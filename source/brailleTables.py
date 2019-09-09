@@ -426,7 +426,7 @@ def initialize():
 	import os
 	from logHandler import log
 	customDirs = _getCustomTablesDirs()
-	# Insert all custom directories before the default one.
+	# Insert the custom directories before the default one.
 	tablesDirs[:0] = customDirs
 	# Reversing the order ensures that user defined configuration takes
 	# precedence over addons.
@@ -456,7 +456,6 @@ def _getCustomTablesDirs():
 	
 	These are "brailleTables" sub-directories searched after in order in:
 	 - The scratchpad directory, if enabled.
-	 - The user configuration directory.
 	 - Every running addon.
 	"""
 	import os
