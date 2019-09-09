@@ -692,7 +692,11 @@ def processPositiveStates(role, states, reason, positiveStates=None):
 	positiveStates.discard(STATE_INVISIBLE)
 	if reason != REASON_CHANGE:
 		positiveStates.discard(STATE_LINKED)
-		if role in (ROLE_LISTITEM, ROLE_TREEVIEWITEM, ROLE_MENUITEM, ROLE_TABLEROW, ROLE_CHECKBOX) and STATE_SELECTABLE in states:
+		if role in (
+			ROLE_LISTITEM, ROLE_TREEVIEWITEM,
+			ROLE_MENUITEM, ROLE_TABLEROW,
+			ROLE_CHECKBOX
+		) and STATE_SELECTABLE in states:
 			positiveStates.discard(STATE_SELECTED)
 	if role not in (ROLE_EDITABLETEXT, ROLE_CHECKBOX):
 		positiveStates.discard(STATE_READONLY)
