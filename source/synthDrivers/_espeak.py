@@ -1,17 +1,14 @@
 # -*- coding: UTF-8 -*-
 #synthDrivers/_espeak.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2012 NV Access Limited, Peter Vágner
+#Copyright (C) 2007-2017 NV Access Limited, Peter Vágner
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import time
 import nvwave
 import threading
-try:
-	import Queue as queue # Python 2.7 import
-except ImportError:
-	import queue # Python 3 import
+import queue
 from ctypes import *
 import config
 import globalVars
@@ -20,11 +17,14 @@ import os
 import codecs
 
 isSpeaking = False
-lastIndex = None
+onIndexReached = None
 bgThread=None
 bgQueue = None
 player = None
 espeakDLL=None
+#: Keeps count of the number of bytes pushed for the current utterance.
+#: This is necessary because index positions are given as ms since the start of the utterance.
+_numBytesPushed = 0
 
 #Parameter bounds
 minRate=80
@@ -118,29 +118,61 @@ class espeak_VOICE(Structure):
 	def __eq__(self, other):
 		return isinstance(other, type(self)) and addressof(self) == addressof(other)
 
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	# The default hash implementation is fine for  our purposes.
+	def __hash__(self):
+		return super().__hash__()
+
+# constants that can be returned by espeak_callback
+CALLBACK_CONTINUE_SYNTHESIS=0
+CALLBACK_ABORT_SYNTHESIS=1
+
+def encodeEspeakString(text):
+	return text.encode('utf8')
+
+def decodeEspeakString(data):
+	return data.decode('utf8')
+
 t_espeak_callback=CFUNCTYPE(c_int,POINTER(c_short),c_int,POINTER(espeak_EVENT))
 
 @t_espeak_callback
 def callback(wav,numsamples,event):
 	try:
-		global player, isSpeaking, lastIndex
+		global player, isSpeaking, _numBytesPushed
 		if not isSpeaking:
-			return 1
+			return CALLBACK_ABORT_SYNTHESIS
+		indexes = []
 		for e in event:
 			if e.type==espeakEVENT_MARK:
-				lastIndex=int(e.id.name)
+				indexNum = int(decodeEspeakString(e.id.name))
+				# e.audio_position is ms since the start of this utterance.
+				# Convert to bytes since the start of the utterance.
+				BYTES_PER_SAMPLE = 2
+				MS_PER_SEC = 1000
+				bytesPerMS = player.samplesPerSec * BYTES_PER_SAMPLE  // MS_PER_SEC
+				indexByte = e.audio_position * bytesPerMS
+				# Subtract bytes in the utterance that have already been handled
+				# to give us the byte offset into the samples for this callback.
+				indexByte -= _numBytesPushed
+				indexes.append((indexNum, indexByte))
 			elif e.type==espeakEVENT_LIST_TERMINATED:
 				break
 		if not wav:
 			player.idle()
+			onIndexReached(None)
 			isSpeaking = False
-			return 0
-		if numsamples > 0:
-			try:
-				player.feed(string_at(wav, numsamples * sizeof(c_short)))
-			except:
-				log.debugWarning("Error feeding audio to nvWave",exc_info=True)
-		return 0
+			return CALLBACK_CONTINUE_SYNTHESIS
+		wav = string_at(wav, numsamples * sizeof(c_short)) if numsamples>0 else b""
+		prevByte = 0
+		for indexNum, indexByte in indexes:
+			player.feed(wav[prevByte:indexByte],
+				onDone=lambda indexNum=indexNum: onIndexReached(indexNum))
+			prevByte = indexByte
+			if not isSpeaking:
+				return CALLBACK_ABORT_SYNTHESIS
+		player.feed(wav[prevByte:])
+		_numBytesPushed += len(wav)
+		return CALLBACK_CONTINUE_SYNTHESIS
 	except:
 		log.error("callback", exc_info=True)
 
@@ -161,10 +193,8 @@ class BgThread(threading.Thread):
 				log.error("Error running function from queue", exc_info=True)
 			bgQueue.task_done()
 
-def _execWhenDone(func, *args, **kwargs):
+def _execWhenDone(func, *args, mustBeAsync=False, **kwargs):
 	global bgQueue
-	# This can't be a kwarg in the function definition because it will consume the first non-keywor dargument which is meant for func.
-	mustBeAsync = kwargs.pop("mustBeAsync", False)
 	if mustBeAsync or bgQueue.unfinished_tasks != 0:
 		# Either this operation must be asynchronous or There is still an operation in progress.
 		# Therefore, run this asynchronously in the background thread.
@@ -173,9 +203,15 @@ def _execWhenDone(func, *args, **kwargs):
 		func(*args, **kwargs)
 
 def _speak(text):
-	global isSpeaking
+	global isSpeaking, _numBytesPushed
 	uniqueID=c_int()
+	# if eSpeak was interupted while speaking ssml that changed parameters such as pitch,
+	# It may not reset those runtime values back to the user-configured values.
+	# Therefore forcefully cause eSpeak to reset its parameters each time beginning to speak again after not speaking. 
+	if not isSpeaking:
+		espeakDLL.espeak_ng_Cancel()
 	isSpeaking = True
+	_numBytesPushed = 0
 	# eSpeak can only process compound emojis  when using a UTF8 encoding
 	text=text.encode('utf8',errors='ignore')
 	flags = espeakCHARS_UTF8 | espeakSSML | espeakPHONEMES
@@ -186,7 +222,7 @@ def speak(text):
 	_execWhenDone(_speak, text, mustBeAsync=True)
 
 def stop():
-	global isSpeaking, bgQueue, lastIndex
+	global isSpeaking, bgQueue
 	# Kill all speech from now.
 	# We still want parameter changes to occur, so requeue them.
 	params = []
@@ -203,7 +239,6 @@ def stop():
 		bgQueue.put(item)
 	isSpeaking = False
 	player.stop()
-	lastIndex=None
 
 def pause(switch):
 	global player
@@ -235,10 +270,11 @@ def setVoice(voice):
 	setVoiceByName(voice.identifier)
 
 def setVoiceByName(name):
-	_execWhenDone(espeakDLL.espeak_SetVoiceByName,name)
+	_execWhenDone(espeakDLL.espeak_SetVoiceByName,encodeEspeakString(name))
 
 def _setVoiceAndVariant(voice=None, variant=None):
-	res = getCurrentVoice().identifier.split("+")
+	v=getCurrentVoice()
+	res = decodeEspeakString(v.identifier).split("+")
 	if not voice:
 		voice = res[0]
 	if not variant:
@@ -247,12 +283,12 @@ def _setVoiceAndVariant(voice=None, variant=None):
 		else:
 			variant = "none"
 	if variant == "none":
-		espeakDLL.espeak_SetVoiceByName(voice)
+		espeakDLL.espeak_SetVoiceByName(encodeEspeakString(voice))
 	else:
 		try:
-			espeakDLL.espeak_SetVoiceByName("%s+%s" % (voice, variant))
+			espeakDLL.espeak_SetVoiceByName(encodeEspeakString("%s+%s" % (voice, variant)))
 		except:
-			espeakDLL.espeak_SetVoiceByName(voice)
+			espeakDLL.espeak_SetVoiceByName(encodeEspeakString(voice))
 
 def setVoiceAndVariant(voice=None, variant=None):
 	_execWhenDone(_setVoiceAndVariant, voice=voice, variant=variant)
@@ -260,11 +296,11 @@ def setVoiceAndVariant(voice=None, variant=None):
 def _setVoiceByLanguage(lang):
 	v=espeak_VOICE()
 	lang=lang.replace('_','-')
-	v.languages=lang
+	v.languages=encodeEspeakString(lang)
 	try:
 		espeakDLL.espeak_SetVoiceByProperties(byref(v))
 	except:
-		v.languages="en"
+		v.languages=encodeEspeakString("en")
 		espeakDLL.espeak_SetVoiceByProperties(byref(v))
 
 def setVoiceByLanguage(lang):
@@ -275,8 +311,13 @@ def espeak_errcheck(res, func, args):
 		raise RuntimeError("%s: code %d" % (func.__name__, res))
 	return res
 
-def initialize():
-	global espeakDLL, bgThread, bgQueue, player
+def initialize(indexCallback=None):
+	"""
+	@param indexCallback: A function which is called when eSpeak reaches an index.
+		It is called with one argument:
+		the number of the index or C{None} when speech stops.
+	"""
+	global espeakDLL, bgThread, bgQueue, player, onIndexReached
 	espeakDLL=cdll.LoadLibrary(r"synthDrivers\espeak.dll")
 	espeakDLL.espeak_Info.restype=c_char_p
 	espeakDLL.espeak_Synth.errcheck=espeak_errcheck
@@ -287,18 +328,23 @@ def initialize():
 	espeakDLL.espeak_ListVoices.restype=POINTER(POINTER(espeak_VOICE))
 	espeakDLL.espeak_GetCurrentVoice.restype=POINTER(espeak_VOICE)
 	espeakDLL.espeak_SetVoiceByName.argtypes=(c_char_p,)
+	eSpeakPath=os.path.abspath("synthDrivers")
 	sampleRate=espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,300,
-		os.path.abspath("synthDrivers"),0)
+		os.fsencode(eSpeakPath),0)
 	if sampleRate<0:
 		raise OSError("espeak_Initialize %d"%sampleRate)
-	player = nvwave.WavePlayer(channels=1, samplesPerSec=sampleRate, bitsPerSample=16, outputDevice=config.conf["speech"]["outputDevice"])
+	player = nvwave.WavePlayer(channels=1, samplesPerSec=sampleRate, bitsPerSample=16,
+		outputDevice=config.conf["speech"]["outputDevice"],
+		buffered=True)
+	onIndexReached = indexCallback
 	espeakDLL.espeak_SetSynthCallback(callback)
 	bgQueue = queue.Queue()
 	bgThread=BgThread()
 	bgThread.start()
 
+
 def terminate():
-	global bgThread, bgQueue, player, espeakDLL 
+	global bgThread, bgQueue, player, espeakDLL , onIndexReached
 	stop()
 	bgQueue.put((None, None, None))
 	bgThread.join()
@@ -308,6 +354,7 @@ def terminate():
 	player.close()
 	player=None
 	espeakDLL=None
+	onIndexReached = None
 
 def info():
 	return espeakDLL.espeak_Info()
@@ -317,16 +364,23 @@ def getVariantDict():
 	# Translators: name of the default espeak varient.
 	variantDict={"none": pgettext("espeakVarient", "none")}
 	for fileName in os.listdir(dir):
-		if os.path.isfile("%s\\%s"%(dir,fileName)):
-			file=codecs.open("%s\\%s"%(dir,fileName))
-			for line in file:
-				if line.startswith('name '):
-					temp=line.split(" ")
-					if len(temp) ==2:
-						name=temp[1].rstrip()
-						break
-				name=None
-			file.close()
+		absFilePath = os.path.join(dir, fileName)
+		if os.path.isfile(absFilePath):
+			# In python 3, open assumes the default system encoding by default.
+			# This fails if Windows' "use Unicode UTF-8 for worldwide language support" option is enabled.
+			# The expected encoding is unknown, therefore use latin-1 to stay as close to Python 2 behavior as possible.
+			try:
+				with open(absFilePath, 'r', encoding="latin-1") as file:
+					for line in file:
+						if line.startswith('name '):
+							temp=line.split(" ")
+							if len(temp) ==2:
+								name=temp[1].rstrip()
+								break
+						name=None
+			except:
+				log.error("Couldn't parse espeak variant file %s" % fileName, exc_info=True)
+				continue
 		if name is not None:
 			variantDict[fileName]=name
 	return variantDict

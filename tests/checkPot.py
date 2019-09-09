@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2017 NV Access Limited
+#Copyright (C) 2017-2019 NV Access Limited
 
 """Check a translation template (pot) for strings without translator comments.
 """
@@ -113,7 +113,7 @@ def checkPot(fileName):
 	errors = 0
 	expectedErrors = 0
 	unexpectedSuccesses = 0
-	with file(fileName, "rt") as pot:
+	with open(fileName, "rt") as pot:
 		for line in pot:
 			line = line.rstrip()
 			if not line:

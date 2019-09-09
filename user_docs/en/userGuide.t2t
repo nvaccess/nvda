@@ -107,10 +107,10 @@ There are also a few options in this dialog which are explained below.
 Once the installation has completed, a message will appear telling you that it was successful.
 Pressing OK at this point will restart the newly installed copy of NVDA.
 
-+++ Untested add-ons warning +++[InstallWithUntestedAddons]
-If you have add-ons already installed there may also be a warning that untested add-ons will be disabled.
-Before you're able to press the Continue button you will have to use a checkbox to confirm that you understand that these add-ons will be disabled.
-There will also be a button present to review the untested add-ons that will be disabled, and prevent them from being disabled.
++++ Incompatible add-ons warning +++[InstallWithIncompatibleAddons]
+If you have add-ons already installed there may also be a warning that incompatible add-ons will be disabled.
+Before you're able to press the Continue button you will have to use the checkbox to confirm that you understand that these add-ons will be disabled.
+There will also be a button present to review the add-ons that will be disabled.
 Refer to the [incompatible add-ons dialog section #incompatibleAddonsManager] for more help on this button.
 
 +++ Start at Windows Logon +++[StartAtWindowsLogon]
@@ -401,6 +401,7 @@ The following commands are available for reviewing text:
 | Select then Copy from review cursor | NVDA+f9 | NVDA+f9 | none | Starts the select then copy process from the current position of the review cursor. The actual action is not performed until you tell NVDA where the end of the text range is |
 | Select then Copy to review cursor | NVDA+f10 | NVDA+f10 | none | On the first press, text is selected from the position previously set start marker up to and including the review cursor's current position. After pressing this key a second time, the text will be copied to the Windows clipboard |
 | Report text formatting | NVDA+f | NVDA+f | none | Reports the formatting of the text where the review cursor is currently situated. Pressing twice shows the information in browse mode |
+| Report current symbol replacement | None | None | none | Speaks the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode. |
 %kc:endInclude
 
 Note: numpad keys require numlock key to be turned off to work properly.
@@ -472,7 +473,18 @@ Although a physical mouse or trackpad should be used to navigate with the mouse,
 
 + Browse Mode +[BrowseMode]
 Complex read-only documents such as web pages are browsed in NVDA using browse mode.
-This includes documents in Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, HTML messages in Microsoft Outlook, Google Chrome, Adobe Reader and Adobe Flash.
+This includes documents in the following applications:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- HTML messages in Microsoft Outlook
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash
+- Supported books in Amazon Kindle for PC
+-
 Browse mode is also optionally available for Microsoft Word documents.
 
 In browse mode, the content of the document is made available in a flat representation that can be navigated with the cursor keys as if it were a normal text document.
@@ -493,7 +505,7 @@ In addition, you can manually force focus mode, after which it will remain in ef
 | Toggle browse/focus modes | NVDA+space | Toggles between focus mode and browse mode |
 | Exit focus mode | escape | Switches back to browse mode if focus mode was previously switched to automatically |
 | Refresh browse mode document | NVDA+f5 | Reloads the current document content (useful if certain content seems to be missing from the document. Not available in Microsoft Word and Outlook.) |
-| Find | NVDA+control+f | Pops up a dialog in which you can type some text to find in the current document |
+| Find | NVDA+control+f | Pops up a dialog in which you can type some text to find in the current document. See [searching for text #SearchingForText] for more information. |
 | Find next | NVDA+f3 | Finds the next occurrence of the text in the document that you previously searched for |
 | Find previous | NVDA+shift+f3 | Finds the previous occurrence of the text in the document you previously searched for |
 | Open long description | NVDA+d | Opens a new window containing a long description for the element you are on if it has one. | 
@@ -550,6 +562,19 @@ Once you have chosen an item, you can use the provided buttons in the dialog to 
 %kc:beginInclude
 || Name | Key | Description |
 | Browse mode elements list | NVDA+f7 | Lists various types of elements in the current document |
+%kc:endInclude
+
+++ Searching for text ++[SearchingForText]
+This dialog allows you to search for terms in the current document.
+In the "Type the text you wish to find" field, the text to be found can be entered.
+The "Case sensitive" checkbox makes the search consider uppercase and lowercase letters differently.
+For example, with "Case sensitive" selected you can find "NV Access" but not "nv access".
+Use the following keys for performing searches:
+%kc:beginInclude
+|| Name | Key | Description |
+| Find text | NVDA+control+f | Opens the  search dialog |
+| Find next | NVDA+f3 | searches the next occurrence of the current search term  |
+| Find previous | NVDA+shift+f3 | searches the previous  occurrence of the current search term  |
 %kc:endInclude
 
 ++ Embedded Objects ++[ImbeddedObjects]
@@ -912,6 +937,21 @@ When in the table view of added books:
 || Name | Key | Description |
 | Enter | enter | Opens the selected book. |
 | Context menu | applications | Opens the context menu for the selected book. |
+%kc:endInclude
+
+++ Windows Console ++[WinConsole]
+NVDA provides support for the Windows command console used by Command Prompt, PowerShell, and the Windows Subsystem for Linux.
+The console window is of fixed size, typically much smaller than the buffer that holds the output.
+As new text is written, the content scroll upwards and previous text is no longer visible. 
+Text that is not visibly displayed in the window is not accessible with NVDA's text review commands.
+Therefore, it is necessary to scroll the console window to read earlier text.
+%kc:beginInclude
+The following built-in Windows Console keyboard shortcuts may be useful when [reviewing text #ReviewingText] with NVDA:
+|| Name | Key | Description |
+| Scroll up | control+upArrow | Scrolls the console window up, so earlier text can be read. |
+| Scroll down | control+downArrow | Scrolls the console window down, so later text can be read. |
+| Scroll to start | control+home | Scrolls the console window to the beginning of the buffer. |
+| Scroll to end | control+end | Scrolls the console window to the end of the buffer. |
 %kc:endInclude
 
 + Configuring NVDA +[ConfiguringNVDA]
@@ -1352,6 +1392,8 @@ When enabled, NVDA will announce the text currently under the mouse pointer, as 
 If NVDA is set to announce the text under the mouse as you move it, this option allows you to choose exactly how much text will be spoken.
 The options are character, word, line and paragraph.
 
+To toggle text unit resolution from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
 ==== Report role when mouse enters object ====[MouseSettingsRole]
 If this checkbox is checked, NVDA will announce the role (type) of object as the mouse moves inside it.
 
@@ -1503,7 +1545,15 @@ This field sets the amount of lines you will move by when pressing page up or pa
 ==== Use screen layout ====[BrowseModeSettingsScreenLayout]
 Key: NVDA+v
 
-This option allows you to specify whether content in browse mode should place content such as links and other fields on their own line, or if it should keep them in the flow of text as it is visually shown. If the option is enabled then things will stay as they are visually shown, but if it is disabled then fields will be placed on their own line.
+This option allows you to specify whether content in browse mode should place content such as links and other fields on their own line, or if it should keep them in the flow of text as it is visually shown.
+If the option is enabled then things will stay as they are visually shown, but if it is disabled then fields will be placed on their own line.
+
+==== Enable browse mode on page load ====[BrowseModeSettingsEnableOnPageLoad]
+This checkbox toggles whether browse mode should be automatically enabled when loading a page.
+When this option is disabled, browse mode can still be manually activated on pages or in documents where browse mode is supported.
+See the [Browse Mode section #BrowseMode] for a list of applications supported by browse mode.
+Note that this option does not apply to situations where browse mode is always optional, e.g. in Microsoft Word.
+This option is enabled by default.
 
 ==== Automatic Say All on page load ====[BrowseModeSettingsAutoSayAll]
 This checkbox toggles the automatic reading of a page after it loads in browse mode.
@@ -1603,6 +1653,78 @@ This category contains the following options:
 ==== Recognition language ====[Win10OcrSettingsRecognitionLanguage]
 This combo box allows you to choose the language to be used for text recognition.
 
++++ Advanced Settings +++[AdvancedSettings]
+Warning! The settings in this category are for advanced users and may cause NVDA to not function correctly if configured in the wrong way.
+Only make changes to these settings if you are sure you know what you are doing or if you have been specifically instructed to by an NVDA developer.
+
+==== Making changes to advanced settings ====[AdvancedSettingsMakingChanges]
+In order to make changes to the advanced settings, the controls must be enabled by confirming, with the checkbox, that you understand the risks of modifying these settings
+
+==== Restoring the default settings ====[AdvancedSettingsRestoringDefaults]
+The button restores the default values for the settings, even if the confirmation checkbox is not ticked.
+After changing settings you may wish to revert to the default values.
+This may also be the case if you are unsure if the settings have been changed.
+
+==== Enable loading custom code from Developer Scratchpad Directory ====[AdvancedSettingsEnableScratchpad]
+When developing add-ons for NVDA, it is useful to be able to test code as you are writing it.
+This option when enabled, allows NVDA to load custom appModules, globalPlugins, brailleDisplayDrivers and synthDrivers, from a special developer scratchpad directory in your NVDA user configuration directory.
+Previously NVDA would load custom code directly from the user configuration directory, with no way of disabling this.
+This option is off by default, ensuring that no untested code is ever run in NVDA with out the user's explicit knowledge.
+If you wish to distribute custom code to others, you should package it as an NVDA add-on.
+
+==== Open Developer Scratchpad Directory ====[AdvancedSettingsOpenScratchpadDir]
+This button opens the directory where you can place custom code while developing it.
+This button is only enabled if NVDA is configured to enable loading custom code from the Developer Scratchpad Directory.
+ 
+==== Use UI automation to access Microsoft Word document controls when available ====[AdvancedSettingsUseUiaForWord]
+When this option is enabled, NVDA will try to use  the Microsoft UI Automation accessibility api in order to fetch information from Microsoft Word document controls.
+This includes in Microsoft Word itself, and also the Microsoft Outlook message viewer and composer.
+ For the most recent versions of Microsoft Office 2016/365 running on windows 10, UI Automation support is complete enough to provide access to Microsoft Word documents almost equal to NVDA's existing Microsoft Word support, with the added advantage that responsiveness is majorly increased.
+However, There may be some information which is either not exposed, or exposed incorrectly in some versions of Microsoft Office, which means this UI automation support cannot always be relied upon.
+We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Office 2016/365 to test this feature and provide feedback.
+
+==== Windows Console support ====[AdvancedSettingsConsoleUIA]
+This option selects how NVDA interacts with the Windows Console used by command prompt, PowerShell, and the Windows Subsystem for Linux.
+It does not affect the modern Windows Terminal.
+In Windows 10 version 1709, Microsoft [added support for its UI Automation API to the console https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], bringing vastly improved performance and stability for screen readers that support it.
+In situations where UI Automation is unavailable or known to result in an inferior user experience, NVDA's legacy console support is available as a fallback.
+The Windows Console support combo box has three options:
+- Automatic: Uses UI Automation in consoles on Windows 10 version 1803 and later. This option is recommended and set by default.
+- Prefer UIA: Uses UI Automation in consoles if available, even on Windows versions with incomplete or buggy implementations. While this limited functionality may be useful (and even sufficient for your usage), use of this option is entirely at your own risk and no support for it will be provided.
+- Legacy: UI Automation in the Windows Console will be completely disabled, so the legacy fallback will always be used.
+-
+
+==== Speak passwords in Windows Console ====[AdvancedSettingsWinConsoleSpeakPasswords]
+This setting controls whether characters are spoken by [speak typed characters #KeyboardSettingsSpeakTypedCharacters] or [speak typed words #KeyboardSettingsSpeakTypedWords] in situations where the screen does not update (such as password entry) in some terminal programs, such as the Windows Console with UI automation support enabled and Mintty.
+For security purposes, this setting should be left disabled.
+However, you may wish to enable it if you experience performance issues or instability with typed character and/or word reporting in consoles, or work in trusted environments and prefer password announcement.
+
+==== Use the new typed character support in legacy Windows consoles when available ====[AdvancedSettingsKeyboardSupportInLegacy]
+This option enables an alternative method for detecting typed characters in legacy Windows consoles.
+While it improves performance and prevents some console output from being spelled out, it may be incompatible with some terminal programs.
+This feature is available and enabled by default on Windows 10 versions 1607, 1703 and 1709 as well as on newer Windows 10 releases when UI Automation is unavailable or disabled.
+Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
+In untrusted environments, you may temporarily disable [speak typed characters #KeyboardSettingsSpeakTypedCharacters] and [speak typed words #KeyboardSettingsSpeakTypedWords] when entering passwords.
+
+==== Automatically set system focus to focusable elements in Browse Mode ====[BrowseModeSettingsAutoFocusFocusableElements]
+Key: NVDA+8
+
+Enabled by default, this option allows you to choose if the system focus should automatically be set to elements that can take the system focus (links, form fields, etc.) when navigating content with the browse mode caret.
+If enabled, this represents default behavior of NVDA as of version 2019.1 and before.
+Disabling this option will not automatically focus focusable elements when they are selected with the browse mode caret.
+This might result in faster browsing experience and better responsiveness in browse mode.
+The focus will yet be updated to the particular element when interacting with it (e.g. pressing a button, checking a check box).
+This functionality is experimental as of NVDA 2019.2.
+
+==== Caret move timeout (in MS) ====[AdvancedSettingsCaretMoveTimeout]
+This option allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.
+If you find that NVDA seems to be incorrectly tracking the caret E.g. it seems to be always one character behind or is repeating lines, then you may wish to try increasing this value.
+
+==== Debug logging categories ====[AdvancedSettingsDebugLoggingCategories]
+The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
+Logging these messages can resort in decreased performance and large log files.
+Only turn one of these on if specifically instructed to by an NVDA developer e.g. when debugging why a braille display driver is not functioning correctly.
+
 ++ miscellaneous Settings ++[MiscSettings]
 Besides the [NVDA Settings #NVDASettings] dialog, The Preferences sub-menu of the NVDA Menu contains several other items which are outlined below.
 
@@ -1647,6 +1769,7 @@ The language for which symbol pronunciation is being edited will be shown in the
 Note that this dialog respects the "Trust voice's language for processing symbols and characters" option found in the [Speech category #SpeechSettings] of the [NVDA Settings #NVDASettings] dialog; i.e. it uses the voice language rather than the NVDA global language setting when this option is enabled.
 
 To change a symbol, first select it in the Symbols list.
+You can filter the symbols by entering the symbol or a part of the symbol's replacement into the Filter by edit box.
 
 - The Replacement field allows you to change the text that should be spoken in place of this symbol.
 - Using the Level field, you can adjust the lowest symbol level at which this symbol should be spoken.
@@ -1712,7 +1835,7 @@ NVDA allows you to do this using configuration profiles.
 A configuration profile contains only those settings which are changed while the profile is being edited.
 Most settings can be changed in configuration profiles except for those in the General category of the [NVDA Settings #NVDASettings] dialog, which apply to the entirety of NVDA.
 
-Configuration profiles can be manually activated.
+Configuration profiles can be manually activated either from a dialog or using custom added gestures.
 They can also be activated automatically due to triggers such as switching to a particular application.
 
 +++ Basic Management +++[ProfilesBasicManagement]
@@ -1779,6 +1902,14 @@ You can do this by checking the Temporarily disable all triggers checkbox in the
 
 To toggle disabling triggers from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
++++ Activating a profile using input gestures +++[ConfigProfileGestures]
+For every profile you add, you are able to assign one or more input gestures to activate it.
+By default, configuration profiles do not have input gestures assigned.
+You can add gestures to activate a profile using the [Input Gestures dialog #InputGestures].
+Every profile has its own entry under the configuration profiles category.
+When you rename a profile, any gesture you added previously will still be available.
+Removing a profile will automatically delete the gestures associated with it.
+
 ++ Location of Configuration files ++[LocationOfConfigurationFiles]
 Portable versions of NVDA store all settings and add-ons in a directory called userConfig, found in the NVDA directory.
 
@@ -1794,6 +1925,7 @@ To change NVDA's configuration on the logon/UAC screens, configure NVDA as you w
 
 ++ Log Viewer ++[LogViewer]
 The log viewer, found under Tools in the NVDA menu, allows you to view all the logging output that has occurred up until now from when you last started NVDA.
+Using NVDA+F1 will open the log viewer and display developer information about the current navigator object.
 
 Apart from reading the content, you can also Save a copy of the log file, or refresh the viewer so that it shows the most recent output since the Log viewer was opened.
 These actions are available under the viewer's Log menu.
@@ -1851,27 +1983,25 @@ Just like when you install or remove add-ons, you need to restart NVDA in order 
 The manager also has a Close button to close the dialog.
 If you have installed, removed or changed the status of an add-on, NVDA will first ask you if you wish to restart so that your changes can take effect.
 
-Some older add-ons may not have been tested with the version of NVDA that you have, in this case the add-on may be considered incompatible.
-Attempting to install an untested add-on will result in an additional warning requiring confirmation.
-To manage these add-ons, and override the compatibility (not recommended) you can use the "manage incompatible add-ons button" to launch the incompatible add-ons manager.
-
-In the past,  it was possible to extend NVDA's functionality by copying individual plugins and drivers into your NVDA user Configuration directory.
-Although this version of NVDA  may still   load them, they will not be shown in the Add-on Manager.
-It is best to remove these files from your configuration and install  the appropriate add-on if one is available.
+Some older add-ons may no longer be compatible with the version of NVDA that you have.
+When using an older version of NVDA, some new add-ons may not be compatible either.
+Attempting to install an incompatible add-on will result in an error explaining why the add-on is considered incompatible.
+To inspect these incompatible add-ons, you can use the "view incompatible add-ons" button to launch the incompatible add-ons manager.
 
 To access the Add-ons Manager from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
 ++ Incompatible Add-ons Manager ++[incompatibleAddonsManager]
-The Incompatible Add-ons Manager, which can be accessed via the "manage incompatible add-ons" buttons in the Add-on manager, allows you to override the incompatibility of untested add-ons.
-Add-ons are considered incompatible when they have not been tested with the version of NVDA that you are using.
-Enabling untested add-ons may cause NVDA to be unstable.
+The Incompatible Add-ons Manager, which can be accessed via the "view incompatible add-ons" buttons in the Add-on manager, allows you to inspect any incompatible add-ons, and the reason they are considered incompatible.
+Add-ons are considered incompatible when they have not been updated to work with significant changes to NVDA, or when they rely on a feature not available in the version of NVDA you are using.
 The Incompatible add-ons manager has a short message to explain its purpose as well as the version of NVDA.
-The untested add-ons are presented in a list with the following four columns:
-+ Available, a checkbox which reflects whether the add-on can be enabled via the Add-on Manager
+The incompatible add-ons are presented in a list with the following columns:
 + Package, the name of the add-on
 + Version, the version of the add-on
-+ Last tested NVDA Version, the version of NVDA that the add-on was last tested against
++ Incompatible reason, an explanation of why the addon is considered incompatible
 +
+
+The Incompatible add-ons manager also has an "About add-on..." button.
+This opens will let you know the full details of the add-on, which is helpful when contacting the add-on author.
 
 
 ++ Python Console ++[PythonConsole]
@@ -1962,13 +2092,11 @@ All Focus and PAC Mate displays from [Freedom Scientific http://www.freedomscien
 You will need the Freedom Scientific braille display drivers installed on your system.
 If you do not have them already, you can obtain them from http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Although this page only mentions the Focus Blue display, the drivers support all Freedom Scientific Focus and Pacmate displays.
-If your system is running 64 bit Windows and the drivers were already installed by another screen reader, you will probably still need to install the drivers from this link, as the files required by NVDA were probably not installed by the other screen reader.
 
 By default, NVDA can automatically detect and connect to these displays either via USB or bluetooth.
 However, when configuring the display, you can explicitly select "USB" or "Bluetooth" ports to restrict the connection type to be used.
 This might be useful if you want to connect the focus display to NVDA using bluetooth, but still be able to charge it using USB power from your computer.
-
-These displays do not yet support NVDA's automatic background braille display detection functionality.
+NVDA's automatic braille display detection will also recognize the display on USB or Bluetooth.
 
 Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.

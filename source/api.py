@@ -6,6 +6,7 @@
 
 """General functions for NVDA"""
 
+import ctypes
 import config
 import textInfos
 import review
@@ -18,12 +19,13 @@ import NVDAObjects
 import NVDAObjects.IAccessible
 import winUser
 import controlTypes
-import win32clipboard
-import win32con
 import eventHandler
 import braille
+import vision
 import watchdog
 import appModuleHandler
+import cursorManager
+from typing import Any
 
 #User functions
 
@@ -85,7 +87,7 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 				pass
 			tempObj=getDesktopObject()
 		# Scan backwards through the old ancestors looking for a match.
-		for index in xrange(oldFocusLineLength-1,-1,-1):
+		for index in range(oldFocusLineLength-1,-1,-1):
 			watchdog.alive()
 			if tempObj==oldFocusLine[index]:
 				# Match! The old and new focus ancestors converge at this point.
@@ -178,22 +180,36 @@ def getReviewPosition():
 		globalVars.reviewPosition,globalVars.reviewPositionObj=review.getPositionForCurrentMode(obj)
 		return globalVars.reviewPosition
 
-def setReviewPosition(reviewPosition,clearNavigatorObject=True,isCaret=False):
+
+def setReviewPosition(
+		reviewPosition,
+		clearNavigatorObject=True,
+		isCaret=False,
+		isMouse=False
+):
 	"""Sets a TextInfo instance as the review position.
 	@param clearNavigatorObject: if  true, It sets the current navigator object to C{None}.
 		In that case, the next time the navigator object is asked for it fetches it from the review position.
 	@type clearNavigatorObject: bool
 	@param isCaret: Whether the review position is changed due to caret following.
 	@type isCaret: bool
+	@param isMouse: Whether the review position is changed due to mouse following.
+	@type isMouse: bool
 	"""
 	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj
 	if clearNavigatorObject: globalVars.navigatorObject=None
 	# When the review cursor follows the caret and braille is auto tethered to review,
 	# we should not update braille with the new review position as a tether to focus is due.
-	if braille.handler.shouldAutoTether and isCaret:
-		return
-	braille.handler.handleReviewMove(shouldAutoTether=not isCaret)
+	if not (braille.handler.shouldAutoTether and isCaret):
+		braille.handler.handleReviewMove(shouldAutoTether=not isCaret)
+	if isCaret:
+		visionContext = vision.constants.Context.CARET
+	elif isMouse:
+		visionContext = vision.constants.Context.MOUSE
+	else:
+		visionContext = vision.constants.Context.REVIEW
+	vision.handler.handleReviewMove(context=visionContext)
 
 def getNavigatorObject():
 	"""Gets the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. If the navigator object is not set, it fetches it from the review position. 
@@ -252,17 +268,14 @@ def isTypingProtected():
 
 def createStateList(states):
 	"""Breaks down the given integer in to a list of numbers that are 2 to the power of their position.""" 
-	return [x for x in [1<<y for y in xrange(32)] if x&states]
+	return [x for x in [1<<y for y in range(32)] if x&states]
 
 
 def moveMouseToNVDAObject(obj):
 	"""Moves the mouse to the given NVDA object's position""" 
 	location=obj.location
-	if location and (len(location)==4):
-		(left,top,width,height)=location
-		x=(left+left+width)/2
-		y=(top+top+height)/2
-		winUser.setCursorPos(x,y)
+	if location:
+		winUser.setCursorPos(*location.center)
 
 def processPendingEvents(processEventQueue=True):
 	# Import late to avoid circular import.
@@ -286,37 +299,23 @@ def copyToClip(text):
 @param text: the text which will be copied to the clipboard
 @type text: string
 """
-	if isinstance(text,basestring) and len(text)>0 and not text.isspace():
-		try:
-			win32clipboard.OpenClipboard()
-		except win32clipboard.error:
-			return False
-		try:
-			win32clipboard.EmptyClipboard()
-			win32clipboard.SetClipboardData(win32con.CF_UNICODETEXT, text)
-		finally:
-			win32clipboard.CloseClipboard()
-		win32clipboard.OpenClipboard() # there seems to be a bug so to retrieve unicode text we have to reopen the clipboard
-		try:
-			got = 	win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT)
-		finally:
-			win32clipboard.CloseClipboard()
-		if got == text:
-			return True
-	return False
+	if not isinstance(text,str) or len(text)==0:
+		return False
+	import gui
+	with winUser.openClipboard(gui.mainFrame.Handle):
+		winUser.emptyClipboard()
+		winUser.setClipboardData(winUser.CF_UNICODETEXT,text)
+	got=getClipData()
+	return got == text
 
 def getClipData():
 	"""Receives text from the windows clipboard.
 @returns: Clipboard text
 @rtype: string
 """
-	text = ""
-	win32clipboard.OpenClipboard()
-	try:
-		text = win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT)
-	finally:
-		win32clipboard.CloseClipboard()
-	return text
+	import gui
+	with winUser.openClipboard(gui.mainFrame.Handle):
+		return winUser.getClipboardData(winUser.CF_UNICODETEXT) or u""
 
 def getStatusBar():
 	"""Obtain the status bar for the current foreground object.
@@ -350,7 +349,7 @@ def getStatusBarText(obj):
 	text = obj.name or ""
 	if text:
 		text += " "
-	return text + " ".join(chunk for child in obj.children for chunk in (child.name, child.value) if chunk and isinstance(chunk, basestring) and not chunk.isspace())
+	return text + " ".join(chunk for child in obj.children for chunk in (child.name, child.value) if chunk and isinstance(chunk, str) and not chunk.isspace())
 
 def filterFileName(name):
 	"""Replaces invalid characters in a given string to make a windows compatible file name.
@@ -363,6 +362,34 @@ def filterFileName(name):
 	for c in invalidChars:
 		name=name.replace(c,'_')
 	return name
+
+
+def isNVDAObject(obj: Any) -> bool:
+	"""Returns whether the supplied object is a L{NVDAObjects.NVDAObject}"""
+	return isinstance(obj, NVDAObjects.NVDAObject)
+
+
+def isCursorManager(obj: Any) -> bool:
+	"""Returns whether the supplied object is a L{cursorManager.CursorManager}"""
+	return isinstance(obj, cursorManager.CursorManager)
+
+
+def isTreeInterceptor(obj: Any) -> bool:
+	"""Returns whether the supplied object is a L{treeInterceptorHandler.TreeInterceptor}"""
+	return isinstance(obj, treeInterceptorHandler.TreeInterceptor)
+
+
+def isObjectInActiveTreeInterceptor(obj: NVDAObjects.NVDAObject) -> bool:
+	"""Returns whether the supplied L{NVDAObjects.NVDAObject} is
+	in an active L{treeInterceptorHandler.TreeInterceptor},
+	i.e. a tree interceptor that is not in pass through mode.
+	"""
+	return bool(
+		isinstance(obj, NVDAObjects.NVDAObject)
+		and obj.treeInterceptor
+		and not obj.treeInterceptor.passThrough
+	)
+
 
 def getCaretObject():
 	"""Gets the object which contains the caret.

@@ -107,9 +107,16 @@ Hai tamén algunhas opcións neste diálogo que se explican máis abaixo.
 Unha vez se completara a instalación, aparecerá una mensaxe dicíndoche que foi satisfactoria.
 Premendo Aceptar neste ponto reiniciarase a copia nova instalada do NVDA.
 
++++ Aviso sobre complementos incompatibles +++[InstallWithIncompatibleAddons]
+Se xa tes complementos instalados tamén pode haber un aviso de que se deshabilitarán os complementos incompatibles.
+Antes de poder premer o botón Continuar terás que usar a caixa de verificación para confirmar que entendes que estos complementos serán desactivados.
+Tamén haberá presente un botón para revisar os complementos que se deshabilitarán.
+Consulta a [seción diálogo complementos incompatibles #incompatibleAddonsManager] para máis axuda sobre este botón.
+
 +++ Iniciar na Autentificación de Windows +++[StartAtWindowsLogon]
 Esta opción permíteche escoller se NVDA debería arrancar automáticamente ou non mentres está na ventá de autentificación de Windows, antes de introducir unha clave.
-Esto tamén inclúe ao control do UAC e outras pantallas seguras.
+Esto tamén inclúe o control da conta de usuario e outras pantallas seguras.
+Esta opción está habilitada por defecto para instalacións novas.
 
 +++ Crear Atallos do Escritorio (ctrl+alt+n) +++[CreateDesktopShortcut]
 Esta opción permíteche escoller se NVDA debería crear ou non un atallo no escritorio para comezar o NVDA. 
@@ -394,6 +401,7 @@ As seguintes ordes están dispoñibles para revisión de texto:
 | Selecionar logo Copiar dende cursor de revisión | NVDA+f9 | NVDA+f9 | none | Comeza a seleción logo procesa a copia dende a posición actual do cursor de revisión. A acción actual non se leva a cabo ata que digas ao NVDA onde está o final do rango de texto |
 | Seleccionar logo Copiar a cursor de revisión | NVDA+f10 | NVDA+f10 | none | Na primeira pulsación, o texto seleciónase dende enriba da posición previamente fixada coma a marca de comezo e incluindo a posición actual do cursor de revisión. Logo de premer esta tecla unha segunda vez, o texto copiarase ao portapapeis de Windows |
 | Anunciar formato do texto | NVDA+f | NVDA+f | non | Informa do formato do texto onde estea situado actualmente o cursor de revisión. Premendo dúas veces amosa a información en modo exploración |
+| Anunciar reemplazo de símbolo actual | Non | Non | non | Fala o símbolo onde estea colocado o cursor de revisión. Premido dúas veces, amosa o símbolo e o texto usado para falalo no modo exploración. |
 %kc:endInclude
 
 nota: as teclas do teclado numérico requiren que a tecla BloqNum sexa desactivada para funcionar apropriadamente.
@@ -465,7 +473,18 @@ Se ben se poderían usar un rato físico ou un trackpad para navegar co rato, NV
 
 + Modo Navegación +[BrowseMode]
 Os documentos complexos de só lectura, como páxinas web, son representados no NVDA cun Modo Navegación. 
-Esto inclúe documentos en Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, mensaxes HTML en Microsoft Outlook,Google Chrome, Adobe Reader e Adobe Flash.
+Esto inclúe documentos nas seguintes aplicacións:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- Mmensaxes HTML en Microsoft Outlook
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash.
+- Libros admitidos en Amazon Kindle for PC
+-
 O modo Exploración tamén está dispoñible opcionalmente para documentos de Microsoft Word.
 
 No Modo Navegación, o contido do documento faise dispoñible mediante unha representación chan de contido como unha páxina Web, polo que te podes mover cas teclas de cursor. 
@@ -486,7 +505,7 @@ Ademáis, podes forzar manualmente o modo foco, despois permanecerá efectivo at
 | Conmutar modos Navegación/foco | NVDA+espazo | Conmuta entre modo foco e modo navegación |
 | Saír de modo foco | escape | Cambia a modo navegación se o modo foco anteriormente estaba cambiado automáticamente |
 | Refrescar documento en modo Navegación | NVDA+f5 | Recarga o contido do documento actual (útil se certos contidos parecen estar desaparecidos da páxina. Non dispoñible en Microsoft Word e Outlook) |
-| Procurar | NVDA+control+f | Desprega un diálogo no que podes teclear algún texto a atopar no  documento actual |
+| Procurar | NVDA+control+f | Desprega un diálogo no que podes teclear algún texto a atopar no  documento actual. Consulta [procurar texto #SearchingForText] para máis información. |
 | Procurar seguinte | NVDA+f3 | Atopa a seguinte  ocurrencia do texto no documento que buscaches anteriormente |
 | Procurar anterior | NVDA+shift+f3 | Atopa a ocurrencia anterior do texto no documento buscado anteriormente |
 | abrir descripción longa | NVDA+d | Abre unha ventá nova contendo unha descripción longa para o elemento sobre o que estea se ten unha. | 
@@ -516,7 +535,7 @@ A seguintes teclas elas soas saltan ao seguinte campo, ca tecla shift saltan ao 
 - s: separador
 - m: marco
 - g: gráfico
-- d: ponto de referencia
+- d: rexión
 - o: obxecto empotrado (reproductor de audio e vídeo, aplicación, diálogo, etc.)
 - 1 a 6: cabeceiras da 1 á 6 respectivamente
 - a: anotación (comentario, revisión do editor, etc.)
@@ -536,13 +555,26 @@ Para activar ou desactivar a navegación cunha soa letra para o documento actual
 
 ++ A Lista de Elementos ++[ElementsList]
 A lista de elementos proporciona acceso a unha lista de varios tipos de elementos no documento segundo sexa apropriado para a aplicación.
-Por exemplo, nos navegadores web, a lista de elementos pode listar ligas, cabeceiras, campos de formulario, botóns ou pontos de referencia.
+Por exemplo, nos navegadores web, a listaxe de elementos pode listar ligas, cabeceiras, campos de formulario, botóns ou rexións.
 Os botóns de opción permítenche cambiar entre os diferentes tipos de elementos.
 Proporciónase tamén un campo de edición no diálogo o que che permite filtrar a lista para axudarche a buscar un elemento en particular na páxina. 
 Unha vez escollas un elemento, podes utilizar os botóns proporcionados no diálogo para moverte cara, ou activar, ese elemento.
 %kc:beginInclude
 || Nome | Tecla | Descripción |
 | Lista de elementos do Modo Navegación | NVDA+f7 | Lista  varios tipos de elementos no documento actual |
+%kc:endInclude
+
+++ Procurar texto ++[SearchingForText]
+Este diálogo permíteche buscar termos no documento actual.
+No campo "Teclear o texto que desexes atopar", pode introducirse o texto a procurar.
+A caixa de verificación "Sensible ás maiúsculas" fai que a busca considere letras en maiúsculas e en minúsculas de xeito diferente.
+Por exemplo, con "Sensible ás maiúsculas" selecionada podes atopar "NV Access" pero non "nv access".
+Usa as seguintes teclas para realizar buscas:
+%kc:beginInclude
+|| Nome | Tecla | Descripción |
+| Procurar texto | NVDA+control+f | Abre o diálogo procurar |
+| Procurar seguinte | NVDA+f3 | Busca a seguinte ocurrencia do termo buscado actual |
+| Procurar anterior | NVDA+shift+f3 | Busca a ocurrencia anterior do termo buscado actual |
 %kc:endInclude
 
 ++ Obxectos Empotrados ++[ImbeddedObjects]
@@ -604,8 +636,8 @@ Por favor consulta a seción [Pantallas Braille soportadas  #SupportedBrailleDis
 Esta seción tamén contén información sobre que pantallas son compatibles coa función de detección automática de pantallas braille do NVDA.
 Podes configurar o braille usando a [categoría Opcións de Braille #BrailleSettings] do diálogo [Opcións do NVDA #NVDASettings].
 
-++ Abreviaturas de tipos de Control, estado e pontos de referencia ++[BrailleAbbreviations]
-Co fin de ter a maior cantidade de información posible nunha pantalla braille, definíronse as seguintes abreviaturas para indicar o tipo de control e o estado así como os pontos de referencia.
+++ Abreviaturas de tipos de Control, estado e rexións ++[BrailleAbbreviations]
+Co fin de ter a maior cantidade de información posible nunha pantalla braille, definíronse as seguintes abreviaturas para indicar o tipo de control e o estado así como as rexións.
 
 || Abreviatura | Tipo de Control |
 | apl | aplicación |
@@ -628,7 +660,7 @@ Co fin de ter a maior cantidade de información posible nunha pantalla braille, 
 | grp | grupo |
 | enN | cabeceira de nivel n, ex.: h1, h2. |
 | axd | grobo de axuda |
-| pdr | ponto de referencia |
+| rex | rexión |
 | lig | liga |
 | ligv | liga visitada |
 | lst | listaxe |
@@ -681,8 +713,8 @@ Os seguintes indicadores de estado  tamén están definidos:
 | ordeado desc | amosado cando un obxecto se ordea descendentemente |
 | submnu | amosado cando un obxecto ten un despregable (normalmente un submenú) |
 
-Finalmente, definíronse as seguintes abreviaturas para potos de referencia:
-|| Abreviatura | Ponto de referencia |
+Finalmente, definíronse as seguintes abreviaturas para rexións:
+|| Abreviatura | Rexión |
 | tlo | título |
 | cinf | info de contido |
 | cmpl | complementario |
@@ -940,8 +972,7 @@ Hai moitas linguas, nembargantes a derradeira elección na lista chámase "Prede
 Esta elección dirá ao NVDA que utilice a lingua na que Windows estea actualmente axustado. 
 
 Por favor ten en conta que NVDA debe reiniciarse cando se cambie a lingua. 
-NVDA preguntarache se desexas reiniciar se fas cambios na selección e garda os cambios.
-Preme Aceptar e NVDA reiniciarase. 
+Cando apareza o diálogo de confirmación, seleciona "reiniciar agora" ou "reiniciar máis tarde" se desexas usar a lingua nova agora ou nun momento posterior, respectivamente. Se está selecionado "reiniciar máis tarde", a configuración debe gardarse (ou manualmente ou usando a funcionalidade gardar ao saír).
 
 ==== Gardar Configuración ao Saír ====[GeneralSettingsSaveConfig]
 Esta opción é unha caixa de verificación que, cando se marca, di ao NVDA que garde automáticamente a actual configuración cando saias do NVDA. 
@@ -957,7 +988,15 @@ Esta Opción é unha caixa de verificación que, cando está marcada, di ao NVDA
 ==== nivel do Rexistro ====[GeneralSettingsLogLevel]
 Este é unha caixa combinada que che permite elexir canto NVDA porá no rexistro segundo se executa. 
 Xeralmente os usuarios non deberían necesitar tocar esto xa que non é demasiado amigable. 
-Sen embargo se queres proporcionar información nun informe sobre un fallo etc, entón poderá ser unha boa opción.
+Sen embargo, se desexas proporcionar información nun informe de fallos, ou habilitar ou deshabilitar todo o rexistro, entón poderá seren unha opción útil.
+
+Os niveis dispoñibles do rexistro son:
+- Deshabilitado: aparte dunha curta mensaxe de inicio, o NVDA non rexistrará nada mentres se execute.
+- Información: O NVDA rexistrará información básica coma mensaxes de inicio e información útil para os desenvolvedores.
+- Aviso de depuración: rexistraranse mensaxes de aviso que non sexan causados por erros graves.
+- Entrada/saída: rexistraranse as entradas das pantallas braille e dos teclados, así como a saída da voz e do braille. Se che preocupa a privacidade, non configures a esta opción de nivel de rexistro.
+- Depuración: ademáis das mensaxes de información, aviso e entrada/saída, rexistraranse mensaxes de depuración adicionais. Ao igual que coa Entrada/saída, se che preocupa a privacidade, non deberías configurar o nivel de rexistro nesta opción.
+-
 
 ==== Iniciar automáticamente nvda despois de autentificarse en windows ====[GeneralSettingsStartAfterLogOn]
 Se esta opción está activada, NVDA arrancará automáticamente tan pronto como te autentifiques en Windows. 
@@ -1338,6 +1377,8 @@ Cando está marcada significa que NVDA anunciará o texto actualmente baixo o pu
 Se NVDA está configurado para anunciar o texto baixo o rato segundo se mova, esta opción permíteche escoller  exactamente canto texto será falado. 
 As opcións son caracter, palabra, liña e parágrafo.
 
+Para cambiar a unidade de resolución de texto dende calquera sitio, por favor asigna un xesto personalizado usando o [Diálogo Xestos de entrada #InputGestures].
+
 ==== Anunciar rol cando o rato entra nos Obxectos ====[MouseSettingsRole]
 Se esta caixa de verificación está marcada, NVDA anunciará o rol (tipo) de obxecto cando o rato se mova dentro del.
 
@@ -1349,6 +1390,11 @@ Canto máis estea situado o rato á esquerda ou á dereita  na pantalla, o son r
 ==== O Brilo controla o volume do audio ====[MouseSettingsBrightness]
 Se a caixa de verificación 'reproducir audio cando o rato se mova' está marcada, entón marcando esta caixa de verificación significa que o volume dos pitidos de audio está controlado por cómo o brilo da pantalla estea baixo o rato. 
 Esto poderá causar algúns problemas de rendemento en Windows Vista, así que está desverificado de xeito predeterminado.
+
+==== Ignorar a entrada do rato dende outras aplicacións ====[MouseSettingsHandleMouseControl]
+Esta opción permite ao usuario ignorar os eventos do rato (incluindo o movemento do rato e as pulsacións de botóns) xerados por outras aplicacións como TeamViewer e outros programas de control remoto.
+Esta opción está desmarcada por defecto.
+Se marcas esta opción e tes activada a opción "Habilitar seguemento do rato", o NVDA non anunciará o que hai por enbaixo do rato se este é movido por outra aplicación.
 
 +++ Interación Tactil +++[TouchInteraction]
 Esta categoría de opcións, só dispoñible en computadores que executen Windows 8 e posterior con capacidades tactiles, permítenche configurar o xeito no que NVDA interactúa con pantallas tactiles.
@@ -1483,7 +1529,15 @@ Este campo axusta a cantidade de liñas que moverás cando premas Avance de páx
 ==== Utilizar deseño de pantalla ====[BrowseModeSettingsScreenLayout]
 Tecla: NVDA+v
 
-Esta opción permíteche especificar se o contido no modo navegación debería colocar cousas como ligas e outros campos na súa propria liña, ou se debería conservalos no fluxo de texto segundo sexa amosado visualmente. Se a opción está activada, entón as cousas permanecerán segundo sexan amosadas visualmente, pero se está desactivada, entón os campos serán colocados na súa propria liña.
+Esta opción permíteche especificar se o contido no modo navegación debería colocar cousas como ligas e outros campos na súa propria liña, ou se debería conservalos no fluxo de texto segundo sexa amosado visualmente.
+Se a opción está activada, entón as cousas permanecerán segundo sexan amosadas visualmente, pero se está desactivada, entón os campos serán colocados na súa propria liña.
+
+==== Habilitar modo Exploración ao cargar Páxina ====[BrowseModeSettingsEnableOnPageLoad]
+Esta caixa de verificación conmuta se se debería habilitar automáticamente o modo exploración ao cargar unha páxina.
+Cando esta opción estea deshabilitada, o modo exploración aínda pode activarse manualmente en páxinas ou en documentos onde se admita o modo exploración.
+Consulta a [Seción modo Exploración #BrowseMode] para unha listaxe das aplicacións admitidas polo modo Exploración.
+Ten en conta que esta opción non se aplica a situacións onde o modo exploración sexa sempre opcional, por exemplo, en Microsoft Word.
+Esta opción está habilitada por defecto.
 
 ==== Falar Todo Automáticamente ao Cargar a Páxina ====[BrowseModeSettingsAutoSayAll]
 Esta caixa de verificación conmuta a fala automática dunha páxina despois de cargala en modo navegación.
@@ -1550,7 +1604,7 @@ Podes configurar o anunciado de:
  - Ligas
  - Listas
  - Citas
- - Pontos de referencia
+ - Rexións
  - Marcos
  - Admite clic
  -
@@ -1582,6 +1636,62 @@ Esta categoría contén as seguintes opcións:
 
 ==== Lingua de Recoñecemento ====[Win10OcrSettingsRecognitionLanguage]
 Esta caixa combinada permíteche escoller a lingua para usar co recoñecemento de texto.
+
++++ Opcións Avanzadas +++[AdvancedSettings]
+¡Advertencia! As opcións nesta categoría son para usuarios avanzados e poden causar que o NVDA non funcione correctamente se se configura de xeito incorrecto.
+Realiza cambios nestas opcións únicamente se estás seguro de que sabes o que estás a facer ou se recibiches as instrucións específicas dun desenvolvedor do NVDA.
+
+==== Facer cambios a opcións avanzadas ====[AdvancedSettingsMakingChanges]
+Para realizar cambios nas Opcións Avanzadas, os controis deben estar habilitados confirmando coa caixa de verificación, que entendes os resgos de modificar estas opcións.
+
+==== Reestablecer as opcións predeterminadas ====[AdvancedSettingsRestoringDefaults]
+O botón reestablece os valores predeterminados para as opcións, incluso se a caixa de confirmación non está marcada.
+Despois de cambiar as opcións é posible que desexes voltar aos valores predeterminados.
+Este tamén pode ser o caso se non estás seguro de que se cambiaran as opcións.
+
+==== Habilitar a carga de código persoalizado dende o directorio Developer Scratchpad ====[AdvancedSettingsEnableScratchpad]
+Ao desenvolver complementos para o NVDA, é útil poder probar o código a medida que o escrebes.
+Esta opción ao estar habilitada, permite ao NVDA cargar appModules persoalizados, globalPlugins, brailleDisplayDrivers e synthDrivers, dende un directorio especial de desenvolvedores scratchpad do teu directorio de configuración de usuario do NVDA.
+Anteriormente, o NVDA cargaba código persoalizado directamente dende o directorio de configuración do usuario, sen posibilidade de deshabilitalo.
+Esta opción está desactivada de xeito predeterminado, o que garante que nunca se execute ningún código non probado no NVDA sen o coñecemento explícito do usuario.
+Se desexas distribuir código persoalizado a outros, debes empaquetalo coma un complemento de NVDA.
+
+==== Abrir o directorio Developer Scratchpad ====[AdvancedSettingsOpenScratchpadDir]
+Este botón abre o directorio onde podes colocar o código persoalizado mentres o desenvolves.
+Este botón só está habilitado se o NVDA está configurado para permitir a carga de código persoalizado dende o directorio de desenvolvedores do Scratchpad.
+ 
+==== Usar UI automation para acesar a controis de documento de Microsoft Word cando estea dispoñible ====[AdvancedSettingsUseUiaForWord]
+Cando esta opción estea activada, o NVDA tentará usar a API de accesibilidade de Microsoft UI Automation para obter información dos controis de documentos de Microsoft Word.
+Esto inclúe ao mesmo Microsoft Word, e tamén o visor de mensajes e o compositor de Microsoft Outlook.
+ Para as versións máis recentes de Microsoft Office 2016/365 que se executan en Windows 10, a compatibilidade coa UI Automation  é o suficentemente compreta como para proporcionar acceso a documentos de Microsoft Word case igual á compatibilidade con Microsoft Word existente de NVDA, coa ventaxa engadida de que a capacidade de resposta aumenta considerablemente.
+
+Sen embargo, pode haber algunha información que non estea exposta ou que estea incorrectamente exposta nalgunhas versións de Microsoft Office, o que significa que non sempre se pode confiar neste soporte da UI automation.
+Aínda non recomendamos que a maioría dos usuarios activen esta opción de xeito predeterminado, aínda que invitamos aos usuarios de Office 2016/365 a que proben esta función e que nos envíen os seus comentarios.
+
+==== Usar UI Automation para acesar á Consola de Windows cando estea dispoñible ====[AdvancedSettingsConsoleUIA]
+Cando esta opción estea activada, o NVDA usará unha versión nova de traballo en curso do seu soporte para a Consola de Windows que aproveita as ventallas das [melloras de accesibilidade feitas por Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Esta característica é altamente experimental e aínda incompreta, así que o seu uso aínda non está recomendado. Sen embargo, unha vez compretado, pénsase que este novo soporte se convirta  no predeterminado, mellorando o rendemento e a estabilidade do NVDA nas consolas de ordes de Windows.
+
+==== Falar contrasinais en Consolas UIA ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Esta opción controla se se falan os caracteres por [falar caracteres ao se escreber #KeyboardSettingsSpeakTypedCharacters] ou [falar palabras ao se escreber #KeyboardSettingsSpeakTypedWords] en situacións onde a pantalla non se actualice (coma entrada de contrasinal) na Consola de Windows co soporte UI automation activado. Por razóns de seguridade, esta opción debería deixarse deshabilitada. Sen embargo, é posible que desexes habilitala se experimentas problemas de rendemento ou de inestabilidade co anuncio de caracteres e/ou palabras ao se escreber mentres usas o novo soporte experimental do NVDA para a Consola.
+
+==== Poñer Automáticamente o Foco do Sistema nos Elementos enfocables en Modo Exploración ====[BrowseModeSettingsAutoFocusFocusableElements]
+Tecla: NVDA+8
+
+Habilitada por defecto, esta opción permíteche escoller se o foco do sistema debería poñerse automáticamente nos elementos que podan telo (ligas, campos de formulario, etc.) cando se navegue polo contido co cursor do modo exploración.
+Se se habilita, esto representa o comportamento predeterminado do NVDA como a versión 2019.1 e anteriores.
+Deshabilitando esta opción non se enfocarán automáticamente os elementos enfocables cando se selecionen co cursor do modo exploración.
+Esto podería resultar nunha mellor experiencia de navegación e unha mellor resposta no modo exploración.
+O foco aínda se actualizará ao elemento en particular cando interactúes con el (por exemplo, premendo un botón, marcando unha caixa de verificación).
+Esta funcionalidade é experimental a partires do NVDA 2019.2.
+
+==== Tempo de espera para o movemento do cursor (en MS) ====[AdvancedSettingsCaretMoveTimeout]
+Esta opción permíteche configurar o número de milésimas de segundo que o NVDA esperará a que o cursor (ponto de inserción) se mova nos controis de texto editables.
+Se ves que o NVDA semella estar seguindo incorrectamente o cursor, por exemplo, parece estar sempre un carácter por detrás ou repetindo liñas, entón podes tentar aumentar este valor.
+
+==== Categorías de rexistro de depuración ====[AdvancedSettingsDebugLoggingCategories]
+As caixas de verificación desta listaxe permíteche habilitar categorías específicas de mensaxes de depuración no rexistro do NVDA.
+O rexistro destas mensaxes pode incurrir nun menor rendemento e en arquivos de rexistro de gran tamaño.
+Activa só un deles se un desenvolvedor do NVDA che dou instrucións específicas, por exemplo, ao depurar por que un controlador de pantalla braille non está funcionando correctamente.
 
 ++ Miscelánea de Opcións ++[MiscSettings]
 Ademáis da caixa de diálogo [Opcións do NVDA #NVDASettings], o submenú Preferencias do menú NVDA contén outros elementos que se describen a continuación.
@@ -1627,6 +1737,7 @@ A lingua cuia pronuncia de símbolo vai a seren editada amosarase No título do 
 Ten en conta que este diálogo respeta a opción "Confiar na lingua da voz ao se procesar símbolos e caracteres" que se atopa na [Categoría Voz #SpeechSettings] do diálogo [Opcións do NVDA #NVDASettings] é dicir, usa a lingua da voz en lugar da opción da lingua global do NVDA cando esta opción estea habilitada.
 
 Para cambiar un símbolo, primeiro selecciónao na lísta de Símbolos.
+Podes filtrar os símbolos introducindo o símbolo ou unha parte da súa sustitución no cuadro de edición Filtrar por.
 
 - O campo Reemprazar permíteche cambiar o texto que debería falarse en lugar deste símbolo.
 - Utilizando o campo Nível, podes axustar o nivel máis baixo do símbolo ao que este símbolo debería se falar.
@@ -1692,7 +1803,7 @@ O NVDA permíteche facer esto utilizando perfiles de configuración.
 Un perfil de configuración contén só as opcións que se cambian mentres que o perfil estea a ser editado.
 A maioría das opcións pódense cambiar nos perfís de configuración con excepción de aquelas que estean na categoría Xeral da caixa de diálogo [Opcións do NVDA #NVDASettings, as que se aplican á totalidade do NVDA.
 
-Os perfiles de configuración pódense activar manualmente.
+Os perfís de configuración pódense activar manualmente, sexa dende unha caixa de diálogo ou usando xestos engadidos persoalizados.
 Tamén se poden activar de forma automática debido aos disparadores como o cambio a unha aplicación en particular.
 
 +++ Manexo Básico +++[ProfilesBasicManagement]
@@ -1759,6 +1870,14 @@ Podes facer esto marcando a caixa de verificación Desactivar Temporalmente Todo
 
 Para activar ou desactivar os disparadores dende calquera sitio, por favor asigna un xesto personalizado usando o [Diálogo Xestos de Entrada #InputGestures].
 
++++ Activar un perfil usando xestos de entrada +++[ConfigProfileGestures]
+Para cada perfil que engadas, poderás asignar un ou máis xestos de entrada para activalo.
+Por defecto, os perfís de configuración non teñen xestos de entrada asignados.
+Podes engadir xestos para activar un perfil usando o [diálogo Xestos de Entrada #InputGestures].
+Cada perfil ten a súa propria entrada na categoría perfís de configuración.
+Cando renomees un perfil, calquera xesto que engadiras con anterioridade aínda estará dispoñible.
+Borrar un perfil eliminará automáticamente o xesto asociado con él.
+
 ++ Ubicación dos Ficheiros de Configuración++[LocationOfConfigurationFiles]
 As versións portátiles do NVDA almacenan todas as súas opcións e complementos nun directorio chamado userConfig, que se atopa no directorio de NVDA.
 
@@ -1774,6 +1893,7 @@ Para cambiar como se configura NVDA nas pantallas de logon/UAC, configura a NVDA
 
 ++ Visualizador do Rexistro ++[LogViewer]
 O visualizador do rexistro, atopado en Ferramentas no menú NVDA, permítenche ver toda a saída que ocurrira ata agora dende cando iniciaches NVDA por última vez.
+Usando NVDA+F1 abrirase o visualizador do rexistro e amosarase a información do desenvolvedor sobre o navegador de obxectos actual.
 
 Ademáis de ler o contido, tamén podes gardar unha copia do ficheiro do rexistro, ou refrescar o visualizador tal que se amose a saída máis recente dende que o visualizador do rexistro foi aberto.
 Estas accións están dispoñibles baixo o menú de visualizador do Rexistro.
@@ -1824,17 +1944,32 @@ Para deshabilitar un complemento, preme o botón deshabilitar.
 Para habilitar un comnplemento anteriormente deshabilitado, preme o botón habilitar.
 Podes deshabilitar un complemento se o seu estado indica que está en execución ou habilitado, ou habilitalo se o complemento está suspendido ou deshabilitado.
 Para cada pulsación do botón habilitar/deshabilitar, o estado do complemento cambia para indicar que ocurrirá ao reiniciar NVDA.
-Se o complemento foi deshabilitado anteriormente, amosarase un estado "habilitado despois de reiniciar". Se o complemento foi anteriormente "Habilitado", amosarase un estado "deshabilitado despois de reiniciar"
+Se o complemento foi deshabilitado anteriormente, amosarase un estado "habilitado despois de reiniciar".
+Se o complemento foi anteriormente "Habilitado", amosarase un estado "deshabilitado despois de reiniciar"
 Ao igual que cando instalas ou eliminas complementos, tes que reiniciar o NVDA para que os cambios teñan efecto.
 
 O administrador tamén ten un botón Pechar para pechar o diálogo.
 Se instalaches, eliminaches ou cambiaches o estado dos complementos, NVDA primeiro preguntarache se desexas reiniciar para que os cambios podan levarse a cabo.
 
-No pasado foi posible extender a funcionalidade do NVDA copiando plugins e controladores individuais no teu directorio de configuración do usuario do NVDA.
-Aíndaque esta versión do NVDA aínda poderá cargalos, Non se amosarán no Administrador de Complementos.
-É mellor eliminar estos ficheiros da túa configuración e instalar o complemento apropriado se hai un dispoñible.
+Algúns complementos vellos poden xa non ser compatibles coa versión do NVDA que tes.
+Cando uses unha versión máis vella de NVDA, algúns complementos novos poden non ser compatibles.
+Tentar instalar un complemento incompatible resultará nun erro explicando por qué o complemento se considera incompatible.
 
 Para aceder ao Administrador de Complementos dende calquera lugar, por favor asigna un xesto persoalizado utilizando o [diálogho Xestos de Entrada #InputGestures].
+
+++ Administrador de Complementos Incompatibles ++[incompatibleAddonsManager]
+O Administrador de Complementos Incompatibles, ao que se pode acesar a través dos botóns "ver complementos incompatibles" no Administrador de Complementos, permíteche examinar calquera complemento incompatible e a razón pola que se consideran incompatibles.
+Os complementos considéranse incompatibles cando non foron actualizados para funcionar con cambios significativos do NVDA, ou cando se basean nunha característica non dispoñible na versión do NVDA que estás usando.
+O Administrador de Complementos Incompatibles ten unha mensaxe curta para explicar o seu propósito así como a versión do NVDA.
+Os complementos incompatibles preséntanse nunha listaxe coas seguintes columnas:
++ Paquete, o nome do complemento
++ Versión, a versión do complemento
++ Razón de Incompatiblilidade, unha explicación de por qué o complemento se considera incompatible
++
+
+O Administrador de Complementos Incompatibles tamén ten un botón "Acerca do complemento...".
+Esto abre o que che permitirá conocer todos os detalles do complemento, o que é de axuda cando contactes co autor do complemento.
+
 
 ++ Consola de Python ++[PythonConsole]
 A consola de Python do NVDA, atopada baixo Ferramentas no menú NVDA, é unha ferramenta de desenvolvemento que é útil para depuración, inspección xeral do interior  do NVDA ou inspeción da xerarquía de accesibilidade de unha aplicación.
@@ -1924,13 +2059,11 @@ Todas as pantallas Focus e PAC Mate de [Freedom Scientific https://www.freedomsc
 Necesitarás os controladores de pantallas braille de Freedom Scientific instalados no teu sistema.
 Se non os tes aínda, podes obtelos dende https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Aíndaque esta páxina só mencione a pantalla Focus 40 Blue, o controlador soporta todas as pantallas Focus e Pacmate de Freedom Scientific.
-Se o teu sistema executa un Windows de 64 bit e os controladores xa se instalaron por outro lector de pantalla, posiblemente aínda necesitarás instalar os controladores dende esta liga, posto que os ficheiros que require NVDA posiblemente non foron instalados polo outro lector de pantalla.
 
 Predeterminadamente, NVDA pode detectar automáticamente e conectarse a estas pantallas tanto a través do USB como do bluetooth.
 Non obstante, cando se configura a pantalla, podes seleccionar explícitamente os portos "USB" ou "Bluetooth" para restrinxir o tipo de conexión a utilizar.
 Esto podería ser útil se queres conectar a pantalla focus ao NVDA utilizando bluetooth, e todavía poderías cargala utilizando a enerxía do USB dende o teu ordenador.
-
-Estas pantallas aínda non admiten a funcionalidade de detección automática do NVDA.
+A deteción automática de pantallas braille do NVDA tamén recoñecerá a pantalla en USB ou en Bluetooth.
 
 Seguidamente van as asociacións de teclas para esta pantalla co NVDA.
 Por favor consulta a documentación da pantalla para descripcións de onde poden atoparse estas teclas.
@@ -2755,15 +2888,17 @@ Seguidamente van as opcións de liña de ordes para o NVDA:
 | -r | --replace | Sae da copia que xa se estea a executar do NVDA e arranca esta outra |
 | -k | --check-running | Informa se NVDA está en execución a través do código de saída; 0 se está en execución, 1 se non está en execución |
 | -f LOGFILENAME | --log-file=LOGFILENAME | O ficheiro onde se deberían escreber as mesaxes de rexistro |
-| -l LOGLEVEL | --log-level=LOGLEVEL | O nivel máis baixo de mesaxe rexistrado (depuración 10, información 20, aviso 30, error 40, crítico 50), por defecto está en aviso |
+| -l LOGLEVEL | --log-level=LOGLEVEL | O nível máis baixo de mensaxe rexistrada (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning |
 | -c CONFIGPATH | --config-path=CONFIGPATH | A vía  onde se almacenan todos os axustes para o NVDA |
 | -m | --minimal | Sen sons, sen interface, sen mesaxe de inicio etc |
-| -s | --secure | Modo seguro (deshabilita a consola Python) |
+| -s | --secure | Modo seguro (deshabilita a consola Python e as características de rexistro, a menudo usado en pantallas seguras) |
 | None | --disable-addons | Os complementos non terán efecto |
 | None | --no-sr-flag  | Non cambia a bandeira global do sistema do lector de pantalla |
-| None | --debug-logging | Habilita o nivel depuración no rexistro só para esta execución. Esta opción anulará calquera outro argumento do nivel do rexistro ( ""--loglevel"", -l) dado. |
+| None | --debug-logging | Habilita o nível de rexistro de depuración só para esta execución. Esta configuración sobreescribirá calquera outro nível de rexistro ( ""--loglevel"", -l) argumento dado, incluindo a opción non rexistro. |
+| None | --no-logging | Deshabilita o rexistro durante o uso do NVDA. Esta opción pode sobreescribirse se se especifica un nível de rexistro ( ""--loglevel"", -l) dende a liña de ordes ou se o rexistro de depuración está activado. |
 | None | --install | Instálase o NVDA comezando a nova copia instalada |
 | None | --install-silent | Instala en silenzo NVDA (Non comeza a nova copia instalada) |
+| None | --enable-start-on-logon=True|False | Ao instalar, habilita [arrancar na pantalla de inicio #StartAtWindowsLogon] do NVDA |
 | None | --create-portable | Crea unha copia portable do NVDA (comezando a copia recentemente creada). Require especificarse --portable-path |
 | None | --create-portable-silent | Crea unha copia portable do NVDA (non comeza a copia recentemente instalada). Require expecificarse --portable-path |
 | None | --portable-path=PORTABLEPATH | A ruta onde se creará unha copia portable |
