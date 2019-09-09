@@ -10,6 +10,7 @@ What's New in NVDA
  - Vastly improved performance and stability (#9771)
  - Reporting of typed text that does not appear onscreen (such as passwords) can now be enabled via an option in NVDA's advanced settings panel. (#9649)
 - The accuracy of the move mouse to navigator object command has been improved in text fields in Java applications. (#10157)
+- Screen curtain, which when enabled, makes the whole screen black on Windows 8 and above. (#7857)
 
 
 == Changes ==
@@ -21,6 +22,8 @@ What's New in NVDA
 - In Windows 10, NVDA will announce tooltips from universal apps if NVDA is configured to report tooltips in object presentation dialog. (#8118)
 - On Windows 10 version 1607 and later, typed text is now reported in Mintty. (#1348)
 - On Windows 10 version 1607 and later, output in the Windows Console that appears close to the caret is no longer spelled out. (#513)
+- controls in Audacitys compressor dialog are now announced when navigating the dialog. (#10103)
+- NVDA no longer treats spaces as words in object review in Scintilla based editors such as Notepad++. (#8295)
 
 
 == Changes for Developers ==

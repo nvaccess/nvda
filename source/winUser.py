@@ -66,6 +66,7 @@ class GUITHREADINFO(Structure):
 
 #constants
 ERROR_OLD_WIN_VERSION=1150
+MOUSEEVENTF_MOVE = 0x0001  # Movement occurred.
 MOUSEEVENTF_LEFTDOWN=0x0002 
 MOUSEEVENTF_LEFTUP=0x0004 
 MOUSEEVENTF_RIGHTDOWN=0x0008
@@ -74,6 +75,10 @@ MOUSEEVENTF_MIDDLEDOWN=0x0020
 MOUSEEVENTF_MIDDLEUP=0x0040
 MOUSEEVENTF_XDOWN=0x0080
 MOUSEEVENTF_XUP=0x0100
+MOUSEEVENTF_WHEEL = 0x0800  # The wheel button is rotated.
+MOUSEEVENTF_HWHEEL = 0x1000  # The wheel button is tilted.
+WHEEL_DELTA = 120  # One wheel click. Negate to scroll down.
+MOUSEEVENTF_ABSOLUTE = 0x8000  # The dx and dy parameters contain normalized absolute coordinates (0..65535).
 GUI_CARETBLINKING=0x00000001
 GUI_INMOVESIZE=0x00000002
 GUI_INMENUMODE=0x00000004
@@ -663,7 +668,9 @@ class Input(Structure):
     _fields_ = [("type", c_ulong),
              ("ii", Input_I)]
 
-INPUT_KEYBOARD = 1
+
+INPUT_MOUSE = 0  # The event is a mouse event. Use the mi structure of the union.
+INPUT_KEYBOARD = 1  # The event is a keyboard event. Use the ki structure of the union.
 KEYEVENTF_KEYUP = 0x0002
 KEYEVENTF_UNICODE = 0x04
 # END SENDINPUT TYPE DECLARATIONS
