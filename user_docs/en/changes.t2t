@@ -68,10 +68,12 @@ What's New in NVDA
   - Support for the Outlook pre 2003 message list.
   - An overlay class for the classic start menu, only found in Windows Vista and earlier.
   - Dropped support for Skype 7, as it is definitely not working any more.
- - A framework allowing developers to create vision enhancement providers; modules that can change screen contents, optionally based on input from NVDA about object locations. (#9064)
-  - Add-ons can bundle their own providers in a visionEnhancementProviders folder.
-  - See the vision and visionEnhancementProviders modules for the implementation of the framework and examples, respectively.
- - Abstract class properties are now supported on objects that inherit from baseObject.AutoPropertyObject (e.g. NVDAObjects and TextInfos). (#10102)
+- A framework allowing developers to create vision enhancement providers; modules that can change screen contents, optionally based on input from NVDA about object locations. (#9064)
+ - Add-ons can bundle their own providers in a visionEnhancementProviders folder.
+ - See the vision and visionEnhancementProviders modules for the implementation of the framework and examples, respectively.
+- Abstract class properties are now supported on objects that inherit from baseObject.AutoPropertyObject (e.g. NVDAObjects and TextInfos). (#10102)
+- Introduced displayModel.UNIT_DISPLAYCHUNK as a textInfos unit constant specific to DisplayModelTextInfo. (#10165)
+ - This new constant allows walking over the text in a DisplayModelTextInfo in a way that more closely resembles how the text chunks are saved in the underlying model.
 
 
 = 2019.2 =
