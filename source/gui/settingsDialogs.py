@@ -2693,7 +2693,6 @@ class BrailleSettingsSubPanel(DriverSettingsMixin, SettingsPanel):
 		outTableChoices = [table.displayName for table in self.outTables]
 		self.outTableList = sHelper.addLabeledControl(outputsLabelText, wx.Choice, choices=outTableChoices)
 		try:
-			# selection = self.outTableNames.index(config.conf["braille"]["translationTable"])
 			selection = self.outTables.index(braille.handler.table)
 			self.outTableList.SetSelection(selection)
 		except:
