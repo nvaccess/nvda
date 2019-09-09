@@ -570,8 +570,6 @@ class _AllGestureMappingsRetriever(object):
 		gmap = braille.handler.display.gestureMap
 		if gmap:
 			self.addGlobalMap(gmap)
-		if isinstance(braille.handler.display, baseObject.ScriptableObject):
-			self.addObj(braille.handler.display)
 
 		# Global plugins.
 		import globalPluginHandler
@@ -582,6 +580,16 @@ class _AllGestureMappingsRetriever(object):
 		app = obj.appModule
 		if app:
 			self.addObj(app)
+
+		# Braille display driver
+		if isinstance(braille.handler.display, baseObject.ScriptableObject):
+			self.addObj(braille.handler.display)
+
+		# Vision enhancement provider
+		import vision
+		for provider in vision.handler.providers.values():
+			if isinstance(provider, baseObject.ScriptableObject):
+				self.addObj(provider)
 
 		# Tree interceptor.
 		ti = obj.treeInterceptor
