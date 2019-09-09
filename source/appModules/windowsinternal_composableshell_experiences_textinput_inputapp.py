@@ -84,11 +84,10 @@ class AppModule(appModuleHandler.AppModule):
 			)
 		):
 			self.event_UIA_elementSelected(obj.lastChild.firstChild, nextHandler)
-		# Handle hardware keyboard and CJK IME suggestions.
+		# Handle hardware keyboard suggestions.
 		# Treat it the same as CJK composition list - don't announce this if candidate announcement setting is off.
-		# #10093: in fact, in 20H1, this is the CJK IME candidates window.
 		elif (
-			inputPanelAutomationID in ("CandidateWindowControl", "IME_Candidate_Window")
+			inputPanelAutomationID == "CandidateWindowControl"
 			and config.conf["inputComposition"]["autoReportAllCandidates"]
 		):
 			try:
@@ -129,8 +128,7 @@ class AppModule(appModuleHandler.AppModule):
 	def event_nameChange(self, obj, nextHandler):
 		# On some systems, touch keyboard keys keeps firing name change event.
 		# In build 17704, whenever skin tones are selected, name change is fired by emoji entries (GridViewItem).
-		# In build 18975, CJK IME candidates fire name change event.
-		if ((obj.UIAElement.cachedClassName in ("CRootKey", "GridViewItem", "ListViewItem"))
+		if ((obj.UIAElement.cachedClassName in ("CRootKey", "GridViewItem"))
 		# Just ignore useless clipboard status.
 		# Also top emoji search result must be announced for better user experience.
 		or (obj.UIAElement.cachedAutomationID in ("TEMPLATE_PART_ClipboardItemsList", "TEMPLATE_PART_Search_TextBlock"))
