@@ -25,6 +25,7 @@ import winVersion
 import eventHandler
 from logHandler import log
 import UIAUtils
+from comtypes.gen import UIAutomationClient as UIA
 from comtypes.gen.UIAutomationClient import *
 
 #Some newer UIA constants that could be missing
@@ -154,8 +155,8 @@ UIAEventIdsToNVDAEventNames={
 autoSelectDetectionAvailable = False
 if winVersion.isWin10():
 	UIAEventIdsToNVDAEventNames.update({
-		UIA_Text_TextChangedEventId: "textChange",
-		UIA_Text_TextSelectionChangedEventId: "caret", })
+		UIA.UIA_Text_TextChangedEventId: "textChange",
+		UIA.UIA_Text_TextSelectionChangedEventId: "caret", })
 	autoSelectDetectionAvailable = True
 
 ignoreWinEventsMap = {
