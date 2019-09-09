@@ -748,7 +748,7 @@ Pressing dot 7 + dot 8 translates any braille input, but without adding a space 
 While NVDA is primairly aimed at blind or vision impaired people how primarily use speech and/or braille to operate a computer, it also provides built-in facilities to change the contents of the screen.
 Within NVDA, such a facility is called a vision enhancement provider.
 
-NVDA offers several built-in vision enhaancement providers which are described below.
+NVDA offers several built-in vision enhancement providers which are described below.
 Additional vision enhancement providers can be provided in [NVDA add-ons #AddonsManager].
 
 NVDA's vision settings can be changed in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog.
@@ -769,9 +769,12 @@ When the NVDA Highlighter is enabled in the [vision category #VisionSettings] of
 ++ Screen Curtain ++[VisionScreenCurtain]
 As a blind or vision impaired user, it is often not possible or necessary to see the contents of the screen.
 Furthermore, it might be hard to ensure that there isn't someone looking over your shoulder.
-For this situation, NVDA contains a screen curtain that, when enabled, makes the screen black.
+For this situation, NVDA contains a feature called "screen curtain" which can be enabled to make the screen black.
 
-When enabling the Screen Curtain in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog, a warning will be displayed telling you that your screen will be black after activating the curtain.
+Enable the Screen Curtain in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog.
+A warning that your screen will become black after activation will be displayed.
+Before continuing (selecting "Yes"), ensure you have enabled speech / braille and will be able to control your computer without the use of the screen.
+Select "No" if you no longer wish to enable the Screen Curtain.
 If you are sure, you can choose the Yes button to enable the screen curtain.
 If not, choosing No will disable the screen curtain again.
 If you no longer want to see this warning message every time, you can change this behavior in the dialog that displays the message.
