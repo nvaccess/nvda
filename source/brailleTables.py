@@ -441,10 +441,7 @@ def initialize():
 						manifest = CustomTablesManifest(file_)
 						_loadCustomTablesConfig(manifest.dict())
 				except Exception:
-					log.exception(
-						"Error while applying custom braille tables config: {}"
-						"".format(path)
-					)
+					log.exception(f"Error while applying custom braille tables config: {path}")
 
 
 def terminate():
