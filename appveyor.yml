@@ -3,8 +3,6 @@ version: "{branch}-{build}"
 
 branches:
  only:
-  - threshold
-  - threshold_py3_staging
   - master
   - beta
   - rc
@@ -196,8 +194,15 @@ test_script:
 
 on_finish:
  - ps: |
-      Get-ChildItem output\*   | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
-      Get-ChildItem output\*\* | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+    $uploadFromFolder = "output\"
+    if( Test-Path $uploadFromFolder ){
+      $root = Resolve-Path .\
+      $output = Resolve-Path $uploadFromFolder
+      $paths = [IO.Directory]::GetFiles($output.Path, '*.*', 'AllDirectories')
+      $paths | % {
+        Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1)
+      }
+    }
 
 deploy_script:
  - ps: |
