@@ -61,7 +61,6 @@ CComPtr<IAccessible2> GeckoVBufBackend_t::getLabelElement(IAccessible2_2* elemen
 }
 
 #define NAVRELATION_LABELLED_BY 0x1003
-#define NAVRELATION_NODE_CHILD_OF 0x1005
 const wchar_t EMBEDDED_OBJ_CHAR = 0xFFFC;
 
 HWND findRealMozillaWindow(HWND hwnd) {
@@ -1042,59 +1041,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	return parentNode;
 }
 
-bool getDocumentFrame(HWND* hwnd, long* childID) {
-	IAccessible2* pacc=IAccessible2FromIdentifier(HandleToUlong(*hwnd),*childID);
-	if (!pacc)
-		return false;
-
-	IAccessible2* parentPacc=NULL;
-	VARIANT varChild;
-	varChild.vt=VT_I4;
-	varChild.lVal=*childID;
-	VARIANT varDisp;
-	if(pacc->accNavigate(NAVRELATION_NODE_CHILD_OF,varChild,&varDisp)!=S_OK) {
-		pacc->Release();
-		return false;
-	}
-	pacc->Release();
-
-	if(varDisp.vt!=VT_DISPATCH) {
-		VariantClear(&varDisp);
-		return false;
-	}
-
-	if(varDisp.pdispVal->QueryInterface(IID_IAccessible2,(void**)&parentPacc)!=S_OK) {
-		VariantClear(&varDisp);
-		return false;
-	}
-	VariantClear(&varDisp);
-
-	if(parentPacc==pacc) {
-		parentPacc->Release();
-		return false;
-	}
-
-	long role;
-	if(parentPacc->role(&role)!=S_OK||role!=IA2_ROLE_INTERNAL_FRAME) {
-		parentPacc->Release();
-		return false;
-	}
-
-	if(parentPacc->get_uniqueID(childID)!=S_OK||*childID>=0) {
-		parentPacc->Release();
-		return false;
-	}
-
-	if(parentPacc->get_windowHandle(hwnd)!=S_OK) {
-		parentPacc->Release();
-		return false;
-	}
-
-	parentPacc->Release();
-
-	return true;
-}
-
 void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
 	switch(eventID) {
 		case EVENT_OBJECT_FOCUS:
@@ -1145,20 +1091,6 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 			return;
 
 		VBufStorage_controlFieldNode_t* node=backend->getControlFieldNodeWithIdentifier(docHandle,ID);
-		if(!node&&eventID==EVENT_OBJECT_STATECHANGE) {
-			// This event is possibly due to a new document loading in a subframe.
-			// Gecko doesn't fire a reorder on the iframe (Mozilla bug 420845), so we need to use NODE_CHILD_OF in this case so that frames will reload.
-			LOG_DEBUG(L"State change on an unknown node in a subframe, try NODE_CHILD_OF");
-			if (getDocumentFrame(&hwnd, &childID)) {
-				#ifdef DEBUG
-				Beep(2000,50);
-				#endif
-				LOG_DEBUG(L"Got NODE_CHILD_OF, recursing");
-				renderThread_winEventProcHook(hookID,eventID,hwnd,OBJID_CLIENT,childID,threadID,time);
-			} else
-				LOG_DEBUG(L"NODE_CHILD_OF failed, returning");
-			continue;
-		}
 		if(!node)
 			continue;
 		backend->invalidateSubtree(node);

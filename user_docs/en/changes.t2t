@@ -15,6 +15,7 @@ What's New in NVDA
 
 == Changes ==
 - The user guide now describes how to use NVDA in the Windows Console. (#9957)
+- Running nvda.exe now defaults to replace an already running copy of NVDA. The -r|--replace command line parameter is still accepted, but ignored. (#8320)
 
 
 == Bug Fixes ==
@@ -22,6 +23,10 @@ What's New in NVDA
 - In Windows 10, NVDA will announce tooltips from universal apps if NVDA is configured to report tooltips in object presentation dialog. (#8118)
 - On Windows 10 version 1607 and later, typed text is now reported in Mintty. (#1348)
 - On Windows 10 version 1607 and later, output in the Windows Console that appears close to the caret is no longer spelled out. (#513)
+- controls in Audacitys compressor dialog are now announced when navigating the dialog. (#10103)
+- NVDA no longer treats spaces as words in object review in Scintilla based editors such as Notepad++. (#8295)
+- NVDA will prevent the  system from entering sleep mode when scrolling through text with braille display gestures. (#9175)
+- In Windows 7, NVDA no longer causes Windows Explorer to crash when the mouse is used in the start menu. (#9435)
 
 
 == Changes for Developers ==
@@ -66,10 +71,12 @@ What's New in NVDA
   - Support for the Outlook pre 2003 message list.
   - An overlay class for the classic start menu, only found in Windows Vista and earlier.
   - Dropped support for Skype 7, as it is definitely not working any more.
- - A framework allowing developers to create vision enhancement providers; modules that can change screen contents, optionally based on input from NVDA about object locations. (#9064)
-  - Add-ons can bundle their own providers in a visionEnhancementProviders folder.
-  - See the vision and visionEnhancementProviders modules for the implementation of the framework and examples, respectively.
- - Abstract class properties are now supported on objects that inherit from baseObject.AutoPropertyObject (e.g. NVDAObjects and TextInfos). (#10102)
+- A framework allowing developers to create vision enhancement providers; modules that can change screen contents, optionally based on input from NVDA about object locations. (#9064)
+ - Add-ons can bundle their own providers in a visionEnhancementProviders folder.
+ - See the vision and visionEnhancementProviders modules for the implementation of the framework and examples, respectively.
+- Abstract class properties are now supported on objects that inherit from baseObject.AutoPropertyObject (e.g. NVDAObjects and TextInfos). (#10102)
+- Introduced displayModel.UNIT_DISPLAYCHUNK as a textInfos unit constant specific to DisplayModelTextInfo. (#10165)
+ - This new constant allows walking over the text in a DisplayModelTextInfo in a way that more closely resembles how the text chunks are saved in the underlying model.
 
 
 = 2019.2 =

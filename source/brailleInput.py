@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#brailleInput.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2012-2017 NV Access Limited, Rui Batista, Babbage B.V.
+# brailleInput.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2012-2019 NV Access Limited, Rui Batista, Babbage B.V.
 
 import os.path
 import time
@@ -469,6 +469,8 @@ class BrailleInputGesture(inputCore.InputGesture):
 	#: Whether the space bar is pressed.
 	#: @type: bool
 	space = False
+
+	shouldPreventSystemIdle = True
 
 	def _makeDotsId(self):
 		items = ["dot%d" % (i+1) for i in range(8) if self.dots & (1 << i)]
