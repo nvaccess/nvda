@@ -342,6 +342,21 @@ class AppModule(baseObject.ScriptableObject):
 		self.helperLocalBindingHandle=None
 		self._inprocRegistrationHandle=None
 
+	def _getExecutableFileInfo(self):
+		# Used for obtaining file name and version for the executable.
+		# This is needed in case immersive app package returns an error,
+		# dealing with a native app, or a converted desktop app.
+		# Create the buffer to get the executable name
+		exeFileName = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
+		length = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
+		if not ctypes.windll.Kernel32.QueryFullProcessImageNameW(
+			self.processHandle, 0, exeFileName, ctypes.byref(length)
+		):
+			raise ctypes.WinError()
+		fileName = exeFileName.value
+		fileinfo = getFileVersionInfo(fileName, "ProductName", "ProductVersion")
+		return (fileinfo["ProductName"], fileinfo["ProductVersion"])
+
 	def _setProductInfo(self):
 		"""Set productName and productVersion attributes.
 		There are at least two ways of obtaining product info for an app:
@@ -351,22 +366,6 @@ class AppModule(baseObject.ScriptableObject):
 		# Sometimes (I.E. when NVDA starts) handle is 0, so stop if it is the case
 		if not self.processHandle:
 			raise RuntimeError("processHandle is 0")
-		# Use an internal function for obtaining file name and version for the executable.
-		# This is needed in case immersive app package returns an error,
-		# dealing with a native app, or a converted desktop app.
-
-		def _getExecutableFileInfo():
-			# Create the buffer to get the executable name
-			exeFileName = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
-			length = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
-			if not ctypes.windll.Kernel32.QueryFullProcessImageNameW(
-				self.processHandle, 0, exeFileName, ctypes.byref(length)
-			):
-				raise ctypes.WinError()
-			fileName = exeFileName.value
-			fileinfo = getFileVersionInfo(fileName, "ProductName", "ProductVersion")
-			return (fileinfo["ProductName"], fileinfo["ProductVersion"])
-
 		# No need to worry about immersive (hosted) apps and friends until Windows 8.
 		# Python 3.7 introduces platform_version to sys.getwindowsversion tuple,
 		# which returns major, minor, build.
@@ -387,10 +386,10 @@ class AppModule(baseObject.ScriptableObject):
 				productInfo = packageFullName.value.split("_")
 			else:
 				# File Explorer and friends which are really native aps.
-				productInfo = _getExecutableFileInfo()
+				productInfo = self._getExecutableFileInfo()
 		else:
 			# Not only native apps, but also converted desktop aps such as Office.
-			productInfo = _getExecutableFileInfo()
+			productInfo = self._getExecutableFileInfo()
 		self.productName = productInfo[0]
 		self.productVersion = productInfo[1]
 
