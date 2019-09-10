@@ -332,7 +332,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 				winKernel.readProcessMemory(
 					processHandle,
 					internalRect,
-					ctypes.byref((localRect),
+					ctypes.byref(localRect),
 					ctypes.sizeof(localRect),
 					None
 				)
