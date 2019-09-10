@@ -103,12 +103,12 @@ parser.add_argument('--portable-path',dest='portablePath',default=None,type=str,
 parser.add_argument('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
 parser.add_argument('--enable-start-on-logon',metavar="True|False",type=stringToBool,dest='enableStartOnLogon',default=None,
 	help="When installing, enable NVDA's start on the logon screen")
-# This option currently doesn't actually do anything.
-# It is passed by Ease of Access so that if someone downgrades without uninstalling (despite our discouragement),
-# the downgraded copy won't be started in non-secure mode on secure desktops.
+# This option is passed by Ease of Access so that if someone downgrades without uninstalling
+# (despite our discouragement), the downgraded copy won't be started in non-secure mode on secure desktops.
 # (Older versions always required the --secure option to start in secure mode.)
 # If this occurs, the user will see an obscure error,
 # but that's far better than a major security hazzard.
+# If this option is provided, NVDA will not replace an already running instance (#10179) 
 parser.add_argument('--ease-of-access',action="store_true",dest='easeOfAccess',default=False,help="Started by Windows Ease of Access")
 (globalVars.appArgs,globalVars.appArgsExtra)=parser.parse_known_args()
 
@@ -144,7 +144,7 @@ except:
 	oldAppWindowHandle=0
 if not winUser.isWindow(oldAppWindowHandle):
 	oldAppWindowHandle=0
-if oldAppWindowHandle:
+if oldAppWindowHandle and not globalVars.appArgs.easeOfAccess:
 	if globalVars.appArgs.check_running:
 		# NVDA is running.
 		sys.exit(0)
@@ -152,7 +152,7 @@ if oldAppWindowHandle:
 		terminateRunningNVDA(oldAppWindowHandle)
 	except:
 		sys.exit(1)
-if globalVars.appArgs.quit:
+if globalVars.appArgs.quit or (oldAppWindowHandle and globalVars.appArgs.easeOfAccess):
 	sys.exit(0)
 elif globalVars.appArgs.check_running:
 	# NVDA is not running.
