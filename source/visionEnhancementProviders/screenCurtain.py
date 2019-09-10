@@ -38,6 +38,8 @@ class Magnification:
 	_MagSetFullscreenColorEffectArgTypes = ((1, "effect"),)
 	_MagGetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, POINTER(MAGCOLOREFFECT))
 	_MagGetFullscreenColorEffectArgTypes = ((2, "effect"),)
+	_MagShowSystemCursorFuncType = WINFUNCTYPE(BOOL, BOOL)
+	_MagShowSystemCursorArgTypes = ((1, "showCursor"),)
 
 	MagInitialize = _MagInitializeFuncType(("MagInitialize", _magnification))
 	MagInitialize.errcheck = _errCheck
@@ -57,6 +59,11 @@ class Magnification:
 	except AttributeError:
 		MagSetFullscreenColorEffect = None
 		MagGetFullscreenColorEffect = None
+	MagShowSystemCursor = _MagShowSystemCursorFuncType(
+		("MagShowSystemCursor", _magnification),
+		_MagShowSystemCursorArgTypes
+	)
+	MagShowSystemCursor.errcheck = _errCheck
 
 
 class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
@@ -73,10 +80,12 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 	def __init__(self):
 		super(VisionEnhancementProvider, self).__init__()
 		Magnification.MagInitialize()
+		Magnification.MagShowSystemCursor(False)
 		Magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
 
 	def terminate(self):
 		super(VisionEnhancementProvider, self).terminate()
+		Magnification.MagShowSystemCursor(True)
 		Magnification.MagUninitialize()
 
 	def registerEventExtensionPoints(self, extensionPoints):
