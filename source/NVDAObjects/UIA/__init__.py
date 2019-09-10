@@ -29,7 +29,15 @@ from UIAUtils import *
 from UIAUtils import shouldUseUIAConsole
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
-from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions, ToolTip
+from NVDAObjects.behaviors import (
+	ProgressBar,
+	EditableTextWithoutAutoSelectDetection,
+	EditableTextWithAutoSelectDetection,
+	Dialog,
+	Notification,
+	EditableTextWithSuggestions,
+	ToolTip
+)
 import braille
 import locationHelper
 import ui
@@ -881,7 +889,10 @@ class UIA(Window):
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:
-			clsList.append(EditableTextWithoutAutoSelectDetection)
+			if UIAHandler.autoSelectDetectionAvailable:
+				clsList.append(EditableTextWithAutoSelectDetection)
+			else:
+				clsList.append(EditableTextWithoutAutoSelectDetection)
 
 		clsList.append(UIA)
 
@@ -1465,7 +1476,7 @@ class UIA(Window):
 		self.event_stateChange()
 
 	def event_valueChange(self):
-		if isinstance(self, EditableTextWithoutAutoSelectDetection):
+		if issubclass(self.TextInfo, UIATextInfo):
 			return
 		return super(UIA, self).event_valueChange()
 
