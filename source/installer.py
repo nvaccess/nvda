@@ -247,6 +247,9 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 	NVDAExe=os.path.join(installDir,u"nvda.exe")
 	slaveExe=os.path.join(installDir,u"nvda_slave.exe")
 	if shouldCreateDesktopShortcut:
+		# #8320: -r|--replace is now the default. Nevertheless, keep creating
+		# the shortcut with the now superfluous argument in case a downgrade of
+		# NVDA is later performed.
 		# Translators: The shortcut key used to start NVDA.
 		# This should normally be left as is, but might be changed for some locales
 		# if the default key causes problems for the normal locale keyboard layout.

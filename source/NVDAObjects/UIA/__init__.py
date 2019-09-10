@@ -29,10 +29,19 @@ from UIAUtils import *
 from UIAUtils import shouldUseUIAConsole
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
-from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions, ToolTip
+from NVDAObjects.behaviors import (
+	ProgressBar,
+	EditableTextWithoutAutoSelectDetection,
+	EditableTextWithAutoSelectDetection,
+	Dialog,
+	Notification,
+	EditableTextWithSuggestions,
+	ToolTip
+)
 import braille
 import locationHelper
 import ui
+import winVersion
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -312,7 +321,9 @@ class UIATextInfo(textInfos.TextInfo):
 			# sometimes rangeFromChild can return a NULL range
 			if not self._rangeObj: raise LookupError
 		elif isinstance(position,locationHelper.Point):
-			#rangeFromPoint used to cause a freeze in UIA client library!
+			if (winVersion.winVersion.major, winVersion.winVersion.minor) == (6, 1):
+				# #9435: RangeFromPoint causes a freeze in UIA client library in the Windows 7 start menu!
+				raise NotImplementedError("RangeFromPoint not supported on Windows 7")
 			self._rangeObj=self.obj.UIATextPattern.RangeFromPoint(position.toPOINT())
 		elif isinstance(position,UIAHandler.IUIAutomationTextRange):
 			self._rangeObj=position.clone()
@@ -878,7 +889,10 @@ class UIA(Window):
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:
-			clsList.append(EditableTextWithoutAutoSelectDetection)
+			if UIAHandler.autoSelectDetectionAvailable:
+				clsList.append(EditableTextWithAutoSelectDetection)
+			else:
+				clsList.append(EditableTextWithoutAutoSelectDetection)
 
 		clsList.append(UIA)
 
@@ -1462,7 +1476,7 @@ class UIA(Window):
 		self.event_stateChange()
 
 	def event_valueChange(self):
-		if isinstance(self, EditableTextWithoutAutoSelectDetection):
+		if issubclass(self.TextInfo, UIATextInfo):
 			return
 		return super(UIA, self).event_valueChange()
 
