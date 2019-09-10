@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2019 Bill Dengler
+# Copyright (C) 2019 NV Access Limited, Bill Dengler, Babbage B.V.
 
 import ctypes
 import NVDAHelper
@@ -250,6 +250,7 @@ class consoleUIATextInfo(UIATextInfo):
 
 
 class consoleUIAWindow(Window):
+
 	def _get_focusRedirect(self):
 		"""
 		Sometimes, attempting to interact with the console too quickly after
@@ -259,9 +260,13 @@ class consoleUIAWindow(Window):
 		"""
 		for child in self.children:
 			if isinstance(child, WinConsoleUIA):
+				self.focusRedirect = child
 				return child
 		return None
 
+	def _get_shouldAllowUIAFocusEvent(self):
+		#return not isinstance(api.getFocusObject(), WinConsoleUIA)
+		return api.getFocusObject() != self.focusRedirect
 
 class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 	#: Disable the name as it won't be localized
