@@ -177,6 +177,8 @@ class SettingsDialog(wx.Dialog, DpiScalingHelperMixin, metaclass=guiHelper.SIPAB
 		self.Bind(wx.EVT_WINDOW_DESTROY, self._onWindowDestroy)
 
 		self.postInit()
+		if resizeable:
+			self.SetMinSize(self.mainSizer.GetMinSize())
 		self.CentreOnScreen()
 		if gui._isDebug():
 			log.debug("Loading %s took %.2f seconds"%(self.__class__.__name__, time.time() - startTime))
