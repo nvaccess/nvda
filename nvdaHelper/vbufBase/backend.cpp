@@ -284,10 +284,6 @@ VBufStorage_controlFieldNode_t* VBufBackend_t::reuseExistingNodeInRender(VBufSto
 		LOG_DEBUG(L"existing node has no parent. Not reusing.");
 		return nullptr;
 	}
-	if(existingParent->identifier!=parent->identifier) {
-		LOG_DEBUG(L"Cannot reuse a node moved from within another parent.");
-		return nullptr;
-	}
 	if(existingNode->denyReuseIfPreviousSiblingsChanged) {
 		// This node is not allowed to be reused if any of its previous siblings have changed.
 		// We work this out by walking back to the previous controlFieldNode in its siblings, and ensuring that it is a reference node that references the existing node's first previous controlFieldNode.
