@@ -681,8 +681,13 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			# this dialog is not designed to show an empty list.
 			raise RuntimeError("No incompatible addons.")
 
-		# Translators: The title of the Incompatible Addons Dialog
-		wx.Dialog.__init__(self, parent, title=_("Incompatible Add-ons"))
+		wx.Dialog.__init__(
+			self,
+			parent,
+			# Translators: The title of the Incompatible Addons Dialog
+			title=_("Incompatible Add-ons"),
+			style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX,
+		)
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
@@ -704,7 +709,6 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			entriesLabel,
 			nvdaControls.AutoWidthColumnListCtrl,
 			style=wx.LC_REPORT|wx.LC_SINGLE_SEL,
-			size=self.scaleSize((maxControlWidth, 350))
 		)
 
 		# Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
@@ -723,7 +727,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		button = buttonSizer.addButton(self, label=_("&Close"), id=wx.ID_CLOSE)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		sHelper.addDialogDismissButtons(buttonSizer)
-		mainSizer.Add(settingsSizer, border=20, flag=wx.ALL)
+		mainSizer.Add(settingsSizer, border=20, flag=wx.ALL | wx.EXPAND, proportion=1)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 
@@ -732,8 +736,13 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		button.Bind(wx.EVT_BUTTON, self.onClose)
 
 		self.refreshAddonsList()
-		self.addonsList.SetFocus()
+		self.SetMinSize(mainSizer.GetMinSize())
+		# Historical initial size, result of L{self.addonsList} being (550, 350) as of 1364839447.
+		# Setting an initial size on L{self.addonsList} directly would also sets its minimum size
+		# and thus forbid to shrink the dialog.
+		self.SetSize(self.scaleSize((606, 525)))
 		self.CentreOnScreen()
+		self.addonsList.SetFocus()
 
 	def _getIncompatReason(self, addon):
 		if not addonVersionCheck.hasAddonGotRequiredSupport(
