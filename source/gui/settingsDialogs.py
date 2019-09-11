@@ -2405,13 +2405,21 @@ class DictionaryDialog(SettingsDialog):
 		self.tempSpeechDict=speechDictHandler.SpeechDict()
 		self.tempSpeechDict.extend(self.speechDict)
 		globalVars.speechDictionaryProcessing=False
-		super(DictionaryDialog, self).__init__(parent)
+		super().__init__(parent, resizeable=True)
+		# Historical initial size, result of L{self.dictList} being (550,350) as of #6287.
+		# Setting an initial size on L{self.dictList} directly would also sets its minimum size
+		# and thus forbid to shrink the dialog.
+		self.SetSize(576, 502)
+		self.CentreOnScreen()
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 		entriesLabelText=_("&Dictionary entries")
-		self.dictList=sHelper.addLabeledControl(entriesLabelText, wx.ListCtrl, style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
+		self.dictList = sHelper.addLabeledControl(
+			entriesLabelText,
+			wx.ListCtrl, style=wx.LC_REPORT | wx.LC_SINGLE_SEL
+		)
 		# Translators: The label for a column in dictionary entries list used to identify comments for the entry.
 		self.dictList.InsertColumn(0,_("Comment"),width=150)
 		# Translators: The label for a column in dictionary entries list used to identify pattern (original word or a pattern).
