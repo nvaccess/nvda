@@ -3053,12 +3053,6 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.filter()
 
 	def postInit(self):
-		size = self.GetBestSize()
-		self.SetSizeHints(
-			minW=size.GetWidth(),
-			minH=size.GetHeight(),
-			maxH=size.GetHeight(),
-		)
 		self.symbolsList.SetFocus()
 
 	def filter(self, filterText=''):
