@@ -136,7 +136,9 @@ class SettingsDialog(wx.Dialog, DpiScalingHelperMixin, metaclass=guiHelper.SIPAB
 		"""
 		if gui._isDebug():
 			startTime = time.time()
-		windowStyle = wx.DEFAULT_DIALOG_STYLE | (wx.RESIZE_BORDER if resizeable else 0)
+		windowStyle = wx.DEFAULT_DIALOG_STYLE
+		if resizeable:
+			windowStyle |= wx.RESIZE_BORDER | wx.MAXIMIZE_BOX
 		wx.Dialog.__init__(self, parent, title=self.title, style=windowStyle)
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
