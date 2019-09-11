@@ -506,7 +506,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	def getTextInChunks(self,unit):
 		# Specifically handle the line and display chunk units.
 		# We have the line offsets pre-calculated, and we can not guarantee lines end with \n
-		if unit is textInfos.UNIT_DISPLAYCHUNK:
+		if unit is UNIT_DISPLAYCHUNK:
 			for x in self._getFieldsInRange(self._startOffset, self._endOffset):
 				if not isinstance(x, str):
 					continue
