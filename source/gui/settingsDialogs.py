@@ -3236,6 +3236,11 @@ class InputGesturesDialog(SettingsDialog):
 
 	def __init__(self, parent):
 		super().__init__(parent, resizeable=True)
+		# Historical initial size, result of L{self.tree} being (600, 400) as of #6349.
+		# Setting an initial size on L{self.tree} directly would also sets its minimum size
+		# and thus forbid to shrink the dialog.
+		self.SetSize(626, 554)
+		self.CentreOnScreen()
 
 	def makeSettings(self, settingsSizer):
 		filterSizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -3249,7 +3254,10 @@ class InputGesturesDialog(SettingsDialog):
 		settingsSizer.AddSpacer(5)
 		filter.Bind(wx.EVT_TEXT, self.onFilterChange, filter)
 
-		tree = self.tree = wx.TreeCtrl(self, size=wx.Size(600, 400), style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE )
+		tree = self.tree = wx.TreeCtrl(
+			self,
+			style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE
+		)
 
 		self.treeRoot = tree.AddRoot("root")
 		tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.onTreeSelect)
