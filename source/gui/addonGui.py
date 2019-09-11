@@ -162,7 +162,8 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		wx.Dialog.__init__(
 			self,
 			parent,
-			title=title if not globalVars.appArgs.disableAddons else titleWhenAddonsAreDisabled
+			title=title if not globalVars.appArgs.disableAddons else titleWhenAddonsAreDisabled,
+			style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX,
 		)
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
@@ -191,8 +192,9 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			nvdaControls.AutoWidthColumnListCtrl(
 				parent=self,
 				style=wx.LC_REPORT | wx.LC_SINGLE_SEL,
-				size=self.scaleSize((550, 350))
-			)
+			),
+			flag=wx.EXPAND,
+			proportion=1,
 		)
 		# Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
 		self.addonsList.InsertColumn(0, _("Package"), width=self.scaleSize(150))
@@ -229,7 +231,8 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		mainSizer.Add(
 			listAndButtonsSizerHelper.sizer,
 			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.ALL
+			flag=wx.ALL | wx.EXPAND,
+			proportion=1,
 		)
 
 		# the following buttons are more general and apply regardless of the current selection.
@@ -270,8 +273,13 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		self.refreshAddonsList()
-		self.addonsList.SetFocus()
+		self.SetMinSize(mainSizer.GetMinSize())
+		# Historical initial size, result of L{self.addonsList} being (550, 350) as of 1364839447.
+		# Setting an initial size on L{self.addonsList} directly would also sets its minimum size
+		# and thus forbid to shrink the dialog.
+		self.SetSize(self.scaleSize((763, 509)))
 		self.CentreOnScreen()
+		self.addonsList.SetFocus()
 
 	def onAddClick(self, evt):
 		# Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
