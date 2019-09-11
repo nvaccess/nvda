@@ -30,7 +30,7 @@ WE_POST = r'''
 
 
 def makeJunitXML(inFileName, outFileName):
-	with open(inFileName, 'rt', encoding='UTF-8') as flake8In:
+	with open(inFileName, 'rt', encoding='ANSI', errors='replace') as flake8In:
 		errorText = flake8In.read()
 	if len(errorText) > 0:
 		# make "with error" xml content
@@ -39,7 +39,7 @@ def makeJunitXML(inFileName, outFileName):
 		# make "no error" xml content
 		outContents = NO_ERROR
 
-	with open(outFileName, 'wt', encoding='UTF-8') as out:
+	with open(outFileName, 'wt', encoding='UTF-8', errors='replace') as out:
 		out.write(outContents)
 
 
