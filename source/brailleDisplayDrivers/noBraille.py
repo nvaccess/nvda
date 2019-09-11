@@ -16,3 +16,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	@classmethod
 	def check(cls):
 		return True
+
+	def _get_numCells(self):
+		import brailleViewer
+		brailleViewerActive = brailleViewer.isBrailleViewerActive()
+		disabledBrailleCellCount = 0  # a zero cell count disables NVDA braille
+		return disabledBrailleCellCount if not brailleViewerActive else brailleViewer.DEFAULT_NUM_CELLS
