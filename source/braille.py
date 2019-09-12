@@ -1721,7 +1721,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		import brailleViewer
 		if not created:  # the viewer was destroyed
 			# if we have a hardware display attached, use it's cell count
-			self.displaySize = None if not self.display else self.display.numCells
+			self.displaySize = 0 if not self.display else self.display.numCells
 			self.enabled = bool(self.displaySize)
 		else:
 			if not self.displaySize:
