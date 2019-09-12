@@ -1603,7 +1603,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._cursorBlinkTimer.Stop()
 			self._cursorBlinkTimer = None
 		config.post_configProfileSwitch.unregister(self.handlePostConfigProfileSwitch)
-		brailleViewer.destroyBrailleViewer()
 		if self.display:
 			self.display.terminate()
 			self.display = None
