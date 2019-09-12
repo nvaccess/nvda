@@ -1180,6 +1180,8 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			rawToBraillePos.extend(p+regionStart for p in region.rawToBraillePos)
 		return rawToBraillePos
 
+	brailleToRawPos: List[int]
+
 	def _get_brailleToRawPos(self):
 		"""@return: a list mapping positions in L{brailleCells} to positions in L{rawText} for the entire buffer.
 		@rtype: [int, ...]
@@ -1214,11 +1216,24 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		raise LookupError("No such position")
 
 	def bufferPositionsToRawText(self, startPos, endPos):
+		brailleToRawPos = self.brailleToRawPos
+		if not brailleToRawPos or not self.rawText:
+			# if either are empty, just return an empty string.
+			return ""
 		try:
-			rawTextStart = self.brailleToRawPos[startPos]
-			rawTextEnd = self.brailleToRawPos[endPos-1]+1
-			return self.rawText[rawTextStart:rawTextEnd]
+			lastIndex = len(brailleToRawPos)-1
+			rawTextStart = brailleToRawPos[min(lastIndex, startPos)]
+			rawTextEnd = brailleToRawPos[min(lastIndex, endPos)]+1
+			lastIndex = len(self.rawText)
+			return self.rawText[rawTextStart:min(lastIndex, rawTextEnd)]
 		except IndexError:
+			log.debugWarning(
+				f"Unable to get raw text for buffer positions"
+				f"(startPos-endPos): {startPos}-{endPos}, "
+				f"for rawText: {self.rawText}, "
+				f"with brailleToRawPos: {brailleToRawPos}",
+				exc_info=True
+			)
 			return ""
 
 	def bufferPosToWindowPos(self, bufferPos):
