@@ -337,7 +337,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	//If a rectangle was provided, convert it to screen coordinates
 	if(lprc) {
 		clearRect=*lprc;
-		dcPointsToScreenPoints(hdc,(LPPOINT)&clearRect,2,false);
+		logicalPointsToScreenPoints(hdc,(LPPOINT)&clearRect,2,false);
 		//Also if opaquing is requested, clear this rectangle in the given display model
 		if(fuOptions&ETO_OPAQUE) model->clearRectangle(clearRect,FALSE,hdc);
 	}
@@ -407,7 +407,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		free(characterExtentsX);
 	}
 	//Convert the character extents from logical to physical points, but keep them relative
-	dcPointsToScreenPoints(hdc,characterExtents,cbCount,true);
+	logicalPointsToScreenPoints(hdc,characterExtents,cbCount,true);
 	//are we writing a transparent background?
 	if(tm.tmCharSet!=SYMBOL_CHARSET&&!(fuOptions&ETO_OPAQUE)&&(GetBkMode(hdc)==TRANSPARENT)) {
 		//Find out if the text we're writing is just whitespace
@@ -443,8 +443,8 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	//We must store chunks using device coordinates, not logical coordinates, as its possible for the DC's viewport to move or resize.
 	//For example, in Windows 7, menu items are always drawn at the same DC coordinates, but the DC is moved downward each time.
 	POINT baselinePoint={textRect.left,textRect.top+tm.tmAscent};
-	dcPointsToScreenPoints(hdc,&baselinePoint,1,false);
-	dcPointsToScreenPoints(hdc,(LPPOINT)&textRect,2,false);
+	logicalPointsToScreenPoints(hdc,&baselinePoint,1,false);
+	logicalPointsToScreenPoints(hdc,(LPPOINT)&textRect,2,false);
 	//Calculate the real physical baselineFromTop
 	//Clear a space for the text in the model, though take clipping in to account
 	RECT tempRect;
@@ -599,7 +599,7 @@ int WINAPI fake_FillRect(HDC hdc, const RECT* lprc, HBRUSH hBrush) {
 	displayModel_t* model=acquireDisplayModel(hdc,TRUE);
 	if(!model) return res;
 	RECT rect=*lprc;
-	dcPointsToScreenPoints(hdc,(LPPOINT)&rect,2,false);
+	logicalPointsToScreenPoints(hdc,(LPPOINT)&rect,2,false);
 	model->clearRectangle(rect,FALSE,hdc);
 	model->release();
 	return res;
@@ -618,7 +618,7 @@ BOOL WINAPI fake_DrawFocusRect(HDC hdc, const RECT* lprc) {
 	RECT oldFocusRect;
 	bool hadFocusRect=model->getFocusRect(&oldFocusRect);
 	RECT focusRect=*lprc;
-	dcPointsToScreenPoints(hdc,(LPPOINT)&focusRect,2,false);
+	logicalPointsToScreenPoints(hdc,(LPPOINT)&focusRect,2,false);
 	POINT pt={(focusRect.left+focusRect.right)/2,(focusRect.top+focusRect.bottom)/2};
 	/*
 	if(!hwnd) {
@@ -661,7 +661,7 @@ BOOL WINAPI fake_PatBlt(HDC hdc, int nxLeft, int nxTop, int nWidth, int nHeight,
 	displayModel_t* model=acquireDisplayModel(hdc,TRUE);
 	if(!model) return res;
 	RECT rect={nxLeft,nxTop,nxLeft+nWidth,nxTop+nHeight};
-	dcPointsToScreenPoints(hdc,(LPPOINT)&rect,2,false);
+	logicalPointsToScreenPoints(hdc,(LPPOINT)&rect,2,false);
 	model->clearRectangle(rect,FALSE,hdc);
 	model->release();
 	return res;
@@ -805,10 +805,10 @@ void StretchBlt_helper(HDC hdcDest, int nXDest, int nYDest, int nWidthDest, int 
 	}
 	RECT srcRect={nXSrc,nYSrc,nXSrc+nWidthSrc,nYSrc+nHeightSrc};
 	//we record chunks using device coordinates -- DCs can move/resize
-	dcPointsToScreenPoints(hdcSrc,(LPPOINT)&srcRect,2,false);
+	logicalPointsToScreenPoints(hdcSrc,(LPPOINT)&srcRect,2,false);
 	RECT destRect={nXDest,nYDest,nXDest+nWidthDest,nYDest+nHeightDest};
 	//we record chunks using device coordinates -- DCs can move/resize
-	dcPointsToScreenPoints(hdcDest,(LPPOINT)&destRect,2,false);
+	logicalPointsToScreenPoints(hdcDest,(LPPOINT)&destRect,2,false);
 	if(destInvertBefore) {
 		destModel->copyRectangle(destRect,TRUE,TRUE,TRUE,destRect,NULL,NULL);
 	}

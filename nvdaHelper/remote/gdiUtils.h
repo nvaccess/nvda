@@ -23,7 +23,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @param points a pointer to the points you wish to convert.
  * @param count the number of points you want to convert.
  */
-void dcPointsToScreenPoints(HDC hdc, POINT* points, int count,bool relative);
+void logicalPointsToScreenPoints(HDC hdc, POINT* points, int count,bool relative);
 
 /**
  * converts given points from absolute screen coordinates to dc coordinates. 
@@ -31,6 +31,6 @@ void dcPointsToScreenPoints(HDC hdc, POINT* points, int count,bool relative);
  * @param points a pointer to the points you wish to convert.
  * @param count the number of points you want to convert.
  */
-void screenPointsToDCPoints(HDC hdc, POINT* points, int count);
+void screenPointsToLogicalPoints(HDC hdc, POINT* points, int count);
 
 #endif

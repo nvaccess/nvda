@@ -14,7 +14,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include "gdiUtils.h"
 
-void dcPointsToScreenPoints(HDC hdc, POINT* points, int count,bool relative) {
+void logicalPointsToScreenPoints(HDC hdc, POINT* points, int count,bool relative) {
 	//Convert from logical points to device points 
 	//Includes origins and scaling for window and viewport, and also world transformation 
 	LPtoDP(hdc,points,count);
@@ -37,7 +37,7 @@ void dcPointsToScreenPoints(HDC hdc, POINT* points, int count,bool relative) {
 	}
 }
 
-void screenPointsToDCPoints(HDC hdc, POINT* points, int count) {
+void screenPointsToLogicalPoints(HDC hdc, POINT* points, int count) {
 	//Convert from device points to logical points
 	//Includes origins and scaling for window and viewport, and also world transformation 
 	DPtoLP(hdc,points,count);
