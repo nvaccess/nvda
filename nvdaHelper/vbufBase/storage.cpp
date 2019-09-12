@@ -646,14 +646,14 @@ bool VBufStorage_buffer_t::replaceSubtrees(map<VBufStorage_fieldNode_t*,VBufStor
 	// Reverse iterate over all reference nodes, replacing them with the existing nodes in the original buffer they point to.
 	// We must iterate in reverse as new nodes are always inserted using parent and previous as the location,
 	// iterating forward would cause a future reference node's previous to be come invalid as it had been replaced. 
-	for(map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>::iterator i=m.begin();i!=m.end();++i) {
-		VBufStorage_fieldNode_t* node=i->first;
-		VBufStorage_buffer_t* buffer=i->second;
-		for(auto i=buffer->referenceNodes.rbegin();i!=buffer->referenceNodes.rend();++i) {
-			VBufStorage_controlFieldNode_t* parent=(*i)->parent;
-			VBufStorage_fieldNode_t* previous=(*i)->previous;
-			VBufStorage_controlFieldNode_t* referenced=(*i)->referenceNode;
-			buffer->removeFieldNode(*i);
+	for(auto subtreeEntryIter=m.cbegin();subtreeEntryIter!=m.cend();++subtreeEntryIter) {
+		auto node=subtreeEntryIter->first;
+		auto buffer=subtreeEntryIter->second;
+		for(auto referenceNodeIter=buffer->referenceNodes.rbegin();referenceNodeIter!=buffer->referenceNodes.rend();++referenceNodeIter) {
+			auto parent=(*referenceNodeIter)->parent;
+			auto previous=(*referenceNodeIter)->previous;
+			auto referenced=(*referenceNodeIter)->referenceNode;
+			buffer->removeFieldNode(*referenceNodeIter);
 			this->unlinkFieldNode(referenced);
 			buffer->insertNode(parent,previous,referenced);
 		}
