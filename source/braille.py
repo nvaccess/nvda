@@ -1221,9 +1221,9 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			# if either are empty, just return an empty string.
 			return ""
 		try:
-			lastIndex = len(brailleToRawPos)-1
+			lastIndex = len(brailleToRawPos) - 1
 			rawTextStart = brailleToRawPos[min(lastIndex, startPos)]
-			rawTextEnd = brailleToRawPos[min(lastIndex, endPos)]+1
+			rawTextEnd = brailleToRawPos[min(lastIndex, endPos)] + 1
 			lastIndex = len(self.rawText)
 			return self.rawText[rawTextStart:min(lastIndex, rawTextEnd)]
 		except IndexError:

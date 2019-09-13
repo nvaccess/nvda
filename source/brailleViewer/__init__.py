@@ -110,4 +110,3 @@ def createBrailleViewerTool():
 	_brailleGui = BrailleViewerFrame(numCells, _onGuiDestroyed)
 
 	postBrailleViewerToolToggledAction.notify(created=True)
-
