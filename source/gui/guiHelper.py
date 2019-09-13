@@ -248,14 +248,15 @@ class BoxSizerHelper(object):
 		if isinstance(item, ButtonHelper):
 			toAdd = item.sizer
 			buttonBorderAmount = 5
-			keywordArgs.update({'border':buttonBorderAmount, 'flag':wx.ALL})
+			keywordArgs["border"] = buttonBorderAmount
+			keywordArgs["flag"] = keywordArgs.get("flag", 0) | wx.ALL
 			shouldAddSpacer = False # no need to add a spacer, since the button border has been added.
 		elif isinstance(item, BoxSizerHelper):
 			toAdd = item.sizer
 		elif isinstance(item, PathSelectionHelper):
 			toAdd = item.sizer
 			if self.sizer.GetOrientation() == wx.VERTICAL:
-				keywordArgs['flag'] = wx.EXPAND
+				keywordArgs["flag"] = keywordArgs.get("flag", 0) | wx.EXPAND
 			else:
 				raise NotImplementedError("Adding PathSelectionHelper to a horizontal BoxSizerHelper is not implemented")
 		elif isinstance(item, LabeledControlHelper):
@@ -263,7 +264,7 @@ class BoxSizerHelper(object):
 
 		# a boxSizerHelper could contain a wx.StaticBoxSizer
 		if isinstance(toAdd, (wx.StaticBoxSizer, scrolledpanel.ScrolledPanel)):
-			keywordArgs['flag'] = wx.EXPAND
+			keywordArgs["flag"] = keywordArgs.get("flag", 0) | wx.EXPAND
 
 		if shouldAddSpacer:
 			self.sizer.AddSpacer(SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
