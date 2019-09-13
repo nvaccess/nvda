@@ -28,6 +28,7 @@ from inputCore import SCRCAT_BROWSEMODE
 import ui
 from textInfos import DocumentWithPageTurns
 from keyboardHandler import KeyboardInputGesture
+from treeInterceptorHandler import TreeInterceptor
 
 
 class FindDialog(wx.Dialog):
@@ -367,22 +368,23 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		self._selectionMovementScriptHelper(toPosition=textInfos.POSITION_ALL)
 
 	def script_copyToClipboard(self,gesture):
-		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		if info.isCollapsed:
-			# Translators: Reported when there is no text selected (for copying).
-			ui.message(_("No selection"))
-			if (
-				isinstance(gesture, KeyboardInputGesture)
-				and gesture.identifiers[-1] in (
-					"kb:control+c",
-					"kb:control+insert",
-				)
-			):
-				gesture.send()
+		info = self.makeTextInfo(textInfos.POSITION_SELECTION)
+		if not info.isCollapsed:
+			if info.copyToClipboard():
+				# Translators: Message presented when text has been copied to clipboard.
+				ui.message(_("Copied to clipboard"))
 			return
-		if info.copyToClipboard():
-			# Translators: Message presented when text has been copied to clipboard.
-			ui.message(_("Copied to clipboard"))
+		if isinstance(self, TreeInterceptor):
+			info = self.rootNVDAObject.makeTextInfo(textInfos.POSITION_SELECTION)
+			if not info.isCollapsed:
+				# There is indeed a selection, but L{info} strangely enough
+				# does not contains it (tested with Firefox and Chrome).
+				KeyboardInputGesture.fromName("control+c").send()
+				# Translators: Message presented when text has been copied to clipboard.
+				ui.message(_("Copied to clipboard"))
+				return
+		# Translators: Reported when there is no text selected (for copying).
+		ui.message(_("No selection"))
 
 	def reportSelectionChange(self, oldTextInfo):
 		newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
