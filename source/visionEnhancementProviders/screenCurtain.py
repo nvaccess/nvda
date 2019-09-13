@@ -86,11 +86,9 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 	def terminate(self):
 		try:
 			super(VisionEnhancementProvider, self).terminate()
-			Magnification.MagUninitialize()
-		except:  # noqa: E722
-			raise
 		finally:
 			Magnification.MagShowSystemCursor(True)
+			Magnification.MagUninitialize()
 
 	def registerEventExtensionPoints(self, extensionPoints):
 		# The screen curtain isn't interested in any events
