@@ -1573,14 +1573,13 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def __init__(self):
 		louisHelper.initialize()
 		self.display: Optional[BrailleDisplayDriver] = None
-		self.displaySize = 0
+		#: Number of cells the connected device (of if no device, braille viewer has)
+		#: Zero cells disables braille. See L{_get_enabled}
+		self._displaySize: int = 0
 		self.mainBuffer = BrailleBuffer(self)
 		self.messageBuffer = BrailleBuffer(self)
 		self._messageCallLater = None
 		self.buffer = self.mainBuffer
-		#: Whether braille is enabled.
-		#: @type: bool
-		self.enabled = False
 		self._keyCountForLastMessage=0
 		self._cursorPos = None
 		self._cursorBlinkUp = True
@@ -1624,6 +1623,14 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def _get_shouldAutoTether(self):
 		return self.enabled and config.conf["braille"]["autoTether"]
+
+	def _get_displaySize(self):
+		if self._displaySize == 0 and brailleViewer.isBrailleViewerActive():
+			return brailleViewer.DEFAULT_NUM_CELLS
+		return self._displaySize
+
+	def _get_enabled(self):
+		return bool(self.displaySize)
 
 	_lastRequestedDisplayName=None #: the name of the last requested braille display driver with setDisplayByName, even if it failed and has fallen back to no braille.
 	def setDisplayByName(self, name, isFallback=False, detected=None):
@@ -1684,8 +1691,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 						log.error("Error terminating previous display driver", exc_info=True)
 				self.display = newDisplay
 			newDisplay.initSettings()
-			self.displaySize = newDisplay.numCells
-			self.enabled = bool(self.displaySize)
+			self._displaySize = newDisplay.numCells
 			if isFallback:
 				if self._detectionEnabled and not self._detector:
 					# As this is the fallback display, which is usually noBraille,
@@ -1718,15 +1724,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return False
 
 	def _onBrailleViewerChangedState(self, created):
-		import brailleViewer
-		if not created:  # the viewer was destroyed
-			# if we have a hardware display attached, use it's cell count
-			self.displaySize = 0 if not self.display else self.display.numCells
-			self.enabled = bool(self.displaySize)
-		else:
-			if not self.displaySize:
-				self.displaySize = brailleViewer.DEFAULT_NUM_CELLS
-			self.enabled = True
+		if created:
 			self._updateDisplay()
 		log.debug("Braille Viewer enabled: {}".format(self.enabled))
 

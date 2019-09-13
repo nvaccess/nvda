@@ -123,6 +123,7 @@ class BrailleViewerFrame(wx.Frame):
 		]
 
 	def savePositionInformation(self):
+		log.debug("Save braille viewer position info")
 		position = self.GetPosition()
 		config.conf["brailleViewer"]["x"] = position.x
 		config.conf["brailleViewer"]["y"] = position.y
@@ -132,23 +133,16 @@ class BrailleViewerFrame(wx.Frame):
 	isDestroyed: bool = False
 
 	def onClose(self, evt):
-		log.debug("braille viewer gui onClose")
-		self.savePositionInformation()
+		log.debug("braille viewer gui onclose")
 		if not evt.CanVeto():
-			isDestroyed = True
+			self.isDestroyed = True
 			self.Destroy()
 			return
 		evt.Veto()
 
 	def onDestroy(self, evt):
 		log.debug("braille viewer gui destroyed")
+		self.savePositionInformation()
 		self.isDestroyed = True
 		self._notifyOfDestroyed()
 		evt.Skip()
-
-	def doDestroy(self):
-		try:
-			self.Destroy()
-		except wx.PyDeadObjectError:
-			# NVDA's GUI has already terminated.
-			pass

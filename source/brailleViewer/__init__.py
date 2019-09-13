@@ -6,7 +6,6 @@
 from typing import Optional, List
 
 import gui
-from logHandler import log
 import extensionPoints
 from .brailleViewerGui import BrailleViewerFrame
 
@@ -68,13 +67,13 @@ def update(cells: List[int], rawText: str):
 	if _brailleGui:
 		_brailleGui.updateBrailleDisplayed(cells, rawText)
 
+
 def _destroyGUI():
 	global _brailleGui
 	d: Optional[BrailleViewerFrame] = _brailleGui
 	_brailleGui = None
 	if d and not d.isDestroyed:
-		d.savePositionInformation()
-		d.doDestroy()
+		d.Destroy()
 
 
 def destroyBrailleViewer():
@@ -83,8 +82,13 @@ def destroyBrailleViewer():
 
 
 def _onGuiDestroyed():
+	""" Used as a callback from L{BrailleViewerFrame}, lets us know that the GUI initiated a destruction.
+	"""
 	global _brailleGui
-	if _brailleGui:  # If True, this wasn't initiated from L{_destroyGUI}
+	if _brailleGui:
+		# Destruction wasn't initiated from L{_destroyGUI} ie not through direct user action.
+		# It's likely that the window received a shutdown event that could not be skipped.
+		# Continue to destroy the braille viewer.
 		destroyBrailleViewer()
 
 

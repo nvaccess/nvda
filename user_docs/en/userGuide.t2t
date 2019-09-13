@@ -1951,6 +1951,7 @@ To toggle the speech viewer from anywhere, please assign a custom gesture using 
 ++ Braille Viewer ++[BrailleViewer]
 For sighted software developers or people demoing NVDA to sighted audiences, a floating window is available that allows you to view braille output, and the text equivalent for each braille character.
 The braille viewer can be used at the same time as a physical braille display, it will match the number of cells on the physical device.
+While the braille viewer is enabled, it constantly updates to show you the braille that would be displayed on a physical braille display.
 
 To enable the braille viewer, check the "Braille Viewer" menu item under Tools in the NVDA menu.
 Uncheck the menu item to disable it.
@@ -1960,8 +1961,6 @@ Physical braille displays typically have buttons to scroll forwards or backwards
 The braille viewer window contains a check box labeled "Show braille viewer on startup".
 If this is checked, the braille viewer will open when NVDA is started.
 The braille viewer window will always attempt to re-open with the same dimensions and location as when it was closed.
-
-While the braille viewer is enabled, it constantly updates to show you the braille that would be displayed on a physical braille display.
 
 ++ Add-ons Manager ++[AddonsManager]
 The Add-ons Manager, accessed by selecting Manage add-ons under Tools in the NVDA menu, allows you to install, uninstall, enable and disable add-on packages for NVDA.
