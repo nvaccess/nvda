@@ -2409,8 +2409,8 @@ class DictionaryDialog(SettingsDialog):
 		globalVars.speechDictionaryProcessing=False
 		super().__init__(parent, resizeable=True)
 		# Historical initial size, result of L{self.dictList} being (550,350) as of #6287.
-		# Setting an initial size on L{self.dictList} directly would also sets its minimum size
-		# and thus forbid to shrink the dialog.
+		# Setting an initial size on L{self.dictList} by passing a L{size} argument when
+		# creating the control would also set its minimum size and thus block the dialog from being shrunk.
 		self.SetSize(576, 502)
 		self.CentreOnScreen()
 
