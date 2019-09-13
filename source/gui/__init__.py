@@ -446,9 +446,9 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		item=self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
 		self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
 
-		# Translators: The label for the menu item to toggle Braille Viewer.
 		item = self.menu_tools_toggleBrailleViewer = menu_tools.AppendCheckItem(
 			wx.ID_ANY,
+			# Translators: The label for the menu item to toggle Braille Viewer.
 			_("Braille viewer")
 		)
 		self.Bind(wx.EVT_MENU, frame.onToggleBrailleViewerCommand, item)
