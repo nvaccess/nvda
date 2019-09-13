@@ -274,7 +274,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.SetSizer(mainSizer)
 		self.refreshAddonsList()
 		self.SetMinSize(mainSizer.GetMinSize())
-		# Historical initial size, result of L{self.addonsList} being (550, 350) as of 1364839447.
+		# Historical initial size, result of L{self.addonsList} being (550, 350) as of commit 1364839447.
 		# Setting an initial size on L{self.addonsList} by passing a L{size} argument when
 		# creating the control would also set its minimum size and thus block the dialog from being shrunk.
 		self.SetSize(self.scaleSize((763, 509)))
