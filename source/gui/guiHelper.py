@@ -127,7 +127,7 @@ def associateElements( firstElement, secondElement):
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		sizer.Add(firstElement)
 		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
-		sizer.Add(secondElement, flag=wx.EXPAND)
+		sizer.Add(secondElement, flag=wx.EXPAND, proportion=1)
 	# button and checkBox
 	elif isinstance(firstElement, wx.Button) and isinstance(secondElement, wx.CheckBox):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -285,7 +285,7 @@ class BoxSizerHelper(object):
 		"""
 		labeledControl = LabeledControlHelper(self._parent, labelText, wxCtrlClass, **kwargs)
 		if(isinstance(labeledControl.control, (wx.ListCtrl,wx.ListBox,wx.TreeCtrl))):
-			self.addItem(labeledControl.sizer, flag=wx.EXPAND)
+			self.addItem(labeledControl.sizer, flag=wx.EXPAND, proportion=1)
 		else:
 			self.addItem(labeledControl.sizer)
 		return labeledControl.control
