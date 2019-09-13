@@ -23,7 +23,7 @@ import addonHandler
 import easeOfAccess
 import COMRegistrationFixes
 import winKernel
-
+import importlib.machinery
 _wsh=None
 def _getWSH():
 	global _wsh
@@ -150,7 +150,8 @@ def copyUserConfig(destPath):
 			destFilePath=os.path.join(destPath,os.path.relpath(sourceFilePath,sourcePath))
 			tryCopyFile(sourceFilePath,destFilePath)
 
-def removeOldLibFiles(destPath,rebootOK=False):
+
+def removeOldLibFiles(destPath, rebootOK=False):
 	"""
 	Removes library files from previous versions of NVDA.
 	@param destPath: The path where NVDA is installed.
@@ -158,25 +159,25 @@ def removeOldLibFiles(destPath,rebootOK=False):
 	@param rebootOK: If true then files can be removed on next reboot if trying to do so now fails.
 	@type rebootOK: boolean
 	"""
-	for topDir in ('lib','lib64'):
-		currentLibPath=os.path.join(destPath,topDir,versionInfo.version)
-		for parent,subdirs,files in os.walk(os.path.join(destPath,topDir),topdown=False):
+	for topDir in ('lib', 'lib64', 'libArm64'):
+		currentLibPath = os.path.join(destPath, topDir, versionInfo.version)
+		for parent, subdirs, files in os.walk(os.path.join(destPath, topDir), topdown=False):
 			if parent==currentLibPath:
 				# Lib dir for current installation. Don't touch this!
 				log.debug("Skipping current install lib path: %r"%parent)
 				continue
 			for d in subdirs:
-				path=os.path.join(parent,d)
+				path = os.path.join(parent, d)
 				log.debug("Removing old lib directory: %r"%path)
 				try:
 					os.rmdir(path)
 				except OSError:
 					log.warning("Failed to remove a directory no longer needed. This can be manually removed after a reboot or the  installer will try removing it again next time. Directory: %r"%path)
 			for f in files:
-				path=os.path.join(parent,f)
+				path = os.path.join(parent, f)
 				log.debug("Removing old lib file: %r"%path)
 				try:
-					tryRemoveFile(path,numRetries=2,rebootOK=rebootOK)
+					tryRemoveFile(path, numRetries=2, rebootOK=rebootOK)
 				except RetriableFailure:
 					log.warning("A file no longer needed could not be removed. This can be manually removed after a reboot, or  the installer will try again next time. File: %r"%path)
 
@@ -210,7 +211,7 @@ def removeOldProgramFiles(destPath):
 	# in a newer version of NVDA.
 	for curDestDir,subDirs,files in os.walk(destPath):
 		for f in files:
-			if f.endswith((".pyc", ".pyo")):
+			if f.endswith((".pyc", ".pyo", ".pyd")) and not f.endswith(importlib.machinery.EXTENSION_SUFFIXES[0]):
 				# This also removes compiled files from system config,
 				# but that is fine.
 				path=os.path.join(curDestDir, f)
