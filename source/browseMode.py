@@ -1590,8 +1590,12 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if (
 			# roles such as application and dialog should be treated as being within a "application" and therefore outside of the browseMode document. 
 			obj.role in self.APPLICATION_ROLES 
-			# Anything inside a combo box should be treated as being outside a browseMode document.
-			or (obj.container and obj.container.role==controlTypes.ROLE_COMBOBOX)
+			# Anything other than an editable text box inside a combo box should be
+			# treated as being outside a browseMode document.
+			or (
+				obj.role != controlTypes.ROLE_EDITABLETEXT and obj.container
+				and obj.container.role == controlTypes.ROLE_COMBOBOX
+			)
 		):
 			return True
 		return None

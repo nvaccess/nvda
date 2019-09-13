@@ -16,6 +16,7 @@ What's New in NVDA
 == Changes ==
 - The user guide now describes how to use NVDA in the Windows Console. (#9957)
 - Running nvda.exe now defaults to replace an already running copy of NVDA. The -r|--replace command line parameter is still accepted, but ignored. (#8320)
+- On Windows 8 and later, NVDA will now report product name and version information for hosted apps such as apps downloaded from Microsoft Store using information provided by the app. (#4259, #10108)
 
 
 == Bug Fixes ==
@@ -29,6 +30,10 @@ What's New in NVDA
 - In Windows 7, NVDA no longer causes Windows Explorer to crash when the mouse is used in the start menu. (#9435)
 - On Windows 10, braille will now follow when editing cell contents in Microsoft Excel and in other UIA text controls where it was lagging behind. (#9749)
 - NVDA will once again report suggestions in the Microsoft Edge address bar. (#7554)
+- NVDA is no longer silent when focusing an HTML tab control header in Internet Explorer. (#8898)
+- In Microsoft Edge based on EdgeHTML, NVDA will no longer play search suggestion sound when the window becomes maximized. (#9110, #10002)
+- ARIA 1.1 combo boxes are now supported in Mozilla Firefox and Google Chrome. (#9616)
+- Windows Explorer on Windows 7 no longer crashes when accessing metadata edit fields. (#5337)
 
 
 == Changes for Developers ==
