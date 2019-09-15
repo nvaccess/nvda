@@ -1368,10 +1368,10 @@ class WordDocument(Window):
 			return gesture.send()
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordDocumentObject.TrackRevisions)
 		if val:
-			# Translators: a message when toggling track changes in Microsoft word
+			# Translators: a message when toggling change tracking in Microsoft word
 			ui.message(_("Change tracking on"))
 		else:
-			# Translators: a message when toggling track changes in Microsoft word
+			# Translators: a message when toggling change tracking in Microsoft word
 			ui.message(_("Change tracking off"))
 	
 	def script_tab(self,gesture):
