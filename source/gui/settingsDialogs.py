@@ -3021,7 +3021,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 
 		# Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 		replacementText = _("&Replacement")
-		self.replacementEdit = sHelper.addLabeledControl(
+		self.replacementEdit = changeSymbolHelper.addLabeledControl(
 			labelText=replacementText,
 			wxCtrlClass=wx.TextCtrl,
 			size=self.scaleSize((300, -1)),
