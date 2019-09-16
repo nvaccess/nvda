@@ -1,6 +1,6 @@
 # brailleViewer.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2014-2017 NV Access Limited
+# Copyright (C) 2014-2019 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 from typing import Optional, List
@@ -100,13 +100,9 @@ def createBrailleViewerTool():
 	if not braille.handler:
 		raise RuntimeError("Can not initialise the BrailleViewerGui: braille.handler not yet initialised")
 
-	numCells = DEFAULT_NUM_CELLS
-	if braille.handler.displaySize:
-		numCells = braille.handler.displaySize
-
 	global _brailleGui
 	if _brailleGui:
 		_destroyGUI()
-	_brailleGui = BrailleViewerFrame(numCells, _onGuiDestroyed)
+	_brailleGui = BrailleViewerFrame(braille.handler.displaySize, _onGuiDestroyed)
 
 	postBrailleViewerToolToggledAction.notify(created=True)

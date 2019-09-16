@@ -1624,10 +1624,20 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def _get_shouldAutoTether(self):
 		return self.enabled and config.conf["braille"]["autoTether"]
 
+	displaySize: int
+
 	def _get_displaySize(self):
 		if self._displaySize == 0 and brailleViewer.isBrailleViewerActive():
 			return brailleViewer.DEFAULT_NUM_CELLS
 		return self._displaySize
+
+	def _set_displaySize(self, numCells):
+		"""The display size can be changed while a display is connected, for instance
+			see L{brailleDisplayDrivers.alva.BrailleDisplayDriver} split point feature.
+		"""
+		self._displaySize = numCells
+
+	enabled: bool
 
 	def _get_enabled(self):
 		return bool(self.displaySize)

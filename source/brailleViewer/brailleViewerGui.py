@@ -1,3 +1,8 @@
+# brailleViewer.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2014-2019 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 from typing import List
 
 import wx
@@ -102,11 +107,13 @@ class BrailleViewerFrame(wx.Frame):
 		self.Update()
 
 	def setFont(self, font, forBraille=False):
-		# We would like the raw characters to align with the braille dots, however, the
-		# Braille characters are much smaller than the raw text characters so we override the size
-		# to make them closer. It is still not an exact match.
-		# I assume this is because the "Courier New" font does not support this unicode range
-		# so the system falls back to another font.
+		# Ideally the raw characters should align with the braille dots, however, the
+		# Braille characters are much smaller than the raw text characters, so we override the size
+		# to make them more similar. It is still not an exact match.
+		# Assumption: the "Courier New" font does not support this unicode range and the system falls
+		# back to another font which does not match the size?
+		# If trying to improve this alignment, also consider that there are also cases where a single
+		# raw text character is represented by multiple braille characters.
 		font.PointSize = 20 if not forBraille else 22
 		font.Family = wx.FONTFAMILY_TELETYPE
 		font.FaceName = "Courier New"
