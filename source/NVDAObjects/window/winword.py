@@ -1432,6 +1432,13 @@ class WordDocument(Window):
 			# Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 			ui.message(_("1.5 line spacing"))
 
+	def initOverlayClass(self):
+		if isinstance(self, EditableTextWithoutAutoSelectDetection):
+			self.bindGesture("kb:alt+shift+home", "caret_changeSelection")
+			self.bindGesture("kb:alt+shift+end", "caret_changeSelection")
+			self.bindGesture("kb:alt+shift+pageUp", "caret_changeSelection",)
+			self.bindGesture("kb:alt+shift+pageDown", "caret_changeSelection",)
+
 	__gestures = {
 		"kb:control+[":"increaseDecreaseFontSize",
 		"kb:control+]":"increaseDecreaseFontSize",
@@ -1459,10 +1466,6 @@ class WordDocument(Window):
 		"kb:control+5":"changeLineSpacing",
 		"kb:tab": "tab",
 		"kb:shift+tab": "tab",
-		"kb:alt+shift+home":"caret_changeSelection",
-		"kb:alt+shift+end":"caret_changeSelection",
-		"kb:alt+shift+pageUp":"caret_changeSelection",
-		"kb:alt+shift+pageDown":"caret_changeSelection",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 	}
