@@ -367,6 +367,11 @@ class Terminal(LiveText, EditableText):
 		super(Terminal, self).event_loseFocus()
 		self.stopMonitoring()
 
+	def _get_caretMovementDetectionUsesEvents(self):
+		"""Using caret events in consoles sometimes causes the last character of the
+		prompt to be read when quickly deleting text."""
+		return False
+
 
 class KeyboardHandlerBasedTypedCharSupport(Terminal):
 	"""A Terminal object that also provides typed character support for
@@ -413,7 +418,7 @@ class KeyboardHandlerBasedTypedCharSupport(Terminal):
 				config.conf['keyboard']['speakTypedCharacters']
 				or config.conf['keyboard']['speakTypedWords']
 			)
-			and not config.conf['UIA']['winConsoleSpeakPasswords']
+			and not config.conf['terminals']['speakPasswords']
 			and self._supportsTextChange
 		):
 			self._queuedChars.append(ch)
