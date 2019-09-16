@@ -6,13 +6,17 @@ What's New in NVDA
 = 2019.3 =
 
 == New Features ==
-- In Command Prompt, PowerShell, and the Windows Subsystem for Linux on Windows 10 version 1803 and later:
+- In Command Prompt, PowerShell, and the Windows Subsystem for Linux on Windows 10 version 1809 and later:
  - Vastly improved performance and stability (#9771)
  - Reporting of typed text that does not appear onscreen (such as passwords) can now be enabled via an option in NVDA's advanced settings panel. (#9649)
+- The accuracy of the move mouse to navigator object command has been improved in text fields in Java applications. (#10157)
+- Screen curtain, which when enabled, makes the whole screen black on Windows 8 and above. (#7857)
 
 
 == Changes ==
 - The user guide now describes how to use NVDA in the Windows Console. (#9957)
+- Running nvda.exe now defaults to replace an already running copy of NVDA. The -r|--replace command line parameter is still accepted, but ignored. (#8320)
+- On Windows 8 and later, NVDA will now report product name and version information for hosted apps such as apps downloaded from Microsoft Store using information provided by the app. (#4259, #10108)
 
 
 == Bug Fixes ==
@@ -20,6 +24,17 @@ What's New in NVDA
 - In Windows 10, NVDA will announce tooltips from universal apps if NVDA is configured to report tooltips in object presentation dialog. (#8118)
 - On Windows 10 version 1607 and later, typed text is now reported in Mintty. (#1348)
 - On Windows 10 version 1607 and later, output in the Windows Console that appears close to the caret is no longer spelled out. (#513)
+- controls in Audacitys compressor dialog are now announced when navigating the dialog. (#10103)
+- NVDA no longer treats spaces as words in object review in Scintilla based editors such as Notepad++. (#8295)
+- NVDA will prevent the  system from entering sleep mode when scrolling through text with braille display gestures. (#9175)
+- In Windows 7, NVDA no longer causes Windows Explorer to crash when the mouse is used in the start menu. (#9435)
+- On Windows 10, braille will now follow when editing cell contents in Microsoft Excel and in other UIA text controls where it was lagging behind. (#9749)
+- NVDA will once again report suggestions in the Microsoft Edge address bar. (#7554)
+- NVDA is no longer silent when focusing an HTML tab control header in Internet Explorer. (#8898)
+- In Microsoft Edge based on EdgeHTML, NVDA will no longer play search suggestion sound when the window becomes maximized. (#9110, #10002)
+- ARIA 1.1 combo boxes are now supported in Mozilla Firefox and Google Chrome. (#9616)
+- Windows Explorer on Windows 7 no longer crashes when accessing metadata edit fields. (#5337)
+- Addressed several crashes in Gmail seen in both Firefox and Chrome when interacting with particular popup menus such as when creating filters or changing certain Gmail settings. (#10175, #9402, #8924)
 
 
 == Changes for Developers ==
@@ -64,10 +79,12 @@ What's New in NVDA
   - Support for the Outlook pre 2003 message list.
   - An overlay class for the classic start menu, only found in Windows Vista and earlier.
   - Dropped support for Skype 7, as it is definitely not working any more.
- - A framework allowing developers to create vision enhancement providers; modules that can change screen contents, optionally based on input from NVDA about object locations. (#9064)
-  - Add-ons can bundle their own providers in a visionEnhancementProviders folder.
-  - See the vision and visionEnhancementProviders modules for the implementation of the framework and examples, respectively.
- - Abstract class properties are now supported on objects that inherit from baseObject.AutoPropertyObject (e.g. NVDAObjects and TextInfos). (#10102)
+- A framework allowing developers to create vision enhancement providers; modules that can change screen contents, optionally based on input from NVDA about object locations. (#9064)
+ - Add-ons can bundle their own providers in a visionEnhancementProviders folder.
+ - See the vision and visionEnhancementProviders modules for the implementation of the framework and examples, respectively.
+- Abstract class properties are now supported on objects that inherit from baseObject.AutoPropertyObject (e.g. NVDAObjects and TextInfos). (#10102)
+- Introduced displayModel.UNIT_DISPLAYCHUNK as a textInfos unit constant specific to DisplayModelTextInfo. (#10165)
+ - This new constant allows walking over the text in a DisplayModelTextInfo in a way that more closely resembles how the text chunks are saved in the underlying model.
 
 
 = 2019.2 =

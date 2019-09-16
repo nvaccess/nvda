@@ -84,7 +84,6 @@ def stringToBool(string):
 parser=NoConsoleOptionParser()
 quitGroup = parser.add_mutually_exclusive_group()
 quitGroup.add_argument('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
-quitGroup.add_argument('-r','--replace',action="store_true",dest='replace',default=False,help="Quit already running copy of NVDA and start this one")
 parser.add_argument('-k','--check-running',action="store_true",dest='check_running',default=False,help="Report whether NVDA is running via the exit code; 0 if running, 1 if not running")
 parser.add_argument('-f','--log-file',dest='logFileName',type=str,help="The file where log messages should be written to")
 parser.add_argument('-l','--log-level',dest='logLevel',type=int,default=0,choices=[10, 12, 15, 20, 30, 40, 50, 100],help="The lowest level of message logged (debug 10, input/output 12, debugwarning 15, info 20, warning 30, error 40, critical 50, off 100), default is info")
@@ -104,12 +103,12 @@ parser.add_argument('--portable-path',dest='portablePath',default=None,type=str,
 parser.add_argument('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
 parser.add_argument('--enable-start-on-logon',metavar="True|False",type=stringToBool,dest='enableStartOnLogon',default=None,
 	help="When installing, enable NVDA's start on the logon screen")
-# This option currently doesn't actually do anything.
-# It is passed by Ease of Access so that if someone downgrades without uninstalling (despite our discouragement),
-# the downgraded copy won't be started in non-secure mode on secure desktops.
+# This option is passed by Ease of Access so that if someone downgrades without uninstalling
+# (despite our discouragement), the downgraded copy won't be started in non-secure mode on secure desktops.
 # (Older versions always required the --secure option to start in secure mode.)
 # If this occurs, the user will see an obscure error,
 # but that's far better than a major security hazzard.
+# If this option is provided, NVDA will not replace an already running instance (#10179) 
 parser.add_argument('--ease-of-access',action="store_true",dest='easeOfAccess',default=False,help="Started by Windows Ease of Access")
 (globalVars.appArgs,globalVars.appArgsExtra)=parser.parse_known_args()
 
@@ -145,12 +144,15 @@ except:
 	oldAppWindowHandle=0
 if not winUser.isWindow(oldAppWindowHandle):
 	oldAppWindowHandle=0
-if oldAppWindowHandle and (globalVars.appArgs.quit or globalVars.appArgs.replace):
+if oldAppWindowHandle and not globalVars.appArgs.easeOfAccess:
+	if globalVars.appArgs.check_running:
+		# NVDA is running.
+		sys.exit(0)
 	try:
 		terminateRunningNVDA(oldAppWindowHandle)
 	except:
 		sys.exit(1)
-if globalVars.appArgs.quit or (oldAppWindowHandle and not globalVars.appArgs.replace):
+if globalVars.appArgs.quit or (oldAppWindowHandle and globalVars.appArgs.easeOfAccess):
 	sys.exit(0)
 elif globalVars.appArgs.check_running:
 	# NVDA is not running.

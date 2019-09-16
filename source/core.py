@@ -104,7 +104,7 @@ def doStartupDialogs():
 			gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None),onResult)
 
 def restart(disableAddons=False, debugLogging=False):
-	"""Restarts NVDA by starting a new copy with -r."""
+	"""Restarts NVDA by starting a new copy."""
 	if globalVars.appArgs.launcher:
 		import wx
 		globalVars.exitCode=3
@@ -114,8 +114,6 @@ def restart(disableAddons=False, debugLogging=False):
 	import winUser
 	import shellapi
 	options=[]
-	if "-r" not in sys.argv:
-		options.append("-r")
 	try:
 		sys.argv.remove('--disable-addons')
 	except ValueError:
@@ -428,6 +426,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("initializing Java Access Bridge support")
 	try:
 		JABHandler.initialize()
+		log.info("Java Access Bridge support initialized")
 	except NotImplementedError:
 		log.warning("Java Access Bridge not available")
 	except:
