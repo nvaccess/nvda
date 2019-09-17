@@ -201,7 +201,7 @@ class MetadataEditField(RichEdit50):
 		if ((winVersion.winVersion.major, winVersion.winVersion.minor) == (6, 1)):
 			cls.TextInfo = EditTextInfo
 		else:
-			cls.TextInfo = super().TextInfo
+			cls.TextInfo = super(MetadataEditField, self).TextInfo
 		return cls.TextInfo
 
 class AppModule(appModuleHandler.AppModule):
