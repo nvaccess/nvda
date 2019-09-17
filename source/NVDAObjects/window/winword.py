@@ -17,7 +17,7 @@ import colorsys
 import sayAllHandler
 import eventHandler
 import braille
-import scriptHandler
+from scriptHandler import script
 import languageHandler
 import ui
 import NVDAHelper
@@ -1378,6 +1378,7 @@ class WordDocument(Window):
 			# Translators: a message when toggling change tracking in Microsoft word
 			ui.message(_("Change tracking off"))
 	
+	@script(gestures=["kb:tab", "kb:shift+tab"])
 	def script_tab(self,gesture):
 		"""
 		A script for the tab key which:
@@ -1483,8 +1484,6 @@ class WordDocument(Window):
 		"kb:control+2":"changeLineSpacing",
 		"kb:control+5":"changeLineSpacing",
 		"kb:control+shift+e": "toggleChangeTracking",
-		"kb:tab": "tab",
-		"kb:shift+tab": "tab",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 	}
