@@ -14,6 +14,7 @@ import time
 import appModuleHandler
 import controlTypes
 import winUser
+import winVersion
 import api
 import speech
 import eventHandler
@@ -21,6 +22,7 @@ import mouseHandler
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible import sysListView32, IAccessible, List
 from NVDAObjects.UIA import UIA
+from NVDAObjects.window.edit import RichEdit50, EditTextInfo
 
 # Suppress incorrect Win 10 Task switching window focus
 class MultitaskingViewFrameWindow(UIA):
@@ -177,6 +179,19 @@ class ReadOnlyEditBox(IAccessible):
 			return windowText.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 		return windowText
 
+
+class MetadataEditField(RichEdit50):
+	""" Used for metadata edit fields in Windows Explorer in Windows 7.
+	By default these fields would use ITextDocumentTextInfo ,
+	but to avoid Windows Explorer crashes we need to use EditTextInfo here. """
+	@classmethod
+	def _get_TextInfo(cls):
+		if ((winVersion.winVersion.major, winVersion.winVersion.minor) == (6, 1)):
+			cls.TextInfo = EditTextInfo
+		else:
+			cls.TextInfo = super().TextInfo
+		return cls.TextInfo
+
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
@@ -215,6 +230,10 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.remove(List)
 			clsList.insert(0, StartButton)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
+
+		if windowClass == 'RICHEDIT50W' and obj.windowControlID == 256:
+			clsList.insert(0, MetadataEditField)
+			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if isinstance(obj, UIA):
 			uiaClassName = obj.UIAElement.cachedClassName

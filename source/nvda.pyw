@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #nvda.pyw
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee
+#Copyright (C) 2006-2019 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -103,12 +104,12 @@ parser.add_argument('--portable-path',dest='portablePath',default=None,type=str,
 parser.add_argument('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
 parser.add_argument('--enable-start-on-logon',metavar="True|False",type=stringToBool,dest='enableStartOnLogon',default=None,
 	help="When installing, enable NVDA's start on the logon screen")
-# This option currently doesn't actually do anything.
-# It is passed by Ease of Access so that if someone downgrades without uninstalling (despite our discouragement),
-# the downgraded copy won't be started in non-secure mode on secure desktops.
+# This option is passed by Ease of Access so that if someone downgrades without uninstalling
+# (despite our discouragement), the downgraded copy won't be started in non-secure mode on secure desktops.
 # (Older versions always required the --secure option to start in secure mode.)
 # If this occurs, the user will see an obscure error,
 # but that's far better than a major security hazzard.
+# If this option is provided, NVDA will not replace an already running instance (#10179) 
 parser.add_argument('--ease-of-access',action="store_true",dest='easeOfAccess',default=False,help="Started by Windows Ease of Access")
 (globalVars.appArgs,globalVars.appArgsExtra)=parser.parse_known_args()
 
@@ -144,7 +145,7 @@ except:
 	oldAppWindowHandle=0
 if not winUser.isWindow(oldAppWindowHandle):
 	oldAppWindowHandle=0
-if oldAppWindowHandle:
+if oldAppWindowHandle and not globalVars.appArgs.easeOfAccess:
 	if globalVars.appArgs.check_running:
 		# NVDA is running.
 		sys.exit(0)
@@ -152,7 +153,7 @@ if oldAppWindowHandle:
 		terminateRunningNVDA(oldAppWindowHandle)
 	except:
 		sys.exit(1)
-if globalVars.appArgs.quit:
+if globalVars.appArgs.quit or (oldAppWindowHandle and globalVars.appArgs.easeOfAccess):
 	sys.exit(0)
 elif globalVars.appArgs.check_running:
 	# NVDA is not running.
@@ -205,8 +206,8 @@ logHandler.initialize()
 logHandler.log.setLevel(logLevel)
 if logLevel is log.DEBUG:
 	log.debug("Provided arguments: {}".format(sys.argv[1:]))
-
-log.info("Starting NVDA")
+import buildVersion
+log.info("Starting NVDA version %s" % buildVersion.version)
 log.debug("Debug level logging enabled")
 if globalVars.appArgs.changeScreenReaderFlag:
 	winUser.setSystemScreenReaderFlag(True)
