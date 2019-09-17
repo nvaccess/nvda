@@ -595,6 +595,8 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		objLocation = self.obj.location
 		objRect = objLocation.toLTRB().toLogical(self.obj.windowHandle)
 		caretRect = caretRect.intersection(objRect)
+		if not any(caretRect):
+			raise RuntimeError("The caret rectangle does not overlap with the window")
 		# Find a character offset where the caret overlaps vertically, overlaps horizontally, overlaps the baseline and is totally within or on the correct side for the reading order
 		try:
 			return self._findCaretOffsetFromLocation(caretRect,validateBaseline=True,validateDirection=True)
