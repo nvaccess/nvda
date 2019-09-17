@@ -368,6 +368,38 @@ CComPtr<IAccessible2> GeckoVBufBackend_t::getSelectedItem(
 	return nullptr;
 }
 
+/**
+ * Get the text box inside a combo box, if any.
+ */
+CComPtr<IAccessible2> getTextBoxInComboBox(
+	IAccessible2* comboBox
+) {
+	CComPtr<IDispatch> childDisp;
+	// We only check the first child.
+	if (FAILED(comboBox->get_accChild(CComVariant(1), &childDisp))) {
+		return nullptr;
+	}
+	CComQIPtr<IAccessible2> child = childDisp;
+	if (!child) {
+		return nullptr;
+	}
+	long role;
+	if (FAILED(child->role(&role))) {
+		return nullptr;
+	}
+	if (role != ROLE_SYSTEM_TEXT) {
+		return nullptr;
+	}
+	CComVariant state;
+	if (FAILED(child->get_accState(CComVariant(CHILDID_SELF), &state))) {
+		return nullptr;
+	}
+	if (state.vt != VT_I4 || !(state.lVal & STATE_SYSTEM_FOCUSABLE)) {
+		return nullptr;
+	}
+	return child;
+}
+
 const vector<wstring>ATTRLIST_ROLES(1, L"IAccessible2::attribute_xml-roles");
 const wregex REGEX_PRESENTATION_ROLE(L"IAccessible2\\\\:\\\\:attribute_xml-roles:.*\\bpresentation\\b.*;");
 
@@ -965,6 +997,25 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 					static_cast<VBufStorage_controlFieldNode_t*>(tempNode)->requiresParentUpdate = true;
 				} else {
 					LOG_DEBUG(L"Error in calling fillVBuf");
+				}
+			}
+
+		} else if (role == ROLE_SYSTEM_COMBOBOX) {
+			CComPtr<IAccessible2> textBox = getTextBoxInComboBox(pacc);
+			if (textBox) {
+				// ARIA 1.1 combobox. Render the text box child.
+				if (tempNode = this->fillVBuf(textBox, buffer, parentNode, previousNode,
+					paccTable, paccTable2, tableID, presentationalRowNumber,
+					ignoreInteractiveUnlabelledGraphics)
+				) {
+					previousNode=tempNode;
+				} else {
+					LOG_DEBUG(L"Error in calling fillVBuf");
+				}
+			} else if (value) {
+				previousNode=buffer->addTextFieldNode(parentNode,previousNode,value);
+				if(previousNode && !locale.empty()) {
+					previousNode->addAttribute(L"language", locale);
 				}
 			}
 

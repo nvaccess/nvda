@@ -80,13 +80,15 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 	def __init__(self):
 		super(VisionEnhancementProvider, self).__init__()
 		Magnification.MagInitialize()
-		Magnification.MagShowSystemCursor(False)
 		Magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
+		Magnification.MagShowSystemCursor(False)
 
 	def terminate(self):
-		super(VisionEnhancementProvider, self).terminate()
-		Magnification.MagShowSystemCursor(True)
-		Magnification.MagUninitialize()
+		try:
+			super(VisionEnhancementProvider, self).terminate()
+		finally:
+			Magnification.MagShowSystemCursor(True)
+			Magnification.MagUninitialize()
 
 	def registerEventExtensionPoints(self, extensionPoints):
 		# The screen curtain isn't interested in any events

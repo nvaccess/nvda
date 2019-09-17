@@ -642,9 +642,25 @@ bool VBufStorage_buffer_t::replaceSubtrees(map<VBufStorage_fieldNode_t*,VBufStor
 			for(previous=parent->previous;previous!=NULL;relativeSelectionStart+=previous->length,previous=previous->previous);
 		}
 	}
+	// For each buffer in the map,
+	// Reverse iterate over all reference nodes, replacing them with the existing nodes in the original buffer they point to.
+	// We must iterate in reverse as new nodes are always inserted using parent and previous as the location,
+	// iterating forward would cause a future reference node's previous to be come invalid as it had been replaced. 
+	for(auto subtreeEntryIter=m.cbegin();subtreeEntryIter!=m.cend();++subtreeEntryIter) {
+		auto node=subtreeEntryIter->first;
+		auto buffer=subtreeEntryIter->second;
+		for(auto referenceNodeIter=buffer->referenceNodes.rbegin();referenceNodeIter!=buffer->referenceNodes.rend();++referenceNodeIter) {
+			auto parent=(*referenceNodeIter)->parent;
+			auto previous=(*referenceNodeIter)->previous;
+			auto referenced=(*referenceNodeIter)->referenceNode;
+			buffer->removeFieldNode(*referenceNodeIter);
+			this->unlinkFieldNode(referenced);
+			buffer->insertNode(parent,previous,referenced);
+		}
+	}
 	//For each node in the map,
 	//Replace the node on this buffer, with the content of the buffer in the map for that node
-	//Note that controlField info will automatically be removed, but not added again
+	//Note that controlField info will automatically be removed, but not added again.
 	bool failedBuffers=false;
 	for(map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>::iterator i=m.begin();i!=m.end();) {
 		VBufStorage_fieldNode_t* node=i->first;
@@ -654,17 +670,6 @@ bool VBufStorage_buffer_t::replaceSubtrees(map<VBufStorage_fieldNode_t*,VBufStor
 			failedBuffers=true;
 			m.erase(i++);
 			continue;
-		}
-		// Reverse iterate over all reference nodes, replacing them with the existing nodes in the original buffer they point to.
-		// We must iterate in reverse as new nodes are always inserted using parent and previous as the location,
-		 // iterating forward would cause a future reference node's previous to be come invalid as it had been replaced. 
-		for(auto i=buffer->referenceNodes.rbegin();i!=buffer->referenceNodes.rend();++i) {
-			VBufStorage_controlFieldNode_t* parent=(*i)->parent;
-			VBufStorage_fieldNode_t* previous=(*i)->previous;
-			VBufStorage_controlFieldNode_t* referenced=(*i)->referenceNode;
-			buffer->removeFieldNode(*i);
-			this->unlinkFieldNode(referenced);
-			buffer->insertNode(parent,previous,referenced);
 		}
 		parent=node->parent;
 		previous=node->previous;

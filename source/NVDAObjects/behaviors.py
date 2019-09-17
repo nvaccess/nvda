@@ -559,11 +559,11 @@ class RowWithFakeNavigation(NVDAObject):
 	def script_moveToNextColumn(self, gesture):
 		cur = api.getNavigatorObject()
 		if cur == self:
-			new = self.firstChild
+			new = self.simpleFirstChild
 		elif cur.parent != self:
 			new = self
 		else:
-			new = cur.next
+			new = cur.simpleNext
 		self._moveToColumn(new)
 	script_moveToNextColumn.canPropagate = True
 	# Translators: The description of an NVDA command.
@@ -573,10 +573,10 @@ class RowWithFakeNavigation(NVDAObject):
 		cur = api.getNavigatorObject()
 		if cur == self:
 			new = None
-		elif cur.parent != self or cur.columnNumber == 1:
+		elif cur.parent != self or not cur.simplePrevious:
 			new = self
 		else:
-			new = cur.previous
+			new = cur.simplePrevious
 		self._moveToColumn(new)
 	script_moveToPreviousColumn.canPropagate = True
 	# Translators: The description of an NVDA command.
@@ -711,7 +711,10 @@ class _FakeTableCell(NVDAObject):
 		return id(self.parent.parent)
 
 	def _get_states(self):
-		return self.parent.states
+		states = self.parent.states.copy()
+		if not self.location or self.location.width == 0:
+			states.add(controlTypes.STATE_INVISIBLE)
+		return states
 
 class FocusableUnfocusableContainer(NVDAObject):
 	"""Makes an unfocusable container focusable using its first focusable descendant.
