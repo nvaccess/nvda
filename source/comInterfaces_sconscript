@@ -24,6 +24,8 @@ def interfaceAction(target,source,env):
 		source=(clsid,env['majorVersion'],env['minorVersion'])
 	else:
 		source=str(source[0])
+	# Make sure the importlib cache is empty as a new module will be generated.
+	importlib.invalidate_caches()
 	comtypes.client.GetModule(source)
 
 interfaceBuilder=env.Builder(
@@ -31,11 +33,9 @@ interfaceBuilder=env.Builder(
 )
 env['BUILDERS']['comtypesInterface']=interfaceBuilder
 
-	#Bit of a dance to force comtypes generated interfaces in to our directory
+# Force comtypes generated interfaces in to our directory
 import comtypes.client
 comtypes.client.gen_dir=Dir('comInterfaces').abspath
-import sys
-sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),locals(),[])
 
 COM_INTERFACES = {
 	"IAccessible2Lib.py": "typelibs/ia2.tlb",
