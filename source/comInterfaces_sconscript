@@ -24,8 +24,6 @@ def interfaceAction(target,source,env):
 		source=(clsid,env['majorVersion'],env['minorVersion'])
 	else:
 		source=str(source[0])
-	# Make sure the importlib cache is empty as a new module will be generated.
-	importlib.invalidate_caches()
 	comtypes.client.GetModule(source)
 
 interfaceBuilder=env.Builder(

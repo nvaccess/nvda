@@ -38,6 +38,7 @@ def recursiveCopy(env,targetDir,sourceDir):
 import gettext
 gettext.install("nvda")
 sys.path.append("source")
+import comtypesMonkeyPatches
 import versionInfo
 del sys.path[-1]
 
