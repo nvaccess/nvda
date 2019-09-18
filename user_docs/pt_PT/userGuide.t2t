@@ -401,6 +401,7 @@ Os comandos seguintes estão disponíveis para a revisão de texto:
 | Seleccionar e copiar a partir do cursor de revisão | NVDA+F9 | NVDA+F9 | Nenhum | Inicia o Seleccionar e copiar o texto a partir da posição actual do cursor de revisão. A função não será efectuada até que informe o NVDA até onde é que pretende copiar |
 | Seleccionar e copiar até ao cursor de revisão | NVDA+F10 | NVDA+F10 | Nenhum | Ao pressionar a primeira vez o texto, se possível, é seleccionado até à posição do cursor. Ao pressionar segunda vez copia o texto para a área de transferência do Windows |
 | Anunciar formatação de texto | NVDA+f | NVDA+f | Nenhum | Anuncia a formatação do texto onde o cursor de revisão está posicionado actualmente. Pressionando duas vezes, as informações serão mostradas numa janela. |
+| Anunciar substituto do símbolo actual | Nenhum | Nenhum | Nenhum | Anuncia o símbolo sob o cursor de revisão. Pressionado duas vezes, anuncia o símbolo e o texto com que é anunciado em modo de navegação. |
 %kc:endInclude
 
 Nota: As teclas do bloco numérico exigem que o NumLock esteja desligado, para que possam executar os comandos do NVDA.
@@ -566,11 +567,8 @@ Uma vez escolhido um item, pode utilizar os botões fornecidos no diálogo, para
 ++ Localizar texto ++[SearchingForText]
 Este diálogo permite procurar palavras ou expressões no documento atual.
 No campo "Localizar", introduza o texto a pesquisar.
-No campo de edição, pode usar as setas para cima ou para baixo para selecionar os termos pesquisados anteriormente.
 A caixa de verificação "Maiúsculas/minúsculas" faz com que a pesquisa considere as letras maiúsculas diferentes das minúsculas.
 Por exemplo, com a opção "Maiúsculas/minúsculas" marcada, pode encontrar "NV Access", mas não "nv access".
-Diferenças de capitalização não serão guardadas no histórico de pesquisas.
-Quando o NVDA é reiniciado, a lista do histórico é apagada.
 Use os seguintes comandos para pesquisar:
 %kc:beginInclude
 || Nome | Comando de Teclado | Descrição |
@@ -1668,8 +1666,14 @@ Ao activar esta opção, o NVDA irá utilizar a API de acessibilidade da Microso
 Isto inclui o próprio Microsoft Word e também o visualizador e o compositor de mensagens do Microsoft Outlook.
 Para as versões mais recentes do Microsoft Office, 2016/365, em execução no Windows 10, o suporte da UI Automation está suficientemente completo para fornecer praticamente o mesmo acesso aos documentos do Microsoft Word, que havia antes, com a vantagem adicional de aumentar significativamente a capacidade de resposta.
 No entanto, em algumas versões do Microsoft Office, pode haver algumas informações que não são expostas, ou o são incorrectamente, pelo que o suporte UI Automation nem sempre deve ser activado.
-Ainda não é recomendável, para a maioria dos utilizadores, activar esta opção por padrão, embora seja aceitável que os utilizadores do Office 2016/365 queiram testar este recurso e fornecer feedback.
+Ainda não é recomendável, para a maioria dos utilizadores, activar esta opção por padrão, embora seja aceitável que os utilizadores do Office 2016/365 queiram testar este recurso e fornecer "feedback".
  
+==== Usar UI Automation para aceder a Consola do Windows, se disponível ====[AdvancedSettingsConsoleUIA]
+Quando esta opção está activada, o NVDA usará o, ainda em progresso,  suporte para a consola do Windows, que aproveita as melhorias de [acessibilidade desenvolvidas pela Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Esta funcionalidade ainda está numa fase inicial, experimental, e ainda incompleta, pelo que o seu uso ainda não é recomendado. No entanto, quando estiver terminado, espera-se que este suporte venha a ser o padrão, melhorando o funcionamento e estabilidade do NVDA nas consolas do Windows.
+
+==== Anunciar palavras-passe em consolas UIA ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Esta opção controla se os caracteres são anunciados de acordo com a opção [Anunciar Caracteres Escritos#KeyboardSettingsSpeakTypedCharacters] ou [Anunciar Palavras Escritas #KeyboardSettingsSpeakTypedWords] nas situações em que o ecrã não é actualizado, como na introdução de palavra-passe em consolas Windows com o suporte da UI automation activada. Por razões de seguranção, esta opção deve ser deixada desactivada. No entanto, pode querer activá-la se experimentar problemas de performance ou instabilidade no anúncio de caracteres e/ou palavras escritas usando o suporte experimental do NVDA às consolas do Windows.
+
 ==== Definir automaticamente o foco do sistema para os elementos focáveis em modo de navegação ====[BrowseModeSettingsAutoFocusFocusableElements]
 Comando: NVDA+8
 
@@ -1888,7 +1892,8 @@ Para alterar a configuração do NVDA, nos ecrãs de autenticação/ecrãs UAC, 
 + Ferramentas +[ExtraTools]
 
 ++ Visualizador de Registo ++[LogViewer]
-O Visualizador de Registo encontra-se no submenu "Ferramentas", do Menu do NVDA e permite-lhe ver todas as saídas de registo que têm ocorrido até agora, desde que iniciou o NVDA pela última vez.
+O Visualizador de Registo encontra-se no submenu "Ferramentas", do Menu do NVDA e permite-lhe ver todas as entradas de registo que têm ocorrido até agora, desde que iniciou o NVDA pela última vez.
+Pode abri-lo pressionando NVDA+F1 para visualizar as informações para desenvolvedores sobre o actual objecto de navegação.
 
 Para além de ler o conteúdo, também pode Guardar uma cópia do ficheiro de registo, ou actualizar o visualizador, de forma a apresentar a saída mais recente, desde que o Visualizador de Registo foi aberto.
 Estas acções estão disponíveis no menu "Registo do visualizador".

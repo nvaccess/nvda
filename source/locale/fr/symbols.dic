@@ -19,6 +19,7 @@ decimal point	(?<![^\d -])\,(?=\d)
 thousands separator	(?<![^\d -])\.(?=\d{3}(\D|$))
 in-word '	(?<=[^\W_])['’]
 in-word -	(?<=[^\W_])[-]
+between-words -	(?<=\s)[-](?=\s)
 negative number	(?<!\w)-(?=[$£€¥.]?\d)
 dates .	((?<=\b\d\d)\.(?=\d\d.(\d{2}|\d{4})\b))|((?<=\b\d\d.\d\d)\.(?=(\d{2}|\d{4})\b))
 dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
@@ -46,6 +47,7 @@ negative number	moins	none	norep	# - devant un nombre
 after-number %	pour cent	none	norep	# % après un nombre
 in-word '	apostrophe	# ' dans un mot
 in-word -	tiret	all	norep	# - dans un mot
+between-words -	tiret	all	norep	# - entre deux mots
 n°	numéro	none	norep	# numéro
 
 # Whitespace

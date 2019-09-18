@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#NVDAObjects/behaviors.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Joseph Lee
+# NVDAObjects/behaviors.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler
 
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.
@@ -261,6 +261,15 @@ class LiveText(NVDAObject):
 		"""
 		return list(self.makeTextInfo(textInfos.POSITION_ALL).getTextInChunks(textInfos.UNIT_LINE))
 
+	def _reportNewLines(self, lines):
+		"""
+		Reports new lines of text using _reportNewText for each new line.
+		Subclasses may override this method to provide custom filtering of new text,
+		where logic depends on multiple lines.
+		"""
+		for line in lines:
+			self._reportNewText(line)
+
 	def _reportNewText(self, line):
 		"""Report a line of new text.
 		"""
@@ -294,8 +303,8 @@ class LiveText(NVDAObject):
 						# which probably means it is just a typed character,
 						# so ignore it.
 						del outLines[0]
-					for line in outLines:
-						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewText, line)
+					if outLines:
+						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewLines, outLines)
 				oldLines = newLines
 			except:
 				log.exception("Error getting lines or calculating new text")
@@ -367,6 +376,11 @@ class Terminal(LiveText, EditableText):
 		super(Terminal, self).event_loseFocus()
 		self.stopMonitoring()
 
+	def _get_caretMovementDetectionUsesEvents(self):
+		"""Using caret events in consoles sometimes causes the last character of the
+		prompt to be read when quickly deleting text."""
+		return False
+
 
 class KeyboardHandlerBasedTypedCharSupport(Terminal):
 	"""A Terminal object that also provides typed character support for
@@ -392,14 +406,15 @@ class KeyboardHandlerBasedTypedCharSupport(Terminal):
 	#: be short.
 	_hasTab = False
 
-	def _reportNewText(self, line):
+	def _reportNewLines(self, lines):
 		# Perform typed character filtering, as typed characters are handled with events.
 		if (
-			not self._hasTab
-			and len(line.strip()) < max(len(speech.curWordChars) + 1, 3)
+			len(lines) == 1
+			and not self._hasTab
+			and len(lines[0].strip()) < max(len(speech.curWordChars) + 1, 3)
 		):
 			return
-		super()._reportNewText(line)
+		super()._reportNewLines(lines)
 
 	def event_typedCharacter(self, ch):
 		if ch == '\t':
@@ -554,11 +569,11 @@ class RowWithFakeNavigation(NVDAObject):
 	def script_moveToNextColumn(self, gesture):
 		cur = api.getNavigatorObject()
 		if cur == self:
-			new = self.firstChild
+			new = self.simpleFirstChild
 		elif cur.parent != self:
 			new = self
 		else:
-			new = cur.next
+			new = cur.simpleNext
 		self._moveToColumn(new)
 	script_moveToNextColumn.canPropagate = True
 	# Translators: The description of an NVDA command.
@@ -568,10 +583,10 @@ class RowWithFakeNavigation(NVDAObject):
 		cur = api.getNavigatorObject()
 		if cur == self:
 			new = None
-		elif cur.parent != self or cur.columnNumber == 1:
+		elif cur.parent != self or not cur.simplePrevious:
 			new = self
 		else:
-			new = cur.previous
+			new = cur.simplePrevious
 		self._moveToColumn(new)
 	script_moveToPreviousColumn.canPropagate = True
 	# Translators: The description of an NVDA command.
@@ -706,7 +721,10 @@ class _FakeTableCell(NVDAObject):
 		return id(self.parent.parent)
 
 	def _get_states(self):
-		return self.parent.states
+		states = self.parent.states.copy()
+		if not self.location or self.location.width == 0:
+			states.add(controlTypes.STATE_INVISIBLE)
+		return states
 
 class FocusableUnfocusableContainer(NVDAObject):
 	"""Makes an unfocusable container focusable using its first focusable descendant.

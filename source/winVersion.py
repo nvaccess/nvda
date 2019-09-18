@@ -56,3 +56,7 @@ def isWin10(version=1507, atLeast=True):
 	except KeyError:
 		log.error("Unknown Windows 10 version {}".format(version))
 		return False
+
+
+def isFullScreenMagnificationAvailable():
+	return (winVersion.major, winVersion.minor) >= (6, 2)
