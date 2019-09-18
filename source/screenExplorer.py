@@ -62,7 +62,7 @@ def playObjectCoordinates(obj):
 	# First, obtain where the center of the object is.
 	x, y = obj.location.center
 	# The object might be located on another display.
-	displays = [ wx.Display(i).GetGeometry() for i in xrange(wx.Display.GetCount()) ]
+	displays = [wx.Display(i).GetGeometry() for i in range(wx.Display.GetCount())]
 	x, y = mouseHandler.getMouseRestrictedToScreens(x, y, displays)
 	screenWidth, screenHeight, minPos = mouseHandler.getTotalWidthAndHeightAndMinimumPosition(displays)
 	playLocationCoordinates(x, y, screenWidth, screenHeight, screenMinPos=minPos, detectBrightness=False)
