@@ -501,7 +501,7 @@ class AppModule(baseObject.ScriptableObject):
 		e.g. File Explorer reports itself as immersive when it is not.
 		@rtype: bool
 		"""
-		if (winVersion.winVersion.major, winVersion.winVersion.minor) < (6, 2):
+		if winVersion.winVersion.platform_version < (6, 2, 9200):
 			# Windows Store/UWP apps were introduced in Windows 8.
 			self.isWindowsStoreApp = False
 			return False
