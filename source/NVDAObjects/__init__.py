@@ -1,13 +1,15 @@
 # -*- coding: UTF-8 -*-
-#NVDAObjects/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V., Davy Kager, Joseph Lee
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# NVDAObjects/__init__.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Patrick Zajda, Babbage B.V., Davy Kager, Joseph Lee
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Module that contains the base NVDA object type and support services.
 
-In the NVDA world, an object represents graphical elements and provides useful services such as scripts, properties and overlay classes.
+In the NVDA world, an object represents graphical elements
+and provides useful services such as scripts, properties and overlay classes.
 """
 
 import time
@@ -1059,10 +1061,13 @@ This code is executed if a gain focus event is received by this object.
 		@param isFocus: true if the navigator object was set due to a focus change.
 		@type isFocus: bool
 		"""
-		# #2559: coordinate tone playback takes priority, as it should be done regardless of state of braille output at the moment.
+		# #2559: coordinate tone playback takes priority,
+		# as it should be done regardless of state of braille output at the moment.
 		playObjectCoordinates = config.conf["presentation"]["playObjectCoordinates"]
-		if ((not isFocus and playObjectCoordinates in ("objNav", "both"))
-		or (isFocus and playObjectCoordinates in ("focus", "both"))):
+		if (
+			(not isFocus and playObjectCoordinates in ("objNav", "both"))
+			or (isFocus and playObjectCoordinates in ("focus", "both"))
+		):
 			screenExplorer.playObjectCoordinates(self)
 		# When the navigator object follows the focus and braille is auto tethered to review,
 		# we should not update braille with the new review position as a tether to focus is due.
@@ -1295,14 +1300,15 @@ This code is executed if a gain focus event is received by this object.
 		"""
 		return 0
 
+
 # Play object coordinates options and their human-readable representations.
-objCoordinateChoices=[
-	#Translators: An option to turn off playing of object coordinates.
+objCoordinateChoices = [
+	# Translators: An option to turn off playing of object coordinates.
 	("off", _("off")),
-	#Translators: An option to play object coordinates when moving navigator object.
+	# Translators: An option to play object coordinates when moving navigator object.
 	("objNav", _("when using object navigation")),
-	#Translators: An option to play object coordinates when moving system focus.
+	# Translators: An option to play object coordinates when moving system focus.
 	("focus", _("when focus moves")),
-	#Translators: An option to play object coordinates when moving by focus and object navigation.
+	# Translators: An option to play object coordinates when moving by focus and object navigation.
 	("both", _("both object navigation and focus"))
 ]

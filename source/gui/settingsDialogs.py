@@ -1583,13 +1583,19 @@ class ObjectPresentationPanel(SettingsPanel):
 		objCoordinatesText = _("&Play object coordinates:")
 		import NVDAObjects
 		playObjCoordinateChoices = [name for setting, name in NVDAObjects.objCoordinateChoices]
-		self.objCoordinatesCombo=sHelper.addLabeledControl(objCoordinatesText, wx.Choice, choices=playObjCoordinateChoices)
+		self.objCoordinatesCombo = sHelper.addLabeledControl(
+			objCoordinatesText,
+			wx.Choice,
+			choices=playObjCoordinateChoices
+		)
 		for index, (setting, name) in enumerate(NVDAObjects.objCoordinateChoices):
 			if setting == config.conf["presentation"]["playObjectCoordinates"]:
 				self.objCoordinatesCombo.SetSelection(index)
 				break
 		else:
-			log.debugWarning("Could not set object coordinates combo box to current object coordinate announcement setting")
+			log.debugWarning(
+				"Could not set object coordinates combo box to current object coordinate announcement option"
+			)
 
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings dialog.
@@ -1634,7 +1640,9 @@ class ObjectPresentationPanel(SettingsPanel):
 		config.conf["presentation"]["reportKeyboardShortcuts"]=self.shortcutCheckBox.IsChecked()
 		config.conf["presentation"]["reportObjectPositionInformation"]=self.positionInfoCheckBox.IsChecked()
 		config.conf["presentation"]["guessObjectPositionInformationWhenUnavailable"]=self.guessPositionInfoCheckBox.IsChecked()
-		config.conf["presentation"]["playObjectCoordinates"] = NVDAObjects.objCoordinateChoices[self.objCoordinatesCombo.GetSelection()][0]
+		config.conf["presentation"]["playObjectCoordinates"] = NVDAObjects.objCoordinateChoices[
+			self.objCoordinatesCombo.GetSelection()
+		][0]
 		config.conf["presentation"]["reportObjectDescriptions"]=self.descriptionCheckBox.IsChecked()
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]=self.progressLabels[self.progressList.GetSelection()][0]
 		config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]=self.reportBackgroundProgressBarsCheckBox.IsChecked()

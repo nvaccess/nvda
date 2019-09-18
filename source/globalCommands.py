@@ -1567,23 +1567,28 @@ class GlobalCommands(ScriptableObject):
 	script_toggleProgressBarOutput.__doc__=_("Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates")
 	script_toggleProgressBarOutput.category=SCRCAT_SPEECH
 
-	def script_togglePlayObjectCoordinates(self,gesture):
+	@script(
+		# Translators: Input help mode message for toggle object coordinate announcement command.
+		description=_(
+			"Toggles when object coordinate tone will be heard between off, "
+			"object navigation only, focus only, or always"
+		),
+		category=SCRCAT_OBJECTNAVIGATION
+	)
+	def script_togglePlayObjectCoordinates(self, gesture):
 		import NVDAObjects
 		values = [x[0] for x in NVDAObjects.objCoordinateChoices]
 		labels = [x[1] for x in NVDAObjects.objCoordinateChoices]
 		try:
 			index = values.index(config.conf["presentation"]["playObjectCoordinates"])
-		except:
-			index=0
-		newIndex = (index+1) % len(values)
+		except ValueError:
+			index = 0
+		newIndex = (index + 1) % len(values)
 		config.conf["presentation"]["playObjectCoordinates"] = values[newIndex]
 		# Translators: Reports the new state of object coordinate playback.
 		# %s will be replaced with play object coordinates setting.
 		# For example, the full message might be "Play object coordinates: when focus moves"
-		ui.message(_("Play object coordinates: %s")%labels[newIndex].lower())
-	# Translators: Input help mode message for toggle object coordinate announcement command.
-	script_togglePlayObjectCoordinates.__doc__ = _("Toggles when object coordinate tone will be heard between off, object navigation only, focus only, or always")
-	script_togglePlayObjectCoordinates.category = SCRCAT_OBJECTNAVIGATION
+		ui.message(_("Play object coordinates: {setting}").format(setting=labels[newIndex].lower()))
 
 	def script_toggleReportDynamicContentChanges(self,gesture):
 		if config.conf["presentation"]["reportDynamicContentChanges"]:

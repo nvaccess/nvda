@@ -1,8 +1,8 @@
-#screenExplorer.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2018 NV Access Limited, Joseph Lee
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# screenExplorer.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2012-2018 NV Access Limited, Joseph Lee
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Module which implements various utilities for screen exploration.
 This includes touchscreen movement as well as handling coordinate announcement for mouse and objects.
@@ -19,9 +19,15 @@ import config
 import mouseHandler
 import wx
 
-def playLocationCoordinates(x, y, screenWidth, screenHeight, screenMinPos=None, detectBrightness=True,blurFactor=0):
+
+def playLocationCoordinates(
+		x, y,
+		screenWidth, screenHeight, screenMinPos=None,
+		detectBrightness=True, blurFactor=0
+):
 	"""Plays a tone indicating the XY-coordinate for the given location.
-	This works for keyboard-based object navigation/focus movement, mouse movement and during touch hover gesture.
+	This works for keyboard-based object navigation/focus movement,
+	mouse movement, and during touch hover gesture.
 	Left to right adjusting the volume between left and right speakers.
 	Top to bottom adjusts the pitch of the sound.
 	Brightness adjusts the volume of the sound (applicable for mouse movement).
@@ -33,27 +39,30 @@ def playLocationCoordinates(x, y, screenWidth, screenHeight, screenMinPos=None, 
 	# Do not play any tone if offscreen.
 	if not (screenMinPos.x <= x <= screenWidth or screenMinPos.y <= y <= screenHeight):
 		return
-	minPitch=config.conf['mouse']['audioCoordinates_minPitch']
-	maxPitch=config.conf['mouse']['audioCoordinates_maxPitch']
-	curPitch=minPitch+((maxPitch-minPitch)*((screenHeight-y)/float(screenHeight)))
+	minPitch = config.conf['mouse']['audioCoordinates_minPitch']
+	maxPitch = config.conf['mouse']['audioCoordinates_maxPitch']
+	curPitch = minPitch + ((maxPitch - minPitch) * ((screenHeight - y) / float(screenHeight)))
 	if detectBrightness:
-		startX=min(max(x-blurFactor,0),screenWidth)+screenMinPos.x
-		startY=min(max(y-blurFactor,0),screenHeight)+screenMinPos.y
-		width=min(blurFactor+1,screenWidth)
-		height=min(blurFactor+1,screenHeight)
-		grey=screenBitmap.rgbPixelBrightness(mouseHandler.scrBmpObj.captureImage( startX, startY, width, height)[0][0])
-		brightness=grey/255.0
-		minBrightness=config.conf['mouse']['audioCoordinates_minVolume']
-		maxBrightness=config.conf['mouse']['audioCoordinates_maxVolume']
-		brightness=(brightness*(maxBrightness-minBrightness))+minBrightness
+		startX = min(max(x - blurFactor, 0), screenWidth) + screenMinPos.x
+		startY = min(max(y - blurFactor, 0), screenHeight) + screenMinPos.y
+		width = min(blurFactor + 1, screenWidth)
+		height = min(blurFactor + 1, screenHeight)
+		grey = screenBitmap.rgbPixelBrightness(
+			mouseHandler.scrBmpObj.captureImage(startX, startY, width, height)[0][0]
+		)
+		brightness = grey / 255.0
+		minBrightness = config.conf['mouse']['audioCoordinates_minVolume']
+		maxBrightness = config.conf['mouse']['audioCoordinates_maxVolume']
+		brightness = (brightness * (maxBrightness - minBrightness)) + minBrightness
 	else:
-		brightness=config.conf['mouse']['audioCoordinates_maxVolume']
-	leftVolume=int((85*((screenWidth-float(x))/screenWidth))*brightness)
-	rightVolume=int((85*(float(x)/screenWidth))*brightness)
-	tones.beep(curPitch,40,left=leftVolume,right=rightVolume)
+		brightness = config.conf['mouse']['audioCoordinates_maxVolume']
+	leftVolume = int((85 * ((screenWidth - float(x)) / screenWidth)) * brightness)
+	rightVolume = int((85 * (float(x) / screenWidth)) * brightness)
+	tones.beep(curPitch, 40, left=leftVolume, right=rightVolume)
+
 
 def playObjectCoordinates(obj):
-	"""Plays the audio coordinate for the object.  
+	"""Plays the audio coordinate for the object.
 	@param obj: the object for which the coordinates should be played
 	@type obj: NVDAObjects.NvDAObject
 	"""
