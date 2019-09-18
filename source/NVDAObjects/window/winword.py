@@ -1377,7 +1377,25 @@ class WordDocument(Window):
 		else:
 			# Translators: a message when toggling change tracking in Microsoft word
 			ui.message(_("Change tracking off"))
-	
+
+	def script_toggleDisplayNonprintingCharacters(self, gesture):
+		if not self.WinwordWindowObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the status change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or it's within Windows Defender Application Guard.
+			# In this case, just let the gesture through and don't report anything.
+			return gesture.send()
+		val = self._WaitForValueChangeForAction(
+			lambda: gesture.send(),
+			lambda: self.WinwordWindowObject.ActivePane.View.ShowAll
+		)
+		if val:
+			# Translators: a message when toggling Display Nonprinting Characters in Microsoft word
+			ui.message(_("Display Nonprinting Characters on"))
+		else:
+			# Translators: a message when toggling Display Nonprinting Characters in Microsoft word
+			ui.message(_("Display Nonprinting Characters off"))
+
 	@script(gestures=["kb:tab", "kb:shift+tab"])
 	def script_tab(self,gesture):
 		"""
@@ -1484,6 +1502,7 @@ class WordDocument(Window):
 		"kb:control+2":"changeLineSpacing",
 		"kb:control+5":"changeLineSpacing",
 		"kb:control+shift+e": "toggleChangeTracking",
+		"kb:control+shift+8": "toggleDisplayNonprintingCharacters",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 	}
