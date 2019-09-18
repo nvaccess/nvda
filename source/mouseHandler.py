@@ -169,7 +169,7 @@ def getTotalWidthAndHeightAndMinimumPosition(displays):
 def executeMouseMoveEvent(x,y):
 	global currentMouseWindow
 	desktopObject=api.getDesktopObject()
-	displays = [ wx.Display(i).GetGeometry() for i in xrange(wx.Display.GetCount()) ]
+	displays = [ wx.Display(i).GetGeometry() for i in range(wx.Display.GetCount()) ]
 	x, y = getMouseRestrictedToScreens(x, y, displays)
 	screenWidth, screenHeight, minPos = getTotalWidthAndHeightAndMinimumPosition(displays)
 	if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:

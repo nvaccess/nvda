@@ -27,6 +27,7 @@ import controlTypes
 import config
 import textInfos
 import braille
+import vision
 import speech
 import sayAllHandler
 import treeInterceptorHandler
@@ -35,7 +36,6 @@ import api
 import gui.guiHelper
 from NVDAObjects import NVDAObject
 from abc import ABCMeta, abstractmethod
-from six import with_metaclass
 
 REASON_QUICKNAV = "quickNav"
 
@@ -93,7 +93,7 @@ def mergeQuickNavItemIterators(iterators,direction="next"):
 			continue
 		curValues.append((it,newVal))
 
-class QuickNavItem(with_metaclass(ABCMeta, object)):
+class QuickNavItem(object, metaclass=ABCMeta):
 	""" Emitted by L{BrowseModeTreeInterceptor._iterNodesByType}, this represents one of many positions in a browse mode document, based on the type of item being searched for (e.g. link, heading, table etc)."""  
 
 	itemType=None #: The type of items searched for (e.g. link, heading, table etc) 
@@ -1025,7 +1025,7 @@ class ElementsListDialog(wx.Dialog):
 		else:
 			# Search the list.
 			# We have to implement this ourselves, as tree views don't accept space as a search character.
-			char = unichr(evt.UnicodeKey).lower()
+			char = chr(evt.UnicodeKey).lower()
 			# IF the same character is typed twice, do the same search.
 			if self._searchText != char:
 				self._searchText += char
@@ -1221,7 +1221,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 						speech.speakObject(self.rootNVDAObject, reason=controlTypes.REASON_FOCUS)
 				info = self.selection
 				if not info.isCollapsed:
-					speech.speakSelectedText(info.text)
+					speech.speakPreselectedText(info.text)
 				else:
 					info.expand(textInfos.UNIT_LINE)
 					speech.speakTextInfo(info, reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_LINE)
@@ -1504,6 +1504,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				speech.speakTextInfo(focusInfo,reason=controlTypes.REASON_FOCUS)
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
+				# As we do not call nextHandler which would trigger the vision framework to handle gain focus,
+				# we need to call it manually here.
+				vision.handler.handleGainFocus(obj)
 			else:
 				# Although we are going to speak the object rather than textInfo content, we still need to silently speak the textInfo content so that the textInfo speech cache is updated correctly.
 				# Not doing this would cause  later browseMode speaking to either not speak controlFields it had entered, or speak controlField exits after having already exited.
@@ -1519,9 +1522,13 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# This focus change was caused by a virtual caret movement, so don't speak the focused node to avoid double speaking.
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
-				if (
-					not config.conf["virtualBuffers"]["autoFocusFocusableElements"]
-					and self._lastFocusableObj
+				if config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+					# As we do not call nextHandler which would trigger the vision framework to handle gain focus,
+					# we need to call it manually here.
+					# Note: this is usually called after the caret movement.
+					vision.handler.handleGainFocus(obj)
+				elif (
+					self._lastFocusableObj
 					and obj == self._lastFocusableObj
 					and obj is not self._lastFocusableObj
 				):
@@ -1583,8 +1590,12 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if (
 			# roles such as application and dialog should be treated as being within a "application" and therefore outside of the browseMode document. 
 			obj.role in self.APPLICATION_ROLES 
-			# Anything inside a combo box should be treated as being outside a browseMode document.
-			or (obj.container and obj.container.role==controlTypes.ROLE_COMBOBOX)
+			# Anything other than an editable text box inside a combo box should be
+			# treated as being outside a browseMode document.
+			or (
+				obj.role != controlTypes.ROLE_EDITABLETEXT and obj.container
+				and obj.container.role == controlTypes.ROLE_COMBOBOX
+			)
 		):
 			return True
 		return None
@@ -1648,7 +1659,12 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		docConstId = self.documentConstantIdentifier
 		# Return True if the URL indicates that this is probably a web browser document.
 		# We do this check because we don't want to remember caret positions for email messages, etc.
-		return isinstance(docConstId, basestring) and docConstId.split("://", 1)[0] in ("http", "https", "ftp", "ftps", "file")
+		if isinstance(docConstId, str):
+			protocols=("http", "https", "ftp", "ftps", "file")
+			protocol=docConstId.split("://", 1)[0]
+			return protocol in protocols
+		return False
+
 
 	def _getInitialCaretPos(self):
 		"""Retrieve the initial position of the caret after the buffer has been loaded.
@@ -1664,14 +1680,14 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				pass
 		return None
 
-	def getEnclosingContainerRange(self,range):
-		range=range.copy()
-		range.collapse()
+	def getEnclosingContainerRange(self, textRange):
+		textRange = textRange.copy()
+		textRange.collapse()
 		try:
-			item = next(self._iterNodesByType("container", "up", range))
+			item = next(self._iterNodesByType("container", "up", textRange))
 		except (NotImplementedError,StopIteration):
 			try:
-				item = next(self._iterNodesByType("landmark", "up", range))
+				item = next(self._iterNodesByType("landmark", "up", textRange))
 			except (NotImplementedError,StopIteration):
 				return
 		return item.textInfo
@@ -1720,8 +1736,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	script_movePastEndOfContainer.__doc__=_("Moves past the end  of the container element, such as a list or table")
 
 	NOT_LINK_BLOCK_MIN_LEN = 30
-	def _isSuitableNotLinkBlock(self,range):
-		return len(range.text)>=self.NOT_LINK_BLOCK_MIN_LEN
+	def _isSuitableNotLinkBlock(self, textRange):
+		return len(textRange.text) >= self.NOT_LINK_BLOCK_MIN_LEN
 
 	def _iterNotLinkBlock(self, direction="next", pos=None):
 		links = self._iterNodesByType("link", direction=direction, pos=pos)
@@ -1731,15 +1747,15 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			item2 = next(links)
 			# If the distance between the links is small, this is probably just a piece of non-link text within a block of links; e.g. an inactive link of a nav bar.
 			if direction=="previous":
-				range=item1.textInfo.copy()
-				range.collapse()
-				range.setEndPoint(item2.textInfo,"startToEnd")
+				textRange=item1.textInfo.copy()
+				textRange.collapse()
+				textRange.setEndPoint(item2.textInfo,"startToEnd")
 			else:
-				range=item2.textInfo.copy()
-				range.collapse()
-				range.setEndPoint(item1.textInfo,"startToEnd")
-			if self._isSuitableNotLinkBlock(range):
-				yield TextInfoQuickNavItem("notLinkBlock",self,range)
+				textRange=item2.textInfo.copy()
+				textRange.collapse()
+				textRange.setEndPoint(item1.textInfo,"startToEnd")
+			if self._isSuitableNotLinkBlock(textRange):
+				yield TextInfoQuickNavItem("notLinkBlock", self, textRange)
 			item1=item2
 
 	__gestures={

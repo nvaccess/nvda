@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-14 00:10+1000\n"
+"POT-Creation-Date: 2019-08-16 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Bart Simons <bart@bartsimons.be>\n"
 "Language-Team: \n"
@@ -597,7 +597,7 @@ msgstr "aan leescursor"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Dot firm&ness"
-msgstr "Pu&tsterkte"
+msgstr "Pu&ntsterkte"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Braille inp&ut"
@@ -1763,12 +1763,6 @@ msgstr "%s oriëntatiepunt"
 msgid "lmk %s"
 msgstr "ortp %s"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#. Translators: Announces selected text. %s is replaced with the text.
-#, python-format
-msgid "selected %s"
-msgstr "geselecteerd %s"
-
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
 msgstr "Geen uitgebreide beschrijving"
@@ -2653,7 +2647,7 @@ msgstr "ingeschakeld"
 
 #. Translators: This is presented when a three state check box is half checked.
 msgid "half checked"
-msgstr "gedeeltelijk ingeschakeld"
+msgstr "half ingeschakeld"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
@@ -2694,7 +2688,7 @@ msgstr "vereist"
 #. Translators: Reported when an object no longer exists in the user interface;
 #. i.e. it is dead and is no longer usable.
 msgid "defunct"
-msgstr "niet beschikbaar"
+msgstr "onbruikbaar"
 
 #. Translators: This is presented when an invalid entry has been made.
 msgid "invalid entry"
@@ -2705,18 +2699,18 @@ msgstr "modaal"
 
 #. Translators: This is presented when a field supports auto completion of entered text such as email address field in Microsoft Outlook.
 msgid "has auto complete"
-msgstr "beschikt over auto aanvullen"
+msgstr "heeft auto aanvullen"
 
 #. Translators: This is presented when an edit field allows typing multiple lines of text such as comment fields on websites.
 msgid "multi line"
 msgstr "meerdere regels"
 
 msgid "iconified"
-msgstr "van pictogram voorzien"
+msgstr "bevat pictogram"
 
 #. Translators: Presented when the current control is located off screen.
 msgid "off screen"
-msgstr "buiten het scherm"
+msgstr "buiten scherm"
 
 #. Translators: Presented when the control allows selection such as text fields.
 msgid "selectable"
@@ -2758,7 +2752,7 @@ msgstr "aflopend gesorteerd"
 
 #. Translators: a state that denotes that an object (usually a graphic) has a long description.
 msgid "has long description"
-msgstr "bevat uitgebreide beschrijving"
+msgstr "heeft uitgebreide beschrijving"
 
 #. Translators: a state that denotes that an object is pinned in its current location
 msgid "pinned"
@@ -2766,12 +2760,12 @@ msgstr "vastgemaakt"
 
 #. Translators: a state that denotes the existance of a formula on a spreadsheet cell
 msgid "has formula"
-msgstr "bevat formule"
+msgstr "heeft formule"
 
 #. Translators: a state that denotes the existance of a comment.
 #. Translators: Reported when text contains a comment.
 msgid "has comment"
-msgstr "bevat opmerking"
+msgstr "heeft opmerking"
 
 #. Translators: a state that denotes that the object is covered partially or fully by another object
 msgid "obscured"
@@ -3130,10 +3124,6 @@ msgstr "Rechter muisknop vasthouden"
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "Vasthouden of loslaten van de rechter muisknop"
-
-#, python-format
-msgid "Selected %s"
-msgstr "Geselecteerd %s"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3829,6 +3819,31 @@ msgid ""
 msgstr ""
 "Verplaatst de leescursor naar het laatste karakter van de huidige regel van "
 "het navigatorobject, en spreekt het uit"
+
+#. Translators: Input help mode message for Review Current Symbol command.
+msgid ""
+"Reports the symbol where the review cursor is positioned. Pressed twice, "
+"shows the symbol and the text used to speak it in browse mode"
+msgstr ""
+"Meldt het symbool op de huidige leescursorpositie. Tweemaal drukken geeft in "
+"bladermodus het symbool en de tekst die wordt gebruikt om het uit te spreken "
+"weer"
+
+#. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+msgid "No symbol replacement"
+msgstr "Geen symboolvervanging"
+
+#. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+msgid ""
+"Character: {}\n"
+"Replacement: {}"
+msgstr ""
+"Karakter: {}\n"
+"Vervanging: {}"
+
+#. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+msgid "Expanded symbol ({})"
+msgstr "Vervangen symbool ({})"
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -6084,15 +6099,24 @@ msgstr "Hoofdletter %s"
 msgid "no indent"
 msgstr "geen inspringing"
 
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "geselecteerd %s"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s geselecteerd"
+
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d karakters"
-
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
-#, python-format
-msgid "%s selected"
-msgstr "%s geselecteerd"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -9464,6 +9488,17 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
+msgid "Use UI Automation to access the Windows Console when available"
+msgstr ""
+"Gebruik UI Automation voor toegang tot de Windows Console indien beschikbaar"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "Wachtwoorden uits&preken in UIA consoles (kan prestaties verbeteren)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
 msgid "Automatically set system &focus to focusable elements"
 msgstr "Systeem&focus automatisch verplaatsen naar focusbare elementen"
 
@@ -11307,6 +11342,9 @@ msgstr "Dubbele regelafstand"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 regelafstand"
+
+#~ msgid "Selected %s"
+#~ msgstr "Geselecteerd %s"
 
 #~ msgid "Currently running application is %s"
 #~ msgstr "De applicatie die momenteel uitgevoerd wordt is %s"

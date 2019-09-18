@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#NVDAObjects/behaviors.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Joseph Lee
+# NVDAObjects/behaviors.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler
 
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.
@@ -24,6 +24,7 @@ from . import NVDAObject, NVDAObjectTextInfo
 import textInfos
 import editableText
 from logHandler import log
+from scriptHandler import script
 import api
 import ui
 import braille
@@ -51,8 +52,8 @@ class ProgressBar(NVDAObject):
 			left,top,width,height=self.location
 		except:
 			left=top=width=height=0
-		x=left+(width/2)
-		y=top+(height/2)
+		x = left + (width // 2)
+		y = top+ (height // 2)
 		lastBeepProgressValue=self.progressValueCache.get("beep,%d,%d"%(x,y),None)
 		if pbConf["progressBarOutputMode"] in ("beep","both") and (lastBeepProgressValue is None or abs(percentage-lastBeepProgressValue)>=pbConf["beepPercentageInterval"]):
 			tones.beep(pbConf["beepMinHZ"]*2**(percentage/25.0),40)
@@ -77,7 +78,7 @@ class Dialog(NVDAObject):
 		children=obj.children
 		textList=[]
 		childCount=len(children)
-		for index in xrange(childCount):
+		for index in range(childCount):
 			child=children[index]
 			childStates=child.states
 			childRole=child.role
@@ -260,6 +261,15 @@ class LiveText(NVDAObject):
 		"""
 		return list(self.makeTextInfo(textInfos.POSITION_ALL).getTextInChunks(textInfos.UNIT_LINE))
 
+	def _reportNewLines(self, lines):
+		"""
+		Reports new lines of text using _reportNewText for each new line.
+		Subclasses may override this method to provide custom filtering of new text,
+		where logic depends on multiple lines.
+		"""
+		for line in lines:
+			self._reportNewText(line)
+
 	def _reportNewText(self, line):
 		"""Report a line of new text.
 		"""
@@ -293,8 +303,8 @@ class LiveText(NVDAObject):
 						# which probably means it is just a typed character,
 						# so ignore it.
 						del outLines[0]
-					for line in outLines:
-						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewText, line)
+					if outLines:
+						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewLines, outLines)
 				oldLines = newLines
 			except:
 				log.exception("Error getting lines or calculating new text")
@@ -323,7 +333,7 @@ class LiveText(NVDAObject):
 				textLen = len(text)
 				prevTextLen = len(prevText)
 				# Find the first character that differs between the two lines.
-				for pos in xrange(min(textLen, prevTextLen)):
+				for pos in range(min(textLen, prevTextLen)):
 					if text[pos] != prevText[pos]:
 						start = pos
 						break
@@ -336,7 +346,7 @@ class LiveText(NVDAObject):
 					# The lines are different lengths, so assume the rest of the line changed.
 					end = textLen
 				else:
-					for pos in xrange(textLen - 1, start - 1, -1):
+					for pos in range(textLen - 1, start - 1, -1):
 						if text[pos] != prevText[pos]:
 							end = pos + 1
 							break
@@ -363,7 +373,114 @@ class Terminal(LiveText, EditableText):
 		self.startMonitoring()
 
 	def event_loseFocus(self):
+		super(Terminal, self).event_loseFocus()
 		self.stopMonitoring()
+
+	def _get_caretMovementDetectionUsesEvents(self):
+		"""Using caret events in consoles sometimes causes the last character of the
+		prompt to be read when quickly deleting text."""
+		return False
+
+
+class KeyboardHandlerBasedTypedCharSupport(Terminal):
+	"""A Terminal object that also provides typed character support for
+	console applications via keyboardHandler events.
+	These events are queued from NVDA's global keyboard hook.
+	Therefore, an event is fired for every single character that is being typed,
+	even when a character is not written to the console (e.g. in read only console applications).
+	This approach is an alternative to monitoring the console output for
+	characters close to the caret, or injecting in-process with NVDAHelper.
+	This class relies on the toUnicodeEx Windows function, and in particular
+	the flag to preserve keyboard state available in Windows 10 1607
+	and later."""
+	#: Whether this object quickly and reliably sends textChange events
+	#: when its contents update.
+	#: Timely and reliable textChange events are required
+	#: to support password suppression.
+	_supportsTextChange = True
+	#: A queue of typed characters, to be dispatched on C{textChange}.
+	#: This queue allows NVDA to suppress typed passwords when needed.
+	_queuedChars = []
+	#: Whether the last typed character is a tab.
+	#: If so, we should temporarily disable filtering as completions may
+	#: be short.
+	_hasTab = False
+
+	def _reportNewLines(self, lines):
+		# Perform typed character filtering, as typed characters are handled with events.
+		if (
+			len(lines) == 1
+			and not self._hasTab
+			and len(lines[0].strip()) < max(len(speech.curWordChars) + 1, 3)
+		):
+			return
+		super()._reportNewLines(lines)
+
+	def event_typedCharacter(self, ch):
+		if ch == '\t':
+			self._hasTab = True
+			# Clear the typed word buffer for tab completion.
+			speech.clearTypedWordBuffer()
+		else:
+			self._hasTab = False
+		if (
+			(
+				config.conf['keyboard']['speakTypedCharacters']
+				or config.conf['keyboard']['speakTypedWords']
+			)
+			and not config.conf['terminals']['speakPasswords']
+			and self._supportsTextChange
+		):
+			self._queuedChars.append(ch)
+		else:
+			super().event_typedCharacter(ch)
+
+	def event_textChange(self):
+		self._dispatchQueue()
+		super().event_textChange()
+
+	@script(gestures=[
+		"kb:enter",
+		"kb:numpadEnter",
+		"kb:tab",
+		"kb:control+c",
+		"kb:control+d",
+		"kb:control+pause"
+	])
+	def script_flush_queuedChars(self, gesture):
+		"""
+		Flushes the typed word buffer and queue of typedCharacter events if present.
+		Since these gestures clear the current word/line, we should flush the
+		queue to avoid erroneously reporting these chars.
+		"""
+		self._queuedChars = []
+		speech.clearTypedWordBuffer()
+		gesture.send()
+
+	def _calculateNewText(self, newLines, oldLines):
+		hasNewLines = (
+			self._findNonBlankIndices(newLines)
+			!= self._findNonBlankIndices(oldLines)
+		)
+		if hasNewLines:
+			# Clear the typed word buffer for new text lines.
+			speech.clearTypedWordBuffer()
+			self._queuedChars = []
+		return super()._calculateNewText(newLines, oldLines)
+
+	def _dispatchQueue(self):
+		"""Sends queued typedCharacter events through to NVDA."""
+		while self._queuedChars:
+			ch = self._queuedChars.pop(0)
+			super().event_typedCharacter(ch)
+
+	def _findNonBlankIndices(self, lines):
+		"""
+		Given a list of strings, returns a list of indices where the strings
+		are not empty.
+		"""
+		return [index for index, line in enumerate(lines) if line]
+
 
 class CandidateItem(NVDAObject):
 
@@ -452,11 +569,11 @@ class RowWithFakeNavigation(NVDAObject):
 	def script_moveToNextColumn(self, gesture):
 		cur = api.getNavigatorObject()
 		if cur == self:
-			new = self.firstChild
+			new = self.simpleFirstChild
 		elif cur.parent != self:
 			new = self
 		else:
-			new = cur.next
+			new = cur.simpleNext
 		self._moveToColumn(new)
 	script_moveToNextColumn.canPropagate = True
 	# Translators: The description of an NVDA command.
@@ -466,10 +583,10 @@ class RowWithFakeNavigation(NVDAObject):
 		cur = api.getNavigatorObject()
 		if cur == self:
 			new = None
-		elif cur.parent != self or cur.columnNumber == 1:
+		elif cur.parent != self or not cur.simplePrevious:
 			new = self
 		else:
-			new = cur.previous
+			new = cur.simplePrevious
 		self._moveToColumn(new)
 	script_moveToPreviousColumn.canPropagate = True
 	# Translators: The description of an NVDA command.
@@ -554,7 +671,7 @@ class RowWithoutCellObjects(NVDAObject):
 		return self._makeCell(1)
 
 	def _get_children(self):
-		return [self._makeCell(column) for column in xrange(1, self.childCount + 1)]
+		return [self._makeCell(column) for column in range(1, self.childCount + 1)]
 
 	def getChild(self, index):
 		return self._makeCell(index + 1)
@@ -604,7 +721,10 @@ class _FakeTableCell(NVDAObject):
 		return id(self.parent.parent)
 
 	def _get_states(self):
-		return self.parent.states
+		states = self.parent.states.copy()
+		if not self.location or self.location.width == 0:
+			states.add(controlTypes.STATE_INVISIBLE)
+		return states
 
 class FocusableUnfocusableContainer(NVDAObject):
 	"""Makes an unfocusable container focusable using its first focusable descendant.

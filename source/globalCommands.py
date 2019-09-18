@@ -43,6 +43,7 @@ from baseObject import ScriptableObject
 import core
 import winVersion
 from base64 import b16encode
+import vision
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -68,6 +69,9 @@ SCRCAT_CONFIG_PROFILES = _("Configuration profiles")
 #: Script category for Braille commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_BRAILLE = _("Braille")
+#: Script category for Vision commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_VISION = _("Vision")
 #: Script category for tools commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_TOOLS = pgettext('script category', 'Tools')
@@ -210,7 +214,7 @@ class GlobalCommands(ScriptableObject):
 		if not info or info.isCollapsed:
 			speech.speakMessage(_("No selection"))
 		else:
-			speech.speakSelectedText(info.text)
+			speech.speakTextSelected(info.text)
 	# Translators: Input help mode message for report current selection command.
 	script_reportCurrentSelection.__doc__=_("Announces the current selection in edit controls and documents. If there is no selection it says so.")
 	script_reportCurrentSelection.category=SCRCAT_SYSTEMCARET
@@ -707,8 +711,8 @@ class GlobalCommands(ScriptableObject):
 				# Translators: Reported when the object has no location for the mouse to move to it.
 				ui.message(_("Object has no location"))
 				return
-			x=left+(width/2)
-			y=top+(height/2)
+			x=left+(width//2)
+			y=top+(height//2)
 		winUser.setCursorPos(x,y)
 		mouseHandler.executeMouseMoveEvent(x,y)
 	# Translators: Input help mode message for move mouse to navigator object command.
@@ -779,8 +783,9 @@ class GlobalCommands(ScriptableObject):
 		if scriptHandler.getLastScriptRepeatCount()>=1:
 			if curObject.TextInfo!=NVDAObjectTextInfo:
 				textList=[]
-				if curObject.name and isinstance(curObject.name, basestring) and not curObject.name.isspace():
-					textList.append(curObject.name)
+				name = curObject.name
+				if isinstance(name, str) and not name.isspace():
+					textList.append(name)
 				try:
 					info=curObject.makeTextInfo(textInfos.POSITION_SELECTION)
 					if not info.isCollapsed:
@@ -793,7 +798,10 @@ class GlobalCommands(ScriptableObject):
 					# No caret or selection on this object.
 					pass
 			else:
-				textList=[prop for prop in (curObject.name, curObject.value) if prop and isinstance(prop, basestring) and not prop.isspace()]
+				textList=[]
+				for prop in (curObject.name, curObject.value):
+					if isinstance(prop,str) and not prop.isspace():
+						textList.append(prop)
 			text=" ".join(textList)
 			if len(text)>0 and not text.isspace():
 				if scriptHandler.getLastScriptRepeatCount()==1:
@@ -1092,9 +1100,8 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_startOfLine(self,gesture):
 		info=api.getReviewPosition().copy()
-		if info._expandCollapseBeforeReview:
-			info.expand(textInfos.UNIT_LINE)
-			info.collapse()
+		info.expand(textInfos.UNIT_LINE)
+		info.collapse()
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
 		ui.reviewMessage(_("Left"))
@@ -1139,18 +1146,7 @@ class GlobalCommands(ScriptableObject):
 			try:
 				c = ord(info.text)
 			except TypeError:
-				# This might be a character taking multiple code points.
-				# If it is a 32 bit character, encode it to UTF-32 and calculate the ord manually.
-				# In Python 3, this is no longer necessary.
-				try:
-					encoded = info.text.encode("utf_32_le")
-				except UnicodeEncodeError:
-					c = None
-				else:
-					if len(encoded)==4:
-						c = sum(ord(cp)<<i*8 for i, cp in enumerate(encoded))
-					else:
-						c = None
+				c = None
 			if c is not None:
 				speech.speakMessage("%d," % c)
 				speech.speakSpelling(hex(c))
@@ -1498,9 +1494,9 @@ class GlobalCommands(ScriptableObject):
 	def script_title(self,gesture):
 		obj=api.getForegroundObject()
 		title=obj.name
-		if not isinstance(title,basestring) or not title or title.isspace():
+		if not isinstance(title,str) or not title or title.isspace():
 			title=obj.appModule.appName if obj.appModule else None
-			if not isinstance(title,basestring) or not title or title.isspace():
+			if not isinstance(title,str) or not title or title.isspace():
 				# Translators: Reported when there is no title text for current program or window.
 				title=_("No title")
 		repeatCount=scriptHandler.getLastScriptRepeatCount()
@@ -1664,7 +1660,7 @@ class GlobalCommands(ScriptableObject):
 		if sps.ACLineStatus & AC_ONLINE: text += _("AC power on")
 		elif sps.BatteryLifeTime!=0xffffffff: 
 			# Translators: This is the estimated remaining runtime of the laptop battery.
-			text += _("{hours:d} hours and {minutes:d} minutes remaining") .format(hours=sps.BatteryLifeTime / 3600, minutes=(sps.BatteryLifeTime % 3600) / 60)
+			text += _("{hours:d} hours and {minutes:d} minutes remaining") .format(hours=sps.BatteryLifeTime // 3600, minutes=(sps.BatteryLifeTime % 3600) // 60)
 		ui.message(text)
 	# Translators: Input help mode message for report battery status command.
 	script_say_battery_status.__doc__ = _("Reports battery status and time remaining if AC is not plugged in")
@@ -1938,7 +1934,7 @@ class GlobalCommands(ScriptableObject):
 			text = api.getClipData()
 		except:
 			text = None
-		if not text or not isinstance(text,basestring) or text.isspace():
+		if not text or not isinstance(text,str) or text.isspace():
 			# Translators: Presented when there is no text on the clipboard.
 			ui.message(_("There is no text on the clipboard"))
 			return
@@ -2304,6 +2300,49 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Describes a command.
 	script_recognizeWithUwpOcr.__doc__ = _("Recognizes the content of the current navigator object with Windows 10 OCR")
 
+	@script(
+		# Translators: Describes a command.
+		description=_(
+			"Toggles the state of the screen curtain, "
+			"either by making the screen black or SHOWING the contents of the screen. "
+			"If pressed to enable once, the screen curtain is enabled until you restart NVDA. "
+			"If pressed tree times, it is enabled until you disable it"
+		),
+		category=SCRCAT_VISION
+	)
+	def script_toggleScreenCurtain(self, gesture):
+		message = None
+		try:
+			screenCurtainName = "screenCurtain"
+			if not vision.getProviderClass(screenCurtainName).canStart():
+				# Translators: Reported when the screen curtain is not available.
+				message = _("Screen curtain not available")
+				return
+			scriptCount = scriptHandler.getLastScriptRepeatCount()
+			if scriptCount == 0 and screenCurtainName in vision.handler.providers:
+				vision.handler.terminateProvider(screenCurtainName)
+				# Translators: Reported when the screen curtain is disabled.
+				message = _("Screen curtain disabled")
+			elif scriptCount in (0, 2):
+				temporary = scriptCount == 0
+				if not vision.handler.initializeProvider(
+					screenCurtainName,
+					temporary=temporary,
+				):
+					# Translators: Reported when the screen curtain could not be enabled.
+					message = _("Could not enable screen curtain")
+					return
+				else:
+					if temporary:
+						# Translators: Reported when the screen curtain is temporarily enabled.
+						message = _("Temporary Screen curtain, enabled until next restart")
+					else:
+						# Translators: Reported when the screen curtain is enabled.
+						message = _("Screen curtain enabled")
+		finally:
+			if message is not None:
+				ui.message(message, speechPriority=speech.priorities.SPRI_NOW)
+
 	__gestures = {
 		# Basic
 		"kb:NVDA+n": "showGui",
@@ -2509,14 +2548,12 @@ class ConfigProfileActivationCommands(ScriptableObject):
 
 	@classmethod
 	def _getScriptNameForProfile(cls, name):
-		name = name.encode("utf-8")
 		invalidChars = set()
 		for c in name:
 			if not c.isalnum() and c != "_":
 				invalidChars.add(c)
 		for c in invalidChars:
-			name=name.replace(c, b16encode(c))
-		# Python 3: Revisit this to ensure that script names are decoded correctly
+			name=name.replace(c, b16encode(c.encode()).decode("ascii"))
 		return "profile_%s" % name
 
 	@classmethod

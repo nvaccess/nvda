@@ -1,25 +1,33 @@
 # -*- coding: UTF-8 -*-
-#core.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner, Derek Riemer, Babbage B.V., Zahari Yurukov
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2019 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
+# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """NVDA core"""
 
-# Do this first to initialise comtypes.client.gen_dir and the comtypes.gen search path.
+RPC_E_CALL_CANCELED = -2147418110
+
+class CallCancelled(Exception):
+	"""Raised when a call is cancelled.
+	"""
+
+# Apply several monkey patches to comtypes
+# noinspection PyUnresolvedReferences
+import comtypesMonkeyPatches
+
+# Initialise comtypes.client.gen_dir and the comtypes.gen search path 
+# and Append our comInterfaces directory to the comtypes.gen search path.
+import comtypes
 import comtypes.client
-# Append our comInterfaces directory to the comtypes.gen search path.
 import comtypes.gen
 import comInterfaces
 comtypes.gen.__path__.append(comInterfaces.__path__[0])
 
-#Apply several monky patches to comtypes
-import comtypesMonkeyPatches
-
 import sys
 import winVersion
-import thread
+import threading
 import nvwave
 import os
 import time
@@ -28,7 +36,6 @@ import logHandler
 import globalVars
 from logHandler import log
 import addonHandler
-
 import extensionPoints
 
 # inform those who want to know that NVDA has finished starting up.
@@ -37,7 +44,7 @@ postNvdaStartup = extensionPoints.Action()
 PUMP_MAX_DELAY = 10
 
 #: The thread identifier of the main thread.
-mainThreadId = thread.get_ident()
+mainThreadId = threading.get_ident()
 
 #: Notifies when a window message has been received by NVDA.
 #: This allows components to perform an action when several system events occur,
@@ -96,7 +103,7 @@ def doStartupDialogs():
 			gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None),onResult)
 
 def restart(disableAddons=False, debugLogging=False):
-	"""Restarts NVDA by starting a new copy with -r."""
+	"""Restarts NVDA by starting a new copy."""
 	if globalVars.appArgs.launcher:
 		import wx
 		globalVars.exitCode=3
@@ -106,8 +113,6 @@ def restart(disableAddons=False, debugLogging=False):
 	import winUser
 	import shellapi
 	options=[]
-	if "-r" not in sys.argv:
-		options.append("-r")
 	try:
 		sys.argv.remove('--disable-addons')
 	except ValueError:
@@ -125,8 +130,8 @@ def restart(disableAddons=False, debugLogging=False):
 	except ValueError:
 		pass
 	shellapi.ShellExecute(None, None,
-		sys.executable.decode("mbcs"),
-		subprocess.list2cmdline(sys.argv + options).decode("mbcs"),
+		sys.executable,
+		subprocess.list2cmdline(sys.argv + options),
 		None,
 		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
 		winUser.SW_SHOWNORMAL)
@@ -138,8 +143,11 @@ def resetConfiguration(factoryDefaults=False):
 	import braille
 	import brailleInput
 	import speech
+	import vision
 	import languageHandler
 	import inputCore
+	log.debug("Terminating vision")
+	vision.terminate()
 	log.debug("Terminating braille")
 	braille.terminate()
 	log.debug("Terminating brailleInput")
@@ -165,6 +173,9 @@ def resetConfiguration(factoryDefaults=False):
 	brailleInput.initialize()
 	log.debug("Initializing braille")
 	braille.initialize()
+	# Vision
+	log.debug("initializing vision")
+	vision.initialize()
 	log.debug("Reloading user and locale input gesture maps")
 	inputCore.manager.loadUserGestureMap()
 	inputCore.manager.loadLocaleGestureMap()
@@ -172,7 +183,6 @@ def resetConfiguration(factoryDefaults=False):
 	if audioDucking.isAudioDuckingSupported():
 		audioDucking.handlePostConfigProfileSwitch()
 	log.info("Reverted to saved configuration")
-	
 
 def _setInitialFocus():
 	"""Sets the initial focus if no focus event was received at startup.
@@ -221,8 +231,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		languageHandler.setLanguage(lang)
 	except:
 		log.warning("Could not set language to %s"%lang)
-	import versionInfo
-	log.info("NVDA version %s" % versionInfo.version)
 	log.info("Using Windows version %s" % winVersion.winVersionText)
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
@@ -255,7 +263,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	# wxPython 4 no longer has either of these constants (despite the documentation saying so), some add-ons may rely on
 	# them so we add it back into wx. https://wxpython.org/Phoenix/docs/html/wx.Window.html#wx.Window.Centre
 	wx.CENTER_ON_SCREEN = wx.CENTRE_ON_SCREEN = 0x2
-	log.info("Using wx version %s"%wx.version())
+	import six
+	log.info("Using wx version %s with six version %s"%(wx.version(), six.__version__))
 	class App(wx.App):
 		def OnAssert(self,file,line,cond,msg):
 			message="{file}, line {line}:\nassert {cond}: {msg}".format(file=file,line=line,cond=cond,msg=msg)
@@ -274,7 +283,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		speech.cancelSpeech()
 		if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 			try:
-				nvwave.playWaveFile("waves\\exit.wav",async=False)
+				nvwave.playWaveFile("waves\\exit.wav",asynchronous=False)
 			except:
 				pass
 		log.info("Windows session ending")
@@ -285,6 +294,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import braille
 	log.debug("Initializing braille")
 	braille.initialize()
+	import vision
+	log.debug("Initializing vision")
+	vision.initialize()
 	import displayModel
 	log.debug("Initializing displayModel")
 	displayModel.initialize()
@@ -303,9 +315,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import windowUtils
 	class MessageWindow(windowUtils.CustomWindow):
 		className = u"wxWindowClassNR"
-		#Just define these constants here, so we don't have to import win32con
+		# Windows constants for power / display changes
 		WM_POWERBROADCAST = 0x218
-		WM_DISPLAYCHANGE = 0x7e
 		PBT_APMPOWERSTATUSCHANGE = 0xA
 		UNKNOWN_BATTERY_STATUS = 0xFF
 		AC_ONLINE = 0X1
@@ -326,7 +337,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			post_windowMessageReceipt.notify(msg=msg, wParam=wParam, lParam=lParam)
 			if msg == self.WM_POWERBROADCAST and wParam == self.PBT_APMPOWERSTATUSCHANGE:
 				self.handlePowerStatusChange()
-			elif msg == self.WM_DISPLAYCHANGE:
+			elif msg == winUser.WM_DISPLAYCHANGE:
 				self.handleScreenOrientationChange(lParam)
 
 		def handleScreenOrientationChange(self, lParam):
@@ -374,8 +385,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			else:
 				#Translators: Reported when the battery is no longer plugged in, and now is not charging.
 				ui.message(_("Not charging battery. %d percent") %sps.BatteryLifePercent)
-
-	messageWindow = MessageWindow(unicode(versionInfo.name))
+	import versionInfo
+	messageWindow = MessageWindow(versionInfo.name)
 
 	# initialize wxpython localization support
 	locale = wx.Locale()
@@ -384,7 +395,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	if not wxLang and '_' in lang:
 		wxLang=locale.FindLanguageInfo(lang.split('_')[0])
 	if hasattr(sys,'frozen'):
-		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwdu(),"locale"))
+		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwd(),"locale"))
 	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
 	# If we try to initialize this language, wx will show a warning dialog.
 	# #9089: some languages (such as Aragonese) do not have language info, causing language getter to fail.
@@ -412,6 +423,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("initializing Java Access Bridge support")
 	try:
 		JABHandler.initialize()
+		log.info("Java Access Bridge support initialized")
 	except NotImplementedError:
 		log.warning("Java Access Bridge not available")
 	except:
@@ -490,6 +502,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 				queueHandler.pumpAll()
 				mouseHandler.pumpAll()
 				braille.pumpAll()
+				vision.pumpAll()
 			except:
 				log.exception("errors in this core pump cycle")
 			baseObject.AutoPropertyObject.invalidateCaches()
@@ -550,6 +563,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	_terminate(keyboardHandler, name="keyboard handler")
 	_terminate(mouseHandler)
 	_terminate(inputCore)
+	_terminate(vision)
 	_terminate(brailleInput)
 	_terminate(braille)
 	_terminate(speech)
@@ -557,7 +571,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
-			nvwave.playWaveFile("waves\\exit.wav",async=False)
+			nvwave.playWaveFile("waves\\exit.wav",asynchronous=False)
 		except:
 			pass
 	# #5189: Destroy the message window as late as possible
@@ -584,7 +598,7 @@ def requestPump():
 	if not _pump or _isPumpPending:
 		return
 	_isPumpPending = True
-	if thread.get_ident() == mainThreadId:
+	if threading.get_ident() == mainThreadId:
 		_pump.Start(PUMP_MAX_DELAY, True)
 		return
 	# This isn't the main thread. wx timers cannot be run outside the main thread.
@@ -599,7 +613,7 @@ def callLater(delay, callable, *args, **kwargs):
 	This function can be safely called from any thread.
 	"""
 	import wx
-	if thread.get_ident() == mainThreadId:
+	if threading.get_ident() == mainThreadId:
 		return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
 	else:
 		return wx.CallAfter(wx.CallLater,delay, _callLaterExec, callable, args, kwargs)

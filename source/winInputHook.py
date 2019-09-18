@@ -9,8 +9,17 @@ import comtypes.client
 import time
 from ctypes import *
 from ctypes.wintypes import *
-from win32con import WM_QUIT, HC_ACTION, WH_KEYBOARD_LL, LLKHF_UP, LLKHF_EXTENDED, LLKHF_INJECTED, WH_MOUSE_LL, LLMHF_INJECTED
 import watchdog
+import winUser
+
+# Some Windows constants
+HC_ACTION = 0
+WH_KEYBOARD_LL = 13
+LLKHF_UP = 128
+LLKHF_EXTENDED = 1
+LLKHF_INJECTED = 16
+WH_MOUSE_LL = 14
+LLMHF_INJECTED = 1
 
 class KBDLLHOOKSTRUCT(Structure):
 	_fields_=[
@@ -97,6 +106,6 @@ def terminate():
 		raise RuntimeError("winInputHook not running")
 	hookThreadRefCount-=1
 	if hookThreadRefCount==0:
-		windll.user32.PostThreadMessageW(hookThread.ident,WM_QUIT,0,0)
+		windll.user32.PostThreadMessageW(hookThread.ident,winUser.WM_QUIT,0,0)
 		hookThread.join()
 		hookThread=None

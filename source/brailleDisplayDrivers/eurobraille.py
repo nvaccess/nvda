@@ -6,7 +6,9 @@
 #Copyright (C) 2017-2019 NV Access Limited, Babbage B.V., Eurobraille
 
 from collections import OrderedDict, defaultdict
-from cStringIO import StringIO
+from typing import Dict, Any, List, Union
+
+from io import BytesIO
 import serial
 import bdDetect
 import braille
@@ -14,6 +16,7 @@ import inputCore
 from logHandler import log
 import brailleInput
 import hwIo
+from hwIo import intToByte, boolToByte
 from baseObject import AutoPropertyObject, ScriptableObject
 import wx
 import threading
@@ -34,7 +37,7 @@ EB_KEY_INTERACTIVE = b'I' # 0x49
 EB_KEY_INTERACTIVE_SINGLE_CLICK = b'\x01'
 EB_KEY_INTERACTIVE_REPETITION = b'\x02'
 EB_KEY_INTERACTIVE_DOUBLE_CLICK = b'\x03'
-EB_KEY_BRAILLE='B' # 0x42
+EB_KEY_BRAILLE=b'B' # 0x42
 EB_KEY_COMMAND = b'C' # 0x43
 EB_KEY_QWERTY = b'Z' # 0x5a
 EB_KEY_USB_HID_MODE = b'U' # 0x55
@@ -52,6 +55,10 @@ EB_IRIS_TEST = b'T' # 0x54
 EB_IRIS_TEST_sub = b'L' # 0x4c
 EB_VISU = b'V' # 0x56
 EB_VISU_DOT = b'D' # 0x44
+
+# The eurobraille protocol uses real number characters as boolean values, so 0 (0x30) and 1 (0x31)
+EB_FALSE = b'0' # 0x30
+EB_TRUE = b'1' # 0x31
 
 KEYS_STICK = OrderedDict({
 	0x10000: "joystick1Up",
@@ -127,11 +134,16 @@ DEVICE_TYPES={
 	0x11:"Esytime evo 32 standard",
 }
 
-def bytesToInt(bytes):
-	"""Converts a basestring to its integral equivalent."""
-	return int(bytes.encode('hex'), 16)
+
+def bytesToInt(byteData: bytes):
+	"""Converts bytes to its integral equivalent."""
+	return int.from_bytes(byteData, byteorder="big", signed=False)
+
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
+	_dev: hwIo.IoBase
+	# Used to for error checking.
+	_awaitingFrameReceipts: Dict[int, Any]
 	name = "eurobraille"
 	# Translators: Names of braille displays.
 	description = _("Eurobraille Esys/Esytime/Iris displays")
@@ -155,7 +167,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._frame = 0x20
 		self._frameLock = threading.Lock()
 		self._hidKeyboardInput = False
-		self._hidInputBuffer = ""
+		self._hidInputBuffer = b""
 
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			# At this point, a port bound to this display has been found.
@@ -184,11 +196,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				log.debugWarning("Error while connecting to port %r"%port, exc_info=True)
 				continue
 
-			for i in xrange(3):
+			for i in range(3):
 				# Request device identification
 				self._sendPacket(EB_SYSTEM, EB_SYSTEM_IDENTITY)
 				# Make sure visualisation packets are disabled, as we ignore them anyway.
-				self._sendPacket(EB_VISU, EB_VISU_DOT, '0')
+				self._sendPacket(EB_VISU, EB_VISU_DOT, EB_FALSE)
 				# A device identification results in multiple packets.
 				# Make sure we've received everything before we continue
 				while self._dev.waitForRead(self.timeout*2):
@@ -218,53 +230,60 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._dev = None
 			self._deviceData.clear()
 
-	def _onReceive(self, data):
+	def _prepFirstByteStreamAndData(
+			self,
+			data: bytes
+	) -> (bytes, Union[BytesIO, hwIo.IoBase], bytes):
 		if self.isHid:
 			# data contains the entire packet.
 			# HID Packets start with 0x00.
-			byte0 = data[0]
-			assert byte0=="\x00", "byte 0 is %r"%byte0
+			byte0 = data[0:1]
+			assert byte0 == b"\x00", "byte 0 is %r" % byte0
 			# Check whether there is an incomplete packet in the buffer
 			if self._hidInputBuffer:
 				data = self._hidInputBuffer + data[1:]
-				self._hidInputBuffer = ""
-			byte1 = data[1]
-			stream = StringIO(data)
+				self._hidInputBuffer = b""
+			byte1 = data[1:2]
+			stream = BytesIO(data)
 			stream.seek(2)
-		else:
-			byte1= data
-			stream = self._dev
+			return byte1, stream, data
+		else:  # is serial
+			return data, self._dev, data
+
+	def _onReceive(self, data: bytes):
+		byte1, stream, data = self._prepFirstByteStreamAndData(data)
+
 		if byte1 == ACK:
 			frame = ord(stream.read(1))
 			self._handleAck(frame)
 		elif byte1 == STX:
-			length = bytesToInt(stream.read(2))-2 # lenght includes the lenght itself
-			packet = stream.read(length)
-			if self.isHid and not stream.read(1)==ETX:
+			length = bytesToInt(stream.read(2)) - 2  # length includes the length itself
+			packet: bytes = stream.read(length)
+			if self.isHid and not stream.read(1) == ETX:
 				# Incomplete packet
 				self._hidInputbuffer = data
 				return
-			packetType = packet[0]
-			packetSubType = packet[1]
-			packetData = packet[2:] if length>2 else b""
-			if packetType==EB_SYSTEM:
+			packetType: bytes = packet[0:1]
+			packetSubType: bytes = packet[1:2]
+			packetData: bytes = packet[2:] if length > 2 else b""
+			if packetType == EB_SYSTEM:
 				self._handleSystemPacket(packetSubType, packetData)
-			elif packetType==EB_MODE:
-				if packetSubType  == EB_MODE_DRIVER:
+			elif packetType == EB_MODE:
+				if packetSubType == EB_MODE_DRIVER:
 					log.debug("Braille display switched to driver mode, updating display...")
 					braille.handler.update()
-				elif packetSubType  == EB_MODE_INTERNAL:
+				elif packetSubType == EB_MODE_INTERNAL:
 					log.debug("Braille display switched to internal mode")
-			elif packetType==EB_KEY:
+			elif packetType == EB_KEY:
 				self._handleKeyPacket(packetSubType, packetData)
-			elif packetType==EB_IRIS_TEST and packetSubType==EB_IRIS_TEST_sub:
+			elif packetType == EB_IRIS_TEST and packetSubType == EB_IRIS_TEST_sub:
 				# Ping command sent by Iris every two seconds, send it back on the main thread.
 				# This means that, if the main thread is frozen, Iris will be notified of this.
 				log.debug("Received ping from Iris braille display")
 				wx.CallAfter(self._sendPacket, packetType, packetSubType, packetData)
-			elif packetType==EB_VISU:
+			elif packetType == EB_VISU:
 				log.debug("Ignoring visualisation packet")
-			elif packetType==EB_ENCRYPTION_KEY:
+			elif packetType == EB_ENCRYPTION_KEY:
 				log.debug("Ignoring encryption key packet")
 			else:
 				log.debug("Ignoring packet: type %r, subtype %r, data %r"%(
@@ -273,9 +292,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					packetData
 				))
 
-	def _handleAck(self, frame):
+	def _handleAck(self, frame: int):
 		try:
-			super(BrailleDisplayDriver,self)._handleAck()
+			super(BrailleDisplayDriver, self)._handleAck()
 		except NotImplementedError:
 			log.debugWarning("Received ACK for frame %d while ACK handling is disabled"%frame)
 		else:
@@ -284,51 +303,52 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			except KeyError:
 				log.debugWarning("Received ACK for unregistered frame %d"%frame)
 
-	def _handleSystemPacket(self, type, data):
-		if type==EB_SYSTEM_TYPE:
+	def _handleSystemPacket(self, packetType: bytes, data: bytes):
+		if packetType == EB_SYSTEM_TYPE:
 			deviceType = ord(data)
 			self.deviceType = DEVICE_TYPES[deviceType]
-			if 0x01<=deviceType<=0x06: # Iris
+			if 0x01 <= deviceType <= 0x06:  # Iris
 				self.keys = KEYS_IRIS
-			elif 0x07<=deviceType<=0x0d: # Esys
+			elif 0x07 <= deviceType <= 0x0d:  # Esys
 				self.keys = KEYS_ESYS
-			elif 0x0e<=deviceType<=0x11: # Esitime
+			elif 0x0e <= deviceType <= 0x11:  # Esitime
 				self.keys = KEYS_ESITIME
 			else:
 				log.debugWarning("Unknown device identifier %r"%data)
-		elif type==EB_SYSTEM_DISPLAY_LENGTH:
+		elif packetType == EB_SYSTEM_DISPLAY_LENGTH:
 			self.numCells = ord(data)
-		elif type==EB_SYSTEM_FRAME_LENGTH:
+		elif packetType == EB_SYSTEM_FRAME_LENGTH:
 			self._frameLength = bytesToInt(data)
-		elif type==EB_SYSTEM_PROTOCOL and self.isHid:
-			protocol = data.rstrip("\x00 ")
+		elif packetType == EB_SYSTEM_PROTOCOL and self.isHid:
+			protocol = data.rstrip(b"\x00 ")
 			try:
 				version = float(protocol[:4])
 			except ValueError:
 				pass
 			else:
-				self.receivesAckPackets = version>=3.0
-		elif type==EB_SYSTEM_IDENTITY:
-			return # End of system information
-		self._deviceData[type]=data.rstrip("\x00 ")
+				self.receivesAckPackets = version >= 3.0
+		elif packetType == EB_SYSTEM_IDENTITY:
+			return  # End of system information
+		self._deviceData[packetType] = data.rstrip(b"\x00 ")
 
-	def _handleKeyPacket(self, group, data):
+	def _handleKeyPacket(self, group: bytes, data: bytes):
 		if group == EB_KEY_USB_HID_MODE:
-			self._hidKeyboardInput = bool(int(data))
+			assert data in [EB_TRUE, EB_FALSE]
+			self._hidKeyboardInput = EB_TRUE == data
 			return
 		if group == EB_KEY_QWERTY:
 			log.debug("Ignoring Iris AZERTY/QWERTY input")
 			return
-		if group == EB_KEY_INTERACTIVE and data[0]==EB_KEY_INTERACTIVE_REPETITION:
-			log.debug("Ignoring routing key %d repetition"%(ord(data[1])-1))
+		if group == EB_KEY_INTERACTIVE and data[0:1] == EB_KEY_INTERACTIVE_REPETITION:
+			log.debug("Ignoring routing key %d repetition" % (data[1] - 1))
 			return
 		arg = bytesToInt(data)
-		if arg==self.keysDown[group]:
+		if arg == self.keysDown[group]:
 			log.debug("Ignoring key repetition")
 			return
 		self.keysDown[group] |= arg
 		isIris = self.deviceType.startswith("Iris")
-		if not isIris and group == EB_KEY_COMMAND and arg>=self.keysDown[group]:
+		if not isIris and group == EB_KEY_COMMAND and arg >= self.keysDown[group]:
 			# Started a gesture including command keys
 			self._ignoreCommandKeyReleases = False
 		else:
@@ -337,55 +357,68 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					inputCore.manager.executeGesture(InputGesture(self))
 				except inputCore.NoInputGestureAction:
 					pass
-				self._ignoreCommandKeyReleases = not isIris and (group == EB_KEY_COMMAND or self.keysDown[EB_KEY_COMMAND]>0)
+				self._ignoreCommandKeyReleases = not isIris and (group == EB_KEY_COMMAND or self.keysDown[EB_KEY_COMMAND] > 0)
 			if not isIris and group == EB_KEY_COMMAND:
 				self.keysDown[group] = arg
 			else:
 				del self.keysDown[group]
 
-	def _sendPacket(self, packetType, packetSubType, packetData=b""):
-		packetSize=len(packetData)+4
-		packet=[
-			STX,
-			chr((packetSize>>8)&0xff),
-			chr(packetSize&0xff),
-			packetType,
-			packetSubType,
-			packetData,
-			ETX
-		]
+	def _sendPacket(self, packetType: bytes, packetSubType: bytes, packetData: bytes = b""):
+		packetSize = len(packetData)+4
+		packetBytes = bytearray(
+			b"".join([
+				STX,
+				packetSize.to_bytes(2, "big", signed=False),
+				packetType,
+				packetSubType,
+				packetData,
+				ETX
+		]))
 		if self.receivesAckPackets:
 			with self._frameLock:
 				frame = self._frame
-				packet.insert(-1,chr(frame))
-				self._awaitingFrameReceipts[frame] = packet
-				self._frame = frame+1 if frame<0x7F else 0x20
-		packetStr = b"".join(packet)
+				# Assumption: frame will only ever be 1 byte, otherwise consider byte order
+				packetBytes.insert(-1, frame)
+				self._awaitingFrameReceipts[frame] = packetBytes
+				self._frame = frame+1 if frame < 0x7F else 0x20
+		packetData = bytes(packetBytes)
 		if self.isHid:
-			self._sendHidPacket(packetStr)
+			self._sendHidPacket(packetData)
 		else:
-			self._dev.write(packetStr)
+			self._dev.write(packetData)
 
-	def _sendHidPacket(self, packet):
+	def _sendHidPacket(self, packet: bytes):
 		assert self.isHid
-		blockSize = self._dev._writeSize-1
+		blockSize = self._dev._writeSize - 1
 		# When the packet length exceeds C{blockSize}, the packet is split up into several block packets.
 		# These blocks are of size C{blockSize}.
-		for offset in xrange(0, len(packet), blockSize):
+		for offset in range(0, len(packet), blockSize):
 			bytesToWrite = packet[offset:(offset+blockSize)]
-			hidPacket = b"\x00"+bytesToWrite+b"\x55"*(blockSize-len(bytesToWrite))
+			hidPacket = b"".join([
+				b"\x00",
+				bytesToWrite,
+				b"\x55" * (blockSize - len(bytesToWrite))  # padding
+			])
 			self._dev.write(hidPacket)
 
-	def display(self, cells):
+	def display(self, cells: List[int]):
 		# cells will already be padded up to numCells.
-		self._sendPacket(EB_BRAILLE_DISPLAY, EB_BRAILLE_DISPLAY_STATIC, b"".join(chr(cell) for cell in cells))	
+		self._sendPacket(
+			packetType=EB_BRAILLE_DISPLAY,
+			packetSubType=EB_BRAILLE_DISPLAY_STATIC,
+			packetData=bytes(cells)
+		)
 
 	def _get_hidKeyboardInput(self):
 		return self._hidKeyboardInput
 
-	def _set_hidKeyboardInput(self, state):
-		self._sendPacket(EB_KEY, EB_KEY_USB_HID_MODE, str(int(state)))
-		for i in xrange(3):
+	def _set_hidKeyboardInput(self, state: bool):
+		self._sendPacket(
+			packetType=EB_KEY,
+			packetSubType=EB_KEY_USB_HID_MODE,
+			packetData=EB_TRUE if state else EB_FALSE
+		)
+		for i in range(3):
 			self._dev.waitForRead(self.timeout)
 			if state is self._hidKeyboardInput:
 				break
@@ -549,14 +582,14 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		self.model = display.deviceType.lower().split(" ")[0]
 		keysDown = dict(display.keysDown)
 		self.keyNames = names = []
-		for group, groupKeysDown in keysDown.iteritems():
+		for group, groupKeysDown in keysDown.items():
 			if group == EB_KEY_BRAILLE:
-				if sum(keysDown.itervalues())==groupKeysDown and not groupKeysDown & 0x100:
+				if sum(keysDown.values())==groupKeysDown and not groupKeysDown & 0x100:
 					# This is braille input.
 					# 0x1000 is backspace, 0x2000 is space
 					self.dots = groupKeysDown & 0xff
 					self.space = groupKeysDown & 0x200
-				names.extend("dot%d" % (i+1) for i in xrange(8) if (groupKeysDown &0xff) & (1 << i))
+				names.extend("dot%d" % (i+1) for i in range(8) if (groupKeysDown &0xff) & (1 << i))
 				if groupKeysDown & 0x200:
 					names.append("space")
 				if groupKeysDown & 0x100:
@@ -565,7 +598,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				self.routingIndex = (groupKeysDown & 0xff)-1
 				names.append("doubleRouting" if groupKeysDown>>8 ==ord(EB_KEY_INTERACTIVE_DOUBLE_CLICK) else "routing")
 			if group == EB_KEY_COMMAND:
-				for key, keyName in display.keys.iteritems():
+				for key, keyName in display.keys.items():
 					if groupKeysDown & key:
 						# This key is pressed
 						names.append(keyName)

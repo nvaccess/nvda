@@ -111,7 +111,7 @@ class OrderedWinEventLimiter(object):
 		g=self._genericEventCache
 		self._genericEventCache={}
 		threadCounters={}
-		for k,v in sorted(g.iteritems(),key=lambda item: item[1],reverse=True):
+		for k,v in sorted(g.items(),key=lambda item: item[1],reverse=True):
 			threadCount=threadCounters.get(k[-1],0)
 			if threadCount>MAX_WINEVENTS_PER_THREAD:
 				continue
@@ -119,12 +119,12 @@ class OrderedWinEventLimiter(object):
 			threadCounters[k[-1]]=threadCount+1
 		f=self._focusEventCache
 		self._focusEventCache={}
-		for k,v in sorted(f.iteritems(),key=lambda item: item[1])[0-self.maxFocusItems:]:
+		for k,v in sorted(f.items(),key=lambda item: item[1])[0-self.maxFocusItems:]:
 			heapq.heappush(self._eventHeap,(v,)+k)
 		e=self._eventHeap
 		self._eventHeap=[]
 		r=[]
-		for count in xrange(len(e)):
+		for count in range(len(e)):
 			event=heapq.heappop(e)[1:-1]
 			r.append(event)
 		return r
@@ -836,7 +836,7 @@ def initialize():
 		accPropServices=comtypes.client.CreateObject(CAccPropServices)
 	except (WindowsError,COMError) as e:
 		log.debugWarning("AccPropServices is not available: %s"%e)
-	for eventType in winEventIDsToNVDAEventNames.keys():
+	for eventType in winEventIDsToNVDAEventNames:
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if hookID:
 			winEventHookIDs.append(hookID)
@@ -995,8 +995,7 @@ def getRecursiveTextFromIAccessibleTextObject(obj,startOffset=0,endOffset=-1):
 	except:
 		return text
 	textList=[]
-	for i in xrange(len(text)):
-		t=text[i]
+	for i, t in enumerate(text):
 		if ord(t)==0xFFFC:
 			try:
 				childTextObject=hypertextObject.hyperlink(hypertextObject.hyperlinkIndex(i+startOffset)).QueryInterface(IAccessible)

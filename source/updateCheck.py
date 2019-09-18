@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2018 NV Access Limited, Zahari Yurukov, Babbage B.V.
+#Copyright (C) 2012-2019 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
 
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
@@ -23,8 +23,10 @@ import os
 import inspect
 import threading
 import time
-import cPickle
-import urllib
+import pickle
+# #9818: one must import at least urllib.request in Python 3 in order to use full urllib functionality.
+import urllib.request
+import urllib.parse
 import tempfile
 import hashlib
 import ctypes.wintypes
@@ -40,6 +42,7 @@ from logHandler import log, isPathExternalToNVDA
 import config
 import shellapi
 import winUser
+import winKernel
 import fileUtils
 from gui.dpiScalingHelper import DpiScalingHelperMixin
 
@@ -119,23 +122,24 @@ def checkForUpdate(auto=False):
 			"outputBrailleTable":config.conf['braille']['translationTable'] if brailleDisplayClass else None,
 		}
 		params.update(extraParams)
-	url = "%s?%s" % (CHECK_URL, urllib.urlencode(params))
+	url = "%s?%s" % (CHECK_URL, urllib.parse.urlencode(params))
 	try:
-		res = urllib.urlopen(url)
+		res = urllib.request.urlopen(url)
 	except IOError as e:
 		if isinstance(e.strerror, ssl.SSLError) and e.strerror.reason == "CERTIFICATE_VERIFY_FAILED":
 			# #4803: Windows fetches trusted root certificates on demand.
 			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
 			_updateWindowsRootCertificates()
 			# and then retry the update check.
-			res = urllib.urlopen(url)
+			res = urllib.request.urlopen(url)
 		else:
 			raise
 	if res.code != 200:
 		raise RuntimeError("Checking for update failed with code %d" % res.code)
 	info = {}
 	for line in res:
-		line = line.rstrip()
+		# #9819: update description resource returns bytes, so make it Unicode.
+		line = line.decode("utf-8").rstrip()
 		try:
 			key, val = line.split(": ", 1)
 		except ValueError:
@@ -196,7 +200,7 @@ def _executeUpdate(destPath):
 	if config.isInstalledCopy():
 		executeParams = u"--install -m"
 	else:
-		portablePath = os.getcwdu()
+		portablePath = os.getcwd()
 		if os.access(portablePath, os.W_OK):
 			executeParams = u'--create-portable --portable-path "{portablePath}" --config-path "{configPath}" -m'.format(
 				portablePath=portablePath,
@@ -206,7 +210,7 @@ def _executeUpdate(destPath):
 			executeParams = u"--launcher"
 	# #4475: ensure that the new process shows its first window, by providing SW_SHOWNORMAL
 	shellapi.ShellExecute(None, None,
-		destPath.decode("mbcs"),
+		destPath,
 		executeParams,
 		None, winUser.SW_SHOWNORMAL)
 
@@ -516,7 +520,11 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 	def onPostponeButton(self, evt):
 		finalDest=os.path.join(storeUpdatesDir, os.path.basename(self.destPath))
 		try:
-			os.renames(self.destPath, finalDest)
+			# #9825: behavior of os.rename(s) has changed (see https://bugs.python.org/issue28356).
+			# In Python 2, os.renames did rename files across drives, no longer allowed in Python 3 (error 17 (cannot move files across drives) is raised).
+			# This is prominent when trying to postpone an update for portable copy of NVDA if this runs from a USB flash drive or another internal storage device.
+			# Therefore use kernel32::MoveFileEx with copy allowed (0x2) flag set.
+			winKernel.moveFileEx(self.destPath, finalDest, winKernel.MOVEFILE_COPY_ALLOWED)
 		except:
 			log.debugWarning("Unable to rename the file from {} to {}".format(self.destPath, finalDest), exc_info=True)
 			gui.messageBox(
@@ -610,13 +618,12 @@ class UpdateDownloader(object):
 		self._guiExec(self._downloadSuccess)
 
 	def _download(self, url):
-		remote = urllib.urlopen(url)
-		if remote.code != 200:
-			raise RuntimeError("Download failed with code %d" % remote.code)
 		# #2352: Some security scanners such as Eset NOD32 HTTP Scanner
 		# cause huge read delays while downloading.
 		# Therefore, set a higher timeout.
-		remote.fp._sock.settimeout(120)
+		remote = urllib.request.urlopen(url, timeout=120)
+		if remote.code != 200:
+			raise RuntimeError("Download failed with code %d" % remote.code)
 		size = int(remote.headers["content-length"])
 		with open(self.destPath, "wb") as local:
 			if self.fileHash:
@@ -735,7 +742,9 @@ class DonateRequestDialog(wx.Dialog):
 
 def saveState():
 	try:
-		cPickle.dump(state, file(_stateFilename, "wb"))
+		# #9038: Python 3 requires binary format when working with pickles.
+		with open(_stateFilename, "wb") as f:
+			pickle.dump(state, f)
 	except:
 		log.debugWarning("Error saving state", exc_info=True)
 
@@ -743,7 +752,9 @@ def initialize():
 	global state, _stateFilename, autoChecker
 	_stateFilename = os.path.join(globalVars.appArgs.configPath, "updateCheckState.pickle")
 	try:
-		state = cPickle.load(file(_stateFilename, "r"))
+		# #9038: Python 3 requires binary format when working with pickles.
+		with open(_stateFilename, "rb") as f:
+			state = pickle.load(f)
 	except:
 		log.debugWarning("Couldn't retrieve update state", exc_info=True)
 		# Defaults.
@@ -803,7 +814,7 @@ def _updateWindowsRootCertificates():
 	crypt = ctypes.windll.crypt32
 	# Get the server certificate.
 	sslCont = ssl._create_unverified_context()
-	u = urllib.urlopen("https://www.nvaccess.org/nvdaUpdateCheck", context=sslCont)
+	u = urllib.request.urlopen("https://www.nvaccess.org/nvdaUpdateCheck", context=sslCont)
 	cert = u.fp._sock.getpeercert(True)
 	u.close()
 	# Convert to a form usable by Windows.

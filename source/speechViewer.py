@@ -55,10 +55,10 @@ class SpeechViewerFrame(wx.Dialog):
 	def doDisplaysMatchConfig(self):
 		configSizes = config.conf["speechViewer"]["displays"]
 		attachedSizes = self.getAttachedDisplaySizesAsStringArray()
-		return len(configSizes) == len(attachedSizes) and all( configSizes[i] == attachedSizes[i] for i in xrange(len(configSizes)))
+		return len(configSizes) == len(attachedSizes) and all( configSizes[i] == attachedSizes[i] for i in range(len(configSizes)))
 
 	def getAttachedDisplaySizesAsStringArray(self):
-		displays = ( wx.Display(i).GetGeometry().GetSize() for i in xrange(wx.Display.GetCount()) )
+		displays = ( wx.Display(i).GetGeometry().GetSize() for i in range(wx.Display.GetCount()) )
 		return [repr( (i.width, i.height) ) for i in displays]
 
 	def savePositionInformation(self):
@@ -90,7 +90,7 @@ def _setActive(isNowActive, speechViewerFrame=None):
 def appendText(text):
 	if not isActive:
 		return
-	if not isinstance(text,basestring):
+	if not isinstance(text,str):
 		return
 	#If the speech viewer text control has the focus, we want to disable updates
 	#Otherwise it would be impossible to select text, or even just read it (as a blind person).

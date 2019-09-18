@@ -65,7 +65,7 @@ class AppModule(appModuleHandler.AppModule):
 		parentClassName=winUser.getClassName(parentWindow)
 		#If this object is an email header field, and we have a custom label for it,
 		#Then set the object's name to the label 
-		if parentClassName=="OE_Envelope" and isinstance(obj,IAccessible) and obj.IAccessibleChildID==0 and envelopeNames.has_key(controlID):
+		if parentClassName=="OE_Envelope" and isinstance(obj,IAccessible) and obj.IAccessibleChildID==0 and controlID in envelopeNames:
 			obj.name=envelopeNames[controlID]
 			obj.useITextDocumentSupport=True
 			obj.editValueUnit=textInfos.UNIT_STORY
