@@ -187,7 +187,8 @@ def getCaretRect(obj):
 		raise RuntimeError(f"displayModel_getCaretRect failed with res {res}")
 	return RectLTRB(
 		left.value,
-		top.value,right.value,
+		top.value,
+		right.value,
 		bottom.value
 	)
 
