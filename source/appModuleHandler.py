@@ -496,13 +496,19 @@ class AppModule(baseObject.ScriptableObject):
 		An immersive process is a Windows app that runs inside a Windows Runtime (WinRT) container.
 		These include Windows store apps on Windows 8 and 8.1,
 		and Universal Windows Platform (UWP) apps on Windows 10.
+		A special case is a converted desktop app distributed on Microsoft Store.
+		Not all immersive apps are packaged as a true Store app with a package info
+		e.g. File Explorer reports itself as immersive when it is not.
 		@rtype: bool
 		"""
 		if (winVersion.winVersion.major, winVersion.winVersion.minor) < (6, 2):
 			# Windows Store/UWP apps were introduced in Windows 8.
 			self.isWindowsStoreApp = False
 			return False
-		if winUser.user32.IsImmersiveProcess(self.processHandle) != 0:
+		# Package info is much more accurate than IsImmersiveProcess
+		# because IsImmersive Process returns nonzero for File Explorer
+		# and zero for Store version of Office.
+		if self._getImmersivePackageInfo() is not None:
 			self.isWindowsStoreApp = True
 			return True
 		self.isWindowsStoreApp = False
