@@ -395,22 +395,18 @@ class AppModule(baseObject.ScriptableObject):
 			# Some apps such as File Explorer says it is an immersive process but error 15700 is shown.
 			# Therefore resort to file version info behavior because it is not a hosted app.
 			# Others such as Store version of Office are not truly hosted apps,
-			# yet returns an internal version anyway.
+			# yet returns an internal version anyway because they are converted desktop apps.
 			# For immersive apps, default implementation is generic - returns Windows version information.
 			# Thus probe package full name and parse the serialized representation of package info structure.
-			length = ctypes.c_uint()
-			buf = ctypes.windll.kernel32.GetPackageFullName(self.processHandle, ctypes.byref(length), None)
-			packageFullName = ctypes.create_unicode_buffer(buf)
-			if ctypes.windll.kernel32.GetPackageFullName(
-				self.processHandle, ctypes.byref(length), packageFullName
-			) == 0:
+			packageInfo = self._getImmersivePackageInfo()
+			if packageInfo is not None:
 				# Product name is of the form publisher.name for a hosted app.
-				productInfo = packageFullName.value.split("_")
+				productInfo = packageInfo.split("_")
 			else:
 				# File Explorer and friends which are really native aps.
 				productInfo = self._getExecutableFileInfo()
 		else:
-			# Not only native apps, but also converted desktop aps such as Office.
+			# Not only native apps, but also some converted desktop aps such as Office.
 			productInfo = self._getExecutableFileInfo()
 		self.productName = productInfo[0]
 		self.productVersion = productInfo[1]
