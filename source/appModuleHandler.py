@@ -363,6 +363,22 @@ class AppModule(baseObject.ScriptableObject):
 		fileinfo = getFileVersionInfo(fileName, "ProductName", "ProductVersion")
 		return (fileinfo["ProductName"], fileinfo["ProductVersion"])
 
+	def _getImmersivePackageInfo(self):
+		# Used to obtain full package structure for a hosted app.
+		# The package structure consists of product name, version, architecture, language, and app ID.
+		# This is useful for confirming whether an app is hosted or not despite an app reporting otherwise.
+		# Some apps such as File Explorer says it is an immersive process but error 15700 is shown.
+		# Others such as Store version of Office are not truly hosted apps but are distributed via Store.
+		length = ctypes.c_uint()
+		buf = ctypes.windll.kernel32.GetPackageFullName(self.processHandle, ctypes.byref(length), None)
+		packageFullName = ctypes.create_unicode_buffer(buf)
+		if ctypes.windll.kernel32.GetPackageFullName(
+			self.processHandle, ctypes.byref(length), packageFullName
+		) == 0:
+			return packageFullName.value
+		else:
+			return None
+
 	def _setProductInfo(self):
 		"""Set productName and productVersion attributes.
 		There are at least two ways of obtaining product info for an app:
