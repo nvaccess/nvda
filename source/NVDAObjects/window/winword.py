@@ -1378,6 +1378,7 @@ class WordDocument(Window):
 			# Translators: a message when toggling change tracking in Microsoft word
 			ui.message(_("Change tracking off"))
 
+	@script(gesture="kb:control+shift+8")
 	def script_toggleDisplayNonprintingCharacters(self, gesture):
 		if not self.WinwordWindowObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the status change.
@@ -1502,7 +1503,6 @@ class WordDocument(Window):
 		"kb:control+2":"changeLineSpacing",
 		"kb:control+5":"changeLineSpacing",
 		"kb:control+shift+e": "toggleChangeTracking",
-		"kb:control+shift+8": "toggleDisplayNonprintingCharacters",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 	}
