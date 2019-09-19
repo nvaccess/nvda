@@ -873,17 +873,17 @@ class UIA(Window):
 		elif UIAClassName=="NetUIDropdownAnchor":
 			clsList.append(NetUIDropdownAnchor)
 		elif self.windowClassName=="EXCEL6" and self.role==controlTypes.ROLE_PANE:
-			from excel import BadExcelFormulaEdit
+			from .excel import BadExcelFormulaEdit
 			clsList.append(BadExcelFormulaEdit)
 		elif self.windowClassName=="EXCEL7":
 			if self.role==controlTypes.ROLE_DATAITEM:
-				from excel import ExcelCell
+				from .excel import ExcelCell
 				clsList.append(ExcelCell)
 			elif self.role==controlTypes.ROLE_DATAGRID:
-				from excel import ExcelWorksheet
+				from .excel import ExcelWorksheet
 				clsList.append(ExcelWorksheet)
 			elif self.role==controlTypes.ROLE_EDITABLETEXT:
-				from excel import CellEdit
+				from .excel import CellEdit
 				clsList.append(CellEdit)
 		elif self.TextInfo == UIATextInfo and (
 			UIAClassName == '_WwG'
