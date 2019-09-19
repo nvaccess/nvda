@@ -54,7 +54,8 @@ from NVDAObjects import UIA
 import appModuleHandler
 import controlTypes
 
-import speech, api
+import speech
+import api
 
 #
 # A few helpful constants
@@ -109,23 +110,29 @@ class AppModule(appModuleHandler.AppModule):
 				pass
 			clsList.insert(0, VsTextEditPane)
 
-		if ((self.major == 15 and self.minor >= 3)
-			or self.major >= 16):
+		if (
+			(self.major == 15 and self.minor >= 3)
+			or self.major >= 16
+		):
 			if obj.role == controlTypes.ROLE_TREEVIEWITEM and obj.windowClassName == "LiteTreeView32":
 				clsList.insert(0, ObjectsTreeItem)
 
-			if (obj.role == controlTypes.ROLE_MENUITEM
+			if (
+				obj.role == controlTypes.ROLE_MENUITEM
 				and isinstance(obj, UIA.UIA)
-				and obj.UIAElement.CachedClassName in ("IntellisenseMenuItem",)):
+				and obj.UIAElement.CachedClassName in ("IntellisenseMenuItem",)
+			):
 				clsList.insert(0, IntellisenseMenuItem)
 
 			try:
-				if (obj.role == controlTypes.ROLE_STATICTEXT
+				if (
+					obj.role == controlTypes.ROLE_STATICTEXT
 					and isinstance(obj, UIA.UIA)
-					and obj.previous.previous.firstChild.UIAElement.CachedClassName in ("IntellisenseMenuItem",)):
+					and obj.previous.previous.firstChild.UIAElement.CachedClassName in ("IntellisenseMenuItem",)
+				):
 					clsList.insert(0, IntellisenseLabel)
 
-			except:
+			except AttributeError:
 				pass
 
 	def _getDTE(self):
@@ -523,10 +530,12 @@ class ObjectsTreeItem(IAccessible):
 			"level": int(self.IAccessibleObject.accValue(self.IAccessibleChildID))
 		}
 
+
 class IntellisenseMenuItem(UIA.UIA):
 
 	def event_UIA_elementSelected(self):
 		api.setNavigatorObject(self)
+
 
 class IntellisenseLabel(UIA.UIA):
 
