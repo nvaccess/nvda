@@ -872,17 +872,17 @@ class UIA(Window):
 			clsList.append(WpfTextView)
 		elif UIAClassName=="NetUIDropdownAnchor":
 			clsList.append(NetUIDropdownAnchor)
-		elif self.windowClassName=="EXCEL6" and self.role==controlTypes.ROLE_PANE:
+		elif self.windowClassName == "EXCEL6" and self.role == controlTypes.ROLE_PANE:
 			from .excel import BadExcelFormulaEdit
 			clsList.append(BadExcelFormulaEdit)
-		elif self.windowClassName=="EXCEL7":
-			if self.role==controlTypes.ROLE_DATAITEM:
+		elif self.windowClassName == "EXCEL7":
+			if self.role == controlTypes.ROLE_DATAITEM:
 				from .excel import ExcelCell
 				clsList.append(ExcelCell)
-			elif self.role==controlTypes.ROLE_DATAGRID:
+			elif self.role == controlTypes.ROLE_DATAGRID:
 				from .excel import ExcelWorksheet
 				clsList.append(ExcelWorksheet)
-			elif self.role==controlTypes.ROLE_EDITABLETEXT:
+			elif self.role == controlTypes.ROLE_EDITABLETEXT:
 				from .excel import CellEdit
 				clsList.append(CellEdit)
 		elif self.TextInfo == UIATextInfo and (
@@ -1165,10 +1165,6 @@ class UIA(Window):
 		if punk:
 			return punk.QueryInterface(interface)
 
-	def _get_UIASpreadsheetItemPattern(self):
-		self.UIASpreadsheetItemPattern=self._getUIAPattern(UIAHandler.UIA_SpreadsheetItemPatternId,UIAHandler.IUIAutomationSpreadsheetItemPattern)
-		return self.UIASpreadsheetItemPattern
-
 	def _get_UIAInvokePattern(self):
 		self.UIAInvokePattern=self._getUIAPattern(UIAHandler.UIA_InvokePatternId,UIAHandler.IUIAutomationInvokePattern)
 		return self.UIAInvokePattern
@@ -1186,32 +1182,42 @@ class UIA(Window):
 		return self.UIASelectionItemPattern
 
 	def _get_UIASelectionPattern(self):
-		self.UIASelectionPattern=self._getUIAPattern(UIAHandler.UIA_SelectionPatternId,UIAHandler.IUIAutomationSelectionPattern)
+		self.UIASelectionPattern = self._getUIAPattern(
+			UIAHandler.UIA_SelectionPatternId,
+			UIAHandler.IUIAutomationSelectionPattern
+		)
 		return self.UIASelectionPattern
 
 	def _get_UIASelectionPattern2(self):
-		self.UIASelectionPattern2=self._getUIAPattern(UIAHandler.UIA_SelectionPattern2Id,UIAHandler.IUIAutomationSelectionPattern2)
+		self.UIASelectionPattern2 = self._getUIAPattern(
+			UIAHandler.UIA_SelectionPattern2Id,
+			UIAHandler.IUIAutomationSelectionPattern2
+		)
 		return self.UIASelectionPattern2
 
-	def getSelectedItemsCount(self,maxItems=None):
-		p=self.UIASelectionPattern2
+	def getSelectedItemsCount(self, maxItems=None):
+		p = self.UIASelectionPattern2
 		if p:
 			return p.currentItemCount
 		return 0
 
 	def _get_selectionContainer(self):
-		p=self.UIASelectionItemPattern
+		p = self.UIASelectionItemPattern
 		if not p:
 			return None
-		e=p.currentSelectionContainer
-		e=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
-		obj=UIA(UIAElement=e)
+		e = p.currentSelectionContainer
+		e = e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		obj = UIA(UIAElement=e)
 		if obj.UIASelectionPattern2:
 			return obj
 		return None
 
 	def _get_UIATextPattern(self):
-		self.UIATextPattern=self._getUIAPattern(UIAHandler.UIA_TextPatternId,UIAHandler.IUIAutomationTextPattern,cache=False)
+		self.UIATextPattern = self._getUIAPattern(
+			UIAHandler.UIA_TextPatternId,
+			UIAHandler.IUIAutomationTextPattern,
+			cache=False
+		)
 		return self.UIATextPattern
 
 	def _get_UIATextEditPattern(self):
