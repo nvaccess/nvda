@@ -49,10 +49,12 @@ from NVDAObjects.window import Window
 
 from NVDAObjects.window import DisplayModelEditableText
 from NVDAObjects.IAccessible import IAccessible
+from NVDAObjects import UIA
 
 import appModuleHandler
 import controlTypes
 
+import speech, api
 
 #
 # A few helpful constants
@@ -89,9 +91,14 @@ SB_VERT = 1
 
 
 class AppModule(appModuleHandler.AppModule):
+
+	def _get_major(self):
+		return int(self.productVersion.split(".", 2)[0])
+
+	def _get_minor(self):
+		return int(self.productVersion.split(".", 2)[1])
+
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		vsMajor, vsMinor, rest = self.productVersion.split(".", 2)
-		vsMajor, vsMinor = int(vsMajor), int(vsMinor)
 
 		# Only use this overlay class if the top level automation object for the IDE can be retrieved,
 		# as it will not work otherwise.
@@ -102,11 +109,24 @@ class AppModule(appModuleHandler.AppModule):
 				pass
 			clsList.insert(0, VsTextEditPane)
 
-		if ((vsMajor == 15 and vsMinor >= 3)
-			or vsMajor >= 16):
+		if ((self.major == 15 and self.minor >= 3)
+			or self.major >= 16):
 			if obj.role == controlTypes.ROLE_TREEVIEWITEM and obj.windowClassName == "LiteTreeView32":
 				clsList.insert(0, ObjectsTreeItem)
 
+			if (obj.role == controlTypes.ROLE_MENUITEM
+				and isinstance(obj, UIA.UIA)
+				and obj.UIAElement.CachedClassName in ("IntellisenseMenuItem",)):
+				clsList.insert(0, IntellisenseMenuItem)
+
+			try:
+				if (obj.role == controlTypes.ROLE_STATICTEXT
+					and isinstance(obj, UIA.UIA)
+					and obj.previous.previous.firstChild.UIAElement.CachedClassName in ("IntellisenseMenuItem",)):
+					clsList.insert(0, IntellisenseLabel)
+
+			except:
+				pass
 
 	def _getDTE(self):
 	# Return the already fetched instance if there is one.
@@ -502,3 +522,14 @@ class ObjectsTreeItem(IAccessible):
 		return {
 			"level": int(self.IAccessibleObject.accValue(self.IAccessibleChildID))
 		}
+
+class IntellisenseMenuItem(UIA.UIA):
+
+	def event_UIA_elementSelected(self):
+		api.setNavigatorObject(self)
+
+class IntellisenseLabel(UIA.UIA):
+
+	def event_liveRegionChange(self):
+		speech.cancelSpeech()
+		super().event_liveRegionChange()
