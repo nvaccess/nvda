@@ -292,6 +292,15 @@ class AppModule(appModuleHandler.AppModule):
 		# Lets hide that
 		if windowClass=="msctls_progress32" and winUser.getClassName(winUser.getAncestor(obj.windowHandle,winUser.GA_PARENT))=="Address Band Root":
 			obj.presentationType=obj.presType_layout
+			return
+
+		if windowClass == "DirectUIHWND" and role == controlTypes.ROLE_LIST:
+			parent = obj.parent.parent.parent
+			if parent is not None and parent.windowClassName == "Desktop Search Open View":
+				# List containing search results in Windows 7 start menu.
+				# Its name is not useful so discard it.
+				obj.name = None
+				return
 
 	def event_gainFocus(self, obj, nextHandler):
 		wClass = obj.windowClassName
