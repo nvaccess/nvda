@@ -40,14 +40,15 @@ The following dependencies need to be installed on your system:
 * Microsoft Visual Studio 2019 Community, Version 16.2 or later:
 	* Download from https://visualstudio.microsoft.com/downloads/
 	* When installing Visual Studio, you need to enable the following:
-		* On the Workloads tab, in the Windows group:
-			* Desktop development with C++
-		* Then in the Installation details section, under Desktop for C++, Optional grouping, ensure the following are selected:
-			* MSVC v142 - VS 2019 C++ x64/x86 build tools
-			* Windows 10 SDK (10.0.18362.0)
-			* C++ ATL for v142 build tools (x86 & x64)
-			* C++ Clang tools for Windows
-		On the Individual components tab, ensure the following items are selected:
+		* On the Workloads tab
+			* in the Windows group:
+				* Desktop development with C++
+			* Then in the Installation details section, under Desktop for C++, Optional grouping, ensure the following are selected:
+				* MSVC v142 - VS 2019 C++ x64/x86 build tools
+				* Windows 10 SDK (10.0.18362.0)
+				* C++ ATL for v142 build tools (x86 & x64)
+				* C++ Clang tools for Windows
+		* On the Individual components tab, ensure the following items are selected:
 			* MSVC v142 - VS 2019 C++ ARM64 build tools
 			* C++ ATL for v142 build tools (ARM64)
 
