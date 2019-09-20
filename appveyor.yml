@@ -1,4 +1,4 @@
-os: Visual Studio 2019
+os: Visual Studio 2017
 version: "{branch}-{build}"
 
 branches:
@@ -65,6 +65,7 @@ install:
     if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
      openssl version
      openssl enc -aes-256-cbc -d -pass pass:$env:encFileKey -in authenticode.pfx.enc -out authenticode.pfx
+     $host.SetShouldExit(1)
      openssl enc -aes-256-cbc -d -pass pass:$env:encFileKey -in ssh_id_rsa.enc -out ssh_id_rsa
      # Install ssh stuff.
      copy ssh_id_rsa $env:userprofile\.ssh\id_rsa
