@@ -317,6 +317,12 @@ def initialize(shouldDoRemoteLogging=False):
 			except (IOError, WindowsError):
 				pass # Probably log does not exist, don't care.
 			logHandler = FileHandler(globalVars.appArgs.logFileName, mode="w",encoding="utf-8")
+			logLevel = globalVars.appArgs.logLevel
+			if globalVars.appArgs.debugLogging:
+				logLevel = Logger.DEBUG
+			elif logLevel <= 0:
+				logLevel = Logger.INFO
+			log.setLevel(logLevel)
 	else:
 		logHandler = RemoteHandler()
 		logFormatter = Formatter("%(codepath)s:\n%(message)s")
@@ -327,12 +333,22 @@ def initialize(shouldDoRemoteLogging=False):
 	warnings.showwarning = _showwarning
 	warnings.simplefilter("default", DeprecationWarning)
 
+
+def isLogLevelForced() -> bool:
+	"""Check if the log level was overridden either from the command line or because of secure mode.
+	"""
+	return (
+		globalVars.appArgs.secure
+		or globalVars.appArgs.debugLogging
+		or globalVars.appArgs.logLevel != 0
+		or globalVars.appArgs.noLogging
+	)
+
+
 def setLogLevelFromConfig():
 	"""Set the log level based on the current configuration.
 	"""
-	if globalVars.appArgs.debugLogging or globalVars.appArgs.logLevel != 0 or globalVars.appArgs.secure or globalVars.appArgs.noLogging:
-		# Log level was overridden on the command line or we're running in secure mode,
-		# so don't set it.
+	if isLogLevelForced:
 		return
 	import config
 	levelName=config.conf["general"]["loggingLevel"]
