@@ -241,7 +241,10 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 		self.contextToRectMap = {}
 		winGDI.gdiPlusInitialize()
 		self.window = None
-		self._highlighterThread = threading.Thread(target=self._run)
+		self._highlighterThread = threading.Thread(
+			name="NVDAHighlighterThread",
+			target=self._run
+		)
 		self._highlighterThread.daemon = True
 		self._highlighterThread.start()
 

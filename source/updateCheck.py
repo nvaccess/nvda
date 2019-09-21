@@ -225,7 +225,10 @@ class UpdateChecker(object):
 	def check(self):
 		"""Check for an update.
 		"""
-		t = threading.Thread(target=self._bg)
+		t = threading.Thread(
+			name=self.__class__.__qualname__,
+			target=self._bg
+		)
 		t.daemon = True
 		self._started()
 		t.start()
@@ -580,7 +583,10 @@ class UpdateDownloader(object):
 			style=wx.PD_CAN_ABORT | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE,
 			parent=gui.mainFrame)
 		self._progressDialog.Raise()
-		t = threading.Thread(target=self._bg)
+		t = threading.Thread(
+			name=self.__class__.__qualname__,
+			target=self._bg
+		)
 		t.daemon = True
 		t.start()
 

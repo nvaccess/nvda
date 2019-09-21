@@ -309,7 +309,7 @@ def initialize(shouldDoRemoteLogging=False):
 		# This produces log entries such as the following:
 		# IO - inputCore.InputManager.executeGesture (09:17:40.724) - Thread-5 (13576):
 		# Input: kb(desktop):v
-		logFormatter=Formatter(
+		logFormatter = Formatter(
 			fmt="{levelname!s} - {codepath!s} ({asctime}) - {threadName} ({thread}):\n{message}",
 			style="{"
 		)

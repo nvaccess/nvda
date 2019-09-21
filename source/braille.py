@@ -2030,7 +2030,10 @@ class _BgThread:
 		if cls.thread:
 			return
 		cls.queuedWriteLock = threading.Lock()
-		thread = cls.thread = threading.Thread(target=cls.func)
+		thread = cls.thread = threading.Thread(
+			name="braille._BgThread",
+			target=cls.func
+		)
 		thread.daemon = True
 		thread.start()
 		cls.handle = ctypes.windll.kernel32.OpenThread(winKernel.THREAD_SET_CONTEXT, False, thread.ident)

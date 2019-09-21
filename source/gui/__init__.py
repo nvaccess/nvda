@@ -889,6 +889,7 @@ class ExecAndPump(threading.Thread):
 	"""Executes the given function with given args and kwargs in a background thread while blocking and pumping in the current thread."""
 
 	def __init__(self,func,*args,**kwargs):
+		self.name = f"{self.__class__.__name__}({func!r})"
 		self.func=func
 		self.args=args
 		self.kwargs=kwargs

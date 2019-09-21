@@ -177,6 +177,8 @@ def callback(wav,numsamples,event):
 		log.error("callback", exc_info=True)
 
 class BgThread(threading.Thread):
+	name = "espeakBgThread"
+
 	def __init__(self):
 		threading.Thread.__init__(self)
 		self.setDaemon(True)
