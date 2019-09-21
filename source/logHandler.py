@@ -112,18 +112,7 @@ class Logger(logging.Logger):
 	DEBUGWARNING = 15
 	OFF = 100
 
-	def _log(
-			self,
-			level,
-			msg,
-			args,
-			exc_info=None,
-			extra=None,
-			codepath=None,
-			thread=None,
-			activateLogViewer=False,
-			stack_info=None
-	):
+	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False, stack_info=None):
 		if not extra:
 			extra={}
 
