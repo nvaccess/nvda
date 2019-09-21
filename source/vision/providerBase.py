@@ -14,6 +14,9 @@ from .visionHandlerExtensionPoints import EventExtensionPoints
 from typing import FrozenSet
 
 
+class VisionEnhancementProviderStaticSettings(driverHandler.Driver):
+	_configSection = "vision"
+
 class VisionEnhancementProvider(driverHandler.Driver):
 	"""A class for vision enhancement providers.
 	"""
@@ -29,13 +32,12 @@ class VisionEnhancementProvider(driverHandler.Driver):
 		return super().supportedSettings
 
 	@classmethod
-	def _get_guiPanelClass(cls):
-		"""Returns the class to be used in order to construct a settings panel for the provider.
-		The class constructor should take the required providerCallable keyword argument.
+	def getSettingsPanel(cls):
+		"""Returns the instance to be used in order to construct a settings panel for the provider.
+		@return: Optional[SettingsPanel]
+		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Default} is used.
 		"""
-		# Import late to avoid circular import
-		from gui.settingsDialogs import VisionProviderSubPanel
-		return VisionProviderSubPanel
+		return None
 
 	def reinitialize(self):
 		"""Reinitializes a vision enhancement provider, reusing the same instance.

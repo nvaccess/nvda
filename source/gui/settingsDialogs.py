@@ -34,7 +34,7 @@ import braille
 import brailleTables
 import brailleInput
 import vision
-from typing import Callable, List
+from typing import Callable, List, Type, Optional
 import core
 import keyboardHandler
 import characterProcessing
@@ -2871,55 +2871,37 @@ class VisionSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the vision panel
 	title = _("Vision")
 
-	def makeSettings(self, settingsSizer):
+	def makeSettings(self, settingsSizer: wx.BoxSizer):
 		self.initialProviders = list(vision.handler.providers)
 		self.providerPanelInstances = []
 
-		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		self.settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
-		# Translators: The label for a setting in vision settings to choose a vision enhancement provider.
-		providerLabelText = _("&Vision enhancement providers")
+		for providerName, providerDesc, _providerRole, providerClass in vision.getProviderList():
+			providerSizer = self.settingsSizerHelper.addItem(
+				wx.StaticBoxSizer(wx.StaticBox(self, label=providerDesc), wx.VERTICAL),
+				flag=wx.EXPAND
+			)
+			settingsPanel = providerClass.getSettingsPanel()
+			if not settingsPanel:
+				settingsPanel = VisionProviderSubPanel_Default(
+					self,
+					providerClass=providerClass,
+					getProvider=self._getProvider,
+					initProvider=lambda providerName: self.safeInitProviders([providerName]),
+					terminateProvider=lambda providerName: self.safeTerminateProviders([providerName], verbose=True)
+				)
+			if len(self.providerPanelInstances) > 0:
+				settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
+			providerSizer.Add(settingsPanel, flag=wx.EXPAND)
+			self.providerPanelInstances.append(settingsPanel)
 
-		# Translators: Description in vision settings to choose a vision enhancement provider.
-		providersListDescriptionText = _(
-			"Providers are activated and deactivated as soon as you check or uncheck check boxes."
-		)
-		providersSizer = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
-		providerListDescTextCtrl = providersSizer.addItem(wx.StaticText(self, label=providersListDescriptionText))
-		# The width that is available to the text is 544.
-		# Using providerSizer.Size.Width would be prefered, but it is not correct during construction.
-		# The value is dependent on the nesting level of the text, and has to be checked manually.
-		providerListDescTextCtrl.Wrap(self.scaleSize(544))
-		self.providerList = providersSizer.addLabeledControl(
-			f"{providerLabelText}:",
-			nvdaControls.CustomCheckListBox,
-			choices=[]
-		)
-		self.providerList.Bind(wx.EVT_CHECKLISTBOX, self.onProviderToggled)
-
-		self.populateProviderList()
-
-		settingsSizerHelper.addItem(providersSizer, flag=wx.EXPAND)
-		settingsSizerHelper.addItem(
-			wx.StaticLine(self),
-			flag=wx.EXPAND
-		)
-
-		self.providerPanelsSizer = wx.BoxSizer(wx.VERTICAL)
-		settingsSizerHelper.addItem(self.providerPanelsSizer, flag=wx.EXPAND)
-
-	def populateProviderList(self):
-		providerList = vision.getProviderList()
-		self.providerNames = [provider[0] for provider in providerList]
-		providerChoices = [provider[1] for provider in providerList]
-		self.providerList.Clear()
-		self.providerList.Items = providerChoices
-		self.providerList.Select(0)
+	def _getProvider(self, providerName: str) -> Optional[vision.VisionEnhancementProvider]:
+		return vision.handler.providers.get(providerName, None)
 
 	def safeInitProviders(
 			self,
-			providerNames: List[str],
-			confirmInitWithUser: bool = True
+			providerNames: List[str]
 	) -> bool:
 		"""Initializes one or more providers in a way that is gui friendly,
 		showing an error if appropriate.
@@ -2929,9 +2911,6 @@ class VisionSettingsPanel(SettingsPanel):
 		initErrors = []
 		for providerName in providerNames:
 			try:
-				if confirmInitWithUser and not vision.handler.confirmInitWithUser(providerName):
-					success = False
-					continue
 				vision.handler.initializeProvider(providerName)
 			except Exception:
 				initErrors.append(providerName)
@@ -3009,24 +2988,6 @@ class VisionSettingsPanel(SettingsPanel):
 					self
 				)
 
-	def syncProviderCheckboxes(self):
-		self.providerList.CheckedItems = [self.providerNames.index(name) for name in vision.handler.providers]
-
-	def onProviderToggled(self, evt):
-		evt.Skip()
-		index = evt.Int
-		if index != self.providerList.Selection:
-			# Toggled an unselected provider
-			self.providerList.Select(index)
-		providerName = self.providerNames[index]
-		isChecked = self.providerList.IsChecked(index)
-		if not isChecked:
-			self.safeTerminateProviders([providerName], verbose=True)
-		elif not self.safeInitProviders([providerName]):
-			self.providerList.Check(index, False)
-			return
-		self.refreshPanel()
-
 	def refreshPanel(self):
 		self.Freeze()
 		# trigger a refresh of the settings
@@ -3034,24 +2995,7 @@ class VisionSettingsPanel(SettingsPanel):
 		self._sendLayoutUpdatedEvent()
 		self.Thaw()
 
-	def updateCurrentProviderPanels(self):
-		self.providerPanelsSizer.Clear(delete_windows=True)
-		self.providerPanelInstances[:] = []
-		for name, providerInst in sorted(vision.handler.providers.items()):
-			if providerInst.guiPanelClass and (
-				providerInst.guiPanelClass is not VisionProviderSubPanel or providerInst.supportedSettings
-			):
-				if len(self.providerPanelInstances) > 0:
-					self.providerPanelsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
-				panelSizer = wx.StaticBoxSizer(wx.StaticBox(self, label=providerInst.description), wx.VERTICAL)
-				panel = providerInst.guiPanelClass(self, providerCallable=weakref.ref(providerInst))
-				panelSizer.Add(panel, flag=wx.EXPAND)
-				self.providerPanelsSizer.Add(panelSizer, flag=wx.EXPAND)
-				self.providerPanelInstances.append(panel)
-
 	def onPanelActivated(self):
-		self.syncProviderCheckboxes()
-		self.updateCurrentProviderPanels()
 		super().onPanelActivated()
 
 	def onDiscard(self):
@@ -3059,9 +3003,7 @@ class VisionSettingsPanel(SettingsPanel):
 			panel.onDiscard()
 
 		providersToInitialize = [name for name in self.initialProviders if name not in vision.handler.providers]
-		# These providers were already initialized.
-		# Therefore, we do not display user confirmation messages, if any.
-		self.safeInitProviders(providersToInitialize, confirmInitWithUser=False)
+		self.safeInitProviders(providersToInitialize)
 		providersToTerminate = [name for name in vision.handler.providers if name not in self.initialProviders]
 		self.safeTerminateProviders(providersToTerminate)
 
@@ -3071,8 +3013,10 @@ class VisionSettingsPanel(SettingsPanel):
 		self.initialProviders = list(vision.handler.providers)
 
 
-class VisionProviderSubPanel(DriverSettingsMixin, SettingsPanel):
-
+class VisionProviderSubPanel_Runtime(
+		DriverSettingsMixin,
+		SettingsPanel
+):
 	def __init__(
 			self,
 			parent: wx.Window,
@@ -3093,6 +3037,69 @@ class VisionProviderSubPanel(DriverSettingsMixin, SettingsPanel):
 	def makeSettings(self, settingsSizer):
 		# Construct vision enhancement provider settings
 		self.updateDriverSettings()
+
+
+class VisionProviderSubPanel_Default(
+		SettingsPanel
+):
+
+	def __init__(
+			self,
+			parent: wx.Window,
+			*,  # Make next argument keyword only
+			providerClass: Type[vision.VisionEnhancementProvider],
+			getProvider: Callable[[str], vision.VisionEnhancementProvider],
+			initProvider,
+			terminateProvider
+	):
+		"""
+		@param getProvider: A callable that returns an instance to a VisionEnhancementProvider.
+			This will usually be a weakref, but could be any callable taking no arguments.
+		"""
+		self.providerClass = providerClass
+		self._getProvider = lambda: getProvider(providerClass.name)
+		self._initProvider = lambda: initProvider(providerClass.name)
+		self._terminateProvider = lambda: terminateProvider(providerClass.name)
+		self._runtimeSettings: Optional[VisionProviderSubPanel_Runtime] = None
+		self._runtimeSettingsSizer = wx.BoxSizer(orient=wx.VERTICAL)
+		super().__init__(parent=parent)
+
+	def makeSettings(self, settingsSizer):
+		checkBox = wx.CheckBox(self, label=_("Enable"))
+		settingsSizer.Add(checkBox)
+		settingsSizer.Add(self._runtimeSettingsSizer, flag=wx.EXPAND, proportion=1.0)
+		self._checkBox: wx.CheckBox = checkBox
+		if self._getProvider():
+			self._createRuntimeSettings()
+			checkBox.SetValue(True)
+		checkBox.Bind(wx.EVT_CHECKBOX, self._enableToggle)
+
+	def _createRuntimeSettings(self):
+		self._runtimeSettings = VisionProviderSubPanel_Runtime(
+			self,
+			providerCallable=weakref.ref(self._getProvider())
+		)
+		self._runtimeSettingsSizer.Add(self._runtimeSettings, flag=wx.EXPAND, proportion=1.0)
+
+	def _enableToggle(self, evt):
+		if not evt.IsChecked():
+			self._runtimeSettings.onPanelDeactivated()
+			self._runtimeSettingsSizer.Clear(delete_windows=True)
+			self._runtimeSettings: Optional[VisionProviderSubPanel_Runtime] = None
+			self._terminateProvider()
+		else:
+			self._initProvider()
+			self._createRuntimeSettings()
+			self._runtimeSettings.onPanelActivated()
+		self._sendLayoutUpdatedEvent()
+
+	def onDiscard(self):
+		if self._runtimeSettings:
+			self._runtimeSettings.onDiscard()
+
+	def onSave(self):
+		if self._runtimeSettings:
+			self._runtimeSettings.onSave()
 
 
 """ The name of the config profile currently being edited, if any.

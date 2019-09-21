@@ -10,15 +10,16 @@ One or more assistant functions can be implemented in vision enhancement provide
 Add-ons can provide their own provider
 using modules in the visionEnhancementProviders package containing a L{VisionEnhancementProvider} class.
 """
-
+from vision.providerBase import VisionEnhancementProvider
 from .constants import Role
 from .visionHandler import VisionHandler, getProviderClass
 import pkgutil
 import visionEnhancementProviders
 import config
 from logHandler import log
-from typing import List, Tuple
+from typing import List, Tuple, Type, Optional
 
+handler: Optional[VisionHandler] = None
 
 def initialize():
 	global handler
@@ -40,7 +41,7 @@ def terminate():
 
 def getProviderList(
 		onlyStartable: bool = True
-) -> List[Tuple[str, str, List[Role]]]:
+) -> List[Tuple[str, str, List[Role], Type[VisionEnhancementProvider]]]:
 	"""Gets a list of available vision enhancement names with their descriptions as well as supported roles.
 	@param onlyStartable: excludes all providers for which the check method returns C{False}.
 	@return: list of tuples with provider names, provider descriptions, and supported roles.
@@ -66,7 +67,8 @@ def getProviderList(
 				providerList.append((
 					provider.name,
 					provider.description,
-					list(provider.supportedRoles)
+					list(provider.supportedRoles),
+					provider
 				))
 			else:
 				log.debugWarning("Vision enhancement provider %s reports as unable to start, excluding" % provider.name)
