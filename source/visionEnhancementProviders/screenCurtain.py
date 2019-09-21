@@ -21,6 +21,8 @@ class MAGCOLOREFFECT(Structure):
 	_fields_ = (("transform", c_float * 5 * 5),)
 
 
+# homogeneous matrix for a 4-space transformation (red, green, blue, opacity).
+# https://docs.microsoft.com/en-gb/windows/win32/gdiplus/-gdiplus-using-a-color-matrix-to-transform-a-single-color-use
 TRANSFORM_BLACK = MAGCOLOREFFECT()
 TRANSFORM_BLACK.transform[4][4] = 1.0
 
@@ -36,17 +38,28 @@ class Magnification:
 
 	_magnification = windll.Magnification
 
-	_MagInitializeFuncType = WINFUNCTYPE(BOOL)
-	_MagUninitializeFuncType = WINFUNCTYPE(BOOL)
+	# Set full screen color effect
 	_MagSetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, POINTER(MAGCOLOREFFECT))
 	_MagSetFullscreenColorEffectArgTypes = ((1, "effect"),)
+
+	# Get full screen color effect
 	_MagGetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, POINTER(MAGCOLOREFFECT))
 	_MagGetFullscreenColorEffectArgTypes = ((2, "effect"),)
 
+	# show system cursor
+	_MagShowSystemCursorFuncType = WINFUNCTYPE(BOOL, BOOL)
+	_MagShowSystemCursorArgTypes = ((1, "showCursor"),)
+
+	# initialise
+	_MagInitializeFuncType = WINFUNCTYPE(BOOL)
 	MagInitialize = _MagInitializeFuncType(("MagInitialize", _magnification))
 	MagInitialize.errcheck = _errCheck
+
+	# uninitialize
+	_MagUninitializeFuncType = WINFUNCTYPE(BOOL)
 	MagUninitialize = _MagUninitializeFuncType(("MagUninitialize", _magnification))
 	MagUninitialize.errcheck = _errCheck
+
 	try:
 		MagSetFullscreenColorEffect = _MagSetFullscreenColorEffectFuncType(
 			("MagSetFullscreenColorEffect", _magnification),
@@ -61,6 +74,11 @@ class Magnification:
 	except AttributeError:
 		MagSetFullscreenColorEffect = None
 		MagGetFullscreenColorEffect = None
+	MagShowSystemCursor = _MagShowSystemCursorFuncType(
+		("MagShowSystemCursor", _magnification),
+		_MagShowSystemCursorArgTypes
+	)
+	MagShowSystemCursor.errcheck = _errCheck
 
 
 class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
@@ -89,10 +107,12 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 	def __init__(self):
 		super(VisionEnhancementProvider, self).__init__()
 		Magnification.MagInitialize()
+		Magnification.MagShowSystemCursor(False)
 		Magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
 
 	def terminate(self, *args, **kwargs):
 		super().terminate(*args, **kwargs)
+		Magnification.MagShowSystemCursor(True)
 		Magnification.MagUninitialize()
 
 	def registerEventExtensionPoints(self, extensionPoints):
