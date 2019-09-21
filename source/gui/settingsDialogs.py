@@ -796,7 +796,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		logLevel=self.LOG_LEVELS[self.logLevelList.GetSelection()][0]
 		if not logHandler.isLogLevelForced:
 			config.conf["general"]["loggingLevel"] = logging.getLevelName(logLevel)
-		logHandler.setLogLevelFromConfig()
+			logHandler.setLogLevelFromConfig()
 		if self.startAfterLogonCheckBox.IsEnabled():
 			config.setStartAfterLogon(self.startAfterLogonCheckBox.GetValue())
 		if self.startOnLogonScreenCheckBox.IsEnabled():
