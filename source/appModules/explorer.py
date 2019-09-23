@@ -296,12 +296,13 @@ class AppModule(appModuleHandler.AppModule):
 			return
 
 		if windowClass == "DirectUIHWND" and role == controlTypes.ROLE_LIST:
-			parent = obj.parent.parent.parent
-			if parent is not None and parent.windowClassName == "Desktop Search Open View":
-				# List containing search results in Windows 7 start menu.
-				# Its name is not useful so discard it.
-				obj.name = None
-				return
+			if obj.parent and obj.parent.parent:
+				parent = obj.parent.parent.parent
+				if parent is not None and parent.windowClassName == "Desktop Search Open View":
+					# List containing search results in Windows 7 start menu.
+					# Its name is not useful so discard it.
+					obj.name = None
+					return
 
 	def event_gainFocus(self, obj, nextHandler):
 		wClass = obj.windowClassName
