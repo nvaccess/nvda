@@ -424,12 +424,14 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 				activeIndex=0
 			self.addonsList.Select(activeIndex,on=1)
 			self.addonsList.SetItemState(activeIndex,wx.LIST_STATE_FOCUSED,wx.LIST_STATE_FOCUSED)
+			self.updateCheckButton.Enable()
+			self.updateSettingsButton.Enable()
 		else:
 			self.aboutButton.Disable()
 			self.helpButton.Disable()
 			self.removeButton.Disable()
 			self.updateCheckButton.Disable()
-			self.updateSettingsButton.Enable()
+			self.updateSettingsButton.Disable()
 
 	def _shouldDisable(self, addon):
 		return not (addon.isPendingDisable or (addon.isDisabled and not addon.isPendingEnable))
