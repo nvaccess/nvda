@@ -55,7 +55,6 @@ import appModuleHandler
 import controlTypes
 
 import speech
-import api
 
 #
 # A few helpful constants
@@ -93,11 +92,16 @@ SB_VERT = 1
 
 class AppModule(appModuleHandler.AppModule):
 
-	def _get_major(self):
-		return int(self.productVersion.split(".", 2)[0])
+	INTELLISENSE_LIST_AUTOMATIONIDS = (
+		# Visual Studio 2019
+		"CompletionList",
+		# Visual Studio 2017
+		"listBoxCompletions"
+	)
 
-	def _get_minor(self):
-		return int(self.productVersion.split(".", 2)[1])
+	def _get_visualStudioVersion(self):
+		splitted = self.productVersion.split(".", 2)
+		return (int(splitted[0]), int(splitted[1]))
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 
@@ -111,24 +115,19 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, VsTextEditPane)
 
 		if (
-			(self.major == 15 and self.minor >= 3)
-			or self.major >= 16
-		):
+			(
+				self.visualStudioVersion[0] == 15
+				and self.visualStudioVersion[1] >= 3
+			)
+			or self.visualStudioVersion[0] >= 16):
 			if obj.role == controlTypes.ROLE_TREEVIEWITEM and obj.windowClassName == "LiteTreeView32":
 				clsList.insert(0, ObjectsTreeItem)
-
-			if (
-				obj.role == controlTypes.ROLE_MENUITEM
-				and isinstance(obj, UIA.UIA)
-				and obj.UIAElement.CachedClassName in ("IntellisenseMenuItem",)
-			):
-				clsList.insert(0, IntellisenseMenuItem)
 
 			try:
 				if (
 					obj.role == controlTypes.ROLE_STATICTEXT
 					and isinstance(obj, UIA.UIA)
-					and obj.previous.previous.firstChild.UIAElement.CachedClassName in ("IntellisenseMenuItem",)
+					and obj.previous.previous.UIAElement.CachedAutomationId in self.INTELLISENSE_LIST_AUTOMATIONIDS
 				):
 					clsList.insert(0, IntellisenseLabel)
 
@@ -182,6 +181,7 @@ class AppModule(appModuleHandler.AppModule):
 		serviceProvider = self._getDTE().QueryInterface(comtypes.IServiceProvider)
 		self._textManager = serviceProvider.QueryService(SVsTextManager, IVsTextManager)
 		return self._textManager
+
 
 class VsTextEditPaneTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _InformUnsupportedWindowType(self,type):
@@ -529,12 +529,6 @@ class ObjectsTreeItem(IAccessible):
 		return {
 			"level": int(self.IAccessibleObject.accValue(self.IAccessibleChildID))
 		}
-
-
-class IntellisenseMenuItem(UIA.UIA):
-
-	def event_UIA_elementSelected(self):
-		api.setNavigatorObject(self)
 
 
 class IntellisenseLabel(UIA.UIA):
