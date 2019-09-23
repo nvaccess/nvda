@@ -1392,10 +1392,10 @@ class WordDocument(Window):
 		)
 		if val:
 			# Translators: a message when toggling Display Nonprinting Characters in Microsoft word
-			ui.message(_("Display Nonprinting Characters on"))
+			ui.message(_("Display nonprinting characters"))
 		else:
 			# Translators: a message when toggling Display Nonprinting Characters in Microsoft word
-			ui.message(_("Display Nonprinting Characters off"))
+			ui.message(_("Hide nonprinting characters"))
 
 	@script(gestures=["kb:tab", "kb:shift+tab"])
 	def script_tab(self,gesture):
