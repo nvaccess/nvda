@@ -348,7 +348,7 @@ def isLogLevelForced() -> bool:
 def setLogLevelFromConfig():
 	"""Set the log level based on the current configuration.
 	"""
-	if isLogLevelForced:
+	if isLogLevelForced():
 		return
 	import config
 	levelName=config.conf["general"]["loggingLevel"]
