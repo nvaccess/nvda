@@ -889,19 +889,13 @@ class ExecAndPump(threading.Thread):
 	"""Executes the given function with given args and kwargs in a background thread while blocking and pumping in the current thread."""
 
 	def __init__(self,func,*args,**kwargs):
-		if hasattr(func, "__qualname__"):  # _FuncPtr doesn't have this
-			if hasattr(func, "__func__"):
-				fname = func.__func__.__module__
-			else:
-				fname = func.__module__
-			fname += f".{func.__qualname__}"
-		else:
-			fname = repr(func)
-		self.name = f"{self.__class__.__module__}.{self.__class__.__qualname__}({fname})"
 		self.func=func
 		self.args=args
 		self.kwargs=kwargs
-		super(ExecAndPump,self).__init__()
+		fname = repr(func)
+		super().__init__(
+			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}({fname})"
+		)
 		self.threadExc=None
 		self.start()
 		time.sleep(0.1)
