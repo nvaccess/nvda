@@ -226,7 +226,7 @@ class UpdateChecker(object):
 		"""Check for an update.
 		"""
 		t = threading.Thread(
-			name=self.__class__.__qualname__,
+			name=f"{self.__class__.__module__}.{self.check.__qualname__}",
 			target=self._bg
 		)
 		t.daemon = True
@@ -584,7 +584,7 @@ class UpdateDownloader(object):
 			parent=gui.mainFrame)
 		self._progressDialog.Raise()
 		t = threading.Thread(
-			name=self.__class__.__qualname__,
+			name=f"{self.__class__.__module__}.{self.start.__qualname__}",
 			target=self._bg
 		)
 		t.daemon = True

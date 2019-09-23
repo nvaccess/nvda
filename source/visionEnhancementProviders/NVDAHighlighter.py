@@ -242,7 +242,7 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 		winGDI.gdiPlusInitialize()
 		self.window = None
 		self._highlighterThread = threading.Thread(
-			name="NVDAHighlighterThread",
+			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}",
 			target=self._run
 		)
 		self._highlighterThread.daemon = True

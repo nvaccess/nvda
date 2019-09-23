@@ -2031,7 +2031,7 @@ class _BgThread:
 			return
 		cls.queuedWriteLock = threading.Lock()
 		thread = cls.thread = threading.Thread(
-			name="braille._BgThread",
+			name=f"{cls.__module__}.{cls.__qualname__}",
 			target=cls.func
 		)
 		thread.daemon = True

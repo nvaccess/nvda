@@ -174,7 +174,7 @@ class UIAHandler(COMObject):
 		self.MTAThreadStopEvent=threading.Event()
 		self.MTAThreadInitException=None
 		self.MTAThread = threading.Thread(
-			name="UIAHandler.MTAThread",
+			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}.MTAThread",
 			target=self.MTAThreadFunc
 		)
 		self.MTAThread.daemon=True

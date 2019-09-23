@@ -400,7 +400,7 @@ def playWaveFile(fileName, asynchronous=True):
 		if fileWavePlayerThread is not None:
 			fileWavePlayerThread.join()
 		fileWavePlayerThread = threading.Thread(
-			name=f"fileWavePlayerThread({os.path.basename(fileName)})",
+			name=f"{__name__}.playWaveFile({os.path.basename(fileName)})",
 			target=fileWavePlayer.idle
 		)
 		fileWavePlayerThread.start()
