@@ -894,7 +894,7 @@ class ExecAndPump(threading.Thread):
 		self.kwargs=kwargs
 		fname = repr(func)
 		super().__init__(
-			name=		f"{self.__class__.__module__}.{self.__class__.__qualname__}({fname})"
+			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}({fname})"
 		)
 		self.threadExc=None
 		self.start()
