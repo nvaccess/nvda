@@ -257,14 +257,7 @@ class CancellableCallThread(threading.Thread):
 		self.isUsable = True
 
 	def execute(self, func, *args, pumpMessages=True, **kwargs):
-		if hasattr(func, "__qualname__"):  # _FuncPtr doesn't have this
-			if hasattr(func, "__func__"):
-				fname = func.__func__.__module__
-			else:
-				fname = func.__module__
-			fname += f".{func.__qualname__}"
-		else:
-			fname = repr(func)
+		fname = repr(func)
 		self.name = f"{self.__class__.__module__}.{self.execute.__qualname__}({fname})"
 		# Don't even bother making the call if the core is already dead.
 		if isAttemptingRecovery:
