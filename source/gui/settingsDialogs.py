@@ -732,8 +732,6 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
-			# Translators: The label of a checkbox in general settings
-			# to toggle automatic checking for ad-on updates at startup.
 			item = self.autoCheckForAddonUpdatesCheckBox = wx.CheckBox(
 				self,
 				# Translators: The label of a checkbox in general settings
