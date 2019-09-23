@@ -192,6 +192,7 @@ class MetadataEditField(RichEdit50):
 			cls.TextInfo = super().TextInfo
 		return cls.TextInfo
 
+
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
