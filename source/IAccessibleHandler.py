@@ -29,6 +29,8 @@ import mouseHandler
 import controlTypes
 import keyboardHandler
 import core
+import re
+
 
 MAX_WINEVENTS=500
 MAX_WINEVENTS_PER_THREAD=10
@@ -1006,6 +1008,11 @@ def getRecursiveTextFromIAccessibleTextObject(obj,startOffset=0,endOffset=-1):
 		textList.append(t)
 	return "".join(textList).replace('  ',' ')
 
+
+ATTRIBS_STRING_BASE64_PATTERN = re.compile(r"base64\\,[A-Za-z0-9+/=]+")
+ATTRIBS_STRING_BASE64_THRESHOLD = 4096
+
+
 def splitIA2Attribs(attribsString):
 	"""Split an IAccessible2 attributes string into a dict of attribute keys and values.
 	An invalid attributes string does not cause an error, but strange results may be returned.
@@ -1015,6 +1022,11 @@ def splitIA2Attribs(attribsString):
 	@return: A dict of the attribute keys and values, where values are strings or dicts.
 	@rtype: {str: str or {str: str}}
 	"""
+	# Do not treat huge base64 data as it might freeze NVDA in Google Chrome (#10227)
+	if len(attribsString) >= ATTRIBS_STRING_BASE64_THRESHOLD:
+		attribsString = ATTRIBS_STRING_BASE64_PATTERN.sub("base64,<truncated>", attribsString)
+		if len(attribsString) >= ATTRIBS_STRING_BASE64_THRESHOLD:
+			log.debugWarning(u"IA2 attributes string exceeds threshold: {}".format(attribsString))
 	attribsDict = {}
 	tmp = ""
 	key = ""
