@@ -1022,7 +1022,7 @@ def splitIA2Attribs(attribsString):
 	@return: A dict of the attribute keys and values, where values are strings or dicts.
 	@rtype: {str: str or {str: str}}
 	"""
-	# Do not treat huge base64 data as it might freeze Google Chrome (#10227)
+	# Do not treat huge base64 data as it might freeze NVDA in Google Chrome (#10227)
 	if len(attribsString) >= ATTRIBS_STRING_BASE64_THRESHOLD:
 		attribsString = ATTRIBS_STRING_BASE64_PATTERN.sub("base64,<truncated>", attribsString)
 		if len(attribsString) >= ATTRIBS_STRING_BASE64_THRESHOLD:
