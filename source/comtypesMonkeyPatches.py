@@ -1,10 +1,12 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2009-2016 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2009-2019 NV Access Limited, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import ctypes
 import _ctypes
+import importlib
+import comtypes.client._generate
 
 # A version of ctypes.WINFUNCTYPE 
 # that produces a WinFunctionType class whose instance will convert COMError into a CallCancelled exception when called as a function.
@@ -125,3 +127,15 @@ def _check_version(actual):
 	if actual != required:
 		raise ImportError("Wrong version")
 comtypes._check_version = _check_version
+
+
+# Monkeypatch comtypes to clear the importlib cache when importing a new module
+old_my_import = comtypes.client._generate._my_import
+
+
+def new_my_import(fullname):
+	importlib.invalidate_caches()
+	return old_my_import(fullname)
+
+
+comtypes.client._generate._my_import = new_my_import
