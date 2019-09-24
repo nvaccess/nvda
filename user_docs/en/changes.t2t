@@ -19,6 +19,9 @@ What's New in NVDA
 - On Windows 8 and later, NVDA will now report product name and version information for hosted apps such as apps downloaded from Microsoft Store using information provided by the app. (#4259, #10108)
 - When toggling track changes on and off with the keyboard in Microsoft Word, NVDA will announce the state of the setting. (#942) 
 - The NVDA version number is now logged as the first message in the log. This occurs even if logging has been disabled from the GUI. (#9803)
+- For every entry in the NVDA log, information about the originating thread is now included. (#10259)
+- The settings dialog no longer allows for changing the configured log level if it has been overridden from the command line. (#10209)
+- In Microsoft Word, NVDA now announces the display state of  non printable characters when pressing the toggle shortcut Ctrl+Shift+8 . (#10241)
 
 
 == Bug Fixes ==
@@ -38,6 +41,7 @@ What's New in NVDA
 - Windows Explorer on Windows 7 no longer crashes when accessing metadata edit fields. (#5337)
 - Addressed several crashes in Gmail seen in both Firefox and Chrome when interacting with particular popup menus such as when creating filters or changing certain Gmail settings. (#10175, #9402, #8924)
 - NVDA will no longer report content of visually hidden columns for list items in SysListView32 controls. (#8268)
+- The settings dialog no longer shows "info" as the current log level when in secure mode. (#10209)
 
 
 == Changes for Developers ==
@@ -88,12 +92,14 @@ What's New in NVDA
 - Abstract class properties are now supported on objects that inherit from baseObject.AutoPropertyObject (e.g. NVDAObjects and TextInfos). (#10102)
 - Introduced displayModel.UNIT_DISPLAYCHUNK as a textInfos unit constant specific to DisplayModelTextInfo. (#10165)
  - This new constant allows walking over the text in a DisplayModelTextInfo in a way that more closely resembles how the text chunks are saved in the underlying model.
+- displayModel.getCaretRect now returns an instance of locationHelper.RectLTRB. (#10233)
 
 
 = 2019.2.1 =
 This is a minor release to fix several crashes present in 2019.2. Fixes include:
 - Addressed several crashes in Gmail seen in both Firefox and Chrome when interacting with particular popup menus such as when creating filters or changing certain Gmail settings. (#10175, #9402, #8924)
 - In Windows 7, NVDA no longer causes Windows Explorer to crash when the mouse is used in the start menu. (#9435) 
+- Windows Explorer on Windows 7 no longer crashes when accessing metadata edit fields. (#5337) 
 
 
 = 2019.2 =

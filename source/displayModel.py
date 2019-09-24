@@ -4,6 +4,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2006-2017 NV Access Limited, Babbage B.V.
 
+import ctypes
 from ctypes import *
 from ctypes.wintypes import RECT
 from comtypes import BSTR
@@ -169,14 +170,27 @@ def initialize():
 	_requestTextChangeNotificationsForWindow=NVDAHelper.localLib.displayModel_requestTextChangeNotificationsForWindow
 
 def getCaretRect(obj):
-	left=c_long()
-	top=c_long()
-	right=c_long()
-	bottom=c_long()
-	res=watchdog.cancellableExecute(NVDAHelper.localLib.displayModel_getCaretRect, obj.appModule.helperLocalBindingHandle, obj.windowThreadID, byref(left),byref(top),byref(right),byref(bottom))
-	if res!=0:
-			raise RuntimeError("displayModel_getCaretRect failed with res %d"%res)
-	return RECT(left,top,right,bottom)
+	left = ctypes.c_long()
+	top = ctypes.c_long()
+	right = ctypes.c_long()
+	bottom = ctypes.c_long()
+	res = watchdog.cancellableExecute(
+		NVDAHelper.localLib.displayModel_getCaretRect,
+		obj.appModule.helperLocalBindingHandle,
+		obj.windowThreadID,
+		ctypes.byref(left),
+		ctypes.byref(top),
+		ctypes.byref(right),
+		ctypes.byref(bottom)
+	)
+	if res != 0:
+		raise RuntimeError(f"displayModel_getCaretRect failed with res {res}")
+	return RectLTRB(
+		left.value,
+		top.value,
+		right.value,
+		bottom.value
+	)
 
 def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace=True,includeDescendantWindows=True):
 	text, cpBuf = watchdog.cancellableExecute(_getWindowTextInRect, bindingHandle, windowHandle, includeDescendantWindows, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace)
@@ -555,7 +569,12 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 	minVerticalWhitespace=4
 	stripOuterWhitespace=False
 
-	def _findCaretOffsetFromLocation(self,caretRect,validateBaseline=True,validateDirection=True):
+	def _findCaretOffsetFromLocation(
+			self,
+			caretRect: RectLTRB,
+			validateBaseline: bool = True,
+			validateDirection: bool = True
+	):
 		# Accepts logical coordinates.
 		for charOffset, ((charLeft, charTop, charRight, charBottom),charBaseline,charDirection) in enumerate(self._getStoryOffsetLocations()):
 			# Skip any character that does not overlap the caret vertically
@@ -577,17 +596,12 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		raise LookupError
 
 	def _getCaretOffset(self):
-		caretRect=getCaretRect(self.obj)
-		objLocation=self.obj.location
-		objRect=RECT(objLocation[0],objLocation[1],objLocation[0]+objLocation[2],objLocation[1]+objLocation[3])
-		objRect.left,objRect.top=windowUtils.physicalToLogicalPoint(
-			self.obj.windowHandle,objRect.left,objRect.top)
-		objRect.right,objRect.bottom=windowUtils.physicalToLogicalPoint(
-			self.obj.windowHandle,objRect.right,objRect.bottom)
-		caretRect.left=max(objRect.left,caretRect.left)
-		caretRect.top=max(objRect.top,caretRect.top)
-		caretRect.right=min(objRect.right,caretRect.right)
-		caretRect.bottom=min(objRect.bottom,caretRect.bottom)
+		caretRect = getCaretRect(self.obj)
+		objLocation = self.obj.location
+		objRect = objLocation.toLTRB().toLogical(self.obj.windowHandle)
+		caretRect = caretRect.intersection(objRect)
+		if not any(caretRect):
+			raise RuntimeError("The caret rectangle does not overlap with the window")
 		# Find a character offset where the caret overlaps vertically, overlaps horizontally, overlaps the baseline and is totally within or on the correct side for the reading order
 		try:
 			return self._findCaretOffsetFromLocation(caretRect,validateBaseline=True,validateDirection=True)
