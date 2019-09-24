@@ -42,6 +42,7 @@ What's New in NVDA
 - Addressed several crashes in Gmail seen in both Firefox and Chrome when interacting with particular popup menus such as when creating filters or changing certain Gmail settings. (#10175, #9402, #8924)
 - NVDA will no longer report content of visually hidden columns for list items in SysListView32 controls. (#8268)
 - The settings dialog no longer shows "info" as the current log level when in secure mode. (#10209)
+- NVDA no longer locks up for a significant amount of time when interacting with images with a base64 URI in Mozilla Firefox or Google Chrome. (#10227)
 
 
 == Changes for Developers ==
