@@ -173,7 +173,10 @@ class UIAHandler(COMObject):
 		self.MTAThreadInitEvent=threading.Event()
 		self.MTAThreadStopEvent=threading.Event()
 		self.MTAThreadInitException=None
-		self.MTAThread=threading.Thread(target=self.MTAThreadFunc)
+		self.MTAThread = threading.Thread(
+			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}.MTAThread",
+			target=self.MTAThreadFunc
+		)
 		self.MTAThread.daemon=True
 		self.MTAThread.start()
 		self.MTAThreadInitEvent.wait(2)
