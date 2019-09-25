@@ -127,6 +127,8 @@ class AppModule(appModuleHandler.AppModule):
 				if (
 					obj.role == controlTypes.ROLE_STATICTEXT
 					and isinstance(obj, UIA.UIA)
+					and obj.previous
+					and obj.previous.previous
 					and obj.previous.previous.UIAElement.CachedAutomationId in self.INTELLISENSE_LIST_AUTOMATIONIDS
 				):
 					clsList.insert(0, IntellisenseLabel)
