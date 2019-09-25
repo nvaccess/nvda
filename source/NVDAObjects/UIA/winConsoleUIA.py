@@ -12,7 +12,9 @@ import time
 import textInfos
 import UIAHandler
 
+from comtypes import COMError
 from scriptHandler import script
+from UIAUtils import isTextRangeOffscreen
 from winVersion import isWin10
 from . import UIATextInfo
 from ..behaviors import Terminal
@@ -25,6 +27,21 @@ class consoleUIATextInfo(UIATextInfo):
 	#: There may be no need to disable this anymore, but doing so doesn't seem
 	#: to do much good either.
 	_expandCollapseBeforeReview = False
+
+	def __init__(self,obj,position,_rangeObj=None):
+		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
+		# Re-implement POSITION_FIRST and POSITION_LAST in terms of
+		# visible ranges to fix review top/bottom scripts.
+		if position==textInfos.POSITION_FIRST:
+			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
+			firstVisiRange = visiRanges.GetElement(0)
+			self._rangeObj = firstVisiRange
+			self.collapse()
+		elif position==textInfos.POSITION_LAST:
+			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
+			lastVisiRange = visiRanges.GetElement(visiRanges.length - 1)
+			self._rangeObj = lastVisiRange
+			self.collapse(True)
 
 	def collapse(self,end=False):
 		"""Works around a UIA bug on Windows 10 1903 and later."""
@@ -50,8 +67,6 @@ class consoleUIATextInfo(UIATextInfo):
 			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
 			visiLength = visiRanges.length
 			if visiLength > 0:
-				firstVisiRange = visiRanges.GetElement(0)
-				lastVisiRange = visiRanges.GetElement(visiLength - 1)
 				oldRange = self._rangeObj.clone()
 		if unit == textInfos.UNIT_WORD and direction != 0:
 			# UIA doesn't implement word movement, so we need to do it manually.
@@ -94,7 +109,6 @@ class consoleUIATextInfo(UIATextInfo):
 					lineInfo.expand(textInfos.UNIT_LINE)
 					offset = self._getCurrentOffsetInThisLine(lineInfo)
 				# Finally using the new offset,
-
 				# Calculate the current word offsets and move to the start of
 				# this word if we are not already there.
 				start, end = self._getWordOffsetsInThisLine(offset, lineInfo)
@@ -108,15 +122,16 @@ class consoleUIATextInfo(UIATextInfo):
 		else:  # moving by a unit other than word
 			res = super(consoleUIATextInfo, self).move(unit, direction,
 														endPoint)
-		if oldRange and (
-			self._rangeObj.CompareEndPoints(
-				UIAHandler.TextPatternRangeEndpoint_Start, firstVisiRange,
-				UIAHandler.TextPatternRangeEndpoint_Start) < 0
-			or self._rangeObj.CompareEndPoints(
-				UIAHandler.TextPatternRangeEndpoint_Start, lastVisiRange,
-				UIAHandler.TextPatternRangeEndpoint_End) >= 0):
-			self._rangeObj = oldRange
-			return 0
+		try:
+			if (
+				oldRange
+				and isTextRangeOffscreen(self._rangeObj, visiRanges)
+				and not isTextRangeOffscreen(oldRange, visiRanges)
+			):
+				self._rangeObj = oldRange
+				return 0
+		except COMError, RuntimeError:
+			pass
 		return res
 
 	def expand(self, unit):
