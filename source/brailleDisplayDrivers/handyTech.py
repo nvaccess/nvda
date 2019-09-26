@@ -478,6 +478,7 @@ def basicBraillePlusFactory(numCells, deviceId):
 		"numCells": numCells,
 	})
 
+
 BasicBraillePlus32 = basicBraillePlusFactory(32, MODEL_BASIC_BRAILLE_PLUS_32)
 BasicBraillePlus40 = basicBraillePlusFactory(40, MODEL_BASIC_BRAILLE_PLUS_40)
 

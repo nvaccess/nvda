@@ -524,8 +524,8 @@ addUsbDevices("handyTech", KEY_SERIAL, {
 addUsbDevices("handyTech", KEY_HID, {
 	"VID_1FE4&PID_0054", # Active Braille
 	"VID_1FE4&PID_0055", # Connect Braille
-	"VID_1FE4&PID_0061", # Actilino
-	"VID_1FE4&PID_0064", # Active Star 40
+	"VID_1FE4&PID_0061",  # Actilino
+	"VID_1FE4&PID_0064",  # Active Star 40
 	"VID_1FE4&PID_0081", # Basic Braille 16
 	"VID_1FE4&PID_0082", # Basic Braille 20
 	"VID_1FE4&PID_0083", # Basic Braille 32
