@@ -292,6 +292,9 @@ class Addon(AddonBase):
 					translatedInput = open(p, 'rb')
 					break
 			self.manifest = AddonManifest(f, translatedInput)
+			if self.manifest.errors is not None:
+				_report_manifest_errors(self.manifest)
+				raise AddonError("Manifest file has errors.")
 
 	@property
 	def isPendingInstall(self):
