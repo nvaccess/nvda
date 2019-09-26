@@ -17,7 +17,7 @@ import colorsys
 import sayAllHandler
 import eventHandler
 import braille
-from scriptHandler import script, getLastScriptRepeatCount
+from scriptHandler import script
 import languageHandler
 import ui
 import NVDAHelper
