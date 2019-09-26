@@ -134,7 +134,10 @@ comtypes._check_version = _check_version
 
 
 # Monkeypatch comtypes to clear the importlib cache when importing a new module
-import comtypes.client._generate
+
+# We must import comtypes.client._generate here as it must be done after other monkeypatching
+import comtypes.client._generate  # noqa: E402
+
 old_my_import = comtypes.client._generate._my_import
 
 
