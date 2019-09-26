@@ -717,6 +717,8 @@ docFileName = string(default=None)
 
 def validate_apiVersionString(value):
 	from configobj.validate import ValidateError
+	if not value or value == "None":
+		return (0, 0, 0)
 	if not isinstance(value, string_types):
 		raise ValidateError('Expected an apiVersion in the form of a string. EG "2019.1.0"')
 	try:
