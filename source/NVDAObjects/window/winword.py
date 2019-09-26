@@ -73,7 +73,8 @@ wdStartOfRangeRowNumber=13
 wdMaximumNumberOfRows=15
 wdStartOfRangeColumnNumber=16
 wdMaximumNumberOfColumns=18
-#Underline style
+
+# Underline style
 wdUnderlineNone = 0
 wdUnderlineSingle = 1
 wdUnderlineWords = 2
@@ -92,6 +93,7 @@ wdUnderlineWavyHeavy = 27
 wdUnderlineDashLong = 39
 wdUnderlineWavyDouble = 43
 wdUnderlineDashLongHeavy = 55
+
 #Horizontal alignment
 wdAlignParagraphLeft=0
 wdAlignParagraphCenter=1
@@ -291,39 +293,39 @@ wdRevisionTypeLabels={
 
 wdUnderlineTypeDescriptions = {
 	# Translators: an underline style in Microsoft Word as announced in the font window.
-	wdUnderlineSingle:_("Single"),
+	wdUnderlineSingle: _("Single"),
 	# Translators: an underline style in Microsoft Word as announced in the font window.
-	wdUnderlineWords:_("Words only"),
+	wdUnderlineWords: _("Words only"),
 	# Translators: an underline style in Microsoft Word as announced in the font window.
-	wdUnderlineDouble:_("Double"),
+	wdUnderlineDouble: _("Double"),
 	# Translators: an underline style in Microsoft Word as announced in the font window.
-	wdUnderlineDotted:_("Dotted"),
+	wdUnderlineDotted: _("Dotted"),
 	# Translators: an underline style in Microsoft Word as announced in the font window.
-	wdUnderlineThick:_("Thick"),
+	wdUnderlineThick: _("Thick"),
 	# Translators: an underline style in Microsoft Word as announced in the font window.
-	wdUnderlineDash:_("Dash"),
+	wdUnderlineDash: _("Dash"),
 	# Translators: an underline style in Microsoft Word as announced in the font window.
-	wdUnderlineDotDash:_("Dot dash"),
+	wdUnderlineDotDash: _("Dot dash"),
 	# Translators: an underline style in Microsoft Word as announced in the font window.
-	wdUnderlineDotDotDash:_("Dot dot dash"),
+	wdUnderlineDotDotDash: _("Dot dot dash"),
 	# Translators: an underline style in Microsoft Word as announced in the font window.
-	wdUnderlineWavy:_("Wave"),
+	wdUnderlineWavy: _("Wave"),
 	# Translators: an underline style in Microsoft Word as announced in the font window.
-	wdUnderlineDottedHeavy:_("Dotted heavy"),
+	wdUnderlineDottedHeavy: _("Dotted heavy"),
 	# Translators: an underline style in Microsoft Word as announced in the font window.
-	wdUnderlineDashHeavy:_("Dashed heavy"),
+	wdUnderlineDashHeavy: _("Dashed heavy"),
 	# Translators: an underline style in Microsoft Word as announced in the font window.
-	wdUnderlineDotDashHeavy:_("Dot dash heavy"),
+	wdUnderlineDotDashHeavy: _("Dot dash heavy"),
 	# Translators: an underline style in Microsoft Word as announced in the font window.
-	wdUnderlineDotDotDashHeavy:_("Dot dot dash heavy"),
+	wdUnderlineDotDotDashHeavy: _("Dot dot dash heavy"),
 	# Translators: an underline style in Microsoft Word as announced in the font window.
-	wdUnderlineWavyHeavy:_("Wave heavy"),
+	wdUnderlineWavyHeavy: _("Wave heavy"),
 	# Translators: an underline style in Microsoft Word as announced in the font window.
-	wdUnderlineDashLong:_("Dashed long"),
+	wdUnderlineDashLong: _("Dashed long"),
 	# Translators: an underline style in Microsoft Word as announced in the font window.
-	wdUnderlineWavyDouble:_("Wave double"),
+	wdUnderlineWavyDouble: _("Wave double"),
 	# Translators: an underline style in Microsoft Word as announced in the font window.
-	wdUnderlineDashLongHeavy:_("Dashed long heavy"),
+	wdUnderlineDashLongHeavy: _("Dashed long heavy"),
 }
 
 storyTypeLocalizedLabels={
@@ -341,7 +343,7 @@ storyTypeLocalizedLabels={
 
 wdCharacterCaseTypeLabels = {
 	# Translators: a Microsoft Word character case type
-	wdNextCase: _("No case"), #Returned when selection range contains only case-insensitive characters
+	wdNextCase: _("No case"),  # Returned when selection range contains only case-insensitive characters
 	# Translators: a Microsoft Word character case type
 	wdLowerCase: _("Lowercase"),
 	# Translators: a Microsoft Word character case type
@@ -361,7 +363,7 @@ wdCharacterCaseTypeLabels = {
 	# Translators: a Microsoft Word character case type
 	wdHiragana: _("Hiragana"),
 }
-	
+
 wdFieldTypesToNVDARoles={
 	wdFieldFormTextInput:controlTypes.ROLE_EDITABLETEXT,
 	wdFieldFormCheckBox:controlTypes.ROLE_CHECKBOX,
@@ -1319,31 +1321,7 @@ class WordDocument(Window):
 			curTime=time.time()
 		return curVal
 
-	def modified_WaitForValueChangeForAction(self,action,fetcher,timeout=0.15):
-		oldVal=fetcher()
-		action()
-		startTime=curTime=time.time()
-		curVal=fetcher()
-		s = []
-		s.append('oldVal = ' + str(oldVal))
-		isSameScript = getLastScriptRepeatCount() > 0
-		retVal=None
-		s.append('IsSameScript = ' + str(isSameScript))
-		while (curTime-startTime)<timeout:
-			s.append(str(curTime) + ' - ' + str(curVal))
-			if curVal!=oldVal and retVal is None:
-				retVal=curVal
-				s.append('retVal = ' + str(curVal))
-			time.sleep(0.002)
-			curVal=fetcher()
-			curTime=time.time()
-			#if (not isSameScript) and curVal!=oldVal:
-			#	break
-		s.append(str(curTime) + ' - ' + str(curVal))
-		log.debug('\n'.join(s))
-		return retVal
-
-	@script(gestures=["kb:control+b","kb:control+shift+b"])
+	@script(gestures=["kb:control+b", "kb:control+shift+b"])
 	def script_toggleBold(self,gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1358,7 +1336,7 @@ class WordDocument(Window):
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Bold off"))
 
-	@script(gestures=["kb:control+i","kb:control+shift+i"])
+	@script(gestures=["kb:control+i", "kb:control+shift+i"])
 	def script_toggleItalic(self,gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1652,9 +1630,6 @@ class WordDocument(Window):
 		"kb:control+]":"increaseDecreaseFontSize",
 		"kb:control+shift+,":"increaseDecreaseFontSize",
 		"kb:control+shift+.":"increaseDecreaseFontSize",
-		"kb:control+b":"toggleBold",
-		"kb:control+i":"toggleItalic",
-		"kb:control+shift+d":"toggleUnderline",
 		"kb:control+=":"toggleSuperscriptSubscript",
 		"kb:control+shift+=":"toggleSuperscriptSubscript",
 		"kb:control+l":"toggleAlignment",

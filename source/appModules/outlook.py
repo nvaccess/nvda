@@ -576,9 +576,9 @@ class OutlookWordDocument(WordDocument):
 	ignorePageNumbers=True # This includes page sections, and page columns. None of which are appropriate for outlook.
 	
 	__gestures = {
-	    "kb:control+shift+w": None, # Shortcut existing in Word but not in Outlook
-	    "kb:control+shift+b": None, # Shortcut existing in Word but opens address book in Outlook
-		"kb:control+shift+a": "changeCase", # In Outlook Ctrl+Shift+A is equivalent to Shift+F3
+		"kb:control+shift+w": None,  # Shortcut existing in Word but not in Outlook
+		"kb:control+shift+b": None,  # Shortcut existing in Word but opens address book in Outlook
+		"kb:control+shift+a": "changeCase",  # In Outlook Ctrl+Shift+A is equivalent to Shift+F3
 	}
 
 class OutlookUIAWordDocument(UIAWordDocument):
@@ -593,11 +593,11 @@ class OutlookUIAWordDocument(UIAWordDocument):
 
 	def _get_shouldCreateTreeInterceptor(self):
 		return self.isReadonlyViewer
-		
+
 	__gestures = {
-		"kb:control+shift+w": None, # Shortcut existing in Word but not in Outlook
-		"kb:control+shift+b": None, # Shortcut existing in Word but opens address book in Outlook
-		"kb:control+shift+a": "changeCase", # In Outlook Ctrl+Shift+A is equivalent to Shift+F3
+		"kb:control+shift+w": None,  # Shortcut existing in Word but not in Outlook
+		"kb:control+shift+b": None,  # Shortcut existing in Word but opens address book in Outlook
+		"kb:control+shift+a": "changeCase",  # In Outlook Ctrl+Shift+A is equivalent to Shift+F3
 	}
 
 class DatePickerButton(IAccessible):
