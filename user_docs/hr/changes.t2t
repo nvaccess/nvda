@@ -2,6 +2,13 @@
 
 
 %!includeconf: ../changes.t2tconf
+
+= 2019.2.1 =
+Ovo je mala inačica koja ispravlja nekoliko rušenja u inačici 2019.2. Ispravci uključuju:
+- Ispravljeno nekoliko rušenja u Gmail-u uočeno u  Firefoxu i Chromeu prilikom interakcije sa nekim skočnim izbornicima, kao što je to stvaranje filtera ili mijenjanje nekih postavki Gmail-a. (#10175, #9402, #8924)
+- U Windowsima 7, NVDA NVDA više neće prouzrokovati rušenje Windows upravitelja za datoteke kada se miš koristi u start izborniku. (#9435) 
+
+
 = 2019.2 =
 Novosti u ovoj inačici uključuju  automatsko otkrivanje Freedom Scientific brajičnih redaka, eksperimentalnu postavku u panelu naprednih postavki koja zaustavlja način pregleda da pomiće fokus (što može doprinijeti unapređenim performansama), opciju dodatne vrzine za  Windows OneCore govornu jedinicu kako bise postigle velike brzine govora, i mnogo drugih ispravaka grešaka.
 
@@ -37,7 +44,7 @@ Novosti u ovoj inačici uključuju  automatsko otkrivanje Freedom Scientific bra
 - Nadograđen eSpeak-NG na inačicu 67324cc.
 - Nadograđen liblouis brajični prevoditelj na inačicu 3.10.0. (#9439, #9678)
 - NVDA će sada izgovarati riječ  'označeno' poslije trenutnog označenog teksta.(#9028, #9909)
-- U Microsoft Visual Studio Code, način pregleda je sada podrazumjevano isključen. (#9828)
+- U Microsoft Visual Studio Code, NVDA se sada podrazumjevano nalazi u načinu fokusa. (#9828)
 
 
 == Ispravci grešaka ==
