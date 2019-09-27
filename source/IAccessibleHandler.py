@@ -1010,7 +1010,7 @@ def getRecursiveTextFromIAccessibleTextObject(obj,startOffset=0,endOffset=-1):
 
 
 ATTRIBS_STRING_BASE64_PATTERN = re.compile(
-	r"(([^\\](\\\\)*);src:data\\:[^\\;]+\\;base64)\\,[A-Za-z0-9+/=]+"
+	r"(([^\\](\\\\)*);src:data\\:[^\\;]+\\;base64\\,)[A-Za-z0-9+/=]+"
 )
 ATTRIBS_STRING_BASE64_REPL = r"\1<truncated>"
 ATTRIBS_STRING_BASE64_THRESHOLD = 4096
