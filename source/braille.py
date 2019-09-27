@@ -37,6 +37,7 @@ import extensionPoints
 import hwPortUtils
 import bdDetect
 import winUser
+import queueHandler
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is a
@@ -1692,7 +1693,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			else: # detected:
 				self._disableDetection()
 			log.info("Loaded braille display driver %s, current display has %d cells." %(name, self.displaySize))
-			wx.CallAfter(self.initialDisplay)
+			queueHandler.queueFunction(queueHandler.eventQueue, self.initialDisplay)
 			if detected and 'bluetoothName' in detected.deviceInfo:
 				self._enableDetection(bluetooth=False, keepCurrentDisplay=True, limitToDevices=[name])
 			return True
