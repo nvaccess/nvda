@@ -3427,6 +3427,18 @@ class InputGesturesDialog(SettingsDialog):
 		self.pendingAdds.clear()
 		self.pendingRemoves.clear()
 		inputCore.manager.userGestureMap.clear()
+		try:
+			inputCore.manager.userGestureMap.save()
+		except:  # noqa: E722
+			log.debugWarning("", exc_info=True)
+			# Translators: An error displayed when saving user defined input gestures fails.
+			gui.messageBox(
+				_("Error saving user defined gestures - probably read only file system."),
+				caption=_("Error"),
+				style=wx.OK | wx.ICON_ERROR
+			)
+			self.onCancel(None)
+			return
 		inputCore.manager.userGestureMap.save()
 		self.gestures = inputCore.manager.getAllGestureMappings(
 			obj=gui.mainFrame.prevFocus,
