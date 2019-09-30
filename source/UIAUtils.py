@@ -239,4 +239,4 @@ it is retrieved from config).
 	# ignore it.
 	# It does not implement caret/selection, and probably has no
 	# new text events.
-	return isWin10(1803)
+	return isWin10(1809)

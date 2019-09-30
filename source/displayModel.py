@@ -4,6 +4,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2006-2017 NV Access Limited, Babbage B.V.
 
+import ctypes
 from ctypes import *
 from ctypes.wintypes import RECT
 from comtypes import BSTR
@@ -22,6 +23,11 @@ from logHandler import log
 import windowUtils
 from locationHelper import RectLTRB, RectLTWH, Point
 import textUtils
+from typing import Union, List, Tuple
+
+#: A text info unit constant for a single chunk in a display model
+UNIT_DISPLAYCHUNK = "displayChunk"
+
 
 def wcharToInt(c):
 	i=ord(c)
@@ -164,14 +170,27 @@ def initialize():
 	_requestTextChangeNotificationsForWindow=NVDAHelper.localLib.displayModel_requestTextChangeNotificationsForWindow
 
 def getCaretRect(obj):
-	left=c_long()
-	top=c_long()
-	right=c_long()
-	bottom=c_long()
-	res=watchdog.cancellableExecute(NVDAHelper.localLib.displayModel_getCaretRect, obj.appModule.helperLocalBindingHandle, obj.windowThreadID, byref(left),byref(top),byref(right),byref(bottom))
-	if res!=0:
-			raise RuntimeError("displayModel_getCaretRect failed with res %d"%res)
-	return RECT(left,top,right,bottom)
+	left = ctypes.c_long()
+	top = ctypes.c_long()
+	right = ctypes.c_long()
+	bottom = ctypes.c_long()
+	res = watchdog.cancellableExecute(
+		NVDAHelper.localLib.displayModel_getCaretRect,
+		obj.appModule.helperLocalBindingHandle,
+		obj.windowThreadID,
+		ctypes.byref(left),
+		ctypes.byref(top),
+		ctypes.byref(right),
+		ctypes.byref(bottom)
+	)
+	if res != 0:
+		raise RuntimeError(f"displayModel_getCaretRect failed with res {res}")
+	return RectLTRB(
+		left.value,
+		top.value,
+		right.value,
+		bottom.value
+	)
 
 def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace=True,includeDescendantWindows=True):
 	text, cpBuf = watchdog.cancellableExecute(_getWindowTextInRect, bindingHandle, windowHandle, includeDescendantWindows, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace)
@@ -273,21 +292,27 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		super(DisplayModelTextInfo, self).__init__(obj, position)
 
 	_cache__storyFieldsAndRects = True
-	def _get__storyFieldsAndRects(self):
+
+	def _get__storyFieldsAndRects(self) -> Tuple[
+		List[Union[str, textInfos.FieldCommand]],
+		List[RectLTRB],
+		List[int],
+		List[int]
+	]:
 		# All returned coordinates are logical coordinates.
 		location = self._location if self._location else self.obj.location
 		if location is None or not any(location):
 			# No location; nothing we can do.
-			return [], [], []
+			return [], [], [], []
 		bindingHandle=self.obj.appModule.helperLocalBindingHandle
 		if not bindingHandle:
 			log.debugWarning("AppModule does not have a binding handle")
-			return [], [], []
+			return [], [], [], []
 		try:
 			location = location.toLogical(self.obj.windowHandle)
 		except RuntimeError:
 			log.exception()
-			return [], [], []
+			return [], [], [], []
 		text, rects = getWindowTextInRect(
 			bindingHandle,
 			self.obj.windowHandle,
@@ -301,7 +326,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			self.includeDescendantWindows
 		)
 		if not text:
-			return [], [], []
+			return [], [], [], []
 		text="<control>%s</control>"%text
 		commandList=XMLFormatting.XMLTextParser().parse(text)
 		curFormatField=None
@@ -309,11 +334,13 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		lineStartOffset=0
 		lineStartIndex=0
 		lineBaseline=None
-		lineEndOffsets=[]
+		lineEndOffsets = []
+		displayChunkEndOffsets = []
 		for index in range(len(commandList)):
 			item=commandList[index]
 			if isinstance(item,str):
 				lastEndOffset += textUtils.WideStringOffsetConverter(item).wideStringLength
+				displayChunkEndOffsets.append(lastEndOffset)
 			elif isinstance(item,textInfos.FieldCommand):
 				if isinstance(item.field,textInfos.FormatField):
 					curFormatField=item.field
@@ -339,13 +366,13 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 						lineStartIndex=index
 						lineStartOffset=lastEndOffset
 						lineBaseline=baseline
-		return commandList,rects,lineEndOffsets
+		return commandList, rects, lineEndOffsets, displayChunkEndOffsets
 
 	def _getStoryOffsetLocations(self):
 		baseline=None
 		direction=0
 		lastEndOffset=0
-		commandList,rects,lineEndOffsets=self._storyFieldsAndRects
+		commandList, rects = self._storyFieldsAndRects[:2]
 		for item in commandList:
 			if isinstance(item,textInfos.FieldCommand) and isinstance(item.field,textInfos.FormatField):
 				baseline=item.field['baseline']
@@ -494,28 +521,49 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		offset=self._getClosestOffsetFromPoint(*l.center)
 		return offset,offset
 
-	def _getLineOffsets(self,offset):
-		lineEndOffsets=self._storyFieldsAndRects[2]
-		if not lineEndOffsets:
-			return offset,offset+1
-		limit=lineEndOffsets[-1]
+	def _getOffsetsInPreCalculatedOffsets(self, preCalculated, offset):
+		limit = preCalculated[-1]
 		if not limit:
-			return offset,offset+1
+			return (offset, offset + 1)
 		offset=min(offset,limit-1)
 		startOffset=0
 		endOffset=0
-		for lineEndOffset in lineEndOffsets: 
-			startOffset=endOffset
-			endOffset=lineEndOffset
-			if lineEndOffset>offset:
+		for preCalculatedEndOffset in preCalculated:
+			startOffset = endOffset
+			endOffset = preCalculatedEndOffset
+			if preCalculatedEndOffset > offset:
 				break
-		return startOffset,endOffset
+		return (startOffset, endOffset)
+
+	def _getLineOffsets(self, offset):
+		lineEndOffsets = self._storyFieldsAndRects[2]
+		if not lineEndOffsets:
+			return (offset, offset + 1)
+		return self._getOffsetsInPreCalculatedOffsets(lineEndOffsets, offset)
+
+	def _getDisplayChunkOffsets(self, offset):
+		displayChunkEndOffsets = self._storyFieldsAndRects[3]
+		if not displayChunkEndOffsets:
+			return (offset, offset + 1)
+		return self._getOffsetsInPreCalculatedOffsets(displayChunkEndOffsets, offset)
+
+	def _getUnitOffsets(self, unit, offset):
+		if unit is UNIT_DISPLAYCHUNK:
+			return self._getDisplayChunkOffsets(offset)
+		return super()._getUnitOffsets(unit, offset)
 
 	def _get_clipboardText(self):
 		return "\r\n".join(x.strip('\r\n') for x in self.getTextInChunks(textInfos.UNIT_LINE))
 
 	def getTextInChunks(self,unit):
-		#Specifically handle the line unit as we have the line offsets pre-calculated, and we can not guarantee lines end with \n
+		# Specifically handle the line and display chunk units.
+		# We have the line offsets pre-calculated, and we can not guarantee lines end with \n
+		if unit is UNIT_DISPLAYCHUNK:
+			for x in self._getFieldsInRange(self._startOffset, self._endOffset):
+				if not isinstance(x, str):
+					continue
+				yield x
+			return
 		if unit is textInfos.UNIT_LINE:
 			text=self.text
 			relStart=0
@@ -567,7 +615,12 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 	minVerticalWhitespace=4
 	stripOuterWhitespace=False
 
-	def _findCaretOffsetFromLocation(self,caretRect,validateBaseline=True,validateDirection=True):
+	def _findCaretOffsetFromLocation(
+			self,
+			caretRect: RectLTRB,
+			validateBaseline: bool = True,
+			validateDirection: bool = True
+	):
 		# Accepts logical coordinates.
 		for charOffset, ((charLeft, charTop, charRight, charBottom),charBaseline,charDirection) in enumerate(self._getStoryOffsetLocations()):
 			# Skip any character that does not overlap the caret vertically
@@ -589,19 +642,17 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		raise LookupError
 
 	def _getCaretOffset(self):
-		caretRect=getCaretRect(self.obj)
-		objRect = self.obj.location.toLTRB()
+		caretRect = getCaretRect(self.obj)
+		objLocation = self.obj.location
 		try:
-			objRect = objRect.toLogical(self.obj.windowHandle)
+			objRect = objLocation.toLTRB().toLogical(self.obj.windowHandle)
 		except RuntimeError:
 			raise RuntimeError(
 				"Couldn't convert object location to logical coordinates when getting caret offset"
 			)
-		caretRect.left = max(objRect.left, caretRect.left)
-		caretRect.top = max(objRect.top, caretRect.top)
-		caretRect.right = min(objRect.right, caretRect.right)
-		caretRect.bottom = min(objRect.bottom, caretRect.bottom)
-		# Find a character offset where the caret overlaps vertically, overlaps horizontally, overlaps the baseline and is totally within or on the correct side for the reading order
+		caretRect = caretRect.intersection(objRect)
+		if not any(caretRect):
+			raise RuntimeError("The caret rectangle does not overlap with the window")		# Find a character offset where the caret overlaps vertically, overlaps horizontally, overlaps the baseline and is totally within or on the correct side for the reading order
 		try:
 			return self._findCaretOffsetFromLocation(caretRect,validateBaseline=True,validateDirection=True)
 		except LookupError:
