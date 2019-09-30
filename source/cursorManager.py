@@ -27,7 +27,6 @@ import controlTypes
 from inputCore import SCRCAT_BROWSEMODE
 import ui
 from textInfos import DocumentWithPageTurns
-from keyboardHandler import KeyboardInputGesture
 from treeInterceptorHandler import TreeInterceptor
 
 
