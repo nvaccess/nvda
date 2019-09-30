@@ -3418,7 +3418,7 @@ class InputGesturesDialog(SettingsDialog):
 		log.warning("doing it")
 		if gui.messageBox(
 			# Translators: A prompt for comfirmation to reset all gestures in the Input Gestures dialog.
-			_("""Are you sure you want to reset all gestures to their factory default?
+			_("""Are you sure you want to reset all gestures to their factory defaults?
 			
 			All past and present user defined gestures will be lost.
 			This cannot be undone."""),
