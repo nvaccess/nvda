@@ -24,6 +24,8 @@ Import(
 )
 
 env=win10env.Clone()
+env.Append(CCFLAGS='/std:c++17')
+env.Append(CPPPATH=Dir('#include/uiaRemote'))
 
 localWin10Lib = env.SharedLibrary(
 	target="nvdaHelperLocalWin10",
@@ -32,6 +34,7 @@ localWin10Lib = env.SharedLibrary(
 		'utils.cpp',
 		'oneCoreSpeech.cpp',
 		'uwpOcr.cpp',
+		'uiaRemote.cpp',
 	],
 	LIBS=["oleaut32", localLib[2]],
 )
