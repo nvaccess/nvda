@@ -16,6 +16,7 @@ elif config.isAppX:
 import versionInfo
 if not versionInfo.updateVersionType:
 	raise RuntimeError("No update version type, update checking not supported")
+import buildVersion
 import addonAPIVersion
 
 import winVersion
@@ -102,6 +103,7 @@ def checkForUpdate(auto=False):
 		"autoCheck": auto,
 		"allowUsageStats":allowUsageStats,
 		"version": versionInfo.version,
+		"buildVersion":buildVersion.formatBuildVersionString(),
 		"versionType": versionInfo.updateVersionType,
 		"osVersion": winVersion.winVersionText,
 		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
