@@ -379,7 +379,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			if not info.isCollapsed:
 				# There is indeed a selection, but L{info} strangely enough
 				# does not contains it (tested with Firefox and Chrome).
-				KeyboardInputGesture.fromName("control+c").send()
+				gesture.send()
 				# Translators: Message presented when text has been copied to clipboard.
 				ui.message(_("Copied to clipboard"))
 				return
