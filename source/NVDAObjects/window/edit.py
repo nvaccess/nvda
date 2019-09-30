@@ -184,8 +184,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			return point.toScreen(self.obj.windowHandle)
 		except WindowsError as e:
 			raise LookupError(
-				"Couldn't convert point at offset %d to screen coordinates: %s"
-				% (offset, e.strerror)
+				f"Couldn't convert point at offset {offset} to screen coordinates: {e.strerror}"
 			)
 
 	def _getOffsetFromPoint(self,x,y):

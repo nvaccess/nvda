@@ -497,8 +497,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			rect = rect.toPhysical(self.obj.windowHandle)
 		except RuntimeError:
 			raise LookupError(
-				"Couldn't convert character rectangle at offset %d to physical coordinates"
-				% offset
+				f"Couldn't convert character rectangle at offset {offset} to physical coordinates"
 			)
 		return rect
 
@@ -652,7 +651,8 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 			)
 		caretRect = caretRect.intersection(objRect)
 		if not any(caretRect):
-			raise RuntimeError("The caret rectangle does not overlap with the window")		# Find a character offset where the caret overlaps vertically, overlaps horizontally, overlaps the baseline and is totally within or on the correct side for the reading order
+			raise RuntimeError("The caret rectangle does not overlap with the window")
+		# Find a character offset where the caret overlaps vertically, overlaps horizontally, overlaps the baseline and is totally within or on the correct side for the reading order
 		try:
 			return self._findCaretOffsetFromLocation(caretRect,validateBaseline=True,validateDirection=True)
 		except LookupError:

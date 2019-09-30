@@ -258,7 +258,7 @@ class _RectMixin:
 			left, top = self.topLeft.toLogical(hwnd)
 			right, bottom = self.bottomRight.toLogical(hwnd)
 		except RuntimeError:
-			raise RuntimeError("Couldn't convert %s to logical coordinates" % str(self))
+			raise RuntimeError(f"Couldn't convert {self} to logical coordinates")
 		if isinstance(self, RectLTWH):
 			return RectLTWH(left, top, right - left, bottom - top)
 		return RectLTRB(left, top, right, bottom)
@@ -268,7 +268,7 @@ class _RectMixin:
 			left, top = self.topLeft.toPhysical(hwnd)
 			right, bottom = self.bottomRight.toPhysical(hwnd)
 		except RuntimeError:
-			raise RuntimeError("Couldn't convert %s to physical coordinates" % str(self))
+			raise RuntimeError(f"Couldn't convert {self} to physical coordinates")
 		if isinstance(self, RectLTWH):
 			return RectLTWH(left, top, right - left, bottom - top)
 		return RectLTRB(left, top, right, bottom)
