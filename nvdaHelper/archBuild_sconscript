@@ -34,7 +34,7 @@ def clsidStringToCLSIDDefine(clsidString):
 		"0x"+d[0:8],
 		"0x"+d[8:12],
 		"0x"+d[12:16],
-		"{%s}"%(",".join("0x"+d[x:x+2] for x in xrange(16,32,2)))
+		"{%s}"%(",".join("0x"+d[x:x+2] for x in range(16,32,2)))
 	)
 
 def COMProxyDllBuilder(env,target,source,proxyClsid):

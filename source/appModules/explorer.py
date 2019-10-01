@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #appModules/explorer.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Joseph Lee
+#Copyright (C) 2006-2019 NV Access Limited, Joseph Lee, Łukasz Golonka
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -13,6 +14,7 @@ import time
 import appModuleHandler
 import controlTypes
 import winUser
+import winVersion
 import api
 import speech
 import eventHandler
@@ -20,6 +22,7 @@ import mouseHandler
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible import sysListView32, IAccessible, List
 from NVDAObjects.UIA import UIA
+from NVDAObjects.window.edit import RichEdit50, EditTextInfo
 
 # Suppress incorrect Win 10 Task switching window focus
 class MultitaskingViewFrameWindow(UIA):
@@ -65,18 +68,6 @@ class SysListView32MenuItem(sysListView32.ListItemWithoutColumnSupport):
 		if type(focus)!=type(self) or (self.event_windowHandle,self.event_objectID,self.event_childID)!=(focus.event_windowHandle,focus.event_objectID,focus.event_childID):
 			return True
 		return False
-
-
-class ClassicStartMenu(Window):
-	# Override the name, as Windows names this the "Application" menu contrary to all documentation.
-	# Translators: The title of Start menu/screen in your language (only the word start).
-	name = _("Start")
-
-	def event_gainFocus(self):
-		# In Windows XP, the Start button will get focus first, so silence this.
-		speech.cancelSpeech()
-		super(ClassicStartMenu, self).event_gainFocus()
-
 
 class NotificationArea(IAccessible):
 	"""The Windows notification area, a.k.a. system tray.
@@ -178,6 +169,29 @@ class UIProperty(UIA):
 			return value
 		return value.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 
+class ReadOnlyEditBox(IAccessible):
+#Used for read-only edit boxes in a properties window.
+#These can contain dates that include unwanted left-to-right and right-to-left indicator characters.
+
+	def _get_windowText(self):
+		windowText = super(ReadOnlyEditBox, self).windowText
+		if windowText is not None:
+			return windowText.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
+		return windowText
+
+
+class MetadataEditField(RichEdit50):
+	""" Used for metadata edit fields in Windows Explorer in Windows 7.
+	By default these fields would use ITextDocumentTextInfo ,
+	but to avoid Windows Explorer crashes we need to use EditTextInfo here. """
+	@classmethod
+	def _get_TextInfo(cls):
+		if ((winVersion.winVersion.major, winVersion.winVersion.minor) == (6, 1)):
+			cls.TextInfo = EditTextInfo
+		else:
+			cls.TextInfo = super().TextInfo
+		return cls.TextInfo
+
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -190,14 +204,7 @@ class AppModule(appModuleHandler.AppModule):
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if windowClass == "ToolbarWindow32":
-			if role == controlTypes.ROLE_POPUPMENU:
-				parent = obj.parent
-				if parent and parent.windowClassName == "SysPager" and obj.windowStyle & 0x80:
-					clsList.insert(0, ClassicStartMenu)
-			else:
-				# Check whether this is the notification area, a.k.a. system tray.
-				if isinstance(obj.parent, ClassicStartMenu):
-					return # This can't be a notification area
+			if role != controlTypes.ROLE_POPUPMENU:
 				try:
 					# The toolbar's immediate parent is its window object, so we need to go one further.
 					toolbarParent = obj.parent.parent
@@ -208,6 +215,10 @@ class AppModule(appModuleHandler.AppModule):
 					toolbarParent = None
 				if toolbarParent and toolbarParent.windowClassName == "SysPager":
 					clsList.insert(0, NotificationArea)
+			return 
+
+		if windowClass == "Edit" and controlTypes.STATE_READONLY in obj.states:
+			clsList.insert(0, ReadOnlyEditBox)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if windowClass == "SysListView32" and role == controlTypes.ROLE_MENUITEM:
@@ -220,6 +231,10 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.remove(List)
 			clsList.insert(0, StartButton)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
+
+		if windowClass == 'RICHEDIT50W' and obj.windowControlID == 256:
+			clsList.insert(0, MetadataEditField)
+			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if isinstance(obj, UIA):
 			uiaClassName = obj.UIAElement.cachedClassName
@@ -267,7 +282,7 @@ class AppModule(appModuleHandler.AppModule):
 			return
 
 		if windowClass == "DV2ControlHost" and role == controlTypes.ROLE_PANE:
-			# Windows Vista/7 start menu.
+			# Windows 7 start menu.
 			obj.presentationType=obj.presType_content
 			obj.isPresentableFocusAncestor = True
 			# In Windows 7, the description of this pane is extremely verbose help text, so nuke it.
@@ -278,6 +293,16 @@ class AppModule(appModuleHandler.AppModule):
 		# Lets hide that
 		if windowClass=="msctls_progress32" and winUser.getClassName(winUser.getAncestor(obj.windowHandle,winUser.GA_PARENT))=="Address Band Root":
 			obj.presentationType=obj.presType_layout
+			return
+
+		if windowClass == "DirectUIHWND" and role == controlTypes.ROLE_LIST:
+			if obj.parent and obj.parent.parent:
+				parent = obj.parent.parent.parent
+				if parent is not None and parent.windowClassName == "Desktop Search Open View":
+					# List containing search results in Windows 7 start menu.
+					# Its name is not useful so discard it.
+					obj.name = None
+					return
 
 	def event_gainFocus(self, obj, nextHandler):
 		wClass = obj.windowClassName

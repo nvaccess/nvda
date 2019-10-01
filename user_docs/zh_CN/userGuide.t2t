@@ -10,8 +10,8 @@ NVDA NVDA_VERSION 用户指南
 + 前言 +[Introduction]
 欢迎使用NVDA！
 
-无视觉桌面访问(NVDA)是一个免费且开放源码的微软 Windows 操作系统的屏幕阅读器。
-通过接受合成器语音或者盲文点字的反馈，盲人和低视力人群无需付出更多而能使用运行在 Windows 操作系统下运作的电脑。，
+无视觉桌面访问(NVDA)是一个免费且开放源码的微软 Windows读屏软件。
+通过接受合成器语音或者盲文点字的反馈，盲人和低视力人群能比较方便地使用运行在 Windows 操作系统下运作的电脑。，
 NVDA 由 [NV Access https://www.nvaccess.org/]和其他贡献者共同开发(译者注：中文相关的教程和资讯，也可访问：[NVDA中文站 https://www.nvdacn.com/]获取)。
 
 ++ 主要功能 ++[GeneralFeatures]
@@ -107,9 +107,16 @@ NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。
 一旦安装完成，将弹出消息提示您，安装已经成功。
 再此点击“确定”按钮，将启动更新版本的 NVDA。
 
-+++ 在 Windows 启动时运行 +++[StartAtWindowsLogon]
++++ 插件不兼容的警告 +++[InstallWithIncompatibleAddons]
+如果已经安装了不兼容的插件，NVDA可能还会发出警告，说明不兼容的插件将被禁用。
+您必须使用复选框确认您了解这些插件将被禁用之后才可以按确认按钮继续安装。
+还将显示一个按钮来查看将被禁用的插件。
+请看 [管理不兼容的插件 #incompatibleAddonsManager] 这一节了解详细情况。
+
++++ 在Windows启动时运行NVDA +++[StartAtWindowsLogon]
 此选项将允许您选择是否在 Windows 欢迎屏幕(即在输入密码以前)启动 NVDA。
-此选项还可应用于 UAC 控制和其他安全界面。
+此选项还可应用于用户账户控制（UAC）和其他安全界面。
+全新安装时默认启用这个选项。
 
 +++ 创建桌面快捷方式 (control+alt+n) +++[CreateDesktopShortcut]
 此选项允许您选择，是否要在桌面上创建一个快捷方式启动 NVDA。
@@ -393,7 +400,8 @@ NVDA 允许您按照字、词、行的方式朗读[屏幕 #ScreenReview]、当�
 | 导航对象全文朗读 | 小键盘加号 | NVDA+shift+a | 三个手指向下滑动(文本模式) | 从浏览光标所在位置开始朗读并随之移动。 |
 | 拷贝浏览光标从 | NVDA+f9 | NVDA+f9 | 无 | 设定当前浏览光标所在位置为开始点，实际的复制并不会执行，除非您告诉 NVDA 范围的结束点在哪里。 |
 | 拷贝浏览光标到 | NVDA+f10 | NVDA+f10 | 无 | 按一次，选择开始点和结束点之间的文本；连按两次，把“拷贝浏览光标从”和“拷贝浏览光标到”之间的文本拷贝到剪贴板。当您按下此键时，文本将被真正的拷贝到 Windows 剪贴板。 |
-| 朗读文本格式 | NVDA+f | NVDA+f | 无 | 朗读浏览光标当前所在位置的文本的格式信息，连按两次可使用浏览模式在格式信息之间导航。
+| 朗读文本格式 | NVDA+f | NVDA+f | 无 | 朗读浏览光标当前所在位置的文本的格式信息，连按两次可使用浏览模式在格式信息之间导航。|
+| 朗读字符信息 | 无 | 无 | 无 | 朗读浏览光标当前所在位置的字符，连按两次弹出一个显示字符的详细信息的窗口。 |
 %kc:endInclude
 
 请注意，数字键盘必须处于关闭状态下按键才能正常工作。
@@ -464,9 +472,20 @@ NVDA 的这个额外的鼠标特性默认情况下是关闭的。
 %kc:endInclude
 
 + 浏览模式 +[BrowseMode]
-NVDA 使用浏览模式来浏览复杂的只读文档，如 web 页面。
-这包括Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, Microsoft Outlook  的 HTML 消息， Google Chrome, Adobe Reader 和 Adobe Flash 的文档。
-浏览模式在阅读 Microsoft Word 文档时也可用(可选)。
+NVDA 使用浏览模式来浏览复杂的只读文档，比如网页或者PDF文档。
+NVDA支持以下应用的文档
+- 火狐浏览器
+- IE浏览器
+- Mozilla Thunderbird
+- Microsoft Outlook 邮件内网页形式的消息
+- 谷歌浏览器
+- 微软Edge浏览器
+- Adobe PDF阅读器
+- 福昕PDF阅读器
+- Adobe Flash
+- 亚马逊Kindle阅读软件
+-
+浏览模式在阅读微软Word文档时也可用(可选)。
 
 在浏览模式中，文档的内容将可以以平面的形式用浏览光标快捷键进行浏览，前提是它是传统的文本文档。
 所有 NVDA 的[系统输入焦点 #SystemCaret]快捷键都可以正常的在此模式下工作，例如全文朗读、朗读格式、表格导航快捷键等等。
@@ -486,7 +505,7 @@ NVDA 使用浏览模式来浏览复杂的只读文档，如 web 页面。
 | 切换浏览/焦点模式 | NVDA+空格 | 在焦点模式和浏览模式之间切换。 |
 | 退出焦点模式 | esc | 如果上次已经自动切换到了焦点模式则返回到浏览模式。 |
 | 刷新浏览模式文档 | NVDA+f5 | 重载当前文档的内容(对于那些丢失了原来文档内容的情况非常实用，但不可用于 Microsoft Word 和 Outlook)。 |
-| 查找 | NVDA+control+f | 弹出一个对话框，您可以输入一些文本在当前文档中进行查找。 |
+| 查找 | NVDA+control+f | 弹出一个对话框，您可以输入一些文本在当前文档中进行查找。请查看[搜索文本 #SearchingForText]这一节了解详细情况。|
 | 查找下一个 | NVDA+f3 | 在当前文档查找下一个您先前键入的文本的结果。 |
 | 查找上一个 | NVDA+shift+f3 | 在当前文档查找上一个您先前键入的文本的结果。 |
 | 打开长描述 | NVDA+d | 打开一个新窗口，显示您当前浏览元素的详细描述(如果有的话)。 |
@@ -543,6 +562,19 @@ NVDA 使用浏览模式来浏览复杂的只读文档，如 web 页面。
 %kc:beginInclude
 || 名称 | 按键 | 描述 |
 | 浏览模式元素列表 | NVDA+f7 | 列举当前文档的各种元素。 |
+%kc:endInclude
+
+++ 搜索文本 ++[SearchingForText]
+此对话框允许您在当前文档中搜索术语。
+在“键入要查找的文本”字段中，可以输入要查找的文本。
+“区分大小写”复选框使搜索以不同的方式考虑大写和小写字母。
+例如，选择“区分大小写”，您可以找到“NV Access”但不能找到“nv access”。
+使用以下快捷键执行搜索：
+%kc:beginInclude
+|| 名称 | 按键 | 描述 |
+| 查找 | NVDA+control+f | 弹出搜索对话框。|
+| 查找下一个 | NVDA+f3 | 在当前文档查找下一个您先前键入的文本的结果。 |
+| 查找上一个 | NVDA+shift+f3 | 在当前文档查找上一个您先前键入的文本的结果。 |
 %kc:endInclude
 
 ++ 嵌入式对象 ++[ImbeddedObjects]
@@ -940,8 +972,7 @@ Kindle允许您对所选文本执行各种功能，包括获取字典定义，�
 此选项告诉 NVDA，使用 Windows 当前设置的语言。
 
 请注意，更改语言时，NVDA 必须先重新启动。
- 如果您做出了不同的选择，NVDA 将询问您是否要重新启动。
-点击“确定”按钮，NVDA 将重新启动。
+出现确认对话框时，如果您希望现在或稍后使用新语言，请选择“立即重启”或“稍后重启”。 如果选择“稍后重启”，则必须保存配置（手动保存或打开退出时保存配置的功能）。
 
 ==== 退出时保存设置 ====[GeneralSettingsSaveConfig]
 此选项是一个复选框，告诉 NVDA 在您退出时自动地保存当前的配置。
@@ -957,7 +988,15 @@ Kindle允许您对所选文本执行各种功能，包括获取字典定义，�
 ==== 日志记录级别 ====[GeneralSettingsLogLevel]
 这是一个组合框，允许您指定在 NVDA 运行时日志记录的数量。
 用户一般不用更改这一设置，以免日志太多。
-然而，如果您希望在报告 Bug 时提供信息，这个选项或许是有用的。
+然而，如果您希望在报告 Bug 时提供更多信息，或者完全关闭日志功能，这个选项或许是有用的。
+
+日志记录级别有以下几种：
+- 停用 除了NVDA启动的信息，不记录其他日志。
+- 基本信息 启动信息以及对开发者有用的其他信息。
+- 调试警告 包括信息级别的日志以及不严重的错误
+- 输入/输出 包括上面几个级别的日志以及键盘和点显器的输入信息、语音和点显器输出信息，这些日志可能包含您的个人隐私，如果您希望保护隐私请不要把日志级别设为输入/输出。
+- 调试 包括上面几个级别的日志以及对调试有用的信息，这些日志同样可能包含您的个人隐私，如果您希望保护隐私请不要把日志级别设为调试。
+-
 
 ==== 系统启动后自动运行 NVDA ====[GeneralSettingsStartAfterLogOn]
 如果此选项被选中，NVDA 将在 Windows 登陆后尽快启动。
@@ -980,7 +1019,7 @@ Kindle允许您对所选文本执行各种功能，包括获取字典定义，�
 - 当前 NVDA 版本
 - 操作系统版本
 - 操作系统是 64 位还是 32 位
-
+- 
 
 ==== 允许NVDA获取用户统计信息 ====[GeneralSettingsGatherUsageStats]
 选中这一项之后，NV Access 会在检查更新时获取您的信息，以便统计NVDA用户的分布。比如使用的操作系统和所在国家的比例。
@@ -991,7 +1030,7 @@ NVDA更新服务器只根据您的IP判断用户在哪国使用NVDA，并不会�
 - 当前使用的语音合成器名称(包括合成器插件名称)
 - 当前使用的点显器名称(包括点显器驱动插件名称)
 - 当前使用的盲文表(使用点显器时才会上传)
-
+- 
 
 这些信息有助于 NV Access 决定NVDA开发的侧重点。
 
@@ -1338,6 +1377,8 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 如果设置 NVDA 在鼠标经过时朗读文本，此选项允许您设置朗读文本的多少。
 选项分别为字符、单词和段落。
 
+要从任何地方切换文本单位，请使用[输入手势对话框 #InputGestures]分配自定义手势。
+
 ==== 读出鼠标所进入对象的类型 ====[MouseSettingsRole]
 如果此复选框被选中，NVDA 将读出鼠标所进入的对象的类型。
 
@@ -1348,7 +1389,12 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 
 ==== 亮度控制音频坐标的音量 ====[MouseSettingsBrightness]
 如果“鼠标移动时播放音频坐标”复选框被选中之后，选中此复选框意味着，播放音频坐标的音量由鼠标下的屏幕亮度的大小来决定。
-此设置默认情况下不选中。
+默认设置没有启用这个功能。
+
+==== 忽略某些软件的鼠标操作 ====[MouseSettingsHandleMouseControl]
+使用TeamViewer等远程控制软件时，远程控制端会操作鼠标，选中这个复选框可以让NVDA忽略这些操作。
+默认设置没有启用这个功能。
+如果您还选中了启用鼠标导航复选框，NVDA不会读出这些软件远程控制端对鼠标的操作。
 
 +++ 使用触摸屏与系统交互 +++[TouchInteraction]
 这个部分只有在设备有触摸屏并且系统是Windows 8或者更高的版本才可用。
@@ -1446,8 +1492,8 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
  
 ==== 自动朗读所有可用的候选 ====[InputCompositionReportAllCandidates]
 此选项默认情况下启用，允许您选择是否在候选列表出现时或他的页面被滚动时，自动朗读所有候选列表上的可见候选。
-对于如新仓颉或無蝦米等中文笔画输入法而言，拥有此选项是非常实用的。您可以迅速地听到所有的标点和编号，并正确的作出选择。
-然而，对于中国的新注音输入法等拼音输入法而言，关闭此选项可能更为实用。当所有候选听起来都相同的时候，您必须使用光标键在候选列表之中逐一进行浏览，从而在每个字符的字符描述中获取更多的信息。
+对于如新仓颉或無蝦米等中文笔画输入法而言，这个功能很实用。您可以迅速地听到所有的候选词和编号，方便作出选择。
+通常使用拼音输入法的时候，关闭此选项可能更为实用。当所有候选听起来都相同的时候，您必须使用光标键在候选列表之中逐一进行浏览，从而在每个字符的字符描述中获取更多的信息。
 
 ==== 朗读选中的候选 ====[InputCompositionAnnounceSelectedCandidate]
 此选项默认情况下启用，允许您选择，在候选列表出现时或在选择的候选发生变动时，是否朗读选择的候选。
@@ -1484,7 +1530,15 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 ==== 使用屏幕真实布局 ====[BrowseModeSettingsScreenLayout]
 按键: NVDA+v
 
- 此选项允许您定义是否把内容(如链接、表单)独立成为一行，或者象视觉所看到的，保持文字的布局不变。如果此选项启用，文字的布局就会与视觉同步，如果此选项被关闭，每个不同的区域就会独立成为一行。
+此选项允许您定义是否把内容(如链接、表单)独立成为一行，或者象视觉所看到的，保持文字的布局不变。如果此选项启用，文字的布局就会与屏幕的布局同步.
+如果此选项被关闭，每个不同的区域就会独立成为一行。
+
+==== 页面加载完成后启用浏览模式 ====[BrowseModeSettingsEnableOnPageLoad]
+此复选框用于切换加载页面时是否应自动启用浏览模式。
+禁用此选项后，仍可在页面或支持浏览模式的文档中手动激活浏览模式。
+有关浏览模式支持的应用程序列表，请参阅[浏览模式#BrowseMode]部分。
+请注意，此选项不适用于浏览模式始终是可选的情况，例如 在Microsoft Word中，浏览模式总是需要手动开启，不受这个选项影响。
+这个选项默认情况下是开启的。
 
 ==== 页面加载完成后朗读所有内容 ====[BrowseModeSettingsAutoSayAll]
 此复选框用来切换在浏览模式下，页面加载完成之后自动朗读所有内容的开关。
@@ -1584,13 +1638,68 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 ==== 识别用语言 ====[Win10OcrSettingsRecognitionLanguage]
 此组合框允许您选择用于光学字符识别的语言。
 
++++ 高级设置 +++
+请注意！ 此类别中的设置适用于高级用户，如果随意修改，可能会导致NVDA无法正常运行。
+只有在您确定知道自己在做什么，或者NVDA开发人员明确指示您修改时，才应该对这些设置进行更改。
+
+==== 更改高级设置 ====[AdvancedSettingsMakingChanges]
+更改下面的设置之前必须选中这个复选框，表示用户了解随意更改这些设置的风险。
+
+==== 恢复高级设置为默认值 ====[AdvancedSettingsRestoringDefaults]
+即使未勾选确认复选框，该按钮也会恢复高级设置为默认值。
+更改高级设置后，您可能希望恢复高级设置为默认值。
+如果您不确定设置是否已更改，您可能也会需要恢复高级设置为默认值。
+
+==== 允许从开发者实验目录加载代码 ====[AdvancedSettingsEnableScratchpad]
+在为NVDA开发插件时，能够边写边测试会给开发者带来很大便利。
+启用此选项后，NVDA允许从NVDA用户配置目录中特殊的开发者实验目录目录加载自定义appModules，globalPlugins，brailleDisplayDrivers和synthDrivers。
+以前NVDA会直接从用户配置目录加载自定义代码而且不提供关闭加载的选项，这种做法不太安全。
+默认情况下，此选项处于关闭状态，可以确保用户仅仅在明确了解的情况下，用NVDA运行未经测试的代码。
+如果您希望将代码分发给其他人，则应将其打包为NVDA插件。
+
+==== 打开开发者实验目录 ====[AdvancedSettingsOpenScratchpadDir]
+此按钮可打开开发者实验目录。
+仅当用户允许从开发者实验目录加载代码时，才会启用此按钮。
+ 
+==== 在Word里使用Microsoft UI Automation Microsoft UI Automation是微软的最新无障碍接口 简称UIA  ====[AdvancedSettingsUseUiaForWord]
+启用此选项后，NVDA将尝试使用Microsoft UI Automation这个无障碍接口从Word文档控件中获取信息。
+这包括Microsoft Word本身，以及Microsoft Outlook消息查看器和编写器。
+  对于在Windows 10上运行的最新版本的Office 2016或者Office 365，Microsoft UI Automation能够获取的信息和原来的方式差不多，而且响应速度更快。
+但是，在某些版本的Office中可能存在某些未公开或未正确显示的信息，这意味着UIA支持不好用。
+我们建议大多数用户不要启用此功能，但我们欢迎Office 2016或者Office 365的用户测试此功能并提供反馈。
+
+==== 使用Microsoft UI Automation支持命令提示符 ====[AdvancedSettingsConsoleUIA]
+启用此选项后，NVDA将使用Microsoft UI Automation朗读命令提示符，该版本利用了[Windows10的对命令提示符的无障碍改进 https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]。 此功能还在测试，仍然不稳定，因此尚未默认开启。 但是，一旦完成，预计这种新支持将成为默认设置，从而提高NVDA在Windows命令控制台中的性能和稳定性。
+
+==== 命令提示符中读出密码 ====[AdvancedSettingsWinConsoleSpeakPasswords]
+这一项控制在使用Microsoft UI Automation支持命令提示符情况下屏幕内容不更新时是否[朗读输入字符  #KeyboardSettingsSpeakTypedCharacters] 或 [朗读输入单词 #KeyboardSettingsSpeakTypedWords]。通常输入密码的时候会遇到这种情况。 出于安全考虑，应禁用此设置。 但是，如果您在使用NVDA的新的命令提示符支持时遇到性能问题或朗读不稳定，您可能希望启用它。
+
+==== 浏览模式中自动把焦点放到可聚焦的元素上 ====[BrowseModeSettingsAutoFocusFocusableElements]
+快捷键: NVDA+8
+
+默认情况下启用。此选项允许您选择在使用浏览模式插入符导航内容时是否应自动将系统焦点设置为可以获取系统焦点的元素（链接，表单域等）。
+如果启用，则表示自版本2019.1及之前的NVDA的默认行为。
+禁用此选项不会自动聚焦可聚焦元素。
+这可能会在浏览模式下提供更快的浏览体验和更好的响应能力。
+当与其交互时，焦点将更新为特定元素（例如，按下按钮，选中复选框）。
+此功能在NVDA 2019.2中是实验性质的。
+
+==== 光标移动超时（单位是千分之一秒） ====[AdvancedSettingsCaretMoveTimeout]
+此选项允许您配置NVDA等多长时间之后才从编辑框获取光标位置。
+如果您发现NVDA光标朗读有问题，比如位置不对，那么你可以增加这个时间试试。
+
+==== 调试日志 ====[AdvancedSettingsDebugLoggingCategories]
+此列表中的复选框允许您在NVDA日志中启用特定类别的调试信息。
+记录这些信息可能会影响性能而且会让日志文件比以前大。
+例如 调试盲文显示器驱动程序时，NVDA开发者会让你打开其中一个，请不要同时开启多个。
+
 ++ 杂项设置 ++[MiscSettings]
 除了[NVDA 设置 #NVDASettings]对话框以外，NVDA菜单的“首选项”子菜单包含下面列出的其他几个项目。
 
 +++ 语音字典 +++[SpeechDictionaries]
 “语音字典”对话框，可用来为特定词语或者短语指定特殊的朗读方法，他可以再“选项”菜单下的“语音字典”找到。
 目前，存在三种类型的字典。
-他们是：
+分别是：
 - 默认： 字典的规则会应用于所有 NVDA 的语音输出。
 - 合成器：字典的规则会应用于当前使用的合成器的语音输出。
 - 临时：字典的规则会应用于 NVDA 所有的语音输出，但仅在当前会话时可用，规则是临时的，并在下次 NVDA 重新启动之后丢失数据。
@@ -1628,6 +1737,7 @@ NVDA 的语音字典比之单词替换更为强大。
 请注意，此对话框依照可在[语音设置对话框 #VoiceSettings]中找到的选项“处理字符和标点时信任语音语言”而定，极如果此选项被选中，将使用语音语言代替 NVDA 本地语言设置。
 
 要想修改某个标点，请在标点列表选择它。
+您可以通过在“查找”编辑框中输入符号或符号替换的一部分来寻找符号。
 
 - “替换文本”编辑区域允许您定义用来替换此标点的文本。
 - 使用“标点符号级别”区域，您可以为希望读出的标点指定更低的级别。
@@ -1693,7 +1803,7 @@ NVDA 的语音字典比之单词替换更为强大。
 配置文件仅包含当配置文件处于编辑状态时进行的那些设置。
 大多数设置都可以由配置文件进行修改，但“常规设置”对话框包含的那些可影响 NVDA 全局的设置除外。
 
-配置文件也可手动激活。
+配置文件也可手动激活。可以从对话框或使用自定义添加的手势手动激活配置文件。
 它也可由一些触发条件自动的激活，如切换到特定的程序。
 
 +++ 基本配置管理 +++[ProfilesBasicManagement]
@@ -1760,6 +1870,14 @@ NVDA 的语音字典比之单词替换更为强大。
 
 要想在任何地方切换是否临时停用所有关联，请在[输入手势对话框 #InputGestures]定义一个自定义手势。
 
++++ 使用输入手势激活配置 +++[ConfigProfileGestures]
+对于您添加的每个配置文件，您都可以分配一个或多个输入手势来激活它。
+默认情况下，配置文件没有分配输入手势。
+您可以使用[输入手势对话框#InputGestures]添加手势以激活配置文件。
+每个配置文件在配置文件类别下都有自己的条目。
+重命名配置文件时，您之前添加的任何手势仍然可用。
+删除配置文件将自动删除与其关联的手势。
+
 ++ 配置文件保存的位置 ++[LocationOfConfigurationFiles]
 便携版本的 NVDA 设置(包括自定义程序模块、自定义驱动)都被直接存放在 NVDA 的 userConfig 目录下。
 
@@ -1775,6 +1893,7 @@ NVDA 的语音字典比之单词替换更为强大。
 
 ++ 日志查看器 ++[LogViewer]
 在 NVDA 的“工具”菜单下能找到“日志查看器”，允许您查看所有自上次启动 NVDA 开始到现在的所有日志输出。
+按 NVDA+F1可以打开日志查看器，并且在日志查看器里面显示当前导航对象的详细信息。
 
 除了阅读内容，您还可以保存日志文件的副本，或刷新查看器，因为日志查看器只会显示在该对话框被打开之前的最近输出。
 此动作可在日志查看器的“日志”菜单下找到。
@@ -1825,17 +1944,33 @@ NVDA 会询问您是否真的要这样做。
 要想启用先前停用的插件，点击“启用”按钮。
 当插件状态显示为“正在运行”或“已启用”时，您可以停用该插件；当状态显示为“挂起”或“已停用”时，您可以启用该插件。
 每次点击“启用”和“停用”按钮后，插件状态栏都能实时地显示在下次 NVDA 重新启动时会发生什么变化。
-如果之前停用了插件，状态一栏会显示“重启后启用”。如果之前插件是启用的，状态一栏会显示“重启后禁用”。
+如果之前停用了插件，状态一栏会显示“重启后启用”。
+如果之前插件是启用的，状态一栏会显示“重启后禁用”。
 就像是添加或删除插件一样，您必须重新启动 NVDA 才能使之生效。
 
 管理器也包含“关闭”按钮，使用它可以关闭对话框。
 如果您已经安装卸载插件或修改了插件的状态，NVDA 会首先询问您是否要重新启动以使修改生效。
 
-在过去，您只需单独复制插件或驱动到 NVDA 的用户配置目录即可扩展 NVDA 的功能。
-虽然此版本的 NVDA 仍然会加载他们，但是他们不会被显示在插件管理器。
-最好从您的配置删除这些文件并安装可用的适合插件。
+旧插件可能不兼容新版NVDA。
+为新版NVDA编写的插件也可能不兼容旧版NVDA。
+安装这些插件时，NVDA会报错并提示原因。
+您可以在插件管理器内找到“查看不兼容的插件”这个按钮，点击这个按钮就可以查看这些插件。
 
 要想在任何地方访问插件管理器，请在[输入手势对话框 #InputGestures]定义一个自定义手势。
+
+++ 管理不兼容的插件 ++[incompatibleAddonsManager]
+可以通过插件管理器中的“查看不兼容的插件”按钮访问不兼容的加插件管理器，允许您检查任何不兼容的插件以及不兼容的原因。
+如果NVDA进行重大更改之后插件尚未更新，或者它们依赖于您正在使用的NVDA版本中未提供的功能，NVDA则会认为插件不兼容。
+不兼容的附加组件管理器有一条简短的消息来解释它的用途以及NVDA的版本。
+不兼容的加载项显示在列表中，其中包含以下列：
++ 名称， 插件名称
++ 版本， 插件版本
++ 不兼容的原因， 解释为什么插件不兼容
++
+
+不兼容插件管理器里面也有关于插件按钮
+点击这个按钮会打开一个对话框，里面有这个插件的详细信息，或许可以帮你找到开发者。
+
 
 ++ Python 控制台 ++[PythonConsole]
 NVDA Python 控制台可以再 NVDA 的“工具”菜单找到，他是一个开发工具，他可用来进行调试，一般的内部检查和程序可访问程度的检查。
@@ -1879,7 +2014,7 @@ Microsoft Speech Platform (微软语音平台)包含许多语言的声音，它�
 - Microsoft Speech Platform - 运行库语言包 (版本 11): https://www.microsoft.com/download/en/details.aspx?id=27224
  此页面包含了许多用于语音识别和文字转语音的文件。
  为您希望的语言和语音选择包含 TTS 数据的文件。
- 例如，文件 MSSpeech_TTS_en-US_ZiraPro.msi 是一个英国英语的语音。
+ 例如，文件 MSSpeech_TTS_en-US_ZiraPro.msi 是一个美国英语的语音。
  -
 -
 
@@ -1889,7 +2024,7 @@ Windows 10包括称为“OneCore”或“移动”语音的新语音。
 
 请参阅此Microsoft文章，获取可用语音列表和安装说明：https：//support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
-请注意，NVDA目前不提供Narrator可用的更快语速。
+请注意，NVDA目前不提供讲述人可用的更快语速。
 此外，您在Windows设置中选择的速度会影响NVDA中设置的语速。
 这些是我们无法在不更改Windows的情况下解决的问题。
 我们希望这些将在未来的Windows更新中得到解决。
@@ -1923,15 +2058,13 @@ NVDA能够通过USB或蓝牙自动检测后台的许多点显器。
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
 All Focus and PAC Mate displays from [Freedom Scientific https://www.freedomscientific.com/] are supported when connected via USB or bluetooth.
 You will need the Freedom Scientific braille display drivers installed on your system.
-If you do not have them already, you can obtain them from https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+If you do not have them already, you can obtain them from https://support.freedomscientific.com/Downloads/Focus/FocusBlueBrailleDisplayDriver
 Although this page only mentions the Focus Blue display, the drivers support all Freedom Scientific Focus and Pacmate displays.
-If your system is running 64 bit Windows and the drivers were already installed by another screen reader, you will probably still need to install the drivers from this link, as the files required by NVDA were probably not installed by the other screen reader.
 
 By default, NVDA can automatically detect and connect to these displays either via USB or bluetooth.
 However, when configuring the display, you can explicitly select "USB" or "Bluetooth" ports to restrict the connection type to be used.
 This might be useful if you want to connect the focus display to NVDA using bluetooth, but still be able to charge it using USB power from your computer.
-
-These displays do not yet support NVDA's automatic background braille display detection functionality.
+NVDA's automatic braille display detection will also recognize the display on USB or Bluetooth.
 
 Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -2756,15 +2889,17 @@ nvda -q
 | -r | --replace | 退出已运行的版本并启用这个版本。 |
 | -k | --check-running | 通过退出代码报告 NVDA 是否在运行，0 表示运行， 1 表示没有运行。 |
 | -f LOGFILENAME | --log-file=LOGFILENAME | 日志消息需要写入的文件。 |
-| -l LOGLEVEL | --log-level=LOGLEVEL | 日志消息记录的最低级(调试 10， 信息 20， 警告 30， 错误 40， 严重 50默认为“警告”。 |
+| -l LOGLEVEL | --log-level=LOGLEVEL | 日志消息记录的最低级别(调试 10， 信息 20， 警告 30， 错误 40， 严重 50，停用 100 默认为“警告”。 |
 | -c CONFIGPATH | --config-path=CONFIGPATH | 所有 NVDA 设置存储的路径。 |
 | -m | --minimal | 无声、无界面、无启动通知等。 |
-| -s | --secure | 安全模式 (禁用 Python 控制台)。 |
+| -s | --secure | 安全模式 (禁用 Python 控制台并且停用日志)。 |
 | None | --disable-addons | 使插件无效。 |
-| None | --debug-logging | 开启调试日志 覆盖之前的日志等级设置( ""--loglevel"", -l) argument given. |
-| None | --no-sr-flag  | 不修改全局系统屏幕阅读器的标志。 |
+| None | --debug-logging | 开启调试日志 覆盖之前的日志等级设置( ""--loglevel"", -l) 注意：这个参数会覆盖其他停用日志的参数 |
+| None | --no-logging | 关闭NVDA日志功能 注意 --debug-logging 和 --loglevel 会覆盖这个参数|
+| None | --no-sr-flag  | 不修改Windows系统全局屏幕阅读器的标志。 |
 | None | --install | 安装 NVDA(启动最新安装的副本)。 |
 | None | --install-silent | 静默安装 NVDA(不启动最新安装的副本)。 |
+| None | --enable-start-on-logon=True|False | 为安装的副本开启[在 Windows 启动时运行 #StartAtWindowsLogon]这个选项 |
 | None | --create-portable |创建一个便携版 (并且启动这个便携版). 必须和 --portable-path 一起用 |
 | None | --create-portable-silent | 创建一个便携版 (不启动这个便携版). 必须和 --portable-path 一起用 |
 | None | --portable-path=PORTABLEPATH | 创建便携版的目录 |

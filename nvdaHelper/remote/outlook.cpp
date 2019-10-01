@@ -18,6 +18,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <common/log.h>
 #include <common/libraryLoader.h>
+#include <common/COMUtils.h>
 #include "inProcess.h"
 #include "nvdaInProcUtils.h"
 
@@ -74,25 +75,18 @@ error_status_t nvdaInProcUtils_outlook_getMAPIProp(handle_t bindingHandle, const
 	// NVDA gave us an IUnknown pointer representing the MAPI object from Outlook.
 	// As the MAPIProp interface is not marshallable, we need to access it from its original STA thread as a real (non-proxied) raw pointer.
 	// Therefore register the IUnknown in the COM global interface table so we can unmarshal it in the main GUI thread. 
-	IGlobalInterfaceTablePtr pGIT;
-	HRESULT res=pGIT.CreateInstance(CLSID_StdGlobalInterfaceTable);
+	nvCOMUtils::InterfaceMarshaller im;
+	HRESULT res=im.marshal(mapiObject);
 	if(res!=S_OK) {
-		LOG_ERROR(L"Could not create global interface table");
-		return res;
-	}
-	DWORD cookie=0;
-	res=pGIT->RegisterInterfaceInGlobal(mapiObject,IID_IUnknown,&cookie);
-	if(res!=S_OK) {
-		LOG_ERROR(L"Could not register object in global interface table");
-		return res;
+		LOG_ERROR(L"Failed to marshal MAPI object from rpc thread");
+		return E_UNEXPECTED;
 	}
 	// Execute the following code in Outlook's GUI thread. 
-	execInThread(threadID,[=,&res](){
+	execInThread(threadID,[=,&res,&im](){
 		// Unmarshal the IUnknown pointer from the COM global interface table.
-		IUnknownPtr mapiObject=nullptr;
-		res=pGIT->GetInterfaceFromGlobal(cookie,IID_IUnknown,reinterpret_cast<void**>(&mapiObject));
-		if(res!=S_OK) {
-			LOG_ERROR(L"Could not unmarshal object, code "<<res);
+		IUnknownPtr mapiObject=im.unmarshal<IUnknown>();
+		if(!mapiObject) {
+			LOG_ERROR(L"Failed to unmarshal MAPI object into Outlook GUI thread");
 			return;
 		}
 		// Fetch the wanted property from the MAPI object
@@ -117,7 +111,5 @@ error_status_t nvdaInProcUtils_outlook_getMAPIProp(handle_t bindingHandle, const
 		retVal->vt=VT_I4;
 		retVal->lVal=propValue->Value.l;
 	});
-	// Unregister the IUnknown from the COM global interface table as we don't need it anymore.
-	pGIT->RevokeInterfaceFromGlobal(cookie);
 	return res;
 }

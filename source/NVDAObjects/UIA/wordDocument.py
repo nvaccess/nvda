@@ -64,7 +64,7 @@ def getCommentInfoFromPosition(position):
 		UIAElementArray=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
 	except COMError:
 		return
-	for index in xrange(UIAElementArray.length):
+	for index in range(UIAElementArray.length):
 		UIAElement=UIAElementArray.getElement(index)
 		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		obj=UIA(UIAElement=UIAElement)
@@ -140,8 +140,8 @@ class WordDocumentTextInfo(UIATextInfo):
 			field['value']=field.pop('description',None) or obj.description or field.pop('name',None) or obj.name
 		return field
 
-	def _getTextFromUIARange(self,range):
-		t=super(WordDocumentTextInfo,self)._getTextFromUIARange(range)
+	def _getTextFromUIARange(self, textRange):
+		t=super(WordDocumentTextInfo,self)._getTextFromUIARange(textRange)
 		if t:
 			# HTML emails expose a lot of vertical tab chars in their text
 			# Really better as carage returns
@@ -189,7 +189,7 @@ class WordDocumentTextInfo(UIATextInfo):
 		# Sometimes embedded objects and graphics In MS Word can cause a controlStart then a controlEnd with no actual formatChange / text in the middle.
 		# SpeakTextInfo always expects that the first lot of controlStarts will always contain some text.
 		# Therefore ensure that the first lot of controlStarts does contain some text by inserting a blank formatChange and empty string in this case.
-		for index in xrange(len(fields)):
+		for index in range(len(fields)):
 			field=fields[index]
 			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
 				continue
@@ -203,7 +203,7 @@ class WordDocumentTextInfo(UIATextInfo):
 		# Therefore, detect when at the start of a list, and strip the bullet from the text string, placing it in the text's formatField as line-prefix.
 		listItemStarted=False
 		lastFormatField=None
-		for index in xrange(len(fields)):
+		for index in range(len(fields)):
 			field=fields[index]
 			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
 				if field.field.get('role')==controlTypes.ROLE_LISTITEM and field.field.get('_startOfNode'):
@@ -212,7 +212,7 @@ class WordDocumentTextInfo(UIATextInfo):
 			elif isinstance(field,textInfos.FieldCommand) and field.command=="formatChange":
 				# This is the most recent formatField we have seen.
 				lastFormatField=field.field
-			elif listItemStarted and isinstance(field,basestring):
+			elif listItemStarted and isinstance(field,str):
 				# This is the first text string within the list.
 				# Remove the text up to the first space, and store it as line-prefix which NVDA will appropriately speak/braille as a bullet.
 				try:
@@ -330,7 +330,7 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 			UIAElementArray=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
 		except COMError:
 			return
-		for index in xrange(UIAElementArray.length):
+		for index in range(UIAElementArray.length):
 			UIAElement=UIAElementArray.getElement(index)
 			UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 			obj=UIA(UIAElement=UIAElement)
