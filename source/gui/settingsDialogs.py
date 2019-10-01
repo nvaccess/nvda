@@ -3242,6 +3242,7 @@ class InputGesturesDialog(SettingsDialog):
 	title = _("Input Gestures")
 
 	def __init__(self, parent):
+		self.populateTreeTimer = None
 		super().__init__(parent, resizeable=True)
 
 	def makeSettings(self, settingsSizer):
@@ -3287,13 +3288,28 @@ class InputGesturesDialog(SettingsDialog):
 	def postInit(self):
 		self.tree.SetFocus()
 
-	def populateTree(self, filter=''):
+	POPULATE_TREE_DELAY_MS = 300
+
+	def populateTree(self, *args, **kwargs):
+		def delayedCall(*args, **kwargs):
+			self.tree.Freeze()
+			try:
+				self._populateTree(*args, **kwargs)
+			finally:
+				self.tree.Thaw()
+		if self.populateTreeTimer is None:
+			self.populateTreeTimer = wx.CallLater(self.POPULATE_TREE_DELAY_MS, delayedCall, *args, **kwargs)
+		else:
+			self.populateTreeTimer.Start(self.POPULATE_TREE_DELAY_MS, *args, **kwargs)
+
+	def _populateTree(self, filter=''):
 		if filter:
 			#This regexp uses a positive lookahead (?=...) for every word in the filter, which just makes sure the word is present in the string to be tested without matching position or order.
 			# #5060: Escape the filter text to prevent unexpected matches and regexp errors.
 			# Because we're escaping, words must then be split on "\ ".
 			filter = re.escape(filter)
 			filterReg = re.compile(r'(?=.*?' + r')(?=.*?'.join(filter.split('\ ')) + r')', re.U|re.IGNORECASE)
+		self.tree.DeleteChildren(self.treeRoot)
 		for category in sorted(self.gestures):
 			treeCat = self.tree.AppendItem(self.treeRoot, category)
 			commands = self.gestures[category]
@@ -3313,7 +3329,6 @@ class InputGesturesDialog(SettingsDialog):
 
 	def onFilterChange(self, evt):
 		filter=evt.GetEventObject().GetValue()
-		self.tree.DeleteChildren(self.treeRoot)
 		self.populateTree(filter)
 
 	def _formatGesture(self, identifier):
