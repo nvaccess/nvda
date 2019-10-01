@@ -3263,7 +3263,7 @@ class InputGesturesDialog(SettingsDialog):
 		settingsSizer.Add(tree, proportion=1, flag=wx.EXPAND)
 
 		self.gestures = inputCore.manager.getAllGestureMappings(obj=gui.mainFrame.prevFocus, ancestors=gui.mainFrame.prevFocusAncestors)
-		if not inputCore.SCRCAT_KBEMU in self.gestures:
+		if inputCore.SCRCAT_KBEMU not in self.gestures:
 			self.gestures[inputCore.SCRCAT_KBEMU] = {}
 		self._kbEmuCategory = None
 		self.populateTree()
@@ -3301,7 +3301,7 @@ class InputGesturesDialog(SettingsDialog):
 		self._kbEmuCategory = None
 		for category in sorted(self.gestures):
 			treeCat = self.tree.AppendItem(self.treeRoot, category)
-			if category==inputCore.SCRCAT_KBEMU:
+			if category == inputCore.SCRCAT_KBEMU:
 				self._kbEmuCategory = treeCat
 			commands = self.gestures[category]
 			for command in sorted(commands):
@@ -3313,7 +3313,7 @@ class InputGesturesDialog(SettingsDialog):
 				for gesture in commandInfo.gestures:
 					treeGes = self.tree.AppendItem(treeCom, self._formatGesture(gesture))
 					self.tree.SetItemData(treeGes, gesture)
-			if not self.tree.ItemHasChildren(treeCat) and (treeCat!=self._kbEmuCategory or filter):
+			if not self.tree.ItemHasChildren(treeCat) and (treeCat != self._kbEmuCategory or filter):
 				self.tree.Delete(treeCat)
 			elif filter:
 				self.tree.Expand(treeCat)
@@ -3343,8 +3343,11 @@ class InputGesturesDialog(SettingsDialog):
 		isKbEmuCategory = item == self._kbEmuCategory
 		isCommand = isinstance(data, inputCore.AllGesturesScriptInfo)
 		isGesture = isinstance(data, str)
-		isObsoleteAddedKbEmuScriptInfo = (isCommand and data in self.addedKbEmuScriptInfos
-			and not self.tree.ItemHasChildren(item))
+		isObsoleteAddedKbEmuScriptInfo = (
+			isCommand
+			and data in self.addedKbEmuScriptInfos
+			and not self.tree.ItemHasChildren(item)
+		)
 		self.addButton.Enabled = isKbEmuCategory or isCommand or isGesture
 		self.removeButton.Enabled = isGesture or isObsoleteAddedKbEmuScriptInfo
 
