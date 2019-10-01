@@ -416,19 +416,19 @@ def is64BitProcess(processHandle):
 		raise WinError(ERROR_INVALID_HANDLE)
 	try:
 		# We need IsWow64Process2 to detect WOW64 on ARM64.
-		processMachine = USHORT()
+		processMachine = ctypes.wintypes.USHORT()
 		if kernel32.IsWow64Process2(
 			processHandle,
-			byref(processMachine),
+			ctypes.byref(processMachine),
 			None
-			) == 0:
+		) == 0:
 			raise WinError()
 		# IMAGE_FILE_MACHINE_UNKNOWN if not a WOW64 process.
 		return processMachine.value == IMAGE_FILE_MACHINE_UNKNOWN
 	except AttributeError:
 		# IsWow64Process2 is only supported on Windows 10 version 1511 and later.
 		# Fall back to IsWow64Process.
-		res = BOOL()
+		res = ctypes.wintypes.BOOL()
 		if kernel32.IsWow64Process(processHandle, ctypes.byref(res)) == 0:
 			raise WinError()
 		return not res.value
