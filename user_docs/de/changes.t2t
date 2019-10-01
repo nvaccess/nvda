@@ -3,6 +3,14 @@ Was ist neu in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.2.1 =
+Dies ist eine kleinere Version, um mehrere Abstürze in 2019.2 zu beheben, darunter:
+- Mehrere Abstürze in Google Mail , die sowohl in Firefox als auch in Chrome bei der Interaktion mit bestimmten Popup-Menüs auftraten, z. B. beim Erstellen von Filtern oder beim Ändern bestimmter Google Mail-Einstellungen. (#10175, #9402, #8924)
+- In Windows 7 führt NVDA nicht mehr zum Absturz von Windows Explorer, wenn die Maus im Startmenü verwendet wird. (#9435)
+- Unter Windows 7 stürzt Windows Explorer beim Zugriff auf Metadaten-Eingabefelder nicht mehr ab. (#5337)
+- NVDA friert bei der Interaktion mit Bildern mit einem base64-URI in Mozilla Firefox oder Google Chrome nicht mehr ein. (#10227)
+
+
 = 2019.2 =
 Zu den Highlights dieser Version gehören die automatische Erkennung von Freedom Scientific Braillezeilen, eine experimentelle Einstellung in DEN erweiterten Einstellungen, um die automatische Bewegung des systemfokus beim Verwenden des Lesemodus zu deaktivieren (was unter Umständen zu Leistungssteigerungen führen kann), eine Option zur Erhöhung der Geschwindigkeit für die Windows OneCore-Sprachausgabe, um sehr schnelle Geschwindigkeiten zu erzielen und viele andere Fehlerbehebungen.
 

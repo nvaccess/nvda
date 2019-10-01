@@ -74,7 +74,10 @@ def initialize():
 	global server
 	server = socketserver.TCPServer(("", PORT), RequestHandler)
 	server.daemon_threads = True
-	thread = threading.Thread(target=server.serve_forever)
+	thread = threading.Thread(
+		name=__name__,  # remotePythonConsole
+		target=server.serve_forever
+	)
 	thread.daemon = True
 	thread.start()
 
