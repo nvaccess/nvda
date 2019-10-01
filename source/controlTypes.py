@@ -697,7 +697,7 @@ def processPositiveStates(role, states, reason, positiveStates=None):
 			ROLE_TREEVIEWITEM,
 			ROLE_MENUITEM,
 			ROLE_TABLEROW,
-			ROLE_CHECKBOX)
+			ROLE_CHECKBOX,
 		) and STATE_SELECTABLE in states:
 			positiveStates.discard(STATE_SELECTED)
 	if role not in (ROLE_EDITABLETEXT, ROLE_CHECKBOX):
