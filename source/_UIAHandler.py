@@ -1,8 +1,8 @@
-#_UIAHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# _UIAHandler.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from ctypes import *
 from ctypes.wintypes import *
@@ -25,6 +25,7 @@ import winVersion
 import eventHandler
 from logHandler import log
 import UIAUtils
+from comtypes.gen import UIAutomationClient as UIA
 from comtypes.gen.UIAutomationClient import *
 
 #Some newer UIA constants that could be missing
@@ -144,7 +145,6 @@ UIAEventIdsToNVDAEventNames={
 	UIA_SelectionItem_ElementAddedToSelectionEventId:"stateChange",
 	UIA_SelectionItem_ElementRemovedFromSelectionEventId:"stateChange",
 	#UIA_MenuModeEndEventId:"menuModeEnd",
-	#UIA_Text_TextSelectionChangedEventId:"caret",
 	UIA_ToolTipOpenedEventId:"UIA_toolTipOpened",
 	#UIA_AsyncContentLoadedEventId:"documentLoadComplete",
 	#UIA_ToolTipClosedEventId:"hide",
@@ -152,8 +152,12 @@ UIAEventIdsToNVDAEventNames={
 	UIA_SystemAlertEventId:"UIA_systemAlert",
 }
 
+autoSelectDetectionAvailable = False
 if winVersion.isWin10():
-	UIAEventIdsToNVDAEventNames[UIA_Text_TextChangedEventId] = "textChange"
+	UIAEventIdsToNVDAEventNames.update({
+		UIA.UIA_Text_TextChangedEventId: "textChange",
+		UIA.UIA_Text_TextSelectionChangedEventId: "caret", })
+	autoSelectDetectionAvailable = True
 
 ignoreWinEventsMap = {
 	UIA_AutomationPropertyChangedEventId: list(UIAPropertyIdsToNVDAEventNames.keys()),
@@ -169,7 +173,10 @@ class UIAHandler(COMObject):
 		self.MTAThreadInitEvent=threading.Event()
 		self.MTAThreadStopEvent=threading.Event()
 		self.MTAThreadInitException=None
-		self.MTAThread=threading.Thread(target=self.MTAThreadFunc)
+		self.MTAThread = threading.Thread(
+			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}.MTAThread",
+			target=self.MTAThreadFunc
+		)
 		self.MTAThread.daemon=True
 		self.MTAThread.start()
 		self.MTAThreadInitEvent.wait(2)
@@ -273,12 +280,18 @@ class UIAHandler(COMObject):
 		NVDAEventName=UIAEventIdsToNVDAEventNames.get(eventID,None)
 		if not NVDAEventName:
 			return
-		if not self.isNativeUIAElement(sender):
+		focus = api.getFocusObject()
+		import NVDAObjects.UIA
+		if (
+			isinstance(focus, NVDAObjects.UIA.UIA)
+			and self.clientObject.compareElements(focus.UIAElement, sender)
+		):
+			pass
+		elif not self.isNativeUIAElement(sender):
 			return
 		window=self.getNearestWindowHandle(sender)
 		if window and not eventHandler.shouldAcceptEvent(NVDAEventName,windowHandle=window):
 			return
-		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if (
 			not obj
@@ -286,7 +299,6 @@ class UIAHandler(COMObject):
 			or (NVDAEventName=="liveRegionChange" and not obj._shouldAllowUIALiveRegionChangeEvent)
 		):
 			return
-		focus=api.getFocusObject()
 		if obj==focus:
 			obj=focus
 		eventHandler.queueEvent(NVDAEventName,obj)
@@ -328,16 +340,21 @@ class UIAHandler(COMObject):
 		NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
 		if not NVDAEventName:
 			return
-		if not self.isNativeUIAElement(sender):
+		focus = api.getFocusObject()
+		import NVDAObjects.UIA
+		if (
+			isinstance(focus, NVDAObjects.UIA.UIA)
+			and self.clientObject.compareElements(focus.UIAElement, sender)
+		):
+			pass
+		elif not self.isNativeUIAElement(sender):
 			return
 		window=self.getNearestWindowHandle(sender)
 		if window and not eventHandler.shouldAcceptEvent(NVDAEventName,windowHandle=window):
 			return
-		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if not obj:
 			return
-		focus=api.getFocusObject()
 		if obj==focus:
 			obj=focus
 		eventHandler.queueEvent(NVDAEventName,obj)

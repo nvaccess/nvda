@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#braille.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2008-2018 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
+# braille.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2008-2019 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
 
 import itertools
 import os
@@ -2030,7 +2030,10 @@ class _BgThread:
 		if cls.thread:
 			return
 		cls.queuedWriteLock = threading.Lock()
-		thread = cls.thread = threading.Thread(target=cls.func)
+		thread = cls.thread = threading.Thread(
+			name=f"{cls.__module__}.{cls.__qualname__}",
+			target=cls.func
+		)
 		thread.daemon = True
 		thread.start()
 		cls.handle = ctypes.windll.kernel32.OpenThread(winKernel.THREAD_SET_CONTEXT, False, thread.ident)
@@ -2411,6 +2414,8 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 	Subclasses can also inherit from L{brailleInput.BrailleInputGesture} if the display has a braille keyboard.
 	If the braille display driver is a L{baseObject.ScriptableObject}, it can provide scripts specific to input gestures from this display.
 	"""
+
+	shouldPreventSystemIdle = True
 
 	def _get_source(self):
 		"""The string used to identify all gestures from this display.
