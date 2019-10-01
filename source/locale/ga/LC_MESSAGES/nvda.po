@@ -8,15 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA 2017.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-25 00:10+1000\n"
-"PO-Revision-Date: 2018-05-26 18:10+0100\n"
+"POT-Creation-Date: 2018-12-28 00:10+1000\n"
+"PO-Revision-Date: 2019-01-01 09:53-0800\n"
 "Last-Translator: Ronan McGuirk <ronan.mcguirk@gmail.com>\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 1.8.9\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -85,11 +85,6 @@ msgstr "teanga anaithnid"
 #. Translators: The label for an unknown input method when switching input methods.
 msgid "unknown input method"
 msgstr "Mód ionchuir anaithnid"
-
-#. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
-msgid "{language} - {layout}"
-msgstr "{language} - {layout}"
 
 #. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
@@ -372,6 +367,15 @@ msgstr "pnl"
 msgid "pwdedt"
 msgstr "pwdedt"
 
+#. Translators: Displayed in braille for an object which is deleted.
+#, fuzzy
+msgid "del"
+msgstr "dlg"
+
+#. Translators: Displayed in braille for an object which is inserted.
+msgid "ins"
+msgstr "ion"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "rghn"
@@ -509,6 +513,18 @@ msgstr "líon an taispeántas Braille I gcónaí"
 msgid "Only when scrolling back"
 msgstr "Níl sé le fáil ach nuair atá tú ag scrollú ar ais"
 
+#. Translators: String representing automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "Uathoibríoch"
+
+#. Translators: String representing the USB port selection for braille displays.
+msgid "USB"
+msgstr "USB"
+
+#. Translators: String representing the Bluetooth port selection for braille displays.
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -578,9 +594,21 @@ msgstr "chun  fócas a dhéanamh"
 msgid "to review"
 msgstr "chun Athbhreithniú "
 
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "Uathoibríoch"
+#. Translators: Displayed when the source driver of a braille display gesture is unknown.
+#, fuzzy
+msgid "Unknown braille display"
+msgstr "Taispeántais bhraille Seika"
+
+#. Translators: Name of a Bluetooth serial communications port.
+#, fuzzy, python-brace-format
+msgid "Bluetooth Serial: {port} ({deviceName})"
+msgstr "Port Srathach: {portName}"
+
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
+#, python-brace-format
+msgid "Serial: {portName}"
+msgstr "Port Srathach: {portName}"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
@@ -646,6 +674,12 @@ msgstr "Bulgáiris, ríomhbhraille 8-ponc"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Central Kurdish grade 1"
+msgstr "Sualainnis, grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Welsh grade 1"
 msgstr "Breatnais, grád 1"
 
@@ -653,6 +687,12 @@ msgstr "Breatnais, grád 1"
 #. braille settings dialog.
 msgid "Welsh grade 2"
 msgstr "Breatnais, grád 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Czech 8 dot computer braille"
+msgstr "Spáinnis, ríomhbhraille 8-ponc"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -753,6 +793,12 @@ msgstr "Béarla (SAM), grád 1"
 #. braille settings dialog.
 msgid "English (U.S.) grade 2"
 msgstr "Béarla (SAM), grád 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Esperanto grade 1"
+msgstr "Gearmáinis, grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -857,6 +903,12 @@ msgstr "Ungáiris, ríomhbhraille 8-ponc"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hungarian grade 1"
+msgstr "Ungáiris, grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Hungarian grade 2"
 msgstr "Ungáiris, grád 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -1042,6 +1094,12 @@ msgstr "Sanscrait, grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Swedish 8 dot computer braille"
+msgstr "Spáinnis, ríomhbhraille 8-ponc"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Swedish grade 1"
 msgstr "Sualainnis, grád 1"
 
@@ -1097,6 +1155,18 @@ msgstr "Braille Unicode"
 #, fuzzy
 msgid "Vietnamese grade 1"
 msgstr "Assaiméis grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "Sínis (An Téaváin, Mandairínis)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "Sínis (An Téaváin, Mandairínis)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2509,15 +2579,25 @@ msgstr "rialtán ordóige"
 msgid "calendar"
 msgstr "féilire"
 
-#. Translators: Identifies a chart element.
-msgid "chart element"
-msgstr "Eilimint cairte"
-
 msgid "video"
 msgstr "físeán"
 
 msgid "audio"
 msgstr "fuaim"
+
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "Eilimint cairte"
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "scriosta"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "ionsáite"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -2856,14 +2936,12 @@ msgid "moves to the previous table column"
 msgstr "téigh go dtí an colún roimhe seo sa tábla"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
-#, fuzzy
 msgid "layout tables off"
-msgstr "Ná tabhair tuairisc ar táblaí"
+msgstr "Ná tabhair tuairisc ar tháblaí le haghaidh leagain amach"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
-#, fuzzy
 msgid "layout tables on"
-msgstr "Tabhair tuairisc ar táblaí"
+msgstr "Tabhair tuairisc ar tháblaí le haghaidh leagain amach"
 
 #. Translators: Input help mode message for include layout tables command.
 #, fuzzy
@@ -3812,6 +3890,14 @@ msgstr ""
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "Líne stádais gan aimsiú"
+
+#. Translators: Reported when status line exist, but is empty.
+msgid "no status bar information"
+msgstr "Níl aon fhaisnéis sa bharra stádais"
+
+#. Translators: Reported when user attempts to copy content of the empty status line.
+msgid "unable to copy status bar content to clipboard"
+msgstr "Ní féidir an barra stádais a chóipeáil go dtí an ghearrthaisce."
 
 #. Translators: Input help mode message for report status line text command.
 #, fuzzy
@@ -4767,28 +4853,23 @@ msgstr "Leagan amach  gach  mhéarchláir"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Amharic"
-msgstr "Amáiris"
-
-#. Translators: The name of a language supported by NVDA.
-msgctxt "languageName"
 msgid "Aragonese"
 msgstr "Aragóinis"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Arabic"
-msgstr "Araibis"
+msgid "Central Kurdish"
+msgstr ""
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Nepali"
-msgstr "Neipealais"
+msgid "Northern Kurdish"
+msgstr ""
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Serbian (Latin)"
-msgstr "Seirbis (Laidineach)"
+msgid "Burmese"
+msgstr ""
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -5985,7 +6066,7 @@ msgstr "le %s ró"
 msgid "level %s"
 msgstr "leibhéal %s"
 
-#. Translators: Speaks number of items in a list (example output: list with 5 items).
+#. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
 msgid "with %s items"
 msgstr "le %s mír"
@@ -6096,17 +6177,9 @@ msgstr "patrún cúlra {pattern}"
 msgid "line %s"
 msgstr "líne %s"
 
-#. Translators: Reported when text is marked as having been inserted
-msgid "inserted"
-msgstr "ionsáite"
-
 #. Translators: Reported when text is no longer marked as having been inserted.
 msgid "not inserted"
 msgstr "gan ionsá"
-
-#. Translators: Reported when text is marked as having been deleted
-msgid "deleted"
-msgstr "scriosta"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
 msgid "not deleted"
@@ -6602,7 +6675,7 @@ msgstr "Léitheoir scáileáin saor oscailte le haghaidh Windows"
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "© {years} Rannpháirtithe NVDA"
 
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -6638,7 +6711,7 @@ msgstr ""
 "saothar eascartha.\n"
 "Le breis eolais a fháil is féidir leat amharc ar an cheadúnas sa roghchlár "
 "“Cabhair”. \n"
-"Freisin is féidir leat amharc air ar líne ag: http://www.gnu.org/licenses/"
+"Freisin is féidir leat amharc air ar líne ag: https://www.gnu.org/licenses/"
 "old-licenses/gpl-2.0.html\n"
 "\n"
 "{name} atá forbatha ag NV Access, eagraíocht neamhbhrabúsach a chaitheann a "
@@ -6719,8 +6792,18 @@ msgstr "Tosú"
 msgid "No track playing"
 msgstr "Níl aon amhrán ag seinm"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
+msgstr "Tabhair tuairisc ar an méid ama fágtha san amhrán reatha"
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+#, fuzzy
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr "Tabhair tuairisc ar an méid ama fágtha san amhrán reatha"
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+#, fuzzy
+msgid "Reports the length of the currently playing track, if any"
 msgstr "Tabhair tuairisc ar an méid ama fágtha san amhrán reatha"
 
 #. Translators: Describes a command.
@@ -6837,35 +6920,20 @@ msgstr "gan léamh"
 msgid "Editing profile {profile}"
 msgstr "Próifíl Eagarthóireachta {profile}"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "bratach chorcra"
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "replied"
+msgstr "athchuir"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "bratach oráiste"
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "replied all"
+msgstr "athchuir"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "bratach uaine"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "bratach bhuí"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "bratach ghorm"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "bratach dhearg"
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "forwarded"
+msgstr "ar aghaidh"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -7266,14 +7334,13 @@ msgctxt "repeat"
 msgid "off"
 msgstr "as"
 
+#. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
+msgid "No emoji"
+msgstr ""
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
 msgstr ""
-
-#. Translators: Name of a bluetooth serial communications port.
-#, fuzzy, python-brace-format
-msgid "Bluetooth serial: {portName}"
-msgstr "Port Srathach: {portName}"
 
 #. Translators: Message when setting HID keyboard simulation failed.
 #, fuzzy
@@ -7295,15 +7362,6 @@ msgstr ""
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
 msgstr "Taispeántóir Bhraille Baum/HumanWare/APH/Orbit "
-
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#, python-brace-format
-msgid "Serial: {portName}"
-msgstr "Port Srathach: {portName}"
 
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
@@ -7782,6 +7840,33 @@ msgstr "Suiteáil an Nuashonrú atá ag feitheamh"
 msgid "Please wait"
 msgstr "Fan nóiméad"
 
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "Bailiú sonraí ar úsáid NVDA"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr ""
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr ""
+
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Bainisteoir na mBreiseán"
@@ -7832,6 +7917,7 @@ msgstr "&Suiteáil..."
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
 msgstr "&Bain"
@@ -8454,6 +8540,10 @@ msgstr "Lorg n&uashonruithe NVDA go huathoibríoch"
 msgid "Notify for &pending update on startup"
 msgstr "Cuir in iúl go bhfuil nuashonrú ag feitheamh agus NVDA ag tosú"
 
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr "Lig don thionscadal NVDA staitisticí ar úsáid NVDA  a bhailiú "
+
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
 "Add-ons were detected in your user settings directory. Copying these to the "
@@ -8580,6 +8670,17 @@ msgstr ""
 "        Bí muiníneach as teanga an ghuth nuair a phróiseáiletar "
 "carachtairagus siombailí"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+#, fuzzy
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"        Bí muiníneach as teanga an ghuth nuair a phróiseáiletar "
+"carachtairagus siombailí"
+
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "athrú tiúnairde ceannlitreach, faoin gcéad."
@@ -8603,20 +8704,11 @@ msgstr "Bain úsáid asfeidhm an &litriúithe má tá sé tacaithe.H1."
 msgid "Keyboard"
 msgstr "méarchlár"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Úsáid CapsLock mar eochair mhionathraithe in NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Úsáid Insert ón uimhircheap mar eochair mhionathraithe NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Úsáid Insert breisithe mar eochair mhionathraithe NVDA"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+#, fuzzy
+msgid "&Select NVDA Modifier Keys"
+msgstr "&Úsáid CapsLock mar eochair mhionathraithe in NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8783,8 +8875,9 @@ msgstr "Leid uirlise"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "Léig&h balúin chabhrach"
+#, fuzzy
+msgid "Report &notifications"
+msgstr "Leid uirlise"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10119,16 +10212,15 @@ msgid "Secondary Series Axis"
 msgstr "ais na sraithe tánaistí"
 
 #. Translators: the title of a chart axis
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid " title: {axisTitle}"
-msgstr "Teideal an chárta  {chartTitle}"
+msgstr "Teideal: {axisTitle}"
 
 #. Translators: Indicates that trendline type is Exponential
 msgid "Exponential"
 msgstr ""
 
 #. Translators: Indicates that trendline type is Linear
-#, fuzzy
 msgid "Linear"
 msgstr "líne"
 
@@ -10149,14 +10241,12 @@ msgid "Power"
 msgstr ""
 
 #. Translators: Substitute superscript two by square for R square value
-#, fuzzy
 msgid " square "
-msgstr "cearnaithe "
+msgstr "cearnóg "
 
 #. Translators: Substitute - by minus in trendline equations.
-#, fuzzy
 msgid " minus "
-msgstr "comhartha lúide (uimhircheap)"
+msgstr "#comhartha lúide (uimhircheap)"
 
 #. Translators: This message gives trendline type and name for selected series
 #, python-brace-format
@@ -10702,6 +10792,16 @@ msgstr "nóta tráchta: {text} le {author} ar {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType}: {description}:  {text} le {author} ar {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance:.3g} pointí ó imeall chlé."
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance:.3g} pointí ó barr."
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10860,177 +10960,3 @@ msgstr "spásáil línte dúbalta"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "spásáil línte 1.5"
-
-#~ msgid "Shows the NVDA voice settings dialog"
-#~ msgstr "Taispeáin socruithe gutha NVDA"
-
-#~ msgid "&General settings..."
-#~ msgstr "Socruithe &ginearálta..."
-
-#~ msgid "&Synthesizer..."
-#~ msgstr "&Sintéiseoir..."
-
-#~ msgid "Change the synthesizer to be used"
-#~ msgstr "Athraigh an sintéiseoir"
-
-#~ msgid "Choose the voice, rate, pitch and volume to use"
-#~ msgstr "Roghnaigh an guth, ráta, airde, agus láine"
-
-#~ msgid "B&raille settings..."
-#~ msgstr "Socruithe B&raille..."
-
-#~ msgid "&Keyboard settings..."
-#~ msgstr "Socruithe an &mhéarchláir..."
-
-#~ msgid ""
-#~ "Configure keyboard layout, speaking of typed characters, words or command "
-#~ "keys"
-#~ msgstr ""
-#~ "Cumraigh leagan amach an mhéarchláir, ag labhairt na carachtar "
-#~ "clóscríofa, focal nó eochracha ordaithe."
-
-#~ msgid "&Mouse settings..."
-#~ msgstr "Socruithe na &luiche..."
-
-#~ msgid "Change reporting of mouse shape and object under mouse"
-#~ msgstr ""
-#~ "Athraigh tuairisceáil crutha na luiche agus na hoibiachta faoin luch."
-
-#, fuzzy
-#~ msgid "&Touch interaction..."
-#~ msgstr "Foclóir &gutha..."
-
-#~ msgid "Configure how and when the review cursor moves"
-#~ msgstr "Cumraigh gluaiseacht an chursóra athbhreithnithe"
-
-#~ msgid "&Input composition settings..."
-#~ msgstr "&ionchuir Socruithe an chomhshuímh"
-
-#~ msgid ""
-#~ "Configure how NVDA reports input composition and candidate selection for "
-#~ "certain languages"
-#~ msgstr ""
-#~ "Cumraigh conas a thuairiscíonn NVDA comhshuíomh an ionchuir agus "
-#~ "roghnúchán an iarrthóra maidir le teangacha áirithe."
-
-#~ msgid "&Object presentation..."
-#~ msgstr "Léiriú &oibiachta"
-
-#~ msgid "Change reporting of objects"
-#~ msgstr "Athraigh tuairisciú na hoibiachtaí."
-
-#~ msgid "&Browse mode..."
-#~ msgstr "Mód &brabhsála..."
-
-#~ msgid "Change virtual buffers specific settings"
-#~ msgstr "Athraigh sainsocruithe an mhaoláin fhíorúil."
-
-#~ msgid "Document &formatting..."
-#~ msgstr "&Formáidiú doiciméid..."
-
-#~ msgid "Change settings of document properties"
-#~ msgstr "Athraigh airíonna na cáipéise"
-
-#, fuzzy
-#~ msgid "&Windows 10 OCR..."
-#~ msgstr "Windows 10 OCR..."
-
-#~ msgid "General Settings"
-#~ msgstr "Socruithe Ginearálta"
-
-#~ msgid "Voice Settings"
-#~ msgstr "Socruithe an Ghutha"
-
-#~ msgid "Keyboard Settings"
-#~ msgstr "Socruithe an Mhéarchláir"
-
-#~ msgid "Mouse Settings"
-#~ msgstr "Socruithe na Luiche"
-
-#~ msgid "Review Cursor Settings"
-#~ msgstr "Socruithe an Chúrsóra Athbhreithnithe"
-
-#~ msgid "Braille Settings"
-#~ msgstr "Socruithe Braille"
-
-#~ msgid "French (Canada) grade 1"
-#~ msgstr "Fraincis (Ceanada), grád 1"
-
-#~ msgid "French (Canada) grade 2"
-#~ msgstr "Fraincis (Ceanada), grád 2"
-
-#~ msgid "Mongolian"
-#~ msgstr "Mongóilis"
-
-#~ msgid "Download and &install update"
-#~ msgstr "Íosluchtaigh agus &suiteáil an nuashonrú"
-
-#~ msgid "Update downloaded. It will now be installed."
-#~ msgstr "Nuashonrú íosluchtaithe. Suiteálfar anois é."
-
-#~ msgid "Route to and report formatting"
-#~ msgstr "Ródaítear chuig agus déan tuairisc ar an bhformáidiú."
-
-#~ msgid "r%s"
-#~ msgstr "r%s"
-
-#~ msgid "c%s"
-#~ msgstr "c%s"
-
-#~ msgid "suspended"
-#~ msgstr "curtha ar athló"
-
-#~ msgid "running"
-#~ msgstr "ar siúl"
-
-#~ msgid "ALVA BC640/680 series"
-#~ msgstr "Sraith ALVA BC640/680"
-
-#~ msgid "review"
-#~ msgstr "athbhreithniú"
-
-#~ msgid "focus"
-#~ msgstr "fócas"
-
-#~ msgid "B&raille tethered to:"
-#~ msgstr "Braille nasctha le:"
-
-#~ msgid "Not defined"
-#~ msgstr "nil sé sainmhínithe"
-
-#~ msgid "Value"
-#~ msgstr "luach"
-
-#~ msgid "Series"
-#~ msgstr "Srath"
-
-#~ msgid "{axisName} Axis is {axisTitle}"
-#~ msgstr "Is í  {axisTitle} ais  {axisName}"
-
-#~ msgid "Primary"
-#~ msgstr "Príomh"
-
-#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
-#~ msgstr ""
-#~ "Ais cairte, cinneál: {axisType}, grúpa: {axisGroup}, Teideal: {axisTitle}"
-
-#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}"
-#~ msgstr "Ais cairte, cinneál: {axisType}, grúpa: {axisGroup}"
-
-#~ msgid "Chart axis title"
-#~ msgstr "Teideal ais cairte"
-
-#~ msgid "trendline"
-#~ msgstr "line treochta "
-
-#~ msgid "Legend"
-#~ msgstr "eochair eolais"
-
-#~ msgid "No legend"
-#~ msgstr "nil aon eochair eolais ann."
-
-#~ msgid "HIMS SyncBraille"
-#~ msgstr "HIMS SyncBraille"
-
-#~ msgid "Show the Handy Tech driver configuration window."
-#~ msgstr "Taispeáin fuinneog chumraíochta Handy Tech."

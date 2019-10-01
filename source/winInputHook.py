@@ -1,15 +1,24 @@
-#winInputHook.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2019 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import threading
 import comtypes.client
 import time
 from ctypes import *
 from ctypes.wintypes import *
-from win32con import WM_QUIT, HC_ACTION, WH_KEYBOARD_LL, LLKHF_UP, LLKHF_EXTENDED, LLKHF_INJECTED, WH_MOUSE_LL, LLMHF_INJECTED
+import watchdog
+import winUser
+
+# Some Windows constants
+HC_ACTION = 0
+WH_KEYBOARD_LL = 13
+LLKHF_UP = 128
+LLKHF_EXTENDED = 1
+LLKHF_INJECTED = 16
+WH_MOUSE_LL = 14
+LLMHF_INJECTED = 1
 
 class KBDLLHOOKSTRUCT(Structure):
 	_fields_=[
@@ -35,7 +44,7 @@ mouseCallback=None
 
 @WINFUNCTYPE(c_long,c_int,WPARAM,LPARAM)
 def keyboardHook(code,wParam,lParam):
-	if code!=HC_ACTION:
+	if watchdog.isAttemptingRecovery or code!=HC_ACTION:
 		return windll.user32.CallNextHookEx(0,code,wParam,lParam)
 	kbd=KBDLLHOOKSTRUCT.from_address(lParam)
 	if keyUpCallback and kbd.flags&LLKHF_UP:
@@ -48,7 +57,7 @@ def keyboardHook(code,wParam,lParam):
 
 @WINFUNCTYPE(c_long,c_int,WPARAM,LPARAM)
 def mouseHook(code,wParam,lParam):
-	if code!=HC_ACTION:
+	if watchdog.isAttemptingRecovery or code!=HC_ACTION:
 		return windll.user32.CallNextHookEx(0,code,wParam,lParam)
 	msll=MSLLHOOKSTRUCT.from_address(lParam)
 	if mouseCallback:
@@ -78,7 +87,10 @@ def initialize():
 	global hookThread, hookThreadRefCount
 	hookThreadRefCount+=1
 	if hookThreadRefCount==1:
-		hookThread=threading.Thread(target=hookThreadFunc)
+		hookThread = threading.Thread(
+			name=__name__,  # winInputHook
+			target=hookThreadFunc
+		)
 		hookThread.start()
 
 def setCallbacks(keyUp=None,keyDown=None,mouse=None):
@@ -96,6 +108,6 @@ def terminate():
 		raise RuntimeError("winInputHook not running")
 	hookThreadRefCount-=1
 	if hookThreadRefCount==0:
-		windll.user32.PostThreadMessageW(hookThread.ident,WM_QUIT,0,0)
+		windll.user32.PostThreadMessageW(hookThread.ident,winUser.WM_QUIT,0,0)
 		hookThread.join()
 		hookThread=None

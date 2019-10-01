@@ -155,10 +155,12 @@ def UIAHeadingQuicknavIterator(itemType,document,position,direction="next"):
 	while not stop:
 		tempInfo=curPosition.copy()
 		tempInfo.expand(textInfos.UNIT_CHARACTER)
-		styleIDValue=getUIATextAttributeValueFromRange(tempInfo._rangeObj,UIAHandler.UIA_StyleIdAttributeId)
-		if (UIAHandler.StyleId_Heading1<=styleIDValue<=UIAHandler.StyleId_Heading9):
-			foundLevel=(styleIDValue-UIAHandler.StyleId_Heading1)+1
-			wantedLevel=int(itemType[7:]) if len(itemType)>7 else None
+		styleIDValue=getUIATextAttributeValueFromRange(tempInfo._rangeObj,UIAHandler.UIA_StyleIdAttributeId,ignoreMixedValues=True)
+		# #9842: styleIDValue can sometimes be a pointer to IUnknown.
+		# In Python 3, comparing an int with a pointer raises a TypeError.
+		if isinstance(styleIDValue, int) and UIAHandler.StyleId_Heading1 <= styleIDValue <= UIAHandler.StyleId_Heading9:
+			foundLevel = (styleIDValue - UIAHandler.StyleId_Heading1) + 1
+			wantedLevel = int(itemType[7:]) if len(itemType) > 7 else None
 			if not wantedLevel or wantedLevel==foundLevel: 
 				if not firstLoop or not position:
 					tempInfo.expand(textInfos.UNIT_PARAGRAPH)
@@ -175,7 +177,7 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 		# All items are requested (such as for elements list)
 		elements=document.rootNVDAObject.UIAElement.findAll(UIAHandler.TreeScope_Descendants,UIACondition)
 		if elements:
-			for index in xrange(elements.length):
+			for index in range(elements.length):
 				element=elements.getElement(index)
 				try:
 					elementRange=document.rootNVDAObject.UIATextPattern.rangeFromChild(element)
@@ -425,13 +427,20 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 	def __contains__(self,obj):
 		if not isinstance(obj,UIA):
 			return False
+		# Ensure that this object is a descendant of the document or is the document itself. 
+		runtimeID=VARIANT()
+		self.rootNVDAObject.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(UIAHandler.UIA_RuntimeIdPropertyId,byref(runtimeID))
+		UIACondition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,runtimeID)
+		UIAWalker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
+		try:
+			docUIAElement=UIAWalker.normalizeElement(obj.UIAElement)
+		except COMError:
+			docUIAElement=None
+		if not docUIAElement:
+			return False
+		# Ensure that this object also can be reached by the document's text pattern.
 		try:
 			self.rootNVDAObject.makeTextInfo(obj)
 		except LookupError:
 			return False
 		return True
-
-	def event_caret(self,obj,nextHandler):
-		pass
-
-

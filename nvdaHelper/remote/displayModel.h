@@ -17,6 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <map>
 #include <deque>
+#include <string>
 #include <windows.h>
 #include <common/lock.h>
 

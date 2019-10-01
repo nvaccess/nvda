@@ -11,7 +11,7 @@ import gui
 from logHandler import log
 import appModuleHandler
 import globalVars
-import guiHelper
+from . import guiHelper
 
 class ProfilesDialog(wx.Dialog):
 	shouldSuspendConfigProfileTriggers = True
@@ -300,7 +300,7 @@ class TriggersDialog(wx.Dialog):
 			triggers.append(TriggerInfo(spec, disp, profile))
 			processed.add(spec)
 		# Handle all other triggers.
-		for spec, profile in confTrigs.iteritems():
+		for spec, profile in confTrigs.items():
 			if spec in processed:
 				continue
 			if spec.startswith("app:"):

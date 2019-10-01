@@ -1,3 +1,9 @@
+---
+name: Bug report
+about: Create a report to help us improve
+
+---
+
 <!--
 Please thoroughly read NVDA's wiki article on how to fill in this template, including how to provide the required files.
 Issues may be closed if the required information is not present.
@@ -10,9 +16,8 @@ https://github.com/nvaccess/nvda/wiki/Github-issue-template-explanation-and-exam
 
 ### Expected behavior:
 
-### System configuration:
-
-#### NVDA Installed/portable/running from source:
+### System configuration
+#### NVDA installed/portable/running from source:
 
 #### NVDA version:
 
@@ -22,9 +27,7 @@ https://github.com/nvaccess/nvda/wiki/Github-issue-template-explanation-and-exam
 
 #### Other information about your system:
 
-### Other questions:
-
+### Other questions
 #### Does the issue still occur after restarting your PC?
 
-#### Have you tried any other versions of NVDA?
-
+#### Have you tried any other versions of NVDA? If so, please report their behaviors.

@@ -29,6 +29,8 @@ import mouseHandler
 import controlTypes
 import keyboardHandler
 import core
+import re
+
 
 MAX_WINEVENTS=500
 MAX_WINEVENTS_PER_THREAD=10
@@ -111,7 +113,7 @@ class OrderedWinEventLimiter(object):
 		g=self._genericEventCache
 		self._genericEventCache={}
 		threadCounters={}
-		for k,v in sorted(g.iteritems(),key=lambda item: item[1],reverse=True):
+		for k,v in sorted(g.items(),key=lambda item: item[1],reverse=True):
 			threadCount=threadCounters.get(k[-1],0)
 			if threadCount>MAX_WINEVENTS_PER_THREAD:
 				continue
@@ -119,12 +121,12 @@ class OrderedWinEventLimiter(object):
 			threadCounters[k[-1]]=threadCount+1
 		f=self._focusEventCache
 		self._focusEventCache={}
-		for k,v in sorted(f.iteritems(),key=lambda item: item[1])[0-self.maxFocusItems:]:
+		for k,v in sorted(f.items(),key=lambda item: item[1])[0-self.maxFocusItems:]:
 			heapq.heappush(self._eventHeap,(v,)+k)
 		e=self._eventHeap
 		self._eventHeap=[]
 		r=[]
-		for count in xrange(len(e)):
+		for count in range(len(e)):
 			event=heapq.heappop(e)[1:-1]
 			r.append(event)
 		return r
@@ -569,6 +571,10 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 				window=tempWindow
 
 		windowClassName=winUser.getClassName(window)
+		# Modern IME candidate list windows fire menu events which confuse us
+		# and can't be used properly in conjunction with input composition support.
+		if windowClassName=="Microsoft.IME.UIManager.CandidateWindow.Host" and eventID in MENU_EVENTIDS:
+			return
 		#At the moment we can't handle show, hide or reorder events on Mozilla Firefox Location bar,as there are just too many of them
 		#Ignore show, hide and reorder on MozillaDropShadowWindowClass windows.
 		if windowClassName.startswith('Mozilla') and eventID in (winUser.EVENT_OBJECT_SHOW,winUser.EVENT_OBJECT_HIDE,winUser.EVENT_OBJECT_REORDER) and childID<0:
@@ -832,7 +838,7 @@ def initialize():
 		accPropServices=comtypes.client.CreateObject(CAccPropServices)
 	except (WindowsError,COMError) as e:
 		log.debugWarning("AccPropServices is not available: %s"%e)
-	for eventType in winEventIDsToNVDAEventNames.keys():
+	for eventType in winEventIDsToNVDAEventNames:
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if hookID:
 			winEventHookIDs.append(hookID)
@@ -991,8 +997,7 @@ def getRecursiveTextFromIAccessibleTextObject(obj,startOffset=0,endOffset=-1):
 	except:
 		return text
 	textList=[]
-	for i in xrange(len(text)):
-		t=text[i]
+	for i, t in enumerate(text):
 		if ord(t)==0xFFFC:
 			try:
 				childTextObject=hypertextObject.hyperlink(hypertextObject.hyperlinkIndex(i+startOffset)).QueryInterface(IAccessible)
@@ -1001,6 +1006,14 @@ def getRecursiveTextFromIAccessibleTextObject(obj,startOffset=0,endOffset=-1):
 				pass
 		textList.append(t)
 	return "".join(textList).replace('  ',' ')
+
+
+ATTRIBS_STRING_BASE64_PATTERN = re.compile(
+	r"(([^\\](\\\\)*);src:data\\:[^\\;]+\\;base64\\,)[A-Za-z0-9+/=]+"
+)
+ATTRIBS_STRING_BASE64_REPL = r"\1<truncated>"
+ATTRIBS_STRING_BASE64_THRESHOLD = 4096
+
 
 def splitIA2Attribs(attribsString):
 	"""Split an IAccessible2 attributes string into a dict of attribute keys and values.
@@ -1011,6 +1024,11 @@ def splitIA2Attribs(attribsString):
 	@return: A dict of the attribute keys and values, where values are strings or dicts.
 	@rtype: {str: str or {str: str}}
 	"""
+	# Do not treat huge base64 data as it might freeze NVDA in Google Chrome (#10227)
+	if len(attribsString) >= ATTRIBS_STRING_BASE64_THRESHOLD:
+		attribsString = ATTRIBS_STRING_BASE64_PATTERN.sub(ATTRIBS_STRING_BASE64_REPL, attribsString)
+		if len(attribsString) >= ATTRIBS_STRING_BASE64_THRESHOLD:
+			log.debugWarning(f"IA2 attributes string exceeds threshold: {attribsString}")
 	attribsDict = {}
 	tmp = ""
 	key = ""

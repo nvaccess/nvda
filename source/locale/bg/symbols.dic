@@ -5,7 +5,6 @@
 
 complexSymbols:
 # identifier	regexp
-
 # Sentence endings.
 . sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
 ! sentence ending	(?<=[^\s!])\!(?=[\"')\s]|$)
@@ -185,3 +184,6 @@ _	долна черта
 ⅜	три осми
 ⅝	пет осми
 ⅞	седем осми
+
+# Miscellaneous Technical
+⌘	Команден клавиш на Mac

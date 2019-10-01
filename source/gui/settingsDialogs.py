@@ -1,11 +1,14 @@
 # -*- coding: UTF-8 -*-
-#settingsDialogs.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# settingsDialogs.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
+# Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
-import glob
+import logging
+from abc import abstractmethod
 import os
 import copy
 import re
@@ -21,13 +24,11 @@ import config
 import languageHandler
 import speech
 import gui
-from gui import nvdaControls
 import globalVars
 from logHandler import log
 import nvwave
 import audioDucking
 import speechDictHandler
-import appModuleHandler
 import queueHandler
 import braille
 import brailleTables
@@ -35,19 +36,23 @@ import brailleInput
 import core
 import keyboardHandler
 import characterProcessing
-import guiHelper
+from . import guiHelper
 try:
 	import updateCheck
 except RuntimeError:
 	updateCheck = None
 import inputCore
-import nvdaControls
+from . import nvdaControls
+from driverHandler import *
+from UIAUtils import shouldUseUIAConsole
 import touchHandler
 import winVersion
 import weakref
 import time
+import keyLabels
+from .dpiScalingHelper import DpiScalingHelperMixin
 
-class SettingsDialog(wx.Dialog):
+class SettingsDialog(wx.Dialog, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCMeta):
 	"""A settings dialog.
 	A settings dialog consists of one or more settings controls and OK and Cancel buttons and an optional Apply button.
 	Action may be taken in response to the OK, Cancel or Apply buttons.
@@ -66,25 +71,54 @@ class SettingsDialog(wx.Dialog):
 
 	class MultiInstanceError(RuntimeError): pass
 
-	_instances=weakref.WeakSet()
+	_DIALOG_CREATED_STATE = 0
+	_DIALOG_DESTROYED_STATE = 1
+	# holds instances of SettingsDialogs as keys, and state as the value
+	_instances=weakref.WeakKeyDictionary()
 	title = ""
 	shouldSuspendConfigProfileTriggers = True
 
 	def __new__(cls, *args, **kwargs):
-		if next((dlg for dlg in SettingsDialog._instances if isinstance(dlg,cls)),None) or (
-			SettingsDialog._instances and not kwargs.get('multiInstanceAllowed',False)
-		):
+		# We are iterating over instanceItems only once, so it can safely be an iterator.
+		instanceItems = SettingsDialog._instances.items()
+		instancesOfSameClass = (
+			(dlg, state) for dlg, state in instanceItems if isinstance(dlg, cls)
+		)
+		firstMatchingInstance, state = next(instancesOfSameClass, (None, None))
+		multiInstanceAllowed = kwargs.get('multiInstanceAllowed', False)
+		if log.isEnabledFor(log.DEBUG):
+			instancesState = dict(SettingsDialog._instances)
+			log.debug(
+				"Creating new settings dialog (multiInstanceAllowed:{}). "
+				"State of _instances {!r}".format(multiInstanceAllowed, instancesState)
+			)
+		if state is cls._DIALOG_CREATED_STATE and not multiInstanceAllowed:
 			raise SettingsDialog.MultiInstanceError("Only one instance of SettingsDialog can exist at a time")
-			pass
+		if state is cls._DIALOG_DESTROYED_STATE and not multiInstanceAllowed:
+			# the dialog has been destroyed by wx, but the instance is still available. This indicates there is something
+			# keeping it alive.
+			log.error("Opening new settings dialog while instance still exists: {!r}".format(firstMatchingInstance))
 		obj = super(SettingsDialog, cls).__new__(cls, *args, **kwargs)
-		SettingsDialog._instances.add(obj)
+		SettingsDialog._instances[obj] = cls._DIALOG_CREATED_STATE
 		return obj
 
-	def __init__(self, parent,
-	             resizeable=False,
-	             hasApplyButton=False,
-	             settingsSizerOrientation=wx.VERTICAL,
-	             multiInstanceAllowed=False):
+	def _setInstanceDestroyedState(self):
+		if log.isEnabledFor(log.DEBUG):
+			instancesState = dict(SettingsDialog._instances)
+			log.debug(
+				"Setting state to destroyed for instance: {!r}\n"
+				"Current _instances {!r}".format(self, instancesState)
+			)
+		if self in SettingsDialog._instances:
+			SettingsDialog._instances[self] = self._DIALOG_DESTROYED_STATE
+
+	def __init__(
+			self, parent,
+			resizeable=False,
+			hasApplyButton=False,
+			settingsSizerOrientation=wx.VERTICAL,
+			multiInstanceAllowed=False
+	):
 		"""
 		@param parent: The parent for this dialog; C{None} for no parent.
 		@type parent: wx.Window
@@ -102,13 +136,13 @@ class SettingsDialog(wx.Dialog):
 		"""
 		if gui._isDebug():
 			startTime = time.time()
-		windowStyle = wx.DEFAULT_DIALOG_STYLE | (wx.RESIZE_BORDER if resizeable else 0)
-		super(SettingsDialog, self).__init__(parent, title=self.title, style=windowStyle)
-		self.hasApply = hasApplyButton
+		windowStyle = wx.DEFAULT_DIALOG_STYLE
+		if resizeable:
+			windowStyle |= wx.RESIZE_BORDER | wx.MAXIMIZE_BOX
+		wx.Dialog.__init__(self, parent, title=self.title, style=windowStyle)
+		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
-		# the wx.Window must be constructed before we can get the handle.
-		import windowUtils
-		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
+		self.hasApply = hasApplyButton
 
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(settingsSizerOrientation)
@@ -139,8 +173,14 @@ class SettingsDialog(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		self.Bind(wx.EVT_BUTTON, self.onApply, id=wx.ID_APPLY)
 		self.Bind(wx.EVT_CHAR_HOOK, self._enterActivatesOk_ctrlSActivatesApply)
+		# Garbage collection normally handles removing the settings instance, however this may not happen immediately
+		# after a window is closed, or may be blocked by a circular reference. So instead, remove when the window is
+		# destroyed.
+		self.Bind(wx.EVT_WINDOW_DESTROY, self._onWindowDestroy)
 
 		self.postInit()
+		if resizeable:
+			self.SetMinSize(self.mainSizer.GetMinSize())
 		self.CentreOnScreen()
 		if gui._isDebug():
 			log.debug("Loading %s took %.2f seconds"%(self.__class__.__name__, time.time() - startTime))
@@ -159,6 +199,7 @@ class SettingsDialog(wx.Dialog):
 		else:
 			evt.Skip()
 
+	@abstractmethod
 	def makeSettings(self, sizer):
 		"""Populate the dialog with settings controls.
 		Subclasses must override this method.
@@ -199,20 +240,15 @@ class SettingsDialog(wx.Dialog):
 		self.postInit()
 		self.SetReturnCode(wx.ID_APPLY)
 
-	def scaleSize(self, size):
-		"""Helper method to scale a size using the logical DPI
-		@param size: The size (x,y) as a tuple or a single numerical type to scale
-		@returns: The scaled size, returned as the same type"""
-		if isinstance(size, tuple):
-			return (self.scaleFactor * size[0], self.scaleFactor * size[1])
-		return self.scaleFactor * size
-
+	def _onWindowDestroy(self, evt):
+		evt.Skip()
+		self._setInstanceDestroyedState()
 
 # An event and event binder that will notify the containers that they should
 # redo the layout in whatever way makes sense for their particular content.
 _RWLayoutNeededEvent, EVT_RW_LAYOUT_NEEDED = wx.lib.newevent.NewCommandEvent()
 
-class SettingsPanel(wx.Panel):
+class SettingsPanel(wx.Panel, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCMeta):
 	"""A settings panel, to be used in a multi category settings dialog.
 	A settings panel consists of one or more settings controls.
 	Action may be taken in response to the parent dialog's OK or Cancel buttons.
@@ -230,6 +266,7 @@ class SettingsPanel(wx.Panel):
 	"""
 
 	title=""
+	panelDescription=u""
 
 	def __init__(self, parent):
 		"""
@@ -238,10 +275,9 @@ class SettingsPanel(wx.Panel):
 		"""
 		if gui._isDebug():
 			startTime = time.time()
-		super(SettingsPanel, self).__init__(parent, wx.ID_ANY)
-		# the wx.Window must be constructed before we can get the handle.
-		import windowUtils
-		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
+		wx.Panel.__init__(self, parent, wx.ID_ANY)
+		DpiScalingHelperMixin.__init__(self, self.GetHandle())
+
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		self.makeSettings(self.settingsSizer)
@@ -251,6 +287,7 @@ class SettingsPanel(wx.Panel):
 		if gui._isDebug():
 			log.debug("Loading %s took %.2f seconds"%(self.__class__.__name__, time.time() - startTime))
 
+	@abstractmethod
 	def makeSettings(self, sizer):
 		"""Populate the panel with settings controls.
 		Subclasses must override this method.
@@ -272,6 +309,7 @@ class SettingsPanel(wx.Panel):
 		"""
 		self.Hide()
 
+	@abstractmethod
 	def onSave(self):
 		"""Take action in response to the parent's dialog OK or apply button being pressed.
 		Sub-classes should override this method.
@@ -308,14 +346,6 @@ class SettingsPanel(wx.Panel):
 		event = _RWLayoutNeededEvent(self.GetId())
 		event.SetEventObject(self)
 		self.GetEventHandler().ProcessEvent(event)
-
-	def scaleSize(self, size):
-		"""Helper method to scale a size using the logical DPI
-		@param size: The size (x,y) as a tuple or a single numerical type to scale
-		@returns: The scaled size, returned as the same type"""
-		if isinstance(size, tuple):
-			return (self.scaleFactor * size[0], self.scaleFactor * size[1])
-		return self.scaleFactor * size
 
 class MultiCategorySettingsDialog(SettingsDialog):
 	"""A settings dialog with multiple settings categories.
@@ -401,7 +431,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 		self.catListCtrl = nvdaControls.AutoWidthColumnListCtrl(
 			self,
-			autoSizeColumnIndex=0,
+			autoSizeColumn=1,
 			size=catListDim,
 			style=wx.LC_REPORT|wx.LC_SINGLE_SEL|wx.LC_NO_HEADER
 		)
@@ -409,17 +439,8 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# The provided column header is just a placeholder, as it is hidden due to the wx.LC_NO_HEADER style flag.
 		self.catListCtrl.InsertColumn(0,categoriesLabelText)
 
-		# Put the settings panel in a scrolledPanel, we don't know how large the settings panels might grow. If they exceed
-		# the maximum size, its important all items can be accessed visually.
-		# Save the ID for the panel, this panel will have its name changed when the categories are changed. This name is
-		# exposed via the IAccessibleName property.
-		global NvdaSettingsCategoryPanelId
-		# #7077: wxPython 4.0.0 to 4.0.2 have a wrap-around bug with wx.NewId function, so use the fixed version below.
-		# Among other things, this allows dialogs and panels to work correctly after using NVDA for a long time.
-		NvdaSettingsCategoryPanelId = wx.NewIdRef()
 		self.container = scrolledpanel.ScrolledPanel(
 			parent = self,
-			id = NvdaSettingsCategoryPanelId,
 			style = wx.TAB_TRAVERSAL | wx.BORDER_THEME,
 			size=containerDim
 		)
@@ -489,6 +510,15 @@ class MultiCategorySettingsDialog(SettingsDialog):
 					 "MultiCategorySettingsDialog.MIN_SIZE"
 					).format(cls, panel.Size[0])
 				)
+			panel.SetLabel(panel.title)
+			import oleacc
+			panel.server = nvdaControls.AccPropertyOverride(
+				panel,
+				propertyAnnotations={
+					oleacc.PROPID_ACC_ROLE: oleacc.ROLE_SYSTEM_PROPERTYPAGE,  # change the role from pane to property page
+					oleacc.PROPID_ACC_DESCRIPTION: panel.panelDescription,  # set a description
+				}
+			)
 		return panel
 
 	def postInit(self):
@@ -556,10 +586,6 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# call Layout and SetupScrolling on the container to make sure that the controls apear in their expected locations.
 		self.container.Layout()
 		self.container.SetupScrolling()
-		# Set the label for the container, this is exposed via the Name property on an NVDAObject.
-		# For one or another reason, doing this before SetupScrolling causes this to be ignored by NVDA in some cases.
-		# Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
-		self.container.SetLabel(_("%s Settings Category")%newCat.title)
 		self.container.Thaw()
 
 	def onCategoryChange(self, evt):
@@ -571,12 +597,12 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			evt.Skip()
 
 	def _doSave(self):
-		for panel in self.catIdToInstanceMap.itervalues():
+		for panel in self.catIdToInstanceMap.values():
 			if panel.isValid() is False:
 				raise ValueError("Validation for %s blocked saving settings" % panel.__class__.__name__)
-		for panel in self.catIdToInstanceMap.itervalues():
+		for panel in self.catIdToInstanceMap.values():
 			panel.onSave()
-		for panel in self.catIdToInstanceMap.itervalues():
+		for panel in self.catIdToInstanceMap.values():
 			panel.postSave()
 
 	def onOk(self,evt):
@@ -585,12 +611,12 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		except ValueError:
 			log.debugWarning("", exc_info=True)
 			return
-		for panel in self.catIdToInstanceMap.itervalues():
+		for panel in self.catIdToInstanceMap.values():
 			panel.Destroy()
 		super(MultiCategorySettingsDialog,self).onOk(evt)
 
 	def onCancel(self,evt):
-		for panel in self.catIdToInstanceMap.itervalues():
+		for panel in self.catIdToInstanceMap.values():
 			panel.onDiscard()
 			panel.Destroy()
 		super(MultiCategorySettingsDialog,self).onCancel(evt)
@@ -607,6 +633,8 @@ class GeneralSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the general settings panel.
 	title = _("General")
 	LOG_LEVELS = (
+		# Translators: One of the log levels of NVDA (the disabled mode turns off logging completely).
+		(log.OFF, _("disabled")),
 		# Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 		(log.INFO, _("info")),
 		# Translators: One of the log levels of NVDA (the debug warning shows debugging messages and warnings as NVDA runs).
@@ -656,6 +684,8 @@ class GeneralSettingsPanel(SettingsPanel):
 		logLevelChoices = [name for level, name in self.LOG_LEVELS]
 		self.logLevelList = settingsSizerHelper.addLabeledControl(logLevelLabelText, wx.Choice, choices=logLevelChoices)
 		curLevel = log.getEffectiveLevel()
+		if logHandler.isLogLevelForced():
+			self.logLevelList.Disable()
 		for index, (level, name) in enumerate(self.LOG_LEVELS):
 			if level == curLevel:
 				self.logLevelList.SetSelection(index)
@@ -690,6 +720,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
+
 			# Translators: The label of a checkbox in general settings to toggle startup notifications
 			# for a pending NVDA update.
 			item=self.notifyForPendingUpdateCheckBox=wx.CheckBox(self,label=_("Notify for &pending update on startup"))
@@ -705,21 +736,29 @@ class GeneralSettingsPanel(SettingsPanel):
 			settingsSizerHelper.addItem(item)
 
 	def onCopySettings(self,evt):
-		for packageType in ('addons','appModules','globalPlugins','brailleDisplayDrivers','synthDrivers'):
-			if len(os.listdir(os.path.join(globalVars.appArgs.configPath,packageType)))>0:
-				if gui.messageBox(
-					# Translators: A message to warn the user when attempting to copy current settings to system settings.
-					_("Add-ons were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"),
-					# Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-					_("Warning"),wx.YES|wx.NO|wx.ICON_WARNING,self
-				)==wx.NO:
-					return
-				break
-		progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
-		# Translators: The title of the dialog presented while settings are being copied
-		_("Copying Settings"),
-		# Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
-		_("Please wait while settings are copied to the system configuration."))
+		addonsDirPath = os.path.join(globalVars.appArgs.configPath, 'addons')
+		if os.path.isdir(addonsDirPath) and 0 < len(os.listdir(addonsDirPath)):
+			# Translators: A message to warn the user when attempting to copy current
+			# settings to system settings.
+			message = _(
+				"Add-ons were detected in your user settings directory. "
+				"Copying these to the system profile could be a security risk. "
+				"Do you still wish to copy your settings?"
+			)
+			# Translators: The title of the warning dialog displayed when trying to
+			# copy settings for use in secure screens.
+			title = _("Warning")
+			style = wx.YES | wx.NO | wx.ICON_WARNING
+			if wx.NO == gui.messageBox(message, title, style, self):
+				return
+		progressDialog = gui.IndeterminateProgressDialog(
+			gui.mainFrame,
+			# Translators: The title of the dialog presented while settings are being copied
+			_("Copying Settings"),
+			# Translators: The message displayed while settings are being copied
+			# to the system configuration (for use on Windows logon etc)
+			_("Please wait while settings are copied to the system configuration.")
+		)
 		while True:
 			try:
 				gui.ExecAndPump(config.setSystemConfigToCurrentConfig)
@@ -755,8 +794,9 @@ class GeneralSettingsPanel(SettingsPanel):
 		config.conf["general"]["askToExit"]=self.askToExitCheckBox.IsChecked()
 		config.conf["general"]["playStartAndExitSounds"]=self.playStartAndExitSoundsCheckBox.IsChecked()
 		logLevel=self.LOG_LEVELS[self.logLevelList.GetSelection()][0]
-		config.conf["general"]["loggingLevel"]=logHandler.levelNames[logLevel]
-		logHandler.setLogLevelFromConfig()
+		if not logHandler.isLogLevelForced():
+			config.conf["general"]["loggingLevel"] = logging.getLevelName(logLevel)
+			logHandler.setLogLevelFromConfig()
 		if self.startAfterLogonCheckBox.IsEnabled():
 			config.setStartAfterLogon(self.startAfterLogonCheckBox.GetValue())
 		if self.startOnLogonScreenCheckBox.IsEnabled():
@@ -772,15 +812,40 @@ class GeneralSettingsPanel(SettingsPanel):
 			updateCheck.initialize()
 
 	def postSave(self):
-		if self.oldLanguage!=config.conf["general"]["language"]:
-			if gui.messageBox(
-				# Translators: The message displayed after NVDA interface language has been changed.
-				_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),
-				# Translators: The title of the dialog which appears when the user changed NVDA's interface language.
-				_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING,self
-			)==wx.OK:
-				config.conf.save()
-				queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
+		if self.oldLanguage != config.conf["general"]["language"]:
+			LanguageRestartDialog(self).ShowModal()
+
+class LanguageRestartDialog(wx.Dialog):
+
+	def __init__(self, parent):
+		# Translators: The title of the dialog which appears when the user changed NVDA's interface language.
+		super(LanguageRestartDialog, self).__init__(parent, title=_("Language Configuration Change"))
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+		# Translators: The message displayed after NVDA interface language has been changed.
+		sHelper.addItem(wx.StaticText(self, label=_("NVDA must be restarted for the new language to take effect.")))
+
+		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
+		# Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
+		restartNowButton = bHelper.addButton(self, label=_("Restart &now"))
+		restartNowButton.Bind(wx.EVT_BUTTON, self.onRestartNowButton)
+		restartNowButton.SetFocus()
+
+		# Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
+		restartLaterButton = bHelper.addButton(self, wx.ID_CLOSE, label=_("Restart &later"))
+		restartLaterButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
+		self.Bind(wx.EVT_CLOSE, lambda evt: self.Destroy())
+		self.EscapeId = wx.ID_CLOSE
+
+		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
+		self.Sizer = mainSizer
+		mainSizer.Fit(self)
+		self.CentreOnScreen()
+
+	def onRestartNowButton(self, evt):
+		self.Destroy()
+		config.conf.save()
+		queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
 
 class SpeechSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the speech panel
@@ -927,144 +992,211 @@ class SynthesizerSelectionDialog(SettingsDialog):
 			self.Parent.updateCurrentSynth()
 		super(SynthesizerSelectionDialog, self).onOk(evt)
 
-class SynthSettingChanger(object):
+class DriverSettingChanger(object):
 	"""Functor which acts as calback for GUI events."""
 
-	def __init__(self,setting):
+	def __init__(self,driver,setting):
+		self._driverRef=weakref.ref(driver)
 		self.setting=setting
+
+	@property
+	def driver(self):
+		return self._driverRef()
 
 	def __call__(self,evt):
 		val=evt.GetSelection()
-		setattr(getSynth(),self.setting.name,val)
+		setattr(self.driver,self.setting.id,val)
 
-class StringSynthSettingChanger(SynthSettingChanger):
-	"""Same as L{SynthSettingChanger} but handles combobox events."""
-	def __init__(self,setting,panel):
-		self.panel=panel
-		super(StringSynthSettingChanger,self).__init__(setting)
+class StringDriverSettingChanger(DriverSettingChanger):
+	"""Same as L{DriverSettingChanger} but handles combobox events."""
+	def __init__(self,driver,setting,container):
+		self.container=container
+		super(StringDriverSettingChanger,self).__init__(driver,setting)
 
 	def __call__(self,evt):
-		if self.setting.name=="voice":
+		# Quick workaround to deal with voice changes.
+		if self.setting.id == "voice":
 			# Cancel speech first so that the voice will change immediately instead of the change being queued.
 			speech.cancelSpeech()
-			changeVoice(getSynth(),getattr(self.panel,"_%ss"%self.setting.name)[evt.GetSelection()].ID)
-			self.panel.updateVoiceSettings(changedSetting=self.setting.name)
+			changeVoice(
+				self.driver,
+				getattr(self.container,"_%ss"%self.setting.id)[evt.GetSelection()].id
+			)
+			self.container.updateDriverSettings(changedSetting=self.setting.id)
 		else:
-			setattr(getSynth(),self.setting.name,getattr(self.panel,"_%ss"%self.setting.name)[evt.GetSelection()].ID)
+			setattr(
+				self.driver,
+				self.setting.id,
+				getattr(self.container,"_%ss"%self.setting.id)[evt.GetSelection()].id
+			)
 
-class VoiceSettingsSlider(wx.Slider):
+class DriverSettingsMixin(object):
+	"""
+	Mixin class that provides support for driver specific gui settings.
+	Derived classes should implement L{driver}.
+	"""
 
-	def __init__(self,*args, **kwargs):
-		super(VoiceSettingsSlider,self).__init__(*args,**kwargs)
-		self.Bind(wx.EVT_CHAR, self.onSliderChar)
+	def __init__(self, *args, **kwargs):
+		self.sizerDict={}
+		self.lastControl=None		
+		super(DriverSettingsMixin,self).__init__(*args,**kwargs)
+		self._curDriverRef = weakref.ref(self.driver)
 
-	def SetValue(self,i):
-		super(VoiceSettingsSlider, self).SetValue(i)
-		evt = wx.CommandEvent(wx.wxEVT_COMMAND_SLIDER_UPDATED,self.GetId())
-		evt.SetInt(i)
-		self.ProcessEvent(evt)
-		# HACK: Win events don't seem to be sent for certain explicitly set values,
-		# so send our own win event.
-		# This will cause duplicates in some cases, but NVDA will filter them out.
-		winUser.user32.NotifyWinEvent(winUser.EVENT_OBJECT_VALUECHANGE,self.Handle,winUser.OBJID_CLIENT,winUser.CHILDID_SELF)
-
-	def onSliderChar(self, evt):
-		key = evt.KeyCode
-		if key == wx.WXK_UP:
-			newValue = min(self.Value + self.LineSize, self.Max)
-		elif key == wx.WXK_DOWN:
-			newValue = max(self.Value - self.LineSize, self.Min)
-		elif key == wx.WXK_PAGEUP:
-			newValue = min(self.Value + self.PageSize, self.Max)
-		elif key == wx.WXK_PAGEDOWN:
-			newValue = max(self.Value - self.PageSize, self.Min)
-		elif key == wx.WXK_HOME:
-			newValue = self.Max
-		elif key == wx.WXK_END:
-			newValue = self.Min
-		else:
-			evt.Skip()
-			return
-		self.SetValue(newValue)
-
-class VoiceSettingsPanel(SettingsPanel):
-	# Translators: This is the label for the voice settings panel.
-	title = _("Voice")
+	@property
+	def driver(self):
+		raise NotImplementedError
 
 	@classmethod
 	def _setSliderStepSizes(cls, slider, setting):
 		slider.SetLineSize(setting.minStep)
 		slider.SetPageSize(setting.largeStep)
 
-	def makeSettingControl(self,setting):
-		"""Constructs appropriate GUI controls for given L{SynthSetting} such as label and slider.
+	def makeSliderSettingControl(self,setting):
+		"""Constructs appropriate GUI controls for given L{DriverSetting} such as label and slider.
 		@param setting: Setting to construct controls for
-		@type setting: L{SynthSetting}
+		@type setting: L{DriverSetting}
 		@returns: WXSizer containing newly created controls.
 		@rtype: L{wx.BoxSizer}
 		"""
-		sizer=wx.BoxSizer(wx.HORIZONTAL)
-		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.displayNameWithAccelerator)
-		slider=VoiceSettingsSlider(self,wx.ID_ANY,minValue=0,maxValue=100)
-		setattr(self,"%sSlider"%setting.name,slider)
-		slider.Bind(wx.EVT_SLIDER,SynthSettingChanger(setting))
-		self._setSliderStepSizes(slider,setting)
-		slider.SetValue(getattr(getSynth(),setting.name))
-		sizer.Add(label)
-		sizer.Add(slider)
+		labeledControl = guiHelper.LabeledControlHelper(
+			self,
+			"%s:"%setting.displayNameWithAccelerator,
+			nvdaControls.EnhancedInputSlider,
+			minValue=setting.minVal,
+			maxValue=setting.maxVal
+		)
+		lSlider=labeledControl.control
+		setattr(self,"%sSlider"%setting.id,lSlider)
+		lSlider.Bind(wx.EVT_SLIDER,DriverSettingChanger(self.driver,setting))
+		self._setSliderStepSizes(lSlider,setting)
+		lSlider.SetValue(getattr(self.driver,setting.id))
 		if self.lastControl:
-			slider.MoveAfterInTabOrder(self.lastControl)
-		self.lastControl=slider
-		return sizer
+			lSlider.MoveAfterInTabOrder(self.lastControl)
+		self.lastControl=lSlider
+		return labeledControl.sizer
 
 	def makeStringSettingControl(self,setting):
-		"""Same as L{makeSettingControl} but for string settings. Returns sizer with label and combobox."""
+		"""Same as L{makeSliderSettingControl} but for string settings. Returns sizer with label and combobox."""
 
 		labelText="%s:"%setting.displayNameWithAccelerator
-		synth=getSynth()
-		setattr(self,"_%ss"%setting.name,getattr(synth,"available%ss"%setting.name.capitalize()).values())
-		l=getattr(self,"_%ss"%setting.name)###
-		labeledControl=guiHelper.LabeledControlHelper(self, labelText, wx.Choice, choices=[x.name for x in l])
+		setattr(
+			self,
+			"_%ss"%setting.id,
+			# Settings are stored as an ordered dict.
+			# Therefore wrap this inside a list call.
+			list(getattr(self.driver,"available%ss"%setting.id.capitalize()).values())
+		)
+		l=getattr(self,"_%ss"%setting.id)
+		labeledControl=guiHelper.LabeledControlHelper(
+			self,
+			labelText,
+			wx.Choice,
+			choices=[x.displayName for x in l]
+		)
 		lCombo = labeledControl.control
-		setattr(self,"%sList"%setting.name,lCombo)
+		setattr(self,"%sList"%setting.id,lCombo)
 		try:
-			cur=getattr(synth,setting.name)
-			i=[x.ID for x in l].index(cur)
+			cur=getattr(self.driver,setting.id)
+			i=[x.id for x in l].index(cur)
 			lCombo.SetSelection(i)
 		except ValueError:
 			pass
-		lCombo.Bind(wx.EVT_CHOICE,StringSynthSettingChanger(setting,self))
+		lCombo.Bind(wx.EVT_CHOICE,StringDriverSettingChanger(self.driver,setting,self))
 		if self.lastControl:
 			lCombo.MoveAfterInTabOrder(self.lastControl)
 		self.lastControl=lCombo
 		return labeledControl.sizer
 
 	def makeBooleanSettingControl(self,setting):
-		"""Same as L{makeSettingControl} but for boolean settings. Returns checkbox."""
+		"""Same as L{makeSliderSettingControl} but for boolean settings. Returns checkbox."""
 		checkbox=wx.CheckBox(self,wx.ID_ANY,label=setting.displayNameWithAccelerator)
-		setattr(self,"%sCheckbox"%setting.name,checkbox)
+		setattr(self,"%sCheckbox"%setting.id,checkbox)
 		checkbox.Bind(wx.EVT_CHECKBOX,
-			lambda evt: setattr(getSynth(),setting.name,evt.IsChecked()))
-		checkbox.SetValue(getattr(getSynth(),setting.name))
+			lambda evt: setattr(self.driver,setting.id,evt.IsChecked()))
+		checkbox.SetValue(getattr(self.driver,setting.id))
 		if self.lastControl:
 			checkbox.MoveAfterInTabOrder(self.lastControl)
 		self.lastControl=checkbox
 		return checkbox
 
+	def updateDriverSettings(self, changedSetting=None):
+		"""Creates, hides or updates existing GUI controls for all of supported settings."""
+		#firstly check already created options
+		for name,sizer in self.sizerDict.items():
+			if name == changedSetting:
+				# Changing a setting shouldn't cause that setting itself to disappear.
+				continue
+			if not self.driver.isSupported(name):
+				self.settingsSizer.Hide(sizer)
+		#Create new controls, update already existing
+		for setting in self.driver.supportedSettings:
+			if setting.id == changedSetting:
+				# Changing a setting shouldn't cause that setting's own values to change.
+				continue
+			if setting.id in self.sizerDict: #update a value
+				self.settingsSizer.Show(self.sizerDict[setting.id])
+				if isinstance(setting,NumericDriverSetting):
+					getattr(self,"%sSlider"%setting.id).SetValue(getattr(self.driver,setting.id))
+				elif isinstance(setting,BooleanDriverSetting):
+					getattr(self,"%sCheckbox"%setting.id).SetValue(getattr(self.driver,setting.id))
+				else:
+					l=getattr(self,"_%ss"%setting.id)
+					lCombo=getattr(self,"%sList"%setting.id)
+					try:
+						cur=getattr(self.driver,setting.id)
+						i=[x.id for x in l].index(cur)
+						lCombo.SetSelection(i)
+					except ValueError:
+						pass
+			else: #create a new control
+				if isinstance(setting,NumericDriverSetting):
+					settingMaker=self.makeSliderSettingControl
+				elif isinstance(setting,BooleanDriverSetting):
+					settingMaker=self.makeBooleanSettingControl
+				else:
+					settingMaker=self.makeStringSettingControl
+				try:
+					s=settingMaker(setting)
+				except UnsupportedConfigParameterError:
+					log.debugWarning("Unsupported setting %s; ignoring"%setting.id, exc_info=True)
+					continue
+				self.sizerDict[setting.id]=s
+				self.settingsSizer.Insert(len(self.sizerDict)-1,s,border=10,flag=wx.BOTTOM)
+		#Update graphical layout of the dialog
+		self.settingsSizer.Layout()
+
+	def onDiscard(self):
+		#unbind change events for string settings as wx closes combo boxes on cancel
+		for setting in self.driver.supportedSettings:
+			if isinstance(setting,(NumericDriverSetting,BooleanDriverSetting)): continue
+			getattr(self,"%sList"%setting.id).Unbind(wx.EVT_CHOICE)
+		#restore settings
+		self.driver.loadSettings()
+
+	def onSave(self):
+		self.driver.saveSettings()
+
 	def onPanelActivated(self):
-		if getSynth().name is not self._synth.name:
+		if not self._curDriverRef():
 			if gui._isDebug():
-				log.debug("refreshing voice panel")
+				log.debug("refreshing panel")
 			self.sizerDict.clear()
 			self.settingsSizer.Clear(delete_windows=True)
+			self._curDriverRef = weakref.ref(self.driver)
 			self.makeSettings(self.settingsSizer)
-		super(VoiceSettingsPanel,self).onPanelActivated()
+		super(DriverSettingsMixin,self).onPanelActivated()
+
+class VoiceSettingsPanel(DriverSettingsMixin, SettingsPanel):
+	# Translators: This is the label for the voice settings panel.
+	title = _("Voice")
+
+	@property
+	def driver(self):
+		return getSynth()
 
 	def makeSettings(self, settingsSizer):
-		self.sizerDict={}
-		self.lastControl=None
-		#Create controls for Synth Settings
-		self.updateVoiceSettings()
+		# Construct synthesizer settings
+		self.updateDriverSettings()
 
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is the label for a checkbox in the
@@ -1094,94 +1226,54 @@ class VoiceSettingsPanel(SettingsPanel):
 		self.trustVoiceLanguageCheckbox = settingsSizerHelper.addItem(wx.CheckBox(self,label=trustVoiceLanguageText))
 		self.trustVoiceLanguageCheckbox.SetValue(config.conf["speech"]["trustVoiceLanguage"])
 
+		# Translators: This is the label for a checkbox in the
+		# voice settings panel (if checked, data from the unicode CLDR will be used
+		# to speak emoji descriptions).
+		includeCLDRText = _("Include Unicode Consortium data (including emoji) when processing characters and symbols")
+		self.includeCLDRCheckbox = settingsSizerHelper.addItem(wx.CheckBox(self,label=includeCLDRText))
+		self.includeCLDRCheckbox.SetValue(config.conf["speech"]["includeCLDR"])
+
 		# Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 		capPitchChangeLabelText=_("Capital pitch change percentage")
 		self.capPitchChangeEdit=settingsSizerHelper.addLabeledControl(capPitchChangeLabelText, nvdaControls.SelectOnFocusSpinCtrl,
-			min=int(config.conf.getConfigValidationParameter(["speech", getSynth().name, "capPitchChange"], "min")),
-			max=int(config.conf.getConfigValidationParameter(["speech", getSynth().name, "capPitchChange"], "max")),
-			initial=config.conf["speech"][getSynth().name]["capPitchChange"])
+			min=int(config.conf.getConfigValidation(("speech", self.driver.name, "capPitchChange")).kwargs["min"]),
+			max=int(config.conf.getConfigValidation(("speech", self.driver.name, "capPitchChange")).kwargs["max"]),
+			initial=config.conf["speech"][self.driver.name]["capPitchChange"])
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel.
 		sayCapForCapsText = _("Say &cap before capitals")
 		self.sayCapForCapsCheckBox = settingsSizerHelper.addItem(wx.CheckBox(self,label=sayCapForCapsText))
-		self.sayCapForCapsCheckBox.SetValue(config.conf["speech"][getSynth().name]["sayCapForCapitals"])
+		self.sayCapForCapsCheckBox.SetValue(config.conf["speech"][self.driver.name]["sayCapForCapitals"])
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel.
 		beepForCapsText =_("&Beep for capitals")
 		self.beepForCapsCheckBox = settingsSizerHelper.addItem(wx.CheckBox(self, label = beepForCapsText))
-		self.beepForCapsCheckBox.SetValue(config.conf["speech"][getSynth().name]["beepForCapitals"])
+		self.beepForCapsCheckBox.SetValue(config.conf["speech"][self.driver.name]["beepForCapitals"])
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel.
 		useSpellingFunctionalityText = _("Use &spelling functionality if supported")
 		self.useSpellingFunctionalityCheckBox = settingsSizerHelper.addItem(wx.CheckBox(self, label = useSpellingFunctionalityText))
-		self.useSpellingFunctionalityCheckBox.SetValue(config.conf["speech"][getSynth().name]["useSpellingFunctionality"])
-
-	def updateVoiceSettings(self, changedSetting=None):
-		"""Creates, hides or updates existing GUI controls for all of supported settings."""
-		synth=self._synth=getSynth()
-		#firstly check already created options
-		for name,sizer in self.sizerDict.iteritems():
-			if name == changedSetting:
-				# Changing a setting shouldn't cause that setting itself to disappear.
-				continue
-			if not synth.isSupported(name):
-				self.settingsSizer.Hide(sizer)
-		#Create new controls, update already existing
-		for setting in synth.supportedSettings:
-			if setting.name == changedSetting:
-				# Changing a setting shouldn't cause that setting's own values to change.
-				continue
-			if setting.name in self.sizerDict: #update a value
-				self.settingsSizer.Show(self.sizerDict[setting.name])
-				if isinstance(setting,NumericSynthSetting):
-					getattr(self,"%sSlider"%setting.name).SetValue(getattr(synth,setting.name))
-				elif isinstance(setting,BooleanSynthSetting):
-					getattr(self,"%sCheckbox"%setting.name).SetValue(getattr(synth,setting.name))
-				else:
-					l=getattr(self,"_%ss"%setting.name)
-					lCombo=getattr(self,"%sList"%setting.name)
-					try:
-						cur=getattr(synth,setting.name)
-						i=[x.ID for x in l].index(cur)
-						lCombo.SetSelection(i)
-					except ValueError:
-						pass
-			else: #create a new control
-				if isinstance(setting,NumericSynthSetting):
-					settingMaker=self.makeSettingControl
-				elif isinstance(setting,BooleanSynthSetting):
-					settingMaker=self.makeBooleanSettingControl
-				else:
-					settingMaker=self.makeStringSettingControl
-				s=settingMaker(setting)
-				self.sizerDict[setting.name]=s
-				self.settingsSizer.Insert(len(self.sizerDict)-1,s,border=10,flag=wx.BOTTOM)
-		#Update graphical layout of the dialog
-		self.settingsSizer.Layout()
-
-	def onDiscard(self):
-		#unbind change events for string settings as wx closes combo boxes on cancel
-		for setting in getSynth().supportedSettings:
-			if isinstance(setting,(NumericSynthSetting,BooleanSynthSetting)): continue
-			getattr(self,"%sList"%setting.name).Unbind(wx.EVT_CHOICE)
-		#restore settings
-		getSynth().loadSettings()
-		super(VoiceSettingsPanel,self).onDiscard()
+		self.useSpellingFunctionalityCheckBox.SetValue(config.conf["speech"][self.driver.name]["useSpellingFunctionality"])
 
 	def onSave(self):
-		synth = getSynth()
-		synth.saveSettings()
+		DriverSettingsMixin.onSave(self)
+
 		config.conf["speech"]["autoLanguageSwitching"]=self.autoLanguageSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["autoDialectSwitching"]=self.autoDialectSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["symbolLevel"]=characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[self.symbolLevelList.GetSelection()]
 		config.conf["speech"]["trustVoiceLanguage"]=self.trustVoiceLanguageCheckbox.IsChecked()
-		config.conf["speech"][synth.name]["capPitchChange"]=self.capPitchChangeEdit.Value
-		config.conf["speech"][synth.name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
-		config.conf["speech"][synth.name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
-		config.conf["speech"][synth.name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
+		currentIncludeCLDR = config.conf["speech"]["includeCLDR"]
+		config.conf["speech"]["includeCLDR"] = newIncludeCldr = self.includeCLDRCheckbox.IsChecked()
+		if currentIncludeCLDR is not newIncludeCldr:
+			# Either included or excluded CLDR data, so clear the cache.
+			characterProcessing.clearSpeechSymbols()
+		config.conf["speech"][self.driver.name]["capPitchChange"]=self.capPitchChangeEdit.Value
+		config.conf["speech"][self.driver.name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
+		config.conf["speech"][self.driver.name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
+		config.conf["speech"][self.driver.name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
 
 class KeyboardSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the keyboard settings panel.
@@ -1202,24 +1294,20 @@ class KeyboardSettingsPanel(SettingsPanel):
 		except:
 			log.debugWarning("Could not set Keyboard layout list to current layout",exc_info=True)
 
-		# Translators: This is the label for a checkbox in the
-		# keyboard settings panel.
-		capsAsNVDAText = _("Use CapsLock as an NVDA modifier key")
-		self.capsAsNVDAModifierCheckBox=sHelper.addItem(wx.CheckBox(self,label=capsAsNVDAText))
-		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
-
-		# Translators: This is the label for a checkbox in the
-		# keyboard settings panel.
-		numpadInsertAsModText = _("Use numpad Insert as an NVDA modifier key")
-		self.numpadInsertAsNVDAModifierCheckBox=sHelper.addItem(wx.CheckBox(self,label=numpadInsertAsModText))
-		self.numpadInsertAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"])
-
-		# Translators: This is the label for a checkbox in the
-		# keyboard settings panel.
-		extendedInsertAsModText = _("Use extended Insert as an NVDA modifier key")
-		self.extendedInsertAsNVDAModifierCheckBox=sHelper.addItem(wx.CheckBox(self,label=extendedInsertAsModText))
-		self.extendedInsertAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"])
-
+		#Translators: This is the label for a list of checkboxes
+		# controlling which keys are NVDA modifier keys.
+		modifierBoxLabel = _("&Select NVDA Modifier Keys")
+		self.modifierChoices = [keyLabels.localizedKeyLabels[key] for key in keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS]
+		self.modifierList=sHelper.addLabeledControl(modifierBoxLabel, nvdaControls.CustomCheckListBox, choices=self.modifierChoices)
+		checkedItems = []
+		if config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]:
+			checkedItems.append(keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS.index("numpadinsert"))
+		if config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"]:
+			checkedItems.append(keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS.index("insert"))
+		if config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"]:
+			checkedItems.append(keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS.index("capslock"))
+		self.modifierList.CheckedItems = checkedItems
+		self.modifierList.Select(0)
 		# Translators: This is the label for a checkbox in the
 		# keyboard settings panel.
 		charsText = _("Speak typed &characters")
@@ -1278,7 +1366,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 
 	def isValid(self):
 		# #2871: check wether at least one key is the nvda key.
-		if not self.capsAsNVDAModifierCheckBox.IsChecked() and not self.numpadInsertAsNVDAModifierCheckBox.IsChecked() and not self.extendedInsertAsNVDAModifierCheckBox.IsChecked():
+		if not self.modifierList.CheckedItems:
 			log.debugWarning("No NVDA key set")
 			gui.messageBox(
 				# Translators: Message to report wrong configuration of the NVDA key
@@ -1291,9 +1379,9 @@ class KeyboardSettingsPanel(SettingsPanel):
 	def onSave(self):
 		layout=self.kbdNames[self.kbdList.GetSelection()]
 		config.conf['keyboard']['keyboardLayout']=layout
-		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"]=self.capsAsNVDAModifierCheckBox.IsChecked()
-		config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]=self.numpadInsertAsNVDAModifierCheckBox.IsChecked()
-		config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"]=self.extendedInsertAsNVDAModifierCheckBox.IsChecked()
+		config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]= self.modifierList.IsChecked(keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS.index("numpadinsert"))
+		config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"] = self.modifierList.IsChecked(keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS.index("insert"))
+		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"] = self.modifierList.IsChecked(keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS.index("capslock"))
 		config.conf["keyboard"]["speakTypedCharacters"]=self.charsCheckBox.IsChecked()
 		config.conf["keyboard"]["speakTypedWords"]=self.wordsCheckBox.IsChecked()
 		config.conf["keyboard"]["speechInterruptForCharacters"]=self.speechInterruptForCharsCheckBox.IsChecked()
@@ -1327,7 +1415,7 @@ class MouseSettingsPanel(SettingsPanel):
 		# mouse settings panel.
 		textUnitLabelText=_("Text &unit resolution:")
 		import textInfos
-		self.textUnits=[textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD,textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH]
+		self.textUnits=textInfos.MOUSE_TEXT_RESOLUTION_UNITS
 		textUnitsChoices = [textInfos.unitLabels[x] for x in self.textUnits]
 		self.textUnitComboBox=sHelper.addLabeledControl(textUnitLabelText, wx.Choice, choices=textUnitsChoices)
 		try:
@@ -1354,6 +1442,12 @@ class MouseSettingsPanel(SettingsPanel):
 		self.audioDetectBrightnessCheckBox=sHelper.addItem(wx.CheckBox(self,label=audioDetectBrightnessText))
 		self.audioDetectBrightnessCheckBox.SetValue(config.conf["mouse"]["audioCoordinates_detectBrightness"])
 
+		# Translators: This is the label for a checkbox in the
+		# mouse settings panel.
+		ignoreInjectedMouseInputText = _("Ignore mouse input from other &applications")
+		self.ignoreInjectedMouseInputCheckBox=sHelper.addItem(wx.CheckBox(self,label=ignoreInjectedMouseInputText))
+		self.ignoreInjectedMouseInputCheckBox.SetValue(config.conf["mouse"]["ignoreInjectedMouseInput"])
+
 	def onSave(self):
 		config.conf["mouse"]["reportMouseShapeChanges"]=self.shapeCheckBox.IsChecked()
 		config.conf["mouse"]["enableMouseTracking"]=self.mouseTrackingCheckBox.IsChecked()
@@ -1361,6 +1455,7 @@ class MouseSettingsPanel(SettingsPanel):
 		config.conf["mouse"]["reportObjectRoleOnMouseEnter"]=self.reportObjectRoleCheckBox.IsChecked()
 		config.conf["mouse"]["audioCoordinatesOnMouseMove"]=self.audioCheckBox.IsChecked()
 		config.conf["mouse"]["audioCoordinates_detectBrightness"]=self.audioDetectBrightnessCheckBox.IsChecked()
+		config.conf["mouse"]["ignoreInjectedMouseInput"]=self.ignoreInjectedMouseInputCheckBox.IsChecked()
 
 class ReviewCursorPanel(SettingsPanel):
 	# Translators: This is the label for the review cursor settings panel.
@@ -1464,7 +1559,7 @@ class ObjectPresentationPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings panel.
-		balloonText = _("Report &help balloons")
+		balloonText = _("Report &notifications")
 		self.balloonCheckBox=sHelper.addItem(wx.CheckBox(self,label=balloonText))
 		self.balloonCheckBox.SetValue(config.conf["presentation"]["reportHelpBalloons"])
 
@@ -1539,62 +1634,77 @@ class BrowseModePanel(SettingsPanel):
 	title = _("Browse Mode")
 
 	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
 		# Translators: This is the label for a textfield in the
 		# browse mode settings panel.
-		maxLengthLabel=wx.StaticText(self,-1,label=_("&Maximum number of characters on one line"))
-		settingsSizer.Add(maxLengthLabel)
-		self.maxLengthEdit=nvdaControls.SelectOnFocusSpinCtrl(self,
-			min=10, max=250, # min and max are not enforced in the config for virtualBuffers.maxLineLength
+		maxLengthLabelText = _("&Maximum number of characters on one line")
+		self.maxLengthEdit = sHelper.addLabeledControl(maxLengthLabelText, nvdaControls.SelectOnFocusSpinCtrl,
+			# min and max are not enforced in the config for virtualBuffers.maxLineLength
+			min=10, max=250,
 			initial=config.conf["virtualBuffers"]["maxLineLength"])
-		settingsSizer.Add(self.maxLengthEdit,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a textfield in the
 		# browse mode settings panel.
-		pageLinesLabel=wx.StaticText(self,-1,label=_("&Number of lines per page"))
-		settingsSizer.Add(pageLinesLabel)
-		self.pageLinesEdit=nvdaControls.SelectOnFocusSpinCtrl(self,
-			min=5, max=150, # min and max are not enforced in the config for virtualBuffers.linesPerPage
+		pageLinesLabelText = _("&Number of lines per page")
+		self.pageLinesEdit = sHelper.addLabeledControl(pageLinesLabelText, nvdaControls.SelectOnFocusSpinCtrl,
+			# min and max are not enforced in the config for virtualBuffers.linesPerPage
+			min=5, max=150,
 			initial=config.conf["virtualBuffers"]["linesPerPage"])
-		settingsSizer.Add(self.pageLinesEdit,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.useScreenLayoutCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Use &screen layout (when supported)"))
+		useScreenLayoutText = _("Use &screen layout (when supported)")
+		self.useScreenLayoutCheckBox = sHelper.addItem(wx.CheckBox(self, label=useScreenLayoutText))
 		self.useScreenLayoutCheckBox.SetValue(config.conf["virtualBuffers"]["useScreenLayout"])
-		settingsSizer.Add(self.useScreenLayoutCheckBox,border=10,flag=wx.BOTTOM)
+
+		# Translators: The label for a checkbox in browse mode settings to 
+		# enable browse mode on page load.
+		enableOnPageLoadText = _("&Enable browse mode on page load")
+		self.enableOnPageLoadCheckBox = sHelper.addItem(wx.CheckBox(self, label=enableOnPageLoadText))
+		self.enableOnPageLoadCheckBox.SetValue(config.conf["virtualBuffers"]["enableOnPageLoad"])
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.autoSayAllCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Automatic &Say All on page load"))
+		autoSayAllText = _("Automatic &Say All on page load")
+		self.autoSayAllCheckBox = sHelper.addItem(wx.CheckBox(self, label=autoSayAllText))
 		self.autoSayAllCheckBox.SetValue(config.conf["virtualBuffers"]["autoSayAllOnPageLoad"])
-		settingsSizer.Add(self.autoSayAllCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.layoutTablesCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Include l&ayout tables"))
+		layoutTablesText = _("Include l&ayout tables")
+		self.layoutTablesCheckBox = sHelper.addItem(wx.CheckBox(self, label =layoutTablesText))
 		self.layoutTablesCheckBox.SetValue(config.conf["documentFormatting"]["includeLayoutTables"])
-		settingsSizer.Add(self.layoutTablesCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.autoPassThroughOnFocusChangeCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Automatic focus mode for focus changes"))
+		autoPassThroughOnFocusChangeText = _("Automatic focus mode for focus changes")
+		self.autoPassThroughOnFocusChangeCheckBox = sHelper.addItem(wx.CheckBox(self, label=autoPassThroughOnFocusChangeText))
 		self.autoPassThroughOnFocusChangeCheckBox.SetValue(config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
-		settingsSizer.Add(self.autoPassThroughOnFocusChangeCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.autoPassThroughOnCaretMoveCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Automatic focus mode for caret movement"))
+		autoPassThroughOnCaretMoveText = _("Automatic focus mode for caret movement")
+		self.autoPassThroughOnCaretMoveCheckBox = sHelper.addItem(wx.CheckBox(self, label=autoPassThroughOnCaretMoveText))
 		self.autoPassThroughOnCaretMoveCheckBox.SetValue(config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
-		settingsSizer.Add(self.autoPassThroughOnCaretMoveCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.passThroughAudioIndicationCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Audio indication of focus and browse modes"))
+		passThroughAudioIndicationText = _("Audio indication of focus and browse modes")
+		self.passThroughAudioIndicationCheckBox = sHelper.addItem(wx.CheckBox(self, label=passThroughAudioIndicationText))
 		self.passThroughAudioIndicationCheckBox.SetValue(config.conf["virtualBuffers"]["passThroughAudioIndication"])
-		settingsSizer.Add(self.passThroughAudioIndicationCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.trapNonCommandGesturesCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("&Trap all non-command gestures from reaching the document"))
+		trapNonCommandGesturesText = _("&Trap all non-command gestures from reaching the document")
+		self.trapNonCommandGesturesCheckBox = sHelper.addItem(wx.CheckBox(self, label=trapNonCommandGesturesText))
 		self.trapNonCommandGesturesCheckBox.SetValue(config.conf["virtualBuffers"]["trapNonCommandGestures"])
-		settingsSizer.Add(self.trapNonCommandGesturesCheckBox,border=10,flag=wx.BOTTOM)
 
 	def onSave(self):
 		config.conf["virtualBuffers"]["maxLineLength"]=self.maxLengthEdit.GetValue()
 		config.conf["virtualBuffers"]["linesPerPage"]=self.pageLinesEdit.GetValue()
 		config.conf["virtualBuffers"]["useScreenLayout"]=self.useScreenLayoutCheckBox.IsChecked()
+		config.conf["virtualBuffers"]["enableOnPageLoad"] = self.enableOnPageLoadCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoSayAllOnPageLoad"]=self.autoSayAllCheckBox.IsChecked()
 		config.conf["documentFormatting"]["includeLayoutTables"]=self.layoutTablesCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"]=self.autoPassThroughOnFocusChangeCheckBox.IsChecked()
@@ -1606,12 +1716,13 @@ class DocumentFormattingPanel(SettingsPanel):
 	# Translators: This is the label for the document formatting panel.
 	title = _("Document Formatting")
 
+	# Translators: This is a label appearing on the document formatting settings panel.
+	panelDescription = _("The following options control the types of document formatting reported by NVDA.")
+
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
-		# Translators: This is a label appearing on the document formatting settings panel.
-		panelText =_("The following options control the types of document formatting reported by NVDA.")
-		sHelper.addItem(wx.StaticText(self, label=panelText))
+		sHelper.addItem(wx.StaticText(self, label=self.panelDescription))
 
 		# Translators: This is the label for a group of document formatting options in the 
 		# document formatting settings panel
@@ -1896,6 +2007,331 @@ class UwpOcrPanel(SettingsPanel):
 		lang = self.languageCodes[self.languageChoice.Selection]
 		config.conf["uwpOcr"]["language"] = lang
 
+class AdvancedPanelControls(wx.Panel):
+	"""Holds the actual controls for the Advanced Settings panel, this allows the state of the controls to
+	be more easily managed.
+	"""
+	def __init__(self, parent):
+		super(AdvancedPanelControls, self).__init__(parent)
+		self._defaultsRestored = False
+
+		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+		self.SetSizer(sHelper.sizer)
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
+		groupText = _("NVDA Development")
+		devGroup = guiHelper.BoxSizerHelper(
+			parent=self,
+			sizer=wx.StaticBoxSizer(parent=self, label=groupText, orient=wx.VERTICAL)
+		)
+		sHelper.addItem(devGroup)
+
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Enable loading custom code from Developer Scratchpad directory")
+		self.scratchpadCheckBox=devGroup.addItem(wx.CheckBox(self, label=label))
+		self.scratchpadCheckBox.SetValue(config.conf["development"]["enableScratchpadDir"])
+		self.scratchpadCheckBox.defaultValue = self._getDefaultValue(["development", "enableScratchpadDir"])
+		self.scratchpadCheckBox.Bind(
+			wx.EVT_CHECKBOX,
+			lambda evt: self.openScratchpadButton.Enable(evt.IsChecked())
+		)
+		if config.isAppX:
+			self.scratchpadCheckBox.Disable()
+
+		# Translators: the label for a button in the Advanced settings category
+		label=_("Open developer scratchpad directory")
+		self.openScratchpadButton=devGroup.addItem(wx.Button(self, label=label))
+		self.openScratchpadButton.Enable(config.conf["development"]["enableScratchpadDir"])
+		self.openScratchpadButton.Bind(wx.EVT_BUTTON,self.onOpenScratchpadDir)
+		if config.isAppX:
+			self.openScratchpadButton.Disable()
+
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
+		label = _("Microsoft UI Automation")
+		UIAGroup = guiHelper.BoxSizerHelper(
+			parent=self,
+			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+		)
+		sHelper.addItem(UIAGroup)
+
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Use UI Automation to access Microsoft &Word document controls when available")
+		self.UIAInMSWordCheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
+		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
+		self.UIAInMSWordCheckBox.defaultValue = self._getDefaultValue(["UIA", "useInMSWordWhenAvailable"])
+
+		# Translators: This is the label for a combo box for selecting the
+		# active console implementation in the advanced settings panel.
+		# Choices are automatic, prefer UIA, and legacy.
+		consoleComboText = _("Windows C&onsole support:")
+		consoleChoices = [
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA determine its Windows Console implementation
+			# automatically.
+			_("Automatic"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA use UIA in the Windows Console when available.
+			_("Prefer UIA"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA use its legacy Windoes Console support
+			# in all cases.
+			_("Legacy")
+		]
+		#: The possible console config values, in the order they appear
+		#: in the combo box.
+		self.consoleVals = (
+			"auto",
+			"UIA",
+			"legacy"
+		)
+		self.consoleCombo = UIAGroup.addLabeledControl(consoleComboText, wx.Choice, choices=consoleChoices)
+		self.consoleCombo.Bind(
+			wx.EVT_CHOICE,
+			self.enableConsolePasswordsCheckBox,
+			self.consoleCombo
+		)
+		curChoice = self.consoleVals.index(
+			config.conf['UIA']['winConsoleImplementation']
+		)
+		self.consoleCombo.SetSelection(curChoice)
+		self.consoleCombo.defaultValue = self.consoleVals.index(
+			self._getDefaultValue(["UIA", "winConsoleImplementation"])
+		)
+
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
+		label = _("Terminal programs")
+		terminalsGroup = guiHelper.BoxSizerHelper(
+			parent=self,
+			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+		)
+		sHelper.addItem(terminalsGroup)
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Speak &passwords in Windows Console (may improve performance)")
+		self.speakPasswordsCheckBox = terminalsGroup.addItem(wx.CheckBox(self, label=label))
+		self.speakPasswordsCheckBox.SetValue(config.conf["terminals"]["speakPasswords"])
+		self.speakPasswordsCheckBox.defaultValue = self._getDefaultValue(["terminals", "speakPasswords"])
+		self.enableConsolePasswordsCheckBox()
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Use the new t&yped character support in legacy Windows consoles when available")
+		self.keyboardSupportInLegacyCheckBox=terminalsGroup.addItem(wx.CheckBox(self, label=label))
+		self.keyboardSupportInLegacyCheckBox.SetValue(config.conf["terminals"]["keyboardSupportInLegacy"])
+		self.keyboardSupportInLegacyCheckBox.defaultValue = self._getDefaultValue(["terminals", "keyboardSupportInLegacy"])
+		self.keyboardSupportInLegacyCheckBox.Enable(winVersion.isWin10(1607))
+
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
+		label = _("Browse mode")
+		browseModeGroup = guiHelper.BoxSizerHelper(
+			parent=self,
+			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+		)
+		sHelper.addItem(browseModeGroup)
+
+		# Translators: This is the label for a checkbox in the
+		# Advanced settings panel.
+		autoFocusFocusableElementsText = _("Automatically set system &focus to focusable elements")
+		self.autoFocusFocusableElementsCheckBox=browseModeGroup.addItem(wx.CheckBox(self,wx.ID_ANY,label=autoFocusFocusableElementsText))
+		self.autoFocusFocusableElementsCheckBox.SetValue(config.conf["virtualBuffers"]["autoFocusFocusableElements"])
+		self.autoFocusFocusableElementsCheckBox.defaultValue=self._getDefaultValue(["virtualBuffers","autoFocusFocusableElements"])
+
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
+		label = _("Editable Text")
+		editableTextGroup = guiHelper.BoxSizerHelper(
+			self,
+			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+		)
+		sHelper.addItem(editableTextGroup)
+
+		# Translators: This is the label for a numeric control in the
+		#  Advanced settings panel.
+		label = _("Caret movement timeout (in ms)")
+		self.caretMoveTimeoutSpinControl=editableTextGroup.addLabeledControl(
+			label,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=0,
+			max=2000,
+			initial=config.conf["editableText"]["caretMoveTimeoutMs"]
+		)
+		self.caretMoveTimeoutSpinControl.defaultValue = self._getDefaultValue(["editableText", "caretMoveTimeoutMs"])
+
+		# Translators: This is the label for a group of advanced options in the
+		# Advanced settings panel
+		label = _("Debug logging")
+		debugLogGroup = guiHelper.BoxSizerHelper(
+			self,
+			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+		)
+		sHelper.addItem(debugLogGroup)
+
+		self.logCategories=[
+			"hwIo",
+			"audioDucking",
+			"gui",
+			"louis",
+			"timeSinceInput",
+			"vision",
+		]
+		# Translators: This is the label for a list in the
+		#  Advanced settings panel
+		logCategoriesLabel=_("Enabled logging categories")
+		self.logCategoriesList=debugLogGroup.addLabeledControl(
+			logCategoriesLabel,
+			nvdaControls.CustomCheckListBox,
+			choices=self.logCategories
+		)
+		self.logCategoriesList.CheckedItems = [
+			index for index, x in enumerate(self.logCategories) if config.conf['debugLog'][x]
+		]
+		self.logCategoriesList.Select(0)
+		self.logCategoriesList.defaultCheckedItems = [
+				index for index, x in enumerate(self.logCategories) if bool(
+					self._getDefaultValue(['debugLog', x])
+			)
+		]
+		self.Layout()
+
+	def enableConsolePasswordsCheckBox(self, evt=None):
+		return self.speakPasswordsCheckBox.Enable(
+			shouldUseUIAConsole(self.consoleVals[
+				self.consoleCombo.GetSelection()
+			])
+		)
+
+	def onOpenScratchpadDir(self,evt):
+		path=config.getScratchpadDir(ensureExists=True)
+		os.startfile(path)
+
+	def _getDefaultValue(self, configPath):
+		return config.conf.getConfigValidation(configPath).default
+
+	def haveConfigDefaultsBeenRestored(self):
+		return (
+			self._defaultsRestored and
+			self.scratchpadCheckBox.IsChecked() == self.scratchpadCheckBox.defaultValue and
+			self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue and
+			self.consoleCombo.GetSelection() == self.consoleCombo.defaultValue and
+			self.speakPasswordsCheckBox.IsChecked() == self.speakPasswordsCheckBox.defaultValue and
+			self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue and
+			self.autoFocusFocusableElementsCheckBox.IsChecked() == self.autoFocusFocusableElementsCheckBox.defaultValue and
+			self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue and
+			set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems) and
+			True  # reduce noise in diff when the list is extended.
+		)
+
+	def restoreToDefaults(self):
+		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
+		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
+		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue == 'UIA')
+		self.speakPasswordsCheckBox.SetValue(self.speakPasswordsCheckBox.defaultValue)
+		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
+		self.autoFocusFocusableElementsCheckBox.SetValue(self.autoFocusFocusableElementsCheckBox.defaultValue)
+		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
+		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
+		self._defaultsRestored = True
+
+	def onSave(self):
+		log.debug("Saving advanced config")
+		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
+		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
+		consoleChoice = self.consoleCombo.GetSelection()
+		config.conf['UIA']['winConsoleImplementation'] = (
+			self.consoleVals[consoleChoice]
+		)
+		config.conf["terminals"]["speakPasswords"] = self.speakPasswordsCheckBox.IsChecked()
+		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
+		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = self.autoFocusFocusableElementsCheckBox.IsChecked()
+		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
+		for index,key in enumerate(self.logCategories):
+			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
+
+class AdvancedPanel(SettingsPanel):
+	enableControlsCheckBox = None  # type: wx.CheckBox
+	# Translators: This is the label for the Advanced settings panel.
+	title = _("Advanced")
+
+	# Translators: This is the label to warn users about the Advanced options in the
+	# Advanced settings panel
+	warningHeader = _("Warning!")
+
+	# Translators: This is a label appearing on the Advanced settings panel.
+	warningExplanation = _(
+		"The following settings are for advanced users. "
+		"Changing them may cause NVDA to function incorrectly. "
+		"Please only change these if you know what you are doing or "
+		"have been specifically instructed by NVDA developers."
+	)
+
+	panelDescription = u"{}\n{}".format(warningHeader, warningExplanation)
+
+	def makeSettings(self, settingsSizer):
+		"""
+		:type settingsSizer: wx.BoxSizer
+		"""
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		warningGroup = guiHelper.BoxSizerHelper(
+			self,
+			sizer=wx.StaticBoxSizer(wx.StaticBox(self), wx.VERTICAL)
+		)
+		sHelper.addItem(warningGroup)
+		warningBox = warningGroup.sizer.GetStaticBox()  # type: wx.StaticBox
+
+		warningText = wx.StaticText(warningBox, label=self.warningHeader)
+		warningText.SetFont(wx.Font(18, wx.FONTFAMILY_DEFAULT, wx.NORMAL, wx.BOLD))
+		warningGroup.addItem(warningText)
+
+		self.windowText = warningGroup.addItem(wx.StaticText(warningBox, label=self.warningExplanation))
+		self.windowText.Wrap(self.scaleSize(544))
+
+		# Translators: This is the label for a checkbox in the Advanced settings panel.
+		enableAdvancedControlslabel = _(
+			"I understand that changing these settings may cause NVDA to function incorrectly."
+		)
+		self.enableControlsCheckBox = warningGroup.addItem(
+			wx.CheckBox(parent=warningBox, label=enableAdvancedControlslabel, id=wx.NewIdRef())
+		)
+		boldedFont = self.enableControlsCheckBox.GetFont().Bold()
+		self.enableControlsCheckBox.SetFont(boldedFont)
+
+		restoreDefaultsButton = warningGroup.addItem(
+			# Translators: This is the label for a button in the Advanced settings panel
+			wx.Button(self, label=_("Restore defaults"))
+		)
+		restoreDefaultsButton.Bind(wx.EVT_BUTTON, lambda evt: self.advancedControls.restoreToDefaults())
+
+		self.advancedControls = AdvancedPanelControls(self)
+		sHelper.sizer.Add(self.advancedControls, flag=wx.EXPAND)
+
+		self.enableControlsCheckBox.Bind(
+			wx.EVT_CHECKBOX,
+			self.onEnableControlsCheckBox
+		)
+		self.advancedControls.Enable(self.enableControlsCheckBox.IsChecked())
+
+	def onSave(self):
+		if (
+			self.enableControlsCheckBox.IsChecked() or
+			self.advancedControls.haveConfigDefaultsBeenRestored()
+		):
+			self.advancedControls.onSave()	
+
+
+	def onEnableControlsCheckBox(self, evt):
+		# due to some not very well understood mis ordering of event processing, we force NVDA to
+		# process pending events. This fixes an issue where the checkbox state was being reported
+		# incorrectly. This checkbox is slightly different from most, in that its behaviour is to
+		# enable more controls than is typical. This might be causing enough of a delay, that there
+		# is a mismatch in the state of the checkbox and when the events are processed by NVDA.
+		from api import processPendingEvents
+		processPendingEvents()
+		self.advancedControls.Enable(evt.IsChecked())
+
 class DictionaryEntryDialog(wx.Dialog):
 	TYPE_LABELS = {
 		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
@@ -1968,7 +2404,7 @@ class DictionaryEntryDialog(wx.Dialog):
 		self.typeRadioBox.SetSelection(DictionaryEntryDialog.TYPE_LABELS_ORDERING.index(type))
 
 class DictionaryDialog(SettingsDialog):
-	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.iteritems()}
+	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.items()}
 
 	def __init__(self,parent,title,speechDict):
 		self.title = title
@@ -1976,13 +2412,21 @@ class DictionaryDialog(SettingsDialog):
 		self.tempSpeechDict=speechDictHandler.SpeechDict()
 		self.tempSpeechDict.extend(self.speechDict)
 		globalVars.speechDictionaryProcessing=False
-		super(DictionaryDialog, self).__init__(parent)
+		super().__init__(parent, resizeable=True)
+		# Historical initial size, result of L{self.dictList} being (550,350) as of #6287.
+		# Setting an initial size on L{self.dictList} by passing a L{size} argument when
+		# creating the control would also set its minimum size and thus block the dialog from being shrunk.
+		self.SetSize(576, 502)
+		self.CentreOnScreen()
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 		entriesLabelText=_("&Dictionary entries")
-		self.dictList=sHelper.addLabeledControl(entriesLabelText, wx.ListCtrl, style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
+		self.dictList = sHelper.addLabeledControl(
+			entriesLabelText,
+			wx.ListCtrl, style=wx.LC_REPORT | wx.LC_SINGLE_SEL
+		)
 		# Translators: The label for a column in dictionary entries list used to identify comments for the entry.
 		self.dictList.InsertColumn(0,_("Comment"),width=150)
 		# Translators: The label for a column in dictionary entries list used to identify pattern (original word or a pattern).
@@ -2203,7 +2647,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		if displayName != "auto":
 			displayCls = braille._getDisplayDriver(displayName)
 			try:
-				self.possiblePorts.extend(displayCls.getPossiblePorts().iteritems())
+				self.possiblePorts.extend(displayCls.getPossiblePorts().items())
 			except NotImplementedError:
 				pass
 		if self.possiblePorts:
@@ -2243,11 +2687,18 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			self.Parent.updateCurrentDisplay()
 		super(BrailleDisplaySelectionDialog, self).onOk(evt)
 
-class BrailleSettingsSubPanel(SettingsPanel):
+class BrailleSettingsSubPanel(DriverSettingsMixin, SettingsPanel):
+
+	@property
+	def driver(self):
+		return braille.handler.display
 
 	def makeSettings(self, settingsSizer):
 		if gui._isDebug():
 			startTime = time.time()
+		# Construct braille display specific settings
+		self.updateDriverSettings()
+
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		tables = brailleTables.listTables()
@@ -2299,8 +2750,8 @@ class BrailleSettingsSubPanel(SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 		cursorBlinkRateLabelText = _("Cursor blink rate (ms)")
-		minBlinkRate = int(config.conf.getConfigValidationParameter(["braille", "cursorBlinkRate"], "min"))
-		maxBlinkRate = int(config.conf.getConfigValidationParameter(["braille", "cursorBlinkRate"], "max"))
+		minBlinkRate = int(config.conf.getConfigValidation(("braille", "cursorBlinkRate")).kwargs["min"])
+		maxBlinkRate = int(config.conf.getConfigValidation(("braille", "cursorBlinkRate")).kwargs["max"])
 		self.cursorBlinkRateEdit = sHelper.addLabeledControl(cursorBlinkRateLabelText, nvdaControls.SelectOnFocusSpinCtrl,
 			min=minBlinkRate, max=maxBlinkRate, initial=config.conf["braille"]["cursorBlinkRate"])
 		if not self.showCursorCheckBox.GetValue() or not self.cursorBlinkCheckBox.GetValue() :
@@ -2336,8 +2787,8 @@ class BrailleSettingsSubPanel(SettingsPanel):
 		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 		messageTimeoutText = _("Message &timeout (sec)")
 		self.messageTimeoutEdit = sHelper.addLabeledControl(messageTimeoutText, nvdaControls.SelectOnFocusSpinCtrl,
-			min=int(config.conf.getConfigValidationParameter(["braille", "messageTimeout"], "min")),
-			max=int(config.conf.getConfigValidationParameter(["braille", "messageTimeout"], "max")),
+			min=int(config.conf.getConfigValidation(("braille", "messageTimeout")).kwargs["min"]),
+			max=int(config.conf.getConfigValidation(("braille", "messageTimeout")).kwargs["max"]),
 			initial=config.conf["braille"]["messageTimeout"])
 
 		# Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
@@ -2357,7 +2808,7 @@ class BrailleSettingsSubPanel(SettingsPanel):
 		tetherChoices = [x[1] for x in braille.handler.tetherValues]
 		self.tetherList = sHelper.addLabeledControl(tetherListText, wx.Choice, choices=tetherChoices)
 		tetherChoice=braille.handler.TETHER_AUTO if config.conf["braille"]["autoTether"] else config.conf["braille"]["tetherTo"]
-		selection = (x for x,y in enumerate(braille.handler.tetherValues) if y[0]==tetherChoice).next()
+		selection = next((x for x,y in enumerate(braille.handler.tetherValues) if y[0]==tetherChoice))
 		try:
 			self.tetherList.SetSelection(selection)
 		except:
@@ -2388,6 +2839,7 @@ class BrailleSettingsSubPanel(SettingsPanel):
 			log.debug("Finished making settings, now at %.2f seconds from start"%(time.time() - startTime))
 
 	def onSave(self):
+		DriverSettingsMixin.onSave(self)
 		config.conf["braille"]["translationTable"] = self.outTableNames[self.outTableList.GetSelection()]
 		brailleInput.handler.table = self.inTables[self.inTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
@@ -2421,18 +2873,15 @@ class BrailleSettingsSubPanel(SettingsPanel):
 	def onNoMessageTimeoutChange(self, evt):
 		self.messageTimeoutEdit.Enable(not evt.IsChecked())
 
-""" The Id of the category panel in the multi category settings dialog, this is set when the dialog is created
-and returned to None when the dialog is destroyed. This can be used by an AppModule for NVDA to identify and announce
-changes in name for the panel when categories are changed"""
-NvdaSettingsCategoryPanelId = None
 """ The name of the config profile currently being edited, if any.
 This is set when the currently edited configuration profile is determined and returned to None when the dialog is destroyed.
 This can be used by an AppModule for NVDA to identify and announce
 changes in the name of the edited configuration profile when categories are changed"""
 NvdaSettingsDialogActiveConfigProfile = None
+NvdaSettingsDialogWindowHandle = None
 class NVDASettingsDialog(MultiCategorySettingsDialog):
 	# Translators: This is the label for the NVDA settings dialog.
-	title = _("NVDA")
+	title = _("NVDA Settings")
 	categoryClasses=[
 		GeneralSettingsPanel,
 		SpeechSettingsPanel,
@@ -2449,11 +2898,16 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		categoryClasses.append(TouchInteractionPanel)
 	if winVersion.isUwpOcrAvailable():
 		categoryClasses.append(UwpOcrPanel)
+	# And finally the Advanced panel which should always be last.
+	if not globalVars.appArgs.secure:
+		categoryClasses.append(AdvancedPanel)
 
 	def makeSettings(self, settingsSizer):
 		# Ensure that after the settings dialog is created the name is set correctly
 		super(NVDASettingsDialog, self).makeSettings(settingsSizer)
 		self._doOnCategoryChange()
+		global NvdaSettingsDialogWindowHandle
+		NvdaSettingsDialogWindowHandle = self.GetHandle()
 
 	def _doOnCategoryChange(self):
 		global NvdaSettingsDialogActiveConfigProfile
@@ -2477,9 +2931,9 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		self._doOnCategoryChange()
 
 	def Destroy(self):
-		global NvdaSettingsCategoryPanelId, NvdaSettingsDialogActiveConfigProfile
-		NvdaSettingsCategoryPanelId = None
+		global NvdaSettingsDialogActiveConfigProfile, NvdaSettingsDialogWindowHandle
 		NvdaSettingsDialogActiveConfigProfile = None
+		NvdaSettingsDialogWindowHandle = None
 		super(NVDASettingsDialog, self).Destroy()
 
 class AddSymbolDialog(wx.Dialog):
@@ -2513,38 +2967,63 @@ class SpeechSymbolsDialog(SettingsDialog):
 		# Translators: This is the label for the symbol pronunciation dialog.
 		# %s is replaced by the language for which symbol pronunciation is being edited.
 		self.title = _("Symbol Pronunciation (%s)")%languageHandler.getLanguageDescription(self.symbolProcessor.locale)
-		super(SpeechSymbolsDialog, self).__init__(parent)
+		super(SpeechSymbolsDialog, self).__init__(
+			parent,
+			resizeable=True,
+		)
 
 	def makeSettings(self, settingsSizer):
-		symbols = self.symbols = [copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()]
+		self.filteredSymbols = self.symbols = [
+			copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.values()
+		]
 		self.pendingRemovals = {}
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		# Translators: The label of a text field to search for symbols in the speech symbols dialog.
+		filterText = pgettext("speechSymbols", "&Filter by:")
+		self.filterEdit = sHelper.addLabeledControl(
+			labelText = filterText,
+			wxCtrlClass=wx.TextCtrl,
+			size=self.scaleSize((310, -1)),
+		)
+		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
+
 		# Translators: The label for symbols list in symbol pronunciation dialog.
 		symbolsText = _("&Symbols")
-		self.symbolsList = sHelper.addLabeledControl(symbolsText, nvdaControls.AutoWidthColumnListCtrl, autoSizeColumnIndex=0, style=wx.LC_REPORT | wx.LC_SINGLE_SEL)
+		self.symbolsList = sHelper.addLabeledControl(
+			symbolsText,
+			nvdaControls.AutoWidthColumnListCtrl,
+			autoSizeColumn=2,  # The replacement column is likely to need the most space
+			itemTextCallable=self.getItemTextForList,
+			style=wx.LC_REPORT | wx.LC_SINGLE_SEL | wx.LC_VIRTUAL
+		)
+
 		# Translators: The label for a column in symbols list used to identify a symbol.
-		self.symbolsList.InsertColumn(0, _("Symbol"))
+		self.symbolsList.InsertColumn(0, _("Symbol"), width=self.scaleSize(150))
 		self.symbolsList.InsertColumn(1, _("Replacement"))
 		# Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
 		self.symbolsList.InsertColumn(2, _("Level"))
 		# Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 		# See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
 		self.symbolsList.InsertColumn(3, _("Preserve"))
-		for symbol in symbols:
-			item = self.symbolsList.Append((symbol.displayName,))
-			self.updateListItem(item, symbol)
 		self.symbolsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemFocused)
 
 		# Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
 		changeSymbolText = _("Change selected symbol")
-		changeSymbolHelper = sHelper.addItem(guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=changeSymbolText), wx.VERTICAL)))
+		changeSymbolHelper = sHelper.addItem(guiHelper.BoxSizerHelper(
+			parent=self,
+			sizer=wx.StaticBoxSizer(
+				parent=self,
+				label=changeSymbolText,
+				orient=wx.VERTICAL,
+			)
+		))
 
 		# Used to ensure that event handlers call Skip(). Not calling skip can cause focus problems for controls. More
 		# generally the advice on the wx documentation is: "In general, it is recommended to skip all non-command events
 		# to allow the default handling to take place. The command events are, however, normally not skipped as usually
 		# a single command such as a button click or menu item selection must only be processed by one handler."
-		def skipEventAndCall(handler):
+		def skipEventAndCall(handler):	
 			def wrapWithEventSkip(event):
 				if event:
 					event.Skip()
@@ -2553,7 +3032,11 @@ class SpeechSymbolsDialog(SettingsDialog):
 
 		# Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 		replacementText = _("&Replacement")
-		self.replacementEdit = changeSymbolHelper.addLabeledControl(replacementText, wx.TextCtrl)
+		self.replacementEdit = changeSymbolHelper.addLabeledControl(
+			labelText=replacementText,
+			wxCtrlClass=wx.TextCtrl,
+			size=self.scaleSize((300, -1)),
+		)
 		self.replacementEdit.Bind(wx.EVT_TEXT, skipEventAndCall(self.onSymbolEdited))
 
 		# Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
@@ -2570,12 +3053,6 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.preserveList = changeSymbolHelper.addLabeledControl(preserveText, wx.Choice, choices=preserveChoices)
 		self.preserveList.Bind(wx.EVT_CHOICE, skipEventAndCall(self.onSymbolEdited))
 
-		# disable the "change symbol" controls until a valid item is selected.
-		self.replacementEdit.Disable()
-		self.levelList.Disable()
-		self.preserveList.Disable()
-
-
 		bHelper = sHelper.addItem(guiHelper.ButtonHelper(orientation=wx.HORIZONTAL))
 		# Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 		addButton = bHelper.addButton(self, label=_("&Add"))
@@ -2587,30 +3064,81 @@ class SpeechSymbolsDialog(SettingsDialog):
 		addButton.Bind(wx.EVT_BUTTON, self.OnAddClick)
 		self.removeButton.Bind(wx.EVT_BUTTON, self.OnRemoveClick)
 
-		self.editingItem = None
+		# Populate the unfiltered list with symbols.
+		self.filter()
 
 	def postInit(self):
 		self.symbolsList.SetFocus()
 
-	def updateListItem(self, item, symbol):
-		self.symbolsList.SetItem(item, 1, symbol.replacement)
-		self.symbolsList.SetItem(item, 2, characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[symbol.level])
-		self.symbolsList.SetItem(item, 3, characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS[symbol.preserve])
+	def filter(self, filterText=''):
+		NONE_SELECTED = -1
+		previousSelectionValue = None
+		previousIndex = self.symbolsList.GetFirstSelected()  # may return NONE_SELECTED
+		if previousIndex != NONE_SELECTED:
+			previousSelectionValue = self.filteredSymbols[previousIndex]
+
+		if not filterText:
+			self.filteredSymbols = self.symbols
+		else:
+			# Do case-insensitive matching by lowering both filterText and each symbols's text.
+			filterText = filterText.lower()
+			self.filteredSymbols = [
+				symbol for symbol in self.symbols
+				if filterText in symbol.displayName.lower()
+				or filterText in symbol.replacement.lower()
+			]
+		self.symbolsList.ItemCount = len(self.filteredSymbols)
+
+		# sometimes filtering may result in an empty list.
+		if not self.symbolsList.ItemCount:
+			self.editingItem = None
+			# disable the "change symbol" controls, since there are no items in the list.
+			self.replacementEdit.Disable()
+			self.levelList.Disable()
+			self.preserveList.Disable()
+			self.removeButton.Disable()
+			return  # exit early, no need to select an item.
+
+		# If there was a selection before filtering, try to preserve it
+		newIndex = 0  # select first item by default.
+		if previousSelectionValue:
+			try:
+				newIndex = self.filteredSymbols.index(previousSelectionValue)
+			except ValueError:
+				pass
+
+		# Change the selection
+		self.symbolsList.Select(newIndex)
+		self.symbolsList.Focus(newIndex)
+		# We don't get a new focus event with the new index.
+		self.symbolsList.sendListItemFocusedEvent(newIndex)
+
+	def getItemTextForList(self, item, column):
+		symbol = self.filteredSymbols[item]
+		if column == 0:
+			return symbol.displayName
+		elif column == 1:
+			return symbol.replacement
+		elif column == 2:
+			return characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[symbol.level]
+		elif column == 3:
+			return characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS[symbol.preserve]
+		else:
+			raise ValueError("Unknown column: %d" % column)
 
 	def onSymbolEdited(self):
 		if self.editingItem is not None:
 			# Update the symbol the user was just editing.
 			item = self.editingItem
-			symbol = self.symbols[item]
+			symbol = self.filteredSymbols[item]
 			symbol.replacement = self.replacementEdit.Value
 			symbol.level = characterProcessing.SPEECH_SYMBOL_LEVELS[self.levelList.Selection]
 			symbol.preserve = characterProcessing.SPEECH_SYMBOL_PRESERVES[self.preserveList.Selection]
-			self.updateListItem(item, symbol)
 
 	def onListItemFocused(self, evt):
 		# Update the editing controls to reflect the newly selected symbol.
 		item = evt.GetIndex()
-		symbol = self.symbols[item]
+		symbol = self.filteredSymbols[item]
 		self.editingItem = item
 		# ChangeValue and Selection property used because they do not cause EVNT_CHANGED to be fired.
 		self.replacementEdit.ChangeValue(symbol.replacement)
@@ -2629,6 +3157,9 @@ class SpeechSymbolsDialog(SettingsDialog):
 			identifier = entryDialog.identifierTextCtrl.GetValue()
 			if not identifier:
 				return
+		# Clean the filter, so we can select the new entry.
+		self.filterEdit.Value=""
+		self.filter()
 		for index, symbol in enumerate(self.symbols):
 			if identifier == symbol.identifier:
 				# Translators: An error reported in the Symbol Pronunciation dialog when adding a symbol that is already present.
@@ -2648,31 +3179,42 @@ class SpeechSymbolsDialog(SettingsDialog):
 		addedSymbol.level = characterProcessing.SYMLVL_ALL
 		addedSymbol.preserve = characterProcessing.SYMPRES_NEVER
 		self.symbols.append(addedSymbol)
-		item = self.symbolsList.Append((addedSymbol.displayName,))
-		self.updateListItem(item, addedSymbol)
-		self.symbolsList.Select(item)
-		self.symbolsList.Focus(item)
+		self.symbolsList.ItemCount = len(self.symbols)
+		index = self.symbolsList.ItemCount - 1
+		self.symbolsList.Select(index)
+		self.symbolsList.Focus(index)
+		# We don't get a new focus event with the new index.
+		self.symbolsList.sendListItemFocusedEvent(index)
 		self.symbolsList.SetFocus()
 
 	def OnRemoveClick(self, evt):
 		index = self.symbolsList.GetFirstSelected()
-		symbol = self.symbols[index]
+		symbol = self.filteredSymbols[index]
 		self.pendingRemovals[symbol.identifier] = symbol
-		# Deleting from self.symbolsList focuses the next item before deleting,
-		# so it must be done *before* we delete from self.symbols.
-		self.symbolsList.DeleteItem(index)
-		del self.symbols[index]
-		index = min(index, self.symbolsList.ItemCount - 1)
-		self.symbolsList.Select(index)
-		self.symbolsList.Focus(index)
-		# We don't get a new focus event with the new index, so set editingItem.
-		self.editingItem = index
+		del self.filteredSymbols[index]
+		if self.filteredSymbols is not self.symbols:
+			self.symbols.remove(symbol)
+		self.symbolsList.ItemCount = len(self.filteredSymbols)
+		# sometimes removing may result in an empty list.
+		if not self.symbolsList.ItemCount:
+			self.editingItem = None
+			# disable the "change symbol" controls, since there are no items in the list.
+			self.replacementEdit.Disable()
+			self.levelList.Disable()
+			self.preserveList.Disable()
+			self.removeButton.Disable()
+		else:
+			index = min(index, self.symbolsList.ItemCount - 1)
+			self.symbolsList.Select(index)
+			self.symbolsList.Focus(index)
+			# We don't get a new focus event with the new index.
+			self.symbolsList.sendListItemFocusedEvent(index)
 		self.symbolsList.SetFocus()
 
 	def onOk(self, evt):
 		self.onSymbolEdited()
 		self.editingItem = None
-		for symbol in self.pendingRemovals.itervalues():
+		for symbol in self.pendingRemovals.values():
 			self.symbolProcessor.deleteSymbol(symbol)
 		for symbol in self.symbols:
 			if not symbol.replacement:
@@ -2685,9 +3227,22 @@ class SpeechSymbolsDialog(SettingsDialog):
 		characterProcessing._localeSpeechSymbolProcessors.invalidateLocaleData(self.symbolProcessor.locale)
 		super(SpeechSymbolsDialog, self).onOk(evt)
 
+	def _refreshVisibleItems(self):
+		count = self.symbolsList.GetCountPerPage()
+		first = self.symbolsList.GetTopItem()
+		self.symbolsList.RefreshItems(first, first+count)
+
+	def onFilterEditTextChange(self, evt):
+		self.filter(self.filterEdit.Value)
+		self._refreshVisibleItems()
+		evt.Skip()
+
 class InputGesturesDialog(SettingsDialog):
 	# Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 	title = _("Input Gestures")
+
+	def __init__(self, parent):
+		super().__init__(parent, resizeable=True)
 
 	def makeSettings(self, settingsSizer):
 		filterSizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -2779,7 +3334,7 @@ class InputGesturesDialog(SettingsDialog):
 			return
 		data = self.tree.GetItemData(item)
 		isCommand = isinstance(data, inputCore.AllGesturesScriptInfo)
-		isGesture = isinstance(data, basestring)
+		isGesture = isinstance(data, str)
 		self.addButton.Enabled = isCommand or isGesture
 		self.removeButton.Enabled = isGesture
 

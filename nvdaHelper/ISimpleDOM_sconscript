@@ -17,8 +17,10 @@ Import('env')
 env['MIDLCOM']=env['MIDLCOM'][:-6]
 
 # Copy some secondary IDL files included by ISimpleDOMNode.idl
-env.Command("ISimpleDOMText.idl","#/miscDeps/include/ISimpleDOM/ISimpleDOMText.idl",Copy("$TARGET","$SOURCE"))
-env.Command("ISimpleDOMDocument.idl","#/miscDeps/include/ISimpleDOM/ISimpleDOMDocument.idl",Copy("$TARGET","$SOURCE"))
+idlDeps = [
+	env.Command("ISimpleDOMText.idl","#/miscDeps/include/ISimpleDOM/ISimpleDOMText.idl",Copy("$TARGET","$SOURCE")),
+	env.Command("ISimpleDOMDocument.idl","#/miscDeps/include/ISimpleDOM/ISimpleDOMDocument.idl",Copy("$TARGET","$SOURCE")),
+]
 # copy ISimpleDOMNode.idl but changing imports of the secondary files to #includes
 # This is necessary as midl will not build secondary header files. this way the primary header file will contain all secondary header file content
 idlFile=env.Substfile(
@@ -28,6 +30,9 @@ idlFile=env.Substfile(
 		'import "ISimpleDOM':'#include "ISimpleDOM',
 	}
 )
+# SCons doesn't scan the file we just created,
+# so we must explicitly declare its dependencies.
+env.Depends(idlFile, idlDeps)
 
 tlbFile,headerFile,iidSourceFile,proxySourceFile,dlldataSourceFile=env.TypeLibrary(
 	source=idlFile,

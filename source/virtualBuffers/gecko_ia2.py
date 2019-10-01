@@ -10,6 +10,7 @@ import controlTypes
 import NVDAObjects.IAccessible.mozilla
 import NVDAObjects.behaviors
 import winUser
+import mouseHandler
 import IAccessibleHandler
 import oleacc
 from logHandler import log
@@ -18,12 +19,32 @@ from comtypes.gen.IAccessible2Lib import IAccessible2
 from comtypes import COMError
 import aria
 import config
-from NVDAObjects.IAccessible import normalizeIA2TextFormatField
+from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
+	def _getBoundingRectFromOffset(self,offset):
+		formatFieldStart, formatFieldEnd = self._getUnitOffsets(self.UNIT_FORMATFIELD, offset)
+		# The format field starts at the first character.
+		for field in reversed(self._getFieldsInRange(formatFieldStart, formatFieldStart+1)):
+			if not (isinstance(field, textInfos.FieldCommand) and field.command == "formatChange"):
+				# This is no format field.
+				continue
+			attrs = field.field
+			ia2TextStartOffset = attrs.get("ia2TextStartOffset")
+			if ia2TextStartOffset is None:
+				# No ia2TextStartOffset specified, most likely a format field that doesn't originate from IA2Text.
+				continue
+			ia2TextStartOffset += attrs.get("strippedCharsFromStart", 0)
+			relOffset = offset - formatFieldStart + ia2TextStartOffset
+			obj = self._getNVDAObjectFromOffset(offset)
+			if not hasattr(obj, "IAccessibleTextObject"):
+				raise LookupError("Object doesn't have an IAccessibleTextObject")
+			return IA2TextTextInfo._getBoundingRectFromOffsetInObject(obj, relOffset)
+		return super(Gecko_ia2_TextInfo, self)._getBoundingRectFromOffset(offset)
+
 	def _normalizeControlField(self,attrs):
-		for attr in ("table-physicalrownumber","table-physicalcolumnnumber","table-physicalrowcount","table-physicalcolumncount"):
+		for attr in ("table-rownumber-presentational","table-columnnumber-presentational","table-rowcount-presentational","table-columncount-presentational"):
 			attrVal=attrs.get(attr)
 			if attrVal is not None:
 				attrs[attr]=int(attrVal)
@@ -39,8 +60,8 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
 		if attrs.get('IAccessible2::attribute_tag',"").lower()=="blockquote":
 			role=controlTypes.ROLE_BLOCKQUOTE
-		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
-		states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
+		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
 		if role == controlTypes.ROLE_EDITABLETEXT and not (controlTypes.STATE_FOCUSABLE in states or controlTypes.STATE_UNAVAILABLE in states or controlTypes.STATE_EDITABLE in states):
 			# This is a text leaf.
 			# See NVDAObjects.Iaccessible.mozilla.findOverlayClasses for an explanation of these checks.
@@ -84,7 +105,11 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 	def _normalizeFormatField(self, attrs):
 		normalizeIA2TextFormatField(attrs)
-		return attrs
+		ia2TextStartOffset = attrs.get("ia2TextStartOffset")
+		if ia2TextStartOffset is not None:
+			assert ia2TextStartOffset.isdigit(), "ia2TextStartOffset isn't a digit, %r" % ia2TextStartOffset
+			attrs["ia2TextStartOffset"] = int(ia2TextStartOffset)
+		return super(Gecko_ia2_TextInfo,self)._normalizeFormatField(attrs)
 
 class Gecko_ia2(VirtualBuffer):
 
@@ -102,33 +127,14 @@ class Gecko_ia2(VirtualBuffer):
 			return False
 		return True
 
-	def _getExpandedComboBox(self, obj):
-		"""If obj is an item in an expanded combo box, get the combo box.
-		"""
-		if not (obj.windowClassName.startswith('Mozilla') and obj.windowStyle & winUser.WS_POPUP):
-			# This is not a Mozilla popup window, so it can't be an expanded combo box.
-			return None
-		if obj.role not in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_LIST):
-			return None
-		parent = obj.parent
-		# Try a maximum of 2 ancestors, since we might be on the list item or the list.
-		for i in xrange(2):
-			obj = obj.parent
-			if not obj:
-				return None
-			if obj.role == controlTypes.ROLE_COMBOBOX:
-				return obj
-		return None
-
 	def __contains__(self,obj):
-		# if this is a Mozilla combo box popup, we want to work with the combo box.
-		combo = self._getExpandedComboBox(obj)
-		if combo:
-			obj = combo
 		if not (isinstance(obj,NVDAObjects.IAccessible.IAccessible) and isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2)) or not obj.windowClassName.startswith('Mozilla') or not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle):
 			return False
 		if self.rootNVDAObject.windowHandle==obj.windowHandle:
 			ID=obj.IA2UniqueID
+			if not ID:
+				# Dead object.
+				return False
 			try:
 				self.rootNVDAObject.IAccessibleObject.accChild(ID)
 			except COMError:
@@ -160,7 +166,11 @@ class Gecko_ia2(VirtualBuffer):
 
 
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
-		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
+		try:
+			pacc=self.rootNVDAObject.IAccessibleObject.accChild(ID)
+		except COMError:
+			return None
+		return NVDAObjects.IAccessible.IAccessible(windowHandle=docHandle,IAccessibleObject=IAccessibleHandler.normalizeIAccessible(pacc),IAccessibleChildID=0)
 
 	def getIdentifierFromNVDAObject(self,obj):
 		docHandle=obj.windowHandle
@@ -197,25 +207,20 @@ class Gecko_ia2(VirtualBuffer):
 				break
 			except:
 				log.debugWarning("doAction failed")
-			if controlTypes.STATE_OFFSCREEN in obj.states or controlTypes.STATE_INVISIBLE in obj.states:
+			if obj.hasIrrelevantLocation:
+				# This check covers invisible, off screen and a None location
+				log.debugWarning("No relevant location for object")
 				obj = obj.parent
 				continue
-			try:
-				l, t, w, h = obj.location
-			except TypeError:
-				log.debugWarning("No location for object")
-				obj = obj.parent
-				continue
-			if not w or not h:
+			location = obj.location
+			if not location.width or not location.height:
 				obj = obj.parent
 				continue
 			log.debugWarning("Clicking with mouse")
-			x = l + w / 2
-			y = t + h / 2
 			oldX, oldY = winUser.getCursorPos()
-			winUser.setCursorPos(x, y)
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0, None, None)
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP, 0, 0, None, None)
+			winUser.setCursorPos(*location.center)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
 			winUser.setCursorPos(oldX, oldY)
 			break
 
@@ -304,12 +309,6 @@ class Gecko_ia2(VirtualBuffer):
 		if not self._handleScrollTo(obj):
 			return nextHandler()
 	event_scrollingStart.ignoreIsReady = True
-
-	# NVDA exposes IAccessible2 table interface row and column numbers as table-physicalrownumber and table-physicalcolumnnumber respectively.
-	# These should be used when navigating the physical table (I.e. these values should be provided to the table interfaces).
-	# The presentational table-columnnumber and table-rownumber attributes are normally duplicates of the physical ones, but are overridden  by the values of aria-rowindex and aria-colindex if present.
-	navigationalTableRowNumberAttributeName="table-physicalrownumber"
-	navigationalTableColumnNumberAttributeName="table-physicalcolumnnumber"
 
 	def _getTableCellAt(self,tableID,startPos,destRow,destCol):
 		docHandle = self.rootDocHandle

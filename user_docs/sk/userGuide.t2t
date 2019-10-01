@@ -22,7 +22,7 @@ Najvýznamnejšie prednosti programu:
 - Vstavaný hlasový výstup, ktorý podporuje viac než 80 jazykov
 - Oznamovanie informácií o formátovaní ako napríklad názov a veľkosť písma, štýl textu a pravopisné chyby
 - Automatické oznamovanie textu pod kurzorom myši a voliteľné akustické oznamovanie pozície kurzora myši
-- Podpora množstva braillovských zobrazovačov vrátane písania na riadkoch, ktoré majú braillovskú klávesnicu
+- Podpora množstva braillovských zobrazovačov vrátane písania na riadkoch, ktoré majú braillovskú klávesnicu a automatickej detekcie riadka, ktorý je pripojený
 - Možnosť spustenia programu z USB kľúča, alebo iného prenosného zariadenia, bez nutnosti inštalácie
 - Ozvučený inštalátor
 - Preložený do 54 jazykov
@@ -47,6 +47,7 @@ Informácie o ďalších hlasových výstupoch, ktoré NVDA podporuje môžete n
 ++ Podpora braillovských zobrazovačov ++[BrailleSupport]
 Pre používateľov, ktorí vlastnia braillovský zobrazovač - ľudovo nazývaný tiež braillovský riadok, NVDA umožňuje výstup v braillovom písme.
 NVDA tiež podporuje zápis textu v Brailovom plnopise alebo skratkopise cez braillovský riadok.
+Navyše, NVDA dokáže automaticky rozpoznať mnohé pripojené braillovské riadky.
 Prosím pozrite si časť [Podporované braillovské zobrazovače #SupportedBrailleDisplays] pre informácie o podporovaných zariadeniach.
 
 NVDA podporuje rôzne kódové tabuľky umožňujúce tak čítať braillový výstup vo viacerých jazykoch. V mnohých prípadoch existujú tabuľky pre plnopis aj skratkopis prípadne počítačový kód.
@@ -57,7 +58,7 @@ NVDA je chránený autorskými právami Copyright NVDA_COPYRIGHT_YEARS Tím NVDA
 Distribúcia NVDA je možná pod licenciou GNU General Public License 2.0.
 Tento produkt môžete voľne šíriť a meniť rôznym spôsobom, podmienkou však je pripojiť k nemu túto licenciu a sprístupniť zdrojový kód každému, kto si to vyžiada.
 Týka sa to oboch pôvodných, aj upravených kópií daného software.
-Pre viac informácií si môžete pozrieť [kompletnú licenciu (anglicky) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html].
+Pre viac informácií si môžete pozrieť [kompletnú licenciu (anglicky) https://www.gnu.org/licenses/old-licenses/gpl-2.0.html].
 
 + Systémové požiadavky +[SystemRequirements]
 - NVDA spustíte v 32 aj 64 bitových verziách systémov Windows 7, 8, 8.1, 10 a tiež v serverových edíciách Windows od verzie 2008 R2..
@@ -106,9 +107,16 @@ Počas inštalácie máte niekoľko možností, ktoré sú opísané v nasleduj�
 Po úspešnom nainštalovaní sa zobrazí okno so správou, ktoré môžete zatvoriť stlačením tlačidla OK.
 Po zatvorení okna sa NVDA reštartuje.
 
++++ Upozornenie na nekompatibilné doplnky +++[InstallWithIncompatibleAddons]
+Ak používate nejaké doplnky, NVDA vás môže upozorniť, že vaše doplnky nie sú kompatibilné s verziou NVDA, ktorú sa pokúšate nainštalovať.
+Pred tým, než budete pokračovať, musíte odsúhlasiť zakázanie doplnkov.
+Po aktivovaní tlačidla zobraziť nekompatibilné doplnky si môžete pozrieť, ktoré doplnky budú zakázané.
+Podrobnosti si môžete prečítať v časti [Nekompatibilné doplnky #incompatibleAddonsManager].
+
 +++ Spúšťať NVDA pri zobrazení prihlasovacej obrazovky +++[StartAtWindowsLogon]
 Umožňuje nastaviť, či sa má NVDA automaticky spustiť pri zobrazení prihlasovacej obrazovky, teda ešte pred tým, ako zadáte svoje heslo.
-toto zahŕňa aj obrazovky UAC a iné zabezpečené obrazovky.
+toto zahŕňa aj obrazovky UAC (zabezpečenie systému) a iné zabezpečené obrazovky.
+Táto možnosť je predvolene začiarknutá.
 
 +++ Vytvoriť odkaz na pracovnej ploche so skratkou ctrl+alt+n +++[CreateDesktopShortcut]
 Môžete sa rozhodnúť, či chcete, aby sa pri inštalácii NVDA vytvoril odkaz na pracovnej ploche.
@@ -393,6 +401,7 @@ Na navigáciu v texte je možné použiť nasledovné príkazy:
 | Začiatok bloku kopírovania prezeracím kurzorom | NVDA+f9 | NVDA+f9 | Nie je | Označí aktuálnu pozíciu ako začiatok výberu a bloku na kopírovanie do schránky. Kopírovanie sa neuskutoční kým neurčíte koniec bloku kopírovania. |
 | Koniec bloku kopírovania prezeracím kurzorom | NVDA+f10 | NVDA+f10 | Nie je | Po prvom stlačení označí text  od označeného miesta po aktuálnu pozíciu prezeracieho kurzora. Po dvojitom stlačení skopíruje text od značky po aktuálnu pozíciu  do schránky Windows. |
 | formátovanie textu | NVDA+f | NVDA+f | Nie je | Oznámi formátovanie textu na pozícii prezeracieho kurzora. Po dvojitom stlačení zobrazí informáciu v režime prehliadania.|
+| Prečítať výslovnosť symbolu | Nie je | Nie je | Nie je | Prečíta symbol pod prezeracím kurzorom. Dvojité stlačenie zobrazí dialóg, v ktorom je možné prečítať si textový popis symbolu v režime prehliadania.|
 %kc:endInclude
 
 Všimnite si: Pri týchto operáciách musí byť numerický blok vypnutý.
@@ -464,7 +473,18 @@ Aj napriek tomu, že sa na tento druh navigácie bežne používa myš alebo tra
 
 + Režim prehliadania +[BrowseMode]
 Súhrnnejšie dokumenty, ako napríklad web stránky, nám NVDA dokáže zobraziť v TZV. režime prehliadania.
-Toto zahŕňa dokumenty v programoch Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, HTML správy v programe Microsoft Outlook, Google Chrome, Adobe Reader a Adobe Flash.
+Toto zahŕňa dokumenty v programoch:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- HTML správy v programe Microsoft Outlook
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash
+- Podporované knihy v aplikácii Amazon Kindle pre  PC
+-
 Režim prehliadania môžete aktivovať aj v dokumentoch programu Microsoft Word.
 
 V režime prehliadania je obsah dokumentu usporiadaný plošne, takže na navigáciu je možné použiť bežné navigačné príkazy ako v prípade textových dokumentov.
@@ -485,7 +505,7 @@ Nakoniec je možné režim fokusu vynútiť, v takom prípade ostane aktívny, a
 | Prepnúť režimy fokusu / prehliadania | NVDA+medzera | Prepína medzi režimom fokusu a režimom prehliadania |
 | Ukončiť režim fokusu | escape | Prepína do režimu prehliadania, ak bol režim fokusu aktivovaný automaticky |
 | Obnoviť dokument v režime prehliadania | NVDA+f5 | Obnoví obsah aktuálneho dokumentu (užitočné ak časť obsahu nebola správne načítaná. Nie je dostupné v programoch Microsoft Word a Outlook.) |
-| Hľadať | NVDA+ctrl+f | Zobrazí dialóg, ktorý umožní vyhľadávanie textu v aktuálnom dokumente |
+| Hľadať | NVDA+ctrl+f | Zobrazí dialóg, ktorý umožní vyhľadávanie textu v aktuálnom dokumente. Podrobnosti sú popísané v časti [Hľadanie textu #SearchingForText].|
 | Hľadať ďalej | NVDA+f3 | Vyhľadá nasledujúci výskyt textu v aktívnom dokumente, ktorý Ste už hľadali |
 | Hľadať späť | NVDA+shift+f3 | Vyhľadá predchádzajúci výskyt textu v aktívnom dokumente, ktorý Ste už hľadali |
 | Otvoriť dlhý popis | NVDA+d | Otvorí nové okno s popisom pre prvok, ak ho zameraný prvok obsahuje. |
@@ -544,6 +564,19 @@ Tlačidlami prejsť na alebo aktivovať vykonávame akcie pre prvky vybraté v z
 | Zoznam prvkov v režime prehliadania | NVDA+f7 | Zobrazí dialóg so zoznamom   prvkov aktuálneho dokumentu |
 %kc:endInclude
 
+++ Hľadanie textu ++[SearchingForText]
+Tento dialóg vám umožní vyhľadávať reťazce v aktuálnom dokumente.
+Text na vyhľadanie zadajte do editačného poľa "Napíšte text, ktorý chcete vyhľadať".
+Ak chcete, aby sa pri hľadaní zohľadňovali aj malé a veľké písmená, začiarknite políčko "Rozlišovať malé a veľké písmená".
+Ak začiarknete toto políčko a vyhľadáte reťazec "NV Access", NVDA vyhľadá len vtento reťazec a vynechá napríklad výskyt "nv access".
+Na vyhľadávanie môžete použiť nasledujúce klávesové skratky:
+%kc:beginInclude
+|| Názov | Klávesová skratka | Popis |
+| Vyhľadať text | NVDA+ctrl+f | Otvorí dialóg s moľžnosťami hľadania |
+| Vyhľadať nasledujúci výskyt | NVDA+f3 | Vyhľadá nasledujúci výskyt hľadaného reťazca od aktuálnej pozície kurzora |
+| Vyhľadať predchádzajúce | NVDA+shift+f3 | Vyhľadá predchádzajúci výskyt reťazca od aktuálnej pozície kurzora |
+%kc:endInclude
+
 ++ Vnorené objekty ++[ImbeddedObjects]
 Moderné webové stránky môžu byť obohatené o prvky Adobe Flash, Oracle Java a HTML5, ale aj o dialógy či aplikácie.
 Ak sa tieto nachádzajú v dokumente, NVDA oznámi "vnorený objekt", "aplikácia", alebo "dialóg".
@@ -559,7 +592,7 @@ Je možné použiť klávesovú skratku na prechod späť do dokumentu v ktorom 
 + Čítanie matematického obsahu +[ReadingMath]
 NVDA môže čítať matematický obsah sprostredkovaný cez aplikáciu MathPlayer 4 od spoločnosti Design Science.
 Musíte však mať vo vašom počítači nainštalovanú aplikáciu  MathPlayer 4.
-MathPlayer si môžete zdarma stiahnuť z tejto adresy: http://www.dessci.com/en/products/mathplayer/
+MathPlayer si môžete zdarma stiahnuť z tejto adresy: https://www.dessci.com/en/products/mathplayer/
 
 NVDA podporuje tieto typy matematického obsahu:
 - MathML v prehliadačoch Mozilla Firefox, Microsoft Internet Explorer a google Chrome.
@@ -600,7 +633,8 @@ Ak máte Braillovský riadok, NVDA môže informácie zorbazovať priamo na brai
 Ak váš riadok podporuje písanie cez klávesnicu, môžete ho použiť na písanie textu v plnopise alebo skratkopise.
 
 Informácie o podporovaných riadkoch nájdete v časti [Podporované braillovské zobrazovače #SupportedBrailleDisplays].
-Všetky nastavenia týkajúce sa braillovských riadkov a tabuliek nájdete v kategórii  [Nastavenia Braillu #BrailleSettings] v [nastaveniach #NVDASettings] dialog.
+Na tomto mieste tiež nájdete informácie o tom, ktoré riadky dokáže NVDA rozpoznať automaticky.
+Všetky nastavenia týkajúce sa braillovských riadkov a tabuliek nájdete v kategórii  [Braillovo písmo #BrailleSettings] v [nastaveniach #NVDASettings].
 
 ++ Skratky pre prvky, oblasti stránky a typy stavov v braillovskom zobrazení ++[BrailleAbbreviations]
 Aby sa na braillovský riadok dostalo čo najviac informácií, pre prvky, oblasti stránky a stavy sa používajú tieto skratky.
@@ -692,7 +726,7 @@ Pre oblasti stránky sa používajú tieto skratky:
 
 ++ Braillovský zápis ++[BrailleInput]
 NVDA podporuje písanie textu cez klávesnicu braillovského riadka v plnopise i skratkopise.
-Prekladovú tabuľku, ktorá sa použije na preklad textu, môžete určiť v [Nastaveniach #NVDASettings] v kategórii Braille nastavením [Vstupnej tabuľky #BrailleSettingsInputTable].
+Prekladovú tabuľku, ktorá sa použije na preklad textu, môžete určiť v [Nastaveniach #NVDASettings] v kategórii Braillovo písmo nastavením [Vstupnej tabuľky #BrailleSettingsInputTable].
 
 Keď píšete v plnopise, text sa vkladá okamžite.
 Ak píšete v skratkopise, text sa preloží a vloží po stlačení medzeri alebo klávesu enter na konci slova.
@@ -832,9 +866,11 @@ pre viac informácii o práci v režime prehliadania a o skratkách rýchlej nav
 %kc:beginInclude
 || Názov | Klávesová skratka | Popis |
 | Oznámiť zostávajúci čas | ctrl+shift+r | V prípade, že je práve prehrávaná skladba, oznámi zostávajúci čas. |
+| Oznámiť uplinulý čas | ctrl+shift+e | Oznámi koľko zo skladby bolo prehraté, ak je spustené prehrávanie. |
+| Oznámiť dĺžku skladby | ctrl+shift+t | Oznámi dĺžku prehrávanie skladby, ak je spustené prehrávanie. |
 %kc:endInclude
 
-Všimnite si: Klávesová skratka pre oznámenie zostávajúceho času funguje len ak máte vo Foobare nastavené predvolené zobrazenie stavového riadka.
+Všimnite si: tieto skratky fungujú len ak máte vo Foobare nastavené predvolené zobrazenie stavového riadka.
 
 ++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
@@ -935,9 +971,8 @@ Je to zoznam, kde je možné vybrať jazyk, ktorý NVDA bude používať a v ňo
 Nachádza sa tu mnoho jazykov a poslednou položkou zoznamu je Jazyk systému.
 Táto posledná voľba hovorí NVDA, aby používal jazyk, v ktorom sú zobrazované dialógy Windows.
 
-Ak sa jazyk zmení, NVDA potrebuje reštart.
-NVDA sa bude pýtať, či sa má automaticky reštartovať, ak sa jazyk zmení.
-Na reštartovanie stlačte tlačidlo OK.
+Aby sa prejavili zmeny, je potrebné reštartovať NVDA.
+Môžete si vybrať, či chcete reštartovať teraz, alebo neskôr. V oboch prípadoch je potrebné, aby bolo povolené ukladanie nastavení pri ukončení NVDA (buď ručne, alebo automaticky).
 
 ==== Uložiť nastavenia pri ukončení ====[GeneralSettingsSaveConfig]
 Začiarkavacie políčko, ktoré ak začiarknete, bude NVDA pri ukončení automaticky ukladať svoje nastavenia.
@@ -953,7 +988,15 @@ začiarkávacie pole. Ak začiarknete, NVDA pri spustení  a pred ukončením pr
 ==== Úroveň záznamu ====[GeneralSettingsLogLevel]
 Zoznamový rámik, ktorý umožňuje používateľovi zvoliť, aké množstvo dát má NVDA  zaznamenať počas svojho vlastného behu.
 Všeobecne sa používateľ týmto nastavením nemusí zaoberať.
-No ak chcete tvorcom programu poskytnúť informácie o chybových hláseniach, je dobré nastaviť túto voľbu na vyššiu úroveň.
+Ak chcete tvorcom programu poskytnúť informácie o chybových hláseniach, je dobré nastaviť túto voľbu na vyššiu úroveň. Takisto môžete zaznamenávanie úplne vypnúť.
+
+Dostupné sú tieto možnosti:
+- Zakázaný: NVDA zaznamená len krátku správu pri štarte.
+- Info: NVDA zaznamená správu pri štarte a základné informácie pre vývojárov.
+- Upozornenie: Zaznamená len menej závažné chyby.
+- Vstup a výstup: Zaznamená vstup z klávesnice a braillovského riadka a tiež to, čo NVDA zobrazuje a hovorí. Ak sa obávate o vaše súkromie, nepoužívajte túto úroveň záznamu.
+- Debug: Zaznamenáva závažné aj menej závažné chyby a tiež vstup a výstup. Opäť, ak sa obávate o vaše súkromie, nepoužívajte túto úroveň záznamu.
+-
 
 ==== Automaticky spustiť NVDA po prihlásení do Windows ====[GeneralSettingsStartAfterLogOn]
 Ak je táto voľba zaškrtnutá, NVDA sa spustí hneď ako sa prihlásite do Windows.
@@ -971,6 +1014,25 @@ Táto voľba je dostupná len po nainštalovaní NVDA a nemôže byť použitá 
 ==== Kontrolovať dostupnosť novej verzie NVDA ====[GeneralSettingsCheckForUpdates]
 Ak je začiarknuté, NVDA bude automaticky kontrolovať dostupnosť novej verzie a ak novú verziu nájde, upozorní vás na to.
 Aktualizácie môžete skontrolovať ručne aktivovaním položky skontrolovať aktualizácie v menu pomocník v ponuke NVDA.
+Ak požiadate o stiahnutie aktualizácie, NVDA z vášho počítača odosiela na náš server niektoré údaje.
+Aby bolo možné poskytnúť aktualizáciu, zisťujeme:
+- Aktuálnu verziu NVDA, ktorú používate
+- Aktuálnu verziu vášho operačného systému
+- Či používate 32 alebo 64 bitovú verziu
+
+
+==== Zhromažďovanie údajov o používaní NVDA ====[GeneralSettingsGatherUsageStats]
+Ak začiarknete túto možnosť, NV Access využije tieto informácie na zisťovanie, koľko ľudí používa NVDA, z akých krajín pochádzajú. Informácie sú zasielané vždy pri kontrole dostupnosti novej verzie.
+Na zisťovanie krajiny, v ktorej sa nachádzate, využívame IP adresu. Vašu IP adresu si však ďalej neukladáme.
+Okrem nevyhnutných údajov na získanie aktualizácie tiež po začiarknutí tohto políčka budeme odosielať tieto informácie:
+- Aktuálny jazyk NVDA
+- Či používate portable alebo nainštalovanú verziu NVDA
+- Aký hlasový výstup používate (vrátane názvu doplnku z ktorého je nainštalovaný ovládač)
+- Aký braillovský riadok používate (vrátane názvu doplnku z ktorého je nainštalovaný ovládač)
+- Akú braillovskú tabuľku používate (ak využívate rbaillovský výstup)
+
+
+Tieto údaje nám umožnia určiť ďalšie priority pri vývoji NVDA.
 
 ==== Upozorniť na čakajúcu aktualizáciu po štarte ====[GeneralSettingsNotifyPendingUpdates]
 Ak je začiarknuté, NVDA po štarte upozorní, že máte stiahnuté aktualizácie a ponúkne možnosť inštalácie.
@@ -1032,6 +1094,16 @@ Nastavenie interpunkcie ovplyvňuje prejav NVDA pre všetky hlasové výstupy.
 ==== pri spracovaní textu sa riadiť jazykom hlasového výstupu ====[speechSettingsTrust]
 táto možnosť je predvolene začiarknutá a hovorí NVDA, že pri spracovaní textu sa má riadiť jazykom konkrétneho hlasu.
 Ak vám NVDA pri použití konkrétneho hlasu alebo hlasového výstupu nesprávne číta interpunkciu, odčiarknite túto možnosť, aby boli uprednostnené globálne nastavenia NVDA.
+
+==== Pri spracovaní špeciálnych znakov sa riadiť dátami z Unicode Konzorcia ====[SpeechSettingsCLDR]
+Ak začiarknete túto možnosť, NVDA bude na spracovanie symbolov využívať dodatočné slovníky.
+Tieto slovníky obsahujú popisy pre interpunkciu a emotikony od [Unicode Konzorcia http://www.unicode.org/consortium/], ktoré sú súčasťou [Spoločnej jazykovej databázy http://cldr.unicode.org/].
+Ak chcete, aby NVDA pri spracovaní špeciálnych symbolov používalo tento slovník, začiarknite túto možnosť.
+Ak používate hlasový výstup, ktorý už podporuje popisovanie emotikonov, mali by ste tieto dodatočné slovníky vypnúť.
+
+Nezabudnite, že ak upravíte výslovnosť špeciálnych symbolov, úpravy sa uložia do vašich nastavení NVDA.
+Ak upravíte popis pre konkrétny emotikon, tento popis bude použitý aj v prípade, ak je zapnutá podpora pre slovníky Unicode konzorcia.
+Výslovnosť špeciálnych symbolov môžete upravovať v dialógu [Výslovnosť interpunkčných a špeciálnych symbolov #SymbolPronunciation].
 
 ==== Zmeniť výšku hlasu pri čítaní veľkých písmen v percentách ====[speechSettingsCapPitchChange]
 Do tohto editačného poľa je možné napísať hodnotu v percentách, ako sa zmení výška hlasu pri čítaní veľkých písmen.
@@ -1095,7 +1167,7 @@ Ak chcete zmeniť niektoré vlastnosti reči bez nutnosti otvárať dialóg nast
 | Znížiť hodnotu nastavenia hlasu | NVDA+ctrl+šípka dolu | NVDA+ctrl+shift+šípka dolu | Zníži hodnotu aktuálne zameraného nastavenia hlasového výstupu. Napríklad spomalí tempo, vyberie predchádzajúci hlas, stíši hlasitosť. |
 %kc:endInclude
 
-+++  braille +++[BrailleSettings]
++++ brailovo písmo +++[BrailleSettings]
 Táto kategória obsahuje nastavenia ohľadom braillovských riadkov, braillovského vstupu a výstupu.
 Nájdete tu nasledujúce možnosti:
 
@@ -1210,9 +1282,12 @@ Ak pri načítaní riadka nastane chyba, NVDA vás na to upozorní a vráti sa k
 V zozname budú vždy zobrazené možnosti podľa toho, aké ovládače braillovských zariadení máte nainštalované v systéme.
 Medzi jednotlivými voľbami je možné sa pohybovať použitím kurzorových klávesov.
 
+Ak vyberiete možnosť "automaticky", NVDA bude sledovať pripájanie riadkov na pozadí.
+To zmanená, že ak cez USB alebo Bluetooth pripojíte braillovský riadok, NVDA ho automaticky začne používať.
+
 Žiadny zobrazovač Znamená, že nepoužívate výstup v braillovom písme.
 
-Prosím, prečítajte si tiež [Podporované braillovské zobrazovače #SupportedBrailleDisplays] pre získanie viac informácií o podporovaných zariadeniach.
+Prosím, prečítajte si tiež [Podporované braillovské zobrazovače #SupportedBrailleDisplays] pre získanie viac informácií o podporovaných zariadeniach a o tom, ktoré dokáže NVDA rozpoznať automaticky.
 
 ==== Port ====[SelectBrailleDisplayPort]
 Táto možnosť, ak je dostupná, určuje, aký port sa použije pri komunikácii s vybratým braillovským zobrazovačom.
@@ -1233,14 +1308,12 @@ Obsahuje nasledujúce voľby:
 ==== Rozloženie klávesnice ====[KeyboardSettingsLayout]
 Tento zoznamový rámik nám umožňuje vybrať, aký typ klávesnice chceme používať. Či pôjde o verziu pre desktop/stolné PC, alebo laptop/pre prenosné počítače/notebooky.
 
-==== Používať Capslock ako kláves NVDA ====[KeyboardSettingsCapsModifier]
-Ak je toto políčko začiarknuté, NVDA bude tento kláves využívať ako svoj modifikačný kláves, v kombinácii s ktorým sa zadávajú takmer všetky klávesové príkazy NVDA.
-
-==== Používať insert ako kláves NVDA ====[KeyboardSettingsExtendedInsert]
-Ak je toto políčko začiarknuté, rozšírený insert Taktiež môže byť využitý ako NVDA kláves. Nájdete ho v blízkosti kláves home, End a kurzorových šípok.
-
-==== Používať numerický insert ako kláves NVDA ====[KeyboardSettingsNumpadInsert]
-Ak je toto políčko začiarknuté, numerický Insert môže byť použitý ako NVDA kláves.
+==== Vybrať kláves NVDA ====[KeyboardSettingsModifiers]
+Začiarkávacie políčka v tomto zozname určujú, ktoré klávesy sa budú používať ako [kláves NVDA #TheNVDAModifierKey]. Dostupné sú tieto možnosti:
+- Capslock
+- Numerický insert
+- Insert (zvyčajne sa nachádza pod šípkami, vedľa klávesov home a end)
+-
 
 Ak nevyberiete žiadny kláves ako kláves NVDA, je ťažké vykonávať väčšinu príkazov NVDA.
 preto ak zatvoríte dialóg tlačidlom OK a nevybrali ste žiadny kláves NVDA, zobrazí sa chybové hlásenie.
@@ -1300,9 +1373,11 @@ Klávesová skratka: NVDA+n
 
 Ak je možnosť povolená, NVDA bude oznamovať text cez ktorý prechádza kurzor myši. Takto môžete nájsť položky na obrazovke za pomoci myši a nemusíte použiť objektovú navigáciu.
 
-==== Jednotka oznamovania pri zameraní textu ====[MouseSettingsTextUnit]
+ ====[MouseSettingsTextUnit]
 Ak je začiarknutá voľba Oznamovať text pod kurzorom myši, toto nastavenie určuje aké množstvo textu bude oznamované.
 Je možno vyberať z: znak, slovo, riadok alebo odsek.
+
+Ak potrebujete často meniť jednotku pri zameraní textu, môžete tejto funkcii priradiť klávesovú skratku v dialógu [Klávesové skratky#InputGestures].
 
 ==== Oznamovať typ prvku pri zameraní kurzorom myši ====[MouseSettingsRole]
 Ak je toto začiarkavacie políčko začiarknuté, NVDA bude oznamovať typ objektu pri prechode myšou cez tento objekt.
@@ -1315,6 +1390,11 @@ Ak myš posuniete doľava na obrazovke, pípanie sa bude ozývať z ľavého rep
 ==== Úroveň jasu ovplyvňuje hlasitosť signalizácie ====[MouseSettingsBrightness]
 Začiarknutie tohto políčka znamená, že hlasitosť signalizácie je riadená tým aká je úroveň jasu na mieste obrazovky kadiaľ prechádza kurzor myši. Toto funguje len ak začiarknete možnosť "signalizovať polohu myši počas posúvania".
 Táto  voľba je predvolene vypnutá.
+
+==== Ignorovať pokyny pre myš z externých aplikácií====[MouseSettingsHandleMouseControl]
+Umožňuje ignorovať pokyny pre myš (pohyb myšou a klikanie) cez iné aplikácie, napríklad z programu TeamViewer.
+Predvolene je táto možnosť vypnutá.
+Ak začiarknete túto možnosť, máte povolené oznamovanie textu pod kurzorom myši a iná aplikácia bude napríklad hýbať myšou, NVDA ani v takomto prípade nebude oznamovať text pod kurzorom.
 
 +++ Dotyková obrazovka +++[TouchInteraction]
 Táto kategória je dostupná len v počítačoch s operačným systémom Windows od verzie 8. Môžete tu nastaviť, ako sa NVDA bude správať pri používaní dotykovej obrazovky.
@@ -1450,7 +1530,15 @@ Toto nastavenie určuje o koľko riadkov sa má NVDA posunúť pri pohybe po stl
 ==== Zachovať vzhľad ako na obrazovke ====[BrowseModeSettingsScreenLayout]
 Klávesová skratka: NVDA+v
 
-Umožňuje nastaviť zalamovanie obsahu dokumentu v režime prehliadania. Ak je táto voľba zapnutá, všetky prvky budú zobrazené tak, ako sú rozmiestnené na obrazovke. Naopak ak je toto vypnuté, odkazy a tiež ďalšie prvky budú zobrazené na samostatnom riadku.
+Umožňuje nastaviť zalamovanie obsahu dokumentu v režime prehliadania. Ak je táto voľba zapnutá, všetky prvky budú zobrazené tak, ako sú rozmiestnené na obrazovke. 
+Ak je toto nastavenie vypnuté, odkazy a tiež ďalšie prvky budú zobrazené na samostatnom riadku.
+
+==== Po načítaní stránky  automaticky aktivovať režim prehliadania ====[BrowseModeSettingsEnableOnPageLoad]
+Určuje, či sa má po načítaní dokumentu automaticky aktivovať režim prehliadania.
+Ak je táto možnosť vypnutá, stále môžete v podporovaných dokumentoch a prvkoch aktivovať režim prehliadania ručne.
+Podporované aplikácie sú popísané v časti [Režim prehliadania#BrowseMode].
+Toto nastavenie neovplyvňuje aplikácie, v ktorých je režim prehliadania voliteľný, napríklad Microsoft Word.
+Predvolene je toto nastavenie začiarknuté.
 
 ==== Automaticky spustiť plynulé čítanie po načítaní stránky ====[BrowseModeSettingsAutoSayAll]
 Toto začiarkavacie políčko prepína automatické plynulé čítanie po načítaní stránky v režime prehliadania.
@@ -1550,6 +1638,61 @@ Kategória obsahuje nasledujúce možnosti:
 ==== jazyk rozpoznávania ====[Win10OcrSettingsRecognitionLanguage]
 V tomto zozname môžete vybrať jazyk, ktorý sa bude používať na rozpoznávanie textu.
 
++++ Pokročilé +++[AdvancedSettings]
+Pozor! Tieto nastavenia sú určené pre pokročilých používateľov. Nesprávnou konfiguráciou môžete spôsobiť, že NVDA nebude pracovať správne.
+Upravujte tieto nastavenia v prípade, že viete, čo máte robiť alebo ste dostali inštrukcie od vývojára NVDA.
+
+==== Povolenie zmien v pokročilích nastaveniach ====[AdvancedSettingsMakingChanges]
+Pred úpravou pokročilých nastavení musíte začiarknuť začiarkávacie políčko, čím potvrdíte, že rozumiete ryzikám.
+
+==== Obnovenie predvolených nastavení ====[AdvancedSettingsRestoringDefaults]
+Toto tlačidlo obnoví predvolené hodnoty pre pokročilé možnosti a to aj v prípade, ak je vyššie spomenuté začiarkávacie políčko odčiarknuté.
+Po zmene nastavení sa časom môžete chcieť vrátiť k pôvodným hodnotám.
+Môžete chcieť obnoviť pôvodné nastavenie, ak si nie ste istí, čo všetko ste zmenili.
+
+==== Načítať vlastné moduly z priečinka Scratchpad ====[AdvancedSettingsEnableScratchpad]
+Keď vyvíjate doplnky pre NVDA, je lepšie testovať ich okamžite počas písania kódu.
+Ak začiarknete túto možnosť, NVDA bude načítavať moduly, ovládače pre syntézy reči a braillovské riadky, globálne pluginy, z priečinka scratchpad vo vašom priečinku s nastaveniami NVDA.
+Staršie verzie načítavali vlastné moduly automaticky a neponúkali možnosť vypnúť načítanie vlastného kódu.
+Predvolene je táto možnosť vypnutá, aby sme zaistili, že sa nespúšťa neoverený kód bez výslovného súhlasu používateľa.
+Ak chcete to, čo ste naprogramovali distribuovať, je potrebné vytvoriť doplnok pre NVDA vo formáte nvda-addon.
+
+==== Otvoriť priečinok Scratchpad ====[AdvancedSettingsOpenScratchpadDir]
+Po aktivovaní tohto tlačidla sa otvorí priečinok, do ktorého môžete ukladať vlastné experimentálne kódy počas práce na doplnkoch, moduloch a pod.
+Toto tlačidlo sa zobrazí, len ak povolíte načítavanie vlastných modulov z priečinka Scratchpad.
+
+==== Na zobrazenie prvkov v Microsoft aplikáciách používať UI automation ====[AdvancedSettingsUseUiaForWord]
+Ak začiarknete túto možnosť, NVDA sa pokúsi použiť Microsoft UI Automation accessibility api na zobrazenie prvkov v aplikácii MS Word.
+Toto sa týka aplikácie Word, a tiež písania a čítania správ v aplikácii Outlook.
+Aktuálne verzie MS Office 2016/365 bežiace v systéme Windows 10 majú podporu dostatočne dobrú, ako je súčasná podpora zabudovaná priamo v NVDA. Výhodou tiež je, že aplikácie cez UI automation reagujú rýchlejšie.
+Niektoré informácie sú však nedostatočne prezentované, alebo sú prezentované nesprávne, takže nemôžeme UI automation odporúčať vo všetkých prípadoch.
+Väčšine používateľov neodporúčame používať UI automation. Zároveň privítame odozvu od používateľov Office 2016/365, ktorí sú ochotný otestovať UI automation.
+
+==== Na zobrazenie príkazového riadka používať UI Automation, ak je dostupné====[AdvancedSettingsConsoleUIA]
+Ak začiarknete túto možnosť, NVDA bude používať novú, zatiaľ rozpracovanú verziu sprístupnenia pre Windows príkazové riadky. Tá vychádza  z [Vylepšení prístupnosti implementovaných spoločnosťou Microsoft (Anglicky) https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Táto funkcia je experimentálna a nie je dokončená, preto ju zatiaľ neodporúčame používať. Po jej dokončení a implementovaní však nahradí doterajšiu podporu prístupnosti pre príkazové riadky.
+
+==== Hovoriť heslá v UIA prostredí ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Toto nastavenie určuje, či bude NVDA oznamovať [napísané znaky #KeyboardSettingsSpeakTypedCharacters] alebo  [napísané slová #KeyboardSettingsSpeakTypedWords] v situáciách, keď sa obsah na obrazovke neaktualizuje (napríklad pri písaní hesiel) pri písaní v príkazovom riadku v prostredí UIA. Z bezpečnostných dôvodov odporúčame toto nastavenie ponechať vypnuté. Ak však máte problémy s čítaním napísaných znakov alebo slov pri používaní novej UIA podpori pre príkazové riadky, toto nastavenie môže zlepšiť stabilitu.
+
+==== Automaticky presúvať fokus na zamerané prvky ====[BrowseModeSettingsAutoFocusFocusableElements]
+Klávesová skratka: NVDA+8
+
+Táto možnosť je predvolene zapnutá. Určuje, či sa má systémový fokus presúvať na prvky, ktoré je možné zamerať a prejdete na ne kurzorom v režime prehliadania (napríklad odkazy, prvky formulárov a podobne).
+Ak je toto zapnuté, NVDA sa bude správať tak, ako ste boli zvyknutí do verzie 2019.1.
+Ak vypnete túto možnosť, prvky nebudú mať automaticky fokus.
+Toto môže zrýchlyť prehliadanie dokumentov v režime prehliadania.
+Fokus sa automaticky presunie na prvok až vtedy, keď s ním budete pracovať (aktivovanie tlačidla, začiarknutie políčka a pod).
+Táto funkcia je experimentálne zaradená od verzie NVDA 2019.2.
+
+==== Počkať pred pohybom systémového kurzora (v milisekundách) ====[AdvancedSettingsCaretMoveTimeout]
+Tu môžete nastaviť časový úsek, ktorý NVDA počká pred pohybom systémového kurzora (bodu vloženia).
+Ak zistíte, že NVDA nesprávne sleduje kurzor, napríklad je o znak pozadu alebo opakuje riadky, môže vám pomôcť zvýšiť tento časový úsek.
+
+==== Úroveň záznamu ====[AdvancedSettingsDebugLoggingCategories]
+Začiarkávacie políčka v tejto časti umožňujú povoliť dodatočné zaznamenávanie do logu NVDA.
+Logovanie týchto správ môže spomaliť NVDA a zvýšiť veľkosť logov.
+Zaznamenávanie týchto správ povoľte, len ak dostanete inštrukcie od vývojáro, napríklad pri diagnostike nefunkčného ovládača braillovského riadka.
+
 ++ Ďalšie nastavenia ++[MiscSettings]
 Okrem rozsiahleho [dialógu nastavení #NVDASettings], je v ponuke NVDA v časti možnosti viacero položiek, ktorým sa budeme venovať v nasledujúcich riadkoch.
 
@@ -1594,6 +1737,7 @@ V názve okna sa zobrazuje jazyk, ktorého symboly upravujete.
 Tento dialóg rešpektuje nastavenie "pri spracovaní textu sa riadiť hlasovým výstupom", ktoré je v kategórii  [Nastavenia hlasu #speechSettings] v dialógu [Nastavenia #NVDASettings]. Ak je toto políčko začiarknuté, upravujete nastavenie pre jazyk hlasu a nie jazyk NVDA.
 
 Ak si želáte upraviť symbol, musíte ho najprv vybrať v zozname symbolov.
+Zoznam symbolov môžete filtrovať, ak zadáte symbol alebo jeho nahradenie do políčka filtrovať.
 
 - Do poľa nahradiť s môžete vpísať text, ktorý sa má vysloviť vždy, keď bude NVDA čítať tento symbol.
 - Zmenou výberu v zozname úrovní môžete určiť najnižšiu úroveň, na ktorej bude symbol oznamovaný.
@@ -1659,7 +1803,7 @@ NVDA vám umožňuje urobiť takéto nastavenia pomocou konfiguračných profilo
 Konfiguračný profil obsahuje len tie nastavenia, ktoré zmeníte, keď je profil aktívny.
 Zmeniť môžete všetky nastavenia okrem tých, ktoré sú v kategórii všeobecné v dialógu [Nastavenia #NVDASettings], lebo tie sa týkajú NVDA ako celku.
 
-Konfiguračné profily môžete aktivovať ručne.
+Konfiguračné profily môžete aktivovať ručne z dialógu alebo pomocou klávesovej skratky.
 Môžu ich však aktivovať aj rôzne udalosti, ako napríklad prepnutie sa do určitej aplikácie.
 
 +++ Základné nastavenie +++[ProfilesBasicManagement]
@@ -1726,6 +1870,14 @@ toto docielite začiarknutím možnosti dočasne zakázať všetky udalosti v di
 
 Ak chcete dočasne zakázať udalosti klávesovou skratkou, môžete ju nastaviť v dialógu [Klávesové skratky #InputGestures].
 
++++ Aktivovanie profilu klávesovou skratkou +++[ConfigProfileGestures]
+Pre každý vytvorený profil môžete vytvoriť jednu alebo viacero klávesových skratiek.
+Predvolene NVDA nevytvára žiadne klávesové skratky pre profily.
+Klávesové skratky k profilu priradíte v dialógu [Klávesové skratky #InputGestures].
+Každý profil má samostatnú vetvu v strome Konfiguračné profily.
+Klávesové skratky sa zachovajú aj vtedy, ak profil premenujete.
+Ak odstránite profil, automaticky sa odstráni aj klávesová skratka.
+
 ++ Umiestnenie súborov s nastaveniami ++[LocationOfConfigurationFiles]
 Prenosné verzie NVDA si ukladajú všetky nastavenia, vlastné aplikačné moduly, ovládače hlasových a braillovských výstupov v podpriečinku userConfig v priečinku NVDA.
 
@@ -1741,6 +1893,7 @@ Ak chcete zmeniť konfiguráciu NVDA pre prihlasovaciu obrazovku, nakonfigurujte
 
 ++ Zobraziť log ++[LogViewer]
 Zobrazovač logu, ktorý je možné spustiť z podmenu nástroje, dokáže zobraziť všetok zápis do súboru log, ktorý sa zaznamenal od posledného štartu NVDA.
+Skratkou NVDA+F1 otvoríte zobrazovač logu a do logu sa zapíšu informácie o aktuálnom navigačnom objekte.
 
 Okrem čítania obsahu, je možné obsah logu uložiť do súboru, či obnoviť obsah, aby obsahoval aj záznamy zapísané po otvorení okna zobrazovač logu.
 Tieto možnosti sú dostupné z aplikačnej ponuky okna zobrazovač logu.
@@ -1791,17 +1944,33 @@ Ak chcete doplnok zakázať, aktivujte tlačidlo "zakázať".
 Doplnok, ktorý ste zakázali, môžete znovu povoliť aktivovaním tlačidla "povoliť".
 Ak je doplnok povolený, zobrazuje sa tlačidlo na jeho zakázanie, ak je zakázaný, zobrazuje sa tlačidlo na jeho povolenie.
 Po každom stlačení tlačidla sa na stavovom riadku zobrazí, čo sa stane po najbližšom reštarte NVDA.
-Ak ste zakázali doplnok, na stavovom riadku sa objaví hlásenie "zakázaný po reštarte" a naopak, ak ste povolili doplnok, na stavovom riadku sa zobrazí hlásenie "povolený po reštarte".
+Ak ste zakázali doplnok, na stavovom riadku sa objaví hlásenie "zakázaný po reštarte".
+Ak ste povolili doplnok, na stavovom riadku sa zobrazí hlásenie "povolený po reštarte".
 Aj v tomto prípade sa zmeny prejavia až po reštarte.
 
 Správcu doplnkov zatvoríte aktivovaním tlačidla Zatvoriť.
 Ak ste pridali,  odstránili, zakázali alebo povolili nejaké doplnky, NVDA sa vás opýta, či ho chcete reštartovať, aby boli uložené zmeny.
 
-V minulosti bolo možné funkcie NVDA rozšíriť skopírovaní  pluginov alebo ovládačov do používateľského priečinka s konfiguráciou NVDA.
-Táto verzia NVDA stále tieto pluginy a ovládače načíta, no nebudú zobrazené v okne správcu doplnkov.
-Najlepšie je tieto súbory odstrániť a nahradiť ich skutočnými doplnkami hneď, ako budú k dispozícii.
+Niektoré staršie doplnky už nemusia byť kompatibilné s vašou verziou NVDA.
+Takisto niektoré novšie doplnky môžu vyžadovať aj novšiu verziu NVDA.
+Ak sa pokúsite nainštalovať nekompatibilný doplnok, NVDA vás na túto skutočnosť upozorní a inštaláciu takéhoto doplnku zakáže.
+Nekompatibilné doplnky zobrazíte po aktivovaní tlačidla Nekompatibilné doplnky.
 
 Ak chcete okno  Správcu doplnkov aktivovať z hociktorého miesta, môžete mu priradiť  skratku v dialógu [Klávesové skratky #InputGestures].
+
+++ Správca nekompatibilných doplnkov ++[incompatibleAddonsManager]
+Správcu nekompatibilných doplnkov môžete zobraziť po aktivovaní príslušného tlačidla v správcovi doplnkov. Umožňuje zobraziť doplnky a dôvod ich nekompatibility.
+Doplnky sú zvyčajne nekompatibilné, ak neboli prispôsobené pre aktuálnu verziu NVDA, alebo opačne, vyžadujú už novšiu verziu NVDA.
+V správcovi nekompatibilných doplnkov vidíte aj aktuálnu verziu NVDA, ktorú máte spustenú.
+V zozname s nekompatibilnými doplnkami sú tieto údaje:
++ Názov doplnku
++ Verzia doplnku
++ Dôvod nekompatibility
++
+
+V správcovi nekompatibilných doplnkov je tiež tlačidlo O doplnku. 
+Po jeho aktivovaní sa zobrazia ďalšie informácie o doplnku, ktoré môžu byť užitočné, ak sa rozhodnete kontaktovať vývojára doplnku.
+
 
 ++ Python konzola ++[PythonConsole]
 Python konzola programu NVDA, dostupná z podmenu nástroje, je nástroj pre vývojárov, ktorý umožňuje kontrolovať správnosť behu NVDA, zisťovať stav vnútorných premenných NVDA a tiež skúmať hierarchiu prístupnosti aplikácií.
@@ -1841,8 +2010,8 @@ Platforma Microsoft Speech poskytuje TTS služby pre rôzne jazyky. Štandardne 
 Tieto hlasy je možné použiť aj s NVDA.
 
 Aby Ste mohli používať tieto hlasy, je potrebné nainštalovať dva komponenty:
-- Microsoft Speech Platform - Server Runtime (Verzia 11), x86: http://www.microsoft.com/download/en/details.aspx?id=27225
-- Microsoft Speech Platform - Server Runtime Languages (Verzia 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+- Microsoft Speech Platform - Server Runtime (Verzia 11), x86: https://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Server Runtime Languages (Verzia 11): https://www.microsoft.com/download/en/details.aspx?id=27224
  - Na tejto stránke nájdete množstvo hlasov určených na rozpoznávanie hlasu aj na prevod textu na reč.
  Vyberte súbor, ktorý obsahuje dáta pre vami požadovaný jazyk / hlas.
  Napríklad súbor MSSpeech_TTS_en-US_ZiraPro.msi obsahuje dáta pre americký hlas.
@@ -1870,16 +2039,32 @@ Tento hlasový výstup nepodporuje [riadenie hláskovania #speechSettingsUseSpel
 + Podporované braillovské zobrazovače +[SupportedBrailleDisplays]
 Táto sekcia obsahuje informácie o braillovských zobrazovačoch, ktoré môžete používať s NVDA.
 
+++ Riadky, ktoré NVDA dokáže automaticky rozpoznať ++[AutomaticDetection]
+NVDA dokáže rozpoznať a automaticky používať mnoho braillovských riadkov, ktoré pripojíte cez USB alebo Bluetooth.
+Stačí, ak ako braillovský riadok zvolíte možnosť "automaticky". Nastavenie vykonáte v dialógu [Braillovo písmo #BrailleSettings].
+NVDA predvolene automaticky vyhľadáva a pripája braillovské riadky na pozadí.
+
+Funkcia aktuálne funguje s týmito riadkami:
+- Handy Tech
+- Baum/Humanware/APH/Orbit
+- HumanWare Brailliant BI/B
+- HumanWare BrailleNote
+- SuperBraille
+- Optelec ALVA 6
+- HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille
+- Eurobraille Esys/Esytime/Iris
+-
+
 ++ Riadky Focus/PAC Mate od spoločnosti Freedom Scientific ++[FreedomScientificFocus]
-Podporované sú všetky braillovské riadky Focus a PAC Mate od spoločnosti [Freedom Scientific http://www.freedomscientific.com/], ktoré sú k počítaču pripojené cez USB alebo bluetooth.
+Podporované sú všetky braillovské riadky Focus a PAC Mate od spoločnosti [Freedom Scientific https://www.freedomscientific.com/], ktoré sú k počítaču pripojené cez USB alebo bluetooth.
 Pre správnu funkčnosť musíte mať v systéme nainštalované ovládače braillovských riadkov Freedom scientific.
-Ak ich ešte nemáte, môžete ich stiahnuť zo stránky http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Ak ich ešte nemáte, môžete ich stiahnuť zo stránky https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Aj keď na stránke sa píše len o riadku Focus Blue, ovládač spolupracuje so všetkými zobrazovačmi Freedom scientific.
-Ak máte nainštalovanú 64 bitovú edíciu Windows a používate aj iný čítač obrazovky, budete pravdepodobne musieť tiež nainštalovať ovládač, pretože potrebné súbory sa nemuseli nainštalovať počas inštalácie iného čítača.
 
 NVDA sa dokáže predvolene k týmto zobrazovačom pripojiť cez USB alebo Bluetooth rozhranie.
 Môžete však samy určiť typ pripojenia a obmedziť ho len na pripojenie cez "USB" alebo "bluetooth".
 Toto je užitočné, ak chcete nabiť riadok cez USb, ale chcete ho používať cez Bluetooth.
+NVDA dokáže automaticky rozpoznať tieto riadky, ak sú pripojené cez USB alebo Bluetooth.
 
 Nasleduje zoznam klávesových príkazov pre tento typ riadku.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov.
@@ -1911,6 +2096,8 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | ctrl+end | braillovská medzera+body 4,5,6 |
 | alt | braillovská medzera+body 1,3,4 |
 | alt+tab | braillovská medzera+body 2,3,4,5 |
+| alt+shift+tab | braillovská medzera + body 1256 |
+| windows+tab  | braillovská medzera +body 234 |
 | escape | braillovská medzera+body 1,5 |
 | kláves windows | braillovská medzera+body2,4,5,6 |
 | medzera | braillovská medzera |
@@ -1930,7 +2117,7 @@ Len pre riadok Focus 80:
 %kc:endInclude
 
 ++ Optelec ALVA 6 series/protocol converter ++[OptelecALVA]
-Podporované sú oba zobrazovače od [Optelec http://www.optelec.com/] pripojené cez USB a bluetooth, aj ALVA BC640 aj BC680.
+Podporované sú oba zobrazovače od [Optelec https://www.optelec.com/] pripojené cez USB a bluetooth, aj ALVA BC640 aj BC680.
 ak máte starší riadok, napríklad Braille Voyager, môžete ho pripojiť pomocou rozhrania protocol converter od Optelec.
 Na ich používanie nie je potrebné inštalovať žiadne ovládače.
 Stačí zapojiť riadok a nastaviť NVDA na jeho používanie.
@@ -1946,11 +2133,11 @@ Nasleduje zoznam klávesových príkazov pre tento typ riadku.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov.
 %kc:beginInclude
 || Názov | Klávesová skratka |
-| posunúť riadok späť | t1 alebo etouch1 |
+| posunúť riadok späť | t1, etouch1 |
 | predchádzajúci riadok | t2 |
 | Presunúť na fokus | t3 |
 | nasledujúci riadok | t4 |
-| posunúť riadok vpred | t5 alebo etouch3 |
+| posunúť riadok vpred | t5, etouch3 |
 | Prejsť na znak v brailly | smerové tlačidlá |
 | Oznámiť formátovanie pod aktuálnym  braillovským znakom| sekundárne smerové tlačidlá |
 | Prepnúť simuláciu HID klávesnice | t1+spEnter |
@@ -1960,7 +2147,7 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | oznámiť názov okna | etouch2 |
 | oznámiť stavový riadok | etouch4 |
 | emulácia shift+tab | sp1 |
-| emulácia alt | sp2 |
+| emulácia alt | sp2, alt|
 | emulácia escape | sp3 |
 | emulácia tab | sp4 |
 | šípka hore | spUp |
@@ -1968,22 +2155,21 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | šípka vľavo | spLeft |
 | šípka vpravo | spRight |
 | enter | spEnter, Enter |
-| oznámiť dátum a čas | sp1+sp2 |
+| oznámiť dátum a čas | sp2+sp3 |
 | ponuka NVDA | sp1+sp3 |
 | klávesová skratka windows+d (minimalizovať všetky aplikácie) | sp1+sp4 |
 | windows+b (prechod na systémovú lištu) | sp3+sp4 |
-| kláves windows | sp2+sp3, Windows|
+| kláves windows | sp1+sp2, Windows|
 | klávesová skratka alt+tab | sp2+sp4 |
 | ctrl+home | t3+spUp |
 | ctrl+end | t3+spDown |
 | home | t3+spLeft |
 | end | t3+spRight |
-| alt | alt |
 | ctrl | ctrl |
 %kc:endInclude
 
 ++ Zobrazovače od spoločnosti Handy Tech ++[HandyTech]
-NVDA podporuje väčšinu  zobrazovačov od spoločnosti [Handy Tech http://www.handytech.de/], ak sú pripojené k počítaču cez USB, sériový port alebob  bluetooth.
+NVDA podporuje väčšinu  zobrazovačov od spoločnosti [Handy Tech https://www.handytech.de/], ak sú pripojené k počítaču cez USB, sériový port alebob  bluetooth.
 Pre niektoré staršie USB riadky je potrebné do systému nainštalovať USB ovládače Handy Tech.
 
 Nasledujúce braillovské riadky nie sú podporované priamo, môžete ich však používať po inštalácií [Univerzálneho ovládača Handy Techhttps://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] a doplnku pre NVDA.
@@ -2017,9 +2203,11 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 %kc:endInclude
 
 ++ MDV Lilli ++[MDVLilli]
-Riadok Lilli od [MDV http://www.mdvbologna.it/] je plne podporovaný.
+Riadok Lilli od [MDV https://www.mdvbologna.it/] je plne podporovaný.
 Na jeho používanie nie je potrebné inštalovať žiadne ovládače.
 Stačí zapojiť riadok a nastaviť NVDA na jeho používanie.
+
+NVDA sa v súčasnosti nedokáže automaticky pripájať k týmto riadkom.
 
 Nasleduje zoznam klávesových príkazov pre tieto typy riadkov.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov.
@@ -2037,7 +2225,7 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 %kc:endInclude
 
 ++ Zobrazovače Baum/Humanware/APHp/Orbit  ++[Baum]
-Podporované sú niektoré riadky od [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] a [Orbit http://www.orbitresearch.com/] pripojené cez USB,  bluetooth alebo sériový port.
+Podporované sú niektoré riadky od [Baum https://www.baum.de/cms/en/], [HumanWare https://www.humanware.com/], [APH https://www.aph.org/] a [Orbit https://www.orbitresearch.com/] pripojené cez USB,  bluetooth alebo sériový port.
 Toto zahŕňa:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
 - HumanWare: Brailliant, BrailleConnect, Brailliant2
@@ -2073,8 +2261,10 @@ Pre zobrazovače, ktoré majú džojstik:
 %kc:endInclude
 
 ++ hedo ProfiLine USB ++[HedoProfiLine]
-Hedo ProfiLine USB od [hedo Reha-Technik http://www.hedo.de/] sú plne podporované.
+Hedo ProfiLine USB od [hedo Reha-Technik https://www.hedo.de/] sú plne podporované.
 Pred použitím je potrebné nainštalovať USB ovládače od výrobcu.
+
+NVDA sa v súčasnosti nedokáže automaticky pripájať k týmto riadkom.
 
 Nasleduje zoznam klávesových príkazov pre tento typ riadkov.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov.
@@ -2090,8 +2280,10 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 %kc:endInclude
 
 ++ hedo MobilLine USB ++[HedoMobilLine]
-HedoMobilLine USB od [hedo Reha-Technik http://www.hedo.de/] sú plne podporované.
+HedoMobilLine USB od [hedo Reha-Technik https://www.hedo.de/] sú plne podporované.
 Pred použitím je potrebné nainštalovať USB ovládače od výrobcu.
+
+NVDA sa v súčasnosti nedokáže automaticky pripájať k týmto riadkom.
 
 Nasleduje zoznam klávesových príkazov pre tento typ riadkov.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov.
@@ -2107,7 +2299,7 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B / BrailleNote Touch  ++[HumanWareBrailliant]
-Riadky Brailliant BI and B od [HumanWare http://www.humanware.com/], zahŕňajú BI 14, BI 32, BI 40 a B 80, sú podporované pripojené cez USB alebo bluetooth.
+Riadky Brailliant BI and B od [HumanWare https://www.humanware.com/], zahŕňajú BI 14, BI 32, BI 40 a B 80, sú podporované pripojené cez USB alebo bluetooth.
 Ak máte riadok pripojený cez USB a protokol nastavený na HumanWare, je potrebné nainštalovať ovládač dodaný od výrobcu.
 Ovládače nebudete potrebovať, ak nastavíte protokol na OpenBraille.
 
@@ -2159,9 +2351,9 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++[Hims]
-NVDA podporuje riadky Braille Sense, Smart Beetle, Sync Braille a Braille EDGE od spoločnosti [Hims http://www.hims-inc.com/]. Je potrebné ich pripájať cez USB alebo bluetooth rozhranie.
+NVDA podporuje riadky Braille Sense, Smart Beetle, Sync Braille a Braille EDGE od spoločnosti [Hims https://www.hims-inc.com/]. Je potrebné ich pripájať cez USB alebo bluetooth rozhranie.
 Ak máte riadok pripojený cez USB, je potrebné nainštalovať ovládač dodávaný spoločnosťou HIMS.
-Ovládače si môžete stiahnuť zo stránky: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+Ovládače si môžete stiahnuť zo stránky: https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Nasleduje zoznam klávesových príkazov pre tieto typy riadkov.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením  na zistenie rozmiestnenia klávesov.
@@ -2231,9 +2423,11 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením  na zistenie
 %kc:endInclude
 
 ++ Braillovské riadky od spoločnosti Seika ++[Seika]
-Podporované sú 40-znakové verzie 3, 4 a 5 a takisto 80-znakový riadok Seika80 od spoločnosti [Nippon Telesoft http://www.nippontelesoft.com/].
-Viac informácii o týchto riadkoch nájdete na stránke http://www.seika-braille.com/.
+Podporované sú 40-znakové verzie 3, 4 a 5 a takisto 80-znakový riadok Seika80 od spoločnosti [Nippon Telesoft https://www.nippontelesoft.com/].
+Viac informácii o týchto riadkoch nájdete na stránke https://www.seika-braille.com/.
 Aby ste mohli riadky používať, nainštalujte USB ovládač dodávaný so zariadením.
+
+NVDA sa v súčasnosti nedokáže automaticky pripájať k týmto riadkom.
 
 Nasleduje zoznam klávesových príkazov pre tieto typy riadkov.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením  na zistenie rozmiestnenia klávesov.
@@ -2260,9 +2454,10 @@ Podporované sú tieto braillovské riadky:
 - BRAILLEX Live 20, BRAILLEX Live a BRAILLEX Live Plus (USB a bluetooth)
 -
 
+NVDA sa v súčasnosti nedokáže automaticky pripájať k týmto riadkom.
+
 Ak máte nainštalovaný BrxCom, NVDA ho bude používať.
 Pomocou BrxCom môžete písať priamo cez braillovský riadok nezávisle od použitého čítača obrazovky.
-Nová verzia BrxComu od spoločnosti Papenmeier s podporou pre NVDA by mala byť vydaná čoskoro.
 Písanie je podporované na riadkoch Trio a BRAILLEX Live.
 
 Väčšina zariadení má tzv. panel rýchleho prístupu, ktorý umožňuje rýchle a intuitívne ovládanie.
@@ -2340,6 +2535,7 @@ Podporované sú tieto braillovské riadky:
 -
 
 tieto zariadenia môžu byť pripojené len cez sériový port.
+Z tohto dôvodu sa NVDA nedokáže automaticky pripájať k týmto riadkom.
 Môžete teda vybrať konkrétny port, na ktorom je zariadenie pripojené, ak ste zvolili príslušný ovládač v dialógu [nastavenie braillovského riadka #SelectBrailleDisplay] dialog.
 
 Väčšina zariadení má tzv. panel rýchleho prístupu, ktorý umožňuje rýchle a intuitívne ovládanie.
@@ -2417,7 +2613,7 @@ BRAILLEX 2D Screen:
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++[HumanWareBrailleNote]
-NVDA podporuje zápisníky BrailleNote od [Humanware http://www.humanware.com], ak sú nastavené do režimu pre príjem príkazov z čítača obrazovky.
+NVDA podporuje zápisníky BrailleNote od [Humanware https://www.humanware.com], ak sú nastavené do režimu pre príjem príkazov z čítača obrazovky.
 Podporované sú tieto typy:
 - BrailleNote Classic (len cez sériový port)
 - BrailleNote PK (Sériový port a Bluetooth)
@@ -2427,11 +2623,19 @@ Podporované sú tieto typy:
 
 Pre informácie o podpore zariadenia BrailleNote Touch, Pozrite časť [Brailliant BI / BrailleNote Touch HumanWareBrailliant].
 
+Podporované je písanie cez braillovskú klávesnicu (BT) aj cez qwerty klávesnicu (QT). Výnimku tvorí zariadenie BrailleNote PK.
+Riadok BrailleNote QT nepodporuje emuláciu počítačovej klávesnice.
+Braillovské body môžete zadávať aj pomocou QT klávesnice.
+Pozrite si časť Braille terminal v používateľskej príručke k Braille note.
+
 Ak zariadenie podporuje viacero druhov pripojenia, je potrebné nastaviť druh pripojenia "braille terminal port" v nastaveniach "braille terminal".
 Podrobnosti nájdete v návode k Braillenote.
 Môžete tiež chcieť nastaviť port v [Dialóg nastavenie braillovského riadka #SelectBrailleDisplay] dialog.
 Ak sa pripájate cez USb alebo Bluetooth, môžete si vybrať automatickú detekciu portu, "Bluetooth" alebo "USB", v závislosti od vybraného zariadenia.
 Ak sa pripájate cez niektorý zo sériových portov, alebo cez USB / sériový prevodník, alebo ak nie sú dostupné iné možnosti, musíte si vybrať niektorý z hardwarových komunikačných portov.
+
+Na riadku BrailleNote Apex BT môžete používať skrolovacie koliesko na ovládanie príkazov NVDA.
+Koliesko pozostáva zo štyroch smerových tlačidiel, jedného potvrdzovacieho tlačidla v strede a kolieska, ktoré možno otočiť v smere alebo protismere hodinových ručičiek.
 
 Pred pripojením BrailleNote Apex cez USb je potrebné nainštalovať ovládač dodávaný od výrobcu.
 
@@ -2445,6 +2649,7 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | Predchádzajúci riadok | previous |
 | Nasledujúci riadok | next |
 | Prejsť na znak v brailly | smerové tlačidlá |
+| NVDA menu | medzera +body 1345 (medzera+n) |
 | Prepnúť nastavenie braillovský kurzor zviazaný s | previous+next |
 | Šípka hore | medzera+bod1 |
 | Šípka dole | medzera+bod4 |
@@ -2464,10 +2669,43 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | Windows | medzera+body 2,4,5,6 (medzera+w) |
 | Alt | medzera+body 1,3,4 (medzera+m) |
 | Nápoveda vstupu | medzera+body 2,3, 6 (medzera+znížené h) |
+
+Nasledujú skratky špecifické pre model BrailleNote QT, ak nie je v braillovskom režime.
+
+|| Názov | klávesová skratka |
+| NVDA menu | read+n |
+| šípka hore | šípka hore |
+| šípka dole | šípka dole |
+| šípka vľavo | šípka vľavo |
+| šípka vpravo | šípka vpravo |
+| Page up | function+šípka hore |
+| Page down | function+šípka dole |
+| Home | function+šípka vľavo |
+| End | function+šípka vpravo |
+| ctrl+home | read+t |
+| ctrl+end | read+b |
+| Enter | enter |
+| Backspace | backspace |
+| Tab | tab |
+| Shift+tab | shift+tab |
+| kláves Windows | read+w |
+| Alt | read+m |
+| Nápoveda vstupu | read+1 |
+
+Nasledujúce príkazy je možné vykonať pomocou skrolovacieho kolieska:
+
+|| Názov | klávesová skratka |
+| šípka hore | tlačidlo hore |
+| šípka dole | tlačidlo dole |
+| šípka vľavo | tlačidlo vľavo |
+| šípka vpravo | tlačidlo vpravo |
+| Enter | stredné potvrdzovacie tlačidlo |
+| Tab | pootočiť kolieskom v smere hodinových ručičiek |
+| Shift+tab | pootočiť kolieskom v protismere hodinových ručičiek |
 %kc:endInclude
 
 ++ Zobrazovače EcoBraille ++[EcoBraille]
-NVDA podporuje zobrazovače EcoBraille od spoločnosti [ONCE http://www.once.es/].
+NVDA podporuje zobrazovače EcoBraille od spoločnosti [ONCE https://www.once.es/].
 Podporované sú tieto riadky:
 - EcoBraille 20
 - EcoBraille 40
@@ -2476,6 +2714,7 @@ Podporované sú tieto riadky:
 -
 
 Sériový port, do ktorého je riadok pripojený, môžete vybrať v dialógu [nastavenie braillovského riadka #SelectBrailleDisplay] dialog.
+NVDA sa v súčasnosti nedokáže automaticky pripájať k týmto riadkom.
 
 Nasleduje zoznam klávesových príkazov.
 Pre popis a umiestnenie tlačidiel si prosím pozrite [Návod k zobrazovačom EcoBraille (anglicky) ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] for descriptions of where these keys can be found.
@@ -2512,7 +2751,7 @@ Aby bolo možné zaisťiť prácu s riadkom a tiež kompatibilitu s inými čít
 %kc:endInclude
 
 ++ Eurobraille Esys/Esytime/Iris ++[Eurobraille]
-NVDA podporuje riadky Esys, Esytime a Iris od spoločnosti [Eurobraille http://www.eurobraille.fr/].
+NVDA podporuje riadky Esys, Esytime a Iris od spoločnosti [Eurobraille https://www.eurobraille.fr/].
 Zariadenia Esys a Esytime-Evo sú podporované cez rozhranie USB a Bluetooth.
 Staršie riadky Esytime je možné používať len cez rozhranie USB.
 Riadky Iris môžete používať len cez sériový port.
@@ -2596,16 +2835,18 @@ Pre popis a umiestnenie tlačidiel si prosím pozrite návod k vášmu riadku.
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
-[BRLTTY http://www.brltty.com/] je osobitný program, prostredníctvom ktorého je možné použiť množstvo ďalších braillovských zobrazovačov.
-Na používanie ovládača braillovských riadkov BRLTTY je potrebné nainštalovať [BRLTTY pre Windows http://www.brltty.com/download.html].
+[BRLTTY https://www.brltty.com/] je osobitný program, prostredníctvom ktorého je možné použiť množstvo ďalších braillovských zobrazovačov.
+Na používanie ovládača braillovských riadkov BRLTTY je potrebné nainštalovať [BRLTTY pre Windows https://www.brltty.com/download.html].
 Mali by ste si stiahnuť najnovšiu inštalačnú verziu, ktorá bude pomenovaná napríklad brltty-win-4.2-2.exe.
 Počas konfigurácie riadku a portu dávajte veľký pozor na presné dodržiavanie inštrukcií, hlavne ak pripájate riadok cez USB a už máte nainštalované ovládače od výrobcu.
 
 Riadky, ktoré podporujú písanie pomocou vstavanej klávesnice sa riadia nastavením BRLTTY.
 Nastavenie vstupnej prekladovej tabuľky v NVDA preto nemá na vstup z braillovskej klávesnice tohto typu riadku žiadny vplyv.
 
+Ovládač brltty nie je zahrnutý do automatického rozpoznávania braillovských riadkov.
+
 Nasledujú brltty klávesové skratky pre NVDA.
-Prosím prečítajte si [dokumentáciu skratiek  brltty http://mielke.cc/brltty/doc/KeyBindings/] pre viac informácií o tom, ako sú príkazy brltty mapované na tlačidlá skutočných zobrazovačov.
+Prosím prečítajte si [dokumentáciu skratiek  brltty https://mielke.cc/brltty/doc/KeyBindings/] pre viac informácií o tom, ako sú príkazy brltty mapované na tlačidlá skutočných zobrazovačov.
 %kc:beginInclude
 || Názov | príkaz brltty |
 | posunúť riadok späť | fwinlt (go left one window) |
@@ -2648,15 +2889,17 @@ NVDA v súčasnosti podporuje tieto parametre:
 | -r | --replace | Ukončí práve spustenú kópiu NVDA a spustí novú |
 | -k | --check-running | Oznámi, či NVDA beží alebo nie. 0 =beží, 1 =nie |
 | -f c:\esta\k\suboru | --log-file=c:\esta\k\suboru | Cesta k súboru, kde sa má zapisovať log |
-| -l n | --log-level=n | Určuje úroveň záznamu (debug 10, info 20, upozornenia 30, chyby 40, kritické chyby 50), predvolene je úroveň nastavená na upozornenia |
+| -l N | --log-level=n | Určuje úroveň záznamu (debug 10, Vstup a výstup 12, debug 15, info 20, upozornenia 30, chyby 40, kritické chyby 50, vypnuté 100), predvolene je úroveň nastavená na upozornenia |
 | -c C:\esta\k\profilu | --config-path=C:\esta\k\profilu | určuje cestu, kam sa ukladajú nastavenia NVDA |
 | -m | --minimal | spustí NVDA bez zvukov, bez používateľského rozhrania, bez úvodného dialógu a podobne |
-| -s | --secure | Zabezpečený režim (je zakázaná Python konzola) |
+| -s | --secure | Zabezpečený režim (je zakázaná Python konzola a zaznamenávanie. Používa sa na zabezpečených obrazovkách) |
 | nie je | --disable-addons | Všetky doplnky budú vypnuté |
-| Nie je | --debug-logging | nastaví úroveň záznamu pre najbližšie spustenie NVDA na najvyššiu úroveň (debug). Toto nastavenie má prednosť pred ostatnými argumentmi ( ""--loglevel"", -l). |
+| Nie je | --debug-logging | nastaví úroveň záznamu pre najbližšie spustenie NVDA na najvyššiu úroveň (debug). Toto nastavenie má prednosť pred ostatnými argumentmi ( ""--loglevel"", -l aj ak bolo zaznamenávanie vypnuté). |
+| Nie je | --no-logging | Vypne zaznamenávanie do logu. Toto nastavenie môže byť zmenené ak nastavíte úroveň záznamu cez príkazový riadok (""--loglevel"" -l) alebo ak zapnete zaznamenávanie najvyššej úrovne cez príkaz --debug-logging |
 | nie je | --no-sr-flag  | Nezmení predvolené označenie čítača obrazovky v systéme |
 | Nie je | --install | Nainštaluje NVDA a spustí nainštalovanú kópiu |
 | nie je | --install-silent | Nainštaluje NVDA s predvolenými parametrami bez používateľského rozhrania, ale nespustí nainštalovanú kópiu|
+| Nie je | --enable-start-on-logon=True|False | Počas inštalácie povolí [Spustenie na prihlasovacej obrazovke  #StartAtWindowsLogon] |
 | Nie je | --create-portable | Vytvorí prenosnú verziu NVDA a spustí ju. Je potrebné určiť cestu cez argument --portable-path |
 | Nie je | --create-portable-silent | Vytvorí prenosnú verziu NVDA, ale nespustí ju. Je potrebné určiť cestu cez argument --portable-path |
 | Nie je  | --portable-path=cesta | určuje, kam sa uloží prenosná verzia NVDA|

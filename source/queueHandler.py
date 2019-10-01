@@ -1,11 +1,11 @@
 #queueHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2018 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import types
-from Queue import Queue
+from queue import Queue
 import globalVars
 from logHandler import log
 import watchdog
@@ -42,7 +42,7 @@ def isRunningGenerators():
 	log.debug("generators running: %s"%res)
 
 def flushQueue(queue):
-	for count in xrange(queue.qsize()+1):
+	for count in range(queue.qsize()+1):
 		if not queue.empty():
 			(func,args,kwargs)=queue.get_nowait()
 			watchdog.alive()
@@ -59,8 +59,8 @@ def isPendingItems(queue):
 	return res
 
 def pumpAll():
-	# This dict can mutate during iteration, so use keys().
-	for ID in generators.keys():
+	# This dict can mutate during iteration, so wrap the keys in a list.
+	for ID in list(generators):
 		# KeyError could occur within the generator itself, so retrieve the generator first.
 		try:
 			gen = generators[ID]

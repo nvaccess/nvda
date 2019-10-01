@@ -36,6 +36,7 @@ import aria
 import nvwave
 import treeInterceptorHandler
 import watchdog
+from abc import abstractmethod
 
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
@@ -43,20 +44,21 @@ VBufStorage_findDirection_up=2
 VBufRemote_nodeHandle_t=ctypes.c_ulonglong
 
 
-class VBufStorage_findMatch_word(unicode):
+class VBufStorage_findMatch_word(str):
 	pass
 VBufStorage_findMatch_notEmpty = object()
 
 FINDBYATTRIBS_ESCAPE_TABLE = {
 	# Symbols that are escaped in the attributes string.
-	ord(u":"): ur"\\:",
-	ord(u";"): ur"\\;",
+	ord(u":"): r"\\:",
+	ord(u";"): r"\\;",
 	ord(u"\\"): u"\\\\\\\\",
 }
 # Symbols that must be escaped for a regular expression.
 FINDBYATTRIBS_ESCAPE_TABLE.update({(ord(s), u"\\" + s) for s in u"^$.*+?()[]{}|"})
 def _prepareForFindByAttributes(attribs):
-	escape = lambda text: unicode(text).translate(FINDBYATTRIBS_ESCAPE_TABLE)
+	# A lambda that coerces a value to a string and escapes characters suitable for a regular expression. 
+	escape = lambda val: str(val).translate(FINDBYATTRIBS_ESCAPE_TABLE)
 	reqAttrs = []
 	regexp = []
 	if isinstance(attribs, dict):
@@ -66,7 +68,7 @@ def _prepareForFindByAttributes(attribs):
 	# so first build the list of requested attributes.
 	for option in attribs:
 		for name in option:
-			reqAttrs.append(unicode(name))
+			reqAttrs.append(name)
 	# Now build the regular expression.
 	for option in attribs:
 		optRegexp = []
@@ -135,6 +137,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 	allowMoveToOffsetPastEnd=False #: no need for end insertion point as vbuf is not editable. 
 
 	UNIT_CONTROLFIELD = "controlField"
+	UNIT_FORMATFIELD = "formatField"
 
 	def _getControlFieldAttribs(self,  docHandle, id):
 		info = self.copy()
@@ -155,6 +158,8 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		ID = ctypes.c_int()
 		node=VBufRemote_nodeHandle_t()
 		NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(docHandle), ctypes.byref(ID),ctypes.byref(node))
+		if not any((docHandle.value, ID.value)):
+			raise LookupError("Neither docHandle nor ID found for offset %d" % offset)
 		return docHandle.value, ID.value
 
 	def _getOffsetsFromFieldIdentifier(self, docHandle, ID):
@@ -167,13 +172,20 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		NVDAHelper.localLib.VBuf_getFieldNodeOffsets(self.obj.VBufHandle, node, ctypes.byref(start), ctypes.byref(end))
 		return start.value, end.value
 
-	def _getPointFromOffset(self,offset):
+	def _getBoundingRectFromOffset(self,offset):
 		o = self._getNVDAObjectFromOffset(offset)
-		left, top, width, height = o.location
-		return textInfos.Point(left + width / 2, top + height / 2)
+		if not o:
+			raise LookupError("no NVDAObject at offset %d" % offset)
+		if o.hasIrrelevantLocation:
+			raise LookupError("Object is off screen, invisible or has no location")
+		return o.location
 
 	def _getNVDAObjectFromOffset(self,offset):
-		docHandle,ID=self._getFieldIdentifierFromOffset(offset)
+		try:
+			docHandle,ID=self._getFieldIdentifierFromOffset(offset)
+		except LookupError:
+			log.debugWarning("Couldn't get NVDAObject from offset %d" % offset)
+			return None
 		return self.obj.getNVDAObjectFromIdentifier(docHandle,ID)
 
 	def _getOffsetsFromNVDAObjectInBuffer(self,obj):
@@ -252,16 +264,12 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 					return placeholder
 		return None
 
-	def getTextWithFields(self,formatConfig=None):
-		start=self._startOffset
-		end=self._endOffset
-		if start==end:
-			return ""
+	def _getFieldsInRange(self,start,end):
 		text=NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,True)
 		if not text:
 			return ""
 		commandList=XMLFormatting.XMLTextParser().parse(text)
-		for index in xrange(len(commandList)):
+		for index in range(len(commandList)):
 			if isinstance(commandList[index],textInfos.FieldCommand):
 				field=commandList[index].field
 				if isinstance(field,textInfos.ControlField):
@@ -269,6 +277,13 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 				elif isinstance(field,textInfos.FormatField):
 					commandList[index].field=self._normalizeFormatField(field)
 		return commandList
+
+	def getTextWithFields(self,formatConfig=None):
+		start=self._startOffset
+		end=self._endOffset
+		if start==end:
+			return ""
+		return self._getFieldsInRange(start,end)
 
 	def _getWordOffsets(self,offset):
 		#Use VBuf_getBufferLineOffsets with out screen layout to find out the range of the current field
@@ -334,6 +349,10 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		return attrs
 
 	def _normalizeFormatField(self, attrs):
+		strippedCharsFromStart = attrs.get("strippedCharsFromStart")
+		if strippedCharsFromStart is not None:
+			assert strippedCharsFromStart.isdigit(), "strippedCharsFromStart isn't a digit, %r" % strippedCharsFromStart
+			attrs["strippedCharsFromStart"] = int(strippedCharsFromStart)
 		return attrs
 
 	def _getLineNumFromOffset(self, offset):
@@ -351,6 +370,12 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 			node=VBufRemote_nodeHandle_t()
 			NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(docHandle),ctypes.byref(ID),ctypes.byref(node))
 			return startOffset.value,endOffset.value
+		elif unit == self.UNIT_FORMATFIELD:
+			startOffset=ctypes.c_int()
+			endOffset=ctypes.c_int()
+			node=VBufRemote_nodeHandle_t()
+			NVDAHelper.localLib.VBuf_locateTextFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(node))
+			return startOffset.value,endOffset.value
 		return super(VirtualBufferTextInfo, self)._getUnitOffsets(unit, offset)
 
 	def _get_clipboardText(self):
@@ -360,7 +385,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		return "\r\n".join(blocks)
 
 	def activate(self):
-		self.obj._activatePosition(self)
+		self.obj._activatePosition(info=self)
 
 	def getMathMl(self, field):
 		docHandle = int(field["controlIdentifier_docHandle"])
@@ -408,13 +433,20 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 	def loadBuffer(self):
 		self.isLoading = True
 		self._loadProgressCallLater = wx.CallLater(1000, self._loadProgress)
-		threading.Thread(target=self._loadBuffer).start()
+		threading.Thread(
+			name=f"{self.__class__.__module__}.{self.loadBuffer.__qualname__}",
+			target=self._loadBuffer).start(
+		)
 
 	def _loadBuffer(self):
 		try:
 			if log.isEnabledFor(log.DEBUG):
 				startTime = time.time()
-			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,unicode(self.backendName))
+			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(
+				self.rootNVDAObject.appModule.helperLocalBindingHandle,
+				self.rootDocHandle,self.rootID,
+				self.backendName
+			)
 			if not self.VBufHandle:
 				raise RuntimeError("Could not remotely create virtualBuffer")
 		except:
@@ -455,7 +487,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	def isNVDAObjectPartOfLayoutTable(self,obj):
 		docHandle,ID=self.getIdentifierFromNVDAObject(obj)
-		ID=unicode(ID)
+		ID=str(ID)
 		info=self.makeTextInfo(obj)
 		info.collapse()
 		info.expand(textInfos.UNIT_CHARACTER)
@@ -479,6 +511,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 				break
 		return tableLayout
 
+	@abstractmethod
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
 		"""Retrieve an NVDAObject for a given node identifier.
 		Subclasses must override this method.
@@ -491,6 +524,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		"""
 		raise NotImplementedError
 
+	@abstractmethod
 	def getIdentifierFromNVDAObject(self,obj):
 		"""Retreaves the virtualBuffer field identifier from an NVDAObject.
 		@param obj: the NVDAObject to retreave the field identifier from.
@@ -618,14 +652,14 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			else:
 				raise LookupError
 
-	def _isSuitableNotLinkBlock(self,range):
-		return (range._endOffset-range._startOffset)>=self.NOT_LINK_BLOCK_MIN_LEN
+	def _isSuitableNotLinkBlock(self, textRange):
+		return (textRange._endOffset - textRange._startOffset) >= self.NOT_LINK_BLOCK_MIN_LEN
 
-	def getEnclosingContainerRange(self,range):
+	def getEnclosingContainerRange(self, textRange):
 		formatConfig=config.conf['documentFormatting'].copy()
 		formatConfig.update({"reportBlockQuotes":True,"reportTables":True,"reportLists":True,"reportFrames":True})
 		controlFields=[]
-		for cmd in range.getTextWithFields():
+		for cmd in textRange.getTextWithFields():
 			if not isinstance(cmd,textInfos.FieldCommand) or cmd.command!="controlStart":
 				break
 			controlFields.append(cmd.field)
@@ -638,7 +672,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		if not containerField: return None
 		docHandle=int(containerField['controlIdentifier_docHandle'])
 		ID=int(containerField['controlIdentifier_ID'])
-		offsets=range._getOffsetsFromFieldIdentifier(docHandle,ID)
+		offsets = textRange._getOffsetsFromFieldIdentifier(docHandle,ID)
 		return self.makeTextInfo(textInfos.offsets.Offsets(*offsets))
 
 	@classmethod
@@ -658,7 +692,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	def getControlFieldForNVDAObject(self, obj):
 		docHandle, objId = self.getIdentifierFromNVDAObject(obj)
-		objId = unicode(objId)
+		objId = str(objId)
 		info = self.makeTextInfo(obj)
 		info.collapse()
 		info.expand(textInfos.UNIT_CHARACTER)
@@ -669,6 +703,28 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			if fieldId == objId:
 				return item.field
 		raise LookupError
+
+	def _isNVDAObjectInApplication_noWalk(self, obj):
+		inApp = super(VirtualBuffer, self)._isNVDAObjectInApplication_noWalk(obj)
+		if inApp is not None:
+			return inApp
+		# If the object is in the buffer, it's definitely not in an application.
+		try:
+			docHandle, objId = self.getIdentifierFromNVDAObject(obj)
+		except:
+			log.debugWarning("getIdentifierFromNVDAObject failed. "
+				"Object probably died while walking ancestors.", exc_info=True)
+			return None
+		node = VBufRemote_nodeHandle_t()
+		if not self.VBufHandle:
+			return None
+		try:
+			NVDAHelper.localLib.VBuf_getControlFieldNodeWithIdentifier(self.VBufHandle, docHandle, objId,ctypes.byref(node))
+		except WindowsError:
+			return None
+		if node:
+			return False
+		return None
 
 	__gestures = {
 		"kb:NVDA+f5": "refreshBuffer",

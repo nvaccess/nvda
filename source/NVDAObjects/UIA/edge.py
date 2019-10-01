@@ -80,10 +80,10 @@ class EdgeTextInfo(UIATextInfo):
 				if ('label=' in ariaProperties)  or ('labelledby=' in ariaProperties):
 					return element
 				try:
-					range=self.obj.UIATextPattern.rangeFromChild(element)
+					textRange=self.obj.UIATextPattern.rangeFromChild(element)
 				except COMError:
 					return
-				text=range.getText(-1)
+				text = textRange.getText(-1)
 				if not text or text.isspace():
 					return element
 			element=walker.getParentElementBuildCache(element,cacheRequest)
@@ -94,15 +94,15 @@ class EdgeTextInfo(UIATextInfo):
 		if not element:
 			return
 		try:
-			range=self.obj.UIATextPattern.rangeFromChild(element)
+			textRange=self.obj.UIATextPattern.rangeFromChild(element)
 		except COMError:
 			return
 		if not back:
-			range.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,range,UIAHandler.TextPatternRangeEndpoint_End)
-			range.move(UIAHandler.TextUnit_Character,-1)
+			textRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start, textRange, UIAHandler.TextPatternRangeEndpoint_End)
+			textRange.move(UIAHandler.TextUnit_Character, -1)
 		else:
-			range.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,range,UIAHandler.TextPatternRangeEndpoint_Start)
-		self._rangeObj=range
+			textRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End, textRange, UIAHandler.TextPatternRangeEndpoint_Start)
+		self._rangeObj=textRange
 
 	def _collapsedMove(self,unit,direction,skipReplacedContent):
 		"""A simple collapsed move (i.e. both ends move together), but whether it classes replaced content as one character stop can be configured via the skipReplacedContent argument."""
@@ -202,7 +202,7 @@ class EdgeTextInfo(UIATextInfo):
 		index=0
 		while index<len(fields):
 			field=fields[index]
-			if index>1 and isinstance(field,basestring) and field.isspace():
+			if index>1 and isinstance(field,str) and field.isspace():
 				prevField=fields[index-2]
 				if isinstance(prevField,textInfos.FieldCommand) and prevField.command=="controlEnd":
 					del fields[index-1:index+1]
@@ -212,9 +212,9 @@ class EdgeTextInfo(UIATextInfo):
 		startCount=0
 		lastStartIndex=None
 		numFields=len(fields)
-		for index in xrange(numFields-1,-1,-1):
+		for index in range(numFields-1,-1,-1):
 			field=fields[index]
-			if isinstance(field,basestring):
+			if isinstance(field,str):
 				break
 			elif isinstance(field,textInfos.FieldCommand) and field.command=="controlStart" and not field.field.get('embedded'):
 				startCount+=1
@@ -224,7 +224,7 @@ class EdgeTextInfo(UIATextInfo):
 		# Remove any content from fields with a content attribute
 		numFields=len(fields)
 		curField=None
-		for index in xrange(numFields-1,-1,-1):
+		for index in range(numFields-1,-1,-1):
 			field=fields[index]
 			if not curField and isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd" and field.field.get('content'):
 				curField=field.field
@@ -413,13 +413,13 @@ class EdgeNode(UIA):
 	_TextInfo=EdgeTextInfo_preGapRemoval if _edgeIsPreGapRemoval else EdgeTextInfo
 
 	def getNormalizedUIATextRangeFromElement(self,UIAElement):
-		range=super(EdgeNode,self).getNormalizedUIATextRangeFromElement(UIAElement)
-		if not range or not self._edgeIsPreGapRemoval:
-			return range
+		textRange = super().getNormalizedUIATextRangeFromElement(UIAElement)
+		if not textRange or not self._edgeIsPreGapRemoval:
+			return textRange
 		#Move the start of a UIA text range past any element start character stops
-		lastCharInfo=EdgeTextInfo_preGapRemoval(self,None,_rangeObj=range)
-		lastCharInfo._rangeObj=range
-		charInfo=lastCharInfo.copy()
+		lastCharInfo = EdgeTextInfo_preGapRemoval(self,None, _rangeObj=textRange)
+		lastCharInfo._rangeObj = textRange
+		charInfo = lastCharInfo.copy()
 		charInfo.collapse()
 		while super(EdgeTextInfo,charInfo).move(textInfos.UNIT_CHARACTER,1)!=0:
 			charInfo.setEndPoint(lastCharInfo,"startToStart")
@@ -427,7 +427,7 @@ class EdgeNode(UIA):
 				break
 			lastCharInfo.setEndPoint(charInfo,"startToEnd")
 			charInfo.collapse(True)
-		return range
+		return textRange
 
 	def _get_role(self):
 		role=super(EdgeNode,self).role
@@ -555,7 +555,8 @@ def EdgeHeadingQuicknavIterator(itemType,document,position,direction="next"):
 	# However, sometimes when ARIA is used, the level on the element may not match the level in the text attributes.
 	# Therefore we need to search for all levels 1 through 6, even if a specific level is specified.
 	# Though this is still much faster than searching text attributes alone
-	levels=range(1,7)
+	# #9078: this must be wrapped inside a list, as Python 3 will treat this as iteration.
+	levels=list(range(1,7))
 	condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_TextControlTypeId,UIAHandler.UIA_LevelPropertyId:levels})
 	levelString=itemType[7:]
 	for item in UIAControlQuicknavIterator(itemType,document,position,condition,direction=direction,itemClass=EdgeHeadingQuickNavItem):

@@ -15,8 +15,10 @@ They are implemented using the L{ContentRecognizer} class.
 
 from collections import namedtuple
 import textInfos.offsets
+from abc import ABCMeta, abstractmethod
+from locationHelper import RectLTWH
 
-class ContentRecognizer(object):
+class ContentRecognizer(object, metaclass=ABCMeta):
 	"""Implementation of a content recognizer.
 	"""
 
@@ -32,6 +34,7 @@ class ContentRecognizer(object):
 		"""
 		return 1
 
+	@abstractmethod
 	def recognize(self, pixels, imageInfo, onResult):
 		"""Asynchronously recognize content from an image.
 		This method should not block.
@@ -50,6 +53,7 @@ class ContentRecognizer(object):
 		"""
 		raise NotImplementedError
 
+	@abstractmethod
 	def cancel(self):
 		"""Cancel the recognition in progress (if any).
 		"""
@@ -114,7 +118,17 @@ class RecogImageInfo(object):
 		"""
 		return self.screenTop + int(y / self.resizeFactor)
 
-class RecognitionResult(object):
+	def convertWidthToScreen(self, width):
+		"""Convert width in the recognized image to the width on the screen.
+		"""
+		return int(width / self.resizeFactor)
+
+	def convertHeightToScreen(self, height):
+		"""Convert height in the recognized image to the height on the screen.
+		"""
+		return int(height / self.resizeFactor)
+
+class RecognitionResult(object, metaclass=ABCMeta):
 	"""Provides access to the result of recognition by a recognizer.
 	The result is textual, but to facilitate navigation by word, line, etc.
 	and to allow for retrieval of screen coordinates within the text,
@@ -123,6 +137,7 @@ class RecognitionResult(object):
 	Most implementers should use one of the subclasses provided in this module.
 	"""
 
+	@abstractmethod
 	def makeTextInfo(self, obj, position):
 		"""Make a TextInfo within the recognition result text at the requested position.
 		@param obj: The object to return for the C{obj} property of the TextInfo.
@@ -135,7 +150,7 @@ class RecognitionResult(object):
 
 # Used internally by LinesWordsResult.
 # (Lwr is short for LinesWordsResult.)
-LwrWord = namedtuple("LwrWord", ("offset", "left", "top"))
+LwrWord = namedtuple("LwrWord", ("offset", "left", "top", "width", "height"))
 
 class LinesWordsResult(RecognitionResult):
 	"""A L{RecognizerResult} which can create TextInfos based on a simple lines/words data structure.
@@ -186,7 +201,9 @@ class LinesWordsResult(RecognitionResult):
 					self.textLen += 1
 				self.words.append(LwrWord(self.textLen,
 					self.imageInfo.convertXToScreen(word["x"]),
-					self.imageInfo.convertYToScreen(word["y"])))
+					self.imageInfo.convertYToScreen(word["y"]),
+					self.imageInfo.convertWidthToScreen(word["width"]),
+					self.imageInfo.convertHeightToScreen(word["height"])))
 				text = word["text"]
 				self._textList.append(text)
 				self.textLen += len(text)
@@ -202,6 +219,8 @@ class LwrTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""TextInfo used by L{LinesWordsResult}.
 	This should only be instantiated by L{LinesWordsResult}.
 	"""
+
+	encoding = None
 
 	def __init__(self, obj, position, result):
 		self.result = result
@@ -234,14 +253,14 @@ class LwrTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# offset is in the last word (or offset is too big).
 		return (start, self.result.textLen)
 
-	def _getPointFromOffset(self, offset):
+	def _getBoundingRectFromOffset(self, offset):
 		word = None
 		for nextWord in self.result.words:
 			if nextWord.offset > offset:
 				# Stop! We need the word before this.
 				break
 			word = nextWord
-		return textInfos.Point(word.left, word.top)
+		return RectLTWH(word.left, word.top, word.width, word.height)
 
 class SimpleTextResult(RecognitionResult):
 	"""A L{RecognitionResult} which presents a simple text string.
@@ -264,6 +283,8 @@ class SimpleResultTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""TextInfo used by L{SimpleTextResult}.
 	This should only be instantiated by L{SimpleTextResult}.
 	"""
+
+	encoding = None
 
 	def __init__(self, obj, position, result):
 		self.result = result

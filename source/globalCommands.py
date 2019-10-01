@@ -32,6 +32,7 @@ import winKernel
 import treeInterceptorHandler
 import browseMode
 import scriptHandler
+from scriptHandler import script
 import ui
 import braille
 import brailleInput
@@ -41,6 +42,8 @@ import characterProcessing
 from baseObject import ScriptableObject
 import core
 import winVersion
+from base64 import b16encode
+import vision
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -60,9 +63,15 @@ SCRCAT_SPEECH = _("Speech")
 #: Script category for configuration dialogs commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_CONFIG = _("Configuration")
+#: Script category for configuration profile activation and management commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_CONFIG_PROFILES = _("Configuration profiles")
 #: Script category for Braille commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_BRAILLE = _("Braille")
+#: Script category for Vision commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_VISION = _("Vision")
 #: Script category for tools commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_TOOLS = pgettext('script category', 'Tools')
@@ -152,8 +161,8 @@ class GlobalCommands(ScriptableObject):
 	def script_leftMouseClick(self,gesture):
 		# Translators: Reported when left mouse button is clicked.
 		ui.message(_("Left click"))
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
 	# Translators: Input help mode message for left mouse click command.
 	script_leftMouseClick.__doc__=_("Clicks the left mouse button once at the current mouse position")
 	script_leftMouseClick.category=SCRCAT_MOUSE
@@ -161,8 +170,8 @@ class GlobalCommands(ScriptableObject):
 	def script_rightMouseClick(self,gesture):
 		# Translators: Reported when right mouse button is clicked.
 		ui.message(_("Right click"))
-		winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTDOWN,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTUP,0,0,None,None)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTDOWN,0,0)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTUP,0,0)
 	# Translators: Input help mode message for right mouse click command.
 	script_rightMouseClick.__doc__=_("Clicks the right mouse button once at the current mouse position")
 	script_rightMouseClick.category=SCRCAT_MOUSE
@@ -171,11 +180,11 @@ class GlobalCommands(ScriptableObject):
 		if winUser.getKeyState(winUser.VK_LBUTTON)&32768:
 			# Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 			ui.message(_("Left mouse button unlock"))
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
 		else:
 			# Translators: This is presented when the left mouse button is locked down (used for drag and drop).
 			ui.message(_("Left mouse button lock"))
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
 	# Translators: Input help mode message for left mouse lock/unlock toggle command.
 	script_toggleLeftMouseButton.__doc__=_("Locks or unlocks the left mouse button")
 	script_toggleLeftMouseButton.category=SCRCAT_MOUSE
@@ -184,11 +193,11 @@ class GlobalCommands(ScriptableObject):
 		if winUser.getKeyState(winUser.VK_RBUTTON)&32768:
 			# Translators: This is presented when the right mouse button lock is released (used for drag and drop).
 			ui.message(_("Right mouse button unlock"))
-			winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTUP,0,0,None,None)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTUP,0,0)
 		else:
 			# Translators: This is presented when the right mouse button is locked down (used for drag and drop).
 			ui.message(_("Right mouse button lock"))
-			winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTDOWN,0,0,None,None)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTDOWN,0,0)
 	# Translators: Input help mode message for right mouse lock/unlock command.
 	script_toggleRightMouseButton.__doc__=_("Locks or unlocks the right mouse button")
 	script_toggleRightMouseButton.category=SCRCAT_MOUSE
@@ -205,7 +214,7 @@ class GlobalCommands(ScriptableObject):
 		if not info or info.isCollapsed:
 			speech.speakMessage(_("No selection"))
 		else:
-			speech.speakMessage(_("Selected %s")%info.text)
+			speech.speakTextSelected(info.text)
 	# Translators: Input help mode message for report current selection command.
 	script_reportCurrentSelection.__doc__=_("Announces the current selection in edit controls and documents. If there is no selection it says so.")
 	script_reportCurrentSelection.category=SCRCAT_SYSTEMCARET
@@ -702,8 +711,8 @@ class GlobalCommands(ScriptableObject):
 				# Translators: Reported when the object has no location for the mouse to move to it.
 				ui.message(_("Object has no location"))
 				return
-			x=left+(width/2)
-			y=top+(height/2)
+			x=left+(width//2)
+			y=top+(height//2)
 		winUser.setCursorPos(x,y)
 		mouseHandler.executeMouseMoveEvent(x,y)
 	# Translators: Input help mode message for move mouse to navigator object command.
@@ -774,8 +783,9 @@ class GlobalCommands(ScriptableObject):
 		if scriptHandler.getLastScriptRepeatCount()>=1:
 			if curObject.TextInfo!=NVDAObjectTextInfo:
 				textList=[]
-				if curObject.name and isinstance(curObject.name, basestring) and not curObject.name.isspace():
-					textList.append(curObject.name)
+				name = curObject.name
+				if isinstance(name, str) and not name.isspace():
+					textList.append(name)
 				try:
 					info=curObject.makeTextInfo(textInfos.POSITION_SELECTION)
 					if not info.isCollapsed:
@@ -788,7 +798,10 @@ class GlobalCommands(ScriptableObject):
 					# No caret or selection on this object.
 					pass
 			else:
-				textList=[prop for prop in (curObject.name, curObject.value) if prop and isinstance(prop, basestring) and not prop.isspace()]
+				textList=[]
+				for prop in (curObject.name, curObject.value):
+					if isinstance(prop,str) and not prop.isspace():
+						textList.append(prop)
 			text=" ".join(textList)
 			if len(text)>0 and not text.isspace():
 				if scriptHandler.getLastScriptRepeatCount()==1:
@@ -979,8 +992,9 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_previousLine(self,gesture):
 		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_LINE)
-		info.collapse()
+		if info._expandCollapseBeforeReview:
+			info.expand(textInfos.UNIT_LINE)
+			info.collapse()
 		res=info.move(textInfos.UNIT_LINE,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
@@ -1010,8 +1024,9 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_nextLine(self,gesture):
 		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_LINE)
-		info.collapse()
+		if info._expandCollapseBeforeReview:
+			info.expand(textInfos.UNIT_LINE)
+			info.collapse()
 		res=info.move(textInfos.UNIT_LINE,1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
@@ -1037,8 +1052,9 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_previousWord(self,gesture):
 		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_WORD)
-		info.collapse()
+		if info._expandCollapseBeforeReview:
+			info.expand(textInfos.UNIT_WORD)
+			info.collapse()
 		res=info.move(textInfos.UNIT_WORD,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
@@ -1067,8 +1083,9 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_nextWord(self,gesture):
 		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_WORD)
-		info.collapse()
+		if info._expandCollapseBeforeReview:
+			info.expand(textInfos.UNIT_WORD)
+			info.collapse()
 		res=info.move(textInfos.UNIT_WORD,1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
@@ -1097,8 +1114,9 @@ class GlobalCommands(ScriptableObject):
 		lineInfo=api.getReviewPosition().copy()
 		lineInfo.expand(textInfos.UNIT_LINE)
 		charInfo=api.getReviewPosition().copy()
-		charInfo.expand(textInfos.UNIT_CHARACTER)
-		charInfo.collapse()
+		if charInfo._expandCollapseBeforeReview:
+			charInfo.expand(textInfos.UNIT_CHARACTER)
+			charInfo.collapse()
 		res=charInfo.move(textInfos.UNIT_CHARACTER,-1)
 		if res==0 or charInfo.compareEndPoints(lineInfo,"startToStart")<0:
 			# Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
@@ -1127,9 +1145,13 @@ class GlobalCommands(ScriptableObject):
 		else:
 			try:
 				c = ord(info.text)
+			except TypeError:
+				c = None
+			if c is not None:
 				speech.speakMessage("%d," % c)
 				speech.speakSpelling(hex(c))
-			except:
+			else:
+				log.debugWarning("Couldn't calculate ordinal for character %r" % info.text)
 				speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for report current character under review cursor command.
 	script_review_currentCharacter.__doc__=_("Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal")
@@ -1139,8 +1161,9 @@ class GlobalCommands(ScriptableObject):
 		lineInfo=api.getReviewPosition().copy()
 		lineInfo.expand(textInfos.UNIT_LINE)
 		charInfo=api.getReviewPosition().copy()
-		charInfo.expand(textInfos.UNIT_CHARACTER)
-		charInfo.collapse()
+		if charInfo._expandCollapseBeforeReview:
+			charInfo.expand(textInfos.UNIT_CHARACTER)
+			charInfo.collapse()
 		res=charInfo.move(textInfos.UNIT_CHARACTER,1)
 		if res==0 or charInfo.compareEndPoints(lineInfo,"endToEnd")>=0:
 			# Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
@@ -1168,6 +1191,42 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for move review cursor to end of current line command.
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
 	script_review_endOfLine.category=SCRCAT_TEXTREVIEW
+
+	def _getCurrentLanguageForTextInfo(self, info):
+		curLanguage = None
+		if config.conf['speech']['autoLanguageSwitching']:
+			for field in info.getTextWithFields({}):
+				if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
+					curLanguage = field.field.get('language')
+		if curLanguage is None:
+			curLanguage = speech.getCurrentLanguage()
+		return curLanguage
+
+	@script(
+		# Translators: Input help mode message for Review Current Symbol command.
+		description=_("Reports the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode"),
+		category=SCRCAT_TEXTREVIEW,
+	)
+	def script_review_currentSymbol(self,gesture):
+		info=api.getReviewPosition().copy()
+		info.expand(textInfos.UNIT_CHARACTER)
+		curLanguage = self._getCurrentLanguageForTextInfo(info)
+		text = info.text
+		expandedSymbol = characterProcessing.processSpeechSymbol(curLanguage, text)
+		if expandedSymbol == text:
+			# Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+			ui.message(_("No symbol replacement"))
+			return
+		repeats=scriptHandler.getLastScriptRepeatCount()
+		if repeats == 0:
+			ui.message(expandedSymbol)
+		else:
+			# Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+			message = _("Character: {}\nReplacement: {}").format(text, expandedSymbol)
+			languageDescription = languageHandler.getLanguageDescription(curLanguage)
+			# Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+			title = _("Expanded symbol ({})").format(languageDescription)
+			ui.browseableMessage(message, title)
 
 	def script_speechMode(self,gesture):
 		curMode=speech.speechMode
@@ -1203,7 +1262,9 @@ class GlobalCommands(ScriptableObject):
 			parent.treeInterceptor.rootNVDAObject.setFocus()
 			import eventHandler
 			import wx
-			wx.CallLater(50,eventHandler.executeEvent,"gainFocus",parent.treeInterceptor.rootNVDAObject)
+			# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
+			# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
+			core.callLater(50,eventHandler.executeEvent,"gainFocus",parent.treeInterceptor.rootNVDAObject)
 	# Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 	script_moveToParentTreeInterceptor.__doc__=_("Moves the focus to the next closest document that contains the focus")
 	script_moveToParentTreeInterceptor.category=SCRCAT_FOCUS
@@ -1212,10 +1273,7 @@ class GlobalCommands(ScriptableObject):
 		focus = api.getFocusObject()
 		vbuf = focus.treeInterceptor
 		if not vbuf:
-			# #2023: Search the focus and its ancestors for an object for which browse mode is optional.
 			for obj in itertools.chain((api.getFocusObject(),), reversed(api.getFocusAncestors())):
-				if obj.shouldCreateTreeInterceptor:
-					continue
 				try:
 					obj.treeInterceptorClass
 				except:
@@ -1224,8 +1282,7 @@ class GlobalCommands(ScriptableObject):
 			else:
 				return
 			# Force the tree interceptor to be created.
-			obj.shouldCreateTreeInterceptor = True
-			ti = treeInterceptorHandler.update(obj)
+			ti = treeInterceptorHandler.update(obj, force=True)
 			if not ti:
 				return
 			if focus in ti:
@@ -1235,7 +1292,11 @@ class GlobalCommands(ScriptableObject):
 				# Then ensure that browse mode is reported here. From the users point of view, browse mode was turned on.
 				if isinstance(ti,browseMode.BrowseModeTreeInterceptor) and not ti.passThrough:
 					browseMode.reportPassThrough(ti,False)
-					braille.handler.handleGainFocus(ti)
+					# #8716: Only let braille handle the focus when the tree interceptor is ready.
+					# If not ready (e.g. a loading virtual buffer),
+					# the buffer will take responsibility to update braille as soon as it completed loading.
+					if ti.isReady:
+						braille.handler.handleGainFocus(ti)
 			return
 
 		if not isinstance(vbuf, browseMode.BrowseModeTreeInterceptor):
@@ -1411,12 +1472,31 @@ class GlobalCommands(ScriptableObject):
 	script_toggleMouseTracking.__doc__=_("Toggles the reporting of information as the mouse moves")
 	script_toggleMouseTracking.category=SCRCAT_MOUSE
 
+	def script_toggleMouseTextResolution(self,gesture):
+		values = textInfos.MOUSE_TEXT_RESOLUTION_UNITS
+		labels = [textInfos.unitLabels[x] for x in values]
+		try:
+			index = values.index(config.conf["mouse"]["mouseTextUnit"])
+		except ValueError:
+			log.debugWarning("Couldn't get current mouse text resolution setting", exc_info=True)
+			default = 				config.conf.getConfigValidation(("mouse", "mouseTextUnit")).default
+			index = values.index(default)
+		newIndex = (index+1) % len(values)
+		config.conf["mouse"]["mouseTextUnit"]= values[newIndex]
+		# Translators: Reports the new state of the mouse text unit resolution:.
+		# %s will be replaced with the new label.
+		# For example, the full message might be "Mouse text unit resolution character"
+		ui.message(_("Mouse text unit resolution %s")%labels[newIndex])
+	# Translators: Input help mode message for toggle mouse text unit resolution command.
+	script_toggleMouseTextResolution.__doc__=_("Toggles how much text will be spoken when the mouse moves")
+	script_toggleMouseTextResolution.category=SCRCAT_MOUSE
+
 	def script_title(self,gesture):
 		obj=api.getForegroundObject()
 		title=obj.name
-		if not isinstance(title,basestring) or not title or title.isspace():
+		if not isinstance(title,str) or not title or title.isspace():
 			title=obj.appModule.appName if obj.appModule else None
-			if not isinstance(title,basestring) or not title or title.isspace():
+			if not isinstance(title,str) or not title or title.isspace():
 				# Translators: Reported when there is no title text for current program or window.
 				title=_("No title")
 		repeatCount=scriptHandler.getLastScriptRepeatCount()
@@ -1445,9 +1525,21 @@ class GlobalCommands(ScriptableObject):
 		speech.speakMessage(text)
 		log.info(text)
 
+	def script_startWxInspectionTool(self, gesture):
+		import wx.lib.inspection
+		wx.lib.inspection.InspectionTool().Show()
+	script_startWxInspectionTool.__doc__ = _(
+		# Translators: GUI development tool, to get information about the components used in the NVDA GUI
+		"Opens the WX GUI inspection tool. Used to get more information about the state of GUI components."
+	)
+	script_startWxInspectionTool.category = SCRCAT_TOOLS
+
 	def script_navigatorObject_devInfo(self,gesture):
 		obj=api.getNavigatorObject()
-		log.info("Developer info for navigator object:\n%s" % "\n".join(obj.devInfo), activateLogViewer=True)
+		if hasattr(obj, "devInfo"):
+			log.info("Developer info for navigator object:\n%s" % "\n".join(obj.devInfo), activateLogViewer=True)
+		else:
+			log.info("No developer info for navigator object", activateLogViewer=True)
 	# Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 	script_navigatorObject_devInfo.__doc__ = _("Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined.")
 	script_navigatorObject_devInfo.category=SCRCAT_TOOLS
@@ -1517,6 +1609,20 @@ class GlobalCommands(ScriptableObject):
 	script_toggleFocusMovesNavigatorObject.__doc__=_("Toggles on and off the movement of the navigator object due to focus changes") 
 	script_toggleFocusMovesNavigatorObject.category=SCRCAT_OBJECTNAVIGATION
 
+	def script_toggleAutoFocusFocusableElements(self,gesture):
+		if config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+			# Translators: presented when toggled.
+			state = _("Automatically set system focus to focusable elements off")
+			config.conf["virtualBuffers"]["autoFocusFocusableElements"]=False
+		else:
+			# Translators: presented when toggled.
+			state = _("Automatically set system focus to focusable elements on")
+			config.conf["virtualBuffers"]["autoFocusFocusableElements"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle auto focus focusable elements command.
+	script_toggleAutoFocusFocusableElements.__doc__=_("Toggles on and off automatic movement of the system focus due to browse mode commands") 
+	script_toggleAutoFocusFocusableElements.category=inputCore.SCRCAT_BROWSEMODE
+
 	#added by Rui Batista<ruiandrebatista@gmail.com> to implement a battery status script
 	def script_say_battery_status(self,gesture):
 		UNKNOWN_BATTERY_STATUS = 0xFF
@@ -1536,7 +1642,7 @@ class GlobalCommands(ScriptableObject):
 		if sps.ACLineStatus & AC_ONLINE: text += _("AC power on")
 		elif sps.BatteryLifeTime!=0xffffffff: 
 			# Translators: This is the estimated remaining runtime of the laptop battery.
-			text += _("{hours:d} hours and {minutes:d} minutes remaining") .format(hours=sps.BatteryLifeTime / 3600, minutes=(sps.BatteryLifeTime % 3600) / 60)
+			text += _("{hours:d} hours and {minutes:d} minutes remaining") .format(hours=sps.BatteryLifeTime // 3600, minutes=(sps.BatteryLifeTime % 3600) // 60)
 		ui.message(text)
 	# Translators: Input help mode message for report battery status command.
 	script_say_battery_status.__doc__ = _("Reports battery status and time remaining if AC is not plugged in")
@@ -1552,17 +1658,17 @@ class GlobalCommands(ScriptableObject):
 
 	def script_reportAppModuleInfo(self,gesture):
 		focus=api.getFocusObject()
-		appName=appModuleHandler.getAppNameFromProcessID(focus.processID,True)
-		# Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
-		# Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
-		# If there is an appModule for the current program, NVDA speaks the name of the module after presenting this message.
-		message = _("Currently running application is %s") % appName
+		message = ''
 		mod=focus.appModule
 		if isinstance(mod,appModuleHandler.AppModule) and type(mod)!=appModuleHandler.AppModule:
-			# Translators: Indicates the name of the appModule for the current program (example output: and currently loaded module is explorer).
-			# For example, the complete message for Windows explorer is: Currently running application is explorer.exe and currently loaded module is explorer.
+			# Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 			# This message will not be presented if there is no module for the current program.
-			message += _(" and currently loaded module is %s") % mod.appModuleName.split(".")[0]
+			message = _(" %s module is loaded. ") % mod.appModuleName.split(".")[0]
+		appName=appModuleHandler.getAppNameFromProcessID(focus.processID,True)
+		# Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
+		# Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
+		# For example, the complete message for Windows explorer is: "explorer module is loaded. Explorer.exe is currenty running."
+		message +=_(" %s is currently running.") % appName
 		ui.message(message)
 	# Translators: Input help mode message for report current program name and app module name command.
 	script_reportAppModuleInfo.__doc__ = _("Speaks the filename of the active application along with the name of the currently loaded appModule")
@@ -1810,7 +1916,7 @@ class GlobalCommands(ScriptableObject):
 			text = api.getClipData()
 		except:
 			text = None
-		if not text or not isinstance(text,basestring) or text.isspace():
+		if not text or not isinstance(text,str) or text.isspace():
 			# Translators: Presented when there is no text on the clipboard.
 			ui.message(_("There is no text on the clipboard"))
 			return
@@ -2126,7 +2232,7 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onConfigProfilesCommand, None)
 	# Translators: Describes the command to open the Configuration Profiles dialog.
 	script_activateConfigProfilesDialog.__doc__ = _("Shows the NVDA Configuration Profiles dialog")
-	script_activateConfigProfilesDialog.category=SCRCAT_CONFIG
+	script_activateConfigProfilesDialog.category=SCRCAT_CONFIG_PROFILES
 
 	def script_toggleConfigProfileTriggers(self,gesture):
 		if config.conf.profileTriggersEnabled:
@@ -2175,6 +2281,49 @@ class GlobalCommands(ScriptableObject):
 		recogUi.recognizeNavigatorObject(recog)
 	# Translators: Describes a command.
 	script_recognizeWithUwpOcr.__doc__ = _("Recognizes the content of the current navigator object with Windows 10 OCR")
+
+	@script(
+		# Translators: Describes a command.
+		description=_(
+			"Toggles the state of the screen curtain, "
+			"either by making the screen black or SHOWING the contents of the screen. "
+			"If pressed to enable once, the screen curtain is enabled until you restart NVDA. "
+			"If pressed tree times, it is enabled until you disable it"
+		),
+		category=SCRCAT_VISION
+	)
+	def script_toggleScreenCurtain(self, gesture):
+		message = None
+		try:
+			screenCurtainName = "screenCurtain"
+			if not vision.getProviderClass(screenCurtainName).canStart():
+				# Translators: Reported when the screen curtain is not available.
+				message = _("Screen curtain not available")
+				return
+			scriptCount = scriptHandler.getLastScriptRepeatCount()
+			if scriptCount == 0 and screenCurtainName in vision.handler.providers:
+				vision.handler.terminateProvider(screenCurtainName)
+				# Translators: Reported when the screen curtain is disabled.
+				message = _("Screen curtain disabled")
+			elif scriptCount in (0, 2):
+				temporary = scriptCount == 0
+				if not vision.handler.initializeProvider(
+					screenCurtainName,
+					temporary=temporary,
+				):
+					# Translators: Reported when the screen curtain could not be enabled.
+					message = _("Could not enable screen curtain")
+					return
+				else:
+					if temporary:
+						# Translators: Reported when the screen curtain is temporarily enabled.
+						message = _("Temporary Screen curtain, enabled until next restart")
+					else:
+						# Translators: Reported when the screen curtain is enabled.
+						message = _("Screen curtain enabled")
+		finally:
+			if message is not None:
+				ui.message(message, speechPriority=speech.priorities.SPRI_NOW)
 
 	__gestures = {
 		# Basic
@@ -2334,6 +2483,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+5": "toggleReportDynamicContentChanges",
 		"kb:NVDA+6": "toggleCaretMovesReviewCursor",
 		"kb:NVDA+7": "toggleFocusMovesNavigatorObject",
+		"kb:NVDA+8": "toggleAutoFocusFocusableElements",
 		"kb:NVDA+control+t": "braille_toggleTether",
 
 		# Synth settings ring
@@ -2365,3 +2515,113 @@ class GlobalCommands(ScriptableObject):
 #: The single global commands instance.
 #: @type: L{GlobalCommands}
 commands = GlobalCommands()
+
+class ConfigProfileActivationCommands(ScriptableObject):
+	"""Singleton scriptable object that collects scripts for available configuration profiles."""
+
+	scriptCategory = SCRCAT_CONFIG_PROFILES
+
+	@classmethod
+	def __new__(cls, *args, **kwargs):
+		# Iterate through the available profiles, creating scripts for them.
+		for profile in config.conf.listProfiles():
+			cls.addScriptForProfile(profile)
+		return 		super(ConfigProfileActivationCommands, cls).__new__(cls)
+
+	@classmethod
+	def _getScriptNameForProfile(cls, name):
+		invalidChars = set()
+		for c in name:
+			if not c.isalnum() and c != "_":
+				invalidChars.add(c)
+		for c in invalidChars:
+			name=name.replace(c, b16encode(c.encode()).decode("ascii"))
+		return "profile_%s" % name
+
+	@classmethod
+	def _profileScript(cls, name):
+		if gui.shouldConfigProfileTriggersBeSuspended():
+			# Translators: a message indicating that configuration profiles can't be activated using gestures,
+			# due to profile activation being suspended.
+			state = _("Can't change the active profile while an NVDA dialog is open")
+		elif config.conf.profiles[-1].name == name:
+			config.conf.manualActivateProfile(None)
+			# Translators: a message when a configuration profile is manually deactivated.
+			# {profile} is replaced with the profile's name.
+			state = _("{profile} profile deactivated").format(profile=name)
+		else:
+			config.conf.manualActivateProfile(name)
+			# Translators: a message when a configuration profile is manually activated.
+			# {profile} is replaced with the profile's name.
+			state = _("{profile} profile activated").format(profile=name)
+		ui.message(state)
+
+	@classmethod
+	def addScriptForProfile(cls, name):
+		"""Adds a script for the given configuration profile.
+		This method will not check a profile's existence.
+		@param name: The name of the profile to add a script for.
+		@type name: str
+		"""
+		script = lambda self, gesture: cls._profileScript(name)
+		funcName = script.__name__ = "script_%s" % cls._getScriptNameForProfile(name)
+		# Just set the doc string of the script, using the decorator is overkill here.
+		# Translators: The description shown in input help for a script that
+		# activates or deactivates a config profile.
+		# {profile} is replaced with the profile's name.
+		script.__doc__ = _("Activates or deactivates the {profile} configuration profile").format(profile=name)
+		setattr(cls, funcName, script)
+
+	@classmethod
+	def removeScriptForProfile(cls, name):
+		"""Removes a script for the given configuration profile.
+		@param name: The name of the profile to remove a script for.
+		@type name: str
+		"""
+		scriptName = cls._getScriptNameForProfile(name)
+		cls._moveGesturesForProfileActivationScript(scriptName)
+		delattr(cls, "script_%s" % scriptName)
+
+	@classmethod
+	def _moveGesturesForProfileActivationScript(cls, oldScriptName, newScriptName=None):
+		"""Patches the user gesture map to reflect updates to profile scripts.
+		@param oldScriptName: The current name of the profile activation script.
+		@type oldScriptName: str
+		@param newScriptName: The new name for the profile activation script, if any.
+			if C{None}, the gestures are only removed for the current profile sript.
+		@type newScriptName: str
+		"""
+		gestureMap = inputCore.manager.userGestureMap
+		for scriptCls, gesture, scriptName in gestureMap.getScriptsForAllGestures():
+			if scriptName != oldScriptName:
+				continue
+			moduleName = scriptCls.__module__
+			className = scriptCls.__name__
+			gestureMap.remove(gesture, moduleName, className, scriptName)
+			if newScriptName is not None:
+				gestureMap.add(gesture, moduleName, className, newScriptName)
+		try:
+			gestureMap.save()
+		except:
+			log.debugWarning("Couldn't save user gesture map after renaming profile script", exc_info=True)
+
+	@classmethod
+	def updateScriptForRenamedProfile(cls, oldName, newName):
+		"""Removes a script for the oldName configuration profile,
+		and adds a new script for newName.
+		Existing gestures in the gesture map are moved from the oldName to the newName profile.
+		@param oldName: The current name of the profile.
+		@type oldName: str
+		@param newName: The new name for the profile.
+		@type newName: str
+		"""
+		oldScriptName = cls._getScriptNameForProfile(oldName)
+		newScriptName = cls._getScriptNameForProfile(newName)
+		cls._moveGesturesForProfileActivationScript(oldScriptName, newScriptName)
+		delattr(cls, "script_%s" % oldScriptName)
+		cls.addScriptForProfile(newName)
+
+#: The single instance for the configuration profile activation commands.
+#: @type: L{ConfigProfileActivationCommands}
+configProfileActivationCommands = ConfigProfileActivationCommands()
+

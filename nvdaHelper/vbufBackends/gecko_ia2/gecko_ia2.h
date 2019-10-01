@@ -32,6 +32,12 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 
 	bool shouldDisableTableHeaders;
 	bool hasEncodedAccDescription;
+	std::wstring toolkitName;
+
+	bool isLabelVisible(IAccessible2* pacc2);
+	CComPtr<IAccessible2> getLabelElement(IAccessible2_2* element);
+	CComPtr<IAccessible2> getSelectedItem(IAccessible2* container,
+		const std::map<std::wstring, std::wstring>& attribs);
 
 	protected:
 
