@@ -342,21 +342,56 @@ class AppModule(baseObject.ScriptableObject):
 		self.helperLocalBindingHandle=None
 		self._inprocRegistrationHandle=None
 
+	def _getExecutableFileInfo(self):
+		# Used for obtaining file name and version for the executable.
+		# This is needed in case immersive app package returns an error,
+		# dealing with a native app, or a converted desktop app.
+		# Create the buffer to get the executable name
+		exeFileName = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
+		length = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
+		if not ctypes.windll.Kernel32.QueryFullProcessImageNameW(
+			self.processHandle, 0, exeFileName, ctypes.byref(length)
+		):
+			raise ctypes.WinError()
+		fileName = exeFileName.value
+		fileinfo = getFileVersionInfo(fileName, "ProductName", "ProductVersion")
+		return (fileinfo["ProductName"], fileinfo["ProductVersion"])
+
 	def _setProductInfo(self):
 		"""Set productName and productVersion attributes.
+		There are at least two ways of obtaining product info for an app:
+		* Package info for hosted apps
+		* File version info for other apps and for some hosted apps
 		"""
 		# Sometimes (I.E. when NVDA starts) handle is 0, so stop if it is the case
 		if not self.processHandle:
 			raise RuntimeError("processHandle is 0")
-		# Create the buffer to get the executable name
-		exeFileName = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
-		length = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
-		if not ctypes.windll.Kernel32.QueryFullProcessImageNameW(self.processHandle, 0, exeFileName, ctypes.byref(length)):
-			raise ctypes.WinError()
-		fileName = exeFileName.value
-		fileinfo = getFileVersionInfo(fileName, "ProductName", "ProductVersion")
-		self.productName = fileinfo["ProductName"]
-		self.productVersion = fileinfo["ProductVersion"]
+		# No need to worry about immersive (hosted) apps and friends until Windows 8.
+		# Python 3.7 introduces platform_version to sys.getwindowsversion tuple,
+		# which returns major, minor, build.
+		if winVersion.winVersion.platform_version >= (6, 2, 9200):
+			# Some apps such as File Explorer says it is an immersive process but error 15700 is shown.
+			# Therefore resort to file version info behavior because it is not a hosted app.
+			# Others such as Store version of Office are not truly hosted apps,
+			# yet returns an internal version anyway.
+			# For immersive apps, default implementation is generic - returns Windows version information.
+			# Thus probe package full name and parse the serialized representation of package info structure.
+			length = ctypes.c_uint()
+			buf = ctypes.windll.kernel32.GetPackageFullName(self.processHandle, ctypes.byref(length), None)
+			packageFullName = ctypes.create_unicode_buffer(buf)
+			if ctypes.windll.kernel32.GetPackageFullName(
+				self.processHandle, ctypes.byref(length), packageFullName
+			) == 0:
+				# Product name is of the form publisher.name for a hosted app.
+				productInfo = packageFullName.value.split("_")
+			else:
+				# File Explorer and friends which are really native aps.
+				productInfo = self._getExecutableFileInfo()
+		else:
+			# Not only native apps, but also converted desktop aps such as Office.
+			productInfo = self._getExecutableFileInfo()
+		self.productName = productInfo[0]
+		self.productVersion = productInfo[1]
 
 	def _get_productName(self):
 		self._setProductInfo()

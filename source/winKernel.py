@@ -9,6 +9,7 @@
 import contextlib
 import ctypes
 import ctypes.wintypes
+from ctypes import WinError
 from ctypes import *
 from ctypes.wintypes import *
 import os
@@ -430,4 +431,19 @@ def is64BitProcess(processHandle):
 		res = BOOL()
 		if kernel32.IsWow64Process(processHandle, ctypes.byref(res)) == 0:
 			raise WinError()
-		return not res
+		return not res.value
+
+
+# Thread execution states
+ES_CONTINUOUS = 0x80000000
+ES_DISPLAY_REQUIRED = 0x2
+ES_SYSTEM_REQUIRED = 0x1
+
+kernel32.SetThreadExecutionState.restype = ctypes.wintypes.DWORD
+
+
+def SetThreadExecutionState(esFlags):
+	res = kernel32.SetThreadExecutionState(esFlags)
+	if not res:
+		raise WinError()
+	return res
