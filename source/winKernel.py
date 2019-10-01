@@ -9,6 +9,7 @@
 import contextlib
 import ctypes
 import ctypes.wintypes
+from ctypes import WinError
 from ctypes import *
 from ctypes.wintypes import *
 
@@ -397,3 +398,18 @@ def moveFileEx(lpExistingFileName: str, lpNewFileName: str, dwFlags: int):
 	# If MoveFileExW fails, Windows will raise appropriate errors.
 	if not kernel32.MoveFileExW(lpExistingFileName, lpNewFileName, dwFlags):
 		raise ctypes.WinError()
+
+
+# Thread execution states
+ES_CONTINUOUS = 0x80000000
+ES_DISPLAY_REQUIRED = 0x2
+ES_SYSTEM_REQUIRED = 0x1
+
+kernel32.SetThreadExecutionState.restype = ctypes.wintypes.DWORD
+
+
+def SetThreadExecutionState(esFlags):
+	res = kernel32.SetThreadExecutionState(esFlags)
+	if not res:
+		raise WinError()
+	return res

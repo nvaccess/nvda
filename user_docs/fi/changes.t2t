@@ -3,28 +3,12 @@
 
 %!includeconf: ../changes.t2tconf
 
-= 2019.3 =
-
-== Uudet ominaisuudet ==
-- Lisätty komento tarkastelukohdistimen kohdalla olevan symbolin korvauksen näyttämiseen. (#9286)
-- Lisäasetukset-paneeliin lisätty kokeellinen asetus, jolla voi testata uutta NVDA:777777n työn alla olevaa Microsoft UI Automation -rajapintaa käyttävää komentokehotteen tukea. (#9614)
-- Python-konsolin syöttökenttä tukee nyt usean rivin liittämistä leikepöydältä. (#9776)
-
-
-== Muutokset ==
-- eSpeak-NG PÄIVITETTY muutoksella 67324cc.
-- Liblouis-piste kirjoituskääntäjä päivitetty versioksi 3.10.0. (#9439, #9678)
-- NVDA sanoo nyt "valittu" ilmoitettuaan ensin käyttäjän valitseman tekstin. (#9028, #9909)
-- Selaustila on oletusarvoisesti poissa käytöstä Microsoft Visual Studio Codessa. (#9828)
-
-
-== Korjatut ohjelmavirheet ==
-- Taustavälilehdellä olevan Aktiivisen alueen päivityksiä ei enää puhuta Mozilla Firefoxissa. (#1318)
-- Selaustilan Etsi-valintaikkuna ei enää lakkaa toimimasta, jos NVDA:n Tietoja-valintaikkuna on avoimena taustalla. (#8566)
-
-
-== Muutokset kehittäjille ==
-Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
+= 2019.2.1 =
+Tämä versio korjaa useita 2019.2:ssa olevia kaatumisia. Muun muassa seuraavat ongelmat on korjattu:
+- Ratkaistu useita Gmailin kaatumisia, joita on esiintynyt sekä Firefoxissa että Chromessa oltaessa vuorovaikutuksessa ponnahdusvalikoiden kanssa, kuten esim. luotaessa suodattimia tai muutettaessa tiettyjä Gmailin asetuksia. (#10175, #9402, #8924)
+- NVDA ei enää aiheuta Resurssienhallinnan kaatumista Windows 7:ssä, kun hiirtä käytetään Käynnistä-valikossa. (#9435) 
+- Resurssienhallinta ei enää kaadu Windows 7:ssä metatietojen muokkauskenttiä käytettäessä. (#5337) 
+- NVDA ei jää enää jumiin Mozilla Firefoxissa tai Google Chromessa oltaessa vuorovaikutuksessa sellaisten kuvien kanssa, joiden URI-tietotunniste sisältää Base64-koodattua tietoa. (#10227)
 
 
 = 2019.2 =
@@ -56,6 +40,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat Freedom Scientificin p
 - Unicode Common Locale Data Repository -tietokannan emojiselitteet päivitetty versioksi 35.0. (#9445)
 - Liblouis-pistekirjoituskääntäjä päivitetty versioksi 3.9.0. (#9439)
 - Selaustilan elementtilistan suodatuskentän pikanäppäin on muutettu englanninkielisessä käyttöliittymässä Alt+Y:ksi. (#8728)
+- Kun automaattisesti tunnistettu pistenäyttö kytketään bluetoothin kautta, NVDA jatkaa saman ajurin tukemien USB-näyttöjen etsimistä ja vaihtaa USB-yhteyteen, mikäli sellainen tulee saataville. (#8853)
 
 
 == Korjatut ohjelmavirheet ==
@@ -76,9 +61,14 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat Freedom Scientificin p
 - Windows 10:n teksti puheeksi -asetuksissa määritetty nopeus ei enää vaikuta Windows OneCore -ääniä käytettäessä NVDA:ssa määritettyyn nopeuteen. (#7498)
 - Lokin voi nyt avata painamalla NVDA+F1, kun nykyisestä navigointiobjektista ei ole saatavilla kehittäjätietoja. (#8613)
 - NVDA:n taulukkonavigointikomentojen käyttäminen on jälleen mahdollista Google Docsissa, Firefoxissa ja Chromessa. (#9494)
+<<<<<<< .mine
+§- The bumper keys now work correctly on Freedom Scientific braille displays. (#8849)
+||||||| .r49291
+=======
 - Freedom Scientific -pistenäyttöjen vieritysnäppäimet toimivat nyt asianmukaisesti. (#8849)
 - NVDA ei enää hjyydy enimillään 10 sekunniksi luettaessa asiakirjan ensimmäistä merkkiä 64-bittisessä Notepad++ 7.7:ssä. (#9609)
 - NVDA:ssa voidaan nyt käyttää HTComia Handy Tech -pistenäytön kanssa. (#9691)
+>>>>>>> .r51124
 
 
 == Muutokset kehittäjille ==

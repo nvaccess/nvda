@@ -276,16 +276,10 @@ VBufStorage_controlFieldNode_t* VBufBackend_t::reuseExistingNodeInRender(VBufSto
 		LOG_DEBUG(L"Existing node refuses to be reused");
 		return nullptr;
 	}
-	// We only allow reusing nodes that share the same parent. 
-	// I.e. we don't allow reusing a node that existed in an entirely different part of the tree. 
-	// If we did, this could possibly cause corruption in the virtualBuffer as a node might move between two unrelated updates.
+	// Don't reuse the node if it has no parent (is the root of the buffer).
 	auto existingParent=existingNode->getParent();
 	if(!existingParent) {
 		LOG_DEBUG(L"existing node has no parent. Not reusing.");
-		return nullptr;
-	}
-	if(existingParent->identifier!=parent->identifier) {
-		LOG_DEBUG(L"Cannot reuse a node moved from within another parent.");
 		return nullptr;
 	}
 	if(existingNode->denyReuseIfPreviousSiblingsChanged) {

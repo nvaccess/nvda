@@ -136,7 +136,9 @@ class SettingsDialog(wx.Dialog, DpiScalingHelperMixin, metaclass=guiHelper.SIPAB
 		"""
 		if gui._isDebug():
 			startTime = time.time()
-		windowStyle = wx.DEFAULT_DIALOG_STYLE | (wx.RESIZE_BORDER if resizeable else 0)
+		windowStyle = wx.DEFAULT_DIALOG_STYLE
+		if resizeable:
+			windowStyle |= wx.RESIZE_BORDER | wx.MAXIMIZE_BOX
 		wx.Dialog.__init__(self, parent, title=self.title, style=windowStyle)
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
@@ -177,6 +179,8 @@ class SettingsDialog(wx.Dialog, DpiScalingHelperMixin, metaclass=guiHelper.SIPAB
 		self.Bind(wx.EVT_WINDOW_DESTROY, self._onWindowDestroy)
 
 		self.postInit()
+		if resizeable:
+			self.SetMinSize(self.mainSizer.GetMinSize())
 		self.CentreOnScreen()
 		if gui._isDebug():
 			log.debug("Loading %s took %.2f seconds"%(self.__class__.__name__, time.time() - startTime))
@@ -680,6 +684,8 @@ class GeneralSettingsPanel(SettingsPanel):
 		logLevelChoices = [name for level, name in self.LOG_LEVELS]
 		self.logLevelList = settingsSizerHelper.addLabeledControl(logLevelLabelText, wx.Choice, choices=logLevelChoices)
 		curLevel = log.getEffectiveLevel()
+		if logHandler.isLogLevelForced():
+			self.logLevelList.Disable()
 		for index, (level, name) in enumerate(self.LOG_LEVELS):
 			if level == curLevel:
 				self.logLevelList.SetSelection(index)
@@ -788,8 +794,9 @@ class GeneralSettingsPanel(SettingsPanel):
 		config.conf["general"]["askToExit"]=self.askToExitCheckBox.IsChecked()
 		config.conf["general"]["playStartAndExitSounds"]=self.playStartAndExitSoundsCheckBox.IsChecked()
 		logLevel=self.LOG_LEVELS[self.logLevelList.GetSelection()][0]
-		config.conf["general"]["loggingLevel"]=logging.getLevelName(logLevel)
-		logHandler.setLogLevelFromConfig()
+		if not logHandler.isLogLevelForced():
+			config.conf["general"]["loggingLevel"] = logging.getLevelName(logLevel)
+			logHandler.setLogLevelFromConfig()
 		if self.startAfterLogonCheckBox.IsEnabled():
 			config.setStartAfterLogon(self.startAfterLogonCheckBox.GetValue())
 		if self.startOnLogonScreenCheckBox.IsEnabled():
@@ -2405,13 +2412,21 @@ class DictionaryDialog(SettingsDialog):
 		self.tempSpeechDict=speechDictHandler.SpeechDict()
 		self.tempSpeechDict.extend(self.speechDict)
 		globalVars.speechDictionaryProcessing=False
-		super(DictionaryDialog, self).__init__(parent)
+		super().__init__(parent, resizeable=True)
+		# Historical initial size, result of L{self.dictList} being (550,350) as of #6287.
+		# Setting an initial size on L{self.dictList} by passing a L{size} argument when
+		# creating the control would also set its minimum size and thus block the dialog from being shrunk.
+		self.SetSize(576, 502)
+		self.CentreOnScreen()
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 		entriesLabelText=_("&Dictionary entries")
-		self.dictList=sHelper.addLabeledControl(entriesLabelText, wx.ListCtrl, style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
+		self.dictList = sHelper.addLabeledControl(
+			entriesLabelText,
+			wx.ListCtrl, style=wx.LC_REPORT | wx.LC_SINGLE_SEL
+		)
 		# Translators: The label for a column in dictionary entries list used to identify comments for the entry.
 		self.dictList.InsertColumn(0,_("Comment"),width=150)
 		# Translators: The label for a column in dictionary entries list used to identify pattern (original word or a pattern).
@@ -3017,7 +3032,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 
 		# Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 		replacementText = _("&Replacement")
-		self.replacementEdit = sHelper.addLabeledControl(
+		self.replacementEdit = changeSymbolHelper.addLabeledControl(
 			labelText=replacementText,
 			wxCtrlClass=wx.TextCtrl,
 			size=self.scaleSize((300, -1)),
@@ -3053,12 +3068,6 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.filter()
 
 	def postInit(self):
-		size = self.GetBestSize()
-		self.SetSizeHints(
-			minW=size.GetWidth(),
-			minH=size.GetHeight(),
-			maxH=size.GetHeight(),
-		)
 		self.symbolsList.SetFocus()
 
 	def filter(self, filterText=''):
@@ -3231,6 +3240,9 @@ class SpeechSymbolsDialog(SettingsDialog):
 class InputGesturesDialog(SettingsDialog):
 	# Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 	title = _("Input Gestures")
+
+	def __init__(self, parent):
+		super().__init__(parent, resizeable=True)
 
 	def makeSettings(self, settingsSizer):
 		filterSizer = wx.BoxSizer(wx.HORIZONTAL)
