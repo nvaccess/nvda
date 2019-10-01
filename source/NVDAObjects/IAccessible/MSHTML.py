@@ -934,7 +934,7 @@ class MSHTML(IAccessible):
 
 	def scrollIntoView(self):
 		if self.HTMLNode:
-			self._scrollHTMLNodeIntoView(self.HTMLNode, True)
+			return self._scrollHTMLNodeIntoView(self.HTMLNode, True)
 		raise NotImplementedError
 
 	def doAction(self, index=None):

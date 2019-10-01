@@ -366,7 +366,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		try:
 			if self.obj.hasIrrelevantLocation:
 				# The complete object is out of view.
-				# In these cases, scrollSUbStringTo is known to fail.
+				# In these cases, scrollSubStringTo is known to fail.
 				self.obj.IAccessibleObject.scrollTo(scrollType)
 			else:
 				self.obj.IAccessibleTextObject.scrollSubstringTo(
