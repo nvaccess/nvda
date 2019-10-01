@@ -1087,7 +1087,6 @@ class ElementsListDialog(wx.Dialog):
 	FILTER_TIMER_DELAY_MS = 300
 
 	def onFilterEditTextChange(self, evt):
-		# self.filter(self.filterEdit.GetValue())
 		filter = self.filterEdit.GetValue()
 		if self.filterTimer is None:
 			self.filterTimer = wx.CallLater(self.FILTER_TIMER_DELAY_MS, self.filter, filter)
