@@ -859,6 +859,7 @@ class ElementsListDialog(wx.Dialog):
 		filterText = _("Filter b&y:")
 		labeledCtrl = gui.guiHelper.LabeledControlHelper(self, filterText, wx.TextCtrl)
 		self.filterEdit = labeledCtrl.control
+		self.filterTimer = None
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
 		contentsSizer.Add(labeledCtrl.sizer)
 		contentsSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
@@ -1083,8 +1084,15 @@ class ElementsListDialog(wx.Dialog):
 
 			item = self.tree.GetNextSibling(item)
 
+	FILTER_TIMER_DELAY_MS = 300
+
 	def onFilterEditTextChange(self, evt):
-		self.filter(self.filterEdit.GetValue())
+		# self.filter(self.filterEdit.GetValue())
+		filter = self.filterEdit.GetValue()
+		if self.filterTimer is None:
+			self.filterTimer = wx.CallLater(self.FILTER_TIMER_DELAY_MS, self.filter, filter)
+		else:
+			self.filterTimer.Start(self.FILTER_TIMER_DELAY_MS, filter)
 		evt.Skip()
 
 	def onAction(self, activate):
