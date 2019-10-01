@@ -46,6 +46,20 @@ void IA2AttribsToMap(const wstring &attribsString, map<wstring, wstring> &attrib
 	// If there was no trailing semi-colon, we need to handle the last attribute.
 	if (!key.empty())
 		attribsMap[key] = str;
+	// Truncate the value of "src" if it contains base64 data
+	map<wstring,wstring>::const_iterator attribsMapIt;
+	if ((attribsMapIt = attribsMap.find(L"src")) != attribsMap.end()) {
+		str = attribsMapIt->second;
+		const wstring prefix = L"data:";
+		if (str.substr(0, prefix.length()) == prefix) {
+			const wstring needle = L"base64,";
+			wstring::size_type pos = str.find(needle);
+			if (pos != wstring::npos) {
+				str.replace(pos + needle.length(), wstring::npos, L"<truncated>");
+				attribsMap[L"src"] = str;
+			}
+		}
+	}
 }
 
 CComPtr<IAccessibleHyperlink> HyperlinkGetter::next() {

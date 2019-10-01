@@ -1541,11 +1541,13 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 			textList.append(text)
 		revision=attrs.get("revision")
 		oldRevision=attrsCache.get("revision") if attrsCache is not None else None
-		if (revision or oldRevision is not None) and revision!=oldRevision:
-			# Translators: Reported when text is revised.
-			text=(_("revised %s"%revision) if revision
+		if (revision or oldRevision is not None) and revision != oldRevision:
+			if revision:
+				# Translators: Reported when text is revised.
+				text = _("revised %s") % revision
+			else:
 				# Translators: Reported when text is not revised.
-				else _("no revised %s")%oldRevision)
+				text = _("no revised %s") % oldRevision
 			textList.append(text)
 	if  formatConfig["reportEmphasis"]:
 		# marked text 
