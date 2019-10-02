@@ -30,6 +30,7 @@ import speechDictHandler
 import characterProcessing
 import languageHandler
 from .commands import *
+import aria
 
 speechMode_off=0
 speechMode_beeps=1
@@ -1202,10 +1203,19 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 
 	presCat=attrs.getPresentationCategory(ancestorAttrs,formatConfig, reason=reason)
 	childControlCount=int(attrs.get('_childcontrolcount',"0"))
-	if reason==controlTypes.REASON_FOCUS or attrs.get('alwaysReportName',False):
-		name=attrs.get('name',"")
+	landmark = attrs.get("landmark")
+	if (
+		reason==controlTypes.REASON_FOCUS 
+		or attrs.get('alwaysReportName',False)
+		or (
+			formatConfig["reportLandmarks"]
+			and landmark
+			and attrs.get("_startOfNode")
+		)
+	):
+		name = attrs.get('name',"")
 	else:
-		name=""
+		name = ""
 	role=attrs.get('role',controlTypes.ROLE_UNKNOWN)
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
@@ -1223,9 +1233,12 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	else:
 		tableID = None
 
-	roleText=attrs.get('roleText')
+	roleText = attrs.get('roleText')
 	if not roleText:
-		roleText=getSpeechTextForProperties(reason=reason,role=role)
+		if landmark and formatConfig["reportLandmarks"]:
+			roleText = f"{aria.landmarkRoles[landmark]} {controlTypes.roleLabels[controlTypes.ROLE_LANDMARK]}"
+		else:
+			roleText=getSpeechTextForProperties(reason=reason,role=role)
 	stateText=getSpeechTextForProperties(reason=reason,states=states,_role=role)
 	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut) if config.conf["presentation"]["reportKeyboardShortcuts"] else ""
 	ariaCurrentText=getSpeechTextForProperties(reason=reason,current=ariaCurrent)

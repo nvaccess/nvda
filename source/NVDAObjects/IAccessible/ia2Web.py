@@ -49,10 +49,10 @@ class Ia2Web(IAccessible):
 		return super(Ia2Web,self).isPresentableFocusAncestor
 
 	def _get_roleText(self):
-		roleText=self.IA2Attributes.get('roledescription')
+		roleText = self.IA2Attributes.get('roledescription')
 		if roleText:
 			return roleText
-		return super(Ia2Web,self).roleText
+		return super().roleText
 
 	def _get_states(self):
 		states=super(Ia2Web,self).states

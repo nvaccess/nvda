@@ -675,6 +675,11 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			# However, we still need to pass it (hence "_role").
 			"_role" if role == controlTypes.ROLE_MATH else "role": role,
 			"states": states,"value":value, "current":current, "placeholder":placeholder,"roleText":roleText}
+		if formatConfig["reportLandmarks"] and field.get("landmark") and field.get("_startOfNode"):
+			# Ensure that the name of the field gets presented even if normally it wouldn't.
+			name = field.get("name")
+			if name:
+				props["name"] = name
 		if config.conf["presentation"]["reportKeyboardShortcuts"]:
 			kbShortcut = field.get("keyboardShortcut")
 			if kbShortcut:

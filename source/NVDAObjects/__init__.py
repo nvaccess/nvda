@@ -408,7 +408,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		No string is provided by default, meaning that NVDA will fall back to using role.
 		Examples of where this property might be overridden are shapes in Powerpoint, or ARIA role descriptions.
 		"""
-		if self.landmark and self.landmark in aria.landmarkRoles and self.landmark != "region":
+		if self.landmark and self.landmark in aria.landmarkRoles:
 			return f"{aria.landmarkRoles[self.landmark]} {controlTypes.roleLabels[controlTypes.ROLE_LANDMARK]}"
 		return None
 
@@ -418,7 +418,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		which will override the standard label for this object's role property as well as the value of roleText.
 		By default, NVDA falls back to using roleText.
 		"""
-		if self.landmark and self.landmark in braille.landmarkLabels and self.landmark != "region":
+		if self.landmark and self.landmark in braille.landmarkLabels:
 			return f"{braille.roleLabels[controlTypes.ROLE_LANDMARK]} {braille.landmarkLabels[self.landmark]}"
 		return self.roleText
 

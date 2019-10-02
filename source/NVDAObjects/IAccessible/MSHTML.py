@@ -1009,7 +1009,11 @@ class MSHTML(IAccessible):
 		pass
 
 	def _get_roleText(self):
-		return self.HTMLAttributes['aria-roledescription']
+		roleText = self.HTMLAttributes['aria-roledescription']
+		if roleText:
+			return roleText
+		return super().roleText
+
 
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.
