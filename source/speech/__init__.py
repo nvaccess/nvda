@@ -1272,6 +1272,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		and presCat != attrs.PRESCAT_CONTAINER
 		and role not in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_LIST)
 		and not tableID
+		and not landmark
 		and controlTypes.STATE_EDITABLE not in states)
 	# speakStatesFirst: Speak the states before the role.
 	speakStatesFirst=role==controlTypes.ROLE_LINK
@@ -1324,7 +1325,10 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 
 	# General cases.
 	if (
-		(speakEntry and ((speakContentFirst and fieldType in ("end_relative","end_inControlFieldStack")) or (not speakContentFirst and fieldType in ("start_addedToControlFieldStack","start_relative"))))
+		(speakEntry and (
+			(speakContentFirst and fieldType in ("end_relative", "end_inControlFieldStack"))
+			or (not speakContentFirst and fieldType in ("start_addedToControlFieldStack", "start_relative"))
+		))
 		or (speakWithinForLine and not speakContentFirst and not extraDetail and fieldType=="start_inControlFieldStack")
 	):
 		out = []
@@ -1339,7 +1343,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		if content and not speakContentFirst:
 			out.append(content)
 		return CHUNK_SEPARATOR.join(out)
-		
+
 	elif fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText and ((not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther)):
 		# Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 		return _("out of %s")%roleText
