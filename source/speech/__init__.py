@@ -1204,10 +1204,14 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	presCat=attrs.getPresentationCategory(ancestorAttrs,formatConfig, reason=reason)
 	childControlCount=int(attrs.get('_childcontrolcount',"0"))
 	landmark = attrs.get("landmark")
+	speakLandmark = (
+		fieldType == "start_addedToControlFieldStack"
+		and formatConfig["reportLandmarks"]
+	)
 	if (
 		reason == controlTypes.REASON_FOCUS
 		or attrs.get('alwaysReportName', False)
-		or (landmark and formatConfig["reportLandmarks"])
+		or (landmark and speakLandmark)
 	):
 		name = attrs.get('name', "")
 	else:
@@ -1231,10 +1235,10 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 
 	roleText = attrs.get('roleText')
 	if not roleText:
-		if landmark and formatConfig["reportLandmarks"]:
-			roleText = f"{aria.landmarkRoles[landmark]} {controlTypes.roleLabels[controlTypes.ROLE_LANDMARK]}"
-		else:
+		if not landmark:
 			roleText = getSpeechTextForProperties(reason=reason, role=role)
+		elif speakLandmark:
+			roleText = f"{aria.landmarkRoles[landmark]} {controlTypes.roleLabels[controlTypes.ROLE_LANDMARK]}"
 	stateText=getSpeechTextForProperties(reason=reason,states=states,_role=role)
 	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut) if config.conf["presentation"]["reportKeyboardShortcuts"] else ""
 	ariaCurrentText=getSpeechTextForProperties(reason=reason,current=ariaCurrent)
