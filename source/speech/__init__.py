@@ -1211,6 +1211,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 			formatConfig["reportLandmarks"]
 			and landmark
 			and attrs.get("_startOfNode")
+			and attrs.getPresentationCategory(ancestorAttrs, formatConfig, reason) is None
 		)
 	):
 		name = attrs.get('name', "")
