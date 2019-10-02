@@ -3,6 +3,14 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.2.1 =
+Esta é unha versión menor para arranxar varios bloqueos presentes en 2019.2. As correcións inclúen:
+- Solucionáronse varios problemas en Gmail que se viron tanto en Firefox coma en Chrome ao se interactuar con determinados menús emerxentes como ao se crear filtros ou ao se cambiar certas opcións de Gmail. (#10175, #9402, #8924)
+- En Windows 7, o NVDA xa non fai que o explorador de arquivos de Windows se bloquee cando se use o rato no menú Inicio. (#9435) 
+- O Explorador de Arquivos de Windows en Windows 7 xa non se bloquea ao acesar aos campos de edición dos metadatos. (#5337) 
+- O NVDA xa non se colga ao interactuar con imaxes cunha URI en base 64 en Mozilla Firefox ou en Google Chrome. (#10227)
+
+
 = 2019.2 =
 O subliñable desta versión inclúe a deteción automática de pantallas braille de Freedom Scientific, unha opción experimental no panel Avanzado para deter o modo exploración dende o movemento automático do foco (o que podería proporcionar melloras de rendemento), unha opción de alzado brusco para o sintetizador Windows OneCore para acadar velocidades moi rápidas, e moitas outras correcións de fallos.
 
@@ -38,7 +46,7 @@ O subliñable desta versión inclúe a deteción automática de pantallas braill
 - Actualizado eSpeak-NG a commit 67324cc.
 - Actualizado o transcriptor braille liblouis á versión 3.10.0. (#9439, #9678)
 - O NVDA agora anunciará a palabra 'selecionado' despois de anunciar o texto que un usuario acabe de selecionar. (#9028, #9909))
-- En Microsoft Visual Studio Code, o modo exploración está desactivado por defecto. (#9828)
+- En Microsoft Visual Studio Code, NVDA está en modo Foco por defecto. (#9828)
 
 
 == corrección de Fallos ==

@@ -185,7 +185,12 @@ def getCaretRect(obj):
 	)
 	if res != 0:
 		raise RuntimeError(f"displayModel_getCaretRect failed with res {res}")
-	return RectLTRB(left, top, right, bottom)
+	return RectLTRB(
+		left.value,
+		top.value,
+		right.value,
+		bottom.value
+	)
 
 def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace=True,includeDescendantWindows=True):
 	text, cpBuf = watchdog.cancellableExecute(_getWindowTextInRect, bindingHandle, windowHandle, includeDescendantWindows, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace)
@@ -565,7 +570,7 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 	stripOuterWhitespace=False
 
 	def _findCaretOffsetFromLocation(
-			selff,
+			self,
 			caretRect: RectLTRB,
 			validateBaseline: bool = True,
 			validateDirection: bool = True

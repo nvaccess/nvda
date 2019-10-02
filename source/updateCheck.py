@@ -226,7 +226,10 @@ class UpdateChecker(object):
 	def check(self):
 		"""Check for an update.
 		"""
-		t = threading.Thread(target=self._bg)
+		t = threading.Thread(
+			name=f"{self.__class__.__module__}.{self.check.__qualname__}",
+			target=self._bg
+		)
 		t.daemon = True
 		self._started()
 		t.start()
@@ -586,7 +589,10 @@ class UpdateDownloader(object):
 			style=wx.PD_CAN_ABORT | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE,
 			parent=gui.mainFrame)
 		self._progressDialog.Raise()
-		t = threading.Thread(target=self._bg)
+		t = threading.Thread(
+			name=f"{self.__class__.__module__}.{self.start.__qualname__}",
+			target=self._bg
+		)
 		t.daemon = True
 		t.start()
 
@@ -750,7 +756,7 @@ def saveState():
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
 		with open(_stateFilename, "wb") as f:
-			pickle.dump(state, f)
+			pickle.dump(state, f, protocol=0)
 	except:
 		log.debugWarning("Error saving state", exc_info=True)
 

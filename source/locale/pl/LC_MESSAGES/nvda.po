@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-23 00:10+1000\n"
-"PO-Revision-Date: 2019-08-23 14:35+0100\n"
+"POT-Creation-Date: 2019-09-27 00:10+1000\n"
+"PO-Revision-Date: 2019-09-28 17:49+0100\n"
 "Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: killer@tyflonet.com\n"
 "Language: pl_PL\n"
@@ -755,7 +755,7 @@ msgstr "Niemiecki brajl komputerowy"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "German grade 0"
-msgstr "Niemiecki bez skrótów"
+msgstr "Niemiecki pismo podstawowe"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -840,7 +840,7 @@ msgstr "Hiszpański skróty"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Estonian grade 0"
-msgstr "Estoński bez skrótów"
+msgstr "Estoński podstawowy"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3602,21 +3602,21 @@ msgstr ""
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
-msgstr "Przejdź do fokusa"
+msgstr "Przejdź do fokusu"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
 msgstr ""
-"Sprowadza obiekt nawigatora do fokusa i przenosi punkt przeglądu do kursora "
+"Sprowadza obiekt nawigatora do fokusu i przenosi punkt przeglądu do kursora "
 "w ramach tego obiektu, gdy jest to możliwe"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
 msgid "No focus"
-msgstr "Brak fokusa"
+msgstr "Brak fokusu"
 
 #. Translators: Reported when attempting to move focus to navigator object.
 msgid "Move focus"
@@ -4014,7 +4014,7 @@ msgid ""
 "Toggles between beeps, speech, beeps and speech, and off, for reporting "
 "progress bar updates"
 msgstr ""
-"Przełącza pomiędzy dźwięki, mowa, lub dźwięki i mowa albo wyłącza "
+"Przełącza pomiędzy trybami dźwięki, mowa, lub dźwięki i mowa albo wyłącza "
 "raportowanie aktualizacji paska postępu"
 
 #. Translators: presented when the present dynamic changes is toggled.
@@ -4059,7 +4059,7 @@ msgstr "fokus przesuwa obiekt nawigatora tak"
 #. Translators: Input help mode message for toggle focus moves navigator object command.
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
-msgstr "Włącza i wyłącza przesuwanie obiektu nawigatora podczas ruchów fokusa"
+msgstr "Włącza i wyłącza przesuwanie obiektu nawigatora podczas ruchów fokusu"
 
 #. Translators: presented when toggled.
 msgid "Automatically set system focus to focusable elements off"
@@ -4074,7 +4074,7 @@ msgid ""
 "Toggles on and off automatic movement of the system focus due to browse mode "
 "commands"
 msgstr ""
-"Przełącza przesuwanie fokusa systemowego  w  wyniku komend trybu czytania."
+"Przełącza przesuwanie fokusu systemowego  w  wyniku komend trybu czytania."
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
@@ -4145,7 +4145,7 @@ msgstr "Otwiera okno dialogowe ustawień mowy"
 
 #. Translators: Input help mode message for go to select braille display command.
 msgid "Shows the NVDA braille display selection dialog"
-msgstr "Otwiera okno dialogowe służące do wyboru monitora brajlowskiego"
+msgstr "Otwiera okno dialogowe służące do wyboru linijki brajlowskiej"
 
 #. Translators: Input help mode message for go to braille settings command.
 msgid "Shows NVDA's braille settings"
@@ -4247,7 +4247,7 @@ msgstr "Brajl powiązany z %s"
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
-"Przełącza powiązanie tekstu prezentowanego na monitorze brajlowskim pomiędzy "
+"Przełącza powiązanie tekstu prezentowanego na linijce brajlowskiej pomiędzy "
 "fokusem a punktem przeglądu"
 
 #. Translators: Reports the new state of braille focus context presentation.
@@ -4255,7 +4255,7 @@ msgstr ""
 #. For example, the full message might be "Braille focus context presentation: fill display for context changes"
 #, python-format
 msgid "Braille focus context presentation: %s"
-msgstr "kontekstowa brajlowska prezentacja fokusa %s"
+msgstr "kontekstowa brajlowska prezentacja fokusu %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
@@ -4358,8 +4358,8 @@ msgstr "Przewija brajl w przód"
 #. Translators: Input help mode message for a braille command.
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr ""
-"Umieszcza kursor, lub aktywuje obiekt pod daną komórką na monitorze "
-"brajlowskim"
+"Umieszcza kursor, lub aktywuje obiekt pod daną komórką na linijce "
+"brajlowskiej"
 
 #. Translators: Input help mode message for Braille report formatting command.
 msgid "Reports formatting info for the text under this braille cell"
@@ -4367,11 +4367,11 @@ msgstr "Wymawia informację o formatowaniu pod tą komórką brajlowską"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
-msgstr "Przenosi monitor brajlowski do poprzedniej linii"
+msgstr "Przenosi linijkę brajlowską do poprzedniej linii"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the next line"
-msgstr "Przenosi monitor brajlowski do następnej linii"
+msgstr "Przenosi linijkę brajlowską do następnej linii"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Inputs braille dots via the braille keyboard"
@@ -4379,7 +4379,7 @@ msgstr "Wprowadza punkty brajla przy pomocy klawiatury brajlowskiej"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the current focus"
-msgstr "Przenosi wyświetlanie brajla do fokusa"
+msgstr "Przenosi wyświetlanie brajla do fokusu"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Erases the last entered braille cell or character"
@@ -6025,7 +6025,7 @@ msgstr "Film"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Return"
-msgstr "Return"
+msgstr "wróć"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -7481,7 +7481,7 @@ msgstr "Włącza lub wyłącza symulację klawiatury HID"
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
-msgstr "Monitory brajlowskie Baum/HumanWare/APH/Orbit"
+msgstr "Linijki brajlowskie Baum/HumanWare/APH/Orbit"
 
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
@@ -7493,11 +7493,11 @@ msgstr "HumanWare Brailliant BI/B series / BrailleNote Touch"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
-msgstr "Monitory EcoBraille "
+msgstr "Linijki EcoBraille "
 
 #. Translators: Names of braille displays.
 msgid "Eurobraille Esys/Esytime/Iris displays"
-msgstr "Monitory Eurobraille Esys/Esytime/Iris"
+msgstr "Linijki Eurobraille Esys/Esytime/Iris"
 
 #. Translators: Message when HID keyboard simulation is unavailable.
 msgid "HID keyboard input simulation is unavailable."
@@ -7522,7 +7522,7 @@ msgstr "przewiń linię"
 
 #. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
-msgstr "Monitory brajlowskie Handy Tech"
+msgstr "Linijki brajlowskie Handy Tech"
 
 #. Translators: message when braille input is enabled
 msgid "Braille input enabled"
@@ -7558,7 +7558,7 @@ msgstr "Starsze modele Papenmeier BRAILLEX"
 
 #. Translators: Names of braille displays.
 msgid "Seika braille displays"
-msgstr "Monitory brajlowskie seika"
+msgstr "Linijki brajlowskie seika"
 
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
@@ -7982,10 +7982,10 @@ msgstr ""
 "\n"
 "Dane zawierają wersję systemu operacyjnego, wersję NVDA, język, kraj "
 "pochodzenia, oraz pewne ustawienia, takie jak aktualnie używany syntezator "
-"mowy, monitor brajlowski lub tablica brajlowska. Ani treść wypowiadana, ani "
-"wyświetlana na monitorze brajlowskim nigdy nie będzie wysyłana do NV "
-"Access.  Prosimy zajrzeć do podręcznika użytkownika, aby się zapoznać z "
-"aktualną listą zbieranych danych.\n"
+"mowy, linijkę brajlowską lub tablica brajlowska. Ani treść wypowiadana, ani "
+"wyświetlana na linijce brajlowskiej nigdy nie będzie wysyłana do NV Access.  "
+"Prosimy zajrzeć do podręcznika użytkownika, aby się zapoznać z aktualną "
+"listą zbieranych danych.\n"
 "\n"
 "Czy zgadzasz się, aby organizacja NV Access zbierała te dane w celu "
 "ulepszania NVDA?"
@@ -8056,7 +8056,7 @@ msgstr "Informacja o wtyczce"
 
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
-msgstr "Menadżer wtyczek"
+msgstr "Menedżer dodatków"
 
 #. Translators: The title of the Addons Dialog when add-ons are disabled
 msgid "Add-ons Manager (add-ons disabled)"
@@ -8131,7 +8131,7 @@ msgstr "Pliki pakietów wtyczek NVDA(*.{ext})"
 
 #. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
-msgstr "Czy napewno usunąć wtyczkę?"
+msgstr "Czy napewno usunąć dodatek?"
 
 #. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
@@ -8185,7 +8185,7 @@ msgid ""
 "Failed to open add-on package file at %s - missing file or invalid file "
 "format"
 msgstr ""
-"Nieudało się otworzyć pakietu z wtyczką %s - brakujący plik lub "
+"Nieudało się otworzyć pakietu z dodatkiem %s - brakujący plik lub "
 "nieprawidłowy format"
 
 #. Translators: A title for the dialog asking if the user wishes to update a previously installed
@@ -9177,7 +9177,7 @@ msgstr "Dołącz &tabele układu treści"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatic focus mode for focus changes"
-msgstr "Automatyczny tryb formularza przy zmianie &fokusa"
+msgstr "Automatyczny tryb formularza przy zmianie &fokusu"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -9575,15 +9575,15 @@ msgstr "Dodaj wpis słownika"
 
 #. Translators: A label for the braille display on the braille panel.
 msgid "Braille &display"
-msgstr "&Monitor brajlowski"
+msgstr "&Linijka brajlowska"
 
 #. Translators: This is the label for the braille display selection dialog.
 msgid "Select Braille Display"
-msgstr "Wybór monitora brajlowskiego"
+msgstr "Wybór linijki brajlowskiej"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
-msgstr "&Monitor brajlowski"
+msgstr "&Linijka brajlowska"
 
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
@@ -9594,7 +9594,7 @@ msgid "Could not load the %s display."
 msgstr "Nie można załadować urządzenia %s."
 
 msgid "Braille Display Error"
-msgstr "Błąd monitora brajlowskiego"
+msgstr "Błąd linijki brajlowskiej"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
@@ -9622,7 +9622,7 @@ msgstr "&Tempo migania kursora (w milisekundach)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
 msgid "Cursor shape for &focus:"
-msgstr "Kształt kursora dla &fokusa:"
+msgstr "Kształt kursora dla &fokusu:"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
 msgid "Cursor shape for &review:"
@@ -9650,7 +9650,7 @@ msgstr "Unikaj &rozdzielania słów"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
-msgstr "Kontekstowa prezentacja fokusa:"
+msgstr "Kontekstowa prezentacja fokusu:"
 
 #. Translators: This is the label for the NVDA settings dialog.
 msgid "NVDA Settings"

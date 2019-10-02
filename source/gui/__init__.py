@@ -892,7 +892,10 @@ class ExecAndPump(threading.Thread):
 		self.func=func
 		self.args=args
 		self.kwargs=kwargs
-		super(ExecAndPump,self).__init__()
+		fname = repr(func)
+		super().__init__(
+			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}({fname})"
+		)
 		self.threadExc=None
 		self.start()
 		time.sleep(0.1)
