@@ -1207,12 +1207,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	if (
 		reason == controlTypes.REASON_FOCUS
 		or attrs.get('alwaysReportName', False)
-		or (
-			formatConfig["reportLandmarks"]
-			and landmark
-			and attrs.get("_startOfNode")
-			and attrs.getPresentationCategory(ancestorAttrs, formatConfig, reason) is None
-		)
+		or (landmark and formatConfig["reportLandmarks"])
 	):
 		name = attrs.get('name', "")
 	else:
