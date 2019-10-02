@@ -724,6 +724,13 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
 			return self.presType_unavailable
 		role = self.role
+		landmark = self.landmark
+		if (
+			role == controlTypes.ROLE_LANDMARK
+			or landmark
+		) and not config.conf["documentFormatting"]["reportLandmarks"]:
+			return self.presType_layout
+
 		roleText = self.roleText
 		if roleText:
 			# If roleText is set, the object is very likely to communicate something relevant to the user.
@@ -754,8 +761,6 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		description = self.description
 		if not name and not description:
 			if role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING,controlTypes.ROLE_OPTIONPANE,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_FORM,controlTypes.ROLE_TABLEBODY):
-				return self.presType_layout
-			if role == controlTypes.ROLE_LANDMARK and not config.conf["documentFormatting"]["reportLandmarks"]:
 				return self.presType_layout
 			if role == controlTypes.ROLE_TABLE and not config.conf["documentFormatting"]["reportTables"]:
 				return self.presType_layout
