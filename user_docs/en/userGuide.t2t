@@ -1112,10 +1112,7 @@ This option applies to all synthesizers, not just the currently active synthesiz
 On by default, this option tells NVDA if the current voice's language can be trusted when processing symbols and characters.
 If you find that NVDA is reading punctuation in the wrong language for a particular synthesizer or voice, you may wish to turn this off to force NVDA to use its global language setting instead.
 
-%kc:setting
 ==== Include Unicode Consortium data (including emoji) when processing characters and symbols ====[SpeechSettingsCLDR]
-Key: shift+NVDA+p
-
 When this checkbox is enabled, NVDA will include additional symbol pronunciation dictionaries when pronouncing characters and symbols.
 These dictionaries contain descriptions for symbols (particularly emoji) that are provided by the [Unicode Consortium http://www.unicode.org/consortium/] as part of their [Common Locale Data Repository http://cldr.unicode.org/].
 If you want NVDA to speak descriptions of emoji characters based on this data, you should enable this option.
