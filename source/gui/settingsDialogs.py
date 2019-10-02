@@ -3419,7 +3419,7 @@ class InputGesturesDialog(SettingsDialog):
 			# Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
 			_("""Are you sure you want to reset all gestures to their factory defaults?
 			
-			All past and present user defined gestures will be lost.
+			All of your user defined gestures, whether previously set or defined during this session, will be lost.
 			This cannot be undone."""),
 			style=wx.YES | wx.NO | wx.NO_DEFAULT
 		) != wx.YES:
