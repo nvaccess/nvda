@@ -3416,7 +3416,7 @@ class InputGesturesDialog(SettingsDialog):
 
 	def onReset(self, evt):
 		if gui.messageBox(
-			# Translators: A prompt for comfirmation to reset all gestures in the Input Gestures dialog.
+			# Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
 			_("""Are you sure you want to reset all gestures to their factory defaults?
 			
 			All past and present user defined gestures will be lost.
