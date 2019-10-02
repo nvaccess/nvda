@@ -4,6 +4,14 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 %!includeconf: ../changes.t2tconf
 %!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
 
+= 2019.2.1 =
+Esta é uma versão secundária para corrigir várias falhas presentes em 2019.2. As correções incluem:
+- Foram corrigidas várias falhas no Gmail percebidas no Firefox e no Chrome ao interagir com menus instantâneos ""[pop-up]"" específicos, como ao criar filtros ou alterar determinadas configurações do Gmail. (#10175, #9402, #8924)
+- No Windows 7, o NVDA não causa mais falha no Windows Explorer quando o mouse é usado no menu Iniciar. (#9435)
+- O Windows Explorer no Windows 7 não falha mais ao acessar os campos de edição de metadados. (#5337)
+- O NVDA não congela mais ao interagir com imagens com um URI ""[identificador uniforme de recurso]"" base64 no Mozilla Firefox ou Google Chrome. (#10227)
+
+
 = 2019.2 =
 Os destaques desta versão incluem a detecção automática de linhas braille da Freedom Scientific, uma configuração experimental no painel Avançado para impedir que o modo de navegação mova automaticamente o foco (que pode fornecer melhorias de desempenho), uma opção de aumento ""[especial]"" de velocidade para o sintetizador Windows OneCore atingir velocidades muito rápidas e muitas outras correções de falhas.
 
@@ -40,7 +48,7 @@ Os destaques desta versão incluem a detecção automática de linhas braille da
 - eSpeak-NG atualizado para commit 67324cc.
 - Atualizado o transcritor braille liblouis para a versão 3.10.0. (#9439, #9678)
 - O NVDA agora informará a palavra 'selecionado' depois de relatar o texto que o usuário acabou de selecionar. (#9028, #9909)
-- No código do Microsoft Visual Studio, o modo de navegação está desativado por padrão. (#9828)
+- No código do Microsoft Visual Studio, o NVDA está no modo de foco por padrão. (#9828)
 
 
 == Correção de Falhas ==
@@ -60,7 +68,7 @@ Os destaques desta versão incluem a detecção automática de linhas braille da
 - Complementos com nomes que diferem apenas na maiusculização não são mais tratados como complementos separados. (#9334)
 - Para vozes Windows OneCore, a velocidade definida no NVDA não é mais afetada pela velocidade definida em Configurações de fala do Windows 10. (#7498)
 - O log ""[registro de eventos]"" agora pode ser aberto com NVDA+F1 quando não houver informações de desenvolvedor para o objeto atual de navegação. (#8613)
-- É novamente possível usar os comandos de navegação de tabelas do NvDA no Google Docs, no Firefox e no Chrome. (#9494)
+- É novamente possível usar os comandos de navegação de tabelas do NVDA no Google Docs, no Firefox e no Chrome. (#9494)
 - As teclas balanceadoras ""[bumper]"" agora funcionam corretamente nas linhas braille da Freedom Scientific. (#8849)
 - Ao ler o primeiro caractere dum documento no Notepad++ 7.7 X64, o NVDA não congela mais por até dez segundos. (#9609)
 - HTCom agora pode ser usado com uma Linha braille Handy Tech em combinação com o NVDA. (#9691)

@@ -433,7 +433,10 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 	def loadBuffer(self):
 		self.isLoading = True
 		self._loadProgressCallLater = wx.CallLater(1000, self._loadProgress)
-		threading.Thread(target=self._loadBuffer).start()
+		threading.Thread(
+			name=f"{self.__class__.__module__}.{self.loadBuffer.__qualname__}",
+			target=self._loadBuffer).start(
+		)
 
 	def _loadBuffer(self):
 		try:
