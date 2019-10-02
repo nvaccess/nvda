@@ -738,7 +738,17 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 			controlTypes.ROLE_UNKNOWN,
 			controlTypes.ROLE_PANE,
 			controlTypes.ROLE_TEXTFRAME,
-			controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SPLITPANE, controlTypes.ROLE_SECTION, controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_TITLEBAR, controlTypes.ROLE_LABEL, controlTypes.ROLE_WHITESPACE,controlTypes.ROLE_BORDER):
+			controlTypes.ROLE_ROOTPANE,
+			controlTypes.ROLE_LAYEREDPANE,
+			controlTypes.ROLE_SCROLLPANE,
+			controlTypes.ROLE_SPLITPANE,
+			controlTypes.ROLE_SECTION,
+			controlTypes.ROLE_PARAGRAPH,
+			controlTypes.ROLE_TITLEBAR,
+			controlTypes.ROLE_LABEL,
+			controlTypes.ROLE_WHITESPACE,
+			controlTypes.ROLE_BORDER
+		):
 			return self.presType_layout
 		name = self.name
 		description = self.description

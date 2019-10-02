@@ -108,7 +108,13 @@ class ControlField(Field):
 		):
 			return self.PRESCAT_SINGLELINE
 		elif (
-			role in (controlTypes.ROLE_SEPARATOR, controlTypes.ROLE_FOOTNOTE, controlTypes.ROLE_ENDNOTE, controlTypes.ROLE_EMBEDDEDOBJECT, controlTypes.ROLE_MATH)
+			role in (
+				controlTypes.ROLE_SEPARATOR,
+				controlTypes.ROLE_FOOTNOTE,
+				controlTypes.ROLE_ENDNOTE,
+				controlTypes.ROLE_EMBEDDEDOBJECT,
+				controlTypes.ROLE_MATH
+			)
 			or (role == controlTypes.ROLE_LANDMARK or landmark)
 		):
 			return self.PRESCAT_MARKER

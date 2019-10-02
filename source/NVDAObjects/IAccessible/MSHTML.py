@@ -677,7 +677,7 @@ class MSHTML(IAccessible):
 
 	def _get_landmark(self):
 		if self.HTMLNode:
-			ariaRole=self.HTMLAttributes['role']
+			ariaRole = self.HTMLAttributes['role']
 			if ariaRole and ariaRole in aria.landmarkRoles:
 				return ariaRole
 		return super().landmark
