@@ -169,6 +169,8 @@ roleLabels = {
 	controlTypes.ROLE_DELETED_CONTENT: _("del"),
 	# Translators: Displayed in braille for an object which is inserted.
 	controlTypes.ROLE_INSERTED_CONTENT: _("ins"),
+	# Translators: Displayed in braille for a landmark.
+	controlTypes.ROLE_LANDMARK: _("lmk"),
 }
 
 positiveStateLabels = {
@@ -473,7 +475,7 @@ def getBrailleTextForProperties(**propertyValues):
 	if name:
 		textList.append(name)
 	role = propertyValues.get("role")
-	roleText=propertyValues.get('roleText')
+	roleText = propertyValues.get('roleText')
 	states = propertyValues.get("states")
 	positionInfo = propertyValues.get("positionInfo")
 	level = positionInfo.get("level") if positionInfo else None
@@ -643,9 +645,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	value=field.get('value',None)
 	current=field.get('current', None)
 	placeholder=field.get('placeholder', None)
-	roleText=field.get('roleTextBraille')
-	if not roleText:
-		roleText=field.get('roleText')
+	roleText = field.get('roleTextBraille', field.get('roleText'))
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []
 		if current:

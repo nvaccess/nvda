@@ -19,7 +19,6 @@ import globalVars
 from logHandler import log
 import api
 import controlTypes
-import aria
 import config
 import tones
 import synthDriverHandler
@@ -352,7 +351,6 @@ def speakObject(obj, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None
 		'states': True,
 		'value': True,
 		'description': True,
-		'landmark': True,
 		'keyboardShortcut': True,
 		'positionInfo_level': True,
 		'positionInfo_indexInGroup': True,
@@ -1087,19 +1085,13 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	else:
 		speakRole=False
 		role=controlTypes.ROLE_UNKNOWN
-	landmark = propertyValues.get('landmark') if role == controlTypes.ROLE_LANDMARK else None
 	value=propertyValues.get('value') if role not in controlTypes.silentValuesForRoles else None
 	cellCoordsText=propertyValues.get('cellCoordsText')
 	rowNumber=propertyValues.get('rowNumber')
 	columnNumber=propertyValues.get('columnNumber')
 	includeTableCellCoords=propertyValues.get('includeTableCellCoords',True)
-	if (
-		role == controlTypes.ROLE_CHARTELEMENT
-		or (role == controlTypes.ROLE_LANDMARK and landmark == "region")
-	):
+	if role==controlTypes.ROLE_CHARTELEMENT:
 		speakRole=False
-	if landmark and landmark in aria.landmarkRoles:
-		textList.append(aria.landmarkRoles[landmark])
 	roleText=propertyValues.get('roleText')
 	if speakRole and (roleText or reason not in (controlTypes.REASON_SAYALL,controlTypes.REASON_CARET,controlTypes.REASON_FOCUS) or not (name or value or cellCoordsText or rowNumber or columnNumber) or role not in controlTypes.silentRolesOnFocus) and (role!=controlTypes.ROLE_MATH or reason not in (controlTypes.REASON_CARET,controlTypes.REASON_SAYALL)):
 		textList.append(roleText if roleText else controlTypes.roleLabels[role])

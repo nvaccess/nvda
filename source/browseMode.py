@@ -1135,7 +1135,9 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 					textList.append(braille.landmarkLabels[landmark])
 			if landmark != "region":
 				# Translators: This is brailled to indicate a landmark (example output: lmk main).
-				textList.append(_("lmk %s") % braille.landmarkLabels[landmark])
+				textList.append(
+					f"{braille.roleLabels[controlTypes.ROLE_LANDMARK]} {braille.landmarkLabels[landmark]}"
+				)
 		text = super(BrowseModeDocumentTextInfo, self).getControlFieldBraille(field, ancestors, reportStart, formatConfig)
 		if text:
 			textList.append(text)

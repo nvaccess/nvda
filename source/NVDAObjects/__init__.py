@@ -29,6 +29,7 @@ import vision
 import globalPluginHandler
 import brailleInput
 import locationHelper
+import aria
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
@@ -407,9 +408,18 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		No string is provided by default, meaning that NVDA will fall back to using role.
 		Examples of where this property might be overridden are shapes in Powerpoint, or ARIA role descriptions.
 		"""
+		if self.landmark and self.landmark in aria.landmarkRoles and self.landmark != "region":
+			return f"{aria.landmarkRoles[self.landmark]} {controlTypes.roleLabels[controlTypes.ROLE_LANDMARK]}"
 		return None
 
 	def _get_roleTextBraille(self):
+		"""
+		A custom role string for this object, which is used for braille presentation,
+		which will override the standard label for this object's role property as well as the value of roleText.
+		By default, NVDA falls back to using roleText.
+		"""
+		if self.landmark and self.landmark in braille.landmarkLabels and self.landmark != "region":
+			return f"{braille.roleLabels[controlTypes.ROLE_LANDMARK]} {braille.landmarkLabels[self.landmark]}"
 		return self.roleText
 
 	def _get_value(self):
@@ -1169,6 +1179,11 @@ This code is executed if a gain focus event is received by this object.
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("role: %s" % ret)
+		try:
+			ret = repr(self.roleText)
+		except Exception as e:
+			ret = f"exception: {e}"
+		info.append(f"roleText: {ret}")
 		try:
 			stateConsts = dict((const, name) for name, const in controlTypes.__dict__.items() if name.startswith("STATE_"))
 			ret = ", ".join(
