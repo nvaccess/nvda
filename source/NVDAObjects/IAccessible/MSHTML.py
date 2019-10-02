@@ -675,6 +675,13 @@ class MSHTML(IAccessible):
 			return ""
 		return super(MSHTML,self).name
 
+	def _get_landmark(self):
+		if self.HTMLNode:
+			ariaRole=self.HTMLAttributes['role']
+			if ariaRole and ariaRole in aria.landmarkRoles:
+				return ariaRole
+		return super().landmark
+
 	def _get_value(self):
 		if self.HTMLNodeHasAncestorIAccessible:
 			try:
