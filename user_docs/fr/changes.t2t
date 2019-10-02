@@ -3,6 +3,14 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.2.1 =
+Ceci est une version mineure qui corrige plusieurs plantages présents dans la version 2019.2. Les correctifs incluent :
+- Résolution de plusieurs blocages dans Gmail observés dans Firefox et Chrome lors de l'interaction avec des menus contextuels spécifiques, tels que la création de filtres ou la modification de certains paramètres Gmail. (#10175, #9402, #8924)
+- Sous Windows 7, NVDA ne provoque plus le blocage de l'explorateur Windows quand la souris est utilisée dans le menu Démarrer. (#9435)
+- L'explorateur Windows sous Windows 7 ne plante plus lors de l'accès aux champs d'édition des métadonnées. (#5337)
+- NVDA ne gèle plus quand on interagit avec des images contenant un URI en base64 sous Mozilla Firefox ou Google Chrome. (#10227)
+
+
 = 2019.2 =
 Les améliorations principales de cette version consistent en l'ajout de l'auto-détection des afficheurs Braille Freedom Scientific, de l'ajout d'un réglage expérimental aux paramètres avancés pour empêcher le mode navigation de se déplacer automatiquement vers le curseur (ce qui peut améliorer les performances), une option pour trippler le débit du synthétiseur Windows OneCore, et plein d'autres correctifs.
 
@@ -38,7 +46,7 @@ Les améliorations principales de cette version consistent en l'ajout de l'auto-
 - Mise à jour de eSpeak-NG à la révision 67324cc.
 - Mise à jour du traducteur braille liblouis à la version 3.10.0. (#9439, #9678)
 - NVDA dira maintenant le mot " sélectionné " après avoir annoncé le texte qu'un utilisateur vient de sélectionner (#9028, #9909).
-- Dans Microsoft Visual Studio Code, le mode navigation est maintenant désactivé par défaut. (#9828)
+- Dans Microsoft Visual Studio Code, NVDA est maintenant en mode formulaire automatiquement. (#9828)
 
 
 == Corrections de Bogues ==
@@ -58,7 +66,7 @@ Les améliorations principales de cette version consistent en l'ajout de l'auto-
 - Les extensions dont les noms diffèrent seulement par leur majuscule ne sont plus traités comme des extensions séparées. (#9334)
 - Pour les voix Windows OneCore, le débit défini dans NVDA n'est plus affecté par celui défini dans les paramètres vocaux de Windows 10. (#7498)
 - Le journal peut maintenant être ouvert avec NVDA + F1 en l'absence d'informations développeur pour l'objet navigateur courant. (#8613)
-- Il est à nouveau possible d'utiliser les commandes de navigation NVDA dans les tableaux de Google Docs, Firefox et Chrome. (#9494)
+- Il est à nouveau possible d'utiliser les commandes de navigation des tableaux de NVDA dans Google Docs, dans Firefox et Google Chrome. (#9494)
 - Les touches " bumper " fonctionnent maintenant correctement sur les afficheurs Braille Freedom Scientific. (#8849)
 - Lors de la lecture du premier caractère d'un document dans Notepad++ 7.7 X64, NVDA ne se bloque plus pendant 10 secondes. (#9609)
 - HTCom peut maintenant être utilisé avec un afficheur Braille Handy Tech en association avec NVDA. (#9691)
