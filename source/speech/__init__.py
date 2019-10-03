@@ -1577,7 +1577,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 			# Translators: Reported when text is hidden.
 			text = (_("hidden") if hidden
 				# Translators: Reported when text is not hidden.
-				else _("no hidden"))
+				else _("not hidden"))
 			textList.append(text)
 		textPosition=attrs.get("text-position")
 		oldTextPosition=attrsCache.get("text-position") if attrsCache is not None else None
