@@ -67,7 +67,7 @@ For reference, the following run time dependencies are included in Git submodule
 * [IAccessible2](http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2), commit 21bbb176
 * [ConfigObj](https://github.com/DiffSK/configobj), commit 5b5de48
 * [Six](https://pypi.python.org/pypi/six), version 1.12.0, required by wxPython and ConfigObj
-* [liblouis](http://www.liblouis.org/), version 3.10.0
+* [liblouis](http://www.liblouis.org/), version 3.10.0 commit 146c0757
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/) Emoji Annotations, version 35.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](http://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
