@@ -3053,7 +3053,7 @@ class VisionProviderSubPanel_Runtime(
 
 	@property
 	def driver(self):
-		return self._providerCallable()
+		return self._providerCallable().getSettings()
 
 	def makeSettings(self, settingsSizer):
 		# Construct vision enhancement provider settings
@@ -3101,6 +3101,7 @@ class VisionProviderSubPanel_Default(
 			)
 			self._runtimeSettingsSizer.Add(self._runtimeSettings, flag=wx.EXPAND, proportion=1.0)
 		except:
+			log.error("unable to create runtime settings", exc_info=True)
 			return False
 		return True
 

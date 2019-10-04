@@ -331,7 +331,7 @@ class NVDAHightlighter(vision.providerBase.VisionEnhancementProvider):
 		@return: Optional[SettingsPanel]
 		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Default} is used.
 		"""
-		return NVDAHighlighterGuiPanel
+		return None
 
 	@classmethod  # impl required by proivderBase.VisionEnhancementProvider
 	def canStart(cls) -> bool:
