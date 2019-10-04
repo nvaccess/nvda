@@ -103,7 +103,8 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 
 	@classmethod
 	def canStart(cls):
-		return winVersion.isFullScreenMagnificationAvailable()
+		# return winVersion.isFullScreenMagnificationAvailable()
+		return False
 
 	def __init__(self):
 		super(VisionEnhancementProvider, self).__init__()

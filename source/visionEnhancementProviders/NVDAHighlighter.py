@@ -5,10 +5,9 @@
 # Copyright (C) 2018-2019 NV Access Limited, Babbage B.V., Takuya Nishimoto
 
 """Default highlighter based on GDI Plus."""
-from typing import Callable, Optional, List, Tuple
+from typing import Callable, Optional, Tuple
 
 import vision
-from baseObject import AutoPropertyObject
 from vision.constants import Role, Context
 from vision.util import getContextRect
 from windowUtils import CustomWindow
@@ -203,16 +202,13 @@ _supportedContexts = (Context.FOCUS, Context.NAVIGATOR, Context.BROWSEMODE)
 
 class NVDAHighlighterSettings(vision.providerBase.VisionEnhancementProviderStaticSettings):
 	name = "NVDAHighlighter"
+	# Translators: Description for NVDA's built-in screen highlighter.
+	description = _("NVDA Highlighter")
+	supportedRoles = frozenset([Role.HIGHLIGHTER])
 	# Default settings for parameters
 	highlightFocus = False
 	highlightNavigator = False
 	highlightBrowseMode = False
-
-	supportedSettings: List[driverHandler.DriverSetting]
-
-	def __init__(self):
-		super().__init__()
-		self.initSettings()
 
 	def _get_supportedSettings(cls):
 		return [
@@ -223,15 +219,6 @@ class NVDAHighlighterSettings(vision.providerBase.VisionEnhancementProviderStati
 			)
 			for context in _supportedContexts
 		]
-
-	def check(cls):
-		return True
-
-	def loadSettings(self, onlyChanged: bool = False):
-		super().loadSettings(onlyChanged)
-
-	def saveSettings(self):
-		super().saveSettings()
 
 
 class NVDAHighlighterGuiPanel(
@@ -252,10 +239,10 @@ class NVDAHighlighterGuiPanel(
 
 
 	@property
-	def driver(self) -> driverHandler.Driver:
+	def driver(self) -> driverHandler.Driver:  # todo: call this something other than driver
 		# DriverSettingsMixin uses self.driver to get / set attributes matching the names of the settings.
 		# We want them set on this class.
-		return VisionEnhancementProvider.settings
+		return VisionEnhancementProvider.getSettings()
 
 	def makeSettings(self, sizer):
 		self._enabledCheckbox = wx.CheckBox(self, label="Highlight focus", style=wx.CHK_3STATE)
@@ -280,7 +267,7 @@ class NVDAHighlighterGuiPanel(
 		self.lastControl = self._enabledCheckbox
 
 	def _updateEnabledState(self):
-		settings = VisionEnhancementProvider.settings
+		settings = VisionEnhancementProvider._settings
 		settingsToTriggerActivation = [
 			settings.highlightBrowseMode,
 			settings.highlightFocus,
@@ -308,7 +295,7 @@ class NVDAHighlighterGuiPanel(
 			self._terminateProvider()
 
 	def _onCheckEvent(self, evt: wx.CommandEvent):
-		settings = VisionEnhancementProvider.settings
+		settings = VisionEnhancementProvider._settings
 		if evt.GetEventObject() is self._enabledCheckbox:
 			settings.highlightBrowseMode = evt.IsChecked()
 			settings.highlightFocus = evt.IsChecked()
@@ -321,11 +308,7 @@ class NVDAHighlighterGuiPanel(
 			self._getProvider().refresh()
 
 
-class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
-	name = "NVDAHighlighter"
-	# Translators: Description for NVDA's built-in screen highlighter.
-	description = _("NVDA Highlighter")
-	supportedRoles = frozenset([Role.HIGHLIGHTER])
+class NVDAHightlighter(vision.providerBase.VisionEnhancementProvider):
 	_ContextStyles = {
 		Context.FOCUS: DASH_BLUE,
 		Context.NAVIGATOR: SOLID_PINK,
@@ -334,7 +317,13 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 	}
 	_refreshInterval = 100
 	customWindowClass = HighlightWindow
-	settings = NVDAHighlighterSettings()
+	_settings = NVDAHighlighterSettings()
+
+	enabledContexts: Tuple[Context]  # type info for autoprop: L{_get_enableContexts}
+
+	@classmethod
+	def getSettings(cls):
+		return cls._settings
 
 	@classmethod  # impl required by vision.providerBase.VisionEnhancementProvider
 	def getSettingsPanelClass(cls):
@@ -344,20 +333,9 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 		"""
 		return NVDAHighlighterGuiPanel
 
-	@classmethod  # impl required by driverHandler.Driver
-	def _get_supportedSettings(cls):
-		return cls.settings.supportedSettings
-
-	@classmethod  # impl required by driverHandler.Driver
+	@classmethod  # impl required by proivderBase.VisionEnhancementProvider
 	def canStart(cls) -> bool:
 		return True
-
-	def _registerConfigSaveAction(self):
-		# we don't want to register
-		pass
-
-	def initSettings(self):
-		pass
 
 	def registerEventExtensionPoints(self, extensionPoints):
 		extensionPoints.post_focusChange.register(self.handleFocusChange)
@@ -381,7 +359,6 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 			self._highlighterThread = None
 		winGDI.gdiPlusTerminate()
 		self.contextToRectMap.clear()
-		#self.settings.terminate(*args, **kwargs)
 
 	def _run(self):
 		if vision._isDebug():
@@ -434,11 +411,13 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 		if self.window:
 			self.window.refresh()
 
-	enabledContexts: Tuple[Context]
 	def _get_enabledContexts(self):
 		"""Gets the contexts for which the highlighter is enabled.
 		"""
 		return tuple(
 			context for context in _supportedContexts
-			if getattr(self.settings, 'highlight%s' % (context[0].upper() + context[1:]))
+			if getattr(self.getSettings(), 'highlight%s' % (context[0].upper() + context[1:]))
 		)
+
+
+VisionEnhancementProvider = NVDAHightlighter

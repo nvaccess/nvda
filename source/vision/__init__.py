@@ -64,14 +64,17 @@ def getProviderList(
 			continue
 		try:
 			if not onlyStartable or provider.canStart():
+				providerSettings = provider.getSettings()
 				providerList.append((
-					provider.name,
-					provider.description,
+					providerSettings.name,
+					providerSettings.description,
 					list(provider.supportedRoles),
 					provider
 				))
 			else:
-				log.debugWarning("Vision enhancement provider %s reports as unable to start, excluding" % provider.name)
+				log.debugWarning(
+					f"Excluding Vision enhancement provider {providerSettings.name} which is unable to start"
+				)  # todo: accessed before init?
 		except Exception:
 			# Purposely catch everything else as we don't want one failing provider
 			# make it impossible to list all the others.

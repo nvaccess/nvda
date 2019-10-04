@@ -80,7 +80,7 @@ class VisionHandler(AutoPropertyObject):
 		@param providerName: The provider to terminate.
 		@param saveSettings: Whether settings should be saved on termionation.
 		"""
-		success = True
+		success = True  # todo: can we remove this? seems unused, what is the history?
 		# Remove the provider from the providers dictionary.
 		providerInstance = self.providers.pop(providerName, None)
 		if not providerInstance:
@@ -133,7 +133,6 @@ class VisionHandler(AutoPropertyObject):
 			This defaults to C{False}.
 			If C{True}, no changes will be performed to the configuration.
 		"""
-		providerCls = None
 		providerInst = self.providers.pop(providerName, None)
 		if providerInst is not None:
 			providerCls = type(providerInst)
@@ -163,9 +162,10 @@ class VisionHandler(AutoPropertyObject):
 					log.error(
 						f"Error terminating provider {providerName} after registering to extension points", exc_info=True)
 				raise registerEventExtensionPointsException
-		providerInst.initSettings()
-		if not temporary and providerCls.name not in config.conf['vision']['providers']:
-			config.conf['vision']['providers'] = config.conf['vision']['providers'][:] + [providerCls.name]
+		providerSettings = providerCls.getSettings()
+		providerSettings.initSettings()  # todo: do we actually have to do this here? It might actually cause a bug, reloading settings and overwriting current static settings.
+		if not temporary and providerName not in config.conf['vision']['providers']:
+			config.conf['vision']['providers'] = config.conf['vision']['providers'][:] + [providerName]
 		self.providers[providerName] = providerInst
 		try:
 			self.initialFocus()
