@@ -15,6 +15,7 @@ import driverHandler
 import wx
 import gui
 import config
+from logHandler import log
 
 
 class MAGCOLOREFFECT(Structure):
@@ -106,6 +107,7 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 
 	def __init__(self):
 		super(VisionEnhancementProvider, self).__init__()
+		log.debug(f"ScreenCurtain", stack_info=True)
 		Magnification.MagInitialize()
 		Magnification.MagShowSystemCursor(False)
 		Magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)

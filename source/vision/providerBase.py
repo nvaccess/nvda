@@ -11,11 +11,12 @@ import driverHandler
 from abc import abstractmethod
 from .constants import Role
 from .visionHandlerExtensionPoints import EventExtensionPoints
-from typing import FrozenSet
+from typing import FrozenSet, Type, Optional
 
 
 class VisionEnhancementProviderStaticSettings(driverHandler.Driver):
 	_configSection = "vision"
+	cachePropertiesByDefault = True
 
 class VisionEnhancementProvider(driverHandler.Driver):
 	"""A class for vision enhancement providers.
@@ -32,7 +33,7 @@ class VisionEnhancementProvider(driverHandler.Driver):
 		return super().supportedSettings
 
 	@classmethod
-	def getSettingsPanel(cls):
+	def getSettingsPanelClass(cls) -> Optional[Type]:
 		"""Returns the instance to be used in order to construct a settings panel for the provider.
 		@return: Optional[SettingsPanel]
 		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Default} is used.

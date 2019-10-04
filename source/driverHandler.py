@@ -44,6 +44,10 @@ class Driver(AutoPropertyObject):
 		@postcondition: This driver can be used.
 		"""
 		super(Driver, self).__init__()
+		self._registerConfigSaveAction()
+
+	def _registerConfigSaveAction(self):
+		log.debug(f"registering: {self.__class__!r}")
 		config.pre_configSave.register(self.saveSettings)
 
 	@classmethod
@@ -169,6 +173,7 @@ class Driver(AutoPropertyObject):
 			settings: Union[List, Tuple],
 			onlyChanged: bool = False
 	):
+		log.debug(f"loading {cls._configSection} {cls.name}")
 		conf = config.conf[cls._configSection][cls.name]
 		for setting in settings:
 			if not setting.useConfig or conf.get(setting.id) is None:

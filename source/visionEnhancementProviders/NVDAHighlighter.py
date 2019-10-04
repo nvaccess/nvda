@@ -5,8 +5,10 @@
 # Copyright (C) 2018-2019 NV Access Limited, Babbage B.V., Takuya Nishimoto
 
 """Default highlighter based on GDI Plus."""
+from typing import Callable, Optional, List, Tuple
 
 import vision
+from baseObject import AutoPropertyObject
 from vision.constants import Role, Context
 from vision.util import getContextRect
 from windowUtils import CustomWindow
@@ -184,52 +186,178 @@ class HighlightWindow(CustomWindow):
 		winUser.user32.InvalidateRect(self.handle, None, True)
 
 
+_contextOptionLabelsWithAccelerators = {
+	# Translators: shown for a highlighter setting that toggles
+	# highlighting the system focus.
+	Context.FOCUS: _("Highlight system fo&cus"),
+	# Translators: shown for a highlighter setting that toggles
+	# highlighting the browse mode cursor.
+	Context.BROWSEMODE: _("Highlight browse &mode cursor"),
+	# Translators: shown for a highlighter setting that toggles
+	# highlighting the navigator object.
+	Context.NAVIGATOR: _("Highlight navigator &object"),
+}
+
+_supportedContexts = (Context.FOCUS, Context.NAVIGATOR, Context.BROWSEMODE)
+
+
+class NVDAHighlighterSettings(vision.providerBase.VisionEnhancementProviderStaticSettings):
+	name = "NVDAHighlighter"
+	# Default settings for parameters
+	highlightFocus = False
+	highlightNavigator = False
+	highlightBrowseMode = False
+
+	supportedSettings: List[driverHandler.DriverSetting]
+
+	def __init__(self):
+		super().__init__()
+		self.initSettings()
+
+	def _get_supportedSettings(cls):
+		return [
+			driverHandler.BooleanDriverSetting(
+				'highlight%s' % (context[0].upper() + context[1:]),
+				_contextOptionLabelsWithAccelerators[context],
+				defaultVal=True
+			)
+			for context in _supportedContexts
+		]
+
+	def check(cls):
+		return True
+
+	def loadSettings(self, onlyChanged: bool = False):
+		super().loadSettings(onlyChanged)
+
+	def saveSettings(self):
+		super().saveSettings()
+
+
+class NVDAHighlighterGuiPanel(
+		gui.DriverSettingsMixin,
+		gui.SettingsPanel
+):
+	def __init__(
+			self,
+			parent,
+			getProvider: Callable[[], Optional[vision.VisionEnhancementProvider]],
+			initProvider: Callable[[], bool],
+			terminateProvider: Callable[[], None]
+	):
+		self._getProvider = getProvider
+		self._initProvider = initProvider
+		self._terminateProvider = terminateProvider
+		super().__init__(parent)
+
+
+	@property
+	def driver(self) -> driverHandler.Driver:
+		# DriverSettingsMixin uses self.driver to get / set attributes matching the names of the settings.
+		# We want them set on this class.
+		return VisionEnhancementProvider.settings
+
+	def makeSettings(self, sizer):
+		self._enabledCheckbox = wx.CheckBox(self, label="Highlight focus", style=wx.CHK_3STATE)
+		self.lastControl = self._enabledCheckbox
+		sizer.Add(self._enabledCheckbox)
+		self._enableCheckSizer = sizer
+		self.mainSizer.Add(self._enableCheckSizer, flag=wx.ALL | wx.EXPAND)
+		optionsSizer = wx.StaticBoxSizer(
+			wx.StaticBox(
+				self,
+				# Translators: The label for a group box containing the NVDA welcome dialog options.
+				label=_("Options")
+			),
+			wx.VERTICAL
+		)
+		self.settingsSizer = optionsSizer
+		self.updateDriverSettings()
+		self.Bind(wx.EVT_CHECKBOX, self._onCheckEvent)
+		self._updateEnabledState()
+
+	def onPanelActivated(self):
+		self.lastControl = self._enabledCheckbox
+
+	def _updateEnabledState(self):
+		settings = VisionEnhancementProvider.settings
+		settingsToTriggerActivation = [
+			settings.highlightBrowseMode,
+			settings.highlightFocus,
+			settings.highlightNavigator,
+		]
+		if any(settingsToTriggerActivation):
+			if all(settingsToTriggerActivation):
+				self._enabledCheckbox.Set3StateValue(wx.CHK_CHECKED)
+				log.debug("all")
+			else:
+				self._enabledCheckbox.Set3StateValue(wx.CHK_UNDETERMINED)
+				log.debug("some")
+			self._ensureEnableState(True)
+		else:
+			self._enabledCheckbox.Set3StateValue(wx.CHK_UNCHECKED)
+			self._ensureEnableState(False)
+
+	def _ensureEnableState(self, shouldBeEnabled: bool):
+		currentlyEnabled = bool(self._getProvider())
+		if shouldBeEnabled and not currentlyEnabled:
+			log.debug("init provider")
+			self._initProvider()
+		elif not shouldBeEnabled and currentlyEnabled:
+			log.debug("terminate provider")
+			self._terminateProvider()
+
+	def _onCheckEvent(self, evt: wx.CommandEvent):
+		settings = VisionEnhancementProvider.settings
+		if evt.GetEventObject() is self._enabledCheckbox:
+			settings.highlightBrowseMode = evt.IsChecked()
+			settings.highlightFocus = evt.IsChecked()
+			settings.highlightNavigator = evt.IsChecked()
+			self._ensureEnableState(evt.IsChecked())
+			self.updateDriverSettings()
+		else:
+			self._updateEnabledState()
+		if self._getProvider():
+			self._getProvider().refresh()
+
+
 class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 	name = "NVDAHighlighter"
 	# Translators: Description for NVDA's built-in screen highlighter.
 	description = _("NVDA Highlighter")
 	supportedRoles = frozenset([Role.HIGHLIGHTER])
-	supportedContexts = (Context.FOCUS, Context.NAVIGATOR, Context.BROWSEMODE)
 	_ContextStyles = {
 		Context.FOCUS: DASH_BLUE,
 		Context.NAVIGATOR: SOLID_PINK,
 		Context.FOCUS_NAVIGATOR: SOLID_BLUE,
 		Context.BROWSEMODE: SOLID_YELLOW,
 	}
-	refreshInterval = 100
+	_refreshInterval = 100
 	customWindowClass = HighlightWindow
+	settings = NVDAHighlighterSettings()
 
-	# Default settings for parameters
-	highlightFocus = True
-	highlightNavigator = True
-	highlightBrowseMode = True
+	@classmethod  # impl required by vision.providerBase.VisionEnhancementProvider
+	def getSettingsPanelClass(cls):
+		"""Returns the instance to be used in order to construct a settings panel for the provider.
+		@return: Optional[SettingsPanel]
+		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Default} is used.
+		"""
+		return NVDAHighlighterGuiPanel
 
-	_contextOptionLabelsWithAccelerators = {
-		# Translators: shown for a highlighter setting that toggles
-		# highlighting the system focus.
-		Context.FOCUS: _("Highlight system fo&cus"),
-		# Translators: shown for a highlighter setting that toggles
-		# highlighting the browse mode cursor.
-		Context.BROWSEMODE: _("Highlight browse &mode cursor"),
-		# Translators: shown for a highlighter setting that toggles
-		# highlighting the navigator object.
-		Context.NAVIGATOR: _("Highlight navigator &object"),
-	}
-
-	@classmethod
+	@classmethod  # impl required by driverHandler.Driver
 	def _get_supportedSettings(cls):
-		return [
-			driverHandler.BooleanDriverSetting(
-				'highlight%s' % (context[0].upper() + context[1:]),
-				cls._contextOptionLabelsWithAccelerators[context],
-				defaultVal=True
-			)
-			for context in cls.supportedContexts
-		]
+		return cls.settings.supportedSettings
 
-	@classmethod
+	@classmethod  # impl required by driverHandler.Driver
 	def canStart(cls) -> bool:
 		return True
+
+	def _registerConfigSaveAction(self):
+		# we don't want to register
+		pass
+
+	def initSettings(self):
+		pass
 
 	def registerEventExtensionPoints(self, extensionPoints):
 		extensionPoints.post_focusChange.register(self.handleFocusChange)
@@ -253,13 +381,13 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 			self._highlighterThread = None
 		winGDI.gdiPlusTerminate()
 		self.contextToRectMap.clear()
-		super().terminate(*args, **kwargs)
+		#self.settings.terminate(*args, **kwargs)
 
 	def _run(self):
 		if vision._isDebug():
 			log.debug("Starting NVDAHighlighter thread")
 		window = self.window = self.customWindowClass(self)
-		self.timer = winUser.WinTimer(window.handle, 0, self.refreshInterval, None)
+		self.timer = winUser.WinTimer(window.handle, 0, self._refreshInterval, None)
 		msg = MSG()
 		while winUser.getMessage(byref(msg), None, 0, 0):
 			winUser.user32.TranslateMessage(byref(msg))
@@ -306,10 +434,11 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 		if self.window:
 			self.window.refresh()
 
+	enabledContexts: Tuple[Context]
 	def _get_enabledContexts(self):
 		"""Gets the contexts for which the highlighter is enabled.
 		"""
 		return tuple(
-			context for context in self.supportedContexts
-			if getattr(self, 'highlight%s' % (context[0].upper() + context[1:]))
+			context for context in _supportedContexts
+			if getattr(self.settings, 'highlight%s' % (context[0].upper() + context[1:]))
 		)

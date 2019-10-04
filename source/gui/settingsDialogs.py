@@ -1109,8 +1109,12 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 		"""Same as L{makeSliderSettingControl} but for boolean settings. Returns checkbox."""
 		checkbox=wx.CheckBox(self,wx.ID_ANY,label=setting.displayNameWithAccelerator)
 		setattr(self,"%sCheckbox"%setting.id,checkbox)
-		checkbox.Bind(wx.EVT_CHECKBOX,
-			lambda evt: setattr(self.driver,setting.id,evt.IsChecked()))
+
+		def onCheckChanged(evt: wx.CommandEvent):
+			evt.Skip()  # allow other handlers to also process this event.
+			setattr(self.driver, setting.id, evt.IsChecked())
+
+		checkbox.Bind(wx.EVT_CHECKBOX, onCheckChanged)
 		checkbox.SetValue(getattr(self.driver,setting.id))
 		if self.lastControl:
 			checkbox.MoveAfterInTabOrder(self.lastControl)
@@ -2882,21 +2886,32 @@ class VisionSettingsPanel(SettingsPanel):
 				wx.StaticBoxSizer(wx.StaticBox(self, label=providerDesc), wx.VERTICAL),
 				flag=wx.EXPAND
 			)
-			settingsPanel = providerClass.getSettingsPanel()
-			if not settingsPanel:
-				settingsPanel = VisionProviderSubPanel_Default(
+			settingsPanelCls = providerClass.getSettingsPanelClass()
+			if not settingsPanelCls:
+				log.debug(f"Using default panel for providerName: {providerName}")
+				settingsPanelCls = VisionProviderSubPanel_Default
+			else:
+				log.debug(f"Using custom panel for providerName: {providerName}")
+			try:
+				settingsPanel = settingsPanelCls(
 					self,
-					providerClass=providerClass,
-					getProvider=self._getProvider,
-					initProvider=lambda providerName: self.safeInitProviders([providerName]),
-					terminateProvider=lambda providerName: self.safeTerminateProviders([providerName], verbose=True)
+					# default value for name parameter to lambda, recommended by python3 FAQ:
+					# https://docs.python.org/3/faq/programming.html#why-do-lambdas-defined-in-a-loop-with-different-values-all-return-the-same-result
+					getProvider=lambda name=providerName: self._getProvider(name),
+					initProvider=lambda name=providerName: self.safeInitProviders([name]),
+					terminateProvider=lambda name=providerName: self.safeTerminateProviders([name], verbose=True)
 				)
+			except:
+				log.debug(f"Error creating providerPanel: {settingsPanelCls!r}", exc_info=True)
+				continue
+
 			if len(self.providerPanelInstances) > 0:
 				settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 			providerSizer.Add(settingsPanel, flag=wx.EXPAND)
 			self.providerPanelInstances.append(settingsPanel)
 
 	def _getProvider(self, providerName: str) -> Optional[vision.VisionEnhancementProvider]:
+		log.debug(f"providerName: {providerName}")
 		return vision.handler.providers.get(providerName, None)
 
 	def safeInitProviders(
@@ -3000,7 +3015,10 @@ class VisionSettingsPanel(SettingsPanel):
 
 	def onDiscard(self):
 		for panel in self.providerPanelInstances:
-			panel.onDiscard()
+			try:
+				panel.onDiscard()
+			except:
+				log.debug(f"Error discarding providerPanel: {panel.__class__!r}", exc_info=True)
 
 		providersToInitialize = [name for name in self.initialProviders if name not in vision.handler.providers]
 		self.safeInitProviders(providersToInitialize)
@@ -3009,7 +3027,10 @@ class VisionSettingsPanel(SettingsPanel):
 
 	def onSave(self):
 		for panel in self.providerPanelInstances:
-			panel.onSave()
+			try:
+				panel.onSave()
+			except:
+				log.debug(f"Error saving providerPanel: {panel.__class__!r}", exc_info=True)
 		self.initialProviders = list(vision.handler.providers)
 
 
@@ -3047,19 +3068,17 @@ class VisionProviderSubPanel_Default(
 			self,
 			parent: wx.Window,
 			*,  # Make next argument keyword only
-			providerClass: Type[vision.VisionEnhancementProvider],
-			getProvider: Callable[[str], vision.VisionEnhancementProvider],
-			initProvider,
-			terminateProvider
+			getProvider: Callable[[], Optional[vision.VisionEnhancementProvider]],
+			initProvider: Callable[[], bool],
+			terminateProvider: Callable[[], None]
 	):
 		"""
 		@param getProvider: A callable that returns an instance to a VisionEnhancementProvider.
 			This will usually be a weakref, but could be any callable taking no arguments.
 		"""
-		self.providerClass = providerClass
-		self._getProvider = lambda: getProvider(providerClass.name)
-		self._initProvider = lambda: initProvider(providerClass.name)
-		self._terminateProvider = lambda: terminateProvider(providerClass.name)
+		self._getProvider = getProvider
+		self._initProvider = initProvider
+		self._terminateProvider = terminateProvider
 		self._runtimeSettings: Optional[VisionProviderSubPanel_Runtime] = None
 		self._runtimeSettingsSizer = wx.BoxSizer(orient=wx.VERTICAL)
 		super().__init__(parent=parent)
@@ -3075,11 +3094,15 @@ class VisionProviderSubPanel_Default(
 		checkBox.Bind(wx.EVT_CHECKBOX, self._enableToggle)
 
 	def _createRuntimeSettings(self):
-		self._runtimeSettings = VisionProviderSubPanel_Runtime(
-			self,
-			providerCallable=weakref.ref(self._getProvider())
-		)
-		self._runtimeSettingsSizer.Add(self._runtimeSettings, flag=wx.EXPAND, proportion=1.0)
+		try:
+			self._runtimeSettings = VisionProviderSubPanel_Runtime(
+				self,
+				providerCallable=weakref.ref(self._getProvider())
+			)
+			self._runtimeSettingsSizer.Add(self._runtimeSettings, flag=wx.EXPAND, proportion=1.0)
+		except:
+			return False
+		return True
 
 	def _enableToggle(self, evt):
 		if not evt.IsChecked():
@@ -3089,7 +3112,9 @@ class VisionProviderSubPanel_Default(
 			self._terminateProvider()
 		else:
 			self._initProvider()
-			self._createRuntimeSettings()
+			if not self._createRuntimeSettings():
+				self._checkBox.SetValue(False)
+				return
 			self._runtimeSettings.onPanelActivated()
 		self._sendLayoutUpdatedEvent()
 
@@ -3098,6 +3123,7 @@ class VisionProviderSubPanel_Default(
 			self._runtimeSettings.onDiscard()
 
 	def onSave(self):
+		log.debug(f"calling VisionProviderSubPanel_Default")
 		if self._runtimeSettings:
 			self._runtimeSettings.onSave()
 
