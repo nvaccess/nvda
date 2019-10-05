@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-14 00:10+1000\n"
-"PO-Revision-Date: 2019-06-18 22:52+0200\n"
+"POT-Creation-Date: 2019-09-27 00:10+1000\n"
+"PO-Revision-Date: 2019-09-29 13:32+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
 "rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
@@ -1768,12 +1768,6 @@ msgstr "ορόσημο %s"
 msgid "lmk %s"
 msgstr "ορόσημο %s"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#. Translators: Announces selected text. %s is replaced with the text.
-#, python-format
-msgid "selected %s"
-msgstr "επιλέχθηκε %s"
-
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
 msgstr "Καμία εκτενής περιγραφή"
@@ -3144,10 +3138,6 @@ msgstr "Κλείδωμα δεξιού πλήκτρου ποντικιού"
 msgid "Locks or unlocks the right mouse button"
 msgstr "Κλειδώνει ή ξεκλειδώνει το δεξί πλήκτρο του ποντικιού"
 
-#, python-format
-msgid "Selected %s"
-msgstr "Επιλογή %s"
-
 #. Translators: Input help mode message for report current selection command.
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
@@ -3908,6 +3898,31 @@ msgid ""
 msgstr ""
 "Μετακινεί το δρομέα επισκόπησης στον τελευταίο χαρακτήρα της γραμμής στην "
 "οποία βρίσκεται στο τρέχον αντικείμενο πλοήγησης και τον εκφωνεί"
+
+#. Translators: Input help mode message for Review Current Symbol command.
+msgid ""
+"Reports the symbol where the review cursor is positioned. Pressed twice, "
+"shows the symbol and the text used to speak it in browse mode"
+msgstr ""
+"Αναφέρει το σύμβολο για την τρέχουσα θέση του δρομέα επισκόπησης. Αν πατηθεί "
+"δυο φορές, παρουσιάζει το σύμβολο και το κείμενο που χρησιμοποιούνται ώστε "
+"να τα εκφωνήσει λειτουργία περιήγησης."
+
+#. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+msgid "No symbol replacement"
+msgstr "Δεν έχει αντικατασταθεί το σύμβολο "
+
+#. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+msgid ""
+"Character: {}\n"
+"Replacement: {}"
+msgstr ""
+"Χαρακτήρας: {}\n"
+"Αντικατάσταση: {}"
+
+#. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+msgid "Expanded symbol ({})"
+msgstr "Αναπτυγμένο σύμβολο ({})"
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -6202,15 +6217,24 @@ msgstr "κεφαλαίο %s"
 msgid "no indent"
 msgstr "χωρίς εσοχή"
 
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "επιλέχθηκε %s"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s επιλεγμένο"
+
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d χαρακτήρες"
-
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
-#, python-format
-msgid "%s selected"
-msgstr "%s επιλεγμένο"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -9613,6 +9637,20 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
+msgid "Use UI Automation to access the Windows Console when available"
+msgstr ""
+"Χρήση αυτοματοποίησης διεπαφής χρήστη για να αποκτήσετε πρόσβαση στην "
+"κονσόλα των Windows όταν διατίθεται"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr ""
+"Εκφώνηση &κωδικών πρόσβασης στις κονσόλες UIA (μπορεί να βελτιώσει την "
+"απόδοση)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
 msgid "Automatically set system &focus to focusable elements"
 msgstr "Αυτόματη επιλογή εστιασμένων στοιχείων ως %εστίασης συστήματος"
 
@@ -11481,6 +11519,9 @@ msgstr "Διπλό διάστιχο γραμμής"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Διάστιχο γραμμής 1.5"
+
+#~ msgid "Selected %s"
+#~ msgstr "Επιλογή %s"
 
 #~ msgid "Currently running application is %s"
 #~ msgstr "Η εφαρμογή που εκτελείται αυτή τη στιγμή είναι το %s"
