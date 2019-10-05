@@ -45,7 +45,7 @@ The following dependencies need to be installed on your system:
 			* Desktop development with C++
 		* Then in the Installation details section, under Desktop for C++, Optional grouping, ensure the following are selected:
 			* VC++ 2017 v141 toolset (x86,x64)
-			* Windows 10 SDK (10.0.17134.0) for Desktop C++ x86 and x64
+			* Windows 10 SDK (10.0.18362.0) for Desktop C++ x86 and x64
 			* Visual C++ ATL for x86 and x64
 		* In the Installation details section, under Individual components, ensure the following are selected:
 			* Visual C++ compilers and libraries for ARM64
