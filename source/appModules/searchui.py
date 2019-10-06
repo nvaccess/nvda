@@ -19,7 +19,7 @@ class StartMenuSearchField(SearchField):
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
-		if isinstance(obj,IAccessible):
+		if isinstance(obj, IAccessible):
 			try:
 				# #5288: Never use ContentGenericClient, as this uses displayModel
 				# which will freeze if the process is suspended.
