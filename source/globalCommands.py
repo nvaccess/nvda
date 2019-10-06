@@ -2283,6 +2283,23 @@ class GlobalCommands(ScriptableObject):
 	script_recognizeWithUwpOcr.__doc__ = _("Recognizes the content of the current navigator object with Windows 10 OCR")
 
 	@script(
+		# Translators: Input help mode message for toggle report CLDR command.
+		description=_("Toggles on and off the reporting of CLDR characters, such as emojis"),
+		category=SCRCAT_SPEECH,
+	)
+	def script_toggleReportCLDR(self, gesture):
+		if config.conf["speech"]["includeCLDR"]:
+			# Translators: presented when the report CLDR is toggled.
+			state = _("report CLDR characters off")
+			config.conf["speech"]["includeCLDR"] = False
+		else:
+			# Translators: presented when the report CLDR is toggled.
+			state = _("report CLDR characters on")
+			config.conf["speech"]["includeCLDR"] = True
+		characterProcessing.clearSpeechSymbols()
+		ui.message(state)
+
+	@script(
 		# Translators: Describes a command.
 		description=_(
 			"Toggles the state of the screen curtain, "
