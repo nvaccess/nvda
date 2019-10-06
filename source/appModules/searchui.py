@@ -1,7 +1,10 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2015-2017 NV Access Limited, Joseph Lee
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2015-2019 NV Access Limited, Joseph Lee
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
+"""App module for Start menu/Windows Search/Cortana user interface in Windows 10 Version 1909 and earlier.
+"""
 
 import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
@@ -9,7 +12,7 @@ from NVDAObjects.UIA import UIA, SearchField
 
 class StartMenuSearchField(SearchField):
 
-		# #7370: do not announce text when start menu (searchui) closes.
+	# #7370: do not announce text when start menu (searchui) closes.
 	announceNewLineText = False
 
 class AppModule(appModuleHandler.AppModule):
