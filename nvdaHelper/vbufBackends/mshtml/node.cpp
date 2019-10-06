@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2015 NVDA contributers.
+Copyright 2006-2019 NV Access Limited, Google LLC
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -76,7 +76,6 @@ class CDispatchChangeSink : public IDispatch {
 		this->dwCookie=dwCookie;
 		return true;
 	}
-
 
 	BOOL disconnect() {
 		if(this->dwCookie==0) return false;
@@ -276,7 +275,6 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 	}
 
 };
-
 
 MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, bool isRootNode, IHTMLDOMNode* pHTMLDOMNode,const wstring& lang): VBufStorage_controlFieldNode_t(docHandle,ID,isBlock), language(lang) {
 	nhAssert(backend);
