@@ -12,6 +12,14 @@ class StartMenuSearchField(SearchField):
 		# #7370: do not announce text when start menu (searchui) closes.
 	announceNewLineText = False
 
+	# #10336: "blank" is announced when up or down arrow is pressed from an empty search box,
+	# as well as causing repetitions for search results.
+	__gestures = {
+		"kb:downArrow": None,
+		"kb:upArrow": None,
+	}
+
+
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
