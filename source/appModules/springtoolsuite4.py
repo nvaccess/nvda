@@ -6,6 +6,7 @@
 
 """ App module for Spring Tool Suite version 4
 This simply uses the app module for Eclipse.
+Normally these Flake8 errors shouldn't be ignored but in this case we are simply reusing existing ap module.
 """
 
-from .eclipse import *
+from .eclipse import *  # noqa: F403,F401
