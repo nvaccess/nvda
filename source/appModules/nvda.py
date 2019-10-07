@@ -1,19 +1,29 @@
-#appModules/nvda.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2017 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# appModules/nvda.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2008-2019 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
+
+import typing
 
 import appModuleHandler
 import api
 import controlTypes
 import versionInfo
 from NVDAObjects.IAccessible import IAccessible
+from baseObject import ScriptableObject
 import gui
+from scriptHandler import script
 import speech
+import textInfos
 import braille
 import config
 from logHandler import log
+
+if typing.TYPE_CHECKING:
+	import inputCore
+
 
 nvdaMenuIaIdentity = None
 
@@ -43,6 +53,103 @@ class NvdaDialogEmptyDescription(IAccessible):
 			However this will do to ensure that the dialog is described as we wish.
 		"""
 		return ""
+
+
+SCRCAT_PYTHON_CONSOLE = _("Python Console")
+
+
+class NvdaPythonConsoleUIOutputClear(ScriptableObject):
+
+	isPrevFocusOnNvdaPopup = True
+
+	@script(
+		gesture="kb:control+l",
+		description=_("Clear the output pane"),
+		category=SCRCAT_PYTHON_CONSOLE,
+	)
+	def script_clearOutput(self, gesture: "inputCore.InputGesture"):
+		from pythonConsole import consoleUI
+		consoleUI.clear()
+
+
+class NvdaPythonConsoleUIOutputCtrl(ScriptableObject):
+
+	isPrevFocusOnNvdaPopup = True
+
+	@script(
+		gesture="kb:alt+downArrow",
+		description=_("Move to the next result"),
+		category=SCRCAT_PYTHON_CONSOLE
+	)
+	def script_moveToNextResult(self, gesture: "inputCore.InputGesture"):
+		self._resultNavHelper(direction="next", select=False)
+
+	@script(
+		gesture="kb:alt+upArrow",
+		description=_("Move to the previous result"),
+		category=SCRCAT_PYTHON_CONSOLE
+	)
+	def script_moveToPrevResult(self, gesture: "inputCore.InputGesture"):
+		self._resultNavHelper(direction="previous", select=False)
+
+	@script(
+		gesture="kb:alt+downArrow+shift",
+		description=_("Select until the end of the current result"),
+		category=SCRCAT_PYTHON_CONSOLE
+	)
+	def script_selectToResultEnd(self, gesture: "inputCore.InputGesture"):
+		self._resultNavHelper(direction="next", select=True)
+
+	@script(
+		gesture="kb:alt+shift+upArrow",
+		description=_("Select until the start of the current result"),
+		category=SCRCAT_PYTHON_CONSOLE
+	)
+	def script_selectToResultStart(self, gesture: "inputCore.InputGesture"):
+		self._resultNavHelper(direction="previous", select=True)
+
+	def _resultNavHelper(self, direction: str = "next", select: bool = False):
+		from pythonConsole import consoleUI
+		startPos, endPos = consoleUI.outputCtrl.GetSelection()
+		if self.isTextSelectionAnchoredAtStart:
+			curPos = endPos
+		else:
+			curPos = startPos
+		if direction == "previous":
+			for pos in reversed(consoleUI.outputPositions):
+				if pos < curPos:
+					break
+			else:
+				speech.speakMessage(_("top"))
+				return
+		elif direction == "next":
+			for pos in consoleUI.outputPositions:
+				if pos > curPos:
+					break
+			else:
+				speech.speakMessage(_("bottom"))
+				return
+		else:
+			raise ValueError(u"Unexpected direction: {!r}".format(direction))
+		if select:
+			consoleUI.outputCtrl.Freeze()
+			anchorPos = startPos if self.isTextSelectionAnchoredAtStart else endPos
+			consoleUI.outputCtrl.SetSelection(anchorPos, pos)
+			consoleUI.outputCtrl.Thaw()
+			self.detectPossibleSelectionChange()
+			self.isTextSelectionAnchoredAtStart = anchorPos < pos
+		else:
+			consoleUI.outputCtrl.SetSelection(pos, pos)
+		info = self.makeTextInfo(textInfos.POSITION_CARET)
+		copy = info.copy()
+		info.expand(textInfos.UNIT_LINE)
+		if (
+			copy.move(textInfos.UNIT_CHARACTER, 4, endPoint="end") == 4
+			and copy.text == ">>> "
+		):
+			info.move(textInfos.UNIT_CHARACTER, 4, endPoint="start")
+		speech.speakTextInfo(info, reason=controlTypes.REASON_CARET)
+
 
 class AppModule(appModuleHandler.AppModule):
 	# The configuration profile that has been previously edited.
@@ -108,8 +215,26 @@ class AppModule(appModuleHandler.AppModule):
 			return True
 		return False
 
+	def isNvdaPythonConsoleUIInputCtrl(self, obj):
+		from pythonConsole import consoleUI
+		if not consoleUI:
+			return
+		return obj.windowHandle == consoleUI.inputCtrl.GetHandle()
+
+	def isNvdaPythonConsoleUIOutputCtrl(self, obj):
+		from pythonConsole import consoleUI
+		if not consoleUI:
+			return
+		return obj.windowHandle == consoleUI.outputCtrl.GetHandle()
+
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName == "#32770" and obj.role == controlTypes.ROLE_DIALOG:
 			clsList.insert(0, NvdaDialog)
 			if self.isNvdaSettingsDialog(obj):
 				clsList.insert(0, NvdaDialogEmptyDescription)
+				return
+		if self.isNvdaPythonConsoleUIInputCtrl(obj):
+			clsList.insert(0, NvdaPythonConsoleUIOutputClear)
+		elif self.isNvdaPythonConsoleUIOutputCtrl(obj):
+			clsList.insert(0, NvdaPythonConsoleUIOutputClear)
+			clsList.insert(0, NvdaPythonConsoleUIOutputCtrl)

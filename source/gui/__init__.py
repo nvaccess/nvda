@@ -127,7 +127,7 @@ class MainFrame(wx.Frame):
 		"""
 		nvdaPid = os.getpid()
 		focus = api.getFocusObject()
-		if focus.processID != nvdaPid:
+		if focus.processID != nvdaPid or getattr(focus, "isPrevFocusOnNvdaPopup", False):
 			self.prevFocus = focus
 			self.prevFocusAncestors = api.getFocusAncestors()
 		if winUser.getWindowThreadProcessID(winUser.getForegroundWindow())[0] != nvdaPid:

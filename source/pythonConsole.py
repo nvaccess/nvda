@@ -12,6 +12,7 @@ To use, call L{initialize} to create a singleton instance of the console GUI. Th
 
 import builtins
 import os
+from typing import Sequence
 import code
 import codeop
 import sys
@@ -246,7 +247,7 @@ class ConsoleUI(wx.Frame):
 		# Even the most recent line has a position in the history, so initialise with one blank line.
 		self.inputHistory = [""]
 		self.inputHistoryPos = 0
-		self.outputPositions = [0]
+		self.outputPositions: Sequence[int] = [0]
 
 	def onActivate(self, evt):
 		if evt.GetActive():
@@ -292,7 +293,8 @@ class ConsoleUI(wx.Frame):
 			self.inputHistory.append("")
 		self.inputHistoryPos = len(self.inputHistory) - 1
 		self.inputCtrl.ChangeValue("")
-		self.outputPositions.append(self.outputCtrl.GetInsertionPoint())
+		if self.console.prompt != "...":
+			self.outputPositions.append(self.outputCtrl.GetInsertionPoint())
 
 	def historyMove(self, movement):
 		newIndex = self.inputHistoryPos + movement
@@ -402,9 +404,6 @@ class ConsoleUI(wx.Frame):
 		elif key == wx.WXK_ESCAPE:
 			self.Close()
 			return
-		elif not evt.ShiftDown() and key == wx.WXK_CONTROL_L:
-			self.clear()
-			return
 		evt.Skip()
 	
 	def onInputPaste(self, evt):
@@ -449,32 +448,6 @@ class ConsoleUI(wx.Frame):
 		if key == wx.WXK_F6:
 			self.inputCtrl.SetFocus()
 			return
-		if evt.ControlDown() and not evt.ShiftDown():
-			if key == wx.WXK_UP:
-				cur = self.outputCtrl.GetInsertionPoint()
-				for pos in reversed(self.outputPositions):
-					if pos < cur:
-						self.outputCtrl.SetInsertionPoint(pos)
-						break
-				else:
-					# Translators: A message reported when there is no next
-					# result in the Python Console.
-					speech.speakMessage(_("Top"))
-				return
-			if key == wx.WXK_DOWN:
-				cur = self.outputCtrl.GetInsertionPoint()
-				for pos in self.outputPositions:
-					if pos > cur:
-						self.outputCtrl.SetInsertionPoint(pos)
-						break
-				else:
-					# Translators: A message reported when there is no previous
-					# result in the Python Console.
-					speech.speakMessage(_("Bottom"))
-				return
-			if key == wx.WXK_CONTROL_L:
-				self.clear()
-				return
 		evt.Skip()
 
 def initialize():
