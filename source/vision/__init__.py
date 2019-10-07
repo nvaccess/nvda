@@ -73,8 +73,8 @@ def getProviderList(
 				))
 			else:
 				log.debugWarning(
-					f"Excluding Vision enhancement provider {providerSettings.name} which is unable to start"
-				)  # todo: accessed before init?
+					f"Excluding Vision enhancement provider {name} which is unable to start"
+				)
 		except Exception:
 			# Purposely catch everything else as we don't want one failing provider
 			# make it impossible to list all the others.

@@ -23,7 +23,7 @@ SupportedSettingType = Union[
 
 class VisionEnhancementProviderStaticSettings(driverHandler.Driver):
 	_configSection = "vision"
-	cachePropertiesByDefault = True
+	cachePropertiesByDefault = False
 
 	supportedSettings: SupportedSettingType  # Typing for autoprop L{_get_supportedSettings}
 
@@ -80,7 +80,7 @@ class VisionEnhancementProvider(AutoPropertyObject):
 	def getSettingsPanelClass(cls) -> Optional[Type]:
 		"""Returns the instance to be used in order to construct a settings panel for the provider.
 		@return: Optional[SettingsPanel]
-		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Default} is used.
+		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.
 		"""
 		return None
 

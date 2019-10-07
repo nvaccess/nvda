@@ -1040,8 +1040,11 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 		super(DriverSettingsMixin,self).__init__(*args,**kwargs)
 		self._curDriverRef = weakref.ref(self.driver)
 
-	@abstractproperty
 	def driver(self):
+		return self.getSettings()
+
+	@abstractmethod
+	def getSettings(self):
 		raise NotImplementedError
 
 	@classmethod
@@ -1131,6 +1134,9 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 			if not self.driver.isSupported(name):
 				self.settingsSizer.Hide(sizer)
 		#Create new controls, update already existing
+		log.debug(f"Current sizerDict: {self.sizerDict!r}")
+
+		log.debug(f"Current supportedSettings: {self.driver.supportedSettings!r}")
 		for setting in self.driver.supportedSettings:
 			if setting.id == changedSetting:
 				# Changing a setting shouldn't cause that setting's own values to change.
@@ -1154,6 +1160,7 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 				if isinstance(setting,NumericDriverSetting):
 					settingMaker=self.makeSliderSettingControl
 				elif isinstance(setting,BooleanDriverSetting):
+					log.debug(f"creating a new bool driver setting: {setting.id}")
 					settingMaker=self.makeBooleanSettingControl
 				else:
 					settingMaker=self.makeStringSettingControl
@@ -2886,20 +2893,25 @@ class VisionSettingsPanel(SettingsPanel):
 				wx.StaticBoxSizer(wx.StaticBox(self, label=providerDesc), wx.VERTICAL),
 				flag=wx.EXPAND
 			)
+			kwargs = {
+				# default value for name parameter to lambda, recommended by python3 FAQ:
+				# https://docs.python.org/3/faq/programming.html#why-do-lambdas-defined-in-a-loop-with-different-values-all-return-the-same-result
+				"getProvider": lambda name=providerName: self._getProvider(name),
+				"initProvider": lambda name=providerName: self.safeInitProviders([name]),
+				"terminateProvider": lambda name=providerName: self.safeTerminateProviders([name], verbose=True)
+			}
+
 			settingsPanelCls = providerClass.getSettingsPanelClass()
 			if not settingsPanelCls:
 				log.debug(f"Using default panel for providerName: {providerName}")
-				settingsPanelCls = VisionProviderSubPanel_Default
+				settingsPanelCls = VisionProviderSubPanel_Wrapper
+				kwargs["providerType"] = providerClass
 			else:
 				log.debug(f"Using custom panel for providerName: {providerName}")
 			try:
 				settingsPanel = settingsPanelCls(
 					self,
-					# default value for name parameter to lambda, recommended by python3 FAQ:
-					# https://docs.python.org/3/faq/programming.html#why-do-lambdas-defined-in-a-loop-with-different-values-all-return-the-same-result
-					getProvider=lambda name=providerName: self._getProvider(name),
-					initProvider=lambda name=providerName: self.safeInitProviders([name]),
-					terminateProvider=lambda name=providerName: self.safeTerminateProviders([name], verbose=True)
+					**kwargs
 				)
 			except:
 				log.debug(f"Error creating providerPanel: {settingsPanelCls!r}", exc_info=True)
@@ -3034,33 +3046,39 @@ class VisionSettingsPanel(SettingsPanel):
 		self.initialProviders = list(vision.handler.providers)
 
 
-class VisionProviderSubPanel_Runtime(
+class VisionProviderSubPanel_Settings(
 		DriverSettingsMixin,
 		SettingsPanel
 ):
+	cachePropertiesByDefault = False
 	def __init__(
 			self,
 			parent: wx.Window,
 			*,  # Make next argument keyword only
-			providerCallable: Callable[[], vision.providerBase.VisionEnhancementProvider]
+			settingsCallable: Callable[[], vision.providerBase.VisionEnhancementProviderStaticSettings]
 	):
 		"""
 		@param providerCallable: A callable that returns an instance to a VisionEnhancementProvider.
 			This will usually be a weakref, but could be any callable taking no arguments.
 		"""
-		self._providerCallable = providerCallable
+		self._settingsCallable = settingsCallable
 		super().__init__(parent=parent)
 
 	@property
 	def driver(self):
-		return self._providerCallable().getSettings()
+		return self.getSettings()
+
+	def getSettings(self):
+		settings = self._settingsCallable()
+		log.debug(f"getting settings: {settings.__class__!r}")
+		return settings
 
 	def makeSettings(self, settingsSizer):
 		# Construct vision enhancement provider settings
 		self.updateDriverSettings()
 
 
-class VisionProviderSubPanel_Default(
+class VisionProviderSubPanel_Wrapper(
 		SettingsPanel
 ):
 
@@ -3068,18 +3086,30 @@ class VisionProviderSubPanel_Default(
 			self,
 			parent: wx.Window,
 			*,  # Make next argument keyword only
-			getProvider: Callable[[], Optional[vision.VisionEnhancementProvider]],
-			initProvider: Callable[[], bool],
-			terminateProvider: Callable[[], None]
+			# todo: make these part of a class:
+			providerType: Type[vision.VisionEnhancementProvider],
+			getProvider: Callable[
+				[],
+				Optional[vision.VisionEnhancementProvider]
+			],# mostly used to see if the provider is initialised or not.
+			initProvider: Callable[
+				[],
+				bool
+			],
+			terminateProvider: Callable[
+				[],
+				None
+			]
 	):
 		"""
 		@param getProvider: A callable that returns an instance to a VisionEnhancementProvider.
 			This will usually be a weakref, but could be any callable taking no arguments.
 		"""
+		self._providerType = providerType
 		self._getProvider = getProvider
 		self._initProvider = initProvider
 		self._terminateProvider = terminateProvider
-		self._runtimeSettings: Optional[VisionProviderSubPanel_Runtime] = None
+		self._runtimeSettings: Optional[VisionProviderSubPanel_Settings] = None
 		self._runtimeSettingsSizer = wx.BoxSizer(orient=wx.VERTICAL)
 		super().__init__(parent=parent)
 
@@ -3089,15 +3119,17 @@ class VisionProviderSubPanel_Default(
 		settingsSizer.Add(self._runtimeSettingsSizer, flag=wx.EXPAND, proportion=1.0)
 		self._checkBox: wx.CheckBox = checkBox
 		if self._getProvider():
-			self._createRuntimeSettings()
 			checkBox.SetValue(True)
-		checkBox.Bind(wx.EVT_CHECKBOX, self._enableToggle)
+		if self._createRuntimeSettings():
+			checkBox.Bind(wx.EVT_CHECKBOX, self._enableToggle)
+		else:
+			checkBox.Bind(wx.EVT_CHECKBOX, self._nonEnableableGUI)
 
 	def _createRuntimeSettings(self):
 		try:
-			self._runtimeSettings = VisionProviderSubPanel_Runtime(
+			self._runtimeSettings = VisionProviderSubPanel_Settings(
 				self,
-				providerCallable=weakref.ref(self._getProvider())
+				settingsCallable=self._providerType.getSettings
 			)
 			self._runtimeSettingsSizer.Add(self._runtimeSettings, flag=wx.EXPAND, proportion=1.0)
 		except:
@@ -3105,17 +3137,23 @@ class VisionProviderSubPanel_Default(
 			return False
 		return True
 
+	def _nonEnableableGUI(self, evt):
+		wx.MessageBox(
+			# Translators: Shown when there is an error showing the GUI for a vision enhancement provider
+			_("Unable to configure GUI for Vision Enhancement Provider, it can not be enabled."),
+			parent=self,
+		)
+		self._checkBox.SetValue(False)
+
+
 	def _enableToggle(self, evt):
 		if not evt.IsChecked():
-			self._runtimeSettings.onPanelDeactivated()
-			self._runtimeSettingsSizer.Clear(delete_windows=True)
-			self._runtimeSettings: Optional[VisionProviderSubPanel_Runtime] = None
 			self._terminateProvider()
+			self._runtimeSettings.updateDriverSettings()
+			self._runtimeSettings.onPanelActivated()
 		else:
 			self._initProvider()
-			if not self._createRuntimeSettings():
-				self._checkBox.SetValue(False)
-				return
+			self._runtimeSettings.updateDriverSettings()
 			self._runtimeSettings.onPanelActivated()
 		self._sendLayoutUpdatedEvent()
 
@@ -3124,7 +3162,7 @@ class VisionProviderSubPanel_Default(
 			self._runtimeSettings.onDiscard()
 
 	def onSave(self):
-		log.debug(f"calling VisionProviderSubPanel_Default")
+		log.debug(f"calling VisionProviderSubPanel_Wrapper")
 		if self._runtimeSettings:
 			self._runtimeSettings.onSave()
 

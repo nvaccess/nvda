@@ -210,7 +210,7 @@ class NVDAHighlighterSettings(vision.providerBase.VisionEnhancementProviderStati
 	highlightNavigator = False
 	highlightBrowseMode = False
 
-	def _get_supportedSettings(cls):
+	def _get_supportedSettings(self):
 		return [
 			driverHandler.BooleanDriverSetting(
 				'highlight%s' % (context[0].upper() + context[1:]),
@@ -220,6 +220,18 @@ class NVDAHighlighterSettings(vision.providerBase.VisionEnhancementProviderStati
 			for context in _supportedContexts
 		]
 
+
+class NVDAHighlighterSettings_Runtime(NVDAHighlighterSettings):
+	someRuntimeOnlySetting = True
+
+	def _get_supportedSettings(self):
+		settings = super()._get_supportedSettings()
+		settings.append(driverHandler.BooleanDriverSetting(
+			"someRuntimeOnlySetting", "Some runtime only setting",
+			defaultVal=True
+		))
+		log.info("Runtime settings!")
+		return settings
 
 class NVDAHighlighterGuiPanel(
 		gui.DriverSettingsMixin,
@@ -237,9 +249,11 @@ class NVDAHighlighterGuiPanel(
 		self._terminateProvider = terminateProvider
 		super().__init__(parent)
 
-
 	@property
 	def driver(self) -> driverHandler.Driver:  # todo: call this something other than driver
+		return self.getSettings()
+
+	def getSettings(self) -> driverHandler.Driver:
 		# DriverSettingsMixin uses self.driver to get / set attributes matching the names of the settings.
 		# We want them set on this class.
 		return VisionEnhancementProvider.getSettings()
@@ -323,15 +337,19 @@ class NVDAHightlighter(vision.providerBase.VisionEnhancementProvider):
 
 	@classmethod
 	def getSettings(cls):
+		log.debug(f"getting settings: {cls._settings.__class__!r}")
 		return cls._settings
 
 	@classmethod  # impl required by vision.providerBase.VisionEnhancementProvider
 	def getSettingsPanelClass(cls):
 		"""Returns the instance to be used in order to construct a settings panel for the provider.
 		@return: Optional[SettingsPanel]
-		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Default} is used.
+		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.
 		"""
-		return None
+		# When using custom panel, dont change settings dynamically
+		# see comment in __init__
+		return NVDAHighlighterGuiPanel
+		# return None
 
 	@classmethod  # impl required by proivderBase.VisionEnhancementProvider
 	def canStart(cls) -> bool:
@@ -351,6 +369,11 @@ class NVDAHightlighter(vision.providerBase.VisionEnhancementProvider):
 		self._highlighterThread.daemon = True
 		self._highlighterThread.start()
 
+		# Demonstrate adding runtime settings, to test this:
+		# - make  getSettingsPanelClass return None
+		# - un-comment equivelent line in terminate (restoring settings to non-runtime version)
+		# self.__class__._settings = NVDAHighlighterSettings_Runtime()
+
 	def terminate(self, *args, **kwargs):
 		if self._highlighterThread:
 			if not winUser.user32.PostThreadMessageW(self._highlighterThread.ident, winUser.WM_QUIT, 0, 0):
@@ -359,6 +382,8 @@ class NVDAHightlighter(vision.providerBase.VisionEnhancementProvider):
 			self._highlighterThread = None
 		winGDI.gdiPlusTerminate()
 		self.contextToRectMap.clear()
+		# see comment in __init__
+		# self.__class__._settings = NVDAHighlighterSettings()
 
 	def _run(self):
 		if vision._isDebug():
