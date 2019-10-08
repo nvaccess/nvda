@@ -111,7 +111,7 @@ def getAvailableLanguages(presentational=False):
 	# Python 3: zip function changed from returning a list to an iterator, thus wrap this inside a list call.
 	langs = list(zip(locales,displayNames))
 	if presentational:
-		langs.sort(key=lambda lang: lang[1])
+		langs.sort(key=lambda lang: lang[1].lower())
 	#include a 'user default, windows' language, which just represents the default language for this user account
 	langs.append(("Windows",
 		# Translators: the label for the Windows default NVDA interface language.
