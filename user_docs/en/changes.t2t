@@ -17,6 +17,7 @@ What's New in NVDA
  - Connect Braille
 - All user-defined gestures can now be removed via a new "Reset to factory defaults" button in the Input Gestures dialog. (#10293)
 - Font reporting in Microsoft Word now includes if text is marked as hidden. (#8713)
+- Added a command to move the review cursor to the position previously set as start marker for selection or copy: NVDA+shift+F9. (#1969)
 
 
 == Changes ==
@@ -27,7 +28,7 @@ What's New in NVDA
 - The NVDA version number is now logged as the first message in the log. This occurs even if logging has been disabled from the GUI. (#9803)
 - For every entry in the NVDA log, information about the originating thread is now included. (#10259)
 - The settings dialog no longer allows for changing the configured log level if it has been overridden from the command line. (#10209)
-- In Microsoft Word, NVDA now announces the display state of  non printable characters when pressing the toggle shortcut Ctrl+Shift+8 . (#10241)
+- In Microsoft Word, NVDA now announces the display state of non printable characters when pressing the toggle shortcut Ctrl+Shift+8 . (#10241)
 - Updated Liblouis braille translator to commit 58d67e63. (#10094)
 - When CLDR characters (including emojis) reporting is enabled, they are announced at all punctuation levels. (#8826)
 
