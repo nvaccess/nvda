@@ -18,6 +18,15 @@ class StartMenuSearchField(SearchField):
 
 class AppModule(appModuleHandler.AppModule):
 
+	def event_NVDAObject_init(self, obj):
+		if isinstance(obj, UIA):
+			# #10341: Build 18363 introduces modern search experience in File Explorer.
+			# As part of this, suggestion count is part of a live region.
+			# Although it is geared for Narrator, it is applicable to other screen readers as well.
+			# The live region itself is a child of the one shown here.
+			if obj.UIAElement.cachedAutomationID == "suggestionCountForNarrator" and obj.firstChild is not None:
+				obj.name = obj.firstChild.name
+
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
 		if isinstance(obj, IAccessible):
 			try:
