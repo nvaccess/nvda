@@ -26,6 +26,8 @@ What's New in NVDA
 - For every entry in the NVDA log, information about the originating thread is now included. (#10259)
 - The settings dialog no longer allows for changing the configured log level if it has been overridden from the command line. (#10209)
 - In Microsoft Word, NVDA now announces the display state of  non printable characters when pressing the toggle shortcut Ctrl+Shift+8 . (#10241)
+- Updated Liblouis braille translator to commit 58d67e63. (#10094)
+- When CLDR characters (including emojis) reporting is enabled, they are announced at all punctuation levels. (#8826)
 
 
 == Bug Fixes ==
@@ -36,17 +38,13 @@ What's New in NVDA
 - controls in Audacitys compressor dialog are now announced when navigating the dialog. (#10103)
 - NVDA no longer treats spaces as words in object review in Scintilla based editors such as Notepad++. (#8295)
 - NVDA will prevent the  system from entering sleep mode when scrolling through text with braille display gestures. (#9175)
-- In Windows 7, NVDA no longer causes Windows Explorer to crash when the mouse is used in the start menu. (#9435)
 - On Windows 10, braille will now follow when editing cell contents in Microsoft Excel and in other UIA text controls where it was lagging behind. (#9749)
 - NVDA will once again report suggestions in the Microsoft Edge address bar. (#7554)
 - NVDA is no longer silent when focusing an HTML tab control header in Internet Explorer. (#8898)
 - In Microsoft Edge based on EdgeHTML, NVDA will no longer play search suggestion sound when the window becomes maximized. (#9110, #10002)
 - ARIA 1.1 combo boxes are now supported in Mozilla Firefox and Google Chrome. (#9616)
-- Windows Explorer on Windows 7 no longer crashes when accessing metadata edit fields. (#5337)
-- Addressed several crashes in Gmail seen in both Firefox and Chrome when interacting with particular popup menus such as when creating filters or changing certain Gmail settings. (#10175, #9402, #8924)
 - NVDA will no longer report content of visually hidden columns for list items in SysListView32 controls. (#8268)
 - The settings dialog no longer shows "info" as the current log level when in secure mode. (#10209)
-- NVDA no longer locks up for a significant amount of time when interacting with images with a base64 URI in Mozilla Firefox or Google Chrome. (#10227)
 
 
 == Changes for Developers ==
