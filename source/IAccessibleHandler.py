@@ -1008,7 +1008,10 @@ def getRecursiveTextFromIAccessibleTextObject(obj,startOffset=0,endOffset=-1):
 	return "".join(textList).replace('  ',' ')
 
 
-ATTRIBS_STRING_BASE64_PATTERN = re.compile(r"base64\\,[A-Za-z0-9+/=]+")
+ATTRIBS_STRING_BASE64_PATTERN = re.compile(
+	r"(([^\\](\\\\)*);src:data\\:[^\\;]+\\;base64\\,)[A-Za-z0-9+/=]+"
+)
+ATTRIBS_STRING_BASE64_REPL = r"\1<truncated>"
 ATTRIBS_STRING_BASE64_THRESHOLD = 4096
 
 
@@ -1023,7 +1026,7 @@ def splitIA2Attribs(attribsString):
 	"""
 	# Do not treat huge base64 data as it might freeze NVDA in Google Chrome (#10227)
 	if len(attribsString) >= ATTRIBS_STRING_BASE64_THRESHOLD:
-		attribsString = ATTRIBS_STRING_BASE64_PATTERN.sub("base64,<truncated>", attribsString)
+		attribsString = ATTRIBS_STRING_BASE64_PATTERN.sub(ATTRIBS_STRING_BASE64_REPL, attribsString)
 		if len(attribsString) >= ATTRIBS_STRING_BASE64_THRESHOLD:
 			log.debugWarning(f"IA2 attributes string exceeds threshold: {attribsString}")
 	attribsDict = {}

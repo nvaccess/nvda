@@ -3,6 +3,14 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.2.1 =
+Ovo je manje ažuriranje kako bi se ispravile neke nestabilnosti u verziji 2019.2. Ispravke uključuju:
+- Windows Explorer na  Windowsu 7 se više ne ruši kada se pristupa  poljima sa detaljima o podacima. (#5337) 
+- U  Windowsu 7, NVDA više neće izazvati rušenje Windows Explorera kada se miš koristi u start meniju. (#9435) 
+- Ispravljeno nekoliko grešaka u Gmailu u pretraživačima Firefox i Chrome prilikom interakcije sa određenim iskačujućim menijima, na primer menjanje filtera ili nekih Gmail podešavanja. (#10175, #9402, #8924)
+- NVDA više neće prestajati sa radom kada pristupate slikama  sa base64 URI u aplikaciji Mozilla Firefox ili Google Chrome. (#10227)
+
+
 = 2019.2 =
 Glavne karakteristike ove verzije uključuju automatsko prepoznavanje brajevih redova kompanije Freedom Scientific , eksperimentalno podešavanje u naprednim podešavanjima koje zaustavlja pomeranje sistemskog fokusa u režimu pretraživanja (što može doneti ubrzanja u radu ), opcija povećanja brzine za Windows OneCore sintetizator kako bi se dostigao veoma brz govor, i puno drugih ispravljenih grešaka.
 
@@ -38,7 +46,7 @@ Glavne karakteristike ove verzije uključuju automatsko prepoznavanje brajevih r
 - Ažuriran  eSpeak-NG na verziju 67324cc.
 - Updated liblouis braille translator to version 3.10.0. (#9439, #9678)
 - NVDA će sada izgovoriti reč 'izabrano' nakon izgovaranja teksta koji je korisnik izabrao. (#9028, #9909)
-- U programu Microsoft Visual Studio Code, režim pretraživanja je podrazumevano isključen. (#9828)
+- U programu Microsoft Visual Studio Code, NVDA će podrazumevano biti u režimu fokusiranja. (#9828)
 
 
 == Ispravljene greške ==
