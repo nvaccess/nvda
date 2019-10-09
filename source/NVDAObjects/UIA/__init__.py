@@ -869,6 +869,7 @@ class UIA(Window):
 			# Nested block here in order to catch value error and variable binding error when attempting to access automation ID for invalid elements.
 			try:
 				# #6241: Raw UIA base tree walker is better than simply looking at self.parent when locating suggestion list items.
+				# #10329: 2019 Windows Search results require special handling due to UI redesign.
 				parentElement=UIAHandler.handler.baseTreeWalker.GetParentElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
 				# Sometimes, fetching parent (list control) via base tree walker fails, especially when dealing with suggestions in Windows10 Start menu.
 				# Oddly, we need to take care of context menu for Start search suggestions as well.
