@@ -306,7 +306,7 @@ def speakObjectProperties(obj, reason=controlTypes.REASON_QUERY, priority=None, 
 			states.discard(controlTypes.STATE_SELECTABLE)
 			newPropertyValues['states']=states
 	#Get the speech text for the properties we want to speak, and then speak it
-	speechSequence = getSpeechTextForProperties(reason,**newPropertyValues)
+	speechSequence = getPropertiesSpeech(reason,**newPropertyValues)
 	if speechSequence:
 		if _prefixSpeechCommand is not None:
 			speechSequence.insert(0, _prefixSpeechCommand)
@@ -1114,7 +1114,7 @@ def speakTextInfo(
 			return True
 
 
-def getSpeechTextForProperties(
+def getPropertiesSpeech(
 		reason=controlTypes.REASON_QUERY,
 		**propertyValues
 ) -> SpeechSequence:
@@ -1279,23 +1279,23 @@ def getControlFieldSpeech(
 
 	roleTextSequence = attrs.get('roleText', None)
 	if not roleTextSequence:
-		roleTextSequence = getSpeechTextForProperties(reason=reason, role=role)
-	stateTextSequence = getSpeechTextForProperties(reason=reason, states=states, _role=role)
+		roleTextSequence = getPropertiesSpeech(reason=reason, role=role)
+	stateTextSequence = getPropertiesSpeech(reason=reason, states=states, _role=role)
 	keyboardShortcutSequence = []
 	if config.conf["presentation"]["reportKeyboardShortcuts"]:
-		keyboardShortcutSequence = getSpeechTextForProperties(
+		keyboardShortcutSequence = getPropertiesSpeech(
 			reason=reason, keyboardShortcut=keyboardShortcut
 		)
-	ariaCurrentSequence = getSpeechTextForProperties(reason=reason, current=ariaCurrent)
-	placeholderSequence = getSpeechTextForProperties(reason=reason, placeholder=placeholderValue)
-	nameSequence = getSpeechTextForProperties(reason=reason, name=name)
-	valueSequence = getSpeechTextForProperties(reason=reason, value=value)
+	ariaCurrentSequence = getPropertiesSpeech(reason=reason, current=ariaCurrent)
+	placeholderSequence = getPropertiesSpeech(reason=reason, placeholder=placeholderValue)
+	nameSequence = getPropertiesSpeech(reason=reason, name=name)
+	valueSequence = getPropertiesSpeech(reason=reason, value=value)
 	descriptionSequence = []
 	if config.conf["presentation"]["reportObjectDescriptions"]:
-		descriptionSequence = getSpeechTextForProperties(
+		descriptionSequence = getPropertiesSpeech(
 			reason=reason, description=description
 		)
-	levelSequence = getSpeechTextForProperties(reason=reason, positionInfo_level=level)
+	levelSequence = getPropertiesSpeech(reason=reason, positionInfo_level=level)
 
 	# Determine under what circumstances this node should be spoken.
 	# speakEntry: Speak when the user enters the control.
@@ -1348,7 +1348,7 @@ def getControlFieldSpeech(
 		tableSeq.extend(roleTextSequence)
 		tableSeq.extend(stateTextSequence)
 		tableSeq.extend(
-			getSpeechTextForProperties(
+			getPropertiesSpeech(
 				_tableID=tableID, 
 				rowCount=rowCount, 
 				columnCount=columnCount
@@ -1386,7 +1386,7 @@ def getControlFieldSpeech(
 		if reportTableHeaders:
 			getProps['rowHeaderText'] = attrs.get("table-rowheadertext")
 			getProps['columnHeaderText'] = attrs.get("table-columnheadertext")
-		tableCellsequence = getSpeechTextForProperties(_tableID=tableID, **getProps)
+		tableCellsequence = getPropertiesSpeech(_tableID=tableID, **getProps)
 		tableCellsequence.extend(stateTextSequence)
 		tableCellsequence.extend(ariaCurrentSequence)
 		return tableCellsequence
