@@ -68,7 +68,9 @@ class Ia2Web(IAccessible):
 	def _get_landmark(self):
 		if self.IAccessibleRole != IAccessibleHandler.IA2_ROLE_LANDMARK:
 			return super().landmark
-		return self.IA2Attributes.get('xml-roles', '').split(' ')[0]
+		xmlRoles = self.IA2Attributes.get('xml-roles', '').split(' ')
+		return next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
+
 
 class Document(Ia2Web):
 	value = None
