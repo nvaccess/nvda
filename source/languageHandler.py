@@ -105,13 +105,14 @@ def getAvailableLanguages(presentational=False):
 	displayNames = []
 	for entry in locales:
 		desc=getLanguageDescription(entry)
-		displayNames.append("%s, %s"%(desc,entry) if desc else entry)
+		displayNames.append(desc)
 	#Prepare a zipped view of language codes and descriptions.
 	# #7284: especially for sorting by description.
 	# Python 3: zip function changed from returning a list to an iterator, thus wrap this inside a list call.
 	langs = list(zip(locales,displayNames))
 	if presentational:
-		langs.sort(key=lambda lang: locale.strxfrm(lang[1]))
+		langs.sort(key=lambda lang: locale.strxfrm(lang[1] if lang[1] else lang[0]))
+	langs = [(loc, ("%s, %s" % (name, loc) if name else loc)) for loc,name in langs]
 	#include a 'user default, windows' language, which just represents the default language for this user account
 	langs.append(("Windows",
 		# Translators: the label for the Windows default NVDA interface language.
