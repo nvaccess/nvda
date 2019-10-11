@@ -112,7 +112,7 @@ def getAvailableLanguages(presentational=False):
 	langs = list(zip(locales,displayNames))
 	if presentational:
 		langs.sort(key=lambda lang: locale.strxfrm(lang[1] if lang[1] else lang[0]))
-	langs = [(loc, (f"{name}, {loc} if name else loc)) for loc, name in langs]
+	langs = [(loc, (f"{name}, {loc}" if name else loc)) for loc, name in langs]
 	#include a 'user default, windows' language, which just represents the default language for this user account
 	langs.append(("Windows",
 		# Translators: the label for the Windows default NVDA interface language.
