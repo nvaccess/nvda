@@ -204,7 +204,7 @@ def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,mi
 			wcharToInt(cp),
 			wcharToInt(next(cpBufIt)),
 			wcharToInt(next(cpBufIt)),
-			wcharToInt(next(cpBufIt)
+			wcharToInt(next(cpBufIt))
 		)
 		if right < left:
 			left, right = right, left
