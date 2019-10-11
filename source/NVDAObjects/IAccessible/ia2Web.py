@@ -17,6 +17,7 @@ from documentBase import DocumentWithTableNavigation
 from NVDAObjects.behaviors import Dialog, WebDialog 
 from . import IAccessible
 from .ia2TextMozilla import MozillaCompoundTextInfo
+import aria
 
 class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib=True
@@ -66,10 +67,18 @@ class Ia2Web(IAccessible):
 		return states
 
 	def _get_landmark(self):
-		if self.IAccessibleRole != IAccessibleHandler.IA2_ROLE_LANDMARK:
-			return super().landmark
 		xmlRoles = self.IA2Attributes.get('xml-roles', '').split(' ')
-		return next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
+		landmark = next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
+		if (
+			landmark
+			and self.IAccessibleRole != IAccessibleHandler.IA2_ROLE_LANDMARK
+			and landmark != xmlRoles[0]
+		):
+			# Ignore the landmark role
+			landmark = None
+		if landmark:
+			return landmark
+		return super().landmark
 
 
 class Document(Ia2Web):
