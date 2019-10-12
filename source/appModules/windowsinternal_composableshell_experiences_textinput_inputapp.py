@@ -72,34 +72,35 @@ class AppModule(appModuleHandler.AppModule):
 		# However, in build 17666 and later, child count is the same for both emoji panel and hardware keyboard candidates list.
 		# Thankfully first child automation ID's are different for each modern input technology.
 		# However this event is raised when the input panel closes.
-		if obj.firstChild is None:
+		inputPanel = obj.firstChild
+		if inputPanel is None:
 			return
 		# #9104: different aspects of modern input panel are represented by automation iD's.
-		childAutomationID = obj.firstChild.UIAElement.cachedAutomationID
+		inputPanelAutomationID = inputPanel.UIAElement.cachedAutomationID
 		# Emoji panel for build 16299 and 17134.
 		# This event is properly raised in build 17134.
-		if winVersion.winVersion.build <= 17134 and childAutomationID in ("TEMPLATE_PART_ExpressiveInputFullViewFuntionBarItemControl", "TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton"):
+		if winVersion.winVersion.build <= 17134 and inputPanelAutomationID in ("TEMPLATE_PART_ExpressiveInputFullViewFuntionBarItemControl", "TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton"):
 			self.event_UIA_elementSelected(obj.lastChild.firstChild, nextHandler)
 		# Handle hardware keyboard suggestions.
 		# Treat it the same as CJK composition list - don't announce this if candidate announcement setting is off.
-		elif childAutomationID == "CandidateWindowControl" and config.conf["inputComposition"]["autoReportAllCandidates"]:
+		elif inputPanelAutomationID == "CandidateWindowControl" and config.conf["inputComposition"]["autoReportAllCandidates"]:
 			try:
-				self.event_UIA_elementSelected(obj.firstChild.firstChild.firstChild, nextHandler)
+				self.event_UIA_elementSelected(inputPanel.firstChild.firstChild, nextHandler)
 			except AttributeError:
 				# Because this is dictation window.
 				pass
 		# Emoji panel in build 17666 and later (unless this changes).
-		elif childAutomationID == "TEMPLATE_PART_ExpressionGroupedFullView":
+		elif inputPanelAutomationID == "TEMPLATE_PART_ExpressionGroupedFullView":
 			self._emojiPanelJustOpened = True
 			try:
-				self.event_UIA_elementSelected(obj.firstChild.children[-2].firstChild.firstChild, nextHandler)
+				self.event_UIA_elementSelected(inputPanel.children[-2].firstChild.firstChild, nextHandler)
 			except AttributeError:
 				# In build 18272's emoji panel, emoji list becomes empty in some situations.
 				pass
 		# Clipboard history.
 		# Move to clipboard list so element selected event can pick it up.
 		# #9103: if clipboard is empty, a status message is displayed instead, and luckily it is located where clipboard data items can be found.
-		elif childAutomationID == "TEMPLATE_PART_ClipboardTitleBar":
+		elif inputPanelAutomationID == "TEMPLATE_PART_ClipboardTitleBar":
 			self.event_UIA_elementSelected(obj.children[-2], nextHandler)
 		nextHandler()
 
