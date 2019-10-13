@@ -79,11 +79,20 @@ class AppModule(appModuleHandler.AppModule):
 		inputPanelAutomationID = inputPanel.UIAElement.cachedAutomationID
 		# Emoji panel for build 16299 and 17134.
 		# This event is properly raised in build 17134.
-		if winVersion.winVersion.build <= 17134 and inputPanelAutomationID in ("TEMPLATE_PART_ExpressiveInputFullViewFuntionBarItemControl", "TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton"):
+		if (
+			winVersion.winVersion.build <= 17134
+			and inputPanelAutomationID in (
+				"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarItemControl",
+				"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton"
+			)
+		):
 			self.event_UIA_elementSelected(obj.lastChild.firstChild, nextHandler)
 		# Handle hardware keyboard suggestions.
 		# Treat it the same as CJK composition list - don't announce this if candidate announcement setting is off.
-		elif inputPanelAutomationID == "CandidateWindowControl" and config.conf["inputComposition"]["autoReportAllCandidates"]:
+		elif (
+			inputPanelAutomationID == "CandidateWindowControl"
+			and config.conf["inputComposition"]["autoReportAllCandidates"]
+		):
 			try:
 				self.event_UIA_elementSelected(inputPanel.firstChild.firstChild, nextHandler)
 			except AttributeError:
@@ -92,8 +101,12 @@ class AppModule(appModuleHandler.AppModule):
 		# Emoji panel in build 17666 and later (unless this changes).
 		elif inputPanelAutomationID == "TEMPLATE_PART_ExpressionGroupedFullView":
 			self._emojiPanelJustOpened = True
-			# #10377: on some systems, there is something else besides grouping controls, so another child control must be used.
-			emojisIndex = -3 if inputPanel.children[-2].UIAElement.cachedAutomationID != "TEMPLATE_PART_Items_GridView" else -2
+			# #10377: on some systems, there is something else besides grouping controls,
+			# so another child control must be used.
+			if inputPanel.children[-2].UIAElement.cachedAutomationID != "TEMPLATE_PART_Items_GridView":
+				emojisIndex = -3
+			else:
+				emojisIndex = -2
 			try:
 				self.event_UIA_elementSelected(inputPanel.children[emojisIndex].firstChild.firstChild, nextHandler)
 			except AttributeError:
@@ -103,8 +116,12 @@ class AppModule(appModuleHandler.AppModule):
 		# Move to clipboard list so element selected event can pick it up.
 		# #9103: if clipboard is empty, a status message is displayed instead, and luckily it is located where clipboard data items can be found.
 		elif inputPanelAutomationID == "TEMPLATE_PART_ClipboardTitleBar":
-			# Under some cases, clipboard tip text isn't shown on screen, causing clipboard history title to be announced instead of most recently copied item.
-			clipboardItemsIndex = -2 if obj.children[-2].UIAElement.cachedAutomationID != inputPanelAutomationID else -1
+			# Under some cases, clipboard tip text isn't shown on screen,
+			# causing clipboard history title to be announced instead of most recently copied item.
+			if obj.children[-2].UIAElement.cachedAutomationID != inputPanelAutomationID:
+				clipboardItemsIndex = -2
+			else:
+				clipboardItemsIndex = -1
 			self.event_UIA_elementSelected(obj.children[clipboardItemsIndex], nextHandler)
 		nextHandler()
 
