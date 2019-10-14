@@ -249,10 +249,12 @@ class RootProxyTextInfo(textInfos.TextInfo):
 			# but that can't be specified as a default argument because of circular import issues.
 			import speech
 			separator = speech.CHUNK_SEPARATOR
-		return self.innerTextInfo.getFormatFieldSpeech(
+		sequence = self.innerTextInfo.getFormatFieldSpeech(
 			attrs, attrsCache=attrsCache, formatConfig=formatConfig, reason=reason, unit=unit,
 			extraDetail=extraDetail, initialFormat=initialFormat, separator=separator
 		)
+		textInfos._logBadSequenceTypes(sequence)
+		return sequence
 
 	def _get_pointAtStart(self):
 		return self.innerTextInfo.pointAtStart

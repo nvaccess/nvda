@@ -488,6 +488,7 @@ def speak(speechSequence: SpeechSequence, symbolLevel=None, priority=None):
 	@param priority: The speech priority.
 	@type priority: One of the C{SPRI_*} constants.
 	"""
+	_logBadSequenceTypes(speechSequence)
 	if priority is None:
 		priority=SPRI_NORMAL
 	if not speechSequence: #Pointless - nothing to speak 
@@ -764,6 +765,9 @@ def _speakTextInfo_addMath(
 	except (NotImplementedError, LookupError):
 		return
 
+
+def _logBadSequenceTypes(sequence, shouldRaise: bool = True) -> bool:
+	return types.logBadSequenceTypes(sequence, raiseExceptionOnError=shouldRaise)
 
 def speakTextInfo(
 		info: textInfos.TextInfo,
@@ -1258,6 +1262,8 @@ def getPropertiesSpeech(
 				oldTreeLevel=level
 			else:
 				textList.append(levelTranslation)
+	_logBadSequenceTypes(textList)
+	return textList
 
 def getControlFieldSpeech(
 		attrs: textInfos.ControlField,
@@ -1372,6 +1378,7 @@ def getControlFieldSpeech(
 				columnCount=columnCount
 			))
 		tableSeq.extend(levelSequence)
+		_logBadSequenceTypes(tableSeq)
 		return tableSeq
 	elif (
 		nameSequence
@@ -1381,6 +1388,7 @@ def getControlFieldSpeech(
 	):
 		# #3321, #709: Report the name of groupings (such as fieldsets) and tab pages for quicknav and focus jumps
 		nameSequence.extend(roleTextSequence)
+		_logBadSequenceTypes(nameSequence)
 		return nameSequence
 	elif (
 			fieldType in ("start_addedToControlFieldStack", "start_relative")
@@ -1407,6 +1415,7 @@ def getControlFieldSpeech(
 		tableCellsequence = getPropertiesSpeech(_tableID=tableID, **getProps)
 		tableCellsequence.extend(stateTextSequence)
 		tableCellsequence.extend(ariaCurrentSequence)
+		_logBadSequenceTypes(tableCellsequence)
 		return tableCellsequence
 
 	# General cases.
@@ -1463,6 +1472,7 @@ def getControlFieldSpeech(
 		out = []
 		if ariaCurrent:
 			out.extend(ariaCurrentSequence)
+			_logBadSequenceTypes(out)
 		return out
 	else:
 		return []
@@ -1896,6 +1906,7 @@ def getFormatFieldSpeech(
 	if attrsCache is not None:
 		attrsCache.clear()
 		attrsCache.update(attrs)
+	_logBadSequenceTypes(textList)
 	return textList
 
 
@@ -1928,6 +1939,7 @@ def getTableInfoSpeech(
 	rowNumber=tableInfo.get("row-number",0)
 	if rowNumber!=oldRowNumber:
 		textList.append(_("row %s")%rowNumber)
+	_logBadSequenceTypes(textList)
 	return textList
 
 re_last_pause=re.compile(r"^(.*(?<=[^\s.!?])[.!?][\"'”’)]?(?:\s+|$))(.*$)",re.DOTALL|re.UNICODE)

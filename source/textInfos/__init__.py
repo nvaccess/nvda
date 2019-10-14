@@ -219,6 +219,12 @@ unitLabels={
 	UNIT_PARAGRAPH:_("paragraph"),
 }
 
+
+def _logBadSequenceTypes(sequence: SpeechSequence, shouldRaise: bool = True):
+	import speech.types
+	return speech.types.logBadSequenceTypes(sequence, raiseExceptionOnError=shouldRaise)
+
+
 class TextInfo(baseObject.AutoPropertyObject):
 	"""Provides information about a range of text in an object and facilitates access to all text in the widget.
 	A TextInfo represents a specific range of text, providing access to the text itself, as well as information about the text such as its formatting and any associated controls.
@@ -485,8 +491,8 @@ class TextInfo(baseObject.AutoPropertyObject):
 		sequence = speech.getControlFieldSpeech(
 			attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason
 		)
-		# remove empty strings or empty sequences which originate from speech.getControlFieldSpeech
-		return list(item for item in sequence if bool(item))
+		_logBadSequenceTypes(sequence)
+		return sequence
 
 	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
 		# Import late to avoid circular import.

@@ -1109,14 +1109,6 @@ class ElementsListDialog(wx.Dialog):
 			core.callLater(100, move)
 
 
-def _checkType(value):
-	assert (
-		isinstance(value, (EndUtteranceCommand, LangChangeCommand, str)),
-		f"unexpectedType: {value!r}"
-	)
-	return value
-
-
 class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 
 	def getControlFieldSpeech(
@@ -1128,11 +1120,11 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 			# Ensure that the name of the field gets presented even if normally it wouldn't. 
 			name=attrs.get('name')
 			if name and attrs.getPresentationCategory(ancestorAttrs,formatConfig,reason) is None:
-				textList.append(_checkType(name))
+				textList.append(name)
 				if landmark == "region":
 					# The word landmark is superfluous for regions.
 					landmarkRole = aria.landmarkRoles[landmark]
-					textList.append(_checkType(landmarkRole))
+					textList.append(landmarkRole)
 			if landmark != "region":
 				textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
 		baseSequence = super(BrowseModeDocumentTextInfo, self).getControlFieldSpeech(
@@ -1140,8 +1132,7 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 			formatConfig, extraDetail, reason
 		)
 		textList.extend(baseSequence)
-		for item in textList:
-			_checkType(item)
+		textInfos._logBadSequenceTypes(textList)
 		return textList
 
 	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):

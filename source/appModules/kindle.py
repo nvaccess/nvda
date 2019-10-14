@@ -307,6 +307,7 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 				attrs, attrsCache=attrsCache, formatConfig=formatConfig, reason=reason, unit=unit,
 				extraDetail=extraDetail, initialFormat=initialFormat, separator=separator
 		))
+		textInfos._logBadSequenceTypes(out)
 		return out
 
 	def updateSelection(self):
