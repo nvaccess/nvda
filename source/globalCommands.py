@@ -1386,8 +1386,16 @@ class GlobalCommands(ScriptableObject):
 				ui.message(_("No formatting information"))
 				return
 
-			# Translators: title for formatting information dialog.
-			ui.browseableMessage("\n".join(textList), _("Formatting"))
+			# browseable message only supports a string, remove commands:
+			message = "\n".join(
+				stringItem for stringItem in textList if isinstance(stringItem, str)
+			)
+
+			ui.browseableMessage(
+				message,
+				# Translators: title for formatting information dialog.
+				_("Formatting")
+			)
 
 	def script_reportFormatting(self,gesture):
 		info=api.getReviewPosition()

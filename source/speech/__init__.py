@@ -1145,7 +1145,28 @@ def getPropertiesSpeech(
 	if role == controlTypes.ROLE_CHARTELEMENT:
 		speakRole = False
 	roleText: Optional[str] = propertyValues.get('roleText')
-	if speakRole and (roleText or reason not in (controlTypes.REASON_SAYALL,controlTypes.REASON_CARET,controlTypes.REASON_FOCUS) or not (name or value or cellCoordsText or rowNumber or columnNumber) or role not in controlTypes.silentRolesOnFocus) and (role!=controlTypes.ROLE_MATH or reason not in (controlTypes.REASON_CARET,controlTypes.REASON_SAYALL)):
+	if speakRole and (
+			roleText
+			or reason not in (
+				controlTypes.REASON_SAYALL,
+				controlTypes.REASON_CARET,
+				controlTypes.REASON_FOCUS
+			)
+			or not (
+				name
+				or value
+				or cellCoordsText
+				or rowNumber
+				or columnNumber
+			)
+			or role not in controlTypes.silentRolesOnFocus
+	) and (
+		role != controlTypes.ROLE_MATH
+		or reason not in (
+				controlTypes.REASON_CARET,
+				controlTypes.REASON_SAYALL
+		)
+	):
 		textList.append(roleText if roleText else controlTypes.roleLabels[role])
 	if value:
 		textList.append(value)
@@ -1153,11 +1174,16 @@ def getPropertiesSpeech(
 	realStates=propertyValues.get('_states',states)
 	negativeStates=propertyValues.get('negativeStates',set())
 	if states or negativeStates:
-		textList.extend(controlTypes.processAndLabelStates(role, realStates, reason, states, negativeStates))
-	if 'description' in propertyValues:
-		textList.append(propertyValues['description'])
-	if 'keyboardShortcut' in propertyValues:
-		textList.append(propertyValues['keyboardShortcut'])
+		labelStates = controlTypes.processAndLabelStates(role, realStates, reason, states, negativeStates)
+		textList.extend(labelStates)
+	# sometimes description key is present but value is None
+	description: Optional[str] = propertyValues.get('description')
+	if description:
+		textList.append(description)
+	# sometimes keyboardShortcut key is present but value is None
+	keyboardShortcut: Optional[str] = propertyValues.get('keyboardShortcut')
+	if keyboardShortcut:
+		textList.append(keyboardShortcut)
 	if includeTableCellCoords and cellCoordsText:
 		textList.append(cellCoordsText)
 	if cellCoordsText or rowNumber or columnNumber:
@@ -1301,9 +1327,10 @@ def getControlFieldSpeech(
 	else:
 		tableID = None
 
-	roleTextSequence = attrs.get('roleText', None)
-	if not roleTextSequence:
-		roleTextSequence = getPropertiesSpeech(reason=reason, role=role)
+	roleText = attrs.get('roleText')
+	roleTextSequence = [
+		roleText,
+	] if roleText else getPropertiesSpeech(reason=reason, role=role)
 	stateTextSequence = getPropertiesSpeech(reason=reason, states=states, _role=role)
 	keyboardShortcutSequence = []
 	if config.conf["presentation"]["reportKeyboardShortcuts"]:
@@ -1462,10 +1489,13 @@ def getControlFieldSpeech(
 	) and roleTextSequence and (
 		(not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther)
 	):
-		return [
-		# Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
-			_("out of %s") % " ".join(roleTextSequence)
+		out = [
+			# Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
+			_("out of %s"),
 		]
+		out.extend(roleTextSequence)
+		_logBadSequenceTypes(out)
+		return out
 
 	# Special cases
 	elif not speakEntry and fieldType in ("start_addedToControlFieldStack","start_relative"):
