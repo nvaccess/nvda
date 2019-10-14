@@ -80,7 +80,7 @@ class AppModule(appModuleHandler.AppModule):
 		# Emoji panel for build 16299 and 17134.
 		# This event is properly raised in build 17134.
 		if (
-			winVersion.winVersion.build <= 17134
+			not winVersion.isWin10(version=1809)
 			and inputPanelAutomationID in (
 				"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarItemControl",
 				"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton"
