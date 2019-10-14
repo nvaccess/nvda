@@ -275,7 +275,7 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 			self, attrs, attrsCache=None, formatConfig=None, reason=None, unit=None, extraDetail=False,
 			initialFormat=False, separator=speech.CHUNK_SEPARATOR
 	) -> SpeechSequence:
-		out = []
+		out: SpeechSequence = []
 		comment = attrs.get("kindle-user-note")
 		if comment:
 			# For now, we report this the same way we do comments.

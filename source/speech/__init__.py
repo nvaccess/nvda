@@ -23,7 +23,7 @@ import speechDictHandler
 import characterProcessing
 from .commands import *
 from .types import SpeechSequence
-from typing import Optional, Dict, Any, Union
+from typing import Optional, Dict, Any, Union, Set, List
 
 speechMode_off=0
 speechMode_beeps=1
@@ -1119,8 +1119,8 @@ def getPropertiesSpeech(
 		**propertyValues
 ) -> SpeechSequence:
 	global oldTreeLevel, oldTableID, oldRowNumber, oldRowSpan, oldColumnNumber, oldColumnSpan
-	textList=[]
-	name=propertyValues.get('name')
+	textList: List[str] = []
+	name: Optional[str] = propertyValues.get('name')
 	if name:
 		textList.append(name)
 	if 'role' in propertyValues:
@@ -1132,14 +1132,15 @@ def getPropertiesSpeech(
 	else:
 		speakRole=False
 		role=controlTypes.ROLE_UNKNOWN
-	value=propertyValues.get('value') if role not in controlTypes.silentValuesForRoles else None
-	cellCoordsText=propertyValues.get('cellCoordsText')
-	rowNumber=propertyValues.get('rowNumber')
-	columnNumber=propertyValues.get('columnNumber')
-	includeTableCellCoords=propertyValues.get('includeTableCellCoords',True)
-	if role==controlTypes.ROLE_CHARTELEMENT:
-		speakRole=False
-	roleText=propertyValues.get('roleText')
+	value: Optional[str] = propertyValues.get('value') if role not in controlTypes.silentValuesForRoles else None
+	cellCoordsText: Optional[str] = propertyValues.get('cellCoordsText')
+	rowNumber = propertyValues.get('rowNumber')
+	columnNumber = propertyValues.get('columnNumber')
+	includeTableCellCoords = propertyValues.get('includeTableCellCoords', True)
+
+	if role == controlTypes.ROLE_CHARTELEMENT:
+		speakRole = False
+	roleText: Optional[str] = propertyValues.get('roleText')
 	if speakRole and (roleText or reason not in (controlTypes.REASON_SAYALL,controlTypes.REASON_CARET,controlTypes.REASON_FOCUS) or not (name or value or cellCoordsText or rowNumber or columnNumber) or role not in controlTypes.silentRolesOnFocus) and (role!=controlTypes.ROLE_MATH or reason not in (controlTypes.REASON_CARET,controlTypes.REASON_SAYALL)):
 		textList.append(roleText if roleText else controlTypes.roleLabels[role])
 	if value:
@@ -1168,58 +1169,71 @@ def getPropertiesSpeech(
 		rowSpan = propertyValues.get("rowSpan") or 1
 		columnSpan = propertyValues.get("columnSpan") or 1
 		if rowNumber and (not sameTable or rowNumber != oldRowNumber or rowSpan != oldRowSpan):
-			rowHeaderText = propertyValues.get("rowHeaderText")
+			rowHeaderText: Optional[str] = propertyValues.get("rowHeaderText")
 			if rowHeaderText:
 				textList.append(rowHeaderText)
 			if includeTableCellCoords and not cellCoordsText: 
 				# Translators: Speaks current row number (example output: row 3).
-				textList.append(_("row %s")%rowNumber)
+				rowNumberTranslation: str = _("row %s") % rowNumber
+				textList.append(rowNumberTranslation)
 				if rowSpan>1 and columnSpan<=1:
 					# Translators: Speaks the row span added to the current row number (example output: through 5).
-					textList.append(_("through %s")%(rowNumber+rowSpan-1))
+					rowSpanAddedTranslation: str = _("through %s") % (rowNumber + rowSpan - 1)
+					textList.append(rowSpanAddedTranslation)
 			oldRowNumber = rowNumber
 			oldRowSpan = rowSpan
 		if columnNumber and (not sameTable or columnNumber != oldColumnNumber or columnSpan != oldColumnSpan):
-			columnHeaderText = propertyValues.get("columnHeaderText")
+			columnHeaderText: Optional[str] = propertyValues.get("columnHeaderText")
 			if columnHeaderText:
 				textList.append(columnHeaderText)
 			if includeTableCellCoords and not cellCoordsText:
 				# Translators: Speaks current column number (example output: column 3).
-				textList.append(_("column %s")%columnNumber)
+				colNumberTranslation: str = _("column %s") % columnNumber
+				textList.append(colNumberTranslation)
 				if columnSpan>1 and rowSpan<=1:
 					# Translators: Speaks the column span added to the current column number (example output: through 5).
-					textList.append(_("through %s")%(columnNumber+columnSpan-1))
+					colSpanAddedTranslation: str = _("through %s") % (columnNumber + columnSpan - 1)
+					textList.append(colSpanAddedTranslation)
 			oldColumnNumber = columnNumber
 			oldColumnSpan = columnSpan
 		if includeTableCellCoords and not cellCoordsText and rowSpan>1 and columnSpan>1:
 			# Translators: Speaks the row and column span added to the current row and column numbers
 			#			(example output: through row 5 column 3).
-			textList.append(_("through row {row} column {column}").format(
-				row=rowNumber+rowSpan-1,
-				column=columnNumber+columnSpan-1
-			))
+			rowColSpanTranslation: str = _("through row {row} column {column}").format(
+				row=rowNumber + rowSpan - 1,
+				column=columnNumber + columnSpan - 1
+			)
+			textList.append(rowColSpanTranslation)
 	rowCount=propertyValues.get('rowCount',0)
 	columnCount=propertyValues.get('columnCount',0)
 	if rowCount and columnCount:
 		# Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-		textList.append(_("with {rowCount} rows and {columnCount} columns").format(rowCount=rowCount,columnCount=columnCount))
+		rowAndColCountTranslation: str = _("with {rowCount} rows and {columnCount} columns").format(
+			rowCount=rowCount,
+			columnCount=columnCount
+		)
+		textList.append(rowAndColCountTranslation)
 	elif columnCount and not rowCount:
 		# Translators: Speaks number of columns (example output: with 4 columns).
-		textList.append(_("with %s columns")%columnCount)
+		columnCountTransation: str = _("with %s columns") % columnCount
+		textList.append(columnCountTransation)
 	elif rowCount and not columnCount:
 		# Translators: Speaks number of rows (example output: with 2 rows).
-		textList.append(_("with %s rows")%rowCount)
+		rowCountTranslation: str = _("with %s rows") % rowCount
+		textList.append(rowCountTranslation)
 	if rowCount or columnCount:
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
 		oldTableID = None
 	ariaCurrent = propertyValues.get('current', False)
 	if ariaCurrent:
 		try:
-			textList.append(controlTypes.isCurrentLabels[ariaCurrent])
+			ariaCurrentLabel = controlTypes.isCurrentLabels[ariaCurrent]
+			textList.append(ariaCurrentLabel)
 		except KeyError:
 			log.debugWarning("Aria-current value not handled: %s"%ariaCurrent)
-			textList.append(controlTypes.isCurrentLabels[True])
-	placeholder = propertyValues.get('placeholder', None)
+			ariaCurrentLabel = controlTypes.isCurrentLabels[True]
+			textList.append(ariaCurrentLabel)
+	placeholder: Optional[str] = propertyValues.get('placeholder', None)
 	if placeholder:
 		textList.append(placeholder)
 	indexInGroup=propertyValues.get('positionInfo_indexInGroup',0)
@@ -1228,26 +1242,30 @@ def getPropertiesSpeech(
 		# Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 		# {number} is replaced with the number of the item in the group.
 		# {total} is replaced with the total number of items in the group.
-		textList.append(_("{number} of {total}").format(number=indexInGroup, total=similarItemsInGroup))
+		itemPosTranslation: str = _("{number} of {total}").format(
+			number=indexInGroup,
+			total=similarItemsInGroup
+		)
+		textList.append(itemPosTranslation)
 	if 'positionInfo_level' in propertyValues:
 		level=propertyValues.get('positionInfo_level',None)
 		role=propertyValues.get('role',None)
 		if level is not None:
+			# Translators: Speaks the item level in treeviews (example output: level 2).
+			levelTranslation: str = _('level %s') % level
 			if role in (controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM) and level!=oldTreeLevel:
-				textList.insert(0,_("level %s")%level)
+				textList.insert(0, levelTranslation)
 				oldTreeLevel=level
 			else:
-				# Translators: Speaks the item level in treeviews (example output: level 2).
-				textList.append(_('level %s')%propertyValues['positionInfo_level'])
-	return [x for x in textList if x]
-
-
-AttrsType = Dict[str, Union[str, SpeechCommand]]
+				textList.append(levelTranslation)
 
 def getControlFieldSpeech(
-		attrs: AttrsType,
-		ancestorAttrs: AttrsType,
-		fieldType, formatConfig=None, extraDetail=False, reason=None
+		attrs: textInfos.ControlField,
+		ancestorAttrs: List[textInfos.Field],
+		fieldType: str,
+		formatConfig: Optional[Dict[str, bool]] = None,
+		extraDetail=False,
+		reason: Optional[str] = None
 ) -> SpeechSequence:
 	if attrs.get('isHidden'):
 		return []
@@ -1450,8 +1468,8 @@ def getControlFieldSpeech(
 		return []
 
 def getFormatFieldSpeech(
-		attrs: AttrsType,
-		attrsCache: Optional[AttrsType] = None,
+		attrs: textInfos.Field,
+		attrsCache: Optional[textInfos.Field] = None,
 		formatConfig: Optional[Dict[str, bool]] = None,
 		reason: Optional[str] = None,
 		unit: Optional[str] = None,

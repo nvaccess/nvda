@@ -13,7 +13,7 @@ A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable t
 from abc import abstractmethod
 import weakref
 import re
-from typing import Any, Union, List
+from typing import Any, Union, List, Optional
 
 import baseObject
 import config
@@ -137,7 +137,7 @@ class FieldCommand(object):
 	A command indicates the start or end of a control or that the formatting of the text has changed.
 	"""
 
-	def __init__(self,command,field):
+	def __init__(self, command: str, field: Optional[Union[ControlField, FormatField]]):
 		"""Constructor.
 		@param command: The command; one of:
 			"controlStart", indicating the start of a L{ControlField};
