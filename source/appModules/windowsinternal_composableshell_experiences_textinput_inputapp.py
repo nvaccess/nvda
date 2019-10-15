@@ -67,6 +67,12 @@ class AppModule(appModuleHandler.AppModule):
 			ui.message(_("No emoji"))
 		nextHandler()
 
+	# Emoji panel for build 16299 and 17134.
+	_classicEmojiPanelAutomationID = (
+		"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarItemControl",
+		"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton"
+	)
+
 	def event_UIA_window_windowOpen(self, obj, nextHandler):
 		# Make sure to announce most recently used emoji first in post-1709 builds.
 		# Fake the announcement by locating 'most recently used" category and calling selected event on this.
@@ -82,10 +88,7 @@ class AppModule(appModuleHandler.AppModule):
 		# This event is properly raised in build 17134.
 		if (
 			not winVersion.isWin10(version=1809)
-			and inputPanelAutomationID in (
-				"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarItemControl",
-				"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton"
-			)
+			and inputPanelAutomationID in self._classicEmojiPanelAutomationID
 		):
 			eventHandler.executeEvent("UIA_elementSelected", obj.lastChild.firstChild)
 		# Handle hardware keyboard suggestions.
