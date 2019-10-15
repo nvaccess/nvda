@@ -13,7 +13,6 @@ from comtypes import COMError
 import time
 import appModuleHandler
 import controlTypes
-import winVersion
 import winUser
 import winVersion
 import api
