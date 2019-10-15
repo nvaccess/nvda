@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA - R3939\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-21 00:10+1000\n"
-"PO-Revision-Date: 2019-06-21 15:43+0200\n"
+"POT-Creation-Date: 2019-07-12 00:10+1000\n"
+"PO-Revision-Date: 2019-07-15 05:01+0300\n"
 "Last-Translator: shmuel naaman <shmuel_naaman@yahoo.com>\n"
 "Language-Team: Shmuel Naaman <shmuel_naaman@yahoo.com>, Shmuel Retbi Adi "
 "Kushnir <nvda.israel@gmail.com>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 2.2.3\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1761,12 +1761,6 @@ msgstr "%s ציון דרך"
 msgid "lmk %s"
 msgstr "סמן %s"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#. Translators: Announces selected text. %s is replaced with the text.
-#, python-format
-msgid "selected %s"
-msgstr "נבחר %s"
-
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
 msgstr "ללא תיאור ארוך"
@@ -3115,10 +3109,6 @@ msgstr "נעילת כפתור ימין"
 msgid "Locks or unlocks the right mouse button"
 msgstr "נעילה ושחרור הכפתור הימני של העכבר"
 
-#, python-format
-msgid "Selected %s"
-msgstr "%s נבחר"
-
 #. Translators: Input help mode message for report current selection command.
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
@@ -3765,6 +3755,28 @@ msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr "העברת סמן הסריקה לתו האחרון בשורה והקראתו"
+
+#. Translators: Input help mode message for Review Current Symbol command.
+msgid ""
+"Reports the symbol where the review cursor is positioned. Pressed twice, "
+"shows the symbol and the text used to speak it in browse mode"
+msgstr ""
+"מספק מידע אודות מיקום הסריקה בתוך המסמך.\n"
+" לחיצה פעמיים מכניסה את המידע גם לטקסט של מצב הגלישה."
+
+#. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+msgid "No symbol replacement"
+msgstr "ללא החלפת סימון"
+
+#. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+msgid ""
+"Character: {}\n"
+"Replacement: {}"
+msgstr "החלפת תו"
+
+#. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+msgid "Expanded symbol ({})"
+msgstr "סמון מורחב"
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -5965,15 +5977,24 @@ msgstr "%s גדולה"
 msgid "no indent"
 msgstr "אין כניסה"
 
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "נבחר %s"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s נבחר"
+
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d תווים"
-
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
-#, python-format
-msgid "%s selected"
-msgstr "%s נבחר"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -9255,6 +9276,16 @@ msgstr "עשה שימוש בUIAutomation  במסמכי וורד ובמקרים �
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
+msgid "Use UI Automation to access the Windows Console when available"
+msgstr "עשה שימוש Automation בחלונית הפקודות ובמנומות נוספים בהם ניתן"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "אמקריא סיסמאות בחלוניות ( עשוי לשפר ביצועים)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
 msgid "Automatically set system &focus to focusable elements"
 msgstr "סמן המערכת מתמקד באופן אוטומתי על אלמנטים ניתנים להתמקדות "
 
@@ -11081,6 +11112,9 @@ msgstr "מרווח של שתי שורות"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "מרווח שורה וחצי"
+
+#~ msgid "Selected %s"
+#~ msgstr "%s נבחר"
 
 #~ msgid "Currently running application is %s"
 #~ msgstr "התכנית שבפוקוס היא %s"

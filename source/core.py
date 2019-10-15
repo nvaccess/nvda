@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#core.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner, Derek Riemer, Babbage B.V., Zahari Yurukov
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2019 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
+# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """NVDA core"""
 
@@ -36,7 +36,6 @@ import logHandler
 import globalVars
 from logHandler import log
 import addonHandler
-
 import extensionPoints
 
 # inform those who want to know that NVDA has finished starting up.
@@ -104,7 +103,7 @@ def doStartupDialogs():
 			gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None),onResult)
 
 def restart(disableAddons=False, debugLogging=False):
-	"""Restarts NVDA by starting a new copy with -r."""
+	"""Restarts NVDA by starting a new copy."""
 	if globalVars.appArgs.launcher:
 		import wx
 		globalVars.exitCode=3
@@ -114,8 +113,6 @@ def restart(disableAddons=False, debugLogging=False):
 	import winUser
 	import shellapi
 	options=[]
-	if "-r" not in sys.argv:
-		options.append("-r")
 	try:
 		sys.argv.remove('--disable-addons')
 	except ValueError:
@@ -146,8 +143,11 @@ def resetConfiguration(factoryDefaults=False):
 	import braille
 	import brailleInput
 	import speech
+	import vision
 	import languageHandler
 	import inputCore
+	log.debug("Terminating vision")
+	vision.terminate()
 	log.debug("Terminating braille")
 	braille.terminate()
 	log.debug("Terminating brailleInput")
@@ -173,6 +173,9 @@ def resetConfiguration(factoryDefaults=False):
 	brailleInput.initialize()
 	log.debug("Initializing braille")
 	braille.initialize()
+	# Vision
+	log.debug("initializing vision")
+	vision.initialize()
 	log.debug("Reloading user and locale input gesture maps")
 	inputCore.manager.loadUserGestureMap()
 	inputCore.manager.loadLocaleGestureMap()
@@ -180,7 +183,6 @@ def resetConfiguration(factoryDefaults=False):
 	if audioDucking.isAudioDuckingSupported():
 		audioDucking.handlePostConfigProfileSwitch()
 	log.info("Reverted to saved configuration")
-	
 
 def _setInitialFocus():
 	"""Sets the initial focus if no focus event was received at startup.
@@ -229,8 +231,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		languageHandler.setLanguage(lang)
 	except:
 		log.warning("Could not set language to %s"%lang)
-	import versionInfo
-	log.info("NVDA version %s" % versionInfo.version)
 	log.info("Using Windows version %s" % winVersion.winVersionText)
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
@@ -294,6 +294,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import braille
 	log.debug("Initializing braille")
 	braille.initialize()
+	import vision
+	log.debug("Initializing vision")
+	vision.initialize()
 	import displayModel
 	log.debug("Initializing displayModel")
 	displayModel.initialize()
@@ -314,7 +317,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		className = u"wxWindowClassNR"
 		# Windows constants for power / display changes
 		WM_POWERBROADCAST = 0x218
-		WM_DISPLAYCHANGE = 0x7e
 		PBT_APMPOWERSTATUSCHANGE = 0xA
 		UNKNOWN_BATTERY_STATUS = 0xFF
 		AC_ONLINE = 0X1
@@ -335,7 +337,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			post_windowMessageReceipt.notify(msg=msg, wParam=wParam, lParam=lParam)
 			if msg == self.WM_POWERBROADCAST and wParam == self.PBT_APMPOWERSTATUSCHANGE:
 				self.handlePowerStatusChange()
-			elif msg == self.WM_DISPLAYCHANGE:
+			elif msg == winUser.WM_DISPLAYCHANGE:
 				self.handleScreenOrientationChange(lParam)
 
 		def handleScreenOrientationChange(self, lParam):
@@ -383,7 +385,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			else:
 				#Translators: Reported when the battery is no longer plugged in, and now is not charging.
 				ui.message(_("Not charging battery. %d percent") %sps.BatteryLifePercent)
-
+	import versionInfo
 	messageWindow = MessageWindow(versionInfo.name)
 
 	# initialize wxpython localization support
@@ -421,6 +423,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("initializing Java Access Bridge support")
 	try:
 		JABHandler.initialize()
+		log.info("Java Access Bridge support initialized")
 	except NotImplementedError:
 		log.warning("Java Access Bridge not available")
 	except:
@@ -499,6 +502,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 				queueHandler.pumpAll()
 				mouseHandler.pumpAll()
 				braille.pumpAll()
+				vision.pumpAll()
 			except:
 				log.exception("errors in this core pump cycle")
 			baseObject.AutoPropertyObject.invalidateCaches()
@@ -559,6 +563,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	_terminate(keyboardHandler, name="keyboard handler")
 	_terminate(mouseHandler)
 	_terminate(inputCore)
+	_terminate(vision)
 	_terminate(brailleInput)
 	_terminate(braille)
 	_terminate(speech)

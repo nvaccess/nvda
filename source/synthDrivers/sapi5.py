@@ -105,8 +105,8 @@ class SapiSink(object):
 	See https://msdn.microsoft.com/en-us/library/ms723587(v=vs.85).aspx
 	"""
 
-	def __init__(self, synth):
-		self.synthRef = weakref.ref(synth)
+	def __init__(self, synthRef: weakref.ReferenceType):
+		self.synthRef = synthRef
 
 	def Bookmark(self, streamNum, pos, bookmark, bookmarkId):
 		synth = self.synthRef()
@@ -230,7 +230,7 @@ class SynthDriver(SynthDriver):
 		outputDeviceID=nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True)
 		if outputDeviceID>=0:
 			self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
-		self._eventsConnection = comtypes.client.GetEvents(self.tts, SapiSink(self))
+		self._eventsConnection = comtypes.client.GetEvents(self.tts, SapiSink(weakref.ref(self)))
 		self.tts.EventInterests = constants.SVEBookmark | constants.SVEEndInputStream
 		from comInterfaces.SpeechLib import ISpAudio
 		try:
