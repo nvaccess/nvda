@@ -50,7 +50,7 @@ from .commands import (  # noqa: F401
 )
 import types
 from .types import SpeechSequence
-from typing import Optional, Dict, List
+from typing import Optional, Dict, List, Any
 from logHandler import log
 import config
 
@@ -335,7 +335,7 @@ def speakObjectProperties(obj, reason=controlTypes.REASON_QUERY, priority=None, 
 			states.discard(controlTypes.STATE_SELECTABLE)
 			newPropertyValues['states']=states
 	#Get the speech text for the properties we want to speak, and then speak it
-	speechSequence = getPropertiesSpeech(reason, **newPropertyValues)
+	speechSequence = getPropertiesSpeech(reason=reason, **newPropertyValues)
 	if speechSequence:
 		if _prefixSpeechCommand is not None:
 			speechSequence.insert(0, _prefixSpeechCommand)
@@ -920,8 +920,9 @@ def speakTextInfo(  # noqa: C901
 				endingBlock=bool(int(controlFieldStackCache[count].get('isBlock',0)))
 		if endingBlock:
 			speechSequence.append(EndUtteranceCommand())
-	# The TextInfo should be considered blank if we are only exiting fields (i.e. we aren't entering any new fields and there is no text).
-	isTextBlank=True
+	# The TextInfo should be considered blank if we are only exiting fields (i.e. we aren't
+	# entering any new fields and there is no text).
+	shouldConsiderTextInfoBlank = True
 
 	if _prefixSpeechCommand is not None:
 		assert isinstance(_prefixSpeechCommand, SpeechCommand)
@@ -941,9 +942,9 @@ def speakTextInfo(  # noqa: C901
 			)
 			if fieldSequence:
 				speechSequence.extend(fieldSequence)
-				isTextBlank=False
+				shouldConsiderTextInfoBlank = False
 			if field.get("role")==controlTypes.ROLE_MATH:
-				isTextBlank=False
+				shouldConsiderTextInfoBlank = False
 				_speakTextInfo_addMath(speechSequence,info,field)
 
 	# When true, we are inside a clickable field, and should therefore not announce any more new clickable fields
@@ -958,7 +959,7 @@ def speakTextInfo(  # noqa: C901
 				presCat=field.getPresentationCategory(newControlFieldStack[0:count],formatConfig,reason)
 				if not presCat or presCat is field.PRESCAT_LAYOUT:
 					speechSequence.append(controlTypes.stateLabels[controlTypes.STATE_CLICKABLE])
-					isTextBlank=False
+					shouldConsiderTextInfoBlank = False
 				inClickable=True
 		fieldSequence = info.getControlFieldSpeech(
 			field,
@@ -970,9 +971,9 @@ def speakTextInfo(  # noqa: C901
 		)
 		if fieldSequence:
 			speechSequence.extend(fieldSequence)
-			isTextBlank=False
+			shouldConsiderTextInfoBlank = False
 		if field.get("role")==controlTypes.ROLE_MATH:
-			isTextBlank=False
+			shouldConsiderTextInfoBlank = False
 			_speakTextInfo_addMath(speechSequence,info,field)
 		commonFieldCount+=1
 
@@ -1121,7 +1122,7 @@ def speakTextInfo(  # noqa: C901
 			break
 	if not relativeBlank:
 		speechSequence.extend(relativeSpeechSequence)
-		isTextBlank=False
+		shouldConsiderTextInfoBlank = False
 
 	#Finally get speech text for any fields left in new controlFieldStack that are common with the old controlFieldStack (for closing), if extra detail is not requested
 	if autoLanguageSwitching and lastLanguage is not None:
@@ -1141,10 +1142,11 @@ def speakTextInfo(  # noqa: C901
 			)
 			if fieldSequence:
 				speechSequence.extend(fieldSequence)
-				isTextBlank=False
+				shouldConsiderTextInfoBlank = False
 
-	# If there is nothing  that should cause the TextInfo to be considered non-blank, blank should be reported, unless we are doing a say all.
-	if not suppressBlanks and reason != controlTypes.REASON_SAYALL and isTextBlank:
+	# If there is nothing that should cause the TextInfo to be considered
+	# non-blank, blank should be reported, unless we are doing a say all.
+	if not suppressBlanks and reason != controlTypes.REASON_SAYALL and shouldConsiderTextInfoBlank:
 		# Translators: This is spoken when the line is considered blank.
 		speechSequence.append(_("blank"))
 
@@ -1351,7 +1353,7 @@ def getControlFieldSpeech(  # noqa: C901
 		ancestorAttrs: List[textInfos.Field],
 		fieldType: str,
 		formatConfig: Optional[Dict[str, bool]] = None,
-		extraDetail=False,
+		extraDetail: bool = False,
 		reason: Optional[str] = None
 ) -> SpeechSequence:
 	if attrs.get('isHidden'):
@@ -1450,7 +1452,7 @@ def getControlFieldSpeech(  # noqa: C901
 		# Table.
 		rowCount=(attrs.get("table-rowcount-presentational") or attrs.get("table-rowcount"))
 		columnCount=(attrs.get("table-columncount-presentational") or attrs.get("table-columncount"))
-		tableSeq = nameSequence
+		tableSeq = nameSequence[:]
 		tableSeq.extend(roleTextSequence)
 		tableSeq.extend(stateTextSequence)
 		tableSeq.extend(
@@ -1494,11 +1496,11 @@ def getControlFieldSpeech(  # noqa: C901
 		if reportTableHeaders:
 			getProps['rowHeaderText'] = attrs.get("table-rowheadertext")
 			getProps['columnHeaderText'] = attrs.get("table-columnheadertext")
-		tableCellsequence = getPropertiesSpeech(_tableID=tableID, **getProps)
-		tableCellsequence.extend(stateTextSequence)
-		tableCellsequence.extend(ariaCurrentSequence)
-		_logBadSequenceTypes(tableCellsequence)
-		return tableCellsequence
+		tableCellSequence = getPropertiesSpeech(_tableID=tableID, **getProps)
+		tableCellSequence.extend(stateTextSequence)
+		tableCellSequence.extend(ariaCurrentSequence)
+		_logBadSequenceTypes(tableCellSequence)
+		return tableCellSequence
 
 	# General cases.
 	if ((
@@ -1539,8 +1541,9 @@ def getControlFieldSpeech(  # noqa: C901
 		out.extend(keyboardShortcutSequence)
 		if content and not speakContentFirst:
 			out.append(content)
-		return out
 
+		_logBadSequenceTypes(out)
+		return out
 	elif (
 		fieldType in (
 			"end_removedFromControlFieldStack",
@@ -1551,11 +1554,15 @@ def getControlFieldSpeech(  # noqa: C901
 			(not extraDetail and speakExitForLine)
 			or (extraDetail and speakExitForOther)
 	)):
-		out = [
-			# Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
-			_("out of %s"),
-		]
-		out.extend(roleTextSequence)
+		if all(isinstance(item, str) for item in roleTextSequence):
+			joinedRoleText = " ".join(roleTextSequence)
+			out = [
+				# Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
+				_("out of %s") % joinedRoleText,
+			]
+		else:
+			out = roleTextSequence
+
 		_logBadSequenceTypes(out)
 		return out
 
@@ -2007,7 +2014,9 @@ def getFormatFieldSpeech(  # noqa: C901
 
 
 def getTableInfoSpeech(
-		tableInfo, oldTableInfo, extraDetail=False
+		tableInfo: Optional[Dict[str, Any]],
+		oldTableInfo: Optional[Dict[str, Any]],
+		extraDetail: bool = False
 ) -> SpeechSequence:
 	if tableInfo is None and oldTableInfo is None:
 		return []

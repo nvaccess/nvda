@@ -13,7 +13,7 @@ A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable t
 from abc import abstractmethod
 import weakref
 import re
-from typing import Any, Union, List, Optional
+from typing import Any, Union, List, Optional, Dict
 
 import baseObject
 import config
@@ -484,7 +484,13 @@ class TextInfo(baseObject.AutoPropertyObject):
 			unitInfo.collapse(end=True)
 
 	def getControlFieldSpeech(
-			self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None
+			self,
+			attrs: ControlField,
+			ancestorAttrs: List[Field],
+			fieldType: str,
+			formatConfig: Optional[Dict[str, bool]] = None,
+			extraDetail: bool = False,
+			reason: Optional[str] = None
 	) -> SpeechSequence:
 		# Import late to avoid circular import.
 		import speech
