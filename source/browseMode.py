@@ -9,7 +9,6 @@ import collections
 import winsound
 import time
 import weakref
-from typing import Optional
 
 import wx
 import core
@@ -31,6 +30,7 @@ import textInfos
 import braille
 import vision
 import speech
+from speech.types import SpeechSequence
 import sayAllHandler
 import treeInterceptorHandler
 import inputCore
@@ -38,8 +38,6 @@ import api
 import gui.guiHelper
 from NVDAObjects import NVDAObject
 from abc import ABCMeta, abstractmethod
-
-from speech import SpeechSequence, EndUtteranceCommand, LangChangeCommand
 
 REASON_QUICKNAV = "quickNav"
 

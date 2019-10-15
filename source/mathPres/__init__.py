@@ -52,9 +52,11 @@ class MathPresentationProvider(object):
 		"""
 		raise NotImplementedError
 
+
 speechProvider: Optional[MathPresentationProvider] = None
 brailleProvider: Optional[MathPresentationProvider] = None
 interactionProvider: Optional[MathPresentationProvider] = None
+
 
 def registerProvider(provider, speech=False, braille=False, interaction=False):
 	"""Register a math presentation provider.

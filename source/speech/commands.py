@@ -10,7 +10,6 @@ from abc import ABCMeta, abstractmethod
 from typing import Optional
 
 import config
-import languageHandler
 from synthDriverHandler import getSynth
 
 class SpeechCommand(object):

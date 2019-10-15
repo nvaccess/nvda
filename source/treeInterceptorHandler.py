@@ -241,8 +241,15 @@ class RootProxyTextInfo(textInfos.TextInfo):
 		return self.innerTextInfo.focusableNVDAObjectAtStart
 
 	def getFormatFieldSpeech(
-			self, attrs, attrsCache=None, formatConfig=None, reason=None, unit=None,
-			extraDetail=False , initialFormat=False, separator=None
+			self,
+			attrs,
+			attrsCache=None,
+			formatConfig=None,
+			reason=None,
+			unit=None,
+			extraDetail=False,
+			initialFormat=False,
+			separator=None
 	) -> SpeechSequence:
 		if separator is None:
 			# #6749: The default for this argument is actually speech.CHUNK_SEPARATOR,

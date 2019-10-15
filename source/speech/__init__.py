@@ -21,9 +21,38 @@ import re
 import textInfos
 import speechDictHandler
 import characterProcessing
-from .commands import *
+from .commands import (
+	# Commands that are used in this file.
+	SpeechCommand,
+	PitchCommand,
+	LangChangeCommand,
+	BeepCommand,
+	EndUtteranceCommand,
+	CharacterModeCommand,
+)
+from .commands import (  # noqa: F401
+	# F401 imported but unused:
+	# The following are imported here because other files that speech.py
+	# previously relied on "import * from .commands"
+	# New commands added to commands.py should be directly imported only where needed.
+	SynthCommand,
+	IndexCommand,
+	SynthParamCommand,
+	BreakCommand,
+	BaseProsodyCommand,
+	VolumeCommand,
+	RateCommand,
+	PhonemeCommand,
+	BaseCallbackCommand,
+	CallbackCommand,
+	WaveFileCommand,
+	ConfigProfileTriggerCommand,
+)
+import types
 from .types import SpeechSequence
-from typing import Optional, Dict, Any, Union, Set, List
+from typing import Optional, Dict, List
+from logHandler import log
+import config
 
 speechMode_off=0
 speechMode_beeps=1
@@ -306,7 +335,7 @@ def speakObjectProperties(obj, reason=controlTypes.REASON_QUERY, priority=None, 
 			states.discard(controlTypes.STATE_SELECTABLE)
 			newPropertyValues['states']=states
 	#Get the speech text for the properties we want to speak, and then speak it
-	speechSequence = getPropertiesSpeech(reason,**newPropertyValues)
+	speechSequence = getPropertiesSpeech(reason, **newPropertyValues)
 	if speechSequence:
 		if _prefixSpeechCommand is not None:
 			speechSequence.insert(0, _prefixSpeechCommand)
@@ -430,6 +459,8 @@ RE_INDENTATION_CONVERT = re.compile(r"(?P<char>\s)(?P=char)*", re.UNICODE)
 IDT_BASE_FREQUENCY = 220 #One octave below middle A.
 IDT_TONE_DURATION = 80 #Milleseconds
 IDT_MAX_SPACES = 72
+
+
 def getIndentationSpeech(indentation, formatConfig) -> SpeechSequence:
 	"""Retrieves the phrase to be spoken for a given string of indentation.
 	@param indentation: The string of indentation.
@@ -481,7 +512,15 @@ def getIndentationSpeech(indentation, formatConfig) -> SpeechSequence:
 
 from .priorities import *
 
-def speak(speechSequence: SpeechSequence, symbolLevel=None, priority=None):
+
+# C901 'speak' is too complex
+# Note: when working on speak, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+def speak(  # noqa: C901
+		speechSequence: SpeechSequence,
+		symbolLevel: Optional[int] = None,
+		priority: Optional[int] = None
+):
 	"""Speaks a sequence of text and speech commands
 	@param speechSequence: the sequence of text and L{SpeechCommand} objects to speak
 	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
@@ -769,9 +808,15 @@ def _speakTextInfo_addMath(
 def _logBadSequenceTypes(sequence, shouldRaise: bool = True) -> bool:
 	return types.logBadSequenceTypes(sequence, raiseExceptionOnError=shouldRaise)
 
-def speakTextInfo(
+
+# C901 'speakTextInfo' is too complex
+# Note: when working on speakTextInfo, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+def speakTextInfo(  # noqa: C901
 		info: textInfos.TextInfo,
-		useCache=True, formatConfig=None, unit=None,
+		useCache=True,
+		formatConfig=None,
+		unit: Optional[str] = None,
 		reason=controlTypes.REASON_QUERY,
 		_prefixSpeechCommand=None,
 		onlyInitialFields=False,
@@ -1118,7 +1163,10 @@ def speakTextInfo(
 			return True
 
 
-def getPropertiesSpeech(
+# C901 'getPropertiesSpeech' is too complex
+# Note: when working on getPropertiesSpeech, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+def getPropertiesSpeech(  # noqa: C901
 		reason=controlTypes.REASON_QUERY,
 		**propertyValues
 ) -> SpeechSequence:
@@ -1145,7 +1193,9 @@ def getPropertiesSpeech(
 	if role == controlTypes.ROLE_CHARTELEMENT:
 		speakRole = False
 	roleText: Optional[str] = propertyValues.get('roleText')
-	if speakRole and (
+	if (
+		speakRole
+		and (
 			roleText
 			or reason not in (
 				controlTypes.REASON_SAYALL,
@@ -1160,13 +1210,14 @@ def getPropertiesSpeech(
 				or columnNumber
 			)
 			or role not in controlTypes.silentRolesOnFocus
-	) and (
-		role != controlTypes.ROLE_MATH
-		or reason not in (
+		)
+		and (
+			role != controlTypes.ROLE_MATH
+			or reason not in (
 				controlTypes.REASON_CARET,
 				controlTypes.REASON_SAYALL
-		)
-	):
+			)
+	)):
 		textList.append(roleText if roleText else controlTypes.roleLabels[role])
 	if value:
 		textList.append(value)
@@ -1291,7 +1342,11 @@ def getPropertiesSpeech(
 	_logBadSequenceTypes(textList)
 	return textList
 
-def getControlFieldSpeech(
+
+# C901 'getControlFieldSpeech' is too complex
+# Note: when working on getControlFieldSpeech, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+def getControlFieldSpeech(  # noqa: C901
 		attrs: textInfos.ControlField,
 		ancestorAttrs: List[textInfos.Field],
 		fieldType: str,
@@ -1380,10 +1435,10 @@ def getControlFieldSpeech(
 	# Determine what text to speak.
 	# Special cases
 	if(
-			childControlCount
-			and fieldType=="start_addedToControlFieldStack"
-			and role==controlTypes.ROLE_LIST
-			and controlTypes.STATE_READONLY in states
+		childControlCount
+		and fieldType == "start_addedToControlFieldStack"
+		and role == controlTypes.ROLE_LIST
+		and controlTypes.STATE_READONLY in states
 	):
 		# List.
 		# #7652: containerContainsText variable is set here, but the actual generation of all other output is
@@ -1403,7 +1458,7 @@ def getControlFieldSpeech(
 				_tableID=tableID, 
 				rowCount=rowCount, 
 				columnCount=columnCount
-			))
+		))
 		tableSeq.extend(levelSequence)
 		_logBadSequenceTypes(tableSeq)
 		return tableSeq
@@ -1418,13 +1473,13 @@ def getControlFieldSpeech(
 		_logBadSequenceTypes(nameSequence)
 		return nameSequence
 	elif (
-			fieldType in ("start_addedToControlFieldStack", "start_relative")
-			and role in (
-				controlTypes.ROLE_TABLECELL,
-				controlTypes.ROLE_TABLECOLUMNHEADER,
-				controlTypes.ROLE_TABLEROWHEADER
-			)
-			and tableID
+		fieldType in ("start_addedToControlFieldStack", "start_relative")
+		and role in (
+			controlTypes.ROLE_TABLECELL,
+			controlTypes.ROLE_TABLECOLUMNHEADER,
+			controlTypes.ROLE_TABLEROWHEADER
+		)
+		and tableID
 	):
 		# Table cell.
 		reportTableHeaders = formatConfig["reportTableHeaders"]
@@ -1446,20 +1501,22 @@ def getControlFieldSpeech(
 		return tableCellsequence
 
 	# General cases.
-	if (
+	if ((
 		speakEntry and (
 			speakContentFirst
 			and fieldType in ("end_relative", "end_inControlFieldStack")
-		) or (
-				not speakContentFirst
-				and fieldType in ("start_addedToControlFieldStack", "start_relative")
 		)
-	) or (
-			speakWithinForLine
-			and not speakContentFirst
-			and not extraDetail
-			and fieldType == "start_inControlFieldStack"
-	):
+		or (
+			not speakContentFirst
+			and fieldType in ("start_addedToControlFieldStack", "start_relative")
+		)
+	)
+	or (
+		speakWithinForLine
+		and not speakContentFirst
+		and not extraDetail
+		and fieldType == "start_inControlFieldStack"
+	)):
 		out = []
 		content = attrs.get("content")
 		if content and speakContentFirst:
@@ -1484,11 +1541,16 @@ def getControlFieldSpeech(
 			out.append(content)
 		return out
 
-	elif fieldType in (
-			"end_removedFromControlFieldStack", "end_relative"
-	) and roleTextSequence and (
-		(not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther)
-	):
+	elif (
+		fieldType in (
+			"end_removedFromControlFieldStack",
+			"end_relative",
+		)
+		and roleTextSequence
+		and (
+			(not extraDetail and speakExitForLine)
+			or (extraDetail and speakExitForOther)
+	)):
 		out = [
 			# Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 			_("out of %s"),
@@ -1507,7 +1569,11 @@ def getControlFieldSpeech(
 	else:
 		return []
 
-def getFormatFieldSpeech(
+
+# C901 'getFormatFieldSpeech' is too complex
+# Note: when working on getFormatFieldSpeech, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+def getFormatFieldSpeech(  # noqa: C901
 		attrs: textInfos.Field,
 		attrsCache: Optional[textInfos.Field] = None,
 		formatConfig: Optional[Dict[str, bool]] = None,
@@ -1522,7 +1588,7 @@ def getFormatFieldSpeech(
 	if formatConfig["reportTables"]:
 		tableInfo=attrs.get("table-info")
 		oldTableInfo=attrsCache.get("table-info") if attrsCache is not None else None
-		tableSequence=getTableInfoSpeech(
+		tableSequence = getTableInfoSpeech(
 			tableInfo, oldTableInfo, extraDetail=extraDetail
 		)
 		if tableSequence:

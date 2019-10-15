@@ -15,9 +15,11 @@ from .commands import SpeechCommand
 
 SpeechSequence = List[Union[SpeechCommand, str]]
 
+
 def _isDebugForSpeechSequences() -> bool:
 	"""Check if debug logging for speech sequences is enabled."""
 	return config.conf["debugLog"]["speechSequences"]
+
 
 def logBadSequenceTypes(sequence: SpeechSequence, raiseExceptionOnError=False) -> bool:
 	"""

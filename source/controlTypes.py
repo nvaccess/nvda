@@ -771,6 +771,7 @@ def processNegativeStates(role, states, reason, negativeStates=None):
 		# Return all negative states which should be spoken, excluding the positive states.
 		return speakNegatives - states
 
+
 def processAndLabelStates(
 		role: int,
 		states: Set[Any],
