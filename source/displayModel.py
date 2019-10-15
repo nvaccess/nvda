@@ -22,7 +22,7 @@ from logHandler import log
 import windowUtils
 from locationHelper import RectLTRB, RectLTWH
 import textUtils
-from typing import Union, List, Tuple, Dict
+from typing import Union, List, Tuple
 
 COLOR_HIGHLIGHT = 13
 COLOR_HIGHLIGHTTEXT = 14
@@ -253,28 +253,28 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		self.foregroundSelectionColor = colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(COLOR_HIGHLIGHTTEXT))
 		return self.foregroundSelectionColor
 
-	def _get_selectionCondition(self) -> List[Dict[str, Union[bool, List]]]:
-		"""The search condition for selections.
+	def _get_selectionQuery(self) -> textInfos.FieldQuery:
+		"""The search query for selections.
 
 		It is applied to a L{textInfos.FieldCommand} when searching for selected or highlighted text.
-		A condition is a list with dicts whose keys are control field attributes,
+		A query is a list with dicts whose keys are control field attributes,
 		and whose values are either:
 			* A list of possible values for the attribute.
-			* A boolean value, indicating that the condition for the key matches
-			if the key is or is not in the field with whatever value.
+			* A boolean value, indicating that the condition for the key matches,
+			i.e. whether or not the key is in the field.
 		The dicts are joined with 'or', the keys in each dict are joined with 'and',
 		and the values  for each key are joined with 'or'.
-		It is evaluated using L{textInfos.Field.evaluateCondition}.
+		It is evaluated using L{textInfos.Field.evaluateQuery}.
 		"""
-		defaultCondition = dict()
+		defaultSubQuery: textInfos.FieldSUbQuery = dict()
 		if self.backgroundSelectionColor is not None and self.foregroundSelectionColor is not None:
-			defaultCondition['color'] = [self.foregroundSelectionColor]
-			defaultCondition['background-color'] = [self.backgroundSelectionColor]
-		return [defaultCondition]
+			defaultSubQuery['color'] = [self.foregroundSelectionColor]
+			defaultSubQuery['background-color'] = [self.backgroundSelectionColor]
+		return [defaultSubQuery]
 
 	def _getSelectionOffsets(self):
-		condition = self.selectionCondition
-		if condition:
+		query = self.selectionQuery
+		if query:
 			highlightDict = None
 			fields=self._storyFieldsAndRects[0]
 			startOffset=None
@@ -283,22 +283,23 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			inHighlightChunk = False
 			for item in fields:
 				if isinstance(item, textInfos.FieldCommand) and item.command == "formatChange":
-					# If we are able to evaluate text against a condition of multiple dicts,
-					# We can limit our future evaluations to the dict that matches.
-					# This makes sure that we only apply the first matching condition to the highlight searching strategy.
+					# If we are able to evaluate text against a field query,
+					# We can limit our future evaluations to the sub query that matches.
+					# This makes sure that we only apply the first matching sub query
+					# to the highlight searching strategy.
 					if not highlightDict:
-						evaluation = item.field.evaluateCondition(*self.selectionCondition)
+						evaluation = item.field.evaluateQuery(self.selectionQuery)
 						if evaluation:
 							highlightDict = evaluation
 					else:
-						evaluation = item.field.evaluateCondition(highlightDict)
+						evaluation = item.field.evaluateQuery([highlightDict])
 						if not evaluation:
 							# The highlight dict does not match, but we're dealing with format changes
 							# The highlight chunk ends if we encounter another format change that contains the keys.
 							# Execute a negative evaluation.
-							evaluation = item.field.evaluateCondition(
+							evaluation = item.field.evaluateQuery([
 								{key: False for key in highlightDict.keys()}
-							)
+							])
 					if evaluation:
 						inHighlightChunk = True
 						if startOffset is None:

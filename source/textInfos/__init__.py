@@ -1,8 +1,7 @@
-#textInfos/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -17,41 +16,43 @@ import baseObject
 import config
 import controlTypes
 import locationHelper
+from typing import Union, List, Tuple, Dict
+
+FieldSubQuery = Dict[str, Union[bool, List]]
+FieldQuery = List[FieldSubQuery]
 
 class Field(dict):
 	"""Provides information about a piece of text."""
 
-	def evaluateCondition(self, *dicts):
-		"""Evaluate a condition against self.
+	def evaluateQuery(self, query: FieldQuery) -> FieldSubQuery:
+		"""Executes a query against self.
 
-		This function evaluates whether the provided condition is met for this L{Field}.
-		The arguments to this function are dicts whose keys are field attributes,
+		This function evaluates whether the provided query is met for this L{Field}.
+		The argument to this function is a list of dicts whose keys are field attributes,
 		and whose values are either:
 			* A list of possible values for the attribute.
-			* A boolean value, indicating that the condition for the key matches
-			if the key is or is not in the field with whatever value.
+			* A boolean value, indicating that the condition for the key matches,
+			i.e. whether or not the key is in the field.
 		The dicts are joined with 'or', the keys in each dict are joined with 'and',
 		and the values  for each key are joined with 'or'.
-		For example,  to create a condition that matches on a format field with a white or black foreground color,
-		you would provide the following condition argument:
+		For example,  to create a query that matches on a format field with a white or black foreground color,
+		you would provide the following query argument:
 
-			{'color': [colors.RGB(255, 255, 255), colors.RGB(0, 0, 0)]}
+			[{'color': [colors.RGB(255, 255, 255), colors.RGB(0, 0, 0)]}]
 
-		To create a condition that matches on a format field with whatever foreground color,
-		you would provide the following condition argument:
+		To create a query that matches on a format field with whatever foreground color,
+		you would provide the following query argument:
 
-			{'color': True}
+			[{'color': True}]
 
-		To create a condition that matches on a format field without a foreground color,
-		you would provide the following condition argument:
+		To create a query that matches on a format field without a foreground color,
+		you would provide the following query argument:
 
-			{'color': False}
+			[{'color': False}]
 		"""
-		if len(dicts) == 1 and isinstance(dicts[0], (list, set, tuple)):
-			dicts = dicts[0]
-		for dict in dicts:
+		for sub in query:
 			# Dicts are joined with or, therefore return early if a dict matches.
-			for key, values in dict.items():
+			for key, values in sub.items():
 				if key not in self:
 					if values is False:
 						continue
@@ -67,7 +68,7 @@ class Field(dict):
 					break
 			else:
 				# This dict matches.
-				return dict
+				return sub
 		return None
 
 
