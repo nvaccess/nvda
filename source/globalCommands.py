@@ -1378,7 +1378,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(" ".join(textList))
 		else:
 			if formatField:
-				sequence = info.getFormatFieldSpeech(formatField, formatConfig=formatConfig, separator="\n")
+				sequence = info.getFormatFieldSpeech(formatField, formatConfig=formatConfig)
 				textList.extend(sequence)
 
 			if not textList:

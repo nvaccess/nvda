@@ -2,6 +2,7 @@
 #Copyright (C) 2016-2017 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+from typing import Optional, Dict
 
 from comtypes import COMError
 from comtypes.hresult import S_OK
@@ -272,8 +273,14 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 		return items
 
 	def getFormatFieldSpeech(
-			self, attrs, attrsCache=None, formatConfig=None, reason=None, unit=None, extraDetail=False,
-			initialFormat=False, separator=speech.CHUNK_SEPARATOR
+			self,
+			attrs: textInfos.Field,
+			attrsCache: Optional[textInfos.Field] = None,
+			formatConfig: Optional[Dict[str, bool]] = None,
+			reason: Optional[str] = None,
+			unit: Optional[str] = None,
+			extraDetail: bool = False,
+			initialFormat: bool = False
 	) -> SpeechSequence:
 		out: SpeechSequence = []
 		comment = attrs.get("kindle-user-note")
@@ -302,11 +309,17 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 				_("out of popular highlight")
 			)
 			out.append(translation)
-		out.extend(
-			super(BookPageViewTextInfo, self).getFormatFieldSpeech(
-				attrs, attrsCache=attrsCache, formatConfig=formatConfig, reason=reason, unit=unit,
-				extraDetail=extraDetail, initialFormat=initialFormat, separator=separator
-		))
+
+		superSpeech = super(BookPageViewTextInfo, self).getFormatFieldSpeech(
+			attrs,
+			attrsCache=attrsCache,
+			formatConfig=formatConfig,
+			reason=reason,
+			unit=unit,
+			extraDetail=extraDetail,
+			initialFormat=initialFormat
+		)
+		out.extend(superSpeech)
 		textInfos._logBadSequenceTypes(out)
 		return out
 

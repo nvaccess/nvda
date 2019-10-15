@@ -1436,10 +1436,12 @@ class ExcelCell(ExcelBase):
 			if isinstance(field,textInfos.FieldCommand) and isinstance(field.field,textInfos.FormatField):
 				formatField.update(field.field)
 		if not hasattr(self.parent,'_formatFieldSpeechCache'):
-			self.parent._formatFieldSpeechCache={}
+			self.parent._formatFieldSpeechCache = textInfos.Field()
 		if formatField:
 			sequence = speech.getFormatFieldSpeech(
-				formatField, attrsCache=self.parent._formatFieldSpeechCache, formatConfig=formatConfig
+				formatField,
+				attrsCache=self.parent._formatFieldSpeechCache,
+				formatConfig=formatConfig
 			)
 			speech.speak(sequence)
 		super(ExcelCell,self).reportFocus()

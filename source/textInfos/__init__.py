@@ -506,28 +506,30 @@ class TextInfo(baseObject.AutoPropertyObject):
 		return braille.getControlFieldBraille(self, field, ancestors, reportStart, formatConfig)
 
 	def getFormatFieldSpeech(
-			self, attrs, attrsCache=None, formatConfig=None, reason=None, unit=None, extraDetail=False,
-			initialFormat=False, separator=None
+			self,
+			attrs: Field,
+			attrsCache: Optional[Field] = None,
+			formatConfig: Optional[Dict[str, bool]] = None,
+			reason: Optional[str] = None,
+			unit: Optional[str] = None,
+			extraDetail: bool = False,
+			initialFormat: bool = False,
 	) -> SpeechSequence:
 		"""Get the spoken representation for given format information.
 		The base implementation just calls L{speech.getFormatFieldSpeech}.
 		This can be extended in order to support implementation specific attributes.
 		If extended, the superclass should be called first.
-		@param separator: The text used to separate chunks of format information;
-			defaults to L{speech.CHUNK_SEPARATOR}.
-		@type separator: str
 		"""
 		# Import late to avoid circular import.
 		import speech
-		if separator is None:
-			# #6749: The default for this argument is actually speech.CHUNK_SEPARATOR,
-			# but that can't be specified as a default argument because of circular import issues.
-			separator = speech.CHUNK_SEPARATOR
 		return speech.getFormatFieldSpeech(
-			attrs, attrsCache=attrsCache, formatConfig=formatConfig,
-			reason=reason, unit=unit, extraDetail=extraDetail,
+			attrs=attrs,
+			attrsCache=attrsCache,
+			formatConfig=formatConfig,
+			reason=reason,
+			unit=unit,
+			extraDetail=extraDetail,
 			initialFormat=initialFormat
-			# speech does not take a "separator" argument.
 		)
 
 	def activate(self):
