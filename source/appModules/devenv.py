@@ -19,7 +19,6 @@ from enum import IntEnum
 import config
 import appModuleHandler
 import controlTypes
-import api
 import threading
 
 
@@ -43,29 +42,6 @@ class AppModule(appModuleHandler.AppModule):
 		self._DTECache = {}
 		vsMajor, vsMinor, rest = self.productVersion.split(".", 2)
 		self.vsMajor, self.vsMinor = int(vsMajor), int(vsMinor)
-
-	hasTriedVsAppSwitch = False
-
-	def _registerCOMWithFocusJuggle(self):
-		import wx
-		import gui
-		# Translators: A title for a dialog shown while Microsoft Visual Studio initializes
-		d = wx.Dialog(
-			parent=None,
-			title=_("Waiting for Visual Studio...")
-		)
-		d.CentreOnScreen()
-		gui.mainFrame.prePopup()
-		d.Show()
-		self.hasTriedVsAppSwitch = True
-		# Make sure NVDA detects and reports focus on the waiting dialog
-		api.processPendingEvents()
-		try:
-			comtypes.client.PumpEvents(1)
-		except WindowsError:
-			log.debugWarning("Error while pumping com events", exc_info=True)
-		d.Destroy()
-		gui.mainFrame.postPopup()
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		# Only use this overlay class if the top level automation object for the IDE can be retrieved,
@@ -112,9 +88,6 @@ class AppModule(appModuleHandler.AppModule):
 			return DTE
 
 		DTE = self._DTECache[thread] = self._getDTE()
-		if DTE is None and not self.hasTriedVsAppSwitch:
-			self._registerCOMWithFocusJuggle()
-			DTE = self._DTECache[thread] = self._getDTE()
 		return DTE
 
 
