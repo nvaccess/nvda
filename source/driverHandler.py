@@ -1,12 +1,27 @@
 # -*- coding: UTF-8 -*-
-#driverHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2018 NV Access Limited, Leonard de Ruijter
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2019 NV Access Limited, Leonard de Ruijter
 
 """Handler for driver functionality that is global to synthesizers and braille displays."""
+from autoSettingsUtils.autoSettings import AutoSettings
+from autoSettingsUtils.utils import (
+	paramToPercent,
+	percentToParam
+)
 
+# F401: the following imports, while unused in this file, are provided for backwards compatibility.
+from autoSettingsUtils.driverSetting import (  # noqa: F401
+	DriverSetting,
+	BooleanDriverSetting,
+	NumericDriverSetting,
+	AutoPropertyObject,
+)
+from autoSettingsUtils.utils import (  # noqa: F401
+	UnsupportedConfigParameterError,
+	StringParameterInfo,
+)
 from baseObject import AutoPropertyObject
 import config
 from copy import deepcopy
@@ -216,7 +231,7 @@ class Driver(AutoPropertyObject):
 		@param max: The maximum value.
 		@type max: int
 		"""
-		return int(round(float(current - min) / (max - min) * 100))
+		return paramToPercent(current, min, max)
 
 	@classmethod
 	def _percentToParam(cls, percent, min, max):
@@ -228,4 +243,4 @@ class Driver(AutoPropertyObject):
 		@param max: The maximum raw parameter value.
 		@type max: int
 		"""
-		return int(round(float(percent) / 100 * (max - min) + min))
+		return percentToParam(percent, min, max)

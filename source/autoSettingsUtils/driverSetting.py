@@ -1,3 +1,5 @@
+from baseObject import AutoPropertyObject
+
 
 class DriverSetting(AutoPropertyObject):
 	"""Represents a synthesizer or braille display setting such as voice, variant or dot firmness.
