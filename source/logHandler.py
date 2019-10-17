@@ -309,7 +309,7 @@ def initialize(shouldDoRemoteLogging=False):
 			# #8516: also if logging is completely turned off.
 			logHandler = logging.NullHandler()
 			# There's no point in logging anything at all, since it'll go nowhere.
-			log.setLevel(Logger.OFF)
+			log.root.setLevel(Logger.OFF)
 		else:
 			if not globalVars.appArgs.logFileName:
 				globalVars.appArgs.logFileName = _getDefaultLogFilePath()
@@ -329,6 +329,7 @@ def initialize(shouldDoRemoteLogging=False):
 			elif logLevel <= 0:
 				logLevel = Logger.INFO
 			log.setLevel(logLevel)
+			log.root.setLevel(max(logLevel, logging.WARN))
 	else:
 		logHandler = RemoteHandler()
 		logFormatter = Formatter(
@@ -370,3 +371,4 @@ def setLogLevelFromConfig():
 		level = log.INFO
 		config.conf["general"]["loggingLevel"] = logging.getLevelName(log.INFO)
 	log.setLevel(level)
+	log.root.setLevel(max(level, logging.WARN))
