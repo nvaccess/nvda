@@ -133,11 +133,18 @@ class AppModule(appModuleHandler.AppModule):
 				):
 					clsList.insert(0, IntellisenseLabel)
 
+				if (
+					obj.role == controlTypes.ROLE_MENUITEM
+					and isinstance(obj, UIA.UIA)
+					and obj.UIAElement.CachedClassName in ("IntellisenseMenuItem",)
+				):
+					clsList.insert(0, IntellisenseItem)
+
 			except AttributeError:
 				pass
 
 	def _getDTE(self):
-	# Return the already fetched instance if there is one.
+		# Return the already fetched instance if there is one.
 		try:
 			if self._DTE:
 				return self._DTE
@@ -536,5 +543,20 @@ class ObjectsTreeItem(IAccessible):
 class IntellisenseLabel(UIA.UIA):
 
 	def event_liveRegionChange(self):
-		speech.cancelSpeech()
-		super().event_liveRegionChange()
+		# Just ignore this event...
+		pass
+
+
+class IntellisenseItem(UIA.UIA):
+
+	def _get_highlighted(self):
+		return "[HIGHLIGHTED]=True;" in self.UIAElement.CurrentItemStatus
+
+	def event_UIA_itemStatus(self):
+		if self.highlighted:
+			speech.cancelSpeech()
+			ui.message(self.name)
+
+	def event_nameChange(self):
+		self.event_UIA_itemStatus()
+
