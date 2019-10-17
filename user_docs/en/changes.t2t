@@ -11,6 +11,13 @@ What's New in NVDA
  - Reporting of typed text that does not appear onscreen (such as passwords) can now be enabled via an option in NVDA's advanced settings panel. (#9649)
 - The accuracy of the move mouse to navigator object command has been improved in text fields in Java applications. (#10157)
 - Screen curtain, which when enabled, makes the whole screen black on Windows 8 and above. (#7857)
+- Added support for  the following Handy Tech Braille displays (#8955):
+ - Basic Braille Plus 40
+ - Basic Braille Plus 32
+ - Connect Braille
+- All user-defined gestures can now be removed via a new "Reset to factory defaults" button in the Input Gestures dialog. (#10293)
+- Font reporting in Microsoft Word now includes if text is marked as hidden. (#8713)
+- Added a command to move the review cursor to the position previously set as start marker for selection or copy: NVDA+shift+F9. (#1969)
 
 
 == Changes ==
@@ -19,6 +26,11 @@ What's New in NVDA
 - On Windows 8 and later, NVDA will now report product name and version information for hosted apps such as apps downloaded from Microsoft Store using information provided by the app. (#4259, #10108)
 - When toggling track changes on and off with the keyboard in Microsoft Word, NVDA will announce the state of the setting. (#942) 
 - The NVDA version number is now logged as the first message in the log. This occurs even if logging has been disabled from the GUI. (#9803)
+- For every entry in the NVDA log, information about the originating thread is now included. (#10259)
+- The settings dialog no longer allows for changing the configured log level if it has been overridden from the command line. (#10209)
+- In Microsoft Word, NVDA now announces the display state of non printable characters when pressing the toggle shortcut Ctrl+Shift+8 . (#10241)
+- Updated Liblouis braille translator to commit 58d67e63. (#10094)
+- When CLDR characters (including emojis) reporting is enabled, they are announced at all punctuation levels. (#8826)
 
 
 == Bug Fixes ==
@@ -29,15 +41,14 @@ What's New in NVDA
 - controls in Audacitys compressor dialog are now announced when navigating the dialog. (#10103)
 - NVDA no longer treats spaces as words in object review in Scintilla based editors such as Notepad++. (#8295)
 - NVDA will prevent the  system from entering sleep mode when scrolling through text with braille display gestures. (#9175)
-- In Windows 7, NVDA no longer causes Windows Explorer to crash when the mouse is used in the start menu. (#9435)
 - On Windows 10, braille will now follow when editing cell contents in Microsoft Excel and in other UIA text controls where it was lagging behind. (#9749)
 - NVDA will once again report suggestions in the Microsoft Edge address bar. (#7554)
 - NVDA is no longer silent when focusing an HTML tab control header in Internet Explorer. (#8898)
 - In Microsoft Edge based on EdgeHTML, NVDA will no longer play search suggestion sound when the window becomes maximized. (#9110, #10002)
 - ARIA 1.1 combo boxes are now supported in Mozilla Firefox and Google Chrome. (#9616)
-- Windows Explorer on Windows 7 no longer crashes when accessing metadata edit fields. (#5337)
-- Addressed several crashes in Gmail seen in both Firefox and Chrome when interacting with particular popup menus such as when creating filters or changing certain Gmail settings. (#10175, #9402, #8924)
 - NVDA will no longer report content of visually hidden columns for list items in SysListView32 controls. (#8268)
+- The settings dialog no longer shows "info" as the current log level when in secure mode. (#10209)
+- In Start menu for Windows 10 Anniversary Update and later, NVDA will announce details of search results. (#10232)
 
 
 == Changes for Developers ==
@@ -95,6 +106,8 @@ What's New in NVDA
 This is a minor release to fix several crashes present in 2019.2. Fixes include:
 - Addressed several crashes in Gmail seen in both Firefox and Chrome when interacting with particular popup menus such as when creating filters or changing certain Gmail settings. (#10175, #9402, #8924)
 - In Windows 7, NVDA no longer causes Windows Explorer to crash when the mouse is used in the start menu. (#9435) 
+- Windows Explorer on Windows 7 no longer crashes when accessing metadata edit fields. (#5337) 
+- NVDA no longer freezes when interacting with images with a base64 URI in Mozilla Firefox or Google Chrome. (#10227)
 
 
 = 2019.2 =
