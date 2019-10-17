@@ -336,7 +336,7 @@ def initialize(shouldDoRemoteLogging=False):
 			style="{"
 		)
 	logHandler.setFormatter(logFormatter)
-	log.addHandler(logHandler)
+	log.root.addHandler(logHandler)
 	redirectStdout(log)
 	sys.excepthook = _excepthook
 	warnings.showwarning = _showwarning
@@ -370,14 +370,3 @@ def setLogLevelFromConfig():
 		level = log.INFO
 		config.conf["general"]["loggingLevel"] = logging.getLevelName(log.INFO)
 	log.setLevel(level)
-	setComtypesLogging(config.conf["debugLog"]["comtypes"])
-
-
-def setComtypesLogging(state: bool):
-	"""Sets the state of comtypes logging.
-	This is done by adding or removing our log handler to the comtypes main logger.
-	Comtypes loggers are hyrarchical, therefore the comtypes.client logger will use this handler as well.
-	"""
-	logger = logging.getLogger("comtypes")
-	func = logger.addHandler if state else logger.removeHandler
-	func(logHandler)

@@ -2177,7 +2177,6 @@ class AdvancedPanelControls(wx.Panel):
 			"louis",
 			"timeSinceInput",
 			"vision",
-			"comtypes",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
@@ -2249,12 +2248,8 @@ class AdvancedPanelControls(wx.Panel):
 		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = self.autoFocusFocusableElementsCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
-		for index, key in enumerate(self.logCategories):
-			checked = self.logCategoriesList.IsChecked(index)
-			config.conf['debugLog'][key] = checked
-			if key == "comtypes":
-				logHandler.setComtypesLogging(checked)
-
+		for index,key in enumerate(self.logCategories):
+			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
 
 class AdvancedPanel(SettingsPanel):
 	enableControlsCheckBox = None  # type: wx.CheckBox

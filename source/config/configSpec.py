@@ -220,7 +220,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	louis = boolean(default=false)
 	timeSinceInput = boolean(default=false)
 	vision = boolean(default=false)
-	comtypes = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")
