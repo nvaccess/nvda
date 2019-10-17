@@ -55,6 +55,7 @@ import appModuleHandler
 import controlTypes
 
 import speech
+import ui
 
 #
 # A few helpful constants
@@ -559,4 +560,3 @@ class IntellisenseItem(UIA.UIA):
 
 	def event_nameChange(self):
 		self.event_UIA_itemStatus()
-
