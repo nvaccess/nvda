@@ -70,7 +70,7 @@ class Driver(AutoSettings):
 		"""
 		if saveSettings:
 			self.saveSettings()
-		config.pre_configSave.unregister(self.saveSettings)
+		self._unregisterConfigSaveAction()
 
 	@classmethod
 	def check(cls):
@@ -106,3 +106,16 @@ class Driver(AutoSettings):
 		@type max: int
 		"""
 		return percentToParam(percent, min, max)
+
+# Impl for abstract methods in AutoSettings class
+	@classmethod
+	def getId(cls) -> str:
+		return cls.name
+
+	@classmethod
+	def getDisplayName(cls) -> str:
+		return cls.description
+
+	@classmethod
+	def _getConfigSection(cls) -> str:
+		return cls._configSection

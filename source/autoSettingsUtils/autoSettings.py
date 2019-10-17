@@ -7,7 +7,7 @@
 """autoSettings for add-ons"""
 from abc import abstractmethod
 from copy import deepcopy
-from typing import List, Tuple, Union, Dict, Type
+from typing import Union, Dict, Type, Any, Iterable
 
 import config
 from autoSettingsUtils.utils import paramToPercent, percentToParam, UnsupportedConfigParameterError
@@ -16,8 +16,7 @@ from logHandler import log
 from .driverSetting import DriverSetting
 
 SupportedSettingType: Type = Union[
-	List[DriverSetting],
-	Tuple[DriverSetting]
+	Iterable[DriverSetting]
 ]
 
 
@@ -44,13 +43,34 @@ class AutoSettings(AutoPropertyObject):
 		config.pre_configSave.unregister(self.saveSettings)
 
 	@classmethod
-	def _initSpecificSettings(cls, clsOrInst, settings: List):
-		firstLoad = not config.conf[cls._configSection].isSet(cls.name)
+	@abstractmethod
+	def getId(cls) -> str:
+		...
+
+	@classmethod
+	@abstractmethod
+	def getDisplayName(cls) -> str:
+		...
+
+	@classmethod
+	@abstractmethod
+	def _getConfigSection(cls) -> str:
+		...
+
+	@classmethod
+	def _initSpecificSettings(
+			cls,
+			clsOrInst: Any,
+			settings: SupportedSettingType
+	) -> None:
+		section = cls._getConfigSection()
+		settingsId = cls.getId()
+		firstLoad = not config.conf[section].isSet(settingsId)
 		if firstLoad:
 			# Create the new section.
-			config.conf[cls._configSection][cls.name] = {}
+			config.conf[section][settingsId] = {}
 		# Make sure the config spec is up to date, so the config validator does its work.
-		config.conf[cls._configSection][cls.name].spec.update(
+		config.conf[section][settingsId].spec.update(
 			cls._getConfigSpecForSettings(settings)
 		)
 		# Make sure the clsOrInst has attributes for every setting
@@ -71,30 +91,31 @@ class AutoSettings(AutoPropertyObject):
 
 	_abstract_supportedSettings = True
 
-	def _get_supportedSettings(self) -> Union[List, Tuple]:
+	def _get_supportedSettings(self) -> SupportedSettingType:
 		"""The settings supported by the driver.
 		@rtype: list or tuple of L{DriverSetting}
 		"""
 		return []
 
-	def isSupported(self,settingID):
+	def isSupported(self, settingID) -> bool:
 		"""Checks whether given setting is supported by the driver.
-		@rtype: l{bool}
 		"""
 		for s in self.supportedSettings:
-			if s.id == settingID: return True
+			if s.id == settingID:
+				return True
 		return False
 
 	@classmethod
 	def _getConfigSpecForSettings(
 			cls,
-			settings: Union[List, Tuple]
+			settings: SupportedSettingType
 	) -> Dict:
-		spec = deepcopy(config.confspec[cls._configSection]["__many__"])
+		section = cls._getConfigSection()
+		spec = deepcopy(config.confspec[section]["__many__"])
 		for setting in settings:
 			if not setting.useConfig:
 				continue
-			spec[setting.id]=setting.configSpec
+			spec[setting.id] = setting.configSpec
 		return spec
 
 	def getConfigSpec(self):
@@ -103,10 +124,18 @@ class AutoSettings(AutoPropertyObject):
 	@classmethod
 	def _saveSpecificSettings(
 			cls,
-			clsOrInst,
-			settings: Union[List, Tuple]
-	):
-		conf = config.conf[cls._configSection][cls.name]
+			clsOrInst: Any,
+			settings: SupportedSettingType
+	) -> None:
+		"""
+		Save values for settings to config.
+		The values from the attributes of `clsOrInst` that match the `id` of each setting are saved to config.
+		@param clsOrInst: Destination for the values.
+		@param settings: The settings to load.
+		"""
+		section = cls._getConfigSection()
+		setingsId = cls.getId()
+		conf = config.conf[section][setingsId]
 		for setting in settings:
 			if not setting.useConfig:
 				continue
@@ -132,12 +161,22 @@ class AutoSettings(AutoPropertyObject):
 	@classmethod
 	def _loadSpecificSettings(
 			cls,
-			clsOrInst,
-			settings: Union[List, Tuple],
+			clsOrInst: Any,
+			settings: SupportedSettingType,
 			onlyChanged: bool = False
-	):
-		log.debug(f"loading {cls._configSection} {cls.name}")
-		conf = config.conf[cls._configSection][cls.name]
+	) -> None:
+		"""
+		Load settings from config, set them on `clsOrInst`.
+		@param clsOrInst: Destination for the values.
+		@param settings: The settings to load.
+		@param onlyChanged: When True, only settings that no longer match the config are set.
+		@note: attributes are set on clsOrInst using setattr.
+			The id of each setting in `settings` is used as the attribute name.
+		"""
+		section = cls._getConfigSection()
+		settingsID = cls.getId()
+		log.debug(f"loading {section} {settingsID}")
+		conf = config.conf[section][settingsID]
 		for setting in settings:
 			if not setting.useConfig or conf.get(setting.id) is None:
 				continue
