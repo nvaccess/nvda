@@ -70,18 +70,19 @@ def getCommentInfoFromPosition(position):
 		UIAElement=UIAElementArray.getElement(index)
 		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		obj=UIA(UIAElement=UIAElement)
-		if not obj.parent or (obj.parent.role !=controlTypes.ROLE_GROUPING and not
+		if not obj.parent or (obj.parent.role != controlTypes.ROLE_GROUPING and not
 		obj.parent.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId)):
 			continue
 		comment=obj.makeTextInfo(textInfos.POSITION_ALL).text
-		tempObj =obj.previous.previous
-		authorObj =tempObj or obj.previous
-		author =authorObj.name
+		tempObj = obj.previous.previous
+		authorObj = tempObj or obj.previous
+		author = authorObj.name
 		if not tempObj:
 			return dict(comment=comment,author=author)
 		dateObj=obj.previous
 		date=dateObj.name
 		return dict(comment=comment,author=author,date=date)
+
 
 def getPresentableCommentInfoFromPosition(commentInfo):
 	if "date" not in commentInfo:
@@ -333,9 +334,9 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 	name=u""
 
 	@script(
-	gesture ="kb:NVDA+alt+c",
-	# Translators: a description for a script that reports the comment at the caret.
-	description=_("Reports the text of the comment where the System caret is located.")
+		gesture ="kb:NVDA+alt+c",
+		# Translators: a description for a script that reports the comment at the caret.
+		description=_("Reports the text of the comment where the System caret is located.")
 	)
 	def script_reportCurrentComment(self,gesture):
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
