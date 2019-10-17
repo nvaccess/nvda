@@ -3,30 +3,6 @@
 
 %!includeconf: ../changes.t2tconf
 
-= 2019.3 =
-
-== Uudet ominaisuudet ==
-- Lisätty komento tarkastelukohdistimen kohdalla olevan symbolin korvauksen näyttämiseen. (#9286)
-- Lisäasetukset-paneeliin lisätty kokeellinen asetus, jolla voi testata uutta NVDA:n työn alla olevaa Microsoft UI Automation -rajapintaa käyttävää komentokehotteen tukea. (#9614)
-- Python-konsolin syöttökenttä tukee nyt usean rivin liittämistä leikepöydältä. (#9776)
-
-
-== Muutokset ==
-- eSpeak-NG PÄIVITETTY muutoksella 67324cc.
-- Liblouis-piste kirjoituskääntäjä päivitetty versioksi 3.10.0. (#9439, #9678)
-- NVDA sanoo nyt "valittu" ilmoitettuaan ensin käyttäjän valitseman tekstin. (#9028, #9909)
-- Vuorovaikutustila on oletusarvoisesti käytössä Microsoft Visual Studio Codessa. (#9828)
-
-
-== Korjatut ohjelmavirheet ==
-- Taustavälilehdellä olevan Aktiivisen alueen päivityksiä ei enää puhuta Mozilla Firefoxissa. (#1318)
-- Selaustilan Etsi-valintaikkuna ei enää lakkaa toimimasta, jos NVDA:n Tietoja-valintaikkuna on avoimena taustalla. (#8566)
-
-
-== Muutokset kehittäjille ==
-Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
-
-
 = 2019.2.1 =
 Tämä versio korjaa useita 2019.2:ssa olevia kaatumisia. Muun muassa seuraavat ongelmat on korjattu:
 - Ratkaistu useita Gmailin kaatumisia, joita on esiintynyt sekä Firefoxissa että Chromessa oltaessa vuorovaikutuksessa ponnahdusvalikoiden kanssa, kuten esim. luotaessa suodattimia tai muutettaessa tiettyjä Gmailin asetuksia. (#10175, #9402, #8924)

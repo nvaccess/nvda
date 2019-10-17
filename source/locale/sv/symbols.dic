@@ -8,12 +8,15 @@ symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	punkt
-! sentence ending	utropstecken
-? sentence ending	frågetecken
-; phrase ending	semikolon
-: phrase ending	kolon
-in-word '	apostrof
+. sentence ending	punkt	all	always
+! sentence ending	utropstecken	all	always
+? sentence ending	frågetecken	all	always
+# Phrase endings.
+; phrase ending	semikolon	most	always
+: phrase ending	kolon	most	always
+decimal point		none	always
+in-word '	apostrof	all	norep
+negative number	minus	none	norep
 
 # Whitespace
 \0	blank
@@ -25,51 +28,152 @@ in-word '	apostrof
  	mellanslag # no-break space
 
 # Standard punctuation/symbols
-!	utropstecken
-"	citat
-\#	nummer
-$	dollar
-£	pund
-€	euro
-%	procent
-&	och
-'	apostrof
-(	vänster parentes
-)	höger parentes
-*	stjärna
-+	plus
-,	komma
+!	utropstecken	all
+"	citat	most
+\#	nummer	some
+$	dollar	all	norep
+£	pund	all	norep
+€	euro	all	norep
+¢	Cent	all	norep
+¥	Yen	all	norep
+₹	Rupie	some	norep
+%	procent	some
+&	och	some
+'	apostrof	all
+(	vänster parentes	most	always
+)	höger parentes	most	always
+*	stjärna	most
++	plus	most
+,	komma	all	always
 -	streck
-.	punkt
-/	snedstreck
-:	kolon
-;	semikolon
-<	mindre än
->	större än
-=	likhetstecken
-?	frågetecken
-@	snabel-a
-[	vänster hakparentes
-]	höger hakparentes
-\\	omvänt snedstreck
-^	markör
-_	understreck
-`	grav accent
-{	vänster klammer
-}	höger klammer
-|	vertikalt streck
-~	tilde
+	most.	punkt
+.	punkt	some
+/	snedstreck	some
+:	kolon	most	norep
+;	semikolon	most
+<	mindre än	some
+>	större än	some
+=	likhetstecken	most
+?	frågetecken	all
+@	snabel-a	some
+[	vänster hakparentes	most
+]	höger hakparentes	most
+\\	omvänt snedstreck	most
+^	markör	most
+_	understreck	most
+`	grav accent	most
+{	vänster klammer	most
+}	höger klammer	most
+|	vertikalt streck	most
+~	tilde	most
 
 # Other characters
-•	bomb
-…	punkt punkt punkt
-	bomb
-“	vänster citat
-”	höger citat
-‘	vänster apostrof
-’	höger apostrof
-–	en dash
-—	em dash
-●	cirkel
-¨	diaeresis	most
+•	listpunkt	some
+…	punkt punkt punkt	all	always
+...	punkt punkt punkt	all	always
+#	bomb
+“	vänster citat	most
+”	höger citat	most
+‘	vänster apostrof	most
+’	höger apostrof	most
+–	bindestreck	most	always
+—	långt tankstreck	most	
+●	cirkel	most
+¨	trema	most
+‎	vänster till höger tecken	char
+‏	höger till vänster tecken	char
+■	svart fyrkant	some
+▪	svart fyrkant	some
+◾	svart fyrkant	some
+◦	vit listpunkt	some
+➔	dubbel högerpil	some
+⇨	vit högerpil	some
+➢	pilspets åt höger	some
+❖	svart diamant med vitt X	some
+♣	klöver	some
+♦	ruter	some
+§	paragraf	all
+°	grader	some
+«	dubbla vänstervinklar
+»	dubbla högervinklar
+µ	my	some
+¹	i første	some
+²	i anden	some
+³	i tredje	some
+®	registrerat varumärke	some
+™	skyddat varumärke	some
+©	upphovsrättssymbol	some
+±	Plus eller Minus	some
+×	multiplicerat	some
+÷	dividerat med	some
+←	vänsterpil	some
+↑	uppåtpil	some
+→	högerpil	some
+↓	nedåtpil some
+✓	bockmarkering	some
+✔	bockmarkering	some
 
+#Mathematical Operators U+2200 to U+220F
+∀	För alla 	none
+∁	Komplementär	none
+∂	partiellt derivat	none
+∃	Där existerar	none
+∄	Där existerar inte	none
+∅	Tom mängde	none
+∆	Ökning	none
+∇	NABLA	none
+∈	Är ett element av	none
+∉	Inte ett element av	none
+∊	Litet Är element av	none
+∋	Innehåller som medlem	none
+∌	Innehåller inte som medlem	none
+∍	Litet Innehåller som medlem	none
+∎	Slut på bevis	none
+∏	n-ær produkt	none
+
+# Miscellaneous Mathematical Operators
+∑	n-ær summering	none
+√	Kvadratrot	none
+∛	Kubikrot	none
+∜	Fjärde-rot	none
+∝	proportionell med	none
+∞	oändligt	none
+∟	rät vinkel	none
+∠	Vinkel	none
+∥	parallell med	none
+∦	inte parallell med	none
+∧	Logisk och	none
+∨	Logisk eller	none
+∩	Intersektion	none
+∪	Union	none
+∫	INTEGRAL	none
+∴	Därför	none
+∵	För att	none
+∶	Förhållande	none
+∷	Proportion	none
+≤	Mindre än eller lika med	none
+≥	Större än eller lika med	none
+⊂	Delmängd av	none
+⊃	Innehåller som delmängd	none
+⊆	Delmängd av eller lika med	none
+⊇	Innehåller eller är lika med	none
+
+# Vulgur Fractions U+2150 to U+215E
+⅐	en sjundedel	none
+⅑	en niondel	none
+⅒	en tiondel	none
+⅓	en tredjedel	none
+⅔	två tredjedelar	none
+⅕	en femtedel	none
+⅖	två femtedelar	none
+⅗	tre femtedelar	none
+⅘	fyra femtedelar	none
+⅙	en sjättedel	none
+⅚	fem sjättedelar	none
+⅛	en åttondel	none
+⅜	tre åttondelar	none
+⅝	fem åttondelar	none
+⅞	sju åttondelar	none
+
+# Miscellaneous Technical
+⌘	Mac kommandotangent	none
