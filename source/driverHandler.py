@@ -106,3 +106,16 @@ class Driver(AutoSettings):
 		@type max: int
 		"""
 		return percentToParam(percent, min, max)
+
+# Impl for abstract methods in AutoSettings class
+	@classmethod
+	def getId(cls) -> str:
+		return cls.name
+
+	@classmethod
+	def getProductName(cls) -> str:
+		return cls.description
+
+	@classmethod
+	def _getConfigSection(cls) -> str:
+		return cls._configSection

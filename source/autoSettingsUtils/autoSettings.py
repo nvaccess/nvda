@@ -45,13 +45,30 @@ class AutoSettings(AutoPropertyObject):
 		config.pre_configSave.unregister(self.saveSettings)
 
 	@classmethod
+	@abstractmethod
+	def getId(cls) -> str:
+		...
+
+	@classmethod
+	@abstractmethod
+	def getProductName(cls) -> str:
+		...
+
+	@classmethod
+	@abstractmethod
+	def _getConfigSection(cls) -> str:
+		...
+
+	@classmethod
 	def _initSpecificSettings(cls, clsOrInst, settings: List):
-		firstLoad = not config.conf[cls._configSection].isSet(cls.name)
+		section = cls._getConfigSection()
+		id = cls.getId()
+		firstLoad = not config.conf[section].isSet(id)
 		if firstLoad:
 			# Create the new section.
-			config.conf[cls._configSection][cls.name] = {}
+			config.conf[section][id] = {}
 		# Make sure the config spec is up to date, so the config validator does its work.
-		config.conf[cls._configSection][cls.name].spec.update(
+		config.conf[section][id].spec.update(
 			cls._getConfigSPecForSettings(settings)
 		)
 		# Make sure the clsOrInst has attributes for every setting
@@ -101,7 +118,8 @@ class AutoSettings(AutoPropertyObject):
 			cls,
 			settings: Union[List, Tuple]
 	) -> Dict:
-		spec = deepcopy(config.confspec[cls._configSection]["__many__"])
+		section = cls._getConfigSection()
+		spec = deepcopy(config.confspec[section]["__many__"])
 		for setting in settings:
 			if not setting.useConfig:
 				continue
@@ -117,7 +135,9 @@ class AutoSettings(AutoPropertyObject):
 			clsOrInst,
 			settings: Union[List, Tuple]
 	):
-		conf = config.conf[cls._configSection][cls.name]
+		section = cls._getConfigSection()
+		id = cls.getId()
+		conf = config.conf[section][id]
 		for setting in settings:
 			if not setting.useConfig:
 				continue
@@ -147,8 +167,10 @@ class AutoSettings(AutoPropertyObject):
 			settings: Union[List, Tuple],
 			onlyChanged: bool = False
 	):
-		log.debug(f"loading {cls._configSection} {cls.name}")
-		conf = config.conf[cls._configSection][cls.name]
+		section = cls._getConfigSection()
+		id = cls.getId()
+		log.debug(f"loading {section} {id}")
+		conf = config.conf[section][id]
 		for setting in settings:
 			if not setting.useConfig or conf.get(setting.id) is None:
 				continue
