@@ -17,6 +17,7 @@ import traceback
 from types import MethodType, FunctionType
 import globalVars
 import buildVersion
+from typing import Optional
 
 ERROR_INVALID_WINDOW_HANDLE = 1400
 ERROR_TIMEOUT = 1460
@@ -267,8 +268,9 @@ def redirectStdout(logger):
 # Register our logging class as the class for all loggers.
 logging.setLoggerClass(Logger)
 #: The singleton logger instance.
-#: @type: L{Logger}
-log = logging.getLogger("nvda")
+log: Logger = logging.getLogger("nvda")
+#: The singleton log handler instance.
+logHandler: Optional[logging.Handler] = None
 
 def _getDefaultLogFilePath():
 	if getattr(sys, "frozen", None):
@@ -290,7 +292,7 @@ def initialize(shouldDoRemoteLogging=False):
 	@var shouldDoRemoteLogging: True if all logging should go to the real NVDA via rpc (for slave)
 	@type shouldDoRemoteLogging: bool
 	"""
-	global log
+	global log, logHandler
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
 	logging.addLevelName(Logger.IO, "IO")
 	logging.addLevelName(Logger.OFF, "OFF")
@@ -307,7 +309,7 @@ def initialize(shouldDoRemoteLogging=False):
 			# #8516: also if logging is completely turned off.
 			logHandler = logging.NullHandler()
 			# There's no point in logging anything at all, since it'll go nowhere.
-			log.setLevel(Logger.OFF)
+			log.root.setLevel(Logger.OFF)
 		else:
 			if not globalVars.appArgs.logFileName:
 				globalVars.appArgs.logFileName = _getDefaultLogFilePath()
@@ -326,7 +328,7 @@ def initialize(shouldDoRemoteLogging=False):
 				logLevel = Logger.DEBUG
 			elif logLevel <= 0:
 				logLevel = Logger.INFO
-			log.setLevel(logLevel)
+			log.root.setLevel(logLevel)
 	else:
 		logHandler = RemoteHandler()
 		logFormatter = Formatter(
@@ -367,4 +369,15 @@ def setLogLevelFromConfig():
 		log.warning("invalid setting for logging level: %s" % levelName)
 		level = log.INFO
 		config.conf["general"]["loggingLevel"] = logging.getLevelName(log.INFO)
-	log.setLevel(level)
+	log.root.setLevel(level)
+	setComtypesLogging(config.conf["debugLog"]["comtypes"])
+
+
+def setComtypesLogging(state: bool):
+	"""Sets the state of comtypes logging.
+	This is done by adding or removing our log handler to the comtypes main logger.
+	Comtypes loggers are hyrarchical, therefore the comtypes.client logger will use this handler as well.
+	"""
+	logger = logging.getLogger("comtypes")
+	func = logger.addHandler if state else logger.removeHandler
+	func(logHandler)
