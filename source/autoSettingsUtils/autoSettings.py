@@ -31,9 +31,18 @@ class AutoSettings(AutoPropertyObject):
 		super().__init__()
 		self._registerConfigSaveAction()
 
+	def __del__(self):
+		self._unregisterConfigSaveAction()
+
 	def _registerConfigSaveAction(self):
-		log.debug(f"registering: {self.__class__!r}")
+		"""Overrideable pre_configSave registration"""
+		log.debug(f"registering pre_configSave action: {self.__class__!r}")
 		config.pre_configSave.register(self.saveSettings)
+
+	def _unregisterConfigSaveAction(self):
+		"""Overrideable pre_configSave de-registration"""
+		log.debug(f"de-registering pre_configSave action: {self.__class__!r}")
+		config.pre_configSave.unregister(self.saveSettings)
 
 	@classmethod
 	def _initSpecificSettings(cls, clsOrInst, settings: List):

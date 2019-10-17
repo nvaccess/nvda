@@ -70,7 +70,7 @@ class Driver(AutoSettings):
 		"""
 		if saveSettings:
 			self.saveSettings()
-		config.pre_configSave.unregister(self.saveSettings)
+		self._unregisterConfigSaveAction()
 
 	@classmethod
 	def check(cls):
