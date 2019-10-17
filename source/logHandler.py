@@ -337,7 +337,7 @@ def initialize(shouldDoRemoteLogging=False):
 		)
 	logHandler.setFormatter(logFormatter)
 	log.addHandler(logHandler)
-	redirectStdout(log)
+	redirectStdout(log.root)
 	sys.excepthook = _excepthook
 	warnings.showwarning = _showwarning
 	warnings.simplefilter("default", DeprecationWarning)
