@@ -309,7 +309,7 @@ def initialize(shouldDoRemoteLogging=False):
 			# #8516: also if logging is completely turned off.
 			logHandler = logging.NullHandler()
 			# There's no point in logging anything at all, since it'll go nowhere.
-			log.root.setLevel(Logger.OFF)
+			log.setLevel(Logger.OFF)
 		else:
 			if not globalVars.appArgs.logFileName:
 				globalVars.appArgs.logFileName = _getDefaultLogFilePath()
@@ -328,7 +328,7 @@ def initialize(shouldDoRemoteLogging=False):
 				logLevel = Logger.DEBUG
 			elif logLevel <= 0:
 				logLevel = Logger.INFO
-			log.root.setLevel(logLevel)
+			log.setLevel(logLevel)
 	else:
 		logHandler = RemoteHandler()
 		logFormatter = Formatter(
@@ -337,7 +337,7 @@ def initialize(shouldDoRemoteLogging=False):
 		)
 	logHandler.setFormatter(logFormatter)
 	log.addHandler(logHandler)
-	redirectStdout(log.root)
+	redirectStdout(log)
 	sys.excepthook = _excepthook
 	warnings.showwarning = _showwarning
 	warnings.simplefilter("default", DeprecationWarning)
@@ -369,7 +369,7 @@ def setLogLevelFromConfig():
 		log.warning("invalid setting for logging level: %s" % levelName)
 		level = log.INFO
 		config.conf["general"]["loggingLevel"] = logging.getLevelName(log.INFO)
-	log.root.setLevel(level)
+	log.setLevel(level)
 	setComtypesLogging(config.conf["debugLog"]["comtypes"])
 
 
