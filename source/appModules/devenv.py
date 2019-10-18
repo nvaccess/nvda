@@ -46,12 +46,18 @@ import textInfos.offsets
 
 from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection
 from NVDAObjects.window import Window
+from NVDAObjects import UIA
 
 from NVDAObjects.window import DisplayModelEditableText
 from NVDAObjects.IAccessible import IAccessible
 
 import appModuleHandler
 import controlTypes
+import scriptHandler
+
+import speech
+import ui
+import api
 
 
 #
@@ -155,6 +161,73 @@ class AppModule(appModuleHandler.AppModule):
 		serviceProvider = self._getDTE().QueryInterface(comtypes.IServiceProvider)
 		self._textManager = serviceProvider.QueryService(SVsTextManager, IVsTextManager)
 		return self._textManager
+
+	def event_nameChange(self, obj, nextHandler):
+		if (
+			obj.role == controlTypes.ROLE_STATICTEXT
+			and isinstance(obj, UIA.UIA)
+			and isinstance(obj.parent, UIA.UIA)
+			and obj.parent.UIAElement.CachedAutomationId in ("WpfSignatureHelp",)
+		):
+			if obj.UIAElement.CachedAutomationId in ("UpDownTextBlock",):
+				objParameterName = obj.next.next.next.next
+				objParameterDescription = objParameterName.next
+
+				# The speech must be stopped
+				speech.cancelSpeech()
+
+				if len(objParameterName.name) > 0:
+					# Translators: In english and other languages the first item has a leading colon. The first is the parameter name and the second is the description.
+					ui.message(_("{parameterName} {parameterDescription}").format(
+						parameterName=objParameterName.name,
+						parameterDescription=objParameterDescription.name
+					))
+				else:
+					# Translators: Indicates when a method overload doesn't have parameters.
+					ui.message(_("No parameters"))
+
+				self.parameterRead = True
+
+			elif obj.UIAElement.CachedAutomationId in ("CurrentParameterName",):
+				if not self.parameterRead:
+					self.event_nameChange(obj.previous.previous.previous.previous, nextHandler)
+					self.parameterRead = False
+					return
+
+		# Call the handler always
+		nextHandler()
+
+	@scriptHandler.script(
+		gesture="kb:NVDA+d",
+		# Translators: Help message for the read documentation script
+		description=_("Reads documentation for the current selected intellisense item or overload."),
+		# Translators: Default category for the read documentation script.
+		category=_("Visual Studio")
+	)
+	def script_readDocumentation(self, gesture):
+		foreground = api.getForegroundObject()
+		objPopup = foreground.firstChild
+		if (
+			isinstance(objPopup, UIA.UIA)
+			and objPopup.UIAElement.CachedClassName == "Popup"
+		):
+			popupChild = objPopup.firstChild
+			if popupChild.UIAElement.CachedClassName == "Popup":
+				speech.cancelSpeech()
+				for child in popupChild.firstChild.children:
+					ui.message(child.name)
+
+			elif popupChild.UIAElement.CachedAutomationId in ("WpfSignatureHelp",):
+				speech.cancelSpeech()
+				ui.message(popupChild.firstChild.next.next.next.makeTextInfo("all").text)
+				if len(popupChild.firstChild.next.name) > 0:
+					ui.message(popupChild.firstChild.next.name)
+
+		else:
+			speech.cancelSpeech()
+			# Translators: Message to speak if the documentation object cannot be found.
+			ui.message(_("Cann't find documentation object."))
+
 
 class VsTextEditPaneTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _InformUnsupportedWindowType(self,type):
