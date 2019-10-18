@@ -1323,7 +1323,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		# We've hit the edge of the focused control.
 		# Therefore, move the virtual caret to the same edge of the field.
 		info = self.makeTextInfo(textInfos.POSITION_CARET)
-		info.expand(info.UNIT_CONTROLFIELD)
+		info.expand(textInfos.UNIT_CONTROLFIELD)
 		if gesture.mainKeyName in ("leftArrow", "upArrow", "pageUp"):
 			info.collapse()
 		else:
