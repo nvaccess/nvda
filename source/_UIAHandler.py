@@ -274,16 +274,22 @@ class UIAHandler(COMObject):
 		self.MTAThreadStopEvent.wait()
 		self.clientObject.RemoveAllEventHandlers()
 
-	def IUIAutomationEventHandler_HandleAutomationEvent(self,sender,eventID):
+	def IUIAutomationEventHandler_HandleAutomationEvent(self, sender, eventID):
 		if not self.MTAThreadInitEvent.isSet():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
+			if _isDebug():
+				log.debug("HandleAutomationEvent: event received while not fully initialized")
 			return
 		if eventID==UIA_MenuOpenedEventId and eventHandler.isPendingEvents("gainFocus"):
 			# We don't need the menuOpened event if focus has been fired,
 			# as focus should be more correct.
+			if _isDebug():
+				log.debug("HandleAutomationEvent: Ignored MenuOpenedEvent while focus event pending")
 			return
 		NVDAEventName=UIAEventIdsToNVDAEventNames.get(eventID,None)
 		if not NVDAEventName:
+			if _isDebug():
+				log.debugWarning(f"HandleAutomationEvent: Don't know how to handle event {eventID}")
 			return
 		focus = api.getFocusObject()
 		import NVDAObjects.UIA
@@ -293,9 +299,17 @@ class UIAHandler(COMObject):
 		):
 			pass
 		elif not self.isNativeUIAElement(sender):
+			if _isDebug():
+				log.debugWarning(
+					f"HandleAutomationEvent: Ignoring event {NVDAEventName} for non native element"
+				)
 			return
-		window=self.getNearestWindowHandle(sender)
-		if window and not eventHandler.shouldAcceptEvent(NVDAEventName,windowHandle=window):
+		window = self.getNearestWindowHandle(sender)
+		if window and not eventHandler.shouldAcceptEvent(NVDAEventName, windowHandle=window):
+			if _isDebug():
+				log.debug(
+					f"HandleAutomationEvent: Ignoring event {NVDAEventName} for shouldAcceptEvent=False"
+				)
 			return
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if (
@@ -303,6 +317,11 @@ class UIAHandler(COMObject):
 			or (NVDAEventName=="gainFocus" and not obj.shouldAllowUIAFocusEvent)
 			or (NVDAEventName=="liveRegionChange" and not obj._shouldAllowUIALiveRegionChangeEvent)
 		):
+			if _isDebug():
+				log.debug(
+					"HandleAutomationEvent: "
+					f"Ignoring event {NVDAEventName} because no object or ignored by object itself"
+				)
 			return
 		if obj==focus:
 			obj=focus
@@ -315,9 +334,13 @@ class UIAHandler(COMObject):
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
 		if not self.MTAThreadInitEvent.isSet():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
+			if _isDebug():
+				log.debug("HandleFocusChangedEvent: event received while not fully initialized")
 			return
-		self.lastFocusedUIAElement=sender
+		self.lastFocusedUIAElement = sender
 		if not self.isNativeUIAElement(sender):
+			if _isDebug():
+				log.debugWarning("HandleFocusChangedEvent: Ignoring for non native element")
 			return
 		import NVDAObjects.UIA
 		if isinstance(eventHandler.lastQueuedFocusObject,NVDAObjects.UIA.UIA):
@@ -326,12 +349,20 @@ class UIAHandler(COMObject):
 			# It seems that it is possible for compareElements to return True, even though the objects are different.
 			# Therefore, don't ignore the event if the last focus object has lost its hasKeyboardFocus state.
 			if self.clientObject.compareElements(sender,lastFocus) and lastFocus.currentHasKeyboardFocus:
+				if _isDebug():
+					log.debugWarning("HandleFocusChangedEvent: Ignoring duplicate focus event")
 				return
 		window=self.getNearestWindowHandle(sender)
 		if window and not eventHandler.shouldAcceptEvent("gainFocus",windowHandle=window):
+			if _isDebug():
+				log.debug("HandleFocusChangedEvent: Ignoring for shouldAcceptEvent=False")
 			return
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if not obj or not obj.shouldAllowUIAFocusEvent:
+			if _isDebug():
+				log.debug(
+					"HandleFocusChangedEvent: Ignoring because no object or ignored by object itself"
+				)
 			return
 		eventHandler.queueEvent("gainFocus",obj)
 
@@ -486,3 +517,6 @@ class UIAHandler(COMObject):
 				return True
 		return False
 
+
+def _isDebug():
+	return config.conf["debugLog"]["UIA"]

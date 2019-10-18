@@ -1,7 +1,8 @@
-# A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2019 NV Access Limited, Joseph Lee, Babbage B.V.
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+#UIAHandler.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2008-2018 NV Access Limited, Joseph Lee
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
 
 from comtypes import COMError
 import config
@@ -14,6 +15,7 @@ if config.conf and config.conf["UIA"]["enabled"]:
 	# Because Windows 7 SP1 (NT 6.1) or later is supported, just assume UIA can be used unless told otherwise.
 	try:
 		from _UIAHandler import *
+		from _UIAHandler import _isDebug
 		isUIAAvailable=True
 	except ImportError:
 		log.debugWarning("Unable to import _UIAHandler",exc_info=True)
@@ -29,13 +31,8 @@ def initialize():
 		handler=None
 		raise RuntimeError("UIA not available")
 
-
 def terminate():
 	global handler
 	if handler:
 		handler.terminate()
 		handler=None
-
-
-def _isDebug():
-	return config.conf["debugLog"]["UIA"]
