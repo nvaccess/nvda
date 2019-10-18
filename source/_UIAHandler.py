@@ -352,8 +352,8 @@ class UIAHandler(COMObject):
 				if _isDebug():
 					log.debugWarning("HandleFocusChangedEvent: Ignoring duplicate focus event")
 				return
-		window=self.getNearestWindowHandle(sender)
-		if window and not eventHandler.shouldAcceptEvent("gainFocus",windowHandle=window):
+		window = self.getNearestWindowHandle(sender)
+		if window and not eventHandler.shouldAcceptEvent("gainFocus", windowHandle=window):
 			if _isDebug():
 				log.debug("HandleFocusChangedEvent: Ignoring for shouldAcceptEvent=False")
 			return
@@ -372,9 +372,13 @@ class UIAHandler(COMObject):
 		newValue.vt=VT_EMPTY
 		if not self.MTAThreadInitEvent.isSet():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
+			if _isDebug():
+				log.debug("HandlePropertyChangedEvent: event received while not fully initialized")
 			return
 		NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
 		if not NVDAEventName:
+			if _isDebug():
+				log.debugWarning(f"HandlePropertyChangedEvent: Don't know how to handle event {eventID}")
 			return
 		focus = api.getFocusObject()
 		import NVDAObjects.UIA
@@ -384,26 +388,52 @@ class UIAHandler(COMObject):
 		):
 			pass
 		elif not self.isNativeUIAElement(sender):
+			if _isDebug():
+				log.debugWarning(
+					f"HandlePropertyChangedEvent: Ignoring event {NVDAEventName} for non native element"
+				)
 			return
-		window=self.getNearestWindowHandle(sender)
-		if window and not eventHandler.shouldAcceptEvent(NVDAEventName,windowHandle=window):
+		window = self.getNearestWindowHandle(sender)
+		if window and not eventHandler.shouldAcceptEvent(NVDAEventName, windowHandle=window):
+			if _isDebug():
+				log.debug(
+					f"HandlePropertyChangedEvent: Ignoring event {NVDAEventName} for shouldAcceptEvent=False"
+				)
 			return
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if not obj:
+			if _isDebug():
+				log.debug(f"HandlePropertyChangedEvent: Ignoring event {NVDAEventName} because no object")
 			return
 		if obj==focus:
 			obj=focus
 		eventHandler.queueEvent(NVDAEventName,obj)
 
-	def IUIAutomationNotificationEventHandler_HandleNotificationEvent(self,sender,NotificationKind,NotificationProcessing,displayString,activityId):
+	def IUIAutomationNotificationEventHandler_HandleNotificationEvent(
+			self,
+			sender,
+			NotificationKind,
+			NotificationProcessing,
+			displayString,
+			activityId
+	):
 		if not self.MTAThreadInitEvent.isSet():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
+			if _isDebug():
+				log.debug("HandleNotificationEvent: event received while not fully initialized")
 			return
 		import NVDAObjects.UIA
-		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
+		obj = NVDAObjects.UIA.UIA(UIAElement=sender)
 		if not obj:
 			# Sometimes notification events can be fired on a UIAElement that has no windowHandle and does not connect through parents back to the desktop.
 			# There is nothing we can do with these.
+			if _isDebug():
+				log.debug(
+					"HandleNotificationEvent: Ignoring because no object: "
+					f"NotificationProcessing={NotificationProcessing} "
+					f"displayString={displayString} "
+					f"activityId={activityId}"
+				)
 			return
 		eventHandler.queueEvent("UIA_notification",obj, notificationKind=NotificationKind, notificationProcessing=NotificationProcessing, displayString=displayString, activityId=activityId)
 
