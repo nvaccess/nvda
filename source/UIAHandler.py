@@ -1,8 +1,7 @@
-#UIAHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2018 NV Access Limited, Joseph Lee
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2008-2019 NV Access Limited, Joseph Lee, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from comtypes import COMError
 import config
@@ -30,8 +29,13 @@ def initialize():
 		handler=None
 		raise RuntimeError("UIA not available")
 
+
 def terminate():
 	global handler
 	if handler:
 		handler.terminate()
 		handler=None
+
+
+def _isDebug():
+	return config.conf["debugLog"]["UIA"]

@@ -2172,6 +2172,7 @@ class AdvancedPanelControls(wx.Panel):
 
 		self.logCategories=[
 			"hwIo",
+			"UIA",
 			"audioDucking",
 			"gui",
 			"louis",

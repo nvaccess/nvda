@@ -166,7 +166,12 @@ for id in UIAEventIdsToNVDAEventNames.keys():
 	ignoreWinEventsMap[id] = [0]
 
 class UIAHandler(COMObject):
-	_com_interfaces_=[IUIAutomationEventHandler,IUIAutomationFocusChangedEventHandler,IUIAutomationPropertyChangedEventHandler,IUIAutomationNotificationEventHandler]
+	_com_interfaces_ = [
+		UIA.IUIAutomationEventHandler,
+		UIA.IUIAutomationFocusChangedEventHandler,
+		UIA.IUIAutomationPropertyChangedEventHandler,
+		UIA.IUIAutomationNotificationEventHandler
+	]
 
 	def __init__(self):
 		super(UIAHandler,self).__init__()
@@ -480,3 +485,4 @@ class UIAHandler(COMObject):
 				# Therefore, we must use UIA here.
 				return True
 		return False
+
