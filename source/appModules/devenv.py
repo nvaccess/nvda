@@ -177,7 +177,7 @@ class AppModule(appModuleHandler.AppModule):
 				speech.cancelSpeech()
 
 				if len(objParameterName.name) > 0:
-					# Translators: In english and other languages the first item has a leading colon. The first is the parameter name and the second is the description.
+					# Translators: In english and other languages the parameter name ends with a colon.
 					ui.message(_("{parameterName} {parameterDescription}").format(
 						parameterName=objParameterName.name,
 						parameterDescription=objParameterDescription.name
