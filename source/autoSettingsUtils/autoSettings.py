@@ -187,7 +187,7 @@ class AutoSettings(AutoPropertyObject):
 				setattr(clsOrInst, setting.id, val)
 			except UnsupportedConfigParameterError:
 				log.debugWarning(
-					f"Unsupported setting {setting.name!r}; ignoring",
+					f"Unsupported setting {setting.id!r}; ignoring",
 					exc_info=True
 				)
 				continue
