@@ -7,7 +7,7 @@
 """autoSettings for add-ons"""
 from abc import abstractmethod
 from copy import deepcopy
-from typing import List, Tuple, Union, Dict, Type
+from typing import Union, Dict, Type, Any, Iterable
 
 import config
 from autoSettingsUtils.utils import paramToPercent, percentToParam, UnsupportedConfigParameterError
@@ -16,8 +16,7 @@ from logHandler import log
 from .driverSetting import DriverSetting
 
 SupportedSettingType: Type = Union[
-	List[DriverSetting],
-	Tuple[DriverSetting]
+	Iterable[DriverSetting]
 ]
 
 
@@ -60,7 +59,11 @@ class AutoSettings(AutoPropertyObject):
 		...
 
 	@classmethod
-	def _initSpecificSettings(cls, clsOrInst, settings: List):
+	def _initSpecificSettings(
+			cls,
+			clsOrInst: Any,
+			settings: SupportedSettingType
+	) -> None:
 		section = cls._getConfigSection()
 		id = cls.getId()
 		firstLoad = not config.conf[section].isSet(id)
@@ -87,43 +90,47 @@ class AutoSettings(AutoPropertyObject):
 		"""
 		self._initSpecificSettings(self, self.supportedSettings)
 
+	#: type hinting for _get_preInitSettings
+	preInitSettings: SupportedSettingType
 
 	@classmethod
-	def _get_preInitSettings(self) -> Union[List, Tuple]:
+	def _get_preInitSettings(cls) -> SupportedSettingType:
 		"""The settings supported by the driver at pre initialisation time.
-		@rtype: list or tuple of L{DriverSetting}
 		"""
-		return ()
+		return []
 
+	#: Typing for auto property L{_get_supportedSettings}
+	supportedSettings: SupportedSettingType
+
+	# make supportedSettings an abstract property
 	_abstract_supportedSettings = True
 
-	def _get_supportedSettings(self) -> Union[List, Tuple]:
+	def _get_supportedSettings(self) -> SupportedSettingType:
 		"""The settings supported by the driver.
 		When overriding this property, subclasses are encouraged to extend the getter method
 		to ensure that L{preInitSettings} is part of the list of supported settings.
-		@rtype: list or tuple of L{DriverSetting}
 		"""
 		return self.preInitSettings
 
-	def isSupported(self,settingID):
+	def isSupported(self, settingID) -> bool:
 		"""Checks whether given setting is supported by the driver.
-		@rtype: l{bool}
 		"""
 		for s in self.supportedSettings:
-			if s.id == settingID: return True
+			if s.id == settingID:
+				return True
 		return False
 
 	@classmethod
 	def _getConfigSPecForSettings(
 			cls,
-			settings: Union[List, Tuple]
+			settings: SupportedSettingType
 	) -> Dict:
 		section = cls._getConfigSection()
 		spec = deepcopy(config.confspec[section]["__many__"])
 		for setting in settings:
 			if not setting.useConfig:
 				continue
-			spec[setting.id]=setting.configSpec
+			spec[setting.id] = setting.configSpec
 		return spec
 
 	def getConfigSpec(self):
@@ -132,9 +139,15 @@ class AutoSettings(AutoPropertyObject):
 	@classmethod
 	def _saveSpecificSettings(
 			cls,
-			clsOrInst,
-			settings: Union[List, Tuple]
-	):
+			clsOrInst: Any,
+			settings: SupportedSettingType
+	) -> None:
+		"""
+		Save values for settings to config.
+		The values from the attributes of `clsOrInst` that match the `id` of each setting are saved to config.
+		@param clsOrInst: Destination for the values.
+		@param settings: The settings to load.
+		"""
 		section = cls._getConfigSection()
 		id = cls.getId()
 		conf = config.conf[section][id]
@@ -163,10 +176,18 @@ class AutoSettings(AutoPropertyObject):
 	@classmethod
 	def _loadSpecificSettings(
 			cls,
-			clsOrInst,
-			settings: Union[List, Tuple],
+			clsOrInst: Any,
+			settings: SupportedSettingType,
 			onlyChanged: bool = False
-	):
+	) -> None:
+		"""
+		Load settings from config, set them on `clsOrInst`.
+		@param clsOrInst: Destination for the values.
+		@param settings: The settings to load.
+		@param onlyChanged: When True, only settings that no longer match the config are set.
+		@note: attributes are set on clsOrInst using setattr.
+			The id of each setting in `settings` is used as the attribute name.
+		"""
 		section = cls._getConfigSection()
 		id = cls.getId()
 		log.debug(f"loading {section} {id}")
