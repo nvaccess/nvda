@@ -65,13 +65,13 @@ class AutoSettings(AutoPropertyObject):
 			settings: SupportedSettingType
 	) -> None:
 		section = cls._getConfigSection()
-		id = cls.getId()
-		firstLoad = not config.conf[section].isSet(id)
+		settingsId = cls.getId()
+		firstLoad = not config.conf[section].isSet(settingsId)
 		if firstLoad:
 			# Create the new section.
-			config.conf[section][id] = {}
+			config.conf[section][settingsId] = {}
 		# Make sure the config spec is up to date, so the config validator does its work.
-		config.conf[section][id].spec.update(
+		config.conf[section][settingsId].spec.update(
 			cls._getConfigSPecForSettings(settings)
 		)
 		# Make sure the clsOrInst has attributes for every setting
@@ -149,8 +149,8 @@ class AutoSettings(AutoPropertyObject):
 		@param settings: The settings to load.
 		"""
 		section = cls._getConfigSection()
-		id = cls.getId()
-		conf = config.conf[section][id]
+		setingsId = cls.getId()
+		conf = config.conf[section][setingsId]
 		for setting in settings:
 			if not setting.useConfig:
 				continue
@@ -189,9 +189,9 @@ class AutoSettings(AutoPropertyObject):
 			The id of each setting in `settings` is used as the attribute name.
 		"""
 		section = cls._getConfigSection()
-		id = cls.getId()
-		log.debug(f"loading {section} {id}")
-		conf = config.conf[section][id]
+		settingsID = cls.getId()
+		log.debug(f"loading {section} {settingsID}")
+		conf = config.conf[section][settingsID]
 		for setting in settings:
 			if not setting.useConfig or conf.get(setting.id) is None:
 				continue
