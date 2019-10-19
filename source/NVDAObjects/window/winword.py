@@ -290,7 +290,7 @@ wdContentControlTypesToNVDARoles={
 
 winwordWindowIid=GUID('{00020962-0000-0000-C000-000000000046}')
 
-wm_winword_expandToLine=ctypes.windll.user32.RegisterWindowMessageW(u"wm_winword_expandToLine")
+wm_winword_expandToLine=ctypes.windll.user32.RegisterWindowMessageW("wm_winword_expandToLine")
 
 NVDAUnitsToWordUnits={
 	textInfos.UNIT_CHARACTER:wdCharacter,
@@ -332,22 +332,22 @@ formatConfigFlag_includeLayoutTables=0x20000
 # Doesn't care about the actual font, so can give incorrect Unicode in rare cases.
 mapPUAToUnicode = {
 	# from : to # fontname
-	u'\uF06E' : u'\u25A0', # Wingdings
-	u'\uF076' : u'\u2756', # Wingdings
-	u'\uF0A7' : u'\u2663', # Symbol
-	u'\uF0A8' : u'\u2666', # Symbol
-	u'\uF0B7' : u'\u2022', # Symbol
-	u'\uF0D8' : u'\u27A2', # Wingdings
-	u'\uF0E8' : u'\u21D2', # Wingdings
-	u'\uF0F0' : u'\u21E8', # Wingdings
-	u'\uF0FC' : u'\u2714', # Wingdings
+	'\uF06E' : '\u25A0', # Wingdings
+	'\uF076' : '\u2756', # Wingdings
+	'\uF0A7' : '\u2663', # Symbol
+	'\uF0A8' : '\u2666', # Symbol
+	'\uF0B7' : '\u2022', # Symbol
+	'\uF0D8' : '\u27A2', # Wingdings
+	'\uF0E8' : '\u21D2', # Wingdings
+	'\uF0F0' : '\u21E8', # Wingdings
+	'\uF0FC' : '\u2714', # Wingdings
 }
 
 class WordDocumentHeadingQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 	def __init__(self,nodeType,document,textInfo,level):
 		self.level=level
-		super(WordDocumentHeadingQuickNavItem,self).__init__(nodeType,document,textInfo)
+		super().__init__(nodeType,document,textInfo)
 
 	def isChild(self,parent):
 		if not isinstance(parent,WordDocumentHeadingQuickNavItem):
@@ -374,7 +374,7 @@ class WordDocumentCollectionQuickNavItem(browseMode.TextInfoQuickNavItem):
 		self.collectionItem=collectionItem
 		self.rangeObj=self.rangeFromCollectionItem(collectionItem)
 		textInfo=BrowseModeWordDocumentTextInfo(document,None,_rangeObj=self.rangeObj)
-		super(WordDocumentCollectionQuickNavItem,self).__init__(itemType,document,textInfo)
+		super().__init__(itemType,document,textInfo)
 
 class WordDocumentCommentQuickNavItem(WordDocumentCollectionQuickNavItem):
 	@property
@@ -384,7 +384,7 @@ class WordDocumentCommentQuickNavItem(WordDocumentCollectionQuickNavItem):
 		text=self.collectionItem.range.text
 		# Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
 		# {text}, {author} and {date} will be replaced by the corresponding details about the comment.
-		return _(u"comment: {text} by {author} on {date}").format(author=author,text=text,date=date)
+		return _("comment: {text} by {author} on {date}").format(author=author,text=text,date=date)
 
 	def rangeFromCollectionItem(self,item):
 		return item.scope
@@ -405,7 +405,7 @@ class WordDocumentRevisionQuickNavItem(WordDocumentCollectionQuickNavItem):
 		# {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
 		# {description} will be replaced with a description of the formatting changes, if any.
 		# {text}, {author} and {date} will be replaced by the corresponding details about the revision.
-		return _(u"{revisionType} {description}: {text} by {author} on {date}").format(revisionType=revisionType,author=author,text=text,date=date,description=description)
+		return _("{revisionType} {description}: {text} by {author} on {date}").format(revisionType=revisionType,author=author,text=text,date=date,description=description)
 
 class WordDocumentChartQuickNavItem(WordDocumentCollectionQuickNavItem):
 	@property
@@ -415,7 +415,7 @@ class WordDocumentChartQuickNavItem(WordDocumentCollectionQuickNavItem):
 			text=self.collectionItem.Chart.ChartTitle.Text
 		else:
 			text=self.collectionItem.Chart.Name
-		return u"{text}".format(text=text)
+		return f"{text}"
 
 	def moveTo(self):
 		chartNVDAObj = _msOfficeChart.OfficeChart(windowHandle= self.document.rootNVDAObject.windowHandle, officeApplicationObject=self.rangeObj.Document.Application, officeChartObject=self.collectionItem.Chart , initialDocument  = self.document.rootNVDAObject )
@@ -431,9 +431,9 @@ class WordDocumentSpellingErrorQuickNavItem(WordDocumentCollectionQuickNavItem):
 		text=self.collectionItem.text
 		# Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
 		# {text} will be replaced with the text of the spelling error.
-		return _(u"spelling: {text}").format(text=text)
+		return _("spelling: {text}").format(text=text)
 
-class WinWordCollectionQuicknavIterator(object):
+class WinWordCollectionQuicknavIterator:
 	"""
 	Allows iterating over an MS Word collection (e.g. HyperLinks) emitting L{QuickNavItem} objects.
 	"""
@@ -559,7 +559,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	# force mouse reading chunk to sentense to make it what it used to be in 2014.4.
 	# We need to however fix line so it does not accidentially scroll.
 	def _get_unit_mouseChunk(self):
-		unit=super(WordDocumentTextInfo,self).unit_mouseChunk
+		unit=super().unit_mouseChunk
 		if unit==textInfos.UNIT_LINE:
 			unit=textInfos.UNIT_SENTENCE
 		return unit
@@ -572,7 +572,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if s.isEqual(r):
 			r=s
 		else:
-			return super(WordDocumentTextInfo,self).locationText
+			return super().locationText
 		offset=r.information(wdHorizontalPositionRelativeToPage)
 		distance=self.obj.getLocalizedMeasurementTextForPointSize(offset)
 		# Translators: a distance from the left edge of the page in Microsoft Word
@@ -657,7 +657,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		self._rangeObj.setRange(lineStart.value,lineEnd.value)
 
 	def __init__(self,obj,position,_rangeObj=None):
-		super(WordDocumentTextInfo,self).__init__(obj,position)
+		super().__init__(obj,position)
 		if _rangeObj:
 			self._rangeObj=_rangeObj.Duplicate
 			return
@@ -763,7 +763,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			if fieldType!=-1:
 				role=wdFieldTypesToNVDARoles.get(fieldType,controlTypes.ROLE_UNKNOWN)
 				if fieldType==wdFieldFormCheckBox and int(field.get('wdFieldResult','0'))>0:
-					field['states']=set([controlTypes.STATE_CHECKED])
+					field['states']={controlTypes.STATE_CHECKED}
 				elif fieldType==wdFieldFormDropDown:
 					field['value']=field.get('wdFieldResult',None)
 			fieldStatusText=field.pop('wdFieldStatusText',None)
@@ -777,14 +777,14 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 					if role==controlTypes.ROLE_CHECKBOX:
 						fieldChecked=bool(int(field.get('wdContentControlChecked','0')))
 						if fieldChecked:
-							field['states']=set([controlTypes.STATE_CHECKED])
+							field['states']={controlTypes.STATE_CHECKED}
 					fieldTitle=field.get('wdContentControlTitle',None)
 					if fieldTitle:
 						field['name']=fieldTitle
 						field['alwaysReportName']=True
 		if role is not None: field['role']=role
 		if role==controlTypes.ROLE_TABLE and field.get('longdescription'):
-			field['states']=set([controlTypes.STATE_HASLONGDESC])
+			field['states']={controlTypes.STATE_HASLONGDESC}
 		storyType=int(field.pop('wdStoryType',0))
 		if storyType:
 			name=storyTypeLocalizedLabels.get(storyType,None)
@@ -800,17 +800,17 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 						cell=self._rangeObj.cells[1]
 					except IndexError:
 						log.debugWarning("no cells for table row, possibly on end of cell mark")
-						return super(ControlField,d).get(name,default)
+						return super().get(name,default)
 					return self.obj.fetchAssociatedHeaderCellText(cell,False)
 				elif name=="table-columnheadertext":
 					try:
 						cell=self._rangeObj.cells[1]
 					except IndexError:
 						log.debugWarning("no cells for table row, possibly on end of cell mark")
-						return super(ControlField,d).get(name,default)
+						return super().get(name,default)
 					return self.obj.fetchAssociatedHeaderCellText(cell,True)
 				else:
-					return super(ControlField,d).get(name,default)
+					return super().get(name,default)
 		newField=ControlField()
 		newField.update(field)
 		return newField
@@ -1047,7 +1047,7 @@ class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeI
 	def __init__(self,obj,position,_rangeObj=None):
 		if isinstance(position,WordDocument):
 			position=textInfos.POSITION_CARET
-		super(BrowseModeWordDocumentTextInfo,self).__init__(obj,position,_rangeObj=_rangeObj)
+		super().__init__(obj,position,_rangeObj=_rangeObj)
 
 	def _get_focusableNVDAObjectAtStart(self):
 		return self.obj.rootNVDAObject
@@ -1192,7 +1192,7 @@ class WordDocument(Window):
 		if not getattr(self,'_WinwordWindowObject',None): 
 			try:
 				pDispatch=oleacc.AccessibleObjectFromWindow(self.documentWindowHandle,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch)
-			except (COMError, WindowsError):
+			except (COMError, OSError):
 				log.debugWarning("Could not get MS Word object model from window %s with class %s"%(self.documentWindowHandle,winUser.getClassName(self.documentWindowHandle)),exc_info=True)
 				return None
 			self._WinwordWindowObject=comtypes.client.dynamic.Dispatch(pDispatch)
@@ -1510,14 +1510,14 @@ class WordDocument(Window):
 class WordDocument_WwN(WordDocument):
 
 	def _get_documentWindowHandle(self):
-		w=NVDAHelper.localLib.findWindowWithClassInThread(self.windowThreadID,u"_WwG",True)
+		w=NVDAHelper.localLib.findWindowWithClassInThread(self.windowThreadID,"_WwG",True)
 		if not w:
 			log.debugWarning("Could not find window for class _WwG in thread.")
-			w=super(WordDocument_WwN,self).documentWindowHandle
+			w=super().documentWindowHandle
 		return w
 
 	def _get_WinwordWindowObject(self):
-		window=super(WordDocument_WwN,self).WinwordWindowObject
+		window=super().WinwordWindowObject
 		if not window: return None
 		try:
 			return window.application.activeWindow.activePane

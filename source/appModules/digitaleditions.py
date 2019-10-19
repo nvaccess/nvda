@@ -22,7 +22,7 @@ class BookContentTextInfo(UIATextInfo):
 class BookContent(DocumentWithPageTurns, UIA):
 
 	def _get_TextInfo(self):
-		TextInfo=super(BookContent,self).TextInfo
+		TextInfo=super().TextInfo
 		if TextInfo is UIATextInfo:
 			TextInfo=BookContentTextInfo
 		return TextInfo

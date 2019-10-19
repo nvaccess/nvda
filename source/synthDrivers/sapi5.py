@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #synthDrivers/sapi5.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy
@@ -256,8 +255,8 @@ class SynthDriver(SynthDriver):
 		return percent // 2 - 25
 
 	IPA_TO_SAPI = {
-		u"θ": u"th",
-		u"s": u"s",
+		"θ": "th",
+		"s": "s",
 	}
 	def _convertPhoneme(self, ipa):
 		# We only know about US English phonemes.
@@ -268,8 +267,8 @@ class SynthDriver(SynthDriver):
 		out = []
 		outAfter = None
 		for ipaChar in ipa:
-			if ipaChar == u"ˈ":
-				outAfter = u"1"
+			if ipaChar == "ˈ":
+				outAfter = "1"
 				continue
 			out.append(self.IPA_TO_SAPI[ipaChar])
 			if outAfter:
@@ -277,7 +276,7 @@ class SynthDriver(SynthDriver):
 				outAfter = None
 		if outAfter:
 			out.append(outAfter)
-		return u" ".join(out)
+		return " ".join(out)
 
 	def speak(self, speechSequence):
 		textList = []
@@ -349,8 +348,8 @@ class SynthDriver(SynthDriver):
 				tagsChanged[0] = True
 			elif isinstance(item, speech.PhonemeCommand):
 				try:
-					textList.append(u'<pron sym="%s">%s</pron>'
-						% (self._convertPhoneme(item.ipa), item.text or u""))
+					textList.append('<pron sym="%s">%s</pron>'
+						% (self._convertPhoneme(item.ipa), item.text or ""))
 				except LookupError:
 					log.debugWarning("Couldn't convert character in IPA string: %s" % item.ipa)
 					if item.text:

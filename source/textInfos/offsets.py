@@ -320,7 +320,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		lineStart, lineEnd = self._getLineOffsets(offset)
 		lineText = self._getTextRange(lineStart,lineEnd)
 		# Convert NULL and non-breaking space to space to make sure that words will break on them
-		lineText = lineText.translate({0:u' ',0xa0:u' '})
+		lineText = lineText.translate({0:' ',0xa0:' '})
 		relOffset = offset - lineStart
 		if self.useUniscribe:
 			relStart=ctypes.c_int()

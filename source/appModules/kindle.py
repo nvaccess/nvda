@@ -167,8 +167,7 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 				# This is a graphic, etc. which doesn't support text.
 				continue
 			log.debug("Object has hypertext. Recursing")
-			for subObj in self._iterEmbeddedObjs(objHt, 0 if direction == "next" else objHt.nHyperlinks - 1, direction):
-				yield subObj
+			yield from self._iterEmbeddedObjs(objHt, 0 if direction == "next" else objHt.nHyperlinks - 1, direction)
 
 	NODE_TYPES_TO_ROLES = {
 		"link": {controlTypes.ROLE_LINK, controlTypes.ROLE_FOOTNOTE},
@@ -196,13 +195,13 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 		offset = pos.innerTextInfo._start._startOffset
 		if direction == "next":
 			text = obj.IAccessibleTextObject.text(offset + 1, obj.IAccessibleTextObject.nCharacters)
-			embed = text.find(u"\uFFFC")
+			embed = text.find("\uFFFC")
 			if embed != -1:
 				embed += offset + 1
 		else:
 			if offset > 0:
 				text = obj.IAccessibleTextObject.text(0, offset)
-				embed = text.rfind(u"\uFFFC")
+				embed = text.rfind("\uFFFC")
 			else:
 				# We're at the start; we can't go back any further.
 				embed = -1
@@ -261,7 +260,7 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 	def getTextWithFields(self, formatConfig=None):
 		if not formatConfig:
 			formatConfig = config.conf["documentFormatting"]
-		items = super(BookPageViewTextInfo, self).getTextWithFields(formatConfig=formatConfig)
+		items = super().getTextWithFields(formatConfig=formatConfig)
 		for item in items:
 			if isinstance(item, textInfos.FieldCommand) and item.command == "formatChange":
 				if formatConfig['reportPage']:
@@ -294,7 +293,7 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 			out += (_("%s highlighted") % popular if popular
 				# Translators: Reported when moving out of a popular highlight.
 				else _("out of popular highlight")) + separator
-		out += super(BookPageViewTextInfo, self).getFormatFieldSpeech(attrs, attrsCache=attrsCache, formatConfig=formatConfig, reason=reason, unit=unit, extraDetail=extraDetail , initialFormat=initialFormat, separator=separator)
+		out += super().getFormatFieldSpeech(attrs, attrsCache=attrsCache, formatConfig=formatConfig, reason=reason, unit=unit, extraDetail=extraDetail , initialFormat=initialFormat, separator=separator)
 		return out
 
 	def updateSelection(self):
@@ -317,7 +316,7 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 		sel.updateSelection()
 
 	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
-		field = super(BookPageViewTextInfo, self)._getControlFieldForObject(obj, ignoreEditableText=ignoreEditableText)
+		field = super()._getControlFieldForObject(obj, ignoreEditableText=ignoreEditableText)
 		if field and field["role"] == controlTypes.ROLE_MATH:
 			try:
 				field["mathMl"] = obj.mathMl
@@ -366,7 +365,7 @@ class PageTurnFocusIgnorer(IAccessible):
 		if isinstance(focus, BookPageView) and focus.hasFocus:
 			# The book area reports that it still has the focus, so this event is bogus.
 			return False
-		return super(PageTurnFocusIgnorer,self).shouldAllowIAccessibleFocusEvent
+		return super().shouldAllowIAccessibleFocusEvent
 
 class Math(IAccessible):
 

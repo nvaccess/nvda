@@ -38,7 +38,7 @@ HorizontalTextAlignment_Right=2
 HorizontalTextAlignment_Justified=3
 
 # The name of the WDAG (Windows Defender Application Guard) process
-WDAG_PROCESS_NAME=u'hvsirdpclient'
+WDAG_PROCESS_NAME='hvsirdpclient'
 
 goodUIAWindowClassNames=[
 	# A WDAG (Windows Defender Application Guard) Window is always native UIA, even if it doesn't report as such.
@@ -246,8 +246,8 @@ class UIAHandler(COMObject):
 			self.baseTreeWalker=self.clientObject.RawViewWalker
 			self.baseCacheRequest=self.windowCacheRequest.Clone()
 			import UIAHandler
-			self.ItemIndex_PropertyId=NVDAHelper.localLib.registerUIAProperty(byref(ItemIndex_Property_GUID),u"ItemIndex",1)
-			self.ItemCount_PropertyId=NVDAHelper.localLib.registerUIAProperty(byref(ItemCount_Property_GUID),u"ItemCount",1)
+			self.ItemIndex_PropertyId=NVDAHelper.localLib.registerUIAProperty(byref(ItemIndex_Property_GUID),"ItemIndex",1)
+			self.ItemCount_PropertyId=NVDAHelper.localLib.registerUIAProperty(byref(ItemCount_Property_GUID),"ItemCount",1)
 			for propertyId in (UIA_FrameworkIdPropertyId,UIA_AutomationIdPropertyId,UIA_ClassNamePropertyId,UIA_ControlTypePropertyId,UIA_ProviderDescriptionPropertyId,UIA_ProcessIdPropertyId,UIA_IsTextPatternAvailablePropertyId,UIA_IsContentElementPropertyId,UIA_IsControlElementPropertyId):
 				self.baseCacheRequest.addProperty(propertyId)
 			self.baseCacheRequest.addPattern(UIA_TextPatternId)
@@ -440,7 +440,7 @@ class UIAHandler(COMObject):
 		# WDAG (Windows Defender application Guard) UIA elements should be treated as being from a remote machine, and therefore their window handles are completely invalid on this machine.
 		# Therefore, jump all the way up to the root of the WDAG process and use that window handle as it is local to this machine.
 		if appModule.appName==WDAG_PROCESS_NAME:
-			condition=UIAUtils.createUIAMultiPropertyCondition({UIA_ClassNamePropertyId:[u'ApplicationFrameWindow',u'CabinetWClass']})
+			condition=UIAUtils.createUIAMultiPropertyCondition({UIA_ClassNamePropertyId:['ApplicationFrameWindow','CabinetWClass']})
 			walker=self.clientObject.createTreeWalker(condition)
 		else:
 			# Not WDAG, just walk up to the nearest valid windowHandle

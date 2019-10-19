@@ -13,7 +13,7 @@ from logHandler import log
 import globalVars
 import config
 
-class LocaleDataMap(object):
+class LocaleDataMap:
 	"""Allows access to locale-specific data objects, dynamically loading them if needed on request"""
 
 	def __init__(self,localeDataFactory):
@@ -66,7 +66,7 @@ class LocaleDataMap(object):
 		"""
 		self._dataMap.clear()
 
-class CharacterDescriptions(object):
+class CharacterDescriptions:
 	"""
 	Represents a map of characters to one or more descriptions (examples) for that character.
 	The data is loaded from a file from the requested locale.
@@ -162,7 +162,7 @@ SPEECH_SYMBOL_PRESERVE_LABELS = {
 }
 SPEECH_SYMBOL_PRESERVES = (SYMPRES_NEVER, SYMPRES_ALWAYS, SYMPRES_NOREP)
 
-class SpeechSymbol(object):
+class SpeechSymbol:
 	__slots__ = ("identifier", "pattern", "replacement", "level", "preserve", "displayName")
 
 	def __init__(self, identifier, pattern=None, replacement=None, level=None, preserve=None, displayName=None):
@@ -180,7 +180,7 @@ class SpeechSymbol(object):
 				name=attr, val=getattr(self, attr)))
 		return "SpeechSymbol(%s)" % ", ".join(attrs)
 
-class SpeechSymbols(object):
+class SpeechSymbols:
 	"""
 	Contains raw information about the pronunciation of symbols.
 	It does not handle inheritance of data from other sources, processing of text, etc.
@@ -221,7 +221,7 @@ class SpeechSymbols(object):
 					else:
 						raise ValueError
 				except ValueError:
-					log.warning(u"Invalid line in file {file}: {line}".format(
+					log.warning("Invalid line in file {file}: {line}".format(
 						file=fileName, line=line))
 
 	def _loadComplexSymbol(self, line):
@@ -314,15 +314,15 @@ class SpeechSymbols(object):
 
 		with codecs.open(fileName, "w", "utf_8_sig", errors="replace") as f:
 			if self.complexSymbols:
-				f.write(u"complexSymbols:\r\n")
+				f.write("complexSymbols:\r\n")
 				for identifier, pattern in self.complexSymbols.items():
-					f.write(u"%s\t%s\r\n" % (identifier, pattern))
-				f.write(u"\r\n")
+					f.write("%s\t%s\r\n" % (identifier, pattern))
+				f.write("\r\n")
 
 			if self.symbols:
-				f.write(u"symbols:\r\n")
+				f.write("symbols:\r\n")
 				for symbol in self.symbols.values():
-					f.write(u"%s\r\n" % self._saveSymbol(symbol))
+					f.write("%s\r\n" % self._saveSymbol(symbol))
 
 	def _saveSymbolField(self, output, outputMap=None):
 		if output is None:
@@ -337,7 +337,7 @@ class SpeechSymbols(object):
 	def _saveSymbol(self, symbol):
 		identifier = symbol.identifier
 		try:
-			identifier = u"\\%s%s" % (
+			identifier = "\\%s%s" % (
 				self.IDENTIFIER_ESCAPES_OUTPUT[identifier[0]], identifier[1:])
 		except KeyError:
 			pass
@@ -355,7 +355,7 @@ class SpeechSymbols(object):
 				break
 		if symbol.displayName:
 			fields.append("# %s" % symbol.displayName)
-		return u"\t".join(fields)
+		return "\t".join(fields)
 
 _noSymbolLocalesCache = set()
 def _getSpeechSymbolsForLocale(locale):
@@ -369,11 +369,11 @@ def _getSpeechSymbolsForLocale(locale):
 		try:
 			builtin.load(os.path.join("locale", locale, "cldr.dic"),
 				allowComplexSymbols=False)
-		except IOError:
+		except OSError:
 			log.debugWarning("No CLDR data for locale %s" % locale)
 	try:
 		builtin.load(os.path.join("locale", locale, "symbols.dic"))
-	except IOError:
+	except OSError:
 		_noSymbolLocalesCache.add(locale)
 		raise LookupError("No symbol information for locale %s" % locale)
 	user = SpeechSymbols()
@@ -382,12 +382,12 @@ def _getSpeechSymbolsForLocale(locale):
 		# because an error will cause the whole processor to fail.
 		user.load(os.path.join(globalVars.appArgs.configPath, "symbols-%s.dic" % locale),
 			allowComplexSymbols=False)
-	except IOError:
+	except OSError:
 		# An empty user SpeechSymbols is okay.
 		pass
 	return builtin, user
 
-class SpeechSymbolProcessor(object):
+class SpeechSymbolProcessor:
 	"""
 	Handles processing of symbol pronunciation for a locale.
 	Pronunciation information is taken from one or more L{SpeechSymbols} instances.
@@ -466,7 +466,7 @@ class SpeechSymbolProcessor(object):
 		for symbol in list(symbols.values()):
 			if symbol.replacement is None:
 				# Symbols without a replacement specified are useless.
-				log.warning(u"Replacement not defined in locale {locale} for symbol: {symbol}".format(
+				log.warning("Replacement not defined in locale {locale} for symbol: {symbol}".format(
 					symbol=symbol.identifier, locale=self.locale))
 				del symbols[symbol.identifier]
 				try:
@@ -503,7 +503,7 @@ class SpeechSymbolProcessor(object):
 		# Complex symbols.
 		# Each complex symbol has its own named group so we know which symbol matched.
 		patterns.extend(
-			u"(?P<c{index}>{pattern})".format(index=index, pattern=symbol.pattern)
+			f"(?P<c{index}>{symbol.pattern})"
 			for index, symbol in enumerate(complexSymbolsList))
 		# Simple symbols.
 		# These are all handled in one named group.
@@ -530,7 +530,7 @@ class SpeechSymbolProcessor(object):
 			text = m.group()
 			symbol = self.computedSymbols[text[0]]
 			if self._level >= symbol.level:
-				return u" {count} {char} ".format(count=len(text), char=symbol.replacement)
+				return " {count} {char} ".format(count=len(text), char=symbol.replacement)
 			else:
 				return " "
 
@@ -549,7 +549,7 @@ class SpeechSymbolProcessor(object):
 			else:
 				suffix = " "
 			if self._level >= symbol.level and symbol.replacement:
-				return u" {repl}{suffix}".format(repl=symbol.replacement, suffix=suffix)
+				return f" {symbol.replacement}{suffix}"
 			else:
 				return suffix
 

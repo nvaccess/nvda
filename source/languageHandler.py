@@ -128,7 +128,7 @@ def makePgettext(translations):
 		def pgettext(context, message):
 			try:
 				# Look up the message with its context.
-				return translations._catalog[u"%s\x04%s" % (context, message)]
+				return translations._catalog["%s\x04%s" % (context, message)]
 			except KeyError:
 				return message
 	elif isinstance(translations, gettext.NullTranslations):
@@ -190,7 +190,7 @@ def setLanguage(lang):
 			#Set the windows locale for this thread (NVDA core) to this locale.
 			LCID=localeNameToWindowsLCID(lang)
 			ctypes.windll.kernel32.SetThreadLocale(LCID)
-	except IOError:
+	except OSError:
 		trans=gettext.translation("nvda",fallback=True)
 		curLang="en"
 	trans.install()

@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2018 NV Access Limited
 #This file is covered by the GNU General Public License.

@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #appModuleHandler.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee, Babbage B.V., Mozilla Corporation
@@ -78,7 +77,7 @@ def getAppNameFromProcessID(processID,includeExt=False):
 	FProcessEntry32 = processEntry32W()
 	FProcessEntry32.dwSize = ctypes.sizeof(processEntry32W)
 	ContinueLoop = winKernel.kernel32.Process32FirstW(FSnapshotHandle, ctypes.byref(FProcessEntry32))
-	appName = str()
+	appName = ''
 	while ContinueLoop:
 		if FProcessEntry32.th32ProcessID == processID:
 			appName = FProcessEntry32.szExeFile
@@ -142,7 +141,7 @@ def cleanup():
 	for deadMod in [mod for mod in runningTable.values() if not mod.isAlive]:
 		log.debug("application %s closed"%deadMod.appName)
 		del runningTable[deadMod.processID]
-		if deadMod in set(o.appModule for o in api.getFocusAncestors()+[api.getFocusObject()] if o and o.appModule):
+		if deadMod in {o.appModule for o in api.getFocusAncestors()+[api.getFocusObject()] if o and o.appModule}:
 			if hasattr(deadMod,'event_appLoseFocus'):
 				deadMod.event_appLoseFocus()
 		import eventHandler
@@ -329,7 +328,7 @@ class AppModule(baseObject.ScriptableObject):
 	sleepMode=False
 
 	def __init__(self,processID,appName=None):
-		super(AppModule,self).__init__()
+		super().__init__()
 		#: The ID of the process this appModule is for.
 		#: @type: int
 		self.processID=processID

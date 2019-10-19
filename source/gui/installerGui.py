@@ -278,7 +278,7 @@ class PortableCreaterDialog(wx.Dialog):
 
 	def __init__(self, parent):
 		# Translators: The title of the Create Portable NVDA dialog.
-		super(PortableCreaterDialog, self).__init__(parent, title=_("Create Portable NVDA"))
+		super().__init__(parent, title=_("Create Portable NVDA"))
 		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 

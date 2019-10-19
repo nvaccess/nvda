@@ -107,14 +107,14 @@ class EdgeTextInfo(UIATextInfo):
 	def _collapsedMove(self,unit,direction,skipReplacedContent):
 		"""A simple collapsed move (i.e. both ends move together), but whether it classes replaced content as one character stop can be configured via the skipReplacedContent argument."""
 		if not skipReplacedContent: 
-			return super(EdgeTextInfo,self).move(unit,direction)
+			return super().move(unit,direction)
 		if direction==0: 
 			return
 		chunk=1 if direction>0 else -1
 		finalRes=0
 		while finalRes!=direction:
 			self._moveToEdgeOfReplacedContent(back=direction<0)
-			res=super(EdgeTextInfo,self).move(unit,chunk)
+			res=super().move(unit,chunk)
 			if res==0:
 				break
 			finalRes+=res
@@ -131,7 +131,7 @@ class EdgeTextInfo(UIATextInfo):
 			return res
 
 	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
-		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
+		field=super()._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
 		field['embedded']=isEmbedded
 		role=field.get('role')
 		# Fields should be treated as block for certain roles.
@@ -183,7 +183,7 @@ class EdgeTextInfo(UIATextInfo):
 		# This would normally be a general rule, but MS Word currently needs fields for collapsed ranges, thus this code is not in the base.
 		if self.isCollapsed:
 			return []
-		fields=super(EdgeTextInfo,self).getTextWithFields(formatConfig)
+		fields=super().getTextWithFields(formatConfig)
 		seenText=False
 		curStarts=[]
 		# remove clickable state on descendants of controls with clickable state
@@ -303,8 +303,7 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 		log.debug("_getTextWithFieldsForUIARange (unbalanced)")
 		if not recurseChildren:
 			log.debug("recurseChildren is False. Falling back to super")
-			for field in super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(rootElement,textRange,formatConfig,includeRoot=includeRoot,alwaysWalkAncestors=True,recurseChildren=False,_rootElementClipped=_rootElementClipped):
-				yield field
+			yield from super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(rootElement,textRange,formatConfig,includeRoot=includeRoot,alwaysWalkAncestors=True,recurseChildren=False,_rootElementClipped=_rootElementClipped)
 			return
 		if log.isEnabledFor(log.DEBUG):
 			log.debug("rootElement: %s"%rootElement.currentLocalizedControlType)
@@ -333,8 +332,7 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 		childElements=getChildrenWithCacheFromUIATextRange(startRange,self._controlFieldUIACacheRequest)
 		if childElements.length==1 and UIAHandler.handler.clientObject.compareElements(rootElement,childElements.getElement(0)):
 			log.debug("Using single embedded child as enclosingElement")
-			for field in super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(rootElement,startRange,formatConfig,_rootElementClipped=_rootElementClipped,includeRoot=includeRoot,alwaysWalkAncestors=False,recurseChildren=False):
-				yield field
+			yield from super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(rootElement,startRange,formatConfig,_rootElementClipped=_rootElementClipped,includeRoot=includeRoot,alwaysWalkAncestors=False,recurseChildren=False)
 			return
 		parents=[]
 		parentElement=enclosingElement
@@ -373,8 +371,7 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 		log.debug("Yielding balanced fields for startRange")
 		clippedStart=enclosingRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,startRange,UIAHandler.TextPatternRangeEndpoint_Start)<0
 		clippedEnd=enclosingRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,startRange,UIAHandler.TextPatternRangeEndpoint_End)>0
-		for field in super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(enclosingElement,startRange,formatConfig,_rootElementClipped=(clippedStart,clippedEnd),includeRoot=includeRoot or hasAncestors,alwaysWalkAncestors=False,recurseChildren=True):
-			yield field
+		yield from super(EdgeTextInfo,self)._getTextWithFieldsForUIARange(enclosingElement,startRange,formatConfig,_rootElementClipped=(clippedStart,clippedEnd),includeRoot=includeRoot or hasAncestors,alwaysWalkAncestors=False,recurseChildren=True)
 		tempRange=startRange.clone()
 		log.debug("Walking parents to yield controlEnds and recurse unbalanced endRanges")
 		for parentElement,field in parents:
@@ -395,8 +392,7 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 					field['_endOfNode']=not clippedEnd
 				if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)>0:
 					log.debug("Recursing endRange")
-					for endField in self._getTextWithFieldsForUIARange(parentElement,tempRange,formatConfig,_rootElementClipped=(clippedStart,clippedEnd),includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True):
-						yield endField
+					yield from self._getTextWithFieldsForUIARange(parentElement,tempRange,formatConfig,_rootElementClipped=(clippedStart,clippedEnd),includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True)
 					log.debug("Done recursing endRange")
 				else:
 					log.debug("No content after parent")
@@ -430,7 +426,7 @@ class EdgeNode(UIA):
 		return textRange
 
 	def _get_role(self):
-		role=super(EdgeNode,self).role
+		role=super().role
 		if not isinstance(self,EdgeHTMLRoot) and role==controlTypes.ROLE_PANE and self.UIATextPattern:
 			return controlTypes.ROLE_INTERNALFRAME
 		ariaRole=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
@@ -444,7 +440,7 @@ class EdgeNode(UIA):
 		return role
 
 	def _get_states(self):
-		states=super(EdgeNode,self).states
+		states=super().states
 		if self.role in (controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_GROUPING,controlTypes.ROLE_SECTION,controlTypes.ROLE_GRAPHIC) and self.UIAInvokePattern:
 			states.add(controlTypes.STATE_CLICKABLE)
 		return states
@@ -456,7 +452,7 @@ class EdgeNode(UIA):
 				return self._getUIACacheablePropertyValue(UIAHandler.UIA_FullDescriptionPropertyId) or ""
 			except COMError:
 				pass
-		return super(EdgeNode,self).description
+		return super().description
 
 	def _get_ariaProperties(self):
 		return splitUIAElementAttribs(self.UIAElement.currentAriaProperties)
@@ -466,7 +462,7 @@ class EdgeNode(UIA):
 	# character and before the ';' character.
 	# This could be one of: "false", "true", "page", "step", "location", "date", "time"
 	# "false" is ignored by the regEx and will not produce a match
-	RE_ARIA_CURRENT_PROP_VALUE = re.compile("current=(?!false)(\w+);")
+	RE_ARIA_CURRENT_PROP_VALUE = re.compile(r"current=(?!false)(\w+);")
 
 	def _get_isCurrent(self):
 		ariaProperties=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
@@ -520,7 +516,7 @@ class EdgeList(EdgeNode):
 
 	# non-focusable lists are readonly lists (ensures correct NVDA presentation category)
 	def _get_states(self):
-		states=super(EdgeList,self).states
+		states=super().states
 		if controlTypes.STATE_FOCUSABLE not in states:
 			states.add(controlTypes.STATE_READONLY)
 		return states
@@ -532,7 +528,7 @@ class EdgeHTMLRootContainer(EdgeNode):
 		if isinstance(firstChild,UIA):
 			eventHandler.executeEvent("gainFocus",firstChild)
 			return
-		return super(EdgeHTMLRootContainer,self).event_gainFocus()
+		return super().event_gainFocus()
 
 class EdgeHeadingQuickNavItem(UIATextRangeQuickNavItem):
 
@@ -575,17 +571,17 @@ class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,UIABrowseModeDoc
 		if nodeType.startswith("heading"):
 			return EdgeHeadingQuicknavIterator(nodeType,self,pos,direction=direction)
 		else:
-			return super(EdgeHTMLTreeInterceptor,self)._iterNodesByType(nodeType,direction=direction,pos=pos)
+			return super()._iterNodesByType(nodeType,direction=direction,pos=pos)
 
 	def shouldPassThrough(self,obj,reason=None):
 		# Enter focus mode for selectable list items (<select> and role=listbox)
 		if reason==controlTypes.REASON_FOCUS and obj.role==controlTypes.ROLE_LISTITEM and controlTypes.STATE_SELECTABLE in obj.states:
 			return True
-		return super(EdgeHTMLTreeInterceptor,self).shouldPassThrough(obj,reason=reason)
+		return super().shouldPassThrough(obj,reason=reason)
 
 	def makeTextInfo(self,position):
 		try:
-			return super(EdgeHTMLTreeInterceptor,self).makeTextInfo(position)
+			return super().makeTextInfo(position)
 		except RuntimeError as e:
 			# sometimes the stored TextRange we have for the caret/selection can die if the page mutates too much.
 			# Therefore, if we detect this, just give back the first position in the document, updating our stored version as we go.
@@ -604,7 +600,7 @@ class EdgeHTMLRoot(EdgeNode):
 		return self.role==controlTypes.ROLE_DOCUMENT
 
 	def _get_role(self):
-		role=super(EdgeHTMLRoot,self).role
+		role=super().role
 		if role==controlTypes.ROLE_PANE:
 			role=controlTypes.ROLE_DOCUMENT
 		return role

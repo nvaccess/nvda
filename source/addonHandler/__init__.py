@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #addonHandler.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2012-2019 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee, Babbage B.V., Arnold Loubriat
@@ -252,7 +251,7 @@ def installAddonBundle(bundle):
 class AddonError(Exception):
 	""" Represents an exception coming from the addon subsystem. """
 
-class AddonBase(object):
+class AddonBase:
 	"""The base class for functionality that is available both for add-on bundles and add-ons on the file system.
 	Subclasses should at least implement L{manifest}.
 	"""
@@ -335,14 +334,14 @@ class Addon(AddonBase):
 		tempPath=tempfile.mktemp(suffix=DELETEDIR_SUFFIX,dir=os.path.dirname(self.path))
 		try:
 			os.rename(self.path,tempPath)
-		except (WindowsError,IOError):
+		except OSError:
 			raise RuntimeError("Cannot rename add-on path for deletion")
 		shutil.rmtree(tempPath,ignore_errors=True)
 		if os.path.exists(tempPath):
 			log.error("Error removing addon directory %s, deferring until next NVDA restart"%self.path)
 		# clean up the addons state. If an addon with the same name is installed, it should not be automatically
 		# disabled / blocked.
-		log.debug("removing addon {} from _disabledAddons/_blockedAddons".format(self.name))
+		log.debug(f"removing addon {self.name} from _disabledAddons/_blockedAddons")
 		_disabledAddons.discard(self.name)
 		_blockedAddons.discard(self.name)
 		saveState()
@@ -448,7 +447,7 @@ class Addon(AddonBase):
 			return None
 
 	def getTranslationsInstance(self, domain='nvda'):
-		""" Gets the gettext translation instance for this addon.
+		r""" Gets the gettext translation instance for this addon.
 		<addon-path<\locale will be used to find .mo files, if exists.
 		If a translation file is not found the default fallback null translation is returned.
 		@param domain: the tranlation domain to retrieve. The 'nvda' default should be used in most cases.
@@ -470,7 +469,7 @@ class Addon(AddonBase):
 
 	def getDocFilePath(self, fileName=None):
 		"""Get the path to a documentation file for this add-on.
-		The file should be located in C{doc\lang\file} inside the add-on,
+		The file should be located in C{doc\\lang\file} inside the add-on,
 		where C{lang} is the language code and C{file} is the requested file name.
 		Failing that, the language without country is tried.
 		English is tried as a last resort.
@@ -687,7 +686,7 @@ docFileName = string(default=None)
 		@param translatedInput: translated manifest input
 		@type translatedInput: file-like object
 		"""
-		super(AddonManifest, self).__init__(input, configspec=self.configspec, encoding='utf-8', default_encoding='utf-8')
+		super().__init__(input, configspec=self.configspec, encoding='utf-8', default_encoding='utf-8')
 		self._errors = None
 		val = Validator({"apiVersion":validate_apiVersionString})
 		result = self.validate(val, copy=True, preserve_errors=True)
@@ -719,10 +718,10 @@ def validate_apiVersionString(value):
 	from configobj.validate import ValidateError
 	if not value or value == "None":
 		return (0, 0, 0)
-	if not isinstance(value, string_types):
+	if not isinstance(value, str):
 		raise ValidateError('Expected an apiVersion in the form of a string. EG "2019.1.0"')
 	try:
 		tuple = addonAPIVersion.getAPIVersionTupleFromString(value)
 		return tuple
 	except ValueError as e:
-		raise ValidateError('"{}" is not a valid API Version string: {}'.format(value, e))
+		raise ValidateError(f'"{value}" is not a valid API Version string: {e}')

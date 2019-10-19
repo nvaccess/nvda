@@ -1,4 +1,3 @@
-# -*- coding: mbcs -*-
 typelib_path = 'UIAutomationCore.dll'
 _lcid = 0 # change this if required
 from ctypes import *
@@ -1250,7 +1249,7 @@ StyleId_NumberedList = 70016 # Constant c_int
 UIA_RangeValueValuePropertyId = 30047 # Constant c_int
 UIA_CustomLandmarkTypeId = 80000 # Constant c_int
 HeadingLevel1 = 80051 # Constant c_int
-class Library(object):
+class Library:
     name = 'UIAutomationClient'
     _reg_typelib_ = ('{944DE083-8FB8-45CF-BCB7-C477ACB2F897}', 1, 0)
 

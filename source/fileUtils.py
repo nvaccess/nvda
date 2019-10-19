@@ -29,7 +29,7 @@ def FaultTolerantFile(name):
 	This creates a temporary file, and the writes actually happen on this temp file. At the end of the 
 	`with` block, when `f` goes out of context the temporary file is closed and, this temporary file replaces "myFile.txt"
 	'''
-	if not isinstance(name, text_type):
+	if not isinstance(name, str):
 		raise TypeError("name must be an unicode string")
 	dirpath, filename = os.path.split(name)
 	with NamedTemporaryFile(dir=dirpath, prefix=filename, suffix='.tmp', delete=False) as f:
@@ -42,7 +42,7 @@ def FaultTolerantFile(name):
 
 def getFileVersionInfo(name, *attributes):
 	"""Gets the specified file version info attributes from the provided file."""
-	if not isinstance(name, text_type):
+	if not isinstance(name, str):
 		raise TypeError("name must be an unicode string")
 	if not os.path.exists(name):
 		raise RuntimeError("The file %s does not exist" % name)
@@ -58,7 +58,7 @@ def getFileVersionInfo(name, *attributes):
 	r = ctypes.c_uint()
 	l = ctypes.c_uint()
 	# Look for codepages
-	ctypes.windll.version.VerQueryValueW(res, u'\\VarFileInfo\\Translation',
+	ctypes.windll.version.VerQueryValueW(res, '\\VarFileInfo\\Translation',
 		ctypes.byref(r), ctypes.byref(l))
 	if not l.value:
 		raise RuntimeError("No codepage")
@@ -67,7 +67,7 @@ def getFileVersionInfo(name, *attributes):
 	codepage = "%04x%04x" % tuple(codepage)
 	for attr in attributes:
 		if not ctypes.windll.version.VerQueryValueW(res,
-			u'\\StringFileInfo\\%s\\%s' % (codepage, attr),
+			'\\StringFileInfo\\%s\\%s' % (codepage, attr),
 			ctypes.byref(r), ctypes.byref(l)
 		):
 			log.warning("Invalid or unavailable version info attribute for %r: %s" % (name, attr))

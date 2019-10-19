@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2018 NV Access Limited
 #This file is covered by the GNU General Public License.
@@ -20,11 +19,11 @@ def getScaleFactor(windowHandle):
 	import windowUtils
 	return windowUtils.getWindowScalingFactor(windowHandle)
 
-class DpiScalingHelperMixin(object):
+class DpiScalingHelperMixin:
 	""" mixin to provide size scaling """
 	def __init__(self, windowHandle):
 		self._scaleFactor = getScaleFactor(windowHandle)
 
 	def scaleSize(self, size):
-		assert getattr(self, u"_scaleFactor", None)
+		assert getattr(self, "_scaleFactor", None)
 		return scaleSize(self._scaleFactor, size)

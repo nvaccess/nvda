@@ -79,7 +79,7 @@ def isPendingEvents(eventName=None,obj=None):
 	elif eventName and obj:
 		return (eventName,obj) in _pendingEventCountsByNameAndObj
 
-class _EventExecuter(object):
+class _EventExecuter:
 	"""Facilitates execution of a chain of event functions.
 	L{gen} generates the event functions and positional arguments.
 	L{next} calls the next function in the chain.

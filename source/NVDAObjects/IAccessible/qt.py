@@ -64,7 +64,7 @@ class Container(IAccessible):
 	def _get_shouldAllowIAccessibleFocusEvent(self):
 		# QT doesn't fire focus on the active child as it should, so we will bounce the focus to it.
 		# However, as the container does not have the focused state in QT5, we must still ensure we can get the event if we are going to bounce it
-		res=super(Container,self).shouldAllowIAccessibleFocusEvent
+		res=super().shouldAllowIAccessibleFocusEvent
 		if not res:
 			res=bool(self.activeChild)
 		return res
@@ -127,7 +127,7 @@ class Application(IAccessible):
 	description = None
 
 	def _get_states(self):
-		states = super(Application, self)._get_states()
+		states = super()._get_states()
 		# The application should not have the focused state.
 		# Otherwise, checks for the focused state will always hit the application and assume the focus is valid.
 		states.discard(controlTypes.STATE_FOCUSED)

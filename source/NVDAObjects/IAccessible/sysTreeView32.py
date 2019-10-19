@@ -55,7 +55,7 @@ class TreeView(IAccessible):
 
 	def _get_firstChild(self):
 		try:
-			return super(TreeView, self).firstChild
+			return super().firstChild
 		except:
 			# Broken commctrl 5 tree view.
 			return BrokenCommctrl5Item.getFirstItem(self)
@@ -77,7 +77,7 @@ class TreeViewItem(IAccessible):
 		return int(self.IAccessibleObject.accValue(self.IAccessibleChildID))
 
 	def _get_states(self):
-		states=super(TreeViewItem,self)._get_states()
+		states=super()._get_states()
 		hItem=self.treeview_hItem
 		itemStates=watchdog.cancellableSendMessage(self.windowHandle,TVM_GETITEMSTATE,hItem,TVIS_STATEIMAGEMASK)
 		ch=(itemStates>>12)&3
@@ -94,13 +94,13 @@ class TreeViewItem(IAccessible):
 
 	def _get_parent(self):
 		if self.IAccessibleChildID==0:
-			return super(TreeViewItem,self)._get_parent()
+			return super()._get_parent()
 		hItem=self.treeview_hItem
 		if not hItem:
-			return super(TreeViewItem,self)._get_parent()
+			return super()._get_parent()
 		parentItem=watchdog.cancellableSendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_PARENT,hItem)
 		if parentItem<=0:
-			return super(TreeViewItem,self)._get_parent()
+			return super()._get_parent()
 		newID=watchdog.cancellableSendMessage(self.windowHandle,TVM_MAPHTREEITEMTOACCID,parentItem,0)
 		if not newID:
 			# Tree views from comctl < 6.0 use the hItem as the child ID.
@@ -109,13 +109,13 @@ class TreeViewItem(IAccessible):
 
 	def _get_firstChild(self):
 		if self.IAccessibleChildID==0:
-			return super(TreeViewItem,self)._get_firstChild()
+			return super()._get_firstChild()
 		hItem=self.treeview_hItem
 		if not hItem:
-			return super(TreeViewItem,self)._get_firstChild()
+			return super()._get_firstChild()
 		childItem=watchdog.cancellableSendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_CHILD,hItem)
 		if childItem<=0:
-			return super(TreeViewItem,self)._get_firstChild()
+			return super()._get_firstChild()
 		newID=watchdog.cancellableSendMessage(self.windowHandle,TVM_MAPHTREEITEMTOACCID,childItem,0)
 		if not newID:
 			# Tree views from comctl < 6.0 use the hItem as the child ID.
@@ -124,7 +124,7 @@ class TreeViewItem(IAccessible):
 
 	def _get_next(self):
 		if self.IAccessibleChildID==0:
-			return super(TreeViewItem,self)._get_next()
+			return super()._get_next()
 		hItem=self.treeview_hItem
 		if not hItem:
 			return None
@@ -139,7 +139,7 @@ class TreeViewItem(IAccessible):
 
 	def _get_previous(self):
 		if self.IAccessibleChildID==0:
-			return super(TreeViewItem,self)._get_previous()
+			return super()._get_previous()
 		hItem=self.treeview_hItem
 		if not hItem:
 			return None
@@ -175,7 +175,7 @@ class TreeViewItem(IAccessible):
 
 	def _get_positionInfo(self):
 		if self.IAccessibleChildID==0:
-			return super(TreeViewItem,self)._get_positionInfo()
+			return super()._get_positionInfo()
 		info={}
 		info['level']=self.treeview_level
 		hItem=self.treeview_hItem
@@ -197,7 +197,7 @@ class TreeViewItem(IAccessible):
 
 	def event_stateChange(self):
 		announceContains = self is api.getFocusObject() and controlTypes.STATE_EXPANDED in self.states and controlTypes.STATE_EXPANDED not in getattr(self,'_speakObjectPropertiesCache',{}).get('states',frozenset())
-		super(TreeViewItem,self).event_stateChange()
+		super().event_stateChange()
 		if announceContains:
 			speech.speakMessage(_("%s items")%self.childCount)
 
@@ -213,12 +213,12 @@ class BrokenCommctrl5Item(IAccessible):
 		if not _uiaObj:
 			raise ValueError("Cannot instantiate directly without supplying _uiaObj")
 		self._uiaObj = _uiaObj
-		super(BrokenCommctrl5Item, self).__init__(**kwargs)
+		super().__init__(**kwargs)
 
 	def initOverlayClass(self):
 		self._uiaObj = None
 		if UIAHandler.handler: 
-			parent=super(BrokenCommctrl5Item, self).parent
+			parent=super().parent
 			if parent and parent.hasFocus:
 				try:
 					kwargs = {}
@@ -260,7 +260,7 @@ class BrokenCommctrl5Item(IAccessible):
 			# If the parent is the tree view itself (root window object), just use super's parent. IAccessible isn't broken on the container itself.
 			if not uiaParent.UIAElement.cachedNativeWindowHandle:
 				return self._makeRelatedObj(uiaParent)
-		return super(BrokenCommctrl5Item, self).parent
+		return super().parent
 
 	def _get_next(self):
 		return self._makeRelatedObj(self._uiaObj.next) if self._uiaObj else None

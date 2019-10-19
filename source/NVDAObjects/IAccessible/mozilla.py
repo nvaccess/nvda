@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #NVDAObjects/IAccessible/mozilla.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
@@ -40,7 +39,7 @@ class Mozilla(ia2Web.Ia2Web):
 
 	def setFocus(self):
 		oldFocus=self._getPhysicalFocus()
-		super(Mozilla,self).setFocus()
+		super().setFocus()
 		# Although all versions of Firefox block inSetFocus or in accFocus until    the physical focus has moved,
 		# Firefox 57 and above return before they fire a focus winEvent communicating the focus change to ATs.
 		# Therefore, If the call to setFocus did change the physical focus,
@@ -65,10 +64,10 @@ class Mozilla(ia2Web.Ia2Web):
 				newObj=IAccessible(windowHandle=windowHandle,IAccessibleObject=res[0],IAccessibleChildID=res[1])
 				if newObj:
 					return newObj
-		return super(Mozilla,self).parent
+		return super().parent
 
 	def _get_states(self):
-		states = super(Mozilla, self).states
+		states = super().states
 		if self.IAccessibleStates & oleacc.STATE_SYSTEM_MARQUEED:
 			states.add(controlTypes.STATE_CHECKABLE)
 		if self.IA2Attributes.get("hidden") == "true":
@@ -76,7 +75,7 @@ class Mozilla(ia2Web.Ia2Web):
 		return states
 
 	def _get_presentationType(self):
-		presType=super(Mozilla,self).presentationType
+		presType=super().presentationType
 		if presType==self.presType_content:
 			if self.role==controlTypes.ROLE_TABLE and self.IA2Attributes.get('layout-guess')=='true':
 				presType=self.presType_layout
@@ -118,14 +117,14 @@ class Document(ia2Web.Document):
 	def _get_treeInterceptorClass(self):
 		ver=getGeckoVersion(self)
 		if (not ver or ver.full.startswith('1.9')) and self.windowClassName!="MozillaContentWindowClass":
-			return super(Document,self).treeInterceptorClass
+			return super().treeInterceptorClass
 		if controlTypes.STATE_EDITABLE not in self.states:
 			import virtualBuffers.gecko_ia2
 			if ver and ver.major < 14:
 				return virtualBuffers.gecko_ia2.Gecko_ia2Pre14
 			else:
 				return virtualBuffers.gecko_ia2.Gecko_ia2
-		return super(Document,self).treeInterceptorClass
+		return super().treeInterceptorClass
 
 class EmbeddedObject(Mozilla):
 
@@ -135,7 +134,7 @@ class EmbeddedObject(Mozilla):
 			# This window doesn't have the focus, which means the embedded object's window probably already has the focus.
 			# We don't want to override the focus event fired by the embedded object.
 			return False
-		return super(EmbeddedObject, self).shouldAllowIAccessibleFocusEvent
+		return super().shouldAllowIAccessibleFocusEvent
 
 GeckoVersion = namedtuple("GeckoVersion", ("full", "major"))
 def getGeckoVersion(obj):
@@ -159,7 +158,7 @@ class GeckoPluginWindowRoot(WindowRoot):
 	parentUsesSuperOnWindowRootIAccessible = False
 
 	def _get_parent(self):
-		parent=super(GeckoPluginWindowRoot,self).parent
+		parent=super().parent
 		if parent.IAccessibleRole==oleacc.ROLE_SYSTEM_CLIENT:
 			# Skip the window wrapping the plugin window,
 			# which doesn't expose a Gecko accessible in Gecko >= 11.

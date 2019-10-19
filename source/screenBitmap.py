@@ -13,7 +13,7 @@ import winGDI
 user32=ctypes.windll.user32
 gdi32=ctypes.windll.gdi32
 
-class ScreenBitmap(object):
+class ScreenBitmap:
 	"""Provides a way to capture a bitmap of any part of the screen. The object caches needed DCs and bitmaps therefore an instance of an object only handles one size of bitmap."""
 
 	def __init__(self,width,height):

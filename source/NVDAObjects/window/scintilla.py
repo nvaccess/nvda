@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2009-2019 NV Access Limited, Arnold Loubriat, Babbage B.V., Łukasz Golonka
 # This file is covered by the GNU General Public License.
@@ -265,7 +264,7 @@ class Scintilla(EditableTextWithAutoSelectDetection, Window):
 		return controlTypes.ROLE_EDITABLETEXT
 
 	def _get_states(self):
-		states = super(Scintilla, self)._get_states()
+		states = super()._get_states()
 		# Scintilla controls are always multiline.
 		states.add(controlTypes.STATE_MULTILINE)
 		return states

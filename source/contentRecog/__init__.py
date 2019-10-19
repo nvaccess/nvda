@@ -18,7 +18,7 @@ import textInfos.offsets
 from abc import ABCMeta, abstractmethod
 from locationHelper import RectLTWH
 
-class ContentRecognizer(object, metaclass=ABCMeta):
+class ContentRecognizer(metaclass=ABCMeta):
 	"""Implementation of a content recognizer.
 	"""
 
@@ -59,7 +59,7 @@ class ContentRecognizer(object, metaclass=ABCMeta):
 		"""
 		raise NotImplementedError
 
-class RecogImageInfo(object):
+class RecogImageInfo:
 	"""Encapsulates information about a recognized image and
 	provides functionality to convert coordinates.
 	An image captured for recognition can begin at any point on the screen.
@@ -128,7 +128,7 @@ class RecogImageInfo(object):
 		"""
 		return int(height / self.resizeFactor)
 
-class RecognitionResult(object, metaclass=ABCMeta):
+class RecognitionResult(metaclass=ABCMeta):
 	"""Provides access to the result of recognition by a recognizer.
 	The result is textual, but to facilitate navigation by word, line, etc.
 	and to allow for retrieval of screen coordinates within the text,
@@ -224,7 +224,7 @@ class LwrTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def __init__(self, obj, position, result):
 		self.result = result
-		super(LwrTextInfo, self).__init__(obj, position)
+		super().__init__(obj, position)
 
 	def copy(self):
 		return self.__class__(self.obj, self.bookmark, self.result)
@@ -288,7 +288,7 @@ class SimpleResultTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def __init__(self, obj, position, result):
 		self.result = result
-		super(SimpleResultTextInfo, self).__init__(obj, position)
+		super().__init__(obj, position)
 
 	def copy(self):
 		return self.__class__(self.obj, self.bookmark, self.result)

@@ -36,12 +36,12 @@ class GUID(ctypes.Structure):
 		('Data4', ctypes.c_ubyte*8),
 	)
 	def __str__(self):
-		return u"{%08x-%04x-%04x-%s-%s}" % (
+		return "{%08x-%04x-%04x-%s-%s}" % (
 			self.Data1,
 			self.Data2,
 			self.Data3,
-			u''.join([u"%02x" % d for d in self.Data4[:2]]),
-			u''.join([u"%02x" % d for d in self.Data4[2:]]),
+			''.join(["%02x" % d for d in self.Data4[:2]]),
+			''.join(["%02x" % d for d in self.Data4[2:]]),
 		)
 
 class SP_DEVINFO_DATA(ctypes.Structure):
@@ -70,7 +70,7 @@ PSP_DEVICE_INTERFACE_DATA = ctypes.POINTER(SP_DEVICE_INTERFACE_DATA)
 PSP_DEVICE_INTERFACE_DETAIL_DATA = ctypes.c_void_p
 
 class dummy(ctypes.Structure):
-	_fields_=((u"d1", DWORD), (u"d2", WCHAR))
+	_fields_=(("d1", DWORD), ("d2", WCHAR))
 	_pack_ = 1
 SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W = ctypes.sizeof(dummy)
 
@@ -203,7 +203,7 @@ def listComPorts(onlyAvailable=True):
 			try:
 				try:
 					port = entry["port"] = winreg.QueryValueEx(regKey, "PortName")[0]
-				except WindowsError:
+				except OSError:
 					# #6015: In some rare cases, this value doesn't exist.
 					log.debugWarning("No PortName value for hardware ID %s" % hwID)
 					continue
@@ -279,7 +279,7 @@ class BLUETOOTH_DEVICE_INFO(ctypes.Structure):
 		("szName", WCHAR * BLUETOOTH_MAX_NAME_SIZE)
 	)
 	def __init__(self, **kwargs):
-		super(BLUETOOTH_DEVICE_INFO, self).__init__(dwSize=ctypes.sizeof(self), **kwargs)
+		super().__init__(dwSize=ctypes.sizeof(self), **kwargs)
 
 def getBluetoothDeviceInfo(address):
 	devInfo = BLUETOOTH_DEVICE_INFO(address=address)
@@ -293,7 +293,7 @@ def getToshibaBluetoothPortInfo(port):
 		for index in itertools.count():
 			try:
 				keyName = winreg.EnumKey(rootKey, index)
-			except WindowsError:
+			except OSError:
 				break
 			with winreg.OpenKey(rootKey, keyName) as itemKey:
 				with winreg.OpenKey(itemKey, "SCORIGINAL") as scorigKey:
@@ -301,7 +301,7 @@ def getToshibaBluetoothPortInfo(port):
 						if winreg.QueryValueEx(scorigKey, "PORTNAME")[0].rstrip("\0") != port:
 							# This isn't the port we're interested in.
 							continue
-					except WindowsError:
+					except OSError:
 						# This isn't a COM port.
 						continue
 				addr = winreg.QueryValueEx(itemKey, "BDADDR")[0]
@@ -317,7 +317,7 @@ def getWidcommBluetoothPortInfo(port):
 		for index in itertools.count():
 			try:
 				keyName = winreg.EnumKey(rootKey, index)
-			except WindowsError:
+			except OSError:
 				break
 			# The keys are the port number, but might be prefixed by 0s.
 			# For example, COM4 is 0004.
@@ -428,7 +428,7 @@ class HIDD_ATTRIBUTES(ctypes.Structure):
 		("VersionNumber", USHORT)
 	)
 	def __init__(self, **kwargs):
-		super(HIDD_ATTRIBUTES, self).__init__(Size=ctypes.sizeof(HIDD_ATTRIBUTES), **kwargs)
+		super().__init__(Size=ctypes.sizeof(HIDD_ATTRIBUTES), **kwargs)
 
 def _getHidInfo(hwId, path):
 	info = {
@@ -453,7 +453,7 @@ def _getHidInfo(hwId, path):
 		winKernel.OPEN_EXISTING, FILE_FLAG_OVERLAPPED, None)
 	if handle == INVALID_HANDLE_VALUE:
 		if _isDebug():
-			log.debug(u"Opening device {dev} to get additional info failed: {exc}".format(
+			log.debug("Opening device {dev} to get additional info failed: {exc}".format(
 				dev=path, exc=ctypes.WinError()))
 		return info
 	try:

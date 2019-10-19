@@ -23,7 +23,7 @@ class Ia2Web(IAccessible):
 	caretMovementDetectionUsesEvents = False
 
 	def _get_positionInfo(self):
-		info=super(Ia2Web,self).positionInfo
+		info=super().positionInfo
 		level=info.get('level',None)
 		if not level:
 			level=self.IA2Attributes.get('level',None)
@@ -46,16 +46,16 @@ class Ia2Web(IAccessible):
 			# It is not useful to present IAccessible2 table rows in the focus ancestry as  cells contain row and column information anyway.
 			# Also presenting the rows would cause duplication of information
 			return False
-		return super(Ia2Web,self).isPresentableFocusAncestor
+		return super().isPresentableFocusAncestor
 
 	def _get_roleText(self):
 		roleText=self.IA2Attributes.get('roledescription')
 		if roleText:
 			return roleText
-		return super(Ia2Web,self).roleText
+		return super().roleText
 
 	def _get_states(self):
-		states=super(Ia2Web,self).states
+		states=super().states
 		# Ensure that ARIA gridcells always get the focusable state, even if the Browser fails to provide it.
 		# This is necessary for other code that calculates how selection of cells should be spoken.
 		if 'gridcell' in self.IA2Attributes.get('xml-roles','').split(' '):

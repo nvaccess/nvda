@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #appModules/explorer.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2019 NV Access Limited, Joseph Lee, Łukasz Golonka
@@ -36,7 +35,7 @@ class MultitaskingViewFrameListItem(UIA):
 		if winUser.getAsyncKeyState(winUser.VK_MENU)&32768:
 			return api.getDesktopObject()
 		else:
-			return super(MultitaskingViewFrameListItem,self).container
+			return super().container
 
 
 # Support for Win8 start screen search suggestions.
@@ -46,7 +45,7 @@ class SuggestionListItem(UIA):
 		speech.cancelSpeech()
 		api.setNavigatorObject(self, isFocus=True)
 		self.reportFocus()
-		super(SuggestionListItem,self).event_UIA_elementSelected()
+		super().event_UIA_elementSelected()
 
 
 # Windows 8 hack: Class to disable incorrect focus on windows 8 search box (containing the already correctly focused edit field)
@@ -61,7 +60,7 @@ class SysListView32MenuItem(sysListView32.ListItemWithoutColumnSupport):
 	# However NVDA redirects it to the real focus.
 	# But this means double focus events on the item, so filter the second one out
 	def _get_shouldAllowIAccessibleFocusEvent(self):
-		res=super(SysListView32MenuItem,self).shouldAllowIAccessibleFocusEvent
+		res=super().shouldAllowIAccessibleFocusEvent
 		if not res:
 			return False
 		focus=eventHandler.lastQueuedFocusObject
@@ -98,7 +97,7 @@ class NotificationArea(IAccessible):
 
 		if eventHandler.isPendingEvents("gainFocus"):
 			return
-		super(NotificationArea, self).event_gainFocus()
+		super().event_gainFocus()
 
 
 class GridTileElement(UIA):
@@ -153,18 +152,18 @@ class StartButton(IAccessible):
 	def _get_states(self):
 		# #5178: Selection announcement should be suppressed.
 		# Borrowed from Mozilla objects in NVDAObjects/IAccessible/Mozilla.py.
-		states = super(StartButton, self).states
+		states = super().states
 		states.discard(controlTypes.STATE_SELECTED)
 		return states
 		
-CHAR_LTR_MARK = u'\u200E'
-CHAR_RTL_MARK = u'\u200F'
+CHAR_LTR_MARK = '\u200E'
+CHAR_RTL_MARK = '\u200F'
 class UIProperty(UIA):
 	#Used for columns in Windows Explorer Details view.
 	#These can contain dates that include unwanted left-to-right and right-to-left indicator characters.
 	
 	def _get_value(self):
-		value = super(UIProperty, self).value
+		value = super().value
 		if value is None:
 			return value
 		return value.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
@@ -174,7 +173,7 @@ class ReadOnlyEditBox(IAccessible):
 #These can contain dates that include unwanted left-to-right and right-to-left indicator characters.
 
 	def _get_windowText(self):
-		windowText = super(ReadOnlyEditBox, self).windowText
+		windowText = super().windowText
 		if windowText is not None:
 			return windowText.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 		return windowText

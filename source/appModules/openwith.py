@@ -19,7 +19,7 @@ class NonDefaultAppTile(UIA):
 			next=firstChild.next
 			if next:
 				return next.name
-		return super(NonDefaultAppTile,self).name
+		return super().name
 
 class ImmersiveOpenWithFlyout(Dialog,UIA):
 
@@ -29,7 +29,7 @@ class ImmersiveOpenWithFlyout(Dialog,UIA):
 	#So Force it to get focus
 	def event_focusEntered(self):
 		self.setFocus()
-		super(ImmersiveOpenWithFlyout,self).event_focusEntered()
+		super().event_focusEntered()
 
 class AppModule(appModuleHandler.AppModule):
 

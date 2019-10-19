@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # brailleInput.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
@@ -39,7 +38,7 @@ LOUIS_DOTS_IO_START = 0x8000
 UNICODE_BRAILLE_START = 0x2800
 #: The Unicode braille character to use when masking cells in protected fields.
 #: @type: str
-UNICODE_BRAILLE_PROTECTED = u"⣿" # All dots down
+UNICODE_BRAILLE_PROTECTED = "⣿" # All dots down
 
 
 class BrailleInputHandler(AutoPropertyObject):
@@ -70,7 +69,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		#: e.g. capital and number signs.
 		self.bufferBraille = []
 		#: The text translated so far from the cells in L{bufferBraille}.
-		self.bufferText = u""
+		self.bufferText = ""
 		#: Indexes of cells which produced text.
 		#: For example, this includes letters and numbers, but not number signs,
 		#: since a number sign by itself doesn't produce text.
@@ -127,10 +126,10 @@ class BrailleInputHandler(AutoPropertyObject):
 		assert not self.useContractedForCurrentFocus or endWord, "Must only translate contracted at end of word"
 		if self.useContractedForCurrentFocus:
 			# self.bufferText has been used by _reportContractedCell, so clear it.
-			self.bufferText = u""
+			self.bufferText = ""
 		oldTextLen = len(self.bufferText)
 		pos = self.untranslatedStart + self.untranslatedCursorPos
-		data = u"".join([chr(cell | LOUIS_DOTS_IO_START) for cell in self.bufferBraille[:pos]])
+		data = "".join([chr(cell | LOUIS_DOTS_IO_START) for cell in self.bufferBraille[:pos]])
 		mode = louis.dotsIO | louis.noUndefinedDots
 		if (not self.currentFocusIsTextObj or self.currentModifiers) and self._table.contracted:
 			mode |=  louis.partialTrans
@@ -154,7 +153,7 @@ class BrailleInputHandler(AutoPropertyObject):
 				if len(newText)>1:
 					# Emulation of multiple characters at once is unsupported
 					# Clear newText, so this function returns C{False} if not at end of word
-					newText = u""
+					newText = ""
 				else:
 					self.emulateKey(newText)
 			else:
@@ -164,7 +163,7 @@ class BrailleInputHandler(AutoPropertyObject):
 			# We only need to buffer one word.
 			# Clear the previous word (anything before the cursor) from the buffer.
 			del self.bufferBraille[:pos]
-			self.bufferText = u""
+			self.bufferText = ""
 			self.cellsWithText.clear()
 			self.currentModifiers.clear()
 			self.untranslatedStart = 0
@@ -182,7 +181,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		@rtype: str
 		"""
 		cells = self.bufferBraille[:pos + 1]
-		data = u"".join([chr(cell | LOUIS_DOTS_IO_START) for cell in cells])
+		data = "".join([chr(cell | LOUIS_DOTS_IO_START) for cell in cells])
 		oldText = self.bufferText
 		text = louis.backTranslate(
 			[os.path.join(brailleTables.TABLES_DIR, self._table.fileName),
@@ -358,7 +357,7 @@ class BrailleInputHandler(AutoPropertyObject):
 
 	def flushBuffer(self):
 		self.bufferBraille = []
-		self.bufferText = u""
+		self.bufferText = ""
 		self.cellsWithText.clear()
 		self.currentModifiers.clear()
 		self.untranslatedBraille = ""

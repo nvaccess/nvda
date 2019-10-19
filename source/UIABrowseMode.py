@@ -64,7 +64,7 @@ class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 		else:
 			raise ValueError("Invalid UIAElementOrRange")
 		textInfo=document.TextInfo(document,None,_rangeObj=UIATextRange)
-		super(UIATextRangeQuickNavItem,self).__init__(itemType,document,textInfo)
+		super().__init__(itemType,document,textInfo)
 
 	@property
 	def obj(self):
@@ -83,7 +83,7 @@ class TextAttribUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 	def __init__(self,attribValues,itemType,document,textInfo):
 		self.attribValues=attribValues
-		super(TextAttribUIATextInfoQuickNavItem,self).__init__(itemType,document,textInfo)
+		super().__init__(itemType,document,textInfo)
 
 class ErrorUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 	attribID=UIAHandler.UIA_AnnotationTypesAttributeId
@@ -95,15 +95,15 @@ class ErrorUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 		if (UIAHandler.AnnotationType_SpellingError in self.attribValues) and (UIAHandler.AnnotationType_GrammarError in self.attribValues):
 			# Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
 			# {text} will be replaced with the text of the spelling error.
-			return _(u"spelling and grammar: {text}").format(text=text)
+			return _("spelling and grammar: {text}").format(text=text)
 		elif UIAHandler.AnnotationType_SpellingError in self.attribValues:
 			# Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
 			# {text} will be replaced with the text of the spelling error.
-			return _(u"spelling: {text}").format(text=text)
+			return _("spelling: {text}").format(text=text)
 		elif UIAHandler.AnnotationType_GrammarError in self.attribValues:
 			# Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
 			# {text} will be replaced with the text of the spelling error.
-			return _(u"grammar: {text}").format(text=text)
+			return _("grammar: {text}").format(text=text)
 		else:
 			return text
 
@@ -137,7 +137,7 @@ def UIATextAttributeQuicknavIterator(ItemClass,itemType,document,position,direct
 class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 	def __init__(self,itemType,document,position,level=0):
-		super(HeadingUIATextInfoQuickNavItem,self).__init__(itemType,document,position)
+		super().__init__(itemType,document,position)
 		self.level=level
 
 	def isChild(self,parent):
@@ -405,7 +405,7 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:True},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ComboBoxControlTypeId})
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		elif nodeType=="embeddedObject":
-			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_PaneControlTypeId,UIAHandler.UIA_AriaRolePropertyId:[u"application",u"alertdialog",u"dialog"]})
+			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_PaneControlTypeId,UIAHandler.UIA_AriaRolePropertyId:["application","alertdialog","dialog"]})
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		raise NotImplementedError
 

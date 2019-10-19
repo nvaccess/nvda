@@ -187,7 +187,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 	SINGLE_TEXTINFO_UNITS = (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD, textInfos.UNIT_LINE, textInfos.UNIT_SENTENCE, textInfos.UNIT_PARAGRAPH)
 
 	def __init__(self, obj, position):
-		super(TreeCompoundTextInfo, self).__init__(obj, position)
+		super().__init__(obj, position)
 		rootObj = obj.rootNVDAObject
 		if isinstance(position, NVDAObject):
 			# FIXME
@@ -258,7 +258,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 		# Get the number of embeds before the start.
 		# The index is 0 based, so this is the index of the first embed after start.
 		text = info._getTextRange(0, info._startOffset)
-		return text.count(u"\uFFFC")
+		return text.count("\uFFFC")
 
 	def getTextWithFields(self, formatConfig=None):
 		# Get the initial control fields.
@@ -285,7 +285,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 					controlField = self._getControlFieldForObject(field, ignoreEditableText=False)
 					controlField["content"] = field.name
 					fields.extend((textInfos.FieldCommand("controlStart", controlField),
-						u"\uFFFC",
+						"\uFFFC",
 						textInfos.FieldCommand("controlEnd", None)))
 				else:
 					fields.append(field)
@@ -428,7 +428,7 @@ class CompoundDocument(EditableText, DocumentTreeInterceptor):
 	TextInfo = TreeCompoundTextInfo
 
 	def __init__(self, rootNVDAObject):
-		super(CompoundDocument, self).__init__(rootNVDAObject)
+		super().__init__(rootNVDAObject)
 
 	def _get_isAlive(self):
 		root = self.rootNVDAObject

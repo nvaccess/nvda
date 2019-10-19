@@ -3,7 +3,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-class HeaderCellInfo(object):
+class HeaderCellInfo:
 	__slots__=['rowNumber','columnNumber','rowSpan','colSpan','minRowNumber','maxRowNumber','minColumnNumber','maxColumnNumber','name','isRowHeader','isColumnHeader']
 	def __init__(self,**kwargs):
 		self.rowSpan=self.colSpan=1
@@ -11,7 +11,7 @@ class HeaderCellInfo(object):
 		for  name,value in kwargs.items():
 			setattr(self,name,value)
 
-class HeaderCellTracker(object):
+class HeaderCellTracker:
 
 	def __init__(self):
 		self.infosDict={}

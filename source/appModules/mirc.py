@@ -15,7 +15,7 @@ import appModuleHandler
 class Input(Window):
 
 	def event_gainFocus(self):
-		super(Input, self).event_gainFocus()
+		super().event_gainFocus()
 		try:
 			output = self.parent.parent.lastChild.firstChild
 		except AttributeError:

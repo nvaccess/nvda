@@ -174,7 +174,7 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# We need to count the embedded objects to determine which child to use.
 		# This could possibly be optimised by caching.
 		text = self._getTextRange(0, offset + 1)
-		childIndex = text.count(u"\uFFFC") - 1
+		childIndex = text.count("\uFFFC") - 1
 		jabContext=self.obj.jabContext.getAccessibleChildFromContext(childIndex)
 		if jabContext:
 			return JAB(jabContext=jabContext)
@@ -222,7 +222,7 @@ class JAB(Window):
 			windowHandle=jabContext.hwnd
 		self.windowHandle=windowHandle
 		self.jabContext=jabContext
-		super(JAB,self).__init__(windowHandle=windowHandle)
+		super().__init__(windowHandle=windowHandle)
 		try:
 			self._JABAccContextInfo
 		except RuntimeError:
@@ -234,7 +234,7 @@ class JAB(Window):
 	def _get_TextInfo(self):
 		if self._JABAccContextInfo.accessibleText and self.role not in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENU,controlTypes.ROLE_LISTITEM]:
 			return JABTextInfo
-		return super(JAB,self).TextInfo
+		return super().TextInfo
 
 	def _isEqual(self,other):
 		try:
@@ -318,7 +318,7 @@ class JAB(Window):
 			return False
 
 	def _get_positionInfo(self):
-		info=super(JAB,self).positionInfo or {}
+		info=super().positionInfo or {}
 
 		# If tree view item, try to retrieve the level via JAB
 		if self.role==controlTypes.ROLE_TREEVIEWITEM:
@@ -360,13 +360,13 @@ class JAB(Window):
 			if jabContext:
 				self._parent=JAB(jabContext=jabContext)
 			else:
-				self._parent=super(JAB,self).parent
+				self._parent=super().parent
 		return self._parent
  
 	def _get_next(self):
 		parent=self.parent
 		if not isinstance(parent,JAB):
-			return super(JAB,self).next
+			return super().next
 		if self.indexInParent is None:
 			return None
 		newIndex=self.indexInParent+1
@@ -387,7 +387,7 @@ class JAB(Window):
 	def _get_previous(self):
 		parent=self.parent
 		if not isinstance(parent,JAB):
-			return super(JAB,self).previous
+			return super().previous
 		if self.indexInParent is None:
 			return None
 		newIndex=self.indexInParent-1
@@ -480,7 +480,7 @@ class JAB(Window):
 		parent=self.parent
 		if self.role in [controlTypes.ROLE_LIST] and isinstance(parent,JAB) and parent.role==controlTypes.ROLE_COMBOBOX:
 			return
-		super(JAB,self).reportFocus()
+		super().reportFocus()
 
 	def _get__actions(self):
 		actions = JABHandler.AccessibleActions()
@@ -532,7 +532,7 @@ class JAB(Window):
 	def event_gainFocus(self):
 		if eventHandler.isPendingEvents("gainFocus"):
 			return
-		super(JAB,self).event_gainFocus()
+		super().event_gainFocus()
 		if eventHandler.isPendingEvents("gainFocus"):
 			return
 		activeDescendant=self.activeDescendant
@@ -542,7 +542,7 @@ class JAB(Window):
 class ComboBox(JAB):
 
 	def _get_states(self):
-		states=super(ComboBox,self).states
+		states=super().states
 		if controlTypes.STATE_COLLAPSED not in states and controlTypes.STATE_EXPANDED not in states:
 			if self.childCount==1 and self.firstChild and self.firstChild.role==controlTypes.ROLE_POPUPMENU:
 				if controlTypes.STATE_INVISIBLE in self.firstChild.states:
@@ -554,12 +554,12 @@ class ComboBox(JAB):
 	def _get_activeDescendant(self):
 		if controlTypes.STATE_COLLAPSED in self.states:
 			return None
-		return super(ComboBox,self).activeDescendant
+		return super().activeDescendant
 
 	def _get_value(self):
-		value=super(ComboBox,self).value
+		value=super().value
 		if not value and not self.activeDescendant: 
-			descendant=super(ComboBox,self).activeDescendant
+			descendant=super().activeDescendant
 			if descendant:
 				value=descendant.name
 		return value

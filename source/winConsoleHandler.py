@@ -66,11 +66,11 @@ def connectConsole(obj):
 	#Attach NVDA to this console so we can access its text etc
 	try:
 		wincon.AttachConsole(processID)
-	except WindowsError as e:
+	except OSError as e:
 		log.debugWarning("Could not attach console: %r"%e)
 		return False
 	wincon.SetConsoleCtrlHandler(_consoleCtrlHandler,True)
-	consoleOutputHandle=winKernel.CreateFile(u"CONOUT$",winKernel.GENERIC_READ|winKernel.GENERIC_WRITE,winKernel.FILE_SHARE_READ|winKernel.FILE_SHARE_WRITE,None,winKernel.OPEN_EXISTING,0,None)                                                     
+	consoleOutputHandle=winKernel.CreateFile("CONOUT$",winKernel.GENERIC_READ|winKernel.GENERIC_WRITE,winKernel.FILE_SHARE_READ|winKernel.FILE_SHARE_WRITE,None,winKernel.OPEN_EXISTING,0,None)                                                     
 	#Register this callback with all the win events we need, storing the given handles for removal later
 	for eventID in (winUser.EVENT_CONSOLE_CARET,winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_UPDATE_SIMPLE,winUser.EVENT_CONSOLE_UPDATE_SCROLL,winUser.EVENT_CONSOLE_LAYOUT):
 		handle=winUser.setWinEventHook(eventID,eventID,0,consoleWinEventHook,0,0,0)
@@ -99,12 +99,12 @@ def disconnectConsole():
 	consoleObject=None
 	try:
 		wincon.SetConsoleCtrlHandler(_consoleCtrlHandler,False)
-	except WindowsError:
+	except OSError:
 		pass
 	#Try freeing NVDA from this console
 	try:
 		wincon.FreeConsole()
-	except WindowsError:
+	except OSError:
 		pass
 	return True
 

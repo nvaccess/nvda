@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #globalCommands.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
@@ -2564,7 +2563,7 @@ class ConfigProfileActivationCommands(ScriptableObject):
 		# Iterate through the available profiles, creating scripts for them.
 		for profile in config.conf.listProfiles():
 			cls.addScriptForProfile(profile)
-		return 		super(ConfigProfileActivationCommands, cls).__new__(cls)
+		return 		super().__new__(cls)
 
 	@classmethod
 	def _getScriptNameForProfile(cls, name):

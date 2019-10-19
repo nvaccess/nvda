@@ -61,18 +61,18 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 		if lcid is languageHandler.LCID_NONE:
 			log.debugWarning("Invalid language: %s" % command.lang)
 			return None
-		return super(_OcSsmlConverter, self).convertLangChangeCommand(command)
+		return super().convertLangChangeCommand(command)
 
 class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 
 	def __init__(self, defaultLanguage, rate, pitch, volume):
-		super(_OcPreAPI5SsmlConverter, self).__init__(defaultLanguage)
+		super().__init__(defaultLanguage)
 		self._rate = rate
 		self._pitch = pitch
 		self._volume = volume
 
 	def generateBalancerCommands(self, speechSequence):
-		commands = super(_OcPreAPI5SsmlConverter, self).generateBalancerCommands(speechSequence)
+		commands = super().generateBalancerCommands(speechSequence)
 		# The EncloseAllCommand from SSML must be first.
 		yield next(commands)
 		# OneCore didn't provide a way to set base prosody values before API version 5.
@@ -80,8 +80,7 @@ class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 		yield self.convertRateCommand(speech.RateCommand(multiplier=1))
 		yield self.convertVolumeCommand(speech.VolumeCommand(multiplier=1))
 		yield self.convertPitchCommand(speech.PitchCommand(multiplier=1))
-		for command in commands:
-			yield command
+		yield from commands
 
 	def convertRateCommand(self, command):
 		return self._convertProsody(command, "rate", 50, self._rate)
@@ -138,7 +137,7 @@ class SynthDriver(SynthDriver):
 		return settings
 
 	def __init__(self):
-		super(SynthDriver, self).__init__()
+		super().__init__()
 		self._dll = NVDAHelper.getHelperLocalWin10Dll()
 		self._dll.ocSpeech_getCurrentVoiceLanguage.restype = ctypes.c_wchar_p
 		# Set initial values for parameters that can't be queried when prosody is not supported.
@@ -185,7 +184,7 @@ class SynthDriver(SynthDriver):
 			outputDevice=config.conf["speech"]["outputDevice"])
 
 	def terminate(self):
-		super(SynthDriver, self).terminate()
+		super().terminate()
 		self._dll.ocSpeech_terminate(self._handle)
 		# Drop the ctypes function instance for the callback,
 		# as it is holding a reference to an instance method, which causes a reference cycle.
@@ -390,12 +389,12 @@ class SynthDriver(SynthDriver):
 		subkey = "\\".join(IDParts[1:])
 		try:
 			hkey = winreg.OpenKey(rootKey, subkey)
-		except WindowsError as e:
+		except OSError as e:
 			log.debugWarning("Could not open registry key %s, %r" % (ID, e))
 			return False
 		try:
 			langDataPath = winreg.QueryValueEx(hkey, 'langDataPath')
-		except WindowsError as e:
+		except OSError as e:
 			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)
 			return False
 		if not langDataPath or not isinstance(langDataPath[0], str):
@@ -406,7 +405,7 @@ class SynthDriver(SynthDriver):
 			return False
 		try:
 			voicePath = winreg.QueryValueEx(hkey, 'voicePath')
-		except WindowsError as e:
+		except OSError as e:
 			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)
 			return False
 		if not voicePath or not isinstance(voicePath[0],str):

@@ -23,7 +23,7 @@ class TweetListItem(ListItem):
 	def _get_name(self):
 		self._isGettingName = True
 		try:
-			return super(TweetListItem, self).name
+			return super().name
 		finally:
 			self._isGettingName = False
 
@@ -32,7 +32,7 @@ class TweetListItem(ListItem):
 			# If this is for use in the name property,
 			# don't include the headers for the Name and Post columns.
 			return None
-		return super(TweetListItem, self)._getColumnHeaderRaw(index)
+		return super()._getColumnHeaderRaw(index)
 
 	def _getColumnContentRaw(self, index):
 		if controlTypes.STATE_INVISIBLE not in self.states and index == 3:
@@ -44,7 +44,7 @@ class TweetListItem(ListItem):
 				locationHelper.RectLTRB(left, top, left + width, top + height)).text
 			if content:
 				return content
-		return super(TweetListItem, self)._getColumnContentRaw(index)
+		return super()._getColumnContentRaw(index)
 
 class AppModule(appModuleHandler.AppModule):
 

@@ -50,13 +50,13 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		if lastSelectionPos:
 			if curSelectionPos._rangeObj.isEqual(lastSelectionPos._rangeObj):
 				return
-		super(WordDocument,self).event_caret()
+		super().event_caret()
 
 	def _get_role(self):
 		return controlTypes.ROLE_EDITABLETEXT
 
 	def _get_states(self):
-		states=super(WordDocument,self).states
+		states=super().states
 		states.add(controlTypes.STATE_MULTILINE)
 		return states
 
@@ -416,12 +416,12 @@ class SpellCheckErrorField(IAccessible,WordDocument_WwN):
 				inBold=field.field.get('bold',False)
 			if not inBold and len(textList)>0:
 				break
-		return u"".join(textList)
+		return "".join(textList)
 
 	def _get_name(self):
 		if self.WinwordVersion<13:
-			return super(SpellCheckErrorField,self).description
-		return super(SpellCheckErrorField,self).name
+			return super().description
+		return super().name
 
 	description=None
 

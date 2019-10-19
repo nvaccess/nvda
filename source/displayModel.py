@@ -51,7 +51,7 @@ def normalizeRtlString(s):
 			if d and len(d)==2 and d[0] in ('<initial>','<medial>','<final>','<isolated>'):
 				c=chr(int(d[1],16))
 		l.append(c)
-	return u"".join(l)
+	return "".join(l)
 
 def yieldListRange(l,start,stop):
 	for x in range(start,stop):
@@ -195,7 +195,7 @@ def getCaretRect(obj):
 def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace=True,includeDescendantWindows=True):
 	text, cpBuf = watchdog.cancellableExecute(_getWindowTextInRect, bindingHandle, windowHandle, includeDescendantWindows, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace)
 	if not text or not cpBuf:
-		return u"",[]
+		return "",[]
 
 	characterLocations = []
 	cpBufIt = iter(cpBuf)
@@ -344,7 +344,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 							and len(item)==1
 							and item.isspace()
 						):
-							commandList[index-1]=u'\n'
+							commandList[index-1]='\n'
 						lineEndOffsets.append(lastEndOffset)
 					if baseline is not None:
 						lineStartIndex=index
@@ -400,7 +400,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		return commandList
 
 	def _getStoryText(self):
-		return u"".join(x for x in self._storyFieldsAndRects[0] if isinstance(x,str))
+		return "".join(x for x in self._storyFieldsAndRects[0] if isinstance(x,str))
 
 	def _getStoryLength(self):
 		lineEndOffsets=self._storyFieldsAndRects[2]
@@ -411,13 +411,13 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	useUniscribe=False
 
 	def _getTextRange(self, start, end):
-		return u"".join(x for x in self._getFieldsInRange(start,end) if isinstance(x,str))
+		return "".join(x for x in self._getFieldsInRange(start,end) if isinstance(x,str))
 
 	def getTextWithFields(self,formatConfig=None):
 		start=self._startOffset
 		end=self._endOffset
 		if start==end:
-			return u""
+			return ""
 		return self._getFieldsInRange(start,end)
 
 	def _normalizeFormatField(self,field):

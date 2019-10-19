@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #keyboardHandler.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
@@ -370,11 +369,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			# Some numpad keys have the same vkCode regardless of numlock.
 			# For these keys, treat numlock as a modifier.
 			modifiers.add((winUser.VK_NUMLOCK, False))
-		self.generalizedModifiers = set((self.NORMAL_MODIFIER_KEYS.get(mod) or mod, extended) for mod, extended in modifiers)
+		self.generalizedModifiers = {(self.NORMAL_MODIFIER_KEYS.get(mod) or mod, extended) for mod, extended in modifiers}
 		self.vkCode = vkCode
 		self.scanCode = scanCode
 		self.isExtended = isExtended
-		super(KeyboardInputGesture, self).__init__()
+		super().__init__()
 
 	def _get_bypassInputHelp(self):
 		# #4226: Numlock must always be handled normally otherwise the Keyboard controller and Windows can get out of synk wih each other in regard to this key state.
@@ -435,8 +434,8 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	def _get_identifiers(self):
 		keyName = "+".join(self._keyNamesInDisplayOrder)
 		return (
-			u"kb({layout}):{key}".format(layout=self.layout, key=keyName),
-			u"kb:{key}".format(key=keyName)
+			f"kb({self.layout}):{keyName}",
+			f"kb:{keyName}"
 		)
 
 	def _get_shouldReportAsCommand(self):
@@ -490,7 +489,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	def _reportToggleKey(self):
 		toggleState = winUser.getKeyState(self.vkCode) & 1
 		key = self.mainKeyName
-		ui.message(u"{key} {state}".format(
+		ui.message("{key} {state}".format(
 			key=localizedKeyLabels.get(key.lower(), key),
 			state=_("on") if toggleState else _("off")))
 

@@ -28,7 +28,7 @@ class NotesRichText(IAccessible):
 	def _get_shouldAllowIAccessibleFocusEvent(self):
 		if not isinstance(self,DisplayModelEditableText) and self.role==controlTypes.ROLE_EDITABLETEXT:
 			return False
-		return super(NotesRichText,self).shouldAllowIAccessibleFocusEvent
+		return super().shouldAllowIAccessibleFocusEvent
 
 	def _get_treeInterceptorClass(self):
 		if controlTypes.STATE_READONLY in self.states:

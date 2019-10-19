@@ -1,11 +1,10 @@
-# -*- coding: UTF-8 -*-
 #shlobj.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2017 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-"""
+r"""
 This module wraps the SHGetFolderPath function in shell32.dll and defines the necessary contstants.
 CSIDL (constant special item ID list) values provide a unique system-independent way to
 identify special folders used frequently by applications, but which may not have the same name

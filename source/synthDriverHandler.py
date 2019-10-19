@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #synthDriverHandler.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
@@ -440,7 +439,7 @@ class VoiceInfo(driverHandler.StringParameterInfo):
 		@type language: str
 		"""
 		self.language=language
-		super(VoiceInfo,self).__init__(id, displayName)
+		super().__init__(id, displayName)
 
 class LanguageInfo(driverHandler.StringParameterInfo):
 	"""Holds information for a particular language"""
@@ -448,7 +447,7 @@ class LanguageInfo(driverHandler.StringParameterInfo):
 	def __init__(self, id):
 		"""Given a language ID (locale name) the description is automatically calculated."""
 		displayName = languageHandler.getLanguageDescription(id)
-		super(LanguageInfo,self).__init__(id, displayName)
+		super().__init__(id, displayName)
 
 #: Notifies when a synthesizer reaches an index during speech.
 #: Handlers are called with these keyword arguments:

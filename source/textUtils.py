@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #textUtils.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
@@ -222,15 +221,15 @@ def getTextFromRawBytes(
 		text = rawText.decode(encoding, errors=errorsFallback)
 	return text
 
-HIGH_SURROGATE_FIRST = u"\uD800"
-HIGH_SURROGATE_LAST = u"\uDBFF"
+HIGH_SURROGATE_FIRST = "\uD800"
+HIGH_SURROGATE_LAST = "\uDBFF"
 
 def isHighSurrogate(ch: str) -> bool:
 	"""Returns if the given character is a high surrogate UTF-16 character."""
 	return HIGH_SURROGATE_FIRST <= ch <= HIGH_SURROGATE_LAST
 
-LOW_SURROGATE_FIRST = u"\uDC00"
-LOW_SURROGATE_LAST = u"\uDFFF"
+LOW_SURROGATE_FIRST = "\uDC00"
+LOW_SURROGATE_LAST = "\uDFFF"
 
 def isLowSurrogate(ch: str) -> bool:
 	"""Returns if the given character is a low surrogate UTF-16 character."""

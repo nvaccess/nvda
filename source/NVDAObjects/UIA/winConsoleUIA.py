@@ -222,10 +222,10 @@ class consoleUIATextInfo(UIATextInfo):
 		return res
 
 	def _getWordOffsetsInThisLine(self, offset, lineInfo):
-		lineText = lineInfo.text or u" "
+		lineText = lineInfo.text or " "
 		# Convert NULL and non-breaking space to space to make sure
 		# that words will break on them
-		lineText = lineText.translate({0: u' ', 0xa0: u' '})
+		lineText = lineText.translate({0: ' ', 0xa0: ' '})
 		start = ctypes.c_int()
 		end = ctypes.c_int()
 		# Uniscribe does some strange things when you give it a string  with

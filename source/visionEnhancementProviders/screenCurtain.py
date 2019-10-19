@@ -78,14 +78,14 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 		return winVersion.isFullScreenMagnificationAvailable()
 
 	def __init__(self):
-		super(VisionEnhancementProvider, self).__init__()
+		super().__init__()
 		Magnification.MagInitialize()
 		Magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
 		Magnification.MagShowSystemCursor(False)
 
 	def terminate(self):
 		try:
-			super(VisionEnhancementProvider, self).terminate()
+			super().terminate()
 		finally:
 			Magnification.MagShowSystemCursor(True)
 			Magnification.MagUninitialize()

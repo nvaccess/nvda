@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #NVDAObjects/window/_msOfficeChartConstants.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2014-2017 NV Access Limited, NVDA India
@@ -382,7 +381,7 @@ class OfficeChartElementBase(Window):
 		self.elementID = elementID 
 		self.arg1 = arg1
 		self.arg2 = arg2
-		super(OfficeChartElementBase ,self).__init__(windowHandle=windowHandle)
+		super().__init__(windowHandle=windowHandle)
 
 	def GetChartSegment(self):
 		chartType = self.officeChartObject.ChartType
@@ -476,7 +475,7 @@ class OfficeChartElementList(Window):
 		self.officeChartObject = officeChartObject
 		self.elementList = []
 		self.activeElement = None	
-		super(OfficeChartElementList,self).__init__(windowHandle=windowHandle )
+		super().__init__(windowHandle=windowHandle )
 
 	def addElement(self , element , parent):
 		element.parent = parent
@@ -521,7 +520,7 @@ class OfficeChart(OfficeChartElementList):
 	role=controlTypes.ROLE_CHART
 
 	def __init__(self,windowHandle, officeApplicationObject, officeChartObject, initialDocument , keyIndex=0):
-		super(OfficeChart,self).__init__(windowHandle=windowHandle  , officeChartObject = officeChartObject )
+		super().__init__(windowHandle=windowHandle  , officeChartObject = officeChartObject )
 		self.initialDocument = initialDocument 
 		self.parent=initialDocument
 		self.officeApplicationObject=officeApplicationObject
@@ -601,7 +600,7 @@ class OfficeChartElementCollection(OfficeChartElementList):
 	description=None
 
 	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( OfficeChartElementCollection ,self).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+		super().__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
 		if officeChartObject.HasTitle:
 			self.addElement(OfficeChartElementChartTitle(windowHandle = windowHandle, officeChartObject = officeChartObject ) , self )
 
@@ -641,7 +640,7 @@ class OfficeChartElementSeries(OfficeChartElementList):
 	role=controlTypes.ROLE_CHARTELEMENT
 
 	def __init__(self,windowHandle, officeChartObject , elementID , arg1 = None , arg2= None   ):
-		super(OfficeChartElementSeries,self).__init__( windowHandle=windowHandle , officeChartObject = officeChartObject ) 
+		super().__init__( windowHandle=windowHandle , officeChartObject = officeChartObject ) 
 		self.elementID=elementID 
 		self.seriesIndex=arg1
 		self.currentPointIndex=arg2
@@ -680,7 +679,7 @@ class OfficeChartElementSeries(OfficeChartElementList):
 class OfficeChartElementPoint(OfficeChartElementBase):
 
 	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super(OfficeChartElementPoint ,self).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+		super().__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if ElementID == xlSeries:
@@ -785,7 +784,7 @@ class OfficeChartElementAxis(OfficeChartElementBase):
 	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
 		self.axisGroup = arg1
 		self.axisType = arg2
-		super( OfficeChartElementAxis , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+		super().__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		return self._axisMap[self.axisType][self.axisGroup]
@@ -796,11 +795,11 @@ class OfficeChartElementAxis(OfficeChartElementBase):
 class OfficeChartElementAxisTitle( OfficeChartElementAxis ):
 
 	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( OfficeChartElementAxisTitle , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+		super().__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		# Translators: Indicates a chart axis title in Microsoft Office.
-		axisTitle = super(OfficeChartElementAxisTitle , self)._getChartElementText(ElementID , arg1 , arg2 )
+		axisTitle = super()._getChartElementText(ElementID , arg1 , arg2 )
 		if self.officeChartObject.HasAxis( arg2 , arg1 ) and self.officeChartObject.Axes( arg2 , arg1 ).HasTitle:
 			# Translators: the title of a chart axis 
 			axisTitle += _(" title: {axisTitle}").format( axisTitle = self.officeChartObject.Axes(self.axisType, self.axisGroup).AxisTitle.Text)
@@ -830,18 +829,18 @@ class OfficeChartElementTrendline( OfficeChartElementBase):
 		self.seriesIndex = arg1
 		self.trendlineIndex = arg2
 		self.currentTrendline = officeChartObject.SeriesCollection(self.seriesIndex).Trendlines(self.trendlineIndex)
-		super( OfficeChartElementTrendline , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+		super().__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if self.currentTrendline.DisplayEquation or self.currentTrendline.DisplayRSquared:
 			label=self.currentTrendline.DataLabel.Text
 			#Translators: Substitute superscript two by square for R square value
-			label=label.replace(u"²", _( " square " ))
+			label=label.replace("²", _( " square " ))
 			label=re.sub(r'([a-zA-Z]+)([2])',r'\1 square', label)
 			label=re.sub(r'([a-zA-Z]+)([3])',r'\1 cube', label)
 			label=re.sub(r'([a-zA-Z]+)([-]*[04-9][0-9]*)',r'\1 to the power \2', label)
 			#Translators: Substitute - by minus in trendline equations.
-			label=label.replace(u"-",_(" minus "))
+			label=label.replace("-",_(" minus "))
 			# Translators: This message gives trendline type and name for selected series
 			output=_("{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: {trendlineLabel} ").format(seriesName=self.officeChartObject.SeriesCollection(self.seriesIndex).Name, trendlineType=self._trendlineTypeMap[self.currentTrendline.Type], trendlineName=self.currentTrendline.Name, trendlineLabel=label)
 		else:
@@ -855,7 +854,7 @@ class OfficeChartElementTrendline( OfficeChartElementBase):
 class OfficeChartElementChartTitle( OfficeChartElementBase):
 
 	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( OfficeChartElementChartTitle , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+		super().__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if self.officeChartObject.HasTitle:
@@ -871,7 +870,7 @@ class OfficeChartElementChartTitle( OfficeChartElementBase):
 class OfficeChartElementChartArea( OfficeChartElementBase):
 
 	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( OfficeChartElementChartArea , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+		super().__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if reportExtraInfo:
@@ -887,7 +886,7 @@ class OfficeChartElementChartArea( OfficeChartElementBase):
 class OfficeChartElementPlotArea( OfficeChartElementBase):
 
 	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( OfficeChartElementPlotArea , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+		super().__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if reportExtraInfo:
@@ -905,7 +904,7 @@ class OfficeChartElementLegend( OfficeChartElementBase):
 
 	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
 		self.chartLegend = officeChartObject.Legend
-		super( OfficeChartElementLegend , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+		super().__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		return self.chartLegend.Name
@@ -920,7 +919,7 @@ class OfficeChartElementLegendEntry( OfficeChartElementBase):
 	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
 		if self.eventDriven:
 			self.legendEntry = officeChartObject.Legend.LegendEntries(arg1)
-		super( OfficeChartElementLegendEntry , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+		super().__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		# Translators: Details about a legend entry for a series in a Microsoft Office chart.
@@ -939,7 +938,7 @@ class OfficeChartElementLegendEntry( OfficeChartElementBase):
 class OfficeChartElementLegendKey( OfficeChartElementBase):
 
 	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( OfficeChartElementLegendKey , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+		super().__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if ElementID == xlLegendKey:

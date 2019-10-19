@@ -66,7 +66,7 @@ class PluginClientWithBrokenFocus(IAccessible):
 		try:
 			self.firstChild.firstChild.setFocus()
 		except AttributeError:
-			super(PluginClientWithBrokenFocus, self).event_gainFocus()
+			super().event_gainFocus()
 
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Flash object.

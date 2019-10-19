@@ -32,7 +32,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		return bool(brlapi)
 
 	def __init__(self):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		self._con = brlapi.Connection()
 		self._con.enterTtyModeWithPath()
 		self._keyCheckTimer = wx.PyTimer(self._handleKeyPresses)
@@ -42,7 +42,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._con.ignoreKeys(brlapi.rangeType_type, (brlapi.KEY_TYPE_SYM,))
 
 	def terminate(self):
-		super(BrailleDisplayDriver, self).terminate()
+		super().terminate()
 		# Exceptions might be raised if initialisation failed. Just ignore them.
 		try:
 			self._keyCheckTimer.Stop()
@@ -108,7 +108,7 @@ class InputGesture(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, command, argument):
-		super(InputGesture, self).__init__()
+		super().__init__()
 		self.model = model
 		self.id = BRLAPI_CMD_KEYS[command]
 		if command == brlapi.KEY_CMD_ROUTE:

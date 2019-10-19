@@ -19,7 +19,7 @@ url="http://www.nvaccess.org/"
 copyrightYears="2006-2019"
 copyright=_("Copyright (C) {years} NVDA Contributors").format(
 	years=copyrightYears)
-aboutMessage=_(u"""{longName} ({name})
+aboutMessage=_("""{longName} ({name})
 Version: {version}
 URL: {url}
 {copyright}

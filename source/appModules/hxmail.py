@@ -13,7 +13,7 @@ from NVDAObjects.UIA.wordDocument import WordDocument
 class MailWordDocumentTreeInterceptor(WordDocument.treeInterceptorClass):
 
 	def _get_isAlive(self):
-		return super(MailWordDocumentTreeInterceptor,self).isAlive and self.rootNVDAObject.shouldCreateTreeInterceptor
+		return super().isAlive and self.rootNVDAObject.shouldCreateTreeInterceptor
 
 class MailWordDocument(WordDocument):
 

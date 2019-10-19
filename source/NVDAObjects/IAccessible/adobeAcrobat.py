@@ -87,7 +87,7 @@ class AcrobatNode(IAccessible):
 		except (AttributeError, LookupError, COMError):
 			pass
 
-		role = super(AcrobatNode, self).role
+		role = super().role
 		if role == controlTypes.ROLE_PANE:
 			# Pane doesn't make sense for nodes in a document.
 			role = controlTypes.ROLE_TEXTFRAME
@@ -102,7 +102,7 @@ class AcrobatNode(IAccessible):
 	def _isEqual(self, other):
 		if self.windowHandle == other.windowHandle and self.accID and other.accID:
 			return self.accID == other.accID
-		return super(AcrobatNode, self)._isEqual(other)
+		return super()._isEqual(other)
 
 	def _getNodeMathMl(self, node):
 		tag = node.GetTagName()
@@ -123,8 +123,7 @@ class AcrobatNode(IAccessible):
 					subNode = node.GetChild(childNum).QueryInterface(IPDDomElement)
 				except COMError:
 					continue
-				for sub in self._getNodeMathMl(subNode):
-					yield sub
+				yield from self._getNodeMathMl(subNode)
 		yield "</%s>" % tag
 
 	def _get_mathMl(self):
@@ -169,7 +168,7 @@ class Document(RootNode):
 				return self.IAccessibleObject.accFocus in (None, 0)
 			except COMError:
 				pass
-		return super(Document, self).shouldAllowIAccessibleFocusEvent
+		return super().shouldAllowIAccessibleFocusEvent
 
 class RootTextNode(RootNode):
 	"""The message text node that appears instead of the document when the document is not available.
@@ -223,7 +222,7 @@ class BadFocusStates(AcrobatNode):
 	"""
 
 	def _get_states(self):
-		states = super(BadFocusStates, self).states
+		states = super().states
 		states.difference_update({controlTypes.STATE_FOCUSABLE, controlTypes.STATE_FOCUSED})
 		return states
 

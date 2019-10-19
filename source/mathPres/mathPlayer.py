@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #mathPlayer.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
@@ -76,12 +75,12 @@ def _processMpSpeech(text, language):
 class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):
 
 	def __init__(self, provider=None, mathMl=None):
-		super(MathPlayerInteraction, self).__init__(provider=provider, mathMl=mathMl)
+		super().__init__(provider=provider, mathMl=mathMl)
 		provider._setSpeechLanguage(mathMl)
 		provider._mpSpeech.SetMathML(mathMl)
 
 	def reportFocus(self):
-		super(MathPlayerInteraction, self).reportFocus()
+		super().reportFocus()
 		speech.speak(_processMpSpeech(self.provider._mpSpeech.GetSpokenText(),
 			self.provider._language))
 
@@ -104,7 +103,7 @@ class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):
 			or len(gesture.mainKeyName) == 1
 		):
 			return self.script_navigate
-		return super(MathPlayerInteraction, self).getScript(gesture)
+		return super().getScript(gesture)
 
 	def script_navigate(self, gesture):
 		modNames = gesture.modifierNames

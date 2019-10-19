@@ -192,7 +192,7 @@ class RemoteHandler(logging.Handler):
 
 	def __init__(self):
 		#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-		path=os.path.abspath(os.path.join(u"lib",buildVersion.version,u"nvdaHelperRemote.dll"))
+		path=os.path.abspath(os.path.join("lib",buildVersion.version,"nvdaHelperRemote.dll"))
 		h=ctypes.windll.kernel32.LoadLibraryExW(path,0,LOAD_WITH_ALTERED_SEARCH_PATH)
 		if not h:
 			raise OSError("Could not load %s"%path) 
@@ -203,7 +203,7 @@ class RemoteHandler(logging.Handler):
 		msg = self.format(record)
 		try:
 			self._remoteLib.nvdaControllerInternal_logMessage(record.levelno, ctypes.windll.kernel32.GetCurrentProcessId(), msg)
-		except WindowsError:
+		except OSError:
 			pass
 
 class FileHandler(logging.FileHandler):
@@ -229,9 +229,9 @@ class Formatter(logging.Formatter):
 	default_msec_format = "%s.%03d"
 
 	def formatException(self, ex):
-		return stripBasePathFromTracebackText(super(Formatter, self).formatException(ex))
+		return stripBasePathFromTracebackText(super().formatException(ex))
 
-class StreamRedirector(object):
+class StreamRedirector:
 	"""Redirects an output stream to a logger.
 	"""
 
@@ -318,7 +318,7 @@ def initialize(shouldDoRemoteLogging=False):
 				if os.path.exists(oldLogFileName):
 					os.unlink(oldLogFileName)
 				os.rename(globalVars.appArgs.logFileName, oldLogFileName)
-			except (IOError, WindowsError):
+			except OSError:
 				pass # Probably log does not exist, don't care.
 			logHandler = FileHandler(globalVars.appArgs.logFileName, mode="w",encoding="utf-8")
 			logLevel = globalVars.appArgs.logLevel

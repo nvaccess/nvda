@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #synthDrivers/espeak.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2007-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Leonard de Ruijter
@@ -66,18 +65,18 @@ class SynthDriver(SynthDriver):
 	}
 
 	IPA_TO_ESPEAK = {
-		u"θ": u"T",
-		u"s": u"s",
-		u"ˈ": u"'",
+		"θ": "T",
+		"s": "s",
+		"ˈ": "'",
 	}
 
 	def _processText(self, text):
 		# We need to make several replacements.
 		return text.translate({
 			0x1: None, # used for embedded commands
-			0x3C: u"&lt;", # <: because of XML
-			0x3E: u"&gt;", # >: because of XML
-			0x5B: u" [", # [: [[ indicates phonemes
+			0x3C: "&lt;", # <: because of XML
+			0x3E: "&gt;", # >: because of XML
+			0x5B: " [", # [: [[ indicates phonemes
 		})
 
 	def speak(self,speechSequence):
@@ -127,7 +126,7 @@ class SynthDriver(SynthDriver):
 					phonemes="".join([self.IPA_TO_ESPEAK[char] for char in item.ipa])
 					# There needs to be a space after the phoneme command.
 					# Otherwise, eSpeak will announce a subsequent SSML tag instead of processing it.
-					textList.append(u"[[%s]] "%phonemes)
+					textList.append("[[%s]] "%phonemes)
 				except KeyError:
 					log.debugWarning("Unknown character in IPA string: %s"%item.ipa)
 					if item.text:
@@ -139,7 +138,7 @@ class SynthDriver(SynthDriver):
 			textList.append("</voice>")
 		if prosody:
 			textList.append("</prosody>")
-		text=u"".join(textList)
+		text="".join(textList)
 		_espeak.speak(text)
 
 	def cancel(self):
@@ -228,7 +227,7 @@ class SynthDriver(SynthDriver):
 		except:
 			self._voice=None
 			raise
-		self._language=super(SynthDriver,self).language
+		self._language=super().language
 
 	def _onIndexReached(self, index):
 		if index is not None:

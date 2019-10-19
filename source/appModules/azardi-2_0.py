@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #appModules/azardi-2_0.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2016-2017 NV Access Limited, Noelia Ruiz Martínez

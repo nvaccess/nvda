@@ -198,16 +198,16 @@ def _executeUpdate(destPath):
 	_setStateToNone(state)
 	saveState()
 	if config.isInstalledCopy():
-		executeParams = u"--install -m"
+		executeParams = "--install -m"
 	else:
 		portablePath = os.getcwd()
 		if os.access(portablePath, os.W_OK):
-			executeParams = u'--create-portable --portable-path "{portablePath}" --config-path "{configPath}" -m'.format(
+			executeParams = '--create-portable --portable-path "{portablePath}" --config-path "{configPath}" -m'.format(
 				portablePath=portablePath,
 				configPath=os.path.abspath(globalVars.appArgs.configPath)
 			)
 		else:
-			executeParams = u"--launcher"
+			executeParams = "--launcher"
 	# #4475: ensure that the new process shows its first window, by providing SW_SHOWNORMAL
 	shellapi.ShellExecute(None, None,
 		destPath,

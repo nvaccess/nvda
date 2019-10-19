@@ -36,7 +36,7 @@ class TCList(IAccessible):
 				ui.message(_("left"))
 			else:
 				ui.message(_("right"))
-		super(TCList,self).event_gainFocus()
+		super().event_gainFocus()
 
 	def reportFocus(self):
 		if self.name:
@@ -46,4 +46,4 @@ class TCList(IAccessible):
 			speakList.append(self.name.split("\\")[-1])
 			speech.speakMessage(" ".join(speakList))
 		else:
-			super(TCList,self).reportFocus()
+			super().reportFocus()

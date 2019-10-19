@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #appModules/skype.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2019 Peter Vágner, NV Access Limited, Babbage B.V.

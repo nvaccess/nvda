@@ -5,7 +5,7 @@ import textInfos
 import locationHelper
 import speech
 
-class ScreenExplorer(object):
+class ScreenExplorer:
 
 	updateReview=False
 

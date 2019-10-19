@@ -31,7 +31,7 @@ class FakeEmbeddingTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getUnitOffsets(self,unit,offset):
 		if unit in (textInfos.UNIT_WORD,textInfos.UNIT_LINE):
 			unit=textInfos.UNIT_CHARACTER
-		return super(FakeEmbeddingTextInfo,self)._getUnitOffsets(unit,offset)
+		return super()._getUnitOffsets(unit,offset)
 
 def _getRawTextInfo(obj):
 	if not hasattr(obj, "IAccessibleTextObject") and obj.role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLEROW):
@@ -57,7 +57,7 @@ def _getEmbedded(obj, offset):
 class MozillaCompoundTextInfo(CompoundTextInfo):
 
 	def __init__(self, obj, position):
-		super(MozillaCompoundTextInfo, self).__init__(obj, position)
+		super().__init__(obj, position)
 		if isinstance(position, NVDAObject):
 			try:
 				self._start, self._startObj = self._findContentDescendant(position, textInfos.POSITION_FIRST)
@@ -231,7 +231,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 
 		for item in ti._iterTextWithEmbeddedObjects(controlStack is not None, formatConfig=formatConfig):
 			if item is None:
-				yield u""
+				yield ""
 			elif isinstance(item, str):
 				yield item
 			elif isinstance(item, int): # Embedded object.
@@ -246,7 +246,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 						controlField["_startOfNode"] = True
 						yield textInfos.FieldCommand("controlStart", controlField)
 				if notText:
-					yield u" "
+					yield " "
 				else:
 					for subItem in self._iterRecursiveText(self._makeRawTextInfo(embedded, textInfos.POSITION_ALL), controlStack, formatConfig):
 						yield subItem

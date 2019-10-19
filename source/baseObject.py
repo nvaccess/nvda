@@ -11,7 +11,7 @@ import weakref
 from logHandler import log
 from abc import ABCMeta, abstractproperty
 
-class Getter(object):
+class Getter:
 
 	def __init__(self,fget, abstract=False):
 		self.fget=fget
@@ -44,7 +44,7 @@ class CachingGetter(Getter):
 class AutoPropertyType(ABCMeta):
 
 	def __init__(self,name,bases,dict):
-		super(AutoPropertyType,self).__init__(name,bases,dict)
+		super().__init__(name,bases,dict)
 
 		cacheByDefault=False
 		try:
@@ -99,7 +99,7 @@ class AutoPropertyType(ABCMeta):
 			# The __abstractmethods__ set is frozen, therefore we ought to override it.
 			self.__abstractmethods__=(self.__abstractmethods__|newAbstractProps)-oldAbstractProps
 
-class AutoPropertyObject(object, metaclass=AutoPropertyType):
+class AutoPropertyObject(metaclass=AutoPropertyType):
 	"""A class that dynamically supports properties, by looking up _get_*, _set_*, and _del_* methods at runtime.
 	_get_x will make property x with a getter (you can get its value).
 	_set_x will make a property x with a setter (you can set its value).
@@ -126,7 +126,7 @@ class AutoPropertyObject(object, metaclass=AutoPropertyType):
 
 
 	def __new__(cls, *args, **kwargs):
-		self = super(AutoPropertyObject, cls).__new__(cls)
+		self = super().__new__(cls)
 		#: Maps properties to cached values.
 		#: @type: dict
 		self._propertyCache={}
@@ -162,7 +162,7 @@ class ScriptableType(AutoPropertyType):
 	"""A metaclass used for collecting and caching gestures on a ScriptableObject"""
 
 	def __new__(meta, name, bases, dict):
-		cls = super(ScriptableType, meta).__new__(meta, name, bases, dict)
+		cls = super().__new__(meta, name, bases, dict)
 		gesturesDictName = "_%s__gestures" % cls.__name__
 		# #8463: To avoid name mangling conflicts, create a copy of the __gestures dictionary.
 		try:
@@ -213,7 +213,7 @@ class ScriptableObject(AutoPropertyObject, metaclass=ScriptableType):
 				self.bindGestures(cls._scriptDecoratorGestures)
 			except AttributeError:
 				pass
-		super(ScriptableObject, self).__init__()
+		super().__init__()
 
 	def bindGesture(self, gestureIdentifier, scriptName):
 		"""Bind an input gesture to a script.

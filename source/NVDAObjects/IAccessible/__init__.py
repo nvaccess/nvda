@@ -40,7 +40,7 @@ from locationHelper import RectLTWH
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
 		accHandle=IAccessibleHandler.accessibleObjectFromEvent(hwnd,objectID,childID)
-	except WindowsError:
+	except OSError:
 		accHandle=None
 	if not accHandle:
 		return None
@@ -160,20 +160,20 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			isMouseChunkUnit=True
 			oldStart=self._startOffset
 			oldEnd=self._endOffset
-			unit=super(IA2TextTextInfo,self).unit_mouseChunk
+			unit=super().unit_mouseChunk
 		else:
 			isMouseChunkUnit=False
-		super(IA2TextTextInfo,self).expand(unit)
+		super().expand(unit)
 		if isMouseChunkUnit:
 			text=self._getTextRange(self._startOffset,self._endOffset)
 			if not text:
 				return
 			try:
-				self._startOffset=text.rindex(u'\ufffc',0,oldStart-self._startOffset)
+				self._startOffset=text.rindex('\ufffc',0,oldStart-self._startOffset)
 			except ValueError:
 				pass
 			try:
-				self._endOffset=text.index(u'\ufffc',oldEnd-self._startOffset)
+				self._endOffset=text.index('\ufffc',oldEnd-self._startOffset)
 			except ValueError:
 				pass
 
@@ -224,9 +224,9 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getTextRange(self,start,end):
 		try:
-			return self.obj.IAccessibleTextObject.text(start,end) or u""
+			return self.obj.IAccessibleTextObject.text(start,end) or ""
 		except COMError:
-			return u""
+			return ""
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		try:
@@ -260,11 +260,11 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		try:
 			start,end,text = self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_CHAR)
 		except COMError:
-			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
+			return super()._getCharacterOffsets(offset)
 		if textUtils.isHighSurrogate(text) or textUtils.isLowSurrogate(text):
 			# #8953: Some IA2 implementations, including Gecko and Chromium,
 			# erroneously report one offset for surrogates.
-			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
+			return super()._getCharacterOffsets(offset)
 		return start, end
 
 	def _getWordOffsets(self,offset):
@@ -276,7 +276,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		try:
 			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_WORD)
 		except COMError:
-			return super(IA2TextTextInfo,self)._getWordOffsets(offset)
+			return super()._getWordOffsets(offset)
 		if start>offset or offset>end:
 			# HACK: Work around buggy implementations which return a range that does not include offset.
 			return offset,offset+1
@@ -302,7 +302,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 				raise NotImplementedError
 			return start,end
 		except COMError:
-			return super(IA2TextTextInfo,self)._getSentenceOffsets(offset)
+			return super()._getSentenceOffsets(offset)
 
 	def _getParagraphOffsets(self,offset):
 		try:
@@ -316,7 +316,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 				raise RuntimeError("did not expand to paragraph correctly")
 			return start,end
 		except (RuntimeError,COMError):
-			return super(IA2TextTextInfo,self)._getParagraphOffsets(offset)
+			return super()._getParagraphOffsets(offset)
 
 	def _lineNumFromOffset(self,offset):
 		return -1
@@ -345,7 +345,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			while chunkStart < itemLen:
 				# Find the next embedded object character.
 				try:
-					chunkEnd = item.index(u"\uFFFC", chunkStart)
+					chunkEnd = item.index("\uFFFC", chunkStart)
 				except ValueError:
 					# This is the last chunk of text.
 					yield item[chunkStart:]
@@ -554,7 +554,7 @@ the NVDAObject for IAccessible
 		if not hasattr(IAccessible,"IID_ITextServices"):
 			try:
 				IAccessible.IID_ITextServices=ctypes.cast(ctypes.windll.msftedit.IID_ITextServices,ctypes.POINTER(GUID)).contents
-			except WindowsError:
+			except OSError:
 				log.debugWarning("msftedit not available, couldn't retrieve IID_ITextServices")
 				IAccessible.IID_ITextServices=None
 		if IAccessible.IID_ITextServices:
@@ -581,7 +581,7 @@ the NVDAObject for IAccessible
 			# This is the main (client) area of the window, so we can use other classes at the window level.
 			# #3872: However, don't do this for IAccessible2 because
 			# IA2 supersedes window level APIs and might conflict with them.
-			super(IAccessible,self).findOverlayClasses(clsList)
+			super().findOverlayClasses(clsList)
 			#Generic client IAccessibles with no children should be classed as content and should use displayModel 
 			if clsList[0]==IAccessible and len(clsList)==3 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_CLIENT and self.childCount==0:
 				clsList.insert(0,ContentGenericClient)
@@ -653,7 +653,7 @@ the NVDAObject for IAccessible
 		self.event_windowHandle=event_windowHandle
 		self.event_objectID=event_objectID
 		self.event_childID=event_childID
-		super(IAccessible,self).__init__(windowHandle=windowHandle)
+		super().__init__(windowHandle=windowHandle)
 
 		try:
 			self.IAccessibleActionObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleAction)
@@ -703,7 +703,7 @@ the NVDAObject for IAccessible
 	def _get_TextInfo(self):
 		if hasattr(self,'IAccessibleTextObject'):
 			return IA2TextTextInfo
-		return super(IAccessible,self).TextInfo
+		return super().TextInfo
 
 	def _isEqual(self,other):
 		if self.IAccessibleChildID!=other.IAccessibleChildID:
@@ -731,7 +731,7 @@ the NVDAObject for IAccessible
 			return False
 		if self.event_childID is not None and other.event_childID is not None and self.event_childID!=other.event_childID:
 			return False
-		if not super(IAccessible,self)._isEqual(other):
+		if not super()._isEqual(other):
 			return False
 		selfIden=self.IAccessibleIdentity
 		otherIden=other.IAccessibleIdentity
@@ -841,7 +841,7 @@ the NVDAObject for IAccessible
 	def _get_role(self):
 		IARole=self.IAccessibleRole
 		if IARole==oleacc.ROLE_SYSTEM_CLIENT:
-			superRole=super(IAccessible,self).role
+			superRole=super().role
 			if superRole!=controlTypes.ROLE_WINDOW:
 					return superRole
 		if isinstance(IARole,str):
@@ -862,7 +862,7 @@ the NVDAObject for IAccessible
 	def _get_states(self):
 		states=set()
 		if self.event_objectID in (winUser.OBJID_CLIENT, winUser.OBJID_WINDOW) and self.event_childID == 0:
-			states.update(super(IAccessible, self).states)
+			states.update(super().states)
 		try:
 			IAccessibleStates=self.IAccessibleStates
 		except COMError:
@@ -873,7 +873,7 @@ the NVDAObject for IAccessible
 			# Not an IA2 object.
 			return states
 		IAccessible2States=self.IA2States
-		states=states|set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in range(32)) if y&IAccessible2States) if x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
+		states=states|{IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in range(32)) if y&IAccessible2States) if x in IAccessibleHandler.IAccessible2StatesToNVDAStates}
 		# Readonly should override editable
 		if controlTypes.STATE_READONLY in states:
 			states.discard(controlTypes.STATE_EDITABLE)
@@ -956,7 +956,7 @@ the NVDAObject for IAccessible
 			return None
 
 	def isPointInObject(self,x,y):
-		if self.windowHandle and not super(IAccessible,self).isPointInObject(x,y):
+		if self.windowHandle and not super().isPointInObject(x,y):
 			return False
 		res=IAccessibleHandler.accHitTest(self.IAccessibleObject,self.IAccessibleChildID,x,y)
 		if not res or res[0]!=self.IAccessibleObject or res[1]!=self.IAccessibleChildID:
@@ -973,7 +973,7 @@ the NVDAObject for IAccessible
 
 	def _get_parent(self):
 		if self.IAccessibleChildID!=0:
-			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=0,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=0) or super(IAccessible,self).parent
+			return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=0,event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=0) or super().parent
 		res=IAccessibleHandler.accParent(self.IAccessibleObject,self.IAccessibleChildID)
 		if res:
 			parentObj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
@@ -983,8 +983,8 @@ the NVDAObject for IAccessible
 					windowObj=Window(windowHandle=self.windowHandle)
 					if windowObj and isinstance(windowObj,IAccessible) and windowObj.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW and windowObj.parent==parentObj:
 						return windowObj
-			return self.correctAPIForRelation(parentObj,relation="parent") or super(IAccessible,self).parent
-		return super(IAccessible,self).parent
+			return self.correctAPIForRelation(parentObj,relation="parent") or super().parent
+		return super().parent
 
 	def _get_next(self):
 		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,oleacc.NAVDIR_NEXT)
@@ -1080,7 +1080,7 @@ the NVDAObject for IAccessible
 		child = IAccessibleHandler.accChild(self.IAccessibleObject, index + 1)
 		if not child:
 			if index < self.childCount:
-				return super(IAccessible, self).getChild(index)
+				return super().getChild(index)
 			return None
 		if child[0] == self.IAccessibleObject:
 			return IAccessible(windowHandle=self.windowHandle, IAccessibleObject=self.IAccessibleObject, IAccessibleChildID=child[1],
@@ -1281,7 +1281,7 @@ the NVDAObject for IAccessible
 	def _get_selectionContainer(self):
 		if self.table:
 			return self.table
-		return super(IAccessible,self).selectionContainer
+		return super().selectionContainer
 
 	def _getSelectedItemsCount_accSelection(self,maxCount):
 		sel=self.IAccessibleObject.accSelection
@@ -1320,7 +1320,7 @@ the NVDAObject for IAccessible
 			pass
 		else:
 			log.debug("No means of getting a selection count from this IAccessible")
-		return super(IAccessible,self).getSelectedItemsCount(maxCount)
+		return super().getSelectedItemsCount(maxCount)
 
 
 	def _get_table(self):
@@ -1344,7 +1344,7 @@ the NVDAObject for IAccessible
 	def _get_tableID(self):
 		table = self.table
 		if not table:
-			return super(IAccessible, self).tableID
+			return super().tableID
 		return (self.windowHandle, self.table.IA2UniqueID)
 
 	def _get_activeChild(self):
@@ -1454,7 +1454,7 @@ the NVDAObject for IAccessible
 		if isinstance(self, EditableTextWithAutoSelectDetection):
 			self.hasContentChangedSinceLastSelection = True
 			return
-		return super(IAccessible, self).event_valueChange()
+		return super().event_valueChange()
 
 	def event_alert(self):
 		if self.role != controlTypes.ROLE_ALERT:
@@ -1482,14 +1482,14 @@ the NVDAObject for IAccessible
 				# This object is part of the focused compound text editor, so notify it.
 				focus.event_caret()
 				return
-		super(IAccessible, self).event_caret()
+		super().event_caret()
 
 	def _get_groupName(self):
 		return None
 		if self.IAccessibleChildID>0:
 			return None
 		else:
-			return super(IAccessible,self)._get_groupName()
+			return super()._get_groupName()
 
 	def event_selection(self):
 		return self.event_stateChange()
@@ -1509,10 +1509,10 @@ the NVDAObject for IAccessible
 		# #4300: We check the object and child ids as well because there can be "clients" other than the root.
 		if IARole == oleacc.ROLE_SYSTEM_CLIENT and self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and self.windowStyle & winUser.WS_SYSMENU:
 			return True
-		return super(IAccessible, self).isPresentableFocusAncestor
+		return super().isPresentableFocusAncestor
 
 	def _get_devInfo(self):
-		info = super(IAccessible, self).devInfo
+		info = super().devInfo
 		iaObj = self.IAccessibleObject
 		info.append("IAccessibleObject: %r" % iaObj)
 		childID = self.IAccessibleChildID
@@ -1653,7 +1653,7 @@ class ContentGenericClient(IAccessible):
 		val=self.displayText
 		truncate=len(val)>200
 		if truncate:
-			return u"%s\u2026"%val[:200]
+			return "%s\u2026"%val[:200]
 		return val
 
 class GenericWindow(IAccessible):
@@ -1682,7 +1682,7 @@ class WindowRoot(GenericWindow):
 	def _get_parent(self):
 		if self.parentUsesSuperOnWindowRootIAccessible:
 			return super(IAccessible,self).parent
-		return super(WindowRoot,self).parent
+		return super().parent
 
 	def _get_next(self):
 		return super(IAccessible,self).next 
@@ -1695,7 +1695,7 @@ class WindowRoot(GenericWindow):
 		groupboxObj=IAccessibleHandler.findGroupboxObject(self)
 		if groupboxObj:
 			return groupboxObj
-		return super(WindowRoot,self).container
+		return super().container
 
 class ShellDocObjectView(IAccessible):
 
@@ -1703,13 +1703,13 @@ class ShellDocObjectView(IAccessible):
 		#Sometimes Shell DocObject View gets focus, when really the document inside it should
 		#Adobe Reader 9 licence agreement
 		if eventHandler.isPendingEvents("gainFocus") or self.childCount!=1:
-			return super(ShellDocObjectView,self).event_gainFocus()
+			return super().event_gainFocus()
 		child=self.firstChild
 		if not child or child.windowClassName!="Internet Explorer_Server" or child.role!=controlTypes.ROLE_PANE:
-			return super(ShellDocObjectView,self).event_gainFocus()
+			return super().event_gainFocus()
 		child=child.firstChild
 		if not child or child.windowClassName!="Internet Explorer_Server" or child.role!=controlTypes.ROLE_DOCUMENT:
-			return super(ShellDocObjectView,self).event_gainFocus()
+			return super().event_gainFocus()
 		eventHandler.queueEvent("gainFocus",child)
 
 class JavaVMRoot(IAccessible):
@@ -1755,17 +1755,17 @@ class Groupbox(IAccessible):
 			nextNext=self._getNextSkipWindows(next)
 			if nextNext and nextNext.name!=next.name:
 				return next.name
-		return super(Groupbox,self).description
+		return super().description
 
 	def _get_isPresentableFocusAncestor(self):
 		# Only fetch this the first time it is requested,
 		# as it is a bit slow due to the description property
 		# and the answer shouldn't change anyway.
-		self.isPresentableFocusAncestor = res = super(Groupbox, self).isPresentableFocusAncestor
+		self.isPresentableFocusAncestor = res = super().isPresentableFocusAncestor
 		return res
 
-CHAR_LTR_MARK = u'\u200E'
-CHAR_RTL_MARK = u'\u200F'
+CHAR_LTR_MARK = '\u200E'
+CHAR_RTL_MARK = '\u200F'
 class TrayClockWClass(IAccessible):
 	"""
 	Based on NVDAObject but the role is changed to clock.
@@ -1774,19 +1774,19 @@ class TrayClockWClass(IAccessible):
 
 	def _get_role(self):
 		# On Windows 10 Anniversary update and later the text 'clock' is included in the name so having clock in the control type is redundant.
-		if super(TrayClockWClass, self).value is None:
+		if super().value is None:
 			return controlTypes.ROLE_BUTTON
 		return controlTypes.ROLE_CLOCK
 
 	def _get_name(self):
 	# #4364 On some versions of Windows name contains redundant information that is available either in the role or the value, however on Windows 10 Anniversary Update and later the value is empty, so we cannot simply dismiss the name.
-		if super(TrayClockWClass, self).value is None:
-			clockName = super(TrayClockWClass, self).name
+		if super().value is None:
+			clockName = super().name
 			return clockName.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 		return None
 
 	def _get_value(self):
-		clockValue = super(TrayClockWClass, self).value
+		clockValue = super().value
 		if clockValue is not None:
 			clockValue = clockValue.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 		return clockValue
@@ -1794,7 +1794,7 @@ class TrayClockWClass(IAccessible):
 class OutlineItem(IAccessible):
 
 	def _get_value(self):
-		val=super(OutlineItem,self)._get_value()
+		val=super()._get_value()
 		try:
 			int(val)
 		except (ValueError, TypeError):
@@ -1813,13 +1813,13 @@ class SysLinkClient(IAccessible):
 	def _get_role(self):
 		if self.childCount==0:
 			return controlTypes.ROLE_LINK
-		return super(SysLinkClient,self).role
+		return super().role
 
 class SysLink(IAccessible):
 
 	def _get_name(self):
 		#Workaround for #451 - explorer returns incorrect string length, thus it can contain garbage characters
-		name=super(SysLink,self).name
+		name=super().name
 		if name: 
 			#Remove any data after the null character
 			i=name.find('\0')
@@ -1834,7 +1834,7 @@ class TaskList(IAccessible):
 		if self.childCount == 0:
 			# However, in Windows 7, the task list gets focus even if alt+tab is pressed with no applications open.
 			# In this case, we must report the focus so the user knows where the focus has landed.
-			return super(TaskList, self).event_gainFocus()
+			return super().event_gainFocus()
 
 class TaskListIcon(IAccessible):
 
@@ -1846,25 +1846,25 @@ class TaskListIcon(IAccessible):
 	def reportFocus(self):
 		if controlTypes.STATE_INVISIBLE in self.states:
 			return
-		super(TaskListIcon,self).reportFocus()
+		super().reportFocus()
 
 class MenuItem(IAccessible):
 
 	def _get_description(self):
 		name=self.name
-		description=super(MenuItem,self)._get_description()
+		description=super()._get_description()
 		if description!=name:
 			return description
 		else:
 			return None
 
 	def _get_name(self):
-		return super(MenuItem,self).name or self.displayText
+		return super().name or self.displayText
 
 	def event_gainFocus(self):
 		if eventHandler.isPendingEvents("gainFocus"):
 			return
-		super(MenuItem, self).event_gainFocus()
+		super().event_gainFocus()
 
 class Taskbar(IAccessible):
 	name = _("Taskbar")
@@ -1872,7 +1872,7 @@ class Taskbar(IAccessible):
 class Button(IAccessible):
 
 	def _get_name(self):
-		name=super(Button,self).name
+		name=super().name
 		if not name or name.isspace():
 			name=self.displayText
 		return name
@@ -1899,7 +1899,7 @@ class StaticText(IAccessible):
 	"""Support for owner-drawn staticText controls where accName is empty."""
 
 	def _get_name(self):
-		name=super(StaticText,self).name
+		name=super().name
 		if not name or name.isspace():
 				name=self.displayText
 		return name

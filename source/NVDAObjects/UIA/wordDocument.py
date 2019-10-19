@@ -41,13 +41,13 @@ class RevisionUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 		text=self.textInfo.text
 		if UIAHandler.AnnotationType_InsertionChange in self.attribValues:
 			# Translators: The label shown for an insertion change 
-			return _(u"insertion: {text}").format(text=text)
+			return _("insertion: {text}").format(text=text)
 		elif UIAHandler.AnnotationType_DeletionChange in self.attribValues:
 			# Translators: The label shown for a deletion change 
-			return _(u"deletion: {text}").format(text=text)
+			return _("deletion: {text}").format(text=text)
 		else:
 			# Translators: The general label shown for track changes 
-			return _(u"track change: {text}").format(text=text)
+			return _("track change: {text}").format(text=text)
 
 def getCommentInfoFromPosition(position):
 	"""
@@ -96,12 +96,12 @@ class WordDocumentTextInfo(UIATextInfo):
 		# Therefore for now, get the screen coordinates, and if the word object model is available, use our legacy code to get the location text.
 		om=self.obj.WinwordWindowObject
 		if not om:
-			return super(WordDocumentTextInfo,self).locationText
+			return super().locationText
 		try:
 			r=om.rangeFromPoint(point.x,point.y)
 		except (COMError,NameError):
 			log.debugWarning("MS Word object model does not support rangeFromPoint")
-			return super(WordDocumentTextInfo,self).locationText
+			return super().locationText
 		from  NVDAObjects.window.winword import WordDocumentTextInfo as WordObjectModelTextInfo
 		i=WordObjectModelTextInfo(self.obj,None,_rangeObj=r)
 		return i.locationText
@@ -110,7 +110,7 @@ class WordDocumentTextInfo(UIATextInfo):
 		if UIAFormatUnits is None and self.UIAFormatUnits:
 			# Word documents must always split by a unit the first time, as an entire text chunk can give valid annotation types 
 			UIAFormatUnits=self.UIAFormatUnits
-		return super(WordDocumentTextInfo,self)._getTextWithFields_text(textRange,formatConfig,UIAFormatUnits=UIAFormatUnits)
+		return super()._getTextWithFields_text(textRange,formatConfig,UIAFormatUnits=UIAFormatUnits)
 
 	def _get_controlFieldNVDAObjectClass(self):
 		return WordDocumentNode
@@ -118,7 +118,7 @@ class WordDocumentTextInfo(UIATextInfo):
 	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		automationID=obj.UIAElement.cachedAutomationID
-		field=super(WordDocumentTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
+		field=super()._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
 		if automationID.startswith('UIA_AutomationId_Word_Page_'):
 			field['page-number']=automationID.rsplit('_',1)[-1]
 		elif obj.UIAElement.cachedControlType==UIAHandler.UIA_GroupControlTypeId and obj.name:
@@ -141,7 +141,7 @@ class WordDocumentTextInfo(UIATextInfo):
 		return field
 
 	def _getTextFromUIARange(self, textRange):
-		t=super(WordDocumentTextInfo,self)._getTextFromUIARange(textRange)
+		t=super()._getTextFromUIARange(textRange)
 		if t:
 			# HTML emails expose a lot of vertical tab chars in their text
 			# Really better as carage returns
@@ -154,11 +154,11 @@ class WordDocumentTextInfo(UIATextInfo):
 		""" Is this textInfo positioned on an end-of-row mark? """
 		info=self.copy()
 		info.expand(textInfos.UNIT_CHARACTER)
-		return info._rangeObj.getText(-1)==u'\u0007'
+		return info._rangeObj.getText(-1)=='\u0007'
 
 	def move(self,unit,direction,endPoint=None):
 		if endPoint is None:
-			res=super(WordDocumentTextInfo,self).move(unit,direction)
+			res=super().move(unit,direction)
 			if res==0:
 				return 0
 			# Skip over end of Row marks
@@ -166,10 +166,10 @@ class WordDocumentTextInfo(UIATextInfo):
 				if self.move(unit,1 if direction>0 else -1)==0:
 					break
 			return res
-		return super(WordDocumentTextInfo,self).move(unit,direction,endPoint)
+		return super().move(unit,direction,endPoint)
 
 	def expand(self,unit):
-		super(WordDocumentTextInfo,self).expand(unit)
+		super().expand(unit)
 		# #7970: MS Word refuses to expand to line when on the final line and it is blank.
 		# This among other things causes a newly inserted bullet not to be spoken or brailled.
 		# Therefore work around this by detecting if the expand to line failed, and moving the end of the range to the end of the document manually.
@@ -182,7 +182,7 @@ class WordDocumentTextInfo(UIATextInfo):
 		if self.isCollapsed:
 			# #7652: We cannot fetch fields on collapsed ranges otherwise we end up with repeating controlFields in braille (such as list list list). 
 			return []
-		fields=super(WordDocumentTextInfo,self).getTextWithFields(formatConfig=formatConfig)
+		fields=super().getTextWithFields(formatConfig=formatConfig)
 		if len(fields)==0: 
 			# Nothing to do... was probably a collapsed range.
 			return fields
@@ -274,13 +274,13 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		if obj.role==controlTypes.ROLE_EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
 			return False
-		return super(WordBrowseModeDocument,self).shouldSetFocusToObj(obj)
+		return super().shouldSetFocusToObj(obj)
 
 	def shouldPassThrough(self,obj,reason=None):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		if obj.role==controlTypes.ROLE_EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
 			return False
-		return super(WordBrowseModeDocument,self).shouldPassThrough(obj,reason=reason)
+		return super().shouldPassThrough(obj,reason=reason)
 
 	def script_tab(self,gesture):
 		oldBookmark=self.rootNVDAObject.makeTextInfo(textInfos.POSITION_SELECTION).bookmark
@@ -298,7 +298,7 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 			comments=UIATextAttributeQuicknavIterator(CommentUIATextInfoQuickNavItem,nodeType,self,pos,direction=direction)
 			revisions=UIATextAttributeQuicknavIterator(RevisionUIATextInfoQuickNavItem,nodeType,self,pos,direction=direction)
 			return browseMode.mergeQuickNavItemIterators([comments,revisions],direction)
-		return super(WordBrowseModeDocument,self)._iterNodesByType(nodeType,direction=direction,pos=pos)
+		return super()._iterNodesByType(nodeType,direction=direction,pos=pos)
 
 	ElementsListDialog=ElementsListDialog
 
@@ -306,7 +306,7 @@ class WordDocumentNode(UIA):
 	TextInfo=WordDocumentTextInfo
 
 	def _get_role(self):
-		role=super(WordDocumentNode,self).role
+		role=super().role
 		# Footnote / endnote elements currently have a role of unknown. Force them to editableText so that theyr text is presented correctly
 		if role==controlTypes.ROLE_UNKNOWN:
 			role=controlTypes.ROLE_EDITABLETEXT
@@ -318,7 +318,7 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 	announceEntireNewLine=True
 
 	# Microsoft Word duplicates the full title of the document on this control, which is redundant as it appears in the title of the app itself.
-	name=u""
+	name=""
 
 	def script_reportCurrentComment(self,gesture):
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)

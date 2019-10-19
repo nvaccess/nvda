@@ -278,7 +278,7 @@ class UIATextInfo(textInfos.TextInfo):
 		return textInfos.FieldCommand("formatChange",formatField)
 
 	def __init__(self,obj,position,_rangeObj=None):
-		super(UIATextInfo,self).__init__(obj,position)
+		super().__init__(obj,position)
 		if _rangeObj:
 			try:
 				self._rangeObj=_rangeObj.clone()
@@ -475,8 +475,7 @@ class UIATextInfo(textInfos.TextInfo):
 					field=self._getFormatFieldAtRange(tempRange,formatConfig,ignoreMixedValues=len(furtherUIAFormatUnits)==0)
 				except UIAMixedAttributeError:
 					log.debug("Mixed formatting. Trying higher resolution unit")
-					for subfield in self._getTextWithFields_text(tempRange,formatConfig,UIAFormatUnits=furtherUIAFormatUnits):
-						yield subfield
+					yield from self._getTextWithFields_text(tempRange,formatConfig,UIAFormatUnits=furtherUIAFormatUnits)
 					log.debug("Done yielding higher resolution unit")
 					continue
 				log.debug("Yielding formatting and text")
@@ -624,8 +623,7 @@ class UIATextInfo(textInfos.TextInfo):
 					# plain text before this child
 					tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,childRange,UIAHandler.TextPatternRangeEndpoint_Start)
 					log.debug("Plain text before child")
-					for field in self._getTextWithFields_text(tempRange,formatConfig):
-						yield field
+					yield from self._getTextWithFields_text(tempRange,formatConfig)
 				elif childStartDelta<0:
 					log.debug("textRange started part way through child. Cropping Start of child range to fit" )
 					childRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
@@ -634,8 +632,7 @@ class UIATextInfo(textInfos.TextInfo):
 					log.debug("childRange is degenerate. Skipping")
 					continue
 				log.debug("Recursing into child %s"%index)
-				for field in self._getTextWithFieldsForUIARange(childElement,childRange,formatConfig,includeRoot=True,alwaysWalkAncestors=False,_rootElementClipped=(clippedStart,clippedEnd)):
-					yield field
+				yield from self._getTextWithFieldsForUIARange(childElement,childRange,formatConfig,includeRoot=True,alwaysWalkAncestors=False,_rootElementClipped=(clippedStart,clippedEnd))
 				log.debug("Done recursing into child %s"%index)
 				tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_End)
 			log.debug("children done")
@@ -643,13 +640,11 @@ class UIATextInfo(textInfos.TextInfo):
 			if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_End)<0:
 				tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
 				log.debug("Yielding final text")
-				for field in self._getTextWithFields_text(tempRange,formatConfig):
-					yield field
+				yield from self._getTextWithFields_text(tempRange,formatConfig)
 		else: #no children 
 			log.debug("no children")
 			log.debug("Yielding text") 
-			for field in self._getTextWithFields_text(textRange,formatConfig):
-				yield field
+			yield from self._getTextWithFields_text(textRange,formatConfig)
 		for field in parentFields:
 			log.debug("Yielding controlEnd for parentElement")
 			yield textInfos.FieldCommand("controlEnd",field)
@@ -897,7 +892,7 @@ class UIA(Window):
 		clsList.append(UIA)
 
 		if self.UIAIsWindowElement:
-			super(UIA,self).findOverlayClasses(clsList)
+			super().findOverlayClasses(clsList)
 			if self.UIATextPattern:
 				#Since there is a UIA text pattern, there is no need to use the win32 edit support at all
 				import NVDAObjects.window.edit
@@ -952,7 +947,7 @@ class UIA(Window):
 			windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
 		if not windowHandle:
 			raise InvalidNVDAObject("no windowHandle")
-		super(UIA,self).__init__(windowHandle=windowHandle)
+		super().__init__(windowHandle=windowHandle)
 
 		self.initialUIACachedPropertyIDs=initialUIACachedPropertyIDs
 		if initialUIACachedPropertyIDs:
@@ -1025,7 +1020,7 @@ class UIA(Window):
 	_TextInfo=UIATextInfo
 	def _get_TextInfo(self):
 		if self.UIATextPattern: return self._TextInfo
-		textInfo=super(UIA,self).TextInfo
+		textInfo=super().TextInfo
 		if textInfo is NVDAObjectTextInfo and self.UIAIsWindowElement and self.role==controlTypes.ROLE_WINDOW:
 			import displayModel
 			return displayModel.DisplayModelTextInfo
@@ -1035,7 +1030,7 @@ class UIA(Window):
 		self.UIAElement.setFocus()
 
 	def _get_devInfo(self):
-		info=super(UIA,self).devInfo
+		info=super().devInfo
 		info.append("UIAElement: %r"%self.UIAElement)
 		try:
 			ret=self.UIAElement.currentAutomationID
@@ -1063,10 +1058,10 @@ class UIA(Window):
 			ret="Exception: %s"%e
 		info.append("UIA className: %s"%ret)
 		patternsAvailable = []
-		patternAvailableConsts = dict(
-			(const, name) for name, const in UIAHandler.__dict__.items()
+		patternAvailableConsts = {
+			const: name for name, const in UIAHandler.__dict__.items()
 			if name.startswith("UIA_Is") and name.endswith("PatternAvailablePropertyId")
-		)
+		}
 		self._prefetchUIACacheForPropertyIDs(list(patternAvailableConsts))
 		for const, name in patternAvailableConsts.items():
 			try:
@@ -1095,7 +1090,7 @@ class UIA(Window):
 			if s!=UIAHandler.handler.reservedNotSupportedValue:
 				role=controlTypes.ROLE_TOGGLEBUTTON
 		elif role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_PANE,controlTypes.ROLE_WINDOW) and self.windowHandle:
-			superRole=super(UIA,self).role
+			superRole=super().role
 			if superRole!=controlTypes.ROLE_WINDOW:
 				role=superRole
 		return role
@@ -1204,7 +1199,7 @@ class UIA(Window):
 		return states
 
 	def _get_presentationType(self):
-		presentationType=super(UIA,self).presentationType
+		presentationType=super().presentationType
 		# UIA NVDAObjects can only be considered content if UI Automation considers them both a control and content.
 		if presentationType==self.presType_content and not (self.UIAElement.cachedIsContentElement and self.UIAElement.cachedIsControlElement):
 			presentationType=self.presType_layout
@@ -1214,7 +1209,7 @@ class UIA(Window):
 		if obj and self.windowHandle != obj.windowHandle and not obj.UIAElement.cachedNativeWindowHandle:
 			# The target element is not the root element for the window, so don't change API class; i.e. always use UIA.
 			return obj
-		return super(UIA, self).correctAPIForRelation(obj, relation)
+		return super().correctAPIForRelation(obj, relation)
 
 	def _get_parent(self):
 		try:
@@ -1222,7 +1217,7 @@ class UIA(Window):
 		except COMError:
 			parentElement=None
 		if not parentElement:
-			return super(UIA,self).parent
+			return super().parent
 		if not parentElement.CachedNativeWindowHandle and not self.UIAElement.CachedNativeWindowHandle:
 			# Neither self or parent have a window handle themselves, so their nearest window handle will be the same.
 			# Cache this on the parent if cached on self, to avoid fetching it later.
@@ -1280,7 +1275,7 @@ class UIA(Window):
 			cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
 		except COMError as e:
 			log.debugWarning("Could not fetch cached children from UIA element: %s"%e)
-			return super(UIA,self).children
+			return super().children
 		children=[]
 		if not cachedChildren:
 			# GetCachedChildren returns null if there are no children.
@@ -1432,7 +1427,7 @@ class UIA(Window):
 		return isOffScreen or not self.location or not any(self.location)
 
 	def _get_positionInfo(self):
-		info=super(UIA,self).positionInfo or {}
+		info=super().positionInfo or {}
 		itemIndex=0
 		try:
 			itemIndex=self._getUIACacheablePropertyValue(UIAHandler.UIA_PositionInSetPropertyId)
@@ -1478,7 +1473,7 @@ class UIA(Window):
 	def event_valueChange(self):
 		if issubclass(self.TextInfo, UIATextInfo):
 			return
-		return super(UIA, self).event_valueChange()
+		return super().event_valueChange()
 
 	def event_UIA_systemAlert(self):
 		"""
@@ -1524,7 +1519,7 @@ class TreeviewItem(UIA):
 		return level
 
 	def _get_positionInfo(self):
-		info=super(TreeviewItem,self).positionInfo or {}
+		info=super().positionInfo or {}
 		info['level']=self._level
 		return info
 
@@ -1532,7 +1527,7 @@ class MenuItem(UIA):
 
 	def _get_description(self):
 		name=self.name
-		description=super(MenuItem,self)._get_description()
+		description=super()._get_description()
 		if description!=name:
 			return description
 		else:
@@ -1541,7 +1536,7 @@ class MenuItem(UIA):
 class UIColumnHeader(UIA):
 
 	def _get_description(self):
-		description=super(UIColumnHeader,self).description
+		description=super().description
 		try:
 			itemStatus=self._getUIACacheablePropertyValue(UIAHandler.UIA_ItemStatusPropertyId)
 		except COMError:
@@ -1588,12 +1583,12 @@ class SensitiveSlider(UIA):
 		if self==focusParent:
 			speech.speakObjectProperties(self,value=True,reason=controlTypes.REASON_CHANGE)
 		else:
-			super(SensitiveSlider,self).event_valueChange()
+			super().event_valueChange()
 
 class ControlPanelLink(UIA):
 
 	def _get_description(self):
-		desc=super(ControlPanelLink,self).description
+		desc=super().description
 		try:
 			i=desc.find('\n')
 		except:
@@ -1635,7 +1630,7 @@ class ListItem(UIA):
 				# #6337: This is an item in a combo box without the Value pattern or does not raise value change event.
 				# This item has been selected, so notify the combo box that its value has changed.
 				focus.event_valueChange()
-		super(ListItem, self).event_stateChange()
+		super().event_stateChange()
 
 class Dialog(Dialog):
 	role=controlTypes.ROLE_DIALOG
@@ -1714,7 +1709,7 @@ class SuggestionListItem(UIA):
 class NetUIDropdownAnchor(UIA):
 
 	def _get_name(self):
-		name=super(NetUIDropdownAnchor,self).name
+		name=super().name
 		# In MS Office 2010, these combo boxes had no name.
 		# However, the name can be found as the direct previous sibling label element. 
 		if not name and self.previous and self.previous.role==controlTypes.ROLE_STATICTEXT:

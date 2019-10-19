@@ -492,8 +492,8 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 	def _get_identifiers(self):
 		ids = [
-			u"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=self.secondaryId),
-			u"br({source}):{id}".format(source=self.source, id=self.id),
+			"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=self.secondaryId),
+			"br({source}):{id}".format(source=self.source, id=self.id),
 		]
 		ids.extend(brailleInput.BrailleInputGesture._get_identifiers(self))
 		return ids

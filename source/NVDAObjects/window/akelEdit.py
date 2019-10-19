@@ -72,7 +72,7 @@ class AkelEditTextInfo(edit.EditTextInfo):
 		return end+1
 
 	def _getLineOffsets(self,offset):
-		(start,end)=super(AkelEditTextInfo,self)._getLineOffsets(offset)
+		(start,end)=super()._getLineOffsets(offset)
 		if end == self._getStoryLength():
 			return (start,end)
 		ciChar=AECHARINDEX()

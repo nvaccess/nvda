@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #driverHandler.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
@@ -41,7 +40,7 @@ class Driver(AutoPropertyObject):
 		@raise Exception: If an error occurs.
 		@postcondition: This driver can be used.
 		"""
-		super(Driver, self).__init__()
+		super().__init__()
 		config.pre_configSave.register(self.saveSettings)
 
 	def initSettings(self):
@@ -122,7 +121,7 @@ class Driver(AutoPropertyObject):
 				log.debugWarning("Unsupported setting %s; ignoring"%s.id, exc_info=True)
 				continue
 		if self.supportedSettings:
-			log.debug("Saved settings for {} {}".format(self.__class__.__name__, self.name))
+			log.debug(f"Saved settings for {self.__class__.__name__} {self.name}")
 
 	def loadSettings(self, onlyChanged=False):
 		"""
@@ -185,7 +184,7 @@ class DriverSetting(AutoPropertyObject):
 		"""Returns the configuration specification of this particular setting for config file validator.
 		@rtype: str
 		"""
-		return "string(default={defaultVal})".format(defaultVal=self.defaultVal)
+		return f"string(default={self.defaultVal})"
 
 	def __init__(self, id, displayNameWithAccelerator,
 		availableInSettingsRing=False, defaultVal=None, displayName=None, useConfig=True):
@@ -239,7 +238,7 @@ class NumericDriverSetting(DriverSetting):
 		@type largeStep: int
 		@note: If necessary, the step values will be normalised so that L{minStep} <= L{normalStep} <= L{largeStep}.
 		"""
-		super(NumericDriverSetting,self).__init__(id, displayNameWithAccelerator, availableInSettingsRing=availableInSettingsRing,
+		super().__init__(id, displayNameWithAccelerator, availableInSettingsRing=availableInSettingsRing,
 			defaultVal=defaultVal, displayName=displayName, useConfig=useConfig)
 		self.minVal=minVal
 		self.maxVal=max(maxVal,self.defaultVal)
@@ -257,19 +256,19 @@ class BooleanDriverSetting(DriverSetting):
 		@param defaultVal: Specifies the default value for a boolean driver setting.
 		@type defaultVal: bool
 		"""
-		super(BooleanDriverSetting,self).__init__(id, displayNameWithAccelerator, availableInSettingsRing=availableInSettingsRing,
+		super().__init__(id, displayNameWithAccelerator, availableInSettingsRing=availableInSettingsRing,
 			defaultVal=defaultVal, displayName=displayName, useConfig=useConfig)
 
 	def _get_configSpec(self):
 		defaultVal = repr(self.defaultVal) if self.defaultVal is not None else self.defaultVal
-		return "boolean(default={defaultVal})".format(defaultVal=defaultVal)
+		return f"boolean(default={defaultVal})"
 
 class UnsupportedConfigParameterError(NotImplementedError):
 	"""
 	Raised when changing or retrieving a driver setting that is unsupported for the connected device.
 	"""
 
-class StringParameterInfo(object):
+class StringParameterInfo:
 	"""
 	The base class used to represent a value of a string driver setting.
 	"""

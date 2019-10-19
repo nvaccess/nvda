@@ -200,8 +200,8 @@ class TouchInputGesture(inputCore.InputGesture):
 		# Translators: a touch screen gesture
 		source=_("Touch screen")
 		if mode:
-			source=u"{source}, {mode}".format(source=source,mode=touchModeLabels[mode])
-		return source,u" + ".join(actions)
+			source="{source}, {mode}".format(source=source,mode=touchModeLabels[mode])
+		return source," + ".join(actions)
 
 inputCore.registerGestureSource("ts", TouchInputGesture)
 
@@ -228,7 +228,7 @@ class TouchHandler(threading.Thread):
 			self._cInputTouchWindowProc=winUser.WNDPROC(self.inputTouchWndProc)
 			self._wc=winUser.WNDCLASSEXW(cbSize=sizeof(winUser.WNDCLASSEXW),lpfnWndProc=self._cInputTouchWindowProc,hInstance=self._appInstance,lpszClassName="inputTouchWindowClass")
 			self._wca=windll.user32.RegisterClassExW(byref(self._wc))
-			self._touchWindow=windll.user32.CreateWindowExW(0,self._wca,u"NVDA touch input",0,0,0,0,0,HWND_MESSAGE,None,self._appInstance,None)
+			self._touchWindow=windll.user32.CreateWindowExW(0,self._wca,"NVDA touch input",0,0,0,0,0,HWND_MESSAGE,None,self._appInstance,None)
 			windll.user32.RegisterPointerInputTarget(self._touchWindow,PT_TOUCH)
 			oledll.oleacc.AccSetRunningUtilityState(self._touchWindow,ANRUS_TOUCH_MODIFICATION_ACTIVE,ANRUS_TOUCH_MODIFICATION_ACTIVE)
 			self.trackerManager=touchTracker.TrackerManager()

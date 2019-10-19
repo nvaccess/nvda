@@ -20,7 +20,7 @@ class LogViewer(wx.Frame):
 
 	def __init__(self, parent):
 		# Translators: The title of the NVDA log viewer window.
-		super(LogViewer, self).__init__(parent, wx.ID_ANY, _("NVDA Log Viewer"))
+		super().__init__(parent, wx.ID_ANY, _("NVDA Log Viewer"))
 		self.Bind(wx.EVT_ACTIVATE, self.onActivate)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -60,7 +60,7 @@ class LogViewer(wx.Frame):
 			self._lastFilePos = f.tell()
 			self.outputCtrl.SetInsertionPoint(pos)
 			f.close()
-		except IOError:
+		except OSError:
 			pass
 
 	def onActivate(self, evt):
@@ -80,7 +80,7 @@ class LogViewer(wx.Frame):
 			# #9038: work with UTF-8 from the start.
 			with open(filename, "w", encoding="UTF-8") as f:
 				f.write(self.outputCtrl.GetValue())
-		except (IOError, OSError) as e:
+		except OSError as e:
 			# Translators: Dialog text presented when NVDA cannot save a log file.
 			gui.messageBox(_("Error saving log: %s") % e.strerror, _("Error"), style=wx.OK | wx.ICON_ERROR, parent=self)
 

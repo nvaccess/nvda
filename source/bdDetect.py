@@ -88,7 +88,7 @@ def addUsbDevices(driver, type, ids):
 	malformedIds = [id for id in ids if not isinstance(id, str) or not USB_ID_REGEX.match(id)]
 	if malformedIds:
 		raise ValueError("Invalid IDs provided for driver %s, type %s: %s"
-			% (driver, type, u", ".join(malformedIds)))
+			% (driver, type, ", ".join(malformedIds)))
 	devs = _getDriver(driver)
 	driverUsb = devs[type]
 	driverUsb.update(ids)
@@ -161,7 +161,7 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 #: @type: L{_DeviceInfoFetcher}
 deviceInfoFetcher = _DeviceInfoFetcher()
 
-class Detector(object):
+class Detector:
 	"""Detector class used to automatically detect braille displays.
 	This should only be used by the L{braille} module.
 	"""

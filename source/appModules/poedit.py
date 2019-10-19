@@ -145,7 +145,7 @@ class PoeditListItem(sysListView32.ListItem):
 		# If this item is untranslated or fuzzy, then it will be bold.
 		# Other info on the web says that the background color of 
 		# the item changes, but this doesn't seem to be true while testing.
-		name = super(PoeditListItem,self).name
+		name = super().name
 		return "* " + name if self.isBold else name
 
 	def event_gainFocus(self):

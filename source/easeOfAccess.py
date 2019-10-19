@@ -26,7 +26,7 @@ def isRegistered():
 		winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, APP_KEY_PATH, 0,
 			winreg.KEY_READ | winreg.KEY_WOW64_64KEY)
 		return True
-	except WindowsError:
+	except OSError:
 		return False
 
 def notify(signal):
@@ -64,7 +64,7 @@ def willAutoStart(hkey):
 			winreg.KEY_READ | winreg.KEY_WOW64_64KEY)
 		return (APP_KEY_NAME in
 			winreg.QueryValueEx(k, "Configuration")[0].split(","))
-	except WindowsError:
+	except OSError:
 		return False
 
 def setAutoStart(hkey, enable):
@@ -72,7 +72,7 @@ def setAutoStart(hkey, enable):
 		winreg.KEY_READ | winreg.KEY_WRITE | winreg.KEY_WOW64_64KEY)
 	try:
 		conf = winreg.QueryValueEx(k, "Configuration")[0].split(",")
-	except WindowsError:
+	except OSError:
 		conf = []
 	else:
 		if not conf[0]:

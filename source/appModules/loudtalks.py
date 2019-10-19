@@ -23,7 +23,7 @@ class loudTalksContactListItem(ListItem):
 	shouldAllowIAccessibleFocusEvent = True
 
 	def _get_keyboardShortcut(self):
-		keyboardShortcut = super(loudTalksContactListItem,self).keyboardShortcut
+		keyboardShortcut = super().keyboardShortcut
 		if keyboardShortcut == "None":
 			 return None
 		return keyboardShortcut

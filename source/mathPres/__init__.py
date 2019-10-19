@@ -21,7 +21,7 @@ from logHandler import log
 import ui
 import textInfos
 
-class MathPresentationProvider(object):
+class MathPresentationProvider:
 	"""Implements presentation of math content.
 	A single provider does not need to implement all presentation types.
 	"""
@@ -102,7 +102,7 @@ class MathInteractionNVDAObject(Window):
 	def __init__(self, provider=None, mathMl=None):
 		self.parent = parent = api.getFocusObject()
 		self.provider = provider
-		super(MathInteractionNVDAObject, self).__init__(windowHandle=parent.windowHandle)
+		super().__init__(windowHandle=parent.windowHandle)
 
 	def setFocus(self):
 		ti = self.parent.treeInterceptor

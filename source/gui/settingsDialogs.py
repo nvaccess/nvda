@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # settingsDialogs.py
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
@@ -97,8 +96,8 @@ class SettingsDialog(wx.Dialog, DpiScalingHelperMixin, metaclass=guiHelper.SIPAB
 		if state is cls._DIALOG_DESTROYED_STATE and not multiInstanceAllowed:
 			# the dialog has been destroyed by wx, but the instance is still available. This indicates there is something
 			# keeping it alive.
-			log.error("Opening new settings dialog while instance still exists: {!r}".format(firstMatchingInstance))
-		obj = super(SettingsDialog, cls).__new__(cls, *args, **kwargs)
+			log.error(f"Opening new settings dialog while instance still exists: {firstMatchingInstance!r}")
+		obj = super().__new__(cls, *args, **kwargs)
 		SettingsDialog._instances[obj] = cls._DIALOG_CREATED_STATE
 		return obj
 
@@ -194,7 +193,7 @@ class SettingsDialog(wx.Dialog, DpiScalingHelperMixin, metaclass=guiHelper.SIPAB
 		"""
 		if evt.KeyCode in (wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER):
 			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
-		elif self.hasApply and evt.UnicodeKey == ord(u'S') and evt.controlDown:
+		elif self.hasApply and evt.UnicodeKey == ord('S') and evt.controlDown:
 			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_APPLY))
 		else:
 			evt.Skip()
@@ -266,7 +265,7 @@ class SettingsPanel(wx.Panel, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCM
 	"""
 
 	title=""
-	panelDescription=u""
+	panelDescription=""
 
 	def __init__(self, parent):
 		"""
@@ -374,11 +373,11 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		"""
 		if initialCategory and not issubclass(initialCategory,SettingsPanel):
 			if gui._isDebug():
-				log.debug("Unable to open category: {}".format(initialCategory), stack_info=True)
+				log.debug(f"Unable to open category: {initialCategory}", stack_info=True)
 			raise TypeError("initialCategory should be an instance of SettingsPanel")
 		if initialCategory and initialCategory not in self.categoryClasses:
 			if gui._isDebug():
-				log.debug("Unable to open category: {}".format(initialCategory), stack_info=True)
+				log.debug(f"Unable to open category: {initialCategory}", stack_info=True)
 			raise MultiCategorySettingsDialog.CategoryUnavailableError(
 				"The provided initial category is not a part of this dialog"
 			)
@@ -388,7 +387,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# dictionary key is index of category in self.catList, value is the instance. Partially filled, check for KeyError
 		self.catIdToInstanceMap = {}
 
-		super(MultiCategorySettingsDialog, self).__init__(
+		super().__init__(
 			parent,
 			resizeable=True,
 			hasApplyButton=True,
@@ -497,7 +496,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			try:
 				cls = self.categoryClasses[catId]
 			except IndexError:
-				raise ValueError("Unable to create panel for unknown category ID: {}".format(catId))
+				raise ValueError(f"Unable to create panel for unknown category ID: {catId}")
 			panel = cls(parent=self.container)
 			panel.Hide()
 			self.containerSizer.Add(panel, flag=wx.ALL, border=guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
@@ -577,7 +576,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			newCat = self._getCategoryPanel(newCatId)
 		except ValueError as e:
 			newCatTitle = self.catListCtrl.GetItemText(newCatId)
-			log.error("Unable to change to category: {}".format(newCatTitle), exc_info=e)
+			log.error(f"Unable to change to category: {newCatTitle}", exc_info=e)
 			return
 		if oldCat:
 			oldCat.onPanelDeactivated()
@@ -613,13 +612,13 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			return
 		for panel in self.catIdToInstanceMap.values():
 			panel.Destroy()
-		super(MultiCategorySettingsDialog,self).onOk(evt)
+		super().onOk(evt)
 
 	def onCancel(self,evt):
 		for panel in self.catIdToInstanceMap.values():
 			panel.onDiscard()
 			panel.Destroy()
-		super(MultiCategorySettingsDialog,self).onCancel(evt)
+		super().onCancel(evt)
 
 	def onApply(self,evt):
 		try:
@@ -627,7 +626,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		except ValueError:
 			log.debugWarning("", exc_info=True)
 			return
-		super(MultiCategorySettingsDialog,self).onApply(evt)
+		super().onApply(evt)
 
 class GeneralSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the general settings panel.
@@ -802,7 +801,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		if self.startOnLogonScreenCheckBox.IsEnabled():
 			try:
 				config.setStartOnLogonScreen(self.startOnLogonScreenCheckBox.GetValue())
-			except (WindowsError, RuntimeError):
+			except (OSError, RuntimeError):
 				gui.messageBox(_("This change requires administrator privileges."), _("Insufficient Privileges"), style=wx.OK | wx.ICON_ERROR, parent=self)
 		if updateCheck:
 			config.conf["update"]["autoCheck"]=self.autoCheckForUpdatesCheckBox.IsChecked()
@@ -819,7 +818,7 @@ class LanguageRestartDialog(wx.Dialog):
 
 	def __init__(self, parent):
 		# Translators: The title of the dialog which appears when the user changed NVDA's interface language.
-		super(LanguageRestartDialog, self).__init__(parent, title=_("Language Configuration Change"))
+		super().__init__(parent, title=_("Language Configuration Change"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		# Translators: The message displayed after NVDA interface language has been changed.
@@ -905,11 +904,11 @@ class SpeechSettingsPanel(SettingsPanel):
 	def onPanelActivated(self):
 		# call super after all panel updates have been completed, we dont want the panel to show until this is complete.
 		self.voicePanel.onPanelActivated()
-		super(SpeechSettingsPanel,self).onPanelActivated()
+		super().onPanelActivated()
 
 	def onPanelDeactivated(self):
 		self.voicePanel.onPanelDeactivated()
-		super(SpeechSettingsPanel,self).onPanelDeactivated()
+		super().onPanelDeactivated()
 
 	def onDiscard(self):
 		self.voicePanel.onDiscard()
@@ -990,9 +989,9 @@ class SynthesizerSelectionDialog(SettingsDialog):
 			# Hack: we need to update the synth in our parent window before closing.
 			# Otherwise, NVDA will report the old synth even though the new synth is reflected visually.
 			self.Parent.updateCurrentSynth()
-		super(SynthesizerSelectionDialog, self).onOk(evt)
+		super().onOk(evt)
 
-class DriverSettingChanger(object):
+class DriverSettingChanger:
 	"""Functor which acts as calback for GUI events."""
 
 	def __init__(self,driver,setting):
@@ -1011,7 +1010,7 @@ class StringDriverSettingChanger(DriverSettingChanger):
 	"""Same as L{DriverSettingChanger} but handles combobox events."""
 	def __init__(self,driver,setting,container):
 		self.container=container
-		super(StringDriverSettingChanger,self).__init__(driver,setting)
+		super().__init__(driver,setting)
 
 	def __call__(self,evt):
 		# Quick workaround to deal with voice changes.
@@ -1030,7 +1029,7 @@ class StringDriverSettingChanger(DriverSettingChanger):
 				getattr(self.container,"_%ss"%self.setting.id)[evt.GetSelection()].id
 			)
 
-class DriverSettingsMixin(object):
+class DriverSettingsMixin:
 	"""
 	Mixin class that provides support for driver specific gui settings.
 	Derived classes should implement L{driver}.
@@ -1039,7 +1038,7 @@ class DriverSettingsMixin(object):
 	def __init__(self, *args, **kwargs):
 		self.sizerDict={}
 		self.lastControl=None		
-		super(DriverSettingsMixin,self).__init__(*args,**kwargs)
+		super().__init__(*args,**kwargs)
 		self._curDriverRef = weakref.ref(self.driver)
 
 	@property
@@ -1184,7 +1183,7 @@ class DriverSettingsMixin(object):
 			self.settingsSizer.Clear(delete_windows=True)
 			self._curDriverRef = weakref.ref(self.driver)
 			self.makeSettings(self.settingsSizer)
-		super(DriverSettingsMixin,self).onPanelActivated()
+		super().onPanelActivated()
 
 class VoiceSettingsPanel(DriverSettingsMixin, SettingsPanel):
 	# Translators: This is the label for the voice settings panel.
@@ -1374,7 +1373,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 				# Translators: The title of the message box
 				_("Error"), wx.OK|wx.ICON_ERROR,self)
 			return False
-		return super(KeyboardSettingsPanel, self).isValid()
+		return super().isValid()
 
 	def onSave(self):
 		layout=self.kbdNames[self.kbdList.GetSelection()]
@@ -2012,7 +2011,7 @@ class AdvancedPanelControls(wx.Panel):
 	be more easily managed.
 	"""
 	def __init__(self, parent):
-		super(AdvancedPanelControls, self).__init__(parent)
+		super().__init__(parent)
 		self._defaultsRestored = False
 
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
@@ -2268,7 +2267,7 @@ class AdvancedPanel(SettingsPanel):
 		"have been specifically instructed by NVDA developers."
 	)
 
-	panelDescription = u"{}\n{}".format(warningHeader, warningExplanation)
+	panelDescription = f"{warningHeader}\n{warningExplanation}"
 
 	def makeSettings(self, settingsSizer):
 		"""
@@ -2345,7 +2344,7 @@ class DictionaryEntryDialog(wx.Dialog):
 
 	# Translators: This is the label for the edit dictionary entry dialog.
 	def __init__(self, parent, title=_("Edit Dictionary Entry")):
-		super(DictionaryEntryDialog,self).__init__(parent,title=title)
+		super().__init__(parent,title=title)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -2468,7 +2467,7 @@ class DictionaryDialog(SettingsDialog):
 
 	def onCancel(self,evt):
 		globalVars.speechDictionaryProcessing=True
-		super(DictionaryDialog, self).onCancel(evt)
+		super().onCancel(evt)
 
 	def onOk(self,evt):
 		globalVars.speechDictionaryProcessing=True
@@ -2476,7 +2475,7 @@ class DictionaryDialog(SettingsDialog):
 			del self.speechDict[:]
 			self.speechDict.extend(self.tempSpeechDict)
 			self.speechDict.save()
-		super(DictionaryDialog, self).onOk(evt)
+		super().onOk(evt)
 
 	def OnAddClick(self,evt):
 		# Translators: This is the label for the add dictionary entry dialog.
@@ -2578,11 +2577,11 @@ class BrailleSettingsPanel(SettingsPanel):
 
 	def onPanelActivated(self):
 		self.brailleSubPanel.onPanelActivated()
-		super(BrailleSettingsPanel,self).onPanelActivated()
+		super().onPanelActivated()
 
 	def onPanelDeactivated(self):
 		self.brailleSubPanel.onPanelDeactivated()
-		super(BrailleSettingsPanel,self).onPanelDeactivated()
+		super().onPanelDeactivated()
 
 	def onDiscard(self):
 		self.brailleSubPanel.onDiscard()
@@ -2685,7 +2684,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			# Hack: we need to update the display in our parent window before closing.
 			# Otherwise, NVDA will report the old display even though the new display is reflected visually.
 			self.Parent.updateCurrentDisplay()
-		super(BrailleDisplaySelectionDialog, self).onOk(evt)
+		super().onOk(evt)
 
 class BrailleSettingsSubPanel(DriverSettingsMixin, SettingsPanel):
 
@@ -2904,7 +2903,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 
 	def makeSettings(self, settingsSizer):
 		# Ensure that after the settings dialog is created the name is set correctly
-		super(NVDASettingsDialog, self).makeSettings(settingsSizer)
+		super().makeSettings(settingsSizer)
 		self._doOnCategoryChange()
 		global NvdaSettingsDialogWindowHandle
 		NvdaSettingsDialogWindowHandle = self.GetHandle()
@@ -2918,14 +2917,14 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		self.SetTitle(self._getDialogTitle())
 
 	def _getDialogTitle(self):
-		return u"{dialogTitle}: {panelTitle} ({configProfile})".format(
+		return "{dialogTitle}: {panelTitle} ({configProfile})".format(
 			dialogTitle=self.title,
 			panelTitle=self.currentCategory.title,
 			configProfile=NvdaSettingsDialogActiveConfigProfile
 		)
 
 	def onCategoryChange(self,evt):
-		super(NVDASettingsDialog,self).onCategoryChange(evt)
+		super().onCategoryChange(evt)
 		if evt.Skipped:
 			return
 		self._doOnCategoryChange()
@@ -2934,13 +2933,13 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		global NvdaSettingsDialogActiveConfigProfile, NvdaSettingsDialogWindowHandle
 		NvdaSettingsDialogActiveConfigProfile = None
 		NvdaSettingsDialogWindowHandle = None
-		super(NVDASettingsDialog, self).Destroy()
+		super().Destroy()
 
 class AddSymbolDialog(wx.Dialog):
 
 	def __init__(self, parent):
 		# Translators: This is the label for the add symbol dialog.
-		super(AddSymbolDialog,self).__init__(parent, title=_("Add Symbol"))
+		super().__init__(parent, title=_("Add Symbol"))
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -2967,7 +2966,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		# Translators: This is the label for the symbol pronunciation dialog.
 		# %s is replaced by the language for which symbol pronunciation is being edited.
 		self.title = _("Symbol Pronunciation (%s)")%languageHandler.getLanguageDescription(self.symbolProcessor.locale)
-		super(SpeechSymbolsDialog, self).__init__(
+		super().__init__(
 			parent,
 			resizeable=True,
 		)
@@ -3222,10 +3221,10 @@ class SpeechSymbolsDialog(SettingsDialog):
 			self.symbolProcessor.updateSymbol(symbol)
 		try:
 			self.symbolProcessor.userSymbols.save()
-		except IOError as e:
+		except OSError as e:
 			log.error("Error saving user symbols info: %s" % e)
 		characterProcessing._localeSpeechSymbolProcessors.invalidateLocaleData(self.symbolProcessor.locale)
-		super(SpeechSymbolsDialog, self).onOk(evt)
+		super().onOk(evt)
 
 	def _refreshVisibleItems(self):
 		count = self.symbolsList.GetCountPerPage()
@@ -3299,7 +3298,7 @@ class InputGesturesDialog(SettingsDialog):
 			# #5060: Escape the filter text to prevent unexpected matches and regexp errors.
 			# Because we're escaping, words must then be split on "\ ".
 			filter = re.escape(filter)
-			filterReg = re.compile(r'(?=.*?' + r')(?=.*?'.join(filter.split('\ ')) + r')', re.U|re.IGNORECASE)
+			filterReg = re.compile(r'(?=.*?' + r')(?=.*?'.join(filter.split(r'\ ')) + r')', re.U|re.IGNORECASE)
 		for category in sorted(self.gestures):
 			treeCat = self.tree.AppendItem(self.treeRoot, category)
 			commands = self.gestures[category]
@@ -3475,4 +3474,4 @@ class InputGesturesDialog(SettingsDialog):
 				gui.messageBox(_("Error saving user defined gestures - probably read only file system."),
 					_("Error"), wx.OK | wx.ICON_ERROR)
 
-		super(InputGesturesDialog, self).onOk(evt)
+		super().onOk(evt)

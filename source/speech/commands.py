@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -11,7 +10,7 @@ import config
 import languageHandler
 from synthDriverHandler import getSynth
 
-class SpeechCommand(object):
+class SpeechCommand:
 	"""The base class for objects that can be inserted between strings of text to perform actions, change voice parameters, etc.
 	Note that some of these commands are processed by NVDA and are not directly passed to synth drivers.
 	synth drivers will only receive commands derived from L{SynthCommand}.

@@ -736,7 +736,7 @@ def normalizeGestureIdentifier(identifier):
 	# We sort them by character.
 	main.sort()
 	main = "+".join(main)
-	return u"{0}:{1}".format(prefix, main)
+	return "{}:{}".format(prefix, main)
 
 #: Maps registered source prefix strings to L{InputGesture} classes.
 gestureSources = weakref.WeakValueDictionary()

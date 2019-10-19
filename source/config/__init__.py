@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #config/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2018 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov, Joseph Lee, Babbage B.V.
@@ -95,7 +94,7 @@ def isInstalledCopy():
 #: A value of 0 will evaluate to loading the configuration from the roaming application data (default).
 #: A value of 1 means loading the configuration from the local application data folder.
 #: @type: str
-CONFIG_IN_LOCAL_APPDATA_SUBKEY=u"configInLocalAppData"
+CONFIG_IN_LOCAL_APPDATA_SUBKEY="configInLocalAppData"
 
 def getInstalledUserConfigPath():
 	try:
@@ -125,7 +124,7 @@ def getUserDefaultConfigPath(useInstalledPathIfExists=False):
 			# Therefore add a suffix to the directory to make it specific to Windows Store application versions.
 			installedUserConfigPath+='_appx'
 		return installedUserConfigPath
-	return u'.\\userConfig\\'
+	return '.\\userConfig\\'
 
 def getSystemConfigPath():
 	if isInstalledCopy():
@@ -183,7 +182,7 @@ def getStartAfterLogon():
 		return True
 	try:
 		k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, RUN_REGKEY)
-		val = winreg.QueryValueEx(k, u"nvda")[0]
+		val = winreg.QueryValueEx(k, "nvda")[0]
 		return os.stat(val) == os.stat(sys.argv[0])
 	except (WindowsError, OSError):
 		return False
@@ -202,10 +201,10 @@ def setStartAfterLogon(enable):
 		run = enable
 	k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, RUN_REGKEY, 0, winreg.KEY_WRITE)
 	if run:
-		winreg.SetValueEx(k, u"nvda", None, winreg.REG_SZ, sys.argv[0])
+		winreg.SetValueEx(k, "nvda", None, winreg.REG_SZ, sys.argv[0])
 	else:
 		try:
-			winreg.DeleteValue(k, u"nvda")
+			winreg.DeleteValue(k, "nvda")
 		except WindowsError:
 			pass
 
@@ -223,7 +222,7 @@ def execElevated(path, params=None, wait=False,handleAlreadyElevated=False):
 	sei = shellapi.SHELLEXECUTEINFO(lpFile=os.path.abspath(path), lpParameters=params, nShow=winUser.SW_HIDE)
 	#IsUserAnAdmin is apparently deprecated so may not work above Windows 8
 	if not handleAlreadyElevated or not ctypes.windll.shell32.IsUserAnAdmin():
-		sei.lpVerb=u"runas"
+		sei.lpVerb="runas"
 	if wait:
 		sei.fMask = shellapi.SEE_MASK_NOCLOSEPROCESS
 	shellapi.ShellExecuteEx(sei)
@@ -239,7 +238,7 @@ def execElevated(path, params=None, wait=False,handleAlreadyElevated=False):
 		finally:
 			winKernel.closeHandle(sei.hProcess)
 
-SLAVE_FILENAME = u"nvda_slave.exe"
+SLAVE_FILENAME = "nvda_slave.exe"
 
 #: The name of the registry key stored under  HKEY_LOCAL_MACHINE where system wide NVDA settings are stored.
 #: Note that NVDA is a 32-bit application, so on X64 systems, this will evaluate to "SOFTWARE\WOW6432Node\nvda"
@@ -250,7 +249,7 @@ def getStartOnLogonScreen():
 		return True
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
-		return bool(winreg.QueryValueEx(k, u"startOnLogonScreen")[0])
+		return bool(winreg.QueryValueEx(k, "startOnLogonScreen")[0])
 	except WindowsError:
 		return False
 
@@ -261,14 +260,14 @@ def _setStartOnLogonScreen(enable):
 		easeOfAccess.setAutoStart(winreg.HKEY_LOCAL_MACHINE, enable)
 	else:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY, 0, winreg.KEY_WRITE)
-		winreg.SetValueEx(k, u"startOnLogonScreen", None, winreg.REG_DWORD, int(enable))
+		winreg.SetValueEx(k, "startOnLogonScreen", None, winreg.REG_DWORD, int(enable))
 
 def setSystemConfigToCurrentConfig():
 	fromPath=os.path.abspath(globalVars.appArgs.configPath)
 	if ctypes.windll.shell32.IsUserAnAdmin():
 		_setSystemConfig(fromPath)
 	else:
-		res=execElevated(SLAVE_FILENAME, (u"setNvdaSystemConfig", fromPath), wait=True)
+		res=execElevated(SLAVE_FILENAME, ("setNvdaSystemConfig", fromPath), wait=True)
 		if res==2:
 			import installer
 			raise installer.RetriableFailure
@@ -312,7 +311,7 @@ def setStartOnLogonScreen(enable):
 		_setStartOnLogonScreen(enable)
 	except WindowsError:
 		# We probably don't have admin privs, so we need to elevate to do this using the slave.
-		if execElevated(SLAVE_FILENAME, (u"config_setStartOnLogonScreen", u"%d" % enable), wait=True) != 0:
+		if execElevated(SLAVE_FILENAME, ("config_setStartOnLogonScreen", "%d" % enable), wait=True) != 0:
 			raise RuntimeError("Slave failed to set startOnLogonScreen")
 
 def getConfigDirs(subpath=None):
@@ -444,7 +443,7 @@ class ConfigManager(object):
 		self._handleProfileSwitch()
 
 	def _loadConfig(self, fn, fileError=False):
-		log.info(u"Loading config: {0}".format(fn))
+		log.info("Loading config: {}".format(fn))
 		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8", file_error=fileError)
 		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 		profile.newlines = "\r\n"
@@ -454,7 +453,7 @@ class ConfigManager(object):
 			profileUpgrader.upgrade(profile, self.validator, writeProfileFunc)
 		except Exception as e:
 			# Log at level info to ensure that the profile is logged.
-			log.info(u"Config before schema update:\n%s" % profileCopy, exc_info=False)
+			log.info("Config before schema update:\n%s" % profileCopy, exc_info=False)
 			raise e
 		# since profile settings are not yet imported we have to "peek" to see
 		# if debug level logging is enabled.
@@ -464,7 +463,7 @@ class ConfigManager(object):
 			logLevelName = None
 		if log.isEnabledFor(log.DEBUG) or (logLevelName and DEBUG >= logging.getLevelName(logLevelName)):
 			# Log at level info to ensure that the profile is logged.
-			log.info(u"Config loaded (after upgrade, and in the state it will be used by NVDA):\n{0}".format(profile))
+			log.info("Config loaded (after upgrade, and in the state it will be used by NVDA):\n{}".format(profile))
 		return profile
 
 	def __getitem__(self, key):

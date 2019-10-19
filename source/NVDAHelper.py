@@ -81,12 +81,12 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 	buf=create_unicode_buffer(1024)
 	bufSize=c_int(2048)
 	key=HKEY()
-	if windll.advapi32.RegOpenKeyExW(winreg.HKEY_LOCAL_MACHINE,u"SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ layoutString,0,winreg.KEY_QUERY_VALUE,byref(key))==0:
+	if windll.advapi32.RegOpenKeyExW(winreg.HKEY_LOCAL_MACHINE,"SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ layoutString,0,winreg.KEY_QUERY_VALUE,byref(key))==0:
 		try:
-			if windll.advapi32.RegQueryValueExW(key,u"Layout Display Name",0,None,buf,byref(bufSize))==0:
+			if windll.advapi32.RegQueryValueExW(key,"Layout Display Name",0,None,buf,byref(bufSize))==0:
 				windll.shlwapi.SHLoadIndirectString(buf.value,buf,1023,None)
 				return buf.value
-			if windll.advapi32.RegQueryValueExW(key,u"Layout Text",0,None,buf,byref(bufSize))==0:
+			if windll.advapi32.RegQueryValueExW(key,"Layout Text",0,None,buf,byref(bufSize))==0:
 				return buf.value
 		finally:
 			windll.advapi32.RegCloseKey(key)
@@ -147,7 +147,7 @@ def handleInputCompositionEnd(result):
 	from NVDAObjects.inputComposition import InputComposition
 	from NVDAObjects.IAccessible.mscandui import ModernCandidateUICandidateItem
 	focus=api.getFocusObject()
-	result=result.lstrip(u'\u3000 ')
+	result=result.lstrip('\u3000 ')
 	curInputComposition=None
 	if isinstance(focus,InputComposition):
 		curInputComposition=focus
@@ -176,7 +176,7 @@ def handleInputCompositionEnd(result):
 		speech.speechMode=oldSpeechMode
 
 	if curInputComposition and not result:
-		result=curInputComposition.compositionString.lstrip(u'\u3000 ')
+		result=curInputComposition.compositionString.lstrip('\u3000 ')
 	if result:
 		speech.speakText(result,symbolLevel=characterProcessing.SYMLVL_ALL)
 
@@ -386,7 +386,7 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 		inputMethodName="".join(inputMethodName.split(' - ')[1:])
 	#Include the language only if it changed.
 	if languageID!=lastLanguageID:
-		msg=u"{language} - {layout}".format(language=inputLanguageName,layout=inputMethodName)
+		msg=f"{inputLanguageName} - {inputMethodName}"
 	else:
 		msg=inputMethodName
 	lastLanguageID=languageID
@@ -418,7 +418,7 @@ def nvdaControllerInternal_installAddonPackageFromPath(addonPath):
 	wx.CallAfter(addonGui.handleRemoteAddonInstall, addonPath)
 	return 0
 
-class RemoteLoader64(object):
+class RemoteLoader64:
 
 	def __init__(self):
 		# Create a pipe so we can write to stdin of the loader process.
@@ -438,7 +438,7 @@ class RemoteLoader64(object):
 		# Therefore, explicitly specify our own process token, which causes them to be inherited.
 		token = winKernel.OpenProcessToken(winKernel.GetCurrentProcess(), winKernel.MAXIMUM_ALLOWED)
 		try:
-			winKernel.CreateProcessAsUser(token, None, os.path.join(versionedLib64Path,u"nvdaHelperRemoteLoader.exe"), None, None, True, None, None, None, si, pi)
+			winKernel.CreateProcessAsUser(token, None, os.path.join(versionedLib64Path,"nvdaHelperRemoteLoader.exe"), None, None, True, None, None, None, si, pi)
 			# We don't need the thread handle.
 			winKernel.closeHandle(pi.hThread)
 			self._process = pi.hProcess
@@ -505,7 +505,7 @@ def initialize():
 		log.info("Remote injection disabled due to running as a Windows Store Application")
 		return
 	#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-	h=windll.kernel32.LoadLibraryExW(os.path.abspath(os.path.join(versionedLibPath,u"nvdaHelperRemote.dll")),0,0x8)
+	h=windll.kernel32.LoadLibraryExW(os.path.abspath(os.path.join(versionedLibPath,"nvdaHelperRemote.dll")),0,0x8)
 	if not h:
 		log.critical("Error loading nvdaHelperRemote.dll: %s" % WinError())
 		return

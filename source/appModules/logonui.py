@@ -33,7 +33,7 @@ class LogonDialog(Dialog):
 			eventHandler.queueEvent("gainFocus", child)
 			return
 
-		return super(LogonDialog, self).event_gainFocus()
+		return super().event_gainFocus()
 
 if UIAHandler.isUIAAvailable:
 	class Win8PasswordField(UIA):
@@ -44,7 +44,7 @@ if UIAHandler.isUIAAvailable:
 			if not index:
 				self.setFocus()
 			else:
-				super(Win8PasswordField,self).doAction(index)
+				super().doAction(index)
 
 class XPPasswordField(IAccessible):
 
@@ -60,7 +60,7 @@ class XPPasswordField(IAccessible):
 			self.parent.invalidateCache()
 			return self.parent.name
 		except:
-			return super(XPPasswordField, self).name
+			return super().name
 
 	def script_changeUser(self, gesture):
 		# The up and down arrow keys change the selected user, but there's no reliable NVDA event for detecting this.

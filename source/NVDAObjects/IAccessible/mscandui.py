@@ -31,7 +31,7 @@ class BaseCandidateItem(CandidateItemBehavior,IAccessible):
 	keyboardShortcut=""
 
 	def _get_candidateNumber(self):
-		number=super(BaseCandidateItem,self).keyboardShortcut
+		number=super().keyboardShortcut
 		try:
 			number=int(number)
 		except (ValueError,TypeError):
@@ -39,7 +39,7 @@ class BaseCandidateItem(CandidateItemBehavior,IAccessible):
 		return number
 
 	def _get_parent(self):
-		parent=super(BaseCandidateItem,self).parent
+		parent=super().parent
 		# Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document. 
 		parent.name=_("Candidate")
 		parent.description=None
@@ -49,21 +49,21 @@ class BaseCandidateItem(CandidateItemBehavior,IAccessible):
 		try:
 			number=int(self.candidateNumber)
 		except (TypeError,ValueError):
-			return super(BaseCandidateItem,self).name
-		candidate=super(BaseCandidateItem,self).name
+			return super().name
+		candidate=super().name
 		return self.getFormattedCandidateName(number,candidate)
 
 	def _get_description(self):
-		candidate=super(BaseCandidateItem,self).name
+		candidate=super().name
 		return self.getFormattedCandidateDescription(candidate)
 
 	def _get_basicText(self):
-		return super(BaseCandidateItem,self).name
+		return super().name
 
 class MSCandUI_candidateListItem(BaseCandidateItem):
 
 	def _get_states(self):
-		states=super(MSCandUI_candidateListItem,self).states
+		states=super().states
 		states.add(controlTypes.STATE_SELECTABLE)
 		return states
 
@@ -74,12 +74,12 @@ class MSCandUI_candidateListItem(BaseCandidateItem):
 class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 
 	def _get_previous(self):
-		item=super(MSCandUI21_candidateMenuItem,self).previous
+		item=super().previous
 		if not item or controlTypes.STATE_INVISIBLE in item.states: return
 		return MSCandUI21_candidateMenuItem(IAccessibleObject=item.IAccessibleObject,IAccessibleChildID=item.IAccessibleChildID)
 
 	def _get_next(self):
-		item=super(MSCandUI21_candidateMenuItem,self).next
+		item=super().next
 		if not item or controlTypes.STATE_INVISIBLE in item.states: return
 		return MSCandUI21_candidateMenuItem(IAccessibleObject=item.IAccessibleObject,IAccessibleChildID=item.IAccessibleChildID)
 
@@ -204,7 +204,7 @@ class MSCandUIWindow(IAccessible):
 	role=controlTypes.ROLE_LIST
 
 	def _get_states(self):
-		states=super(MSCandUIWindow,self).states
+		states=super().states
 		states.discard(controlTypes.STATE_UNAVAILABLE)
 		return states
 
@@ -229,13 +229,13 @@ class ModernCandidateUICandidateItem(BaseCandidateItem):
 
 	def refreshCandidateList(self):
 		textList=[]
-		candidateItems = super(ModernCandidateUICandidateItem,self).parent.children
+		candidateItems = super().parent.children
 		for child in candidateItems:
 			if not isinstance(child,ModernCandidateUICandidateItem) or controlTypes.STATE_SELECTABLE not in child.states:
 				continue
 			textList.append(child.candidateCharacters)
 		if not len(textList)<=1:
-			self._visibleCandidateItemsText=(u", ".join(textList))+u", "
+			self._visibleCandidateItemsText=(", ".join(textList))+", "
 			try:
 				self._candidateNumber = textList.index(self.candidateCharacters)+1
 			except ValueError:

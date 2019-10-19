@@ -16,7 +16,7 @@ class SysMonthCal32(IAccessible):
 		return ""
 
 	def _get_value(self):
-		return super(SysMonthCal32,self).name
+		return super().name
 
 	def script_valueChange(self,gesture):
 		gesture.send()

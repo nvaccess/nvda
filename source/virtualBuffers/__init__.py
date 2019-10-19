@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #virtualBuffers/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
@@ -50,12 +49,12 @@ VBufStorage_findMatch_notEmpty = object()
 
 FINDBYATTRIBS_ESCAPE_TABLE = {
 	# Symbols that are escaped in the attributes string.
-	ord(u":"): r"\\:",
-	ord(u";"): r"\\;",
-	ord(u"\\"): u"\\\\\\\\",
+	ord(":"): r"\\:",
+	ord(";"): r"\\;",
+	ord("\\"): "\\\\\\\\",
 }
 # Symbols that must be escaped for a regular expression.
-FINDBYATTRIBS_ESCAPE_TABLE.update({(ord(s), u"\\" + s) for s in u"^$.*+?()[]{}|"})
+FINDBYATTRIBS_ESCAPE_TABLE.update({(ord(s), "\\" + s) for s in "^$.*+?()[]{}|"})
 def _prepareForFindByAttributes(attribs):
 	# A lambda that coerces a value to a string and escapes characters suitable for a regular expression. 
 	escape = lambda val: str(val).translate(FINDBYATTRIBS_ESCAPE_TABLE)
@@ -89,10 +88,10 @@ def _prepareForFindByAttributes(attribs):
 			else:
 				# Assume all are exact matches or None (must not exist).
 				optRegexp.append("(?:" )
-				optRegexp.append("|".join((escape(val)+u';') if val is not None else u';' for val in values))
+				optRegexp.append("|".join((escape(val)+';') if val is not None else ';' for val in values))
 				optRegexp.append(")")
 		regexp.append("".join(optRegexp))
-	return u" ".join(reqAttrs), u"|".join(regexp)
+	return " ".join(reqAttrs), "|".join(regexp)
 
 class VirtualBufferQuickNavItem(browseMode.TextInfoQuickNavItem):
 
@@ -229,8 +228,8 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 
 	def _getTextRange(self,start,end):
 		if start==end:
-			return u""
-		return NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,False) or u""
+			return ""
+		return NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,False) or ""
 
 	def _getPlaceholderAttribute(self, attrs, placeholderAttrsKey):
 		"""Gets the placeholder attribute to be used.

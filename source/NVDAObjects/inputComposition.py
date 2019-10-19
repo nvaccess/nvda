@@ -61,7 +61,7 @@ class InputComposition(EditableTextWithAutoSelectDetection,Window):
 
 	def __init__(self,parent=None):
 		self.parent=parent
-		super(InputComposition,self).__init__(windowHandle=parent.windowHandle)
+		super().__init__(windowHandle=parent.windowHandle)
 
 	def findOverlayClasses(self,clsList):
 		clsList.append(InputComposition)
@@ -70,7 +70,7 @@ class InputComposition(EditableTextWithAutoSelectDetection,Window):
 
 	def reportNewText(self,oldString,newString):
 		if (config.conf["keyboard"]["speakTypedCharacters"] or config.conf["keyboard"]["speakTypedWords"]):
-			newText=calculateInsertedChars(oldString.strip(u'\u3000'),newString.strip(u'\u3000'))
+			newText=calculateInsertedChars(oldString.strip('\u3000'),newString.strip('\u3000'))
 			if newText:
 				queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,newText,symbolLevel=characterProcessing.SYMLVL_ALL)
 
@@ -111,7 +111,7 @@ class CandidateList(Window):
 
 	def __init__(self,parent=None):
 		self.parent=parent
-		super(CandidateList,self).__init__(windowHandle=parent.windowHandle)
+		super().__init__(windowHandle=parent.windowHandle)
 
 	def findOverlayClasses(self,clsList):
 		clsList.append(CandidateList)
@@ -129,7 +129,7 @@ class CandidateItem(CandidateItemBehavior,Window):
 		self.candidateStrings=candidateStrings
 		self.candidateIndex=candidateIndex
 		self.inputMethod=inputMethod
-		super(CandidateItem,self).__init__(windowHandle=parent.windowHandle)
+		super().__init__(windowHandle=parent.windowHandle)
 
 	def findOverlayClasses(self,clsList):
 		clsList.append(CandidateItem)

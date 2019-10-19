@@ -1,4 +1,3 @@
-#coding=UTF-8
 #appModules/_default.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
@@ -17,22 +16,22 @@ import cursorManager
 
 lastMSNHistoryValue=None
 possibleHistoryWindowNames=frozenset([
-u'History',
-u'Geskiedenis',
-u'Verlauf',
-u'Historia',
-u'Historial',
-u'Historique',
-u'Cronologia',
-u'HistÃ³rico',
-u'Histórico',
-u'HistÃ³ria',
-u'LÆ°á»£c Sá',
-u'è¨˜éŒ',
-u'Historik',
-u'Előzmények',
-u'Geçmiş',
-u'المحفوظات',
+'History',
+'Geskiedenis',
+'Verlauf',
+'Historia',
+'Historial',
+'Historique',
+'Cronologia',
+'HistÃ³rico',
+'Histórico',
+'HistÃ³ria',
+'LÆ°á»£c Sá',
+'è¨˜éŒ',
+'Historik',
+'Előzmények',
+'Geçmiş',
+'المحفوظات',
 ])
 
 class AppModule(appModuleHandler.AppModule):
@@ -42,7 +41,7 @@ class AppModule(appModuleHandler.AppModule):
 			from NVDAObjects.window import DisplayModelEditableText 
 			clsList.remove(DisplayModelEditableText)
 			clsList.insert(0, OldMSNHistory)
-		elif obj.windowClassName==u'WLXDUI' and obj.role==controlTypes.ROLE_ALERT and obj.IAccessibleStates&oleacc.STATE_SYSTEM_ALERT_MEDIUM:
+		elif obj.windowClassName=='WLXDUI' and obj.role==controlTypes.ROLE_ALERT and obj.IAccessibleStates&oleacc.STATE_SYSTEM_ALERT_MEDIUM:
 			clsList.insert(0, MSNHistory)
 
 class OldMSNHistory(cursorManager.ReviewCursorManager,IAccessible):
@@ -51,7 +50,7 @@ class OldMSNHistory(cursorManager.ReviewCursorManager,IAccessible):
 		return "%s - %s\r%s"%(self.name,self.description,self.value)
 
 	def _get_value(self):
-		value=super(OldMSNHistory,self).value
+		value=super().value
 		if not isinstance(value,str):
 			value=""
 		return value
@@ -65,7 +64,7 @@ class OldMSNHistory(cursorManager.ReviewCursorManager,IAccessible):
 				lastMSNHistoryValue=value
 
 	def event_gainFocus(self):
-		super(OldMSNHistory,self).event_gainFocus()
+		super().event_gainFocus()
 		self.selection=self.makeTextInfo(textInfos.POSITION_LAST)
 
 	def reportFocus(self):

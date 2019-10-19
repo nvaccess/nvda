@@ -42,4 +42,4 @@ class KeywordList(IAccessible):
 			# We do this at the IAccessibleHandler level so that duplicate focus event checks will work properly.
 			IAccessibleHandler.processFocusNVDAEvent(child)
 		else:
-			super(KeywordList, self).event_gainFocus()
+			super().event_gainFocus()

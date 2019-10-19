@@ -315,7 +315,7 @@ def getClipData():
 """
 	import gui
 	with winUser.openClipboard(gui.mainFrame.Handle):
-		return winUser.getClipboardData(winUser.CF_UNICODETEXT) or u""
+		return winUser.getClipboardData(winUser.CF_UNICODETEXT) or ""
 
 def getStatusBar():
 	"""Obtain the status bar for the current foreground object.
@@ -358,7 +358,7 @@ def filterFileName(name):
 	@returns: The filtered file name.
 	@rtype: str
 	"""
-	invalidChars=':?*\|<>/"'
+	invalidChars=r':?*\|<>/"'
 	for c in invalidChars:
 		name=name.replace(c,'_')
 	return name

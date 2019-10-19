@@ -17,7 +17,7 @@ class AnnotatableWeakref(weakref.ref):
 	"""
 
 
-class BoundMethodWeakref(object):
+class BoundMethodWeakref:
 	"""Weakly references a bound instance method.
 	Instance methods are bound dynamically each time they are fetched.
 	weakref.ref on a bound instance method doesn't work because
@@ -58,7 +58,7 @@ def _getHandlerKey(handler):
 	return id(handler)
 
 
-class HandlerRegistrar(object):
+class HandlerRegistrar:
 	"""Base class to Facilitate registration and unregistration of handler functions.
 	The handlers are stored using weak references and are automatically unregistered
 	if the handler dies.

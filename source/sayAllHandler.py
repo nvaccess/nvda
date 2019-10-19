@@ -39,7 +39,7 @@ def readObjects(obj):
 	_activeSayAll = weakref.ref(reader)
 	reader.next()
 
-class _ObjectsReader(object):
+class _ObjectsReader:
 
 	def __init__(self, root):
 		self.walker = self.walk(root)
@@ -49,8 +49,7 @@ class _ObjectsReader(object):
 		yield obj
 		child=obj.simpleFirstChild
 		while child:
-			for descendant in self.walk(child):
-				yield descendant
+			yield from self.walk(child)
 			child=child.simpleNext
 
 	def next(self):
@@ -78,7 +77,7 @@ def readText(cursor):
 	_activeSayAll = weakref.ref(reader)
 	reader.nextLine()
 
-class _TextReader(object):
+class _TextReader:
 	"""Manages continuous reading of text.
 	This is intended for internal use only.
 

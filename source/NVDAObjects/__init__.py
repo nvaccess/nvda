@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #NVDAObjects/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V., Davy Kager
@@ -296,7 +295,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 
 	def __init__(self):
-		super(NVDAObject,self).__init__()
+		super().__init__()
 		self._mouseEntered=False #:True if the mouse has entered this object (for use in L{event_mouseMoved})
 		self.textRepresentationLineLength=None #:If an integer greater than 0 then lines of text in this object are always this long.
 
@@ -699,8 +698,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		for child in self.children:
 			yield child
-			for recursiveChild in child.recursiveDescendants:
-				yield recursiveChild
+			yield from child.recursiveDescendants
 
 	presType_unavailable="unavailable"
 	presType_layout="layout"
@@ -974,7 +972,7 @@ Tries to force this object to take the focus.
 	def event_typedCharacter(self,ch):
 		if config.conf["documentFormatting"]["reportSpellingErrors"] and config.conf["keyboard"]["alertForSpellingErrors"] and (
 			# Not alpha, apostrophe or control.
-			ch.isspace() or (ch >= u" " and ch not in u"'\x7f" and not ch.isalpha())
+			ch.isspace() or (ch >= " " and ch not in "'\x7f" and not ch.isalpha())
 		):
 			# Reporting of spelling errors is enabled and this character ends a word.
 			self._reportErrorInPreviousWord()
@@ -1009,7 +1007,7 @@ Tries to force this object to take the focus.
 			notBlank=False
 			if text:
 				for ch in text:
-					if not ch.isspace() and ch!=u'\ufffc':
+					if not ch.isspace() and ch!='\ufffc':
 						notBlank=True
 			if notBlank:
 				if not speechWasCanceled:
@@ -1111,9 +1109,9 @@ This code is executed if a gain focus event is received by this object.
 		newTime=time.time()
 		oldTime=getattr(self,'_basicTextTime',0)
 		if newTime-oldTime>0.5:
-			self._basicText=u" ".join(x for x in (self.name, self.value, self.description) if isinstance(x, str) and len(x) > 0 and not x.isspace())
+			self._basicText=" ".join(x for x in (self.name, self.value, self.description) if isinstance(x, str) and len(x) > 0 and not x.isspace())
 			if len(self._basicText)==0:
-				self._basicText=u""
+				self._basicText=""
 		else:
 			self._basicTextTime=newTime
 		return self._basicText
@@ -1165,7 +1163,7 @@ This code is executed if a gain focus event is received by this object.
 			ret = "exception: %s" % e
 		info.append("role: %s" % ret)
 		try:
-			stateConsts = dict((const, name) for name, const in controlTypes.__dict__.items() if name.startswith("STATE_"))
+			stateConsts = {const: name for name, const in controlTypes.__dict__.items() if name.startswith("STATE_")}
 			ret = ", ".join(
 				stateConsts.get(state) or str(state)
 				for state in self.states)

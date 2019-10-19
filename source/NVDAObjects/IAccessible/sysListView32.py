@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #NVDAObjects/IAccessible/sysListView32.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2017 NV Access Limited, Peter Vágner
@@ -274,8 +273,8 @@ class GroupingItem(Window):
 		gesture.send()
 		eventHandler.queueEvent("stateChange",self)
 
-CHAR_LTR_MARK = u'\u200E'
-CHAR_RTL_MARK = u'\u200F'
+CHAR_LTR_MARK = '\u200E'
+CHAR_RTL_MARK = '\u200F'
 
 class ListItemWithoutColumnSupport(IAccessible):
 

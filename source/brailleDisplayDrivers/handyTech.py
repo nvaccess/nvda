@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #brailleDisplayDrivers/handyTech.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
@@ -33,17 +32,17 @@ from typing import List, Any, Union, Optional
 
 
 class InvisibleDriverWindow(windowUtils.CustomWindow):
-	className = u"Handy_Tech_Server"
+	className = "Handy_Tech_Server"
 	HT_SLEEP = 100
 	HT_INCREMENT = 1
 	HT_DECREMENT = 0
 
 	def __init__(self, driver: Any):
-		super(InvisibleDriverWindow, self).__init__(u"Handy Tech Server")
+		super(InvisibleDriverWindow, self).__init__("Handy Tech Server")
 		# Register shared window message.
 		# Note: There is no corresponding unregister function.
 		# Still this does no harm if done repeatedly.
-		self.window_message=windll.user32.RegisterWindowMessageW(u"Handy_Tech_Server")
+		self.window_message=windll.user32.RegisterWindowMessageW("Handy_Tech_Server")
 		self.driver = weakref.ref(driver, lambda r: self.destroy())
 
 	def windowProc(self, hwnd: int, msg: int, wParam: int, lParam: int):

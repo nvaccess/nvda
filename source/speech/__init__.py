@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -66,7 +65,7 @@ def terminate():
 	speechViewerObj=None
 
 #: If a chunk of text contains only these characters, it will be considered blank.
-BLANK_CHUNK_CHARS = frozenset((" ", "\n", "\r", "\0", u"\xa0"))
+BLANK_CHUNK_CHARS = frozenset((" ", "\n", "\r", "\0", "\xa0"))
 def isBlank(text):
 	"""Determine whether text should be reported as blank.
 	@param text: The text in question.
@@ -81,7 +80,7 @@ RE_CONVERT_WHITESPACE = re.compile("[\0\r\n]")
 def processText(locale,text,symbolLevel):
 	text = speechDictHandler.processText(text)
 	text = characterProcessing.processSpeechSymbols(locale, text, symbolLevel)
-	text = RE_CONVERT_WHITESPACE.sub(u" ", text)
+	text = RE_CONVERT_WHITESPACE.sub(" ", text)
 	return text.strip()
 
 def cancelSpeech():
@@ -178,7 +177,7 @@ def getSpeechForSpelling(text, locale=None, useCharacterDescriptions=False):
 				charDesc=characterProcessing.getCharacterDescription(locale,speakCharAs.lower())
 		uppercase=speakCharAs.isupper()
 		if useCharacterDescriptions and charDesc:
-			IDEOGRAPHIC_COMMA = u"\u3001"
+			IDEOGRAPHIC_COMMA = "\u3001"
 			speakCharAs=charDesc[0] if textLength>1 else IDEOGRAPHIC_COMMA.join(charDesc)
 		else:
 			speakCharAs=characterProcessing.processSpeechSymbol(locale,speakCharAs)
@@ -456,7 +455,7 @@ def getIndentationSpeech(indentation, formatConfig):
 		return (_("no indent") if speechIndentConfig else "")
 
 	#The non-breaking space is semantically a space, so we replace it here.
-	indentation = indentation.replace(u"\xa0", u" ")
+	indentation = indentation.replace("\xa0", " ")
 	res = []
 	locale=languageHandler.getLanguage()
 	quarterTones = 0
@@ -470,7 +469,7 @@ def getIndentationSpeech(indentation, formatConfig):
 		elif count == 1:
 			res.append(symbol)
 		else:
-			res.append(u"{count} {symbol}".format(count=count, symbol=symbol))
+			res.append(f"{count} {symbol}")
 		quarterTones += (count*4 if raw[0]== "\t" else count)
 
 	speak = speechIndentConfig
@@ -689,7 +688,7 @@ PROTECTED_CHAR = "*"
 #: The first character which is not a Unicode control character.
 #: This is used to test whether a character should be spoken as a typed character;
 #: i.e. it should have a visual or spatial representation.
-FIRST_NONCONTROL_CHAR = u" "
+FIRST_NONCONTROL_CHAR = " "
 def speakTypedCharacters(ch):
 	global curWordChars
 	typingIsProtected=api.isTypingProtected()
@@ -702,7 +701,7 @@ def speakTypedCharacters(ch):
 	elif ch=="\b":
 		# Backspace, so remove the last character from our buffer.
 		del curWordChars[-1:]
-	elif ch==u'\u007f':
+	elif ch=='\u007f':
 		# delete character produced in some apps with control+backspace
 		return
 	elif len(curWordChars)>0:
@@ -727,7 +726,7 @@ def speakTypedCharacters(ch):
 	if not suppress and config.conf["keyboard"]["speakTypedCharacters"] and ch >= FIRST_NONCONTROL_CHAR:
 		speakSpelling(realChar)
 
-class SpeakTextInfoState(object):
+class SpeakTextInfoState:
 	"""Caches the state of speakTextInfo such as the current controlField stack, current formatfield and indentation."""
 
 	__slots__=[
@@ -1173,7 +1172,7 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 
 def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraDetail=False,reason=None):
 	if attrs.get('isHidden'):
-		return u""
+		return ""
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 
@@ -1680,7 +1679,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 			oldVal=attrsCache.get(attr) if attrsCache else None
 			if (newVal or oldVal is not None) and newVal!=oldVal:
 				if newVal:
-					textList.append(u"%s %s"%(label,newVal))
+					textList.append("%s %s"%(label,newVal))
 				else:
 					textList.append(noVal)
 	if formatConfig["reportLineSpacing"]:

@@ -93,7 +93,7 @@ def mergeQuickNavItemIterators(iterators,direction="next"):
 			continue
 		curValues.append((it,newVal))
 
-class QuickNavItem(object, metaclass=ABCMeta):
+class QuickNavItem(metaclass=ABCMeta):
 	""" Emitted by L{BrowseModeTreeInterceptor._iterNodesByType}, this represents one of many positions in a browse mode document, based on the type of item being searched for (e.g. link, heading, table etc)."""  
 
 	itemType=None #: The type of items searched for (e.g. link, heading, table etc) 
@@ -164,7 +164,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 		@type textInfo: L{textInfos.TextInfo}
 		"""
 		self.textInfo=textInfo
-		super(TextInfoQuickNavItem,self).__init__(itemType,document)
+		super().__init__(itemType,document)
 
 	def __lt__(self,other):
 		return self.textInfo.compareEndPoints(other.textInfo,"startToStart")<0
@@ -222,12 +222,12 @@ class TextInfoQuickNavItem(QuickNavItem):
 			or "lambda property: getattr(self.obj, property, None)" for an L{NVDAObject}.
 		"""
 		content = self.textInfo.text.strip()
-		if self.itemType is "heading":
+		if self.itemType == "heading":
 			# Output: displayed text of the heading.
 			return content
 		labelParts = None
 		name = labelPropertyGetter("name")
-		if self.itemType is "landmark":
+		if self.itemType == "landmark":
 			landmark = aria.landmarkRoles.get(labelPropertyGetter("landmark"))
 			# Example output: main menu; navigation
 			labelParts = (name, landmark)
@@ -238,7 +238,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 			unlabeled = _("Unlabeled")
 			realStates = labelPropertyGetter("states")
 			labeledStates = " ".join(controlTypes.processAndLabelStates(role, realStates, controlTypes.REASON_FOCUS))
-			if self.itemType is "formField":
+			if self.itemType == "formField":
 				if role in (controlTypes.ROLE_BUTTON,controlTypes.ROLE_DROPDOWNBUTTON,controlTypes.ROLE_TOGGLEBUTTON,controlTypes.ROLE_SPLITBUTTON,controlTypes.ROLE_MENUBUTTON,controlTypes.ROLE_DROPDOWNBUTTONGRID,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_TREEVIEWBUTTON):
 					# Example output: Mute; toggle button; pressed
 					labelParts = (content or name or unlabeled, roleText, labeledStates)
@@ -833,7 +833,7 @@ class ElementsListDialog(wx.Dialog):
 	def __init__(self, document):
 		self.document = document
 		# Translators: The title of the browse mode Elements List dialog.
-		super(ElementsListDialog, self).__init__(gui.mainFrame, wx.ID_ANY, _("Elements List"))
+		super().__init__(gui.mainFrame, wx.ID_ANY, _("Elements List"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -1078,8 +1078,7 @@ class ElementsListDialog(wx.Dialog):
 			childItem = self.tree.GetFirstChild(item)[0]
 			if childItem and self.tree.IsExpanded(item):
 				# Has children and is reachable, so recurse.
-				for childItem in self._iterReachableTreeItemsFromItem(childItem):
-					yield childItem
+				yield from self._iterReachableTreeItemsFromItem(childItem)
 
 			item = self.tree.GetNextSibling(item)
 
@@ -1119,7 +1118,7 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 					textList.append(aria.landmarkRoles[landmark])
 			if landmark != "region":
 				textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
-		textList.append(super(BrowseModeDocumentTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
+		textList.append(super().getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
 		return " ".join(textList)
 
 	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
@@ -1136,7 +1135,7 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 			if landmark != "region":
 				# Translators: This is brailled to indicate a landmark (example output: lmk main).
 				textList.append(_("lmk %s") % braille.landmarkLabels[landmark])
-		text = super(BrowseModeDocumentTextInfo, self).getControlFieldBraille(field, ancestors, reportStart, formatConfig)
+		text = super().getControlFieldBraille(field, ancestors, reportStart, formatConfig)
 		if text:
 			textList.append(text)
 		return " ".join(textList)
@@ -1155,7 +1154,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	programmaticScrollMayFireEvent = False
 
 	def __init__(self,obj):
-		super(BrowseModeDocumentTreeInterceptor,self).__init__(obj)
+		super().__init__(obj)
 		self._lastProgrammaticScrollTime = None
 		self.documentConstantIdentifier = self.documentConstantIdentifier
 		self._lastFocusObj = None
@@ -1246,10 +1245,10 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			obj=info.NVDAObjectAtStart
 			if not obj:
 				return
-		super(BrowseModeDocumentTreeInterceptor,self)._activatePosition(obj=obj)
+		super()._activatePosition(obj=obj)
 
 	def _set_selection(self, info, reason=controlTypes.REASON_CARET):
-		super(BrowseModeDocumentTreeInterceptor, self)._set_selection(info)
+		super()._set_selection(info)
 		if isScriptWaiting() or not info.isCollapsed:
 			return
 		# Save the last caret position for use in terminate().

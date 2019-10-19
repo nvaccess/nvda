@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2019 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
 # Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
@@ -267,7 +266,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.info("Using wx version %s with six version %s"%(wx.version(), six.__version__))
 	class App(wx.App):
 		def OnAssert(self,file,line,cond,msg):
-			message="{file}, line {line}:\nassert {cond}: {msg}".format(file=file,line=line,cond=cond,msg=msg)
+			message=f"{file}, line {line}:\nassert {cond}: {msg}"
 			log.debugWarning(message,codepath="WX Widgets",stack_info=True)
 	app = App(redirect=False)
 	# We support queryEndSession events, but in general don't do anything for them.
@@ -314,7 +313,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	# We don't need to do anything else because wx handles WM_QUIT for all windows.
 	import windowUtils
 	class MessageWindow(windowUtils.CustomWindow):
-		className = u"wxWindowClassNR"
+		className = "wxWindowClassNR"
 		# Windows constants for power / display changes
 		WM_POWERBROADCAST = 0x218
 		PBT_APMPOWERSTATUSCHANGE = 0xA
@@ -327,7 +326,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		ORIENTATION_LANDSCAPE = 2
 
 		def __init__(self, windowName=None):
-			super(MessageWindow, self).__init__(windowName)
+			super().__init__(windowName)
 			self.oldBatteryStatus = None
 			self.orientationStateCache = self.ORIENTATION_NOT_INITIALIZED
 			self.orientationCoordsCache = (0,0)

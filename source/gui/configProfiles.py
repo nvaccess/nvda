@@ -20,7 +20,7 @@ class ProfilesDialog(wx.Dialog):
 	def __new__(cls, *args, **kwargs):
 		# Make this a singleton.
 		if ProfilesDialog._instance is None:
-			return super(ProfilesDialog, cls).__new__(cls, *args, **kwargs)
+			return super().__new__(cls, *args, **kwargs)
 		return ProfilesDialog._instance
 
 	def __init__(self, parent):
@@ -28,7 +28,7 @@ class ProfilesDialog(wx.Dialog):
 			return
 		ProfilesDialog._instance = self
 		# Translators: The title of the Configuration Profiles dialog.
-		super(ProfilesDialog, self).__init__(parent, title=_("Configuration Profiles"))
+		super().__init__(parent, title=_("Configuration Profiles"))
 
 		self.currentAppName = (gui.mainFrame.prevFocus or api.getFocusObject()).appModule.appName
 		self.profileNames = [None]
@@ -272,7 +272,7 @@ class ProfilesDialog(wx.Dialog):
 			gui.messageBox(_("Error saving configuration profile triggers - probably read only file system."),
 				_("Error"), wx.OK | wx.ICON_ERROR, parent=parentWindow)
 
-class TriggerInfo(object):
+class TriggerInfo:
 	__slots__ = ("spec", "display", "profile")
 
 	def __init__(self, spec, display, profile):
@@ -284,7 +284,7 @@ class TriggersDialog(wx.Dialog):
 
 	def __init__(self, parent):
 		# Translators: The title of the configuration profile triggers dialog.
-		super(TriggersDialog, self).__init__(parent, title=_("Profile Triggers"))
+		super().__init__(parent, title=_("Profile Triggers"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -370,7 +370,7 @@ class NewProfileDialog(wx.Dialog):
 
 	def __init__(self, parent):
 		# Translators: The title of the dialog to create a new configuration profile.
-		super(NewProfileDialog, self).__init__(parent, title=_("New Profile"))
+		super().__init__(parent, title=_("New Profile"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 

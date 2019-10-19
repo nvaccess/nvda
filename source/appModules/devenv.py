@@ -190,7 +190,7 @@ class VsTextEditPaneTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def __init__(self, obj, position):
 		self._window = obj._window
 		self._textView = obj._textView
-		super(VsTextEditPaneTextInfo, self).__init__(obj, position)
+		super().__init__(obj, position)
 	
 	def _getCaretOffset(self):
 		return self._createEditPoint().AbsoluteCharOffset

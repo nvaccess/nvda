@@ -34,7 +34,7 @@ class FindDialog(wx.Dialog):
 
 	def __init__(self, parent, cursorManager, text, caseSensitivity):
 		# Translators: Title of a dialog to find text.
-		super(FindDialog, self).__init__(parent, wx.ID_ANY, _("Find"))
+		super().__init__(parent, wx.ID_ANY, _("Find"))
 		# Have a copy of the active cursor manager, as this is needed later for finding text.
 		self.activeCursorManager = cursorManager
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -91,7 +91,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	_lastCaseSensitivity=False
 
 	def __init__(self, *args, **kwargs):
-		super(CursorManager, self).__init__(*args, **kwargs)
+		super().__init__(*args, **kwargs)
 		self.initCursorManager()
 
 	def initOverlayClass(self):
@@ -438,7 +438,7 @@ class ReviewCursorManager(CursorManager):
 	"""
 
 	def initCursorManager(self):
-		super(ReviewCursorManager, self).initCursorManager()
+		super().initCursorManager()
 		realTI = self.TextInfo
 		self.TextInfo = type("ReviewCursorManager_%s" % realTI.__name__, (_ReviewCursorManagerTextInfo, realTI), {})
 		self._selection = self.makeTextInfo(textInfos.POSITION_FIRST)
@@ -450,4 +450,4 @@ class ReviewCursorManager(CursorManager):
 			sel = self._selection.copy()
 			sel.collapse()
 			return sel
-		return super(ReviewCursorManager, self).makeTextInfo(position)
+		return super().makeTextInfo(position)

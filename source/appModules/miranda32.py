@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #appModules/miranda32.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2019 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Joseph Lee, Bill Dengler
@@ -121,7 +120,7 @@ class AppModule(appModuleHandler.AppModule):
 	script_readMessage.__doc__=_("Displays one of the recent messages")
 
 	def __init__(self, *args, **kwargs):
-		super(AppModule, self).__init__(*args, **kwargs)
+		super().__init__(*args, **kwargs)
 		for n in range(1, self.MessageHistoryLength + 1):
 			self.bindGesture("kb:NVDA+control+%s" % n, "readMessage")
 
@@ -153,7 +152,7 @@ class mirandaIMContactList(IAccessible):
 			return controlTypes.ROLE_TREEVIEWITEM
 
 	def _get_states(self):
-		newStates=super(mirandaIMContactList,self)._get_states()
+		newStates=super()._get_states()
 		hItem=watchdog.cancellableSendMessage(self.windowHandle,CLM_GETSELECTION,0,0)
 		state=watchdog.cancellableSendMessage(self.windowHandle,CLM_GETEXPAND,hItem,0)
 		if state==CLE_EXPAND:
@@ -188,7 +187,7 @@ class mirandaIMButton(IAccessible):
 
 	def _get_name(self):
 		api.moveMouseToNVDAObject(self)
-		return super(mirandaIMButton,self)._get_name()
+		return super()._get_name()
 
 	def _get_role(self):
 		return controlTypes.ROLE_BUTTON
@@ -217,7 +216,7 @@ class mirandaIMHyperlink(mirandaIMButton):
 class MPropertyPage(Dialog,IAccessible):
 
 	def _get_name(self):
-		name=super(MPropertyPage,self)._get_name()
+		name=super()._get_name()
 		if not name:
 			try:
 				tc=self.parent.next.firstChild
@@ -244,7 +243,7 @@ class MirandaMessageViewerScrollbar(IAccessible):
 			if config.conf["presentation"]["reportDynamicContentChanges"]:
 				ui.message(message)
 			self.appModule.lastTextLengths[self.windowHandle]=curTextLength
-		super(MirandaMessageViewerScrollbar,self).event_valueChange()
+		super().event_valueChange()
 
 class DuplicateFocusListBox(IAccessible):
 	"""A list box which annoyingly fires focus events every second, even when a menu is open.
@@ -260,4 +259,4 @@ class DuplicateFocusListBox(IAccessible):
 			(focusRole == controlTypes.ROLE_POPUPMENU and controlTypes.STATE_INVISIBLE not in focusStates)
 		):
 			return False
-		return super(DuplicateFocusListBox, self).shouldAllowIAccessibleFocusEvent
+		return super().shouldAllowIAccessibleFocusEvent

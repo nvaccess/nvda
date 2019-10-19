@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #brailleDisplayDrivers/esys.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.

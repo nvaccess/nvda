@@ -244,7 +244,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# Formatting for unidentified edit fields is ignored.
 		# Note that unidentified rich edit fields will most likely use L{ITextDocumentTextInfo}.
 		if self.obj.editAPIVersion<1:
-			return super(EditTextInfo,self)._getFormatFieldAndOffsets(offset,formatConfig,calculateOffsets=calculateOffsets)
+			return super()._getFormatFieldAndOffsets(offset,formatConfig,calculateOffsets=calculateOffsets)
 		if calculateOffsets:
 			startOffset,endOffset=self._getWordOffsets(offset)
 		else:
@@ -321,7 +321,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getStoryText(self):
 		if controlTypes.STATE_PROTECTED in self.obj.states:
-			return u'*' * (self._getStoryLength() - 1)
+			return '*' * (self._getStoryLength() - 1)
 		return self.obj.windowText
 
 	def _getStoryLength(self):
@@ -398,9 +398,9 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			# We do this specifically.
 			# Note that protected standard edit controls get characters hidden in _getStoryText.
 			if text and controlTypes.STATE_PROTECTED in self.obj.states:
-				text=u'*'*len(text)
+				text='*'*len(text)
 		else:
-			text = super(EditTextInfo, self)._getTextRange(start, end)
+			text = super()._getTextRange(start, end)
 		return text
 
 	def _getWordOffsets(self,offset):
@@ -415,7 +415,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			if self._getTextRange(offset,offset+1) in ['\r','\n']:
 				return offset,offset+1
 			else:
-				return super(EditTextInfo,self)._getWordOffsets(offset)
+				return super()._getWordOffsets(offset)
 
 	def _getLineNumFromOffset(self,offset):
 		if self.obj.editAPIVersion>=1:
@@ -431,7 +431,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		end=start+length
 		#If we just seem to get invalid line info, calculate manually
 		if start<=0 and end<=0 and lineNum<=0 and self._getLineCount()<=0 and self._getStoryLength()>0:
-			return super(EditTextInfo,self)._getLineOffsets(offset)
+			return super()._getLineOffsets(offset)
 		#Some edit controls that show both line feed and carage return can give a length not including the line feed
 		if end<=offset:
 			end=offset+1
@@ -620,9 +620,9 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		embedRangeObj=None
 		bufText=rangeObj.text
 		if not bufText:
-			return u""
+			return ""
 		if controlTypes.STATE_PROTECTED in self.obj.states:
-			return u'*'*len(bufText)
+			return '*'*len(bufText)
 		newTextList=[]
 		start=rangeObj.start
 		for offset in range(len(bufText)):
@@ -639,7 +639,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		return "".join(newTextList)
 
 	def __init__(self,obj,position,_rangeObj=None):
-		super(ITextDocumentTextInfo,self).__init__(obj,position)
+		super().__init__(obj,position)
 		if _rangeObj:
 			self._rangeObj=_rangeObj.Duplicate
 			return
@@ -817,13 +817,13 @@ class Edit(EditableTextWithAutoSelectDetection, Window):
 			return
 		if eventHandler.isPendingEvents('valueChange',self):
 			self.hasContentChangedSinceLastSelection=True
-		super(Edit,self).event_caret()
+		super().event_caret()
 
 	def event_valueChange(self):
 		self.event_textChange()
 
 	def _get_states(self):
-		states = super(Edit, self)._get_states()
+		states = super()._get_states()
 		if self.windowStyle & winUser.ES_MULTILINE:
 			states.add(controlTypes.STATE_MULTILINE)
 		return states
@@ -833,7 +833,7 @@ class RichEdit(Edit):
 
 	def makeTextInfo(self,position):
 		if self.TextInfo is not ITextDocumentTextInfo:
-			return super(RichEdit,self).makeTextInfo(position)
+			return super().makeTextInfo(position)
 		# #4090: Sometimes ITextDocument support can fail (security restrictions in Outlook 2010)
 		# We then fall back to normal Edit support.
 		try:

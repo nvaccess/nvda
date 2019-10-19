@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #guiHelper.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2016 NV Access Limited
@@ -64,7 +63,7 @@ SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL = 10
 #: put this much space between two vertically associated elements (such as a wx.StaticText and a wx.Choice or wx.TextCtrl)
 SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL = 3
 
-class ButtonHelper(object):
+class ButtonHelper:
 	""" Class used to ensure that the appropriate space is added between each button, whether in horizontal or vertical
 	arrangement. This class should be used for groups of buttons. While it won't cause problems to use this class with a
 	single button there is little benefit. Individual buttons can be added directly to a sizer / sizer helper.
@@ -145,7 +144,7 @@ def associateElements( firstElement, secondElement):
 
 	return sizer
 
-class LabeledControlHelper(object):
+class LabeledControlHelper:
 	""" Represents a Labeled Control. Provides a class to create and hold on to the objects and automatically associate
 	the two controls together.
 	Relies on guiHelper.associateElements(), any limitations in guiHelper.associateElements() also apply here.
@@ -171,7 +170,7 @@ class LabeledControlHelper(object):
 	def sizer(self):
 		return self._sizer
 
-class PathSelectionHelper(object):
+class PathSelectionHelper:
 	"""
 	Abstracts away details for creating a path selection helper. The path selection helper is a textCtrl with a
 	button in horizontal layout. The Button launches a directory explorer. To get the path selected by the user, use the
@@ -209,7 +208,7 @@ class PathSelectionHelper(object):
 			if d.ShowModal() == wx.ID_OK:
 				self._textCtrl.Value = d.Path
 
-class BoxSizerHelper(object):
+class BoxSizerHelper:
 	""" Used to abstract away spacing logic for a wx.BoxSizer
 	"""
 	def __init__(self, parent, orientation=None, sizer=None):
@@ -302,7 +301,7 @@ class BoxSizerHelper(object):
 		elif isinstance(buttons, (wx.Sizer, wx.Button)):
 			toAdd = buttons
 		else:
-			raise NotImplementedError("Unknown type: {}".format(buttons))
+			raise NotImplementedError(f"Unknown type: {buttons}")
 		self.addItem(toAdd, flag=wx.ALIGN_RIGHT)
 		self.dialogDismissButtonsAdded = True
 		return buttons

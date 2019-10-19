@@ -40,7 +40,7 @@ class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Wind
 		self.parent = parent = api.getFocusObject()
 		self.result = result
 		self._selection = self.makeTextInfo(textInfos.POSITION_FIRST)
-		super(RecogResultNVDAObject, self).__init__(windowHandle=parent.windowHandle)
+		super().__init__(windowHandle=parent.windowHandle)
 
 	def makeTextInfo(self, position):
 		# Maintain our own fake selection/caret.

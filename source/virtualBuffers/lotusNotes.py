@@ -19,18 +19,18 @@ class LotusNotesRichText_TextInfo(VirtualBufferTextInfo):
 
 	def _normalizeControlField(self,attrs):
 		role=controlTypes.ROLE_STATICTEXT
-		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		states={IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates}
 		if controlTypes.STATE_LINKED in states:
 			role=controlTypes.ROLE_LINK
 		attrs['role']=role
 		attrs['states']=states
-		return super(LotusNotesRichText_TextInfo, self)._normalizeControlField(attrs)
+		return super()._normalizeControlField(attrs)
 
 class LotusNotesRichText(VirtualBuffer):
 	TextInfo=LotusNotesRichText_TextInfo
 
 	def __init__(self,rootNVDAObject):
-		super(LotusNotesRichText,self).__init__(rootNVDAObject,backendName="lotusNotesRichText")
+		super().__init__(rootNVDAObject,backendName="lotusNotesRichText")
 
 	def __contains__(self,obj):
 		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle)

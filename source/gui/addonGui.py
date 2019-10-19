@@ -41,7 +41,7 @@ def promptUserForRestart():
 
 class ConfirmAddonInstallDialog(nvdaControls.MessageDialog):
 	def __init__(self, parent, title, message, showAddonInfoFunction):
-		super(ConfirmAddonInstallDialog, self).__init__(
+		super().__init__(
 			parent,
 			title,
 			message,
@@ -79,7 +79,7 @@ class ConfirmAddonInstallDialog(nvdaControls.MessageDialog):
 
 class ErrorAddonInstallDialog(nvdaControls.MessageDialog):
 	def __init__(self, parent, title, message, showAddonInfoFunction):
-		super(ErrorAddonInstallDialog, self).__init__(
+		super().__init__(
 			parent,
 			title,
 			message,
@@ -146,7 +146,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 	def __new__(cls, *args, **kwargs):
 		instance = AddonsDialog._instance()
 		if instance is None:
-			return super(AddonsDialog, cls).__new__(cls, *args, **kwargs)
+			return super().__new__(cls, *args, **kwargs)
 		return instance
 
 	def __init__(self, parent):
@@ -657,7 +657,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 	def __new__(cls, *args, **kwargs):
 		instance = IncompatibleAddonsDialog._instance()
 		if instance is None:
-			return super(IncompatibleAddonsDialog, cls).__new__(cls, *args, **kwargs)
+			return super().__new__(cls, *args, **kwargs)
 		return instance
 
 	def __init__(

@@ -38,7 +38,7 @@ from NVDAObjects.window._msOfficeChart import OfficeChart
 
 # Window classes where PowerPoint's object model should be used 
 # These also all request to have their (incomplete) UI Automation implementations  disabled. [MS Office 2013]
-objectModelWindowClasses=set(["paneClassDC","mdiClass","screenClass"])
+objectModelWindowClasses={"paneClassDC","mdiClass","screenClass"}
 
 MATHTYPE_PROGID = "Equation.DSMT"
 
@@ -249,8 +249,7 @@ def getBulletText(ppBulletFormat):
 def walkPpShapeRange(ppShapeRange):
 	for ppShape in ppShapeRange:
 		if ppShape.type==msoGroup:
-			for ppChildShape in walkPpShapeRange(ppShape.groupItems):
-				yield ppChildShape
+			yield from walkPpShapeRange(ppShape.groupItems)
 		else:
 			yield ppShape
 
@@ -308,7 +307,7 @@ class DocumentWindow(PaneClassDC):
 
 	def _get_currentSlide(self):
 		if self.ppActivePaneViewType in (ppViewSlideSorter,ppViewThumbnails,ppViewMasterThumbnails): return None
-		return super(DocumentWindow,self).currentSlide
+		return super().currentSlide
 
 	def _get_ppSelection(self):
 		"""Fetches and caches the current Powerpoint Selection object for the current presentation."""
@@ -456,7 +455,7 @@ class PpObject(Window):
 	def __init__(self,windowHandle=None,documentWindow=None,ppObject=None):
 		self.documentWindow=documentWindow
 		self.ppObject=ppObject
-		super(PpObject,self).__init__(windowHandle=windowHandle)
+		super().__init__(windowHandle=windowHandle)
 
 	def _get_parent(self):
 		return self.documentWindow
@@ -480,7 +479,7 @@ class SlideBase(PpObject):
 		clsList.append(SlideBase)
 
 	def _isEqual(self,other):
-		return super(SlideBase,self)._isEqual(other) and self.name==other.name
+		return super()._isEqual(other) and self.name==other.name
 
 	role=controlTypes.ROLE_PANE
 
@@ -518,7 +517,7 @@ class Shape(PpObject):
 	presentationType=Window.presType_content
 
 	def __init__(self, **kwargs):
-		super(Shape, self).__init__(**kwargs)
+		super().__init__(**kwargs)
 		if self.role == controlTypes.ROLE_EMBEDDEDOBJECT:
 			if self.ppObject.OLEFormat.ProgID.startswith(MATHTYPE_PROGID):
 				self.role = controlTypes.ROLE_MATH
@@ -767,7 +766,7 @@ class Shape(PpObject):
 		return label
 
 	def _isEqual(self,other):
-		return super(Shape,self)._isEqual(other) and self.ppObject.ID==other.ppObject.ID
+		return super()._isEqual(other) and self.ppObject.ID==other.ppObject.ID
 
 	def _get_description(self):
 		return self.ppObject.alternativeText
@@ -798,7 +797,7 @@ class Shape(PpObject):
 			return self.ppObject.textFrame.textRange.text
 
 	def _get_states(self):
-		states=super(Shape,self).states
+		states=super().states
 		if self._overlapInfo[1] is not None:
 			states.add(controlTypes.STATE_OBSCURED)
 		if any(x for x in self._edgeDistances if x<0):
@@ -841,7 +840,7 @@ class ChartShape(Shape):
 		chartObj=self.chart.officeChartObject
 		if chartObj.hasTitle:
 			return chartObj.chartTitle.text
-		return super(ChartShape,self).name
+		return super().name
 
 	role=controlTypes.ROLE_CHART
 
@@ -963,7 +962,7 @@ class TableCell(PpObject):
 		self.parent=self.table=table
 		self.columnNumber=columnNumber
 		self.rowNumber=rowNumber
-		super(TableCell,self).__init__(windowHandle=windowHandle,documentWindow=documentWindow,ppObject=ppObject)
+		super().__init__(windowHandle=windowHandle,documentWindow=documentWindow,ppObject=ppObject)
 
 class TextFrame(EditableTextWithoutAutoSelectDetection,PpObject):
 	"""Represents a Text frame in Powerpoint. Provides a suitable TextInfo."""
@@ -971,7 +970,7 @@ class TextFrame(EditableTextWithoutAutoSelectDetection,PpObject):
 	TextInfo=TextFrameTextInfo
 
 	def __init__(self,windowHandle=None,documentWindow=None,ppObject=None):
-		super(TextFrame,self).__init__(windowHandle=windowHandle,documentWindow=documentWindow,ppObject=ppObject)
+		super().__init__(windowHandle=windowHandle,documentWindow=documentWindow,ppObject=ppObject)
 		# EditableText* wasn't added as an overlay,
 		# so initOverlayClass doesn't get called automatically.
 		# #5360: EditableText.initOverlayClass gives us announcement of new line text.
@@ -979,7 +978,7 @@ class TextFrame(EditableTextWithoutAutoSelectDetection,PpObject):
 		EditableTextWithoutAutoSelectDetection.initClass(self)
 
 	def _isEqual(self,other):
-		return super(TextFrame,self)._isEqual(other) and self.ppObject.parent.ID==other.ppObject.parent.ID
+		return super()._isEqual(other) and self.ppObject.parent.ID==other.ppObject.parent.ID
 
 	name=None
 	role=controlTypes.ROLE_EDITABLETEXT
@@ -991,10 +990,10 @@ class TextFrame(EditableTextWithoutAutoSelectDetection,PpObject):
 			return Shape(windowHandle=self.windowHandle,documentWindow=self.documentWindow,ppObject=parent)
 
 	def script_caret_backspaceCharacter(self, gesture):
-		super(TextFrame, self).script_caret_backspaceCharacter(gesture)
+		super().script_caret_backspaceCharacter(gesture)
 		# #3231: The typedCharacter event is never fired for the backspace key.
 		# Call it here so that speak typed words works as expected.
-		self.event_typedCharacter(u"\b")
+		self.event_typedCharacter("\b")
 
 class TableCellTextFrame(TextFrame):
 	"""Represents a text frame inside a table cell in Powerpoint. Specifially supports the caret jumping into another cell with tab or arrows."""
@@ -1041,7 +1040,7 @@ class SlideShowTreeInterceptorTextInfo(NVDAObjectTextInfo):
 			out.extend((
 				# Copy the field so the original isn't modified.
 				textInfos.FieldCommand("controlStart", textInfos.ControlField(field)),
-				u" ", textInfos.FieldCommand("controlEnd", None)))
+				" ", textInfos.FieldCommand("controlEnd", None)))
 			textOffset = fieldOffset + 1
 		# Output any text after all fields in this range.
 		chunk = text[textOffset:self._endOffset]
@@ -1156,15 +1155,13 @@ class SlideShowWindow(PaneClassDC):
 		shapeType=shape.type
 		if shapeType==msoGroup:
 			for childShape in shape.groupItems:
-				for chunk in self._getShapeText(childShape):
-					yield chunk
+				yield from self._getShapeText(childShape)
 			return
 		if shape.hasTable:
 			table=shape.table
 			for row in table.rows:
 				for cell in row.cells:
-					for chunk in self._getShapeText(cell.shape,cellShape=True):
-						yield chunk
+					yield from self._getShapeText(cell.shape,cellShape=True)
 			return
 		if shapeType==msoEmbeddedOLEObject:
 			oleFormat=shape.OLEFormat
@@ -1244,7 +1241,7 @@ class AppModule(appModuleHandler.AppModule):
 		# We must disable it in order to fall back to our own code.
 		if winUser.getClassName(hwnd) in objectModelWindowClasses:
 			return True
-		return super(AppModule,self).isBadUIAWindow(hwnd)
+		return super().isBadUIAWindow(hwnd)
 
 	def _registerCOMWithFocusJuggle(self):
 		import wx
@@ -1259,7 +1256,7 @@ class AppModule(appModuleHandler.AppModule):
 		api.processPendingEvents()
 		try:
 			comtypes.client.PumpEvents(1)
-		except WindowsError:
+		except OSError:
 			log.debugWarning("Error while pumping com events", exc_info=True)
 		d.Destroy()
 		gui.mainFrame.postPopup()
@@ -1280,7 +1277,7 @@ class AppModule(appModuleHandler.AppModule):
 	def _getPpObjectModelFromROT(self,useRPC=False):
 		if not self._ppApplicationFromROT:
 			try:
-				self._ppApplicationFromROT=comHelper.getActiveObject(u'powerPoint.application',dynamic=True,appModule=self if useRPC else None)
+				self._ppApplicationFromROT=comHelper.getActiveObject('powerPoint.application',dynamic=True,appModule=self if useRPC else None)
 			except:
 				log.debugWarning("Could not get active object via RPC")
 				return None

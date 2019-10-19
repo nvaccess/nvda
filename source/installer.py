@@ -33,7 +33,7 @@ def _getWSH():
 	return _wsh
 
 defaultStartMenuFolder=versionInfo.name
-with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, "SOFTWARE\Microsoft\Windows\CurrentVersion") as k: 
+with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows\CurrentVersion") as k: 
 	programFilesPath=winreg.QueryValueEx(k, "ProgramFilesDir")[0] 
 defaultInstallPath=os.path.join(programFilesPath, versionInfo.name)
 
@@ -69,7 +69,7 @@ def createShortcut(path,targetPath=None,arguments=None,iconLocation=None,working
 def getStartMenuFolder(noDefault=False):
 	try:
 		with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,config.NVDA_REGKEY) as k:
-			return winreg.QueryValueEx(k,u"Start Menu Folder")[0]
+			return winreg.QueryValueEx(k,"Start Menu Folder")[0]
 	except WindowsError:
 		return defaultStartMenuFolder if not noDefault else None
 
@@ -224,11 +224,11 @@ def removeOldProgramFiles(destPath):
 uninstallerRegInfo={
 	"DisplayName":versionInfo.name,
 	"DisplayVersion":versionInfo.version,
-	"DisplayIcon":u"{installDir}\\images\\nvda.ico",
-	"InstallDir":u"{installDir}",
+	"DisplayIcon":"{installDir}\\images\\nvda.ico",
+	"InstallDir":"{installDir}",
 	"Publisher":versionInfo.publisher,
-	"UninstallDirectory":u"{installDir}",
-	"UninstallString":u"{installDir}\\uninstall.exe",
+	"UninstallDirectory":"{installDir}",
+	"UninstallString":"{installDir}\\uninstall.exe",
 	"URLInfoAbout":versionInfo.url,
 }
 
@@ -245,8 +245,8 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 	registerEaseOfAccess(installDir)
 	if startOnLogonScreen is not None:
 		config._setStartOnLogonScreen(startOnLogonScreen)
-	NVDAExe=os.path.join(installDir,u"nvda.exe")
-	slaveExe=os.path.join(installDir,u"nvda_slave.exe")
+	NVDAExe=os.path.join(installDir,"nvda.exe")
+	slaveExe=os.path.join(installDir,"nvda_slave.exe")
 	if shouldCreateDesktopShortcut:
 		# #8320: -r|--replace is now the default. Nevertheless, keep creating
 		# the shortcut with the now superfluous argument in case a downgrade of
@@ -256,7 +256,7 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 		# if the default key causes problems for the normal locale keyboard layout.
 		# The key must be formatted as described in this article:
 		# http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
-		createShortcut(u"NVDA.lnk",targetPath=slaveExe,arguments="launchNVDA -r",hotkey=_("CTRL+ALT+N"),workingDirectory=installDir,prependSpecialFolder="AllUsersDesktop")
+		createShortcut("NVDA.lnk",targetPath=slaveExe,arguments="launchNVDA -r",hotkey=_("CTRL+ALT+N"),workingDirectory=installDir,prependSpecialFolder="AllUsersDesktop")
 	createShortcut(os.path.join(startMenuFolder,"NVDA.lnk"),targetPath=NVDAExe,workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
 	# Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 	createShortcut(os.path.join(startMenuFolder,_("NVDA web site")+".lnk"),targetPath=versionInfo.url,prependSpecialFolder="AllUsersPrograms")
@@ -322,7 +322,7 @@ def registerAddonFileAssociation(slaveExe):
 				winreg.SetValueEx(k2, None, 0, winreg.REG_SZ, "@{slaveExe},1".format(slaveExe=slaveExe))
 			# Point the open verb to nvda_slave addons_installAddonPackage action
 			with winreg.CreateKeyEx(k, "shell\\open\\command", 0, winreg.KEY_WRITE) as k2:
-				winreg.SetValueEx(k2, None, 0, winreg.REG_SZ, u"\"{slaveExe}\" addons_installAddonPackage \"%1\"".format(slaveExe=slaveExe))
+				winreg.SetValueEx(k2, None, 0, winreg.REG_SZ, "\"{slaveExe}\" addons_installAddonPackage \"%1\"".format(slaveExe=slaveExe))
 		# Now associate addon extension to the created prog id.
 		with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE, "SOFTWARE\\Classes\\.%s" % addonHandler.BUNDLE_EXTENSION, 0, winreg.KEY_WRITE) as k:
 			winreg.SetValueEx(k, None, 0, winreg.REG_SZ, addonHandler.NVDA_ADDON_PROG_ID)
@@ -385,7 +385,7 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 		try:
 			# Use escapes in a unicode string instead of raw.
 			# In a raw string the trailing slash escapes the closing quote leading to a python syntax error.
-			pathQualifier=u"\\\\?\\"
+			pathQualifier="\\\\?\\"
 			# #9847: Move file to None to delete it.
 			winKernel.moveFileEx(pathQualifier+tempPath,None,winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
 		except WindowsError:
@@ -399,9 +399,9 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 
 def tryCopyFile(sourceFilePath,destFilePath):
 	if not sourceFilePath.startswith('\\\\'):
-		sourceFilePath=u"\\\\?\\"+sourceFilePath
+		sourceFilePath="\\\\?\\"+sourceFilePath
 	if not destFilePath.startswith('\\\\'):
-		destFilePath=u"\\\\?\\"+destFilePath
+		destFilePath="\\\\?\\"+destFilePath
 	if windll.kernel32.CopyFileW(sourceFilePath,destFilePath,False)==0:
 		errorCode=GetLastError()
 		log.debugWarning("Unable to copy %s, error %d"%(sourceFilePath,errorCode))
@@ -497,7 +497,7 @@ def registerEaseOfAccess(installDir):
 			winreg.SetValueEx(appKey, "ATExe", None, winreg.REG_SZ,
 				"nvda.exe")
 			winreg.SetValueEx(appKey, "StartExe", None, winreg.REG_SZ,
-				os.path.join(installDir, u"nvda.exe"))
+				os.path.join(installDir, "nvda.exe"))
 			winreg.SetValueEx(appKey, "StartParams", None, winreg.REG_SZ,
 				"--ease-of-access")
 			winreg.SetValueEx(appKey, "TerminateOnDesktopSwitch", None,
@@ -510,4 +510,4 @@ def registerEaseOfAccess(installDir):
 			winreg.SetValueEx(appKey, "ATExe", None, winreg.REG_SZ,
 				"nvda_eoaProxy.exe")
 			winreg.SetValueEx(appKey, "StartExe", None, winreg.REG_SZ,
-				os.path.join(installDir, u"nvda_eoaProxy.exe"))
+				os.path.join(installDir, "nvda_eoaProxy.exe"))

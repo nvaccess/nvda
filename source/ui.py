@@ -45,7 +45,7 @@ def browseableMessage(message,title=None,isHtml=False):
 	@param isHtml: Whether the message is html
 	@type isHtml: boolean
 	"""
-	htmlFileName  = os.path.realpath( u'message.html' )
+	htmlFileName  = os.path.realpath( 'message.html' )
 	if not os.path.isfile(htmlFileName ): 
 		raise LookupError(htmlFileName )
 	moniker = POINTER(IUnknown)()
@@ -54,7 +54,7 @@ def browseableMessage(message,title=None,isHtml=False):
 		# Translators: The title for the dialog used to present general NVDA messages in browse mode.
 		title = _("NVDA Message")
 	isHtmlArgument = "true" if isHtml else "false"
-	dialogString = u"{isHtml};{title};{message}".format( isHtml = isHtmlArgument , title=title , message=message ) 
+	dialogString = f"{isHtmlArgument};{title};{message}" 
 	dialogArguements = automation.VARIANT( dialogString )
 	gui.mainFrame.prePopup() 
 	windll.mshtml.ShowHTMLDialogEx( 

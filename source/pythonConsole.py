@@ -28,7 +28,7 @@ import gui
 from logHandler import log
 import braille
 
-class HelpCommand(object):
+class HelpCommand:
 	"""
 	Emulation of the 'help' command found in the Python interactive shell.
 	"""
@@ -41,7 +41,7 @@ class HelpCommand(object):
 	def __call__(self,*args,**kwargs):
 		return pydoc.help(*args,**kwargs)
 
-class ExitConsoleCommand(object):
+class ExitConsoleCommand:
 	"""
 	An object that can be used as an exit command that can close the console or print a friendly message for its repr.
 	"""
@@ -221,7 +221,7 @@ class ConsoleUI(wx.Frame):
 	"""
 
 	def __init__(self, parent):
-		super(ConsoleUI, self).__init__(parent, wx.ID_ANY, _("NVDA Python Console"))
+		super().__init__(parent, wx.ID_ANY, _("NVDA Python Console"))
 		self.Bind(wx.EVT_ACTIVATE, self.onActivate)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)

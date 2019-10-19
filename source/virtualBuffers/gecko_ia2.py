@@ -41,7 +41,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			if not hasattr(obj, "IAccessibleTextObject"):
 				raise LookupError("Object doesn't have an IAccessibleTextObject")
 			return IA2TextTextInfo._getBoundingRectFromOffsetInObject(obj, relOffset)
-		return super(Gecko_ia2_TextInfo, self)._getBoundingRectFromOffset(offset)
+		return super()._getBoundingRectFromOffset(offset)
 
 	def _normalizeControlField(self,attrs):
 		for attr in ("table-rownumber-presentational","table-columnnumber-presentational","table-rowcount-presentational","table-columncount-presentational"):
@@ -60,8 +60,8 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
 		if attrs.get('IAccessible2::attribute_tag',"").lower()=="blockquote":
 			role=controlTypes.ROLE_BLOCKQUOTE
-		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
-		states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
+		states={IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates}
+		states|={IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates}
 		if role == controlTypes.ROLE_EDITABLETEXT and not (controlTypes.STATE_FOCUSABLE in states or controlTypes.STATE_UNAVAILABLE in states or controlTypes.STATE_EDITABLE in states):
 			# This is a text leaf.
 			# See NVDAObjects.Iaccessible.mozilla.findOverlayClasses for an explanation of these checks.
@@ -97,11 +97,11 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 		attrs['role']=role
 		attrs['states']=states
-		if level is not "" and level is not None:
+		if level != "" and level is not None:
 			attrs['level']=level
 		if landmark:
 			attrs["landmark"]=landmark
-		return super(Gecko_ia2_TextInfo,self)._normalizeControlField(attrs)
+		return super()._normalizeControlField(attrs)
 
 	def _normalizeFormatField(self, attrs):
 		normalizeIA2TextFormatField(attrs)
@@ -109,18 +109,18 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		if ia2TextStartOffset is not None:
 			assert ia2TextStartOffset.isdigit(), "ia2TextStartOffset isn't a digit, %r" % ia2TextStartOffset
 			attrs["ia2TextStartOffset"] = int(ia2TextStartOffset)
-		return super(Gecko_ia2_TextInfo,self)._normalizeFormatField(attrs)
+		return super()._normalizeFormatField(attrs)
 
 class Gecko_ia2(VirtualBuffer):
 
 	TextInfo=Gecko_ia2_TextInfo
 
 	def __init__(self,rootNVDAObject):
-		super(Gecko_ia2,self).__init__(rootNVDAObject,backendName="gecko_ia2")
+		super().__init__(rootNVDAObject,backendName="gecko_ia2")
 		self._initialScrollObj = None
 
 	def _get_shouldPrepare(self):
-		if not super(Gecko_ia2, self).shouldPrepare:
+		if not super().shouldPrepare:
 			return False
 		if isinstance(self.rootNVDAObject, NVDAObjects.IAccessible.mozilla.Gecko1_9) and controlTypes.STATE_BUSY in self.rootNVDAObject.states:
 			# If the document is busy in Gecko 1.9, it isn't safe to create a buffer yet.
@@ -180,18 +180,18 @@ class Gecko_ia2(VirtualBuffer):
 	def _shouldIgnoreFocus(self, obj):
 		if obj.role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE not in obj.states:
 			return True
-		return super(Gecko_ia2, self)._shouldIgnoreFocus(obj)
+		return super()._shouldIgnoreFocus(obj)
 
 	def _postGainFocus(self, obj):
 		if isinstance(obj, NVDAObjects.behaviors.EditableText):
 			# We aren't passing this event to the NVDAObject, so we need to do this ourselves.
 			obj.initAutoSelectDetection()
-		super(Gecko_ia2, self)._postGainFocus(obj)
+		super()._postGainFocus(obj)
 
 	def _shouldSetFocusToObj(self, obj):
 		if obj.role == controlTypes.ROLE_GRAPHIC and controlTypes.STATE_LINKED in obj.states:
 			return True
-		return super(Gecko_ia2,self)._shouldSetFocusToObj(obj)
+		return super()._shouldSetFocusToObj(obj)
 
 	def _activateLongDesc(self,controlField):
 		index=int(controlField['IAccessibleAction_showlongdesc'])
@@ -336,7 +336,7 @@ class Gecko_ia2(VirtualBuffer):
 			return None
 
 	def _getInitialCaretPos(self):
-		initialPos = super(Gecko_ia2,self)._getInitialCaretPos()
+		initialPos = super()._getInitialCaretPos()
 		if initialPos:
 			return initialPos
 		return self._initialScrollObj

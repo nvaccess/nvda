@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #synthDrivers/_espeak.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2007-2017 NV Access Limited, Peter Vágner

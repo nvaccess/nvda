@@ -33,19 +33,19 @@ class WebKit_TextInfo(VirtualBufferTextInfo):
 		if not role:
 			role = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole, controlTypes.ROLE_UNKNOWN)
 
-		states = set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1 << y for y in range(32)] if int(attrs.get('IAccessible::state_%s' % x, 0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		states = {IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1 << y for y in range(32)] if int(attrs.get('IAccessible::state_%s' % x, 0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates}
 
 		attrs["role"] = role
 		attrs["states"] = states
 		if level:
 			attrs["level"] = level
-		return super(WebKit_TextInfo, self)._normalizeControlField(attrs)
+		return super()._normalizeControlField(attrs)
 
 class WebKit(VirtualBuffer):
 	TextInfo = WebKit_TextInfo
 
 	def __init__(self,rootNVDAObject):
-		super(WebKit,self).__init__(rootNVDAObject,backendName="webKit")
+		super().__init__(rootNVDAObject,backendName="webKit")
 
 	def __contains__(self,obj):
 		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle)
@@ -124,4 +124,4 @@ class WebKit(VirtualBuffer):
 		winUser.setCursorPos(oldX,oldY)
 
 	def _shouldSetFocusToObj(self,obj):
-		return obj.role!=controlTypes.ROLE_GROUPING and super(WebKit,self)._shouldSetFocusToObj(obj)
+		return obj.role!=controlTypes.ROLE_GROUPING and super()._shouldSetFocusToObj(obj)

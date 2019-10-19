@@ -126,7 +126,7 @@ class ControlField(Field):
 
 		return self.PRESCAT_LAYOUT
 
-class FieldCommand(object):
+class FieldCommand:
 	"""A command indicating a L{Field} in a sequence of text and fields.
 	When retrieving text with its associated fields, a L{TextInfo} provides a sequence of text strings and L{FieldCommand}s.
 	A command indicates the start or end of a control or that the formatting of the text has changed.
@@ -245,7 +245,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		@type position: int, tuple or string
 		@param obj: The object containing the range of text being represented.
 		"""
-		super(TextInfo,self).__init__()
+		super().__init__()
 		self._obj=weakref.ref(obj) if type(obj)!=weakref.ProxyType else obj
 		#: The position with which this instance was constructed.
 		self.basePosition=position

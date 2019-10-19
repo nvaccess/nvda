@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # braille.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
@@ -113,7 +112,7 @@ roleLabels = {
 	controlTypes.ROLE_DROPDOWNBUTTON: _("drbtn"),
 	# Displayed in braille for an object which is a
 	# separator.
-	controlTypes.ROLE_SEPARATOR: u"⠤⠤⠤⠤⠤",
+	controlTypes.ROLE_SEPARATOR: "⠤⠤⠤⠤⠤",
 	# Translators: Displayed in braille for an object which is a
 	# block quote.
 	controlTypes.ROLE_BLOCKQUOTE: _("bqt"),
@@ -175,11 +174,11 @@ positiveStateLabels = {
 	# Translators: Displayed in braille when an object is selected.
 	controlTypes.STATE_SELECTED: _("sel"),
 	# Displayed in braille when an object (e.g. a toggle button) is pressed.
-	controlTypes.STATE_PRESSED: u"⢎⣿⡱",
+	controlTypes.STATE_PRESSED: "⢎⣿⡱",
 	# Displayed in braille when an object (e.g. a check box) is checked.
-	controlTypes.STATE_CHECKED: u"⣏⣿⣹",
+	controlTypes.STATE_CHECKED: "⣏⣿⣹",
 	# Displayed in braille when an object (e.g. a check box) is half checked.
-	controlTypes.STATE_HALFCHECKED: u"⣏⣸⣹",
+	controlTypes.STATE_HALFCHECKED: "⣏⣸⣹",
 	# Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
 	controlTypes.STATE_READONLY: _("ro"),
 	# Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
@@ -215,9 +214,9 @@ negativeStateLabels = {
 	# Translators: Displayed in braille when an object is not selected.
 	controlTypes.STATE_SELECTED: _("nsel"),
 	# Displayed in braille when an object (e.g. a toggle button) is not pressed.
-	controlTypes.STATE_PRESSED: u"⢎⣀⡱",
+	controlTypes.STATE_PRESSED: "⢎⣀⡱",
 	# Displayed in braille when an object (e.g. a check box) is not checked.
-	controlTypes.STATE_CHECKED: u"⣏⣀⣹",
+	controlTypes.STATE_CHECKED: "⣏⣀⣹",
 }
 
 landmarkLabels = {
@@ -252,9 +251,9 @@ CURSOR_SHAPES = (
 SELECTION_SHAPE = 0xC0 #: Dots 7 and 8
 
 #: Unicode braille indicator at the start of untranslated braille input.
-INPUT_START_IND = u"⣏"
+INPUT_START_IND = "⣏"
 #: Unicode braille indicator at the end of untranslated braille input.
-INPUT_END_IND = u" ⣹"
+INPUT_END_IND = " ⣹"
 
 # used to separate chunks of text when programmatically joined
 TEXT_SEPARATOR = " "
@@ -2449,10 +2448,10 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 	routingIndex = None
 
 	def _get_identifiers(self):
-		ids = [u"br({source}):{id}".format(source=self.source, id=self.id)]
+		ids = ["br({source}):{id}".format(source=self.source, id=self.id)]
 		if self.model:
 			# Model based ids should take priority.
-			ids.insert(0, u"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=self.id))
+			ids.insert(0, "br({source}.{model}):{id}".format(source=self.source, model=self.model, id=self.id))
 		import brailleInput
 		if isinstance(self, brailleInput.BrailleInputGesture):
 			ids.extend(brailleInput.BrailleInputGesture._get_identifiers(self))
@@ -2501,9 +2500,9 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		if gestureKeys != set(self.keyNames):
 			# Find a script for L{gestureKeys}.
 			id = "+".join(gestureKeys)
-			fakeGestureIds = [u"br({source}):{id}".format(source=self.source, id=id),]
+			fakeGestureIds = ["br({source}):{id}".format(source=self.source, id=id),]
 			if self.model:
-				fakeGestureIds.insert(0,u"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=id))
+				fakeGestureIds.insert(0,"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=id))
 			scriptNames = []
 			globalMaps = [inputCore.manager.userGestureMap, handler.display.gestureMap]
 			for globalMap in globalMaps:

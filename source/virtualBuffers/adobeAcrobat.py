@@ -39,7 +39,7 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 				# Older versions of Adobe Reader have per word objects, but they don't expose a location
 				break
 			return obj.location
-		return super(AdobeAcrobat_TextInfo, self)._getBoundingRectFromOffset(offset)
+		return super()._getBoundingRectFromOffset(offset)
 
 	def _normalizeControlField(self,attrs):
 		stdName = attrs.get("acrobat::stdname", "")
@@ -56,7 +56,7 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 				accRole = accRole.lower()
 			role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
 
-		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		states={IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates}
 
 		if role == controlTypes.ROLE_EDITABLETEXT and {controlTypes.STATE_READONLY, controlTypes.STATE_FOCUSABLE, controlTypes.STATE_LINKED} <= states:
 			# HACK: Acrobat sets focus states on text nodes beneath links,
@@ -67,7 +67,7 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 		attrs['states']=states
 		if level:
 			attrs["level"] = level
-		return super(AdobeAcrobat_TextInfo, self)._normalizeControlField(attrs)
+		return super()._normalizeControlField(attrs)
 
 	def _normalizeFormatField(self, attrs):
 		try:
@@ -85,7 +85,7 @@ class AdobeAcrobat(VirtualBuffer):
 	programmaticScrollMayFireEvent = True
 
 	def __init__(self,rootNVDAObject):
-		super(AdobeAcrobat,self).__init__(rootNVDAObject,backendName="adobeAcrobat")
+		super().__init__(rootNVDAObject,backendName="adobeAcrobat")
 
 	def __contains__(self,obj):
 		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle)

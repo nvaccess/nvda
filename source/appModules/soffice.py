@@ -44,24 +44,24 @@ class JAB_OOTableCell(JAB):
 	role=controlTypes.ROLE_TABLECELL
 
 	def _get_name(self):
-		name=super(JAB_OOTableCell,self).name
+		name=super().name
 		if name and name.startswith('Cell') and name[-2].isdigit():
 			return None
 		return name
 
 	def _get_cellCoordsText(self):
-		name=super(JAB_OOTableCell,self).name
+		name=super().name
 		if name and name.startswith('Cell') and name[-2].isdigit():
 			return name[5:-1]
 
 	def _get_value(self):
-		value=super(JAB_OOTableCell,self).value
+		value=super().value
 		if not value and issubclass(self.TextInfo,JABTextInfo):
 			value=self.makeTextInfo(textInfos.POSITION_ALL).text
 		return value
 
 	def _get_states(self):
-		states=super(JAB_OOTableCell,self).states
+		states=super().states
 		states.discard(controlTypes.STATE_EDITABLE)
 		return states
 
@@ -182,7 +182,7 @@ class SymphonyTextInfo(IA2TextTextInfo):
 		return formatField,(startOffset,endOffset)
 
 	def _getLineOffsets(self, offset):
-		start, end = super(SymphonyTextInfo, self)._getLineOffsets(offset)
+		start, end = super()._getLineOffsets(offset)
 		if offset == 0 and start == 0 and end == 0:
 			# HACK: Symphony doesn't expose any characters at all on empty lines, but this means we don't ever fetch the list item prefix in this case.
 			# Fake a character so that the list item prefix will be spoken on empty lines.
@@ -191,7 +191,7 @@ class SymphonyTextInfo(IA2TextTextInfo):
 
 	def _getStoryLength(self):
 		# HACK: Account for the character faked in _getLineOffsets() so that move() will work.
-		return max(super(SymphonyTextInfo, self)._getStoryLength(), 1)
+		return max(super()._getStoryLength(), 1)
 
 class SymphonyText(IAccessible, EditableText):
 	TextInfo = SymphonyTextInfo
@@ -200,7 +200,7 @@ class SymphonyText(IAccessible, EditableText):
 		level = self.IA2Attributes.get("heading-level")
 		if level:
 			return {"level": int(level)}
-		return super(SymphonyText, self).positionInfo
+		return super().positionInfo
 
 class SymphonyTableCell(IAccessible):
 	"""Silences particular states, and redundant column/row numbers"""
@@ -208,12 +208,12 @@ class SymphonyTableCell(IAccessible):
 	TextInfo=SymphonyTextInfo
 
 	def _get_cellCoordsText(self):
-		return super(SymphonyTableCell,self).name
+		return super().name
 
 	name=None
 
 	def _get_states(self):
-		states=super(SymphonyTableCell,self).states
+		states=super().states
 		states.discard(controlTypes.STATE_MULTILINE)
 		states.discard(controlTypes.STATE_EDITABLE)
 		if controlTypes.STATE_SELECTED not in states and {controlTypes.STATE_FOCUSED, controlTypes.STATE_SELECTABLE}.issubset(states):

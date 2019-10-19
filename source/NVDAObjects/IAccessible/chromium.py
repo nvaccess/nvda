@@ -38,7 +38,7 @@ class Document(ia2Web.Document):
 		states = self.states
 		if controlTypes.STATE_EDITABLE not in states and controlTypes.STATE_BUSY not in states:
 			return ChromeVBuf
-		return super(Document, self).treeInterceptorClass
+		return super().treeInterceptorClass
 
 class ComboboxListItem(IAccessible):
 	"""

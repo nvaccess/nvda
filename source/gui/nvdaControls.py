@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2016-2018 NV Access Limited, Derek Riemer
 #This file is covered by the GNU General Public License.
@@ -58,7 +57,7 @@ class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 		self._itemTextCallable = None
 
 	def _super_itemTextCallable(self, item, column):
-		return super(AutoWidthColumnListCtrl, self).OnGetItemText(item, column)
+		return super().OnGetItemText(item, column)
 
 	def OnGetItemText(self, item, column):
 		return self._itemTextCallable(item, column)
@@ -92,7 +91,7 @@ class AccPropertyOverride(accPropServer.IAccPropServer_Impl):
 		A simple class for overriding specific values on a control
 		:type propertyAnnotations: dict
 		"""
-		super(AccPropertyOverride, self).__init__(
+		super().__init__(
 			control,
 			annotateProperties=list(propertyAnnotations.keys()),
 			annotateChildren=False
@@ -118,13 +117,13 @@ class AccPropertyOverride(accPropServer.IAccPropServer_Impl):
 		# could contain references (via lambda) of our owner, set it to None to avoid a circular reference which
 		# would block destruction.
 		self.propertyAnnotations = None
-		super(AccPropertyOverride, self)._cleanup()
+		super()._cleanup()
 
 class ListCtrlAccPropServer(accPropServer.IAccPropServer_Impl):
 	"""AccPropServer for wx checkable lists which aren't fully accessible."""
 
 	def __init__(self, control):
-		super(ListCtrlAccPropServer, self).__init__(
+		super().__init__(
 			control,
 			annotateProperties=[
 				oleacc.PROPID_ACC_ROLE,  # supposed to be checkbox, rather than list item
@@ -161,7 +160,7 @@ class CustomCheckListBox(wx.CheckListBox):
 	"""Custom checkable list to fix a11y bugs in the standard wx checkable list box."""
 
 	def __init__(self, *args, **kwargs):
-		super(CustomCheckListBox, self).__init__(*args, **kwargs)
+		super().__init__(*args, **kwargs)
 		# Register object with COM to fix accessibility bugs in wx.
 		self.server = ListCtrlAccPropServer(self)
 		# Register ourself with ourself's selected event, so that we can notify winEvent of the state change.
@@ -365,11 +364,11 @@ class MessageDialog(DPIScaledDialog):
 class EnhancedInputSlider(wx.Slider):
 
 	def __init__(self,*args, **kwargs):
-		super(EnhancedInputSlider,self).__init__(*args,**kwargs)
+		super().__init__(*args,**kwargs)
 		self.Bind(wx.EVT_CHAR, self.onSliderChar)
 
 	def SetValue(self,i):
-		super(EnhancedInputSlider, self).SetValue(i)
+		super().SetValue(i)
 		evt = wx.CommandEvent(wx.wxEVT_COMMAND_SLIDER_UPDATED,self.GetId())
 		evt.SetInt(i)
 		self.ProcessEvent(evt)

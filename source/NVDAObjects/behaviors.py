@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # NVDAObjects/behaviors.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
@@ -501,17 +500,17 @@ class CandidateItem(NVDAObject):
 						describedSymbols.append(description[1:-1])
 					else:
 						# Translators: a message announcing a candidate's character and description.
-						describedSymbols.append(_(u"{symbol} as in {description}").format(symbol=symbol,description=description))
+						describedSymbols.append(_("{symbol} as in {description}").format(symbol=symbol,description=description))
 				else:
 					describedSymbols.append(symbol)
-			candidate=u", ".join(describedSymbols)
+			candidate=", ".join(describedSymbols)
 		# Translators: a formatted message announcing a candidate's number and candidate text.
-		return _(u"{number} {candidate}").format(number=number,candidate=candidate)
+		return _("{number} {candidate}").format(number=number,candidate=candidate)
 
 	def getFormattedCandidateDescription(self,candidate):
 		descriptions=[]
 		numSymbols=len(candidate) if candidate else 0
-		if numSymbols!=1: return u""
+		if numSymbols!=1: return ""
 		symbol=candidate[0]
 		try:
 			symbolDescriptions=characterProcessing.getCharacterDescription(speech.getCurrentLanguage(),symbol) or []
@@ -519,15 +518,15 @@ class CandidateItem(NVDAObject):
 			symbolDescriptions=[]
 		if config.conf["inputComposition"]["alwaysIncludeShortCharacterDescriptionInCandidateName"]:
 			symbolDescriptions=symbolDescriptions[1:]
-		if len(symbolDescriptions)<1: return u""
-		return u", ".join(symbolDescriptions)
+		if len(symbolDescriptions)<1: return ""
+		return ", ".join(symbolDescriptions)
 
 	def reportFocus(self):
 		if not config.conf["inputComposition"]["announceSelectedCandidate"]: return
 		text=self.name
 		desc=self.description
 		if desc:
-			text+=u", "+desc
+			text+=", "+desc
 		speech.speakText(text)
 
 	def _get_visibleCandidateItemsText(self):
@@ -542,7 +541,7 @@ class CandidateItem(NVDAObject):
 			textList.append(obj.name)
 			obj=obj.next
 		if len(textList)<=1: return None
-		self.visibleCandidateItemsText=(u", ".join(textList))+u", "
+		self.visibleCandidateItemsText=(", ".join(textList))+", "
 		return self.visibleCandidateItemsText
 
 class RowWithFakeNavigation(NVDAObject):

@@ -144,7 +144,7 @@ def getEnclosingElementWithCacheFromUIATextRange(textRange,cacheRequest):
 		return e
 	return textRange.getEnclosingElementBuildCache(cacheRequest)
 
-class CacheableUIAElementArray(object):
+class CacheableUIAElementArray:
 
 	def __init__(self,elementArray,cacheRequest=None):
 		self._elementArray=elementArray
@@ -191,7 +191,7 @@ def isTextRangeOffscreen(textRange, visiRanges):
 		raise RuntimeError("Visible textRanges array is empty or invalid.")
 
 
-class UIATextRangeAttributeValueFetcher(object):
+class UIATextRangeAttributeValueFetcher:
 
 	def __init__(self,textRange):
 		self.textRange=textRange
@@ -211,7 +211,7 @@ class BulkUIATextRangeAttributeValueFetcher(UIATextRangeAttributeValueFetcher):
 	def __init__(self,textRange,IDs):
 		IDs=list(IDs)
 		self.IDsToValues={}
-		super(BulkUIATextRangeAttributeValueFetcher,self).__init__(textRange)
+		super().__init__(textRange)
 		IDsArray=(ctypes.c_long*len(IDs))(*IDs)
 		values=textRange.GetAttributeValues(IDsArray,len(IDsArray))
 		self.IDsToValues={IDs[x]:values[x] for x in range(len(IDs))}

@@ -70,7 +70,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		roleText=attrs.get('HTMLAttrib::aria-roledescription')
 		if roleText:
 			attrs['roleText']=roleText
-		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		states={IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates}
 		if attrs.get('HTMLAttrib::longdesc'):
 			states.add(controlTypes.STATE_HASLONGDESC)
 		#IE exposes destination anchors as links, this is wrong
@@ -158,14 +158,14 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			attrs["landmark"]=landmark
 		if description:
 			attrs["description"]=description
-		return super(MSHTMLTextInfo,self)._normalizeControlField(attrs)
+		return super()._normalizeControlField(attrs)
 
 class MSHTML(VirtualBuffer):
 
 	TextInfo=MSHTMLTextInfo
 
 	def __init__(self,rootNVDAObject):
-		super(MSHTML,self).__init__(rootNVDAObject,backendName="mshtml")
+		super().__init__(rootNVDAObject,backendName="mshtml")
 		# As virtualBuffers must be created at all times for MSHTML to support live regions,
 		# Force focus mode for applications, and dialogs with no parent treeInterceptor (E.g. a dialog embedded in an application)  
 		if rootNVDAObject.role==controlTypes.ROLE_APPLICATION or (rootNVDAObject.role==controlTypes.ROLE_DIALOG and (not rootNVDAObject.parent or not rootNVDAObject.parent.treeInterceptor or rootNVDAObject.parent.treeInterceptor.passThrough)):
@@ -173,7 +173,7 @@ class MSHTML(VirtualBuffer):
 			self.passThrough=True
 
 	def _getInitialCaretPos(self):
-		initialPos = super(MSHTML,self)._getInitialCaretPos()
+		initialPos = super()._getInitialCaretPos()
 		if initialPos:
 			return initialPos
 		try:
@@ -319,7 +319,7 @@ class MSHTML(VirtualBuffer):
 
 
 	def _activateNVDAObject(self,obj):
-		super(MSHTML,self)._activateNVDAObject(obj)
+		super()._activateNVDAObject(obj)
 		#If we activated a same-page link, then scroll to its anchor
 		count=0
 		# #4134: The link may not always be the deepest node
@@ -363,4 +363,4 @@ class MSHTML(VirtualBuffer):
 				return False
 		except COMError:
 			pass
-		return super(MSHTML, self).shouldPassThrough(obj, reason)
+		return super().shouldPassThrough(obj, reason)

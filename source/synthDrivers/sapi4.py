@@ -24,7 +24,7 @@ class SynthDriverBufSink(COMObject):
 	def __init__(self, synthRef: weakref.ReferenceType):
 		self.synthRef = synthRef
 		self._allowDelete = True
-		super(SynthDriverBufSink,self).__init__()
+		super().__init__()
 
 	def ITTSBufNotifySink_BookMark(self, this, qTimeStamp, dwMarkNum):
 		synth = self.synthRef()
@@ -40,7 +40,7 @@ class SynthDriverBufSink(COMObject):
 		if not self._allowDelete and self._refcnt.value == 1:
 			log.debugWarning("ITTSBufNotifySink::Release called too many times by engine")
 			return 1
-		return super(SynthDriverBufSink, self).IUnknown_Release(this, *args, **kwargs)
+		return super().IUnknown_Release(this, *args, **kwargs)
 
 class SynthDriver(SynthDriver):
 
@@ -54,7 +54,7 @@ class SynthDriver(SynthDriver):
 		try:
 			winreg.OpenKey(winreg.HKEY_CLASSES_ROOT, r"CLSID\%s" % CLSID_TTSEnumerator).Close()
 			return True
-		except WindowsError:
+		except OSError:
 			return False
 
 	def _fetchEnginesList(self):

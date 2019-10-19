@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #setup.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Joseph Lee
@@ -78,7 +77,7 @@ class py2exe(distutils_buildexe.py2exe):
 	]
 
 	def initialize_options(self):
-		super(py2exe, self).initialize_options()
+		super().initialize_options()
 		self.enable_uiAccess = False
 
 	def run(self):
@@ -101,7 +100,7 @@ class py2exe(distutils_buildexe.py2exe):
 					(manifest_template % dict(uiAccess=target['uiAccess'])).encode("utf-8")
 				),
 			]
-		super(py2exe, self).run()
+		super().run()
 
 def getLocaleDataFiles():
 	wxDir=wx.__path__[0]

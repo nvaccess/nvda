@@ -61,8 +61,8 @@ SOLID_YELLOW = HighlightStyle(YELLOW, 2, winGDI.DashStyleSolid, 2)
 
 class HighlightWindow(CustomWindow):
 	transparency = 0xff
-	className = u"NVDAHighlighter"
-	windowName = u"NVDA Highlighter Window"
+	className = "NVDAHighlighter"
+	windowName = "NVDA Highlighter Window"
 	windowStyle = winUser.WS_POPUP | winUser.WS_DISABLED
 	extendedWindowStyle = winUser.WS_EX_TOPMOST | winUser.WS_EX_LAYERED
 	transparentColor = 0  # Black

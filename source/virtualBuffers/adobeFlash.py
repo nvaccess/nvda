@@ -25,17 +25,17 @@ class AdobeFlash_TextInfo(VirtualBufferTextInfo):
 			accRole = accRole.lower()
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
 
-		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		states={IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates}
 
 		attrs['role']=role
 		attrs['states']=states
-		return super(AdobeFlash_TextInfo, self)._normalizeControlField(attrs)
+		return super()._normalizeControlField(attrs)
 
 class AdobeFlash(VirtualBuffer):
 	TextInfo = AdobeFlash_TextInfo
 
 	def __init__(self,rootNVDAObject):
-		super(AdobeFlash,self).__init__(rootNVDAObject,backendName="adobeFlash")
+		super().__init__(rootNVDAObject,backendName="adobeFlash")
 		self.isWindowless = rootNVDAObject.event_objectID is not None and rootNVDAObject.event_objectID > 0
 
 	def __contains__(self,obj):

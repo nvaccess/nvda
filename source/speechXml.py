@@ -16,10 +16,10 @@ import speech
 from logHandler import log
 
 XML_ESCAPES = {
-	0x3C: u"&lt;", # <
-	0x3E: u"&gt;", # >
-	0x26: u"&amp;", # &
-	0x22: u"&quot;", # "
+	0x3C: "&lt;", # <
+	0x3E: "&gt;", # >
+	0x26: "&amp;", # &
+	0x22: "&quot;", # "
 }
 
 # Regular expression to replace invalid XML characters.
@@ -28,17 +28,17 @@ def _buildInvalidXmlRegexp():
 	# Ranges of invalid characters.
 	# Both start and end are inclusive; i.e. they are both themselves considered invalid.
 	ranges = ((0x00, 0x08), (0x0B, 0x0C), (0x0E, 0x1F), (0x7F, 0x84), (0x86, 0x9F), (0xFDD0, 0xFDDF), (0xFFFE, 0xFFFF))
-	rangeExprs = [u"%s-%s" % (chr(start), chr(end))
+	rangeExprs = ["%s-%s" % (chr(start), chr(end))
 		for start, end in ranges]
-	leadingSurrogate = u"[\uD800-\uDBFF]"
-	trailingSurrogate = u"[\uDC00-\uDFFF]"
+	leadingSurrogate = "[\uD800-\uDBFF]"
+	trailingSurrogate = "[\uDC00-\uDFFF]"
 	return re.compile((
 			# These ranges of characters are invalid.
-			u"[{ranges}]"
+			"[{ranges}]"
 			# Leading Unicode surrogate is invalid if not followed by trailing surrogate.
-			u"|{leading}(?!{trailing})"
+			"|{leading}(?!{trailing})"
 			# Trailing surrogate is invalid if not preceded by a leading surrogate.
-			u"|(?<!{leading}){trailing}"
+			"|(?<!{leading}){trailing}"
 		).format(
 			ranges="".join(rangeExprs),
 			leading=leadingSurrogate,
@@ -46,7 +46,7 @@ def _buildInvalidXmlRegexp():
 
 RE_INVALID_XML_CHARS = _buildInvalidXmlRegexp()
 # The Unicode replacement character. See https://en.wikipedia.org/wiki/Specials_(Unicode_block)#Replacement_character
-REPLACEMENT_CHAR = u"\uFFFD"
+REPLACEMENT_CHAR = "\uFFFD"
 
 def toXmlLang(nvdaLang):
 	"""Convert an NVDA language to an XML language.
@@ -77,7 +77,7 @@ def _escapeXml(text):
 	text = RE_INVALID_XML_CHARS.sub(REPLACEMENT_CHAR, text)
 	return text
 
-class XmlBalancer(object):
+class XmlBalancer:
 	"""Generates balanced XML given a set of commands.
 	NVDA speech sequences are linear, but XML is hierarchical, which makes conversion challenging.
 	For example, a speech sequence might change the pitch, then change the volume, then reset the pitch to default.
@@ -181,9 +181,9 @@ class XmlBalancer(object):
 			self._closeTag(tag)
 		for tag in self._enclosingAllTags:
 			self._closeTag(tag)
-		return u"".join(self._out)
+		return "".join(self._out)
 
-class SpeechXmlConverter(object):
+class SpeechXmlConverter:
 	"""Base class for conversion of NVDA speech sequences to XML.
 	This class converts an NVDA speech sequence into XmlBalancer commands
 	which can then be passed to L{XmlBalancer} to produce correct XML.
@@ -241,8 +241,7 @@ class SsmlConverter(SpeechXmlConverter):
 		attrs = OrderedDict((("version", "1.0"), ("xmlns", "http://www.w3.org/2001/10/synthesis"),
 			("xml:lang", self.defaultLanguage)))
 		yield EncloseAllCommand("speak", attrs)
-		for command in super(SsmlConverter, self).generateBalancerCommands(speechSequence):
-			yield command
+		yield from super().generateBalancerCommands(speechSequence)
 
 	def convertIndexCommand(self, command):
 		return StandAloneTagCommand("mark", {"name": command.index}, None)

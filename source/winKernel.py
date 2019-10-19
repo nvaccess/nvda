@@ -268,7 +268,7 @@ class SECURITY_ATTRIBUTES(Structure):
 		("bInheritHandle", BOOL)
 	)
 	def __init__(self, **kwargs):
-		super(SECURITY_ATTRIBUTES, self).__init__(nLength=sizeof(self), **kwargs)
+		super().__init__(nLength=sizeof(self), **kwargs)
 
 def CreatePipe(pipeAttributes, size):
 	read = ctypes.wintypes.HANDLE()
@@ -299,7 +299,7 @@ class STARTUPINFOW(Structure):
 		('hSTDError',HANDLE),
 	)
 	def __init__(self, **kwargs):
-		super(STARTUPINFOW, self).__init__(cb=sizeof(self), **kwargs)
+		super().__init__(cb=sizeof(self), **kwargs)
 STARTUPINFO = STARTUPINFOW
 
 class PROCESS_INFORMATION(Structure):
@@ -350,7 +350,7 @@ class HGLOBAL(HANDLE):
 		@param autoFree: True by default, the handle will automatically be freed with GlobalFree 
 		when this object goes out of scope.
 		"""
-		super(HGLOBAL,self).__init__(h)
+		super().__init__(h)
 		self._autoFree=autoFree
 
 	def __del__(self):

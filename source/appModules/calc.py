@@ -34,13 +34,13 @@ class Display(NVDAObjects.IAccessible.IAccessible):
 	)
 
 	def _get_name(self):
-		name=super(Display,self).name
+		name=super().name
 		if not name:
 			name=_("Display")
 		return name
 
 	def event_typedCharacter(self,ch):
-		super(Display,self).event_typedCharacter(ch)
+		super().event_typedCharacter(ch)
 		if ch in self.calcCommandChars:
 			speech.speakObjectProperties(self,value=True)
 

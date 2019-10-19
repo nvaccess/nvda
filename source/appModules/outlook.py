@@ -90,7 +90,7 @@ def getSentMessageString(obj):
 class AppModule(appModuleHandler.AppModule):
 
 	def __init__(self,*args,**kwargs):
-		super(AppModule,self).__init__(*args,**kwargs)
+		super().__init__(*args,**kwargs)
 		# Explicitly allow gainFocus events for the window class that hosts the active Outlook DatePicker cell
 		# This object gets focus but its window does not conform to our GUI thread info window checks
 		eventHandler.requestEvents("gainFocus",processId=self.processID,windowClassName="rctrl_renwnd32")
@@ -110,7 +110,7 @@ class AppModule(appModuleHandler.AppModule):
 		api.processPendingEvents()
 		try:
 			comtypes.client.PumpEvents(1)
-		except WindowsError:
+		except OSError:
 			log.debugWarning("Error while pumping com events", exc_info=True)
 		d.Destroy()
 		gui.mainFrame.postPopup()
@@ -118,7 +118,7 @@ class AppModule(appModuleHandler.AppModule):
 	def _get_nativeOm(self):
 		try:
 			nativeOm=comHelper.getActiveObject("outlook.application",dynamic=True)
-		except (COMError,WindowsError,RuntimeError):
+		except (COMError, OSError, RuntimeError):
 			if self._hasTriedoutlookAppSwitch:
 				log.error("Failed to get native object model",exc_info=True)
 			nativeOm=None
@@ -234,21 +234,21 @@ class SuperGridClient2010(IAccessible):
 		# Outlook can sometimes fire invalid focus events when showing daily tasks within the calendar.
 		if winUser.getGUIThreadInfo(self.windowThreadID).hwndFocus!=self.windowHandle:
 			return False
-		return super(SuperGridClient2010,self).shouldAllowIAccessibleFocusEvent
+		return super().shouldAllowIAccessibleFocusEvent
 
 	def event_gainFocus(self):
 		# #3834: UIA has a much better implementation for rows, so use it if available.
 		if self.appModule.outlookVersion<14 or not UIAHandler.handler:
-			return super(SuperGridClient2010,self).event_gainFocus()
+			return super().event_gainFocus()
 		try:
 			kwargs = {}
 			UIA.kwargsFromSuper(kwargs, relation="focus")
 			obj=UIA(**kwargs)
 		except:
 			log.debugWarning("Retrieving UIA focus failed", exc_info=True)
-			return super(SuperGridClient2010,self).event_gainFocus()
+			return super().event_gainFocus()
 		if not isinstance(obj,UIAGridRow):
-			return super(SuperGridClient2010,self).event_gainFocus()
+			return super().event_gainFocus()
 		obj.parent=self.parent
 		eventHandler.executeEvent("gainFocus",obj)
 
@@ -351,7 +351,7 @@ class CalendarView(IAccessible):
 					start=p.start
 					end=p.end
 				except COMError:
-					return super(CalendarView,self).reportFocus()
+					return super().reportFocus()
 				t=self._generateTimeRangeText(start,end)
 				# Translators: A message reported when on a calendar appointment in Microsoft Outlook
 				ui.message(_("Appointment {subject}, {time}").format(subject=p.subject,time=t))
@@ -361,11 +361,11 @@ class CalendarView(IAccessible):
 					selectedStartTime=v.selectedStartTime
 					selectedEndTime=v.selectedEndTime
 				except COMError:
-					return super(CalendarView,self).reportFocus()
+					return super().reportFocus()
 				timeSlotText=self._generateTimeRangeText(selectedStartTime,selectedEndTime)
-				startLimit=u"%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedStartTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedStartTime, None))
-				endLimit=u"%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedEndTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedEndTime, None))
-				query=u'[Start] < "{endLimit}" And [End] > "{startLimit}"'.format(startLimit=startLimit,endLimit=endLimit)
+				startLimit="%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedStartTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedStartTime, None))
+				endLimit="%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedEndTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedEndTime, None))
+				query=f'[Start] < "{endLimit}" And [End] > "{startLimit}"'
 				i=e.currentFolder.items
 				i.sort('[Start]')
 				i.IncludeRecurrences =True
@@ -447,7 +447,7 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			# There are no children
 			# This is unexpected here.
 			log.debugWarning("Unable to get relevant children for UIAGridRow", stack_info=True)
-			return super(UIAGridRow, self).name
+			return super().name
 		for index in range(cachedChildren.length):
 			e=cachedChildren.getElement(index)
 			UIAControlType=e.cachedControlType
@@ -483,31 +483,31 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 					columnHeaderTextList.append(columnHeaderItem.currentName)
 			columnHeaderText=" ".join(columnHeaderTextList)
 			if columnHeaderText:
-				text=u"{header} {name}".format(header=columnHeaderText,name=name)
+				text=f"{columnHeaderText} {name}"
 			else:
 				text=name
 			if text:
 				if UIAClassName=="FlagField":
 					textList.insert(0,text)
 				else:
-					text+=u","
+					text+=","
 					textList.append(text)
 		return " ".join(textList)
 
 	value=None
 
 	def _get_positionInfo(self):
-		info=super(UIAGridRow,self).positionInfo
+		info=super().positionInfo
 		if info is None: info={}
 		UIAClassName=self.UIAElement.cachedClassName
 		if UIAClassName=="ThreadHeader":
 			info['level']=1
-		elif UIAClassName=="ThreadItem" and isinstance(super(UIAGridRow,self).parent,UIAGridRow):
+		elif UIAClassName=="ThreadItem" and isinstance(super().parent,UIAGridRow):
 			info['level']=2
 		return info
 
 	def _get_role(self):
-		role=super(UIAGridRow,self).role
+		role=super().role
 		if role==controlTypes.ROLE_TREEVIEW:
 			role=controlTypes.ROLE_TREEVIEWITEM
 		elif role==controlTypes.ROLE_DATAITEM:
@@ -515,7 +515,7 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 		return role
 
 	def setFocus(self):
-		super(UIAGridRow,self).setFocus()
+		super().setFocus()
 		eventHandler.queueEvent("gainFocus",self)
 
 class MailViewerTextInfoForTreeInterceptor(WordDocumentTextInfo):
@@ -564,13 +564,13 @@ class OutlookWordDocument(WordDocument):
 	def _get_treeInterceptorClass(self):
 		if self.isReadonlyViewer:
 			return MailViewerTreeInterceptor
-		return super(OutlookWordDocument,self).treeInterceptorClass
+		return super().treeInterceptorClass
 
 	def _get_shouldCreateTreeInterceptor(self):
 		return self.isReadonlyViewer
 
 	def _get_role(self):
-		return controlTypes.ROLE_DOCUMENT if self.isReadonlyViewer else super(OutlookWordDocument,self).role
+		return controlTypes.ROLE_DOCUMENT if self.isReadonlyViewer else super().role
 
 	ignoreEditorRevisions=True
 	ignorePageNumbers=True # This includes page sections, and page columns. None of which are appropriate for outlook.

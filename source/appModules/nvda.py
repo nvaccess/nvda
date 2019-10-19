@@ -22,7 +22,7 @@ class NvdaDialog(IAccessible):
 	"""
 
 	def _get_presentationType(self):
-		presType = super(NvdaDialog, self).presentationType
+		presType = super().presentationType
 		# Sometimes, NVDA message dialogs briefly report the invisible state
 		# after they're focused.
 		# This causes them to be treated as unavailable and they are thus not reported.

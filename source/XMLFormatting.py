@@ -9,7 +9,7 @@ import textInfos
 from logHandler import log
 from textUtils import WCHAR_ENCODING, isLowSurrogate
 
-class XMLTextParser(object): 
+class XMLTextParser: 
 
 	def __init__(self):
 		self.parser=expat.ParserCreate('utf-8')
@@ -25,7 +25,7 @@ class XMLTextParser(object):
 				try:
 					data=chr(int(data))
 				except ValueError:
-					data=u'\ufffd'
+					data='\ufffd'
 				self._CharacterDataHandler(data, processBufferedSurrogates=isLowSurrogate(data))
 			return
 		elif tagName=='control':

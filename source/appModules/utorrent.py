@@ -1,11 +1,10 @@
-# -*- coding: UTF-8 -*-
 #appModules/utorrent.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 #Copyright (C) 2010 James Teh <jamie@jantrid.net>
 
-u"""App module for µTorrent
+"""App module for µTorrent
 """
 
 import appModuleHandler
@@ -32,7 +31,7 @@ class DuplicateFocusListView(IAccessible):
 			(focusRole == controlTypes.ROLE_POPUPMENU and controlTypes.STATE_INVISIBLE not in focusStates)
 		):
 			return False
-		return super(DuplicateFocusListView, self).shouldAllowIAccessibleFocusEvent
+		return super().shouldAllowIAccessibleFocusEvent
 
 class TorrentContentsListItem(ListItem):
 	"""Items of the Torrent Contents list in the Add Torrent dialog.
@@ -40,7 +39,7 @@ class TorrentContentsListItem(ListItem):
 	"""
 
 	def _getColumnContent(self, column):
-		superContent = super(TorrentContentsListItem, self)._getColumnContent(column)
+		superContent = super()._getColumnContent(column)
 		if superContent or column != 1:
 			return superContent
 		# We need to use the display model to retrieve the Name column.

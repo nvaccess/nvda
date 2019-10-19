@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2007-2019 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
 # This file is covered by the GNU General Public License.
@@ -61,10 +60,10 @@ legacyAccessBridge=True
 try:
 	bridgeDll=getattr(cdll,'windowsAccessBridge-32')
 	legacyAccessBridge=False
-except WindowsError:
+except OSError:
 	try:
 		bridgeDll=cdll.windowsAccessBridge
-	except WindowsError:
+	except OSError:
 		bridgeDll=None
 
 #Definitions of access bridge types, structs and prototypes
@@ -344,7 +343,7 @@ def getWindowHandleFromAccContext(vmID,accContext):
 	else:
 		return vmIDsToWindowHandles.get(vmID)
 
-class JABContext(object):
+class JABContext:
 
 	def __init__(self,hwnd=None,vmID=None,accContext=None):
 		if hwnd and not vmID:
@@ -416,7 +415,7 @@ class JABContext(object):
 	def getAccessibleTextRange(self,start,end):
 		length=((end+1)-start)
 		if length<=0:
-			return u""
+			return ""
 		# Use a string buffer, as from an unicode buffer, we can't get the raw data.
 		buf = create_string_buffer((length +1) * 2)
 		bridgeDll.getAccessibleTextRange(self.vmID, self.accContext, start, end, buf, length)

@@ -19,7 +19,7 @@ class SpeechViewerFrame(wx.Dialog):
 			speechViewSection = config.conf["speechViewer"]
 			dialogSize = wx.Size(speechViewSection["width"], speechViewSection["height"])
 			dialogPos = wx.Point(x=speechViewSection["x"], y=speechViewSection["y"])
-		super(SpeechViewerFrame, self).__init__(gui.mainFrame, wx.ID_ANY, _("NVDA Speech Viewer"), size=dialogSize, pos=dialogPos, style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP)
+		super().__init__(gui.mainFrame, wx.ID_ANY, _("NVDA Speech Viewer"), size=dialogSize, pos=dialogPos, style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP)
 		self.onDestroyCallBack = onDestroyCallBack
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		self.Bind(wx.EVT_WINDOW_DESTROY, self.onDestroy)

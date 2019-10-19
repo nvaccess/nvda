@@ -54,7 +54,7 @@ def isWin10(version=1507, atLeast=True):
 		else:
 			return winVersion.build == win10VersionsToBuilds[version]
 	except KeyError:
-		log.error("Unknown Windows 10 version {}".format(version))
+		log.error(f"Unknown Windows 10 version {version}")
 		return False
 
 

@@ -23,10 +23,10 @@ class SDM(IAccessible):
 		# E.g. File recovery pane, clipboard manager pane
 		if winUser.getGUIThreadInfo(0).hwndFocus!=self.windowHandle:
 			return False
-		return super(SDM,self).shouldAllowIAccessibleFocusEvent
+		return super().shouldAllowIAccessibleFocusEvent
 
 	def _get_name(self):
-		name=super(SDM,self).name
+		name=super().name
 		if not name and self.role==controlTypes.ROLE_LISTITEM:
 			name=self.displayText
 		return name
@@ -34,29 +34,29 @@ class SDM(IAccessible):
 	def _get_positionInfo(self):
 		if self.role!=controlTypes.ROLE_LISTITEM:
 			return {}
-		return super(SDM,self).positionInfo
+		return super().positionInfo
 
 	def _get_parent(self):
 		if self.IAccessibleChildID == 0 and self.role not in (controlTypes.ROLE_DIALOG, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_WINDOW):
 			# SDM child IAccessible objects have a broken accParent.
 			# The parent should be the dialog.
 			return getNVDAObjectFromEvent(self.windowHandle, winUser.OBJID_CLIENT, 0)
-		return super(SDM, self).parent
+		return super().parent
 
 	def _get_presentationType(self):
-		t=super(SDM,self).presentationType
+		t=super().presentationType
 		if t==self.presType_content and self.SDMChild:
 			t=self.presType_layout
 		return t
 
 	def _get_firstChild(self):
-		child=super(SDM,self).firstChild
+		child=super().firstChild
 		if not child:
 			child=self.SDMChild
 		return child
 
 	def _get_lastChild(self):
-		child=super(SDM,self).lastChild
+		child=super().lastChild
 		if not child:
 			child=self.SDMChild
 		return child
@@ -86,13 +86,13 @@ class MsoCommandBarToolBar(IAccessible):
 		# Therefore suppress reporting of these toolbars in focus ancestry if they only have one child.
 		if self.childCount==1:
 			return False
-		return super(MsoCommandBarToolBar,self).isPresentableFocusAncestor
+		return super().isPresentableFocusAncestor
 
 	def _get_name(self):
-		name=super(MsoCommandBarToolBar,self).name
+		name=super().name
 		# #3407: overly verbose and programmatic toolbar label
 		if name and name.startswith('MSO Generic Control Container'):
-			name=u""
+			name=""
 		return name
 
 	description=None
@@ -121,7 +121,7 @@ class BrokenMsoCommandBar(IAccessible):
 	description = None
 
 	def _get_name(self):
-		name = super(BrokenMsoCommandBar, self).name
+		name = super().name
 		if name == "MSO Generic Control Container":
 			return None
 		return name
@@ -131,7 +131,7 @@ class CommandBarListItem(IAccessible):
 
 	COMPILED_RE = re.compile(r'RGB\(\d+, \d+, \d+\)',re.I)
 	def _get_rgbNameAndMatch(self):
-		name = super(CommandBarListItem,self).name
+		name = super().name
 		if self.COMPILED_RE.match(name):
 			matchRGB = True
 		else:
@@ -154,7 +154,7 @@ class CommandBarListItem(IAccessible):
 			# Translators: a color, broken down into its RGB red, green, blue parts.
 			return _("RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}").format(rgb=colors.RGB.fromString(name))
 		else:
-			return super(CommandBarListItem,self).description
+			return super().description
 
 class SDMSymbols(SDM):
 
