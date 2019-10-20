@@ -569,7 +569,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for toggle report cell borders command.
 		description=_("Cycles through cell borders settings")
-		category=SCRCAT_DOCUMENTFORMATTING
+		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportCellBorders(self, gesture):
 		if not config.conf["documentFormatting"]["reportBorderStyle"] and not config.conf["documentFormatting"]["reportBorderColor"]:
