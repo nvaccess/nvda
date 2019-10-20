@@ -332,15 +332,15 @@ formatConfigFlag_includeLayoutTables=0x20000
 # Doesn't care about the actual font, so can give incorrect Unicode in rare cases.
 mapPUAToUnicode = {
 	# from : to # fontname
-	u'\uF06E' : u'\u25A0', # Wingdings (black square)
-	u'\uF076' : u'\u2756', # Wingdings (black diamond minus white x
-	u'\uF0A7' : u'\u25AA', # Symbol (black small square)
-	u'\uF0A8' : u'\u2666', # Symbol (black diamond suit)
-	u'\uF0B7' : u'\u2022', # Symbol (bullet)
-	u'\uF0D8' : u'\u2B9A', # Wingdings (three-D top-lighted RIGHTWARDS equilateral arrowhead) 
-	u'\uF0E8' : u'\U0001f87a', # Wingdings (wide-headed rightwards heavy barb arrow)
-	u'\uF0F0' : u'\u21E8', # Wingdings (right white arrow)
-	u'\uF0FC' : u'\u2714', # Wingdings (heavy check mark)
+	u'\uF06E': u'\u25A0',  # Wingdings (black square)
+	u'\uF076': u'\u2756',  # Wingdings (black diamond minus white x
+	u'\uF0A7': u'\u25AA',  # Symbol (black small square)
+	u'\uF0A8': u'\u2666',  # Symbol (black diamond suit)
+	u'\uF0B7': u'\u2022',  # Symbol (bullet)
+	u'\uF0D8': u'\u2B9A',  # Wingdings (three-D top-lighted RIGHTWARDS equilateral arrowhead)
+	u'\uF0E8': u'\U0001f87a',  # Wingdings (wide-headed rightwards heavy barb arrow)
+	u'\uF0F0': u'\u21E8',  # Wingdings (right white arrow)
+	u'\uF0FC': u'\u2714',  # Wingdings (heavy check mark)
 }
 
 class WordDocumentHeadingQuickNavItem(browseMode.TextInfoQuickNavItem):
