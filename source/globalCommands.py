@@ -327,7 +327,7 @@ class GlobalCommands(ScriptableObject):
 			config.conf["documentFormatting"]["reportFontName"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report font name command.
-	script_toggleReportFontName.__doc__=_("Toggles on and off the reporting of font changes")
+	script_toggleReportFontName.__doc__=_("Toggles on and off the reporting of font name changes")
 	script_toggleReportFontName.category=SCRCAT_DOCUMENTFORMATTING
 
 	def script_toggleReportFontSize(self,gesture):
@@ -566,6 +566,24 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for toggle report table cell coordinates command.
 	script_toggleReportTableCellCoords.__doc__=_("Toggles on and off the reporting of table cell coordinates")
 	script_toggleReportTableCellCoords.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportCellBorders(self, gesture):
+		if not config.conf["documentFormatting"]["reportBorderStyle"] and not config.conf["documentFormatting"]["reportBorderColor"]:
+			# Translators: A message reported when cycling through cell borders settings.
+			ui.message(_("Report styles of cell borders"))
+			config.conf["documentFormatting"]["reportBorderStyle"] = True
+		elif config.conf["documentFormatting"]["reportBorderStyle"] and not config.conf["documentFormatting"]["reportBorderColor"]:
+			# Translators: A message reported when cycling through cell borders settings.
+			ui.message(_("Report colors and styles of cell borders"))
+			config.conf["documentFormatting"]["reportBorderColor"] = True
+		else:
+			# Translators: A message reported when cycling through cell borders settings.
+			ui.message(_("Report cell borders off."))
+			config.conf["documentFormatting"]["reportBorderStyle"] = False
+			config.conf["documentFormatting"]["reportBorderColor"] = False
+	# Translators: Input help mode message for toggle report cell borders command.
+	script_toggleReportCellBorders.__doc__=_("Cycles through cell borders settings")
+	script_toggleReportCellBorders.category=SCRCAT_DOCUMENTFORMATTING
 
 	def script_toggleReportLinks(self,gesture):
 		if config.conf["documentFormatting"]["reportLinks"]:
