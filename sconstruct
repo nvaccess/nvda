@@ -394,6 +394,7 @@ def makePot(target, source, env):
 			"--keyword=pgettext:1c,2",
 			# Needed because xgettext doesn't recognise the .pyw extension.
 			"--language=python",
+			"--from-code=UTF-8",
 		] + [os.path.relpath(str(f), str(sourceDir)) for f in source]
 	]) != 0:
 		raise RuntimeError("xgettext failed")
