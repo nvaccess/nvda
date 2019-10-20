@@ -3,6 +3,14 @@ Nyheder i NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.2.1 =
+Dette er en mindre version der indeholder fejlrettelser i forhold til tilfælde, hvor NVDA gik ned, når man kører version 2019.2. Følgende er rettet:
+- Rettet flere nedbrud med Gmail i både Firefox og Chrome, hvis man benyttede særlige pop-op-menuer, når man f.eks. oprettede filtre eller ændrede bestemte Gmail-indstillinger. (#10175, #9402, #8924)
+- NVDA vil ikke længere få Windows Stifinder til at gå ned, hvis musen benyttes i startmenuen i Windows 7. (#9435)
+- Windows Stifinder i Windows 7 vil ikke længere gå ned, når du indtaster metadata i redigeringsfelter. (#5337) 
+- NVDA vil ikke længere fryse, når der interageres med billeder der benytter en base64 URI i Mozilla Firefox eller Google Chrome. (#10227)
+
+
 = 2019.2 =
 Af forbedringer i denne version af NVDA kan nævnes automatisk detektion af punktdisplays fra Freedom Scientific, en eksperimentel indstilling i NVDAs avancerede indstillinger der forhindre gennemsynstilstand i automatisk at flytte systemfokus (hvilket kan forøge ydeevnen), indstilling der øger hastigheden yderligere for talesyntesen Windows OneCore der gør det muligt at opnå en meget høj talehastighed, samt mange fejlrettelser.
 

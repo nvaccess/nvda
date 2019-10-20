@@ -1,8 +1,7 @@
-#logHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2019 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2019 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Utilities and classes to manage logging in NVDA"""
 
@@ -226,6 +225,8 @@ class FileHandler(logging.FileHandler):
 		return super().handle(record)
 
 class Formatter(logging.Formatter):
+	default_time_format = "%H:%M:%S"
+	default_msec_format = "%s.%03d"
 
 	def formatException(self, ex):
 		return stripBasePathFromTracebackText(super(Formatter, self).formatException(ex))
@@ -295,9 +296,12 @@ def initialize(shouldDoRemoteLogging=False):
 	logging.addLevelName(Logger.OFF, "OFF")
 	if not shouldDoRemoteLogging:
 		# This produces log entries such as the following:
-		# IO - inputCore.InputManager.executeGesture (09:17:40.724):
+		# IO - inputCore.InputManager.executeGesture (09:17:40.724) - Thread-5 (13576):
 		# Input: kb(desktop):v
-		logFormatter=Formatter("%(levelname)s - %(codepath)s (%(asctime)s.%(msecs)03d):\n%(message)s", "%H:%M:%S")
+		logFormatter = Formatter(
+			fmt="{levelname!s} - {codepath!s} ({asctime}) - {threadName} ({thread}):\n{message}",
+			style="{"
+		)
 		if (globalVars.appArgs.secure or globalVars.appArgs.noLogging) and (not globalVars.appArgs.debugLogging and globalVars.appArgs.logLevel == 0):
 			# Don't log in secure mode.
 			# #8516: also if logging is completely turned off.
@@ -317,9 +321,18 @@ def initialize(shouldDoRemoteLogging=False):
 			except (IOError, WindowsError):
 				pass # Probably log does not exist, don't care.
 			logHandler = FileHandler(globalVars.appArgs.logFileName, mode="w",encoding="utf-8")
+			logLevel = globalVars.appArgs.logLevel
+			if globalVars.appArgs.debugLogging:
+				logLevel = Logger.DEBUG
+			elif logLevel <= 0:
+				logLevel = Logger.INFO
+			log.setLevel(logLevel)
 	else:
 		logHandler = RemoteHandler()
-		logFormatter = Formatter("%(codepath)s:\n%(message)s")
+		logFormatter = Formatter(
+			fmt="{codepath!s}:\n{message}",
+			style="{"
+		)
 	logHandler.setFormatter(logFormatter)
 	log.addHandler(logHandler)
 	redirectStdout(log)
@@ -327,12 +340,22 @@ def initialize(shouldDoRemoteLogging=False):
 	warnings.showwarning = _showwarning
 	warnings.simplefilter("default", DeprecationWarning)
 
+
+def isLogLevelForced() -> bool:
+	"""Check if the log level was overridden either from the command line or because of secure mode.
+	"""
+	return (
+		globalVars.appArgs.secure
+		or globalVars.appArgs.debugLogging
+		or globalVars.appArgs.logLevel != 0
+		or globalVars.appArgs.noLogging
+	)
+
+
 def setLogLevelFromConfig():
 	"""Set the log level based on the current configuration.
 	"""
-	if globalVars.appArgs.debugLogging or globalVars.appArgs.logLevel != 0 or globalVars.appArgs.secure or globalVars.appArgs.noLogging:
-		# Log level was overridden on the command line or we're running in secure mode,
-		# so don't set it.
+	if isLogLevelForced():
 		return
 	import config
 	levelName=config.conf["general"]["loggingLevel"]
