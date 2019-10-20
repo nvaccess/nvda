@@ -567,6 +567,11 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportTableCellCoords.__doc__=_("Toggles on and off the reporting of table cell coordinates")
 	script_toggleReportTableCellCoords.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report cell borders command.
+		description=_("Cycles through cell borders settings")
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportCellBorders(self, gesture):
 		if not config.conf["documentFormatting"]["reportBorderStyle"] and not config.conf["documentFormatting"]["reportBorderColor"]:
 			# Translators: A message reported when cycling through cell borders settings.
@@ -581,9 +586,6 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("Report cell borders off."))
 			config.conf["documentFormatting"]["reportBorderStyle"] = False
 			config.conf["documentFormatting"]["reportBorderColor"] = False
-	# Translators: Input help mode message for toggle report cell borders command.
-	script_toggleReportCellBorders.__doc__=_("Cycles through cell borders settings")
-	script_toggleReportCellBorders.category=SCRCAT_DOCUMENTFORMATTING
 
 	def script_toggleReportLinks(self,gesture):
 		if config.conf["documentFormatting"]["reportLinks"]:
