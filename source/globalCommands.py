@@ -1,8 +1,8 @@
-# -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-# Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Jakub Lukowicz
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard
+# de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Jakub Lukowicz
 
 import time
 import itertools
@@ -315,6 +315,11 @@ class GlobalCommands(ScriptableObject):
 	script_toggleSpeakCommandKeys.__doc__=_("Toggles on and off the speaking of typed keys, that are not specifically characters")
 	script_toggleSpeakCommandKeys.category=SCRCAT_SPEECH
 
+	@script(
+		# Translators: Input help mode message for toggle report font name command.
+		description=_("Toggles on and off the reporting of font name changes"),
+		category=SCRCAT_DOCUMENTFORMATTING,
+	)
 	def script_toggleReportFontName(self,gesture):
 		if config.conf["documentFormatting"]["reportFontName"]:
 			# Translators: The message announced when toggling the report font name document formatting setting.
@@ -325,9 +330,6 @@ class GlobalCommands(ScriptableObject):
 			state = _("report font name on")
 			config.conf["documentFormatting"]["reportFontName"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report font name command.
-	script_toggleReportFontName.__doc__=_("Toggles on and off the reporting of font name changes")
-	script_toggleReportFontName.category=SCRCAT_DOCUMENTFORMATTING
 
 	def script_toggleReportFontSize(self,gesture):
 		if config.conf["documentFormatting"]["reportFontSize"]:
@@ -568,15 +570,21 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for toggle report cell borders command.
-		description=_("Cycles through cell borders settings"),
+		description=_("Cycles through  the cell border reporting settings"),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportCellBorders(self, gesture):
-		if not config.conf["documentFormatting"]["reportBorderStyle"] and not config.conf["documentFormatting"]["reportBorderColor"]:
+		if (
+			not config.conf["documentFormatting"]["reportBorderStyle"] and not
+			config.conf["documentFormatting"]["reportBorderColor"]
+		):
 			# Translators: A message reported when cycling through cell borders settings.
 			ui.message(_("Report styles of cell borders"))
 			config.conf["documentFormatting"]["reportBorderStyle"] = True
-		elif config.conf["documentFormatting"]["reportBorderStyle"] and not config.conf["documentFormatting"]["reportBorderColor"]:
+		elif (
+			config.conf["documentFormatting"]["reportBorderStyle"] and not
+			config.conf["documentFormatting"]["reportBorderColor"]
+		):
 			# Translators: A message reported when cycling through cell borders settings.
 			ui.message(_("Report colors and styles of cell borders"))
 			config.conf["documentFormatting"]["reportBorderColor"] = True
