@@ -300,7 +300,7 @@ class UIAHandler(COMObject):
 			pass
 		elif not self.isNativeUIAElement(sender):
 			if _isDebug():
-				log.debugWarning(
+				log.debug(
 					f"HandleAutomationEvent: Ignoring event {NVDAEventName} for non native element"
 				)
 			return
@@ -340,7 +340,7 @@ class UIAHandler(COMObject):
 		self.lastFocusedUIAElement = sender
 		if not self.isNativeUIAElement(sender):
 			if _isDebug():
-				log.debugWarning("HandleFocusChangedEvent: Ignoring for non native element")
+				log.debug("HandleFocusChangedEvent: Ignoring for non native element")
 			return
 		import NVDAObjects.UIA
 		if isinstance(eventHandler.lastQueuedFocusObject,NVDAObjects.UIA.UIA):
@@ -389,7 +389,7 @@ class UIAHandler(COMObject):
 			pass
 		elif not self.isNativeUIAElement(sender):
 			if _isDebug():
-				log.debugWarning(
+				log.debug(
 					f"HandlePropertyChangedEvent: Ignoring event {NVDAEventName} for non native element"
 				)
 			return
