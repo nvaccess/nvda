@@ -206,13 +206,14 @@ def removeOldProgramFiles(destPath):
 	#  However don't touch user and system config.
 	#  Also remove old .dll and .manifest files.
 	for curDestDir,subDirs,files in os.walk(destPath):
-		subDirs[:] = [x for x in subDirs if os.path.basename(x).lower() not in (
-			'userconfig',
-			'systemconfig',
-			#  Do not remove old libraries here. It is done by removeOldLibFiles.
-			'lib',
-			'lib64',
-			'libarm64')]
+		if curDestDir == destPath:
+			subDirs[:] = [x for x in subDirs if os.path.basename(x).lower() not in (
+				'userconfig',
+				'systemconfig',
+				#  Do not remove old libraries here. It is done by removeOldLibFiles.
+				'lib',
+				'lib64',
+				'libarm64')]
 		for f in files:
 			if f.endswith((".pyc", ".pyo", ".pyd", ".dll", ".manifest")):
 				path=os.path.join(curDestDir, f)
