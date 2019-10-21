@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2019 NV Access Limited, Soronel Haetir, Babbage B.V.
+# Copyright (C) 2010-2019 NV Access Limited, Soronel Haetir, Babbage B.V., Francisco Del Roio
 
 import objbase
 import comtypes
@@ -52,14 +52,6 @@ class AppModule(appModuleHandler.AppModule):
 			except ValueError:
 				pass
 			clsList[0:0] = [VsTextEditPane, EditableTextWithoutAutoSelectDetection]
-		elif (
-			isinstance(obj, UIA)
-			and obj.UIAElement.CachedClassName == "WpfTextView"
-			and not config.conf["UIA"]["useInMSVSWhenAvailable"]
-			and self.DTE
-		):
-			clsList.insert(0, VsTextEditPane)
-
 		elif (
 			(self.vsMajor == 15 and self.vsMinor >= 3)
 			or self.vsMajor >= 16
@@ -173,12 +165,16 @@ class VsTextEditPane(EditableText, Window):
 
 	def initOverlayClass(self):
 		self._window = self.appModule.DTE.ActiveWindow
-		self.location = RectLTWH(
-			self._window.Left,
-			self._window.Top,
-			self._window.Width,
-			self._window.Height
-		)
+
+	def _get-location(self):
+		if not isinstance(self, UIA):
+			return RectLTWH(
+				self._window.Left,
+				self._window.Top,
+				self._window.Width,
+				self._window.Height
+			)
+		return super().location
 
 	def event_valueChange(self):
 		pass

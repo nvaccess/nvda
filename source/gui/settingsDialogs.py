@@ -2063,13 +2063,6 @@ class AdvancedPanelControls(wx.Panel):
 		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
 		self.UIAInMSWordCheckBox.defaultValue = self._getDefaultValue(["UIA", "useInMSWordWhenAvailable"])
 
-		# Translators: This is the label for a checkbox in the
-		#  Advanced settings panel.
-		label = _("Use UI Automation to access Microsoft &Visual Studio document controls when available")
-		self.UIAInMSVSCheckBox = UIAGroup.addItem(wx.CheckBox(self, label=label))
-		self.UIAInMSVSCheckBox.SetValue(config.conf["UIA"]["useInMSVSWhenAvailable"])
-		self.UIAInMSVSCheckBox.defaultValue = self._getDefaultValue(["UIA", "useInMSVSWhenAvailable"])
-
 		# Translators: This is the label for a combo box for selecting the
 		# active console implementation in the advanced settings panel.
 		# Choices are automatic, prefer UIA, and legacy.
@@ -2220,26 +2213,21 @@ class AdvancedPanelControls(wx.Panel):
 
 	def haveConfigDefaultsBeenRestored(self):
 		return (
-			self._defaultsRestored
-			and self.scratchpadCheckBox.IsChecked() == self.scratchpadCheckBox.defaultValue
-			and self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue
-			and self.UIAInMSVSCheckBox.IsChecked() == self.UIAInMSVSCheckBox.defaultValue
-			and self.consoleCombo.GetSelection() == self.consoleCombo.defaultValue
-			and self.speakPasswordsCheckBox.IsChecked() == self.speakPasswordsCheckBox.defaultValue
-			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
-			and (
-				self.autoFocusFocusableElementsCheckBox.IsChecked()
-				== self.autoFocusFocusableElementsCheckBox.defaultValue
-			)
-			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
-			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
-			and True  # reduce noise in diff when the list is extended.
+			self._defaultsRestored and
+			self.scratchpadCheckBox.IsChecked() == self.scratchpadCheckBox.defaultValue and
+			self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue and
+			self.consoleCombo.GetSelection() == self.consoleCombo.defaultValue and
+			self.speakPasswordsCheckBox.IsChecked() == self.speakPasswordsCheckBox.defaultValue and
+			self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue and
+			self.autoFocusFocusableElementsCheckBox.IsChecked() == self.autoFocusFocusableElementsCheckBox.defaultValue and
+			self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue and
+			set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems) and
+			True  # reduce noise in diff when the list is extended.
 		)
 
 	def restoreToDefaults(self):
 		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
-		self.UIAInMSVSCheckBox.SetValue(self.UIAInMSVSCheckBox.defaultValue)
 		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue == 'UIA')
 		self.speakPasswordsCheckBox.SetValue(self.speakPasswordsCheckBox.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
@@ -2252,7 +2240,6 @@ class AdvancedPanelControls(wx.Panel):
 		log.debug("Saving advanced config")
 		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
 		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
-		config.conf["UIA"]["useInMSVSWhenAvailable"] = self.UIAInMSVSCheckBox.IsChecked()
 		consoleChoice = self.consoleCombo.GetSelection()
 		config.conf['UIA']['winConsoleImplementation'] = (
 			self.consoleVals[consoleChoice]
