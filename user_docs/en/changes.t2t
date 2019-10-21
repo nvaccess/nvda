@@ -102,6 +102,8 @@ What's New in NVDA
 - Introduced displayModel.UNIT_DISPLAYCHUNK as a textInfos unit constant specific to DisplayModelTextInfo. (#10165)
  - This new constant allows walking over the text in a DisplayModelTextInfo in a way that more closely resembles how the text chunks are saved in the underlying model.
 - displayModel.getCaretRect now returns an instance of locationHelper.RectLTRB. (#10233)
+- The UNIT_CONTROLFIELD and UNIT_FORMATFIELD constants have been moved from virtualBuffers.VirtualBufferTextInfo to the textInfos package. (#10396)
+- UIA TextInfo objects can now be moved/expanded by the page, story and formatField text units. (#10396)
 
 
 = 2019.2.1 =
