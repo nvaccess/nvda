@@ -685,7 +685,7 @@ class UIATextInfo(textInfos.TextInfo):
 		else: #no children 
 			if debug:
 				log.debug("no children")
-				log.debug("Yielding text") 
+				log.debug("Yielding text")
 			for field in self._getTextWithFields_text(textRange,formatConfig):
 				yield field
 		for field in parentFields:

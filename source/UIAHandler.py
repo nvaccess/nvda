@@ -8,6 +8,10 @@ from comtypes import COMError
 import config
 from logHandler import log
 
+# Make the _UIAHandler._isDebug function available to this module,
+# ignoring the fact that it is not used here directly.
+from _UIAHandler import _isDebug   # noqa: F401
+
 handler=None
 isUIAAvailable=False
 
@@ -15,7 +19,6 @@ if config.conf and config.conf["UIA"]["enabled"]:
 	# Because Windows 7 SP1 (NT 6.1) or later is supported, just assume UIA can be used unless told otherwise.
 	try:
 		from _UIAHandler import *
-		from _UIAHandler import _isDebug
 		isUIAAvailable=True
 	except ImportError:
 		log.debugWarning("Unable to import _UIAHandler",exc_info=True)

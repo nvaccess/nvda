@@ -378,7 +378,7 @@ class UIAHandler(COMObject):
 		NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
 		if not NVDAEventName:
 			if _isDebug():
-				log.debugWarning(f"HandlePropertyChangedEvent: Don't know how to handle event {eventID}")
+				log.debugWarning(f"HandlePropertyChangedEvent: Don't know how to handle property {propertyId}")
 			return
 		focus = api.getFocusObject()
 		import NVDAObjects.UIA
