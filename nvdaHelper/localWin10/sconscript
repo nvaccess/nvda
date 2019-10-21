@@ -26,6 +26,12 @@ Import(
 env=win10env.Clone()
 env.Append(CCFLAGS='/std:c++17')
 env.Append(CPPPATH=Dir('#include/uiaRemote'))
+env.Append(CPPPATH=Dir('#include/wil/include'))
+
+uiaOperationAbstractionObjs=[
+	env.Object('UiaOperationAbstraction','#include/uiaRemote/uiaOperationAbstraction/UiaOperationAbstraction.cpp'),
+	#env.Object('UiaTypeAbstractionImpl.g','#include/uiaRemote/uiaOperationAbstraction/UiaTypeAbstractionImpl.g.cpp'),
+]
 
 localWin10Lib = env.SharedLibrary(
 	target="nvdaHelperLocalWin10",
@@ -35,6 +41,8 @@ localWin10Lib = env.SharedLibrary(
 		'oneCoreSpeech.cpp',
 		'uwpOcr.cpp',
 		'uiaRemote.cpp',
+		'uiaRemote2.cpp',
+		uiaOperationAbstractionObjs,
 	],
 	LIBS=["oleaut32", localLib[2]],
 )

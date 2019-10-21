@@ -203,12 +203,28 @@ class consoleUIATextInfo(UIATextInfo):
 		This is necessary since Uniscribe requires indices into the text to
 		find word boundaries, but UIA only allows for relative movement.
 		"""
-		tempInfo=lineInfo.copy()
-		tempInfo.setEndPoint(self,"endToStart")
 		dll=NVDAHelper.getHelperLocalWin10Dll()
-		res=dll.uiaRemote_getTextRangeUnitCount(tempInfo._rangeObj,UIAHandler.TextUnit_Character)
+		res=dll.uiaRemote_getTextRangeUnitCount3(False,self._rangeObj)
+		print(res)
 		if res<0:
 			raise RuntimeError(f"uiaRemote_getTextRangeUnitCount returned code {res}");
+		return res
+		charInfo = self.copy()
+		res = 0
+		chars = None
+		while charInfo.compareEndPoints(
+			lineInfo,
+			"startToEnd"
+		) <= 0:
+			charInfo.expand(textInfos.UNIT_CHARACTER)
+			chars = charInfo.move(textInfos.UNIT_CHARACTER, -1) * -1
+			if chars != 0 and charInfo.compareEndPoints(
+				lineInfo,
+				"startToStart"
+			) >= 0:
+				res += chars
+			else:
+				break
 		return res
 
 	def _getWordOffsetsInThisLine(self, offset, lineInfo):

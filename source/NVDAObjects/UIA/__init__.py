@@ -24,6 +24,8 @@ import config
 import speech
 import api
 import textInfos
+from scriptHandler import script
+import NVDAHelper
 from logHandler import log
 from UIAUtils import *
 from UIAUtils import shouldUseUIAConsole
@@ -737,6 +739,15 @@ class UIATextInfo(textInfos.TextInfo):
 	updateCaret = updateSelection
 
 class UIA(Window):
+
+	@script(gestures=["kb:nvda+x"])
+	def script_offsetInLine(self,gesture):
+		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
+		tempInfo=self.makeTextInfo(textInfos.POSITION_ALL)
+		tempInfo.setEndPoint(caretInfo,"endToStart")
+		dll=NVDAHelper.getHelperLocalWin10Dll()
+		res=dll.uiaRemote_getTextRangeUnitCount2(True,tempInfo._rangeObj,UIAHandler.TextUnit_Character)
+		speech.speakMessage(f"Offset {res}")
 
 	def _get__coreCycleUIAPropertyCacheElementCache(self):
 		"""
