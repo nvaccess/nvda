@@ -5,7 +5,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-"""App module for Windows Explorer (aka Windows shell).
+"""App module for Windows Explorer (aka Windows shell and renamed to File Explorer in Windows 8).
 Provides workarounds for controls such as identifying Start button, notification area and others.
 """
 
@@ -323,4 +323,25 @@ class AppModule(appModuleHandler.AppModule):
 			# #6671: Never allow WorkerW thread to send gain focus event, as it causes 'pane" to be announced when minimizing windows or moving to desktop.
 			return
 
+		nextHandler()
+
+	def isGoodUIAWindow(self, hwnd):
+		# #9204: shell raises window open event for emoji panel in build 18305 and later.
+		if winVersion.isWin10(version=1903) and winUser.getClassName(hwnd) == "ApplicationFrameWindow":
+			return True
+		return False
+
+	def event_UIA_window_windowOpen(self, obj, nextHandler):
+		# Send UIA window open event to input app window.
+		if isinstance(obj, UIA) and obj.UIAElement.cachedClassName == "ApplicationFrameWindow":
+			inputPanelWindow = obj.firstChild
+			inputPanelAppName = (
+				# 19H2 and earlier
+				"windowsinternal_composableshell_experiences_textinput_inputapp",
+				# 20H1 and later
+				"textinputhost"
+			)
+			if inputPanelWindow and inputPanelWindow.appModule.appName in inputPanelAppName:
+				eventHandler.executeEvent("UIA_window_windowOpen", inputPanelWindow)
+				return
 		nextHandler()
