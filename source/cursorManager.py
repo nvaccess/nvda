@@ -142,11 +142,15 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 					pass
 				else:
 					info=self.makeTextInfo(textInfos.POSITION_FIRST if direction>0 else textInfos.POSITION_LAST)
-		self.selection=info
+		# #10343: Speak before setting selection because setting selection might
+		# move the focus, which might mutate the document, potentially invalidating
+		# info if it is offset-based.
+		selection = info.copy()
 		info.expand(unit)
 		if not willSayAllResume(gesture): speech.speakTextInfo(info,unit=unit,reason=controlTypes.REASON_CARET)
 		if not oldInfo.isCollapsed:
 			speech.speakSelectionChange(oldInfo,self.selection)
+		self.selection = selection
 
 	def doFindText(self,text,reverse=False,caseSensitive=False):
 		if not text:
