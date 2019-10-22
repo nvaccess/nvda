@@ -172,7 +172,7 @@ def fetchAppModule(processID,appName):
 		except:
 			log.exception(f"error in appModule {modName!r}")
 			import ui
-			import speech
+			import speech.priorities
 			ui.message(
 				# Translators: This is presented when errors are found in an appModule
 				# (example output: error in appModule explorer).
