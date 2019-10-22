@@ -1,11 +1,11 @@
-# -*- coding: UTF-8 -*-
-#NVDAObjects/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V., Davy Kager
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
+# Davy Kager
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
-"""Module that contains the base NVDA object type"""
+"""Module that contains the base NVDA object type with dynamic class creation support,
+as well as the associated TextInfo class."""
 
 import time
 import re
@@ -89,11 +89,20 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		# optimisation: The base implementation of chooseNVDAObjectOverlayClasses does nothing,
 		# so only call this method if it's been overridden.
 		if appModule and not hasattr(appModule.chooseNVDAObjectOverlayClasses, "_isBase"):
-			appModule.chooseNVDAObjectOverlayClasses(obj, clsList)
+			try:
+				appModule.chooseNVDAObjectOverlayClasses(obj, clsList)
+			except Exception:
+				log.exception(f"Exception in chooseNVDAObjectOverlayClasses for {appModule}")
+				pass
+
 		# Allow global plugins to choose overlay classes.
 		for plugin in globalPluginHandler.runningPlugins:
 			if "chooseNVDAObjectOverlayClasses" in plugin.__class__.__dict__:
-				plugin.chooseNVDAObjectOverlayClasses(obj, clsList)
+				try:
+					plugin.chooseNVDAObjectOverlayClasses(obj, clsList)
+				except Exception:
+					log.exception(f"Exception in chooseNVDAObjectOverlayClasses for {plugin}")
+					pass
 
 		# Determine the bases for the new class.
 		bases=[]
@@ -123,9 +132,13 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			if cls in oldMro:
 				# This class was part of the initially constructed object, so its constructor would have been called.
 				continue
-			initFunc=cls.__dict__.get("initOverlayClass")
+			initFunc = cls.__dict__.get("initOverlayClass")
 			if initFunc:
-				initFunc(obj)
+				try:
+					initFunc(obj)
+				except Exception:
+					log.exception(f"Exception in initOverlayClass for {cls}")
+					continue
 			# Bind gestures specified on the class.
 			try:
 				obj.bindGestures(getattr(cls, "_%s__gestures" % cls.__name__))
@@ -134,7 +147,11 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 
 		# Allow app modules to make minor tweaks to the instance.
 		if appModule and hasattr(appModule,"event_NVDAObject_init"):
-			appModule.event_NVDAObject_init(obj)
+			try:
+				appModule.event_NVDAObject_init(obj)
+			except Exception:
+				log.exception(f"Exception in event_NVDAObject_init for {appModule}")
+				pass
 
 		return obj
 
