@@ -1,4 +1,4 @@
-# App module for Text Inpur Hoar (formerly Composable Shell (CShell) input panel)
+# App module for Text Input Host (formerly Composable Shell (CShell) input panel)
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2019 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.

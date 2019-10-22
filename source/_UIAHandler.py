@@ -27,6 +27,8 @@ from logHandler import log
 import UIAUtils
 from comtypes.gen import UIAutomationClient as UIA
 from comtypes.gen.UIAutomationClient import *
+import textInfos
+from typing import Dict
 
 #Some newer UIA constants that could be missing
 ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
@@ -76,12 +78,15 @@ UIADialogClassNames=[
 	"Shell_SystemDialog", # Various dialogs in Windows 10 Settings app
 ]
 
-NVDAUnitsToUIAUnits={
-	"character":TextUnit_Character,
-	"word":TextUnit_Word,
-	"line":TextUnit_Line,
-	"paragraph":TextUnit_Paragraph,
-	"readingChunk":TextUnit_Line,
+NVDAUnitsToUIAUnits: Dict[str, int] = {
+	textInfos.UNIT_CHARACTER: UIA.TextUnit_Character,
+	textInfos.UNIT_WORD: UIA.TextUnit_Word,
+	textInfos.UNIT_LINE: UIA.TextUnit_Line,
+	textInfos.UNIT_PARAGRAPH: UIA.TextUnit_Paragraph,
+	textInfos.UNIT_PAGE: UIA.TextUnit_Page,
+	textInfos.UNIT_READINGCHUNK: UIA.TextUnit_Line,
+	textInfos.UNIT_STORY: UIA.TextUnit_Document,
+	textInfos.UNIT_FORMATFIELD: UIA.TextUnit_Format,
 }
 
 UIAControlTypesToNVDARoles={

@@ -408,9 +408,12 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		except StopIteration:
 			ui.message(errorMessage)
 			return
-		item.moveTo()
+		# #8831: Report before moving because moving might change the focus, which
+		# might mutate the document, potentially invalidating info if it is
+		# offset-based.
 		if not gesture or not willSayAllResume(gesture):
 			item.report(readUnit=readUnit)
+		item.moveTo()
 
 	@classmethod
 	def addQuickNav(cls, itemType, key, nextDoc, nextError, prevDoc, prevError, readUnit=None):
@@ -1323,7 +1326,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		# We've hit the edge of the focused control.
 		# Therefore, move the virtual caret to the same edge of the field.
 		info = self.makeTextInfo(textInfos.POSITION_CARET)
-		info.expand(info.UNIT_CONTROLFIELD)
+		info.expand(textInfos.UNIT_CONTROLFIELD)
 		if gesture.mainKeyName in ("leftArrow", "upArrow", "pageUp"):
 			info.collapse()
 		else:
