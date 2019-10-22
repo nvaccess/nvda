@@ -31,6 +31,7 @@ What's New in NVDA
 - In Microsoft Word, NVDA now announces the display state of non printable characters when pressing the toggle shortcut Ctrl+Shift+8 . (#10241)
 - Updated Liblouis braille translator to commit 58d67e63. (#10094)
 - When CLDR characters (including emojis) reporting is enabled, they are announced at all punctuation levels. (#8826)
+- Third party python packages included in NVDA, such as comtypes, now log their warnings and errors to the NVDA log. (#10393)
 
 
 == Bug Fixes ==
@@ -50,6 +51,9 @@ What's New in NVDA
 - The settings dialog no longer shows "info" as the current log level when in secure mode. (#10209)
 - In Start menu for Windows 10 Anniversary Update and later, NVDA will announce details of search results. (#10232)
 - In browse mode, if moving the cursor or using quick navigation causes the document to change, NVDA no longer speaks incorrect content in some cases. (#8831, #10343)
+- Some bullet names in Microsoft Word have been corrected. (#10399)
+- In Windows 10 May 2019 Update and later, NVDA will once again announce first selected emoji or clipboard item when emoji panel and clipboard history opens, respectively. (#9204)
+- In Poedit, it is once again possible to view some translations for right to left languages. (#9931)
 
 
 == Changes for Developers ==
@@ -101,6 +105,8 @@ What's New in NVDA
 - Introduced displayModel.UNIT_DISPLAYCHUNK as a textInfos unit constant specific to DisplayModelTextInfo. (#10165)
  - This new constant allows walking over the text in a DisplayModelTextInfo in a way that more closely resembles how the text chunks are saved in the underlying model.
 - displayModel.getCaretRect now returns an instance of locationHelper.RectLTRB. (#10233)
+- The UNIT_CONTROLFIELD and UNIT_FORMATFIELD constants have been moved from virtualBuffers.VirtualBufferTextInfo to the textInfos package. (#10396)
+- UIA TextInfo objects can now be moved/expanded by the page, story and formatField text units. (#10396)
 
 
 = 2019.2.1 =
