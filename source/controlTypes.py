@@ -493,6 +493,8 @@ roleLabels={
 	ROLE_DELETED_CONTENT:_("deleted"),
 	# Translators: Identifies inserted content. 
 	ROLE_INSERTED_CONTENT:_("inserted"),
+	# Translators: Identifies a value meter
+	# Such as for checking input volume
 	ROLE_METER: _("meter"),
 }
 
