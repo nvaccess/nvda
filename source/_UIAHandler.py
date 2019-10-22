@@ -279,7 +279,7 @@ class UIAHandler(COMObject):
 		self.MTAThreadStopEvent.wait()
 		self.clientObject.RemoveAllEventHandlers()
 
-	def IUIAutomationEventHandler_HandleAutomationEvent(self, sender, eventID):
+	def IUIAutomationEventHandler_HandleAutomationEvent(self,sender,eventID):
 		if not self.MTAThreadInitEvent.isSet():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
@@ -316,7 +316,15 @@ class UIAHandler(COMObject):
 					f"HandleAutomationEvent: Ignoring event {NVDAEventName} for shouldAcceptEvent=False"
 				)
 			return
-		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
+		try:
+			obj = NVDAObjects.UIA.UIA(UIAElement=sender)
+		except Exception:
+			if _isDebug():
+				log.debugWarning(
+					f"HandleAutomationEvent: Exception while creating object for event {NVDAEventName}",
+					exc_info=True
+				)
+			return
 		if (
 			not obj
 			or (NVDAEventName=="gainFocus" and not obj.shouldAllowUIAFocusEvent)
@@ -362,7 +370,15 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug("HandleFocusChangedEvent: Ignoring for shouldAcceptEvent=False")
 			return
-		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
+		try:
+			obj = NVDAObjects.UIA.UIA(UIAElement=sender)
+		except Exception:
+			if _isDebug():
+				log.debugWarning(
+					"HandleFocusChangedEvent: Exception while creating object",
+					exc_info=True
+				)
+			return
 		if not obj or not obj.shouldAllowUIAFocusEvent:
 			if _isDebug():
 				log.debug(
@@ -405,7 +421,15 @@ class UIAHandler(COMObject):
 					f"HandlePropertyChangedEvent: Ignoring event {NVDAEventName} for shouldAcceptEvent=False"
 				)
 			return
-		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
+		try:
+			obj = NVDAObjects.UIA.UIA(UIAElement=sender)
+		except Exception:
+			if _isDebug():
+				log.debugWarning(
+					f"HandlePropertyChangedEvent: Exception while creating object for event {NVDAEventName}",
+					exc_info=True
+				)
+			return
 		if not obj:
 			if _isDebug():
 				log.debug(f"HandlePropertyChangedEvent: Ignoring event {NVDAEventName} because no object")
@@ -428,7 +452,18 @@ class UIAHandler(COMObject):
 				log.debug("HandleNotificationEvent: event received while not fully initialized")
 			return
 		import NVDAObjects.UIA
-		obj = NVDAObjects.UIA.UIA(UIAElement=sender)
+		try:
+			obj = NVDAObjects.UIA.UIA(UIAElement=sender)
+		except Exception:
+			if _isDebug():
+				log.debugWarning(
+					"HandleNotificationEvent: Exception while creating object: "
+					f"NotificationProcessing={NotificationProcessing} "
+					f"displayString={displayString} "
+					f"activityId={activityId}",
+					exc_info=True
+				)
+			return
 		if not obj:
 			# Sometimes notification events can be fired on a UIAElement that has no windowHandle and does not connect through parents back to the desktop.
 			# There is nothing we can do with these.
