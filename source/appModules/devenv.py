@@ -16,7 +16,6 @@ from NVDAObjects.window import DisplayModelEditableText
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.UIA import UIA
 from enum import IntEnum
-import config
 import appModuleHandler
 import controlTypes
 import threading
