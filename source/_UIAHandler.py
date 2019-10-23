@@ -1,8 +1,8 @@
-#_UIAHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# _UIAHandler.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from ctypes import *
 from ctypes.wintypes import *
@@ -25,7 +25,10 @@ import winVersion
 import eventHandler
 from logHandler import log
 import UIAUtils
+from comtypes.gen import UIAutomationClient as UIA
 from comtypes.gen.UIAutomationClient import *
+import textInfos
+from typing import Dict
 
 #Some newer UIA constants that could be missing
 ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
@@ -75,12 +78,15 @@ UIADialogClassNames=[
 	"Shell_SystemDialog", # Various dialogs in Windows 10 Settings app
 ]
 
-NVDAUnitsToUIAUnits={
-	"character":TextUnit_Character,
-	"word":TextUnit_Word,
-	"line":TextUnit_Line,
-	"paragraph":TextUnit_Paragraph,
-	"readingChunk":TextUnit_Line,
+NVDAUnitsToUIAUnits: Dict[str, int] = {
+	textInfos.UNIT_CHARACTER: UIA.TextUnit_Character,
+	textInfos.UNIT_WORD: UIA.TextUnit_Word,
+	textInfos.UNIT_LINE: UIA.TextUnit_Line,
+	textInfos.UNIT_PARAGRAPH: UIA.TextUnit_Paragraph,
+	textInfos.UNIT_PAGE: UIA.TextUnit_Page,
+	textInfos.UNIT_READINGCHUNK: UIA.TextUnit_Line,
+	textInfos.UNIT_STORY: UIA.TextUnit_Document,
+	textInfos.UNIT_FORMATFIELD: UIA.TextUnit_Format,
 }
 
 UIAControlTypesToNVDARoles={
@@ -144,7 +150,6 @@ UIAEventIdsToNVDAEventNames={
 	UIA_SelectionItem_ElementAddedToSelectionEventId:"stateChange",
 	UIA_SelectionItem_ElementRemovedFromSelectionEventId:"stateChange",
 	#UIA_MenuModeEndEventId:"menuModeEnd",
-	#UIA_Text_TextSelectionChangedEventId:"caret",
 	UIA_ToolTipOpenedEventId:"UIA_toolTipOpened",
 	#UIA_AsyncContentLoadedEventId:"documentLoadComplete",
 	#UIA_ToolTipClosedEventId:"hide",
@@ -152,8 +157,12 @@ UIAEventIdsToNVDAEventNames={
 	UIA_SystemAlertEventId:"UIA_systemAlert",
 }
 
+autoSelectDetectionAvailable = False
 if winVersion.isWin10():
-	UIAEventIdsToNVDAEventNames[UIA_Text_TextChangedEventId] = "textChange"
+	UIAEventIdsToNVDAEventNames.update({
+		UIA.UIA_Text_TextChangedEventId: "textChange",
+		UIA.UIA_Text_TextSelectionChangedEventId: "caret", })
+	autoSelectDetectionAvailable = True
 
 ignoreWinEventsMap = {
 	UIA_AutomationPropertyChangedEventId: list(UIAPropertyIdsToNVDAEventNames.keys()),
@@ -169,7 +178,10 @@ class UIAHandler(COMObject):
 		self.MTAThreadInitEvent=threading.Event()
 		self.MTAThreadStopEvent=threading.Event()
 		self.MTAThreadInitException=None
-		self.MTAThread=threading.Thread(target=self.MTAThreadFunc)
+		self.MTAThread = threading.Thread(
+			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}.MTAThread",
+			target=self.MTAThreadFunc
+		)
 		self.MTAThread.daemon=True
 		self.MTAThread.start()
 		self.MTAThreadInitEvent.wait(2)
@@ -273,12 +285,18 @@ class UIAHandler(COMObject):
 		NVDAEventName=UIAEventIdsToNVDAEventNames.get(eventID,None)
 		if not NVDAEventName:
 			return
-		if not self.isNativeUIAElement(sender):
+		focus = api.getFocusObject()
+		import NVDAObjects.UIA
+		if (
+			isinstance(focus, NVDAObjects.UIA.UIA)
+			and self.clientObject.compareElements(focus.UIAElement, sender)
+		):
+			pass
+		elif not self.isNativeUIAElement(sender):
 			return
 		window=self.getNearestWindowHandle(sender)
 		if window and not eventHandler.shouldAcceptEvent(NVDAEventName,windowHandle=window):
 			return
-		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if (
 			not obj
@@ -286,7 +304,6 @@ class UIAHandler(COMObject):
 			or (NVDAEventName=="liveRegionChange" and not obj._shouldAllowUIALiveRegionChangeEvent)
 		):
 			return
-		focus=api.getFocusObject()
 		if obj==focus:
 			obj=focus
 		eventHandler.queueEvent(NVDAEventName,obj)
@@ -328,16 +345,21 @@ class UIAHandler(COMObject):
 		NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
 		if not NVDAEventName:
 			return
-		if not self.isNativeUIAElement(sender):
+		focus = api.getFocusObject()
+		import NVDAObjects.UIA
+		if (
+			isinstance(focus, NVDAObjects.UIA.UIA)
+			and self.clientObject.compareElements(focus.UIAElement, sender)
+		):
+			pass
+		elif not self.isNativeUIAElement(sender):
 			return
 		window=self.getNearestWindowHandle(sender)
 		if window and not eventHandler.shouldAcceptEvent(NVDAEventName,windowHandle=window):
 			return
-		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if not obj:
 			return
-		focus=api.getFocusObject()
 		if obj==focus:
 			obj=focus
 		eventHandler.queueEvent(NVDAEventName,obj)

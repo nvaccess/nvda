@@ -29,10 +29,19 @@ from UIAUtils import *
 from UIAUtils import shouldUseUIAConsole
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
-from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions, ToolTip
+from NVDAObjects.behaviors import (
+	ProgressBar,
+	EditableTextWithoutAutoSelectDetection,
+	EditableTextWithAutoSelectDetection,
+	Dialog,
+	Notification,
+	EditableTextWithSuggestions,
+	ToolTip
+)
 import braille
 import locationHelper
 import ui
+import winVersion
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -312,7 +321,9 @@ class UIATextInfo(textInfos.TextInfo):
 			# sometimes rangeFromChild can return a NULL range
 			if not self._rangeObj: raise LookupError
 		elif isinstance(position,locationHelper.Point):
-			#rangeFromPoint used to cause a freeze in UIA client library!
+			if (winVersion.winVersion.major, winVersion.winVersion.minor) == (6, 1):
+				# #9435: RangeFromPoint causes a freeze in UIA client library in the Windows 7 start menu!
+				raise NotImplementedError("RangeFromPoint not supported on Windows 7")
 			self._rangeObj=self.obj.UIATextPattern.RangeFromPoint(position.toPOINT())
 		elif isinstance(position,UIAHandler.IUIAutomationTextRange):
 			self._rangeObj=position.clone()
@@ -852,13 +863,13 @@ class UIA(Window):
 		if isDialog:
 			clsList.append(Dialog)
 		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
-		# In Windows 10, allow Start menu search box and Edge's address omnibar to participate in announcing appearance of auto-suggestions.
-		if self.UIAElement.cachedAutomationID in ("SearchTextBox", "TextBox", "addressEditBox"):
+		if self.UIAElement.cachedAutomationID in ("SearchTextBox", "TextBox"):
 			clsList.append(SearchField)
 		try:
 			# Nested block here in order to catch value error and variable binding error when attempting to access automation ID for invalid elements.
 			try:
 				# #6241: Raw UIA base tree walker is better than simply looking at self.parent when locating suggestion list items.
+				# #10329: 2019 Windows Search results require special handling due to UI redesign.
 				parentElement=UIAHandler.handler.baseTreeWalker.GetParentElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
 				# Sometimes, fetching parent (list control) via base tree walker fails, especially when dealing with suggestions in Windows10 Start menu.
 				# Oddly, we need to take care of context menu for Start search suggestions as well.
@@ -878,7 +889,10 @@ class UIA(Window):
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:
-			clsList.append(EditableTextWithoutAutoSelectDetection)
+			if UIAHandler.autoSelectDetectionAvailable:
+				clsList.append(EditableTextWithAutoSelectDetection)
+			else:
+				clsList.append(EditableTextWithoutAutoSelectDetection)
 
 		clsList.append(UIA)
 
@@ -1462,7 +1476,7 @@ class UIA(Window):
 		self.event_stateChange()
 
 	def event_valueChange(self):
-		if isinstance(self, EditableTextWithoutAutoSelectDetection):
+		if issubclass(self.TextInfo, UIATextInfo):
 			return
 		return super(UIA, self).event_valueChange()
 

@@ -27,6 +27,7 @@ import controlTypes
 import config
 import textInfos
 import braille
+import vision
 import speech
 import sayAllHandler
 import treeInterceptorHandler
@@ -407,9 +408,12 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		except StopIteration:
 			ui.message(errorMessage)
 			return
-		item.moveTo()
+		# #8831: Report before moving because moving might change the focus, which
+		# might mutate the document, potentially invalidating info if it is
+		# offset-based.
 		if not gesture or not willSayAllResume(gesture):
 			item.report(readUnit=readUnit)
+		item.moveTo()
 
 	@classmethod
 	def addQuickNav(cls, itemType, key, nextDoc, nextError, prevDoc, prevError, readUnit=None):
@@ -1322,7 +1326,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		# We've hit the edge of the focused control.
 		# Therefore, move the virtual caret to the same edge of the field.
 		info = self.makeTextInfo(textInfos.POSITION_CARET)
-		info.expand(info.UNIT_CONTROLFIELD)
+		info.expand(textInfos.UNIT_CONTROLFIELD)
 		if gesture.mainKeyName in ("leftArrow", "upArrow", "pageUp"):
 			info.collapse()
 		else:
@@ -1503,6 +1507,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				speech.speakTextInfo(focusInfo,reason=controlTypes.REASON_FOCUS)
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
+				# As we do not call nextHandler which would trigger the vision framework to handle gain focus,
+				# we need to call it manually here.
+				vision.handler.handleGainFocus(obj)
 			else:
 				# Although we are going to speak the object rather than textInfo content, we still need to silently speak the textInfo content so that the textInfo speech cache is updated correctly.
 				# Not doing this would cause  later browseMode speaking to either not speak controlFields it had entered, or speak controlField exits after having already exited.
@@ -1518,9 +1525,13 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# This focus change was caused by a virtual caret movement, so don't speak the focused node to avoid double speaking.
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
-				if (
-					not config.conf["virtualBuffers"]["autoFocusFocusableElements"]
-					and self._lastFocusableObj
+				if config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+					# As we do not call nextHandler which would trigger the vision framework to handle gain focus,
+					# we need to call it manually here.
+					# Note: this is usually called after the caret movement.
+					vision.handler.handleGainFocus(obj)
+				elif (
+					self._lastFocusableObj
 					and obj == self._lastFocusableObj
 					and obj is not self._lastFocusableObj
 				):
@@ -1582,8 +1593,12 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if (
 			# roles such as application and dialog should be treated as being within a "application" and therefore outside of the browseMode document. 
 			obj.role in self.APPLICATION_ROLES 
-			# Anything inside a combo box should be treated as being outside a browseMode document.
-			or (obj.container and obj.container.role==controlTypes.ROLE_COMBOBOX)
+			# Anything other than an editable text box inside a combo box should be
+			# treated as being outside a browseMode document.
+			or (
+				obj.role != controlTypes.ROLE_EDITABLETEXT and obj.container
+				and obj.container.role == controlTypes.ROLE_COMBOBOX
+			)
 		):
 			return True
 		return None

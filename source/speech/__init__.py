@@ -1556,11 +1556,13 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 			textList.append(text)
 		revision=attrs.get("revision")
 		oldRevision=attrsCache.get("revision") if attrsCache is not None else None
-		if (revision or oldRevision is not None) and revision!=oldRevision:
-			# Translators: Reported when text is revised.
-			text=(_("revised %s"%revision) if revision
+		if (revision or oldRevision is not None) and revision != oldRevision:
+			if revision:
+				# Translators: Reported when text is revised.
+				text = _("revised %s") % revision
+			else:
 				# Translators: Reported when text is not revised.
-				else _("no revised %s")%oldRevision)
+				text = _("no revised %s") % oldRevision
 			textList.append(text)
 	if  formatConfig["reportEmphasis"]:
 		# marked text 
@@ -1629,6 +1631,16 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 			text=(_("underlined") if underline
 				# Translators: Reported when text is not underlined.
 				else _("not underlined"))
+			textList.append(text)
+		hidden = attrs.get("hidden")
+		oldHidden = attrsCache.get("hidden") if attrsCache is not None else None
+		if (hidden or oldHidden is not None) and hidden != oldHidden:
+			text = (
+				# Translators: Reported when text is hidden.
+				_("hidden")if hidden
+				# Translators: Reported when text is not hidden.
+				else _("not hidden")
+			)
 			textList.append(text)
 		textPosition=attrs.get("text-position")
 		oldTextPosition=attrsCache.get("text-position") if attrsCache is not None else None

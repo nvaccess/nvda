@@ -72,6 +72,13 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	[[__many__]]
 		port = string(default="")
 
+# Vision enhancement provider settings
+[vision]
+	providers = string_list(=default=list())
+
+	# Vision enhancement provider settings
+	[[__many__]]
+
 # Presentation settings
 [presentation]
 		reportKeyboardShortcuts = boolean(default=true)
@@ -213,6 +220,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	gui = boolean(default=false)
 	louis = boolean(default=false)
 	timeSinceInput = boolean(default=false)
+	vision = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")
