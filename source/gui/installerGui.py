@@ -86,10 +86,14 @@ def doInstall(
 			_("Success"))
 	if startAfterInstall:
 		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL  
-		shellapi.ShellExecute(None, None,
+		shellapi.ShellExecute(
+			None,
+			None,
 			os.path.join(installer.defaultInstallPath,'nvda.exe'),
-			u"-r",
-			None, winUser.SW_SHOWNORMAL)
+			None,
+			None,
+			winUser.SW_SHOWNORMAL
+		)
 	else:
 		wx.GetApp().ExitMainLoop()
 
@@ -407,7 +411,11 @@ def doCreatePortable(portableDirectory,copyUserConfig=False,silent=False,startAf
 			_("Success"))
 		if startAfterCreate:
 			# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL  
-			shellapi.ShellExecute(None, None,
+			shellapi.ShellExecute(
+				None,
+				None,
 				os.path.join(os.path.abspath(portableDirectory),'nvda.exe'),
-				u"-r",
-				None, winUser.SW_SHOWNORMAL)
+				None,
+				None,
+				winUser.SW_SHOWNORMAL
+			)

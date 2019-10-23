@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #nvda.pyw
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee
+#Copyright (C) 2006-2019 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -85,7 +86,6 @@ def stringToBool(string):
 parser=NoConsoleOptionParser()
 quitGroup = parser.add_mutually_exclusive_group()
 quitGroup.add_argument('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
-quitGroup.add_argument('-r','--replace',action="store_true",dest='replace',default=False,help="Quit already running copy of NVDA and start this one")
 parser.add_argument('-k','--check-running',action="store_true",dest='check_running',default=False,help="Report whether NVDA is running via the exit code; 0 if running, 1 if not running")
 parser.add_argument('-f','--log-file',dest='logFileName',type=str,help="The file where log messages should be written to")
 parser.add_argument('-l','--log-level',dest='logLevel',type=int,default=0,choices=[10, 12, 15, 20, 30, 40, 50, 100],help="The lowest level of message logged (debug 10, input/output 12, debugwarning 15, info 20, warning 30, error 40, critical 50, off 100), default is info")
@@ -114,12 +114,12 @@ parser.add_argument(
 		"When installing, copy the portable configuration "
 		"from the provided path (--config-path, -c) to the current user account"
 	))
-# This option currently doesn't actually do anything.
-# It is passed by Ease of Access so that if someone downgrades without uninstalling (despite our discouragement),
-# the downgraded copy won't be started in non-secure mode on secure desktops.
+# This option is passed by Ease of Access so that if someone downgrades without uninstalling
+# (despite our discouragement), the downgraded copy won't be started in non-secure mode on secure desktops.
 # (Older versions always required the --secure option to start in secure mode.)
 # If this occurs, the user will see an obscure error,
 # but that's far better than a major security hazzard.
+# If this option is provided, NVDA will not replace an already running instance (#10179) 
 parser.add_argument('--ease-of-access',action="store_true",dest='easeOfAccess',default=False,help="Started by Windows Ease of Access")
 (globalVars.appArgs,globalVars.appArgsExtra)=parser.parse_known_args()
 
@@ -155,12 +155,15 @@ except:
 	oldAppWindowHandle=0
 if not winUser.isWindow(oldAppWindowHandle):
 	oldAppWindowHandle=0
-if oldAppWindowHandle and (globalVars.appArgs.quit or globalVars.appArgs.replace):
+if oldAppWindowHandle and not globalVars.appArgs.easeOfAccess:
+	if globalVars.appArgs.check_running:
+		# NVDA is running.
+		sys.exit(0)
 	try:
 		terminateRunningNVDA(oldAppWindowHandle)
 	except:
 		sys.exit(1)
-if globalVars.appArgs.quit or (oldAppWindowHandle and not globalVars.appArgs.replace):
+if globalVars.appArgs.quit or (oldAppWindowHandle and globalVars.appArgs.easeOfAccess):
 	sys.exit(0)
 elif globalVars.appArgs.check_running:
 	# NVDA is not running.
@@ -201,20 +204,11 @@ if isSecureDesktop:
 # #8516: because config manager isn't ready yet, we must let start and exit messages be logged unless disabled via --no-logging switch.
 # However, do log things if debug logging or log level other than 0 (not set) is requested from command line switches.
 
-logLevel=globalVars.appArgs.logLevel
-if globalVars.appArgs.noLogging and (not globalVars.appArgs.debugLogging and logLevel == 0):
-	logLevel = log.OFF
-else:
-	if logLevel<=0:
-		logLevel=log.INFO
-	if globalVars.appArgs.debugLogging:
-		logLevel=log.DEBUG
 logHandler.initialize()
-logHandler.log.setLevel(logLevel)
-if logLevel is log.DEBUG:
+if logHandler.log.getEffectiveLevel() is log.DEBUG:
 	log.debug("Provided arguments: {}".format(sys.argv[1:]))
-
-log.info("Starting NVDA")
+import buildVersion
+log.info("Starting NVDA version %s" % buildVersion.version)
 log.debug("Debug level logging enabled")
 if globalVars.appArgs.changeScreenReaderFlag:
 	winUser.setSystemScreenReaderFlag(True)

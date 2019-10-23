@@ -1,8 +1,7 @@
-#textInfos/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -189,21 +188,24 @@ class Bookmark(baseObject.AutoPropertyObject):
 	def __ne__(self,other):
 		return not self==other
 
+
 #Unit constants
-UNIT_CHARACTER="character"
-UNIT_WORD="word"
-UNIT_LINE="line"
-UNIT_SENTENCE="sentence"
-UNIT_PARAGRAPH="paragraph"
-UNIT_PAGE="page"
-UNIT_TABLE="table"
-UNIT_ROW="row"
-UNIT_COLUMN="column"
-UNIT_CELL="cell"
-UNIT_SCREEN="screen"
-UNIT_STORY="story"
-UNIT_READINGCHUNK="readingChunk"
-UNIT_OFFSET="offset"
+UNIT_CHARACTER = "character"
+UNIT_WORD = "word"
+UNIT_LINE = "line"
+UNIT_SENTENCE = "sentence"
+UNIT_PARAGRAPH = "paragraph"
+UNIT_PAGE = "page"
+UNIT_TABLE = "table"
+UNIT_ROW = "row"
+UNIT_COLUMN = "column"
+UNIT_CELL = "cell"
+UNIT_SCREEN = "screen"
+UNIT_STORY = "story"
+UNIT_READINGCHUNK = "readingChunk"
+UNIT_OFFSET = "offset"
+UNIT_CONTROLFIELD = "controlField"
+UNIT_FORMATFIELD = "formatField"
 
 MOUSE_TEXT_RESOLUTION_UNITS = (UNIT_CHARACTER,UNIT_WORD,UNIT_LINE,UNIT_PARAGRAPH)
 
