@@ -166,7 +166,7 @@ class VsTextEditPane(EditableText, Window):
 	def initOverlayClass(self):
 		self._window = self.appModule.DTE.ActiveWindow
 
-	def _get-location(self):
+	def _get_location(self):
 		if not isinstance(self, UIA):
 			return RectLTWH(
 				self._window.Left,
