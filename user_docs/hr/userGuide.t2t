@@ -11,7 +11,7 @@ NVDA NVDA_VERSION Vodič za korisnike
 Dobrodošli u NVDA!
 
 NonVisual Desktop Access (NVDA) je  besplatan čitač zaslona otvorenog koda za operacijski sustav Microsoft Windows.
-Pružajući povratne informacije pomoću sintetičkog govora i brajice, NVDA omogućuje slijepim osobama i osobama s oštećenjem vida pristup računalima sa windows operativnim sustavom za cijenu koja nije veća od one koju plaćaju korisnici normalnog vida.
+Pružajući povratne informacije pomoću sintetičkog govora i brajice, NVDA omogućuje slijepim osobama i osobama s oštećenjem vida pristup računalima sa windows operativnim sustavom za cijenu koja nije veća od one koju plaćaju korisnici koji vide.
 NVDA razvija organizacija [NV Access https://www.nvaccess.org/], uz doprinose zajednice.
 
 ++ Glavne Značajke ++[GeneralFeatures]
@@ -22,15 +22,15 @@ Glavne značajke uključuju:
 - ugrađen sintetizator govora koji podržava preko 80 jezika
 - izvještavanje o oblikovanju teksta, gdje je to podržano, kao što su to ime fonta i informacije o bojama, stil i pravopisne pogreške
 - automatsko obavještavanje o tekstu ispod pokazivača miša i neobavezna zvučna indikacija o položaju miša
-- Podrška za mnoge brajične redke, uključujući podršku automatskog otkrivanja istih kao i podrška brajičnog ulaza uz pomoć brajične tipkovnice
+- podrška za mnoge brajične redke, uključujući podršku automatskog otkrivanja istih kao i podrška brajičnog ulaza uz pomoć brajične tipkovnice
 - mogućnost pokretanja sa USB memorijskih stickova u cijelosti ili drugih prijenosnih medija bez potrebe instalacije samog čitača zaslona
 - govorni instalacijski program koji je jednostavan za korištenje
 - preveden na 54 jezika
 - podršku za moderne Windows operativne sustave u 32 i 64 bitnim inačicama
 - mogućnost pokretanja na Windows zaslonu za prijavu i ostalim sigurnosnim zaslonima
-- Izgovaranje kontrola i teksta, pri korištenju dodirnih gesti
-- podršku za uobičajena sučelja za pristupačnost kao što su Microsoft Active Accessibility, Java Access Bridge, IAccessible2 i UI Automation (UI Automation je podržan samo u windows 7 i novijim inačicama)
-- podršku za windows naredbeni redak i druge aplikacije koje rade u konzoli
+- izgovaranje kontrola i teksta pri korištenju dodirnih gesti
+- podršku za uobičajena sučelja za pristupačnost, kao što su to Microsoft Active Accessibility, Java Access Bridge, IAccessible2 i UI Automation (UI Automation je podržan samo u windows 7 i novijim inačicama)
+- podršku za windows naredbeni redak i druge aplikacije koje rade u naredbenom retku
 -
 
 ++ Internacionalizacija ++[Internationalization]
@@ -47,7 +47,7 @@ Informacije o drugim sintetizatorima govora koje NVDA podržava mogu se pronaći
 ++ Podrška za brajične retke ++[BrailleSupport]
 Za korisnike koji posjeduju brajični redak, NVDA može prikazivati svoje informacije na Brailleovom pismu.
 Također, podržan je unos putem brajične tipkovnice brajičnog redka, koristeći kratkopis, puno pismo, te osmotočkastu brajicu.
-Čak štoviše, NVDA će podrazumijevano otkrivati brajične redke.
+Čak štoviše, NVDA će zadano automatski pronalaziti brajične redke.
 Za više informacija o podržanim brajičnim retcima pogledajte poglavlje [Podržani Brajični Retci #SupportedBrailleDisplays].
 
 NVDA podržava brajične kodove za mnoge jezike, uključujući kratkopis, puno pismo i kompjutorsku brajicu.
@@ -62,10 +62,10 @@ Za više pojedinosti, možete [pogledati cijelu licencu. https://www.gnu.org/lic
 
 + Zahtjevi Sustava +[SystemRequirements]
 - Operativni sustavi: sva 32-bitna i 64-bitna izdanja Windowsa 7, Windowsa 8, Windowsa 8.1, Windowsa 10, i svih Serverskih Operacijskih Sustava počevši od Windows Server 2008 R2.
- - Za Windowse 7, NVDA zahtjeva Servisni Pack 1 ili viši.
+ - Za Windowse 7, NVDA zahtjeva Servisni Paket 1 ili viši.
  - Za Windows Server 2008 R2, NVDA zahtjeva Servisni Paket 1 ili Viši.
-- Memorija: 256 mb ili više RAMA
-- Brzina procesora: 1.0 ghz ili više
+- Memorija: 256 mb ili više RAM-A
+- Brzina procesora: 1.0 gHZ ili više
 - Oko 90 MB prostora na hard disku.
 -
 
@@ -77,7 +77,7 @@ Pronađite odjeljak Preuzimanje i tamo ćete pronaći najnoviju verziju NVDA.
 Pokrenete li datoteku koju ste upravo preuzeli, pokrenut će se privremena kopija NVDA.
 Tada će vas NVDA pitati želite li instalirati NVDA, izraditi prijenosnu kopiju ili nastaviti koristiti privremenu kopiju.
 
-Planirate li stalno koristiti NVDA na ovom računalu, poželjeti ćete instalirati NVDA.
+Ako planirate stalno koristiti NVDA na ovom računalu, poželjet ćete instalirati NVDA.
 Instalacija NVDA omogućuje dodatne funkcije kao što su to automatsko pokretanje nakon prijave, mogućnost čitanja windowsovog zaslona za prijavu i windows osiguranih zaslona (što nije moguće izvesti sa prijenosnom i privremenom kopijom) i izradba prečaca u izborniku start i na radnoj površini.
 Prijenosnu kopiju možete stvoriti iz instalirane kopije u bilo kojem trenutku.
 
@@ -101,7 +101,7 @@ Osim nemogućnosti automatskog pokretanja tokom i/ili nakon prijave, prijenosne 
 Ako instalirate NVDA izravno pokrečući preuzeti instalacijski paket, pritisnite gumb instaliraj NVDA.
 Ako ste već zatvorili ovaj dijaloški okvir ili želite instalirati iz prijenosne kopije, odaberite instaliraj NVDA stavku izbornika koju možete pronaći U podizborniku Alati u NVDA izborniku.
 
-Instalacijski dijaloški okvir koji će se prikazati potvrditi će želite li instalirati NVDA i obavjestit će vas hoće li instalacija nadograditi vašu trenutnu kopiju NVDA.
+U instalacijskom dijaloškom okviru koji će se prikazati potvrditi ćete želite li instalirati NVDA i obavjestit će vas hoće li instalacijski program nadograditi vašu trenutnu kopiju NVDA.
 Kada pritisnete gumb Nastavi, započeti ćete instalaciju NVDA.
 Također postoji nekoliko opcija u ovom dijaloškom okviru koje su objašnjene ispod.
 Nakon završetka instalacije, pojavit će se poruka da je instalacija uspješna.
@@ -120,7 +120,7 @@ Ova je opcija uključena podrazumjevano za nove instalacije.
 
 +++ Napravi prečac na radnoj površini (ctrl+alt+F5) +++[CreateDesktopShortcut]
 Ova vam opcija omogućuje odabir između toga hoće li ili neće NVDA napraviti prečac na radnoj površini za njegovo pokretanje. 
-Ako je napravljen, prečici na radnoj površini bit će dodijeljen tipkovnički prečac kontrol+alt+F5, omogučujući vam pokretanje NVDA u bilo kojem trenu.
+Ako je napravljen, prečacu na radnoj površini bit će dodijeljen tipkovnički prečac kontrol+alt+F5, omogučujući vam pokretanje NVDA u bilo kojem trenu.
 
 +++ Kopiraj prijenosnu konfiguraciju na ovaj korisnički račun +++[CopyPortableConfigurationToCurrentUserAccount]
 Ova opcija vam omogućuje odabir između toga hoće li ili neće NVDA kopirati trenutnu konfiguraciju iz prijenosne kopije na trenutno prijavljeni korisnički račun za trenutno instaliranu kopiju NVDA. 
@@ -172,7 +172,7 @@ Treći vam omogućuje odabir hoće li se ili neće ovaj dijalog prikazivati pril
 
 +++ NVDA modifikacijska tipka +++[TheNVDAModifierKey]
 Većina specifičnih NVDA tipkovničkih kratica sastoji se od pritiska određene tipke koja se naziva nvda modifikacijska tipka u kombinaciji sa jednom ili više tipaka.
-Značajne su iznimke prečaci za pregled teksta za izgled tipkovnice za stolna računala koje koriste numerički dio tipkovnice od strane samih sebe, ali postoje i druge iznimke.
+Značajne su iznimke prečaci za pregled teksta za izgled tipkovnice za stolna računala koje koriste numerički dio tipkovnice, ali postoje i druge iznimke.
 
 NVDA se može konfigurirati tako da se Numerički Insert, Prošireni Insert i/ili capslock mogu koristiti kao NVDA modifikacijske tipke.
 Podrazumijeva se da su obje tipke numerički insert i prošireni insert podešene kao NVDA modifikacijske tipke.
@@ -207,9 +207,9 @@ Dodirujte brzo zaslon sa jednim ili više prstiju.
 Dodirivanje samo sa jednim prstom jednostavno je poznato kao dodir.
 
 Dodirivanje sa dva prsta je poznato kao dvoprstni dodir itd.
-Ako je isti dodir ponovljen jedom ili više puta brzo, NVDA će to shvatiti kao višedodirnu gestu.
-Dvostruki dodir prouzrukuje dvostruko dodirivanje nekog elementa na zaslonu.
-Dodirivanje 3 puta će prouzročiti trostruki dodir itd.
+Ako je isti dodir ponovljen jednom ili više puta brzo, NVDA će to shvatiti kao višedodirnu gestu.
+Dvostruki dodir prouzrokuje dvostruko dodirivanje nekog elementa na zaslonu.
+Dodirivanje 3 puta će prouzrokovati trostruki dodir itd.
 Naravno, ove višedodirne geste prepoznaju koliko se prstiju koristi, također, moguće je imati geste kao što su na primjer trostruki dodir sa dva prsta, dodir sa četiri prsta itd. 
 
 ==== Klizanje ====
@@ -233,7 +233,7 @@ Za prebacivanje između dodirnih načina, izvedite dodir sa tri prsta.
 
 +++ Dodirna tipkovnica +++[TouchKeyboard]
 Dodirna tipkovnica se koristi za unos teksta i komandi na zaslonu osjetljivom na dodir.
-Kada ste fokusirani na polju za uređivanje, možete prikazati dodirnu tipkovnicu dva puta tapnući ikonu dodirne tipkovnice na kraju ekranaa.
+Kada ste fokusirani na polju za uređivanje, možete prikazati dodirnu tipkovnicu tako da dva puta dodirnete ikonu dodirne tipkovnice na kraju zaslona.
 Na tabletima, poput Microsoft Surface Pro, dodirna tipkovnica je uvijek dostupna, kada je hardverska tipkovnica otkvačena.
 Kako biste sakrili dodirnu tipkovnicu, dva puta stisnite ikonu dodirne tipkovnice, ili izađite iz polja za uređivanje teksta.
 
@@ -251,7 +251,7 @@ Trenutne komande se neće izvršavati kad se nalazite u pomoći pri unosu.
 ++ NVDA izbornik ++[TheNVDAMenu]
 NVDA izbornik vam omogućuje izmjenu NVDA postavki, pristup pomoči, spremanje/vraćanje vaše konfiguracije, izmjenu govornih riječnika, pristup dodatnim alatima i izlaz iz programa NVDA.
 
-Da biste došli do NVDA izbornika s bilo kojeg mjesta kad je windows operacijski sustav pokrenut, pritisnite NVDA+n na tipkovnici ili izvedite dvostruki dodir sa dva prsta na zaslonu osjeljjivom na dodir.
+Da biste došli do NVDA izbornika s bilo kojeg mjesta kad je windows operacijski sustav pokrenut, pritisnite NVDA+n na tipkovnici ili izvedite dvostruki dodir sa dva prsta na zaslonu osjetljjivom na dodir.
 Također možete doći do NVDA izbornika preko windowsove trake za obavjesti,
 Ili pritisnite aplikacijsku tipku ili desnu tipku miša na ikoni NVDA ili pristupite traci za obavjesti pritiščući windows+b, pritišćite strelicu prema dolje dok ne dođete do ikonice NVDA i pritisnite aplikacijsku tipku koja se nalazi pokraj kontrola na tipkovnicama.
 Kad se izbornik prikaže, koristite strelice za navigaciju i enter da bi ste aktivirali stavku.
@@ -337,10 +337,10 @@ Da biste vidjeli tekst kako on doista izgleda na zaslonu, možete umjesto objekt
 
 Umjesto pojedinačnog pomicanja po svakom objektu naprijed-natrag, oni su organizirani hijerarhijski.
 To znači da neki objekti sadrže druge objekte i krećite se unutar njih da biste pristupili objektima koje sadrže.
-Na primjer, popis sadrži stavke popisa, dakle, uđite u listu da biste pristupili njenom sadržaju.
+Na primjer, popis sadrži stavke popisa, dakle, uđite u popis, kako biste pristupili njegovom sadržaju.
 Ako ste se pomakli na stavku popisa, pomičući se naprijed-natrag NVDA će vas prebacivati na ostale stavke istog popisa.
 Pomičući se na sadržavajući objekt popisa NVDA će vas vratiti na popis.
-Tada se možete pomaknuti iz liste ako želite pristupiti drugim objektima.
+Tada se možete pomaknuti iz popisa ako želite pristupiti drugim objektima.
 Slično tome, alatna traka sadrži kontrole, dakle, pomaknite se na alatnu traku da biste pristupili kontrolama na alatnoj traci.
 
 Objekt koji se trenutno pregledava naziva se objektom navigatora.
@@ -370,8 +370,8 @@ Da biste se kretali po objektima, koristite sljedeće prečace:
 Bilješka: tipke na numeričkoj tipkovnici zahtjevaju isključen numerički blok da bi ispravno radile.
 
 ++ Pregled teksta ++[ReviewingText]
-NVDA vam omogućuje čitanje sadržaja [zaslona #ScreenReview], trenutnog [dokumenta #DocumentReview] ili trenutnog [objekta #ObjectReview] riječ po riječ, slovo po slovo, ili redak po redak.
-To je veoma korisno u slučajevima (koji ukljućuju windows komandne konzole) gdje ne postoji [kursor sustava #SystemCaret].
+NVDA vam omogućava čitanje sadržaja [zaslona #ScreenReview], trenutnog [dokumenta #DocumentReview] ili trenutnog [objekta #ObjectReview] riječ po riječ, slovo po slovo, ili redak po redak.
+To je veoma korisno u slučajevima koji ukljućuju windows naredbene retke gdje ne postoji [kursor sustava #SystemCaret].
 Na primjer, možda ga želite koristiti da biste pregledali tekst neke duge informacije u dijaloškom okviru.
 
 Kad pomićete pregledni kursor, kursor sustava ne prati uzduž, dakle možete uređivati tekst bez gubitka pozicije uređivanja.
@@ -381,13 +381,13 @@ Ovo se može uključiti ili isključiti.
 Imajte na umu da brajica prati [fokus #SystemFocus] i [kursor #SystemCaret] umjesto objektne navigacije i pregleda teksta.
 Ako umjesto toga želite da brajica prati objektnu navigaciju i pregled teksta, trebate  [podesiti brajicu usmjerenu na #BrailleTether] pregled.
 
-Sljedeći prečaci su dostupne za pregled teksta:
+Sljedeći prečaci su dostupni za pregled teksta:
 %kc:beginInclude
 || Naziv | Prečac za stolna računala | Prečac za prijenosna računala | Dodir | Opis |
 | Prebaci na početak retka u pregledu | shift+num7 | NVDA+control+home | nema | prebacuje pregledni kursor na početak retka teksta |
 | Pomakni se na prethodni redak u pregledu | num7 | NVDA+strelicaGore | klizni gore (način teksta) | pomiče pregledni kursor na prethodni redak teksta |
 | Izvijesti o trenutnom retku u pregledu | num8 | NVDA+shift+. | nema | Čita trenutni redak teksta gdje je pozicioniran pregledni kursor. Kad se pritisne dvaput, NVDA slovka trenutni redak. Kad se pritisne triput, cijeli se redak slovka fonetski. |
-| Pomiće na idući redak u pregledu | num9 | NVDA+strelicaDolje | klizni dolje (način teksta) | pomiče pregledni kursor na idući redak teksta |
+| Pomiče na idući redak u pregledu | num9 | NVDA+strelicaDolje | klizni dolje (način teksta) | pomiče pregledni kursor na idući redak teksta |
 | pomakni redak na kraj preglednog kursora | shift+num9 | NVDA+control+end | nema | pomiče pregledni kursor na krajnji redak teksta |
 | Pomakni se na prethodnu riječ u pregledu | num4 | NVDA+kontrol+strelicaLijevo | klizni lijevo sa dva prsta (način teksta) | pomiće pregledni kursor na prethodnu riječ u tekstu |
 | Izgovori trenutnu riječ pod preglednim kursorom | num5 | NVDA+control+. | nema | čita trenutnu riječ u tekstu gdje je pozicioniran pregledni kursor. Kad se pritisne dvaput, slovka cijelu riječ. a Kad se pritisne tri put, slovka riječ fonetski. |
@@ -401,7 +401,7 @@ Sljedeći prečaci su dostupne za pregled teksta:
 | označi a potom kopiraj sa preglednog kursora | insert+f9 | insert+f9 | nema | označava a potom započinje proces kopiranja od trenutne pozicije preglednog kursora. trenutna akcija se ne izvodi sve dok ne kažete NVDA gdje se nalazi kraj niza znakova |
 | označi a potom kopiraj na pregledni kursor | insert+f10 | insert+f10 | nema | prilikom prvog pritiska, tekst je označen od pozicije od koje je označen početni marker uključujući trenutnu poziciju preglednog kursora. Poslije drugog pritiska iste prečice, tekst će biti kopiran u windowsow međuspremnik |
 | Izvijesti o oblikovanju teksta | NVDA+f | NVDA+f | nema | izgovara oblikovanje teksta gdje se pregledni kursor nalazi Prilikom pritiska prečaca dva puta brzo, informacija se prikazuje u načinu pregleda. |
-| Iygovori trenutnu zamjenu simbola | Nema | Nema | Nema | Izgovara simbol na kojem se nalazi pregledni kursor. Kada se pritisne dvaput, pokazuje simbol i tekst koji ga opisuje u načinu pregleda. |
+| Izgovori trenutnu zamjenu simbola | Nema | Nema | Nema | Izgovara simbol na kojem se nalazi pregledni kursor. Kada se pritisne dvaput, pokazuje simbol i tekst koji ga opisuje u načinu pregleda. |
 %kc:endInclude
 
 Bilješka: tipke na numeričkoj tipkovnici zahtjevaju isključen numerički blok da bi ispravno radile.
@@ -444,7 +444,7 @@ To je slično pregledu zaslona ili  funkcionalnosti kursora miša u mnogim drugi
 Kad se prebacujete na način pregleda zaslona, pregledni je kursor smješten na zaslonskoj poziciji trenutnog [objekta navigacije #ObjectNavigation].
 Kad se pomičete po zaslonu sa prečacima za pregled zaslona, objekt navigacije je automatski osvježen na objekt pronađen na zaslonskoj poziciji preglednog kursora.
 
-Imaj te na umu da u većini novijih aplikacija, NVDA neće moći vidjeti većinu ili cijeli tekst prikazan na zaslonu zbog korištenja novijih tehnologija crtanja zaslona koje je trenutno nemoguće podržati.
+Imajte na umu da u većini novijih aplikacija, NVDA neće moći vidjeti većinu ili cijeli tekst prikazan na zaslonu zbog korištenja novijih tehnologija crtanja zaslona koje je trenutno nemoguće podržati.
 
 ++ Navigacija uz pomoć miša ++[NavigatingWithTheMouse]
 Kad pomićete miš, NVDA čita tekst koji se nalazi izravno pod pokazivačem miša kad se pokazivač miša kreće preko njega.

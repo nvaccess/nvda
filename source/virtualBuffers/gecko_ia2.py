@@ -24,7 +24,7 @@ from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 	def _getBoundingRectFromOffset(self,offset):
-		formatFieldStart, formatFieldEnd = self._getUnitOffsets(self.UNIT_FORMATFIELD, offset)
+		formatFieldStart, formatFieldEnd = self._getUnitOffsets(textInfos.UNIT_FORMATFIELD, offset)
 		# The format field starts at the first character.
 		for field in reversed(self._getFieldsInRange(formatFieldStart, formatFieldStart+1)):
 			if not (isinstance(field, textInfos.FieldCommand) and field.command == "formatChange"):
