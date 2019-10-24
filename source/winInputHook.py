@@ -1,8 +1,7 @@
-#winInputHook.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2019 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import threading
 import comtypes.client
@@ -88,7 +87,10 @@ def initialize():
 	global hookThread, hookThreadRefCount
 	hookThreadRefCount+=1
 	if hookThreadRefCount==1:
-		hookThread=threading.Thread(target=hookThreadFunc)
+		hookThread = threading.Thread(
+			name=__name__,  # winInputHook
+			target=hookThreadFunc
+		)
 		hookThread.start()
 
 def setCallbacks(keyUp=None,keyDown=None,mouse=None):

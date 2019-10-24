@@ -1,8 +1,8 @@
-#installer.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V.
+# -*- coding: UTF-8 -*-
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka
 
 from ctypes import *
 from ctypes.wintypes import *
@@ -150,7 +150,8 @@ def copyUserConfig(destPath):
 			destFilePath=os.path.join(destPath,os.path.relpath(sourceFilePath,sourcePath))
 			tryCopyFile(sourceFilePath,destFilePath)
 
-def removeOldLibFiles(destPath,rebootOK=False):
+
+def removeOldLibFiles(destPath, rebootOK=False):
 	"""
 	Removes library files from previous versions of NVDA.
 	@param destPath: The path where NVDA is installed.
@@ -158,25 +159,25 @@ def removeOldLibFiles(destPath,rebootOK=False):
 	@param rebootOK: If true then files can be removed on next reboot if trying to do so now fails.
 	@type rebootOK: boolean
 	"""
-	for topDir in ('lib','lib64'):
-		currentLibPath=os.path.join(destPath,topDir,versionInfo.version)
-		for parent,subdirs,files in os.walk(os.path.join(destPath,topDir),topdown=False):
+	for topDir in ('lib', 'lib64', 'libArm64'):
+		currentLibPath = os.path.join(destPath, topDir, versionInfo.version)
+		for parent, subdirs, files in os.walk(os.path.join(destPath, topDir), topdown=False):
 			if parent==currentLibPath:
 				# Lib dir for current installation. Don't touch this!
 				log.debug("Skipping current install lib path: %r"%parent)
 				continue
 			for d in subdirs:
-				path=os.path.join(parent,d)
+				path = os.path.join(parent, d)
 				log.debug("Removing old lib directory: %r"%path)
 				try:
 					os.rmdir(path)
 				except OSError:
 					log.warning("Failed to remove a directory no longer needed. This can be manually removed after a reboot or the  installer will try removing it again next time. Directory: %r"%path)
 			for f in files:
-				path=os.path.join(parent,f)
+				path = os.path.join(parent, f)
 				log.debug("Removing old lib file: %r"%path)
 				try:
-					tryRemoveFile(path,numRetries=2,rebootOK=rebootOK)
+					tryRemoveFile(path, numRetries=2, rebootOK=rebootOK)
 				except RetriableFailure:
 					log.warning("A file no longer needed could not be removed. This can be manually removed after a reboot, or  the installer will try again next time. File: %r"%path)
 
@@ -199,20 +200,22 @@ def removeOldProgramFiles(destPath):
 			else:
 				os.remove(fn)
 
-	# #4235: mpr.dll is a Windows system dll accidentally included with
-	# earlier versions of NVDA. Its presence causes problems in Windows Vista.
-	fn = os.path.join(destPath, "mpr.dll")
-	if os.path.isfile(fn):
-		tryRemoveFile(fn)
-
 	# #9960: If compiled python files from older versions aren't removed correctly,
 	# this could cause strange errors when Python tries to create tracebacks
 	# in a newer version of NVDA.
+	#  However don't touch user and system config.
+	#  Also remove old .dll and .manifest files.
 	for curDestDir,subDirs,files in os.walk(destPath):
+		if curDestDir == destPath:
+			subDirs[:] = [x for x in subDirs if os.path.basename(x).lower() not in (
+				'userconfig',
+				'systemconfig',
+				#  Do not remove old libraries here. It is done by removeOldLibFiles.
+				'lib',
+				'lib64',
+				'libarm64')]
 		for f in files:
-			if f.endswith((".pyc", ".pyo")):
-				# This also removes compiled files from system config,
-				# but that is fine.
+			if f.endswith((".pyc", ".pyo", ".pyd", ".dll", ".manifest")):
 				path=os.path.join(curDestDir, f)
 				log.debug(f"Removing old byte compiled python file: {path!r}")
 				try:

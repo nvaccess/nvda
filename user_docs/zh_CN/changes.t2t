@@ -3,14 +3,23 @@ NVDA更新日志
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.2.1 =
+这是2019.2的次要版本，主要修复了以下问题：
+This is a minor release to fix several crashes present in 2019.2. Fixes include:
+- 修复在与特定弹出菜单（如创建过滤器或修改某些Gmail设置）进行交互时，在Firefox和Chrome中都可以看到Gmail中发生的多次崩溃的错误。 (#10175, #9402, #8924)
+- Addressed several crashes in Gmail seen in both Firefox and Chrome when interacting with particular popup menus such as when creating filters or changing certain Gmail settings. (#10175, #9402, #8924)
+- 现在，在Windows7的开始菜单使用鼠标时，NVDA不再导致Windows资源管理器崩溃。 (#9435)
+- In Windows 7, NVDA no longer causes Windows Explorer to crash when the mouse is used in the start menu. (#9435)
+- 修复浏览元数据编辑字段时，Windows 7上的Windows资源管理器不再崩溃的bug。 (#5337) 
+- Windows Explorer on Windows 7 no longer crashes when accessing metadata edit fields. (#5337)
+- 现在，在Mozilla Firefox或Google Chrome中与具有base64 URI的图像进行交互时，NVDA不再冻结。 (#10227)
+- NVDA no longer freezes when interacting with images with a base64 URI in Mozilla Firefox or Google Chrome. (#10227)
+
+
 = 2019.2 =
 本版亮点包括对 Freedom Scientific 系列点显器的自动检测支持，高级面板中的一项实验功能，用于避免浏览模式的焦点自动移动（可以提高性能），一个Windows One core语音合成器的语速加倍选项以获得很快的语速，以及许多其他问题修复。
 
 == 新特性 ==
-- 查找对话框现在包含过去的20条搜索历史。 (#8482)
- - 当NVDA退出或重启时，搜索历史会被清除。
-- The find dialog now includes a history of the last 20 searches. (#8482)
- - The search history is cleared when NVDA exits or restarts.
 - 支持新版本 Miranda NG。 (#9053)
 - NVDA's Miranda NG support  works with newer versions of the client. (#9053)
 - 可以在NVDA浏览模式设置对话框内取消勾选“页面加载时启用浏览模式”复选框，以关闭浏览模式默认自动启用。 (#8716)
@@ -68,7 +77,6 @@ NVDA更新日志
 - Updated liblouis braille translator to version 3.10.0. (#9439, #9678)
 - 朗读选中文本操作时NVDA会 先读选中文本再读“已选择”。 (#9028, #9909)
 - NVDA will now report the word 'selected' after saying what is selected. (#9028, #9909))
-
 - 在 Microsoft Visual Studio Code中，浏览模式默认关闭。 (#9828)
 - In Microsoft Visual Studio Code, browse mode is now off by default. (#9828)
 

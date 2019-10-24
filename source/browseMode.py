@@ -408,9 +408,12 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		except StopIteration:
 			ui.message(errorMessage)
 			return
-		item.moveTo()
+		# #8831: Report before moving because moving might change the focus, which
+		# might mutate the document, potentially invalidating info if it is
+		# offset-based.
 		if not gesture or not willSayAllResume(gesture):
 			item.report(readUnit=readUnit)
+		item.moveTo()
 
 	@classmethod
 	def addQuickNav(cls, itemType, key, nextDoc, nextError, prevDoc, prevError, readUnit=None):
@@ -1323,7 +1326,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		# We've hit the edge of the focused control.
 		# Therefore, move the virtual caret to the same edge of the field.
 		info = self.makeTextInfo(textInfos.POSITION_CARET)
-		info.expand(info.UNIT_CONTROLFIELD)
+		info.expand(textInfos.UNIT_CONTROLFIELD)
 		if gesture.mainKeyName in ("leftArrow", "upArrow", "pageUp"):
 			info.collapse()
 		else:
@@ -1590,8 +1593,12 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if (
 			# roles such as application and dialog should be treated as being within a "application" and therefore outside of the browseMode document. 
 			obj.role in self.APPLICATION_ROLES 
-			# Anything inside a combo box should be treated as being outside a browseMode document.
-			or (obj.container and obj.container.role==controlTypes.ROLE_COMBOBOX)
+			# Anything other than an editable text box inside a combo box should be
+			# treated as being outside a browseMode document.
+			or (
+				obj.role != controlTypes.ROLE_EDITABLETEXT and obj.container
+				and obj.container.role == controlTypes.ROLE_COMBOBOX
+			)
 		):
 			return True
 		return None
