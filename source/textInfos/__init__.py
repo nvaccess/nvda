@@ -69,6 +69,7 @@ class ControlField(Field):
 			or (role == controlTypes.ROLE_BLOCKQUOTE and not formatConfig["reportBlockQuotes"])
 			or (role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"])
 			or (role in (controlTypes.ROLE_LIST, controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
+			or (role == controlTypes.ROLE_ARTICLE and not formatConfig["reportArticles"])
 			or (role in (controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME) and not formatConfig["reportFrames"])
 			or (role in (controlTypes.ROLE_DELETED_CONTENT,controlTypes.ROLE_INSERTED_CONTENT) and not formatConfig["reportRevisions"])
 			or (
@@ -131,6 +132,7 @@ class ControlField(Field):
 				controlTypes.ROLE_MENUBAR,
 				controlTypes.ROLE_POPUPMENU,
 				controlTypes.ROLE_TABLE,
+				controlTypes.ROLE_ARTICLE,
 			)
 			or (role == controlTypes.ROLE_EDITABLETEXT and (
 				controlTypes.STATE_READONLY not in states
