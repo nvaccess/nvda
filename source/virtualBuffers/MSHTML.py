@@ -145,6 +145,8 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			ariaRoles.append(lRole)
 		# If the first role is a landmark role, use it.
 		landmark = ariaRoles[0] if ariaRoles[0] in aria.landmarkRoles else None
+		if ariaRoles[0] == "article":
+			role = controlTypes.ROLE_ARTICLE
 		ariaLevel=attrs.get('HTMLAttrib::aria-level',None)
 		ariaLevel=int(ariaLevel) if ariaLevel is not None else None
 		if ariaLevel:
