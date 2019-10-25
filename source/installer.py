@@ -1,8 +1,8 @@
-#installer.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V.
+# -*- coding: UTF-8 -*-
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka
 
 from ctypes import *
 from ctypes.wintypes import *
@@ -23,7 +23,7 @@ import addonHandler
 import easeOfAccess
 import COMRegistrationFixes
 import winKernel
-import importlib.machinery
+
 _wsh=None
 def _getWSH():
 	global _wsh
@@ -200,20 +200,22 @@ def removeOldProgramFiles(destPath):
 			else:
 				os.remove(fn)
 
-	# #4235: mpr.dll is a Windows system dll accidentally included with
-	# earlier versions of NVDA. Its presence causes problems in Windows Vista.
-	fn = os.path.join(destPath, "mpr.dll")
-	if os.path.isfile(fn):
-		tryRemoveFile(fn)
-
 	# #9960: If compiled python files from older versions aren't removed correctly,
 	# this could cause strange errors when Python tries to create tracebacks
 	# in a newer version of NVDA.
+	#  However don't touch user and system config.
+	#  Also remove old .dll and .manifest files.
 	for curDestDir,subDirs,files in os.walk(destPath):
+		if curDestDir == destPath:
+			subDirs[:] = [x for x in subDirs if os.path.basename(x).lower() not in (
+				'userconfig',
+				'systemconfig',
+				#  Do not remove old libraries here. It is done by removeOldLibFiles.
+				'lib',
+				'lib64',
+				'libarm64')]
 		for f in files:
-			if f.endswith((".pyc", ".pyo", ".pyd")) and not f.endswith(importlib.machinery.EXTENSION_SUFFIXES[0]):
-				# This also removes compiled files from system config,
-				# but that is fine.
+			if f.endswith((".pyc", ".pyo", ".pyd", ".dll", ".manifest")):
 				path=os.path.join(curDestDir, f)
 				log.debug(f"Removing old byte compiled python file: {path!r}")
 				try:

@@ -143,8 +143,8 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		lRole = aria.htmlNodeNameToAriaLandmarkRoles.get(nodeName.lower())
 		if lRole:
 			ariaRoles.append(lRole)
-		# Get the first landmark role, if any.
-		landmark=next((ar for ar in ariaRoles if ar in aria.landmarkRoles),None)
+		# If the first role is a landmark role, use it.
+		landmark = ariaRoles[0] if ariaRoles[0] in aria.landmarkRoles else None
 		ariaLevel=attrs.get('HTMLAttrib::aria-level',None)
 		ariaLevel=int(ariaLevel) if ariaLevel is not None else None
 		if ariaLevel:

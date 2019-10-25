@@ -206,6 +206,8 @@ def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,mi
 			wcharToInt(next(cpBufIt)),
 			wcharToInt(next(cpBufIt))
 		)
+		if right < left:
+			left, right = right, left
 		characterLocations.append(RectLTRB(left, top, right, bottom))
 	return text, characterLocations
 
