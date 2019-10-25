@@ -408,9 +408,12 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		except StopIteration:
 			ui.message(errorMessage)
 			return
-		item.moveTo()
+		# #8831: Report before moving because moving might change the focus, which
+		# might mutate the document, potentially invalidating info if it is
+		# offset-based.
 		if not gesture or not willSayAllResume(gesture):
 			item.report(readUnit=readUnit)
+		item.moveTo()
 
 	@classmethod
 	def addQuickNav(cls, itemType, key, nextDoc, nextError, prevDoc, prevError, readUnit=None):
@@ -1106,41 +1109,6 @@ class ElementsListDialog(wx.Dialog):
 
 class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 
-	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
-		textList = []
-		landmark = attrs.get("landmark")
-		if formatConfig["reportLandmarks"] and fieldType == "start_addedToControlFieldStack" and landmark:
-			# Ensure that the name of the field gets presented even if normally it wouldn't. 
-			name=attrs.get('name')
-			if name and attrs.getPresentationCategory(ancestorAttrs,formatConfig,reason) is None:
-				textList.append(name)
-				if landmark == "region":
-					# The word landmark is superfluous for regions.
-					textList.append(aria.landmarkRoles[landmark])
-			if landmark != "region":
-				textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
-		textList.append(super(BrowseModeDocumentTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
-		return " ".join(textList)
-
-	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
-		textList = []
-		landmark = field.get("landmark")
-		if formatConfig["reportLandmarks"] and reportStart and landmark and field.get("_startOfNode"):
-			# Ensure that the name of the field gets presented even if normally it wouldn't. 
-			name=field.get('name')
-			if name and field.getPresentationCategory(ancestors,formatConfig) is None:
-				textList.append(name)
-				if landmark == "region":
-					# The word landmark is superfluous for regions.
-					textList.append(braille.landmarkLabels[landmark])
-			if landmark != "region":
-				# Translators: This is brailled to indicate a landmark (example output: lmk main).
-				textList.append(_("lmk %s") % braille.landmarkLabels[landmark])
-		text = super(BrowseModeDocumentTextInfo, self).getControlFieldBraille(field, ancestors, reportStart, formatConfig)
-		if text:
-			textList.append(text)
-		return " ".join(textList)
-
 	def _get_focusableNVDAObjectAtStart(self):
 		try:
 			item = next(self.obj._iterNodesByType("focusable", "up", self))
@@ -1323,7 +1291,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		# We've hit the edge of the focused control.
 		# Therefore, move the virtual caret to the same edge of the field.
 		info = self.makeTextInfo(textInfos.POSITION_CARET)
-		info.expand(info.UNIT_CONTROLFIELD)
+		info.expand(textInfos.UNIT_CONTROLFIELD)
 		if gesture.mainKeyName in ("leftArrow", "upArrow", "pageUp"):
 			info.collapse()
 		else:
@@ -1590,8 +1558,12 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if (
 			# roles such as application and dialog should be treated as being within a "application" and therefore outside of the browseMode document. 
 			obj.role in self.APPLICATION_ROLES 
-			# Anything inside a combo box should be treated as being outside a browseMode document.
-			or (obj.container and obj.container.role==controlTypes.ROLE_COMBOBOX)
+			# Anything other than an editable text box inside a combo box should be
+			# treated as being outside a browseMode document.
+			or (
+				obj.role != controlTypes.ROLE_EDITABLETEXT and obj.container
+				and obj.container.role == controlTypes.ROLE_COMBOBOX
+			)
 		):
 			return True
 		return None

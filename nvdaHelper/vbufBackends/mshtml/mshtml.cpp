@@ -459,6 +459,20 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	macro_addHTMLAttributeToMap(L"alt",true,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"title",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"src",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	// Truncate the value of "src" if it contains base64 data
+	map<wstring,wstring>::iterator attribsMapIt;
+	if ((attribsMapIt = attribsMap.find(L"HTMLAttrib::src")) != attribsMap.end()) {
+		wstring str = attribsMapIt->second;
+		const wstring prefix = L"data:";
+		if (str.substr(0, prefix.length()) == prefix) {
+			const wstring needle = L"base64,";
+			wstring::size_type pos = str.find(needle);
+			if (pos != wstring::npos) {
+				str.replace(pos + needle.length(), wstring::npos, L"<truncated>");
+				attribsMap[L"HTMLAttrib::src"] = str;
+			}
+		}
+	}
 	macro_addHTMLAttributeToMap(L"onclick",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"onmousedown",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"onmouseup",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);

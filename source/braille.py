@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#braille.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2008-2018 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
+# braille.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2008-2019 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
 
 import itertools
 import os
@@ -169,6 +169,8 @@ roleLabels = {
 	controlTypes.ROLE_DELETED_CONTENT: _("del"),
 	# Translators: Displayed in braille for an object which is inserted.
 	controlTypes.ROLE_INSERTED_CONTENT: _("ins"),
+	# Translators: Displayed in braille for a landmark.
+	controlTypes.ROLE_LANDMARK: _("lmk"),
 }
 
 positiveStateLabels = {
@@ -473,7 +475,7 @@ def getBrailleTextForProperties(**propertyValues):
 	if name:
 		textList.append(name)
 	role = propertyValues.get("role")
-	roleText = propertyValues.get("roleText")
+	roleText = propertyValues.get('roleText')
 	states = propertyValues.get("states")
 	positionInfo = propertyValues.get("positionInfo")
 	level = positionInfo.get("level") if positionInfo else None
@@ -596,7 +598,7 @@ class NVDAObjectRegion(Region):
 		text = getBrailleTextForProperties(
 			name=obj.name,
 			role=role,
-			roleText=obj.roleText,
+			roleText=obj.roleTextBraille,
 			current=obj.isCurrent,
 			placeholder=placeholderValue,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
@@ -643,8 +645,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	value=field.get('value',None)
 	current=field.get('current', None)
 	placeholder=field.get('placeholder', None)
-	roleText=field.get('roleText')
-
+	roleText = field.get('roleTextBraille', field.get('roleText'))
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []
 		if current:
@@ -674,6 +675,11 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			# However, we still need to pass it (hence "_role").
 			"_role" if role == controlTypes.ROLE_MATH else "role": role,
 			"states": states,"value":value, "current":current, "placeholder":placeholder,"roleText":roleText}
+		if formatConfig["reportLandmarks"] and field.get("landmark") and field.get("_startOfNode"):
+			# Ensure that the name of the field gets presented even if normally it wouldn't.
+			name = field.get("name")
+			if name:
+				props["name"] = name
 		if config.conf["presentation"]["reportKeyboardShortcuts"]:
 			kbShortcut = field.get("keyboardShortcut")
 			if kbShortcut:
@@ -2030,7 +2036,10 @@ class _BgThread:
 		if cls.thread:
 			return
 		cls.queuedWriteLock = threading.Lock()
-		thread = cls.thread = threading.Thread(target=cls.func)
+		thread = cls.thread = threading.Thread(
+			name=f"{cls.__module__}.{cls.__qualname__}",
+			target=cls.func
+		)
 		thread.daemon = True
 		thread.start()
 		cls.handle = ctypes.windll.kernel32.OpenThread(winKernel.THREAD_SET_CONTEXT, False, thread.ident)
@@ -2411,6 +2420,8 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 	Subclasses can also inherit from L{brailleInput.BrailleInputGesture} if the display has a braille keyboard.
 	If the braille display driver is a L{baseObject.ScriptableObject}, it can provide scripts specific to input gestures from this display.
 	"""
+
+	shouldPreventSystemIdle = True
 
 	def _get_source(self):
 		"""The string used to identify all gestures from this display.
