@@ -140,13 +140,11 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			# MSHTML puts the unavailable state on all graphics when the showing of graphics is disabled.
 			# This is rather annoying and irrelevant to our users, so discard it.
 			states.discard(controlTypes.STATE_UNAVAILABLE)
-		lRole = aria.htmlNodeNameToAriaLandmarkRoles.get(nodeName.lower())
+		lRole = aria.htmlNodeNameToAriaRoles.get(nodeName.lower())
 		if lRole:
 			ariaRoles.append(lRole)
 		# If the first role is a landmark role, use it.
 		landmark = ariaRoles[0] if ariaRoles[0] in aria.landmarkRoles else None
-		if ariaRoles[0] == "article":
-			role = controlTypes.ROLE_ARTICLE
 		ariaLevel=attrs.get('HTMLAttrib::aria-level',None)
 		ariaLevel=int(ariaLevel) if ariaLevel is not None else None
 		if ariaLevel:
@@ -302,8 +300,11 @@ class MSHTML(VirtualBuffer):
 				{"HTMLAttrib::role": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles if lr != "region"]},
 				{"HTMLAttrib::role": [VBufStorage_findMatch_word("region")],
 					"name": [VBufStorage_findMatch_notEmpty]},
-				{"IHTMLDOMNode::nodeName": [VBufStorage_findMatch_word(lr.upper()) for lr in aria.htmlNodeNameToAriaLandmarkRoles]}
-				]
+				{"IHTMLDOMNode::nodeName": [
+					VBufStorage_findMatch_word(lr.upper()) for lr in aria.htmlNodeNameToAriaRoles
+					if lr in aria.landmarkRoles
+				]}
+			]
 		elif nodeType == "embeddedObject":
 			attrs = [
 				{"IHTMLDOMNode::nodeName": ["OBJECT","EMBED","APPLET","AUDIO","VIDEO"]},
