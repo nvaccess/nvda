@@ -90,4 +90,7 @@ htmlNodeNameToAriaRoles = {
 	"main": "main",
 	"footer": "contentinfo",
 	"article": "article",
+	"section": "region",
+	"aside": "complementary",
+	"dialog": "dialog",
 }
