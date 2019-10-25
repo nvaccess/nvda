@@ -292,6 +292,10 @@ class Gecko_ia2(VirtualBuffer):
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("region")],
 					"name": [VBufStorage_findMatch_notEmpty]}
 				]
+		elif nodeType=="article":
+			attrs = [
+				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("article")]}
+			]
 		elif nodeType=="embeddedObject":
 			attrs=[
 				{"IAccessible2::attribute_tag":self._searchableTagValues(["embed","object","applet","audio","video"])},
