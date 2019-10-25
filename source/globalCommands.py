@@ -623,6 +623,22 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportHeadings.__doc__=_("Toggles on and off the reporting of headings")
 	script_toggleReportHeadings.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report groupings command.
+		description=_("Toggles on and off the reporting of groupings"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
+	def script_toggleReportGroupings(self,gesture):
+		if config.conf["documentFormatting"]["reportGroupings"]:
+			# Translators: The message announced when toggling the report block quotes document formatting setting.
+			state = _("report gorupings off")
+			config.conf["documentFormatting"]["reportGroupings"]=False
+		else:
+			# Translators: The message announced when toggling the report block quotes document formatting setting.
+			state = _("report groupings on")
+			config.conf["documentFormatting"]["reportGroupings"]=True
+		ui.message(state)
+
 	def script_toggleReportBlockQuotes(self,gesture):
 		if config.conf["documentFormatting"]["reportBlockQuotes"]:
 			# Translators: The message announced when toggling the report block quotes document formatting setting.
