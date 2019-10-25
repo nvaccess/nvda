@@ -1920,7 +1920,7 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
-		self.articlesCheckBox=elementsGroup.addItem(wx.CheckBox(self,label=_("Arti&cles")))
+		self.articlesCheckBox = elementsGroup.addItem(wx.CheckBox(self, label=_("Arti&cles")))
 		self.articlesCheckBox.SetValue(config.conf["documentFormatting"]["reportArticles"])
 
 		# Translators: This is the label for a checkbox in the

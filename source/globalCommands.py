@@ -656,15 +656,15 @@ class GlobalCommands(ScriptableObject):
 		description=_("Toggles on and off the reporting of articles"),
 		category=SCRCAT_DOCUMENTFORMATTING
 	)
-	def script_toggleReportArticles(self,gesture):
+	def script_toggleReportArticles(self, gesture):
 		if config.conf["documentFormatting"]["reportArticles"]:
 			# Translators: The message announced when toggling the report articles document formatting setting.
 			state = _("report articles off")
-			config.conf["documentFormatting"]["reportArticles"]=False
+			config.conf["documentFormatting"]["reportArticles"] = False
 		else:
 			# Translators: The message announced when toggling the report articles document formatting setting.
 			state = _("report articles on")
-			config.conf["documentFormatting"]["reportArticles"]=True
+			config.conf["documentFormatting"]["reportArticles"] = True
 		ui.message(state)
 
 	def script_toggleReportFrames(self,gesture):

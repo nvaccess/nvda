@@ -821,7 +821,8 @@ qn("error", key="w",
 	prevDoc=_("moves to the previous error"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous error"))
-qn("article", key=None,
+qn(
+	"article", key=None,
 	# Translators: Input help message for a quick navigation command in browse mode.
 	nextDoc=_("moves to the next article"),
 	# Translators: Message presented when the browse mode element is not found.

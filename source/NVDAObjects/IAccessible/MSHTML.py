@@ -139,7 +139,7 @@ nodeNamesToNVDARoles={
 	"MATH":controlTypes.ROLE_MATH,
 	"NAV":controlTypes.ROLE_SECTION,
 	"SECTION":controlTypes.ROLE_SECTION,
-	"ARTICLE":controlTypes.ROLE_ARTICLE,
+	"ARTICLE": controlTypes.ROLE_ARTICLE,
 }
 
 def getZoomFactorsFromHTMLDocument(HTMLDocument):

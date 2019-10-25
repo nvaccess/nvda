@@ -184,11 +184,11 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 
 	if iaRole==oleacc.ROLE_SYSTEM_APPLICATION:
 		clsList.append(Application)
-	if iaRole==oleacc.ROLE_SYSTEM_DIALOG:
+	if iaRole == oleacc.ROLE_SYSTEM_DIALOG:
 		clsList.append(WebDialog)
 	if (
-		iaRole in (oleacc.ROLE_SYSTEM_APPLICATION, oleacc.ROLE_SYSTEM_DIALOG, oleacc.ROLE_SYSTEM_DOCUMENT)
-		and Article not in clsList
+		iaRole in (oleacc.ROLE_SYSTEM_APPLICATION, oleacc.ROLE_SYSTEM_DIALOG)
+		or (iaRole == oleacc.ROLE_SYSTEM_DOCUMENT and Article not in clsList)
 	):
 		clsList.append(documentClass)
 

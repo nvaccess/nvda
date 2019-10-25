@@ -305,7 +305,7 @@ class MSHTML(VirtualBuffer):
 					if lr in aria.landmarkRoles
 				]}
 			]
-		elif nodeType=="article":
+		elif nodeType == "article":
 			attrs = [
 				{"HTMLAttrib::role": [VBufStorage_findMatch_word("article")]},
 				{"IHTMLDOMNode::nodeName": [VBufStorage_findMatch_word("ARTICLE")]},
