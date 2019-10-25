@@ -17,6 +17,7 @@ from documentBase import DocumentWithTableNavigation
 from NVDAObjects.behaviors import Dialog, WebDialog 
 from . import IAccessible
 from .ia2TextMozilla import MozillaCompoundTextInfo
+import aria
 
 class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib=True
@@ -49,10 +50,10 @@ class Ia2Web(IAccessible):
 		return super(Ia2Web,self).isPresentableFocusAncestor
 
 	def _get_roleText(self):
-		roleText=self.IA2Attributes.get('roledescription')
+		roleText = self.IA2Attributes.get('roledescription')
 		if roleText:
 			return roleText
-		return super(Ia2Web,self).roleText
+		return super().roleText
 
 	def _get_states(self):
 		states=super(Ia2Web,self).states
@@ -64,6 +65,21 @@ class Ia2Web(IAccessible):
 		if self.IA2Attributes.get('goog-editable')=="false":
 			states.discard(controlTypes.STATE_EDITABLE)
 		return states
+
+	def _get_landmark(self):
+		xmlRoles = self.IA2Attributes.get('xml-roles', '').split(' ')
+		landmark = next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
+		if (
+			landmark
+			and self.IAccessibleRole != IAccessibleHandler.IA2_ROLE_LANDMARK
+			and landmark != xmlRoles[0]
+		):
+			# Ignore the landmark role
+			landmark = None
+		if landmark:
+			return landmark
+		return super().landmark
+
 
 class Document(Ia2Web):
 	value = None

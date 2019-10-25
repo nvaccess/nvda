@@ -1109,41 +1109,6 @@ class ElementsListDialog(wx.Dialog):
 
 class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 
-	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
-		textList = []
-		landmark = attrs.get("landmark")
-		if formatConfig["reportLandmarks"] and fieldType == "start_addedToControlFieldStack" and landmark:
-			# Ensure that the name of the field gets presented even if normally it wouldn't. 
-			name=attrs.get('name')
-			if name and attrs.getPresentationCategory(ancestorAttrs,formatConfig,reason) is None:
-				textList.append(name)
-				if landmark == "region":
-					# The word landmark is superfluous for regions.
-					textList.append(aria.landmarkRoles[landmark])
-			if landmark != "region":
-				textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
-		textList.append(super(BrowseModeDocumentTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
-		return " ".join(textList)
-
-	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
-		textList = []
-		landmark = field.get("landmark")
-		if formatConfig["reportLandmarks"] and reportStart and landmark and field.get("_startOfNode"):
-			# Ensure that the name of the field gets presented even if normally it wouldn't. 
-			name=field.get('name')
-			if name and field.getPresentationCategory(ancestors,formatConfig) is None:
-				textList.append(name)
-				if landmark == "region":
-					# The word landmark is superfluous for regions.
-					textList.append(braille.landmarkLabels[landmark])
-			if landmark != "region":
-				# Translators: This is brailled to indicate a landmark (example output: lmk main).
-				textList.append(_("lmk %s") % braille.landmarkLabels[landmark])
-		text = super(BrowseModeDocumentTextInfo, self).getControlFieldBraille(field, ancestors, reportStart, formatConfig)
-		if text:
-			textList.append(text)
-		return " ".join(textList)
-
 	def _get_focusableNVDAObjectAtStart(self):
 		try:
 			item = next(self.obj._iterNodesByType("focusable", "up", self))

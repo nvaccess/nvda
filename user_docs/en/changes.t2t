@@ -18,6 +18,7 @@ What's New in NVDA
 - All user-defined gestures can now be removed via a new "Reset to factory defaults" button in the Input Gestures dialog. (#10293)
 - Font reporting in Microsoft Word now includes if text is marked as hidden. (#8713)
 - Added a command to move the review cursor to the position previously set as start marker for selection or copy: NVDA+shift+F9. (#1969)
+- In Internet Explorer, Microsoft Edge and recent versions of Firefox and Chrome, landmarks are now reported in focus mode and object navigation. (#10101)
 
 
 == Changes ==
@@ -54,6 +55,7 @@ What's New in NVDA
 - Some bullet names in Microsoft Word have been corrected. (#10399)
 - In Windows 10 May 2019 Update and later, NVDA will once again announce first selected emoji or clipboard item when emoji panel and clipboard history opens, respectively. (#9204)
 - In Poedit, it is once again possible to view some translations for right to left languages. (#9931)
+- In the Settings app in Windows 10 April 2018 Update and later, NVDA will no longer announce progress bar information for volume meters found in the System/Sound page. (#10284)
 
 
 == Changes for Developers ==
@@ -107,6 +109,8 @@ What's New in NVDA
 - displayModel.getCaretRect now returns an instance of locationHelper.RectLTRB. (#10233)
 - The UNIT_CONTROLFIELD and UNIT_FORMATFIELD constants have been moved from virtualBuffers.VirtualBufferTextInfo to the textInfos package. (#10396)
 - UIA TextInfo objects can now be moved/expanded by the page, story and formatField text units. (#10396)
+- External modules (appModules and globalPlugins) are now less likely to be able to break the creation of NVDAObjects. 
+ - Exceptions caused by the "chooseNVDAObjectOverlayClasses" and "event_NVDAObject_init" methods are now properly caught and logged.
 
 
 = 2019.2.1 =
