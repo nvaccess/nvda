@@ -102,7 +102,8 @@ class ControlField(Field):
 				controlTypes.ROLE_MENUBUTTON, 
 				controlTypes.ROLE_TREEVIEW, 
 				controlTypes.ROLE_CHECKMENUITEM, 
-				controlTypes.ROLE_RADIOMENUITEM
+				controlTypes.ROLE_RADIOMENUITEM,
+				controlTypes.ROLE_CAPTION,
 			)
 			or (role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states))
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
