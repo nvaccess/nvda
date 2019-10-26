@@ -129,6 +129,7 @@ class ControlField(Field):
 			role in (
 				controlTypes.ROLE_BLOCKQUOTE,
 				controlTypes.ROLE_GROUPING,
+				controlTypes.ROLE_FIGURE,
 				controlTypes.ROLE_FRAME,
 				controlTypes.ROLE_INTERNALFRAME,
 				controlTypes.ROLE_TOOLBAR,

@@ -7,8 +7,6 @@
 import controlTypes
 
 ariaRolesToNVDARoles={
-	"description":controlTypes.ROLE_STATICTEXT,
-	"search":controlTypes.ROLE_SECTION,
 	"alert":controlTypes.ROLE_ALERT,
 	"alertdialog":controlTypes.ROLE_DIALOG,
 	"application":controlTypes.ROLE_APPLICATION,
@@ -17,9 +15,11 @@ ariaRolesToNVDARoles={
 	"columnheader":controlTypes.ROLE_TABLECOLUMNHEADER,
 	"combobox":controlTypes.ROLE_COMBOBOX,
 	"definition":controlTypes.ROLE_LISTITEM,
+	"description":controlTypes.ROLE_STATICTEXT,
 	"dialog":controlTypes.ROLE_DIALOG,
 	"directory":controlTypes.ROLE_LIST,
 	"document":controlTypes.ROLE_DOCUMENT,
+	"figure":controlTypes.ROLE_FIGURE,
 	"form":controlTypes.ROLE_FORM,
 	"grid":controlTypes.ROLE_TABLE,
 	"gridcell":controlTypes.ROLE_TABLECELL,
@@ -42,6 +42,7 @@ ariaRolesToNVDARoles={
 	"row":controlTypes.ROLE_TABLEROW,
 	"rowgroup":controlTypes.ROLE_GROUPING,
 	"rowheader":controlTypes.ROLE_TABLEROWHEADER,
+	"search":controlTypes.ROLE_SECTION,
 	"separator":controlTypes.ROLE_SEPARATOR,
 	"scrollbar":controlTypes.ROLE_SCROLLBAR,
 	"slider":controlTypes.ROLE_SLIDER,

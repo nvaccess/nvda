@@ -91,11 +91,15 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
 			role=controlTypes.ROLE_TEXTFRAME
 		level=attrs.get('IAccessible2::attribute_level',"")
+
 		xmlRoles=attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")
 		landmark = next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
 		if landmark and role != controlTypes.ROLE_LANDMARK and landmark != xmlRoles[0]:
 			# Ignore the landmark role
 			landmark = None
+		if role == controlTypes.ROLE_FIGURE and xmlRoles[0] == "figure":
+			# This is a figure.
+			role = controlTypes.ROLE_FIGURE
 		attrs['role']=role
 		attrs['states']=states
 		if level is not "" and level is not None:
@@ -292,7 +296,7 @@ class Gecko_ia2(VirtualBuffer):
 				]
 		elif nodeType=="embeddedObject":
 			attrs=[
-				{"IAccessible2::attribute_tag":self._searchableTagValues(["embed","object","applet","audio","video"])},
+				{"IAccessible2::attribute_tag":self._searchableTagValues(["embed","object","applet","audio","video","figure"])},
 				{"IAccessible::role":[oleacc.ROLE_SYSTEM_APPLICATION,oleacc.ROLE_SYSTEM_DIALOG]},
 			]
 		else:
