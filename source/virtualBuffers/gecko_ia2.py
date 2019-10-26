@@ -97,7 +97,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		if landmark and role != controlTypes.ROLE_LANDMARK and landmark != xmlRoles[0]:
 			# Ignore the landmark role
 			landmark = None
-		if role == controlTypes.ROLE_FIGURE and xmlRoles[0] == "figure":
+		if role == controlTypes.ROLE_GROUPING and xmlRoles[0] == "figure":
 			# This is a figure.
 			role = controlTypes.ROLE_FIGURE
 		attrs['role']=role
