@@ -15,6 +15,10 @@ What's New in NVDA
  - Basic Braille Plus 40
  - Basic Braille Plus 32
  - Connect Braille
+- All user-defined gestures can now be removed via a new "Reset to factory defaults" button in the Input Gestures dialog. (#10293)
+- Font reporting in Microsoft Word now includes if text is marked as hidden. (#8713)
+- Added a command to move the review cursor to the position previously set as start marker for selection or copy: NVDA+shift+F9. (#1969)
+- In Internet Explorer, Microsoft Edge and recent versions of Firefox and Chrome, landmarks are now reported in focus mode and object navigation. (#10101)
 
 
 == Changes ==
@@ -25,9 +29,10 @@ What's New in NVDA
 - The NVDA version number is now logged as the first message in the log. This occurs even if logging has been disabled from the GUI. (#9803)
 - For every entry in the NVDA log, information about the originating thread is now included. (#10259)
 - The settings dialog no longer allows for changing the configured log level if it has been overridden from the command line. (#10209)
-- In Microsoft Word, NVDA now announces the display state of  non printable characters when pressing the toggle shortcut Ctrl+Shift+8 . (#10241)
+- In Microsoft Word, NVDA now announces the display state of non printable characters when pressing the toggle shortcut Ctrl+Shift+8 . (#10241)
 - Updated Liblouis braille translator to commit 58d67e63. (#10094)
 - When CLDR characters (including emojis) reporting is enabled, they are announced at all punctuation levels. (#8826)
+- Third party python packages included in NVDA, such as comtypes, now log their warnings and errors to the NVDA log. (#10393)
 
 
 == Bug Fixes ==
@@ -45,6 +50,12 @@ What's New in NVDA
 - ARIA 1.1 combo boxes are now supported in Mozilla Firefox and Google Chrome. (#9616)
 - NVDA will no longer report content of visually hidden columns for list items in SysListView32 controls. (#8268)
 - The settings dialog no longer shows "info" as the current log level when in secure mode. (#10209)
+- In Start menu for Windows 10 Anniversary Update and later, NVDA will announce details of search results. (#10232)
+- In browse mode, if moving the cursor or using quick navigation causes the document to change, NVDA no longer speaks incorrect content in some cases. (#8831, #10343)
+- Some bullet names in Microsoft Word have been corrected. (#10399)
+- In Windows 10 May 2019 Update and later, NVDA will once again announce first selected emoji or clipboard item when emoji panel and clipboard history opens, respectively. (#9204)
+- In Poedit, it is once again possible to view some translations for right to left languages. (#9931)
+- In the Settings app in Windows 10 April 2018 Update and later, NVDA will no longer announce progress bar information for volume meters found in the System/Sound page. (#10284)
 
 
 == Changes for Developers ==
@@ -96,6 +107,10 @@ What's New in NVDA
 - Introduced displayModel.UNIT_DISPLAYCHUNK as a textInfos unit constant specific to DisplayModelTextInfo. (#10165)
  - This new constant allows walking over the text in a DisplayModelTextInfo in a way that more closely resembles how the text chunks are saved in the underlying model.
 - displayModel.getCaretRect now returns an instance of locationHelper.RectLTRB. (#10233)
+- The UNIT_CONTROLFIELD and UNIT_FORMATFIELD constants have been moved from virtualBuffers.VirtualBufferTextInfo to the textInfos package. (#10396)
+- UIA TextInfo objects can now be moved/expanded by the page, story and formatField text units. (#10396)
+- External modules (appModules and globalPlugins) are now less likely to be able to break the creation of NVDAObjects. 
+ - Exceptions caused by the "chooseNVDAObjectOverlayClasses" and "event_NVDAObject_init" methods are now properly caught and logged.
 
 
 = 2019.2.1 =

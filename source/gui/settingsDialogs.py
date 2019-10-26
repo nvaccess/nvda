@@ -3248,7 +3248,7 @@ class InputGesturesDialog(SettingsDialog):
 		filterSizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 		filterLabel = wx.StaticText(self, label=pgettext("inputGestures", "&Filter by:"))
-		filter = wx.TextCtrl(self)
+		filter = self.filter = wx.TextCtrl(self)
 		filterSizer.Add(filterLabel, flag=wx.ALIGN_CENTER_VERTICAL)
 		filterSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
 		filterSizer.Add(filter, proportion=1)
@@ -3279,10 +3279,16 @@ class InputGesturesDialog(SettingsDialog):
 		self.removeButton.Bind(wx.EVT_BUTTON, self.onRemove)
 		self.removeButton.Disable()
 
+		bHelper.sizer.AddStretchSpacer()
+		# Translators: The label of a button to reset all gestures in the Input Gestures dialog.
+		resetButton = wx.Button(self, label=_("Reset to factory &defaults"))
+		bHelper.sizer.Add(resetButton, flag=wx.ALIGN_RIGHT)
+		resetButton.Bind(wx.EVT_BUTTON, self.onReset)
+
 		self.pendingAdds = set()
 		self.pendingRemoves = set()
 
-		settingsSizer.Add(bHelper.sizer)
+		settingsSizer.Add(bHelper.sizer, flag=wx.EXPAND)
 
 	def postInit(self):
 		self.tree.SetFocus()
@@ -3406,6 +3412,40 @@ class InputGesturesDialog(SettingsDialog):
 			self.pendingRemoves.add(entry)
 		self.tree.Delete(treeGes)
 		scriptInfo.gestures.remove(gesture)
+		self.tree.SetFocus()
+
+	def onReset(self, evt):
+		if gui.messageBox(
+			# Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+			_("""Are you sure you want to reset all gestures to their factory defaults?
+			
+			All of your user defined gestures, whether previously set or defined during this session, will be lost.
+			This cannot be undone."""),
+			style=wx.YES | wx.NO | wx.NO_DEFAULT
+		) != wx.YES:
+			return
+		self.pendingAdds.clear()
+		self.pendingRemoves.clear()
+		inputCore.manager.userGestureMap.clear()
+		try:
+			inputCore.manager.userGestureMap.save()
+		except:  # noqa: E722
+			log.debugWarning("", exc_info=True)
+			# Translators: An error displayed when saving user defined input gestures fails.
+			gui.messageBox(
+				_("Error saving user defined gestures - probably read only file system."),
+				caption=_("Error"),
+				style=wx.OK | wx.ICON_ERROR
+			)
+			self.onCancel(None)
+			return
+		inputCore.manager.userGestureMap.save()
+		self.gestures = inputCore.manager.getAllGestureMappings(
+			obj=gui.mainFrame.prevFocus,
+			ancestors=gui.mainFrame.prevFocusAncestors
+		)
+		self.tree.DeleteChildren(self.treeRoot)
+		self.populateTree(filter=self.filter.GetValue())
 		self.tree.SetFocus()
 
 	def onOk(self, evt):
