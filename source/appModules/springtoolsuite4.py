@@ -10,4 +10,4 @@ This simply uses the app module for Eclipse.
 
 # Normally these Flake8 errors shouldn't be ignored but here we are simply reusing existing ap module.
 
-from .eclipse import *  # noqa: F403,F401
+from .eclipse import *  # noqa: F401, F403
