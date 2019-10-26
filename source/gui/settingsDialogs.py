@@ -34,7 +34,7 @@ import braille
 import brailleTables
 import brailleInput
 import vision
-from typing import Callable, List, Type, Optional
+from typing import Callable, List, Type, Optional, Any
 import core
 import keyboardHandler
 import characterProcessing
@@ -1031,33 +1031,46 @@ class StringDriverSettingChanger(DriverSettingChanger):
 class DriverSettingsMixin(metaclass=ABCMeta):
 	"""
 	Mixin class that provides support for driver specific gui settings.
-	Derived classes should implement L{driver}.
+	Derived classes should implement:
+	- L{getSettings}
+	- L{settingsSizer}
 	"""
 
 	def __init__(self, *args, **kwargs):
 		self.sizerDict={}
 		self.lastControl=None		
 		super(DriverSettingsMixin,self).__init__(*args,**kwargs)
-		self._curDriverRef = weakref.ref(self.driver)
+		# because settings instances can be of type L{Driver} as well, we have to handle
+		# showing settings for non-instances. Because of this, we must reacquire a reference
+		# to the settings class whenever we wish to use it (via L{getSettings}) in case the instance changes.
+		self._currentSettingsRef = weakref.ref(self.getSettings())
 
-	def driver(self):
-		return self.getSettings()
+	settingsSizer: wx.BoxSizer
 
 	@abstractmethod
-	def getSettings(self):
-		raise NotImplementedError
+	def getSettings(self) -> AutoSettings:
+		...
+
+	def _getSettingsStorage(self) -> Any:
+		""" Override to change storage object for settings."""
+		return self.getSettings()
 
 	@classmethod
 	def _setSliderStepSizes(cls, slider, setting):
 		slider.SetLineSize(setting.minStep)
 		slider.SetPageSize(setting.largeStep)
 
-	def makeSliderSettingControl(self,setting):
+	def _makeSliderSettingControl(
+			self,
+			setting: NumericDriverSetting,
+			settingsStorage: Any
+	) -> wx.BoxSizer:
 		"""Constructs appropriate GUI controls for given L{DriverSetting} such as label and slider.
 		@param setting: Setting to construct controls for
-		@type setting: L{DriverSetting}
-		@returns: WXSizer containing newly created controls.
-		@rtype: L{wx.BoxSizer}
+		@param settingsStorage: where to get initial values / set values.
+			This param must have an attribute with a name matching setting.id.
+			In most cases it will be of type L{AutoSettings}
+		@returns: wx.BoxSizer containing newly created controls.
 		"""
 		labeledControl = guiHelper.LabeledControlHelper(
 			self,
@@ -1068,24 +1081,36 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 		)
 		lSlider=labeledControl.control
 		setattr(self,"%sSlider"%setting.id,lSlider)
-		lSlider.Bind(wx.EVT_SLIDER,DriverSettingChanger(self.driver,setting))
 		self._setSliderStepSizes(lSlider,setting)
-		lSlider.SetValue(getattr(self.driver,setting.id))
+		lSlider.Bind(wx.EVT_SLIDER, DriverSettingChanger(
+			settingsStorage, setting
+		))
+		lSlider.SetValue(getattr(settingsStorage, setting.id))
 		if self.lastControl:
 			lSlider.MoveAfterInTabOrder(self.lastControl)
 		self.lastControl=lSlider
 		return labeledControl.sizer
 
-	def makeStringSettingControl(self,setting):
-		"""Same as L{makeSliderSettingControl} but for string settings. Returns sizer with label and combobox."""
+	def _makeStringSettingControl(
+			self,
+			setting: DriverSetting,
+			settingsStorage: Any
+	):
+		"""
+		Same as L{_makeSliderSettingControl} but for string settings. Returns sizer with label and combobox.
+		"""
 
 		labelText="%s:"%setting.displayNameWithAccelerator
+		settingsInst = self.getSettings()
 		setattr(
 			self,
 			"_%ss"%setting.id,
 			# Settings are stored as an ordered dict.
 			# Therefore wrap this inside a list call.
-			list(getattr(self.driver,"available%ss"%setting.id.capitalize()).values())
+			list(getattr(
+				settingsStorage,
+				f"available{setting.id.capitalize()}s"
+			).values())
 		)
 		l=getattr(self,"_%ss"%setting.id)
 		labeledControl=guiHelper.LabeledControlHelper(
@@ -1097,28 +1122,40 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 		lCombo = labeledControl.control
 		setattr(self,"%sList"%setting.id,lCombo)
 		try:
-			cur=getattr(self.driver,setting.id)
+			cur = getattr(settingsStorage, setting.id)
 			i=[x.id for x in l].index(cur)
 			lCombo.SetSelection(i)
 		except ValueError:
 			pass
-		lCombo.Bind(wx.EVT_CHOICE,StringDriverSettingChanger(self.driver,setting,self))
+		lCombo.Bind(
+			wx.EVT_CHOICE,
+			StringDriverSettingChanger(settingsStorage, setting, self)
+		)
 		if self.lastControl:
 			lCombo.MoveAfterInTabOrder(self.lastControl)
 		self.lastControl=lCombo
 		return labeledControl.sizer
 
-	def makeBooleanSettingControl(self,setting):
-		"""Same as L{makeSliderSettingControl} but for boolean settings. Returns checkbox."""
+	def _makeBooleanSettingControl(
+			self,
+			setting: BooleanDriverSetting,
+			settingsStorage: Any
+	):
+		"""
+		Same as L{_makeSliderSettingControl} but for boolean settings. Returns checkbox.
+		"""
 		checkbox=wx.CheckBox(self,wx.ID_ANY,label=setting.displayNameWithAccelerator)
 		setattr(self,"%sCheckbox"%setting.id,checkbox)
 
-		def onCheckChanged(evt: wx.CommandEvent):
+		def _onCheckChanged(evt: wx.CommandEvent):
 			evt.Skip()  # allow other handlers to also process this event.
-			setattr(self.driver, setting.id, evt.IsChecked())
+			setattr(settingsStorage, setting.id, evt.IsChecked())
 
-		checkbox.Bind(wx.EVT_CHECKBOX, onCheckChanged)
-		checkbox.SetValue(getattr(self.driver,setting.id))
+		checkbox.Bind(wx.EVT_CHECKBOX, _onCheckChanged)
+		checkbox.SetValue(getattr(
+			settingsStorage,
+			setting.id
+		))
 		if self.lastControl:
 			checkbox.MoveAfterInTabOrder(self.lastControl)
 		self.lastControl=checkbox
@@ -1126,32 +1163,38 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 
 	def updateDriverSettings(self, changedSetting=None):
 		"""Creates, hides or updates existing GUI controls for all of supported settings."""
-		#firstly check already created options
-		for name,sizer in self.sizerDict.items():
+		settingsInst = self.getSettings()
+		settingsStorage = self._getSettingsStorage()
+		# firstly check already created options
+		for name, sizer in self.sizerDict.items():
 			if name == changedSetting:
 				# Changing a setting shouldn't cause that setting itself to disappear.
 				continue
-			if not self.driver.isSupported(name):
+			if not settingsInst.isSupported(name):
 				self.settingsSizer.Hide(sizer)
 		#Create new controls, update already existing
 		log.debug(f"Current sizerDict: {self.sizerDict!r}")
 
-		log.debug(f"Current supportedSettings: {self.driver.supportedSettings!r}")
-		for setting in self.driver.supportedSettings:
+		log.debug(f"Current supportedSettings: {self.getSettings().supportedSettings!r}")
+		for setting in settingsInst.supportedSettings:
 			if setting.id == changedSetting:
 				# Changing a setting shouldn't cause that setting's own values to change.
 				continue
 			if setting.id in self.sizerDict: #update a value
 				self.settingsSizer.Show(self.sizerDict[setting.id])
 				if isinstance(setting,NumericDriverSetting):
-					getattr(self,"%sSlider"%setting.id).SetValue(getattr(self.driver,setting.id))
+					getattr(self, f"{setting.id}Slider").SetValue(
+						getattr(settingsStorage, setting.id)
+					)
 				elif isinstance(setting,BooleanDriverSetting):
-					getattr(self,"%sCheckbox"%setting.id).SetValue(getattr(self.driver,setting.id))
+					getattr(self, f"{setting.id}Checkbox").SetValue(
+						getattr(settingsStorage, setting.id)
+					)
 				else:
 					l=getattr(self,"_%ss"%setting.id)
 					lCombo=getattr(self,"%sList"%setting.id)
 					try:
-						cur=getattr(self.driver,setting.id)
+						cur = getattr(settingsStorage, setting.id)
 						i=[x.id for x in l].index(cur)
 						lCombo.SetSelection(i)
 					except ValueError:
@@ -1161,11 +1204,11 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 					settingMaker=self.makeSliderSettingControl
 				elif isinstance(setting,BooleanDriverSetting):
 					log.debug(f"creating a new bool driver setting: {setting.id}")
-					settingMaker=self.makeBooleanSettingControl
+					settingMaker = self._makeBooleanSettingControl
 				else:
-					settingMaker=self.makeStringSettingControl
+					settingMaker = self._makeStringSettingControl
 				try:
-					s=settingMaker(setting)
+					s = settingMaker(setting, settingsStorage)
 				except UnsupportedConfigParameterError:
 					log.debugWarning("Unsupported setting %s; ignoring"%setting.id, exc_info=True)
 					continue
@@ -1175,23 +1218,25 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 		self.settingsSizer.Layout()
 
 	def onDiscard(self):
-		#unbind change events for string settings as wx closes combo boxes on cancel
-		for setting in self.driver.supportedSettings:
-			if isinstance(setting,(NumericDriverSetting,BooleanDriverSetting)): continue
-			getattr(self,"%sList"%setting.id).Unbind(wx.EVT_CHOICE)
-		#restore settings
-		self.driver.loadSettings()
+		# unbind change events for string settings as wx closes combo boxes on cancel
+		settingsInst = self.getSettings()
+		for setting in settingsInst.supportedSettings:
+			if isinstance(setting, (NumericDriverSetting, BooleanDriverSetting)):
+				continue
+			getattr(self, f"{setting.id}List").Unbind(wx.EVT_CHOICE)
+		# restore settings
+		settingsInst.loadSettings()
 
 	def onSave(self):
-		self.driver.saveSettings()
+		self.getSettings().saveSettings()
 
 	def onPanelActivated(self):
-		if not self._curDriverRef():
+		if not self._currentSettingsRef():
 			if gui._isDebug():
 				log.debug("refreshing panel")
 			self.sizerDict.clear()
 			self.settingsSizer.Clear(delete_windows=True)
-			self._curDriverRef = weakref.ref(self.driver)
+			self._currentSettingsRef = weakref.ref(self.getSettings())
 			self.makeSettings(self.settingsSizer)
 		super(DriverSettingsMixin,self).onPanelActivated()
 
@@ -1201,7 +1246,11 @@ class VoiceSettingsPanel(DriverSettingsMixin, SettingsPanel):
 
 	@property
 	def driver(self):
-		return getSynth()
+		synth: SynthDriver = getSynth()
+		return synth
+
+	def getSettings(self) -> AutoSettings:
+		return self.driver
 
 	def makeSettings(self, settingsSizer):
 		# Construct synthesizer settings
@@ -2697,6 +2746,9 @@ class BrailleSettingsSubPanel(DriverSettingsMixin, SettingsPanel):
 	def driver(self):
 		return braille.handler.display
 
+	def getSettings(self) -> AutoSettings:
+		return self.driver
+
 	def makeSettings(self, settingsSizer):
 		if gui._isDebug():
 			startTime = time.time()
@@ -3064,11 +3116,7 @@ class VisionProviderSubPanel_Settings(
 		self._settingsCallable = settingsCallable
 		super().__init__(parent=parent)
 
-	@property
-	def driver(self):
-		return self.getSettings()
-
-	def getSettings(self):
+	def getSettings(self) -> AutoSettings:
 		settings = self._settingsCallable()
 		log.debug(f"getting settings: {settings.__class__!r}")
 		return settings
@@ -3091,7 +3139,7 @@ class VisionProviderSubPanel_Wrapper(
 			getProvider: Callable[
 				[],
 				Optional[vision.VisionEnhancementProvider]
-			],# mostly used to see if the provider is initialised or not.
+			],  # mostly used to see if the provider is initialised or not.
 			initProvider: Callable[
 				[],
 				bool

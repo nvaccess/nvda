@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2019 NV Access Limited, Babbage B.V., Takuya Nishimoto
 
 """Default highlighter based on GDI Plus."""
-from typing import Callable, Optional, Tuple
+from typing import Callable, Optional, Tuple, Any
 
 import vision
 from vision.constants import Role, Context
@@ -249,14 +249,13 @@ class NVDAHighlighterGuiPanel(
 		self._terminateProvider = terminateProvider
 		super().__init__(parent)
 
-	@property
-	def driver(self) -> driverHandler.Driver:  # todo: call this something other than driver
-		return self.getSettings()
-
 	def getSettings(self) -> driverHandler.Driver:
 		# DriverSettingsMixin uses self.driver to get / set attributes matching the names of the settings.
 		# We want them set on this class.
 		return VisionEnhancementProvider.getSettings()
+
+	def _getSettingsStorage(self) -> Any:
+		return self.getSettings()
 
 	def makeSettings(self, sizer):
 		self._enabledCheckbox = wx.CheckBox(self, label="Highlight focus", style=wx.CHK_3STATE)
