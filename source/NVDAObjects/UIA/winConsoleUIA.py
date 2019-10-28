@@ -160,9 +160,9 @@ class consoleUIATextInfo(UIATextInfo):
 		# past the start.
 		# Compare to the start (not the end) when collapsed.
 		selfEndPoint, otherEndPoint = which.split("To")
-		if selfEndPoint == "end" and not self._isCollapsed():
+		if selfEndPoint == "end" and self._isCollapsed():
 			selfEndPoint = "start"
-		if otherEndPoint == "End" and not other._isCollapsed():
+		if otherEndPoint == "End" and other._isCollapsed():
 			otherEndPoint = "Start"
 		which = f"{selfEndPoint}To{otherEndPoint}"
 		return super().compareEndPoints(other, which=which)
@@ -177,7 +177,7 @@ class consoleUIATextInfo(UIATextInfo):
 		# In this case, there is no need to check if self is collapsed
 		# since the point of this method is to change its text range, modifying the "end" endpoint of a collapsed
 		# text range is fine.
-		if otherEndPoint == "End" and not other._isCollapsed():
+		if otherEndPoint == "End" and other._isCollapsed():
 			otherEndPoint = "Start"
 		which = f"{selfEndPoint}To{otherEndPoint}"
 		return super().setEndPoint(other, which=which)
@@ -194,7 +194,7 @@ class consoleUIATextInfo(UIATextInfo):
 	def _get_isCollapsed(self):
 		# To decide if the textRange is collapsed,
 		# Check if it has no text.
-		return self._isCollapsed
+		return self._isCollapsed()
 
 	def _getCurrentOffsetInThisLine(self, lineInfo):
 		"""
@@ -269,14 +269,15 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 	#: Only process text changes every 30 ms, in case the console is getting
 	#: a lot of text.
 	STABILIZE_DELAY = 0.03
-	_TextInfo = consoleUIATextInfo
 	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
 	_caretMovementTimeoutMultiplier = 1.5
 
-	def _get_caretMovementDetectionUsesEvents(self):
-		"""Using caret events in consoles sometimes causes the last character of the
-		prompt to be read when quickly deleting text."""
-		return False
+	def _get_TextInfo(self):
+		"""Overriding _get_TextInfo and thus the TextInfo property
+		on NVDAObjects.UIA.UIA
+		consoleUIATextInfo fixes expand/collapse, implements word movement, and
+		bounds review to the visible text."""
+		return consoleUIATextInfo
 
 	def _getTextLines(self):
 		# Filter out extraneous empty lines from UIA

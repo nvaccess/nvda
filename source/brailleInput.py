@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#brailleInput.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2012-2017 NV Access Limited, Rui Batista, Babbage B.V.
+# brailleInput.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2012-2019 NV Access Limited, Rui Batista, Babbage B.V.
 
 import os.path
 import time
@@ -29,7 +29,7 @@ as there are built-in gesture bindings for braille input.
 """
 
 #: Table to use if the input table configuration is invalid.
-FALLBACK_TABLE = "en-us-comp8.ctb"
+FALLBACK_TABLE = "en-ueb-g1.ctb"
 DOT7 = 1 << 6
 DOT8 = 1 << 7
 #: This bit flag must be added to all braille cells when using liblouis with dotsIO.
@@ -468,6 +468,8 @@ class BrailleInputGesture(inputCore.InputGesture):
 	#: Whether the space bar is pressed.
 	#: @type: bool
 	space = False
+
+	shouldPreventSystemIdle = True
 
 	def _makeDotsId(self):
 		items = ["dot%d" % (i+1) for i in range(8) if self.dots & (1 << i)]
