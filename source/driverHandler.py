@@ -12,6 +12,9 @@ from autoSettingsUtils.utils import (
 )
 
 # F401: the following imports, while unused in this file, are provided for backwards compatibility.
+from autoSettingsUtils.autoSettings import (  # noqa: F401
+	SupportedSettingType,
+)
 from autoSettingsUtils.driverSetting import (  # noqa: F401
 	DriverSetting,
 	BooleanDriverSetting,
@@ -22,11 +25,6 @@ from autoSettingsUtils.utils import (  # noqa: F401
 	UnsupportedConfigParameterError,
 	StringParameterInfo,
 )
-from baseObject import AutoPropertyObject
-import config
-from copy import deepcopy
-from logHandler import log
-from typing import List, Tuple, Dict, Union
 
 
 class Driver(AutoSettings):

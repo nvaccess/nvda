@@ -8,8 +8,7 @@
 # See the file COPYING for more details.
 
 import logging
-from abc import abstractmethod, abstractproperty, ABCMeta
-import os
+from abc import abstractmethod, ABCMeta
 import copy
 import re
 import wx
@@ -20,6 +19,7 @@ import winUser
 import logHandler
 import installer
 from synthDriverHandler import *
+from synthDriverHandler import SynthDriver, getSynth
 import config
 import languageHandler
 import speech
@@ -46,6 +46,8 @@ except RuntimeError:
 import inputCore
 from . import nvdaControls
 from driverHandler import *
+from autoSettingsUtils.autoSettings import AutoSettings
+from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting, DriverSetting
 from UIAUtils import shouldUseUIAConsole
 import touchHandler
 import winVersion
@@ -1037,9 +1039,15 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 	"""
 
 	def __init__(self, *args, **kwargs):
-		self.sizerDict={}
-		self.lastControl=None		
-		super(DriverSettingsMixin,self).__init__(*args,**kwargs)
+		"""
+		Mixin init, forwards args to other base class.
+		The other base class is likely L{gui.SettingsPanel}.
+		@param args: Positional args to passed to other base class.
+		@param kwargs: Keyword args to passed to other base class.
+		"""
+		self.sizerDict = {}
+		self.lastControl = None
+		super(DriverSettingsMixin, self).__init__(*args, **kwargs)
 		# because settings instances can be of type L{Driver} as well, we have to handle
 		# showing settings for non-instances. Because of this, we must reacquire a reference
 		# to the settings class whenever we wish to use it (via L{getSettings}) in case the instance changes.
@@ -1074,17 +1082,17 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 		"""
 		labeledControl = guiHelper.LabeledControlHelper(
 			self,
-			"%s:"%setting.displayNameWithAccelerator,
+			f"{setting.displayNameWithAccelerator}:",
 			nvdaControls.EnhancedInputSlider,
 			minValue=setting.minVal,
 			maxValue=setting.maxVal
 		)
 		lSlider=labeledControl.control
-		setattr(self,"%sSlider"%setting.id,lSlider)
-		self._setSliderStepSizes(lSlider,setting)
+		setattr(self, f"{setting.id}Slider", lSlider)
 		lSlider.Bind(wx.EVT_SLIDER, DriverSettingChanger(
 			settingsStorage, setting
 		))
+		self._setSliderStepSizes(lSlider, setting)
 		lSlider.SetValue(getattr(settingsStorage, setting.id))
 		if self.lastControl:
 			lSlider.MoveAfterInTabOrder(self.lastControl)
@@ -1099,12 +1107,11 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 		"""
 		Same as L{_makeSliderSettingControl} but for string settings. Returns sizer with label and combobox.
 		"""
-
-		labelText="%s:"%setting.displayNameWithAccelerator
-		settingsInst = self.getSettings()
+		labelText = f"{setting.displayNameWithAccelerator}:"
+		stringSettingAttribName = f"_{setting.id}s"
 		setattr(
 			self,
-			"_%ss"%setting.id,
+			stringSettingAttribName,
 			# Settings are stored as an ordered dict.
 			# Therefore wrap this inside a list call.
 			list(getattr(
@@ -1112,19 +1119,21 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 				f"available{setting.id.capitalize()}s"
 			).values())
 		)
-		l=getattr(self,"_%ss"%setting.id)
-		labeledControl=guiHelper.LabeledControlHelper(
+		stringSettings = getattr(self, stringSettingAttribName)
+		labeledControl = guiHelper.LabeledControlHelper(
 			self,
 			labelText,
 			wx.Choice,
-			choices=[x.displayName for x in l]
+			choices=[x.displayName for x in stringSettings]
 		)
 		lCombo = labeledControl.control
-		setattr(self,"%sList"%setting.id,lCombo)
+		setattr(self, f"{setting.id}List", lCombo)
 		try:
 			cur = getattr(settingsStorage, setting.id)
-			i=[x.id for x in l].index(cur)
-			lCombo.SetSelection(i)
+			selectionIndex = [
+				x.id for x in stringSettings
+			].index(cur)
+			lCombo.SetSelection(selectionIndex)
 		except ValueError:
 			pass
 		lCombo.Bind(
@@ -1133,7 +1142,7 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 		)
 		if self.lastControl:
 			lCombo.MoveAfterInTabOrder(self.lastControl)
-		self.lastControl=lCombo
+		self.lastControl = lCombo
 		return labeledControl.sizer
 
 	def _makeBooleanSettingControl(
@@ -1144,8 +1153,8 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 		"""
 		Same as L{_makeSliderSettingControl} but for boolean settings. Returns checkbox.
 		"""
-		checkbox=wx.CheckBox(self,wx.ID_ANY,label=setting.displayNameWithAccelerator)
-		setattr(self,"%sCheckbox"%setting.id,checkbox)
+		checkbox = wx.CheckBox(self, label=setting.displayNameWithAccelerator)
+		setattr(self, f"{setting.id}Checkbox", checkbox)
 
 		def _onCheckChanged(evt: wx.CommandEvent):
 			evt.Skip()  # allow other handlers to also process this event.
@@ -1162,7 +1171,9 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 		return checkbox
 
 	def updateDriverSettings(self, changedSetting=None):
-		"""Creates, hides or updates existing GUI controls for all of supported settings."""
+		"""
+		Creates, hides or updates existing GUI controls for all of supported settings.
+		"""
 		settingsInst = self.getSettings()
 		settingsStorage = self._getSettingsStorage()
 		# firstly check already created options
@@ -1172,7 +1183,7 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 				continue
 			if not settingsInst.isSupported(name):
 				self.settingsSizer.Hide(sizer)
-		#Create new controls, update already existing
+		# Create new controls, update already existing
 		log.debug(f"Current sizerDict: {self.sizerDict!r}")
 
 		log.debug(f"Current supportedSettings: {self.getSettings().supportedSettings!r}")
@@ -1180,29 +1191,29 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 			if setting.id == changedSetting:
 				# Changing a setting shouldn't cause that setting's own values to change.
 				continue
-			if setting.id in self.sizerDict: #update a value
+			if setting.id in self.sizerDict:  # update a value
 				self.settingsSizer.Show(self.sizerDict[setting.id])
-				if isinstance(setting,NumericDriverSetting):
+				if isinstance(setting, NumericDriverSetting):
 					getattr(self, f"{setting.id}Slider").SetValue(
 						getattr(settingsStorage, setting.id)
 					)
-				elif isinstance(setting,BooleanDriverSetting):
+				elif isinstance(setting, BooleanDriverSetting):
 					getattr(self, f"{setting.id}Checkbox").SetValue(
 						getattr(settingsStorage, setting.id)
 					)
 				else:
-					l=getattr(self,"_%ss"%setting.id)
-					lCombo=getattr(self,"%sList"%setting.id)
+					options = getattr(self, f"_{setting.id}s")
+					lCombo = getattr(self, f"{setting.id}List")
 					try:
 						cur = getattr(settingsStorage, setting.id)
-						i=[x.id for x in l].index(cur)
-						lCombo.SetSelection(i)
+						indexOfItem = [x.id for x in options].index(cur)
+						lCombo.SetSelection(indexOfItem)
 					except ValueError:
 						pass
-			else: #create a new control
-				if isinstance(setting,NumericDriverSetting):
-					settingMaker=self.makeSliderSettingControl
-				elif isinstance(setting,BooleanDriverSetting):
+			else:  # create a new control
+				if isinstance(setting, NumericDriverSetting):
+					settingMaker = self._makeSliderSettingControl
+				elif isinstance(setting, BooleanDriverSetting):
 					log.debug(f"creating a new bool driver setting: {setting.id}")
 					settingMaker = self._makeBooleanSettingControl
 				else:
@@ -1210,11 +1221,16 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 				try:
 					s = settingMaker(setting, settingsStorage)
 				except UnsupportedConfigParameterError:
-					log.debugWarning("Unsupported setting %s; ignoring"%setting.id, exc_info=True)
+					log.debugWarning(f"Unsupported setting {setting.id}; ignoring", exc_info=True)
 					continue
-				self.sizerDict[setting.id]=s
-				self.settingsSizer.Insert(len(self.sizerDict)-1,s,border=10,flag=wx.BOTTOM)
-		#Update graphical layout of the dialog
+				self.sizerDict[setting.id] = s
+				self.settingsSizer.Insert(
+					len(self.sizerDict) - 1,
+					s,
+					border=10,
+					flag=wx.BOTTOM
+				)
+		# Update graphical layout of the dialog
 		self.settingsSizer.Layout()
 
 	def onDiscard(self):
@@ -1238,7 +1254,7 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 			self.settingsSizer.Clear(delete_windows=True)
 			self._currentSettingsRef = weakref.ref(self.getSettings())
 			self.makeSettings(self.settingsSizer)
-		super(DriverSettingsMixin,self).onPanelActivated()
+		super(DriverSettingsMixin, self).onPanelActivated()
 
 class VoiceSettingsPanel(DriverSettingsMixin, SettingsPanel):
 	# Translators: This is the label for the voice settings panel.
@@ -1260,67 +1276,113 @@ class VoiceSettingsPanel(DriverSettingsMixin, SettingsPanel):
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel (if checked, text will be read using the voice for the language of the text).
 		autoLanguageSwitchingText = _("Automatic language switching (when supported)")
-		self.autoLanguageSwitchingCheckbox = settingsSizerHelper.addItem(wx.CheckBox(self,label=autoLanguageSwitchingText))
-		self.autoLanguageSwitchingCheckbox.SetValue(config.conf["speech"]["autoLanguageSwitching"])
+		self.autoLanguageSwitchingCheckbox = settingsSizerHelper.addItem(
+			wx.CheckBox(
+				self,
+				label=autoLanguageSwitchingText
+		))
+		self.autoLanguageSwitchingCheckbox.SetValue(
+			config.conf["speech"]["autoLanguageSwitching"]
+		)
 
 		# Translators: This is the label for a checkbox in the
-		# voice settings panel (if checked, different voices for dialects will be used to read text in that dialect).
-		autoDialectSwitchingText =_("Automatic dialect switching (when supported)")
-		self.autoDialectSwitchingCheckbox=settingsSizerHelper.addItem(wx.CheckBox(self,label=autoDialectSwitchingText))
-		self.autoDialectSwitchingCheckbox.SetValue(config.conf["speech"]["autoDialectSwitching"])
+		# voice settings panel (if checked, different voices for dialects will be used to
+		# read text in that dialect).
+		autoDialectSwitchingText = _("Automatic dialect switching (when supported)")
+		self.autoDialectSwitchingCheckbox = settingsSizerHelper.addItem(
+			wx.CheckBox(self, label=autoDialectSwitchingText
+		))
+		self.autoDialectSwitchingCheckbox.SetValue(
+			config.conf["speech"]["autoDialectSwitching"]
+		)
 
 		# Translators: This is the label for a combobox in the
 		# voice settings panel (possible choices are none, some, most and all).
 		punctuationLabelText = _("Punctuation/symbol &level:")
-		symbolLevelLabels=characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
-		symbolLevelChoices =[symbolLevelLabels[level] for level in characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS]
-		self.symbolLevelList = settingsSizerHelper.addLabeledControl(punctuationLabelText, wx.Choice, choices=symbolLevelChoices)
+		symbolLevelLabels = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
+		symbolLevelChoices = [
+			symbolLevelLabels[level] for level in characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS
+		]
+		self.symbolLevelList = settingsSizerHelper.addLabeledControl(
+			punctuationLabelText, wx.Choice, choices=symbolLevelChoices
+		)
 		curLevel = config.conf["speech"]["symbolLevel"]
-		self.symbolLevelList.SetSelection(characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS.index(curLevel))
+		self.symbolLevelList.SetSelection(
+			characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS.index(curLevel)
+		)
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel (if checked, text will be read using the voice for the language of the text).
 		trustVoiceLanguageText = _("Trust voice's language when processing characters and symbols")
-		self.trustVoiceLanguageCheckbox = settingsSizerHelper.addItem(wx.CheckBox(self,label=trustVoiceLanguageText))
+		self.trustVoiceLanguageCheckbox = settingsSizerHelper.addItem(
+			wx.CheckBox(self, label=trustVoiceLanguageText)
+		)
 		self.trustVoiceLanguageCheckbox.SetValue(config.conf["speech"]["trustVoiceLanguage"])
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel (if checked, data from the unicode CLDR will be used
 		# to speak emoji descriptions).
-		includeCLDRText = _("Include Unicode Consortium data (including emoji) when processing characters and symbols")
-		self.includeCLDRCheckbox = settingsSizerHelper.addItem(wx.CheckBox(self,label=includeCLDRText))
+		includeCLDRText = _(
+			"Include Unicode Consortium data (including emoji) when processing characters and symbols"
+		)
+		self.includeCLDRCheckbox = settingsSizerHelper.addItem(
+			wx.CheckBox(self, label=includeCLDRText)
+		)
 		self.includeCLDRCheckbox.SetValue(config.conf["speech"]["includeCLDR"])
 
-		# Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
-		capPitchChangeLabelText=_("Capital pitch change percentage")
-		self.capPitchChangeEdit=settingsSizerHelper.addLabeledControl(capPitchChangeLabelText, nvdaControls.SelectOnFocusSpinCtrl,
-			min=int(config.conf.getConfigValidation(("speech", self.driver.name, "capPitchChange")).kwargs["min"]),
-			max=int(config.conf.getConfigValidation(("speech", self.driver.name, "capPitchChange")).kwargs["max"]),
+		minPitchChange = int(config.conf.getConfigValidation(
+			("speech", self.driver.name, "capPitchChange")
+		).kwargs["min"])
+
+		maxPitchChange = int(config.conf.getConfigValidation(
+			("speech", self.driver.name, "capPitchChange")
+		).kwargs["max"])
+
+		# Translators: This is a label for a setting in voice settings (an edit box to change
+		# voice pitch for capital letters; the higher the value, the pitch will be higher).
+		capPitchChangeLabelText = _("Capital pitch change percentage")
+		self.capPitchChangeEdit = settingsSizerHelper.addLabeledControl(
+			capPitchChangeLabelText,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=minPitchChange,
+			max=maxPitchChange,
 			initial=config.conf["speech"][self.driver.name]["capPitchChange"])
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel.
 		sayCapForCapsText = _("Say &cap before capitals")
-		self.sayCapForCapsCheckBox = settingsSizerHelper.addItem(wx.CheckBox(self,label=sayCapForCapsText))
-		self.sayCapForCapsCheckBox.SetValue(config.conf["speech"][self.driver.name]["sayCapForCapitals"])
+		self.sayCapForCapsCheckBox = settingsSizerHelper.addItem(
+			wx.CheckBox(self, label=sayCapForCapsText)
+		)
+		self.sayCapForCapsCheckBox.SetValue(
+			config.conf["speech"][self.driver.name]["sayCapForCapitals"]
+		)
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel.
 		beepForCapsText =_("&Beep for capitals")
-		self.beepForCapsCheckBox = settingsSizerHelper.addItem(wx.CheckBox(self, label = beepForCapsText))
-		self.beepForCapsCheckBox.SetValue(config.conf["speech"][self.driver.name]["beepForCapitals"])
+		self.beepForCapsCheckBox = settingsSizerHelper.addItem(
+			wx.CheckBox(self, label=beepForCapsText)
+		)
+		self.beepForCapsCheckBox.SetValue(
+			config.conf["speech"][self.driver.name]["beepForCapitals"]
+		)
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel.
 		useSpellingFunctionalityText = _("Use &spelling functionality if supported")
-		self.useSpellingFunctionalityCheckBox = settingsSizerHelper.addItem(wx.CheckBox(self, label = useSpellingFunctionalityText))
-		self.useSpellingFunctionalityCheckBox.SetValue(config.conf["speech"][self.driver.name]["useSpellingFunctionality"])
+		self.useSpellingFunctionalityCheckBox = settingsSizerHelper.addItem(
+			wx.CheckBox(self, label=useSpellingFunctionalityText)
+		)
+		self.useSpellingFunctionalityCheckBox.SetValue(
+			config.conf["speech"][self.driver.name]["useSpellingFunctionality"]
+		)
 
 	def onSave(self):
 		DriverSettingsMixin.onSave(self)
 
-		config.conf["speech"]["autoLanguageSwitching"]=self.autoLanguageSwitchingCheckbox.IsChecked()
-		config.conf["speech"]["autoDialectSwitching"]=self.autoDialectSwitchingCheckbox.IsChecked()
+		config.conf["speech"]["autoLanguageSwitching"] = self.autoLanguageSwitchingCheckbox.IsChecked()
+		config.conf["speech"]["autoDialectSwitching"] = self.autoDialectSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["symbolLevel"]=characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[self.symbolLevelList.GetSelection()]
 		config.conf["speech"]["trustVoiceLanguage"]=self.trustVoiceLanguageCheckbox.IsChecked()
 		currentIncludeCLDR = config.conf["speech"]["includeCLDR"]
@@ -2750,8 +2812,8 @@ class BrailleSettingsSubPanel(DriverSettingsMixin, SettingsPanel):
 		return self.driver
 
 	def makeSettings(self, settingsSizer):
-		if gui._isDebug():
-			startTime = time.time()
+		shouldDebugGui = gui._isDebug()
+		startTime = 0 if not shouldDebugGui else time.time()
 		# Construct braille display specific settings
 		self.updateDriverSettings()
 
@@ -2769,8 +2831,11 @@ class BrailleSettingsSubPanel(DriverSettingsMixin, SettingsPanel):
 			self.outTableList.SetSelection(selection)
 		except:
 			pass
-		if gui._isDebug():
-			log.debug("Loading output tables completed, now at %.2f seconds from start"%(time.time() - startTime))
+		if shouldDebugGui:
+			timePassed = time.time() - startTime
+			log.debug(
+				f"Loading output tables completed, now at {timePassed:.2f} seconds from start"
+			)
 
 		# Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 		inputLabelText = _("&Input table:")
@@ -2782,12 +2847,17 @@ class BrailleSettingsSubPanel(DriverSettingsMixin, SettingsPanel):
 			self.inTableList.SetSelection(selection)
 		except:
 			pass
-		if gui._isDebug():
-			log.debug("Loading input tables completed, now at %.2f seconds from start"%(time.time() - startTime))
+		if shouldDebugGui:
+			timePassed = time.time() - startTime
+			log.debug(
+				f"Loading input tables completed, now at {timePassed:.2f} seconds from start"
+			)
 
 		# Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 		expandAtCursorText = _("E&xpand to computer braille for the word at the cursor")
-		self.expandAtCursorCheckBox = sHelper.addItem(wx.CheckBox(self, wx.ID_ANY, label=expandAtCursorText))
+		self.expandAtCursorCheckBox = sHelper.addItem(
+			wx.CheckBox(self, wx.ID_ANY, label=expandAtCursorText)
+		)
 		self.expandAtCursorCheckBox.SetValue(config.conf["braille"]["expandAtCursor"])
 
 		# Translators: The label for a setting in braille settings to show the cursor.
@@ -2798,7 +2868,9 @@ class BrailleSettingsSubPanel(DriverSettingsMixin, SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to enable cursor blinking.
 		cursorBlinkLabelText = _("Blink cursor")
-		self.cursorBlinkCheckBox = sHelper.addItem(wx.CheckBox(self, label=cursorBlinkLabelText))
+		self.cursorBlinkCheckBox = sHelper.addItem(
+			wx.CheckBox(self, label=cursorBlinkLabelText)
+		)
 		self.cursorBlinkCheckBox.Bind(wx.EVT_CHECKBOX, self.onBlinkCursorChange)
 		self.cursorBlinkCheckBox.SetValue(config.conf["braille"]["cursorBlink"])
 		if not self.showCursorCheckBox.GetValue():
@@ -2806,10 +2878,17 @@ class BrailleSettingsSubPanel(DriverSettingsMixin, SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 		cursorBlinkRateLabelText = _("Cursor blink rate (ms)")
-		minBlinkRate = int(config.conf.getConfigValidation(("braille", "cursorBlinkRate")).kwargs["min"])
+		minBlinkRate = int(config.conf.getConfigValidation(
+			("braille", "cursorBlinkRate")
+		).kwargs["min"])
 		maxBlinkRate = int(config.conf.getConfigValidation(("braille", "cursorBlinkRate")).kwargs["max"])
-		self.cursorBlinkRateEdit = sHelper.addLabeledControl(cursorBlinkRateLabelText, nvdaControls.SelectOnFocusSpinCtrl,
-			min=minBlinkRate, max=maxBlinkRate, initial=config.conf["braille"]["cursorBlinkRate"])
+		self.cursorBlinkRateEdit = sHelper.addLabeledControl(
+			cursorBlinkRateLabelText,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=minBlinkRate,
+			max=maxBlinkRate,
+			initial=config.conf["braille"]["cursorBlinkRate"]
+		)
 		if not self.showCursorCheckBox.GetValue() or not self.cursorBlinkCheckBox.GetValue() :
 			self.cursorBlinkRateEdit.Disable()
 
@@ -2840,12 +2919,22 @@ class BrailleSettingsSubPanel(DriverSettingsMixin, SettingsPanel):
 		if gui._isDebug():
 			log.debug("Loading cursor settings completed, now at %.2f seconds from start"%(time.time() - startTime))
 
+		minTimeout = int(config.conf.getConfigValidation(
+			("braille", "messageTimeout")
+		).kwargs["min"])
+		maxTimeOut = int(config.conf.getConfigValidation(
+			("braille", "messageTimeout")
+		).kwargs["max"])
+
 		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 		messageTimeoutText = _("Message &timeout (sec)")
-		self.messageTimeoutEdit = sHelper.addLabeledControl(messageTimeoutText, nvdaControls.SelectOnFocusSpinCtrl,
-			min=int(config.conf.getConfigValidation(("braille", "messageTimeout")).kwargs["min"]),
-			max=int(config.conf.getConfigValidation(("braille", "messageTimeout")).kwargs["max"]),
-			initial=config.conf["braille"]["messageTimeout"])
+		self.messageTimeoutEdit = sHelper.addLabeledControl(
+			messageTimeoutText,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=minTimeout,
+			max=maxTimeOut,
+			initial=config.conf["braille"]["messageTimeout"]
+		)
 
 		# Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
 		noMessageTimeoutLabelText = _("Show &messages indefinitely")
@@ -2965,7 +3054,9 @@ class VisionSettingsPanel(SettingsPanel):
 					self,
 					**kwargs
 				)
-			except:
+			# E722: bare except used since we can not know what exceptions a provider might throw.
+			# We should be able to continue despite a buggy provider.
+			except:  # noqa: E722
 				log.debug(f"Error creating providerPanel: {settingsPanelCls!r}", exc_info=True)
 				continue
 
@@ -3081,7 +3172,9 @@ class VisionSettingsPanel(SettingsPanel):
 		for panel in self.providerPanelInstances:
 			try:
 				panel.onDiscard()
-			except:
+			# E722: bare except used since we can not know what exceptions a provider might throw.
+			# We should be able to continue despite a buggy provider.
+			except:  # noqa: E722
 				log.debug(f"Error discarding providerPanel: {panel.__class__!r}", exc_info=True)
 
 		providersToInitialize = [name for name in self.initialProviders if name not in vision.handler.providers]
@@ -3093,7 +3186,9 @@ class VisionSettingsPanel(SettingsPanel):
 		for panel in self.providerPanelInstances:
 			try:
 				panel.onSave()
-			except:
+			# E722: bare except used since we can not know what exceptions a provider might throw.
+			# We should be able to continue despite a buggy provider.
+			except:  # noqa: E722
 				log.debug(f"Error saving providerPanel: {panel.__class__!r}", exc_info=True)
 		self.initialProviders = list(vision.handler.providers)
 
@@ -3102,7 +3197,7 @@ class VisionProviderSubPanel_Settings(
 		DriverSettingsMixin,
 		SettingsPanel
 ):
-	cachePropertiesByDefault = False
+
 	def __init__(
 			self,
 			parent: wx.Window,
@@ -3180,7 +3275,9 @@ class VisionProviderSubPanel_Wrapper(
 				settingsCallable=self._providerType.getSettings
 			)
 			self._runtimeSettingsSizer.Add(self._runtimeSettings, flag=wx.EXPAND, proportion=1.0)
-		except:
+		# E722: bare except used since we can not know what exceptions a provider might throw.
+		# We should be able to continue despite a buggy provider.
+		except:  # noqa: E722
 			log.error("unable to create runtime settings", exc_info=True)
 			return False
 		return True
@@ -3192,7 +3289,6 @@ class VisionProviderSubPanel_Wrapper(
 			parent=self,
 		)
 		self._checkBox.SetValue(False)
-
 
 	def _enableToggle(self, evt):
 		if not evt.IsChecked():

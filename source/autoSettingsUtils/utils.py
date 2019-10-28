@@ -12,7 +12,8 @@ def paramToPercent(current, min, max):
 
 
 def percentToParam(percent, min, max):
-	"""Convert a percentage to a raw parameter value given the current percentage and the minimum and maximum raw parameter values.
+	"""Convert a percentage to a raw parameter value given the current percentage and the minimum and maximum
+	raw parameter values.
 	@param percent: The current percentage.
 	@type percent: int
 	@param min: The minimum raw parameter value.
@@ -27,6 +28,7 @@ class UnsupportedConfigParameterError(NotImplementedError):
 	"""
 	Raised when changing or retrieving a driver setting that is unsupported for the connected device.
 	"""
+
 
 class StringParameterInfo(object):
 	"""
