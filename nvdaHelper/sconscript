@@ -32,6 +32,6 @@ archClientInstallDirs={
 
 #Build nvdaHelper for needed architectures
 for arch in env['targetArchitectures']: 
-	archEnv=env.Clone(TARGET_ARCH=arch,HOST_ARCH='x86',tools=['default','windowsSdk','midl','msrpc'])
+	archEnv = env.Clone(TARGET_ARCH = arch, HOST_ARCH = 'x86', tools = ['default', 'midl', 'msrpc'])
 	archEnv.SConscript('archBuild_sconscript',exports={'env':archEnv,'clientInstallDir':archClientInstallDirs[arch],'libInstallDir':archLibInstallDirs[arch]},variant_dir='build/%s'%arch)
 

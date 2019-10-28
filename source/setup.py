@@ -230,6 +230,7 @@ setup(
 		("images", glob("images/*.ico")),
 		("louis/tables",glob("louis/tables/*")),
 		("COMRegistrationFixes", glob("COMRegistrationFixes/*.reg")),
+		(".", glob("../miscDeps/python/*.dll")),
 		(".", ['message.html' ])
 	] + (
 		getLocaleDataFiles()
