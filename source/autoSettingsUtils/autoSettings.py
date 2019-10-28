@@ -40,7 +40,6 @@ class AutoSettings(AutoPropertyObject):
 
 	def _unregisterConfigSaveAction(self):
 		"""Overrideable pre_configSave de-registration"""
-		log.debug(f"de-registering pre_configSave action: {self.__class__!r}")
 		config.pre_configSave.unregister(self.saveSettings)
 
 	@classmethod
