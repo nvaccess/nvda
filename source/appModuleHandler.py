@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#appModuleHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee, Babbage B.V., Mozilla Corporation
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
+# Babbage B.V., Mozilla Corporation
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Manages appModules.
 @var runningTable: a dictionary of the currently running appModules, using their application's main window handle as a key.
@@ -25,7 +25,6 @@ import baseObject
 import globalVars
 from logHandler import log
 import NVDAHelper
-import ui
 import winUser
 import winKernel
 import config
@@ -172,9 +171,15 @@ def fetchAppModule(processID,appName):
 		try:
 			return importlib.import_module("appModules.%s" % modName, package="appModules").AppModule(processID, appName)
 		except:
-			log.error("error in appModule %r"%modName, exc_info=True)
-			# Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
-			ui.message(_("Error in appModule %s")%modName)
+			log.exception(f"error in appModule {modName!r}")
+			import ui
+			import speech.priorities
+			ui.message(
+				# Translators: This is presented when errors are found in an appModule
+				# (example output: error in appModule explorer).
+				_("Error in appModule %s") % modName,
+				speechPriority=speech.priorities.SPRI_NOW
+			)
 
 	# Use the base AppModule.
 	return AppModule(processID, appName)
