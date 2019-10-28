@@ -3281,7 +3281,16 @@ class InputGesturesDialog(SettingsDialog):
 				return _("Enter input gesture:")
 			category, commands = self.Parent.filteredGestures[index[0]]
 			if len(index) == 1:
-				return category
+				if self.Parent.filteredGestures is self.Parent.flattenedGestures:
+					return category
+				nbResults = len(commands)
+				if nbResults == 1:
+					# Translators: The label for a filtered category in the Input Gestures dialog.
+					return _("{category} (1 result)").format(category=category)
+				# Translators: The label for a filtered category in the Input Gestures dialog.
+				return _("{category} ({nbResults} results)").format(
+					category=category, nbResults=len(commands)
+				)
 			command, scriptInfo = commands[index[1]]
 			if len(index) == 2:
 				return command
@@ -3321,7 +3330,7 @@ class InputGesturesDialog(SettingsDialog):
 		filterSizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 		filterLabel = wx.StaticText(self, label=pgettext("inputGestures", "&Filter by:"))
-		filter = self.filter = wx.TextCtrl(self)
+		filter = wx.TextCtrl(self)
 		filterSizer.Add(filterLabel, flag=wx.ALIGN_CENTER_VERTICAL)
 		filterSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
 		filterSizer.Add(filter, proportion=1)
@@ -3387,7 +3396,7 @@ class InputGesturesDialog(SettingsDialog):
 
 	def _filter(self, token: object, filter: str):
 		if not filter:
-			wx.CallAfter(self.refreshTree, token, self.flattenedGestures, delayed=False)
+			wx.CallAfter(self.refreshTree, token, self.flattenedGestures)
 			return
 		filteredGestures = []
 		# This regexp uses a positive lookahead (?=...) for every word in the filter, which just makes sure
@@ -3396,6 +3405,7 @@ class InputGesturesDialog(SettingsDialog):
 		# Because we're escaping, words must then be split on r"\ ".
 		filter = re.escape(filter)
 		pattern = re.compile(r"(?=.*?" + r")(?=.*?".join(filter.split(r"\ ")) + r")", re.U | re.IGNORECASE)
+		nbCommands = 0
 		for category, commands in self.flattenedGestures:
 			if token is not self.filterToken:
 				log.debug(f"filter token {token} superseded by {self.filterToken}")
@@ -3407,23 +3417,25 @@ class InputGesturesDialog(SettingsDialog):
 			]
 			if filteredCommands:
 				filteredGestures.append((category, filteredCommands))
+				nbCommands += len(filteredCommands)
 		if token is not self.filterToken:
 			log.debug(f"filter token {token} superseded by {self.filterToken}")
 			return
-		wx.CallAfter(self.refreshTree, token, filteredGestures, delayed=True)
+		wx.CallAfter(self.refreshTree, token, filteredGestures, expandCategories=nbCommands <= 10)
 	
-	def refreshTree(self, token: object, filteredGestures: FlattenedGestureMappings, delayed: bool = False):
-		if delayed:
-			wx.CallLater(300, self.refreshTree, token, filteredGestures, delayed=False)
-			return
+	def refreshTree(
+			self,
+			token: object,
+			filteredGestures: FlattenedGestureMappings,
+			expandCategories: bool = False,
+	):
 		if token is not self.filterToken:
 			log.debug(f"filter token {token} superseded by {self.filterToken}")
 			return
 		self.tree.CollapseAll()
 		self.filteredGestures = filteredGestures
 		self.tree.RefreshItems()
-		if filteredGestures is self.flattenedGestures:
-			# Do not forcibly expand the categories if there is no filter
+		if not expandCategories:
 			return
 		for index in range(len(self.filteredGestures)):
 			if token is not self.filterToken:
