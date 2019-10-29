@@ -107,15 +107,12 @@ class ControlField(Field):
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
 		):
 			return self.PRESCAT_SINGLELINE
-		elif (
-			role in (
-				controlTypes.ROLE_SEPARATOR,
-				controlTypes.ROLE_FOOTNOTE,
-				controlTypes.ROLE_ENDNOTE,
-				controlTypes.ROLE_EMBEDDEDOBJECT,
-				controlTypes.ROLE_MATH
-			)
-			or (role == controlTypes.ROLE_LANDMARK or landmark)
+		elif role in (
+			controlTypes.ROLE_SEPARATOR,
+			controlTypes.ROLE_FOOTNOTE,
+			controlTypes.ROLE_ENDNOTE,
+			controlTypes.ROLE_EMBEDDEDOBJECT,
+			controlTypes.ROLE_MATH
 		):
 			return self.PRESCAT_MARKER
 		elif role in (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG):
@@ -139,6 +136,7 @@ class ControlField(Field):
 				or controlTypes.STATE_FOCUSABLE in states
 			) and controlTypes.STATE_MULTILINE in states)
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states)
+			or (role == controlTypes.ROLE_LANDMARK or landmark)
 			or (controlTypes.STATE_FOCUSABLE in states and controlTypes.STATE_EDITABLE in states)
 		):
 			return self.PRESCAT_CONTAINER

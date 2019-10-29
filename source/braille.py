@@ -648,6 +648,10 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	current=field.get('current', None)
 	placeholder=field.get('placeholder', None)
 	roleText = field.get('roleTextBraille', field.get('roleText'))
+	landmark = field.get("landmark")
+	if not roleText and landmark:
+		roleText = f"{roleLabels[controlTypes.ROLE_LANDMARK]} {landmarkLabels[landmark]}"
+
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []
 		if current:
@@ -676,8 +680,13 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			# Don't report the role for math here.
 			# However, we still need to pass it (hence "_role").
 			"_role" if role == controlTypes.ROLE_MATH else "role": role,
-			"states": states,"value":value, "current":current, "placeholder":placeholder,"roleText":roleText}
-		if formatConfig["reportLandmarks"] and field.get("landmark") and field.get("_startOfNode"):
+			"states": states,
+			"value": value,
+			"current": current,
+			"placeholder": placeholder,
+			"roleText": roleText
+		}
+		if formatConfig["reportLandmarks"] and landmark:
 			# Ensure that the name of the field gets presented even if normally it wouldn't.
 			name = field.get("name")
 			if name:
