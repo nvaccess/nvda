@@ -9,7 +9,13 @@ from comtypes.automation import VARIANT
 import array
 import winUser
 import UIAHandler
-from UIAUtils import *
+from UIAUtils import (
+	createUIAMultiPropertyCondition,
+	getDeepestLastChildUIAElementInWalker,
+	getUIATextAttributeValueFromRange,
+	isUIAElementInWalker,
+	iterUIARangeByUnit,
+)
 import documentBase
 import treeInterceptorHandler
 import cursorManager
@@ -396,8 +402,26 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_EditControlTypeId,UIAHandler.UIA_ValueIsReadOnlyPropertyId:False},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ComboBoxControlTypeId,UIAHandler.UIA_IsTextPatternAvailablePropertyId:True})
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		elif nodeType=="formField":
-			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_EditControlTypeId,UIAHandler.UIA_ValueIsReadOnlyPropertyId:False},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:True},{UIAHandler.UIA_ControlTypePropertyId:[UIAHandler.UIA_CheckBoxControlTypeId,UIAHandler.UIA_RadioButtonControlTypeId,UIAHandler.UIA_ComboBoxControlTypeId,UIAHandler.UIA_ButtonControlTypeId]})
-			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
+			condition = createUIAMultiPropertyCondition(
+				{
+					UIAHandler.UIA_ControlTypePropertyId: UIAHandler.UIA_EditControlTypeId,
+					UIAHandler.UIA_ValueIsReadOnlyPropertyId: False
+				},
+				{
+					UIAHandler.UIA_ControlTypePropertyId: UIAHandler.UIA_ListControlTypeId,
+					UIAHandler.UIA_IsKeyboardFocusablePropertyId: True
+				},
+				{
+					UIAHandler.UIA_ControlTypePropertyId: [
+						UIAHandler.UIA_ButtonControlTypeId,
+						UIAHandler.UIA_CheckBoxControlTypeId,
+						UIAHandler.UIA_ComboBoxControlTypeId,
+						UIAHandler.UIA_RadioButtonControlTypeId,
+						UIAHandler.UIA_TabItemControlTypeId,
+					]
+				},
+			)
+			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
 		elif nodeType=="landmark":
 			condition=UIAHandler.handler.clientObject.createNotCondition(UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_LandmarkTypePropertyId,0))
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
