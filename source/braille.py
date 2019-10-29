@@ -37,6 +37,7 @@ import extensionPoints
 import hwPortUtils
 import bdDetect
 import winUser
+import aria
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is a
@@ -650,7 +651,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	roleText = field.get('roleTextBraille', field.get('roleText'))
 	landmark = field.get("landmark")
 	if not roleText and landmark:
-		roleText = f"{roleLabels[controlTypes.ROLE_LANDMARK]} {landmarkLabels[landmark]}"
+		roleText = aria.getLandmarkRoleTextBraille(landmark)
 
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []

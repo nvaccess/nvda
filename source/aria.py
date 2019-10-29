@@ -94,3 +94,25 @@ htmlNodeNameToAriaRoles = {
 	"aside": "complementary",
 	"dialog": "dialog",
 }
+
+
+def getLandmarkRoleText(landmark: str) -> str:
+	""""Gets the role text to speak for a particular landmark."""
+	landmarkLabel = landmarkRoles.get(landmark)
+	if landmarkLabel is None:
+		return None
+	if landmark == "region":
+		return landmarkLabel
+	return f"{landmarkLabel} {controlTypes.roleLabels[controlTypes.ROLE_LANDMARK]}"
+
+
+def getLandmarkRoleTextBraille(landmark):
+	""""Gets the role text to braille for a particular landmark."""
+	# Import late to avoid circular import
+	import braille
+	landmarkLabel = braille.landmarkLabels.get(landmark)
+	if landmarkLabel is None:
+		return None
+	if landmark == "region":
+		return landmarkLabel
+	return f"{braille.roleLabels[controlTypes.ROLE_LANDMARK]} {landmarkLabel}"
