@@ -428,6 +428,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			readUnit: Optional[str] = None
 	):
 		"""Adds a script for the given quick nav item.
+		@param itemType: The type of item, I.E. "heading" "Link" ...
 		@param key: The quick navigation key to bind to the script.
 			Shift is automatically added for the previous item gesture. E.G. h for heading.
 			If C{None} is provided, the script is unbound by default.
