@@ -33,6 +33,7 @@ What's New in NVDA
 - Updated Liblouis braille translator to commit 58d67e63. (#10094)
 - When CLDR characters (including emojis) reporting is enabled, they are announced at all punctuation levels. (#8826)
 - Third party python packages included in NVDA, such as comtypes, now log their warnings and errors to the NVDA log. (#10393)
+- Updated Unicode Common Locale Data Repository emoji annotations to version 36.0. (#10426)
 
 
 == Bug Fixes ==
@@ -56,6 +57,7 @@ What's New in NVDA
 - In Windows 10 May 2019 Update and later, NVDA will once again announce first selected emoji or clipboard item when emoji panel and clipboard history opens, respectively. (#9204)
 - In Poedit, it is once again possible to view some translations for right to left languages. (#9931)
 - In the Settings app in Windows 10 April 2018 Update and later, NVDA will no longer announce progress bar information for volume meters found in the System/Sound page. (#10284)
+- Invalid regular expressions in speech dictionaries no longer completely break speech in NVDA. (#10334)
 
 
 == Changes for Developers ==
