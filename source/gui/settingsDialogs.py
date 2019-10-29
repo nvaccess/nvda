@@ -1724,214 +1724,166 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		sHelper.addItem(wx.StaticText(self, label=self.panelDescription))
 
-		# Translators: This is the label for a group of document formatting options in the 
+		# Translators: This is the label for a list with document formatting options in the 
 		# document formatting settings panel
-		fontGroupText = _("Font")
-		fontGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=fontGroupText), wx.VERTICAL))
-		sHelper.addItem(fontGroup)
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		fontNameText = _("&Font name")
-		self.fontNameCheckBox=fontGroup.addItem(wx.CheckBox(self, label=fontNameText))
-		self.fontNameCheckBox.SetValue(config.conf["documentFormatting"]["reportFontName"])
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		fontSizeText = _("Font &size")
-		self.fontSizeCheckBox=fontGroup.addItem(wx.CheckBox(self,label=fontSizeText))
-		self.fontSizeCheckBox.SetValue(config.conf["documentFormatting"]["reportFontSize"])
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		fontAttributesText = _("Font attri&butes")
-		self.fontAttrsCheckBox=fontGroup.addItem(wx.CheckBox(self,label=fontAttributesText))
-		self.fontAttrsCheckBox.SetValue(config.conf["documentFormatting"]["reportFontAttributes"])
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		emphasisText=_("E&mphasis")
-		self.emphasisCheckBox=fontGroup.addItem(wx.CheckBox(self,label=emphasisText))
-		self.emphasisCheckBox.SetValue(config.conf["documentFormatting"]["reportEmphasis"])
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		styleText =_("St&yle")
-		self.styleCheckBox=fontGroup.addItem(wx.CheckBox(self,label=styleText))
-		self.styleCheckBox.SetValue(config.conf["documentFormatting"]["reportStyle"])
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		colorsText = _("&Colors")
-		self.colorCheckBox=fontGroup.addItem(wx.CheckBox(self,label=colorsText))
-		self.colorCheckBox.SetValue(config.conf["documentFormatting"]["reportColor"])
-
-		# Translators: This is the label for a group of document formatting options in the 
-		# document formatting settings panel
-		documentInfoGroupText = _("Document information")
-		docInfoGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=documentInfoGroupText), wx.VERTICAL))
-		sHelper.addItem(docInfoGroup)
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		commentsText = _("Co&mments")
-		self.commentsCheckBox=docInfoGroup.addItem(wx.CheckBox(self,label=commentsText))
-		self.commentsCheckBox.SetValue(config.conf["documentFormatting"]["reportComments"])
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		revisionsText = _("&Editor revisions")
-		self.revisionsCheckBox=docInfoGroup.addItem(wx.CheckBox(self,label=revisionsText))
-		self.revisionsCheckBox.SetValue(config.conf["documentFormatting"]["reportRevisions"])
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		spellingErrorText = _("Spelling e&rrors")
-		self.spellingErrorsCheckBox=docInfoGroup.addItem(wx.CheckBox(self,label=spellingErrorText))
-		self.spellingErrorsCheckBox.SetValue(config.conf["documentFormatting"]["reportSpellingErrors"])
-
-		# Translators: This is the label for a group of document formatting options in the 
-		# document formatting settings panel
-		pageAndSpaceGroupText = _("Pages and spacing")
-		pageAndSpaceGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=pageAndSpaceGroupText), wx.VERTICAL))
-		sHelper.addItem(pageAndSpaceGroup)
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		pageText = _("&Pages")
-		self.pageCheckBox=pageAndSpaceGroup.addItem(wx.CheckBox(self,label=pageText))
-		self.pageCheckBox.SetValue(config.conf["documentFormatting"]["reportPage"])
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		lineText = _("Line &numbers")
-		self.lineNumberCheckBox=pageAndSpaceGroup.addItem(wx.CheckBox(self,label=lineText))
-		self.lineNumberCheckBox.SetValue(config.conf["documentFormatting"]["reportLineNumber"])
-
-		# Translators: This is the label for a combobox controlling the reporting of line indentation in the
-		# Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-		lineIndentationText = _("Line &indentation reporting:")
-		indentChoices=[
-			#Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
-			_("Off"),
-			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
-			pgettext('line indentation setting', "Speech"),
-			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
-			_("Tones"),
-			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-			_("Both  Speech and Tones")
+		fontListText = _("&Font")
+		self.fontListMap = {
+			# Translators: Label for an option in the font list in the document formatting settings panel.
+			"reportFontName": _("Font name"),
+			# Translators: Label for an option in the font list in the document formatting settings panel.
+			"reportFontSize": _("Font size"),
+			# Translators: Label for an option in the font list in the document formatting settings panel.
+			"reportFontAttributes": _("Font attributes"),
+			# Translators: Label for an option in the font list in the document formatting settings panel.
+			"reportEmphasis": _("Emphasis"),
+			# Translators: Label for an option in the font list in the document formatting settings panel.
+			"reportStyle": _("Style"),
+			# Translators: Label for an option in the font list in the document formatting settings panel.
+			"reportColor": _("Colors"),
+		}
+		self.fontList = sHelper.addLabeledControl(
+			fontListText,
+			nvdaControls.CustomCheckListBox,
+			choices=list(self.fontListMap.values())
+		)
+		self.fontList.CheckedItems = [
+			i for i, setting in enumerate(self.fontListMap)
+			if config.conf["documentFormatting"][setting]
 		]
-		self.lineIndentationCombo = pageAndSpaceGroup.addLabeledControl(lineIndentationText, wx.Choice, choices=indentChoices)
-		#We use bitwise operations because it saves us a four way if statement.
-		curChoice = config.conf["documentFormatting"]["reportLineIndentationWithTones"] << 1 |  config.conf["documentFormatting"]["reportLineIndentation"]
-		self.lineIndentationCombo.SetSelection(curChoice)
+		self.fontList.Select(0)
 
-		# Translators: This message is presented in the document formatting settings panelue
-		# If this option is selected, NVDA will report paragraph indentation if available. 
-		paragraphIndentationText = _("&Paragraph indentation")
-		self.paragraphIndentationCheckBox=pageAndSpaceGroup.addItem(wx.CheckBox(self,label=paragraphIndentationText))
-		self.paragraphIndentationCheckBox.SetValue(config.conf["documentFormatting"]["reportParagraphIndentation"])
-
-		# Translators: This message is presented in the document formatting settings panelue
-		# If this option is selected, NVDA will report line spacing if available. 
-		lineSpacingText=_("&Line spacing")
-		self.lineSpacingCheckBox=pageAndSpaceGroup.addItem(wx.CheckBox(self,label=lineSpacingText))
-		self.lineSpacingCheckBox.SetValue(config.conf["documentFormatting"]["reportLineSpacing"])
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		alignmentText = _("&Alignment")
-		self.alignmentCheckBox=pageAndSpaceGroup.addItem(wx.CheckBox(self,label=alignmentText))
-		self.alignmentCheckBox.SetValue(config.conf["documentFormatting"]["reportAlignment"])
-
-		# Translators: This is the label for a group of document formatting options in the 
+		# Translators: This is the label for a list with document formatting options in the 
 		# document formatting settings panel
-		tablesGroupText = _("Table information")
-		tablesGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=tablesGroupText), wx.VERTICAL))
-		sHelper.addItem(tablesGroup)
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		self.tablesCheckBox=tablesGroup.addItem(wx.CheckBox(self,label=_("&Tables")))
-		self.tablesCheckBox.SetValue(config.conf["documentFormatting"]["reportTables"])
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		self.tableHeadersCheckBox=tablesGroup.addItem(wx.CheckBox(self,label=_("Row/column h&eaders")))
-		self.tableHeadersCheckBox.SetValue(config.conf["documentFormatting"]["reportTableHeaders"])
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		self.tableCellCoordsCheckBox=tablesGroup.addItem(wx.CheckBox(self,label=_("Cell c&oordinates")))
-		self.tableCellCoordsCheckBox.SetValue(config.conf["documentFormatting"]["reportTableCellCoords"])
-
-		borderChoices=[
-			# Translators: This is the label for a combobox in the
+		docInfoListText = _("&Document information")
+		self.docInfoListMap = {
+			# Translators: Label for an option in the document information list in the
 			# document formatting settings panel.
-			_("Off"),
-			# Translators: This is the label for a combobox in the
+			"reportComments": _("Comments"),
+			# Translators: Label for an option in the document information list in the
 			# document formatting settings panel.
-			_("Styles"),
-			# Translators: This is the label for a combobox in the
+			"reportRevisions": _("Editor revisions"),
+			# Translators: Label for an option in the document information list in the
 			# document formatting settings panel.
-			_("Both Colors and Styles"),
+			"reportSpellingErrors": _("SPelling and grammar errors"),
+		}
+		self.docInfoList = sHelper.addLabeledControl(
+			docInfoListText,
+			nvdaControls.CustomCheckListBox,
+			choices=list(self.docInfoListMap.values())
+		)
+		self.docInfoList.CheckedItems = [
+			i for i, setting in enumerate(self.docInfoListMap)
+			if config.conf["documentFormatting"][setting]
 		]
-		# Translators: This is the label for a combobox in the
-		# document formatting settings panel.
-		self.borderComboBox=tablesGroup.addLabeledControl(_("Cell borders:"), wx.Choice, choices=borderChoices)
-		curChoice = 0
-		if config.conf["documentFormatting"]["reportBorderStyle"]:
-			if config.conf["documentFormatting"]["reportBorderColor"]:
-				curChoice = 2
-			else:
-				curChoice = 1
-		self.borderComboBox.SetSelection(curChoice)
+		self.docInfoList.Select(0)
 
-		# Translators: This is the label for a group of document formatting options in the 
+		# Translators: This is the label for a list with document formatting options in the 
 		# document formatting settings panel
-		elementsGroupText = _("Elements")
-		elementsGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=elementsGroupText), wx.VERTICAL))
-		sHelper.addItem(elementsGroup, flag=wx.EXPAND, proportion=1)
+		pageAndSpaceListText = _("&Pages and spacing")
+		self.pageAndSpaceListMap = {
+			# Translators: Label for an option in the page and spacing list in the
+			# document formatting settings panel.
+			"reportPage": _("Pages"),
+			# Translators: Label for an option in the page and spacing list in the
+			# document formatting settings panel.
+			"reportLineNumber": _("Line numbers"),
+			# Translators: Label for an option in the page and spacing list in the
+			# document formatting settings panel.
+			"reportLineIndentation": _("Line indentation with speech"),
+			# Translators: Label for an option in the page and spacing list in the
+			# document formatting settings panel.
+			"reportLineIndentationWithTones": _("Line indentation with tones"),
+			# Translators: Label for an option in the page and spacing list in the
+			# document formatting settings panel.
+			"reportParagraphIndentation": _("Paragraph indentation"),
+			# Translators: Label for an option in the page and spacing list in the
+			# document formatting settings panel.
+			"reportLineSpacing": _("Line spacing"),
+			# Translators: Label for an option in the page and spacing list in the
+			# document formatting settings panel.
+			"reportAlignment": _("Alignment"),
+		}
+		self.pageAndSpaceList = sHelper.addLabeledControl(
+			pageAndSpaceListText,
+			nvdaControls.CustomCheckListBox,
+			choices=list(self.pageAndSpaceListMap.values())
+		)
+		self.pageAndSpaceList.CheckedItems = [
+			i for i, setting in enumerate(self.pageAndSpaceListMap)
+			if config.conf["documentFormatting"][setting]
+		]
+		self.pageAndSpaceList.Select(0)
 
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		self.headingsCheckBox=elementsGroup.addItem(wx.CheckBox(self,label=_("&Headings")))
-		self.headingsCheckBox.SetValue(config.conf["documentFormatting"]["reportHeadings"])
+		# Translators: This is the label for a list with document formatting options in the 
+		# document formatting settings panel
+		tablesListText = _("&Table information")
+		self.tablesListMap = {
+			# Translators: Label for an option in the table information list in the
+			# document formatting settings panel.
+			"reportTables": _("Tables"),
+			# Translators: Label for an option in the table information list in the
+			# document formatting settings panel.
+			"reportTableHeaders": _("Row and column headers"),
+			# Translators: Label for an option in the table information list in the
+			# document formatting settings panel.
+			"reportTableCellCoords": _("Cell coordinates"),
+			# Translators: Label for an option in the table information list in the
+			# document formatting settings panel.
+			"reportBorderStyle": _("Cell border style"),
+			# Translators: Label for an option in the table information list in the
+			# document formatting settings panel.
+			"reportBorderColor": _("Cell border color"),
+		}
+		self.tablesList = sHelper.addLabeledControl(
+			tablesListText,
+			nvdaControls.CustomCheckListBox,
+			choices=list(self.tablesListMap.values())
+		)
+		self.tablesList.CheckedItems = [
+			i for i, setting in enumerate(self.tablesListMap)
+			if config.conf["documentFormatting"][setting]
+		]
+		self.tablesList.Select(0)
 
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		self.linksCheckBox=elementsGroup.addItem(wx.CheckBox(self,label=_("Lin&ks")))
-		self.linksCheckBox.SetValue(config.conf["documentFormatting"]["reportLinks"])
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		self.listsCheckBox=elementsGroup.addItem(wx.CheckBox(self,label=_("&Lists")))
-		self.listsCheckBox.SetValue(config.conf["documentFormatting"]["reportLists"])
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		self.blockQuotesCheckBox=elementsGroup.addItem(wx.CheckBox(self,label=_("Block &quotes")))
-		self.blockQuotesCheckBox.SetValue(config.conf["documentFormatting"]["reportBlockQuotes"])
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		self.landmarksCheckBox=elementsGroup.addItem(wx.CheckBox(self,label=_("Lan&dmarks")))
-		self.landmarksCheckBox.SetValue(config.conf["documentFormatting"]["reportLandmarks"])
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		self.articlesCheckBox = elementsGroup.addItem(wx.CheckBox(self, label=_("Arti&cles")))
-		self.articlesCheckBox.SetValue(config.conf["documentFormatting"]["reportArticles"])
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		self.framesCheckBox=elementsGroup.addItem(wx.CheckBox(self,label=_("Fra&mes")))
-		self.framesCheckBox.Value=config.conf["documentFormatting"]["reportFrames"]
-
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		self.clickableCheckBox=elementsGroup.addItem(wx.CheckBox(self,label=_("&Clickable")))
-		self.clickableCheckBox.Value=config.conf["documentFormatting"]["reportClickable"]
+		# Translators: This is the label for a list with document formatting options in the 
+		# document formatting settings panel
+		elementsListText = _("&Elements")
+		self.elementsListMap = {
+			# Translators: Label for an option in the list with elements in the
+			# document formatting settings panel.
+			"reportHeadings": _("Headings"),
+			# Translators: Label for an option in the list with elements in the
+			# document formatting settings panel.
+			"reportLinks": _("Links"),
+			# Translators: Label for an option in the list with elements in the
+			# document formatting settings panel.
+			"reportLists": _("Lists"),
+			# Translators: Label for an option in the list with elements in the
+			# document formatting settings panel.
+			"reportBlockQuotes": _("Block quotes"),
+			# Translators: Label for an option in the list with elements in the
+			# document formatting settings panel.
+			"reportLandmarks": _("Landmarks"),
+			# Translators: Label for an option in the list with elements in the
+			# document formatting settings panel.
+			"reportArticles": _("Articles"),
+			# Translators: Label for an option in the list with elements in the
+			# document formatting settings panel.
+			"reportFrames": _("Frames"),
+			# Translators: Label for an option in the list with elements in the
+			# document formatting settings panel.
+			"reportClickable": _("Clickable"),
+		}
+		self.elementsList = sHelper.addLabeledControl(
+			elementsListText,
+			nvdaControls.CustomCheckListBox,
+			choices=list(self.elementsListMap.values())
+		)
+		self.elementsList.CheckedItems = [
+			i for i, setting in enumerate(self.elementsListMap)
+			if config.conf["documentFormatting"][setting]
+		]
+		self.elementsList.Select(0)
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
@@ -1942,37 +1894,16 @@ class DocumentFormattingPanel(SettingsPanel):
 
 	def onSave(self):
 		config.conf["documentFormatting"]["detectFormatAfterCursor"]=self.detectFormatAfterCursorCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportFontName"]=self.fontNameCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportFontSize"]=self.fontSizeCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportFontAttributes"]=self.fontAttrsCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportColor"]=self.colorCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportComments"]=self.commentsCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportRevisions"]=self.revisionsCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportEmphasis"]=self.emphasisCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportAlignment"]=self.alignmentCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportStyle"]=self.styleCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportSpellingErrors"]=self.spellingErrorsCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportPage"]=self.pageCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportLineNumber"]=self.lineNumberCheckBox.IsChecked()
-		choice = self.lineIndentationCombo.GetSelection()
-		config.conf["documentFormatting"]["reportLineIndentation"] = choice in (1, 3)
-		config.conf["documentFormatting"]["reportLineIndentationWithTones"] = choice in (2, 3)
-		config.conf["documentFormatting"]["reportParagraphIndentation"]=self.paragraphIndentationCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportLineSpacing"]=self.lineSpacingCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportTableHeaders"]=self.tableHeadersCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportTableCellCoords"]=self.tableCellCoordsCheckBox.IsChecked()
-		choice = self.borderComboBox.GetSelection()
-		config.conf["documentFormatting"]["reportBorderStyle"] = choice in (1,2)
-		config.conf["documentFormatting"]["reportBorderColor"] = (choice == 2)
-		config.conf["documentFormatting"]["reportLinks"]=self.linksCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportHeadings"]=self.headingsCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportLists"]=self.listsCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportBlockQuotes"]=self.blockQuotesCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportLandmarks"]=self.landmarksCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportArticles"] = self.articlesCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportFrames"]=self.framesCheckBox.Value
-		config.conf["documentFormatting"]["reportClickable"]=self.clickableCheckBox.Value
+		for i, setting in enumerate(self.fontListMap):
+			config.conf["documentFormatting"][setting] = self.fontList.IsChecked(i)
+		for i, setting in enumerate(self.docInfoListMap):
+			config.conf["documentFormatting"][setting] = self.docInfoList.IsChecked(i)
+		for i, setting in enumerate(self.pageAndSpaceListMap):
+			config.conf["documentFormatting"][setting] = self.pageAndSpaceList.IsChecked(i)
+		for i, setting in enumerate(self.tablesListMap):
+			config.conf["documentFormatting"][setting] = self.tablesList.IsChecked(i)
+		for i, setting in enumerate(self.elementsListMap):
+			config.conf["documentFormatting"][setting] = self.elementsList.IsChecked(i)
 
 class TouchInteractionPanel(SettingsPanel):
 	# Translators: This is the label for the touch interaction settings panel.

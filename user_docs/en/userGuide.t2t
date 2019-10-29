@@ -1592,10 +1592,10 @@ Enabled by default, this option allows you to choose if gestures (such as key pr
 As an example, if enabled, if the letter j was pressed, it would be trapped from reaching the document, even though it is not a quick navigation command nor is it likely to be a command in the application itself.
 
 +++ Document Formatting (NVDA+control+d) +++[DocumentFormattingSettings]
-Most of the checkboxes in this category are for configuring what type of formatting you wish to have reported as you move the cursor around documents.
-For example, if you check the report font name checkbox, each time you arrow onto text with a different font, the name of the font will be announced.
+Most of the settings in this category are for configuring what type of formatting you wish to have reported as you move the cursor around documents.
+For example, if you check the font name checkbox in the font list, each time you arrow onto text with a different font, the name of the font will be announced.
 
-The document formatting options are organized into groups.
+The document formatting options are organized into lists with checkboxes.
 You can configure reporting of:
 - Font
  - Font name
@@ -1611,7 +1611,7 @@ You can configure reporting of:
 - Pages and spacing
  - Page numbers
  - Line numbers
- - Line indentation reporting [(Off, Speech, Tones, Both Speech and Tones) #lineIndentationOptions]
+ - Line indentation [with speech and/or tones #lineIndentationOptions]
  - Paragraph indentation (e.g. hanging indent, first line indent)
  - Line spacing (single, double, etc.)
  - Alignment
@@ -1619,7 +1619,8 @@ You can configure reporting of:
  - Tables
  - Row/column headers
  - Cell coordinates
- - Cell borders [(Off, Styles, Both Colors and Styles)
+ - Cell border colors
+ - Cell border styles
 - Elements
  - Headings
  - Links
@@ -1628,11 +1629,18 @@ You can configure reporting of:
  - Landmarks
  - Articles
  - Frames
- - Clickable
+ - Clickable elements
  -
 -
 
 To toggle these settings from anywhere, please assign custom gestures using the [Input Gestures dialog #InputGestures].
+
+==== Line indentation reporting ====[DocumentFormattingSettingsLineIndentation]
+These options allows you to configure how indentation at the beginning of lines is reported.
+
+If line indentation with speech is checked, when the  amount of indentation changes, NVDA will say something like "twelve space" or "four tab".
+If line indentation with tones is checked, when the  amount of  indentation changes, tones indicate the amount of change in indent.
+The tone will increase a quarter tone in pitch every space, and for a tab, it will increase in pitch the equivalent of 4 spaces.
 
 ==== Report formatting changes after the cursor ====[DocumentFormattingDetectFormatAfterCursor]
 If enabled, this setting tells NVDA to try and detect all the formatting changes on a line as it reports it, even if doing this may slow down NVDA's performance.
@@ -1640,17 +1648,6 @@ If enabled, this setting tells NVDA to try and detect all the formatting changes
 By default, NVDA will detect the formatting at the position of the System caret / Review Cursor, and in some instances may detect formatting on the rest of the line, only if it is not going to cause a performance decrease.
 
 Enable this option while proof reading documents in applications such as WordPad, where formatting is important.
-
-==== Line indentation reporting ====[DocumentFormattingSettingsLineIndentation]
-This option allows you to configure how indentation at the beginning of lines is reported.
-The Report line indentation with combo box has four options.
-
-- Off: NVDA will not treat indentation specially.
-- Speech: If speech is selected, when the  amount of indentation changes, NVDA will say something like "twelve space" or "four tab."
-- Tones: If Tones is selected, when the  amount of  indentation changes, tones indicate the amount of change in indent.
-The tone will increase in pitch every space, and for a tab, it will increase in pitch the equivalent of 4 spaces.
-- Both Speech and Tones: This option reads indentation using both of the above methods.
--
 
 +++ Windows 10 OCR Settings +++[Win10OcrSettings]
 The settings in this category allow you to configure [Windows 10 OCR #Win10Ocr].
