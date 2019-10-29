@@ -3421,6 +3421,7 @@ class InputGesturesDialog(SettingsDialog):
 		if token is not self.filterToken:
 			log.debug(f"filter token {token} superseded by {self.filterToken}")
 			return
+		# Expanding categories can be expensive: Only do it if there are few results.
 		wx.CallAfter(self.refreshTree, token, filteredGestures, expandCategories=nbCommands <= 10)
 	
 	def refreshTree(
