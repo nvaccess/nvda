@@ -27,9 +27,10 @@ class AutoSettings(AutoPropertyObject):
 	Derived classes must implement:
 	- getId
 	- getTranslatedName
-	Although technically optional, derived classes probably need to implement:
+	- _get_supportedSettings - you may just call super from this implementation,
+		it will return _get_preInitSettings
+	Derived classes should use the following to return settings if possible:
 	- _get_preInitSettings
-	- _get_supportedSettings
 	"""
 
 	def __init__(self):
@@ -123,7 +124,7 @@ class AutoSettings(AutoPropertyObject):
 	_abstract_supportedSettings = True
 
 	def _get_supportedSettings(self) -> SupportedSettingType:
-		"""The settings supported by the driver.
+		"""The settings supported by the driver. Abstract.
 		When overriding this property, subclasses are encouraged to extend the getter method
 		to ensure that L{preInitSettings} is part of the list of supported settings.
 		"""
