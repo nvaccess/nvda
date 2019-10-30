@@ -100,21 +100,9 @@ ID_TOOLBAR = 59392
 ID_VU = 1004
 
 
-class TTToolBarInfo(object):
-	"""Info about one TeamTalk toolbar and its items.
-	"""
-
-	def __init__(self, NVDAObj=None):
-		if not NVDAObj:
-			# Use the IAccessible for the active TeamTalk instance's toolbar.
-			NVDAObj = self.getToolBar()
-			if not NVDAObj:
-				# Translators: Reported when status information is unavailable
-				# in the TeamTalk voice conferencing client.
-				ui.message(_("Status unavailable"))
-				return
-		self.NVDAObj = NVDAObj
-		n = NVDAObj.childCount
+class TTToolBar(IAccessible):
+	def initOverlayClass(self):
+		n = self.childCount
 		# TeamTalk version-specific toolbar item names by toolbar item count.
 		self.names = []
 		for lst in _msgNames.values():
@@ -145,11 +133,6 @@ class TTToolBarInfo(object):
 		return name
 
 
-class TTToolBar(IAccessible):
-	def initOverlayClass(self):
-		self.info = TTToolBarInfo(self)
-
-
 class TTToolBarItem(IAccessible):
 	def event_valueChange(self):
 		speech.speakObject(self)
@@ -172,16 +155,7 @@ class AppModule(appModuleHandler.AppModule):
 			obj.name = _("Channel messages")
 		elif obj.windowControlID == ID_CHATIN:
 			# Translators: a label for the TeamTalk chat entry field
-			obj.name = _("Type a message to the channel")
-		# Better name Add/Remove buttons where they occur.
-		# Example: Banned Users dialog from the Server menu.
-		elif obj.role == controlTypes.ROLE_BUTTON:
-			if obj.name == ">":
-				# Translators: A TeamTalk button label.
-				obj.name = _("Add to unban list")
-			elif obj.name == "<":
-				# Translators: A TeamTalk button label.
-				obj.name = _("Remove from unban list")
+			obj.name = _("Channel input")
 		# Name the lists in the Banned Users dialog.
 		elif obj.role == controlTypes.ROLE_LIST:
 			if obj.windowControlID == ID_BANNEDLIST:
@@ -213,27 +187,28 @@ class AppModule(appModuleHandler.AppModule):
 
 	@scriptHandler.script(
 		gesture="kb:control+shift+s",
-		description="""Says various on/off states from the toolbar. Depending
-on TeamTalk version, these can include connection status,
-status of voice activation, push-to-talk, and video
-features, whether channel audio is being saved to files,
-and whether the channel message window is showing.
-On one press, just says which are checked (in effect).
-On two presses, says all states.
-		"""
-	)
+		# Translators: a gesture description for the TeamTalk voice conferencing client.
+		description=_(
+			"Says various on/off states from the toolbar. Depending "
+			"on TeamTalk version, these can include connection status, "
+			"status of voice activation, push-to-talk, and video"
+			"features, whether channel audio is being saved to files,"
+			"and whether the channel message window is showing."
+			"On one press, just says which are checked (in effect)."
+			"On two presses, says all states."
+		)
 	def script_sayToolbarInfo(self, gesture):
 		info = TTToolBarInfo()
 		if not info:
 			return
 		scnt = scriptHandler.getLastScriptRepeatCount()
 		if scnt > 0:
-			[
-				speech.speakObject(o)
-				for o in info.NVDAObj.children
-				if o.role == controlTypes.ROLE_CHECKBOX
-				and not (controlTypes.STATE_UNAVAILABLE in o.states)
-			]
+			for o in info.NVDAObj.children:
+				if (
+					o.role == controlTypes.ROLE_CHECKBOX
+					and not (controlTypes.STATE_UNAVAILABLE in o.states)
+				):
+					speech.speakObject(o)
 			return
 		for o in info.NVDAObj.children:
 			if o.role != controlTypes.ROLE_CHECKBOX:
