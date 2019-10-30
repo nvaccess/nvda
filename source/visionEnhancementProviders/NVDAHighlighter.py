@@ -9,6 +9,7 @@ from typing import Callable, Optional, Tuple
 
 import vision
 from vision.constants import Role, Context
+from vision.providerBase import SupportedSettingType
 from vision.util import getContextRect
 from windowUtils import CustomWindow
 import wx
@@ -219,7 +220,8 @@ class NVDAHighlighterSettings(vision.providerBase.VisionEnhancementProviderSetti
 		# Translators: Description for NVDA's built-in screen highlighter.
 		return _("NVDA Highlighter")
 
-	def _get_supportedSettings(self):
+	@classmethod
+	def _get_preInitSettings(cls) -> SupportedSettingType:
 		return [
 			driverHandler.BooleanDriverSetting(
 				'highlight%s' % (context[0].upper() + context[1:]),
@@ -228,6 +230,9 @@ class NVDAHighlighterSettings(vision.providerBase.VisionEnhancementProviderSetti
 			)
 			for context in _supportedContexts
 		]
+
+	def _get_supportedSettings(self) -> SupportedSettingType:
+		return super().supportedSettings
 
 
 class NVDAHighlighterGuiPanel(
