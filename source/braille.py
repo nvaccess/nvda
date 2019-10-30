@@ -174,6 +174,8 @@ roleLabels = {
 	controlTypes.ROLE_INSERTED_CONTENT: _("ins"),
 	# Translators: Displayed in braille for a landmark.
 	controlTypes.ROLE_LANDMARK: _("lmk"),
+	# Translators: Displayed in braille for an object which is an article.
+	controlTypes.ROLE_ARTICLE: _("art"),
 	# Translators: Displayed in braille for an object which is a
 	# figure.
 	controlTypes.ROLE_FIGURE: _("fig"),

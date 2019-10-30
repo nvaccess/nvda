@@ -183,6 +183,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportBlockQuotes = boolean(default=true)
 	reportGroupings = boolean(default=true)
 	reportLandmarks = boolean(default=true)
+	reportArticles = boolean(default=false)
 	reportFrames = boolean(default=true)
 	reportClickable = boolean(default=true)
 

@@ -139,7 +139,7 @@ nodeNamesToNVDARoles={
 	"MATH":controlTypes.ROLE_MATH,
 	"NAV":controlTypes.ROLE_SECTION,
 	"SECTION":controlTypes.ROLE_SECTION,
-	"ARTICLE":controlTypes.ROLE_DOCUMENT,
+	"ARTICLE": controlTypes.ROLE_ARTICLE,
 }
 
 def getZoomFactorsFromHTMLDocument(HTMLDocument):
@@ -681,7 +681,7 @@ class MSHTML(IAccessible):
 			ariaRolesString = self.HTMLAttributes['role']
 			if ariaRolesString:
 				ariaRoles.append(ariaRolesString.split(" ")[0])
-			lRole = aria.htmlNodeNameToAriaLandmarkRoles.get(self.HTMLNodeName.lower())
+			lRole = aria.htmlNodeNameToAriaRoles.get(self.HTMLNodeName.lower())
 			if lRole:
 				ariaRoles.append(lRole)
 			if ariaRoles and ariaRoles[0] in aria.landmarkRoles:

@@ -97,7 +97,9 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		if landmark and role != controlTypes.ROLE_LANDMARK and landmark != xmlRoles[0]:
 			# Ignore the landmark role
 			landmark = None
-		if role == controlTypes.ROLE_GROUPING and xmlRoles[0] == "figure":
+		if role == controlTypes.ROLE_DOCUMENT and xmlRoles[0] == "article":
+			role = controlTypes.ROLE_ARTICLE
+		elif role == controlTypes.ROLE_GROUPING and xmlRoles[0] == "figure":
 			# This is a figure.
 			role = controlTypes.ROLE_FIGURE
 		attrs['role']=role
@@ -294,6 +296,10 @@ class Gecko_ia2(VirtualBuffer):
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("region")],
 					"name": [VBufStorage_findMatch_notEmpty]}
 				]
+		elif nodeType == "article":
+			attrs = [
+				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("article")]}
+			]
 		elif nodeType=="embeddedObject":
 			attrs=[
 				{"IAccessible2::attribute_tag":self._searchableTagValues(["embed","object","applet","audio","video","figure"])},
