@@ -18,6 +18,9 @@ What's New in NVDA
 - All user-defined gestures can now be removed via a new "Reset to factory defaults" button in the Input Gestures dialog. (#10293)
 - Font reporting in Microsoft Word now includes if text is marked as hidden. (#8713)
 - Added a command to move the review cursor to the position previously set as start marker for selection or copy: NVDA+shift+F9. (#1969)
+- In Internet Explorer, Microsoft Edge and recent versions of Firefox and Chrome, landmarks are now reported in focus mode and object navigation. (#10101)
+- In Internet Explorer, Google Chrome and Mozilla Firefox, You can now navigate by article using quick navigation scripts. These scripts are unbound by default and can be assigned in the Input Gestures dialog when the dialog is opened from a browse mode document. (#9227)
+- In Internet Explorer, Google Chrome and Mozilla Firefox, article elements are now reported with object navigation, and optionally in browse mode if turned on in Document Formatting settings. (#10424)
 
 
 == Changes ==
@@ -32,6 +35,7 @@ What's New in NVDA
 - Updated Liblouis braille translator to commit 58d67e63. (#10094)
 - When CLDR characters (including emojis) reporting is enabled, they are announced at all punctuation levels. (#8826)
 - Third party python packages included in NVDA, such as comtypes, now log their warnings and errors to the NVDA log. (#10393)
+- Updated Unicode Common Locale Data Repository emoji annotations to version 36.0. (#10426)
 
 
 == Bug Fixes ==
@@ -54,6 +58,8 @@ What's New in NVDA
 - Some bullet names in Microsoft Word have been corrected. (#10399)
 - In Windows 10 May 2019 Update and later, NVDA will once again announce first selected emoji or clipboard item when emoji panel and clipboard history opens, respectively. (#9204)
 - In Poedit, it is once again possible to view some translations for right to left languages. (#9931)
+- In the Settings app in Windows 10 April 2018 Update and later, NVDA will no longer announce progress bar information for volume meters found in the System/Sound page. (#10284)
+- Invalid regular expressions in speech dictionaries no longer completely break speech in NVDA. (#10334)
 
 
 == Changes for Developers ==
@@ -107,6 +113,9 @@ What's New in NVDA
 - displayModel.getCaretRect now returns an instance of locationHelper.RectLTRB. (#10233)
 - The UNIT_CONTROLFIELD and UNIT_FORMATFIELD constants have been moved from virtualBuffers.VirtualBufferTextInfo to the textInfos package. (#10396)
 - UIA TextInfo objects can now be moved/expanded by the page, story and formatField text units. (#10396)
+- External modules (appModules and globalPlugins) are now less likely to be able to break the creation of NVDAObjects. 
+ - Exceptions caused by the "chooseNVDAObjectOverlayClasses" and "event_NVDAObject_init" methods are now properly caught and logged.
+- The aria.htmlNodeNameToAriaLandmarkRoles dictionary has been renamed to aria.htmlNodeNameToAriaRoles. It now also contains roles that aren't landmarks.
 
 
 = 2019.2.1 =
