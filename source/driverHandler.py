@@ -111,7 +111,7 @@ class Driver(AutoSettings):
 		return cls.name
 
 	@classmethod
-	def getProductName(cls) -> str:
+	def getTranslatedName(cls) -> str:  # todo rename to getTranslatedName
 		return cls.description
 
 	@classmethod

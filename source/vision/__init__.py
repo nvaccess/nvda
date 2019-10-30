@@ -66,8 +66,8 @@ def getProviderList(
 			if not onlyStartable or provider.canStart():
 				providerSettings = provider.getSettings()
 				providerList.append((
-					providerSettings.name,
-					providerSettings.description,
+					providerSettings.getId(),
+					providerSettings.getTranslatedName(),
 					list(provider.supportedRoles),
 					provider
 				))

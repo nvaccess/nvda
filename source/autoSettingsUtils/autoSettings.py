@@ -61,7 +61,7 @@ class AutoSettings(AutoPropertyObject):
 
 	@classmethod
 	@abstractmethod
-	def getProductName(cls) -> str:
+	def getTranslatedName(cls) -> str:
 		"""
 		@return: The translated name for this collection of settings. This is for use in the GUI to represent the
 		group of these settings.

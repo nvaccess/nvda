@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2019 NV Access Limited, Babbage B.V., Takuya Nishimoto
 
 """Default highlighter based on GDI Plus."""
-from typing import Callable, Optional, Tuple, Any
+from typing import Callable, Optional, Tuple
 
 import vision
 from vision.constants import Role, Context
@@ -210,6 +210,15 @@ class NVDAHighlighterSettings(vision.providerBase.VisionEnhancementProviderSetti
 	highlightNavigator = False
 	highlightBrowseMode = False
 
+	@classmethod
+	def getId(cls) -> str:
+		return "NVDAHighlighter"
+
+	@classmethod
+	def getTranslatedName(cls) -> str:
+		# Translators: Description for NVDA's built-in screen highlighter.
+		return _("NVDA Highlighter")
+
 	def _get_supportedSettings(self):
 		return [
 			driverHandler.BooleanDriverSetting(
@@ -221,22 +230,13 @@ class NVDAHighlighterSettings(vision.providerBase.VisionEnhancementProviderSetti
 		]
 
 
-class NVDAHighlighterSettings_Runtime(NVDAHighlighterSettings):
-	someRuntimeOnlySetting = True
-
-	def _get_supportedSettings(self):
-		settings = super()._get_supportedSettings()
-		settings.append(driverHandler.BooleanDriverSetting(
-			"someRuntimeOnlySetting", "Some runtime only setting",
-			defaultVal=True
-		))
-		log.info("Runtime settings!")
-		return settings
-
 class NVDAHighlighterGuiPanel(
 		gui.DriverSettingsMixin,
 		gui.SettingsPanel
 ):
+	_enableCheckSizer: wx.BoxSizer
+	_enabledCheckbox: wx.CheckBox
+
 	def __init__(
 			self,
 			parent,
@@ -249,16 +249,19 @@ class NVDAHighlighterGuiPanel(
 		self._terminateProvider = terminateProvider
 		super().__init__(parent)
 
-	def getSettings(self) -> driverHandler.Driver:
+	def getSettings(self) -> NVDAHighlighterSettings:
 		# DriverSettingsMixin uses self.driver to get / set attributes matching the names of the settings.
 		# We want them set on this class.
 		return VisionEnhancementProvider.getSettings()
 
-	def _getSettingsStorage(self) -> Any:
-		return self.getSettings()
-
-	def makeSettings(self, sizer):
-		self._enabledCheckbox = wx.CheckBox(self, label="Highlight focus", style=wx.CHK_3STATE)
+	def makeSettings(self, sizer: wx.BoxSizer):
+		self._enabledCheckbox = wx.CheckBox(
+			self,
+			#  Translators: The label for a checkbox that enables / disables focus highlighting
+			#  in the NVDA Highlighter vision settings panel.
+			label=_("Highlight focus"),
+			style=wx.CHK_3STATE
+		)
 		self.lastControl = self._enabledCheckbox
 		sizer.Add(self._enabledCheckbox)
 		self._enableCheckSizer = sizer
@@ -280,7 +283,7 @@ class NVDAHighlighterGuiPanel(
 		self.lastControl = self._enabledCheckbox
 
 	def _updateEnabledState(self):
-		settings = VisionEnhancementProvider._settings
+		settings = self._getSettingsStorage()
 		settingsToTriggerActivation = [
 			settings.highlightBrowseMode,
 			settings.highlightFocus,
@@ -308,11 +311,11 @@ class NVDAHighlighterGuiPanel(
 			self._terminateProvider()
 
 	def _onCheckEvent(self, evt: wx.CommandEvent):
-		settings = VisionEnhancementProvider._settings
+		settingsStorage = self._getSettingsStorage()
 		if evt.GetEventObject() is self._enabledCheckbox:
-			settings.highlightBrowseMode = evt.IsChecked()
-			settings.highlightFocus = evt.IsChecked()
-			settings.highlightNavigator = evt.IsChecked()
+			settingsStorage.highlightBrowseMode = evt.IsChecked()
+			settingsStorage.highlightFocus = evt.IsChecked()
+			settingsStorage.highlightNavigator = evt.IsChecked()
 			self._ensureEnableState(evt.IsChecked())
 			self.updateDriverSettings()
 		else:
@@ -335,7 +338,7 @@ class NVDAHightlighter(vision.providerBase.VisionEnhancementProvider):
 	enabledContexts: Tuple[Context]  # type info for autoprop: L{_get_enableContexts}
 
 	@classmethod
-	def getSettings(cls):
+	def getSettings(cls) -> NVDAHighlighterSettings:
 		log.debug(f"getting settings: {cls._settings.__class__!r}")
 		return cls._settings
 

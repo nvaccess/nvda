@@ -291,7 +291,7 @@ class SettingsPanel(wx.Panel, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCM
 		"""Populate the panel with settings controls.
 		Subclasses must override this method.
 		@param sizer: The sizer to which to add the settings controls.
-		@type sizer: wx.Sizer
+		@type sizer: wx.BoxSizer
 		"""
 		raise NotImplementedError
 
@@ -3029,26 +3029,26 @@ class VisionSettingsPanel(SettingsPanel):
 
 		self.settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
-		for providerName, providerDesc, _providerRole, providerClass in vision.getProviderList():
+		for providerId, provTransName, _providerRole, providerClass in vision.getProviderList():
 			providerSizer = self.settingsSizerHelper.addItem(
-				wx.StaticBoxSizer(wx.StaticBox(self, label=providerDesc), wx.VERTICAL),
+				wx.StaticBoxSizer(wx.StaticBox(self, label=provTransName), wx.VERTICAL),
 				flag=wx.EXPAND
 			)
 			kwargs = {
 				# default value for name parameter to lambda, recommended by python3 FAQ:
 				# https://docs.python.org/3/faq/programming.html#why-do-lambdas-defined-in-a-loop-with-different-values-all-return-the-same-result
-				"getProvider": lambda name=providerName: self._getProvider(name),
-				"initProvider": lambda name=providerName: self.safeInitProviders([name]),
-				"terminateProvider": lambda name=providerName: self.safeTerminateProviders([name], verbose=True)
+				"getProvider": lambda id=providerId: self._getProvider(id),
+				"initProvider": lambda id=providerId: self.safeInitProviders([id]),
+				"terminateProvider": lambda id=providerId: self.safeTerminateProviders([id], verbose=True)
 			}
 
 			settingsPanelCls = providerClass.getSettingsPanelClass()
 			if not settingsPanelCls:
-				log.debug(f"Using default panel for providerName: {providerName}")
+				log.debug(f"Using default panel for providerId: {providerId}")
 				settingsPanelCls = VisionProviderSubPanel_Wrapper
 				kwargs["providerType"] = providerClass
 			else:
-				log.debug(f"Using custom panel for providerName: {providerName}")
+				log.debug(f"Using custom panel for providerId: {providerId}")
 			try:
 				settingsPanel = settingsPanelCls(
 					self,
@@ -3065,13 +3065,13 @@ class VisionSettingsPanel(SettingsPanel):
 			providerSizer.Add(settingsPanel, flag=wx.EXPAND)
 			self.providerPanelInstances.append(settingsPanel)
 
-	def _getProvider(self, providerName: str) -> Optional[vision.VisionEnhancementProvider]:
-		log.debug(f"providerName: {providerName}")
-		return vision.handler.providers.get(providerName, None)
+	def _getProvider(self, providerId: str) -> Optional[vision.VisionEnhancementProvider]:
+		log.debug(f"providerId: {providerId}")
+		return vision.handler.providers.get(providerId, None)
 
 	def safeInitProviders(
 			self,
-			providerNames: List[str]
+			providerIds: List[str]
 	) -> bool:
 		"""Initializes one or more providers in a way that is gui friendly,
 		showing an error if appropriate.
@@ -3079,13 +3079,13 @@ class VisionSettingsPanel(SettingsPanel):
 		"""
 		success = True
 		initErrors = []
-		for providerName in providerNames:
+		for providerId in providerIds:
 			try:
-				vision.handler.initializeProvider(providerName)
+				vision.handler.initializeProvider(providerId)
 			except Exception:
-				initErrors.append(providerName)
+				initErrors.append(providerId)
 				log.error(
-					f"Could not initialize the {providerName} vision enhancement provider",
+					f"Could not initialize the {providerId} vision enhancement provider",
 					exc_info=True
 				)
 				success = False
@@ -3112,7 +3112,7 @@ class VisionSettingsPanel(SettingsPanel):
 
 	def safeTerminateProviders(
 			self,
-			providerNames: List[str],
+			providerIds: List[str],
 			verbose: bool = False
 	):
 		"""Terminates one or more providers in a way that is gui friendly,
@@ -3120,17 +3120,17 @@ class VisionSettingsPanel(SettingsPanel):
 		@returns: Whether initialization succeeded for all providers.
 		"""
 		terminateErrors = []
-		for providerName in providerNames:
+		for providerId in providerIds:
 			try:
 				# Terminating a provider from the gui should never save the settings.
 				# This is because termination happens on the fly when unchecking check boxes.
 				# Saving settings would be harmful if a user opens the vision panel,
 				# then changes some settings and disables the provider.
-				vision.handler.terminateProvider(providerName, saveSettings=False)
+				vision.handler.terminateProvider(providerId, saveSettings=False)
 			except Exception:
-				terminateErrors.append(providerName)
+				terminateErrors.append(providerId)
 				log.error(
-					f"Could not terminate the {providerName} vision enhancement provider",
+					f"Could not terminate the {providerId} vision enhancement provider",
 					exc_info=True
 				)
 
@@ -3177,9 +3177,15 @@ class VisionSettingsPanel(SettingsPanel):
 			except:  # noqa: E722
 				log.debug(f"Error discarding providerPanel: {panel.__class__!r}", exc_info=True)
 
-		providersToInitialize = [name for name in self.initialProviders if name not in vision.handler.providers]
+		providersToInitialize = [
+			providerId for providerId in self.initialProviders
+			if providerId not in vision.handler.providers
+		]
 		self.safeInitProviders(providersToInitialize)
-		providersToTerminate = [name for name in vision.handler.providers if name not in self.initialProviders]
+		providersToTerminate = [
+			providerId for providerId in vision.handler.providers
+			if providerId not in self.initialProviders
+		]
 		self.safeTerminateProviders(providersToTerminate)
 
 	def onSave(self):

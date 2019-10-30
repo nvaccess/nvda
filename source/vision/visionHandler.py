@@ -72,26 +72,26 @@ class VisionHandler(AutoPropertyObject):
 		self.handleConfigProfileSwitch()
 		config.post_configProfileSwitch.register(self.handleConfigProfileSwitch)
 
-	def terminateProvider(self, providerName: str, saveSettings: bool = True):
+	def terminateProvider(self, providerId: str, saveSettings: bool = True):
 		"""Terminates a currently active provider.
 		When termnation fails, an exception is raised.
 		Yet, the provider wil lbe removed from the providers dictionary,
 		so its instance goes out of scope and wil lbe garbage collected.
-		@param providerName: The provider to terminate.
+		@param providerId: The provider to terminate.
 		@param saveSettings: Whether settings should be saved on termionation.
 		"""
 		# Remove the provider from the providers dictionary.
-		providerInstance = self.providers.pop(providerName, None)
+		providerInstance = self.providers.pop(providerId, None)
 		if not providerInstance:
 			raise exceptions.ProviderTerminateException(
-				f"Tried to terminate uninitialized provider {providerName!r}"
+				f"Tried to terminate uninitialized provider {providerId!r}"
 			)
 		exception = None
 		if saveSettings:
 			try:
 				providerInstance.getSettings().saveSettings()
 			except Exception:
-				log.error(f"Error while saving settings during termination of {providerName}")
+				log.error(f"Error while saving settings during termination of {providerId}")
 		try:
 			providerInstance.terminate()
 		except Exception as e:
@@ -103,7 +103,7 @@ class VisionHandler(AutoPropertyObject):
 		# If we don't, configobj won't be aware of changes the list.
 		configuredProviders: List = config.conf['vision']['providers'][:]
 		try:
-			configuredProviders.remove(providerName)
+			configuredProviders.remove(providerId)
 			config.conf['vision']['providers'] = configuredProviders
 		except ValueError:
 			pass
@@ -114,7 +114,7 @@ class VisionHandler(AutoPropertyObject):
 			try:
 				providerInst.registerEventExtensionPoints(self.extensionPoints)
 			except Exception:
-				log.error("Error while registering to extension points for provider %s" % providerName, exc_info=True)
+				log.error(f"Error while registering to extension points for provider {providerId}", exc_info=True)
 		if exception:
 			raise exception
 
@@ -129,27 +129,27 @@ class VisionHandler(AutoPropertyObject):
 		providerCls = getProviderClass(providerName)
 		return providerCls.confirmInitWithUser()
 
-	def initializeProvider(self, providerName: str, temporary: bool = False):
+	def initializeProvider(self, providerId: str, temporary: bool = False):
 		"""
 		Enables and activates the supplied provider.
-		@param providerName: The name of the registered provider.
+		@param providerId: The id of the registered provider.
 		@param temporary: Whether the selected provider is enabled temporarily (e.g. as a fallback).
 			This defaults to C{False}.
 			If C{True}, no changes will be performed to the configuration.
 		"""
-		providerInst = self.providers.pop(providerName, None)
+		providerInst = self.providers.pop(providerId, None)
 		if providerInst is not None:
 			providerCls = type(providerInst)
 			providerInst.reinitialize()
 		else:
 			try:
-				providerCls = getProviderClass(providerName)
+				providerCls = getProviderClass(providerId)
 			except ModuleNotFoundError:
-				raise exceptions.ProviderInitException(f"No provider named {providerName!r}")
+				raise exceptions.ProviderInitException(f"No provider: {providerId!r}")
 			else:
 				if not providerCls.canStart():
 					raise exceptions.ProviderInitException(
-						f"Trying to initialize provider {providerName!r} which reported being unable to start"
+						f"Trying to initialize provider {providerId!r} which reported being unable to start"
 					)
 			# Initialize the provider.
 			providerInst = providerCls()
@@ -158,21 +158,21 @@ class VisionHandler(AutoPropertyObject):
 				providerInst.registerEventExtensionPoints(self.extensionPoints)
 			except Exception as registerEventExtensionPointsException:
 				log.error(
-					f"Error while registering to extension points for provider {providerName}",
+					f"Error while registering to extension points for provider: {providerId}",
 				)
 				try:
 					providerInst.terminate()
 				except Exception:
 					log.error(
-						f"Error terminating provider {providerName} after registering to extension points", exc_info=True)
+						f"Error terminating provider {providerId} after registering to extension points", exc_info=True)
 				raise registerEventExtensionPointsException
 		providerSettings = providerCls.getSettings()
 		# todo: do we actually have to do initSettings here?
 		#  It might actually cause a bug, reloading settings and overwriting current static settings.
 		providerSettings.initSettings()
-		if not temporary and providerName not in config.conf['vision']['providers']:
-			config.conf['vision']['providers'] = config.conf['vision']['providers'][:] + [providerName]
-		self.providers[providerName] = providerInst
+		if not temporary and providerId not in config.conf['vision']['providers']:
+			config.conf['vision']['providers'] = config.conf['vision']['providers'][:] + [providerId]
+		self.providers[providerId] = providerInst
 		try:
 			self.initialFocus()
 		except Exception:

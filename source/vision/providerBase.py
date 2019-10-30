@@ -8,8 +8,9 @@
 """
 
 import driverHandler
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 
+from autoSettingsUtils.autoSettings import AutoSettings
 from baseObject import AutoPropertyObject
 from .constants import Role
 from .visionHandlerExtensionPoints import EventExtensionPoints
@@ -21,44 +22,38 @@ SupportedSettingType = Union[
 ]
 
 
-class VisionEnhancementProviderSettings(driverHandler.Driver):
-	_configSection = "vision"
-	cachePropertiesByDefault = False
-
+class VisionEnhancementProviderSettings(AutoSettings, ABC):
+	"""
+	Base class for settings for a vision enhancement provider.
+	Ensure that the following are implemented:
+	- AutoSettings.getId
+	- AutoSettings.getTranslatedName
+	Although technically optional, derived classes probably need to implement:
+	- AutoSettings._get_preInitSettings
+	- AutoSettings._get_supportedSettings
+	"""
 	supportedSettings: SupportedSettingType  # Typing for autoprop L{_get_supportedSettings}
 
 	def __init__(self):
 		super().__init__()
+		# ensure that settings are loaded at construction time.
 		self.initSettings()
 
-	@property
-	@abstractmethod
-	def name(self):  # todo: rename this? "providerID"
-		"""Application Friendly name, should be unique!"""
-
-	@property
-	@abstractmethod
-	def description(self):  # todo: rename this? "translated Name"
-		"""Translated name"""
-
-	def _get_supportedSettings(self) -> SupportedSettingType:
-		raise NotImplementedError(
-			f"_get_supportedSettings must be implemented in Class {self.__class__.__qualname__}"
-		)
-
 	@classmethod
-	def check(cls):  # todo: remove, comes from Driver
-		return True
-
-	def loadSettings(self, onlyChanged: bool = False):
-		super().loadSettings(onlyChanged)
-
-	def saveSettings(self):
-		super().saveSettings()
+	def _getConfigSection(cls) -> str:
+		# all providers should be in the "vision" section.
+		return "vision"
 
 
 class VisionEnhancementProvider(AutoPropertyObject):
 	"""A class for vision enhancement providers.
+	Derived classes should implement:
+	- terminate
+	- registerEventExtensionPoints
+	- canStart
+	- getSettings
+	To provide a custom GUI, return a SettingsPanel class type from:
+	- getSettingsPanelClass
 	"""
 	cachePropertiesByDefault = True
 	#: The roles supported by this provider.
@@ -72,9 +67,7 @@ class VisionEnhancementProvider(AutoPropertyObject):
 		@remarks: The L{VisionEnhancementProviderSettings} class should be implemented to define the settings
 			for your provider
 		"""
-		raise NotImplementedError(
-			f"getSettings must be implemented in Class {cls.__qualname__}"
-		)
+		...
 
 	@classmethod
 	def getSettingsPanelClass(cls) -> Optional[Type]:
@@ -91,12 +84,14 @@ class VisionEnhancementProvider(AutoPropertyObject):
 		self.terminate()
 		self.__init__()
 
+	@abstractmethod
 	def terminate(self):
 		"""Terminate this driver.
 		This should be used for any required clean up.
 		@precondition: L{initialize} has been called.
-		@postcondition: This driver can no longer be used.
+		@postcondition: This provider can no longer be used.
 		"""
+		...
 
 	@abstractmethod
 	def registerEventExtensionPoints(self, extensionPoints: EventExtensionPoints):
@@ -108,7 +103,7 @@ class VisionEnhancementProvider(AutoPropertyObject):
 		as it might be called again several times between initialization and termination.
 		@param extensionPoints: An object containing available extension points as attributes.
 		"""
-		pass
+		...
 
 	@classmethod
 	@abstractmethod
