@@ -437,7 +437,9 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		By default, NVDA falls back to using roleText.
 		"""
 		if self.landmark:
-			return aria.getLandmarkRoleTextBraille(self.landmark)
+			roleTextBraille = aria.getLandmarkRoleTextBraille(self.landmark)
+			if roleTextBraille:
+				return roleTextBraille
 		return self.roleText
 
 	def _get_value(self):
