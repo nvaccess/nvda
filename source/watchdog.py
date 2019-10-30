@@ -209,7 +209,10 @@ def initialize():
 		"cancelCallEvent")
 	# Handle cancelled SendMessage calls.
 	NVDAHelper._setDllFuncPointer(NVDAHelper.localLib, "_notifySendMessageCancelled", _notifySendMessageCancelled)
-	_watcherThread=threading.Thread(target=_watcher)
+	_watcherThread = threading.Thread(
+		name=__name__,
+		target=_watcher
+	)
 	alive()
 	_watcherThread.start()
 
@@ -254,6 +257,8 @@ class CancellableCallThread(threading.Thread):
 		self.isUsable = True
 
 	def execute(self, func, *args, pumpMessages=True, **kwargs):
+		fname = repr(func)
+		self.name = f"{self.__class__.__module__}.{self.execute.__qualname__}({fname})"
 		# Don't even bother making the call if the core is already dead.
 		if isAttemptingRecovery:
 			raise CallCancelled

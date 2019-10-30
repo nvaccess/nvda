@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-07 00:10+1000\n"
-"PO-Revision-Date: 2019-06-11 22:59+0100\n"
+"POT-Creation-Date: 2019-07-12 00:10+1000\n"
+"PO-Revision-Date: 2019-07-18 04:39-0700\n"
 "Last-Translator: Stanley Chung <stanley@mail.com>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 1.8.9\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1764,12 +1764,6 @@ msgstr "%s 랜드마크"
 msgid "lmk %s"
 msgstr "lmk %s"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#. Translators: Announces selected text. %s is replaced with the text.
-#, python-format
-msgid "selected %s"
-msgstr "%s 선택됨"
-
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
 msgstr "상세 설명 없음"
@@ -3128,10 +3122,6 @@ msgstr "오른쪽 마우스 버튼 잠금"
 msgid "Locks or unlocks the right mouse button"
 msgstr "오른쪽 마우스 버튼을 잠그거나 해제합니다"
 
-#, python-format
-msgid "Selected %s"
-msgstr "%s 선택됨"
-
 #. Translators: Input help mode message for report current selection command.
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
@@ -3801,6 +3791,30 @@ msgid ""
 "situated in the current navigator object and speaks it"
 msgstr ""
 "리뷰 커서를 현재 탐색 객체의 줄의 맨 마지막 글자로 옮기고 그 글자를 읽습니다"
+
+#. Translators: Input help mode message for Review Current Symbol command.
+#, fuzzy
+msgid ""
+"Reports the symbol where the review cursor is positioned. Pressed twice, "
+"shows the symbol and the text used to speak it in browse mode"
+msgstr ""
+"현재 리뷰 커서 위치의 서식 정보를 알려줍니다. 두 번 누르면 브라우즈 모드에서 "
+"서식 정보를 표시합니다"
+
+#. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+#, fuzzy
+msgid "No symbol replacement"
+msgstr "변경값"
+
+#. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+msgid ""
+"Character: {}\n"
+"Replacement: {}"
+msgstr ""
+
+#. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+msgid "Expanded symbol ({})"
+msgstr ""
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -6014,15 +6028,24 @@ msgstr "대문자 %s"
 msgid "no indent"
 msgstr "들여쓰기 없음"
 
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "%s 선택됨"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s 선택됨"
+
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "글자 수: %d"
-
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
-#, python-format
-msgid "%s selected"
-msgstr "%s 선택됨"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -9339,6 +9362,19 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
+#, fuzzy
+msgid "Use UI Automation to access the Windows Console when available"
+msgstr ""
+"적용 가능한 경우 마이크로소프트 워드 문서를 조정하기 위해서 UI 자동화를 사용"
+"합니다 (&W)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr ""
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
 msgid "Automatically set system &focus to focusable elements"
 msgstr "자동으로 시스템 포커스 이동"
 
@@ -11169,34 +11205,3 @@ msgstr "두 줄 간격"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 줄 간격"
-
-#~ msgid "Currently running application is %s"
-#~ msgstr "현재 실행중인 어플리케이션: %s"
-
-#~ msgid " and currently loaded module is %s"
-#~ msgstr " 현재 적용된 환경설정:  %s"
-
-#~ msgid ""
-#~ "All add-ons are currently disabled. To enable add-ons you must restart "
-#~ "NVDA."
-#~ msgstr ""
-#~ "현재 모든 추가 기능이 비활성화되어 있습니다. 추가 기능을 사용하려면 NVDA"
-#~ "를 재시작하십시오."
-
-#~ msgid "%s Settings Category"
-#~ msgstr "%s 설정 패널"
-
-#~ msgid "NVDA"
-#~ msgstr "NVDA"
-
-#~ msgid "remove"
-#~ msgstr "제거"
-
-#~ msgid ""
-#~ "For the new language to take effect, the configuration must be saved and "
-#~ "NVDA must be restarted. Press enter to save and restart NVDA, or cancel "
-#~ "to manually save and exit at a later time."
-#~ msgstr ""
-#~ "새 언어를 적용하기 위해서는 현재 환경 설정을 저장하고 NVDA를 다시 시작해"
-#~ "야 합니다. 엔터를 눌러 환경 설정을 저장하고 NVDA를 다시 시작하거나, 취소하"
-#~ "고 수동으로 다시 시작하십시오."
