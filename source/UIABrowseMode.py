@@ -9,7 +9,13 @@ from comtypes.automation import VARIANT
 import array
 import winUser
 import UIAHandler
-from UIAUtils import *
+from UIAUtils import (
+	createUIAMultiPropertyCondition,
+	isUIAElementInWalker,
+	getDeepestLastChildUIAElementInWalker,
+	getUIATextAttributeValueFromRange,
+	iterUIARangeByUnit
+)
 import documentBase
 import treeInterceptorHandler
 import cursorManager
@@ -390,7 +396,22 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:False})
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		elif nodeType=="container":
-			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:False},{UIAHandler.UIA_ControlTypePropertyId:[UIAHandler.UIA_TableControlTypeId,UIAHandler.UIA_DataGridControlTypeId]})
+			condition = createUIAMultiPropertyCondition(
+				{
+					UIAHandler.UIA.UIA_ControlTypePropertyId: UIAHandler.UIA.UIA_ListControlTypeId,
+					UIAHandler.UIA.UIA_IsKeyboardFocusablePropertyId: False
+				},
+				{
+					UIAHandler.UIA.UIA_ControlTypePropertyId: [
+						UIAHandler.UIA.UIA_TableControlTypeId,
+						UIAHandler.UIA.UIA_DataGridControlTypeId
+					]
+				},
+				{
+					UIAHandler.UIA_ControlTypePropertyId: UIAHandler.UIA.UIA_GroupControlTypeId,
+					UIAHandler.UIA_AriaRolePropertyId: ["article"]
+				}
+			)
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		elif nodeType=="edit":
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_EditControlTypeId,UIAHandler.UIA_ValueIsReadOnlyPropertyId:False},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ComboBoxControlTypeId,UIAHandler.UIA_IsTextPatternAvailablePropertyId:True})
@@ -401,6 +422,12 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 		elif nodeType=="landmark":
 			condition=UIAHandler.handler.clientObject.createNotCondition(UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_LandmarkTypePropertyId,0))
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
+		elif nodeType == "article":
+			condition = createUIAMultiPropertyCondition({
+				UIAHandler.UIA_ControlTypePropertyId: UIAHandler.UIA.UIA_GroupControlTypeId,
+				UIAHandler.UIA_AriaRolePropertyId: ["article"]
+			})
+			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
 		elif nodeType=="nonTextContainer":
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:True},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ComboBoxControlTypeId})
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)

@@ -36,6 +36,7 @@ import api
 import gui.guiHelper
 from NVDAObjects import NVDAObject
 from abc import ABCMeta, abstractmethod
+from typing import Optional
 
 REASON_QUICKNAV = "quickNav"
 
@@ -416,10 +417,21 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		item.moveTo()
 
 	@classmethod
-	def addQuickNav(cls, itemType, key, nextDoc, nextError, prevDoc, prevError, readUnit=None):
+	def addQuickNav(
+			cls,
+			itemType: str,
+			key: Optional[str],
+			nextDoc: str,
+			nextError: str,
+			prevDoc: str,
+			prevError: str,
+			readUnit: Optional[str] = None
+	):
 		"""Adds a script for the given quick nav item.
 		@param itemType: The type of item, I.E. "heading" "Link" ...
-		@param key: The quick navigation key to bind to the script. Shift is automatically added for the previous item gesture. E.G. h for heading
+		@param key: The quick navigation key to bind to the script.
+			Shift is automatically added for the previous item gesture. E.G. h for heading.
+			If C{None} is provided, the script is unbound by default.
 		@param nextDoc: The command description to bind to the script that yields the next quick nav item.
 		@param nextError: The error message if there are no more quick nav items of type itemType in this direction.
 		@param prevDoc: The command description to bind to the script that yields the previous quick nav item.
@@ -436,7 +448,8 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		script.__name__ = funcName
 		script.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 		setattr(cls, funcName, script)
-		cls.__gestures["kb:%s" % key] = scriptName
+		if key is not None:
+			cls.__gestures["kb:%s" % key] = scriptName
 		scriptName = "previous%s" % scriptSuffix
 		funcName = "script_%s" % scriptName
 		script = lambda self,gesture: self._quickNavScript(gesture, itemType, "previous", prevError, readUnit)
@@ -444,7 +457,8 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		script.__name__ = funcName
 		script.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 		setattr(cls, funcName, script)
-		cls.__gestures["kb:shift+%s" % key] = scriptName
+		if key is not None:
+			cls.__gestures["kb:shift+%s" % key] = scriptName
 
 	def script_elementsList(self,gesture):
 		# We need this to be a modal dialog, but it mustn't block this script.
@@ -808,6 +822,16 @@ qn("error", key="w",
 	prevDoc=_("moves to the previous error"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous error"))
+qn(
+	"article", key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next article"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next article"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous article"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous article"))
 del qn
 
 class ElementsListDialog(wx.Dialog):

@@ -1,8 +1,7 @@
-#aria.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2009-2014 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2009-2019 NV Access Limited, Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import controlTypes
 
@@ -11,6 +10,7 @@ ariaRolesToNVDARoles={
 	"search":controlTypes.ROLE_SECTION,
 	"alert":controlTypes.ROLE_ALERT,
 	"alertdialog":controlTypes.ROLE_DIALOG,
+	"article": controlTypes.ROLE_ARTICLE,
 	"application":controlTypes.ROLE_APPLICATION,
 	"button":controlTypes.ROLE_BUTTON,
 	"checkbox":controlTypes.ROLE_CHECKBOX,
@@ -84,9 +84,13 @@ landmarkRoles = {
 	"region": pgettext("aria", "region"),
 }
 
-htmlNodeNameToAriaLandmarkRoles = {
+htmlNodeNameToAriaRoles = {
 	"header": "banner",
 	"nav": "navigation",
 	"main": "main",
 	"footer": "contentinfo",
+	"article": "article",
+	"section": "region",
+	"aside": "complementary",
+	"dialog": "dialog",
 }

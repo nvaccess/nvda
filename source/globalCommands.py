@@ -651,6 +651,22 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportLandmarks.__doc__=_("Toggles on and off the reporting of landmarks")
 	script_toggleReportLandmarks.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report articles command.
+		description=_("Toggles on and off the reporting of articles"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
+	def script_toggleReportArticles(self, gesture):
+		if config.conf["documentFormatting"]["reportArticles"]:
+			# Translators: The message announced when toggling the report articles document formatting setting.
+			state = _("report articles off")
+			config.conf["documentFormatting"]["reportArticles"] = False
+		else:
+			# Translators: The message announced when toggling the report articles document formatting setting.
+			state = _("report articles on")
+			config.conf["documentFormatting"]["reportArticles"] = True
+		ui.message(state)
+
 	def script_toggleReportFrames(self,gesture):
 		if config.conf["documentFormatting"]["reportFrames"]:
 			# Translators: The message announced when toggling the report frames document formatting setting.
