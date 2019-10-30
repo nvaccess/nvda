@@ -1724,7 +1724,7 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		sHelper.addItem(wx.StaticText(self, label=self.panelDescription))
 
-		# Translators: This is the label for a list with document formatting options in the 
+		# Translators: This is the label for a list with document formatting options in the
 		# document formatting settings panel
 		fontListText = _("&Font")
 		self.fontListMap = {
@@ -1752,7 +1752,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		]
 		self.fontList.Select(0)
 
-		# Translators: This is the label for a list with document formatting options in the 
+		# Translators: This is the label for a list with document formatting options in the
 		# document formatting settings panel
 		docInfoListText = _("&Document information")
 		self.docInfoListMap = {
@@ -1777,7 +1777,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		]
 		self.docInfoList.Select(0)
 
-		# Translators: This is the label for a list with document formatting options in the 
+		# Translators: This is the label for a list with document formatting options in the
 		# document formatting settings panel
 		pageAndSpaceListText = _("&Pages and spacing")
 		self.pageAndSpaceListMap = {
@@ -1814,7 +1814,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		]
 		self.pageAndSpaceList.Select(0)
 
-		# Translators: This is the label for a list with document formatting options in the 
+		# Translators: This is the label for a list with document formatting options in the
 		# document formatting settings panel
 		tablesListText = _("&Table information")
 		self.tablesListMap = {
@@ -1845,7 +1845,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		]
 		self.tablesList.Select(0)
 
-		# Translators: This is the label for a list with document formatting options in the 
+		# Translators: This is the label for a list with document formatting options in the
 		# document formatting settings panel
 		elementsListText = _("&Elements")
 		self.elementsListMap = {
