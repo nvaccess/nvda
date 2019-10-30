@@ -21,12 +21,18 @@ SupportedSettingType: Type = Union[
 
 
 class AutoSettings(AutoPropertyObject):
-	"""
+	""" An AutoSettings instance is used to simplify the load/save of user config for NVDA extensions
+	(Synth drivers, braille drivers, vision providers) and make it possible to automatically provide a
+	standard GUI for these settings.
+	Derived classes must implement:
+	- getId
+	- getTranslatedName
+	Although technically optional, derived classes probably need to implement:
+	- _get_preInitSettings
+	- _get_supportedSettings
 	"""
 
 	def __init__(self):
-		"""
-		"""
 		super().__init__()
 		self._registerConfigSaveAction()
 
@@ -34,27 +40,40 @@ class AutoSettings(AutoPropertyObject):
 		self._unregisterConfigSaveAction()
 
 	def _registerConfigSaveAction(self):
-		"""Overrideable pre_configSave registration"""
+		""" Overrideable pre_configSave registration
+		"""
 		log.debug(f"registering pre_configSave action: {self.__class__!r}")
 		config.pre_configSave.register(self.saveSettings)
 
 	def _unregisterConfigSaveAction(self):
-		"""Overrideable pre_configSave de-registration"""
+		""" Overrideable pre_configSave de-registration
+		"""
 		config.pre_configSave.unregister(self.saveSettings)
 
 	@classmethod
 	@abstractmethod
 	def getId(cls) -> str:
+		"""
+		@return: Application friendly name, should be globally unique, however since this is used in the config file
+		human readable is also beneficial.
+		"""
 		...
 
 	@classmethod
 	@abstractmethod
 	def getProductName(cls) -> str:
+		"""
+		@return: The translated name for this collection of settings. This is for use in the GUI to represent the
+		group of these settings.
+		"""
 		...
 
 	@classmethod
 	@abstractmethod
 	def _getConfigSection(cls) -> str:
+		"""
+		@return: The section of the config that these settings belong in.
+		"""
 		...
 
 	@classmethod
@@ -83,8 +102,7 @@ class AutoSettings(AutoPropertyObject):
 			cls._loadSpecificSettings(clsOrInst, settings)
 
 	def initSettings(self):
-		"""
-		Initializes the configuration for this driver.
+		"""Initializes the configuration for this driver.
 		This method is called when initializing the driver.
 		"""
 		self._initSpecificSettings(self, self.supportedSettings)
