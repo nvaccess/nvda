@@ -6,8 +6,7 @@
 import controlTypes
 
 ariaRolesToNVDARoles={
-	"description":controlTypes.ROLE_STATICTEXT,
-	"search":controlTypes.ROLE_SECTION,
+	"description": controlTypes.ROLE_STATICTEXT,  # Not in ARIA 1.1 spec
 	"alert":controlTypes.ROLE_ALERT,
 	"alertdialog":controlTypes.ROLE_DIALOG,
 	"article": controlTypes.ROLE_ARTICLE,
@@ -42,6 +41,7 @@ ariaRolesToNVDARoles={
 	"row":controlTypes.ROLE_TABLEROW,
 	"rowgroup":controlTypes.ROLE_GROUPING,
 	"rowheader":controlTypes.ROLE_TABLEROWHEADER,
+	"search": controlTypes.ROLE_LANDMARK,
 	"separator":controlTypes.ROLE_SEPARATOR,
 	"scrollbar":controlTypes.ROLE_SCROLLBAR,
 	"slider":controlTypes.ROLE_SLIDER,
