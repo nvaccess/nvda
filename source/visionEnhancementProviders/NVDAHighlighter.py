@@ -200,7 +200,7 @@ _contextOptionLabelsWithAccelerators = {
 _supportedContexts = (Context.FOCUS, Context.NAVIGATOR, Context.BROWSEMODE)
 
 
-class NVDAHighlighterSettings(vision.providerBase.VisionEnhancementProviderStaticSettings):
+class NVDAHighlighterSettings(vision.providerBase.VisionEnhancementProviderSettings):
 	name = "NVDAHighlighter"
 	# Translators: Description for NVDA's built-in screen highlighter.
 	description = _("NVDA Highlighter")

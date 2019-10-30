@@ -3202,7 +3202,7 @@ class VisionProviderSubPanel_Settings(
 			self,
 			parent: wx.Window,
 			*,  # Make next argument keyword only
-			settingsCallable: Callable[[], vision.providerBase.VisionEnhancementProviderStaticSettings]
+			settingsCallable: Callable[[], vision.providerBase.VisionEnhancementProviderSettings]
 	):
 		"""
 		@param providerCallable: A callable that returns an instance to a VisionEnhancementProvider.

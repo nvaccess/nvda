@@ -21,7 +21,7 @@ SupportedSettingType = Union[
 ]
 
 
-class VisionEnhancementProviderStaticSettings(driverHandler.Driver):
+class VisionEnhancementProviderSettings(driverHandler.Driver):
 	_configSection = "vision"
 	cachePropertiesByDefault = False
 
@@ -67,9 +67,9 @@ class VisionEnhancementProvider(AutoPropertyObject):
 	supportedRoles: FrozenSet[Role] = frozenset()
 
 	@classmethod
-	def getSettings(cls) -> VisionEnhancementProviderStaticSettings:
+	def getSettings(cls) -> VisionEnhancementProviderSettings:
 		"""
-		@remarks: The L{VisionEnhancementProviderStaticSettings} class should be implemented to define the settings
+		@remarks: The L{VisionEnhancementProviderSettings} class should be implemented to define the settings
 			for your provider
 		"""
 		raise NotImplementedError(
