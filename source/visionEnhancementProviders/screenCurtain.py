@@ -122,10 +122,11 @@ class ScreenCurtainSettings(VisionEnhancementProviderSettings):
 
 warnOnLoadText = _(
 	# Translators: A warning shown when activating the screen curtain.
-	# {description} is replaced by the translation of "screen curtain"
-	f"You are about to enable {screenCurtainTranslatedName}.\n"
-	f"When {screenCurtainTranslatedName} is enabled, the screen of your computer will go completely black.\n"
-	f"Do you really want to enable {screenCurtainTranslatedName}?"
+	# the translation of "Screen Curtain" should match the "translated name"
+	"Enabling Screen Curtain will make the screen of your computer completely black. "
+	"Ensure you will be able to navigate without any use of your screen before continuing. "
+	"\n\n"
+	"Do you wish to continue?"
 )
 
 
@@ -204,28 +205,36 @@ class ScreenCurtainGuiPanel(
 		self._terminateProvider = terminateProvider
 		super().__init__(parent)
 
-	def getSettings(self) -> ScreenCurtainSettings:
-		return ScreenCurtainProvider.getSettings()
+	def _buildGui(self):
+		self.mainSizer = wx.BoxSizer(wx.VERTICAL)
 
-	def makeSettings(self, sizer: wx.BoxSizer):
 		self._enabledCheckbox = wx.CheckBox(
 			self,
 			#  Translators: option to enable screen curtain in the vision settings panel
 			label=_("Make screen black (immediate effect)")
 		)
-		self.lastControl = self._enabledCheckbox
-		sizer.Add(self._enabledCheckbox)
-		self._enableCheckSizer = sizer
-		self.mainSizer.Add(self._enableCheckSizer, flag=wx.ALL | wx.EXPAND)
-		optionsSizer = wx.StaticBoxSizer(
-			wx.StaticBox(
-				self,
-				# Translators: The label for a group box containing the NVDA welcome dialog options.
-				label=_("Options")
-			),
-			wx.VERTICAL
+
+		self.mainSizer.Add(self._enabledCheckbox)
+		self.mainSizer.AddSpacer(size=self.scaleSize(10))
+		# this options separator is done with text rather than a group box because a groupbox is too verbose,
+		# but visually some separation is helpful, since the rest of the options are really sub-settings.
+		self.optionsText = wx.StaticText(
+			self,
+			# Translators: The label for a group box containing the NVDA highlighter options.
+			label=_("Options:")
 		)
-		self.settingsSizer = optionsSizer
+		self.mainSizer.Add(self.optionsText)
+		self.lastControl = self.optionsText
+		self.settingsSizer = wx.BoxSizer(wx.VERTICAL)
+		self.makeSettings(self.settingsSizer)
+		self.mainSizer.Add(self.settingsSizer, border=self.scaleSize(15), flag=wx.LEFT | wx.EXPAND)
+		self.mainSizer.Fit(self)
+		self.SetSizer(self.mainSizer)
+
+	def getSettings(self) -> ScreenCurtainSettings:
+		return ScreenCurtainProvider.getSettings()
+
+	def makeSettings(self, sizer: wx.BoxSizer):
 		self.updateDriverSettings()
 		self.Bind(wx.EVT_CHECKBOX, self._onCheckEvent)
 

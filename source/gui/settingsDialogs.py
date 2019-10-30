@@ -277,14 +277,20 @@ class SettingsPanel(wx.Panel, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCM
 		wx.Panel.__init__(self, parent, wx.ID_ANY)
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
+		self._buildGui()
+
+		if gui._isDebug():
+			elapsedSeconds = time.time() - startTime
+			panelName = self.__class__.__qualname__
+			log.debug(f"Loading {panelName} took {elapsedSeconds:.2f} seconds")
+
+	def _buildGui(self):
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		self.makeSettings(self.settingsSizer)
 		self.mainSizer.Add(self.settingsSizer, flag=wx.ALL | wx.EXPAND)
 		self.mainSizer.Fit(self)
 		self.SetSizer(self.mainSizer)
-		if gui._isDebug():
-			log.debug("Loading %s took %.2f seconds"%(self.__class__.__name__, time.time() - startTime))
 
 	@abstractmethod
 	def makeSettings(self, sizer):

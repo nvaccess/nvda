@@ -254,12 +254,9 @@ class NVDAHighlighterGuiPanel(
 		self._terminateProvider = terminateProvider
 		super().__init__(parent)
 
-	def getSettings(self) -> NVDAHighlighterSettings:
-		# DriverSettingsMixin uses self.driver to get / set attributes matching the names of the settings.
-		# We want them set on this class.
-		return VisionEnhancementProvider.getSettings()
+	def _buildGui(self):
+		self.mainSizer = wx.BoxSizer(wx.VERTICAL)
 
-	def makeSettings(self, sizer: wx.BoxSizer):
 		self._enabledCheckbox = wx.CheckBox(
 			self,
 			#  Translators: The label for a checkbox that enables / disables focus highlighting
@@ -267,25 +264,38 @@ class NVDAHighlighterGuiPanel(
 			label=_("Highlight focus"),
 			style=wx.CHK_3STATE
 		)
-		self.lastControl = self._enabledCheckbox
-		sizer.Add(self._enabledCheckbox)
-		self._enableCheckSizer = sizer
-		self.mainSizer.Add(self._enableCheckSizer, flag=wx.ALL | wx.EXPAND)
-		optionsSizer = wx.StaticBoxSizer(
-			wx.StaticBox(
-				self,
-				# Translators: The label for a group box containing the NVDA welcome dialog options.
-				label=_("Options")
-			),
-			wx.VERTICAL
+
+		self.mainSizer.Add(self._enabledCheckbox)
+		self.mainSizer.AddSpacer(size=self.scaleSize(10))
+		# this options separator is done with text rather than a group box because a groupbox is too verbose,
+		# but visually some separation is helpful, since the rest of the options are really sub-settings.
+		self.optionsText = wx.StaticText(
+			self,
+			# Translators: The label for a group box containing the NVDA highlighter options.
+			label=_("Options:")
 		)
-		self.settingsSizer = optionsSizer
+		self.mainSizer.Add(self.optionsText)
+
+		self.lastControl = self.optionsText
+		self.settingsSizer = wx.BoxSizer(wx.VERTICAL)
+		self.makeSettings(self.settingsSizer)
+		self.mainSizer.Add(self.settingsSizer, border=self.scaleSize(15), flag=wx.LEFT | wx.EXPAND)
+		self.mainSizer.Fit(self)
+		self.SetSizer(self.mainSizer)
+
+	def getSettings(self) -> NVDAHighlighterSettings:
+		# DriverSettingsMixin uses self.driver to get / set attributes matching the names of the settings.
+		# We want them set on this class.
+		return VisionEnhancementProvider.getSettings()
+
+	def makeSettings(self, sizer: wx.BoxSizer):
 		self.updateDriverSettings()
+		# bind to all check box events
 		self.Bind(wx.EVT_CHECKBOX, self._onCheckEvent)
 		self._updateEnabledState()
 
 	def onPanelActivated(self):
-		self.lastControl = self._enabledCheckbox
+		self.lastControl = self.optionsText
 
 	def _updateEnabledState(self):
 		settings = self._getSettingsStorage()
