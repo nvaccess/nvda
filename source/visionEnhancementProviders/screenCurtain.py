@@ -113,8 +113,8 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 		Magnification.MagShowSystemCursor(False)
 		Magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
 
-	def terminate(self, *args, **kwargs):
-		super().terminate(*args, **kwargs)
+	def terminate(self):
+		super().terminate()
 		Magnification.MagShowSystemCursor(True)
 		Magnification.MagUninitialize()
 

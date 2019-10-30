@@ -87,8 +87,13 @@ class VisionHandler(AutoPropertyObject):
 				f"Tried to terminate uninitialized provider {providerName!r}"
 			)
 		exception = None
+		if saveSettings:
+			try:
+				providerInstance.getSettings().saveSettings()
+			except Exception:
+				log.error(f"Error while saving settings during termination of {providerName}")
 		try:
-			providerInstance.terminate(saveSettings=saveSettings)
+			providerInstance.terminate()
 		except Exception as e:
 			# Purposely catch everything.
 			# A provider can raise whatever exception,

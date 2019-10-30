@@ -373,7 +373,7 @@ class NVDAHightlighter(vision.providerBase.VisionEnhancementProvider):
 		# - un-comment equivelent line in terminate (restoring settings to non-runtime version)
 		# self.__class__._settings = NVDAHighlighterSettings_Runtime()
 
-	def terminate(self, *args, **kwargs):
+	def terminate(self):
 		if self._highlighterThread:
 			if not winUser.user32.PostThreadMessageW(self._highlighterThread.ident, winUser.WM_QUIT, 0, 0):
 				raise WinError()

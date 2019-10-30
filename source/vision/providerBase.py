@@ -91,11 +91,9 @@ class VisionEnhancementProvider(AutoPropertyObject):
 		self.terminate()
 		self.__init__()
 
-	# todo: remove saveSettings param
-	def terminate(self, saveSettings: bool = True):
+	def terminate(self):
 		"""Terminate this driver.
 		This should be used for any required clean up.
-		@param saveSettings: Whether settings should be saved on termination.
 		@precondition: L{initialize} has been called.
 		@postcondition: This driver can no longer be used.
 		"""
