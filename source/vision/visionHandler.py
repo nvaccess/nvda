@@ -118,17 +118,6 @@ class VisionHandler(AutoPropertyObject):
 		if exception:
 			raise exception
 
-	@staticmethod
-	def confirmInitWithUser(providerName: str) -> bool:
-		"""Before initialisation of a provider,
-		confirm with the user that the provider should start.
-		This method calls confirmInitWithUser on the provider,
-		and should be executed on the main thread.
-		@returns: C{True} if initialisation should continue, C{False} otherwise.
-		"""
-		providerCls = getProviderClass(providerName)
-		return providerCls.confirmInitWithUser()
-
 	def initializeProvider(self, providerId: str, temporary: bool = False):
 		"""
 		Enables and activates the supplied provider.

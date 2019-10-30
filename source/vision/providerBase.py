@@ -110,13 +110,3 @@ class VisionEnhancementProvider(AutoPropertyObject):
 	def canStart(cls) -> bool:
 		"""Returns whether this provider is able to start."""
 		return False
-
-	# todo: remove this, providers should do this themselves
-	@classmethod
-	def confirmInitWithUser(cls) -> bool:
-		"""Before initialisation of the provider,
-		confirm with the user that the provider should start.
-		This method should be executed on the main thread.
-		@returns: C{True} if initialisation should continue, C{False} otherwise.
-		"""
-		return True

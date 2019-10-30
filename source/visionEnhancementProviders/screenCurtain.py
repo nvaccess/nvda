@@ -14,8 +14,9 @@ from ctypes.wintypes import BOOL
 import driverHandler
 import wx
 import gui
-import config
 from logHandler import log
+from vision.providerBase import VisionEnhancementProviderSettings, SupportedSettingType
+from typing import Optional, Type, Callable
 
 
 class MAGCOLOREFFECT(Structure):
@@ -82,29 +83,205 @@ class Magnification:
 	MagShowSystemCursor.errcheck = _errCheck
 
 
-class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
-	name = "screenCurtain"
-	# Translators: Description of a vision enhancement provider that disables output to the screen,
-	# making it black.
-	description = _("Screen Curtain")
-	supportedRoles = frozenset([vision.constants.Role.COLORENHANCER])
+# Translators: Description of a vision enhancement provider that disables output to the screen,
+# making it black.
+screenCurtainTranslatedName = _("Screen Curtain")
 
+warnOnLoadCheckBoxText = (
 	# Translators: Description for a screen curtain setting that shows a warning when loading
 	# the screen curtain.
-	warnOnLoadCheckBoxText = _(f"Always &show a warning when loading {description}")
+	_(f"Always &show a warning when loading {screenCurtainTranslatedName}")
+)
 
-	preInitSettings = [
-		driverHandler.BooleanDriverSetting(
-			"warnOnLoad",
-			warnOnLoadCheckBoxText,
-			defaultVal=True
-		),
-	]
+
+class ScreenCurtainSettings(VisionEnhancementProviderSettings):
+
+	warnOnLoad: bool
+
+	@classmethod
+	def getId(cls) -> str:
+		return "screenCurtain"
+
+	@classmethod
+	def getTranslatedName(cls) -> str:
+		return screenCurtainTranslatedName
+
+	@classmethod
+	def _get_preInitSettings(cls) -> SupportedSettingType:
+		return [
+			driverHandler.BooleanDriverSetting(
+				"warnOnLoad",
+				warnOnLoadCheckBoxText,
+				defaultVal=True
+			),
+		]
+
+	def _get_supportedSettings(self) -> SupportedSettingType:
+		return super().supportedSettings
+
+
+warnOnLoadText = _(
+	# Translators: A warning shown when activating the screen curtain.
+	# {description} is replaced by the translation of "screen curtain"
+	f"You are about to enable {screenCurtainTranslatedName}.\n"
+	f"When {screenCurtainTranslatedName} is enabled, the screen of your computer will go completely black.\n"
+	f"Do you really want to enable {screenCurtainTranslatedName}?"
+)
+
+
+class WarnOnLoadDialog(gui.nvdaControls.MessageDialog):
+
+	def __init__(
+			self,
+			screenCurtainSettingsStorage: ScreenCurtainSettings,
+			parent,
+			title=_("Warning"),
+			message=warnOnLoadText,
+			dialogType=gui.nvdaControls.MessageDialog.DIALOG_TYPE_WARNING
+	):
+		self._settingsStorage = screenCurtainSettingsStorage
+		super().__init__(parent, title, message, dialogType)
+
+	def _addContents(self, contentsSizer):
+		self.showWarningOnLoadCheckBox: wx.CheckBox = wx.CheckBox(
+			self,
+			label=warnOnLoadCheckBoxText
+		)
+		contentsSizer.addItem(self.showWarningOnLoadCheckBox)
+		self.showWarningOnLoadCheckBox.SetValue(
+			self._settingsStorage.warnOnLoad
+		)
+
+	def _addButtons(self, buttonHelper):
+		yesButton = buttonHelper.addButton(
+			self,
+			id=wx.ID_YES,
+			# Translators: A button in the screen curtain warning dialog which allows the user to
+			# agree to enabling the curtain.
+			label=_("&Yes")
+		)
+		yesButton.Bind(wx.EVT_BUTTON, lambda evt: self._exitDialog(wx.YES))
+
+		noButton = buttonHelper.addButton(
+			self,
+			id=wx.ID_NO,
+			# Translators: A button in the screen curtain warning dialog which allows the user to
+			# disagree to enabling the curtain.
+			label=_("&No")
+		)
+		noButton.SetDefault()
+		noButton.Bind(wx.EVT_BUTTON, lambda evt: self._exitDialog(wx.NO))
+		noButton.SetFocus()
+
+	def _exitDialog(self, result: int):
+		"""
+		@param result: either wx.YES or wx.No
+		"""
+		if result == wx.YES:
+			settingsStorage = self._settingsStorage
+			settingsStorage.warnOnLoad = self.showWarningOnLoadCheckBox.IsChecked()
+			settingsStorage._saveSpecificSettings(settingsStorage, settingsStorage.preInitSettings)
+		self.EndModal(result)
+
+
+class ScreenCurtainGuiPanel(
+		gui.DriverSettingsMixin,
+		gui.SettingsPanel,
+):
+
+	_enabledCheckbox: wx.CheckBox
+	_enableCheckSizer: wx.BoxSizer
+
+	def __init__(
+			self,
+			parent,
+			getProvider: Callable[[], Optional[vision.VisionEnhancementProvider]],
+			initProvider: Callable[[], bool],
+			terminateProvider: Callable[[], None]
+	):
+		self._getProvider = getProvider
+		self._initProvider = initProvider
+		self._terminateProvider = terminateProvider
+		super().__init__(parent)
+
+	def getSettings(self) -> ScreenCurtainSettings:
+		return ScreenCurtainProvider.getSettings()
+
+	def makeSettings(self, sizer: wx.BoxSizer):
+		self._enabledCheckbox = wx.CheckBox(
+			self,
+			#  Translators: option to enable screen curtain in the vision settings panel
+			label=_("Make screen black (immediate effect)")
+		)
+		self.lastControl = self._enabledCheckbox
+		sizer.Add(self._enabledCheckbox)
+		self._enableCheckSizer = sizer
+		self.mainSizer.Add(self._enableCheckSizer, flag=wx.ALL | wx.EXPAND)
+		optionsSizer = wx.StaticBoxSizer(
+			wx.StaticBox(
+				self,
+				# Translators: The label for a group box containing the NVDA welcome dialog options.
+				label=_("Options")
+			),
+			wx.VERTICAL
+		)
+		self.settingsSizer = optionsSizer
+		self.updateDriverSettings()
+		self.Bind(wx.EVT_CHECKBOX, self._onCheckEvent)
+
+	def onPanelActivated(self):
+		self.lastControl = self._enabledCheckbox
+
+	def _onCheckEvent(self, evt: wx.CommandEvent):
+		if evt.GetEventObject() is self._enabledCheckbox:
+			self._ensureEnableState(evt.IsChecked())
+
+	def _ensureEnableState(self, shouldBeEnabled: bool):
+		currentlyEnabled = bool(self._getProvider())
+		if shouldBeEnabled and not currentlyEnabled:
+			log.debug("init provider")
+			confirmed = self.confirmInitWithUser()
+			if confirmed:
+				self._initProvider()
+			else:
+				self._enabledCheckbox.SetValue(False)
+		elif not shouldBeEnabled and currentlyEnabled:
+			log.debug("terminate provider")
+			self._terminateProvider()
+
+	def confirmInitWithUser(self) -> bool:
+		settingsStorage = self._getSettingsStorage()
+		if not settingsStorage.warnOnLoad:
+			return True
+		parent = self
+		dlg = WarnOnLoadDialog(
+			screenCurtainSettingsStorage=settingsStorage,
+			parent=parent
+		)
+		res = dlg.ShowModal()
+		# WarnOnLoadDialog can change settings, reload them
+		self.updateDriverSettings()
+		return res == wx.YES
+
+
+class ScreenCurtainProvider(vision.providerBase.VisionEnhancementProvider):
+	_settings = ScreenCurtainSettings()
 
 	@classmethod
 	def canStart(cls):
-		# return winVersion.isFullScreenMagnificationAvailable()
-		return False
+		return winVersion.isFullScreenMagnificationAvailable()
+
+	@classmethod
+	def getSettingsPanelClass(cls) -> Optional[Type]:
+		"""Returns the instance to be used in order to construct a settings panel for the provider.
+		@return: Optional[SettingsPanel]
+		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.
+		"""
+		return ScreenCurtainGuiPanel
+
+	@classmethod
+	def getSettings(cls) -> ScreenCurtainSettings:
+		return cls._settings
 
 	def __init__(self):
 		super(VisionEnhancementProvider, self).__init__()
@@ -122,72 +299,5 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 		# The screen curtain isn't interested in any events
 		pass
 
-	warnOnLoadText = _(
-		# Translators: A warning shown when activating the screen curtain.
-		# {description} is replaced by the translation of "screen curtain"
-		f"You are about to enable {description}.\n"
-		f"When {description} is enabled, the screen of your computer will go completely black.\n"
-		f"Do you really want to enable {description}?"
-	)
 
-	@classmethod
-	def confirmInitWithUser(cls) -> bool:
-		cls._initSpecificSettings(cls, cls.preInitSettings)
-		if cls.warnOnLoad:
-			parent = next(
-				(
-					dlg for dlg, state in gui.settingsDialogs.NVDASettingsDialog._instances.items()
-					if isinstance(dlg, gui.settingsDialogs.NVDASettingsDialog)
-					and state == gui.settingsDialogs.SettingsDialog._DIALOG_CREATED_STATE
-				),
-				gui.mainFrame
-			)
-			with WarnOnLoadDialog(
-				parent=parent,
-				# Translators: Title for the screen curtain warning dialog.
-				title=_("Warning"),
-				message=cls.warnOnLoadText,
-				dialogType=WarnOnLoadDialog.DIALOG_TYPE_WARNING
-			) as dlg:
-				res = dlg.ShowModal()
-				if res == wx.NO:
-					return False
-				else:
-					cls.warnOnLoad = dlg.showWarningOnLoadCheckBox.IsChecked()
-					cls._saveSpecificSettings(cls, cls.preInitSettings)
-		return True
-
-
-class WarnOnLoadDialog(gui.nvdaControls.MessageDialog):
-
-	def _addContents(self, contentsSizer):
-		self.showWarningOnLoadCheckBox = contentsSizer.addItem(wx.CheckBox(
-			self,
-			label=VisionEnhancementProvider.warnOnLoadCheckBoxText
-		))
-		self.showWarningOnLoadCheckBox.SetValue(
-			config.conf[VisionEnhancementProvider._configSection][VisionEnhancementProvider.name][
-				"warnOnLoad"
-			]
-		)
-
-	def _addButtons(self, buttonHelper):
-		yesButton = buttonHelper.addButton(
-			self,
-			id=wx.ID_YES,
-			# Translators: A button in the screen curtain warning dialog which allows the user to
-			# agree to enabling the curtain.
-			label=_("&Yes")
-		)
-		yesButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.YES))
-
-		noButton = buttonHelper.addButton(
-			self,
-			id=wx.ID_NO,
-			# Translators: A button in the screen curtain warning dialog which allows the user to
-			# disagree to enabling the curtain.
-			label=_("&No")
-		)
-		noButton.SetDefault()
-		noButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.NO))
-		noButton.SetFocus()
+VisionEnhancementProvider = ScreenCurtainProvider
