@@ -337,6 +337,7 @@ class MessageDialog(DPIScaledDialog):
 		self._setIcon(dialogType)
 		self._setSound(dialogType)
 		self.Bind(wx.EVT_SHOW, self._onShowEvt, source=self)
+		self.Bind(wx.EVT_ACTIVATE, self._onDialogActivated, source=self)
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
@@ -358,6 +359,9 @@ class MessageDialog(DPIScaledDialog):
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		self.CentreOnScreen()
+
+	def _onDialogActivated(self, evt):
+		evt.Skip()
 
 	def _onShowEvt(self, evt):
 		"""

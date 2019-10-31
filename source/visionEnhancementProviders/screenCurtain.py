@@ -132,6 +132,9 @@ warnOnLoadText = _(
 
 class WarnOnLoadDialog(gui.nvdaControls.MessageDialog):
 
+	showWarningOnLoadCheckBox: wx.CheckBox
+	noButton: wx.Button
+
 	def __init__(
 			self,
 			screenCurtainSettingsStorage: ScreenCurtainSettings,
@@ -142,6 +145,7 @@ class WarnOnLoadDialog(gui.nvdaControls.MessageDialog):
 	):
 		self._settingsStorage = screenCurtainSettingsStorage
 		super().__init__(parent, title, message, dialogType)
+		self.noButton.SetFocus()
 
 	def _addContents(self, contentsSizer):
 		self.showWarningOnLoadCheckBox: wx.CheckBox = wx.CheckBox(
@@ -163,7 +167,7 @@ class WarnOnLoadDialog(gui.nvdaControls.MessageDialog):
 		)
 		yesButton.Bind(wx.EVT_BUTTON, lambda evt: self._exitDialog(wx.YES))
 
-		noButton = buttonHelper.addButton(
+		noButton: wx.Button = buttonHelper.addButton(
 			self,
 			id=wx.ID_NO,
 			# Translators: A button in the screen curtain warning dialog which allows the user to
@@ -172,7 +176,7 @@ class WarnOnLoadDialog(gui.nvdaControls.MessageDialog):
 		)
 		noButton.SetDefault()
 		noButton.Bind(wx.EVT_BUTTON, lambda evt: self._exitDialog(wx.NO))
-		noButton.SetFocus()
+		self.noButton = noButton  # so we can manually set the focus.
 
 	def _exitDialog(self, result: int):
 		"""
@@ -183,6 +187,20 @@ class WarnOnLoadDialog(gui.nvdaControls.MessageDialog):
 			settingsStorage.warnOnLoad = self.showWarningOnLoadCheckBox.IsChecked()
 			settingsStorage._saveSpecificSettings(settingsStorage, settingsStorage.preInitSettings)
 		self.EndModal(result)
+
+	def _onDialogActivated(self, evt):
+		# focus is normally set to the first child, however, we want people to easily be able to cancel this
+		# dialog
+		super()._onDialogActivated(evt)
+		self.noButton.SetFocus()
+
+	def _onShowEvt(self, evt):
+		"""When no other dialogs have been opened first, focus lands in the wrong place (on the checkbox),
+		so we correct it after the dialog is opened.
+		"""
+		if evt.IsShown():
+			self.noButton.SetFocus()
+		super()._onShowEvt(evt)
 
 
 class ScreenCurtainGuiPanel(
