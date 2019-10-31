@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA-TW\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-09 00:10+1000\n"
-"PO-Revision-Date: 2019-08-08 15:10+0800\n"
+"POT-Creation-Date: 2019-10-25 00:10+1000\n"
+"PO-Revision-Date: 2019-10-28 11:12+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: NVDA-Taiwan Volunteers Team\n"
 "Language: zh_TW\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Poedit-Bookmarks: 127,-1,122,121,-1,606,650,117,123,-1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -3777,8 +3777,8 @@ msgid ""
 "Reports the symbol where the review cursor is positioned. Pressed twice, "
 "shows the symbol and the text used to speak it in browse mode"
 msgstr ""
-"讀出當前檢閱游標所在的符號，連按兩下，在瀏覽模式視窗中顯示該符號及其對應的替"
-"代讀音的文字。"
+"讀出當前檢閱游標所在的符號，連按兩下，在瀏覽模式視窗中顯示該符號及其對應替代"
+"讀音的文字"
 
 #. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
 msgid "No symbol replacement"
@@ -4437,13 +4437,13 @@ msgstr "當有 NVDA 對話框開啟時，無法更改作用中的組態檔"
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
 msgid "{profile} profile deactivated"
-msgstr "{profile} 組態檔停用了  "
+msgstr "{profile} 組態檔停用了"
 
 #. Translators: a message when a configuration profile is manually activated.
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
 msgid "{profile} profile activated"
-msgstr "{profile} 組態檔啟用了 "
+msgstr "{profile} 組態檔啟用了"
 
 #. Translators: The description shown in input help for a script that
 #. activates or deactivates a config profile.
@@ -7185,52 +7185,52 @@ msgstr "其他項目"
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
-msgstr "左側覆蓋{otherShape}{distance:.3g}點"
+msgstr "覆蓋到{otherShape}左側{distance:.3g}點"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
 #, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
-msgstr "左側露出 {otherShape}{distance:.3g}點"
+msgstr "被{otherShape}左側覆蓋到{distance:.3g}點"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
-msgstr "上緣覆蓋{otherShape}{distance:.3g}點"
+msgstr "覆蓋到{otherShape}上緣{distance:.3g}點"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 #, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
-msgstr "上緣露出{otherShape}{distance:.3g}點"
+msgstr "被{otherShape}上緣覆蓋到{distance:.3g}點"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
-msgstr "右側覆蓋{otherShape}{distance:.3g}點"
+msgstr "覆蓋到{otherShape}右側{distance:.3g}點"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 #, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
-msgstr "右側露出{otherShape}{distance:.3g}點"
+msgstr "被{otherShape}右側覆蓋到{distance:.3g}點"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
-msgstr "下緣覆蓋{otherShape}{distance:.3g}點"
+msgstr "覆蓋到{otherShape}下緣{distance:.3g}點"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 #, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
-msgstr "下緣露出{otherShape}{distance:.3g}點"
+msgstr "被{otherShape}下緣覆蓋到{distance:.3g}點"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers  {otherShape}"
-msgstr "在{otherShape}之上"
+msgstr "覆蓋{otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 #, python-brace-format
 msgid "behind {otherShape}"
-msgstr "在{otherShape}之下"
+msgstr "被{otherShape}覆蓋"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
 #, python-brace-format
@@ -7240,37 +7240,37 @@ msgstr "距離投影片左側邊緣{distance:.3g}點"
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
 #, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
-msgstr "投影片左側超出{distance:.3g}點"
+msgstr "超出投影片左側邊緣{distance:.3g}點"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
 #, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
-msgstr "從投影片上緣{distance:.3g}點"
+msgstr "距離投影片上緣{distance:.3g}點"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
 #, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
-msgstr "距離投影片上緣{distance:.3g}點"
+msgstr "超出投影片上緣{distance:.3g}點"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
 #, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
-msgstr "從投影片右側邊緣{distance:.3g}點"
+msgstr "距離投影片右側邊緣{distance:.3g}點"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
 #, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
-msgstr "距離投影片右側邊緣{distance:.3g}點"
+msgstr "超出投影片右側邊緣{distance:.3g}點"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
 #, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
-msgstr "從投影片下緣{distance:.3g}點"
+msgstr "距離投影片下緣{distance:.3g}點"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
 #, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
-msgstr "距離投影片下緣{distance:.3g}點"
+msgstr "超出投影片下緣{distance:.3g}點"
 
 #. Translators: The description for a script
 msgid ""
@@ -8620,7 +8620,7 @@ msgstr "將目前儲存的設定套用到登入或其他安全畫面(需要系�
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
-msgstr "自動檢查 NVDA的更新(&U)"
+msgstr "自動檢查NVDA更新(&U)"
 
 #. Translators: The label of a checkbox in general settings to toggle startup notifications
 #. for a pending NVDA update.
