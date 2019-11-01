@@ -1066,7 +1066,7 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 		...
 
 	def _getSettingsStorage(self) -> Any:
-		""" Override to change storage object for settings."""
+		""" Override to change storage object for setting values."""
 		return self.getSettings()
 
 	@classmethod
@@ -1111,7 +1111,11 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 			settingsStorage: Any
 	):
 		"""
-		Same as L{_makeSliderSettingControl} but for string settings. Returns sizer with label and combobox.
+		Same as L{_makeSliderSettingControl} but for string settings displayed in a wx.Choice control
+		Options for the choice control come from the availableXstringvalues property
+		(Dict[id, StringParameterInfo]) on the instance returned by self.getSettings()
+		The id of the value is stored on settingsStorage.
+		Returns sizer with label and combobox.
 		"""
 		labelText = f"{setting.displayNameWithAccelerator}:"
 		stringSettingAttribName = f"_{setting.id}s"
@@ -1121,7 +1125,7 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 			# Settings are stored as an ordered dict.
 			# Therefore wrap this inside a list call.
 			list(getattr(
-				settingsStorage,
+				self.getSettings(),
 				f"available{setting.id.capitalize()}s"
 			).values())
 		)
@@ -3029,11 +3033,16 @@ class VisionSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the vision panel
 	title = _("Vision")
 
+	# Translators: This is a label appearing on the vision settings panel.
+	panelDescription = _("Configure visual aides.")
+
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
 		self.initialProviders = list(vision.handler.providers)
 		self.providerPanelInstances = []
 
 		self.settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		self.settingsSizerHelper.addItem(wx.StaticText(self, label=self.panelDescription))
 
 		for providerId, provTransName, _providerRole, providerClass in vision.getProviderList():
 			providerSizer = self.settingsSizerHelper.addItem(
@@ -3237,6 +3246,8 @@ class VisionProviderSubPanel_Wrapper(
 		SettingsPanel
 ):
 
+	_checkBox: wx.CheckBox
+
 	def __init__(
 			self,
 			parent: wx.Window,
@@ -3264,33 +3275,42 @@ class VisionProviderSubPanel_Wrapper(
 		self._getProvider = getProvider
 		self._initProvider = initProvider
 		self._terminateProvider = terminateProvider
-		self._runtimeSettings: Optional[VisionProviderSubPanel_Settings] = None
-		self._runtimeSettingsSizer = wx.BoxSizer(orient=wx.VERTICAL)
+		self._providerSettings: Optional[VisionProviderSubPanel_Settings] = None
+		self._providerSettingsSizer = wx.BoxSizer(orient=wx.VERTICAL)
 		super().__init__(parent=parent)
 
 	def makeSettings(self, settingsSizer):
+		# Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
 		checkBox = wx.CheckBox(self, label=_("Enable"))
 		settingsSizer.Add(checkBox)
-		settingsSizer.Add(self._runtimeSettingsSizer, flag=wx.EXPAND, proportion=1.0)
+		settingsSizer.AddSpacer(size=self.scaleSize(10))
+		# Translators: Options label on a vision enhancement provider on the vision settings category panel
+		settingsSizer.Add(wx.StaticText(self, label=_("Options:")))
+		settingsSizer.Add(
+			self._providerSettingsSizer,
+			border=self.scaleSize(15),
+			flag=wx.LEFT | wx.EXPAND,
+			proportion=1.0
+		)
 		self._checkBox: wx.CheckBox = checkBox
 		if self._getProvider():
 			checkBox.SetValue(True)
-		if self._createRuntimeSettings():
+		if self._createProviderSettings():
 			checkBox.Bind(wx.EVT_CHECKBOX, self._enableToggle)
 		else:
 			checkBox.Bind(wx.EVT_CHECKBOX, self._nonEnableableGUI)
 
-	def _createRuntimeSettings(self):
+	def _createProviderSettings(self):
 		try:
-			self._runtimeSettings = VisionProviderSubPanel_Settings(
+			self._providerSettings = VisionProviderSubPanel_Settings(
 				self,
 				settingsCallable=self._providerType.getSettings
 			)
-			self._runtimeSettingsSizer.Add(self._runtimeSettings, flag=wx.EXPAND, proportion=1.0)
+			self._providerSettingsSizer.Add(self._providerSettings, flag=wx.EXPAND, proportion=1.0)
 		# E722: bare except used since we can not know what exceptions a provider might throw.
 		# We should be able to continue despite a buggy provider.
 		except:  # noqa: E722
-			log.error("unable to create runtime settings", exc_info=True)
+			log.error("unable to create provider settings", exc_info=True)
 			return False
 		return True
 
@@ -3305,22 +3325,22 @@ class VisionProviderSubPanel_Wrapper(
 	def _enableToggle(self, evt):
 		if not evt.IsChecked():
 			self._terminateProvider()
-			self._runtimeSettings.updateDriverSettings()
-			self._runtimeSettings.onPanelActivated()
+			self._providerSettings.updateDriverSettings()
+			self._providerSettings.onPanelActivated()
 		else:
 			self._initProvider()
-			self._runtimeSettings.updateDriverSettings()
-			self._runtimeSettings.onPanelActivated()
+			self._providerSettings.updateDriverSettings()
+			self._providerSettings.onPanelActivated()
 		self._sendLayoutUpdatedEvent()
 
 	def onDiscard(self):
-		if self._runtimeSettings:
-			self._runtimeSettings.onDiscard()
+		if self._providerSettings:
+			self._providerSettings.onDiscard()
 
 	def onSave(self):
 		log.debug(f"calling VisionProviderSubPanel_Wrapper")
-		if self._runtimeSettings:
-			self._runtimeSettings.onSave()
+		if self._providerSettings:
+			self._providerSettings.onSave()
 
 
 """ The name of the config profile currently being edited, if any.

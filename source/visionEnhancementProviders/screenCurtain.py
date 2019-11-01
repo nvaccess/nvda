@@ -311,7 +311,7 @@ class ScreenCurtainProvider(vision.providerBase.VisionEnhancementProvider):
 		return cls._settings
 
 	def __init__(self):
-		super(VisionEnhancementProvider, self).__init__()
+		super().__init__()
 		log.debug(f"ScreenCurtain", stack_info=True)
 		Magnification.MagInitialize()
 		Magnification.MagShowSystemCursor(False)

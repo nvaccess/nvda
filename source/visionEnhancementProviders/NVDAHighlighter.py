@@ -378,7 +378,7 @@ class NVDAHightlighter(vision.providerBase.VisionEnhancementProvider):
 		extensionPoints.post_browseModeMove.register(self.handleBrowseModeMove)
 
 	def __init__(self):
-		super(VisionEnhancementProvider, self).__init__()
+		super().__init__()
 		self.contextToRectMap = {}
 		winGDI.gdiPlusInitialize()
 		self.window = None
