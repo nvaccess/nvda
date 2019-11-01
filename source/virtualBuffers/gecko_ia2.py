@@ -100,8 +100,9 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		if role == controlTypes.ROLE_DOCUMENT and xmlRoles[0] == "article":
 			role = controlTypes.ROLE_ARTICLE
 		elif role == controlTypes.ROLE_GROUPING and xmlRoles[0] == "figure":
-			# This is a figure.
 			role = controlTypes.ROLE_FIGURE
+		elif role in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_SECTION) and xmlRoles[0] == "region":
+			role = controlTypes.ROLE_REGION
 		attrs['role']=role
 		attrs['states']=states
 		if level is not "" and level is not None:

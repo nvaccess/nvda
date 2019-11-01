@@ -19,7 +19,7 @@ ariaRolesToNVDARoles={
 	"dialog":controlTypes.ROLE_DIALOG,
 	"directory":controlTypes.ROLE_LIST,
 	"document":controlTypes.ROLE_DOCUMENT,
-	"figure":controlTypes.ROLE_FIGURE,
+	"figure": controlTypes.ROLE_FIGURE,
 	"form":controlTypes.ROLE_FORM,
 	"grid":controlTypes.ROLE_TABLE,
 	"gridcell":controlTypes.ROLE_TABLECELL,
@@ -39,6 +39,7 @@ ariaRolesToNVDARoles={
 	"progressbar":controlTypes.ROLE_PROGRESSBAR,
 	"radio":controlTypes.ROLE_RADIOBUTTON,
 	"radiogroup":controlTypes.ROLE_GROUPING,
+	"region": controlTypes.ROLE_REGION,
 	"row":controlTypes.ROLE_TABLEROW,
 	"rowgroup":controlTypes.ROLE_GROUPING,
 	"rowheader":controlTypes.ROLE_TABLEROWHEADER,
@@ -80,10 +81,13 @@ landmarkRoles = {
 	"search": pgettext("aria", "search"),
 	# Translators: Reported for the form landmark, normally found on web pages.
 	"form": pgettext("aria", "form"),
-	# Strictly speaking, region isn't a landmark, but it is very similar.
-	# Translators: Reported for a significant region, normally found on web pages.
-	"region": pgettext("aria", "region"),
 }
+
+ariaRolesToNVDARoles.update({
+	role: controlTypes.ROLE_LANDMARK
+	for role in landmarkRoles
+	if role not in ariaRolesToNVDARoles
+})
 
 htmlNodeNameToAriaRoles = {
 	"header": "banner",
@@ -94,4 +98,5 @@ htmlNodeNameToAriaRoles = {
 	"section": "region",
 	"aside": "complementary",
 	"dialog": "dialog",
+	"figure": "figure",
 }

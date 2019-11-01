@@ -1915,12 +1915,14 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
-		self.groupingsCheckBox = elementsGroup.addItem(wx.CheckBox(self, label=_("&Groupings")))
+		groupingsText = _("&Groupings")
+		self.groupingsCheckBox = elementsGroup.addItem(wx.CheckBox(self, label=groupingsText))
 		self.groupingsCheckBox.SetValue(config.conf["documentFormatting"]["reportGroupings"])
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
-		self.landmarksCheckBox=elementsGroup.addItem(wx.CheckBox(self,label=_("Lan&dmarks")))
+		landmarksText = _("Lan&dmarks and regions")
+		self.landmarksCheckBox = elementsGroup.addItem(wx.CheckBox(self, label=landmarksText))
 		self.landmarksCheckBox.SetValue(config.conf["documentFormatting"]["reportLandmarks"])
 
 		# Translators: This is the label for a checkbox in the

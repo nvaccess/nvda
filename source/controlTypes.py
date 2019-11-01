@@ -154,7 +154,8 @@ ROLE_DELETED_CONTENT=147
 ROLE_INSERTED_CONTENT=148
 ROLE_LANDMARK = 149
 ROLE_ARTICLE = 150
-ROLE_FIGURE = 151
+ROLE_REGION = 151
+ROLE_FIGURE = 152
 
 STATE_UNAVAILABLE=0X1
 STATE_FOCUSED=0X2
@@ -499,6 +500,8 @@ roleLabels={
 	ROLE_LANDMARK: _("landmark"),
 	# Translators: Identifies an article.
 	ROLE_ARTICLE: _("article"),
+	# Translators: Identifies a region.
+	ROLE_REGION: _("region"),
 	# Translators: Identifies a figure (commonly seen on some websites).
 	ROLE_FIGURE: _("figure"),
 }

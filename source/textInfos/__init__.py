@@ -62,6 +62,7 @@ class ControlField(Field):
 					table = None
 			if not table or (not formatConfig["includeLayoutTables"] and table.get("table-layout", None)) or table.get('isHidden',False):
 				return self.PRESCAT_LAYOUT
+
 		name = self.get("name")
 		landmark = self.get("landmark")
 		if reason in (controlTypes.REASON_CARET, controlTypes.REASON_SAYALL, controlTypes.REASON_FOCUS) and (
@@ -78,6 +79,7 @@ class ControlField(Field):
 				(role == controlTypes.ROLE_LANDMARK or landmark)
 				and not formatConfig["reportLandmarks"]
 			)
+			or (role == controlTypes.ROLE_REGION and (not name or not formatConfig["reportLandmarks"]))
 		):
 			# This is just layout as far as the user is concerned.
 			return self.PRESCAT_LAYOUT
@@ -128,6 +130,7 @@ class ControlField(Field):
 				controlTypes.ROLE_BLOCKQUOTE,
 				controlTypes.ROLE_GROUPING,
 				controlTypes.ROLE_FIGURE,
+				controlTypes.ROLE_REGION,
 				controlTypes.ROLE_FRAME,
 				controlTypes.ROLE_INTERNALFRAME,
 				controlTypes.ROLE_TOOLBAR,

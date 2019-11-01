@@ -1203,20 +1203,15 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 
 	presCat=attrs.getPresentationCategory(ancestorAttrs,formatConfig, reason=reason)
 	childControlCount=int(attrs.get('_childcontrolcount',"0"))
-	landmark = attrs.get("landmark")
-	speakLandmark = (
-		fieldType == "start_addedToControlFieldStack"
-		and formatConfig["reportLandmarks"]
-	)
+	role = attrs.get('role', controlTypes.ROLE_UNKNOWN)
 	if (
 		reason == controlTypes.REASON_FOCUS
 		or attrs.get('alwaysReportName', False)
-		or (landmark and speakLandmark)
+		or role in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_REGION)
 	):
 		name = attrs.get('name', "")
 	else:
 		name = ""
-	role=attrs.get('role',controlTypes.ROLE_UNKNOWN)
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	ariaCurrent=attrs.get('current', None)
@@ -1235,10 +1230,12 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 
 	roleText = attrs.get('roleText')
 	if not roleText:
-		if not landmark:
-			roleText = getSpeechTextForProperties(reason=reason, role=role)
-		elif speakLandmark:
+		if role == controlTypes.ROLE_LANDMARK:
+			landmark = attrs.get("landmark")
+			assert landmark, "Trying to speak landmark but no landmark given"
 			roleText = f"{aria.landmarkRoles[landmark]} {controlTypes.roleLabels[controlTypes.ROLE_LANDMARK]}"
+		else:
+			roleText = getSpeechTextForProperties(reason=reason, role=role)
 	stateText=getSpeechTextForProperties(reason=reason,states=states,_role=role)
 	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut) if config.conf["presentation"]["reportKeyboardShortcuts"] else ""
 	ariaCurrentText=getSpeechTextForProperties(reason=reason,current=ariaCurrent)
@@ -1263,7 +1260,10 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		speakEntry=True
 	elif presCat == attrs.PRESCAT_CONTAINER:
 		speakEntry=True
-		speakExitForLine=True
+		speakExitForLine = bool(
+			attrs.get('roleText')
+			or role not in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_REGION)
+		)
 		speakExitForOther=True
 
 	# Determine the order of speech.
@@ -1271,9 +1271,15 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	speakContentFirst = (
 		reason == controlTypes.REASON_FOCUS
 		and presCat != attrs.PRESCAT_CONTAINER
-		and role not in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_LIST)
+		and role not in (
+			controlTypes.ROLE_EDITABLETEXT,
+			controlTypes.ROLE_COMBOBOX,
+			controlTypes.ROLE_TREEVIEW,
+			controlTypes.ROLE_LIST,
+			controlTypes.ROLE_LANDMARK,
+			controlTypes.ROLE_REGION,
+		)
 		and not tableID
-		and not landmark
 		and controlTypes.STATE_EDITABLE not in states
 	)
 	# speakStatesFirst: Speak the states before the role.

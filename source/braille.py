@@ -176,8 +176,9 @@ roleLabels = {
 	controlTypes.ROLE_LANDMARK: _("lmk"),
 	# Translators: Displayed in braille for an object which is an article.
 	controlTypes.ROLE_ARTICLE: _("art"),
-	# Translators: Displayed in braille for an object which is a
-	# figure.
+	# Translators: Displayed in braille for an object which is a region.
+	controlTypes.ROLE_ARTICLE: _("rgn"),
+	# Translators: Displayed in braille for an object which is a figure.
 	controlTypes.ROLE_FIGURE: _("fig"),
 }
 
@@ -245,9 +246,6 @@ landmarkLabels = {
 	"search": pgettext("braille landmark abbreviation", "srch"),
 	# Translators: Displayed in braille for the form landmark, normally found on web pages.
 	"form": pgettext("braille landmark abbreviation", "form"),
-	# Strictly speaking, region isn't a landmark, but it is very similar.
-	# Translators: Displayed in braille for a significant region, normally found on web pages.
-	"region": pgettext("braille landmark abbreviation", "rgn"),
 }
 
 #: Cursor shapes
@@ -638,24 +636,28 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
 	# Cache this for later use.
 	field._presCat = presCat
+	role = field.get("role", controlTypes.ROLE_UNKNOWN)
 	landmark = field.get("landmark")
 	if reportStart:
 		# If this is a container, only report it if this is the start of the node.
 		if presCat == field.PRESCAT_CONTAINER and not field.get("_startOfNode"):
 			return None
 	else:
-		# We only report ends for containers that are not landmarks
+		# We only report ends for containers that are not landmarks/regions
 		# and only if this is the end of the node.
-		if presCat != field.PRESCAT_CONTAINER or not field.get("_endOfNode") or landmark:
+		if (
+			presCat != field.PRESCAT_CONTAINER
+			or not field.get("_endOfNode")
+			or role in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_REGION)
+		):
 			return None
 
-	role = field.get("role", controlTypes.ROLE_UNKNOWN)
 	states = field.get("states", set())
 	value=field.get('value',None)
 	current=field.get('current', None)
 	placeholder=field.get('placeholder', None)
 	roleText = field.get('roleTextBraille', field.get('roleText'))
-	if not roleText and landmark:
+	if not roleText and role == controlTypes.ROLE_LANDMARK:
 		roleText = f"{roleLabels[controlTypes.ROLE_LANDMARK]} {landmarkLabels[landmark]}"
 
 	if presCat == field.PRESCAT_LAYOUT:
@@ -692,7 +694,10 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			"placeholder": placeholder,
 			"roleText": roleText
 		}
-		if formatConfig["reportLandmarks"] and landmark:
+		if (
+			field.get('alwaysReportName', False)
+			or role in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_REGION)
+		):
 			# Ensure that the name of the field gets presented even if normally it wouldn't.
 			name = field.get("name")
 			if name:

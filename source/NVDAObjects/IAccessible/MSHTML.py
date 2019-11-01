@@ -133,13 +133,18 @@ nodeNamesToNVDARoles={
 	"OBJECT":controlTypes.ROLE_EMBEDDEDOBJECT,
 	"APPLET":controlTypes.ROLE_EMBEDDEDOBJECT,
 	"EMBED":controlTypes.ROLE_EMBEDDEDOBJECT,
-	"FIELDSET":controlTypes.ROLE_GROUPING,
+	"FIELDSET": controlTypes.ROLE_GROUPING,
 	"OPTION":controlTypes.ROLE_LISTITEM,
 	"BLOCKQUOTE":controlTypes.ROLE_BLOCKQUOTE,
 	"MATH":controlTypes.ROLE_MATH,
-	"NAV":controlTypes.ROLE_SECTION,
-	"SECTION":controlTypes.ROLE_SECTION,
+	"NAV": controlTypes.ROLE_LANDMARK,
+	"HEADER": controlTypes.ROLE_LANDMARK,
+	"MAIN": controlTypes.ROLE_LANDMARK,
+	"ASIDE": controlTypes.ROLE_LANDMARK,
+	"FOOTER": controlTypes.ROLE_LANDMARK,
+	"SECTION": controlTypes.ROLE_REGION,
 	"ARTICLE": controlTypes.ROLE_ARTICLE,
+	"FIGURE": controlTypes.ROLE_FIGURE,
 }
 
 def getZoomFactorsFromHTMLDocument(HTMLDocument):
@@ -519,7 +524,7 @@ class MSHTML(IAccessible):
 			# The IAccessibleObject is for this node (not an ancestor), so IAccessible overlay classes are relevant.
 			super(MSHTML,self).findOverlayClasses(clsList)
 			if self.IAccessibleRole == oleacc.ROLE_SYSTEM_DIALOG:
-				ariaRoles = self.HTMLAttributes["role"].split(" ")
+				ariaRoles = (self.HTMLAttributes["role"] or "").split(" ")
 				if "dialog" in ariaRoles:
 					# #2390: Don't try to calculate text for ARIA dialogs.
 					try:
@@ -732,7 +737,7 @@ class MSHTML(IAccessible):
 
 	def _get_role(self):
 		if self.HTMLNode:
-			ariaRole=self.HTMLAttributes['role']
+			ariaRole = (self.HTMLAttributes["role"] or "").split(" ")[0]
 			if ariaRole:
 				role=aria.ariaRolesToNVDARoles.get(ariaRole)
 				if role:

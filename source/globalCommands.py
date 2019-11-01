@@ -656,11 +656,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportLandmarks(self,gesture):
 		if config.conf["documentFormatting"]["reportLandmarks"]:
 			# Translators: The message announced when toggling the report landmarks document formatting setting.
-			state = _("report landmarks off")
+			state = _("report landmarks and regions off")
 			config.conf["documentFormatting"]["reportLandmarks"]=False
 		else:
 			# Translators: The message announced when toggling the report landmarks document formatting setting.
-			state = _("report landmarks on")
+			state = _("report landmarks and regions on")
 			config.conf["documentFormatting"]["reportLandmarks"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report landmarks command.

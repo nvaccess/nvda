@@ -141,10 +141,12 @@ class EdgeTextInfo(UIATextInfo):
 			controlTypes.ROLE_SECTION,
 			controlTypes.ROLE_PARAGRAPH,
 			controlTypes.ROLE_ARTICLE,
+			controlTypes.ROLE_LANDMARK,
+			controlTypes.ROLE_REGION,
 		):
 			field['isBlock']=True
 		# ARIA roledescription and landmarks
-		field['roleText']=obj.roleText
+		field['roleText'] = obj.ariaProperties.get('roledescription')
 		# provide landmarks
 		field['landmark']=obj.landmark
 		# Combo boxes with a text pattern are editable
