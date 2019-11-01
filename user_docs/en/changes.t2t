@@ -29,7 +29,6 @@ What's New in NVDA
 - On Windows 8 and later, NVDA will now report product name and version information for hosted apps such as apps downloaded from Microsoft Store using information provided by the app. (#4259, #10108)
 - When toggling track changes on and off with the keyboard in Microsoft Word, NVDA will announce the state of the setting. (#942) 
 - The NVDA version number is now logged as the first message in the log. This occurs even if logging has been disabled from the GUI. (#9803)
-- For every entry in the NVDA log, information about the originating thread is now included. (#10259)
 - The settings dialog no longer allows for changing the configured log level if it has been overridden from the command line. (#10209)
 - In Microsoft Word, NVDA now announces the display state of non printable characters when pressing the toggle shortcut Ctrl+Shift+8 . (#10241)
 - Updated Liblouis braille translator to commit 58d67e63. (#10094)
@@ -112,6 +111,7 @@ What's New in NVDA
  - This new constant allows walking over the text in a DisplayModelTextInfo in a way that more closely resembles how the text chunks are saved in the underlying model.
 - displayModel.getCaretRect now returns an instance of locationHelper.RectLTRB. (#10233)
 - The UNIT_CONTROLFIELD and UNIT_FORMATFIELD constants have been moved from virtualBuffers.VirtualBufferTextInfo to the textInfos package. (#10396)
+- For every entry in the NVDA log, information about the originating thread is now included. (#10259)
 - UIA TextInfo objects can now be moved/expanded by the page, story and formatField text units. (#10396)
 - External modules (appModules and globalPlugins) are now less likely to be able to break the creation of NVDAObjects. 
  - Exceptions caused by the "chooseNVDAObjectOverlayClasses" and "event_NVDAObject_init" methods are now properly caught and logged.
