@@ -19,6 +19,7 @@ ariaRolesToNVDARoles={
 	"dialog":controlTypes.ROLE_DIALOG,
 	"directory":controlTypes.ROLE_LIST,
 	"document":controlTypes.ROLE_DOCUMENT,
+	"figure":controlTypes.ROLE_FIGURE,
 	"form":controlTypes.ROLE_FORM,
 	"grid":controlTypes.ROLE_TABLE,
 	"gridcell":controlTypes.ROLE_TABLECELL,

@@ -62,11 +62,13 @@ class ControlField(Field):
 					table = None
 			if not table or (not formatConfig["includeLayoutTables"] and table.get("table-layout", None)) or table.get('isHidden',False):
 				return self.PRESCAT_LAYOUT
+		name = self.get("name")
 		landmark = self.get("landmark")
 		if reason in (controlTypes.REASON_CARET, controlTypes.REASON_SAYALL, controlTypes.REASON_FOCUS) and (
 			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"])
 			or (role == controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"])
 			or (role == controlTypes.ROLE_BLOCKQUOTE and not formatConfig["reportBlockQuotes"])
+			or (role == controlTypes.ROLE_GROUPING and (not name or not formatConfig["reportGroupings"]))
 			or (role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"])
 			or (role in (controlTypes.ROLE_LIST, controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
 			or (role == controlTypes.ROLE_ARTICLE and not formatConfig["reportArticles"])
@@ -101,7 +103,8 @@ class ControlField(Field):
 				controlTypes.ROLE_MENUBUTTON, 
 				controlTypes.ROLE_TREEVIEW, 
 				controlTypes.ROLE_CHECKMENUITEM, 
-				controlTypes.ROLE_RADIOMENUITEM
+				controlTypes.ROLE_RADIOMENUITEM,
+				controlTypes.ROLE_CAPTION,
 			)
 			or (role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states))
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
@@ -123,6 +126,8 @@ class ControlField(Field):
 		elif (
 			role in (
 				controlTypes.ROLE_BLOCKQUOTE,
+				controlTypes.ROLE_GROUPING,
+				controlTypes.ROLE_FIGURE,
 				controlTypes.ROLE_FRAME,
 				controlTypes.ROLE_INTERNALFRAME,
 				controlTypes.ROLE_TOOLBAR,

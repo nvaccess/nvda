@@ -127,6 +127,9 @@ roleLabels = {
 	# grouping.
 	controlTypes.ROLE_GROUPING: _("grp"),
 	# Translators: Displayed in braille for an object which is a
+	# caption.
+	controlTypes.ROLE_CAPTION: _("cap"),
+	# Translators: Displayed in braille for an object which is a
 	# embedded object.
 	controlTypes.ROLE_EMBEDDEDOBJECT: _("embedded"),
 	# Translators: Displayed in braille for an object which is a
@@ -173,6 +176,9 @@ roleLabels = {
 	controlTypes.ROLE_LANDMARK: _("lmk"),
 	# Translators: Displayed in braille for an object which is an article.
 	controlTypes.ROLE_ARTICLE: _("art"),
+	# Translators: Displayed in braille for an object which is a
+	# figure.
+	controlTypes.ROLE_FIGURE: _("fig"),
 }
 
 positiveStateLabels = {
