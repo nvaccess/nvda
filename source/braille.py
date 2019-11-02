@@ -694,10 +694,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			"placeholder": placeholder,
 			"roleText": roleText
 		}
-		if (
-			field.get('alwaysReportName', False)
-			or role in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_REGION)
-		):
+		if field.get('alwaysReportName', False):
 			# Ensure that the name of the field gets presented even if normally it wouldn't.
 			name = field.get("name")
 			if name:
