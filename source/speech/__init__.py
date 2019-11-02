@@ -1207,7 +1207,6 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	if (
 		reason == controlTypes.REASON_FOCUS
 		or attrs.get('alwaysReportName', False)
-		or role in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_REGION)
 	):
 		name = attrs.get('name', "")
 	else:

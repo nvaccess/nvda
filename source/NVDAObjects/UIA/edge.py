@@ -145,8 +145,11 @@ class EdgeTextInfo(UIATextInfo):
 			controlTypes.ROLE_REGION,
 		):
 			field['isBlock']=True
+		ariaProperties = splitUIAElementAttribs(
+			obj._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
+		)
 		# ARIA roledescription and landmarks
-		field['roleText'] = obj.ariaProperties.get('roledescription')
+		field['roleText'] = ariaProperties.get('roledescription')
 		# provide landmarks
 		field['landmark']=obj.landmark
 		# Combo boxes with a text pattern are editable
@@ -158,10 +161,9 @@ class EdgeTextInfo(UIATextInfo):
 			field['placeholder']=obj.placeholder
 		# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
 		# Later processing in Edge's getTextWithFields will remove descendant content from fields with a content attribute.
-		ariaProperties=obj._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
-		hasAriaLabel=('label=' in ariaProperties)
-		hasAriaLabelledby=('labelledby=' in ariaProperties)
-		if field.get('nameIsContent'):
+		hasAriaLabel = 'label' in ariaProperties
+		hasAriaLabelledby= 'labelledby' in ariaProperties
+		if field.get('name	IsContent'):
 			content=""
 			field.pop('name',None)
 			if hasAriaLabel or hasAriaLabelledby:
@@ -178,6 +180,8 @@ class EdgeTextInfo(UIATextInfo):
 				field['role']=controlTypes.ROLE_EMBEDDEDOBJECT
 				if not obj.value:
 					field['content']=obj.name
+		elif hasAriaLabel or hasAriaLabelledby:
+			field['alwaysReportName'] = True
 		# Give lists an item count
 		if obj.role==controlTypes.ROLE_LIST:
 			child=UIAHandler.handler.clientObject.ControlViewWalker.GetFirstChildElement(obj.UIAElement)
