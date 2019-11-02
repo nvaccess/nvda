@@ -460,7 +460,9 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		if key is not None:
 			cls.__gestures["kb:shift+%s" % key] = scriptName
 
-	def script_elementsList(self,gesture):
+	def script_elementsList(self, gesture):
+		self.passThrough = False
+		reportPassThrough(self)
 		# We need this to be a modal dialog, but it mustn't block this script.
 		def run():
 			gui.mainFrame.prePopup()
@@ -469,8 +471,10 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			d.Destroy()
 			gui.mainFrame.postPopup()
 		wx.CallAfter(run)
+
 	# Translators: the description for the Elements List command in browse mode.
 	script_elementsList.__doc__ = _("Lists various types of elements in this document")
+	script_elementsList.ignoreTreeInterceptorPassThrough = True
 
 	def _activateNVDAObject(self, obj):
 		"""Activate an object in response to a user request.
