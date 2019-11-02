@@ -143,6 +143,13 @@ UIAPropertyIdsToNVDAEventNames={
 	UIA_ItemStatusPropertyId:"UIA_itemStatus",
 }
 
+UIALandmarkTypeIdsToLandmarkNames: Dict[int, str] = {
+	UIA.UIA_FormLandmarkTypeId: "form",
+	UIA.UIA_NavigationLandmarkTypeId: "nav",
+	UIA.UIA_MainLandmarkTypeId: "main",
+	UIA.UIA_SearchLandmarkTypeId: "search",
+}
+
 UIAEventIdsToNVDAEventNames={
 	UIA_LiveRegionChangedEventId:"liveRegionChange",
 	UIA_SelectionItem_ElementSelectedEventId:"UIA_elementSelected",

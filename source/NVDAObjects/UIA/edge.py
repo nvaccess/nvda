@@ -522,13 +522,17 @@ class EdgeNode(UIA):
 		landmarkId=self._getUIACacheablePropertyValue(UIAHandler.UIA_LandmarkTypePropertyId)
 		if not landmarkId: # will be 0 for non-landmarks
 			return None
+		landmarkRole = UIAHandler.UIALandmarkTypeIdsToLandmarkNames.get(landmarkId)
+		if landmarkRole:
+			return landmarkRole
 		ariaRoles=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
 		# #7333: It is valid to provide multiple, space separated aria roles in HTML
 		# If multiple roles or even multiple landmark roles are provided, the first one is used
-		for ariaRole in ariaRoles.split():
-			if ariaRole in aria.landmarkRoles and (ariaRole!='region' or self.name):
-				return ariaRole
+		ariaRole = ariaRoles.split(" ")[0]
+		if ariaRole in aria.landmarkRoles and (ariaRole!='region' or self.name):
+			return ariaRole
 		return None
+
 
 class EdgeList(EdgeNode):
 
