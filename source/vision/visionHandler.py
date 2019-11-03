@@ -155,10 +155,6 @@ class VisionHandler(AutoPropertyObject):
 					log.error(
 						f"Error terminating provider {providerId} after registering to extension points", exc_info=True)
 				raise registerEventExtensionPointsException
-		providerSettings = providerCls.getSettings()
-		# todo: do we actually have to do initSettings here?
-		#  It might actually cause a bug, reloading settings and overwriting current static settings.
-		providerSettings.initSettings()
 		if not temporary and providerId not in config.conf['vision']['providers']:
 			config.conf['vision']['providers'] = config.conf['vision']['providers'][:] + [providerId]
 		self.providers[providerId] = providerInst
