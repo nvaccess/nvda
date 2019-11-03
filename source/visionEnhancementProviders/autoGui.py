@@ -3,7 +3,7 @@ import driverHandler
 import wx
 from autoSettingsUtils.utils import StringParameterInfo
 from vision.providerBase import VisionEnhancementProviderSettings, SupportedSettingType
-from typing import Optional, Type
+from typing import Optional, Type, Any, List
 
 
 class AutoGuiTestSettings(VisionEnhancementProviderSettings):
@@ -64,20 +64,19 @@ class AutoGuiTestSettings(VisionEnhancementProviderSettings):
 			)
 		]
 
-	@classmethod
-	def clearRuntimeSettings(cls):
-		cls._availableRuntimeSettings = []
+	def clearRuntimeSettings(self):
+		self._availableRuntimeSettings = []
 
-	@classmethod
-	def addRuntimeSettingAvailibility(cls, settingID: str):
-		cls._availableRuntimeSettings.append(settingID)
+	def addRuntimeSettingsAvailibility(self, settingIDs: List[str]):
+		self._availableRuntimeSettings.extend(settingIDs)
+		# ensure any previously saved settings are loaded from config file:
+		self._initSpecificSettings(self, self._getAvailableRuntimeSettings())
 
 	def _hasFeature(self, settingID: str) -> bool:
-		return settingID in AutoGuiTestSettings._availableRuntimeSettings
+		return settingID in self._availableRuntimeSettings
 
-	def _get_supportedSettings(self) -> SupportedSettingType:
+	def _getAvailableRuntimeSettings(self) -> SupportedSettingType:
 		settings = []
-		settings.extend(self.preInitSettings)
 		if self._hasFeature("runtimeOnlySetting"):
 			settings.extend([
 				driverHandler.NumericDriverSetting(
@@ -86,6 +85,12 @@ class AutoGuiTestSettings(VisionEnhancementProviderSettings):
 					defaultVal=50,
 				),
 			])
+		return settings
+
+	def _get_supportedSettings(self) -> SupportedSettingType:
+		settings = []
+		settings.extend(self.preInitSettings)
+		settings.extend(self._getAvailableRuntimeSettings())
 		return settings
 
 
@@ -110,19 +115,37 @@ class AutoGuiTestProvider(vision.providerBase.VisionEnhancementProvider):
 
 	def __init__(self):
 		super().__init__()
+		self._initRuntimeOnlySettings()
+		self._showCurrentConfig()
+
+	def _initRuntimeOnlySettings(self):
+		""" This method might query another application for its capabilities and initialise these configuration
+			options.
+		"""
+		settings = self.getSettings()
+		settings.addRuntimeSettingsAvailibility(["runtimeOnlySetting"])
+		if not hasattr(settings, "runtimeOnlySetting"):
+			#  Set the default
+			settings.runtimeOnlySetting = self._getValueFromDeviceOrOtherApplication("runtimeOnlySetting")
+
+	def _getValueFromDeviceOrOtherApplication(self, settingId: str) -> Any:
+		""" This method might connect to another application / device and fetch default values."""
+		return 75
+
+	def _showCurrentConfig(self):
+		"""Simple mechanism to test updating values."""
 		result = (
 			f"AutoGuiTestProvider:\n"
 			f"x: {self._settings.shouldDoX}\n"
 			f"y: {self._settings.shouldDoY}\n"
 			f"z: {self._settings.amountOfZ}\n"
 			f"name: {self._settings.nameOfSomething}\n"
-			f"runtimeOnlySetting: {getattr(self, 'runtimeOnlySetting', None)}"
+			f"runtimeOnlySetting: {self._settings.runtimeOnlySetting}"
 		)
 		wx.MessageBox(result, caption="started")
-		AutoGuiTestSettings.addRuntimeSettingAvailibility("runtimeOnlySetting")
 
 	def terminate(self):
-		AutoGuiTestSettings.clearRuntimeSettings()
+		self._settings.clearRuntimeSettings()
 		super().terminate()
 
 	def registerEventExtensionPoints(self, extensionPoints):
