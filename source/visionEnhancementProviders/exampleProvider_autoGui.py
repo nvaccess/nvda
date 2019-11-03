@@ -12,6 +12,7 @@ class AutoGuiTestSettings(VisionEnhancementProviderSettings):
 	_availableRuntimeSettings = [
 	]
 
+	# The following settings can be configured prior to runtime in this example
 	shouldDoX: bool
 	shouldDoY: bool
 	amountOfZ: int
@@ -24,7 +25,9 @@ class AutoGuiTestSettings(VisionEnhancementProviderSettings):
 		"n4": StringParameterInfo(id="n4", displayName="name four"),
 	}
 
-	runtimeOnlySetting: int
+	# The following settings are runtime only in this example
+	runtimeOnlySetting_externalValueLoad: int
+	runtimeOnlySetting_localDefault: int
 
 	@classmethod
 	def getId(cls) -> str:
@@ -64,7 +67,7 @@ class AutoGuiTestSettings(VisionEnhancementProviderSettings):
 			)
 		]
 
-	def clearRuntimeSettings(self):
+	def clearRuntimeSettingAvailability(self):
 		self._availableRuntimeSettings = []
 
 	def addRuntimeSettingsAvailibility(self, settingIDs: List[str]):
@@ -77,11 +80,19 @@ class AutoGuiTestSettings(VisionEnhancementProviderSettings):
 
 	def _getAvailableRuntimeSettings(self) -> SupportedSettingType:
 		settings = []
-		if self._hasFeature("runtimeOnlySetting"):
+		if self._hasFeature("runtimeOnlySetting_externalValueLoad"):
 			settings.extend([
 				driverHandler.NumericDriverSetting(
-					"runtimeOnlySetting",  # value stored in matching property name on class
-					"Runtime Only amount",
+					"runtimeOnlySetting_externalValueLoad",  # value stored in matching property name on class
+					"Runtime Only amount, external value load",
+					# no GUI default
+				),
+			])
+		if self._hasFeature("runtimeOnlySetting_localDefault"):
+			settings.extend([
+				driverHandler.NumericDriverSetting(
+					"runtimeOnlySetting_localDefault",  # value stored in matching property name on class
+					"Runtime Only amount, local default",
 					defaultVal=50,
 				),
 			])
@@ -123,14 +134,21 @@ class AutoGuiTestProvider(vision.providerBase.VisionEnhancementProvider):
 			options.
 		"""
 		settings = self.getSettings()
-		settings.addRuntimeSettingsAvailibility(["runtimeOnlySetting"])
-		if not hasattr(settings, "runtimeOnlySetting"):
-			#  Set the default
-			settings.runtimeOnlySetting = self._getValueFromDeviceOrOtherApplication("runtimeOnlySetting")
+		settings.addRuntimeSettingsAvailibility([
+			"runtimeOnlySetting_localDefault",
+			"runtimeOnlySetting_externalValueLoad"
+		])
+
+		# load and set values from the external source, this will override values loaded from config.
+		settings.runtimeOnlySetting_externalValueLoad = self._getValueFromDeviceOrOtherApplication(
+				"runtimeOnlySetting_externalValueLoad"
+			)
 
 	def _getValueFromDeviceOrOtherApplication(self, settingId: str) -> Any:
 		""" This method might connect to another application / device and fetch default values."""
-		return 75
+		if settingId == "runtimeOnlySetting_externalValueLoad":
+			return 75
+		return None
 
 	def _showCurrentConfig(self):
 		"""Simple mechanism to test updating values."""
@@ -140,12 +158,13 @@ class AutoGuiTestProvider(vision.providerBase.VisionEnhancementProvider):
 			f"y: {self._settings.shouldDoY}\n"
 			f"z: {self._settings.amountOfZ}\n"
 			f"name: {self._settings.nameOfSomething}\n"
-			f"runtimeOnlySetting: {self._settings.runtimeOnlySetting}"
+			f"runtimeOnlySetting_externalValueLoad: {self._settings.runtimeOnlySetting_externalValueLoad}\n"
+			f"runtimeOnlySetting_localDefault: {self._settings.runtimeOnlySetting_localDefault}\n"
 		)
 		wx.MessageBox(result, caption="started")
 
 	def terminate(self):
-		self._settings.clearRuntimeSettings()
+		self._settings.clearRuntimeSettingAvailability()
 		super().terminate()
 
 	def registerEventExtensionPoints(self, extensionPoints):
