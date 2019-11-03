@@ -1,9 +1,23 @@
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2019 NV Access Limited
+
 import vision
 import driverHandler
 import wx
 from autoSettingsUtils.utils import StringParameterInfo
 from vision.providerBase import VisionEnhancementProviderSettings, SupportedSettingType
 from typing import Optional, Type, Any, List
+
+"""Example provider, which demonstrates using the automatically constructed GUI.
+
+For examples of overriding the GUI and using a custom implementation, see NVDAHighlighter or ScreenCurtain.
+
+This example imagines that some settings are "always available", while the availability of others is unknown
+until "runtime".
+This might be because the provider must interface with an external application or device.
+"""
 
 
 class AutoGuiTestSettings(VisionEnhancementProviderSettings):
