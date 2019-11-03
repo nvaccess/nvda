@@ -3044,11 +3044,12 @@ class VisionSettingsPanel(SettingsPanel):
 
 		self.settingsSizerHelper.addItem(wx.StaticText(self, label=self.panelDescription))
 
-		for providerId, provTransName, _providerRole, providerClass in vision.getProviderList():
+		for providerInfo in vision.getProviderList():
 			providerSizer = self.settingsSizerHelper.addItem(
-				wx.StaticBoxSizer(wx.StaticBox(self, label=provTransName), wx.VERTICAL),
+				wx.StaticBoxSizer(wx.StaticBox(self, label=providerInfo.translatedName), wx.VERTICAL),
 				flag=wx.EXPAND
 			)
+			providerId = providerInfo.providerId
 			kwargs = {
 				# default value for name parameter to lambda, recommended by python3 FAQ:
 				# https://docs.python.org/3/faq/programming.html#why-do-lambdas-defined-in-a-loop-with-different-values-all-return-the-same-result
@@ -3057,13 +3058,13 @@ class VisionSettingsPanel(SettingsPanel):
 				"terminateProvider": lambda id=providerId: self.safeTerminateProviders([id], verbose=True)
 			}
 
-			settingsPanelCls = providerClass.getSettingsPanelClass()
+			settingsPanelCls = providerInfo.providerClass.getSettingsPanelClass()
 			if not settingsPanelCls:
-				log.debug(f"Using default panel for providerId: {providerId}")
+				log.debug(f"Using default panel for providerId: {providerInfo.providerId}")
 				settingsPanelCls = VisionProviderSubPanel_Wrapper
-				kwargs["providerType"] = providerClass
+				kwargs["providerType"] = providerInfo.providerClass
 			else:
-				log.debug(f"Using custom panel for providerId: {providerId}")
+				log.debug(f"Using custom panel for providerId: {providerInfo.providerId}")
 			try:
 				settingsPanel = settingsPanelCls(
 					self,
