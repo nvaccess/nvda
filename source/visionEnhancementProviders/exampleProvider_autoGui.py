@@ -28,11 +28,11 @@ class AutoGuiTestSettings(VisionEnhancementProviderSettings):
 
 	@classmethod
 	def getId(cls) -> str:
-		return "autoGui"
+		return "exampleProvider_autoGui"
 
 	@classmethod
 	def getTranslatedName(cls) -> str:
-		return "Auto Gui"  # Should actually be translated with _() method.
+		return "Example Provider with Auto Gui"  # Should normally be translated with _() method.
 
 	@classmethod
 	def _get_preInitSettings(cls) -> SupportedSettingType:
