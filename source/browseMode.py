@@ -30,7 +30,6 @@ import textInfos
 import braille
 import vision
 import speech
-from speech.types import SpeechSequence
 import sayAllHandler
 import treeInterceptorHandler
 import inputCore

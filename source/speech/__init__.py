@@ -1388,14 +1388,14 @@ def getControlFieldSpeech(  # noqa: C901
 	presCat=attrs.getPresentationCategory(ancestorAttrs,formatConfig, reason=reason)
 	childControlCount=int(attrs.get('_childcontrolcount',"0"))
 	landmark = attrs.get("landmark")
-	speakLandmark = (
+	shouldSpeakLandmark = bool(
 		fieldType == "start_addedToControlFieldStack"
 		and formatConfig["reportLandmarks"]
 	)
 	if (
 		reason == controlTypes.REASON_FOCUS
 		or attrs.get('alwaysReportName', False)
-		or (landmark and speakLandmark)
+		or (landmark and shouldSpeakLandmark)
 	):
 		name = attrs.get('name', "")
 	else:
@@ -1422,7 +1422,7 @@ def getControlFieldSpeech(  # noqa: C901
 	if not roleText:
 		if not landmark:
 			roleTextSequence = getPropertiesSpeech(reason=reason, role=role)
-		elif speakLandmark:
+		elif shouldSpeakLandmark:
 			roleTextSequence = [
 				f"{aria.landmarkRoles[landmark]} {controlTypes.roleLabels[controlTypes.ROLE_LANDMARK]}",
 			]
