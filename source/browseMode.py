@@ -1123,6 +1123,7 @@ class ElementsListDialog(wx.Dialog):
 		evt.Skip()
 
 	def onAction(self, activate):
+		prevFocus = gui.mainFrame.prevFocus
 		self.Close()
 		# Save off the last selected element type on to the class so its used in initialization next time.
 		self.__class__.lastSelectedElementType=self.lastSelectedElementType
@@ -1133,8 +1134,18 @@ class ElementsListDialog(wx.Dialog):
 		else:
 			def move():
 				speech.cancelSpeech()
+				# Avoid double announce if item.obj is about to gain focus.
+				if not (
+					self.document.passThrough
+					and getattr(item, "obj", False)
+					and item.obj != prevFocus
+					and controlTypes.STATE_FOCUSABLE in item.obj.states
+				):
+					# #8831: Report before moving because moving might change the focus, which
+					# might mutate the document, potentially invalidating info if it is
+					# offset-based.
+					item.report()
 				item.moveTo()
-				item.report()
 			# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
 			# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
 			core.callLater(100, move)
