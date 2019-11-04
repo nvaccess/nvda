@@ -162,7 +162,7 @@ class EdgeTextInfo(UIATextInfo):
 		# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
 		# Later processing in Edge's getTextWithFields will remove descendant content from fields with a content attribute.
 		hasAriaLabel = 'label' in ariaProperties
-		hasAriaLabelledby= 'labelledby' in ariaProperties
+		hasAriaLabelledby = 'labelledby' in ariaProperties
 		if field.get('name	IsContent'):
 			content=""
 			field.pop('name',None)
@@ -529,7 +529,7 @@ class EdgeNode(UIA):
 		# #7333: It is valid to provide multiple, space separated aria roles in HTML
 		# If multiple roles or even multiple landmark roles are provided, the first one is used
 		ariaRole = ariaRoles.split(" ")[0]
-		if ariaRole in aria.landmarkRoles and (ariaRole!='region' or self.name):
+		if ariaRole in aria.landmarkRoles and (ariaRole != 'region' or self.name):
 			return ariaRole
 		return None
 

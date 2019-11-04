@@ -809,7 +809,7 @@ class UIA(Window):
 		# Windows 8.x toast, although a form of tool tip, is covered separately.
 		elif UIAControlType==UIAHandler.UIA_ToolTipControlTypeId:
 			clsList.append(ToolTip)
-		elif self.UIAElement.cachedFrameworkID in ("InternetExplorer","Chrome","MicrosoftEdge"):
+		elif self.UIAElement.cachedFrameworkID in ("InternetExplorer","MicrosoftEdge"):
 			from . import edge
 			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
 				clsList.append(edge.EdgeHTMLRootContainer)

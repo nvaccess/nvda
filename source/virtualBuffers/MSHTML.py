@@ -63,7 +63,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		ariaRoles = [ar for ar in roleAttrib.split(" ") if ar]
 		#choose role
 		#Priority is aria role -> HTML tag name -> IAccessible role
-		role= next(
+		role = next(
 			(aria.ariaRolesToNVDARoles[ar] for ar in ariaRoles if ar in aria.ariaRolesToNVDARoles),
 			controlTypes.ROLE_UNKNOWN
 		)
