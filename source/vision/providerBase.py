@@ -14,7 +14,7 @@ from autoSettingsUtils.autoSettings import AutoSettings
 from baseObject import AutoPropertyObject
 from .constants import Role
 from .visionHandlerExtensionPoints import EventExtensionPoints
-from typing import FrozenSet, Type, Optional, List, Union, Tuple
+from typing import FrozenSet, Type, Optional, List, Union, Tuple, Any
 
 SupportedSettingType = Union[
 	List[driverHandler.DriverSetting],
@@ -26,23 +26,26 @@ class VisionEnhancementProviderSettings(AutoSettings, ABC):
 	"""
 	Base class for settings for a vision enhancement provider.
 	Ensure that the following are implemented:
-	- AutoSettings.getId
-	- AutoSettings.getTranslatedName
+	- AutoSettings.getId:
+			This is case sensitive. Used in the config file.
+	- AutoSettings.getTranslatedName:
+			The string that should appear in the GUI as the name
+	- AutoSettings._get_supportedSettings:
+			The "runtime" settings for your provider
 	Although technically optional, derived classes probably need to implement:
-	- AutoSettings._get_preInitSettings
-	- AutoSettings._get_supportedSettings
+	- AutoSettings._get_preInitSettings:
+			The settings always configurable for your provider
 	"""
 	supportedSettings: SupportedSettingType  # Typing for autoprop L{_get_supportedSettings}
 
 	def __init__(self):
 		super().__init__()
-		# ensure that settings are loaded at construction time.
-		self.initSettings()
+		self.initSettings()  # ensure that settings are loaded at construction time.
 
 	@classmethod
 	def _getConfigSection(cls) -> str:
-		# all providers should be in the "vision" section.
-		return "vision"
+		return "vision"  # all providers should be in the "vision" section.
+
 
 class VisionProviderStateControl:
 	""" Stub showing the interface for controling the start/termination of a single provider.
@@ -80,11 +83,15 @@ class VisionProviderStateControl:
 class VisionEnhancementProvider(AutoPropertyObject):
 	"""A class for vision enhancement providers.
 	Derived classes should implement:
-	- terminate
-	- registerEventExtensionPoints
-	- canStart
-	- getSettings
-	To provide a custom GUI, return a SettingsPanel class type from:
+	- terminate:
+			How to shutdown the provider
+	- registerEventExtensionPoints:
+			Allows the provider to receive updates form NVDA
+	- canStart:
+			Checks startup dependencies are satisfied
+	- getSettings:
+			Returns your implementation of VisionEnhancementProviderSettings
+	Optional: To provide a custom GUI, return a SettingsPanel class type from:
 	- getSettingsPanelClass
 	"""
 	cachePropertiesByDefault = True
@@ -102,9 +109,18 @@ class VisionEnhancementProvider(AutoPropertyObject):
 		...
 
 	@classmethod
-	def getSettingsPanelClass(cls) -> Optional[Type]:
+	def getSettingsPanelClass(cls) -> Optional[Any]:
 		"""Returns the instance to be used in order to construct a settings panel for the provider.
-		@return: Optional[SettingsPanel]
+		The returned class must have a constructor which accepts:
+			- parent: wx.Window
+			- providerControl: VisionProviderStateControl
+		EG:
+		``` python
+		class mySettingsPanel(gui.settingsDialogs.SettingsPanel):
+			def __init__(self, parent: wx.Window, providerControl: VisionProviderStateControl):
+				super().__init__(parent=parent)
+		```
+		@rtype: Optional[SettingsPanel]
 		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.
 		"""
 		return None

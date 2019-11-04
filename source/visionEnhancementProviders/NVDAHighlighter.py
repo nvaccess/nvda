@@ -305,10 +305,8 @@ class NVDAHighlighterGuiPanel(
 		if any(settingsToTriggerActivation):
 			if all(settingsToTriggerActivation):
 				self._enabledCheckbox.Set3StateValue(wx.CHK_CHECKED)
-				log.debug("all")
 			else:
 				self._enabledCheckbox.Set3StateValue(wx.CHK_UNDETERMINED)
-				log.debug("some")
 			self._ensureEnableState(True)
 		else:
 			self._enabledCheckbox.Set3StateValue(wx.CHK_UNCHECKED)
@@ -351,7 +349,6 @@ class NVDAHightlighter(vision.providerBase.VisionEnhancementProvider):
 
 	@classmethod
 	def getSettings(cls) -> NVDAHighlighterSettings:
-		log.debug(f"getting settings: {cls._settings.__class__!r}")
 		return cls._settings
 
 	@classmethod  # impl required by vision.providerBase.VisionEnhancementProvider
@@ -376,6 +373,7 @@ class NVDAHightlighter(vision.providerBase.VisionEnhancementProvider):
 
 	def __init__(self):
 		super().__init__()
+		log.debug("Starting NVDAHighlighter")
 		self.contextToRectMap = {}
 		winGDI.gdiPlusInitialize()
 		self.window = None
@@ -383,12 +381,8 @@ class NVDAHightlighter(vision.providerBase.VisionEnhancementProvider):
 		self._highlighterThread.daemon = True
 		self._highlighterThread.start()
 
-		# Demonstrate adding runtime settings, to test this:
-		# - make  getSettingsPanelClass return None
-		# - un-comment equivelent line in terminate (restoring settings to non-runtime version)
-		# self.__class__._settings = NVDAHighlighterSettings_Runtime()
-
 	def terminate(self):
+		log.debug("Terminating NVDAHighlighter")
 		if self._highlighterThread:
 			if not winUser.user32.PostThreadMessageW(self._highlighterThread.ident, winUser.WM_QUIT, 0, 0):
 				raise WinError()
@@ -396,8 +390,6 @@ class NVDAHightlighter(vision.providerBase.VisionEnhancementProvider):
 			self._highlighterThread = None
 		winGDI.gdiPlusTerminate()
 		self.contextToRectMap.clear()
-		# see comment in __init__
-		# self.__class__._settings = NVDAHighlighterSettings()
 
 	def _run(self):
 		if vision._isDebug():

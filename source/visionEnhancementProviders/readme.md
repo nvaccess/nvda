@@ -1,6 +1,9 @@
 ## Vision Enhancement Providers
 
-These modules use the "vision framework" (see source/vision/) to augment visual information presented to the user.
+These modules use the "vision framework" to augment visual information presented to the user.
+For more information about the implementation of a provider see vision.providerBase.VisionEnhancementProvider
+(in source/vision/providerBase.py)
+
 Two of the built-in examples are:
 - NVDA Highlighter which will react to changes in focus and draw a rectangle outline around the focused object.
 - Screen Curtain which when enabled makes the screen black for privacy reasons.

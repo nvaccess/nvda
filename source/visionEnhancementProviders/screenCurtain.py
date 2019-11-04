@@ -311,12 +311,13 @@ class ScreenCurtainProvider(vision.providerBase.VisionEnhancementProvider):
 
 	def __init__(self):
 		super().__init__()
-		log.debug(f"ScreenCurtain", stack_info=True)
+		log.debug(f"Starting ScreenCurtain")
 		Magnification.MagInitialize()
 		Magnification.MagShowSystemCursor(False)
 		Magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
 
 	def terminate(self):
+		log.debug(f"Terminating ScreenCurtain")
 		super().terminate()
 		Magnification.MagShowSystemCursor(True)
 		Magnification.MagUninitialize()

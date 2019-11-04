@@ -110,7 +110,7 @@ class VisionHandler(AutoPropertyObject):
 	It performs the following tasks:
 
 		* It keeps track of active vision enhancement providers in the L{providers} dictionary.
-		* It processes initialization and termnation of  providers.
+		* It processes initialization and termination of providers.
 		* It receives certain events from the core of NVDA,
 			delegating them to the appropriate extension points.
 	"""
