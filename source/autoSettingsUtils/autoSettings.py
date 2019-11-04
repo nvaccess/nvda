@@ -91,7 +91,7 @@ class AutoSettings(AutoPropertyObject):
 			config.conf[section][settingsId] = {}
 		# Make sure the config spec is up to date, so the config validator does its work.
 		config.conf[section][settingsId].spec.update(
-			cls._getConfigSPecForSettings(settings)
+			cls._getConfigSpecForSettings(settings)
 		)
 		# Make sure the clsOrInst has attributes for every setting
 		for setting in settings:
@@ -139,7 +139,7 @@ class AutoSettings(AutoPropertyObject):
 		return False
 
 	@classmethod
-	def _getConfigSPecForSettings(
+	def _getConfigSpecForSettings(
 			cls,
 			settings: SupportedSettingType
 	) -> Dict:
@@ -152,7 +152,7 @@ class AutoSettings(AutoPropertyObject):
 		return spec
 
 	def getConfigSpec(self):
-		return self._getConfigSPecForSettings(self.supportedSettings)
+		return self._getConfigSpecForSettings(self.supportedSettings)
 
 	@classmethod
 	def _saveSpecificSettings(
