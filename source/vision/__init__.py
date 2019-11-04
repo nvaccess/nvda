@@ -11,7 +11,6 @@ Add-ons can provide their own provider
 using modules in the visionEnhancementProviders package containing a L{VisionEnhancementProvider} class.
 """
 from vision.providerInfo import ProviderInfo
-from .constants import Role
 from . import visionHandler
 from .visionHandler import VisionHandler, getProviderClass
 import visionEnhancementProviders

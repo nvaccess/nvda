@@ -52,10 +52,9 @@ def getProviderClass(
 def getProviderList(
 		onlyStartable: bool = True
 ) -> List[providerInfo.ProviderInfo]:
-	"""Gets a list of available vision enhancement names with their descriptions as well as supported roles.
+	"""Gets a list of available vision enhancement provider information
 	@param onlyStartable: excludes all providers for which the check method returns C{False}.
-	@return: list of tuples with provider names, provider descriptions, and supported roles.
-		See L{constants.Role} for the available roles.
+	@return: List of available providers
 	"""
 	providerList = []
 	for loader, moduleName, isPkg in pkgutil.iter_modules(visionEnhancementProviders.__path__):

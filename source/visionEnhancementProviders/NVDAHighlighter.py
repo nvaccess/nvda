@@ -8,7 +8,7 @@
 from typing import Optional, Tuple
 
 import vision
-from vision.constants import Role, Context
+from vision.constants import Context
 from vision.providerBase import SupportedSettingType
 from vision.util import getContextRect
 from windowUtils import CustomWindow
@@ -205,7 +205,6 @@ class NVDAHighlighterSettings(vision.providerBase.VisionEnhancementProviderSetti
 	name = "NVDAHighlighter"
 	# Translators: Description for NVDA's built-in screen highlighter.
 	description = _("NVDA Highlighter")
-	supportedRoles = frozenset([Role.HIGHLIGHTER])
 	# Default settings for parameters
 	highlightFocus = False
 	highlightNavigator = False

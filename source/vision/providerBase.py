@@ -12,9 +12,8 @@ from abc import abstractmethod, ABC
 
 from autoSettingsUtils.autoSettings import AutoSettings
 from baseObject import AutoPropertyObject
-from .constants import Role
 from .visionHandlerExtensionPoints import EventExtensionPoints
-from typing import FrozenSet, Optional, List, Union, Tuple, Any
+from typing import Optional, List, Union, Tuple, Any
 
 SupportedSettingType = Union[
 	List[driverHandler.DriverSetting],
@@ -95,10 +94,6 @@ class VisionEnhancementProvider(AutoPropertyObject):
 	- getSettingsPanelClass
 	"""
 	cachePropertiesByDefault = True
-	#: The roles supported by this provider.
-	#: This attribute is currently not used,
-	#: but might be later for presentational purposes.
-	supportedRoles: FrozenSet[Role] = frozenset()
 
 	@classmethod
 	def getSettings(cls) -> VisionEnhancementProviderSettings:
