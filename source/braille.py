@@ -177,7 +177,7 @@ roleLabels = {
 	# Translators: Displayed in braille for an object which is an article.
 	controlTypes.ROLE_ARTICLE: _("art"),
 	# Translators: Displayed in braille for an object which is a region.
-	controlTypes.ROLE_ARTICLE: _("rgn"),
+	controlTypes.ROLE_REGION: _("rgn"),
 	# Translators: Displayed in braille for an object which is a figure.
 	controlTypes.ROLE_FIGURE: _("fig"),
 }
