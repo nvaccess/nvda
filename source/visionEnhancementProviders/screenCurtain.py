@@ -50,6 +50,8 @@ class Magnification:
 	# Get full screen color effect
 	_MagGetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, POINTER(MAGCOLOREFFECT))
 	_MagGetFullscreenColorEffectArgTypes = ((2, "effect"),)
+	_MagShowSystemCursorFuncType = WINFUNCTYPE(BOOL, BOOL)
+	_MagShowSystemCursorArgTypes = ((1, "showCursor"),)
 
 	# show system cursor
 	_MagShowSystemCursorFuncType = WINFUNCTYPE(BOOL, BOOL)
@@ -84,6 +86,7 @@ class Magnification:
 		_MagShowSystemCursorArgTypes
 	)
 	MagShowSystemCursor.errcheck = _errCheck
+<<<<<<< HEAD
 
 
 # Translators: Description of a vision enhancement provider that disables output to the screen,
@@ -315,12 +318,15 @@ class ScreenCurtainProvider(vision.providerBase.VisionEnhancementProvider):
 		Magnification.MagInitialize()
 		Magnification.MagShowSystemCursor(False)
 		Magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
+		Magnification.MagShowSystemCursor(False)
 
 	def terminate(self):
 		log.debug(f"Terminating ScreenCurtain")
-		super().terminate()
-		Magnification.MagShowSystemCursor(True)
-		Magnification.MagUninitialize()
+		try:
+			super(VisionEnhancementProvider, self).terminate()
+		finally:
+			Magnification.MagShowSystemCursor(True)
+			Magnification.MagUninitialize()
 
 	def registerEventExtensionPoints(self, extensionPoints):
 		# The screen curtain isn't interested in any events

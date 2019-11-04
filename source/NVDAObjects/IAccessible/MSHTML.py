@@ -139,7 +139,7 @@ nodeNamesToNVDARoles={
 	"MATH":controlTypes.ROLE_MATH,
 	"NAV":controlTypes.ROLE_SECTION,
 	"SECTION":controlTypes.ROLE_SECTION,
-	"ARTICLE":controlTypes.ROLE_DOCUMENT,
+	"ARTICLE": controlTypes.ROLE_ARTICLE,
 }
 
 def getZoomFactorsFromHTMLDocument(HTMLDocument):
@@ -675,6 +675,19 @@ class MSHTML(IAccessible):
 			return ""
 		return super(MSHTML,self).name
 
+	def _get_landmark(self):
+		if self.HTMLNode:
+			ariaRoles = []
+			ariaRolesString = self.HTMLAttributes['role']
+			if ariaRolesString:
+				ariaRoles.append(ariaRolesString.split(" ")[0])
+			lRole = aria.htmlNodeNameToAriaRoles.get(self.HTMLNodeName.lower())
+			if lRole:
+				ariaRoles.append(lRole)
+			if ariaRoles and ariaRoles[0] in aria.landmarkRoles:
+				return ariaRoles[0]
+		return super().landmark
+
 	def _get_value(self):
 		if self.HTMLNodeHasAncestorIAccessible:
 			try:
@@ -954,7 +967,7 @@ class MSHTML(IAccessible):
 
 	def _get_table(self):
 		if self.role not in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLEROW) or not self.HTMLNode:
-			raise NotImplementedError
+			return None
 		HTMLNode=self.HTMLNode
 		while HTMLNode:
 			nodeName=HTMLNode.nodeName
@@ -962,7 +975,7 @@ class MSHTML(IAccessible):
 				nodeName=nodeName.upper()
 			if nodeName=="TABLE": return MSHTML(HTMLNode=HTMLNode)
 			HTMLNode=HTMLNode.parentNode
-		raise NotImplementedError
+		return None
 
 	def _get_HTMLNodeUniqueNumber(self):
 		if not hasattr(self,'_HTMLNodeUniqueNumber'):
@@ -1009,7 +1022,11 @@ class MSHTML(IAccessible):
 		pass
 
 	def _get_roleText(self):
-		return self.HTMLAttributes['aria-roledescription']
+		roleText = self.HTMLAttributes['aria-roledescription']
+		if roleText:
+			return roleText
+		return super().roleText
+
 
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.
