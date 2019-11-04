@@ -3030,6 +3030,7 @@ class BrailleSettingsSubPanel(DriverSettingsMixin, SettingsPanel):
 
 
 class VisionSettingsPanel(SettingsPanel):
+	initialProviders: List[str]
 	# Translators: This is the label for the vision panel
 	title = _("Vision")
 
@@ -3096,8 +3097,9 @@ class VisionSettingsPanel(SettingsPanel):
 		success = True
 		initErrors = []
 		for providerId in providerIds:
+			providerInfo = vision.visionHandler.getProviderInfo(providerId)
 			try:
-				vision.handler.initializeProvider(providerId)
+				vision.handler.initializeProvider(providerInfo)
 			except Exception:
 				initErrors.append(providerId)
 				log.error(
@@ -3138,11 +3140,12 @@ class VisionSettingsPanel(SettingsPanel):
 		terminateErrors = []
 		for providerId in providerIds:
 			try:
+				providerInfo = vision.visionHandler.getProviderInfo(providerId)
 				# Terminating a provider from the gui should never save the settings.
 				# This is because termination happens on the fly when unchecking check boxes.
 				# Saving settings would be harmful if a user opens the vision panel,
 				# then changes some settings and disables the provider.
-				vision.handler.terminateProvider(providerId, saveSettings=False)
+				vision.handler.terminateProvider(providerInfo, saveSettings=False)
 			except Exception:
 				terminateErrors.append(providerId)
 				log.error(

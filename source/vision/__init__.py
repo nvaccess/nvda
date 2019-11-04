@@ -14,11 +14,9 @@ from vision.providerBase import VisionEnhancementProvider
 from vision.providerInfo import ProviderInfo
 from .constants import Role
 from .visionHandler import VisionHandler, getProviderClass
-import pkgutil
 import visionEnhancementProviders
 import config
-from logHandler import log
-from typing import List, Tuple, Type, Optional
+from typing import List, Optional
 
 handler: Optional[VisionHandler] = None
 
@@ -43,48 +41,11 @@ def terminate():
 def getProviderList(
 		onlyStartable: bool = True
 ) -> List[ProviderInfo]:
-	"""Gets a list of available vision enhancement names with their descriptions as well as supported roles.
+	"""Gets a list of available vision enhancement providers
 	@param onlyStartable: excludes all providers for which the check method returns C{False}.
-	@return: list of tuples with provider names, provider descriptions, and supported roles.
-		See L{constants.Role} for the available roles.
+	@return: Details of providers available
 	"""
-	providerList = []
-	for loader, moduleName, isPkg in pkgutil.iter_modules(visionEnhancementProviders.__path__):
-		if moduleName.startswith('_'):
-			continue
-		try:
-			provider = getProviderClass(moduleName)
-		except Exception:
-			# Purposely catch everything.
-			# A provider can raise whatever exception it likes,
-			# therefore it is unknown what to expect.
-			log.error(
-				f"Error while importing vision enhancement provider module {moduleName}",
-				exc_info=True
-			)
-			continue
-		try:
-			if not onlyStartable or provider.canStart():
-				providerSettings = provider.getSettings()
-				providerList.append(
-					ProviderInfo(
-						providerId=providerSettings.getId(),
-						moduleName=moduleName,
-						translatedName=providerSettings.getTranslatedName(),
-						providerClass=provider
-					)
-				)
-			else:
-				log.debugWarning(
-					f"Excluding Vision enhancement provider module {moduleName} which is unable to start"
-				)
-		except Exception:
-			# Purposely catch everything else as we don't want one failing provider
-			# make it impossible to list all the others.
-			log.error("", exc_info=True)
-	# Sort the providers alphabetically by name.
-	providerList.sort(key=lambda info:  info.translatedName.lower())
-	return providerList
+	return visionHandler.getProviderList(onlyStartable)
 
 
 def _isDebug() -> bool:

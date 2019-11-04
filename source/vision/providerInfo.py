@@ -4,7 +4,7 @@
 # Copyright (C) 2019 NV Access Limited
 from dataclasses import dataclass
 from typing import Type
-from .providerBase import VisionEnhancementProvider
+from vision import providerBase
 
 ProviderIdT = str
 ModuleNameT = str
@@ -17,4 +17,4 @@ class ProviderInfo:
 	providerId: ProviderIdT
 	moduleName: ModuleNameT
 	translatedName: TranslatedNameT
-	providerClass: Type[VisionEnhancementProvider]
+	providerClass: Type[providerBase.VisionEnhancementProvider]

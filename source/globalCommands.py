@@ -2304,6 +2304,7 @@ class GlobalCommands(ScriptableObject):
 
 		from visionEnhancementProviders.screenCurtain import ScreenCurtainProvider
 		screenCurtainId = ScreenCurtainProvider.getSettings().getId()
+		screenCurtainProviderInfo = vision.visionHandler.getProviderInfo(screenCurtainId)
 		alreadyRunning = screenCurtainId in vision.handler.providers
 
 		GlobalCommands._tempEnableScreenCurtain = scriptCount == 0
@@ -2343,7 +2344,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Reported when the screen curtain is disabled.
 			message = _("Screen curtain disabled")
 			try:
-				vision.handler.terminateProvider(screenCurtainId)
+				vision.handler.terminateProvider(screenCurtainProviderInfo)
 			except Exception:
 				# If the screen curtain was enabled, we do not expect exceptions.
 				log.error("Screen curtain termination error", exc_info=True)
@@ -2378,7 +2379,7 @@ class GlobalCommands(ScriptableObject):
 
 				try:
 					vision.handler.initializeProvider(
-						screenCurtainId,
+						screenCurtainProviderInfo,
 						temporary=tempEnable,
 					)
 				except Exception:

@@ -9,7 +9,7 @@
 The vision handler is the core of the vision framework.
 See the documentation of L{VisionHandler} for more details about what it does.
 """
-
+from . import providerInfo
 from .constants import Context
 from .providerBase import VisionEnhancementProvider
 from .visionHandlerExtensionPoints import EventExtensionPoints
@@ -21,7 +21,7 @@ import config
 from logHandler import log
 import visionEnhancementProviders
 import queueHandler
-from typing import Type, Dict, List
+from typing import Type, Dict, List, Optional
 from . import exceptions
 
 
@@ -49,6 +49,62 @@ def getProviderClass(
 			raise initialException
 
 
+def getProviderList(
+			onlyStartable: bool = True
+	) -> List[providerInfo.ProviderInfo]:
+	"""Gets a list of available vision enhancement names with their descriptions as well as supported roles.
+	@param onlyStartable: excludes all providers for which the check method returns C{False}.
+	@return: list of tuples with provider names, provider descriptions, and supported roles.
+		See L{constants.Role} for the available roles.
+	"""
+	providerList = []
+	for loader, moduleName, isPkg in pkgutil.iter_modules(visionEnhancementProviders.__path__):
+		if moduleName.startswith('_'):
+			continue
+		try:
+			provider = getProviderClass(moduleName)
+		except Exception:
+			# Purposely catch everything.
+			# A provider can raise whatever exception it likes,
+			# therefore it is unknown what to expect.
+			log.error(
+				f"Error while importing vision enhancement provider module {moduleName}",
+				exc_info=True
+			)
+			continue
+		try:
+			if not onlyStartable or provider.canStart():
+				providerSettings = provider.getSettings()
+				providerList.append(
+					providerInfo.ProviderInfo(
+						providerId=providerSettings.getId(),
+						moduleName=moduleName,
+						translatedName=providerSettings.getTranslatedName(),
+						providerClass=provider
+					)
+				)
+			else:
+				log.debugWarning(
+					f"Excluding Vision enhancement provider module {moduleName} which is unable to start"
+				)
+		except Exception:
+			# Purposely catch everything else as we don't want one failing provider
+			# make it impossible to list all the others.
+			log.error("", exc_info=True)
+	# Sort the providers alphabetically by name.
+	providerList.sort(key=lambda info:  info.translatedName.lower())
+	return providerList
+
+
+def getProviderInfo(providerId: providerInfo.ProviderIdT) -> Optional[providerInfo.ProviderInfo]:
+	# This mechanism of getting the provider list and looking it up is particularly inefficient, but, before
+	# refactoring, confirm that getProviderList is / isn't cached.
+	for p in getProviderList(onlyStartable=False):
+		if p.providerId == providerId:
+			return p
+	raise LookupError(f"Provider with id ({providerId}) does not exist.")
+
+
 class VisionHandler(AutoPropertyObject):
 	"""The singleton vision handler is the core of the vision framework.
 	It performs the following tasks:
@@ -60,7 +116,7 @@ class VisionHandler(AutoPropertyObject):
 	"""
 
 	def __init__(self):
-		self.providers: Dict[str, VisionEnhancementProvider] = dict()
+		self.providers: Dict[providerInfo.ProviderIdT, VisionEnhancementProvider] = dict()
 		self.extensionPoints: EventExtensionPoints = EventExtensionPoints()
 		queueHandler.queueFunction(queueHandler.eventQueue, self.postGuiInit)
 
@@ -72,14 +128,19 @@ class VisionHandler(AutoPropertyObject):
 		self.handleConfigProfileSwitch()
 		config.post_configProfileSwitch.register(self.handleConfigProfileSwitch)
 
-	def terminateProvider(self, providerId: str, saveSettings: bool = True):
+	def terminateProvider(
+			self,
+			provider: providerInfo.ProviderInfo,
+			saveSettings: bool = True
+	):
 		"""Terminates a currently active provider.
 		When termnation fails, an exception is raised.
 		Yet, the provider wil lbe removed from the providers dictionary,
 		so its instance goes out of scope and wil lbe garbage collected.
-		@param providerId: The provider to terminate.
-		@param saveSettings: Whether settings should be saved on termionation.
+		@param provider: The provider to terminate.
+		@param saveSettings: Whether settings should be saved on termination.
 		"""
+		providerId = provider.providerId
 		# Remove the provider from the providers dictionary.
 		providerInstance = self.providers.pop(providerId, None)
 		if not providerInstance:
@@ -118,28 +179,28 @@ class VisionHandler(AutoPropertyObject):
 		if exception:
 			raise exception
 
-	def initializeProvider(self, providerId: str, temporary: bool = False):
+	def initializeProvider(
+			self,
+			provider: providerInfo.ProviderInfo,
+			temporary: bool = False
+	):
 		"""
 		Enables and activates the supplied provider.
-		@param providerId: The id of the registered provider.
+		@param provider: The provider to initialise.
 		@param temporary: Whether the selected provider is enabled temporarily (e.g. as a fallback).
 			This defaults to C{False}.
 			If C{True}, no changes will be performed to the configuration.
 		"""
+		providerId = provider.providerId
 		providerInst = self.providers.pop(providerId, None)
 		if providerInst is not None:
-			providerCls = type(providerInst)
 			providerInst.reinitialize()
 		else:
-			try:
-				providerCls = getProviderClass(providerId)
-			except ModuleNotFoundError:
-				raise exceptions.ProviderInitException(f"No provider: {providerId!r}")
-			else:
-				if not providerCls.canStart():
-					raise exceptions.ProviderInitException(
-						f"Trying to initialize provider {providerId!r} which reported being unable to start"
-					)
+			providerCls = provider.providerClass
+			if not providerCls.canStart():
+				raise exceptions.ProviderInitException(
+					f"Trying to initialize provider {providerId!r} which reported being unable to start"
+				)
 			# Initialize the provider.
 			providerInst = providerCls()
 			# Register extension points.
@@ -205,20 +266,22 @@ class VisionHandler(AutoPropertyObject):
 		curProviders = set(self.providers)
 		providersToInitialize = configuredProviders - curProviders
 		providersToTerminate = curProviders - configuredProviders
-		for provider in providersToTerminate:
+		for providerId in providersToTerminate:
 			try:
-				self.terminateProvider(provider)
+				providerInfo = getProviderInfo(providerId)
+				self.terminateProvider(providerInfo)
 			except Exception:
 				log.error(
-					f"Could not terminate the {provider} vision enhancement provider",
+					f"Could not terminate the {providerId} vision enhancement providerId",
 					exc_info=True
 				)
-		for provider in providersToInitialize:
+		for providerId in providersToInitialize:
 			try:
-				self.initializeProvider(provider)
+				providerInfo = getProviderInfo(providerId)
+				self.initializeProvider(providerInfo)
 			except Exception:
 				log.error(
-					f"Could not initialize the {provider} vision enhancement provider",
+					f"Could not initialize the {providerId} vision enhancement providerId",
 					exc_info=True
 				)
 
