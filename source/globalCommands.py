@@ -2367,6 +2367,12 @@ class GlobalCommands(ScriptableObject):
 			# Already in the process of enabling the screen curtain, exit early.
 			# Ensure that the dialog is in the foreground, and read it again.
 			self._waitingOnScreenCurtainWarningDialog.Raise()
+
+			# Key presses interrupt speech, so it maybe that the dialog wasn't
+			# announced properly (if the user triggered the gesture more
+			# than once). So we speak the objects to imitate the dialog getting
+			# focus again. It might be useful to have something like this in a
+			# script: see https://github.com/nvaccess/nvda/issues/9147#issuecomment-454278313
 			speech.cancelSpeech()
 			speech.speakObject(
 				api.getForegroundObject(),
