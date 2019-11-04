@@ -1385,9 +1385,9 @@ def getControlFieldSpeech(  # noqa: C901
 		tableID = None
 
 	roleText = attrs.get('roleText')
-	roleTextSequence = [
-		roleText,
-	] if roleText else getPropertiesSpeech(reason=reason, role=role)
+	roleTextSequence = [roleText, ]
+	if not roleText:
+		roleTextSequence = getPropertiesSpeech(reason=reason, role=role)
 	stateTextSequence = getPropertiesSpeech(reason=reason, states=states, _role=role)
 	keyboardShortcutSequence = []
 	if config.conf["presentation"]["reportKeyboardShortcuts"]:
@@ -1471,9 +1471,10 @@ def getControlFieldSpeech(  # noqa: C901
 		and role in (controlTypes.ROLE_GROUPING, controlTypes.ROLE_PROPERTYPAGE)
 	):
 		# #3321, #709: Report the name of groupings (such as fieldsets) and tab pages for quicknav and focus jumps
-		nameSequence.extend(roleTextSequence)
-		_logBadSequenceTypes(nameSequence)
-		return nameSequence
+		nameAndRole = nameSequence[:]
+		nameAndRole.extend(roleTextSequence)
+		_logBadSequenceTypes(nameAndRole)
+		return nameAndRole
 	elif (
 		fieldType in ("start_addedToControlFieldStack", "start_relative")
 		and role in (
@@ -1504,14 +1505,14 @@ def getControlFieldSpeech(  # noqa: C901
 
 	# General cases.
 	if ((
-		speakEntry and (
+		speakEntry and ((
 			speakContentFirst
 			and fieldType in ("end_relative", "end_inControlFieldStack")
 		)
 		or (
 			not speakContentFirst
 			and fieldType in ("start_addedToControlFieldStack", "start_relative")
-		)
+		))
 	)
 	or (
 		speakWithinForLine
