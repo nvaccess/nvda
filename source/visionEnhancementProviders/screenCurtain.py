@@ -15,7 +15,10 @@ import driverHandler
 import wx
 import gui
 from logHandler import log
-from vision.providerBase import VisionEnhancementProviderSettings, SupportedSettingType
+from vision.providerBase import (
+	VisionEnhancementProviderSettings,
+	SupportedSettingType,
+)
 from typing import Optional, Type, Callable
 
 
@@ -211,16 +214,14 @@ class ScreenCurtainGuiPanel(
 	_enabledCheckbox: wx.CheckBox
 	_enableCheckSizer: wx.BoxSizer
 
+	from gui.settingsDialogs import VisionProviderStateControl
+
 	def __init__(
 			self,
 			parent,
-			getProvider: Callable[[], Optional[vision.VisionEnhancementProvider]],
-			initProvider: Callable[[], bool],
-			terminateProvider: Callable[[], None]
+			providerControl: VisionProviderStateControl
 	):
-		self._getProvider = getProvider
-		self._initProvider = initProvider
-		self._terminateProvider = terminateProvider
+		self._providerControl = providerControl
 		super().__init__(parent)
 
 	def _buildGui(self):
@@ -264,17 +265,15 @@ class ScreenCurtainGuiPanel(
 			self._ensureEnableState(evt.IsChecked())
 
 	def _ensureEnableState(self, shouldBeEnabled: bool):
-		currentlyEnabled = bool(self._getProvider())
+		currentlyEnabled = bool(self._providerControl.getProviderInstance())
 		if shouldBeEnabled and not currentlyEnabled:
-			log.debug("init provider")
 			confirmed = self.confirmInitWithUser()
 			if confirmed:
-				self._initProvider()
+				self._providerControl.startProvider()
 			else:
 				self._enabledCheckbox.SetValue(False)
 		elif not shouldBeEnabled and currentlyEnabled:
-			log.debug("terminate provider")
-			self._terminateProvider()
+			self._providerControl.terminateProvider()
 
 	def confirmInitWithUser(self) -> bool:
 		settingsStorage = self._getSettingsStorage()

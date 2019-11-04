@@ -242,16 +242,14 @@ class NVDAHighlighterGuiPanel(
 	_enableCheckSizer: wx.BoxSizer
 	_enabledCheckbox: wx.CheckBox
 
+	from gui.settingsDialogs import VisionProviderStateControl
+
 	def __init__(
 			self,
-			parent,
-			getProvider: Callable[[], Optional[vision.VisionEnhancementProvider]],
-			initProvider: Callable[[], bool],
-			terminateProvider: Callable[[], None]
+			parent: wx.Window,
+			providerControl: VisionProviderStateControl
 	):
-		self._getProvider = getProvider
-		self._initProvider = initProvider
-		self._terminateProvider = terminateProvider
+		self._providerControl = providerControl
 		super().__init__(parent)
 
 	def _buildGui(self):
@@ -317,13 +315,11 @@ class NVDAHighlighterGuiPanel(
 			self._ensureEnableState(False)
 
 	def _ensureEnableState(self, shouldBeEnabled: bool):
-		currentlyEnabled = bool(self._getProvider())
+		currentlyEnabled = bool(self._providerControl.getProviderInstance())
 		if shouldBeEnabled and not currentlyEnabled:
-			log.debug("init provider")
-			self._initProvider()
+			self._providerControl.startProvider()
 		elif not shouldBeEnabled and currentlyEnabled:
-			log.debug("terminate provider")
-			self._terminateProvider()
+			self._providerControl.terminateProvider()
 
 	def _onCheckEvent(self, evt: wx.CommandEvent):
 		settingsStorage = self._getSettingsStorage()
@@ -335,8 +331,9 @@ class NVDAHighlighterGuiPanel(
 			self.updateDriverSettings()
 		else:
 			self._updateEnabledState()
-		if self._getProvider():
-			self._getProvider().refresh()
+		providerInst: Optional[NVDAHightlighter] = self._providerControl.getProviderInstance()
+		if providerInst:
+			providerInst.refresh()
 
 
 class NVDAHightlighter(vision.providerBase.VisionEnhancementProvider):

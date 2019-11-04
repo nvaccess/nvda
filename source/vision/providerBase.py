@@ -44,6 +44,38 @@ class VisionEnhancementProviderSettings(AutoSettings, ABC):
 		# all providers should be in the "vision" section.
 		return "vision"
 
+class VisionProviderStateControl:
+	""" Stub showing the interface for controling the start/termination of a single provider.
+			Implementors of this class should handle the outcome when things go wrong.
+	"""
+
+	@abstractmethod
+	def startProvider(self) -> bool:
+		"""Initializes the provider in a way that is gui friendly,
+		showing an error if appropriate.
+		@returns: True on initialization success.
+		"""
+
+	@abstractmethod
+	def terminateProvider(self, verbose: bool = False):
+		"""Terminates one or more providers in a way that is gui friendly,
+		@verbose: Whether to show a termination error.
+		@returns: Whether initialization succeeded for all providers.
+		"""
+
+	@abstractmethod
+	def getProviderInstance(self):
+		"""Gets an instance of the provider if it already exists
+		@rtype: Optional[VisionEnhancementProvider]
+		"""
+
+	@abstractmethod
+	def getProviderInfo(self):
+		"""
+		@return: The provider info
+		@rtype: providerInfo.ProviderInfo
+		"""
+
 
 class VisionEnhancementProvider(AutoPropertyObject):
 	"""A class for vision enhancement providers.

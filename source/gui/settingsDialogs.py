@@ -3029,84 +3029,33 @@ class BrailleSettingsSubPanel(DriverSettingsMixin, SettingsPanel):
 		self.messageTimeoutEdit.Enable(not evt.IsChecked())
 
 
-class VisionSettingsPanel(SettingsPanel):
-	initialProviders: List[str]
-	# Translators: This is the label for the vision panel
-	title = _("Vision")
-
-	# Translators: This is a label appearing on the vision settings panel.
-	panelDescription = _("Configure visual aides.")
-
-	def makeSettings(self, settingsSizer: wx.BoxSizer):
-		self.initialProviders = list(vision.handler.providers)
-		self.providerPanelInstances = []
-
-		self.settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-
-		self.settingsSizerHelper.addItem(wx.StaticText(self, label=self.panelDescription))
-
-		for providerInfo in vision.getProviderList():
-			providerSizer = self.settingsSizerHelper.addItem(
-				wx.StaticBoxSizer(wx.StaticBox(self, label=providerInfo.translatedName), wx.VERTICAL),
-				flag=wx.EXPAND
-			)
-			providerId = providerInfo.providerId
-			kwargs = {
-				# default value for name parameter to lambda, recommended by python3 FAQ:
-				# https://docs.python.org/3/faq/programming.html#why-do-lambdas-defined-in-a-loop-with-different-values-all-return-the-same-result
-				"getProvider": lambda id=providerId: self._getProvider(id),
-				"initProvider": lambda id=providerId: self.safeInitProviders([id]),
-				"terminateProvider": lambda id=providerId: self.safeTerminateProviders([id], verbose=True)
-			}
-
-			settingsPanelCls = providerInfo.providerClass.getSettingsPanelClass()
-			if not settingsPanelCls:
-				log.debug(f"Using default panel for providerId: {providerInfo.providerId}")
-				settingsPanelCls = VisionProviderSubPanel_Wrapper
-				kwargs["providerType"] = providerInfo.providerClass
-			else:
-				log.debug(f"Using custom panel for providerId: {providerInfo.providerId}")
-			try:
-				settingsPanel = settingsPanelCls(
-					self,
-					**kwargs
-				)
-			# E722: bare except used since we can not know what exceptions a provider might throw.
-			# We should be able to continue despite a buggy provider.
-			except:  # noqa: E722
-				log.debug(f"Error creating providerPanel: {settingsPanelCls!r}", exc_info=True)
-				continue
-
-			if len(self.providerPanelInstances) > 0:
-				settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
-			providerSizer.Add(settingsPanel, flag=wx.EXPAND)
-			self.providerPanelInstances.append(settingsPanel)
-
-	def _getProvider(self, providerId: str) -> Optional[vision.VisionEnhancementProvider]:
-		log.debug(f"providerId: {providerId}")
-		return vision.handler.providers.get(providerId, None)
-
-	def safeInitProviders(
+class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl):
+	def __init__(
 			self,
-			providerIds: List[str]
+			parent: wx.Window,
+			providerInfo: vision.providerInfo.ProviderInfo
+	):
+		self._providerInfo = providerInfo
+		self._parent = parent
+
+	def startProvider(
+			self,
 	) -> bool:
-		"""Initializes one or more providers in a way that is gui friendly,
+		"""Initializes the provider in a way that is gui friendly,
 		showing an error if appropriate.
-		@returns: Whether initialization succeeded for all providers.
+		@returns: Whether initialization succeeded.
 		"""
 		success = True
 		initErrors = []
-		for providerId in providerIds:
-			providerInfo = vision.visionHandler.getProviderInfo(providerId)
-			try:
-				vision.handler.initializeProvider(providerInfo)
-			except Exception:
-				initErrors.append(providerId)
-				log.error(
-					f"Could not initialize the {providerId} vision enhancement provider",
-					exc_info=True
-				)
-				success = False
+		try:
+			vision.handler.initializeProvider(self._providerInfo)
+		except Exception:
+			initErrors.append(self._providerInfo.providerId)
+			log.error(
+				f"Could not initialize the {self._providerInfo.providerId} vision enhancement provider",
+				exc_info=True
+			)
+			success = False
 		if not success and initErrors:
 			if len(initErrors) == 1:
 				# Translators: This message is presented when
@@ -3124,13 +3073,12 @@ class VisionSettingsPanel(SettingsPanel):
 				# Translators: The title of the vision enhancement provider error message box.
 				_("Vision Enhancement Provider Error"),
 				wx.OK | wx.ICON_WARNING,
-				self
+				self._parent
 			)
 		return success
 
-	def safeTerminateProviders(
+	def terminateProvider(
 			self,
-			providerIds: List[str],
 			verbose: bool = False
 	):
 		"""Terminates one or more providers in a way that is gui friendly,
@@ -3138,20 +3086,18 @@ class VisionSettingsPanel(SettingsPanel):
 		@returns: Whether initialization succeeded for all providers.
 		"""
 		terminateErrors = []
-		for providerId in providerIds:
-			try:
-				providerInfo = vision.visionHandler.getProviderInfo(providerId)
-				# Terminating a provider from the gui should never save the settings.
-				# This is because termination happens on the fly when unchecking check boxes.
-				# Saving settings would be harmful if a user opens the vision panel,
-				# then changes some settings and disables the provider.
-				vision.handler.terminateProvider(providerInfo, saveSettings=False)
-			except Exception:
-				terminateErrors.append(providerId)
-				log.error(
-					f"Could not terminate the {providerId} vision enhancement provider",
-					exc_info=True
-				)
+		try:
+			# Terminating a provider from the gui should never save the settings.
+			# This is because termination happens on the fly when unchecking check boxes.
+			# Saving settings would be harmful if a user opens the vision panel,
+			# then changes some settings and disables the provider.
+			vision.handler.terminateProvider(self._providerInfo, saveSettings=False)
+		except Exception:
+			terminateErrors.append(self._providerInfo.providerId)
+			log.error(
+				f"Could not terminate the {self._providerInfo.providerId} vision enhancement provider",
+				exc_info=True
+			)
 
 		if terminateErrors:
 			if verbose:
@@ -3174,8 +3120,93 @@ class VisionSettingsPanel(SettingsPanel):
 					# Translators: The title of the vision enhancement provider error message box.
 					_("Vision Enhancement Provider Error"),
 					wx.OK | wx.ICON_WARNING,
-					self
+					self._parent
 				)
+
+	def getProviderInstance(self) -> Optional[vision.VisionEnhancementProvider]:
+		return vision.handler.providers.get(self._providerInfo.providerId, None)
+
+	def getProviderInfo(self) -> vision.providerInfo.ProviderInfo:
+		return self._providerInfo
+
+
+class VisionSettingsPanel(SettingsPanel):
+	initialProviders: List[vision.providerInfo.ProviderInfo]
+	# Translators: This is the label for the vision panel
+	title = _("Vision")
+
+	# Translators: This is a label appearing on the vision settings panel.
+	panelDescription = _("Configure visual aides.")
+
+	def _getProviderInfos(self) -> List[vision.providerInfo.ProviderInfo]:
+		return list(
+			vision.visionHandler.getProviderInfo(providerId) for providerId in vision.handler.providers
+		)
+
+	def makeSettings(self, settingsSizer: wx.BoxSizer):
+		self.initialProviders = self._getProviderInfos()
+		self.providerPanelInstances = []
+
+		self.settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		self.settingsSizerHelper.addItem(wx.StaticText(self, label=self.panelDescription))
+
+		for providerInfo in vision.getProviderList():
+			providerSizer = self.settingsSizerHelper.addItem(
+				wx.StaticBoxSizer(wx.StaticBox(self, label=providerInfo.translatedName), wx.VERTICAL),
+				flag=wx.EXPAND
+			)
+			providerControl = VisionProviderStateControl(parent=self, providerInfo=providerInfo)
+
+			settingsPanelCls = providerInfo.providerClass.getSettingsPanelClass()
+			if not settingsPanelCls:
+				log.debug(f"Using default panel for providerId: {providerInfo.providerId}")
+				settingsPanelCls = VisionProviderSubPanel_Wrapper
+			else:
+				log.debug(f"Using custom panel for providerId: {providerInfo.providerId}")
+			try:
+				settingsPanel = settingsPanelCls(parent=self, providerControl=providerControl)
+			# E722: bare except used since we can not know what exceptions a provider might throw.
+			# We should be able to continue despite a buggy provider.
+			except:  # noqa: E722
+				log.debug(f"Error creating providerPanel: {settingsPanelCls!r}", exc_info=True)
+				continue
+
+			if len(self.providerPanelInstances) > 0:
+				settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
+			providerSizer.Add(settingsPanel, flag=wx.EXPAND)
+			self.providerPanelInstances.append(settingsPanel)
+
+	def safeInitProviders(
+			self,
+			providers: List[vision.providerInfo.ProviderInfo]
+	) -> bool:
+		"""Initializes one or more providers in a way that is gui friendly,
+		showing an error if appropriate.
+		@returns: Whether initialization succeeded for all providers.
+		"""
+		results = [True]
+		for provider in providers:
+			results.append(
+				VisionProviderStateControl(self, provider).startProvider()
+			)
+		return all(results)
+
+	def safeTerminateProviders(
+			self,
+			providers: List[vision.providerInfo.ProviderInfo],
+			verbose: bool = False
+	):
+		"""Terminates one or more providers in a way that is gui friendly,
+		@verbose: Whether to show a termination error.
+		@returns: Whether termination succeeded for all providers.
+		"""
+		results = [True]
+		for provider in providers:
+			results.append(
+				VisionProviderStateControl(self, provider).terminateProvider()
+			)
+		return all(results)
 
 	def refreshPanel(self):
 		self.Freeze()
@@ -3197,13 +3228,16 @@ class VisionSettingsPanel(SettingsPanel):
 				log.debug(f"Error discarding providerPanel: {panel.__class__!r}", exc_info=True)
 
 		providersToInitialize = [
-			providerId for providerId in self.initialProviders
-			if providerId not in vision.handler.providers
+			provider for provider in self.initialProviders
+			if provider.providerId not in vision.handler.providers
 		]
 		self.safeInitProviders(providersToInitialize)
+		initialProviderIds = [
+			providerInfo.providerId for providerInfo in self.initialProviders
+		]
 		providersToTerminate = [
-			providerId for providerId in vision.handler.providers
-			if providerId not in self.initialProviders
+			vision.visionHandler.getProviderInfo(providerId) for providerId in vision.handler.providers
+			if providerId not in initialProviderIds
 		]
 		self.safeTerminateProviders(providersToTerminate)
 
@@ -3215,7 +3249,10 @@ class VisionSettingsPanel(SettingsPanel):
 			# We should be able to continue despite a buggy provider.
 			except:  # noqa: E722
 				log.debug(f"Error saving providerPanel: {panel.__class__!r}", exc_info=True)
-		self.initialProviders = list(vision.handler.providers)
+		self.initialProviders = list(
+			vision.visionHandler.getProviderInfo(providerId)
+				for providerId in vision.handler.providers
+		)
 
 
 class VisionProviderSubPanel_Settings(
@@ -3255,30 +3292,9 @@ class VisionProviderSubPanel_Wrapper(
 	def __init__(
 			self,
 			parent: wx.Window,
-			*,  # Make next argument keyword only
-			# todo: make these part of a class:
-			providerType: Type[vision.VisionEnhancementProvider],
-			getProvider: Callable[
-				[],
-				Optional[vision.VisionEnhancementProvider]
-			],  # mostly used to see if the provider is initialised or not.
-			initProvider: Callable[
-				[],
-				bool
-			],
-			terminateProvider: Callable[
-				[],
-				None
-			]
+			providerControl: VisionProviderStateControl
 	):
-		"""
-		@param getProvider: A callable that returns an instance to a VisionEnhancementProvider.
-			This will usually be a weakref, but could be any callable taking no arguments.
-		"""
-		self._providerType = providerType
-		self._getProvider = getProvider
-		self._initProvider = initProvider
-		self._terminateProvider = terminateProvider
+		self._providerControl = providerControl
 		self._providerSettings: Optional[VisionProviderSubPanel_Settings] = None
 		self._providerSettingsSizer = wx.BoxSizer(orient=wx.VERTICAL)
 		super().__init__(parent=parent)
@@ -3297,7 +3313,7 @@ class VisionProviderSubPanel_Wrapper(
 			proportion=1.0
 		)
 		self._checkBox: wx.CheckBox = checkBox
-		if self._getProvider():
+		if self._providerControl.getProviderInstance():
 			checkBox.SetValue(True)
 		if self._createProviderSettings():
 			checkBox.Bind(wx.EVT_CHECKBOX, self._enableToggle)
@@ -3306,9 +3322,10 @@ class VisionProviderSubPanel_Wrapper(
 
 	def _createProviderSettings(self):
 		try:
+			getSettingsCallable = self._providerControl.getProviderInfo().providerClass.getSettings
 			self._providerSettings = VisionProviderSubPanel_Settings(
 				self,
-				settingsCallable=self._providerType.getSettings
+				settingsCallable=getSettingsCallable
 			)
 			self._providerSettingsSizer.Add(self._providerSettings, flag=wx.EXPAND, proportion=1.0)
 		# E722: bare except used since we can not know what exceptions a provider might throw.
@@ -3328,11 +3345,11 @@ class VisionProviderSubPanel_Wrapper(
 
 	def _enableToggle(self, evt):
 		if not evt.IsChecked():
-			self._terminateProvider()
+			self._providerControl.terminateProvider()
 			self._providerSettings.updateDriverSettings()
 			self._providerSettings.onPanelActivated()
 		else:
-			self._initProvider()
+			self._providerControl.startProvider()
 			self._providerSettings.updateDriverSettings()
 			self._providerSettings.onPanelActivated()
 		self._sendLayoutUpdatedEvent()
