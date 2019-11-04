@@ -86,7 +86,6 @@ class Magnification:
 		_MagShowSystemCursorArgTypes
 	)
 	MagShowSystemCursor.errcheck = _errCheck
-<<<<<<< HEAD
 
 
 # Translators: Description of a vision enhancement provider that disables output to the screen,
