@@ -53,6 +53,7 @@ from .types import SpeechSequence
 from typing import Optional, Dict, List, Any
 from logHandler import log
 import config
+import aria
 
 speechMode_off=0
 speechMode_beeps=1
@@ -365,7 +366,28 @@ def speakObject(obj, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None
 		# objects that do not report as having navigableText should not report their text content either
 		not obj._hasNavigableText
 	)
-	allowProperties={'name':True,'role':True,'roleText':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True,"rowSpan":True,"columnSpan":True}
+	allowProperties = {
+		'name': True,
+		'role': True,
+		'roleText': True,
+		'states': True,
+		'value': True,
+		'description': True,
+		'keyboardShortcut': True,
+		'positionInfo_level': True,
+		'positionInfo_indexInGroup': True,
+		'positionInfo_similarItemsInGroup': True,
+		"cellCoordsText": True,
+		"rowNumber": True,
+		"columnNumber": True,
+		"includeTableCellCoords": True,
+		"columnCount": True,
+		"rowCount": True,
+		"rowHeaderText": True,
+		"columnHeaderText": True,
+		"rowSpan": True,
+		"columnSpan": True
+	}
 
 	if reason==controlTypes.REASON_FOCUSENTERED:
 		allowProperties["value"]=False
@@ -393,8 +415,10 @@ def speakObject(obj, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None
 	if not formatConf["reportTableHeaders"]:
 		allowProperties["rowHeaderText"]=False
 		allowProperties["columnHeaderText"]=False
-	if (not formatConf["reportTables"]
-			or (not formatConf["reportTableCellCoords"] and not formatConf["reportTableHeaders"])):
+	if (
+		not formatConf["reportTables"]
+		or (not formatConf["reportTableCellCoords"] and not formatConf["reportTableHeaders"])
+	):
 		# We definitely aren't reporting any table info at all.
 		allowProperties["rowNumber"]=False
 		allowProperties["columnNumber"]=False
@@ -1363,10 +1387,19 @@ def getControlFieldSpeech(  # noqa: C901
 
 	presCat=attrs.getPresentationCategory(ancestorAttrs,formatConfig, reason=reason)
 	childControlCount=int(attrs.get('_childcontrolcount',"0"))
-	if reason==controlTypes.REASON_FOCUS or attrs.get('alwaysReportName',False):
-		name=attrs.get('name',"")
+	landmark = attrs.get("landmark")
+	speakLandmark = (
+		fieldType == "start_addedToControlFieldStack"
+		and formatConfig["reportLandmarks"]
+	)
+	if (
+		reason == controlTypes.REASON_FOCUS
+		or attrs.get('alwaysReportName', False)
+		or (landmark and speakLandmark)
+	):
+		name = attrs.get('name', "")
 	else:
-		name=""
+		name = ""
 	role=attrs.get('role',controlTypes.ROLE_UNKNOWN)
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
@@ -1387,7 +1420,12 @@ def getControlFieldSpeech(  # noqa: C901
 	roleText = attrs.get('roleText')
 	roleTextSequence = [roleText, ]
 	if not roleText:
-		roleTextSequence = getPropertiesSpeech(reason=reason, role=role)
+		if not landmark:
+			roleTextSequence = getPropertiesSpeech(reason=reason, role=role)
+		elif speakLandmark:
+			roleTextSequence = [
+				f"{aria.landmarkRoles[landmark]} {controlTypes.roleLabels[controlTypes.ROLE_LANDMARK]}",
+			]
 	stateTextSequence = getPropertiesSpeech(reason=reason, states=states, _role=role)
 	keyboardShortcutSequence = []
 	if config.conf["presentation"]["reportKeyboardShortcuts"]:
@@ -1424,11 +1462,14 @@ def getControlFieldSpeech(  # noqa: C901
 
 	# Determine the order of speech.
 	# speakContentFirst: Speak the content before the control field info.
-	speakContentFirst = (reason == controlTypes.REASON_FOCUS
+	speakContentFirst = (
+		reason == controlTypes.REASON_FOCUS
 		and presCat != attrs.PRESCAT_CONTAINER
 		and role not in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_LIST)
 		and not tableID
-		and controlTypes.STATE_EDITABLE not in states)
+		and not landmark
+		and controlTypes.STATE_EDITABLE not in states
+	)
 	# speakStatesFirst: Speak the states before the role.
 	speakStatesFirst=role==controlTypes.ROLE_LINK
 
@@ -1844,6 +1885,16 @@ def getFormatFieldSpeech(  # noqa: C901
 			text=(_("underlined") if underline
 				# Translators: Reported when text is not underlined.
 				else _("not underlined"))
+			textList.append(text)
+		hidden = attrs.get("hidden")
+		oldHidden = attrsCache.get("hidden") if attrsCache is not None else None
+		if (hidden or oldHidden is not None) and hidden != oldHidden:
+			text = (
+				# Translators: Reported when text is hidden.
+				_("hidden")if hidden
+				# Translators: Reported when text is not hidden.
+				else _("not hidden")
+			)
 			textList.append(text)
 		textPosition=attrs.get("text-position")
 		oldTextPosition=attrsCache.get("text-position") if attrsCache is not None else None

@@ -38,6 +38,7 @@ import api
 import gui.guiHelper
 from NVDAObjects import NVDAObject
 from abc import ABCMeta, abstractmethod
+from typing import Optional
 
 REASON_QUICKNAV = "quickNav"
 
@@ -410,15 +411,29 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		except StopIteration:
 			ui.message(errorMessage)
 			return
-		item.moveTo()
+		# #8831: Report before moving because moving might change the focus, which
+		# might mutate the document, potentially invalidating info if it is
+		# offset-based.
 		if not gesture or not willSayAllResume(gesture):
 			item.report(readUnit=readUnit)
+		item.moveTo()
 
 	@classmethod
-	def addQuickNav(cls, itemType, key, nextDoc, nextError, prevDoc, prevError, readUnit=None):
+	def addQuickNav(
+			cls,
+			itemType: str,
+			key: Optional[str],
+			nextDoc: str,
+			nextError: str,
+			prevDoc: str,
+			prevError: str,
+			readUnit: Optional[str] = None
+	):
 		"""Adds a script for the given quick nav item.
 		@param itemType: The type of item, I.E. "heading" "Link" ...
-		@param key: The quick navigation key to bind to the script. Shift is automatically added for the previous item gesture. E.G. h for heading
+		@param key: The quick navigation key to bind to the script.
+			Shift is automatically added for the previous item gesture. E.G. h for heading.
+			If C{None} is provided, the script is unbound by default.
 		@param nextDoc: The command description to bind to the script that yields the next quick nav item.
 		@param nextError: The error message if there are no more quick nav items of type itemType in this direction.
 		@param prevDoc: The command description to bind to the script that yields the previous quick nav item.
@@ -435,7 +450,8 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		script.__name__ = funcName
 		script.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 		setattr(cls, funcName, script)
-		cls.__gestures["kb:%s" % key] = scriptName
+		if key is not None:
+			cls.__gestures["kb:%s" % key] = scriptName
 		scriptName = "previous%s" % scriptSuffix
 		funcName = "script_%s" % scriptName
 		script = lambda self,gesture: self._quickNavScript(gesture, itemType, "previous", prevError, readUnit)
@@ -443,7 +459,8 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		script.__name__ = funcName
 		script.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 		setattr(cls, funcName, script)
-		cls.__gestures["kb:shift+%s" % key] = scriptName
+		if key is not None:
+			cls.__gestures["kb:shift+%s" % key] = scriptName
 
 	def script_elementsList(self,gesture):
 		# We need this to be a modal dialog, but it mustn't block this script.
@@ -807,6 +824,16 @@ qn("error", key="w",
 	prevDoc=_("moves to the previous error"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous error"))
+qn(
+	"article", key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next article"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next article"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous article"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous article"))
 del qn
 
 class ElementsListDialog(wx.Dialog):
@@ -1109,49 +1136,6 @@ class ElementsListDialog(wx.Dialog):
 
 class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 
-	def getControlFieldSpeech(
-			self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None
-	) -> SpeechSequence:
-		textList = []
-		landmark = attrs.get("landmark")
-		if formatConfig["reportLandmarks"] and fieldType == "start_addedToControlFieldStack" and landmark:
-			# Ensure that the name of the field gets presented even if normally it wouldn't. 
-			name=attrs.get('name')
-			if name and attrs.getPresentationCategory(ancestorAttrs,formatConfig,reason) is None:
-				textList.append(name)
-				if landmark == "region":
-					# The word landmark is superfluous for regions.
-					landmarkRole = aria.landmarkRoles[landmark]
-					textList.append(landmarkRole)
-			if landmark != "region":
-				textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
-		baseSequence = super(BrowseModeDocumentTextInfo, self).getControlFieldSpeech(
-			attrs, ancestorAttrs, fieldType,
-			formatConfig, extraDetail, reason
-		)
-		textList.extend(baseSequence)
-		textInfos._logBadSequenceTypes(textList)
-		return textList
-
-	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
-		textList = []
-		landmark = field.get("landmark")
-		if formatConfig["reportLandmarks"] and reportStart and landmark and field.get("_startOfNode"):
-			# Ensure that the name of the field gets presented even if normally it wouldn't. 
-			name=field.get('name')
-			if name and field.getPresentationCategory(ancestors,formatConfig) is None:
-				textList.append(name)
-				if landmark == "region":
-					# The word landmark is superfluous for regions.
-					textList.append(braille.landmarkLabels[landmark])
-			if landmark != "region":
-				# Translators: This is brailled to indicate a landmark (example output: lmk main).
-				textList.append(_("lmk %s") % braille.landmarkLabels[landmark])
-		text = super(BrowseModeDocumentTextInfo, self).getControlFieldBraille(field, ancestors, reportStart, formatConfig)
-		if text:
-			textList.append(text)
-		return " ".join(textList)
-
 	def _get_focusableNVDAObjectAtStart(self):
 		try:
 			item = next(self.obj._iterNodesByType("focusable", "up", self))
@@ -1334,7 +1318,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		# We've hit the edge of the focused control.
 		# Therefore, move the virtual caret to the same edge of the field.
 		info = self.makeTextInfo(textInfos.POSITION_CARET)
-		info.expand(info.UNIT_CONTROLFIELD)
+		info.expand(textInfos.UNIT_CONTROLFIELD)
 		if gesture.mainKeyName in ("leftArrow", "upArrow", "pageUp"):
 			info.collapse()
 		else:

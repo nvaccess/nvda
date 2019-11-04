@@ -1,8 +1,7 @@
-#textInfos/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -68,14 +67,20 @@ class ControlField(Field):
 					table = None
 			if not table or (not formatConfig["includeLayoutTables"] and table.get("table-layout", None)) or table.get('isHidden',False):
 				return self.PRESCAT_LAYOUT
+		landmark = self.get("landmark")
 		if reason in (controlTypes.REASON_CARET, controlTypes.REASON_SAYALL, controlTypes.REASON_FOCUS) and (
 			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"])
 			or (role == controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"])
 			or (role == controlTypes.ROLE_BLOCKQUOTE and not formatConfig["reportBlockQuotes"])
 			or (role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"])
 			or (role in (controlTypes.ROLE_LIST, controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
+			or (role == controlTypes.ROLE_ARTICLE and not formatConfig["reportArticles"])
 			or (role in (controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME) and not formatConfig["reportFrames"])
 			or (role in (controlTypes.ROLE_DELETED_CONTENT,controlTypes.ROLE_INSERTED_CONTENT) and not formatConfig["reportRevisions"])
+			or (
+				(role == controlTypes.ROLE_LANDMARK or landmark)
+				and not formatConfig["reportLandmarks"]
+			)
 		):
 			# This is just layout as far as the user is concerned.
 			return self.PRESCAT_LAYOUT
@@ -107,7 +112,16 @@ class ControlField(Field):
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
 		):
 			return self.PRESCAT_SINGLELINE
-		elif role in (controlTypes.ROLE_SEPARATOR, controlTypes.ROLE_FOOTNOTE, controlTypes.ROLE_ENDNOTE, controlTypes.ROLE_EMBEDDEDOBJECT, controlTypes.ROLE_MATH):
+		elif (
+			role in (
+				controlTypes.ROLE_SEPARATOR,
+				controlTypes.ROLE_FOOTNOTE,
+				controlTypes.ROLE_ENDNOTE,
+				controlTypes.ROLE_EMBEDDEDOBJECT,
+				controlTypes.ROLE_MATH
+			)
+			or (role == controlTypes.ROLE_LANDMARK or landmark)
+		):
 			return self.PRESCAT_MARKER
 		elif role in (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG):
 			# Applications and dialogs should be reported as markers when embedded within content, but not when they themselves are the root
@@ -115,8 +129,20 @@ class ControlField(Field):
 		elif role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER):
 			return self.PRESCAT_CELL
 		elif (
-			role in (controlTypes.ROLE_BLOCKQUOTE, controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME, controlTypes.ROLE_TOOLBAR, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU, controlTypes.ROLE_TABLE)
-			or (role == controlTypes.ROLE_EDITABLETEXT and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states) and controlTypes.STATE_MULTILINE in states)
+			role in (
+				controlTypes.ROLE_BLOCKQUOTE,
+				controlTypes.ROLE_FRAME,
+				controlTypes.ROLE_INTERNALFRAME,
+				controlTypes.ROLE_TOOLBAR,
+				controlTypes.ROLE_MENUBAR,
+				controlTypes.ROLE_POPUPMENU,
+				controlTypes.ROLE_TABLE,
+				controlTypes.ROLE_ARTICLE,
+			)
+			or (role == controlTypes.ROLE_EDITABLETEXT and (
+				controlTypes.STATE_READONLY not in states
+				or controlTypes.STATE_FOCUSABLE in states
+			) and controlTypes.STATE_MULTILINE in states)
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states)
 			or (controlTypes.STATE_FOCUSABLE in states and controlTypes.STATE_EDITABLE in states)
 		):
@@ -194,21 +220,24 @@ class Bookmark(baseObject.AutoPropertyObject):
 	def __ne__(self,other):
 		return not self==other
 
+
 #Unit constants
-UNIT_CHARACTER="character"
-UNIT_WORD="word"
-UNIT_LINE="line"
-UNIT_SENTENCE="sentence"
-UNIT_PARAGRAPH="paragraph"
-UNIT_PAGE="page"
-UNIT_TABLE="table"
-UNIT_ROW="row"
-UNIT_COLUMN="column"
-UNIT_CELL="cell"
-UNIT_SCREEN="screen"
-UNIT_STORY="story"
-UNIT_READINGCHUNK="readingChunk"
-UNIT_OFFSET="offset"
+UNIT_CHARACTER = "character"
+UNIT_WORD = "word"
+UNIT_LINE = "line"
+UNIT_SENTENCE = "sentence"
+UNIT_PARAGRAPH = "paragraph"
+UNIT_PAGE = "page"
+UNIT_TABLE = "table"
+UNIT_ROW = "row"
+UNIT_COLUMN = "column"
+UNIT_CELL = "cell"
+UNIT_SCREEN = "screen"
+UNIT_STORY = "story"
+UNIT_READINGCHUNK = "readingChunk"
+UNIT_OFFSET = "offset"
+UNIT_CONTROLFIELD = "controlField"
+UNIT_FORMATFIELD = "formatField"
 
 MOUSE_TEXT_RESOLUTION_UNITS = (UNIT_CHARACTER,UNIT_WORD,UNIT_LINE,UNIT_PARAGRAPH)
 
