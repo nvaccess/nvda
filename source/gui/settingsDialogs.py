@@ -1309,8 +1309,8 @@ class VoiceSettingsPanel(DriverSettingsMixin, SettingsPanel):
 		# read text in that dialect).
 		autoDialectSwitchingText = _("Automatic dialect switching (when supported)")
 		self.autoDialectSwitchingCheckbox = settingsSizerHelper.addItem(
-			wx.CheckBox(self, label=autoDialectSwitchingText
-		))
+			wx.CheckBox(self, label=autoDialectSwitchingText)
+		)
 		self.autoDialectSwitchingCheckbox.SetValue(
 			config.conf["speech"]["autoDialectSwitching"]
 		)
