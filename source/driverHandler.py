@@ -54,7 +54,6 @@ class Driver(AutoSettings):
 		@postcondition: This driver can be used.
 		"""
 		super(Driver, self).__init__()
-		self._registerConfigSaveAction()
 
 	def terminate(self, saveSettings: bool = True):
 		"""Terminate this driver.
@@ -102,7 +101,7 @@ class Driver(AutoSettings):
 		"""
 		return percentToParam(percent, min, max)
 
-# Impl for abstract methods in AutoSettings class
+	# Impl for abstract methods in AutoSettings class
 	@classmethod
 	def getId(cls) -> str:
 		return cls.name

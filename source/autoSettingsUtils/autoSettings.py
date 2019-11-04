@@ -32,6 +32,9 @@ class AutoSettings(AutoPropertyObject):
 	"""
 
 	def __init__(self):
+		"""Perform any initialisation
+		@note: registers with the config save action extension point
+		"""
 		super().__init__()
 		self._registerConfigSaveAction()
 
