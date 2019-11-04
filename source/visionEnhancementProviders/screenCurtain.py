@@ -50,8 +50,6 @@ class Magnification:
 	# Get full screen color effect
 	_MagGetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, POINTER(MAGCOLOREFFECT))
 	_MagGetFullscreenColorEffectArgTypes = ((2, "effect"),)
-	_MagShowSystemCursorFuncType = WINFUNCTYPE(BOOL, BOOL)
-	_MagShowSystemCursorArgTypes = ((1, "showCursor"),)
 
 	# show system cursor
 	_MagShowSystemCursorFuncType = WINFUNCTYPE(BOOL, BOOL)
@@ -315,14 +313,13 @@ class ScreenCurtainProvider(vision.providerBase.VisionEnhancementProvider):
 		super().__init__()
 		log.debug(f"Starting ScreenCurtain")
 		Magnification.MagInitialize()
-		Magnification.MagShowSystemCursor(False)
 		Magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
 		Magnification.MagShowSystemCursor(False)
 
 	def terminate(self):
 		log.debug(f"Terminating ScreenCurtain")
 		try:
-			super(VisionEnhancementProvider, self).terminate()
+			super().terminate()
 		finally:
 			Magnification.MagShowSystemCursor(True)
 			Magnification.MagUninitialize()
