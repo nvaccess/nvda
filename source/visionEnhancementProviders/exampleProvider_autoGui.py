@@ -155,8 +155,8 @@ class AutoGuiTestProvider(vision.providerBase.VisionEnhancementProvider):
 
 		# load and set values from the external source, this will override values loaded from config.
 		settings.runtimeOnlySetting_externalValueLoad = self._getValueFromDeviceOrOtherApplication(
-				"runtimeOnlySetting_externalValueLoad"
-			)
+			"runtimeOnlySetting_externalValueLoad"
+		)
 
 	def _getValueFromDeviceOrOtherApplication(self, settingId: str) -> Any:
 		""" This method might connect to another application / device and fetch default values."""

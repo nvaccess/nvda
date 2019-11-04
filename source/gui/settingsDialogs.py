@@ -12,6 +12,7 @@ from abc import abstractmethod, ABCMeta
 import copy
 import re
 import wx
+from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib import scrolledpanel
 from wx.lib.expando import ExpandoTextCtrl
 import wx.lib.newevent
@@ -34,7 +35,8 @@ import braille
 import brailleTables
 import brailleInput
 import vision
-from typing import Callable, List, Type, Optional, Any
+import vision.providerBase
+from typing import Callable, List, Optional, Any
 import core
 import keyboardHandler
 import characterProcessing
@@ -3123,7 +3125,7 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 					self._parent
 				)
 
-	def getProviderInstance(self) -> Optional[vision.VisionEnhancementProvider]:
+	def getProviderInstance(self) -> Optional[vision.providerBase.VisionEnhancementProvider]:
 		return vision.handler.providers.get(self._providerInfo.providerId, None)
 
 	def getProviderInfo(self) -> vision.providerInfo.ProviderInfo:
@@ -3251,7 +3253,7 @@ class VisionSettingsPanel(SettingsPanel):
 				log.debug(f"Error saving providerPanel: {panel.__class__!r}", exc_info=True)
 		self.initialProviders = list(
 			vision.visionHandler.getProviderInfo(providerId)
-				for providerId in vision.handler.providers
+			for providerId in vision.handler.providers
 		)
 
 
@@ -3260,6 +3262,8 @@ class VisionProviderSubPanel_Settings(
 		SettingsPanel
 ):
 
+	_settingsCallable: Callable[[], VisionEnhancementProviderSettings]
+
 	def __init__(
 			self,
 			parent: wx.Window,
@@ -3267,7 +3271,7 @@ class VisionProviderSubPanel_Settings(
 			settingsCallable: Callable[[], vision.providerBase.VisionEnhancementProviderSettings]
 	):
 		"""
-		@param providerCallable: A callable that returns an instance to a VisionEnhancementProvider.
+		@param settingsCallable: A callable that returns an instance to a VisionEnhancementProviderSettings.
 			This will usually be a weakref, but could be any callable taking no arguments.
 		"""
 		self._settingsCallable = settingsCallable
@@ -3275,7 +3279,6 @@ class VisionProviderSubPanel_Settings(
 
 	def getSettings(self) -> AutoSettings:
 		settings = self._settingsCallable()
-		log.debug(f"getting settings: {settings.__class__!r}")
 		return settings
 
 	def makeSettings(self, settingsSizer):

@@ -14,7 +14,7 @@ from autoSettingsUtils.autoSettings import AutoSettings
 from baseObject import AutoPropertyObject
 from .constants import Role
 from .visionHandlerExtensionPoints import EventExtensionPoints
-from typing import FrozenSet, Type, Optional, List, Union, Tuple, Any
+from typing import FrozenSet, Optional, List, Union, Tuple, Any
 
 SupportedSettingType = Union[
 	List[driverHandler.DriverSetting],

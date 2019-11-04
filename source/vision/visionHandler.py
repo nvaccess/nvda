@@ -50,8 +50,8 @@ def getProviderClass(
 
 
 def getProviderList(
-			onlyStartable: bool = True
-	) -> List[providerInfo.ProviderInfo]:
+		onlyStartable: bool = True
+) -> List[providerInfo.ProviderInfo]:
 	"""Gets a list of available vision enhancement names with their descriptions as well as supported roles.
 	@param onlyStartable: excludes all providers for which the check method returns C{False}.
 	@return: list of tuples with provider names, provider descriptions, and supported roles.
@@ -92,7 +92,7 @@ def getProviderList(
 			# make it impossible to list all the others.
 			log.error("", exc_info=True)
 	# Sort the providers alphabetically by name.
-	providerList.sort(key=lambda info:  info.translatedName.lower())
+	providerList.sort(key=lambda info: info.translatedName.lower())
 	return providerList
 
 

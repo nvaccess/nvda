@@ -5,7 +5,7 @@
 # Copyright (C) 2018-2019 NV Access Limited, Babbage B.V., Takuya Nishimoto
 
 """Default highlighter based on GDI Plus."""
-from typing import Callable, Optional, Tuple
+from typing import Optional, Tuple
 
 import vision
 from vision.constants import Role, Context

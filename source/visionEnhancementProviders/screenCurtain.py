@@ -19,7 +19,7 @@ from vision.providerBase import (
 	VisionEnhancementProviderSettings,
 	SupportedSettingType,
 )
-from typing import Optional, Type, Callable
+from typing import Optional, Type
 
 
 class MAGCOLOREFFECT(Structure):

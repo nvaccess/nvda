@@ -9,7 +9,6 @@ from vision import providerBase
 ProviderIdT = str
 ModuleNameT = str
 TranslatedNameT = str
-#RolesT = List[Role]
 
 
 @dataclass
