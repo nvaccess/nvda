@@ -105,7 +105,7 @@ class VisionEnhancementProvider(AutoPropertyObject):
 
 	@classmethod
 	def getSettingsPanelClass(cls) -> Optional[Any]:
-		"""Returns the instance to be used in order to construct a settings panel for the provider.
+		"""Returns the class to be used in order to construct a settingsPanel instance for the provider.
 		The returned class must have a constructor which accepts:
 			- parent: wx.Window
 			- providerControl: VisionProviderStateControl
