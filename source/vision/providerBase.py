@@ -47,22 +47,22 @@ class VisionEnhancementProviderSettings(AutoSettings, ABC):
 
 
 class VisionProviderStateControl:
-	""" Stub showing the interface for controling the start/termination of a single provider.
+	""" Stub showing the interface for controlling the start/termination of a single provider.
 			Implementors of this class should handle the outcome when things go wrong.
 	"""
 
 	@abstractmethod
-	def startProvider(self) -> bool:
-		"""Initializes the provider in a way that is gui friendly,
+	def startProvider(self) -> None:
+		"""Initializes the provider in a way that is GUI friendly,
 		showing an error if appropriate.
-		@returns: True on initialization success.
+		@note: Use getProviderInstance to determine success
 		"""
 
 	@abstractmethod
-	def terminateProvider(self, verbose: bool = False):
-		"""Terminates one or more providers in a way that is gui friendly,
+	def terminateProvider(self, verbose: bool = False) -> None:
+		"""Terminates one or more providers in a way that is GUI friendly,
 		@verbose: Whether to show a termination error.
-		@returns: Whether initialization succeeded for all providers.
+		@note: Use getProviderInstance to determine success
 		"""
 
 	@abstractmethod
@@ -120,7 +120,7 @@ class VisionEnhancementProvider(AutoPropertyObject):
 		"""
 		return None
 
-	def reinitialize(self):
+	def reinitialize(self) -> None:
 		"""Reinitialize a vision enhancement provider, reusing the same instance.
 		This base implementation simply calls terminate and __init__ consecutively.
 		"""
@@ -128,7 +128,7 @@ class VisionEnhancementProvider(AutoPropertyObject):
 		self.__init__()
 
 	@abstractmethod
-	def terminate(self):
+	def terminate(self) -> None:
 		"""Terminate this driver.
 		This should be used for any required clean up.
 		@precondition: L{initialize} has been called.
@@ -137,7 +137,7 @@ class VisionEnhancementProvider(AutoPropertyObject):
 		...
 
 	@abstractmethod
-	def registerEventExtensionPoints(self, extensionPoints: EventExtensionPoints):
+	def registerEventExtensionPoints(self, extensionPoints: EventExtensionPoints) -> None:
 		"""
 		Called at provider initialization time, this method should register the provider
 		to the several event extension points that it is interested in.

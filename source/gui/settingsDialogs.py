@@ -3042,10 +3042,9 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 
 	def startProvider(
 			self,
-	) -> bool:
+	) -> None:
 		"""Initializes the provider in a way that is gui friendly,
 		showing an error if appropriate.
-		@returns: Whether initialization succeeded.
 		"""
 		success = True
 		initErrors = []
@@ -3077,12 +3076,11 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 				wx.OK | wx.ICON_WARNING,
 				self._parent
 			)
-		return success
 
 	def terminateProvider(
 			self,
 			verbose: bool = False
-	):
+	) -> None:
 		"""Terminates one or more providers in a way that is gui friendly,
 		@verbose: Whether to show a termination error.
 		@returns: Whether initialization succeeded for all providers.
@@ -3182,33 +3180,24 @@ class VisionSettingsPanel(SettingsPanel):
 	def safeInitProviders(
 			self,
 			providers: List[vision.providerInfo.ProviderInfo]
-	) -> bool:
+	) -> None:
 		"""Initializes one or more providers in a way that is gui friendly,
 		showing an error if appropriate.
-		@returns: Whether initialization succeeded for all providers.
 		"""
-		results = [True]
 		for provider in providers:
-			results.append(
-				VisionProviderStateControl(self, provider).startProvider()
-			)
-		return all(results)
+			VisionProviderStateControl(self, provider).startProvider()
 
 	def safeTerminateProviders(
 			self,
 			providers: List[vision.providerInfo.ProviderInfo],
 			verbose: bool = False
-	):
+	) -> None:
 		"""Terminates one or more providers in a way that is gui friendly,
 		@verbose: Whether to show a termination error.
 		@returns: Whether termination succeeded for all providers.
 		"""
-		results = [True]
 		for provider in providers:
-			results.append(
-				VisionProviderStateControl(self, provider).terminateProvider()
-			)
-		return all(results)
+			VisionProviderStateControl(self, provider).terminateProvider(verbose=verbose)
 
 	def refreshPanel(self):
 		self.Freeze()

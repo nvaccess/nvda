@@ -131,7 +131,7 @@ class VisionHandler(AutoPropertyObject):
 			self,
 			provider: providerInfo.ProviderInfo,
 			saveSettings: bool = True
-	):
+	) -> None:
 		"""Terminates a currently active provider.
 		When termnation fails, an exception is raised.
 		Yet, the provider wil lbe removed from the providers dictionary,
@@ -182,7 +182,7 @@ class VisionHandler(AutoPropertyObject):
 			self,
 			provider: providerInfo.ProviderInfo,
 			temporary: bool = False
-	):
+	) -> None:
 		"""
 		Enables and activates the supplied provider.
 		@param provider: The provider to initialise.

@@ -20,19 +20,19 @@ from typing import List, Optional
 handler: Optional[VisionHandler] = None
 
 
-def initialize():
+def initialize() -> None:
 	global handler
 	config.addConfigDirsToPythonPackagePath(visionEnhancementProviders)
 	handler = VisionHandler()
 
 
-def pumpAll():
+def pumpAll() -> None:
 	"""Runs tasks at the end of each core cycle."""
 	if handler and handler.extensionPoints:
 		handler.extensionPoints.post_coreCycle.notify()
 
 
-def terminate():
+def terminate() -> None:
 	global handler
 	handler.terminate()
 	handler = None
