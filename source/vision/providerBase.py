@@ -27,7 +27,7 @@ class VisionEnhancementProviderSettings(AutoSettings, ABC):
 	Base class for settings for a vision enhancement provider.
 	Ensure that the following are implemented:
 	- AutoSettings.getId:
-			This is case sensitive. Used in the config file.
+			This is case sensitive. Used in the config file. Does not have to match the module name.
 	- AutoSettings.getTranslatedName:
 			The string that should appear in the GUI as the name
 	- AutoSettings._get_supportedSettings:
