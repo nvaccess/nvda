@@ -103,8 +103,8 @@ class AutoSettings(AutoPropertyObject):
 			cls._loadSpecificSettings(clsOrInst, settings)
 
 	def initSettings(self):
-		"""Initializes the configuration for this driver.
-		This method is called when initializing the driver.
+		"""Initializes the configuration for this AutoSettings instance.
+		This method is called when initializing the AutoSettings instance.
 		"""
 		self._initSpecificSettings(self, self.supportedSettings)
 
@@ -113,7 +113,7 @@ class AutoSettings(AutoPropertyObject):
 
 	@classmethod
 	def _get_preInitSettings(cls) -> SupportedSettingType:
-		"""The settings supported by the driver at pre initialisation time.
+		"""The settings supported by the AutoSettings instance at pre initialisation time.
 		"""
 		return []
 
@@ -124,14 +124,14 @@ class AutoSettings(AutoPropertyObject):
 	_abstract_supportedSettings = True
 
 	def _get_supportedSettings(self) -> SupportedSettingType:
-		"""The settings supported by the driver. Abstract.
+		"""The settings supported by the AutoSettings instance. Abstract.
 		When overriding this property, subclasses are encouraged to extend the getter method
 		to ensure that L{preInitSettings} is part of the list of supported settings.
 		"""
 		return self.preInitSettings
 
 	def isSupported(self, settingID) -> bool:
-		"""Checks whether given setting is supported by the driver.
+		"""Checks whether given setting is supported by the AutoSettings instance.
 		"""
 		for s in self.supportedSettings:
 			if s.id == settingID:
@@ -185,8 +185,8 @@ class AutoSettings(AutoPropertyObject):
 
 	def saveSettings(self):
 		"""
-		Saves the current settings for the driver to the configuration.
-		This method is also executed when the driver is loaded for the first time,
+		Saves the current settings for the AutoSettings instance to the configuration.
+		This method is also executed when the AutoSettings instance is loaded for the first time,
 		in order to populate the configuration with the initial settings..
 		"""
 		self._saveSpecificSettings(self, self.supportedSettings)
@@ -233,7 +233,7 @@ class AutoSettings(AutoPropertyObject):
 
 	def loadSettings(self, onlyChanged: bool = False):
 		"""
-		Loads settings for this driver from the configuration.
+		Loads settings for this AutoSettings instance from the configuration.
 		This method assumes that the instance has attributes o/properties
 		corresponding with the name of every setting in L{supportedSettings}.
 		@param onlyChanged: When loading settings, only apply those for which

@@ -1,3 +1,12 @@
+# -*- coding: UTF-8 -*-
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2019 NV Access Limited
+
+"""Utility methods for Driver and AutoSettings instances
+"""
+
 
 def paramToPercent(current, min, max):
 	"""Convert a raw parameter value to a percentage given the current, minimum and maximum raw values.
@@ -32,7 +41,7 @@ class UnsupportedConfigParameterError(NotImplementedError):
 
 class StringParameterInfo(object):
 	"""
-	The base class used to represent a value of a string driver setting.
+	Used to represent a value of a DriverSetting instance.
 	"""
 
 	def __init__(self, id, displayName):

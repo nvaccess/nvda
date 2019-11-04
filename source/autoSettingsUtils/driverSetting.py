@@ -1,10 +1,25 @@
-from typing import Optional
+# -*- coding: UTF-8 -*-
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2019 NV Access Limited
 
+"""Classes used to represent settings for Drivers and other AutoSettings instances
+
+	Naming of these classes is historical, kept for backwards compatibility purposes.
+"""
+
+from typing import Optional
 from baseObject import AutoPropertyObject
 
 
 class DriverSetting(AutoPropertyObject):
-	"""Represents a synthesizer or braille display setting such as voice, variant or dot firmness.
+	"""As a base class, represents a setting to be shown in GUI and saved to config.
+
+	GUI representation is a string selection GUI control, a wx.Choice control.
+
+	Used for synthesizer or braille display setting such as voice, variant or dot firmness as
+	well as for settings in Vision Providers
 	"""
 	id: str
 	displayName: str
@@ -53,7 +68,9 @@ class DriverSetting(AutoPropertyObject):
 
 
 class NumericDriverSetting(DriverSetting):
-	"""Represents a numeric driver setting such as rate, volume, pitch or dot firmness."""
+	"""Represents a numeric driver setting such as rate, volume, pitch or dot firmness.
+	GUI representation is a slider control.
+	"""
 
 	defaultVal: int
 
@@ -103,6 +120,7 @@ class NumericDriverSetting(DriverSetting):
 
 class BooleanDriverSetting(DriverSetting):
 	"""Represents a boolean driver setting such as rate boost or automatic time sync.
+	GUI representation is a wx.Checkbox
 	"""
 	defaultVal: bool
 
