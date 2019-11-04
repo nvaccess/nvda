@@ -395,12 +395,13 @@ class SynthDriver(driverHandler.Driver):
 			).format(self.name))
 
 	def _get_initialSettingsRingSetting (self):
-		if not self.isSupported("rate") and len(self.supportedSettings)>0:
+		supportedSettings = list(self.supportedSettings)
+		if not self.isSupported("rate") and len(supportedSettings)>0:
 			#Choose first as an initial one
-			for i,s in enumerate(self.supportedSettings): 
+			for i, s in enumerate(supportedSettings):
 				if s.availableInSettingsRing: return i
 			return None
-		for i,s in enumerate(self.supportedSettings):
+		for i, s in enumerate(supportedSettings):
 			if s.id == "rate": return i
 		return None
 

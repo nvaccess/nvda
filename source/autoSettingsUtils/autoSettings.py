@@ -7,7 +7,7 @@
 """autoSettings for add-ons"""
 from abc import abstractmethod
 from copy import deepcopy
-from typing import Union, Dict, Type, Any, Iterable
+from typing import Dict, Type, Any, Iterable
 
 import config
 from autoSettingsUtils.utils import paramToPercent, percentToParam, UnsupportedConfigParameterError
@@ -15,9 +15,7 @@ from baseObject import AutoPropertyObject
 from logHandler import log
 from .driverSetting import DriverSetting
 
-SupportedSettingType: Type = Union[
-	Iterable[DriverSetting]
-]
+SupportedSettingType: Type = Iterable[DriverSetting]
 
 
 class AutoSettings(AutoPropertyObject):

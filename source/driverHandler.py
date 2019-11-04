@@ -12,9 +12,6 @@ from autoSettingsUtils.utils import (
 )
 
 # F401: the following imports, while unused in this file, are provided for backwards compatibility.
-from autoSettingsUtils.autoSettings import (  # noqa: F401
-	SupportedSettingType,
-)
 from autoSettingsUtils.driverSetting import (  # noqa: F401
 	DriverSetting,
 	BooleanDriverSetting,

@@ -7,18 +7,12 @@
 """Module within the vision framework that contains the base vision enhancement provider class.
 """
 
-import driverHandler
 from abc import abstractmethod, ABC
 
-from autoSettingsUtils.autoSettings import AutoSettings
+from autoSettingsUtils.autoSettings import AutoSettings, SupportedSettingType
 from baseObject import AutoPropertyObject
 from .visionHandlerExtensionPoints import EventExtensionPoints
-from typing import Optional, List, Union, Tuple, Any
-
-SupportedSettingType = Union[
-	List[driverHandler.DriverSetting],
-	Tuple[driverHandler.DriverSetting]
-]
+from typing import Optional, Any
 
 
 class VisionEnhancementProviderSettings(AutoSettings, ABC):
