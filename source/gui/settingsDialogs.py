@@ -1044,7 +1044,7 @@ class StringDriverSettingChanger(DriverSettingChanger):
 			)
 
 
-class DriverSettingsMixin(metaclass=ABCMeta):
+class AutoSettingsMixin(metaclass=ABCMeta):
 	"""
 	Mixin class that provides support for driver specific gui settings.
 	Derived classes should implement:
@@ -1061,7 +1061,7 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 		"""
 		self.sizerDict = {}
 		self.lastControl = None
-		super(DriverSettingsMixin, self).__init__(*args, **kwargs)
+		super(AutoSettingsMixin, self).__init__(*args, **kwargs)
 		# because settings instances can be of type L{Driver} as well, we have to handle
 		# showing settings for non-instances. Because of this, we must reacquire a reference
 		# to the settings class whenever we wish to use it (via L{getSettings}) in case the instance changes.
@@ -1272,9 +1272,15 @@ class DriverSettingsMixin(metaclass=ABCMeta):
 			self.settingsSizer.Clear(delete_windows=True)
 			self._currentSettingsRef = weakref.ref(self.getSettings())
 			self.makeSettings(self.settingsSizer)
-		super(DriverSettingsMixin, self).onPanelActivated()
+		super(AutoSettingsMixin, self).onPanelActivated()
 
-class VoiceSettingsPanel(DriverSettingsMixin, SettingsPanel):
+
+#: DriverSettingsMixin name is provided or backwards compatibility.
+# The name DriverSettingsMixin should be considered deprecated, use AutoSettingsMixin instead.
+DriverSettingsMixin = AutoSettingsMixin
+
+
+class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 	# Translators: This is the label for the voice settings panel.
 	title = _("Voice")
 
@@ -1397,7 +1403,7 @@ class VoiceSettingsPanel(DriverSettingsMixin, SettingsPanel):
 		)
 
 	def onSave(self):
-		DriverSettingsMixin.onSave(self)
+		AutoSettingsMixin.onSave(self)
 
 		config.conf["speech"]["autoLanguageSwitching"] = self.autoLanguageSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["autoDialectSwitching"] = self.autoDialectSwitchingCheckbox.IsChecked()
@@ -2834,7 +2840,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			self.Parent.updateCurrentDisplay()
 		super(BrailleDisplaySelectionDialog, self).onOk(evt)
 
-class BrailleSettingsSubPanel(DriverSettingsMixin, SettingsPanel):
+class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 	@property
 	def driver(self):
@@ -3016,7 +3022,7 @@ class BrailleSettingsSubPanel(DriverSettingsMixin, SettingsPanel):
 			log.debug("Finished making settings, now at %.2f seconds from start"%(time.time() - startTime))
 
 	def onSave(self):
-		DriverSettingsMixin.onSave(self)
+		AutoSettingsMixin.onSave(self)
 		config.conf["braille"]["translationTable"] = self.outTableNames[self.outTableList.GetSelection()]
 		brailleInput.handler.table = self.inTables[self.inTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
@@ -3267,7 +3273,7 @@ class VisionSettingsPanel(SettingsPanel):
 
 
 class VisionProviderSubPanel_Settings(
-		DriverSettingsMixin,
+		AutoSettingsMixin,
 		SettingsPanel
 ):
 

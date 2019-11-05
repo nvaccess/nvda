@@ -232,7 +232,7 @@ class NVDAHighlighterSettings(vision.providerBase.VisionEnhancementProviderSetti
 
 
 class NVDAHighlighterGuiPanel(
-		gui.DriverSettingsMixin,
+		gui.AutoSettingsMixin,
 		gui.SettingsPanel
 ):
 	_enableCheckSizer: wx.BoxSizer
@@ -278,7 +278,7 @@ class NVDAHighlighterGuiPanel(
 		self.SetSizer(self.mainSizer)
 
 	def getSettings(self) -> NVDAHighlighterSettings:
-		# DriverSettingsMixin uses self.driver to get / set attributes matching the names of the settings.
+		# AutoSettingsMixin uses self.driver to get / set attributes matching the names of the settings.
 		# We want them set on this class.
 		return VisionEnhancementProvider.getSettings()
 

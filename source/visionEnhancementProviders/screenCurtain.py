@@ -207,7 +207,7 @@ class WarnOnLoadDialog(gui.nvdaControls.MessageDialog):
 
 
 class ScreenCurtainGuiPanel(
-		gui.DriverSettingsMixin,
+		gui.AutoSettingsMixin,
 		gui.SettingsPanel,
 ):
 
