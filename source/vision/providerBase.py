@@ -54,14 +54,14 @@ class VisionProviderStateControl:
 
 	@abstractmethod
 	def terminateProvider(self, verbose: bool = False) -> None:
-		"""Terminates one or more providers in a way that is GUI friendly,
+		"""Terminates the provider in a way that is GUI friendly,
 		@verbose: Whether to show a termination error.
 		@note: Use getProviderInstance to determine success
 		"""
 
 	@abstractmethod
 	def getProviderInstance(self):
-		"""Gets an instance of the provider if it already exists
+		"""Gets an instance for the provider if it already exists
 		@rtype: Optional[VisionEnhancementProvider]
 		"""
 

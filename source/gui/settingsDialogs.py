@@ -3064,6 +3064,11 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 
 class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl):
+	"""
+		Gives settings panels for vision enhancement providers a way to control a
+		single vision enhancement provider, handling any error conditions in
+		a UX friendly way.
+	"""
 	def __init__(
 			self,
 			parent: wx.Window,
