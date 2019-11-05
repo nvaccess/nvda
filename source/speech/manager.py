@@ -151,8 +151,6 @@ class SpeechManager(object):
 		self._shouldPushWhenDoneSpeaking = False
 
 	def speak(self, speechSequence, priority):
-		if "section" in speechSequence and "First section" in speechSequence:
-			log.error("Found it")
 		# If speech isn't already in progress, we need to push the first speech.
 		push = self._curPriQueue is None
 		interrupt = self._queueSpeechSequence(speechSequence, priority)
