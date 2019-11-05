@@ -647,7 +647,12 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		if (
 			presCat != field.PRESCAT_CONTAINER
 			or not field.get("_endOfNode")
-			or role in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_REGION)
+			or role in (
+				controlTypes.ROLE_LANDMARK,
+				controlTypes.ROLE_REGION,
+				controlTypes.ROLE_ARTICLE,
+				controlTypes.ROLE_GROUPING,
+			)
 		):
 			return None
 

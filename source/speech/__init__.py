@@ -1261,7 +1261,12 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		speakEntry=True
 		speakExitForLine = bool(
 			attrs.get('roleText')
-			or role not in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_REGION)
+			or role not in (
+				controlTypes.ROLE_LANDMARK,
+				controlTypes.ROLE_REGION,
+				controlTypes.ROLE_ARTICLE,
+				controlTypes.ROLE_GROUPING,
+			)
 		)
 		speakExitForOther=True
 
