@@ -28,6 +28,7 @@ from .. import InvalidNVDAObject
 from ..window import Window
 from NVDAObjects.UIA import UIA, UIATextInfo
 from locationHelper import RectLTRB
+from typing import Dict
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
@@ -100,7 +101,7 @@ class HTMLAttribCache(object):
 		self.containsCache[item]=contains
 		return contains
 
-nodeNamesToNVDARoles={
+nodeNamesToNVDARoles: Dict[str, int] = {
 	"FRAME":controlTypes.ROLE_FRAME,
 	"IFRAME":controlTypes.ROLE_INTERNALFRAME,
 	"FRAMESET":controlTypes.ROLE_DOCUMENT,
@@ -145,7 +146,9 @@ nodeNamesToNVDARoles={
 	"SECTION": controlTypes.ROLE_REGION,
 	"ARTICLE": controlTypes.ROLE_ARTICLE,
 	"FIGURE": controlTypes.ROLE_FIGURE,
+	"FIGCAPTION": controlTypes.ROLE_CAPTION,
 }
+
 
 def getZoomFactorsFromHTMLDocument(HTMLDocument):
 	try:
