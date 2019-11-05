@@ -637,7 +637,6 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	# Cache this for later use.
 	field._presCat = presCat
 	role = field.get("role", controlTypes.ROLE_UNKNOWN)
-	landmark = field.get("landmark")
 	if reportStart:
 		# If this is a container, only report it if this is the start of the node.
 		if presCat == field.PRESCAT_CONTAINER and not field.get("_startOfNode"):
@@ -658,6 +657,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	placeholder=field.get('placeholder', None)
 	roleText = field.get('roleTextBraille', field.get('roleText'))
 	if not roleText and role == controlTypes.ROLE_LANDMARK:
+		landmark = field.get("landmark")
 		roleText = f"{roleLabels[controlTypes.ROLE_LANDMARK]} {landmarkLabels[landmark]}"
 
 	if presCat == field.PRESCAT_LAYOUT:
