@@ -1050,6 +1050,12 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 	Derived classes should implement:
 	- L{getSettings}
 	- L{settingsSizer}
+	Derived classes likely need to inherit from L{SettingsPanel}, in particular
+	the following methods must be provided:
+	- makeSettings
+	- onPanelActivated
+	@note: This mixin uses self.lastControl and self.sizerDict to keep track of the
+	controls added / and maintain ordering. If you plan to maintain other controls in the same panel care will need to be taken.
 	"""
 
 	def __init__(self, *args, **kwargs):
@@ -1092,7 +1098,7 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 		@param settingsStorage: where to get initial values / set values.
 			This param must have an attribute with a name matching setting.id.
 			In most cases it will be of type L{AutoSettings}
-		@returns: wx.BoxSizer containing newly created controls.
+		@return: wx.BoxSizer containing newly created controls.
 		"""
 		labeledControl = guiHelper.LabeledControlHelper(
 			self,
