@@ -299,11 +299,10 @@ class SettingsPanel(wx.Panel, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCM
 		self.SetSizer(self.mainSizer)
 
 	@abstractmethod
-	def makeSettings(self, sizer):
+	def makeSettings(self, sizer) -> wx.BoxSizer:
 		"""Populate the panel with settings controls.
 		Subclasses must override this method.
 		@param sizer: The sizer to which to add the settings controls.
-		@type sizer: wx.BoxSizer
 		"""
 		raise NotImplementedError
 
