@@ -324,7 +324,7 @@ class MSHTML(VirtualBuffer):
 			attrs = [
 				{
 					"HTMLAttrib::role": [
-						VBufStorage_findMatch_word(r) for r in ("group", "radiogroup"
+						VBufStorage_findMatch_word(r) for r in ("group", "radiogroup")
 					],
 					"name": [VBufStorage_findMatch_notEmpty]
 				},
