@@ -749,7 +749,17 @@ class MSHTML(IAccessible):
 			if nodeName:
 				if nodeName in ("OBJECT","EMBED","APPLET"):
 					return controlTypes.ROLE_EMBEDDEDOBJECT
-				if self.HTMLNodeHasAncestorIAccessible or nodeName in ("BODY","FRAMESET","FRAME","IFRAME","LABEL","NAV","SECTION","ARTICLE"):
+				if self.HTMLNodeHasAncestorIAccessible or nodeName in (
+					"BODY",
+					"FRAMESET",
+					"FRAME",
+					"IFRAME",
+					"LABEL",
+					"NAV",
+					"SECTION",
+					"ARTICLE",
+					"FIELDSET",
+				):
 					return nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_SECTION)
 		if self.IAccessibleChildID>0:
 			states=super(MSHTML,self).states
