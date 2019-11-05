@@ -194,17 +194,8 @@ if isSecureDesktop:
 # #8516: because config manager isn't ready yet, we must let start and exit messages be logged unless disabled via --no-logging switch.
 # However, do log things if debug logging or log level other than 0 (not set) is requested from command line switches.
 
-logLevel=globalVars.appArgs.logLevel
-if globalVars.appArgs.noLogging and (not globalVars.appArgs.debugLogging and logLevel == 0):
-	logLevel = log.OFF
-else:
-	if logLevel<=0:
-		logLevel=log.INFO
-	if globalVars.appArgs.debugLogging:
-		logLevel=log.DEBUG
 logHandler.initialize()
-logHandler.log.setLevel(logLevel)
-if logLevel is log.DEBUG:
+if logHandler.log.getEffectiveLevel() is log.DEBUG:
 	log.debug("Provided arguments: {}".format(sys.argv[1:]))
 import buildVersion
 log.info("Starting NVDA version %s" % buildVersion.version)

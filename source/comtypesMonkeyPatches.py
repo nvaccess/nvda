@@ -3,10 +3,12 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+# Warning: no comtypes modules can be imported until ctypes.WINFUNCTYPE has been replaced further down.
+
 import ctypes
 import _ctypes
 import importlib
-import comtypes.client._generate
+
 
 # A version of ctypes.WINFUNCTYPE 
 # that produces a WinFunctionType class whose instance will convert COMError into a CallCancelled exception when called as a function.
@@ -45,6 +47,8 @@ try:
 	import comtypes
 finally:
 	ctypes.WINFUNCTYPE=old_WINFUNCTYPE
+
+# It is safe to import any comtypes modules from here on down.
 
 from logHandler import log
 
@@ -130,6 +134,10 @@ comtypes._check_version = _check_version
 
 
 # Monkeypatch comtypes to clear the importlib cache when importing a new module
+
+# We must import comtypes.client._generate here as it must be done after other monkeypatching
+import comtypes.client._generate  # noqa: E402
+
 old_my_import = comtypes.client._generate._my_import
 
 
