@@ -163,7 +163,7 @@ class EdgeTextInfo(UIATextInfo):
 		# Later processing in Edge's getTextWithFields will remove descendant content from fields with a content attribute.
 		hasAriaLabel = 'label' in ariaProperties
 		hasAriaLabelledby = 'labelledby' in ariaProperties
-		if field.get('name	IsContent'):
+		if field.get('nameIsContent'):
 			content=""
 			field.pop('name',None)
 			if hasAriaLabel or hasAriaLabelledby:
