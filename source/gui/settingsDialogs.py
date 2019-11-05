@@ -1055,7 +1055,8 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 	- makeSettings
 	- onPanelActivated
 	@note: This mixin uses self.lastControl and self.sizerDict to keep track of the
-	controls added / and maintain ordering. If you plan to maintain other controls in the same panel care will need to be taken.
+	controls added / and maintain ordering.
+	If you plan to maintain other controls in the same panel care will need to be taken.
 	"""
 
 	def __init__(self, *args, **kwargs):
@@ -1208,9 +1209,9 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 			if not settingsInst.isSupported(name):
 				self.settingsSizer.Hide(sizer)
 		# Create new controls, update already existing
-		log.debug(f"Current sizerDict: {self.sizerDict!r}")
-
-		log.debug(f"Current supportedSettings: {self.getSettings().supportedSettings!r}")
+		if(gui._isDebug()):
+			log.debug(f"Current sizerDict: {self.sizerDict!r}")
+			log.debug(f"Current supportedSettings: {self.getSettings().supportedSettings!r}")
 		for setting in settingsInst.supportedSettings:
 			if setting.id == changedSetting:
 				# Changing a setting shouldn't cause that setting's own values to change.
@@ -1238,7 +1239,6 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 				if isinstance(setting, NumericDriverSetting):
 					settingMaker = self._makeSliderSettingControl
 				elif isinstance(setting, BooleanDriverSetting):
-					log.debug(f"creating a new bool driver setting: {setting.id}")
 					settingMaker = self._makeBooleanSettingControl
 				else:
 					settingMaker = self._makeStringSettingControl
