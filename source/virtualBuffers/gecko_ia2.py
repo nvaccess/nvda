@@ -293,13 +293,26 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType=="landmark":
 			attrs = [
 				{"IAccessible::role": [IAccessibleHandler.IA2_ROLE_LANDMARK]},
-				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles if lr != "region"]},
+				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]},
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("region")],
 					"name": [VBufStorage_findMatch_notEmpty]}
 				]
 		elif nodeType == "article":
 			attrs = [
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("article")]}
+			]
+		elif nodeType == "grouping":
+			attrs = [
+				{
+					"IAccessible2::attribute_xml-roles": [
+						VBufStorage_findMatch_word(r) for r in ("group", "radiogroup")
+					],
+					"name": [VBufStorage_findMatch_notEmpty]
+				},
+				{
+					"IAccessible2::attribute_tag": self._searchableTagValues(["fieldset"]),
+					"name": [VBufStorage_findMatch_notEmpty]
+				},
 			]
 		elif nodeType=="embeddedObject":
 			attrs=[

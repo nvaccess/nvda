@@ -320,10 +320,23 @@ class MSHTML(VirtualBuffer):
 				{"HTMLAttrib::role": [VBufStorage_findMatch_word("article")]},
 				{"IHTMLDOMNode::nodeName": [VBufStorage_findMatch_word("ARTICLE")]},
 			]
+		elif nodeType == "grouping":
+			attrs = [
+				{
+					"HTMLAttrib::role": [
+						VBufStorage_findMatch_word(r) for r in ("group", "radiogroup"
+					],
+					"name": [VBufStorage_findMatch_notEmpty]
+				},
+				{
+					"IHTMLDOMNode::nodeName": [VBufStorage_findMatch_word("FIELDSET")],
+					"name": [VBufStorage_findMatch_notEmpty]
+				},
+			]
 		elif nodeType == "embeddedObject":
 			attrs = [
-				{"IHTMLDOMNode::nodeName": ["OBJECT","EMBED","APPLET","AUDIO","VIDEO"]},
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_APPLICATION,oleacc.ROLE_SYSTEM_DIALOG]},
+				{"IHTMLDOMNode::nodeName": ["OBJECT", "EMBED", "APPLET", "AUDIO", "VIDEO", "FIGURE"]},
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_APPLICATION, oleacc.ROLE_SYSTEM_DIALOG]},
 			]
 		elif nodeType == "separator":
 			attrs = {"IHTMLDOMNode::nodeName": ["HR"]}
