@@ -1764,7 +1764,7 @@ class DocumentFormattingPanel(SettingsPanel):
 			"reportRevisions": _("Editor revisions"),
 			# Translators: Label for an option in the document information list in the
 			# document formatting settings panel.
-			"reportSpellingErrors": _("SPelling and grammar errors"),
+			"reportSpellingErrors": _("Spelling and grammar errors"),
 		}
 		self.docInfoList = sHelper.addLabeledControl(
 			docInfoListText,
