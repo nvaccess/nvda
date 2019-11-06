@@ -48,7 +48,8 @@ from .commands import (  # noqa: F401
 	WaveFileCommand,
 	ConfigProfileTriggerCommand,
 )
-import types
+
+from . import types
 from .types import SpeechSequence
 from typing import Optional, Dict, List, Any
 from logHandler import log
