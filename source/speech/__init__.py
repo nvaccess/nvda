@@ -550,7 +550,7 @@ def speak(  # noqa: C901
 	@param priority: The speech priority.
 	@type priority: One of the C{SPRI_*} constants.
 	"""
-	_logBadSequenceTypes(speechSequence)
+	types.logBadSequenceTypes(speechSequence)
 	if priority is None:
 		priority=SPRI_NORMAL
 	if not speechSequence: #Pointless - nothing to speak 
@@ -824,10 +824,6 @@ def _speakTextInfo_addMath(
 		speechSequence.extend(mathPres.speechProvider.getSpeechForMathMl(info.getMathMl(field)))
 	except (NotImplementedError, LookupError):
 		return
-
-
-def _logBadSequenceTypes(sequence, shouldRaise: bool = True) -> bool:
-	return types.logBadSequenceTypes(sequence, raiseExceptionOnError=shouldRaise)
 
 
 # C901 'speakTextInfo' is too complex
@@ -1362,7 +1358,7 @@ def getPropertiesSpeech(  # noqa: C901
 				oldTreeLevel=level
 			else:
 				textList.append(levelTranslation)
-	_logBadSequenceTypes(textList)
+	types.logBadSequenceTypes(textList)
 	return textList
 
 
@@ -1500,7 +1496,7 @@ def getControlFieldSpeech(  # noqa: C901
 				columnCount=columnCount
 		))
 		tableSeq.extend(levelSequence)
-		_logBadSequenceTypes(tableSeq)
+		types.logBadSequenceTypes(tableSeq)
 		return tableSeq
 	elif (
 		nameSequence
@@ -1511,7 +1507,7 @@ def getControlFieldSpeech(  # noqa: C901
 		# #3321, #709: Report the name of groupings (such as fieldsets) and tab pages for quicknav and focus jumps
 		nameAndRole = nameSequence[:]
 		nameAndRole.extend(roleTextSequence)
-		_logBadSequenceTypes(nameAndRole)
+		types.logBadSequenceTypes(nameAndRole)
 		return nameAndRole
 	elif (
 		fieldType in ("start_addedToControlFieldStack", "start_relative")
@@ -1538,7 +1534,7 @@ def getControlFieldSpeech(  # noqa: C901
 		tableCellSequence = getPropertiesSpeech(_tableID=tableID, **getProps)
 		tableCellSequence.extend(stateTextSequence)
 		tableCellSequence.extend(ariaCurrentSequence)
-		_logBadSequenceTypes(tableCellSequence)
+		types.logBadSequenceTypes(tableCellSequence)
 		return tableCellSequence
 
 	# General cases.
@@ -1581,7 +1577,7 @@ def getControlFieldSpeech(  # noqa: C901
 		if content and not speakContentFirst:
 			out.append(content)
 
-		_logBadSequenceTypes(out)
+		types.logBadSequenceTypes(out)
 		return out
 	elif (
 		fieldType in (
@@ -1602,7 +1598,7 @@ def getControlFieldSpeech(  # noqa: C901
 		else:
 			out = roleTextSequence
 
-		_logBadSequenceTypes(out)
+		types.logBadSequenceTypes(out)
 		return out
 
 	# Special cases
@@ -1610,7 +1606,7 @@ def getControlFieldSpeech(  # noqa: C901
 		out = []
 		if ariaCurrent:
 			out.extend(ariaCurrentSequence)
-			_logBadSequenceTypes(out)
+			types.logBadSequenceTypes(out)
 		return out
 	else:
 		return []
@@ -2058,7 +2054,7 @@ def getFormatFieldSpeech(  # noqa: C901
 	if attrsCache is not None:
 		attrsCache.clear()
 		attrsCache.update(attrs)
-	_logBadSequenceTypes(textList)
+	types.logBadSequenceTypes(textList)
 	return textList
 
 
@@ -2093,7 +2089,7 @@ def getTableInfoSpeech(
 	rowNumber=tableInfo.get("row-number",0)
 	if rowNumber!=oldRowNumber:
 		textList.append(_("row %s")%rowNumber)
-	_logBadSequenceTypes(textList)
+	types.logBadSequenceTypes(textList)
 	return textList
 
 re_last_pause=re.compile(r"^(.*(?<=[^\s.!?])[.!?][\"'”’)]?(?:\s+|$))(.*$)",re.DOTALL|re.UNICODE)
