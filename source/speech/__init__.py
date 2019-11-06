@@ -41,7 +41,7 @@ from .commands import (
 )
 from typing import Optional, Callable, Any
 from functools import partial
-
+import aria
 
 speechMode_off=0
 speechMode_beeps=1
@@ -356,7 +356,28 @@ def speakObject(obj, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None
 		# objects that do not report as having navigableText should not report their text content either
 		not obj._hasNavigableText
 	)
-	allowProperties={'name':True,'role':True,'roleText':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True,"rowSpan":True,"columnSpan":True}
+	allowProperties = {
+		'name': True,
+		'role': True,
+		'roleText': True,
+		'states': True,
+		'value': True,
+		'description': True,
+		'keyboardShortcut': True,
+		'positionInfo_level': True,
+		'positionInfo_indexInGroup': True,
+		'positionInfo_similarItemsInGroup': True,
+		"cellCoordsText": True,
+		"rowNumber": True,
+		"columnNumber": True,
+		"includeTableCellCoords": True,
+		"columnCount": True,
+		"rowCount": True,
+		"rowHeaderText": True,
+		"columnHeaderText": True,
+		"rowSpan": True,
+		"columnSpan": True
+	}
 
 	if reason==controlTypes.REASON_FOCUSENTERED:
 		allowProperties["value"]=False
@@ -384,8 +405,10 @@ def speakObject(obj, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None
 	if not formatConf["reportTableHeaders"]:
 		allowProperties["rowHeaderText"]=False
 		allowProperties["columnHeaderText"]=False
-	if (not formatConf["reportTables"]
-			or (not formatConf["reportTableCellCoords"] and not formatConf["reportTableHeaders"])):
+	if (
+		not formatConf["reportTables"]
+		or (not formatConf["reportTableCellCoords"] and not formatConf["reportTableHeaders"])
+	):
 		# We definitely aren't reporting any table info at all.
 		allowProperties["rowNumber"]=False
 		allowProperties["columnNumber"]=False
@@ -1240,10 +1263,19 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 
 	presCat=attrs.getPresentationCategory(ancestorAttrs,formatConfig, reason=reason)
 	childControlCount=int(attrs.get('_childcontrolcount',"0"))
-	if reason==controlTypes.REASON_FOCUS or attrs.get('alwaysReportName',False):
-		name=attrs.get('name',"")
+	landmark = attrs.get("landmark")
+	speakLandmark = (
+		fieldType == "start_addedToControlFieldStack"
+		and formatConfig["reportLandmarks"]
+	)
+	if (
+		reason == controlTypes.REASON_FOCUS
+		or attrs.get('alwaysReportName', False)
+		or (landmark and speakLandmark)
+	):
+		name = attrs.get('name', "")
 	else:
-		name=""
+		name = ""
 	role=attrs.get('role',controlTypes.ROLE_UNKNOWN)
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
@@ -1261,9 +1293,12 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	else:
 		tableID = None
 
-	roleText=attrs.get('roleText')
+	roleText = attrs.get('roleText')
 	if not roleText:
-		roleText=getSpeechTextForProperties(reason=reason,role=role)
+		if not landmark:
+			roleText = getSpeechTextForProperties(reason=reason, role=role)
+		elif speakLandmark:
+			roleText = f"{aria.landmarkRoles[landmark]} {controlTypes.roleLabels[controlTypes.ROLE_LANDMARK]}"
 	stateText=getSpeechTextForProperties(reason=reason,states=states,_role=role)
 	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut) if config.conf["presentation"]["reportKeyboardShortcuts"] else ""
 	ariaCurrentText=getSpeechTextForProperties(reason=reason,current=ariaCurrent)
@@ -1293,11 +1328,14 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 
 	# Determine the order of speech.
 	# speakContentFirst: Speak the content before the control field info.
-	speakContentFirst = (reason == controlTypes.REASON_FOCUS
+	speakContentFirst = (
+		reason == controlTypes.REASON_FOCUS
 		and presCat != attrs.PRESCAT_CONTAINER
 		and role not in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_LIST)
 		and not tableID
-		and controlTypes.STATE_EDITABLE not in states)
+		and not landmark
+		and controlTypes.STATE_EDITABLE not in states
+	)
 	# speakStatesFirst: Speak the states before the role.
 	speakStatesFirst=role==controlTypes.ROLE_LINK
 
@@ -1349,7 +1387,10 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 
 	# General cases.
 	if (
-		(speakEntry and ((speakContentFirst and fieldType in ("end_relative","end_inControlFieldStack")) or (not speakContentFirst and fieldType in ("start_addedToControlFieldStack","start_relative"))))
+		(speakEntry and (
+			(speakContentFirst and fieldType in ("end_relative", "end_inControlFieldStack"))
+			or (not speakContentFirst and fieldType in ("start_addedToControlFieldStack", "start_relative"))
+		))
 		or (speakWithinForLine and not speakContentFirst and not extraDetail and fieldType=="start_inControlFieldStack")
 	):
 		out = []
@@ -1364,7 +1405,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		if content and not speakContentFirst:
 			out.append(content)
 		return CHUNK_SEPARATOR.join(out)
-		
+
 	elif fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText and ((not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther)):
 		# Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 		return _("out of %s")%roleText

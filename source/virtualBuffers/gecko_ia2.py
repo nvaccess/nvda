@@ -92,9 +92,12 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			role=controlTypes.ROLE_TEXTFRAME
 		level=attrs.get('IAccessible2::attribute_level',"")
 		xmlRoles=attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")
-		# Get the first landmark role, if any.
-		landmark=next((xr for xr in xmlRoles if xr in aria.landmarkRoles),None)
-
+		landmark = next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
+		if landmark and role != controlTypes.ROLE_LANDMARK and landmark != xmlRoles[0]:
+			# Ignore the landmark role
+			landmark = None
+		if role == controlTypes.ROLE_DOCUMENT and xmlRoles[0] == "article":
+			role = controlTypes.ROLE_ARTICLE
 		attrs['role']=role
 		attrs['states']=states
 		if level is not "" and level is not None:
@@ -284,10 +287,15 @@ class Gecko_ia2(VirtualBuffer):
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="landmark":
 			attrs = [
+				{"IAccessible::role": [IAccessibleHandler.IA2_ROLE_LANDMARK]},
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles if lr != "region"]},
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("region")],
 					"name": [VBufStorage_findMatch_notEmpty]}
 				]
+		elif nodeType == "article":
+			attrs = [
+				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("article")]}
+			]
 		elif nodeType=="embeddedObject":
 			attrs=[
 				{"IAccessible2::attribute_tag":self._searchableTagValues(["embed","object","applet","audio","video"])},
