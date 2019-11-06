@@ -3215,12 +3215,35 @@ class VisionSettingsPanel(SettingsPanel):
 			vision.visionHandler.getProviderInfo(providerId) for providerId in vision.handler.providers
 		)
 
+	def _createProviderSettingsPanel(
+			self,
+			providerInfo: vision.providerInfo.ProviderInfo
+	) -> Optional[SettingsPanel]:
+		settingsPanelCls = providerInfo.providerClass.getSettingsPanelClass()
+		if not settingsPanelCls:
+			if gui._isDebug():
+				log.debug(f"Using default panel for providerId: {providerInfo.providerId}")
+			settingsPanelCls = VisionProviderSubPanel_Wrapper
+		else:
+			if gui._isDebug():
+				log.debug(f"Using custom panel for providerId: {providerInfo.providerId}")
+
+		providerControl = VisionProviderStateControl(parent=self, providerInfo=providerInfo)
+		try:
+			return settingsPanelCls(
+				parent=self,
+				providerControl=providerControl
+			)
+		# E722: bare except used since we can not know what exceptions a provider might throw.
+		# We should be able to continue despite a buggy provider.
+		except:  # noqa: E722
+			log.debug(f"Error creating providerPanel: {settingsPanelCls!r}", exc_info=True)
+			return None
+
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
 		self.initialProviders = self._getProviderInfos()
 		self.providerPanelInstances = []
-
 		self.settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-
 		self.settingsSizerHelper.addItem(wx.StaticText(self, label=self.panelDescription))
 
 		for providerInfo in vision.getProviderList():
@@ -3228,24 +3251,13 @@ class VisionSettingsPanel(SettingsPanel):
 				wx.StaticBoxSizer(wx.StaticBox(self, label=providerInfo.translatedName), wx.VERTICAL),
 				flag=wx.EXPAND
 			)
-			providerControl = VisionProviderStateControl(parent=self, providerInfo=providerInfo)
-
-			settingsPanelCls = providerInfo.providerClass.getSettingsPanelClass()
-			if not settingsPanelCls:
-				log.debug(f"Using default panel for providerId: {providerInfo.providerId}")
-				settingsPanelCls = VisionProviderSubPanel_Wrapper
-			else:
-				log.debug(f"Using custom panel for providerId: {providerInfo.providerId}")
-			try:
-				settingsPanel = settingsPanelCls(parent=self, providerControl=providerControl)
-			# E722: bare except used since we can not know what exceptions a provider might throw.
-			# We should be able to continue despite a buggy provider.
-			except:  # noqa: E722
-				log.debug(f"Error creating providerPanel: {settingsPanelCls!r}", exc_info=True)
-				continue
-
 			if len(self.providerPanelInstances) > 0:
 				settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
+
+			settingsPanel = self._createProviderSettingsPanel(providerInfo)
+			if not settingsPanel:
+				continue
+
 			providerSizer.Add(settingsPanel, flag=wx.EXPAND)
 			self.providerPanelInstances.append(settingsPanel)
 
