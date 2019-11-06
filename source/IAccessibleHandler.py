@@ -17,6 +17,7 @@ import oleacc
 import UIAHandler
 from comInterfaces.Accessibility import *
 from comInterfaces.IAccessible2Lib import *
+from comInterfaces import IAccessible2Lib as IA2
 from logHandler import log
 import JABHandler
 import eventHandler
@@ -257,6 +258,7 @@ IAccessibleRolesToNVDARoles={
 	IA2_ROLE_CONTENT_DELETION:controlTypes.ROLE_DELETED_CONTENT,
 	IA2_ROLE_CONTENT_INSERTION:controlTypes.ROLE_INSERTED_CONTENT,
 	IA2_ROLE_BLOCK_QUOTE:controlTypes.ROLE_BLOCKQUOTE,
+	IA2.IA2_ROLE_LANDMARK: controlTypes.ROLE_LANDMARK,
 	#some common string roles
 	"frame":controlTypes.ROLE_FRAME,
 	"iframe":controlTypes.ROLE_INTERNALFRAME,
@@ -343,7 +345,9 @@ def accessibleObjectFromEvent(window,objectID,childID):
 	try:
 		pacc,childID=oleacc.AccessibleObjectFromEvent(window,objectID,childID)
 	except Exception as e:
-		log.debugWarning("oleacc.AccessibleObjectFromEvent with window %s, objectID %s and childID %s: %s"%(window,objectID,childID,e))
+		log.debug(
+			f"oleacc.AccessibleObjectFromEvent with window {window}, objectID {objectID} and childID {childID}: {e}"
+		)
 		return None
 	return (normalizeIAccessible(pacc,childID),childID)
 
