@@ -486,12 +486,10 @@ IDT_TONE_DURATION = 80 #Milleseconds
 IDT_MAX_SPACES = 72
 
 
-def getIndentationSpeech(indentation, formatConfig) -> SpeechSequence:
+def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> SpeechSequence:
 	"""Retrieves the phrase to be spoken for a given string of indentation.
 	@param indentation: The string of indentation.
-	@type indentation: str
 	@param formatConfig: The configuration to use.
-	@type formatConfig: dict
 	@return: The phrase to be spoken.
 	"""
 	speechIndentConfig = formatConfig["reportLineIndentation"]
