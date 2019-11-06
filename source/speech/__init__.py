@@ -487,22 +487,22 @@ IDT_MAX_SPACES = 72
 
 
 def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> SpeechSequence:
-	"""Retrieves the phrase to be spoken for a given string of indentation.
+	"""Retrieves the indentation speech sequence for a given string of indentation.
 	@param indentation: The string of indentation.
 	@param formatConfig: The configuration to use.
-	@return: The phrase to be spoken.
 	"""
 	speechIndentConfig = formatConfig["reportLineIndentation"]
 	toneIndentConfig = formatConfig["reportLineIndentationWithTones"] and speechMode == speechMode_talk
+	indentSequence: SpeechSequence = []
 	if not indentation:
 		if toneIndentConfig:
-			tones.beep(IDT_BASE_FREQUENCY, IDT_TONE_DURATION)
-		return (
-			[
+			indentSequence.append(BeepCommand(IDT_BASE_FREQUENCY, IDT_TONE_DURATION))
+		if speechIndentConfig:
+			indentSequence.append(
 				# Translators: This is spoken when the given line has no indentation.
 				_("no indent")
-			] if speechIndentConfig else []
-		)
+			)
+		return indentSequence
 
 	#The non-breaking space is semantically a space, so we replace it here.
 	indentation = indentation.replace(u"\xa0", u" ")
@@ -525,13 +525,14 @@ def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> Spe
 	speak = speechIndentConfig
 	if toneIndentConfig: 
 		if quarterTones <= IDT_MAX_SPACES:
-			#Remove me during speech refactor.
 			pitch = IDT_BASE_FREQUENCY*2**(quarterTones/24.0) #24 quarter tones per octave.
-			tones.beep(pitch, IDT_TONE_DURATION)
+			indentSequence.append(BeepCommand(pitch, IDT_TONE_DURATION))
 		else: 
 			#we have more than 72 spaces (18 tabs), and must speak it since we don't want to hurt the users ears.
 			speak = True
-	return [" ".join(res)] if speak else []
+	if speak:
+		indentSequence.extend(res)
+	return indentSequence
 
 from .priorities import *
 
