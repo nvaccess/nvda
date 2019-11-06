@@ -2,10 +2,11 @@
 # Copyright (C) 2009-2019 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+from typing import Dict
 
 import controlTypes
 
-ariaRolesToNVDARoles={
+ariaRolesToNVDARoles: Dict[str, int] = {
 	"description": controlTypes.ROLE_STATICTEXT,  # Not in ARIA 1.1 spec
 	"alert":controlTypes.ROLE_ALERT,
 	"alertdialog":controlTypes.ROLE_DIALOG,
@@ -60,13 +61,13 @@ ariaRolesToNVDARoles={
 	"treeitem":controlTypes.ROLE_TREEVIEWITEM,
 }
 
-ariaSortValuesToNVDAStates={
+ariaSortValuesToNVDAStates: Dict[str, int] = {
 	'descending':controlTypes.STATE_SORTED_DESCENDING,
 	'ascending':controlTypes.STATE_SORTED_ASCENDING,
 	'other':controlTypes.STATE_SORTED,
 }
 
-landmarkRoles = {
+landmarkRoles: Dict[str, str] = {
 	# Translators: Reported for the banner landmark, normally found on web pages.
 	"banner": pgettext("aria", "banner"),
 	# Translators: Reported for the complementary landmark, normally found on web pages.
@@ -89,7 +90,7 @@ ariaRolesToNVDARoles.update({
 	if role not in ariaRolesToNVDARoles
 })
 
-htmlNodeNameToAriaRoles = {
+htmlNodeNameToAriaRoles: Dict[str, str] = {
 	"header": "banner",
 	"nav": "navigation",
 	"main": "main",
