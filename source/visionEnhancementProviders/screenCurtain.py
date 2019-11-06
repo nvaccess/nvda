@@ -280,14 +280,14 @@ class ScreenCurtainGuiPanel(
 		if not settingsStorage.warnOnLoad:
 			return True
 		parent = self
-		dlg = WarnOnLoadDialog(
+		with WarnOnLoadDialog(
 			screenCurtainSettingsStorage=settingsStorage,
 			parent=parent
-		)
-		res = dlg.ShowModal()
-		# WarnOnLoadDialog can change settings, reload them
-		self.updateDriverSettings()
-		return res == wx.YES
+		) as dlg:
+			res = dlg.ShowModal()
+			# WarnOnLoadDialog can change settings, reload them
+			self.updateDriverSettings()
+			return res == wx.YES
 
 
 class ScreenCurtainProvider(vision.providerBase.VisionEnhancementProvider):
