@@ -8,6 +8,8 @@ import wx
 import gui
 import config
 from logHandler import log
+from speech import SpeechSequence
+
 
 class SpeechViewerFrame(wx.Dialog):
 
@@ -87,16 +89,29 @@ def _setActive(isNowActive, speechViewerFrame=None):
 	if gui and gui.mainFrame:
 		gui.mainFrame.onSpeechViewerEnabled(isNowActive)
 
-def appendText(text):
+
+#: How to separate items in a speech sequence
+SPEECH_ITEM_SEPARATOR = "  "
+#: How to separate speech sequences
+SPEECH_SEQUENCE_SEPARATOR = "\n"
+
+
+def appendSpeechSequence(sequence: SpeechSequence) -> None:
+	""" Appends a speech sequence to the speech viewer.
+	@param sequence: To append, items are separated with . Concluding with a newline.
+	"""
 	if not isActive:
 		return
-	if not isinstance(text,str):
+	# If the speech viewer text control has the focus, we want to disable updates
+	# Otherwise it would be impossible to select text, or even just read it (as a blind person).
+	if _guiFrame.FindFocus() == _guiFrame.textCtrl:
 		return
-	#If the speech viewer text control has the focus, we want to disable updates
-	#Otherwise it would be impossible to select text, or even just read it (as a blind person).
-	if _guiFrame.FindFocus()==_guiFrame.textCtrl:
-		return
-	_guiFrame.textCtrl.AppendText(text + "\n")
+
+	# to make the speech easier to read, we must separate the items.
+	text = SPEECH_ITEM_SEPARATOR.join(
+		speech for speech in sequence if isinstance(speech, str)
+	)
+	_guiFrame.textCtrl.AppendText(text + SPEECH_SEQUENCE_SEPARATOR)
 
 def _cleanup():
 	global isActive

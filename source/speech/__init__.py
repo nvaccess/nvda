@@ -558,9 +558,7 @@ def speak(  # noqa: C901
 		return
 	import speechViewer
 	if speechViewer.isActive:
-		for item in speechSequence:
-			if isinstance(item, str):
-				speechViewer.appendText(item)
+		speechViewer.appendSpeechSequence(speechSequence)
 	global beenCanceled
 	if speechMode==speechMode_off:
 		return
