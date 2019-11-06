@@ -471,7 +471,11 @@ class TextRegion(Region):
 		super(TextRegion, self).__init__()
 		self.rawText = text
 
-def getBrailleTextForProperties(**propertyValues):
+
+# C901 'getPropertiesBraille' is too complex
+# Note: when working on getPropertiesBraille, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 	textList = []
 	name = propertyValues.get("name")
 	if name:
@@ -573,6 +577,7 @@ def getBrailleTextForProperties(**propertyValues):
 		textList.append(cellCoordsText)
 	return TEXT_SEPARATOR.join([x for x in textList if x])
 
+
 class NVDAObjectRegion(Region):
 	"""A region to provide a braille representation of an NVDAObject.
 	This region will update based on the current state of the associated NVDAObject.
@@ -597,7 +602,7 @@ class NVDAObjectRegion(Region):
 		placeholderValue = obj.placeholder
 		if placeholderValue and not obj._isTextEmpty:
 			placeholderValue = None
-		text = getBrailleTextForProperties(
+		text = getPropertiesBraille(
 			name=obj.name,
 			role=role,
 			roleText=obj.roleTextBraille,
@@ -651,7 +656,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []
 		if current:
-			text.append(getBrailleTextForProperties(current=current))
+			text.append(getPropertiesBraille(current=current))
 		return TEXT_SEPARATOR.join(text) if len(text) != 0 else None
 
 	elif role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER) and field.get("table-id"):
@@ -669,7 +674,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		}
 		if reportTableHeaders:
 			props["columnHeaderText"] = field.get("table-columnheadertext")
-		return getBrailleTextForProperties(**props)
+		return getPropertiesBraille(**props)
 
 	elif reportStart:
 		props = {
@@ -689,7 +694,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		level = field.get("level")
 		if level:
 			props["positionInfo"] = {"level": level}
-		text = getBrailleTextForProperties(**props)
+		text = getPropertiesBraille(**props)
 		content = field.get("content")
 		if content:
 			if text:
@@ -710,8 +715,11 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	else:
 		# Translators: Displayed in braille at the end of a control field such as a list or table.
 		# %s is replaced with the control's role.
-		return (_("%s end") %
-			getBrailleTextForProperties(role=role,roleText=roleText))
+		return (_("%s end") % getPropertiesBraille(
+			role=role,
+			roleText=roleText
+		))
+
 
 def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 	"""Generates the braille text for the given format field.
