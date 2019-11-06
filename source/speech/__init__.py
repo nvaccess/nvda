@@ -134,6 +134,7 @@ def pauseSpeech(switch):
 	isPaused=switch
 	beenCanceled=False
 
+
 def speakMessage(
 		text: str,
 		priority: Optional[Spri] = None
@@ -158,6 +159,7 @@ def getCurrentLanguage():
 	if not language:
 		language=languageHandler.getLanguage()
 	return language
+
 
 def spellTextInfo(
 		info: textInfos.TextInfo,
@@ -186,7 +188,10 @@ def speakSpelling(
 	speak(seq, priority=priority)
 
 
-def getSpeechForSpelling(
+# C901 'getSpeechForSpelling' is too complex
+# Note: when working on getSpeechForSpelling, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+def getSpeechForSpelling(  # noqa: C901
 		text: str,
 		locale: Optional[str] = None,
 		useCharacterDescriptions: bool = False
@@ -271,7 +276,10 @@ def getCharDescListFromText(text,locale):
 	return charDescList
 
 
-def speakObjectProperties(
+# C901 'speakObjectProperties' is too complex
+# Note: when working on speakObjectProperties, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+def speakObjectProperties(  # noqa: C901
 		obj,
 		reason: str = controlTypes.REASON_QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
@@ -372,7 +380,10 @@ def speakObjectProperties(
 
 def _speakPlaceholderIfEmpty(
 		info: textInfos.TextInfo,
-		obj, reason,priority=None):
+		obj,
+		reason: str,
+		priority: Optional[Spri] = None
+) -> bool:
 	""" attempt to speak placeholder attribute if the textInfo 'info' is empty
 	@return: True if info was considered empty, and we attempted to speak the placeholder value.
 	False if info was not considered empty.
@@ -383,7 +394,11 @@ def _speakPlaceholderIfEmpty(
 		return True
 	return False
 
-def speakObject(
+
+# C901 'speakObject' is too complex
+# Note: when working on speakObject, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+def speakObject(  # noqa: C901
 		obj,
 		reason: str = controlTypes.REASON_QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
@@ -702,7 +717,10 @@ def speakSelectionMessage(
 		speakMessage(message % _("%d characters") % len(text),priority=priority)
 
 
-def speakSelectionChange(
+# C901 'speakSelectionChange' is too complex
+# Note: when working on speakSelectionChange, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+def speakSelectionChange(  # noqa: C901
 		oldInfo: textInfos.TextInfo,
 		newInfo: textInfos.TextInfo,
 		speakSelected: bool = True,
@@ -2158,7 +2176,7 @@ def getTableInfoSpeech(
 re_last_pause=re.compile(r"^(.*(?<=[^\s.!?])[.!?][\"'”’)]?(?:\s+|$))(.*$)",re.DOTALL|re.UNICODE)
 
 
-def speakWithoutPauses(
+def speakWithoutPauses(  # noqa: C901
 		speechSequence: SpeechSequence,
 		detectBreaks: bool = True
 ) -> bool:
