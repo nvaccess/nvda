@@ -3063,6 +3063,64 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.messageTimeoutEdit.Enable(not evt.IsChecked())
 
 
+def showStartErrorForProviders(
+		parent: wx.Window,
+		providers: List[vision.providerInfo.ProviderInfo],
+) -> None:
+	if not providers:
+		return
+
+	if len(providers) == 1:
+		providerName = providers[0].translatedName
+		# Translators: This message is presented when
+		# NVDA is unable to load a single vision enhancement provider.
+		message = _(f"Could not load the {providerName} vision enhancement provider")
+	else:
+		providerNames = ", ".join(provider.translatedName for provider in providers)
+		# Translators: This message is presented when
+		# NVDA is unable to load multiple vision enhancement providers.
+		message = _(
+			f"Could not load the following vision enhancement providers:"
+			f"\n{providerNames}"
+		)
+	gui.messageBox(
+		message,
+		# Translators: The title of the vision enhancement provider error message box.
+		_("Vision Enhancement Provider Error"),
+		wx.OK | wx.ICON_WARNING,
+		parent,
+	)
+
+
+def showTerminationErrorForProviders(
+		parent: wx.Window,
+		providers: List[vision.providerInfo.ProviderInfo],
+) -> None:
+	if not providers:
+		return
+
+	if len(providers) == 1:
+		providerName = providers[0].translatedName
+		# Translators: This message is presented when
+		# NVDA is unable to gracefully terminate a single vision enhancement provider.
+		message = _(f"Could not gracefully terminate the {providerName} vision enhancement provider")
+	else:
+		providerNames = ", ".join(provider.translatedName for provider in providers)
+		# Translators: This message is presented when
+		# NVDA is unable to terminate multiple vision enhancement providers.
+		message = _(
+			"Could not gracefully terminate the following vision enhancement providers:\n"
+			f"{providerNames }"
+		)
+		gui.messageBox(
+			message,
+			# Translators: The title of the vision enhancement provider error message box.
+			_("Vision Enhancement Provider Error"),
+			wx.OK | wx.ICON_WARNING,
+			parent,
+		)
+
+
 class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl):
 	"""
 		Gives settings panels for vision enhancement providers a way to control a
@@ -3077,97 +3135,74 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 		self._providerInfo = providerInfo
 		self._parent = parent
 
+	def getProviderInfo(self) -> vision.providerInfo.ProviderInfo:
+		return self._providerInfo
+
+	def getProviderInstance(self) -> Optional[vision.providerBase.VisionEnhancementProvider]:
+		return vision.handler.providers.get(self._providerInfo.providerId, None)
+
 	def startProvider(
 			self,
-	) -> None:
-		"""Initializes the provider in a way that is gui friendly,
-		showing an error if appropriate.
+			shouldPromptOnError: bool = True
+	) -> bool:
+		"""Initializes the provider, prompting user with the error if necessary.
+		@param shouldPromptOnError: True if  the user should be presented with any errors that may occur.
+		@return: True on success
 		"""
-		success = True
-		initErrors = []
+		success = self._doStartProvider()
+		if not success and shouldPromptOnError:
+			showStartErrorForProviders(self._parent, [self._providerInfo, ])
+		return success
+
+	def terminateProvider(
+			self,
+			shouldPromptOnError: bool = True
+	) -> bool:
+		"""Terminate the provider, prompting user with the error if necessary.
+		@param shouldPromptOnError: True if  the user should be presented with any errors that may occur.
+		@return: True on success
+		"""
+		success = self._doTerminate()
+		if not success and shouldPromptOnError:
+			showTerminationErrorForProviders(self._parent, [self._providerInfo, ])
+		return success
+
+	def _doStartProvider(self) -> bool:
+		"""Attempt to start the provider, catching any errors.
+		@return True on successful termination.
+		"""
 		try:
 			vision.handler.initializeProvider(self._providerInfo)
+			return True
 		except Exception:
-			initErrors.append(self._providerInfo.providerId)
 			log.error(
 				f"Could not initialize the {self._providerInfo.providerId} vision enhancement provider",
 				exc_info=True
 			)
-			success = False
-		if not success and initErrors:
-			if len(initErrors) == 1:
-				# Translators: This message is presented when
-				# NVDA is unable to load a single vision enhancement provider.
-				message = _("Could not load the {provider} vision enhancement provider").format(
-					provider=initErrors[0]
-				)
-			else:
-				initErrorsList = ", ".join(initErrors)
-				# Translators: This message is presented when
-				# NVDA is unable to load multiple vision enhancement providers.
-				message = _(f"Could not load the following vision enhancement providers:\n{initErrorsList}")
-			gui.messageBox(
-				message,
-				# Translators: The title of the vision enhancement provider error message box.
-				_("Vision Enhancement Provider Error"),
-				wx.OK | wx.ICON_WARNING,
-				self._parent
-			)
+			return False
 
-	def terminateProvider(
-			self,
-			verbose: bool = False
-	) -> None:
-		"""Terminates one or more providers in a way that is gui friendly,
-		@verbose: Whether to show a termination error.
-		@returns: Whether initialization succeeded for all providers.
+	def _doTerminate(self) -> bool:
+		"""Attempt to terminate the provider, catching any errors.
+		@return True on successful termination.
 		"""
-		terminateErrors = []
 		try:
 			# Terminating a provider from the gui should never save the settings.
 			# This is because termination happens on the fly when unchecking check boxes.
 			# Saving settings would be harmful if a user opens the vision panel,
 			# then changes some settings and disables the provider.
 			vision.handler.terminateProvider(self._providerInfo, saveSettings=False)
+			return True
 		except Exception:
-			terminateErrors.append(self._providerInfo.providerId)
 			log.error(
 				f"Could not terminate the {self._providerInfo.providerId} vision enhancement provider",
 				exc_info=True
 			)
-
-		if terminateErrors:
-			if verbose:
-				if len(terminateErrors) == 1:
-					# Translators: This message is presented when
-					# NVDA is unable to gracefully terminate a single vision enhancement provider.
-					message = _(
-						"Could not gracefully terminate the {provider} vision enhancement provider"
-					).format(provider=list(terminateErrors)[0])
-				else:
-					terminateErrorsList = ", ".join(terminateErrors)
-					# Translators: This message is presented when
-					# NVDA is unable to termiante multiple vision enhancement providers.
-					message = _(
-						"Could not gracefully terminate the following vision enhancement providers:\n"
-						f"{terminateErrorsList}"
-					)
-				gui.messageBox(
-					message,
-					# Translators: The title of the vision enhancement provider error message box.
-					_("Vision Enhancement Provider Error"),
-					wx.OK | wx.ICON_WARNING,
-					self._parent
-				)
-
-	def getProviderInstance(self) -> Optional[vision.providerBase.VisionEnhancementProvider]:
-		return vision.handler.providers.get(self._providerInfo.providerId, None)
-
-	def getProviderInfo(self) -> vision.providerInfo.ProviderInfo:
-		return self._providerInfo
+			return False
 
 
 class VisionSettingsPanel(SettingsPanel):
+	settingsSizerHelper: guiHelper.BoxSizerHelper
+	providerPanelInstances: List[SettingsPanel]
 	initialProviders: List[vision.providerInfo.ProviderInfo]
 	# Translators: This is the label for the vision panel
 	title = _("Vision")
@@ -3221,8 +3256,13 @@ class VisionSettingsPanel(SettingsPanel):
 		"""Initializes one or more providers in a way that is gui friendly,
 		showing an error if appropriate.
 		"""
+		errorProviders: List[vision.providerInfo.ProviderInfo] = []
 		for provider in providers:
-			VisionProviderStateControl(self, provider).startProvider()
+			with VisionProviderStateControl(self, provider) as control:
+				success = control.startProvider(shouldPromptOnError=False)
+			if not success:
+				errorProviders.append(provider)
+		showStartErrorForProviders(self, errorProviders)
 
 	def safeTerminateProviders(
 			self,
@@ -3233,8 +3273,14 @@ class VisionSettingsPanel(SettingsPanel):
 		@verbose: Whether to show a termination error.
 		@returns: Whether termination succeeded for all providers.
 		"""
+		errorProviders: List[vision.providerInfo.ProviderInfo] = []
 		for provider in providers:
-			VisionProviderStateControl(self, provider).terminateProvider(verbose=verbose)
+			with VisionProviderStateControl(self, provider) as control:
+				success = control.terminateProvider(shouldPromptOnError=False)
+			if not success:
+				errorProviders.append(provider)
+		if verbose:
+			showTerminationErrorForProviders(self, errorProviders)
 
 	def refreshPanel(self):
 		self.Freeze()

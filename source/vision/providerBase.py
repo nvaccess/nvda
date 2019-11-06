@@ -46,17 +46,10 @@ class VisionProviderStateControl:
 	"""
 
 	@abstractmethod
-	def startProvider(self) -> None:
-		"""Initializes the provider in a way that is GUI friendly,
-		showing an error if appropriate.
-		@note: Use getProviderInstance to determine success
+	def getProviderInfo(self):
 		"""
-
-	@abstractmethod
-	def terminateProvider(self, verbose: bool = False) -> None:
-		"""Terminates the provider in a way that is GUI friendly,
-		@verbose: Whether to show a termination error.
-		@note: Use getProviderInstance to determine success
+		@return: The provider info
+		@rtype: providerInfo.ProviderInfo
 		"""
 
 	@abstractmethod
@@ -66,10 +59,17 @@ class VisionProviderStateControl:
 		"""
 
 	@abstractmethod
-	def getProviderInfo(self):
+	def startProvider(self, shouldPromptOnError: bool) -> bool:
+		"""Initializes the provider, prompting user with the error if necessary.
+		@param shouldPromptOnError: True if  the user should be presented with any errors that may occur.
+		@return: True on success
 		"""
-		@return: The provider info
-		@rtype: providerInfo.ProviderInfo
+
+	@abstractmethod
+	def terminateProvider(self, shouldPromptOnError: bool) -> bool:
+		"""Terminate the provider, prompting user with the error if necessary.
+		@param shouldPromptOnError: True if  the user should be presented with any errors that may occur.
+		@return: True on success
 		"""
 
 
