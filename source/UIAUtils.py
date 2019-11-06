@@ -126,7 +126,8 @@ def iterUIARangeByUnit(rangeObj,unit,reverse=False):
 		if pastEnd:
 			return
 		tempRange.MoveEndpointByRange(Endpoint_relativeStart,tempRange,Endpoint_relativeEnd)
-		if relativeGTOperator(tempRange.CompareEndpoints(Endpoint_relativeStart,rangeObj,Endpoint_relativeEnd),-1):
+		delta = tempRange.CompareEndpoints(Endpoint_relativeStart, rangeObj, Endpoint_relativeEnd)
+		if relativeGTOperator(delta, -1):
 			# tempRange is now already entirely passed the end of the given range.
 			# Can be seen with MS Word bullet points: #9613
 			return
