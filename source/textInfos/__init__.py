@@ -16,7 +16,7 @@ import baseObject
 import config
 import controlTypes
 import locationHelper
-from typing import Union, List, Tuple, Dict
+from typing import Union, List, Dict
 
 FieldSubQuery = Dict[str, Union[bool, List]]
 FieldQuery = List[FieldSubQuery]
