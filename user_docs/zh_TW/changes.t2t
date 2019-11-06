@@ -3,6 +3,14 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.2.1 =
+This is a minor release to fix several crashes present in 2019.2. Fixes include:
+- Addressed several crashes in Gmail seen in both Firefox and Chrome when interacting with particular popup menus such as when creating filters or changing certain Gmail settings. (#10175, #9402, #8924)
+- In Windows 7, NVDA no longer causes Windows Explorer to crash when the mouse is used in the start menu. (#9435) 
+- Windows Explorer on Windows 7 no longer crashes when accessing metadata edit fields. (#5337) 
+- NVDA no longer freezes when interacting with images with a base64 URI in Mozilla Firefox or Google Chrome. (#10227)
+
+
 = 2019.2 =
 Highlights of this release include auto detection of Freedom Scientific braille displays, an experimental setting in the Advanced panel to stop browse mode from automatically moving focus (which may provide performance improvements), a rate boost option for the Windows OneCore synthesizer to achieve very fast rates, and many other bug fixes.
 
@@ -38,7 +46,7 @@ Highlights of this release include auto detection of Freedom Scientific braille 
 - Updated eSpeak-NG to commit 67324cc.
 - Updated liblouis braille translator to version 3.10.0. (#9439, #9678)
 - NVDA will now report the word 'selected' after reporting the text a user has just selected.(#9028, #9909)
-- In Microsoft Visual Studio Code, browse mode is now off by default. (#9828)
+- In Microsoft Visual Studio Code, NVDA is in focus mode by default. (#9828)
 
 
 == Bug Fixes ==
@@ -58,7 +66,7 @@ Highlights of this release include auto detection of Freedom Scientific braille 
 - Add-ons with names that only differ in capitalization are no longer treated as separate add-ons. (#9334)
 - For Windows OneCore voices, the rate set in NVDA is no longer affected by the rate set in Windows 10 Speech Settings. (#7498)
 - The log can now be opened with NVDA+F1 when there is no developer info for the current navigator object. (#8613)
-- It is again possible to use NvDA's table navigation commands in Google Docs, in Firefox and Chrome. (#9494)
+- It is again possible to use NVDA's table navigation commands in Google Docs, in Firefox and Chrome. (#9494)
 - The bumper keys now work correctly on Freedom Scientific braille displays. (#8849)
 - When reading the first character of a document in Notepad++ 7.7 X64, NVDA no longer freezes for up to ten seconds. (#9609)
 - HTCom can now be used with a Handy Tech Braille display in combination with NVDA. (#9691)

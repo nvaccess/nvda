@@ -30,7 +30,8 @@ def createCLDRAnnotationsDict(sources, dest):
 	with codecs.open(dest, "w", "utf_8_sig", errors="replace") as dictFile:
 		dictFile.write(u"symbols:\r\n")
 		for pattern, description in cldrDict.items():
-			dictFile.write(u"{pattern}\t{description}\tsome\r\n".format(
+			# Punctuations are set to none for CLDR characters to be pronounced even if user set punctuation level to None
+			dictFile.write(u"{pattern}\t{description}\tnone\r\n".format(
 				pattern=pattern,
 				description=description
 			))

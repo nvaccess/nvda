@@ -152,6 +152,8 @@ ROLE_AUDIO=145
 ROLE_CHARTELEMENT=146
 ROLE_DELETED_CONTENT=147
 ROLE_INSERTED_CONTENT=148
+ROLE_LANDMARK = 149
+ROLE_ARTICLE = 150
 
 STATE_UNAVAILABLE=0X1
 STATE_FOCUSED=0X2
@@ -492,6 +494,10 @@ roleLabels={
 	ROLE_DELETED_CONTENT:_("deleted"),
 	# Translators: Identifies inserted content. 
 	ROLE_INSERTED_CONTENT:_("inserted"),
+	# Translators: Identifies a landmark.
+	ROLE_LANDMARK: _("landmark"),
+	# Translators: Identifies an article.
+	ROLE_ARTICLE: _("article"),
 }
 
 stateLabels={
