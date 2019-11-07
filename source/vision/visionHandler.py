@@ -185,7 +185,7 @@ class VisionHandler(AutoPropertyObject):
 	) -> None:
 		"""
 		Enables and activates the supplied provider.
-		@param provider: The provider to initialise.
+		@param provider: The provider to initialize.
 		@param temporary: Whether the selected provider is enabled temporarily (e.g. as a fallback).
 			This defaults to C{False}.
 			If C{True}, no changes will be performed to the configuration.
@@ -286,6 +286,6 @@ class VisionHandler(AutoPropertyObject):
 
 	def initialFocus(self) -> None:
 		if not api.getDesktopObject():
-			# focus/review hasn't yet been initialised.
+			# focus/review hasn't yet been initialized.
 			return
 		self.handleGainFocus(api.getFocusObject())

@@ -55,7 +55,7 @@ class Magnification:
 	_MagShowSystemCursorFuncType = WINFUNCTYPE(BOOL, BOOL)
 	_MagShowSystemCursorArgTypes = ((1, "showCursor"),)
 
-	# initialise
+	# initialize
 	_MagInitializeFuncType = WINFUNCTYPE(BOOL)
 	MagInitialize = _MagInitializeFuncType(("MagInitialize", _magnification))
 	MagInitialize.errcheck = _errCheck
