@@ -160,7 +160,7 @@ class VisionHandler(AutoPropertyObject):
 			# therefore it is unknown what to expect.
 			exception = e
 		# Copy the configured providers before mutating the list.
-		# If we don't, configobj won't be aware of changes the list.
+		# If we don't, configobj won't be aware of changes in the list.
 		configuredProviders: List = config.conf['vision']['providers'][:]
 		try:
 			configuredProviders.remove(providerId)
