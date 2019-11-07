@@ -3435,7 +3435,7 @@ class VisionProviderSubPanel_Wrapper(
 	def _nonEnableableGUI(self, evt):
 		wx.MessageBox(
 			# Translators: Shown when there is an error showing the GUI for a vision enhancement provider
-			_("Unable to configure GUI for Vision Enhancement Provider, it can not be enabled."),
+			_("Unable to configure user interface for Vision Enhancement Provider, it can not be enabled."),
 			parent=self,
 		)
 		self._checkBox.SetValue(False)
