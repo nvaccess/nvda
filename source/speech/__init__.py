@@ -1013,7 +1013,7 @@ def speakTextInfo(  # noqa: C901
 
 	if onlyInitialFields or (unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and len(textWithFields)>0 and len(textWithFields[0])==1 and all((isinstance(x,textInfos.FieldCommand) and x.command=="controlEnd") for x in itertools.islice(textWithFields,1,None) )): 
 		if not onlyCache:
-			if onlyInitialFields or any(isinstance(x,str) for x in speechSequence):
+			if onlyInitialFields or speechSequence:
 				speak(speechSequence,priority=priority)
 			if not onlyInitialFields: 
 				speakSpelling(textWithFields[0],locale=language if autoLanguageSwitching else None,priority=priority)
@@ -2020,8 +2020,7 @@ def getFormatFieldSpeech(  # noqa: C901
 		oldInvalidSpelling=attrsCache.get("invalid-spelling") if attrsCache is not None else None
 		if (invalidSpelling or oldInvalidSpelling is not None) and invalidSpelling!=oldInvalidSpelling:
 			if invalidSpelling:
-				# Translators: Reported when text contains a spelling error.
-				text=_("spelling error")
+				text = WaveFileCommand(r"waves\textError.wav")
 			elif extraDetail:
 				# Translators: Reported when moving out of text containing a spelling error.
 				text=_("out of spelling error")
