@@ -3,6 +3,14 @@ Traduzido pela Equipa portuguesa do NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.2.1 =
+Esta é uma sub-versão para corrigir vários craches presentes na 2019.2. As correcções incluem:
+- Corrigidos vários craches no GMail observados quer no Mozilla Firefox quer no  Google Chrome ao interagir com alguns menus popup, tais como ao criar filtros ou ao alterar algumas opções do GMail. (#10175, #9402, #8924)
+- No Windows 7, o NVDA já não causa craches no Windows Explorer quando o rato é usado no menu Iniciar. (#9435) 
+- O Windows Explorer no Windows 7 já não cracha ao aceder aos campos de edição de metadata. (#5337) 
+- O NVDA já não "congela" ao interagir com imagens com URI base64 no Mozilla Firefox ou Google Chrome. (#10227)
+
+
 = 2019.2 =
 Os destaques desta versão incluem:
 - Ddetecção automática das linhas Braille da Freedom Scientific;

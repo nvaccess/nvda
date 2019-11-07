@@ -3,6 +3,14 @@ Wat is Nieuw in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.2.1 =
+In deze versie van NVDA zijn er diverse crashes opgelost die zich voordeden in 2019.2, waaronder:
+- Verschillende crashes opgelost in Gmail die merkbaar waren in zowel Firefox als Chrome bij interactie met bepaalde pop-upmenu's zoals bij het maken van filters of het wijzigen van bepaalde Gmail-instellingen. (#10175, #9402, #8924)
+- In Windows 7 veroorzaakt NVDA niet langer een crash van de Windows Verkenner wanneer de muis wordt gebruikt in het startmenu. (#9435) 
+- Windows Verkenner in Windows 7 crasht niet langer bij het gebruik van metadata-invoervelden. (#5337) 
+- NVDA crasht niet langer bij interactie met afbeeldingen met een base64 URI in Mozilla Firefox of Google Chrome. (#10227)
+
+
 = 2019.2 =
 Hoogtepunten in deze versie zijn automatische detectie van Freedom Scientific brailleleesregels, een expirimentele functie in de geavanceerde instellingencategorie waardoor de bladermodus de focus niet langer automatisch verplaatst (wat mogelijk prestatieverbeteringen oplevert), toevoeging van de optie snelheidsboost voor de Windows OneCore synthesizer voor het gebruiken van zeer snelle spraak, en vele andere oplossingen voor problemen.
 

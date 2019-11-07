@@ -48,6 +48,8 @@ class SpeechDictEntry:
 
 class SpeechDict(list):
 
+	fileName = None
+
 	def load(self, fileName):
 		self.fileName=fileName
 		comment=""
@@ -99,8 +101,16 @@ class SpeechDict(list):
 		file.close()
 
 	def sub(self, text):
-		for entry in self:
-			text = entry.sub(text)
+		invalidEntries = []
+		for index, entry in enumerate(self):
+			try:
+				text = entry.sub(text)
+			except re.error as exc:
+				dictName = self.fileName or "temporary dictionary"
+				log.error(f"Invalid dictionary entry {index+1} in {dictName}: \"{entry.pattern}\", {exc}")
+				invalidEntries.append(index)
+			for index in reversed(invalidEntries):
+				del self[index]
 		return text
 
 def processText(text):

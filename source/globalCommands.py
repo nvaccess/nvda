@@ -651,6 +651,22 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportLandmarks.__doc__=_("Toggles on and off the reporting of landmarks")
 	script_toggleReportLandmarks.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report articles command.
+		description=_("Toggles on and off the reporting of articles"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
+	def script_toggleReportArticles(self, gesture):
+		if config.conf["documentFormatting"]["reportArticles"]:
+			# Translators: The message announced when toggling the report articles document formatting setting.
+			state = _("report articles off")
+			config.conf["documentFormatting"]["reportArticles"] = False
+		else:
+			# Translators: The message announced when toggling the report articles document formatting setting.
+			state = _("report articles on")
+			config.conf["documentFormatting"]["reportArticles"] = True
+		ui.message(state)
+
 	def script_toggleReportFrames(self,gesture):
 		if config.conf["documentFormatting"]["reportFrames"]:
 			# Translators: The message announced when toggling the report frames document formatting setting.
@@ -1369,7 +1385,7 @@ class GlobalCommands(ScriptableObject):
 		line.expand(textInfos.UNIT_LINE)
 		indentation,content=speech.splitTextIndentation(line.text)
 		if indentation:
-			textList.append(speech.getIndentationSpeech(indentation, formatConfig))
+			textList.extend(speech.getIndentationSpeech(indentation, formatConfig))
 		
 		info=info.copy()
 		info.expand(textInfos.UNIT_CHARACTER)
@@ -1379,9 +1395,9 @@ class GlobalCommands(ScriptableObject):
 				formatField.update(field.field)
 
 		if not browseable:
-			text=info.getFormatFieldSpeech(formatField,formatConfig=formatConfig) if formatField else None
-			if text:
-				textList.append(text)
+			if formatField:
+				sequence = info.getFormatFieldSpeech(formatField, formatConfig=formatConfig)
+				textList.extend(sequence)
 
 			if not textList:
 			# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
@@ -1390,17 +1406,25 @@ class GlobalCommands(ScriptableObject):
 				
 			ui.message(" ".join(textList))
 		else:
-			text=info.getFormatFieldSpeech(formatField,formatConfig=formatConfig , separator="\n") if formatField else None
-			if text:
-				textList.append(text)
+			if formatField:
+				sequence = info.getFormatFieldSpeech(formatField, formatConfig=formatConfig)
+				textList.extend(sequence)
 
 			if not textList:
 				# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 				ui.message(_("No formatting information"))
 				return
 
-			# Translators: title for formatting information dialog.
-			ui.browseableMessage("\n".join(textList), _("Formatting"))
+			# browseable message only supports a string, remove commands:
+			message = "\n".join(
+				stringItem for stringItem in textList if isinstance(stringItem, str)
+			)
+
+			ui.browseableMessage(
+				message,
+				# Translators: title for formatting information dialog.
+				_("Formatting")
+			)
 
 	def script_reportFormatting(self,gesture):
 		info=api.getReviewPosition()
@@ -1954,6 +1978,27 @@ class GlobalCommands(ScriptableObject):
 	script_review_markStartForCopy.__doc__ = _("Marks the current position of the review cursor as the start of text to be selected or copied")
 	script_review_markStartForCopy.category=SCRCAT_TEXTREVIEW
 
+	@script(
+		# Translators: Input help mode message for move review cursor to marked start position for a
+		# select or copy command
+		description=_(
+			"Move the review cursor to the position marked as the start of text to be selected or copied"
+		),
+		category=SCRCAT_TEXTREVIEW,
+		gesture="kb:NVDA+shift+F9",
+	)
+	def script_review_moveToStartMarkedForCopy(self, gesture):
+		pos = api.getReviewPosition()
+		if not getattr(pos.obj, "_copyStartMarker", None):
+			# Translators: Presented when attempting to move to the start marker for copy but none has been set.
+			ui.reviewMessage(_("No start marker set"))
+			return
+		startMarker = pos.obj._copyStartMarker.copy()
+		api.setReviewPosition(startMarker)
+		startMarker.collapse()
+		startMarker.expand(textInfos.UNIT_CHARACTER)
+		speech.speakTextInfo(startMarker, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.REASON_CARET)
+
 	def script_review_copy(self, gesture):
 		pos = api.getReviewPosition().copy()
 		if not getattr(pos.obj, "_copyStartMarker", None):
@@ -2294,6 +2339,23 @@ class GlobalCommands(ScriptableObject):
 		recogUi.recognizeNavigatorObject(recog)
 	# Translators: Describes a command.
 	script_recognizeWithUwpOcr.__doc__ = _("Recognizes the content of the current navigator object with Windows 10 OCR")
+
+	@script(
+		# Translators: Input help mode message for toggle report CLDR command.
+		description=_("Toggles on and off the reporting of CLDR characters, such as emojis"),
+		category=SCRCAT_SPEECH,
+	)
+	def script_toggleReportCLDR(self, gesture):
+		if config.conf["speech"]["includeCLDR"]:
+			# Translators: presented when the report CLDR is toggled.
+			state = _("report CLDR characters off")
+			config.conf["speech"]["includeCLDR"] = False
+		else:
+			# Translators: presented when the report CLDR is toggled.
+			state = _("report CLDR characters on")
+			config.conf["speech"]["includeCLDR"] = True
+		characterProcessing.clearSpeechSymbols()
+		ui.message(state)
 
 	@script(
 		# Translators: Describes a command.
