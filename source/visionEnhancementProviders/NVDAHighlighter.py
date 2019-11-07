@@ -350,14 +350,11 @@ class NVDAHightlighter(vision.providerBase.VisionEnhancementProvider):
 
 	@classmethod  # impl required by vision.providerBase.VisionEnhancementProvider
 	def getSettingsPanelClass(cls):
-		"""Returns the instance to be used in order to construct a settings panel for the provider.
+		"""Returns the class to be used in order to construct a settings panel for the provider.
 		@return: Optional[SettingsPanel]
 		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.
 		"""
-		# When using custom panel, dont change settings dynamically
-		# see comment in __init__
 		return NVDAHighlighterGuiPanel
-		# return None
 
 	@classmethod  # impl required by proivderBase.VisionEnhancementProvider
 	def canStart(cls) -> bool:
