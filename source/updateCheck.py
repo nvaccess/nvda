@@ -33,7 +33,8 @@ import ctypes.wintypes
 import ssl
 import wx
 import languageHandler
-import synthDriverHandler
+# Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
+import synthDriverHandler  # noqa: E402
 import braille
 import gui
 from gui import guiHelper
