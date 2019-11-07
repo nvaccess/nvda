@@ -1046,7 +1046,7 @@ class StringDriverSettingChanger(DriverSettingChanger):
 
 class AutoSettingsMixin(metaclass=ABCMeta):
 	"""
-	Mixin class that provides support for driver specific gui settings.
+	Mixin class that provides support for driver/vision provider specific gui settings.
 	Derived classes should implement:
 	- L{getSettings}
 	- L{settingsSizer}
@@ -1209,7 +1209,7 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 			if not settingsInst.isSupported(name):
 				self.settingsSizer.Hide(sizer)
 		# Create new controls, update already existing
-		if(gui._isDebug()):
+		if gui._isDebug():
 			log.debug(f"Current sizerDict: {self.sizerDict!r}")
 			log.debug(f"Current supportedSettings: {self.getSettings().supportedSettings!r}")
 		for setting in settingsInst.supportedSettings:
@@ -1217,45 +1217,55 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 				# Changing a setting shouldn't cause that setting's own values to change.
 				continue
 			if setting.id in self.sizerDict:  # update a value
-				self.settingsSizer.Show(self.sizerDict[setting.id])
-				if isinstance(setting, NumericDriverSetting):
-					getattr(self, f"{setting.id}Slider").SetValue(
-						getattr(settingsStorage, setting.id)
-					)
-				elif isinstance(setting, BooleanDriverSetting):
-					getattr(self, f"{setting.id}Checkbox").SetValue(
-						getattr(settingsStorage, setting.id)
-					)
-				else:
-					options = getattr(self, f"_{setting.id}s")
-					lCombo = getattr(self, f"{setting.id}List")
-					try:
-						cur = getattr(settingsStorage, setting.id)
-						indexOfItem = [x.id for x in options].index(cur)
-						lCombo.SetSelection(indexOfItem)
-					except ValueError:
-						pass
+				self._updateValueForControl(setting, settingsStorage)
 			else:  # create a new control
-				if isinstance(setting, NumericDriverSetting):
-					settingMaker = self._makeSliderSettingControl
-				elif isinstance(setting, BooleanDriverSetting):
-					settingMaker = self._makeBooleanSettingControl
-				else:
-					settingMaker = self._makeStringSettingControl
-				try:
-					s = settingMaker(setting, settingsStorage)
-				except UnsupportedConfigParameterError:
-					log.debugWarning(f"Unsupported setting {setting.id}; ignoring", exc_info=True)
-					continue
-				self.sizerDict[setting.id] = s
-				self.settingsSizer.Insert(
-					len(self.sizerDict) - 1,
-					s,
-					border=10,
-					flag=wx.BOTTOM
-				)
+				self._createNewControl(setting, settingsStorage)
 		# Update graphical layout of the dialog
 		self.settingsSizer.Layout()
+
+	def _createNewControl(self, setting, settingsStorage):
+		settingMaker = self._getSettingMaker(setting)
+		try:
+			s = settingMaker(setting, settingsStorage)
+		except UnsupportedConfigParameterError:
+			log.debugWarning(f"Unsupported setting {setting.id}; ignoring", exc_info=True)
+		else:
+			self.sizerDict[setting.id] = s
+			self.settingsSizer.Insert(
+				len(self.sizerDict) - 1,
+				s,
+				border=10,
+				flag=wx.BOTTOM
+			)
+
+	def _getSettingMaker(self, setting):
+		if isinstance(setting, NumericDriverSetting):
+			settingMaker = self._makeSliderSettingControl
+		elif isinstance(setting, BooleanDriverSetting):
+			settingMaker = self._makeBooleanSettingControl
+		else:
+			settingMaker = self._makeStringSettingControl
+		return settingMaker
+
+	def _updateValueForControl(self, setting, settingsStorage):
+		self.settingsSizer.Show(self.sizerDict[setting.id])
+		if isinstance(setting, NumericDriverSetting):
+			getattr(self, f"{setting.id}Slider").SetValue(
+				getattr(settingsStorage, setting.id)
+			)
+		elif isinstance(setting, BooleanDriverSetting):
+			getattr(self, f"{setting.id}Checkbox").SetValue(
+				getattr(settingsStorage, setting.id)
+			)
+		else:
+			options = getattr(self, f"_{setting.id}s")
+			lCombo = getattr(self, f"{setting.id}List")
+			try:
+				cur = getattr(settingsStorage, setting.id)
+				indexOfItem = [x.id for x in options].index(cur)
+				lCombo.SetSelection(indexOfItem)
+			except ValueError:
+				pass
 
 	def onDiscard(self):
 		# unbind change events for string settings as wx closes combo boxes on cancel
