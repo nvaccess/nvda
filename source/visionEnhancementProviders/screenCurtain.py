@@ -232,6 +232,8 @@ class ScreenCurtainGuiPanel(
 			#  Translators: option to enable screen curtain in the vision settings panel
 			label=_("Make screen black (immediate effect)")
 		)
+		isProviderActive = bool(self._providerControl.getProviderInstance())
+		self._enabledCheckbox.SetValue(isProviderActive)
 
 		self.mainSizer.Add(self._enabledCheckbox)
 		self.mainSizer.AddSpacer(size=self.scaleSize(10))
