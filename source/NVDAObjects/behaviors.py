@@ -782,8 +782,8 @@ class ToolTip(NVDAObject):
 		if not config.conf["presentation"]["reportTooltips"]:
 			return
 		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
-		# Ideally, we wouldn't use getBrailleTextForProperties directly.
-		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
+		# Ideally, we wouldn't use getPropertiesBraille directly.
+		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
 class Notification(NVDAObject):
 	"""Informs the user of non-critical information that does not require immediate action.
@@ -795,8 +795,8 @@ class Notification(NVDAObject):
 		if not config.conf["presentation"]["reportHelpBalloons"]:
 			return
 		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
-		# Ideally, we wouldn't use getBrailleTextForProperties directly.
-		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
+		# Ideally, we wouldn't use getPropertiesBraille directly.
+		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
 	event_show = event_alert
 
