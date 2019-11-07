@@ -7,6 +7,8 @@ What's New in NVDA
 This is a minor release to fix several crashes present in 2019.2. Fixes include:
 - Addressed several crashes in Gmail seen in both Firefox and Chrome when interacting with particular popup menus such as when creating filters or changing certain Gmail settings. (#10175, #9402, #8924)
 - In Windows 7, NVDA no longer causes Windows Explorer to crash when the mouse is used in the start menu. (#9435) 
+- Windows Explorer on Windows 7 no longer crashes when accessing metadata edit fields. (#5337) 
+- NVDA no longer freezes when interacting with images with a base64 URI in Mozilla Firefox or Google Chrome. (#10227)
 
 
 = 2019.2 =

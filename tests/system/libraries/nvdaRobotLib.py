@@ -31,7 +31,7 @@ repoRoot = _abspath("./")
 whichNVDA = builtIn.get_variable_value("${whichNVDA}", "source")
 if whichNVDA == "source":
 	NVDACommandPathToCheckExists = _pJoin(repoRoot, "source/nvda.pyw")
-	baseNVDACommandline = "pythonw "+NVDACommandPathToCheckExists
+	baseNVDACommandline = f"pyw {NVDACommandPathToCheckExists}"
 elif whichNVDA == "installed":
 	NVDACommandPathToCheckExists = _pJoin(_expandvars('%PROGRAMFILES%'),'nvda','nvda.exe')
 	baseNVDACommandline='"%s"' % NVDACommandPathToCheckExists

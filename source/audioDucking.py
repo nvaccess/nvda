@@ -6,6 +6,7 @@
 
 import threading
 from ctypes import *
+from ctypes import oledll
 import time
 import config
 from logHandler import log
@@ -141,7 +142,10 @@ _isAudioDuckingSupported=None
 def isAudioDuckingSupported():
 	global _isAudioDuckingSupported
 	if _isAudioDuckingSupported is None:
-		_isAudioDuckingSupported=config.isInstalledCopy() and hasattr(oledll.oleacc,'AccSetRunningUtilityState')
+		_isAudioDuckingSupported = (
+			config.isInstalledCopy()
+			or config.isAppX
+		) and hasattr(oledll.oleacc, 'AccSetRunningUtilityState')
 	return _isAudioDuckingSupported
 
 def handlePostConfigProfileSwitch():
