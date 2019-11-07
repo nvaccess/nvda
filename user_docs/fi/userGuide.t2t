@@ -99,7 +99,7 @@ Sen lisäksi, ettei automaattinen käynnistys toimi kirjautumisen aikana ja/tai 
 
 ++ Asentaminen ++[InstallingNVDA]
 Mikäli asennetaan suoraan ladatusta paketista, painetaan Asenna NVDA -painiketta.
-Jos tämä valintaikkuna on jo suljettu tai halutaan asentaa massamuistiversiosta, valitaan Asenna NVDA -vaihtoehto, joka löytyy NVDA-valikon Työkalut-alavalikosta.
+Jos tämä valintaikkuna on jo suljettu tai halutaan asentaa massamuistiversiosta, valitaan Asenna NVDA -vaihtoehto, joka löytyy NVDA-valikon Työkalut-alivalikosta.
 
 Näkyviin tulevassa valintaikkunassa pyydetään vahvistus NVDA:n asentamiselle ja kerrotaan myös, päivitetäänkö aiempi versio.
 Asennus käynnistyy painamalla Jatka-painiketta.
@@ -181,7 +181,7 @@ Mikäli jonkin NVDA-näppäimen halutaan toimivan samalla tavalla kuin silloin, 
 
 +++ Näppäimistöasettelut +++[KeyboardLayouts]
 NVDA:n mukana tulee tällä hetkellä kaksi erilaista näppäinkomentojen määritystä, joita kutsutaan näppäimistöasetteluiksi: pöytäkoneille ja kannettaville tarkoitettu.
-NVDA käyttää oletusarvoisesti pöytäkoneiden näppäimistöasettelua, mutta kannettaville tarkoitettuun asetteluun voidaan vaihtaa Näppäimistö-kategoriasta [NVDA:n asetukset #NVDASettings] -valintaikkunasta, johon päästään NVDA-valikon Asetukset-alavalikosta.
+NVDA käyttää oletusarvoisesti pöytäkoneiden näppäimistöasettelua, mutta kannettaville tarkoitettuun asetteluun voidaan vaihtaa Näppäimistö-kategoriasta [NVDA:n asetukset #NVDASettings] -valintaikkunasta, johon päästään NVDA-valikon Asetukset-alivalikosta.
 
 Pöytäkoneiden näppäimistöasettelussa käytetään runsaasti numeronäppäimistön näppäimiä (Numlockin on oltava pois käytöstä).
 Vaikka useimmissa kannettavissa tietokoneissa ei olekaan fyysistä numeronäppäimistöä, joissakin sellaista voidaan kuitenkin jäljitellä pitämällä FN-näppäintä alhaalla ja painamalla kirjaimia ja numeroita näppäimistön oikeanpuoleisesta osasta (7, 8, 9, u, i, o, j, k, l jne).
@@ -711,7 +711,7 @@ Seuraavat tilanilmaisimet on myös määritetty:
 | eval | Näytetään, kun objektia ei ole valittu. |
 | laj nou | Näytetään, kun objekti on lajiteltu nousevasti. |
 | laj lask | Näytetään, kun objekti on lajiteltu laskevasti. |
-| alavko | Näytetään, kun objektilla on ponnahdusvalikko (yleensä alavalikko). |
+| avko | Näytetään, kun objektilla on ponnahdusvalikko (yleensä alivalikko). |
 
 Kiintopisteille on määritetty seuraavat lyhenteet:
 || Lyhenne | Kiintopiste |
@@ -940,7 +940,7 @@ Lisättyjen kirjojen taulukkonäkymässä:
 %kc:endInclude
 
 + Asetusten määrittäminen +[ConfiguringNVDA]
-Useimpia asetuksia voidaan muuttaa valintaikkunoista, joihin pääsee NVDA-valikon Asetukset-alavalikosta.
+Useimpia asetuksia voidaan muuttaa valintaikkunoista, joihin pääsee NVDA-valikon Asetukset-alivalikosta.
 Monet näistä asetuksista löytyvät usean kategorian [Asetukset-valintaikkunasta #NVDASettings].
 Hyväksy valintaikkunoissa tekemäsi muutokset painamalla OK-painiketta.
 Peru muutokset painamalla Peruuta-painiketta tai Esc-näppäintä.
@@ -1694,7 +1694,7 @@ Näiden ilmoitusten tallentamisesta lokiin voi olla seurauksena suorituskyvyn hu
 Ota jokin näistä käyttöön vain, jos NVDA:n kehittäjä on neuvonut tekemään niin, esim. sen selvittämiseksi, miksi pistenäytön ajuri ei toimi oikein.
 
 ++ Sekalaiset asetukset ++[MiscSettings]
-[Asetukset #NVDASettings]-valintaikkunan lisäksi NVDA-valikosta löytyvä Asetukset-alavalikko sisältää myös useita muita kohteita, jotka on kuvailtu alla.
+[Asetukset #NVDASettings]-valintaikkunan lisäksi NVDA-valikosta löytyvä Asetukset-alivalikko sisältää myös useita muita kohteita, jotka on kuvailtu alla.
 
 +++ Puhesanastot +++[SpeechDictionaries]
 Asetukset-valikosta löytyvä Puhesanastot-valikko sisältää valintaikkunoita, joista voidaan muuttaa tapaa, jolla NVDA lausuu tietyt sanat tai ilmaisut.
@@ -1892,7 +1892,7 @@ Kirjautumisikkunassa ja käyttäjätilien valvonnan ruuduissa käytettävät ase
 + Lisätyökalut +[ExtraTools]
 
 ++ Lokin tarkastelu ++[LogViewer]
-Lokin tarkastelulla, joka löytyy NVDA-valikon Työkalut-alavalikosta, voidaan tutkia kaikkia NVDA:n edellisen käynnistyksen jälkeen tulleita lokimerkintöjä.
+Lokin tarkastelulla, joka löytyy NVDA-valikon Työkalut-alivalikosta, voidaan tutkia kaikkia NVDA:n edellisen käynnistyksen jälkeen tulleita lokimerkintöjä.
 Näppäinkomento NVDA+F1 avaa lokin tarkastelun sekä näyttää kehittäjätietoa nykyisestä navigointiobjektista.
 
 Loki voidaan myös tallentaa tiedostoon tai ikkunan sisältö päivittää, jotta uusimmat lokin avaamisen jälkeen tulleet merkinnät näytetään.
@@ -1901,7 +1901,7 @@ Nämä toiminnot ovat käytettävissä Lokin tarkastelu -sovelluksen Tiedosto-va
 ++ Puheen tarkastelu ++[SpeechViewer]
 Näkeville ohjelmistokehittäjille tai NVDA:ta näkevälle yleisölle esitteleville on käytettävissä kelluva ikkuna, jonka avulla on mahdolista näyttää kaikki NVDA:n puhuma teksti.
 
-Puheen tarkastelu otetaan käyttöön valitsemalla Puheen tarkastelu -vaihtoehto NVDA-valikon Työkalut-alavalikosta.
+Puheen tarkastelu otetaan käyttöön valitsemalla Puheen tarkastelu -vaihtoehto NVDA-valikon Työkalut-alivalikosta.
 Toiminto poistetaan käytöstä poistamalla vaihtoehdon valinta.
 
 Puheen tarkastelu -ikkunassa on  "Näytä Puheen tarkastelu käynnistettäessä" -valintaruutu.
@@ -1973,7 +1973,7 @@ Sitä painamalla saa näkyviin kaikki lisäosan tiedot, joista on apua otettaess
 
 
 ++ Python-konsoli ++[PythonConsole]
-NVDA:n Python-konsoli, joka löytyy NVDA-valikon Työkalut-alavalikosta, on kehitystyökalu, joka on hyödyllinen virheiden etsinnässä, yleisessä NVDA:n sisäisen toiminnan tai sovelluksen esteettömyyshierarkian tutkimisessa.
+NVDA:n Python-konsoli, joka löytyy NVDA-valikon Työkalut-alivalikosta, on kehitystyökalu, joka on hyödyllinen virheiden etsinnässä, yleisessä NVDA:n sisäisen toiminnan tai sovelluksen esteettömyyshierarkian tutkimisessa.
 Lisätietoja on [NVDA-kehittäjän oppaassa. https://www.nvaccess.org/files/nvda/documentation/developerGuide.html]
 
 ++ Lataa liitännäiset uudelleen ++[ReloadPlugins]
