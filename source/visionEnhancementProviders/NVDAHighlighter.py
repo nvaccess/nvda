@@ -326,12 +326,12 @@ class NVDAHighlighterGuiPanel(
 			self.updateDriverSettings()
 		else:
 			self._updateEnabledState()
-		providerInst: Optional[NVDAHightlighter] = self._providerControl.getProviderInstance()
+		providerInst: Optional[NVDAHighlighter] = self._providerControl.getProviderInstance()
 		if providerInst:
 			providerInst.refresh()
 
 
-class NVDAHightlighter(vision.providerBase.VisionEnhancementProvider):
+class NVDAHighlighter(vision.providerBase.VisionEnhancementProvider):
 	_ContextStyles = {
 		Context.FOCUS: DASH_BLUE,
 		Context.NAVIGATOR: SOLID_PINK,
@@ -448,4 +448,4 @@ class NVDAHightlighter(vision.providerBase.VisionEnhancementProvider):
 		)
 
 
-VisionEnhancementProvider = NVDAHightlighter
+VisionEnhancementProvider = NVDAHighlighter
