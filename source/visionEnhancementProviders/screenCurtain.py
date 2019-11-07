@@ -268,9 +268,7 @@ class ScreenCurtainGuiPanel(
 		currentlyEnabled = bool(self._providerControl.getProviderInstance())
 		if shouldBeEnabled and not currentlyEnabled:
 			confirmed = self.confirmInitWithUser()
-			if confirmed:
-				self._providerControl.startProvider()
-			else:
+			if not confirmed or not self._providerControl.startProvider():
 				self._enabledCheckbox.SetValue(False)
 		elif not shouldBeEnabled and currentlyEnabled:
 			self._providerControl.terminateProvider()
