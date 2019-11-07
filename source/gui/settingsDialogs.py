@@ -3441,12 +3441,12 @@ class VisionProviderSubPanel_Wrapper(
 		self._checkBox.SetValue(False)
 
 	def _enableToggle(self, evt):
-		if not evt.IsChecked():
-			self._providerControl.terminateProvider()
+		if evt.IsChecked():
+			self._providerControl.startProvider()
 			self._providerSettings.updateDriverSettings()
 			self._providerSettings.onPanelActivated()
 		else:
-			self._providerControl.startProvider()
+			self._providerControl.terminateProvider()
 			self._providerSettings.updateDriverSettings()
 			self._providerSettings.onPanelActivated()
 		self._sendLayoutUpdatedEvent()
