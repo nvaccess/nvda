@@ -278,8 +278,9 @@ class NVDAHighlighterGuiPanel(
 		self.SetSizer(self.mainSizer)
 
 	def getSettings(self) -> NVDAHighlighterSettings:
-		# AutoSettingsMixin uses self.driver to get / set attributes matching the names of the settings.
-		# We want them set on this class.
+		# AutoSettingsMixin uses the getSettings method (via getSettingsStorage) to get the instance which is
+		# used to get / set attributes. The attributes must match the id's of the settings.
+		# We want them set on our settings instance.
 		return VisionEnhancementProvider.getSettings()
 
 	def makeSettings(self, sizer: wx.BoxSizer):
