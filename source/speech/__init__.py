@@ -16,11 +16,12 @@ import api
 import controlTypes
 import tones
 import synthDriverHandler
-from synthDriverHandler import *
+from synthDriverHandler import getSynth, setSynth
 import re
 import textInfos
 import speechDictHandler
 import characterProcessing
+import languageHandler
 from .commands import (
 	# Commands that are used in this file.
 	SpeechCommand,
@@ -87,7 +88,7 @@ def initialize():
 	setSynth(config.conf["speech"]["synth"])
 
 def terminate():
-	setSynth(None)
+	synthDriverHandler.setSynth(None)
 	speechViewerObj=None
 
 #: If a chunk of text contains only these characters, it will be considered blank.
@@ -143,7 +144,7 @@ def speakMessage(text,priority=None):
 	speakText(text,reason=controlTypes.REASON_MESSAGE,priority=priority)
 
 def getCurrentLanguage():
-	synth=getSynth()
+	synth = getSynth()
 	language=None
 	if  synth:
 		try:

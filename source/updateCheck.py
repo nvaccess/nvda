@@ -33,7 +33,7 @@ import ctypes.wintypes
 import ssl
 import wx
 import languageHandler
-import speech
+import synthDriverHandler
 import braille
 import gui
 from gui import guiHelper
@@ -110,8 +110,8 @@ def checkForUpdate(auto=False):
 		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
 	}
 	if auto and allowUsageStats:
-		synthDriverClass=speech.getSynth().__class__
-		brailleDisplayClass=braille.handler.display.__class__ if braille.handler else None
+		synthDriverClass = synthDriverHandler.getSynth().__class__
+		brailleDisplayClass = braille.handler.display.__class__ if braille.handler else None
 		# Following are parameters sent purely for stats gathering.
 		#  If new parameters are added here, they must be documented in the userGuide for transparency.
 		extraParams={
