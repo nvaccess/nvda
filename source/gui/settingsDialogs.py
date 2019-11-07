@@ -47,7 +47,7 @@ except RuntimeError:
 	updateCheck = None
 import inputCore
 from . import nvdaControls
-from driverHandler import *
+from autoSettingsUtils.utils import UnsupportedConfigParameterError
 from autoSettingsUtils.autoSettings import AutoSettings
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting, DriverSetting
 from UIAUtils import shouldUseUIAConsole
@@ -3244,9 +3244,9 @@ class VisionSettingsPanel(SettingsPanel):
 				parent=self,
 				providerControl=providerControl
 			)
-		# E722: bare except used since we can not know what exceptions a provider might throw.
+		# Broad except used since we can not know what exceptions a provider might throw.
 		# We should be able to continue despite a buggy provider.
-		except:  # noqa: E722
+		except Exception:
 			log.debug(f"Error creating providerPanel: {settingsPanelCls!r}", exc_info=True)
 			return None
 
@@ -3318,9 +3318,9 @@ class VisionSettingsPanel(SettingsPanel):
 		for panel in self.providerPanelInstances:
 			try:
 				panel.onDiscard()
-			# E722: bare except used since we can not know what exceptions a provider might throw.
+			# Broad except used since we can not know what exceptions a provider might throw.
 			# We should be able to continue despite a buggy provider.
-			except:  # noqa: E722
+			except Exception:
 				log.debug(f"Error discarding providerPanel: {panel.__class__!r}", exc_info=True)
 
 		providersToInitialize = [
@@ -3341,9 +3341,9 @@ class VisionSettingsPanel(SettingsPanel):
 		for panel in self.providerPanelInstances:
 			try:
 				panel.onSave()
-			# E722: bare except used since we can not know what exceptions a provider might throw.
+			# Broad except used since we can not know what exceptions a provider might throw.
 			# We should be able to continue despite a buggy provider.
-			except:  # noqa: E722
+			except Exception:
 				log.debug(f"Error saving providerPanel: {panel.__class__!r}", exc_info=True)
 		self.initialProviders = list(
 			vision.visionHandler.getProviderInfo(providerId)
@@ -3425,9 +3425,9 @@ class VisionProviderSubPanel_Wrapper(
 				settingsCallable=getSettingsCallable
 			)
 			self._providerSettingsSizer.Add(self._providerSettings, flag=wx.EXPAND, proportion=1.0)
-		# E722: bare except used since we can not know what exceptions a provider might throw.
+		# Broad except used since we can not know what exceptions a provider might throw.
 		# We should be able to continue despite a buggy provider.
-		except:  # noqa: E722
+		except Exception:
 			log.error("unable to create provider settings", exc_info=True)
 			return False
 		return True
