@@ -38,15 +38,5 @@ def terminate() -> None:
 	handler = None
 
 
-def getProviderList(
-		onlyStartable: bool = True
-) -> List[ProviderInfo]:
-	"""Gets a list of available vision enhancement providers
-	@param onlyStartable: excludes all providers for which the check method returns C{False}.
-	@return: Details of providers available
-	"""
-	return visionHandler.getProviderList(onlyStartable)
-
-
 def _isDebug() -> bool:
 	return config.conf["debugLog"]["vision"]

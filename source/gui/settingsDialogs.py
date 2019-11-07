@@ -3256,7 +3256,7 @@ class VisionSettingsPanel(SettingsPanel):
 		self.settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self.settingsSizerHelper.addItem(wx.StaticText(self, label=self.panelDescription))
 
-		for providerInfo in vision.getProviderList():
+		for providerInfo in vision.visionHandler.getProviderList():
 			providerSizer = self.settingsSizerHelper.addItem(
 				wx.StaticBoxSizer(wx.StaticBox(self, label=providerInfo.translatedName), wx.VERTICAL),
 				flag=wx.EXPAND
