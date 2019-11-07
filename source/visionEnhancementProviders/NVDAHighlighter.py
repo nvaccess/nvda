@@ -387,6 +387,7 @@ class NVDAHighlighter(vision.providerBase.VisionEnhancementProvider):
 			self._highlighterThread = None
 		winGDI.gdiPlusTerminate()
 		self.contextToRectMap.clear()
+		super().terminate()
 
 	def _run(self):
 		if vision._isDebug():
