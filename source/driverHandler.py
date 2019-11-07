@@ -6,10 +6,6 @@
 
 """Handler for driver functionality that is global to synthesizers and braille displays."""
 from autoSettingsUtils.autoSettings import AutoSettings
-from autoSettingsUtils.utils import (
-	paramToPercent,
-	percentToParam
-)
 
 # F401: the following imports, while unused in this file, are provided for backwards compatibility.
 from autoSettingsUtils.driverSetting import (  # noqa: F401
@@ -76,38 +72,13 @@ class Driver(AutoSettings):
 		"""
 		return False
 
-
-	@classmethod
-	def _paramToPercent(cls, current, min, max):
-		"""Convert a raw parameter value to a percentage given the current, minimum and maximum raw values.
-		@param current: The current value.
-		@type current: int
-		@param min: The minimum value.
-		@type current: int
-		@param max: The maximum value.
-		@type max: int
-		"""
-		return paramToPercent(current, min, max)
-
-	@classmethod
-	def _percentToParam(cls, percent, min, max):
-		"""Convert a percentage to a raw parameter value given the current percentage and the minimum and maximum raw parameter values.
-		@param percent: The current percentage.
-		@type percent: int
-		@param min: The minimum raw parameter value.
-		@type min: int
-		@param max: The maximum raw parameter value.
-		@type max: int
-		"""
-		return percentToParam(percent, min, max)
-
 	# Impl for abstract methods in AutoSettings class
 	@classmethod
 	def getId(cls) -> str:
 		return cls.name
 
 	@classmethod
-	def getTranslatedName(cls) -> str:  # todo rename to getTranslatedName
+	def getTranslatedName(cls) -> str:
 		return cls.description
 
 	@classmethod
