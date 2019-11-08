@@ -9,8 +9,9 @@ from typing import Optional, Tuple
 
 import vision
 from vision.constants import Context
-from vision.providerBase import SupportedSettingType
+from autoSettingsUtils.autoSettings import SupportedSettingType
 from vision.util import getContextRect
+from vision.visionHandlerExtensionPoints import EventExtensionPoints
 from windowUtils import CustomWindow
 import wx
 import gui
@@ -344,11 +345,11 @@ class NVDAHighlighter(vision.providerBase.VisionEnhancementProvider):
 
 	enabledContexts: Tuple[Context]  # type info for autoprop: L{_get_enableContexts}
 
-	@classmethod
+	@classmethod  # override
 	def getSettings(cls) -> NVDAHighlighterSettings:
 		return cls._settings
 
-	@classmethod  # impl required by vision.providerBase.VisionEnhancementProvider
+	@classmethod  # override
 	def getSettingsPanelClass(cls):
 		"""Returns the class to be used in order to construct a settings panel for the provider.
 		@return: Optional[SettingsPanel]
@@ -356,11 +357,14 @@ class NVDAHighlighter(vision.providerBase.VisionEnhancementProvider):
 		"""
 		return NVDAHighlighterGuiPanel
 
-	@classmethod  # impl required by proivderBase.VisionEnhancementProvider
+	@classmethod  # override
 	def canStart(cls) -> bool:
 		return True
 
-	def registerEventExtensionPoints(self, extensionPoints):
+	def registerEventExtensionPoints(  # override
+			self,
+			extensionPoints: EventExtensionPoints
+	) -> None:
 		extensionPoints.post_focusChange.register(self.handleFocusChange)
 		extensionPoints.post_reviewMove.register(self.handleReviewMove)
 		extensionPoints.post_browseModeMove.register(self.handleBrowseModeMove)

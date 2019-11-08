@@ -7,7 +7,8 @@ import vision
 import driverHandler
 import wx
 from autoSettingsUtils.utils import StringParameterInfo
-from vision.providerBase import VisionEnhancementProviderSettings, SupportedSettingType
+from autoSettingsUtils.autoSettings import SupportedSettingType
+from vision.providerBase import VisionEnhancementProviderSettings
 from typing import Optional, Type, Any, List
 
 """Example provider, which demonstrates using the automatically constructed GUI.

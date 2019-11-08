@@ -11,13 +11,13 @@ import vision
 import winVersion
 from ctypes import Structure, windll, c_float, POINTER, WINFUNCTYPE, WinError
 from ctypes.wintypes import BOOL
-import driverHandler
+from autoSettingsUtils.driverSetting import BooleanDriverSetting
+from autoSettingsUtils.autoSettings import SupportedSettingType
 import wx
 import gui
 from logHandler import log
 from vision.providerBase import (
 	VisionEnhancementProviderSettings,
-	SupportedSettingType,
 )
 from typing import Optional, Type
 
@@ -112,7 +112,7 @@ class ScreenCurtainSettings(VisionEnhancementProviderSettings):
 	@classmethod
 	def _get_preInitSettings(cls) -> SupportedSettingType:
 		return [
-			driverHandler.BooleanDriverSetting(
+			BooleanDriverSetting(
 				"warnOnLoad",
 				warnOnLoadCheckBoxText,
 				defaultVal=True

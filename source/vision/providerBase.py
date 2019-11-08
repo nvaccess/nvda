@@ -9,7 +9,7 @@
 
 from abc import abstractmethod, ABC
 
-from autoSettingsUtils.autoSettings import AutoSettings, SupportedSettingType
+from autoSettingsUtils.autoSettings import AutoSettings
 from baseObject import AutoPropertyObject
 from .visionHandlerExtensionPoints import EventExtensionPoints
 from typing import Optional, Any
@@ -29,8 +29,6 @@ class VisionEnhancementProviderSettings(AutoSettings, ABC):
 	- AutoSettings._get_preInitSettings:
 			The settings always configurable for your provider
 	"""
-	supportedSettings: SupportedSettingType  # Typing for autoprop L{_get_supportedSettings}
-
 	def __init__(self):
 		super().__init__()
 		self.initSettings()  # ensure that settings are loaded at construction time.
@@ -90,6 +88,7 @@ class VisionEnhancementProvider(AutoPropertyObject):
 	cachePropertiesByDefault = True
 
 	@classmethod
+	@abstractmethod
 	def getSettings(cls) -> VisionEnhancementProviderSettings:
 		"""
 		@remarks: The L{VisionEnhancementProviderSettings} class should be implemented to define the settings
