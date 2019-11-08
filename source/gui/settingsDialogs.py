@@ -35,6 +35,7 @@ import braille
 import brailleTables
 import brailleInput
 import vision
+import vision.providerInfo
 import vision.providerBase
 from typing import Callable, List, Optional, Any
 import core
@@ -3088,12 +3089,9 @@ def showStartErrorForProviders(
 		message = _(f"Could not load the {providerName} vision enhancement provider")
 	else:
 		providerNames = ", ".join(provider.translatedName for provider in providers)
-		# Translators: This message is presented when
-		# NVDA is unable to load multiple vision enhancement providers.
-		message = _(
-			f"Could not load the following vision enhancement providers:"
-			f"\n{providerNames}"
-		)
+		# Translators: This message is presented when NVDA is unable to
+		# load multiple vision enhancement providers.
+		message = _(f"Could not load the following vision enhancement providers:\n{providerNames}")
 	gui.messageBox(
 		message,
 		# Translators: The title of the vision enhancement provider error message box.
