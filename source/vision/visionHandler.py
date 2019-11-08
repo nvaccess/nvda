@@ -189,16 +189,21 @@ class VisionHandler(AutoPropertyObject):
 		@param temporary: Whether the selected provider is enabled temporarily (e.g. as a fallback).
 			This defaults to C{False}.
 			If C{True}, no changes will be performed to the configuration.
+		@note: On error, an an Exception is raised.
 		"""
 		providerId = provider.providerId
 		providerInst = self.providers.pop(providerId, None)
 		if providerInst is not None:
-			providerInst.reinitialize()
+			try:
+				providerInst.reinitialize()
+			except Exception as e:
+				log.error(f"Error while re-initialising {providerId}")
+				raise e
 		else:
 			providerCls = provider.providerClass
 			if not providerCls.canStart():
 				raise exceptions.ProviderInitException(
-					f"Trying to initialize provider {providerId!r} which reported being unable to start"
+					f"Trying to initialize provider {providerId} which reported being unable to start"
 				)
 			# Initialize the provider.
 			providerInst = providerCls()
