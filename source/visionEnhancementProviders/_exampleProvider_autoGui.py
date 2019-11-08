@@ -11,7 +11,8 @@ from autoSettingsUtils.autoSettings import SupportedSettingType
 from vision.providerBase import VisionEnhancementProviderSettings
 from typing import Optional, Type, Any, List
 
-"""Example provider, which demonstrates using the automatically constructed GUI.
+"""Example provider, which demonstrates using the automatically constructed GUI. Rename this file, removing
+ the first underscore to test it with NVDA.
 
 For examples of overriding the GUI and using a custom implementation, see NVDAHighlighter or ScreenCurtain.
 
