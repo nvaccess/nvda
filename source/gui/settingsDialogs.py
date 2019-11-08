@@ -2856,6 +2856,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			self.Parent.updateCurrentDisplay()
 		super(BrailleDisplaySelectionDialog, self).onOk(evt)
 
+
 class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 	@property
