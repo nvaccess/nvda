@@ -1,8 +1,7 @@
-#brailleTables.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2008-2019 NV Access Limited, Joseph Lee
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2008-2019 NV Access Limited, Joseph Lee, Babbage B.V.
 
 """Manages information about available braille translation tables.
 """
@@ -56,9 +55,7 @@ def listTables():
 	@return: A list of braille tables.
 	@rtype: list of L{BrailleTable}
 	"""
-	tables = _tables.values()
-	tables.sort(key=lambda table: table.displayName)
-	return tables
+	return sorted(_tables.values(), key=lambda table: table.displayName)
 
 #: Maps old table names to new table names for tables renamed in newer versions of liblouis.
 RENAMED_TABLES = {
@@ -71,6 +68,7 @@ RENAMED_TABLES = {
 	"en-us-comp8.ctb" : "en-us-comp8-ext.utb",
 	"fr-ca-g1.utb":"fr-bfu-comp6.utb",
 	"Fr-Ca-g2.ctb":"fr-bfu-g2.ctb",
+	"gr-bb.ctb": "grc-international-en.utb",
 	"gr-gr-g1.utb":"el.ctb",
 	"hr.ctb":"hr-comp8.utb",
 	"mn-MN.utb":"mn-MN-g1.utb",
@@ -228,7 +226,7 @@ addTable("ga-g2.ctb", _("Irish grade 2"), contracted=True)
 addTable("gu-in-g1.utb", _("Gujarati grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("gr-bb.ctb", _("Koine Greek"))
+addTable("grc-international-en.utb", _("Greek international braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("he.ctb", _("Hebrew 8 dot computer braille"))

@@ -1,8 +1,8 @@
-#_UIAHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# _UIAHandler.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from ctypes import *
 from ctypes.wintypes import *
@@ -25,7 +25,10 @@ import winVersion
 import eventHandler
 from logHandler import log
 import UIAUtils
+from comtypes.gen import UIAutomationClient as UIA
 from comtypes.gen.UIAutomationClient import *
+import textInfos
+from typing import Dict
 
 #Some newer UIA constants that could be missing
 ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
@@ -75,12 +78,15 @@ UIADialogClassNames=[
 	"Shell_SystemDialog", # Various dialogs in Windows 10 Settings app
 ]
 
-NVDAUnitsToUIAUnits={
-	"character":TextUnit_Character,
-	"word":TextUnit_Word,
-	"line":TextUnit_Line,
-	"paragraph":TextUnit_Paragraph,
-	"readingChunk":TextUnit_Line,
+NVDAUnitsToUIAUnits: Dict[str, int] = {
+	textInfos.UNIT_CHARACTER: UIA.TextUnit_Character,
+	textInfos.UNIT_WORD: UIA.TextUnit_Word,
+	textInfos.UNIT_LINE: UIA.TextUnit_Line,
+	textInfos.UNIT_PARAGRAPH: UIA.TextUnit_Paragraph,
+	textInfos.UNIT_PAGE: UIA.TextUnit_Page,
+	textInfos.UNIT_READINGCHUNK: UIA.TextUnit_Line,
+	textInfos.UNIT_STORY: UIA.TextUnit_Document,
+	textInfos.UNIT_FORMATFIELD: UIA.TextUnit_Format,
 }
 
 UIAControlTypesToNVDARoles={
@@ -144,7 +150,6 @@ UIAEventIdsToNVDAEventNames={
 	UIA_SelectionItem_ElementAddedToSelectionEventId:"stateChange",
 	UIA_SelectionItem_ElementRemovedFromSelectionEventId:"stateChange",
 	#UIA_MenuModeEndEventId:"menuModeEnd",
-	#UIA_Text_TextSelectionChangedEventId:"caret",
 	UIA_ToolTipOpenedEventId:"UIA_toolTipOpened",
 	#UIA_AsyncContentLoadedEventId:"documentLoadComplete",
 	#UIA_ToolTipClosedEventId:"hide",
@@ -152,13 +157,17 @@ UIAEventIdsToNVDAEventNames={
 	UIA_SystemAlertEventId:"UIA_systemAlert",
 }
 
+autoSelectDetectionAvailable = False
 if winVersion.isWin10():
-	UIAEventIdsToNVDAEventNames[UIA_Text_TextChangedEventId] = "textChange"
+	UIAEventIdsToNVDAEventNames.update({
+		UIA.UIA_Text_TextChangedEventId: "textChange",
+		UIA.UIA_Text_TextSelectionChangedEventId: "caret", })
+	autoSelectDetectionAvailable = True
 
 ignoreWinEventsMap = {
 	UIA_AutomationPropertyChangedEventId: list(UIAPropertyIdsToNVDAEventNames.keys()),
 }
-for id in UIAEventIdsToNVDAEventNames.iterkeys():
+for id in UIAEventIdsToNVDAEventNames.keys():
 	ignoreWinEventsMap[id] = [0]
 
 class UIAHandler(COMObject):
@@ -169,7 +178,10 @@ class UIAHandler(COMObject):
 		self.MTAThreadInitEvent=threading.Event()
 		self.MTAThreadStopEvent=threading.Event()
 		self.MTAThreadInitException=None
-		self.MTAThread=threading.Thread(target=self.MTAThreadFunc)
+		self.MTAThread = threading.Thread(
+			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}.MTAThread",
+			target=self.MTAThreadFunc
+		)
 		self.MTAThread.daemon=True
 		self.MTAThread.start()
 		self.MTAThreadInitEvent.wait(2)
@@ -197,10 +209,10 @@ class UIAHandler(COMObject):
 			# #7345: Instruct UIA to never map MSAA winEvents to UIA propertyChange events.
 			# These events are not needed by NVDA, and they can cause the UI Automation client library to become unresponsive if an application firing winEvents has a slow message pump. 
 			pfm=self.clientObject.proxyFactoryMapping
-			for index in xrange(pfm.count):
+			for index in range(pfm.count):
 				e=pfm.getEntry(index)
 				entryChanged = False
-				for eventId, propertyIds in ignoreWinEventsMap.iteritems():
+				for eventId, propertyIds in ignoreWinEventsMap.items():
 					for propertyId in propertyIds:
 						# Check if this proxy has mapped any winEvents to the UIA propertyChange event for this property ID 
 						try:
@@ -248,8 +260,9 @@ class UIAHandler(COMObject):
 			self.reservedNotSupportedValue=self.clientObject.ReservedNotSupportedValue
 			self.ReservedMixedAttributeValue=self.clientObject.ReservedMixedAttributeValue
 			self.clientObject.AddFocusChangedEventHandler(self.baseCacheRequest,self)
-			self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self,UIAPropertyIdsToNVDAEventNames.keys())
-			for x in UIAEventIdsToNVDAEventNames.iterkeys():  
+			# Use a list of keys as AddPropertyChangedEventHandler expects a sequence.
+			self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self,list(UIAPropertyIdsToNVDAEventNames))
+			for x in UIAEventIdsToNVDAEventNames.keys():
 				self.clientObject.addAutomationEventHandler(x,self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self)
 			# #7984: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
 			if isinstance(self.clientObject, IUIAutomation5):
@@ -272,12 +285,18 @@ class UIAHandler(COMObject):
 		NVDAEventName=UIAEventIdsToNVDAEventNames.get(eventID,None)
 		if not NVDAEventName:
 			return
-		if not self.isNativeUIAElement(sender):
+		focus = api.getFocusObject()
+		import NVDAObjects.UIA
+		if (
+			isinstance(focus, NVDAObjects.UIA.UIA)
+			and self.clientObject.compareElements(focus.UIAElement, sender)
+		):
+			pass
+		elif not self.isNativeUIAElement(sender):
 			return
 		window=self.getNearestWindowHandle(sender)
 		if window and not eventHandler.shouldAcceptEvent(NVDAEventName,windowHandle=window):
 			return
-		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if (
 			not obj
@@ -285,7 +304,6 @@ class UIAHandler(COMObject):
 			or (NVDAEventName=="liveRegionChange" and not obj._shouldAllowUIALiveRegionChangeEvent)
 		):
 			return
-		focus=api.getFocusObject()
 		if obj==focus:
 			obj=focus
 		eventHandler.queueEvent(NVDAEventName,obj)
@@ -327,16 +345,21 @@ class UIAHandler(COMObject):
 		NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
 		if not NVDAEventName:
 			return
-		if not self.isNativeUIAElement(sender):
+		focus = api.getFocusObject()
+		import NVDAObjects.UIA
+		if (
+			isinstance(focus, NVDAObjects.UIA.UIA)
+			and self.clientObject.compareElements(focus.UIAElement, sender)
+		):
+			pass
+		elif not self.isNativeUIAElement(sender):
 			return
 		window=self.getNearestWindowHandle(sender)
 		if window and not eventHandler.shouldAcceptEvent(NVDAEventName,windowHandle=window):
 			return
-		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if not obj:
 			return
-		focus=api.getFocusObject()
 		if obj==focus:
 			obj=focus
 		eventHandler.queueEvent(NVDAEventName,obj)
@@ -355,9 +378,10 @@ class UIAHandler(COMObject):
 
 	def _isBadUIAWindowClassName(self, windowClass):
 		"Given a windowClassName, returns True if this is a known problematic UIA implementation."
-		# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
-		# It does not implement caret/selection, and probably has no new text events.
-		if windowClass == "ConsoleWindowClass" and config.conf['UIA']['winConsoleImplementation'] != "UIA":
+		if (
+			windowClass == "ConsoleWindowClass"
+			and not UIAUtils.shouldUseUIAConsole()
+		):
 			return True
 		return windowClass in badUIAWindowClassNames
 

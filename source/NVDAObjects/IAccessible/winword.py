@@ -63,7 +63,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 	def populateHeaderCellTrackerFromHeaderRows(self,headerCellTracker,table):
 		rows=table.rows
 		numHeaderRows=0
-		for rowIndex in xrange(rows.count): 
+		for rowIndex in range(rows.count): 
 			try:
 				row=rows.item(rowIndex+1)
 			except COMError:
@@ -175,7 +175,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		for info in headerCellTracker.iterPossibleHeaderCellInfosFor(rowNumber,columnNumber,columnHeader=columnHeader):
 			textList=[]
 			if columnHeader:
-				for headerRowNumber in xrange(info.rowNumber,info.rowNumber+info.rowSpan): 
+				for headerRowNumber in range(info.rowNumber,info.rowNumber+info.rowSpan): 
 					tempColumnNumber=columnNumber
 					while tempColumnNumber>=1:
 						try:
@@ -186,7 +186,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 						break
 					textList.append(headerCell.range.text)
 			else:
-				for headerColumnNumber in xrange(info.columnNumber,info.columnNumber+info.colSpan): 
+				for headerColumnNumber in range(info.columnNumber,info.columnNumber+info.colSpan): 
 					tempRowNumber=rowNumber
 					while tempRowNumber>=1:
 						try:
@@ -281,9 +281,9 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 				commentReference=field.field.get('comment')
 				if commentReference:
 					offset=int(commentReference)
-					range=self.WinwordDocumentObject.range(offset,offset+1)
+					textRange=self.WinwordDocumentObject.range(offset, offset + 1)
 					try:
-						text=range.comments[1].range.text
+						text = textRange.comments[1].range.text
 					except COMError:
 						break
 					if text:
@@ -410,7 +410,7 @@ class SpellCheckErrorField(IAccessible,WordDocument_WwN):
 		inBold=False
 		textList=[]
 		for field in fields:
-			if isinstance(field,basestring):
+			if isinstance(field,str):
 				if inBold: textList.append(field)
 			elif field.field:
 				inBold=field.field.get('bold',False)

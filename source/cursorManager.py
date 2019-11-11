@@ -22,6 +22,7 @@ import api
 import speech
 import config
 import braille
+import vision
 import controlTypes
 from inputCore import SCRCAT_BROWSEMODE
 import ui
@@ -111,6 +112,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		info.updateSelection()
 		review.handleCaretMove(info)
 		braille.handler.handleCaretMove(self)
+		vision.handler.handleCaretMove(self)
 
 	def _caretMovementScriptHelper(self,gesture,unit,direction=None,posConstant=textInfos.POSITION_SELECTION,posUnit=None,posUnitEnd=False,extraDetail=False,handleSymbols=False):
 		oldInfo=self.makeTextInfo(posConstant)
@@ -140,11 +142,15 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 					pass
 				else:
 					info=self.makeTextInfo(textInfos.POSITION_FIRST if direction>0 else textInfos.POSITION_LAST)
-		self.selection=info
+		# #10343: Speak before setting selection because setting selection might
+		# move the focus, which might mutate the document, potentially invalidating
+		# info if it is offset-based.
+		selection = info.copy()
 		info.expand(unit)
 		if not willSayAllResume(gesture): speech.speakTextInfo(info,unit=unit,reason=controlTypes.REASON_CARET)
 		if not oldInfo.isCollapsed:
 			speech.speakSelectionChange(oldInfo,self.selection)
+		self.selection = selection
 
 	def doFindText(self,text,reverse=False,caseSensitive=False):
 		if not text:

@@ -1,13 +1,13 @@
 # -*- coding: UTF-8 -*-
-#NVDAObjects/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V., Davy Kager
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
+# Davy Kager
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
-"""Module that contains the base NVDA object type"""
+"""Module that contains the base NVDA object type with dynamic class creation support,
+as well as the associated TextInfo class."""
 
-from six import with_metaclass
 import time
 import re
 import weakref
@@ -26,8 +26,11 @@ import controlTypes
 import appModuleHandler
 import treeInterceptorHandler
 import braille
+import vision
 import globalPluginHandler
 import brailleInput
+import locationHelper
+import aria
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
@@ -35,6 +38,8 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""
 
 	locationText=None
+	# Do not use encoded text.
+	encoding = None
 
 	def _get_unit_mouseChunk(self):
 		return textInfos.UNIT_STORY
@@ -44,10 +49,6 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getStoryLength(self):
 		return len(self._getStoryText())
-
-	def _getTextRange(self,start,end):
-		text=self._getStoryText()
-		return text[start:end]
 
 	def _get_boundingRects(self):
 		if self.obj.hasIrrelevantLocation:
@@ -90,15 +91,24 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		# optimisation: The base implementation of chooseNVDAObjectOverlayClasses does nothing,
 		# so only call this method if it's been overridden.
 		if appModule and not hasattr(appModule.chooseNVDAObjectOverlayClasses, "_isBase"):
-			appModule.chooseNVDAObjectOverlayClasses(obj, clsList)
+			try:
+				appModule.chooseNVDAObjectOverlayClasses(obj, clsList)
+			except Exception:
+				log.exception(f"Exception in chooseNVDAObjectOverlayClasses for {appModule}")
+				pass
+
 		# Allow global plugins to choose overlay classes.
 		for plugin in globalPluginHandler.runningPlugins:
 			if "chooseNVDAObjectOverlayClasses" in plugin.__class__.__dict__:
-				plugin.chooseNVDAObjectOverlayClasses(obj, clsList)
+				try:
+					plugin.chooseNVDAObjectOverlayClasses(obj, clsList)
+				except Exception:
+					log.exception(f"Exception in chooseNVDAObjectOverlayClasses for {plugin}")
+					pass
 
 		# Determine the bases for the new class.
 		bases=[]
-		for index in xrange(len(clsList)):
+		for index in range(len(clsList)):
 			# A class doesn't need to be a base if it is already implicitly included by being a superclass of a previous base.
 			if index==0 or not issubclass(clsList[index-1],clsList[index]):
 				bases.append(clsList[index])
@@ -124,9 +134,13 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			if cls in oldMro:
 				# This class was part of the initially constructed object, so its constructor would have been called.
 				continue
-			initFunc=cls.__dict__.get("initOverlayClass")
+			initFunc = cls.__dict__.get("initOverlayClass")
 			if initFunc:
-				initFunc(obj)
+				try:
+					initFunc(obj)
+				except Exception:
+					log.exception(f"Exception in initOverlayClass for {cls}")
+					continue
 			# Bind gestures specified on the class.
 			try:
 				obj.bindGestures(getattr(cls, "_%s__gestures" % cls.__name__))
@@ -135,7 +149,11 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 
 		# Allow app modules to make minor tweaks to the instance.
 		if appModule and hasattr(appModule,"event_NVDAObject_init"):
-			appModule.event_NVDAObject_init(obj)
+			try:
+				appModule.event_NVDAObject_init(obj)
+			except Exception:
+				log.exception(f"Exception in event_NVDAObject_init for {appModule}")
+				pass
 
 		return obj
 
@@ -146,7 +164,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		"""
 		cls._dynamicClassCache.clear()
 
-class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContainerObject,baseObject.ScriptableObject)):
+class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, metaclass=DynamicNVDAObjectType):
 	"""NVDA's representation of a single control/widget.
 	Every widget, regardless of how it is exposed by an application or the operating system, is represented by a single NVDAObject instance.
 	This allows NVDA to work with all widgets in a uniform way.
@@ -319,6 +337,11 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 			return False
 		return self._isEqual(other)
  
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	# The default hash implementation is fine for  our purposes.
+	def __hash__(self):
+		return super().__hash__()
+
 	def __ne__(self,other):
 		"""The opposite to L{NVDAObject.__eq__}
 		"""
@@ -386,7 +409,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 
 	def _get_name(self):
 		"""The name or label of this object (example: the text of a button).
-		@rtype: basestring
+		@rtype: str
 		"""
 		return ""
 
@@ -403,17 +426,29 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		No string is provided by default, meaning that NVDA will fall back to using role.
 		Examples of where this property might be overridden are shapes in Powerpoint, or ARIA role descriptions.
 		"""
+		if self.landmark and self.landmark in aria.landmarkRoles:
+			return f"{aria.landmarkRoles[self.landmark]} {controlTypes.roleLabels[controlTypes.ROLE_LANDMARK]}"
 		return None
+
+	def _get_roleTextBraille(self):
+		"""
+		A custom role string for this object, which is used for braille presentation,
+		which will override the standard label for this object's role property as well as the value of roleText.
+		By default, NVDA falls back to using roleText.
+		"""
+		if self.landmark and self.landmark in braille.landmarkLabels:
+			return f"{braille.roleLabels[controlTypes.ROLE_LANDMARK]} {braille.landmarkLabels[self.landmark]}"
+		return self.roleText
 
 	def _get_value(self):
 		"""The value of this object (example: the current percentage of a scrollbar, the selected option in a combo box).
-		@rtype: basestring
+		@rtype: str
 		"""   
 		return ""
 
 	def _get_description(self):
 		"""The description or help text of this object.
-		@rtype: basestring
+		@rtype: str
 		"""
 		return ""
 
@@ -431,7 +466,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		@param index: the optional 0-based index of the wanted action.
 		@type index: int
 		@return: the action's name
-		@rtype: basestring
+		@rtype: str
 		"""
 		raise NotImplementedError
  
@@ -447,7 +482,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 
 	def _get_keyboardShortcut(self):
 		"""The shortcut key that activates this object(example: alt+t).
-		@rtype: basestring
+		@rtype: str
 		"""
 		return ""
 
@@ -706,14 +741,39 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		states=self.states
 		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
 			return self.presType_unavailable
-		role=self.role
+		role = self.role
+		landmark = self.landmark
+		if (
+			role == controlTypes.ROLE_LANDMARK
+			or landmark
+		) and not config.conf["documentFormatting"]["reportLandmarks"]:
+			return self.presType_layout
+
+		roleText = self.roleText
+		if roleText:
+			# If roleText is set, the object is very likely to communicate something relevant to the user.
+			return self.presType_content
 
 		#Static text should be content only if it really use usable text
 		if role==controlTypes.ROLE_STATICTEXT:
 			text=self.makeTextInfo(textInfos.POSITION_ALL).text
 			return self.presType_content if text and not text.isspace() else self.presType_layout
 
-		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SPLITPANE, controlTypes.ROLE_SECTION, controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_TITLEBAR, controlTypes.ROLE_LABEL, controlTypes.ROLE_WHITESPACE,controlTypes.ROLE_BORDER):
+		if role in (
+			controlTypes.ROLE_UNKNOWN,
+			controlTypes.ROLE_PANE,
+			controlTypes.ROLE_TEXTFRAME,
+			controlTypes.ROLE_ROOTPANE,
+			controlTypes.ROLE_LAYEREDPANE,
+			controlTypes.ROLE_SCROLLPANE,
+			controlTypes.ROLE_SPLITPANE,
+			controlTypes.ROLE_SECTION,
+			controlTypes.ROLE_PARAGRAPH,
+			controlTypes.ROLE_TITLEBAR,
+			controlTypes.ROLE_LABEL,
+			controlTypes.ROLE_WHITESPACE,
+			controlTypes.ROLE_BORDER
+		):
 			return self.presType_layout
 		name = self.name
 		description = self.description
@@ -988,14 +1048,15 @@ Tries to force this object to take the focus.
 		else:
 			speechWasCanceled=False
 		self._mouseEntered=True
+		vision.handler.handleMouseMove(self, x, y)
 		try:
-			info=self.makeTextInfo(textInfos.Point(x,y))
+			info=self.makeTextInfo(locationHelper.Point(x,y))
 		except NotImplementedError:
 			info=NVDAObjectTextInfo(self,textInfos.POSITION_FIRST)
 		except LookupError:
 			return
 		if config.conf["reviewCursor"]["followMouse"]:
-			api.setReviewPosition(info)
+			api.setReviewPosition(info, isCaret=True)
 		info.expand(info.unit_mouseChunk)
 		oldInfo=getattr(self,'_lastMouseTextInfoObject',None)
 		self._lastMouseTextInfoObject=info
@@ -1015,6 +1076,7 @@ Tries to force this object to take the focus.
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self,states=True, reason=controlTypes.REASON_CHANGE)
 		braille.handler.handleUpdate(self)
+		vision.handler.handleUpdate(self, property="states")
 
 	def event_focusEntered(self):
 		if self.role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU,controlTypes.ROLE_MENUITEM):
@@ -1030,6 +1092,11 @@ This code is executed if a gain focus event is received by this object.
 		self.reportFocus()
 		braille.handler.handleGainFocus(self)
 		brailleInput.handler.handleGainFocus(self)
+		vision.handler.handleGainFocus(self)
+
+	def event_loseFocus(self):
+		# Forget the word currently being typed as focus is moving to a new control. 
+		speech.clearTypedWordBuffer()
 
 	def event_foreground(self):
 		"""Called when the foreground window changes.
@@ -1037,6 +1104,7 @@ This code is executed if a gain focus event is received by this object.
 		L{event_focusEntered} or L{event_gainFocus} will be called for this object, so this method should not speak/braille the object, etc.
 		"""
 		speech.cancelSpeech()
+		vision.handler.handleForeground(self)
 
 	def event_becomeNavigatorObject(self, isFocus=False):
 		"""Called when this object becomes the navigator object.
@@ -1045,29 +1113,35 @@ This code is executed if a gain focus event is received by this object.
 		"""
 		# When the navigator object follows the focus and braille is auto tethered to review,
 		# we should not update braille with the new review position as a tether to focus is due.
-		if braille.handler.shouldAutoTether and isFocus:
-			return
-		braille.handler.handleReviewMove(shouldAutoTether=not isFocus)
+		if not (braille.handler.shouldAutoTether and isFocus):
+			braille.handler.handleReviewMove(shouldAutoTether=not isFocus)
+		vision.handler.handleReviewMove(
+			context=vision.constants.Context.FOCUS if isFocus else vision.constants.Context.NAVIGATOR
+		)
 
 	def event_valueChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, value=True, reason=controlTypes.REASON_CHANGE)
 		braille.handler.handleUpdate(self)
+		vision.handler.handleUpdate(self, property="value")
 
 	def event_nameChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, name=True, reason=controlTypes.REASON_CHANGE)
 		braille.handler.handleUpdate(self)
+		vision.handler.handleUpdate(self, property="name")
 
 	def event_descriptionChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, description=True, reason=controlTypes.REASON_CHANGE)
 		braille.handler.handleUpdate(self)
+		vision.handler.handleUpdate(self, property="description")
 
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			braille.handler.handleCaretMove(self)
 			brailleInput.handler.handleCaretMove(self)
+			vision.handler.handleCaretMove(self)
 			review.handleCaretMove(self)
 
 	def _get_flatReviewPosition(self):
@@ -1093,7 +1167,7 @@ This code is executed if a gain focus event is received by this object.
 		newTime=time.time()
 		oldTime=getattr(self,'_basicTextTime',0)
 		if newTime-oldTime>0.5:
-			self._basicText=u" ".join([x for x in self.name, self.value, self.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
+			self._basicText=u" ".join(x for x in (self.name, self.value, self.description) if isinstance(x, str) and len(x) > 0 and not x.isspace())
 			if len(self._basicText)==0:
 				self._basicText=u""
 		else:
@@ -1115,13 +1189,13 @@ This code is executed if a gain focus event is received by this object.
 		If the string is too long to be useful, it will be truncated.
 		This string should be included as returned. There is no need to call repr.
 		@param string: The string to format.
-		@type string: nbasestring
+		@type string: str
 		@param truncateLen: The length at which to truncate the string.
 		@type truncateLen: int
 		@return: The formatted string.
-		@rtype: basestring
+		@rtype: str
 		"""
-		if isinstance(string, basestring) and len(string) > truncateLen:
+		if isinstance(string, str) and len(string) > truncateLen:
 			return "%r (truncated)" % string[:truncateLen]
 		return repr(string)
 
@@ -1139,7 +1213,7 @@ This code is executed if a gain focus event is received by this object.
 		info.append("name: %s" % ret)
 		try:
 			ret = self.role
-			for name, const in controlTypes.__dict__.iteritems():
+			for name, const in controlTypes.__dict__.items():
 				if name.startswith("ROLE_") and ret == const:
 					ret = name
 					break
@@ -1147,7 +1221,12 @@ This code is executed if a gain focus event is received by this object.
 			ret = "exception: %s" % e
 		info.append("role: %s" % ret)
 		try:
-			stateConsts = dict((const, name) for name, const in controlTypes.__dict__.iteritems() if name.startswith("STATE_"))
+			ret = repr(self.roleText)
+		except Exception as e:
+			ret = f"exception: {e}"
+		info.append(f"roleText: {ret}")
+		try:
+			stateConsts = dict((const, name) for name, const in controlTypes.__dict__.items() if name.startswith("STATE_"))
 			ret = ", ".join(
 				stateConsts.get(state) or str(state)
 				for state in self.states)
@@ -1233,7 +1312,7 @@ This code is executed if a gain focus event is received by this object.
 		raise NotImplementedError
 
 	#: The language/locale of this object.
-	#: @type: basestring
+	#: @type: str
 	language = None
 
 	def _get__hasNavigableText(self):

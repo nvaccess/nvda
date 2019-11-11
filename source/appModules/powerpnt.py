@@ -244,7 +244,7 @@ def getBulletText(ppBulletFormat):
 	if t==ppBulletNumbered:
 		return "%d."%ppBulletFormat.number #(ppBulletFormat.startValue+(ppBulletFormat.number-1))
 	elif t:
-		return unichr(ppBulletFormat.character)
+		return chr(ppBulletFormat.character)
 
 def walkPpShapeRange(ppShapeRange):
 	for ppShape in ppShapeRange:
@@ -1257,7 +1257,10 @@ class AppModule(appModuleHandler.AppModule):
 		self.hasTriedPpAppSwitch=True
 		#Make sure NVDA detects and reports focus on the waiting dialog
 		api.processPendingEvents()
-		comtypes.client.PumpEvents(1)
+		try:
+			comtypes.client.PumpEvents(1)
+		except WindowsError:
+			log.debugWarning("Error while pumping com events", exc_info=True)
 		d.Destroy()
 		gui.mainFrame.postPopup()
 

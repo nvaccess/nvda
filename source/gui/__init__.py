@@ -36,17 +36,13 @@ import api
 from . import guiHelper
 import winVersion
 
-# Temporary: #8599: add cp65001 codec
-#            #7105: upgrading to python 3 should fix this issue. See https://bugs.python.org/issue13216
-codecs.register(lambda name: codecs.lookup('utf-8') if name == 'cp65001' else None)
-
 try:
 	import updateCheck
 except RuntimeError:
 	updateCheck = None
 
 ### Constants
-NVDA_PATH = os.getcwdu()
+NVDA_PATH = os.getcwd()
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
 DONATE_URL = "http://www.nvaccess.org/donate/"
 
@@ -152,11 +148,9 @@ class MainFrame(wx.Frame):
 
 	def showGui(self):
 		# The menu pops up at the location of the mouse, which means it pops up at an unpredictable location.
-		# Therefore, move the mouse to the centre of the screen so that the menu will always pop up there.
-		left, top, width, height = api.getDesktopObject().location
-		x = width / 2
-		y = height / 2
-		winUser.setCursorPos(x, y)
+		# Therefore, move the mouse to the center of the screen so that the menu will always pop up there.
+		location = api.getDesktopObject().location
+		winUser.setCursorPos(*location.center)
 		self.evaluateUpdatePendingUpdateMenuItemCommand()
 		self.sysTrayIcon.onActivate(None)
 
@@ -329,7 +323,7 @@ class MainFrame(wx.Frame):
 		if isInMessageBox:
 			return
 		self.prePopup()
-		from addonGui import AddonsDialog
+		from .addonGui import AddonsDialog
 		d=AddonsDialog(gui.mainFrame)
 		d.Show()
 		self.postPopup()
@@ -388,7 +382,7 @@ class MainFrame(wx.Frame):
 		if isInMessageBox:
 			return
 		self.prePopup()
-		from configProfiles import ProfilesDialog
+		from .configProfiles import ProfilesDialog
 		ProfilesDialog(gui.mainFrame).Show()
 		self.postPopup()
 
@@ -553,7 +547,7 @@ def initialize():
 	wx.GetApp().SetTopWindow(mainFrame)
 
 def terminate():
-	for instance, state in gui.SettingsDialog._instances.iteritems():
+	for instance, state in gui.SettingsDialog._instances.items():
 		if state is gui.SettingsDialog._DIALOG_DESTROYED_STATE:
 			log.error(
 				"Destroyed but not deleted instance of settings dialog exists: {!r}".format(instance)
@@ -847,7 +841,10 @@ class ExitDialog(wx.Dialog):
 		self.actionsList = contentSizerHelper.addLabeledControl(labelText, wx.Choice, choices=self.actions)
 		self.actionsList.SetSelection(0)
 
-		contentSizerHelper.addItem( self.CreateButtonSizer(wx.OK | wx.CANCEL))
+		contentSizerHelper.addItem(
+			self.CreateButtonSizer(wx.OK | wx.CANCEL),
+			flag=wx.ALIGN_RIGHT
+		)
 
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
@@ -898,7 +895,10 @@ class ExecAndPump(threading.Thread):
 		self.func=func
 		self.args=args
 		self.kwargs=kwargs
-		super(ExecAndPump,self).__init__()
+		fname = repr(func)
+		super().__init__(
+			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}({fname})"
+		)
 		self.threadExc=None
 		self.start()
 		time.sleep(0.1)

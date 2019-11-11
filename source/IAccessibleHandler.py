@@ -17,6 +17,7 @@ import oleacc
 import UIAHandler
 from comInterfaces.Accessibility import *
 from comInterfaces.IAccessible2Lib import *
+from comInterfaces import IAccessible2Lib as IA2
 from logHandler import log
 import JABHandler
 import eventHandler
@@ -113,7 +114,7 @@ class OrderedWinEventLimiter(object):
 		g=self._genericEventCache
 		self._genericEventCache={}
 		threadCounters={}
-		for k,v in sorted(g.iteritems(),key=lambda item: item[1],reverse=True):
+		for k,v in sorted(g.items(),key=lambda item: item[1],reverse=True):
 			threadCount=threadCounters.get(k[-1],0)
 			if threadCount>MAX_WINEVENTS_PER_THREAD:
 				continue
@@ -121,12 +122,12 @@ class OrderedWinEventLimiter(object):
 			threadCounters[k[-1]]=threadCount+1
 		f=self._focusEventCache
 		self._focusEventCache={}
-		for k,v in sorted(f.iteritems(),key=lambda item: item[1])[0-self.maxFocusItems:]:
+		for k,v in sorted(f.items(),key=lambda item: item[1])[0-self.maxFocusItems:]:
 			heapq.heappush(self._eventHeap,(v,)+k)
 		e=self._eventHeap
 		self._eventHeap=[]
 		r=[]
-		for count in xrange(len(e)):
+		for count in range(len(e)):
 			event=heapq.heappop(e)[1:-1]
 			r.append(event)
 		return r
@@ -257,6 +258,7 @@ IAccessibleRolesToNVDARoles={
 	IA2_ROLE_CONTENT_DELETION:controlTypes.ROLE_DELETED_CONTENT,
 	IA2_ROLE_CONTENT_INSERTION:controlTypes.ROLE_INSERTED_CONTENT,
 	IA2_ROLE_BLOCK_QUOTE:controlTypes.ROLE_BLOCKQUOTE,
+	IA2.IA2_ROLE_LANDMARK: controlTypes.ROLE_LANDMARK,
 	#some common string roles
 	"frame":controlTypes.ROLE_FRAME,
 	"iframe":controlTypes.ROLE_INTERNALFRAME,
@@ -343,7 +345,9 @@ def accessibleObjectFromEvent(window,objectID,childID):
 	try:
 		pacc,childID=oleacc.AccessibleObjectFromEvent(window,objectID,childID)
 	except Exception as e:
-		log.debugWarning("oleacc.AccessibleObjectFromEvent with window %s, objectID %s and childID %s: %s"%(window,objectID,childID,e))
+		log.debug(
+			f"oleacc.AccessibleObjectFromEvent with window {window}, objectID {objectID} and childID {childID}: {e}"
+		)
 		return None
 	return (normalizeIAccessible(pacc,childID),childID)
 
@@ -838,7 +842,7 @@ def initialize():
 		accPropServices=comtypes.client.CreateObject(CAccPropServices)
 	except (WindowsError,COMError) as e:
 		log.debugWarning("AccPropServices is not available: %s"%e)
-	for eventType in winEventIDsToNVDAEventNames.keys():
+	for eventType in winEventIDsToNVDAEventNames:
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if hookID:
 			winEventHookIDs.append(hookID)
@@ -997,8 +1001,7 @@ def getRecursiveTextFromIAccessibleTextObject(obj,startOffset=0,endOffset=-1):
 	except:
 		return text
 	textList=[]
-	for i in xrange(len(text)):
-		t=text[i]
+	for i, t in enumerate(text):
 		if ord(t)==0xFFFC:
 			try:
 				childTextObject=hypertextObject.hyperlink(hypertextObject.hyperlinkIndex(i+startOffset)).QueryInterface(IAccessible)
@@ -1029,7 +1032,7 @@ def splitIA2Attribs(attribsString):
 	if len(attribsString) >= ATTRIBS_STRING_BASE64_THRESHOLD:
 		attribsString = ATTRIBS_STRING_BASE64_PATTERN.sub(ATTRIBS_STRING_BASE64_REPL, attribsString)
 		if len(attribsString) >= ATTRIBS_STRING_BASE64_THRESHOLD:
-			log.debugWarning(u"IA2 attributes string exceeds threshold: {}".format(attribsString))
+			log.debugWarning(f"IA2 attributes string exceeds threshold: {attribsString}")
 	attribsDict = {}
 	tmp = ""
 	key = ""

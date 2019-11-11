@@ -28,7 +28,7 @@ def _buildInvalidXmlRegexp():
 	# Ranges of invalid characters.
 	# Both start and end are inclusive; i.e. they are both themselves considered invalid.
 	ranges = ((0x00, 0x08), (0x0B, 0x0C), (0x0E, 0x1F), (0x7F, 0x84), (0x86, 0x9F), (0xFDD0, 0xFDDF), (0xFFFE, 0xFFFF))
-	rangeExprs = [u"%s-%s" % (unichr(start), unichr(end))
+	rangeExprs = [u"%s-%s" % (chr(start), chr(end))
 		for start, end in ranges]
 	leadingSurrogate = u"[\uD800-\uDBFF]"
 	trailingSurrogate = u"[\uDC00-\uDFFF]"
@@ -73,7 +73,7 @@ StopEnclosingTextCommand = namedtuple("StopEnclosingTextCommand", ())
 StandAloneTagCommand = namedtuple("StandAloneTagCommand", ("tag", "attrs", "content"))
 
 def _escapeXml(text):
-	text = unicode(text).translate(XML_ESCAPES)
+	text = text.translate(XML_ESCAPES)
 	text = RE_INVALID_XML_CHARS.sub(REPLACEMENT_CHAR, text)
 	return text
 
@@ -110,9 +110,11 @@ class XmlBalancer(object):
 
 	def _openTag(self, tag, attrs, empty=False):
 		self._out.append("<%s" % tag)
-		for attr, val in attrs.iteritems():
+		for attr, val in attrs.items():
 			self._out.append(' %s="' % attr)
-			self._out.append(_escapeXml(val))
+			# Attribute values could be ints, floats etc, not just strings.
+			# Therefore coerce the value to a string, as well as escaping xml characters. 
+			self._out.append(_escapeXml(str(val)))
 			self._out.append('"')
 		self._out.append("/>" if empty else ">")
 
@@ -145,7 +147,7 @@ class XmlBalancer(object):
 		for tag in reversed(self._openTags):
 			self._closeTag(tag)
 		del self._openTags[:]
-		for tag, attrs in self._tags.iteritems():
+		for tag, attrs in self._tags.items():
 			self._openTag(tag, attrs)
 			self._openTags.append(tag)
 		self._tagsChanged = False
@@ -154,7 +156,7 @@ class XmlBalancer(object):
 		"""Generate XML from a sequence of balancer commands and text.
 		"""
 		for command in commands:
-			if isinstance(command, basestring):
+			if isinstance(command, str):
 				self._outputTags()
 				self._text(command)
 			elif isinstance(command, EncloseAllCommand):
@@ -206,7 +208,7 @@ class SpeechXmlConverter(object):
 		@rtype: generator
 		"""
 		for item in speechSequence:
-			if isinstance(item, basestring):
+			if isinstance(item, str):
 				yield item
 			elif isinstance(item, speech.SpeechCommand):
 				name = type(item).__name__

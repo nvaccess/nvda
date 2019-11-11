@@ -19,6 +19,7 @@ PYTHON_DIRS = (
 	os.path.join(TOP_DIR, "include", "comtypes"),
 	os.path.join(TOP_DIR, "include", "configobj", "src"),
 	os.path.join(TOP_DIR, "include", "wxPython"),
+	os.path.join(TOP_DIR, "include", "py2exe"),
 	os.path.join(TOP_DIR, "miscDeps", "python"),
 )
 

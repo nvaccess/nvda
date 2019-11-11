@@ -139,7 +139,7 @@ nodeNamesToNVDARoles={
 	"MATH":controlTypes.ROLE_MATH,
 	"NAV":controlTypes.ROLE_SECTION,
 	"SECTION":controlTypes.ROLE_SECTION,
-	"ARTICLE":controlTypes.ROLE_DOCUMENT,
+	"ARTICLE": controlTypes.ROLE_ARTICLE,
 }
 
 def getZoomFactorsFromHTMLDocument(HTMLDocument):
@@ -156,7 +156,7 @@ def getZoomFactorsFromHTMLDocument(HTMLDocument):
 	except (COMError,NameError,AttributeError,TypeError):
 		log.debugWarning("unable to fetch DPI factors")
 		return (1,1)
-	return (devX/logX,devY/logY)
+	return (devX // logX, devY // logY)
 
 def IAccessibleFromHTMLNode(HTMLNode):
 	try:
@@ -483,7 +483,7 @@ class MSHTML(IAccessible):
 			# #3494: MSHTML's internal coordinates are always at a hardcoded DPI (usually 96) no matter the system DPI or zoom level.
 			xFactor,yFactor=getZoomFactorsFromHTMLDocument(HTMLNode.document)
 			try:
-				HTMLNode=HTMLNode.document.elementFromPoint(p.x/xFactor,p.y/yFactor)
+				HTMLNode=HTMLNode.document.elementFromPoint(p.x // xFactor, p.y // yFactor)
 			except:
 				HTMLNode=None
 			if not HTMLNode:
@@ -670,10 +670,23 @@ class MSHTML(IAccessible):
 			title=self.HTMLAttributes['title']
 			# #2121: MSHTML sometimes returns a node for the title attribute.
 			# This doesn't make any sense, so ignore it.
-			if title and isinstance(title,basestring):
+			if title and isinstance(title,str):
 				return title
 			return ""
 		return super(MSHTML,self).name
+
+	def _get_landmark(self):
+		if self.HTMLNode:
+			ariaRoles = []
+			ariaRolesString = self.HTMLAttributes['role']
+			if ariaRolesString:
+				ariaRoles.append(ariaRolesString.split(" ")[0])
+			lRole = aria.htmlNodeNameToAriaRoles.get(self.HTMLNodeName.lower())
+			if lRole:
+				ariaRoles.append(lRole)
+			if ariaRoles and ariaRoles[0] in aria.landmarkRoles:
+				return ariaRoles[0]
+		return super().landmark
 
 	def _get_value(self):
 		if self.HTMLNodeHasAncestorIAccessible:
@@ -954,7 +967,7 @@ class MSHTML(IAccessible):
 
 	def _get_table(self):
 		if self.role not in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLEROW) or not self.HTMLNode:
-			raise NotImplementedError
+			return None
 		HTMLNode=self.HTMLNode
 		while HTMLNode:
 			nodeName=HTMLNode.nodeName
@@ -962,7 +975,7 @@ class MSHTML(IAccessible):
 				nodeName=nodeName.upper()
 			if nodeName=="TABLE": return MSHTML(HTMLNode=HTMLNode)
 			HTMLNode=HTMLNode.parentNode
-		raise NotImplementedError
+		return None
 
 	def _get_HTMLNodeUniqueNumber(self):
 		if not hasattr(self,'_HTMLNodeUniqueNumber'):
@@ -1009,7 +1022,11 @@ class MSHTML(IAccessible):
 		pass
 
 	def _get_roleText(self):
-		return self.HTMLAttributes['aria-roledescription']
+		roleText = self.HTMLAttributes['aria-roledescription']
+		if roleText:
+			return roleText
+		return super().roleText
+
 
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.
@@ -1139,7 +1156,7 @@ def findExtraIAccessibleOverlayClasses(obj, clsList):
 		clsList.append(MSAATextLeaf)
 		return
 
-	if iaRole == oleacc.ROLE_SYSTEM_WINDOW and obj.event_objectID > 0:
+	if iaRole == oleacc.ROLE_SYSTEM_WINDOW and obj.event_objectID is not None and obj.event_objectID > 0:
 		clsList.append(PluginWindow)
 	elif iaRole == oleacc.ROLE_SYSTEM_CLIENT and obj.event_objectID == winUser.OBJID_CLIENT:
 		clsList.append(RootClient)

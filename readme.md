@@ -5,21 +5,21 @@ It is developed by NV Access in collaboration with a global community of contrib
 To learn more about NVDA or download a copy, visit the main [NV Access](http://www.nvaccess.org/) website.
 
 ## Key Project Links
-* [NV Access](http://www.nvaccess.org/): The main home of NVDA
+* [NV Access](https://www.nvaccess.org/): The main home of NVDA
 * [NVDA on GitHub](https://github.com/nvaccess/nvda)
 * [NVDA issues on GitHub](https://github.com/nvaccess/nvda/issues): Bug reports, feature requests, etc.
-* [NVDA development snapshots](http://www.nvda-project.org/snapshots): Automatically generated builds of the project in its current state of development
-* [NVDA add-ons](http://addons.nvda-project.org/): Get add-ons to enhance NVDA
+* [NVDA development snapshots](https://www.nvaccess.org/files/nvda/snapshots/): Automatically generated builds of the project in its current state of development
+* [NVDA add-ons](https://addons.nvda-project.org/): Get add-ons to enhance NVDA
 * [Translating NVDA](https://github.com/nvaccess/nvda/wiki/Translating): Information about how to translate NVDA into another language
 * [NVDA community wiki](https://github.com/nvaccess/nvda-community/wiki): Articles contributed by the community
 * [NVDA Controller Client](http://www.nvda-project.org/nvdaControllerClient/nvdaControllerClient_20100219.7z) (2010-02-19): NVDA API for external applications to directly speak or braille messages, etc.
-* [NVDA Developer Guide](http://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
+* [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
 * [Contributing to NVDA](https://github.com/nvaccess/nvda/wiki/Contributing): Guidelines for contributing to the NVDA source code
 * [NVDA development email list](https://nvda-devel.groups.io/) ([Old archives](http://nabble.nvda-project.org/Development-f1.html)): Discussion about NVDA development
-* [NVDA commits email list](http://lists.sourceforge.net/lists/listinfo/nvda-commits): Notifications for all commits to the Git repository
+* [NVDA commits email list](https://lists.sourceforge.net/lists/listinfo/nvda-commits): Notifications for all commits to the Git repository
 
 ## Getting the Source Code
-The NVDA project uses the [Git](http://www.git-scm.com/) version control system for its source code and documentation.
+The NVDA project uses the [Git](https://www.git-scm.com/) version control system for its source code and documentation.
 
 The NVDA Git repository is located at https://github.com/nvaccess/nvda.git. You can clone it with the following command, which will place files in a directory named `nvda`:
 
@@ -35,9 +35,10 @@ The NVDA source depends on several other packages to run correctly.
 ### Installed Dependencies
 The following dependencies need to be installed on your system:
 
-* [Python](http://www.python.org/), version 2.7.15, 32 bit
+* [Python](https://www.python.org/), version 3.7, 32 bit
+	* Use latest minor version if possible.
 * Microsoft Visual Studio 2017 Community, Version 15.3 or later:
-	* Download from https://visualstudio.microsoft.com/downloads/
+	* Download from https://visualstudio.microsoft.com/vs/older-downloads/
 	* When installing Visual Studio, you need to enable the following:
 		On the Workloads tab, in the Windows group:
 			* Universal Windows Platform Development
@@ -57,41 +58,52 @@ If you didn't pass the `--recursive` option to git clone, you will need to run `
 Whenever a required submodule commit changes (e.g. after git pull), you will need to run `git submodule update`.
 If you aren't sure, run `git submodule update` after every git pull, merge or checkout.
 
-For reference, the following dependencies are included in Git submodules:
+For reference, the following run time dependencies are included in Git submodules:
 
 * [comtypes](https://github.com/enthought/comtypes), version 1.1.7
-* [wxPython](http://www.wxpython.org/), version 4.0.3
-* [Six](https://pypi.python.org/pypi/six), version 1.10.0, required by wxPython
-* [Python Windows Extensions](http://sourceforge.net/projects/pywin32/ ), build 218
+* [wxPython](https://www.wxpython.org/), version 4.0.3
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit 86e67a
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
-* [IAccessible2](http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2), commit 21bbb176
+* [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit 21bbb176
 * [ConfigObj](https://github.com/DiffSK/configobj), commit 5b5de48
-* [liblouis](http://www.liblouis.org/), version 3.10.0
-* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/) Emoji Annotations, version 35.0
+* [Six](https://pypi.python.org/pypi/six), version 1.12.0, required by wxPython and ConfigObj
+* [liblouis](http://www.liblouis.org/), version 3.10.0 commit 146c0757
+* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/) Emoji Annotations, version 36.0
 * NVDA images and sounds
-* System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest
-* [Adobe Acrobat accessibility interface, version XI](http://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
+* [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * Adobe FlashAccessibility interface typelib
-* [txt2tags](http://txt2tags.sourceforge.net/), version 2.5
 * [MinHook](https://github.com/RaMMicHaeL/minhook), tagged version 1.2.2
-* [SCons](http://www.scons.org/), version 3.0.4
-* brlapi Python bindings, version 0.5.7 or later, distributed with [BRLTTY for Windows](http://brl.thefreecat.org/brltty/), version 4.2-2
-* ALVA BC6 generic dll, version 3.0.4.1
+* brlapi Python bindings, version 0.7.0 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html/brltty/), version 4.2-2
 * lilli.dll, version 2.1.0.0
-* [pyserial](http://pypi.python.org/pypi/pyserial), version 2.7
+* [pySerial](https://pypi.python.org/pypi/pyserial), version 3.4
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
-* [Py2Exe](http://sourceforge.net/projects/py2exe/), version 0.6.9
-* [Nulsoft Install System](http://nsis.sourceforge.net/), version 2.51
-* [NSIS UAC plug-in](http://nsis.sourceforge.net/UAC_plug-in), version 0.2.4, ansi
-* xgettext and msgfmt from [GNU gettext](http://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
+
+Additionally, the following build time dependencies are included in Git submodules:
+
+* [Py2Exe](https://github.com/albertosottile/py2exe/), version 0.9.3.2 commit b372a8e
+* [Python Windows Extensions](https://sourceforge.net/projects/pywin32/ ), build 224, required by py2exe
+* [txt2tags](https://txt2tags.org/), version 2.5
+* [SCons](https://www.scons.org/), version 3.0.4
+* [Nulsoft Install System](https://nsis.sourceforge.io/Main_Page/), version 2.51
+* [NSIS UAC plug-in](https://nsis.sourceforge.io/UAC_plug-in), version 0.2.4, ansi
+* xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
 * [epydoc](http://epydoc.sourceforge.net/), version 3.0.1 with patch for bug #303
 * [Boost Optional (stand-alone header)](https://github.com/akrzemi1/Optional), from commit [3922965](https://github.com/akrzemi1/Optional/commit/3922965396fc455c6b1770374b9b4111799588a9)
 
 ### Other Dependencies
-These dependencies are not included in Git submodules, but aren't needed by most people.
+To lint using Flake 8 locally using our SCons integration, some dependencies are installed (automatically) via pip.
+Although this [must be run manually](#linting-your-changes), developers may wish to first configure a Python Virtual Environment to ensure their general install is not affected.
+* Flake8
+* Flake8-tabs
 
-* To generate developer documentation for nvdaHelper: [Doxygen version 1.7.3 Windows installer](https://sourceforge.net/projects/doxygen/files/rel-1.7.3/doxygen-1.7.3-setup.exe)
+
+The following dependencies aren't needed by most people, and are not included in Git submodules:
+
+* To generate developer documentation for nvdaHelper: [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
+* When you are using Visual Studio Code as your integrated development environment of preference, you can make use of our [prepopulated workspace configuration](https://github.com/nvaccess/vscode-nvda/) for [Visual Studio Code](https://code.visualstudio.com/).
+	While this VSCode project is not included as a submodule in the NVDA repository, you can easily check out the workspace configuration in your repository by executing the following from the root of the repository.
+
+	```git clone https://github.com/nvaccess/vscode-nvda.git .vscode```
 
 ## Preparing the Source Tree
 Before you can run the NVDA source code, you must prepare the source tree.
@@ -153,6 +165,8 @@ scons dist
 
 The build will be created in the dist directory.
 
+### Building the installer
+
 To create a launcher archive (one executable allowing for installation or portable dist generation), type:
 
 ```
@@ -161,13 +175,16 @@ scons launcher
 
 The archive will be placed in the output directory.
 
-To generate developer documentation, type:
+### Building the developer documentation
+
+To generate the NVDA developer guide, type:
 
 ```
-scons devDocs
+scons developerGuide
 ```
 
-The developer docs will be placed in the `devDocs` folder in the output directory.
+The developer guide will be placed in the `devDocs` folder in the output directory.
+Note that the Python 3 sources of NVDA currently do not support building NVDA developer documentation using the `scons devDocs` command.
 
 To generate developer documentation for nvdaHelper (not included in the devDocs target):
 
@@ -177,6 +194,7 @@ scons devDocs_nvdaHelper
 
 The documentation will be placed in the `devDocs\nvdaHelper` folder in the output directory.
 
+### Generate debug symbols archive
 To generate an archive of debug symbols for the various dll/exe binaries, type:
 
 ```
@@ -185,12 +203,14 @@ scons symbolsArchive
 
 The archive will be placed in the output directory.
 
+### Generate translation template
 To generate a gettext translation template (for translators), type:
 
 ```
 scons pot
 ```
 
+### Customising the build
 Optionally, the build can be customised by providing variables on the command line:
 
 * version: The version of this build.
@@ -213,15 +233,15 @@ scons launcher version=test1
 ## Running Automated Tests
 If you make a change to the NVDA code, you should run NVDA's automated tests.
 These tests help to ensure that code changes do not unintentionally break functionality that was previously working.
-Currently, NVDA has two kinds of automated testing: unit tests and translatable string checks.
 
-To run the tests, first change directory to the root of the NVDA source distribution as above.
+To run the tests (unit tests, translatable string checks), first change directory to the root of the NVDA source distribution as above.
 Then, run:
 
 ```
 scons tests
 ```
 
+### Unit tests
 To run only specific unit tests, specify them using the `unitTests` variable on the command line.
 The tests should be provided as a comma separated list.
 Each test should be specified as a Python module, class or method relative to the `tests\unit` directory.
@@ -231,12 +251,26 @@ For example, to run only methods in the `TestMove` and `TestSelection` classes i
 scons tests unitTests=test_cursorManager.TestMove,test_cursorManager.TestSelection
 ```
 
+### Translatable string checks
 To run only the translatable string checks (which check that all translatable strings have translator comments), run:
 
 ```
 scons checkPot
 ```
 
+### Linting your changes
+In order to ensure your changes comply with NVDA's coding style you can run the Flake8 linter locally.
+Some developers have found certain linting error messages misleading, these are clarified in `tests/lint/readme.md`.
+Running via SCons will use Flake8 to inspect only the differences between your working directory and the specified `base` branch.
+If you create a Pull Request, the `base` branch you use here should be the same as the target you would use for a Pull Request. In most cases it will be `origin/master`.
+```
+scons lint base=origin/master
+```
+
+To be warned about linting errors faster, you may wish to integrate Flake8 other development tools you are using.
+For more details, see `tests/lint/readme.md`
+
+### System Tests
 You may also use scons to run the system tests, though this will still rely on having set up the dependencies (see `tests/system/readme.md`).
 
 ```
@@ -249,3 +283,7 @@ This filter accepts wildcard characters.
 ```
 scons systemTests filter="Read welcome dialog"
 ```
+
+## Contributing to NVDA
+
+If you would like to contribute code or documentation to NVDA, you can read more information in our [contributing guide](https://github.com/nvaccess/nvda/wiki/Contributing).

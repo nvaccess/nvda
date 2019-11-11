@@ -8,7 +8,6 @@
 This is now used by other applications as well.
 """
 
-import itertools
 from comtypes import COMError
 import winUser
 import textInfos
@@ -18,15 +17,16 @@ import api
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 from . import IA2TextTextInfo, IAccessible
 from compoundDocuments import CompoundTextInfo
-from locationHelper import RectLTWH
+import locationHelper
 
 class FakeEmbeddingTextInfo(textInfos.offsets.OffsetsTextInfo):
+	encoding = None
 
 	def _getStoryLength(self):
 		return self.obj.childCount
 
 	def _iterTextWithEmbeddedObjects(self, withFields, formatConfig=None):
-		return xrange(self._startOffset, self._endOffset)
+		return range(self._startOffset, self._endOffset)
 
 	def _getUnitOffsets(self,unit,offset):
 		if unit in (textInfos.UNIT_WORD,textInfos.UNIT_LINE):
@@ -111,7 +111,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				self._startObj = self._endObj = tempObj
 			else:
 				self._start, self._startObj, self._end, self._endObj = self._findUnitEndpoints(tempTi, position)
-		elif isinstance(position, textInfos.Point):
+		elif isinstance(position, locationHelper.Point):
 			startObj = api.getDesktopObject().objectFromPoint(position.x, position.y)
 			while startObj and startObj.role == controlTypes.ROLE_STATICTEXT:
 				# Skip text leaf nodes.
@@ -232,7 +232,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		for item in ti._iterTextWithEmbeddedObjects(controlStack is not None, formatConfig=formatConfig):
 			if item is None:
 				yield u""
-			elif isinstance(item, basestring):
+			elif isinstance(item, str):
 				yield item
 			elif isinstance(item, int): # Embedded object.
 				embedded = _getEmbedded(ti.obj, item)
@@ -628,7 +628,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		otherAncs = self._getAncestors(otherTi, otherObj)
 		# Find the first common ancestor.
 		maxAncIndex = min(len(selfAncs), len(otherAncs)) - 1
-		for (selfAncTi, selfAncObj), (otherAncTi, otherAncObj) in itertools.izip(selfAncs[maxAncIndex::-1], otherAncs[maxAncIndex::-1]):
+		for (selfAncTi, selfAncObj), (otherAncTi, otherAncObj) in zip(selfAncs[maxAncIndex::-1], otherAncs[maxAncIndex::-1]):
 			if selfAncObj == otherAncObj:
 				break
 		else:

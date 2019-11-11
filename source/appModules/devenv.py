@@ -179,13 +179,12 @@ class VsTextEditPaneTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getOffsetFromPoint(self,x,y):
 		yMinUnit, yMaxUnit, yVisible, yFirstVisible = self._textView.GetScrollInfo(SB_VERT)
 		hMinUnit, hMaxUnit, hVisible, hFirstVisible = self._textView.GetScrollInfo(SB_HORZ)
-		
 		# These should probably be cached as they are fairly unlikely to change, but ...
 		lineHeight = self._textView.GetLineHeight()
-		charWidth = self._window.Width / hVisible
+		charWidth = self._window.Width // hVisible
 
-		offsetLine = (y - self._window.Top) / lineHeight + yFirstVisible
-		offsetChar = (x - self._window.Left) / charWidth + hFirstVisible
+		offsetLine = (y - self._window.Top) // lineHeight + yFirstVisible
+		offsetChar = (x - self._window.Left) // charWidth + hFirstVisible
 		return self._textView.GetNearestPosition(offsetLine, offsetChar)[0]
 
 	def __init__(self, obj, position):

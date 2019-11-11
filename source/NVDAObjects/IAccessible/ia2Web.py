@@ -17,9 +17,11 @@ from documentBase import DocumentWithTableNavigation
 from NVDAObjects.behaviors import Dialog, WebDialog 
 from . import IAccessible
 from .ia2TextMozilla import MozillaCompoundTextInfo
+import aria
 
 class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib=True
+	caretMovementDetectionUsesEvents = False
 
 	def _get_positionInfo(self):
 		info=super(Ia2Web,self).positionInfo
@@ -48,10 +50,10 @@ class Ia2Web(IAccessible):
 		return super(Ia2Web,self).isPresentableFocusAncestor
 
 	def _get_roleText(self):
-		roleText=self.IA2Attributes.get('roledescription')
+		roleText = self.IA2Attributes.get('roledescription')
 		if roleText:
 			return roleText
-		return super(Ia2Web,self).roleText
+		return super().roleText
 
 	def _get_states(self):
 		states=super(Ia2Web,self).states
@@ -64,6 +66,21 @@ class Ia2Web(IAccessible):
 			states.discard(controlTypes.STATE_EDITABLE)
 		return states
 
+	def _get_landmark(self):
+		xmlRoles = self.IA2Attributes.get('xml-roles', '').split(' ')
+		landmark = next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
+		if (
+			landmark
+			and self.IAccessibleRole != IAccessibleHandler.IA2_ROLE_LANDMARK
+			and landmark != xmlRoles[0]
+		):
+			# Ignore the landmark role
+			landmark = None
+		if landmark:
+			return landmark
+		return super().landmark
+
+
 class Document(Ia2Web):
 	value = None
 
@@ -75,6 +92,11 @@ class Application(Document):
 
 class BlockQuote(Ia2Web):
 	role = controlTypes.ROLE_BLOCKQUOTE
+
+
+class Article(Ia2Web):
+	role = controlTypes.ROLE_ARTICLE
+
 
 class Editor(Ia2Web, DocumentWithTableNavigation):
 	TextInfo = MozillaCompoundTextInfo
@@ -150,8 +172,11 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 		return
 
 	iaRole = obj.IAccessibleRole
+	xmlRoles = obj.IA2Attributes.get("xml-roles", "").split(" ")
 	if iaRole == IAccessibleHandler.IA2_ROLE_SECTION and obj.IA2Attributes.get("tag", None) == "blockquote":
 		clsList.append(BlockQuote)
+	elif iaRole == oleacc.ROLE_SYSTEM_DOCUMENT and xmlRoles[0] == "article":
+		clsList.append(Article)
 	elif iaRole == oleacc.ROLE_SYSTEM_ALERT:
 		clsList.append(Dialog)
 	elif iaRole == oleacc.ROLE_SYSTEM_EQUATION:
@@ -159,9 +184,12 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 
 	if iaRole==oleacc.ROLE_SYSTEM_APPLICATION:
 		clsList.append(Application)
-	elif iaRole==oleacc.ROLE_SYSTEM_DIALOG:
+	if iaRole == oleacc.ROLE_SYSTEM_DIALOG:
 		clsList.append(WebDialog)
-	if iaRole in (oleacc.ROLE_SYSTEM_APPLICATION,oleacc.ROLE_SYSTEM_DIALOG,oleacc.ROLE_SYSTEM_DOCUMENT):
+	if (
+		iaRole in (oleacc.ROLE_SYSTEM_APPLICATION, oleacc.ROLE_SYSTEM_DIALOG)
+		or (iaRole == oleacc.ROLE_SYSTEM_DOCUMENT and Article not in clsList)
+	):
 		clsList.append(documentClass)
 
 	if obj.IA2States & IAccessibleHandler.IA2_STATE_EDITABLE:
@@ -171,7 +199,6 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 			clsList.append(EditorChunk)
 
 	if iaRole in (oleacc.ROLE_SYSTEM_DIALOG,oleacc.ROLE_SYSTEM_PROPERTYPAGE):
-		xmlRoles = obj.IA2Attributes.get("xml-roles", "").split(" ")
 		if "dialog" in xmlRoles or "tabpanel" in xmlRoles:
 			# #2390: Don't try to calculate text for ARIA dialogs.
 			# #4638: Don't try to calculate text for ARIA tab panels.

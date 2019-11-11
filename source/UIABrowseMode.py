@@ -9,7 +9,13 @@ from comtypes.automation import VARIANT
 import array
 import winUser
 import UIAHandler
-from UIAUtils import *
+from UIAUtils import (
+	createUIAMultiPropertyCondition,
+	isUIAElementInWalker,
+	getDeepestLastChildUIAElementInWalker,
+	getUIATextAttributeValueFromRange,
+	iterUIARangeByUnit
+)
 import documentBase
 import treeInterceptorHandler
 import cursorManager
@@ -156,9 +162,11 @@ def UIAHeadingQuicknavIterator(itemType,document,position,direction="next"):
 		tempInfo=curPosition.copy()
 		tempInfo.expand(textInfos.UNIT_CHARACTER)
 		styleIDValue=getUIATextAttributeValueFromRange(tempInfo._rangeObj,UIAHandler.UIA_StyleIdAttributeId,ignoreMixedValues=True)
-		if (UIAHandler.StyleId_Heading1<=styleIDValue<=UIAHandler.StyleId_Heading9):
-			foundLevel=(styleIDValue-UIAHandler.StyleId_Heading1)+1
-			wantedLevel=int(itemType[7:]) if len(itemType)>7 else None
+		# #9842: styleIDValue can sometimes be a pointer to IUnknown.
+		# In Python 3, comparing an int with a pointer raises a TypeError.
+		if isinstance(styleIDValue, int) and UIAHandler.StyleId_Heading1 <= styleIDValue <= UIAHandler.StyleId_Heading9:
+			foundLevel = (styleIDValue - UIAHandler.StyleId_Heading1) + 1
+			wantedLevel = int(itemType[7:]) if len(itemType) > 7 else None
 			if not wantedLevel or wantedLevel==foundLevel: 
 				if not firstLoop or not position:
 					tempInfo.expand(textInfos.UNIT_PARAGRAPH)
@@ -175,7 +183,7 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 		# All items are requested (such as for elements list)
 		elements=document.rootNVDAObject.UIAElement.findAll(UIAHandler.TreeScope_Descendants,UIACondition)
 		if elements:
-			for index in xrange(elements.length):
+			for index in range(elements.length):
 				element=elements.getElement(index)
 				try:
 					elementRange=document.rootNVDAObject.UIATextPattern.rangeFromChild(element)
@@ -388,7 +396,22 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:False})
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		elif nodeType=="container":
-			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:False},{UIAHandler.UIA_ControlTypePropertyId:[UIAHandler.UIA_TableControlTypeId,UIAHandler.UIA_DataGridControlTypeId]})
+			condition = createUIAMultiPropertyCondition(
+				{
+					UIAHandler.UIA.UIA_ControlTypePropertyId: UIAHandler.UIA.UIA_ListControlTypeId,
+					UIAHandler.UIA.UIA_IsKeyboardFocusablePropertyId: False
+				},
+				{
+					UIAHandler.UIA.UIA_ControlTypePropertyId: [
+						UIAHandler.UIA.UIA_TableControlTypeId,
+						UIAHandler.UIA.UIA_DataGridControlTypeId
+					]
+				},
+				{
+					UIAHandler.UIA_ControlTypePropertyId: UIAHandler.UIA.UIA_GroupControlTypeId,
+					UIAHandler.UIA_AriaRolePropertyId: ["article"]
+				}
+			)
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		elif nodeType=="edit":
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_EditControlTypeId,UIAHandler.UIA_ValueIsReadOnlyPropertyId:False},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ComboBoxControlTypeId,UIAHandler.UIA_IsTextPatternAvailablePropertyId:True})
@@ -399,6 +422,12 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 		elif nodeType=="landmark":
 			condition=UIAHandler.handler.clientObject.createNotCondition(UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_LandmarkTypePropertyId,0))
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
+		elif nodeType == "article":
+			condition = createUIAMultiPropertyCondition({
+				UIAHandler.UIA_ControlTypePropertyId: UIAHandler.UIA.UIA_GroupControlTypeId,
+				UIAHandler.UIA_AriaRolePropertyId: ["article"]
+			})
+			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
 		elif nodeType=="nonTextContainer":
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:True},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ComboBoxControlTypeId})
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
@@ -442,8 +471,3 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 		except LookupError:
 			return False
 		return True
-
-	def event_caret(self,obj,nextHandler):
-		pass
-
-

@@ -5,6 +5,7 @@
 
 import synthDriverHandler
 import extensionPoints
+import speech
 
 # inform those who want to know that there is new speech
 post_speech = extensionPoints.Action()
@@ -20,8 +21,13 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		return True
 
 	supportedSettings = []
+	supportedNotifications={synthDriverHandler.synthIndexReached,synthDriverHandler.synthDoneSpeaking}
 
 	def speak(self, speechSequence):
+		for item in speechSequence:
+			if isinstance(item,speech.IndexCommand):
+				synthDriverHandler.synthIndexReached.notify(synth=self,index=item.index)
+		synthDriverHandler.synthDoneSpeaking.notify(synth=self)
 		post_speech.notify(speechSequence=speechSequence)
 
 	def cancel(self):

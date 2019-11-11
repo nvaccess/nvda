@@ -11,7 +11,7 @@ The server will only handle one connection at a time.
 """
 
 import threading
-import SocketServer
+import socketserver
 import wx
 import pythonConsole
 from logHandler import log
@@ -22,7 +22,7 @@ PORT = 6832
 
 server = None
 
-class RequestHandler(SocketServer.StreamRequestHandler):
+class RequestHandler(socketserver.StreamRequestHandler):
 
 	def setPrompt(self, prompt):
 		if not self._keepRunning:
@@ -72,9 +72,12 @@ class RequestHandler(SocketServer.StreamRequestHandler):
 
 def initialize():
 	global server
-	server = SocketServer.TCPServer(("", PORT), RequestHandler)
+	server = socketserver.TCPServer(("", PORT), RequestHandler)
 	server.daemon_threads = True
-	thread = threading.Thread(target=server.serve_forever)
+	thread = threading.Thread(
+		name=__name__,  # remotePythonConsole
+		target=server.serve_forever
+	)
 	thread.daemon = True
 	thread.start()
 

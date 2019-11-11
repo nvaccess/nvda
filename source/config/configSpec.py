@@ -4,18 +4,18 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-from cStringIO import StringIO
+from io import StringIO
 from configobj import ConfigObj
 
 #: The version of the schema outlined in this file. Increment this when modifying the schema and 
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config 
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 2
+latestSchemaVersion = 3
 
 #: The configuration specification string
 #: @type: String
-configSpecString = ("""# NVDA Configuration File
+configSpecString = (f"""# NVDA Configuration File
 schemaVersion = integer(min=0, default={latestSchemaVersion})
 [general]
 	language = string(default="Windows")
@@ -70,6 +70,13 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# Braille display driver settings
 	[[__many__]]
 		port = string(default="")
+
+# Vision enhancement provider settings
+[vision]
+	providers = string_list(=default=list())
+
+	# Vision enhancement provider settings
+	[[__many__]]
 
 # Presentation settings
 [presentation]
@@ -175,6 +182,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportHeadings = boolean(default=true)
 	reportBlockQuotes = boolean(default=true)
 	reportLandmarks = boolean(default=true)
+	reportArticles = boolean(default=false)
 	reportFrames = boolean(default=true)
 	reportClickable = boolean(default=true)
 
@@ -188,7 +196,10 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enabled = boolean(default=true)
 	useInMSWordWhenAvailable = boolean(default=false)
 	winConsoleImplementation= option("auto", "legacy", "UIA", default="auto")
-	winConsoleSpeakPasswords = boolean(default=false)
+
+[terminals]
+	speakPasswords = boolean(default=false)
+	keyboardSupportInLegacy = boolean(default=True)
 
 [update]
 	autoCheck = boolean(default=true)
@@ -209,6 +220,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	gui = boolean(default=false)
 	louis = boolean(default=false)
 	timeSinceInput = boolean(default=false)
+	vision = boolean(default=false)
+	speech = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")
@@ -221,7 +234,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [development]
 	enableScratchpadDir = boolean(default=false)
-""").format(latestSchemaVersion=latestSchemaVersion)
+""")
 
 #: The configuration specification
 #: @type: ConfigObj
