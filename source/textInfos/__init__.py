@@ -12,10 +12,15 @@ A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable t
 from abc import abstractmethod
 import weakref
 import re
+from typing import Any, Union, List, Optional, Dict
+
 import baseObject
 import config
 import controlTypes
 import locationHelper
+
+
+SpeechSequence = List[Union[Any, str]]
 
 class Field(dict):
 	"""Provides information about a piece of text."""
@@ -158,7 +163,7 @@ class FieldCommand(object):
 	A command indicates the start or end of a control or that the formatting of the text has changed.
 	"""
 
-	def __init__(self,command,field):
+	def __init__(self, command: str, field: Optional[Union[ControlField, FormatField]]):
 		"""Constructor.
 		@param command: The command; one of:
 			"controlStart", indicating the start of a L{ControlField};
@@ -242,6 +247,12 @@ unitLabels={
 	UNIT_LINE:_("line"),
 	UNIT_PARAGRAPH:_("paragraph"),
 }
+
+
+def _logBadSequenceTypes(sequence: SpeechSequence, shouldRaise: bool = True):
+	import speech.types
+	return speech.types.logBadSequenceTypes(sequence, raiseExceptionOnError=shouldRaise)
+
 
 class TextInfo(baseObject.AutoPropertyObject):
 	"""Provides information about a range of text in an object and facilitates access to all text in the widget.
@@ -501,32 +512,54 @@ class TextInfo(baseObject.AutoPropertyObject):
 			yield chunkInfo.text
 			unitInfo.collapse(end=True)
 
-	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
+	def getControlFieldSpeech(
+			self,
+			attrs: ControlField,
+			ancestorAttrs: List[Field],
+			fieldType: str,
+			formatConfig: Optional[Dict[str, bool]] = None,
+			extraDetail: bool = False,
+			reason: Optional[str] = None
+	) -> SpeechSequence:
 		# Import late to avoid circular import.
 		import speech
-		return speech.getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason)
+		sequence = speech.getControlFieldSpeech(
+			attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason
+		)
+		_logBadSequenceTypes(sequence)
+		return sequence
 
 	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
 		# Import late to avoid circular import.
 		import braille
 		return braille.getControlFieldBraille(self, field, ancestors, reportStart, formatConfig)
 
-	def getFormatFieldSpeech(self, attrs, attrsCache=None, formatConfig=None, reason=None, unit=None, extraDetail=False , initialFormat=False, separator=None):
+	def getFormatFieldSpeech(
+			self,
+			attrs: Field,
+			attrsCache: Optional[Field] = None,
+			formatConfig: Optional[Dict[str, bool]] = None,
+			reason: Optional[str] = None,
+			unit: Optional[str] = None,
+			extraDetail: bool = False,
+			initialFormat: bool = False,
+	) -> SpeechSequence:
 		"""Get the spoken representation for given format information.
 		The base implementation just calls L{speech.getFormatFieldSpeech}.
 		This can be extended in order to support implementation specific attributes.
 		If extended, the superclass should be called first.
-		@param separator: The text used to separate chunks of format information;
-			defaults to L{speech.CHUNK_SEPARATOR}.
-		@type separator: str
 		"""
 		# Import late to avoid circular import.
 		import speech
-		if separator is None:
-			# #6749: The default for this argument is actually speech.CHUNK_SEPARATOR,
-			# but that can't be specified as a default argument because of circular import issues.
-			separator = speech.CHUNK_SEPARATOR
-		return speech.getFormatFieldSpeech(attrs, attrsCache=attrsCache, formatConfig=formatConfig, reason=reason, unit=unit, extraDetail=extraDetail , initialFormat=initialFormat, separator=separator)
+		return speech.getFormatFieldSpeech(
+			attrs=attrs,
+			attrsCache=attrsCache,
+			formatConfig=formatConfig,
+			reason=reason,
+			unit=unit,
+			extraDetail=extraDetail,
+			initialFormat=initialFormat
+		)
 
 	def activate(self):
 		"""Activate this position.

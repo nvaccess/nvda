@@ -227,17 +227,21 @@ class ExcelQuickNavItem(browseMode.QuickNavItem):
 
 class ExcelChartQuickNavItem(ExcelQuickNavItem):
 
-	def __init__( self , nodeType , document , chartObject , chartCollection ):
+	def __init__(self, nodeType, document, chartObject, chartCollection):
 		self.chartIndex = chartObject.Index
+		topLeftAddress = chartObject.TopLeftCell.address(False, False, 1, False)
+		bottomRightAddress = chartObject.BottomRightCell.address(False, False, 1, False)
 		if chartObject.Chart.HasTitle:
-
-			self.label = chartObject.Chart.ChartTitle.Text + " " + chartObject.TopLeftCell.address(False,False,1,False) + "-" + chartObject.BottomRightCell.address(False,False,1,False) 
-
+			nameText = chartObject.Chart.ChartTitle.Text
 		else:
-
-			self.label = chartObject.Name + " " + chartObject.TopLeftCell.address(False,False,1,False) + "-" + chartObject.BottomRightCell.address(False,False,1,False) 
-
-		super( ExcelChartQuickNavItem ,self).__init__( nodeType , document , chartObject , chartCollection )
+			nameText = chartObject.Name
+		self.label = f"{nameText} {topLeftAddress}-{bottomRightAddress}"
+		super(ExcelChartQuickNavItem, self).__init__(
+			nodeType,
+			document,
+			chartObject,
+			chartCollection
+		)
 
 	def __lt__(self,other):
 		return self.chartIndex < other.chartIndex
@@ -245,18 +249,12 @@ class ExcelChartQuickNavItem(ExcelQuickNavItem):
 	def moveTo(self):
 		try:
 			self.excelItemObject.Activate()
-
-			# After activate(), though the chart object is selected, 
-
-			# pressing arrow keys moves the object, rather than 
-
-			# let use go inside for sub-objects. Somehow 
-		# calling an COM function on a different object fixes that !
-
-			log.debugWarning( self.excelItemCollection.Count )
-
-		except(COMError):
-
+			# After activate(), though the chart object is selected,
+			# pressing arrow keys moves the object, rather than
+			# let us go inside for sub-objects. Somehow
+			# calling a COM function on a different object fixes that!
+			log.debugWarning(self.excelItemCollection.Count)
+		except COMError:
 			pass
 		focus=api.getDesktopObject().objectWithFocus()
 		if not focus or not isinstance(focus,ExcelBase):
@@ -265,14 +263,12 @@ class ExcelChartQuickNavItem(ExcelQuickNavItem):
 		sel=focus._getSelection()
 		if not sel:
 			return
-		eventHandler.queueEvent("gainFocus",sel)
+		eventHandler.queueEvent("gainFocus", sel)
 
 
 	@property
 	def isAfterSelection(self):
 		activeCell = self.document.Application.ActiveCell
-		#log.debugWarning("active row: {} active column: {} current row: {} current column: {}".format ( activeCell.row , activeCell.column , self.excelCommentObject.row , self.excelCommentObject.column   ) )
-
 		if self.excelItemObject.TopLeftCell.row == activeCell.row:
 			if self.excelItemObject.TopLeftCell.column > activeCell.column:
 				return False
@@ -295,7 +291,14 @@ class ExcelRangeBasedQuickNavItem(ExcelQuickNavItem):
 	@property
 	def isAfterSelection(self):
 		activeCell = self.document.Application.ActiveCell
-		log.debugWarning("active row: {} active column: {} current row: {} current column: {}".format ( activeCell.row , activeCell.column , self.excelItemObject.row , self.excelItemObject.column   ) )
+		log.debugWarning(
+			"active row: {} active column: {} current row: {} current column: {}".format(
+				activeCell.row,
+				activeCell.column,
+				self.excelItemObject.row,
+				self.excelItemObject.column
+			)
+		)
 
 		if self.excelItemObject.row == activeCell.row:
 			if self.excelItemObject.column > activeCell.column:
@@ -1433,10 +1436,14 @@ class ExcelCell(ExcelBase):
 			if isinstance(field,textInfos.FieldCommand) and isinstance(field.field,textInfos.FormatField):
 				formatField.update(field.field)
 		if not hasattr(self.parent,'_formatFieldSpeechCache'):
-			self.parent._formatFieldSpeechCache={}
-		text=speech.getFormatFieldSpeech(formatField,attrsCache=self.parent._formatFieldSpeechCache,formatConfig=formatConfig) if formatField else None
-		if text:
-			speech.speakText(text)
+			self.parent._formatFieldSpeechCache = textInfos.Field()
+		if formatField:
+			sequence = speech.getFormatFieldSpeech(
+				formatField,
+				attrsCache=self.parent._formatFieldSpeechCache,
+				formatConfig=formatConfig
+			)
+			speech.speak(sequence)
 		super(ExcelCell,self).reportFocus()
 
 	__gestures = {
