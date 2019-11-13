@@ -42,7 +42,8 @@ def isWin10(version=1507, atLeast=True):
 		1709: 16299,
 		1803: 17134,
 		1809: 17763,
-		1903: 18362
+		1903: 18362,
+		1909: 18363
 	}
 	if atLeast and winVersion.major < 10:
 		return False
