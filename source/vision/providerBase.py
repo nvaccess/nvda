@@ -7,7 +7,7 @@
 """Module within the vision framework that contains the base vision enhancement provider class.
 """
 
-from abc import abstractmethod, ABC
+from abc import abstractmethod
 
 from autoSettingsUtils.autoSettings import AutoSettings
 from baseObject import AutoPropertyObject
@@ -15,7 +15,7 @@ from .visionHandlerExtensionPoints import EventExtensionPoints
 from typing import Optional, Any
 
 
-class VisionEnhancementProviderSettings(AutoSettings, ABC):
+class VisionEnhancementProviderSettings(AutoSettings):
 	"""
 	Base class for settings for a vision enhancement provider.
 	Ensure that the following are implemented:
