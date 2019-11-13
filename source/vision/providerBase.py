@@ -22,12 +22,22 @@ class VisionEnhancementProviderSettings(AutoSettings):
 	- AutoSettings.getId:
 			This is case sensitive. Used in the config file. Does not have to match the module name.
 	- AutoSettings.getTranslatedName:
-			The string that should appear in the GUI as the name
+			The string that should appear in the GUI as the name.
 	- AutoSettings._get_supportedSettings:
-			The "runtime" settings for your provider
+			The "runtime" settings for your provider. By default this just returns L{_get_preInitSettings}.
+			The implementation must handle how to modify the returned settings based on external (software,
+			hardware) dependencies.
 	Although technically optional, derived classes probably need to implement:
 	- AutoSettings._get_preInitSettings:
-			The settings always configurable for your provider
+			The settings that are always configurable for your provider.
+	@note
+	If the vision enhancement provider has settings, it will provide an implementation of this class.
+	The provider will hold a reference to an instance of this class, this is accessed through the class method
+	L{VisionEnhancementProvider.getSettings}.
+	One way to handle settings that are strictly runtime:
+	- During initialization, the vision enhancement provider can instruct the settings instance what it should
+	expose using the L{utoSettings._get_supportedSettings} property.
+	- "_exampleProvider_autoGui.py" provides an example of this.
 	"""
 	def __init__(self):
 		super().__init__()
