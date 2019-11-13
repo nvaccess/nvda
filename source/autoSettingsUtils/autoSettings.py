@@ -209,9 +209,20 @@ class AutoSettings(AutoPropertyObject):
 		self._loadSpecificSettings(self, self.supportedSettings, onlyChanged)
 
 	@classmethod
-	def _paramToPercent(cls, current, min, max):
+	def _paramToPercent(cls, current: int, min: int, max: int) -> int:
+		"""Convert a raw parameter value to a percentage given the current, minimum and maximum raw values.
+		@param current: The current value.
+		@param min: The minimum value.
+		@param max: The maximum value.
+		"""
 		return paramToPercent(current, min, max)
 
 	@classmethod
-	def _percentToParam(cls, percent, min, max):
+	def _percentToParam(cls, percent: int, min: int, max: int) -> int:
+		"""Convert a percentage to a raw parameter value given the current percentage and the minimum and maximum
+		raw parameter values.
+		@param percent: The current percentage.
+		@param min: The minimum raw parameter value.
+		@param max: The maximum raw parameter value.
+		"""
 		return percentToParam(percent, min, max)
