@@ -43,16 +43,13 @@ class StringParameterInfo(object):
 	"""
 	Used to represent a value of a DriverSetting instance.
 	"""
+	id: str
+	displayName: str
 
-	def __init__(self, id, displayName):
+	def __init__(self, id: str, displayName: str):
 		"""
 		@param id: The unique identifier of the value.
-		@type id: str
 		@param displayName: The name of the value, visible to the user.
-		@type displayName: str
 		"""
 		self.id = id
 		self.displayName = displayName
-		# Keep backwards compatibility
-		self.ID = id
-		self.name = displayName
