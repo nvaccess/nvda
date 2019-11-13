@@ -1405,11 +1405,10 @@ def getControlFieldSpeech(  # noqa: C901
 		tableID = None
 
 	roleText = attrs.get('roleText')
+	landmark = attrs.get("landmark")
 	if roleText:
 		roleTextSequence = [roleText, ]
-	elif role == controlTypes.ROLE_LANDMARK:
-		landmark = attrs.get("landmark")
-		assert landmark, "Trying to speak landmark but no landmark given"
+	elif role == controlTypes.ROLE_LANDMARK and landmark:
 		roleTextSequence = [
 			f"{aria.landmarkRoles[landmark]} {controlTypes.roleLabels[controlTypes.ROLE_LANDMARK]}",
 		]

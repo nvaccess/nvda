@@ -666,8 +666,8 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	current=field.get('current', None)
 	placeholder=field.get('placeholder', None)
 	roleText = field.get('roleTextBraille', field.get('roleText'))
-	if not roleText and role == controlTypes.ROLE_LANDMARK:
-		landmark = field.get("landmark")
+	landmark = field.get("landmark")
+	if not roleText and role == controlTypes.ROLE_LANDMARK and landmark:
 		roleText = f"{roleLabels[controlTypes.ROLE_LANDMARK]} {landmarkLabels[landmark]}"
 
 	if presCat == field.PRESCAT_LAYOUT:
