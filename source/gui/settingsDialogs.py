@@ -3228,7 +3228,7 @@ class VisionSettingsPanel(SettingsPanel):
 
 	def _getProviderInfos(self) -> List[vision.providerInfo.ProviderInfo]:
 		return list(
-			vision.visionHandler.getProviderInfo(providerId) for providerId in vision.handler.providers
+			vision.handler.getProviderInfo(providerId) for providerId in vision.handler.providers
 		)
 
 	def _createProviderSettingsPanel(
@@ -3262,7 +3262,7 @@ class VisionSettingsPanel(SettingsPanel):
 		self.settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self.settingsSizerHelper.addItem(wx.StaticText(self, label=self.panelDescription))
 
-		for providerInfo in vision.visionHandler.getProviderList():
+		for providerInfo in vision.handler.getProviderList(reloadFromSystem=True):
 			providerSizer = self.settingsSizerHelper.addItem(
 				wx.StaticBoxSizer(wx.StaticBox(self, label=providerInfo.translatedName), wx.VERTICAL),
 				flag=wx.EXPAND
@@ -3338,7 +3338,7 @@ class VisionSettingsPanel(SettingsPanel):
 			providerInfo.providerId for providerInfo in self.initialProviders
 		]
 		providersToTerminate = [
-			vision.visionHandler.getProviderInfo(providerId) for providerId in vision.handler.providers
+			vision.handler.getProviderInfo(providerId) for providerId in vision.handler.providers
 			if providerId not in initialProviderIds
 		]
 		self.safeTerminateProviders(providersToTerminate)
@@ -3352,7 +3352,7 @@ class VisionSettingsPanel(SettingsPanel):
 			except Exception:
 				log.debug(f"Error saving providerPanel: {panel.__class__!r}", exc_info=True)
 		self.initialProviders = list(
-			vision.visionHandler.getProviderInfo(providerId)
+			vision.handler.getProviderInfo(providerId)
 			for providerId in vision.handler.providers
 		)
 

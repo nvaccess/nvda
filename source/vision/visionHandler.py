@@ -73,47 +73,6 @@ def _getProvidersFromFileSystem():
 			continue
 
 
-allProviders: List[providerInfo.ProviderInfo]
-
-
-def getProviderList(
-		onlyStartable: bool = True,
-		reloadFromSystem: bool = False,
-) -> List[providerInfo.ProviderInfo]:
-	"""Gets a list of available vision enhancement provider information
-	@param onlyStartable: excludes all providers for which the check method returns C{False}.
-	@return: List of available providers
-	"""
-	global allProviders
-	if reloadFromSystem or not allProviders:
-		allProviders = list(_getProvidersFromFileSystem())
-		# Sort the providers alphabetically by name.
-		allProviders.sort(key=lambda info: info.translatedName.lower())
-
-	providerList = []
-	for provider in allProviders:
-		try:
-			providerCanStart = provider.providerClass.canStart()
-		except Exception:  # Purposely catch everything as we don't know what a provider might raise.
-			log.error(f"Error calling canStart for provider {provider.moduleName}", exc_info=True)
-		else:
-			if not onlyStartable or providerCanStart:
-				providerList.append(provider)
-			else:
-				log.debugWarning(
-					f"Excluding Vision enhancement provider module {provider.moduleName} which is unable to start"
-				)
-	return providerList
-
-
-def getProviderInfo(providerId: providerInfo.ProviderIdT) -> Optional[providerInfo.ProviderInfo]:
-	global allProviders
-	for p in allProviders:
-		if p.providerId == providerId:
-			return p
-	raise LookupError(f"Provider with id ({providerId}) does not exist.")
-
-
 class VisionHandler(AutoPropertyObject):
 	"""The singleton vision handler is the core of the vision framework.
 	It performs the following tasks:
@@ -134,8 +93,50 @@ class VisionHandler(AutoPropertyObject):
 		This is executed on the main thread by L{__init__} using the events queue.
 		This ensures that the gui is fully initialized before providers are initialized that might rely on it.
 		"""
+		self._updateAllProvidersList()
 		self.handleConfigProfileSwitch()
 		config.post_configProfileSwitch.register(self.handleConfigProfileSwitch)
+
+	_allProviders: List[providerInfo.ProviderInfo] = []
+
+	def _updateAllProvidersList(self):
+		self._allProviders = list(_getProvidersFromFileSystem())
+		# Sort the providers alphabetically by name.
+		self._allProviders.sort(key=lambda info: info.translatedName.lower())
+
+	def getProviderList(
+			self,
+			onlyStartable: bool = True,
+			reloadFromSystem: bool = False,
+	) -> List[providerInfo.ProviderInfo]:
+		"""Gets a list of available vision enhancement provider information
+		@param onlyStartable: excludes all providers for which the check method returns C{False}.
+		@param reloadFromSystem: ensure the list is fresh. Providers may have been added to the file system.
+		@return: List of available providers
+		"""
+		if reloadFromSystem or not self._allProviders:
+			self._updateAllProvidersList()
+
+		providerList = []
+		for provider in self._allProviders:
+			try:
+				providerCanStart = provider.providerClass.canStart()
+			except Exception:  # Purposely catch everything as we don't know what a provider might raise.
+				log.error(f"Error calling canStart for provider {provider.moduleName}", exc_info=True)
+			else:
+				if not onlyStartable or providerCanStart:
+					providerList.append(provider)
+				else:
+					log.debugWarning(
+						f"Excluding Vision enhancement provider module {provider.moduleName} which is unable to start"
+					)
+		return providerList
+
+	def getProviderInfo(self, providerId: providerInfo.ProviderIdT) -> Optional[providerInfo.ProviderInfo]:
+		for p in self._allProviders:
+			if p.providerId == providerId:
+				return p
+		raise LookupError(f"Provider with id ({providerId}) does not exist.")
 
 	def terminateProvider(
 			self,
@@ -282,7 +283,7 @@ class VisionHandler(AutoPropertyObject):
 		providersToTerminate = curProviders - configuredProviders
 		for providerId in providersToTerminate:
 			try:
-				providerInfo = getProviderInfo(providerId)
+				providerInfo = self.getProviderInfo(providerId)
 				self.terminateProvider(providerInfo)
 			except Exception:
 				log.error(
@@ -291,7 +292,7 @@ class VisionHandler(AutoPropertyObject):
 				)
 		for providerId in providersToInitialize:
 			try:
-				providerInfo = getProviderInfo(providerId)
+				providerInfo = self.getProviderInfo(providerId)
 				self.initializeProvider(providerInfo)
 			except Exception:
 				log.error(
