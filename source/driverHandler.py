@@ -6,10 +6,6 @@
 
 """Handler for driver functionality that is global to synthesizers and braille displays."""
 from autoSettingsUtils.autoSettings import AutoSettings
-from autoSettingsUtils.utils import (
-	paramToPercent,
-	percentToParam
-)
 
 # F401: the following imports, while unused in this file, are provided for backwards compatibility.
 from autoSettingsUtils.driverSetting import (  # noqa: F401
@@ -22,11 +18,6 @@ from autoSettingsUtils.utils import (  # noqa: F401
 	UnsupportedConfigParameterError,
 	StringParameterInfo,
 )
-from baseObject import AutoPropertyObject
-import config
-from copy import deepcopy
-from logHandler import log
-from typing import List, Tuple, Dict, Union
 
 
 class Driver(AutoSettings):
@@ -59,17 +50,14 @@ class Driver(AutoSettings):
 		@postcondition: This driver can be used.
 		"""
 		super(Driver, self).__init__()
-		self._registerConfigSaveAction()
 
-	def terminate(self, saveSettings: bool = True):
-		"""Terminate this driver.
+	def terminate(self):
+		"""Save settings and terminate this driver.
 		This should be used for any required clean up.
-		@param saveSettings: Whether settings should be saved on termination.
 		@precondition: L{initialize} has been called.
 		@postcondition: This driver can no longer be used.
 		"""
-		if saveSettings:
-			self.saveSettings()
+		self.saveSettings()
 		self._unregisterConfigSaveAction()
 
 	@classmethod
@@ -82,32 +70,7 @@ class Driver(AutoSettings):
 		"""
 		return False
 
-
-	@classmethod
-	def _paramToPercent(cls, current, min, max):
-		"""Convert a raw parameter value to a percentage given the current, minimum and maximum raw values.
-		@param current: The current value.
-		@type current: int
-		@param min: The minimum value.
-		@type current: int
-		@param max: The maximum value.
-		@type max: int
-		"""
-		return paramToPercent(current, min, max)
-
-	@classmethod
-	def _percentToParam(cls, percent, min, max):
-		"""Convert a percentage to a raw parameter value given the current percentage and the minimum and maximum raw parameter values.
-		@param percent: The current percentage.
-		@type percent: int
-		@param min: The minimum raw parameter value.
-		@type min: int
-		@param max: The maximum raw parameter value.
-		@type max: int
-		"""
-		return percentToParam(percent, min, max)
-
-# Impl for abstract methods in AutoSettings class
+	# Impl for abstract methods in AutoSettings class
 	@classmethod
 	def getId(cls) -> str:
 		return cls.name
