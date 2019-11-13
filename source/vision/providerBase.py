@@ -122,7 +122,7 @@ class VisionEnhancementProvider(AutoPropertyObject):
 
 	@abstractmethod
 	def terminate(self) -> None:
-		"""Terminate this driver.
+		"""Terminate this provider.
 		This should be used for any required clean up.
 		@precondition: L{initialize} has been called.
 		@postcondition: This provider can no longer be used.
