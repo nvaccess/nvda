@@ -228,7 +228,10 @@ class LiveText(NVDAObject):
 		"""
 		if self._monitorThread:
 			return
-		thread = self._monitorThread = threading.Thread(target=self._monitor)
+		thread = self._monitorThread = threading.Thread(
+			name=f"{self.__class__.__qualname__}._monitorThread",
+			target=self._monitor
+		)
 		thread.daemon = True
 		self._keepMonitoring = True
 		self._event.clear()
@@ -748,8 +751,8 @@ class ToolTip(NVDAObject):
 		if not config.conf["presentation"]["reportTooltips"]:
 			return
 		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
-		# Ideally, we wouldn't use getBrailleTextForProperties directly.
-		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
+		# Ideally, we wouldn't use getPropertiesBraille directly.
+		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
 class Notification(NVDAObject):
 	"""Informs the user of non-critical information that does not require immediate action.
@@ -761,8 +764,8 @@ class Notification(NVDAObject):
 		if not config.conf["presentation"]["reportHelpBalloons"]:
 			return
 		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
-		# Ideally, we wouldn't use getBrailleTextForProperties directly.
-		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
+		# Ideally, we wouldn't use getPropertiesBraille directly.
+		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
 	event_show = event_alert
 
