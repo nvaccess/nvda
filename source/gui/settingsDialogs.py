@@ -1018,6 +1018,7 @@ class DriverSettingChanger(object):
 		return self._driverRef()
 
 	def __call__(self,evt):
+		evt.Skip()  # allow other handlers to also process this event.
 		val=evt.GetSelection()
 		setattr(self.driver,self.setting.id,val)
 
@@ -1028,6 +1029,7 @@ class StringDriverSettingChanger(DriverSettingChanger):
 		super(StringDriverSettingChanger,self).__init__(driver,setting)
 
 	def __call__(self,evt):
+		evt.Skip()  # allow other handlers to also process this event.
 		# Quick workaround to deal with voice changes.
 		if self.setting.id == "voice":
 			# Cancel speech first so that the voice will change immediately instead of the change being queued.
