@@ -2418,7 +2418,7 @@ class GlobalCommands(ScriptableObject):
 			scriptCount in (0, 1)  # 1 press (temp enable) or 2 presses (enable)
 		):
 			# Check if screen curtain is available, exit early if not.
-			if not vision.getProviderClass(screenCurtainId).canStart():
+			if not screenCurtainProviderInfo.providerClass.canStart():
 				# Translators: Reported when the screen curtain is not available.
 				message = _("Screen curtain not available")
 				self._toggleScreenCurtainMessage = message

@@ -25,7 +25,7 @@ from typing import Type, Dict, List, Optional
 from . import exceptions
 
 
-def getProviderClass(
+def _getProviderClass(
 		moduleName: str,
 		caseSensitive: bool = True
 ) -> Type[VisionEnhancementProvider]:
@@ -55,7 +55,7 @@ def _getProvidersFromFileSystem():
 			continue
 		try:
 			#  Get each piece of info in a new statement so any exceptions raised identifies the line correctly.
-			provider = getProviderClass(moduleName)
+			provider = _getProviderClass(moduleName)
 			providerSettings = provider.getSettings()
 			providerId = providerSettings.getId()
 			translatedName = providerSettings.getTranslatedName()
