@@ -3128,13 +3128,13 @@ def showTerminationErrorForProviders(
 			"Could not gracefully terminate the following vision enhancement providers:\n"
 			f"{providerNames }"
 		)
-		gui.messageBox(
-			message,
-			# Translators: The title of the vision enhancement provider error message box.
-			_("Vision Enhancement Provider Error"),
-			wx.OK | wx.ICON_WARNING,
-			parent,
-		)
+	gui.messageBox(
+		message,
+		# Translators: The title of the vision enhancement provider error message box.
+		_("Vision Enhancement Provider Error"),
+		wx.OK | wx.ICON_WARNING,
+		parent,
+	)
 
 
 class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl):
@@ -3446,14 +3446,18 @@ class VisionProviderSubPanel_Wrapper(
 		self._checkBox.SetValue(False)
 
 	def _enableToggle(self, evt):
-		if evt.IsChecked():
-			self._providerControl.startProvider()
-			self._providerSettings.updateDriverSettings()
-			self._providerSettings.onPanelActivated()
-		else:
-			self._providerControl.terminateProvider()
-			self._providerSettings.updateDriverSettings()
-			self._providerSettings.onPanelActivated()
+		shouldBeRunning = evt.IsChecked()
+		if shouldBeRunning and not self._providerControl.startProvider():
+			self._checkBox.SetValue(False)
+			return
+		elif not shouldBeRunning and not self._providerControl.terminateProvider():
+			# When there is an error on termination, don't leave the checkbox checked.
+			# The provider should not be left configured to startup.
+			self._checkBox.SetValue(False)
+			return
+		# Able to successfully start / terminate:
+		self._providerSettings.updateDriverSettings()
+		self._providerSettings.onPanelActivated()
 		self._sendLayoutUpdatedEvent()
 
 	def onDiscard(self):
