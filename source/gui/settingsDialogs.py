@@ -3303,8 +3303,7 @@ class VisionSettingsPanel(SettingsPanel):
 		"""
 		errorProviders: List[vision.providerInfo.ProviderInfo] = []
 		for provider in providers:
-			with VisionProviderStateControl(self, provider) as control:
-				success = control.terminateProvider(shouldPromptOnError=False)
+			success = VisionProviderStateControl(self, provider).terminateProvider(shouldPromptOnError=False)
 			if not success:
 				errorProviders.append(provider)
 		if verbose:
