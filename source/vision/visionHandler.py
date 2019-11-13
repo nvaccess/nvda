@@ -49,56 +49,66 @@ def getProviderClass(
 			raise initialException
 
 
-def getProviderList(
-		onlyStartable: bool = True
-) -> List[providerInfo.ProviderInfo]:
-	"""Gets a list of available vision enhancement provider information
-	@param onlyStartable: excludes all providers for which the check method returns C{False}.
-	@return: List of available providers
-	"""
-	providerList = []
+def _getProvidersFromFileSystem():
 	for loader, moduleName, isPkg in pkgutil.iter_modules(visionEnhancementProviders.__path__):
 		if moduleName.startswith('_'):
 			continue
 		try:
+			#  Get each piece of info in a new statement so any exceptions raised identifies the line correctly.
 			provider = getProviderClass(moduleName)
-		except Exception:
-			# Purposely catch everything.
-			# A provider can raise whatever exception it likes,
-			# therefore it is unknown what to expect.
+			providerSettings = provider.getSettings()
+			providerId = providerSettings.getId()
+			translatedName = providerSettings.getTranslatedName()
+			yield providerInfo.ProviderInfo(
+				providerId=providerId,
+				moduleName=moduleName,
+				translatedName=translatedName,
+				providerClass=provider
+			)
+		except Exception:  # Purposely catch everything as we don't know what a provider might raise.
 			log.error(
 				f"Error while importing vision enhancement provider module {moduleName}",
 				exc_info=True
 			)
 			continue
+
+
+allProviders: List[providerInfo.ProviderInfo]
+
+
+def getProviderList(
+		onlyStartable: bool = True,
+		reloadFromSystem: bool = False,
+) -> List[providerInfo.ProviderInfo]:
+	"""Gets a list of available vision enhancement provider information
+	@param onlyStartable: excludes all providers for which the check method returns C{False}.
+	@return: List of available providers
+	"""
+	global allProviders
+	if reloadFromSystem or not allProviders:
+		allProviders = list(_getProvidersFromFileSystem())
+		# Sort the providers alphabetically by name.
+		allProviders.sort(key=lambda info: info.translatedName.lower())
+
+	providerList = []
+	for provider in allProviders:
 		try:
-			if not onlyStartable or provider.canStart():
-				providerSettings = provider.getSettings()
-				providerList.append(
-					providerInfo.ProviderInfo(
-						providerId=providerSettings.getId(),
-						moduleName=moduleName,
-						translatedName=providerSettings.getTranslatedName(),
-						providerClass=provider
-					)
-				)
+			providerCanStart = provider.providerClass.canStart()
+		except Exception:  # Purposely catch everything as we don't know what a provider might raise.
+			log.error(f"Error calling canStart for provider {provider.moduleName}", exc_info=True)
+		else:
+			if not onlyStartable or providerCanStart:
+				providerList.append(provider)
 			else:
 				log.debugWarning(
-					f"Excluding Vision enhancement provider module {moduleName} which is unable to start"
+					f"Excluding Vision enhancement provider module {provider.moduleName} which is unable to start"
 				)
-		except Exception:
-			# Purposely catch everything else as we don't want one failing provider
-			# make it impossible to list all the others.
-			log.error("", exc_info=True)
-	# Sort the providers alphabetically by name.
-	providerList.sort(key=lambda info: info.translatedName.lower())
 	return providerList
 
 
 def getProviderInfo(providerId: providerInfo.ProviderIdT) -> Optional[providerInfo.ProviderInfo]:
-	# This mechanism of getting the provider list and looking it up is particularly inefficient, but, before
-	# refactoring, confirm that getProviderList is / isn't cached.
-	for p in getProviderList(onlyStartable=False):
+	global allProviders
+	for p in allProviders:
 		if p.providerId == providerId:
 			return p
 	raise LookupError(f"Provider with id ({providerId}) does not exist.")
@@ -133,8 +143,8 @@ class VisionHandler(AutoPropertyObject):
 			saveSettings: bool = True
 	) -> None:
 		"""Terminates a currently active provider.
-		When termnation fails, an exception is raised.
-		Yet, the provider wil lbe removed from the providers dictionary,
+		When termination fails, an exception is raised.
+		Yet, the provider will be removed from the providers dictionary,
 		so its instance goes out of scope and wil lbe garbage collected.
 		@param provider: The provider to terminate.
 		@param saveSettings: Whether settings should be saved on termination.
