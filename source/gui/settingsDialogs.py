@@ -2845,10 +2845,17 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			port = self.possiblePorts[self.portsList.GetSelection()][0]
 			config.conf["braille"][display]["port"] = port
 		if not braille.handler.setDisplayByName(display):
-			# Translators: This message is presented when
-			# NVDA is unable to load the selected
-			# braille display.
-			gui.messageBox(_("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING, self)
+
+			gui.messageBox(
+				# Translators: The message in a dialog presented when NVDA is unable to load the selected
+				# braille display.
+				message=_(f"Could not load the {display} display."),
+				# Translators: The title in a dialog presented when NVDA is unable to load the selected
+				# braille display.
+				caption=_("Braille Display Error"),
+				style=wx.OK | wx.ICON_WARNING,
+				parent=self
+			)
 			return 
 
 		if self.IsModal():

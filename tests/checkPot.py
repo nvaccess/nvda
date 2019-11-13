@@ -81,7 +81,6 @@ EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
 	'Insufficient Privileges',
 	'Synthesizer Error',
 	'Dictionary Entry Error',
-	'Braille Display Error',
 	'word',
 	'Taskbar',
 	'%s items',
