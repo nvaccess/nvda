@@ -8,7 +8,7 @@
 """
 
 
-def paramToPercent(current, min, max):
+def paramToPercent(current: int, min: int, max: int) -> int:
 	"""Convert a raw parameter value to a percentage given the current, minimum and maximum raw values.
 	@param current: The current value.
 	@type current: int
@@ -17,10 +17,10 @@ def paramToPercent(current, min, max):
 	@param max: The maximum value.
 	@type max: int
 	"""
-	return int(round(float(current - min) / (max - min) * 100))
+	return round(float(current - min) / (max - min) * 100)
 
 
-def percentToParam(percent, min, max):
+def percentToParam(percent: int, min: int, max: int) -> int:
 	"""Convert a percentage to a raw parameter value given the current percentage and the minimum and maximum
 	raw parameter values.
 	@param percent: The current percentage.
@@ -30,7 +30,7 @@ def percentToParam(percent, min, max):
 	@param max: The maximum raw parameter value.
 	@type max: int
 	"""
-	return int(round(float(percent) / 100 * (max - min) + min))
+	return round(float(percent) / 100 * (max - min) + min)
 
 
 class UnsupportedConfigParameterError(NotImplementedError):
