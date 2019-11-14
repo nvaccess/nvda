@@ -3226,7 +3226,7 @@ class VisionSettingsPanel(SettingsPanel):
 	title = _("Vision")
 
 	# Translators: This is a label appearing on the vision settings panel.
-	panelDescription = _("Configure visual aides.")
+	panelDescription = _("Configure visual aids.")
 
 	def _createProviderSettingsPanel(
 			self,
