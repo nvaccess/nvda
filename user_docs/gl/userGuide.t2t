@@ -144,13 +144,15 @@ Preme Aceptar para pechar este diálogo.
 ++ Lanzando o NVDA ++[LaunchingNVDA]
 Se instalaches o NVDA co instalador, entón iniciar NVDA é tan sinxelo coma ou premer control+alt+n, ou elexir NVDA dende o menú NVDA no Menú Inicio, submenú Programas. 
 Adicionalmente podes teclear NVDA no diálogo Executar e premer Intro. 
-Tamén podes pasar algunhas [opcións de liña de ordes #CommandLineOptions] as que che permiten reiniciar o NVDA (-r), saír (-q), deshabilitar complementos (--disable-addons), etc.
+Se o NVDA xa se está a executar, reiniciarase.
+Tamén podes pasar algunhas [opcións de liña de ordes #CommandLineOptions] que che permiten saír (-q), desactivar complementos (--disable-addons), etc.
 
 Para as copias instaladas, NVDA almacena a configuración no cartafol roaming application data do usuario actual por omisión (ex.: "C:\Users\<user>\AppData\Roaming").
 É posible cambiar esto de xeito que o NVDA cargue a súa configuración dende o cartafol local de datos de aplicación no seu lugar.
 Consulta a seción acerca de [parámetros do sistema #SystemWideParameters] para máis detalles.
 
 Para iniciar a versión portátil, vai ao directorio onde descomprimiches ao NVDA, e preme intro ou fai doble clic sobre nvda.exe.
+Se o NVDA xa se estaba a executar, deterase automáticamente despois de arrancar a versión portable.
 
 Cando o NVDA arrinca, primeiro escoitarás un grupo ascendente de tons (que che din que NVDA se está a cargar). 
 Dependendo como de rápido sexa o teu computador, ou se estás executándo o NVDA dende un lapis USB ou outro medio máis lento, poderá retrasarse un pouco mentres arrinca. 
@@ -400,6 +402,7 @@ As seguintes ordes están dispoñibles para revisión de texto:
 | Ler todo con revisión | Máis teclado numérico | NVDA+shift+a | deslizar con 3 dedos abaixo (modo texto) | Le dende a posición actual do cursor de revisión, movéndoo segundo baixa |
 | Selecionar logo Copiar dende cursor de revisión | NVDA+f9 | NVDA+f9 | none | Comeza a seleción logo procesa a copia dende a posición actual do cursor de revisión. A acción actual non se leva a cabo ata que digas ao NVDA onde está o final do rango de texto |
 | Seleccionar logo Copiar a cursor de revisión | NVDA+f10 | NVDA+f10 | none | Na primeira pulsación, o texto seleciónase dende enriba da posición previamente fixada coma a marca de comezo e incluindo a posición actual do cursor de revisión. Logo de premer esta tecla unha segunda vez, o texto copiarase ao portapapeis de Windows |
+| Mover a marca de inicio para copiar na revisión | NVDA+shift+f9 | NVDA+shift+f9 | non | Move o cursor de revisión á posición axustada previamente como marca de comezo para copiar |
 | Anunciar formato do texto | NVDA+f | NVDA+f | non | Informa do formato do texto onde estea situado actualmente o cursor de revisión. Premendo dúas veces amosa a información en modo exploración |
 | Anunciar reemplazo de símbolo actual | Non | Non | non | Fala o símbolo onde estea colocado o cursor de revisión. Premido dúas veces, amosa o símbolo e o texto usado para falalo no modo exploración. |
 %kc:endInclude
@@ -939,6 +942,21 @@ Cando se estea na táboa de vista de libros engadidos:
 | Menú de Contexto | aplicacións | Abre o menú de contexto para o libro selecionado. |
 %kc:endInclude
 
+++ Consola de Windows ++[WinConsole]
+O NVDA proporciona compatibilidade para a consola de ordes de Windows utilizada polo indicativo do sistema, PowerShell, e o subsistema Windows para Linux.
+A ventá da consola é de tamano fixo, normalmente moito máis pequena que o búfer que contén a saída.
+Segundo se escrebe un novo texto, o contido desprázase cara arriba e o texto anterior xa non é visible.
+O texto que non se amosa visiblemente na ventá non é acesible cos comandos de revisión de texto do NVDA.
+Polo tanto, é necesario desprazarse pola ventá da consola para ler o texto anterior.
+%kc:beginInclude
+Os seguintes métodos abreviados de teclado incorporados na Consola de Windows poden seren útiles ao [revisar texto #ReviewingText] co NVDA:
+|| Nome | Tecla | Descripción |
+| Desprazar arriba | control+frecha arriba | Despraza a ventá da consola cara arriba, así pódese ler o texto anterior. |
+| Desprazar abaixo | control+frecha abaixo | Despraza a ventá da consola cara abaixo, así pódese ler o texto posterior. |
+| Desprazar ao comezo | control+inicio | Despraza a ventá da consola ao comezo do búfer. |
+| Desprazar ao final | control+fin | Despraza a ventá da consola ao final do búfer. |
+%kc:endInclude
+
 + Configurando o NVDA +[ConfiguringNVDA]
 A maior parte da configuración pode realizarse usando caixas de diálogo ás que se accede mediante o submenú Preferencias do menú NVDA.
 Moitas destas opcións poden atoparse na caixa de diálogo multipáxina [Opcións do NVDA #NVDASettings].
@@ -1104,6 +1122,8 @@ Podes engadir, editar ou borrar descripcións de símbolos no [diálogo de pronu
 ==== Confiar na lingua da voz ao procesar símbolos e caracteres ====[SpeechSettingsTrust]
 Activada de xeito predeterminado, esta opción di ao NVDA se a lingua da voz actual pode ser de confianza ao procesar símbolos e caracteres.
 Se atopas que o NVDA está lendo a pontoación nunha lingua  incorrecta para un sintetizador ou voz en particular, poderás querer desactivar esta opción para forzar ao NVDA a utilizar a súa lingua global configurada no seu lugar.
+
+Para activar ou desactivar a inclusión de Unicode Consortium data dende calquera sitio, por favor asigna un xesto persoalizado usando o [diálogo Xestos de Entrada #InputGestures].
 
 ==== Cambio da Porcentaxe de Ton para Maiúsculas ====[SpeechSettingsCapPitchChange]
 Este campo de edición permíteche teclear a cantidade na que o ton da voz cambiará cando se fale unha letra maiúscula.
@@ -1605,6 +1625,7 @@ Podes configurar o anunciado de:
  - Listas
  - Citas
  - Rexións
+ - Artigos
  - Marcos
  - Admite clic
  -
@@ -1668,11 +1689,28 @@ Esto inclúe ao mesmo Microsoft Word, e tamén o visor de mensajes e o composito
 Sen embargo, pode haber algunha información que non estea exposta ou que estea incorrectamente exposta nalgunhas versións de Microsoft Office, o que significa que non sempre se pode confiar neste soporte da UI automation.
 Aínda non recomendamos que a maioría dos usuarios activen esta opción de xeito predeterminado, aínda que invitamos aos usuarios de Office 2016/365 a que proben esta función e que nos envíen os seus comentarios.
 
-==== Usar UI Automation para acesar á Consola de Windows cando estea dispoñible ====[AdvancedSettingsConsoleUIA]
-Cando esta opción estea activada, o NVDA usará unha versión nova de traballo en curso do seu soporte para a Consola de Windows que aproveita as ventallas das [melloras de accesibilidade feitas por Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Esta característica é altamente experimental e aínda incompreta, así que o seu uso aínda non está recomendado. Sen embargo, unha vez compretado, pénsase que este novo soporte se convirta  no predeterminado, mellorando o rendemento e a estabilidade do NVDA nas consolas de ordes de Windows.
+==== Compatibilidade coa Consola de Windows ====[AdvancedSettingsConsoleUIA]
+Esta opción seleciona cómo interactúa o NVDA coa consola de Windows usada pola liña de ordes, PowerShell e o subsistema de Windows para Linux.
+Non afecta ao terminal moderno de Windows.
+Na versión 1709 de Windows 10, Microsoft [engadíu soporte para a súa API de automatización de interfaz de usuario á consola https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], o que aporta un rendemento e unha estabilidade moi melloradas para os lectores de pantalla que o admitan.
+En situacións nas que a UI Automation non estea dispoñible ou se sepa que resulta nunha experiencia de usuario inferior, a compatibilidade coa consola anterior de NVDA está dispoñible coma solución alternativa.
+A caixa combinada de compatibilidade coa Consola de Windows ten tres opcións:
+- Automático: usa UI Automation en consolas con Windows 10 versión 1809 e posteriores. Esta opción recoméndase e configúrase por defecto.
+- Preferir UIA: usa UI Automation en consolas se está dispoñible, incluso en versións de Windows con implementacións incompretas ou fallidas. Aíndaque esta funcionalidade limitada poderá ser útil (e incluso suficiente para o teu uso), a utilización desta opción está totalmente baixo a teu proprio resgo e non se proporcionará soporte para ela.
+- Herdado: UI Automation na consola de Windows desactivarase compretamente, así que sempre se usará a alternativa herdada.
+-
 
-==== Falar contrasinais en Consolas UIA ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Esta opción controla se se falan os caracteres por [falar caracteres ao se escreber #KeyboardSettingsSpeakTypedCharacters] ou [falar palabras ao se escreber #KeyboardSettingsSpeakTypedWords] en situacións onde a pantalla non se actualice (coma entrada de contrasinal) na Consola de Windows co soporte UI automation activado. Por razóns de seguridade, esta opción debería deixarse deshabilitada. Sen embargo, é posible que desexes habilitala se experimentas problemas de rendemento ou de inestabilidade co anuncio de caracteres e/ou palabras ao se escreber mentres usas o novo soporte experimental do NVDA para a Consola.
+==== Falar Contrasinais na Consola de Windows ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Esta opción controla se os caracteres se falan por [falar caracteres ao se escrebir #KeyboardSettingsSpeakTypedCharacters] ou [falar palabras ao se escrebir #KeyboardSettingsSpeakTypedWords] en situacións onde a pantalla non se actualice (coma entrada de contrasinais) nalgúns programas de terminal, como a Consola de Windows coa compatibilidade con UI automation activada e Mintty.
+Por razóns de seguridade, esta opción debe deixarse desactivada.
+Sen embargo, é posible que desexes habilitalo se experimentas problemas de rendemento ou inestabilidade co anunciado de caracteres e/ou palabras escrebidas nas consolas, ou se traballas en entornos de confianza e prefires o anunciado de contrasinais.
+
+==== Usar  o soporte novo de caracteres escrebidos nas Consolas de Windows herdadas cando estea dispoñible ====[AdvancedSettingsKeyboardSupportInLegacy]
+Esta opción activa un método alternativo para detectar caracteres ao escrebir en Consolas herdadas de Windows.
+Aíndaque mellora o rendemento e evita que se especifique a saída da consola, pode ser incompatible con algúns programas de terminal.
+Esta característica está dispoñible e activada por omisión en versións de Windows 10 1607, 1703, 1709 e 1803 así coma en versións de Windows 10 máis novas cando UI Automation non estea dispoñible ou desactivado.
+Advertencia: con esta opción activada, os caracteres escrebidos que non aparezan en pantalla, como contrasinais, non se suprimirán.
+En entornos non confiables, poderás desactivar temporalmente [falar caracteres ao se escrebir #KeyboardSettingsSpeakTypedCharacters] e [falar palabras ao se escrebir #KeyboardSettingsSpeakTypedWords] ao introducir contrasinais.
 
 ==== Poñer Automáticamente o Foco do Sistema nos Elementos enfocables en Modo Exploración ====[BrowseModeSettingsAutoFocusFocusableElements]
 Tecla: NVDA+8
@@ -1894,7 +1932,6 @@ Para cambiar como se configura NVDA nas pantallas de logon/UAC, configura a NVDA
 ++ Visualizador do Rexistro ++[LogViewer]
 O visualizador do rexistro, atopado en Ferramentas no menú NVDA, permítenche ver toda a saída que ocurrira ata agora dende cando iniciaches NVDA por última vez.
 Usando NVDA+F1 abrirase o visualizador do rexistro e amosarase a información do desenvolvedor sobre o navegador de obxectos actual.
-
 Ademáis de ler o contido, tamén podes gardar unha copia do ficheiro do rexistro, ou refrescar o visualizador tal que se amose a saída máis recente dende que o visualizador do rexistro foi aberto.
 Estas accións están dispoñibles baixo o menú de visualizador do Rexistro.
 
@@ -2862,8 +2899,7 @@ O NVDA pode aceptar unha ou máis opcións adicionais ao arrancar que alteren o 
 Podes pasar tantas opcións como necesites.
 Estas opcións poden pasarse ao arrancar dende un atallo de teclado (nas propiedades do atallo de teclado), dende o diálogo Executar(Menú Inicio -> Executar ou Windows+r) ou dende unha consola de ordes de Windows.
 As opcións deberían separarse do nome do ficheiro executable do NVDA e de outras opcións por espazos.
-Por exemplo, o atallo de teclado do escritorio que crea o NVDA durante a instalación ten a opción -r, que di ao NVDA que peche a copia actual en execucución antes de iniciar unha nova.
-Outra opción útil é --disable-addons, que di ao NVDA que suspenda todos os complementos en execución.
+Por exemplo, unha opción útil é --disable-addons, que di ao NVDA que suspenda todos os complementos en execución.
 Esto permíteche determinar se un problema é causado por un complemento e recuperarte de problemas serios causados por complementos.
 
 Como un exemplo, podes saír da copia actualmente en execución do NVDA introducindo o seguinte no diálogo Executar:
@@ -2872,8 +2908,8 @@ nvda -q
 
 Algunhas das opcións de liña de ordes teñen unha versión curta e unha longa, mentras outras só teñen unha versión longa.
 Para aquelas que teñan unha versión curta, podes combinalas así:
-| nvda -rm | Esto salirá da copia actualmente en execución do NVDA e iniciará unha copia nova cos sons de inicio deshabilitados, etc. |
-| nvda -rm --disable-addons | Igual que o anterior, pero cos complementos deshabilitados |
+| nvda -mc CONFIGPATH | Esto iniciará o NVDA con sons de arranque e a mensaxe desactivada, e a configuración especificada |
+| nvda -mc CONFIGPATH --disable-addons | O mesmo que a de arriba, pero con complementos desactivados |
 
 Algunhas das opcións de liña de ordes aceptan parámetros adicionais; ex.: cómo debería ser o grado de detalle do rexistro ou a vía para o directorio de configuración do usuario.
 Esos parámetros deberían colocarse despois da opción, separados da opción por un espazo cando se utiliza a versión ou un signo igual (=) cando se utiliza  a versión longa; ex.:
@@ -2885,7 +2921,6 @@ Seguidamente van as opcións de liña de ordes para o NVDA:
 || Curta | Longa | Descripción |
 | -h | --help | Amosa a axuda en liña de ordes e sae |
 | -q | --quit | Sae da copia que xa se estea a executar do NVDA |
-| -r | --replace | Sae da copia que xa se estea a executar do NVDA e arranca esta outra |
 | -k | --check-running | Informa se NVDA está en execución a través do código de saída; 0 se está en execución, 1 se non está en execución |
 | -f LOGFILENAME | --log-file=LOGFILENAME | O ficheiro onde se deberían escreber as mesaxes de rexistro |
 | -l LOGLEVEL | --log-level=LOGLEVEL | O nível máis baixo de mensaxe rexistrada (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning |
