@@ -1,4 +1,3 @@
-# winVersion.py
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2019 NV Access Limited
 # This file is covered by the GNU General Public License.
@@ -43,7 +42,7 @@ def isWin10(version=1507, atLeast=True):
 		1803: 17134,
 		1809: 17763,
 		1903: 18362,
-		1909: 18363
+		1909: 18363,
 	}
 	if atLeast and winVersion.major < 10:
 		return False
