@@ -1176,8 +1176,20 @@ class UIA(Window):
 			isReadOnly=self._getUIACacheablePropertyValue(UIAHandler.UIA_ValueIsReadOnlyPropertyId,True)
 		except COMError:
 			isReadOnly=UIAHandler.handler.reservedNotSupportedValue
-		if isReadOnly and isReadOnly!=UIAHandler.handler.reservedNotSupportedValue:
-			states.add(controlTypes.STATE_READONLY)
+		if isReadOnly:
+			if isReadOnly != UIAHandler.handler.reservedNotSupportedValue:
+				states.add(controlTypes.STATE_READONLY)
+
+			if (
+				controlTypes.STATE_READONLY not in states
+				and self.UIATextPattern
+			):
+				# Most UIA text controls don't support the "ValueIsReadOnly" property, so we need to
+				# 	look at root document "IsReadOnly" attribute.
+				document = self.UIATextPattern.documentRange
+				if document.GetAttributeValue(UIAHandler.UIA_IsReadOnlyAttributeId):
+					states.add(controlTypes.STATE_READONLY)
+
 		try:
 			s=self._getUIACacheablePropertyValue(UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,True)
 		except COMError:
