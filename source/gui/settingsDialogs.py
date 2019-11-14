@@ -3157,7 +3157,7 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 		return self._providerInfo
 
 	def getProviderInstance(self) -> Optional[vision.providerBase.VisionEnhancementProvider]:
-		return vision.handler.providers.get(self._providerInfo.providerId, None)
+		return vision.handler.getProviderInstance(self._providerInfo)
 
 	def startProvider(
 			self,
@@ -3228,11 +3228,6 @@ class VisionSettingsPanel(SettingsPanel):
 	# Translators: This is a label appearing on the vision settings panel.
 	panelDescription = _("Configure visual aides.")
 
-	def _getProviderInfos(self) -> List[vision.providerInfo.ProviderInfo]:
-		return list(
-			vision.handler.getProviderInfo(providerId) for providerId in vision.handler.providers
-		)
-
 	def _createProviderSettingsPanel(
 			self,
 			providerInfo: vision.providerInfo.ProviderInfo
@@ -3259,7 +3254,7 @@ class VisionSettingsPanel(SettingsPanel):
 			return None
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
-		self.initialProviders = self._getProviderInfos()
+		self.initialProviders = vision.handler.getActiveProviderInfos()
 		self.providerPanelInstances = []
 		self.settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self.settingsSizerHelper.addItem(wx.StaticText(self, label=self.panelDescription))
@@ -3332,15 +3327,15 @@ class VisionSettingsPanel(SettingsPanel):
 
 		providersToInitialize = [
 			provider for provider in self.initialProviders
-			if provider.providerId not in vision.handler.providers
+			if not bool(vision.handler.getProviderInstance(provider))
 		]
 		self.safeInitProviders(providersToInitialize)
 		initialProviderIds = [
 			providerInfo.providerId for providerInfo in self.initialProviders
 		]
 		providersToTerminate = [
-			vision.handler.getProviderInfo(providerId) for providerId in vision.handler.providers
-			if providerId not in initialProviderIds
+			provider for provider in vision.handler.getActiveProviderInfos()
+			if provider.providerId not in initialProviderIds
 		]
 		self.safeTerminateProviders(providersToTerminate)
 
@@ -3352,10 +3347,7 @@ class VisionSettingsPanel(SettingsPanel):
 			# We should be able to continue despite a buggy provider.
 			except Exception:
 				log.debug(f"Error saving providerPanel: {panel.__class__!r}", exc_info=True)
-		self.initialProviders = list(
-			vision.handler.getProviderInfo(providerId)
-			for providerId in vision.handler.providers
-		)
+		self.initialProviders = vision.handler.getActiveProviderInfos()
 
 
 class VisionProviderSubPanel_Settings(

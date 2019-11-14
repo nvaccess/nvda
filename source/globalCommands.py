@@ -2359,7 +2359,7 @@ class GlobalCommands(ScriptableObject):
 		from visionEnhancementProviders.screenCurtain import ScreenCurtainProvider
 		screenCurtainId = ScreenCurtainProvider.getSettings().getId()
 		screenCurtainProviderInfo = vision.handler.getProviderInfo(screenCurtainId)
-		alreadyRunning = screenCurtainId in vision.handler.providers
+		alreadyRunning = bool(vision.handler.getProviderInstance(screenCurtainProviderInfo))
 
 		GlobalCommands._tempEnableScreenCurtain = scriptCount == 0
 

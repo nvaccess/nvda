@@ -77,14 +77,14 @@ class VisionHandler(AutoPropertyObject):
 	"""The singleton vision handler is the core of the vision framework.
 	It performs the following tasks:
 
-		* It keeps track of active vision enhancement providers in the L{providers} dictionary.
+		* It keeps track of active vision enhancement _providers in the L{_providers} dictionary.
 		* It processes initialization and termination of providers.
 		* It receives certain events from the core of NVDA,
 			delegating them to the appropriate extension points.
 	"""
 
 	def __init__(self):
-		self.providers: Dict[providerInfo.ProviderIdT, VisionEnhancementProvider] = dict()
+		self._providers: Dict[providerInfo.ProviderIdT, VisionEnhancementProvider] = dict()
 		self.extensionPoints: EventExtensionPoints = EventExtensionPoints()
 		queueHandler.queueFunction(queueHandler.eventQueue, self.postGuiInit)
 
@@ -138,6 +138,21 @@ class VisionHandler(AutoPropertyObject):
 				return p
 		raise LookupError(f"Provider with id ({providerId}) does not exist.")
 
+	def getActiveProviderInstances(self):
+		return list(self._providers.values())
+
+	def getActiveProviderInfos(self) -> List[providerInfo.ProviderInfo]:
+		activeProviderInfos = [
+			self.getProviderInfo(p) for p in self._providers
+		]
+		return list(activeProviderInfos)
+
+	def getProviderInstance(
+			self,
+			provider: providerInfo.ProviderInfo
+	) -> Optional[VisionEnhancementProvider]:
+		return self._providers.get(provider.providerId)
+
 	def terminateProvider(
 			self,
 			provider: providerInfo.ProviderInfo,
@@ -151,8 +166,8 @@ class VisionHandler(AutoPropertyObject):
 		@param saveSettings: Whether settings should be saved on termination.
 		"""
 		providerId = provider.providerId
-		# Remove the provider from the providers dictionary.
-		providerInstance = self.providers.pop(providerId, None)
+		# Remove the provider from the _providers dictionary.
+		providerInstance = self._providers.pop(providerId, None)
 		if not providerInstance:
 			raise exceptions.ProviderTerminateException(
 				f"Tried to terminate uninitialized provider {providerId!r}"
@@ -181,7 +196,7 @@ class VisionHandler(AutoPropertyObject):
 		# As we cant rely on providers to de-register themselves from extension points when terminating them,
 		# Re-create our extension points instance and ask active providers to reregister.
 		self.extensionPoints = EventExtensionPoints()
-		for providerInst in self.providers.values():
+		for providerInst in self._providers.values():
 			try:
 				providerInst.registerEventExtensionPoints(self.extensionPoints)
 			except Exception:
@@ -203,7 +218,7 @@ class VisionHandler(AutoPropertyObject):
 		@note: On error, an an Exception is raised.
 		"""
 		providerId = provider.providerId
-		providerInst = self.providers.pop(providerId, None)
+		providerInst = self._providers.pop(providerId, None)
 		if providerInst is not None:
 			try:
 				providerInst.reinitialize()
@@ -233,7 +248,7 @@ class VisionHandler(AutoPropertyObject):
 				raise registerEventExtensionPointsException
 		if not temporary and providerId not in config.conf['vision']['providers']:
 			config.conf['vision']['providers'] = config.conf['vision']['providers'][:] + [providerId]
-		self.providers[providerId] = providerInst
+		self._providers[providerId] = providerInst
 		try:
 			self.initialFocus()
 		except Exception:
@@ -246,9 +261,9 @@ class VisionHandler(AutoPropertyObject):
 	def terminate(self) -> None:
 		self.extensionPoints = None
 		config.post_configProfileSwitch.unregister(self.handleConfigProfileSwitch)
-		for instance in self.providers.values():
+		for instance in self._providers.values():
 			instance.terminate()
-		self.providers.clear()
+		self._providers.clear()
 
 	def handleUpdate(self, obj, property: str) -> None:
 		self.extensionPoints.post_objectUpdate.notify(obj=obj, property=property)
@@ -278,7 +293,7 @@ class VisionHandler(AutoPropertyObject):
 
 	def handleConfigProfileSwitch(self) -> None:
 		configuredProviders = set(config.conf['vision']['providers'])
-		curProviders = set(self.providers)
+		curProviders = set(self._providers)
 		providersToInitialize = configuredProviders - curProviders
 		providersToTerminate = curProviders - configuredProviders
 		for providerId in providersToTerminate:
