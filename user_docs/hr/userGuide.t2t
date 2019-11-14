@@ -144,13 +144,15 @@ Pritisnite U redu da bi ste zatvorili ovaj dijaloški okvir.
 ++ Pokretanje NVDA ++[LaunchingNVDA]
 Ako ste instalirali NVDA pomoću instalacijskog programa, tada je pokretanje NVDA jednostavno kao i  pritisak kontrol+alt+f5, Ili odabirom NVDA iz NVDA izbornika U podizborniku programi u start izborniku.
 Dodatno, možete upisati "nvda", u dijaloški okvir pokreni i pritisnuti enter da biste pokrenuli NVDA.
-Možete također dodati nekoliko [opcija naredbenog retka #CommandLineOptions] koje vam omogućuju ponovno pokretanje NVDA (-r), izlaz (-q), onemogućavanje dodataka (--disable-addons) itd.
+Ako je NVDA već pokrenut, biti će ponovno pokrenut.
+Možete također dodati neke [opcije naredbenog retka #CommandLineOptions] koje vam omogućuju izlazak (-q), onemogućavanje dodataka (--disable-addons), itd.
 
 U instaliranim kopijama, NVDA posprema konfiguraciju u roaming application data mapu trenutnog korisnika podrazumijevano (npr. "C:\Users\<user>\AppData\Roaming").
 To je moguće promijeniti, tako da NVDA učitava svoje postavke iz mape local application data.
 Za više detalja, pročitajte poglavlje o [cjelosustavnim parametrima #SystemWideParameters].
 
 Da biste pokrenuli prijenosnu inačicu, uđite u mapu u kojoj ste raspakirali NVDA i pritisnite enter ili dva puta kliknite na datoteku nvda.exe.
+Ako je NVDA bio ponovno pokrenut, isti će se isključiti prije pokretanja prijenosne inačice.
 
 Kad se NVDA pokreće, prvo ćete čuti seriju uzlaznih tonova (koji vam govore da se NVDA učitava).
 Ovisno o tome koliko je vaše računalo brzo ili ako pokrećete NVDA sa usb sticka ili sa drugog sporog medija, pokretanje može potrajati.
@@ -400,6 +402,7 @@ Sljedeći prečaci su dostupni za pregled teksta:
 | Izgovori sve pomoću pregleda | numPlus | NVDA+shift+a | klizni sa tri prsta prema dolje (tekstualni način) | Čita od trenutne pozicije preglednog kursora, pomičući se s pomićanjem kursora |
 | označi a potom kopiraj sa preglednog kursora | insert+f9 | insert+f9 | nema | označava a potom započinje proces kopiranja od trenutne pozicije preglednog kursora. trenutna akcija se ne izvodi sve dok ne kažete NVDA gdje se nalazi kraj niza znakova |
 | označi a potom kopiraj na pregledni kursor | insert+f10 | insert+f10 | nema | prilikom prvog pritiska, tekst je označen od pozicije od koje je označen početni marker uključujući trenutnu poziciju preglednog kursora. Poslije drugog pritiska iste prečice, tekst će biti kopiran u windowsow međuspremnik |
+| Premjesti se na označeni početak kopiranja na pregled | NVDA+shift+f9 | NVDA+shift+f9 | Nema | Premješta na poziciju koja je određena kao početak markera za kopiranje |
 | Izvijesti o oblikovanju teksta | NVDA+f | NVDA+f | nema | izgovara oblikovanje teksta gdje se pregledni kursor nalazi Prilikom pritiska prečaca dva puta brzo, informacija se prikazuje u načinu pregleda. |
 | Izgovori trenutnu zamjenu simbola | Nema | Nema | Nema | Izgovara simbol na kojem se nalazi pregledni kursor. Kada se pritisne dvaput, pokazuje simbol i tekst koji ga opisuje u načinu pregleda. |
 %kc:endInclude
@@ -936,7 +939,22 @@ Kako biste pregledali, uredili ili izbrisali bilješku:
 Kada se nalazite u tabličnom pregledu dodanih knjiga:
 || naziv | Prečac | Opis |
 | Enter | enter | otvara označenu knjigu. |
-| Kontekstni izbornik | aplikacijska tipka | Okvara kontekstni izbornik za označenu knjigu. |
+| Kontekstni izbornik | aplikacijska tipka | Otvara kontekstni izbornik za označenu knjigu. |
+%kc:endInclude
+
+++ Windows naredbeni redak ++[WinConsole]
+NVDA omogućuje podršku za windowsow naredbeni redak kojeg koriste sama aplikacija naredbenog retka, PowerShell, i podsustav sustava linux za windows.
+Prozor naredbenog retka je fiksne veličine, tipično veći od spremnika koji sadrži informaciju.
+Kako se novi tekst zapisuje, sadržaj se pomiće prema gore i stari tekst više nije vidljiv. 
+Tekst koji nije prikazan na vidljiv način u prozoru nije dostupan uz pomoć NVDA komandi pregleda.
+stoga, potrebno je pomicati prozor kako bi se pročitao raniji tekst.
+%kc:beginInclude
+Sljedeći ugrađeni tipkovnički prečaci naredbenog retka mogu biti korisni prilikom [pregledavanja teksta #ReviewingText] uz pomoć NVDA:
+|| Naziv | Prečac | Opis |
+| Pomakni prema gore | ctrl+strelicaGore | Pomiće prozor naredbenog retka prema gore, tako da se raniji tekst može čitati. |
+| pomakni prema dolje | ctrl+StrelicaDolje | Pomiće prozor naredbenog retka prema dolje, tako da se kasniji tekst može čitati. |
+| Pomakni se na početak | ctrl+home | Pomiće naredbeni redak na početak spremnika. |
+| Pomakni se na kraj | ctrl+end | Pomiće naredbeni redak na kraj spremnika. |
 %kc:endInclude
 
 + Podešavanje NVDA +[ConfiguringNVDA]
@@ -1104,6 +1122,8 @@ Međutim, ako vaša govorna jedinica čita emoji, možete isključiti ovu opciju
 Imajte na umu, da izmijenjeni opisi znakova se spremaju u vašu korisničku mapu.
 Dakle, ako izmijenite naziv određenog emoji,, vaš će opis biti izgovoren neovisno o tome, je li ova opcija uključena.
 Možete dodati, ukloniti ili urediti opise simbola u [dijaloškom okviru izgovaranja simbola #SymbolPronunciation].
+
+Kako biste odasvud mogli uključivati ili isključivati izgovor Unicode znakova poput emoji, molimo pridjelite prilagođeni prečac ili gestu u [dijaloškom okviru ulaznih gesti #InputGestures].
 
 ==== Postotak visine glasa kod velikih slova ====[SpeechSettingsCapPitchChange]
 Ovo polje za uređivanje vam omogućuje promjenu vrijednosti visine koju će govorna jedinica koristiti pri izgovoru velikih slova.
@@ -1606,8 +1626,9 @@ Možete podesiti izgovor slijedećeg:
  - Popisi
  - citati
  - Orjentiri
+ - članci
  - okviri
- - klikajuće elemente
+ - klikajući elementi
  -
 -
 
@@ -1668,11 +1689,28 @@ Ovo uključuje Microsoft Word, te sastavljač i preglednik poruka u Microsoft Ou
 Međutim, postoje neke informacije koje se ne mogu dohvatiti koristeći ovu podršku, stoga se na nju ne možemo potpuno pouzdati.
 Još uvijek ne preporučujemo uključivanje ove opcije za stalno korištenje, ali pozivamo korisnike Microsoft Office 2016/365 da testiraju ovu značajku, te da šalju povratne informacije.
 
-==== Koristi UI Automation za pristup windows naredbenim retcima kada je to moguće ====[AdvancedSettingsConsoleUIA]
-Kada je ova opcija omogućena, NVDA će koristiti novu podrškuza windowsowe naredbene retke koja iskorištava [unapređenja pristupačnosti koje je razvio Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Ova je značajka eksperimentalna te je stoga nepotpuna, stoga njeno korištenje se ne preporučuje. Međutim, jednom kada postane dovršena, podrazumijeva se da će ta podrška biti podrazumjevana, unapređujući tako performanse i stabilnost NVDA u windowsovim naredbenim retcima.
+==== Podrška Windows naredbenog retka ====[AdvancedSettingsConsoleUIA]
+Ova opcija regulira kako NVDA pristupa naredbenim retcima koje koriste aplikacija naredbenog retka, PowerShell, i podsustav sustava Linux za Windows.
+Ovo ne utjeće na suvremeni Windows terminal.
+U Windowsima 10 inačici 1709, Microsoft [dodao je podršku za svoj UI automation API u naredbeni redak https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], dajući mogućnost drastično unapređenih performansi za čitače zaslona koji su to omogućili.
+U situacijama kada je UI automation podrška nedostupna, ili ista prouzrokuje loše korisničko iskustvo, NVDAova stara podrška naredbenog retka dostupna je kao obratno rješenje.
+The Windows Console support combo box has three options:
+- Automatski: koristi UI automation u naredbenim retcima u Windowsima 10 inačici 1809 i novijima. Ova opcija je preporučena i podrazumjevano postavljena.
+- Preferiraj UIA: koristi UI automation u naredbenim retcima kada je to dostupno, čak i u inačicama windowsa sa nekompletnim ili bubičastim implementacijama. Iako ta ograničena implementacija može biti korisna (pa čak i dostatna za vaše korištenje), koristite ju na vlastitu odgovornost i za nju neće biti pružena tehnička podrška.
+- stara implementacija: UI Automation u naredbenim retcima bit će kompletno isključena, te će stari način biti uvijek korišten.
+-
 
-==== Izgovaraj lozinke u UIA naredbenim retcima ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Ova opcija kontrolira izgovor znakova opcijama [čitaj upisane znakove #KeyboardSettingsSpeakTypedCharacters] ili [čitaj upisane riječi #KeyboardSettingsSpeakTypedWords] u slučaju kada se zaslon ne osvježava (poput upisa lozinke) u windowsovom naredbenom retku s uključenom podrškom za UI automation. Radi sigurnosti, ova opcija bi trebala biti isključena. Međutim, možda biste htjeli uključiti ovu opciju ako se susrećete sa problamima performansi sa uključenim izgovorom znakova ili riječi Prilikom korištenja NVDA nove podrške za windowsowe naredbene retke.
+==== Izgovaraj lozinke u Windows naredbenim retcima ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Ova opcija regulira izgovaranje znakova kada su opcije [izgovori upisane znakove #KeyboardSettingsSpeakTypedCharacters] ili [izgovori upisane riječi #KeyboardSettingsSpeakTypedWords] uključene kada se zaslon ne osvježava (kao što je to slučaj sa upisivanjem lozinki) u nekim programima naredbenom retka, kao što je to windows naredbeni redak sa UI automation podrškom i Mintty.
+Iz sigurnosnih razloga, ova postavka treba biti isključena.
+Međutim, možda biste ju htjeli uključiti ako osjećate probleme s performansama ili nestabilnost sa izgovaranjem upisanih znakova ili riječi u naredbenim retcima, ili radite u okruženju u kojem imate povjerenja i preferirate izgovaranje lozinki.
+
+==== Koristi novu podršku izgovora upisanih znakova u starim Windows naredbenim retcima ====[AdvancedSettingsKeyboardSupportInLegacy]
+Ova opcija uključuje alternativnu metodu otkrivanja upisanih znakova u windows naredbenom retku.
+Iako ova opcija  donosi unapređenja performansi i ispravlja problem slovkanja neželjenih stavki, ista može biti nekompatibilna s nekim programima naredbenog retka.
+Ova je opcija dostupna i podrazumjevano uključena u Windowsima 10 inačicama 1607, 1703, 1709 i 1803 kao i na novim Windows 10 inačicama gdje je UIA nedostupna ili isključena.
+Upozorenje: sa uključenom ovom opcijom, izgovoreni znakovi koji se ne pokazuju na zaslonu, poput lozinki, neće biti spriječeni u izgovoru.
+U nepovjerljivim okruženjima, možda biste trebali privremeno isključiti opcije [izgovor upisanih znakova #KeyboardSettingsSpeakTypedCharacters] i [Izgovor upisanih riječi #KeyboardSettingsSpeakTypedWords] pri upisivanju lozinki.
 
 ==== Automatski postavi fokus na stavku koja može biti fokusirana u načinu pregleda ====[BrowseModeSettingsAutoFocusFocusableElements]
 Prečac: NVDA+8
@@ -2863,8 +2901,7 @@ Kad se pokreće, NVDA može prihvatiti jednu ili više opcija što mjenja način
 Možete zadati onoliko opcija koliko trebate.
 Ove opcije mogu biti zadane kada se NVDA pokreće putem prečaca na radnoj površini (u svojstvima prečaca), iz dijaloškog okvira "pokreni" (izbornik start -> pokreni ili prečac Windows+r) ili iz windowsovog naredbenog retka.
 Opcije moraju biti odvojene od imena NVDA izvršne datoteke i od drugih opcija znacima razmaka.
-Na primjer, prečac na radnoj površini koju stvara tijekom instalacije ima opciju -r, koja prosljeđuje naredbu NVDA da zatvori trenutnu kopiju prije pokretanja nove.
-Druga korisna opcija je --disable-addons, koja prosljeđuje komandu NVDA da onemogući sve pokrenute dodatke.
+Na primjer, korisna opcija je --disable-addons, koja govori NVDA da se pokrene sa svim onemogućenim dodacima.
 Ovo vam pomaže otkriti je li problem nastao zbog dodatka i kako biste oporavili NVDA od ozbiljnih problema koje dodaci mogu prouzročiti.
 
 Kao primjer, možete izaći iz nvda  upisujući slijedeće u dijaloški okvir "pokreni":
@@ -2873,8 +2910,8 @@ nvda -q
 
 Neke opcije naredbenog retka imaju dugu i kratku inačicu, dok neke od njih imaju samo dugu inačicu.
 Za opcije koje imaju kratku inačicu, Možete ih kombinirati kako slijedi:
-| nvda -rm | Ovo će iskljućiti NVDA i pokrenuti novu kopiju sa onemogućenim zvukom za pokretanje, itd. |
-| nvda -rm --disable-addons | isto kao i ovo gore, ali sa onemogućenim dodacima |
+| nvda -mc CONFIGPATH | Ova će opcija pokrenuti NVDA sa onemogućenim zvukom pokretanja i onemogućenom porukom, i sa točno određenom konfiguracijom |
+| nvda -mc CONFIGPATH --disable-addons | Ista opcija kao i prethodna, ali sa isključenim dodacima |
 
 Neke opcije naredbenog retka prihvaćaju dodatne parametre; npr. koliko će zapisivanje u zapisnik biti detaljno ili staza do korisničke konfiguracijske mape.
 Ovi parametri trebaju biti smješteni poslije opcije, odvojene razmakom ako se koristi kratka inačica ili znakom jednakosti (=) kada se koristi duga inačica; npr:
@@ -2886,7 +2923,6 @@ Sljede opcije naredbenog retka za NVDA:
 || Kratka | Duga | Opis |
 | -h | --help | Prikazuje pomoć u naredbenom retku i izlazi |
 | -q | --quit | Zaustavlja trenutno pokrenutu kopiju NVDA |
-| -r | --replace | Zaustavlja sadašnju kopiju NVDA i ponovno je pokreće |
 | -k | --check-running | Izvještava o pokrenutosti NVDA putem izlaznog koda; 0 ako je pokrenut, 1 ako nije pokrenut |
 | -f LOGFILENAME | --log-file=LOGFILENAME | datoteka u kojoj poruke zapisnika trebaju biti zapisane |
 | -l LOGLEVEL | --log-level=LOGLEVEL | Najniža razina poruka zapisivana (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), podrazumijevano je warning |
