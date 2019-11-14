@@ -867,7 +867,7 @@ class UIA(Window):
 			if self.UIAElement.cachedAutomationID in ("SearchTextBox", "TextBox"):
 				clsList.append(SearchField)
 		except COMError:
-			log.debug("Failed to locate UIA search field",exc_info=True)
+			log.debug("Failed to locate UIA search field", exc_info=True)
 		try:
 			# Nested block here in order to catch value error and variable binding error when attempting to access automation ID for invalid elements.
 			try:
