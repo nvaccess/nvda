@@ -3,11 +3,74 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.3 =
+
+== Tính năng mới ==
+- Trong Command Prompt, PowerShell và Windows Subsystem for Linux trên Windows 10 phiên bản 1809 trở lên:
+ - Cải thiện triệt để hiệu suất và tính ổn định (#9771)
+ - Việc đọc các văn bản đã nhập mà không hiển thị trên màn hình (mật khẩu chẳng hạn) có thể bật thông qua tùy chọn trong bảng cài đặt mở rộng của NVDA. (#9649)
+- Độ chính xác của lệnh di chuyển chuột đến đối tượng điều hướng đã được cải thiện ở các trường văn bản trong các ứng dụng Java. (#10157)
+- Screen curtain (che màn hình), bật tính năng này để làm đen toàn bộ màn hình cho Windows 8 trở lên. (#7857)
+- Thêm hỗ trợ cho các  màn hình nổi Handy Tech sau (#8955):
+ - Basic Braille Plus 40
+ - Basic Braille Plus 32
+ - Connect Braille
+- Có thể xóa tất cả các thao tác / phím tắt do người dùng gán (user-defined gestures) thông qua nút "Khôi phục về cấu hình mặc định" trong hộp thoại Quản lý các thao tác. (#10293)
+- Việc thông báo font trong Microsoft Word giờ đây đã bao gồm thông báo nội dung được đánh dấu là ẩn. (#8713)
+- Thêm lệnh di chuyển con trỏ duyệt đến vị trí mà trước đó được chọn là điểm bắt đầu cho vùng chọn hoặc sao chép: NVDA+shift+F9. (#1969)
+- Trong Internet Explorer, Microsoft Edge, các phiên bản gần đây của Firefox và Chrome, các cột mốc giờ đây đã được đọc trong chế độ focus và chế độ duyệt đối tượng. (#10101)
+- Trong Internet Explorer, Google Chrome và Mozilla Firefox, bạn có thể điều hướng theo bài viết  (article) bằng các kịch bản di chuyển nhanh. Những kịch bản này mặc định không có thao tác và có thể gán trong hộp thoại Quản lý các thao tác khi nó được mở từ một tài liệu ở chế độ duyệt. (#9227)
+- Trong Internet Explorer, Google Chrome và Mozilla Firefox, các thành phần dạng article giờ đây đã được đọc với việc điều hướng đối tượng, và tùy chọn trong chế độ duyệt nếu bật trong cài đặt Định dạng tài liệu. (#10424)
+
+
+== Các thay đổi ==
+- Hướng dẫn sử dụng giờ đây có mô tả cách sử dụng NVDA trong Windows Console. (#9957)
+- Giờ đây, gọi chạy nvda.exe mặc định sẽ thay thế một phiên bản NVDA đang chạy. Tham số dòng lệnh -r|--replace vẫn còn được nhận, nhưng chương trình sẽ bỏ qua. (#8320)
+- Trên Windows 8 và cao hơn, NVDA giờ đây sẽ đọc thông tin tên và phiên bản của  nhóm các ứng dụng như ứng dụng tải về từ Microsoft Store bằng các thông tin được cung cấp bởi ứng dụng đó. (#4259, #10108)
+- Khi bật / tắt tính năng track changes (theo dõi thay đổi) bằng bàn phím trong Microsoft Word, NVDA sẽ đọc trạng thái của thiết lập. (#942) 
+- Phiên bản NVDA sẽ được ghi ở thông điệp đầu tiên trong log. Điều này xảy ra ngay cả khi chế độ log bị tắt. (#9803)
+- Hộp thoại cài đặt giờ đây không còn cho phép thay đổi mức độ log đã cấu hình nếu nó đã được ghi đè từ dòng lệnh. (#10209)
+- Trong Microsoft Word, NVDA giờ đây đọc được trạng thái hiển thị của các kí tự không in được khi bấm phím bật / tắt Ctrl+Shift+8 . (#10241)
+- Đã cập nhật thư viện phiên dịch chữ nổi liblouis lên commit 58d67e63. (#10094)
+- Khi bật đọc các kí tự CLDR (bao gồm emojis - biểu tượng cảm xúc), chúng sẽ được đọc ở cấp độ dấu câu tất cả. (#8826)
+- Các gói python của bên thứ ba đã bao gồm trong NVDA như comtypes, giờ đây sẽ ghi các cảnh báo và lỗi của chúng vào NVDA log. (#10393)
+- Đã cập nhật Unicode Common Locale Data Repository emoji annotations lên phiên bản 36.0. (#10426)
+
+
+== Sửa lỗi ==
+- Emoji và các kí tự 32 bit unicode khác giờ đây chiếm ít không gian trên màn hình chữ nổi khi chúng hiển thị ở giá trị hexadecimal. (#6695)
+- Trong Windows 10, NVDA sẽ đọc các thông tin giúp đỡ (tooltips) từ các ứng dụng phổ cập nếu NVDA được cấu hình để đọc thông tin giúp đỡ trong hộp thoại trình bày các đối tượng. (#8118)
+- Trên Windows 10 phiên bản 1607 trở lên, văn bản được nhập giờ đây đã được đọc trong Mintty. (#1348)
+- Trên Windows 10 phiên bản 1607 trở lên, các thông tin đầu ra trong Windows Console xuất hiện gần dấu nháy  không còn bị đánh vần nữa. (#513)
+- Các điều khiển trong hộp thoại compressor của Audacity giờ đã được đọc khi điều hướng trong hộp thoại. (#10103)
+- NVDA không còn xem các khoảng trắng là từ ở chế độ duyệt đối tượng trong các trình soạn thảo trên nền Scintilla như Notepad++. (#8295)
+- NVDA sẽ ngăn chặn hệ thống vào chế độ ngủ khi cuộn qua văn bản với các thao tác của màn hình chữ nổi. (#9175)
+- Trên Windows 10, chữ nổi giờ đây sẽ đi theo khi chỉnh sửa nội dung ô trong Microsoft Excel và các điều khiển văn bản UIA khác đã bị tràn nội dung sang bên cạnh. (#9749)
+- NVDA một lần nữa sẽ đọc gợi ý trên thanh địa chỉ của Microsoft Edge. (#7554)
+- NVDA không còn bị im lặng khi con trỏ ở tại một điều khiển thẻ tiêu đề HTML trong Internet Explorer. (#8898)
+- Trong Microsoft Edge trên nền EdgeHTML, NVDA sẽ không còn phát âm thanh gợi ý tìm kiếm khi phóng lớn cửa sổ. (#9110, #10002)
+- Các hộp xổ ARIA 1.1  giờ đây đã được hỗ trợ trong Mozilla Firefox và Google Chrome. (#9616)
+- NVDA sẽ không còn đọc các nội dung của các cột ẩn trực quan cho  thành phần của danh sách trong các điều khiển SysListView32. (#8268)
+- Hộp thoại cài đặt không còn hiển thị "thông tin" cho mức độ log hiện tại khi ở chế độ bảo mật. (#10209)
++- Trong trình đơn Start (Start menu) cho Windows 10 Anniversary Update trở lên, NVDA sẽ thông báo các chi tiết của kết quả tìm kiếm. (#10232)
+- Trong chế độ duyệt, nếu di chuyển con trỏ hay dùng lệnh di chuyển nhanh làm thay đổi tài liệu, NVDA không còn đọc sai nội dung trong vài trường hợp. (#8831, #10343)
+- Tên của vài  dấu đầu dòng (bullet) trong Microsoft Word đã được sửa lại. (#10399)
+- Trong Windows 10 May 2019 Update trở lên, NVDA sẽ một lần nữa đọc biểu tượng cảm xúc được chọn đầu tiên hay thành phần trong bộ nhớ tạm khi mở bản biểu tượng cảm xúc hay lịch sử bộ nhớ tạm tương ứng. (#9204)
+- Trong Poedit,  một lần nữa, lại có thể xem các bản dịch những ngôn ngữ dạng từ phải sang trái. (#9931)
+- ứng dụng Settings (cài đặt) trong Windows 10 April 2018 Update trở lên, NVDA sẽ không còn đọc thông tin thanh tiến độ cho các thanh tùy chỉnh âm lượng được tìm thấy trong trang System/Sound. (#10284)
+- Các biểu thức phổ thông không hợp lệ trong từ điển phát âm không còn phá hỏng hoàn toàn cho bộ đọc trong NVDA. (#10334)
+- Khi đọc các dấu đầu dòng trong Microsoft Word với UIA được bật, các dấu đầu dòng của thành phần danh sách kế  không còn đọc một cách bất hợp lý. (#9613)
+
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
+
 = 2019.2.1 =
 Đây là bản phát hành phụ nhằm sửa vài sự cố tồn tại trong 2019.2. Các lỗi được sửa bao gồm:
 - Phát hiện vài sự cố với Gmail được tìm thấy trong cả Firefox và Chrome khi tương tác với các trình đơn popup cụ thể như khi tạo các bộ lọc hay thay đổi một số tiết lập nhất định của Gmail. (#10175, #9402, #8924)
 - Trong Windows 7, NVDA không còn làm cho Windows Explorer bị sự cố khi chuộc được sử dụng trong start menu. (#9435) 
-- Windows Explorer trên Windows 7 không còn gặp sự cố khi truy cập các trường chỉnh sửa metadata. (#5337) 
+- Windows Explorer trên Windows 7 không còn gặp sự cố khi truy cập các trường chỉnh sửa siêu dữ liệu. (#5337) 
 - NVDA không còn bị đóng băng khi tương tác với hình ảnh với base64 URI trong Mozilla Firefox hoặc Google Chrome. (#10227)
 
 
