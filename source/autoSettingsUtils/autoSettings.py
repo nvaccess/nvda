@@ -252,7 +252,7 @@ class AutoSettings(AutoPropertyObject):
 		return paramToPercent(current, min, max)
 
 	@classmethod
-	def percentToParam(cls, percent: int, min: int, max: int) -> int:
+	def _percentToParam(cls, percent: int, min: int, max: int) -> int:
 		"""Convert a percentage to a raw parameter value given the current percentage and the minimum and maximum
 		raw parameter values.
 		@param percent: The current percentage.
