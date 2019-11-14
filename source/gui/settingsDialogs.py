@@ -310,7 +310,7 @@ class SettingsPanel(wx.Panel, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCM
 	def onPanelActivated(self):
 		"""Called after the panel has been activated (i.e. de corresponding category is selected in the list of categories).
 		For example, this might be used for resource intensive tasks.
-		Sub-classes should extendthis method.
+		Sub-classes should extend this method.
 		"""
 		self.Show()
 
@@ -1083,6 +1083,14 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 	def getSettings(self) -> AutoSettings:
 		...
 
+	@abstractmethod
+	def makeSettings(self, sizer: wx.BoxSizer):
+		"""Populate the panel with settings controls.
+		@note: Normally classes also inherit from settingsDialogs.SettingsPanel.
+		@param sizer: The sizer to which to add the settings controls.
+		"""
+		...
+
 	def _getSettingsStorage(self) -> Any:
 		""" Override to change storage object for setting values."""
 		return self.getSettings()
@@ -1283,7 +1291,7 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 	def onSave(self):
 		self.getSettings().saveSettings()
 
-	def onPanelActivated(self):
+	def refreshGui(self):
 		if not self._currentSettingsRef():
 			if gui._isDebug():
 				log.debug("refreshing panel")
@@ -1291,7 +1299,13 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 			self.settingsSizer.Clear(delete_windows=True)
 			self._currentSettingsRef = weakref.ref(self.getSettings())
 			self.makeSettings(self.settingsSizer)
-		super(AutoSettingsMixin, self).onPanelActivated()
+
+	def onPanelActivated(self):
+		"""Called after the panel has been activated
+		@note: Normally classes also inherit from settingsDialogs.SettingsPanel.
+		"""
+		self.refreshGui()
+		super().onPanelActivated()
 
 
 #: DriverSettingsMixin name is provided or backwards compatibility.
@@ -3378,6 +3392,10 @@ class VisionProviderSubPanel_Settings(
 		# Construct vision enhancement provider settings
 		self.updateDriverSettings()
 
+	@property
+	def hasOptions(self) -> bool:
+		return bool(self.sizerDict)
+
 
 class VisionProviderSubPanel_Wrapper(
 		SettingsPanel
@@ -3396,25 +3414,42 @@ class VisionProviderSubPanel_Wrapper(
 		super().__init__(parent=parent)
 
 	def makeSettings(self, settingsSizer):
-		# Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
-		checkBox = wx.CheckBox(self, label=_("Enable"))
-		settingsSizer.Add(checkBox)
-		settingsSizer.AddSpacer(size=self.scaleSize(10))
+		self._checkBox = wx.CheckBox(
+			self,
+			# Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
+			label=_("Enable")
+		)
+		settingsSizer.Add(self._checkBox)
+		self._optionsSizer = wx.BoxSizer(orient=wx.VERTICAL)
+		self._optionsSizer.AddSpacer(size=self.scaleSize(10))
 		# Translators: Options label on a vision enhancement provider on the vision settings category panel
-		settingsSizer.Add(wx.StaticText(self, label=_("Options:")))
-		settingsSizer.Add(
+		self._optionsText = wx.StaticText(self, label=_("Options:"))
+		self._optionsSizer.Add(self._optionsText)
+		self._optionsSizer.Add(
 			self._providerSettingsSizer,
 			border=self.scaleSize(15),
 			flag=wx.LEFT | wx.EXPAND,
 			proportion=1.0
 		)
-		self._checkBox: wx.CheckBox = checkBox
-		if self._providerControl.getProviderInstance():
-			checkBox.SetValue(True)
+		settingsSizer.Add(
+			self._optionsSizer,
+			flag=wx.EXPAND,
+			proportion=1.0
+		)
+		self._checkBox.SetValue(bool(self._providerControl.getProviderInstance()))
 		if self._createProviderSettings():
-			checkBox.Bind(wx.EVT_CHECKBOX, self._enableToggle)
+			self._checkBox.Bind(wx.EVT_CHECKBOX, self._enableToggle)
 		else:
-			checkBox.Bind(wx.EVT_CHECKBOX, self._nonEnableableGUI)
+			self._checkBox.Bind(wx.EVT_CHECKBOX, self._nonEnableableGUI)
+		self._updateOptionsVisibility()
+
+	def _updateOptionsVisibility(self):
+		hasProviderOptions = bool(self._providerSettings) and self._providerSettings.hasOptions
+		if hasProviderOptions:
+			self.settingsSizer.Show(self._optionsSizer, recursive=True)
+		else:
+			self.settingsSizer.Hide(self._optionsSizer, recursive=True)
+		self._sendLayoutUpdatedEvent()
 
 	def _createProviderSettings(self):
 		try:
@@ -3443,16 +3478,18 @@ class VisionProviderSubPanel_Wrapper(
 		shouldBeRunning = evt.IsChecked()
 		if shouldBeRunning and not self._providerControl.startProvider():
 			self._checkBox.SetValue(False)
+			self._updateOptionsVisibility()
 			return
 		elif not shouldBeRunning and not self._providerControl.terminateProvider():
 			# When there is an error on termination, don't leave the checkbox checked.
 			# The provider should not be left configured to startup.
 			self._checkBox.SetValue(False)
+			self._updateOptionsVisibility()
 			return
 		# Able to successfully start / terminate:
 		self._providerSettings.updateDriverSettings()
-		self._providerSettings.onPanelActivated()
-		self._sendLayoutUpdatedEvent()
+		self._providerSettings.refreshGui()
+		self._updateOptionsVisibility()
 
 	def onDiscard(self):
 		if self._providerSettings:
