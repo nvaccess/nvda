@@ -3,6 +3,131 @@ NVDA更新日志
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.3 =
+
+== 新特性 ==
+- 现在，当使用PowerShell和Windows 10-1809及更高版本的Linux子系统时:
+ - 大大提高了性能和稳定性 (#9771)
+ - 现在，可以通过NVDA高级设置面板的一个选项来启用在Windows控制台读出密码 可提高性能，启用后这些朗读不会显示在屏幕上，例如密码。 (#9649)
+- 现在，当使用NVDA操作Java应用程序时，将鼠标移至导航器对象命令的准确性已得到改善。 (#10157)
+- 现在，屏幕帘启用后，在Windows 8及更高版本上会使整个屏幕变黑。 (#7857)
+- 新增了对以下Handy Tech Braille 点显器的支持 (#8955):
+ - Basic Braille Plus 40
+ - Basic Braille Plus 32
+ - Connect Braille
+- 现在，可以使用输入手势对话框中的恢复默认按钮删除所有用户自定义的手势。 (#10293)
+- 现在，NVDA在朗读Microsoft Word字体时，包括文本被标记为隐藏的部分。 (#8713)
+- 现在，可以使用 NVDA + shift + F9 将浏览光标移动到开始点。 (#1969)
+- 在Internet Explorer，Microsoft Edge和Firefox和Chrome的最新版本中，路标现在以焦点模式和对象导航朗读。 (#10101)
+- 在Internet Explorer，Google Chrome和Mozilla Firefox中，您现在可以使用快速浏览脚本按文章顺序进行浏览。脚本默认情况下是未绑定快捷手势的，您可以在“输入手势”对话框中进行配置。 (#9227)
+- 现在，在Internet Explorer，Google Chrome和Mozilla Firefox中，文章元素通过对象导航朗读，如果在“文档格式”设置中启用，则可以使用浏览模式朗读。 (#10424)
+
+
+== 修改 ==
+- 现在，用户指南介绍了如何在Windows命令行中使用NVDA。 (#9957)
+- 现在，默认情况下，运行nvda.exe会替换已运行的NVDA副本。 -r | --replace命令行参数仍被接受，但会被忽略。 (#8320)
+- 现在，在Windows 8和更高版本上，NVDA现在将朗读托管应用程序的产品名称和版本信息，例如从Microsoft Store下载的应用程序。 (#4259, #10108)
+- 当使用Microsoft Word中的键盘来切换音轨的开和关时，NVDA将朗读设置状态。 (#942) 
+- 现在将NVDA版本号记录为日志中的第一条消息。即使已从GUI禁用日志记录级别，也会进行记录。 (#9803)
+- 现在，如果已从命令行覆盖已配置的日志级别，则设置对话框不再允许更改。 (#10209)
+- 现在，当在Microsoft Word中，按快捷键Ctrl + Shift + 8时，NVDA现在朗读不可打印字符的显示状态。 (#10241)
+- 将Liblouis盲文转换器更新至58d67e63。 (#10094)
+- 现在，启用CLDR字符（包括表情符号）朗读后，将在所有标点符号级别进行朗读。 (#8826)
+- 现在，NVDA中包含的第三方python软件包（例如，comtypes）已将其警告和错误日志记录到NVDA日志中。 (#10393)
+- 将Unicode Common Locale Data Repository表情符号库更新为版本36.0。 (#10426)
+
+
+== 错误修复 ==
+- 现在，当表情符号和其他32位Unicode字符显示为十六进制值时，它们在盲文点显器上所占的空间较小。 (#6695)
+- 在Windows 10中，如果NVDA配置为在对象表示对话框中朗读工具提示，则NVDA将从通用应用程序中读出工具提示。 (#8118)
+- 在Windows 10版本1607和更高版本上，现在在Mintty中朗读输入的文本。 (#1348)
+- 在Windows 10版本1607和更高版本上，不再详细说明Windows控制台中插入符号附近的输出。 (#513)
+- 现在可以在浏览对话框时朗读Audacitys压缩程序对话框中的控件。 (#10103)
+- 现在，NVDA在基于Scintilla的编辑器（例如Notepad ++）中不再将空格视为对象浏览中的单词。 (#8295)
+- 当使用盲文显示手势滚动文本时，NVDA将阻止系统进入睡眠模式。 (#9175)
+- 在Windows 10上，现在在Microsoft Excel和其他UIA文本控件中编辑滞后的单元格内容时，会显示盲文。 (#9749)
+- 现在，NVDA将再次在Microsoft Edge地址栏中朗读输入建议。 (#7554)
+- 现在，在Internet Explorer中聚焦HTML选项卡控件时，NVDA不再保持静音。 (#8898)
+- 现在，在基于EdgeHTML的Microsoft Edge中，当窗口最大化时，NVDA将不再播放搜索建议音。 (#9110, #10002)
+- Mozilla Firefox和Google Chrome现在支持ARIA 1.1组合框。 (#9616)
+- NVDA将不再朗读SysListView32控件中列表项的隐藏内容。 (#8268)
+- 在安全模式下，设置对话框不再显示“ info”作为当前日志级别。 (#10209)
+- 在Windows 10 Anniversary Update和更高版本的“开始”菜单中，NVDA将朗读搜索结果的详细信息。 (#10232)
+- 在浏览模式下，如果移动光标或使用快速导航导致文档更改，则NVDA在某些情况下将不再朗读不正确的内容。 (#8831, #10343)
+- Microsoft Word中的某些项目符号名称已得到纠正。 (#10399)
+- 在Windows 10 May 2019 Update和更高版本中，当打开表情符号面板和剪贴板历史记录时，NVDA将再次朗读第一个选定的表情符号或剪贴板项目。 (#9204)
+- 在Poedit中，可以再次查看从右到左语言的一些翻译。 (#9931)
+- 在Windows 10 April 2018 Update和更高版本的``设置''应用程序中，NVDA将不再朗读在``系统/声音''页面中的音量进度条。 (#10284)
+- 现在，语音词典中的无效正则表达式不再破坏NVDA中的语音。 (#10334)
+- 在启用了UIA的Microsoft Word中读取项目符号时，不再会朗读下一个列表项。 (#9613)
+
+
+== 插件以及NVDA核心开发者需要了解的变动 ==
+- Updated Python to 3.7. (#7105)
+- Updated pySerial to version 3.4. (#8815)
+- Updated wxPython to 4.0.3 to support Python 3.5+ (#9630)
+- Updated six to version 1.12.0 (#9630)
+- Updated py2exe to version 0.9.3.2 (in development, commit b372a8e from albertosottile/py2exe#13). (#9856)
+- Updated UIAutomationCore.dll comtypes module to version 10.0.18362. (#9829)
+- The tab-completion in the Python console only suggests attributes starting with an underscore if the underscore is first typed. (#9918)
+- Flake8 linting tool has been integrated with SCons reflecting code requirements for Pull Requests. (#5918)
+- As NVDA no longer depends on pyWin32, modules such as win32api and win32con are no longer available to add-ons. (#9639)
+ - win32api calls can be replaced with direct calls to win32 dll functions via ctypes.
+ - win32con constants should be defined in your files.
+- The "async" argument in nvwave.playWaveFile has been renamed to "asynchronous". (#8607)
+- speakText and speakCharacter methods on synthDriver objects are no longer supported.
+ - This functionality is handled by SynthDriver.speak.
+- SynthSetting classes in synthDriverHandler have been removed. Now use driverHandler.DriverSetting classes instead.
+- SynthDriver classes should no longer expose index via the lastIndex property.
+ - Instead, they should notify the synthDriverHandler.synthIndexReached action with the index, once all previous audio has finished playing before that index.
+- SynthDriver classes must now notify the synthDriverHandler.synthDoneSpeaking action, once all audio from a SynthDriver.speak call has completed playing.
+- SynthDriver classes must support the speech.PitchCommand in their speak method, as changes in pitch for speak spelling now depends on this functionality.
+- The speech function getSpeechTextForProperties has been renamed to getPropertiesSpeech. (#10098)
+- The braille function getBrailleTextForProperties has been renamed to getPropertiesBraille. (#10469)
+- Several speech functions have been changed to return speech sequences. (#10098)
+ - getControlFieldSpeech
+ - getFormatFieldSpeech
+ - getSpeechTextForProperties now called getPropertiesSpeech
+ - getIndentationSpeech
+ - getTableInfoSpeech
+- Added a textUtils module to simplify string differences between Python 3 strings and Windows unicode strings. (#9545)
+ - See the module documentation and textInfos.offsets module for example implementations.
+- Deprecated functionality now removed. (#9548)
+ - AppModules removed:
+  - Windows XP sound recorder.
+  - Klango Player, which is abandoned software.
+ - configobj.validate wrapper removed.
+  - New code should use from configobj import validate instead of import validate
+ - textInfos.Point and textInfos.Rect replaced by locationHelper.Point and locationHelper.RectLTRB respectively.
+ - braille.BrailleHandler._get_tether and braille.BrailleHandler.set_tether have been removed.
+ - config.getConfigDirs has been removed.
+ - config.ConfigManager.getConfigValidationParameter has been replaced by getConfigValidation
+ - inputCore.InputGesture.logIdentifier property has been removed.
+   - Use _get_identifiers in inputCore.InputGesture instead.
+ - synthDriverHandler.SynthDriver.speakText/speakCharacter, have been removed.
+ - Removed several synthDriverHandler.SynthSetting classes.
+   - Previously kept for backwards compatibility (#8214), now considered obsolete.
+   - Drivers that used the SynthSetting classes should be updated to use the DriverSetting classes.
+ - Some legacy code has been removed, particularly:
+  - Support for the Outlook pre 2003 message list.
+  - An overlay class for the classic start menu, only found in Windows Vista and earlier.
+  - Dropped support for Skype 7, as it is definitely not working any more.
+- A framework allowing developers to create vision enhancement providers; modules that can change screen contents, optionally based on input from NVDA about object locations. (#9064)
+ - Add-ons can bundle their own providers in a visionEnhancementProviders folder.
+ - See the vision and visionEnhancementProviders modules for the implementation of the framework and examples, respectively.
+- Abstract class properties are now supported on objects that inherit from baseObject.AutoPropertyObject (e.g. NVDAObjects and TextInfos). (#10102)
+- Introduced displayModel.UNIT_DISPLAYCHUNK as a textInfos unit constant specific to DisplayModelTextInfo. (#10165)
+ - This new constant allows walking over the text in a DisplayModelTextInfo in a way that more closely resembles how the text chunks are saved in the underlying model.
+- displayModel.getCaretRect now returns an instance of locationHelper.RectLTRB. (#10233)
+- The UNIT_CONTROLFIELD and UNIT_FORMATFIELD constants have been moved from virtualBuffers.VirtualBufferTextInfo to the textInfos package. (#10396)
+- For every entry in the NVDA log, information about the originating thread is now included. (#10259)
+- UIA TextInfo objects can now be moved/expanded by the page, story and formatField text units. (#10396)
+- External modules (appModules and globalPlugins) are now less likely to be able to break the creation of NVDAObjects. 
+ - Exceptions caused by the "chooseNVDAObjectOverlayClasses" and "event_NVDAObject_init" methods are now properly caught and logged.
+- The aria.htmlNodeNameToAriaLandmarkRoles dictionary has been renamed to aria.htmlNodeNameToAriaRoles. It now also contains roles that aren't landmarks.
+- scriptHandler.isCurrentScript has been removed due to lack of use. There is no replacement. (#8677)}+
+
+
 = 2019.2.1 =
 这是2019.2的次要版本，主要修复了以下问题：
 - 修复在与特定弹出菜单（如创建过滤器或修改某些Gmail设置）进行交互时，在Firefox和Chrome中都可以看到Gmail中发生的多次崩溃的错误。 (#10175, #9402, #8924)

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-01 00:10+1000\n"
-"PO-Revision-Date: 2019-11-03 23:30+0100\n"
+"POT-Creation-Date: 2019-11-11 16:32+1000\n"
+"PO-Revision-Date: 2019-11-13 23:04+0100\n"
 "Last-Translator: Niklas Johansson <sleeping.pillow@gmail.com>\n"
 "Language-Team: sv\n"
 "Language: sv\n"
@@ -110,7 +110,8 @@ msgstr "grammatik: {text}"
 msgid "unknown"
 msgstr "okänd"
 
-#. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
+#. Translators: This is presented when errors are found in an appModule
+#. (example output: error in appModule explorer).
 #, python-format
 msgid "Error in appModule %s"
 msgstr "Fel i applikationsmodul %s"
@@ -386,6 +387,16 @@ msgstr "del"
 msgid "ins"
 msgstr "ins"
 
+#. Translators: Displayed in braille for a landmark.
+#, fuzzy
+msgid "lmk"
+msgstr "lnk"
+
+#. Translators: Displayed in braille for an object which is an article.
+#, fuzzy
+msgid "art"
+msgstr "markör"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "mrk"
@@ -527,6 +538,9 @@ msgid "Only when scrolling back"
 msgstr "Bara när man skrollar tillbaks"
 
 #. Translators: String representing automatic port selection for braille displays.
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA determine its Windows Console implementation
+#. automatically.
 msgid "Automatic"
 msgstr "Automatisk"
 
@@ -916,8 +930,8 @@ msgstr "Gujarati grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Koine Greek"
-msgstr "Koiné"
+msgid "Greek international braille"
+msgstr "Grekisk internationell braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1715,6 +1729,26 @@ msgstr "hoppar till föregående fel"
 msgid "no previous error"
 msgstr "inget föregående fel"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+#, fuzzy
+msgid "moves to the next article"
+msgstr "hoppar till nästa tabell"
+
+#. Translators: Message presented when the browse mode element is not found.
+#, fuzzy
+msgid "no next article"
+msgstr "ingen nästa tabell"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+#, fuzzy
+msgid "moves to the previous article"
+msgstr "hoppar till föregående tabell"
+
+#. Translators: Message presented when the browse mode element is not found.
+#, fuzzy
+msgid "no previous article"
+msgstr "ingen föregående tabell"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -1771,15 +1805,6 @@ msgstr "&Aktivera"
 #. in the browse mode Elements List dialog.
 msgid "&Move to"
 msgstr "&Flytta till"
-
-#, python-format
-msgid "%s landmark"
-msgstr "%s landmärke"
-
-#. Translators: This is brailled to indicate a landmark (example output: lmk main).
-#, python-format
-msgid "lmk %s"
-msgstr "lmk %s"
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
@@ -2506,7 +2531,7 @@ msgstr "indikator"
 
 #. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
 msgid "spin button"
-msgstr ""
+msgstr "öka-minska knapp"
 
 #. Translators: Identifies a sound clip on websites.
 msgid "sound"
@@ -2658,6 +2683,15 @@ msgstr "radera"
 #. Translators: Reported when text is marked as having been inserted
 msgid "inserted"
 msgstr "infogat"
+
+#. Translators: Identifies a landmark.
+#, fuzzy
+msgid "landmark"
+msgstr "%s landmärke"
+
+#. Translators: Identifies an article.
+msgid "article"
+msgstr "artikel"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -3041,6 +3075,11 @@ msgstr "Konfigurationsprofiler"
 #. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "Punktskrift"
+
+#. Translators: The name of a category of NVDA commands.
+#, fuzzy
+msgid "Vision"
+msgstr "Version"
 
 #. Translators: The name of a category of NVDA commands.
 #, fuzzy
@@ -3521,6 +3560,21 @@ msgstr "rapportera landmärken på"
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
 msgstr "Växlar rapportering av landmärken"
+
+#. Translators: Input help mode message for toggle report articles command.
+#, fuzzy
+msgid "Toggles on and off the reporting of articles"
+msgstr "Växlar rapportering av tabeller"
+
+#. Translators: The message announced when toggling the report articles document formatting setting.
+#, fuzzy
+msgid "report articles off"
+msgstr "rapportera tabeller av"
+
+#. Translators: The message announced when toggling the report articles document formatting setting.
+#, fuzzy
+msgid "report articles on"
+msgstr "rapportera tabeller på"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
@@ -4031,6 +4085,8 @@ msgid ""
 "Opens the WX GUI inspection tool. Used to get more information about the "
 "state of GUI components."
 msgstr ""
+"Öppnar WX GUI inspektionsverktyget. Används för att få mer information om "
+"användargränssnittskomponenters tillstånd."
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
@@ -4369,6 +4425,15 @@ msgstr ""
 "Markerar granskningsmarkörens nuvarande position som startpunkt för "
 "markering av text"
 
+#, fuzzy
+msgid ""
+"Move the review cursor to the position marked as the start of text to be "
+"selected or copied"
+msgstr ""
+"Markerar granskningsmarkörens nuvarande position som startpunkt för "
+"markering av text"
+
+#. Translators: Presented when attempting to move to the start marker for copy but none has been set.
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 msgid "No start marker set"
 msgstr "Ingen startmarkering satt"
@@ -4538,17 +4603,19 @@ msgstr "Visar NVDA:s konfigurationsprofiler"
 
 #. Translators: The message announced when temporarily disabling all configuration profile triggers.
 msgid "Configuration profile triggers disabled"
-msgstr ""
+msgstr "Konfigurationsprofilens utlösare är inaktiverade"
 
 #. Translators: The message announced when re-enabling all configuration profile triggers.
 msgid "Configuration profile triggers enabled"
-msgstr ""
+msgstr "Konfigurationsprofilens utlösare är aktiverade"
 
 #. Translators: Input help mode message for toggle configuration profile triggers command.
 msgid ""
 "Toggles disabling of all configuration profile triggers. Disabling remains "
 "in effect until NVDA is restarted"
 msgstr ""
+"Växlar alla konfigurationsprofilutlösare till att vara inaktiva. "
+"Inaktiveringen är kvar tills NVDA startats om"
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -4567,6 +4634,53 @@ msgstr "Windows 10 OCR inte tillgängligt"
 msgid ""
 "Recognizes the content of the current navigator object with Windows 10 OCR"
 msgstr "Tolkar innehållet i det aktuella navigatorobjektet med Windows 10 OCR"
+
+#. Translators: Input help mode message for toggle report CLDR command.
+#, fuzzy
+msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
+msgstr "Växlar rapportering av stil"
+
+#. Translators: presented when the report CLDR is toggled.
+#, fuzzy
+msgid "report CLDR characters off"
+msgstr "rapportera ramar av"
+
+#. Translators: presented when the report CLDR is toggled.
+#, fuzzy
+msgid "report CLDR characters on"
+msgstr "rapportera ramar på"
+
+msgid ""
+"Toggles the state of the screen curtain, either by making the screen black "
+"or SHOWING the contents of the screen. If pressed to enable once, the screen "
+"curtain is enabled until you restart NVDA. If pressed tree times, it is "
+"enabled until you disable it"
+msgstr ""
+"Växlar skärmridån, antingen genom att göra skärmen helt svart eller visa "
+"dess innehåll. Ett tryck aktiverar skärmridån tills du startar om NVDA. Tre "
+"tryck aktiverar skärmridån permanent och du måste manuellt inaktivera den"
+
+#. Translators: Reported when the screen curtain is not available.
+msgid "Screen curtain not available"
+msgstr "Skärmridå är inte tillgänglig"
+
+#. Translators: Reported when the screen curtain is disabled.
+#, fuzzy
+msgid "Screen curtain disabled"
+msgstr "Punktskriftsinmatning inaktiverad"
+
+#. Translators: Reported when the screen curtain could not be enabled.
+msgid "Could not enable screen curtain"
+msgstr "Kunde inte aktivera skärmridå"
+
+#. Translators: Reported when the screen curtain is temporarily enabled.
+msgid "Temporary Screen curtain, enabled until next restart"
+msgstr "Tillfällig skärmridå, aktiv till nästa omstart"
+
+#. Translators: Reported when the screen curtain is enabled.
+#, fuzzy
+msgid "Screen curtain enabled"
+msgstr "Punktskriftsinmatning på"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -4911,7 +5025,7 @@ msgstr "numLock numeriskt 9"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "insert"
-msgstr "infoga"
+msgstr "insert"
 
 #. Translators: This is the name of a key on the keyboard.
 #, fuzzy
@@ -5257,19 +5371,19 @@ msgstr "Diamant"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Dodecagon"
-msgstr ""
+msgstr "Tolvhörning"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Donut"
-msgstr ""
+msgstr "Munk"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double brace"
-msgstr ""
+msgstr "Dubbla klammer"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5281,7 +5395,7 @@ msgstr "Dubbel vinkel"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double wave"
-msgstr ""
+msgstr "Dubbel våg"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5299,19 +5413,19 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Explosion"
-msgstr ""
+msgstr "Explosion"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Alternate process flowchart symbol"
-msgstr ""
+msgstr "Alternate process flowchart symbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Card flowchart symbol"
-msgstr ""
+msgstr "Flödesschemasymbol Kort"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5480,55 +5594,55 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Folded corner"
-msgstr ""
+msgstr "Vikt hörn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangular picture frame"
-msgstr ""
+msgstr "Rektangulär fotoram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Funnel"
-msgstr ""
+msgstr "Tratt"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Gear with six teeth"
-msgstr ""
+msgstr "Kugghjul med sex kuggar"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Gear with nine teeth"
-msgstr ""
+msgstr "Kugghjul med nio kuggar"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Half of rectangular picture frame"
-msgstr ""
+msgstr "Halv rektangulär fotoram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Heart"
-msgstr ""
+msgstr "Hjärta"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Heptagon"
-msgstr ""
+msgstr "Sjuhörning"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Hexagon"
-msgstr ""
+msgstr "Sexhörning"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5540,7 +5654,7 @@ msgstr "Horisontell rullning"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Isosceles triangle"
-msgstr ""
+msgstr "Likbent triangel"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5577,7 +5691,7 @@ msgstr "Moturs cirkulär pil"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double-ended horizontal Arrow"
-msgstr ""
+msgstr "Dubbeländad horisontell pil"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5589,7 +5703,7 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double-ended Circular arrow"
-msgstr ""
+msgstr "Dubbeländad cirkulär pil"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5764,7 +5878,7 @@ msgstr "Måne"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Trapezoid with asymmetrical non-parallel sides"
-msgstr ""
+msgstr "Trapetsoid  med asymetriska icke-parallella sidor"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5776,7 +5890,7 @@ msgstr "'Nej' symbol"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Notched RightArrow"
-msgstr ""
+msgstr "Högerpil med hack"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5818,19 +5932,19 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Quarter Pie Wedge"
-msgstr ""
+msgstr "Kvarts cirkelkil"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Plaque"
-msgstr ""
+msgstr "Tallrik"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Plaque Tabs"
-msgstr ""
+msgstr "Plattflikar"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5896,13 +6010,13 @@ msgstr "Rektangel med ett rundat hörn"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with two rounded corners diagonally-opposed"
-msgstr ""
+msgstr "Rektangel med två rundade hörn diagonalt motsatta"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with two-rounded corners that share a side"
-msgstr ""
+msgstr "Rektangle med två rundade hörn på samma sida"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5932,13 +6046,13 @@ msgstr "Rektangel med ett kapat hörn"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with two snipped corners diagonally-opposed"
-msgstr ""
+msgstr "Rektangel med två klippta hörn diagonalt motsatta"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with two snipped corners that share a side"
-msgstr ""
+msgstr "Rektangel med två klippta hörn på samma sida"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5950,13 +6064,13 @@ msgstr "Rektangel med ett runt och ett kapat hörn"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Four small squares that define a rectangular shape"
-msgstr ""
+msgstr "Fyra små kvadrater som bildar en rektangulär form"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Right Arrow with Stripes"
-msgstr ""
+msgstr "Högerpil med ränder"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5974,7 +6088,7 @@ msgstr "Böjd pil"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Water droplet"
-msgstr ""
+msgstr "Vattendroppe"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5998,7 +6112,7 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double-ended Arrow pointing up and down"
-msgstr ""
+msgstr "Dubbeländad pil som pekar uppåt och nedåt"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6010,7 +6124,7 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "U-shaped Arrow"
-msgstr ""
+msgstr "U-formad pil"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6082,7 +6196,7 @@ msgstr "Film"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Return"
-msgstr ""
+msgstr "Tillbaks"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6114,411 +6228,6 @@ msgstr "Skärmgranskning"
 #, python-format
 msgid "Emulates pressing %s on the system keyboard"
 msgstr "Emulerar tangentbordstrycket %s"
-
-#. Translators: This is spoken when NVDA moves to an empty line.
-#. Translators: This is spoken when the line is considered blank.
-msgid "blank"
-msgstr "tom"
-
-#. Translators: cap will be spoken before the given letter when it is capitalized.
-#, python-format
-msgid "cap %s"
-msgstr "stort %s"
-
-#. Translators: This is spoken when the given line has no indentation.
-msgid "no indent"
-msgstr "inget indrag"
-
-#. Translators: This is spoken to indicate that some text is already selected.
-#. 'selected' preceding text is intentional.
-#. For example 'selected hello world'
-#, python-format
-msgid "selected %s"
-msgstr "markerade %s"
-
-#. Translators: This is spoken to indicate what has just been selected.
-#. The text preceding 'selected' is intentional.
-#. For example 'hello world selected'
-#, python-format
-msgid "%s selected"
-msgstr "%s markerad"
-
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
-#, python-format
-msgid "%d characters"
-msgstr "%d tecken"
-
-#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
-#, python-format
-msgid "%s unselected"
-msgstr "%s avmarkerad"
-
-#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
-#, python-format
-msgid "%s selected instead"
-msgstr "%s markerat istället"
-
-#. Translators: Reported when selection is removed.
-msgid "selection removed"
-msgstr "markering borttagen"
-
-#. Translators: Speaks current row number (example output: row 3).
-#, python-format
-msgid "row %s"
-msgstr "rad %s"
-
-#. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "till %s"
-
-#. Translators: Speaks current column number (example output: column 3).
-#, python-format
-msgid "column %s"
-msgstr "kolumn %s"
-
-#. Translators: Speaks the row and column span added to the current row and column numbers
-#. (example output: through row 5 column 3).
-#, python-brace-format
-msgid "through row {row} column {column}"
-msgstr "till rad {row} kolumn {column}"
-
-#. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
-msgid "with {rowCount} rows and {columnCount} columns"
-msgstr "med {rowCount} rader och {columnCount} kolumner"
-
-#. Translators: Speaks number of columns (example output: with 4 columns).
-#, python-format
-msgid "with %s columns"
-msgstr "med %s kolumner"
-
-#. Translators: Speaks number of rows (example output: with 2 rows).
-#, python-format
-msgid "with %s rows"
-msgstr "med %s rader"
-
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "nivå %s"
-
-#. Translators: Number of items in a list (example output: list with 5 items).
-#, python-format
-msgid "with %s items"
-msgstr "med %s objekt"
-
-#. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
-#, python-format
-msgid "out of %s"
-msgstr "lämnar %s"
-
-#. Translators: Indicates the page number in a document.
-#. %s will be replaced with the page number.
-#, python-format
-msgid "page %s"
-msgstr "sida %s"
-
-#. Translators: Indicates the section number in a document.
-#. %s will be replaced with the section number.
-#, python-format
-msgid "section %s"
-msgstr "avsnitt %s"
-
-#. Translators: Indicates the text column number in a document.
-#. {0} will be replaced with the text column number.
-#. {1} will be replaced with the number of text columns.
-#, python-brace-format
-msgid "column {0} of {1}"
-msgstr "kolumn {0} av {1}"
-
-#. Translators: Indicates the text column number in a document.
-#. %s will be replaced with the number of text columns.
-#, python-format
-msgid "%s columns"
-msgstr "%s kolumner"
-
-msgid "continuous section break"
-msgstr ""
-
-msgid "new column section break"
-msgstr "ny kolumnbrytning"
-
-msgid "new page section break"
-msgstr "ny sidbrytning"
-
-msgid "even pages section break"
-msgstr ""
-
-msgid "odd pages section break"
-msgstr "udda sida avsnittsbrytning"
-
-msgid "column break"
-msgstr "kolumnbrytning"
-
-#. Translators: Speaks the heading level (example output: heading level 2).
-#, python-format
-msgid "heading level %d"
-msgstr "rubriknivå %d"
-
-#. Translators: Indicates the style of text.
-#. A style is a collection of formatting settings and depends on the application.
-#. %s will be replaced with the name of the style.
-#, python-format
-msgid "style %s"
-msgstr "stil %s"
-
-#. Translators: Indicates that text has reverted to the default style.
-#. A style is a collection of formatting settings and depends on the application.
-msgid "default style"
-msgstr "standardstil"
-
-#. Translators: Indicates that cell does not have border lines.
-msgid "no border lines"
-msgstr "inga kantlinjer"
-
-#. Translators: Reported when there are two background colors.
-#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
-#. {color1} will be replaced with the first background color.
-#. {color2} will be replaced with the second background color.
-#, python-brace-format
-msgid "{color1} to {color2}"
-msgstr "{color1} till {color2}"
-
-#. Translators: Reported when both the text and background colors change.
-#. {color} will be replaced with the text color.
-#. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
-msgid "{color} on {backgroundColor}"
-msgstr "{color} på {backgroundColor}"
-
-#. Translators: Reported when the text color changes (but not the background color).
-#. {color} will be replaced with the text color.
-#, python-brace-format
-msgid "{color}"
-msgstr "{color}"
-
-#. Translators: Reported when the background color changes (but not the text color).
-#. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
-msgid "{backgroundColor} background"
-msgstr "{backgroundColor} bakgrund"
-
-#, python-brace-format
-msgid "background pattern {pattern}"
-msgstr "bakgrundsmönster {pattern}"
-
-#. Translators: Indicates the line number of the text.
-#. %s will be replaced with the line number.
-#, python-format
-msgid "line %s"
-msgstr "rad %s"
-
-#. Translators: Reported when text is no longer marked as having been inserted.
-msgid "not inserted"
-msgstr "inte infogat"
-
-#. Translators: Reported when text is no longer marked as having been  deleted.
-msgid "not deleted"
-msgstr "inte raderat"
-
-#. Translators: Reported when text is revised.
-#, python-format
-msgid "revised %s"
-msgstr "reviderad %s"
-
-#. Translators: Reported when text is not revised.
-#, python-format
-msgid "no revised %s"
-msgstr "ingen revidering %s"
-
-#. Translators: Reported when text is marked
-msgid "marked"
-msgstr "markerad"
-
-#. Translators: Reported when text is no longer marked
-msgid "not marked"
-msgstr "inte markerat"
-
-#. Translators: Reported when text is marked as strong (e.g. bold)
-msgid "strong"
-msgstr "fet"
-
-#. Translators: Reported when text is no longer marked as strong (e.g. bold)
-msgid "not strong"
-msgstr "inte fet"
-
-#. Translators: Reported when text is marked as emphasised
-msgid "emphasised"
-msgstr "betonad"
-
-#. Translators: Reported when text is no longer marked as emphasised
-msgid "not emphasised"
-msgstr "inte betonad"
-
-#. Translators: Reported when text is not bolded.
-msgid "no bold"
-msgstr "ingen fetstil"
-
-#. Translators: Reported when text is not italicized.
-msgid "no italic"
-msgstr "ingen kursivering"
-
-#. Translators: Reported when text is formatted with double strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
-msgid "double strikethrough"
-msgstr "dubbel genomstrykning"
-
-#. Translators: Reported when text is formatted with strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
-msgid "strikethrough"
-msgstr "genomstruken"
-
-#. Translators: Reported when text is formatted without strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
-msgid "no strikethrough"
-msgstr "ingen genomstrykning"
-
-#. Translators: Reported when text is underlined.
-msgid "underlined"
-msgstr "understruken"
-
-#. Translators: Reported when text is not underlined.
-msgid "not underlined"
-msgstr "inte understruken"
-
-#. Translators: Reported for text which is at the baseline position;
-#. i.e. not superscript or subscript.
-msgid "baseline"
-msgstr "baslinje"
-
-#. Translators: Reported when text is left-aligned.
-msgid "align left"
-msgstr "vänsterjusterad"
-
-#. Translators: Reported when text is centered.
-msgid "align center"
-msgstr "centrerad"
-
-#. Translators: Reported when text is right-aligned.
-msgid "align right"
-msgstr "högerjusterad"
-
-#. Translators: Reported when text is justified.
-#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
-msgid "align justify"
-msgstr "marginaljusterad"
-
-#. Translators: Reported when text is justified with character spacing (Japanese etc)
-#. See http://kohei.us/2010/01/21/distributed-text-justification/
-msgid "align distributed"
-msgstr "distribuerad justering"
-
-#. Translators: Reported when text has reverted to default alignment.
-msgid "align default"
-msgstr "standardjustering"
-
-#. Translators: Reported when text is vertically top-aligned.
-#, fuzzy
-msgid "vertical align top"
-msgstr "lodrät överkantsjustering"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "centrera lodrätt"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-#, fuzzy
-msgid "vertical align bottom"
-msgstr "lodrät nederkantsjustering"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-#, fuzzy
-msgid "vertical align baseline"
-msgstr "lodrät baslinjesjustering"
-
-#. Translators: Reported when text is vertically justified.
-#, fuzzy
-msgid "vertical align justified"
-msgstr "lodrät justerad"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-#, fuzzy
-msgid "vertical align distributed"
-msgstr "lodrät distribuerad justering"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-#, fuzzy
-msgid "vertical align default"
-msgstr "lodrät standardjustering"
-
-#. Translators: the label for paragraph format left indent
-msgid "left indent"
-msgstr "vänsterindrag"
-
-#. Translators: the message when there is no paragraph format left indent
-msgid "no left indent"
-msgstr "inget vänsterindrag"
-
-#. Translators: the label for paragraph format right indent
-msgid "right indent"
-msgstr "högerindrag"
-
-#. Translators: the message when there is no paragraph format right indent
-msgid "no right indent"
-msgstr "inget högerindrag"
-
-#. Translators: the label for paragraph format hanging indent
-msgid "hanging indent"
-msgstr "hängande indrag"
-
-#. Translators: the message when there is no paragraph format hanging indent
-msgid "no hanging indent"
-msgstr "inget hängande indrag"
-
-#. Translators: the label for paragraph format first line indent
-msgid "first line indent"
-msgstr "indrag på första raden"
-
-#. Translators: the message when there is no paragraph format first line indent
-msgid "no first line indent"
-msgstr "inget indrag på första raden"
-
-#. Translators: a type of line spacing (E.g. single line spacing)
-#, python-format
-msgid "line spacing %s"
-msgstr "radavstånd %s"
-
-#. Translators: Reported when text no longer contains a comment.
-#, fuzzy
-msgid "out of comment"
-msgstr "lämnar kommentar"
-
-#. Translators: Reported when text contains a spelling error.
-msgid "spelling error"
-msgstr "stavfel"
-
-#. Translators: Reported when moving out of text containing a spelling error.
-msgid "out of spelling error"
-msgstr "lämnar felstavning"
-
-#. Translators: Reported when text contains a grammar error.
-msgid "grammar error"
-msgstr "grammatikfel"
-
-#. Translators: Reported when moving out of text containing a grammar error.
-msgid "out of grammar error"
-msgstr "lämnar grammatikfel"
-
-#. Translators: Indicates end of a table.
-msgid "out of table"
-msgstr "lämnar tabell"
-
-#. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
-msgid "table with {columnCount} columns and {rowCount} rows"
-msgstr "tabell med {columnCount} kolumner och {rowCount} rader"
 
 msgid "NVDA Speech Viewer"
 msgstr "NVDA Talfönster"
@@ -6679,7 +6388,7 @@ msgstr "långtryck/svep ner"
 #. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
 msgctxt "touch action"
 msgid "hover"
-msgstr ""
+msgstr "sväva"
 
 #. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
 msgctxt "touch action"
@@ -6990,10 +6699,6 @@ msgstr "Försöker läsa dokumentationen för den valda autokompletteringen."
 #. Translators: When the help popup cannot be found for the selected autocompletion item
 msgid "Cann't find the documentation window."
 msgstr "Kan inte hitta dokumentationsfönstret."
-
-#. Translators: The title of Start menu/screen in your language (only the word start).
-msgid "Start"
-msgstr "Start"
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
@@ -7490,38 +7195,6 @@ msgstr "Tom bild"
 msgid "Waiting for Powerpoint..."
 msgstr "Väntar på Powerpoint..."
 
-#. Translators: The name of the NVDA command category for Skype specific commands.
-msgid "Skype"
-msgstr "Skype"
-
-msgid "Reports and moves the review cursor to a recent message"
-msgstr ""
-"Rapporterar och flyttar granskningsmarkören till ett nyligen läst meddelande"
-
-#. Translators: Indicates that a contact stopped typing.
-msgid "Typing stopped"
-msgstr "Tangenttryckningar avbrutna"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Rewind"
-msgstr "Spola bakåt"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Fast forward"
-msgstr "Spola framåt"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Play"
-msgstr "Spela"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Stop"
-msgstr "Stopp"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Record"
-msgstr "Spela in"
-
 msgid "left"
 msgstr "vänster"
 
@@ -7554,7 +7227,7 @@ msgstr "Ingen emoji"
 
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
-msgstr ""
+msgstr "Optelec ALVA 6 series/protokollomvandlare"
 
 #. Translators: Message when setting HID keyboard simulation failed.
 msgid "Setting HID keyboard simulation not supported"
@@ -7592,7 +7265,7 @@ msgstr "EcoBraille displayer"
 
 #. Translators: Names of braille displays.
 msgid "Eurobraille Esys/Esytime/Iris displays"
-msgstr ""
+msgstr "Eurobraille Esys/Esytime/Iris displayer"
 
 #. Translators: Message when HID keyboard simulation is unavailable.
 msgid "HID keyboard input simulation is unavailable."
@@ -8170,6 +7843,9 @@ msgid ""
 "disabled state, and install or uninstall add-ons. Changes will not take "
 "effect until after NVDA is restarted."
 msgstr ""
+"NVDA startades med alla tillägg inaktiverade. Du kan aktivera/inaktivera och "
+"installera eller avinstallera tillägg. Ändringar kommer inte få effekt "
+"förrän NVDA startats om."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -8333,6 +8009,9 @@ msgid ""
 "version required for this add-on is {minimumNVDAVersion}, your current NVDA "
 "version is {NVDAVersion}"
 msgstr ""
+"Installationen av {summary} {version} har blockerats. Lägsta versionen av "
+"NVDA som krävs för detta tillägg är {minimumNVDAVersion}, Din nuvarande "
+"version av NVDA är {NVDAVersion}"
 
 #. Translators: The title of a dialog presented when an error occurs.
 msgid "Add-on not compatible"
@@ -8344,6 +8023,9 @@ msgid ""
 "this add-on is required, the minimum add-on API supported by this version of "
 "NVDA is {backCompatToAPIVersion}"
 msgstr ""
+"Installation av {summary} {version} har blockerats. En uppdaterad version av "
+"detta tillägg krävs, Lägsta API-version för tillägg som stöds av denna "
+"version av NVDA är {backCompatToAPIVersion}"
 
 #, python-brace-format
 msgid ""
@@ -9465,6 +9147,11 @@ msgstr "Block&citat"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+msgid "Arti&cles"
+msgstr "Arti&klar"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "Fra&mes"
 msgstr "&Ramar"
 
@@ -9523,17 +9210,43 @@ msgstr ""
 "Använd UI Automation för att interagera med Microsoft &Word dokument när det "
 "är  möjligt"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid "Use UI Automation to access the Windows Console when available"
-msgstr ""
-"Använd UI Automation för att interagera med Windows kommandotolk när det är "
-"möjligt"
+#. Translators: This is the label for a combo box for selecting the
+#. active console implementation in the advanced settings panel.
+#. Choices are automatic, prefer UIA, and legacy.
+msgid "Windows C&onsole support:"
+msgstr "Windows K&onsolstöd:"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use UIA in the Windows Console when available.
+msgid "Prefer UIA"
+msgstr "Föredra UIA"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use its legacy Windoes Console support
+#. in all cases.
+msgid "Legacy"
+msgstr "Ursprunglig"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Terminal programs"
+msgstr "Terminalprogram"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in UIA consoles (may improve performance)"
+#, fuzzy
+msgid "Speak &passwords in Windows Console (may improve performance)"
 msgstr "Säg &lösenord i UIA konsoler (kan öka prestandan)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+#, fuzzy
+msgid ""
+"Use the new t&yped character support in legacy Windows consoles when "
+"available"
+msgstr ""
+"Använd UI Automation för att interagera med Windows kommandotolk när det är "
+"möjligt"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9834,6 +9547,11 @@ msgctxt "inputGestures"
 msgid "&Filter by:"
 msgstr "&Filtrera med:"
 
+#. Translators: The label of a button to reset all gestures in the Input Gestures dialog.
+#, fuzzy
+msgid "Reset to factory &defaults"
+msgstr "&Återställ konfigurationen till fabriksinställningar"
+
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
@@ -9844,6 +9562,22 @@ msgstr "{main} ({source})"
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 msgid "Enter input gesture:"
 msgstr "Ange inmatningsgest:"
+
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid ""
+"Are you sure you want to reset all gestures to their factory defaults?\n"
+"\t\t\t\n"
+"\t\t\tAll of your user defined gestures, whether previously set or defined "
+"during this session, will be lost.\n"
+"\t\t\tThis cannot be undone."
+msgstr ""
+"Är du säker på att du vill återställa alla dina inmatningsgester till deras "
+"fabriksinställningar?\n"
+"\t\t\t\n"
+"\t\t\tAlla dina egendefinierade inmatningsgester, oavsett om de var "
+"definierade sedan tidigare eller definierade under denna session, kommer gå "
+"förlorade.\n"
+"\t\t\tDetta kan inte ångras."
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
@@ -9859,6 +9593,419 @@ msgstr "Avsluta matematisk interaktion"
 #. but math interaction is not supported.
 msgid "Math interaction not supported."
 msgstr "Matematisk interaktion stöds inte."
+
+#. Translators: This is spoken when NVDA moves to an empty line.
+#. Translators: This is spoken when the line is considered blank.
+msgid "blank"
+msgstr "tom"
+
+#. Translators: cap will be spoken before the given letter when it is capitalized.
+#, python-format
+msgid "cap %s"
+msgstr "stort %s"
+
+#. Translators: This is spoken when the given line has no indentation.
+msgid "no indent"
+msgstr "inget indrag"
+
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "markerade %s"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s markerad"
+
+#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#, python-format
+msgid "%d characters"
+msgstr "%d tecken"
+
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
+#, python-format
+msgid "%s unselected"
+msgstr "%s avmarkerad"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s markerat istället"
+
+#. Translators: Reported when selection is removed.
+msgid "selection removed"
+msgstr "markering borttagen"
+
+#. Translators: Speaks current row number (example output: row 3).
+#, python-format
+msgid "row %s"
+msgstr "rad %s"
+
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-format
+msgid "through %s"
+msgstr "till %s"
+
+#. Translators: Speaks current column number (example output: column 3).
+#, python-format
+msgid "column %s"
+msgstr "kolumn %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "till rad {row} kolumn {column}"
+
+#. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
+#, python-brace-format
+msgid "with {rowCount} rows and {columnCount} columns"
+msgstr "med {rowCount} rader och {columnCount} kolumner"
+
+#. Translators: Speaks number of columns (example output: with 4 columns).
+#, python-format
+msgid "with %s columns"
+msgstr "med %s kolumner"
+
+#. Translators: Speaks number of rows (example output: with 2 rows).
+#, python-format
+msgid "with %s rows"
+msgstr "med %s rader"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "nivå %s"
+
+#. Translators: Number of items in a list (example output: list with 5 items).
+#, python-format
+msgid "with %s items"
+msgstr "med %s objekt"
+
+#. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
+#, python-format
+msgid "out of %s"
+msgstr "lämnar %s"
+
+#. Translators: Indicates the page number in a document.
+#. %s will be replaced with the page number.
+#, python-format
+msgid "page %s"
+msgstr "sida %s"
+
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "avsnitt %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+#, python-brace-format
+msgid "column {0} of {1}"
+msgstr "kolumn {0} av {1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s kolumner"
+
+msgid "continuous section break"
+msgstr "kontinuerlig avsnittsbrytning"
+
+msgid "new column section break"
+msgstr "ny kolumnbrytning"
+
+msgid "new page section break"
+msgstr "ny sidbrytning"
+
+msgid "even pages section break"
+msgstr "avsnittsbrytning på jämna sidor"
+
+msgid "odd pages section break"
+msgstr "udda sida avsnittsbrytning"
+
+msgid "column break"
+msgstr "kolumnbrytning"
+
+#. Translators: Speaks the heading level (example output: heading level 2).
+#, python-format
+msgid "heading level %d"
+msgstr "rubriknivå %d"
+
+#. Translators: Indicates the style of text.
+#. A style is a collection of formatting settings and depends on the application.
+#. %s will be replaced with the name of the style.
+#, python-format
+msgid "style %s"
+msgstr "stil %s"
+
+#. Translators: Indicates that text has reverted to the default style.
+#. A style is a collection of formatting settings and depends on the application.
+msgid "default style"
+msgstr "standardstil"
+
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "inga kantlinjer"
+
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+#, python-brace-format
+msgid "{color1} to {color2}"
+msgstr "{color1} till {color2}"
+
+#. Translators: Reported when both the text and background colors change.
+#. {color} will be replaced with the text color.
+#. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
+msgid "{color} on {backgroundColor}"
+msgstr "{color} på {backgroundColor}"
+
+#. Translators: Reported when the text color changes (but not the background color).
+#. {color} will be replaced with the text color.
+#, python-brace-format
+msgid "{color}"
+msgstr "{color}"
+
+#. Translators: Reported when the background color changes (but not the text color).
+#. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
+msgid "{backgroundColor} background"
+msgstr "{backgroundColor} bakgrund"
+
+#, python-brace-format
+msgid "background pattern {pattern}"
+msgstr "bakgrundsmönster {pattern}"
+
+#. Translators: Indicates the line number of the text.
+#. %s will be replaced with the line number.
+#, python-format
+msgid "line %s"
+msgstr "rad %s"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "inte infogat"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "inte raderat"
+
+#. Translators: Reported when text is revised.
+#, python-format
+msgid "revised %s"
+msgstr "reviderad %s"
+
+#. Translators: Reported when text is not revised.
+#, python-format
+msgid "no revised %s"
+msgstr "ingen revidering %s"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "markerad"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "inte markerat"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "fet"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "inte fet"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "betonad"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "inte betonad"
+
+#. Translators: Reported when text is not bolded.
+msgid "no bold"
+msgstr "ingen fetstil"
+
+#. Translators: Reported when text is not italicized.
+msgid "no italic"
+msgstr "ingen kursivering"
+
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "dubbel genomstrykning"
+
+#. Translators: Reported when text is formatted with strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "strikethrough"
+msgstr "genomstruken"
+
+#. Translators: Reported when text is formatted without strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "no strikethrough"
+msgstr "ingen genomstrykning"
+
+#. Translators: Reported when text is underlined.
+msgid "underlined"
+msgstr "understruken"
+
+#. Translators: Reported when text is not underlined.
+msgid "not underlined"
+msgstr "inte understruken"
+
+#. Translators: Reported when text is hidden.
+msgid "hidden"
+msgstr "dold"
+
+#. Translators: Reported when text is not hidden.
+msgid "not hidden"
+msgstr "inte dolt"
+
+#. Translators: Reported for text which is at the baseline position;
+#. i.e. not superscript or subscript.
+msgid "baseline"
+msgstr "baslinje"
+
+#. Translators: Reported when text is left-aligned.
+msgid "align left"
+msgstr "vänsterjusterad"
+
+#. Translators: Reported when text is centered.
+msgid "align center"
+msgstr "centrerad"
+
+#. Translators: Reported when text is right-aligned.
+msgid "align right"
+msgstr "högerjusterad"
+
+#. Translators: Reported when text is justified.
+#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
+msgid "align justify"
+msgstr "marginaljusterad"
+
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "distribuerad justering"
+
+#. Translators: Reported when text has reverted to default alignment.
+msgid "align default"
+msgstr "standardjustering"
+
+#. Translators: Reported when text is vertically top-aligned.
+#, fuzzy
+msgid "vertical align top"
+msgstr "lodrät överkantsjustering"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "centrera lodrätt"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+#, fuzzy
+msgid "vertical align bottom"
+msgstr "lodrät nederkantsjustering"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+#, fuzzy
+msgid "vertical align baseline"
+msgstr "lodrät baslinjesjustering"
+
+#. Translators: Reported when text is vertically justified.
+#, fuzzy
+msgid "vertical align justified"
+msgstr "lodrät justerad"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+#, fuzzy
+msgid "vertical align distributed"
+msgstr "lodrät distribuerad justering"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+#, fuzzy
+msgid "vertical align default"
+msgstr "lodrät standardjustering"
+
+#. Translators: the label for paragraph format left indent
+msgid "left indent"
+msgstr "vänsterindrag"
+
+#. Translators: the message when there is no paragraph format left indent
+msgid "no left indent"
+msgstr "inget vänsterindrag"
+
+#. Translators: the label for paragraph format right indent
+msgid "right indent"
+msgstr "högerindrag"
+
+#. Translators: the message when there is no paragraph format right indent
+msgid "no right indent"
+msgstr "inget högerindrag"
+
+#. Translators: the label for paragraph format hanging indent
+msgid "hanging indent"
+msgstr "hängande indrag"
+
+#. Translators: the message when there is no paragraph format hanging indent
+msgid "no hanging indent"
+msgstr "inget hängande indrag"
+
+#. Translators: the label for paragraph format first line indent
+msgid "first line indent"
+msgstr "indrag på första raden"
+
+#. Translators: the message when there is no paragraph format first line indent
+msgid "no first line indent"
+msgstr "inget indrag på första raden"
+
+#. Translators: a type of line spacing (E.g. single line spacing)
+#, python-format
+msgid "line spacing %s"
+msgstr "radavstånd %s"
+
+#. Translators: Reported when text no longer contains a comment.
+#, fuzzy
+msgid "out of comment"
+msgstr "lämnar kommentar"
+
+#. Translators: Reported when text contains a spelling error.
+msgid "spelling error"
+msgstr "stavfel"
+
+#. Translators: Reported when moving out of text containing a spelling error.
+msgid "out of spelling error"
+msgstr "lämnar felstavning"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "grammatikfel"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "lämnar grammatikfel"
+
+#. Translators: Indicates end of a table.
+msgid "out of table"
+msgstr "lämnar tabell"
+
+#. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
+#, python-brace-format
+msgid "table with {columnCount} columns and {rowCount} rows"
+msgstr "tabell med {columnCount} kolumner och {rowCount} rader"
 
 #. Translators: name of the default espeak varient.
 #, fuzzy
@@ -9920,13 +10067,56 @@ msgstr ""
 "Växlar mellan på och av om skärmlayout bevaras när dokumentinnehållet "
 "renderas"
 
+#. Translators: The name for a vision enhancement provider that magnifies (a part of) the screen.
+msgid "Magnifier"
+msgstr "Förstoringsglaset"
+
+#. Translators: The name for a vision enhancement provider that highlights important areas on screen,
+#. such as the focus, caret or review cursor location.
+msgid "Highlighter"
+msgstr "Highlighter"
+
+#. Translators: The name for a vision enhancement provider that enhances the color presentation.
+#. (i.e. color inversion, gray scale coloring, etc.)
+msgid "Color enhancer"
+msgstr "Färgförbättrare"
+
+#. Translators: Description for NVDA's built-in screen highlighter.
+#, fuzzy
+msgid "NVDA Highlighter"
+msgstr "%s markerad"
+
+#. Translators: shown for a highlighter setting that toggles
+#. highlighting the system focus.
+#, fuzzy
+msgid "Highlight system fo&cus"
+msgstr "Följ system&fokus"
+
+#. Translators: shown for a highlighter setting that toggles
+#. highlighting the browse mode cursor.
+#, fuzzy
+msgid "Highlight browse &mode cursor"
+msgstr "Följ &musmarkör"
+
+#. Translators: shown for a highlighter setting that toggles
+#. highlighting the navigator object.
+#, fuzzy
+msgid "Highlight navigator &object"
+msgstr "Inget navigationsobjekt"
+
+#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. making it black.
+#, fuzzy
+msgid "Screen Curtain"
+msgstr "Skärmgranskning"
+
 msgid "Taskbar"
 msgstr "Aktivitetsfält"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
 #, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
-msgstr ""
+msgstr "RGB röd {rgb.red}, grön {rgb.green}, blå {rgb.blue}"
 
 #, python-format
 msgid "%s items"
@@ -10355,17 +10545,17 @@ msgstr ""
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Open-High-Low-Close"
-msgstr ""
+msgstr "Öppna-Hög-Låg-Stäng"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Volume-High-Low-Close"
-msgstr ""
+msgstr "Volym-Hög-Låg-Stäng"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Volume-Open-High-Low-Close"
-msgstr ""
+msgstr "Volym-Öppna-Hög-Låg-Stäng"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -10385,7 +10575,7 @@ msgstr ""
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface (wireframe)"
-msgstr ""
+msgstr "3D-yta(trådmodell)"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -10482,7 +10672,7 @@ msgstr ""
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "Corners"
-msgstr ""
+msgstr "Hörn"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #. Translators: Data Table will be spoken when chart element Data Table is selected
@@ -10525,7 +10715,7 @@ msgstr "Form"
 #. Translators: Message reporting the title and type of a chart.
 #, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
-msgstr ""
+msgstr "Diagramtitel: {chartTitle}, typ: {chartType}"
 
 #. Translators: Indicates that there is 1 series in a chart.
 msgid "There is 1 series in this chart"
@@ -10555,7 +10745,7 @@ msgstr "Elementlista"
 #. For example, this might report "foo series 1 of 2"
 #, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
-msgstr ""
+msgstr "{seriesName} serie {seriesIndex} av {seriesCount}"
 
 #. Translators: Message to be spoken to report Slice Color in Pie Chart
 #, python-brace-format
@@ -10570,32 +10760,32 @@ msgstr ""
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr ""
+msgstr "Ökad med {incrementValue} från punkt {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr ""
+msgstr "minskad med {decrementValue} från punkt {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
 #, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr ""
+msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
 #, python-brace-format
 msgid "Category {categoryAxisData}: "
-msgstr ""
+msgstr "Kategori {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
 #, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
-msgstr ""
+msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
@@ -10643,7 +10833,7 @@ msgstr "Sekundär serieaxelOr&dlisteposter"
 #. Translators: the title of a chart axis
 #, python-brace-format
 msgid " title: {axisTitle}"
-msgstr ""
+msgstr " titel: {axisTitle}"
 
 #. Translators: Indicates that trendline type is Exponential
 msgid "Exponential"
@@ -10663,11 +10853,11 @@ msgstr ""
 
 #. Translators: Indicates that trendline type is Polynomial
 msgid "Polynomial"
-msgstr ""
+msgstr "Polynom"
 
 #. Translators: Indicates that trendline type is Power
 msgid "Power"
-msgstr ""
+msgstr "Ström"
 
 #. Translators: Substitute superscript two by square for R square value
 msgid " square "
@@ -10692,7 +10882,7 @@ msgstr ""
 #. Translators: Details about a chart title in Microsoft Office.
 #, python-brace-format
 msgid "Chart title: {chartTitle}"
-msgstr ""
+msgstr "Diagramtitel: {chartTitle}"
 
 #. Translators: Indicates an untitled chart in Microsoft Office.
 msgid "Untitled chart"
@@ -10704,6 +10894,8 @@ msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
 msgstr ""
+"Diagramyta, höjd: {chartAreaHeight}, bredd: {chartAreaWidth}, överkant: "
+"{chartAreaTop}, vänster: {chartAreaLeft}"
 
 #. Translators: Indicates the chart area of a Microsoft Office chart.
 msgid "Chart area "
@@ -10757,7 +10949,7 @@ msgstr "automatisk"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
 msgid "diagonal crosshatch"
-msgstr ""
+msgstr "diagonal korshatch"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
@@ -10843,12 +11035,12 @@ msgstr ""
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
 msgid "solid"
-msgstr ""
+msgstr "solid"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
 msgid "diagonal stripe"
-msgstr ""
+msgstr "diagonal rand"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark vertical bars
@@ -11018,7 +11210,7 @@ msgstr ""
 
 #. Translators: border styles in Microsoft Excel.
 msgid "continuous"
-msgstr ""
+msgstr "kontinuerlig"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "dashed"
@@ -11046,7 +11238,7 @@ msgstr ""
 
 #. Translators: border styles in Microsoft Excel.
 msgid "hair"
-msgstr ""
+msgstr "hår"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "thin"
@@ -11075,7 +11267,7 @@ msgstr "medium streckad"
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format
 msgid "{weight} {style}"
-msgstr ""
+msgstr "{weight} {style}"
 
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format
@@ -11346,6 +11538,25 @@ msgstr "format {styleName}, dispositionsnivå {outlineLevel}"
 msgid "{size:g} point font"
 msgstr "{size:g}-punkts teckensnitt"
 
+#. Translators: a message when toggling change tracking in Microsoft word
+#, fuzzy
+msgid "Change tracking on"
+msgstr "Musföljning på"
+
+#. Translators: a message when toggling change tracking in Microsoft word
+#, fuzzy
+msgid "Change tracking off"
+msgstr "Musföljning av"
+
+#. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
+msgid "Display nonprinting characters"
+msgstr "Visa icke skrivbara tecken"
+
+#. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
+#, fuzzy
+msgid "Hide nonprinting characters"
+msgstr "%d tecken"
+
 #. Translators: a measurement in Microsoft Word
 #, python-brace-format
 msgid "{offset:.3g} characters"
@@ -11388,6 +11599,41 @@ msgstr "Dubbelt radavstånd"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 rader"
+
+#~ msgid "Koine Greek"
+#~ msgstr "Koiné"
+
+#~ msgid "lmk %s"
+#~ msgstr "lmk %s"
+
+#~ msgid "Start"
+#~ msgstr "Start"
+
+#~ msgid "Skype"
+#~ msgstr "Skype"
+
+#~ msgid "Reports and moves the review cursor to a recent message"
+#~ msgstr ""
+#~ "Rapporterar och flyttar granskningsmarkören till ett nyligen läst "
+#~ "meddelande"
+
+#~ msgid "Typing stopped"
+#~ msgstr "Tangenttryckningar avbrutna"
+
+#~ msgid "Rewind"
+#~ msgstr "Spola bakåt"
+
+#~ msgid "Fast forward"
+#~ msgstr "Spola framåt"
+
+#~ msgid "Play"
+#~ msgstr "Spela"
+
+#~ msgid "Stop"
+#~ msgstr "Stopp"
+
+#~ msgid "Record"
+#~ msgstr "Spela in"
 
 #, fuzzy
 #~ msgid "Selected %s"

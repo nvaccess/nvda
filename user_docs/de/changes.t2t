@@ -3,6 +3,132 @@ Was ist neu in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+
+= 2019.3 =
+
+== Neue Features ==
+- In der Eingabeaufforderung, PowerShell und dem Windows-Subsystem für Linux unter Windows 10 Version 1809 und neuer:
+ - Stark verbesserte Leistung und Stabilität. (#9771)
+ - Die Meldung von eingegebenem Text, der nicht auf dem Bildschirm erscheint (z. B. Passwörter), kann nun über eine Option im erweiterten Einstellungsbereich von NVDA aktiviert werden. (#9649)
+- Die Genauigkeit des Befehls zum Ziehen der Maus zum Navigator-Objekt wurde in Textfeldern in Java-Anwendungen verbessert. (#10157)
+- Bildschirmvorhang, der bei Aktivierung den gesamten Bildschirm unter Windows 8 und neuer schwarz macht. (#7857)
+- Unterstützung für die folgenden HandyTech-Braillezeilen hinzugefügt (#8955):
+ - Basic Braille Plus 40
+ - Basic Braille Plus 32
+ - Connect Braille
+- Alle benutzerdefinierten Gesten können nun über einen neuen Schalter "Auf die Standard-Einstellungen zurücksetzen" im Dialog "Eingaben" entfernt werden. (#10293)
+- Die Ansage der Schriftarten in Microsoft Word berücksichtigt nun auch, wenn Text als Verborgen markiert ist. (#8713)
+- Es wurde ein Befehl hinzugefügt, um den System-Cursor an die zuvor als Startmarker für die Auswahl oder das Kopieren eingestellte Position zu bewegen: NVDA+Umschalt+F9. (#1969)
+- In Internet Explorer, Microsoft Edge und neue Versionen von Mozilla Firefox und Google Chrome werden Sprungmarken  nun auch im Fokusmodus und Objekt-Navigation angesagt. (#10101)
+- In Internet Explorer, Google Chrome und Mozilla Firefox können Sie nun mit Hilfe von Schnellnavigationsskripte nach Artikeln navigieren. Diese Skripte sind standardmäßig nicht gebunden und können im Dialogfeld "Eingaben" zugewiesen werden, wenn der Dialog aus einem Dokument im Lesemodus geöffnet wird. (#9227)
+- In Internet Explorer, Google Chrome und Mozilla Firefox werden nun Artikel-Elemente mit Objektnavigation und optional im Lesemodus angezeigt, wenn sie in den Einstellungen für die Dokumentenformatierung aktiviert sind. (#10424)
+
+
+== Änderungen ==
+- Das Benutzerhandbuch beschreibt nun, wie Sie NVDA in der Windows-Konsole verwenden können. (#9957)
+- Wenn Sie nvda.exe ausführen, wird nun standardmäßig eine bereits laufendes NVDA ersetzt. Der Befehlszeilenparameter -r oder --replace wird weiterhin akzeptiert, aber ignoriert. (#8320)
+- Unter Windows 8 und höher wird NVDA nun Produktnamen und Versionsinformationen für gehostete Anwendungen, wie beispielsweise Anwendungen, die aus dem Microsoft Store heruntergeladen wurden, unter Verwendung der von der Anwendung bereitgestellten Informationen mitteilen. (#4259, #10108)
+- Beim Ein- und Ausschalten der Änderungsverfolgung mit der Tastatur in Microsoft Word meldet NVDA den Status der Einstellung. (#942) 
+- Die NVDA-Versionsnummer wird nun als erste Meldung im Protokoll angezeigt. Dies geschieht auch dann, wenn die Protokollierung über die Einstellungen deaktiviert wurde. (#9803)
+- Der Einstellungsdialog lässt es nicht mehr zu, die konfigurierte Protokollstufe zu ändern, wenn sie von der Kommandozeile aus überschrieben wurde. (#10209)
+- In Microsoft Word meldet NVDA nun den Anzeigestatus von nicht druckbaren Zeichen, wenn Sie die Umschalt-Taste Strg+Umschalt+8 drücken. (#10241)
+- Der Liblouis-Brailleübersetzer wurde aktualisiert auf den Commit 58d67e63. (#10094)
+- Wenn die CLDR-Zeichen (einschließlich Emojis) aktiviert sind, werden sie auf allen Interpunktionsebenen angezeigt. (#8826)
+- Python-Pakete von Drittanbietern, die in NVDA enthalten sind, wie beispielsweise comtypes, protokollieren nun ihre Warnungen und Fehler im NVDA-Protokoll. (#10393)
+- Die Emoji-Anmerkungen der Unicode Common Locale Data Repository wurden auf Version 36.0 aktualisiert. (#10426)
+
+
+== Fehlerbehebungen ==
+- Emoji und andere 32-Bit-Unicode-Zeichen benötigen nun weniger Platz auf einer Braillezeile, wenn sie als hexadezimale Werte angezeigt werden. (#6695)
+- Unter Windows 10 meldet NVDA QuickInfos aus universellen Anwendungen, wenn NVDA konfiguriert ist, um QuickInfos im Dialogfeld zur Objektdarstellung mitzuteilen. (#8118)
+- Unter Windows 10 Version 1607 und höher wird eingegebener Text nun in Mintty angezeigt. (#1348)
+- Bei Windows 10 Version 1607 und höher wird die Ausgabe in der Windows-Konsole, die in der Nähe des Einfügebereichs erscheint, nicht mehr ausgeschrieben. (#513)
+- Steuerelemente im Kompressor-Dialog von Audacity werden nun beim Navigieren durch den Dialog angesagt. (#10103)
+- NVDA behandelt Leerzeichen nicht mehr als Wörter in der Objektprüfung in Scintilla-basierten Editoren wie Notepad++. (#8295)
+- NVDA verhindert, dass das System in den Ruhezustand wechselt, wenn mit den Gesten auf der Braillezeile durch Text navigiert wird. (#9175)
+- Unter Windows 10 folgt nun die Blindenschrift bei der Bearbeitung von Zellinhalten in Microsoft Excel und anderen Text-Steuerelementen der Benutzeroberflächenautomatisierung, wo sie zurückbleibt. (#9749)
+- NVDA wird erneut Vorschläge in der Adressleiste von Microsoft Edge melden. (#7554)
+- NVDA ist nicht mehr stumm, wenn es darum geht, eine HTML-Registerkartenüberschrift im Internet Explorer zu hervorzuheben. (#8898)
+- In Microsoft Edge, der auf EdgeHTML basiert, gibt NVDA keinen Sound für Suchvorschläge mehr aus, wenn das Fenster maximiert ist. (#9110, #10002)
+- ARIA 1.1-Auswahlklapplisten werden nun in Mozilla Firefox und Google Chrome unterstützt. (#9616)
+- NVDA meldet nicht mehr den Inhalt von visuell ausgeblendeten Spalten für Listenelemente in SysListView32-Steuerelementen. (#8268)
+- Der Einstellungsdialog zeigt im Sicherheitsmodus nicht mehr "Info" als aktuelle ProtokollStufe an. (#10209)
+- Im Startmenü für Windows 10 Anniversary Update und neuer gibt nun NVDA Details der Suchergebnisse bekannt. (#10232)
+- Im Lesemodus, wenn sich das Dokument durch Bewegen des Cursors oder durch Schnellnavigation ändert, spricht NVDA in einigen Fällen nicht mehr den falschen Inhalt. (#8831, #10343)
+- Einige Aufzählungszeichen in Microsoft Word wurden korrigiert. (#10399)
+- In Windows 10 Mai 2019 Update und neuer wird NVDA erneut das erste ausgewählte Emoji oder das Element der Zwischenablage mitteilen, wenn sich das Emoji-Panel und der Verlauf der Zwischenablage geöffnet ist. (#9204)
+- In Poedit ist es wieder möglich, einige Übersetzungen für Sprachen von rechts nach links anzuzeigen. (#9931)
+- In den Einstellungen in Windows 10 April 2018 Update und neuer gibt nun NVDA keine Informationen zum Fortschrittsbalken mehr für die Lautstärke auf der Seite für System/Sound bekannt. (#10284)
+- Ungültige reguläre Ausdrücke in Sprachwörterbüchern unterbrechen die Sprache in NVDA nicht mehr vollständig. (#10334)
+- Beim Lesen von gegliederten Elementen in Microsoft Word mit aktivierter Benutzeroberflächenautomatisierung wird der Punkt aus dem nächsten Listenelement nicht mehr unangemessen angekündigt. (#9613)
+
+
+== Änderungen für Entwickler ==
+- Python aktualisiert auf 3.7. (#7105)
+- pySerial aktualisiert auf version 3.4. (#8815)
+- wxPython aktualisiert auf 4.0.3 to support Python 3.5+ (#9630)
+- six aktualisiert auf version 1.12.0 (#9630)
+- py2exe aktualisiert auf Version 0.9.3.2 (in Entwicklung, Commit b372a8e von albertosottile/py2exe#13). (#9856)
+- UIAutomationCore.dll-comtypes-Modul aktualisiert auf Version 10.0.18362. (#9829)
+- Die Tab-Vervollständigung in der Python-Konsole schlägt nur dann Attribute vor, die mit einem Unterstrich beginnen, wenn der Unterstrich zuerst eingegeben wurde. (#9918)
+- Das Tool Flake8 Linting wurde in SCons integriert, die die Code-Anforderungen für Pull-Requests widerspiegeln. (#5918)
+- Da NVDA nicht mehr von pyWin32 abhängig ist, sind Module wie win32api und win32con für Erweiterungen nicht mehr verfügbar. (#9639)
+ - win32api-Aufrufe können durch direkte Aufrufe von win32.dll-Funktionen über ctypes ersetzt werden.
+ - win32con-Konstanten sollten in Ihren Dateien definiert werden.
+- Das Argument "async" in nvwave.playWaveFile wurde in "asynchron" umbenannt. (#8607)
+- Methoden von speakText und speakCharacter in synthDriver-Objekten werden nicht mehr unterstützt.
+ - Diese Funktionalität wird verwendet von SynthDriver.speak.
+- SynthSetting-Klassen in synthDriverHandler wurde entfernt. Nun stattdessen die driverHandler.DriverSetting-Klassen verwenden.
+- SynthDriver-Klassen sollten den Index nicht mehr über die lastIndex-Eigenschaft freigeben.
+ - Stattdessen sollten sie die Aktion "synthDriverHandler.synthIndexReached" mit dem Index benachrichtigen, sobald alle vorherigen Audiodateien vor diesem Index abgespielt wurden.
+- SynthDriver-Klassen müssen nun die Aktion "synthDriverHandler.synthDoneSpeaking" melden, sobald alle Audiodaten eines "SynthDriver.speak"-Aufrufs abgespielt wurden.
+- SynthDriver-Klassen müssen die speech.PitchCommand in ihrer Sprachmethode unterstützen, da Änderungen in der Tonhöhe für die Rechtschreibung nun von dieser Funktionalität abhängen.
+- Die Sprachfunktion "getSpeechTextForProperties" wurde in "getPropertiesSpeech" umbenannt. (#10098)
+- Die Braille-Funktion "getBrailleTextForProperties" wurde in "getPropertiesBraille" umbenannt. (#10469)
+- Mehrere Sprachfunktionen wurden geändert, um Sprachsequenzen zurückzugeben. (#10098)
+ - getControlFieldSpeech
+ - getFormatFieldSpeech
+ - getSpeechTextForProperties nennt sich nun getPropertiesSpeech
+ - getIndentationSpeech
+ - getTableInfoSpeech
+- Es wurde ein textUtils-Modul hinzugefügt, um die Zeichenkettenunterschiede zwischen Zeichenketten in Python 3 und Windows-Unicode zu vereinfachen. (#9545)
+ - Siehe dazu im Module "documentation" und "textInfos.offsets" für die Implementierung des Frameworks bzw. der Beispiele.
+  - Veraltete Funktionen wurden entfernt. (#9548)
+ - AppModules entfernt:
+  - Windows XP-Audiorekorder
+  - Klango Player, der nicht mehr weiterentwickelt wurde.
+ - configobj.validate wrapper entfernt.
+  - Neuer Code sollte benutzen configobj import validate stattdessen import validate
+ - textInfos.Point und textInfos.Rect wurden jeweils ersetzt durch locationHelper.Point und locationHelper.RectLTRB.
+ - braille.BrailleHandler._get_tether und braille.BrailleHandler.set_tether wurden entfernt.
+ - config.getConfigDirs wurde entfernt.
+ - config.ConfigManager.getConfigValidationParameter wurde ersetzt durch getConfigValidation
+ - inputCore.InputGesture.logIdentifier property wurde entfernt.
+   - Verwenden Sie _get_identifiers in inputCore.InputGesture stattdessen.
+ - synthDriverHandler.SynthDriver.speakText / speakCharacter wurden entfernt.
+ - Mehrere synthDriverHandler.SynthSetting-Klassen wurden entfernt.
+   - Zuvor aus Gründen der Rückwärtskompatibilität (#8214) aufbewahrt, gilt nun als veraltet.
+   - Treiber, die die SynthSetting-Klassen verwendet haben, sollten aktualisiert werden, um die DriverSetting-Klassen zu verwenden.
+ - Einige ältere Code-Abschnitte wurden entfernt, insbesondere:
+  - Unterstützung für die Nachrichtenliste in Microsoft Outlook 2003.
+  - Eine Overlay-Klasse für das klassische Startmenü, die nur in Windows Vista und älter zu finden waren.
+  - Die Unterstützung für Skype 7 wurde eingestellt, da es definitiv nicht mehr funktioniert.
+- Ein Framework, das es Entwicklern ermöglicht, Anbieter zur Verbesserung der Sehkraft zu erstellen; Module, die Bildschirminhalte ändern können, optional basierend auf Eingaben von NVDA über die Objektpositionen. (#9064)
+ - Erweiterungen können ihre eigenen Provider in einem "visionEnhancementProvider"-Ordner bündeln.
+ - Siehe dazu im Module "vision" und "visionEnhancementProviders" für die Implementierung des Frameworks bzw. der Beispiele.
+- Abstrakte Klasseneigenschaften werden nun auch für Objekte unterstützt, die von "baseObject.AutoPropertyObject" erben (z. B. "NVDAObjects" und "TextInfos"). (#10102)
+- Einführung von displayModel.UNIT_DISPLAYCHUNK als eine für DisplayModelTextInfo spezifische TextInfos-Einheitenkonstante. (#10165)
+ - Diese neue Konstante ermöglicht es, den Text in "DisplayModelTextInfo" in einer Weise zu behandeln, die der Speicherung der Textbausteine im zugrunde liegenden Modell ähnelt.
+- displayModel.getCaretRect gibt nun eine Instanz von locationHelper.RectLTRB zurück. (#10233)
+- Die Konstanten UNIT_CONTROLFIELD und UNIT_FORMATFIELD wurden von "virtualBuffers.VirtualBufferTextInfo" in das Paket "textInfos" verschoben. (#10396)
+- Für jeden Eintrag im NVDA-Protokoll werden nun Informationen über den Ursprungs-Thread angezeigt. (#10259)
+- TextInfo-Objekte der Benutzeroberflächenautomatisierung kann nun verschoben / erweitert werden von den Text-Einheiten "page", "story" und "formatField". (#10396)
+- Externe Module (appModules und globalPlugins) sind nun weniger wahrscheinlich in der Lage, die Erstellung von NVDA-Objekten zu unterbrechen. 
+ - Ausnahmen, die durch die Methoden "chooseNVDAObjectOverlayClasses" und "event_NVDAObject_init" verursacht werden, werden nun korrekt abgefangen und protokolliert.
+- Das Wörterbuch "aria.htmlNodeNameToAriaLandmarkRoles" wurde umbenannt in "aria.htmlNodeNameToAriaRoles". Es enthält nun auch Regeln, die keine Sprungmarken sind.
+- Die Funktion "scriptHandler.isCurrentScript" wurde auf Grund mangelnder Verwendung entfernt. Es gibt keinen Ersatz dafür. (#8677)
+
+
 = 2019.2.1 =
 Dies ist eine kleinere Version, um mehrere Abstürze in 2019.2 zu beheben, darunter:
 - Mehrere Abstürze in Google Mail , die sowohl in Firefox als auch in Chrome bei der Interaktion mit bestimmten Popup-Menüs auftraten, z. B. beim Erstellen von Filtern oder beim Ändern bestimmter Google Mail-Einstellungen. (#10175, #9402, #8924)

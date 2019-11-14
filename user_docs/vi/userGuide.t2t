@@ -144,13 +144,15 @@ Bấm Đồng ý để đóng cửa sổ đó.
 ++ Khởi động NVDA ++[LaunchingNVDA]
 Nếu đã cài NVDA thì bạn có thể khởi động nó bằng cách bấm tổ hợp phím ctrl + alt + n, hoặc chọn NVDA từ thực đơn NVDA trong Programs  trên menu start.
 Thêm vào đó, bạn có thể gõ nvda vào hộp thoại Run và bấm enter.
+Nếu NVDA đang chạy, nó sẽ được khởi động lại.
 Bạn cũng có thể đưa thêm vào một số [tùy chọn của dòng lệnh #CommandLineOptions] khi chạy NVDA chẳng hạn như khởi động lại NVDA (-r), thoát (-q), vô hiệu hóa add-ons (--disable-addons), v...v...
 
 Đối với bản cài đặt, mặc định, NVDA lưu các cấu hình người dùng trong thư mục roaming application data của người dùng hiện tại (ví dụ: "C:\Users\<user>\AppData\Roaming").
 Hiện đã có thể thay đổi để NVDA tải và sử dụng cấu hình từ thư mục local application data.
 Hãy tham khảo thêm phần [các tham số hệ thống #SystemWideParameters].
 
-Để khởi động bản NVDA chạy trực tiếp thì bạn tìm đến thư mục của bản chạy, sau đó tìm tập tin nvda.exe và bấm Enter hay nhấp đôi chuột trái lên nó.
+Để khởi động bản NVDA chạy trực tiếp, hãy tìm đến thư mục của bản chạy, sau đó tìm tập tin nvda.exe và bấm Enter hay nhấp đôi chuột trái lên nó.
+Nếu NVDA đang chạy, nó sẽ tự tắt trước khi gọi bản chạy trực tiếp.
 
 Khi NVDA khởi động, bạn sẽ nghe thấy những nốt nhạc cao dần thông báo là NVDA đang được gọi chạy.
 Tùy thuộc vào tốc độ xử lý trên máy của bạn hay thiết bị lưu trữ bản chạy trực tiếp mà việc khởi động NVDA có thể mất một khoảng thời gian nhỏ.
@@ -400,6 +402,7 @@ Dưới đây là một số phím tắt dùng để duyệt nội dung:
 | Đọc cả vùng văn bản | dấu cộng bàn phím số | NVDA+shift+a | Vuốt xuống 3-ngón (chế độ văn bản) | Đọc cả vùng văn bản từ vị trí con trỏ duyệt hiện tại trở đi |
 | Chọn điểm bắt đầu để sao chép | NVDA+f9 | NVDA+f9 | không có | Đánh dấu điểm bắt đầu của vùng chọn để sao chép. Hành động sao chép vẫn chưa được thực hiện cho đến khi bạn chọn điểm kết. |
 | Chọn điểm kết của vùng chọn và chép | NVDA+f10 | NVDA+f10 | không có | Bấm lần đầu để đánh dấu điểm kết thúc và chọn vùng nội dung từ điểm bắt đầu đến điểm kết.  Bấm lần hai để thực hiện lệnh sao chép nội dung lên bộ nhớ tạm. |
+| Chuyển đến điểm bắt đầu để sao chép trong chế độ duyệt | NVDA+shift+f9 | NVDA+shift+f9 | không có | di chuyển con trỏ duyệt đến vị trí đã được chọn là điểm bắt đầu để sao chép |
 | Thông báo định dạng nội dung | NVDA+f | NVDA+f | không có | Thông báo định dạng của nội dung  tại vị trí con trỏ duyệt |
 | Thông báo kí tự thay thế hiện tại | Không có | Không có | Không có | Nói kí tự tại vị trí con trỏ duyệt. Bấm hai lần để hiển thị kí hiệu và văn bản dùng để thay thế ở chế độ duyệt. |
 %kc:endInclude
@@ -939,6 +942,21 @@ Khi ở trong bảng xem các sách đã thêm vào:
 | Trình đơn ngữ cảnh| applications | Mở trình đơn ngữ cảnh cho quyển sách được chọn. |
 %kc:endInclude
 
+++ Windows Console ++[WinConsole]
+NVDA cung cấp hỗ trợ cho Windows command console sử dụng bởi Command Prompt, PowerShell và Windows Subsystem for Linux.
+Cửa sổ console có kích thước cố định, thường nhỏ hơn nhiều so với màn hình hiển thị đầu ra nội dung.
+Khi văn bản mới được nhập vào, nội dung sẽ được cuộn lên trên và các văn bản trước đó không hiển thị nữa. 
+văn bản không hiển thị trực quan trên cửa sổ thì không tiếp cận được với các lệnh duyệt văn bản của NVDA.
+Vậy nên, cần phải cuộn cửa sổ console để đọc các nội dung phía trên.
+%kc:beginInclude
+Các phím tắt có sẵn sau đây của Windows Console  có thể hữu ích khi [duyệt nội dung #ReviewingText] với NVDA:
+|| Tên | Phím | Mô tả |
+| Cuộn lên | control+mũi tên lên | Cuộn cửa sổ console lên để đọc các nội dung phía trên. |
+| Cuộn xuống | control+mũi tên xuống | Cuộn cửa sổ console xuống để đọc các nội dung bên dứi. |
+| Cuộn về đầu | control+home | Cuộn cửa sổ console về đầu màn hình. |
+| Cuộn về cuối | control+end | Cuộn cửa sổ console về cuối màn hình. |
+%kc:endInclude
+
 + Cấu hình NVDA +[ConfiguringNVDA]
 Hầu hết các cấu hình có thể thực hiện bằng   các hộp thoại được mở thông qua thực đơn tùy chọn trong thực đơn của NVDA.
 Nhiều thiết lập cũng có thể được  thực hiện  trong [hộp thoại nhiều trang  để cấu hình NVDA #NVDASettings].
@@ -1104,6 +1122,8 @@ Tuy nhiên, nếu bạn đang dùng một bộ đọc có hỗ trợ mô tả c�
 Lưu ý rằng việc thêm hay sửa thủ công các mô tả cho kí tự sẽ được lưu lại thành một phần trong thiết lập người dùng của bạn.
 Vậy nên, nếu thay đổi mô tả của một biểu tượng cảm xúc cụ thể, tùy chỉnh mô tả của bạn sẽ được đọc cho  biểu tượng đó, bất kể tùy chọn này có bật hay không.
 Bạn có thể thêm, sửa hay xóa các mô tả kí hiệu trong [hộp thoại phát âm kí hiệu / dấu câu #SymbolPronunciation] của NVDA.
+
+Để bật / tắt việc bao gồm dữ liệu Unicode Consortium ở bất cứ đâu, hãy gán một thao tác / phím tắt thông qua [Hộp thoại quản lý thao tác #InputGestures].
 
 ==== Phần trăm thay đổi độ cao cho chữ hoa ====[SpeechSettingsCapPitchChange]
 Tùy chọn này cho phép bạn nhập phần trăm độ cao sẽ thay đổi khi đọc các chữ cái in hoa.
@@ -1606,6 +1626,7 @@ Bạn có thể chọn các mục sau:
  - Danh sách
  - Đoạn trích dẫn
  - cột mốc
+ - Bài viết
  - Khung
  - Có thể click
  -
@@ -1668,11 +1689,28 @@ Nó được tích hợp trong chính Microsoft Word cũng như trình xem và s
  Tuy nhiên, có thể một vài thông tin không được thể hiện hoặc thể hiện không chính xác trong vài phiên bản của Microsoft Office, có nghĩa là hỗ trợ UI automation không thể luôn được dựa vào.
  Chúng tôi vẫn không khuyến khích đa số người dùng bật tính năng này làm mặc định, dù rằng vẫn hoan nghênh những người dùng Office 2016/365 thử nghiệm tính năng này và cung cấp phản hồi.
 
-==== Sử dụng UI Automation để truy cập Windows Console khi có thể ====[AdvancedSettingsConsoleUIA]
-Khi bật tùy chọn này, NVDA sẽ dùng  một phiên bản mới, đang được thực hiện nhằm hỗ trợ cho Windows Console lợi dụng [các cải tiến cho tính tiếp cận của  Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Tính năng này thật sự còn đang được thử nghiệm và chưa hoàn thành. Vậy nên việc sử dụng nó vẫn chưa được khuyến khích. Tuy nhiên, khi hoàn tất, hỗ trợ mới này dự đoán sẽ mặc định là cải thiện khả năng vận hành và tính ổn định của NVDA trong dòng lệnh Windows  consoles.
+==== Hỗ trợ Windows Console ====[AdvancedSettingsConsoleUIA]
+Tùy chọn này là cách mà NVDA tương tác với Windows Console, được dùng bởi command prompt, PowerShell và Windows Subsystem for Linux.
+Nó không ảnh hưởng gì đến  Windows Terminal.
+Trong Windows 10 phiên bản 1709, Microsoft [đã thêm hỗ trợ UI Automation API của mình cho console https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], mang đến cải thiện hiệu suất vận hành triệt để và ổn định cho các trình đọc màn hình có hỗ trợ nó.
+Trường hợp UI Automation không hoạt động hoặc biết trước kết quả là trải nghiệm không tốt cho người dùng, hỗ trợ  Console cũ (legacy console) của NVDA sẽ tồn tại như là để dự phòng.
+Hộp xổ hỗ trợ Windows Console có ba tùy chọn:
+- Tự động: sử dụng UI Automation cho console trên Windows 10 phiên bản 1809 trở lên. Tùy chọn này được khuyên dùng và mặc định được chọn.
+- Ưu tiên UIA: sử dụng UI Automation cho console nếu có thể, thậm chí trên các phiên bản Windows chưa hoàn thiện hoặc triển khai bị lỗi. Trong khi các tính năng giới hạn của nó có thể hữu ích (và thậm chí đủ cho việc sử dụng của bạn), rủi ro của việc sử dụng tùy chọn này hoàn toàn là do bạn và không có hỗ trợ nào cho nó được cung cấp.
+- Bản cũ: UI Automation trong  Windows Console sẽ bị vô hiệu hoàn toàn, bản dự phòng sẽ luôn được dùng.
+-
 
 ==== Nói mật khẩu trong UIA consoles ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Thiết lập này điều khiển việc các kí tự sẽ được đọc bởi [đọc ký tự khi gõ #KeyboardSettingsSpeakTypedCharacters] hay [đọc từ khi gõ #KeyboardSettingsSpeakTypedWords] trong tình huống mà màn hình không được cập nhật (ô nhập mật khẩu chẳng hạn) trong Windows Console khi đã bật hỗ trợ UI automation. Vì mục đích bảo mật, thiết lập này nên được để nguyên, tức là tắt. Tuy nhiên, có thể bạn muốn bật nó khi gặp các vấn đề  về hiệu suất vận hành hoặc việc đọc khi gõ kí tự hay từ  trong khi sử dụng tính năng thử nghiệm mới của NVDA hỗ trợ cho console.
+Thiết lập này điều khiển việc các kí tự sẽ được đọc bởi [đọc ký tự khi gõ #KeyboardSettingsSpeakTypedCharacters] hay [đọc từ khi gõ #KeyboardSettingsSpeakTypedWords] trong tình huống mà màn hình không được cập nhật (ô nhập mật khẩu chẳng hạn) trong vài ứng dụng terminal như Windows Console khi đã bật hỗ trợ UI automation và Mintty.
+Vì mục đích bảo mật, thiết lập này nên được để nguyên, tức là tắt.
+Tuy nhiên, có thể bạn muốn bật nó khi gặp các vấn đề  về hiệu suất vận hành hoặc việc đọc khi gõ kí tự hay từ  trong console, hay đang làm việc ở những nơi an toàn và thích nghe đọc mật khẩu.
+
+==== Dùng hỗ trợ nhập văn bản mới trong  Windows console bản cũ nếu có thể ====[AdvancedSettingsKeyboardSupportInLegacy]
+Tùy chọn này  gọi một phương thức thay thế để nhận các kí tự đã nhập trong Windows console bản cũ.
+Trong khi nó cải thiện hiệu suất và ngăn chặn việc đánh vần thông tin đầu ra của console, nó cũng có thể không tương thích với vài ứng dụng terminal .
+Tính năng này tồn tại và mặc định được bật trên Windows 10 phiên bản 1607, 1703, 1709 và 1803, cũng như các phiên bản Windows 10 mới hơn, phát hành khi  UI Automation không có hoặc bị vô hiệu.
+Cảnh báo: khi bật tùy chọn này, các kí tự được nhập mà không hiển thị trên màn hình như mật khẩu chẳng hạn sẽ không bị bỏ qua.
+Trong những môi trường không an toàn, bạn có thể tạm thời vô hiệu [đọc kí tự khi gõ #KeyboardSettingsSpeakTypedCharacters] và [đọc từ khi gõ #KeyboardSettingsSpeakTypedWords] khi nhập mật khẩu.
 
 ==== Tự đưa con trỏ hệ thống đến các thành phần có thể có focus trong chế độ duyệt ====[BrowseModeSettingsAutoFocusFocusableElements]
 Phím tắt: NVDA+8
@@ -2863,8 +2901,7 @@ NVDA có thể nhận một hoặc nhiều hơn các tùy chọn để thay đ�
 Sẽ không giới hạn số lượng tùy chọn mà bạn muốn đưa vào.  
 Những tùy chọn này có thể đưa vào từ hộp thoại thuộc tính của biểu tượng, từ hộp thoại Run (mở từ start menu hoặc windows+r) hoặc từ cửa sổ dòng lệnh của Windows.
 Tùy chọn được viết phân cách với tên tập tin thực thi của NVDA và giữa mỗi tùy chọn.
-Ví dụ: biểu tượng của NVDA trên desktop được tạo khi cài đặt có một tùy chọn là -r.  Tùy chọn này yêu cầu khi chạy NVDA sẽ đóng bản NVDA đang chạy trước khi chạy bản mới.
-Một tùy chọn hữu ích khác là --disable-addons, sẽ yêu cầu NVDA tắt tất cả các add-on đang chạy.
+Ví dụ, một tùy chọn hữu ích là --disable-addons, nhằm khai báo với NVDA là vô hiệu tất cả add-on đang chạy.
 Điều này giúp bạn kiểm tra những vấn đề hoặc lỗi gây ra có phải do các add-on hay không; và từ đó có thể khắc phục lại các lỗi gây ra bởi add-on.
 
 Một ví dụ khác, bạn có thể đóng bản NVDA đang chạy bằng cách gõ dòng lệnh với tùy chọn sau trong hộp thoại Run:
@@ -2873,8 +2910,8 @@ nvda -q
 
 Có một số tùy chọn có cả phần viết tắt và đầy đủ; trong khi một số khác chỉ có phần ghi đầy đủ.
 Đối với những tùy chọn có phần viết tắt, bạn có thể kết hợp và ghi như sau:
-| nvda -rm | Sẽ đóng bản NVDA đang chạy và chạy lại với phần âm thanh khởi động được tắt.. |
-| nvda -rm --disable-addons | giống như ở trên nhưng thêm phần tắt tất cả các add-on. |
+| nvda -mc CONFIGPATH | Sẽ khởi động NVDA với âm thanh và thông điệp khởi động bị vô hiệu, và định sẵn cấu hình |
+| nvda -mc CONFIGPATH --disable-addons | Giống như trên, nhưng vô hiệu hóa các add-on |
 
 Một số tùy chọn chấp nhận thêm các tham số; ví dụ như chỉ định bao nhiêu thông tin sẽ được ghi lại hoặc chỉ định thư mục lưu tập tin cấu hình người dùng.
 Những tham số này sẽ nằm sau phần tùy chọn, phân cách với tùy chọn bằng khoảng trắng nếu tùy chọn được viết tắt; và phân cách bằng dấu bằng (=) nếu tùy chọn được viết đầy đủ. Ví dụ:
@@ -2886,8 +2923,7 @@ Sau đây là các tùy chọn dòng lệnh cho NVDA:
 || Viết ngắn | Viết dài | Mô tả |
 | -h | --help | Hiển thị trợ giúp dòng lệnh và đóng |
 | -q | --quit | Đóng bản NVDA đang chạy |
-| -r | --replace | Đóng bản NVDA đang chạy và chạy với bản NVDA này |
-| -k | --check-running | Thông báo NVDA đang chạy hay không chạy thông qua mã exit; 0 nếu đang chạy và 1 nếu không chạy |
+ | -k | --check-running | Thông báo NVDA đang chạy hay không chạy thông qua mã exit; 0 nếu đang chạy và 1 nếu không chạy |
 | -f LOGFILENAME | --log-file=LOGFILENAME | Tập tin để ghi các thông điệp log vào |
 | -l LOGLEVEL | --log-level=LOGLEVEL | Cấp độ thấp nhất của thông điệp log (dò lỗi 10, đầu vào / đầu ra 12, cảnh báo gỡ lỗi 15, thông tin 20, cảnh báo 30, lỗi 40, nghiêm trọng 50, tắt 100), mặc định là cảnh báo |
 | -c CONFIGPATH | --config-path=CONFIGPATH | Đường dẫn để lưu tất cả cấu hình của NVDA |
