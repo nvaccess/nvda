@@ -1184,10 +1184,14 @@ class UIA(Window):
 		):
 			# Most UIA text controls don't support the "ValueIsReadOnly" property, so we need to look at
 			# 	root document "IsReadOnly" attribute.
-			document = self.UIATextPattern.documentRange
-			isReadOnly = document.GetAttributeValue(UIAHandler.UIA_IsReadOnlyAttributeId)
+			try:
+				document = self.UIATextPattern.documentRange
+				isReadOnly = document.GetAttributeValue(UIAHandler.UIA_IsReadOnlyAttributeId)
+			except COMError:
+				isReadOnly = UIAHandler.handler.reservedNotSupportedValue
+
 		# We can check "isReadOnly" again
-		if isReadOnly:
+		if isReadOnly is True:
 			states.add(controlTypes.STATE_READONLY)
 
 		try:
