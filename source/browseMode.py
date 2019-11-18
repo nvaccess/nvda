@@ -9,6 +9,7 @@ import collections
 import winsound
 import time
 import weakref
+
 import wx
 import core
 from logHandler import log
@@ -1125,11 +1126,15 @@ class ElementsListDialog(wx.Dialog):
 		else:
 			def move():
 				speech.cancelSpeech()
-				item.moveTo()
+				# #8831: Report before moving because moving might change the focus, which
+				# might mutate the document, potentially invalidating info if it is
+				# offset-based.
 				item.report()
+				item.moveTo()
 			# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
 			# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
 			core.callLater(100, move)
+
 
 class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 

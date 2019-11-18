@@ -178,7 +178,7 @@ def fetchAppModule(processID,appName):
 				# Translators: This is presented when errors are found in an appModule
 				# (example output: error in appModule explorer).
 				_("Error in appModule %s") % modName,
-				speechPriority=speech.priorities.SPRI_NOW
+				speechPriority=speech.priorities.Spri.NOW
 			)
 
 	# Use the base AppModule.
