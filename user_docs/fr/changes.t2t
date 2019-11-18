@@ -5,39 +5,39 @@ Quoi de Neuf dans NVDA
 
 = 2019.3 =
 
-== Nouvelles fonctionnalités ==
-- Dans l'invite de commande, Powershell, et le sous-système Linux pour Windows sous Windows 10 version 1809 et suppérieur :
- - Notables améliorations de performance et de stabilité (#9771)
+== Nouvelles Fonctionnalités ==
+- Dans l'invite de commande, PowerShell, et le sous-système Linux pour Windows sous Windows 10 version 1809 et suppérieur :
+ - Améliorations considérables de la performance et de la stabilité (#9771)
  - L'annonce des textes tapés qui n'apparaissent pas à l'écran (comme les mots de passe) peut maintenant être activée via une option dans les paramètres avancés de NVDA. (#9649)
-- La précision de la commande pour déplacer la souris à l'objet navigateur a été améliorée dans les zones d'édition des applications Java. (#10157)
-- Rideau d'écran, quand cette fonctionnalité est activé, elle rend l'intégralité de l'écran noir sous Windows 8 et suppérieur. (#7857)
-- Ajout du support des afficheurs Braille Handy Tech suivants : (#8955):
+- La précision de la commande pour déplacer la souris à l'objet navigateur a été améliorée dans les zones de texte des applications Java. (#10157)
+- Ajout du rideau d’écran, qui, si activé, rend l'écran totalement noir sous Windows 8 et supérieur. (#7857)
+- Ajout du support des afficheurs Braille Handy Tech suivants (#8955) :
  - Basic Braille Plus 40
  - Basic Braille Plus 32
  - Connect Braille
-- Tous les gestes personnalisés peuvent maintenant être supprimés via un nouveau bouton "Réinitialiser aux valeurs par défaut" dans le dialogue "Gestes de commandes". (#10293)
+- Tous les gestes personnalisés peuvent maintenant être supprimés via un nouveau bouton " Réinitialiser aux valeurs par défaut " dans le dialogue " Gestes de commandes ". (#10293)
 - L'annonce de la police dans Microsoft Word indiquera maintenant si un texte est marqué comme masqué. (#8713)
-- Ajout d'une commande pour déplacer le curseur de revue à la position précédemment marquée comme position initiale pour la sélection ou la copie : NVDA+Maj+F9. (#1969)
+- Ajout d'une commande pour déplacer le curseur de revue vers la position précédemment définie comme marqueur de début pour la sélection ou la copie : NVDA+Maj+F9. (#1969)
 - Dans Internet Explorer, Microsoft Edge et les versions récentes de Firefox et Chrome, les régions sont maintenant annoncées en mode formulaire et en navigation par objet. (#10101)
-- Dans Internet Explorer, Firefox et Chrome, vous pouvez maintenant naviguer entre les articles en utilisant les touches de navigation rapide. Cette fonction n'a pas de touche assignée par défaut, vous pouvez le faire via le dialogue "Gestes de commandes" lorsque celui-ci est ouvert quand un document en mode navigation a le focus. (#9227)
-- Dans Internet Explorer, Chrome et Firefox, les articles sont maintenant annoncés en navigation par objet, et peuvent l'être optionellement si cela est activé dans les paramètres "Mise en forme des documents". (#10424)
+- Dans Internet Explorer, Google Chrome et Mozilla Firefox, vous pouvez désormais naviguer par article à l'aide de scripts de navigation rapide. Ces scripts ne sont pas assignés par défaut mais ils peuvent être attribués dans le dialogue Gestes de commande quand le dialogue est ouvert à partir d'un document en mode navigation. (#9227)
+- Dans Internet Explorer, Google Chrome et Mozilla Firefox, les articles sont désormais annoncés lors de la navigation par objet et éventuellement, en mode navigation, si ceci est activé dans les paramètres de mise en forme du document. (#10424)
 
 
 == Changements ==
 - Le guide de l'utilisateur décrit maintenant comment utiliser NVDA dans les consoles Windows. (#9957)
-- Exécuter nvda.exe remplace désormais automatiquement toute autre copie de NVDA en cours d'exécution, le paramètre de ligne de commande -r|--replace est toujours autorisé, mais ignoré. (#8320)
+- Lancer nvda.exe remplace désormais automatiquement toute copie de NVDA en cours d'exécution. Le paramètre de ligne de commande -r | --replace est toujours accepté mais ignoré. (#8320)
 - Sous Windows 8 et suppérieur, NVDA indiquera désormais le nom et la version des applications hébergées telles que les applications téléchargées depuis le Microsoft Store en utilisant les informations transmises par l'application.) (#4259, #10108)
-- Lors de l'activation ou de la désactivation du changement de piste dans Microsoft Word, NVDA annoncera désormais l'état du paramètre. (#942) 
+- Quand on active ou désactive le suivi des modifications dans Microsoft Word, NVDA annoncera désormais l'état de ce paramètre. (#942)
 - La version de NVDA est désormais indiquée dans le premier message du journal. Cela se produit même si la journalisation a été désactivée via l'interface graphique. (#9803)
-- Le dialogue de paramètres ne permet plus de changer le niveau de journalisation si ce dernier a déjà été configuré via la ligne de commande. (#10209)
-- Dans Microsoft Word, NVDA annonce maintenant l'état d'affichage d'un caractère non imprimable lorsque vous pressez le raccourcis CTRL+Maj+8. (#10241)
-- Mise à jour du transcripteur Braille Liblouis au niveau 58d67e63. (#10094)
-- Quand le report des caractères unicode (tels que les emojis) est activé, ils sont maintenant annoncés dans tous les niveaux de ponctuation. (#8826)
+- Le dialogue des paramètres ne permet plus de changer le niveau de journalisation si ce dernier a déjà été configuré via la ligne de commande. (#10209)
+- Dans Microsoft Word, NVDA annonce désormais l'état d'affichage des caractères non imprimables lorsqu'on fait le raccourci clavier Ctrl+Maj+8. (#10241)
+- Mise à jour du transcripteur Braille Liblouis vers la révision 58d67e63. (#10094)
+- Lorsque l'annonce des caractères CLDR (y compris les emojis) est activée, ceux-ci sont annoncés à tous les niveaux de ponctuation. (#8826)
 - Les paquets Python tiers, tel que Comtypes, incluent maintenant leurs avertissements et erreurs dans le journal de NVDA. (#10393)
 - Mise à jour des annotations d'emoji du référenciel commun de l'Unicode vers la version 36.0. (#10426)
 
 
-== Corrections de bogues ==
+== Corrections de Bogues ==
 - Les emojis ainsi que les autres caractères Unicode 32 bits prennent maintenant moins de place sur un afficheur Braille lorsqu'ils sont affichés sous forme de valeurs hexadécimal. (#6695)
 - Dans Windows 10, NVDA annonce maintenant les infos bulle dans les applications universelles si il est configuré pour annoncer les infos bulle dans le dialogue de paramétrage "Présentation des objets". (#8118)
 - Dans Windows 10 version 1607 et suppérieur, le texte tapé est maintenant annoncé dans MinTTY. (#1348)
