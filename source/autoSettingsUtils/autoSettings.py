@@ -24,7 +24,7 @@ class AutoSettings(AutoPropertyObject):
 	standard GUI for these settings.
 	Derived classes must implement:
 	- getId
-	- getTranslatedName
+	- getDisplayName
 	- _get_supportedSettings
 	"""
 
@@ -60,7 +60,7 @@ class AutoSettings(AutoPropertyObject):
 
 	@classmethod
 	@abstractmethod
-	def getTranslatedName(cls) -> str:
+	def getDisplayName(cls) -> str:
 		"""
 		@return: The translated name for this collection of settings. This is for use in the GUI to represent the
 		group of these settings.

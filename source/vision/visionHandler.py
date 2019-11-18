@@ -58,11 +58,11 @@ def _getProvidersFromFileSystem():
 			provider = _getProviderClass(moduleName)
 			providerSettings = provider.getSettings()
 			providerId = providerSettings.getId()
-			translatedName = providerSettings.getTranslatedName()
+			displayName = providerSettings.getDisplayName()
 			yield providerInfo.ProviderInfo(
 				providerId=providerId,
 				moduleName=moduleName,
-				translatedName=translatedName,
+				displayName=displayName,
 				providerClass=provider
 			)
 		except Exception:  # Purposely catch everything as we don't know what a provider might raise.
@@ -102,7 +102,7 @@ class VisionHandler(AutoPropertyObject):
 	def _updateAllProvidersList(self):
 		self._allProviders = list(_getProvidersFromFileSystem())
 		# Sort the providers alphabetically by name.
-		self._allProviders.sort(key=lambda info: info.translatedName.lower())
+		self._allProviders.sort(key=lambda info: info.displayName.lower())
 
 	def getProviderList(
 			self,

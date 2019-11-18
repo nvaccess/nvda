@@ -50,7 +50,7 @@ class AutoGuiTestSettings(VisionEnhancementProviderSettings):
 		return "exampleOfAutoGui"  # Note: this does not have to match the name of the module.
 
 	@classmethod
-	def getTranslatedName(cls) -> str:
+	def getDisplayName(cls) -> str:
 		return "Example Provider with Auto Gui"  # Should normally be translated with _() method.
 
 	@classmethod

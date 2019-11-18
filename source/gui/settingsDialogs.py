@@ -3106,12 +3106,12 @@ def showStartErrorForProviders(
 		return
 
 	if len(providers) == 1:
-		providerName = providers[0].translatedName
+		providerName = providers[0].displayName
 		# Translators: This message is presented when
 		# NVDA is unable to load a single vision enhancement provider.
 		message = _(f"Could not load the {providerName} vision enhancement provider")
 	else:
-		providerNames = ", ".join(provider.translatedName for provider in providers)
+		providerNames = ", ".join(provider.displayName for provider in providers)
 		# Translators: This message is presented when NVDA is unable to
 		# load multiple vision enhancement providers.
 		message = _(f"Could not load the following vision enhancement providers:\n{providerNames}")
@@ -3132,12 +3132,12 @@ def showTerminationErrorForProviders(
 		return
 
 	if len(providers) == 1:
-		providerName = providers[0].translatedName
+		providerName = providers[0].displayName
 		# Translators: This message is presented when
 		# NVDA is unable to gracefully terminate a single vision enhancement provider.
 		message = _(f"Could not gracefully terminate the {providerName} vision enhancement provider")
 	else:
-		providerNames = ", ".join(provider.translatedName for provider in providers)
+		providerNames = ", ".join(provider.displayName for provider in providers)
 		# Translators: This message is presented when
 		# NVDA is unable to terminate multiple vision enhancement providers.
 		message = _(
@@ -3275,7 +3275,7 @@ class VisionSettingsPanel(SettingsPanel):
 
 		for providerInfo in vision.handler.getProviderList(reloadFromSystem=True):
 			providerSizer = self.settingsSizerHelper.addItem(
-				wx.StaticBoxSizer(wx.StaticBox(self, label=providerInfo.translatedName), wx.VERTICAL),
+				wx.StaticBoxSizer(wx.StaticBox(self, label=providerInfo.displayName), wx.VERTICAL),
 				flag=wx.EXPAND
 			)
 			if len(self.providerPanelInstances) > 0:

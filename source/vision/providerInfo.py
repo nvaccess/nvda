@@ -8,12 +8,12 @@ from vision import providerBase
 
 ProviderIdT = str
 ModuleNameT = str
-TranslatedNameT = str
+DisplayNameT = str
 
 
 @dataclass
 class ProviderInfo:
 	providerId: ProviderIdT
 	moduleName: ModuleNameT
-	translatedName: TranslatedNameT
+	displayName: DisplayNameT
 	providerClass: Type[providerBase.VisionEnhancementProvider]

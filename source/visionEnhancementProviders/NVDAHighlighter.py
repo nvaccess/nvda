@@ -213,7 +213,7 @@ class NVDAHighlighterSettings(vision.providerBase.VisionEnhancementProviderSetti
 		return "NVDAHighlighter"
 
 	@classmethod
-	def getTranslatedName(cls) -> str:
+	def getDisplayName(cls) -> str:
 		# Translators: Description for NVDA's built-in screen highlighter.
 		return _("Focus Highlight")
 

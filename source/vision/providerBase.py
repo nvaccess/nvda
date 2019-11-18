@@ -21,7 +21,7 @@ class VisionEnhancementProviderSettings(AutoSettings):
 	Ensure that the following are implemented:
 	- AutoSettings.getId:
 			This is case sensitive. Used in the config file. Does not have to match the module name.
-	- AutoSettings.getTranslatedName:
+	- AutoSettings.getDisplayName:
 			The string that should appear in the GUI as the name.
 	- AutoSettings._get_supportedSettings:
 			The settings for your provider, the returned list is permitted to change during

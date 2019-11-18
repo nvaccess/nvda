@@ -106,7 +106,7 @@ class ScreenCurtainSettings(VisionEnhancementProviderSettings):
 		return "screenCurtain"
 
 	@classmethod
-	def getTranslatedName(cls) -> str:
+	def getDisplayName(cls) -> str:
 		return screenCurtainTranslatedName
 
 	def _get_supportedSettings(self) -> SupportedSettingType:

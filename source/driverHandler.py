@@ -76,7 +76,7 @@ class Driver(AutoSettings):
 		return cls.name
 
 	@classmethod
-	def getTranslatedName(cls) -> str:
+	def getDisplayName(cls) -> str:
 		return cls.description
 
 	@classmethod
