@@ -28,6 +28,7 @@ from .. import InvalidNVDAObject
 from ..window import Window
 from NVDAObjects.UIA import UIA, UIATextInfo
 from locationHelper import RectLTRB
+from typing import Dict
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
@@ -100,7 +101,8 @@ class HTMLAttribCache(object):
 		self.containsCache[item]=contains
 		return contains
 
-nodeNamesToNVDARoles={
+
+nodeNamesToNVDARoles: Dict[str, int] = {
 	"FRAME":controlTypes.ROLE_FRAME,
 	"IFRAME":controlTypes.ROLE_INTERNALFRAME,
 	"FRAMESET":controlTypes.ROLE_DOCUMENT,
@@ -133,14 +135,21 @@ nodeNamesToNVDARoles={
 	"OBJECT":controlTypes.ROLE_EMBEDDEDOBJECT,
 	"APPLET":controlTypes.ROLE_EMBEDDEDOBJECT,
 	"EMBED":controlTypes.ROLE_EMBEDDEDOBJECT,
-	"FIELDSET":controlTypes.ROLE_GROUPING,
+	"FIELDSET": controlTypes.ROLE_GROUPING,
 	"OPTION":controlTypes.ROLE_LISTITEM,
 	"BLOCKQUOTE":controlTypes.ROLE_BLOCKQUOTE,
 	"MATH":controlTypes.ROLE_MATH,
-	"NAV":controlTypes.ROLE_SECTION,
-	"SECTION":controlTypes.ROLE_SECTION,
+	"NAV": controlTypes.ROLE_LANDMARK,
+	"HEADER": controlTypes.ROLE_LANDMARK,
+	"MAIN": controlTypes.ROLE_LANDMARK,
+	"ASIDE": controlTypes.ROLE_LANDMARK,
+	"FOOTER": controlTypes.ROLE_LANDMARK,
+	"SECTION": controlTypes.ROLE_REGION,
 	"ARTICLE": controlTypes.ROLE_ARTICLE,
+	"FIGURE": controlTypes.ROLE_FIGURE,
+	"FIGCAPTION": controlTypes.ROLE_CAPTION,
 }
+
 
 def getZoomFactorsFromHTMLDocument(HTMLDocument):
 	try:
@@ -519,7 +528,7 @@ class MSHTML(IAccessible):
 			# The IAccessibleObject is for this node (not an ancestor), so IAccessible overlay classes are relevant.
 			super(MSHTML,self).findOverlayClasses(clsList)
 			if self.IAccessibleRole == oleacc.ROLE_SYSTEM_DIALOG:
-				ariaRoles = self.HTMLAttributes["role"].split(" ")
+				ariaRoles = (self.HTMLAttributes["role"] or "").split(" ")
 				if "dialog" in ariaRoles:
 					# #2390: Don't try to calculate text for ARIA dialogs.
 					try:
@@ -732,7 +741,7 @@ class MSHTML(IAccessible):
 
 	def _get_role(self):
 		if self.HTMLNode:
-			ariaRole=self.HTMLAttributes['role']
+			ariaRole = (self.HTMLAttributes["role"] or "").split(" ")[0]
 			if ariaRole:
 				role=aria.ariaRolesToNVDARoles.get(ariaRole)
 				if role:
@@ -741,7 +750,17 @@ class MSHTML(IAccessible):
 			if nodeName:
 				if nodeName in ("OBJECT","EMBED","APPLET"):
 					return controlTypes.ROLE_EMBEDDEDOBJECT
-				if self.HTMLNodeHasAncestorIAccessible or nodeName in ("BODY","FRAMESET","FRAME","IFRAME","LABEL","NAV","SECTION","ARTICLE"):
+				if self.HTMLNodeHasAncestorIAccessible or nodeName in (
+					"BODY",
+					"FRAMESET",
+					"FRAME",
+					"IFRAME",
+					"LABEL",
+					"NAV",
+					"SECTION",
+					"ARTICLE",
+					"FIELDSET",
+				):
 					return nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_SECTION)
 		if self.IAccessibleChildID>0:
 			states=super(MSHTML,self).states
