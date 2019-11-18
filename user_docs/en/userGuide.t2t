@@ -298,7 +298,8 @@ When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the cur
 There are some key commands that are useful when moving with the System focus:
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Description |
-| Report current focus | NVDA+tab | NVDA+tab | announces the current object or control that has the System focus. Pressing twice will spell the information |
+| Report current focus | NVDA+tab | NVDA+tab | Announces the current object or control that has the System focus. Pressing twice will spell the information |
+| Report current focus context | NVDA+shift+tab | NVDA+shift+tab | Announces the current object or control that has the system focus along with its context, such as the parent objects. If pressed twice, the objects are spoken in more detail |
 | Report title | NVDA+t | NVDA+t | Reports the title of the currently active window. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
 | Read active window | NVDA+b | NVDA+b | reads all the controls in the currently active window (useful for dialogs) |
 | Report Status Bar | NVDA+end | NVDA+shift+end | Reports the Status Bar if NVDA finds one. It also moves the navigator object to this location. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |

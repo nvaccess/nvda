@@ -1455,6 +1455,40 @@ class GlobalCommands(ScriptableObject):
 	script_reportCurrentFocus.__doc__ = _("Reports the object with focus. If pressed twice, spells the information")
 	script_reportCurrentFocus.category=SCRCAT_FOCUS
 
+	@staticmethod
+	def _reportFocusContextHelper(detailed: bool = False) -> True:
+		speech.cancelSpeech()
+		focus = api.getFocusObject()
+		if not isinstance(focus, NVDAObject):
+			return False
+		ancestors = api.getFocusAncestors()
+		for ancestor in ancestors:
+			if ancestor.isPresentableFocusAncestor:
+				speech.speakObject(
+					ancestor,
+					reason=controlTypes.REASON_QUERY if detailed else controlTypes.REASON_FOCUSENTERED
+				)
+		speech.speakObject(
+			focus,
+			reason=controlTypes.REASON_QUERY if detailed else controlTypes.REASON_FOCUS
+		)
+		return True
+
+	@script(
+		gesture="kb:nvda+shift+tab",
+		# Translators: Input help mode message for report current focus command.
+		description=_(
+			"Reports the object with focus and its context. "
+			"If pressed twice, the objects are spoken in more detail"
+		),
+		category=SCRCAT_FOCUS
+	)
+	def script_reportCurrentFocusContext(self, gesture):
+		result = self._reportFocusContextHelper(detailed=scriptHandler.getLastScriptRepeatCount() >= 1)
+		if not result:
+			ui.message(_("No focus"))
+			return
+
 	def script_reportStatusLine(self,gesture):
 		obj = api.getStatusBar()
 		found=False
@@ -2395,17 +2429,8 @@ class GlobalCommands(ScriptableObject):
 			# Key presses interrupt speech, so it maybe that the dialog wasn't
 			# announced properly (if the user triggered the gesture more
 			# than once). So we speak the objects to imitate the dialog getting
-			# focus again. It might be useful to have something like this in a
-			# script: see https://github.com/nvaccess/nvda/issues/9147#issuecomment-454278313
-			speech.cancelSpeech()
-			speech.speakObject(
-				api.getForegroundObject(),
-				reason=controlTypes.REASON_FOCUS
-			)
-			speech.speakObject(
-				api.getFocusObject(),
-				reason=controlTypes.REASON_FOCUS
-			)
+			# focus again.
+			self._reportFocusContextHelper()
 			return
 
 		if scriptCount >= 2 and self._toggleScreenCurtainMessage:
