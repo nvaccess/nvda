@@ -51,15 +51,13 @@ class Driver(AutoSettings):
 		"""
 		super(Driver, self).__init__()
 
-	def terminate(self, saveSettings: bool = True):
-		"""Terminate this driver.
+	def terminate(self):
+		"""Save settings and terminate this driver.
 		This should be used for any required clean up.
-		@param saveSettings: Whether settings should be saved on termination.
 		@precondition: L{initialize} has been called.
 		@postcondition: This driver can no longer be used.
 		"""
-		if saveSettings:
-			self.saveSettings()
+		self.saveSettings()
 		self._unregisterConfigSaveAction()
 
 	@classmethod
