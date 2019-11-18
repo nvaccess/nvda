@@ -1863,6 +1863,9 @@ class DocumentFormattingPanel(SettingsPanel):
 			"reportBlockQuotes": _("Block quotes"),
 			# Translators: Label for an option in the list with elements in the
 			# document formatting settings panel.
+			"reportGroupings": _("Groupings"),
+			# Translators: Label for an option in the list with elements in the
+			# document formatting settings panel.
 			"reportLandmarks": _("Landmarks"),
 			# Translators: Label for an option in the list with elements in the
 			# document formatting settings panel.
@@ -1894,6 +1897,7 @@ class DocumentFormattingPanel(SettingsPanel):
 
 	def onSave(self):
 		config.conf["documentFormatting"]["detectFormatAfterCursor"]=self.detectFormatAfterCursorCheckBox.IsChecked()
+<<<<<<< HEAD
 		for i, setting in enumerate(self.fontListMap):
 			config.conf["documentFormatting"][setting] = self.fontList.IsChecked(i)
 		for i, setting in enumerate(self.docInfoListMap):
@@ -1904,6 +1908,40 @@ class DocumentFormattingPanel(SettingsPanel):
 			config.conf["documentFormatting"][setting] = self.tablesList.IsChecked(i)
 		for i, setting in enumerate(self.elementsListMap):
 			config.conf["documentFormatting"][setting] = self.elementsList.IsChecked(i)
+=======
+		config.conf["documentFormatting"]["reportFontName"]=self.fontNameCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportFontSize"]=self.fontSizeCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportFontAttributes"]=self.fontAttrsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportColor"]=self.colorCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportComments"]=self.commentsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportRevisions"]=self.revisionsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportEmphasis"]=self.emphasisCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportAlignment"]=self.alignmentCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportStyle"]=self.styleCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportSpellingErrors"]=self.spellingErrorsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportPage"]=self.pageCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportLineNumber"]=self.lineNumberCheckBox.IsChecked()
+		choice = self.lineIndentationCombo.GetSelection()
+		config.conf["documentFormatting"]["reportLineIndentation"] = choice in (1, 3)
+		config.conf["documentFormatting"]["reportLineIndentationWithTones"] = choice in (2, 3)
+		config.conf["documentFormatting"]["reportParagraphIndentation"]=self.paragraphIndentationCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportLineSpacing"]=self.lineSpacingCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportTableHeaders"]=self.tableHeadersCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportTableCellCoords"]=self.tableCellCoordsCheckBox.IsChecked()
+		choice = self.borderComboBox.GetSelection()
+		config.conf["documentFormatting"]["reportBorderStyle"] = choice in (1,2)
+		config.conf["documentFormatting"]["reportBorderColor"] = (choice == 2)
+		config.conf["documentFormatting"]["reportLinks"]=self.linksCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportHeadings"]=self.headingsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportLists"]=self.listsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportBlockQuotes"]=self.blockQuotesCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportGroupings"] = self.groupingsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportLandmarks"]=self.landmarksCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportArticles"] = self.articlesCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportFrames"]=self.framesCheckBox.Value
+		config.conf["documentFormatting"]["reportClickable"]=self.clickableCheckBox.Value
+>>>>>>> origin/master
 
 class TouchInteractionPanel(SettingsPanel):
 	# Translators: This is the label for the touch interaction settings panel.
@@ -2114,6 +2152,7 @@ class AdvancedPanelControls(wx.Panel):
 			"louis",
 			"timeSinceInput",
 			"vision",
+			"speech",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel

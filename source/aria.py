@@ -2,12 +2,12 @@
 # Copyright (C) 2009-2019 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+from typing import Dict
 
 import controlTypes
 
-ariaRolesToNVDARoles={
-	"description":controlTypes.ROLE_STATICTEXT,
-	"search":controlTypes.ROLE_SECTION,
+ariaRolesToNVDARoles: Dict[str, int] = {
+	"description": controlTypes.ROLE_STATICTEXT,  # Not in ARIA 1.1 spec
 	"alert":controlTypes.ROLE_ALERT,
 	"alertdialog":controlTypes.ROLE_DIALOG,
 	"article": controlTypes.ROLE_ARTICLE,
@@ -20,6 +20,7 @@ ariaRolesToNVDARoles={
 	"dialog":controlTypes.ROLE_DIALOG,
 	"directory":controlTypes.ROLE_LIST,
 	"document":controlTypes.ROLE_DOCUMENT,
+	"figure": controlTypes.ROLE_FIGURE,
 	"form":controlTypes.ROLE_FORM,
 	"grid":controlTypes.ROLE_TABLE,
 	"gridcell":controlTypes.ROLE_TABLECELL,
@@ -39,9 +40,11 @@ ariaRolesToNVDARoles={
 	"progressbar":controlTypes.ROLE_PROGRESSBAR,
 	"radio":controlTypes.ROLE_RADIOBUTTON,
 	"radiogroup":controlTypes.ROLE_GROUPING,
+	"region": controlTypes.ROLE_REGION,
 	"row":controlTypes.ROLE_TABLEROW,
 	"rowgroup":controlTypes.ROLE_GROUPING,
 	"rowheader":controlTypes.ROLE_TABLEROWHEADER,
+	"search": controlTypes.ROLE_LANDMARK,
 	"separator":controlTypes.ROLE_SEPARATOR,
 	"scrollbar":controlTypes.ROLE_SCROLLBAR,
 	"slider":controlTypes.ROLE_SLIDER,
@@ -58,13 +61,13 @@ ariaRolesToNVDARoles={
 	"treeitem":controlTypes.ROLE_TREEVIEWITEM,
 }
 
-ariaSortValuesToNVDAStates={
+ariaSortValuesToNVDAStates: Dict[str, int] = {
 	'descending':controlTypes.STATE_SORTED_DESCENDING,
 	'ascending':controlTypes.STATE_SORTED_ASCENDING,
 	'other':controlTypes.STATE_SORTED,
 }
 
-landmarkRoles = {
+landmarkRoles: Dict[str, str] = {
 	# Translators: Reported for the banner landmark, normally found on web pages.
 	"banner": pgettext("aria", "banner"),
 	# Translators: Reported for the complementary landmark, normally found on web pages.
@@ -79,12 +82,15 @@ landmarkRoles = {
 	"search": pgettext("aria", "search"),
 	# Translators: Reported for the form landmark, normally found on web pages.
 	"form": pgettext("aria", "form"),
-	# Strictly speaking, region isn't a landmark, but it is very similar.
-	# Translators: Reported for a significant region, normally found on web pages.
-	"region": pgettext("aria", "region"),
 }
 
-htmlNodeNameToAriaRoles = {
+ariaRolesToNVDARoles.update({
+	role: controlTypes.ROLE_LANDMARK
+	for role in landmarkRoles
+	if role not in ariaRolesToNVDARoles
+})
+
+htmlNodeNameToAriaRoles: Dict[str, str] = {
 	"header": "banner",
 	"nav": "navigation",
 	"main": "main",
@@ -93,4 +99,5 @@ htmlNodeNameToAriaRoles = {
 	"section": "region",
 	"aside": "complementary",
 	"dialog": "dialog",
+	"figure": "figure",
 }

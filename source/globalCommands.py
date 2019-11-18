@@ -623,6 +623,22 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportHeadings.__doc__=_("Toggles on and off the reporting of headings")
 	script_toggleReportHeadings.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report groupings command.
+		description=_("Toggles on and off the reporting of groupings"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
+	def script_toggleReportGroupings(self, gesture):
+		if config.conf["documentFormatting"]["reportGroupings"]:
+			# Translators: The message announced when toggling the report block quotes document formatting setting.
+			state = _("report gorupings off")
+			config.conf["documentFormatting"]["reportGroupings"] = False
+		else:
+			# Translators: The message announced when toggling the report block quotes document formatting setting.
+			state = _("report groupings on")
+			config.conf["documentFormatting"]["reportGroupings"] = True
+		ui.message(state)
+
 	def script_toggleReportBlockQuotes(self,gesture):
 		if config.conf["documentFormatting"]["reportBlockQuotes"]:
 			# Translators: The message announced when toggling the report block quotes document formatting setting.
@@ -640,11 +656,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportLandmarks(self,gesture):
 		if config.conf["documentFormatting"]["reportLandmarks"]:
 			# Translators: The message announced when toggling the report landmarks document formatting setting.
-			state = _("report landmarks off")
+			state = _("report landmarks and regions off")
 			config.conf["documentFormatting"]["reportLandmarks"]=False
 		else:
 			# Translators: The message announced when toggling the report landmarks document formatting setting.
-			state = _("report landmarks on")
+			state = _("report landmarks and regions on")
 			config.conf["documentFormatting"]["reportLandmarks"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report landmarks command.
@@ -1372,7 +1388,7 @@ class GlobalCommands(ScriptableObject):
 		line.expand(textInfos.UNIT_LINE)
 		indentation,content=speech.splitTextIndentation(line.text)
 		if indentation:
-			textList.append(speech.getIndentationSpeech(indentation, formatConfig))
+			textList.extend(speech.getIndentationSpeech(indentation, formatConfig))
 		
 		info=info.copy()
 		info.expand(textInfos.UNIT_CHARACTER)
@@ -1382,9 +1398,9 @@ class GlobalCommands(ScriptableObject):
 				formatField.update(field.field)
 
 		if not browseable:
-			text=info.getFormatFieldSpeech(formatField,formatConfig=formatConfig) if formatField else None
-			if text:
-				textList.append(text)
+			if formatField:
+				sequence = info.getFormatFieldSpeech(formatField, formatConfig=formatConfig)
+				textList.extend(sequence)
 
 			if not textList:
 			# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
@@ -1393,17 +1409,25 @@ class GlobalCommands(ScriptableObject):
 				
 			ui.message(" ".join(textList))
 		else:
-			text=info.getFormatFieldSpeech(formatField,formatConfig=formatConfig , separator="\n") if formatField else None
-			if text:
-				textList.append(text)
+			if formatField:
+				sequence = info.getFormatFieldSpeech(formatField, formatConfig=formatConfig)
+				textList.extend(sequence)
 
 			if not textList:
 				# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 				ui.message(_("No formatting information"))
 				return
 
-			# Translators: title for formatting information dialog.
-			ui.browseableMessage("\n".join(textList), _("Formatting"))
+			# browseable message only supports a string, remove commands:
+			message = "\n".join(
+				stringItem for stringItem in textList if isinstance(stringItem, str)
+			)
+
+			ui.browseableMessage(
+				message,
+				# Translators: title for formatting information dialog.
+				_("Formatting")
+			)
 
 	def script_reportFormatting(self,gesture):
 		info=api.getReviewPosition()
@@ -2377,7 +2401,7 @@ class GlobalCommands(ScriptableObject):
 						message = _("Screen curtain enabled")
 		finally:
 			if message is not None:
-				ui.message(message, speechPriority=speech.priorities.SPRI_NOW)
+				ui.message(message, speechPriority=speech.priorities.Spri.NOW)
 
 	__gestures = {
 		# Basic

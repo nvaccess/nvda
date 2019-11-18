@@ -127,6 +127,9 @@ roleLabels = {
 	# grouping.
 	controlTypes.ROLE_GROUPING: _("grp"),
 	# Translators: Displayed in braille for an object which is a
+	# caption.
+	controlTypes.ROLE_CAPTION: _("cap"),
+	# Translators: Displayed in braille for an object which is a
 	# embedded object.
 	controlTypes.ROLE_EMBEDDEDOBJECT: _("embedded"),
 	# Translators: Displayed in braille for an object which is a
@@ -173,6 +176,10 @@ roleLabels = {
 	controlTypes.ROLE_LANDMARK: _("lmk"),
 	# Translators: Displayed in braille for an object which is an article.
 	controlTypes.ROLE_ARTICLE: _("art"),
+	# Translators: Displayed in braille for an object which is a region.
+	controlTypes.ROLE_REGION: _("rgn"),
+	# Translators: Displayed in braille for an object which is a figure.
+	controlTypes.ROLE_FIGURE: _("fig"),
 }
 
 positiveStateLabels = {
@@ -239,9 +246,6 @@ landmarkLabels = {
 	"search": pgettext("braille landmark abbreviation", "srch"),
 	# Translators: Displayed in braille for the form landmark, normally found on web pages.
 	"form": pgettext("braille landmark abbreviation", "form"),
-	# Strictly speaking, region isn't a landmark, but it is very similar.
-	# Translators: Displayed in braille for a significant region, normally found on web pages.
-	"region": pgettext("braille landmark abbreviation", "rgn"),
 }
 
 #: Cursor shapes
@@ -471,7 +475,11 @@ class TextRegion(Region):
 		super(TextRegion, self).__init__()
 		self.rawText = text
 
-def getBrailleTextForProperties(**propertyValues):
+
+# C901 'getPropertiesBraille' is too complex
+# Note: when working on getPropertiesBraille, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 	textList = []
 	name = propertyValues.get("name")
 	if name:
@@ -573,6 +581,7 @@ def getBrailleTextForProperties(**propertyValues):
 		textList.append(cellCoordsText)
 	return TEXT_SEPARATOR.join([x for x in textList if x])
 
+
 class NVDAObjectRegion(Region):
 	"""A region to provide a braille representation of an NVDAObject.
 	This region will update based on the current state of the associated NVDAObject.
@@ -597,7 +606,7 @@ class NVDAObjectRegion(Region):
 		placeholderValue = obj.placeholder
 		if placeholderValue and not obj._isTextEmpty:
 			placeholderValue = None
-		text = getBrailleTextForProperties(
+		text = getPropertiesBraille(
 			name=obj.name,
 			role=role,
 			roleText=obj.roleTextBraille,
@@ -632,26 +641,34 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
 	# Cache this for later use.
 	field._presCat = presCat
+	role = field.get("role", controlTypes.ROLE_UNKNOWN)
 	if reportStart:
 		# If this is a container, only report it if this is the start of the node.
 		if presCat == field.PRESCAT_CONTAINER and not field.get("_startOfNode"):
 			return None
 	else:
-		# We only report ends for containers
+		# We only report ends for containers that are not landmarks/regions
 		# and only if this is the end of the node.
-		if presCat != field.PRESCAT_CONTAINER or not field.get("_endOfNode"):
+		if (
+			presCat != field.PRESCAT_CONTAINER
+			or not field.get("_endOfNode")
+			or role == controlTypes.ROLE_LANDMARK
+		):
 			return None
 
-	role = field.get("role", controlTypes.ROLE_UNKNOWN)
 	states = field.get("states", set())
 	value=field.get('value',None)
 	current=field.get('current', None)
 	placeholder=field.get('placeholder', None)
 	roleText = field.get('roleTextBraille', field.get('roleText'))
+	landmark = field.get("landmark")
+	if not roleText and role == controlTypes.ROLE_LANDMARK and landmark:
+		roleText = f"{roleLabels[controlTypes.ROLE_LANDMARK]} {landmarkLabels[landmark]}"
+
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []
 		if current:
-			text.append(getBrailleTextForProperties(current=current))
+			text.append(getPropertiesBraille(current=current))
 		return TEXT_SEPARATOR.join(text) if len(text) != 0 else None
 
 	elif role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER) and field.get("table-id"):
@@ -669,15 +686,20 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		}
 		if reportTableHeaders:
 			props["columnHeaderText"] = field.get("table-columnheadertext")
-		return getBrailleTextForProperties(**props)
+		return getPropertiesBraille(**props)
 
 	elif reportStart:
 		props = {
 			# Don't report the role for math here.
 			# However, we still need to pass it (hence "_role").
 			"_role" if role == controlTypes.ROLE_MATH else "role": role,
-			"states": states,"value":value, "current":current, "placeholder":placeholder,"roleText":roleText}
-		if formatConfig["reportLandmarks"] and field.get("landmark") and field.get("_startOfNode"):
+			"states": states,
+			"value": value,
+			"current": current,
+			"placeholder": placeholder,
+			"roleText": roleText
+		}
+		if field.get('alwaysReportName', False):
 			# Ensure that the name of the field gets presented even if normally it wouldn't.
 			name = field.get("name")
 			if name:
@@ -689,7 +711,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		level = field.get("level")
 		if level:
 			props["positionInfo"] = {"level": level}
-		text = getBrailleTextForProperties(**props)
+		text = getPropertiesBraille(**props)
 		content = field.get("content")
 		if content:
 			if text:
@@ -710,8 +732,11 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	else:
 		# Translators: Displayed in braille at the end of a control field such as a list or table.
 		# %s is replaced with the control's role.
-		return (_("%s end") %
-			getBrailleTextForProperties(role=role,roleText=roleText))
+		return (_("%s end") % getPropertiesBraille(
+			role=role,
+			roleText=roleText
+		))
+
 
 def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 	"""Generates the braille text for the given format field.

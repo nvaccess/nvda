@@ -3,6 +3,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 #Copyright (C) 2007-2016 NV Access Limited, Babbage B.V.
+from typing import Dict, Union, Set, Any, Optional, List
 
 ROLE_UNKNOWN=0
 ROLE_WINDOW=1
@@ -154,6 +155,8 @@ ROLE_DELETED_CONTENT=147
 ROLE_INSERTED_CONTENT=148
 ROLE_LANDMARK = 149
 ROLE_ARTICLE = 150
+ROLE_REGION = 151
+ROLE_FIGURE = 152
 
 STATE_UNAVAILABLE=0X1
 STATE_FOCUSED=0X2
@@ -199,7 +202,7 @@ STATE_CROPPED=0x8000000000
 STATE_OVERFLOWING=0x10000000000
 STATE_UNLOCKED=0x20000000000
 
-roleLabels={
+roleLabels: Dict[int, str] = {
 	# Translators: The word for an unknown control type.
 	ROLE_UNKNOWN:_("unknown"),
 	# Translators: The word for window of a program such as document window.
@@ -498,9 +501,13 @@ roleLabels={
 	ROLE_LANDMARK: _("landmark"),
 	# Translators: Identifies an article.
 	ROLE_ARTICLE: _("article"),
+	# Translators: Identifies a region.
+	ROLE_REGION: _("region"),
+	# Translators: Identifies a figure (commonly seen on some websites).
+	ROLE_FIGURE: _("figure"),
 }
 
-stateLabels={
+stateLabels: Dict[int, str] = {
 	# Translators: This is presented when a control or document is unavailable.
 	STATE_UNAVAILABLE:_("unavailable"),
 	# Translators: This is presented when a control has focus.
@@ -639,7 +646,7 @@ REASON_ONLYCACHE="onlyCache"
 
 #: Text to use for 'current' values. These describe if an item is the current item 
 #: within a particular kind of selection.
-isCurrentLabels = {
+isCurrentLabels: Dict[Union[bool, str], str] = {
 	# Translators: Presented when an item is marked as current in a collection of items
 	True:_("current"),
 	# Translators: Presented when a page item is marked as current in a collection of page items
@@ -776,24 +783,25 @@ def processNegativeStates(role, states, reason, negativeStates=None):
 		# Return all negative states which should be spoken, excluding the positive states.
 		return speakNegatives - states
 
-def processAndLabelStates(role, states, reason, positiveStates=None, negativeStates=None, positiveStateLabelDict={}, negativeStateLabelDict={}):
+
+def processAndLabelStates(
+		role: int,
+		states: Set[Any],
+		reason: str,
+		positiveStates: Optional[Set[Any]] = None,
+		negativeStates: Optional[Set[Any]] = None,
+		positiveStateLabelDict: Dict[int, str] = {},
+		negativeStateLabelDict: Dict[int, str] = {},
+) -> List[str]:
 	"""Processes the states for an object and returns the appropriate state labels for both positive and negative states.
 	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
-	@type role: int
 	@param states: The raw states for an object to process.
-	@type states: set
 	@param reason: The reason to process the states (e.g. C{REASON_FOCUS}.
-	@type reason: str
 	@param positiveStates: Used for C{REASON_CHANGE}, specifies states changed from negative to positive;
-	@type positiveStates: set
 	@param negativeStates: Used for C{REASON_CHANGE}, specifies states changed from positive to negative;
-	@type negativeStates: setpositiveStateLabelDict={}, negativeStateLabelDict
 	@param positiveStateLabelDict: Dictionary containing state identifiers as keys and associated positive labels as their values.
-	@type positiveStateLabelDict: dict
 	@param negativeStateLabelDict: Dictionary containing state identifiers as keys and associated negative labels as their values.
-	@type negativeStateLabelDict: dict
 	@return: The labels of the relevant positive and negative states.
-	@rtype: [str, ...]
 	"""
 	mergedStateLabels=[]
 	positiveStates = processPositiveStates(role, states, reason, positiveStates)
