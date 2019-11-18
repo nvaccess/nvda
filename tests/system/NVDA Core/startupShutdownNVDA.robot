@@ -26,13 +26,13 @@ Quits from keyboard
 	[Documentation]	Starts NVDA and ensures that it can be quit using the keyboard
 	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
 
-	${Welcome dialog title} =	catenate double space	Welcome to NVDA	dialog
+	${Welcome dialog title} =	catenate double space	Welcome to NVDA
 	wait for specific speech	${Welcome dialog title}
 	wait for speech to finish
 	sleep	1	# the dialog is not always receiving the enter keypress, wait a little longer for it
 	send key	enter
 
-	${Exit NVDA dialog} =	catenate double space	Exit NVDA	dialog
+	${Exit NVDA dialog} =	catenate double space	Exit NVDA
 	send key	insert	q
 	${INDEX} =	wait for specific speech	${Exit NVDA dialog}
 
@@ -48,7 +48,7 @@ Read welcome dialog
 	[Documentation]	Ensure that the welcome dialog can be read in full
 	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
 
-	${Welcome dialog title} =	catenate double space	Welcome to NVDA	dialog
+	${Welcome dialog title} =	catenate double space	Welcome to NVDA
 	${INDEX} =	wait for specific speech	${Welcome dialog title}
 	wait for speech to finish
 	${actual speech} =	get speech from index until now	${INDEX}

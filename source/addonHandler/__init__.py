@@ -72,7 +72,7 @@ def saveState():
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
 		with open(statePath, "wb") as f:
-			pickle.dump(state, f)
+			pickle.dump(state, f, protocol=0)
 	except:
 		log.debugWarning("Error saving state", exc_info=True)
 
@@ -283,15 +283,18 @@ class Addon(AddonBase):
 		self.path = os.path.abspath(path)
 		self._extendedPackages = set()
 		manifest_path = os.path.join(path, MANIFEST_FILENAME)
-		with open(manifest_path, 'r', encoding="utf_8") as f:
+		with open(manifest_path, 'rb') as f:
 			translatedInput = None
 			for translatedPath in _translatedManifestPaths():
 				p = os.path.join(self.path, translatedPath)
 				if os.path.exists(p):
 					log.debug("Using manifest translation from %s", p)
-					translatedInput = open(p, 'r', encoding="utf_8")
+					translatedInput = open(p, 'rb')
 					break
 			self.manifest = AddonManifest(f, translatedInput)
+			if self.manifest.errors is not None:
+				_report_manifest_errors(self.manifest)
+				raise AddonError("Manifest file has errors.")
 
 	@property
 	def isPendingInstall(self):
@@ -614,7 +617,7 @@ def createAddonBundleFromPath(path, destDir=None):
 	manifest_path = os.path.join(basedir, MANIFEST_FILENAME)
 	if not os.path.isfile(manifest_path):
 		raise AddonError("Can't find %s manifest file." % manifest_path)
-	with open(manifest_path, 'r', encoding="utf_8") as f:
+	with open(manifest_path, 'rb') as f:
 		manifest = AddonManifest(f)
 	if manifest.errors is not None:
 		_report_manifest_errors(manifest)
@@ -714,6 +717,8 @@ docFileName = string(default=None)
 
 def validate_apiVersionString(value):
 	from configobj.validate import ValidateError
+	if not value or value == "None":
+		return (0, 0, 0)
 	if not isinstance(value, string_types):
 		raise ValidateError('Expected an apiVersion in the form of a string. EG "2019.1.0"')
 	try:

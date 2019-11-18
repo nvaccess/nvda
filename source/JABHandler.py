@@ -1,17 +1,34 @@
 # -*- coding: UTF-8 -*-
-#javaAccessBridgeHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2018 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2019 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import queue
-from ctypes import *
-from ctypes.wintypes import *
+from ctypes import (
+	c_short,
+	c_long,
+	c_int,
+	c_int64,
+	c_bool,
+	c_float,
+	c_char,
+	c_wchar,
+	c_wchar_p,
+	c_void_p,
+	Structure,
+	POINTER,
+	byref,
+	cdll,
+	windll,
+	CFUNCTYPE,
+	WinError,
+	create_string_buffer,
+	create_unicode_buffer
+)
+from ctypes.wintypes import BOOL, HWND, WCHAR
 import time
 import queueHandler
-import speech
-import globalVars
 from logHandler import log
 import winUser
 import api
@@ -258,6 +275,15 @@ if bridgeDll:
 	_fixBridgeFunc(BOOL,'getAccessibleTextItems',c_long,JOBJECT64,POINTER(AccessibleTextItemsInfo),jint,errcheck=True)
 	_fixBridgeFunc(BOOL,'getAccessibleTextSelectionInfo',c_long,JOBJECT64,POINTER(AccessibleTextSelectionInfo),errcheck=True)
 	_fixBridgeFunc(BOOL,'getAccessibleTextAttributes',c_long,JOBJECT64,jint,POINTER(AccessibleTextAttributesInfo),errcheck=True)
+	_fixBridgeFunc(
+		BOOL,
+		'getAccessibleTextRect',
+		c_long,
+		JOBJECT64,
+		POINTER(AccessibleTextRectInfo),
+		jint,
+		errcheck=True
+	)
 	_fixBridgeFunc(BOOL,'getAccessibleTextLineBounds',c_long,JOBJECT64,jint,POINTER(jint),POINTER(jint),errcheck=True)
 	_fixBridgeFunc(BOOL,'getAccessibleTextRange',c_long,JOBJECT64,jint,jint,POINTER(c_char),c_short,errcheck=True)
 	_fixBridgeFunc(BOOL,'getCurrentAccessibleValueFromContext',c_long,JOBJECT64,POINTER(c_wchar),c_short,errcheck=True)
@@ -494,6 +520,11 @@ class JABContext(object):
 		bridgeDll.getTextAttributesInRange(self.vmID, self.accContext, startIndex, endIndex, byref(attributes), byref(length))
 		return attributes, length.value
 
+	def getAccessibleTextRect(self, index):
+		rect = AccessibleTextRectInfo()
+		bridgeDll.getAccessibleTextRect(self.vmID, self.accContext, byref(rect), index)
+		return rect
+
 	def getAccessibleRelationSet(self):
 		relations = AccessibleRelationSetInfo()
 		bridgeDll.getAccessibleRelationSet(self.vmID, self.accContext, byref(relations))
@@ -544,7 +575,7 @@ class JABContext(object):
 			# #6992: Querying the hwnd for table related objects can cause the app to crash.
 			# A table is almost certainly contained within a single hwnd,
 			# so just pass the hwnd for the querying object.
-			return JabContext(hwnd=self.hwnd,vmID=self.vmID,accContext=accContext)
+			return JABContext(hwnd=self.hwnd, vmID=self.vmID, accContext=accContext)
 
 	def getAccessibleTableColumnHeader(self):
 		info=AccessibleTableInfo()
@@ -564,7 +595,7 @@ class JABContext(object):
 			# #6992: Querying the hwnd for table related objects can cause the app to crash.
 			# A table is almost certainly contained within a single hwnd,
 			# so just pass the hwnd for the querying object.
-			return JabContext(hwnd=self.hwnd,vmID=self.vmID,accContext=accContext)
+			return JABContext(hwnd=self.hwnd, vmID=self.vmID, accContext=accContext)
 
 	def getAccessibleKeyBindings(self):
 		bindings=AccessibleKeyBindings()
@@ -683,7 +714,6 @@ def event_enterJavaWindow(hwnd):
 def enterJavaWindow_helper(hwnd):
 	vmID=c_long()
 	accContext=JOBJECT64()
-	gotFocus=False
 	timeout=time.time()+0.2
 	while time.time()<timeout and not eventHandler.isPendingEvents("gainFocus"):
 		try:
@@ -715,15 +745,13 @@ def initialize():
 	if not bridgeDll:
 		raise NotImplementedError("dll not available")
 	bridgeDll.Windows_run()
-	#Accept wm_copydata and any wm_user messages from other processes even if running with higher privilages
-	ChangeWindowMessageFilter=getattr(windll.user32,'ChangeWindowMessageFilter',None)
-	if ChangeWindowMessageFilter:
-		if not ChangeWindowMessageFilter(winUser.WM_COPYDATA,1):
+	# Accept wm_copydata and any wm_user messages from other processes even if running with higher privileges
+	if not windll.user32.ChangeWindowMessageFilter(winUser.WM_COPYDATA, 1):
+		raise WinError()
+	for msg in range(winUser.WM_USER + 1, 0xffff):
+		if not windll.user32.ChangeWindowMessageFilter(msg, 1):
 			raise WinError()
-		for msg in range(winUser.WM_USER+1,65535):
-			if not ChangeWindowMessageFilter(msg,1):
-				raise WinError()
-	#Register java events
+	# Register java events
 	bridgeDll.setFocusGainedFP(internal_event_focusGained)
 	bridgeDll.setPropertyActiveDescendentChangeFP(internal_event_activeDescendantChange)
 	bridgeDll.setPropertyNameChangeFP(event_nameChange)
