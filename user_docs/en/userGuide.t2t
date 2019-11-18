@@ -2027,7 +2027,7 @@ For an even more extensive list of  free and commercial synthesizers that you ca
 
 ++ eSpeak NG ++[eSpeakNG]
 The [eSpeak NG https://github.com/espeak-ng/espeak-ng] synthesizer is built directly into NVDA and does not require any other special drivers or components to be installed.
-NVDA starts using eSpeak NG by default.
+On Windows 7, 8 and 8.1, NVDA uses eSpeak NG by default ([Windows OneCore #OneCore] is used in Windows 10 by default).
 As this synthesizer is built into NVDA, this is a great choice for when running NVDA off a USB thumb drive on other systems.
 
 Each voice that comes with eSpeak NG speaks a different language.
@@ -2063,20 +2063,10 @@ To use these voices, you will need to install two components:
 ++ Windows OneCore Voices ++[OneCore]
 Windows 10 includes new voices known as "OneCore" or "mobile" voices.
 Voices are provided for many languages, and they are more responsive than the Microsoft voices available using Microsoft Speech API version 5.
+On Windows 10, NVDA uses Windows OneCore voices by default ([[eSpeak NG #eSpeakNG] is used in other releases).
 
 Please see this Microsoft article for a list of available voices and instructions to install them: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
-Please note that the faster rates available with Narrator are not currently available with NVDA.
-Also, the speed you select in the Windows Settings affects the rate set in NVDA.
-These are issues we cannot resolve without changes to Windows.
-We are hopeful that these will be addressed in a future Windows update.
-
-++ Audiologic Tts3 ++[Audiologic]
-This is a commercial speech synthesizer specifically for the Italian language.
-You must have the synthesizer installed on your system in order for it to be used with NVDA.
-For more information, please visit the Audiologic website at www.audiologic.it.
-
-This synthesizer does not support [spelling functionality #SpeechSettingsUseSpelling].
 
 + Supported Braille Displays +[SupportedBrailleDisplays]
 This section contains information about the Braille displays supported by NVDA.

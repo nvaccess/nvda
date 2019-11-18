@@ -6,11 +6,11 @@ What's New in NVDA
 = 2019.3 =
 
 == New Features ==
-- In Command Prompt, PowerShell, and the Windows Subsystem for Linux on Windows 10 version 1809 and later:
- - Vastly improved performance and stability (#9771)
+- In Command Prompt, PowerShell, and the Windows Subsystem for Linux on Windows 10 October 2018 Update and later:
+ - Vastly improved performance and stability. (#9771)
  - Reporting of typed text that does not appear onscreen (such as passwords) can now be enabled via an option in NVDA's advanced settings panel. (#9649)
 - The accuracy of the move mouse to navigator object command has been improved in text fields in Java applications. (#10157)
-- Screen curtain, which when enabled, makes the whole screen black on Windows 8 and above. (#7857)
+- Added screen curtain, which when enabled, makes the whole screen black on Windows 8 and later. (#7857)
 - Added support for  the following Handy Tech Braille displays (#8955):
  - Basic Braille Plus 40
  - Basic Braille Plus 32
@@ -21,11 +21,12 @@ What's New in NVDA
 - In Internet Explorer, Microsoft Edge and recent versions of Firefox and Chrome, landmarks are now reported in focus mode and object navigation. (#10101)
 - In Internet Explorer, Google Chrome and Mozilla Firefox, You can now navigate by article using quick navigation scripts. These scripts are unbound by default and can be assigned in the Input Gestures dialog when the dialog is opened from a browse mode document. (#9227)
 - In Internet Explorer, Google Chrome and Mozilla Firefox, article elements are now reported with object navigation, and optionally in browse mode if turned on in Document Formatting settings. (#10424)
+- Support for out-of-process iframes in Mozilla Firefox. (#9672)
 
 
 == Changes ==
 - The user guide now describes how to use NVDA in the Windows Console. (#9957)
-- Running nvda.exe now defaults to replace an already running copy of NVDA. The -r|--replace command line parameter is still accepted, but ignored. (#8320)
+- Running nvda.exe now defaults to replacing an already running copy of NVDA. The -r|--replace command line parameter is still accepted, but ignored. (#8320)
 - On Windows 8 and later, NVDA will now report product name and version information for hosted apps such as apps downloaded from Microsoft Store using information provided by the app. (#4259, #10108)
 - When toggling track changes on and off with the keyboard in Microsoft Word, NVDA will announce the state of the setting. (#942) 
 - The NVDA version number is now logged as the first message in the log. This occurs even if logging has been disabled from the GUI. (#9803)
@@ -40,9 +41,9 @@ What's New in NVDA
 == Bug Fixes ==
 - Emoji and other 32 bit unicode characters now take less space on a braille display when they are shown as hexadecimal values. (#6695)
 - In Windows 10, NVDA will announce tooltips from universal apps if NVDA is configured to report tooltips in object presentation dialog. (#8118)
-- On Windows 10 version 1607 and later, typed text is now reported in Mintty. (#1348)
-- On Windows 10 version 1607 and later, output in the Windows Console that appears close to the caret is no longer spelled out. (#513)
-- controls in Audacitys compressor dialog are now announced when navigating the dialog. (#10103)
+- On Windows 10 Anniversary Update and later, typed text is now reported in Mintty. (#1348)
+- On Windows 10 Anniversary Update and later, output in the Windows Console that appears close to the caret is no longer spelled out. (#513)
+- Controls in Audacitys compressor dialog are now announced when navigating the dialog. (#10103)
 - NVDA no longer treats spaces as words in object review in Scintilla based editors such as Notepad++. (#8295)
 - NVDA will prevent the  system from entering sleep mode when scrolling through text with braille display gestures. (#9175)
 - On Windows 10, braille will now follow when editing cell contents in Microsoft Excel and in other UIA text controls where it was lagging behind. (#9749)
@@ -65,8 +66,8 @@ What's New in NVDA
 == Changes for Developers ==
 - Updated Python to 3.7. (#7105)
 - Updated pySerial to version 3.4. (#8815)
-- Updated wxPython to 4.0.3 to support Python 3.5+ (#9630)
-- Updated six to version 1.12.0 (#9630)
+- Updated wxPython to 4.0.3 to support Python 3.5 and later. (#9630)
+- Updated six to version 1.12.0. (#9630)
 - Updated py2exe to version 0.9.3.2 (in development, commit b372a8e from albertosottile/py2exe#13). (#9856)
 - Updated UIAutomationCore.dll comtypes module to version 10.0.18362. (#9829)
 - The tab-completion in the Python console only suggests attributes starting with an underscore if the underscore is first typed. (#9918)
@@ -104,7 +105,7 @@ What's New in NVDA
  - config.ConfigManager.getConfigValidationParameter has been replaced by getConfigValidation
  - inputCore.InputGesture.logIdentifier property has been removed.
    - Use _get_identifiers in inputCore.InputGesture instead.
- - synthDriverHandler.SynthDriver.speakText/speakCharacter, have been removed.
+ - synthDriverHandler.SynthDriver.speakText/speakCharacter have been removed.
  - Removed several synthDriverHandler.SynthSetting classes.
    - Previously kept for backwards compatibility (#8214), now considered obsolete.
    - Drivers that used the SynthSetting classes should be updated to use the DriverSetting classes.
@@ -125,6 +126,7 @@ What's New in NVDA
 - External modules (appModules and globalPlugins) are now less likely to be able to break the creation of NVDAObjects. 
  - Exceptions caused by the "chooseNVDAObjectOverlayClasses" and "event_NVDAObject_init" methods are now properly caught and logged.
 - The aria.htmlNodeNameToAriaLandmarkRoles dictionary has been renamed to aria.htmlNodeNameToAriaRoles. It now also contains roles that aren't landmarks.
+- scriptHandler.isCurrentScript has been removed due to lack of use. There is no replacement. (#8677)
 
 
 = 2019.2.1 =

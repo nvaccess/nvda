@@ -2401,7 +2401,7 @@ class GlobalCommands(ScriptableObject):
 						message = _("Screen curtain enabled")
 		finally:
 			if message is not None:
-				ui.message(message, speechPriority=speech.priorities.SPRI_NOW)
+				ui.message(message, speechPriority=speech.priorities.Spri.NOW)
 
 	__gestures = {
 		# Basic
