@@ -16,11 +16,7 @@ class Getter(object):
 	def __init__(self,fget, abstract=False):
 		self.fget=fget
 		if abstract:
-			if isinstance(fget, classmethod):
-				log.warning("Abstract class properties are not supported.")
-				self._abstract = False
-			else:
-				self._abstract = self.__isabstractmethod__=abstract
+			self._abstract = self.__isabstractmethod__ = abstract
 
 	def __get__(self,instance,owner):
 		if isinstance(self.fget, classmethod):

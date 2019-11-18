@@ -23,8 +23,6 @@ sys.path.append( os.path.join(TOP_DIR, "libs"))
 log.debug("after pathmod: {}".format(sys.path))
 from robotremoteserver import RobotRemoteServer
 
-whitespaceMinusSlashN = '\t\x0b\x0c\r '
-
 
 class SystemTestSpy(object):
 	SPEECH_HAS_FINISHED_SECONDS = 0.5
@@ -59,12 +57,17 @@ class SystemTestSpy(object):
 
 	# Private helper methods
 	def _flattenCommandsSeparatingWithNewline(self, commandArray):
+		"""
+		Flatten many collections of speech sequences into a single speech sequence. Each original speech sequence
+		is separated by a newline string.
+		@param commandArray: is a collection of speechSequences
+		@return: speechSequence
+		"""
 		f = [c for commands in commandArray for newlineJoined in [commands, [u"\n"]] for c in newlineJoined]
 		return f
 
 	def _getJoinedBaseStringsFromCommands(self, speechCommandArray):
-		wsChars = whitespaceMinusSlashN
-		baseStrings = [c.strip(wsChars) for c in speechCommandArray if isinstance(c, str)]
+		baseStrings = [c for c in speechCommandArray if isinstance(c, str)]
 		return ''.join(baseStrings).strip()
 
 	# Public methods

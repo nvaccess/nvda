@@ -136,7 +136,9 @@ class SettingsDialog(wx.Dialog, DpiScalingHelperMixin, metaclass=guiHelper.SIPAB
 		"""
 		if gui._isDebug():
 			startTime = time.time()
-		windowStyle = wx.DEFAULT_DIALOG_STYLE | (wx.RESIZE_BORDER if resizeable else 0)
+		windowStyle = wx.DEFAULT_DIALOG_STYLE
+		if resizeable:
+			windowStyle |= wx.RESIZE_BORDER | wx.MAXIMIZE_BOX
 		wx.Dialog.__init__(self, parent, title=self.title, style=windowStyle)
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
@@ -177,6 +179,8 @@ class SettingsDialog(wx.Dialog, DpiScalingHelperMixin, metaclass=guiHelper.SIPAB
 		self.Bind(wx.EVT_WINDOW_DESTROY, self._onWindowDestroy)
 
 		self.postInit()
+		if resizeable:
+			self.SetMinSize(self.mainSizer.GetMinSize())
 		self.CentreOnScreen()
 		if gui._isDebug():
 			log.debug("Loading %s took %.2f seconds"%(self.__class__.__name__, time.time() - startTime))
@@ -680,6 +684,8 @@ class GeneralSettingsPanel(SettingsPanel):
 		logLevelChoices = [name for level, name in self.LOG_LEVELS]
 		self.logLevelList = settingsSizerHelper.addLabeledControl(logLevelLabelText, wx.Choice, choices=logLevelChoices)
 		curLevel = log.getEffectiveLevel()
+		if logHandler.isLogLevelForced():
+			self.logLevelList.Disable()
 		for index, (level, name) in enumerate(self.LOG_LEVELS):
 			if level == curLevel:
 				self.logLevelList.SetSelection(index)
@@ -788,8 +794,9 @@ class GeneralSettingsPanel(SettingsPanel):
 		config.conf["general"]["askToExit"]=self.askToExitCheckBox.IsChecked()
 		config.conf["general"]["playStartAndExitSounds"]=self.playStartAndExitSoundsCheckBox.IsChecked()
 		logLevel=self.LOG_LEVELS[self.logLevelList.GetSelection()][0]
-		config.conf["general"]["loggingLevel"]=logging.getLevelName(logLevel)
-		logHandler.setLogLevelFromConfig()
+		if not logHandler.isLogLevelForced():
+			config.conf["general"]["loggingLevel"] = logging.getLevelName(logLevel)
+			logHandler.setLogLevelFromConfig()
 		if self.startAfterLogonCheckBox.IsEnabled():
 			config.setStartAfterLogon(self.startAfterLogonCheckBox.GetValue())
 		if self.startOnLogonScreenCheckBox.IsEnabled():
@@ -1913,6 +1920,11 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
+		self.articlesCheckBox = elementsGroup.addItem(wx.CheckBox(self, label=_("Arti&cles")))
+		self.articlesCheckBox.SetValue(config.conf["documentFormatting"]["reportArticles"])
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings panel.
 		self.framesCheckBox=elementsGroup.addItem(wx.CheckBox(self,label=_("Fra&mes")))
 		self.framesCheckBox.Value=config.conf["documentFormatting"]["reportFrames"]
 
@@ -1958,6 +1970,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportLists"]=self.listsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportBlockQuotes"]=self.blockQuotesCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLandmarks"]=self.landmarksCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportArticles"] = self.articlesCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFrames"]=self.framesCheckBox.Value
 		config.conf["documentFormatting"]["reportClickable"]=self.clickableCheckBox.Value
 
@@ -2170,6 +2183,7 @@ class AdvancedPanelControls(wx.Panel):
 			"louis",
 			"timeSinceInput",
 			"vision",
+			"speech",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
@@ -2405,13 +2419,21 @@ class DictionaryDialog(SettingsDialog):
 		self.tempSpeechDict=speechDictHandler.SpeechDict()
 		self.tempSpeechDict.extend(self.speechDict)
 		globalVars.speechDictionaryProcessing=False
-		super(DictionaryDialog, self).__init__(parent)
+		super().__init__(parent, resizeable=True)
+		# Historical initial size, result of L{self.dictList} being (550,350) as of #6287.
+		# Setting an initial size on L{self.dictList} by passing a L{size} argument when
+		# creating the control would also set its minimum size and thus block the dialog from being shrunk.
+		self.SetSize(576, 502)
+		self.CentreOnScreen()
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 		entriesLabelText=_("&Dictionary entries")
-		self.dictList=sHelper.addLabeledControl(entriesLabelText, wx.ListCtrl, style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
+		self.dictList = sHelper.addLabeledControl(
+			entriesLabelText,
+			wx.ListCtrl, style=wx.LC_REPORT | wx.LC_SINGLE_SEL
+		)
 		# Translators: The label for a column in dictionary entries list used to identify comments for the entry.
 		self.dictList.InsertColumn(0,_("Comment"),width=150)
 		# Translators: The label for a column in dictionary entries list used to identify pattern (original word or a pattern).
@@ -3017,7 +3039,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 
 		# Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 		replacementText = _("&Replacement")
-		self.replacementEdit = sHelper.addLabeledControl(
+		self.replacementEdit = changeSymbolHelper.addLabeledControl(
 			labelText=replacementText,
 			wxCtrlClass=wx.TextCtrl,
 			size=self.scaleSize((300, -1)),
@@ -3053,12 +3075,6 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.filter()
 
 	def postInit(self):
-		size = self.GetBestSize()
-		self.SetSizeHints(
-			minW=size.GetWidth(),
-			minH=size.GetHeight(),
-			maxH=size.GetHeight(),
-		)
 		self.symbolsList.SetFocus()
 
 	def filter(self, filterText=''):
@@ -3232,11 +3248,14 @@ class InputGesturesDialog(SettingsDialog):
 	# Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 	title = _("Input Gestures")
 
+	def __init__(self, parent):
+		super().__init__(parent, resizeable=True)
+
 	def makeSettings(self, settingsSizer):
 		filterSizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 		filterLabel = wx.StaticText(self, label=pgettext("inputGestures", "&Filter by:"))
-		filter = wx.TextCtrl(self)
+		filter = self.filter = wx.TextCtrl(self)
 		filterSizer.Add(filterLabel, flag=wx.ALIGN_CENTER_VERTICAL)
 		filterSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
 		filterSizer.Add(filter, proportion=1)
@@ -3267,10 +3286,16 @@ class InputGesturesDialog(SettingsDialog):
 		self.removeButton.Bind(wx.EVT_BUTTON, self.onRemove)
 		self.removeButton.Disable()
 
+		bHelper.sizer.AddStretchSpacer()
+		# Translators: The label of a button to reset all gestures in the Input Gestures dialog.
+		resetButton = wx.Button(self, label=_("Reset to factory &defaults"))
+		bHelper.sizer.Add(resetButton, flag=wx.ALIGN_RIGHT)
+		resetButton.Bind(wx.EVT_BUTTON, self.onReset)
+
 		self.pendingAdds = set()
 		self.pendingRemoves = set()
 
-		settingsSizer.Add(bHelper.sizer)
+		settingsSizer.Add(bHelper.sizer, flag=wx.EXPAND)
 
 	def postInit(self):
 		self.tree.SetFocus()
@@ -3394,6 +3419,40 @@ class InputGesturesDialog(SettingsDialog):
 			self.pendingRemoves.add(entry)
 		self.tree.Delete(treeGes)
 		scriptInfo.gestures.remove(gesture)
+		self.tree.SetFocus()
+
+	def onReset(self, evt):
+		if gui.messageBox(
+			# Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+			_("""Are you sure you want to reset all gestures to their factory defaults?
+			
+			All of your user defined gestures, whether previously set or defined during this session, will be lost.
+			This cannot be undone."""),
+			style=wx.YES | wx.NO | wx.NO_DEFAULT
+		) != wx.YES:
+			return
+		self.pendingAdds.clear()
+		self.pendingRemoves.clear()
+		inputCore.manager.userGestureMap.clear()
+		try:
+			inputCore.manager.userGestureMap.save()
+		except:  # noqa: E722
+			log.debugWarning("", exc_info=True)
+			# Translators: An error displayed when saving user defined input gestures fails.
+			gui.messageBox(
+				_("Error saving user defined gestures - probably read only file system."),
+				caption=_("Error"),
+				style=wx.OK | wx.ICON_ERROR
+			)
+			self.onCancel(None)
+			return
+		inputCore.manager.userGestureMap.save()
+		self.gestures = inputCore.manager.getAllGestureMappings(
+			obj=gui.mainFrame.prevFocus,
+			ancestors=gui.mainFrame.prevFocusAncestors
+		)
+		self.tree.DeleteChildren(self.treeRoot)
+		self.populateTree(filter=self.filter.GetValue())
 		self.tree.SetFocus()
 
 	def onOk(self, evt):

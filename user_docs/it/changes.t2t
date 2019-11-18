@@ -3,6 +3,14 @@ Novità in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.2.1 =
+Si tratta di una versione minore che corregge diversi arresti anomali presenti nella versione 2019.2. Le correzioni includono:
+- Sono stati risolti numerosi problemi con Gmail individuati sia in Firefox che in Chrome durante l'interazione con determinati menu popup, ad esempio durante la creazione di filtri o la modifica di alcune impostazioni di Gmail. (#10175, #9402, #8924)
+- In Windows 7, NVDA non causa più l'arresto anomalo di Esplora risorse quando si utilizza il mouse nel menu Start. (#9435)
+- Esplora risorse su Windows 7 non si blocca più quando si accede ai campi di modifica dei metadati. (#5337)
+- NVDA non si blocca più quando si interagisce con le immagini con un URI base64 in Mozilla Firefox o Google Chrome. (#10227)
+
+
 = 2019.2 =
 Le novità più interessanti di questa versione riguardano il rilevamento automatico dei Display Braille Freedom Scientific, una nuova impostazione sperimentale situata nella scheda avanzate che impedisce al focus di spostarsi assieme al cursore virtuale durante la navigazione (il che può migliorare moltissimo la velocità di gestione delle pagine web), una nuova funzione chiamata "aumento velocità" nelle voci Windows OneCore in Windows10 che consente al sintetizzatore di leggere molto più rapidamente, e molti altri bug risolti.
 

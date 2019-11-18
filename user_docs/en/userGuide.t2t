@@ -144,13 +144,15 @@ Press OK to dismiss this dialog.
 ++ Launching NVDA ++[LaunchingNVDA]
 If you have installed NVDA with the installer, then starting NVDA is as simple as either pressing control+alt+n, or choosing NVDA from the NVDA menu under Programs on the Start Menu.
 Additionally you can type NVDA into the Run dialog and press Enter.
-You can also pass some [command line options #CommandLineOptions] which allows you to restart NVDA (-r), quit (-q), disable add-ons (--disable-addons), etc.
+If NVDA is already running, it will be restarted.
+You can also pass some [command line options #CommandLineOptions] which allows you to quit (-q), disable add-ons (--disable-addons), etc.
 
 For installed copies, NVDA stores the configuration in the roaming application data folder of the current user by default (e.g. "C:\Users\<user>\AppData\Roaming").
 It is possible to change this in a way that NVDA loads its configuration from the local application data folder instead.
 Consult the section about [system wide parameters #SystemWideParameters] for more details.
 
 To start the portable version, go to the directory you unpacked NVDA to, and press enter or double click on nvda.exe.
+If NVDA was already running, it will automatically stop before starting the portable version.
 
 As NVDA starts, you will first hear an ascending set of tones (telling you that NVDA is loading).
 Depending on how fast your computer is, or if you are running NVDA off a USB key or other slow media, it may take a little while to start.
@@ -400,6 +402,7 @@ The following commands are available for reviewing text:
 | Say all with review | numpadPlus | NVDA+shift+a | 3-finger flick down (text mode) | Reads from the current position of the review cursor, moving it as it goes |
 | Select then Copy from review cursor | NVDA+f9 | NVDA+f9 | none | Starts the select then copy process from the current position of the review cursor. The actual action is not performed until you tell NVDA where the end of the text range is |
 | Select then Copy to review cursor | NVDA+f10 | NVDA+f10 | none | On the first press, text is selected from the position previously set start marker up to and including the review cursor's current position. After pressing this key a second time, the text will be copied to the Windows clipboard |
+| Move to marked start for copy in review | NVDA+shift+f9 | NVDA+shift+f9 | none | Moves the review cursor to the position previously set start marker for copy |
 | Report text formatting | NVDA+f | NVDA+f | none | Reports the formatting of the text where the review cursor is currently situated. Pressing twice shows the information in browse mode |
 | Report current symbol replacement | None | None | none | Speaks the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode. |
 %kc:endInclude
@@ -1120,6 +1123,8 @@ Note that manually added or edited character descriptions are saved as part of y
 Therefore, if you change the description of a particular emoji, your custom description will be spoken for that emoji regardless of whether this option is enabled.
 You can add, edit or remove symbol descriptions in NVDA's [punctuation/symbol pronunciation dialog #SymbolPronunciation].
 
+To toggle Unicode Consortium data inclusion from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
 ==== Capital pitch change percentage ====[SpeechSettingsCapPitchChange]
 This edit field allows you to type the amount that the pitch of the voice will change when speaking a capital letter.
 This value is a percentage, where a negative value lowers the pitch and a positive value raises it.
@@ -1621,6 +1626,7 @@ You can configure reporting of:
  - Lists
  - Block quotes
  - Landmarks
+ - Articles
  - Frames
  - Clickable
  -
@@ -1689,7 +1695,7 @@ It does not affect the modern Windows Terminal.
 In Windows 10 version 1709, Microsoft [added support for its UI Automation API to the console https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], bringing vastly improved performance and stability for screen readers that support it.
 In situations where UI Automation is unavailable or known to result in an inferior user experience, NVDA's legacy console support is available as a fallback.
 The Windows Console support combo box has three options:
-- Automatic: Uses UI Automation in consoles on Windows 10 version 1803 and later. This option is recommended and set by default.
+- Automatic: Uses UI Automation in consoles on Windows 10 version 1809 and later. This option is recommended and set by default.
 - Prefer UIA: Uses UI Automation in consoles if available, even on Windows versions with incomplete or buggy implementations. While this limited functionality may be useful (and even sufficient for your usage), use of this option is entirely at your own risk and no support for it will be provided.
 - Legacy: UI Automation in the Windows Console will be completely disabled, so the legacy fallback will always be used.
 -
@@ -1702,7 +1708,7 @@ However, you may wish to enable it if you experience performance issues or insta
 ==== Use the new typed character support in legacy Windows consoles when available ====[AdvancedSettingsKeyboardSupportInLegacy]
 This option enables an alternative method for detecting typed characters in legacy Windows consoles.
 While it improves performance and prevents some console output from being spelled out, it may be incompatible with some terminal programs.
-This feature is available and enabled by default on Windows 10 versions 1607, 1703 and 1709 as well as on newer Windows 10 releases when UI Automation is unavailable or disabled.
+This feature is available and enabled by default on Windows 10 versions 1607, 1703, 1709 and 1803 as well as on newer Windows 10 releases when UI Automation is unavailable or disabled.
 Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
 In untrusted environments, you may temporarily disable [speak typed characters #KeyboardSettingsSpeakTypedCharacters] and [speak typed words #KeyboardSettingsSpeakTypedWords] when entering passwords.
 
@@ -2017,7 +2023,7 @@ For an even more extensive list of  free and commercial synthesizers that you ca
 
 ++ eSpeak NG ++[eSpeakNG]
 The [eSpeak NG https://github.com/espeak-ng/espeak-ng] synthesizer is built directly into NVDA and does not require any other special drivers or components to be installed.
-NVDA starts using eSpeak NG by default.
+On Windows 7, 8 and 8.1, NVDA uses eSpeak NG by default ([Windows OneCore #OneCore] is used in Windows 10 by default).
 As this synthesizer is built into NVDA, this is a great choice for when running NVDA off a USB thumb drive on other systems.
 
 Each voice that comes with eSpeak NG speaks a different language.
@@ -2053,20 +2059,10 @@ To use these voices, you will need to install two components:
 ++ Windows OneCore Voices ++[OneCore]
 Windows 10 includes new voices known as "OneCore" or "mobile" voices.
 Voices are provided for many languages, and they are more responsive than the Microsoft voices available using Microsoft Speech API version 5.
+On Windows 10, NVDA uses Windows OneCore voices by default ([[eSpeak NG #eSpeakNG] is used in other releases).
 
 Please see this Microsoft article for a list of available voices and instructions to install them: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
-Please note that the faster rates available with Narrator are not currently available with NVDA.
-Also, the speed you select in the Windows Settings affects the rate set in NVDA.
-These are issues we cannot resolve without changes to Windows.
-We are hopeful that these will be addressed in a future Windows update.
-
-++ Audiologic Tts3 ++[Audiologic]
-This is a commercial speech synthesizer specifically for the Italian language.
-You must have the synthesizer installed on your system in order for it to be used with NVDA.
-For more information, please visit the Audiologic website at www.audiologic.it.
-
-This synthesizer does not support [spelling functionality #SpeechSettingsUseSpelling].
 
 + Supported Braille Displays +[SupportedBrailleDisplays]
 This section contains information about the Braille displays supported by NVDA.
@@ -2895,8 +2891,7 @@ NVDA can accept one or more additional options when it starts which alter its be
 You can pass as many options as you need.
 These options can be passed when starting from a shortcut (in the shortcut properties), from the Run dialog (Start Menu -> Run or Windows+r) or from a Windows command console.
 Options should be separated from the name of NVDA's executable file and from other options by spaces.
-For example, the Desktop shortcut that NVDA creates during installation has the -r option, which tells NVDA to close the currently running copy before starting the new one.
-Another useful option is --disable-addons, which tells NVDA to suspend all running add-ons.
+For example, a useful option is --disable-addons, which tells NVDA to suspend all running add-ons.
 This allows you to determine whether a problem is caused by an add-on and to recover from serious problems caused by add-ons.
 
 As an example, you can exit the currently running copy of NVDA by entering the following in the Run dialog:
@@ -2905,8 +2900,8 @@ nvda -q
 
 Some of the command line options have a short and a long version, while some of them have only a long version.
 For those which have a short version, you can combine them like this:
-| nvda -rm | This will exit the currently running copy of NVDA and will start a new copy with startup sounds disabled, etc. |
-| nvda -rm --disable-addons | Same as above, but with add-ons disabled |
+| nvda -mc CONFIGPATH | This will start NVDA with startup sounds and message disabled, and the specified configuration |
+| nvda -mc CONFIGPATH --disable-addons | Same as above, but with add-ons disabled |
 
 Some of the command line options accept additional parameters; e.g. how detailed the logging should be or the path to the user configuration directory.
 Those parameters should be placed after the option, separated from the option by a space when using the short version or an equals sign (=) when using the long version; e.g.:
@@ -2918,7 +2913,6 @@ Following are the command line options for NVDA:
 || Short | Long | Description |
 | -h | --help | show command line help and exit |
 | -q | --quit | Quit already running copy of NVDA |
-| -r | --replace | Quit already running copy of NVDA and start this one |
 | -k | --check-running | Report whether NVDA is running via the exit code; 0 if running, 1 if not running |
 | -f LOGFILENAME | --log-file=LOGFILENAME | The file where log messages should be written to |
 | -l LOGLEVEL | --log-level=LOGLEVEL | The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning |

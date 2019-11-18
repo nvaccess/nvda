@@ -3,6 +3,14 @@ Ce este nou în NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.2.1 =
+Aceasta este o versiune minoră care repară câteva erori prezente în NVDA 2019.2. Reparările includ:
+- Câteva crash-uri din Gmail văzute  în Firefox și în Chrome la interacțiunea cu meniuri pop-upp particulare, de exemplu la crearea de filtre sau la modificarea anumitor setări din Gmail. (#10175, #9402, #8924)
+- În Windows 7, NVDA nu mai face ca Windows Explorer să dea crash când e folosit mausul în meniul start. (#9435) 
+- În Windows 7, Windows Explorer nu mai dă crash la accesarea câmpurilor de editare de tip metadata. (#5337)
+- NVDA nu se mai blochează la interacțiunea cu o imagine cu un URI base64 în Mozilla Firefox sau Google Chrome. (#10227)
+
+
 = 2019.2 =
 Caracteristicile principale ale acestei versiuni includ autodetectarea afișajelor braille de la Freedom Scientific, o setare de test inclusă în panoul de setări avansate care  face ca modul de navigare să nu mai miște focalizarea de unul singur, (această setare poate aduce îmbunătățiri), o opțiune de amplificare a vitezei pentru sintetizatorul Windows OneCore pentru ca mărirea vitezei vocilor să fie mai accentuată și multe alte defecte rezolvate.
 

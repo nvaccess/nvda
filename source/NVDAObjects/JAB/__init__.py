@@ -97,6 +97,13 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		offset=max(min(info.indexAtPoint,info.charCount-1),0)
 		return offset
 
+	def _getBoundingRectFromOffset(self, offset):
+		rect = self.obj.jabContext.getAccessibleTextRect(offset)
+		try:
+			return RectLTWH(rect.x, rect.y, rect.width, rect.height).toLTRB()
+		except ValueError:
+			raise LookupError
+
 	def _getCaretOffset(self):
 		textInfo=self.obj.jabContext.getAccessibleTextInfo(self.obj._JABAccContextInfo.x,self.obj._JABAccContextInfo.y)
 		offset=textInfo.caretIndex
