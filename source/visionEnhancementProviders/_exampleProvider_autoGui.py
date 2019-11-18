@@ -54,7 +54,10 @@ class AutoGuiTestSettings(VisionEnhancementProviderSettings):
 		return "Example Provider with Auto Gui"  # Should normally be translated with _() method.
 
 	@classmethod
-	def _get_preInitSettings(cls) -> SupportedSettingType:
+	def getPreInitSettings(cls) -> SupportedSettingType:
+		"""Get settings that can be configured before the provider is initialized.
+		This is a class method because it does not rely on any instance state in this class.
+		"""
 		return [
 			driverHandler.BooleanDriverSetting(
 				"shouldDoX",  # value stored in matching property name on class
@@ -116,7 +119,7 @@ class AutoGuiTestSettings(VisionEnhancementProviderSettings):
 
 	def _get_supportedSettings(self) -> SupportedSettingType:
 		settings = []
-		settings.extend(self.preInitSettings)
+		settings.extend(self.getPreInitSettings())
 		settings.extend(self._getAvailableRuntimeSettings())
 		return settings
 

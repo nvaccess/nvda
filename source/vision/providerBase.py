@@ -24,12 +24,10 @@ class VisionEnhancementProviderSettings(AutoSettings):
 	- AutoSettings.getTranslatedName:
 			The string that should appear in the GUI as the name.
 	- AutoSettings._get_supportedSettings:
-			The "runtime" settings for your provider. By default this just returns L{_get_preInitSettings}.
+			The settings for your provider, the returned list is permitted to change during
+			start / termination of the provider.
 			The implementation must handle how to modify the returned settings based on external (software,
 			hardware) dependencies.
-	Although technically optional, derived classes probably need to implement:
-	- AutoSettings._get_preInitSettings:
-			The settings that are always configurable for your provider.
 	@note
 	If the vision enhancement provider has settings, it will provide an implementation of this class.
 	The provider will hold a reference to an instance of this class, this is accessed through the class method

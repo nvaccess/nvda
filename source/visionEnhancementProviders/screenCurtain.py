@@ -109,8 +109,7 @@ class ScreenCurtainSettings(VisionEnhancementProviderSettings):
 	def getTranslatedName(cls) -> str:
 		return screenCurtainTranslatedName
 
-	@classmethod
-	def _get_preInitSettings(cls) -> SupportedSettingType:
+	def _get_supportedSettings(self) -> SupportedSettingType:
 		return [
 			BooleanDriverSetting(
 				"warnOnLoad",
@@ -118,9 +117,6 @@ class ScreenCurtainSettings(VisionEnhancementProviderSettings):
 				defaultVal=True
 			),
 		]
-
-	def _get_supportedSettings(self) -> SupportedSettingType:
-		return super().supportedSettings
 
 
 warnOnLoadText = _(
@@ -188,7 +184,7 @@ class WarnOnLoadDialog(gui.nvdaControls.MessageDialog):
 		if result == wx.YES:
 			settingsStorage = self._settingsStorage
 			settingsStorage.warnOnLoad = self.showWarningOnLoadCheckBox.IsChecked()
-			settingsStorage._saveSpecificSettings(settingsStorage, settingsStorage.preInitSettings)
+			settingsStorage._saveSpecificSettings(settingsStorage, settingsStorage.supportedSettings)
 		self.EndModal(result)
 
 	def _onDialogActivated(self, evt):

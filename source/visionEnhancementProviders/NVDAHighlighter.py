@@ -217,8 +217,7 @@ class NVDAHighlighterSettings(vision.providerBase.VisionEnhancementProviderSetti
 		# Translators: Description for NVDA's built-in screen highlighter.
 		return _("Focus Highlight")
 
-	@classmethod
-	def _get_preInitSettings(cls) -> SupportedSettingType:
+	def _get_supportedSettings(self) -> SupportedSettingType:
 		return [
 			driverHandler.BooleanDriverSetting(
 				'highlight%s' % (context[0].upper() + context[1:]),
@@ -227,9 +226,6 @@ class NVDAHighlighterSettings(vision.providerBase.VisionEnhancementProviderSetti
 			)
 			for context in _supportedContexts
 		]
-
-	def _get_supportedSettings(self) -> SupportedSettingType:
-		return super().supportedSettings
 
 
 class NVDAHighlighterGuiPanel(
