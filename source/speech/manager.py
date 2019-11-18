@@ -8,7 +8,7 @@ from logHandler import log
 import queueHandler
 import synthDriverHandler
 from .commands import *
-from .priorities import *
+from .priorities import Spri, SPEECH_PRIORITIES
 
 class ParamChangeTracker(object):
 	"""Keeps track of commands which change parameters from their defaults.
@@ -171,8 +171,8 @@ class SpeechManager(object):
 			queue = self._priQueues[priority] = _ManagerPriorityQueue(priority)
 		first = len(queue.pendingSequences) == 0
 		queue.pendingSequences.extend(outSeq)
-		if priority is SPRI_NOW and first:
-			# If this is the first sequence at SPRI_NOW, interrupt speech.
+		if priority is Spri.NOW and first:
+			# If this is the first sequence at Spri.NOW, interrupt speech.
 			return True
 		return False
 

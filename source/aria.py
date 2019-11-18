@@ -1,16 +1,17 @@
-#aria.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2009-2014 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2009-2019 NV Access Limited, Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+from typing import Dict
 
 import controlTypes
 
-ariaRolesToNVDARoles={
+ariaRolesToNVDARoles: Dict[str, int] = {
 	"description":controlTypes.ROLE_STATICTEXT,
 	"search":controlTypes.ROLE_SECTION,
 	"alert":controlTypes.ROLE_ALERT,
 	"alertdialog":controlTypes.ROLE_DIALOG,
+	"article": controlTypes.ROLE_ARTICLE,
 	"application":controlTypes.ROLE_APPLICATION,
 	"button":controlTypes.ROLE_BUTTON,
 	"checkbox":controlTypes.ROLE_CHECKBOX,
@@ -58,13 +59,13 @@ ariaRolesToNVDARoles={
 	"treeitem":controlTypes.ROLE_TREEVIEWITEM,
 }
 
-ariaSortValuesToNVDAStates={
+ariaSortValuesToNVDAStates: Dict[str, int] = {
 	'descending':controlTypes.STATE_SORTED_DESCENDING,
 	'ascending':controlTypes.STATE_SORTED_ASCENDING,
 	'other':controlTypes.STATE_SORTED,
 }
 
-landmarkRoles = {
+landmarkRoles: Dict[str, str] = {
 	# Translators: Reported for the banner landmark, normally found on web pages.
 	"banner": pgettext("aria", "banner"),
 	# Translators: Reported for the complementary landmark, normally found on web pages.
@@ -84,9 +85,13 @@ landmarkRoles = {
 	"region": pgettext("aria", "region"),
 }
 
-htmlNodeNameToAriaLandmarkRoles = {
+htmlNodeNameToAriaRoles: Dict[str, str] = {
 	"header": "banner",
 	"nav": "navigation",
 	"main": "main",
 	"footer": "contentinfo",
+	"article": "article",
+	"section": "region",
+	"aside": "complementary",
+	"dialog": "dialog",
 }
