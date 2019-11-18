@@ -136,11 +136,16 @@ class EdgeTextInfo(UIATextInfo):
 		role=field.get('role')
 		# Fields should be treated as block for certain roles.
 		# This can affect whether the field is presented as a container (e.g.  announcing entering and exiting) 
-		if role in (controlTypes.ROLE_GROUPING,controlTypes.ROLE_SECTION,controlTypes.ROLE_PARAGRAPH):
+		if role in (
+			controlTypes.ROLE_GROUPING,
+			controlTypes.ROLE_SECTION,
+			controlTypes.ROLE_PARAGRAPH,
+			controlTypes.ROLE_ARTICLE,
+		):
 			field['isBlock']=True
-		# ARIA roledescription
+		# ARIA roledescription and landmarks
 		field['roleText']=obj.roleText
-		# report landmarks
+		# provide landmarks
 		field['landmark']=obj.landmark
 		# Combo boxes with a text pattern are editable
 		if obj.role==controlTypes.ROLE_COMBOBOX and obj.UIATextPattern:
@@ -479,7 +484,10 @@ class EdgeNode(UIA):
 		return None
 
 	def _get_roleText(self):
-		return self.ariaProperties.get('roledescription', None)
+		roleText = self.ariaProperties.get('roledescription', None)
+		if roleText:
+			return roleText
+		return super().roleText
 
 	def _get_placeholder(self):
 		ariaPlaceholder = self.ariaProperties.get('placeholder', None)
