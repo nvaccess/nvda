@@ -8,6 +8,7 @@ This implementation only works on Windows 8 and above.
 """
 
 import vision
+from vision import providerBase
 import winVersion
 from ctypes import Structure, windll, c_float, POINTER, WINFUNCTYPE, WinError
 from ctypes.wintypes import BOOL
@@ -16,9 +17,6 @@ from autoSettingsUtils.autoSettings import SupportedSettingType
 import wx
 import gui
 from logHandler import log
-from vision.providerBase import (
-	VisionEnhancementProviderSettings,
-)
 from typing import Optional, Type
 
 
@@ -97,7 +95,7 @@ warnOnLoadCheckBoxText = (
 )
 
 
-class ScreenCurtainSettings(VisionEnhancementProviderSettings):
+class ScreenCurtainSettings(providerBase.VisionEnhancementProviderSettings):
 
 	warnOnLoad: bool
 
@@ -286,7 +284,7 @@ class ScreenCurtainGuiPanel(
 			return res == wx.YES
 
 
-class ScreenCurtainProvider(vision.providerBase.VisionEnhancementProvider):
+class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 	_settings = ScreenCurtainSettings()
 
 	@classmethod

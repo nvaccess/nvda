@@ -3,12 +3,11 @@
 # See the file COPYING for more details.
 # Copyright (C) 2019 NV Access Limited
 
-import vision
+from vision import providerBase
 import driverHandler
 import wx
 from autoSettingsUtils.utils import StringParameterInfo
 from autoSettingsUtils.autoSettings import SupportedSettingType
-from vision.providerBase import VisionEnhancementProviderSettings
 from typing import Optional, Type, Any, List
 
 """Example provider, which demonstrates using the automatically constructed GUI. Rename this file, removing
@@ -22,7 +21,7 @@ This might be because the provider must interface with an external application o
 """
 
 
-class AutoGuiTestSettings(VisionEnhancementProviderSettings):
+class AutoGuiTestSettings(providerBase.VisionEnhancementProviderSettings):
 
 	#: dictionary of the setting id's available when provider is running.
 	_availableRuntimeSettings = [
@@ -124,7 +123,7 @@ class AutoGuiTestSettings(VisionEnhancementProviderSettings):
 		return settings
 
 
-class AutoGuiTestProvider(vision.providerBase.VisionEnhancementProvider):
+class AutoGuiTestProvider(providerBase.VisionEnhancementProvider):
 	_settings = AutoGuiTestSettings()
 
 	@classmethod

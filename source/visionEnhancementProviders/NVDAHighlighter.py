@@ -7,11 +7,12 @@
 """Default highlighter based on GDI Plus."""
 from typing import Optional, Tuple
 
+from autoSettingsUtils.autoSettings import SupportedSettingType
 import vision
 from vision.constants import Context
-from autoSettingsUtils.autoSettings import SupportedSettingType
 from vision.util import getContextRect
 from vision.visionHandlerExtensionPoints import EventExtensionPoints
+from vision import providerBase
 from windowUtils import CustomWindow
 import wx
 import gui
@@ -202,7 +203,7 @@ _contextOptionLabelsWithAccelerators = {
 _supportedContexts = (Context.FOCUS, Context.NAVIGATOR, Context.BROWSEMODE)
 
 
-class NVDAHighlighterSettings(vision.providerBase.VisionEnhancementProviderSettings):
+class NVDAHighlighterSettings(providerBase.VisionEnhancementProviderSettings):
 	# Default settings for parameters
 	highlightFocus = False
 	highlightNavigator = False
@@ -328,7 +329,7 @@ class NVDAHighlighterGuiPanel(
 			providerInst.refresh()
 
 
-class NVDAHighlighter(vision.providerBase.VisionEnhancementProvider):
+class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 	_ContextStyles = {
 		Context.FOCUS: DASH_BLUE,
 		Context.NAVIGATOR: SOLID_PINK,
