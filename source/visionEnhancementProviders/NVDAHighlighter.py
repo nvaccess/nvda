@@ -5,10 +5,14 @@
 # Copyright (C) 2018-2019 NV Access Limited, Babbage B.V., Takuya Nishimoto
 
 """Default highlighter based on GDI Plus."""
+from typing import Optional, Tuple
 
+from autoSettingsUtils.autoSettings import SupportedSettingType
 import vision
-from vision.constants import Role, Context
+from vision.constants import Context
 from vision.util import getContextRect
+from vision.visionHandlerExtensionPoints import EventExtensionPoints
+from vision import providerBase
 from windowUtils import CustomWindow
 import wx
 import gui
@@ -184,60 +188,187 @@ class HighlightWindow(CustomWindow):
 		winUser.user32.InvalidateRect(self.handle, None, True)
 
 
-class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
-	name = "NVDAHighlighter"
-	# Translators: Description for NVDA's built-in screen highlighter.
-	description = _("NVDA Highlighter")
-	supportedRoles = frozenset([Role.HIGHLIGHTER])
-	supportedContexts = (Context.FOCUS, Context.NAVIGATOR, Context.BROWSEMODE)
+_contextOptionLabelsWithAccelerators = {
+	# Translators: shown for a highlighter setting that toggles
+	# highlighting the system focus.
+	Context.FOCUS: _("Highlight system fo&cus"),
+	# Translators: shown for a highlighter setting that toggles
+	# highlighting the browse mode cursor.
+	Context.BROWSEMODE: _("Highlight browse &mode cursor"),
+	# Translators: shown for a highlighter setting that toggles
+	# highlighting the navigator object.
+	Context.NAVIGATOR: _("Highlight navigator &object"),
+}
+
+_supportedContexts = (Context.FOCUS, Context.NAVIGATOR, Context.BROWSEMODE)
+
+
+class NVDAHighlighterSettings(providerBase.VisionEnhancementProviderSettings):
+	# Default settings for parameters
+	highlightFocus = False
+	highlightNavigator = False
+	highlightBrowseMode = False
+
+	@classmethod
+	def getId(cls) -> str:
+		return "NVDAHighlighter"
+
+	@classmethod
+	def getDisplayName(cls) -> str:
+		# Translators: Description for NVDA's built-in screen highlighter.
+		return _("Focus Highlight")
+
+	def _get_supportedSettings(self) -> SupportedSettingType:
+		return [
+			driverHandler.BooleanDriverSetting(
+				'highlight%s' % (context[0].upper() + context[1:]),
+				_contextOptionLabelsWithAccelerators[context],
+				defaultVal=True
+			)
+			for context in _supportedContexts
+		]
+
+
+class NVDAHighlighterGuiPanel(
+		gui.AutoSettingsMixin,
+		gui.SettingsPanel
+):
+	_enableCheckSizer: wx.BoxSizer
+	_enabledCheckbox: wx.CheckBox
+
+	from gui.settingsDialogs import VisionProviderStateControl
+
+	def __init__(
+			self,
+			parent: wx.Window,
+			providerControl: VisionProviderStateControl
+	):
+		self._providerControl = providerControl
+		super().__init__(parent)
+
+	def _buildGui(self):
+		self.mainSizer = wx.BoxSizer(wx.VERTICAL)
+
+		self._enabledCheckbox = wx.CheckBox(
+			self,
+			#  Translators: The label for a checkbox that enables / disables focus highlighting
+			#  in the NVDA Highlighter vision settings panel.
+			label=_("&Enable Highlighting"),
+			style=wx.CHK_3STATE
+		)
+
+		self.mainSizer.Add(self._enabledCheckbox)
+		self.mainSizer.AddSpacer(size=self.scaleSize(10))
+		# this options separator is done with text rather than a group box because a groupbox is too verbose,
+		# but visually some separation is helpful, since the rest of the options are really sub-settings.
+		self.optionsText = wx.StaticText(
+			self,
+			# Translators: The label for a group box containing the NVDA highlighter options.
+			label=_("Options:")
+		)
+		self.mainSizer.Add(self.optionsText)
+
+		self.lastControl = self.optionsText
+		self.settingsSizer = wx.BoxSizer(wx.VERTICAL)
+		self.makeSettings(self.settingsSizer)
+		self.mainSizer.Add(self.settingsSizer, border=self.scaleSize(15), flag=wx.LEFT | wx.EXPAND)
+		self.mainSizer.Fit(self)
+		self.SetSizer(self.mainSizer)
+
+	def getSettings(self) -> NVDAHighlighterSettings:
+		# AutoSettingsMixin uses the getSettings method (via getSettingsStorage) to get the instance which is
+		# used to get / set attributes. The attributes must match the id's of the settings.
+		# We want them set on our settings instance.
+		return VisionEnhancementProvider.getSettings()
+
+	def makeSettings(self, sizer: wx.BoxSizer):
+		self.updateDriverSettings()
+		# bind to all check box events
+		self.Bind(wx.EVT_CHECKBOX, self._onCheckEvent)
+		self._updateEnabledState()
+
+	def onPanelActivated(self):
+		self.lastControl = self.optionsText
+
+	def _updateEnabledState(self):
+		settings = self._getSettingsStorage()
+		settingsToTriggerActivation = [
+			settings.highlightBrowseMode,
+			settings.highlightFocus,
+			settings.highlightNavigator,
+		]
+		if any(settingsToTriggerActivation):
+			if all(settingsToTriggerActivation):
+				self._enabledCheckbox.Set3StateValue(wx.CHK_CHECKED)
+			else:
+				self._enabledCheckbox.Set3StateValue(wx.CHK_UNDETERMINED)
+			self._ensureEnableState(True)
+		else:
+			self._enabledCheckbox.Set3StateValue(wx.CHK_UNCHECKED)
+			self._ensureEnableState(False)
+
+	def _ensureEnableState(self, shouldBeEnabled: bool):
+		currentlyEnabled = bool(self._providerControl.getProviderInstance())
+		if shouldBeEnabled and not currentlyEnabled:
+			self._providerControl.startProvider()
+		elif not shouldBeEnabled and currentlyEnabled:
+			self._providerControl.terminateProvider()
+
+	def _onCheckEvent(self, evt: wx.CommandEvent):
+		settingsStorage = self._getSettingsStorage()
+		if evt.GetEventObject() is self._enabledCheckbox:
+			settingsStorage.highlightBrowseMode = evt.IsChecked()
+			settingsStorage.highlightFocus = evt.IsChecked()
+			settingsStorage.highlightNavigator = evt.IsChecked()
+			self._ensureEnableState(evt.IsChecked())
+			self.updateDriverSettings()
+		else:
+			self._updateEnabledState()
+		providerInst: Optional[NVDAHighlighter] = self._providerControl.getProviderInstance()
+		if providerInst:
+			providerInst.refresh()
+
+
+class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 	_ContextStyles = {
 		Context.FOCUS: DASH_BLUE,
 		Context.NAVIGATOR: SOLID_PINK,
 		Context.FOCUS_NAVIGATOR: SOLID_BLUE,
 		Context.BROWSEMODE: SOLID_YELLOW,
 	}
-	refreshInterval = 100
+	_refreshInterval = 100
 	customWindowClass = HighlightWindow
+	_settings = NVDAHighlighterSettings()
 
-	# Default settings for parameters
-	highlightFocus = True
-	highlightNavigator = True
-	highlightBrowseMode = True
+	enabledContexts: Tuple[Context]  # type info for autoprop: L{_get_enableContexts}
 
-	_contextOptionLabelsWithAccelerators = {
-		# Translators: shown for a highlighter setting that toggles
-		# highlighting the system focus.
-		Context.FOCUS: _("Highlight system fo&cus"),
-		# Translators: shown for a highlighter setting that toggles
-		# highlighting the browse mode cursor.
-		Context.BROWSEMODE: _("Highlight browse &mode cursor"),
-		# Translators: shown for a highlighter setting that toggles
-		# highlighting the navigator object.
-		Context.NAVIGATOR: _("Highlight navigator &object"),
-	}
+	@classmethod  # override
+	def getSettings(cls) -> NVDAHighlighterSettings:
+		return cls._settings
 
-	@classmethod
-	def _get_supportedSettings(cls):
-		return [
-			driverHandler.BooleanDriverSetting(
-				'highlight%s' % (context[0].upper() + context[1:]),
-				cls._contextOptionLabelsWithAccelerators[context],
-				defaultVal=True
-			)
-			for context in cls.supportedContexts
-		]
+	@classmethod  # override
+	def getSettingsPanelClass(cls):
+		"""Returns the class to be used in order to construct a settings panel for the provider.
+		@return: Optional[SettingsPanel]
+		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.
+		"""
+		return NVDAHighlighterGuiPanel
 
-	@classmethod
+	@classmethod  # override
 	def canStart(cls) -> bool:
 		return True
 
-	def registerEventExtensionPoints(self, extensionPoints):
+	def registerEventExtensionPoints(  # override
+			self,
+			extensionPoints: EventExtensionPoints
+	) -> None:
 		extensionPoints.post_focusChange.register(self.handleFocusChange)
 		extensionPoints.post_reviewMove.register(self.handleReviewMove)
 		extensionPoints.post_browseModeMove.register(self.handleBrowseModeMove)
 
 	def __init__(self):
-		super(VisionEnhancementProvider, self).__init__()
+		super().__init__()
+		log.debug("Starting NVDAHighlighter")
 		self.contextToRectMap = {}
 		winGDI.gdiPlusInitialize()
 		self.window = None
@@ -249,6 +380,7 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 		self._highlighterThread.start()
 
 	def terminate(self):
+		log.debug("Terminating NVDAHighlighter")
 		if self._highlighterThread:
 			if not winUser.user32.PostThreadMessageW(self._highlighterThread.ident, winUser.WM_QUIT, 0, 0):
 				raise WinError()
@@ -256,13 +388,13 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 			self._highlighterThread = None
 		winGDI.gdiPlusTerminate()
 		self.contextToRectMap.clear()
-		super(VisionEnhancementProvider, self).terminate()
+		super().terminate()
 
 	def _run(self):
 		if vision._isDebug():
 			log.debug("Starting NVDAHighlighter thread")
 		window = self.window = self.customWindowClass(self)
-		self.timer = winUser.WinTimer(window.handle, 0, self.refreshInterval, None)
+		self.timer = winUser.WinTimer(window.handle, 0, self._refreshInterval, None)
 		msg = MSG()
 		while winUser.getMessage(byref(msg), None, 0, 0):
 			winUser.user32.TranslateMessage(byref(msg))
@@ -313,6 +445,9 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 		"""Gets the contexts for which the highlighter is enabled.
 		"""
 		return tuple(
-			context for context in self.supportedContexts
-			if getattr(self, 'highlight%s' % (context[0].upper() + context[1:]))
+			context for context in _supportedContexts
+			if getattr(self.getSettings(), 'highlight%s' % (context[0].upper() + context[1:]))
 		)
+
+
+VisionEnhancementProvider = NVDAHighlighter

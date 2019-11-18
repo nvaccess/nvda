@@ -7,35 +7,138 @@
 """Module within the vision framework that contains the base vision enhancement provider class.
 """
 
-import driverHandler
 from abc import abstractmethod
-from .constants import Role
+
+from autoSettingsUtils.autoSettings import AutoSettings
+from baseObject import AutoPropertyObject
 from .visionHandlerExtensionPoints import EventExtensionPoints
-from typing import FrozenSet
+from typing import Optional, Any
 
 
-class VisionEnhancementProvider(driverHandler.Driver):
-	"""A class for vision enhancement providers.
+class VisionEnhancementProviderSettings(AutoSettings):
+	"""
+	Base class for settings for a vision enhancement provider.
+	Ensure that the following are implemented:
+	- AutoSettings.getId:
+			This is case sensitive. Used in the config file. Does not have to match the module name.
+	- AutoSettings.getDisplayName:
+			The string that should appear in the GUI as the name.
+	- AutoSettings._get_supportedSettings:
+			The settings for your provider, the returned list is permitted to change during
+			start / termination of the provider.
+			The implementation must handle how to modify the returned settings based on external (software,
+			hardware) dependencies.
+	@note
+	If the vision enhancement provider has settings, it will provide an implementation of this class.
+	The provider will hold a reference to an instance of this class, this is accessed through the class method
+	L{VisionEnhancementProvider.getSettings}.
+	One way to handle settings that are strictly runtime:
+	- During initialization, the vision enhancement provider can instruct the settings instance what it should
+	expose using the L{utoSettings._get_supportedSettings} property.
+	- "_exampleProvider_autoGui.py" provides an example of this.
+	"""
+	def __init__(self):
+		super().__init__()
+		self.initSettings()  # ensure that settings are loaded at construction time.
+
+	@classmethod
+	def _getConfigSection(cls) -> str:
+		return "vision"  # all providers should be in the "vision" section.
+
+
+class VisionProviderStateControl:
+	""" Stub showing the interface for controlling the start/termination of a single provider.
+			Implementors of this class should handle the outcome when things go wrong.
 	"""
 
-	_configSection = "vision"
-	cachePropertiesByDefault = True
-	#: Override of supportedSettings to be a class property.
-	supportedSettings = ()
-	#: The roles supported by this provider.
-	#: This attribute is currently not used,
-	#: but might be later for presentational purposes.
-	supportedRoles: FrozenSet[Role] = frozenset()
+	@abstractmethod
+	def getProviderInfo(self):
+		"""
+		@return: The provider info
+		@rtype: providerInfo.ProviderInfo
+		"""
 
-	def reinitialize(self):
-		"""Reinitializes a vision enhancement provider, reusing the same instance.
+	@abstractmethod
+	def getProviderInstance(self):
+		"""Gets an instance for the provider if it already exists
+		@rtype: Optional[VisionEnhancementProvider]
+		"""
+
+	@abstractmethod
+	def startProvider(self, shouldPromptOnError: bool) -> bool:
+		"""Initializes the provider, prompting user with the error if necessary.
+		@param shouldPromptOnError: True if  the user should be presented with any errors that may occur.
+		@return: True on success
+		"""
+
+	@abstractmethod
+	def terminateProvider(self, shouldPromptOnError: bool) -> bool:
+		"""Terminate the provider, prompting user with the error if necessary.
+		@param shouldPromptOnError: True if  the user should be presented with any errors that may occur.
+		@return: True on success
+		"""
+
+
+class VisionEnhancementProvider(AutoPropertyObject):
+	"""A class for vision enhancement providers.
+	Derived classes should implement:
+	- terminate:
+			How to shutdown the provider
+	- registerEventExtensionPoints:
+			Allows the provider to receive updates form NVDA
+	- canStart:
+			Checks startup dependencies are satisfied
+	- getSettings:
+			Returns your implementation of VisionEnhancementProviderSettings
+	Optional: To provide a custom GUI, return a SettingsPanel class type from:
+	- getSettingsPanelClass
+	"""
+	cachePropertiesByDefault = True
+
+	@classmethod
+	@abstractmethod
+	def getSettings(cls) -> VisionEnhancementProviderSettings:
+		"""
+		@remarks: The L{VisionEnhancementProviderSettings} class should be implemented to define the settings
+			for your provider
+		"""
+		...
+
+	@classmethod
+	def getSettingsPanelClass(cls) -> Optional[Any]:
+		"""Returns the class to be used in order to construct a settingsPanel instance for the provider.
+		The returned class must have a constructor which accepts:
+			- parent: wx.Window
+			- providerControl: VisionProviderStateControl
+		EG:
+		``` python
+		class mySettingsPanel(gui.settingsDialogs.SettingsPanel):
+			def __init__(self, parent: wx.Window, providerControl: VisionProviderStateControl):
+				super().__init__(parent=parent)
+		```
+		@rtype: Optional[SettingsPanel]
+		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.
+		"""
+		return None
+
+	def reinitialize(self) -> None:
+		"""Reinitialize a vision enhancement provider, reusing the same instance.
 		This base implementation simply calls terminate and __init__ consecutively.
 		"""
 		self.terminate()
 		self.__init__()
 
 	@abstractmethod
-	def registerEventExtensionPoints(self, extensionPoints: EventExtensionPoints):
+	def terminate(self) -> None:
+		"""Terminate this provider.
+		This should be used for any required clean up.
+		@precondition: L{initialize} has been called.
+		@postcondition: This provider can no longer be used.
+		"""
+		...
+
+	@abstractmethod
+	def registerEventExtensionPoints(self, extensionPoints: EventExtensionPoints) -> None:
 		"""
 		Called at provider initialization time, this method should register the provider
 		to the several event extension points that it is interested in.
@@ -44,14 +147,10 @@ class VisionEnhancementProvider(driverHandler.Driver):
 		as it might be called again several times between initialization and termination.
 		@param extensionPoints: An object containing available extension points as attributes.
 		"""
-		pass
+		...
 
 	@classmethod
 	@abstractmethod
 	def canStart(cls) -> bool:
 		"""Returns whether this provider is able to start."""
 		return False
-
-	@classmethod
-	def check(cls) -> bool:
-		return cls.canStart()
