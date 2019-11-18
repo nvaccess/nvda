@@ -10,6 +10,7 @@ import os
 from typing import Iterable, Union, Tuple, List, Optional
 
 import driverHandler
+from autoSettingsUtils import driverSetting
 import pkgutil
 import importlib
 import ctypes.wintypes
@@ -2190,7 +2191,8 @@ class BrailleDisplayDriver(driverHandler.Driver):
 
 	@see: L{hwIo} for raw serial and HID I/O.
 
-	There are factory functions to create L{driverHandler.DriverSetting} instances for common display specific settings; e.g. L{DotFirmnessSetting}.
+	There are factory functions to create L{autoSettingsUtils.driverSetting.DriverSetting} instances for
+	common display specific settings; e.g. L{DotFirmnessSetting}.
 	"""
 	_configSection = "braille"
 	# Most braille display drivers don't have settings yet.
@@ -2406,12 +2408,12 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		_BgThread.queueApc(_BgThread.executor)
 
 	@classmethod
-	def DotFirmnessSetting(cls,defaultVal,minVal,maxVal,useConfig=False):
+	def DotFirmnessSetting(cls, defaultVal, minVal, maxVal, useConfig=False):
 		"""Factory function for creating dot firmness setting."""
-		return driverHandler.NumericDriverSetting(
-			"dotFirmness",
+		return driverSetting.NumericDriverSetting(
+			id="dotFirmness",
 			# Translators: Label for a setting in braille settings dialog.
-			_("Dot firm&ness"),
+			displayNameWithAccelerator=_("Dot firm&ness"),
 			defaultVal=defaultVal,
 			minVal=minVal,
 			maxVal=maxVal,
@@ -2421,22 +2423,23 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	@classmethod
 	def BrailleInputSetting(cls, useConfig=True):
 		"""Factory function for creating braille input setting."""
-		return driverHandler.BooleanDriverSetting(
-			"brailleInput",
+		return driverSetting.BooleanDriverSetting(
+			id="brailleInput",
 			# Translators: Label for a setting in braille settings dialog.
-			_("Braille inp&ut"),
+			displayNameWithAccelerator=_("Braille inp&ut"),
 			useConfig=useConfig
 		)
 
 	@classmethod
 	def HIDInputSetting(cls, useConfig):
 		"""Factory function for creating HID input setting."""
-		return driverHandler.BooleanDriverSetting(
-			"hidKeyboardInput",
+		return driverSetting.BooleanDriverSetting(
+			id="hidKeyboardInput",
 			# Translators: Label for a setting in braille settings dialog.
-			_("&HID keyboard input simulation"),
+			displayNameWithAccelerator=_("&HID keyboard input simulation"),
 			useConfig=useConfig
 		)
+
 
 class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.

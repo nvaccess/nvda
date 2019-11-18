@@ -7,8 +7,11 @@
 """Utility methods for Driver and AutoSettings instances
 """
 
+from dataclasses import dataclass
+
 
 def paramToPercent(current: int, min: int, max: int) -> int:
+
 	"""Convert a raw parameter value to a percentage given the current, minimum and maximum raw values.
 	@param current: The current value.
 	@type current: int
@@ -39,17 +42,12 @@ class UnsupportedConfigParameterError(NotImplementedError):
 	"""
 
 
-class StringParameterInfo(object):
+@dataclass
+class StringParameterInfo:
 	"""
 	Used to represent a value of a DriverSetting instance.
 	"""
+	#: The unique identifier of the value.
 	id: str
+	#: The name of the value, visible to the user.
 	displayName: str
-
-	def __init__(self, id: str, displayName: str):
-		"""
-		@param id: The unique identifier of the value.
-		@param displayName: The name of the value, visible to the user.
-		"""
-		self.id = id
-		self.displayName = displayName

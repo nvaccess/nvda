@@ -19,8 +19,11 @@ import speechDictHandler
 import extensionPoints
 import synthDrivers
 import driverHandler
-from driverHandler import StringParameterInfo # Backwards compatibility
+from autoSettingsUtils.utils import StringParameterInfo
+from autoSettingsUtils import driverSetting
 from abc import abstractmethod
+from dataclasses import dataclass, field
+from typing import Optional
 
 _curSynth=None
 _audioOutputDevice=None
@@ -147,7 +150,8 @@ class SynthDriver(driverHandler.Driver):
 	At a minimum, synth drivers must set L{name} and L{description} and override the L{check} method.
 	The methods L{speak}, L{cancel} and L{pause} should be overridden as appropriate.
 	L{supportedSettings} should be set as appropriate for the settings supported by the synthesiser.
-	There are factory functions to create L{driverHandler.DriverSetting} instances for common settings; e.g. L{VoiceSetting} and L{RateSetting}.
+	There are factory functions to create L{autoSettingsUtils.driverSetting.DriverSetting} instances for
+	common settings; e.g. L{VoiceSetting} and L{RateSetting}.
 	Each setting is retrieved and set using attributes named after the setting;
 	e.g. the L{voice} attribute is used for the L{voice} setting.
 	These will usually be properties.
@@ -193,65 +197,103 @@ class SynthDriver(driverHandler.Driver):
 	@classmethod
 	def LanguageSetting(cls):
 		"""Factory function for creating a language setting."""
-		# Translators: Label for a setting in voice settings dialog.
-		return driverHandler.DriverSetting("language",_("&Language"),availableInSettingsRing=True,
-		# Translators: Label for a setting in synth settings ring.
-		displayName=pgettext('synth setting','Language'))
+		return driverSetting.DriverSetting(
+			id="language",
+			# Translators: Label for a setting in voice settings dialog.
+			displayNameWithAccelerator=_("&Language"),
+			availableInSettingsRing=True,
+			# Translators: Label for a setting in synth settings ring.
+			displayName=pgettext('synth setting', 'Language')
+		)
 
 	@classmethod
 	def VoiceSetting(cls):
 		"""Factory function for creating voice setting."""
-		# Translators: Label for a setting in voice settings dialog.
-		return driverHandler.DriverSetting("voice",_("&Voice"),availableInSettingsRing=True,
-		# Translators: Label for a setting in synth settings ring.
-		displayName=pgettext('synth setting','Voice'))
+		return driverSetting.DriverSetting(
+			id="voice",
+			# Translators: Label for a setting in voice settings dialog.
+			displayNameWithAccelerator=_("&Voice"),
+			availableInSettingsRing=True,
+			# Translators: Label for a setting in synth settings ring.
+			displayName=pgettext('synth setting', 'Voice')
+		)
+
 	@classmethod
 	def VariantSetting(cls):
 		"""Factory function for creating variant setting."""
-		# Translators: Label for a setting in voice settings dialog.
-		return driverHandler.DriverSetting("variant",_("V&ariant"),availableInSettingsRing=True,
-		# Translators: Label for a setting in synth settings ring.
-		displayName=pgettext('synth setting','Variant'))
+		return driverSetting.DriverSetting(
+			id="variant",
+			# Translators: Label for a setting in voice settings dialog.
+			displayNameWithAccelerator=_("V&ariant"),
+			availableInSettingsRing=True,
+			# Translators: Label for a setting in synth settings ring.
+			displayName=pgettext('synth setting', 'Variant')
+		)
 
 	@classmethod
 	def RateSetting(cls,minStep=1):
 		"""Factory function for creating rate setting."""
-		# Translators: Label for a setting in voice settings dialog.
-		return driverHandler.NumericDriverSetting("rate",_("&Rate"),minStep=minStep,availableInSettingsRing=True,
-		# Translators: Label for a setting in synth settings ring.
-		displayName=pgettext('synth setting','Rate'))
+		return driverSetting.NumericDriverSetting(
+			id="rate",
+			# Translators: Label for a setting in voice settings dialog.
+			displayNameWithAccelerator=_("&Rate"),
+			minStep=minStep,
+			availableInSettingsRing=True,
+			# Translators: Label for a setting in synth settings ring.
+			displayName=pgettext('synth setting', 'Rate')
+		)
+
 	@classmethod
 	def RateBoostSetting(cls):
 		"""Factory function for creating rate boost setting."""
-		# Translators: This is the name of the rate boost voice toggle
-		# which further increases the speaking rate when enabled.
-		return driverHandler.BooleanDriverSetting("rateBoost",_("Rate boos&t"),
-		# Translators: Label for a setting in synth settings ring.
-		displayName=pgettext('synth setting','Rate boost'),
-		availableInSettingsRing=True)
+		return driverSetting.BooleanDriverSetting(
+			id="rateBoost",
+			# Translators: This is the name of the rate boost voice toggle
+			# which further increases the speaking rate when enabled.
+			displayNameWithAccelerator=_("Rate boos&t"),
+			# Translators: Label for a setting in synth settings ring.
+			displayName=pgettext('synth setting', 'Rate boost'),
+			availableInSettingsRing=True
+		)
+
 	@classmethod
 	def VolumeSetting(cls,minStep=1):
 		"""Factory function for creating volume setting."""
-		# Translators: Label for a setting in voice settings dialog.
-		return driverHandler.NumericDriverSetting("volume",_("V&olume"),minStep=minStep,normalStep=5,availableInSettingsRing=True,
+		return driverSetting.NumericDriverSetting(
+			id="volume",
+			# Translators: Label for a setting in voice settings dialog.
+			displayNameWithAccelerator=_("V&olume"),
+			minStep=minStep,
+			availableInSettingsRing=True,
+			# Translators: Label for a setting in synth settings ring.
+			displayName=pgettext('synth setting', 'Volume')
+		)
 
-		# Translators: Label for a setting in synth settings ring.
-		displayName=pgettext('synth setting','Volume'))
 	@classmethod
 	def PitchSetting(cls,minStep=1):
 		"""Factory function for creating pitch setting."""
-		# Translators: Label for a setting in voice settings dialog.
-		return driverHandler.NumericDriverSetting("pitch",_("&Pitch"),minStep=minStep,availableInSettingsRing=True,
-		# Translators: Label for a setting in synth settings ring.
-		displayName=pgettext('synth setting','Pitch'))
+		return driverSetting.NumericDriverSetting(
+			id="pitch",
+			# Translators: Label for a setting in voice settings dialog.
+			displayNameWithAccelerator=_("&Pitch"),
+			minStep=minStep,
+			availableInSettingsRing=True,
+			# Translators: Label for a setting in synth settings ring.
+			displayName=pgettext('synth setting', 'Pitch')
+		)
 
 	@classmethod
 	def InflectionSetting(cls,minStep=1):
 		"""Factory function for creating inflection setting."""
-		# Translators: Label for a setting in voice settings dialog.
-		return driverHandler.NumericDriverSetting("inflection",_("&Inflection"),minStep=minStep,availableInSettingsRing=True,
-		# Translators: Label for a setting in synth settings ring.
-		displayName=pgettext('synth setting','Inflection'))
+		return driverSetting.NumericDriverSetting(
+			id="inflection",
+			# Translators: Label for a setting in voice settings dialog.
+			displayNameWithAccelerator=_("&Inflection"),
+			minStep=minStep,
+			availableInSettingsRing=True,
+			# Translators: Label for a setting in synth settings ring.
+			displayName=pgettext('synth setting', 'Inflection')
+		)
 
 	@abstractmethod
 	def speak(self, speechSequence):
@@ -405,26 +447,24 @@ class SynthDriver(driverHandler.Driver):
 			if s.id == "rate": return i
 		return None
 
-class VoiceInfo(driverHandler.StringParameterInfo):
+
+@dataclass
+class VoiceInfo(StringParameterInfo):
 	"""Provides information about a single synthesizer voice.
 	"""
+	#: The ID of the language this voice speaks,
+	#: C{None} if not known or the synth implements language separate from voices.
+	language: Optional[str] = None
 
-	def __init__(self, id, displayName, language=None):
-		"""
-		@param language: The ID of the language this voice speaks,
-			C{None} if not known or the synth implements language separate from voices.
-		@type language: str
-		"""
-		self.language=language
-		super(VoiceInfo,self).__init__(id, displayName)
 
-class LanguageInfo(driverHandler.StringParameterInfo):
+@dataclass
+class LanguageInfo(StringParameterInfo):
 	"""Holds information for a particular language"""
+	displayName: str = field(init=False)
 
-	def __init__(self, id):
-		"""Given a language ID (locale name) the description is automatically calculated."""
-		displayName = languageHandler.getLanguageDescription(id)
-		super(LanguageInfo,self).__init__(id, displayName)
+	def __post_init__(self):
+		self.displayName = languageHandler.getLanguageDescription(self.id)
+
 
 #: Notifies when a synthesizer reaches an index during speech.
 #: Handlers are called with these keyword arguments:

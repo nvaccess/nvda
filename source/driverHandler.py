@@ -12,7 +12,6 @@ from autoSettingsUtils.driverSetting import (  # noqa: F401
 	DriverSetting,
 	BooleanDriverSetting,
 	NumericDriverSetting,
-	AutoPropertyObject,
 )
 from autoSettingsUtils.utils import (  # noqa: F401
 	UnsupportedConfigParameterError,

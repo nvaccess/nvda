@@ -133,8 +133,8 @@ class AutoSettings(AutoPropertyObject):
 		section = cls._getConfigSection()
 		spec = deepcopy(config.confspec[section]["__many__"])
 		for setting in settings:
-			if not setting.useConfig:
-				continue
+			# Even if this setting isn't saved in config, it should be in the config spec
+			# to have appropriate default values when loading an instance.
 			spec[setting.id] = setting.configSpec
 		return spec
 
