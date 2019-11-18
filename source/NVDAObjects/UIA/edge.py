@@ -136,7 +136,12 @@ class EdgeTextInfo(UIATextInfo):
 		role=field.get('role')
 		# Fields should be treated as block for certain roles.
 		# This can affect whether the field is presented as a container (e.g.  announcing entering and exiting) 
-		if role in (controlTypes.ROLE_GROUPING,controlTypes.ROLE_SECTION,controlTypes.ROLE_PARAGRAPH):
+		if role in (
+			controlTypes.ROLE_GROUPING,
+			controlTypes.ROLE_SECTION,
+			controlTypes.ROLE_PARAGRAPH,
+			controlTypes.ROLE_ARTICLE,
+		):
 			field['isBlock']=True
 		# ARIA roledescription and landmarks
 		field['roleText']=obj.roleText

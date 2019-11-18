@@ -2,14 +2,13 @@
 #Copyright (C) 2016-2017 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+from typing import Optional, Dict
 
 from comtypes import COMError
-import time
 from comtypes.hresult import S_OK
 import appModuleHandler
 import speech
 import sayAllHandler
-import eventHandler
 import api
 from scriptHandler import willSayAllResume, isScriptWaiting
 import controlTypes
@@ -18,6 +17,7 @@ from cursorManager import ReviewCursorManager
 import browseMode
 from browseMode import BrowseModeDocumentTreeInterceptor
 import textInfos
+from speech.types import SpeechSequence
 from textInfos import DocumentWithPageTurns
 from IAccessibleHandler import IAccessible2
 from NVDAObjects.IAccessible import IAccessible
@@ -272,8 +272,17 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 				item.field.pop("content", None)
 		return items
 
-	def getFormatFieldSpeech(self, attrs, attrsCache=None, formatConfig=None, reason=None, unit=None, extraDetail=False , initialFormat=False, separator=speech.CHUNK_SEPARATOR):
-		out = ""
+	def getFormatFieldSpeech(
+			self,
+			attrs: textInfos.Field,
+			attrsCache: Optional[textInfos.Field] = None,
+			formatConfig: Optional[Dict[str, bool]] = None,
+			reason: Optional[str] = None,
+			unit: Optional[str] = None,
+			extraDetail: bool = False,
+			initialFormat: bool = False
+	) -> SpeechSequence:
+		out: SpeechSequence = []
 		comment = attrs.get("kindle-user-note")
 		if comment:
 			# For now, we report this the same way we do comments.
@@ -281,20 +290,37 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 		highlight = attrs.get("kindle-highlight")
 		oldHighlight = attrsCache.get("kindle-highlight") if attrsCache is not None else None
 		if oldHighlight != highlight:
-			# Translators: Reported when text is highlighted.
-			out += (_("highlight") if highlight
+			translation = (
+				# Translators: Reported when text is highlighted.
+				_("highlight") if highlight else
 				# Translators: Reported when text is not highlighted.
-				else _("no highlight")) + separator
+				_("no highlight")
+			)
+			out.append(translation)
 		popular = attrs.get("kindle-popular-highlight-count")
 		oldPopular = attrsCache.get("kindle-popular-highlight-count") if attrsCache is not None else None
 		if oldPopular != popular:
-			# Translators: Reported in Kindle when text has been identified as a popular highlight;
-			# i.e. it has been highlighted by several people.
-			# %s is replaced with the number of people who have highlighted this text.
-			out += (_("%s highlighted") % popular if popular
+			translation = (
+				# Translators: Reported in Kindle when text has been identified as a popular highlight;
+				# i.e. it has been highlighted by several people.
+				# %s is replaced with the number of people who have highlighted this text.
+				_("%s highlighted") % popular if popular else
 				# Translators: Reported when moving out of a popular highlight.
-				else _("out of popular highlight")) + separator
-		out += super(BookPageViewTextInfo, self).getFormatFieldSpeech(attrs, attrsCache=attrsCache, formatConfig=formatConfig, reason=reason, unit=unit, extraDetail=extraDetail , initialFormat=initialFormat, separator=separator)
+				_("out of popular highlight")
+			)
+			out.append(translation)
+
+		superSpeech = super(BookPageViewTextInfo, self).getFormatFieldSpeech(
+			attrs,
+			attrsCache=attrsCache,
+			formatConfig=formatConfig,
+			reason=reason,
+			unit=unit,
+			extraDetail=extraDetail,
+			initialFormat=initialFormat
+		)
+		out.extend(superSpeech)
+		textInfos._logBadSequenceTypes(out)
 		return out
 
 	def updateSelection(self):
