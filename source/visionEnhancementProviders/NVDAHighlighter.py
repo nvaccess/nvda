@@ -297,7 +297,7 @@ class NVDAHighlighterGuiPanel(
 			settings.highlightFocus,
 			settings.highlightNavigator,
 		]
-		if any(settingsToTriggerActivation):
+		if NVDAHighlighter.isEnabledInConfig() and any(settingsToTriggerActivation):
 			if all(settingsToTriggerActivation):
 				self._enabledCheckbox.Set3StateValue(wx.CHK_CHECKED)
 			else:
