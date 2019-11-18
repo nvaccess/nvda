@@ -19,7 +19,8 @@ What's New in NVDA
 - Font reporting in Microsoft Word now includes if text is marked as hidden. (#8713)
 - Added a command to move the review cursor to the position previously set as start marker for selection or copy: NVDA+shift+F9. (#1969)
 - In Internet Explorer, Microsoft Edge and recent versions of Firefox and Chrome, landmarks are now reported in focus mode and object navigation. (#10101)
-- In Internet Explorer, Google Chrome and Mozilla Firefox, You can now navigate by article using quick navigation scripts. These scripts are unbound by default and can be assigned in the Input Gestures dialog when the dialog is opened from a browse mode document. (#9227)
+- In Internet Explorer, Google Chrome and Mozilla Firefox, You can now navigate by article and grouping using quick navigation scripts. These scripts are unbound by default and can be assigned in the Input Gestures dialog when the dialog is opened from a browse mode document. (#9485, #9227)
+ - Figures are are also reported. They are considered objects and therefore navigable with the o quick navigation key.
 - In Internet Explorer, Google Chrome and Mozilla Firefox, article elements are now reported with object navigation, and optionally in browse mode if turned on in Document Formatting settings. (#10424)
 - Support for out-of-process iframes in Mozilla Firefox. (#9672)
 
@@ -36,6 +37,7 @@ What's New in NVDA
 - When CLDR characters (including emojis) reporting is enabled, they are announced at all punctuation levels. (#8826)
 - Third party python packages included in NVDA, such as comtypes, now log their warnings and errors to the NVDA log. (#10393)
 - Updated Unicode Common Locale Data Repository emoji annotations to version 36.0. (#10426)
+- When focussing a grouping in browse mode, the description is now also read. (#10095)
 
 
 == Bug Fixes ==
