@@ -1915,7 +1915,14 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
-		self.landmarksCheckBox=elementsGroup.addItem(wx.CheckBox(self,label=_("Lan&dmarks")))
+		groupingsText = _("&Groupings")
+		self.groupingsCheckBox = elementsGroup.addItem(wx.CheckBox(self, label=groupingsText))
+		self.groupingsCheckBox.SetValue(config.conf["documentFormatting"]["reportGroupings"])
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings panel.
+		landmarksText = _("Lan&dmarks and regions")
+		self.landmarksCheckBox = elementsGroup.addItem(wx.CheckBox(self, label=landmarksText))
 		self.landmarksCheckBox.SetValue(config.conf["documentFormatting"]["reportLandmarks"])
 
 		# Translators: This is the label for a checkbox in the
@@ -1969,6 +1976,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportHeadings"]=self.headingsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLists"]=self.listsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportBlockQuotes"]=self.blockQuotesCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportGroupings"] = self.groupingsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLandmarks"]=self.landmarksCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportArticles"] = self.articlesCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFrames"]=self.framesCheckBox.Value
