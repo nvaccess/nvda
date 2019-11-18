@@ -20,6 +20,7 @@ import extensionPoints
 import synthDrivers
 import driverHandler
 from driverHandler import StringParameterInfo # Backwards compatibility
+from abc import abstractmethod
 
 _curSynth=None
 _audioOutputDevice=None
@@ -252,40 +253,14 @@ class SynthDriver(driverHandler.Driver):
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Inflection'))
 
-	def speak(self,speechSequence):
+	@abstractmethod
+	def speak(self, speechSequence):
 		"""
 		Speaks the given sequence of text and speech commands.
-		This base implementation will fallback to making use of the old speakText and speakCharacter methods. But new synths should override this method to support its full functionality.
 		@param speechSequence: a list of text strings and SynthCommand objects (such as index and parameter changes).
 		@type speechSequence: list of string and L{SynthCommand}
 		"""
-		import speech
-		lastIndex=None
-		text=""
-		origSpeakFunc=self.speakText
-		speechSequence=iter(speechSequence)
-		while True:
-			item = next(speechSequence,None)
-			if text and (item is None or isinstance(item,(speech.IndexCommand,speech.CharacterModeCommand))):
-				# Either we're about to handle a command or this is the end of the sequence.
-				# Speak the text since the last command we handled.
-				origSpeakFunc(text,index=lastIndex)
-				text=""
-				lastIndex=None
-			if item is None:
-				# No more items.
-				break
-			if isinstance(item,str):
-				# Merge the text between commands into a single chunk.
-				text+=item
-			elif isinstance(item,speech.IndexCommand):
-				lastIndex=item.index
-			elif isinstance(item,speech.CharacterModeCommand):
-				origSpeakFunc=self.speakCharacter if item.state else self.speakText
-			elif isinstance(item,speech.SynthCommand):
-				log.debugWarning("Unknown synth command: %s"%item)
-			else:
-				log.error("Unknown item in speech sequence: %s"%item)
+		raise NotImplementedError
 
 	def cancel(self):
 		"""Silence speech immediately.
