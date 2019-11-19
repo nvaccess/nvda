@@ -903,8 +903,11 @@ class UIA(Window):
 		if isDialog:
 			clsList.append(Dialog)
 		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
-		if self.UIAElement.cachedAutomationID in ("SearchTextBox", "TextBox"):
-			clsList.append(SearchField)
+		try:
+			if self.UIAElement.cachedAutomationID in ("SearchTextBox", "TextBox"):
+				clsList.append(SearchField)
+		except COMError:
+			log.debug("Failed to locate UIA search field", exc_info=True)
 		try:
 			# Nested block here in order to catch value error and variable binding error when attempting to access automation ID for invalid elements.
 			try:
@@ -1527,8 +1530,8 @@ class UIA(Window):
 		Skype for business toast notifications being one example.
 		"""
 		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
-		# Ideally, we wouldn't use getBrailleTextForProperties directly.
-		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
+		# Ideally, we wouldn't use getPropertiesBraille directly.
+		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
 	def event_UIA_notification(self, notificationKind=None, notificationProcessing=UIAHandler.NotificationProcessing_CurrentThenMostRecent, displayString=None, activityId=None):
 		"""
@@ -1748,7 +1751,9 @@ class SuggestionListItem(UIA):
 			api.setNavigatorObject(self, isFocus=True)
 			self.reportFocus()
 			# Display results as flash messages.
-			braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role, positionInfo=self.positionInfo))
+			braille.handler.message(braille.getPropertiesBraille(
+				name=self.name, role=self.role, positionInfo=self.positionInfo
+			))
 
 # NetUIDropdownAnchor comboBoxes (such as in the MS Office Options dialog)
 class NetUIDropdownAnchor(UIA):

@@ -181,7 +181,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportLists = boolean(default=true)
 	reportHeadings = boolean(default=true)
 	reportBlockQuotes = boolean(default=true)
+	reportGroupings = boolean(default=true)
 	reportLandmarks = boolean(default=true)
+	reportArticles = boolean(default=false)
 	reportFrames = boolean(default=true)
 	reportClickable = boolean(default=true)
 
@@ -221,6 +223,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	louis = boolean(default=false)
 	timeSinceInput = boolean(default=false)
 	vision = boolean(default=false)
+	speech = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")
