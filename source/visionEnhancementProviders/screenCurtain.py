@@ -74,14 +74,15 @@ class Magnification:
 			_MagGetFullscreenColorEffectArgTypes
 		)
 		MagGetFullscreenColorEffect.errcheck = _errCheck
+		MagShowSystemCursor = _MagShowSystemCursorFuncType(
+			("MagShowSystemCursor", _magnification),
+			_MagShowSystemCursorArgTypes
+		)
+		MagShowSystemCursor.errcheck = _errCheck
 	except AttributeError:
 		MagSetFullscreenColorEffect = None
 		MagGetFullscreenColorEffect = None
-	MagShowSystemCursor = _MagShowSystemCursorFuncType(
-		("MagShowSystemCursor", _magnification),
-		_MagShowSystemCursorArgTypes
-	)
-	MagShowSystemCursor.errcheck = _errCheck
+		MagShowSystemCursor = None
 
 
 # Translators: Description of a vision enhancement provider that disables output to the screen,
