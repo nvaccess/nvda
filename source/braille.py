@@ -37,6 +37,7 @@ import extensionPoints
 import hwPortUtils
 import bdDetect
 import winUser
+import queueHandler
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is a
@@ -1709,14 +1710,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			else: # detected:
 				self._disableDetection()
 			log.info("Loaded braille display driver %s, current display has %d cells." %(name, self.displaySize))
-			try:
-				self.initialDisplay()
-			except:
-				# #8877: initialDisplay might fail because NVDA tries to focus
-				# an object for which property fetching raises an exception.
-				# We should handle this more gracefully, since this is no reason
-				# to stop a display from loading successfully.
-				log.debugWarning("Error in initial display after display load", exc_info=True)
+			queueHandler.queueFunction(queueHandler.eventQueue, self.initialDisplay)
 			if detected and 'bluetoothName' in detected.deviceInfo:
 				self._enableDetection(bluetooth=False, keepCurrentDisplay=True, limitToDevices=[name])
 			return True
@@ -1999,10 +1993,15 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if not self.enabled or not api.getDesktopObject():
 			# Braille is disabled or focus/review hasn't yet been initialised.
 			return
-		if self.getTether() == self.TETHER_FOCUS:
-			self.handleGainFocus(api.getFocusObject(), shouldAutoTether=False)
-		else:
-			self.handleReviewMove(shouldAutoTether=False)
+		try:
+			if self.getTether() == self.TETHER_FOCUS:
+				self.handleGainFocus(api.getFocusObject(), shouldAutoTether=False)
+			else:
+				self.handleReviewMove(shouldAutoTether=False)
+		except Exception:
+			# #8877: initialDisplay might fail because NVDA tries to focus
+			# an object for which property fetching raises an exception.
+			log.debugWarning("Error in initial display", exc_info=True)
 
 	def handlePostConfigProfileSwitch(self):
 		display = config.conf["braille"]["display"]
