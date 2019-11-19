@@ -63,6 +63,8 @@ class Magnification:
 	MagUninitialize = _MagUninitializeFuncType(("MagUninitialize", _magnification))
 	MagUninitialize.errcheck = _errCheck
 
+	# These magnification functions are not available on versions of Windows prior to Windows 8,
+	# and therefore looking them up from the magnification library will raise an AttributeError.
 	try:
 		MagSetFullscreenColorEffect = _MagSetFullscreenColorEffectFuncType(
 			("MagSetFullscreenColorEffect", _magnification),
