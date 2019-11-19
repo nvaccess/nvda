@@ -292,24 +292,28 @@ class VisionHandler(AutoPropertyObject):
 		self.extensionPoints.post_mouseMove.notify(obj=obj, x=x, y=y)
 
 	def handleConfigProfileSwitch(self) -> None:
-		configuredProviders: Set[providerInfo.ProviderInfo] = set(self.getConfiguredProviderInfos())
-		curProviders: Set[providerInfo.ProviderInfo] = set(self.getActiveProviderInfos())
+		configuredProviders: Set[providerInfo.ProviderIdT] = set(
+			info.providerId for info in self.getConfiguredProviderInfos()
+		)
+		curProviders: Set[providerInfo.ProviderIdT] = set(self._providers)
 		providersToInitialize = configuredProviders - curProviders
 		providersToTerminate = curProviders - configuredProviders
-		for info in providersToTerminate:
+		for providerId in providersToTerminate:
 			try:
+				info = self.getProviderInfo(providerId)
 				self.terminateProvider(info)
 			except Exception:
 				log.error(
-					f"Could not terminate the {info.providerId} vision enhancement provider",
+					f"Could not terminate the {providerId} vision enhancement provider",
 					exc_info=True
 				)
-		for info in providersToInitialize:
+		for providerId in providersToInitialize:
 			try:
+				info = self.getProviderInfo(providerId)
 				self.initializeProvider(info)
 			except Exception:
 				log.error(
-					f"Could not initialize the {info.providerId} vision enhancement provider",
+					f"Could not initialize the {providerId} vision enhancement provider",
 					exc_info=True
 				)
 
