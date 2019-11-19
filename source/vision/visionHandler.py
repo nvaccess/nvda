@@ -296,20 +296,20 @@ class VisionHandler(AutoPropertyObject):
 		curProviders: Set[providerInfo.ProviderInfo] = set(self.getActiveProviderInfos())
 		providersToInitialize = configuredProviders - curProviders
 		providersToTerminate = curProviders - configuredProviders
-		for providerInfo in providersToTerminate:
+		for info in providersToTerminate:
 			try:
-				self.terminateProvider(providerInfo)
+				self.terminateProvider(info)
 			except Exception:
 				log.error(
-					f"Could not terminate the {providerId} vision enhancement providerId",
+					f"Could not terminate the {info.providerId} vision enhancement provider",
 					exc_info=True
 				)
-		for providerInfo in providersToInitialize:
+		for info in providersToInitialize:
 			try:
-				self.initializeProvider(providerInfo)
+				self.initializeProvider(info)
 			except Exception:
 				log.error(
-					f"Could not initialize the {providerId} vision enhancement providerId",
+					f"Could not initialize the {info.providerId} vision enhancement provider",
 					exc_info=True
 				)
 
