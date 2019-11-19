@@ -19,14 +19,14 @@ What's New in NVDA
 - Added a command to move the review cursor to the position previously set as start marker for selection or copy: NVDA+shift+F9. (#1969)
 - In Internet Explorer, Microsoft Edge and recent versions of Firefox and Chrome, landmarks are now reported in focus mode and object navigation. (#10101)
 - In Internet Explorer, Google Chrome and Mozilla Firefox, You can now navigate by article and grouping using quick navigation scripts. These scripts are unbound by default and can be assigned in the Input Gestures dialog when the dialog is opened from a browse mode document. (#9485, #9227)
- - Figures are are also reported. They are considered objects and therefore navigable with the o quick navigation key.
+ - Figures are also reported. They are considered objects and therefore navigable with the o quick navigation key.
 - In Internet Explorer, Google Chrome and Mozilla Firefox, article elements are now reported with object navigation, and optionally in browse mode if turned on in Document Formatting settings. (#10424)
 - Support for out-of-process iframes in Mozilla Firefox. (#9672)
 - Added screen curtain, which when enabled, makes the whole screen black on Windows 8 and later. (#7857)
- - Added a script to enable screen curtain (until next restart with one press, or always while NVDA is runninging with two presses), no default gesture is assigned.
- - Can be enabled and configured via the added 'vision' category in NVDA's settings dialog.
+ - Added a script to enable screen curtain (until next restart with one press, or always while NVDA is running with two presses), no default gesture is assigned.
+ - Can be enabled and configured via the 'vision' category in NVDA's settings dialog.
 - Added screen highlight functionality to NVDA. (#971, #9064)
- - Highlighting of the focus, navigator object, and browse mode caret position can be enabled and configured via the added 'vision' category in NVDA's settings dialog.
+ - Highlighting of the focus, navigator object, and browse mode caret position can be enabled and configured via the 'vision' category in NVDA's settings dialog.
  - Note: This feature is incompatible with the focus highlight add-on, however, the add-on can still be used while the built-in highlighter is disabled.
 
 
@@ -124,7 +124,7 @@ What's New in NVDA
 - Added a framework to create vision enhancement providers; modules that can change screen contents, optionally based on input from NVDA about object locations. (#9064)
  - Add-ons can bundle their own providers in a visionEnhancementProviders folder.
  - See the vision and visionEnhancementProviders modules for the implementation of the framework and examples, respectively.
- - Vision enhancement providers are enabled and configured via the added 'vision' category in NVDA's settings dialog.
+ - Vision enhancement providers are enabled and configured via the 'vision' category in NVDA's settings dialog.
 - Abstract class properties are now supported on objects that inherit from baseObject.AutoPropertyObject (e.g. NVDAObjects and TextInfos). (#10102)
 - Introduced displayModel.UNIT_DISPLAYCHUNK as a textInfos unit constant specific to DisplayModelTextInfo. (#10165)
  - This new constant allows walking over the text in a DisplayModelTextInfo in a way that more closely resembles how the text chunks are saved in the underlying model.
