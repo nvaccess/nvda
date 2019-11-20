@@ -2182,12 +2182,22 @@ class TouchInteractionPanel(SettingsPanel):
 	def makeSettings(self, settingsSizer):
 		# Translators: This is the label for a checkbox in the
 		# touch interaction settings panel.
-		self.touchTypingCheckBox=wx.CheckBox(self,label=_("&Touch typing mode"))
+		self.enableTouchSupportCheckBox = wx.CheckBox(self, label=_("Enable touch interaction support"))
+		self.enableTouchSupportCheckBox.SetValue(config.conf["touch"]["enabled"])
+		settingsSizer.Add(self.enableTouchSupportCheckBox, border=10, flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# touch interaction settings panel.
+		self.touchTypingCheckBox = wx.CheckBox(self, label=_("&Touch typing mode"))
 		self.touchTypingCheckBox.SetValue(config.conf["touch"]["touchTyping"])
-		settingsSizer.Add(self.touchTypingCheckBox,border=10,flag=wx.BOTTOM)
+		settingsSizer.Add(self.touchTypingCheckBox, border=10, flag=wx.BOTTOM)
 
 	def onSave(self):
-		config.conf["touch"]["touchTyping"]=self.touchTypingCheckBox.IsChecked()
+		config.conf["touch"]["enabled"] = self.enableTouchSupportCheckBox.IsChecked()
+		config.conf["touch"]["touchTyping"] = self.touchTypingCheckBox.IsChecked()
+		if config.conf["touch"]["enabled"] and touchHandler.handler is None:
+			touchHandler.initialize()
+		elif not config.conf["touch"]["enabled"] and touchHandler.handler:
+			touchHandler.terminate()
 
 class UwpOcrPanel(SettingsPanel):
 	# Translators: The title of the Windows 10 OCR panel.
