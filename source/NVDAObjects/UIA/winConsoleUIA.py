@@ -205,9 +205,9 @@ class consoleUIATextInfo(UIATextInfo):
 		find word boundaries, but UIA only allows for relative movement.
 		"""
 		charInfo = self.copy()
-		charInfo.setEndPoint(lineInfo,"startToStart")
-		text=charInfo.text
-		offset = textUtils.WideStringOffsetConverter(text).wideStringLength-1
+		charInfo.setEndPoint(lineInfo, "startToStart")
+		text = charInfo.text
+		offset = textUtils.WideStringOffsetConverter(text).wideStringLength - 1
 		return offset
 
 	def _getWordOffsetsInThisLine(self, offset, lineInfo):
