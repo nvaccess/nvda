@@ -299,7 +299,7 @@ def touchSupported():
 	if not config.isInstalledCopy() and not config.isAppX:
 		log.debugWarning("Touch only supported on installed copies")
 		return False
-	if (winVersion.winVersion.major*10+winVersion.winVersion.minor)<62:
+	if winVersion.winVersion.platform_version < (6, 2, 9200):
 		log.debugWarning("Touch only supported on Windows 8 and higher")
 		return False
 	maxTouches=windll.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES)
