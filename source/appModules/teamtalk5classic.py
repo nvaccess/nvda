@@ -99,9 +99,14 @@ ID_UNBANNEDLIST = 1327
 ID_TOOLBAR = 59392
 ID_VU = 1004
 
+# The active TTToolbar instance.
+tb=None
+
 
 class TTToolBar(IAccessible):
 	def initOverlayClass(self):
+		global tb
+		tb = self
 		n = self.childCount
 		# TeamTalk version-specific toolbar item names by toolbar item count.
 		self.names = []
@@ -110,15 +115,7 @@ class TTToolBar(IAccessible):
 				self.names = lst
 				break
 
-	def getToolBar(self):
-		# First lastChild is a Window object, then the client toolbar object.
-		try:
-			tb = api.getForegroundObject().lastChild.lastChild
-		except AttributeError:
-			tb = None
-		return tb
-
-	def name(self, itemID):
+	def itemName(self, itemID):
 		"""The name of one item.
 		"""
 		if itemID <= 0:
@@ -138,7 +135,7 @@ class TTToolBarItem(IAccessible):
 		speech.speakObject(self)
 
 	def _get_name(self):
-		return self.parent.info.name(self.IAccessibleChildID)
+		return self.parent.itemName(self.IAccessibleChildID)
 
 
 class AppModule(appModuleHandler.AppModule):
@@ -178,39 +175,35 @@ class AppModule(appModuleHandler.AppModule):
 				from logHandler import log
 				log.exception("Couldn't remove VU meter progress bar")
 		# Name toolbar icons.
-		elif obj.windowControlID == ID_TOOLBAR:
-			# Applies to toolbar and its items.
-			if obj.role == controlTypes.ROLE_TOOLBAR:
-				clsList.insert(0, TTToolBar)
-			elif obj.parent and obj.parent.role == controlTypes.ROLE_TOOLBAR:
-				clsList.insert(0, TTToolBarItem)
+		# Applies to toolbar and its items.
+		if obj.role == controlTypes.ROLE_TOOLBAR:
+			import tones
+			tones.beep(440, 50)
+			clsList.insert(0, TTToolBar)
+		elif obj.parent and obj.parent.role == controlTypes.ROLE_TOOLBAR:
+			clsList.insert(0, TTToolBarItem)
 
 	@scriptHandler.script(
 		gesture="kb:control+shift+s",
 		# Translators: a gesture description for the TeamTalk voice conferencing client.
 		description=_(
-			"Says various on/off states from the toolbar. Depending "
-			"on TeamTalk version, these can include connection status, "
-			"status of voice activation, push-to-talk, and video"
-			"features, whether channel audio is being saved to files,"
-			"and whether the channel message window is showing."
-			"On one press, just says which are checked (in effect)."
-			"On two presses, says all states."
-		)
+			"Announces status information from the TeamTalk toolbar."
+			"pressing once only announces statuses that are checked (in effect)."
+			"Pressing twice announces all statuses."
+		))
 	def script_sayToolbarInfo(self, gesture):
-		info = TTToolBarInfo()
-		if not info:
+		if not tb:
 			return
 		scnt = scriptHandler.getLastScriptRepeatCount()
 		if scnt > 0:
-			for o in info.NVDAObj.children:
+			for o in tb.children:
 				if (
 					o.role == controlTypes.ROLE_CHECKBOX
 					and not (controlTypes.STATE_UNAVAILABLE in o.states)
 				):
 					speech.speakObject(o)
 			return
-		for o in info.NVDAObj.children:
+		for o in tb.children:
 			if o.role != controlTypes.ROLE_CHECKBOX:
 				continue
 			if controlTypes.STATE_UNAVAILABLE in o.states:
