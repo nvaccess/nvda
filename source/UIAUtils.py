@@ -242,7 +242,7 @@ it is retrieved from config).
 		return False
 	elif setting == "UIA":
 		return True
-	#10191: Text review in the UIA console does not function properly
+	# #10191: Text review in the UIA console does not function properly
 	# in Braille, so don't prefer it when a display is connected until we
 	# can find a workaround.
 	if braille.handler.enabled:
