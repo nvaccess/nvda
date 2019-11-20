@@ -1,8 +1,7 @@
-#touchHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2012-2018 NV Access Limited, Joseph Lee, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2012-2019 NV Access Limited, Joseph Lee, Babbage B.V.
 
 """handles touchscreen interaction (Windows 8 and later).
 Used to provide input gestures for touchscreens, touch modes and other support facilities.
