@@ -297,6 +297,10 @@ def speakObjectProperties(  # noqa: C901
 		elif name.startswith('positionInfo_') and value:
 			if positionInfo is None:
 				positionInfo=obj.positionInfo
+		elif value and name == "current":
+			# getPropertiesSpeech names this "current", but the NVDAObject property is
+			# named "isCurrent".
+			newPropertyValues['current'] = obj.isCurrent
 		elif value:
 			# Certain properties such as row and column numbers have presentational versions, which should be used for speech if they are available.
 			# Therefore redirect to those values first if they are available, falling back to the normal properties if not.
@@ -350,7 +354,6 @@ def speakObjectProperties(  # noqa: C901
 			newPropertyValues["_tableID"]=obj.tableID
 		except NotImplementedError:
 			pass
-	newPropertyValues['current']=obj.isCurrent
 	if allowedProperties.get('placeholder', False):
 		newPropertyValues['placeholder']=obj.placeholder
 	# When speaking an object due to a focus change, the 'selected' state should not be reported if only one item is selected.
@@ -437,7 +440,8 @@ def speakObject(  # noqa: C901
 		"rowHeaderText": True,
 		"columnHeaderText": True,
 		"rowSpan": True,
-		"columnSpan": True
+		"columnSpan": True,
+		"current": True
 	}
 
 	if reason==controlTypes.REASON_FOCUSENTERED:
