@@ -1195,10 +1195,11 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 		"""
 		checkbox = wx.CheckBox(self, label=setting.displayNameWithAccelerator)
 		setattr(self, f"{setting.id}Checkbox", checkbox)
+		settingsStorageProxy = weakref.proxy(settingsStorage)
 
 		def _onCheckChanged(evt: wx.CommandEvent):
 			evt.Skip()  # allow other handlers to also process this event.
-			setattr(settingsStorage, setting.id, evt.IsChecked())
+			setattr(settingsStorageProxy, setting.id, evt.IsChecked())
 
 		checkbox.Bind(wx.EVT_CHECKBOX, _onCheckChanged)
 		checkbox.SetValue(getattr(
