@@ -1410,6 +1410,15 @@ class UIA(Window):
 		raise NotImplementedError
 
 	def _get_processID(self):
+		if self.windowClassName == 'ConsoleWindowClass':
+			# #10115: The UIA implementation for Windows console windows exposes the process ID of conhost,
+			# not the actual app it is hosting.
+			# Therefore, to work around this, for console windows, we fallback to getting processID from the window
+			# rather than from UIA.
+			# Note that we can't do this hack in the WinConsoleUIA NVDAObject
+			# Because the appModule is already created and cached
+			# before the UIA NVDAObject is morphed into the specific WinConsoleUIA class.
+			return super().processID
 		return self.UIAElement.cachedProcessId
 
 	def _get_location(self):
