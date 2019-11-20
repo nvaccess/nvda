@@ -21,7 +21,7 @@ import config
 from logHandler import log
 import visionEnhancementProviders
 import queueHandler
-from typing import Type, Dict, List, Optional
+from typing import Type, Dict, List, Optional, Set
 from . import exceptions
 
 
@@ -147,6 +147,13 @@ class VisionHandler(AutoPropertyObject):
 		]
 		return list(activeProviderInfos)
 
+	def getConfiguredProviderInfos(self) -> List[providerInfo.ProviderInfo]:
+		configuredProviderInfos: List[providerInfo.ProviderInfo] = [
+			p for p in self._allProviders
+			if p.providerClass.isEnabledInConfig()
+		]
+		return configuredProviderInfos
+
 	def getProviderInstance(
 			self,
 			provider: providerInfo.ProviderInfo
@@ -185,14 +192,7 @@ class VisionHandler(AutoPropertyObject):
 			# A provider can raise whatever exception,
 			# therefore it is unknown what to expect.
 			exception = e
-		# Copy the configured providers before mutating the list.
-		# If we don't, configobj won't be aware of changes in the list.
-		configuredProviders: List = config.conf['vision']['providers'][:]
-		try:
-			configuredProviders.remove(providerId)
-			config.conf['vision']['providers'] = configuredProviders
-		except ValueError:
-			pass
+		providerInstance.enableInConfig(False)
 		# As we cant rely on providers to de-register themselves from extension points when terminating them,
 		# Re-create our extension points instance and ask active providers to reregister.
 		self.extensionPoints = EventExtensionPoints()
@@ -246,8 +246,8 @@ class VisionHandler(AutoPropertyObject):
 					log.error(
 						f"Error terminating provider {providerId} after registering to extension points", exc_info=True)
 				raise registerEventExtensionPointsException
-		if not temporary and providerId not in config.conf['vision']['providers']:
-			config.conf['vision']['providers'] = config.conf['vision']['providers'][:] + [providerId]
+		if not temporary:
+			providerInst.enableInConfig(True)
 		self._providers[providerId] = providerInst
 		try:
 			self.initialFocus()
@@ -292,26 +292,28 @@ class VisionHandler(AutoPropertyObject):
 		self.extensionPoints.post_mouseMove.notify(obj=obj, x=x, y=y)
 
 	def handleConfigProfileSwitch(self) -> None:
-		configuredProviders = set(config.conf['vision']['providers'])
-		curProviders = set(self._providers)
+		configuredProviders: Set[providerInfo.ProviderIdT] = set(
+			info.providerId for info in self.getConfiguredProviderInfos()
+		)
+		curProviders: Set[providerInfo.ProviderIdT] = set(self._providers)
 		providersToInitialize = configuredProviders - curProviders
 		providersToTerminate = curProviders - configuredProviders
 		for providerId in providersToTerminate:
 			try:
-				providerInfo = self.getProviderInfo(providerId)
-				self.terminateProvider(providerInfo)
+				info = self.getProviderInfo(providerId)
+				self.terminateProvider(info)
 			except Exception:
 				log.error(
-					f"Could not terminate the {providerId} vision enhancement providerId",
+					f"Could not terminate the {providerId} vision enhancement provider",
 					exc_info=True
 				)
 		for providerId in providersToInitialize:
 			try:
-				providerInfo = self.getProviderInfo(providerId)
-				self.initializeProvider(providerInfo)
+				info = self.getProviderInfo(providerId)
+				self.initializeProvider(info)
 			except Exception:
 				log.error(
-					f"Could not initialize the {providerId} vision enhancement providerId",
+					f"Could not initialize the {providerId} vision enhancement provider",
 					exc_info=True
 				)
 

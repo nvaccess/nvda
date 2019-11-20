@@ -244,6 +244,22 @@ class NVDAHighlighterGuiPanel(
 			providerControl: VisionProviderStateControl
 	):
 		self._providerControl = providerControl
+		initiallyEnabledInConfig = providerControl._providerInfo.providerClass.isEnabledInConfig()
+		if not initiallyEnabledInConfig:
+			settingsStorage = self._getSettingsStorage()
+			settingsToCheck = [
+				settingsStorage.highlightBrowseMode,
+				settingsStorage.highlightFocus,
+				settingsStorage.highlightNavigator,
+			]
+			if any(settingsToCheck):
+				log.debugWarning(
+					"Highlighter disabled in config while some of its settings are enabled. "
+					"This will be corrected"
+				)
+				settingsStorage.highlightBrowseMode = False
+				settingsStorage.highlightFocus = False
+				settingsStorage.highlightNavigator = False
 		super().__init__(parent)
 
 	def _buildGui(self):

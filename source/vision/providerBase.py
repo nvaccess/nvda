@@ -8,7 +8,7 @@
 """
 
 from abc import abstractmethod
-
+import config
 from autoSettingsUtils.autoSettings import AutoSettings
 from baseObject import AutoPropertyObject
 from .visionHandlerExtensionPoints import EventExtensionPoints
@@ -154,3 +154,17 @@ class VisionEnhancementProvider(AutoPropertyObject):
 	def canStart(cls) -> bool:
 		"""Returns whether this provider is able to start."""
 		return False
+
+	@classmethod
+	def enableInConfig(cls, enable: bool) -> None:
+		"""Enables or disables the provider in the current configuration.
+		@param enable: Whether to enable (C{True}) or disable (C{False}) the provider in the configuration.
+		"""
+		settings = cls.getSettings()
+		config.conf[settings._getConfigSection()][settings.getId()]["enabled"] = enable
+
+	@classmethod
+	def isEnabledInConfig(cls) -> bool:
+		"""Returns whether the provider is enabled in the configuration."""
+		settings = cls.getSettings()
+		return config.conf[settings._getConfigSection()][settings.getId()]["enabled"]

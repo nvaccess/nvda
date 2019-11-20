@@ -11,7 +11,7 @@ ModuleNameT = str
 DisplayNameT = str
 
 
-@dataclass
+@dataclass(frozen=True)
 class ProviderInfo:
 	providerId: ProviderIdT
 	moduleName: ModuleNameT
