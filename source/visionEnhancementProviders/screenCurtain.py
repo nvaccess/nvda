@@ -63,6 +63,8 @@ class Magnification:
 	MagUninitialize = _MagUninitializeFuncType(("MagUninitialize", _magnification))
 	MagUninitialize.errcheck = _errCheck
 
+	# These magnification functions are not available on versions of Windows prior to Windows 8,
+	# and therefore looking them up from the magnification library will raise an AttributeError.
 	try:
 		MagSetFullscreenColorEffect = _MagSetFullscreenColorEffectFuncType(
 			("MagSetFullscreenColorEffect", _magnification),
@@ -74,14 +76,15 @@ class Magnification:
 			_MagGetFullscreenColorEffectArgTypes
 		)
 		MagGetFullscreenColorEffect.errcheck = _errCheck
+		MagShowSystemCursor = _MagShowSystemCursorFuncType(
+			("MagShowSystemCursor", _magnification),
+			_MagShowSystemCursorArgTypes
+		)
+		MagShowSystemCursor.errcheck = _errCheck
 	except AttributeError:
 		MagSetFullscreenColorEffect = None
 		MagGetFullscreenColorEffect = None
-	MagShowSystemCursor = _MagShowSystemCursorFuncType(
-		("MagShowSystemCursor", _magnification),
-		_MagShowSystemCursorArgTypes
-	)
-	MagShowSystemCursor.errcheck = _errCheck
+		MagShowSystemCursor = None
 
 
 # Translators: Description of a vision enhancement provider that disables output to the screen,

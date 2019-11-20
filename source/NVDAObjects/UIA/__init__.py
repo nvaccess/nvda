@@ -456,7 +456,9 @@ class UIATextInfo(textInfos.TextInfo):
 		@type UIAFormatUnits: List of UI Automation Text Units or None
 		@rtype: a Generator yielding L{textInfos.FieldCommand} objects containing L{textInfos.FormatField} objects, and text strings.
 		"""
-		log.debug("_getTextWithFields_text start")
+		debug = UIAHandler._isDebug() and log.isEnabledFor(log.DEBUG)
+		if debug:
+			log.debug("_getTextWithFields_text start")
 		if UIAFormatUnits:
 			unit=UIAFormatUnits[0]
 			furtherUIAFormatUnits=UIAFormatUnits[1:]
@@ -464,25 +466,33 @@ class UIATextInfo(textInfos.TextInfo):
 			# Fetching text and formatting from the entire range will be tried once before any possible splitting.
 			unit=None
 			furtherUIAFormatUnits=self.UIAFormatUnits if UIAFormatUnits is None else []
-		log.debug("Walking by unit %s"%unit)
-		log.debug("With further units of: %s"%furtherUIAFormatUnits)
+		if debug:
+			log.debug(
+				f"Walking by unit {unit}, "
+				f"with further units of: {furtherUIAFormatUnits}"
+			)
 		rangeIter=iterUIARangeByUnit(textRange,unit) if unit is not None else [textRange]
 		for tempRange in rangeIter:
 			text=self._getTextFromUIARange(tempRange) or ""
 			if text:
-				log.debug("Chunk has text. Fetching formatting")
+				if debug:
+					log.debug("Chunk has text. Fetching formatting")
 				try:
 					field=self._getFormatFieldAtRange(tempRange,formatConfig,ignoreMixedValues=len(furtherUIAFormatUnits)==0)
 				except UIAMixedAttributeError:
-					log.debug("Mixed formatting. Trying higher resolution unit")
+					if debug:
+						log.debug("Mixed formatting. Trying higher resolution unit")
 					for subfield in self._getTextWithFields_text(tempRange,formatConfig,UIAFormatUnits=furtherUIAFormatUnits):
 						yield subfield
-					log.debug("Done yielding higher resolution unit")
+					if debug:
+						log.debug("Done yielding higher resolution unit")
 					continue
-				log.debug("Yielding formatting and text")
+				if debug:
+					log.debug("Yielding formatting and text")
 				yield field
 				yield text
-		log.debug("Done _getTextWithFields_text")
+		if debug:
+			log.debug("Done _getTextWithFields_text")
 
 	def _getTextWithFieldsForUIARange(self,rootElement,textRange,formatConfig,includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True,_rootElementClipped=(True,True)):
 		"""
@@ -503,8 +513,8 @@ class UIATextInfo(textInfos.TextInfo):
 		@type _rootElementClipped: 2-tuple
 		@rtype: A generator that yields L{textInfo.FieldCommand} objects and text strings.
 		"""
-		
-		if log.isEnabledFor(log.DEBUG):
+		debug = UIAHandler._isDebug() and log.isEnabledFor(log.DEBUG)
+		if debug:
 			log.debug("_getTextWithFieldsForUIARange")
 			log.debug("rootElement: %s"%rootElement.currentLocalizedControlType if rootElement else None)
 			log.debug("full text: %s"%textRange.getText(-1))
@@ -519,7 +529,8 @@ class UIATextInfo(textInfos.TextInfo):
 					recurseChildren=False
 		parentElements=[]
 		if alwaysWalkAncestors:
-			log.debug("Fetching parents starting from enclosingElement")
+			if debug:
+				log.debug("Fetching parents starting from enclosingElement")
 			try:
 				parentElement=getEnclosingElementWithCacheFromUIATextRange(textRange,self._controlFieldUIACacheRequest)
 			except COMError:
@@ -527,18 +538,20 @@ class UIATextInfo(textInfos.TextInfo):
 			while parentElement:
 				isRoot=UIAHandler.handler.clientObject.compareElements(parentElement,rootElement)
 				if isRoot:
-					log.debug("Hit root")
+					if debug:
+						log.debug("Hit root")
 					parentElements.append((parentElement,_rootElementClipped))
 					break
 				else:
-					if log.isEnabledFor(log.DEBUG):
+					if debug:
 						log.debug("parentElement: %s"%parentElement.currentLocalizedControlType)
 					try:
 						parentRange=self.obj.UIATextPattern.rangeFromChild(parentElement)
 					except COMError:
 						parentRange=None
 					if not parentRange:
-						log.debug("parentRange is NULL. Breaking")
+						if debug:
+							log.debug("parentRange is NULL. Breaking")
 						break
 					clippedStart=textRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,parentRange,UIAHandler.TextPatternRangeEndpoint_Start)>0
 					clippedEnd=textRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,parentRange,UIAHandler.TextPatternRangeEndpoint_End)<0
@@ -546,16 +559,18 @@ class UIATextInfo(textInfos.TextInfo):
 				parentElement=UIAHandler.handler.baseTreeWalker.getParentElementBuildCache(parentElement,self._controlFieldUIACacheRequest)
 		else:
 			parentElements.append((rootElement,_rootElementClipped))
-		log.debug("Done fetching parents")
+		if debug:
+			log.debug("Done fetching parents")
 		enclosingElement=parentElements[0][0] if parentElements else rootElement
 		if not includeRoot and parentElements:
 			del parentElements[-1]
 		parentFields=[]
-		log.debug("Generating controlFields for parents")
+		if debug:
+			log.debug("Generating controlFields for parents")
 		windowHandle=self.obj.windowHandle
 		controlFieldNVDAObjectClass=self.controlFieldNVDAObjectClass
 		for index,(parentElement,parentClipped) in enumerate(parentElements):
-			if log.isEnabledFor(log.DEBUG):
+			if debug:
 				log.debug("parentElement: %s"%parentElement.currentLocalizedControlType)
 			startOfNode=not parentClipped[0]
 			endOfNode=not parentClipped[1]
@@ -563,25 +578,29 @@ class UIATextInfo(textInfos.TextInfo):
 				obj=controlFieldNVDAObjectClass(windowHandle=windowHandle,UIAElement=parentElement,initialUIACachedPropertyIDs=self._controlFieldUIACachedPropertyIDs)
 				field=self._getControlFieldForObject(obj,isEmbedded=(index==0 and not recurseChildren),startOfNode=startOfNode,endOfNode=endOfNode)
 			except LookupError:
-				log.debug("Failed to fetch controlField data for parentElement. Breaking")
+				if debug:
+					log.debug("Failed to fetch controlField data for parentElement. Breaking")
 				continue
 			if not field:
 				continue
 			parentFields.append(field)
-		log.debug("Done generating controlFields for parents")
-		log.debug("Yielding control starts for parents")
+		if debug:
+			log.debug("Done generating controlFields for parents")
+			log.debug("Yielding control starts for parents")
 		for field in reversed(parentFields):
 			yield textInfos.FieldCommand("controlStart",field)
-		log.debug("Done yielding control starts for parents")
+		if debug:
+			log.debug("Done yielding control starts for parents")
 		del parentElements
-		log.debug("Yielding balanced fields for textRange")
+		if debug:
+			log.debug("Yielding balanced fields for textRange")
 		# Move through the text range, collecting text and recursing into children
 		#: This variable is used to   span lengths of plain text between child ranges as we iterate over getChildren
 		childCount=childElements.length if recurseChildren else 0
 		if childCount>0:
 			tempRange=textRange.clone()
 			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)
-			if log.isEnabledFor(log.DEBUG):
+			if debug:
 				log.debug("Child count: %s"%childElements.length)
 				log.debug("Walking children")
 			lastChildIndex=childCount-1
@@ -591,7 +610,8 @@ class UIATextInfo(textInfos.TextInfo):
 			for index in range(childCount):
 				childElement=childElements.getElement(index)
 				if not childElement or UIAHandler.handler.clientObject.compareElements(childElement,enclosingElement):
-					log.debug("NULL childElement. Skipping")
+					if debug:
+						log.debug("NULL childElement. Skipping")
 					continue
 				if rootElementControlType==UIAHandler.UIA_DataItemControlTypeId:
 					# #9090: MS Word has a rare bug where  a child of a table cell's UIA textRange can be its containing page.
@@ -599,61 +619,81 @@ class UIATextInfo(textInfos.TextInfo):
 					childAutomationID=childElement.cachedAutomationId or ""
 					if childAutomationID.startswith('UIA_AutomationId_Word_Page_'):
 						continue
-				if log.isEnabledFor(log.DEBUG):
+				if debug:
 					log.debug("Fetched child %s (%s)"%(index,childElement.currentLocalizedControlType))
 				try:
 					childRange=documentTextPattern.rangeFromChild(childElement)
 				except COMError as e:
-					log.debug("rangeFromChild failed with %s"%e)
+					if debug:
+						log.debug(f"rangeFromChild failed with {e}")
 					childRange=None
 				if not childRange:
-					log.debug("NULL childRange. Skipping")
+					if debug:
+						log.debug("NULL childRange. Skipping")
 					continue
 				clippedStart=clippedEnd=False
 				if index==lastChildIndex and childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_End)>=0:
-					log.debug("Child at or past end of textRange. Breaking")
+					if debug:
+						log.debug("Child at or past end of textRange. Breaking")
 					break
 				if index==lastChildIndex:
 					lastChildEndDelta=childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
 					if lastChildEndDelta>0:
-						log.debug("textRange ended part way through the child. Crop end of childRange to fit")
+						if debug:
+							log.debug(
+								"textRange ended part way through the child. "
+								"Crop end of childRange to fit"
+							)
 						childRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
 						clippedEnd=True
 				childStartDelta=childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
 				if childStartDelta>0:
 					# plain text before this child
 					tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,childRange,UIAHandler.TextPatternRangeEndpoint_Start)
-					log.debug("Plain text before child")
+					if debug:
+						log.debug("Plain text before child")
 					for field in self._getTextWithFields_text(tempRange,formatConfig):
 						yield field
 				elif childStartDelta<0:
-					log.debug("textRange started part way through child. Cropping Start of child range to fit" )
+					if debug:
+						log.debug(
+							"textRange started part way through child. "
+							"Cropping Start of child range to fit"
+						)
 					childRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
 					clippedStart=True
 				if (index==0 or index==lastChildIndex) and childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_End)==0:
-					log.debug("childRange is degenerate. Skipping")
+					if debug:
+						log.debug("childRange is degenerate. Skipping")
 					continue
-				log.debug("Recursing into child %s"%index)
+				if debug:
+					log.debug(f"Recursing into child {index}")
 				for field in self._getTextWithFieldsForUIARange(childElement,childRange,formatConfig,includeRoot=True,alwaysWalkAncestors=False,_rootElementClipped=(clippedStart,clippedEnd)):
 					yield field
-				log.debug("Done recursing into child %s"%index)
+				if debug:
+					log.debug(f"Done recursing into child {index}")
 				tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_End)
-			log.debug("children done")
+			if debug:
+				log.debug("children done")
 			# Plain text after the final child
 			if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_End)<0:
 				tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
-				log.debug("Yielding final text")
+				if debug:
+					log.debug("Yielding final text")
 				for field in self._getTextWithFields_text(tempRange,formatConfig):
 					yield field
 		else: #no children 
-			log.debug("no children")
-			log.debug("Yielding text") 
+			if debug:
+				log.debug("no children")
+				log.debug("Yielding text")
 			for field in self._getTextWithFields_text(textRange,formatConfig):
 				yield field
 		for field in parentFields:
-			log.debug("Yielding controlEnd for parentElement")
+			if debug:
+				log.debug("Yielding controlEnd for parentElement")
 			yield textInfos.FieldCommand("controlEnd",field)
-		log.debug("_getTextWithFieldsForUIARange end")
+		if debug:
+			log.debug("_getTextWithFieldsForUIARange end")
 
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:

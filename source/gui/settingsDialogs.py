@@ -1095,6 +1095,10 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 		""" Override to change storage object for setting values."""
 		return self.getSettings()
 
+	@property
+	def hasOptions(self) -> bool:
+		return bool(self.getSettings().supportedSettings)
+
 	@classmethod
 	def _setSliderStepSizes(cls, slider, setting):
 		slider.SetLineSize(setting.minStep)
@@ -2363,6 +2367,7 @@ class AdvancedPanelControls(wx.Panel):
 
 		self.logCategories=[
 			"hwIo",
+			"UIA",
 			"audioDucking",
 			"gui",
 			"louis",
@@ -3400,10 +3405,6 @@ class VisionProviderSubPanel_Settings(
 	def makeSettings(self, settingsSizer):
 		# Construct vision enhancement provider settings
 		self.updateDriverSettings()
-
-	@property
-	def hasOptions(self) -> bool:
-		return bool(self.sizerDict)
 
 
 class VisionProviderSubPanel_Wrapper(
