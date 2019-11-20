@@ -4,6 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+import os
 import queue
 from ctypes import (
 	c_short,
@@ -37,6 +38,7 @@ import controlTypes
 import NVDAObjects.JAB
 import core
 import textUtils
+import NVDAHelper
 
 #Some utility functions to help with function defines
 
@@ -56,16 +58,8 @@ def _fixBridgeFunc(restype,name,*argtypes,**kwargs):
 	if kwargs.get('errcheck'):
 		func.errcheck=_errcheck
 
-#Load the first available access bridge dll
-legacyAccessBridge=True
-try:
-	bridgeDll=getattr(cdll,'windowsAccessBridge-32')
-	legacyAccessBridge=False
-except WindowsError:
-	try:
-		bridgeDll=cdll.windowsAccessBridge
-	except WindowsError:
-		bridgeDll=None
+
+bridgeDll = None
 
 #Definitions of access bridge types, structs and prototypes
 
@@ -73,7 +67,9 @@ jchar=c_wchar
 jint=c_int
 jfloat=c_float
 jboolean=c_bool
-class JOBJECT64(c_int if legacyAccessBridge else c_int64):
+
+
+class JOBJECT64(c_int64):
 	pass
 AccessibleTable=JOBJECT64
 
@@ -248,8 +244,10 @@ AccessBridge_PropertyStateChangeFP=CFUNCTYPE(None,c_long,JOBJECT64,JOBJECT64,c_w
 AccessBridge_PropertyCaretChangeFP=CFUNCTYPE(None,c_long,JOBJECT64,JOBJECT64,c_int,c_int)
 AccessBridge_PropertyActiveDescendentChangeFP=CFUNCTYPE(None,c_long,JOBJECT64,JOBJECT64,JOBJECT64,JOBJECT64)
 
-#Appropriately set the return and argument types of all the access bridge dll functions
-if bridgeDll:
+
+def _fixBridgeFuncs():
+	"""Appropriately set the return and argument types of all the access bridge dll functions
+	"""
 	_fixBridgeFunc(None,'Windows_run')
 	_fixBridgeFunc(None,'setFocusGainedFP',c_void_p)
 	_fixBridgeFunc(None,'setPropertyNameChangeFP',c_void_p)
@@ -741,9 +739,13 @@ def isJavaWindow(hwnd):
 	return bridgeDll.isJavaWindow(hwnd)
 
 def initialize():
-	global isRunning
-	if not bridgeDll:
+	global bridgeDll, isRunning
+	try:
+		bridgeDll = cdll.LoadLibrary(
+			os.path.join(NVDAHelper.versionedLibPath, "windowsaccessbridge-32.dll"))
+	except WindowsError:
 		raise NotImplementedError("dll not available")
+	_fixBridgeFuncs()
 	bridgeDll.Windows_run()
 	# Accept wm_copydata and any wm_user messages from other processes even if running with higher privileges
 	if not windll.user32.ChangeWindowMessageFilter(winUser.WM_COPYDATA, 1):
@@ -775,9 +777,5 @@ def terminate():
 	bridgeDll.setPropertyCaretChangeFP(None)
 	h=bridgeDll._handle
 	bridgeDll=None
-	if legacyAccessBridge:
-		del cdll.windowsAccessBridge 
-	else:
-		delattr(cdll,'windowsAccessBridge-32')
 	windll.kernel32.FreeLibrary(h)
 	isRunning=False
