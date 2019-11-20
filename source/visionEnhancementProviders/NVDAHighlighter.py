@@ -412,7 +412,10 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		window = self.window = self.customWindowClass(self)
 		self.timer = winUser.WinTimer(window.handle, 0, self._refreshInterval, None)
 		msg = MSG()
-		while winUser.getMessage(byref(msg), None, 0, 0):
+		# Python 3.8 note, Change this to use an Assignment expression to catch a return value of -1.
+		# See the remarks section of
+		# https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getmessage
+		while winUser.getMessage(byref(msg), None, 0, 0) > 0:
 			winUser.user32.TranslateMessage(byref(msg))
 			winUser.user32.DispatchMessageW(byref(msg))
 		if vision._isDebug():
