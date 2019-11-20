@@ -1075,7 +1075,11 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 		# because settings instances can be of type L{Driver} as well, we have to handle
 		# showing settings for non-instances. Because of this, we must reacquire a reference
 		# to the settings class whenever we wish to use it (via L{getSettings}) in case the instance changes.
-		self._currentSettingsRef = weakref.ref(self.getSettings())
+		# We also use the weakref to refresh the gui when an instance dies.
+		self._currentSettingsRef = weakref.ref(
+			self.getSettings(),
+			lambda ref: wx.CallAfter(self.refreshGui)
+		)
 
 	settingsSizer: wx.BoxSizer
 
@@ -1195,10 +1199,11 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 		"""
 		checkbox = wx.CheckBox(self, label=setting.displayNameWithAccelerator)
 		setattr(self, f"{setting.id}Checkbox", checkbox)
+		settingsStorageProxy = weakref.proxy(settingsStorage)
 
 		def _onCheckChanged(evt: wx.CommandEvent):
 			evt.Skip()  # allow other handlers to also process this event.
-			setattr(settingsStorage, setting.id, evt.IsChecked())
+			setattr(settingsStorageProxy, setting.id, evt.IsChecked())
 
 		checkbox.Bind(wx.EVT_CHECKBOX, _onCheckChanged)
 		checkbox.SetValue(getattr(
@@ -1301,7 +1306,10 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 				log.debug("refreshing panel")
 			self.sizerDict.clear()
 			self.settingsSizer.Clear(delete_windows=True)
-			self._currentSettingsRef = weakref.ref(self.getSettings())
+			self._currentSettingsRef = weakref.ref(
+				self.getSettings(),
+				lambda ref: wx.CallAfter(self.refreshGui)
+			)
 			self.makeSettings(self.settingsSizer)
 
 	def onPanelActivated(self):
