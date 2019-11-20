@@ -312,8 +312,14 @@ def initialize():
 	global handler
 	if not touchSupported():
 		raise NotImplementedError
-	handler=TouchHandler()
-	log.debug("Touch support initialized. maximum touch inputs: %d"%windll.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES))
+	log.debug(
+		"Touchscreen detected, maximum touch inputs: %d" % winUser.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES)
+	)
+	if config.conf["touch"]["enabled"]:
+		handler = TouchHandler()
+		log.debug("Touch support enabled.")
+	else:
+		log.debug("Touch support disabled.")
 
 def terminate():
 	global handler
