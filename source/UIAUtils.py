@@ -3,12 +3,15 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+
+import braille
 import operator
 from comtypes import COMError
 import config
 import ctypes
 import UIAHandler
 from winVersion import isWin10
+
 
 def createUIAMultiPropertyCondition(*dicts):
 	"""
@@ -239,6 +242,11 @@ it is retrieved from config).
 		return False
 	elif setting == "UIA":
 		return True
+	#10191: Text review in the UIA console does not function properly
+	# in Braille, so don't prefer it when a display is connected until we
+	# can find a workaround.
+	if braille.handler.enabled:
+		return False
 	# #7497: Windows 10 Fall Creators Update has an incomplete UIA
 	# implementation for console windows, therefore for now we should
 	# ignore it.

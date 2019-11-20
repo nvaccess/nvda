@@ -1766,8 +1766,8 @@ It does not affect the modern Windows Terminal.
 In Windows 10 version 1709, Microsoft [added support for its UI Automation API to the console https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], bringing vastly improved performance and stability for screen readers that support it.
 In situations where UI Automation is unavailable or known to result in an inferior user experience, NVDA's legacy console support is available as a fallback.
 The Windows Console support combo box has three options:
-- Automatic: Uses UI Automation in consoles on Windows 10 version 1809 and later. This option is recommended and set by default.
-- Prefer UIA: Uses UI Automation in consoles if available, even on Windows versions with incomplete or buggy implementations. While this limited functionality may be useful (and even sufficient for your usage), use of this option is entirely at your own risk and no support for it will be provided.
+- Automatic: Uses UI Automation in consoles on Windows 10 version 1809 and later when a Braille display is not connected. This option is recommended and set by default.
+- Prefer UIA: Uses UI Automation in consoles if possible, even in cases where implementation is incomplete or buggy. While this limited functionality may be useful (and even sufficient for your usage), use of this option is entirely at your own risk and no support for it will be provided.
 - Legacy: UI Automation in the Windows Console will be completely disabled, so the legacy fallback will always be used.
 -
 
