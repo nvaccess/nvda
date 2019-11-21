@@ -61,7 +61,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 
 	def getScript(self, gesture):
 		script = super().getScript(gesture)
-		if script:
+		if script or not self.useTextInfoToSpeakTypedWords:
 			return script
 		if gesture.isCharacter:
 			return self.script_preTypedCharacter
@@ -201,6 +201,8 @@ class EditableText(TextContainerObject,ScriptableObject):
 			2. If the caret has moved and a new word has been typed, a TextInfo
 				expanded to the word that has just been typed.
 		"""
+		if not self.useTextInfoToSpeakTypedWords:
+			return (None, None)
 		bookmark = self._cachedCaretBookmark
 		if not bookmark:
 			return (None, None)
@@ -235,6 +237,15 @@ class EditableText(TextContainerObject,ScriptableObject):
 		# Therefore, try to call super first, and if that fails, return the default (C{True}.
 		try:
 			return super().caretMovementDetectionUsesEvents
+		except AttributeError:
+			return True
+
+	def _get_useTextInfoToSpeakTypedWords(self) -> bool:
+		"""Returns whether or not to use textInfo to announce newly typed words."""
+		# This class is a mixin that usually comes before other relevant classes in the mro.
+		# Therefore, try to call super first, and if that fails, return the default (C{True}.
+		try:
+			return super().useTextInfoToSpeakTypedWords
 		except AttributeError:
 			return True
 
