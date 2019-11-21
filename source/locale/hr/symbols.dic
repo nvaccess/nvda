@@ -26,8 +26,8 @@ symbols:
 ? sentence ending	upitnik	all	always
 ; phrase ending	točka zarez	most	always
 : phrase ending	dvotočka	most	always
-decimal point	cijelo	none	always	# ovako treba učiniti kirisnički prihvatljivim naziv za decimalne brojeve
-in-word '	apostrof	all	norep
+decimal point	cijelih	none	always
+in-word '	izostavnik	all	norep
 negative number	minus	none	norep
 
 # Whitespace
@@ -37,7 +37,7 @@ negative number	minus	none	norep
 \f	nova stranica	none
 \r	kraj retka	char
  	razmak	char
- 	neprijelomni razmak	char
+ 	razmak	char
 
 # Standard punctuation/symbols
 !	uskličnik	all
@@ -51,7 +51,7 @@ $	dolar	some
 ₹	rupija	some	norep
 %	posto	some
 &	trgovačko i	some
-'	izostavnik	all	# izostavnik, vidi nazivlje u gramatici hrvatskog jezika
+'	izostavnik	all
 (	otvorena zagrada	most	always
 )	zatvorena zagrada	most	always
 *	zvjezdica	most
@@ -80,8 +80,8 @@ _	podvlaka	most
 
 # Other characters
 •	predznak	some
-…	trotočje	all	always
-...	tri točke	all	always
+…	trotočka	all	always
+...	trotočka	all	always
 “	otvoreni navodnici gore	most
 „	otvoreni navodnici	most
 ”	zatvoreni navodnici	most
@@ -92,22 +92,22 @@ _	podvlaka	most
 —	duga povlaka	most
 ●	kružić	most
 ¨	prijeglas	most
-‎	s lijeva na desno
-‏	s desna na lijevo
-■	crni kvadrat	some
-▪	crni kvadrat	some	# mali crni kvadrat
-◾	crni kvadrat	some	# srednji crni kvadrat
-◦	bijela točka	some
+‎	oznaka za lijevo na desno	char
+‏	oznaka za desno na lijevo	char
+■	kvadratić	some
+▪	kvadratić	some
+◾	kvadratić	some
+◦	kružić	some
 ⇒	dupla strelica desno	some
 ⇨	bijela strelica desno	some
 ➢	vrh desne strelice desno	some
-❖	bijelo prekrižen crni romb	some
+❖	četverodijelni romb	some
 ♣	tref	some
 ♦	karo	some
 ♥	herc	some
 ♠	pik	some
-§	odjeljak	all
-°	stupanj	some
+§	članak	all
+°	stupnjeva	some
 «	zatvoreni španjolski navodnici
 »	otvoreni španjolski navodnici
 µ	mikro	some
@@ -124,8 +124,8 @@ _	podvlaka	most
 ↑	strelica gore	some
 →	strelica desno	some
 ↓	strelica dolje	some
-✓	označeno	some
-✔	podebljano označeno	some
+✓	kvačica	some
+✔	kvačica	some
 🡺	strelica desno    some
 
 #Mathematical Operators U+2200 to U+220F
@@ -139,10 +139,10 @@ _	podvlaka	most
 ∇	gradijan 	none
 ∈	element skupa	none
 ∉	nije element skupa	none
-∊	element skupa	none	# simbol manjih dimenzija
+∊	element skupa	none
 ∋	sadrži	none
 ∌	ne sadrži	none
-∍	sadrži	none	# simbol manjih dimenzija
+∍	sadrži	none
 ∎	kraj dokaza	none
 ∏	produkt	none
 
