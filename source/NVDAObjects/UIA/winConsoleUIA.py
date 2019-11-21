@@ -281,12 +281,9 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 
 	def _getTextLines(self):
 		# Filter out extraneous empty lines from UIA
-		return (
-			self.makeTextInfo(textInfos.POSITION_ALL)
-			._rangeObj.getText(-1)
-			.rstrip()
-			.split("\r\n")
-		)
+		ptr = self.UIATextPattern.GetVisibleRanges()
+		res = [ptr.GetElement(i).GetText(-1) for i in range(ptr.length)]
+		return res
 
 
 def findExtraOverlayClasses(obj, clsList):

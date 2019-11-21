@@ -29,8 +29,9 @@ Major highlights include:
 - Support for modern Windows Operating Systems including both 32 and 64 bit variants
 - Ability to run on Windows logon and other secure screens
 - Announcing controls and text while using touch gestures
-- Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation only supported in Windows 7 and later)
+- Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation
 - Support for Windows Command Prompt and console applications
+- The ability to highlight the system focus
 -
 
 ++ Internationalization ++[Internationalization]
@@ -292,6 +293,7 @@ For example, if you are typing into an editable text field, the editable text fi
 
 The most common way of navigating around Windows with NVDA is to simply move the system focus using standard Windows keyboard commands, such as pressing tab and shift+tab to move forward and back between controls, pressing alt to get to the menu bar and then using the arrows to navigate menus, and using alt+tab to move between running applications.
 As you do this, NVDA will report information about the object with focus, such as its name, type, value, state, description, keyboard shortcut and positional information.
+When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the current system focus is also exposed visually.
 
 There are some key commands that are useful when moving with the System focus:
 %kc:beginInclude
@@ -347,6 +349,7 @@ Similarly, a toolbar contains controls, so you must move inside the toolbar to a
 
 The object currently being reviewed is called the navigator object.
 Once you navigate to an object, you can review its content using the [text review commands #ReviewingText] while in [Object review mode #ObjectReview].
+When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the current navigator object is also exposed visually.
 By default, the navigator object moves along with the System focus, though this behavior can be toggled on and off.
 
 Note that braille follows both the [focus #SystemFocus] and [caret #SystemCaret] as well as object navigation and text review by default.
@@ -488,10 +491,12 @@ This includes documents in the following applications:
 - Adobe Flash
 - Supported books in Amazon Kindle for PC
 -
+
 Browse mode is also optionally available for Microsoft Word documents.
 
 In browse mode, the content of the document is made available in a flat representation that can be navigated with the cursor keys as if it were a normal text document.
 All of NVDA's [system caret #SystemCaret] key commands will work in this mode; e.g. say all, report formatting, table navigation commands, etc.
+When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the virtual browse mode caret is also exposed visually.
 Information such as whether text is a link, heading, etc. is reported along with the text as you move.
 
 Sometimes, you will need to interact directly with controls in these documents.
@@ -644,12 +649,14 @@ In order to fit as much information as possible on a braille display, the follow
 
 || Abbreviation | Control type |
 | app | application |
+| art | article
 | bqt | block quote |
 | btn | button |
 | drbtn | drop down button |
 | spnbtn | spin button |
 | splbtn | split button |
 | tgbtn | toggle button |
+| cap | caption |
 | cbo | combo box |
 | chk | checkbox |
 | dlg | dialog |
@@ -658,6 +665,7 @@ In order to fit as much information as possible on a braille display, the follow
 | pwdedt | password edit |
 | embedded | embedded object |
 | enote | end note |
+| fig | figure |
 | fnote | foot note |
 | gra | graphic |
 | grp | grouping |
@@ -741,6 +749,33 @@ Pressing dot 7 erases the last entered braille cell or character.
 Dot 8 translates any braille input and presses the enter key.
 Pressing dot 7 + dot 8 translates any braille input, but without adding a space or pressing enter.
 %kc:endInclude
+
++ Vision +[Vision]
+While NVDA is primairly aimed at blind or vision impaired people how primarily use speech and/or braille to operate a computer, it also provides built-in facilities to change the contents of the screen.
+Within NVDA, such a visual aid is called a vision enhancement provider.
+
+NVDA offers several built-in vision enhancement providers which are described below.
+Additional vision enhancement providers can be provided in [NVDA add-ons #AddonsManager].
+
+NVDA's vision settings can be changed in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog.
+
+++ Focus Highlight ++[VisionFocusHighlight]
+Focus Highlight can help to identify the [system focus #SystemFocus], [navigator object #ObjectNavigation] and [browse mode #BrowseMode] positions.
+These positions are highlighted with a colored rectangle outline.
+- Solid blue highlights a combined navigator object and system focus location (e.g. because [the navigator object follows the system focus #ReviewCursorFollowFocus]).
+- Dashed blue highlights just the system focus object.
+- Solid pink highlights just the navigator object.
+- Solid yellow highlights the virtual caret used in browse mode (where there is no physical caret such as in web browsers).
+-
+
+When Focus Highlight is enabled in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog, you can [change whether or not to highlight the focus, navigator object or browse mode caret #VisionSettingsFocusHighlight]
+
+++ Screen Curtain ++[VisionScreenCurtain]
+As a blind or vision impaired user, it is often not possible or necessary to see the contents of the screen.
+Furthermore, it might be hard to ensure that there isn't someone looking over your shoulder.
+For this situation, NVDA contains a feature called "screen curtain" which can be enabled to make the screen black.
+
+You can enable the Screen Curtain in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog.
 
 + Content Recognition +[ContentRecognition]
 When authors don't provide sufficient information for a screen reader user to determine the content of something, various tools can be used to attempt to recognize the content from an image.
@@ -1057,7 +1092,7 @@ If this is enabled, NVDA will inform you when there is a pending update on start
 You can also manually install the pending update from the Exit NVDA dialog (if enabled),  from the NVDA menu, or when you perform a new check from the Help menu.
 
 +++ Speech Settings (NVDA+control+v) +++[SpeechSettings]
-The speech category in the NVDA Settings dialog contains options that lets you change the speech synthesizer as well as voice characteristics for the chosen synthesizer.
+The Speech category in the NVDA Settings dialog contains options that lets you change the speech synthesizer as well as voice characteristics for the chosen synthesizer.
 For a quicker alternative way of controlling speech parameters from anywhere, please see the [Synth Settings Ring #SynthSettingsRing] section.
 
 The Speech Settings category contains the following options:
@@ -1320,6 +1355,41 @@ Common options are "Automatic" (which tells NVDA to employ the default automatic
 This option won't be available if your braille display only supports automatic port detection.
 
 You may consult the documentation for your braille display in the section [Supported Braille Displays #SupportedBrailleDisplays] to check for more details on the supported types of communication and available ports.
+
++++ Vision +++[VisionSettings]
+The Vision category in the NVDA Settings dialog allows you to enable, disable and configure [visual aids #Vision].
+
+Note that the available options in this category could be extended by [NVDA add-ons #AddonsManager].
+By default, this settings category contains the following options:
+
+==== Focus Highlight ====[VisionSettingsFocusHighlight]
+The check boxes in the Focus Highlight grouping control the behavior of NVDA's built-in [Focus Highlight #VisionFocusHighlight] facility.
+
+- Enable Highlighting: Toggles Focus Highlight on and off.
+- Highlight system focus: toggles whether the [system focus #SystemFocus] will be highlighted.
+- Highlight navigator object: toggles whether the [navigator object #ObjectNavigation] will be highlighted.
+- Highlight browse mode cursor: Toggles whether the [virtual browse mode cursor #BrowseMode] will be highlighted.
+-
+
+Note that checking and unchecking the "Enable Highlighting" check box wil also change the state of the tree other check boxes accordingly.
+Therefore, if "Enable Highlighting" is off and you check this check box, the other tree check boxes will also be checked automatically.
+If you only want to highlight the focus and leave the navigator object and browse mode check boxes unchecked, the state of the "Enable Highlighting" check box will be half checked.
+
+==== Screen Curtain ====[VisionSettingsScreenCurtain]
+You can enable the [Screen Curtain #VisionScreenCurtain] by checking the "Make screen black (immediate effect)" check box.
+A warning that your screen will become black after activation will be displayed.
+Before continuing (selecting "Yes"), ensure you have enabled speech / braille and will be able to control your computer without the use of the screen.
+Select "No" if you no longer wish to enable the Screen Curtain.
+If you are sure, you can choose the Yes button to enable the screen curtain.
+If you no longer want to see this warning message every time, you can change this behavior in the dialog that displays the message.
+You can always restore the warning by checking the "Always show a warning when loading Screen Curtain" check box next to the "Make screen black" check box.
+
+To toggle the SCreen Curtain from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
+==== Settings for third party visual aids ====[VisionSettingsThirdPartyVisualAids]
+Additional vision enhancement providers can be provided in [NVDA add-ons #AddonsManager].
+When these providers have adjustable settings, they will be shown in this settings category in separate groupings.
+For the supported settings per provider, please refer to de documentation for that provider.
 
 +++ Keyboard (NVDA+control+k) +++[KeyboardSettings]
 The Keyboard category in the NVDA Settings dialog contains options that sets how NVDA behaves as you use and type on your keyboard.
@@ -1625,6 +1695,7 @@ You can configure reporting of:
  - Links
  - Lists
  - Block quotes
+ - Groupings
  - Landmarks
  - Articles
  - Frames
@@ -1681,7 +1752,7 @@ If you wish to distribute custom code to others, you should package it as an NVD
 ==== Open Developer Scratchpad Directory ====[AdvancedSettingsOpenScratchpadDir]
 This button opens the directory where you can place custom code while developing it.
 This button is only enabled if NVDA is configured to enable loading custom code from the Developer Scratchpad Directory.
- 
+
 ==== Use UI automation to access Microsoft Word document controls when available ====[AdvancedSettingsUseUiaForWord]
 When this option is enabled, NVDA will try to use  the Microsoft UI Automation accessibility api in order to fetch information from Microsoft Word document controls.
 This includes in Microsoft Word itself, and also the Microsoft Outlook message viewer and composer.
@@ -2023,7 +2094,7 @@ For an even more extensive list of  free and commercial synthesizers that you ca
 
 ++ eSpeak NG ++[eSpeakNG]
 The [eSpeak NG https://github.com/espeak-ng/espeak-ng] synthesizer is built directly into NVDA and does not require any other special drivers or components to be installed.
-NVDA starts using eSpeak NG by default.
+On Windows 7, 8 and 8.1, NVDA uses eSpeak NG by default ([Windows OneCore #OneCore] is used in Windows 10 by default).
 As this synthesizer is built into NVDA, this is a great choice for when running NVDA off a USB thumb drive on other systems.
 
 Each voice that comes with eSpeak NG speaks a different language.
@@ -2059,20 +2130,10 @@ To use these voices, you will need to install two components:
 ++ Windows OneCore Voices ++[OneCore]
 Windows 10 includes new voices known as "OneCore" or "mobile" voices.
 Voices are provided for many languages, and they are more responsive than the Microsoft voices available using Microsoft Speech API version 5.
+On Windows 10, NVDA uses Windows OneCore voices by default ([[eSpeak NG #eSpeakNG] is used in other releases).
 
 Please see this Microsoft article for a list of available voices and instructions to install them: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
-Please note that the faster rates available with Narrator are not currently available with NVDA.
-Also, the speed you select in the Windows Settings affects the rate set in NVDA.
-These are issues we cannot resolve without changes to Windows.
-We are hopeful that these will be addressed in a future Windows update.
-
-++ Audiologic Tts3 ++[Audiologic]
-This is a commercial speech synthesizer specifically for the Italian language.
-You must have the synthesizer installed on your system in order for it to be used with NVDA.
-For more information, please visit the Audiologic website at www.audiologic.it.
-
-This synthesizer does not support [spelling functionality #SpeechSettingsUseSpelling].
 
 + Supported Braille Displays +[SupportedBrailleDisplays]
 This section contains information about the Braille displays supported by NVDA.
