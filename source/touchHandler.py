@@ -337,14 +337,12 @@ def initialize():
 	log.debug(
 		"Touchscreen detected, maximum touch inputs: %d" % winUser.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES)
 	)
-	if config.conf["touch"]["enabled"]:
-		handler = TouchHandler()
-		log.debug("Touch support enabled.")
-	else:
-		log.debug("Touch support disabled.")
+	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
+	setTouchSupport(config.conf["touch"]["enabled"])
 
 def terminate():
 	global handler
+	config.post_configProfileSwitch.unregister(handlePostConfigProfileSwitch)
 	if handler:
 		handler.terminate()
 		handler=None
