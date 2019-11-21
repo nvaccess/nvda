@@ -7,8 +7,7 @@ from typing import Dict
 import controlTypes
 
 ariaRolesToNVDARoles: Dict[str, int] = {
-	"description":controlTypes.ROLE_STATICTEXT,
-	"search":controlTypes.ROLE_SECTION,
+	"description": controlTypes.ROLE_STATICTEXT,  # Not in ARIA 1.1 spec
 	"alert":controlTypes.ROLE_ALERT,
 	"alertdialog":controlTypes.ROLE_DIALOG,
 	"article": controlTypes.ROLE_ARTICLE,
@@ -21,6 +20,7 @@ ariaRolesToNVDARoles: Dict[str, int] = {
 	"dialog":controlTypes.ROLE_DIALOG,
 	"directory":controlTypes.ROLE_LIST,
 	"document":controlTypes.ROLE_DOCUMENT,
+	"figure": controlTypes.ROLE_FIGURE,
 	"form":controlTypes.ROLE_FORM,
 	"grid":controlTypes.ROLE_TABLE,
 	"gridcell":controlTypes.ROLE_TABLECELL,
@@ -40,9 +40,11 @@ ariaRolesToNVDARoles: Dict[str, int] = {
 	"progressbar":controlTypes.ROLE_PROGRESSBAR,
 	"radio":controlTypes.ROLE_RADIOBUTTON,
 	"radiogroup":controlTypes.ROLE_GROUPING,
+	"region": controlTypes.ROLE_REGION,
 	"row":controlTypes.ROLE_TABLEROW,
 	"rowgroup":controlTypes.ROLE_GROUPING,
 	"rowheader":controlTypes.ROLE_TABLEROWHEADER,
+	"search": controlTypes.ROLE_LANDMARK,
 	"separator":controlTypes.ROLE_SEPARATOR,
 	"scrollbar":controlTypes.ROLE_SCROLLBAR,
 	"slider":controlTypes.ROLE_SLIDER,
@@ -80,10 +82,13 @@ landmarkRoles: Dict[str, str] = {
 	"search": pgettext("aria", "search"),
 	# Translators: Reported for the form landmark, normally found on web pages.
 	"form": pgettext("aria", "form"),
-	# Strictly speaking, region isn't a landmark, but it is very similar.
-	# Translators: Reported for a significant region, normally found on web pages.
-	"region": pgettext("aria", "region"),
 }
+
+ariaRolesToNVDARoles.update({
+	role: controlTypes.ROLE_LANDMARK
+	for role in landmarkRoles
+	if role not in ariaRolesToNVDARoles
+})
 
 htmlNodeNameToAriaRoles: Dict[str, str] = {
 	"header": "banner",
@@ -94,4 +99,5 @@ htmlNodeNameToAriaRoles: Dict[str, str] = {
 	"section": "region",
 	"aside": "complementary",
 	"dialog": "dialog",
+	"figure": "figure",
 }
