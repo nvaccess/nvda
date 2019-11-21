@@ -345,7 +345,9 @@ def accessibleObjectFromEvent(window,objectID,childID):
 	try:
 		pacc,childID=oleacc.AccessibleObjectFromEvent(window,objectID,childID)
 	except Exception as e:
-		log.debugWarning("oleacc.AccessibleObjectFromEvent with window %s, objectID %s and childID %s: %s"%(window,objectID,childID,e))
+		log.debug(
+			f"oleacc.AccessibleObjectFromEvent with window {window}, objectID {objectID} and childID {childID}: {e}"
+		)
 		return None
 	return (normalizeIAccessible(pacc,childID),childID)
 
