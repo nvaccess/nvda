@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-15 00:10+1000\n"
-"PO-Revision-Date: 2019-11-18 22:56+0300\n"
+"POT-Creation-Date: 2019-11-19 08:03+1000\n"
+"PO-Revision-Date: 2019-11-20 20:23+0300\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
@@ -912,7 +912,7 @@ msgstr "غوجراتية بدون اختصارات"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Greek international braille"
-msgstr ""
+msgstr "يوناني عالمي"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4301,11 +4301,11 @@ msgid ""
 "selected or copied"
 msgstr "بدأ التحديد من نقطة وجود مؤشر الاستعراض للنسخ"
 
-#, fuzzy
 msgid ""
 "Move the review cursor to the position marked as the start of text to be "
 "selected or copied"
-msgstr "بدأ التحديد من نقطة وجود مؤشر الاستعراض للنسخ"
+msgstr ""
+"نقلُ مؤشّر الاستعراض للموضع المحدَّد سابقا كنقطة بداية للنص لتحديده أو نسخه"
 
 #. Translators: Presented when attempting to move to the start marker for copy but none has been set.
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
@@ -4507,19 +4507,17 @@ msgstr ""
 "OCR"
 
 #. Translators: Input help mode message for toggle report CLDR command.
-#, fuzzy
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
-msgstr "التبديل بين تشغيل وتعطيل "
+msgstr ""
+"التبديل بين تفعيل وتعطيل قراءة رموز Cldr، كالرموز والوجوه التعبيرية (Emojis)"
 
 #. Translators: presented when the report CLDR is toggled.
-#, fuzzy
 msgid "report CLDR characters off"
-msgstr "تعطيل الإعلان عن الإطارات"
+msgstr "تعطيل قراءة رموز CLDR"
 
 #. Translators: presented when the report CLDR is toggled.
-#, fuzzy
 msgid "report CLDR characters on"
-msgstr "تشغيل الإعلان عن الإطارات"
+msgstr "تفعيل قراءة رموز CLDR"
 
 msgid ""
 "Toggles the state of the screen curtain, either by making the screen black "
@@ -4527,6 +4525,9 @@ msgid ""
 "curtain is enabled until you restart NVDA. If pressed tree times, it is "
 "enabled until you disable it"
 msgstr ""
+"تبديل حالة سِتار الشاشة، بجعلِها سوداء، أو إظهار محتواها. عند الضغط لتفعيل "
+"سِتار الشاشة مرةً واحدة، سيبقى مُفعّلاً حتى تُعيد تشغيل NVDA. عند ضغطه ثلاث مرات، "
+"سيبقى سِتار الشاشة مفعّلاً حتى تُعطّلَه."
 
 #. Translators: Reported when the screen curtain is not available.
 msgid "Screen curtain not available"
@@ -4542,7 +4543,7 @@ msgstr "يتعذّر تفعيل ستار الشاشة"
 
 #. Translators: Reported when the screen curtain is temporarily enabled.
 msgid "Temporary Screen curtain, enabled until next restart"
-msgstr ""
+msgstr "تفعيل مؤقَّت لسِتار الشاشة، يبقى مُفعّلاً حتى إعادة تشغيل NVDA"
 
 #. Translators: Reported when the screen curtain is enabled.
 msgid "Screen curtain enabled"
@@ -7263,11 +7264,11 @@ msgstr "تشغيل أداة معالجة مشكلات سجل النظام الش
 
 #. Translators: The message displayed while NVDA is running the COM Registration fixing tool
 msgid "Please wait while NVDA tries to fix your system's COM registrations."
-msgstr "يرجى الانتظار حتى الانتهاء من معالجة مشكلات سجل النظام الشائعة."
+msgstr "يرجى الانتظار حتى الانتهاء من معالجة مشكلات سجل النظام الشائعة"
 
 #. Translators: The message displayed when the COM Registration Fixing tool completes.
 msgid "COM Registration Fixing tool complete"
-msgstr "تم الانتهاء من حل مشكلات سجل النظام الشائعة"
+msgstr "اكتمال حل مشكلات سجل النظام الشائعة"
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
 msgid "&Settings..."
@@ -8064,11 +8065,11 @@ msgstr "تثبيت NVDA"
 
 #. Translators: The message displayed while NVDA is being updated.
 msgid "Please wait while your previous installation of NVDA is being updated."
-msgstr "يرجى الانتظار حتى يتم تحديث الإصدار الموجود."
+msgstr "يرجى الانتظار حتى يكتمل تحديث الإصدار الموجود."
 
 #. Translators: The message displayed while NVDA is being installed.
 msgid "Please wait while NVDA is being installed"
-msgstr "يرجى الانتظار حتى تثبيت NVDA."
+msgstr "يرجى الانتظار بينما يجري تثبيت NVDA."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
 msgid ""
@@ -8669,7 +8670,7 @@ msgstr "النطق والصفير"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "Report &tooltips"
-msgstr "الإعلان عن رسالة إر&شادية"
+msgstr "الإعلان عن الرسائل الإر&شادية"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -9023,8 +9024,9 @@ msgstr "نظام الدعم الأقدم"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
+#, fuzzy
 msgid "Terminal programs"
-msgstr ""
+msgstr "برامج التحكم الطرفية لتوجيه الأوامر"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9351,6 +9353,11 @@ msgid ""
 "during this session, will be lost.\n"
 "\t\t\tThis cannot be undone."
 msgstr ""
+"هل أنتَ متأكّدٌ من رغبتك في استرجاع القِيَم الافتراضية لكافة اختصارات NVDA??\n"
+"\t\t\t\n"
+"\t\t\tستُفقَدُ جميع الاختصارت التي عرَّفتَها، سواءً تلك التي عرّفتَها سابقًا، أو "
+"أضفتَها للتوّ خلال فتحك لمربّع الحوار حاليا.\n"
+"\t\t\tلا يمكنُ التراجُع عن هذه الخطوة."
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
@@ -9842,31 +9849,28 @@ msgstr "تمييز"
 
 #. Translators: The name for a vision enhancement provider that enhances the color presentation.
 #. (i.e. color inversion, gray scale coloring, etc.)
+#, fuzzy
 msgid "Color enhancer"
-msgstr ""
+msgstr "مُعزِّز اللون"
 
 #. Translators: Description for NVDA's built-in screen highlighter.
-#, fuzzy
 msgid "NVDA Highlighter"
-msgstr "تم تحديد %s"
+msgstr ""
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the system focus.
-#, fuzzy
 msgid "Highlight system fo&cus"
 msgstr "تمييز مؤشر ال&نظام"
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the browse mode cursor.
-#, fuzzy
 msgid "Highlight browse &mode cursor"
 msgstr "تمييز مؤشّر نمط التصفُّح"
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the navigator object.
-#, fuzzy
 msgid "Highlight navigator &object"
-msgstr "لا يوجد كائن واقع تحت مؤشر NVDA"
+msgstr "تمييز مؤشّر &NVDA (مؤشِّر نمط استعراض الكائن)"
 
 #. Translators: Description of a vision enhancement provider that disables output to the screen,
 #. making it black.
@@ -11293,23 +11297,20 @@ msgid "{size:g} point font"
 msgstr "{size:g} درجة"
 
 #. Translators: a message when toggling change tracking in Microsoft word
-#, fuzzy
 msgid "Change tracking on"
-msgstr "تتبع مسار الفأرة تشغيل"
+msgstr "تفعيل تتبُّع التغييرات"
 
 #. Translators: a message when toggling change tracking in Microsoft word
-#, fuzzy
 msgid "Change tracking off"
-msgstr "تتبع مسار الفأرة تعطيل"
+msgstr "تعطيل تتبُّع التغييرات"
 
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
 msgid "Display nonprinting characters"
-msgstr ""
+msgstr "عرضُ الأحرف غير المطبوعة"
 
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
-#, fuzzy
 msgid "Hide nonprinting characters"
-msgstr "%d أحرف"
+msgstr "إخفاء الأحرف غير المطبوعة"
 
 #. Translators: a measurement in Microsoft Word
 #, python-brace-format
