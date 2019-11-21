@@ -381,8 +381,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return
 
 	def _sendPacket(
-			self, packetType: bytes, mode: bytes,
-			data1: bytes, data2: bytes = b""
+			self,
+			packetType: bytes,
+			mode: bytes,
+			data1: bytes,
+			data2: bytes = b""
 	):
 		d1Len = len(data1)
 		d2Len = len(data2)
@@ -418,7 +421,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		]
 		packetB = bytearray(b"".join(packet))
 		checksum: int = 0xff & sum(packetB)
-		packetB[-2] = checksum
+		packetB[-3] = checksum
 
 		# check that the packet is the size we expect:
 		ptLen = len(packetType)
