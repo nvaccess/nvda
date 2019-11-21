@@ -895,7 +895,7 @@ def speakPreviousWord(wordSeparator):
 	if wordFound is False:
 		curWordChars.append(wordSeparator)
 		return
-	speakUsingTextInfo = wordFound is True
+	speakUsingTextInfo = wordFound is True and not isBlank(wordInfo.text)
 	if speakUsingTextInfo:
 		word = wordInfo.text
 	clearTypedWordBuffer()
