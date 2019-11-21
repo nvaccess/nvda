@@ -293,24 +293,28 @@ class TouchHandler(threading.Thread):
 
 handler=None
 
-def touchSupported():
+
+def touchSupported(debugLog=False):
 	"""Returns if the system and current NVDA session supports touchscreen interaction.
 	"""
 	if not config.isInstalledCopy() and not config.isAppX:
-		log.debugWarning("Touch only supported on installed copies")
+		if debugLog:
+			log.debugWarning("Touch only supported on installed copies")
 		return False
 	if winVersion.winVersion.platform_version < (6, 2, 9200):
-		log.debugWarning("Touch only supported on Windows 8 and higher")
+		if debugLog:
+			log.debugWarning("Touch only supported on Windows 8 and higher")
 		return False
 	maxTouches=windll.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES)
 	if maxTouches<=0:
-		log.debugWarning("No touch devices found")
+		if debugLog:
+			log.debugWarning("No touch devices found")
 		return False
 	return True
 
 def initialize():
 	global handler
-	if not touchSupported():
+	if not touchSupported(debugLog=True):
 		raise NotImplementedError
 	log.debug(
 		"Touchscreen detected, maximum touch inputs: %d" % winUser.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES)
