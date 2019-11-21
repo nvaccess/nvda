@@ -297,6 +297,10 @@ def speakObjectProperties(  # noqa: C901
 		elif name.startswith('positionInfo_') and value:
 			if positionInfo is None:
 				positionInfo=obj.positionInfo
+		elif value and name == "current":
+			# getPropertiesSpeech names this "current", but the NVDAObject property is
+			# named "isCurrent".
+			newPropertyValues['current'] = obj.isCurrent
 		elif value:
 			# Certain properties such as row and column numbers have presentational versions, which should be used for speech if they are available.
 			# Therefore redirect to those values first if they are available, falling back to the normal properties if not.
@@ -350,7 +354,6 @@ def speakObjectProperties(  # noqa: C901
 			newPropertyValues["_tableID"]=obj.tableID
 		except NotImplementedError:
 			pass
-	newPropertyValues['current']=obj.isCurrent
 	if allowedProperties.get('placeholder', False):
 		newPropertyValues['placeholder']=obj.placeholder
 	# When speaking an object due to a focus change, the 'selected' state should not be reported if only one item is selected.
@@ -437,7 +440,8 @@ def speakObject(  # noqa: C901
 		"rowHeaderText": True,
 		"columnHeaderText": True,
 		"rowSpan": True,
-		"columnSpan": True
+		"columnSpan": True,
+		"current": True
 	}
 
 	if reason==controlTypes.REASON_FOCUSENTERED:
@@ -1461,20 +1465,14 @@ def getControlFieldSpeech(  # noqa: C901
 
 	presCat=attrs.getPresentationCategory(ancestorAttrs,formatConfig, reason=reason)
 	childControlCount=int(attrs.get('_childcontrolcount',"0"))
-	landmark = attrs.get("landmark")
-	shouldSpeakLandmark = bool(
-		fieldType == "start_addedToControlFieldStack"
-		and formatConfig["reportLandmarks"]
-	)
+	role = attrs.get('role', controlTypes.ROLE_UNKNOWN)
 	if (
 		reason == controlTypes.REASON_FOCUS
 		or attrs.get('alwaysReportName', False)
-		or (landmark and shouldSpeakLandmark)
 	):
 		name = attrs.get('name', "")
 	else:
 		name = ""
-	role=attrs.get('role',controlTypes.ROLE_UNKNOWN)
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	ariaCurrent=attrs.get('current', None)
@@ -1492,14 +1490,15 @@ def getControlFieldSpeech(  # noqa: C901
 		tableID = None
 
 	roleText = attrs.get('roleText')
-	roleTextSequence = [roleText, ]
-	if not roleText:
-		if not landmark:
-			roleTextSequence = getPropertiesSpeech(reason=reason, role=role)
-		elif shouldSpeakLandmark:
-			roleTextSequence = [
-				f"{aria.landmarkRoles[landmark]} {controlTypes.roleLabels[controlTypes.ROLE_LANDMARK]}",
-			]
+	landmark = attrs.get("landmark")
+	if roleText:
+		roleTextSequence = [roleText, ]
+	elif role == controlTypes.ROLE_LANDMARK and landmark:
+		roleTextSequence = [
+			f"{aria.landmarkRoles[landmark]} {controlTypes.roleLabels[controlTypes.ROLE_LANDMARK]}",
+		]
+	else:
+		roleTextSequence = getPropertiesSpeech(reason=reason, role=role)
 	stateTextSequence = getPropertiesSpeech(reason=reason, states=states, _role=role)
 	keyboardShortcutSequence = []
 	if config.conf["presentation"]["reportKeyboardShortcuts"]:
@@ -1531,7 +1530,10 @@ def getControlFieldSpeech(  # noqa: C901
 		speakEntry=True
 	elif presCat == attrs.PRESCAT_CONTAINER:
 		speakEntry=True
-		speakExitForLine=True
+		speakExitForLine = bool(
+			attrs.get('roleText')
+			or role != controlTypes.ROLE_LANDMARK
+		)
 		speakExitForOther=True
 
 	# Determine the order of speech.
@@ -1539,9 +1541,15 @@ def getControlFieldSpeech(  # noqa: C901
 	speakContentFirst = (
 		reason == controlTypes.REASON_FOCUS
 		and presCat != attrs.PRESCAT_CONTAINER
-		and role not in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_LIST)
+		and role not in (
+			controlTypes.ROLE_EDITABLETEXT,
+			controlTypes.ROLE_COMBOBOX,
+			controlTypes.ROLE_TREEVIEW,
+			controlTypes.ROLE_LIST,
+			controlTypes.ROLE_LANDMARK,
+			controlTypes.ROLE_REGION,
+		)
 		and not tableID
-		and not landmark
 		and controlTypes.STATE_EDITABLE not in states
 	)
 	# speakStatesFirst: Speak the states before the role.
@@ -1585,7 +1593,7 @@ def getControlFieldSpeech(  # noqa: C901
 		and fieldType == "start_addedToControlFieldStack"
 		and role in (controlTypes.ROLE_GROUPING, controlTypes.ROLE_PROPERTYPAGE)
 	):
-		# #3321, #709: Report the name of groupings (such as fieldsets) and tab pages for quicknav and focus jumps
+		# #10095, #3321, #709: Report the name and description of groupings (such as fieldsets) and tab pages
 		nameAndRole = nameSequence[:]
 		nameAndRole.extend(roleTextSequence)
 		types.logBadSequenceTypes(nameAndRole)
