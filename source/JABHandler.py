@@ -746,13 +746,13 @@ def initialize():
 	except WindowsError:
 		raise NotImplementedError("dll not available")
 	_fixBridgeFuncs()
-	bridgeDll.Windows_run()
 	# Accept wm_copydata and any wm_user messages from other processes even if running with higher privileges
 	if not windll.user32.ChangeWindowMessageFilter(winUser.WM_COPYDATA, 1):
 		raise WinError()
 	for msg in range(winUser.WM_USER + 1, 0xffff):
 		if not windll.user32.ChangeWindowMessageFilter(msg, 1):
 			raise WinError()
+	bridgeDll.Windows_run()
 	# Register java events
 	bridgeDll.setFocusGainedFP(internal_event_focusGained)
 	bridgeDll.setPropertyActiveDescendentChangeFP(internal_event_activeDescendantChange)
