@@ -513,12 +513,14 @@ def speakText(
 		text: str,
 		reason: str = controlTypes.REASON_MESSAGE,
 		symbolLevel: Optional[int] = None,
+		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 		priority: Optional[Spri] = None
 ):
 	"""Speaks some text.
 	@param text: The text to speak.
 	@param reason: The reason for this speech; one of the controlTypes.REASON_* constants.
 	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
+	@param _prefixSpeechCommand: A speech command to prepend to the spoken speech sequence.
 	@param priority: The speech priority.
 	"""
 	if text is None:
@@ -526,7 +528,10 @@ def speakText(
 	if isBlank(text):
 		# Translators: This is spoken when the line is considered blank.
 		text=_("blank")
-	speak([text], symbolLevel=symbolLevel, priority=priority)
+	sequence = [text]
+	if _prefixSpeechCommand is not None:
+		sequence.insert(0, _prefixSpeechCommand)
+	speak(sequence, symbolLevel=symbolLevel, priority=priority)
 
 
 RE_INDENTATION_SPLIT = re.compile(r"^([^\S\r\n\f\v]*)(.*)$", re.UNICODE | re.DOTALL)
@@ -897,7 +902,7 @@ def speakPreviousWord(wordSeparator):
 	if log.isEnabledFor(log.IO):
 		log.io(f"typed word: {word}")
 	if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
-		speakText(word)
+		prefixSpeechCommand = None
 		if speakUsingTextInfo and reportSpellingError:
 			for command in wordInfo.getTextWithFields():
 				if (
@@ -905,12 +910,8 @@ def speakPreviousWord(wordSeparator):
 					and command.command == "formatChange"
 					and command.field.get("invalid-spelling")
 				):
-					break
-			else:
-				# No error.
-				return
-			import nvwave
-			nvwave.playWaveFile(r"waves\textError.wav")
+					prefixSpeechCommand = WaveFileCommand(r"waves\textError.wav")
+		speakText(word, _prefixSpeechCommand=prefixSpeechCommand)
 
 
 class SpeakTextInfoState(object):
