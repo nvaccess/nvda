@@ -205,7 +205,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 		if not bookmark:
 			return (None, None)
 		self._clearCachedCaretBookmark()
-		caretMoved, caretInfo = self._hasCaretMoved(bookmark, retryInterval=0.005, timeout=0.02)
+		caretMoved, caretInfo = self._hasCaretMoved(bookmark, retryInterval=0.005, timeout=0.015)
 		if not caretMoved or not caretInfo or not caretInfo.obj:
 			return (None, None)
 		wordInfo = self.makeTextInfo(bookmark)
