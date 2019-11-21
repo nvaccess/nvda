@@ -71,6 +71,7 @@ What's New in NVDA
 - When reading bulleted items in Microsoft Word with UIA enabled, the bullet from the next list item is no longer inappropriately announced. (#9613)
 - Some rare braille translation issues and errors with liblouis have been resolved. (#9982)
 - Java applications started before NVDA are now accessible without the need to restart the Java app. (#10296)
+- In Mozilla Firefox, when the focused element becomes marked as current (aria-current), this change is no longer spoken multiple times. (#8960)
 
 
 == Changes for Developers ==
