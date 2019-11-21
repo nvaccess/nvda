@@ -18,6 +18,8 @@ from NVDAObjects.behaviors import Dialog, WebDialog
 from . import IAccessible
 from .ia2TextMozilla import MozillaCompoundTextInfo
 import aria
+import api
+import speech
 
 class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib=True
@@ -79,6 +81,15 @@ class Ia2Web(IAccessible):
 		if landmark:
 			return landmark
 		return super().landmark
+
+	def event_IA2AttributeChange(self):
+		super().event_IA2AttributeChange()
+		if self is api.getFocusObject():
+			# Report aria-current if it changed.
+			speech.speakObjectProperties(
+				self, current=True, reason=controlTypes.REASON_CHANGE)
+		# super calls event_stateChange which updates braille, so no need to
+		# update braille here.
 
 
 class Document(Ia2Web):
