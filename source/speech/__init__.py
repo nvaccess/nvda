@@ -49,7 +49,6 @@ from .commands import (  # noqa: F401
 	WaveFileCommand,
 	ConfigProfileTriggerCommand,
 )
-import languageHandler
 from functools import partial
 from . import types
 from .types import SpeechSequence
