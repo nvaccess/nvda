@@ -7,6 +7,7 @@
 import ctypes
 import NVDAHelper
 import textInfos
+import textUtils
 import UIAHandler
 
 from comtypes import COMError
@@ -203,23 +204,12 @@ class consoleUIATextInfo(UIATextInfo):
 		This is necessary since Uniscribe requires indices into the text to
 		find word boundaries, but UIA only allows for relative movement.
 		"""
-		charInfo = self.copy()
-		res = 0
-		chars = None
-		while charInfo.compareEndPoints(
-			lineInfo,
-			"startToEnd"
-		) <= 0:
-			charInfo.expand(textInfos.UNIT_CHARACTER)
-			chars = charInfo.move(textInfos.UNIT_CHARACTER, -1) * -1
-			if chars != 0 and charInfo.compareEndPoints(
-				lineInfo,
-				"startToStart"
-			) >= 0:
-				res += chars
-			else:
-				break
-		return res
+		# position a textInfo from the start of the line up to the current position.
+		charInfo = lineInfo.copy()
+		charInfo.setEndPoint(self, "endToStart")
+		text = charInfo.text
+		offset = textUtils.WideStringOffsetConverter(text).wideStringLength
+		return offset
 
 	def _getWordOffsetsInThisLine(self, offset, lineInfo):
 		lineText = lineInfo.text or u" "
@@ -232,16 +222,17 @@ class consoleUIATextInfo(UIATextInfo):
 		# not more than two alphanumeric chars in a row.
 		# Inject two alphanumeric characters at the end to fix this.
 		lineText += "xx"
+		lineTextLen = textUtils.WideStringOffsetConverter(lineText).wideStringLength
 		NVDAHelper.localLib.calculateWordOffsets(
 			lineText,
-			len(lineText),
+			lineTextLen,
 			offset,
 			ctypes.byref(start),
 			ctypes.byref(end)
 		)
 		return (
 			start.value,
-			min(end.value, max(1, len(lineText) - 2))
+			min(end.value, max(1, lineTextLen - 2))
 		)
 
 	def __ne__(self, other):
