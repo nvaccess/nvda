@@ -312,6 +312,24 @@ def touchSupported(debugLog=False):
 		return False
 	return True
 
+
+def setTouchSupport(enable):
+	global handler
+	if not touchSupported():
+		raise NotImplementedError
+	if not handler and enable:
+		handler = TouchHandler()
+		log.debug("Touch support enabled.")
+	elif handler and not enable:
+		handler.terminate()
+		handler = None
+		log.debug("Touch support disabled.")
+
+
+def handlePostConfigProfileSwitch():
+	setTouchSupport(config.conf["touch"]["enabled"])
+
+
 def initialize():
 	global handler
 	if not touchSupported(debugLog=True):
