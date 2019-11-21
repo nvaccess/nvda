@@ -204,10 +204,11 @@ class consoleUIATextInfo(UIATextInfo):
 		This is necessary since Uniscribe requires indices into the text to
 		find word boundaries, but UIA only allows for relative movement.
 		"""
-		charInfo = self.copy()
-		charInfo.setEndPoint(lineInfo, "startToStart")
+		# position a textInfo from the start of the line up to the current position.
+		charInfo = lineInfo.copy()
+		charInfo.setEndPoint(self, "endToStart")
 		text = charInfo.text
-		offset = textUtils.WideStringOffsetConverter(text).wideStringLength - 1
+		offset = textUtils.WideStringOffsetConverter(text).wideStringLength
 		return offset
 
 	def _getWordOffsetsInThisLine(self, offset, lineInfo):
