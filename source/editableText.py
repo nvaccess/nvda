@@ -206,7 +206,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 			return (None, None)
 		self._clearCachedCaretBookmark()
 		caretMoved, caretInfo = self._hasCaretMoved(bookmark, retryInterval=0.005, timeout=0.02)
-		if not caretMoved:
+		if not caretMoved or not caretInfo or not caretInfo.obj:
 			return (None, None)
 		wordInfo = self.makeTextInfo(bookmark)
 		# The bookmark is positioned after the end of the word.
