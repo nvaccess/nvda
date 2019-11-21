@@ -15,7 +15,7 @@ Quoi de Neuf dans NVDA
  - Basic Braille Plus 40
  - Basic Braille Plus 32
  - Connect Braille
-- Tous les gestes personnalisés peuvent maintenant être supprimés via un nouveau bouton " Réinitialiser aux valeurs par défaut " dans le dialogue " Gestes de commandes ". (#10293)
+- Tous les gestes personnalisés peuvent maintenant être supprimés via un nouveau bouton "Réinitialiser aux valeurs par défaut" dans le dialogue " Gestes de commandes ". (#10293)
 - L'annonce de la police dans Microsoft Word indiquera maintenant si un texte est marqué comme masqué. (#8713)
 - Ajout d'une commande pour déplacer le curseur de revue vers la position précédemment définie comme marqueur de début pour la sélection ou la copie : NVDA+Maj+F9. (#1969)
 - Dans Internet Explorer, Microsoft Edge et les versions récentes de Firefox et Chrome, les régions sont maintenant annoncées en mode formulaire et en navigation par objet. (#10101)
@@ -39,27 +39,27 @@ Quoi de Neuf dans NVDA
 
 == Corrections de Bogues ==
 - Les emojis ainsi que les autres caractères Unicode 32 bits prennent maintenant moins de place sur un afficheur Braille lorsqu'ils sont affichés sous forme de valeurs hexadécimal. (#6695)
-- Dans Windows 10, NVDA annonce maintenant les infos bulle dans les applications universelles si il est configuré pour annoncer les infos bulle dans le dialogue de paramétrage "Présentation des objets". (#8118)
-- Dans Windows 10 version 1607 et suppérieur, le texte tapé est maintenant annoncé dans MinTTY. (#1348)
-- Dans Windows 10 version 1607 et suppérieur, le texte qui apparaît près du curseur dans les consoles Windows n'est plus épelé par NVDA. (#513)
-- Les commandes dans le dialogue compresseur d'Audacity sont maintenant annoncées lors de la navigation dans le dialogue. (#10103)
+- Sous Windows 10, NVDA annonce maintenant les infos bulle dans les applications universelles si il est configuré pour annoncer les infos bulle dans le dialogue de paramétrage "Présentation des objets". (#8118)
+- Sous Windows 10 version 1607 et suppérieur, le texte tapé est maintenant annoncé dans MinTTY. (#1348)
+- Sous Windows 10 version 1607 et suppérieur, le texte qui apparaît près du curseur dans les consoles Windows n'est plus épelé. (#513)
+- Les commandes dans le dialogue compresseur d'Audacity sont maintenant annoncées lors de la navigation dans ce dialogue. (#10103)
 - NVDA ne considère plus les espaces comme des mots lors de la navigation par objet dans les éditeurs de texte basés sur Scintilla tel que Notepad++. (#8295)
-- NVDA empêche désormais le système de passer en veille lors de la lecture d'un long texte avec les commandes de navigation d'un afficheur Braille. (#9175)
+- NVDA empêchera le système de passer en veille lors de la lecture d'un long texte avec les commandes de navigation d'un afficheur Braille. (#9175)
 - Sous Windows 10, le Braille suit maintenant correctement lors de l'édition d'une cellule dans Microsoft Excel ainsi que dans d'autres contrôles de texte UIA où il ne suivait pas. (#9749)
-- NVDA reporte à nouveau les suggestions dans la barre d'adresse de Microsoft Edge. (#7554)
-- NVDA ne reste plus silencieux lors de la mise en focus d'un long onglet dans Internet Explorer. (#8898)
-- Dans Microsoft Edge basé sur EdgeHTML, NVDA ne jouera plus le son de suggestions de recherche lors de la maximisation de la fenêtre. (#9110, #10002)
+- NVDA annonce à nouveau les suggestions dans la barre d'adresse de Microsoft Edge. (#7554)
+- NVDA ne sera plus silencieux quand le focus est sur un en-tête de contrôle d'onglet HTML dans Internet Explorer. (#8898)
+- Dans Microsoft Edge basé sur EdgeHTML, NVDA n'émettra plus le son de suggestions de recherche quand la fenêtre est agrandie. (#9110, #10002)
 - Les listes déroulantes ARIA 1.1 sont maintenant supportées sous Firefox et Chrome. (#9616)
-- NVDA ne reporte plus les éléments masqués dans les listes de type SysListView32. (#8268)
+- NVDA n'annoncera plus le contenu des colonnes masquées visuellement pour les éléments de liste des contrôles SysListView32. (#8268)
 - Le dialogue de paramètres n'affiche plus le niveau de journalisation sur les écrans sécurisés. (#10209)
 - Dans le menu Démarrer de Windows 10 version anniversaire et suppérieur, NVDA annonce maintenant le détail des résultats de recherche. (#10232)
-- En mode navigation, si vous déplacez le curseur ou utilisez les commandes de navigation rapides qui entraîne un changement dans le document, NVDA n'indiquera plus un mauvais contenu dans certains cas. (#8831, #10343)
+- En mode navigation, si le déplacement du curseur ou l'utilisation de la navigation rapide entraîne la modification du document, NVDA n'indiquera plus un contenu incorrect dans certains cas. (#8831, #10343)
 - Certains noms de puces dans Microsoft Word ont été corrigés. (#10399)
 - Dans la mise à jour de Mai de Windows 10 et suppérieur, NVDA annonce maintenant correctement le premier emoji ou le premier élément dans l'historique du presse-papiers lorsque le paneau d'emoji et le dialogue d'historique du presse-papiers sont ouverts, respectivement. (#9204)
 - Dans Poedit, il est à nouveau possible de voir les traductions pour les langues se lisant de droite à gauche. (#9931)
-- Dans les paramètres sous Windows 10 mise à jour d'Avril 2018 et suppérieur, NVDA n'annonce plus d'informations de barre de progression dans la partie de paramétrage du son, disponible dans la catégorie système. (#10284)
+- Dans l'application Paramètres de la mise à jour de Windows 10 avril 2018 et ultérieure, NVDA n'annoncera plus les informations de la barre de progression de volume qui se trouve dans ll'onglet Système / Son. (#10284)
 - Des expressions régulières invalides dans les dictionaires de parole n'entraînent plus l'arrêt complet de la parole. (#10334)
-- Lors de la lecture des listes à puces dans Microsoft Word, la puce de l'élément suivant n'est plus annoncée de manière inappropriée. (#9613)
+- Quand on parcourt des éléments à puces dans Microsoft Word avec UIA activé, la puce de l'élément de liste suivant n'est plus indûment annoncée. (#9613)
 
 
 == Changements pour développeurs ==
@@ -69,7 +69,7 @@ Quoi de Neuf dans NVDA
 - Mise à jour de six à la version 1.12.0. (#9630)
 - Mise à jour de py2exe à la version 0.9.3.2 (en développement, niveau b372a8e dans le dépôt albertosottile/py2exe#13). (#9856)
 - Mise à jour du module comtype de UIAutomationCore.dll à la version 10.0.18362. (#9829)
-- La complétion via la tabulation dans la console Python ne suggère des éléments commençant par un souligné uniquement si le souligné est le premier caractère saisi. (#9918)
+- La complétion via la tabulation dans la console Python suggère des éléments commençant par un souligné uniquement si le souligné est le premier caractère saisi. (#9918)
 - L'outil Flake8 a été intégré en plus de SCons dans les tests de code que doit passer une pull request. (#5918)
 - Comme NVDA ne dépend plus de pywin32, les modules tels que win32api et win32con ne sont plus disponibles pour les extensions. (#9639)
  - l'appel à win32api peut être remplacé par l'appel direct à la dll de win32api via ctypes.
@@ -84,7 +84,7 @@ Quoi de Neuf dans NVDA
 - La classe SynthDriver doit supportée speech.PitchCommand dans sa méthode de parole, les changements de hauteur ou encore l'épellation dépendent maintenant de cette méthode.
 - La fonction de parole getSpeechTextForProperties a été renommée en getPropertiesSpeech. (#10098)
 - La fonction Braille getBrailleTextForProperties a été renommée en getPropertiesBraille. (#10469)
-- Beaucoup de fonctions de parole ont été modifiées pour retourner des séquences de parole (#10098)
+- Plusieurs fonctions de parole ont été modifiées pour retourner des séquences de parole (#10098)
  - getControlFieldSpeech
  - getFormatFieldSpeech
  - getSpeechTextForProperties s'appelle maintenant getPropertiesSpeech
