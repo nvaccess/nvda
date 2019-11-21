@@ -249,7 +249,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 		except AttributeError:
 			return True
 
-	def script_caret_newLine(self,gesture):
+	def script_caret_newLine(self, gesture):
 		# Going to a new line should also speak the last word using textInfo.
 		# Note that calling script_preTypedCharacter also executes the gesture, which is fine.
 		self.script_preTypedCharacter(gesture)

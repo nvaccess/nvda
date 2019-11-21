@@ -272,7 +272,7 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
 	_caretMovementTimeoutMultiplier = 1.5
 	# For this reason, don't rely on textInfo to speak typed words
-	useTextInfoToSpeakTypedWords =False
+	useTextInfoToSpeakTypedWords: bool = False
 
 	def _get_TextInfo(self):
 		"""Overriding _get_TextInfo and thus the TextInfo property
