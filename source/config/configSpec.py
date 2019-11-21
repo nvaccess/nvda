@@ -74,10 +74,10 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Vision enhancement provider settings
 [vision]
-	providers = string_list(=default=list())
 
 	# Vision enhancement provider settings
 	[[__many__]]
+		enabled = boolean(default=false)
 
 # Presentation settings
 [presentation]
@@ -182,6 +182,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportLists = boolean(default=true)
 	reportHeadings = boolean(default=true)
 	reportBlockQuotes = boolean(default=true)
+	reportGroupings = boolean(default=true)
 	reportLandmarks = boolean(default=true)
 	reportArticles = boolean(default=false)
 	reportFrames = boolean(default=true)
@@ -217,6 +218,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [debugLog]
 	hwIo = boolean(default=false)
+	UIA = boolean(default=false)
 	audioDucking = boolean(default=false)
 	gui = boolean(default=false)
 	louis = boolean(default=false)

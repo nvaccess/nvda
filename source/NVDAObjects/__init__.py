@@ -744,8 +744,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		role = self.role
 		landmark = self.landmark
 		if (
-			role == controlTypes.ROLE_LANDMARK
-			or landmark
+			role in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_REGION) or landmark
 		) and not config.conf["documentFormatting"]["reportLandmarks"]:
 			return self.presType_layout
 
@@ -778,7 +777,18 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		name = self.name
 		description = self.description
 		if not name and not description:
-			if role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING,controlTypes.ROLE_OPTIONPANE,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_FORM,controlTypes.ROLE_TABLEBODY):
+			if role in (
+				controlTypes.ROLE_WINDOW,
+				controlTypes.ROLE_PANEL,
+				controlTypes.ROLE_PROPERTYPAGE,
+				controlTypes.ROLE_TEXTFRAME,
+				controlTypes.ROLE_GROUPING,
+				controlTypes.ROLE_OPTIONPANE,
+				controlTypes.ROLE_INTERNALFRAME,
+				controlTypes.ROLE_FORM,
+				controlTypes.ROLE_TABLEBODY,
+				controlTypes.ROLE_REGION,
+			):
 				return self.presType_layout
 			if role == controlTypes.ROLE_TABLE and not config.conf["documentFormatting"]["reportTables"]:
 				return self.presType_layout
