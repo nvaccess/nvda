@@ -33,7 +33,8 @@ import ctypes.wintypes
 import ssl
 import wx
 import languageHandler
-import speech
+# Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
+import synthDriverHandler  # noqa: E402
 import braille
 import gui
 from gui import guiHelper
@@ -111,8 +112,8 @@ def checkForUpdate(auto=False):
 		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
 	}
 	if auto and allowUsageStats:
-		synthDriverClass=speech.getSynth().__class__
-		brailleDisplayClass=braille.handler.display.__class__ if braille.handler else None
+		synthDriverClass = synthDriverHandler.getSynth().__class__
+		brailleDisplayClass = braille.handler.display.__class__ if braille.handler else None
 		# Following are parameters sent purely for stats gathering.
 		#  If new parameters are added here, they must be documented in the userGuide for transparency.
 		extraParams={
