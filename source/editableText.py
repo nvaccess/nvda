@@ -137,22 +137,6 @@ class EditableText(TextContainerObject,ScriptableObject):
 	def _caretScriptPostMovedHelper(self, speakUnit, gesture, info=None):
 		if isScriptWaiting():
 			return
-		if eventHandler.isPendingEvents("gainFocus"):
-			# #10536: Normally we would just return here to avoid reading content of the edit field,
-			# as it is going to lose focus.
-			# However in Libre Office each paragraph of the text is included in a separate contro,
-			# which gains focus when moving with arrow keys.
-			# Therefore we have to be sure  that focus is moved to a different control.
-			if hasattr(self, 'caretObject'):
-				prevFocusClass = eventHandler.lastQueuedFocusObject.windowClassName
-				prevFocusRole = eventHandler.lastQueuedFocusObject.role
-			else:
-				prevFocusClass = self.windowClassName
-				prevFocusRole = self.role
-			api.processPendingEvents()
-			currFocusedObj = api.getFocusObject()
-			if prevFocusClass != currFocusedObj.windowClassName or prevFocusRole != currFocusedObj.role:
-				return
 		if not info:
 			try:
 				info = self.makeTextInfo(textInfos.POSITION_CARET)
