@@ -141,6 +141,7 @@ class CustomWindow(AutoPropertyObject):
 	The window will be destroyed when the instance is deleted,
 	but it can be explicitly destroyed using L{destroy}.
 	"""
+	handle: Optional[int] = None
 
 	@classmethod
 	def _get__wClass(cls):
