@@ -241,17 +241,8 @@ class consoleUIATextInfo(UIATextInfo):
 
 
 class consoleUIAWindow(Window):
-	def _get_focusRedirect(self):
-		"""
-		Sometimes, attempting to interact with the console too quickly after
-		focusing the window can make NVDA unable to get any caret or review
-		information or receive new text events.
-		To work around this, we must redirect focus to the console text area.
-		"""
-		for child in self.children:
-			if isinstance(child, WinConsoleUIA):
-				return child
-		return None
+	# This is the parent of the console text area, which sometimes gets focus after the text area.
+	shouldAllowUIAFocusEvent = False
 
 
 class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
