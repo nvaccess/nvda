@@ -633,7 +633,7 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportGroupings(self, gesture):
 		if config.conf["documentFormatting"]["reportGroupings"]:
 			# Translators: The message announced when toggling the report block quotes document formatting setting.
-			state = _("report gorupings off")
+			state = _("report groupings off")
 			config.conf["documentFormatting"]["reportGroupings"] = False
 		else:
 			# Translators: The message announced when toggling the report block quotes document formatting setting.
