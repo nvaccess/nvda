@@ -144,6 +144,13 @@ class CustomWindow(AutoPropertyObject):
 	handle: Optional[int] = None
 
 	@classmethod
+	def __new__(cls, *args, **kwargs):
+		for instance in cls._hwndsToInstances.values():
+			if type(instance) is cls:
+				raise RuntimeError(f"Only one instance of {cls.__qualname__} may exist at a time")
+		return super().__new__(cls, *args, **kwargs)
+
+	@classmethod
 	def _get__wClass(cls):
 		return WNDCLASSEXW(
 			cbSize=ctypes.sizeof(WNDCLASSEXW),

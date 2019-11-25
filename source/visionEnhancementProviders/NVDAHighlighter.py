@@ -343,6 +343,14 @@ class NVDAHighlighterGuiPanel(
 		providerInst: Optional[NVDAHighlighter] = self._providerControl.getProviderInstance()
 		if providerInst:
 			providerInst.refresh()
+		elif evt.IsChecked():
+			# One or more check boxes are enabled, so the provider instance must be there.
+			# Yet, there is no instance. This must be a case where initialization failed.
+			settingsStorage.highlightBrowseMode = False
+			settingsStorage.highlightFocus = False
+			settingsStorage.highlightNavigator = False
+			self.updateDriverSettings()
+			self._updateEnabledState()
 
 
 class NVDAHighlighter(providerBase.VisionEnhancementProvider):
