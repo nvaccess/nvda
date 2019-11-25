@@ -876,7 +876,7 @@ class UIA(Window):
 			from .excel import BadExcelFormulaEdit
 			clsList.append(BadExcelFormulaEdit)
 		elif self.windowClassName == "EXCEL7":
-			if self.role == controlTypes.ROLE_DATAITEM:
+			if self.role in (controlTypes.ROLE_DATAITEM, controlTypes.ROLE_HEADERITEM):
 				from .excel import ExcelCell
 				clsList.append(ExcelCell)
 			elif self.role == controlTypes.ROLE_DATAGRID:
