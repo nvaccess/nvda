@@ -401,10 +401,10 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		self._highlighterRunningEvent = threading.Event()
 		self._highlighterThread.daemon = True
 		self._highlighterThread.start()
-		# Make sure the highlgihter thread doesn't exit early.
+		# Make sure the highlighter thread doesn't exit early.
 		waitResult = self._highlighterRunningEvent.wait(0.2)
-		if not waitResult or not self._highlighterThread.is_alive():
-			raise RuntimeError("Highlighter thread terminated after initialization")
+		if waitResult is False or not self._highlighterThread.is_alive():
+			raise RuntimeError("Highlighter thread wasn't able to initialize correctly")
 
 	def terminate(self):
 		log.debug("Terminating NVDAHighlighter")
