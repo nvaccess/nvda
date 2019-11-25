@@ -169,6 +169,11 @@ class EditableText(editableText.EditableText, NVDAObject):
 			self.bindGesture("kb:enter","caret_newLine")
 			self.bindGesture("kb:numpadEnter","caret_newLine")
 
+	def _caretScriptPostMovedHelper(self, speakUnit, gesture, info=None):
+		if eventHandler.isPendingEvents("gainFocus"):
+			return
+		super()._caretScriptPostMovedHelper(speakUnit, gesture, info)
+
 class EditableTextWithAutoSelectDetection(EditableText):
 	"""In addition to L{EditableText}, handles reporting of selection changes for objects which notify of them.
 	To have selection changes reported, the object must notify of selection changes via the caret event.
@@ -751,8 +756,8 @@ class ToolTip(NVDAObject):
 		if not config.conf["presentation"]["reportTooltips"]:
 			return
 		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
-		# Ideally, we wouldn't use getBrailleTextForProperties directly.
-		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
+		# Ideally, we wouldn't use getPropertiesBraille directly.
+		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
 class Notification(NVDAObject):
 	"""Informs the user of non-critical information that does not require immediate action.
@@ -764,8 +769,8 @@ class Notification(NVDAObject):
 		if not config.conf["presentation"]["reportHelpBalloons"]:
 			return
 		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
-		# Ideally, we wouldn't use getBrailleTextForProperties directly.
-		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
+		# Ideally, we wouldn't use getPropertiesBraille directly.
+		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
 	event_show = event_alert
 
