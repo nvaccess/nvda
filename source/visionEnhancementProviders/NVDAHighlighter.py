@@ -393,6 +393,10 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		)
 		self._highlighterThread.daemon = True
 		self._highlighterThread.start()
+		# Make sure the highlgihter thread doesn't exit early.
+		time.sleep(0.02)
+		if not self._highlighterThread.is_alive():
+			raise RuntimeError("Highlighter thread terminated after initialization")
 
 	def terminate(self):
 		log.debug("Terminating NVDAHighlighter")
@@ -407,21 +411,24 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		super().terminate()
 
 	def _run(self):
-		if vision._isDebug():
-			log.debug("Starting NVDAHighlighter thread")
-		window = self.window = self.customWindowClass(self)
-		timer = winUser.WinTimer(window.handle, 0, self._refreshInterval, None)
-		msg = MSG()
-		# Python 3.8 note, Change this to use an Assignment expression to catch a return value of -1.
-		# See the remarks section of
-		# https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getmessage
-		while winUser.getMessage(byref(msg), None, 0, 0) > 0:
-			winUser.user32.TranslateMessage(byref(msg))
-			winUser.user32.DispatchMessageW(byref(msg))
-		if vision._isDebug():
-			log.debug("Quit message received on NVDAHighlighter thread")
-		timer.terminate()
-		window.destroy()
+		try:
+			if vision._isDebug():
+				log.debug("Starting NVDAHighlighter thread")
+			window = self.window = self.customWindowClass(self)
+			timer = winUser.WinTimer(window.handle, 0, self._refreshInterval, None)
+			msg = MSG()
+			# Python 3.8 note, Change this to use an Assignment expression to catch a return value of -1.
+			# See the remarks section of
+			# https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getmessage
+			while winUser.getMessage(byref(msg), None, 0, 0) > 0:
+				winUser.user32.TranslateMessage(byref(msg))
+				winUser.user32.DispatchMessageW(byref(msg))
+			if vision._isDebug():
+				log.debug("Quit message received on NVDAHighlighter thread")
+			timer.terminate()
+			window.destroy()
+		except Exception:
+			log.exception("Exception in NVDA Highlighter thread")
 
 	def updateContextRect(self, context, rect=None, obj=None):
 		"""Updates the position rectangle of the highlight for the specified context.
