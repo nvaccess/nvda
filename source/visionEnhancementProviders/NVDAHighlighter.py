@@ -107,8 +107,7 @@ class HighlightWindow(CustomWindow):
 		super().__init__(
 			windowName=self.windowName,
 			windowStyle=self.windowStyle,
-			extendedWindowStyle=self.extendedWindowStyle,
-			parent=gui.mainFrame.Handle
+			extendedWindowStyle=self.extendedWindowStyle
 		)
 		self.location = None
 		self.highlighterRef = weakref.ref(highlighter)
@@ -399,11 +398,12 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}",
 			target=self._run
 		)
+		self._highlighterRunningEvent = threading.Event()
 		self._highlighterThread.daemon = True
 		self._highlighterThread.start()
 		# Make sure the highlgihter thread doesn't exit early.
-		time.sleep(0.02)
-		if not self._highlighterThread.is_alive():
+		waitResult = self._highlighterRunningEvent.wait(0.2)
+		if not waitResult or not self._highlighterThread.is_alive():
 			raise RuntimeError("Highlighter thread terminated after initialization")
 
 	def terminate(self):
@@ -422,8 +422,11 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		try:
 			if vision._isDebug():
 				log.debug("Starting NVDAHighlighter thread")
-			window = self.window = self.customWindowClass(self)
-			timer = winUser.WinTimer(window.handle, 0, self._refreshInterval, None)
+			try:
+				window = self.window = self.customWindowClass(self)
+				timer = winUser.WinTimer(window.handle, 0, self._refreshInterval, None)
+			finally:
+				self._highlighterRunningEvent.set()
 			msg = MSG()
 			# Python 3.8 note, Change this to use an Assignment expression to catch a return value of -1.
 			# See the remarks section of
