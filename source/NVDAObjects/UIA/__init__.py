@@ -962,7 +962,7 @@ class UIA(Window):
 					)
 				return False
 			# This object may be in a different window, so we need to recalculate the window handle.
-			kwargs['windowHandle']=None
+			kwargs['windowHandle'] = None
 		elif relation=="focus":
 			try:
 				UIAElement=UIAHandler.handler.clientObject.getFocusedElementBuildCache(UIAHandler.handler.baseCacheRequest)
