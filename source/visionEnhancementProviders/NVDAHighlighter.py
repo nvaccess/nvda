@@ -362,7 +362,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 	_refreshInterval = 100
 	customWindowClass = HighlightWindow
 	_settings = NVDAHighlighterSettings()
-	window: Optional[customWindowClass] = None
+	_window: Optional[customWindowClass] = None
 	enabledContexts: Tuple[Context]  # type info for autoprop: L{_get_enableContexts}
 
 	@classmethod  # override
@@ -408,7 +408,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 
 	def terminate(self):
 		log.debug("Terminating NVDAHighlighter")
-		if self._highlighterThread and self.window and self.window.handle:
+		if self._highlighterThread and self._window and self._window.handle:
 			if not winUser.user32.PostThreadMessageW(self._highlighterThread.ident, winUser.WM_QUIT, 0, 0):
 				raise WinError()
 			else:
@@ -423,7 +423,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 			if vision._isDebug():
 				log.debug("Starting NVDAHighlighter thread")
 			try:
-				window = self.window = self.customWindowClass(self)
+				window = self._window = self.customWindowClass(self)
 				timer = winUser.WinTimer(window.handle, 0, self._refreshInterval, None)
 			finally:
 				self._highlighterRunningEvent.set()
@@ -471,8 +471,8 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 	def refresh(self):
 		"""Refreshes the screen positions of the enabled highlights.
 		"""
-		if self.window and self.window.handle:
-			self.window.refresh()
+		if self._window and self._window.handle:
+			self._window.refresh()
 
 	def _get_enabledContexts(self):
 		"""Gets the contexts for which the highlighter is enabled.
