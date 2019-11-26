@@ -8,6 +8,7 @@ from ctypes import *
 from ctypes.wintypes import *
 import comtypes.client
 from comtypes.automation import VT_EMPTY
+from comtypes import COMError
 from comtypes import *
 import weakref
 import threading
@@ -369,13 +370,19 @@ class UIAHandler(COMObject):
 			# It seems that it is possible for compareElements to return True, even though the objects are different.
 			# Therefore, don't ignore the event if the last focus object has lost its hasKeyboardFocus state.
 			try:
-				if self.clientObject.compareElements(sender,lastFocus) and lastFocus.currentHasKeyboardFocus:
+				if (
+					self.clientObject.compareElements(sender, lastFocus)
+					and lastFocus.currentHasKeyboardFocus
+				):
 					if _isDebug():
 						log.debugWarning("HandleFocusChangedEvent: Ignoring duplicate focus event")
 					return
 			except COMError:
 				if _isDebug():
-					log.debugWarning("HandleFocusChangedEvent: Couldn't check for duplicate focus event", exc_info=True)
+					log.debugWarning(
+						"HandleFocusChangedEvent: Couldn't check for duplicate focus event",
+						exc_info=True
+					)
 		window = self.getNearestWindowHandle(sender)
 		if window and not eventHandler.shouldAcceptEvent("gainFocus", windowHandle=window):
 			if _isDebug():
