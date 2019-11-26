@@ -68,7 +68,17 @@ class HighlightWindow(CustomWindow):
 	className = u"NVDAHighlighter"
 	windowName = u"NVDA Highlighter Window"
 	windowStyle = winUser.WS_POPUP | winUser.WS_DISABLED
-	extendedWindowStyle = winUser.WS_EX_TOPMOST | winUser.WS_EX_LAYERED
+	extendedWindowStyle = (
+		# Ensure that the window is on top of all other windows
+		winUser.WS_EX_TOPMOST
+		# A layered window ensures that L{transparentColor} will be considered transparent, when painted
+		| winUser.WS_EX_LAYERED
+		# Ensure that the window can't be activated when pressing alt+tab
+		| winUser.WS_EX_NOACTIVATE
+		# Make this a transparent window,
+		# primarily for accessibility APIs to ignore this window when getting a window from a screen point
+		| winUser.WS_EX_TRANSPARENT
+	)
 	transparentColor = 0  # Black
 
 	@classmethod
