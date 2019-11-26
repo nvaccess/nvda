@@ -17,6 +17,7 @@ import oleacc
 import UIAHandler
 from comInterfaces.Accessibility import *
 from comInterfaces.IAccessible2Lib import *
+from comInterfaces import IAccessible2Lib as IA2
 from logHandler import log
 import JABHandler
 import eventHandler
@@ -257,6 +258,7 @@ IAccessibleRolesToNVDARoles={
 	IA2_ROLE_CONTENT_DELETION:controlTypes.ROLE_DELETED_CONTENT,
 	IA2_ROLE_CONTENT_INSERTION:controlTypes.ROLE_INSERTED_CONTENT,
 	IA2_ROLE_BLOCK_QUOTE:controlTypes.ROLE_BLOCKQUOTE,
+	IA2.IA2_ROLE_LANDMARK: controlTypes.ROLE_LANDMARK,
 	#some common string roles
 	"frame":controlTypes.ROLE_FRAME,
 	"iframe":controlTypes.ROLE_INTERNALFRAME,
@@ -343,7 +345,9 @@ def accessibleObjectFromEvent(window,objectID,childID):
 	try:
 		pacc,childID=oleacc.AccessibleObjectFromEvent(window,objectID,childID)
 	except Exception as e:
-		log.debugWarning("oleacc.AccessibleObjectFromEvent with window %s, objectID %s and childID %s: %s"%(window,objectID,childID,e))
+		log.debug(
+			f"oleacc.AccessibleObjectFromEvent with window {window}, objectID {objectID} and childID {childID}: {e}"
+		)
 		return None
 	return (normalizeIAccessible(pacc,childID),childID)
 
@@ -1008,7 +1012,10 @@ def getRecursiveTextFromIAccessibleTextObject(obj,startOffset=0,endOffset=-1):
 	return "".join(textList).replace('  ',' ')
 
 
-ATTRIBS_STRING_BASE64_PATTERN = re.compile(r"base64\\,[A-Za-z0-9+/=]+")
+ATTRIBS_STRING_BASE64_PATTERN = re.compile(
+	r"(([^\\](\\\\)*);src:data\\:[^\\;]+\\;base64\\,)[A-Za-z0-9+/=]+"
+)
+ATTRIBS_STRING_BASE64_REPL = r"\1<truncated>"
 ATTRIBS_STRING_BASE64_THRESHOLD = 4096
 
 
@@ -1023,7 +1030,7 @@ def splitIA2Attribs(attribsString):
 	"""
 	# Do not treat huge base64 data as it might freeze NVDA in Google Chrome (#10227)
 	if len(attribsString) >= ATTRIBS_STRING_BASE64_THRESHOLD:
-		attribsString = ATTRIBS_STRING_BASE64_PATTERN.sub("base64,<truncated>", attribsString)
+		attribsString = ATTRIBS_STRING_BASE64_PATTERN.sub(ATTRIBS_STRING_BASE64_REPL, attribsString)
 		if len(attribsString) >= ATTRIBS_STRING_BASE64_THRESHOLD:
 			log.debugWarning(f"IA2 attributes string exceeds threshold: {attribsString}")
 	attribsDict = {}

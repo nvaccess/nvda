@@ -100,7 +100,6 @@ build_script:
  # We don't need launcher to run checkPot, so run the checkPot before launcher.
  - py scons.py checkPot %sconsArgs%
  # The pot gets built by tests, but we don't actually need it as a build artifact.
- - del output\*.pot
  - 'echo scons output targets: %sconsOutTargets%'
  - py scons.py %sconsOutTargets% %sconsArgs%
  # Build symbol store.
@@ -187,6 +186,7 @@ test_script:
      py -m robot --loglevel DEBUG -d $systemTestOutput -x systemTests.xml -v whichNVDA:installed -P "$testSource/libraries" "$testSource"
      Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
      Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
+     Push-AppveyorArtifact "$Output\*.pot"
      if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
      $wc = New-Object 'System.Net.WebClient'
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$systemTestOutput\systemTests.xml"))
