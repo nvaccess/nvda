@@ -94,7 +94,9 @@ screenCurtainTranslatedName = _("Screen Curtain")
 warnOnLoadCheckBoxText = (
 	# Translators: Description for a screen curtain setting that shows a warning when loading
 	# the screen curtain.
-	_(f"Always &show a warning when loading {screenCurtainTranslatedName}")
+	_("Always &show a warning when loading {screenCurtainTranslatedName}").format(
+		screenCurtainTranslatedName=screenCurtainTranslatedName
+	)
 )
 
 
