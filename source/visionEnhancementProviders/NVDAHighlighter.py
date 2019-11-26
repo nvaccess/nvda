@@ -68,7 +68,12 @@ class HighlightWindow(CustomWindow):
 	className = u"NVDAHighlighter"
 	windowName = u"NVDA Highlighter Window"
 	windowStyle = winUser.WS_POPUP | winUser.WS_DISABLED
-	extendedWindowStyle = winUser.WS_EX_TOPMOST | winUser.WS_EX_LAYERED
+	extendedWindowStyle = (
+		winUser.WS_EX_TOPMOST |
+		winUser.WS_EX_LAYERED |
+		winUser.WS_EX_NOACTIVATE |
+		winUser.WS_EX_TRANSPARENT
+	)
 	transparentColor = 0  # Black
 
 	@classmethod
