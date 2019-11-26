@@ -16,7 +16,7 @@ from treeInterceptorHandler import TreeInterceptor
 import api
 import textUtils
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, Tuple
 import locale
 from logHandler import log
 
@@ -301,11 +301,20 @@ class OffsetsTextInfo(textInfos.TextInfo):
 				formatField["line-number"]=lineNum+1
 		return formatField,(startOffset,endOffset)
 
-	def _calculateUniscribeOffsets(self,lineText, unit, relOffset):
-		relStart=ctypes.c_int()
-		relEnd=ctypes.c_int()
-		# uniscribe does some strange things when you give it a string  with not more than two alphanumeric chars in a row.
-		# Inject two alphanumeric characters at the end to fix this 
+	def _calculateUniscribeOffsets(self, lineText: str, unit: str, relOffset: int) -> Optional[Tuple[int, int]]:
+		"""
+		Calculates the bounds of a unit at an offset within a given string of text
+		using the Windows uniscribe  library.
+		Units supported are character and word.
+		@param lineText: the text string to analyze
+		@param unit: the TextInfo unit (character or word)
+		@param relOffset: the character offset within the text string at which to calculate the bounds.
+		"""
+		relStart = ctypes.c_int()
+		relEnd = ctypes.c_int()
+		# uniscribe does some strange things
+		# when you give it a string  with not more than two alphanumeric chars in a row.
+		# Inject two alphanumeric characters at the end to fix this
 		uniscribeLineText = lineText + "xx"
 		# We can't rely on len(lineText) to calculate the length of the line.
 		offsetConverter = textUtils.WideStringOffsetConverter(lineText)
@@ -339,13 +348,13 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		if self.encoding not in (textUtils.WCHAR_ENCODING, None, "utf_32_le", locale.getlocale()[1]):
 			raise NotImplementedError
 		lineStart, lineEnd = self._getLineOffsets(offset)
-		lineText = self._getTextRange(lineStart,lineEnd)
+		lineText = self._getTextRange(lineStart, lineEnd)
 		relOffset = offset - lineStart
 		if self.useUniscribe:
 			offsets = self._calculateUniscribeOffsets(lineText, textInfos.UNIT_CHARACTER, relOffset)
 			if offsets is not None:
 				return (offsets[0] + lineStart, offsets[1] + lineStart)
-		return (offset, offset+1)
+		return (offset, offset + 1)
 
 	def _getWordOffsets(self,offset):
 		if self.encoding not in (textUtils.WCHAR_ENCODING, None, "utf_32_le", locale.getlocale()[1]):
