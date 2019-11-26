@@ -42,6 +42,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		capPitchChange = integer(default=30,min=-100,max=100)
 		sayCapForCapitals = boolean(default=false)
 		beepForCapitals = boolean(default=false)
+		beepPitchForCapitals = integer(default=2000,min=100,max=4000)
+		beepDurationForCapitals = integer(default=50,min=50,max=150)
+		beepVolumeForCapitals = integer(default=50,min=0,max=100)
 		useSpellingFunctionality = boolean(default=true)
 
 # Audio settings

@@ -246,7 +246,11 @@ def getSpeechForSpelling(  # noqa: C901
 			yield CharacterModeCommand(False)
 			charMode = False
 		if uppercase and  synthConfig["beepForCapitals"]:
-			yield BeepCommand(2000, 50)
+			yield BeepCommand(
+				synthConfig["beepPitchForCapitals"],
+				synthConfig["beepDurationForCapitals"],
+				left=synthConfig["beepVolumeForCapitals"],
+				right=synthConfig["beepVolumeForCapitals"])
 		yield speakCharAs
 		if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
 			yield PitchCommand()
