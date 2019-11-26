@@ -1654,7 +1654,22 @@ def getControlFieldSpeech(  # noqa: C901
 					f"valueSequence: {valueSequence!r} placeholderSequence: {placeholderSequence!r}"
 				)
 			valueSequence = placeholderSequence
-		out.extend(nameSequence)
+
+		# don't (effectively) speak name twice. This may happen if a checkbox has aria-labelledby pointing to an
+		# element in its content.
+		contentMustBeSpoken = role in [
+			controlTypes.ROLE_EDITABLETEXT,
+			controlTypes.ROLE_EDITBAR,
+		]
+		if contentMustBeSpoken or not (
+			# dont speak name when labelledByContent
+			attrs.get("IAccessible2::attribute_explicit-name", False)
+			and attrs.get("labelledByContent", False)
+		):
+			out.extend(nameSequence)
+		else:
+			log.debug("skipping name sequence, control field is labelled by content")
+
 		out.extend(stateTextSequence if speakStatesFirst else roleTextSequence)
 		out.extend(roleTextSequence if speakStatesFirst else stateTextSequence)
 		out.append(containerContainsText)

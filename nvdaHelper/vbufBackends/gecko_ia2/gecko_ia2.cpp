@@ -14,6 +14,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <memory>
 #include <functional>
+#include <vector>
+#include <map>
 #include <boost/optional.hpp>
 #include <windows.h>
 #include <set>
@@ -24,6 +26,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <common/ia2utils.h>
 #include <remote/nvdaHelperRemote.h>
 #include <vbufBase/backend.h>
+#include <vbufBase/storage.h>
 #include <common/log.h>
 #include <vbufBase/utils.h>
 #include "gecko_ia2.h"
@@ -284,21 +287,29 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	SysFreeString(toolkitVersion);
 }
 
-bool GeckoVBufBackend_t::isLabelVisible(IAccessible2* pacc2) {
+GeckoVBufBackend_t::OptionalID
+GeckoVBufBackend_t::getIdForVisibleLabel(IAccessible2* pacc2) {
 	CComQIPtr<IAccessible2_2> pacc2_2=pacc2;
-	if(!pacc2_2) return false;
+	if(!pacc2_2) return OptionalID();
 	auto targetAcc=getLabelElement(pacc2_2);
-	if(!targetAcc) return false;
+	if(!targetAcc) return OptionalID();
 	CComVariant child;
 	child.vt = VT_I4;
 	child.lVal = 0;
 	CComVariant state;
 	HRESULT res = targetAcc->get_accState(child, &state);
 	if (res != S_OK)
-		return false;
+		return OptionalID();
 	if (state.lVal & STATE_SYSTEM_INVISIBLE)
-		return false;
-	return true;
+		return OptionalID();
+
+	int ID = 0;
+	//Get ID -- IAccessible2 uniqueID
+	if (targetAcc->get_uniqueID((long*)&ID) != S_OK) {
+		LOG_DEBUG(L"pacc->get_uniqueID failed");
+		return OptionalID();
+	}
+	return OptionalID(ID);
 }
 
 long getChildCount(const bool isAriaHidden, IAccessible2 * const pacc){
@@ -405,6 +416,7 @@ const wregex REGEX_PRESENTATION_ROLE(L"IAccessible2\\\\:\\\\:attribute_xml-roles
 
 VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
+	GeckoVBufBackend_t::IdList parentIds, GeckoVBufBackend_t::IdList& out_ids,
 	IAccessibleTable* paccTable, IAccessibleTable2* paccTable2, long tableID, const wchar_t* parentPresentationalRowNumber,
 	bool ignoreInteractiveUnlabelledGraphics
 ) {
@@ -441,6 +453,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		LOG_DEBUG(L"a node with this docHandle and ID already exists, returning NULL");
 		return NULL;
 	}
+	// Add this Id to parent list for any recursive calls.
+	parentIds.push_back(ID);
+	out_ids.push_back(ID);
 
 	if(buffer!=this&&parentNode) {
 		// We are rendering a subtree of a temp buffer
@@ -629,13 +644,25 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	// Whether the name of this node has been explicitly set (as opposed to calculated by descendant)
 	const bool nameIsExplicit = IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true";
 	// Whether the name is the content of this node.
+	bool isLabelAndVisibleCached_ = false;
+	std::experimental::optional<int> visibleLabelId_;
 	std::experimental::optional<bool> isLabelVisibleVal_;
-	// A version of the isLabelVisible function that caches its result
-	auto isLabelVisibleCached=[&]() {
-		if(!isLabelVisibleVal_) {
-			isLabelVisibleVal_=isLabelVisible(pacc);
+	// A version of the getIdForVisibleLabel function that caches its result
+	auto isLabelVisibleCached = [&]() {
+		if (!isLabelAndVisibleCached_) {
+			visibleLabelId_ = getIdForVisibleLabel(pacc);
+			isLabelVisibleVal_ = bool(visibleLabelId_);
+			isLabelAndVisibleCached_ = true;
 		}
-		return *isLabelVisibleVal_;
+		return isLabelVisibleVal_.value_or(false);
+	};
+	auto getVisibleLabelID = [&]() {
+		if (!isLabelAndVisibleCached_) {
+			visibleLabelId_ = getIdForVisibleLabel(pacc);
+			isLabelVisibleVal_ = bool(visibleLabelId_);
+			isLabelAndVisibleCached_ = true;
+		}
+		return visibleLabelId_;
 	};
 	const bool nameIsContent = isEmbeddedApp
 		|| role == ROLE_SYSTEM_LINK 
@@ -942,8 +969,16 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 					if(!childPacc) {
 						continue;
 					}
-					if (tempNode = this->fillVBuf(childPacc, buffer, parentNode, previousNode, paccTable, paccTable2, tableID, presentationalRowNumber, ignoreInteractiveUnlabelledGraphics)) {
+					GeckoVBufBackend_t::IdList childIds;
+					tempNode = this->fillVBuf(
+						childPacc, buffer, parentNode, previousNode,
+						parentIds, childIds,
+						paccTable, paccTable2, tableID,
+						presentationalRowNumber, ignoreInteractiveUnlabelledGraphics
+					);
+					if (tempNode) {
 						previousNode=tempNode;
+						out_ids.insert(out_ids.end(), childIds.begin(), childIds.end());
 					} else {
 						LOG_DEBUG(L"Error in fillVBuf");
 					}
@@ -973,8 +1008,17 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 					VariantClear(&(varChildren[i]));
 					continue;
 				}
-				if (tempNode = this->fillVBuf(childPacc, buffer, parentNode, previousNode, paccTable, paccTable2, tableID, presentationalRowNumber, ignoreInteractiveUnlabelledGraphics))
-					previousNode=tempNode;
+				IdList childIds;
+				tempNode = this->fillVBuf(
+					childPacc, buffer, parentNode, previousNode,
+					parentIds, childIds,
+					paccTable, paccTable2, tableID,
+					presentationalRowNumber, ignoreInteractiveUnlabelledGraphics
+				);
+				if (tempNode) {
+					previousNode = tempNode;
+					out_ids.insert(out_ids.end(), childIds.begin(), childIds.end());
+				}
 				else
 					LOG_DEBUG(L"Error in calling fillVBuf");
 				childPacc->Release();
@@ -985,16 +1029,21 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		} else if (renderSelectedItemOnly) {
 			CComPtr<IAccessible2> item = this->getSelectedItem(pacc, IA2AttribsMap);
 			if (item) {
-				if (tempNode = this->fillVBuf(item, buffer, parentNode, previousNode,
+				IdList childIds;
+				tempNode = this->fillVBuf(
+					item, buffer, parentNode, previousNode,
+					parentIds, childIds,
 					paccTable, paccTable2, tableID, presentationalRowNumber,
-					ignoreInteractiveUnlabelledGraphics)
-				) {
+					ignoreInteractiveUnlabelledGraphics
+				);
+				if (tempNode) {
 					previousNode=tempNode;
 					// The container itself might not always fire selection events.
 					// Therefore, we rely on a stateChange event on the item (since
 					// these fire for both selection and unselection) and have the item
 					// re-render its parent.
 					static_cast<VBufStorage_controlFieldNode_t*>(tempNode)->requiresParentUpdate = true;
+					out_ids.insert(out_ids.end(), childIds.begin(), childIds.end());
 				} else {
 					LOG_DEBUG(L"Error in calling fillVBuf");
 				}
@@ -1004,11 +1053,16 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			CComPtr<IAccessible2> textBox = getTextBoxInComboBox(pacc);
 			if (textBox) {
 				// ARIA 1.1 combobox. Render the text box child.
-				if (tempNode = this->fillVBuf(textBox, buffer, parentNode, previousNode,
+				IdList childIds;
+				tempNode = this->fillVBuf(
+					textBox, buffer, parentNode, previousNode,
+					parentIds, childIds,
 					paccTable, paccTable2, tableID, presentationalRowNumber,
-					ignoreInteractiveUnlabelledGraphics)
-				) {
+					ignoreInteractiveUnlabelledGraphics
+				);
+				if (tempNode) {
 					previousNode=tempNode;
+					out_ids.insert(out_ids.end(), childIds.begin(), childIds.end());
 				} else {
 					LOG_DEBUG(L"Error in calling fillVBuf");
 				}
@@ -1072,6 +1126,20 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
 		}
 	}
+
+	auto labelId = getVisibleLabelID();
+	if (labelId) {
+		int labelIdValue = labelId.value();
+		auto findItr = std::find(
+			out_ids.begin(),
+			out_ids.end(),
+			labelIdValue
+		);
+		if (out_ids.end() != findItr) {
+			parentNode->addAttribute(L"labelledByContent", L"true");
+		}
+	}
+
 
 	// Clean up.
 	if(name)
@@ -1168,7 +1236,8 @@ void GeckoVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int
 		// This is the root node.
 		this->versionSpecificInit(pacc);
 	}
-	if(!this->fillVBuf(pacc, buffer, NULL, NULL)) {
+	IdList hitIds;
+	if(!this->fillVBuf(pacc, buffer, NULL, NULL, hitIds, hitIds)) {
 		if(oldNode) {
 			LOG_DEBUGWARNING(L"No content rendered in update");
 		} else {

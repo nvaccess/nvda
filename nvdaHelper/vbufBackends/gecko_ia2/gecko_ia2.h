@@ -16,12 +16,22 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define VIRTUALBUFFER_BACKENDS_EXAMPLE_H
 
 #include <vbufBase/backend.h>
+#include <vector>
+#include <map>
+#include <boost/optional.hpp>
 
 class GeckoVBufBackend_t: public VBufBackend_t {
 	private:
 
-	VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc,
+	using Id_T = int;
+	using IdList = std::vector<Id_T>; // List of IDs
+	using IdMap = std::map<Id_T, IdList>; // Map an ID, and its list of child IDs
+	using OptionalID = std::experimental::optional<Id_T>;
+
+	VBufStorage_fieldNode_t* fillVBuf(
+		IAccessible2* pacc,
 		VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
+		IdList parentIds, IdList& out_ids,
 		IAccessibleTable* paccTable=NULL, IAccessibleTable2* paccTable2=NULL, long tableID=0, const wchar_t* parentPresentationalRowNumber=NULL,
 		bool ignoreInteractiveUnlabelledGraphics=false
 	);
@@ -34,7 +44,7 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 	bool hasEncodedAccDescription;
 	std::wstring toolkitName;
 
-	bool isLabelVisible(IAccessible2* pacc2);
+	OptionalID getIdForVisibleLabel(IAccessible2* pacc2);
 	CComPtr<IAccessible2> getLabelElement(IAccessible2_2* element);
 	CComPtr<IAccessible2> getSelectedItem(IAccessible2* container,
 		const std::map<std::wstring, std::wstring>& attribs);
