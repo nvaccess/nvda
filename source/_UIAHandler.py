@@ -368,10 +368,14 @@ class UIAHandler(COMObject):
 			# Ignore duplicate focus events.
 			# It seems that it is possible for compareElements to return True, even though the objects are different.
 			# Therefore, don't ignore the event if the last focus object has lost its hasKeyboardFocus state.
-			if self.clientObject.compareElements(sender,lastFocus) and lastFocus.currentHasKeyboardFocus:
+			try:
+				if self.clientObject.compareElements(sender,lastFocus) and lastFocus.currentHasKeyboardFocus:
+					if _isDebug():
+						log.debugWarning("HandleFocusChangedEvent: Ignoring duplicate focus event")
+					return
+			except COMError:
 				if _isDebug():
-					log.debugWarning("HandleFocusChangedEvent: Ignoring duplicate focus event")
-				return
+					log.debugWarning("HandleFocusChangedEvent: Couldn't check for duplicate focus event", exc_info=True)
 		window = self.getNearestWindowHandle(sender)
 		if window and not eventHandler.shouldAcceptEvent("gainFocus", windowHandle=window):
 			if _isDebug():
