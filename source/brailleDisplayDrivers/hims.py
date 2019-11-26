@@ -422,6 +422,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			b"\xfd" * 2,
 		]
 		packetB = bytearray(b"".join(packet))
+		#  checksum is the 3rd index from the end because 'packet end' takes up
+		# two bytes and 'packetB' is a bytearray
 		checksumIndexInPacketB: int = -3
 		checksum: int = 0xff & sum(packetB)
 		packetB[checksumIndexInPacketB] = checksum
