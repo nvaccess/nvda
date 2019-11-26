@@ -354,6 +354,11 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			offsets = self._calculateUniscribeOffsets(lineText, textInfos.UNIT_CHARACTER, relOffset)
 			if offsets is not None:
 				return (offsets[0] + lineStart, offsets[1] + lineStart)
+		if self.encoding == textUtils.WCHAR_ENCODING:
+			offsetConverter = textUtils.WideStringOffsetConverter(lineText)
+			relStrStart, relStrEnd = offsetConverter.wideToStrOffsets(relOffset, relOffset + 1)
+			relWideStringStart, relWideStringEnd = offsetConverter.strToWideOffsets(relStrStart, relStrEnd)
+			return (relWideStringStart + lineStart, relWideStringEnd + lineStart)
 		return (offset, offset + 1)
 
 	def _getWordOffsets(self,offset):
