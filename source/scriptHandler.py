@@ -103,7 +103,7 @@ def findScript(gesture):
 			return func
 
 	# Vision enhancement provider level
-	for provider in vision.handler.providers.values():
+	for provider in vision.handler.getActiveProviderInstances():
 		if isinstance(provider, baseObject.ScriptableObject):
 			func = _getObjScript(provider, gesture, globalMapScripts)
 			if func:

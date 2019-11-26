@@ -832,7 +832,19 @@ qn(
 	# Translators: Input help message for a quick navigation command in browse mode.
 	prevDoc=_("moves to the previous article"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous article"))
+	prevError=_("no previous article")
+)
+qn(
+	"grouping", key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next grouping"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next grouping"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous grouping"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous grouping")
+)
 del qn
 
 class ElementsListDialog(wx.Dialog):
