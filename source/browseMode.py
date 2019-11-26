@@ -8,6 +8,7 @@ import collections
 import winsound
 import time
 import weakref
+
 import wx
 import core
 from logHandler import log
@@ -830,7 +831,19 @@ qn(
 	# Translators: Input help message for a quick navigation command in browse mode.
 	prevDoc=_("moves to the previous article"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous article"))
+	prevError=_("no previous article")
+)
+qn(
+	"grouping", key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next grouping"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next grouping"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous grouping"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous grouping")
+)
 del qn
 
 class ElementsListDialog(wx.Dialog):
@@ -1124,11 +1137,15 @@ class ElementsListDialog(wx.Dialog):
 		else:
 			def move():
 				speech.cancelSpeech()
-				item.moveTo()
+				# #8831: Report before moving because moving might change the focus, which
+				# might mutate the document, potentially invalidating info if it is
+				# offset-based.
 				item.report()
+				item.moveTo()
 			# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
 			# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
 			core.callLater(100, move)
+
 
 class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 

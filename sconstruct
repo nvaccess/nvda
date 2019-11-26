@@ -198,6 +198,11 @@ envArm64['projectResFile'] = resFile
 
 #Fill sourceDir with anything provided for it by miscDeps
 env.recursiveCopy(sourceDir,Dir('miscdeps/source'))
+# Copy in some other dependencies.
+jabDll = "windowsaccessbridge-32.dll"
+Command(sourceLibDir.File(jabDll),
+	env.Dir("#include/javaAccessBridge32").File(jabDll),
+	Copy("$TARGET", "$SOURCE"))
 
 env.SConscript('source/comInterfaces_sconscript',exports=['env'])
 
