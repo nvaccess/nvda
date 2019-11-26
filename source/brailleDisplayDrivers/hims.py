@@ -419,7 +419,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# whereas it has the -2nd position in the packet list
 			b"\x00",
 			# Packet end
-			b"\xfd"*2,
+			b"\xfd" * 2,
 		]
 		packetB = bytearray(b"".join(packet))
 		checksumIndexInPacketB: int = -3
