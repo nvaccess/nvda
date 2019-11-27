@@ -186,7 +186,6 @@ test_script:
      py -m robot --loglevel DEBUG -d $systemTestOutput -x systemTests.xml -v whichNVDA:installed -P "$testSource/libraries" "$testSource"
      Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
      Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
-     Push-AppveyorArtifact "$Output\*.pot"
      if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
      $wc = New-Object 'System.Net.WebClient'
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$systemTestOutput\systemTests.xml"))
