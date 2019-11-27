@@ -27,7 +27,6 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 
 	using Id_T = int;
 	using IdList = std::vector<Id_T>; // List of IDs
-	using IdMap = std::map<Id_T, IdList>; // Map an ID, and its list of child IDs
 	using OptionalID = std::experimental::optional<Id_T>;
 
 	VBufStorage_fieldNode_t* fillVBuf(
