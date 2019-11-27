@@ -336,6 +336,10 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	#Simple case where there is no change
 	if languageID==lastLanguageID and layoutString==lastLayoutString:
 		return 0
+	fg = api.getForegroundObject()
+	# Cache the new keyboard layout on the foreground object,
+	# Which may be used by keyboardHandler when speaking typed characters in situations where it cannot be fetched directly from the focus.
+	fg._lastDetectedKeyboardLayoutChange = hkl
 	focus=api.getFocusObject()
 	#This callback can be called before NVDa is fully initialized
 	#So also handle focus object being None as well as checking for sleepMode
