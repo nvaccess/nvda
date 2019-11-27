@@ -1107,8 +1107,9 @@ def isMarshalledIAccessible(IAccessibleObject):
 	windll.kernel32.GetModuleFileNameW(handle,buf,1024)
 	return not buf.value.lower().endswith('oleacc.dll')
 
+
 #: Maps from console windows (ConsoleWindowClass) to thread IDs
-# Windows hacks GetWindowThreadProcessId to return the input thread of the first attached process in a console,
+# Windows hacks GetWindowThreadProcessId to return the input thread of the first attached process in a console
 # But NVDA really requires to know the actual thread the window was created in,
 # I.e. inside conhost,
 # In order to handle speaking of typed characters etc.
