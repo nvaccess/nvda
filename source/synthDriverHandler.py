@@ -22,6 +22,21 @@ import driverHandler
 from driverHandler import StringParameterInfo # Backwards compatibility
 from abc import abstractmethod
 
+
+class VoiceInfo(driverHandler.StringParameterInfo):
+	"""Provides information about a single synthesizer voice.
+	"""
+
+	def __init__(self, id, displayName, language=None):
+		"""
+		@param language: The ID of the language this voice speaks,
+			C{None} if not known or the synth implements language separate from voices.
+		@type language: str
+		"""
+		self.language=language
+		super(VoiceInfo,self).__init__(id, displayName)
+
+
 _curSynth=None
 _audioOutputDevice=None
 
@@ -404,19 +419,6 @@ class SynthDriver(driverHandler.Driver):
 		for i, s in enumerate(supportedSettings):
 			if s.id == "rate": return i
 		return None
-
-class VoiceInfo(driverHandler.StringParameterInfo):
-	"""Provides information about a single synthesizer voice.
-	"""
-
-	def __init__(self, id, displayName, language=None):
-		"""
-		@param language: The ID of the language this voice speaks,
-			C{None} if not known or the synth implements language separate from voices.
-		@type language: str
-		"""
-		self.language=language
-		super(VoiceInfo,self).__init__(id, displayName)
 
 class LanguageInfo(driverHandler.StringParameterInfo):
 	"""Holds information for a particular language"""
