@@ -287,29 +287,37 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	SysFreeString(toolkitVersion);
 }
 
-GeckoVBufBackend_t::OptionalID
-GeckoVBufBackend_t::getIdForVisibleLabel(IAccessible2* pacc2) {
+experimental::optional<int>
+getIAccessible2UniqueID(IAccessible2* targetAcc) {
+	int ID = 0;
+	//Get ID -- IAccessible2 uniqueID
+	if (targetAcc->get_uniqueID((long*)&ID) != S_OK) {
+		LOG_DEBUG(L"pacc->get_uniqueID failed");
+		return experimental::optional<int>();
+	}
+	return ID;
+}
+
+class LabelInfo {
+public:
+	bool isVisible;
+	std::experimental::optional<int> ID;
+};
+
+using OptionalLabelInfo = std::experimental::optional< LabelInfo >;
+OptionalLabelInfo GeckoVBufBackend_t::getLabelInfo(IAccessible2* pacc2) {
 	CComQIPtr<IAccessible2_2> pacc2_2=pacc2;
-	if(!pacc2_2) return OptionalID();
+	if (!pacc2_2) return OptionalLabelInfo();
 	auto targetAcc=getLabelElement(pacc2_2);
-	if(!targetAcc) return OptionalID();
+	if(!targetAcc) return OptionalLabelInfo();
 	CComVariant child;
 	child.vt = VT_I4;
 	child.lVal = 0;
 	CComVariant state;
 	HRESULT res = targetAcc->get_accState(child, &state);
-	if (res != S_OK)
-		return OptionalID();
-	if (state.lVal & STATE_SYSTEM_INVISIBLE)
-		return OptionalID();
-
-	int ID = 0;
-	//Get ID -- IAccessible2 uniqueID
-	if (targetAcc->get_uniqueID((long*)&ID) != S_OK) {
-		LOG_DEBUG(L"pacc->get_uniqueID failed");
-		return OptionalID();
-	}
-	return OptionalID(ID);
+	bool isVisible = res == S_OK && !(state.lVal & STATE_SYSTEM_INVISIBLE);
+	auto ID = getIAccessible2UniqueID(targetAcc);
+	return LabelInfo { isVisible, ID } ;
 }
 
 long getChildCount(const bool isAriaHidden, IAccessible2 * const pacc){
@@ -443,9 +451,12 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	}
 	//Get ID -- IAccessible2 uniqueID
 	int ID;
-	if(pacc->get_uniqueID((long*)&ID)!=S_OK) {
-		LOG_DEBUG(L"pacc->get_uniqueID failed");
-		return NULL;
+	{
+		auto opt_id = getIAccessible2UniqueID(pacc);
+		if (!opt_id){
+			return nullptr;
+		}
+		ID = opt_id.value();
 	}
 
 	//Make sure that we don't already know about this object -- protect from loops
@@ -644,25 +655,27 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	// Whether the name of this node has been explicitly set (as opposed to calculated by descendant)
 	const bool nameIsExplicit = IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true";
 	// Whether the name is the content of this node.
-	bool isLabelAndVisibleCached_ = false;
-	std::experimental::optional<int> visibleLabelId_;
-	std::experimental::optional<bool> isLabelVisibleVal_;
+	std::experimental::optional<LabelInfo> labelInfo_;
 	// A version of the getIdForVisibleLabel function that caches its result
 	auto isLabelVisibleCached = [&]() {
-		if (!isLabelAndVisibleCached_) {
-			visibleLabelId_ = getIdForVisibleLabel(pacc);
-			isLabelVisibleVal_ = bool(visibleLabelId_);
-			isLabelAndVisibleCached_ = true;
+		if (!labelInfo_) {
+			labelInfo_ = getLabelInfo(pacc);
 		}
-		return isLabelVisibleVal_.value_or(false);
+		bool isVisible = false;
+		if (labelInfo_) {
+			isVisible = labelInfo_->isVisible;
+		}
+		return isVisible;
 	};
-	auto getVisibleLabelID = [&]() {
-		if (!isLabelAndVisibleCached_) {
-			visibleLabelId_ = getIdForVisibleLabel(pacc);
-			isLabelVisibleVal_ = bool(visibleLabelId_);
-			isLabelAndVisibleCached_ = true;
+	auto getLabelIDCached = [&]() {
+		if (!labelInfo_) {
+			labelInfo_ = getLabelInfo(pacc);
 		}
-		return visibleLabelId_;
+		OptionalID id;
+		if (labelInfo_) {
+			id = labelInfo_->ID;
+		}
+		return id;
 	};
 	const bool nameIsContent = isEmbeddedApp
 		|| role == ROLE_SYSTEM_LINK 
@@ -1127,7 +1140,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		}
 	}
 
-	auto labelId = getVisibleLabelID();
+	auto labelId = getLabelIDCached();
 	if (labelId) {
 		int labelIdValue = labelId.value();
 		auto findItr = std::find(

@@ -20,6 +20,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <map>
 #include <boost/optional.hpp>
 
+class LabelInfo;
+
 class GeckoVBufBackend_t: public VBufBackend_t {
 	private:
 
@@ -44,7 +46,7 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 	bool hasEncodedAccDescription;
 	std::wstring toolkitName;
 
-	OptionalID getIdForVisibleLabel(IAccessible2* pacc2);
+	std::experimental::optional< LabelInfo > getLabelInfo(IAccessible2* pacc2);
 	CComPtr<IAccessible2> getLabelElement(IAccessible2_2* element);
 	CComPtr<IAccessible2> getSelectedItem(IAccessible2* container,
 		const std::map<std::wstring, std::wstring>& attribs);
