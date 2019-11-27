@@ -304,12 +304,18 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _calculateUniscribeOffsets(self, lineText: str, unit: str, relOffset: int) -> Optional[Tuple[int, int]]:
 		"""
 		Calculates the bounds of a unit at an offset within a given string of text
-		using the Windows uniscribe  library.
+		using the Windows uniscribe  library, also used in Notepad, for example.
 		Units supported are character and word.
 		@param lineText: the text string to analyze
 		@param unit: the TextInfo unit (character or word)
 		@param relOffset: the character offset within the text string at which to calculate the bounds.
 		"""
+		if unit is textInfos.UNIT_WORD:
+			helperFunc = NVDAHelper.localLib.calculateWordOffsets
+		elif unit is textInfos.UNIT_CHARACTER:
+			helperFunc = NVDAHelper.localLib.calculateCharacterOffsets
+		else:
+			raise NotImplementedError(f"Unit: {unit}")
 		relStart = ctypes.c_int()
 		relEnd = ctypes.c_int()
 		# uniscribe does some strange things
@@ -323,12 +329,6 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			# We need to convert the str based line offsets to wide string offsets.
 			relOffset = offsetConverter.strToWideOffsets(relOffset, relOffset)[0]
 		uniscribeLineLength = lineLength + 2
-		if unit is textInfos.UNIT_WORD:
-			helperFunc = NVDAHelper.localLib.calculateWordOffsets
-		elif unit is textInfos.UNIT_CHARACTER:
-			helperFunc = NVDAHelper.localLib.calculateCharacterOffsets
-		else:
-			raise NotImplementedError(f"Unit: {unit}")
 		if helperFunc(
 			uniscribeLineText,
 			uniscribeLineLength,
@@ -343,8 +343,9 @@ class OffsetsTextInfo(textInfos.TextInfo):
 				relStart, relEnd = offsetConverter.wideToStrOffsets(relStart, relEnd)
 			return (relStart, relEnd)
 		log.debugWarning(f"Uniscribe failed to calculate {unit} offsets for text {lineText!r}")
+		return None
 
-	def _getCharacterOffsets(self,offset):
+	def _getCharacterOffsets(self, offset):
 		if self.encoding not in (textUtils.WCHAR_ENCODING, None, "utf_32_le", locale.getlocale()[1]):
 			raise NotImplementedError
 		lineStart, lineEnd = self._getLineOffsets(offset)
