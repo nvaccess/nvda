@@ -13,20 +13,20 @@ To access version information for programmatic version checks before languageHan
 import os
 from buildVersion import *
 
-longName=_("NonVisual Desktop Access")
-description=_("A free and open source screen reader for Microsoft Windows")
-url="http://www.nvaccess.org/"
-copyrightYears="2006-2019"
-copyright=_("Copyright (C) {years} NVDA Contributors").format(
+longName = _("NonVisual Desktop Access")
+description = _("A free and open source screen reader for Microsoft Windows")
+url = "https://www.nvaccess.org/"
+copyrightYears = "2006-2019"
+copyright = _("Copyright (C) {years} NVDA Contributors").format(
 	years=copyrightYears)
-aboutMessage=_(u"""{longName} ({name})
+aboutMessage = _(u"""{longName} ({name})
 Version: {version}
 URL: {url}
 {copyright}
 
 {name} is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it. This applies to both original and modified copies of this software, plus any derivative works.
 For further details, you can view the license from the Help menu.
-It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 {name} is developed by NV Access, a non-profit organisation committed to helping and promoting free and open source solutions for blind and vision impaired people.
 If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu.""").format(**globals())
