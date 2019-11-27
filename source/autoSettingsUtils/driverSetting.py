@@ -9,7 +9,7 @@
 	Naming of these classes is historical, kept for backwards compatibility purposes.
 """
 
-from typing import Optional
+from typing import Optional, ClassVar
 from dataclasses import dataclass
 from baseObject import AutoPropertyObject
 
@@ -36,6 +36,9 @@ class DriverSetting(AutoPropertyObject):
 	#: Whether the value of this option is loaded from and saved to NVDA's configuration.
 	#: Set this to C{False} if L{AutoSettings} deals with loading and saving.
 	useConfig: bool = True
+
+	#: Type information for _get_configSpec
+	configSpec: ClassVar[str]
 
 	def _get_configSpec(self) -> str:
 		"""Returns the configuration specification of this particular setting for config file validator.
