@@ -225,12 +225,13 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 				log.debug("Failed to fetch keyboard layout from focus, trying layout from last detected change")
 				# Some threads, such as for Windows consoles
 				# Do not allow getKeyboardLayout to work.
-				# Therefore, use the cached keyboard layout from the last inputLangChange detected by NVDA on the foreground object. 
-				hkl = getattr(api.getForegroundObject(),'_lastDetectedKeyboardLayoutChange',0)
+				# Therefore, use the cached keyboard layout from the last inputLangChange detected by NVDA
+				# on the foreground object.
+				hkl = getattr(api.getForegroundObject(), '_lastDetectedKeyboardLayoutChange', 0)
 				if not hkl:
 					log.debug("No layout cached, falling back to layout of NVDA main thread")
 					# As a last resort, use the keyboard layout of NVDA's main thread.
-					hkl=ctypes.windll.user32.GetKeyboardLayout(core.mainThreadId)
+					hkl = ctypes.windll.user32.GetKeyboardLayout(core.mainThreadId)
 			# In previous Windows builds, calling ToUnicodeEx would destroy keyboard buffer state and therefore cause the app to not produce the right WM_CHAR message.
 			# However, ToUnicodeEx now can take a new flag of 0x4, which stops it from destroying keyboard state, thus allowing us to safely call it here.
 			res=ctypes.windll.user32.ToUnicodeEx(vkCode,scanCode,keyStates,charBuf,len(charBuf),0x4,hkl)
