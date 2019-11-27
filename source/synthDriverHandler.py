@@ -46,124 +46,6 @@ class VoiceInfo(driverHandler.StringParameterInfo):
 		super(VoiceInfo,self).__init__(id, displayName)
 
 
-_curSynth=None
-_audioOutputDevice=None
-
-def initialize():
-	config.addConfigDirsToPythonPackagePath(synthDrivers)
-	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
-
-def changeVoice(synth, voice):
-	# This function can be called with no voice if the synth doesn't support the voice setting (only has one voice).
-	if voice:
-		synth.voice = voice
-	c=config.conf["speech"][synth.name]
-	#start or update the synthSettingsRing
-	if globalVars.settingsRing: globalVars.settingsRing.updateSupportedSettings(synth)
-	else:  globalVars.settingsRing = SynthSettingsRing(synth)
-	speechDictHandler.loadVoiceDict(synth)
-
-def _getSynthDriver(name):
-	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
-
-def getSynthList():
-	synthList=[]
-	# The synth that should be placed at the end of the list.
-	lastSynth = None
-	for loader, name, isPkg in pkgutil.iter_modules(synthDrivers.__path__):
-		if name.startswith('_'):
-			continue
-		try:
-			synth=_getSynthDriver(name)
-		except:
-			log.error("Error while importing SynthDriver %s"%name,exc_info=True)
-			continue
-		try:
-			if synth.check():
-				if synth.name == "silence":
-					lastSynth = (synth.name,synth.description)
-				else:
-					synthList.append((synth.name,synth.description))
-			else:
-				log.debugWarning("Synthesizer '%s' doesn't pass the check, excluding from list"%name)
-		except:
-			log.error("",exc_info=True)
-	synthList.sort(key=lambda s : s[1].lower())
-	if lastSynth:
-		synthList.append(lastSynth)
-	return synthList
-
-def getSynth():
-	return _curSynth
-
-def getSynthInstance(name):
-	newSynth = _getSynthDriver(name)()
-	newSynth.initSettings()
-	return newSynth
-
-# The synthDrivers that should be used by default.
-# The first that successfully initializes will be used when config is set to auto (I.e. new installs of NVDA).
-defaultSynthPriorityList=['espeak','silence']
-if winVersion.winVersion.major>=10:
-	# Default to OneCore on Windows 10 and above
-	defaultSynthPriorityList.insert(0,'oneCore')
-
-def setSynth(name,isFallback=False):
-	global _curSynth,_audioOutputDevice
-	if name is None: 
-		_curSynth.terminate()
-		_curSynth=None
-		return True
-	if name=='auto':
-		name=defaultSynthPriorityList[0]
-	if _curSynth:
-		_curSynth.cancel()
-		_curSynth.terminate()
-		prevSynthName = _curSynth.name
-		_curSynth = None
-	else:
-		prevSynthName = None
-	try:
-		_curSynth=getSynthInstance(name)
-		_audioOutputDevice=config.conf["speech"]["outputDevice"]
-		if not isFallback:
-			config.conf["speech"]["synth"]=name
-		log.info("Loaded synthDriver %s"%name)
-		return True
-	except:
-		log.error("setSynth", exc_info=True)
-		# As there was an error loading this synth:
-		if prevSynthName:
-			# There was a previous synthesizer, so switch back to that one. 
-			setSynth(prevSynthName,isFallback=True)
-		else:
-			# There was no previous synth, so fallback to the next available default synthesizer that has not been tried yet.
-			try:
-				nextIndex=defaultSynthPriorityList.index(name)+1
-			except ValueError:
-				nextIndex=0
-			if nextIndex<len(defaultSynthPriorityList):
-				newName=defaultSynthPriorityList[nextIndex]
-				setSynth(newName,isFallback=True)
-		return False
-
-def handlePostConfigProfileSwitch(resetSpeechIfNeeded=True):
-	"""
-	Switches synthesizers and or applies new voice settings to the synth due to a config profile switch.
-	@var resetSpeechIfNeeded: if true and a new synth will be loaded, speech queues are fully reset first. This is what happens by default. 
-	However, Speech itself may call this with false internally if this is a config profile switch within a currently processing speech sequence. 
-	@type resetSpeechIfNeeded: bool
-	"""
-	conf = config.conf["speech"]
-	if conf["synth"] != _curSynth.name or conf["outputDevice"] != _audioOutputDevice:
-		if resetSpeechIfNeeded:
-			# Reset the speech queues as we are now going to be using a new synthesizer with entirely separate state.
-			import speech
-			speech.cancelSpeech()
-		setSynth(conf["synth"])
-		return
-	_curSynth.loadSettings(onlyChanged=True)
-
 class SynthDriver(driverHandler.Driver):
 	"""Abstract base synthesizer driver.
 	Each synthesizer driver should be a separate Python module in the root synthDrivers directory containing a SynthDriver class which inherits from this base class.
@@ -428,6 +310,125 @@ class SynthDriver(driverHandler.Driver):
 		for i, s in enumerate(supportedSettings):
 			if s.id == "rate": return i
 		return None
+
+
+_curSynth=None
+_audioOutputDevice=None
+
+def initialize():
+	config.addConfigDirsToPythonPackagePath(synthDrivers)
+	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
+
+def changeVoice(synth, voice):
+	# This function can be called with no voice if the synth doesn't support the voice setting (only has one voice).
+	if voice:
+		synth.voice = voice
+	c=config.conf["speech"][synth.name]
+	#start or update the synthSettingsRing
+	if globalVars.settingsRing: globalVars.settingsRing.updateSupportedSettings(synth)
+	else:  globalVars.settingsRing = SynthSettingsRing(synth)
+	speechDictHandler.loadVoiceDict(synth)
+
+def _getSynthDriver(name):
+	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
+
+def getSynthList():
+	synthList=[]
+	# The synth that should be placed at the end of the list.
+	lastSynth = None
+	for loader, name, isPkg in pkgutil.iter_modules(synthDrivers.__path__):
+		if name.startswith('_'):
+			continue
+		try:
+			synth=_getSynthDriver(name)
+		except:
+			log.error("Error while importing SynthDriver %s"%name,exc_info=True)
+			continue
+		try:
+			if synth.check():
+				if synth.name == "silence":
+					lastSynth = (synth.name,synth.description)
+				else:
+					synthList.append((synth.name,synth.description))
+			else:
+				log.debugWarning("Synthesizer '%s' doesn't pass the check, excluding from list"%name)
+		except:
+			log.error("",exc_info=True)
+	synthList.sort(key=lambda s : s[1].lower())
+	if lastSynth:
+		synthList.append(lastSynth)
+	return synthList
+
+def getSynth():
+	return _curSynth
+
+def getSynthInstance(name):
+	newSynth = _getSynthDriver(name)()
+	newSynth.initSettings()
+	return newSynth
+
+# The synthDrivers that should be used by default.
+# The first that successfully initializes will be used when config is set to auto (I.e. new installs of NVDA).
+defaultSynthPriorityList=['espeak','silence']
+if winVersion.winVersion.major>=10:
+	# Default to OneCore on Windows 10 and above
+	defaultSynthPriorityList.insert(0,'oneCore')
+
+def setSynth(name,isFallback=False):
+	global _curSynth,_audioOutputDevice
+	if name is None: 
+		_curSynth.terminate()
+		_curSynth=None
+		return True
+	if name=='auto':
+		name=defaultSynthPriorityList[0]
+	if _curSynth:
+		_curSynth.cancel()
+		_curSynth.terminate()
+		prevSynthName = _curSynth.name
+		_curSynth = None
+	else:
+		prevSynthName = None
+	try:
+		_curSynth=getSynthInstance(name)
+		_audioOutputDevice=config.conf["speech"]["outputDevice"]
+		if not isFallback:
+			config.conf["speech"]["synth"]=name
+		log.info("Loaded synthDriver %s"%name)
+		return True
+	except:
+		log.error("setSynth", exc_info=True)
+		# As there was an error loading this synth:
+		if prevSynthName:
+			# There was a previous synthesizer, so switch back to that one. 
+			setSynth(prevSynthName,isFallback=True)
+		else:
+			# There was no previous synth, so fallback to the next available default synthesizer that has not been tried yet.
+			try:
+				nextIndex=defaultSynthPriorityList.index(name)+1
+			except ValueError:
+				nextIndex=0
+			if nextIndex<len(defaultSynthPriorityList):
+				newName=defaultSynthPriorityList[nextIndex]
+				setSynth(newName,isFallback=True)
+		return False
+
+def handlePostConfigProfileSwitch(resetSpeechIfNeeded=True):
+	"""
+	Switches synthesizers and or applies new voice settings to the synth due to a config profile switch.
+	@var resetSpeechIfNeeded: if true and a new synth will be loaded, speech queues are fully reset first. This is what happens by default. 
+	However, Speech itself may call this with false internally if this is a config profile switch within a currently processing speech sequence. 
+	@type resetSpeechIfNeeded: bool
+	"""
+	conf = config.conf["speech"]
+	if conf["synth"] != _curSynth.name or conf["outputDevice"] != _audioOutputDevice:
+		if resetSpeechIfNeeded:
+			# Reset the speech queues as we are now going to be using a new synthesizer with entirely separate state.
+			import speech
+			speech.cancelSpeech()
+		setSynth(conf["synth"])
+		return
+	_curSynth.loadSettings(onlyChanged=True)
 
 
 #: Notifies when a synthesizer reaches an index during speech.
