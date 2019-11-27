@@ -23,6 +23,15 @@ from driverHandler import StringParameterInfo # Backwards compatibility
 from abc import abstractmethod
 
 
+class LanguageInfo(driverHandler.StringParameterInfo):
+	"""Holds information for a particular language"""
+
+	def __init__(self, id):
+		"""Given a language ID (locale name) the description is automatically calculated."""
+		displayName = languageHandler.getLanguageDescription(id)
+		super(LanguageInfo,self).__init__(id, displayName)
+
+
 class VoiceInfo(driverHandler.StringParameterInfo):
 	"""Provides information about a single synthesizer voice.
 	"""
@@ -420,13 +429,6 @@ class SynthDriver(driverHandler.Driver):
 			if s.id == "rate": return i
 		return None
 
-class LanguageInfo(driverHandler.StringParameterInfo):
-	"""Holds information for a particular language"""
-
-	def __init__(self, id):
-		"""Given a language ID (locale name) the description is automatically calculated."""
-		displayName = languageHandler.getLanguageDescription(id)
-		super(LanguageInfo,self).__init__(id, displayName)
 
 #: Notifies when a synthesizer reaches an index during speech.
 #: Handlers are called with these keyword arguments:
