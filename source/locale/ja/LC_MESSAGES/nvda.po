@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-15 00:10+1000\n"
-"PO-Revision-Date: 2019-11-17 16:36+0900\n"
+"POT-Creation-Date: 2019-11-22 06:43+1000\n"
+"PO-Revision-Date: 2019-11-25 10:31+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -148,11 +148,6 @@ msgstr "検索"
 msgctxt "aria"
 msgid "form"
 msgstr "フォーム"
-
-#. Translators: Reported for a significant region, normally found on web pages.
-msgctxt "aria"
-msgid "region"
-msgstr "範囲"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -310,6 +305,11 @@ msgid "grp"
 msgstr "グループ"
 
 #. Translators: Displayed in braille for an object which is a
+#. caption.
+msgid "cap"
+msgstr "キャプション"
+
+#. Translators: Displayed in braille for an object which is a
 #. embedded object.
 msgid "embedded"
 msgstr "埋め込みオブジェクト"
@@ -384,6 +384,14 @@ msgstr "ランドマーク"
 #. Translators: Displayed in braille for an object which is an article.
 msgid "art"
 msgstr "記事"
+
+#. Translators: Displayed in braille for an object which is a region.
+msgid "rgn"
+msgstr "領域"
+
+#. Translators: Displayed in braille for an object which is a figure.
+msgid "fig"
+msgstr "図"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -487,11 +495,6 @@ msgstr "検索"
 msgctxt "braille landmark abbreviation"
 msgid "form"
 msgstr "フォーム"
-
-#. Translators: Displayed in braille for a significant region, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "rgn"
-msgstr "範囲"
 
 #. Translators: The description of a braille cursor shape.
 msgid "Dots 7 and 8"
@@ -1724,6 +1727,22 @@ msgstr "前の記事に移動"
 msgid "no previous article"
 msgstr "前の記事がありません"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next grouping"
+msgstr "次のグループに移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next grouping"
+msgstr "次のグループがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous grouping"
+msgstr "前のグループに移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous grouping"
+msgstr "前のグループがありません"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -1750,8 +1769,6 @@ msgstr "ボタン(&B)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings panel.
 msgid "Lan&dmarks"
 msgstr "ランドマーク(&D)"
 
@@ -2643,6 +2660,14 @@ msgstr "ランドマーク"
 msgid "article"
 msgstr "記事"
 
+#. Translators: Identifies a region.
+msgid "region"
+msgstr "領域"
+
+#. Translators: Identifies a figure (commonly seen on some websites).
+msgid "figure"
+msgstr "図"
+
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
 msgstr "使用不能"
@@ -3022,6 +3047,7 @@ msgid "Braille"
 msgstr "点字"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the vision panel
 msgid "Vision"
 msgstr "ビジョン"
 
@@ -3471,6 +3497,18 @@ msgstr "見出しを報告する"
 msgid "Toggles on and off the reporting of headings"
 msgstr "見出しの報告の切り替え"
 
+#. Translators: Input help mode message for toggle report groupings command.
+msgid "Toggles on and off the reporting of groupings"
+msgstr "グループの報告の切り替え"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report gorupings off"
+msgstr "グループを報告しない"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report groupings on"
+msgstr "グループを報告する"
+
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
 msgstr "引用を報告しない"
@@ -3484,12 +3522,12 @@ msgid "Toggles on and off the reporting of block quotes"
 msgstr "引用の報告の切り替え"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-msgid "report landmarks off"
-msgstr "ランドマークを報告しない"
+msgid "report landmarks and regions off"
+msgstr "ランドマークと領域を報告しない"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-msgid "report landmarks on"
-msgstr "ランドマークを報告する"
+msgid "report landmarks and regions on"
+msgstr "ランドマークと領域を報告する"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
@@ -4516,33 +4554,38 @@ msgid "report CLDR characters on"
 msgstr "記号や絵文字を報告する"
 
 msgid ""
-"Toggles the state of the screen curtain, either by making the screen black "
-"or SHOWING the contents of the screen. If pressed to enable once, the screen "
-"curtain is enabled until you restart NVDA. If pressed tree times, it is "
-"enabled until you disable it"
+"Toggles the state of the screen curtain, enable to make the screen black or "
+"disable to show the contents of the screen. Pressed once, screen curtain is "
+"enabled until you restart NVDA. Pressed twice, screen curtain is enabled "
+"until you disable it"
 msgstr ""
-"スクリーンカーテンの状態を黒い画面または画面の内容の表示に切り替え。1回押す"
-"と NVDA を再起動するまで有効。すばやく3回押すと手動で無効にするまで有効。"
-
-#. Translators: Reported when the screen curtain is not available.
-msgid "Screen curtain not available"
-msgstr "スクリーンカーテンは使用できません"
+"スクリーンカーテンの切り替え。有効にすると画面が黒になり、無効にすると画面の"
+"内容を表示。1回押すと NVDA を再起動するまで有効。すばやく2回押すと手動で無効"
+"にするまで有効。"
 
 #. Translators: Reported when the screen curtain is disabled.
 msgid "Screen curtain disabled"
 msgstr "スクリーンカーテン無効"
 
 #. Translators: Reported when the screen curtain could not be enabled.
-msgid "Could not enable screen curtain"
-msgstr "スクリーンカーテンを有効にできません"
+msgid "Could not disable screen curtain"
+msgstr "スクリーンカーテンを無効にできません"
+
+#. Translators: Reported when the screen curtain is not available.
+msgid "Screen curtain not available"
+msgstr "スクリーンカーテンは使用できません"
+
+#. Translators: Reported when the screen curtain is enabled.
+msgid "Screen curtain enabled"
+msgstr "スクリーンカーテン有効"
 
 #. Translators: Reported when the screen curtain is temporarily enabled.
 msgid "Temporary Screen curtain, enabled until next restart"
 msgstr "次の再起動まで一時的にスクリーンカーテンが有効"
 
-#. Translators: Reported when the screen curtain is enabled.
-msgid "Screen curtain enabled"
-msgstr "スクリーンカーテン有効"
+#. Translators: Reported when the screen curtain could not be enabled.
+msgid "Could not enable screen curtain"
+msgstr "スクリーンカーテンを有効にできません"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -7581,12 +7624,16 @@ msgstr ""
 #. Translators: The label of a Yes button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
 #. the add-on
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. agree to enabling the curtain.
 msgid "&Yes"
 msgstr "はい(&Y)"
 
 #. Translators: The label of a No button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to decide not to
 #. install the add-on
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. disagree to enabling the curtain.
 msgid "&No"
 msgstr "いいえ(&N)"
 
@@ -8181,12 +8228,12 @@ msgstr "ポータブル版NVDAの作成"
 msgid ""
 "To create a portable copy of NVDA, please select the path and other options "
 "and then press Continue"
-msgstr "NVDAポータブル版を作成する場所とオプションを選択して継続を押します"
+msgstr "NVDAポータブル版の場所とオプションの選択"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
 msgid "Portable &directory:"
-msgstr "ポータブル版を作成する場所(&D)"
+msgstr "ポータブル版を作成する新規のフォルダーまたはドライブ(&D)"
 
 #. Translators: The label of a button to browse for a directory.
 msgid "Browse..."
@@ -8460,7 +8507,8 @@ msgid "Automatic language switching (when supported)"
 msgstr "サポートされている場合自動的に言語を切り替える"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings panel (if checked, different voices for dialects will be used to read text in that dialect).
+#. voice settings panel (if checked, different voices for dialects will be used to
+#. read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
 msgstr "サポートされている場合自動的に方言を切り替える"
 
@@ -8474,15 +8522,13 @@ msgstr "句読点/記号レベル(&L)"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "記号と文字の説明に音声の言語を使用"
 
-#. Translators: This is the label for a checkbox in the
-#. voice settings panel (if checked, data from the unicode CLDR will be used
-#. to speak emoji descriptions).
 msgid ""
 "Include Unicode Consortium data (including emoji) when processing characters "
 "and symbols"
 msgstr "記号と絵文字の説明に Unicode コンソーシアムのデータを使用"
 
-#. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
+#. Translators: This is a label for a setting in voice settings (an edit box to change
+#. voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "大文字のピッチ変更率"
 
@@ -8944,6 +8990,16 @@ msgstr "引用(&Q)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+msgid "&Groupings"
+msgstr "グループ(&G)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+msgid "Lan&dmarks and regions"
+msgstr "ランドマークと領域(&D)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "Arti&cles"
 msgstr "記事(&C)"
 
@@ -9193,10 +9249,14 @@ msgstr "点字ディスプレイ(&D)"
 msgid "&Port:"
 msgstr "ポート(&P)"
 
-#, python-format
-msgid "Could not load the %s display."
-msgstr "点字ディスプレイ %s を読み込めません。"
+#. Translators: The message in a dialog presented when NVDA is unable to load the selected
+#. braille display.
+#, python-brace-format
+msgid "Could not load the {display} display."
+msgstr "点字ディスプレイ {display} を読み込めません。"
 
+#. Translators: The title in a dialog presented when NVDA is unable to load the selected
+#. braille display.
 msgid "Braille Display Error"
 msgstr "点字ディスプレイエラー"
 
@@ -9255,6 +9315,57 @@ msgstr "可能な場合に単語が切れないようにする(&W)"
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
 msgstr "フォーカスの前後の情報"
+
+#. Translators: This message is presented when
+#. NVDA is unable to load a single vision enhancement provider.
+#, python-brace-format
+msgid "Could not load the {providerName} vision enhancement provider"
+msgstr "ビジョン拡張プロバイダー {providerName} を読み込めませんでした"
+
+#. Translators: This message is presented when NVDA is unable to
+#. load multiple vision enhancement providers.
+#, python-brace-format
+msgid ""
+"Could not load the following vision enhancement providers:\n"
+"{providerNames}"
+msgstr ""
+"以下のビジョン拡張プロバイダーを読み込めませんでした:\n"
+"{providerNames}"
+
+#. Translators: The title of the vision enhancement provider error message box.
+msgid "Vision Enhancement Provider Error"
+msgstr "ビジョン拡張プロバイダーのエラー"
+
+#. Translators: This message is presented when
+#. NVDA is unable to gracefully terminate a single vision enhancement provider.
+#, python-brace-format
+msgid ""
+"Could not gracefully terminate the {providerName} vision enhancement provider"
+msgstr "ビジョン拡張プロバイダー {providerName} を正常に終了できませんでした"
+
+msgid ""
+"Could not gracefully terminate the following vision enhancement providers:\n"
+msgstr "以下のビジョン拡張プロバイダーを正常に終了できませんでした:\n"
+
+#. Translators: This is a label appearing on the vision settings panel.
+msgid "Configure visual aids."
+msgstr "視覚的な補助を設定します"
+
+#. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
+msgid "Enable"
+msgstr "有効"
+
+#. Translators: Options label on a vision enhancement provider on the vision settings category panel
+#. Translators: The label for a group box containing the NVDA highlighter options.
+msgid "Options:"
+msgstr "オプション"
+
+#. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
+msgid ""
+"Unable to configure user interface for Vision Enhancement Provider, it can "
+"not be enabled."
+msgstr ""
+"ビジョン拡張プロバイダーのGUIを初期化できません。この機能は有効化できません。"
 
 #. Translators: This is the label for the NVDA settings dialog.
 msgid "NVDA Settings"
@@ -9838,24 +9949,6 @@ msgstr ""
 "ドキュメントコンテンツのレンダリング中に、可能であれば画面レイアウトを使用す"
 "るか使わないかを切り替え"
 
-#. Translators: The name for a vision enhancement provider that magnifies (a part of) the screen.
-msgid "Magnifier"
-msgstr "拡大鏡"
-
-#. Translators: The name for a vision enhancement provider that highlights important areas on screen,
-#. such as the focus, caret or review cursor location.
-msgid "Highlighter"
-msgstr "ハイライト"
-
-#. Translators: The name for a vision enhancement provider that enhances the color presentation.
-#. (i.e. color inversion, gray scale coloring, etc.)
-msgid "Color enhancer"
-msgstr "カラーフィルター"
-
-#. Translators: Description for NVDA's built-in screen highlighter.
-msgid "NVDA Highlighter"
-msgstr "NVDA ハイライト"
-
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the system focus.
 msgid "Highlight system fo&cus"
@@ -9871,10 +9964,43 @@ msgstr "ブラウズモードのカーソルをハイライト(&M)"
 msgid "Highlight navigator &object"
 msgstr "ナビゲーターオブジェクトをハイライト(&O)"
 
+#. Translators: Description for NVDA's built-in screen highlighter.
+msgid "Focus Highlight"
+msgstr "フォーカスハイライト"
+
+#. Translators: The label for a checkbox that enables / disables focus highlighting
+#. in the NVDA Highlighter vision settings panel.
+msgid "&Enable Highlighting"
+msgstr "ハイライトあり(&E)"
+
 #. Translators: Description of a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "スクリーンカーテン"
+
+#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. the screen curtain.
+#, python-brace-format
+msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
+msgstr "{screenCurtainTranslatedName}を開始するときに警告を表示(&S)"
+
+#. Translators: A warning shown when activating the screen curtain.
+#. the translation of "Screen Curtain" should match the "translated name"
+msgid ""
+"Enabling Screen Curtain will make the screen of your computer completely "
+"black. Ensure you will be able to navigate without any use of your screen "
+"before continuing. \n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"スクリーンカーテンを有効にするとPCの画面が完全に黒になります。続行する前に、"
+"画面を使用せずに操作できることを確認してください。\n"
+"\n"
+"続行しますか?"
+
+#. Translators: option to enable screen curtain in the vision settings panel
+msgid "Make screen black (immediate effect)"
+msgstr "画面を黒にする (即時に有効)"
 
 msgid "Taskbar"
 msgstr "タスクバー"
@@ -11349,39 +11475,3 @@ msgstr "2行の行間"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5行の行間"
-
-#~ msgid "Koine Greek"
-#~ msgstr "コイネーギリシャ語"
-
-#~ msgid "lmk %s"
-#~ msgstr "ランドマーク %s"
-
-#~ msgid "Start"
-#~ msgstr "スタート"
-
-#~ msgid "Skype"
-#~ msgstr "Skype"
-
-#~ msgid "Reports and moves the review cursor to a recent message"
-#~ msgstr "チャット履歴の報告とレビューカーソルの移動"
-
-#~ msgid "Typing stopped"
-#~ msgstr "入力ストップ"
-
-#~ msgid "Rewind"
-#~ msgstr "巻き戻し"
-
-#~ msgid "Fast forward"
-#~ msgstr "早送り"
-
-#~ msgid "Play"
-#~ msgstr "再生"
-
-#~ msgid "Stop"
-#~ msgstr "停止"
-
-#~ msgid "Record"
-#~ msgstr "録音"
-
-#~ msgid "Selected %s"
-#~ msgstr "%s 選択"
