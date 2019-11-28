@@ -18,19 +18,20 @@ NVDA est développé par [NV Access https://www.nvaccess.org/], avec des contrib
 En restituant l'information par synthèse vocale ou en braille, NVDA permet aux personnes aveugles et malvoyantes d'utiliser le système d'exploitation Windows ainsi que beaucoup d'applications disponibles dans cet environnement.
 
 Ses points forts sont :
-- La prise en charge d'applications grand-public telles que des navigateurs Web, clients e-mail, programmes de tchat sur Internet et suites bureautiques ;
-- Un synthétiseur intégré prenant en charge plus de 80 langues ;
-- L'annonce, quand c'est possible, d'informations de formatage du texte telles que le nom et la taille de la police, le style et les fautes d'orthographe ;
-- L'annonce automatique du texte sous la souris et, en option, l'indication sonore de la position de la souris ;
-- La prise en charge de nombreux afficheurs braille, incluant la capacité de détecter automatiquement beaucoup d'entre eux ainsi que la saisie pour les afficheurs disposant d'un clavier braille ;
-- La possibilité de s'exécuter entièrement depuis une clé USB ou tout autre média portable sans avoir à installer ;
-- Un installateur parlant facile à utiliser ;
-- Une traduction dans 54 langues ;
-- La prise en charge des environnements Windows modernes, incluant les versions 32 et 64 bits ;
-- L'accès à l'écran de connexion à Windows et aux autres écrans sécurisés ;
+- La prise en charge d'applications grand-public telles que des navigateurs Web, clients e-mail, programmes de tchat sur Internet et suites bureautiques
+- Un synthétiseur intégré prenant en charge plus de 80 langues
+- L'annonce, quand c'est possible, d'informations de mise en forme du texte telles que le nom et la taille de la police, le style et les fautes d'orthographe
+- L'annonce automatique du texte sous la souris et, en option, l'indication sonore de la position de la souris
+- La prise en charge de nombreux afficheurs braille, incluant la capacité de détecter automatiquement beaucoup d'entre eux ainsi que la saisie pour les afficheurs disposant d'un clavier braille
+- La possibilité de s'exécuter entièrement depuis une clé USB ou tout autre média portable sans avoir à installer
+- Un installateur parlant facile à utiliser
+- Une traduction dans 54 langues
+- La prise en charge des environnements Windows modernes, incluant les versions 32 et 64 bits
+- L'accès à l'écran de connexion à Windows et aux autres écrans sécurisés
 - L'annonce des contrôles et du texte durant l'utilisation de gestes tactiles
-- La prise en charge des interfaces d'accessibilité communes telles que Microsoft Active Accessibility, Java Access Bridge, IAccessible2 et UI Automation (UI Automation n'est supporté qu'à partir de Windows 7) ;
-- Support de l'invite de commandes Windows et des applications en mode console.
+- La prise en charge des interfaces d'accessibilité communes telles que Microsoft Active Accessibility, Java Access Bridge, IAccessible2 et UI Automation
+- Le support de l'invite de commandes Windows et des applications en mode console
+- La possibilité de surligner le focus système
 -
 
 ++ Internationalisation ++[Internationalization]
@@ -292,6 +293,7 @@ Par exemple, si vous tapez du texte dans une zone d'édition, cette zone d'édit
 
 La manière la plus commune de naviguer dans Windows avec NVDA, est de simplement se déplacer avec des commandes clavier normales, comme "Tabulation" et "Majuscule+Tabulation" pour se déplacer entre les contrôles, "Alt" pour aller au menu puis "Flèches" pour naviguer dans les menus, utiliser "Alt+Tabulation" pour passer d'une application à l'autre. Cela déplace le focus système, c'est-à-dire l'objet qui reçoit les touches que vous tapez au clavier.
  Quand vous faites cela, NVDA donne des informations sur l'objet ayant le focus, telles que son nom, son type, son état, sa valeur, sa description, son raccourci clavier et sa position.
+Quand le [Surlignage du Focus #VisionFocusHighlight] est activé, la position du focus système courant est également présentée visuellement.
 
 Quelques touches de commandes utiles pour naviguer avec le focus :
 %kc:beginInclude
@@ -347,6 +349,7 @@ De la même manière, une barre d'outils contient des contrôles, vous devrez do
 
 L'objet en cours de revue s'appelle l'objet navigateur.
 Quand vous atteignez un objet, vous pouvez examiner son contenu en utilisant les [commandes de revue de texte #ReviewingText] en étant en [mode Revue d'objet #ObjectReview].
+Quand le [Surlignage du Focus #VisionFocusHighlight] est activé, la position du focus système courant est également présentée visuellement.
 Par défaut, l'objet navigateur suit le focus système, mais ce comportement peut être désactivé.
 
 Note : Par défaut, le braille suit le [focus #SystemFocus], le [curseur système #SystemCaret] ainsi que la navigation par objet et la revue de texte.
@@ -488,10 +491,12 @@ Cela inclut les documents dans les applications suivantes :
 - Adobe Flash
 - Les livres supportés sous Amazon Kindle pour PC
 -
+
 Le mode navigation est aussi disponible en option sous Microsoft Word.
 
 Le mode navigation offre une représentation platement textuelle du document dans laquelle on peut se déplacer avec les flèches de navigation. 
 Dans ce mode, toutes les touches de commandes du [mode curseur #SystemCaret] fonctionneront (ex : dire tout, annonce du formatage, touches de navigation dans les tableaux etc.).
+Quand le [Surlignage du Focus #VisionFocusHighlight] est activé, la position du curseur virtuel de mode navigation est également présentée visuellement.
 Des informations indiquant si le texte est un lien, un titre etc., sont annoncées avec le texte pendant que vous vous déplacez.
 
 Parfois, vous devrez interagir directement avec les contrôles contenus dans ces documents.
@@ -644,12 +649,14 @@ Dans le but de loger autant d'informations que possible sur un afficheur braille
 
 || Abréviation | Type de contrôle |
 | app | application |
+| art | article
 | ctn | citation |
 | btn | bouton |
 | btnd | bouton déroulant |
 | btnrot | bouton rotatif |
 | btnp | bouton partagé |
 | bsc | bascule |
+| lég | légende |
 | lstd | liste déroulante |
 | càc | case à cocher |
 | dlg | dialogue |
@@ -657,6 +664,7 @@ Dans le but de loger autant d'informations que possible sur un afficheur braille
 | éd | zone d'édition |
 | édmdp | édition de mot de passe |
 | objemb | objet embarqué |
+| fig | figure |
 | notef | note de fin |
 | noteb | note de bas de page |
 | gra | graphique |
@@ -741,6 +749,33 @@ L'appui sur le point 7 efface la dernière cellule ou le dernier caractère brai
 Le point 8 traduit toute saisie braille puis appuie sur la touche Entrée.
 L'appui simultané sur les points 7 et 8 traduit toute saisie braille sans ajouter d'espace ou actionner la touche entrer.
 %kc:endInclude
+
++ Vision +[Vision]
+Bien que NVDA soit en premier lieu destiné à des personnes aveugles ou malvoyantes qui utilisent principalement la parole ou le braille pour accéder à un ordinateur, il offre aussi des facilités internes pour changer le contenu de l'écran.
+Sous NVDA, une telle aide visuelle est appelée un service d'amélioration visuelle.
+
+NVDA offre plusieurs services d'amélioration visuelle décrits ci-dessous.
+Des services d'amélioration visuelle additionnels peuvent être apportés dans des [Extensions NVDA#AddonsManager].
+
+Les paramètres de vision de NVDA peuvent être modifiés dans la [catégorie vision #VisionSettings] du dialogue [Paramètres NVDA #NVDASettings].
+
+++ Surlignage du Focus ++[VisionFocusHighlight]
+Le Surlignage du Focus peut aider à identifier la position du [focus système #SystemFocus], de [l'objet navigateur #ObjectNavigation] et du [mode navigation #BrowseMode].
+Ces positions sont surlignées avec un contour rectangulaire coloré.
+- Le bleu continu surligne la position d'un objet navigateur combiné au focus système (ex : lorsque [l'objet navigateur suit le curseur système #ReviewCursorFollowFocus]).
+- Le bleu pointillé surligne juste l'objet ayant le focus système.
+- Le rose continu souligne juste l'objet navigateur.
+- Le jaune continu souligne le curseur virtuel utilisé en mode navigation (quand il n'y a pas de curseur physique comme dans les navigateurs web).
+-
+
+Quand le surlignage du focus est activé dans la [catégorie vision #VisionSettings] du dialogue [Paramètres de NVDA #NVDASettings], vous pouvez [choisir de souligner ou non le focus, l'objet navigateur ou le curseur du mode navigation #VisionSettingsFocusHighlight]
+
+++ Le Rideau d'Écran ++[VisionScreenCurtain]
+En tant qu'utilisateur aveugle ou malvoyant, il est parfois impossible ou inutile de voir le contenu de l'écran.
+Par ailleurs, il peut être difficile de s'assurer que personne ne regarde par-dessus votre épaule.
+Pour cette situation, NVDA contient une fonctionnalité appelée "Rideau d'Écran" qui peut être activée pour rendre l'écran noir.
+
+Vous pouvez activer le Rideau d'Écran dans la [catégorie vision #VisionSettings] du dialogue [Paramètres NVDA Settings #NVDASettings].
 
 + Reconnaissance de Contenu +[ContentRecognition]
 Quand les auteurs ne fournissent pas assez d'informations pour qu'un utilisateur de revue d'écran puisse déterminer le contenu de quelque chose, divers outils peuvent être utilisés pour tenter de reconnaître le contenu à partir d'une image.
@@ -1321,6 +1356,41 @@ Cette option ne sera pas disponible si votre afficheur braille supporte seulemen
 
 Vous devrez consulter la documentation de votre afficheur braille dans la section [Afficheurs braille supportés #SupportedbrailleDisplays] pour plus de détails sur les types de communications supportés et les ports disponibles.
 
++++ Vision +++[VisionSettings]
+La catégorie Vision du dialogue des paramètres NVDA vous permet d'activer, désactiver et configurer les [aides visuelles #Vision].
+
+Notez que les options disponibles dans cette catégorie pourraient être étendues par des [extensions NVDA #AddonsManager].
+Par défaut, cette catégorie de paramètres contient les options suivantes :
+
+==== Surlignage du Focus ====[VisionSettingsFocusHighlight]
+Les cases à cocher du groupe Surlignage du Focus contrôlent le comportement de la fonctionnalité interne de [Surlignage du Focus #VisionFocusHighlight]de NVDA.
+
+- Activer le surlignage : Active/désactive le surlignage du focus.
+- Surligner le focus système : définit si le [focus système #SystemFocus] sera surligné.
+- Surligner l'objet navigateur : définit si [l'objet navigateur #ObjectNavigation] sera surligné.
+- Surligner le curseur du mode navigation : Définit si le [Curseur virtuel du mode navigation #BrowseMode] sera surligné.
+-
+
+Notez que cocher ou décocher la case "Activer le Surlignage" changera également l'état des trois autres cases à cocher  en conséquence.
+Ainsi, si "Activer le Surlignage" n'est pas cochée et que vous la cochez, les trois autres cases seront cochées automatiquement.
+Si vous voulez surligner seulement le focus et laisser les cases objet navigateur et mode navigation non cochées, l'état de la case "Activer le Surlignage" sera semicoché.
+
+==== Le Rideau d'Écran ====[VisionSettingsScreenCurtain]
+Vous pouvez activer le [Rideau d'Écran #VisionScreenCurtain] en cochant la case "Rendre l'écran noir (effet immédiat)".
+Un avertissement indiquant que l'écran deviendra noir après activation sera alors affiché
+Avant de continuer (en sélectionnant "Oui"), vérifiez que vous avez activé la parole ou le braille et que vous serez capable de contrôler votre ordinateur sans utiliser l'écran.
+Sélectionnez "Non" si vous ne souhaitez plus activer le Rideau d'Écran.
+Si vous êtes sûr, vous pouvez choisir le bouton Oui pour activer le Rideau d'Écran.
+Si vous ne voulez plus voir cet avertissement à chaque fois, vous pouvez changer ce comportement dans le dialogue qui affiche le message.
+Vous pouvez toujours restaurer l'avertissement en cochant la case "Toujours afficher un avertissement au chargement du Rideau d'Écran" à côté de la case "Rendre l'écran noir".
+
+Pour activer/désactiver le Rideau d'Écran de n'importe où, veuillez assigner un geste personnalisé en utilisant le dialogue [Gestes de Commandes #InputGestures].
+
+==== Paramètres des aides visuelles tierses ====[VisionSettingsThirdPartyVisualAids]
+Des services d'aide visuelle additionnels peuvent être fournis dans des [Extensions NVDA #AddonsManager].
+Si ces services ont des paramètres ajustables, ils seront affichés dans cette catégorie de paramètres dans des groupes séparés.
+Pour les paramètres supportés par un service, veuilez vous référer à la documentation pour ce service.
+
 +++ Clavier (NVDA+contrôle+k) +++[KeyboardSettings]
 La catégorie Clavier du dialogue Paramètres de NVDA contient des options qui définissent le comportement de NVDA quand vous tapez sur votre clavier.
 Elle contient les options suivantes :
@@ -1625,6 +1695,7 @@ On peut configurer les annonces suivantes :
  - Liens
  - Listes
  - Citations
+ - Groupes
  - Régions
  - Articles
  - Cadres
@@ -2023,7 +2094,7 @@ Pour une liste encore plus importante de synthétiseurs gratuits ou du commerce 
 
 ++ eSpeak NG ++[eSpeakNG]
 Le synthétiseur [eSpeak nG https://github.com/espeak-ng/espeak-ng] est intégré dans NVDA et ne dépend d'aucun pilote ou programme additionnel pour être installé.
-Par défaut, NVDA démarre en utilisant eSpeak NG.
+Sous Windows 7, 8 et 8.1, NVDA utilise eSpeak NG par défaut ([Windows OneCore #OneCore] est utilisé sous Windows 10 par défaut).
 Comme ce synthétiseur est intégré dans NVDA, il est le plus indiqué quand vous voulez exécuter NVDA depuis une clé USB sur un autre système.
 
 Chaque voix fournie avec eSpeak NG correspond à une langue différente.
@@ -2059,20 +2130,10 @@ Pour utiliser ces voix, vous devrez installer deux composants :
 ++ Voix Windows OneCore ++[OneCore]
 Windows 10 inclut de nouvelles voix appelées "OneCore" ou voix "mobile".
 Des voix sont fournies pour beaucoup de langues, et elles sont plus réactives que les voix Microsoft disponibles en utilisant Microsoft Speech API version 5.
+Sous Windows 10, NVDA utilise les voix Windows OneCore par défaut ([[eSpeak NG #eSpeakNG] est utilisé dans les autres versions).
 
 Pour installer des voix pour des langues supplémentaires, veuillez consulter cet article de Microsoft : https://support.office.com/fr-fr/article/T%C3%A9l%C3%A9charger-les-langues-de-synth%C3%A8se-vocale-pour-Windows-10-d5a6b612-b3ae-423f-afa5-4f6caf1ec5d3
 
-Veuillez noter que les débits les plus rapides disponibles avec Narrator ne sont pas disponibles avec NVDA actuellement.
-De plus, la vitesse que vous choisissez dans les paramètres de Windows affecte la vitesse sous NVDA.
-Ce sont des problèmes que nous ne pouvons pas résoudre sans des modifications de Windows.
-Nous espérons qu'ils seront pris en compte dans de futures mises à jour de Windows.
-
-++ AudioLogic TTS3 ++[Audiologic]
-C'est un synthétiseur de parole du commerce, spécifique à la langue italienne.
-Le synthétiseur doit être installé sur le système pour être utilisable par NVDA.
-Pour plus d'informations, veuillez visiter le site Audiologic à www.audiologic.it.
-
-Ce synthétiseur ne supporte pas la [fonction d'épellation #SpeechSettingsUseSpelling].
 
 + Terminaux Braille Pris en Charge +[SupportedbrailleDisplays]
 Cette section contient des informations sur les terminaux braille pris en charge par NVDA.
