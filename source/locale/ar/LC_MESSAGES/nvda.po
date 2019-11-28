@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-19 08:03+1000\n"
-"PO-Revision-Date: 2019-11-20 20:23+0300\n"
+"POT-Creation-Date: 2019-11-22 06:43+1000\n"
+"PO-Revision-Date: 2019-11-27 23:55+0300\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
@@ -147,11 +147,6 @@ msgstr "بحث"
 msgctxt "aria"
 msgid "form"
 msgstr "استمارة"
-
-#. Translators: Reported for a significant region, normally found on web pages.
-msgctxt "aria"
-msgid "region"
-msgstr "منطقة"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -309,6 +304,11 @@ msgid "grp"
 msgstr "grp"
 
 #. Translators: Displayed in braille for an object which is a
+#. caption.
+msgid "cap"
+msgstr "cap"
+
+#. Translators: Displayed in braille for an object which is a
 #. embedded object.
 msgid "embedded"
 msgstr "embedded"
@@ -383,6 +383,14 @@ msgstr "lmkر.ط"
 #. Translators: Displayed in braille for an object which is an article.
 msgid "art"
 msgstr "art"
+
+#. Translators: Displayed in braille for an object which is a region.
+msgid "rgn"
+msgstr "rgn"
+
+#. Translators: Displayed in braille for an object which is a figure.
+msgid "fig"
+msgstr "fig"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -486,11 +494,6 @@ msgstr "srch"
 msgctxt "braille landmark abbreviation"
 msgid "form"
 msgstr "form"
-
-#. Translators: Displayed in braille for a significant region, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "rgn"
-msgstr "rgn"
 
 #. Translators: The description of a braille cursor shape.
 msgid "Dots 7 and 8"
@@ -1724,6 +1727,22 @@ msgstr "الانتقال للمقال السابق"
 msgid "no previous article"
 msgstr "لا يوجد مقالٌ سابق"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next grouping"
+msgstr "الانتقال للتجميع التالي"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next grouping"
+msgstr "لا يوجدُ تجميعٌ تالٍ"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous grouping"
+msgstr "الانتقال للتجميع السابق"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous grouping"
+msgstr "لا يوجد تجميعٌ سابق"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -1750,8 +1769,6 @@ msgstr "أزرار"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings panel.
 msgid "Lan&dmarks"
 msgstr "علامات دلالية"
 
@@ -2643,6 +2660,16 @@ msgstr "علامة دليلية"
 msgid "article"
 msgstr "مقال"
 
+#. Translators: Identifies a region.
+#, fuzzy
+msgid "region"
+msgstr "منطقة"
+
+#. Translators: Identifies a figure (commonly seen on some websites).
+#, fuzzy
+msgid "figure"
+msgstr "شكل"
+
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
 msgstr "غير متاح"
@@ -3023,6 +3050,7 @@ msgid "Braille"
 msgstr "الخط البارز Braille"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the vision panel
 msgid "Vision"
 msgstr "الرؤية"
 
@@ -3471,6 +3499,18 @@ msgstr "تشغيل الإعلان عن رؤوس الموضوعات"
 msgid "Toggles on and off the reporting of headings"
 msgstr "التبديل بين تشغيل وتعطيل الإعلان عن رؤوس الموضوعات"
 
+#. Translators: Input help mode message for toggle report groupings command.
+msgid "Toggles on and off the reporting of groupings"
+msgstr "التبديل بين تفعيل وتعطيل الإعلان عن التجميعات"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report gorupings off"
+msgstr "تعطيل الإعلان عن التجميعات"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report groupings on"
+msgstr "تفعيل الإعلان عن التجميعات"
+
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
 msgstr "تعطيل الإعلان عن الاقتباس"
@@ -3484,12 +3524,14 @@ msgid "Toggles on and off the reporting of block quotes"
 msgstr "التبديل بين تشغيل وتعطيل الإعلان عن الاقتباس"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-msgid "report landmarks off"
-msgstr "تعطيل الإعلان عن العلامات الدليلية"
+#, fuzzy
+msgid "report landmarks and regions off"
+msgstr "تعطيل الإعلان عن العلامات الدلالية "
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-msgid "report landmarks on"
-msgstr "تشغيل الإعلان عن العلامات الدليلية"
+#, fuzzy
+msgid "report landmarks and regions on"
+msgstr "تشغيل الإعلان عن العلامات الدلالية والأقسام"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
@@ -4520,34 +4562,38 @@ msgid "report CLDR characters on"
 msgstr "تفعيل قراءة رموز CLDR"
 
 msgid ""
-"Toggles the state of the screen curtain, either by making the screen black "
-"or SHOWING the contents of the screen. If pressed to enable once, the screen "
-"curtain is enabled until you restart NVDA. If pressed tree times, it is "
-"enabled until you disable it"
+"Toggles the state of the screen curtain, enable to make the screen black or "
+"disable to show the contents of the screen. Pressed once, screen curtain is "
+"enabled until you restart NVDA. Pressed twice, screen curtain is enabled "
+"until you disable it"
 msgstr ""
-"تبديل حالة سِتار الشاشة، بجعلِها سوداء، أو إظهار محتواها. عند الضغط لتفعيل "
-"سِتار الشاشة مرةً واحدة، سيبقى مُفعّلاً حتى تُعيد تشغيل NVDA. عند ضغطه ثلاث مرات، "
-"سيبقى سِتار الشاشة مفعّلاً حتى تُعطّلَه."
-
-#. Translators: Reported when the screen curtain is not available.
-msgid "Screen curtain not available"
-msgstr "سِتارُ الشاشة غير متاح"
+"تبديل حالة سِتار الشاشة. تفعيلُه ليُحيلُ الشاشة سوداء، أو تعطيله لإظظهار "
+"محتواها. عند الضغط لتفعيل سِتار الشاشة مرةً واحدة، سيبقى مُفعّلاً حتى تُعيد تشغيل "
+"NVDA. عند ضغطه مرتين، سيبقى سِتار الشاشة مفعّلاً حتى تُعطّلَه."
 
 #. Translators: Reported when the screen curtain is disabled.
 msgid "Screen curtain disabled"
 msgstr "سِتارُ الشاشة مُعطَّل"
 
 #. Translators: Reported when the screen curtain could not be enabled.
-msgid "Could not enable screen curtain"
-msgstr "يتعذّر تفعيل ستار الشاشة"
+msgid "Could not disable screen curtain"
+msgstr "يتعذّر تعطيل ستار الشاشة"
+
+#. Translators: Reported when the screen curtain is not available.
+msgid "Screen curtain not available"
+msgstr "سِتارُ الشاشة غير متاح"
+
+#. Translators: Reported when the screen curtain is enabled.
+msgid "Screen curtain enabled"
+msgstr "سِتارُ الشاشة مُفعَّل"
 
 #. Translators: Reported when the screen curtain is temporarily enabled.
 msgid "Temporary Screen curtain, enabled until next restart"
 msgstr "تفعيل مؤقَّت لسِتار الشاشة، يبقى مُفعّلاً حتى إعادة تشغيل NVDA"
 
-#. Translators: Reported when the screen curtain is enabled.
-msgid "Screen curtain enabled"
-msgstr "سِتارُ الشاشة مُفعَّل"
+#. Translators: Reported when the screen curtain could not be enabled.
+msgid "Could not enable screen curtain"
+msgstr "يتعذّر تفعيل ستار الشاشة"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -7584,12 +7630,16 @@ msgstr ""
 #. Translators: The label of a Yes button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
 #. the add-on
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. agree to enabling the curtain.
 msgid "&Yes"
 msgstr "&نعم"
 
 #. Translators: The label of a No button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to decide not to
 #. install the add-on
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. disagree to enabling the curtain.
 msgid "&No"
 msgstr "&لا"
 
@@ -8455,7 +8505,8 @@ msgid "Automatic language switching (when supported)"
 msgstr "الانتقال الآلي بين اللغات (عند دعم ذلك)"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings panel (if checked, different voices for dialects will be used to read text in that dialect).
+#. voice settings panel (if checked, different voices for dialects will be used to
+#. read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
 msgstr "الانتقال الآلي بين اللهجات (عند دعم ذلك)"
 
@@ -8469,9 +8520,6 @@ msgstr "&مستوى قراءة الرموز وعلامات الترقيم:"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "الاع&تماد على لغة آلة النطق عند معالجة الأحرف والرموز"
 
-#. Translators: This is the label for a checkbox in the
-#. voice settings panel (if checked, data from the unicode CLDR will be used
-#. to speak emoji descriptions).
 msgid ""
 "Include Unicode Consortium data (including emoji) when processing characters "
 "and symbols"
@@ -8479,7 +8527,8 @@ msgstr ""
 "تض&مين بيانات Unicode Consortium (بما في ذلك الأشكال والوجوه التعبيرية) عند "
 "معالجة الأحرف والرموز "
 
-#. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
+#. Translators: This is a label for a setting in voice settings (an edit box to change
+#. voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "نسبة حدة النطق للأحرف الكبيرة"
 
@@ -8942,6 +8991,17 @@ msgstr "اق&تباس"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+msgid "&Groupings"
+msgstr "التجميعات"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+#, fuzzy
+msgid "Lan&dmarks and regions"
+msgstr "الم&عالم والأقسام"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "Arti&cles"
 msgstr "مقا&لات"
 
@@ -9024,7 +9084,6 @@ msgstr "نظام الدعم الأقدم"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#, fuzzy
 msgid "Terminal programs"
 msgstr "برامج التحكم الطرفية لتوجيه الأوامر"
 
@@ -9193,10 +9252,14 @@ msgstr "السطر الإلكت&روني:"
 msgid "&Port:"
 msgstr "المنفذ:"
 
-#, python-format
-msgid "Could not load the %s display."
-msgstr "لا يمكن تحميل السطر الإلكتروني %s."
+#. Translators: The message in a dialog presented when NVDA is unable to load the selected
+#. braille display.
+#, python-brace-format
+msgid "Could not load the {display} display."
+msgstr "يتعذر تحميل السطر الإلكتروني {display}"
 
+#. Translators: The title in a dialog presented when NVDA is unable to load the selected
+#. braille display.
 msgid "Braille Display Error"
 msgstr "خلل في تشغيل السطر الإلكتروني"
 
@@ -9255,6 +9318,60 @@ msgstr "تجنب تقسيم الكل&مات كلما كان ذلك ممكنا"
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
 msgstr "عرض المعلومات وِفقا للسياق"
+
+#. Translators: This message is presented when
+#. NVDA is unable to load a single vision enhancement provider.
+#, fuzzy, python-brace-format
+msgid "Could not load the {providerName} vision enhancement provider"
+msgstr "يتعذّر تحميل مزوّد تحسين الرية {providerName}"
+
+#. Translators: This message is presented when NVDA is unable to
+#. load multiple vision enhancement providers.
+#, fuzzy, python-brace-format
+msgid ""
+"Could not load the following vision enhancement providers:\n"
+"{providerNames}"
+msgstr ""
+"يتعذّر تحميل مزوّدي تحسين الرؤية الآتية: \n"
+"{providerNames}"
+
+#. Translators: The title of the vision enhancement provider error message box.
+#, fuzzy
+msgid "Vision Enhancement Provider Error"
+msgstr "خطأ في مزوِّد تحسين الرؤية"
+
+#. Translators: This message is presented when
+#. NVDA is unable to gracefully terminate a single vision enhancement provider.
+#, fuzzy, python-brace-format
+msgid ""
+"Could not gracefully terminate the {providerName} vision enhancement provider"
+msgstr "يتعذّر إنهاء موفِّر تحسين الرؤية {providerName} "
+
+#, fuzzy
+msgid ""
+"Could not gracefully terminate the following vision enhancement providers:\n"
+msgstr "يتعذّر إنهاء مزوِّدي تحسين الرؤية الآتية بأمان: \n"
+
+#. Translators: This is a label appearing on the vision settings panel.
+#, fuzzy
+msgid "Configure visual aids."
+msgstr "ضبط المُعينات البصرية"
+
+#. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
+msgid "Enable"
+msgstr "تفعيل"
+
+#. Translators: Options label on a vision enhancement provider on the vision settings category panel
+#. Translators: The label for a group box containing the NVDA highlighter options.
+msgid "Options:"
+msgstr "خيارات:"
+
+#. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
+#, fuzzy
+msgid ""
+"Unable to configure user interface for Vision Enhancement Provider, it can "
+"not be enabled."
+msgstr "يتعذّر ضبطُ واجهة المستدم لمزوِّد تحسين الرؤية. لا يمكنُ تفعيلُه."
 
 #. Translators: This is the label for the NVDA settings dialog.
 msgid "NVDA Settings"
@@ -9837,26 +9954,6 @@ msgid ""
 "document content"
 msgstr "تشغيل وتعطيل الاحتفاظ بعرض تنسيق الشاشة أثناء معالجة محتوى الصفحة"
 
-#. Translators: The name for a vision enhancement provider that magnifies (a part of) the screen.
-msgid "Magnifier"
-msgstr "المكبِّر"
-
-#. Translators: The name for a vision enhancement provider that highlights important areas on screen,
-#. such as the focus, caret or review cursor location.
-#, fuzzy
-msgid "Highlighter"
-msgstr "تمييز"
-
-#. Translators: The name for a vision enhancement provider that enhances the color presentation.
-#. (i.e. color inversion, gray scale coloring, etc.)
-#, fuzzy
-msgid "Color enhancer"
-msgstr "مُعزِّز اللون"
-
-#. Translators: Description for NVDA's built-in screen highlighter.
-msgid "NVDA Highlighter"
-msgstr ""
-
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the system focus.
 msgid "Highlight system fo&cus"
@@ -9872,10 +9969,43 @@ msgstr "تمييز مؤشّر نمط التصفُّح"
 msgid "Highlight navigator &object"
 msgstr "تمييز مؤشّر &NVDA (مؤشِّر نمط استعراض الكائن)"
 
+#. Translators: Description for NVDA's built-in screen highlighter.
+msgid "Focus Highlight"
+msgstr "تمييز موضع التركيز"
+
+#. Translators: The label for a checkbox that enables / disables focus highlighting
+#. in the NVDA Highlighter vision settings panel.
+msgid "&Enable Highlighting"
+msgstr "&تفعيل التمييز المرئي"
+
 #. Translators: Description of a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "سِتارُ الشاشة"
+
+#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. the screen curtain.
+#, python-brace-format
+msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
+msgstr "أظهِرْ &دائمًا تحذيرًا قبل تفعيل {screenCurtainTranslatedName}"
+
+#. Translators: A warning shown when activating the screen curtain.
+#. the translation of "Screen Curtain" should match the "translated name"
+msgid ""
+"Enabling Screen Curtain will make the screen of your computer completely "
+"black. Ensure you will be able to navigate without any use of your screen "
+"before continuing. \n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"تفعيل سِتار الشاشة سيُحيل شاشة حاسوبك بكاملها سوداء. تأكّد قبل المتابعة أنك "
+"قادرٌ على التنقُّل دون الحاجة لاستخدام شاشتك. \n"
+"\n"
+"هل ترغبُ في المتابعة؟"
+
+#. Translators: option to enable screen curtain in the vision settings panel
+msgid "Make screen black (immediate effect)"
+msgstr "إحالة الشاشةِ سوداء (تأثيره فوري)"
 
 msgid "Taskbar"
 msgstr "شريط المهام"
@@ -11354,6 +11484,17 @@ msgstr "تباعد الأسطر بمسافة مزدوجة"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 تباعد السطر"
+
+#~ msgid "Magnifier"
+#~ msgstr "المكبِّر"
+
+#, fuzzy
+#~ msgid "Highlighter"
+#~ msgstr "تمييز"
+
+#, fuzzy
+#~ msgid "Color enhancer"
+#~ msgstr "مُعزِّز اللون"
 
 #~ msgid "Koine Greek"
 #~ msgstr "يونانية عامية"
