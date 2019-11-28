@@ -2182,7 +2182,7 @@ class TouchInteractionPanel(SettingsPanel):
 	def makeSettings(self, settingsSizer):
 		# Translators: This is the label for a checkbox in the
 		# touch interaction settings panel.
-		self.enableTouchSupportCheckBox = wx.CheckBox(self, label=_("Enable touch interaction support"))
+		self.enableTouchSupportCheckBox = wx.CheckBox(self, label=_("&Enable touch interaction support"))
 		self.enableTouchSupportCheckBox.SetValue(config.conf["touch"]["enabled"])
 		settingsSizer.Add(self.enableTouchSupportCheckBox, border=10, flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
