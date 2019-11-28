@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from typing import Dict
 import heapq
 import itertools
 import struct
@@ -1113,6 +1114,6 @@ def isMarshalledIAccessible(IAccessibleObject):
 # But NVDA really requires to know the actual thread the window was created in,
 # I.e. inside conhost,
 # In order to handle speaking of typed characters etc.
-# winEventCallback adds these when ever it sees an event for ConsoleWindowClass windows,
+# winEventCallback adds these whenever it sees an event for ConsoleWindowClass windows,
 # As winEvents always contain the true thread ID.
-consoleWindowsToThreadIDs = {}
+consoleWindowsToThreadIDs: Dict[int, int] = {}
