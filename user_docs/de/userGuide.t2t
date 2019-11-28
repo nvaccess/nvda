@@ -29,8 +29,9 @@ Zu den wichtigsten Funktionen gehören:
 - Unterstützung für moderne Windows-Betriebssystemvarianten (für 32- und 64-Bit).
 - Lauffähig im Windows-Anmeldebildschirm sowie in den Dialogen der Sicherheitshinweise.
 - Unterstützung für berührungsempfindliche Bildschirme (Touchscreens).
-- Unterstützung für übliche Schnittstellen zur Barrierefreiheit wie z. B. Microsoft Active Accessibility, Java Access Bridge, IAccessible2 und Benutzeroberflächenautomatisierung (Diese wird nur unter Windows 7 und höher unterstützt).
+- Unterstützung gängiger Barrierefreiheitsschnittstellen wie Microsoft Active Accessibility, Java Access Bridge, IAccessible2 und Benutzeroberflächenautomatisierung.
 - Unterstützung für die Windows-Eingabeaufforderung und -Konsolenanwendungen.
+- Möglichkeit, den System-Fokus hervorzuheben.
 -
 
 ++ Internationalisierung ++[Internationalization]
@@ -291,7 +292,8 @@ Der System-Fokus, auch bekannt als Fokus, ist dasjenige [Objekt #Objects], das d
 Ein Beispiel: Wenn Sie einen Text in einem Eingabefeld eingeben, wird dieses fokussiert.
 
 Die gebräuchlichste Art, sich in einer Windows-Anwendung zu bewegen sind Windows-Standard-Tastenkombinationen, mit denen der System-Fokus bewegt wird. Beispiele für solche Standard-Tastenkombinationen sind Tab und Umschalt+Tab zum Wechseln zwischen Elementen in einem Dialogfeld, Alt-Taste oder F10 zum Aufrufen der Menüleiste und die Pfeiltasten zur Navigation innerhalb eines Menüs sowie alt+Tab zum Wechseln zwischen laufenden Anwendungen
-Wenn Sie auf diese Weise navigieren, wird NVDA verschiedene Informationen über das Objekt ausgeben, das den Fokus erhalten hat. Hierzu zählen: Name, Beschreibung (erscheint meist als Sprechblase, wenn der Anwender die Maus über das betreffende Objekt zieht), Typ (Schalter, Kontrollkästchen, Eingabefeld, etc.), Wert (z. B., der aktuelle Inhalt eines Eingabefeldes), Positionsangabe (z. B. "1 von 5" in einer Liste oder "1 von 1 Ebene 0" in einer Baumansicht), den Status des Objekts (z. B. aktiviert, hervorgehoben, ausgewählt, etc.).
+Wenn Sie auf diese Weise navigieren, wird NVDA verschiedene Informationen über das Objekt ausgeben, welches den Fokus erhält. Hierzu zählen: Name, Beschreibung (erscheint meist als Sprechblase, wenn der Anwender die Maus über das betreffende Objekt zieht), Typ (Schalter, Kontrollkästchen, Eingabefeld, etc.), Wert (z. B., der aktuelle Inhalt eines Eingabefeldes), Positionsangabe (z. B. "1 von 5" in einer Liste oder "1 von 1 Ebene 0" in einer Baumansicht), den Status des Objekts (z. B. aktiviert, hervorgehoben, ausgewählt, etc.).
+Wenn [Fokus hervorheben #VisionFocusHighlight] aktiviert ist, wird die Position des aktuellen System-Fokus auch visuell dargestellt.
 
 Einige nützliche Tastenkombinationen zum Navigieren mit dem System-Fokus sind:
 %kc:beginInclude
@@ -347,6 +349,7 @@ so ähnlich enthält eine Symbolleiste ebenfalls Steuerelemente und Sie müssen 
 
 Das Objekt, das momentan angezeigt wird, wird als NAvigator-Objekt bezeichnet.
 Wenn Sie sich zu einem Objekt bewegt haben und der Modus [Objektdarstellung #ObjectReview] ist aktiv, können Sie sich das Objekt mit den [Befehlen zum Betrachten von Text #ReviewingText] anschauen.
+Wenn [Fokus hervorheben #VisionFocusHighlight] aktiviert ist, wird die Position des aktuellen Navigator-Objekts auch visuell dargestellt.
 Standardmäßig folgt der Navigator dem System-Fokus, diese Kopplung kann jedoch umgeschaltet werden.
 
 Bedenken Sie, dass die Braillezeile standardmäßig sowohl dem [Fokus #SystemFocus] und dem [System-Cursor #SystemCaret] als auch dem Navigator und dem NVDA-Cursor folgt.
@@ -381,7 +384,7 @@ Wenn Sie jedoch den System-Cursor bewegen, wird er vom NVDA-Cursor verfolgt.
 Diese Kopplung kann ein- und ausgeschaltet werden.
 
 Bedenken Sie, dass die Braillezeile standardmäßig sowohl dem [System-Fokus #SystemFocus] und dem [System-Cursor #SystemCaret] als auch dem NVDA-Cursor folgt.
-Um dies zu ändern, müssen Sie die [Kopplung der Braillezeile konfigurieren #BrailleTether].
+Um dies zu ändern, müssen Sie die [Kopplung der Braillezeile #BrailleTether] konfigurieren.
 
 Die folgenden Tastenkombinationen zum Betrachten von Text sind verfügbar:
 %kc:beginInclude
@@ -488,10 +491,12 @@ Dies betrifft Dokumente in den folgenden Anwendungen:
 - Adobe Flash
 - Unterstützte Bücher in Amazon Kindle für PC
 -
+
 Der Lesemodus ist optional auch in Microsoft Word- und Microsoft Excel-Dokumenten verfügbar. 
 
 Im Lesemodus wird der Inhalt von Dokumenten in einer flächenähnliche Struktur dargestellt, sodass Sie sich mit den Pfeiltasten durch das Dokument bewegen können, als ob es ein Textdokument wäre.
-Alle [Befehle zum Navigieren mit dem System-Cursor #SystemCaret] sind im Lesemodus verfügbar. So z. B. alles lesen, Formatierung ansagen, Befehle zur Tabellen-Navigation, etc.
+Alle [Befehle zum Navigieren mit dem System-Cursor #SystemCaret] sind im Lesemodus verfügbar. So z. B. Alles Lesen, Formatierung ansagen, Befehle zur Tabellen-Navigation, etc.
+Wenn [Fokus hervorheben #VisionFocusHighlight] aktiviert ist, wird die Position des virtuellen Lesemodus auch visuell dargestellt.
 Informationen darüber, ob der Text beispielsweise ein Link, eine Überschrift, o. ä. ist, wird Ihnen beim Navigieren unmittelbar mitgeteilt.
 
 Manchmal müssen Sie in diesen Dokumenten mit Steuerelementen interagieren.
@@ -644,12 +649,14 @@ Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende 
 
 || Abkürzung | Steuerelementtyp |
 | app | Anwendung |
+| art | Artikel
 | zb | Zitatblock |
 | sltr | Schalter |
 | aklsltr | Ausklapplistenschalter |
 | dsltr | Drehschalter |
 | tsltr | Trennschaltfläche |
 | umsltr | Umschalter |
+| UT | Überschriftentitel |
 | kmbf | Konbinationsfeld |
 | kf | Kontrollfeld |
 | dlg | Dialogfeld |
@@ -658,6 +665,7 @@ Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende 
 | kwef | Kennworteingabefeld |
 | eObj | Eingebettetes Objekt |
 | en | Endnote |
+| ill | Illustrationen |
 | fn | Fußnote |
 | grf | Grafik |
 | grp | Gruppe |
@@ -691,7 +699,7 @@ Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende 
 | fst | Fenster |
 | ``⠤⠤⠤⠤⠤`` | Trennlinie |
 
-Für die folgenden Statusanzeigen wurden ebenfalls Abkürzungen festgelegt:
+Für die folgenden Status-Anzeigen wurden ebenfalls Abkürzungen festgelegt:
 || Abkürzung | Status |
 | ... | Wird angezeigt, wenn ein Objekt automatische Vervollständigung unterstützt. |
 | ⢎⣿⡱ | Wird angezeigt, wenn ein Schalter gedrückt wurde |
@@ -739,8 +747,35 @@ Wenn Sie beispielsweise den Cursor an das Ende einer Zahl bewegt haben, müssen 
 %kc:beginInclude
 Drücken Sie den Punkt 7, um das letzte Zeichen zu löschen.
 Drücken Sie den Punkt 8, um einen Zeilenvorschub einzufügen.
-Drücken Sie Punkt 7 und Punkt 8, um die eingegebenen Braillezeichen zu übersetzen, ohne einen Zeilenvorschub oder ein Leerzeichen einzufügen.
+Drücken Sie Punkte 7 und 8, um die eingegebenen Braillezeichen zu übersetzen, ohne einen Zeilenvorschub oder ein Leerzeichen einzufügen.
 %kc:endInclude
+
++ Sehen +[Vision]
+Während sich NVDA in erster Linie an blinde oder sehbehinderte Menschen richtet, die in erster Linie Sprache und/oder Blindenschrift zur Bedienung eines Computers verwenden, bietet es auch integrierte Möglichkeiten, den Inhalt des Bildschirms zu ändern.
+Mit NVDA wird eine solche Sehhilfe als Anbieter zur Bildverbesserung bezeichnet.
+
+NVDA bietet mehrere eingebaute Anbieter zur Bildverbesserung an, die im Folgenden beschrieben werden.
+Zusätzliche Anbieter für die Bildverbesserung können über [NVDA-Erweiterungen #AddonsManager] bereitgestellt werden.
+
+Diese Einstellungen können Sie in den [NVDA-Einstellungen #NVDASettings], in der Kategorie [Sehen #VisionSettings] vornehmen.
+
+++ Fokus hervorheben ++[VisionFocusHighlight]
+Fokus hervorheben kann dabei helfen, die Positionen des [System-Fokus #SystemFokus], des [Navigator-Objekts #ObjektNavigation] und den [Lesemodus #BrowseMode] zu identifizieren.
+Diese Positionen werden mit einem farbigen Rechteck hervorgehoben.
+- Kräftiges Blau markiert ein kombiniertes Navigator-Objekt und eine kombinierte Fokus-Position (z. B. weil das [Navigator-Objekt dem System-Fokus #ReviewCursorFollowFocus ] folgt).
+- Blau gestrichelt markiert nur das Objekt unter dem System-Fokus.
+- Kräftiges Rosa hebt nur das Navigatorobjekt hervor.
+- Kräftiges Gelb hebt den virtuellen System-Cursor hervor, welches im Lesemodus verwendet wird (wo es keinen physischen Cursor gibt, wie z. B. in Web-Browsern).
+-
+
+Wenn "Fokus hervorheben" im Dialogfeld der Kategorie [Sehen #VisionSettings] der [NVDA-Einstellungen #NVDASettings] aktiviert ist, können Sie ändern, ob Sie den Fokus, das Navigator-Objekt oder den Lesemodus #VisionSettingsFocusHighlight] hervorheben oder nicht.
+
+++ Bildschirmvorhang ++[VisionScreenCurtain]
+Als blinder oder sehbehinderter Benutzer ist es oft nicht möglich oder notwendig, den Inhalt des Bildschirms zu sehen.
+Außerdem könnte es schwierig sein, sicherzustellen, dass dir niemand über die Schulter schaut.
+Für diese Situation enthält NVDA eine Funktion namens "Bildschirmvorhang", die aktiviert werden kann, um den Bildschirm schwarz zu machen.
+
+Sie können den Bildschirmvorhang in den [NVDA-Einstellungen #NVDASettings], in der Kategorie [Sehen #VisionSettings] aktivieren.
 
 + Inhaltserkennung +[ContentRecognition]
 Wenn Entwickler von Anwendungen unzureichende Informationen zur Zugänglichkeit bereitstellen, können Sie zahlreiche Werkzeuge verwenden, um z. B. Text aus einem Bild auszulesen.
@@ -1057,10 +1092,10 @@ Wenn diese Option aktiviert ist, wird NVDA nach dem Start darüber informieren, 
 Sie können ausstehende Aktualisierungen auch manuell über das NVDA-Menü, den NVDA-Beenden-Dialog oder durch eine erneute Suche nach Aktualisierungen aus dem Hilfe-Menü installieren
 
 +++ Stimme- und Sprachausgabe (NVDA+Strg+V) +++[SpeechSettings]
-Hier können Sie festlegen, welche Sprachausgabe von NVDA genutzt werden und wie sich die Akustik der Stimme anhören soll.
-Für einen schnellen alternativen Weg zum Ändern der Parameter der Sprachausgabe können Sie im Abschnitt [Einstellungsring der Sprachausgabe #SynthSettingsRing] weiterlesen.
-
-Die Kategorie für die Stimmen- und Sprachausgabeneinstellungen enthält folgende Optionen:
+Die Kategorie Sprache im Dialogfeld NVDA-Einstellungen enthält Optionen, mit denen Sie den Sprachsynthesizer sowie die Sprachmerkmale für den ausgewählten Synthesizer ändern können.
+Für eine schnellere Möglichkeit, Sprachparameter von überall her zu steuern, lesen Sie bitte den Abschnitt [Sprachausgaben-Einstellungsring #SynthSettingsRing].
+ 
+Die Kategorie Spracheinstellungen enthält die folgenden Optionen:
 
 ==== Sprachausgabe ändern ====[SpeechSettingsChange]
 Die erste Option in dieser Kategorie ist der Schalter "Ändern". Dieser Schalter öffnet das Dialog zum [Ändern der Sprachausgabe #SelectSynthesizer]. Dort befinden sich alle verfügbaren Sprachausgaben und Ausgabegeräte, über welche die Sprachausgabe wiedergegeben werden kann.
@@ -1279,7 +1314,7 @@ Für das obige Beispiel bedeutet das, dass NVDA zunächst so viel Information wi
 Sollte noch Platz auf der Braillezeile vorhanden sein, so wird außerdem der Name der Liste angezeigt.
 Wenn Sie sich mit den Pfeiltasten durch die Liste bewegen, wird angenommen, dass Sie wissen, dass Sie sich innerhalb einer Liste befinden.
 Dies bedeutet, dass nur noch die Listeneinträge auf der Braillezeile angezeigt werden.
-Um die Kontextinformationen anzuzeigen können Sie die Braillezeile rückwärtsscrollen.
+Um die Kontext-Informationen anzuzeigen können Sie die Braillezeile rückwärtsscrollen.
 
 Bei der Einstellung "immer Zeile auffüllen" wird NVDA immer so viel Kontextinformation wie möglich auf der Braillezeile anzeigen, selbst wenn Sie diese Information schon vorher bekommen haben.
 Dies hat den Vorteil, dass immer so viel Information wie möglich auf der Braillezeile angezeigt wird.
@@ -1287,7 +1322,7 @@ Andererseits kann es zu einer "springenden Anzeige" kommen, wenn sich die Positi
 Dies kann beim Navigieren durch lange Listen zu Problemen führen, weil Sie mit Ihrem Finger immer wieder den Anfang des Eintrags aufsuchen müssen.
 Dies ist das Standardverhalten von NVDA 2017.2 und älter.
 
-Bei der Einstellung "nur beim zurückscrollen" wird NVDA niemals automatisch Kontextinformationen anzeigen.
+Bei der Einstellung "Nur beim Zurückscrollen" wird NVDA niemals automatisch Kontextinformationen anzeigen.
 Für das obige Beispiel bedeutet dies, dass NVDA immer nur den aktuellen Listeneintrag anzeigt.
 Wenn Sie dennoch Kontextinformationen (wie z. B. den Namen der Liste) angezeigt bekommen möchten, müssen Sie die Braillezeile rückwärtsscrollen.
 
@@ -1307,7 +1342,7 @@ Wenn diese Funktion aktiviert ist und Sie eine unterstützte Braillezeile über 
 
 Der Eintrag "Keine Braillezeile" bedeutet, dass Sie keine Braillezeile verwenden.
 
-Im Abschnitt[Unterstützte Braillezeilen #SupportedBrailleDisplays] finden Sie weitere Informationen über unterstützte Braillezeilen und welche davon die automatische Erkennung im Hintergrund unterstützen.
+Im Abschnitt [Unterstützte Braillezeilen #SupportedBrailleDisplays] finden Sie weitere Informationen über unterstützte Braillezeilen und welche davon die automatische Erkennung im Hintergrund unterstützen.
 
 ==== Anschluss ====[SelectBrailleDisplayPort]
 Sofern diese Option verfügbar ist, erlaubt sie Ihnen, den Anschluss auszuwählen, über den die gewählte Braillezeile mit Ihrem Rechner kommunizieren soll.
@@ -1319,7 +1354,42 @@ Für manche Braillezeilen können Sie jedoch genau festlegen, wie die Zeile ange
 
 Diese Option ist nicht verfügbar, wenn Ihre Braillezeile nur die automatische Suche nach dem Anschluss unterstützt.
 
-Sehen Sie im Abschnitt "[unterstützte Braillezeilen #SupportedBrailleDisplays]" für Informationen darüber nach, welche Anschlüsse für Ihre Braillezeile zur Verfügung stehen.
+Sehen Sie im Abschnitt [unterstützte Braillezeilen #SupportedBrailleDisplays] für Informationen darüber nach, welche Anschlüsse für Ihre Braillezeile zur Verfügung stehen.
+
++++ Sehen +++[VisionSettings]
+Mit der Kategorie Vision im Dialogfeld NVDA-Einstellungen können Sie[Sehhilfen #Vision] aktivieren, deaktivieren und konfigurieren.
+
+Beachten Sie, dass die verfügbaren Optionen in dieser Kategorie um[NVDA-Add-ons #AddonsManager] erweitert werden können.
+Standardmäßig enthält diese Einstellungsart die folgenden Optionen:
+
+==== Fokus hervorheben ====[VisionSettingsFocusHighlight]].
+Die Kontrollkästchen in der Gruppierung Focus Highlight steuern das Verhalten der integrierten NVDA-Funktion[Focus Highlight #VisionFocusHighlight].
+
+- Hervorhebung aktivieren: Schaltet die Fokus-Hervorhebung ein und aus.
+- System-Fokus hervorheben: Schaltet ein, ob der [System-Fokus #Systemfokus] hervorgehoben wird.
+- Hervorheben des Navigator-Objekts: Schaltet um, ob das [Navigator-Objekt #ObjectNavigation] hervorgehoben wird.
+- Hervorheben des Cursors im Durchsuchen-Modus: Schaltet um, ob der Cursor [Virtueller Cursor im Lesemodus #BrowseMode] markiert ist.
+-
+
+Beachten Sie, dass das Aktivieren und Deaktivieren des Kontrollkästchens "Highlighting aktivieren" auch den Zustand der anderen Kontrollkästchen im Baum entsprechend ändert.
+Wenn also "Highlighting aktivieren" ausgeschaltet ist und Sie dieses Kontrollkästchen aktivieren, werden auch die anderen Kontrollkästchen des Baums automatisch aktiviert.
+Wenn Sie nur den Fokus hervorheben und das Kontrollkästchen Navigatorobjekt und Browsermodus nicht aktivieren möchten, wird der Status des Kontrollkästchens "Highlighting aktivieren" zur Hälfte aktiviert.
+
+==== Bildschirmvorhang ====[VisionSettingsScreenCurtain]
+Sie können den [Bildschirmvorhang #VisionScreenCurtain] aktivieren, indem Sie das Kontrollkästchen "Bildschirm schwärzen (sofort wirksam)" aktivieren.
+Eine Warnung, dass Ihr Bildschirm nach der Aktivierung schwarz wird, wird angezeigt.
+Bevor Sie fortfahren (Auswahl von "Ja"), stellen Sie sicher, dass Sie Sprache / Blindenschrift aktiviert haben und Ihren Computer ohne Verwendung des Bildschirms steuern können.
+Wählen Sie "Nein", wenn Sie den Bildschirmvorhang  nicht mehr aktivieren möchten.
+Wenn Sie sicher sind, können Sie die Schaltfläche "Ja" auswählen, um den Bildshcirmvorhang zu aktivieren.
+Wenn Sie diese Warnmeldung nicht mehr jedes Mal sehen möchten, können Sie dieses Verhalten in dem Dialog, der die Meldung anzeigt, ändern.
+Sie können die Warnung jederzeit zurücksetzen, indem Sie das Kontrollkästchen "Beim Laden des Bildschirmvorhangs immer eine Warnung anzeigen" neben dem Kontrollkästchen "Bildschirm schwärzen" aktivieren.
+
+Um den Bildschirmvorhang von überall her umzuschalten, weisen Sie eine benutzerdefinierte Geste über den Dialog [Eingaben #InputGestures] zu.
+
+==== Einstellungen für visuelle Hilfsmittel von Drittanbietern ====[VisionSettingsThirdPartyVisualAids]].
+Zusätzliche Anbieter für die Verbesserung der Sehkraft können in[NVDA-Add-ons #AddonsManager] bereitgestellt werden.
+Wenn diese Anbieter über einstellbare Einstellungen verfügen, werden sie in dieser Einstellungskategorie in separaten Gruppierungen angezeigt.
+Die unterstützten Einstellungen pro Anbieter finden Sie in der Dokumentation des jeweiligen Anbieters.
 
 +++ Tastatur (NVDA+Strg+K) +++[KeyboardSettings]
 Diese Kategorie finden Sie unter dem Menü Optionen im Dialog Einstellungen. Sie beeinflusst das Verhalten von NVDA, wenn Sie etwas eingeben oder eine Aktion über die Tastatur ausführen.
@@ -1625,6 +1695,7 @@ Konfigurieren können Sie die Meldungen von:
  - Links
  - Listen
  - Zitatblöcke
+ - Gruppen
  - Sprungmarken
  - Artikel
  - Rahmen
@@ -2022,8 +2093,8 @@ Dieser Bereich beinhaltet Informationen über die in NVDA unterstützten Spracha
 eine ausführlichere Liste freier und kommerzieller Sprachausgaben, die zusammen mit NVDA verwendet werden können, finden Sie unter [https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
 ++ eSpeak NG ++[eSpeakNG]
-Die in NVDA fest integrierte Sprachausgabe [eSpeak NG https://github.com/espeak-ng/espeak-ng] erfordert keine speziellen Treiber oder andere extra installierten Komponenten.
-Espeak NG wird standardmäßig benutzt, wenn Sie Windows 7, Windows 8 oder Windows 8.1 verwenden. 
+Die in NVDA fest integrierte Sprachausgabe [eSpeak NG https://github.com/espeak-ng/espeak-ng] benötigt keine speziellen Treiber oder andere extra installierten Komponenten.
+Die Sprachausgabe eSpeak wird unter Windows 7, 8 und 8.1 von NVDA standardmäßig verwendet, während unter Windows 10 [Windows OneCore #OneCore] standardmäßig verwendet wird.
 Das hat den enormen Vorteil, dass NVDA auf einen Betriebssystemen mit einem USB-Stick ohne weiteres betrieben werden kann.
 
 Jede Stimme, die mit eSpeak NG ausgeliefert wird, spricht eine andere Sprache.
@@ -2059,20 +2130,10 @@ Um diese Stimmen verwenden zu können, müssen Sie folgende 2 Komponenten instal
 ++ Windows OneCore-Stimmen ++[OneCore]
 Windows 10 enthält neue Stimmen, die als "Mobile" oder "OneCore"-Stimmen bekannt sind.
 Diese Stimmen sind in vielen Sprachen verfügbar. Sie sind außerdem sehr viel reaktionsfreudiger als die Microsoft SAPI 5-Stimmen in früheren Windows-versionen.
+Unter Windows 10 verwendet NVDA standardmäßig Windows OneCore-Stimmen ([eSpeak NG #eSpeakNG] wird in älteren Windows-Versionen standardmäßig verwendet).
 
 Im [Artikel vom Microsoft Support-Center https://support.microsoft.com/de-de/help/22797/windows-10-narrator-tts-voices] finden Sie eine Beschreibung, wie Sie zusätzliche Stimmen und Sprachen installieren können.
 
-Bitte bedenken Sie, dass die höheren Sprechgeschwindigkeiten, die im Narrator eingestellt werden können, in NVDA nicht zur Verfügung stehen.
-Eine Änderung der Sprechgeschwindigkeit in Windows hat außerdem Einfluss auf die Sprechgeschwindigkeit in NVDA.
-Dieses Problem kann nur durch Änderungen in Windows behoben werden.
-Wir hoffen, dass dies im Rahmen einer Aktualisierung von Windows geschehen wird.
-
-++ AudioLogic TTS 3 ++[Audiologic]
-Dies ist eine kommerzielle Sprachausgabe speziell für die italienische Sprache.
-Um sie in NVDA nutzen zu können, müssen Sie die Sprachausgabe auf Ihrem System installiert haben.
-Für weitere Informationenbesuchen Sie bitte die AudioLogic-Website unter https://www.audiologic.it/.
-
-Diese Sprachausgabe unterstützt nicht die [Buchstabierfunktionalität #SpeechSettingsUseSpelling].
 
 + Unterstützte Braillezeilen +[SupportedBrailleDisplays]
 Dieser Bereich beinhaltet Informationen über Braillezeilen, die mit NVDA betrieben werden können.

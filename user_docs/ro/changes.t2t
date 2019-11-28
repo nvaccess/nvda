@@ -10,7 +10,6 @@ Ce este nou în NVDA
  - S-au îmbunătățit într-un mod remarcabil performanța și stabilitatea. (#9771)
  - Anunțarea textului scris care nu apare pe ecran )cum ar fi parolele) poate fi activată printr-o opțiune care se află în panoul setărilor avansate NVDA. (#9649)
 - Acuratețea cu care mausul se deplasează la comanda obiectului navigator a fost îmbunătățită în câmpurile de text din aplicațiile Java. (#10157)
-- Cortina ecranului îl face negru atunci când este activă. Această funcționalitate este disponibilă numai pentru Windows 8 și versiunile mai noi. (#7857)
 - S-a adăugat suportul pentru următoarele afișaje braille de la Handy Tech:
  - Basic Braille Plus 40
  - Basic Braille Plus 32
@@ -20,7 +19,15 @@ Ce este nou în NVDA
 - S-a adăugat o comandă care deplasează cursorul de examinare la poziția care  era setată ca marcaj de început pentru selecție sau copiere: NVDA+shift+F9. (#1969)
 - În Internet Explorer, Microsoft Edge și în versiunile recente de Firefox și Chrome, reperele sunt raportate în modul de focalizare și în navigarea obiectului. (#10101)
 - În Internet Explorer, Google Chrome și Mozilla Firefox, puteți naviga la articole folosind scripturile navigării rapide. Aceste scripturi sunt neasciate în mod implicit și pot fi atribuite în dialogul gesturilor de intrare atunci când acesta este deschis dintr-un document în care modul de navigare este prezent. (#9227)
+ - Și Figurile sunt raportate. Ele sunt considerate obiecte, prin urmare sunt navigabile cu tasta o a navigării rapide.
 - În Internet Explorer, Google Chrome și Mozilla Firefox, elementele articolelor sunt raportate cu navigarea obiectului și opțional în modul de navigare dacă acesta este activat din setările de formatare a documentului. (#10424)
+- Suport pentru procesele care nu au loc în iframe-urile din Mozilla Firefox. (#9672)
+- S-a adăugat cortina ecranului, care face întregul ecran negru în Windows 8 și/sau în versiunile mai noi. (#7857)
+ - S-a adăugat un script care activează cortina ecranului (până la următoarea repornire a NVDA cu o singură apăsare, ori cât timp rulează NVDA cu două apăsări), niciun gest implicit nu este atribuit.
+ - Cortina poate fi activată și configurată în secțiunea „viziune” a ferestrei de dialog a setărilor NVDA.
+- Noua versiune de NVDA vine la pachet și cu funcționalitatea de evidențiere a ecranului. (#971, #9064)
+ - Evidențierea focalizării, obiectul navigator și poziția cursorului de scriere al modului de navigare pot fi activate și configurate în secțiunea „Vedere” a ferestrei de dialog a setărilor NVDA.
+ - Notă: această caracteristică este incompatibilă cu suplimentul Focus Higlight, însă suplimentul încă poate fi utilizat atât timp cât commpilarea în evidențiator este inactivă.
 
 
 == Modificări ==
@@ -35,6 +42,9 @@ Ce este nou în NVDA
 - Când este activă raportarea caracterelor CLDR (aici sunt incluse și emoticoanele), ele sunt anunțate la toate nivelurile de punctuație. (#8826)
 - Au fost incluse în NVDA pachete de Python aparținând unor terțe părți, cum ar fi comtypes, acum își înregistrează avertismentele și erorile în jurnalul NVDA. (#10393)
 - S-au actualizat adnotările emoticoanelor Depozitului de Date Locale Comune Unicode la versiunea 36.0. (#10426)
+- La focalizarea unei grupări din modul de navigare, și descrierea este citită. (#10095)
+- Java Access Bridge este inclus cu NVDA pentru activarea accesului la aplicațiile Java, inclusiv pentru VM-urile Java bazate pe 64 de biți. (#7724)
+- Dacă Java Access Bridge nu este activat pentru utilizator, NVDA îl activează automat la pornire. (#7952)
 
 
 == Defecte Rezolvate ==
@@ -60,6 +70,9 @@ Ce este nou în NVDA
 - În aplicația Setări din Windows 10 April 2018 Update și mai nou, NVDA nu va mai anunța informații ale barei de progres pentru metri de volum, găsite în pagina Sisttem/Sunete. (#10284)
 - Expresiile regulate invalide din dicționarele de vorbire nu mai întrerup complet vorbirea din NVDA. (#10334)
 - La citirea elementelor cu bulină din Microsoft Word cu Interfața Automată a Utilizatorului activată, bulina din următorul element de listă nu mai este anunțată incorect. (#9613)
+- Au fost rezolvate niște probleme rare de traducere braille și niște erori cu liblouis. (#9982)
+- Aplicațiile Java pornite înaintea NVDA sunt accesibile. Nu mai este necesară repornirea acestora. (#10296)
+- În Mozilla Firefox, când elementul focalizat devine marcat ca actual (aria-current), această modificare nu mai este anunțată în mod repetat. (#8960)
 
 
 == Modificări pentru Dezvoltatori ==

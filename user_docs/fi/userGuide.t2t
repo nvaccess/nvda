@@ -29,8 +29,9 @@ Tärkeimpiä ominaisuuksia ovat:
 - Tuki uusille Windows-käyttöjärjestelmille, sekä 32- että 64-bittiset versiot mukaan lukien
 - Mahdollisuus käyttää Windowsin kirjautumisikkunassa ja muissa suojatuissa ruuduissa
 - Säätimien ja tekstin puhuminen kosketuseleitä käytettäessä
-- Tuki yleisille esteettömyysrajapinnoille, kuten Microsoft Active Accessibility, Java Access Bridge, IAccessible2 sekä UI Automation (tuki UI Automationille vain Windows 7:ssä ja uudemmissa käyttöjärjestelmissä)
+- Tuki yleisille esteettömyysrajapinnoille, kuten Microsoft Active Accessibility, Java Access Bridge, IAccessible2 sekä UI Automation
 - Tuki Windowsin komentokehotteelle ja konsolisovelluksille
+- Mahdollisuus kohdistuksen korostamiseen
 -
 
 ++ Kansainvälisyys ++[Internationalization]
@@ -292,6 +293,7 @@ Jos esimerkiksi kirjoitetaan muokattavaan tekstikenttään, kohdistus on kyseise
 
 Yleisin tapa liikkua NVDA:lla Windowsissa on käyttää tavallisia näppäinkomentoja, kuten Sarkain ja Vaihto+Sarkain eteen- ja taaksepäin säädinten välillä liikkumiseen, painamalla Alt valikkoriville siirtymiseen, käyttämällä nuolinäppäimiä valikoissa liikkumiseen ja Alt+Sarkain avointen sovellusten välillä siirtymiseen.
 Näin tehtäessä NVDA kertoo tietoja objektista, jossa kohdistus on, kuten nimen, tyypin, tilan, arvon, kuvauksen, pikanäppäimen ja sijainnin.
+Kun [kohdistuksen korostus #VisionFocusHighlight] on käytössä, järjestelmäkohdistuksen nykyinen sijainti näytetään visuaalisesti.
 
 Joitakin hyödyllisiä näppäinkomentoja kohdistuksella navigoitaessa:
 %kc:beginInclude
@@ -347,6 +349,7 @@ Myös työkalurivi sisältää säätimiä, joten niihin pääsemiseksi on siirr
 
 Nykyistä tarkasteltavaa objektia kutsutaan navigointiobjektiksi.
 Kun objektiin siirrytään, sitä voidaan tarkastella [tekstintarkastelukomennoilla #ReviewingText] [objektintarkastelutilassa #ObjectReview] oltaessa.
+Kun [kohdistuksen korostus #VisionFocusHighlight] on käytössä, nykyisen navigointiobjektin sijainti näytetään visuaalisesti.
 Navigointiobjekti liikkuu oletusarvoisesti järjestelmäkohdistuksen mukana, mutta tämä asetus voidaan poistaa myös käytöstä.
 
 Huom: Pistenäyttö seuraa oletusarvoisesti [kohdistusta #SystemFocus] ja [järjestelmäkohdistinta #SystemCaret] sekä objektinavigointia ja tarkastelukohdistinta.
@@ -488,10 +491,12 @@ Tällaisia asiakirjoja voidaan lukea seuraavissa sovelluksissa:
 - Adobe Flash
 - Tuetut kirjat Amazon Kindle for PC:ssä
 -
+
 Selaustila on käytettävissä valinnaisesti myös Microsoft Wordissa.
 
 Selaustilassa asiakirjan sisältö on käytettävissä kokonaisesityksenä, jossa voidaan liikkua nuolinäppäimillä, aivan kuin se olisi tavallinen tekstiasiakirja.
 Kaikki NVDA:n [järjestelmäkohdistimen #SystemCaret] näppäinkomennot, kuten esim. jatkuva luku ja lue muotoilut, taulukoissa liikkumiseen käytettävät komennot jne, toimivat tässä tilassa.
+Kun [kohdistuksen korostus #VisionFocusHighlight] on käytössä, myös virtuaalisen selaustilakohdistimen sijainti näytetään visuaalisesti.
 Asiakirjassa liikuttaessa luetaan siinä olevan tekstin lisäksi myös muita tietoja, kuten onko kohdalla oleva teksti linkki, otsikko tms.
 
 Toisinaan on tarpeen olla suorassa vuorovaikutuksessa tällaisissa asiakirjoissa olevien säädinten kanssa.
@@ -644,12 +649,14 @@ Jotta pistenäytölle mahtuisi mahdollisimman paljon tietoa, seuraavat lyhenteet
 
 || Lyhenne | Säätimen tyyppi |
 | sov | sovellus |
+| art | artikkeli
 | sln | sisennetty lainaus |
 | pnk | painike |
 | avpnk | avattava painike |
 | askpnk | askelluspainike |
 | jtupnk | jaettu painike |
 | vtpnk | vaihtopainike |
+| kvt | kuvateksti |
 | yhd | yhdistelmäruutu |
 | vlr | valintaruutu |
 | vli | valintaikkuna |
@@ -657,8 +664,9 @@ Jotta pistenäytölle mahtuisi mahdollisimman paljon tietoa, seuraavat lyhenteet
 | muo | muokattava tekstikenttä |
 | slsmuo | salasanan muokkauskenttä |
 | upotettu | upotettu objekti |
-| lpvte | loppuviite |
-| alvte | alaviite |
+| lvt | loppuviite |
+| prs | piirustus |
+| avt | alaviite |
 | gra | grafiikka |
 | rhm | ryhmä |
 | oN | otsikko tasolla n, esim. o1, o2. |
@@ -741,6 +749,33 @@ Pisteen 7 painaminen poistaa viimeksi syötetyn pistesolun tai -merkin.
 Piste 8 kääntää minkä tahansa pistekirjoitussyötteen ja painaa Enter-näppäintä.
 Pisteiden 7 ja 8 painaminen kääntää minkä tahansa pistekirjoitussyötteen lisäämättä välilyöntiä tai painamatta Enteriä.
 %kc:endInclude
+
++ Näkö +[Vision]
+Vaikka NVDA on suunnattu ensisijaisesti sokeille tai heikkonäköisille, jotka käyttävät tietokonetta puheen/pistenäytön avulla, se tarjoaa myös sisäänrakennettuja palveluja ruudun sisällön muuttamiseen.
+NVDA:ssa tällaista näön apuvälinettä kutsutaan näönparannuksen tarjoajaksi.
+
+NVDA:han sisältyy useita sisäänrakennettuja näönparannuksen tarjoajia, jotka kuvaillaan alla.
+Muita näönparannuksen tarjoajia on mahdollista lisätä [lisäosina. #AddonsManager]
+
+NVDA:n näön asetuksia voidaan muuttaa [asetusvalintaikkunan #NVDASettings] [Näkö-kategoriasta. #VisionSettings]
+
+++ Kohdistuksen korostus ++[VisionFocusHighlight]
+Kohdistuksen korostus voi auttaa tunnistamaan [kohdistuksen #SystemFocus], [navigointiobjektin #ObjectNavigation] ja virtuaalisen [selaustilakohdistimen #BrowseMode] sijainnin.
+Sijainnit korostetaan värillisellä, suorakulmaisella ääriviivalla.
+- Kiinteä sininen korostaa yhdistetyn navigointiobjektin ja kohdistuksen sijainnin (esim. koska [navigointiobjekti seuraa kohdistusta. #ReviewCursorFollowFocus])
+- Sininen katkoviiva korostaa pelkän objektin, jossa kohdistus on.
+- Kiinteä pinkki korostaa pelkän navigointiobjektin.
+- Kiinteä keltainen korostaa virtuaalikohdistimen, jota käytetään selaustilassa (kuten verkkoselaimissa, joissa ei ole fyysistä kohdistinta).
+-
+
+Kun kohdistuksen korostus on otettu käyttöön [NVDA:n asetusvalintaikkunan #NVDASettings] [Näkö-kategoriassa #VisionSettings], voit [muuttaa, korostetaanko kohdistus, navigointiobjekti vai selaustilakohdistin. #VisionSettingsFocusHighlight]
+
+++ Näyttöverho ++[VisionScreenCurtain]
+Sokeana tai heikkonäköisenä käyttäjänä ruudun sisältöä ei ole usein mahdollista tai tarpeellista nähdä.
+Lisäksi voi olla vaikea varmistaa, ettei joku katso olkasi yli.
+Tällaisia tilanteita varten NVDA:ssa on ominaisuus nimeltä näyttöverho, jonka käyttöön ottaminen pimentää ruudun.
+
+Voit ottaa näyttöverhon käyttöön [NVDA:n asetusvalintaikkunan #NVDASettings] [Näkö-kategoriassa. #VisionSettings]
 
 + Sisällöntunnistus +[ContentRecognition]
 Kun tekijät eivät tarjoa riittävästi tietoa ruudunlukuohjelman käyttäjälle sisällön määrittämiseen, sitä voidaan yrittää tunnistaa kuvasta eri työkaluja käyttäen.
@@ -1307,7 +1342,7 @@ Kun tämä ominaisuus on käytössä ja tietokoneeseen liitetään tuettu pisten
 
 "Ei pistenäyttöä" tarkoittaa, että pistenäyttöä ei käytetä.
 
-Lisätietoja tuetuista pistenäytöistä sekä siitä, mitkä niistä tukevat taustalla tapahtuvaa automaattista tunnistusta, on [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleessa.
+Lisätietoja tuetuista pistenäytöistä sekä siitä, mitkä niistä tukevat automaattista tunnistusta, on [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleessa.
 
 ==== Portti ====[SelectBrailleDisplayPort]
 Tällä asetuksella, mikäli se on käytettävissä, valitaan, mitä porttia tai yhteystyyppiä valitun pistenäytön kanssa käytetään.
@@ -1320,6 +1355,41 @@ Vaihtoehtoina ovat "Automaattinen" (joka määrää NVDA:n käyttämään oletus
 Tämä vaihtoehto ei ole käytettävissä, jos pistenäyttö tukee vain automaattista portintunnistusta.
 
 Lisätietoja pistenäyttöjen tukemista kommunikointityypeistä ja käytettävissä olevista porteista on [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleessa.
+
++++ Näkö +++[VisionSettings]
+NVDA:n asetusvalintaikkunan Näkö-kategoriassa voit ottaa käyttöön ja poistaa käytöstä [näköapuja. #Vision] sekä muuttaa niiden asetuksia.
+
+Huom: Käytettävissä olevia vaihtoehtoja voidaan laajentaa [lisäosien #AddonsManager] avulla.
+Tämä asetuskategoria sisältää oletusarvoisesti seuraavat vaihtoehdot:
+
+==== Kohdistuksen korostus ====[VisionSettingsFocusHighlight]
+Kohdistuksen korostus -ryhmäsäätimessä olevat valintaruudut säätävät NVDA:n sisäänrakennetun [kohdistuksen korostus #VisionFocusHighlight] -ominaisuuden toimintaa.
+
+- Ota korostus käyttöön: Ottaa kohdistuksen korostuksen käyttöön tai poistaa sen käytöstä.
+- Korosta kohdistus: Määrittää, korostetaanko [kohdistus. #SystemFocus]
+- Korosta navigointiobjekti: Määrittää, korostetaanko [navigointiobjekti. #ObjectNavigation]
+- Korosta selaustilakohdistin: Määrittää, korostetaanko [selaustilan virtuaalikohdistin. #BrowseMode]
+-
+
+Huom: Ota korostus käyttöön -valintaruudun valitseminen tai valinnan poistaminen muuttaa vastaavasti myös kolmen muun valintaruudun tilaa.
+Joten, jos Kohdistuksen korostus -valintaruutu ei ole valittuna, mutta valitset sen, kolme muuta valintaruutua valitaan myös automaattisesti.
+Mikäli haluat korostaa pelkän kohdistuksen ja jättää navigointiobjektin sekä selaustilan valintaruudut valitsematta, Ota korostus käyttöön -valintaruudun tila muuttuu osittain valituksi.
+
+==== Näyttöverho ====[VisionSettingsScreenCurtain]
+Voit ottaa [näyttöverhon #VisionScreenCurtain] käyttöön valitsemalla Pimennä näyttö (vaikuttaa välittömästi) -valintaruudun.
+Varoitus näytön pimentymisestä näytetään.
+Ennen kuin jatkat valitsemalla "Kyllä", varmista, että puhe/pistekirjoitus on käytössä ja että pystyt käyttämään tietokonetta ilman näyttöä.
+Valitse "Ei", jos et halua ottaa näyttöverhoa käyttöön.
+Mikäli olet varma, voit ottaa näyttöverhon käyttöön valitsemalla Kyllä-painikkeen.
+Jos et halua enää nähdä tätä varoitusta, voit poistaa sen käytöstä samassa valintaikkunassa.
+Voit milloin tahansa palauttaa varoituksen käyttöön valitsemalla "Näytä varoitus aina, kun näyttöverho otetaan käyttöön" -valintaruudun.
+
+Muuta näyttöverhon tilaa mistä tahansa määrittämällä mukautettu syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
+
+==== Kolmannen osapuolen näön apuvälineiden asetukset ====[VisionSettingsThirdPartyVisualAids]
+Muita näönparannuksen tarjoajia voidaan asentaa [lisäosina. #AddonsManager]
+Mikäli näillä tarjoajilla on säädettäviä asetuksia, ne näytetään erillisissä ryhmissä tässä asetuskategoriassa.
+Katso tietoja kunkin tarjoajan tukemista asetuksista kyseisen tarjoajan ohjeesta.
 
 +++ Näppäimistö (NVDA+Ctrl+K) +++[KeyboardSettings]
 Näppäimistö-kategoria sisältää asetuksia, jotka määrittävät, miten NVDA käyttäytyy kirjoitettaessa ja käytettäessä näppäimistöä muilla tavoin.
@@ -1625,6 +1695,7 @@ Seuraavien tietojen lukeminen voidaan määrittää:
  - Linkit
  - Luettelot
  - Sisennetyt lainaukset
+ - Ryhmät
  - Kiintopisteet
  - Artikkelit
  - Kehykset
@@ -1956,7 +2027,7 @@ Lisäosien hallinnalla, johon pääsee NVDA-valikosta Työkalut-valikon alta koh
 Lisäosat, jotka ovat NVDA-yhteisön toimittamia, saattavat lisätä tai muuttaa ominaisuuksia tai jopa tarjota tuen uusille pistenäytöille tai puhesyntetisaattoreille.
 
 Lisäosien hallinnassa on luettelo, jossa näkyvät kaikki nykyisen käyttäjän asentamat lisäosat.
-Jokaisesta lisäosasta näytetään nimi, tila, versio sekä tekijä, ja lisätietoja kuten kuvausta ja URL-osoitetta voidaan tarkastella valitsemalla haluttu lisäosa ja painamalla Tiedot-painiketta.
+Jokaisesta lisäosasta näytetään nimi, tila, versio sekä tekijä, ja lisätietoja kuten kuvausta ja URL-osoitetta voidaan tarkastella valitsemalla haluttu lisäosa ja painamalla Tietoa lisäosasta -painiketta.
 Jos valitulle lisäosalle on saatavana ohje, se voidaan avata painamalla Ohje-painiketta.
 
 Verkossa saatavilla olevia lisäosia on mahdollista selata ja ladata painamalla Hae lisäosia -painiketta.
@@ -2023,7 +2094,7 @@ Kattavampi luettelo ilmaisista ja kaupallisista syntetisaattoreista, joita on ma
 
 ++ eSpeak NG ++[eSpeakNG]
 [ESpeak NG https://github.com/espeak-ng/espeak-ng] -puhesyntetisaattori on sisäänrakennettu NVDA:han, joten sen asentamiseksi ja käyttämiseksi ei tarvita muita erikoisajureita tai komponentteja.
-NVDA käyttää oletusarvoisesti tätä syntetisaattoria.
+NVDA käyttää oletusarvoisesti tätä syntetisaattoria Windows 7:ssä, 8:ssa ja 8.1:ssä (Windows 10:ssä [Windows OneCorea #OneCore]).
 Tämä on hyvä valinta käytettäessä NVDA:ta USB-muistitikulta.
 
 Jokainen eSpeak NG:n mukana tuleva ääni puhuu eri kieltä.
@@ -2059,20 +2130,10 @@ Niiden käyttämiseksi on asennettava seuraavat kaksi osaa:
 ++ Windows OneCore ++[OneCore]
 Windows 10 sisältää uusia ääniä, jotka tunnetaan OneCore- tai matkapuhelinääninä.
 Ääniä on saatavilla useille kielille, ja ne reagoivat nopeammin kuin Microsoftin Speech API 5 -rajapinnan kautta käytettävät.
+NVDA käyttää oletusarvoisesti Windows 10:ssä Windows OneCore -ääniä (muissa versioissa [[eSpeak NG:tä #eSpeakNG]).
 
 Katso luettelo saatavilla olevista äänistä ja ohjeet niiden asentamiseen [tästä https://support.microsoft.com/fi-fi/help/22797/windows-10-narrator-tts-voices/] Microsoftin artikkelista.
 
-Huomaa, että Lukijan (Narratorin) suuremmat puhenopeudet eivät ole tällä hetkellä käytettävissä NVDA:n kanssa.
-Lisäksi Windowsin asetuksista valitsemasi puheen nopeus vaikuttaa NVDA:ssa asetettuun puhenopeuteen.
-Näitä ongelmia ei voi ratkaista ilman Windowsiin tehtäviä muutoksia.
-Toivon mukaan ne korjataan joskus julkaistavassa Windows-päivityksessä.
-
-++ Audiologic TTS 3 ++[Audiologic]
-Tämä on kaupallinen italiankielinen puhesyntetisaattori.
-Se on asennettava tietokoneelle, jotta sitä voidaan käyttää NVDA:lla.
-Katso lisätietoja Audiologicin verkkosivustolta osoitteesta www.audiologic.it.
-
-Tämä syntetisaattori ei tue [tavaustoimintoa #SpeechSettingsUseSpelling].
 
 + Tuetut pistenäytöt +[SupportedBrailleDisplays]
 Tässä kappaleessa on tietoja NVDA:n tukemista pistenäytöistä.

@@ -29,8 +29,9 @@ Suas características mais notáveis incluem:
 - Suporte para as modernas versões do sistema operacional Windows incluindo variantes de 32 e 64 bit
 - Possibilidade de uso na tela de logon do Windows e outras telas de segurança
 - Anunciando controles e texto enquanto usa gestos de toque
-- Suporte para interfaces comuns de acessibilidade tais como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation ""[Automação da Interface do Usuário]"" (UI Automation é suportado apenas no Windows 7 e superiores)
-- Suporte para o Prompt de comando do Windows e aplicações de console
+- Suporte para interfaces comuns de acessibilidade tais como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation ""[Automação da Interface do Usuário]""
+- Suporte para o Prompt de Comando do Windows e aplicações de console
+- A capacidade de realçar o foco do sistema
 -
 
 ++ Internacionalização ++[Internationalization]
@@ -292,6 +293,7 @@ Por exemplo, se você está digitando em um campo de texto editável, este entã
 
 A forma mais comum de navegar pelo Windows com o NVDA é simplesmente mover-se com os comandos de teclado normais do windows, tais como Tab e Shift+Tab para se mover para a frente e para trás entre controles, pressionar Alt para acessar a barra de menus e usar as setas para navegar pelos menus e Alt+Tab para se mover entre aplicações em execução.
 Quando você faz isso, o NVDA anuncia a informação sobre o objeto em foco, tal como o seu nome, tipo, valor, estado, descrição, atalho do teclado e informação da posição.
+Quando o [Realce do Foco #VisionFocusHighlight] está ativado, o local do foco atual do sistema também é exposto visualmente.
 
 Existem alguns comandos de teclado úteis quando se move com o foco:
 %kc:beginInclude
@@ -347,6 +349,7 @@ Da mesma forma, se encontrar uma barra de ferramentas, deve mover-se para dentro
 
 O objeto que atualmente está sendo examinado chama-se objeto de navegação.
 Uma vez que tenha navegado para um objeto, pode explorá-lo com os comandos de [exploração de texto #ReviewingText] enquanto estiver no modo de [exploração de objeto #ObjectReview].
+Quando o [Realce do Foco #VisionFocusHighlight] está ativado, o local do objeto de navegação atual também é exposto visualmente.
 Por padrão, a navegação de objetos acompanha o foco do sistema, embora esse comportamento possa ser ativado e desativado.
 
 Note que o braille acompanha igualmente o [foco #SystemFocus] e o [cursor #SystemCaret], bem como a navegação de objeto e a exploração de texto por padrão.
@@ -488,10 +491,12 @@ Isso inclui documentos nos seguintes aplicativos:
 - Adobe Flash
 - Livros suportados no Amazon Kindle para PC
 -
+
 O modo de navegação também encontra-se disponível opcionalmente para documentos no Microsoft Word.
 
 No modo de navegação, o conteúdo do documento é disposto numa representação plana que pode ser navegada com as teclas do cursor como se ele fosse um documento de texto qualquer.
 Todas as teclas de comando do NVDA para o [cursor do sistema #SystemCaret] funcionam neste modo; ex: leitura contínua, informar formatação, comandos de navegação para tabelas, etc.
+Quando o [Realce do Foco #VisionFocusHighlight] está ativado, o local do cursor do modo de navegação virtual também é exposto visualmente.
 A informação tal como se o texto é um link, título, etc, é anunciada conforme se movimenta pelo mesmo.
 
 Algumas vezes, você precisará interagir diretamente com os controles nesses documentos.
@@ -520,7 +525,7 @@ Note que nem todos os comandos são suportados em todos os tipos de documento.
 
 %kc:beginInclude
 As teclas seguintes só por si saltam para o próximo elemento disponível, adicionando-se a tecla Shift faz com que saltem para o elemento anterior:
-- h: cabeçalho ""[título]""
+- h: título ""[cabeçalho]""
 - l: lista
 - i: item de lista
 - t: tabela
@@ -540,7 +545,7 @@ As teclas seguintes só por si saltam para o próximo elemento disponível, adic
 - g: gráfico
 - d: marco
 - o: objeto embutido (tocador de áudio e vídeo, aplicativo, diálogo, etc.)
-- 1 a 6: cabeçalhos ""[títulos]"" de nível 1 a 6 respectivamente
+- 1 a 6: títulos ""[cabeçalhos]"" de nível 1 a 6 respectivamente
 - a: anotação (comentário, revisão do editor, etc.)
 - w: erro ortográfico
 -
@@ -558,7 +563,7 @@ Para alternar a ativação das teclas de navegação com caracteres avulsos no d
 
 ++ A Lista de Elementos ++[ElementsList]
 A lista de elementos fornece acesso a uma lista de vários tipos de elementos no documento, quando apropriado ao aplicativo.
-Por exemplo, nos navegadores Web, a lista de elementos pode listar links, cabeçalhos, campos de formulários, botões ou marcos.
+Por exemplo, nos navegadores Web, a lista de elementos pode listar links, títulos, campos de formulários, botões ou marcos.
 Os botões de opção permitem-lhe alternar entre os vários tipos de elementos.
 Um campo de edição também se encontra disponível na caixa de diálogo que permite filtrar a lista para o ajudar a procurar um item específico na página.
 Depois de ter escolhido um item, pode utilizar os botões fornecidos no diálogo para mover para ou ativar esse item.
@@ -644,12 +649,14 @@ Com vistas a fornecer tanta informação quanto possível numa linha braille, as
 
 || Abreviatura | Tipo de controle |
 | apl | aplicação |
+| art | artigo |
 | bct | bloco de citação |
 | bt | botão |
 | btsus | botão de menu suspenso |
 | btrtç | botão de rotação |
 | btdvs | botão de divisão |
 | btalt | botão de alternância |
+| leg | legenda |
 | cxc | caixa de combinação |
 | cxs | caixa de seleção |
 | dlg | diálogo |
@@ -658,10 +665,11 @@ Com vistas a fornecer tanta informação quanto possível numa linha braille, as
 | edçsnh | edição de senha |
 | embutido | objeto embutido |
 | ntadn | nota de adendo ""[nota final]"" |
+| fig | figura |
 | ntrdp | nota de rodapé |
 | gra | gráfico |
 | grp | grupo |
-| hN | cabeçalho ""[título]"" de nível n, isto é, h1, h2. |
+| tN | título ""[cabeçalho]"" de nível n, isto é, t1, t2. |
 | aju | balão de ajuda |
 | mrc | marco |
 | lnk | link |
@@ -742,6 +750,33 @@ Ponto 8 transcreve qualquer entrada braille e pressiona a tecla enter.
 Pressionar o ponto 7 + ponto 8 transcreve qualquer entrada em braille, mas sem adicionar um espaço ou pressionar enter.
 %kc:endInclude
 
++ Visão +[Vision]
+Embora o NVDA seja voltado primariamente para pessoas cegas ou com deficiência visual principalmente que usam fala e/ou braille para operar um computador, ele também fornece recursos internos para alterar o conteúdo da tela.
+No NVDA, esse auxílio visual é chamado de provedor de aprimoramento da visão.
+
+O NVDA oferece vários provedores de aprimoramento da visão integrados, descritos abaixo.
+Provedores adicionais de aprimoramento da visão podem ser fornecidos nos [complementos do NVDA #AddonsManager].
+
+As configurações de visão do NVDA podem ser alteradas na [categoria de visão #VisionSettings] do diálogo [Configurações do NVDA #NVDASettings].
+
+++ Realce do Foco ++[VisionFocusHighlight]
+O Realce do Foco pode ajudar a identificar o [foco do sistema #SystemFocus], [objeto de navegação #ObjectNavigation] e posições do [modo de navegação #BrowseMode].
+Essas posições são realçadas com um contorno de retângulo colorido.
+- O azul sólido realça um local combinado do objeto de navegação e foco do sistema (por exemplo, porque [o objeto de navegação segue o foco do sistema #ReviewCursorFollowFocus]).
+- Azul tracejado realça apenas o objeto com foco do sistema.
+- O rosa sólido realça apenas o objeto de navegação.
+- Amarelo sólido realça o cursor virtual usado no modo de navegação (onde não há nenhum cursor físico, como em navegadores web).
+-
+
+Quando o Realce do Foco está ativado na [categoria de visão #VisionSettings] do diálogo [Configurações do NVDA #NVDASettings], você pode [alterar se deseja ou não realçar o foco, o objeto de navegação ou o cursor do modo de navegação #VisionSettingsFocusHighlight].
+
+++ Cortina de Tela ++[VisionScreenCurtain]
+Como usuário cego ou com deficiência visual, normalmente não é possível ou necessário ver o conteúdo da tela.
+Além disso, pode ser difícil garantir que não haja alguém olhando por cima do seu ombro.
+Para essa situação, o NVDA contém um recurso chamado "cortina de tela", que pode ser ativado para tornar a tela preta.
+
+Você pode ativar a Cortina de Tela na [categoria de visão #VisionSettings] do diálogo [Configurações do NVDA #NVDASettings].
+
 + Reconhecimento de Conteúdo +[ContentRecognition]
 Quando os autores não fornecem informações suficientes para os usuários de leitores de telas com vistas a determinar o conteúdo de alguma coisa, várias ferramentas podem ser usadas para tentar reconhecer o conteúdo de uma imagem.
 O NVDA suporta a funcionalidade de reconhecimento óptico de caracteres (OCR) integrada no Windows 10 para reconhecer textos oriundos de imagens.
@@ -796,7 +831,7 @@ Para mais informações sobre o Modo de navegação e a Navegação Rápida, con
 %kc:beginInclude
 Estando em modo de navegação no Microsoft Word, você pode acessar a Lista de Elementos pressionando NVDA+f7.
 %kc:endInclude
-A Lista de Elementos pode listar cabeçalhos ""[títulos]"", links, anotações (o que inclui comentários e revisões de editores) e erros (atualmente limitado a erros ortográficos).
+A Lista de Elementos pode listar títulos ""[cabeçalhos]"", links, anotações (o que inclui comentários e revisões de editores) e erros (atualmente limitado a erros ortográficos).
 
 +++ Anunciar Comentários +++[WordReportingComments]
 %kc:beginInclude
@@ -1057,7 +1092,7 @@ Se isso estiver ativado, o NVDA informará quando houver uma atualização pende
 Você também pode instalar manualmente a atualização pendente na caixa de diálogo Sair do NVDA (se ativada), no menu do NVDA ou ao executar uma nova verificação no menu Ajuda.
 
 +++ Configurações de Fala (NVDA+control+v) +++[SpeechSettings]
-A categoria fala no diálogo de Configurações do NVDA contém opções que permitem alterar o sintetizador de fala e as características de voz do sintetizador escolhido.
+A categoria Fala no diálogo de Configurações do NVDA contém opções que permitem alterar o sintetizador de fala e as características de voz do sintetizador escolhido.
 Para uma forma alternativa e mais rápida de controlar os parâmetros de voz a partir de qualquer local, por favor consulte a seção [Anel de Opções de Voz #SynthSettingsRing].
 
 A categoria Configurações de Fala contém as seguintes opções:
@@ -1321,6 +1356,41 @@ Esta opção não estará disponível se sua linha braille suporta apenas a dete
 
 Você pode consultar a documentação sobre sua linha braille na seção [Linhas Braille Suportadas, #SupportedBrailleDisplays] com vistas a obter mais detalhes sobre os tipos de comunicação suportados e portas disponíveis.
 
++++ Visão +++[VisionSettings]
+A categoria Visão no diálogo Configurações do NVDA permite ativar, desativar e configurar [recursos visuais #Vision].
+
+Observe que as opções disponíveis nesta categoria podem ser estendidas pelos [Complementos do NVDA #AddonsManager].
+Por padrão, essa categoria de configurações contém as seguintes opções:
+
+==== Realce do Foco ====[VisionSettingsFocusHighlight]
+As caixas de seleção no agrupamento Realce de Foco controlam o comportamento do recurso [Realce de Foco #VisionFocusHighlight] incorporado do NVDA.
+
+- Ativar Realce: Alterna entre ativado e desativado o Realce de Foco.
+- Realçar foco do sistema: alterna se o [foco do sistema #SystemFocus] será realçado.
+- Realçar objeto de navegação: alterna se o [objeto de navegação #ObjectNavigation] será realçado.
+- Realçar cursor do modo de navegação: Alterna se o [cursor do modo de navegação virtual #BrowseMode] será realçado.
+-
+
+Observe que marcar e desmarcar a caixa de seleção "Ativar Realce" também mudará o estado das outras caixas de seleção da árvore consequentemente.
+Portanto, se "Ativar Realce" estiver desativada e você marcar esta caixa de seleção, as outras caixas de seleção da árvore também serão marcadas automaticamente.
+Se você deseja realçar apenas o foco e deixar as caixas de seleção objeto de navegação e modo de navegação desmarcadas, o estado da caixa de seleção "Ativar Realce" será parcialmente marcada.
+
+==== Cortina de Tela ====[VisionSettingsScreenCurtain]
+Você pode ativar a [Cortina de Tela #VisionScreenCurtain] marcando a caixa de seleção "Tornar a tela preta (efeito imediato)".
+Um aviso de que sua tela ficará preta após a ativação será exibido.
+Antes de continuar (selecionando "Sim"), verifique se ativou fala / braille e será capaz de controlar o seu computador sem o uso da tela.
+Selecione "Não" se não desejar mais ativar a Cortina de Tela.
+Se você tiver certeza, poderá escolher o botão Sim para ativar a cortina de tela.
+Se você não quiser mais ver essa mensagem de aviso todas as vezes, poderá alterar esse comportamento na caixa de diálogo que exibe a mensagem.
+Você sempre pode restaurar o aviso marcando a caixa de seleção "Sempre mostrar um aviso ao carregar a Cortina de Tela" ao lado da caixa de seleção "Tornar a tela preta".
+
+Para alternar a Cortina de Tela de qualquer lugar, atribua um comando personalizado usando o [diálogo Definir Comandos #InputGestures].
+
+==== Configurações para recursos visuais de terceiros ====[VisionSettingsThirdPartyVisualAids]
+Provedores adicionais de aprimoramento da visão podem ser fornecidos nos [complementos do NVDA #AddonsManager].
+Quando esses provedores tiverem configurações ajustáveis, eles serão mostrados nessa categoria de configurações em agrupamentos separados.
+Para as configurações suportadas mediante provedor, consulte a documentação desse provedor.
+
 +++ Teclado (NVDA+control+k) +++[KeyboardSettings]
 A categoria Teclado no diálogo de Configurações do NVDA contém opções que definem como o NVDA se comporta à medida que você usa e digita no seu teclado.
 Essa categoria de configurações contém as seguintes opções:
@@ -1573,8 +1643,8 @@ Por padrão, essa opção está desativada.
 
 Para alternar a inclusão de tabelas de leiaute de qualquer lugar, atribua um comando personalizado usando o [diálogo Definir Comandos #InputGestures].
 
-==== Configurar O Anúncio de Campos Tais Como Links e Cabeçalhos [Títulos] ====[BrowseModeLinksAndHeadings]
-Por favor veja as opções na [categoria Formatação de Documentos #DocumentFormattingSettings] do diálogo de [Configurações do NVDA #NVDASettings] para a configuração dos campos que serão falados quando estiver navegando, tais como links, cabeçalhos e tabelas.
+==== Configurar O Anúncio de Campos Tais Como Links e Títulos [Cabeçalhos] ====[BrowseModeLinksAndHeadings]
+Por favor veja as opções na [categoria Formatação de Documentos #DocumentFormattingSettings] do diálogo de [Configurações do NVDA #NVDASettings] para a configuração dos campos que serão falados quando estiver navegando, tais como links, títulos e tabelas.
 
 ==== Modo de foco automático quando o foco muda ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
 Esta opção permite que o modo de foco seja ativado quando este for modificado.
@@ -1621,10 +1691,11 @@ As opções de formatação de documentos são organizadas em grupos.
  - Coordenadas de Células
  - Bordas das Células (Desativado, Estilos, Tanto Cores como Estilos)
 - Elementos
- - Cabeçalhos ""[títulos]""
+ - Títulos ""[Cabeçalhos]""
  - Links
  - Listas
  - Blocos de citação
+ - Agrupamentos
  - Marcos
  - Artigos
  - Frames ""[quadros]""
@@ -2023,7 +2094,7 @@ Se deseja uma lista mais extensa de sintetizadores gratuitos e comerciais que vo
 
 ++ eSpeak NG ++[eSpeakNG]
 O sintetizador [eSpeak NG https://github.com/espeak-ng/espeak-ng] é embutido diretamente no NVDA e não requer para ser instalado nenhum outro driver ou componente especial.
-O eSpeak NG é iniciado com o NVDA por padrão.
+No Windows 7, 8 e 8.1, o NVDA usa o eSpeak NG por padrão ([Windows OneCore #OneCore] é usado no Windows 10 por padrão).
 Por ter sido integrado ao NVDA, ele é uma boa escolha para quando se executa o NVDA num dispositivo de armazenamento USB em outros sistemas.
 
 Cada voz que vem com o eSpeak NG fala um idioma diferente.
@@ -2059,20 +2130,10 @@ Para usá-las, você necessitará instalar dois componentes:
 ++ Vozes Windows OneCore ++[OneCore]
 O Windows 10 inclui novas vozes conhecidas como "OneCore" ou vozes "mobile" ""[móveis]"".
 As vozes são fornecidas para vários idiomas e são mais responsivas do que as vozes da Microsoft disponíveis via Microsoft Speech API versão 5.
+No Windows 10, o NVDA usa as vozes Windows OneCore por padrão ([eSpeak NG #eSpeakNG] é usado em outras versões).
 
 Por favor consulte esse artigo da Microsoft para uma lista das vozes disponíveis e instruções de como instalá-las: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
-Tenha em conta que as grandes velocidades obtidas com o Narrator atualmente não são possíveis no NVDA.
-Além disso, a velocidade selecionada nas configurações do Windows afetam a velocidade definida no NVDA.
-Estes são problemas que não podemos resolver sem que haja alterações no Windows.
-Esperamos que isso seja solucionado numa futura atualização do Windows.
-
-++ Audiologic Tts3 ++[Audiologic]
-Este é um sintetizador de voz comercial especificamente para o idioma Italiano.
-O mesmo deve estar instalado em seu sistema para que possa utilizá-lo com o NVDA.
-Para mais informações, por favor visite o site Web da Audiologic em www.audiologic.it.
-
-Esse sintetizador não suporta a [funcionalidade de soletragem melhorada #SpeechSettingsUseSpelling].
 
 + Linhas Braille Suportadas +[SupportedBrailleDisplays]
 Esta seção contém informação sobre as linhas Braille que o NVDA suporta.

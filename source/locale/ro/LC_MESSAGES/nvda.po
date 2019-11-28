@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-11 16:32+1000\n"
-"PO-Revision-Date: 2019-11-13 16:05+0200\n"
+"POT-Creation-Date: 2019-11-22 06:43+1000\n"
+"PO-Revision-Date: 2019-11-23 15:53+0200\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, "
 "florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
@@ -147,11 +147,6 @@ msgstr "caută"
 msgctxt "aria"
 msgid "form"
 msgstr "formular"
-
-#. Translators: Reported for a significant region, normally found on web pages.
-msgctxt "aria"
-msgid "region"
-msgstr "regiune"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -309,6 +304,11 @@ msgid "grp"
 msgstr "grp"
 
 #. Translators: Displayed in braille for an object which is a
+#. caption.
+msgid "cap"
+msgstr "cap"
+
+#. Translators: Displayed in braille for an object which is a
 #. embedded object.
 msgid "embedded"
 msgstr "obiect încorporat"
@@ -383,6 +383,14 @@ msgstr "lmk"
 #. Translators: Displayed in braille for an object which is an article.
 msgid "art"
 msgstr "art"
+
+#. Translators: Displayed in braille for an object which is a region.
+msgid "rgn"
+msgstr "rgn"
+
+#. Translators: Displayed in braille for an object which is a figure.
+msgid "fig"
+msgstr "fig"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -486,11 +494,6 @@ msgstr "srch"
 msgctxt "braille landmark abbreviation"
 msgid "form"
 msgstr "formă"
-
-#. Translators: Displayed in braille for a significant region, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "rgn"
-msgstr "rgn"
 
 #. Translators: The description of a braille cursor shape.
 msgid "Dots 7 and 8"
@@ -1725,6 +1728,22 @@ msgstr "se mută la articolul anterior"
 msgid "no previous article"
 msgstr "nu există articol anterior"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next grouping"
+msgstr "se mută la grupul următor"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next grouping"
+msgstr "nu există grup următor"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous grouping"
+msgstr "se mută la grupul anterior"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous grouping"
+msgstr "nu există grup anterior"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -1751,8 +1770,6 @@ msgstr "&Butoane"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings panel.
 msgid "Lan&dmarks"
 msgstr "&Repere"
 
@@ -2645,6 +2662,14 @@ msgstr "reper"
 msgid "article"
 msgstr "articol"
 
+#. Translators: Identifies a region.
+msgid "region"
+msgstr "regiune"
+
+#. Translators: Identifies a figure (commonly seen on some websites).
+msgid "figure"
+msgstr "figură"
+
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
 msgstr "nedisponibil"
@@ -3032,8 +3057,9 @@ msgid "Braille"
 msgstr "Braille"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the vision panel
 msgid "Vision"
-msgstr "Viziune"
+msgstr "Vedere"
 
 #. Translators: The name of a category of NVDA commands.
 msgctxt "script category"
@@ -3495,6 +3521,18 @@ msgstr "anunță rubrică activat"
 msgid "Toggles on and off the reporting of headings"
 msgstr "Activează sau dezactivează raportarea rubricilor"
 
+#. Translators: Input help mode message for toggle report groupings command.
+msgid "Toggles on and off the reporting of groupings"
+msgstr "Activează sau dezactivează raportarea grupurilor"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report gorupings off"
+msgstr "anunță grupuri dezactivat"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report groupings on"
+msgstr "anunță grupuri activat"
+
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
 msgstr "anunță citat în bloc dezactivat"
@@ -3508,12 +3546,12 @@ msgid "Toggles on and off the reporting of block quotes"
 msgstr "Activează sau dezactivează raportarea citatelor în bloc"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-msgid "report landmarks off"
-msgstr "anunță repere dezactivat"
+msgid "report landmarks and regions off"
+msgstr "anunță repere și regiuni dezactivat"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-msgid "report landmarks on"
-msgstr "anunță repere activat"
+msgid "report landmarks and regions on"
+msgstr "anunță repere și regiuni activat"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
@@ -4625,36 +4663,40 @@ msgid "report CLDR characters on"
 msgstr "anunță caractere CLDR activat"
 
 msgid ""
-"Toggles the state of the screen curtain, either by making the screen black "
-"or SHOWING the contents of the screen. If pressed to enable once, the screen "
-"curtain is enabled until you restart NVDA. If pressed tree times, it is "
-"enabled until you disable it"
+"Toggles the state of the screen curtain, enable to make the screen black or "
+"disable to show the contents of the screen. Pressed once, screen curtain is "
+"enabled until you restart NVDA. Pressed twice, screen curtain is enabled "
+"until you disable it"
 msgstr ""
-"Schimbă starea cortinei ecranului, fie făcând ecrramnul negru, fie afișând "
+"Schimbă starea cortinei ecranului, fie făcând ecrranul negru, fie afișând "
 "conținutul acestuia. Dacă pentru activarea cortinei se apasă o dată, ea "
 "rămâne activă până la repornirea NVDA. Dacă se apasă de trei ori, rămâne "
 "activă pe o perioadă nnedeterminată. În consecință, dezactivarea acesteia "
 "trebuie să fie efectuată manual"
-
-#. Translators: Reported when the screen curtain is not available.
-msgid "Screen curtain not available"
-msgstr "Cortină ecran indisponibilă"
 
 #. Translators: Reported when the screen curtain is disabled.
 msgid "Screen curtain disabled"
 msgstr "Cortină ecran dezactivată"
 
 #. Translators: Reported when the screen curtain could not be enabled.
-msgid "Could not enable screen curtain"
-msgstr "Nu s-a putut activa cortina ecranului"
+msgid "Could not disable screen curtain"
+msgstr "Nu s-a putut dezactiva cortina ecranului"
+
+#. Translators: Reported when the screen curtain is not available.
+msgid "Screen curtain not available"
+msgstr "Cortină ecran indisponibilă"
+
+#. Translators: Reported when the screen curtain is enabled.
+msgid "Screen curtain enabled"
+msgstr "Cortină ecran activată"
 
 #. Translators: Reported when the screen curtain is temporarily enabled.
 msgid "Temporary Screen curtain, enabled until next restart"
 msgstr "Cortină ecran temporară, activă până la următoarea repornire"
 
-#. Translators: Reported when the screen curtain is enabled.
-msgid "Screen curtain enabled"
-msgstr "Cortină ecran activată"
+#. Translators: Reported when the screen curtain could not be enabled.
+msgid "Could not enable screen curtain"
+msgstr "Nu s-a putut activa cortina ecranului"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -7719,12 +7761,16 @@ msgstr ""
 #. Translators: The label of a Yes button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
 #. the add-on
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. agree to enabling the curtain.
 msgid "&Yes"
 msgstr "&Da"
 
 #. Translators: The label of a No button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to decide not to
 #. install the add-on
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. disagree to enabling the curtain.
 msgid "&No"
 msgstr "&Nu"
 
@@ -8614,7 +8660,8 @@ msgid "Automatic language switching (when supported)"
 msgstr "Comutare automată a &limbii (când e suportat)"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings panel (if checked, different voices for dialects will be used to read text in that dialect).
+#. voice settings panel (if checked, different voices for dialects will be used to
+#. read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
 msgstr "Comutare automată a &dialectului (când e suportat)"
 
@@ -8628,9 +8675,6 @@ msgstr "&Nivel punctuație/simbol:"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Bazează-te pe limba vocii când se procesează caractere și &simboluri"
 
-#. Translators: This is the label for a checkbox in the
-#. voice settings panel (if checked, data from the unicode CLDR will be used
-#. to speak emoji descriptions).
 msgid ""
 "Include Unicode Consortium data (including emoji) when processing characters "
 "and symbols"
@@ -8638,7 +8682,8 @@ msgstr ""
 "Include datele Unicode Consortium (inclusiv emoji) atunci când se procesează "
 "caractere și simboluri"
 
-#. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
+#. Translators: This is a label for a setting in voice settings (an edit box to change
+#. voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "&Procent schimbare amplitudine la citirea majusculelor"
 
@@ -9108,6 +9153,16 @@ msgstr "&Citate bloc"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+msgid "&Groupings"
+msgstr "G&rupări"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+msgid "Lan&dmarks and regions"
+msgstr "&Repere și regiuni"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "Arti&cles"
 msgstr "Arti&cole"
 
@@ -9365,10 +9420,14 @@ msgstr "&Afișaj Braille:"
 msgid "&Port:"
 msgstr "&Port:"
 
-#, python-format
-msgid "Could not load the %s display."
-msgstr "Nu s-a putut încărca afișajul %s."
+#. Translators: The message in a dialog presented when NVDA is unable to load the selected
+#. braille display.
+#, python-brace-format
+msgid "Could not load the {display} display."
+msgstr "Nu s-a putut încărca afișajul {display}"
 
+#. Translators: The title in a dialog presented when NVDA is unable to load the selected
+#. braille display.
 msgid "Braille Display Error"
 msgstr "Eroare afișaj Braille"
 
@@ -9427,6 +9486,63 @@ msgstr "Evită despărțirea &cuvintelor când e posibil"
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
 msgstr "Focalizare pe contextul prezentării:"
+
+#. Translators: This message is presented when
+#. NVDA is unable to load a single vision enhancement provider.
+#, python-brace-format
+msgid "Could not load the {providerName} vision enhancement provider"
+msgstr ""
+"Nu s-a putut încărca furnizorul de îmbunătățire a vederii {providerName}"
+
+#. Translators: This message is presented when NVDA is unable to
+#. load multiple vision enhancement providers.
+#, python-brace-format
+msgid ""
+"Could not load the following vision enhancement providers:\n"
+"{providerNames}"
+msgstr ""
+"Nu s-au putut încărca următorii furnizori de îmbunătățire a vederii:\n"
+"{providerNames}"
+
+#. Translators: The title of the vision enhancement provider error message box.
+msgid "Vision Enhancement Provider Error"
+msgstr "Eroare la furnizorul de îmbunătățire a vederii"
+
+#. Translators: This message is presented when
+#. NVDA is unable to gracefully terminate a single vision enhancement provider.
+#, python-brace-format
+msgid ""
+"Could not gracefully terminate the {providerName} vision enhancement provider"
+msgstr ""
+"Nu s-a putut termina cu grație furnizorul de îmbunătățire a vederii "
+"{providerName}"
+
+msgid ""
+"Could not gracefully terminate the following vision enhancement providers:\n"
+msgstr ""
+"Nu s-au putut termina cu grație următorii furnizori de îmbunătățire a "
+"vederii:\n"
+
+#. Translators: This is a label appearing on the vision settings panel.
+msgid "Configure visual aids."
+msgstr "Configurează ajutoare de vedere."
+
+#. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
+msgid "Enable"
+msgstr "Activare"
+
+#. Translators: Options label on a vision enhancement provider on the vision settings category panel
+#. Translators: The label for a group box containing the NVDA highlighter options.
+msgid "Options:"
+msgstr "Opțiuni:"
+
+#. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
+msgid ""
+"Unable to configure user interface for Vision Enhancement Provider, it can "
+"not be enabled."
+msgstr ""
+"Nu se poate configura interfața utilizatorului pentru furnizorul de "
+"îmbunătățire a vederii, nu poate fi activată."
 
 #. Translators: This is the label for the NVDA settings dialog.
 msgid "NVDA Settings"
@@ -10011,24 +10127,6 @@ msgstr ""
 "Activează sau dezactivează păstrarea aspectului ecranului în timpul redării "
 "conținutului documentului"
 
-#. Translators: The name for a vision enhancement provider that magnifies (a part of) the screen.
-msgid "Magnifier"
-msgstr "Lupă"
-
-#. Translators: The name for a vision enhancement provider that highlights important areas on screen,
-#. such as the focus, caret or review cursor location.
-msgid "Highlighter"
-msgstr "Evidențiator"
-
-#. Translators: The name for a vision enhancement provider that enhances the color presentation.
-#. (i.e. color inversion, gray scale coloring, etc.)
-msgid "Color enhancer"
-msgstr "Evidențiator de culori"
-
-#. Translators: Description for NVDA's built-in screen highlighter.
-msgid "NVDA Highlighter"
-msgstr "Evidențiator NVDA"
-
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the system focus.
 msgid "Highlight system fo&cus"
@@ -10044,10 +10142,46 @@ msgstr "&Evidențiază modul de navigare"
 msgid "Highlight navigator &object"
 msgstr "&Evidențiază obiectul navigator"
 
+#. Translators: Description for NVDA's built-in screen highlighter.
+msgid "Focus Highlight"
+msgstr "Evidențiere Focalizare"
+
+#. Translators: The label for a checkbox that enables / disables focus highlighting
+#. in the NVDA Highlighter vision settings panel.
+msgid "&Enable Highlighting"
+msgstr "&Activează evidențierea"
+
 #. Translators: Description of a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "Cortină Ecran"
+
+#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. the screen curtain.
+#, python-brace-format
+msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
+msgstr ""
+"Afi&șează întotdeauna un mesaj de avertizare la încărcarea "
+"{screenCurtainTranslatedName}"
+
+#. Translators: A warning shown when activating the screen curtain.
+#. the translation of "Screen Curtain" should match the "translated name"
+msgid ""
+"Enabling Screen Curtain will make the screen of your computer completely "
+"black. Ensure you will be able to navigate without any use of your screen "
+"before continuing. \n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"Activarea cortinei ecranului va face ca ecranul calculatorului dumneavoastră "
+"să fie complet negru. Înainte de a continua, asigurați-vă că veți putea să "
+"navigați fără să vă folosiți ecranul. \n"
+"\n"
+"Doriți să continuați?"
+
+#. Translators: option to enable screen curtain in the vision settings panel
+msgid "Make screen black (immediate effect)"
+msgstr "Fă ecranul negru (efect imediat)"
 
 msgid "Taskbar"
 msgstr "Bară de activități"
@@ -11547,6 +11681,18 @@ msgstr "Spațiere de două linii"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Spațiere de 1.5 linii"
+
+#~ msgid "Magnifier"
+#~ msgstr "Lupă"
+
+#~ msgid "Highlighter"
+#~ msgstr "Evidențiator"
+
+#~ msgid "Color enhancer"
+#~ msgstr "Evidențiator de culori"
+
+#~ msgid "NVDA Highlighter"
+#~ msgstr "Evidențiator NVDA"
 
 #~ msgid "Koine Greek"
 #~ msgstr "Greacă comună"

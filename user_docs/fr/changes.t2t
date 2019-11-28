@@ -6,27 +6,34 @@ Quoi de Neuf dans NVDA
 = 2019.3 =
 
 == Nouvelles Fonctionnalités ==
-- Dans l'invite de commande, PowerShell, et le sous-système Linux pour Windows sous Windows 10 version 1809 et suppérieur :
- - Améliorations considérables de la performance et de la stabilité (#9771)
+- Dans l'invite de commandes, PowerShell, et le sous-système Linux pour Windows sous Windows 10 mise à jour d'Octobre 2018 et supérieur :
+ - Améliorations considérables de la performance et de la stabilité. (#9771)
  - L'annonce des textes tapés qui n'apparaissent pas à l'écran (comme les mots de passe) peut maintenant être activée via une option dans les paramètres avancés de NVDA. (#9649)
 - La précision de la commande pour déplacer la souris à l'objet navigateur a été améliorée dans les zones de texte des applications Java. (#10157)
-- Ajout du rideau d’écran, qui, si activé, rend l'écran totalement noir sous Windows 8 et supérieur. (#7857)
 - Ajout du support des afficheurs Braille Handy Tech suivants (#8955) :
  - Basic Braille Plus 40
  - Basic Braille Plus 32
  - Connect Braille
-- Tous les gestes personnalisés peuvent maintenant être supprimés via un nouveau bouton "Réinitialiser aux valeurs par défaut" dans le dialogue " Gestes de commandes ". (#10293)
+- Tous les gestes personnalisés peuvent maintenant être supprimés via un nouveau bouton "Réinitialiser aux valeurs par défaut" dans le dialogue "Gestes de commandes". (#10293)
 - L'annonce de la police dans Microsoft Word indiquera maintenant si un texte est marqué comme masqué. (#8713)
 - Ajout d'une commande pour déplacer le curseur de revue vers la position précédemment définie comme marqueur de début pour la sélection ou la copie : NVDA+Maj+F9. (#1969)
 - Dans Internet Explorer, Microsoft Edge et les versions récentes de Firefox et Chrome, les régions sont maintenant annoncées en mode formulaire et en navigation par objet. (#10101)
-- Dans Internet Explorer, Google Chrome et Mozilla Firefox, vous pouvez désormais naviguer par article à l'aide de scripts de navigation rapide. Ces scripts ne sont pas assignés par défaut mais ils peuvent être attribués dans le dialogue Gestes de commande quand le dialogue est ouvert à partir d'un document en mode navigation. (#9227)
+- Dans Internet Explorer, Google Chrome et Firefox, vous pouvez maintenant naviguer par article et groupe en utilisant des scripts de navigation rapide. Ces scripts ne sont pas assignés par défaut et peuvent l'être via le dialogue "Gestes de commande" lorsque celui-ci est ouvert à partir d'un document en mode navigation. (#9485, #9227)
+ - Les figures sont également reportées, elles sont considérées comme des objets et vous pouvez y naviguer en utilisant la touche de navigation rapide o.
 - Dans Internet Explorer, Google Chrome et Mozilla Firefox, les articles sont désormais annoncés lors de la navigation par objet et éventuellement, en mode navigation, si ceci est activé dans les paramètres de mise en forme du document. (#10424)
+- Ajout du support des iframes hors processus dans Mozilla Firefox. (#9672)
+- Ajout du rideau d'écran qui, quand il est activé, rend l'écran totalement noir sous Windows 8 et supérieur (#7857)
+ - Ajout d'un script pour activer le rideau d'écran, au prochain redémarrage de NVDA via un simple appui, et tout le temps avec 2 appuis. Aucun geste n'est assigné par défaut.
+ - Peut être configuré et activé via la catégorie "Vision" du dialogue de paramètres NVDA.
+- Ajout de fonctionalités de contraste de l'écran dans NVDA. (#971, #9064)
+ - La mise en évidence du focus, de l'objet navigateur et du curseur en mode navigation peuvent être activés et configurés dans la catégorie "Vision" des paramètres NVDA.
+ - Note : cette fonction est incompatible avec l'extension Focus Highlight, cette dernière pourra être utilisée si la fonction native est désactivée.
 
 
 == Changements ==
 - Le guide de l'utilisateur décrit maintenant comment utiliser NVDA dans les consoles Windows. (#9957)
-- Lancer nvda.exe remplace désormais automatiquement toute copie de NVDA en cours d'exécution. Le paramètre de ligne de commande -r | --replace est toujours accepté mais ignoré. (#8320)
-- Sous Windows 8 et suppérieur, NVDA indiquera désormais le nom et la version des applications hébergées telles que les applications téléchargées depuis le Microsoft Store en utilisant les informations transmises par l'application.) (#4259, #10108)
+- Lancer nvda.exe remplace désormais automatiquement toute copie de NVDA en cours d'exécution. Le paramètre de ligne de commande -r|--replace est toujours accepté mais ignoré. (#8320)
+- Sous Windows 8 et supérieur, NVDA indiquera désormais le nom et la version des applications hébergées telles que les applications téléchargées depuis le Microsoft Store en utilisant les informations transmises par l'application.) (#4259, #10108)
 - Quand on active ou désactive le suivi des modifications dans Microsoft Word, NVDA annoncera désormais l'état de ce paramètre. (#942)
 - La version de NVDA est désormais indiquée dans le premier message du journal. Cela se produit même si la journalisation a été désactivée via l'interface graphique. (#9803)
 - Le dialogue des paramètres ne permet plus de changer le niveau de journalisation si ce dernier a déjà été configuré via la ligne de commande. (#10209)
@@ -35,13 +42,16 @@ Quoi de Neuf dans NVDA
 - Lorsque l'annonce des caractères CLDR (y compris les emojis) est activée, ceux-ci sont annoncés à tous les niveaux de ponctuation. (#8826)
 - Les paquets Python tiers, tel que Comtypes, incluent maintenant leurs avertissements et erreurs dans le journal de NVDA. (#10393)
 - Mise à jour des annotations d'emoji du référenciel commun de l'Unicode vers la version 36.0. (#10426)
+- Lorsque vous naviguez dans un groupe en mode navigation, sa description est désormais lue. (#10095)
+- Java Access Bridge est maintenant inclus dans NVDA afin de permettre l'accès aux applications Java. (#7724)
+- Si Java Access Bridge n'est pas activé pour l'utilisateur, NVDA l'activera automatiquement à son lancement. (#7952)
 
 
 == Corrections de Bogues ==
 - Les emojis ainsi que les autres caractères Unicode 32 bits prennent maintenant moins de place sur un afficheur Braille lorsqu'ils sont affichés sous forme de valeurs hexadécimal. (#6695)
 - Sous Windows 10, NVDA annonce maintenant les infos bulle dans les applications universelles si il est configuré pour annoncer les infos bulle dans le dialogue de paramétrage "Présentation des objets". (#8118)
-- Sous Windows 10 version 1607 et suppérieur, le texte tapé est maintenant annoncé dans MinTTY. (#1348)
-- Sous Windows 10 version 1607 et suppérieur, le texte qui apparaît près du curseur dans les consoles Windows n'est plus épelé. (#513)
+- Sous Windows 10 version anniversaire et supérieur, le texte tapé est maintenant annoncé dans MinTTY. (#1348)
+- Sous Windows 10 version anniversaire et supérieur, le texte qui apparaît près du curseur dans les consoles Windows n'est plus épelé. (#513)
 - Les commandes dans le dialogue compresseur d'Audacity sont maintenant annoncées lors de la navigation dans ce dialogue. (#10103)
 - NVDA ne considère plus les espaces comme des mots lors de la navigation par objet dans les éditeurs de texte basés sur Scintilla tel que Notepad++. (#8295)
 - NVDA empêchera le système de passer en veille lors de la lecture d'un long texte avec les commandes de navigation d'un afficheur Braille. (#9175)
@@ -52,20 +62,23 @@ Quoi de Neuf dans NVDA
 - Les listes déroulantes ARIA 1.1 sont maintenant supportées sous Firefox et Chrome. (#9616)
 - NVDA n'annoncera plus le contenu des colonnes masquées visuellement pour les éléments de liste des contrôles SysListView32. (#8268)
 - Le dialogue de paramètres n'affiche plus le niveau de journalisation sur les écrans sécurisés. (#10209)
-- Dans le menu Démarrer de Windows 10 version anniversaire et suppérieur, NVDA annonce maintenant le détail des résultats de recherche. (#10232)
+- Dans le menu Démarrer de Windows 10 version anniversaire et supérieur, NVDA annonce maintenant le détail des résultats de recherche. (#10232)
 - En mode navigation, si le déplacement du curseur ou l'utilisation de la navigation rapide entraîne la modification du document, NVDA n'indiquera plus un contenu incorrect dans certains cas. (#8831, #10343)
 - Certains noms de puces dans Microsoft Word ont été corrigés. (#10399)
-- Dans la mise à jour de Mai de Windows 10 et suppérieur, NVDA annonce maintenant correctement le premier emoji ou le premier élément dans l'historique du presse-papiers lorsque le paneau d'emoji et le dialogue d'historique du presse-papiers sont ouverts, respectivement. (#9204)
+- Dans la mise à jour de Mai de Windows 10 et supérieur, NVDA annonce maintenant correctement le premier emoji ou le premier élément dans l'historique du presse-papiers lorsque le paneau d'emoji et le dialogue d'historique du presse-papiers sont ouverts, respectivement. (#9204)
 - Dans Poedit, il est à nouveau possible de voir les traductions pour les langues se lisant de droite à gauche. (#9931)
 - Dans l'application Paramètres de la mise à jour de Windows 10 avril 2018 et ultérieure, NVDA n'annoncera plus les informations de la barre de progression de volume qui se trouve dans ll'onglet Système / Son. (#10284)
 - Des expressions régulières invalides dans les dictionaires de parole n'entraînent plus l'arrêt complet de la parole. (#10334)
 - Quand on parcourt des éléments à puces dans Microsoft Word avec UIA activé, la puce de l'élément de liste suivant n'est plus indûment annoncée. (#9613)
+- Quelques rares erreurs de traduction Braille et erreurs avec Liblouis ont été résolues. (#9982)
+- Les applications Java démarrées avant le lancement de NVDA sont maintenant accessibles sans avoir à redémarrer l'application Java. (#10296)
+- Sous Firefox, lorsque l'élément sélectionné est marqué comme actuel (aria-current), NVDA ne le répètera plus plusieurs fois. (#8960)
 
 
-== Changements pour développeurs ==
+== Changements pour les développeurs ==
 - Mise à jour de Python à la version 3.7. (#7105)
 - Mise à jour de pySerial à la version 3.4. (#8815)
-- Mise à jour de wxPython à la version 4.0.3 pour supporter Python 3.5 et suppérieur. (#9630)
+- Mise à jour de wxPython à la version 4.0.3 pour supporter Python 3.5 et supérieur. (#9630)
 - Mise à jour de six à la version 1.12.0. (#9630)
 - Mise à jour de py2exe à la version 0.9.3.2 (en développement, niveau b372a8e dans le dépôt albertosottile/py2exe#13). (#9856)
 - Mise à jour du module comtype de UIAutomationCore.dll à la version 10.0.18362. (#9829)
@@ -104,7 +117,7 @@ Quoi de Neuf dans NVDA
  - config.ConfigManager.getConfigValidationParameter a été remplacé par getConfigValidation
  - La propriété inputCore.InputGesture.logIdentifier a été supprimée.
    - Utilisez _get_identifiers dans inputCore.InputGesture à la place.
- - synthDriverHandler.SynthDriver.speakText/speakCharacter, ont été supprimés.
+ - synthDriverHandler.SynthDriver.speakText/speakCharacter ont été supprimés.
  - Suppression de plusieurs classes synthDriverHandler.SynthSetting.
    - Précédemment conservées pour compatibilité (#8214), maintenant considéré comme obsolète.
    - Les pilotes utilisant la classe SynthSetting doivent être mis à jour pour utiliser la classe DriverSetting.
@@ -112,9 +125,10 @@ Quoi de Neuf dans NVDA
   - Support pour la liste de messages dans les versions antérieures à Outlook 2003.
   - Une casse pour le menu démarrer classique, uniquement trouvée sous Windows Vista et antérieur.
   - Fin du support pour Skype 7, qui ne fonctionne définitivement plus.
-- Un framework permet aux développeurs de créer des modules améliorant les conditions de lecture, en changeant le texte afficher à l'écran, en se basant de manière optionelle sur la frappe interceptée par NVDA ou sur la position des objets. (#9064)
+- Ajout d'un cadre pour créer des fournisseurs d'amélioration de la vision; modules pouvant modifier le contenu de l'écran, éventuellement en fonction des informations fournies par NVDA concernant l'emplacement des objets. (#9064)
  - Ces extensions peuvent trouver leur propre place dans le dossier visionEnhancementProviders.
  - Voir les modules vision et visionEnhancementProviders pour l'implémentation du framework et des exemples, respectivement.
+ - Les fournisseurs d'amélioration de la vision sont activés et configurés via la catégorie «vision» dans la boîte de dialogue des paramètres de NVDA.
 - Les propriétés de classes abstraites sont maintenant supportées sur les objets qui héritent de baseObject.AutoPropertyObject (e.g. NVDAObjects et TextInfos). (#10102)
 - Introduction de displayModel.UNIT_DISPLAYCHUNK comme une unité constante spécifique de textInfos DisplayModelTextInfo. (#10165)
  - Cette nouvelle constante permet de parcourir le texte dans un DisplayModelTextInfo d'une manière plus proche de la façon dont les fragments de texte sont enregistrés dans le modèle sous-jacent.

@@ -29,7 +29,7 @@ Trăsăturile importante includ:
 - Suport pentru sistemele de operare Windows moderne, incluzând atât variantele pe 32 cât și pe 64 biți
 - Capacitatea de a rula pe ecranul de autentificare în Windows și alte ecrane de siguranță
 - Raportare de comenzi și text în timpul folosirii gesturilor de atingere pe ecrane tactile
-- Suport pentru interfețe de control cunoscute cum ar fi Microsoft Active Accessibility, Java Access Bridge, IAccessible2 și UI Automation (UI Automation disponibil doar pentru Windows 7 sau mai nou)
+- Suport pentru interfețe de control cunoscute cum ar fi Microsoft Active Accessibility, Java Access Bridge, IAccessible2 și UI Automation
 - Suport pentru Windows Command Prompt și aplicații de consolă
 -
 
@@ -142,7 +142,7 @@ Apăsați „OK” pentru a elimina fereastra de dialog.
 ++ Lansarea NVDA ++[LansareNVDA]
 Dacă ați instalat NVDA cu interfața de instalare, atunci pornirea NVDA se reduce la apăsarea control+alt+n, sau alegând NVDA din meniul NVDA aflat în meniul Start, Programe.
 În plus, puteți scrie NVDA în fereastra de dialog „Executare” și apăsați „Enter”.
-Puteți, de asemenea, să specificați niște [opțiuni în linie de comandă #OptiuniLinieComanda] care vă permit repornirea NVDA (-r), ieșirea (-q), dezactivarea suplimentelor (--disable-addons), etc.
+Puteți, de asemenea, să specificați niște [opțiuni în linie de comandă #OptiuniLinieComanda] care vă permit ieșirea (-q), dezactivarea suplimentelor (--disable-addons), etc.
 
 În mod implicit, Pentru copiile instalate NVDA stochează configurația în dosarul de date al aplicației de roaming a utilizatorului curent (ex. „C:\Users\<user>\AppData\Roaming”).
 Puteți modifica asta într-un mod în care NVDA își încarcă în schimb configurația din dosarul local de date al aplicației.
@@ -288,7 +288,7 @@ De exemplu, dacă tastați într-un câmp de text editabil, respectivul câmp ar
 
 Modul cel mai obișnuit de a naviga prin Windows cu NVDA este să vă deplasați cu comenzile standard din taste pentru Windows, cum ar fi apăsarea tab și shift+tab pentru a vă deplasa înainte și înapoi între controale, apăsând alt ca să deschideți bara de meniu și apoi folosind săgețile direcționale pentru navigarea prin meniuri și folosind alt+tab pentru mutarea între aplicațiile active.
 Când faceți asta, NVDA va raporta informația despre obiectul focalizat, cum ar fi numele, tipul, valoarea, starea, descrierea, scurtătura din tastatură și informații despre poziția sa.
-
+Când este activă [evidențierea focalizării #VisionFocusHighlight],și  locația sistemului actual al focalizării este expusă vizual
 Există câteva comenzi din taste care sunt utile când vă deplasați cu focalizarea sistemului:
 %kc:beginInclude
 || Nume | Tastă desktop | Tastă laptop | Descriere |
@@ -343,6 +343,7 @@ La fel, o bară de instrumente conține controale, deci trebuie să intrați în
 
 Obiectul descris curent se numește „obiectul navigator”.
 Odată ce navigați la un obiect, îi puteți examina conținutul folosind [comenzile pentru examinarea textului #ExaminareaTextului] când sunteți în [Modul de examinare obiect #ExaminareObiect].
+Când este activă [evidențierea focalizării #VisionFocusHighlight], și locația obiectului navigator curent este expusă vizual.
 Implicit, obiectul navigator se deplasează împreună cu focalizarea sistemului, dar acest comportament poate fi activat sau dezactivat.
 
 De notat faptul că în mod implicit, braille urmărește atât  [focalizarea #FocalizareSistem] cât și [cursorul de scriere #CursorScriereSistem], dar și navigarea prin obiecte și descrierea textului.
@@ -398,6 +399,7 @@ Următoarele comenzi din taste sunt disponibile pentru examinarea textului:
 | Citește tot din descriere | numpadPlus | NVDA+shift+a | glisează brusc jos cu 3 degete (mod text) | Citește din poziția curentă a cursorului de examinare, deplasându-l pe măsură ce înaintează |
 | Selectează apoi copiază de la cursorul de examinare | NVDA+f9 | NVDA+f9 | fără | Începe procesul de selectare și copiere de la poziția curentă a cursorului de examinare. Operația propriu-zisă nu este efectuată până nu specificați către NVDA unde se află limita finală a textului |
 | Selectează apoi copiază la cursorul de examinare | NVDA+f10 | NVDA+f10 | fără | La prima apăsare, se selectează textul începând cu poziția marcată anterior, până la și inclusiv poziția curentă a cursorului de examinare. După apăsarea a doua oară a acestei taste, textul va fi copiat în planșeta Windows |
+| Mută la începutul marcat pentru copia din examinare | NVDA+shift+f9 | NVDA+shift+f9 | fără | Mută cursorul de examinare la poziția setată anterior ca marcaj de început pentru copie |
 | Raportează formatul textului | NVDA+f | NVDA+f | fără | Anunță formatul textului unde se află cursorul de examinare |
 %kc:endInclude
 
@@ -484,6 +486,7 @@ Modul navigare este disponibil opțional și pentru documentele Microsoft Word.
 
 În modul navigare, conținutul documentului este disponibili într-o reprezentare uniformă, navigabilă cu tastele pentru cursor ca și cum ar fi un text normal dintr-un document.
 Toate comenzile din taste ale NVDA pentru [ cursorul de scriere al sistemului #CursorScriereSistem] vor funcționa în acest mod; de ex. „rostește tot”, „anunță formatare”, comenzi de navigare în tabel, etc.
+Când este activă [evidențierea focalizării #VisionFocusHighlight], și locația cursorului de scriere al modului virtual de navigare este expusă vizual.
 Informații cum ar fi dacă acel text este un link, o rubrică, etc, sunt anunțate alături de text pe măsură ce mișcați cursorul.
 
 Uneori, veți avea nevoie să interacționați direct cu controalele din aceste documente.
@@ -637,6 +640,7 @@ Pentru a încăpea cât mai multe informații pe un afișaj braille, au fost def
 
 || Abreviere | tip de control |
 | app | aplicație |
+| art | articol |
 | bqt | citat bloc |
 | btn | buton |
 | drbtn | buton de extindere |
@@ -651,6 +655,7 @@ Pentru a încăpea cât mai multe informații pe un afișaj braille, au fost def
 | pwdedt | modificare parolă |
 | embedded | obiect încorporat |
 | enote | notă de sfârșit |
+| fig | figură |
 | fnote | notă de subsol |
 | gra | grafic |
 | grp | grupare |
@@ -734,6 +739,33 @@ Apăsarea punctului 7 șterge ultima celulă sau ultimul caracter braille introd
 Punctul 8 traduce orice intrare braille și apasă tasta enter.
 Apăsarea punctului 7 plus cea a punctului 8 traduce orice intrare Braille, dar fără să adauge un spațiu sau o apăsare de enter.
 %kc:endInclude
+
++ Vedere +[Vision]
+NVDA a fost conceput pentru a-i ajuta pe nevăzători și pe cei cu deficiențe de vedere să folosească un computer. De asemenea, oferă facilități încorporate pentru schimbarea conținutului ecranului.
+În cadrul NVDA, un astfel de ajutor vizual se numește furnizor de îmbunătățire a vederii.
+
+NVDA oferă câțiva furnizori încorporați de îmbunătățire a vederii, care sunt descriși mai jos.
+Pot fi configurați în [administratorul de suplimente   NVDA #AddonsManager] furnizori adiționali de îmbunătățire a vederii.
+
+Setările de vedere ale NVDA pot fi modificate în categoria [vedere #VisionSettings] din fereastra de dialog a [setărilor NVDA #NVDASettings].
+
+++ Evidențierea focalizării ++[VisionFocusHighlight]
+Evidențierea focalizării poate ajuta la identificarea poziției [focalizării sistemului #SystemFocus], a [obiectului navigator #ObjectNavigation] și a [modului de navigare #BrowseMode].
+Aceste poziții sunt evidențiate cu un contur al unui dreptunghi colorat.
+- Albastru solid evidențiază un obiect navigator combinat și localizarea focalizării sistemului, pentru că [obiectul navigator urmărește focalizarea sistemului #ReviewCursorFollowFocus]).
+- Albastru punctat evidențiază numai obiectul focalizării sistemului.
+- Roz solid evidențiază doar obiectul navigator.
+- Galben solid evidențiază cursorul virtual de scriere folosit în modul de navigare (unde nu există un cursor fizic de scriere precum în navigatoarele web).
+-
+
+Când evidențierea focalizării este activată din categoria [vedere #VisionSettings] a dialogului [setărilor NVDA #NVDASettings], puteți [alege dacă focalizarea, obiectul navigator sau cursorul modului de navigare vor mai fi evidențiate sau nu #VisionSettingsFocusHighlight]
+
+++ Cortina ecranului ++[VisionScreenCurtain]
+Ca utilizator nevăzător sau cu deficiențe de vedere, este adesea imposibil ori nu este necesar să vedeți conținutul ecranului.
+În plus, este greu să vă asigurați că cineva nu se uită pe furiș la ecranul dumneavoastră.
+Pentru această situație, NVDA conține o caracteristică numită „cortină ecran”, care poate fi activată pentru a face ecranul negru.
+
+Puteți activa cortina ecranului în categoria [vedere #VisionSettings] a dialogului [setărilor NVDA #NVDASettings].
 
 + Recunoașterea de conținut +[ContentRecognition]
 Atunci când autorii nu furnizează suficiente detalii pentru ca un utilizator de cititor de ecran să poată determina conținutul acelui lucru, pot fi folosite diferite unelte pentru a încerca recunoașterea conținutului dintr-o imagine.
@@ -935,6 +967,20 @@ Pentru a vizualiza, edita sau șterge o notă:
 | Context meniu | aplicații | Deschide meniul context al cărții selectate. |
 %kc:endInclude
 
+++ Consola Windows ++[WinConsole]
+NVDA oferă suport pentru consola de comandă Windows folosită de Linia de Comandă, PowerShell și de subsistemul Windows pentru Linux.
+Pe măsură ce un nou text este scris, conținutul se deplasează în sus, iar textul precedent nu mai este vizibil.
+Textul care nu este vizibil afișat în fereastră nu este accesibil cu comenzile NVDA de examinare a textului.
+Prin urmare, este necesar să derulați fereastra consolei pentru a citi texte mai vechi.
+%kc:beginInclude
+Următoarele combinații de taste ale Consolei Windows vă pot fi de folos atunci când [examinați textul #ExaminareaTextului] cu NVDA:
+|| Nume | Tastă | Descriere |
+| Derulează în sus | control+săgeată sus | Derulează fereastra consolei în sus, putând fi citite astfel textele mai vechi. |
+| Derulează în jos | control+săgeată jos | Derulează în jos fereastra consolei, putând fi citite astfel textele mai noi. |
+| Derulează la început | control+home | Derulează fereastra consolei la începutul buffer-ului. |
+| Derulează la sfârșit | control+end | Derulează fereastra consolei la sfârșitul buffer-ului. |
+%kc:endInclude
+
 + Configurarea NVDA +[ConfiguringNVDA]
 Majoritatea setărilor NVDA pot fi schimbate folosind ferestre de dialog accesate prin submeniul „Preferințe” din meniul NVDA.
 În toate ferestrele de dialog ale setărilor NVDA, apăsați butonul OK pentru acceptarea oricăror schimbări pe care le-ați făcut.
@@ -1036,7 +1082,6 @@ De asemenea, puteți instala manual actualizarea în așteptare din dialogul de 
 
 +++ Setări Vorbire (NVDA+control+v) +++[SpeechSettings]
 Categoria „Vorbire, găsită în meniul „Preferințe”, conține opțiuni care vă lasă să schimbați sintetizatorul, precum și sunetul vorbirii.
-
 Pentru un mod alternativ mai rapid de control al parametrilor de vorbire de oriunde, vă rugăm citiți secțiunea [Inelul setărilor sintetizatorului #InelSetariSintetizator].
 
 Categoria „Setări vorbire” conține următoarele opțiuni:
@@ -1296,6 +1341,42 @@ Opțiunile comune sunt "Automat" (care indică NVDA să utilizeze procedura impl
 Această opțiune nu va fi disponibilă dacă afișajul dvs. braille acceptă numai detectarea automată a porturilor.
 
 Ați putea consulta documentația pentru afișajul dumneavoastră braille în secțiunea [afișaje braille suportate #SupportedBrailleDisplays]
+
++++ Vedere +++[VisionSettings]
+Categoria Vedere din setările NVDA vă permite să activați, să dezactivați și să configurați [ajutorul vizual #Vision].
+
+Rețineți că opțiunile disponibile în această categorie ar putea fi extinse de [suplimentele NVDA #AddonsManager].
+În mod implicit, această categorie de setări conține următoarele opțiuni:
+
+==== Evidențiere focalizare ====[VisionSettingsFocusHighlight]
+Casetele de bifat din această grupare controlează comportamentul [evidențierii focalizării #VisionFocusHighlight].
+
+- Activează evidențierea: Activează sau dezactivează evidențierea focalizării.
+- Evidențiază focalizarea sistemului: Activează sau dezactivează [evidențierea focalizării sistemului #SystemFocus].
+- Evidențiază obiectul navigator: activează sau dezactivează [evidențierea obiectului navigator #ObjectNavigation].
+- Activează cursorul modului de navigare: Activează sau dezactivează [evidențierea cursorului virtual al modului de navigare #BrowseMode]
+-
+
+
+Rețineți că bifând sau debifând caseta „Activare evidențiere” veți modifica și starea celorlalte trei.
+Așadar, dacă bifați această casetă, și celelalte vor fi bifate automat.
+Dacă vreți doar să evidențiați focalizarea și să lăsați nebifate casetele atribuite evidențierii modului de navigare și a obiectului navigator, caseta „Activare evidențiere” va fi parțial bifată.
+
+==== Cortină Ecran ====[VisionSettingsScreenCurtain]
+Puteți activa [cortina ecranului #VisionScreenCurtain] bifând caseta „Fă ecranul negru (efect imediat)”.
+Veți fi avertizat că ecranul se va face negru după activare.
+Înainte de a continua apăsând butonul „Da”, asigurați-vă că vorbirea sau braille-ul sunt active, ca să puteți controla calculatorul fără să utilizați ecranul.
+Apăsați butonul „Nu” dacă nu mai doriți să activați cortina.
+Dacă sunteți sigur, puteți apăsa butonul „Da” pentru a o activa.
+Dacă nu mai  vreți să vedeți acest mesaj de avertizare de fiecare dată, puteți modifica acest comportament dinn dialogul care îl afișează.
+Puteți oricând să faceți ca mesajul să se afișeze bifând caseta „Afișează întotdeauna un mesaj de avertizare la încărcarea cortinei ecranului”, care se află după caseta „Fă ecranul negru”.
+
+Pentru a activa cortina ecranului de oriunde, atribuiți un gest personalizat în [dialogul gesturilor de intrare #InputGestures].
+
+==== Setări pentru ajutoarele vizuale ale unor terțe părți ====[VisionSettingsThirdPartyVisualAids]
+Furnizorii adiționali de îmbunătățire a vederii pot fi furnizați în [suplimentele NVDA #AddonsManager].
+Dacă acești furnizori au setări ajustabile, vor fi afișați în această categorie de setări în grupuri separate.
+Pentru setările suportate per furnizor, vă rugăm să consultați documentația acelui furnizor.
 
 +++ Tastatură (NVDA+control+k) +++[KeyboardSettings]
 Această categorie de setări conține următoarele opțiuni:
@@ -1651,11 +1732,27 @@ Pentru versiunile cele mai recente ale Microsoft Office 2016/365 care rulează p
 Cu toate acestea, pot exista informații care să nu fie expuse sau expuse incorect, în cel mai bun caz, în unele versiuni ale Microsoft Office, ceea ce înseamnă că acest suport UI automation nu poate fi întotdeauna fiabil.
 Încă nu recomandăm majorității utilizatorilor s-o activeze în mod implicit, deși îi invităm pe cei ai Office 2016/365 să o testeze și să ne ofere o recenzie.
 
-==== Forțează UI Automation în Consola Windows====[AdvancedSettingsConsoleUIA]
-Dacă această opțiune este activă, NVDA va utiliza o nouă versiune în dezvoltare a suportului său pentru Consola Windows, care profită de [îmbunătățirile de accesibilitate făcute de Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Această caracteristică se află în faza de testare și este incompletă, deci utilizarea acesteia nu este recomandată încă. Totuși, odată ce aceasta va funcționa perfect, se anticipează că acest nou suport va deveni implicit, îmbunătățind performanța și stabilitatea NVDA în consolele de comandă ale Windows.
+==== Suport pentru Consola Windows====[AdvancedSettingsConsoleUIA]
+Această opțiune alege cum interacționează NVDA cu Consola Windows folosită de Linia de Comandă, PowerShell și de subsistemul Windows pentru Linux.
+Nu afectează Terminalul modern Windows.
+În Windows 10 versiunea 1709, [Microsoft a adăugat suportul pentru API-ul creat pentru Interfața Utilizatorului la consolă https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], îmbunătățind astfel într-un mod remarcabil performanța și stabilitatea pentru cititoarele de ecran care îl suportă.
+Caseta combinată a suportului pentru Consola Windows are trei opțiuni:
+- Automat: Utilizează UI Automation în consolele din Windows 10 (versiunea 1809 sau mai nouă).
+- Prefer UIA: Utilizează UI Automation în console dacă sunt disponibile, chiar și pe versiuni de Windows cu implementări incomplete sau cu probleme. Cât timp această funcționalitate limitată poate fi de folos (și chiar suficientă pentru utilizarea dumneavoastră), prin utilizarea acesteia vă asumați eventualele riscuri și nu vi se va oferi suport pentru ea.
+- Tradițional: Interfața Automată a Utilizatorului din Consola Windows va fi dezactivată complet și va fi utilizat în schimb și pentru totdeauna fallback-ul tradițional.
+-
 
-==== Spune parolele în consolele UIA ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Această setare controlează dacă caracterele sunt pronunțate prin [pronunțarea caracterelor tastate #KeyboardSettingsSpeakTypedCharacters] sau prin [pronunțarea cuvintelor tastate #KeyboardSettingsSpeakTypedWords] în situația în care ecranul nu se actualizează (un bun exemplu fiind cazul în care se interacționează cu un câmp de parolă) în consola Windows cu suportul activat pentru UI automation. Din motive de securitate, această setare ar trebui să fie lăsată dezactivată. Totuși, s-ar putea să vreți să o activați dacă întâmpinați probleme de performanță sau de instabilitate cu raportarea caracterului și/sau cuvântului tastat cât timp folosiți suportul NVDA experimental pentru consolă.
+==== Spune parolele în Consola Windows ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Această setare controlează dacă caracterele sunt pronunțate prin [pronunțarea caracterelor tastate #KeyboardSettingsSpeakTypedCharacters] sau prin [pronunțarea cuvintelor tastate #KeyboardSettingsSpeakTypedWords] în situația în care ecranul nu se actualizează (un bun exemplu fiind cazul în care se interacționează cu un câmp de parolă) în niște programe terminale precum Consola Windows cu suportul activat pentru UI Automation și pentru Mintty.
+Din motive de securitate, această setare ar trebui să fie lăsată dezactivată.
+Totuși, s-ar putea să vreți să o activați dacă întâmpinați probleme de performanță sau de instabilitate cu raportarea caracterului și/sau cuvântului tastat în console sau lucrați într-un mediu de încredere și preferați anunțarea parolei.
+
+==== Utilizează suportul nou pentru caracterele tastate în consolele Windows tradiționale dacă este disponibil ====[AdvancedSettingsKeyboardSupportInLegacy]
+Această opțiune activează o metodă alternativă pentru detectarea caracterelor tastate în consolele Windows tradiționale.
+Cât timp îmbunătățește performanța și împiedică niște ieșiri de consolă să fie silabisite, poate fi incompatibilă cu unele programe terminale.
+Această caracteristică este disponibilă și activă în mod implicit în următoarele versiuni de windows 10: 1607, 1703, 1709 și 1803, dar și în versiunile mai noi de Windows atunci când UI Automation nu este disponibil sau este inactiv.
+Atenție! Cu această opțiune activă, caracterele tastate care nu apar pe ecran precum parolele nu vor fi suprimate.
+Într-un mediu de neîncredere, puteți dezactiva temporar [pronunțarea caracterelor tastate #KeyboardSettingsSpeakTypedWords] la tastarea de parole.
 
 ==== Setează automat focalizarea sistemului la elementele focalizabile din modul de navigare ====[BrowseModeSettingsAutoFocusFocusableElements]
 Tastă: NVDA+8
@@ -2848,8 +2945,7 @@ NVDA poate accepta una sau mai multe opțiuni adiționale, atunci când porneșt
 Puteți trimite oricâte opțiuni aveți nevoie.
 Aceste opțiuni pot fi trimise atunci când pornirea se face printr-o scurtătură (în proprietățile scurtăturii), din dialogul de Execuție (Meniul Start -> Execută, sau Windows+r) sau dintr-o consolă de comandă Windows.
 Opțiunile trebuie separate prin spații de numele fișierului executabil al NVDA și de celelate opțiuni.
-De exemplu, scurtătura pe spațiul de lucru pe care o creează NVDA în procesul instalării are opțiunea „-r”, ceea ce spune NVDA să închidă instanța care rulează înainte de a o porni pe ce nouă. 
-O altă opțiune folositoare este „--disable-addons” care spune NVDA să suspende toate extensiile add-on care rulează.
+De exemplu, o opțiune folositoare este „--disable-addons”, care spune NVDA să suspende toate extensiile add-on care rulează.
 Aceasta vă permite să determinați dacă o problemă e cauzată de o extensie add-on și să recuperați sistemul dintr-o problemă serioasă cauzată de un add-on.
 
 Pentru un exemplu, puteți să închideți instanța NVDA care rulează, introducând următoarea linie în fereastra de Execuție:
@@ -2858,8 +2954,8 @@ nvda -q
 
 Unele opțiuni în linie de comandă au atât o variantă scurtă cât și una lungă, iar unele au doar varianta lungă.
 Pentru cele care au o variantă scurtă, le puteți combina astfel:
-| nvda -rm | Aceasta va inchide instanța NVDA care rulează și va porni una nouă cu sunetele de pornire dezactivate, etc.  |
-| nvda -rm --disable-addons | La fel ca mai sus, dar cu extensiile add-on dezactivate |
+| nvda -mc CONFIGPATH | Aceasta va porni NVDA cu sunetele de pornire dezactivate, cu mesajul dezactivat și cu configurația specificată |
+| nvda -mc CONFIGPATH --disable-addons | La fel ca mai sus, dar cu extensiile add-on dezactivate |
 
 Unele opțiuni în linie de comandă acceptă parametrii adiționali; de ex. cât de detaliată să fie scrierea în fișierele jurnal sau calea către dosarul cu configurația utilizatorului.
 Acești parametri ar trebui puși după opțiune, separați de opțiune printr-un spațiu atunci când se folosește forma scurtă sau un semn de egalitate (=) când se folosește versiunea lungă; de ex:

@@ -6,11 +6,10 @@
 = 2019.3 =
 
 == Uudet ominaisuudet ==
-- Komentokehote, PowerShell ja Windows-alijärjestelmä Linuxille Windows 10:n versiossa 1809 ja uudemmissa:
+- Komentokehote, PowerShell ja Windows-alijärjestelmä Linuxille Windows 10:n lokakuun 2018 -päivityksessä ja uudemmissa:
  - Suorituskykyä ja vakautta parannettu huomattavasti. (#9771)
  - Ruudulla näkymättömän kirjoitetun tekstin (kuten salasanat) ilmaiseminen voidaan nyt ottaa käyttöön NVDA:n lisäasetusten paneelissa olevalla asetuksella. (#9649)
 - Siirrä hiiri navigointiobjektiin -komennon  tarkkuutta parannettu Java-sovellusten tekstikentissä. (#10157)
-- Näyttöverho, joka käytössä ollessaan pimentää koko ruudun Windows 8:ssa ja uudemmissa. (#7857)
 - Lisätty tuki seuraaville Handy Tech -pistenäytöille (#8955):
  - Basic Braille Plus 40
  - Basic Braille Plus 32
@@ -19,8 +18,16 @@
 - Microsoft Wordissa kerrotaan nyt fonttia ilmaistaessa, onko teksti piilotettu. (#8713)
 - Lisätty komento  tarkastelukohdistimen siirtämiseksi aiemmin asetetun, valittavaksi tai kopioitavaksi merkityn tekstin alkukohdan sijaintiin. (#1969)
 - Kiintopisteet ilmaistaan nyt Internet Explorerissa, Microsoft Edgessä sekä Firefoxin ja Chromen uusimmissa versioissa vuorovaikutustilassa ja objektinavigointia käytettäessä. (#10101)
-- Pikaselauskomennoilla on nyt mahdollista liikkua artikkeleittain Internet Explorerissa, Google Chromessa ja Mozilla Firefoxissa. Näihin komentoihin ei oletusarvoisesti ole liitetty näppäimiä, mutta ne voidaan määrittää Syötekomennot-valintaikkunasta, kun se avataan selaustila-asiakirjan ollessa avoimena. (#9227)
+- Pikaselauskomennoilla on nyt mahdollista liikkua artikkeleittain ja ryhmittäin Internet Explorerissa, Google Chromessa sekä Mozilla Firefoxissa. Näihin komentoihin ei oletusarvoisesti ole liitetty näppäimiä, mutta ne voidaan määrittää Syötekomennot-valintaikkunasta, kun se avataan selaustila-asiakirjan ollessa avoimena. (#9485, #9227)
+ - Myös piirustukset ilmaistaan. Niitä käsitellään objekteina, ja ovat siksi navigoitavissa O-pikaselausnäppäimellä.
 - Artikkelielementit ilmaistaan nyt Internet Explorerissa, Google Chromessa ja Mozilla Firefoxissa objektinavigointia käytettäessä ja vaihtoehtoisesti selaustilassa, mikäli kyseinen asetus on otettu käyttöön asiakirjojen muotoiluasetuksista. (#10424)
+- Tuki prosessin ulkopuolella oleville kehyksille Mozilla Firefoxissa. (#9672)
+- Lisätty näyttöverho, joka käytössä ollessaan pimentää koko ruudun Windows 8:ssa ja uudemmissa. (#7857)
+ - Lisätty skripti näyttöverhon käyttöön ottamiselle (yhdellä painalluksella seuraavaan uudelleenkäynnistykseen saakka tai kahdella painalluksella aina NVDA:n ollessa käynnissä), oletusarvoista syötekomentoa ei ole määritelty.
+ - Voidaan ottaa käyttöön ja määrittää NVDA:n asetusvalintaikkunan Näkö-kategoriasta.
+- Lisätty ruudun korostustoiminnallisuus. (#971, #9064)
+ - Kohdistuksen, navigointiobjektin ja selaustilakohdistimen sijainnin korostaminen voidaan ottaa käyttöön ja määrittää NVDA:n asetusvalintaikkunan Näkö-kategoriasta.
+ - Huom: Tämä toiminto ei ole yhteensopiva Kohdistuksen korostus -lisäosan kanssa, mutta sen käyttäminen on edelleen mahdollista, kun sisäänrakennettu korostaja ei ole käytössä.
 
 
 == Muutokset ==
@@ -35,13 +42,16 @@
 - Kun CLDR-merkkien (emojit mukaan lukien) puhuminen on käytössä, ne sanotaan kaikilla välimerkkitasoilla. (#8826)
 - NVDA:han sisältyvät kolmannen osapuolen Python-paketit, kuten comtypes, tallentavat nyt varoituksensa ja virheensä NVDA:n lokiin. (#10393)
 - Päivitetty Unicode Common Locale Data Repository -tietokannan emojiselitteet versioksi 36.0. (#10426)
+- Kun kohdistus siirretään selaustilassa ryhmän kohdalle, nyt luetaan lisäksi sen kuvaus. (#10095)
+- Java Access Bridge sisältyy nyt NVDA:han, jotta Java-sovellusten (mukaan lukien 64-bittiset Java-virtuaalikoneet) käyttäminen olisi mahdollista. (#7724)
+- Mikäli Java Access Bridgeä ei ole otettu käyttöön nykyiselle käyttäjälle, se otetaan automaattisesti käyttöön NVDA:ta käynnistettäessä. (#7952)
 
 
 == Korjatut ohjelmavirheet ==
 - Emojit ja muut 32-bittiset Unicode-merkit vievät nyt vähemmän tilaa pistenäytöllä, kun ne näytetään heksadesimaaliarvoina. (#6695)
-- NVDA puhuu Windows 10:ssä universaalien sovellusten työkaluvihjeet, mikäli työkaluvihjeiden ilmaiseminen on otettu käyttöön Objektien lukeminen -valintaikkunassa. (#8118)
-- Kirjoitettu teksti puhutaan nyt Mintty:ssä Windows 10:n versiossa 1607 ja uudemmissa. (#1348)
-- Windows-konsolissa kohdistimen lähelle ilmestyvää tulostetta ei enää tavata Windows 10:n versiossa 1607 ja uudemmissa. (#513)
+- NVDA puhuu Windows 10:ssä universaalien sovellusten työkaluvihjeet, mikäli työkaluvihjeiden ilmaiseminen on otettu käyttöön asetusvalintaikkunan Objektien lukeminen -kategoriassa. (#8118)
+- Kirjoitettu teksti puhutaan nyt Mintty:ssä Windows 10:n Anniversary-päivityksessä ja uudemmissa. (#1348)
+- Windows-konsolissa kohdistimen lähelle ilmestyvää tulostetta ei enää tavata Windows 10:n Anniversary-päivityksessä ja uudemmissa. (#513)
 - Audacityn kompressorivalintaikkunan säätimet puhutaan nyt valintaikkunassa liikuttaessa . (#10103)
 - NVDA ei enää käsittele välilyöntejä sanoina objektintarkastelussa Scintilla-pohjaisissa editoreissa, kuten Notepad++:ssa. (#8295)
 - NVDA estää järjestelmää siirtymästä lepotilaan, kun tekstiä vieritetään pistenäytön näppäimillä. (#9175)
@@ -60,6 +70,9 @@
 - NVDA ei enää puhu edistymispalkin tietoja Järjestelmä/Ääni-sivun äänenvoimakkuusmittareille Windows 10:n huhtikuun 2018 päivityksen ja uudempien Asetukset-sovelluksessa. (#10284)
 - Puhesanastojen virheelliset säännölliset lausekkeet eivät enää mykistä täysin NVDA:n puhetta. (#10334)
 - Kun Microsoft Wordissa luetaan luettelomerkillisiä kohteita UIA:n ollessa käytössä, seuraavan luettelokohteen luettelomerkkiä ei enää virheellisesti puhuta. (#9613)
+- Ratkaistu joitakin harvinaisia pistekirjoituskäännöksen ongelmia ja liblouis-virheitä. (#9982)
+- Ennen NVDA:ta käynnistetyt Java-sovellukset ovat nyt saavutettavia ilman sovelluksen uudelleenkäynnistystä. (#10296)
+- Kun kohdistettu elementti merkitään Mozilla Firefoxissa nykyiseksi (aria-current), muutosta ei enää puhuta useita kertoja. (#8960)
 
 
 == Muutokset kehittäjille ==

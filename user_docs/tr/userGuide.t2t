@@ -29,8 +29,9 @@ En dikkat çeken özelliklere şunlar dahildir:
 - 32 ve 64 bit dahil modern Windows işletim sistemlerinin desteklenmesi
 - Windows Logon ve diğer güvenlik ekranlarında çalışabilme yeteneği
 - Dokunmatik hareketlerle metin ve kontrollerin bildirimi
-- Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation, UI Automation sadece windows 7 ve sonraki işletim sistemlerinde desteklenir, gibi yaygın erişilebilirlik arayüzlerinin desteklenmesi
+- Microsoft Active Accessibility, Java Access Bridge, IAccessible2 ve UI Automation gibi yaygın erişilebilirlik arayüzlerinin desteklenmesi
 - Windows Komut İstemi ve Console uygulamalarının desteklenmesi
+- Sistem odağını vurgulama özelliği
 -
 
 ++ Yerel Dil Desteği ++[Internationalization]
@@ -292,6 +293,7 @@ Sistem odağı, sadece "odak" olarak da anılır, klavyede basılacak tuşlardan
 
 NVDA ile windows içinde dolaşmanın en yaygın ve kolay yolu, Tab ve şift tab ile kontroller arasında ileri geri gidiş, Alt ile bir uygulamanın menü çubuğuna ulaşım ve yön tuşları kullanılarak menü ögeleri arasında dolaşım, veya alt+tab ile pencereler arasında dolaşım gibi temel windows komutlarını kullanmaktır. Bu, sistem odağını hareket ettirir; Örneğin, Bazı nesneler klavyede basılan tuşlara göre hareket eder.
 Siz yukarıda bahsedilen tuşlara bastıkça, NVDA Üzerine gelinen nesnenin adı, Türü, değeri, durumu, tanımı, klavye kısayolu ve pozisyonuyla ilgili bilgileri seslendirecektir.
+[Odak vurgulaması #VisionFocusHighlight] etkinleştirildiğinde, geçerli sistem odağının konumu  görsel olarak da gösterilir.
 
 Sistem odağıyla dolaşırken, bazı yararlı tuş kombinasyonları bulunmaktadır:
 %kc:beginInclude
@@ -347,6 +349,7 @@ Benzer biçimde, bir araç çubuğu da çeşitli kontrolleri kapsar ve bu kontro
 
 İncelenmekte olan nesneye dolaşım nesnesi denir. 
 Nesne dolaşım komutlarıyla bir nesne üzerine geldikten sonra, nesneyi [metin inceleme komutlarını #ReviewingText] kullanarak [Nesne inceleme kipinde #ObjectReview] inceleyebilirsiniz.
+[Odak vurgulaması #VisionFocusHighlight] etkinse, geçerli nesne sunucusunun konumu  görsel olarak da gösterilir.
 Varsayılan olarak, nesne sunucusu sistem odağıyla birlikte hareket eder; ancak bu özellik kapatılıp açılabilir.
 
 Braille'in varsayılan olarak nesne sunucusu ve inceleme imlecinin yanında [odağı #SystemFocus] ve [düzenleme imlecini #SystemCaret] takip ettiğini not edin.
@@ -492,6 +495,7 @@ Tarama kipi aynı zamanda Microsoft Word için karmaşık belgelerde dolaşılı
 
 Tarama kipi, web sayfası gibi bir içeriğin bir metin dosyası gibi sunulduğu bir inceleme alanıdır ve içerik içinde yön tuşlarıyla dolaşılabilir.
 NVDA'nın [sistem düzenleme imleci #SystemCaret] için geçerli olan hepsini okuma, tablo inceleme, yazı biçimini raporlama gibi komutları bu kip için de geçerlidir.
+[Odak vurgulaması #VisionFocusHighlight] etkinleştirildiğinde, tarama kipi imlecinin konumu  görsel olarak da gösterilir.
 Metin içinde hareket ettikçe, okunan metnin bir bağlantı veya başlık olup olmadığı gibi bilgiler de belirtilir.
 
 Bazen, belge içindeki kontrollerle doğrudan etkileşim içinde olmanız gerekebilir.
@@ -644,12 +648,14 @@ Braille ekranaa mümkün olduğunca fazla bilgi sığdırmak amacıyla, kontrol 
 
 || Kısaltma | Kontrol türü |
 | uyg | uygulama |
+| mkl | makale
 | lnt | alıntı bloğu |
 | dğm | düğme |
 | drdğm | açılır düğme |
 | döndğm | dönen düğme |
 | blmdğm | bölünmüş düğme |
 | gçşdğm | geçiş düğmesi |
+| lty | altyazı |
 | sk | seçim kutusu |
 | ok | onay kutusu |
 | ik | iletişim kutusu |
@@ -658,6 +664,7 @@ Braille ekranaa mümkün olduğunca fazla bilgi sığdırmak amacıyla, kontrol 
 | prlyza | şifre yazı alanı |
 | gömülü | gömülü nesne |
 | sonnot | sonnot |
+| fig | figür |
 | dnot | dipnot |
 | gra | grafik |
 | grp | gruplandırma |
@@ -741,6 +748,33 @@ Mesela, rakam işaretiyle başlayıp girdiğiniz bazı rakamlardan sonra geri si
 8. nokta braille girişi çevirir ve enter tuşuna basar.
 7. ve 8. noktalara birlikte basarsanız aralık ya da enter tuşuna basılmaksızın braille girişi metne çevrilir.
 %kc:endInclude
+
++ Görsellik +[Vision]
+NVDA öncelikli olarak kör ve az gören kişilere bir bilgisayarı çalıştırmak için öncelikle konuşma ve / veya braille kullanma olanağı  sunarken, ekranın içeriğini değiştirmek için yerleşik olanaklar da sağlar.
+NVDA içinde böyle bir görsel yardım, görsel geliştirme sağlayıcısı olarak adlandırılır.
+
+NVDA, aşağıda açıklanan çeşitli yerleşik görsel geliştirme sağlayıcıları sunmaktadır.
+[NVDA eklentileri #AddonsManager] ile ek görsel geliştirme sağlayıcıları sunulabilir.
+
+NVDA'nın görsellikle ilgili  ayarları [NVDA Ayarları #NVDASettings] iletişim kutusu  altında [görsellik kategorisinden #VisionSettings] değiştirilebilir.
+
+++ Odak vurgulaması ++[VisionFocusHighlight]
+Odak vurgulaması [sistem odağı #SystemFocus], [nesne sunucusu #ObjectNavigation] ve [tarama kipi #BrowseMode] konumlarının anlaşılmasına görsel olarak yardımcı olur.
+Bu konumlar renkli bir dikdörtgen çizgiyle vurgulanır.
+- Düz mavi, sistem odağı ve nesne sunucusu aynı konumdaysa vurgulama için kullanılır. (e.g. Çünkü [nesne sunucusu sistem odağını takip ediyordur #ReviewCursorFollowFocus]).
+- Kesik mavi sistem imleci konumunu vurgular.
+- Düz pembe, sadece nesne sunucusunu vurgular.
+- Düz sarı (web tarayıcılarındaki gibi fiziksel bir imlecin bulunmadığı yerlerde ) tarama kipinde kullanılan sanal imleci vurgular.
+-
+
+[NVDA Ayarları #NVDASettings] iletişim kutusunda [görsellik kategorisi #VisionSettings] altındaki Odak Vurgulaması etkinse, you can [odağın, nesne sunucusunun ya da tarama kipi imleci konumunun  vurgulanıp vurgulanmayacağını değiştirebilirsiniz #VisionSettingsFocusHighlight]
+
+++ Ekran perdesi ++[VisionScreenCurtain]
+Kör ya da az gören bir kullanıcı iseniz, ekranda ne olduğunu sıklıkla mümkün ya da gerekli değildir.
+Dahası, omzunuzun üzerinden biri ekranınızı dikizliyor olabilir.
+Bu tür durumlar için  NVDA, ekranı karartmak için etkinleştirilebilen "ekran perdesi" adı verilen bir özelliğe sahiptir.
+
+[NVDA Ayarları #NVDASettings] iletişim kutusunda [görsellik  kategorisi #VisionSettings] altından ekran perdesini etkinleştirebilirsiniz.
 
 + Görsel İçerik Tanıma +[ContentRecognition]
 Yazarlar bir şeyin içeriğiyle ilgili ekran okuyucuların algılayabileceği tarzda yeterli bilgi sunmadıklarında, bir görüntünün içeriğinin tanınması için çeşitli araçlar kullanılabilir.
@@ -1322,6 +1356,41 @@ Bu bölüm braille ekranınız yalnızca otomatik port belirlemeyi destekliyorsa
 
 Desteklenen bağlantı tipleri ve mevcut portlar için daha fazla detaya ulaşmak için [desteklenen braille ekranlar #SupportedBrailleDisplays] bölümünde Braille ekranınızın dokümantasyonuna baş vurabilirsiniz.
 
++++ Görsellik +++[VisionSettings]
+NVDA Ayarları iletişim kutusundaki görsellik kategorisi [görsel yardımları #Vision] etkinleştirmenizi, devre dışı bırakmanızı ve yapılandırmanızı sağlar.
+
+Bu kategori altında mevcut olan seçeneklerin [NVDA eklentileri #AddonsManager] ile genişletilebileceğini unutmayın.
+Varsayılan olarak, bu ayar kategorisi aşağıdaki seçenekleri içerir:
+
+==== Odak vurgulaması ====[VisionSettingsFocusHighlight]
+Odak Vurgulama grubundaki onay kutuları NVDA'nın [Odak vurgulaması #VisionFocusHighlight] özelliği ile ilgili yerleşik davranışını kontrol eter.
+
+- Vurgulamayı Etkinleştir: Odak Vurgusunu açıp kapatır.
+- Sistem odağını vurgula: [sistem odağının #SystemFocus] vurgulanıp vurgulanmayacağını değiştirir.
+- Nesne sunucusunu vurgula: [nesne sunucusunun #ObjectNavigation]vurgulanıp vurgulanmayacağını değiştirir.
+- Tarama kipi imlecini vurgula: [tarama kipi sanal imlecinin #BrowseMode]vurgulanıp vurgulanmayacağını değiştirir.
+-
+
+"Vurgulamayı Etkinleştir" onay kutusunun işaretlenip işaretlenmemesinin, ağaçtaki diğer onay kutularının durumunu da değiştireceğini unutmayın.
+Bu nedenle, "Vurgulamayı Etkinleştir" kapalıysa ve bu onay kutusunu işaretlerseniz, diğer ağaç onay kutuları da otomatik olarak işaretlenir.
+Yalnızca odağı vurgulamak ve nesne sunucusu ve tarama kipi onay kutularını işaretlemeden bırakmak istiyorsanız, "Vurgulamayı Etkinleştir" onay kutusunun durumu yarı işaretli olur.
+
+==== Ekran perdesi ====[VisionSettingsScreenCurtain]
+[Ekran perdesini #VisionScreenCurtain] "Ekranı karart (anında devreye girer)" onay kutusunu işaretleyerek etkinleştirebilirsiniz.
+Ekranın karartılacağıyla ilgili bir uyarı gösterilir.
+Devam etmeden önce ("Evet" i seçerek), konuşma / braille özelliğini etkinleştirdiğinizden ve bilgisayarınızı ekran kullanmadan kontrol edebildiğinizden emin olun.
+Ekran Perdesini etkinleştirmek istemiyorsanız "Hayır" ı seçin.
+Eminseniz, ekran perdesini etkinleştirmek için Evet düğmesini seçebilirsiniz.
+Her seferinde bu uyarı mesajıyla karşılaşmak istemiyorsanız, mesajı gösteren iletişim kutusundan bu davranışı değiştirebilirsiniz.
+"Ekranı karart" onay kutusunun yanındaki "Ekran Perdesi'ni yüklerken her zaman bir uyarı göster" onay kutusunu işaretleyerek uyarıyı her zaman geri yükleyebilirsiniz.
+
+Ekran Perdesini herhangi bir yerden değiştirmek için, [girdi hareketleri iletişim kutusundan #InputGestures] bir hareket atayabilirsiniz.
+
+==== Üçüncü taraf görsel yardım ayarları ====[VisionSettingsThirdPartyVisualAids]
+Ek görsellik geliştirme sağlayıcıları [NVDA eklentileri #AddonsManager] ile sağlanabilir.
+Bu sağlayıcılar değiştirilebilir ayarlara sahipse, bu ayarlar kategorisinde ayrı ayrı gruplandırılarak  gösterilecektir.
+Sağlayıcı tarafından desteklenen ayarlar için lütfen söz konusu sağlayıcıya ait belgelere bakın.
+
 +++ Klavye (NVDA+kontrol+k) +++[KeyboardSettings]
 NVDA Ayarları iletişim kutusundaki Klavye kategorisi, klavye kullanırken NVDA'nın nasıl davranacağıyla ilgili seçenekleri içerir.
 Bu kategoride aşağıdaki seçenekler mevcuttur:
@@ -1626,6 +1695,7 @@ Belge biçimlendirme seçenekleri gruplar halinde düzenlenmiştir.
 - Bağlantılar
 - Listeler
 - Alıntılar
+- Gruplandırmalar
 - Sınır imleri
  - Makaleler
 - Çerçeveler
@@ -2016,7 +2086,7 @@ NVDA ile kullanılabilecek ticari ve ücretsiz konuşma sentezleyicileri satın 
 
 ++ eSpeak NG ++[eSpeakNG]
  [eSpeak NG https://github.com/espeak-ng/espeak-ng] sentezleyicisi Doğrudan NVDA içinde gömülüdür ve başka bir sürücü ya da bileşenin yüklenmesini gerektirmez.
-NVDA varsayılan olarak ESpeak NG sentezleyicisini kullanarak başlar.
+Windows 7, 8 ve 8.1'de NVDA varsayılan olarak eSpeak NG'yi kullanırken (windows 10 için varsayılan olarak [Windows OneCore #OneCore] kullanır).
 Bu sentezleyici NVDA içine gömülü olduğundan, NVDA'yı USB bellek vb medyalar üzerinden başka sistemlerde çalıştırmak için harika bir seçenektir.
 
 ESpeak NG ile gelen her ses farklı bir dilde konuşmaktadır.
@@ -2052,20 +2122,9 @@ Bu sesleri kullanabilmek için iki bileşeni indirip kurmanız gerekmektedir:
 ++ Windows OneCore Sesleri ++[OneCore]
 Windows 10 "OneCore" ya da "mobile" sesler olarak bilinen yeni sesler içerir.
 Bir çok dil için sesler mevcuttur, dahası Sapi 5 kullanan önceki Microsoft seslerine kıyasla daha hızlı tepki vermektedirler.
+Windows 10'da, NVDA varsayılan olarak Windows OneCore seslerini kullanır ([[eSpeak NG #eSpeakNG] diğer sürümlerde kullanılır).
 
 Lütfen kullanılabilen sesler ve yükleme talimatları için bu Microsoft makalesine bakın: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
-
-Lütfen dikkat, Naratör için geçerli olan daha hızlı konuşma NVDA ile henüz geçerli değildir.
-Ayrıca, Windows Ayarlarında seçtiğiniz hız NVDA konuşma hızını da etkiler.
-Bunlar Windows için bir değişiklik olmadan, halledemeyeceğimiz sorunlar.
-Sorunların gelecek Windows sürümlerinde çözüleceğini sanıyoruz.
-
-++ Audiologic Tts3 ++[Audiologic]
-Bu, italyanca diline özel ücretli bir konuşma sentezleyicisidir.
-NVDA ile kullanılabilmesi için, sentezleyicinin bilgisayarınızda yüklü olması gerekir.
-Daha fazla bilgi için, lütfen Audiologic web sayfasını www.audiologic.it adresinden ziyaret edin.
-
-Bu sentezleyici [kodlama işlevini #SpeechSettingsUseSpelling] desteklemez.
 
 + Desteklenen braille ekranlar +[SupportedBrailleDisplays]
 Bu bölümde NVDA tarafından desteklenen braille ekran bilgileri yer almaktadır.
