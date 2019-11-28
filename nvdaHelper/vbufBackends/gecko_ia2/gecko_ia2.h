@@ -25,15 +25,14 @@ class LabelInfo;
 class GeckoVBufBackend_t: public VBufBackend_t {
 	private:
 
-	using Id_T = int;
-	using IdList = std::vector<Id_T>; // List of IDs
-	using OptionalID = std::experimental::optional<Id_T>;
-
 	VBufStorage_fieldNode_t* fillVBuf(
 		IAccessible2* pacc,
-		VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
-		IdList parentIds, IdList& out_ids,
-		IAccessibleTable* paccTable=NULL, IAccessibleTable2* paccTable2=NULL, long tableID=0, const wchar_t* parentPresentationalRowNumber=NULL,
+		VBufStorage_buffer_t* buffer,
+		VBufStorage_controlFieldNode_t* parentNode,
+		VBufStorage_fieldNode_t* previousNode,
+		IAccessibleTable* paccTable=NULL,
+		IAccessibleTable2* paccTable2=NULL,
+		long tableID=0, const wchar_t* parentPresentationalRowNumber=NULL,
 		bool ignoreInteractiveUnlabelledGraphics=false
 	);
 
