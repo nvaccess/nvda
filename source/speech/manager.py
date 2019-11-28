@@ -186,31 +186,31 @@ class SpeechManager(object):
 	def _processSpeechSequence(self, inSeq: SpeechSequence):
 		paramTracker = ParamChangeTracker()
 		enteredTriggers = []
-		outSeq = []
 		outSeqs = []
 
-		def ensureEndUtterance(outSeq):
+		def ensureEndUtterance(seq: SpeechSequence):
 			# We split at EndUtteranceCommands so the ends of utterances are easily found.
-			if outSeq:
+			if seq:
 				# There have been commands since the last split.
-				outSeqs.append(outSeq)
-				lastOutSeq = outSeq
+				outSeqs.append(seq)
+				lastOutSeq = seq
 				# Re-apply parameters that have been changed from their defaults.
-				outSeq = paramTracker.getChanged()
+				seq = paramTracker.getChanged()
 			else:
 				lastOutSeq = outSeqs[-1] if outSeqs else None
 			lastCommand = lastOutSeq[-1] if lastOutSeq else None
 			if not lastCommand or isinstance(lastCommand, (EndUtteranceCommand, ConfigProfileTriggerCommand)):
 				# It doesn't make sense to start with or repeat EndUtteranceCommands.
 				# We also don't want an EndUtteranceCommand immediately after a ConfigProfileTriggerCommand.
-				return outSeq
+				return seq
 			if not isinstance(lastCommand, IndexCommand):
 				# Add an index so we know when we've reached the end of this utterance.
 				speechIndex = next(self._indexCounter)
 				lastOutSeq.append(IndexCommand(speechIndex))
 			outSeqs.append([EndUtteranceCommand()])
-			return outSeq
+			return seq
 
+		outSeq = []
 		for command in inSeq:
 			if isinstance(command, BaseCallbackCommand):
 				# When the synth reaches this point, we want to call the callback.
