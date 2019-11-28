@@ -29,8 +29,9 @@ Lo más reseñable incluye:
 - Soporte para Sistemas Operativos Windows modernos incluyendo variantes de 32 y 64 bit
 - Capacidad para ejecutarse en el inicio de sesión de Windows  y otras pantallas seguras 
 - Anunciado de controles y texto mientras se utilizan gestos táctiles
-- Soporte para interfaces comunes de accesibilidad tales como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 y UI Automation (UI Automation sólo es compatible con Windows 7 y versiones posteriores))
+- Soporte para interfaces comunes de accesibilidad tales como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 y UI Automation
 - Soporte para el símbolo del sistema de Windows y aplicaciones de consola
+- La capacidad de resaltar el foco del sistema
 -
 
 ++ Internacionalización ++[Internationalization]
@@ -292,6 +293,7 @@ Por ejemplo, si estás escribiendo en un campo de texto editable, el campo de te
 
 El modo más común de navegar por Windows con NVDA, es sólo moverse con las órdenes de teclado normales, tales como tab. Y shift tab. Para moverse adelante y atrás entre controles, pulsando Alt. Para desplegar la barra de menú y luego utilizando las teclas de cursor para navegar por los menús, utilizando Alt-tab. Para moverse entre aplicaciones en ejecución. 
 Cuando hagas esto, NVDA anunciará información sobre lo que tiene el foco, tal como su nombre, tipo, valor, estado, descripción, atajo de teclado e información posicional.
+Cuando [Resaltar Foco #VisionFocusHighlight] esté habilitado, la localización del foco del sistema actual también se expone visualmente.
 
 Hay algunas órdenes de teclado útiles cuando nos movamos con el foco:
 %kc:beginInclude
@@ -347,6 +349,7 @@ Del mismo modo, en una barra de herramientas conteniendo controles, debes movert
  
 El objeto actualmente en revisión se llama navegador de objetos.
 Una vez que navegues a un objeto, puedes revisar su contenido utilizando las [órdenes de revisión de texto #ReviewingText] mientras se esté en [modo revisión de objetos #ObjectReview].
+Cuando [Resaltar Foco #VisionFocusHighlight] esté habilitado, la localización del foco del sistema actual también se expone visualmente.
 De forma predeterminada, el navegador de objetos se mueve junto con el foco  del Sistema aunque este comportamiento puede activarse y desactivarse.
 
 Ten en cuenta que el braille sigue al [foco #SystemFocus] y al [cursor #SystemCaret] así como por omisión a la navegación de objetos y a la revisión de texto.
@@ -488,10 +491,12 @@ Esto incluye documentos en las siguientes aplicaciones:
 - Adobe Flash.
 - Libros admitidos en Amazon Kindle for PC
 -
+
 El modo Exploración también está opcionalmente disponible para documentos de Microsoft Word.
 
 En el Modo Exploración, el contenido del documento está disponible mediante una representación plana por el que te puedes mover con las teclas de cursor como si se tratara de un documento de texto normal. 
 Todas las teclas de órdenes de [cursor del sistema #SystemCaret] de NVDA funcionarán en este modo; por ejemplo: leer todo, anunciar formato, órdenes de navegación de tabla, etc.
+Cuando [Resaltar Foco #VisionFocusHighlight] esté habilitado, la localización del foco del sistema actual también se expone visualmente.
 La información tal como si el texto es un enlace,  encabezado, etc. se anuncia junto con el texto según te muevas.
 
 A veces, necesitarás interactuar directamente con controles en estos documentos.
@@ -644,11 +649,13 @@ Con el fin de tener la mayor cantidad de información posible en una pantalla br
 
 || Abreviatura | Tipo de Control |
 | apl | aplicación |
+| art | artículo
 | cit | cita |
 | bt | botón |
 | btdsp | botón desplegable |
 | btrot | botón rotatorio |
 | btdiv | botón divisor |
+| tlo | título |
 | btcom | botón conmutable |
 | cc | cuadro combinado |
 | cv | casilla de verificación |
@@ -658,6 +665,7 @@ Con el fin de tener la mayor cantidad de información posible en una pantalla br
 | pwdedt | edición de contraseña |
 | integrado | objeto integrado |
 | notaf | nota final |
+| fig | figura |
 | notap | nota al pie |
 | gra | gráfico |
 | grp | grupo |
@@ -741,6 +749,33 @@ Al pulsar el punto 7 borras la última celda o carácter introducido.
 El punto 8 transcribe cualquier entrada braille y pulsa la tecla intro.
 Pulsando los puntos 7 + 8 transcribe cualquier entrada braille, pero sin añadir un espacio o pulsando intro.
 %kc:endInclude
+
++ Visión +[Vision]
+Mientras que NVDA está dirigido principalmente a personas ciegas o con problemas de visión que utilicen principalmente la voz y/o el braille para manejar un ordenador, también ofrece funciones incorporadas para cambiar el contenido de la pantalla.
+Dentro de NVDA, esta ayuda visual se denomina proveedor de mejora de visión.
+
+NVDA ofrece varios provedores de mejora de visión incorporados que se describen  a continuación.
+Se pueden proporcionar provedores adicionales de mejora de visión en [complementos de NVDA #AddonsManager].
+
+Las opciones de visión de NVDA pueden cambiarse en la [categoría visión #VisionSettings] del diálogo [Opciones de NVDA #NVDASettings].
+
+++ Foco Resaltado ++[VisionFocusHighlight]
+El Foco resaltado puede ayudar a identificar las posiciones del [foco del sistema #SystemFocus], [del navegador de objetos #ObjectNavigation] y [del modo Exploración #BrowseMode].
+Estas posiciones se resaltan con un rectángulo de color.
+- El azul sólido resalta una combinación de la localización del navegador de objetos y del foco del sistema (ej.: porque [el navegador de objetos siga al foco del sistema #ReviewCursorFollowFocus]).
+- El azul discontínuo resalta sólo el objeto del foco del sistema.
+- El rosa sólido resalta sólo el navegador de objetos.
+- El amarillo sólido resalta el cursor virtual utilizado en modo Exploración (donde no hay cursor físico como en los navegadores web).
+-
+
+Cuando Resaltar Foco está habilitado en la [categoría visión #VisionSettings] del diálogo [Opciones de NVDA #NVDASettings], [puedes cambiar si deseas o no resaltar el cursor del foco, del navegador de objetos o del modo Exploración #VisionSettingsFocusHighlight]
+
+++ Cortina de Pantalla ++[VisionScreenCurtain]
+Como usuario ciego o con problemas de visión, a menudo no es posible o necesario ver el contenido de la pantalla.
+Además, puede ser difícil asegurarte de que no haya nadie mirando por encima de tu hombro.
+Para esta situación, NVDA contiene una característica llamada "cortina de pantalla" que puede activarse para hacer que la pantalla sea negra.
+
+Puedes habilitar la Cortina de Pantalla en la [categoría visión #VisionSettings] del diálogo [Opciones de NVDA #NVDASettings].
 
 + Reconocimiento de Contenidos +[ContentRecognition]
 Cuando los autores no proporcionan suficiente información para que un usuario de lector de pantalla determine el contenido de algo, pueden utilizarse varias herramientas para intentar reconocer el contenido desde una imagen.
@@ -1321,6 +1356,41 @@ Esta opción no estará disponible si tu pantalla braille sólo admite detecció
 
 Puedes consultar la documentación para tu pantalla braille en la sección [Pantallas Braille Admitidas #SupportedBrailleDisplays] para buscar más detalles sobre los tipos compatibles de comunicación y puertos disponibles.
 
++++ Visión +++[VisionSettings]
+La categoría Visión en el diálogo opciones de NVDA te permite habilitar, deshabilitar y configurar [ayudas visuales #Vision].
+
+Ten en cuenta que las opciones disponibles en esta categoría podrían ampliarse con [complementos de NVDA #AddonsManager].
+Por defecto, esta categoría de ajustes contiene las siguientes opciones:
+
+==== Resaltar Foco ====[VisionSettingsFocusHighlight]
+Las casillas de verificación en el grupo de Resaltar Foco controlan el comportamiento de la función integrada [Resaltar Foco #VisionFocusHighlight] de NVDA.
+
+- Habilitar Resaltado: activa y desactiva el resaltado del foco.
+- Resaltar foco del sistema: conmutará si se resalta o no el [foco del sistema #SystemFocus].
+- Resaltar navegador de objetos: conmuta si se resaltará o no el [navegador de objetos #ObjectNavigation].
+- Resaltar cursor de modo Exploración: conmuta si se resaltará o no el [cursor virtual del modo Exploración #BrowseMode].
+-
+
+Ten en cuenta que marcar y desmarcar la casilla de verificación "Habilitar Resaltado" también cambiará el estado de las otras casillas de verificación del árbol en concordancia.
+Por lo tanto, si "Habilitar Resaltado" está desactivada y la marcas, las otras tres casillas de verificación también se marcarán automáticamente.
+Si sólo quieres resaltar el foco y dejar las casillas navegador de objetos y modo Exploración desmarcadas, el estado de la casilla de verificación "Habilitar Resaltado" será semi marcado.
+
+==== Cortina de Pantalla ====[VisionSettingsScreenCurtain]
+Puedes habilitar la [Cortina de Pantalla #VisionScreenCurtain] marcando la casilla de verificación "poner la pantalla en negro (efecto inmediato)".
+Aparecerá una advertencia de que la pantalla se volverá negra después de la activación.
+Antes de continuar (seleccionando "Sí"), asegúrate de tener activados la voz y el braille y podrás controlar tu ordenador sin utilizar la pantalla.
+Selecciona "No" si ya no deseas habilitar la Cortina de Pantalla.
+Si estás seguro, puedes elegir el botón Sí para activar la Cortina de Pantalla.
+Si ya no quieres ver este mensaje de advertencia cada vez, puedes cambiar este comportamiento en el diálogo que lo muestra.
+Siempre puedes restaurar la advertencia marcando la casilla de verificación "Mostrar siempre una advertencia cuando se cargue la Cortina de Pantalla" junto a la casilla de verificación "Poner la pantalla en negro".
+
+Para conmutar la Cortina de Pantalla desde cualquier lugar, por favor asigna un gesto personalizado utilizando el diálogo [Gestos de Entrada #InputGestures].
+
+==== Opciones para Ayudas Visuales de Terceros ====[VisionSettingsThirdPartyVisualAids]
+Se pueden proporcionar proveedores de mejora de visión adicionales en [complementos de NVDA #AddonsManager].
+Cuando estos proveedores tengan opciones ajustables, se mostrarán en esta categoría de opciones en grupos separados.
+Para obtener más información acerca de la configuración de cada proveedor, por favor consulta la documentación de ese proveedor.
+
 +++ Teclado (NVDA+control+k)+++[KeyboardSettings]
 La categoría Teclado en el cuadro de diálogo Opciones de NVDA contiene ajustes que establecen el comportamiento de NVDA cuando usas y escribes en tu teclado.
 Esta categoría Opciones contiene los siguientes ajustes:
@@ -1624,6 +1694,7 @@ Puedes configurar el anunciado de:
  - Enlaces
  - Listas
  - Citas
+ - Grupos
  - Regiones
  - Artículos
  - Marcos
@@ -2021,7 +2092,7 @@ Para una lista más extensa de los sintetizadores libres y comerciales que puede
 
 ++ eSpeak NG ++[eSpeakNG]
 El sintetizador [Espeak NG https://github.com/espeak-ng/espeak-ng] se compila directamente en NVDA y no requiere ningún otro controlador o componentes especiales para instalarse.
-NVDA se inicia utilizando Espeak NG de forma predeterminada.
+En Windows 7, 8 y 8.1, NVDA utiliza Espeak NG de forma predeterminada ([Windows OneCore #OneCore] se utiliza en Windows 10 por defecto).
 Como este sintetizador se compiló en NVDA, es una gran elección para cuando se ejecuta NVDA en  una memoria USB o en un CD en otros sistemas.
 
 Cada voz que viene con Espeak NG habla un idioma diferente.
@@ -2057,20 +2128,10 @@ Para utilizar estas voces, necesitarás instalar dos componentes:
 ++ Voces Windows OneCore ++[OneCore]
 Windows 10 incluye nuevas voces conocidas como voces "OneCore" o "mobile".
 Se proporcionan voces para muchos idiomas y son más ágiles que las voces Microsoft disponibles al utilizar Microsoft Speech API versión 5.
+En Windows 10, NVDA utiliza voces Windows OneCore por defecto ([[eSpeak NG #eSpeakNG] se utiliza en otras versiones).
 
 Porfavor consulta este artículo de Microsoft para una lista de voces disponibles e instrucciones para instalarlas: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
-Por favor ten en cuenta que actualmente no están disponibles con NVDA las velocidades más rápidas disponibles con Narrator.
-También, la velocidad seleccionada en la configuración de Windows afecta a la configurada en NVDA.
-Estos problemas no se pueden resolver sin cambios en Windows.
-Deseamos que esto se solucione en una actualización futura de Windows.
-
-++ Audiologic Tts3 ++[Audiologic]
-Este es un sintetizador de voz comercial específicamente para el idioma italiano.
-Debes tener este sintetizador instalado en tu sistema para poder utilizarlo con NVDA.
-Para más información, por favor visita el sitio Web de Audiologic en www.audiologic.it.
-
-Este sintetizador no soporta la [funcionalidad de deletreo #SpeechSettingsUseSpelling].
 
 + Pantallas Braille Admitidas +[SupportedBrailleDisplays]
 Esta sección contiene información acerca de las pantallas braille compatibles con NVDA.

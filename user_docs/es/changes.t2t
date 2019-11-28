@@ -6,11 +6,10 @@ Qué hay de Nuevo en NVDA
 = 2019.3 =
 
 == Nuevas Características ==
-- En el indicativo de órdenes, en PowerShell y en el subsistema de  Windows para Linux en Windows 10 versión 1809 y posterior:
+- En el indicativo de órdenes, en PowerShell y en el subsistema de  Windows para Linux en Windows 10 versión de octubre de 2018 y posterior:
  - Rendimiento y estabilidad enormemente mejorados (#9771)
  - El anunciado del texto escrito que no aparezca en pantalla  (tal como contraseñas) ahora puede activarse a través de una opción en el panel de opciones avanzadas de NVDA. (#9649)
 - La precisión de la orden mover el ratón al navegador de objetos se ha mejorado en campos de texto en aplicaciones Java. (#10157)
-- Cortina de pantalla, que al activarse, hace que toda la pantalla sea negra en Windows 8 y superior. (#7857)
 - Añadido el soporte para las siguientes pantallas braille Handy Tech (#8955):
  - Basic Braille Plus 40
  - Basic Braille Plus 32
@@ -19,8 +18,16 @@ Qué hay de Nuevo en NVDA
 - El anunciado de fuente en Microsoft Word ahora incluye si el texto se marca como oculto. (#8713)
 - Añadida una orden para mover el cursor de revisión a la posición anteriormente ajustada como marca de comienzo de selección o copia: NVDA+shift+F9. (#1969)
 - En Internet Explorer, Microsoft Edge y versiones recientes de Firefox y Chrome, las regiones ahora se anuncian en modo foco y en el navegador de objetos. (#10101)
-- En Internet Explorer, Google Chrome y Mozilla Firefox, ahora puedes navegar por artículos utilizando los scripts de navegación rápida. Estos scripts no están vinculados por omisión y pueden asignarse en el diálogo Gestos de Entrada cuando el diálogo se abra desde un documento en modo exploración. (#9227)
+- En Internet Explorer, Google Chrome y Mozilla Firefox, ahora puedes navegar por artículos y grupos utilizando los scripts de navegación rápida. Estos scripts no están vinculados por omisión y pueden asignarse en el diálogo Gestos de Entrada cuando el diálogo se abra desde un documento en modo exploración. (#9227)
+- Ahora se anuncian las figuras. Se consideran objetos y, por lo tanto, navegables con la tecla de navegación rápida o.
 - En Internet Explorer, Google Chrome y Mozilla Firefox, ahora se anuncian los elementos artículo con el navegador de objeto, y opcionalmente, en modo Exploración si se activó en las opciones de Formateado de Documentos. (#10424)
+- Soporte para iframes fuera de proceso en Mozilla Firefox. (#9672)
+- Se añadió una Cortina de Pantalla que, al activarse, hace que toda la pantalla se vuelva negra en Windows 8 y posteriores. (#7857)
+ - Se agregó un script para habilitar la cortina de pantalla (hasta el siguiente reinicio con una sola pulsación, o siempre mientras NVDA esté en ejecución con dos pulsaciones), no se asigna ningún gesto predeterminado.
+ - Puede habilitarse y configurarse a través de la categoría 'visión' en el diálogo opciones de NVDA.
+- Añadida la funcionalidad Resaltado de pantalla a NVDA. (#971, #9064)
+ - El resaltado del foco, del navegador de objetos y de la posición del cursor del modo Exploración pueden habilitarse y configurarse a través de la categoría 'visión' en el diálogo Opciones de NVDA.
+ - Nota: esta característica es incompatible con el complemento focus highlight, sin embargo, el complemento todavía puede utilizarse mientras el resaltador incorporado esté deshabilitado.
 
 
 == Cambios ==
@@ -35,6 +42,9 @@ Qué hay de Nuevo en NVDA
 - Cuando el anunciado de caracteres CLDR (incluyendo emojis) está activado, se anuncian en los niveles de toda la puntuación. (#8826)
 - Los paquetes python de terceros incluídos en NVDA como comtypes, ahora registran sus advertencias y errores en el registro de NVDA. (#10393)
 - Actualizado Unicode Common Locale Data Repository emoji annotations a la versión 36.0. (#10426)
+- Al enfocar un grupo en el modo Exploración, ahora también se lee la descripción. (#10095)
+- Ahora se incluye el Java Access Bridge con NVDA para permitir el acceso a aplicaciones Java, incluso para máquinas Java de 64 bits. (#7724)
+- Si el Java Access Bridge no está habilitado para el usuario, NVDA lo habilita actomáticamente al arrancar. (#7952)
 
 
 == Corrección de fallos ==
@@ -60,6 +70,9 @@ Qué hay de Nuevo en NVDA
 - En la aplicación de configuración de Windows 10 April 2018 Update y posteriores, NVDA ya no anunciará la información de las barras de progreso de los medidores de volumen que se encuentran en la página sistema/Sonido. (#10284)
 - Las expresiones regulares inválidas en los diccionarios del habla ya no interrumpen completamente la voz en NVDA. (#10334)
 - Cuando se leen elementos con viñetas en Microsoft Word con UIA activado, la viñeta del siguiente elemento de la lista ya no se anuncia de forma inapropiada. (#9613)
+- Se han resuelto algunos problemas raros de transcripción braille y errores con liblouis. (#9982)
+- Las aplicaciones Java iniciadas antes de NVDA ahora son accesibles sin la necesidad de iniciar la aplicación Java. (#10296)
+- En Mozilla Firefox, cuando el elemento enfocado se marca como actual (aria-current), este cambio ya no se verbaliza varias veces. (#8960)
 
 
 == Cambios para Desarrolladores ==
