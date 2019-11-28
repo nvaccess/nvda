@@ -199,8 +199,9 @@ If your laptop cannot do this or does not allow you to turn Num Lock off, you ma
 
 ++ NVDA Touch Gestures ++[NVDATouchGestures]
 If you are running NVDA on a device with a touchscreen and running Windows 8 or higher, you can also control NVDA directly via touch commands.
-While NVDA is running, all touch input will go directly to NVDA. 
+While NVDA is running, unless touch interaction support is disabled, all touch input will go directly to NVDA. 
 Therefore, actions that can be performed normally without NVDA will not work.
+You can change this by enabling or disabling [touch interaction support # TouchSupportEnable] from touch interaction category of the NVDA settings.
 
 +++ Exploring the Screen +++[ExploringTheScreen]
 The most basic action you can perform with the touch screen is to announce the control or text at any point on the screen.
@@ -1504,6 +1505,11 @@ If you check this option and you have the "Enable mouse tracking" option enabled
 +++ Touch Interaction +++[TouchInteraction]
 This settings category, only available on computers running Windows 8 and later with touch capabilities, allows you to configure how NVDA interacts with touchscreens.
 This category contains the following options:
+
+==== Enable touch interaction support ====[TouchSupportEnable]
+This checkbox enables NVDA's touch interaction support.
+If enabled, you can use your fingers to navigate and interact with items on screen using a touchscreen device.
+If disabled, touchscreen support from NVDA will be disabled.
 
 ==== Touch typing mode ====[TouchTypingMode]
 This checkbox allows you to specify the method you wish to use when entering text using the touch keyboard.
