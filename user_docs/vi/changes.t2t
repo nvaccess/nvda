@@ -6,11 +6,10 @@
 = 2019.3 =
 
 == Tính năng mới ==
-- Trong Command Prompt, PowerShell và Windows Subsystem for Linux trên Windows 10 phiên bản 1809 trở lên:
- - Cải thiện triệt để hiệu suất và tính ổn định (#9771)
+- Trong Command Prompt, PowerShell và Windows Subsystem for Linux trên Windows 10 October 2018 Update trở lên:
+ - Cải thiện triệt để hiệu suất và tính ổn định. (#9771)
  - Việc đọc các văn bản đã nhập mà không hiển thị trên màn hình (mật khẩu chẳng hạn) có thể bật thông qua tùy chọn trong bảng cài đặt mở rộng của NVDA. (#9649)
 - Độ chính xác của lệnh di chuyển chuột đến đối tượng điều hướng đã được cải thiện ở các trường văn bản trong các ứng dụng Java. (#10157)
-- Screen curtain (che màn hình), bật tính năng này để làm đen toàn bộ màn hình cho Windows 8 trở lên. (#7857)
 - Thêm hỗ trợ cho các  màn hình nổi Handy Tech sau (#8955):
  - Basic Braille Plus 40
  - Basic Braille Plus 32
@@ -19,8 +18,16 @@
 - Việc thông báo font trong Microsoft Word giờ đây đã bao gồm thông báo nội dung được đánh dấu là ẩn. (#8713)
 - Thêm lệnh di chuyển con trỏ duyệt đến vị trí mà trước đó được chọn là điểm bắt đầu cho vùng chọn hoặc sao chép: NVDA+shift+F9. (#1969)
 - Trong Internet Explorer, Microsoft Edge, các phiên bản gần đây của Firefox và Chrome, các cột mốc giờ đây đã được đọc trong chế độ focus và chế độ duyệt đối tượng. (#10101)
-- Trong Internet Explorer, Google Chrome và Mozilla Firefox, bạn có thể điều hướng theo bài viết  (article) bằng các kịch bản di chuyển nhanh. Những kịch bản này mặc định không có thao tác và có thể gán trong hộp thoại Quản lý các thao tác khi nó được mở từ một tài liệu ở chế độ duyệt. (#9227)
+- Trong Internet Explorer, Google Chrome và Mozilla Firefox, bạn có thể điều hướng theo bài viết  (article) và grouping bằng các kịch bản di chuyển nhanh. Những kịch bản này mặc định không có thao tác / phím tắt và có thể gán trong hộp thoại Quản lý các thao tác khi nó được mở từ một tài liệu ở chế độ duyệt. (#9485, #9227)
+ - Hình giáng (figure) cũng đã được thông báo. Chúng được coi là đối tượng nên sẽ duyệt bằng phím di chuyển nhanh là o.
 - Trong Internet Explorer, Google Chrome và Mozilla Firefox, các thành phần dạng article giờ đây đã được đọc với việc điều hướng đối tượng, và tùy chọn trong chế độ duyệt nếu bật trong cài đặt Định dạng tài liệu. (#10424)
+- Hỗ trợ choh out-of-process iframes trong Mozilla Firefox. (#9672)
+- Thêm tính năng che màn hình. Khi bật, sẽ làm đen màn hình từ Windows 8 trở lên. (#7857)
+ - Thêm một kịch bản để bật che màn hình (cho đến khi khởi động lại nếu bấm một lần, luôn bật khi chạy NVDA nếu bấm hai lần), chưa được gán thao tác / phím tắt.
+  - Có thể bật và cấu hình thông qua phân loại 'nhìn' trong hộp thoại cấu hình NVDA.
+  - Thêm chức năng làm nổi bật màn hình cho NVDA. (#971, #9064)
+   - Việc làm nổi bật vị trí focus, đối tượng điều hướng và dấu nháy chế độ duyệt có thể được kích hoạt và cấu hình  thông qua phân loại 'nhìn' trong hộp thoại cấu hình NVDA.+ - Note: This feature is incompatible with the focus highlight add-on, however, the add-on can still be used while the built-in highlighter is disabled.
+ - Lưu ý: tính năng này không tương thích với add-on focus highlight. Tuy nhiên,  add-on này vẫn có thể sử dụng khi tắt tính năng làm nổi có sẵn.
 
 
 == Các thay đổi ==
@@ -35,13 +42,16 @@
 - Khi bật đọc các kí tự CLDR (bao gồm emojis - biểu tượng cảm xúc), chúng sẽ được đọc ở cấp độ dấu câu tất cả. (#8826)
 - Các gói python của bên thứ ba đã bao gồm trong NVDA như comtypes, giờ đây sẽ ghi các cảnh báo và lỗi của chúng vào NVDA log. (#10393)
 - Đã cập nhật Unicode Common Locale Data Repository emoji annotations lên phiên bản 36.0. (#10426)
+- Khi đứng tại một grouping trong chế độ duyệt, mô tả giờ đây đã được đọc. (#10095)
+- Java Access Bridge giờ đây đã được tích hợp vào NVDA để bật khả năng tương tác các ứng dụng Java, bao gồm cả 64 bit Java VMs. (#7724)
+- Nếu Java Access Bridge không được bật cho người dùng, NVDA sẽ tự bật nó khi khởi động NVDA. (#7952)
 
 
 == Sửa lỗi ==
 - Emoji và các kí tự 32 bit unicode khác giờ đây chiếm ít không gian trên màn hình chữ nổi khi chúng hiển thị ở giá trị hexadecimal. (#6695)
 - Trong Windows 10, NVDA sẽ đọc các thông tin giúp đỡ (tooltips) từ các ứng dụng phổ cập nếu NVDA được cấu hình để đọc thông tin giúp đỡ trong hộp thoại trình bày các đối tượng. (#8118)
-- Trên Windows 10 phiên bản 1607 trở lên, văn bản được nhập giờ đây đã được đọc trong Mintty. (#1348)
-- Trên Windows 10 phiên bản 1607 trở lên, các thông tin đầu ra trong Windows Console xuất hiện gần dấu nháy  không còn bị đánh vần nữa. (#513)
+- Trên Windows 10 Anniversary Update trở lên, văn bản được nhập giờ đây đã được đọc trong Mintty. (#1348)
+- Trên Windows 10 Anniversary Update trở lên, các thông tin đầu ra trong Windows Console xuất hiện gần dấu nháy  không còn bị đánh vần nữa. (#513)
 - Các điều khiển trong hộp thoại compressor của Audacity giờ đã được đọc khi điều hướng trong hộp thoại. (#10103)
 - NVDA không còn xem các khoảng trắng là từ ở chế độ duyệt đối tượng trong các trình soạn thảo trên nền Scintilla như Notepad++. (#8295)
 - NVDA sẽ ngăn chặn hệ thống vào chế độ ngủ khi cuộn qua văn bản với các thao tác của màn hình chữ nổi. (#9175)
@@ -60,6 +70,9 @@
 - ứng dụng Settings (cài đặt) trong Windows 10 April 2018 Update trở lên, NVDA sẽ không còn đọc thông tin thanh tiến độ cho các thanh tùy chỉnh âm lượng được tìm thấy trong trang System/Sound. (#10284)
 - Các biểu thức phổ thông không hợp lệ trong từ điển phát âm không còn phá hỏng hoàn toàn cho bộ đọc trong NVDA. (#10334)
 - Khi đọc các dấu đầu dòng trong Microsoft Word với UIA được bật, các dấu đầu dòng của thành phần danh sách kế  không còn đọc một cách bất hợp lý. (#9613)
+- Sửa vài lỗi hiếm gặp khi phiên dịch chữ nổi với liblouis. (#9982)
+- Các ứng dụng Java được gọi chạy trước NVDA giờ đã tiếp cận được mà không cần khởi động lại ứng dụng Java. (#10296)
+- Trong Mozilla Firefox, khi thành phần có focus được đánh dấu là current (aria-current), thay đổi này không còn bị đọc lại nhiều lần. (#8960)
 
 
 == Các thay đổi cho nhà phát triển ==
