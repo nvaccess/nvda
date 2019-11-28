@@ -294,8 +294,9 @@ class TouchHandler(threading.Thread):
 handler=None
 
 
-def touchSupported(debugLog=False):
+def touchSupported(debugLog: bool = False):
 	"""Returns if the system and current NVDA session supports touchscreen interaction.
+	@param debugLog: Whether to log additional details about touch support to the NVDA log.
 	"""
 	if not config.isInstalledCopy() and not config.isAppX:
 		if debugLog:
@@ -313,7 +314,7 @@ def touchSupported(debugLog=False):
 	return True
 
 
-def setTouchSupport(enable):
+def setTouchSupport(enable: bool):
 	global handler
 	if not touchSupported():
 		raise NotImplementedError
