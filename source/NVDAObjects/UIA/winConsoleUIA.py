@@ -25,19 +25,27 @@ class consoleUIATextInfo(UIATextInfo):
 	_expandCollapseBeforeReview = False
 
 	def __init__(self, obj, position, _rangeObj=None):
+		# We want to limit  textInfos to just the visible part of the console.
+		# Therefore we specifically handle POSITION_FIRST, POSITION_LAST and POSITION_ALL.
+		# We could use IUIAutomationTextRange::getVisibleRanges, but it seems very broken in consoles
+		# once more than a few screens worth of content has been written to the console.
+		# Therefore we resort to using IUIAutomationTextPattern::rangeFromPoint
+		# for the top left, and bottom right of the console window.
+		if position is textInfos.POSITION_FIRST:
+			_rangeObj = self.__class__(obj, obj.location.topLeft)._rangeObj
+		elif position is textInfos.POSITION_LAST:
+			tempInfo = self.__class__(obj, obj.location.bottomRight)
+			# Consoles sometimes do not honor the x coordinate, 
+			# so therefore ensure we are really at the end of the line.
+			tempInfo.expand(textInfos.UNIT_LINE)
+			tempInfo.collapse(end=True)
+			_rangeObj = tempInfo._rangeObj
+		elif position is textInfos.POSITION_ALL:
+			first = self.__class__(obj, textInfos.POSITION_FIRST)
+			last = self.__class__(obj, textInfos.POSITION_LAST)
+			first.setEndPoint(last,"endToEnd")
+			_rangeObj = first._rangeObj
 		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
-		# Re-implement POSITION_FIRST and POSITION_LAST in terms of
-		# visible ranges to fix review top/bottom scripts.
-		if position == textInfos.POSITION_FIRST:
-			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
-			firstVisiRange = visiRanges.GetElement(0)
-			self._rangeObj = firstVisiRange
-			self.collapse()
-		elif position == textInfos.POSITION_LAST:
-			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
-			lastVisiRange = visiRanges.GetElement(visiRanges.length - 1)
-			self._rangeObj = lastVisiRange
-			self.collapse(True)
 
 	def collapse(self, end=False):
 		"""Works around a UIA bug on Windows 10 1803 and later."""
@@ -271,13 +279,6 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		consoleUIATextInfo fixes expand/collapse, implements word movement, and
 		bounds review to the visible text."""
 		return consoleUIATextInfo
-
-	def _getTextLines(self):
-		# Filter out extraneous empty lines from UIA
-		ptr = self.UIATextPattern.GetVisibleRanges()
-		res = [ptr.GetElement(i).GetText(-1) for i in range(ptr.length)]
-		return res
-
 
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAElement.cachedAutomationId == "Text Area":
