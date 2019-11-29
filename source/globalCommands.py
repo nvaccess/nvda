@@ -633,7 +633,7 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportGroupings(self, gesture):
 		if config.conf["documentFormatting"]["reportGroupings"]:
 			# Translators: The message announced when toggling the report block quotes document formatting setting.
-			state = _("report gorupings off")
+			state = _("report groupings off")
 			config.conf["documentFormatting"]["reportGroupings"] = False
 		else:
 			# Translators: The message announced when toggling the report block quotes document formatting setting.
@@ -1364,7 +1364,10 @@ class GlobalCommands(ScriptableObject):
 	def script_review_sayAll(self,gesture):
 		sayAllHandler.readText(sayAllHandler.CURSOR_REVIEW)
 	# Translators: Input help mode message for say all in review cursor command.
-	script_review_sayAll.__doc__ = _("Reads from the review cursor up to end of current text, moving the review cursor as it goes")
+	script_review_sayAll.__doc__ = _(
+		"Reads from the review cursor up to the end of the current text,"
+		" moving the review cursor as it goes"
+	)
 	script_review_sayAll.category=SCRCAT_TEXTREVIEW
 
 	def script_sayAll(self,gesture):

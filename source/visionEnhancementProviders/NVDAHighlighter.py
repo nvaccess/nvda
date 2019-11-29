@@ -68,7 +68,17 @@ class HighlightWindow(CustomWindow):
 	className = u"NVDAHighlighter"
 	windowName = u"NVDA Highlighter Window"
 	windowStyle = winUser.WS_POPUP | winUser.WS_DISABLED
-	extendedWindowStyle = winUser.WS_EX_TOPMOST | winUser.WS_EX_LAYERED
+	extendedWindowStyle = (
+		# Ensure that the window is on top of all other windows
+		winUser.WS_EX_TOPMOST
+		# A layered window ensures that L{transparentColor} will be considered transparent, when painted
+		| winUser.WS_EX_LAYERED
+		# Ensure that the window can't be activated when pressing alt+tab
+		| winUser.WS_EX_NOACTIVATE
+		# Make this a transparent window,
+		# primarily for accessibility APIs to ignore this window when getting a window from a screen point
+		| winUser.WS_EX_TRANSPARENT
+	)
 	transparentColor = 0  # Black
 
 	@classmethod
@@ -104,11 +114,10 @@ class HighlightWindow(CustomWindow):
 	def __init__(self, highlighter):
 		if vision._isDebug():
 			log.debug("initializing NVDAHighlighter window")
-		super(HighlightWindow, self).__init__(
+		super().__init__(
 			windowName=self.windowName,
 			windowStyle=self.windowStyle,
-			extendedWindowStyle=self.extendedWindowStyle,
-			parent=gui.mainFrame.Handle
+			extendedWindowStyle=self.extendedWindowStyle
 		)
 		self.location = None
 		self.highlighterRef = weakref.ref(highlighter)
@@ -343,6 +352,14 @@ class NVDAHighlighterGuiPanel(
 		providerInst: Optional[NVDAHighlighter] = self._providerControl.getProviderInstance()
 		if providerInst:
 			providerInst.refresh()
+		elif evt.IsChecked():
+			# One or more check boxes are enabled, so the provider instance must be there.
+			# Yet, there is no instance. This must be a case where initialization failed.
+			settingsStorage.highlightBrowseMode = False
+			settingsStorage.highlightFocus = False
+			settingsStorage.highlightNavigator = False
+			self.updateDriverSettings()
+			self._updateEnabledState()
 
 
 class NVDAHighlighter(providerBase.VisionEnhancementProvider):
@@ -355,7 +372,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 	_refreshInterval = 100
 	customWindowClass = HighlightWindow
 	_settings = NVDAHighlighterSettings()
-
+	_window: Optional[customWindowClass] = None
 	enabledContexts: Tuple[Context]  # type info for autoprop: L{_get_enableContexts}
 
 	@classmethod  # override
@@ -387,42 +404,52 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		log.debug("Starting NVDAHighlighter")
 		self.contextToRectMap = {}
 		winGDI.gdiPlusInitialize()
-		self.window = None
 		self._highlighterThread = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}",
 			target=self._run
 		)
+		self._highlighterRunningEvent = threading.Event()
 		self._highlighterThread.daemon = True
 		self._highlighterThread.start()
+		# Make sure the highlighter thread doesn't exit early.
+		waitResult = self._highlighterRunningEvent.wait(0.2)
+		if waitResult is False or not self._highlighterThread.is_alive():
+			raise RuntimeError("Highlighter thread wasn't able to initialize correctly")
 
 	def terminate(self):
 		log.debug("Terminating NVDAHighlighter")
-		if self._highlighterThread:
+		if self._highlighterThread and self._window and self._window.handle:
 			if not winUser.user32.PostThreadMessageW(self._highlighterThread.ident, winUser.WM_QUIT, 0, 0):
 				raise WinError()
-			self._highlighterThread.join()
+			else:
+				self._highlighterThread.join()
 			self._highlighterThread = None
 		winGDI.gdiPlusTerminate()
 		self.contextToRectMap.clear()
 		super().terminate()
 
 	def _run(self):
-		if vision._isDebug():
-			log.debug("Starting NVDAHighlighter thread")
-		window = self.window = self.customWindowClass(self)
-		self.timer = winUser.WinTimer(window.handle, 0, self._refreshInterval, None)
-		msg = MSG()
-		while winUser.getMessage(byref(msg), None, 0, 0):
-			winUser.user32.TranslateMessage(byref(msg))
-			winUser.user32.DispatchMessageW(byref(msg))
-		if vision._isDebug():
-			log.debug("Quit message received on NVDAHighlighter thread")
-		if self.timer:
-			self.timer.terminate()
-			self.timer = None
-		if self.window:
-			self.window.destroy()
-			self.window = None
+		try:
+			if vision._isDebug():
+				log.debug("Starting NVDAHighlighter thread")
+			try:
+				window = self._window = self.customWindowClass(self)
+				timer = winUser.WinTimer(window.handle, 0, self._refreshInterval, None)
+			finally:
+				self._highlighterRunningEvent.set()
+			msg = MSG()
+			# Python 3.8 note, Change this to use an Assignment expression to catch a return value of -1.
+			# See the remarks section of
+			# https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getmessage
+			while winUser.getMessage(byref(msg), None, 0, 0) > 0:
+				winUser.user32.TranslateMessage(byref(msg))
+				winUser.user32.DispatchMessageW(byref(msg))
+			if vision._isDebug():
+				log.debug("Quit message received on NVDAHighlighter thread")
+			timer.terminate()
+			window.destroy()
+		except Exception:
+			log.exception("Exception in NVDA Highlighter thread")
 
 	def updateContextRect(self, context, rect=None, obj=None):
 		"""Updates the position rectangle of the highlight for the specified context.
@@ -454,8 +481,8 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 	def refresh(self):
 		"""Refreshes the screen positions of the enabled highlights.
 		"""
-		if self.window:
-			self.window.refresh()
+		if self._window and self._window.handle:
+			self._window.refresh()
 
 	def _get_enabledContexts(self):
 		"""Gets the contexts for which the highlighter is enabled.

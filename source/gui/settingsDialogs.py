@@ -2887,7 +2887,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			gui.messageBox(
 				# Translators: The message in a dialog presented when NVDA is unable to load the selected
 				# braille display.
-				message=_(f"Could not load the {display} display."),
+				message=_("Could not load the {display} display.").format(display=display),
 				# Translators: The title in a dialog presented when NVDA is unable to load the selected
 				# braille display.
 				caption=_("Braille Display Error"),
@@ -3131,12 +3131,16 @@ def showStartErrorForProviders(
 		providerName = providers[0].displayName
 		# Translators: This message is presented when
 		# NVDA is unable to load a single vision enhancement provider.
-		message = _(f"Could not load the {providerName} vision enhancement provider")
+		message = _("Could not load the {providerName} vision enhancement provider").format(
+			providerName=providerName
+		)
 	else:
 		providerNames = ", ".join(provider.displayName for provider in providers)
 		# Translators: This message is presented when NVDA is unable to
 		# load multiple vision enhancement providers.
-		message = _(f"Could not load the following vision enhancement providers:\n{providerNames}")
+		message = _("Could not load the following vision enhancement providers:\n{providerNames}").format(
+			providerNames=providerNames
+		)
 	gui.messageBox(
 		message,
 		# Translators: The title of the vision enhancement provider error message box.
@@ -3157,15 +3161,17 @@ def showTerminationErrorForProviders(
 		providerName = providers[0].displayName
 		# Translators: This message is presented when
 		# NVDA is unable to gracefully terminate a single vision enhancement provider.
-		message = _(f"Could not gracefully terminate the {providerName} vision enhancement provider")
+		message = _("Could not gracefully terminate the {providerName} vision enhancement provider").format(
+			providerName=providerName
+		)
 	else:
 		providerNames = ", ".join(provider.displayName for provider in providers)
 		# Translators: This message is presented when
 		# NVDA is unable to terminate multiple vision enhancement providers.
 		message = _(
 			"Could not gracefully terminate the following vision enhancement providers:\n"
-			f"{providerNames }"
-		)
+			"{providerNames}"
+		).format(providerNames=providerNames)
 	gui.messageBox(
 		message,
 		# Translators: The title of the vision enhancement provider error message box.
