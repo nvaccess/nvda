@@ -35,7 +35,7 @@ class consoleUIATextInfo(UIATextInfo):
 			_rangeObj = self.__class__(obj, obj.location.topLeft)._rangeObj
 		elif position is textInfos.POSITION_LAST:
 			tempInfo = self.__class__(obj, obj.location.bottomRight)
-			# Consoles sometimes do not honor the x coordinate, 
+			# Consoles sometimes do not honor the x coordinate,
 			# so therefore ensure we are really at the end of the line.
 			tempInfo.expand(textInfos.UNIT_LINE)
 			tempInfo.collapse(end=True)
@@ -43,7 +43,7 @@ class consoleUIATextInfo(UIATextInfo):
 		elif position is textInfos.POSITION_ALL:
 			first = self.__class__(obj, textInfos.POSITION_FIRST)
 			last = self.__class__(obj, textInfos.POSITION_LAST)
-			first.setEndPoint(last,"endToEnd")
+			first.setEndPoint(last, "endToEnd")
 			_rangeObj = first._rangeObj
 		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
 
