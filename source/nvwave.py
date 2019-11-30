@@ -17,6 +17,7 @@ import winKernel
 import wave
 import config
 from logHandler import log
+import os.path
 
 __all__ = (
 	"WavePlayer", "getOutputDeviceNames", "outputDeviceIDToName", "outputDeviceNameToID",
@@ -398,7 +399,10 @@ def playWaveFile(fileName, asynchronous=True):
 	if asynchronous:
 		if fileWavePlayerThread is not None:
 			fileWavePlayerThread.join()
-		fileWavePlayerThread=threading.Thread(target=fileWavePlayer.idle)
+		fileWavePlayerThread = threading.Thread(
+			name=f"{__name__}.playWaveFile({os.path.basename(fileName)})",
+			target=fileWavePlayer.idle
+		)
 		fileWavePlayerThread.start()
 	else:
 		fileWavePlayer.idle()

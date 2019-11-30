@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#core.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner, Derek Riemer, Babbage B.V., Zahari Yurukov
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2019 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
+# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """NVDA core"""
 
@@ -36,7 +36,6 @@ import logHandler
 import globalVars
 from logHandler import log
 import addonHandler
-
 import extensionPoints
 
 # inform those who want to know that NVDA has finished starting up.
@@ -234,8 +233,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		languageHandler.setLanguage(lang)
 	except:
 		log.warning("Could not set language to %s"%lang)
-	import versionInfo
-	log.info("NVDA version %s" % versionInfo.version)
 	log.info("Using Windows version %s" % winVersion.winVersionText)
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
@@ -390,7 +387,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			else:
 				#Translators: Reported when the battery is no longer plugged in, and now is not charging.
 				ui.message(_("Not charging battery. %d percent") %sps.BatteryLifePercent)
-
+	import versionInfo
 	messageWindow = MessageWindow(versionInfo.name)
 
 	# initialize wxpython localization support

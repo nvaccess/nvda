@@ -17,7 +17,7 @@ import colorsys
 import sayAllHandler
 import eventHandler
 import braille
-import scriptHandler
+from scriptHandler import script
 import languageHandler
 import ui
 import NVDAHelper
@@ -328,19 +328,19 @@ formatConfigFlagsMap={
 }
 formatConfigFlag_includeLayoutTables=0x20000
 
-# Map some characters from PUA to Unicode. Meant to be used with bullets only.
+# Map some characters from 0 to Unicode. Meant to be used with bullets only.
 # Doesn't care about the actual font, so can give incorrect Unicode in rare cases.
 mapPUAToUnicode = {
 	# from : to # fontname
-	u'\uF06E' : u'\u25A0', # Wingdings
-	u'\uF076' : u'\u2756', # Wingdings
-	u'\uF0A7' : u'\u2663', # Symbol
-	u'\uF0A8' : u'\u2666', # Symbol
-	u'\uF0B7' : u'\u2022', # Symbol
-	u'\uF0D8' : u'\u27A2', # Wingdings
-	u'\uF0E8' : u'\u21D2', # Wingdings
-	u'\uF0F0' : u'\u21E8', # Wingdings
-	u'\uF0FC' : u'\u2714', # Wingdings
+	u'\uF06E': u'\u25A0',  # Wingdings (black square)
+	u'\uF076': u'\u2756',  # Wingdings (black diamond minus white x
+	u'\uF0A7': u'\u25AA',  # Symbol (black small square)
+	u'\uF0A8': u'\u2666',  # Symbol (black diamond suit)
+	u'\uF0B7': u'\u2022',  # Symbol (bullet)
+	u'\uF0D8': u'\u2B9A',  # Wingdings (three-D top-lighted RIGHTWARDS equilateral arrowhead)
+	u'\uF0E8': u'\U0001f87a',  # Wingdings (wide-headed rightwards heavy barb arrow)
+	u'\uF0F0': u'\u21E8',  # Wingdings (right white arrow)
+	u'\uF0FC': u'\u2714',  # Wingdings (heavy check mark)
 }
 
 class WordDocumentHeadingQuickNavItem(browseMode.TextInfoQuickNavItem):
@@ -1360,6 +1360,44 @@ class WordDocument(Window):
 		# Translators: a message when increasing or decreasing font size in Microsoft Word
 		ui.message(_("{size:g} point font").format(size=val))
 
+	def script_toggleChangeTracking(self, gesture):
+		if not self.WinwordDocumentObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the status change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or it's within Windows Defender Application Guard.
+			# In this case, just let the gesture through and don't report anything.
+			return gesture.send()
+		val = self._WaitForValueChangeForAction(
+			lambda: gesture.send(),
+			lambda: self.WinwordDocumentObject.TrackRevisions
+		)
+		if val:
+			# Translators: a message when toggling change tracking in Microsoft word
+			ui.message(_("Change tracking on"))
+		else:
+			# Translators: a message when toggling change tracking in Microsoft word
+			ui.message(_("Change tracking off"))
+
+	@script(gesture="kb:control+shift+8")
+	def script_toggleDisplayNonprintingCharacters(self, gesture):
+		if not self.WinwordWindowObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the status change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or it's within Windows Defender Application Guard.
+			# In this case, just let the gesture through and don't report anything.
+			return gesture.send()
+		val = self._WaitForValueChangeForAction(
+			lambda: gesture.send(),
+			lambda: self.WinwordWindowObject.ActivePane.View.ShowAll
+		)
+		if val:
+			# Translators: a message when toggling Display Nonprinting Characters in Microsoft word
+			ui.message(_("Display nonprinting characters"))
+		else:
+			# Translators: a message when toggling Display Nonprinting Characters in Microsoft word
+			ui.message(_("Hide nonprinting characters"))
+
+	@script(gestures=["kb:tab", "kb:shift+tab"])
 	def script_tab(self,gesture):
 		"""
 		A script for the tab key which:
@@ -1464,8 +1502,7 @@ class WordDocument(Window):
 		"kb:control+1":"changeLineSpacing",
 		"kb:control+2":"changeLineSpacing",
 		"kb:control+5":"changeLineSpacing",
-		"kb:tab": "tab",
-		"kb:shift+tab": "tab",
+		"kb:control+shift+e": "toggleChangeTracking",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 	}

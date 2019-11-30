@@ -8,6 +8,10 @@ from comtypes import COMError
 import config
 from logHandler import log
 
+# Make the _UIAHandler._isDebug function available to this module,
+# ignoring the fact that it is not used here directly.
+from _UIAHandler import _isDebug   # noqa: F401
+
 handler=None
 isUIAAvailable=False
 
