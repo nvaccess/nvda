@@ -92,6 +92,12 @@ def _onGuiDestroyed():
 		destroyBrailleViewer()
 
 
+def _getDisplaySize():
+	import braille  # imported late to avoid a circular import.
+	numCells = braille.handler.displaySize
+	return numCells if numCells > 0 else DEFAULT_NUM_CELLS
+
+
 def createBrailleViewerTool():
 	if not gui.mainFrame:
 		raise RuntimeError("Can not initialise the BrailleViewerGui: gui.mainFrame not yet initialised")
@@ -103,6 +109,10 @@ def createBrailleViewerTool():
 	global _brailleGui
 	if _brailleGui:
 		_destroyGUI()
-	_brailleGui = BrailleViewerFrame(braille.handler.displaySize, _onGuiDestroyed)
+
+	_brailleGui = BrailleViewerFrame(
+		_getDisplaySize(),
+		_onGuiDestroyed
+	)
 
 	postBrailleViewerToolToggledAction.notify(created=True)

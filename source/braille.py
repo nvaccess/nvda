@@ -1573,7 +1573,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def __init__(self):
 		louisHelper.initialize()
 		self.display: Optional[BrailleDisplayDriver] = None
-		#: Number of cells the connected device (of if no device, braille viewer has)
+		#: Number of cells the connected device (or if no device connected, what braille viewer has)
 		#: Zero cells disables braille. See L{_get_enabled}
 		self._displaySize: int = 0
 		self.mainBuffer = BrailleBuffer(self)
