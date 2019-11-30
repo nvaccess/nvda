@@ -2008,7 +2008,7 @@ class DocumentFormattingPanel(SettingsPanel):
 			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 			_("Tones"),
 			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-			_("Both  Speech and Tones")
+			_("Both Speech and Tones")
 		]
 		self.lineIndentationCombo = pageAndSpaceGroup.addLabeledControl(lineIndentationText, wx.Choice, choices=indentChoices)
 		#We use bitwise operations because it saves us a four way if statement.
