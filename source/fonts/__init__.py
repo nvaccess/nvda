@@ -13,8 +13,8 @@ Loads custom fonts for use in NVDA.
 
 def _isSupportedFontPath(f: str) -> bool:
 	return os.path.isfile(f) and (
-			f.endswith("otf")
-			or f.endswith("ttf")
+		f.endswith("otf")
+		or f.endswith("ttf")
 	)
 
 

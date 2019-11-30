@@ -115,12 +115,8 @@ class BrailleViewerFrame(wx.Frame):
 		]
 		# Create a unicode string that is at least as long as expected.
 		# A later call to `Fit` will ensure that strings that are too long are handled.
-		braille = u"".join(
-			adjustOffsetsToUnicode
-		).ljust(
-			self._numCells + 2,  # Ensure all content is displayed, append 2 extra space characters
-			BRAILLE_SPACE_CHARACTER
-		)
+		padToLen = self._numCells + 2  # Ensure all content is displayed, append 2 extra space characters
+		braille = u"".join(adjustOffsetsToUnicode).ljust(padToLen, BRAILLE_SPACE_CHARACTER)
 
 		# Determine what we must update
 		brailleEqual = self._brailleOutputLastSet == braille
