@@ -65,7 +65,11 @@ def isBrailleViewerActive() -> bool:
 
 def update(cells: List[int], rawText: str):
 	if _brailleGui:
-		_brailleGui.updateBrailleDisplayed(cells, rawText)
+		_brailleGui.updateBrailleDisplayed(
+			cells,
+			rawText,
+			_getDisplaySize()
+		)
 
 
 def _destroyGUI():
