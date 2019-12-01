@@ -281,7 +281,7 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		return consoleUIATextInfo
 
 	def _getTextLines(self):
-		# This override of _getTextLines takes advantage of the fact that 
+		# This override of _getTextLines takes advantage of the fact that
 		# the console text contains linefeeds for every line
 		# Thus a simple string splitlines is much faster than splitting by unit line.
 		ti = self.makeTextInfo(textInfos.POSITION_ALL)
