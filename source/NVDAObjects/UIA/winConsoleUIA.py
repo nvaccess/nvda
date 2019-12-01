@@ -280,6 +280,14 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		bounds review to the visible text."""
 		return consoleUIATextInfo
 
+	def _getTextLines(self):
+		# This override of _getTextLines takes advantage of the fact that 
+		# the console text contains linefeeds for every line
+		# Thus a simple string splitlines is much faster than splitting by unit line.
+		ti = self.makeTextInfo(textInfos.POSITION_ALL)
+		text = ti.text or ""
+		return text.splitlines()
+
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAElement.cachedAutomationId == "Text Area":
 		clsList.append(WinConsoleUIA)
