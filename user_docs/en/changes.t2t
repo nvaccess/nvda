@@ -72,6 +72,7 @@ What's New in NVDA
 - Some rare braille translation issues and errors with liblouis have been resolved. (#9982)
 - Java applications started before NVDA are now accessible without the need to restart the Java app. (#10296)
 - In Mozilla Firefox, when the focused element becomes marked as current (aria-current), this change is no longer spoken multiple times. (#8960)
+- NVDA will now treat certain composit unicode characters such as e-acute as one single character when moving through text. (#10550)
 
 
 == Changes for Developers ==

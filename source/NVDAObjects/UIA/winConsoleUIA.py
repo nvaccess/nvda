@@ -254,6 +254,17 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
 	_caretMovementTimeoutMultiplier = 1.5
 
+	def _get_windowThreadID(self):
+		# #10113: Windows forces the thread of console windows to match the thread of the first attached process.
+		# However, To correctly handle speaking of typed characters,
+		# NVDA really requires the real thread the window was created in,
+		# I.e. a thread inside conhost.
+		from IAccessibleHandler import consoleWindowsToThreadIDs
+		threadID = consoleWindowsToThreadIDs.get(self.windowHandle, 0)
+		if not threadID:
+			threadID = super().windowThreadID
+		return threadID
+
 	def _get_TextInfo(self):
 		"""Overriding _get_TextInfo and thus the TextInfo property
 		on NVDAObjects.UIA.UIA
