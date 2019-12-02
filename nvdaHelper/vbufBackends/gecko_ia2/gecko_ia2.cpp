@@ -1156,18 +1156,12 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 
 	auto labelId = getLabelIDCached();
 	if (labelId) {
-		auto labelIdentifier = VBufStorage_controlFieldNodeIdentifier_t(
-			docHandle,
-			labelId.value()
-		);
-		auto childIds = buffer->getAllChildIdsOfParent(parentNode->identifier);
-		auto findItr = std::find(
-			childIds.begin(),
-			childIds.end(),
-			labelIdentifier
-		);
-		if (childIds.end() != findItr) {
-			parentNode->addAttribute(L"labelledByContent", L"true");
+		auto labelControlFieldNode = buffer->getControlFieldNodeWithIdentifier(docHandle, labelId.value());
+		if (labelControlFieldNode) {
+			bool isDecendant = buffer->isDescendantNode(parentNode, labelControlFieldNode);
+			if (isDecendant) {
+				parentNode->addAttribute(L"labelledByContent", L"true");
+			}
 		}
 	}
 

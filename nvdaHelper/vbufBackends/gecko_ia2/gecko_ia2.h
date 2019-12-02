@@ -16,8 +16,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define VIRTUALBUFFER_BACKENDS_EXAMPLE_H
 
 #include <vbufBase/backend.h>
-#include <vector>
-#include <map>
 #include <boost/optional.hpp>
 
 class LabelInfo;

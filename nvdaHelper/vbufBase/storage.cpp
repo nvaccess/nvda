@@ -51,21 +51,6 @@ bool VBufStorage_controlFieldNodeIdentifier_t::operator==(const VBufStorage_cont
 	return (this->docHandle==other.docHandle)&&(this->ID==other.ID);
 }
 
-VBufStorage_controlFieldNodeIdentifier_t&
-VBufStorage_controlFieldNodeIdentifier_t::operator=(const VBufStorage_controlFieldNodeIdentifier_t & other) {
-	const_cast<int&>(this->docHandle) = other.docHandle;
-	const_cast<int&>(this->ID) = other.ID;
-	return *this;
-}
-
-VBufStorage_controlFieldNodeIdentifier_t::VBufStorage_controlFieldNodeIdentifier_t(
-	const VBufStorage_controlFieldNodeIdentifier_t & other
-)
-	: docHandle(other.docHandle)
-	, ID(other.ID)
-{
-}
-
 //field  node implementation
 
 VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::nextNodeInTree(int direction, VBufStorage_fieldNode_t* limitNode, int *relativeStartOffset) {
@@ -437,28 +422,6 @@ std::wstring VBufStorage_textFieldNode_t::getDebugInfo() const {
 
 //buffer implementation
 
-using NodeID = VBufStorage_controlFieldNodeIdentifier_t;
-std::vector<NodeID> VBufStorage_buffer_t::getAllChildIdsOfParent(NodeID parentId) {
-	std::vector<NodeID> parentIds{ parentId };
-	std::vector<NodeID> childIds;
-	while (!parentIds.empty()) {
-		NodeID parent = parentIds.back();
-		parentIds.pop_back();
-		auto directChildren = m_idHierarchy[parent];
-		parentIds.insert( // Check if they have their own children
-			parentIds.end(),
-			directChildren.begin(),
-			directChildren.end()
-		);
-		childIds.insert( // Include these child ID's
-			childIds.end(),
-			directChildren.begin(),
-			directChildren.end()
-		);
-	}
-	return childIds;
-}
-
 void VBufStorage_buffer_t::forgetControlFieldNode(VBufStorage_controlFieldNode_t* node) {
 	nhAssert(node); //Node can't be NULL
 	map<VBufStorage_controlFieldNodeIdentifier_t,VBufStorage_controlFieldNode_t*>::iterator i=controlFieldNodesByIdentifier.find(node->identifier);
@@ -597,9 +560,6 @@ VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufS
 	if(!insertNode(parent, previous, controlFieldNode)) {
 		LOG_DEBUGWARNING(L"Error inserting node at "<<controlFieldNode<<L". Returning NULL");
 		return NULL;
-	}
-	if (parent) { // controlFieldNode might be the root node and therefore parent is nullptr.
-		m_idHierarchy[parent->identifier].push_back(controlFieldNode->identifier);
 	}
 	controlFieldNodesByIdentifier[controlFieldNode->identifier]=controlFieldNode;
 	// If the node's new parent requires descendants to always be rerendered, copy this etting to the node as well.

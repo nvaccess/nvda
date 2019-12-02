@@ -80,10 +80,6 @@ class VBufStorage_controlFieldNodeIdentifier_t {
 	bool operator<(const VBufStorage_controlFieldNodeIdentifier_t&) const;
 	bool operator!=(const VBufStorage_controlFieldNodeIdentifier_t&) const;
 	bool operator==(const VBufStorage_controlFieldNodeIdentifier_t&) const;
-
-	VBufStorage_controlFieldNodeIdentifier_t& operator=(const VBufStorage_controlFieldNodeIdentifier_t& other);
-	VBufStorage_controlFieldNodeIdentifier_t(const VBufStorage_controlFieldNodeIdentifier_t& other);
-
 };
 
 /**
@@ -445,13 +441,6 @@ class VBufStorage_buffer_t {
  */
 	std::map<VBufStorage_controlFieldNodeIdentifier_t,VBufStorage_controlFieldNode_t*> controlFieldNodesByIdentifier;
 
-
-	using NodeID = VBufStorage_controlFieldNodeIdentifier_t;
-	/**
-	/ Maps each Node ID to a list of it's direct children.
-	*/
-	std::map<NodeID, std::vector<NodeID>> m_idHierarchy;
-
 /**
  * the offset at where the current selection starts.
  */ 
@@ -515,12 +504,6 @@ class VBufStorage_buffer_t {
 	VBufStorage_controlFieldNode_t* addControlFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, int docHandle, int ID, bool isBlock);
  
 	VBufStorage_controlFieldNode_t* addControlFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_controlFieldNode_t* node); 
-
-	/**
-	* Gets all child Ids for a node. This includes the childs children etc.
-	* Depends on rendering of children having been completed.
-	*/
-	std::vector<NodeID> getAllChildIdsOfParent(NodeID parentId);
 
 /**
  * Adds a text field in to the buffer.
