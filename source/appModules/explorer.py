@@ -195,6 +195,21 @@ class MetadataEditField(RichEdit50):
 		return cls.TextInfo
 
 
+class WorkerW(IAccessible):
+	def event_gainFocus(self):
+		# #6671: Normally we do not allow WorkerW thread to send gain focus event,
+		# as it causes 'pane" to be announced when minimizing windows or moving to desktop.
+		# However when closing Windows 7 Start Menu in some  cases
+		# focus lands  on it instead of the focused desktop item.
+		# Therefore redirect it to the child which is a desktop in this case.
+		if eventHandler.isPendingEvents("gainFocus"):
+			return
+		if self.firstChild:
+			self.firstChild.setFocus()
+			return
+		super().event_gainFocus()
+
+
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
@@ -245,6 +260,10 @@ class AppModule(appModuleHandler.AppModule):
 
 		if windowClass == 'RICHEDIT50W' and obj.windowControlID == 256:
 			clsList.insert(0, MetadataEditField)
+			return  # Optimization: return early to avoid comparing class names and roles that will never match.
+
+		if windowClass== "WorkerW" and role == controlTypes.ROLE_PANE and obj.name is None:
+			clsList.insert(0, WorkerW)
 			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if isinstance(obj, UIA):
@@ -328,10 +347,6 @@ class AppModule(appModuleHandler.AppModule):
 			# This causes NVDA to report "unknown", so ignore it.
 			# We can't do this using shouldAllowIAccessibleFocusEvent because this isn't checked for foreground.
 			# #8137: also seen when opening quick link menu (Windows+X) on Windows 8 and later.
-			return
-
-		if wClass == "WorkerW" and obj.role == controlTypes.ROLE_PANE and obj.name is None:
-			# #6671: Never allow WorkerW thread to send gain focus event, as it causes 'pane" to be announced when minimizing windows or moving to desktop.
 			return
 
 		nextHandler()
