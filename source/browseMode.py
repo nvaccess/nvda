@@ -407,7 +407,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			# Translators: a message when a particular quick nav command is not supported in the current document.
 			ui.message(_("Not supported in this document"))
 			return
-		except (StopIteration, RuntimeError):
+		except StopIteration:
 			ui.message(errorMessage)
 			return
 		# #8831: Report before moving because moving might change the focus, which
