@@ -262,7 +262,7 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, MetadataEditField)
 			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
-		if windowClass== "WorkerW" and role == controlTypes.ROLE_PANE and obj.name is None:
+		if windowClass == "WorkerW" and role == controlTypes.ROLE_PANE and obj.name is None:
 			clsList.insert(0, WorkerW)
 			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
