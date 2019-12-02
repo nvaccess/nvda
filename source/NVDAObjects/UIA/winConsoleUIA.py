@@ -243,7 +243,7 @@ class consoleUIATextInfo(UIATextInfo):
 		# #10036: return a space if the text range is empty.
 		# Consoles don't actually store spaces, the character is merely left blank.
 		res = super(consoleUIATextInfo, self)._get_text()
-		if len(res) < 1:
+		if not res:
 			return ' '
 		else:
 			return res
