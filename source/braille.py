@@ -78,7 +78,7 @@ roleLabels = {
 	controlTypes.ROLE_GRAPHIC: _("gra"),
 	# Translators: Displayed in braille for toast notifications and for an object which is a
 	# help balloon.
-	controlTypes.ROLE_HELPBALLOON: _("ntfc"),
+	controlTypes.ROLE_HELPBALLOON: _("hlp"),
 	# Translators: Displayed in braille for an object which is a
 	# tool tip.
 	controlTypes.ROLE_TOOLTIP: _("tltip"),
