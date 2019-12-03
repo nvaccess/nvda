@@ -7,6 +7,7 @@
 import ctypes
 import NVDAHelper
 import textInfos
+import textUtils
 import UIAHandler
 
 from comtypes import COMError
@@ -203,29 +204,12 @@ class consoleUIATextInfo(UIATextInfo):
 		This is necessary since Uniscribe requires indices into the text to
 		find word boundaries, but UIA only allows for relative movement.
 		"""
-		dll=NVDAHelper.getHelperLocalWin10Dll()
-		res=dll.uiaRemote_getTextRangeUnitCount3(False,self._rangeObj)
-		print(res)
-		if res<0:
-			raise RuntimeError(f"uiaRemote_getTextRangeUnitCount returned code {res}");
-		return res
-		charInfo = self.copy()
-		res = 0
-		chars = None
-		while charInfo.compareEndPoints(
-			lineInfo,
-			"startToEnd"
-		) <= 0:
-			charInfo.expand(textInfos.UNIT_CHARACTER)
-			chars = charInfo.move(textInfos.UNIT_CHARACTER, -1) * -1
-			if chars != 0 and charInfo.compareEndPoints(
-				lineInfo,
-				"startToStart"
-			) >= 0:
-				res += chars
-			else:
-				break
-		return res
+		# position a textInfo from the start of the line up to the current position.
+		charInfo = lineInfo.copy()
+		charInfo.setEndPoint(self, "endToStart")
+		text = charInfo.text
+		offset = textUtils.WideStringOffsetConverter(text).wideStringLength
+		return offset
 
 	def _getWordOffsetsInThisLine(self, offset, lineInfo):
 		lineText = lineInfo.text or u" "
@@ -238,35 +222,36 @@ class consoleUIATextInfo(UIATextInfo):
 		# not more than two alphanumeric chars in a row.
 		# Inject two alphanumeric characters at the end to fix this.
 		lineText += "xx"
+		lineTextLen = textUtils.WideStringOffsetConverter(lineText).wideStringLength
 		NVDAHelper.localLib.calculateWordOffsets(
 			lineText,
-			len(lineText),
+			lineTextLen,
 			offset,
 			ctypes.byref(start),
 			ctypes.byref(end)
 		)
 		return (
 			start.value,
-			min(end.value, max(1, len(lineText) - 2))
+			min(end.value, max(1, lineTextLen - 2))
 		)
 
 	def __ne__(self, other):
 		"""Support more accurate caret move detection."""
 		return not self == other
 
+	def _get_text(self):
+		# #10036: return a space if the text range is empty.
+		# Consoles don't actually store spaces, the character is merely left blank.
+		res = super(consoleUIATextInfo, self)._get_text()
+		if not res:
+			return ' '
+		else:
+			return res
+
 
 class consoleUIAWindow(Window):
-	def _get_focusRedirect(self):
-		"""
-		Sometimes, attempting to interact with the console too quickly after
-		focusing the window can make NVDA unable to get any caret or review
-		information or receive new text events.
-		To work around this, we must redirect focus to the console text area.
-		"""
-		for child in self.children:
-			if isinstance(child, WinConsoleUIA):
-				return child
-		return None
+	# This is the parent of the console text area, which sometimes gets focus after the text area.
+	shouldAllowUIAFocusEvent = False
 
 
 class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
@@ -278,6 +263,17 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
 	_caretMovementTimeoutMultiplier = 1.5
 
+	def _get_windowThreadID(self):
+		# #10113: Windows forces the thread of console windows to match the thread of the first attached process.
+		# However, To correctly handle speaking of typed characters,
+		# NVDA really requires the real thread the window was created in,
+		# I.e. a thread inside conhost.
+		from IAccessibleHandler import consoleWindowsToThreadIDs
+		threadID = consoleWindowsToThreadIDs.get(self.windowHandle, 0)
+		if not threadID:
+			threadID = super().windowThreadID
+		return threadID
+
 	def _get_TextInfo(self):
 		"""Overriding _get_TextInfo and thus the TextInfo property
 		on NVDAObjects.UIA.UIA
@@ -287,12 +283,9 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 
 	def _getTextLines(self):
 		# Filter out extraneous empty lines from UIA
-		return (
-			self.makeTextInfo(textInfos.POSITION_ALL)
-			._rangeObj.getText(-1)
-			.rstrip()
-			.split("\r\n")
-		)
+		ptr = self.UIATextPattern.GetVisibleRanges()
+		res = [ptr.GetElement(i).GetText(-1) for i in range(ptr.length)]
+		return res
 
 
 def findExtraOverlayClasses(obj, clsList):

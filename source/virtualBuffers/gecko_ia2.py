@@ -24,7 +24,7 @@ from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 	def _getBoundingRectFromOffset(self,offset):
-		formatFieldStart, formatFieldEnd = self._getUnitOffsets(self.UNIT_FORMATFIELD, offset)
+		formatFieldStart, formatFieldEnd = self._getUnitOffsets(textInfos.UNIT_FORMATFIELD, offset)
 		# The format field starts at the first character.
 		for field in reversed(self._getFieldsInRange(formatFieldStart, formatFieldStart+1)):
 			if not (isinstance(field, textInfos.FieldCommand) and field.command == "formatChange"):
@@ -91,10 +91,18 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
 			role=controlTypes.ROLE_TEXTFRAME
 		level=attrs.get('IAccessible2::attribute_level',"")
-		xmlRoles=attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")
-		# Get the first landmark role, if any.
-		landmark=next((xr for xr in xmlRoles if xr in aria.landmarkRoles),None)
 
+		xmlRoles=attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")
+		landmark = next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
+		if landmark and role != controlTypes.ROLE_LANDMARK and landmark != xmlRoles[0]:
+			# Ignore the landmark role
+			landmark = None
+		if role == controlTypes.ROLE_DOCUMENT and xmlRoles[0] == "article":
+			role = controlTypes.ROLE_ARTICLE
+		elif role == controlTypes.ROLE_GROUPING and xmlRoles[0] == "figure":
+			role = controlTypes.ROLE_FIGURE
+		elif role in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_SECTION) and xmlRoles[0] == "region":
+			role = controlTypes.ROLE_REGION
 		attrs['role']=role
 		attrs['states']=states
 		if level is not "" and level is not None:
@@ -284,13 +292,34 @@ class Gecko_ia2(VirtualBuffer):
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="landmark":
 			attrs = [
-				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles if lr != "region"]},
+				{"IAccessible::role": [IAccessibleHandler.IA2_ROLE_LANDMARK]},
+				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]},
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("region")],
 					"name": [VBufStorage_findMatch_notEmpty]}
 				]
+		elif nodeType == "article":
+			attrs = [
+				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("article")]}
+			]
+		elif nodeType == "grouping":
+			attrs = [
+				{
+					"IAccessible2::attribute_xml-roles": [
+						VBufStorage_findMatch_word(r) for r in ("group", "radiogroup")
+					],
+					"name": [VBufStorage_findMatch_notEmpty]
+				},
+				{
+					"IAccessible2::attribute_tag": self._searchableTagValues(["fieldset"]),
+					"name": [VBufStorage_findMatch_notEmpty]
+				},
+			]
 		elif nodeType=="embeddedObject":
 			attrs=[
-				{"IAccessible2::attribute_tag":self._searchableTagValues(["embed","object","applet","audio","video"])},
+				{
+					"IAccessible2::attribute_tag":
+					self._searchableTagValues(["embed", "object", "applet", "audio", "video", "figure"])
+				},
 				{"IAccessible::role":[oleacc.ROLE_SYSTEM_APPLICATION,oleacc.ROLE_SYSTEM_DIALOG]},
 			]
 		else:
