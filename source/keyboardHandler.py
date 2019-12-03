@@ -108,7 +108,7 @@ def shouldUseToUnicodeEx(focus=None):
 	return (
 		# This is only possible in Windows 10 1607 and above
 		winVersion.isWin10(1607)
-		and ( #  Either of
+		and (  # Either of
 			# We couldn't inject in-process, and its not a legacy console window without keyboard support.
 			# console windows have their own specific typed character support.
 			(not focus.appModule.helperLocalBindingHandle and focus.windowClassName != 'ConsoleWindowClass')
