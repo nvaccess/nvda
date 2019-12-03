@@ -1751,9 +1751,10 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	def _iterNotLinkBlock(self, direction="next", pos=None):
 		links = self._iterNodesByType("link", direction=direction, pos=pos)
 		# We want to compare each link against the next link.
-		item1 = next(links)
-		while True:
-			item2 = next(links)
+		item1 = next(links, None)
+		if item1 is None:
+			return
+		for item2 in links:
 			# If the distance between the links is small, this is probably just a piece of non-link text within a block of links; e.g. an inactive link of a nav bar.
 			if direction=="previous":
 				textRange=item1.textInfo.copy()
