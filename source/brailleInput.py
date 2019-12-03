@@ -22,6 +22,7 @@ import api
 from baseObject import AutoPropertyObject
 import keyLabels
 
+
 """Framework for handling braille input from the user.
 All braille input is represented by a {BrailleInputGesture}.
 Normally, all that is required is to create and execute a L{BrailleInputGesture},
@@ -399,6 +400,14 @@ class BrailleInputHandler(AutoPropertyObject):
 				input.ii.ki.dwFlags = winUser.KEYEVENTF_UNICODE|direction
 				inputs.append(input)
 		winUser.SendInput(inputs)
+		from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
+		focusObj = api.getFocusObject()
+		if isinstance(focusObj, KeyboardHandlerBasedTypedCharSupport):
+			# #10569: KeyboardHandlerBasedTypedCharSupport uses ToUnicodeEx,
+			# which can't read emulated keyboard events.
+			# Send TypedCharacter events manually.
+			for ch in chars:
+				focusObj.event_typedCharacter(ch=ch)
 
 	def handleGainFocus(self, obj):
 		""" Clear all state when the focus changes.
