@@ -34,15 +34,17 @@ class LogonDialog(Dialog):
 
 		return super(LogonDialog, self).event_gainFocus()
 
+
 class Win8PasswordField(UIA):
 
-	#This UIA object has no invoke pattern, at least set focus.
+	# This UIA object has no invoke pattern, at least set focus.
 	# #6024: Affects both Windows 8.x and 10.
-	def doAction(self,index=None):
+	def doAction(self, index=None):
 		if not index:
 			self.setFocus()
 		else:
-			super(Win8PasswordField,self).doAction(index)
+			super().doAction(index)
+
 
 class XPPasswordField(IAccessible):
 

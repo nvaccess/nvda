@@ -7,7 +7,8 @@
 from comtypes import COMError
 import config
 from logHandler import log
-from _UIAHandler import *
+# Import everything from _UIAHandler, ignoring F403 linter warning.
+from _UIAHandler import *  # noqa: F403
 
 # Make the _UIAHandler._isDebug function available to this module,
 # ignoring the fact that it is not used here directly.
