@@ -400,11 +400,10 @@ class BrailleInputHandler(AutoPropertyObject):
 				input.ii.ki.dwFlags = winUser.KEYEVENTF_UNICODE|direction
 				inputs.append(input)
 		winUser.SendInput(inputs)
-		from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
 		focusObj = api.getFocusObject()
-		if isinstance(focusObj, KeyboardHandlerBasedTypedCharSupport):
-			# #10569: KeyboardHandlerBasedTypedCharSupport uses ToUnicodeEx,
-			# which can't read emulated keyboard events.
+		if keyboardHandler.shouldUseToUnicodeEx(focusObj):
+			# #10569: When we use ToUnicodeEx to detect typed characters,
+			# emulated keypresses aren't detected.
 			# Send TypedCharacter events manually.
 			for ch in chars:
 				focusObj.event_typedCharacter(ch=ch)
