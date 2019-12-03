@@ -16,13 +16,21 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define VIRTUALBUFFER_BACKENDS_EXAMPLE_H
 
 #include <vbufBase/backend.h>
+#include <boost/optional.hpp>
+
+class LabelInfo;
 
 class GeckoVBufBackend_t: public VBufBackend_t {
 	private:
 
-	VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc,
-		VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
-		IAccessibleTable* paccTable=NULL, IAccessibleTable2* paccTable2=NULL, long tableID=0, const wchar_t* parentPresentationalRowNumber=NULL,
+	VBufStorage_fieldNode_t* fillVBuf(
+		IAccessible2* pacc,
+		VBufStorage_buffer_t* buffer,
+		VBufStorage_controlFieldNode_t* parentNode,
+		VBufStorage_fieldNode_t* previousNode,
+		IAccessibleTable* paccTable=NULL,
+		IAccessibleTable2* paccTable2=NULL,
+		long tableID=0, const wchar_t* parentPresentationalRowNumber=NULL,
 		bool ignoreInteractiveUnlabelledGraphics=false
 	);
 
@@ -34,7 +42,7 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 	bool hasEncodedAccDescription;
 	std::wstring toolkitName;
 
-	bool isLabelVisible(IAccessible2* pacc2);
+	std::experimental::optional< LabelInfo > getLabelInfo(IAccessible2* pacc2);
 	CComPtr<IAccessible2> getLabelElement(IAccessible2_2* element);
 	CComPtr<IAccessible2> getSelectedItem(IAccessible2* container,
 		const std::map<std::wstring, std::wstring>& attribs);
