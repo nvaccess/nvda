@@ -36,11 +36,11 @@ class consoleUIATextInfo(UIATextInfo):
 		elif position is textInfos.POSITION_LAST:
 			# Asking for the range at the bottom right of the window
 			# Seems to sometimes ignore the x coordinate.
-			# Therefore use the bottom left, then move the  to last character on that line. 
+			# Therefore use the bottom left, then move the  to last character on that line.
 			tempInfo = self.__class__(obj, obj.location.bottomLeft)
 			tempInfo.expand(textInfos.UNIT_LINE)
-			UIATextInfo.move(tempInfo,textInfos.UNIT_CHARACTER,-1,endPoint="end")
-			tempInfo.setEndPoint(tempInfo,"startToEnd")
+			UIATextInfo.move(tempInfo, textInfos.UNIT_CHARACTER, -1, endPoint="end")
+			tempInfo.setEndPoint(tempInfo, "startToEnd")
 			_rangeObj = tempInfo._rangeObj
 		elif position is textInfos.POSITION_ALL:
 			first = self.__class__(obj, textInfos.POSITION_FIRST)
@@ -128,12 +128,12 @@ class consoleUIATextInfo(UIATextInfo):
 			if (
 				oldInfo
 				and (
-					self.compareEndPoints(boundingInfo, "startToStart") < 0 or
-					self.compareEndPoints(boundingInfo, "startToEnd") >= 0
+					self.compareEndPoints(boundingInfo, "startToStart") < 0
+					or self.compareEndPoints(boundingInfo, "startToEnd") >= 0
 				)
 				and not (
-					oldInfo.compareEndPoints(boundingInfo, "startToStart") < 0 or
-					oldInfo.compareEndPoints(boundingInfo, "startToEnd") >= 0
+					oldInfo.compareEndPoints(boundingInfo, "startToStart") < 0
+					or oldInfo.compareEndPoints(boundingInfo, "startToEnd") >= 0
 				)
 			):
 				self._rangeObj = oldInfo._rangeObj
