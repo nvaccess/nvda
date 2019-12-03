@@ -221,12 +221,12 @@ class consoleUIATextInfo(UIATextInfo):
 		# position a textInfo from the start of the line up to the current position.
 		charInfo = lineInfo.copy()
 		charInfo.setEndPoint(self, "endToStart")
-		text = charInfo.text
+		text = charInfo._rangeObj.getText(-1)
 		offset = textUtils.WideStringOffsetConverter(text).wideStringLength
 		return offset
 
 	def _getWordOffsetsInThisLine(self, offset, lineInfo):
-		lineText = lineInfo.text or u" "
+		lineText = lineInfo._rangeObj.getText(-1)
 		# Convert NULL and non-breaking space to space to make sure
 		# that words will break on them
 		lineText = lineText.translate({0: u' ', 0xa0: u' '})
