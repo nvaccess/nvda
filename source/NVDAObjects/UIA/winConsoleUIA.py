@@ -239,6 +239,15 @@ class consoleUIATextInfo(UIATextInfo):
 		"""Support more accurate caret move detection."""
 		return not self == other
 
+	def _get_text(self):
+		# #10036: return a space if the text range is empty.
+		# Consoles don't actually store spaces, the character is merely left blank.
+		res = super(consoleUIATextInfo, self)._get_text()
+		if not res:
+			return ' '
+		else:
+			return res
+
 
 class consoleUIAWindow(Window):
 	# This is the parent of the console text area, which sometimes gets focus after the text area.

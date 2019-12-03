@@ -171,6 +171,13 @@ The first checkbox lets you control if NVDA should use the Caps Lock as an NVDA 
 The second specifies whether NVDA should start automatically after you log on to Windows and is only available for installed copies of NVDA.
 The third lets you control if this Welcome dialog should appear each time NVDA starts.
 
++++ Data usage statistics dialog +++[UsageStatsDialog]
+Starting from NVDA 2018.3, the user is asked if they want to allow usage data to be sent to NV Access in order to help improve NVDA in the future. 
+When starting NVDA for the first time, a dialog will appear which will ask you if you want to accept sending data to NV Access while using NVDA.
+You can read more info about the data gathered by NV Access in Chapter 11 below.
+Note: pressing on "yes" or "no" will save this setting and the dialog will never appear again unless you reinstall NVDA.
+However, you can enable or disable the data gathering process manually in NVDA's general settings panel. For changing this setting manually, you can check or uncheck the checkbox called [Allow the NVDA project to gather NVDA usage statistics #GeneralSettingsGatherUsageStats].
+
 ++ About NVDA keyboard commands ++[AboutNVDAKeyboardCommands]
 
 +++ The NVDA Modifier Key +++[TheNVDAModifierKey]
@@ -672,7 +679,7 @@ In order to fit as much information as possible on a braille display, the follow
 | gra | graphic |
 | grp | grouping |
 | hN | heading at level n, e.g. h1, h2. |
-| hlp | help baloon |
+| hlp | help balloon |
 | lmk | landmark |
 | lnk | link |
 | vlnk | visited link |
@@ -1531,9 +1538,10 @@ This category contains the following options:
 A checkbox that when checked tells NVDA to report tooltips as they appear.
 Many Windows and controls show a small message (or tooltip) when you move the mouse pointer over them, or sometimes when you move the focus to them.
 
-==== Report Help Balloons ====[ObjectPresentationReportBalloons]
-This checkbox when checked tells NVDA to report help balloons as they appear.
-Help Balloons are like tooltips, but are usually larger in size, and are associated with system events such as a network cable being unplugged, or perhaps to alert you about Windows security issues.
+==== Report notifications ====[ObjectPresentationReportNotifications]
+This checkbox, when checked, tells NVDA to report help balloons and toast notifications as they appear.
+- Help Balloons are like tooltips, but are usually larger in size, and are associated with system events such as a network cable being unplugged, or perhaps to alert you about Windows security issues.
+- Toast notifications have been introduced in Windows 10 and appear in the notification center in the system tray, informing about several events (i.e. if an update has been downloaded, a new e-mail arived in your inbox, etc.).
 
 ==== Report Object Shortcut Keys ====[ObjectPresentationShortcutKeys]
 When this checkbox is checked, NVDA will include the shortcut key that is associated with a certain object or control when it is reported.
