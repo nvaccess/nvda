@@ -103,21 +103,21 @@ def getNVDAModifierKeys():
 def shouldUseToUnicodeEx(focus=None):
 	"Returns whether to use ToUnicodeEx to determine typed characters."
 	if not focus:
-		focus=api.getFocusObject()
+		focus = api.getFocusObject()
 	from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
 	return (
 		# This is only possible in Windows 10 1607 and above
 		winVersion.isWin10(1607)
-		and ( # Either of
+		and ( #  Either of
 			# We couldn't inject in-process, and its not a legacy console window without keyboard support.
 			# console windows have their own specific typed character support.
-			(not focus.appModule.helperLocalBindingHandle and focus.windowClassName!='ConsoleWindowClass')
-			# or the focus is within a UWP app, where WM_CHAR never gets sent 
+			(not focus.appModule.helperLocalBindingHandle and focus.windowClassName != 'ConsoleWindowClass')
+			# or the focus is within a UWP app, where WM_CHAR never gets sent
 			or focus.windowClassName.startswith('Windows.UI.Core')
-			#Or this is a console with keyboard support, where WM_CHAR messages are doubled
+			# Or this is a console with keyboard support, where WM_CHAR messages are doubled
 			or isinstance(focus, KeyboardHandlerBasedTypedCharSupport)
-			)
 		)
+	)
 
 
 def internal_keyDownEvent(vkCode,scanCode,extended,injected):
