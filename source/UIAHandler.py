@@ -23,7 +23,7 @@ def initialize():
 		handler=UIAHandler()
 	except COMError:
 		handler=None
-		raise RuntimeError("UIA not available")
+		raise
 
 def terminate():
 	global handler
