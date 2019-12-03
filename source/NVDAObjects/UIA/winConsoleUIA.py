@@ -34,11 +34,13 @@ class consoleUIATextInfo(UIATextInfo):
 		if position is textInfos.POSITION_FIRST:
 			_rangeObj = self.__class__(obj, obj.location.topLeft)._rangeObj
 		elif position is textInfos.POSITION_LAST:
-			tempInfo = self.__class__(obj, obj.location.bottomRight)
-			# Consoles sometimes do not honor the x coordinate,
-			# so therefore ensure we are really at the end of the line.
+			# Asking for the range at the bottom right of the window
+			# Seems to sometimes ignore the x coordinate.
+			# Therefore use the bottom left, then move the  to last character on that line. 
+			tempInfo = self.__class__(obj, obj.location.bottomLeft)
 			tempInfo.expand(textInfos.UNIT_LINE)
-			tempInfo.collapse(end=True)
+			UIATextInfo.move(tempInfo,textInfos.UNIT_CHARACTER,-1,endPoint="end")
+			tempInfo.setEndPoint(tempInfo,"startToEnd")
 			_rangeObj = tempInfo._rangeObj
 		elif position is textInfos.POSITION_ALL:
 			first = self.__class__(obj, textInfos.POSITION_FIRST)
@@ -62,14 +64,12 @@ class consoleUIATextInfo(UIATextInfo):
 			)
 
 	def move(self, unit, direction, endPoint=None):
-		oldRange = None
+		oldInfo = None
 		if self.basePosition != textInfos.POSITION_CARET:
 			# Insure we haven't gone beyond the visible text.
 			# UIA adds thousands of blank lines to the end of the console.
-			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
-			visiLength = visiRanges.length
-			if visiLength > 0:
-				oldRange = self._rangeObj.clone()
+			boundingInfo = self.obj.makeTextInfo(textInfos.POSITION_ALL)
+			oldInfo = self.copy()
 		if unit == textInfos.UNIT_WORD and direction != 0:
 			# UIA doesn't implement word movement, so we need to do it manually.
 			# Relative to the current line, calculate our offset
@@ -126,11 +126,17 @@ class consoleUIATextInfo(UIATextInfo):
 														endPoint)
 		try:
 			if (
-				oldRange
-				and isTextRangeOffscreen(self._rangeObj, visiRanges)
-				and not isTextRangeOffscreen(oldRange, visiRanges)
+				oldInfo
+				and (
+					self.compareEndPoints(boundingInfo, "startToStart") < 0 or
+					self.compareEndPoints(boundingInfo, "startToEnd") >= 0
+				)
+				and not (
+					oldInfo.compareEndPoints(boundingInfo, "startToStart") < 0 or
+					oldInfo.compareEndPoints(boundingInfo, "startToEnd") >= 0
+				)
 			):
-				self._rangeObj = oldRange
+				self._rangeObj = oldInfo._rangeObj
 				return 0
 		except (COMError, RuntimeError):
 			pass
