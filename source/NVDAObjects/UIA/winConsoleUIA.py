@@ -124,6 +124,11 @@ class consoleUIATextInfo(UIATextInfo):
 		else:  # moving by a unit other than word
 			res = super(consoleUIATextInfo, self).move(unit, direction,
 														endPoint)
+		if not endPoint:
+			# #10191: IUIAutomationTextRange::move in consoles does not correctly produce a collapsed range
+			# after moving.
+			# Therefore manually collapse.
+			self.collapse()
 		try:
 			if (
 				oldInfo
