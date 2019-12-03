@@ -18,11 +18,6 @@ from ..window import Window
 
 
 class consoleUIATextInfo(UIATextInfo):
-	#: At least on Windows 10 1903, expanding then collapsing the text info
-	#: caused review to get stuck, so disable it.
-	#: There may be no need to disable this anymore, but doing so doesn't seem
-	#: to do much good either.
-	_expandCollapseBeforeReview = False
 
 	def __init__(self, obj, position, _rangeObj=None):
 		# We want to limit  textInfos to just the visible part of the console.
