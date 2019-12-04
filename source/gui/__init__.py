@@ -93,7 +93,6 @@ class MainFrame(wx.Frame):
 	def __init__(self):
 		style = wx.DEFAULT_FRAME_STYLE ^ wx.MAXIMIZE_BOX ^ wx.MINIMIZE_BOX | wx.FRAME_NO_TASKBAR
 		super(MainFrame, self).__init__(None, wx.ID_ANY, versionInfo.name, size=(1,1), style=style)
-		self.sysTrayIcon = None
 		self.Bind(wx.EVT_CLOSE, self.onExitCommand)
 		self.sysTrayIcon = SysTrayIcon(self)
 		#: The focus before the last popup or C{None} if unknown.
