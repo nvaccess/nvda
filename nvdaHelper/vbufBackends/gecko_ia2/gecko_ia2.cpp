@@ -1158,8 +1158,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	if (labelId) {
 		auto labelControlFieldNode = buffer->getControlFieldNodeWithIdentifier(docHandle, labelId.value());
 		if (labelControlFieldNode) {
-			bool isDecendant = buffer->isDescendantNode(parentNode, labelControlFieldNode);
-			if (isDecendant) {
+			bool isDescendant = buffer->isDescendantNode(parentNode, labelControlFieldNode);
+			if (isDescendant) {
 				parentNode->addAttribute(L"labelledByContent", L"true");
 			}
 		}
