@@ -31,9 +31,13 @@ class consoleUIATextInfo(UIATextInfo):
 		elif position is textInfos.POSITION_LAST:
 			# Asking for the range at the bottom right of the window
 			# Seems to sometimes ignore the x coordinate.
-			# Therefore use the bottom left, then move the  to last character on that line.
+			# Therefore use the bottom left, then move   to the last character on that line.
 			tempInfo = self.__class__(obj, obj.location.bottomLeft)
 			tempInfo.expand(textInfos.UNIT_LINE)
+			# We must pull back the end by one character otherwise when we collapse to end,
+			# a console bug results in a textRange covering the entire console buffer!
+			# Strangely the *very* last character is a special blank point
+			# so we never seem to miss a real character.
 			UIATextInfo.move(tempInfo, textInfos.UNIT_CHARACTER, -1, endPoint="end")
 			tempInfo.setEndPoint(tempInfo, "startToEnd")
 			_rangeObj = tempInfo._rangeObj
@@ -124,22 +128,27 @@ class consoleUIATextInfo(UIATextInfo):
 			# after moving.
 			# Therefore manually collapse.
 			self.collapse()
-		try:
-			if (
-				oldInfo
-				and (
-					self.compareEndPoints(boundingInfo, "startToStart") < 0
-					or self.compareEndPoints(boundingInfo, "startToEnd") >= 0
-				)
-				and not (
-					oldInfo.compareEndPoints(boundingInfo, "startToStart") < 0
-					or oldInfo.compareEndPoints(boundingInfo, "startToEnd") >= 0
-				)
-			):
-				self._rangeObj = oldInfo._rangeObj
-				return 0
-		except (COMError, RuntimeError):
-			pass
+		# Console textRanges have access to the entire console buffer.
+		# However, we want to limit ourselves to onscreen text.
+		# Therefore, if the textInfo was originally visible,
+		# but we are now aboe or below the visible range,
+		# Restore the original textRange and pretend the move didn't work.
+		if oldInfo:
+			try:
+				if (
+					(
+						self.compareEndPoints(boundingInfo, "startToStart") < 0
+						or self.compareEndPoints(boundingInfo, "startToEnd") >= 0
+					)
+					and not (
+						oldInfo.compareEndPoints(boundingInfo, "startToStart") < 0
+						or oldInfo.compareEndPoints(boundingInfo, "startToEnd") >= 0
+					)
+				):
+					self._rangeObj = oldInfo._rangeObj
+					return 0
+			except (COMError, RuntimeError):
+				pass
 		return res
 
 	def expand(self, unit):
