@@ -90,7 +90,7 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.UIA_AriaPropertiesPropertyId,
 		UIAHandler.UIA_LevelPropertyId,
 		UIAHandler.UIA_IsEnabledPropertyId,
-	} if UIAHandler.isUIAAvailable else set()
+	}
 
 	def _get__controlFieldUIACacheRequest(self):
 		""" The UIA cacheRequest object that will be used when fetching all UIA elements needed when generating control fields for this TextInfo's content."""
@@ -108,7 +108,7 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.TextUnit_Format,
 		UIAHandler.TextUnit_Word,
 		UIAHandler.TextUnit_Character
-	] if UIAHandler.isUIAAvailable else []
+	]
 
 	def find(self,text,caseSensitive=False,reverse=False):
 		tempRange=self._rangeObj.clone()
@@ -380,7 +380,7 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.UIA_TabItemControlTypeId,
 		UIAHandler.UIA_TextControlTypeId,
 		UIAHandler.UIA_SplitButtonControlTypeId
-	} if UIAHandler.isUIAAvailable else None
+	}
 
 
 	def _getControlFieldForObject(self, obj,isEmbedded=False,startOfNode=False,endOfNode=False):
@@ -1190,7 +1190,7 @@ class UIA(Window):
 		UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId,
 		UIAHandler.UIA_IsEnabledPropertyId,
 		UIAHandler.UIA_IsOffscreenPropertyId,
-	}  if UIAHandler.isUIAAvailable else set()
+	}
 
 	def _get_states(self):
 		states=set()
