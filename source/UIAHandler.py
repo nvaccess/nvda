@@ -7,7 +7,7 @@
 from comtypes import COMError
 import config
 from logHandler import log
-# Import everything from _UIAHandler, ignoring F403 linter warning.
+# Maintain backwards compatibility: F403 (unable to detect undefined names) flake8 warning.
 from _UIAHandler import *  # noqa: F403
 
 # Make the _UIAHandler._isDebug function available to this module,
