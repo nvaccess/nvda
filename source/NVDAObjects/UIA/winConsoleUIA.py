@@ -131,7 +131,7 @@ class consoleUIATextInfo(UIATextInfo):
 		# Console textRanges have access to the entire console buffer.
 		# However, we want to limit ourselves to onscreen text.
 		# Therefore, if the textInfo was originally visible,
-		# but we are now aboe or below the visible range,
+		# but we are now above or below the visible range,
 		# Restore the original textRange and pretend the move didn't work.
 		if oldInfo:
 			try:
