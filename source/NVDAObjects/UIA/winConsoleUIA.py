@@ -18,26 +18,35 @@ from ..window import Window
 
 
 class consoleUIATextInfo(UIATextInfo):
-	#: At least on Windows 10 1903, expanding then collapsing the text info
-	#: caused review to get stuck, so disable it.
-	#: There may be no need to disable this anymore, but doing so doesn't seem
-	#: to do much good either.
-	_expandCollapseBeforeReview = False
 
 	def __init__(self, obj, position, _rangeObj=None):
+		# We want to limit  textInfos to just the visible part of the console.
+		# Therefore we specifically handle POSITION_FIRST, POSITION_LAST and POSITION_ALL.
+		# We could use IUIAutomationTextRange::getVisibleRanges, but it seems very broken in consoles
+		# once more than a few screens worth of content has been written to the console.
+		# Therefore we resort to using IUIAutomationTextPattern::rangeFromPoint
+		# for the top left, and bottom right of the console window.
+		if position is textInfos.POSITION_FIRST:
+			_rangeObj = self.__class__(obj, obj.location.topLeft)._rangeObj
+		elif position is textInfos.POSITION_LAST:
+			# Asking for the range at the bottom right of the window
+			# Seems to sometimes ignore the x coordinate.
+			# Therefore use the bottom left, then move   to the last character on that line.
+			tempInfo = self.__class__(obj, obj.location.bottomLeft)
+			tempInfo.expand(textInfos.UNIT_LINE)
+			# We must pull back the end by one character otherwise when we collapse to end,
+			# a console bug results in a textRange covering the entire console buffer!
+			# Strangely the *very* last character is a special blank point
+			# so we never seem to miss a real character.
+			UIATextInfo.move(tempInfo, textInfos.UNIT_CHARACTER, -1, endPoint="end")
+			tempInfo.setEndPoint(tempInfo, "startToEnd")
+			_rangeObj = tempInfo._rangeObj
+		elif position is textInfos.POSITION_ALL:
+			first = self.__class__(obj, textInfos.POSITION_FIRST)
+			last = self.__class__(obj, textInfos.POSITION_LAST)
+			first.setEndPoint(last, "endToEnd")
+			_rangeObj = first._rangeObj
 		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
-		# Re-implement POSITION_FIRST and POSITION_LAST in terms of
-		# visible ranges to fix review top/bottom scripts.
-		if position == textInfos.POSITION_FIRST:
-			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
-			firstVisiRange = visiRanges.GetElement(0)
-			self._rangeObj = firstVisiRange
-			self.collapse()
-		elif position == textInfos.POSITION_LAST:
-			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
-			lastVisiRange = visiRanges.GetElement(visiRanges.length - 1)
-			self._rangeObj = lastVisiRange
-			self.collapse(True)
 
 	def collapse(self, end=False):
 		"""Works around a UIA bug on Windows 10 1803 and later."""
@@ -54,14 +63,12 @@ class consoleUIATextInfo(UIATextInfo):
 			)
 
 	def move(self, unit, direction, endPoint=None):
-		oldRange = None
+		oldInfo = None
 		if self.basePosition != textInfos.POSITION_CARET:
 			# Insure we haven't gone beyond the visible text.
 			# UIA adds thousands of blank lines to the end of the console.
-			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
-			visiLength = visiRanges.length
-			if visiLength > 0:
-				oldRange = self._rangeObj.clone()
+			boundingInfo = self.obj.makeTextInfo(textInfos.POSITION_ALL)
+			oldInfo = self.copy()
 		if unit == textInfos.UNIT_WORD and direction != 0:
 			# UIA doesn't implement word movement, so we need to do it manually.
 			# Relative to the current line, calculate our offset
@@ -116,16 +123,32 @@ class consoleUIATextInfo(UIATextInfo):
 		else:  # moving by a unit other than word
 			res = super(consoleUIATextInfo, self).move(unit, direction,
 														endPoint)
-		try:
-			if (
-				oldRange
-				and isTextRangeOffscreen(self._rangeObj, visiRanges)
-				and not isTextRangeOffscreen(oldRange, visiRanges)
-			):
-				self._rangeObj = oldRange
-				return 0
-		except (COMError, RuntimeError):
-			pass
+		if not endPoint:
+			# #10191: IUIAutomationTextRange::move in consoles does not correctly produce a collapsed range
+			# after moving.
+			# Therefore manually collapse.
+			self.collapse()
+		# Console textRanges have access to the entire console buffer.
+		# However, we want to limit ourselves to onscreen text.
+		# Therefore, if the textInfo was originally visible,
+		# but we are now above or below the visible range,
+		# Restore the original textRange and pretend the move didn't work.
+		if oldInfo:
+			try:
+				if (
+					(
+						self.compareEndPoints(boundingInfo, "startToStart") < 0
+						or self.compareEndPoints(boundingInfo, "startToEnd") >= 0
+					)
+					and not (
+						oldInfo.compareEndPoints(boundingInfo, "startToStart") < 0
+						or oldInfo.compareEndPoints(boundingInfo, "startToEnd") >= 0
+					)
+				):
+					self._rangeObj = oldInfo._rangeObj
+					return 0
+			except (COMError, RuntimeError):
+				pass
 		return res
 
 	def expand(self, unit):
@@ -207,12 +230,12 @@ class consoleUIATextInfo(UIATextInfo):
 		# position a textInfo from the start of the line up to the current position.
 		charInfo = lineInfo.copy()
 		charInfo.setEndPoint(self, "endToStart")
-		text = charInfo.text
+		text = charInfo._rangeObj.getText(-1)
 		offset = textUtils.WideStringOffsetConverter(text).wideStringLength
 		return offset
 
 	def _getWordOffsetsInThisLine(self, offset, lineInfo):
-		lineText = lineInfo.text or u" "
+		lineText = lineInfo._rangeObj.getText(-1)
 		# Convert NULL and non-breaking space to space to make sure
 		# that words will break on them
 		lineText = lineText.translate({0: u' ', 0xa0: u' '})
@@ -282,11 +305,12 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		return consoleUIATextInfo
 
 	def _getTextLines(self):
-		# Filter out extraneous empty lines from UIA
-		ptr = self.UIATextPattern.GetVisibleRanges()
-		res = [ptr.GetElement(i).GetText(-1) for i in range(ptr.length)]
-		return res
-
+		# This override of _getTextLines takes advantage of the fact that
+		# the console text contains linefeeds for every line
+		# Thus a simple string splitlines is much faster than splitting by unit line.
+		ti = self.makeTextInfo(textInfos.POSITION_ALL)
+		text = ti.text or ""
+		return text.splitlines()
 
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAElement.cachedAutomationId == "Text Area":
