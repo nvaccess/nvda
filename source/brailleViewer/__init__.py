@@ -77,7 +77,7 @@ def _destroyGUI():
 	d: Optional[BrailleViewerFrame] = _brailleGui
 	_brailleGui = None
 	if d and not d.isDestroyed:
-		d.Destroy()
+		d.saveInfoAndDestroy()
 
 
 def destroyBrailleViewer():

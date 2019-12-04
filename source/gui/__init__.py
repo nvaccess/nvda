@@ -571,6 +571,9 @@ def initialize():
 	wx.GetApp().SetTopWindow(mainFrame)
 
 def terminate():
+	import brailleViewer
+	brailleViewer.destroyBrailleViewer()
+
 	for instance, state in gui.SettingsDialog._instances.items():
 		if state is gui.SettingsDialog._DIALOG_DESTROYED_STATE:
 			log.error(
