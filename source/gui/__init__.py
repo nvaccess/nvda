@@ -445,15 +445,16 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		item=self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
 		self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
 
-		item = self.menu_tools_toggleBrailleViewer = menu_tools.AppendCheckItem(
+		self.menu_tools_toggleBrailleViewer: wx.MenuItem = menu_tools.AppendCheckItem(
 			wx.ID_ANY,
 			# Translators: The label for the menu item to toggle Braille Viewer.
 			_("Braille viewer")
 		)
+		item = self.menu_tools_toggleBrailleViewer
 		self.Bind(wx.EVT_MENU, frame.onToggleBrailleViewerCommand, item)
 		import brailleViewer
+		self.menu_tools_toggleBrailleViewer.Check(brailleViewer.isBrailleViewerActive())
 		brailleViewer.postBrailleViewerToolToggledAction.register(frame.onBrailleViewerChangedState)
-		frame.onBrailleViewerChangedState(created=brailleViewer.isBrailleViewerActive())
 
 		if not globalVars.appArgs.secure and not config.isAppX:
 			# Translators: The label for the menu item to open NVDA Python Console.
