@@ -3,38 +3,70 @@
 # Copyright (C) 2019 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+from typing import List
 
 from logHandler import log
 import os
+from ctypes import WinDLL
+gdi32 = WinDLL("gdi32.dll")
 """
 Loads custom fonts for use in NVDA.
 """
 
+fontsDir = os.path.abspath("fonts")
+
 
 def _isSupportedFontPath(f: str) -> bool:
 	return os.path.isfile(f) and (
-		f.endswith("otf")
-		or f.endswith("ttf")
+		f.endswith(".otf")
+		or f.endswith(".ttf")
 	)
 
 
-# Fonts that have been loaded. Also used to ensure we don't load fonts twice.
-_importedFonts = []
+def addFonts(_fontSearchPath) -> List[str]:
+	searchPathFiles = [
+		os.path.join(_fontSearchPath, f)
+		for f in os.listdir(_fontSearchPath)
+	]
+	fonts = [
+		f for f in searchPathFiles
+		if _isSupportedFontPath(f)
+	]
+	log.debug(f"Fonts to load: {fonts}")
+	imported = []
+	for fontPath in fonts:
+		numFontsImported = _addFontResource(fontPath)
+		if 0 >= numFontsImported:
+			log.error(f"Unable to add font {fontPath}")
+		else:
+			log.debug(f"Added font resource {fontPath}, imported {numFontsImported} fonts.")
+			imported.append(fontPath)
+	return imported
+
+
+def _addFontResource(fontPath: str) -> int:
+	# from wingdi.h
+	FR_PRIVATE = 0x10
+	res = gdi32.AddFontResourceExW(
+		fontPath,
+		# Only this process can use the font.
+		# The system will take care of unloading the font when the process ends.
+		FR_PRIVATE,
+		# Reserved. Must be zero.
+		0
+	)
+	return res
+
+
+# Fonts that have been loaded.
+_imported: List[str] = []
 
 
 def importFonts():
-	if _importedFonts:
-		# fonts already loaded, exit early.
+	global _imported
+	if _imported:
+		log.debug("Fonts already loaded.")
 		return
-	fontsDir = "fonts"
-	from ctypes import WinDLL
-	import os.path
-	gdi32 = WinDLL("gdi32.dll")
-	fonts = [f for f in os.listdir(fontsDir) if _isSupportedFontPath(f)]
-	for fontPath in fonts:
-		res = gdi32.AddFontResourceW(fontPath)
-		if 0 >= res:
-			log.error(f"Unable to import font, {fontPath}")
-		else:
-			log.debug(f"Importing font {fontPath}, imported {res} fonts.")
-			_importedFonts.append(fontPath)
+
+	log.debug("Loading fonts.")
+	_imported = addFonts(fontsDir)
