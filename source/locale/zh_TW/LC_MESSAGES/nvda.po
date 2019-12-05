@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA-TW\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-22 06:43+1000\n"
-"PO-Revision-Date: 2019-11-27 14:32+0800\n"
+"POT-Creation-Date: 2019-11-29 15:51+1000\n"
+"PO-Revision-Date: 2019-12-02 14:58+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: NVDA-Taiwan Volunteers Team\n"
 "Language: zh_TW\n"
@@ -2418,7 +2418,7 @@ msgstr "捲軸窗格"
 
 #. Translators: Identifies a section of text.
 msgid "section"
-msgstr "區塊"
+msgstr "區域"
 
 #. Translators: Identifies a shape.
 msgid "shape"
@@ -3506,7 +3506,7 @@ msgid "Toggles on and off the reporting of groupings"
 msgstr "切換讀出群組的開與關"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-msgid "report gorupings off"
+msgid "report groupings off"
 msgstr "讀出群組 關"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
@@ -3922,10 +3922,9 @@ msgstr "重新啟動NVDA!"
 msgid "Shows the NVDA menu"
 msgstr "開啟NVDA功能表"
 
-#. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"Reads from the review cursor up to end of current text, moving the review "
-"cursor as it goes"
+"Reads from the review cursor up to the end of the current text, moving the "
+"review cursor as it goes"
 msgstr "從目前檢閱游標所在的文字往後朗讀直到結尾，檢閱游標會跟隨移動"
 
 #. Translators: Input help mode message for say all with system caret command.
@@ -6461,7 +6460,7 @@ msgid ""
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} is developed by NV Access, a non-profit organisation committed to "
@@ -9271,9 +9270,13 @@ msgid ""
 "Could not gracefully terminate the {providerName} vision enhancement provider"
 msgstr "無法順利終止 {providerName} 視覺加強器"
 
+#, python-brace-format
 msgid ""
 "Could not gracefully terminate the following vision enhancement providers:\n"
-msgstr "無法順利終止以下視覺加強器:\n"
+"{providerNames}"
+msgstr ""
+"無法順利終止以下視覺加強器:\n"
+"{providerNames}"
 
 #. Translators: This is a label appearing on the vision settings panel.
 msgid "Configure visual aids."
@@ -9884,7 +9887,7 @@ msgstr "醒目提示系統焦點(C)"
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the browse mode cursor.
 msgid "Highlight browse &mode cursor"
-msgstr "醒目提示瀏覽游標(M)"
+msgstr "醒目提示檢閱游標(M)"
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the navigator object.
@@ -9909,7 +9912,7 @@ msgstr "螢幕簾幕"
 #. the screen curtain.
 #, python-brace-format
 msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
-msgstr "當啟用螢幕簾幕時，總是顯示警告訊息 {screenCurtainTranslatedName}(S) "
+msgstr "當啟用{screenCurtainTranslatedName}時，總是顯示警告訊息(S)"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"

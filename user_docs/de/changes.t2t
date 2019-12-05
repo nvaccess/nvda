@@ -7,7 +7,7 @@ Was ist neu in NVDA
 = 2019.3 =
 
 == Neue Features ==
-- In der Eingabeaufforderung, PowerShell und das Windows-Subsystem für Linux unter Windows 10 (Oktober 2018 Update) und neuer:
+- In der Eingabeaufforderung, PowerShell und im Windows-Subsystem für Linux unter Windows 10 (Oktober 2018 Update) und neuer:
  - Stark verbesserte Leistung und Stabilität. (#9771)
  - Die Meldung von eingegebenem Text, der nicht auf dem Bildschirm erscheint (z. B. Passwörter), kann nun über eine Option im erweiterten Einstellungsbereich von NVDA aktiviert werden. (#9649)
 - Die Genauigkeit des Befehls zum Ziehen der Maus zum Navigator-Objekt wurde in Textfeldern in Java-Anwendungen verbessert. (#10157)
@@ -22,24 +22,23 @@ Was ist neu in NVDA
 - In Internet Explorer, Google Chrome und Mozilla Firefox können Sie nun mit Hilfe der Schnellnavigationsskripte nach Artikeln und Gruppen navigieren. Diese Skripte sind standardmäßig nicht gebunden und können im Dialogfeld "Eingaben..." zugewiesen werden, wenn der Dialog aus einem Dokument im Lesemodus geöffnet wird. (#9485, #9227)
  - Es werden auch Illustrationen vorgelegt. Sie gelten als Objekte und sind daher mit der Schnellnavigationstaste "O" navigierbar.
 - In Internet Explorer, Google Chrome und Mozilla Firefox werden nun Artikel-Elemente mit Objektnavigation und optional im Lesemodus angezeigt, wenn sie in den Einstellungen für die Dokumentenformatierung aktiviert sind. (#10424)
-- Unterstützung für prozessunabhängige integrierte Rahmen in Mozilla Firefox. (#9672)
-- Ein zusätzlicher Bildschirmvorhang, der bei Aktivierung den gesamten Bildschirm unter Windows 8 und neuer schwarz macht. (#7857)
- - Ein Skript zum Aktivieren des Bildschirmvorhangs wurde hinzugefügt, bis zum nächsten Neustart mit einer Taste oder immer, wenn NVDA mit zwei Tasten läuft, wird keine Standard-Geste zugewiesen.
- - Kann über die Kategorie "Sehen" im Einstellungsdialog von NVDA aktiviert und konfiguriert werden.
+- Es gibt nun einen  Bildschirmvorhang, der bei Aktivierung den gesamten Bildschirminhalt unter Windows 8 und neuer schwärzt. (#7857)
+ - Ein Skript zum Aktivieren des Bildschirmvorhangs wurde hinzugefügt, jedoch wurde kein Tastenkürzel zugewiesen. Bei einmaliger Betätigung wird der Bildschirmvorhang bis zum nächsten Neustart aktiviert oder bei zweimaliger Betätigung immer ausgeführt, sofern NVDA verwendet wird.
+ - Dies kann über die Kategorie "Sehen" im Einstellungsdialog von NVDA aktiviert und konfiguriert werden.
 - NVDA wurde um eine Funktion zur Hervorhebung des Bildschirms erweitert. (#971, #9064)
  - Die Hervorhebung von Fokus, Navigator-Objekt und Lesemodus kann über die Kategorie "Sehen" im Einstellungsdialog von NVDA aktiviert und konfiguriert werden.
- - Hinweis: Diese Funktion ist nicht mit dem Fokus-Highlight-Add-on kompatibel, jedoch kann das Add-on weiterhin verwendet werden, während der eingebaute Highlighter deaktiviert ist.
+ - Hinweis: Diese Funktion ist nicht mit der Erweiterung "Fokus hervorheben" kompatibel, jedoch kann die Erweiterung weiterhin verwendet werden, während die eingebaute Hervorhebungsfunktion deaktiviert ist.
 
 
 == Änderungen ==
 - Das Benutzerhandbuch beschreibt nun, wie Sie NVDA in der Windows-Konsole verwenden können. (#9957)
-- Wenn Sie die Datei "nvda.exe" ausführen, wird standardmäßig eine bereits laufender Prozess von NVDA ersetzt. Der Befehlszeilenparameter "-r" oder "---replace" wird weiterhin akzeptiert, jedoch ignoriert. (#8320)
+- Wenn Sie die Datei "nvda.exe" ausführen, wird nun standardmäßig ein bereits laufender Prozess von NVDA ersetzt. Der Befehlszeilenparameter "-r" oder "---replace" wird weiterhin akzeptiert, jedoch ignoriert. (#8320)
 - Unter Windows 8 und neuer wird NVDA nun Produktnamen und Versionsinformationen für gehostete Anwendungen, wie beispielsweise Anwendungen, die aus dem Microsoft Store heruntergeladen wurden, unter Verwendung der von der Anwendung bereitgestellten Informationen mitteilen. (#4259, #10108)
 - Beim Ein- und Ausschalten der Änderungsverfolgung mit der Tastatur in Microsoft Word meldet NVDA den Status der Einstellung. (#942) 
 - Die NVDA-Versionsnummer wird nun als erste Meldung im Protokoll angezeigt. Dies geschieht auch dann, wenn die Protokollierung über die Einstellungen deaktiviert wurde. (#9803)
 - Der Einstellungsdialog lässt es nicht mehr zu, die konfigurierte Protokollstufe zu ändern, wenn sie von der Kommandozeile aus überschrieben wurde. (#10209)
 - In Microsoft Word meldet NVDA nun den Anzeigestatus von nicht druckbaren Zeichen, wenn Sie die Umschalt-Taste Strg+Umschalt+8 drücken. (#10241)
-- Der Liblouis-Brailleübersetzer wurde aktualisiert auf den Commit 58d67e63. (#10094)
+- Der Liblouis-Braille-Übersetzer wurde aktualisiert auf den Commit 58d67e63. (#10094)
 - Wenn die CLDR-Zeichen (einschließlich Emojis) aktiviert sind, werden sie auf allen Interpunktionsebenen angezeigt. (#8826)
 - Python-Pakete von Drittanbietern, die in NVDA enthalten sind, wie beispielsweise comtypes, protokollieren nun ihre Warnungen und Fehler im NVDA-Protokoll. (#10393)
 - Die Emoji-Anmerkungen der Unicode Common Locale Data Repository wurden auf Version 36.0 aktualisiert. (#10426)
@@ -74,6 +73,7 @@ Was ist neu in NVDA
 - Einige Probleme und Fehler bei der Übersetzung von Brailleschrift bei Liblouis wurden behoben. (#9982)
 - Java-Anwendungen, die vor NVDA gestartet wurden, sind nun zugänglich, ohne dass die Java-App neu gestartet werden muss. (#10296)
 - Wenn im Mozilla Firefox das hervorgehobene Element als aktuell (aria-current) markiert wird, wird diese Änderung nicht mehr mehrfach angesagt. (#8960)
+- NVDA behandelt nun bestimmte zusammengesetzte Unicode-Zeichen, wie z. B. das Zeichen é, als ein einziges Zeichen, wenn Sie sich durch Text bewegen. (#10550)
 
 
 == Änderungen für Entwickler ==
@@ -1179,7 +1179,7 @@ Schwerpunkte dieser Version sind: Diagramme können in Microsoft Excel gelesen w
 - In den Einstellungen zu Dokumentformatierungen wurden die Tastenkürzel für die Ausgaben von Listen, Links, Zeilennummern und Schriftartennamen geändert. (#4650)
 - In den Maus-Einstellungen von NVDA wurden Tastenkürzel für Audiokoordinaten bei Mausbewegungen wiedergeben sowie Lautstärke der Audiokoordinaten durch Helligkeit kontrollieren hinzugefügt. (#4916)
 - Die Ausgabe von Farbnamen wurde verbessert. (#4984)
-- Die Brailleübersetzung Liblouis wurde auf Version 2.6.2 aktualisiert. (#4777)
+- Die Liblouis-Braille-Übersetzung wurde auf Version 2.6.2 aktualisiert. (#4777)
 
 
 == Fehlerbehebungen ==

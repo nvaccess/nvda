@@ -21,13 +21,12 @@ Quoi de Neuf dans NVDA
 - Dans Internet Explorer, Google Chrome et Firefox, vous pouvez maintenant naviguer par article et groupe en utilisant des scripts de navigation rapide. Ces scripts ne sont pas assignés par défaut et peuvent l'être via le dialogue "Gestes de commande" lorsque celui-ci est ouvert à partir d'un document en mode navigation. (#9485, #9227)
  - Les figures sont également reportées, elles sont considérées comme des objets et vous pouvez y naviguer en utilisant la touche de navigation rapide o.
 - Dans Internet Explorer, Google Chrome et Mozilla Firefox, les articles sont désormais annoncés lors de la navigation par objet et éventuellement, en mode navigation, si ceci est activé dans les paramètres de mise en forme du document. (#10424)
-- Ajout du support des iframes hors processus dans Mozilla Firefox. (#9672)
 - Ajout du rideau d'écran qui, quand il est activé, rend l'écran totalement noir sous Windows 8 et supérieur (#7857)
- - Ajout d'un script pour activer le rideau d'écran, au prochain redémarrage de NVDA via un simple appui, et tout le temps avec 2 appuis. Aucun geste n'est assigné par défaut.
- - Peut être configuré et activé via la catégorie "Vision" du dialogue de paramètres NVDA.
-- Ajout de fonctionalités de contraste de l'écran dans NVDA. (#971, #9064)
- - La mise en évidence du focus, de l'objet navigateur et du curseur en mode navigation peuvent être activés et configurés dans la catégorie "Vision" des paramètres NVDA.
- - Note : cette fonction est incompatible avec l'extension Focus Highlight, cette dernière pourra être utilisée si la fonction native est désactivée.
+ - Ajout d'un script pour activer le rideau d'écran (jusqu'au prochain redémarrage avec un seul appui, ou toujours tant que NVDA est exécuté avec deux appuis). Aucun geste n'est assigné par défaut.
+ - Ceci peut être configuré et activé via la catégorie "Vision" du dialogue de paramètres NVDA.
+- Ajout de la fonctionnalité surlignage d'écran à NVDA. (#971, #9064)
+ - Le surlignage du focus, de l'objet navigateur et du curseur en mode navigation peuvent être activés et configurés dans la catégorie "Vision" des paramètres NVDA.
+ - Note : cette fonction est incompatible avec l'extension Focus Highlight, cette dernière pourra être utilisée si la fonction native est désactivée.
 
 
 == Changements ==
@@ -39,19 +38,19 @@ Quoi de Neuf dans NVDA
 - Le dialogue des paramètres ne permet plus de changer le niveau de journalisation si ce dernier a déjà été configuré via la ligne de commande. (#10209)
 - Dans Microsoft Word, NVDA annonce désormais l'état d'affichage des caractères non imprimables lorsqu'on fait le raccourci clavier Ctrl+Maj+8. (#10241)
 - Mise à jour du transcripteur Braille Liblouis vers la révision 58d67e63. (#10094)
-- Lorsque l'annonce des caractères CLDR (y compris les emojis) est activée, ceux-ci sont annoncés à tous les niveaux de ponctuation. (#8826)
+- Quand l'annonce des caractères CLDR (y compris les emojis) est activée, ceux-ci sont annoncés à tous les niveaux de ponctuation. (#8826)
 - Les paquets Python tiers, tel que Comtypes, incluent maintenant leurs avertissements et erreurs dans le journal de NVDA. (#10393)
 - Mise à jour des annotations d'emoji du référenciel commun de l'Unicode vers la version 36.0. (#10426)
-- Lorsque vous naviguez dans un groupe en mode navigation, sa description est désormais lue. (#10095)
-- Java Access Bridge est maintenant inclus dans NVDA afin de permettre l'accès aux applications Java. (#7724)
+- Quand le focus est sur un groupe en mode navigation, la description est désormais lue également. (#10095)
+- Java Access Bridge est désormais inclu dans  NVDA pour permettre l'accès aux applications Java, y compris les machines virtuelles Java 64 bits. (#7724)
 - Si Java Access Bridge n'est pas activé pour l'utilisateur, NVDA l'activera automatiquement à son lancement. (#7952)
 
 
 == Corrections de Bogues ==
 - Les emojis ainsi que les autres caractères Unicode 32 bits prennent maintenant moins de place sur un afficheur Braille lorsqu'ils sont affichés sous forme de valeurs hexadécimal. (#6695)
-- Sous Windows 10, NVDA annonce maintenant les infos bulle dans les applications universelles si il est configuré pour annoncer les infos bulle dans le dialogue de paramétrage "Présentation des objets". (#8118)
-- Sous Windows 10 version anniversaire et supérieur, le texte tapé est maintenant annoncé dans MinTTY. (#1348)
-- Sous Windows 10 version anniversaire et supérieur, le texte qui apparaît près du curseur dans les consoles Windows n'est plus épelé. (#513)
+- Sous Windows 10, NVDA annonce maintenant les infos bulle dans les applications universelles s'il est configuré pour annoncer les infos bulle dans le dialogue de paramétrage "Présentation des objets". (#8118)
+- Sous Windows 10 version anniversaire et plus récente, le texte tapé est maintenant annoncé dans MinTTY. (#1348)
+- Sous Windows 10 version anniversaire et ultérieure, le texte qui apparaît près du curseur dans les consoles Windows n'est plus épelé. (#513)
 - Les commandes dans le dialogue compresseur d'Audacity sont maintenant annoncées lors de la navigation dans ce dialogue. (#10103)
 - NVDA ne considère plus les espaces comme des mots lors de la navigation par objet dans les éditeurs de texte basés sur Scintilla tel que Notepad++. (#8295)
 - NVDA empêchera le système de passer en veille lors de la lecture d'un long texte avec les commandes de navigation d'un afficheur Braille. (#9175)
@@ -73,6 +72,7 @@ Quoi de Neuf dans NVDA
 - Quelques rares erreurs de traduction Braille et erreurs avec Liblouis ont été résolues. (#9982)
 - Les applications Java démarrées avant le lancement de NVDA sont maintenant accessibles sans avoir à redémarrer l'application Java. (#10296)
 - Sous Firefox, lorsque l'élément sélectionné est marqué comme actuel (aria-current), NVDA ne le répètera plus plusieurs fois. (#8960)
+- NVDA traitera désormais certains caractères unicode composés tels que le e accent aigu comme un seul caractère lors du déplacement dans le texte. (#10550)
 
 
 == Changements pour les développeurs ==

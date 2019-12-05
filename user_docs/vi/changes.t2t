@@ -21,7 +21,6 @@
 - Trong Internet Explorer, Google Chrome và Mozilla Firefox, bạn có thể điều hướng theo bài viết  (article) và grouping bằng các kịch bản di chuyển nhanh. Những kịch bản này mặc định không có thao tác / phím tắt và có thể gán trong hộp thoại Quản lý các thao tác khi nó được mở từ một tài liệu ở chế độ duyệt. (#9485, #9227)
  - Hình giáng (figure) cũng đã được thông báo. Chúng được coi là đối tượng nên sẽ duyệt bằng phím di chuyển nhanh là o.
 - Trong Internet Explorer, Google Chrome và Mozilla Firefox, các thành phần dạng article giờ đây đã được đọc với việc điều hướng đối tượng, và tùy chọn trong chế độ duyệt nếu bật trong cài đặt Định dạng tài liệu. (#10424)
-- Hỗ trợ choh out-of-process iframes trong Mozilla Firefox. (#9672)
 - Thêm tính năng che màn hình. Khi bật, sẽ làm đen màn hình từ Windows 8 trở lên. (#7857)
  - Thêm một kịch bản để bật che màn hình (cho đến khi khởi động lại nếu bấm một lần, luôn bật khi chạy NVDA nếu bấm hai lần), chưa được gán thao tác / phím tắt.
   - Có thể bật và cấu hình thông qua phân loại 'nhìn' trong hộp thoại cấu hình NVDA.
@@ -73,6 +72,7 @@
 - Sửa vài lỗi hiếm gặp khi phiên dịch chữ nổi với liblouis. (#9982)
 - Các ứng dụng Java được gọi chạy trước NVDA giờ đã tiếp cận được mà không cần khởi động lại ứng dụng Java. (#10296)
 - Trong Mozilla Firefox, khi thành phần có focus được đánh dấu là current (aria-current), thay đổi này không còn bị đọc lại nhiều lần. (#8960)
+- Giờ đây, NVDA sẽ xem một  vài kí tự unicode phức hợp nhất định như e-acute (é) là một kí tự đơn khi duy chuyển qua văn bản. (#10550)
 
 
 == Các thay đổi cho nhà phát triển ==

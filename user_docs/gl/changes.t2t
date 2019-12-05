@@ -21,7 +21,6 @@ Que hai de Novo no NVDA
 - En Internet Explorer, Google Chrome e Mozilla Firefox, agora podes navegar por artigos e grupos usando os scripts de navegación rápida. Estos scripts non están vinculados por omisión e poden asignarse no diálogo Xestos de Entrada cando o diálogo se abra dende un documento en modo exploración. (#9227)
 - Agora anúncianse as figuras. Considéranse obxectos e, polo tanto, navegables coa tecla de navegación rápida o.
 - En Internet Explorer, Google Chrome e Mozilla Firefox, agora anúncianse os elementos artigo co navegador de obxecto, e opcionalmente, en modo Exploración se se activou nas opcións de Formateado de Documentos. (#10424)
- Soporte para iframes fora de proceso en Mozilla Firefox. (#9672)
 - Engadiuse unha Cortina de Pantalla que, ao se activar, fai que toda a pantalla se torne negra en Windows 8 e posteriores. (#7857)
  - Engadiuse un script para activar a cortina de pantalla (ate o seguinte reinicio cunha soa pulsación, ou sempre mentres o NVDA estea en execución con dúas pulsacións), non se asigna ningún xesto predeterminado.
  - Pode activarse e configurarse a través da categoría 'visión' no diálogo opcións do NVDA.
@@ -73,6 +72,7 @@ Que hai de Novo no NVDA
 - Resolvéronse algúns problemas raros de transcripción braille e erros con liblouis. (#9982)
 - As aplicacións Java comezadas antes do NVDA agora son accesibles sen a necesidade de comezar a aplicación Java. (#10296)
 - En Mozilla Firefox, cando o elemento enfocado se marca como actual (aria-current), este cambio xa non se fala varias veces. (#8960)
+- O NVDA agora tratará certos caracteres de composición unicode como e-acute como un so carácter ao se mover polo texto. (#10550)
 
 
 == Cambios para Desenvolvedores ==

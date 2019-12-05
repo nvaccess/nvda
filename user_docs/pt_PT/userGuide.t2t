@@ -71,7 +71,7 @@ Para mais detalhes, pode [ver a licença completa. https://www.gnu.org/licenses/
 -
 
 + Obter e Instalar O NVDA +[GettingAndSettingUpNVDA]
-Se ainda não tem uma cópia do NVDA, pode descarregá-la de [www.nvaccess.org NVDA_URL].
+Se ainda não tem uma cópia do NVDA, pode descarregá-la da [página web da NV Access NVDA_URL].
 
 Entre na secção "download" e encontrará o link para transferir a última versão do NVDA.
 
@@ -167,7 +167,7 @@ Quando o NVDA for executado pela primeira vez, ser-lhe-á apresentado um diálog
 O diálogo contém ainda uma caixa combinada e três caixas de verificação.
 Por favor, veja as secções seguintes, para mais informações sobre estes tópicos.
 na caixa combinada, poderá seleccionar qual o esquema de teclado a utilizar.
-A primeira caixa de verificação permite-lhe definir se o software utiliza o CapsLock como uma tecla modificadora do NVDA.
+A primeira caixa de verificação permite-lhe definir se o NVDA utiliza o CapsLock como uma tecla modificadora do NVDA.
 A segunda permite-lhe especificar se o NVDA deverá ser executado automaticamente, ao iniciar sessão no Windows; esta caixa de verificação só estará disponível em cópias instaladas do NVDA.
 E a  terceira permite-lhe definir se este diálogo de boas vindas aparecerá sempre que o NVDA for iniciado.
 
@@ -605,7 +605,9 @@ O "MathPlayer" está disponível, como download gratuito, em https://www.dessci.
 O NVDA suporta os seguintes tipos de conteúdo matemático:
 - MathML no Mozilla Firefox, Microsoft Internet Explorer e Google Chrome.
 - Design Science MathType no Microsoft Word e PowerPoint.
-O "MathType" tem que estar instalado para que isto funcione. A versão Trial é suficiente.
+O "MathType" tem que estar instalado para que isto funcione.
+A versão Trial é suficiente.
+Pode ser descarregado de https://www.dessci.com/en/products/mathtype/
 - MathML no Adobe Reader.
 Note que este ainda não é um padrão oficial, portanto ainda não está disponível nenhum software que produza este conteúdo.
 - Math no Kindle for PC para livros com conteúdo matemático acessível.
@@ -997,7 +999,7 @@ A maioria das configurações do NVDA pode ser alterada através de diálogos ac
 Muitas dessas configurações aparecem no diálogo multi-páginas [Configurações #NVDASettings].
 Em qualquer dos diálogos, pressione "OK" para aceitar as alterações que tenha feito.
 Para dispensar alterações que possa ter feito, pressione "Cancelar" ou "Escape".
-Em alguns destes diálogos pode pressionar a tecla "Aplicar", para que as alterações entrem em vigor sem fechar o diálogo.
+Em alguns destes diálogos, pode pressionar a tecla "Aplicar", para que as alterações entrem em vigor sem fechar o diálogo.
 Algumas configurações podem ser feitas por atalhos, que serão indicados quando aplicáveis.
 
 ++ Configurações ++[NVDASettings]
@@ -1047,8 +1049,10 @@ Os níveis de registo disponíveis são:
 - Desactivado: Além de uma breve mensagem de início, o NVDA não registará nada enquanto estiver em execução;
 - Informação: O NVDA registará informações básicas, como mensagens de início e informações úteis para os desenvolvedores;
 - Aviso de depuração: Serão registadas mensagens de aviso que não são causadas por erros graves;
-- Entrada/saída de dados: As entradas pelo teclado ou linha Braille, bem como o que é falado ou representado em Braille, serão registadas. Se estiver preocupado com a privacidade, não defina o nível de registo para esta opção;
-- Depuração: Além do que é registado nos níveis anteriores, serão registadas mensagens de depuração adicionais. Assim como no nível anterior, se estiver preocupado com a privacidade, não deve definir o nível de registo para esta opção.
+- Entrada/saída de dados: As entradas pelo teclado ou linha Braille, bem como o que é falado ou representado em Braille, serão registadas;
+ - Se estiver preocupado com a privacidade, não defina o nível de registo para esta opção;
+- Depuração: Além do que é registado nos níveis anteriores, serão registadas mensagens de depuração adicionais.
+ - Assim como no nível anterior, se estiver preocupado com a privacidade, não deve definir o nível de registo para esta opção.
 -
 
 ==== Iniciar o NVDA automaticamente depois de iniciar cessão no Windows ====[GeneralSettingsStartAfterLogOn]
@@ -1111,6 +1115,7 @@ As setas Acima e Esquerda sobem pela lista, enquanto as Setas Abaixo e Direita d
 Se está a utilizar o eSpeak NG que acompanha o NVDA, esta é uma caixa de combinação que lhe permite seleccionar a Variante do sintetizador, com a qual este deve falar.
 As variantes do eSpeak NG são parecidas com as vozes, mas proporcionam atributos ligeiramente diferentes da voz principal.
 Algumas variantes irão soar como um homem, outras como uma mulher e outras, ainda, como um sapo.
+Se usar outro sintetizador, talvez também possa configurar a variante, se o sintetizador possuir essa configuração.
 
 ==== Velocidade ====[SpeechSettingsRate]
 Esta opção permite-lhe alterar a velocidade da voz.
@@ -1129,7 +1134,6 @@ Uma barra deslizante que lhe permite escolher a inflexão (subida e descida da e
 ==== Alterar o idioma, automaticamente (quando suportado) ====[SpeechSettingsLanguageSwitching]
 Esta caixa de verificação permite-lhe definir se o NVDA deverá, ou não, mudar o idioma do sintetizador enquanto fala, caso o texto que esteja a ser lido especifique o seu idioma.
 Esta opção está activa, por padrão.
-Actualmente, apenas o eSpeak NG e o Vocalizer suportam a alteração automática de idioma.
 
 ==== Alterar o dialecto, automaticamente (quando suportado) ====[SpeechSettingsDialectSwitching]
 Se a opção "Alterar o idioma automaticamente" estiver activa, esta caixa de verificação permite-lhe definir se o dialecto também deverá ser alterado, ou se serão efectuadas apenas alterações de idioma propriamente dito.
@@ -1150,7 +1154,7 @@ Se quiser que o NVDA não leia a pontuação no idioma da voz, para um determina
 
 ==== Incluir dados do Unicode Consortium (incluindo emoji) ao processar caracteres e símbolos ====[SpeechSettingsCLDR]
 Quando esta caixa de verificação está marcada, o NVDA incluirá símbolos adicionais pronunciation dictionaries when pronouncing characters and symbols.
-Esses dicionários contém descriçãos para símbolos (principalmente emoji) fornecidas pelo [Consórcio Unicode http://www.unicode.org/consortium/] como parte do seu [Common Locale Data Repository http://cldr.unicode.org/].
+Esses dicionários contêm descrições para símbolos (principalmente emoji) fornecidas pelo [Consórcio Unicode https://www.unicode.org/consortium/] como parte do seu [Common Locale Data Repository https://cldr.unicode.org/].
 Se quiser que o NVDA fale as descriçõess dos emojis desta base de dados, deve activar esta opção.
 Contudo, se estiver a utilizar um sintetizador que já suporte anunciar as descrições dos emojis, pode preferir desactivar esta opção.
 
@@ -1164,14 +1168,14 @@ Para alternar entre anunciar ou não os Unicode Consortium data a partir de qual
 Este campo de edição permite-lhe definir a alteração da entoação da voz, que irá ser usada para falar uma letra maiúscula.
 Este valor é uma percentagem, em que um valor negativo baixa a entoação e um valor positivo aumenta-a.
 Para que não haja variação, introduza 0.
+Normalmente, o NVDA aumenta, ligeiramente, o tom, para sinalizar uma letra maiúscula, mas alguns sintetizadores não suportam essa funcionalidade.
+No caso da mudança de entoação não ser suportada, considere a utilização de ["Anunciar "Maiúscula" Antes De Letras Maiúsculas" #SpeechSettingsSayCapBefore] ou ["Reproduzir "bip" para maiúsculas" #SpeechSettingsBeepForCaps] para diferenciar maiúsculas de minúsculas.
 
 ==== Anunciar "Maiúscula" Antes De Letras Maiúsculas ====[SpeechSettingsSayCapBefore]
 Esta opção é uma caixa de verificação que, quando marcada, indica ao NVDA para que anuncie a palavra "maiúscula" antes de qualquer letra maiúscula, quando falada como um caracter individual, por exemplo, ao soletrar.
-Normalmente, o NVDA aumenta ligeiramente a entoação para qualquer letra maiúscula, mas alguns sintetizadores não suportam correctamente esta configuração; assim sendo, esta opção poderá ser utilizada para esse fim.
 
 ==== Reproduzir "bip" para maiúsculas ====[SpeechSettingsBeepForCaps]
 Se esta caixa de verificação estiver marcada, o NVDA produzirá um pequeno bip, cada vez que encontrar um Caracter maiúsculo.
-Tal como a caixa de verificação "anunciar maiúscula antes de letras maiúsculas", esta opção é útil para os sintetizadores que não possam alterar a sua entoação para letras maiúsculas.
 
 ==== Usar Funcionalidade de Soletrar, se Suportado ====[SpeechSettingsUseSpelling]
 Algumas palavras são constituídas apenas por um caracter, porém a pronúncia é diferente, dependendo se o caracter está a ser falado como um caracter individual (por exemplo, ao soletrar) ou como uma palavra.
@@ -1544,7 +1548,7 @@ Se a opção "Anunciar a Posição do Objecto" estiver activa, permite que o NVD
 Quando activada, O NVDA informará sobre mais controlos como menus e barras de ferramentas, porém esta informação poderá ser ligeiramente incorrecta.
 
 ==== Anunciar Descrição de Objectos ====[ObjectPresentationReportDescriptions]
-Desmarque esta caixa de verificação, se não precisar de ouvir a descrição anunciada em conjunto com os objectos.
+Desmarque esta caixa de verificação, se não precisar de ouvir a descrição anunciada em conjunto com os objectos, (como sugestões de pesquisa, anúncio da totalidade da janela assim que aberta, etc).
 
 %kc:setting
 ==== Anúncio da barra de progresso ====[ObjectPresentationProgressBarOutput]
@@ -1652,7 +1656,8 @@ Por exemplo, numa página da Internet, se pressionar Tab e encontrar um formulá
 
 ==== Modo de Foco Automático Para Movimentos do Cursor do Sistema ====[BrowseModeSettingsAutoPassThroughOnCaretMove]
 Esta opção, quando está marcada, permite que o NVDA entre e saia do modo de foco, quando anda com as setas direccionais.
-Por exemplo, se for pressionando a Seta Abaixo, numa página da Internet e encontrar uma área de edição, o NVDA activará automaticamente o modo de foco. Se pressionar as setas para sair da área de edição, o NVDA voltará a entrar em modo de navegação.
+Por exemplo, se for pressionando a Seta Abaixo, numa página da Internet, ao chegar a um campo de edição, o NVDA activará automaticamente o modo de foco.
+Se pressionar as setas para sair do campo de edição, o NVDA voltará a entrar em modo de navegação.
 
 ==== Indicação em áudio dos modos de foco e de navegação ====[BrowseModeSettingsPassThroughAudioIndication]
 Se esta opção estiver activa, o NVDA reproduzirá sons especiais, quando alternar entre o modo de navegação e modo de foco, em vez de anunciar essa alteração.
@@ -1660,6 +1665,7 @@ Se esta opção estiver activa, o NVDA reproduzirá sons especiais, quando alter
 ==== Impedir comandos de atingir o documento ====[BrowseModeSettingsTrapNonCommandGestures]
 Activada por padrão, esta opção permite que escolha se os comandos, (como o pressionar de teclas) que não são um comando do NVDA, nem são considerados como uma tecla de comando, em geral, devem ser impedidos de atingir o documento que está actualmente em foco.
 Por exemplo, se a opção estiver activada, se a letra j for pressionada, seria impedida de atingir o documento, pois não é um comando rápido de navegação nem é provável que seja um comando da própria aplicação.
+Nestes casos, o NVDA irá reproduzir um som padrão sempre que uma tecla pressionada é impedida de atingir o documento.
 
 +++ Formatação de Documentos (NVDA+Ctrl+D) +++[DocumentFormattingSettings]
 A maioria das caixas de verificação desta secção permitem configurar qual é o tipo de formatação que pretende ouvir automaticamente, conforme se move com o cursor pelos documentos.
@@ -2324,7 +2330,7 @@ Por favor, consulte a documentação desta linha braille para obter a descriçã
 %kc:endInclude
 
 ++ Baum, HumanWare, APH e Orbit ++[Baum]
-São suportadas várias linhas braille da [Baum https://www.baum.de/cms/en/], [HumanWare https://www.humanware.com/], [APH https://www.aph.org/] e [Orbit https://www.orbitresearch.com/] quando ligadas via USB, porta série ou bluetooth.
+São suportadas várias linhas braille da [Baum https://www.visiobraille.de/index.php?article_id=1&clang=2], [HumanWare https://www.humanware.com/], [APH https://www.aph.org/] e [Orbit https://www.orbitresearch.com/] quando ligadas via USB, porta série ou bluetooth.
 Incluem-se:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2 e Vario 340;
 - HumanWare: Brailliant, BrailleConnect e Brailliant2;
@@ -2523,7 +2529,7 @@ Por favor, consulte a documentação da sua linha braille para obter a descriç�
 
 ++ Seika ++[Seika]
 As linhas braille Seika versão 3, 4 e 5 (40 células) e Seika80 (80 células) da [Nippon Telesoft https://www.nippontelesoft.com/] são suportadas.
-Pode econtrar mais sobre estas linhas em https://www.seika-braille.com/.
+Pode econtrar mais sobre estas linhas e drivers necessários em https://en.seika-braille.com/down/index.html.
 Deverá, primeiro, instalar os drivers USB fornecidos pelo fabricante.
 
 Estas linhas ainda não suportam a detecção automática em segundo plano do NVDA.

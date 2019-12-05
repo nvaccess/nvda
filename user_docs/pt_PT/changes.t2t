@@ -21,7 +21,6 @@ Traduzido pela Equipa portuguesa do NVDA
 - No Internet Explorer, Google Chrome e Mozilla Firefox, já pode navegar por artigo e por agrupamento com as teclas de navegação rápida. É necessário atribuir essas teclas na janela "Definir comandos" aberta a partir de um documento em modo de navegação. (#9485, #9227)
  - As figuras também passam a ser anunciadas. São consideradas objectos e portanto navegáveis com a tecla rápida "o".
 - No Internet Explorer, Google Chrome e Mozilla Firefox, os artigos passam a ser anunciados na navegação por objectos, e opcionalmente, em modo de navegação se activados na secção Formatação de Documentos. (#10424)
-- Suporte para as iframes out-of-process no Mozilla Firefox. (#9672)
 - Adicionada a funcionalidade "Cortina de ecrã" que, quando activada torna o ecrã totalmente preto no Windows 8 e superiores (#7857):
  - Adicionada uma função para activar a cortina até o NVDA ser reiniciado, pressionando uma vez, ou activar sempre que o NVDA esteja em execução. É necessário atribuir uma tecla de atalho na janela "Definir comandos", secção "Visão";
  - Pode ser activada e configurada na secção "Visão" das configurações do NVDA.
@@ -73,7 +72,8 @@ Traduzido pela Equipa portuguesa do NVDA
 - Alguns casos raros de erros ou problemas de conversão Braille com o  liblouis foram resolvidos. (#9982)
 - As aplicações Java iniciadas antes do NVDA já são acessíveis sem ser necessário reiniciá-las. (#10296)
 - No Mozilla Firefox, quando o elemento em foco fica marcado como current (aria-current), esta alteração já não é anunciada várias vezes. (#8960)
-
+- O NVDA passa a tratar alguns caracteres unicode compostos, tais como e-acute como um caracter simples ao mover-se pelo texto. (#10550)
+ 
 
 == Alterações para desenvolvedores ==
 - Updated Python to 3.7. (#7105)
