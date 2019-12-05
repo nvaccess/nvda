@@ -71,7 +71,7 @@ Voit [tarkastella lisenssiä https://www.gnu.org/licenses/old-licenses/gpl-2.0.h
 -
 
 + NVDA:n hankkiminen ja asentaminen +[GettingAndSettingUpNVDA]
-NVDA on ladattavissa osoitteesta [www.nvaccess.org NVDA_URL].
+NVDA on ladattavissa [NV Accessin verkkosivulta NVDA_URL].
 
 Viimeisimmän version latauslinkki löytyy Download-osiosta.
 
@@ -167,7 +167,7 @@ Kun NVDA käynnistyy ensimmäistä kertaa, näkyviin tulee valintaikkuna, jossa 
 (Katso edempänä olevia kappaleita saadaksesi tietoja näistä aiheista.)
 Valintaikkunassa on lisäksi yhdistelmäruutu sekä kolme valintaruutua.
 Yhdistelmäruudusta valitaan näppäimistöasettelu.
-Ensimmäisellä valintaruudulla määritetään, käytetäänkö Capslockia NVDA-näppäimenä.
+Ensimmäisellä valintaruudulla määritetään, käytetäänkö Caps Lockia NVDA-näppäimenä.
 Toisella, joka on käytettävissä vain asennetuissa versioissa, valitaan, käynnistyykö NVDA automaattisesti Windowsiin kirjautumisen jälkeen.
 Kolmannella on mahdollista valita, halutaanko Tervetuloa-valintaikkunan tulevan näkyviin joka kerta NVDA:n käynnistyessä.
 
@@ -186,9 +186,9 @@ Mikäli jonkin NVDA-näppäimen halutaan toimivan samalla tavalla kuin silloin, 
 NVDA:n mukana tulee tällä hetkellä kaksi erilaista näppäinkomentojen määritystä, joita kutsutaan näppäimistöasetteluiksi: pöytäkoneille ja kannettaville tarkoitettu.
 NVDA käyttää oletusarvoisesti pöytäkoneiden näppäimistöasettelua, mutta kannettaville tarkoitettuun asetteluun voidaan vaihtaa Näppäimistö-kategoriasta [NVDA:n asetukset #NVDASettings] -valintaikkunasta, johon päästään NVDA-valikon Asetukset-alivalikosta.
 
-Pöytäkoneiden näppäimistöasettelussa käytetään runsaasti numeronäppäimistön näppäimiä (Numlockin on oltava pois käytöstä).
+Pöytäkoneiden näppäimistöasettelussa käytetään runsaasti numeronäppäimistön näppäimiä (Num Lockin on oltava pois käytöstä).
 Vaikka useimmissa kannettavissa tietokoneissa ei olekaan fyysistä numeronäppäimistöä, joissakin sellaista voidaan kuitenkin jäljitellä pitämällä FN-näppäintä alhaalla ja painamalla kirjaimia ja numeroita näppäimistön oikeanpuoleisesta osasta (7, 8, 9, u, i, o, j, k, l jne).
-Mikäli tämä ei ole mahdollista käytössä olevassa kannettavassa tai jos Numlockia ei voi kytkeä pois päältä, voidaan ottaa käyttöön kannettavien näppäimistöasettelu.
+Mikäli tämä ei ole mahdollista käytössä olevassa kannettavassa tai jos Num Lockia ei voi kytkeä pois päältä, voidaan ottaa käyttöön kannettavien näppäimistöasettelu.
 
 ++ NVDA:n kosketuseleet ++[NVDATouchGestures]
 NVDA:ta on mahdollista ohjata myös kosketuskomentojen avulla, mikäli käytettävässä laitteessa on kosketusnäyttö ja Windows 8 tai uudempi käyttöjärjestelmä.
@@ -213,14 +213,14 @@ Yhtäaikaa kahdella sormella napauttaminen tarkoittaa napauttamista kahdella sor
 Mikäli sama napautus suoritetaan kerran tai useammin nopeasti peräkkäin, NVDA käsittelee sitä moninapautuseleenä.
 Kahdesti napauttamisesta on seurauksena kaksoisnapautus.
 Kolmesti napauttamisesta seuraa kolmoisnapautus jne.
-Nämä moninapautuseleet tunnistavat myös, montako sormea käytettiin, joten sellaiset eleet kuin kolmoisnapautus kahdella sormella tai napautus neljällä sormella jne ovat mahdollisia.
+Nämä moninapautuseleet tunnistavat myös, montako sormea käytettiin, joten sellaiset eleet kuin kolmoisnapautus kahdella sormella tai napautus neljällä sormella jne. ovat mahdollisia.
  
 ==== Pyyhkäisyt ====
 Liu'uta sormea nopeasti näytöllä.
 
 Pyyhkäisyeleitä on neljä suunnasta riippuen: pyyhkäisy vasemmalle, oikealle, ylös ja alas.
 
-Eleen suorittamiseen voidaan käyttää useampaa kuin yhtä sormea samoin kuin napautuksissakin.
+Eleen suorittamiseen voidaan käyttää useampaa kuin yhtä sormea samoin kuin napautuksissa.
 Tämän vuoksi sellaiset eleet kuin pyyhkäisy ylös kahdella sormella tai pyyhkäisy vasemmalle neljällä sormella ovat mahdollisia.
 
 +++ Kosketustilat +++[TouchModes]
@@ -269,7 +269,7 @@ Kun valikko tulee näkyviin, siinä voidaan liikkua nuolinäppäimillä ja valit
 | Ota syöteohjetila käyttöön tai poista se käytöstä | NVDA+1 | NVDA+1 | Ei mitään | Tässä tilassa minkä tahansa näppäimen painaminen kertoo kyseisen näppäimen nimen ja kaikki siihen määritellyt NVDA-komennot. |
 | Sulje NVDA | NVDA+Q | NVDA+Q | Ei mitään | Sulkee NVDA:n. |
 | Ohita seuraava näppäinpainallus | NVDA+F2 | NVDA+F2 | Ei mitään | Välittää seuraavan näppäinpainalluksen suoraan aktiiviselle sovellukselle suorittamatta sen mahdollista NVDA-komentoa. |
-| Ota lepotila käyttöön tai poista se käytöstä | NVDA+Vaihto+S | NVDA+Vaihto+Z | Ei mitään | Lepotila poistaa käytöstä kaikki NVDA:n komennot sekä puheen ja pistekirjoituksen tuottamisen nykyisessä sovelluksessa. Tästä on eniten hyötyä sovelluksissa, joissa on  omat puhe- tai ruudunlukutoimintonsa. Lepotila poistetaan käytöstä painamalla uudelleen tätä näppäinyhdistelmää. |
+| Ota lepotila käyttöön tai poista se käytöstä | NVDA+Vaihto+S | NVDA+Vaihto+Z | Ei mitään | Lepotila poistaa käytöstä kaikki NVDA:n komennot sekä puheen ja pistekirjoituksen tuottamisen nykyisessä sovelluksessa. Tästä on eniten hyötyä sovelluksissa, joissa on  omat puhe- tai ruudunlukutoimintonsa. Lepotila poistetaan käytöstä painamalla uudelleen tätä näppäinyhdistelmää. Huom: Asetus säilyy vain seuraavaan NVDA:n uudelleenkäynnistykseen saakka. |
 %kc:endInclude
 
 ++ Järjestelmätietojen lukeminen ++[ReportingSystemInformation]
@@ -372,7 +372,7 @@ Seuraavia komentoja käytetään objekteittain liikkumiseen:
 | Lue tarkastelukohdistimen sijainti | NVDA+numeronäppäimistön Delete | NVDA+Delete | Ei mitään | Kertoo tietoja tarkastelukohdistimen kohdalla olevan tekstin tai objektin sijainnista. Näitä tietoja voivat olla esim. prosenttimäärä asiakirjasta, etäisyys sivun reunasta tai tarkka sijainti ruudulla. Kahdesti painettaessa kerrotaan lisätietoja. |
 %kc:endInclude
 
-Huom: Numlockin on oltava pois käytöstä, jotta numeronäppäimistön näppäimet toimivat oikein.
+Huom: Num Lockin on oltava pois käytöstä, jotta numeronäppäimistön näppäimet toimivat oikein.
 
 ++ Tekstin tarkasteleminen ++[ReviewingText]
 NVDA:n avulla on mahdollista lukea [ruutua #ScreenReview], nykyistä [asiakirjaa #DocumentReview] tai [objektia #ObjectReview] merkeittäin, sanoittain tai riveittäin.
@@ -410,7 +410,7 @@ Seuraavat tekstintarkastelukomennot ovat käytettävissä:
 | Puhu nykyisen symbolin korvaava teksti | Ei mitään | Ei mitään | Ei mitään | Puhuu tarkastelukohdistimen kohdalla olevan symbolin ja näyttää kahdesti painettaessa selaustilassa sekä symbolin että sen korvaavan tekstin. |
 %kc:endInclude
 
-Huom: Numlockin on oltava pois käytöstä, jotta numeronäppäimistön näppäimet toimivat oikein.
+Huom: Num Lockin on oltava pois käytöstä, jotta numeronäppäimistön näppäimet toimivat oikein.
 
 Hyvä keino tekstin tarkastelun peruskomentojen muistamiseen pöytäkoneen näppäimistöasettelua käytettäessä on ajatella  niitä  kolme kertaa kolme ruudukkona, jossa on ylhäältä alas rivi, sana ja merkki sekä vasemmalta oikealle edellinen, nykyinen ja seuraava.
 Asettelua kuvataan seuraavasti:
@@ -605,7 +605,9 @@ Se on ladattavissa ilmaiseksi osoitteesta https://www.dessci.com/en/products/mat
 NVDA tukee seuraavia matemaattisia sisältöjä:
 - MathML Mozilla Firefoxissa, Microsoft Internet Explorerissa ja Google Chromessa.
 - Design Science MathType Microsoft Wordissa ja PowerPointissa.
-MathTypen on oltava asennettuna. Kokeiluversio riittää.
+MathTypen on oltava asennettuna.
+Kokeiluversio riittää.
+Sen voi ladata osoitteesta https://www.dessci.com/en/products/mathtype/
 - MathML Adobe Readerissa.
 Huom: Tämä ei ole vielä virallinen standardi, joten sisältöä tuottavaa ohjelmistoa ei ole julkisesti saatavilla.
 - Math Kindle for PC:ssä kirjoille, joissa on esteetöntä matemaattista sisältöä.
@@ -641,7 +643,7 @@ NVDA voi antaa palautteen pistekirjoituksella, mikäli käytössä on pistenäyt
 Jos näytössä on Perkins-tyylinen näppäimistö, lisäksi on mahdollista syöttää lyhenne- ja tavallista pistekirjoitusta.
 
 Tietoja tuetuista pistenäytöistä on [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleessa.
-Tässä kappaleessa on  tietoja myös siitä, mitkä näytöt tukevat NVDA:n automaattista taustalla tapahtuvaa pistenäytön tunnistustoiminnallisuutta.
+Tässä kappaleessa on  tietoja myös siitä, mitkä näytöt tukevat NVDA:n automaattista pistenäytön tunnistustoiminnallisuutta.
 Pistekirjoituksen asetukset määritetään [Asetukset #NVDASettings]-valintaikkunan [Pistekirjoitus-kategoriasta #BrailleSettings].
 
 ++ Säädintyyppien ja -tilojen sekä kiintopisteiden lyhenteet ++[BrailleAbbreviations]
@@ -1047,8 +1049,10 @@ Käytettävissä ovat seuraavat lokitasot:
 - Ei käytössä: NVDA ei tallenna lokiin mitään käynnissä ollessaan lyhyttä käynnistysilmoitusta lukuun ottamatta.
 - Tiedot: NVDA tallentaa lokiin perustietoja, kuten käynnistysilmoituksia ja kehittäjille hyödyllistä tietoa.
 - Virheenkorjausvaroitus: Lokiin tallennetaan varoituksia, jotka eivät ole vakavien virheiden aiheuttamia.
-- Syöttö/tulostus: Lokiin tallennetaan näppäimistön ja pistenäyttöjen syöte sekä puhe- ja pistekirjoitustuloste. Jos olet huolissasi yksityisyydestä, älä määritä lokitasoksi tätä vaihtoehtoa.
-- Virheenkorjaus: Lokiin tallennetaan tiedot-, varoitukset- ja syöttö/tulostus-ilmoitusten lisäksi virheenkorjauksen lisäilmoituksia. Kuten syöttö/tulostus-tasolla, jos olet huolissasi yksityisyydestä, lokitasoksi ei tule määrittää tätä vaihtoehtoa.
+- Syöttö/tulostus: Lokiin tallennetaan näppäimistön ja pistenäyttöjen syöte sekä puhe- ja pistekirjoitustuloste.
+ - Mikäli olet huolissasi yksityisyydestäsi, älä määritä lokitasoksi tätä vaihtoehtoa.
+- Virheenkorjaus: Lokiin tallennetaan tiedot-, varoitukset- ja syöttö/tulostus-ilmoitusten lisäksi virheenkorjauksen lisäilmoituksia.
+ - Kuten syöttö/tulostus-tasolla, mikäli olet huolissasi yksityisyydestäsi, lokitasoksi ei tule määrittää tätä vaihtoehtoa.
 -
   
 ==== Käynnistä automaattisesti sisäänkirjautumisen jälkeen ====[GeneralSettingsStartAfterLogOn]
@@ -1111,6 +1115,7 @@ Nuoli vasemmalle ja Nuoli ylös siirtävät ylöspäin luettelossa, kun taas Nuo
 Jos käytetään NVDA:n mukana tulevaa eSpeak NG -puhesyntetisaattoria, tästä yhdistelmäruudusta voidaan valita käytettävä muunnelma.
 Muunnelmat ovat ikään kuin puheääniä, koska jokainen antaa äänille hieman eri määreitä.
 Jotkin muunnelmat kuulostavat mieheltä, jotkin naiselta, ja jotkin jopa kuin sammakolta.
+Mikäli käytät kolmannen osapuolen syntetisaattoria, saatat  myös pystyä ehkä muuttamaan tätä arvoa, jos valitsemasi ääni tukee sitä.
 
 ==== Nopeus ====[SpeechSettingsRate]
 Tällä liukusäätimellä muutetaan puheen nopeutta.
@@ -1121,15 +1126,14 @@ Tällä liukusäätimellä muutetaan puheen korkeutta.
 Arvot 0 - 100 ovat mahdollisia (0=matalin ja 100=korkein).
 
 ==== Voimakkuus ====[SpeechSettingsVolume]
-Tällä liukusäätimellä muutetaan puheen voimakkuutta. Arvot 0 - 100 ovat mahdollisia (0=hiljaisin ja 100=voimakkain).
+Tällä liukusäätimellä muutetaan puheen voimakkuutta – arvot 0 - 100 ovat mahdollisia (0=hiljaisin ja 100=voimakkain).
 
 ==== Sävy ====[SpeechSettingsInflection]
-Tällä liukusäätimellä muutetaan puhesyntetisaattorin äänensävyä (korkeuden nousuja ja laskuja). ESpeak NG on tällä hetkellä ainoa syntetisaattori, joka tukee tätä asetusta.
+Tällä liukusäätimellä muutetaan äänensävyä (korkeuden nousuja ja laskuja), jolla puhesyntetisaattori puhuu.
 
 ==== Vaihda kieltä automaattisesti ====[VoiceSettingsLanguageSwitching]
 Tällä valintaruudulla voidaan vaikuttaa siihen, vaihtaako NVDA puhesyntetisaattorin kieltä automaattisesti, jos luettavan tekstin kieli on määritetty asianmukaisesti.
 Asetus on oletusarvoisesti käytössä.
-Tällä hetkellä vain eSpeak NG -syntetisaattori tukee automaattista kielen vaihtamista.
 
 ==== Vaihda murretta automaattisesti ====[SpeechSettingsDialectSwitching]
 Tällä valintaruudulla määritetään, vaihdetaanko pelkän kielen lisäksi myös murretta.
@@ -1150,8 +1154,8 @@ Mikäli välimerkit luetaan väärällä kielellä tiettyä syntetisaattoria tai
 
 ==== Käytä Unicode-konsortion dataa (emojit mukaan lukien) merkkejä ja symboleita käsiteltäessä ====[SpeechSettingsCLDR]
 Kun tämä valintaruutu on valittuna, NVDA käyttääsymboleiden lisäsanastoja merkkejä ja symboleita puhuttaessa.
-Nämä sanastot sisältävät merkkien kuvauksia (erityisesti emojeille), jotka tarjoaa [Unicode-konsortio http://www.unicode.org/consortium/] osana [Common Locale Data -tietokantaa http://cldr.unicode.org/].
-Mikäli NVDA:n halutaan puhuvan emoji-merkkien kuvaukset tähän dataan perustuen, tämän valintaruudun tulisi olla valittuna.
+Nämä sanastot sisältävät merkkien kuvauksia (erityisesti emojeille), jotka tarjoaa [Unicode-konsortio https://www.unicode.org/consortium/] osana [Common Locale Data -tietokantaa https://cldr.unicode.org/].
+Mikäli NVDA:n halutaan puhuvan emoji-merkkien kuvaukset tähän dataan perustuen, tämän valintaruudun tulee olla valittuna.
 Jos kuitenkin käytössä on puhesyntetisaattori, joka jo valmiiksi tukee emojien puhumista, tämä asetus kannattaa ehkä poistaa käytöstä.
 
 Huom: Manuaalisesti lisätyt tai muokatut merkkikuvaukset tallennetaan osana käyttäjän asetuksia.
@@ -1164,18 +1168,18 @@ Unicode-konsortion datan sisällyttämistä voi vaihtaa mistä tahansa lisääm�
 Tähän muokkauskenttään syötetään prosenttiluku, jonka verran puheäänen korkeus muuttuu isoja kirjaimia luettaessa.
 Negatiivinen arvo laskee ja positiivinen nostaa äänenkorkeutta.
 Mikäli äänenkorkeuden ei haluta muuttuvan, tulee arvoksi antaa 0.
+Tavallisesti NVDA nostaa hieman äänenkorkeutta jokaisen ison kirjaimen kohdalla, mutta jotkin puhesyntetisaattorit eivät ehkä tue sitä kunnolla.
+Jos isojen kirjainten äänenkorkeuden muuttamista ei tueta, harkitse sen sijaan asetusten [Ilmaise isot kirjaimet sanomalla "iso" #SpeechSettingsSayCapBefore] ja/tai [Ilmaise isot kirjaimet äänimerkillä #SpeechSettingsBeepForCaps] käyttämistä.
 
-==== Ilmaise isot kirjaimet sanalla "iso" ====[SpeechSettingsSayCapBefore]
+==== Ilmaise isot kirjaimet sanomalla "iso" ====[SpeechSettingsSayCapBefore]
 Kun tämä asetus on käytössä, NVDA sanoo "iso" ennen jokaista yksittäisenä merkkinä puhuttua isoa kirjainta (kuten esim. tavattaessa).
-Tavallisesti NVDA nostaa hieman äänenkorkeutta jokaisen ison kirjaimen kohdalla, mutta jotkin puhesyntetisaattorit eivät ehkä tue sitä kunnolla, joten tälle asetukselle voi olla käyttöä.
 
 ==== Ilmaise isot kirjaimet äänimerkillä ====[SpeechSettingsBeepForCaps]
 Jos tämä valintaruutu on valittuna, NVDA antaa pienen äänimerkin aina isoa kirjainta luettaessa.
-Kuten Ilmaise isot kirjaimet sanalla "iso" -asetus, tämäkin on käyttökelpoinen puhesyntetisaattoreilla, jotka eivät pysty nostamaan äänenkorkeuttaan isojen kirjainten kohdalla.
 
 ==== Käytä tavaustoimintoa (jos mahdollista) ====[SpeechSettingsUseSpelling]
 Jotkin sanat koostuvat vain yhdestä kirjaimesta, mutta se lausutaan eri tavalla riippuen siitä, puhutaanko se yksittäisenä merkkinä (kuten tavattaessa) vai sanana.
-Esimerkiksi englanninkielessä "a" on sekä kirjain että sana, mutta se lausutaan kussakin tilanteessa eri tavalla.
+Esim. englanninkielessä "a" on sekä kirjain että sana, mutta se lausutaan kussakin tilanteessa eri tavalla.
 Tämän asetuksen avulla syntetisaattori pystyy erottamaan nämä tilanteet toisistaan, mikäli se vain tukee toimintoa.
 Useimmat syntetisaattorit tukevat asetusta.
 
@@ -1197,7 +1201,7 @@ Eräs tässä luettelossa aina näkyvä vaihtoehto on "Ei puhetta", joka mahdoll
 Tästä voi olla hyötyä jollekulle, joka haluaa käyttää NVDA:ta vain pistenäytön avulla, tai näkeville kehittäjille, jotka käyttävät pelkkää puheentarkastelutoimintoa.
 
 ==== Äänilaite ====[SelectSynthesizerOutputDevice]
-Tästä valitaan, mitä äänikorttia NVDA:ssa valittuna oleva puhesyntetisaattori käyttää.
+Tästä valitaan, mitä äänilaitetta NVDA:ssa valittuna oleva puhesyntetisaattori käyttää.
 
 %kc:setting
 ==== Äänenvoimakkuuden hiljennys ====[SelectSynthesizerDuckingMode]
@@ -1338,7 +1342,7 @@ Tämä yhdistelmäruutu sisältää useita vaihtoehtoja riippuen järjestelmää
 Vaihtoehtojen välillä liikutaan nuolinäppäimillä.
 
 Vaihtoehto "automaattinen" saa NVDA:n etsimään useita tuettuja pistenäyttöjä taustalla.
-Kun tämä ominaisuus on käytössä ja tietokoneeseen liitetään tuettu pistenäyttö USB:tä tai bluetoothia käyttäen, NVDA ottaa kyseisen näytön käyttöön.
+Kun tämä ominaisuus on käytössä ja tietokoneeseen liitetään tuettu pistenäyttö USB:tä tai Bluetoothia käyttäen, NVDA ottaa kyseisen näytön käyttöön.
 
 "Ei pistenäyttöä" tarkoittaa, että pistenäyttöä ei käytetä.
 
@@ -1348,7 +1352,7 @@ Lisätietoja tuetuista pistenäytöistä sekä siitä, mitkä niistä tukevat au
 Tällä asetuksella, mikäli se on käytettävissä, valitaan, mitä porttia tai yhteystyyppiä valitun pistenäytön kanssa käytetään.
 Se on yhdistelmäruutu, joka sisältää käytettävissä olevat vaihtoehdot valitulle pistenäytölle.
 
-NVDA käyttää oletusarvoisesti automaattista portintunnistusta, mikä tarkoittaa, että pistenäyttöön muodostetaan yhteys automaattisesti skannaamalla järjestelmän käytettävissä olevia USB- ja bluetooth-laitteita.
+NVDA käyttää oletusarvoisesti automaattista portintunnistusta, mikä tarkoittaa, että pistenäyttöön muodostetaan yhteys automaattisesti skannaamalla järjestelmän käytettävissä olevia USB- ja Bluetooth-laitteita.
 Joillekin pistenäytöille voidaan kuitenkin itse valita käytettävä portti.
 Vaihtoehtoina ovat "Automaattinen" (joka määrää NVDA:n käyttämään oletusarvoista automaattista portintunnistusta), "USB", "Bluetooth" sekä "sarjaportti", mikäli pistenäyttö tukee sarjaporttiliitäntää.
 
@@ -1393,7 +1397,7 @@ Katso tietoja kunkin tarjoajan tukemista asetuksista kyseisen tarjoajan ohjeesta
 
 +++ Näppäimistö (NVDA+Ctrl+K) +++[KeyboardSettings]
 Näppäimistö-kategoria sisältää asetuksia, jotka määrittävät, miten NVDA käyttäytyy kirjoitettaessa ja käytettäessä näppäimistöä muilla tavoin.
-Kategoria sisältää seuraavat asetukset:
+Tämä asetuskategoria sisältää seuraavat asetukset:
 
 ==== Näppäimistöasettelu ====[KeyboardSettingsLayout]
 Tästä yhdistelmäruudusta valitaan, mitä näppäimistöasettelua NVDA käyttää. Tällä hetkellä käytettävissä olevat kaksi vaihtoehtoaovat Pöytäkone ja Kannettava.
@@ -1544,7 +1548,7 @@ Jos objektien sijaintitietojen lukeminen on käytössä, tämän asetuksen avull
 Kun tämä asetus on käytössä, NVDA lukee sijaintitiedot entistä useammissa säätimissä, kuten valikoissa ja työkaluriveissä. Tiedot voivat kuitenkin olla hieman epätarkkoja.
  
 ==== Lue objektien kuvaukset ====[ObjectPresentationReportDescriptions]
-Tätä valintaruutua ei kannata valita, jos ei haluta kuulla objektien kuvauksia.
+Poista tämän valintaruudun valinta, mikäli et halua kuulla objektien kuvauksia (esim. hakuehdotuksia, koko valintaikkunan lukemista heti sen avauduttua jne.).
 
 %kc:setting
 ==== Edistymispalkkien päivitykset ====[ObjectPresentationProgressBarOutput]
@@ -1648,7 +1652,8 @@ Ilmaistavat elementit, kuten linkit, otsikot ja taulukot, määritetään [Asetu
   
 ==== Automaattinen vuorovaikutustila kohdistuksen muuttuessa ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
 Kun tämä valintaruutu on valittuna, vuorovaikutustila otetaan käyttöön, jos kohdistus muuttuu.
-Kun esim. verkkosivulla siirrytään sarkaimella lomakkeen kohdalle tämän asetuksen ollessa käytössä, vuorovaikutustila otetaan käyttöön automaattisesti.
+Kun esim. verkkosivulla siirryt sarkaimella lomakkeen kohdalle tämän asetuksen ollessa käytössä, vuorovaikutustila otetaan käyttöön automaattisesti.
+Mikäli siirryt nuolinäppäimillä pois muokkauskentästä, NVDA vaihtaa takaisin selaustilaan.
 
 ==== Automaattinen vuorovaikutustila kohdistinta siirrettäessä ====[BrowseModeSettingsAutoPassThroughOnCaretMove]
 Kun tämä asetus on käytössä, NVDA siirtyy automaattisesti vuorovaikutustilaan ja siitä pois nuolinäppäimillä liikuttaessa.
@@ -1660,6 +1665,7 @@ Jos tämä asetus on käytössä, NVDA toistaa äänimerkin vaihtaessaan selaus-
 ==== Estä muiden kuin syötekomentojen pääsy asiakirjaan ====[BrowseModeSettingsTrapNonCommandGestures]
 Tällä oletusarvoisesti käytössä olevalla asetuksella voidaan valita, estetäänkö syötekomentojen (kuten näppäinpainallusten), jotka eivät suorita NVDA-komentoa tai joita ei pidetä yleisinä komentonäppäiminä, pääsy aktiivisena olevaan asiakirjaan.
 Esim. jos asetuksen ollessa käytössä painetaan J-kirjainta, sen tulostuminen asiakirjaan estetään, sillä se ei ole pikaselausnäppäin, tai koska on epätodennäköistä, että se olisi sovelluksen käytössä oleva näppäinkomento.
+NVDA käskee Windowsia toistamaan oletusäänen, kun estettyä näppäintä painetaan.
 
 +++ Asiakirjojen muotoilu (NVDA+Ctrl+D) +++[DocumentFormattingSettings]
 Useimmilla tämän kategorian valintaruuduilla voidaan määrittää, minkä tyyppisiä muotoilutietoja halutaan automaattisesti kuulla siirrettäessä kohdistinta asiakirjoissa.
@@ -2077,8 +2083,8 @@ Lisäosat näytetään luettelossa, jossa on seuraavat sarakkeet:
 + Yhteensopimattomuuden syy (miksi lisäosaa pidetään yhteensopimattomana)
 +
 
-Valintaikkunassa on myös "Tiedot"-painike.
-Sitä painamalla saa näkyviin kaikki lisäosan tiedot, joista on apua otettaessa yhteyttä kyseisen lisäosan tekijään.
+Valintaikkunassa on myös "Tietoa lisäosasta..." -painike.
+Sitä painamalla saa näkyviin kaikki lisäosan tiedot, joista on apua otettaessa yhteyttä lisäosan tekijään.
 
 
 ++ Python-konsoli ++[PythonConsole]
@@ -2090,7 +2096,7 @@ Tällä voidaan ladata uudelleen sovellusmoduulit ja yleisliitännäiset ilman N
 
 + Tuetut puhesyntetisaattorit +[SupportedSpeechSynths]
 Tässä kappaleessa on tietoja NVDA:n tukemista puhesyntetisaattoreista.
-Kattavampi luettelo ilmaisista ja kaupallisista syntetisaattoreista, joita on mahdollista ostaa ja ladata NVDA:lla käytettäväksi, on [lisä-äänien sivulla. https://github.com/nvaccess/nvda/wiki/ExtraVoices]
+Vielä kattavampi luettelo ilmaisista ja kaupallisista syntetisaattoreista, joita on mahdollista ostaa ja ladata NVDA:lla käytettäväksi, on [lisä-äänien sivulla. https://github.com/nvaccess/nvda/wiki/ExtraVoices]
 
 ++ eSpeak NG ++[eSpeakNG]
 [ESpeak NG https://github.com/espeak-ng/espeak-ng] -puhesyntetisaattori on sisäänrakennettu NVDA:han, joten sen asentamiseksi ja käyttämiseksi ei tarvita muita erikoisajureita tai komponentteja.
@@ -2139,7 +2145,7 @@ Katso luettelo saatavilla olevista äänistä ja ohjeet niiden asentamiseen [tä
 Tässä kappaleessa on tietoja NVDA:n tukemista pistenäytöistä.
 
 ++ Automaattista tunnistusta tukevat pistenäytöt ++[AutomaticDetection]
-NVDA:n on mahdollista tunnistaa useita pistenäyttöjä automaattisesti joko USB:tä tai bluetoothia käyttäen.
+NVDA:n on mahdollista tunnistaa useita pistenäyttöjä automaattisesti joko USB:tä tai Bluetoothia käyttäen.
 Automaattinen tunnistus otetaan käyttöön valitsemalla käytettäväksi pistenäytöksi Automaattinen NVDA:n [Pistekirjoituksen asetukset -valintaikkunasta. #BrailleSettings]
 Tämä vaihtoehto on oletusarvoisesti valittuna.
 
@@ -2155,15 +2161,15 @@ Seuraavat näytöt tukevat automaattista tunnistusta.
 -
 
 ++ Freedom Scientific Focus/PAC Mate ++[FreedomScientificFocus]
-Kaikkia [Freedom Scientificin https://www.freedomscientific.com/] Focus- ja PAC Mate -pistenäyttöjä tuetaan sekä USB-liitännällä että bluetooth-yhteydellä.
+Kaikkia [Freedom Scientificin https://www.freedomscientific.com/] Focus- ja PAC Mate -pistenäyttöjä tuetaan sekä USB-liitännällä että Bluetoothilla.
 Näiden näyttöjen käyttämiseksi on asennettava ajurit.
-Ne voi ladata osoitteesta https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Ne voi ladata osoitteesta https://support.freedomscientific.com/Downloads/Focus/FocusBlueBrailleDisplayDriver.
 Ajurit tukevat kaikkia Freedom Scientificin Focus- ja Pacmate-pistenäyttöjä, vaikka sivulla mainitaankin vain Focus 40 Blue.
 
-NVDA tunnistaa oletusarvoisesti pistenäytöt automaattisesti ja voi yhdistää niihin joko USB:n tai bluetoothin kautta.
-Näytön asetuksia määritettäessä voidaan kuitenkin myös itse valita USB-portti tai bluetooth yhteystyypin rajoittamiseksi.
-Tästä voi olla hyötyä, jos Focus-näyttö halutaan yhdistää NVDA:han bluetoothilla ja silti ladata sitä tietokoneen USB-virralla.
-Myös NVDA:n automaattinen pistenäytön tunnistus tunnistaa tämän näytön USB:tä tai bluetoothia käytettäessä.
+NVDA tunnistaa oletusarvoisesti pistenäytöt automaattisesti ja voi yhdistää niihin joko USB:llä tai Bluetoothilla.
+Näytön asetuksia määritettäessä voidaan kuitenkin myös itse valita USB-portti tai Bluetooth yhteystyypin rajoittamiseksi.
+Tästä voi olla hyötyä, jos Focus-näyttö halutaan yhdistää NVDA:han Bluetoothilla ja silti ladata sitä tietokoneen USB-virralla.
+Myös NVDA:n automaattinen pistenäytön tunnistus tunnistaa tämän näytön USB:tä tai Bluetoothia käytettäessä.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -2216,13 +2222,13 @@ Vain Focus 80:
 %kc:endInclude
 
 ++ Optelec ALVA 6/protokollamuunnin ++[OptelecALVA]
-[Optelecin https://www.optelec.com/] ALVA BC640- ja BC680 -pistenäyttöjä tuetaan sekä USB-liitäntää että bluetooth-yhteyttä käytettäessä.
+[Optelecin https://www.optelec.com/] ALVA BC640- ja BC680 -pistenäyttöjä tuetaan sekä USB-liitäntää että Bluetooth-yhteyttä käytettäessä.
 Vaihtoehtoisesti voit liittää vanhemman näytön, kuten Braille Voyagerin, käyttämällä Optelecin toimittamaa protokollamuunninta.
-Niiden käyttämiseksi ei tarvitse asentaa ajureita.
+Näiden näyttöjen käyttämiseksi ei tarvitse asentaa ajureita.
 Riittää, että pistenäyttö kytketään tietokoneeseen ja määritetään NVDA käyttämään sitä.
 
-Huom: NVDA ei välttämättä pysty käyttämään ALVA BC6 -näyttöä bluetoothin välityksellä, kun sen ja tietokoneen välinen laitepari on muodostettu ALVA:n bluetooth-apuohjelmalla.
-Kun pariliitos on luotu tätä apuohjelmaa käyttäen ja  NVDA ei tunnista laitettasi, suosittelemme käyttämään laiteparin muodostamiseen Windowsin bluetooth-asetuksia.
+Huom: NVDA ei välttämättä pysty käyttämään ALVA BC6 -näyttöä Bluetoothin kautta, kun sen ja tietokoneen välinen laitepari on muodostettu ALVA:n Bluetooth-apuohjelmalla.
+Kun pariliitos on luotu tätä apuohjelmaa käyttäen ja  NVDA ei tunnista laitettasi, suosittelemme käyttämään laiteparin muodostamiseen Windowsin Bluetooth-asetuksia.
 
 Vaikka joissakin näistä pistenäytöistä onkin pistenäppäimistö, ne huolehtivat itse pistekirjoituksen kääntämisestä tekstiksi.
 Tämä tarkoittaa, että oletusarvoisesti NVDA:n pistekirjoituksen syöttöjärjestelmää ei käytetä (ts. pistesyöttötaulukkoasetuksella ei ole vaikutusta).
@@ -2268,7 +2274,7 @@ Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:endInclude
 
 ++ Handy Tech ++[HandyTech]
-NVDA tukee useimpia [Handy Techin https://www.handytech.de/] pistenäyttöjä, joissa on USB/sarjaporttiliitäntä tai bluetooth-yhteys.
+NVDA tukee useimpia [Handy Techin https://www.handytech.de/] pistenäyttöjä, joissa on USB/sarjaporttiliitäntä tai Bluetooth-yhteys.
 Vanhempia USB-malleja varten tietokoneelle on asennettava Handy Techin USB-ajurit.
 
 Seuraavia näyttöjä ei tueta oletusarvoisesti, mutta niitä voidaan käyttää [Handy Techin yleisajurin https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] ja NVDA-lisäosan avulla:
@@ -2306,7 +2312,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 Sen käyttämiseksi ei tarvitse asentaa ajureita.
 Riittää, että pistenäyttö kytketään tietokoneeseen ja määritetään NVDA käyttämään sitä.
 
-Tämä näyttö ei tue NVDA:n automaattista taustalla tapahtuvaa pistenäytön tunnistusta.
+Tämä näyttö ei tue NVDA:n automaattista pistenäytön tunnistusta.
 
 Seuraavassa on lueteltu tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -2324,7 +2330,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:endInclude
 
 ++ Baum/Humanware/APH/Orbit ++[Baum]
-Useita [Baum https://www.baum.de/cms/en/]-, [HumanWare https://www.humanware.com/]-, [APH https://www.aph.org/]- ja [Orbit https://www.orbitresearch.com/]-pistenäyttöjä tuetaan USB:llä, Bluetoothilla tai sarjaportin kautta yhdistettäessä.
+Useita [Baum https://www.visiobraille.de/index.php?article_id=1&clang=2]-, [HumanWare https://www.humanware.com/]-, [APH https://www.aph.org/]- ja [Orbit https://www.orbitresearch.com/]-pistenäyttöjä tuetaan USB:llä, Bluetoothilla tai sarjaportin kautta yhdistettäessä.
 Näitä ovat:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
 - HumanWare: Brailliant, BrailleConnect, Brailliant2
@@ -2363,7 +2369,7 @@ Malleissa, joissa on ohjaustappi:
 [Hedo Reha-Technikin  https://www.hedo.de/] hedo ProfiLine USB -pistenäyttöä tuetaan.
 Sen käyttämiseksi on asennettava valmistajan toimittamat USB-ajurit.
 
-Tämä näyttö ei vielä tue NVDA:n automaattista taustalla tapahtuvaa pistenäytön tunnistusta.
+Tämä näyttö ei vielä tue NVDA:n automaattista pistenäytön tunnistusta.
 
 Seuraavassa on tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -2382,7 +2388,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 [Hedo Reha-Technikin https://www.hedo.de/] hedo MobilLine USB -pistenäyttöä tuetaan.
 Sen käyttämiseksi on asennettava valmistajan toimittamat USB-ajurit.
 
-Tämä näyttö ei vielä tue NVDA:n automaattista taustalla tapahtuvaa pistenäytön tunnistusta.
+Tämä näyttö ei vielä tue NVDA:n automaattista pistenäytön tunnistusta.
 
 Seuraavassa on tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -2398,7 +2404,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B / BrailleNote Touch ++[HumanWareBrailliant]
-[HumanWaren https://www.humanware.com/] Brailliant BI- ja B -sarjan pistenäyttöjä tuetaan, BI 14, BI 32, BI 40 ja B 80 mukaan lukien, kun ne liitetään tietokoneeseen USB:llä tai bluetoothilla.
+[HumanWaren https://www.humanware.com/] Brailliant BI- ja B -sarjan pistenäyttöjä tuetaan, BI 14, BI 32, BI 40 ja B 80 mukaan lukien, kun ne liitetään tietokoneeseen USB:llä tai Bluetoothilla.
 Mikäli käytetään USB-liitäntää ja protokollaksi on määritetty HumanWare, valmistajan toimittamat ajurit on asennettava ensin.
 OpenBraille-protokollaa käytettäessä ajureita ei tarvita.
 
@@ -2452,7 +2458,7 @@ Katso laitteiden käyttöohjeista kuvaukset näppäinten paikoista.
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++[Hims]
 NVDA tukee [HIMSin https://www.hims-inc.com/] Braille Sense-, Braille EDGE-, Smart Beetle- ja Sync Braille -pistenäyttöjä USB-liitäntää tai Bluetooth-yhteyttä käytettäessä.
 USB-liitäntää käytettäessä tietokoneelle on asennettava HIMSin ajurit.
-Voit ladata ne tältä sivulta: https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+Voit ladata ne täältä: https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -2523,13 +2529,13 @@ Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 
 ++ Seika ++[Seika]
 [Nippon Telesoftin https://www.nippontelesoft.com/] 40 merkin Seika-versioita 3, 4 ja 5 sekä 80 merkin Seika80-versiota tuetaan.
-Lisätietoja näistä pistenäytöistä löytyy osoitteesta https://www.seika-braille.com/.
+Lisätietoja näistä pistenäytöistä sekä niiden tarvitsemista ajureista löytyy osoitteesta https://en.seika-braille.com/down/index.html/.
 Tietokoneelle on asennettava valmistajan toimittamat USB-ajurit.
 
-Nämä näytöt eivät vielä tue NVDA:n automaattista taustalla tapahtuvaa pistenäytön tunnistusta.
+Nämä näytöt eivät vielä tue NVDA:n automaattista pistenäytön tunnistusta.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
-Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
+Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
 | Vieritä taaksepäin | vasen |
@@ -2549,11 +2555,11 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 Seuraavia pistenäyttöjä tuetaan:
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
-- BRAILLEX Trio (USB ja bluetooth)
-- BRAILLEX Live 20, BRAILLEX Live sekä BRAILLEX Live Plus (USB ja bluetooth)
+- BRAILLEX Trio (USB ja Bluetooth)
+- BRAILLEX Live 20, BRAILLEX Live sekä BRAILLEX Live Plus (USB ja Bluetooth)
 -
 
-Nämä näytöt eivät tue NVDA:n automaattista taustalla tapahtuvaa pistenäytön tunnistusta.
+Nämä näytöt eivät tue NVDA:n automaattista pistenäytön tunnistusta.
 
 NVDA käyttää BrxComia, mikäli se on asennettu.
 BrxCom on työkalu, joka mahdollistaa pistenäytön näppäimistösyötteen toimimisen itsenäisesti ruudunlukuohjelmasta riippumatta.
@@ -2607,12 +2613,12 @@ Seuraavassa on Papenmeierin näppäinmääritykset NVDA:lle:
 Trio-mallissa on neljä lisänäppäintä, jotka ovat pistenäppäimistön edessä.
 Ne ovat järjestyksessä vasemmalta oikealle:
 - vasen peukalonäppäin (lt)
-- väli
-- väli
+- väli-näppäin
+- väli-näppäin
 - oikea peukalonäppäin (rt)
 -
 Oikea peukalonäppäin ei ole toistaiseksi käytössä.
-Molemmat sisemmät näppäimet on määritelty välilyönniksi.
+Molemmat sisemmät näppäimet on määritelty Väli-näppäimeksi.
 
 || Nimi | Näppäinkomento |
 %kc:beginInclude
@@ -2634,7 +2640,7 @@ Seuraavia pistenäyttöjä tuetaan:
 -
 
 Huomaa, että nämä pistenäytöt voidaan liittää vain sarjaportin kautta.
-Tämän vuoksi Nämä näytöt eivät tue NVDA:n automaattista taustalla tapahtuvaa pistenäytön tunnistusta.
+Tämän vuoksi Nämä näytöt eivät tue NVDA:n automaattista pistenäytön tunnistusta.
 Portti, johon laite on liitetty, tulee valita sen jälkeen, kun pistenäytön ajuri on valittu [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunasta.
 
 Joissakin laitteissa on intuitiivisen ja nopean käytön mahdollistava helppokäyttönäppäin (EAB).
@@ -2715,9 +2721,9 @@ BRAILLEX 2D Screen:
 NVDA tukee [Humanwaren https://www.humanware.com] BrailleNote-muistiinpanolaitteita, kun ne toimivat ruudunlukuohjelman pistenäyttönä.
 Seuraavia malleja tuetaan:
 - BrailleNote Classic (vain sarjaporttiliitäntä)
-- BrailleNote PK (sarjaportti- ja bluetooth-liitännät)
-- BrailleNote MPower (sarjaportti- ja bluetooth-liitännät)
-- BrailleNote Apex (USB- ja bluetooth-liitännät)
+- BrailleNote PK (sarjaportti- ja Bluetooth-liitännät)
+- BrailleNote MPower (sarjaportti- ja Bluetooth-liitännät)
+- BrailleNote Apex (USB- ja Bluetooth-liitännät)
 -
 
 Katso BrailleNote Touchin näppäinkomennot [Brailliant BI/B / BrailleNote Touch HumanWareBrailliant] -kappaleesta.
@@ -2730,7 +2736,7 @@ Katso lisätietoja BrailleNote-käyttöoppaan pistenäyttökappaleesta.
 Käytettävä portti on määritettävä pistenäytön omista asetuksista, jos laitteesi tukee useampaa kuin yhtä liitäntätyyppiä.
 Katso lisätietoja BrailleNoten käsikirjasta.
 Portin määrittäminen voi olla tarpeen myös NVDA:n [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunassa.
-Mikäli laite on liitetty USB:llä tai bluetoothilla, voidaan portiksi määrittää käytettävissä olevista vaihtoehdoista riippuen "Automaattinen", "USB" tai "Bluetooth".
+Mikäli laite on liitetty USB:llä tai Bluetoothilla, voidaan portiksi määrittää käytettävissä olevista vaihtoehdoista riippuen "Automaattinen", "USB" tai "Bluetooth".
 Jos liitäntänä käytetään sarjaporttia (tai USB-sarjaporttisovitinta) tai jos mikään edellisistä vaihtoehdoista ei ole käytettävissä, on käytettävä yhteysportti valittava sarjaporttiluettelosta.
 
 HumanWaren toimittamat ajurit on asennettava ennen kuin BrailleNote Apex kytketään sen USB-asiakasliitännällä.
@@ -2813,7 +2819,7 @@ Seuraavia malleja tuetaan:
 -
 
 Voit määrittää näytön käyttämän sarjaportin [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunasta.
-Nämä näytöt eivät tue NVDA:n automaattista taustalla tapahtuvaa pistenäytön tunnistusta.
+Nämä näytöt eivät tue NVDA:n automaattista pistenäytön tunnistusta.
 
 Seuraavassa on näiden pistenäyttöjen näppäinmääritykset.
 Katso [EcoBraillen käyttöohjeesta ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] kuvaukset näppäinten paikoista.
@@ -2851,10 +2857,10 @@ Tämän vuoksi, ja jotta säilytetään yhteensopivuus muiden taiwanilaisten ruu
 
 ++ Eurobraille Esys/Esytime/Iris ++[Eurobraille]
 NVDA tukee [Eurobraillen https://www.eurobraille.fr/] Esys-, Esytime- ja Iris-pistenäyttöjä.
-Esys- ja Esytime-Evo-laitteiden kytkemiseen voidaan käyttää USB-liitäntää tai bluetooth-yhteyttä.
+Esys- ja Esytime-Evo-laitteiden kytkemiseen voidaan käyttää USB-liitäntää tai Bluetoothia.
 Vanhemmat Esytime-näytöt tukevat vain USB:tä.
 Iris-mallit voidaan kytkeä vain sarjaportin kautta.
-Siksi näiden näyttöjen käyttämä portti tulee valita sen jälkeen, kun olet valinnut tämän ajurin [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunasta.
+Tämän takia näiden näyttöjen käyttämä portti tulee valita sen jälkeen, kun olet valinnut tämän ajurin [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunasta.
 
 Iris- ja Esys-näytöissä on 10-näppäiminen pistekirjoitusnäppäimistö.
 Kahdesta Väli-näppäimen tavoin sijoitellusta näppäimestä vasemmanpuoleinen vastaa Askelpalautinta ja oikea Väli-näppäintä.
@@ -2942,10 +2948,10 @@ Käytettävää pistenäyttöä ja porttia määritettäessä on syytä kiinnitt
 BRLTTY huolehtii tällä hetkellä itse pistesyötöstä näytöissä, joissa on pistenäppäimistö.
 Tämän vuoksi NVDA:n syöttötaulukkoasetuksella ei ole merkitystä.
 
-BRLTTY ei tue NVDA:n automaattista taustalla tapahtuvaa pistenäytön tunnistusta.
+BRLTTY ei tue NVDA:n automaattista pistenäytön tunnistusta.
 
 Seuraavassa on BRLTTY:n näppäinkomennot NVDA:ta käytettäessä.
-Katso [BRLTTY:n näppäinsidosluetteloita https://mielke.cc/brltty/doc/KeyBindings/] saadaksesi tietoja siitä, miten BRLTTY:n komennot määritetään pistenäyttöjen näppäimiin.
+Katso [BRLTTY:n näppäinsidosluetteloita https://mielke.cc/brltty/doc/KeyBindings/] saadaksesi tietoja BRLTTY:n komentojen määrittämisestä pistenäyttöjen näppäimiin.
 %kc:beginInclude
 || Nimi | BRLTTY-komento |
 | Vieritä taaksepäin | fwinlt (siirry yksi ikkuna vasemmalle) |
