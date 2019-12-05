@@ -10,7 +10,7 @@ NVDA更新日志
  - 大大提高了性能和稳定性 (#9771)
  - 现在，可以通过NVDA高级设置面板的一个选项来启用在Windows控制台读出密码 可提高性能，启用后这些朗读不会显示在屏幕上，例如密码。 (#9649)
 - 现在，当使用NVDA操作Java应用程序时，将鼠标移至导航器对象命令的准确性已得到改善。 (#10157)
-- 现在，屏幕帘启用后，在Windows 8及更高版本上会使整个屏幕变黑。 (#7857)
+- 现在，屏幕变黑启用后，在Windows 8及更高版本上会使整个屏幕变黑。 (#7857)
 - 新增了对以下Handy Tech Braille 点显器的支持 (#8955):
  - Basic Braille Plus 40
  - Basic Braille Plus 32
@@ -21,6 +21,13 @@ NVDA更新日志
 - 在Internet Explorer，Microsoft Edge和Firefox和Chrome的最新版本中，路标现在以焦点模式和对象导航朗读。 (#10101)
 - 在Internet Explorer，Google Chrome和Mozilla Firefox中，您现在可以使用快速浏览脚本按文章顺序进行浏览。脚本默认情况下是未绑定快捷手势的，您可以在“输入手势”对话框中进行配置。 (#9227)
 - 现在，在Internet Explorer，Google Chrome和Mozilla Firefox中，文章元素通过对象导航朗读，如果在“文档格式”设置中启用，则可以使用浏览模式朗读。 (#10424)
+- 现在， NVDA 在Mozilla Firefox中支持进程外iframe。 (#9672)
+- 新增了屏幕变黑，启用该模式会使Windows 8及更高版本的整个屏幕变暗。 (#7857)
+ - 新增了用于启用屏幕变黑的脚本注意： 未分配默认手势。
+ - 可以通过NVDA设置对话框中的“视觉”分类启用和配置。
+- 向NVDA添加了屏幕突出显示功能。 (#971, #9064)
+ - 可以通过NVDA设置对话框中的“视觉”分类来启用和配置焦点，导航器对象和浏览模式插入标记的突出显示。
+ - 注意： 此功能与焦点突出显示插件不兼容，但是，在禁用内置突出显示功能后，仍可使用该插件。
 
 
 == 修改 ==
@@ -35,6 +42,9 @@ NVDA更新日志
 - 现在，启用CLDR字符（包括表情符号）朗读后，将在所有标点符号级别进行朗读。 (#8826)
 - 现在，NVDA中包含的第三方python软件包（例如，comtypes）已将其警告和错误日志记录到NVDA日志中。 (#10393)
 - 将Unicode Common Locale Data Repository表情符号库更新为版本36.0。 (#10426)
+- 现在 NVDA ，可读出浏览模式下的集中分组的说明。 (#10095)
+- NVDA现在包含Java Access Bridge，以支持对Java应用程序的访问，包括64位Java VM。 (#7724)
+- 现在， NVDA 启动后将自动启用 Java Access Bridge。 (#7952)
 
 
 == 错误修复 ==
@@ -60,6 +70,10 @@ NVDA更新日志
 - 在Windows 10 April 2018 Update和更高版本的``设置''应用程序中，NVDA将不再朗读在``系统/声音''页面中的音量进度条。 (#10284)
 - 现在，语音词典中的无效正则表达式不再破坏NVDA中的语音。 (#10334)
 - 在启用了UIA的Microsoft Word中读取项目符号时，不再会朗读下一个列表项。 (#9613)
+- 现在，一些罕见的盲文翻译问题和liblouis错误已得到解决。 (#9982)
+- 现在可以访问NVDA之前启动的Java应用程序，而无需重新启动Java。 (#10296)
+- 在Mozilla Firefox中，当焦点元素被标记为“当前”（“ aria-current”）时，此更改将不再重复使用。 (#8960)
+- NVDA现在将在浏览文本时将某些合成unicode字符（例如e-acute）视为一个字符。 (#10550)
 
 
 == 插件以及NVDA核心开发者需要了解的变动 ==
@@ -125,7 +139,7 @@ NVDA更新日志
 - External modules (appModules and globalPlugins) are now less likely to be able to break the creation of NVDAObjects. 
  - Exceptions caused by the "chooseNVDAObjectOverlayClasses" and "event_NVDAObject_init" methods are now properly caught and logged.
 - The aria.htmlNodeNameToAriaLandmarkRoles dictionary has been renamed to aria.htmlNodeNameToAriaRoles. It now also contains roles that aren't landmarks.
-- scriptHandler.isCurrentScript has been removed due to lack of use. There is no replacement. (#8677)}+
+- scriptHandler.isCurrentScript has been removed due to lack of use. There is no replacement. (#8677)
 
 
 = 2019.2.1 =
