@@ -52,7 +52,7 @@ from .commands import (  # noqa: F401
 
 from . import types
 from .types import SpeechSequence, SequenceItemT
-from typing import Optional, Dict, List, Any, Generator
+from typing import Optional, Dict, List, Any, Generator, Callable
 from logHandler import log
 import config
 import aria
@@ -117,8 +117,7 @@ def cancelSpeech():
 	# Import only for this function to avoid circular import.
 	import sayAllHandler
 	sayAllHandler.stop()
-	speakWithoutPauses._pendingSpeechSequence=[]
-	speakWithoutPauses._lastSentIndex=None
+	_speakWithoutPauses.reset()
 	if beenCanceled:
 		return
 	elif speechMode==speechMode_off:
@@ -2202,79 +2201,104 @@ def getTableInfoSpeech(
 	return textList
 
 
-re_last_pause=re.compile(r"^(.*(?<=[^\s.!?])[.!?][\"'”’)]?(?:\s+|$))(.*$)",re.DOTALL|re.UNICODE)
+class SpeechWithoutPauses:
+	_pendingSpeechSequence: SpeechSequence
+	re_last_pause = re.compile(
+		r"^(.*(?<=[^\s.!?])[.!?][\"'”’)]?(?:\s+|$))(.*$)",
+		re.DOTALL | re.UNICODE
+	)
 
+	def __init__(
+			self,
+			speakFunc: Callable[[SpeechSequence], None]
+	):
+		"""
+		:param speakFunc: Function used by L{speakWithoutPauses} to speak. This will likely be speech.speak.
+		"""
+		self.speak = speakFunc
+		self.reset()
 
-def speakWithoutPauses(  # noqa: C901
-		speechSequence: SpeechSequence,
-		detectBreaks: bool = True
-) -> bool:
-	"""
-	Speaks the speech sequences given over multiple calls, only sending to the synth at acceptable phrase or sentence boundaries, or when given None for the speech sequence.
-	@return: C{True} if something was actually spoken,
-		C{False} if only buffering occurred.
-	"""
-	lastStartIndex=0
-	#Break on all explicit break commands
-	if detectBreaks and speechSequence:
-		sequenceLen=len(speechSequence)
-		spoke = False
-		for index in range(sequenceLen):
-			if isinstance(speechSequence[index],EndUtteranceCommand):
-				if index>0 and lastStartIndex<index:
-					speakWithoutPauses(speechSequence[lastStartIndex:index],detectBreaks=False)
-				speakWithoutPauses(None)
-				spoke = True
-				lastStartIndex=index+1
-		if lastStartIndex<sequenceLen:
-			spoke = speakWithoutPauses(speechSequence[lastStartIndex:],detectBreaks=False)
-		return spoke
-	finalSpeechSequence=[] #To be spoken now
-	pendingSpeechSequence=[] #To be saved off for speaking  later
-	if speechSequence is None: #Requesting flush
-		if speakWithoutPauses._pendingSpeechSequence: 
-			#Place the last incomplete phrase in to finalSpeechSequence to be spoken now
-			finalSpeechSequence=speakWithoutPauses._pendingSpeechSequence
-			speakWithoutPauses._pendingSpeechSequence=[]
-	else: #Handling normal speech
-		#Scan the given speech and place all completed phrases in finalSpeechSequence to be spoken,
-		#And place the final incomplete phrase in pendingSpeechSequence
-		for index in range(len(speechSequence)-1,-1,-1): 
-			item=speechSequence[index]
-			if isinstance(item,str):
-				m=re_last_pause.match(item)
-				if m:
-					before,after=m.groups()
-					if after:
-						pendingSpeechSequence.append(after)
-					if before:
-						finalSpeechSequence.extend(speakWithoutPauses._pendingSpeechSequence)
-						speakWithoutPauses._pendingSpeechSequence=[]
-						finalSpeechSequence.extend(speechSequence[0:index])
-						finalSpeechSequence.append(before)
-						# Apply the last language change to the pending sequence.
-						# This will need to be done for any other speech change commands introduced in future.
-						for changeIndex in range(index-1,-1,-1):
-							change=speechSequence[changeIndex]
-							if not isinstance(change,LangChangeCommand):
-								continue
-							pendingSpeechSequence.append(change)
+	def reset(self):
+		self._pendingSpeechSequence = []
+
+	def speakWithoutPauses(  # noqa: C901
+			self,
+			speechSequence: Optional[SpeechSequence],
+			detectBreaks: bool = True
+	) -> bool:
+		"""
+		Speaks the speech sequences given over multiple calls,
+		only sending to the synth at acceptable phrase or sentence boundaries,
+		or when given None for the speech sequence.
+		@return: C{True} if something was actually spoken,
+			C{False} if only buffering occurred.
+		"""
+		lastStartIndex=0
+		#Break on all explicit break commands
+		if detectBreaks and speechSequence:
+			sequenceLen=len(speechSequence)
+			spoke = False
+			for index in range(sequenceLen):
+				if isinstance(speechSequence[index],EndUtteranceCommand):
+					if index>0 and lastStartIndex<index:
+						self.speakWithoutPauses(speechSequence[lastStartIndex:index],detectBreaks=False)
+					self.speakWithoutPauses(None)
+					spoke = True
+					lastStartIndex=index+1
+			if lastStartIndex<sequenceLen:
+				spoke = self.speakWithoutPauses(speechSequence[lastStartIndex:],detectBreaks=False)
+			return spoke
+		finalSpeechSequence=[] #To be spoken now
+		pendingSpeechSequence=[] #To be saved off for speaking  later
+		if speechSequence is None: #Requesting flush
+			if self._pendingSpeechSequence:
+				#Place the last incomplete phrase in to finalSpeechSequence to be spoken now
+				finalSpeechSequence=self._pendingSpeechSequence
+				self._pendingSpeechSequence=[]
+		else: #Handling normal speech
+			#Scan the given speech and place all completed phrases in finalSpeechSequence to be spoken,
+			#And place the final incomplete phrase in pendingSpeechSequence
+			for index in range(len(speechSequence)-1,-1,-1):
+				item=speechSequence[index]
+				if isinstance(item,str):
+					m = self.re_last_pause.match(item)
+					if m:
+						before,after=m.groups()
+						if after:
+							pendingSpeechSequence.append(after)
+						if before:
+							finalSpeechSequence.extend(self._pendingSpeechSequence)
+							self._pendingSpeechSequence=[]
+							finalSpeechSequence.extend(speechSequence[0:index])
+							finalSpeechSequence.append(before)
+							# Apply the last language change to the pending sequence.
+							# This will need to be done for any other speech change commands introduced in future.
+							for changeIndex in range(index-1,-1,-1):
+								change=speechSequence[changeIndex]
+								if not isinstance(change,LangChangeCommand):
+									continue
+								pendingSpeechSequence.append(change)
+								break
 							break
-						break
+					else:
+						pendingSpeechSequence.append(item)
 				else:
 					pendingSpeechSequence.append(item)
-			else:
-				pendingSpeechSequence.append(item)
-		if pendingSpeechSequence:
-			pendingSpeechSequence.reverse()
-			speakWithoutPauses._pendingSpeechSequence.extend(pendingSpeechSequence)
-	if finalSpeechSequence:
-		speak(finalSpeechSequence)
-		return True
-	return False
+			if pendingSpeechSequence:
+				pendingSpeechSequence.reverse()
+				self._pendingSpeechSequence.extend(pendingSpeechSequence)
+		if finalSpeechSequence:
+			self.speak(finalSpeechSequence)
+			return True
+		return False
 
 
-speakWithoutPauses._pendingSpeechSequence=[]
+_speakWithoutPauses = SpeechWithoutPauses(speakFunc=speak)
+
+#: Alias for class SpeakWithoutPauses.speakWithoutPauses. Kept for backwards compatibility
+speakWithoutPauses = _speakWithoutPauses.speakWithoutPauses
+#: Kept for backwards compatibility.
+re_last_pause = _speakWithoutPauses.re_last_pause
 
 from .manager import SpeechManager
 #: The singleton _SpeechManager instance used for speech functions.
