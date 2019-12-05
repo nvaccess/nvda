@@ -146,6 +146,7 @@ def resetConfiguration(factoryDefaults=False):
 	import vision
 	import languageHandler
 	import inputCore
+	import tones
 	log.debug("Terminating vision")
 	vision.terminate()
 	log.debug("Terminating braille")
@@ -154,6 +155,8 @@ def resetConfiguration(factoryDefaults=False):
 	brailleInput.terminate()
 	log.debug("terminating speech")
 	speech.terminate()
+	log.debug("terminating tones")
+	tones.terminate()
 	log.debug("terminating addonHandler")
 	addonHandler.terminate()
 	log.debug("Reloading config")
@@ -165,6 +168,8 @@ def resetConfiguration(factoryDefaults=False):
 	languageHandler.setLanguage(lang)
 	# Addons
 	addonHandler.initialize()
+	# Tones
+	tones.initialize()
 	#Speech
 	log.debug("initializing speech")
 	speech.initialize()
@@ -227,9 +232,6 @@ def main():
 		except:
 			pass
 	logHandler.setLogLevelFromConfig()
-	log.debug("Initializing tones")
-	import tones
-	tones.initialize()
 	try:
 		lang = config.conf["general"]["language"]
 		import languageHandler
@@ -255,6 +257,9 @@ def main():
 	import NVDAHelper
 	log.debug("Initializing NVDAHelper")
 	NVDAHelper.initialize()
+	log.debug("Initializing tones")
+	import tones
+	tones.initialize()
 	import speechDictHandler
 	log.debug("Speech Dictionary processing")
 	speechDictHandler.initialize()
@@ -541,9 +546,6 @@ def main():
 	if updateCheck:
 		_terminate(updateCheck)
 
-	# Terminate tones early.
-	import tones
-	_terminate(tones)
 	_terminate(watchdog)
 	_terminate(globalPluginHandler, name="global plugin handler")
 	_terminate(gui)
@@ -567,6 +569,7 @@ def main():
 	_terminate(winConsoleHandler, name="Legacy winConsole support")
 	_terminate(JABHandler, name="Java Access Bridge support")
 	_terminate(appModuleHandler, name="app module handler")
+	_terminate(tones)
 	_terminate(NVDAHelper)
 	_terminate(touchHandler)
 	_terminate(keyboardHandler, name="keyboard handler")
