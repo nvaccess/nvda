@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-22 06:43+1000\n"
-"PO-Revision-Date: 2019-11-27 14:35+0300\n"
+"POT-Creation-Date: 2019-11-29 15:51+1000\n"
+"PO-Revision-Date: 2019-12-05 08:57+0300\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
@@ -3506,7 +3506,7 @@ msgid "Toggles on and off the reporting of groupings"
 msgstr "Gruplandırma bildirimini açıp kapatır."
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-msgid "report gorupings off"
+msgid "report groupings off"
 msgstr "Gruplandırmaları bildirme"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
@@ -3938,10 +3938,9 @@ msgstr "NVDA'yı yeniden başlatır"
 msgid "Shows the NVDA menu"
 msgstr "NVDA menüsünü gösterir"
 
-#. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"Reads from the review cursor up to end of current text, moving the review "
-"cursor as it goes"
+"Reads from the review cursor up to the end of the current text, moving the "
+"review cursor as it goes"
 msgstr ""
 "İnceleme imlecinden itibaren imleci de taşıyarak metnin sonuna kadar okur."
 
@@ -4583,20 +4582,22 @@ msgstr "Windows 10 OCR mevcut değil"
 msgid ""
 "Recognizes the content of the current navigator object with Windows 10 OCR"
 msgstr ""
-"Windows 10 OCR  ile nesne sunucusunun üzerinde bulunduğu nesne üzerinde OCR "
+"Windows 10 OCR  ile nesne sunucusunun konumunda Optik Karakter Tanıma OCR "
 "işlemi yapar"
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
-msgstr "Emoji gibi CLDR karakterlerinin bildirimini açıp kapatır."
+msgstr ""
+"Emoji gibi CLDR (ortak yerel veri deposu) karakterlerinin bildirimini açıp "
+"kapatır."
 
 #. Translators: presented when the report CLDR is toggled.
 msgid "report CLDR characters off"
-msgstr "CLDR karakterlerini bildirme"
+msgstr "Emojileri bildirme"
 
 #. Translators: presented when the report CLDR is toggled.
 msgid "report CLDR characters on"
-msgstr "CLDR karakterlerini bildir"
+msgstr "Emojileri bildir"
 
 msgid ""
 "Toggles the state of the screen curtain, enable to make the screen black or "
@@ -4604,9 +4605,9 @@ msgid ""
 "enabled until you restart NVDA. Pressed twice, screen curtain is enabled "
 "until you disable it"
 msgstr ""
-"Ekran karartarak ya da ekranda olanları göstererek ekran perdesi statüsünü "
+"Ekranı karartarak ya da ekranda olanları göstererek ekran perdesi statüsünü "
 "değiştirir. Perde devre dışıyken, bir kez basılırsa ekran perdesi NVDA'yı "
-"yeniden başlatana kadar etkindir. Üç kez basılırsa, siz devre dışı bırakana "
+"yeniden başlatana kadar etkindir. İki kez basılırsa, devre dışı bırakılana "
 "kadar ekran karartılacaktır."
 
 #. Translators: Reported when the screen curtain is disabled.
@@ -6535,7 +6536,7 @@ msgid ""
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} is developed by NV Access, a non-profit organisation committed to "
@@ -9418,10 +9419,13 @@ msgstr ""
 "{providerName} görsel Geliştirme sağlayıcısı öncelikli olarak "
 "sonlandırılamadı"
 
+#, python-brace-format
 msgid ""
 "Could not gracefully terminate the following vision enhancement providers:\n"
+"{providerNames}"
 msgstr ""
-"Aşağıdaki Görsel Geliştirme Sağlayıcıları incelikle sonlandırılamadı:\n"
+"Aşağıdaki görsellik iyileştirme sağlayıcıları İncelikle sonlanadırılamadı:\n"
+"{providerNames}"
 
 #. Translators: This is a label appearing on the vision settings panel.
 msgid "Configure visual aids."
@@ -10060,7 +10064,7 @@ msgstr "Ekran perdesi"
 #. the screen curtain.
 #, python-brace-format
 msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
-msgstr "{screenCurtainTranslatedName} etkinleştirmeden &önce daima uyar"
+msgstr "{screenCurtainTranslatedName}ni etkinleştirmeden &önce daima uyar"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"

@@ -71,7 +71,7 @@ Daha fazla detay için [Tam lisansı görüntüleyebilirsiniz. https://www.gnu.o
 -
 
 + NVDA programının Tedariki ve Kurulumu +[GettingAndSettingUpNVDA]
-Bir NVDA kopyanız yoksa, aşağıdaki bağlantıdan programı indirebilirsiniz. [www.nvaccess.org NVDA_URL].
+Bir NVDA kopyanız yoksa, programı [NV Access web sitesinden NVDA_URL] indirebilirsiniz.
 
 Buradan Download bölümüne giderek programın en son sürümünün indirme bağlantısına ulaşabilirsiniz.
 
@@ -491,6 +491,7 @@ Web sayfaları gibi karmaşık salt okunur belgeler, NVDA'da tarama kipinde gös
 - Adobe Flash
 - Amazon Kindle for PC içinde desteklenen kitaplar
 -
+
 Tarama kipi aynı zamanda Microsoft Word için karmaşık belgelerde dolaşılırken kullanılmak üzere opsiyonel olarak mevcuttur.
 
 Tarama kipi, web sayfası gibi bir içeriğin bir metin dosyası gibi sunulduğu bir inceleme alanıdır ve içerik içinde yön tuşlarıyla dolaşılabilir.
@@ -604,7 +605,9 @@ MathPlayer uygulamasını aşağıdan ücretsiz olarak indirebilirsiniz: https:/
 NVDA aşağıdaki matematiksel içerik türlerini destekler:
 - Mozilla Firefox, Microsoft Internet Explorer ve Google Chrome MathML.
 - Microsoft Word ve PowerPoint'de, Design Science MathType.
-Bunun çalışabilmesi için MathType'ın kurulu olması gerekir. Deneme sürümü yeterlidir.
+Bunun çalışabilmesi için MathType'ın kurulu olması gerekir.
+Deneme sürümü yeterlidir.
+ŞUradan  https://www.dessci.com/en/products/mathtype/  indirilebilir.
 - Adobe Reader'de MathML.
 Bunun henüz resmi bir standart olmadığını not edin, dolayısıyla şu anda bu içeriği üretebilen hiçbir kamuya açık yazılım bulunmamaktadır.
 - PC için Kindle'de, erişilebilir matematik kitapları için.
@@ -1020,12 +1023,11 @@ Bu kategori altında aşağıdaki seçenekler mevcuttur:
 
 ==== Dil ====[GeneralSettingsLanguage]
 NVDA arayüzü ve mesajlarının gösterileceği dilin seçildiği bir seçim kutusudur.
-içinde birçok dil bulunur; ancak varsayılan ayar "Kullanıcı varsayılan Windows" ayarıdır.
+İçinde birçok dil bulunur; ancak varsayılan ayar "Kullanıcı varsayılan Windows" ayarıdır.
 Bu seçenek NVDA'ya O an windowsun ayarlandığı dili kullanmasını söylemektedir.
 
 Dili değiştirdiğinizde NVDA'nın yeniden başlatılması gerektiğini lütfen not edin.
-NVDA seçimi değiştirip kaydettiğinizde programı yeniden başlatmak isteyip istemediğinizi soaracaktır.
-Onaylama diyalogu belirdiğinde, yeni dili şimdi veya daha sonra kullanmak istiyorsanız, "şimdi yeniden başlat" veya "daha sonra yeniden başlat" seçeneğini seçin. "Daha sonra yeniden başlat" seçilirse, konfigürasyon kaydedilmelidir (manuel  veya çıkışta kaydet seçeneği kullanılarak).
+NVDA seçimi değiştirip kaydettiğinizde programı yeniden başlatmak isteyip istemediğinizi soaracaktır. Onaylama diyalogu belirdiğinde, yeni dili şimdi veya daha sonra kullanmak istiyorsanız, "şimdi yeniden başlat" veya "daha sonra yeniden başlat" seçeneğini seçin. "Daha sonra yeniden başlat" seçilirse, konfigürasyon kaydedilmelidir (manuel  veya çıkışta kaydet seçeneği kullanılarak).
 
 ==== Çıkışta Ayarları (konfigürasyonu) Kaydet ====[GeneralSettingsSaveConfig]
 Bu bir onay kutusudur ve işaretlendiğinde, NVDA'ya çıkışta yapılan ayarların kaydedilmesini söyler.
@@ -1047,8 +1049,10 @@ Mevcut günlük tutma seviyeleri:
 - Devre dışı: Kısa bir başlangıç mesajı dışında, NVDA çalışırken hiçbir şeyi kaydetmez.
 - Bilgi: NVDA, başlangıç mesajları ve geliştiriciler için yararlı bilgiler gibi temel bilgileri kaydeder.
 - Hata ayıklama uyarısı: Ciddi hatalardan kaynaklanmayan uyarı mesajları kaydedilir.
-- Giriş çıkış: Klavye ve braille ekranlarından girdilerin yanı sıra konuşma ve braille çıktısı kaydedilecektir. Gizlilik konusunda endişeleriniz varsa, günlük düzeyini bu seçeneğe ayarlamayın.
-- Hata ayıklama: Bilgi, uyarı ve giriş / çıkış mesajlarına ek olarak, ek hata ayıklama mesajları kaydedilecektir. Giriş / çıkışlarda olduğu gibi, gizlilikten endişe duyuyorsanız, günlük kaydı seviyesini bu seçeneğe ayarlamamalısınız.
+- girdi/çıktı: Klavye ve braille ekranlarından girdilerin yanı sıra konuşma ve braille çıktısı kaydedilecektir.
+- Gizlilik konusunda endişeleriniz varsa, günlük düzeyini bu seçeneğe ayarlamayın.
+- Hata ayıklama: Bilgi, uyarı ve girdi/çıktı mesajlarına ek olarak, ek hata ayıklama mesajları kaydedilecektir.
+- Girdi/çıktı ayarında  olduğu gibi, gizlilikten endişe duyuyorsanız, günlük kaydı seviyesini bu seçeneğe ayarlamamalısınız.
 -
  
 ==== NVDA'yı Windowsu açınca Otomatik Olarak Başlat ====[GeneralSettingsStartAfterLogOn]
@@ -1061,8 +1065,8 @@ Bu seçenek, yalnızca sisteme yüklenmiş olan NVDA kopyalarında mevcuttur.
 
 ==== Windows Giriş ve Diğer Güvenli Ekranlarda Mevcut kaydedilmiş Ayarları Kullan (Yönetici yetkisi gerekirr) ====[GeneralSettingsCopySettings]
 Bu düğmeye basmak Şu anki NVDA ayarlarınızı NVDA system configuration dizinine kopyalar ve böylece oturum açma, kullanıcı hesapları kontrolü (uac) ve diğer güvenli ekranlarda NVDA bu ayarları kullanır.
-Tüm ayarlarınızın transfer edildiğinden emin olmak için, önce kontrol+NVDA+c tuşlarına basarak NVDA ayarlarınızı kaydettiğinizden emin olun veya NVDA menüsünden ayarlarınızı kaydedin.
-Bu seçenek, yalnızca yüklenebilen NVDA kopyalarında mevcuttur.
+Tüm ayarlarınızın transfer edildiğinden emin olmak için, önce kontrol+NVDA+c tuşlarına basarak NVDA ayarlarınızı kaydettiğinizden emin olun veya NVDA menüsünden konfigürasyonu  kaydedin.
+Bu seçenek, yalnızca bilgisayara kurulu  NVDA kopyalarında mevcuttur.
 
 ==== NVDA Güncellemelerini Otomatik Olarak Kontrol Et ====[GeneralSettingsCheckForUpdates]
 Bu etkinleştirildiyse, NVDA güncel versiyon olup olmadığını otomatik olarak kontrol edecek ve güncelleme bulunduğunda sizi bilgilendirecektir.
@@ -1110,26 +1114,26 @@ Sol ve yukarı yön tuşları sizi listenin yukarısına götürürken, sağ ve 
 ==== Konuşucu ====[SpeechSettingsVariant]
 NVDA ile gelen Espeak NG sentezleyicisini kullanıyorsanız, burası, sentezleyicinin konuşacağı konuşucuların listelendiği bir seçim kutusudur.
 Espeak NG konuşucuları farklı seslere benzer ve bir sese farklı özelliklerin yüklenmesini sağlar.
-Bazı sesler kadın, bazıları erkek, hatta bazıları kurbağ sesi gibi çıkacaktır.
+Bazı sesler kadın, bazıları erkek, hatta bazıları kurbağa sesi gibi çıkabilir.
+Bir üçüncü taraf sentezleyici kullanıyorsanız, seçtiğiniz ses destekliyorsa bu değeri değiştirebilirsiniz.
 
 ==== Hız ====[SpeechSettingsRate]
-Bu seçenek sesin hızını değiştirmenizi sağlar.
+Bu seçenek konuşma hızını değiştirmenizi sağlar.
 Burası 0'dan 100'e giden bir göstergedir, ve 0 en yavaşı gösterirken, 100 en hızlıyı gösterir.
 
 ==== Ses Perdesi ====[SpeechSettingsPitch]
-Bu seçenek sesin perdesini değiştirmenizi sağlar.
+Bu seçenek konuşmacının  ses perdesini değiştirmenizi sağlar.
 Burası 0'dan 100'e giden bir göstergedir, ve 0 en düşük perdeyi yani kalını gösterirken, 100 en yüksek perdeyi yani en inceyi gösterir.
 
 ==== Ses Seviyesi ====[SpeechSettingsVolume]
 Burası 0'dan 100'e giden bir göstergedir, ve 0 en düşük ses seviyesini gösterirken, 100 en yüksek ses seviyesini gösterir.
 
 ==== Tonlama ====[SpeechSettingsInflection]
-Bu seçenek, sentezleyicinin konuşmak için ne kadar tonlama (iniş çıkış) kullanacağını belirlemenizi sağlayan bir göstergedir. Şu an itibariyle bu özelliği sağlayan tek sentezleyici Espeak NG sentezleyicisidir.
+Bu seçenek, sentezleyicinin konuşacağı  tonlamayı (iniş çıkış) kullanacağını belirlemenizi sağlayan bir göstergedir.
 
 ==== Konuşma Dilinin Otomatik Değişimi ====[SpeechSettingsLanguageSwitching]
 Bu onay kutusu, okunmakta olan belgedeki metinlerin dili tanımlandıysa,, NVDA'nın konuşma dilini otomatik olarak değiştirip değiştirmemesiyle ilgili ayarı yapmanızı sağlar.
 Bu seçenek varsayılan olarak etkinleştirilmiştir.
-Şuanda sadece ESpeak NG sentezleyicisi otomatik dil değişimini desteklemektedir.
 
 ==== Otomatik Lehçe Değişimi ====[SpeechSettingsDialectSwitching]
 Otomatik dil değişimiyle ilgili seçenek etkinse, bu onay kutusu da okunan belgedeki lehçe değişikliklerine göre NVDA'nın da konuşma dilini otomatik olarak değiştirip değiştirmemesiyle ilgili ayarı yapmanızı sağlar.
@@ -1150,7 +1154,7 @@ NVDA'nın noktalama işaretlerini herhangi bir sentezleyici ya da ses için yanl
 
 ==== Karakter ve sembooleri işlerken (emoji dahil) Unicode Konsorsiyumu verisini dahil et ====[SpeechSettingsCLDR]
 Bu onay kutusu etkinleştirildiğinde, NVDA karakter ve sembolleri tellaffuz ederken  ek  telaffuz sözlüklerini kullanır.
-Bu sözlükler çeşitli sembollerin telaffuzunu içerir  (özellikle emoji) ve [Unicode Consortium http://www.unicode.org/consortium/] tarafından [Ortak Yerel Veri Deposu http://cldr.unicode.org/] içinde sağlanırlar.
+Bu sözlükler çeşitli sembollerin telaffuzunu içerir  (özellikle emoji) ve [Unicode Consortium https://www.unicode.org/consortium/] tarafından [Ortak Yerel Veri Deposu https://cldr.unicode.org/] içinde sağlanırlar.
 Emojilerin bu verilere dayanılarak seslendirilmesini istiyorsanız bu onay kutusunu işaretleyin.
 Ancak, emojilerin kullandığınız sentezleyici tarafından seslendirilmesini istiyorsanız bu onay kutusunu işaretlememelisiniz.
 
@@ -1163,15 +1167,15 @@ Unicode Konsorsiyum verisinin dahil edilmesini her yerden değiştirmek için, l
 ==== Büyük Harflerde Ses Perdesi Değişim Yüzdesi ====[SpeechSettingsCapPitchChange]
 Bu yazı alanı , büyük harfler seslendirilirken ses perdesinin hangi oranda değiştirileceğini belirlemenizi sağlar.
 Bu değer yüzde belirtir ve negatif değer sesi kalınlaştırırken pozitif değer sesi inceltecektir. 
-Ses perdesinde değişiklik olmasını istemezseniz buraya 0 yazabilirsiniz. Wave tabanlı sentezleyiciler bu özelliği desteklemez.
+Ses perdesinde değişiklik olmasını istemezseniz buraya 0 yazabilirsiniz.
+Genellikle, NVDA herhangi bir büyük harf için ses perdesini hafifçe yükseltir, ancak bazı sentezleyiciler bunu iyi desteklemeyebilir.
+Büyük harfler için perde değişiminin desteklenmediği durumlarda, [Büyük harflerden önce "büyük" de #SpeechSettingsSayCapBefore] ve / veya [Büyük harflerde bip sesi çıkar #SpeechSettingsBeepForCaps] seçeneklerini kullanabilirsiniz.
 
 ==== Büyük Harflerden Önce Büyük De ====[SpeechSettingsSayCapBefore]
 Bu ayar bir onay kutusudur ve işaretlendiğinde, metin içinde oklarla dolaşırken veya bir karakteri yazarken, karakter büyük yazılmışsa, öncesinde "büyük" sözcüğü söylenecektir.
-Genellikle, NVDA büyük harflerde sesi bir miktar inceltir. ancak bunu desteklemeyen sentezleyiciler için, bu seçenek oldukça kullanışlı olabilir.
 
 ==== Büyük harflerde Bip sesi çıkar ====[SpeechSettingsBeepForCaps]
 Bu onay kutusu işaretlenirse, NVDA büyük yazılmış bir karakterle karşılaştığında bip sesi çıkaracaktır.
-Büyük Harflerden önce Büyük deme onay kutusunda olduğu gibi, büyük harfler için sesini inceltemeyen sentezleyiciler için, bu seçenek yararlıdır.
 
 ==== Destekleniyorsa Kodlama İşlevini Kullan ====[SpeechSettingsUseSpelling]
 Bazı sözcükler sadece bir karakterden oluşabilir, ancak o karakterin bir sözcüğün içerisinde kodlanırkenki telaffuzu farklılık gösterir.
@@ -1543,8 +1547,8 @@ Eğer nesne konum bilgisinin bildirimi açıksa, Bu seçenek, NVDA'ya başka bi�
 
 Açık olduğunda, NVDA, araç çubukları ve menü çubukları gibi daha fazla nesnenin konum bilgisini bildirecek, ancak verilen bilgilerde küçük hatalar meydana gelebilecektir.
  
-==== Nesne Tariflerini Bildir ====[ObjectPresentationReportDescriptions]
-Nesne adıyla birlikte tarifini duymak istemiyorsanız, bu onay kutusunun işaretini kaldırın.
+==== Nesne Açıklamalarını Bildir ====[ObjectPresentationReportDescriptions]
+Nesne adıyla birlikte ilgili açıklamayı (diğer bir deyişle, arama önerileri, iletişim kutusunun açılmasından hemen sonra tüm iletişim penceresinin bildirilmesi vb.) duymak istemiyorsanız, bu onay kutusunun işaretini kaldırın.
 
 %kc:setting
 ==== Aşama Çubuğu bildirimi ====[ObjectPresentationProgressBarOutput]
@@ -1651,15 +1655,17 @@ Bu seçenek, odak değişiminde odak kipinin açılmasını sağlar.
 Örneğin, Bir web sayfasında tab tuşuyla bir form alanına geldiyseniz ve bu seçenek işaretliyse, otomatik olarak odak kipi açılacaktır.
 
 ==== Düzenleme İmleci İçin Otomatik Odak Kipi ====[BrowseModeSettingsAutoPassThroughOnCaretMove]
-Bu seçenek işaretliyse, yön tuşlarıyla dolaşırken NVDA'nın odak kipine girmesini ve çıkmasını sağlar.
-Örneğin bir web sayfasında aşağı yön tuşuyla dolaşırken bir yazı alanına gelirseniz, NVDA otomatik olarak sizi odak kipine alacaktır. oklarla yazı alanının dışına çıktığınızda ise sizi tekrar tarama kipine geri döndürecektir.
+Bu seçenek işaretliyse, yön tuşlarıyla dolaşırken NVDA'nın odak kipine otomatik olarak girmesini ve çıkmasını sağlar.
+Örneğin bir web sayfasında  yön tuşlarıyla  aşağı doğru inerken  bir yazı alanına gelirseniz, NVDA otomatik olarak odak kipine geçecektir.
+Yön tuşlarıyla  yazı alanının dışına çıktığınızda ise tarama kipine otomatik olarak geçecektir.
 
 ==== Odak Kipiyle Tarama Kipi Arasındaki Geçişi Ses Çalarak bildir ====[BrowseModeSettingsPassThroughAudioIndication]
 Bu seçenek etkinse, odak kipi ve tarama kipi arasında geçiş yaparken NVDA bunu konuşarak değil, özel bir ses çalarak bildirecektir.
 
 ==== Komut tuşu olmayan tuşların belgeye gönderilmesini engelle ====[BrowseModeSettingsTrapNonCommandGestures]
 Bu seçenek varsayılan olarak etkindir ve NVDA komutu olarak kullanılmayan tuşların ve hareketlerin belgeye gönderilip gönderilmeyeceğini belirlemenizi sağlar. 
-Etkinleştirildiğinde, örneğin J harfine basılırsa, bu tuş ne NVDA komutu ne de aktif uygulama komutu olarak kullanıldığı için , tuşun belgeye ulaşması engellenecektir.
+Etkinleştirildiğinde, örneğin ş harfine basılırsa, bu tuş ne NVDA komutu ne de aktif uygulama komutu olarak kullanıldığı için , tuşun belgeye ulaşması engellenecektir.
+Bu durumda NVDA, Windows’a bu türden  bir tuşa basıldığında varsayılan bir ses çalmasını söyler.
 
 +++ Belge formatları (NVDA+kontrol+d) +++[DocumentFormattingSettings]
 Buradaki birçok onay kutusu belge içinde imleci hareket ettirirken hangi tür biçimlendirme bilgilerini otomatik olarak duymak istediğinizi ayarlamanızı sağlamak içindir.
@@ -1734,6 +1740,14 @@ Bu seçim kutusu metin tanıma için kullanılacak dili seçmek içindir.
 Uyarı! Bu kategorideki ayarlar ileri seviye kullanıcılar içindir ve yanlış şekilde yapılandırılmışsa NVDA'nın düzgün çalışmamasına neden olabilir.
 Bu ayarlarda yalnızca, ne yaptığınızı bildiğinizden eminseniz veya bir NVDA geliştiricisi tarafından özel olarak talimat verildiyse değişiklik yapın.
 
+==== Gelişmiş ayarlarda değişiklik yapma ====[AdvancedSettingsMakingChanges]
+Gelişmiş ayarlarda değişiklik yapmak için, kontrollerin bu ayarları değiştirmenin risklerini anladığınızı onaylayarak etkinleştirilmesi gerekir.
+
+==== Varsayılan ayarları geri yükleme ====[AdvancedSettingsRestoringDefaults]
+Uyarı onay kutusu işaretli olmasa bile, düğme ayarların varsayılan değerlerini geri yükler.
+Ayarları değiştirdikten sonra varsayılan değerlere dönmek isteyebilirsiniz.
+Bu, ayarların değiştirilip değiştirilmediğinden emin değilseniz de söz konusu olabilir.
+
 ==== Developer Scratchpad Dizini'nden özel kod yüklemeyi etkinleştir ====
 NVDA için eklentiler geliştirirken, kodu yazarken test edebilmek yararlı olabilir.
 Bu seçenek etkinleştirildiğinde, NVDA'nın NVDA kullanıcı yapılandırma dizininizdeki özel bir geliştirici scratchpad dizininden özel appModules, globalPlugins, brailleDisplayDrivers ve synthDrivers yüklemesini sağlar.
@@ -1764,16 +1778,16 @@ Windows Konsolu desteği seçim kutusunda üç seçenek vardır:
 -
 
 ==== Windows Konsolunda şifreleri Seslendir ====[AdvancedSettingsWinConsoleSpeakPasswords]
-This setting controls whether characters are spoken by [speak typed characters #KeyboardSettingsSpeakTypedCharacters] or [speak typed words #KeyboardSettingsSpeakTypedWords] in situations where the screen does not update (such as password entry) in some terminal programs, such as the Windows Console with UI automation support enabled and Mintty.
-For security purposes, this setting should be left disabled.
-However, you may wish to enable it if you experience performance issues or instability with typed character and/or word reporting in consoles, or work in trusted environments and prefer password announcement.
+Bu ayar, karakterlerin [yazılan karakterleri seslendir  #KeyboardSettingsSpeakTypedCharacters] ya da  [yazılan sözcükleri seslendir #KeyboardSettingsSpeakTypedWords] UI otomasyon desteği etkinleştirilmiş Windows Konsolu ve Mintty gibi bazı terminal programlarında ekranın güncellenmediği durumlarda (parola girişi gibi) ayarlarına göre seslendirilip seslendirilmeyeceğini kontrol eder.
+Güvenlik nedeniyle bu ayar devre dışı bırakılmalıdır.
+Ancak, konsollarda yazılan karakterlerin  ve / veya sözcüklerin bildirimiyle ilgili performans sorunları veya kararsızlığı yaşarsanız veya güvenilir ortamlarda çalışıyorsanız ve parolaların seslendirilmesini istiyorsanız, bunu etkinleştirmek isteyebilirsiniz.
 
-==== Use the new typed character support in legacy Windows consoles when available ====[AdvancedSettingsKeyboardSupportInLegacy]
-This option enables an alternative method for detecting typed characters in legacy Windows consoles.
-While it improves performance and prevents some console output from being spelled out, it may be incompatible with some terminal programs.
-This feature is available and enabled by default on Windows 10 versions 1607, 1703, 1709 and 1803 as well as on newer Windows 10 releases when UI Automation is unavailable or disabled.
-Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
-In untrusted environments, you may temporarily disable [speak typed characters #KeyboardSettingsSpeakTypedCharacters] and [speak typed words #KeyboardSettingsSpeakTypedWords] when entering passwords.
+==== Yeni girilen karakter desteğini, kullanılabilir olduğunda eski Windows konsollarında kullanın ====[AdvancedSettingsKeyboardSupportInLegacy]
+Bu seçenek, eski Windows konsollarında yazılan karakterleri algılamak için alternatif bir yöntem sağlar.
+Performansı artırıp bazı konsol çıktılarının hecelenmesini engellerken, bazı terminal programlarıyla uyumlu olmayabilir.
+Bu özellik, varsayılan olarak Windows 10 sürüm 1607, 1703, 1709 ve 1803'te ve UI Automation kullanılamadığında veya devre dışı bırakıldığında daha yeni Windows 10 sürümlerinde kullanılabilir.
+Dikkat: bu seçenek etkin durumdayken, şifreler gibi ekranda görünmeyen yazılan karakterler gizlenmez.
+Güvensiz ortamlarda parola girerken [karakterleri seslendir #KeyboardSettingsSpeakTypedCharacters] ve [sözcükleri seslendir #KeyboardSettingsSpeakTypedWords] özelliklerini geçici olarak kapatabilirsiniz.
 
 ==== Tarama kipinde sistem odağını otomatik olarak odaklanabilir öğelere taşı ====[BrowseModeSettingsAutoFocusFocusableElements]
 Kısayol: NVDA+8
@@ -2125,6 +2139,7 @@ Bir çok dil için sesler mevcuttur, dahası Sapi 5 kullanan önceki Microsoft s
 Windows 10'da, NVDA varsayılan olarak Windows OneCore seslerini kullanır ([[eSpeak NG #eSpeakNG] diğer sürümlerde kullanılır).
 
 Lütfen kullanılabilen sesler ve yükleme talimatları için bu Microsoft makalesine bakın: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
+
 
 + Desteklenen braille ekranlar +[SupportedBrailleDisplays]
 Bu bölümde NVDA tarafından desteklenen braille ekran bilgileri yer almaktadır.
