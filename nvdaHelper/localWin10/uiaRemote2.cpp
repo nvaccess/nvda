@@ -1,14 +1,15 @@
 #include <windows.h>
+#include <atlsafe.h>
 #include <atlcomcli.h>
 #include <UIAutomation.h>
 #include <UiaOperationAbstraction/UiaOperationAbstraction.h>
+#include <common/log.h>
 #include <common/log.h>
 
 using namespace UiaOperationAbstraction;
 
 UiaArray<UiaTextRange> UiaRemote_splitTextRangeByUnit(UiaTextRange textRange, TextUnit unit) {
 	auto scope=UiaOperationScope::StartOrContinue();
-	scope.BindInput(textRange);
 	UiaArray<UiaTextRange> ranges;
 	// Start with a clone of textRange collapsed to the start
 	auto tempRange=textRange.Clone();
@@ -50,14 +51,13 @@ UiaArray<UiaTextRange> UiaRemote_splitTextRangeByUnit(UiaTextRange textRange, Te
 	return ranges;
 }
 
-extern "C" __declspec(dllexport) BSTR __stdcall uiaRemote_getTextContent(IUIAutomationTextRange* textRangeArg) {
-	UiaTextRange textRange{textRangeArg};
+extern "C" __declspec(dllexport) SAFEARRAY* __stdcall uiaRemote_getTextContent(IUIAutomationTextRange* textRangeArg) {
 	auto scope=UiaOperationScope::StartNew();
-	//scope.BindInput(textRange);
+	UiaTextRange textRange{textRangeArg};
 	auto ranges=UiaRemote_splitTextRangeByUnit(textRange,TextUnit_Format);
 	auto s=ranges.Size();
 	UiaUint index=0;
-	UiaArray<UiaString> textContent;
+	UiaArray<UiaVariant> textContent;
 	scope.For([&]() {
 		index=0;
 	},[&]() {
@@ -65,17 +65,19 @@ extern "C" __declspec(dllexport) BSTR __stdcall uiaRemote_getTextContent(IUIAuto
 	},[&]() {
 		index+=1;
 	},[&]() {
-		textContent.Append(L"format ");
+		textContent.Append(UiaVariant(L"format "));
 		auto subrange=ranges.GetAt(index);
-				textContent.Append(subrange.GetText(-1));
+				textContent.Append(UiaVariant(subrange.GetText(-1)));
 	});
 	scope.BindResult(textContent);
 	scope.Resolve();
-	std::wstring finalText;
-	for(auto t: *textContent) {
-		finalText.append(t.get());
+	size_t numItems=textContent.Size();
+	CComSafeArray<VARIANT> safeArray(numItems);
+	for(size_t i=0;i<numItems;++i) {
+		VARIANT v=*((*textContent)[i]);
+		safeArray.SetAt(i,v);
 	}
-	return SysAllocString(finalText.c_str());
+	return safeArray.Detach();
 }
 
 extern "C" __declspec(dllexport) void __stdcall uiaRemote_initialize(bool doRemote, IUIAutomation* client) {
