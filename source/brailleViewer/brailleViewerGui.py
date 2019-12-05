@@ -185,17 +185,17 @@ class BrailleViewerFrame(wx.Frame):
 
 	isDestroyed: bool = False
 
+	def saveInfoAndDestroy(self):
+		self._savePositionInformation()
+		self.isDestroyed = True
+		self.Destroy()
+
 	def _onClose(self, evt):
 		log.debug("braille viewer gui onclose")
-		if not evt.CanVeto():
-			self.isDestroyed = True
-			self.Destroy()
-			return
-		evt.Veto()
+		self.saveInfoAndDestroy()
 
 	def _onDestroy(self, evt):
-		log.debug("braille viewer gui destroyed")
-		self._savePositionInformation()
+		log.debug("braille viewer gui onDestroy")
 		self.isDestroyed = True
 		self._notifyOfDestroyed()
 		evt.Skip()

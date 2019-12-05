@@ -72,28 +72,23 @@ def update(cells: List[int], rawText: str):
 		)
 
 
-def _destroyGUI():
+def destroyBrailleViewer():
 	global _brailleGui
 	d: Optional[BrailleViewerFrame] = _brailleGui
-	_brailleGui = None
+	_brailleGui = None  # protect against re-entrance
 	if d and not d.isDestroyed:
-		d.Destroy()
-
-
-def destroyBrailleViewer():
-	_destroyGUI()
-	postBrailleViewerToolToggledAction.notify(created=False)
+		d.saveInfoAndDestroy()
 
 
 def _onGuiDestroyed():
 	""" Used as a callback from L{BrailleViewerFrame}, lets us know that the GUI initiated a destruction.
 	"""
-	global _brailleGui
-	if _brailleGui:
-		# Destruction wasn't initiated from L{_destroyGUI} ie not through direct user action.
-		# It's likely that the window received a shutdown event that could not be skipped.
-		# Continue to destroy the braille viewer.
-		destroyBrailleViewer()
+	# In case this destruction wasn't initiated by L{destroyBrailleViewer}, do any necessary clean up.
+	# the destruction may have been triggered by alt+F4 on the window,
+	# or selecting close from the taskbar jumplist.
+	destroyBrailleViewer()
+	# Ensure that the GUI knows about it
+	postBrailleViewerToolToggledAction.notify(created=False)
 
 
 def _getDisplaySize():
@@ -112,7 +107,7 @@ def createBrailleViewerTool():
 
 	global _brailleGui
 	if _brailleGui:
-		_destroyGUI()
+		destroyBrailleViewer()
 
 	_brailleGui = BrailleViewerFrame(
 		_getDisplaySize(),
