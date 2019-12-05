@@ -1000,6 +1000,11 @@ class SynthesizerSelectionDialog(SettingsDialog):
 			config.conf['audio']['audioDuckingMode']=index
 			audioDucking.setAudioDuckingMode(index)
 
+		# Reinitialize the tones module to update the audio device
+		import tones
+		tones.terminate()
+		tones.initialize()
+
 		if self.IsModal():
 			# Hack: we need to update the synth in our parent window before closing.
 			# Otherwise, NVDA will report the old synth even though the new synth is reflected visually.
