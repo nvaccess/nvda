@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-22 06:43+1000\n"
-"PO-Revision-Date: 2019-11-27 23:55+0300\n"
+"POT-Creation-Date: 2019-11-29 15:51+1000\n"
+"PO-Revision-Date: 2019-12-05 14:17+0300\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
@@ -1601,7 +1601,7 @@ msgstr "لا يوجد مربع تحديد سابق"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next graphic"
-msgstr "الانتقال للرسم تعبيري التالي"
+msgstr "الانتقال للرسم التعبيري التالي"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next graphic"
@@ -1609,7 +1609,7 @@ msgstr "لا يوجد المزيد من الرسوم التعبيرية"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous graphic"
-msgstr "الانتقال للرسم تعبيري السابق"
+msgstr "الانتقال للرسم التعبيري السابق"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous graphic"
@@ -2308,7 +2308,7 @@ msgstr "عنصر تفسير صور bitmap على الإنترنت"
 
 #. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
 msgid "caption"
-msgstr "تسمية"
+msgstr "تسمية توضيحية"
 
 #. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's name).
 msgid "check menu item"
@@ -2438,7 +2438,7 @@ msgstr "إطار نصي"
 
 #. Translators: Identifies a toggle button (a button used to toggle something).
 msgid "toggle button"
-msgstr "زر تحويل"
+msgstr "زر تبديل"
 
 msgid "border"
 msgstr "برواز"
@@ -2663,10 +2663,9 @@ msgstr "مقال"
 #. Translators: Identifies a region.
 #, fuzzy
 msgid "region"
-msgstr "منطقة"
+msgstr "قسم"
 
 #. Translators: Identifies a figure (commonly seen on some websites).
-#, fuzzy
 msgid "figure"
 msgstr "شكل"
 
@@ -3504,7 +3503,7 @@ msgid "Toggles on and off the reporting of groupings"
 msgstr "التبديل بين تفعيل وتعطيل الإعلان عن التجميعات"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-msgid "report gorupings off"
+msgid "report groupings off"
 msgstr "تعطيل الإعلان عن التجميعات"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
@@ -3524,12 +3523,10 @@ msgid "Toggles on and off the reporting of block quotes"
 msgstr "التبديل بين تشغيل وتعطيل الإعلان عن الاقتباس"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-#, fuzzy
 msgid "report landmarks and regions off"
-msgstr "تعطيل الإعلان عن العلامات الدلالية "
+msgstr "تعطيل الإعلان عن العلامات الدلالية والأقسام"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-#, fuzzy
 msgid "report landmarks and regions on"
 msgstr "تشغيل الإعلان عن العلامات الدلالية والأقسام"
 
@@ -3923,11 +3920,12 @@ msgstr "إعادة تشغيل NVDa!"
 msgid "Shows the NVDA menu"
 msgstr "تفعيل واجهة البرنامج"
 
-#. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"Reads from the review cursor up to end of current text, moving the review "
-"cursor as it goes"
-msgstr "بدأ القراءة من عند مؤشر الاستعراض, حتى نهاية النص"
+"Reads from the review cursor up to the end of the current text, moving the "
+"review cursor as it goes"
+msgstr ""
+"بدء القراءة من عند مؤشر الاستعراض, حتى نهاية النص، مع تحريك مؤشِّر الاستعراض "
+"بالتزامن مع القراءة"
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
@@ -4246,7 +4244,7 @@ msgstr ""
 
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
-msgstr "تفعيل شاشة السطر الإلكتروني للبرنامج, مما يفيد في تطويره"
+msgstr "تفعيل سطر أوامر لغة Python المُضمَّن في NVDA, يُفيد بشكل أساسي في تطويره"
 
 #. Translators: Input help mode message for activate manage add-ons command.
 msgid ""
@@ -6490,7 +6488,7 @@ msgid ""
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} is developed by NV Access, a non-profit organisation committed to "
@@ -6502,18 +6500,17 @@ msgid ""
 msgstr ""
 "{longName} ({name})\n"
 "الإصدار: {version}\n"
-"{url}\n"
+"رابط المؤؤسسة المنتجة: {url}\n"
 "رابط الموقع العربي: https://www.nvda-ar.org\n"
 "{copyright}\n"
 "\n"
-"يخضع برنامج {name} للإصدار الثاني من رخصة جي أن يو العمومية GNU General "
-"Public License. وهي تتيح للمستخدم كامل الحرية بتوزيع البرنامج أو تعديل "
-"مكوّناته البرمجية بأي طريقة شاء ما دام يُرفِق الرخصة مع البرنامج ويجعل مصدر "
-"الشفرة متاحًا لكل من يطلبه. وينطبق ذلك على كل من النسخة الأصلية والنسخة "
-"المعدَّلة من البرنامج بالإضافة إلى أية برامج تستعمل شفرة برمجية مأخوذة من هذا "
-"البرنامج.\n"
+"يخضع برنامج {name} للإصدار الثاني من رخصة GNU العمومية General Public "
+"License. وهي تتيح للمستخدم كامل الحرية بتوزيع البرنامج أو تعديل مكوّناته "
+"البرمجية بأي طريقة شاء ما دام يُرفِق الرخصة مع البرنامج ويجعل مصدر الشفرة "
+"متاحًا لكل من يطلبه. وينطبق ذلك على كل من النسخة الأصلية والنسخة المعدَّلة من "
+"البرنامج بالإضافة إلى أية برامج تستعمل شفرة برمجية مأخوذة من هذا البرنامج.\n"
 "ولمزيد من المعلومات يمكنكم الاطلاع على الرخصة من خلال قائمة المساعدة\n"
-"كما يمكنكم الاطلاع عليها عبر الإنترنت فللترجمة باللغة العربية (لنصّ رخصة جينو "
+"كما يمكنكم الاطلاع عليها عبر الإنترنت فللترجمة باللغة العربية (لنصّ رخصة GNU "
 "العمومية https://www.linuxfuture.org/download/Arabic_GPL_2.0.htm)  وللاطلاع "
 "على الرخصة باللغة الانكليزية  (GNU General Public License Version 2 https://"
 "www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
@@ -6521,7 +6518,7 @@ msgstr ""
 "والمؤسسة التي تطوِّر {name} هي مؤسسة NV Access وهي مؤسسة غير ربحية تهدف إلى "
 "العمل على تطوير حلول مفتوحة المصدر للمكفوفين وضعاف البصر.\n"
 "إذا كنت ممن يهمهم أمر البرنامج وتطويره يُرجى التبرع لمؤسسة NV Access وذلك "
-"باختيار العنصر تبرع من قائمة NVDA الرئيسية.\n"
+"باختيار العنصر تبرّع من قائمة NVDA الرئيسة.\n"
 "أو بزيارة صفحة التبرُّع بالعربية: https://www.nvda-ar.org/donate"
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
@@ -8982,12 +8979,12 @@ msgstr "عناصر التصفح"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Lists"
-msgstr "ال&قوائم سردية"
+msgstr "ال&قوائم السردية"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Block &quotes"
-msgstr "اق&تباس"
+msgstr "الاق&تباسات"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -8996,14 +8993,13 @@ msgstr "التجميعات"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#, fuzzy
 msgid "Lan&dmarks and regions"
-msgstr "الم&عالم والأقسام"
+msgstr "االع&لامات الدلالية والأقسام"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Arti&cles"
-msgstr "مقا&لات"
+msgstr "المقا&لات"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9321,36 +9317,38 @@ msgstr "عرض المعلومات وِفقا للسياق"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Could not load the {providerName} vision enhancement provider"
-msgstr "يتعذّر تحميل مزوّد تحسين الرية {providerName}"
+msgstr "يتعذّر تحميل مزوّد تعزيز الرؤية {providerName}"
 
 #. Translators: This message is presented when NVDA is unable to
 #. load multiple vision enhancement providers.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "Could not load the following vision enhancement providers:\n"
 "{providerNames}"
 msgstr ""
-"يتعذّر تحميل مزوّدي تحسين الرؤية الآتية: \n"
+"يتعذّر تحميل مزوّدي تعزيز الرؤية الآتية: \n"
 "{providerNames}"
 
 #. Translators: The title of the vision enhancement provider error message box.
-#, fuzzy
 msgid "Vision Enhancement Provider Error"
-msgstr "خطأ في مزوِّد تحسين الرؤية"
+msgstr "خطأ في مزوِّد تعزيز الرؤية"
 
 #. Translators: This message is presented when
 #. NVDA is unable to gracefully terminate a single vision enhancement provider.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "Could not gracefully terminate the {providerName} vision enhancement provider"
-msgstr "يتعذّر إنهاء موفِّر تحسين الرؤية {providerName} "
+msgstr "يتعذّر إنهاء موفِّر تعزيز الرؤية {providerName} "
 
-#, fuzzy
+#, python-brace-format
 msgid ""
 "Could not gracefully terminate the following vision enhancement providers:\n"
-msgstr "يتعذّر إنهاء مزوِّدي تحسين الرؤية الآتية بأمان: \n"
+"{providerNames}"
+msgstr ""
+"يتعذّر إنهاء مزوِّدي تعزيز الرؤية الآتية بأمان: \n"
+"{providerNames}"
 
 #. Translators: This is a label appearing on the vision settings panel.
 #, fuzzy
@@ -9367,11 +9365,10 @@ msgid "Options:"
 msgstr "خيارات:"
 
 #. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
-#, fuzzy
 msgid ""
 "Unable to configure user interface for Vision Enhancement Provider, it can "
 "not be enabled."
-msgstr "يتعذّر ضبطُ واجهة المستدم لمزوِّد تحسين الرؤية. لا يمكنُ تفعيلُه."
+msgstr "يتعذّر ضبطُ واجهة المستخدم لمزوِّد تعزيز الرؤية. لا يمكنُ تفعيلُه."
 
 #. Translators: This is the label for the NVDA settings dialog.
 msgid "NVDA Settings"
@@ -9962,7 +9959,7 @@ msgstr "تمييز مؤشر ال&نظام"
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the browse mode cursor.
 msgid "Highlight browse &mode cursor"
-msgstr "تمييز مؤشّر نمط التصفُّح"
+msgstr "تمييز مؤشّر &نمط التصفُّح"
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the navigator object.
@@ -10005,7 +10002,7 @@ msgstr ""
 
 #. Translators: option to enable screen curtain in the vision settings panel
 msgid "Make screen black (immediate effect)"
-msgstr "إحالة الشاشةِ سوداء (تأثيره فوري)"
+msgstr "إحالة الشاشةِ سوداء (فوريّ التأثير)"
 
 msgid "Taskbar"
 msgstr "شريط المهام"
