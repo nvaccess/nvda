@@ -71,7 +71,7 @@ Para máis detalles, podes [ver a licencia completa.  https://www.gnu.org/licens
 -
 
 + Obtendo e Instalando NVDA +[GettingAndSettingUpNVDA]
-Se aínda non tes unha copia do NVDA, podes descargala de [www.nvaccess.org NVDA_URL].
+Se aínda non tes unha copia do NVDA, podes descargala de [NV Access website NVDA_URL].
 
 Vai á sección download e atoparás unha liga para descargar a derradeira versión do NVDA.
 
@@ -605,7 +605,9 @@ MathPlayer está dispoñible como unha descarga gratuita dende: https://www.dess
 NVDA soporta os seguintes tipos de contidos matemáticos:
 - MathML en Mozilla Firefox, Microsoft Internet Explorer e Google Chrome.
 - Design Science MathType en Microsoft Word e PowerPoint.
-MathType necesita estaren instalado para que esto funcione. A versión trial é suficiente.
+MathType necesita estaren instalado para que esto funcione.
+A versión trial é suficiente.
+Pode descargarse dende https://www.dessci.com/en/products/mathtype/
 - MathML en Adobe Reader.
 Ten en conta que esto non é un estándar official aínda, así que non hai actualmente software dispoñible para o público que poda producir este contido.
 - Matemáticas en Kindle para PC para libros coas matemáticas accesibles.
@@ -1047,8 +1049,10 @@ Os niveis dispoñibles do rexistro son:
 - Deshabilitado: aparte dunha curta mensaxe de inicio, o NVDA non rexistrará nada mentres se execute.
 - Información: O NVDA rexistrará información básica coma mensaxes de inicio e información útil para os desenvolvedores.
 - Aviso de depuración: rexistraranse mensaxes de aviso que non sexan causados por erros graves.
-- Entrada/saída: rexistraranse as entradas das pantallas braille e dos teclados, así como a saída da voz e do braille. Se che preocupa a privacidade, non configures a esta opción de nivel de rexistro.
-- Depuración: ademáis das mensaxes de información, aviso e entrada/saída, rexistraranse mensaxes de depuración adicionais. Ao igual que coa Entrada/saída, se che preocupa a privacidade, non deberías configurar o nivel de rexistro nesta opción.
+- Entrada/saída: rexistraranse as entradas das pantallas braille e dos teclados, así como a saída da voz e do braille.
+ - Se che preocupa a privacidade, non configures a esta opción de nivel de rexistro.
+- Depuración: ademáis das mensaxes de información, aviso e entrada/saída, rexistraranse mensaxes de depuración adicionais.
+ - Ao igual que coa Entrada/saída, se che preocupa a privacidade, non deberías configurar o nivel de rexistro nesta opción.
 -
 
 ==== Iniciar automáticamente nvda despois de autentificarse en windows ====[GeneralSettingsStartAfterLogOn]
@@ -1111,6 +1115,7 @@ As frechas esquerda e arriba suben pola lista, mentres que as frechas dereita e 
 Se estás a usar o sintetizador Espeak NG empaquetado xunto co NVDA, esta é unha caixa combinada que che permite seleccionar a variante ca que o sintetizador debería falar. 
 As variantes de Espeak NG son bastante parecidas ás voces, pero proporcionan atributos lixeiramente diferentes para a voz de ESpeak NG. 
 Algunhas variantes soarán como un home, algunhas como unha muller, e algunhas como se tiveran ronqueira.
+Se usas un sintetizador de terceiros, tamén poderás cambiar este valor se a voz escollida o admite.
 
 ==== Velocidade ====[SpeechSettingsRate]
 Esta opción permíteche cambiar a velocidade da voz. 
@@ -1129,7 +1134,6 @@ Esta opción é unha barra de desprazamento que che permite elexir canta entoaci
 ==== Cambio Automático de Lingua ====[SpeechSettingsLanguageSwitching]
 Esta caixa de verificación permíteche activar ou desactivar se NVDA debería cambiar automáticamente as linguas do sintetizador de voz se o texto a se ler o especifica.
 Esta opción está activada de maneira predeterminada.
-Actualmente só o sintetizador eSpeak NG sopporta o cambio automático de lingua.
 
 ==== Cambio Automático de Dialecto ====[SpeechSettingsDialectSwitching]
 Esta caixa de verificación permíteche activar ou desactivar  se os cambios de dialecto deberíanse facer, en lugar de só cambiar a lingua actual. 
@@ -1144,9 +1148,13 @@ Esto permíteche escoller a cantidade de pontoación e outros símbolos que debe
 Por exemplo, cando se configura a toda, todos os símbolos diranse como palabras.
 Esta opción aplícase a todos os sintetizadores, non só ao sintetizador activo actualmente.
 
+==== Confiar na Linguaxe da voz ao procesar símbolos e caracteres ====[SpeechSettingsTrust]
+Activada de xeito predeterminado, esta opción di ao NVDA se a lingua da voz actual pode ser de confianza ao procesar símbolos e caracteres.
+Se notas que o NVDA está lendo a pontoación nunha lingua incorrecta para un sintetizador ou voz en particular, poderás querer desactivar esta opción para forzar ao NVDA a usar a súa lingua global configurada no su lugar.
+
 ==== Incluir datos Unicode Consortium (incluindo emoji) ao procesar caracteres e símbolos ====[SpeechSettingsCLDR]
 Cando esta caixa de verificación estea activada, o NVDA incluirá os diccionarios de pronunciación de símbolos adicional cando pronuncie caracteres e símbolos.
-Estos dicionarios conteñen descripcións para símbolos (en particular emoji) que se proporcionan polo [Unicode Consortium http://www.unicode.org/consortium/] como parte do seu [Common Locale Data Repository http://cldr.unicode.org/].
+Estos dicionarios conteñen descripcións para símbolos (en particular emoji) que se proporcionan polo [Unicode Consortium https://www.unicode.org/consortium/] como parte do seu [Common Locale Data Repository http://cldr.unicode.org/].
 Se queres que o NVDA fale descripcións de caracteres emoji baseados nestes datos, deberías habilitar esta opción.
 Polo tanto, se estás a usar un sintetizador de voz que admita a fala de descripcións de emoji nativamente, deberías desactivar esto.
 
@@ -1154,16 +1162,14 @@ Ten en conta que as descripcións de caracteres engadidas ou editadas manualment
 Polo tanto, se cambias a descripción dun emoji en particular, a túa descripción persoalizada falarase para ese emoji sen importar se esta opción está habilitada.
 Podes engadir, editar ou borrar descripcións de símbolos no [diálogo de pronunciación de pontoación e símbolos #SymbolPronunciation] do NVDA.
 
-==== Confiar na lingua da voz ao procesar símbolos e caracteres ====[SpeechSettingsTrust]
-Activada de xeito predeterminado, esta opción di ao NVDA se a lingua da voz actual pode ser de confianza ao procesar símbolos e caracteres.
-Se atopas que o NVDA está lendo a pontoación nunha lingua  incorrecta para un sintetizador ou voz en particular, poderás querer desactivar esta opción para forzar ao NVDA a utilizar a súa lingua global configurada no seu lugar.
-
 Para activar ou desactivar a inclusión de Unicode Consortium data dende calquera sitio, por favor asigna un xesto persoalizado usando o [diálogo Xestos de Entrada #InputGestures].
 
 ==== Cambio da Porcentaxe de Ton para Maiúsculas ====[SpeechSettingsCapPitchChange]
 Este campo de edición permíteche teclear a cantidade na que o ton da voz cambiará cando se fale unha letra maiúscula.
 Este valor é unha porcentaxe, onde un valor negativo baixa o ton e un valor positivo súbeo.
 Para non cambiar o ton utilizarías o 0.
+Normalmente, o NVDA sube o ton lixeiramente para calquera letra en maiúsculas, pero algúns sintetizadores poden non admitir esto ben.
+En caso de que non se admita o cambio de ton para as maiúsculas, considera usar [Falar "maius" antes de maiúsculas #SpeechSettingsSayCapBefore] e/ou [Pitar  para maiúsculas #SpeechSettingsBeepForCaps] no seu lugar.
 
 ==== Dicir Maius" antes de Maiúsculas ====[SpeechSettingsSayCapBefore]
 Esta opción é unha caixa de verificación, que cando está marcada di ao NVDA que diga a palabra "maius" antes de calquera letra en maiúscula, cando se navega sobre ela ou falándoo cando está sendo escribida.
@@ -1171,7 +1177,6 @@ Normalmente, NVDA eleva o ton lixeiramente para calquera letra maiúscula, pero 
 
 ==== Pitar para Maiúsculas ====[SpeechSettingsBeepForCaps]
 Se esta caixa de verificación está marcada, NVDA emitirá un pequeno pitido cada vez que estea falando un caracter en maiúscula. 
-Como a caixa de verificación 'dicir maius para maiúsculas', esta é útil para sintetizadores que non podan modificar o seu ton para as letras maiúsculas.
 
 ==== Utilizar funcionalidade de deletreo se está soportada ====[SpeechSettingsUseSpelling]
 Algunhas palabras consisten en só un carácter, pero a pronunciación é diferente dependendo de se o carácter vai ser falado como un carácter individual (como cando se deletrea) ou unha palabra.
@@ -1543,7 +1548,7 @@ Se o anunciado de información de posición do obxecto está desactivada, esta o
 Cando estea activada, NVDA anunciará información de posición para máis controis como menús e barras de ferramentas, non obstante esta información poderá ser lixeiramente incorrecta. 
 
 ==== Anunciar Descripcións de Obxectos ====[ObjectPresentationReportDescriptions]
-Desmarca esta caixa de verificación se coidas que non necesitas escoitar a descripción anunciada xunto cos obxectos.
+Desmarca esta caixa de verificación se coidas que non necesitas escoitar a descripción anunciada xunto cos obxectos (é dicir, suxerencias de búsqueda, anunciado de toda a ventá de diálogo xusto despois de que se abra o diálogo, etc.).
 
 %kc:setting
 ==== Saída nas Barras de Progreso ====[ObjectPresentationProgressBarOutput]
@@ -1651,7 +1656,8 @@ Por exemplo, cando estás nunha páxina web, se premes tab e caes sobre un formu
 
 ==== Modo foco automático para movemento do cursor ====[BrowseModeSettingsAutoPassThroughOnCaretMove]
 Esta opción, cando está marcada, permite ao NVDA entrar en e abandoar o modo foco cando se utilizan as frechas. 
-Por exemplo, se se vai pulsando frecha abaixo por unha páxina web e caes sobre unha caixa de edición, NVDA activará automáticamente o modo foco. Se pulsas as frechas para saír da caixa de edición, NVDA voltaráche a poñer no modo Navegación.
+Por exemplo, se se vai premendo frecha abaixo por unha páxina web e caes sobre unha caixa de edición, NVDA activará automáticamente o modo foco. 
+Se premes as frechas para saír da caixa de edición, NVDA voltaráche a poñer no modo Navegación.
 
 ==== Indicación de Audio dos modos Foco e Navegación ====[BrowseModeSettingsPassThroughAudioIndication]
 Se esta opción está activada, NVDA reproducirá sons especiales cando cambie entre modo Navegación e modo foco, en lugar de falar o cambio.
@@ -1659,6 +1665,7 @@ Se esta opción está activada, NVDA reproducirá sons especiales cando cambie e
 ==== Capturar os Xestos que non Sexan de Ordes  para que non Alcancen o  Documento ====[BrowseModeSettingsTrapNonCommandGestures]
 Habilitada de modo predeterminado, esta opción permíteche escoller se os xestos (como a pulsación de teclas) que non sexan unha orde do NVDA e que non se considere que sexa unha tecla de orde en xeral, deberían capturarse para non pasar ao documento que estea no foco actualmente. 
 Como un exemplo, ao estar activada, se se premeu a letra j, debería capturarse para non alcanzar o documento, xa que non é nin unha tecla de navegación rápida nin é probable que sexa unha orde da mesma aplicación.
+Neste caso, o NVDA pedirá a Windows que reproduza un son predeterminado cada vez que se prema unha tecla que quede atrapada.
 
 +++ Formateado de Documento (NVDA+control+d) +++[DocumentFormattingSettings]
 A maioría das caixas de verificación neste diálogo son para configurar que tipo de formato desexas escoitar automáticamente cando movas o cursor polos documentos. 
