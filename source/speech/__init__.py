@@ -1655,7 +1655,20 @@ def getControlFieldSpeech(  # noqa: C901
 					f"valueSequence: {valueSequence!r} placeholderSequence: {placeholderSequence!r}"
 				)
 			valueSequence = placeholderSequence
-		out.extend(nameSequence)
+
+		# Avoid speaking name twice. Which may happen if this controlfield is labelled by
+		# one of it's internal fields. We determine this by checking for 'labelledByContent'.
+		# An example of this situation is a checkbox element that has aria-labelledby pointing to a child
+		# element.
+		if (
+			# Don't speak name when labelledByContent. It will be spoken by the subsequent controlFields instead.
+			attrs.get("IAccessible2::attribute_explicit-name", False)
+			and attrs.get("labelledByContent", False)
+		):
+			log.debug("Skipping name sequence: control field is labelled by content")
+		else:
+			out.extend(nameSequence)
+
 		out.extend(stateTextSequence if speakStatesFirst else roleTextSequence)
 		out.extend(roleTextSequence if speakStatesFirst else stateTextSequence)
 		out.append(containerContainsText)

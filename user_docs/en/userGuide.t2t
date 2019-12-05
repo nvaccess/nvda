@@ -171,6 +171,13 @@ The first checkbox lets you control if NVDA should use the Caps Lock as an NVDA 
 The second specifies whether NVDA should start automatically after you log on to Windows and is only available for installed copies of NVDA.
 The third lets you control if this Welcome dialog should appear each time NVDA starts.
 
++++ Data usage statistics dialog +++[UsageStatsDialog]
+Starting from NVDA 2018.3, the user is asked if they want to allow usage data to be sent to NV Access in order to help improve NVDA in the future. 
+When starting NVDA for the first time, a dialog will appear which will ask you if you want to accept sending data to NV Access while using NVDA.
+You can read more info about the data gathered by NV Access in Chapter 11 below.
+Note: pressing on "yes" or "no" will save this setting and the dialog will never appear again unless you reinstall NVDA.
+However, you can enable or disable the data gathering process manually in NVDA's general settings panel. For changing this setting manually, you can check or uncheck the checkbox called [Allow the NVDA project to gather NVDA usage statistics #GeneralSettingsGatherUsageStats].
+
 ++ About NVDA keyboard commands ++[AboutNVDAKeyboardCommands]
 
 +++ The NVDA Modifier Key +++[TheNVDAModifierKey]
@@ -641,6 +648,7 @@ When you wish to return to the document, simply press the escape key.
 + Braille +[Braille]
 If you own a braille display, NVDA can display information in braille.
 If your braille display has a Perkins-style keyboard, you can also enter contracted or uncontracted braille.
+Braille can be also be displayed on screen using the [Braille Viewer #BrailleViewer] instead of, or at the same time as, using a physical braille display.
 
 Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for information about the supported braille displays.
 This section also contains information about what displays support NVDA's automatic background braille display detection functionality.
@@ -672,7 +680,7 @@ In order to fit as much information as possible on a braille display, the follow
 | gra | graphic |
 | grp | grouping |
 | hN | heading at level n, e.g. h1, h2. |
-| hlp | help baloon |
+| hlp | help balloon |
 | lmk | landmark |
 | lnk | link |
 | vlnk | visited link |
@@ -1531,9 +1539,10 @@ This category contains the following options:
 A checkbox that when checked tells NVDA to report tooltips as they appear.
 Many Windows and controls show a small message (or tooltip) when you move the mouse pointer over them, or sometimes when you move the focus to them.
 
-==== Report Help Balloons ====[ObjectPresentationReportBalloons]
-This checkbox when checked tells NVDA to report help balloons as they appear.
-Help Balloons are like tooltips, but are usually larger in size, and are associated with system events such as a network cable being unplugged, or perhaps to alert you about Windows security issues.
+==== Report notifications ====[ObjectPresentationReportNotifications]
+This checkbox, when checked, tells NVDA to report help balloons and toast notifications as they appear.
+- Help Balloons are like tooltips, but are usually larger in size, and are associated with system events such as a network cable being unplugged, or perhaps to alert you about Windows security issues.
+- Toast notifications have been introduced in Windows 10 and appear in the notification center in the system tray, informing about several events (i.e. if an update has been downloaded, a new e-mail arived in your inbox, etc.).
 
 ==== Report Object Shortcut Keys ====[ObjectPresentationShortcutKeys]
 When this checkbox is checked, NVDA will include the shortcut key that is associated with a certain object or control when it is reported.
@@ -2027,6 +2036,20 @@ While the speech viewer is enabled, it constantly updates to show you the most c
 However, if you click or focus inside the viewer, NVDA will temporarily stop updating the text, so that you are able to easily select or copy the existing content.
 
 To toggle the speech viewer from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
+++ Braille Viewer ++[BrailleViewer]
+For sighted software developers or people demoing NVDA to sighted audiences, a floating window is available that allows you to view braille output, and the text equivalent for each braille character.
+The braille viewer can be used at the same time as a physical braille display, it will match the number of cells on the physical device.
+While the braille viewer is enabled, it constantly updates to show you the braille that would be displayed on a physical braille display.
+
+To enable the braille viewer, check the "Braille Viewer" menu item under Tools in the NVDA menu.
+Uncheck the menu item to disable it.
+
+Physical braille displays typically have buttons to scroll forwards or backwards, to enable scrolling with the braille viewer tool use the [Input Gestures dialog #InputGestures] to assign keyboard shortcuts which "Scrolls the braille display back" and "Scrolls the braille display forward"
+
+The braille viewer window contains a check box labeled "Show braille viewer on startup".
+If this is checked, the braille viewer will open when NVDA is started.
+The braille viewer window will always attempt to re-open with the same dimensions and location as when it was closed.
 
 ++ Add-ons Manager ++[AddonsManager]
 The Add-ons Manager, accessed by selecting Manage add-ons under Tools in the NVDA menu, allows you to install, uninstall, enable and disable add-on packages for NVDA.
@@ -2529,7 +2552,7 @@ Please see the display's documentation for descriptions of where these keys can 
 
 ++ Seika Braille Displays ++[Seika]
 The Seika Version 3, 4 and 5 (40 cells) and Seika80 (80 cells) braille displays from [Nippon Telesoft https://www.nippontelesoft.com/] are supported.
-You can find more information about the displays and the required drivers at https://en.seika-braille.com/down/index.html/
+You can find more information about the displays and the required drivers at https://en.seika-braille.com/down/index.html
 You must first install the USB drivers provided by the manufacturer.
 
 These displays do not yet support NVDA's automatic background braille display detection functionality.

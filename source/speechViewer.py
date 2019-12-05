@@ -11,7 +11,10 @@ from logHandler import log
 from speech import SpeechSequence
 
 
-class SpeechViewerFrame(wx.Dialog):
+# Inherit from wx.Frame because these windows show in the alt+tab menu (where miniFrame does not)
+# wx.Dialog causes a crash on destruction when multiple were created at the same time (brailleViewer
+# may start at the same time)
+class SpeechViewerFrame(wx.Frame):
 
 	def __init__(self, onDestroyCallBack):
 		dialogSize=wx.Size(500, 500)
@@ -36,13 +39,11 @@ class SpeechViewerFrame(wx.Dialog):
 		# set the check box as having focus, by default the textCtrl has focus which stops the speechviewer output (even if another window is in focus)
 		self.shouldShowOnStartupCheckBox.SetFocus()
 		self.SetSizer(sizer)
-		self.Show(True)
+		self.ShowWithoutActivating()
 
 	def onClose(self, evt):
-		deactivate()
-		return
 		if not evt.CanVeto():
-			self.Destroy()
+			deactivate()
 			return
 		evt.Veto()
 
