@@ -135,6 +135,22 @@ def pauseSpeech(switch):
 	beenCanceled=False
 
 
+def _getSpeakMessageSpeech(
+		text: str,
+) -> SpeechSequence:
+	"""Gets the speech sequence for a given message.
+	@param text: the message to speak
+	"""
+	if text is None:
+		return []
+	if isBlank(text):
+		return [
+			# Translators: This is spoken when the line is considered blank.
+			_("blank"),
+		]
+	return [text, ]
+
+
 def speakMessage(
 		text: str,
 		priority: Optional[Spri] = None
@@ -143,7 +159,9 @@ def speakMessage(
 	@param text: the message to speak
 	@param priority: The speech priority.
 	"""
-	speakText(text, reason=controlTypes.REASON_MESSAGE, priority=priority)
+	seq = _getSpeakMessageSpeech(text)
+	if seq:
+		speak(seq, symbolLevel=None, priority=priority)
 
 
 def getCurrentLanguage():
@@ -538,16 +556,13 @@ def speakText(
 ):
 	"""Speaks some text.
 	@param text: The text to speak.
-	@param reason: The reason for this speech; one of the controlTypes.REASON_* constants.
+	@param reason: Unused
 	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
 	@param priority: The speech priority.
 	"""
-	if text is None:
-		return
-	if isBlank(text):
-		# Translators: This is spoken when the line is considered blank.
-		text=_("blank")
-	speak([text], symbolLevel=symbolLevel, priority=priority)
+	seq = _getSpeakMessageSpeech(text)
+	if seq:
+		speak(seq, symbolLevel=symbolLevel, priority=priority)
 
 
 RE_INDENTATION_SPLIT = re.compile(r"^([^\S\r\n\f\v]*)(.*)$", re.UNICODE | re.DOTALL)
