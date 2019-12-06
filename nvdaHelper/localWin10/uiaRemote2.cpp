@@ -4,12 +4,10 @@
 #include <UIAutomation.h>
 #include <UiaOperationAbstraction/UiaOperationAbstraction.h>
 #include <common/log.h>
-#include <common/log.h>
 
 using namespace UiaOperationAbstraction;
 
-UiaArray<UiaTextRange> UiaRemote_splitTextRangeByUnit(UiaTextRange textRange, TextUnit unit) {
-	auto scope=UiaOperationScope::StartOrContinue();
+UiaArray<UiaTextRange> _remoteable_splitTextRangeByUnit(UiaOperationScope& scope, UiaTextRange& textRange, TextUnit unit) {
 	UiaArray<UiaTextRange> ranges;
 	// Start with a clone of textRange collapsed to the start
 	auto tempRange=textRange.Clone();
@@ -46,29 +44,44 @@ UiaArray<UiaTextRange> UiaRemote_splitTextRangeByUnit(UiaTextRange textRange, Te
 		// Save off this final range.
 		ranges.Append(tempRange.Clone());
 	});
-	scope.BindResult(ranges);
-	scope.Resolve();
 	return ranges;
 }
 
-extern "C" __declspec(dllexport) SAFEARRAY* __stdcall uiaRemote_getTextContent(IUIAutomationTextRange* textRangeArg) {
-	auto scope=UiaOperationScope::StartNew();
-	UiaTextRange textRange{textRangeArg};
-	auto ranges=UiaRemote_splitTextRangeByUnit(textRange,TextUnit_Format);
+const auto textContentCommand_elementStart=1;
+const auto textContentCommand_text=2;
+const auto textContentCommand_elementEnd=3;
+
+UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaTextRange& textRange, const std::vector<int>& attribIDs) {
+	auto ranges=_remoteable_splitTextRangeByUnit(scope,textRange,TextUnit_Format);
 	auto s=ranges.Size();
 	UiaUint index=0;
 	UiaArray<UiaVariant> textContent;
-	scope.For([&]() {
-		index=0;
-	},[&]() {
+	scope.For([&](){},[&]() {
 		return index<s;
-	},[&]() {
+	},[&](){
 		index+=1;
 	},[&]() {
-		textContent.Append(UiaVariant(L"format "));
 		auto subrange=ranges.GetAt(index);
-				textContent.Append(UiaVariant(subrange.GetText(-1)));
+		textContent.Append(UiaVariant(textContentCommand_text));
+		for(auto& attribID: attribIDs) {
+			auto attribValue=subrange.GetAttributeValue(UiaTextAttributeId(attribID));
+			textContent.Append(attribValue);
+		}
+		textContent.Append(UiaVariant(subrange.GetText(-1)));
 	});
+	return textContent;
+}
+
+extern "C" __declspec(dllexport) SAFEARRAY* __stdcall uiaRemote_getTextContent(IUIAutomationTextRange* textRangeArg, SAFEARRAY* pAttribIDsArg) {
+	auto scope=UiaOperationScope::StartNew();
+	UiaTextRange textRange{textRangeArg};
+	CComSafeArray<int> attribIDsArray{pAttribIDsArg};
+	auto attribCount=attribIDsArray.GetCount();
+	std::vector<int> attribIDs(attribCount);
+	for(size_t i=0;i<attribCount;++i) {
+		attribIDs[i]=attribIDsArray.GetAt(i);
+	}
+	auto textContent=_remoteable_getTextContent(scope,textRange,attribIDs);
 	scope.BindResult(textContent);
 	scope.Resolve();
 	size_t numItems=textContent.Size();
