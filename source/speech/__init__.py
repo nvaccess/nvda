@@ -51,8 +51,8 @@ from .commands import (  # noqa: F401
 )
 
 from . import types
-from .types import SpeechSequence
-from typing import Optional, Dict, List, Any
+from .types import SpeechSequence, SequenceItemT
+from typing import Optional, Dict, List, Any, Generator
 from logHandler import log
 import config
 import aria
@@ -196,7 +196,7 @@ def getSpeechForSpelling(  # noqa: C901
 		text: str,
 		locale: Optional[str] = None,
 		useCharacterDescriptions: bool = False
-):
+) -> Generator[SequenceItemT, None, None]:
 	defaultLanguage=getCurrentLanguage()
 	if not locale or (not config.conf['speech']['autoDialectSwitching'] and locale.split('_')[0]==defaultLanguage.split('_')[0]):
 		locale=defaultLanguage
