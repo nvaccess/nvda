@@ -52,7 +52,7 @@ from .commands import (  # noqa: F401
 
 from . import types
 from .types import SpeechSequence, SequenceItemT
-from typing import Optional, Dict, List, Any, Generator, Callable
+from typing import Optional, Dict, List, Any, Generator, Callable, Union
 from logHandler import log
 import config
 import aria
@@ -931,12 +931,9 @@ class GeneratorWithReturn:
 		self.iterationFinished = True
 
 
-# C901 'speakTextInfo' is too complex
-# Note: when working on speakTextInfo, look for opportunities to simplify
-# and move logic out into smaller helper functions.
-def speakTextInfo(  # noqa: C901
+def speakTextInfo(
 		info: textInfos.TextInfo,
-		useCache: bool = True,
+		useCache: Union[bool, SpeakTextInfoState] = True,
 		formatConfig: Dict[str, bool] = None,
 		unit: Optional[str] = None,
 		reason: str = controlTypes.REASON_QUERY,
@@ -945,6 +942,35 @@ def speakTextInfo(  # noqa: C901
 		suppressBlanks: bool = False,
 		priority: Optional[Spri] = None
 ) -> bool:
+	speechSequences = getTextInfoSpeech(
+		info,
+		useCache,
+		formatConfig,
+		unit,
+		reason,
+		_prefixSpeechCommand,
+		onlyInitialFields,
+		suppressBlanks
+	)
+	speechSequences = GeneratorWithReturn(speechSequences)
+	for seq in speechSequences:
+		speak(seq, priority=priority)
+	return speechSequences.returnValue
+
+
+# C901 'getTextInfoSpeech' is too complex
+# Note: when working on getTextInfoSpeech, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+def getTextInfoSpeech(  # noqa: C901
+		info: textInfos.TextInfo,
+		useCache: Union[bool, SpeakTextInfoState] = True,
+		formatConfig: Dict[str, bool] = None,
+		unit: Optional[str] = None,
+		reason: str = controlTypes.REASON_QUERY,
+		_prefixSpeechCommand: Optional[SpeechCommand] = None,
+		onlyInitialFields: bool = False,
+		suppressBlanks: bool = False
+) -> Generator[SpeechSequence, None, bool]:
 	onlyCache=reason==controlTypes.REASON_ONLYCACHE
 	if isinstance(useCache,SpeakTextInfoState):
 		speakTextInfoState=useCache
@@ -964,7 +990,6 @@ def speakTextInfo(  # noqa: C901
 	if unit in (textInfos.UNIT_PARAGRAPH,textInfos.UNIT_CELL) and reason is controlTypes.REASON_CARET:
 		formatConfig['reportSpellingErrors']=False
 
-	speechSequence: SpeechSequence = []
 	#Fetch the last controlFieldStack, or make a blank one
 	controlFieldStackCache=speakTextInfoState.controlFieldStackCache if speakTextInfoState else []
 	formatFieldAttributesCache=speakTextInfoState.formatFieldAttributesCache if speakTextInfoState else {}
@@ -1023,6 +1048,7 @@ def speakTextInfo(  # noqa: C901
 		else:
 			break
 
+	speechSequence: SpeechSequence = []
 	# #2591: Only if the reason is not focus, Speak the exit of any controlFields not in the new stack.
 	# We don't do this for focus because hearing "out of list", etc. isn't useful when tabbing or using quick navigation and makes navigation less efficient.
 	if reason!=controlTypes.REASON_FOCUS:
@@ -1111,17 +1137,30 @@ def speakTextInfo(  # noqa: C901
 	)
 	if fieldSequence:
 		speechSequence.extend(fieldSequence)
+	language = None
 	if autoLanguageSwitching:
 		language=newFormatField.get('language')
 		speechSequence.append(LangChangeCommand(language))
 		lastLanguage=language
 
-	if onlyInitialFields or (unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and len(textWithFields)>0 and len(textWithFields[0])==1 and all((isinstance(x,textInfos.FieldCommand) and x.command=="controlEnd") for x in itertools.islice(textWithFields,1,None) )): 
+	def isControlEndFieldCommand(x):
+		return isinstance(x, textInfos.FieldCommand) and x.command == "controlEnd"
+
+	isWordOrCharUnit = unit in (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD)
+	if onlyInitialFields or (
+		isWordOrCharUnit
+		and len(textWithFields) > 0
+		and len(textWithFields[0]) == 1
+		and all(isControlEndFieldCommand(x) for x in itertools.islice(textWithFields, 1, None))
+	):
 		if not onlyCache:
-			if onlyInitialFields or any(isinstance(x,str) for x in speechSequence):
-				speak(speechSequence,priority=priority)
-			if not onlyInitialFields: 
-				speakSpelling(textWithFields[0],locale=language if autoLanguageSwitching else None,priority=priority)
+			if onlyInitialFields or any(isinstance(x, str) for x in speechSequence):
+				yield speechSequence
+			if not onlyInitialFields:
+				yield getSpellingSpeech(
+					textWithFields[0],
+					locale=language
+				)
 		if useCache:
 			speakTextInfoState.controlFieldStackCache=newControlFieldStack
 			speakTextInfoState.formatFieldAttributesCache=formatFieldAttributesCache
@@ -1279,12 +1318,18 @@ def speakTextInfo(  # noqa: C901
 		if not isinstance(useCache,SpeakTextInfoState):
 			speakTextInfoState.updateObj()
 
-	if not onlyCache and speechSequence:
-		if reason==controlTypes.REASON_SAYALL:
-			return speakWithoutPauses(speechSequence)
-		else:
-			speak(speechSequence,priority=priority)
-			return True
+	if reason == controlTypes.REASON_ONLYCACHE or not speechSequence:
+		return False
+
+	if reason == controlTypes.REASON_SAYALL:
+		withoutPauses = GeneratorWithReturn(
+			_speakWithoutPauses.getSpeechWithoutPauses(speechSequence)
+		)
+		yield from withoutPauses
+		return withoutPauses.returnValue
+
+	yield speechSequence
+	return True
 
 
 # C901 'getPropertiesSpeech' is too complex
