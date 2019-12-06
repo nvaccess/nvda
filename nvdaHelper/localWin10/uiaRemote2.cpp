@@ -65,7 +65,11 @@ UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaTex
 		textContent.Append(UiaVariant(textContentCommand_text));
 		for(auto& attribID: attribIDs) {
 			auto attribValue=subrange.GetAttributeValue(UiaTextAttributeId(attribID));
-			textContent.Append(attribValue);
+			scope.If(attribValue.IsNotSupported(nullptr)||attribValue.IsMixedAttribute(nullptr),[&]() {
+				textContent.Append(UiaVariant(0));
+			},[&]() {
+				textContent.Append(attribValue);
+			});
 		}
 		textContent.Append(UiaVariant(subrange.GetText(-1)));
 	});

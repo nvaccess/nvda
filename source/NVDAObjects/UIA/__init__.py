@@ -29,6 +29,7 @@ import NVDAHelper
 from logHandler import log
 from UIAUtils import *
 from UIAUtils import shouldUseUIAConsole
+import UIARemote
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import (
@@ -700,6 +701,7 @@ class UIATextInfo(textInfos.TextInfo):
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
+		return UIARemote.getTextWithFields(self._rangeObj,formatConfig)
 		fields=list(self._getTextWithFieldsForUIARange(self.obj.UIAElement,self._rangeObj,formatConfig))
 		return fields
 

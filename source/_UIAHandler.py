@@ -280,6 +280,8 @@ class UIAHandler(COMObject):
 			# #7984: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
 			if isinstance(self.clientObject, IUIAutomation5):
 				self.clientObject.AddNotificationEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self)
+			import UIARemote
+			UIARemote.initialize(True,self.clientObject)
 		except Exception as e:
 			self.MTAThreadInitException=e
 		finally:
