@@ -721,13 +721,33 @@ def speakPreselectedText(
 	inform a user that the newly focused control has content that is selected,
 	which they may unintentionally overwrite.
 
-	@remarks: Implemented using L{speakSelectionMessage}, which allows for
-		speaking text with an arbitrary attached message.
+	@remarks: Implemented using L{getPreselectedTextSpeech}
 	"""
-	# Translators: This is spoken to indicate that some text is already selected.
-	# 'selected' preceding text is intentional.
-	# For example 'selected hello world'
-	speakSelectionMessage(_("selected %s"), text, priority)
+	seq = getPreselectedTextSpeech(text)
+	if seq:
+		speak(seq, symbolLevel=None, priority=priority)
+
+
+def getPreselectedTextSpeech(
+		text: str
+) -> SpeechSequence:
+	""" Helper method to get the speech sequence to announce a newly focused control already has
+	text selected.
+	This method will speak the word "selected" with the provided text appended.
+	The announcement order is different from L{speakTextSelected} in order to
+	inform a user that the newly focused control has content that is selected,
+	which they may unintentionally overwrite.
+
+	@remarks: Implemented using L{_getSelectionMessageSpeech}, which allows for
+		creating a speech sequence with an arbitrary attached message.
+	"""
+	return _getSelectionMessageSpeech(
+		# Translators: This is spoken to indicate that some text is already selected.
+		# 'selected' preceding text is intentional.
+		# For example 'selected hello world'
+		_("selected %s"),
+		text
+	)
 
 
 def speakTextSelected(
@@ -752,12 +772,21 @@ def speakSelectionMessage(
 		text: str,
 		priority: Optional[Spri] = None
 ):
-	if len(text) < 512:
-		speakMessage(message % text,priority=priority)
-	else:
-		# Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
-		speakMessage(message % _("%d characters") % len(text),priority=priority)
+	seq = _getSelectionMessageSpeech(message, text)
+	if seq:
+		speak(seq, symbolLevel=None, priority=priority)
 
+
+def _getSelectionMessageSpeech(
+		message: str,
+		text: str,
+) -> SpeechSequence:
+	if len(text) < 512:
+		return _getSpeakMessageSpeech(message % text)
+	# Translators: This is spoken when the user has selected a large portion of text.
+	# Example output "1000 characters"
+	numCharactersText = _("%d characters") % len(text)
+	return _getSpeakMessageSpeech(message % numCharactersText)
 
 # C901 'speakSelectionChange' is too complex
 # Note: when working on speakSelectionChange, look for opportunities to simplify
