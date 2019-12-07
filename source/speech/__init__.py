@@ -517,41 +517,43 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 		"columnSpan": True,
 		"current": True
 	}
-
-	if reason==controlTypes.REASON_FOCUSENTERED:
-		allowProperties["value"]=False
-		allowProperties["keyboardShortcut"]=False
-		allowProperties["positionInfo_level"]=False
+	if reason == controlTypes.REASON_FOCUSENTERED:
+		allowProperties["value"] = False
+		allowProperties["keyboardShortcut"] = False
+		allowProperties["positionInfo_level"] = False
 	if not config.conf["presentation"]["reportObjectDescriptions"]:
-		allowProperties["description"]=False
+		allowProperties["description"] = False
 	if not config.conf["presentation"]["reportKeyboardShortcuts"]:
-		allowProperties["keyboardShortcut"]=False
+		allowProperties["keyboardShortcut"] = False
 	if not config.conf["presentation"]["reportObjectPositionInformation"]:
-		allowProperties["positionInfo_level"]=False
-		allowProperties["positionInfo_indexInGroup"]=False
-		allowProperties["positionInfo_similarItemsInGroup"]=False
-	if reason!=controlTypes.REASON_QUERY:
-		allowProperties["rowCount"]=False
-		allowProperties["columnCount"]=False
-	formatConf=config.conf["documentFormatting"]
+		allowProperties["positionInfo_level"] = False
+		allowProperties["positionInfo_indexInGroup"] = False
+		allowProperties["positionInfo_similarItemsInGroup"] = False
+	if reason != controlTypes.REASON_QUERY:
+		allowProperties["rowCount"] = False
+		allowProperties["columnCount"] = False
+	formatConf = config.conf["documentFormatting"]
 	if not formatConf["reportTableCellCoords"]:
-		allowProperties["cellCoordsText"]=False
+		allowProperties["cellCoordsText"] = False
 		# rowNumber and columnNumber might be needed even if we're not reporting coordinates.
-		allowProperties["includeTableCellCoords"]=False
+		allowProperties["includeTableCellCoords"] = False
 	if not formatConf["reportTableHeaders"]:
-		allowProperties["rowHeaderText"]=False
-		allowProperties["columnHeaderText"]=False
+		allowProperties["rowHeaderText"] = False
+		allowProperties["columnHeaderText"] = False
 	if (
 		not formatConf["reportTables"]
-		or (not formatConf["reportTableCellCoords"] and not formatConf["reportTableHeaders"])
+		or (
+			not formatConf["reportTableCellCoords"]
+			and not formatConf["reportTableHeaders"]
+		)
 	):
 		# We definitely aren't reporting any table info at all.
-		allowProperties["rowNumber"]=False
-		allowProperties["columnNumber"]=False
-		allowProperties["rowSpan"]=False
-		allowProperties["columnSpan"]=False
+		allowProperties["rowNumber"] = False
+		allowProperties["columnNumber"] = False
+		allowProperties["rowSpan"] = False
+		allowProperties["columnSpan"] = False
 	if shouldReportTextContent:
-		allowProperties['value']=False
+		allowProperties['value'] = False
 	return allowProperties
 
 
