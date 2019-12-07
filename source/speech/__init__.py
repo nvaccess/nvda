@@ -459,6 +459,41 @@ def speakObject(  # noqa: C901
 		# objects that do not report as having navigableText should not report their text content either
 		not obj._hasNavigableText
 	)
+
+	allowProperties = _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent)
+
+	if reason==controlTypes.REASON_FOCUSENTERED:
+		# Aside from excluding some properties, focus entered should be spoken like focus.
+		reason=controlTypes.REASON_FOCUS
+
+	speakObjectProperties(obj, reason=reason, _prefixSpeechCommand=_prefixSpeechCommand, priority=priority, **allowProperties)
+	if reason == controlTypes.REASON_ONLYCACHE:
+		return
+	if shouldReportTextContent:
+		try:
+			info = obj.makeTextInfo(textInfos.POSITION_SELECTION)
+			if not info.isCollapsed:
+				# if there is selected text, then there is a value and we do not report placeholder
+				speakPreselectedText(info.text, priority=priority)
+			else:
+				info.expand(textInfos.UNIT_LINE)
+				_speakPlaceholderIfEmpty(info, obj, reason,priority=priority)
+				speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET,priority=priority)
+		except:  # noqa E722 legacy bare except. Unknown what exceptions may be raised.
+			newInfo = obj.makeTextInfo(textInfos.POSITION_ALL)
+			if not _speakPlaceholderIfEmpty(newInfo, obj, reason,priority=priority):
+				speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=controlTypes.REASON_CARET,priority=priority)
+	elif role == controlTypes.ROLE_MATH:
+		import mathPres
+		mathPres.ensureInit()
+		if mathPres.speechProvider:
+			try:
+				speak(mathPres.speechProvider.getSpeechForMathMl(obj.mathMl),priority=priority)
+			except (NotImplementedError, LookupError):
+				pass
+
+
+def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 	allowProperties = {
 		'name': True,
 		'role': True,
@@ -487,9 +522,6 @@ def speakObject(  # noqa: C901
 		allowProperties["value"]=False
 		allowProperties["keyboardShortcut"]=False
 		allowProperties["positionInfo_level"]=False
-		# Aside from excluding some properties, focus entered should be spoken like focus.
-		reason=controlTypes.REASON_FOCUS
-
 	if not config.conf["presentation"]["reportObjectDescriptions"]:
 		allowProperties["description"]=False
 	if not config.conf["presentation"]["reportKeyboardShortcuts"]:
@@ -520,32 +552,7 @@ def speakObject(  # noqa: C901
 		allowProperties["columnSpan"]=False
 	if shouldReportTextContent:
 		allowProperties['value']=False
-
-	speakObjectProperties(obj, reason=reason, _prefixSpeechCommand=_prefixSpeechCommand, priority=priority, **allowProperties)
-	if reason==controlTypes.REASON_ONLYCACHE:
-		return
-	if shouldReportTextContent:
-		try:
-			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
-			if not info.isCollapsed:
-				# if there is selected text, then there is a value and we do not report placeholder
-				speakPreselectedText(info.text, priority=priority)
-			else:
-				info.expand(textInfos.UNIT_LINE)
-				_speakPlaceholderIfEmpty(info, obj, reason,priority=priority)
-				speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET,priority=priority)
-		except:
-			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
-			if not _speakPlaceholderIfEmpty(newInfo, obj, reason,priority=priority):
-				speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=controlTypes.REASON_CARET,priority=priority)
-	elif role==controlTypes.ROLE_MATH:
-		import mathPres
-		mathPres.ensureInit()
-		if mathPres.speechProvider:
-			try:
-				speak(mathPres.speechProvider.getSpeechForMathMl(obj.mathMl),priority=priority)
-			except (NotImplementedError, LookupError):
-				pass
+	return allowProperties
 
 
 def speakText(
