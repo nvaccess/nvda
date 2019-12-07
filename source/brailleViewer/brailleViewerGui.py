@@ -53,38 +53,45 @@ class BrailleViewerFrame(wx.Frame):
 		self._brailleOutputLastSet = BRAILLE_INIT_CHARACTER * numCells
 		self._rawTextOutputLastSet = SPACE_CHARACTER
 
-		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		self.frameContentsSizer = wx.BoxSizer(wx.HORIZONTAL)
+		self.SetSizer(self.frameContentsSizer)
+		self.panel = wx.Panel(self)
+		self.frameContentsSizer.Add(self.panel, proportion=1, flag=wx.EXPAND)
+
+		self.panelContentsSizer = wx.BoxSizer(wx.VERTICAL)
+		self.panel.SetSizer(self.panelContentsSizer)
+
 		borderSizer = wx.BoxSizer(wx.VERTICAL)
-		mainSizer.Add(
+		self.panelContentsSizer .Add(
 			borderSizer,
 			proportion=1,
 			flag=wx.EXPAND | wx.ALL,
 			border=5,
 		)
-		self._brailleOutput = wx.StaticText(self, label=self._brailleOutputLastSet)
+		self._createControls(borderSizer, self.panel)
+		self.ShowWithoutActivating()
+
+	def _createControls(self, sizer, parent):
+		self._brailleOutput = wx.StaticText(parent, label=self._brailleOutputLastSet)
 		self._brailleOutput.Font = self._setBrailleFont(self._brailleOutput.GetFont())
 		log.debug(f"Font for braille: {self._brailleOutput.Font.GetNativeFontInfoUserDesc()}")
-		borderSizer.Add(self._brailleOutput, flag=wx.EXPAND, proportion=1)
+		sizer.Add(self._brailleOutput, flag=wx.EXPAND, proportion=1)
 
-		self._rawTextOutput = wx.StaticText(self, label=self._rawTextOutputLastSet)
+		self._rawTextOutput = wx.StaticText(parent, label=self._rawTextOutputLastSet)
 		self._rawTextOutput.Font = self._setRawTextFont(self._rawTextOutput.Font)
 		log.debug(f"Font for raw text: {self._rawTextOutput.Font.GetNativeFontInfoUserDesc()}")
-		borderSizer.Add(self._rawTextOutput, flag=wx.EXPAND, proportion=1)
+		sizer.Add(self._rawTextOutput, flag=wx.EXPAND, proportion=1)
 
 		# Translators: The label for a setting in the braille viewer that controls
 		# whether the braille viewer is shown at startup or not.
 		showOnStartupCheckboxLabel = _("&Show Braille Viewer on Startup")
 		self._shouldShowOnStartupCheckBox = wx.CheckBox(
-			parent=self,
+			parent=parent,
 			label=showOnStartupCheckboxLabel)
 		self._shouldShowOnStartupCheckBox.SetValue(config.conf["brailleViewer"]["showBrailleViewerAtStartup"])
 		self._shouldShowOnStartupCheckBox.Bind(wx.EVT_CHECKBOX, self._onShouldShowOnStartupChanged)
-		borderSizer.AddSpacer(5)
-		borderSizer.Add(self._shouldShowOnStartupCheckBox)
-
-		mainSizer.Fit(self)
-		self.Sizer = mainSizer
-		self.ShowWithoutActivating()
+		sizer.AddSpacer(5)
+		sizer.Add(self._shouldShowOnStartupCheckBox)
 
 	def _onShouldShowOnStartupChanged(self, evt):
 		config.conf["brailleViewer"]["showBrailleViewerAtStartup"] = self._shouldShowOnStartupCheckBox.IsChecked()
