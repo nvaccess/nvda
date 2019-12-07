@@ -52,7 +52,7 @@ from .commands import (  # noqa: F401
 
 from . import types
 from .types import SpeechSequence, SequenceItemT
-from typing import Optional, Dict, List, Any, Generator, Callable, Union
+from typing import Optional, Dict, List, Any, Generator, Union, Callable, Iterator, Tuple
 from logHandler import log
 import config
 import aria
@@ -421,31 +421,48 @@ def getObjectPropertiesSpeech(  # noqa: C901
 	return speechSequence
 
 
-def _speakPlaceholderIfEmpty(
-		info: textInfos.TextInfo,
+def _getPlaceholderSpeechIfTextEmpty(
 		obj,
 		reason: str,
-		priority: Optional[Spri] = None
-) -> bool:
-	""" attempt to speak placeholder attribute if the textInfo 'info' is empty
-	@return: True if info was considered empty, and we attempted to speak the placeholder value.
-	False if info was not considered empty.
+) -> Tuple[bool, SpeechSequence]:
+	""" Attempt to get speech for placeholder attribute if text for 'obj' is empty. Don't report the placeholder
+		value unless the text is empty, because it is confusing to hear the current value (presumably typed by the
+		user) *and* the placeholder. The placeholder should "disappear" once the user types a value.
+	@return: (True, SpeechSequence) if text for obj was considered empty and we attempted to get speech for the
+		placeholder value. (False, []) if text for obj was not considered empty.
 	"""
 	textEmpty = obj._isTextEmpty
 	if textEmpty:
-		speakObjectProperties(obj,reason=reason,placeholder=True,priority=priority)
-		return True
-	return False
+		return True, getObjectPropertiesSpeech(obj, reason=reason, placeholder=True)
+	return False, []
 
 
-# C901 'speakObject' is too complex
-# Note: when working on speakObject, look for opportunities to simplify
-# and move logic out into smaller helper functions.
-def speakObject(  # noqa: C901
+def speakObject(
 		obj,
 		reason: str = controlTypes.REASON_QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 		priority: Optional[Spri] = None
+):
+	sequence = getObjectSpeech(
+		obj,
+		reason,
+		_prefixSpeechCommand,
+	)
+	if sequence:
+		speak(sequence, priority=priority)
+
+
+def _flattenNestedSequences(nestedSequences: Iterator[SpeechSequence]) -> Iterator[SequenceItemT]:
+	return [i for seq in nestedSequences for i in seq]
+
+
+# C901 'getObjectSpeech' is too complex
+# Note: when working on getObjectSpeech, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+def getObjectSpeech(  # noqa: C901
+		obj,
+		reason: str = controlTypes.REASON_QUERY,
+		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 ):
 	from NVDAObjects import NVDAObjectTextInfo
 	role=obj.role
@@ -462,35 +479,57 @@ def speakObject(  # noqa: C901
 
 	allowProperties = _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent)
 
-	if reason==controlTypes.REASON_FOCUSENTERED:
+	if reason == controlTypes.REASON_FOCUSENTERED:
 		# Aside from excluding some properties, focus entered should be spoken like focus.
-		reason=controlTypes.REASON_FOCUS
+		reason = controlTypes.REASON_FOCUS
 
-	speakObjectProperties(obj, reason=reason, _prefixSpeechCommand=_prefixSpeechCommand, priority=priority, **allowProperties)
+	sequence = getObjectPropertiesSpeech(
+		obj,
+		reason=reason,
+		_prefixSpeechCommand=_prefixSpeechCommand,
+		**allowProperties
+	)
 	if reason == controlTypes.REASON_ONLYCACHE:
-		return
+		return sequence
 	if shouldReportTextContent:
 		try:
 			info = obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			if not info.isCollapsed:
 				# if there is selected text, then there is a value and we do not report placeholder
-				speakPreselectedText(info.text, priority=priority)
+				sequence.extend(getPreselectedTextSpeech(info.text))
 			else:
 				info.expand(textInfos.UNIT_LINE)
-				_speakPlaceholderIfEmpty(info, obj, reason,priority=priority)
-				speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET,priority=priority)
+				textEmpty, placeholderSeq = _getPlaceholderSpeechIfTextEmpty(obj, reason)
+				sequence.extend(placeholderSeq)
+				speechGen = getTextInfoSpeech(
+					info,
+					unit=textInfos.UNIT_LINE,
+					reason=controlTypes.REASON_CARET
+				)
+				sequence.extend(_flattenNestedSequences(speechGen))
 		except:  # noqa E722 legacy bare except. Unknown what exceptions may be raised.
 			newInfo = obj.makeTextInfo(textInfos.POSITION_ALL)
-			if not _speakPlaceholderIfEmpty(newInfo, obj, reason,priority=priority):
-				speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=controlTypes.REASON_CARET,priority=priority)
+			textEmpty, placeholderSeq = _getPlaceholderSpeechIfTextEmpty(obj, reason)
+			if textEmpty:
+				sequence.extend(placeholderSeq)
+			else:
+				speechGen = getTextInfoSpeech(
+					newInfo,
+					unit=textInfos.UNIT_PARAGRAPH,
+					reason=controlTypes.REASON_CARET,
+				)
+				sequence.extend(_flattenNestedSequences(speechGen))
 	elif role == controlTypes.ROLE_MATH:
 		import mathPres
 		mathPres.ensureInit()
 		if mathPres.speechProvider:
 			try:
-				speak(mathPres.speechProvider.getSpeechForMathMl(obj.mathMl),priority=priority)
+				sequence.extend(
+					mathPres.speechProvider.getSpeechForMathMl(obj.mathMl)
+				)
 			except (NotImplementedError, LookupError):
 				pass
+	return sequence
 
 
 def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
