@@ -1,3 +1,4 @@
+#include <functional>
 #include <windows.h>
 #include <atlsafe.h>
 #include <atlcomcli.h>
@@ -6,6 +7,10 @@
 #include <common/log.h>
 
 using namespace UiaOperationAbstraction;
+
+const auto textContentCommand_elementStart=1;
+const auto textContentCommand_text=2;
+const auto textContentCommand_elementEnd=3;
 
 UiaArray<UiaTextRange> _remoteable_splitTextRangeByUnit(UiaOperationScope& scope, UiaTextRange& textRange, TextUnit unit) {
 	UiaArray<UiaTextRange> ranges;
@@ -47,33 +52,68 @@ UiaArray<UiaTextRange> _remoteable_splitTextRangeByUnit(UiaOperationScope& scope
 	return ranges;
 }
 
-const auto textContentCommand_elementStart=1;
-const auto textContentCommand_text=2;
-const auto textContentCommand_elementEnd=3;
-
-UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaTextRange& textRange, const std::vector<int>& attribIDs) {
-	auto ranges=_remoteable_splitTextRangeByUnit(scope,textRange,TextUnit_Format);
-	auto s=ranges.Size();
+template<typename arrayType> void _remoteable_visitUiaArrayElements(UiaOperationScope& scope, arrayType& array, std::function<UiaBool(typename arrayType::_ItemWrapperType&)> visitorFunc) {
+	auto arrayCount=array.Size();
 	UiaUint index=0;
-	UiaArray<UiaVariant> textContent;
 	scope.For([&](){},[&]() {
-		return index<s;
+		return index<arrayCount;
 	},[&](){
 		index+=1;
 	},[&]() {
-		auto subrange=ranges.GetAt(index);
-		textContent.Append(UiaVariant(textContentCommand_text));
-		for(auto& attribID: attribIDs) {
-			auto attribValue=subrange.GetAttributeValue(UiaTextAttributeId(attribID));
-			scope.If(attribValue.IsNotSupported(nullptr)||attribValue.IsMixedAttribute(nullptr),[&]() {
-				textContent.Append(UiaVariant(0));
-			},[&]() {
-				textContent.Append(attribValue);
-			});
-		}
-		textContent.Append(UiaVariant(subrange.GetText(-1)));
+		auto element=array.GetAt(index);
+		scope.If(!visitorFunc(element),[&]() {
+			scope.Break();
+		});
 	});
-	return textContent;
+}
+
+UiaBool _remoteable_getAttributesAndTextForRange(UiaOperationScope& scope,UiaTextRange textRange,UiaArray<UiaInt>& attribIDs,UiaArray<UiaVariant>& outArray,const bool ignoreMixedAttributes) {
+	UiaBool foundMixed{false};
+	UiaArray<UiaVariant> attribValues;
+	_remoteable_visitUiaArrayElements(scope,attribIDs,[&](UiaInt attribID) {
+		auto attribValue=textRange.GetAttributeValue(UiaTextAttributeId(attribID));
+		scope.If(attribValue.IsMixedAttribute(nullptr),[&]() {
+			if(ignoreMixedAttributes) {
+				attribValues.Append(UiaVariant(0));
+			} else {
+				foundMixed=true;
+				scope.Break();
+			}
+		});
+		scope.If(attribValue.IsNotSupported(nullptr),[&]() {
+			attribValues.Append(UiaVariant(0));
+		},[&]() {
+			attribValues.Append(attribValue);
+		});
+		return !foundMixed;
+	});
+	scope.If(!foundMixed,[&]() {
+		outArray.Append(UiaVariant(textContentCommand_text));
+		_remoteable_visitUiaArrayElements(scope,attribValues,[&](auto& element) {
+			outArray.Append(element);
+			return true;
+		});
+		auto text=textRange.GetText(-1);
+		outArray.Append(UiaVariant(text));
+	});
+	return foundMixed;
+}
+
+UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaTextRange& textRange, UiaArray<UiaInt>& attribIDs) {
+	UiaArray<UiaVariant> content;
+	auto formatRanges=_remoteable_splitTextRangeByUnit(scope,textRange,TextUnit_Format);
+	_remoteable_visitUiaArrayElements(scope,formatRanges,[&](auto& formatRange) {
+		UiaBool foundMixed=_remoteable_getAttributesAndTextForRange(scope,formatRange,attribIDs,content,false);
+		scope.If(foundMixed,[&]() {
+			auto charRanges=_remoteable_splitTextRangeByUnit(scope,formatRange,TextUnit_Character);
+			_remoteable_visitUiaArrayElements(scope,charRanges,[&](auto& charRange) {
+				_remoteable_getAttributesAndTextForRange(scope,charRange,attribIDs,content,true);
+				return true;
+			});
+		});
+		return true;
+	});
+	return content;
 }
 
 extern "C" __declspec(dllexport) SAFEARRAY* __stdcall uiaRemote_getTextContent(IUIAutomationTextRange* textRangeArg, SAFEARRAY* pAttribIDsArg) {
@@ -81,9 +121,9 @@ extern "C" __declspec(dllexport) SAFEARRAY* __stdcall uiaRemote_getTextContent(I
 	UiaTextRange textRange{textRangeArg};
 	CComSafeArray<int> attribIDsArray{pAttribIDsArg};
 	auto attribCount=attribIDsArray.GetCount();
-	std::vector<int> attribIDs(attribCount);
+	UiaArray<UiaInt> attribIDs;
 	for(size_t i=0;i<attribCount;++i) {
-		attribIDs[i]=attribIDsArray.GetAt(i);
+		attribIDs.Append(attribIDsArray.GetAt(i));
 	}
 	auto textContent=_remoteable_getTextContent(scope,textRange,attribIDs);
 	scope.BindResult(textContent);
