@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-01 20:04-0800\n"
-"PO-Revision-Date: 2019-12-04 21:04+0530\n"
+"POT-Creation-Date: 2019-12-06 07:28+1000\n"
+"PO-Revision-Date: 2019-12-08 13:42+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -84,16 +84,19 @@ msgstr "தெரியாத உள்ளீட்டு முறை"
 
 #. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
 msgid "spelling and grammar: {text}"
 msgstr "எழுத்து மற்றும் இலக்கணம்: {text}"
 
 #. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
 msgid "spelling: {text}"
 msgstr "எழுத்தாக்கம்: {text}"
 
 #. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
 msgid "grammar: {text}"
 msgstr "இலக்கணம்: {text}"
 
@@ -219,7 +222,7 @@ msgstr "lst"
 msgid "gra"
 msgstr "gra"
 
-#. Translators: Displayed in braille for an object which is a
+#. Translators: Displayed in braille for toast notifications and for an object which is a
 #. help balloon.
 msgid "hlp"
 msgstr "hlp"
@@ -551,6 +554,7 @@ msgstr "வரு"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
+#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{total}ல் {number} "
 
@@ -562,21 +566,25 @@ msgstr "மட் %s"
 
 #. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
 #. Occurences of %s are replaced with the corresponding row numbers.
+#, python-brace-format
 msgid "r{rowNumber}-{rowSpan}"
 msgstr "r{rowNumber}-{rowSpan}"
 
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
+#, python-brace-format
 msgid "r{rowNumber}"
 msgstr "r{rowNumber}"
 
 #. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
 #. Occurences of %s are replaced with the corresponding column numbers.
+#, python-brace-format
 msgid "c{columnNumber}-{columnSpan}"
 msgstr "c{columnNumber}-{columnSpan}"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
+#, python-brace-format
 msgid "c{columnNumber}"
 msgstr "c{columnNumber}"
 
@@ -616,11 +624,13 @@ msgid "Unknown braille display"
 msgstr "தெரியாத பிரெயில் காட்சியமைவு"
 
 #. Translators: Name of a Bluetooth serial communications port.
+#, python-brace-format
 msgid "Bluetooth Serial: {port} ({deviceName})"
 msgstr "ஊடலைத் தொடர் நுழைவாயில்: {port} ({deviceName})"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "தொடர் நுழைவாயில்: {portName}"
 
@@ -629,10 +639,12 @@ msgid "Unsupported input"
 msgstr "ஆதரவளிக்கப்படாத உள்ளீடு"
 
 #. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
 msgid "{modifier} released"
 msgstr "{modifier} விடுவிக்கப்பட்டது"
 
 #. Translators: Reported when a braille input modifier is pressed.
+#, python-brace-format
 msgid "{modifier} pressed"
 msgstr "{modifier} அழுத்தப்பட்டது"
 
@@ -1971,61 +1983,73 @@ msgid "pink-red"
 msgstr "இளஞ்சிவப்பு-சிவப்பு"
 
 #. Translators: a bright color (HSV saturation 100% and value 100%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "ஒளிர் {color}"
 
 #. Translators: color (HSV saturation 100% and value 72%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color}"
 msgstr "அடர் {color}"
 
 #. Translators: a very dark color (HSV saturation 100% and value 16%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
 msgstr "அடர் கரு {color}"
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
 msgstr "இளம்வெளிர் {color}"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
 msgstr "வெளிர் {color}"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
 msgstr "அடர் வெளிர் {color}"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
 msgstr "மிகையடர் வெளிர் {color}"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "{color} white"
 msgstr "{color} வெள்ளை"
 
 #. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "{color} grey"
 msgstr "{color} சாம்பல்"
 
 #. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color} grey"
 msgstr "அடர் {color} சாம்பல்"
 
 #. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color} grey"
 msgstr "மிகக் கருமையான {color} சாம்பல்"
@@ -4158,6 +4182,7 @@ msgid "AC power on"
 msgstr "மாறுதிசை மின்னோட்டம் இணைக்கப்பட்டுள்ளது"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
+#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} மணி நேரம், {minutes:d} நிமிடங்கள் எஞ்சியுள்ளன"
 
@@ -4652,17 +4677,20 @@ msgstr ""
 
 #. Translators: a message when a configuration profile is manually deactivated.
 #. {profile} is replaced with the profile's name.
+#, python-brace-format
 msgid "{profile} profile deactivated"
 msgstr "{profile} தனியமைப்பின் ?இயக்கம் நிறுத்தப்பட்டது"
 
 #. Translators: a message when a configuration profile is manually activated.
 #. {profile} is replaced with the profile's name.
+#, python-brace-format
 msgid "{profile} profile activated"
 msgstr "{profile} தனியமைப்பு இயக்கப்பட்டது"
 
 #. Translators: The description shown in input help for a script that
 #. activates or deactivates a config profile.
 #. {profile} is replaced with the profile's name.
+#, python-brace-format
 msgid "Activates or deactivates the {profile} configuration profile"
 msgstr "{profile} அமைவடிவ தனியமைப்பினை இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
@@ -6187,7 +6215,7 @@ msgstr "என்விடிஏ பேச்சுத் தோற்றம்"
 
 #. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
-msgstr "துவக்கத்தின்பொழுது பேச்சுத் தோற்றத்தைக் காண்பிக்கவும் (&S)"
+msgstr "துவக்கத்தின்பொழுது பேச்சுத் தோற்றத்தைக் காட்டுக (&S)"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -6269,22 +6297,27 @@ msgid "object mode"
 msgstr "பொருள் நிலை"
 
 #. Translators: a touch screen action performed once
+#, python-brace-format
 msgid "single {action}"
 msgstr "ஒற்றை {action}"
 
 #. Translators: a touch screen action performed twice
+#, python-brace-format
 msgid "double {action}"
 msgstr "இரட்டை {action}"
 
 #. Translators: a touch screen action performed 3 times
+#, python-brace-format
 msgid "tripple {action}"
 msgstr "மும்முறை {action}"
 
 #. Translators: a touch screen action performed 4 times
+#, python-brace-format
 msgid "quadruple {action}"
 msgstr "நான்முறை {action}"
 
 #. Translators: a touch screen action using multiple fingers
+#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{numFingers} விரல் {action}"
 
@@ -6372,6 +6405,7 @@ msgstr "இற்றாக்கம் ஏதும் கிடைப்பி�
 
 #. Translators: A message indicating that an updated version of NVDA has been downloaded
 #. and is pending to be installed.
+#, python-brace-format
 msgid "NVDA version {version} has been downloaded and is pending installation."
 msgstr "என்விடிஏ பதிப்பு {version} தரவிறக்கப்பட்டு, நிறுவுதலுக்காக காத்திருக்கிறது."
 
@@ -6404,6 +6438,7 @@ msgstr "கூட்டுக்கூறுகளைச் சீராய்�
 
 #. Translators: The label of a button to install a pending NVDA update.
 #. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
 msgid "&Install NVDA {version}"
 msgstr "என்விடிஏ {version} பதிப்பை நிறுவுக (&I)"
 
@@ -6413,6 +6448,7 @@ msgstr "இற்றாக்கத்தை மீண்டும் தரவ�
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "என்விடிஏ பதிப்பு {version} கிடைப்பிலுள்ளது."
 
@@ -6432,6 +6468,7 @@ msgid "&Close"
 msgstr "மூடுக (&C)"
 
 #. Translators: A message indicating that an updated version of NVDA is ready to be installed.
+#, python-brace-format
 msgid "NVDA version {version} is ready to be installed.\n"
 msgstr "என்விடிஏ பதிப்பு {version} நிறுவுதலுக்கு ஆயத்தமாக உள்ளது.\n"
 
@@ -6520,9 +6557,11 @@ msgstr "NonVisual Desktop Access"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "மைக்ரோசாஃப்ட் விண்டோசிற்கான இலவச திறந்தநிலை ஆதாரத் திரைநவிலி"
 
+#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "பதிப்புரிமை (C) {years} என்விடிஏ பங்களிப்பாளர்கள்"
 
+#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -6568,6 +6607,7 @@ msgstr ""
 "'நன்கொடையளியுங்கள்' உருப்படியைத் தேர்ந்தெடுக்கவும்."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -6576,6 +6616,7 @@ msgstr ""
 "கூட்டுக்கூறுகளை நிறுவ, தாங்கள் என்விடிஏவை இயக்கத்தில் வைத்திருக்க வேண்டும். "
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -6586,10 +6627,12 @@ msgstr ""
 "{width:.1f} விழுக்காடு, உயரம்: திரையின் உயரத்தில் {height:.1f} விழுக்காடு"
 
 #. Translators: a message announcing a candidate's character and description.
+#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{description} இருப்பதுபோல் {symbol}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
+#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -6658,11 +6701,12 @@ msgstr ""
 "தேர்வுகளைக் காட்டுகிறது "
 
 #. Translators: A position in a Kindle book
-#, no-python-format
+#, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
 msgstr "{bookPercentage}%, அமைவிடம் {maxLocation}ல் {curLocation}"
 
 #. Translators: a page in a Kindle book
+#, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "{pageNumber}ம் பக்கம்"
 
@@ -6760,6 +6804,7 @@ msgid "unread"
 msgstr "படிக்கப்படாதது"
 
 #. Translators: A message announcing what configuration profile is currently being edited.
+#, python-brace-format
 msgid "Editing profile {profile}"
 msgstr "{profile} தனியமைப்பு தொகுக்கப்படுகிறது"
 
@@ -6807,14 +6852,17 @@ msgid "Waiting for Outlook..."
 msgstr "ஔட்லுக்கிற்காக காத்துக்கொண்டிருக்கிறது..."
 
 #. Translators: a message reporting the date of a all day Outlook calendar entry
+#, python-brace-format
 msgid "{date} (all day)"
 msgstr "(நாள் முழுவதும்) {date}"
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "{startTime} முதல் {endTime} வரை"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "முன்பதிவு {subject}, {time}"
 
@@ -6976,6 +7024,7 @@ msgid "Master Thumbnails"
 msgstr "தலைமைச் சிறுபடங்கள்"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "நிலைப்படம் {slideNumber}"
 
@@ -6984,86 +7033,104 @@ msgid "other item"
 msgstr "பிற உருப்படி"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr ""
 "{otherShape} வடிவத்தின் இடப்புறத்தை {distance:.3g} புள்ளிகள் அளவிற்கு மறைத்துள்ளது"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr ""
 "{otherShape} வடிவத்தின் இடப்புறத்திற்குப் பின்னால் {distance:.3g} புள்ளிகள் அளவிற்கு "
 "அமைந்துள்ளது"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr ""
 "{otherShape} வடிவத்தின் மேற்புறத்தை {distance:.3g} புள்ளிகள் அளவிற்கு மறைத்துள்ளது"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr ""
 "{otherShape} வடிவத்தின் மேற்புறத்திற்குப் பின்னால் {distance:.3g} புள்ளிகள் அளவிற்கு "
 "அமைந்துள்ளது"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr ""
 "{otherShape} வடிவத்தின் வலப்புறத்தை {distance:.3g} புள்ளிகள் அளவிற்கு மறைத்துள்ளது"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr ""
 "{otherShape} வடிவத்தின் வலப்புறத்திற்குப் பின்னால் {distance:.3g} புள்ளிகள் அளவிற்கு "
 "அமைந்துள்ளது"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr ""
 "{otherShape} வடிவத்தின் கீழ்ப்புறத்தை {distance:.3g} புள்ளிகள் அளவிற்கு மறைத்துள்ளது"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr ""
 "{otherShape} வடிவத்தின் கீழ்ப்புறத்திற்குப் பின்னால் {distance:.3g} புள்ளிகள் அளவிற்கு "
 "அமைந்துள்ளது"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "{otherShape} வடிவத்தை மறைத்துள்ளது"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "{otherShape} வடிவத்தின் பின்னால் அமைந்துள்ளது"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "நிலைப்படத்தின் இட விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "நிலைப்படத்தின் இட விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "நிலைப்படத்தின் மேல் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "நிலைப்படத்தின் மேல் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "நிலைப்படத்தின் வல விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "நிலைப்படத்தின் வல விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "நிலைப்படத்தின் கீழ் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "நிலைப்படத்தின் கீழ் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
 
@@ -7078,10 +7145,12 @@ msgstr ""
 "ஒரு பயனர் எவைகளைப் படிக்கலாம் என்று வரையறுக்கிறது."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "நிலைப்படக் காட்சிக் குறிப்புகள் - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "நிலைப்படக் காட்சி - {slideName}"
 
@@ -7235,6 +7304,15 @@ msgstr "சேக்கா பிரெயில் காட்சியமை�
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
 msgstr "சூப்பர் பிரெயில் "
+
+#. Translators: The title of the NVDA Braille Viewer tool window.
+msgid "NVDA Braille Viewer"
+msgstr "என்விடிஏ பிரெயில் தோற்றம்"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether the braille viewer is shown at startup or not.
+msgid "&Show Braille Viewer on Startup"
+msgstr "துவக்கத்தின்பொழுது பிரெயில் தோற்றத்தைக் காட்டுக (&S)"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -7410,6 +7488,10 @@ msgstr "செயற்குறிப்பேட்டுத் தோற்�
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
 msgstr "பேச்சுத் தோற்றம் (&S)"
+
+#. Translators: The label for the menu item to toggle Braille Viewer.
+msgid "Braille viewer"
+msgstr "பிரெயில் தோற்றம்"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -7701,6 +7783,7 @@ msgstr "கூட்டுக்கூறு குறித்து... (&A)"
 msgid "OK"
 msgstr "சரி"
 
+#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -7713,6 +7796,7 @@ msgstr ""
 "விளக்கம்: {description}\n"
 
 #. Translators: the url part of the About Add-on information
+#, python-brace-format
 msgid "URL: {url}"
 msgstr "இணைய முகவரி: {url}"
 
@@ -7799,6 +7883,7 @@ msgid "Choose Add-on Package File"
 msgstr "கூட்டுக்கூறு தொகுப்புக் கோப்பினைத் தெரிவுச் செய்க"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "என்விடிஏ கூட்டுக்கூறுத் தொகுதி (*.{ext})"
 
@@ -7845,10 +7930,12 @@ msgid "&Enable add-on"
 msgstr "கூட்டுக்கூறினை இயக்குக (&E)"
 
 #. Translators: The message displayed when the add-on cannot be disabled.
+#, python-brace-format
 msgid "Could not disable the {description} add-on."
 msgstr "{description} கூட்டுக்கூறினை முடக்க இயலவில்லை."
 
 #. Translators: The message displayed when the add-on cannot be enabled.
+#, python-brace-format
 msgid "Could not enable the {description} add-on."
 msgstr "{description} கூட்டுக்கூறினை இயக்க இயலவில்லை."
 
@@ -7867,6 +7954,7 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "கூட்டுக்கூறு நிறுவுதல்"
 
+#, python-brace-format
 msgid ""
 "You are about to install version {newVersion} of {summary}, which appears to "
 "be already installed. Would you still like to update?"
@@ -7874,6 +7962,7 @@ msgstr ""
 "{summary} கூட்டுக்கூறின் {newVersion} பதிப்பை நிறுவ இருக்கிறீர்கள், இது ஏற்கெனவே "
 "நிறுவப்பட்டுள்ளதாகத் தோன்றுகிறது. இருப்பினும் இற்றைப்படுத்த விரும்புகிறீர்களா?"
 
+#, python-brace-format
 msgid ""
 "A version of this add-on is already installed. Would you like to update "
 "{summary} version {curVersion} to version {newVersion}?"
@@ -7898,6 +7987,7 @@ msgstr "%s தொகுப்பில் இருக்கும் கூட�
 msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
 msgstr "விண்டோஸ் ஸ்டோர் பதிப்பு என்விடிஏவில் கூட்டுக்கூறுகளை நிறுவ இயலாது"
 
+#, python-brace-format
 msgid ""
 "Installation of {summary} {version} has been blocked. The minimum NVDA "
 "version required for this add-on is {minimumNVDAVersion}, your current NVDA "
@@ -7911,6 +8001,7 @@ msgstr ""
 msgid "Add-on not compatible"
 msgstr "இணக்கமற்றக் கூட்டுக்கூறு"
 
+#, python-brace-format
 msgid ""
 "Installation of {summary} {version} has been blocked. An updated version of "
 "this add-on is required, the minimum add-on API supported by this version of "
@@ -7920,6 +8011,7 @@ msgstr ""
 "பதிப்பு தேவைப்படுகிறது. இந்த என்விடிஏ ஆதரவளிக்கும் குறைந்தபட்ச கூட்டுக்கூறு API "
 "{backCompatToAPIVersion}."
 
+#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on?\n"
 "Only install add-ons from trusted sources.\n"
@@ -8205,6 +8297,7 @@ msgstr ""
 "என்விடிஏவின் முந்தைய படி ஒன்று தங்களின் கணினியில் காணப்படுகிறது. அது இற்றைப்படுத்தப்படும்."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
+#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -8965,7 +9058,7 @@ msgid "Tones"
 msgstr "ஒலிகள்"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both  Speech and Tones"
+msgid "Both Speech and Tones"
 msgstr "பேச்சும் ஒலிகளும்"
 
 #. Translators: This message is presented in the document formatting settings panelue
@@ -9304,6 +9397,7 @@ msgstr "நுழைவாயில் (&P)"
 
 #. Translators: The message in a dialog presented when NVDA is unable to load the selected
 #. braille display.
+#, python-brace-format
 msgid "Could not load the {display} display."
 msgstr "{display} காட்சியமைவை ஏற்ற இயலவில்லை"
 
@@ -9370,11 +9464,13 @@ msgstr "குவிமைய சூழலளிக்கை"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
+#, python-brace-format
 msgid "Could not load the {providerName} vision enhancement provider"
 msgstr "{providerName} பார்வைத் துலக்க ஊக்கிகளை ஏற்ற இயலவில்லை"
 
 #. Translators: This message is presented when NVDA is unable to
 #. load multiple vision enhancement providers.
+#, python-brace-format
 msgid ""
 "Could not load the following vision enhancement providers:\n"
 "{providerNames}"
@@ -9388,10 +9484,12 @@ msgstr "பார்வைத் துலக்க ஊக்கிப் பி
 
 #. Translators: This message is presented when
 #. NVDA is unable to gracefully terminate a single vision enhancement provider.
+#, python-brace-format
 msgid ""
 "Could not gracefully terminate the {providerName} vision enhancement provider"
 msgstr "{providerName} பார்வைத் துலக்க ஊக்கியை நயமாக முடிவிற்கு கொண்டுவர இயலவில்லை"
 
+#, python-brace-format
 msgid ""
 "Could not gracefully terminate the following vision enhancement providers:\n"
 "{providerNames}"
@@ -9501,6 +9599,7 @@ msgstr "தொழிற்சாலை இயல்பிற்கு மாற�
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
+#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -9602,10 +9701,12 @@ msgstr "நெடுவரிசை %s"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
+#, python-brace-format
 msgid "through row {row} column {column}"
 msgstr "கிடைவரிசை {row} முதல் நெடுவரிசை {column} வரை"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
+#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "{rowCount} கிடைவரிசைகள், {columnCount} நெடுவரிசைகள் கொண்டது"
 
@@ -9649,6 +9750,7 @@ msgstr "உட்பிரிவு %s"
 #. Translators: Indicates the text column number in a document.
 #. {0} will be replaced with the text column number.
 #. {1} will be replaced with the number of text columns.
+#, python-brace-format
 msgid "column {0} of {1}"
 msgstr "நெடுவரிசை {1}ல் {0}"
 
@@ -9701,25 +9803,30 @@ msgstr "எல்லைக் கோடுகள் ஏதுமில்லை"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
+#, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "{color1} முதல் {color2} வரை"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{backgroundColor} மீது {color}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
+#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "பின்னணி {backgroundColor}"
 
+#, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "பின்னணி வடிவவிதம் {pattern}"
 
@@ -9931,6 +10038,7 @@ msgid "out of table"
 msgstr "அட்டவணைக்கு வெளியே"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
+#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "{columnCount} நெடுவரிசைகள், {rowCount} கிடைவரிசைகள் கொண்ட அட்டவணை"
 
@@ -9951,14 +10059,17 @@ msgid "word"
 msgstr "சொல்"
 
 #. Translators: the current position's screen coordinates in pixels
+#, python-brace-format
 msgid "Positioned at {x}, {y}"
 msgstr "{x},{y} நிலையில் நிலைநிறுத்தப்பட்டது"
 
 #. Translators: current position in a document as a percentage of the document length
+#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
+#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "தற்போதைய திரையின் நிலை {x},{y} படவணுக்கள்"
 
@@ -10021,6 +10132,7 @@ msgstr "திரைச்சீலை"
 
 #. Translators: Description for a screen curtain setting that shows a warning when loading
 #. the screen curtain.
+#, python-brace-format
 msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
 msgstr "{screenCurtainTranslatedName}யை இடும்பொழுது எச்சரிக்கவும் (&S)"
 
@@ -10046,6 +10158,7 @@ msgid "Taskbar"
 msgstr "பணிப்பட்டை"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
+#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB சிவப்பு {rgb.red}, பச்சை {rgb.green}, நீலம் {rgb.blue}"
 
@@ -10065,12 +10178,14 @@ msgstr ""
 "அறிவிக்கும் வசதியைச் செயற்படுத்தவும்."
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "{rowNumber} கிடைவரிசையையும் {columnNumber} நெடுவரிசையையும், நெடுவரிசை "
 "தலைப்புரையின் துவக்கமாக அமைத்திடுக"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -10078,12 +10193,14 @@ msgstr ""
 "தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr ""
 "{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும் , நெடுவரிசை "
 "தலைப்புரையிலிருந்து நீக்கப்பட்டது"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
 "{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும், நெடுவரிசைத் "
@@ -10100,12 +10217,14 @@ msgstr ""
 "மறக்கும். "
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "{rowNumber} கிடைவரிசையையும் {columnNumber} நெடுவரிசையையும், கிடைவரிசை "
 "தலைப்புரையின் துவக்கமாக அமைத்திடுக"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
@@ -10113,12 +10232,14 @@ msgstr ""
 "தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr ""
 "{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும் , கிடைவரிசை "
 "தலைப்புரையிலிருந்து நீக்கப்பட்டது"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr ""
 "{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும், கிடைவரிசைத் "
@@ -10161,22 +10282,27 @@ msgid "&Errors"
 msgstr "பிழைகள் (&E)"
 
 #. Translators: The label shown for an insertion change
+#, python-brace-format
 msgid "insertion: {text}"
 msgstr "{text} செருகப்பட்டது "
 
 #. Translators: The label shown for a deletion change
+#, python-brace-format
 msgid "deletion: {text}"
 msgstr "{text} அழிக்கப்பட்டது "
 
 #. Translators: The general label shown for track changes
+#, python-brace-format
 msgid "track change: {text}"
 msgstr "மாற்றப்பட்ட உரை: {text}"
 
 #. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
 msgid "Comment: {comment} by {author} on {date}"
 msgstr "கருத்துரை: {comment}, படைப்பாளர்: {author}, தேதி: {date}"
 
 #. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
 msgid "{comment} by {author} on {date}"
 msgstr "கருத்துரை: {comment}, படைப்பாளர்: {author}, தேதி: {date}"
 
@@ -10551,6 +10677,7 @@ msgid "item"
 msgstr "உருப்படி"
 
 #. Translators: Message to be spoken to report Series Color
+#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "தொடர் நிறம்: {colorName} "
 
@@ -10640,6 +10767,7 @@ msgid "Shape"
 msgstr "வடிவம்"
 
 #. Translators: Message reporting the title and type of a chart.
+#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "விளக்கப்படத்தின் தலைப்பு  {chartTitle}, வகை {chartType}"
 
@@ -10653,6 +10781,7 @@ msgid "There are total %d series in this chart"
 msgstr "இந்த விளக்கப்படத்தில் மொத்தம் %d தொடர்கள் உள்ளன"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
+#, python-brace-format
 msgid "series {number} {name}"
 msgstr "தொடர் {number} {name}"
 
@@ -10667,55 +10796,66 @@ msgstr "விளக்கப்படக் கூறுகள்"
 #. Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
+#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} தொடர், {seriesCount}ல் {seriesIndex}"
 
 #. Translators: Message to be spoken to report Slice Color in Pie Chart
+#, python-brace-format
 msgid "Slice color: {colorName} "
 msgstr "கூறின் நிறம்: {colorName} "
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
+#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "{previousIndex} புள்ளியிலிருந்து மாற்றம் ஏதுமில்லை"
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
+#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "{previousIndex} புள்ளியிலிருந்து {incrementValue} அதிகரிக்கப்பட்டுள்ளது,"
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
+#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "{previousIndex} புள்ளியிலிருந்து {decrementValue} குறைக்கப்பட்டுள்ளது,"
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "வகை {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "மதிப்பு {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
+#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr "பின்னம் {fractionValue:.2f}  {pointCount}ல் {pointIndex} விழுக்காடு"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
+#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr "{segmentType} {pointCount}ல் {pointIndex}"
 
@@ -10744,6 +10884,7 @@ msgid "Secondary Series Axis"
 msgstr "இரண்டாம்கட்ட தொடர் அச்சு"
 
 #. Translators: the title of a chart axis
+#, python-brace-format
 msgid " title: {axisTitle}"
 msgstr "தலைப்பு: {axisTitle}"
 
@@ -10780,6 +10921,7 @@ msgid " minus "
 msgstr "கழித்தல்"
 
 #. Translators: This message gives trendline type and name for selected series
+#, python-brace-format
 msgid ""
 "{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: "
 "{trendlineLabel} "
@@ -10788,10 +10930,12 @@ msgstr ""
 "குறிச்சீட்டு: {trendlineLabel} "
 
 #. Translators: This message gives trendline type and name for selected series
+#, python-brace-format
 msgid "{seriesName} trendline type: {trendlineType}, name: {trendlineName} "
 msgstr "{seriesName} போக்குக் கோட்டு வகை: {trendlineType}, பெயர்: {trendlineName} "
 
 #. Translators: Details about a chart title in Microsoft Office.
+#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "விளக்கப்படத்தின் தலைப்பு: {chartTitle}"
 
@@ -10800,6 +10944,7 @@ msgid "Untitled chart"
 msgstr "தலைப்பிடப்படாத விளக்கப்படம்"
 
 #. Translators: Details about the chart area in a Microsoft Office chart.
+#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -10812,6 +10957,7 @@ msgid "Chart area "
 msgstr "விளக்கப்படத்தின் பகுதி"
 
 #. Translators: Details about the plot area of a Microsoft Office chart.
+#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -10826,16 +10972,19 @@ msgid "Plot area "
 msgstr "வரைப் பகுதி"
 
 #. Translators: a message for the legend entry of a chart in MS Office
+#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} தொடருக்கான குறிவிளக்கி உள்ளீடு, {seriesCount}ல் {seriesIndex}"
 
 #. Translators: the legend entry for a chart in Microsoft Office
+#, python-brace-format
 msgid "Legend entry {legendEntryIndex} of {legendEntryCount}"
 msgstr "{legendEntryCount} எண்ணிக்கையின் குறிவிளக்கி உள்ளீடு {legendEntryIndex} "
 
 #. Translators: Details about a legend key for a series in a Microsoft office chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 "{seriesName} தொடருக்கான குறிவிளக்கித் திறவுகோல், {seriesCount}ல் {seriesIndex}"
@@ -10989,22 +11138,27 @@ msgid "&Sheets"
 msgstr "தாள்கள் (&S)"
 
 #. Translators: Used to express an address range in excel.
+#, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} முதல் {end} வரை"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "நெடுவரிசைத் தலைப்புரையின் துவக்கமாக {address}-ஐ அமைத்திடுக"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "{address} ஏற்கெனவே நெடுவரிசைத் தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Removed {address}    from column headers"
 msgstr "நெடுவரிசைத் தலைப்புரையிலிருந்து {address} நீக்கப்பட்டது"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "நெடுவரிசைத் தலைப்புரையில் {address} காணப்படவில்லை"
 
@@ -11019,18 +11173,22 @@ msgstr ""
 "மறக்கும். "
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "கிடைவரிசைத் தலைப்புரையின் துவக்கமாக {address}-ஐ அமைத்திடுக"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "{address} ஏற்கெனவே கிடைவரிசைத் தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "கிடைவரிசைத் தலைப்புரையிலிருந்து {address} நீக்கப்பட்டது"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "கிடைவரிசைத் தலைப்புரையில் {address} காணப்படவில்லை"
 
@@ -11045,12 +11203,15 @@ msgstr ""
 "மறக்கும். "
 
 #. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
 msgid "Sheet {0}, {1}"
 msgstr "தாள் {0}, {1}"
 
+#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "உள்ளீட்டுத் தகவல்: {title}: {message}"
 
+#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "உள்ளீட்டுத் தகவல்: {message}"
 
@@ -11063,10 +11224,12 @@ msgid "Reports the comment on the current cell"
 msgstr "தற்போதைய சிறுகட்டத்தின் கருத்துரையை அறிவிக்கும்"
 
 #. Translators: Dialog text for
+#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "{address} சிறுகட்டத்திற்கான கருத்துரை தொகுக்கப்படுகிறது"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
+#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} முதல் {lastAddress} {lastContent} வரை"
 
@@ -11159,30 +11322,37 @@ msgid "medium dashed"
 msgstr "நடுத்தர சிறுகோடிடப்பட்டது"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{weight} {style}"
 msgstr "{weight} {style}"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{color} {desc}"
 msgstr "{color} {desc}"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{desc} surrounding border"
 msgstr "எல்லையைச் சுற்றிய {desc}"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{desc} top and bottom edges"
 msgstr "{desc} மேல் மற்றும் கீழ் விளிம்புகள்"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{desc} left and right edges"
 msgstr "{desc} இடது மற்றும் வலது விளிம்புகள்"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{desc} up-right and down-right diagonal lines"
 msgstr "{desc} வலது மேல் வலது கீழ் குறுக்குக் கோடுகள்"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{desc} {position}"
 msgstr "{desc} {position}"
 
@@ -11286,6 +11456,7 @@ msgstr "உரைச் சட்டகம்"
 
 #. Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
 #. {text}, {author} and {date} will be replaced by the corresponding details about the comment.
+#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "கருத்துரை: {text}, படைப்பாளர்: {author}, தேதி: {date}"
 
@@ -11293,14 +11464,17 @@ msgstr "கருத்துரை: {text}, படைப்பாளர்: {au
 #. {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
 #. {description} will be replaced with a description of the formatting changes, if any.
 #. {text}, {author} and {date} will be replaced by the corresponding details about the revision.
+#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text}, படைப்பாளர் {author}, தேதி {date}"
 
 #. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
 msgid "{distance} from left edge of page"
 msgstr "பக்கத்தின் இட விளிம்பிலிருந்து {distance}"
 
 #. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
 msgid "{distance} from top edge of page"
 msgstr "பக்கத்தின் மேல் விளிம்பிலிருந்து {distance}"
 
@@ -11411,10 +11585,12 @@ msgid "Moved above blank paragraph"
 msgstr "வெற்றுப் பத்திக்கு மேல் நகர்த்தப்பட்டது"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
+#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "{styleName} பாங்கு, வெளிவரைவு நிலை {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
+#, python-brace-format
 msgid "{size:g} point font"
 msgstr "{size:g} புள்ளி எழுத்துரு"
 
@@ -11435,27 +11611,33 @@ msgid "Hide nonprinting characters"
 msgstr "அச்சாகாத வரியுருக்களை மறைத்திடுக"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} வரியுருக்கள்"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} அங்குலங்கள்"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} செண்டிமீட்டர்கள்"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} மில்லிமீட்டர்கள்"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} புள்ளிகள்"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
+#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} பிக்காக்கள்"
 

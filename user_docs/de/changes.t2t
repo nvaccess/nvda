@@ -28,6 +28,7 @@ Was ist neu in NVDA
 - NVDA wurde um eine Funktion zur Hervorhebung des Bildschirms erweitert. (#971, #9064)
  - Die Hervorhebung von Fokus, Navigator-Objekt und Lesemodus kann über die Kategorie "Sehen" im Einstellungsdialog von NVDA aktiviert und konfiguriert werden.
  - Hinweis: Diese Funktion ist nicht mit der Erweiterung "Fokus hervorheben" kompatibel, jedoch kann die Erweiterung weiterhin verwendet werden, während die eingebaute Hervorhebungsfunktion deaktiviert ist.
+- Braille-Betrachter hinzugefügt, ermöglicht die Anzeige der Braille-Ausgabe über den Bildschirm. (#7788)
 
 
 == Änderungen ==
@@ -45,6 +46,7 @@ Was ist neu in NVDA
 - Beim Hervorheben einer Gruppe im Lesemodus wird nun auch die Beschreibung vorgelesen. (#10095)
 - Die Java Access Bridge ist nun im NVDA enthalten, um den Zugriff auf Java-Anwendungen zu ermöglichen, auch für 64-Bit-Java-VMs. (#7724)
 - Wenn die Java Access Bridge für den Benutzer nicht aktiviert ist, aktiviert NVDA sie automatisch beim Start von NVDA. (#7952)
+- eSpeak-NG aktualisiert auf 1.51-dev, Commit ca65812ac6019926f2fbd7f12c92d7edd3701e0c. (#10581)
 
 
 == Fehlerbehebungen ==
@@ -74,6 +76,10 @@ Was ist neu in NVDA
 - Java-Anwendungen, die vor NVDA gestartet wurden, sind nun zugänglich, ohne dass die Java-App neu gestartet werden muss. (#10296)
 - Wenn im Mozilla Firefox das hervorgehobene Element als aktuell (aria-current) markiert wird, wird diese Änderung nicht mehr mehrfach angesagt. (#8960)
 - NVDA behandelt nun bestimmte zusammengesetzte Unicode-Zeichen, wie z. B. das Zeichen é, als ein einziges Zeichen, wenn Sie sich durch Text bewegen. (#10550)
+- Spring Tool Suite Version 4 wird nun unterstützt. (#10001)
+- Namen werden nicht mehr doppelt angesagt, wenn das Attribut "aria-labelledby"  sich in einem inneren Element befindet. (#10552)
+- Unter Windows 10 Version 1607 und neuer werden in mehreren Situationen Zeichen während der Eingabe von Braille-Tastaturen zurückgemeldet. (#10569)
+- Wenn Sie das Audio-Ausgabegerät wechseln, werden die von NVDA ausgegebenen Töne nun durch das Neue wiedergegeben. (#2167)
 
 
 == Änderungen für Entwickler ==

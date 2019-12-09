@@ -26,7 +26,8 @@
  - Voidaan ottaa käyttöön ja määrittää NVDA:n asetusvalintaikkunan Näkö-kategoriasta.
 - Lisätty ruudun korostustoiminnallisuus. (#971, #9064)
  - Kohdistuksen, navigointiobjektin ja selaustilakohdistimen sijainnin korostaminen voidaan ottaa käyttöön ja määrittää NVDA:n asetusvalintaikkunan Näkö-kategoriasta.
- - Huom: Tämä toiminto ei ole yhteensopiva Kohdistuksen korostus -lisäosan kanssa, mutta sen käyttäminen on edelleen mahdollista, kun sisäänrakennettu korostaja ei ole käytössä.
+ - Huom: Tämä toiminto ei ole yhteensopiva Kohdistuksen korostus -lisäosan kanssa, mutta sen käyttäminen on edelleen mahdollista, kun sisäänrakennettu korostaja on poistettu käytössä.
+- Lisätty Pistekirjoituksen tarkastelu -työkalu, jonka avulla voi tarkastella pistekirjoitustulostetta ruudulla näkyvässä ikkunassa. (#7788)
 
 
 == Muutokset ==
@@ -44,6 +45,7 @@
 - Kun kohdistus siirretään selaustilassa ryhmän kohdalle, nyt luetaan lisäksi sen kuvaus. (#10095)
 - Java Access Bridge sisältyy nyt NVDA:han, jotta Java-sovellusten (mukaan lukien 64-bittiset Java-virtuaalikoneet) käyttäminen olisi mahdollista. (#7724)
 - Mikäli Java Access Bridgeä ei ole otettu käyttöön nykyiselle käyttäjälle, se otetaan automaattisesti käyttöön NVDA:ta käynnistettäessä. (#7952)
+- Päivitetty eSpeak-NG versioksi 1.51-dev, muutos ca65812ac6019926f2fbd7f12c92d7edd3701e0c. (#10581)
 
 
 == Korjatut ohjelmavirheet ==
@@ -73,6 +75,10 @@
 - Ennen NVDA:ta käynnistetyt Java-sovellukset ovat nyt saavutettavia ilman sovelluksen uudelleenkäynnistystä. (#10296)
 - Kun kohdistettu elementti merkitään Mozilla Firefoxissa nykyiseksi (aria-current), muutosta ei enää puhuta useita kertoja. (#8960)
 - NVDA käsittelee nyt tekstissä liikuttaessa tiettyjä Unicode-yhdistelmämerkkejä, kuten e-akuutti, yhtenä merkkinä. (#10550)
+- Spring Tool Suiten versio 4 on nyt tuettu. (#10001)
+- Nimeä ei puhuta kahdesti, kun aria-labelledby-relaatiokohde on sisempi elementti. (#10552)
+- Pistekirjoitusnäppäimistöllä kirjoitetut merkit puhutaan useammissa tapauksissa Windows 10:n versiossa 1607 ja uudemmissa. (#10569)
+- Kun äänen ulostulolaitetta vaihdetaan, NVDA:n äänimerkit toistetaaan nyt juuri valitun laitteen kautta. (#2167)
 
 
 == Muutokset kehittäjille ==

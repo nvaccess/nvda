@@ -171,6 +171,13 @@ Hộp kiểm đầu tiên cho phép bạn chọn phím khóa hoa (Caps Lock) là
 Hộp kiểm thứ hai cho phép NVDA khởi động cùng Windows và chỉ có trong bản cài đặt trên máy.
 Hộp kiểm thứ ba cho phép bạn hiển thị hộp thoại chào mừng này mỗi khi khởi động NVDA.
 
++++ Hộp thoại thống kê sử dụng dữ liệu +++[UsageStatsDialog]
+Từ phiên bản NVDA 2018.3, người dùng được yêu cầu gửi dữ liệu sử dụng cho NV Access, giúp cải thiện các bản NVDA trong tương lai.
+Ở lần khởi động đầu tiên, sẽ xuất hiện một hộp thoại yêu cầu bạn chấp nhận gửi dữ liệu cho NV Access trong khi dùng NVDA.
+Bạn có thể xem thêm thông tin về việc thu thập dữ liệu bởi NV Access trong chương 11 bên dưới.
+Lưu ý: chọn "có" hay "không" đều lưu thiết lập và hộp thoại sẽ không xuất hiện lại cho tới khi bạn cài lại NVDA.
+Tuy nhiên, bạn có thể bật hay tắt thủ công việc thu thập dữ liệu trong bản cài đặt chung của NVDA. Để thay đổi thiết lập này, bạn có thể chọn hay bỏ chọn hộp kiểm [Cho phép dự án NVDA thu thập thống kê sử dụng NVDA #GeneralSettingsGatherUsageStats].
+
 ++ Giới thiệu về các lệnh bàn phím của NVDA ++[AboutNVDAKeyboardCommands]
 
 +++ phím bổ trợ NVDA +++[TheNVDAModifierKey]
@@ -641,6 +648,7 @@ Bấm escape nếu bạn muốn trở về tài liệu.
 + Chữ Nổi +[Braille]
 Nếu bạn sử dụng màn hình nổi, NVDA có thể hiển thị thông tin dạng chữ nổi.
 Nếu màn hình nổi của bạn có bàn phím kiểu Perkins, bạn có thể nhập liệu chữ nổi dưới dạng đầy đủ và viết tắt.
+Chữ nổi cũng có thể hiển thị trên màn hình bằng [Trình xem chữ nổi #BrailleViewer] để thay thế, hay dùng cùng lúc với màn hình chữ nổi.
 
 Vui lòng xem phần [các màn hình nổi được hỗ trợ #SupportedBrailleDisplays] để biết thêm thông tin về các mẫu màn hình được hỗ trợ.
 Phần này cũng có các thông tin về các màn hình được hỗ trợ tính năng tự dò tìm ngầm của NVDA.
@@ -1531,9 +1539,10 @@ Phân loại này gồm các mục sau:
 Tùy chọn này là một hộp kiểm cho phép NVDA đọc thông báo của đối tượng khi nó xuất hiện.
 Rất nhiều đối tượng trên các cửa sổ và trong Windows hiển thị một thông báo nhỏ (tool tip) khi bạn di chuyển chuột qua hoặc khi nó có focus.
 
-==== Đọc các thông báo trợ giúp ====[ObjectPresentationReportBalloons]
-Hộp kiểm này cho phép NVDA đọc thông báo trợ giúp nếu chúng xuất hiện.
-Thông báo trợ giúp (help boloon) thường là các thông báo xuất hiện trên các biểu tượng dưới khay hệ thống như trạng thái kết nối mạng, nhận biết thiết bị mới được cắm vào, v...v...
+==== Đọc các thông báo ====[ObjectPresentationReportNotifications]
+Hộp kiểm này, khi được chọn, NVDA sẽ đọc các thông báo trợ giúp (help balloons) và các thông báo dạng toast (toast notifications) khi chúng xuất hiện.
+- Thông báo trợ giúp thường là các thông báo xuất hiện trên các biểu tượng dưới khay hệ thống như tình trạng kết nối mạng hoặc giả là các cảnh báo về vấn đề an toàn của Windows.
+- Thông báo toast được giới thiệu trong Windows 10 và xuất hiện ở trung tâm thông báo (notification center) trên khay hệ thống, cung cấp thông báo cho vài sự kiện (ví dụ: một bản cập nhật đã được tải, có thư mới trong hộp thư đến, v...v...).
 
 ==== Thông báo phím tắt của đối tượng ====[ObjectPresentationShortcutKeys]
 Nếu được chọn thì NVDA sẽ thông báo phím tắt của đối tượng (nếu có).
@@ -2027,6 +2036,20 @@ Khi được chọn, NVDA sẽ hiển thị các nội dung bằng văn bản đ
 Tuy nhiên, nếu bạn kích hoạt hay đưa focus đến trình hiển thị thì nó sẽ tạm dừng cập nhật nội dung, do vậy bạn có thể dễ dàng sao chép các nội dung đã có để kiểm tra.
 
 Để chạy chức năng này ở bất kỳ đâu, bạn có thể gán phím tắt cho nó bằng cách sử dụng [Hộp thoại quản lý thao tác #InputGestures].
+
+++ Trình xem chữ nổi ++[BrailleViewer]
+Với các nhà phát triển phần mềm là người sáng mắt hoặc những ai đang giới thiệu NVDA đến đối tượng là người sáng mắt, có một cửa sổ cho phép xem đầu ra chữ nổi và nội dung chữ sáng tương ứng với mỗi kí tự chữ nổi.
+Trình xem chữ nổi (braille viewer) có thể dùng cùng lúc với màn hình chữ nổi. Nó sẽ khớp với số ô trên màn hình đó.
+Khi bật trình xem chữ nổi, nó sẽ  liên tục cập nhật để hiển thị nội dung đang hiện trên màn hình chữ nổi.
+
+Để bật trình xem chữ nổi, Đánh dấu chọn  vào "Trình xem chữ nổi" ở trình đơn Công cụ trong trình đơn NVDA.
+Bỏ chọn để tắt nó.
+
+Các màn hình chữ nổi thường có các nút cuộn tới / lui. Để có thể cuộn với trình xem chữ nổi, hãy dùng [Hộp thoại quản lý thao tác #InputGestures] để gán phím tắt cho các lệnh "Cuộn màn hình nổi về trước" và "Cuộn màn hình nổi tới"
+
+Cửa sổ trình xem chữ nổi có một hộp kiểm tên "Hiển thị trình xem chữ nổi khi khởi động".
+Nếu chọn, trình xem chữ nổi sẽ được mở khi khởi động NVDA.
+Cửa sổ trình xem chữ nổi sẽ luôn cố gắng mở lại với kích cỡ và vị trí mà nó đã bị đóng lại trước đó.
 
 ++ Quản lý Add-ons ++[AddonsManager]
 Bạn có thể mở cửa sổ này từ trình đơn công cụ của NVDA, nó cho phép bạn cài đặt hay gỡ bỏ các Add on của NVDA.
@@ -2529,7 +2552,7 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 
 ++ Màn hình nổi Seika ++[Seika]
 NVDA hỗ trợ màn hình nổi Seika phiên bản 3, 4 và 5 (40 ô) và Seika80 (80 ô) tại [Nippon Telesoft https://www.nippontelesoft.com/].
-Bạn có thể đọc thêm thông tin về các mẫu màn hình này và các trình điều khiển được yêu cầu tại https://en.seika-braille.com/down/index.html/
+Bạn có thể đọc thêm thông tin về các mẫu màn hình này và các trình điều khiển được yêu cầu tại https://en.seika-braille.com/down/index.html
 Bạn cần phải cài driver được cung cấp bởi nhà sản xuất.
 
 Các màn hình này không hỗ trợ tính năng ngầm tự nhận biết của NVDA.

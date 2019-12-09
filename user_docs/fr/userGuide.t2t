@@ -171,6 +171,13 @@ La première case à cocher vous permet de choisir si vous voulez utiliser la to
 La deuxième spécifie si NVDA doit démarrer à l'ouverture de votre session et est disponible uniquement sur la version installée.
 La troisième permet d'indiquer si ce dialogue d'accueil doit apparaître à chaque démarrage.
 
++++ Dialogue de statistiques d'utilisation des données +++[UsageStatsDialog]
+Depuis NVDA 2018.3, il est demandé à l'utilisateur s'il veut autoriser l'envoi de données d'utilisation à NV Access dans le but d'aider à l'amélioration de NVDA dans le futur. 
+Au premier démarrage de NVDA, un dialogue vous demandant si vous désirer envoyer des données à NV Access durant l'utilisation de NVDA apparaîtra.
+Vous pouvez obtenir plus d'informations concernant les données rassemblées par NV Access dans le chapitre 11 ci-dessous.
+Note : l'appui sur "oui" ou "non" sauvegardera ce choix et ce dialogue n'apparaîtra plus à moins que vous réinstalliez NVDA.
+Cependant, vous pouvez activer ou désactiver le processus de collecte de données manuellement dans l'écran de paramètres généraux de NVDA. Pour modifier ce paramètre manuellement, vous pouvez cocher ou décocher la case appelée [Autoriser le projet NVDA à recueillir des statistiques d'utilisation #GeneralSettingsGatherUsageStats].
+
 ++ À Propos des Commandes Clavier de NVDA ++[AboutNVDAKeyboardCommands]
 
 +++ La Touche NVDA +++[TheNVDAModifierKey]
@@ -641,6 +648,7 @@ Quand vous voulez retourner au document, pressez simplement la touche échap.
 + Braille +[Braille]
 Si vous possédez un afficheur braille, NVDA peut afficher des informations en braille.
 Si votre terminal braille possède un clavier de type Perkins, vous pouvez également saisir du texte en intégral ou abrégé.
+Le Braille peut aussi être affiché à l'écran en utilisant [la Visionneuse de Braille #BrailleViewer] en remplacement ou en parallèle d'un afficheur braille physique.
 
 Veuillez consulter la section [Terminaux Braille Pris en Charge #SupportedBrailleDisplays] pour des informations concernant les terminaux braille pris en charge.
 Cette section contient également des informations sur les terminaux qui supportent la détection automatique de terminaux braille en arrière-plan.
@@ -1531,9 +1539,10 @@ Elle contient les options suivantes :
 Quand cette case est cochée, NVDA annonce les suggestions à leur apparition. 
 De nombreuses fenêtres et commandes font apparaître un court message (ou suggestion) lorsqu'on y déplace la souris ou le focus.
 
-==== Annoncer les bulles d'aide ====[ObjectPresentationReportBalloons]
-Quand cette case est cochée, NVDA annonce les bulles d'aide à leur apparition. 
+==== Annoncer les notifications ====[ObjectPresentationReportNotifications]
+Quand cette case est cochée, NVDA annonce les bulles d'aide et les notifications d'invitation à leur apparition. 
 Les bulles d'aide sont semblables aux suggestions mais généralement de plus grande taille, et sont associées à des évènements système tels que le débranchement d'un câble réseau, ou bien des alertes relatives à la sécurité.
+- Les notifications d'invitation ont été introduites dans Windows 10 et apparaissent dans le centre de notification  dans la barre d'état système, informant sur divers événements (ex : une mise à jour a été téléchargée, un ouveau courriel est arrivé dans votre boîte de réception, etc.).
 
 ==== Annoncer les raccourcis clavier des objets ====[ObjectPresentationShortcutKeys]
 Quand cette case est cochée, NVDA inclut, à l'annonce d'un objet ou d'une commande, le raccourci clavier qui lui est associé. 
@@ -2027,6 +2036,20 @@ Pendant que la visionneuse de parole est active, elle se met constamment à jour
 Cependant, si vous cliquez ou mettez le focus sur la visionneuse, NVDA arrêtera momentanément de mettre à jour le texte, vous pourrez ainsi sélectionner ou copier le contenu.
 
 Pour activer la visionneuse de parole de n'importe où, Veuillez assigner un geste personnalisé en utilisant le [dialogue Gestes de Commandes #InputGestures].
+
+++ Visionneuse de Braille ++[BrailleViewer]
+Pour les voyants développeurs de logiciel ou les personnes présentant NVDA à un public voyant, une fenêtre flottante permettant de voir la sortie braille ainsi que le texte correspondant à chaque caractère braille est disponible.
+La visionneuse de braille peut être utilisée en même temps qu'un afficheur braille physique, elle s'adaptera au nombre de cellules sur l'afficheur physique.
+Quand la visionneuse braille est activée, elle se met à jour constamment pour vous montrer ce qui serait affiché sur un afficheur braille physique.
+
+Pour activer la visionneuse de Braille, cochez l'élément de menu "Visionneuse deBraille" dans Outils dans le menu de NVDA.
+Décochez l'élément de menu pour la désactiver.
+
+Les afficheurs braille physiques ont généralement des boutons pour faire défiler le texte en avant ou en arrière, pour permettre le défilement avec la visionneuse de braille utilisez le [dialogues de Gestes de Commandes #InputGestures] pour assigner des raccourcis clavier pour "faire défiler l'afficheur braille en arrière" et "faire défiler l'afficheur braille en avant"
+
+La fenêtre de la visionneuse de braille contient une case à cocher étiquetée "Montrer la visionneuse de braille au démarrage".
+Si elle est cochée, la visionneuse de braille s'affichera au démarrage de NVDA.
+La visionneuse de braille essaiera toujours de se rouvrir avec les mêmes dimensions et à la même position que lors de sa fermeture.
 
 ++ Gestionnaire d'Extensions ++[AddonsManager]
 Le Gestionnaire d'extensions, accessible en sélectionnant "Gestion des Extensions" dans le menu "Outils" du menu NVDA, permet d'installer, désinstaller, activer ou désactiver des paquets d'extensions pour NVDA.
@@ -2529,7 +2552,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 
 ++ Seika Braille Displays ++[Seika]
 Les afficheurs braille Seika Version 3, 4 et 5 (40 caractères) et Seika80 (80 caractères) de [Nippon Telesoft https://www.nippontelesoft.com/] sont pris en charge.
-Vous pouvez trouver plus d'informations sur ces afficheurs sur le site https://www.seika-braille.com/.
+Vous pouvez trouver plus d'informations sur ces afficheurs et les pilotes requis sur le site https://en.seika-braille.com/down/index.html.
 Vous devez d'abord installer les pilotes USB fournis par le fabricant.
 
 Ce terminal ne supporte pas encore la détection automatique en arrière-plan.

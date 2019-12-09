@@ -167,14 +167,21 @@ NVDA ilk kez başladığında, NVDA değişken tuşu ve NVDA menüsü hakkında 
 Lütfen bu konularla ilgili sonraki bölümlere bakın.
 Bu iletişim kutusunda ayrıca bir seçim kutusu ve üç onay kutusu bulunmaktadır.
 Seçim kutusu klavye düzenini belirlemenizi sağlar.
-Birinci onay kutusu büyük harf kilidi tuşunun NVDA değişken tuşu olarak kullanılıp kullanılmayacağını kontrol ederken.
+Birinci onay kutusu büyük harf kilidi tuşunun NVDA değişken tuşu olarak kullanılıp kullanılmayacağını kontrol ederken;
 ikincisi, NVDA'nın Windows başladıktan sonra otomatik olarak devreye girmesiyle ilgilidir ve yalnızca kurulu NVDA kopyaları için geçerlidir.
-Üçüncüsü, karşılaştığınız hoşgeldin iletişim kutusunun NVDA her açıldığında görüntülenip görüntülenmemesini kontrol eder.
+Üçüncüsü de, karşılaştığınız hoşgeldin iletişim kutusunun NVDA her açıldığında görüntülenip görüntülenmemesini kontrol eder.
+
++++ Veri kullanım istatistikleri iletişim kutusu +++[UsageStatsDialog]
+NVDA 2018.3'ten başlayarak, kullanıcılara NVDA'yı iyileştirmek için kullanım verilerinin NV Access'e gönderilmesine izin vermek isteyip istemedikleri sorulur. 
+NVDA'yı ilk kez başlatırken, NVDA'yı kullanırken NV Access'e veri göndermeyi kabul etmek isteyip istemediğinizi soran bir iletişim kutusu açılacaktır.
+NV Access tarafından toplanan veriler hakkında daha fazla bilgiyi aşağıdaki 11. Bölümde okuyabilirsiniz.
+Not: "evet" veya "hayır" a basmak bu ayarı kaydeder ve NVDA'yı yeniden yüklemediğiniz sürece iletişim kutusu bir daha asla gösterilmez.
+Ancak, NVDA'nın genel ayarlar panelinde veri toplama işlemini manuel olarak etkinleştirip  devre dışı bırakabilirsiniz. Bu ayarı manuel olarak değiştirmek için, [NVDA kullanım verilerini toplaması için NVDA projesine izin ver #GeneralSettingsGatherUsageStats] adlı onay kutusunu işaretleyebilir veya işaretini kaldırabilirsiniz.
 
 ++ NVDA Klavye Komutları Hakkında ++[AboutNVDAKeyboardCommands]
 
 +++ NVDA Tuşu +++[TheNVDAModifierKey]
-Birçok NVDA'ya özel klavye komutu NVDA değişken tuşu adı verilen özel bir tuş ile klavyedeki başka tuşlara basılarak meydana gelen kombinasyonlardan oluşmaktadır.
+NVDA'ya özel birçok klavye komutu NVDA değişken tuşu adı verilen özel bir tuş ile klavyedeki başka tuşlara basılarak meydana gelen kombinasyonlardan oluşmaktadır.
 Masaüstü klavye düzeninde sadece numaratördeki tuşları kullanan metin inceleme komutları istisnai durumlardandır ve elbette başka istisnalar da olabilir.
 
 Numaratördeki insert, diğer insert, veya büyük harf kilidi tuşlarından birisi NVDA değişken tuşu olarak ayarlanabilir.
@@ -641,6 +648,7 @@ Matematiksel içeriğe sahip olan belgeye geri dönmek istediğinizde, basitçe 
 + Braille +[Braille]
 Eğer braille ekrana sahipseniz, NVDA bilgileri braille olarak gösterebilir.
 Braille ekranınızın perkins tarzı bir klavyesi varsa, kısaltmalı ya da kısaltmasız braille girişi de yapabilirsiniz.
+Braille ayrıca fiziksel bir braille ekran yerine veya onunla aynı anda [Braille Görüntüleyicisi #BrailleViewer] kullanılarak ekranda görüntülenebilir.
 
 Lütfen desteklenen braille ekranlar hakkında bilgi için [desteklenen braille ekranlar #SupportedBrailleDisplays] bölümünü inceleyin.
 Bu bölümde ayrıca, NVDA'nın otomatik arka plan braille ekran algılama işlevinin hangi braille ekranlar için geçerli olduğuna dair bilgi de verilmektedir.
@@ -1531,9 +1539,10 @@ Nesne sunumu kategorisinde aşağıdaki seçenekler mevcuttur:
 İşaretlendiğinde NVDA'ya çıkan baloncuk ipuçlarını bildirmesini söyleyen bir onay kutusudur.
 Bir çok pencere ve kontrol fareyle üzerine gelindiğinde veya üzerine odaklanıldığında küçük mesajlar veya ipuçları (baloncuklar( göstermektedir.
 
-==== Yardım Balonlarını Bildir ====[ObjectPresentationReportBalloons]
-İşaretlendiğinde NVDA'ya çıkan yardım balonlarını bildirmesini söyleyen bir onay kutusudur.
-Yardım balonları ipucu balonlarına benzer, ancak boyut olarak daha büyüktür ve yerel ağ kablosunun takılı olmaması veya windows güvenliği gibi sistemsel olaylarla ilgilidir.
+==== Bildirimleri raporla ====[ObjectPresentationReportNotifications]
+Bu onay kutusu işaretlenirse NVDA'ya yardım balonlarını ve tost bildirimlerini belirdikleri anda  raporlaması söylmiş olur.
+- Yardım Balonları araç ipuçlarına benzer, ancak genellikle boyutları daha büyüktür ve bir ağ kablosunun takılması ya da çıkarılması gibi sistem olaylarıyla veya belki de Windows güvenlik sorunları hakkında sizi uyarmasıyla ilişkilidir.
+- Tost bildirimleri, Windows 10 ile tedavüle girmiştir ve sistem tepsisindeki bildirim merkezinde görünerek çeşitli  olaylar hakkında bilgi verir (örneğin, bir güncelleme indirildiğinde, gelen kutunuza yeni bir e-posta alındığında ​​vb.).
 
 ==== Nesne Kısayol Tuşlarını Bildir ====[ObjectPresentationShortcutKeys]
 Bu onay kutusu işaretlendiğinde, NVDA bir kontrol veya belirli bir nesne üzerine geldiğinde, ilgili kısayol tuşunu da söyler.
@@ -2027,6 +2036,20 @@ Konuşma görüntüleyicisi etkinken, konuşulan metinleri göstermek için düz
 Ancak, Görüntüleyiciye tıklar veya odaklanırsanız, güncelleme geçici olarak duracak ve böylece mevcut içeriği kopyalama şansınız olacaktır.
 
 Konuşma görüntüleyiciyi herhangi bir yerden açıp kapatmak için [Girdi Hareketleri iletişim kutusunu #InputGestures] kullanarak kısayol tuşu belirleyebilirsiniz.
+
+++ Braille Görüntüleyici ++[BrailleViewer]
+Kör olmayan yazılım geliştiricileri veya NVDA'yı gören izleyicilere gösteren kişilerin kullanması için, braille çıktıyı ve her braille karakter için eşdeğer metni görüntülenmesini  sağlayan yüzer bir pencere kullanılabilir.
+Braille görüntüleyici, fiziksel bir braille ekran ile aynı anda kullanılabilir, fiziksel cihazdaki hücre sayısıyla eşleşir.
+Braille görüntüleyici etkin durumdayken, fiziksel braille ekranda olan  braillei gösterecek şekilde sürekli olarak güncellenir.
+
+Braille görüntüleyiciyi etkinleştirmek için, NVDA menüsü Araçlar'ın altındaki "Braille Görüntüleyici" menü öğesini işaretleyin.
+Devre dışı bırakmak için menü öğesinin işaretini kaldırın.
+
+Fiziksel braille ekranlarında genellikle ileri veya geri kaydırma düğmeleri bulunur, Braille görüntüleme aracıyla kaydırmayı etkinleştirmek için [Girdi Hareketleri iletişim kutusu #InputGestures]nu kullanarak "Braille ekranını geri kaydırır" ve "Braille ekranını ileri kaydırır" klavye kısayollarını atayın.
+
+Braille görüntüleyici penceresinde "Başlangıçta braille görüntüleyicisini göster" adlı  bir onay kutusu bulunur.
+Bu işaretliyse, NVDA başlatıldığında braille görüntüleyici açılacaktır.
+Braille görüntüleme penceresi her zaman kapatıldığı zamanki boyut ve konumlarla yeniden açılmaya çalışır.
 
 ++ Eklenti Yöneticisi ++[AddonsManager]
 NVDA Araçlar menüsü altında, Eklentileri Yönet ögesini seçerek ulaşacağınız Eklenti Yöneticisi, NVDA için geliştirilmiş eklenti paketlerini kurmanıza, etkinleştirip devre dışı bırakmanıza ve kaldırmanıza olanak tanır.

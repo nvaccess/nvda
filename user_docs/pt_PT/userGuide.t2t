@@ -171,6 +171,13 @@ A primeira caixa de verificação permite-lhe definir se o NVDA utiliza o CapsLo
 A segunda permite-lhe especificar se o NVDA deverá ser executado automaticamente, ao iniciar sessão no Windows; esta caixa de verificação só estará disponível em cópias instaladas do NVDA.
 E a  terceira permite-lhe definir se este diálogo de boas vindas aparecerá sempre que o NVDA for iniciado.
 
++++ Estatísticas de utilização do NVDA +++[UsageStatsDialog]
+A partir do NVDA 2018.3, o utilizador é questionado se permite que a NV Access recolha estatísticas de utilização do NVDA, para ajudar a melhorar o NVDA no futuro. 
+Ao iniciar o NVDA pela primeira vez, aparecerá uma janela a perguntar se permite o envio de dados para a NV Access enquanto usa o NVDA.
+Pode ler mais sobre os dados recolhidos pela NV Access no capítulo 11.
+Nota: Ao escolher "Sim" ou "não", a opção será guardada e a janela nunca mais aparecerá, a menos que reinstale o NVDA.
+Contudo, pode, manualmente, activar ou desactivar o processo de recolha de dados na janela de configurações do NVDA, secção Geral. Para isso, marque ou desmarque a caixa de verificação ["Permitir que o projeto do NVDA recolha estatísticas de utilização do NVDA" #GeneralSettingsGatherUsageStats].
+
 ++ Acerca Dos Comandos De Teclado Do NVDA ++[AboutNVDAKeyboardCommands]
 
 +++ A Tecla Modificadora do NVDA +++[TheNVDAModifierKey]
@@ -641,6 +648,7 @@ Quando quiser voltar à leitura do documento, simplesmente pressione Escape.
 + Braille +[Braille]
 Se dispõe de uma linha Braille, o NVDA pode usá-la para mostrar as informações em Braille.
 Se a linha Braille possuir um teclado estilo Perkins, pode escrever no PC usando o código Braille normal ou abreviado.
+A saída Braille também pode ser mostrada no ecrã usando o [Visualizador Braille #BrailleViewer], em vez de, ou ao mesmo tempo que se usa uma linha Braille.
 
 para informações sobre os dispositivos suportados, por favor leia a secção [Linhas Braille Suportadas#SupportedBrailleDisplays].
 Esta secção também contém informação sobre que linhas Braille suportam a detecção automática do NVDA.
@@ -986,7 +994,7 @@ A janela da consola tem um tamanho fixo, tipicamente mais pequena que o buffer q
 O texto que deixou de ser visível na janela não é acessível com os comandos de revisão de texto do NVDA.
 Portanto, é necessário deslocar o buffer para conseguir ler o texto.
 %kc:beginInclude
-Os seguintes comandos da consola do Windows podem ser usados para rever o texto #ReviewingText] com o NVDA:
+Os seguintes comandos da consola do Windows podem ser usados para [rever o texto #ReviewingText] com o NVDA:
 || Nome | Comando | Descrição |
 | Deslocar para cima | control+upArrow | Desloca a consola para cima para o texto anterior ficar visível. |
 | Deslocar para baixo down | control+downArrow | Desloca a consola para baixo para o texto seguinte ficar visível. |
@@ -1035,7 +1043,7 @@ Esta opção é uma caixa de verificação que, quando marcada, indica ao NVDA p
 ==== Mostrar opções de saída ao sair do NVDA ====[GeneralSettingsShowExitOptions]
 Esta opção é uma caixa de verificação que lhe permite escolher se pretende ou não que apareça um diálogo, quando fechar o NVDA, questionando o que deseja fazer.
 Quando marcada, um diálogo aparecerá, ao tentar fechar o NVDA, a perguntar se deseja sair, reiniciar, reiniciar com os extras desactivados, reiniciar com o nível de registo definido para Depuração ou instalar actualização, se existir alguma por instalar.
-Quando desmarcada, o NVDA sairá imediatamente
+Quando desmarcada, o NVDA sairá imediatamente.
 
 ==== Tocar sons ao iniciar e sair do NVDA ====[GeneralSettingsPlaySounds]
 Esta opção é uma caixa de verificação que, quando marcada, indica ao NVDA para tocar sons, ao iniciar e terminar.
@@ -1050,7 +1058,7 @@ Os níveis de registo disponíveis são:
 - Informação: O NVDA registará informações básicas, como mensagens de início e informações úteis para os desenvolvedores;
 - Aviso de depuração: Serão registadas mensagens de aviso que não são causadas por erros graves;
 - Entrada/saída de dados: As entradas pelo teclado ou linha Braille, bem como o que é falado ou representado em Braille, serão registadas;
- - Se estiver preocupado com a privacidade, não defina o nível de registo para esta opção;
+ - Se estiver preocupado com a privacidade, não defina o nível de registo para esta opção.
 - Depuração: Além do que é registado nos níveis anteriores, serão registadas mensagens de depuração adicionais.
  - Assim como no nível anterior, se estiver preocupado com a privacidade, não deve definir o nível de registo para esta opção.
 -
@@ -1531,9 +1539,10 @@ Esta secção contém as seguintes opções:
 Uma caixa de verificação que, quando marcada, indica ao NVDA  que anuncie sugestões, quando aparecem.
 Muitas janelas e controlos mostram uma pequena mensagem (ou sugestão), quando move o ponteiro do rato sobre elas, ou, algumas vezes, quando move o foco pelas mesmas.
 
-==== Anunciar Balões de Ajuda ====[ObjectPresentationReportBalloons]
-Esta caixa de verificação, quando marcada, indica ao NVDA que anuncie os balões de ajuda, quando aparecem.
+==== Anunciar notificações ====[ObjectPresentationReportNotifications]
+Esta caixa de verificação, quando marcada, indica ao NVDA que anuncie os balões de ajuda, e notificações "toasts" quando aparecerem.
 Os Balões de Ajuda são como sugestões, mas, por norma, são maiores e estão associados com eventos do sistema, tal como o cabo de rede ser desligado, ou, porventura, para o alertar de problemas de segurança do Windows.
+As notificações "toasts" foram introduzidas no Windows 10 e aparecem na Área de notificações informando sobre vários eventos, tais como a descarga de um update, a chegada de novo e-mail, etc.
 
 ==== Anunciar Teclas de Atalho dos Objectos ====[ObjectPresentationShortcutKeys]
 Quando esta caixa de verificação está marcada, o NVDA incluirá a tecla de atalho que é associada com um determinado objecto ou controlo, quando o mesmo é anunciado.
@@ -2027,6 +2036,20 @@ Enquanto o Visualizador de Discurso estiver activo, o mesmo actualizar-se-á, co
 Contudo, se clicar ou se o cursor ficar no visualizador, o NVDA pára, temporariamente, a actualização do texto, para que possa seleccionar facilmente ou copiar o conteúdo existente.
 
 Para activar ou desactivar o Visualizador de Discurso, em qualquer local, por favor associe-lhe um comando através da opção [Definir comandos #InputGestures].
+
+++ Visualizador Braille ++[BrailleViewer]
+Para programadores normovisuais, ou em demonstrações do NVDA para audiências não exclusivamente cegas, está disponível uma janela flutuante que permite visualizar a saída Braille, e o texto equivalente.
+O Visualizador Braille pode ser usado ao mesmo tempo que uma linha Braille.
+Enquanto o Visualizador Braille estiver activo será constantemente actualizado para igualar o que seria mostrado na linha Braille.
+
+Para activar o Visualizador Braille, marque este item no menu do NVDA, Ferramentas.
+Desmarque para desactivá-lo.
+
+As linhas Braille, normalmente, possuem teclas para deslocar o conteúdo da linha para trás ou para a frente, para poder fazer o mesmo no Visualizador Braille, use a janela ["Definir comandos" #InputGestures] para associar atalhos às funções "Movimenta a linha braille para trás" e "Movimenta a linha braille para a frente".
+
+A janela do Visualizador Braille tem uma caixa de verificação chamada "Mostrar o Visualizador Braille no arranque".
+Se esta caixa estiver marcada, o Visualizador Braille será aberto quando o NVDA é iniciado.
+O Visualizador Braille tentará sempre abrir na mesma localização e com o mesmo tamanho com que foi fechado.
 
 ++ Gestor de extras ++[AddonsManager]
 O gestor de extras, acessível seleccionando "Gestor de Extras", no menu de "ferramentas" do NVDA, permite-lhe que instale, desinstale, active ou desactive pacotes de extras para o NVDA.

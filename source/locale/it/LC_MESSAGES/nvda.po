@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-22 06:43+1000\n"
-"PO-Revision-Date: 2019-11-26 12:25+0100\n"
+"POT-Creation-Date: 2019-12-06 07:28+1000\n"
+"PO-Revision-Date: 2019-12-06 09:33+0100\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
@@ -221,7 +221,7 @@ msgstr "Lst"
 msgid "gra"
 msgstr "gra"
 
-#. Translators: Displayed in braille for an object which is a
+#. Translators: Displayed in braille for toast notifications and for an object which is a
 #. help balloon.
 msgid "hlp"
 msgstr "hlp"
@@ -3526,8 +3526,8 @@ msgid "Toggles on and off the reporting of groupings"
 msgstr "Attiva o disattiva la lettura dei raggruppamenti"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-msgid "report gorupings off"
-msgstr "Annuncio gruppi disattivato"
+msgid "report groupings off"
+msgstr "annuncio gruppi disattivato"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report groupings on"
@@ -3977,10 +3977,9 @@ msgstr "Riavvia NVDA!"
 msgid "Shows the NVDA menu"
 msgstr "Mostra il menu' di NVDA"
 
-#. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"Reads from the review cursor up to end of current text, moving the review "
-"cursor as it goes"
+"Reads from the review cursor up to the end of the current text, moving the "
+"review cursor as it goes"
 msgstr ""
 "Legge dal cursore di controllo  fino alla fine del testo, spostando il "
 "cursore man mano"
@@ -6600,7 +6599,7 @@ msgid ""
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} is developed by NV Access, a non-profit organisation committed to "
@@ -7319,6 +7318,15 @@ msgstr "Seika"
 msgid "SuperBraille"
 msgstr "SuperBraille"
 
+#. Translators: The title of the NVDA Braille Viewer tool window.
+msgid "NVDA Braille Viewer"
+msgstr "Visualizzatore braille di NVDA"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether the braille viewer is shown at startup or not.
+msgid "&Show Braille Viewer on Startup"
+msgstr "Mo&stra il visualizzatore braille all'avvio"
+
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
 msgstr "Risultato"
@@ -7502,6 +7510,10 @@ msgstr "Visualizza log"
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
 msgstr "Visualizzatore sintesi vocale"
+
+#. Translators: The label for the menu item to toggle Braille Viewer.
+msgid "Braille viewer"
+msgstr "Visualizzatore braille"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -9092,7 +9104,7 @@ msgid "Tones"
 msgstr "Toni"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both  Speech and Tones"
+msgid "Both Speech and Tones"
 msgstr "Sia sintesi vocale che toni"
 
 #. Translators: This message is presented in the document formatting settings panelue
@@ -9522,9 +9534,13 @@ msgid ""
 "Could not gracefully terminate the {providerName} vision enhancement provider"
 msgstr "Impossibile chiudere normalmente {providerName}"
 
+#, python-brace-format
 msgid ""
 "Could not gracefully terminate the following vision enhancement providers:\n"
-msgstr "Impossibile chiudere normalmente i seguenti miglioramenti visivi:\n"
+"{providerNames}"
+msgstr ""
+"Impossibile chiudere normalmente i seguenti miglioramenti visivi:\n"
+"{providerNames}"
 
 #. Translators: This is a label appearing on the vision settings panel.
 msgid "Configure visual aids."

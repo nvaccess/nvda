@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-22 06:43+1000\n"
-"PO-Revision-Date: 2019-11-23 18:01+0100\n"
+"POT-Creation-Date: 2019-12-06 07:28+1000\n"
+"PO-Revision-Date: 2019-12-06 22:06+0100\n"
 "Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: killer@tyflonet.com\n"
 "Language: pl_PL\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-Bookmarks: -1,216,-1,-1,128,-1,-1,-1,-1,-1\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -223,7 +223,7 @@ msgstr "⠇⠎"
 msgid "gra"
 msgstr "⠛⠋"
 
-#. Translators: Displayed in braille for an object which is a
+#. Translators: Displayed in braille for toast notifications and for an object which is a
 #. help balloon.
 msgid "hlp"
 msgstr "⠓⠇⠏"
@@ -3512,7 +3512,7 @@ msgid "Toggles on and off the reporting of groupings"
 msgstr "włącza i wyłącza odczytywanie grupowań"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-msgid "report gorupings off"
+msgid "report groupings off"
 msgstr "Czytaj grupowania nie"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
@@ -3959,10 +3959,9 @@ msgstr "Uruchamia ponownie NVDA!"
 msgid "Shows the NVDA menu"
 msgstr "Otwiera menu NVDA"
 
-#. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"Reads from the review cursor up to end of current text, moving the review "
-"cursor as it goes"
+"Reads from the review cursor up to the end of the current text, moving the "
+"review cursor as it goes"
 msgstr ""
 "Czyta od punktu przeglądu do końca tekstu, przenosząc punkt w miarę czytania"
 
@@ -6560,7 +6559,7 @@ msgid ""
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} is developed by NV Access, a non-profit organisation committed to "
@@ -6582,7 +6581,13 @@ msgstr ""
 "zmienionych kopii, a także każdego innego oprogramowania, które korzysta z "
 "kodu zaczerpniętego z tego programu.\n"
 "Dokładne brzmienie licencji znajdziesz online pod adresem:\n"
-"https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
+"https://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
+"{name} jest rozwijane przez NV Access, organizacja pożytku publicznego "
+"powołana w celu świadczenia pomocy i promowania bezpłatnych i otwartych "
+"rozwiązań dla osób z dysfunkcją wzroku.\n"
+"jeśli twoim zdaniem NVDA to przydatne rozwiązanie, które powinno się "
+"rozwijać, Rozważ przekazania wsparcia finansowego dla NV Access. Możesz to "
+"zrobić, wybierając \"Wesprzyj\" z meni NVDA."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
 #, python-brace-format
@@ -7269,6 +7274,15 @@ msgstr "Linijki brajlowskie seika"
 msgid "SuperBraille"
 msgstr "SuperBraille"
 
+#. Translators: The title of the NVDA Braille Viewer tool window.
+msgid "NVDA Braille Viewer"
+msgstr "Przegląd brajla NVDA"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether the braille viewer is shown at startup or not.
+msgid "&Show Braille Viewer on Startup"
+msgstr "&Pokaż przegląd brajla przy starcie"
+
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
 msgstr "Wynik"
@@ -7444,6 +7458,10 @@ msgstr "Podgląd &logu"
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
 msgstr "Podgląd &mowy"
+
+#. Translators: The label for the menu item to toggle Braille Viewer.
+msgid "Braille viewer"
+msgstr "Przegląd brajla"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -9004,8 +9022,8 @@ msgid "Tones"
 msgstr "Dźwięki"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both  Speech and Tones"
-msgstr "Mowa i dźwięki"
+msgid "Both Speech and Tones"
+msgstr "mowa i dźwięki"
 
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -9434,9 +9452,13 @@ msgid ""
 msgstr ""
 "Nie jest możliwe normalne zatrzymanie usługi ulepszania wzroku {providerName}"
 
+#, python-brace-format
 msgid ""
 "Could not gracefully terminate the following vision enhancement providers:\n"
-msgstr "Nie można normalnie zatrzymać następujące usługi ulepszania wzroku:\n"
+"{providerNames}"
+msgstr ""
+"Nie można normalnie zatrzymać następujące usługi ulepszania wzroku:\n"
+"{providerNames}"
 
 #. Translators: This is a label appearing on the vision settings panel.
 msgid "Configure visual aids."

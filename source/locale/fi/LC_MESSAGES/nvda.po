@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-29 15:51+1000\n"
-"PO-Revision-Date: 2019-11-29 15:35+0200\n"
+"POT-Creation-Date: 2019-12-06 07:28+1000\n"
+"PO-Revision-Date: 2019-12-07 13:43+0200\n"
 "Last-Translator: Jani Kinnunen <janikinnunen340@gmail.com>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -223,7 +223,7 @@ msgstr "lst"
 msgid "gra"
 msgstr "gra"
 
-#. Translators: Displayed in braille for an object which is a
+#. Translators: Displayed in braille for toast notifications and for an object which is a
 #. help balloon.
 msgid "hlp"
 msgstr "ohj"
@@ -547,7 +547,7 @@ msgstr "o%s"
 
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
-msgstr "alnk"
+msgstr "vlnk"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -1410,35 +1410,35 @@ msgstr "Ei edellisiä linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next visited link"
-msgstr "Siirtää seuraavan avatun linkin kohdalle."
+msgstr "Siirtää seuraavan vieraillun linkin kohdalle."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next visited link"
-msgstr "Ei enempää avattuja linkkejä"
+msgstr "Ei enempää vierailtuja linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous visited link"
-msgstr "Siirtää edellisen avatun linkin kohdalle."
+msgstr "Siirtää edellisen vieraillun linkin kohdalle."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous visited link"
-msgstr "Ei edellisiä avattuja linkkejä"
+msgstr "Ei edellisiä vierailtuja linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next unvisited link"
-msgstr "Siirtää seuraavan avaamattoman linkin kohdalle."
+msgstr "Siirtää seuraavan vierailemattoman linkin kohdalle."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next unvisited link"
-msgstr "Ei enempää avaamattomia linkkejä"
+msgstr "Ei enempää vierailemattomia linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous unvisited link"
-msgstr "Siirtää edellisen avaamattoman linkin kohdalle."
+msgstr "Siirtää edellisen vierailemattoman linkin kohdalle."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous unvisited link"
-msgstr "Ei edellisiä avaamattomia linkkejä"
+msgstr "Ei edellisiä vierailemattomia linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next form field"
@@ -2708,7 +2708,7 @@ msgstr "laajennettu"
 
 #. Translators: This is presented when a tree view or submenu is collapsed.
 msgid "collapsed"
-msgstr "supistettu"
+msgstr "kutistettu"
 
 #. Translators: This is presented when a control or a document becomes invisible.
 msgid "invisible"
@@ -4336,18 +4336,18 @@ msgstr ""
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
-msgstr "Puheentarkastelu pois"
+msgstr "Puheen tarkastelu pois"
 
 #. Translators: The message announced when enabling speech viewer.
 msgid "speech viewer enabled"
-msgstr "Puheentarkastelu käytössä"
+msgstr "Puheen tarkastelu käytössä"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
 "Toggles the NVDA Speech viewer, a floating window that allows you to view "
 "all the text that NVDA is currently speaking"
 msgstr ""
-"Ottaa käyttöön tai poistaa käytöstä puheentarkastelun, kelluvan ikkunan, "
+"Ottaa käyttöön tai poistaa käytöstä puheen tarkastelun, kelluvan ikkunan, "
 "jonka avulla voidaan tarkastella NVDA:n tällä hetkellä puhumaa tekstiä."
 
 #. Translators: Reports which position braille is tethered to
@@ -6226,11 +6226,11 @@ msgid "Emulates pressing %s on the system keyboard"
 msgstr "Jäljittelee näppäimistön %s-näppäimen painamista."
 
 msgid "NVDA Speech Viewer"
-msgstr "Puheentarkastelu"
+msgstr "Puheen tarkastelu"
 
 #. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
-msgstr "&Näytä puheentarkastelu käynnistettäessä"
+msgstr "&Näytä puheen tarkastelu käynnistettäessä"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -7306,6 +7306,15 @@ msgstr "Seika"
 msgid "SuperBraille"
 msgstr "SuperBraille"
 
+#. Translators: The title of the NVDA Braille Viewer tool window.
+msgid "NVDA Braille Viewer"
+msgstr "Pistekirjoituksen tarkastelu"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether the braille viewer is shown at startup or not.
+msgid "&Show Braille Viewer on Startup"
+msgstr "&Näytä pistekirjoituksen tarkastelu käynnistettäessä"
+
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
 msgstr "Tulokset"
@@ -7480,6 +7489,10 @@ msgstr "Näytä l&oki"
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
 msgstr "Pu&heen tarkastelu"
+
+#. Translators: The label for the menu item to toggle Braille Viewer.
+msgid "Braille viewer"
+msgstr "Pistekirjoituksen tarkastelu"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -9035,7 +9048,7 @@ msgid "Tones"
 msgstr "Äänimerkeillä"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both  Speech and Tones"
+msgid "Both Speech and Tones"
 msgstr "Puheella ja äänimerkeillä"
 
 #. Translators: This message is presented in the document formatting settings panelue

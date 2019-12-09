@@ -27,6 +27,7 @@ What's New in NVDA
 - Added screen highlight functionality to NVDA. (#971, #9064)
  - Highlighting of the focus, navigator object, and browse mode caret position can be enabled and configured via the 'vision' category in NVDA's settings dialog.
  - Note: This feature is incompatible with the focus highlight add-on, however, the add-on can still be used while the built-in highlighter is disabled.
+- Added Braille Viewer tool, allows viewing braille output via an on-screen window. (#7788)
 
 
 == Changes ==
@@ -44,6 +45,7 @@ What's New in NVDA
 - When focussing a grouping in browse mode, the description is now also read. (#10095)
 - The Java Access Bridge is now included with NVDA to enable access to Java applications, including for 64 bit Java VMs. (#7724)
 - If the Java Access Bridge is not enabled for the user, NVDA automatically enables it at NVDA startup. (#7952)
+- Updated eSpeak-NG to 1.51-dev, commit ca65812ac6019926f2fbd7f12c92d7edd3701e0c. (#10581)
 
 
 == Bug Fixes ==
@@ -73,6 +75,10 @@ What's New in NVDA
 - Java applications started before NVDA are now accessible without the need to restart the Java app. (#10296)
 - In Mozilla Firefox, when the focused element becomes marked as current (aria-current), this change is no longer spoken multiple times. (#8960)
 - NVDA will now treat certain composit unicode characters such as e-acute as one single character when moving through text. (#10550)
+- Spring Tool Suite Version 4 is now supported. (#10001)
+- Don't double speak name when aria-labelledby relation target is an inner element. (#10552)
+- On Windows 10 version 1607 and later, typed characters from Braille keyboards are spoken in more situations. (#10569)
+- When changing the audio output device, tones played by NVDA will now play through the newly selected device. (#2167)
 
 
 == Changes for Developers ==
