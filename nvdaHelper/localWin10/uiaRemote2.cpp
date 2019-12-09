@@ -19,6 +19,12 @@ UiaArray<UiaTextRange> _remoteable_splitTextRangeByUnit(UiaOperationScope& scope
 	tempRange.MoveEndpointByRange(TextPatternRangeEndpoint_End,tempRange,TextPatternRangeEndpoint_Start);
 	UiaInt endDelta=0;
 	scope.While([&](){ return true; },[&](){
+		// tempRange may already be at the end of textRange
+		// If so, then break out of the loop.
+		UiaInt startDelta = tempRange.CompareEndpoints(TextPatternRangeEndpoint_End,textRange,TextPatternRangeEndpoint_End);
+		scope.If(startDelta>=0,[&](){
+			scope.Break();
+		});
 		// Move the end forward by the given unit
 		auto moved=tempRange.MoveEndpointByUnit(TextPatternRangeEndpoint_End, unit, 1);
 		scope.If(moved<=0,[&]() {
@@ -67,26 +73,24 @@ template<typename arrayType> void _remoteable_visitUiaArrayElements(UiaOperation
 	});
 }
 
-UiaBool _remoteable_getAttributesAndTextForRange(UiaOperationScope& scope,UiaTextRange textRange,UiaArray<UiaInt>& attribIDs,UiaArray<UiaVariant>& outArray,const bool ignoreMixedAttributes) {
+UiaBool _remoteable_getAttributesAndTextForRange(UiaOperationScope& scope,UiaTextRange textRange,const std::vector<int>& attribIDs,UiaArray<UiaVariant>& outArray, UiaBool ignoreMixedAttributes) {
 	UiaBool foundMixed{false};
 	UiaArray<UiaVariant> attribValues;
-	_remoteable_visitUiaArrayElements(scope,attribIDs,[&](UiaInt attribID) {
-		auto attribValue=textRange.GetAttributeValue(UiaTextAttributeId(attribID));
-		scope.If(attribValue.IsMixedAttribute(nullptr),[&]() {
-			if(ignoreMixedAttributes) {
+	for(auto attribID: attribIDs) {
+		scope.If(!foundMixed,[&]() {
+			auto attribValue=textRange.GetAttributeValue(UiaTextAttributeId(attribID));
+			scope.If(attribValue.IsMixedAttribute(nullptr),[&]() {
 				attribValues.Append(UiaVariant(0));
-			} else {
-				foundMixed=true;
-				scope.Break();
-			}
+				foundMixed=!ignoreMixedAttributes;
+			},[&]() {
+				scope.If(attribValue.IsNotSupported(nullptr),[&]() {
+					attribValues.Append(UiaVariant(0));
+				},[&]() {
+					attribValues.Append(attribValue);
+				});
+			});
 		});
-		scope.If(attribValue.IsNotSupported(nullptr),[&]() {
-			attribValues.Append(UiaVariant(0));
-		},[&]() {
-			attribValues.Append(attribValue);
-		});
-		return !foundMixed;
-	});
+	}
 	scope.If(!foundMixed,[&]() {
 		outArray.Append(UiaVariant(textContentCommand_text));
 		_remoteable_visitUiaArrayElements(scope,attribValues,[&](auto& element) {
@@ -99,7 +103,7 @@ UiaBool _remoteable_getAttributesAndTextForRange(UiaOperationScope& scope,UiaTex
 	return foundMixed;
 }
 
-UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaTextRange& textRange, UiaArray<UiaInt>& attribIDs) {
+UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaTextRange& textRange, const std::vector<int>& attribIDs) {
 	UiaArray<UiaVariant> content;
 	auto formatRanges=_remoteable_splitTextRangeByUnit(scope,textRange,TextUnit_Format);
 	_remoteable_visitUiaArrayElements(scope,formatRanges,[&](auto& formatRange) {
@@ -121,9 +125,10 @@ extern "C" __declspec(dllexport) SAFEARRAY* __stdcall uiaRemote_getTextContent(I
 	UiaTextRange textRange{textRangeArg};
 	CComSafeArray<int> attribIDsArray{pAttribIDsArg};
 	auto attribCount=attribIDsArray.GetCount();
-	UiaArray<UiaInt> attribIDs;
+	std::vector<int> attribIDs(attribCount);
 	for(size_t i=0;i<attribCount;++i) {
-		attribIDs.Append(attribIDsArray.GetAt(i));
+		auto attribID=attribIDsArray.GetAt(i);
+		attribIDs[i]=attribID;
 	}
 	auto textContent=_remoteable_getTextContent(scope,textRange,attribIDs);
 	scope.BindResult(textContent);
