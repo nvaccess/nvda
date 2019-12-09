@@ -12,34 +12,85 @@ from speech import SpeechSequence
 
 
 # Inherit from wx.Frame because these windows show in the alt+tab menu (where miniFrame does not)
+# We have to manually add a wx.Panel to get correct tab ordering behaviour.
 # wx.Dialog causes a crash on destruction when multiple were created at the same time (brailleViewer
 # may start at the same time)
 class SpeechViewerFrame(wx.Frame):
 
-	def __init__(self, onDestroyCallBack):
-		dialogSize=wx.Size(500, 500)
-		dialogPos=wx.DefaultPosition
+	def _getDialogSizeAndPosition(self):
+		dialogSize = wx.Size(500, 500)
+		dialogPos = wx.DefaultPosition
 		if not config.conf["speechViewer"]["autoPositionWindow"] and self.doDisplaysMatchConfig():
 			log.debug("Setting speechViewer window position")
 			speechViewSection = config.conf["speechViewer"]
 			dialogSize = wx.Size(speechViewSection["width"], speechViewSection["height"])
 			dialogPos = wx.Point(x=speechViewSection["x"], y=speechViewSection["y"])
-		super(SpeechViewerFrame, self).__init__(gui.mainFrame, wx.ID_ANY, _("NVDA Speech Viewer"), size=dialogSize, pos=dialogPos, style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP)
+		return dialogSize, dialogPos
+
+	def __init__(self, onDestroyCallBack):
+		dialogSize, dialogPos = self._getDialogSizeAndPosition()
+		super().__init__(
+			gui.mainFrame,
+			title=_("NVDA Speech Viewer"),
+			size=dialogSize,
+			pos=dialogPos,
+			style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP
+		)
+		self._isDestroyed = False
 		self.onDestroyCallBack = onDestroyCallBack
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		self.Bind(wx.EVT_WINDOW_DESTROY, self.onDestroy)
-		sizer = wx.BoxSizer(wx.VERTICAL)
-		self.textCtrl = wx.TextCtrl(self, -1,style=wx.TE_RICH2|wx.TE_READONLY|wx.TE_MULTILINE)
-		sizer.Add(self.textCtrl, proportion=1, flag=wx.EXPAND)
-		# Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
-		self.shouldShowOnStartupCheckBox = wx.CheckBox(self,wx.ID_ANY,label=_("&Show Speech Viewer on Startup"))
-		self.shouldShowOnStartupCheckBox.SetValue(config.conf["speechViewer"]["showSpeechViewerAtStartup"])
-		self.shouldShowOnStartupCheckBox.Bind(wx.EVT_CHECKBOX, self.onShouldShowOnStartupChanged)
-		sizer.Add(self.shouldShowOnStartupCheckBox, border=5, flag=wx.ALL)
-		# set the check box as having focus, by default the textCtrl has focus which stops the speechviewer output (even if another window is in focus)
-		self.shouldShowOnStartupCheckBox.SetFocus()
-		self.SetSizer(sizer)
+		self.Bind(wx.EVT_ACTIVATE, self._onDialogActivated, source=self)
+
+		self.frameContentsSizer = wx.BoxSizer(wx.HORIZONTAL)
+		self.SetSizer(self.frameContentsSizer)
+		self.panel = wx.Panel(self)
+		self.frameContentsSizer.Add(self.panel, proportion=1, flag=wx.EXPAND)
+
+		self.panelContentsSizer = wx.BoxSizer(wx.VERTICAL)
+		self.panel.SetSizer(self.panelContentsSizer)
+
+		self._createControls(sizer=self.panelContentsSizer, parent=self.panel)
+
+		# Don't let speech viewer to steal keyboard focus when opened
 		self.ShowWithoutActivating()
+
+	def _createControls(self, sizer, parent):
+		self.textCtrl = wx.TextCtrl(
+			parent,
+			style=wx.TE_RICH2 | wx.TE_READONLY | wx.TE_MULTILINE
+		)
+		sizer.Add(
+			self.textCtrl,
+			proportion=1,
+			flag=wx.EXPAND
+		)
+
+		self.shouldShowOnStartupCheckBox = wx.CheckBox(
+			parent,
+			# Translators: The label for a setting in the speech viewer that controls
+			# whether the speech viewer is shown at startup or not.
+			label=_("&Show Speech Viewer on Startup")
+		)
+		sizer.Add(
+			self.shouldShowOnStartupCheckBox,
+			border=5,
+			flag=wx.EXPAND | wx.ALL
+		)
+		self.shouldShowOnStartupCheckBox.SetValue(config.conf["speechViewer"]["showSpeechViewerAtStartup"])
+		self.shouldShowOnStartupCheckBox.Bind(
+			wx.EVT_CHECKBOX,
+			self.onShouldShowOnStartupChanged
+		)
+
+	def _onDialogActivated(self, evt):
+		# Check for destruction, if the speechviewer window has focus when we exit NVDA it regains focus briefly
+		# when the quit NVDA dialog disappears. Then shouldShowOnStartupCheckBox is a deleted window when we
+		# try to setFocus
+		if not self._isDestroyed:
+			# focus is normally set to the first child, however,
+			# the checkbox gives more context, and makes it obvious how to stop showing the dialog.
+			self.shouldShowOnStartupCheckBox.SetFocus()
 
 	def onClose(self, evt):
 		if not evt.CanVeto():
@@ -50,7 +101,10 @@ class SpeechViewerFrame(wx.Frame):
 	def onShouldShowOnStartupChanged(self, evt):
 		config.conf["speechViewer"]["showSpeechViewerAtStartup"] = self.shouldShowOnStartupCheckBox.IsChecked()
 
+	_isDestroyed: bool
+
 	def onDestroy(self, evt):
+		self._isDestroyed = True
 		log.debug("SpeechViewer destroyed")
 		self.onDestroyCallBack()
 		evt.Skip()
