@@ -27,6 +27,7 @@
   - Thêm chức năng làm nổi bật màn hình cho NVDA. (#971, #9064)
    - Việc làm nổi bật vị trí focus, đối tượng điều hướng và dấu nháy chế độ duyệt có thể được kích hoạt và cấu hình  thông qua phân loại 'nhìn' trong hộp thoại cấu hình NVDA.+ - Note: This feature is incompatible with the focus highlight add-on, however, the add-on can still be used while the built-in highlighter is disabled.
  - Lưu ý: tính năng này không tương thích với add-on focus highlight. Tuy nhiên,  add-on này vẫn có thể sử dụng khi tắt tính năng làm nổi có sẵn.
+- Thêm trình xem chữ nổi, cho phép  xem đầu ra chữ nổi qua một cửa sổ trên màn hình. (#7788)
 
 
 == Các thay đổi ==
@@ -44,6 +45,7 @@
 - Khi đứng tại một grouping trong chế độ duyệt, mô tả giờ đây đã được đọc. (#10095)
 - Java Access Bridge giờ đây đã được tích hợp vào NVDA để bật khả năng tương tác các ứng dụng Java, bao gồm cả 64 bit Java VMs. (#7724)
 - Nếu Java Access Bridge không được bật cho người dùng, NVDA sẽ tự bật nó khi khởi động NVDA. (#7952)
+- Cập nhật eSpeak-NG lên 1.51-dev, commit ca65812ac6019926f2fbd7f12c92d7edd3701e0c. (#10581)
 
 
 == Sửa lỗi ==
@@ -73,6 +75,10 @@
 - Các ứng dụng Java được gọi chạy trước NVDA giờ đã tiếp cận được mà không cần khởi động lại ứng dụng Java. (#10296)
 - Trong Mozilla Firefox, khi thành phần có focus được đánh dấu là current (aria-current), thay đổi này không còn bị đọc lại nhiều lần. (#8960)
 - Giờ đây, NVDA sẽ xem một  vài kí tự unicode phức hợp nhất định như e-acute (é) là một kí tự đơn khi duy chuyển qua văn bản. (#10550)
+- Đã hỗ trợ cho Spring Tool Suite phiên bản 4. (#10001)
+- Không nói tên hai lần khi các đích đến liên quan của aria-labelledby là một thành phần bên trong. (#10552)
+- Trên Windows 10 phiên bản 1607 trở lên, các kí tự được nhập từ bàn phím chữ nổi đã được đọc trong nhiều tình huống. (#10569)
+- Khi thay đổi đầu ra thiết bị âm thanh, các âm thanh được phát bởi NVDA giờ đây sẽ phát qua thiết bị mới được chọn. (#2167)
 
 
 == Các thay đổi cho nhà phát triển ==
