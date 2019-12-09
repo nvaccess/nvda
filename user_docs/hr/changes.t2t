@@ -21,13 +21,13 @@
 - U Internet Exploreru, Google Chromeu i Mozilla Firefoxu, sada se možete kretati po člancima i grupama koristeći prečace za brzo kretanje. Podrazumjevano ovi prečaci nisu pridjeljeni i mogu se pridjeliti u dijaloškom okviru ulaznih gesti kada je dijaloški okvir otvoren u dokumentu koji koristi način pregleda. (#9227)
  - Figure se također izgovaraju. Iste se smatraju objektima i stoga se po njima može kretati koristeći kraticu brzog kretanja "o".
 - U Internet Exploreru, Google Chromeu i Mozilla Firefoxu, članci se sada izgovaraju koristeći objektnu navigaciju, te neobavezno u načinu pregleda ako je opcija uključena u postavkama oblikovanja dokumenta. (#10424)
-- Podrška za izvanprocesne okvire u Mozilla firefoksu. (#9672)
-- Dodano zaslonska zavjesa, koja kada je uključena, zatamnjuje zaslon u Windowsima 8 i novijim. (#7857)
- - Dodan prečac za omogućavanje zaslonke zavjese (do sljedećeg ponovnog pokretanja sa jednim pritiskom, ili uvijek kada je NVDA pokrenut sa dva pritiska). Ovaj prečac nije dodijeljen.
+- Dodana zaslonska zavjesa, koja kada je uključena, zatamnjuje zaslon u Windowsima 8 i novijim. (#7857)
+ - Dodan prečac za omogućavanje zaslonske zavjese (do sljedećeg ponovnog pokretanja sa jednim pritiskom, ili uvijek kada je NVDA pokrenut sa dva pritiska). Ovaj prečac nije dodijeljen.
  - Može biti uključeno preko kategorije 'vid' u dijaloškom okviru NVDA postavki.
 - Dodana značajka označavanja zaslona u NVDA. (#971, #9064)
  - Označavanje fokusa, objekta navigatora, i kursora u modusu pregleda može biti omogućeno i podešeno preko vid u dijaloškom okviru NVDA postavki.
  - Napomena: ova je značajka nekompatibilna s dodatkom Focus highlight, međutim, dodatak se moš uvjek može koristiti kada je ugrađeni označivač uključen.
+- Dodan brajični preglednik, koji omogućuje prikaz brajice na zaslonu. (#7788)
 
 
 == Izmjene ==
@@ -45,6 +45,7 @@
 - Prilikom fokusiranja grupe u modusu pregleda, sada se izgovara i opis. (#10095)
 - Java Access Bridge se sada isporučuje sa NVDA kako bi se omogućio pristup java aplikacijama, uključujući i 64-bitne Java virtualne mašine. (#7724)
 - Ako Java Access Bridge nije uključen za korisnika, NVDA automatski ga uključuje pri pokretanju. (#7952)
+- Nadograđen eSpeak-NG na inačicu 1.51-dev, commit ca65812ac6019926f2fbd7f12c92d7edd3701e0c. (#10581)
 
 
 == Ispravci Grešaka ==
@@ -73,6 +74,11 @@
 - Nekoliko rijetkih grešaka sa brajičnim prevođenjem i Liblouis brajičnim prevoditeljem je ispravljeno. (#9982)
 - Java aplikacije pokrenute prije NVDA sada se pokreću bez potrebe za ponovnim pokretanjem Java aplikacije. (#10296)
 - U Mozilla Firefoxu, kada je fokusirani element označen kao trenutan (aria-current), više se ne izgovara više puta uzastopce. (#8960)
+- NVDA će sada tretirati neke sastavne unicode znakove poput e s naglaskom kao jedan znak prilikom kretanja po tekstu. (#10550)
+- Spring Tool Suite inačica 4 sada je podržana. (#10001)
+- Kada je Aria-labellz unutrašnji element, ozgovor se neće dublirati. (#10552)
+- U Windowsima 10 inačici 1607 i novijim, upisani znakovi na brajičnim tipkovnicama sada su izgovoreni u većini situacija ispravno. (#10569)
+- Prilikom izmjene izlaznog audio uređaja, zvukovi koje reproducira NVDA sada će se reproducirati na novom uređaju. (#2167)
 
 
 == Izmjene za razvojne programere ==
