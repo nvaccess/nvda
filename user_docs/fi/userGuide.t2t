@@ -171,6 +171,13 @@ Ensimmäisellä valintaruudulla määritetään, käytetäänkö Caps Lockia NVD
 Toisella, joka on käytettävissä vain asennetuissa versioissa, valitaan, käynnistyykö NVDA automaattisesti Windowsiin kirjautumisen jälkeen.
 Kolmannella on mahdollista valita, halutaanko Tervetuloa-valintaikkunan tulevan näkyviin joka kerta NVDA:n käynnistyessä.
 
++++ Käyttötilastojen keräämisen valintaikkuna +++[UsageStatsDialog]
+NVDA 2018.3:sta alkaen käyttäjältä kysytään, haluaako hän sallia käyttötietojen lähettämisen NV Accessille NVDA:n parantamiseksi tulevaisuudessa.
+Kun NVDA käynnistetään ensimmäistä kertaa, näkyviin tulee valintaikkuna, jossa sinulta kysytään, hyväksytkö tietojen lähettämisen.
+Voit lukea lisätietoja kerättävistä tiedoista luvusta 11.
+Huom: Asetus tallennetaan painaessasi "Kyllä" tai "Ei", eikä valintaikkunaa enää näytetä, ellet asenna NVDA:ta uudelleen.
+Voit kuitenkin ottaa käyttöön tai poistaa käytöstä tiedonkeruun manuaalisesti NVDA:n yleisten asetusten paneelista. Muuta asetusta valitsemalla tai poistamalla valinta [Salli käyttötilastojen kerääminen #GeneralSettingsGatherUsageStats] -valintaruudusta.
+
 ++ Tietoja näppäinkomennoista ++[AboutNVDAKeyboardCommands]
 
 +++ NVDA-näppäin +++[TheNVDAModifierKey]
@@ -532,8 +539,8 @@ Sellaisinaan nämä komennot siirtävät seuraavan ja Vaihto-näppäimen kanssa 
 - k: linkki
 - n: teksti, joka ei ole linkki
 - f: lomakekenttä
-- u: avaamaton linkki
-- v: avattu linkki
+- u: vierailematon linkki
+- v: vierailtu linkki
 - e: muokkauskenttä
 - b: painike
 - x: valintaruutu
@@ -641,6 +648,7 @@ Painetaan Esc-näppäintä, kun halutaan palata takaisin asiakirjaan.
 + Pistekirjoitus +[Braille]
 NVDA voi antaa palautteen pistekirjoituksella, mikäli käytössä on pistenäyttö.
 Jos näytössä on Perkins-tyylinen näppäimistö, lisäksi on mahdollista syöttää lyhenne- ja tavallista pistekirjoitusta.
+Pistekirjoitus voidaan näyttää fyysisen pistenäytön asemesta tai sen lisäksi myös ruudulla [pistekirjoituksen tarkastelua #BrailleViewer] käyttäen.
 
 Tietoja tuetuista pistenäytöistä on [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleessa.
 Tässä kappaleessa on  tietoja myös siitä, mitkä näytöt tukevat NVDA:n automaattista pistenäytön tunnistustoiminnallisuutta.
@@ -675,7 +683,7 @@ Jotta pistenäytölle mahtuisi mahdollisimman paljon tietoa, seuraavat lyhenteet
 | ohj | ohjeselite |
 | kp | kiintopiste |
 | lnk | linkki |
-| alnk | avattu linkki |
+| vlnk | vierailtu linkki |
 | lst | luettelo |
 | vko | valikko |
 | vkorvi | valikkorivi |
@@ -1198,7 +1206,7 @@ Tästä yhdistelmäruudusta valitaan, mitä puhesyntetisaattoria NVDA käyttää
 Luettelo NVDA:n tukemista syntetisaattoreista on [Tuetut puhesyntetisaattorit #SupportedSpeechSynths] -kappaleessa.
 
 Eräs tässä luettelossa aina näkyvä vaihtoehto on "Ei puhetta", joka mahdollistaa NVDA:n käytön täysin ilman puhetta.
-Tästä voi olla hyötyä jollekulle, joka haluaa käyttää NVDA:ta vain pistenäytön avulla, tai näkeville kehittäjille, jotka käyttävät pelkkää puheentarkastelutoimintoa.
+Tästä voi olla hyötyä NVDA:ta pelkän pistenäytön varassa käyttävälle tai näkeville kehittäjille, jotka käyttävät pelkkää puheen tarkastelu -toimintoa.
 
 ==== Äänilaite ====[SelectSynthesizerOutputDevice]
 Tästä valitaan, mitä äänilaitetta NVDA:ssa valittuna oleva puhesyntetisaattori käyttää.
@@ -1531,9 +1539,10 @@ Kategoria sisältää seuraavat asetukset:
 Kun tämä valintaruutu on valittuna, NVDA lukee työkaluvihjeet niiden tullessa näkyviin.
 Monet ikkunat ja säätimet näyttävät pienen ilmoituksen (tai työkaluvihjeen), kun hiiri siirretään niiden päälle tai toisinaan kun kohdistus siirretään niihin.
 
-==== Lue ohjeselitteet ====[ObjectPresentationReportBalloons]
-Kun tämä valintaruutu on valittuna, NVDA lukee ohjeselitteet niiden tullessa näkyviin.
-Ohjeselitteet ovat työkaluvihjeiden kaltaisia, mutta ovat yleensä suurempia ja liittyvät järjestelmätapahtumiin, kuten verkkokaapelin irrottamiseen tai ilmoituksiin Windowsin suojausongelmista.
+==== Lue ilmoitukset ====[ObjectPresentationReportNotifications]
+Kun tämä valintaruutu on valittuna, NVDA lukee ohjeselitteet ja ilmoitusruudut niiden tullessa näkyviin.
+- Ohjeselitteet ovat työkaluvihjeiden kaltaisia, mutta ovat yleensä suurempia ja liittyvät järjestelmätapahtumiin, kuten verkkokaapelin irrottamiseen tai ilmoituksiin Windowsin suojausongelmista.
+- Ilmoitusruudut on otettu käyttöön Windows 10:ssä, ja ilmestyvät toimintokeskukseen ilmaisinalueella ilmoittaen useista eri tapahtumista (esim. ladatusta päivityksestä, Saapuneet-kansioosi tulleesta uudesta sähköpostiviestistä jne.).
 
 ==== Lue objektien pikanäppäimet ====[ObjectPresentationShortcutKeys]
 Kun tämä valintaruutu on valittuna, NVDA kertoo objektiin tai säätimeen liitetyn pikanäppäimen.
@@ -2027,6 +2036,20 @@ Kun Puheen tarkastelu -toiminto on käytössä, sen ikkuna päivittyy ajoittain 
 Jos ikkunaa kuitenkin napsautetaan hiirellä tai kohdistus siirretään siihen, NVDA keskeyttää  tilapäisesti tekstin päivittämisen, jotta olemassa olevaa sisältöä voidaan helposti valita ja kopioida.
 
 Puheen tarkastelu -toiminto otetaan käyttöön mistä tahansa määrittämällä sille oma syötekomento [Syötekomennot-valintaikkunaa käyttäen. #InputGestures]
+
+++ Pistekirjoituksen tarkastelu ++[BrailleViewer]
+Näkeville ohjelmistokehittäjille tai NVDA:ta näkevälle yleisölle esitteleville henkilöille on käytettävissä kelluva ikkuna, jonka avulla voidaan tarkastella pistekirjoitustulostetta sekä pistekirjoitusmerkkejä vastaavaa tekstiä.
+Pistekirjoituksen tarkastelua voidaan käyttää samanaikaisesti fyysisen pistenäytön kanssa, jolloin ikkunassa näkyvien solujen määrä vastaa fyysisen laitteen solumäärää.
+Kun pistekirjoituksen tarkastelu on käytössä, se päivittyy jatkuvasti näyttämään pistekirjoitusta, joka näytettäisiin fyysisellä pistenäytöllä.
+
+Ota pistekirjoituksen tarkastelu käyttöön valitsemalla "Pistekirjoituksen tarkastelu" -vaihtoehto, joka löytyy NVDA-valikon Työkalut-alivalikosta.
+Poista toiminto käytöstä poistamalla valikkokohteen valinta.
+
+Fyysisissä pistenäytöissä on tyypillisesti painikkeita, jotka vierittävät näyttöä eteen- tai taaksepäin. Ota vierittäminen käyttöön pistekirjoituksen tarkastelu -työkalussa määrittämällä [Syötekomennot-valintaikkunaa #InputGestures] käyttäen pikanäppäimet, jotka vierittävät pistenäyttöä eteen- ja taaksepäin.
+
+Pistekirjoituksen tarkastelu -ikkunassa on "Näytä pistekirjoituksen tarkastelu käynnistettäessä" -valintaruutu.
+Mikäli se on valittuna, pistekirjoituksen tarkastelu -ikkuna avautuu, kun NVDA käynnistetään.
+Ikkuna yrittää avautua uudelleen aina samoilla mitoilla ja sijainnilla, jotka sillä oli suljettaessa.
 
 ++ Lisäosien hallinta ++[AddonsManager]
 Lisäosien hallinnalla, johon pääsee NVDA-valikosta Työkalut-valikon alta kohdasta Lisäosien hallinta, voi asentaa, poistaa, ottaa käyttöön sekä poistaa käytöstä NVDA:n lisäosapaketteja.
@@ -2529,7 +2552,7 @@ Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 
 ++ Seika ++[Seika]
 [Nippon Telesoftin https://www.nippontelesoft.com/] 40 merkin Seika-versioita 3, 4 ja 5 sekä 80 merkin Seika80-versiota tuetaan.
-Lisätietoja näistä pistenäytöistä sekä niiden tarvitsemista ajureista löytyy osoitteesta https://en.seika-braille.com/down/index.html/.
+Lisätietoja näistä pistenäytöistä sekä niiden tarvitsemista ajureista löytyy osoitteesta https://en.seika-braille.com/down/index.html.
 Tietokoneelle on asennettava valmistajan toimittamat USB-ajurit.
 
 Nämä näytöt eivät vielä tue NVDA:n automaattista pistenäytön tunnistusta.
