@@ -27,7 +27,7 @@ Traduzido pela Equipa portuguesa do NVDA
 - Adicionada a funcionalidade "Realçar foco" (#971, #9064):
  - O realce do foco do sistema, do objecto de navegação, e do cursor em modo de navegação podem ser activados e configurados na secção "Visão" das configurações do NVDA;
  - Nota: Esta funcionalidade é incompatível com o extra focus highlight, mas o extra pode ser usado se a função nativa "Realçar foco" estiver desactivada.
-
+- Adicionada a ferramenta Visualizador Braille, que permite a visualização da saída Braille através de uma janela no ecrã. (# 7788)
 
 == Alterações ==
 - O Guia do utilizador já ensina a usar o NVDA na consola Windows. (#9957)
@@ -44,6 +44,7 @@ Traduzido pela Equipa portuguesa do NVDA
 - Quando se foca um agrupamento em modo de navegação, a descrição é anunciada (#10095)
 - O Java Access Bridge passa a ser incluido com o NVDA para activar o acesso a aplicações Java, incluindo para 64 bit Java VMs. (#7724)
 - Se o Java Access Bridge não estiver activado para o utilizador, o NVDA, automaticamente, activa-o no arranque. (#7952)
+- Actualizado o sintetizador eSpeak-NG para a versão 1.51-dev, commit ca65812ac6019926f2fbd7f12c92d7edd3701e0c. (#10581)
 
 
 == Correcções ==
@@ -73,6 +74,10 @@ Traduzido pela Equipa portuguesa do NVDA
 - As aplicações Java iniciadas antes do NVDA já são acessíveis sem ser necessário reiniciá-las. (#10296)
 - No Mozilla Firefox, quando o elemento em foco fica marcado como current (aria-current), esta alteração já não é anunciada várias vezes. (#8960)
 - O NVDA passa a tratar alguns caracteres unicode compostos, tais como e-acute como um caracter simples ao mover-se pelo texto. (#10550)
+- Spring Tool Suite Version 4 já é suportada. (#10001)
+- Não anunciar em duplicado o nome quando aria-labelledby relation target é um elemento interior. (#10552)
+- No Windows 10 versão 1607 e seguintes, caracteres digitados num teclado Braille passam a ser anunciados em mais situações. (#10569)
+- Ao mudar de dispositivo de saída de áudio, os sons reproduzidos pelo NVDA passam a usar o novo dispositivo seleccionado. (#2167)
  
 
 == Alterações para desenvolvedores ==
