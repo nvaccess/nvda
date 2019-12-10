@@ -25,6 +25,7 @@ import cursorManager
 from scriptHandler import isScriptWaiting, willSayAllResume
 import aria
 import controlTypes
+from controlTypes import OutputReason
 import config
 import textInfos
 import braille
@@ -39,7 +40,7 @@ from NVDAObjects import NVDAObject
 from abc import ABCMeta, abstractmethod
 from typing import Optional
 
-REASON_QUICKNAV = "quickNav"
+REASON_QUICKNAV = OutputReason.QUICKNAV
 
 def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 	"""Reports the pass through mode if it has changed.
@@ -304,7 +305,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		controlTypes.ROLE_CHECKMENUITEM,
 		})
 
-	def shouldPassThrough(self, obj, reason=None):
+	def shouldPassThrough(self, obj, reason: Optional[OutputReason] = None):
 		"""Determine whether pass through mode should be enabled (focus mode) or disabled (browse mode) for a given object.
 		@param obj: The object in question.
 		@type obj: L{NVDAObjects.NVDAObject}

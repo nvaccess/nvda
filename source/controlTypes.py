@@ -646,6 +646,8 @@ class OutputReason(Enum):
 	#: No output, but any state should be cached as if output had occurred.
 	ONLYCACHE = auto()
 
+	QUICKNAV = auto()
+
 # The following constants are kept for backwards compatibility.
 # In future, OutputReason should be used directly
 
@@ -677,7 +679,7 @@ isCurrentLabels: Dict[Union[bool, str], str] = {
 	"time":_("current time"),
 }
 
-def processPositiveStates(role, states, reason, positiveStates=None):
+def processPositiveStates(role, states, reason: OutputReason, positiveStates=None):
 	"""Processes the states for an object and returns the positive states to output for a specified reason.
 	For example, if C{STATE_CHECKED} is in the returned states, it means that the processed object is checked.
 	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
@@ -685,7 +687,6 @@ def processPositiveStates(role, states, reason, positiveStates=None):
 	@param states: The raw states for an object to process.
 	@type states: set
 	@param reason: The reason to process the states (e.g. C{REASON_FOCUS}.
-	@type reason: str
 	@param positiveStates: Used for C{REASON_CHANGE}, specifies states changed from negative to positive;
 	@type positiveStates: set
 	@return: The processed positive states.
@@ -735,7 +736,7 @@ def processPositiveStates(role, states, reason, positiveStates=None):
 		positiveStates.discard(STATE_EDITABLE)
 	return positiveStates
 
-def processNegativeStates(role, states, reason, negativeStates=None):
+def processNegativeStates(role, states, reason: OutputReason, negativeStates=None):
 	"""Processes the states for an object and returns the negative states to output for a specified reason.
 	For example, if C{STATE_CHECKED} is in the returned states, it means that the processed object is not checked.
 	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
@@ -743,7 +744,6 @@ def processNegativeStates(role, states, reason, negativeStates=None):
 	@param states: The raw states for an object to process.
 	@type states: set
 	@param reason: The reason to process the states (e.g. C{REASON_FOCUS}.
-	@type reason: str
 	@param negativeStates: Used for C{REASON_CHANGE}, specifies states changed from positive to negative;
 	@type negativeStates: set
 	@return: The processed negative states.
@@ -803,7 +803,7 @@ def processNegativeStates(role, states, reason, negativeStates=None):
 def processAndLabelStates(
 		role: int,
 		states: Set[Any],
-		reason: str,
+		reason: OutputReason,
 		positiveStates: Optional[Set[Any]] = None,
 		negativeStates: Optional[Set[Any]] = None,
 		positiveStateLabelDict: Dict[int, str] = {},
