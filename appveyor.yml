@@ -253,3 +253,13 @@ deploy_script:
       py -m pip install requests
       py appveyor\mozillaSyms.py
      }
+
+on_finish:
+  # add a message to point to the NVDA build, to make testing PR's easier.
+  - ps: |
+      $appVeyorUrl = "https://ci.appveyor.com"
+      $exe = Get-ChildItem -Name output\*.exe
+      if($?){
+        $exeUrl="$appVeyorUrl/api/buildjobs/$env:APPVEYOR_JOB_ID/artifacts/output/$exe"
+        Add-AppveyorMessage "[Build (for testing PR)]($exeUrl)"
+      }
