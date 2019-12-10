@@ -12,6 +12,18 @@ const auto textContentCommand_elementStart=1;
 const auto textContentCommand_text=2;
 const auto textContentCommand_elementEnd=3;
 
+template<typename ItemType> void _remoteable_clearUiaArray(UiaOperationScope& scope, UiaArray<ItemType>& array) {
+	auto arrayCount=array.Size();
+	UiaUint index=0;
+	scope.For([&](){},[&]() {
+		return index<arrayCount;
+	},[&](){
+		index+=1;
+	},[&]() {
+		array.RemoveAt(0);
+	});
+}
+
 UiaArray<UiaTextRange> _remoteable_splitTextRangeByUnit(UiaOperationScope& scope, UiaTextRange& textRange, TextUnit unit) {
 	UiaArray<UiaTextRange> ranges;
 	// Start with a clone of textRange collapsed to the start
@@ -73,7 +85,7 @@ template<typename arrayType> void _remoteable_visitUiaArrayElements(UiaOperation
 	});
 }
 
-UiaBool _remoteable_getAttributesAndTextForRange(UiaOperationScope& scope,UiaTextRange textRange,const std::vector<int>& attribIDs,UiaArray<UiaVariant>& outArray, UiaBool ignoreMixedAttributes) {
+UiaBool _remoteable_appendAttributesAndTextForRange(UiaOperationScope& scope,UiaTextRange textRange,const std::vector<int>& attribIDs,UiaArray<UiaVariant>& outArray, UiaBool ignoreMixedAttributes) {
 	UiaBool foundMixed{false};
 	UiaArray<UiaVariant> attribValues;
 	for(auto attribID: attribIDs) {
@@ -103,26 +115,132 @@ UiaBool _remoteable_getAttributesAndTextForRange(UiaOperationScope& scope,UiaTex
 	return foundMixed;
 }
 
-UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaTextRange& textRange, const std::vector<int>& attribIDs) {
+UiaBool _remoteable_compareUiaElements(UiaOperationScope& scope, UiaElement& element1, UiaElement& element2) {
+		UiaString name1=element1.GetName(false);
+		UiaString name2=element2.GetName(false);
+		UiaString controlType1=element1.GetLocalizedControlType(false);
+		UiaString controlType2=element2.GetLocalizedControlType(false);
+		return (name1==name2)&&(controlType1==controlType2);
+}
+
+UiaArray<UiaElement> _remoteable_getAncestorsForTextRange(UiaOperationScope& scope, UiaTextRange& textRange, UiaElement& rootElement) {
+	UiaArray<UiaElement> ancestors;
+	auto parent=textRange.GetEnclosingElement();
+	scope.While([&]() {
+		return UiaBool(parent);
+	},[&]() {
+		ancestors.Append(parent);
+		scope.If(_remoteable_compareUiaElements(scope,parent,rootElement),[&]() {
+			scope.Break();
+		});
+		parent=parent.GetParentElement();
+	});
+	return ancestors;
+}
+
+void _remoteable_calculateAncestorsExitedAndEntered(UiaOperationScope& scope, UiaArray<UiaElement>& oldAncestors, UiaArray<UiaElement>& newAncestors, UiaArray<UiaElement>& elementsExited, UiaArray<UiaElement>& elementsEntered) {
+	auto oldCount=oldAncestors.Size();
+	auto exitCount=oldCount;
+	auto newCount=newAncestors.Size();
+	UiaUint newIndex=0;
+	scope.For([&](){},[&]() {
+		return newIndex<newCount;
+	},[&]() {
+		newIndex+=1;
+	},[&]() {
+	auto realNewIndex=newCount;
+	realNewIndex-=newIndex;
+	realNewIndex-=1;
+		auto newElement=newAncestors.GetAt(realNewIndex);
+		auto realOldIndex=oldCount;
+		realOldIndex+=realNewIndex;
+		realOldIndex-=newCount;
+		auto oldIndex=oldCount;
+		oldIndex-=realOldIndex;
+		oldIndex-=1;
+		scope.If(oldIndex<oldCount,[&]() {
+			auto oldElement=oldAncestors.GetAt(realOldIndex);
+			scope.If(_remoteable_compareUiaElements(scope,newElement,oldElement),[&]() {
+				exitCount=realOldIndex;
+			},[&]() {
+				elementsEntered.Append(newElement);
+			});
+			elementsEntered.Append(newElement);
+		});
+	});
+	UiaUint oldIndex=0;
+	scope.For([&](){},[&]() {
+		return oldIndex<exitCount;
+	},[&]() {
+		oldIndex+=1;
+	},[&]() {
+		auto oldElement=oldAncestors.GetAt(oldIndex);
+		elementsExited.Append(oldElement);
+	});
+}
+
+void _remoteable_appendElementStartInfo(UiaOperationScope& scope, UiaElement& element, const std::vector<int>& propIDs, UiaArray<UiaVariant>& outArray) {
+	outArray.Append(UiaVariant(textContentCommand_elementStart));
+	for(auto propID: propIDs) {
+		auto propValue=element.GetPropertyValue(propID,false,false);
+		outArray.Append(propValue);
+	}
+}
+
+void _remoteable_appendElementEndInfo(UiaOperationScope& scope, UiaElement& element, UiaArray<UiaVariant>& outArray) {
+	outArray.Append(UiaVariant(textContentCommand_elementEnd));
+}
+
+UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaElement& rootElement, UiaTextRange& textRange, const std::vector<int>& propIDs, const std::vector<int>& attribIDs) {
 	UiaArray<UiaVariant> content;
 	auto formatRanges=_remoteable_splitTextRangeByUnit(scope,textRange,TextUnit_Format);
+	UiaArray<UiaElement> oldAncestors;
 	_remoteable_visitUiaArrayElements(scope,formatRanges,[&](auto& formatRange) {
-		UiaBool foundMixed=_remoteable_getAttributesAndTextForRange(scope,formatRange,attribIDs,content,false);
+		auto newAncestors=_remoteable_getAncestorsForTextRange(scope,formatRange,rootElement);
+		UiaArray<UiaElement> elementsExited;
+		UiaArray<UiaElement> elementsEntered;
+		_remoteable_calculateAncestorsExitedAndEntered(scope,oldAncestors,newAncestors,elementsExited,elementsEntered);
+		_remoteable_visitUiaArrayElements(scope,elementsExited,[&](auto& element) {
+			_remoteable_appendElementEndInfo(scope,element,content);
+			return true;
+		});
+		_remoteable_visitUiaArrayElements(scope,elementsEntered,[&](auto& element) {
+			_remoteable_appendElementStartInfo(scope,element,propIDs,content);
+			return true;
+		});
+		UiaBool foundMixed=_remoteable_appendAttributesAndTextForRange(scope,formatRange,attribIDs,content,false);
 		scope.If(foundMixed,[&]() {
 			auto charRanges=_remoteable_splitTextRangeByUnit(scope,formatRange,TextUnit_Character);
 			_remoteable_visitUiaArrayElements(scope,charRanges,[&](auto& charRange) {
-				_remoteable_getAttributesAndTextForRange(scope,charRange,attribIDs,content,true);
+				_remoteable_appendAttributesAndTextForRange(scope,charRange,attribIDs,content,true);
 				return true;
 			});
 		});
+		_remoteable_clearUiaArray(scope,oldAncestors);
+		_remoteable_visitUiaArrayElements(scope,newAncestors,[&](auto& element) {
+			oldAncestors.Append(element);
+			return true;
+		});
+		return true;
+	});
+	_remoteable_visitUiaArrayElements(scope,oldAncestors,[&](auto& element) {
+		_remoteable_appendElementEndInfo(scope,element,content);
 		return true;
 	});
 	return content;
 }
 
-extern "C" __declspec(dllexport) SAFEARRAY* __stdcall uiaRemote_getTextContent(IUIAutomationTextRange* textRangeArg, SAFEARRAY* pAttribIDsArg) {
+extern "C" __declspec(dllexport) SAFEARRAY* __stdcall uiaRemote_getTextContent(IUIAutomationElement* rootElementArg, IUIAutomationTextRange* textRangeArg, SAFEARRAY* pPropIDsArg, SAFEARRAY* pAttribIDsArg) {
 	auto scope=UiaOperationScope::StartNew();
 	UiaTextRange textRange{textRangeArg};
+	UiaElement rootElement{rootElementArg};
+	CComSafeArray<int> propIDsArray{pPropIDsArg};
+	auto propCount=propIDsArray.GetCount();
+	std::vector<int> propIDs(propCount);
+	for(size_t i=0;i<propCount;++i) {
+		auto propID=propIDsArray.GetAt(i);
+		propIDs[i]=propID;
+	}
 	CComSafeArray<int> attribIDsArray{pAttribIDsArg};
 	auto attribCount=attribIDsArray.GetCount();
 	std::vector<int> attribIDs(attribCount);
@@ -130,7 +248,7 @@ extern "C" __declspec(dllexport) SAFEARRAY* __stdcall uiaRemote_getTextContent(I
 		auto attribID=attribIDsArray.GetAt(i);
 		attribIDs[i]=attribID;
 	}
-	auto textContent=_remoteable_getTextContent(scope,textRange,attribIDs);
+	auto textContent=_remoteable_getTextContent(scope,rootElement,textRange,propIDs,attribIDs);
 	scope.BindResult(textContent);
 	scope.Resolve();
 	size_t numItems=textContent.Size();
