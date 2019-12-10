@@ -191,8 +191,17 @@ test_script:
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$systemTestOutput\systemTests.xml"))
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
-on_finish:
+# Artifacts are required by deploy code,
+artifacts:
+  - path: output\*
+  - path: output\*\*
+
+# Still upload artifacts on failure, they are useful for testing PR builds despite the build perhaps
+# failing for a minor reason (eg linting)
+on_failure:
+#  `- path` is not allowed in `on_failure` use powerShell instead
  - ps: |
+    # Upload artifacts, preserving directory structure.
     $uploadFromFolder = "output\"
     if( Test-Path $uploadFromFolder ){
       $root = Resolve-Path .\
@@ -203,6 +212,8 @@ on_finish:
       }
     }
 
+# The server side deploy code ('nvdaAppveyorHook') relies on artifacts, they must be uploaded first.
+# For ordering of appveyor yml phases, see: https://www.appveyor.com/docs/build-configuration/#build-pipeline
 deploy_script:
  - ps: |
      if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:versionType) {
