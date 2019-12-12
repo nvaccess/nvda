@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-29 15:51+1000\n"
-"PO-Revision-Date: 2019-11-29 22:01-0300\n"
+"POT-Creation-Date: 2019-12-09 11:28+1000\n"
+"PO-Revision-Date: 2019-12-08 22:49-0300\n"
 "Last-Translator: Cleverson Casarin Uliana <clever97@gmail.com>\n"
 "Language-Team: Equipe de tradução do NVDA para Português do Brasil "
 "<clever97@gmail.com>\n"
@@ -228,7 +228,7 @@ msgstr "lst"
 msgid "gra"
 msgstr "grá"
 
-#. Translators: Displayed in braille for an object which is a
+#. Translators: Displayed in braille for toast notifications and for an object which is a
 #. help balloon.
 msgid "hlp"
 msgstr "aju"
@@ -4335,19 +4335,19 @@ msgstr ""
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
-msgstr "exibidor de fala desativado"
+msgstr "visualizador de fala desativado"
 
 #. Translators: The message announced when enabling speech viewer.
 msgid "speech viewer enabled"
-msgstr "exibidor de fala ativado"
+msgstr "visualizador de fala ativado"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
 "Toggles the NVDA Speech viewer, a floating window that allows you to view "
 "all the text that NVDA is currently speaking"
 msgstr ""
-"Alterna o exibidor de fala do NVDA, una janela flutuante que possibilita ver "
-"todo o texto que o NVDA está falando no momento"
+"Alterna o visualizador de fala do NVDA, uma janela flutuante que possibilita "
+"ver todo o texto que o NVDA está falando no momento"
 
 #. Translators: Reports which position braille is tethered to
 #. (braille can be tethered automatically or to either focus or review position).
@@ -6235,11 +6235,12 @@ msgid "Emulates pressing %s on the system keyboard"
 msgstr "Emula o pressionar de %s no teclado do sistema"
 
 msgid "NVDA Speech Viewer"
-msgstr "Exibidor da Fala do NVDA"
+msgstr "Visualizador da Fala do NVDA"
 
-#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+#. Translators: The label for a setting in the speech viewer that controls
+#. whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
-msgstr "Mo&strar o Exibidor de Fala ao iniciar"
+msgstr "Mo&strar o visualizador de Fala ao iniciar"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -7311,6 +7312,15 @@ msgstr "Linhas braille Seika"
 msgid "SuperBraille"
 msgstr "SuperBraille"
 
+#. Translators: The title of the NVDA Braille Viewer tool window.
+msgid "NVDA Braille Viewer"
+msgstr "Visualizador de Braille do NVDA"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether the braille viewer is shown at startup or not.
+msgid "&Show Braille Viewer on Startup"
+msgstr "Mo&strar o visualizador de Braille ao iniciar"
+
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
 msgstr "Resultado"
@@ -7490,7 +7500,11 @@ msgstr "Ver log"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
-msgstr "Exibidor de fala"
+msgstr "Visualizador de fala"
+
+#. Translators: The label for the menu item to toggle Braille Viewer.
+msgid "Braille viewer"
+msgstr "Visualizador de Braille"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -9054,7 +9068,7 @@ msgid "Tones"
 msgstr "Sons"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both  Speech and Tones"
+msgid "Both Speech and Tones"
 msgstr "Fala e sons juntos"
 
 #. Translators: This message is presented in the document formatting settings panelue
