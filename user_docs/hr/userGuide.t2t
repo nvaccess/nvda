@@ -119,7 +119,7 @@ Ova opcija omogućuje automatsko pokretanje NVDA čitača na Windows ekranu za p
 To također uključuje kontrolu korisničkog računa i ostale sigurne ekrane.
 Ova je opcija standardno aktivirana za nove instalacije.
 
-+++ Izradi prečac na radnoj površini (ctrl+alt+F5) +++[CreateDesktopShortcut]
++++ Izradi prečac na radnoj površini (kontrol+alt+F5) +++[CreateDesktopShortcut]
 Ova opcija omogućuje izradu prečaca na radnoj površini za pokretanje NVDA čitača. 
 Ako je izrađen, prečacu na radnoj površini bit će dodijeljen tipkovnički prečac kontrol+alt+F5, pomoću kojeg je moguće pokrenuti NVDA čitača u bilo kojem trenutku.
 
@@ -193,7 +193,7 @@ Ako želite da se NVDA modifikacijske tipke ponašaju na način kao da NVDA nije
 NVDA trenutačno dolazi s dva skupa tipkovničkih prečaca (poznatih kao rasporedi tipkovnice): raspored tipkovnice za stolna računala i raspored tipkovnice za prijenosna računala.
 NVDA standardno dolazi s rasporedom tipkovnice za stolna računala, međutim možete se prebaciti na raspored za prijenosna računala u kategoriji "Tipkovnica" u dijaloškom okviru [NVDA Postavke #NVDASettings], u podizborniku Postavke, u NVDA izborniku.
 
-Raspored tipkovnice za stolna računala maksimalno iskorištava numeričku tipkovnicu (bez uključenog numeričkog bloka).
+Raspored tipkovnice za stolna računala maksimalno iskorištava numeričku tipkovnicu (s isključenim numeričkim blokom).
 Iako neka prijenosna računala nemaju numeričku tipkovnicu, neka prijenosna računala mogu emulirati numeričku tipkovnicu pritiskom tipke FN i pritiščući slova i brojke koji se nalaze s desne strane na tipkovnici (7, 8, 9, u, i, o, j, k, l, itd.).
 Ako vaše prijenosno računalo to ne može izvršiti ili ako ne postoji mogućnost za isključivanje numeričkog bloka, možda se umjesto toga morate prebaciti na raspored tipkovnice za prijenosna računala.
 
@@ -270,20 +270,20 @@ Kad se izbornik prikaže, koristite strelice za kretanje po izborniku i tipku en
 %kc:beginInclude
 || Naziv | Tipka za stolna računala | Tipka za prijenosna računala | Dodir | Opis |
 | Zaustavi govor | kontrol | kontrol | dodir s dva prsta | Trenutno zaustavlja govor |
-| Pauziraj govor | shift | shift | nema | Trenutno pauzira govor. Kad tipku ponovo pritisnete, NVDA će nastaviti govoriti gdje je stao (ako trenutačna govorna jedinica podržava pauziranje) |
+| Pauziraj govor | šift | šift | nema | Trenutno pauzira govor. Kad tipku ponovo pritisnete, NVDA će nastaviti govoriti gdje je stao (ako trenutačna govorna jedinica podržava pauziranje) |
 | NVDA Izbornik | NVDA+n | NVDA+n | dvostruki dodir s dva prsta | Prikazuje NVDA izbornik koji omogućuje pristup postavkama, alatima, pomoći itd. |
 | Mijenjanje modusa govora | NVDA+s | NVDA+s | nema | Mijenja modus govora između: govor, zvučni signal i isključeno. |
 | Mijenjanje modusa unosa | NVDA+1 | NVDA+1 | nema | Pritiskom bilo koje tipke, izvijestit će se o tome što ta tipka radi s opisom bilo kojeg NVDA prečaca koji joj je pridružen |
 | Izlaz iz NVDA | NVDA+q | NVDA+q | nema | Izlazi iz NVDA |
 | Proslijedi sljedeću tipku | NVDA+f2 | NVDA+f2 | nema | Naređuje NVDA čitaču da proslijedi sljedeći pritisak tipke ravno aktivnoj aplikaciji, čak iako je ta kombinacija tretirana kao NVDA prečac |
-| Uključi ili isključi modus mirovanja | NVDA+shift+s | NVDA+shift+z | nema | Modus mirovanja deaktivira sve NVDA prečace i govorni ili brajični izlaz za trenutačnu aplikaciju. Vrlo korisno kad aplikacije pružaju vlastiti govor ili funkcije čitanja ekrana. Pritisnite prečac još jednom da biste isključili modus mirovanja. |
+| Uključi ili isključi modus mirovanja | NVDA+šift+s | NVDA+šift+z | nema | Modus mirovanja deaktivira sve NVDA prečace i govorni ili brajični izlaz za trenutačnu aplikaciju. Vrlo korisno kad aplikacije pružaju vlastiti govor ili funkcije čitanja ekrana. Pritisnite prečac još jednom da biste isključili modus mirovanja. |
 %kc:endInclude
 
 ++ Izvještavanje o informacijama sustava ++[ReportingSystemInformation]
 %kc:beginInclude
 || Naziv | Tipka | Opis |
 | Izgovori datum i vrijeme | NVDA+f12 | Kad se pritisne jednom izgovara trenutačno vrijeme, kad se pritisne dvaput izgovara datum |
-| Izgovor stanja baterije | NVDA+shift+b | Izvještava o trenutačnom stanju baterije, kao i o tome je li priključen punjač i stanje baterije u postotcima. |
+| Izgovor stanja baterije | NVDA+šift+b | Izvještava o trenutačnom stanju baterije, kao i o tome je li priključen punjač i stanje baterije u postotcima. |
 | Pročitaj tekst iz međuspremnika | NVDA+c | Čita tekst iz međuspremnika ako postoji. |
 %kc:endInclude
 
@@ -298,23 +298,23 @@ Pod objektom se podrazumijeva jedna stavka kao što je komad teksta, gumb, potvr
 Fokus sustava (ili jednostavno fokus) je [objekt #Objects] koji prima upisane znakove s tipkovnice.
 Na primjer, ako upisujete tekst u polje za uređivanje teksta, polje za uređivanje teksta je u fokusu.
 
-Najuobičajeni način kretanja po Windowsu pomoću NVDA čitača je jednostavno premještanje fokusa sustava koristeći osnovne Windowsove tipkovničke prečace. Tipke tab i shift+tab služe za premještanje prema naprijed i natrag između kontrola. Tipka alt služi za premještanje na traku izbornika. Tipke strelica gore, dolje, lijevo i desno služe za kretanje po izbornicima. Tipke alt+tab služe za premještanje između pokrenutih programa.
+Najuobičajeni način kretanja po Windowsu pomoću NVDA čitača je jednostavno premještanje fokusa sustava koristeći osnovne Windowsove tipkovničke prečace. Tipke tabulator i šift+tabulator služe za premještanje prema naprijed i natrag između kontrola. Tipka alt služi za premještanje na traku izbornika. Tipke strelica gore, dolje, lijevo i desno služe za kretanje po izbornicima. Tipke alt+tabulator služe za premještanje između pokrenutih programa.
 Tijekom premještanja NVDA javlja informacije o fokusiranom objektu, kao što su ime objekta, vrsta, vrijednost, stanje, opis, tipkovnički prečac i informacije o položaju.
 Kad je [Isticanje fokusa #VisionFocusHighlight] uključeno, prikazuje se i pozicija fokusa na ekranu.
 
 Postoji nekoliko tipkovničkih prečaca koji su korisni za kretanje po objektima:
 %kc:beginInclude
 || Naziv | Tipka za stolna računala | Tipka za prijenosna računala | Opis |
-| Izvijesti o trenutačnom fokusu | NVDA+tab | NVDA+tab | Izvještava o objektu koji je trenutačno u fokusu. Kad pritisnete dvaput, slovkat će izgovoreno |
+| Izvijesti o trenutačnom fokusu | NVDA+tabulator | NVDA+tabulator | Izvještava o objektu koji je trenutačno u fokusu. Kad pritisnete dvaput, slovkat će izgovoreno |
 | Izvijesti o naslovu | NVDA+t | NVDA+t | Izvještava o naslovu trenutačnog prozora. Kad pritisnete dvaput, NVDA će slovkati izgovoreno. Kad pritisnete triput naslov se kopira u međuspremnik. |
 | Pročitaj trenutačni prozor | NVDA+b | NVDA+b | Čita sve kontrole u trenutačno aktivnom prozoru (korisno za dijaloške okvire) |
-| Izvijesti o traci stanja | NVDA+end | NVDA+shift+end | Izvještava o traci stanja, ako je NVDA pronađe. Također premješta navigacijski objekt na tu lokaciju. Kad se pritisne dvaput, informacije na traci stanja se slovkaju, a kad se pritisne triput, kopiraju se u međuspremnik. |
+| Izvijesti o traci stanja | NVDA+end | NVDA+šift+end | Izvještava o traci stanja, ako je NVDA pronađe. Također premješta navigacijski objekt na tu lokaciju. Kad se pritisne dvaput, informacije na traci stanja se slovkaju, a kad se pritisne triput, kopiraju se u međuspremnik. |
 %kc:endInclude
 
 ++ Kretanje pomoću kursora sustava ++[SystemCaret]
 Kad je [objekt #Objects] koji omogućuje kretanje i-ili uređivanje teksta [u fokusu #SystemFocus], možete se kretati po tekstu koristeći kursor sustava, također poznat kao kursor uređivanja.
 
-Kad je objekt koji ima kursor sustava u fokusu, možete koristiti strelice, page up, page down, home, end, itd, da biste se kretali po tekstu.
+Kad je objekt koji ima kursor sustava u fokusu, možete koristiti strelice, pejdž ap, pejdž daun, houm, end, itd, da biste se kretali po tekstu.
 Možete promjeniti tekst, ako kontrola podržava uređivanje.
 NVDA će vas obavještavati o kretanju po znakovima, riječima i redcima te o označavanju i odznačavanju teksta.
 
@@ -323,7 +323,7 @@ NVDA omogućuje korištenje sljedećih prečaca u svezi s kursorom sustava:
 || Naziv | Tipka za stolna računala | Tipka za prijenosna računala | Opis |
 | Izgovori sve | NVDA+strelicaDolje | NVDA+a | Čita od trenutačne pozicije kursora sustava, pomičući ga dok se kreće |
 | Čitaj trenutačni redak | NVDA+strelicaGore | NVDA+l | Čita trenutačni redak gdje je kursor sustava pozicioniran. Kad se pritisne dvaput, NVDA slovka taj redak. Kad se pritisne tri puta, NVDA slovka redak fonetski. |
-| Čitaj trenutačno označeni tekst | NVDA+Shift+strelicaGore | NVDA+shift+s | Čita bilo koji trenutačno označen tekst |
+| Čitaj trenutačno označeni tekst | NVDA+šift+strelicaGore | NVDA+šift+s | Čita bilo koji trenutačno označen tekst |
 | Sljedeća rečenica | alt+Strelicadolje | alt+StrelicaDolje | Premješta kursor na sljedeću rečenicu, a potom je izgovara. (Podržano u Microsoft Wordu i Outlooku) |
 | Prethodna rečenica | alt+StrelicaGore | alt+StrelicaGore | Premješta kursor na prethodnu rečenicu, a potom je izgovara. (Podržano u Microsoft Wordu i Outlooku) |
 
@@ -368,15 +368,15 @@ Da biste se kretali po objektima, koristite sljedeće prečace:
 
 %kc:beginInclude
 || Naziv | Tipka za stolna računala | Tipka za prijenosna računala | Dodir | Opis |
-| Izvijesti o trenutačnom objektu | NVDA+num5 | NVDA+shift+o | nema | Izvještava o trenutačnom navigacijskom objektu. Kad se dvaput pritisne, slovka objekt. Kad se triput pritisne, kopira ime i vrijednost tog objekta u međuspremnik. |
-| Premjesti se na sadržavajući objekt | NVDA+num8 | NVDA+shift+strelicagore | klizni gore (objektni modus) | Premješta se na objekt koji sadrži trenutačni navigacijski objekt |
-| Premjesti se na prethodni objekt | NVDA+num4 | NVDA+shift+strelicalijevo | klizni lijevo (objektni modus) | Premješta se na objekt ispred trenutačnog navigacijskog objekta |
-| Premjesti se na sljedeći objekt | NVDA+num6 | NVDA+shift+strelicadesno | klizni desno (objektni modus) | Premješta se na objekt iza trenutačnog navigacijskog objekta |
-| Premjesti se na sljedeći sadržavajući objekt | NVDA+num2 | NVDA+shift+strelicaDolje | klizni dolje (objektni modus) | Premješta se na prvi objekt sadržan u navigacijskom objektu |
-| Premjesti se na objekt fokusa | NVDA+numpadMinus | NVDA+backspace | nema | Premješta se na objekt koji je trenutačno u fokusu sustava te premješta kursor pregleda na poziciju kursora sustava, ako se prikazuje |
+| Izvijesti o trenutačnom objektu | NVDA+num5 | NVDA+šift+o | nema | Izvještava o trenutačnom navigacijskom objektu. Kad se dvaput pritisne, slovka objekt. Kad se triput pritisne, kopira ime i vrijednost tog objekta u međuspremnik. |
+| Premjesti se na sadržavajući objekt | NVDA+num8 | NVDA+šift+strelicaGore | klizni gore (objektni modus) | Premješta se na objekt koji sadrži trenutačni navigacijski objekt |
+| Premjesti se na prethodni objekt | NVDA+num4 | NVDA+šift+strelicaLijevo | klizni lijevo (objektni modus) | Premješta se na objekt ispred trenutačnog navigacijskog objekta |
+| Premjesti se na sljedeći objekt | NVDA+num6 | NVDA+šift+strelicaDesno | klizni desno (objektni modus) | Premješta se na objekt iza trenutačnog navigacijskog objekta |
+| Premjesti se na sljedeći sadržavajući objekt | NVDA+num2 | NVDA+šift+strelicaDolje | klizni dolje (objektni modus) | Premješta se na prvi objekt sadržan u navigacijskom objektu |
+| Premjesti se na objekt fokusa | NVDA+numMinus | NVDA+backspace | nema | Premješta se na objekt koji je trenutačno u fokusu sustava te premješta kursor pregleda na poziciju kursora sustava, ako se prikazuje |
 | Aktiviraj trenutačni navigacijski objekt | NVDA+numEnter | NVDA+enter | dvostruki dodir | Aktivira trenutačni navigacijski objekt (slično pritiskanjem miša ili razmaknice kad postoji fokus sustava) |
-| Premjesti fokus sustava ili kursor na trenutačnu poziciju | NVDA+shift+numMinus | NVDA+shift+backspace | nema | Kad se pritisne jedanput, premješta fokus sustava na trenutačni navigacijski objekt. Kad se pritisne dvaput, premješta kursor sustava na trenutačnu poziciju preglednog kursora |
-| Izvijesti o trenutačnom položaju preglednog kursora | NVDA+numDelete | NVDA+delete | nema | Izvještava o informacijama o položaju teksta ili objekta na preglednom kursoru. Na primjer, to može uključivati postotak po dokumentu, udaljenost od rubova stranice ili točnu poziciju na ekranu. Kad se pritisne dvaput, može pružati dodatne detalje. |
+| Premjesti fokus sustava ili kursor na trenutačnu poziciju | NVDA+šift+numMinus | NVDA+šift+backspace | nema | Kad se pritisne jedanput, premješta fokus sustava na trenutačni navigacijski objekt. Kad se pritisne dvaput, premješta kursor sustava na trenutačnu poziciju preglednog kursora |
+| Izvijesti o trenutačnom položaju preglednog kursora | NVDA+numDilit | NVDA+dilit | nema | Izvještava o informacijama o položaju teksta ili objekta na preglednom kursoru. Na primjer, to može uključivati postotak po dokumentu, udaljenost od rubova stranice ili točnu poziciju na ekranu. Kad se pritisne dvaput, može pružati dodatne detalje. |
 %kc:endInclude
 
 Napomena: za tipke na numeričkoj tipkovnici je potrebno isključiti numerički blok, kako bi ispravno radile.
@@ -396,23 +396,23 @@ Ako umjesto toga želite da brajični redak prati kretanje po objektima i pregle
 Sljedeći prečaci su dostupni za pregledavanje teksta:
 %kc:beginInclude
 || Naziv | Tipka za stolna računala | Tipka za prijenosna računala | Dodir | Opis |
-| Premjesti se na početak retka u pregledu | shift+num7 | NVDA+kontrol+home | nema | Pomiče pregledni kursor na najviši redak teksta |
+| Premjesti se na početak retka u pregledu | šift+num7 | NVDA+kontrol+houm | nema | Pomiče pregledni kursor na najviši redak teksta |
 | Premjesti se na prethodni redak u pregledu | num7 | NVDA+strelicaGore | klizni gore (tekstualni modus) | Pomiče pregledni kursor na prethodni redak teksta |
-| Izvijesti o trenutačnom retku u pregledu | num8 | NVDA+shift+. | nema | Čita trenutačni redak teksta gdje je pozicioniran pregledni kursor. Kad se pritisne dvaput, NVDA slovka trenutačni redak. Kad se pritisne triput, cijeli se redak slovka fonetski. |
+| Izvijesti o trenutačnom retku u pregledu | num8 | NVDA+šift+. | nema | Čita trenutačni redak teksta gdje je pozicioniran pregledni kursor. Kad se pritisne dvaput, NVDA slovka trenutačni redak. Kad se pritisne triput, cijeli se redak slovka fonetski. |
 | Premjesti se na idući redak u pregledu | num9 | NVDA+strelicaDolje | klizni dolje (tekstualni modus) | Pomiče pregledni kursor na idući redak teksta |
-| Premjesti redak na kraj preglednog kursora | shift+num9 | NVDA+kontrol+end | nema | Pomiče pregledni kursor na krajnji redak teksta |
+| Premjesti redak na kraj preglednog kursora | šift+num9 | NVDA+kontrol+end | nema | Pomiče pregledni kursor na krajnji redak teksta |
 | Premjesti se na prethodnu riječ u pregledu | num4 | NVDA+kontrol+strelicaLijevo | klizni lijevo s dva prsta (tekstualni modus) | Pomiće pregledni kursor na prethodnu riječ u tekstu |
 | Izgovori trenutačnu riječ pod preglednim kursorom | num5 | NVDA+kontrol+. | nema | Čita trenutačnu riječ u tekstu gdje je pozicioniran pregledni kursor. Kad se pritisne dvaput, slovka cijelu riječ. a Kad se pritisne tri put, slovka riječ fonetski. |
 | Premjesti se na iduću riječ u pregledu | num6 | NVDA+kontrol+strelicaDesno | klizanje s dva prsta (tekstualni modus) | Premjesti pregledni kursor na iduću riječ u tekstu |
-| Premjesti se na početak retka u pregledu | shift+num1 | NVDA+home | nema | Pomiče pregledni kursor na početak trenutačnog retka u tekstu |
+| Premjesti se na početak retka u pregledu | šift+num1 | NVDA+houm | nema | Pomiče pregledni kursor na početak trenutačnog retka u tekstu |
 | Premjesti se na prethodni znak u pregledu | num1 | NVDA+strelicaLijevo | klizni lijevo (tekstualni modus) | Pomiče kursor pregleda na prethodni znak na trenutačnom retku u tekstu |
 | Izvijesti o trenutačnom znaku pod preglednim kursorom | num2 | NVDA+. | nema | Izvještava o trenutačnom znaku u retku teksta gdje je pozicioniran pregledni kursor. Kad se pritisne dvaput, izvještava o opisu ili primjer tog znaka. Kad se pritisne triput, izgovara brojčanu vrijednost znaka u decimalnom i heksadecimalnom obliku. |
 | Premjesti se na sljedeći znak u pregledu | num3 | NVDA+strelicaDesno | klizni desno (tekstualni modus) | Premjesti kursor pregleda na idući znak na trenutačnom retku teksta |
-| Premjesti se na kraj retka u pregledu | shift+num3 | NVDA+end | nema | Pomiče pregledni kursor na kraj u trenutačnom retku teksta |
-| Izgovori sve pomoću pregleda | numPlus | NVDA+shift+a | klizni s tri prsta prema dolje (tekstualni modus) | Čita od trenutačne pozicije preglednog kursora, pomičući se s pomićanjem kursora |
+| Premjesti se na kraj retka u pregledu | šift+num3 | NVDA+end | nema | Pomiče pregledni kursor na kraj u trenutačnom retku teksta |
+| Izgovori sve pomoću pregleda | numPlus | NVDA+šift+a | klizni s tri prsta prema dolje (tekstualni modus) | Čita od trenutačne pozicije preglednog kursora, pomičući se s pomićanjem kursora |
 | Odaberi i potom kopiraj od preglednog kursora | insert+f9 | insert+f9 | nema | Započinje proces biranja, a zatim kopiranja od trenutačne pozicije preglednog kursora. Sama radnja se ne izvodi sve dok ne kažete NVDA-u gdje se nalazi kraj teksta |
 | Odaberi i potom kopiraj do preglednog kursora | insert+f10 | insert+f10 | nema | Prilikom prvog pritiska, tekst je označen od pozicije od koje je označen početni marker uključujući trenutačnu poziciju preglednog kursora. Poslije drugog pritiska istog prečaca, tekst će biti kopiran u Windowsov međuspremnik |
-| Premjesti se na označeni početak kopiranja na pregled | NVDA+shift+f9 | NVDA+shift+f9 | nema | Pomiče pregledni kursor na poziciju koja je određena kao početak markera za kopiranje |
+| Premjesti se na označeni početak kopiranja na pregled | NVDA+šift+f9 | NVDA+šift+f9 | nema | Pomiče pregledni kursor na poziciju koja je određena kao početak markera za kopiranje |
 | Izvijesti o oblikovanju teksta | NVDA+f | NVDA+f | nema | Izvještava o oblikovanje teksta gdje se pregledni kursor nalazi. Kad se pritisne dvaput, informacija se prikazuje u modusu čitanja. |
 | Izvijesti o trenutačnoj zamjeni simbola | nema | nema | nema | Izgovara simbol na kojem se nalazi pregledni kursor. Kad se pritisne dvaput, pokazuje simbol i tekst koji ga opisuje u modusu čitanja. |
 %kc:endInclude
@@ -432,8 +432,8 @@ Modusi pregleda zamijenjuju stariji koncept pregleda ekrana koji se koristio u s
 Sljedeći prečaci se koriste za prebacivanje između modusa pregleda:
 %kc:beginInclude
 || Naziv | Tipka za stolna računala | Tipka za prijenosna računala | Dodir | Opis |
-| Prebaci na sljedeći modus pregleda | NVDA+num7 | NVDA+pageUp | klizanje s dva prsta prema gore | prebacuje na sljedeći dostupni modus pregleda |
-| Prebaci na prethodni modus pregleda | NVDA+num1 | NVDA+pageDown | klizanje s dva prsta prema dolje | prebacuje na prethodni dostupni modus pregleda |
+| Prebaci na sljedeći modus pregleda | NVDA+num7 | NVDA+pejdž ap | klizanje s dva prsta prema gore | prebacuje na sljedeći dostupni modus pregleda |
+| Prebaci na prethodni modus pregleda | NVDA+num1 | NVDA+pejdž daun | klizanje s dva prsta prema dolje | prebacuje na prethodni dostupni modus pregleda |
 %kc:endInclude
 
 +++ Pregled objekta +++[ObjectReview]
@@ -476,12 +476,12 @@ Ako želite koristiti te značajke, možete ih konfigurirati u [postavkama Miša
 Iako bi se za kretanje pomoću miša trebao koristiti miš ili trackpad, NVDA ima nekoliko prečaca povezanih uz miša:
 %kc:beginInclude
 || Naziv | Tipka za stolna računala | Tipka za prijenosna računala | Opis |
-| Lijevi klik miša | numpadPodijeljeno | NVDA+[ | Jednom pritišće lijevu tipku miša. Uobičajeni dvostruki klik se izvodi brzim dvostrukim pritiskom ove tipke |
-| Lijeva zaključana tipka miša | shift+numpadPodijeljeno | NVDA+kontrol+[ | Zaključava lijevu tipku miša u pritisnutom stanju. Pritisnite ponovo da bi ste ju otpustili. Da biste povukli miša, pritisnite ovu tipku kako biste zaključali lijevu tipku miša u pritisnutom stanju i pomičite miša fizički ili koristite jednan od prečaca za micanje miša |
-| Desni klik miša | numpadZvjezdica | NVDA+] | Jednom pritišće desnu tipku miša. |
-| Zaključana desna tipka miša | shift+numpadZvjezdica | NVDA+kontrol+] | Zaključava desnu tipku miša u pritisnutom stanju. Pritisnite ponovo da biste je otpustili. Da biste povukli miša, pritisnite ovu tipku kako biste zaključali desnu tipku miša u pritisnutom stanju i pomičite miša fizički ili koristite jednan od prečaca za micanje miša |
-| Premjesti miša na trenutačni navigacijski objekt | NVDA+numpadPodijeljeno | NVDA+shift+m | Premješta miša i pregledni kursor na mjesto trenutačnog navigacijskog objekta |
-| Premjesti se na objekta ispod miša | NVDA+numpadZvjezdica | NVDA+shift+n | Postavlja navigacijski objekt na objekt koji se nalazi na poziciji miša |
+| Lijevi klik miša | numDijeljenje | NVDA+[ | Jednom pritišće lijevu tipku miša. Uobičajeni dvostruki klik se izvodi brzim dvostrukim pritiskom ove tipke |
+| Lijeva zaključana tipka miša | šift+numDijeljenje | NVDA+kontrol+[ | Zaključava lijevu tipku miša u pritisnutom stanju. Pritisnite ponovo da bi ste ju otpustili. Da biste povukli miša, pritisnite ovu tipku kako biste zaključali lijevu tipku miša u pritisnutom stanju i pomičite miša fizički ili koristite jednan od prečaca za micanje miša |
+| Desni klik miša | numMnoženje | NVDA+] | Jednom pritišće desnu tipku miša. |
+| Zaključana desna tipka miša | šift+numMnoženje | NVDA+kontrol+] | Zaključava desnu tipku miša u pritisnutom stanju. Pritisnite ponovo da biste je otpustili. Da biste povukli miša, pritisnite ovu tipku kako biste zaključali desnu tipku miša u pritisnutom stanju i pomičite miša fizički ili koristite jednan od prečaca za micanje miša |
+| Premjesti miša na trenutačni navigacijski objekt | NVDA+numDijeljenje | NVDA+šift+m | Premješta miša i pregledni kursor na mjesto trenutačnog navigacijskog objekta |
+| Premjesti se na objekta ispod miša | NVDA+numMnoženje | NVDA+šift+n | Postavlja navigacijski objekt na objekt koji se nalazi na poziciji miša |
 %kc:endInclude
 
 + Modus čitanja +[BrowseMode]
@@ -520,9 +520,9 @@ Dodatno, ručno možete uključiti modus fokusa, nakon čega će ostati aktivan 
 | Mijenjaj između modusa čitanja i modusa fokusa | NVDA+razmaknica | Prebacuje između modusa fokusa i modusa čitanja |
 | Izađi iz modusa fokusa | escape | Prebacuje natrag na modus čitanja, ako je prije toga modus fokusa prebačen na automatski |
 | Osvježi dokument u modusu čitanja | NVDA+f5 | Osvježava trenutačni sadržaj dokumenta (korisno kad izgleda da neki dio sadržaja nedostaje iz dokumenta Nije dostupno u Microsoft Wordu i Outlooku.) |
-| Traži | NVDA+ctrl+f | Otvara dijaloški okvir pretrage, u kojem možete upisati tekst koji tražite u dokumentu. Pogledajte [Traženje teksta #SearchingForText] za daljnje informacije. |
+| Traži | NVDA+kontrol+f | Otvara dijaloški okvir pretrage, u kojem možete upisati tekst koji tražite u dokumentu. Pogledajte [Traženje teksta #SearchingForText] za daljnje informacije. |
 | Traži sljedeće | NVDA+f3 | Traži sljedeće pojavljivanje teksta u dokumentu kojeg ste prethodno tražili |
-| Traži prethodno | NVDA+shift+f3 | Traži prethodno pojavljivanje teksta u dokumentu kojeg ste prethodno tražili |
+| Traži prethodno | NVDA+šift+f3 | Traži prethodno pojavljivanje teksta u dokumentu kojeg ste prethodno tražili |
 | Otvori dugi opis | NVDA+d | Otvara novi prozor koji sadrži dugi opis za element na kojem se nalazite ako postoji. | 
 %kc:endInclude
 
@@ -531,7 +531,7 @@ Kad se nalazite u modusu čitanja, za brže kretanje, NVDA također pruža jedno
 Imajte na umu da neki prečaci nisu dostupne u svim vrstama dokumenata.
 
 %kc:beginInclude
-Sljedeće tipke služe za premještanje na idući dostupni element, dodavanjem shifta se premještate na prethodni element:
+Sljedeće tipke služe za premještanje na idući dostupni element, dodavanjem šifta se premještate na prethodni element:
 - h: naslov
 - l: popis
 - i: stavka popisa
@@ -558,14 +558,14 @@ Sljedeće tipke služe za premještanje na idući dostupni element, dodavanjem s
 -
 Da biste se premjestili na početak ili kraj sadržaja elementa kao što su popisi ili tablice:
 || Naziv | Tipka | Opis |
-| Premjesti se na početak sadržaja | shift+zarez | Premješta se na početak sadržaja (popisa, tablice, itd.) gdje se nalazi kursor |
+| Premjesti se na početak sadržaja | šift+zarez | Premješta se na početak sadržaja (popisa, tablice, itd.) gdje se nalazi kursor |
 | Premjesti se na kraj sadržaja | zarez | Premješta se na kraj sadržaja (popisa, tablice, itd.) gdje se nalazi kursor |
 %kc:endInclude
 
 Neke web aplikacije poput Gmaila, Twittera i Facebooka koriste jednoslovne tipkovničke prečace.
 Ako ih želite koristiti istovremeno s kursorskim tipkama kako biste mogli nesmetano čitati sadržaj web stranice, NVDA prečace za brzo kretanje po dokumentu možete privremeno deaktivirati.
 %kc:beginInclude
-Da biste isključili ili uključili brzo kretanje za trenutačni dokument, pritisnite tipke NVDA+shift+razmaknica.
+Da biste isključili ili uključili brzo kretanje za trenutačni dokument, pritisnite tipke NVDA+šift+razmaknica.
 %kc:endInclude
 
 ++ Popis elemenata ++[ElementsList]
@@ -587,15 +587,15 @@ Na primjer, kad je potvrdni okvir "Razlikovanje velikih i malih slova" označen,
 Za traženje teksta koristite sljedeće prečace:
 %kc:beginInclude
 || Naziv | Tipka | Opis |
-| Traži tekst | NVDA+ctrl+f | Otvara dijaloški okvir pretrage |
+| Traži tekst | NVDA+kontrol+f | Otvara dijaloški okvir pretrage |
 | Traži sljedeće | NVDA+f3 | Traži sljedeće pojavljivanje trenutačno traženog teksta |
-| Traži prethodno | NVDA+shift+f3 | Traži prethodno pojavljivanje trenutačno traženog teksta |
+| Traži prethodno | NVDA+šift+f3 | Traži prethodno pojavljivanje trenutačno traženog teksta |
 %kc:endInclude
 
 ++ Ugrađeni objekti ++[ImbeddedObjects]
 Web stranice mogu uključivati obogaćeni sadržaj koristeći tehnologije kao što su Adobe Flash, Oracle Java, i HTML5, kao i aplikacije i dijaloške okvire.
 NVDA će izgovoriti "ugrađeni objekt", "aplikacija" ili "dijaloški okvir" Gdje su takvi objekti otkriveni.
-Možete se brzo kretati po njima koristeći o i shift+o prečace za brzo kretanje po ugrađenim objektima.
+Možete se brzo kretati po njima koristeći o i šift+o prečace za brzo kretanje po ugrađenim objektima.
 Kako biste ušli u interakciju s tim objektima, pritisnite tipku enter kad se nalazite na njima.
 Ako je pristupačan, možete u njemu pritiskati tabulator i koristiti ga kao u svim drugim aplikacijama.
 Postoji prečac za vraćanje na izvornu stranicu koja sadrži taj ugrađeni objekt:
@@ -824,8 +824,8 @@ Nakon toga, nvda treba znati koji stupci sadržavaju zaglavlja za tu tablicu.
 Poslije pomicanja na čeliju u stupcu ili retku koja sadrži zaglavlja, koristite sljedeće naredbe:
 %kc:beginInclude
 || Ime | Tipka | opis |
-| postavi zaglavlja stupaca | insert+shift+c | pritišćući ovu kombinaciju nvda zna da je ovo prvo zaglavlje  u redku koje sadržava zaglavlje stupaca, koji trebaju biti automatski izgovoreni kad se krećete po stupcima ispod tog stupca. kad se pritisne dvaput briše postavku. | 
-| postavi zaglavlja redaka | insert+shift+r | kad se pritisne nvda zna da je to prvo zaglavlje ćelije u stupcu koje sadrži zaglavlje redaka, koji će biti automatski izgovoren šećući se po stupcima između tih stupaca. Kad se pritisne dvaput, izbrisat će se postavka. | 
+| postavi zaglavlja stupaca | insert+šift+c | pritišćući ovu kombinaciju nvda zna da je ovo prvo zaglavlje  u redku koje sadržava zaglavlje stupaca, koji trebaju biti automatski izgovoreni kad se krećete po stupcima ispod tog stupca. kad se pritisne dvaput briše postavku. | 
+| postavi zaglavlja redaka | insert+šift+r | kad se pritisne nvda zna da je to prvo zaglavlje ćelije u stupcu koje sadrži zaglavlje redaka, koji će biti automatski izgovoren šećući se po stupcima između tih stupaca. Kad se pritisne dvaput, izbrisat će se postavka. | 
 %kc:endInclude
 Ove će postavke biti spremljene kao knjižne oznake, kompatibilne s drugim čitačima ekrana poput Jawsa. 
 To znači ako drugi korisnik otvori isti dokument kasnije, imat će postavljena zaglavlja redaka i stupaca.
@@ -858,8 +858,8 @@ Nvda treba znati gdje se nalaze zaglavlja.
 poslije premještanja na odgovarajuću ćeliju ili redak koji sadrži zaglavlja, koristite sljedeće prečace:
 %kc:beginInclude
 || Naziv | Tipka | Opis |
-| Postavi zaglavlja stupaca | NVDA+shift+c | Kad se pritisne jednom, NVDA zna da je to prva ćelija zaglavlja u retku koja sadrži zaglavlje stupaca, koja treba automatski najaviti kad se premještate po stupcima ispod ovog retka. Kad se pritisne dvaput, postavka se briše. | 
-| Postavi zaglavlja redaka | NVDA+shift+r | Kad se pritisne jednom, NVDA zna da je to prva ćelija zaglavlja u stupcu koja sadrži zaglavlja redaka, koja treba automatski najaviti kad se premještate po redcima nakon ovog stupca. Kad se pritisne dvaput, postavka se briše. | 
+| Postavi zaglavlja stupaca | NVDA+šift+c | Kad se pritisne jednom, NVDA zna da je to prva ćelija zaglavlja u retku koja sadrži zaglavlje stupaca, koja treba automatski najaviti kad se premještate po stupcima ispod ovog retka. Kad se pritisne dvaput, postavka se briše. | 
+| Postavi zaglavlja redaka | NVDA+šift+r | Kad se pritisne jednom, NVDA zna da je to prva ćelija zaglavlja u stupcu koja sadrži zaglavlja redaka, koja treba automatski najaviti kad se premještate po redcima nakon ovog stupca. Kad se pritisne dvaput, postavka se briše. | 
 %kc:endInclude
 Ove će se postavke spremiti u radnu knjigu kao definirani imenovani raspon, kompatibilan s drugim čitačima ekrana poput JAWS.
 To znači, da će korisnici drugih čitača ekrana, koji kasnije otvore tu radnu knjigu, imati automatski postavljena zaglavlja stupaca i redaka. 
@@ -900,22 +900,22 @@ Kako biste dozvolili premještanje po zaključanim ćelijama, prebacite se na mo
 
 +++ Polja obrazaca +++[ExcelFormFields]
 Excelovi radni listovi mogu sadržavati obrasce.
-Možete im pristupiti koristeći popis elemenata ili prečace za brzo kretanje po obrascima f i shift+f.
+Možete im pristupiti koristeći popis elemenata ili prečace za brzo kretanje po obrascima f i šift+f.
 Jednom kad se premjestite na obrazac u modusu čitanja, možete pritisnuti enter ili razmaknicu kako biste aktivirali ili se prebacili na modus fokusa, kako biste mogli manipulirati s time, ovisno o kontroli.
 Za više informacija o modusu čitanja i brzom kretanju, pogledajte poglavlje [Modus čitanja #BrowseMode].
 
 ++ Microsoft PowerPoint ++[MicrosoftPowerPoint]
 %kc:beginInclude
 || Naziv | Tipka | Opis |
-| Uključi čitanje govornikovih bilješki | kontrol+shift+s | Kad se nalazite u trenutačnom prikazu slajda, ova naredba prebacuje između govornikovih bilješki za slajd i sadržaja slajda. Ovo utječe samo na ono što NVDA čita, ne i na ono što se prikazuje na ekranu. | 
+| Uključi čitanje govornikovih bilješki | kontrol+šift+s | Kad se nalazite u trenutačnom prikazu slajda, ova naredba prebacuje između govornikovih bilješki za slajd i sadržaja slajda. Ovo utječe samo na ono što NVDA čita, ne i na ono što se prikazuje na ekranu. | 
 %kc:endInclude
 
 ++ Foobar2000 ++[Foobar2000]
 %kc:beginInclude
 || Naziv | Tipka | Opis |
-| Izvijesti o preostalom vremenu | kontrol+shift+r | Izvještava o preostalom vremenu trenutačno svirane pjesme, ako postoji |
-| Izvijesti o proteklom vremenu | ctrl+shift+e | Izvještava o proteklom vremenu trenutačno svirane pjesme, ako postoji |
-| Izvijesti o trajanju zvučne datoteke | ctrl+shift+t | Izvještava o dužini trenutačno svirane pjesme, ako postoji |
+| Izvijesti o preostalom vremenu | kontrol+šift+r | Izvještava o preostalom vremenu trenutačno svirane pjesme, ako postoji |
+| Izvijesti o proteklom vremenu | kontrol+šift+e | Izvještava o proteklom vremenu trenutačno svirane pjesme, ako postoji |
+| Izvijesti o trajanju zvučne datoteke | kontrol+šift+t | Izvještava o dužini trenutačno svirane pjesme, ako postoji |
 %kc:endInclude
 
 Napomena: ovi prečaci rade samo s Foobarovim standardnim stringovima za oblikovanje trake stanja.
@@ -929,8 +929,8 @@ Napomena: ovi prečaci rade samo s Foobarovim standardnim stringovima za oblikov
 ++ Poedit ++[Poedit]
 %kc:beginInclude
 || Naziv | Tipka | Opis |
-| Izvijesti o komentarima | kontrol+shift+c | Izvještava o komentarima u prozoru za komentare. |
-| Izvijesti o napomenama za prevoditelje | kontrol+shift+a | Izvještava o napomenama za prevoditelje. |
+| Izvijesti o komentarima | kontrol+šift+c | Izvještava o komentarima u prozoru za komentare. |
+| Izvijesti o napomenama za prevoditelje | kontrol+šift+a | Izvještava o napomenama za prevoditelje. |
 %kc:endInclude
 
 ++ Skype ++[Skype]
@@ -948,7 +948,7 @@ Modus pregleda se upotrebljava za čitanje knjiga.
 Automatski je aktiviran kad otvorite knjigu ili kad premjestite fokus na područje knjige.
 Stranice će se okretati automatski po potrebi kad pomičete kursor ili prilikom korištenja prečaca "čitaj sve".
 %kc:beginInclude
-možete se ručno prebacivati na sljedeću stranicu uz pomoć tipke pageDown i prebacivati na prethodnu stranicu uz pomoć tipke pageUp.
+možete se ručno prebacivati na sljedeću stranicu uz pomoć tipke pejdž daun i prebacivati na prethodnu stranicu uz pomoć tipke pejdž ap.
 %kc:endInclude
 
 Brzo kretanje je podržano za poveznice i grafike, ali samo za trenutačnu stranicu.
@@ -959,9 +959,9 @@ Za više informacija, pogledajte poglavlje [čitanje matematičkog sadržaja #Re
 
 +++ Odabrani tekst +++[KindleTextSelection]
 Kindle omogućuje izvođenje različitih funkcija na odabranom tekstu, uključujući izvlačenje objašnjenja iz rječnika, dodavanje bilježaka i oznaka, kopiranje teksta u međuspremnik i pretraživanje interneta.
-Kako biste ovo učinili, najprije odaberite tekst na uobičajeni način u modusu čitanja; npr. koristeći shift i kursorske tipke.
+Kako biste ovo učinili, najprije odaberite tekst na uobičajeni način u modusu čitanja; npr. koristeći šift i kursorske tipke.
 %kc:beginInclude
-Kad ste odabrali tekst, pritisnite aplikacijsku tipku ili shift+f10 kako biste prikazali dostupne opcije za rad s označenim tekstom.
+Kad ste odabrali tekst, pritisnite aplikacijsku tipku ili šift+f10 kako biste prikazali dostupne opcije za rad s označenim tekstom.
 %kc:endInclude
 Ako to uradite bez odabranog teksta, pokazat će se opcije za riječ pri kursoru.
 
@@ -996,10 +996,10 @@ Stoga je potrebno klizati po prozor naredbenog retka, kako bi se pročitao ranij
 %kc:beginInclude
 Sljedeći ugrađeni tipkovnički prečaci naredbenog retka mogu biti korisni za [Pregledavanje teksta #ReviewingText] pomoću NVDA čitača:
 || Naziv | Tipka | Opis |
-| Kliži gore | ctrl+strelicaGore | Kliže po prozoru naredbenog retka gore, tako da se raniji tekst može čitati. |
-| Kliži dolje | ctrl+StrelicaDolje | Kliže po prozoru naredbenog retka dolje, tako da se kasniji tekst može čitati. |
-| Kliži na početak | ctrl+home | Kliže po prozoru naredbenog retka na početak spremnika. |
-| Kliži na kraj | ctrl+end | Kliže po prozoru naredbenog retka na kraj spremnika. |
+| Kliži gore | kontrol+strelicaGore | Kliže po prozoru naredbenog retka gore, tako da se raniji tekst može čitati. |
+| Kliži dolje | kontrol+StrelicaDolje | Kliže po prozoru naredbenog retka dolje, tako da se kasniji tekst može čitati. |
+| Kliži na početak | kontrol+houm | Kliže po prozoru naredbenog retka na početak spremnika. |
+| Kliži na kraj | kontrol+end | Kliže po prozoru naredbenog retka na kraj spremnika. |
 %kc:endInclude
 
 + Podešavanje NVDA čitača +[ConfiguringNVDA]
@@ -1061,7 +1061,7 @@ Dostupne razine zapisivanja su:
  - Ako se bojite za svoju privatnost, ne postavljajte ovu razinu zapisnika.
 - Debug: Uz informacije, upozorenja te poruke o ulazima/izlazima, zapisivat će se dodatne poruke koje služe za ispravljanje grešaka.
  - Kao u slučaju ulaz/izlaz, ako se bojite za svoju privatnost, ne postavljajte ovu razinu zapisnika.
--
+
 
 ==== Automatski pokreni NVDA nakon što se prijavim u Windows sustav ====[GeneralSettingsStartAfterLogOn]
 Ako je ova opcija aktivirana, NVDA će se automatski pokrenuti nakon što se prijavite u Windows.
@@ -1071,7 +1071,7 @@ Ova je opcija dostupna samo u instaliranim kopijama NVDA čitača.
 Aktiviranjem ove opcije, NVDA će se automatski pokrenuti na ekranu za prijavu tijekom pokretanja Windows sustava, ako se prijavljujete u Windows upisujući svoje korisničko ime i lozinku.
 Ova je opcija dostupna samo u instaliranim kopijama NVDA čitača.
 
-==== Koristi trenutačno spremljene postavke za ekran prijave te ostale sigurne ekrane (zahtijeva administratorska prava) ====GeneralSettingsCopySettings]
+==== Koristi trenutačno spremljene postavke za ekran prijave te ostale sigurne ekrane (zahtijeva administratorska prava) ====[GeneralSettingsCopySettings]
 Kad je ovaj gumb pritisnut, NVDA postavke će biti kopirane u NVDA mapu za konfiguraciju sustava, tako da će se te postavke koristiti na Windowsovom ekranu za prijavu, kontroli korisničkog računa (UAC) i na drugim sigurnim ekranima Windows sustava.
 Da biste se uvjerili da su sve vaše postavke kopirane, prvo spremite vašu konfiguraciju pomoću prečaca kontrol+NVDA+c ili pomoću opcije spremi konfiguraciju u NVDA izborniku.
 Ova je opcija dostupna samo u instaliranim kopijama NVDA čitača.
@@ -1213,7 +1213,7 @@ Ovaj odabirni okvir omogućuje odabir zvučnog uređaja kojeg će govorna jedini
 
 %kc:setting
 ==== Modus stišavanja zvuka ====[SelectSynthesizerDuckingMode]
-Tipkovnički prečac: NVDA+shift+d
+Tipkovnički prečac: NVDA+šift+d
 
 U sustavu Windows 8 ili novijem, ova opcija omogućuje odabir hoće li NVDA stišati glasnoću drugih aplikacija dok NVDA govori ili će to raditi cijelo vrijeme dok je NVDA pokrenut.
 - Bez stišavanja: NVDA nikad neće smanjiti glasnoću drugih zvukova. 
@@ -1228,10 +1228,10 @@ Na prijenosnim i privremenim kopijama NVDA čitača, podrška za stišavanje zvu
 Ako želite promijeniti postavke odasvud bez ulaženja u kategoriju govor u NVDA postavkama, postoji nekoliko NVDA tipkovničkih prečaca koji to omogućuju:
 %kc:beginInclude
 || Naziv | Tipka za stolna računala | Tipka za prijenosna računala | Opis |
-| Premjesti se na sljedeću postavku govorne jedinice | NVDA+kontrol+desnaStrelica | NVDA+shift+kontrol+desnaStrelica | Premješta se na sljedeću postavku govora poslije trenutačne, prebacujući se natrag na prvu postavku poslije posljednje |
-| Premjesti se na prethodnu postavku govorne jedinice | NVDA+kontrol+strelicaLijevo | NVDA+shift+kontrol+strelicaLijevo | Premješta se na sljedeću dostupnu postavku govora prije trenutačne, prebacujući se na posljednju postavku prije prve |
-| Povećaj vrijednost postavke govorne jedinice | NVDA+kontrol+strelicaGore | NVDA+shift+kontrol+strelicaGore | Povećava vrijednost postavke govora na kojoj se nalazite. Npr. povećava brzinu, izabire sljedeći glas, povećava glasnoću |
-| Smanji vrijednost postavke govorne jedinice | NVDA+kontrol+strelicaDolje | NVDA+shift+kontrol+strelicaDolje | Smanjuje vrijednost trenutačne postavke glasa na kojoj se nalazite. Npr. smanjuje brzinu, odabire prethodni glas, smanjuje glasnoću |
+| Premjesti se na sljedeću postavku govorne jedinice | NVDA+kontrol+desnaStrelica | NVDA+šift+kontrol+desnaStrelica | Premješta se na sljedeću postavku govora poslije trenutačne, prebacujući se natrag na prvu postavku poslije posljednje |
+| Premjesti se na prethodnu postavku govorne jedinice | NVDA+kontrol+strelicaLijevo | NVDA+šift+kontrol+strelicaLijevo | Premješta se na sljedeću dostupnu postavku govora prije trenutačne, prebacujući se na posljednju postavku prije prve |
+| Povećaj vrijednost postavke govorne jedinice | NVDA+kontrol+strelicaGore | NVDA+šift+kontrol+strelicaGore | Povećava vrijednost postavke govora na kojoj se nalazite. Npr. povećava brzinu, izabire sljedeći glas, povećava glasnoću |
+| Smanji vrijednost postavke govorne jedinice | NVDA+kontrol+strelicaDolje | NVDA+šift+kontrol+strelicaDolje | Smanjuje vrijednost trenutačne postavke glasa na kojoj se nalazite. Npr. smanjuje brzinu, odabire prethodni glas, smanjuje glasnoću |
 %kc:endInclude
 
 +++ Brajica +++[BrailleSettings]
@@ -1414,7 +1414,7 @@ Ova opcija omogućuje odabir rasporeda tipkovnice kojeg će NVDA koristiti. Tren
 Ovi potvrdni okviri u ovom popisu određuju tipke koje će se koristiti kao [NVDA modifikacijska tipka #TheNVDAModifierKey]. Dostupne su sljedeće tipke:
 - Tipka za velika slova (caps lock)
 - Numerička tipka insert
-- Proširena tipka insert (obično se nalazi iznad strelica, blizu tipki home i end)
+- Proširena tipka insert (obično se nalazi iznad strelica, blizu tipki houm i end)
 -
 
 Ako nijedna tipka nije odabrana kao NVDA modifikacijska tipka, nećete moći pristupiti većini NVDA funkcijama.
@@ -1443,8 +1443,8 @@ Ako je uključena, ova će opcija prekinuti govor svaki put kad se pritisne tipk
 Ako je ova opcija uključena, određeni prečaci za kretanje (kao što je brzo kretanje u modusu čitanja ili premještanje po redcima ili odlomcima) ne zaustavljaju naredbu "Izgovori sve", već se naredba "Izgovori sve" prebacuje na novu poziciju i nastavlja se sa čitanjem.
 
 ==== Zvučni signal za tipkanje malih slova, kad je caps lock uključen ====[KeyboardSettingsBeepLowercase]
-Kad je ova opcija aktivirana, čut će se zvučni signal upozorenja kad se utipka znak koristeći pri tome tipku shift, dok je caps lock uključen.
-Pisanje malih slova s pritisnutim shiftom je općenito nenamjerna greška u neznanju da je caps lock uključen.
+Kad je ova opcija aktivirana, čut će se zvučni signal upozorenja kad se utipka znak koristeći pri tome tipku šift, dok je caps lock uključen.
+Pisanje malih slova s pritisnutom tipkom šift je općenito nenamjerna greška u neznanju da je caps lock uključen.
 Stoga može biti korisno o tome biti obaviješten zvučnim signalom.
 
 %kc:setting
@@ -1544,6 +1544,7 @@ Kada je ovaj potvrdni okvir odabran, NVDA će čitati balončiće pomoći i obav
 - Balončići pomoći su poput alatnih savjetnika, ali su uobičajeno veći, i povezani su sa događajima sustava poput isključenja mrežng kabla, ili obavještenju o sigurnosnim prijetnjama u Windowsima.
 - Obavijesti centra obavijesti su uvedene u Windowsima 10 i prikazuju se u akcijskom centru u traci obavijesti, informirajući o sljedećim događajima (npr. preuzeta nadogradnja, prispjeće e-maila u vašoj ulaznoj pošti, itd.).
 
+
 ==== Izvijesti o tipkovnim prečacima za objekte ====[ObjectPresentationShortcutKeys]
 Kad je ovaj potvrdni okvir označen, NVDA izvještava i o prečacu koji je pridružen određenom objektu ili kontroli kad se o jednom od njih izvještava.
 Na primjer, u traci izbornika, stavka Datoteka može imati prečac alt+f.
@@ -1627,7 +1628,7 @@ Ova kategorija sadrži sljedeće opcije:
 Ovo polje služi za postavljanje dužine retka u modusu čitanja (koristeći znakove kao mjernu jedinicu).
 
 ==== Broj redaka po stranici ====[BrowseModeSettingsPageLines]
-Ovo polje postavlja količinu redaka po kojima se možete kretati kad u modusu čitanja pritišćete page up i page down.
+Ovo polje postavlja količinu redaka po kojima se možete kretati kad u modusu čitanja pritišćete pejdž ap i pejdž daun.
 
 %kc:setting
 ==== Koristi raspored ekrana ====[BrowseModeSettingsScreenLayout]
@@ -1661,7 +1662,7 @@ Pogledajte opcije u kategoriji [Oblikovanje dokumenta #DocumentFormattingSetting
 
 ==== Automatski modus fokusa pri promjeni fokusa ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
 Ova opcija omogućuje da modus fokusa bude pozvan kad se fokus promjeni.
-Na primjer, kad se nalazite na web stranici, ako pritisnete tab i naiđete na obrazac, ako je ova opcija odabrana, modus fokusa će se automatski pokrenuti.
+Na primjer, kad se nalazite na web stranici, ako pritisnete tabulator i naiđete na obrazac, ako je ova opcija odabrana, modus fokusa će se automatski pokrenuti.
 
 ==== Automatski modus fokusa pri pomicanju kursora sustava ====[BrowseModeSettingsAutoPassThroughOnCaretMove]
 Ova opcija, kad je odabrana, omogućuje  NVDA ulaz i izlaz iz modusa fokusa kad se koriste kursorske tipke.
@@ -2198,42 +2199,42 @@ Slijede prečaci za ovaj brajični redak s NVDA čitačem.
 Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 %kc:beginInclude
 || Naziv | Tipka  |
-| Kliži po brajičnom retku natrag | PrviUsmjerivač1 (prva ćelija na brajičnom retku) |
-| Kliži po brajičnom retku naprijed | toprouting20/40/80 (zadnja ćelija na brajičnom retku) |
+| Kliži po brajičnom retku natrag | topRouting1 (prva ćelija na brajičnom retku) |
+| Kliži po brajičnom retku naprijed | topRouting20/40/80 (zadnja ćelija na brajičnom retku) |
 | Kliži po brajičnom retku natrag | lijeviAdvanceBar |
 | Kliži po brajičnom retku naprijed | desniAdvanceBar |
 | Mijenjaj povezanost brajičnog retka | lijeviGDFGumb+desniGDFGumb |
-| Uključi ili isključi radnju lijevog wiz kotačića | lijeviWizPritisakWheel |
-| Premjesti se natrag koristeći lijevi wiz kotačić | LijeviWizWheelGore |
-| Premjesti se naprijed koristeći lijevi wiz kotačić | lijeviWizWheelDolje |
-| Uključi ili isključi radnju desnog wiz kotačića | desniWizPritisakWheel |
-| Premjesti se natrag koristeći radnju desnog wiz kotačića | DesniWizWheelGore |
-| Premjesti se naprijed koristeći radnju desnog wiz kotačića | desniWizWheelDolje |
+| Uključi ili isključi radnju lijevog kotačića | lijeviKotačićPritisni |
+| Premjesti se natrag koristeći lijevi kotačić | lijeviKotačićGore |
+| Premjesti se naprijed koristeći lijevi kotačić | lijeviKotačićDolje |
+| Uključi ili isključi radnju desnog kotačića | desniKotačićPritisni |
+| Premjesti se natrag koristeći desni kotačić | desniKotačićGore |
+| Premjesti se naprijed koristeći desni kotačić | desniKotačićDolje |
 | Premjesti se na brajičnu ćeliju | routing |
-| Tipka shift+tab | BrajičnaRazmaknica+točkica1+točkica2 |
-| Tipka tab | BrajičnaRazmaknica+točkica4+točkica5 |
-| Tipka strelica gore | BrajičnaRazmaknica+točkica1 |
-| Tipka strelica dolje | Brajičnirazmak+točkica4 |
+| Tipka šift+tabulator | brajičnaRazmaknica+točkica1+točkica2 |
+| Tipka tabulator | brajičnaRazmaknica+točkica4+točkica5 |
+| Tipka strelica gore | brajičnaRazmaknica+točkica1 |
+| Tipka strelica dolje | brajičnaRazmaknica+točkica4 |
 | Tipka kontrol+strelica lijevo | brajičnaRazmaknica+točkica2 |
 | Tipka kontrol+strelica desno | brajičnaRazmaknica+točkica5 |
-| Tipka strelica lijevo | Brajičnarazmaknica+točkica3 |
+| Tipka strelica lijevo | brajičnaRazmaknica+točkica3 |
 | Tipka strelica desno | brajičnaRazmaknica+točkica6 |
-| Tipka home | brajičnaRazmaknica+točkica1+točkica3 |
+| Tipka houm | brajičnaRazmaknica+točkica1+točkica3 |
 | Tipka end | brajičnaRazmaknica+točkica4+točkica6 |
-| Tipka kontrol+home | brajičnaRazmaknica+točkica1+točkica2+točkica3 |
-| Tipka kontrol+end | BrajičnaRazmaknica+točkica4+točkica5+točkica6 |
+| Tipka kontrol+houm | brajičnaRazmaknica+točkica1+točkica2+točkica3 |
+| Tipka kontrol+end | brajičnaRazmaknica+točkica4+točkica5+točkica6 |
 | Tipka alt | brajičnaRazmaknica+točkica1+točkica3+točkica4 |
-| Tipka alt+tab | brajičnaRazmaknica+točkica2+točkica3+točkica4+točkica5 |
-| Tipka alt+shift+tab | Razmaknica+točkica1+točkica2+dočkica5+točkica6 |
-| Tipka windows+tab | razmaknica+točkica2+točkica3+točkica4 |
+| Tipka alt+tabulator | brajičnaRazmaknica+točkica2+točkica3+točkica4+točkica5 |
+| Tipka alt+šift+tabulator | brajičnaRazmaknica+točkica1+točkica2+dočkica5+točkica6 |
+| Tipka windows+tabulator | brajičnaRazmaknica+točkica2+točkica3+točkica4 |
 | Tipka escape | brajičnaRazmaknica+točkica1+točkica5 |
-| Tipka windows | BrajičnaRazmaknica+točkica2+točkica4+točkica5+točkica6 |
+| Tipka windows | brajičnaRazmaknica+točkica2+točkica4+točkica5+točkica6 |
 | Tipka razmaknica | brajičnaRazmaknica |
 | Tipka windows+d (smanji prozore svih aplikacija) | brajičnaRazmaknica+točkica1+točkica2+točkica3+točkica4+točkica5+točkica6 |
 | Izvijesti o trenutačnom retku | brajičnaRazmaknica+točkica1+točkica4 |
 | NVDA izbornik | brajičnaRazmaknica+točkica1+točkica3+točkica4+točkica5 |
 
-Za novije modele fokus brajičnih redaka koji na sebi imaju rocker bar tipke (focus 40, focus 80 i focus blue):
+Za novije modele fokus brajičnih redaka koji na sebi imaju rocker bar tipke (Focus 40, Focus 80 i Focus blue):
 || Naziv | Tipka  |
 | Premjesti brajični redak na prethodni redak | lijeviRockerBarGore, desniRockerBarGore |
 | premjesti brajični redak na sljedeći redak | lijeviRockerBarDolje, desniRockerBarDolje |
@@ -2274,25 +2275,25 @@ Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 | Mijenjaj povezanost brajičnog retka | t1+t3 |
 | Izvijesti o naslovu | etouch2 |
 | Izvijesti o traci stanja | etouch4 |
-| Tipka shift+tab | sp1 |
+| Tipka šift+tabulator | sp1 |
 | Tipka alt | sp2, alt |
 | Tipka escape | sp3 |
-| Tipka tab | sp4 |
-| Tipka strelica gore | spUp |
-| Tipka strelica dolje | spDown |
-| Tipka strelica lijevo | spLeft |
-| Tipka strelica desno | spRight |
+| Tipka tabulator | sp4 |
+| Tipka strelica gore | spGore |
+| Tipka strelica dolje | spDolje |
+| Tipka strelica lijevo | spLijevo |
+| Tipka strelica desno | spDesno |
 | Tipka enter | spEnter, enter |
 | Izvijesti o datumu/vremenu | sp2+sp3 |
 | NVDA izbornik | sp1+sp3 |
 | Tipka windows+d (smanji prozore svih aplikacija) | sp1+sp4 |
 | Tipka windows+b (fokusiranje područja obavijesti) | sp3+sp4 |
 | Tipka windows | sp1+sp2, windows |
-| Tipka alt+tab | sp2+sp4 |
-| Tipka kontrol+home | t3+spUp |
-| Tipka kontrol+end | t3+spDown |
-| Tipka home | t3+spLeft |
-| Tipka end | t3+spRight |
+| Tipka alt+tabulator | sp2+sp4 |
+| Tipka kontrol+houm | t3+spGore |
+| Tipka kontrol+end | t3+spDolje |
+| Tipka houm | t3+spLijevo |
+| Tipka end | t3+spDesno |
 | Tipka kontrol | kontrol |
 %kc:endInclude
 
@@ -2314,20 +2315,20 @@ Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 | Premjesti brajični redak na prethodni redak | b4 |
 | Premjesti brajični redak na sljedeći redak | b5 |
 | Premjesti se na brajičnu ćeliju | routing |
-| Tipka shift+tab | esc, left triple action key up+down |
+| Tipka šift+tabulator | esc, lijeva tipka trostruke radnje gore+dolje |
 | Tipka alt | b2+b4+b5 |
 | Tipka escape | b4+b6 |
-| Tipka tab | enter, right triple action key up+down |
-| Tipka enter | esc+enter, left+right triple action key up+down, joystickAction |
-| Tipka strelica gore | joystickUp |
-| Tipka strelica dolje | joystickDown |
-| Tipka strelica lijevo | joystickLeft |
-| Tipka strelica desno | joystickRight |
+| Tipka tabulator | enter, desna tipka trostruke radnje gore+dolje |
+| Tipka enter | esc+enter, lijeva+desna tipka trostruke radnje gore+dolje, joystickAction |
+| Tipka strelica gore | joystickGore |
+| Tipka strelica dolje | joystickDolje |
+| Tipka strelica lijevo | joystickLijevo |
+| Tipka strelica desno | joystickDesno |
 | NVDA izbornik | b2+b4+b5+b6 |
 | Mijenjaj povezanost brajičnog retka | b2 |
 | Uključi ili isključi brajični kursor | b1 |
 | Mijenjaj prikaz konteksta fokusa | b7 |
-| Uključi ili isključi brajični unos | space+b1+b3+b4 (razmaknica+veliko slovo B) |
+| Uključi ili isključi brajični unos | razmaknica+b1+b3+b4 (razmaknica+veliko slovo B) |
 %kc:endInclude
 
 ++ MDV Lilli ++[MDVLilli]
@@ -2346,10 +2347,10 @@ Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 | Premjesti brajični redak na prethodni redak | UP |
 | Premjesti brajični redak na prethodni redak | DN |
 | Premjesti se na brajičnu ćeliju | route |
-| Tipka shift+tab | SLF |
-| Tipka tab | SRG |
-| Tipka alt+tab | SDN |
-| Tipka alt+shift+tab | SUP |
+| Tipka šift+tabulator | SLF |
+| Tipka tabulator | SRG |
+| Tipka alt+tabulator | SDN |
+| Tipka alt+šift+tabulator | SUP |
 %kc:endInclude
 
 ++ Baum/Humanware/APH/Orbit brajični redci ++[Baum]
@@ -2438,7 +2439,7 @@ Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 +++ Dodijeljeni prečaci za sve modele +++
 %kc:beginInclude
 || Naziv | Tipka  |
-| Kliži po brajičnom retku natrag | Lijevo |
+| Kliži po brajičnom retku natrag | lijevo |
 | Kliži po brajičnom retku naprijed | desno |
 | Premjesti brajični redak na prethodni redak | gore |
 | Premjesti brajični redak na sljedeći redak | dolje |
@@ -2448,15 +2449,15 @@ Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 | Tipka strelica dolje | razmaknica+točkica4 |
 | Tipka strelica lijevo | razmaknica+točkica3 |
 | Tipka strelica desno | razmaknica+točkica6 |
-| Tipka shift+tab | razmaknica+točkica1+točkica3 |
-| Tipka tab | razmaknica+točkica4+točkica6 |
+| Tipka šift+tabulator | razmaknica+točkica1+točkica3 |
+| Tipka tabulator | razmaknica+točkica4+točkica6 |
 | Tipka alt | razmaknica+točkica1+točkica3+točkica4 (razmaknica+m) |
 | Tipka escape | razmaknica+točkica1+točkica5 (razmaknica+e) |
 | Tipka enter | točkica8 |
 | Tipka windows | razmaknica+točkica3+točkica4 |
-| Tipka alt+tab | razmaknica+točkica2+točkica3+točkica4+točkica5 (razmaknica+t) |
+| Tipka alt+tabulator | razmaknica+točkica2+točkica3+točkica4+točkica5 (razmaknica+t) |
 | NVDA Izbornik | razmaknica+točkica1+točkica3+točkica4+točkica5 (razmaknica+n) |
-| Tipka windows+d (smanjuje prozore svih aplikacija | razmaknica+točkice1+točkica4+točkica5 (razmaknica+d) |
+| Tipka windows+d (smanjuje prozore svih aplikacija) | razmaknica+točkice1+točkica4+točkica5 (razmaknica+d) |
 | Izgovori sve | razmaknica+točkica1+točkica2+točkica3+točkica4+točkica5+točkica6 |
 %kc:endInclude
 
@@ -2488,66 +2489,66 @@ Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 %kc:beginInclude
 || Naziv | Tipka |
 | Premjesti se na brajičnu ćeliju | routing |
-| Kliži po brajičnom retku natrag | leftSideScrollUp, rightSideScrollUp, leftSideScroll |
-| Kliži po brajičnom retku naprijed | leftSideScrollDown, rightSideScrollDown, rightSideScroll |
-| Premjesti brajični redak na prethodni redak | leftSideScrollUp+rightSideScrollUp |
-| Premjesti brajični redak na sljedeći redak | leftSideScrollDown+rightSideScrollDown |
-| Premjesti se na prethodni redak u pregledu | rightSideUpArrow |
-| Premjesti se na sljedeći redak u pregledu | rightSideDownArrow |
-| Premjesti se na prethodni znak u pregledu | rightSideLeftArrow |
-| Premjesti se na sljedeći znak u pregledu | rightSideRightArrow |
-| Premjesti se na trenutačni fokus | leftSideScrollUp+leftSideScrollDown, rightSideScrollUp+rightSideScrollDown, leftSideScroll+rightSideScroll |
-| Tipka ctrl | smartbeetle:f1, brailleedge:f3 |
+| Kliži po brajičnom retku natrag | lijevaStranaKlizačGore, desnaStranaKlizačGore, lijevaStranaKlizač |
+| Kliži po brajičnom retku naprijed | lijevaStranaKlizačDolje, desnaStranaKlizačDolje, desnaStranaKlizač |
+| Premjesti brajični redak na prethodni redak | lijevaStranaKlizačGore+desnaStranaKlizačGore |
+| Premjesti brajični redak na sljedeći redak | lijevaStranaKlizačDolje+desnaStranaKlizačDolje |
+| Premjesti se na prethodni redak u pregledu | desnaStranaStrelicaGore |
+| Premjesti se na sljedeći redak u pregledu | desnaStranaStrelicaDolje |
+| Premjesti se na prethodni znak u pregledu | desnaStranaStrelicaLijevo |
+| Premjesti se na sljedeći znak u pregledu | desnaStranaStrelicaDesno |
+| Premjesti se na trenutačni fokus | lijevaStranaKlizačGore+lijevaStranaKlizačDolje, desnaStranaKlizačGore+desnaStranaKlizačDolje, lijevaStranaKlizač+desnaStranaKlizač |
+| Tipka kontrol | smartbeetle:f1, brailleedge:f3 |
 | Tipka windows | f7, smartbeetle:f2 |
-| Tipka alt | točkica1+točkica3+točkica4+space, f2, smartbeetle:f3, brailleedge:f4 |
-| Tipka shift | f5 |
-| Tipka insert | točkica2+točkica4+space, f6 |
-| Aplikacijska tipka | točkica1+točkica2+točkica3+točkica4+space, f8 |
-| Tipka capsLock | točkica1+točkica3+točkica6+space |
-| Tipka tab | točkica4+točkica5+space, f3, brailleedge:f2 |
-| Tipka shift+alt+tab | f2+f3+f1 |
-| Tipka alt+tab | f2+f3 |
-| Tipka shift+tab | točkica1+točkica2+space |
-| Tipka end | točkica4+točkica6+space |
-| Tipka kontrol+end | točkica4+točkica5+točkica6+space |
-| Tipka home | točkica1+točkica3+space, smartbeetle:f4 |
-| Tipka kontrol+home | točkica1+točkica2+točkica3+space |
-| Tipka alt+f4 | točkica1+točkica3+točkica5+točkica6+space |
-| Tipka strelica lijevo | točkica3+space, leftSideLeftArrow |
-| Tipka kontrol+shift+strelica lijevo | točkica2+točkica8+space+f1 |
-| Tipka kontrol+strelica lijevo | točkica2+space |
-| Tipka shift+alt+strelica lijevo | točkica2+točkica7+f1 |
+| Tipka alt | točkica1+točkica3+točkica4+razmaknica, f2, smartbeetle:f3, brailleedge:f4 |
+| Tipka šift | f5 |
+| Tipka insert | točkica2+točkica4+razmaknica, f6 |
+| Aplikacijska tipka | točkica1+točkica2+točkica3+točkica4+razmaknica, f8 |
+| Tipka capsLock | točkica1+točkica3+točkica6+razmaknica |
+| Tipka tabulator | točkica4+točkica5+razmaknica, f3, brailleedge:f2 |
+| Tipka šift+alt+tabulator | f2+f3+f1 |
+| Tipka alt+tabulator | f2+f3 |
+| Tipka šift+tabulator | točkica1+točkica2+razmaknica |
+| Tipka end | točkica4+točkica6+razmaknica |
+| Tipka kontrol+end | točkica4+točkica5+točkica6+razmaknica |
+| Tipka houm | točkica1+točkica3+razmaknica, smartbeetle:f4 |
+| Tipka kontrol+houm | točkica1+točkica2+točkica3+razmaknica |
+| Tipka alt+f4 | točkica1+točkica3+točkica5+točkica6+razmaknica |
+| Tipka strelica lijevo | točkica3+razmaknica, lijevaStranaStrelicaLijevo |
+| Tipka kontrol+šift+strelica lijevo | točkica2+točkica8+razmaknica+f1 |
+| Tipka kontrol+strelica lijevo | točkica2+razmaknica |
+| Tipka šift+alt+strelica lijevo | točkica2+točkica7+f1 |
 | Tipka alt+strelica lijevo | točkica2+točkica7 |
-| Tipka strelica lijevo | točkica6+space, leftSideRightArrow |
-| Tipka kontrol+shift+strelica lijevo | točkica5+točkica8+space+f1 |
-| Tipka kontrol+strelica desno | točkica5+space |
-| Tipka shift+alt+strelica desno | točkica5+točkica7+f1 |
+| Tipka strelica lijevo | točkica6+razmaknica, lijevaStranaStrelicaDesno |
+| Tipka kontrol+šift+strelica lijevo | točkica5+točkica8+razmaknica+f1 |
+| Tipka kontrol+strelica desno | točkica5+razmaknica |
+| Tipka šift+alt+strelica desno | točkica5+točkica7+f1 |
 | Tipka alt+strelica desno | točkica5+točkica7 |
-| Tipka pageUp | točkica1+točkica2+točkica6+space |
-| Tipka kontrol+pageUp key | točkica1+točkica2+točkica6+točkica8+space |
-| Tipka strelica gore | točkica1+space, leftSideUpArrow |
-| Tipka kontrol+shift+strelica gore | točkica2+točkica3+točkica8+space+f1 |
-| Tipka kontrol+strelica gore | točkica2+točkica3+space |
-| Tipka shift+alt+strelica gore | točkica2+točkica3+točkica7+f1 |
+| Tipka pejdž ap | točkica1+točkica2+točkica6+razmaknica |
+| Tipka kontrol+pejdž ap key | točkica1+točkica2+točkica6+točkica8+razmaknica |
+| Tipka strelica gore | točkica1+razmaknica, lijevaStranaStrelicaGore |
+| Tipka kontrol+šift+strelica gore | točkica2+točkica3+točkica8+razmaknica+f1 |
+| Tipka kontrol+strelica gore | točkica2+točkica3+razmaknica |
+| Tipka šift+alt+strelica gore | točkica2+točkica3+točkica7+f1 |
 | Tipka alt+strelica gore | točkica2+točkica3+točkica7 |
-| Tipka shift+strelica gore | leftSideScrollDown+space |
-| Tipka pageDown | točkica3+točkica4+točkica5+space |
-| Tipka kontrol+pageDown | točkica3+točkica4+točkica5+točkica8+space |
-| Tipka strelica dolje | točkica4+space, leftSideDownArrow |
-| Tipka kontrol+shift+strelica dolje | točkica5+točkica6+točkica8+space+f1 |
-| Tipka kontrol+strelica dolje | točkica5+točkica6+space |
-| Tipka shift+alt+strelica dolje | točkica5+točkica6+točkica7+f1 |
+| Tipka šift+strelica gore | lijevaStranaKlizačDolje+razmaknica |
+| Tipka pejdž daun | točkica3+točkica4+točkica5+razmaknica |
+| Tipka kontrol+pejdž daun | točkica3+točkica4+točkica5+točkica8+razmaknica |
+| Tipka strelica dolje | točkica4+razmaknica, lijevaStranaStrelicaDolje |
+| Tipka kontrol+šift+strelica dolje | točkica5+točkica6+točkica8+razmaknica+f1 |
+| Tipka kontrol+strelica dolje | točkica5+točkica6+razmaknica |
+| Tipka šift+alt+strelica dolje | točkica5+točkica6+točkica7+f1 |
 | Tipka alt+strelica dolje | točkica5+točkica6+točkica7 |
-| Tipka shift+strelica dolje | space+rightSideScrollDown |
-| Tipka escape | točkica1+točkica5+space, f4, brailleedge:f1 |
-| Tipka delete | točkica1+točkica3+točkica5+space, točkica1+točkica4+točkica5+space |
-| Tipka f1 | točkica1+točkica2+točkica5+space |
+| Tipka šift+strelica dolje | razmaknica+desnaStranaKlizačDolje |
+| Tipka escape | točkica1+točkica5+razmaknica, f4, brailleedge:f1 |
+| Tipka dilit | točkica1+točkica3+točkica5+razmaknica, točkica1+točkica4+točkica5+razmaknica |
+| Tipka f1 | točkica1+točkica2+točkica5+razmaknica |
 | Tipka f3 | točkica1+točkica2+točkica4+točkica8 |
 | Tipka f4 | točkica7+f3 |
 | Tipka windows+b | točkica1+točkica2+f1 |
 | Tipka windows+d | točkica1+točkica4+točkica5+f1 |
-| Tipka kontrol+insert | smartbeetle:f1+rightSideScroll |
-| Tipka alt+insert | smartbeetle:f3+rightSideScroll |
+| Tipka kontrol+insert | smartbeetle:f1+desnaStranaKlizač |
+| Tipka alt+insert | smartbeetle:f3+desnaStranaKlizač |
 %kc:endInclude
 
 ++ Seika brajični redci ++[Seika]
@@ -2567,9 +2568,9 @@ Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 | Premjesti brajični redak na sljedeći redak | b4 |
 | Mijenjaj povezanost brajičnog retka | b5 |
 | Izgovori sve | b6 |
-| Tipka tab | b1 |
-| Tipka shift+tab | b2 |
-| Tipka alt+tab | b1+b2 |
+| Tipka tabulator | b1 |
+| Tipka šift+tabulator | b2 |
+| Tipka alt+tabulator | b1+b2 |
 | NVDA Izbornik | lijevo+desno |
 | Premjesti se na brajičnu ćeliju | routing |
 %kc:endInclude
@@ -2598,38 +2599,38 @@ Brajični redci Live serije imaju samo jedan red routing tipki i EAB ima samo je
 Drugi se korak može izvesti tako da pritisnete jednu od routing tipki i EAB u odgovarajućem smjeru.
 Kad pritisnete i držite gornje, doljnje, desne i lijeve tipke (ili EAB) uzrokuje ponavljanje dodjeljene akcije.
 
-Većinom, sljedeće su tipke dostupne na ovim brajičnim redcima:
-|| naziv | Tipka |
-| l1 | lijeva prednja tipka |
-| l2 | lijeva stražnja tipka |
-| r1 | desna prednja tipka |
-| r2 | desna stražnja tipka |
-| up | 1 korak prema gore |
-| up2 | 2 koraka gore |
-| left | 1 korak lijevo |
-| left2 | 2 koraka lijevo |
-| right | 1 korak desno |
-| right2 | 2 koraka prema desno |
-| dn | 1 korak prema dolje |
-| dn2 | 2 koraka prema dolje |
+Sljedeće tipke su općenito dostupne na ovim brajičnim redcima:
+|| Naziv | Tipka |
+| l1 | Lijeva prednja tipka |
+| l2 | Lijeva stražnja tipka |
+| r1 | Desna prednja tipka |
+| r2 | Desna stražnja tipka |
+| up | Jedan korak gore |
+| up2 | Dva koraka gore |
+| left | Jedan korak lijevo |
+| left2 | Dva koraka lijevo |
+| right | Jedan korak desno |
+| right2 | Dva koraka desno |
+| dn | Jedan korak dolje |
+| dn2 | Dva koraka dolje |
 
-Ovo su Papenmeier prečaci dodijeljeni za korištenje s NVDA:
+Slijede Papenmeier prečaci za NVDA čitača:
 %kc:beginInclude
 || Naziv | Tipka |
-| Kliži po brajičnom retku natrag | left |
-| Kliži po brajičnom retku naprijed | right |
-| Premjesti brajični redak na prethodni redak | up |
-| Premjesti brajični redak na sljedeći redak | dn |
+| Kliži po brajičnom retku natrag | lijevo |
+| Kliži po brajičnom retku naprijed | desno |
+| Premjesti brajični redak na prethodni redak | gore |
+| Premjesti brajični redak na sljedeći redak | dolje |
 | Premjesti se na brajičnu ćeliju | routing |
 | Izvijesti o trenutačni znak u pregledu | l1 |
-| Aktiviraj trenutačni sadržavajući objekt | l2 |
+| Aktiviraj trenutačni navigacijski objekt | l2 |
 | Mijenjaj povezanost brajičnog retka | r2 |
-| Izvijesti o naslovu | l1+up |
-| Izvijesti o traci stanja | l2+down |
-| Premjesti se na sadržavajući objekt | up2 |
-| Premjesti se na prvi sadržavajući objekt | dn2 |
-| Premjesti se na prethodni objekt | left2 |
-| Premjesti se na sljedeći objekt | right2 |
+| Izvijesti o naslovu | l1+gore |
+| Izvijesti o traci stanja | l2+dolje |
+| Premjesti se na sadržavajući objekt | gore2 |
+| Premjesti se na prvi sadržavajući objekt | dolje2 |
+| Premjesti se na prethodni objekt | lijevo2 |
+| Premjesti se na sljedeći objekt | desno2 |
 | Izvijesti o oblikovanju teksta pod brajičnom ćelijom | Gornji red routing tipki |
 %kc:endInclude
 
@@ -2650,10 +2651,10 @@ Obja srednje tipke su mapirane na razmaknicu.
 | Tipka strelica lijevo | razmaknica s točkicom 1 |
 | Tipka strelica desno | razmaknica s točkicom 4 |
 | Tipka strelica dolje | razmaknica s točkicom 5 |
-| Tipka kontrol | lt+točkica2 |
-| Tipka alt | lt+točkica3 |
+| Tipka kontrol | lijeva palčana tipka+točkica2 |
+| Tipka alt | lijeva palčana tipka+točkica3 |
 | Tipka kontrol+escape | razmaknica s točkicama 1 2 3 4 5 6 |
-| Tipka tab | razmaknica s točkicama 3 7 |
+| Tipka tabulator | razmaknica s točkicama 3 7 |
 %kc:endInclude 
 
 ++ Papenmeier Braille BRAILLEX stariji modeli ++[PapenmeierOld]
@@ -2678,49 +2679,49 @@ Na brajičnim redcima su općenito dostupne sljedeće tipke:
 | l2 | Lijeva stražnja tipka |
 | r1 | Desna prednja tipka |
 | r2 | Desna stražnja tipka |
-| up | 1 korak gore |
-| up2 | 2 koraka gore |
-| left | 1 korak lijevo |
-| left2 | 2 koraka lijevo |
-| right | 1 korak desno |
-| right2 | 2 koraka desno |
-| dn | 1 korak dolje |
-| dn2 | 2 koraka dolje |
+| up | Jedan korak gore |
+| up2 | Dva koraka gore |
+| left | Jedan korak lijevo |
+| left2 | Dva koraka lijevo |
+| right | Jedan korak desno |
+| right2 | Dva koraka desno |
+| dn | Jedan korak dolje |
+| dn2 | Dva koraka dolje |
 
 Slijede Papenmeierovi dodjeljeni prečaci za korištenje s NVDA:
 
 %kc:beginInclude
 Uređaji koji imaju EAB:
 || Naziv | Tipka |
-| Kliži po brajičnom retku natrag | left |
-| Kliži po brajičnom retku naprijed | right |
-| Premjesti brajični redak na prethodni redak | up |
-| Premjesti brajični redak na prethodni redak | dn |
+| Kliži po brajičnom retku natrag | lijevo |
+| Kliži po brajičnom retku naprijed | desno |
+| Premjesti brajični redak na prethodni redak | gore |
+| Premjesti brajični redak na prethodni redak | dolje |
 | Premjesti se na brajičnu ćeliju | routing |
 | Izgovori trenutačni znak u pregledu | l1 |
 | Aktiviraj trenutačni navigacijski objekt | l2 |
-| Izvijesti o naslovu | l1up |
-| Izvijesti o traci stanja | l2down |
-| Premjesti se na sadržavajući objekt | up2 |
-| Premjesti se na prvi sadržavajući objekt | dn2 |
-| Premjesti se na sljedeći objekt | right2 |
-| Premjesti se na prethodni objekt | left2 |
+| Izvijesti o naslovu | l1gore |
+| Izvijesti o traci stanja | l2dolje |
+| Premjesti se na sadržavajući objekt | gore2 |
+| Premjesti se na prvi sadržavajući objekt | dolje2 |
+| Premjesti se na sljedeći objekt | desno2 |
+| Premjesti se na prethodni objekt | lijevo2 |
 | Izvijesti o oblikovanju teksta pod brajičnom ćelijom | gornji red routing tipki |
 
 BRAILLEX Tiny:
 || Naziv | Tipka |
 | Izgovori trenutačni znak u pregledu | l1 |
 | Aktiviraj trenutačni navigacijski objekt | l2 |
-| Kliži po brajičnom retku natrag | left |
-| Kliži po brajičnom retku naprijed | right |
-| Premjesti brajični redak na prethodni redak | up |
-| Premjesti brajični redak na sljedeći redak | dn |
+| Kliži po brajičnom retku natrag | lijevo |
+| Kliži po brajičnom retku naprijed | desno |
+| Premjesti brajični redak na prethodni redak | gore |
+| Premjesti brajični redak na sljedeći redak | dolje |
 | Mijenjaj povezanost brajičnog retka | r2 |
-| Premjesti se na sadržavajući objekt | r1+up |
-| Premjesti se na prvi sadržavajući objekt | r1+dn |
-| Premjesti se na prethodni objekt | r1+left |
-| Premjesti se na sljedeći objekt | r1+right |
-| Izvijesti o oblikovanju teksta pod brajičnom ćelijom | upper routing strip |
+| Premjesti se na sadržavajući objekt | r1+gore |
+| Premjesti se na prvi sadržavajući objekt | r1+dolje |
+| Premjesti se na prethodni objekt | r1+lijevo |
+| Premjesti se na sljedeći objekt | r1+desno |
+| Izvijesti o oblikovanju teksta pod brajičnom ćelijom | gornji red routing tipki |
 | Izvijesti o naslovu | l1+gore |
 | Izvijesti o traci stanja | l2+dolje |
 
@@ -2729,15 +2730,15 @@ BRAILLEX 2D Screen:
 | Izgovori trenutačni znak u pregledu | l1 |
 | Aktiviraj trenutačni navigacijski objekt | l2 |
 | Mijenjaj povezanost brajičnog retka | r2 |
-| Izvijesti o oblikovanju teksta ispod brajične ćelije | upper routing strip |
-| Premjesti brajični redak na prethodni redak | up |
-| Kliži po brajičnom retku natrag | left |
-| Kliži po brajičnom retku naprijed | right |
-| Premjesti brajični redak na sljedeći redak | dn |
-| Premjesti se na sljedeći objekt | left2 |
-| Premjesti se na sadržavajući objekt | up2 |
-| Premjesti se na prvi sadržavajući objekt | dn2 |
-| Premjesti se na prethodni objekt | right2 |
+| Izvijesti o oblikovanju teksta ispod brajične ćelije | gornji red routing tipki |
+| Premjesti brajični redak na prethodni redak | gore |
+| Kliži po brajičnom retku natrag | lijevo |
+| Kliži po brajičnom retku naprijed | desno |
+| Premjesti brajični redak na sljedeći redak | dolje |
+| Premjesti se na sljedeći objekt | lijevo2 |
+| Premjesti se na sadržavajući objekt | gore2 |
+| Premjesti se na prvi sadržavajući objekt | dolje2 |
+| Premjesti se na prethodni objekt | desno2 |
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++[HumanWareBrailleNote]
@@ -2778,25 +2779,25 @@ Smještaj ovih tipki potražite u BrailleNote dokumentaciji.
 | Premjesti brajični redak na sljedeći redak | sljedeće |
 | Premjesti se na brajičnu ćeliju | routing |
 | NVDA izbornik | razmaknica+točkica1+točkica3+točkica4+točkica5 (razmaknica+n) |
-| Mijenjaj povezanost brajičnog retka | Prethodni+Sljedeći |
+| Mijenjaj povezanost brajičnog retka | prethodno+sljedeće |
 | Tipka strelica gore | razmaknica+točkica1 |
 | Tipka strelica golje | razmaknica+točkica4 |
 | Tipka strelica lijevo | razmaknica+točkica3 |
 | Tipka strelica desno | razmaknica+točkica6 |
-| Tipka page up | razmaknica+točkica1+točkica3 |
-| Tipka page down | razmaknica+točkica4+točkica6 |
-| Tipka home | razmaknica+točkica1+točkica2 |
+| Tipka pejdž ap | razmaknica+točkica1+točkica3 |
+| Tipka pejdž daun | razmaknica+točkica4+točkica6 |
+| Tipka houm | razmaknica+točkica1+točkica2 |
 | Tipka end | razmaknica+točkica4+točkica5 |
-| Tipke kontrol+home | razmaknica+točkica1+točkica2+točkica3 |
+| Tipke kontrol+houm | razmaknica+točkica1+točkica2+točkica3 |
 | Tipke kontrol+end | razmaknica+točkica4+točkica5+točkica6 |
 | Razmaknica | razmaknica |
 | Tipka enter | razmaknica+točkica8 |
 | Tipka backspace | razmaknica+točkica7 |
-| Tipka tab | razmaknica+točkica2+točkica3+točkica4+točkica5 (razmaknica+t) |
-| Tipke shift+tab | razmaknica+točkica1+točkica2+točkica5+točkica6 |
+| Tipka tabulator | razmaknica+točkica2+točkica3+točkica4+točkica5 (razmaknica+t) |
+| Tipke šift+tabulator | razmaknica+točkica1+točkica2+točkica5+točkica6 |
 | Tipka windows | razmaknica+točkica2+točkica4+točkica5+točkica6 (razmaknica+w) |
 | Tipka alt | razmaknica+točkica1+točkica3+točkica4 (razmaknica+m) |
-| Uključi i isključi pomoć pri unosu | razmaknica+točkica2+točkica3+točkica6 (razmaknica+spušteno h) |
+| Uključi i isključi pomoć pri unosu | razmaknica+točkica2+točkica3+točkica6 (razmaknica+malo slovo h) |
 
 Slijede prečaci za BrailleNote QT kad nije u modusu brajičnog unosa.
 
@@ -2806,16 +2807,16 @@ Slijede prečaci za BrailleNote QT kad nije u modusu brajičnog unosa.
 | Tipka strelica dolje | strelica dolje |
 | Tipka strelica lijevo | strelica lijevo|
 | Tipka strelica desno | strelica desno |
-| Tipka page up | funkcija+strelica gore |
-| Tipka page down | funkcija+strelica dolje |
-| Tipka home | funkcija+strelica lijevo |
+| Tipka pejdž ap | funkcija+strelica gore |
+| Tipka pejdž daun | funkcija+strelica dolje |
+| Tipka houm | funkcija+strelica lijevo |
 | Tipka end | funkcija+strelica desno |
-| Tipke kontrol+home | read+t |
+| Tipke kontrol+houm | read+t |
 | Tipke kontrol+end | read+b |
 | Tipka enter | enter |
 | Tipka backspace | backspace |
-| Tipka tab | tab |
-| Tipke shift+tab | shift+tab |
+| Tipka tabulator | tabulator |
+| Tipke šift+tabulator | šift+tabulator |
 | Tipka windows | read+w |
 | Tipka alt | read+m |
 | Uključi i isključi pomoć pri unosu | read+1 |
@@ -2828,8 +2829,8 @@ Slijede prečaci dodijeljeni kotačiću za klizanje:
 | Tipka strelica lijevo | strelica lijevo |
 | Tipka strelica desno | strelica desno |
 | Tipka enter | srednji gumb |
-| Tipka tab | okreći kotačić u smjeru kazaljke na satu |
-| Tipke shift+tab | okreći kotačić u obrnutom smjeru od kazaljke na satu |
+| Tipka tabulator | okreći kotačić u smjeru kazaljke na satu |
+| Tipke šift+tabulator | okreći kotačić u obrnutom smjeru od kazaljke na satu |
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]
@@ -2874,8 +2875,8 @@ Budući da SuperBraille nema nikakvih fizičkih tipki za pisanje ili gumbova za 
 Zbog toga, te kako bi se zadržala kompatibilnost s drugim čitačima ekrana na Tajvanu, dodana su dva tipkovnička prečaca za klizanje po brajičnom retku:
 %kc:beginInclude
 || Naziv | Tipka |
-| Kliži po brajičnom retku natrag | numeričkiMinus |
-| Kliži po brajičnom retku naprijed | numeričkiPlus | 
+| Kliži po brajičnom retku natrag | numMinus |
+| Kliži po brajičnom retku naprijed | numPlus | 
 %kc:endInclude
 
 ++ Eurobraille Esys/Esytime/Iris displays ++[Eurobraille]
@@ -2892,30 +2893,30 @@ Slijede prečaci za ove brajične retke s NVDA čitačem.
 Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 %kc:beginInclude
 || Naziv | Tipka |
-| Kliži po brajičnom retku natrag | switch1-6left, l1 |
-| Kliži po brajičnom retku naprijed | switch1-6Right, l8 |
-| Premjesti se na trenutačni fokus | switch1-6Left+switch1-6Right, l1+l8 |
+| Kliži po brajičnom retku natrag | sklopka1-6Lijevo, l1 |
+| Kliži po brajičnom retku naprijed | sklopka1-6Desno, l8 |
+| Premjesti se na trenutačni fokus | sklopka1-6Lijevo+sklopka1-6Desno, l1+l8 |
 | Premjesti se na brajičnu ćeliju | routing |
 | Izvijesti o oblikovanju teksta pod brajičnom ćelijom | doubleRouting |
-| Premjesti se na prethodni redak u pregledu | joystick1Up |
-| Premjesti se na sljedeći redak u pregledu | joystick1Down |
-| Premjesti se na prethodni znak u retku | joystick1Left |
-| Premjesti se na sljedeći znak u pregledu | joystick1Right |
-| Prebaci na prethodni modus pregleda | joystick1Left+joystick1Up |
-| Prebaci na sljedeći modus pregleda | joystick1Right+joystick1Down |
+| Premjesti se na prethodni redak u pregledu | joystick1Gore |
+| Premjesti se na sljedeći redak u pregledu | joystick1Dolje |
+| Premjesti se na prethodni znak u retku | joystick1Lijevo |
+| Premjesti se na sljedeći znak u pregledu | joystick1Desno |
+| Prebaci na prethodni modus pregleda | joystick1Lijevo+joystick1Gore |
+| Prebaci na sljedeći modus pregleda | joystick1Desno+joystick1Dolje |
 | Izbriši prethodni znak u retku ili znak | backSpace |
 | Prevodi svaki brajični unos i pritišće tipku enter | backSpace+razmaknica |
 | Tipka insert | točkica3+točkica5+razmaknica, l7 |
-| Tipka delete | točkica3+točkica6+razmaknica |
-| Tipka home | točkica1+točkica2+točkica3+razmaknica, joystick2Left+joystick2Up |
-| Tipka end | točkica4+točkica5+točkica6+razmaknica, joystick2Right+joystick2Down |
-| Tipka strelica lijevo | točkica2+razmaknica, joystick2Left, strelica lijevo |
-| Tipka strelica desno | točkica5+razmaknica, joystick2Right, strelica desno |
-| Tipka strelica gore | točkica1+razmaknica, joystick2Up, strelica gore |
-| Tipka strelica dolje | točkica6+razmaknica, joystick2Down, strelica dolje |
-| Tipka enter | joystick2Center |
-| Tipka pageUp | točkica1+točkica3+razmaknica |
-| Tipka pageDown | točkica4+točkica6+razmaknica |
+| Tipka dilit | točkica3+točkica6+razmaknica |
+| Tipka houm | točkica1+točkica2+točkica3+razmaknica, joystick2Lijevo+joystick2Gore |
+| Tipka end | točkica4+točkica5+točkica6+razmaknica, joystick2Desno+joystick2Dolje |
+| Tipka strelica lijevo | točkica2+razmaknica, joystick2Lijevo, strelica lijevo |
+| Tipka strelica desno | točkica5+razmaknica, joystick2Desno, strelica desno |
+| Tipka strelica gore | točkica1+razmaknica, joystick2Gore, strelica gore |
+| Tipka strelica dolje | točkica6+razmaknica, joystick2Dolje, strelica dolje |
+| Tipka enter | joystick2Sredina |
+| Tipka pejdž ap | točkica1+točkica3+razmaknica |
+| Tipka pejdž daun | točkica4+točkica6+razmaknica |
 | Tipka numerički1 | točkica1+točkica6+backspace |
 | Tipka numerički2 | točkica1+točkica2+točkica6+backspace |
 | Tipka numerički3 | točkica1+točkica4+točkica6+backspace |
@@ -2933,10 +2934,10 @@ Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 | Tipka numerički plus | točkica2+točkica3+točkica5+backspace |
 | Tipka numerički enter | točkica3+točkica4+točkica5+backspace |
 | Tipka escape | točkica1+točkica2+točkica4+točkica5+razmaknica, l2 |
-| Tipka tab | točkica2+točkica5+točkica6+razmaknica, l3 |
-| Tipka shift+tab | točkica2+točkica3+točkica5+razmaknica |
-| Tipka printScreen | točkica1+točkica3+točkica4+točkica6+razmaknica |
-| Tipka pause | točkica1+točkica4+razmaknica |
+| Tipka tabulator | točkica2+točkica5+točkica6+razmaknica, l3 |
+| Tipka šift+tabulator | točkica2+točkica3+točkica5+razmaknica |
+| Tipka ispis ekrana | točkica1+točkica3+točkica4+točkica6+razmaknica |
+| Tipka pauza | točkica1+točkica4+razmaknica |
 | Tipka aplikacijska tipka | točkica5+točkica6+backspace |
 | Tipka f1 | točkica1+backspace |
 | Tipka f2 | točkica1+točkica2+backspace |
@@ -2953,13 +2954,13 @@ Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 | Tipka windows | točkica1+točkica2+točkica3+točkica4+backspace |
 | Tipka capsLock | točkica7+backspace, točkica8+backspace |
 | Tipka numLock | točkica3+backspace, točkica6+backspace |
-| Tipka shift | točkica7+razmaknica, l4 |
-| Uključi ili isključi shift | točkica1+točkica7+razmaknica, točkica4+točkica7+razmaknica |
-| Tipka ctrl | točkica7+točkica8+razmaknica, l5 |
-| Uključi ili isključi ctrl | točkica1+točkica7+točkica8+razmaknica, točkica4+točkica7+točkica8+razmaknica |
+| Tipka šift | točkica7+razmaknica, l4 |
+| Uključi ili isključi šift | točkica1+točkica7+razmaknica, točkica4+točkica7+razmaknica |
+| Tipka kontrol | točkica7+točkica8+razmaknica, l5 |
+| Uključi ili isključi kontrol | točkica1+točkica7+točkica8+razmaknica, točkica4+točkica7+točkica8+razmaknica |
 | Tipka alt | točkica8+razmaknica, l6 |
 | Uključi ili isključi alt | točkica1+točkica8+razmaknica, točkica4+točkica8+razmaknica |
-| Uključi ili isključi simulaciju HID tipkovnice | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
+| Uključi ili isključi simulaciju HID tipkovnice | esytime):l1+joystick1Dolje, esytime):l8+joystick1Dolje |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
