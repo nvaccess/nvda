@@ -27,7 +27,7 @@ Quoi de Neuf dans NVDA
 - Ajout de la fonctionnalité surlignage d'écran à NVDA. (#971, #9064)
  - Le surlignage du focus, de l'objet navigateur et du curseur en mode navigation peuvent être activés et configurés dans la catégorie "Vision" des paramètres NVDA.
  - Note : cette fonction est incompatible avec l'extension Focus Highlight, cette dernière pourra être utilisée si la fonction native est désactivée.
-- Ajout de l'outil "Visionneuse de Braille", permettant de visualiser la sortie braille via une fenêtre à l'écran. (#7788)
+- Ajout de l'outil Visionneuse Braille, permettant de visualiser la sortie braille via une fenêtre à l'écran. (#7788)
 
 
 == Changements ==
@@ -73,12 +73,13 @@ Quoi de Neuf dans NVDA
 - Quand on parcourt des éléments à puces dans Microsoft Word avec UIA activé, la puce de l'élément de liste suivant n'est plus indûment annoncée. (#9613)
 - Quelques rares erreurs de traduction Braille et erreurs avec Liblouis ont été résolues. (#9982)
 - Les applications Java démarrées avant le lancement de NVDA sont maintenant accessibles sans avoir à redémarrer l'application Java. (#10296)
-- Sous Firefox, lorsque l'élément sélectionné est marqué comme actuel (aria-current), NVDA ne le répètera plus plusieurs fois. (#8960)
+- Dans Firefox, lorsque l'élément sélectionné est marqué comme courant (aria-current), NVDA ne le répète plus plusieurs fois. (#8960)
 - NVDA traitera désormais certains caractères unicode composés tels que le e accent aigu comme un seul caractère lors du déplacement dans le texte. (#10550)
 - Spring Tool Suite Version 4 est maintenant supporté. (#10001)
-- Ne plus annoncer en double l'étiquette quand un élément aria-labeledby est un élément interne. (#10552)
+- NVDA n'annoncera plus deux fois l'étiquette quand un élément aria-labeledby est un élément interne. (#10552)
 - Sous Windows 10 version 1607 et au-delà, les caractères saisis depuis un clavier Braille sont maintenant vocalisés dans plus de situations. (#10569)
-- Lors du changement du périphérique audio, les sons émis par NVDA seront désormais joués directement sur le nouveau périphérique sélectionné. (#2167)
+- Lors du changement du périphérique audio, les sons émis par NVDA seront désormais lus directement sur le nouveau périphérique sélectionné. (#2167)
+- Dans Mozilla Firefox, déplacer le focus en mode navigation est maintenant plus rapide. Cela rend le déplacement du curseur en mode navigation plus réactif dans certains cas. (#10584)
 
 
 == Changements pour les développeurs ==
@@ -134,7 +135,7 @@ Quoi de Neuf dans NVDA
 - Ajout d'un cadre pour créer des fournisseurs d'amélioration de la vision; modules pouvant modifier le contenu de l'écran, éventuellement en fonction des informations fournies par NVDA concernant l'emplacement des objets. (#9064)
  - Ces extensions peuvent trouver leur propre place dans le dossier visionEnhancementProviders.
  - Voir les modules vision et visionEnhancementProviders pour l'implémentation du framework et des exemples, respectivement.
- - Les fournisseurs d'amélioration de la vision sont activés et configurés via la catégorie «vision» dans la boîte de dialogue des paramètres de NVDA.
+ - Les fournisseurs d'amélioration de la vision sont activés et configurés via la catégorie «vision» dans le dialogue des paramètres de NVDA.
 - Les propriétés de classes abstraites sont maintenant supportées sur les objets qui héritent de baseObject.AutoPropertyObject (e.g. NVDAObjects et TextInfos). (#10102)
 - Introduction de displayModel.UNIT_DISPLAYCHUNK comme une unité constante spécifique de textInfos DisplayModelTextInfo. (#10165)
  - Cette nouvelle constante permet de parcourir le texte dans un DisplayModelTextInfo d'une manière plus proche de la façon dont les fragments de texte sont enregistrés dans le modèle sous-jacent.
