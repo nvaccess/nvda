@@ -78,15 +78,15 @@ Traduzido pela Equipa portuguesa do NVDA
 - Não anunciar em duplicado o nome quando aria-labelledby relation target é um elemento interior. (#10552)
 - No Windows 10 versão 1607 e seguintes, caracteres digitados num teclado Braille passam a ser anunciados em mais situações. (#10569)
 - Ao mudar de dispositivo de saída de áudio, os sons reproduzidos pelo NVDA passam a usar o novo dispositivo seleccionado. (#2167)
- 
+- No Mozilla Firefox, mover o foco em modo de navegação é mais rápido. Isto faz com que movimentar o cursor virtual tenha, na maior parte dos casos, uma resposta mais rápida. (#10584) 
 
 == Alterações para desenvolvedores ==
-- Updated Python to 3.7. (#7105)
-- Updated pySerial to version 3.4. (#8815)
-- Updated wxPython to 4.0.3 to support Python 3.5 and later. (#9630)
-- Updated six to version 1.12.0. (#9630)
-- Updated py2exe to version 0.9.3.2 (in development, commit b372a8e from albertosottile/py2exe#13). (#9856)
-- Updated UIAutomationCore.dll comtypes module to version 10.0.18362. (#9829)
+- Atualização do Python para  a versão 3.7. (#7105)
+- Atualização do pySerial para a versão 3.4. (#8815)
+- Atualização do wxPython para a versão 4.0.3 para dar suporte ao Python 3.5 e seguintes. (#9630)
+- Atualização do six para a versão 1.12.0. (#9630)
+- Atualização do py2exe para a versão 0.9.3.2 (em desenvolvimento, commit b372a8e de albertosottile/py2exe#13). (#9856)
+- Atualização do UIAutomationCore.dll, módulo comtypes, para a versão 10.0.18362. (#9829)
 - The tab-completion in the Python console only suggests attributes starting with an underscore if the underscore is first typed. (#9918)
 - Flake8 linting tool has been integrated with SCons reflecting code requirements for Pull Requests. (#5918)
 - As NVDA no longer depends on pyWin32, modules such as win32api and win32con are no longer available to add-ons. (#9639)
