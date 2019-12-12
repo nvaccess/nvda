@@ -1061,7 +1061,7 @@ Os níveis de registo disponíveis são:
  - Se estiver preocupado com a privacidade, não defina o nível de registo para esta opção.
 - Depuração: Além do que é registado nos níveis anteriores, serão registadas mensagens de depuração adicionais.
  - Assim como no nível anterior, se estiver preocupado com a privacidade, não deve definir o nível de registo para esta opção.
--
+
 
 ==== Iniciar o NVDA automaticamente depois de iniciar cessão no Windows ====[GeneralSettingsStartAfterLogOn]
 Se esta opção estiver marcada, o NVDA arrancará, automaticamente, assim que iniciar sessão no Windows.
@@ -1133,7 +1133,7 @@ Trata-se de uma barra deslizante, que vai de 0 a 100 (sendo 0 a velocidade mais 
 Esta opção permite-lhe alterar a entoação da voz actual.
 Trata-se de uma barra deslizante, que vai de 0 a 100 (sendo 0 a entoação mais grave e 100 a mais aguda.
 
-	==== Volume ====[SpeechSettingsVolume]
+==== Volume ====[SpeechSettingsVolume]
 Esta opção é uma barra deslizante, que vai de 0 a 100 (sendo o 0 o volume mais baixo e 100 o mais alto).
 
 ==== Inflexão ====[SpeechSettingsInflection]
@@ -1249,8 +1249,8 @@ Nesta caixa de combinação encontrará tabelas para diferentes idiomas e tipos 
 A tabela seleccionada será usada para converter texto em Braille, para ser mostrado na sua linha Braille.
 Pode mover-se de tabela Braille em tabela Braille, na lista, utilizando as Setas.
 
-==== Tabela de Escrita ====[BrailleInputTable][BrailleSettingsInputTable]
-Em extra da opção anterior, o próximo controlo é a caixa combinada "Tabela de escrita".
+==== Tabela de Escrita ====[BrailleSettingsInputTable]
+Complementando a opção anterior, o próximo controlo é a caixa combinada "Tabela de escrita".
 A tabela escolhida será usada para converter o Braille introduzido, através do teclado Braille da sua linha, em texto.
 Pode mover-se de tabela Braille em tabela Braille, na lista, utilizando as Setas.
 
@@ -1284,7 +1284,7 @@ A indicação de selecção não é afectada por esta opção, é sempre feita c
 Esta definição é um campo numérico que controla durante quantos segundos são apresentadas as mensagens do sistema, na linha Braille.
 Especifique 0, para que estas mensagens não sejam mostradas de todo.
 
-+==== Mostrar Mensagens Indefinidamente ====[BrailleSettingsNoMessageTimeout]
+==== Mostrar Mensagens Indefinidamente ====[BrailleSettingsNoMessageTimeout]
 Esta opção indica ao NVDA para mostrar, na linha Braille, as mensagens até o utilizador as descartar.
 
 %kc:setting
@@ -1493,7 +1493,7 @@ Quanto mais à esquerda ou à direita estiver o rato no ecrã, tanto mais à esq
 Se a caixa de verificação "tocar as coordenadas de áudio quando o rato se mover" estiver marcada, ao marcar esta opção, faz com que o volume dos bips das coordenadas de áudio seja controlado pelo quão brilhante está o ecrã sob o rato.
 Esta definição não está marcada, por padrão.
 
-==== Ignorar eventos do rato de outras aplicações ==== [MouseSettingsHandleMouseControl]
+==== Ignorar eventos do rato de outras aplicações ====[MouseSettingsHandleMouseControl]
 Esta opção permite que sejam ignorados os eventos do rato (incluindo o movimento do rato e o pressionar dos botões) gerados por outras aplicações, como TeamViewer e outro software de controlo remoto.
 Esta opção está desmarcada por padrão.
 Se marcar esta opção, e tiver activada a opção "Activar seguimento do rato, o NVDA não anunciará o que está por baixo do rato se o rato for movido por outra aplicação.
@@ -1541,8 +1541,9 @@ Muitas janelas e controlos mostram uma pequena mensagem (ou sugestão), quando m
 
 ==== Anunciar notificações ====[ObjectPresentationReportNotifications]
 Esta caixa de verificação, quando marcada, indica ao NVDA que anuncie os balões de ajuda, e notificações "toasts" quando aparecerem.
-Os Balões de Ajuda são como sugestões, mas, por norma, são maiores e estão associados com eventos do sistema, tal como o cabo de rede ser desligado, ou, porventura, para o alertar de problemas de segurança do Windows.
-As notificações "toasts" foram introduzidas no Windows 10 e aparecem na Área de notificações informando sobre vários eventos, tais como a descarga de um update, a chegada de novo e-mail, etc.
+- Os Balões de Ajuda são como sugestões, mas, por norma, são maiores e estão associados com eventos do sistema, tal como o cabo de rede ser desligado, ou, porventura, para o alertar de problemas de segurança do Windows.
+- As notificações "toasts" foram introduzidas no Windows 10 e aparecem na Área de notificações informando sobre vários eventos, tais como a descarga de um update, a chegada de novo e-mail, etc.
+
 
 ==== Anunciar Teclas de Atalho dos Objectos ====[ObjectPresentationShortcutKeys]
 Quando esta caixa de verificação está marcada, o NVDA incluirá a tecla de atalho que é associada com um determinado objecto ou controlo, quando o mesmo é anunciado.

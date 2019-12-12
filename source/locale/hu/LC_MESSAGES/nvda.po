@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-29 07:59+0100\n"
-"PO-Revision-Date: 2019-12-01 19:42+0100\n"
+"POT-Creation-Date: 2019-12-09 11:28+1000\n"
+"PO-Revision-Date: 2019-12-07 12:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.6.10\n"
 "X-Poedit-Bookmarks: 672,168,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 # Teszt megjegyzés
@@ -223,7 +223,7 @@ msgstr "lm"
 msgid "gra"
 msgstr "ábra"
 
-#. Translators: Displayed in braille for an object which is a
+#. Translators: Displayed in braille for toast notifications and for an object which is a
 #. help balloon.
 msgid "hlp"
 msgstr "súgó"
@@ -3919,7 +3919,7 @@ msgstr ""
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 msgid "Expanded symbol ({})"
-msgstr ""
+msgstr "Kiterjesztett írásjelek"
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -6201,7 +6201,8 @@ msgstr "A(z) %s billentyű lenyomásának emulálása a billentyűzeten"
 msgid "NVDA Speech Viewer"
 msgstr "NVDA beszédnéző"
 
-#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+#. Translators: The label for a setting in the speech viewer that controls
+#. whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
 msgstr "A beszédnéző mutatása a program &indulásakor"
 
@@ -6582,6 +6583,33 @@ msgid ""
 "donating to NV Access. You can do this by selecting Donate from the NVDA "
 "menu."
 msgstr ""
+"{longName} ({name})\n"
+"Verzió: {version}\n"
+"URL: {url}\n"
+"{copyright}\n"
+"\n"
+"Az {name}-t a magyar NVDA honosítócsapat honosította. Ha valamilyen "
+"nyelvtani hibát észlel vagy egyéb javaslata van, akkor látogassa meg a "
+"http://www.nvda.hu weboldalt, ahol kapcsolatba léphet a honosítócsapattal.\n"
+"Ugyancsak ezen az oldalon talál újabb nyelvcsomagokat, valamint az {name}-"
+"val kapcsolatos hasznos információkat. \n"
+"\n"
+"Az {name} a GNU általános Nyilvános Licensz (2-es verzió) alatt áll. A "
+"szoftver szabadon közzétehető vagy módosítható a licensz és a forráskód "
+"bárki számára elérhetővé tételével. Ez az eredeti és módosított szoftverre, "
+"valamint bármilyen a szoftver forráskódjából származó kódrészletre "
+"vonatkozik.\n"
+"Ha többet szeretne megtudni, elolvashatja a Licensz szerződést a súgó "
+"menüben.\n"
+"Ezt a http://www.gnu.org/licenses/old-licenses/gpl-2.0.html oldalon is "
+"megteheti.\n"
+"\n"
+"Az {name}-t az NV Access fejleszti, amely egy non-profit alapítvány. Céljuk "
+"az ingyenes és nyílt forráskódú szoftverek terjesztése és segítése "
+"látássérült és gyengénlátó felhasználók részére.\n"
+"Ha hasznosnak ítéli a programot és szeretné, hogy továbbra is elérhető "
+"legyen, kérjük adományozzon az NV Access-nek. Ezt a NVDA menü adományozás "
+"menüpontjával érheti el."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
 #, python-brace-format
@@ -7269,6 +7297,15 @@ msgstr "Seika braille kijelzők"
 msgid "SuperBraille"
 msgstr "SuperBraille"
 
+#. Translators: The title of the NVDA Braille Viewer tool window.
+msgid "NVDA Braille Viewer"
+msgstr "NVDA braille-néző"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether the braille viewer is shown at startup or not.
+msgid "&Show Braille Viewer on Startup"
+msgstr "A braille-néző &mutatása a program indulásakor"
+
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
 msgstr "A felismerés eredménye"
@@ -7443,6 +7480,10 @@ msgstr "Naplónéző"
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
 msgstr "Beszédnéző"
+
+#. Translators: The label for the menu item to toggle Braille Viewer.
+msgid "Braille viewer"
+msgstr "Braille-néző"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -8999,7 +9040,7 @@ msgid "Tones"
 msgstr "Hangjelzés"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both  Speech and Tones"
+msgid "Both Speech and Tones"
 msgstr "Beszéd és hangjelzés"
 
 #. Translators: This message is presented in the document formatting settings panelue
@@ -11586,77 +11627,79 @@ msgstr "dupla sorköz"
 msgid "1.5 line spacing"
 msgstr "1,5-es sorköz"
 
-msgid "Highlighter"
-msgstr "Kiemelő"
+#~ msgid "Highlighter"
+#~ msgstr "Kiemelő"
 
-msgid "NVDA Highlighter"
-msgstr "NVDA kiemelő"
+#~ msgid "NVDA Highlighter"
+#~ msgstr "NVDA kiemelő"
 
-msgid "Koine Greek"
-msgstr "Koiné Görög"
+#~ msgid "Koine Greek"
+#~ msgstr "Koiné Görög"
 
-msgid "lmk %s"
-msgstr "%s jp"
+#~ msgid "lmk %s"
+#~ msgstr "%s jp"
 
-msgid "Start"
-msgstr "Start"
+#~ msgid "Start"
+#~ msgstr "Start"
 
-msgid "Skype"
-msgstr "Skype"
+#~ msgid "Skype"
+#~ msgstr "Skype"
 
-msgid "Reports and moves the review cursor to a recent message"
-msgstr "Bemondja és elmozdítja az áttekintő kurzort egy új üzenetre."
+#~ msgid "Reports and moves the review cursor to a recent message"
+#~ msgstr "Bemondja és elmozdítja az áttekintő kurzort egy új üzenetre."
 
-msgid "Typing stopped"
-msgstr "nem ír"
+#~ msgid "Typing stopped"
+#~ msgstr "nem ír"
 
-msgid "Rewind"
-msgstr "Hátra"
+#~ msgid "Rewind"
+#~ msgstr "Hátra"
 
-msgid "Fast forward"
-msgstr "előre"
+#~ msgid "Fast forward"
+#~ msgstr "előre"
 
-msgid "Play"
-msgstr "Lejátszás"
+#~ msgid "Play"
+#~ msgstr "Lejátszás"
 
-msgid "Stop"
-msgstr "Leállítás"
+#~ msgid "Stop"
+#~ msgstr "Leállítás"
 
-msgid "Record"
-msgstr "Felvétel"
+#~ msgid "Record"
+#~ msgstr "Felvétel"
 
-msgid "Selected %s"
-msgstr "%s Kijelölve"
+#~ msgid "Selected %s"
+#~ msgstr "%s Kijelölve"
 
-msgid "Currently running application is %s"
-msgstr "A jelenleg aktív alkalmazás neve: %s"
+#~ msgid "Currently running application is %s"
+#~ msgstr "A jelenleg aktív alkalmazás neve: %s"
 
-msgid " and currently loaded module is %s"
-msgstr "A jelenleg betöltött szkript neve: %s"
+#~ msgid " and currently loaded module is %s"
+#~ msgstr "A jelenleg betöltött szkript neve: %s"
 
-msgid ""
-"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
-msgstr ""
-"Minden bővítmény le van tiltva, a futtatásukhoz újra kell indítani az NVDA-t"
+#~ msgid ""
+#~ "All add-ons are currently disabled. To enable add-ons you must restart "
+#~ "NVDA."
+#~ msgstr ""
+#~ "Minden bővítmény le van tiltva, a futtatásukhoz újra kell indítani az "
+#~ "NVDA-t"
 
-msgid "%s Settings Category"
-msgstr "%s beállítások"
+#~ msgid "%s Settings Category"
+#~ msgstr "%s beállítások"
 
-msgid "NVDA"
-msgstr "NVDA"
+#~ msgid "NVDA"
+#~ msgstr "NVDA"
 
-msgid "remove"
-msgstr "eltávolítás"
+#~ msgid "remove"
+#~ msgstr "eltávolítás"
 
-msgid ""
-"For the new language to take effect, the configuration must be saved and "
-"NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
-"manually save and exit at a later time."
-msgstr ""
-"A nyelvi beállítások megváltoztatásához mentenie kell a beállításokat, és "
-"újra kell indítania az NVDA programot. Nyomja meg az Enter billentyűt a "
-"beállítások elmentéséhez és az NVDA újraindításához. Ha később szeretné "
-"újraindítani a programot, válassza a mégse gombot."
+#~ msgid ""
+#~ "For the new language to take effect, the configuration must be saved and "
+#~ "NVDA must be restarted. Press enter to save and restart NVDA, or cancel "
+#~ "to manually save and exit at a later time."
+#~ msgstr ""
+#~ "A nyelvi beállítások megváltoztatásához mentenie kell a beállításokat, és "
+#~ "újra kell indítania az NVDA programot. Nyomja meg az Enter billentyűt a "
+#~ "beállítások elmentéséhez és az NVDA újraindításához. Ha később szeretné "
+#~ "újraindítani a programot, válassza a mégse gombot."
 
 #~ msgid "report gorupings off"
 #~ msgstr "Elemcsoportok bemondása kikapcsolva"

@@ -79,6 +79,7 @@
 - Kada je Aria-labellz unutrašnji element, ozgovor se neće dublirati. (#10552)
 - U Windowsima 10 inačici 1607 i novijim, upisani znakovi na brajičnim tipkovnicama sada su izgovoreni u većini situacija ispravno. (#10569)
 - Prilikom izmjene izlaznog audio uređaja, zvukovi koje reproducira NVDA sada će se reproducirati na novom uređaju. (#2167)
+- U Mozilla Firefoxu, kretanje u modusu pregleda je sada brže. Ovo omogućuje brže kretanje kursorom u puno slučajeva. (#10584)
 
 
 == Izmjene za razvojne programere ==
@@ -87,7 +88,7 @@ Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesk
 = 2019.2.1 =
 Ovo je mala inačica koja ispravlja nekoliko rušenja u inačici 2019.2. Ispravci uključuju:
 - Ispravljeno nekoliko rušenja u Gmail-u uočeno u  Firefoxu i Chromeu prilikom interakcije sa nekim skočnim izbornicima, kao što je to stvaranje filtera ili mijenjanje nekih postavki Gmail-a. (#10175, #9402, #8924)
-- U Windowsima 7, NVDA NVDA više neće prouzrokovati rušenje Windows upravitelja za datoteke kada se miš koristi u start izborniku. (#9435) 
+- U Windowsima 7, NVDA više neće prouzrokovati rušenje Windows upravitelja za datoteke kada se miš koristi u start izborniku. (#9435) 
 - Windows Explorer u Windowsima 7 se više ne ruši prilikom pristupa metapodatcima. (#5337) 
 - NVDA se više ne ruši prilikom interakcije sa slikama koje sadrže base64 URI u Mozilla Firefoxu ili Google Chromeu. (#10227)
 

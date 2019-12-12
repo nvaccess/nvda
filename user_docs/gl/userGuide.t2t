@@ -171,6 +171,13 @@ A primeira caixa de verificación permíteche controlar se NVDA debería utiliza
 A segunda especifica se NVDA debería arrincar automáticamente despois de autentificarte en Windows e só está dispoñible para copias instaladas do NVDA.
 A terceira permíteche controlar se esta caixa de benvida debería aparecer cada vez que o NVDA arranque.
 
++++ Diálogo Estadísticas de Datos de Uso +++[UsageStatsDialog]
+A partir do NVDA 2018.3, pregúntase ao usuario se quere permitir que os datos de uso se envíen a NV Access para axudar a melloralo no futuro. 
+Ao comezar NVDA por primeira vez, aparecerá un diálogo que che preguntará se queres aceptar o envío de datos a NV Access mentres o usas.
+Podes ler máis información sobre os datos recopilados por NV Access no capítulo 11 máis adiante.
+Nota: ao premer en "si" ou "non" gardarase este axuste e o diálogo non aparecerá nunca máis a menos que reinstales o NVDA.
+Sen embargo, podes activar ou desactivar o proceso de recopilación de datos manualmente no panel das opcións xerais do NVDA. Para cambiar esta opción manualmente, podes marcar ou desmarcar a caixa de verificación chamada [Permitir ao proxecto de NVDA recolectar estadísticas de uso do NVDA #GeneralSettingsGatherUsageStats].
+
 ++ Acerca de Ordes de teclado de NVDA ++[AboutNVDAKeyboardCommands]
 
 +++ A Tecla Modificadora NVDA +++[TheNVDAModifierKey]
@@ -641,6 +648,7 @@ Cando desexes voltar ao documento, simplemente preme a tecla escape.
 + Braille +[Braille]
 Se tes unha pantalla braille, NVDA pode amosar información en braille.
 Se a túa pantalla braille ten un teclado tipo Perkins, tamén podes introducir braille contraído ou sen contraer.
+O Braille tamén pode amosarse en pantalla usando o [Visualizador de Braille #BrailleViewer] no seu lugar, ou ao mesmo tempo, usando unha pantalla braille física.
 
 Por favor consulta a seción [Pantallas Braille soportadas  #SupportedBrailleDisplays] para información  acerca das pantallas braille soportadas.
 Esta seción tamén contén información sobre que pantallas son compatibles coa función de detección automática de pantallas braille do NVDA.
@@ -1053,7 +1061,6 @@ Os niveis dispoñibles do rexistro son:
  - Se che preocupa a privacidade, non configures a esta opción de nivel de rexistro.
 - Depuración: ademáis das mensaxes de información, aviso e entrada/saída, rexistraranse mensaxes de depuración adicionais.
  - Ao igual que coa Entrada/saída, se che preocupa a privacidade, non deberías configurar o nivel de rexistro nesta opción.
--
 
 ==== Iniciar automáticamente nvda despois de autentificarse en windows ====[GeneralSettingsStartAfterLogOn]
 Se esta opción está activada, NVDA arrancará automáticamente tan pronto como te autentifiques en Windows. 
@@ -1532,9 +1539,10 @@ Esta categoría contén as seguintes opcións:
 Unha caixa de verificación que cando está marcada di ao NVDA que anuncie consellos segundo aparezan. 
 Moitas ventás e controis amosan unha pequena mensaxe (ou consello) cando moves o punteiro do rato sobre eles, ou algunhas veces cando te moves co foco por eles.
 
-==== Anunciar globos de axuda ====[ObjectPresentationReportBalloons]
-Esta caixa de verificación cando está marcada di ao NVDA que anuncie os globos de axuda cando aparezan. 
-Os globos de axuda son como pequenos consellos, pero normalmente son máis grandes, e están asociados con eventos do Sistema como un cable de red sendo desenchufado, ou quizáis alertarte acerca de problemas de seguridade do Windows.
+==== Anunciar notificacións ====[ObjectPresentationReportNotifications]
+Esta caixa de verificación, cando está marcada, di ao NVDA que anuncie os globos de axuda e as notificacións segundo aparezan.
+- Os globos de axuda son coma consellos, pero normalmente son de maior tamaño e están asociados con eventos do sistema como a desconexión dun cable de rede, ou tal vez para alertarte sobre problemas de seguridade de Windows.
+- As notificacións se introducíronse en Windows 10 e aparecen no centro de notificacións na bandexa do sistema, informando sobre varios eventos (por exemplo: se se descargou unha actualización, apareceu un novo correo electrónico na túa bandexa de entrada, etc.).
 
 ==== Anunciar Teclas de Atallo dos Obxectos ====[ObjectPresentationShortcutKeys]
 Cando esta caixa de verificación está marcada, NVDA incluirá a tecla de atallo que estea asociada con certo obxecto ou control cando sexa anunciado. 
@@ -2027,6 +2035,20 @@ Mentres o visualizador de voz estea activado, actualízase constantemente para a
 Non obstante, se fas clic ou colocas o foco dentro do visualizador,  NVDA deterá temporalmente a actualización do texto, tal que poderás seleccionar ou copiar sinxelamente o contido existente.
 
 Para conmutar o visualizador de voz dende calquera lugar, por favor asigna un xesto persoalizado utilizando o [diálogo Xestos de Entrada #InputGestures].
+
+++ Visualizador Braille ++[BrailleViewer]
+Para os desenvolvedores de software videntes ou as persoas que fagan demostracións do NVDA para audiencias con visión, hai dispoñible unha ventá frotante que lles permite ver a saída braille e o texto equivalente para cada carácter braille.
+O Visualizador Braille pode usarse ao mesmo tempo que unha pantalla braille física, o que coincidirá co número de celdas do dispositivo físico.
+Mentres o Visualizador Braille estea activado, actualízase constantemente para amosarche o braille que se amosaría na pantalla Braille física.
+
+Para activar o Visualizador Braille, marca o elemento de menú "Visualizador Braille" en Ferramentas no menú NVDA.
+Desmarca o elemento de menú para desactivalo.
+
+As pantallas braille físicas soen ter botóns para desprazarse cara adiante ou cara atrás, para activar el desprazamento coa ferramenta Visualizador Braille usa o [diálogo Xestos de Entrada #InputGestures] para asignar atallos de teclado que "Desprace a pantalla braille atrás" e "Desprace a pantalla braille adiante"
+
+A ventá do Visualizador Braille contén unha caixa de verificación etiquetada "Amosar Visualizador de Braille ao comezar".
+Se esta opción está marcada, o Visualizador Braille abrirase cando se inicie o NVDA.
+A ventá do Visualizador Braille sempre tentará voltar a abrirse coas mesmas dimensións e colocación que cando se pechou.
 
 ++ Administrador de Complementos ++[AddonsManager]
 O Administrador de Complementos, ao que se accesa selecionando Xestionar Complementos baixo Ferramentas no menú NVDA, permíteche instalar, desinstalar, habilitar e deshabilitar os paquetes de complementos para o NVDA.
