@@ -25,7 +25,7 @@ env.Alias("devDocsInstall", devDocsInstall)
 
 devDocsOutputDir=outputDir.Dir('devDocs')
 
-#Build the developer guide -- which must be moved at some point
+#Build the developer guide and move it to the output directory
 htmlFile=env.txt2tags('developerGuide.t2t')
 env.Depends(htmlFile, t2tBuildConf)
 env.SideEffect('_txt2tags',htmlFile)
