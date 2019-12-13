@@ -142,21 +142,28 @@ before_test:
      } catch {
       echo NVDA installer process timed out
       $errorCode=1
+      Add-AppveyorMessage "Unable to install NVDA prior to tests."
      }
      Push-AppveyorArtifact $installerLogFilePath
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
 test_script:
+# Unit Tests (Python)
  - ps: |
      $errorCode=0
      $outDir = (Resolve-Path .\testOutput\unit\)
      $unitTestsXml = "$outDir\unitTests.xml"
      py -m nose -sv --with-xunit --xunit-file="$unitTestsXml" ./tests/unit
-     if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
+     if($LastExitCode -ne 0) {
+      $errorCode=$LastExitCode
+      Add-AppveyorMessage "Unit test failure"
+     }
      Push-AppveyorArtifact $unitTestsXml
      $wc = New-Object 'System.Net.WebClient'
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", $unitTestsXml)
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
+
+# Flake8 Linting
  - ps: |
     if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
       $lintOutput = (Resolve-Path .\testOutput\lint\)
@@ -179,6 +186,8 @@ test_script:
       $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", $junitXML)
       if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
     }
+
+# System tests
  - ps: |
      $testOutput = (Resolve-Path .\testOutput\)
      $systemTestOutput = (Resolve-Path "$testOutput\system")
@@ -186,7 +195,10 @@ test_script:
      py -m robot --loglevel DEBUG -d $systemTestOutput -x systemTests.xml -v whichNVDA:installed -P "$testSource/libraries" "$testSource"
      Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
      Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
-     if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
+     if($LastExitCode -ne 0) {
+      $errorCode=$LastExitCode
+      Add-AppveyorMessage "System test failure"
+     }
      $wc = New-Object 'System.Net.WebClient'
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$systemTestOutput\systemTests.xml"))
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
