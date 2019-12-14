@@ -1035,7 +1035,7 @@ Tries to force this object to take the focus.
 		"""
 		name=self.name
 		if name:
-			ui.message(name)
+			ui.message(name, speechPriority=speech.priorities.Spri.NOW)
 
 	def event_typedCharacter(self,ch):
 		if config.conf["documentFormatting"]["reportSpellingErrors"] and config.conf["keyboard"]["alertForSpellingErrors"] and (
