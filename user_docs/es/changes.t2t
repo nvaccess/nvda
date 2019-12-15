@@ -27,6 +27,7 @@ Qué hay de Nuevo en NVDA
 - Añadida la funcionalidad Resaltado de pantalla a NVDA. (#971, #9064)
  - El resaltado del foco, del navegador de objetos y de la posición del cursor del modo Exploración pueden habilitarse y configurarse a través de la categoría 'visión' en el diálogo Opciones de NVDA.
  - Nota: esta característica es incompatible con el complemento focus highlight, sin embargo, el complemento todavía puede utilizarse mientras el resaltador incorporado esté deshabilitado.
+- Añadida la herramienta Visualizador de Braille, que permite ver la salida braille a través de una ventana sobre la pantalla. (#7788)
 
 
 == Cambios ==
@@ -44,6 +45,7 @@ Qué hay de Nuevo en NVDA
 - Al enfocar un grupo en el modo Exploración, ahora también se lee la descripción. (#10095)
 - Ahora se incluye el Java Access Bridge con NVDA para permitir el acceso a aplicaciones Java, incluso para máquinas Java de 64 bits. (#7724)
 - Si el Java Access Bridge no está habilitado para el usuario, NVDA lo habilita actomáticamente al arrancar. (#7952)
+- Actualizado eSpeak-NG a 1.51-dev, commit ca65812ac6019926f2fbd7f12c92d7edd3701e0c. (#10581)
 
 
 == Corrección de fallos ==
@@ -73,6 +75,11 @@ Qué hay de Nuevo en NVDA
 - Las aplicaciones Java iniciadas antes de NVDA ahora son accesibles sin la necesidad de iniciar la aplicación Java. (#10296)
 - En Mozilla Firefox, cuando el elemento enfocado se marca como actual (aria-current), este cambio ya no se verbaliza varias veces. (#8960)
 - NVDA ahora tratará a ciertos caracteres de composición unicode tales como e-acute como un solo carácter al moverse por el texto. (#10550)
+- Ahora se admite Spring Tool Suite Versión 4. (#10001)
+- No se pronuncia el nombre por duplicado cuando aria-labelledby relation target es un elemento interior. (#10552)
+- En Windows 10 version 1607 y posterior, los caracteres escritos desde teclados Braille se verbalizan en más situaciones. (#10569)
+- Al cambiar el dispositivo de salida de audio, los tonos reproducidos por NVDA ahora se reproducirán por el dispositivo recientemente seleccionado. (#2167)
+- En Mozilla Firefox, mover el foco en modo Exploración es más rápido. Esto hace que mover el cursor en modo Exploración sea más ágil en muchos casos. (#10584)
 
 
 == Cambios para Desarrolladores ==

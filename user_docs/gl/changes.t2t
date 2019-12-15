@@ -27,6 +27,7 @@ Que hai de Novo no NVDA
 - Engadida a funcionalidade Resaltado de pantalla ao NVDA. (#971, #9064)
  - O resaltado do foco, do navegador de obxectos e da posición do cursor do modo Exploración poden activarse e configurarse a través da categoría 'visión' no diálogo Opcións do NVDA.
  - Nota: esta característica é incompatible co complemento focus highlight, sen embargo, o complemento aínda pode usarse mentres o resaltador incorporado estea desactivado.
+- Engadida a ferramenta Visualizador de Braille, que permite ver a saída braille a través dunha ventá sobre a pantalla. (#7788)
 
 
 == Cambios ==
@@ -44,6 +45,7 @@ Que hai de Novo no NVDA
 - Ao enfocar un grupo no modo Exploración, agora tamén se le a descripción. (#10095)
 - Agora inclúese o Java Access Bridge co NVDA para permitir o acceso a aplicacións Java, incluso para máquinas Java de 64 bits. (#7724)
 - Se o Java Access Bridge non está habilitado para o usuario, o NVDA actívao actomáticamente ao arrancar. (#7952)
+- Actualizado eSpeak-NG á 1.51-dev, commit ca65812ac6019926f2fbd7f12c92d7edd3701e0c. (#10581)
 
 
 == Arranxo de fallos ==
@@ -73,6 +75,11 @@ Que hai de Novo no NVDA
 - As aplicacións Java comezadas antes do NVDA agora son accesibles sen a necesidade de comezar a aplicación Java. (#10296)
 - En Mozilla Firefox, cando o elemento enfocado se marca como actual (aria-current), este cambio xa non se fala varias veces. (#8960)
 - O NVDA agora tratará certos caracteres de composición unicode como e-acute como un so carácter ao se mover polo texto. (#10550)
+- Agora admítese Spring Tool Suite Versión 4. (#10001)
+- Non se pronuncia o nome por duplicado cuando aria-labelledby relation target é un elemento interior. (#10552)
+- En Windows 10 version 1607 e posterior, os caracteres escrebidos dende teclados Braille fálanse en máis situacións. (#10569)
+- Ao se cambiar o dispositivo de saída de audio, os tons reproducidos polo NVDA agora reproduciranse polo dispositivo recentemente selecionado. (#2167)
+- En Mozilla Firefox, mover o foco en modo Exploración é máis rápido. Esto fai que mover o cursor en modo Exploración sexa máis áxil en moitos casos. (#10584)
 
 
 == Cambios para Desenvolvedores ==

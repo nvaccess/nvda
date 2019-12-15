@@ -171,6 +171,13 @@ La primera casilla de verificación te permite controlar si NVDA debería utiliz
 La segunda especifica si NVDA debería arrancar automáticamente después del inicio de sesión de Windows y sólo está disponible para copias instaladas de NVDA.
 La tercera te permite controlar si este cuadro de bienvenida debería aparecer cada vez que NVDA arranque.
 
++++ Diálogo Estadísticas de Datos de Uso +++[UsageStatsDialog]
+A partir de NVDA 2018.3, se pregunta al usuario si quiere permitir que los datos de uso se envíen a NV Access para ayudar a mejorarlo en el futuro. 
+Al iniciar NVDA por primera vez, aparecerá un diálogo que te preguntará si quieres aceptar el envío de datos a NV Access mientras lo utilizas.
+Puedes leer más información sobre los datos recopilados por NV Access en el capítulo 11 más adelante.
+Nota: al pulsar en "sí" o "no" se guardará este ajuste y el diálogo no aparecerá nunca más a menos que reinstales NVDA.
+Sin embargo, puedes activar o desactivar el proceso de recopilación de datos manualmente en el panel de las opciones generales de NVDA. Para cambiar esta opción manualmente, puedes marcar o desmarcar la casilla de verificación llamada [Permitir al proyecto de NVDA recolectar estadísticas de uso de NVDA #GeneralSettingsGatherUsageStats].
+
 ++ Acerca de Órdenes de teclado de NVDA ++[AboutNVDAKeyboardCommands]
 
 +++ La Tecla Modificadora NVDA +++[TheNVDAModifierKey]
@@ -641,6 +648,7 @@ Cuando desees volver al documento, simplemente pulsa la tecla escape.
 + Braille +[Braille]
 Si tienes una pantalla braille, NVDA puede mostrar información en braille.
 Si tu pantalla braille tiene un teclado tipo Perkins, también puedes introducir braille contraído o sin contraer.
+El Braille también puede mostrarse en pantalla utilizando el [Visualizador de Braille #BrailleViewer] en su lugar, o al mismo tiempo, utilizando una pantalla braille física.
 
 Por favor consulta la sección [Pantallas Braille admitidas  #SupportedBrailleDisplays] para información  acerca de las pantallas braille soportadas.
 Esta sección también contiene información sobre qué pantallas son compatibles con la función de detección automática de pantallas braille de NVDA.
@@ -1053,7 +1061,6 @@ Los niveles disponibles del registro son:
  - Si te preocupa la privacidad, no configures esta opción de nivel de registro.
 - Depuración: además de los mensajes de información, advertencia y entrada/salida, se registrarán mensajes de depuración adicionales.
  - Al igual que con la Entrada/salida, si te preocupa la privacidad, no deberías configurar el nivel de registro en esta opción.
--
 
 ==== Arrancar automáticamente NVDA después de Iniciar sesión en Windows ====[GeneralSettingsStartAfterLogOn]
 Si esta opción está activada, NVDA arrancará automáticamente tan pronto como inicies sesión en Windows. 
@@ -1532,9 +1539,10 @@ Esta categoría contiene las siguientes opciones:
 Una casilla de verificación que cuando está marcada dice a NVDA que anuncie consejos según aparezcan. 
 Muchas ventanas y controles muestran un pequeño mensaje (o consejo) cuando mueves el puntero del ratón sobre ellos, o algunas veces cuando te mueves con el foco por ellos.
 
-==== Anunciar globos de ayuda ====[ObjectPresentationReportBalloons]
-Esta casilla de verificación cuando está marcada dice a NVDA que anuncie los globos de ayuda cuando aparezcan. 
-Los globos de ayuda son como los consejos, pero normalmente son más grandes, y están asociados con eventos del Sistema tales como la desconexión de un cable de red, o quizás alertarte acerca de problemas de seguridad de Windows.
+==== Anunciar notificaciones ====[ObjectPresentationReportNotifications]
+Esta casilla de verificación, cuando está marcada, dice a NVDA que anuncie los globos de ayuda y las notificaciones a medida que aparezcan.
+- Los globos de ayuda son como consejos, pero normalmente son de mayor tamaño y están asociados con eventos del sistema tales como la desconexión de un cable de red, o tal vez para alertarte sobre problemas de seguridad de Windows.
+- Las notificaciones se han introducido en Windows 10 y aparecen en el centro de notificaciones en la bandeja del sistema, informando sobre varios eventos (por ejemplo: si se ha descargado una actualización, ha aparecido un nuevo correo electrónico en tu bandeja de entrada, etc.).
 
 ==== Anunciar Teclas de Atajo de los Objetos ====[ObjectPresentationShortcutKeys]
 Cuando esta casilla de verificación está verificada, NVDA incluirá la tecla de atajo que esté asociada con cierto objeto o control cuando sea anunciado. 
@@ -2027,6 +2035,20 @@ Mientras el visualizador de voz está activado, se actualiza constantemente para
 No obstante, si haces clic o colocas el foco dentro del visualizador,  NVDA detendrá temporalmente la actualización del texto, tal que podrás seleccionar o copiar fácilmente el contenido existente.
 
 Para conmutar el visualizador de voz desde cualquier lugar, por favor asigna un gesto personalizado utilizando el [diálogo Gestos de Entrada #InputGestures].
+
+++ Visualizador Braille ++[BrailleViewer]
+Para los desarrolladores de software videntes o las personas que hagan demostraciones de NVDA para audiencias con visión, hay disponible una ventana flotante que les permite ver la salida braille y el texto equivalente para cada carácter braille.
+El Visualizador Braille puede utilizarse al mismo tiempo que una pantalla braille física, el cual coincidirá con el número de celdas del dispositivo físico.
+Mientras el Visualizador Braille esté activado, se actualiza constantemente para mostrarte el braille que se mostraría en la pantalla Braille física.
+
+Para activar el Visualizador Braille, marca el elemento de menú "Visualizador Braille" en Herramientas en el menú NVDA.
+Desmarca el elemento de menú para desactivarlo.
+
+Las pantallas braille físicas suelen tener botones para desplazarse hacia adelante o atrás, para activar el desplazamiento con la herramienta Visualizador Braille utiliza el [diálogo Gestos de Entrada #InputGestures] para asignar atajos de teclado que "Desplace la pantalla braille atrás" y "Desplace la pantalla braille adelante"
+
+La ventana del Visualizador Braille contiene una casilla de verificación etiquetada "Mostrar Visualizador de Braille al arrancar".
+Si esta opción está marcada, el Visualizador Braille se abrirá cuando se inicie NVDA.
+La ventana del Visualizador Braille siempre intentará volver a abrirse con las mismas dimensiones y ubicación que cuando se cerró.
 
 ++ Administrador de Complementos ++[AddonsManager]
 El Administrador de Complementos, al que se accede seleccionando Gestionar Complementos en Herramientas en el menú NVDA, te permite instalar, desinstalar, habilitar y deshabilitar paquetes de complementos para NVDA.

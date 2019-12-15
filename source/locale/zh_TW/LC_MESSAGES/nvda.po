@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA-TW\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-29 15:51+1000\n"
-"PO-Revision-Date: 2019-12-02 14:58+0800\n"
+"POT-Creation-Date: 2019-12-09 11:28+1000\n"
+"PO-Revision-Date: 2019-12-10 17:00+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: NVDA-Taiwan Volunteers Team\n"
 "Language: zh_TW\n"
@@ -225,7 +225,7 @@ msgstr "lst"
 msgid "gra"
 msgstr "gra"
 
-#. Translators: Displayed in braille for an object which is a
+#. Translators: Displayed in braille for toast notifications and for an object which is a
 #. help balloon.
 msgid "hlp"
 msgstr "hlp"
@@ -3978,7 +3978,7 @@ msgstr "跟隨鼠標朗讀 關"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking on"
-msgstr "跟隨鼠標朗讀關閉"
+msgstr "跟隨鼠標朗讀 開"
 
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
@@ -6104,7 +6104,8 @@ msgstr "模擬在系統鍵盤上按%s"
 msgid "NVDA Speech Viewer"
 msgstr "NVDA 檢視報讀內容"
 
-#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+#. Translators: The label for a setting in the speech viewer that controls
+#. whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
 msgstr "在啟動時顯示檢視報讀內容(&S)"
 
@@ -7167,6 +7168,15 @@ msgstr "Seika 點顯器"
 msgid "SuperBraille"
 msgstr "超點"
 
+#. Translators: The title of the NVDA Braille Viewer tool window.
+msgid "NVDA Braille Viewer"
+msgstr "NVDA 點字檢視器"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether the braille viewer is shown at startup or not.
+msgid "&Show Braille Viewer on Startup"
+msgstr "在啟動時顯示點字檢視器(&S)"
+
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
 msgstr "結果"
@@ -7333,6 +7343,10 @@ msgstr "檢視事件記錄(&V)"
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
 msgstr "檢視報讀內容(&S)"
+
+#. Translators: The label for the menu item to toggle Braille Viewer.
+msgid "Braille viewer"
+msgstr "點字檢視器"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -8851,7 +8865,7 @@ msgid "Tones"
 msgstr "提示音"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both  Speech and Tones"
+msgid "Both Speech and Tones"
 msgstr "語音及提示音"
 
 #. Translators: This message is presented in the document formatting settings panelue

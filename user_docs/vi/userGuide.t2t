@@ -760,14 +760,14 @@ Chấm 8 dùng để chuyển dịch phần chữ nổi nhập liệu và bấm 
 Bấm chấm 7 + 8 để chuyển dịch phần chữ nổi nhập liệu nhưng không không thêm vào khoảng trắng hay bấm phím enter.
 %kc:endInclude
 
-+ Nhìn +[Vision]
++ Hỗ trợ nhìn +[Vision]
 Trong khi NVDA hướng đến người mù hoặc nhìn kém chủ yếu sử dụng bộ đọc hay chữ nổi để vận hành một máy vi tính, nó cũng cung cấp chức năng dựng sẵn để thay đổi nội dung trên màn hình.
 Trong NVDA, hỗ trợ nhìn được gọi là trình  cải thiện tầm nhìn.
 
 NVDA đưa ra vài trình cải thiện tầm nhìn dựng sẵn được mô tả dưới đây.
 Các trình cải thiện tầm nhìn bổ sung có thể được cung cấp qua [các add-on của NVDA #AddonsManager].
 
-Có thể thay đổi các thiết lập về nhìn của NVDA trong [phân loại nhìn #VisionSettings] của hộp thoại [Cấu hình NVDA #NVDASettings].
+Có thể thay đổi các thiết lập về hỗ trợ nhìn của NVDA trong [phân loại nhìn #VisionSettings] của hộp thoại [Cấu hình NVDA #NVDASettings].
 
 ++ Làm Nổi Focus ++[VisionFocusHighlight]
 Làm Nổi Focus có thể giúp xác định [focus hệ thống #SystemFocus], [đối tượng điều hướng hiện tại #ObjectNavigation] và vị trí con trỏ [chế độ duyệt #BrowseMode].
@@ -1061,7 +1061,7 @@ Các mức độ log bao gồm:
  - Nếu quan ngại về sự riêng tư thì đừng chọn cấp độ log này.
 - Gỡ lỗi: ngoài các thông tin, cảnh báo và thông điệp  đầu vào / đầu ra, các thông điệp gỡ lỗi bổ sung cũng sẽ được ghi lại.
  - Cũng giống như đầu vào / đầu ra, Nếu quan ngại về sự riêng tư thì đừng nên chọn cấp độ log này.
--
+
 
 ==== Tự khởi động NVDA sau khi đăng nhập vào Windows ====[GeneralSettingsStartAfterLogOn]
 Nếu chọn mục này thì NVDA sẽ tự khởi động sau khi bạn đăng nhập vào Windows.
@@ -1543,6 +1543,7 @@ Rất nhiều đối tượng trên các cửa sổ và trong Windows hiển th�
 Hộp kiểm này, khi được chọn, NVDA sẽ đọc các thông báo trợ giúp (help balloons) và các thông báo dạng toast (toast notifications) khi chúng xuất hiện.
 - Thông báo trợ giúp thường là các thông báo xuất hiện trên các biểu tượng dưới khay hệ thống như tình trạng kết nối mạng hoặc giả là các cảnh báo về vấn đề an toàn của Windows.
 - Thông báo toast được giới thiệu trong Windows 10 và xuất hiện ở trung tâm thông báo (notification center) trên khay hệ thống, cung cấp thông báo cho vài sự kiện (ví dụ: một bản cập nhật đã được tải, có thư mới trong hộp thư đến, v...v...).
+
 
 ==== Thông báo phím tắt của đối tượng ====[ObjectPresentationShortcutKeys]
 Nếu được chọn thì NVDA sẽ thông báo phím tắt của đối tượng (nếu có).

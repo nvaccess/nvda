@@ -39,7 +39,7 @@
 - Asetukset-valintaikkuna ei enää salli lokitason muuttamista, mikäli se on ohitettu komentorivivalitsimella. (#10209)
 - NVDA kertoo nyt Microsoft Wordissa tulostumattomien merkkien näyttötilan painettaessa tilanvaihtopikanäppäintä Ctrl+Vaihto+8. (#10241)
 - Päivitetty Liblouis-pistekirjoituskääntäjä muutoksella 58d67e63. (#10094)
-- Kun CLDR-merkkien (emojit mukaan lukien) puhuminen on käytössä, ne sanotaan kaikilla välimerkkitasoilla. (#8826)
+- Kun emojien puhuminen on käytössä, ne sanotaan kaikilla välimerkkitasoilla. (#8826)
 - NVDA:han sisältyvät kolmannen osapuolen Python-paketit, kuten comtypes, tallentavat nyt varoituksensa ja virheensä NVDA:n lokiin. (#10393)
 - Päivitetty Unicode Common Locale Data Repository -tietokannan emojiselitteet versioksi 36.0. (#10426)
 - Kun kohdistus siirretään selaustilassa ryhmän kohdalle, nyt luetaan lisäksi sen kuvaus. (#10095)
@@ -79,6 +79,7 @@
 - Nimeä ei puhuta kahdesti, kun aria-labelledby-relaatiokohde on sisempi elementti. (#10552)
 - Pistekirjoitusnäppäimistöllä kirjoitetut merkit puhutaan useammissa tapauksissa Windows 10:n versiossa 1607 ja uudemmissa. (#10569)
 - Kun äänen ulostulolaitetta vaihdetaan, NVDA:n äänimerkit toistetaaan nyt juuri valitun laitteen kautta. (#2167)
+- Kohdistuksen siirtäminen selaustilassa on nopeampaa Mozilla Firefoxissa. Tämä tekee kohdistimen siirtämisestä responsiivisempaa. (#10584)
 
 
 == Muutokset kehittäjille ==
