@@ -117,9 +117,11 @@ class _TextReader(object):
 
 	def nextLine(self):
 		if not self.reader:
+			log.debug("no self.reader")
 			# We were stopped.
 			return
 		if not self.reader.obj:
+			log.debug("no self.reader.obj")
 			# The object died, so we should too.
 			self.finish()
 			return
@@ -140,15 +142,25 @@ class _TextReader(object):
 			else:
 				self.finish()
 			return
+
 		# Call lineReached when we start speaking this line.
 		# lineReached will move the cursor and trigger reading of the next line.
+		def _onLineReached(obj=self.reader.obj, state=self.speakTextInfoState.copy()):
+			self.lineReached(obj, bookmark, state)
+
 		cb = speech.CallbackCommand(
-			lambda obj=self.reader.obj, state=self.speakTextInfoState.copy(): self.lineReached(obj, bookmark, state),
+			_onLineReached,
 			name="say-all:lineReached"
 		)
-		spoke = speech.speakTextInfo(self.reader, unit=textInfos.UNIT_READINGCHUNK,
-			reason=controlTypes.REASON_SAYALL, _prefixSpeechCommand=cb,
-			useCache=self.speakTextInfoState)
+
+		spoke = speech.speakTextInfo(
+			self.reader,
+			unit=textInfos.UNIT_READINGCHUNK,
+			reason=controlTypes.REASON_SAYALL,
+			_prefixSpeechCommand=cb,
+			useCache=self.speakTextInfoState
+		)
+
 		# Collapse to the end of this line, ready to read the next.
 		try:
 			self.reader.collapse(end=True)
@@ -189,6 +201,7 @@ class _TextReader(object):
 		try:
 			self.reader.obj.turnPage()
 		except RuntimeError:
+			log.debug("No more pages")
 			# No more pages.
 			self.stop()
 			return
@@ -202,8 +215,11 @@ class _TextReader(object):
 		# we might switch synths too early and truncate the final speech.
 		# We do this by putting a CallbackCommand at the start of a new utterance.
 		cb = speech.CallbackCommand(self.stop, name="say-all:stop")
-		speech.speakWithoutPauses([speech.EndUtteranceCommand(), cb,
-			speech.EndUtteranceCommand()])
+		speech.speakWithoutPauses([
+			speech.EndUtteranceCommand(),
+			cb,
+			speech.EndUtteranceCommand()
+		])
 
 	def stop(self):
 		if not self.reader:
