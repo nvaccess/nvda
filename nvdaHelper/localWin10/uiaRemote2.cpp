@@ -70,7 +70,7 @@ UiaArray<UiaTextRange> _remoteable_splitTextRangeByUnit(UiaOperationScope& scope
 	return ranges;
 }
 
-template<typename ItemType> void _remoteable_visitUiaArrayElements(UiaOperationScope& scope, UiaArray<ItemType>& array, std::function<UiaBool(typename UiaArray<ItemType>::_ItemWrapperType&)> visitorFunc) {
+template<typename ItemType> void _remoteable_visitUiaArrayElements(UiaOperationScope& scope, UiaArray<ItemType>& array, std::function<void(typename UiaArray<ItemType>::_ItemWrapperType&)> visitorFunc) {
 	UiaUint arrayCount=array.Size();
 	UiaUint index=0;
 	scope.For([&](){},[&]() {
@@ -79,13 +79,11 @@ template<typename ItemType> void _remoteable_visitUiaArrayElements(UiaOperationS
 		index+=1;
 	},[&]() {
 		auto element=array.GetAt(index);
-		scope.If(!visitorFunc(element),[&]() {
-			scope.Break();
-		});
+		visitorFunc(element);
 	});
 }
 
-template<typename VectorType> void _remoteable_visitVectorElements(UiaOperationScope& scope, VectorType& array, std::function<UiaBool(typename const VectorType::value_type&)> visitorFunc) {
+template<typename VectorType> void _remoteable_visitVectorElements(UiaOperationScope& scope, VectorType& array, std::function<void(typename const VectorType::value_type&)> visitorFunc) {
 	UiaUint arrayCount=array.size();
 	UiaUint index=0;
 	scope.For([&](){},[&]() {
@@ -94,9 +92,7 @@ template<typename VectorType> void _remoteable_visitVectorElements(UiaOperationS
 		index+=1;
 	},[&]() {
 		auto& element=array[index];
-		scope.If(!visitorFunc(element),[&]() {
-			scope.Break();
-		});
+		visitorFunc(element);
 	});
 }
 
@@ -115,13 +111,14 @@ UiaBool _remoteable_appendAttributesAndTextForRange(UiaOperationScope& scope,Uia
 				attribValues.Append(attribValue);
 			});
 		});
-		return true;
+		scope.If(foundMixed,[&]() {
+			scope.Break();
+		});
 	});
 	scope.If(!foundMixed,[&]() {
 		outArray.Append(UiaVariant(textContentCommand_text));
-		_remoteable_visitUiaArrayElements(scope,attribValues,[&](auto& element) {
-			outArray.Append(element);
-			return true;
+		_remoteable_visitUiaArrayElements(scope,attribValues,[&](auto& attribValue) {
+			outArray.Append(attribValue);
 		});
 		auto text=textRange.GetText(-1);
 		outArray.Append(UiaVariant(text));
@@ -192,12 +189,70 @@ void _remoteable_appendElementStartInfo(UiaOperationScope& scope, UiaElement& el
 	_remoteable_visitVectorElements(scope,propIDs,[&](auto& propID) {
 		auto propValue=element.GetPropertyValue(propID,false,false);
 		outArray.Append(propValue);
-		return true;
 	});
 }
 
 void _remoteable_appendElementEndInfo(UiaOperationScope& scope, UiaElement& element, UiaArray<UiaVariant>& outArray) {
 	outArray.Append(UiaVariant(textContentCommand_elementEnd));
+}
+
+void _remoteable_visitChildRangesAndGaps(UiaOperationScope& scope, UiaTextRange textRange, std::function<void(UiaTextRange& subrange, UiaElement& childElement)> visitorFunc) {
+	// collect the children
+	auto children=textRange.GetChildren();
+	// clone a new range, collapsing it to the beginning of the over all textRange
+	auto tempRange=textRange.Clone();
+	tempRange.MoveEndpointByRange(TextPatternRangeEndpoint_End,tempRange,TextPatternRangeEndpoint_Start);
+	// for all children:
+	_remoteable_visitUiaArrayElements(scope,children,[&](auto& child) {
+		scope.If(child.IsNull(),[&]() {
+			// child is NULL. Skipping.
+			scope.Continue();
+		});
+		auto name=child.GetName(false);
+		// fetch the subrange for the current child
+		auto textChildPattern=child.GetTextChildPattern(false);
+		scope.If(textChildPattern.IsNull(),[&]() {
+			// child does not support textchildPattern. Skipping.
+			scope.Continue();
+		});
+		auto childRange=textChildPattern.GetTextRange();
+		auto childStartDelta = childRange.CompareEndpoints(TextPatternRangeEndpoint_Start,tempRange,TextPatternRangeEndpoint_Start);
+		scope.If(childStartDelta>0,[&]() {
+			// The child starts after tempRange,
+			// So stretch tempRange up to start of child and visit that subrange.
+			tempRange.MoveEndpointByRange(TextPatternRangeEndpoint_End,childRange,TextPatternRangeEndpoint_Start);
+			visitorFunc(tempRange,UiaElement(nullptr));
+			// Collapse tempRange to its end.
+			tempRange.MoveEndpointByRange(TextPatternRangeEndpoint_Start,tempRange,TextPatternRangeEndpoint_End);
+		});
+		// tempRange is now lined up with the start of child,
+		// Or the start of textRange if the child happened to start before the over all textRange.
+		// Now stretch tempRange's end so it covers all of the child.
+		tempRange.MoveEndpointByRange(TextPatternRangeEndpoint_End,childRange,TextPatternRangeEndpoint_End);
+		auto childEndDelta = tempRange.CompareEndpoints(TextPatternRangeEndpoint_End,textRange,TextPatternRangeEndpoint_End);
+		scope.If(childEndDelta>0,[&]() {
+			// child's range ends outside of the over all textRange,
+			// Therefore clip tempRange so that it does not go beyond the over all textRange.
+			tempRange.MoveEndpointByRange(TextPatternRangeEndpoint_End,textRange,TextPatternRangeEndpoint_End);
+		});
+		auto tempRangeWidth = tempRange.CompareEndpoints(TextPatternRangeEndpoint_End,tempRange,TextPatternRangeEndpoint_Start);
+		scope.If(tempRangeWidth>0,[&]() {
+			// Visit this subrange with the child
+			visitorFunc(tempRange,child);
+			// collapse tempRange to its end.
+			tempRange.MoveEndpointByRange(TextPatternRangeEndpoint_Start,tempRange,TextPatternRangeEndpoint_End);
+		});
+	});
+	auto childEndDelta = tempRange.CompareEndpoints(TextPatternRangeEndpoint_End,textRange,TextPatternRangeEndpoint_End);
+	scope.If(childEndDelta<0,[&]() {
+		// After all children,
+		// tempRange never reached the end of textRange,
+		// I.e. the last child finished before the end.
+		// Therefore stretch tempRange's end to the end of the over all textRange.
+		tempRange.MoveEndpointByRange(TextPatternRangeEndpoint_End,textRange,TextPatternRangeEndpoint_End);
+		// Visit the final subrange.
+		visitorFunc(tempRange,UiaElement(nullptr));
+	});
 }
 
 UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaElement& rootElement, UiaTextRange& textRange, std::vector<int>& propIDs, const std::vector<int>& attribIDs) {
@@ -211,30 +266,32 @@ UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaEle
 		_remoteable_calculateAncestorsExitedAndEntered(scope,oldAncestors,newAncestors,elementsExited,elementsEntered);
 		_remoteable_visitUiaArrayElements(scope,elementsExited,[&](auto& element) {
 			_remoteable_appendElementEndInfo(scope,element,content);
-			return true;
 		});
 		_remoteable_visitUiaArrayElements(scope,elementsEntered,[&](auto& element) {
 			_remoteable_appendElementStartInfo(scope,element,propIDs,content);
-			return true;
 		});
-		UiaBool foundMixed=_remoteable_appendAttributesAndTextForRange(scope,formatRange,attribIDs,content,false);
-		scope.If(foundMixed,[&]() {
-			auto charRanges=_remoteable_splitTextRangeByUnit(scope,formatRange,TextUnit_Character);
-			_remoteable_visitUiaArrayElements(scope,charRanges,[&](auto& charRange) {
-				_remoteable_appendAttributesAndTextForRange(scope,charRange,attribIDs,content,true);
-				return true;
+		_remoteable_visitChildRangesAndGaps(scope,formatRange,[&](UiaTextRange& subrange, UiaElement& child) {
+			scope.If(!child.IsNull(),[&]() {
+				_remoteable_appendElementStartInfo(scope,child,propIDs,content);
+			});
+			UiaBool foundMixed=_remoteable_appendAttributesAndTextForRange(scope,subrange,attribIDs,content,false);
+			scope.If(foundMixed,[&]() {
+				auto charRanges=_remoteable_splitTextRangeByUnit(scope,subrange,TextUnit_Character);
+				_remoteable_visitUiaArrayElements(scope,charRanges,[&](auto& charRange) {
+					_remoteable_appendAttributesAndTextForRange(scope,charRange,attribIDs,content,true);
+				});
+			});
+			scope.If(!child.IsNull(),[&]() {
+				_remoteable_appendElementEndInfo(scope,child,content);
 			});
 		});
 		_remoteable_clearUiaArray(scope,oldAncestors);
 		_remoteable_visitUiaArrayElements(scope,newAncestors,[&](auto& element) {
 			oldAncestors.Append(element);
-			return true;
 		});
-		return true;
 	});
 	_remoteable_visitUiaArrayElements(scope,oldAncestors,[&](auto& element) {
 		_remoteable_appendElementEndInfo(scope,element,content);
-		return true;
 	});
 	return content;
 }

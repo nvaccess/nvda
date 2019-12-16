@@ -701,7 +701,7 @@ class UIATextInfo(textInfos.TextInfo):
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
-		return UIARemote.getTextWithFields(self._rangeObj,formatConfig)
+		return UIARemote.getTextWithFields(self.obj.UIAElement,self._rangeObj,formatConfig)
 		fields=list(self._getTextWithFieldsForUIARange(self.obj.UIAElement,self._rangeObj,formatConfig))
 		return fields
 
