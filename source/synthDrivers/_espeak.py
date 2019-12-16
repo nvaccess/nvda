@@ -330,7 +330,7 @@ def initialize(indexCallback=None):
 	espeakDLL.espeak_SetVoiceByName.argtypes=(c_char_p,)
 	eSpeakPath=os.path.abspath("synthDrivers")
 	sampleRate=espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,300,
-		os.fsencode(eSpeakPath),0)
+		eSpeakPath.encode('mbcs'),0)
 	if sampleRate<0:
 		raise OSError("espeak_Initialize %d"%sampleRate)
 	player = nvwave.WavePlayer(channels=1, samplesPerSec=sampleRate, bitsPerSample=16,
