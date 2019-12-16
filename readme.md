@@ -38,7 +38,7 @@ The following dependencies need to be installed on your system:
 * [Python](https://www.python.org/), version 3.7, 32 bit
 	* Use latest minor version if possible.
 * Microsoft Visual Studio 2017 Community, Version 15.3 or later:
-	* Download from https://visualstudio.microsoft.com/downloads/
+	* Download from https://visualstudio.microsoft.com/vs/older-downloads/
 	* When installing Visual Studio, you need to enable the following:
 		On the Workloads tab, in the Windows group:
 			* Universal Windows Platform Development
@@ -62,13 +62,13 @@ For reference, the following run time dependencies are included in Git submodule
 
 * [comtypes](https://github.com/enthought/comtypes), version 1.1.7
 * [wxPython](https://www.wxpython.org/), version 4.0.3
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit 86e67a
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit ca65812a
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit 21bbb176
 * [ConfigObj](https://github.com/DiffSK/configobj), commit 5b5de48
 * [Six](https://pypi.python.org/pypi/six), version 1.12.0, required by wxPython and ConfigObj
 * [liblouis](http://www.liblouis.org/), version 3.10.0 commit 146c0757
-* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/) Emoji Annotations, version 35.0
+* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/) Emoji Annotations, version 36.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * Adobe FlashAccessibility interface typelib
@@ -77,6 +77,7 @@ For reference, the following run time dependencies are included in Git submodule
 * lilli.dll, version 2.1.0.0
 * [pySerial](https://pypi.python.org/pypi/pyserial), version 3.4
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
+* Java Access Bridge 32 bit, from Zulu Community OpenJDK build 13.0.1+10Zulu (13.28.11)
 
 Additionally, the following build time dependencies are included in Git submodules:
 
@@ -123,8 +124,12 @@ scons source user_docs
 While simply testing or committing changes, it may be faster usually just doing `scons source` as user documentation will change each time the revision number changes.
 
 ### Compiling NVDAHelper with Debugging Options
-Among other things, preparing the source tree builds the NVDAHelper libraries.  
-If trying to debug nvdaHelper, you can control various debugging options with the `nvdaHelperDebugFlags` command line variable. It takes one or more of the following flags:
+Among other things, preparing the source tree builds the NVDAHelper libraries.
+If trying to debug nvdaHelper, you can control various debugging options by building with the `nvdaHelperDebugFlags` and `nvdaHelperLogLevel` command line variables.
+
+The `nvdaHelperLogLevel` variable specifies the level of logging (0-59) you wish to see, lower is more verbose. The default is 15.
+
+The `nvdaHelperDebugFlags` variable takes one or more of the following flags:
 
 * debugCRT: the libraries will be linked against the debug C runtime and assertions will be enabled. (By default, the normal CRT is used and assertions are disabled.)
 * RTC: runtime checks (stack corruption, uninitialized variables, etc.) will be enabled. (The default is no runtime checks.)
@@ -143,7 +148,7 @@ However, they are not included in the NVDA distribution.
 Instead, `scons symbolsArchive` will package them as a separate archive.
 
 By default, builds also do not use any compiler optimizations.
-Please see the release keyword argument for what compiler optimizations it will enable.
+Please see the `release` keyword argument for what compiler optimizations it will enable.
 
 ## Running the Source Code
 To start NVDA from source code, run `nvda.pyw` located in the source directory.
@@ -229,6 +234,8 @@ For example, to build a launcher with a specific version, you might type:
 ```
 scons launcher version=test1
 ```
+
+For more see the `sconstruct` file.
 
 ## Running Automated Tests
 If you make a change to the NVDA code, you should run NVDA's automated tests.
