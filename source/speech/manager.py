@@ -3,10 +3,12 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 #Copyright (C) 2006-2019 NV Access Limited
+from typing import cast, Dict, Any, List, Tuple
 
 from logHandler import log
 import queueHandler
 import synthDriverHandler
+from .types import SpeechSequence
 from .commands import *
 from .commands import IndexCommand
 from .priorities import Spri, SPEECH_PRIORITIES
@@ -51,16 +53,16 @@ class _ManagerPriorityQueue(object):
 	is preempted by a higher priority queue.
 	"""
 
-	def __init__(self, priority):
+	def __init__(self, priority: Spri):
 		self.priority = priority
 		#: The pending speech sequences to be spoken.
 		#: These are split at indexes,
 		#: so a single utterance might be split over multiple sequences.
-		self.pendingSequences = []
+		self.pendingSequences: List[SpeechSequence] = []
 		#: The configuration profile triggers that have been entered during speech.
-		self.enteredProfileTriggers = []
+		self.enteredProfileTriggers: List[config.ProfileTrigger] = []
 		#: Keeps track of parameters that have been changed during an utterance.
-		self.paramTracker = ParamChangeTracker()
+		self.paramTracker: ParamChangeTracker = ParamChangeTracker()
 
 class SpeechManager(object):
 	"""Manages queuing of speech utterances, calling callbacks at desired points in the speech, profile switching, prioritization, etc.
@@ -113,6 +115,8 @@ class SpeechManager(object):
 	Note:
 	All of this activity is (and must be) synchronized and serialized on the main thread.
 	"""
+	_priQueues: Dict[Any, _ManagerPriorityQueue]
+	_curPriQueue: Optional[_ManagerPriorityQueue]
 
 	def __init__(self):
 		#: A counter for indexes sent to the synthesizer for callbacks, etc.
@@ -153,7 +157,7 @@ class SpeechManager(object):
 		#: Whether to push more speech when the synth reports it is done speaking.
 		self._shouldPushWhenDoneSpeaking = False
 
-	def speak(self, speechSequence, priority):
+	def speak(self, speechSequence: SpeechSequence, priority: Spri):
 		# If speech isn't already in progress, we need to push the first speech.
 		push = self._curPriQueue is None
 		interrupt = self._queueSpeechSequence(speechSequence, priority)
@@ -163,7 +167,7 @@ class SpeechManager(object):
 		if push:
 			self._pushNextSpeech(True)
 
-	def _queueSpeechSequence(self, inSeq, priority):
+	def _queueSpeechSequence(self, inSeq: SpeechSequence, priority: Spri):
 		"""
 		@return: Whether to interrupt speech.
 		@rtype: bool
@@ -179,7 +183,7 @@ class SpeechManager(object):
 			return True
 		return False
 
-	def _processSpeechSequence(self, inSeq):
+	def _processSpeechSequence(self, inSeq: SpeechSequence):
 		paramTracker = ParamChangeTracker()
 		enteredTriggers = []
 		outSeq = []
@@ -248,7 +252,7 @@ class SpeechManager(object):
 			outSeqs.append([command])
 		return outSeqs
 
-	def _pushNextSpeech(self, doneSpeaking):
+	def _pushNextSpeech(self, doneSpeaking: bool):
 		queue = self._getNextPriority()
 		if not queue:
 			# No more speech.
@@ -330,7 +334,7 @@ class SpeechManager(object):
 		# This needs to be handled in the main thread.
 		queueHandler.queueFunction(queueHandler.eventQueue, self._handleIndex, index)
 
-	def _removeCompletedFromQueue(self, index):
+	def _removeCompletedFromQueue(self, index: int) -> Tuple[bool, bool]:
 		"""Removes completed speech sequences from the queue.
 		@param index: The index just reached indicating a completed sequence.
 		@return: Tuple of (valid, endOfUtterance),
@@ -373,7 +377,7 @@ class SpeechManager(object):
 		del self._curPriQueue.pendingSequences[:seqIndex + 1]
 		return True, endOfUtterance
 
-	def _handleIndex(self, index):
+	def _handleIndex(self, index: int):
 		# A synth (such as OneCore) may skip indexes
 		# If before another index, with no text content in between.
 		# Therefore, detect this and ensure we handle all skipped indexes.
@@ -408,7 +412,7 @@ class SpeechManager(object):
 			# Even if we have many indexes, we should only push next speech once.
 			self._pushNextSpeech(False)
 
-	def _onSynthDoneSpeaking(self, synth=None):
+	def _onSynthDoneSpeaking(self, synth: Optional[synthDriverHandler.SynthDriver] = None):
 		if synth != getSynth():
 			return
 		# This needs to be handled in the main thread.
