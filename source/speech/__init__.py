@@ -185,14 +185,14 @@ def speakSpelling(
 		useCharacterDescriptions: bool = False,
 		priority: Optional[Spri] = None
 ) -> None:
-	seq = list(getSpeechForSpelling(text, locale=locale, useCharacterDescriptions=useCharacterDescriptions))
+	seq = list(getSpellingSpeech(text, locale=locale, useCharacterDescriptions=useCharacterDescriptions))
 	speak(seq, priority=priority)
 
 
-# C901 'getSpeechForSpelling' is too complex
-# Note: when working on getSpeechForSpelling, look for opportunities to simplify
+# C901 'getSpellingSpeech' is too complex
+# Note: when working on getSpellingSpeech, look for opportunities to simplify
 # and move logic out into smaller helper functions.
-def getSpeechForSpelling(  # noqa: C901
+def getSpellingSpeech(  # noqa: C901
 		text: str,
 		locale: Optional[str] = None,
 		useCharacterDescriptions: bool = False
@@ -252,6 +252,12 @@ def getSpeechForSpelling(  # noqa: C901
 			yield PitchCommand()
 		yield EndUtteranceCommand()
 
+
+# 'getSpeechForSpelling' should be considered deprecated, use getSpellingSpeech instead.
+# The name 'getSpeechForSpelling' was introduced during the 2019.3 release.
+# The decision was made to rename it to be consistent with the other functions (get*Speech) which create
+# speech sequences.
+getSpeechForSpelling = getSpellingSpeech
 
 def getCharDescListFromText(text,locale):
 	"""This method prepares a list, which contains character and its description for all characters the text is made up of, by checking the presence of character descriptions in characterDescriptions.dic of that locale for all possible combination of consecutive characters in the text.
