@@ -2308,8 +2308,7 @@ class SpeechWithoutPauses:
 					if after:
 						pendingSpeechSequence.append(after)
 					if before:
-						finalSpeechSequence.extend(self._pendingSpeechSequence)
-						self._pendingSpeechSequence = []
+						finalSpeechSequence.extend(self._flushPendingSpeech())
 						finalSpeechSequence.extend(speechSequence[0:index])
 						finalSpeechSequence.append(before)
 						# Apply the last language change to the pending sequence.
