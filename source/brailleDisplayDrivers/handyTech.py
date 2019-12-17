@@ -91,6 +91,8 @@ MODEL_BASIC_BRAILLE_64 = b"\x86"
 MODEL_BASIC_BRAILLE_80 = b"\x87"
 MODEL_BASIC_BRAILLE_160 = b"\x8B"
 MODEL_BASIC_BRAILLE_84 = b"\x8C"
+MODEL_BASIC_BRAILLE_PLUS_32 = b"\x93"
+MODEL_BASIC_BRAILLE_PLUS_40 = b"\x94"
 MODEL_BRAILLINO = b"\x72"
 MODEL_BRAILLE_STAR_40 = b"\x74"
 MODEL_BRAILLE_STAR_80 = b"\x78"
@@ -446,7 +448,14 @@ class BasicBraille(Model):
 		return '{name} {cells}'.format(name=self.genericName, cells=self.numCells)
 
 
-def basicBrailleFactory(numCells: int, deviceId: bytes):
+class BasicBraillePlus(TripleActionKeysMixin, Model):
+	genericName = "Basic Braille Plus"
+
+	def _get_name(self):
+		return '{name} {cells}'.format(name=self.genericName, cells=self.numCells)
+
+
+def basicBrailleFactory(numCells, deviceId):
 	return type("BasicBraille{cells}".format(cells=numCells), (BasicBraille,), {
 		"deviceId": deviceId,
 		"numCells": numCells,
@@ -461,6 +470,17 @@ BasicBraille64 = basicBrailleFactory(64, MODEL_BASIC_BRAILLE_64)
 BasicBraille80 = basicBrailleFactory(80, MODEL_BASIC_BRAILLE_80)
 BasicBraille160 = basicBrailleFactory(160, MODEL_BASIC_BRAILLE_160)
 BasicBraille84 = basicBrailleFactory(84, MODEL_BASIC_BRAILLE_84)
+
+
+def basicBraillePlusFactory(numCells, deviceId):
+	return type("BasicBraillePlus{cells}".format(cells=numCells), (BasicBraillePlus,), {
+		"deviceId": deviceId,
+		"numCells": numCells,
+	})
+
+
+BasicBraillePlus32 = basicBraillePlusFactory(32, MODEL_BASIC_BRAILLE_PLUS_32)
+BasicBraillePlus40 = basicBraillePlusFactory(40, MODEL_BASIC_BRAILLE_PLUS_40)
 
 
 class BrailleStar(TripleActionKeysMixin, Model):
@@ -572,8 +592,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
-		# Create the message window on the ui thread.
-		wx.CallAfter(self.create_message_window)
 		self.numCells = 0
 		self._model = None
 		self._ignoreKeyReleases = False
@@ -618,12 +636,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				self._model.postInit()
 				log.info("Found {device} connected via {type} ({port})".format(
 					device=self._model.name, type=portType, port=port))
+				# Create the message window on the ui thread.
+				wx.CallAfter(self.create_message_window)
 				break
 			self._dev.close()
 
 		else:
-			# Make sure this is called on the ui thread
-			wx.CallAfter(self.destroy_message_window)
 			raise RuntimeError("No Handy Tech display found")
 
 	def create_message_window(self):

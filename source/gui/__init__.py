@@ -313,6 +313,18 @@ class MainFrame(wx.Frame):
 		else:
 			speechViewer.deactivate()
 
+	def onBrailleViewerChangedState(self, created):
+		# its possible for this to be called after the sysTrayIcon is destroyed if we are exiting NVDA
+		if self.sysTrayIcon and self.sysTrayIcon.menu_tools_toggleBrailleViewer:
+			self.sysTrayIcon.menu_tools_toggleBrailleViewer.Check(created)
+
+	def onToggleBrailleViewerCommand(self, evt):
+		import brailleViewer
+		if brailleViewer.isBrailleViewerActive():
+			brailleViewer.destroyBrailleViewer()
+		else:
+			brailleViewer.createBrailleViewerTool()
+
 	def onPythonConsoleCommand(self, evt):
 		import pythonConsole
 		if not pythonConsole.consoleUI:
@@ -432,6 +444,18 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		# Translators: The label for the menu item to toggle Speech Viewer.
 		item=self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
 		self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
+
+		self.menu_tools_toggleBrailleViewer: wx.MenuItem = menu_tools.AppendCheckItem(
+			wx.ID_ANY,
+			# Translators: The label for the menu item to toggle Braille Viewer.
+			_("Braille viewer")
+		)
+		item = self.menu_tools_toggleBrailleViewer
+		self.Bind(wx.EVT_MENU, frame.onToggleBrailleViewerCommand, item)
+		import brailleViewer
+		self.menu_tools_toggleBrailleViewer.Check(brailleViewer.isBrailleViewerActive())
+		brailleViewer.postBrailleViewerToolToggledAction.register(frame.onBrailleViewerChangedState)
+
 		if not globalVars.appArgs.secure and not config.isAppX:
 			# Translators: The label for the menu item to open NVDA Python Console.
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
@@ -547,6 +571,9 @@ def initialize():
 	wx.GetApp().SetTopWindow(mainFrame)
 
 def terminate():
+	import brailleViewer
+	brailleViewer.destroyBrailleViewer()
+
 	for instance, state in gui.SettingsDialog._instances.items():
 		if state is gui.SettingsDialog._DIALOG_DESTROYED_STATE:
 			log.error(
@@ -841,7 +868,10 @@ class ExitDialog(wx.Dialog):
 		self.actionsList = contentSizerHelper.addLabeledControl(labelText, wx.Choice, choices=self.actions)
 		self.actionsList.SetSelection(0)
 
-		contentSizerHelper.addItem( self.CreateButtonSizer(wx.OK | wx.CANCEL))
+		contentSizerHelper.addItem(
+			self.CreateButtonSizer(wx.OK | wx.CANCEL),
+			flag=wx.ALIGN_RIGHT
+		)
 
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
@@ -892,7 +922,10 @@ class ExecAndPump(threading.Thread):
 		self.func=func
 		self.args=args
 		self.kwargs=kwargs
-		super(ExecAndPump,self).__init__()
+		fname = repr(func)
+		super().__init__(
+			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}({fname})"
+		)
 		self.threadExc=None
 		self.start()
 		time.sleep(0.1)

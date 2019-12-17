@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from typing import Dict
 import heapq
 import itertools
 import struct
@@ -17,6 +18,7 @@ import oleacc
 import UIAHandler
 from comInterfaces.Accessibility import *
 from comInterfaces.IAccessible2Lib import *
+from comInterfaces import IAccessible2Lib as IA2
 from logHandler import log
 import JABHandler
 import eventHandler
@@ -29,6 +31,8 @@ import mouseHandler
 import controlTypes
 import keyboardHandler
 import core
+import re
+
 
 MAX_WINEVENTS=500
 MAX_WINEVENTS_PER_THREAD=10
@@ -255,6 +259,7 @@ IAccessibleRolesToNVDARoles={
 	IA2_ROLE_CONTENT_DELETION:controlTypes.ROLE_DELETED_CONTENT,
 	IA2_ROLE_CONTENT_INSERTION:controlTypes.ROLE_INSERTED_CONTENT,
 	IA2_ROLE_BLOCK_QUOTE:controlTypes.ROLE_BLOCKQUOTE,
+	IA2.IA2_ROLE_LANDMARK: controlTypes.ROLE_LANDMARK,
 	#some common string roles
 	"frame":controlTypes.ROLE_FRAME,
 	"iframe":controlTypes.ROLE_INTERNALFRAME,
@@ -341,7 +346,9 @@ def accessibleObjectFromEvent(window,objectID,childID):
 	try:
 		pacc,childID=oleacc.AccessibleObjectFromEvent(window,objectID,childID)
 	except Exception as e:
-		log.debugWarning("oleacc.AccessibleObjectFromEvent with window %s, objectID %s and childID %s: %s"%(window,objectID,childID,e))
+		log.debug(
+			f"oleacc.AccessibleObjectFromEvent with window {window}, objectID {objectID} and childID {childID}: {e}"
+		)
 		return None
 	return (normalizeIAccessible(pacc,childID),childID)
 
@@ -569,6 +576,10 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 				window=tempWindow
 
 		windowClassName=winUser.getClassName(window)
+		if windowClassName == "ConsoleWindowClass":
+			# #10113: we need to use winEvents to track the real thread for console windows.
+			consoleWindowsToThreadIDs[window] = threadID
+
 		# Modern IME candidate list windows fire menu events which confuse us
 		# and can't be used properly in conjunction with input composition support.
 		if windowClassName=="Microsoft.IME.UIManager.CandidateWindow.Host" and eventID in MENU_EVENTIDS:
@@ -1005,6 +1016,14 @@ def getRecursiveTextFromIAccessibleTextObject(obj,startOffset=0,endOffset=-1):
 		textList.append(t)
 	return "".join(textList).replace('  ',' ')
 
+
+ATTRIBS_STRING_BASE64_PATTERN = re.compile(
+	r"(([^\\](\\\\)*);src:data\\:[^\\;]+\\;base64\\,)[A-Za-z0-9+/=]+"
+)
+ATTRIBS_STRING_BASE64_REPL = r"\1<truncated>"
+ATTRIBS_STRING_BASE64_THRESHOLD = 4096
+
+
 def splitIA2Attribs(attribsString):
 	"""Split an IAccessible2 attributes string into a dict of attribute keys and values.
 	An invalid attributes string does not cause an error, but strange results may be returned.
@@ -1014,6 +1033,11 @@ def splitIA2Attribs(attribsString):
 	@return: A dict of the attribute keys and values, where values are strings or dicts.
 	@rtype: {str: str or {str: str}}
 	"""
+	# Do not treat huge base64 data as it might freeze NVDA in Google Chrome (#10227)
+	if len(attribsString) >= ATTRIBS_STRING_BASE64_THRESHOLD:
+		attribsString = ATTRIBS_STRING_BASE64_PATTERN.sub(ATTRIBS_STRING_BASE64_REPL, attribsString)
+		if len(attribsString) >= ATTRIBS_STRING_BASE64_THRESHOLD:
+			log.debugWarning(f"IA2 attributes string exceeds threshold: {attribsString}")
 	attribsDict = {}
 	tmp = ""
 	key = ""
@@ -1083,3 +1107,13 @@ def isMarshalledIAccessible(IAccessibleObject):
 	windll.kernel32.GetModuleHandleExW(6,addr,byref(handle))
 	windll.kernel32.GetModuleFileNameW(handle,buf,1024)
 	return not buf.value.lower().endswith('oleacc.dll')
+
+
+#: Maps from console windows (ConsoleWindowClass) to thread IDs
+# Windows hacks GetWindowThreadProcessId to return the input thread of the first attached process in a console
+# But NVDA really requires to know the actual thread the window was created in,
+# I.e. inside conhost,
+# In order to handle speaking of typed characters etc.
+# winEventCallback adds these whenever it sees an event for ConsoleWindowClass windows,
+# As winEvents always contain the true thread ID.
+consoleWindowsToThreadIDs: Dict[int, int] = {}

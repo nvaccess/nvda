@@ -126,6 +126,11 @@ def iterUIARangeByUnit(rangeObj,unit,reverse=False):
 		if pastEnd:
 			return
 		tempRange.MoveEndpointByRange(Endpoint_relativeStart,tempRange,Endpoint_relativeEnd)
+		delta = tempRange.CompareEndpoints(Endpoint_relativeStart, rangeObj, Endpoint_relativeEnd)
+		if relativeGTOperator(delta, -1):
+			# tempRange is now already entirely past the end of the given range.
+			# Can be seen with MS Word bullet points: #9613
+			return
 	# Ensure that we always reach the end of the outer range, even if the units seem to stop somewhere inside
 	if relativeLTOperator(tempRange.CompareEndpoints(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd),0):
 		tempRange.MoveEndpointByRange(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd)
@@ -239,4 +244,4 @@ it is retrieved from config).
 	# ignore it.
 	# It does not implement caret/selection, and probably has no
 	# new text events.
-	return isWin10(1803)
+	return isWin10(1809)

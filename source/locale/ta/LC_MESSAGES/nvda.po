@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-21 00:10+1000\n"
-"PO-Revision-Date: 2019-06-23 09:14+0530\n"
+"POT-Creation-Date: 2019-12-06 07:28+1000\n"
+"PO-Revision-Date: 2019-12-08 13:42+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -106,7 +106,8 @@ msgstr "இலக்கணம்: {text}"
 msgid "unknown"
 msgstr "தெரியாதது"
 
-#. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
+#. Translators: This is presented when errors are found in an appModule
+#. (example output: error in appModule explorer).
 #, python-format
 msgid "Error in appModule %s"
 msgstr "%s பயன்பாட்டு நிரற்கூறில் பிழை"
@@ -145,11 +146,6 @@ msgstr "தேடுக"
 msgctxt "aria"
 msgid "form"
 msgstr "படிவம்"
-
-#. Translators: Reported for a significant region, normally found on web pages.
-msgctxt "aria"
-msgid "region"
-msgstr "மண்டலம்"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -226,7 +222,7 @@ msgstr "lst"
 msgid "gra"
 msgstr "gra"
 
-#. Translators: Displayed in braille for an object which is a
+#. Translators: Displayed in braille for toast notifications and for an object which is a
 #. help balloon.
 msgid "hlp"
 msgstr "hlp"
@@ -307,6 +303,11 @@ msgid "grp"
 msgstr "grp"
 
 #. Translators: Displayed in braille for an object which is a
+#. caption.
+msgid "cap"
+msgstr "cap"
+
+#. Translators: Displayed in braille for an object which is a
 #. embedded object.
 msgid "embedded"
 msgstr "embedded"
@@ -373,6 +374,22 @@ msgstr "del"
 #. Translators: Displayed in braille for an object which is inserted.
 msgid "ins"
 msgstr "ins"
+
+#. Translators: Displayed in braille for a landmark.
+msgid "lmk"
+msgstr "lmk"
+
+#. Translators: Displayed in braille for an object which is an article.
+msgid "art"
+msgstr "art"
+
+#. Translators: Displayed in braille for an object which is a region.
+msgid "rgn"
+msgstr "rgn"
+
+#. Translators: Displayed in braille for an object which is a figure.
+msgid "fig"
+msgstr "fig"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -477,11 +494,6 @@ msgctxt "braille landmark abbreviation"
 msgid "form"
 msgstr "form"
 
-#. Translators: Displayed in braille for a significant region, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "rgn"
-msgstr "rgn"
-
 #. Translators: The description of a braille cursor shape.
 msgid "Dots 7 and 8"
 msgstr "புள்ளிகள் 7, 8"
@@ -512,6 +524,9 @@ msgid "Only when scrolling back"
 msgstr "பின்னுருட்டும்பொழுது மட்டும்"
 
 #. Translators: String representing automatic port selection for braille displays.
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA determine its Windows Console implementation
+#. automatically.
 msgid "Automatic"
 msgstr "தன்னியக்கம்"
 
@@ -898,8 +913,8 @@ msgstr "குஜராத்தி படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Koine Greek"
-msgstr "காய்ன் கிரேக்கம்"
+msgid "Greek international braille"
+msgstr "கிரேக்க அனைத்துலக பிரெயில்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1696,6 +1711,38 @@ msgstr "முந்தைய பிழைக்கு நகர்கிறத�
 msgid "no previous error"
 msgstr "முந்தைய பிழை ஏதுமில்லை"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next article"
+msgstr "அடுத்த பிரிவுக்கூறுக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next article"
+msgstr "அடுத்த பிரிவுக்கூறு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous article"
+msgstr "முந்தைய பிரிவுக்கூறுக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous article"
+msgstr "முந்தைய பிரிவுக்கூறு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next grouping"
+msgstr "அடுத்த குழுவாக்கத்திற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next grouping"
+msgstr "அடுத்த குழுவாக்கம் ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous grouping"
+msgstr "முந்தைய குழுவாக்கத்திற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous grouping"
+msgstr "முந்தைய குழுவாக்கம் ஏதுமில்லை"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -1722,8 +1769,6 @@ msgstr "பொத்தான்கள் (&B)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings panel.
 msgid "Lan&dmarks"
 msgstr "நிலக்குறிகள் (&D)"
 
@@ -1750,21 +1795,6 @@ msgstr "இயங்கச் செய்க (&A)"
 #. in the browse mode Elements List dialog.
 msgid "&Move to"
 msgstr "இங்கு நகர்க (&M)"
-
-#, python-format
-msgid "%s landmark"
-msgstr "%s நிலக்குறி"
-
-#. Translators: This is brailled to indicate a landmark (example output: lmk main).
-#, python-format
-msgid "lmk %s"
-msgstr "தொடு %s"
-
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#. Translators: Announces selected text. %s is replaced with the text.
-#, python-format
-msgid "selected %s"
-msgstr "%s தெரிவாகியது"
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
@@ -2622,6 +2652,22 @@ msgstr "அழிக்கப்பட்டது"
 msgid "inserted"
 msgstr "செருகப்பட்டது"
 
+#. Translators: Identifies a landmark.
+msgid "landmark"
+msgstr "நிலக்குறி"
+
+#. Translators: Identifies an article.
+msgid "article"
+msgstr "பிரிவுக்கூறு"
+
+#. Translators: Identifies a region.
+msgid "region"
+msgstr "மண்டலம்"
+
+#. Translators: Identifies a figure (commonly seen on some websites).
+msgid "figure"
+msgstr "வடிவம்"
+
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
 msgstr "கிடைப்பிலில்லை"
@@ -3008,6 +3054,11 @@ msgid "Braille"
 msgstr "பிரெயில் "
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the vision panel
+msgid "Vision"
+msgstr "பார்வைத் துலக்கம்"
+
+#. Translators: The name of a category of NVDA commands.
 msgctxt "script category"
 msgid "Tools"
 msgstr "கருவிகள்"
@@ -3123,10 +3174,6 @@ msgstr "சொடுக்கியின் வலது பொத்தான�
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "சொடுக்கியின் வலது பொத்தானைப் பூட்டவோ, திறக்கவோ செய்கிறது"
-
-#, python-format
-msgid "Selected %s"
-msgstr "%s தெரிவாகியது"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3467,6 +3514,18 @@ msgstr "தலைப்புகளை அறிவிக்கும்"
 msgid "Toggles on and off the reporting of headings"
 msgstr "தலைப்புகளை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
+#. Translators: Input help mode message for toggle report groupings command.
+msgid "Toggles on and off the reporting of groupings"
+msgstr "குழுவாக்கங்களின் அறிவித்தலை இயக்கவோ, நிறுத்தவோ செய்கிறது"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report groupings off"
+msgstr "குழுவாக்கங்களை அறிவிக்காது"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report groupings on"
+msgstr "குழுவாக்கங்களை அறிவிக்கும்"
+
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
 msgstr "உரைத் தொகுதிகளை அறிவிக்காது"
@@ -3480,16 +3539,28 @@ msgid "Toggles on and off the reporting of block quotes"
 msgstr "உரைத் தொகுதிகளை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-msgid "report landmarks off"
-msgstr "நிலக்குறிகளை அறிவிக்காது"
+msgid "report landmarks and regions off"
+msgstr "நிலக்குறிகளையும் மண்டலங்களையும் அறிவிக்காது"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-msgid "report landmarks on"
-msgstr "நிலக்குறிகளை அறிவிக்கும்"
+msgid "report landmarks and regions on"
+msgstr "நிலக்குறிகளையும் மண்டலங்களையும் அறிவிக்கும்"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
 msgstr "நிலக்குறிகளை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
+
+#. Translators: Input help mode message for toggle report articles command.
+msgid "Toggles on and off the reporting of articles"
+msgstr "பிரிவுக்கூறுகளின் அறிவித்தலை இயக்கவோ, நிறுத்தவோ செய்கிறது"
+
+#. Translators: The message announced when toggling the report articles document formatting setting.
+msgid "report articles off"
+msgstr "பிரிவுக்கூறுகளை அறிவிக்காது"
+
+#. Translators: The message announced when toggling the report articles document formatting setting.
+msgid "report articles on"
+msgstr "பிரிவுக்கூறுகளை அறிவிக்கும்"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
@@ -3820,6 +3891,31 @@ msgstr ""
 "சீராய்வுச் சுட்டியை, அது இருக்கும்  வழிகாட்டிப் பொருள் வரியின் கடைசி வரியுருவிற்கு "
 "நகர்த்தி, அதைப் படிக்கும்"
 
+#. Translators: Input help mode message for Review Current Symbol command.
+msgid ""
+"Reports the symbol where the review cursor is positioned. Pressed twice, "
+"shows the symbol and the text used to speak it in browse mode"
+msgstr ""
+"சீராய்வுச் சுட்டியின் இடத்திலிருக்கும் குறியெழுத்தினை அறிவிக்கிறது. இரு முறை "
+"அழுத்தினால், குறியெழுத்தினையும், அதைப் படிப்பதற்கு பயன்படுத்தப்படும் உரையையும் உலாவும் "
+"நிலையில் காட்டுகிறது."
+
+#. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+msgid "No symbol replacement"
+msgstr "குறியெழுத்திற்கான மாற்றமர்வு ஏதுமில்லை"
+
+#. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+msgid ""
+"Character: {}\n"
+"Replacement: {}"
+msgstr ""
+"வரியுரு: {}\n"
+"மாற்றமர்வு: {}"
+
+#. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+msgid "Expanded symbol ({})"
+msgstr "விரிவாக்கப்பட்ட குறியெழுத்து ({})"
+
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
 msgstr "பேச்சு நிலை: அமைதி"
@@ -3869,13 +3965,12 @@ msgstr "என்விடிஏவை மறுதுவக்குகிற�
 msgid "Shows the NVDA menu"
 msgstr "என்விடிஏ பட்டியலைக் காட்டும்"
 
-#. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"Reads from the review cursor up to end of current text, moving the review "
-"cursor as it goes"
+"Reads from the review cursor up to the end of the current text, moving the "
+"review cursor as it goes"
 msgstr ""
-"தற்பொழுது சீராய்வுச் சுட்டி இருக்குமிடத்திலிருந்து ஆவணத்தின் இறுதி வரைப் படிக்கும். "
-"அப்படிப் படிக்கும்பொழுது, சீராய்வுச் சுட்டியும் உடன் நகர்த்தப்படும்"
+"சீராய்வுச் சுட்டியின் இடத்திலிருந்து தற்போதைய உரையின் இறுதிவரை படிக்கிறது. அப்படிப் "
+"படிக்கும்பொழுது, சீராய்வுச் சுட்டியையும் உடன் நகர்த்துகிறது."
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
@@ -4024,8 +4119,8 @@ msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
 msgstr ""
-"இயங்குநிலை உள்ளடக்க மாற்றங்களை இயக்கவோ, நிறுத்தவோ செய்யும். டாஸ் சாளரத்தில் தோன்றும் புது "
-"உரைகளை எடுத்துக்காட்டாகச் சொல்லலாம்"
+"இயங்குநிலை உள்ளடக்க மாற்றங்களை இயக்கவோ, நிறுத்தவோ செய்யும். டாஸ் கட்டுப்பாட்டுச் சாளரத்தில் "
+"தோன்றும் புது உரைகளை எடுத்துக்காட்டாகச் சொல்லலாம்"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
@@ -4212,7 +4307,7 @@ msgstr ""
 
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
-msgstr "என்விடிஏ உருவாக்குவதில் பயன்படும் பைத்தன் கட்டுப்பாட்டு மையத்தை இயக்குகிறது"
+msgstr "என்விடிஏ உருவாக்குவதில் பயன்படும் பைத்தன் கட்டுப்பாட்டகத்தை இயக்குகிறது"
 
 #. Translators: Input help mode message for activate manage add-ons command.
 msgid ""
@@ -4312,6 +4407,14 @@ msgstr ""
 "தெரிவுச் செய்ய, அல்லது படியெடுக்க, சீராய்வுச் சுட்டியின் தற்போதைய நிலையை உரையின் "
 "துவக்கமாக குறித்துக்கொள்கிறது"
 
+msgid ""
+"Move the review cursor to the position marked as the start of text to be "
+"selected or copied"
+msgstr ""
+"தெரிவுச் செய்வதற்கு, அல்லது படியெடுப்பதற்கு உரையின் துவக்கமாக குறியிடப்பட்டிருந்த "
+"இடத்திற்கு சீராய்வுச் சுட்டியை நகர்த்துகிறது"
+
+#. Translators: Presented when attempting to move to the start marker for copy but none has been set.
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 msgid "No start marker set"
 msgstr "துவக்கக் குறி ஏதும் வரையருக்கப்படவில்லை"
@@ -4515,6 +4618,55 @@ msgid ""
 "Recognizes the content of the current navigator object with Windows 10 OCR"
 msgstr ""
 "விண்டோஸ் 10 எழுத்துணரியைக் கொண்டு நடப்பு வழிகாட்டிப் பொருளின் உள்ளடக்கத்தை உணருகிறது"
+
+#. Translators: Input help mode message for toggle report CLDR command.
+msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
+msgstr ""
+"முகவடி போன்ற குறியெழுத்துகளுக்கான ஒருங்குறிக் கூட்டமைப்பின் விளக்கங்களை அறிவிக்கும் "
+"வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
+
+#. Translators: presented when the report CLDR is toggled.
+msgid "report CLDR characters off"
+msgstr "ஒருங்குறிக் கூட்டமைப்பின் குறியெழுத்து விளக்கங்களை அறிவிக்காது"
+
+#. Translators: presented when the report CLDR is toggled.
+msgid "report CLDR characters on"
+msgstr "ஒருங்குறிக் கூட்டமைப்பின் குறியெழுத்து விளக்கங்களை அறிவிக்கும்"
+
+msgid ""
+"Toggles the state of the screen curtain, enable to make the screen black or "
+"disable to show the contents of the screen. Pressed once, screen curtain is "
+"enabled until you restart NVDA. Pressed twice, screen curtain is enabled "
+"until you disable it"
+msgstr ""
+"திரைச்சீலையை இடவோ, விலக்கவோ செய்கிறது. இடப்பட்டால், திரை கருமையாக மாறும். "
+"விலக்கப்பட்டால், திரையின் உள்ளடக்கங்கள் காட்டப்படும். ஒரு முறை அழுத்தினால், என்விடிஏ "
+"மறுதுவக்கப்படும் வரை திரைச்சீலை இடப்பட்டிருக்கும். இரு முறை அழுத்தினால், திரைச்சீலையை "
+"நீக்கும் வரை அது இடப்பட்டிருக்கும்"
+
+#. Translators: Reported when the screen curtain is disabled.
+msgid "Screen curtain disabled"
+msgstr "திரைச்சீலை விலக்கப்பட்டது"
+
+#. Translators: Reported when the screen curtain could not be enabled.
+msgid "Could not disable screen curtain"
+msgstr "திரைச்சீலையை விலக்க இயலவில்லை"
+
+#. Translators: Reported when the screen curtain is not available.
+msgid "Screen curtain not available"
+msgstr "திரைச்சீலை கிடைப்பிலில்லை"
+
+#. Translators: Reported when the screen curtain is enabled.
+msgid "Screen curtain enabled"
+msgstr "திரைச்சீலை இடப்பட்டது"
+
+#. Translators: Reported when the screen curtain is temporarily enabled.
+msgid "Temporary Screen curtain, enabled until next restart"
+msgstr "அடுத்த மறுதுவக்கம் வரை இடப்படும் தற்காலிக திரைச்சீலை"
+
+#. Translators: Reported when the screen curtain could not be enabled.
+msgid "Could not enable screen curtain"
+msgstr "திரைச்சீலையை இட இயலவில்லை"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -6037,10 +6189,10 @@ msgid "Type help(object) to get help about object."
 msgstr "பொருளுக்கான உதவியைப்பெற help(object) என்று தட்டச்சிடவும்"
 
 msgid "Type exit() to exit the console"
-msgstr "கட்டுப்பாட்டு மையத்தைவிட்டு வெளியேற exit() என்று தட்டச்சிடவும்"
+msgstr "கட்டுப்பாட்டகத்தைவிட்டு வெளியேற exit() என்று தட்டச்சிடவும்"
 
 msgid "NVDA Python Console"
-msgstr "என்விடிஏ பைத்தன் கட்டுப்பாட்டு மையம்"
+msgstr "என்விடிஏ பைத்தன் கட்டுப்பாட்டகம் "
 
 #. Translators: One of the review modes.
 msgid "Object review"
@@ -6058,401 +6210,12 @@ msgstr "திரைச் சீராய்வு"
 msgid "Emulates pressing %s on the system keyboard"
 msgstr "விசைப்பலகையில் %s என்று தட்டச்சிட்டதற்கு ஈடாகும்"
 
-#. Translators: This is spoken when NVDA moves to an empty line.
-#. Translators: This is spoken when the line is considered blank.
-msgid "blank"
-msgstr "வெற்றிடம்"
-
-#. Translators: cap will be spoken before the given letter when it is capitalized.
-#, python-format
-msgid "cap %s"
-msgstr "cap %s"
-
-#. Translators: This is spoken when the given line has no indentation.
-msgid "no indent"
-msgstr "ஓரச் சீர்மையில்லை"
-
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
-#, python-format
-msgid "%d characters"
-msgstr "%d வரியுருக்கள்"
-
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
-#, python-format
-msgid "%s selected"
-msgstr "%s தெரிவாகியது"
-
-#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
-#, python-format
-msgid "%s unselected"
-msgstr "%s தெரிவு நீக்கப்பட்டது"
-
-#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
-#, python-format
-msgid "%s selected instead"
-msgstr "%s மாற்றாகத் தெரிவாகியது"
-
-#. Translators: Reported when selection is removed.
-msgid "selection removed"
-msgstr "தெரிவு நீக்கப்பட்டது"
-
-#. Translators: Speaks current row number (example output: row 3).
-#, python-format
-msgid "row %s"
-msgstr "கிடைவரிசை %s"
-
-#. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "%s சேர்க்கப்பட்டது"
-
-#. Translators: Speaks current column number (example output: column 3).
-#, python-format
-msgid "column %s"
-msgstr "நெடுவரிசை %s"
-
-#. Translators: Speaks the row and column span added to the current row and column numbers
-#. (example output: through row 5 column 3).
-#, python-brace-format
-msgid "through row {row} column {column}"
-msgstr "கிடைவரிசை {row} முதல் நெடுவரிசை {column} வரை"
-
-#. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
-msgid "with {rowCount} rows and {columnCount} columns"
-msgstr "{rowCount} கிடைவரிசைகள், {columnCount} நெடுவரிசைகள் கொண்டது"
-
-#. Translators: Speaks number of columns (example output: with 4 columns).
-#, python-format
-msgid "with %s columns"
-msgstr "%s நெடுவரிசைகளைக் கொண்டது"
-
-#. Translators: Speaks number of rows (example output: with 2 rows).
-#, python-format
-msgid "with %s rows"
-msgstr "%s கிடைவரிசைகளைக் கொண்டது"
-
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "மட்டம் %s"
-
-#. Translators: Number of items in a list (example output: list with 5 items).
-#, python-format
-msgid "with %s items"
-msgstr "%s உருப்படிகளைக் கொண்டது"
-
-#. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
-#, python-format
-msgid "out of %s"
-msgstr "%s வெளியே"
-
-#. Translators: Indicates the page number in a document.
-#. %s will be replaced with the page number.
-#, python-format
-msgid "page %s"
-msgstr "பக்கம் %s"
-
-#. Translators: Indicates the section number in a document.
-#. %s will be replaced with the section number.
-#, python-format
-msgid "section %s"
-msgstr "உட்பிரிவு %s"
-
-#. Translators: Indicates the text column number in a document.
-#. {0} will be replaced with the text column number.
-#. {1} will be replaced with the number of text columns.
-#, python-brace-format
-msgid "column {0} of {1}"
-msgstr "நெடுவரிசை {1}ல் {0}"
-
-#. Translators: Indicates the text column number in a document.
-#. %s will be replaced with the number of text columns.
-#, python-format
-msgid "%s columns"
-msgstr "%s நெடுவரிசைகள்"
-
-msgid "continuous section break"
-msgstr "தொடர் உட்பிரிவு முறிவு"
-
-msgid "new column section break"
-msgstr "புது நெடுவரிசை உட்பிரிவு முறிவு"
-
-msgid "new page section break"
-msgstr "புதுப் பக்க உட்பிரிவு முறிவு"
-
-msgid "even pages section break"
-msgstr "இரட்டைப் படை பக்கங்களின் உட்பிரிவு முறிவு"
-
-msgid "odd pages section break"
-msgstr "ஒற்றைப் படை பக்கங்களின் உட்பிரிவு முறிவு"
-
-msgid "column break"
-msgstr "நெடுவரிசை முறிவு"
-
-#. Translators: Speaks the heading level (example output: heading level 2).
-#, python-format
-msgid "heading level %d"
-msgstr "%dம் மட்டத் தலைப்பு"
-
-#. Translators: Indicates the style of text.
-#. A style is a collection of formatting settings and depends on the application.
-#. %s will be replaced with the name of the style.
-#, python-format
-msgid "style %s"
-msgstr "பாங்கு %s"
-
-#. Translators: Indicates that text has reverted to the default style.
-#. A style is a collection of formatting settings and depends on the application.
-msgid "default style"
-msgstr "இயல்புப் பாங்கு"
-
-#. Translators: Indicates that cell does not have border lines.
-msgid "no border lines"
-msgstr "எல்லைக் கோடுகள் ஏதுமில்லை"
-
-#. Translators: Reported when there are two background colors.
-#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
-#. {color1} will be replaced with the first background color.
-#. {color2} will be replaced with the second background color.
-#, python-brace-format
-msgid "{color1} to {color2}"
-msgstr "{color1} முதல் {color2} வரை"
-
-#. Translators: Reported when both the text and background colors change.
-#. {color} will be replaced with the text color.
-#. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
-msgid "{color} on {backgroundColor}"
-msgstr "{backgroundColor} மீது {color}"
-
-#. Translators: Reported when the text color changes (but not the background color).
-#. {color} will be replaced with the text color.
-#, python-brace-format
-msgid "{color}"
-msgstr "{color}"
-
-#. Translators: Reported when the background color changes (but not the text color).
-#. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
-msgid "{backgroundColor} background"
-msgstr "பின்னணி {backgroundColor}"
-
-#, python-brace-format
-msgid "background pattern {pattern}"
-msgstr "பின்னணி வடிவவிதம் {pattern}"
-
-#. Translators: Indicates the line number of the text.
-#. %s will be replaced with the line number.
-#, python-format
-msgid "line %s"
-msgstr "வரி %s"
-
-#. Translators: Reported when text is no longer marked as having been inserted.
-msgid "not inserted"
-msgstr "செருகப்படாதது"
-
-#. Translators: Reported when text is no longer marked as having been  deleted.
-msgid "not deleted"
-msgstr "அழிக்கப்படாதது"
-
-#. Translators: Reported when text is revised.
-#, python-format
-msgid "revised %s"
-msgstr "திருத்தப்பட்டது %s "
-
-#. Translators: Reported when text is not revised.
-#, python-format
-msgid "no revised %s"
-msgstr "திருத்தப்படாதது %s "
-
-#. Translators: Reported when text is marked
-msgid "marked"
-msgstr "குறிக்கப்பட்டது"
-
-#. Translators: Reported when text is no longer marked
-msgid "not marked"
-msgstr "குறிக்கப்படாதது"
-
-#. Translators: Reported when text is marked as strong (e.g. bold)
-msgid "strong"
-msgstr "வலுவூட்டப்பட்டது"
-
-#. Translators: Reported when text is no longer marked as strong (e.g. bold)
-msgid "not strong"
-msgstr "வலுவூட்டப்படாதது"
-
-#. Translators: Reported when text is marked as emphasised
-msgid "emphasised"
-msgstr "வலியுறுத்தப்பட்டது"
-
-#. Translators: Reported when text is no longer marked as emphasised
-msgid "not emphasised"
-msgstr "வலியுறுத்தப்படாதது"
-
-#. Translators: Reported when text is not bolded.
-msgid "no bold"
-msgstr "அடர்த்தியில்லை"
-
-#. Translators: Reported when text is not italicized.
-msgid "no italic"
-msgstr "சாய்வில்லை"
-
-#. Translators: Reported when text is formatted with double strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
-msgid "double strikethrough"
-msgstr "ஊடாக இரட்டைக் கோடிடப்பட்டது"
-
-#. Translators: Reported when text is formatted with strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
-msgid "strikethrough"
-msgstr "ஊடாகக் கோடிடப்பட்டது"
-
-#. Translators: Reported when text is formatted without strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
-msgid "no strikethrough"
-msgstr "ஊடாகக் கோடிடப்படவில்லை"
-
-#. Translators: Reported when text is underlined.
-msgid "underlined"
-msgstr "அடிக்கோடிடப்பட்டது"
-
-#. Translators: Reported when text is not underlined.
-msgid "not underlined"
-msgstr "அடிக்கோடிடப்படாதது"
-
-#. Translators: Reported for text which is at the baseline position;
-#. i.e. not superscript or subscript.
-msgid "baseline"
-msgstr "அடித்தளக் கோடு"
-
-#. Translators: Reported when text is left-aligned.
-msgid "align left"
-msgstr "இடதொழுங்கு"
-
-#. Translators: Reported when text is centered.
-msgid "align center"
-msgstr "நடுவொழுங்கு"
-
-#. Translators: Reported when text is right-aligned.
-msgid "align right"
-msgstr "வலதொழுங்கு"
-
-#. Translators: Reported when text is justified.
-#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
-msgid "align justify"
-msgstr "இருபுற ஒழுங்கு"
-
-#. Translators: Reported when text is justified with character spacing (Japanese etc)
-#. See http://kohei.us/2010/01/21/distributed-text-justification/
-msgid "align distributed"
-msgstr "பகிரப்பட்ட ஒழுங்கு"
-
-#. Translators: Reported when text has reverted to default alignment.
-msgid "align default"
-msgstr "இயல்பொழுங்கு"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "செங்குத்து மேலொழுங்கு"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "செங்குத்து நடுவொழுங்கு"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "செங்குத்து கீழொழுங்கு"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "செங்குத்து அடித்தளக்கோடொழுங்கு"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "செங்குத்து இருபுற ஒழுங்கு"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "செங்குத்து பகிர்மான ஒழுங்கு"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "செங்குத்து இயல்பொழுங்கு"
-
-#. Translators: the label for paragraph format left indent
-msgid "left indent"
-msgstr "இடதோரச் சீர்மை"
-
-#. Translators: the message when there is no paragraph format left indent
-msgid "no left indent"
-msgstr "இடதோரச் சீர்மையில்லை"
-
-#. Translators: the label for paragraph format right indent
-msgid "right indent"
-msgstr "வலதோரச் சீர்மை"
-
-#. Translators: the message when there is no paragraph format right indent
-msgid "no right indent"
-msgstr "வலதோரச் சீர்மையில்லை"
-
-#. Translators: the label for paragraph format hanging indent
-msgid "hanging indent"
-msgstr "தொங்கு ஓரச் சீர்மை"
-
-#. Translators: the message when there is no paragraph format hanging indent
-msgid "no hanging indent"
-msgstr "தொங்கு ஓரச் சீர்மையில்லை"
-
-#. Translators: the label for paragraph format first line indent
-msgid "first line indent"
-msgstr "முதல் வரியோரச் சீர்மை"
-
-#. Translators: the message when there is no paragraph format first line indent
-msgid "no first line indent"
-msgstr "முதல் வரியோரச் சீர்மையில்லை"
-
-#. Translators: a type of line spacing (E.g. single line spacing)
-#, python-format
-msgid "line spacing %s"
-msgstr "%s வரி இடைவெளி"
-
-#. Translators: Reported when text no longer contains a comment.
-msgid "out of comment"
-msgstr "கருத்துரைக்கு வெளியே "
-
-#. Translators: Reported when text contains a spelling error.
-msgid "spelling error"
-msgstr "எழுத்துப் பிழை"
-
-#. Translators: Reported when moving out of text containing a spelling error.
-msgid "out of spelling error"
-msgstr "எழுத்துப் பிழைக்கு வெளியே"
-
-#. Translators: Reported when text contains a grammar error.
-msgid "grammar error"
-msgstr "இலக்கணப் பிழை"
-
-#. Translators: Reported when moving out of text containing a grammar error.
-msgid "out of grammar error"
-msgstr "இலக்கணப் பிழைக்கு வெளியே"
-
-#. Translators: Indicates end of a table.
-msgid "out of table"
-msgstr "அட்டவணைக்கு வெளியே"
-
-#. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
-msgid "table with {columnCount} columns and {rowCount} rows"
-msgstr "{columnCount} நெடுவரிசைகள், {rowCount} கிடைவரிசைகள் கொண்ட அட்டவணை"
-
 msgid "NVDA Speech Viewer"
 msgstr "என்விடிஏ பேச்சுத் தோற்றம்"
 
 #. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
-msgstr "துவக்கத்தின்பொழுது பேச்சுத் தோற்றத்தைக் காண்பிக்கவும் (&S)"
+msgstr "துவக்கத்தின்பொழுது பேச்சுத் தோற்றத்தைக் காட்டுக (&S)"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -6811,7 +6574,7 @@ msgid ""
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} is developed by NV Access, a non-profit organisation committed to "
@@ -6830,14 +6593,15 @@ msgstr ""
 "இம்மென்பொருளைத் தங்கள் விருப்பப்படி மாற்றிக் கொள்ளவோ, பிறருடன் பகிர்ந்து கொள்ளவோ தடையில்லை. "
 "அப்படிச் செய்யும்பொழுது, இம்மென்பொருளின் உரிமத்தையும், எல்லா ஆதாரக் குறியீட்டினையும் "
 "கேட்பவர்களுக்குக் கொடுக்க வேண்டும். இவ்விதி, இம்மென்பொருளின் மூலத்திற்கும், மாற்றப்பட்ட "
-"வடிவத்திற்கும், இம்மென்பொருளிலிருந்து பெறப்பட்ட பிற பணிகளுக்கும் பொருந்தும். \n"
-"கூடுதல் தகவல்களுக்கு, உதவிப் பட்டியலிலுள்ள உரிம விவரங்களைக் காணவும்.\n"
+"வடிவத்திற்கும், இம்மென்பொருளிலிருந்து பெறப்பட்ட பிற பணிகளுக்கும் பொருந்தும்.\n"
+" கூடுதல் தகவல்களுக்கு, உதவிப் பட்டியலிலுள்ள உரிம விவரங்களைக் காணவும்.\n"
 "உரிமத்தைப் படிப்பதற்கான இணைய முகவரி: http://www.gnu.org/licenses/old-licenses/"
-"gpl-2.0.html\n"
+"gpl-2.0.html.\n"
 "\n"
-"{name} இம்மென்பொருளை உருவாக்கியது NV Access நிறுவனம். இந்நிறுவனம், இலாப நோக்கில்லாமல் "
-"பார்வையற்றவர்களுக்காகவும், பார்வைக் குறைபாடுள்ளவர்களுக்காகவும் இலவச திறந்தநிலை ஆதாரத் "
-"தீர்வுகளை உருவாக்க உதவவும், அவைகளை மேம்படுத்தவும் தன்னை ஈடுபடுத்திக் கொண்டுள்ளது.\n"
+"இந்த {name} மென்பொருளை உருவாக்கியது NV Access நிறுவனம். இந்நிறுவனம், இலாப "
+"நோக்கில்லாமல் பார்வையற்றவர்களுக்காகவும், பார்வைக் குறைபாடுள்ளவர்களுக்காகவும் இலவச "
+"திறந்தநிலை ஆதாரத் தீர்வுகளை உருவாக்க உதவவும், அவைகளை மேம்படுத்தவும் தன்னை ஈடுபடுத்திக் "
+"கொண்டுள்ளது.\n"
 "என்விடிஏ பயனுள்ளதாக இருந்து, அது மேலும் மேம்பட வேண்டுமென்று தாங்கள் விரும்பினால், "
 "என்விடிஏவிற்கு நன்கொடை அளிப்பதைப் பற்றிச் சிந்தியுங்கள். இதற்கு, என்விடிஏ பட்டியலிலுள்ள "
 "'நன்கொடையளியுங்கள்' உருப்படியைத் தேர்ந்தெடுக்கவும்."
@@ -6913,10 +6677,6 @@ msgstr ""
 #. Translators: When the help popup cannot be found for the selected autocompletion item
 msgid "Cann't find the documentation window."
 msgstr "ஆவணமாக்கல் சாளரம் காணப்படவில்லை"
-
-#. Translators: The title of Start menu/screen in your language (only the word start).
-msgid "Start"
-msgstr "துவக்கு"
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
@@ -7410,37 +7170,6 @@ msgstr "வெற்று நிலைப்படம்"
 msgid "Waiting for Powerpoint..."
 msgstr "பவர் பாயிண்ட்டிற்காக காத்துக்கொண்டிருக்கிறது..."
 
-#. Translators: The name of the NVDA command category for Skype specific commands.
-msgid "Skype"
-msgstr "ஸ்கைப்"
-
-msgid "Reports and moves the review cursor to a recent message"
-msgstr "அண்மைய தகவலைப் படித்து, சீராய்வுச் சுட்டியை அவ்விடத்திற்கு நகர்த்துகிறது"
-
-#. Translators: Indicates that a contact stopped typing.
-msgid "Typing stopped"
-msgstr "தட்டச்சு நிறுத்தப்பட்டது"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Rewind"
-msgstr "பின்நகர்த்துக"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Fast forward"
-msgstr "விரைவாக முன்நகர்த்துக"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Play"
-msgstr "இயக்குக"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Stop"
-msgstr "நிறுத்துக"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Record"
-msgstr "பதிவுச் செய்க"
-
 msgid "left"
 msgstr "இடது"
 
@@ -7575,6 +7304,15 @@ msgstr "சேக்கா பிரெயில் காட்சியமை�
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
 msgstr "சூப்பர் பிரெயில் "
+
+#. Translators: The title of the NVDA Braille Viewer tool window.
+msgid "NVDA Braille Viewer"
+msgstr "என்விடிஏ பிரெயில் தோற்றம்"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether the braille viewer is shown at startup or not.
+msgid "&Show Braille Viewer on Startup"
+msgstr "துவக்கத்தின்பொழுது பிரெயில் தோற்றத்தைக் காட்டுக (&S)"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -7751,9 +7489,13 @@ msgstr "செயற்குறிப்பேட்டுத் தோற்�
 msgid "Speech viewer"
 msgstr "பேச்சுத் தோற்றம் (&S)"
 
+#. Translators: The label for the menu item to toggle Braille Viewer.
+msgid "Braille viewer"
+msgstr "பிரெயில் தோற்றம்"
+
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
-msgstr "பைத்தன் கட்டுப்பாட்டு மையம் (&P)"
+msgstr "பைத்தன் கட்டுப்பாட்டகம்"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
 msgid "Manage &add-ons..."
@@ -8005,12 +7747,16 @@ msgstr ""
 #. Translators: The label of a Yes button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
 #. the add-on
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. agree to enabling the curtain.
 msgid "&Yes"
 msgstr "ஆம் (&Y)"
 
 #. Translators: The label of a No button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to decide not to
 #. install the add-on
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. disagree to enabling the curtain.
 msgid "&No"
 msgstr "இல்லை (&N)"
 
@@ -8891,7 +8637,8 @@ msgid "Automatic language switching (when supported)"
 msgstr "ஆதரவு இருக்கும்பொழுது ஒரு மொழிக்குத் தானாக மாறுக"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings panel (if checked, different voices for dialects will be used to read text in that dialect).
+#. voice settings panel (if checked, different voices for dialects will be used to
+#. read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
 msgstr "ஆதரவு இருக்கும்பொழுது ஒரு வட்டார வழக்கிற்குத் தானாக மாறுக"
 
@@ -8905,9 +8652,6 @@ msgstr "நிறுத்தற்குறிகள்/குறியெழ�
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "வரியுருக்களையும், குறியெழுத்துகளையும் கையாளும்பொழுது குரலின் மொழியை நம்புக"
 
-#. Translators: This is the label for a checkbox in the
-#. voice settings panel (if checked, data from the unicode CLDR will be used
-#. to speak emoji descriptions).
 msgid ""
 "Include Unicode Consortium data (including emoji) when processing characters "
 "and symbols"
@@ -8915,7 +8659,8 @@ msgstr ""
 "வரியுருக்களையும், குறியெழுத்துகளையும் கையாளும்பொழுது முகவடிகள் உட்பட ஒருங்குறிக் "
 "கூட்டமைப்பின் தரவுகளைச் சேர்த்துக்கொள்க"
 
-#. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
+#. Translators: This is a label for a setting in voice settings (an edit box to change
+#. voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "ஆங்கில முகப்பெழுத்து சுருதி மாற்று விழுக்காடு"
 
@@ -9313,7 +9058,7 @@ msgid "Tones"
 msgstr "ஒலிகள்"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both  Speech and Tones"
+msgid "Both Speech and Tones"
 msgstr "பேச்சும் ஒலிகளும்"
 
 #. Translators: This message is presented in the document formatting settings panelue
@@ -9383,6 +9128,21 @@ msgstr "உரைத் தொகுதி (&Q)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+msgid "&Groupings"
+msgstr "குழுவாக்கங்கள் (&G)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+msgid "Lan&dmarks and regions"
+msgstr "நிலக்குறிகளும் மண்டலங்களும் (&D)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+msgid "Arti&cles"
+msgstr "பிரிவுக்கூறுகள் (&C)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "Fra&mes"
 msgstr "சட்டகங்கள் (&M)"
 
@@ -9442,6 +9202,43 @@ msgid ""
 msgstr ""
 "கிடைப்பிலிருக்கும் மைக்ரோசாஃப்ட் வேர்ட் ஆவணக் கட்டுப்பாடுகளை அணுக, இடைமுகப்பு "
 "தன்னியக்கமாக்கலைப் பயன்படுத்துக"
+
+#. Translators: This is the label for a combo box for selecting the
+#. active console implementation in the advanced settings panel.
+#. Choices are automatic, prefer UIA, and legacy.
+msgid "Windows C&onsole support:"
+msgstr "விண்டோஸ் கட்டுப்பாட்டக ஆதரவு (&O)"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use UIA in the Windows Console when available.
+msgid "Prefer UIA"
+msgstr "விரும்பப்படும் இடைமுகப்பு தன்னியக்கமாக்கல்"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use its legacy Windoes Console support
+#. in all cases.
+msgid "Legacy"
+msgstr "மரபு"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Terminal programs"
+msgstr "முனைய நிரல்கள்"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in Windows Console (may improve performance)"
+msgstr ""
+"விண்டோஸ் கட்டுப்பாட்டகத்தில் கடவுச் சொற்களைப் பேசவும். (இது செயல்திறனை மேம்படுத்தலாம்) (&P)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid ""
+"Use the new t&yped character support in legacy Windows consoles when "
+"available"
+msgstr ""
+"விண்டோஸ் மரபுக் கட்டுப்பாட்டகத்தில் எழுத்துகளாக தட்டச்சிடும் வசதிக்கான ஆதரவை "
+"கிடைப்பிலிருந்தால் பயன்படுத்துக (&Y)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9598,10 +9395,14 @@ msgstr "பிரெயில் காட்சியமைவு (&D):"
 msgid "&Port:"
 msgstr "நுழைவாயில் (&P)"
 
-#, python-format
-msgid "Could not load the %s display."
-msgstr "%s காட்சியமைவை ஏற்ற இயலவில்லை."
+#. Translators: The message in a dialog presented when NVDA is unable to load the selected
+#. braille display.
+#, python-brace-format
+msgid "Could not load the {display} display."
+msgstr "{display} காட்சியமைவை ஏற்ற இயலவில்லை"
 
+#. Translators: The title in a dialog presented when NVDA is unable to load the selected
+#. braille display.
 msgid "Braille Display Error"
 msgstr "பிரெயில் காட்சியமைவில் பிழை"
 
@@ -9660,6 +9461,62 @@ msgstr "இயலும் இடங்களில் சொற்களின�
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
 msgstr "குவிமைய சூழலளிக்கை"
+
+#. Translators: This message is presented when
+#. NVDA is unable to load a single vision enhancement provider.
+#, python-brace-format
+msgid "Could not load the {providerName} vision enhancement provider"
+msgstr "{providerName} பார்வைத் துலக்க ஊக்கிகளை ஏற்ற இயலவில்லை"
+
+#. Translators: This message is presented when NVDA is unable to
+#. load multiple vision enhancement providers.
+#, python-brace-format
+msgid ""
+"Could not load the following vision enhancement providers:\n"
+"{providerNames}"
+msgstr ""
+"பின்வரும் பார்வைத் துலக்க ஊக்கிகளை ஏற்ற இயலவில்லை:\n"
+"{providerNames}"
+
+#. Translators: The title of the vision enhancement provider error message box.
+msgid "Vision Enhancement Provider Error"
+msgstr "பார்வைத் துலக்க ஊக்கிப் பிழை"
+
+#. Translators: This message is presented when
+#. NVDA is unable to gracefully terminate a single vision enhancement provider.
+#, python-brace-format
+msgid ""
+"Could not gracefully terminate the {providerName} vision enhancement provider"
+msgstr "{providerName} பார்வைத் துலக்க ஊக்கியை நயமாக முடிவிற்கு கொண்டுவர இயலவில்லை"
+
+#, python-brace-format
+msgid ""
+"Could not gracefully terminate the following vision enhancement providers:\n"
+"{providerNames}"
+msgstr ""
+"பின்வரும் பார்வைத் துலக்க ஊக்கிகளை நயமாக முடிவிற்கு கொண்டுவர இயலவில்லை:\n"
+"{providerNames}"
+
+#. Translators: This is a label appearing on the vision settings panel.
+msgid "Configure visual aids."
+msgstr "பார்வைத் துணைக் கருவிகளை அமைவடிவமாக்குக"
+
+#. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
+msgid "Enable"
+msgstr "முடுக்குக"
+
+#. Translators: Options label on a vision enhancement provider on the vision settings category panel
+#. Translators: The label for a group box containing the NVDA highlighter options.
+msgid "Options:"
+msgstr "விருப்பத் தேர்வுகள்"
+
+#. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
+msgid ""
+"Unable to configure user interface for Vision Enhancement Provider, it can "
+"not be enabled."
+msgstr ""
+"பார்வைத் துலக்க ஊக்கியின் பயனர் இடைமுகப்பை அமைவடிவமாக்க இயலவில்லை. ஆகவே, அது "
+"முடுக்கப்பட மாட்டாது."
 
 #. Translators: This is the label for the NVDA settings dialog.
 msgid "NVDA Settings"
@@ -9735,6 +9592,10 @@ msgctxt "inputGestures"
 msgid "&Filter by:"
 msgstr "இதைக் கொண்டு வடிகட்டுக (&F):"
 
+#. Translators: The label of a button to reset all gestures in the Input Gestures dialog.
+msgid "Reset to factory &defaults"
+msgstr "தொழிற்சாலை இயல்பிற்கு மாற்றியமைத்திடுக (&D)"
+
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
@@ -9745,6 +9606,20 @@ msgstr "{main} ({source})"
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 msgid "Enter input gesture:"
 msgstr "உள்ளீட்டுச் சைகையை உள்ளிடுக"
+
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid ""
+"Are you sure you want to reset all gestures to their factory defaults?\n"
+"\t\t\t\n"
+"\t\t\tAll of your user defined gestures, whether previously set or defined "
+"during this session, will be lost.\n"
+"\t\t\tThis cannot be undone."
+msgstr ""
+"எல்லாச் சைகைகளையும் அவைகளின் தொழிற்சாலை இயல்பிற்கு மாற்றியமைக்க விரும்புகிறீர்களா?\n"
+"\t\t\t\n"
+"\t\t\tநடப்பு அமர்வில், அல்லது ஏற்கெனவே சேமிக்கப்பட்ட தனிப்பயனாக்கப்பட்ட எல்லாச் சைகைகளும் "
+"இழக்கப்படும்\n"
+"\t\t\tஇதைத் திரும்பப் பெற இயலாது."
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
@@ -9760,6 +9635,412 @@ msgstr "கணக்குடனான அளவளாவலை நிறுத�
 #. but math interaction is not supported.
 msgid "Math interaction not supported."
 msgstr "கணக்குடனான அளவளாவலுக்கு ஆதரவில்லை"
+
+#. Translators: This is spoken when NVDA moves to an empty line.
+#. Translators: This is spoken when the line is considered blank.
+msgid "blank"
+msgstr "வெற்றிடம்"
+
+#. Translators: cap will be spoken before the given letter when it is capitalized.
+#, python-format
+msgid "cap %s"
+msgstr "cap %s"
+
+#. Translators: This is spoken when the given line has no indentation.
+msgid "no indent"
+msgstr "ஓரச் சீர்மையில்லை"
+
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "%s தெரிவாகியது"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s தெரிவாகியது"
+
+#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#, python-format
+msgid "%d characters"
+msgstr "%d வரியுருக்கள்"
+
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
+#, python-format
+msgid "%s unselected"
+msgstr "%s தெரிவு நீக்கப்பட்டது"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s மாற்றாகத் தெரிவாகியது"
+
+#. Translators: Reported when selection is removed.
+msgid "selection removed"
+msgstr "தெரிவு நீக்கப்பட்டது"
+
+#. Translators: Speaks current row number (example output: row 3).
+#, python-format
+msgid "row %s"
+msgstr "கிடைவரிசை %s"
+
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-format
+msgid "through %s"
+msgstr "%s சேர்க்கப்பட்டது"
+
+#. Translators: Speaks current column number (example output: column 3).
+#, python-format
+msgid "column %s"
+msgstr "நெடுவரிசை %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "கிடைவரிசை {row} முதல் நெடுவரிசை {column} வரை"
+
+#. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
+#, python-brace-format
+msgid "with {rowCount} rows and {columnCount} columns"
+msgstr "{rowCount} கிடைவரிசைகள், {columnCount} நெடுவரிசைகள் கொண்டது"
+
+#. Translators: Speaks number of columns (example output: with 4 columns).
+#, python-format
+msgid "with %s columns"
+msgstr "%s நெடுவரிசைகளைக் கொண்டது"
+
+#. Translators: Speaks number of rows (example output: with 2 rows).
+#, python-format
+msgid "with %s rows"
+msgstr "%s கிடைவரிசைகளைக் கொண்டது"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "மட்டம் %s"
+
+#. Translators: Number of items in a list (example output: list with 5 items).
+#, python-format
+msgid "with %s items"
+msgstr "%s உருப்படிகளைக் கொண்டது"
+
+#. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
+#, python-format
+msgid "out of %s"
+msgstr "%s வெளியே"
+
+#. Translators: Indicates the page number in a document.
+#. %s will be replaced with the page number.
+#, python-format
+msgid "page %s"
+msgstr "பக்கம் %s"
+
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "உட்பிரிவு %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+#, python-brace-format
+msgid "column {0} of {1}"
+msgstr "நெடுவரிசை {1}ல் {0}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s நெடுவரிசைகள்"
+
+msgid "continuous section break"
+msgstr "தொடர் உட்பிரிவு முறிவு"
+
+msgid "new column section break"
+msgstr "புது நெடுவரிசை உட்பிரிவு முறிவு"
+
+msgid "new page section break"
+msgstr "புதுப் பக்க உட்பிரிவு முறிவு"
+
+msgid "even pages section break"
+msgstr "இரட்டைப் படை பக்கங்களின் உட்பிரிவு முறிவு"
+
+msgid "odd pages section break"
+msgstr "ஒற்றைப் படை பக்கங்களின் உட்பிரிவு முறிவு"
+
+msgid "column break"
+msgstr "நெடுவரிசை முறிவு"
+
+#. Translators: Speaks the heading level (example output: heading level 2).
+#, python-format
+msgid "heading level %d"
+msgstr "%dம் மட்டத் தலைப்பு"
+
+#. Translators: Indicates the style of text.
+#. A style is a collection of formatting settings and depends on the application.
+#. %s will be replaced with the name of the style.
+#, python-format
+msgid "style %s"
+msgstr "பாங்கு %s"
+
+#. Translators: Indicates that text has reverted to the default style.
+#. A style is a collection of formatting settings and depends on the application.
+msgid "default style"
+msgstr "இயல்புப் பாங்கு"
+
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "எல்லைக் கோடுகள் ஏதுமில்லை"
+
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+#, python-brace-format
+msgid "{color1} to {color2}"
+msgstr "{color1} முதல் {color2} வரை"
+
+#. Translators: Reported when both the text and background colors change.
+#. {color} will be replaced with the text color.
+#. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
+msgid "{color} on {backgroundColor}"
+msgstr "{backgroundColor} மீது {color}"
+
+#. Translators: Reported when the text color changes (but not the background color).
+#. {color} will be replaced with the text color.
+#, python-brace-format
+msgid "{color}"
+msgstr "{color}"
+
+#. Translators: Reported when the background color changes (but not the text color).
+#. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
+msgid "{backgroundColor} background"
+msgstr "பின்னணி {backgroundColor}"
+
+#, python-brace-format
+msgid "background pattern {pattern}"
+msgstr "பின்னணி வடிவவிதம் {pattern}"
+
+#. Translators: Indicates the line number of the text.
+#. %s will be replaced with the line number.
+#, python-format
+msgid "line %s"
+msgstr "வரி %s"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "செருகப்படாதது"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "அழிக்கப்படாதது"
+
+#. Translators: Reported when text is revised.
+#, python-format
+msgid "revised %s"
+msgstr "திருத்தப்பட்டது %s "
+
+#. Translators: Reported when text is not revised.
+#, python-format
+msgid "no revised %s"
+msgstr "திருத்தப்படாதது %s "
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "குறிக்கப்பட்டது"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "குறிக்கப்படாதது"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "வலுவூட்டப்பட்டது"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "வலுவூட்டப்படாதது"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "வலியுறுத்தப்பட்டது"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "வலியுறுத்தப்படாதது"
+
+#. Translators: Reported when text is not bolded.
+msgid "no bold"
+msgstr "அடர்த்தியில்லை"
+
+#. Translators: Reported when text is not italicized.
+msgid "no italic"
+msgstr "சாய்வில்லை"
+
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "ஊடாக இரட்டைக் கோடிடப்பட்டது"
+
+#. Translators: Reported when text is formatted with strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "strikethrough"
+msgstr "ஊடாகக் கோடிடப்பட்டது"
+
+#. Translators: Reported when text is formatted without strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "no strikethrough"
+msgstr "ஊடாகக் கோடிடப்படவில்லை"
+
+#. Translators: Reported when text is underlined.
+msgid "underlined"
+msgstr "அடிக்கோடிடப்பட்டது"
+
+#. Translators: Reported when text is not underlined.
+msgid "not underlined"
+msgstr "அடிக்கோடிடப்படாதது"
+
+#. Translators: Reported when text is hidden.
+msgid "hidden"
+msgstr "மறைக்கப்பட்டது"
+
+#. Translators: Reported when text is not hidden.
+msgid "not hidden"
+msgstr "மறைக்கப்படாதது"
+
+#. Translators: Reported for text which is at the baseline position;
+#. i.e. not superscript or subscript.
+msgid "baseline"
+msgstr "அடித்தளக் கோடு"
+
+#. Translators: Reported when text is left-aligned.
+msgid "align left"
+msgstr "இடதொழுங்கு"
+
+#. Translators: Reported when text is centered.
+msgid "align center"
+msgstr "நடுவொழுங்கு"
+
+#. Translators: Reported when text is right-aligned.
+msgid "align right"
+msgstr "வலதொழுங்கு"
+
+#. Translators: Reported when text is justified.
+#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
+msgid "align justify"
+msgstr "இருபுற ஒழுங்கு"
+
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "பகிரப்பட்ட ஒழுங்கு"
+
+#. Translators: Reported when text has reverted to default alignment.
+msgid "align default"
+msgstr "இயல்பொழுங்கு"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "செங்குத்து மேலொழுங்கு"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "செங்குத்து நடுவொழுங்கு"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "செங்குத்து கீழொழுங்கு"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "செங்குத்து அடித்தளக்கோடொழுங்கு"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "செங்குத்து இருபுற ஒழுங்கு"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "செங்குத்து பகிர்மான ஒழுங்கு"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "செங்குத்து இயல்பொழுங்கு"
+
+#. Translators: the label for paragraph format left indent
+msgid "left indent"
+msgstr "இடதோரச் சீர்மை"
+
+#. Translators: the message when there is no paragraph format left indent
+msgid "no left indent"
+msgstr "இடதோரச் சீர்மையில்லை"
+
+#. Translators: the label for paragraph format right indent
+msgid "right indent"
+msgstr "வலதோரச் சீர்மை"
+
+#. Translators: the message when there is no paragraph format right indent
+msgid "no right indent"
+msgstr "வலதோரச் சீர்மையில்லை"
+
+#. Translators: the label for paragraph format hanging indent
+msgid "hanging indent"
+msgstr "தொங்கு ஓரச் சீர்மை"
+
+#. Translators: the message when there is no paragraph format hanging indent
+msgid "no hanging indent"
+msgstr "தொங்கு ஓரச் சீர்மையில்லை"
+
+#. Translators: the label for paragraph format first line indent
+msgid "first line indent"
+msgstr "முதல் வரியோரச் சீர்மை"
+
+#. Translators: the message when there is no paragraph format first line indent
+msgid "no first line indent"
+msgstr "முதல் வரியோரச் சீர்மையில்லை"
+
+#. Translators: a type of line spacing (E.g. single line spacing)
+#, python-format
+msgid "line spacing %s"
+msgstr "%s வரி இடைவெளி"
+
+#. Translators: Reported when text no longer contains a comment.
+msgid "out of comment"
+msgstr "கருத்துரைக்கு வெளியே "
+
+#. Translators: Reported when text contains a spelling error.
+msgid "spelling error"
+msgstr "எழுத்துப் பிழை"
+
+#. Translators: Reported when moving out of text containing a spelling error.
+msgid "out of spelling error"
+msgstr "எழுத்துப் பிழைக்கு வெளியே"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "இலக்கணப் பிழை"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "இலக்கணப் பிழைக்கு வெளியே"
+
+#. Translators: Indicates end of a table.
+msgid "out of table"
+msgstr "அட்டவணைக்கு வெளியே"
+
+#. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
+#, python-brace-format
+msgid "table with {columnCount} columns and {rowCount} rows"
+msgstr "{columnCount} நெடுவரிசைகள், {rowCount} கிடைவரிசைகள் கொண்ட அட்டவணை"
 
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
@@ -9819,6 +10100,59 @@ msgid ""
 msgstr ""
 "ஆவணத்தின் உள்ளடக்கங்களை வழங்கும்பொழுது, திரைத் தளவமைப்புப்  பாதுகாக்கப்பட்டிருந்தால், அதை "
 "இயக்கவோ, நிறுத்தவோ செய்கிறது"
+
+#. Translators: shown for a highlighter setting that toggles
+#. highlighting the system focus.
+msgid "Highlight system fo&cus"
+msgstr "கணினிக் குவிமையத்தைத் துலக்கமாக்குக (&C)"
+
+#. Translators: shown for a highlighter setting that toggles
+#. highlighting the browse mode cursor.
+msgid "Highlight browse &mode cursor"
+msgstr "உலாவும் நிலைச் சுட்டியைத் துலக்கமாக்குக (&M)"
+
+#. Translators: shown for a highlighter setting that toggles
+#. highlighting the navigator object.
+msgid "Highlight navigator &object"
+msgstr "வழிகாட்டிப் பொருளைத் துலக்கமாக்குக (&O)"
+
+#. Translators: Description for NVDA's built-in screen highlighter.
+msgid "Focus Highlight"
+msgstr "குவிமையத் துலக்கம்"
+
+#. Translators: The label for a checkbox that enables / disables focus highlighting
+#. in the NVDA Highlighter vision settings panel.
+msgid "&Enable Highlighting"
+msgstr "துலக்கமாக்கலை முடுக்குக (&H)"
+
+#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. making it black.
+msgid "Screen Curtain"
+msgstr "திரைச்சீலை"
+
+#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. the screen curtain.
+#, python-brace-format
+msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
+msgstr "{screenCurtainTranslatedName}யை இடும்பொழுது எச்சரிக்கவும் (&S)"
+
+#. Translators: A warning shown when activating the screen curtain.
+#. the translation of "Screen Curtain" should match the "translated name"
+msgid ""
+"Enabling Screen Curtain will make the screen of your computer completely "
+"black. Ensure you will be able to navigate without any use of your screen "
+"before continuing. \n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"திரைச்சீலையை இட்டால், தங்களின் கணினித் திரை முழுதும் கருமையாக மாறும். இடுவதற்கு முன், "
+"திரையைப் பயன்படுத்தாமல் தங்களால் வழிநடக்க இயலுமென்பதை உறுதிசெய்துக் கொள்ளவும்.\n"
+"\n"
+"திரைச்சீலையை கட்டாயம் இட விரும்புகிறீர்களா?"
+
+#. Translators: option to enable screen curtain in the vision settings panel
+msgid "Make screen black (immediate effect)"
+msgstr "திரையை உடனே கருமையாக்குக"
 
 msgid "Taskbar"
 msgstr "பணிப்பட்டை"
@@ -11260,6 +11594,22 @@ msgstr "{styleName} பாங்கு, வெளிவரைவு நிலை
 msgid "{size:g} point font"
 msgstr "{size:g} புள்ளி எழுத்துரு"
 
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking on"
+msgstr "மாற்றங்களைப் பின்தொடர்க"
+
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking off"
+msgstr "மாற்றங்களைப் பின்தொடராமல் இருந்திடுக"
+
+#. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
+msgid "Display nonprinting characters"
+msgstr "அச்சாகாத வரியுருக்களைக் காட்டுக"
+
+#. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
+msgid "Hide nonprinting characters"
+msgstr "அச்சாகாத வரியுருக்களை மறைத்திடுக"
+
 #. Translators: a measurement in Microsoft Word
 #, python-brace-format
 msgid "{offset:.3g} characters"
@@ -11302,6 +11652,114 @@ msgstr "இரட்டை வரி இடைவெளி"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "ஒன்றரை வரி இடைவெளி"
+
+#~ msgctxt "aria"
+#~ msgid "region"
+#~ msgstr "மண்டலம்"
+
+#~ msgctxt "braille landmark abbreviation"
+#~ msgid "rgn"
+#~ msgstr "rgn"
+
+#~ msgid "Koine Greek"
+#~ msgstr "காய்ன் கிரேக்கம்"
+
+#~ msgid "%s landmark"
+#~ msgstr "%s நிலக்குறி"
+
+#~ msgid "lmk %s"
+#~ msgstr "தொடு %s"
+
+#~ msgid "Selected %s"
+#~ msgstr "%s தெரிவாகியது"
+
+#~ msgid "report landmarks off"
+#~ msgstr "நிலக்குறிகளை அறிவிக்காது"
+
+#~ msgid "report landmarks on"
+#~ msgstr "நிலக்குறிகளை அறிவிக்கும்"
+
+#~ msgid ""
+#~ "Reads from the review cursor up to end of current text, moving the review "
+#~ "cursor as it goes"
+#~ msgstr ""
+#~ "தற்பொழுது சீராய்வுச் சுட்டி இருக்குமிடத்திலிருந்து ஆவணத்தின் இறுதி வரைப் படிக்கும். "
+#~ "அப்படிப் படிக்கும்பொழுது, சீராய்வுச் சுட்டியும் உடன் நகர்த்தப்படும்"
+
+#~ msgid ""
+#~ "{longName} ({name})\n"
+#~ "Version: {version}\n"
+#~ "URL: {url}\n"
+#~ "{copyright}\n"
+#~ "\n"
+#~ "{name} is covered by the GNU General Public License (Version 2). You are "
+#~ "free to share or change this software in any way you like as long as it "
+#~ "is accompanied by the license and you make all source code available to "
+#~ "anyone who wants it. This applies to both original and modified copies of "
+#~ "this software, plus any derivative works.\n"
+#~ "For further details, you can view the license from the Help menu.\n"
+#~ "It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+#~ "gpl-2.0.html\n"
+#~ "\n"
+#~ "{name} is developed by NV Access, a non-profit organisation committed to "
+#~ "helping and promoting free and open source solutions for blind and vision "
+#~ "impaired people.\n"
+#~ "If you find NVDA useful and want it to continue to improve, please "
+#~ "consider donating to NV Access. You can do this by selecting Donate from "
+#~ "the NVDA menu."
+#~ msgstr ""
+#~ "{longName} ({name})\n"
+#~ "பதிப்பு: {version}\n"
+#~ "இணைய முகவரி: {url}\n"
+#~ "{copyright}\n"
+#~ "\n"
+#~ "{name} இது எல்லோருக்குமான இரண்டாம் பதிப்பு பொது உரிமத்தின் கீழ் வருகிறது. "
+#~ "இம்மென்பொருளைத் தங்கள் விருப்பப்படி மாற்றிக் கொள்ளவோ, பிறருடன் பகிர்ந்து கொள்ளவோ "
+#~ "தடையில்லை. அப்படிச் செய்யும்பொழுது, இம்மென்பொருளின் உரிமத்தையும், எல்லா ஆதாரக் "
+#~ "குறியீட்டினையும் கேட்பவர்களுக்குக் கொடுக்க வேண்டும். இவ்விதி, இம்மென்பொருளின் "
+#~ "மூலத்திற்கும், மாற்றப்பட்ட வடிவத்திற்கும், இம்மென்பொருளிலிருந்து பெறப்பட்ட பிற "
+#~ "பணிகளுக்கும் பொருந்தும். \n"
+#~ "கூடுதல் தகவல்களுக்கு, உதவிப் பட்டியலிலுள்ள உரிம விவரங்களைக் காணவும்.\n"
+#~ "உரிமத்தைப் படிப்பதற்கான இணைய முகவரி: http://www.gnu.org/licenses/old-licenses/"
+#~ "gpl-2.0.html\n"
+#~ "\n"
+#~ "{name} இம்மென்பொருளை உருவாக்கியது NV Access நிறுவனம். இந்நிறுவனம், இலாப "
+#~ "நோக்கில்லாமல் பார்வையற்றவர்களுக்காகவும், பார்வைக் குறைபாடுள்ளவர்களுக்காகவும் இலவச "
+#~ "திறந்தநிலை ஆதாரத் தீர்வுகளை உருவாக்க உதவவும், அவைகளை மேம்படுத்தவும் தன்னை "
+#~ "ஈடுபடுத்திக் கொண்டுள்ளது.\n"
+#~ "என்விடிஏ பயனுள்ளதாக இருந்து, அது மேலும் மேம்பட வேண்டுமென்று தாங்கள் விரும்பினால், "
+#~ "என்விடிஏவிற்கு நன்கொடை அளிப்பதைப் பற்றிச் சிந்தியுங்கள். இதற்கு, என்விடிஏ பட்டியலிலுள்ள "
+#~ "'நன்கொடையளியுங்கள்' உருப்படியைத் தேர்ந்தெடுக்கவும்."
+
+#~ msgid "Start"
+#~ msgstr "துவக்கு"
+
+#~ msgid "Skype"
+#~ msgstr "ஸ்கைப்"
+
+#~ msgid "Reports and moves the review cursor to a recent message"
+#~ msgstr "அண்மைய தகவலைப் படித்து, சீராய்வுச் சுட்டியை அவ்விடத்திற்கு நகர்த்துகிறது"
+
+#~ msgid "Typing stopped"
+#~ msgstr "தட்டச்சு நிறுத்தப்பட்டது"
+
+#~ msgid "Rewind"
+#~ msgstr "பின்நகர்த்துக"
+
+#~ msgid "Fast forward"
+#~ msgstr "விரைவாக முன்நகர்த்துக"
+
+#~ msgid "Play"
+#~ msgstr "இயக்குக"
+
+#~ msgid "Stop"
+#~ msgstr "நிறுத்துக"
+
+#~ msgid "Record"
+#~ msgstr "பதிவுச் செய்க"
+
+#~ msgid "Could not load the %s display."
+#~ msgstr "%s காட்சியமைவை ஏற்ற இயலவில்லை."
 
 #~ msgid "Currently running application is %s"
 #~ msgstr "தற்பொழுது செயற்பட்டுக்கொண்டிருக்கும் பயன்பாட்டின் பெயர் %s, "

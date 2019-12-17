@@ -5,9 +5,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-12 00:10+1000\n"
-"PO-Revision-Date: 2019-07-21 11:03+0200\n"
-"Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
+"POT-Creation-Date: 2019-12-09 11:28+1000\n"
+"PO-Revision-Date: 2019-12-11 07:47+0200\n"
+"Last-Translator: Jani Kinnunen <janikinnunen340@gmail.com>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
@@ -107,7 +107,8 @@ msgstr "Kielioppivirhe: {text}"
 msgid "unknown"
 msgstr "tuntematon"
 
-#. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
+#. Translators: This is presented when errors are found in an appModule
+#. (example output: error in appModule explorer).
 #, python-format
 msgid "Error in appModule %s"
 msgstr "Virhe sovellusmoduulissa %s"
@@ -146,11 +147,6 @@ msgstr "haku"
 msgctxt "aria"
 msgid "form"
 msgstr "lomake"
-
-#. Translators: Reported for a significant region, normally found on web pages.
-msgctxt "aria"
-msgid "region"
-msgstr "alue"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -227,7 +223,7 @@ msgstr "lst"
 msgid "gra"
 msgstr "gra"
 
-#. Translators: Displayed in braille for an object which is a
+#. Translators: Displayed in braille for toast notifications and for an object which is a
 #. help balloon.
 msgid "hlp"
 msgstr "ohj"
@@ -308,6 +304,11 @@ msgid "grp"
 msgstr "rhm"
 
 #. Translators: Displayed in braille for an object which is a
+#. caption.
+msgid "cap"
+msgstr "kvt"
+
+#. Translators: Displayed in braille for an object which is a
 #. embedded object.
 msgid "embedded"
 msgstr "upotettu"
@@ -315,12 +316,12 @@ msgstr "upotettu"
 #. Translators: Displayed in braille for an object which is a
 #. end note.
 msgid "enote"
-msgstr "lpvte"
+msgstr "lvt"
 
 #. Translators: Displayed in braille for an object which is a
 #. foot note.
 msgid "fnote"
-msgstr "alvte"
+msgstr "avt"
 
 #. Translators: Displayed in braille for an object which is a
 #. terminal.
@@ -375,6 +376,22 @@ msgstr "pst"
 msgid "ins"
 msgstr "lis"
 
+#. Translators: Displayed in braille for a landmark.
+msgid "lmk"
+msgstr "kp"
+
+#. Translators: Displayed in braille for an object which is an article.
+msgid "art"
+msgstr "art"
+
+#. Translators: Displayed in braille for an object which is a region.
+msgid "rgn"
+msgstr "alu"
+
+#. Translators: Displayed in braille for an object which is a figure.
+msgid "fig"
+msgstr "prs"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "val"
@@ -393,7 +410,7 @@ msgstr "+"
 
 #. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
 msgid "submnu"
-msgstr "alavko"
+msgstr "avko"
 
 #. Translators: Displayed in braille when a protected control or a document is encountered.
 msgid "***"
@@ -478,11 +495,6 @@ msgctxt "braille landmark abbreviation"
 msgid "form"
 msgstr "lom"
 
-#. Translators: Displayed in braille for a significant region, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "rgn"
-msgstr "alu"
-
 #. Translators: The description of a braille cursor shape.
 msgid "Dots 7 and 8"
 msgstr "pisteet 7 ja 8"
@@ -513,6 +525,9 @@ msgid "Only when scrolling back"
 msgstr "vain taaksepäin vieritettäessä"
 
 #. Translators: String representing automatic port selection for braille displays.
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA determine its Windows Console implementation
+#. automatically.
 msgid "Automatic"
 msgstr "Automaattinen"
 
@@ -532,7 +547,7 @@ msgstr "o%s"
 
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
-msgstr "alnk"
+msgstr "vlnk"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -899,8 +914,8 @@ msgstr "gujarati, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Koine Greek"
-msgstr "Koinee-kreikka"
+msgid "Greek international braille"
+msgstr "kreikka, kansainvälinen pistekirjoitus"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1395,35 +1410,35 @@ msgstr "Ei edellisiä linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next visited link"
-msgstr "Siirtää seuraavan avatun linkin kohdalle."
+msgstr "Siirtää seuraavan vieraillun linkin kohdalle."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next visited link"
-msgstr "Ei enempää avattuja linkkejä"
+msgstr "Ei enempää vierailtuja linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous visited link"
-msgstr "Siirtää edellisen avatun linkin kohdalle."
+msgstr "Siirtää edellisen vieraillun linkin kohdalle."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous visited link"
-msgstr "Ei edellisiä avattuja linkkejä"
+msgstr "Ei edellisiä vierailtuja linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next unvisited link"
-msgstr "Siirtää seuraavan avaamattoman linkin kohdalle."
+msgstr "Siirtää seuraavan vierailemattoman linkin kohdalle."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next unvisited link"
-msgstr "Ei enempää avaamattomia linkkejä"
+msgstr "Ei enempää vierailemattomia linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous unvisited link"
-msgstr "Siirtää edellisen avaamattoman linkin kohdalle."
+msgstr "Siirtää edellisen vierailemattoman linkin kohdalle."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous unvisited link"
-msgstr "Ei edellisiä avaamattomia linkkejä"
+msgstr "Ei edellisiä vierailemattomia linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next form field"
@@ -1697,6 +1712,38 @@ msgstr "Siirtää edellisen virheen kohdalle."
 msgid "no previous error"
 msgstr "Ei edellisiä virheitä"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next article"
+msgstr "Siirtää seuraavaan artikkeliin."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next article"
+msgstr "Ei enempää artikkeleita"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous article"
+msgstr "Siirtää edelliseen artikkeliin."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous article"
+msgstr "Ei edellisiä artikkeleita"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next grouping"
+msgstr "Siirtää seuraavan ryhmän kohdalle."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next grouping"
+msgstr "Ei enempää ryhmiä"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous grouping"
+msgstr "Siirtää edellisen ryhmän kohdalle."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous grouping"
+msgstr "Ei edellisiä ryhmiä"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -1723,8 +1770,6 @@ msgstr "&Painikkeet"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings panel.
 msgid "Lan&dmarks"
 msgstr "Kii&ntopisteet"
 
@@ -1751,15 +1796,6 @@ msgstr "&Avaa"
 #. in the browse mode Elements List dialog.
 msgid "&Move to"
 msgstr "&Siirry"
-
-#, python-format
-msgid "%s landmark"
-msgstr "%s kiintopiste"
-
-#. Translators: This is brailled to indicate a landmark (example output: lmk main).
-#, python-format
-msgid "lmk %s"
-msgstr "kp %s"
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
@@ -2618,6 +2654,22 @@ msgstr "poistettu"
 msgid "inserted"
 msgstr "lisätty"
 
+#. Translators: Identifies a landmark.
+msgid "landmark"
+msgstr "kiintopiste"
+
+#. Translators: Identifies an article.
+msgid "article"
+msgstr "artikkeli"
+
+#. Translators: Identifies a region.
+msgid "region"
+msgstr "alue"
+
+#. Translators: Identifies a figure (commonly seen on some websites).
+msgid "figure"
+msgstr "piirustus"
+
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
 msgstr "ei käytettävissä"
@@ -2652,11 +2704,11 @@ msgstr "vain luku"
 
 #. Translators: This is presented when a tree view or submenu item is expanded.
 msgid "expanded"
-msgstr "avattu"
+msgstr "laajennettu"
 
 #. Translators: This is presented when a tree view or submenu is collapsed.
 msgid "collapsed"
-msgstr "suljettu"
+msgstr "kutistettu"
 
 #. Translators: This is presented when a control or a document becomes invisible.
 msgid "invisible"
@@ -2664,7 +2716,7 @@ msgstr "ei näkyvissä"
 
 #. Translators: This is presented when a visited link is encountered.
 msgid "visited"
-msgstr "avattu"
+msgstr "vierailtu"
 
 #. Translators: This is presented when a link is encountered.
 msgid "linked"
@@ -2672,7 +2724,7 @@ msgstr "linkitetty"
 
 #. Translators: This is presented when the control menu item has a submenu.
 msgid "subMenu"
-msgstr "alavalikko"
+msgstr "alivalikko"
 
 #. Translators: This is presented when a protected control or a document is encountered.
 msgid "protected"
@@ -3001,6 +3053,11 @@ msgstr "Asetusprofiilit"
 #. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "Pistekirjoitus"
+
+#. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the vision panel
+msgid "Vision"
+msgstr "Näkö"
 
 #. Translators: The name of a category of NVDA commands.
 msgctxt "script category"
@@ -3468,6 +3525,18 @@ msgstr "Otsikoiden ilmaiseminen käytössä"
 msgid "Toggles on and off the reporting of headings"
 msgstr "Ottaa käyttöön otsikoiden ilmaisemisen tai poistaa sen käytöstä."
 
+#. Translators: Input help mode message for toggle report groupings command.
+msgid "Toggles on and off the reporting of groupings"
+msgstr "Ottaa käyttöön ryhmien ilmaisemisen tai poistaa sen käytöstä."
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report groupings off"
+msgstr "Ryhmien ilmaiseminen pois"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report groupings on"
+msgstr "Ryhmien ilmaiseminen käytössä"
+
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
 msgstr "Sisennettyjen lainausten ilmaiseminen pois"
@@ -3483,16 +3552,28 @@ msgstr ""
 "käytöstä."
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-msgid "report landmarks off"
-msgstr "Kiintopisteiden ilmaiseminen pois"
+msgid "report landmarks and regions off"
+msgstr "Kiintopisteiden ja alueiden ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-msgid "report landmarks on"
-msgstr "Kiintopisteiden ilmaiseminen käytössä"
+msgid "report landmarks and regions on"
+msgstr "Kiintopisteiden ja alueiden ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
 msgstr "Ottaa käyttöön kiintopisteiden ilmaisemisen tai poistaa sen käytöstä."
+
+#. Translators: Input help mode message for toggle report articles command.
+msgid "Toggles on and off the reporting of articles"
+msgstr "Ottaa käyttöön artikkelien ilmaisemisen tai poistaa sen käytöstä."
+
+#. Translators: The message announced when toggling the report articles document formatting setting.
+msgid "report articles off"
+msgstr "Artikkelien ilmaiseminen pois"
+
+#. Translators: The message announced when toggling the report articles document formatting setting.
+msgid "report articles on"
+msgstr "Artikkelien ilmaiseminen käytössä"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
@@ -3837,7 +3918,7 @@ msgstr ""
 
 #. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
 msgid "No symbol replacement"
-msgstr "Ei symbolin korvaavaa tekstiä"
+msgstr "Ei korvaavaa tekstiä symbolille"
 
 #. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
 msgid ""
@@ -3903,10 +3984,9 @@ msgstr "Käynnistää NVDA:n uudelleen."
 msgid "Shows the NVDA menu"
 msgstr "Avaa NVDA-valikon."
 
-#. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"Reads from the review cursor up to end of current text, moving the review "
-"cursor as it goes"
+"Reads from the review cursor up to the end of the current text, moving the "
+"review cursor as it goes"
 msgstr ""
 "Lukee nykyisen tekstin loppuun saakka tarkastelukohdistimesta alkaen "
 "siirtäen samalla sitä."
@@ -4058,7 +4138,7 @@ msgid ""
 "text in dos console windows"
 msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä dynaamisen sisällön muutosten, kuten DOS-"
-"ikkunoiden uuden tekstin, lukemisen."
+"konsoli-ikkunoiden uuden tekstin, lukemisen."
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
@@ -4256,18 +4336,18 @@ msgstr ""
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
-msgstr "Puheentarkastelu pois"
+msgstr "Puheen tarkastelu pois"
 
 #. Translators: The message announced when enabling speech viewer.
 msgid "speech viewer enabled"
-msgstr "Puheentarkastelu käytössä"
+msgstr "Puheen tarkastelu käytössä"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
 "Toggles the NVDA Speech viewer, a floating window that allows you to view "
 "all the text that NVDA is currently speaking"
 msgstr ""
-"Ottaa käyttöön tai poistaa käytöstä puheentarkastelun, kelluvan ikkunan, "
+"Ottaa käyttöön tai poistaa käytöstä puheen tarkastelun, kelluvan ikkunan, "
 "jonka avulla voidaan tarkastella NVDA:n tällä hetkellä puhumaa tekstiä."
 
 #. Translators: Reports which position braille is tethered to
@@ -4345,6 +4425,14 @@ msgstr ""
 "Merkitsee tarkastelukohdistimen nykyisen sijainnin valittavan tai "
 "kopioitavan tekstin alkukohdaksi."
 
+msgid ""
+"Move the review cursor to the position marked as the start of text to be "
+"selected or copied"
+msgstr ""
+"Siirtää tarkastelukohdistimen valittavaksi tai kopioitavaksi merkityn "
+"tekstin alkukohtaan."
+
+#. Translators: Presented when attempting to move to the start marker for copy but none has been set.
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 msgid "No start marker set"
 msgstr "Tekstilohkon alkumerkkiä ei asetettu"
@@ -4552,6 +4640,54 @@ msgid ""
 msgstr ""
 "Tunnistaa nykyisen navigointiobjektin sisällön Windows 10:n "
 "tekstintunnistuksella."
+
+#. Translators: Input help mode message for toggle report CLDR command.
+msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
+msgstr "Ottaa käyttöön emojien ilmaisemisen tai poistaa sen käytöstä."
+
+#. Translators: presented when the report CLDR is toggled.
+msgid "report CLDR characters off"
+msgstr "Emojien ilmaiseminen pois"
+
+#. Translators: presented when the report CLDR is toggled.
+msgid "report CLDR characters on"
+msgstr "Emojien ilmaiseminen käytössä"
+
+msgid ""
+"Toggles the state of the screen curtain, enable to make the screen black or "
+"disable to show the contents of the screen. Pressed once, screen curtain is "
+"enabled until you restart NVDA. Pressed twice, screen curtain is enabled "
+"until you disable it"
+msgstr ""
+"Vaihtaa näyttöverhon tilaa. Käyttöön ottaminen pimentää ruudun ja  käytöstä "
+"poistaminen näyttää sen sisällön. Kerran painettaessa näyttöverho on "
+"käytössä, kunnes NVDA käynnistetään uudelleen. Kolmesti painettaessa "
+"näyttöverho on käytössä, kunnes se poistetaan käytöstä."
+
+#. Translators: Reported when the screen curtain is disabled.
+msgid "Screen curtain disabled"
+msgstr "Näyttöverho poistettu käytöstä"
+
+#. Translators: Reported when the screen curtain could not be enabled.
+msgid "Could not disable screen curtain"
+msgstr "Näyttöverhoa ei voitu poistaa käytöstä"
+
+#. Translators: Reported when the screen curtain is not available.
+msgid "Screen curtain not available"
+msgstr "Näyttöverho ei käytettävissä"
+
+#. Translators: Reported when the screen curtain is enabled.
+msgid "Screen curtain enabled"
+msgstr "Näyttöverho käytössä"
+
+#. Translators: Reported when the screen curtain is temporarily enabled.
+msgid "Temporary Screen curtain, enabled until next restart"
+msgstr ""
+"Tilapäinen näyttöverho, käytössä seuraavaan uudelleenkäynnistykseen asti"
+
+#. Translators: Reported when the screen curtain could not be enabled.
+msgid "Could not enable screen curtain"
+msgstr "Näyttöverhoa ei voitu ottaa käyttöön"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -6087,410 +6223,13 @@ msgstr "Ruudun tarkastelu"
 msgid "Emulates pressing %s on the system keyboard"
 msgstr "Jäljittelee näppäimistön %s-näppäimen painamista."
 
-#. Translators: This is spoken when NVDA moves to an empty line.
-#. Translators: This is spoken when the line is considered blank.
-msgid "blank"
-msgstr "tyhjä"
-
-#. Translators: cap will be spoken before the given letter when it is capitalized.
-#, python-format
-msgid "cap %s"
-msgstr "iso %s"
-
-#. Translators: This is spoken when the given line has no indentation.
-msgid "no indent"
-msgstr "ei sisennystä"
-
-#. Translators: This is spoken to indicate that some text is already selected.
-#. 'selected' preceding text is intentional.
-#. For example 'selected hello world'
-#, python-format
-msgid "selected %s"
-msgstr "valittu %s"
-
-#. Translators: This is spoken to indicate what has just been selected.
-#. The text preceding 'selected' is intentional.
-#. For example 'hello world selected'
-#, python-format
-msgid "%s selected"
-msgstr "%s valittu"
-
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
-#, python-format
-msgid "%d characters"
-msgstr "%d merkkiä"
-
-#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
-#, python-format
-msgid "%s unselected"
-msgstr "%s ei valittu"
-
-#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
-#, python-format
-msgid "%s selected instead"
-msgstr "%s valittu sen sijaan"
-
-#. Translators: Reported when selection is removed.
-msgid "selection removed"
-msgstr "Valinta peruttu"
-
-#. Translators: Speaks current row number (example output: row 3).
-#, python-format
-msgid "row %s"
-msgstr "rivi %s"
-
-#. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "jakaantunut %s"
-
-#. Translators: Speaks current column number (example output: column 3).
-#, python-format
-msgid "column %s"
-msgstr "sarake %s"
-
-#. Translators: Speaks the row and column span added to the current row and column numbers
-#. (example output: through row 5 column 3).
-#, python-brace-format
-msgid "through row {row} column {column}"
-msgstr "jakaantunut rivi {row} sarake {column}"
-
-#. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
-msgid "with {rowCount} rows and {columnCount} columns"
-msgstr "jossa {rowCount} riviä ja {columnCount} saraketta"
-
-#. Translators: Speaks number of columns (example output: with 4 columns).
-#, python-format
-msgid "with %s columns"
-msgstr "jossa %s saraketta"
-
-#. Translators: Speaks number of rows (example output: with 2 rows).
-#, python-format
-msgid "with %s rows"
-msgstr "jossa %s riviä"
-
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "taso %s"
-
-#. Translators: Number of items in a list (example output: list with 5 items).
-#, python-format
-msgid "with %s items"
-msgstr "jossa %s kohdetta"
-
-#. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
-#, python-format
-msgid "out of %s"
-msgstr "%s loppu"
-
-#. Translators: Indicates the page number in a document.
-#. %s will be replaced with the page number.
-#, python-format
-msgid "page %s"
-msgstr "sivu %s"
-
-#. Translators: Indicates the section number in a document.
-#. %s will be replaced with the section number.
-#, python-format
-msgid "section %s"
-msgstr "osa %s"
-
-#. Translators: Indicates the text column number in a document.
-#. {0} will be replaced with the text column number.
-#. {1} will be replaced with the number of text columns.
-#, python-brace-format
-msgid "column {0} of {1}"
-msgstr "palsta {0} / {1}"
-
-#. Translators: Indicates the text column number in a document.
-#. %s will be replaced with the number of text columns.
-#, python-format
-msgid "%s columns"
-msgstr "%s palstaa"
-
-msgid "continuous section break"
-msgstr "jatkuva osanvaihto"
-
-msgid "new column section break"
-msgstr "uuden palstan osanvaihto"
-
-msgid "new page section break"
-msgstr "uuden sivun osanvaihto"
-
-msgid "even pages section break"
-msgstr "parillisten sivujen osanvaihto"
-
-msgid "odd pages section break"
-msgstr "parittomien sivujen osanvaihto"
-
-msgid "column break"
-msgstr "palstanvaihto"
-
-#. Translators: Speaks the heading level (example output: heading level 2).
-#, python-format
-msgid "heading level %d"
-msgstr "otsikkotaso %d"
-
-#. Translators: Indicates the style of text.
-#. A style is a collection of formatting settings and depends on the application.
-#. %s will be replaced with the name of the style.
-#, python-format
-msgid "style %s"
-msgstr "tyyli: %s"
-
-#. Translators: Indicates that text has reverted to the default style.
-#. A style is a collection of formatting settings and depends on the application.
-msgid "default style"
-msgstr "oletustyyli"
-
-#. Translators: Indicates that cell does not have border lines.
-msgid "no border lines"
-msgstr "ei reunaviivoja"
-
-#. Translators: Reported when there are two background colors.
-#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
-#. {color1} will be replaced with the first background color.
-#. {color2} will be replaced with the second background color.
-#, python-brace-format
-msgid "{color1} to {color2}"
-msgstr "{color1} ja {color2}"
-
-#. Translators: Reported when both the text and background colors change.
-#. {color} will be replaced with the text color.
-#. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
-msgid "{color} on {backgroundColor}"
-msgstr "tekstin väri: {color}, taustaväri: {backgroundColor}"
-
-#. Translators: Reported when the text color changes (but not the background color).
-#. {color} will be replaced with the text color.
-#, python-brace-format
-msgid "{color}"
-msgstr "{color}"
-
-#. Translators: Reported when the background color changes (but not the text color).
-#. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
-msgid "{backgroundColor} background"
-msgstr "{backgroundColor} tausta"
-
-#, python-brace-format
-msgid "background pattern {pattern}"
-msgstr "taustakuvio: {pattern}"
-
-#. Translators: Indicates the line number of the text.
-#. %s will be replaced with the line number.
-#, python-format
-msgid "line %s"
-msgstr "rivi %s"
-
-#. Translators: Reported when text is no longer marked as having been inserted.
-msgid "not inserted"
-msgstr "ei lisätty"
-
-#. Translators: Reported when text is no longer marked as having been  deleted.
-msgid "not deleted"
-msgstr "ei poistettu"
-
-#. Translators: Reported when text is revised.
-#, python-format
-msgid "revised %s"
-msgstr "muokattu %s"
-
-#. Translators: Reported when text is not revised.
-#, python-format
-msgid "no revised %s"
-msgstr "ei muokattu %s"
-
-#. Translators: Reported when text is marked
-msgid "marked"
-msgstr "merkitty"
-
-#. Translators: Reported when text is no longer marked
-msgid "not marked"
-msgstr "ei merkitty"
-
-#. Translators: Reported when text is marked as strong (e.g. bold)
-msgid "strong"
-msgstr "voimakkaasti korostettu"
-
-#. Translators: Reported when text is no longer marked as strong (e.g. bold)
-msgid "not strong"
-msgstr "ei voimakasta korostusta"
-
-#. Translators: Reported when text is marked as emphasised
-msgid "emphasised"
-msgstr "korostettu"
-
-#. Translators: Reported when text is no longer marked as emphasised
-msgid "not emphasised"
-msgstr "ei korostusta"
-
-#. Translators: Reported when text is not bolded.
-msgid "no bold"
-msgstr "ei lihavointia"
-
-#. Translators: Reported when text is not italicized.
-msgid "no italic"
-msgstr "ei kursivointia"
-
-#. Translators: Reported when text is formatted with double strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
-msgid "double strikethrough"
-msgstr "Kaksinkertainen yliviivaus"
-
-#. Translators: Reported when text is formatted with strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
-msgid "strikethrough"
-msgstr "yliviivattu"
-
-#. Translators: Reported when text is formatted without strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
-msgid "no strikethrough"
-msgstr "ei yliviivausta"
-
-#. Translators: Reported when text is underlined.
-msgid "underlined"
-msgstr "alleviivattu"
-
-#. Translators: Reported when text is not underlined.
-msgid "not underlined"
-msgstr "ei alleviivausta"
-
-#. Translators: Reported for text which is at the baseline position;
-#. i.e. not superscript or subscript.
-msgid "baseline"
-msgstr "perusviiva"
-
-#. Translators: Reported when text is left-aligned.
-msgid "align left"
-msgstr "tasaus vasemmalla"
-
-#. Translators: Reported when text is centered.
-msgid "align center"
-msgstr "tasaus keskellä"
-
-#. Translators: Reported when text is right-aligned.
-msgid "align right"
-msgstr "tasaus oikealla"
-
-#. Translators: Reported when text is justified.
-#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
-msgid "align justify"
-msgstr "tasaus molemmissa reunoissa"
-
-#. Translators: Reported when text is justified with character spacing (Japanese etc)
-#. See http://kohei.us/2010/01/21/distributed-text-justification/
-msgid "align distributed"
-msgstr "jaettu tasaus"
-
-#. Translators: Reported when text has reverted to default alignment.
-msgid "align default"
-msgstr "oletustasaus"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "pystysuuntainen tasaus yläreunassa"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "pystysuuntainen tasaus keskellä"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "pystysuuntainen tasaus alareunassa"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "pystysuuntainen tasaus perusviivalla"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "pystysuuntainen tasaus molemmissa reunoissa"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "pystysuuntainen jaettu tasaus"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "pystysuuntainen oletustasaus"
-
-#. Translators: the label for paragraph format left indent
-msgid "left indent"
-msgstr "sisennys vasemmalla"
-
-#. Translators: the message when there is no paragraph format left indent
-msgid "no left indent"
-msgstr "ei vasenta sisennystä"
-
-#. Translators: the label for paragraph format right indent
-msgid "right indent"
-msgstr "sisennys oikealla"
-
-#. Translators: the message when there is no paragraph format right indent
-msgid "no right indent"
-msgstr "ei oikeaa sisennystä"
-
-#. Translators: the label for paragraph format hanging indent
-msgid "hanging indent"
-msgstr "riippuva sisennys"
-
-#. Translators: the message when there is no paragraph format hanging indent
-msgid "no hanging indent"
-msgstr "ei riippuvaa sisennystä"
-
-#. Translators: the label for paragraph format first line indent
-msgid "first line indent"
-msgstr "sisennys ensimmäisellä rivillä"
-
-#. Translators: the message when there is no paragraph format first line indent
-msgid "no first line indent"
-msgstr "ei ensimmäisen rivin sisennystä"
-
-#. Translators: a type of line spacing (E.g. single line spacing)
-#, python-format
-msgid "line spacing %s"
-msgstr "riviväli %s"
-
-#. Translators: Reported when text no longer contains a comment.
-msgid "out of comment"
-msgstr "kommentin loppu"
-
-#. Translators: Reported when text contains a spelling error.
-msgid "spelling error"
-msgstr "kirjoitusvirhe"
-
-#. Translators: Reported when moving out of text containing a spelling error.
-msgid "out of spelling error"
-msgstr "kirjoitusvirheen loppu"
-
-#. Translators: Reported when text contains a grammar error.
-msgid "grammar error"
-msgstr "Kielioppivirhe"
-
-#. Translators: Reported when moving out of text containing a grammar error.
-msgid "out of grammar error"
-msgstr "kielioppivirheen loppu"
-
-#. Translators: Indicates end of a table.
-msgid "out of table"
-msgstr "taulukon loppu"
-
-#. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
-msgid "table with {columnCount} columns and {rowCount} rows"
-msgstr "taulukko jossa {columnCount} saraketta ja {rowCount} riviä"
-
 msgid "NVDA Speech Viewer"
-msgstr "Puheentarkastelu"
+msgstr "Puheen tarkastelu"
 
-#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+#. Translators: The label for a setting in the speech viewer that controls
+#. whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
-msgstr "&Näytä puheentarkastelu käynnistettäessä"
+msgstr "&Näytä puheen tarkastelu käynnistettäessä"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -6848,7 +6587,7 @@ msgid ""
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} is developed by NV Access, a non-profit organisation committed to "
@@ -6860,7 +6599,7 @@ msgid ""
 msgstr ""
 "{longName} ({name})\n"
 "Versio: {version}\n"
-"URL-osoite: {url}\n"
+"URL: {url}\n"
 "{copyright}\n"
 "\n"
 "{name} on suojattu GNU GPL 2.0 -lisenssillä. Voit vapaasti jakaa tai muuttaa "
@@ -6871,12 +6610,12 @@ msgstr ""
 "Lisenssi on luettavissa myös verkossa osoitteessa: http://www.gnu.org/"
 "licenses/old-licenses/gpl-2.0.html\n"
 "\n"
-"{name} :ta kehittää NV Access, voittoa tavoittelematon organisaatio, joka on "
+"{name}:ta kehittää NV Access, voittoa tavoittelematon organisaatio, joka on "
 "sitoutunut auttamaan ja edistämään vapaan ja avoimen lähdekoodin ratkaisuja "
 "sokeille ja heikkonäköisille.\n"
 "Jos pidät NVDA:ta hyödyllisenä ja haluat sen kehityksen jatkuvan, harkitse "
-"lahjoittamista NV Accessille. Voit tehdä tämän valitsemalla NVDA-valikosta "
-"Lahjoita."
+"lahjoittamista NV Accessille. Voit tehdä lahjoituksen valitsemalla NVDA-"
+"valikosta Lahjoita."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
 #, python-brace-format
@@ -6948,10 +6687,6 @@ msgstr "Yrittää lukea ohjeen valitulle automaattisen täydennyksen kohteelle."
 #. Translators: When the help popup cannot be found for the selected autocompletion item
 msgid "Cann't find the documentation window."
 msgstr "Ohjeikkunaa ei löydy."
-
-#. Translators: The title of Start menu/screen in your language (only the word start).
-msgid "Start"
-msgstr "Käynnistä"
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
@@ -7435,39 +7170,6 @@ msgstr "Tyhjä dia"
 msgid "Waiting for Powerpoint..."
 msgstr "Odotetaan PowerPointia..."
 
-#. Translators: The name of the NVDA command category for Skype specific commands.
-msgid "Skype"
-msgstr "Skype"
-
-msgid "Reports and moves the review cursor to a recent message"
-msgstr ""
-"Lukee numeroa vastaavan uusimman viestin ja siirtää tarkastelukohdistimen "
-"siihen"
-
-#. Translators: Indicates that a contact stopped typing.
-msgid "Typing stopped"
-msgstr "Kirjoittaminen lopetettu"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Rewind"
-msgstr "Kelaa taaksepäin"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Fast forward"
-msgstr "Kelaa eteenpäin"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Play"
-msgstr "Toista"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Stop"
-msgstr "Pysäytä"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Record"
-msgstr "Nauhoita"
-
 msgid "left"
 msgstr "vasen"
 
@@ -7602,6 +7304,15 @@ msgstr "Seika"
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
 msgstr "SuperBraille"
+
+#. Translators: The title of the NVDA Braille Viewer tool window.
+msgid "NVDA Braille Viewer"
+msgstr "Pistekirjoituksen tarkastelu"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether the braille viewer is shown at startup or not.
+msgid "&Show Braille Viewer on Startup"
+msgstr "&Näytä pistekirjoituksen tarkastelu käynnistettäessä"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -7777,6 +7488,10 @@ msgstr "Näytä l&oki"
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
 msgstr "Pu&heen tarkastelu"
+
+#. Translators: The label for the menu item to toggle Braille Viewer.
+msgid "Braille viewer"
+msgstr "Pistekirjoituksen tarkastelu"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -8031,12 +7746,16 @@ msgstr ""
 #. Translators: The label of a Yes button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
 #. the add-on
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. agree to enabling the curtain.
 msgid "&Yes"
 msgstr "&Kyllä"
 
 #. Translators: The label of a No button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to decide not to
 #. install the add-on
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. disagree to enabling the curtain.
 msgid "&No"
 msgstr "&Ei"
 
@@ -8055,7 +7774,7 @@ msgstr "Käynnistä NVDA uudelleen"
 #. more information about the addon
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
-msgstr "T&iedot..."
+msgstr "T&ietoa lisäosasta..."
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
@@ -8910,7 +8629,8 @@ msgid "Automatic language switching (when supported)"
 msgstr "Vaihda kieltä automaattisesti (jos mahdollista)"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings panel (if checked, different voices for dialects will be used to read text in that dialect).
+#. voice settings panel (if checked, different voices for dialects will be used to
+#. read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
 msgstr "Vaihda murretta automaattisesti (jos mahdollista)"
 
@@ -8924,9 +8644,6 @@ msgstr "Välimerkki- ja symboli&taso:"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Käytä äänen kieltä merkkejä ja symboleita käsiteltäessä"
 
-#. Translators: This is the label for a checkbox in the
-#. voice settings panel (if checked, data from the unicode CLDR will be used
-#. to speak emoji descriptions).
 msgid ""
 "Include Unicode Consortium data (including emoji) when processing characters "
 "and symbols"
@@ -8934,14 +8651,15 @@ msgstr ""
 "Käytä Unicode-konsortion dataa (emojit mukaan lukien) merkkejä ja symboleita "
 "käsiteltäessä"
 
-#. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
+#. Translators: This is a label for a setting in voice settings (an edit box to change
+#. voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "Äänenkorkeuden muutos prosentteina isoille kirjaimille"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
 msgid "Say &cap before capitals"
-msgstr "Ilmaise isot kirjaimet sanalla \"&iso\""
+msgstr "Ilmaise isot kirjaimet sanomalla \"&iso\""
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
@@ -9059,7 +8777,7 @@ msgstr "Seuraa järjestelmän &kohdistusta"
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
 msgid "Follow System &Caret"
-msgstr "Seuraa järjestelmä&kohdistinta"
+msgstr "Seuraa &kohdistinta"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
@@ -9329,7 +9047,7 @@ msgid "Tones"
 msgstr "Äänimerkeillä"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both  Speech and Tones"
+msgid "Both Speech and Tones"
 msgstr "Puheella ja äänimerkeillä"
 
 #. Translators: This message is presented in the document formatting settings panelue
@@ -9399,6 +9117,21 @@ msgstr "Sisennetyt &lainaukset"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+msgid "&Groupings"
+msgstr "R&yhmät"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+msgid "Lan&dmarks and regions"
+msgstr "Kii&ntopisteet ja alueet"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+msgid "Arti&cles"
+msgstr "A&rtikkelit"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "Fra&mes"
 msgstr "Ke&hykset"
 
@@ -9457,16 +9190,41 @@ msgstr ""
 "Käytä UI Automation -rajapintaa Microsoft &Wordin asiakirjasäätimille, kun "
 "käytettävissä"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid "Use UI Automation to access the Windows Console when available"
-msgstr ""
-"Käytä UI Automation -rajapintaa Windowsin komentokehotteessa, kun mahdollista"
+#. Translators: This is the label for a combo box for selecting the
+#. active console implementation in the advanced settings panel.
+#. Choices are automatic, prefer UIA, and legacy.
+msgid "Windows C&onsole support:"
+msgstr "Windows-k&onsolin tuki:"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use UIA in the Windows Console when available.
+msgid "Prefer UIA"
+msgstr "UIA etusijalla"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use its legacy Windoes Console support
+#. in all cases.
+msgid "Legacy"
+msgstr "Vanha"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Terminal programs"
+msgstr "Pääteohjelmat"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in UIA consoles (may improve performance)"
-msgstr "Puhu &salasanat UIA-komentokehotteessa (voi parantaa suorituskykyä)"
+msgid "Speak &passwords in Windows Console (may improve performance)"
+msgstr "Puhu &salasanat Windows-konsolissa (voi parantaa suorituskykyä)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid ""
+"Use the new t&yped character support in legacy Windows consoles when "
+"available"
+msgstr ""
+"Käytä uutta k&irjoitettujen merkkien tukea vanhoissa Windows-konsoleissa "
+"(kun mahdollista)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9482,7 +9240,7 @@ msgstr "Muokattava teksti"
 #. Translators: This is the label for a numeric control in the
 #. Advanced settings panel.
 msgid "Caret movement timeout (in ms)"
-msgstr "Kohdistimen siirtymisen aikakatkaisu (ms)"
+msgstr "Kohdistimen siirtämisen aikakatkaisu (ms)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9623,10 +9381,14 @@ msgstr "Piste&näyttö:"
 msgid "&Port:"
 msgstr "Po&rtti:"
 
-#, python-format
-msgid "Could not load the %s display."
-msgstr "Pistenäyttöä %s ei voitu ladata."
+#. Translators: The message in a dialog presented when NVDA is unable to load the selected
+#. braille display.
+#, python-brace-format
+msgid "Could not load the {display} display."
+msgstr "Pistenäyttöä {display} ei voitu ladata."
 
+#. Translators: The title in a dialog presented when NVDA is unable to load the selected
+#. braille display.
 msgid "Braille Display Error"
 msgstr "Pistenäyttövirhe"
 
@@ -9685,6 +9447,62 @@ msgstr "Vältä &sanojen katkaisua"
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
 msgstr "Kohdistuskontekstin näyttäminen:"
+
+#. Translators: This message is presented when
+#. NVDA is unable to load a single vision enhancement provider.
+#, python-brace-format
+msgid "Could not load the {providerName} vision enhancement provider"
+msgstr "Näönparannuksen tarjoajaa {providerName} ei voitu ladata"
+
+#. Translators: This message is presented when NVDA is unable to
+#. load multiple vision enhancement providers.
+#, python-brace-format
+msgid ""
+"Could not load the following vision enhancement providers:\n"
+"{providerNames}"
+msgstr ""
+"Seuraavia näönparannuksen tarjoajia ei voitu ladata:\n"
+"{providerNames}"
+
+#. Translators: The title of the vision enhancement provider error message box.
+msgid "Vision Enhancement Provider Error"
+msgstr "Virhe näönparannuksen tarjoajassa"
+
+#. Translators: This message is presented when
+#. NVDA is unable to gracefully terminate a single vision enhancement provider.
+#, python-brace-format
+msgid ""
+"Could not gracefully terminate the {providerName} vision enhancement provider"
+msgstr "Näönparannuksen tarjoajaa {providerName} ei voitu pysäyttää oikein"
+
+#, python-brace-format
+msgid ""
+"Could not gracefully terminate the following vision enhancement providers:\n"
+"{providerNames}"
+msgstr ""
+"Seuraavia näönparannuksen tarjoajia ei voitu pysäyttää oikein:\n"
+"{providerNames}"
+
+#. Translators: This is a label appearing on the vision settings panel.
+msgid "Configure visual aids."
+msgstr "Määritä näön apuvälineiden asetukset."
+
+#. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
+msgid "Enable"
+msgstr "Ota käyttöön"
+
+#. Translators: Options label on a vision enhancement provider on the vision settings category panel
+#. Translators: The label for a group box containing the NVDA highlighter options.
+msgid "Options:"
+msgstr "Asetukset:"
+
+#. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
+msgid ""
+"Unable to configure user interface for Vision Enhancement Provider, it can "
+"not be enabled."
+msgstr ""
+"Näönparannuksen tarjoajaa ei voida ottaa käyttöön, koska sen "
+"kkäyttöliittymän määrittäminen ei onnistu."
 
 #. Translators: This is the label for the NVDA settings dialog.
 msgid "NVDA Settings"
@@ -9760,6 +9578,10 @@ msgctxt "inputGestures"
 msgid "&Filter by:"
 msgstr "&Suodata:"
 
+#. Translators: The label of a button to reset all gestures in the Input Gestures dialog.
+msgid "Reset to factory &defaults"
+msgstr "Palauta o&letukset"
+
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
@@ -9770,6 +9592,20 @@ msgstr "{main} ({source})"
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 msgid "Enter input gesture:"
 msgstr "Anna syötekomento:"
+
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid ""
+"Are you sure you want to reset all gestures to their factory defaults?\n"
+"\t\t\t\n"
+"\t\t\tAll of your user defined gestures, whether previously set or defined "
+"during this session, will be lost.\n"
+"\t\t\tThis cannot be undone."
+msgstr ""
+"Haluatko varmasti palauttaa kaikkien syötekomentojen oletusarvot?\n"
+"\t\t\t\n"
+"\t\t\tKaikki aiemmin tai tämän istunnon aikana itse määrittämäsi "
+"syötekomennot menetetään.\n"
+"\t\t\tTätä ei voi perua."
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
@@ -9785,6 +9621,412 @@ msgstr "Poistu matemaattisen sisällön vuorovaikutuksesta"
 #. but math interaction is not supported.
 msgid "Math interaction not supported."
 msgstr "Matemaattisen sisällön vuorovaikutusta ei tueta."
+
+#. Translators: This is spoken when NVDA moves to an empty line.
+#. Translators: This is spoken when the line is considered blank.
+msgid "blank"
+msgstr "tyhjä"
+
+#. Translators: cap will be spoken before the given letter when it is capitalized.
+#, python-format
+msgid "cap %s"
+msgstr "iso %s"
+
+#. Translators: This is spoken when the given line has no indentation.
+msgid "no indent"
+msgstr "ei sisennystä"
+
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "valittu %s"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s valittu"
+
+#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#, python-format
+msgid "%d characters"
+msgstr "%d merkkiä"
+
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
+#, python-format
+msgid "%s unselected"
+msgstr "%s ei valittu"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s valittu sen sijaan"
+
+#. Translators: Reported when selection is removed.
+msgid "selection removed"
+msgstr "Valinta peruttu"
+
+#. Translators: Speaks current row number (example output: row 3).
+#, python-format
+msgid "row %s"
+msgstr "rivi %s"
+
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-format
+msgid "through %s"
+msgstr "jakaantunut %s"
+
+#. Translators: Speaks current column number (example output: column 3).
+#, python-format
+msgid "column %s"
+msgstr "sarake %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "jakaantunut rivi {row} sarake {column}"
+
+#. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
+#, python-brace-format
+msgid "with {rowCount} rows and {columnCount} columns"
+msgstr "jossa {rowCount} riviä ja {columnCount} saraketta"
+
+#. Translators: Speaks number of columns (example output: with 4 columns).
+#, python-format
+msgid "with %s columns"
+msgstr "jossa %s saraketta"
+
+#. Translators: Speaks number of rows (example output: with 2 rows).
+#, python-format
+msgid "with %s rows"
+msgstr "jossa %s riviä"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "taso %s"
+
+#. Translators: Number of items in a list (example output: list with 5 items).
+#, python-format
+msgid "with %s items"
+msgstr "jossa %s kohdetta"
+
+#. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
+#, python-format
+msgid "out of %s"
+msgstr "%s loppu"
+
+#. Translators: Indicates the page number in a document.
+#. %s will be replaced with the page number.
+#, python-format
+msgid "page %s"
+msgstr "sivu %s"
+
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "osa %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+#, python-brace-format
+msgid "column {0} of {1}"
+msgstr "palsta {0} / {1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s palstaa"
+
+msgid "continuous section break"
+msgstr "jatkuva osanvaihto"
+
+msgid "new column section break"
+msgstr "uuden palstan osanvaihto"
+
+msgid "new page section break"
+msgstr "uuden sivun osanvaihto"
+
+msgid "even pages section break"
+msgstr "parillisten sivujen osanvaihto"
+
+msgid "odd pages section break"
+msgstr "parittomien sivujen osanvaihto"
+
+msgid "column break"
+msgstr "palstanvaihto"
+
+#. Translators: Speaks the heading level (example output: heading level 2).
+#, python-format
+msgid "heading level %d"
+msgstr "otsikkotaso %d"
+
+#. Translators: Indicates the style of text.
+#. A style is a collection of formatting settings and depends on the application.
+#. %s will be replaced with the name of the style.
+#, python-format
+msgid "style %s"
+msgstr "tyyli: %s"
+
+#. Translators: Indicates that text has reverted to the default style.
+#. A style is a collection of formatting settings and depends on the application.
+msgid "default style"
+msgstr "oletustyyli"
+
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "ei reunaviivoja"
+
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+#, python-brace-format
+msgid "{color1} to {color2}"
+msgstr "{color1} ja {color2}"
+
+#. Translators: Reported when both the text and background colors change.
+#. {color} will be replaced with the text color.
+#. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
+msgid "{color} on {backgroundColor}"
+msgstr "tekstin väri: {color}, taustaväri: {backgroundColor}"
+
+#. Translators: Reported when the text color changes (but not the background color).
+#. {color} will be replaced with the text color.
+#, python-brace-format
+msgid "{color}"
+msgstr "{color}"
+
+#. Translators: Reported when the background color changes (but not the text color).
+#. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
+msgid "{backgroundColor} background"
+msgstr "{backgroundColor} tausta"
+
+#, python-brace-format
+msgid "background pattern {pattern}"
+msgstr "taustakuvio: {pattern}"
+
+#. Translators: Indicates the line number of the text.
+#. %s will be replaced with the line number.
+#, python-format
+msgid "line %s"
+msgstr "rivi %s"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "ei lisätty"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "ei poistettu"
+
+#. Translators: Reported when text is revised.
+#, python-format
+msgid "revised %s"
+msgstr "muokattu %s"
+
+#. Translators: Reported when text is not revised.
+#, python-format
+msgid "no revised %s"
+msgstr "ei muokattu %s"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "merkitty"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "ei merkitty"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "voimakkaasti korostettu"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "ei voimakasta korostusta"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "korostettu"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "ei korostusta"
+
+#. Translators: Reported when text is not bolded.
+msgid "no bold"
+msgstr "ei lihavointia"
+
+#. Translators: Reported when text is not italicized.
+msgid "no italic"
+msgstr "ei kursivointia"
+
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "Kaksinkertainen yliviivaus"
+
+#. Translators: Reported when text is formatted with strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "strikethrough"
+msgstr "yliviivattu"
+
+#. Translators: Reported when text is formatted without strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "no strikethrough"
+msgstr "ei yliviivausta"
+
+#. Translators: Reported when text is underlined.
+msgid "underlined"
+msgstr "alleviivattu"
+
+#. Translators: Reported when text is not underlined.
+msgid "not underlined"
+msgstr "ei alleviivausta"
+
+#. Translators: Reported when text is hidden.
+msgid "hidden"
+msgstr "piilotettu"
+
+#. Translators: Reported when text is not hidden.
+msgid "not hidden"
+msgstr "ei piilotettu"
+
+#. Translators: Reported for text which is at the baseline position;
+#. i.e. not superscript or subscript.
+msgid "baseline"
+msgstr "perusviiva"
+
+#. Translators: Reported when text is left-aligned.
+msgid "align left"
+msgstr "tasaus vasemmalla"
+
+#. Translators: Reported when text is centered.
+msgid "align center"
+msgstr "tasaus keskellä"
+
+#. Translators: Reported when text is right-aligned.
+msgid "align right"
+msgstr "tasaus oikealla"
+
+#. Translators: Reported when text is justified.
+#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
+msgid "align justify"
+msgstr "tasaus molemmissa reunoissa"
+
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "jaettu tasaus"
+
+#. Translators: Reported when text has reverted to default alignment.
+msgid "align default"
+msgstr "oletustasaus"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "pystysuuntainen tasaus yläreunassa"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "pystysuuntainen tasaus keskellä"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "pystysuuntainen tasaus alareunassa"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "pystysuuntainen tasaus perusviivalla"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "pystysuuntainen tasaus molemmissa reunoissa"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "pystysuuntainen jaettu tasaus"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "pystysuuntainen oletustasaus"
+
+#. Translators: the label for paragraph format left indent
+msgid "left indent"
+msgstr "sisennys vasemmalla"
+
+#. Translators: the message when there is no paragraph format left indent
+msgid "no left indent"
+msgstr "ei vasenta sisennystä"
+
+#. Translators: the label for paragraph format right indent
+msgid "right indent"
+msgstr "sisennys oikealla"
+
+#. Translators: the message when there is no paragraph format right indent
+msgid "no right indent"
+msgstr "ei oikeaa sisennystä"
+
+#. Translators: the label for paragraph format hanging indent
+msgid "hanging indent"
+msgstr "riippuva sisennys"
+
+#. Translators: the message when there is no paragraph format hanging indent
+msgid "no hanging indent"
+msgstr "ei riippuvaa sisennystä"
+
+#. Translators: the label for paragraph format first line indent
+msgid "first line indent"
+msgstr "sisennys ensimmäisellä rivillä"
+
+#. Translators: the message when there is no paragraph format first line indent
+msgid "no first line indent"
+msgstr "ei ensimmäisen rivin sisennystä"
+
+#. Translators: a type of line spacing (E.g. single line spacing)
+#, python-format
+msgid "line spacing %s"
+msgstr "riviväli %s"
+
+#. Translators: Reported when text no longer contains a comment.
+msgid "out of comment"
+msgstr "kommentin loppu"
+
+#. Translators: Reported when text contains a spelling error.
+msgid "spelling error"
+msgstr "kirjoitusvirhe"
+
+#. Translators: Reported when moving out of text containing a spelling error.
+msgid "out of spelling error"
+msgstr "kirjoitusvirheen loppu"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "Kielioppivirhe"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "kielioppivirheen loppu"
+
+#. Translators: Indicates end of a table.
+msgid "out of table"
+msgstr "taulukon loppu"
+
+#. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
+#, python-brace-format
+msgid "table with {columnCount} columns and {rowCount} rows"
+msgstr "taulukko jossa {columnCount} saraketta ja {rowCount} riviä"
 
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
@@ -9844,6 +10086,60 @@ msgid ""
 msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä asetuksen, joka määrittää, säilytetäänkö "
 "ruudun ulkoasu asiakirjan sisältöä hahmonnettaessa."
+
+#. Translators: shown for a highlighter setting that toggles
+#. highlighting the system focus.
+msgid "Highlight system fo&cus"
+msgstr "Korosta järjestelmän koh&distus"
+
+#. Translators: shown for a highlighter setting that toggles
+#. highlighting the browse mode cursor.
+msgid "Highlight browse &mode cursor"
+msgstr "Korosta selaust&ilakohdistin"
+
+#. Translators: shown for a highlighter setting that toggles
+#. highlighting the navigator object.
+msgid "Highlight navigator &object"
+msgstr "Korosta navigointi&objekti"
+
+#. Translators: Description for NVDA's built-in screen highlighter.
+msgid "Focus Highlight"
+msgstr "Kohdistuksen korostus"
+
+#. Translators: The label for a checkbox that enables / disables focus highlighting
+#. in the NVDA Highlighter vision settings panel.
+msgid "&Enable Highlighting"
+msgstr "&Ota korostus käyttöön"
+
+#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. making it black.
+msgid "Screen Curtain"
+msgstr "Näyttöverho"
+
+#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. the screen curtain.
+#, python-brace-format
+msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
+msgstr ""
+"&Näytä varoitus aina, kun {screenCurtainTranslatedName} otetaan käyttöön"
+
+#. Translators: A warning shown when activating the screen curtain.
+#. the translation of "Screen Curtain" should match the "translated name"
+msgid ""
+"Enabling Screen Curtain will make the screen of your computer completely "
+"black. Ensure you will be able to navigate without any use of your screen "
+"before continuing. \n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"Näyttöverhon käyttöön ottaminen pimentää ruudun kokonaan. Varmista ennen "
+"jatkamista, että voit käyttää tietokonetta ilman näyttöä. \n"
+"\n"
+"Haluatko jatkaa?"
+
+#. Translators: option to enable screen curtain in the vision settings panel
+msgid "Make screen black (immediate effect)"
+msgstr "Pimennä ruutu (vaikuttaa välittömästi)"
 
 msgid "Taskbar"
 msgstr "Tehtäväpalkki"
@@ -11275,6 +11571,22 @@ msgstr "tyyli: {styleName}, jäsennystaso {outlineLevel}"
 msgid "{size:g} point font"
 msgstr "fonttikoko {size:g} pistettä"
 
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking on"
+msgstr "Muutosten jäljittäminen käytössä"
+
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking off"
+msgstr "Muutosten jäljittäminen pois"
+
+#. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
+msgid "Display nonprinting characters"
+msgstr "Näytä tulostumattomat merkit"
+
+#. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
+msgid "Hide nonprinting characters"
+msgstr "Piilota tulostumattomat merkit"
+
 #. Translators: a measurement in Microsoft Word
 #, python-brace-format
 msgid "{offset:.3g} characters"
@@ -11317,6 +11629,53 @@ msgstr "Kaksinkertainen riviväli"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Riviväli 1,5"
+
+#~ msgid "Magnifier"
+#~ msgstr "Suurennuslasi"
+
+#~ msgid "Highlighter"
+#~ msgstr "Korostaja"
+
+#~ msgid "Color enhancer"
+#~ msgstr "Värinparantaja"
+
+#~ msgid "NVDA Highlighter"
+#~ msgstr "NVDA:n korostaja"
+
+#~ msgid "Koine Greek"
+#~ msgstr "Koinee-kreikka"
+
+#~ msgid "lmk %s"
+#~ msgstr "kp %s"
+
+#~ msgid "Start"
+#~ msgstr "Käynnistä"
+
+#~ msgid "Skype"
+#~ msgstr "Skype"
+
+#~ msgid "Reports and moves the review cursor to a recent message"
+#~ msgstr ""
+#~ "Lukee numeroa vastaavan uusimman viestin ja siirtää tarkastelukohdistimen "
+#~ "siihen"
+
+#~ msgid "Typing stopped"
+#~ msgstr "Kirjoittaminen lopetettu"
+
+#~ msgid "Rewind"
+#~ msgstr "Kelaa taaksepäin"
+
+#~ msgid "Fast forward"
+#~ msgstr "Kelaa eteenpäin"
+
+#~ msgid "Play"
+#~ msgstr "Toista"
+
+#~ msgid "Stop"
+#~ msgstr "Pysäytä"
+
+#~ msgid "Record"
+#~ msgstr "Nauhoita"
 
 #~ msgid "Selected %s"
 #~ msgstr "Valittu %s"
