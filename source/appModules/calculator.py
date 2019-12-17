@@ -22,7 +22,11 @@ noCalculatorEntryAnnouncements = [
 	# Results display with Calculator set to compact overlay i.e. always on top mode.
 	"CalculatorAlwaysOnTopResults",
 	# Calculator expressions with Calculator set to always on top mode.
-	"ExpressionContainer"
+	"ExpressionContainer",
+	# Date range selector.
+	"ContentPresenter",
+	# Briefly shown when closing date calculation calendar.
+	"Light Dismiss",
 ]
 
 
