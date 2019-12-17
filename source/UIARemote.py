@@ -18,7 +18,7 @@ _getTextContent=_dll.uiaRemote_getTextContent
 _getTextContent.restype=SAFEARRAY(VARIANT)
 
 _UIAPropIDs=[
-	UIAHandler.UIA_RuntimeIdPropertyId,
+	#UIAHandler.UIA_RuntimeIdPropertyId,
 	UIAHandler.UIA_ControlTypePropertyId,
 	UIAHandler.UIA_IsTogglePatternAvailablePropertyId,
 	UIAHandler.UIA_IsPasswordPropertyId,
@@ -41,7 +41,7 @@ _UIAPropIDs=[
 
 def _getControlField(props):
 	field=textInfos.ControlField()
-	UIARuntimeID = props[UIAHandler.UIA_RuntimeIdPropertyId]
+	UIARuntimeID = None #props[UIAHandler.UIA_RuntimeIdPropertyId]
 	field['runtimeID'] = UIARuntimeID
 	UIAControlType = props[UIAHandler.UIA_ControlTypePropertyId]
 	role = UIAHandler.UIAControlTypesToNVDARoles.get(UIAControlType,controlTypes.ROLE_UNKNOWN)
@@ -250,11 +250,18 @@ def getTextWithFields(rootElement,textRange,formatConfig):
 			formatField=_getFormatField(attribs,formatConfig)
 			fields.append(textInfos.FieldCommand("formatChange",formatField))
 			text=content[endIndex]
-			fields.append(text)
+			if text:
+				fields.append(text)
+			else:
+				del fields[-1]
 			index=endIndex+1
 		elif cmd==textContentCommand_elementEnd:
-			controlField=controlStack.pop()
+			try:
+				controlField=controlStack.pop()
+			except IndexError:
+				controlField=None
 			fields.append(textInfos.FieldCommand("controlEnd",controlField))
 		else:
 			raise RuntimeError(f"unknown command {cmd}")
+	print(f"fields: {fields}")
 	return fields
