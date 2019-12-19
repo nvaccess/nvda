@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-09 11:28+1000\n"
-"PO-Revision-Date: 2019-12-11 07:47+0200\n"
+"POT-Creation-Date: 2019-12-13 00:10+1000\n"
+"PO-Revision-Date: 2019-12-19 11:05+0200\n"
 "Last-Translator: Jani Kinnunen <janikinnunen340@gmail.com>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -547,7 +547,7 @@ msgstr "o%s"
 
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
-msgstr "vlnk"
+msgstr "klnk"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -1410,35 +1410,35 @@ msgstr "Ei edellisiä linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next visited link"
-msgstr "Siirtää seuraavan vieraillun linkin kohdalle."
+msgstr "Siirtää seuraavan käydyn linkin kohdalle."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next visited link"
-msgstr "Ei enempää vierailtuja linkkejä"
+msgstr "Ei enempää käytyjä linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous visited link"
-msgstr "Siirtää edellisen vieraillun linkin kohdalle."
+msgstr "Siirtää edellisen käydyn linkin kohdalle."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous visited link"
-msgstr "Ei edellisiä vierailtuja linkkejä"
+msgstr "Ei edellisiä käytyjä linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next unvisited link"
-msgstr "Siirtää seuraavan vierailemattoman linkin kohdalle."
+msgstr "Siirtää seuraavan käymättömän linkin kohdalle."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next unvisited link"
-msgstr "Ei enempää vierailemattomia linkkejä"
+msgstr "Ei enempää käymättömiä linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous unvisited link"
-msgstr "Siirtää edellisen vierailemattoman linkin kohdalle."
+msgstr "Siirtää edellisen käymättömän linkin kohdalle."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous unvisited link"
-msgstr "Ei edellisiä vierailemattomia linkkejä"
+msgstr "Ei edellisiä käymättömiä linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next form field"
@@ -2704,11 +2704,11 @@ msgstr "vain luku"
 
 #. Translators: This is presented when a tree view or submenu item is expanded.
 msgid "expanded"
-msgstr "laajennettu"
+msgstr "avoinna"
 
 #. Translators: This is presented when a tree view or submenu is collapsed.
 msgid "collapsed"
-msgstr "kutistettu"
+msgstr "suljettu"
 
 #. Translators: This is presented when a control or a document becomes invisible.
 msgid "invisible"
@@ -2716,7 +2716,7 @@ msgstr "ei näkyvissä"
 
 #. Translators: This is presented when a visited link is encountered.
 msgid "visited"
-msgstr "vierailtu"
+msgstr "käyty"
 
 #. Translators: This is presented when a link is encountered.
 msgid "linked"
@@ -7774,7 +7774,7 @@ msgstr "Käynnistä NVDA uudelleen"
 #. more information about the addon
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
-msgstr "T&ietoa lisäosasta..."
+msgstr "T&ietoja lisäosasta..."
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
@@ -7797,7 +7797,7 @@ msgstr ""
 #. Translators: the url part of the About Add-on information
 #, python-brace-format
 msgid "URL: {url}"
-msgstr "URL-osoite: {url}"
+msgstr "URL: {url}"
 
 #. Translators: the minimum NVDA version part of the About Add-on information
 msgid "Minimum required NVDA version: {}"
