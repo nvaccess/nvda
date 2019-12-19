@@ -19,6 +19,8 @@ _getTextContent.restype=SAFEARRAY(VARIANT)
 
 _UIAPropIDs=[
 	#UIAHandler.UIA_RuntimeIdPropertyId,
+	UIAHandler.UIA_NamePropertyId,
+	UIAHandler.UIA_LocalizedControlTypePropertyId,
 	UIAHandler.UIA_ControlTypePropertyId,
 	UIAHandler.UIA_IsTogglePatternAvailablePropertyId,
 	UIAHandler.UIA_IsPasswordPropertyId,
@@ -31,7 +33,6 @@ _UIAPropIDs=[
 	UIAHandler.UIA_IsExpandCollapsePatternAvailablePropertyId,
 	UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,
 	UIAHandler.UIA_ToggleToggleStatePropertyId,
-	UIAHandler.UIA_NamePropertyId,
 	UIAHandler.UIA_HelpTextPropertyId,
 	UIAHandler.UIA_GridRowCountPropertyId,
 	UIAHandler.UIA_GridColumnCountPropertyId,
@@ -227,7 +228,6 @@ def getTextWithFields(rootElement,textRange,formatConfig):
 	log.info(f"uiaRemote_getTextContent took {endTime-startTime} seconds")
 	pArray._needsfree=True
 	content=pArray.unpack()
-	print(f"Content: {content}")
 	fields=[]
 	index=0
 	contentCount=len(content)
@@ -256,12 +256,8 @@ def getTextWithFields(rootElement,textRange,formatConfig):
 				del fields[-1]
 			index=endIndex+1
 		elif cmd==textContentCommand_elementEnd:
-			try:
-				controlField=controlStack.pop()
-			except IndexError:
-				controlField=None
+			controlField=controlStack.pop()
 			fields.append(textInfos.FieldCommand("controlEnd",controlField))
 		else:
 			raise RuntimeError(f"unknown command {cmd}")
-	print(f"fields: {fields}")
 	return fields
