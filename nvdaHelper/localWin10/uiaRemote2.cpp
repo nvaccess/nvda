@@ -325,20 +325,8 @@ extern "C" __declspec(dllexport) SAFEARRAY* __stdcall uiaRemote_getTextContent(I
 	auto scope=UiaOperationScope::StartNew();
 	UiaTextRange textRange{textRangeArg};
 	UiaElement rootElement{rootElementArg};
-	CComSafeArray<int> propIDsArray{pPropIDsArg};
-	auto propCount=propIDsArray.GetCount();
-	std::vector<int> propIDs;
-	for(size_t i=0;i<propCount;++i) {
-		auto propID=propIDsArray.GetAt(i);
-		propIDs.push_back(propID);
-	}
-	CComSafeArray<int> attribIDsArray{pAttribIDsArg};
-	auto attribCount=attribIDsArray.GetCount();
-	std::vector<int> attribIDs;
-	for(size_t i=0;i<attribCount;++i) {
-		auto attribID=attribIDsArray.GetAt(i);
-		attribIDs.push_back(attribID);
-	}
+	auto propIDs=SafeArrayToVector<VT_I4>(pPropIDsArg);
+	auto attribIDs=SafeArrayToVector<VT_I4>(pAttribIDsArg);
 	auto textContent=_remoteable_getTextContent(scope,rootElement,textRange,propIDs,attribIDs);
 	scope.BindResult(textContent);
 	scope.Resolve();
