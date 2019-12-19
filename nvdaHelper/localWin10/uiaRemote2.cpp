@@ -161,8 +161,9 @@ UiaArray<UiaElement> _remoteable_getAncestorsForTextRange(UiaOperationScope& sco
 
 void _remoteable_calculateAncestorsExitedAndEntered(UiaOperationScope& scope, UiaArray<UiaElement>& oldAncestors, UiaArray<UiaElement>& newAncestors, UiaArray<UiaElement>& elementsExited, UiaArray<UiaElement>& elementsEntered) {
 	auto oldCount=oldAncestors.Size();
-	auto exitCount=oldCount;
 	auto newCount=newAncestors.Size();
+	UiaUint exitCount=0;
+	exitCount+=oldCount;
 	UiaUint index=0;
 	scope.For([&](){},[&]() {
 		return index<newCount;
