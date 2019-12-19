@@ -139,6 +139,7 @@ UiaBool _remoteable_appendAttributesAndTextForRange(UiaOperationScope& scope,Uia
 }
 
 UiaBool _remoteable_compareUiaElements(UiaOperationScope& scope, UiaElement& element1, UiaElement& element2) {
+		// compare the two elements using their runtime IDs.
 		auto ID1=element1.GetRuntimeId(false);
 		auto ID2=element2.GetRuntimeId(false);
 		return _remoteable_areUiaArraysEqual(scope,ID1,ID2);
@@ -146,7 +147,10 @@ UiaBool _remoteable_compareUiaElements(UiaOperationScope& scope, UiaElement& ele
 
 UiaArray<UiaElement> _remoteable_getAncestorsForTextRange(UiaOperationScope& scope, UiaTextRange& textRange, UiaElement& rootElement) {
 	UiaArray<UiaElement> ancestors;
+	// Get the enclosing element for this textRange.
 	auto parent=textRange.GetEnclosingElement();
+	// Walk up the parent chain recording saving off each ancestor.
+	// However stop once we reach the given root element.
 	scope.While([&]() {
 		return !parent.IsNull();
 	},[&]() {
@@ -165,6 +169,10 @@ void _remoteable_calculateAncestorsExitedAndEntered(UiaOperationScope& scope, Ui
 	UiaUint exitCount=0;
 	exitCount+=oldCount;
 	UiaUint index=0;
+	// Walking backward through newAncestors (from parent to child),
+	// save off all new ancestors that do not also appear in oldAncestors.
+	// I.e. elements now entered.
+	// also take note at which index in oldAncestors, new and old ancestors are the same.
 	scope.For([&](){},[&]() {
 		return index<newCount;
 	},[&]() {
@@ -185,6 +193,8 @@ void _remoteable_calculateAncestorsExitedAndEntered(UiaOperationScope& scope, Ui
 		});
 	});
 	UiaUint oldIndex=0;
+	// For all old ancestors that don't appear in newAncestors,
+	// Save them off as elements exited.
 	scope.For([&](){},[&]() {
 		return oldIndex<exitCount;
 	},[&]() {
@@ -196,7 +206,10 @@ void _remoteable_calculateAncestorsExitedAndEntered(UiaOperationScope& scope, Ui
 }
 
 void _remoteable_appendElementStartInfo(UiaOperationScope& scope, UiaElement& element, std::vector<int>& propIDs, UiaArray<UiaVariant>& outArray) {
+	// Record an elementStart command
 	outArray.Append(UiaVariant(textContentCommand_elementStart));
+	// For each of the requested property IDs:
+	// Look up and record the property value for this element.
 	for(auto propID: propIDs) {
 		auto propValue=element.GetPropertyValue(UiaPropertyId(propID),false,false);
 		outArray.Append(propValue);
@@ -204,6 +217,7 @@ void _remoteable_appendElementStartInfo(UiaOperationScope& scope, UiaElement& el
 }
 
 void _remoteable_appendElementEndInfo(UiaOperationScope& scope, UiaElement& element, UiaArray<UiaVariant>& outArray) {
+	// record an elementEnd command
 	outArray.Append(UiaVariant(textContentCommand_elementEnd));
 }
 
@@ -282,54 +296,91 @@ void _remoteable_visitChildRangesAndGaps(UiaOperationScope& scope, UiaTextRange&
 
 UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaElement& rootElement, UiaTextRange& textRange, std::vector<int>& propIDs, const std::vector<int>& attribIDs) {
 	UiaArray<UiaVariant> content;
+	// Split textRange into subranges by format unit. 
 	auto formatRanges=_remoteable_splitTextRangeByUnit(scope,textRange,TextUnit_Format);
 	UiaArray<UiaElement> oldAncestors;
+	// For each of the subranges:
 	_remoteable_visitUiaArrayElements(scope,formatRanges,[&](UiaOperationScope& scope, auto& formatRange) {
+		// Collect the ancestor UIAElements enclosing this range, up to the root element.
 		auto newAncestors=_remoteable_getAncestorsForTextRange(scope,formatRange,rootElement);
 		UiaArray<UiaElement> elementsExited;
 		UiaArray<UiaElement> elementsEntered;
+		// Calcuate which ancestors have been exited
+		// I.e. the last ancestors which this range is not a part of.
+		// and the ancestors now entered
+		// I.e. the new ancestors this range is a part of.
 		_remoteable_calculateAncestorsExitedAndEntered(scope,oldAncestors,newAncestors,elementsExited,elementsEntered);
+		// For each of the old ancestors exited,
+		// Record this in the generated textContent.
 		_remoteable_visitUiaArrayElements(scope,elementsExited,[&](UiaOperationScope& scope,auto& element) {
 			_remoteable_appendElementEndInfo(scope,element,content);
 		});
+		// for each of the ancestors now entered,
+		// Record all of their properties in the generated textContent.
 		_remoteable_visitUiaArrayElements(scope,elementsEntered,[&](UiaOperationScope& scope, auto& element) {
 			_remoteable_appendElementStartInfo(scope,element,propIDs,content);
 		});
+		// Splitting the format range into ranges for each embedded child,
+		// and the gaps between the children,
+		// Walk through the ranges:
 		_remoteable_visitChildRangesAndGaps(scope,formatRange,[&](UiaOperationScope& scope, UiaTextRange& subrange, UiaElement& child) {
+			// If this range is for a embedded child, record its element start, including properties.
 			scope.If(!child.IsNull(),[&]() {
 				_remoteable_appendElementStartInfo(scope,child,propIDs,content);
 			});
+			// Record the text attributes and text for this subrange.
+			// If one of the attribute values is Mixed (I.e. resolution is not fine enough),
+			// then none of the attributes or text will be recorded at all.
+			// In that case, attributes and text should be fetched at an even smaller range later.
 			UiaBool foundMixed=_remoteable_appendAttributesAndTextForRange(scope,subrange,attribIDs,content,false);
 			scope.If(foundMixed,[&]() {
+				// A mixed attribute value was detected.
+				// Therefore, split this subrange into characters.
 				auto charRanges=_remoteable_splitTextRangeByUnit(scope,subrange,TextUnit_Character);
+				// for each of the character ranges:
 				_remoteable_visitUiaArrayElements(scope,charRanges,[&](UiaOperationScope& scope, auto& charRange) {
+					// Record the text attributes and text for this subrange.
+					// this time, Mixed attribute values will simply be ignored,
+					// Though we don't expect that there would be any at the smallest resolution.
 					_remoteable_appendAttributesAndTextForRange(scope,charRange,attribIDs,content,true);
 				});
 			});
+			// If this range was for an embeeded child,
+			// Record its element end.
 			scope.If(!child.IsNull(),[&]() {
 				_remoteable_appendElementEndInfo(scope,child,content);
 			});
 		});
+		// Clear the oldAncestors and copy the newAncestors to the old ready for the next loop iteration.
 		_remoteable_clearUiaArray(scope,oldAncestors);
 		_remoteable_visitUiaArrayElements(scope,newAncestors,[&](UiaOperationScope& scope, auto& element) {
 			oldAncestors.Append(element);
 		});
 	});
+	// Now having processed all the format ranges,
+	// Finally record element exits for all remaining oldAncestors.
 	_remoteable_visitUiaArrayElements(scope,oldAncestors,[&](UiaOperationScope& scope, auto& element) {
 		_remoteable_appendElementEndInfo(scope,element,content);
 	});
+	// return the generated text content.
 	return content;
 }
 
 extern "C" __declspec(dllexport) SAFEARRAY* __stdcall uiaRemote_getTextContent(IUIAutomationElement* rootElementArg, IUIAutomationTextRange* textRangeArg, SAFEARRAY* pPropIDsArg, SAFEARRAY* pAttribIDsArg) {
-	auto scope=UiaOperationScope::StartNew();
-	UiaTextRange textRange{textRangeArg};
-	UiaElement rootElement{rootElementArg};
+	// Unpack the requested property ID and attribute ID safeArrays into vectors.
 	auto propIDs=SafeArrayToVector<VT_I4>(pPropIDsArg);
 	auto attribIDs=SafeArrayToVector<VT_I4>(pAttribIDsArg);
+	// Start a new remote ops scope.
+	auto scope=UiaOperationScope::StartNew();
+	// Everything from here on is remoted
+	UiaTextRange textRange{textRangeArg};
+	UiaElement rootElement{rootElementArg};
 	auto textContent=_remoteable_getTextContent(scope,rootElement,textRange,propIDs,attribIDs);
 	scope.BindResult(textContent);
+	// Actually execute the remote call
 	scope.Resolve();
+	// We aare back to local again 
+	// Pack the textContent array we got from the remote call into a new safeArray for returning
 	size_t numItems=textContent.Size();
 	CComSafeArray<VARIANT> safeArray(numItems);
 	for(size_t i=0;i<numItems;++i) {
