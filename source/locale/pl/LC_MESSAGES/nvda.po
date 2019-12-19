@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-06 07:28+1000\n"
-"PO-Revision-Date: 2019-12-06 22:06+0100\n"
+"POT-Creation-Date: 2019-12-13 00:10+1000\n"
+"PO-Revision-Date: 2019-12-17 21:22+0100\n"
 "Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: killer@tyflonet.com\n"
 "Language: pl_PL\n"
@@ -622,7 +622,7 @@ msgstr "&Symulacja klawiatury HID"
 
 #. Translators: Displayed when the source driver of a braille display gesture is unknown.
 msgid "Unknown braille display"
-msgstr "Nieznana linijka brajlowska"
+msgstr "Nieznany monitor brajlowski"
 
 #. Translators: Name of a Bluetooth serial communications port.
 #, python-brace-format
@@ -4225,7 +4225,7 @@ msgstr "Otwiera okno dialogowe ustawień mowy"
 
 #. Translators: Input help mode message for go to select braille display command.
 msgid "Shows the NVDA braille display selection dialog"
-msgstr "Otwiera okno dialogowe służące do wyboru linijki brajlowskiej"
+msgstr "Otwiera okno dialogowe służące do wyboru monitora brajlowskiego"
 
 #. Translators: Input help mode message for go to braille settings command.
 msgid "Shows NVDA's braille settings"
@@ -4300,7 +4300,7 @@ msgid ""
 "Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
 "for NVDA"
 msgstr ""
-"Aktywuje menadżer dodatków, pozwalający instalować i usuwać wtyczki NVDA"
+"Aktywuje menedżer dodatków, pozwalający instalować i usuwać wtyczki NVDA"
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
@@ -4327,7 +4327,7 @@ msgstr "Brajl powiązany z %s"
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
-"Przełącza powiązanie tekstu prezentowanego na linijce brajlowskiej pomiędzy "
+"Przełącza powiązanie tekstu prezentowanego na monitorze brajlowskim pomiędzy "
 "fokusem a punktem przeglądu"
 
 #. Translators: Reports the new state of braille focus context presentation.
@@ -4446,8 +4446,8 @@ msgstr "Przewija brajl w przód"
 #. Translators: Input help mode message for a braille command.
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr ""
-"Umieszcza kursor, lub aktywuje obiekt pod daną komórką na linijce "
-"brajlowskiej"
+"Umieszcza kursor, lub aktywuje obiekt pod daną komórką na monitorze "
+"brajlowskim"
 
 #. Translators: Input help mode message for Braille report formatting command.
 msgid "Reports formatting info for the text under this braille cell"
@@ -6198,7 +6198,8 @@ msgstr "Emuluje wciśnięcie %s na klawiaturze"
 msgid "NVDA Speech Viewer"
 msgstr "Podgląd mowy NVDA"
 
-#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+#. Translators: The label for a setting in the speech viewer that controls
+#. whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
 msgstr "&Pokaż podgląd mowy przy starcie"
 
@@ -7191,7 +7192,7 @@ msgstr "Włącza lub wyłącza symulację klawiatury HID"
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
-msgstr "Linijki brajlowskie Baum/HumanWare/APH/Orbit"
+msgstr "Monitory brajlowskie Baum/HumanWare/APH/Orbit"
 
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
@@ -7203,11 +7204,11 @@ msgstr "HumanWare Brailliant BI/B series / BrailleNote Touch"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
-msgstr "Linijki EcoBraille "
+msgstr "Monitory brajlowskie EcoBraille "
 
 #. Translators: Names of braille displays.
 msgid "Eurobraille Esys/Esytime/Iris displays"
-msgstr "Linijki Eurobraille Esys/Esytime/Iris"
+msgstr "Monitory Eurobraille Esys/Esytime/Iris"
 
 #. Translators: Message when HID keyboard simulation is unavailable.
 msgid "HID keyboard input simulation is unavailable."
@@ -7232,7 +7233,7 @@ msgstr "przewiń linię"
 
 #. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
-msgstr "Linijki brajlowskie Handy Tech"
+msgstr "Monitory brajlowskie Handy Tech"
 
 #. Translators: message when braille input is enabled
 msgid "Braille input enabled"
@@ -7268,7 +7269,7 @@ msgstr "Starsze modele Papenmeier BRAILLEX"
 
 #. Translators: Names of braille displays.
 msgid "Seika braille displays"
-msgstr "Linijki brajlowskie seika"
+msgstr "Monitory brajlowskie seika"
 
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
@@ -7705,10 +7706,10 @@ msgstr ""
 "\n"
 "Dane zawierają wersję systemu operacyjnego, wersję NVDA, język, kraj "
 "pochodzenia, oraz pewne ustawienia, takie jak aktualnie używany syntezator "
-"mowy, linijkę brajlowską lub tablica brajlowska. Ani treść wypowiadana, ani "
-"wyświetlana na linijce brajlowskiej nigdy nie będzie wysyłana do NV Access.  "
-"Prosimy zajrzeć do podręcznika użytkownika, aby się zapoznać z aktualną "
-"listą zbieranych danych.\n"
+"mowy, monitor brajlowski lub tablica brajlowska. Ani treść wypowiadana, ani "
+"wyświetlana na monitorze brajlowskim nigdy nie będzie wysyłana do NV "
+"Access.  Prosimy zajrzeć do podręcznika użytkownika, aby się zapoznać z "
+"aktualną listą zbieranych danych.\n"
 "\n"
 "Czy zgadzasz się, aby organizacja NV Access zbierała te dane w celu "
 "ulepszania NVDA?"
@@ -9343,15 +9344,15 @@ msgstr "Dodaj wpis słownika"
 
 #. Translators: A label for the braille display on the braille panel.
 msgid "Braille &display"
-msgstr "&Linijka brajlowska"
+msgstr "&Monitor brajlowski"
 
 #. Translators: This is the label for the braille display selection dialog.
 msgid "Select Braille Display"
-msgstr "Wybór linijki brajlowskiej"
+msgstr "Wybór monitora brajlowskiego"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
-msgstr "&Linijka brajlowska"
+msgstr "&Monitor brajlowski:"
 
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
@@ -9361,12 +9362,12 @@ msgstr "&Port:"
 #. braille display.
 #, python-brace-format
 msgid "Could not load the {display} display."
-msgstr "Nie można załadować linijki {display}."
+msgstr "Nie można załadować monitora brajlowskiego {display}."
 
 #. Translators: The title in a dialog presented when NVDA is unable to load the selected
 #. braille display.
 msgid "Braille Display Error"
-msgstr "Błąd linijki brajlowskiej"
+msgstr "Błąd monitora brajlowskiego"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
@@ -10098,8 +10099,7 @@ msgstr "Kurtyna"
 #, python-brace-format
 msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
 msgstr ""
-"Zawsze &pokazuy powiadomienie gdy kurtyna się wczytuje "
-"{screenCurtainTranslatedName}"
+"Zawsze &pokazuy powiadomienie gdy {screenCurtainTranslatedName} się wczytuje"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
