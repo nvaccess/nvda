@@ -12,6 +12,29 @@ const auto textContentCommand_elementStart=1;
 const auto textContentCommand_text=2;
 const auto textContentCommand_elementEnd=3;
 
+template<typename ItemType> UiaBool _remoteable_areUiaArraysEqual(UiaOperationScope& scope, UiaArray<ItemType>& array1, UiaArray<ItemType>& array2) {
+	auto count1=array1.Size();
+	auto count2=array2.Size();
+	UiaBool areEqual{true};
+	scope.If(count1!=count2,[&]() {
+		areEqual=false;
+	},[&]() {
+		UiaUint index=0;
+		scope.For([&](){},[&]() {
+			return index<count1;
+		},[&]() {
+			index+=1;
+		},[&]() {
+			areEqual=array1.GetAt(index)==array2.GetAt(index);
+			scope.If(!areEqual,[&]() {
+				scope.Break();
+			});
+		});
+	});
+	return areEqual;
+}
+
+
 template<typename ItemType> void _remoteable_clearUiaArray(UiaOperationScope& scope, UiaArray<ItemType>& array) {
 	auto arrayCount=array.Size();
 	UiaUint index=0;
@@ -116,11 +139,9 @@ UiaBool _remoteable_appendAttributesAndTextForRange(UiaOperationScope& scope,Uia
 }
 
 UiaBool _remoteable_compareUiaElements(UiaOperationScope& scope, UiaElement& element1, UiaElement& element2) {
-		UiaString name1=element1.GetName(false);
-		UiaString name2=element2.GetName(false);
-		UiaString controlType1=element1.GetLocalizedControlType(false);
-		UiaString controlType2=element2.GetLocalizedControlType(false);
-		return (name1==name2)&&(controlType1==controlType2);
+		auto ID1=element1.GetRuntimeId(false);
+		auto ID2=element2.GetRuntimeId(false);
+		return _remoteable_areUiaArraysEqual(scope,ID1,ID2);
 }
 
 UiaArray<UiaElement> _remoteable_getAncestorsForTextRange(UiaOperationScope& scope, UiaTextRange& textRange, UiaElement& rootElement) {
