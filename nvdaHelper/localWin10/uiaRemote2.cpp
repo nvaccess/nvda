@@ -208,6 +208,14 @@ void _remoteable_calculateAncestorsExitedAndEntered(UiaOperationScope& scope, Ui
 void _remoteable_appendElementStartInfo(UiaOperationScope& scope, UiaElement& element, std::vector<int>& propIDs, UiaArray<UiaVariant>& outArray) {
 	// Record an elementStart command
 	outArray.Append(UiaVariant(textContentCommand_elementStart));
+	// Record the element's runtimeId.
+	// However, as remote ops cannot yet store an array as an item in an array of variants,
+	// Record the ID's length, and then record each of its parts separately.
+	auto IDArray=element.GetRuntimeId(false);
+	outArray.Append(UiaVariant(IDArray.Size()));
+	_remoteable_visitUiaArrayElements(scope,IDArray,[&](UiaOperationScope& scope, auto& IDPart) {
+		outArray.Append(UiaVariant(IDPart));
+	});
 	// For each of the requested property IDs:
 	// Look up and record the property value for this element.
 	for(auto propID: propIDs) {

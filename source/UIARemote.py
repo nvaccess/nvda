@@ -18,7 +18,6 @@ _getTextContent=_dll.uiaRemote_getTextContent
 _getTextContent.restype=SAFEARRAY(VARIANT)
 
 _UIAPropIDs=[
-	#UIAHandler.UIA_RuntimeIdPropertyId,
 	UIAHandler.UIA_NamePropertyId,
 	UIAHandler.UIA_LocalizedControlTypePropertyId,
 	UIAHandler.UIA_ControlTypePropertyId,
@@ -40,9 +39,8 @@ _UIAPropIDs=[
 	UIAHandler.UIA_GridItemColumnPropertyId,
 ]
 
-def _getControlField(props):
+def _getControlField(UIARuntimeID,props):
 	field=textInfos.ControlField()
-	UIARuntimeID = None #props[UIAHandler.UIA_RuntimeIdPropertyId]
 	field['runtimeID'] = UIARuntimeID
 	UIAControlType = props[UIAHandler.UIA_ControlTypePropertyId]
 	role = UIAHandler.UIAControlTypesToNVDARoles.get(UIAControlType,controlTypes.ROLE_UNKNOWN)
@@ -62,10 +60,8 @@ def _getControlField(props):
 		states.add(controlTypes.STATE_OFFSCREEN)
 	if props[UIAHandler.UIA_IsRequiredForFormPropertyId]:
 		states.add(controlTypes.STATE_REQUIRED)
-	UIAIsValuePatternAvailable = props[UIAHandler.UIA_IsValuePatternAvailablePropertyId]
-	if UIAIsValuePatternAvailable:
-		if props[UIAHandler.UIA_ValueIsReadOnlyPropertyId]:
-			states.add(controlTypes.STATE_READONLY)
+	if props[UIAHandler.UIA_ValueIsReadOnlyPropertyId]:
+		states.add(controlTypes.STATE_READONLY)
 	UIAIsExpandCollapsePatternAvailable = props[UIAHandler.UIA_IsExpandCollapsePatternAvailablePropertyId]
 	if UIAIsExpandCollapsePatternAvailable:
 		UIAExpandCollapseState = props[UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId]
@@ -236,10 +232,15 @@ def getTextWithFields(rootElement,textRange,formatConfig):
 		cmd=content[index]
 		index+=1
 		if cmd==textContentCommand_elementStart:
+			IDLength=content[index]
+			index+=1
+			endIndex=index+IDLength
+			ID=content[index:endIndex]
+			index=endIndex
 			endIndex=index+propCount
 			propValues=content[index:endIndex]
 			props={propIDs[x]:propValues[x] for x in range(propCount)}
-			controlField=_getControlField(props)
+			controlField=_getControlField(ID,props)
 			fields.append(textInfos.FieldCommand("controlStart",controlField))
 			controlStack.append(controlField)
 			index = endIndex
