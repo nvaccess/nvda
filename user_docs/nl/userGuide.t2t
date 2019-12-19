@@ -176,6 +176,13 @@ Als u het eerste selectievakje inschakelt, wordt de CapsLock-toets ook als NVDA-
 Als u het tweede selectievakje inschakelt, zal NVDA automatisch opstarten zodra u bij Windows bent aangemeld. Deze mogelijkheid is alleen beschikbaar voor de geïnstalleerde versie van NVDA. 
 Het inschakelen van het derde selectievakje zorgt ervoor dat dit welkomsscherm verschijnt, telkens wanneer NVDA wordt gestart.
 
++++ Dialoogvenster Gebruiksgegevensstatistiek +++[UsageStatsDialog]
+Met ingang van NVDA 2018.3, wordt de gebruiker gevraagd of hij / zij toestaat dat gegevens over het gebruik naar NV Access worden gestuurd met het doel NVDA verder te verbeteren. 
+Wanneer NVDA de eerste keer start, verschijnt er een dialoogvenster  met de vraag of u ermee akkoord gaat dat er gegevens naar NV Access worden gestuurd tijdens uw gebruik van NVDA.
+U leest meer over de door NV Access verzamelde data in Hoofdstuk 11 hierna.
+Merk op dat  door op "ja" of "nee"  te drukken  uw keuze wordt opgeslagen en dat  dit dialoogvenster dan niet meer zal verschijnen, tenzij u NVDA opnieuw installeert.
+U kunt het verzamelen van data echter handmatig in- of uitschakelen via de Instellingen van NVDA in de categorie Algemeen. Om de instelling handmatig te wijzigen zet of verwijdert u een vinkje in het selectievakje  met bijschrift Sta het NVDA project toe NVDA gebruiksstatistieken te verzamelen #GeneralSettingsGatherUsageStats].
+
 ++ Over NVDA toetsenbordcommando’s ++[AboutNVDAKeyboardCommands]
 
 +++ De NVDA programmatoets +++[TheNVDAModifierKey]
@@ -649,6 +656,7 @@ Als u naar het document wilt teruggaan drukt u op Escape.
 + Braille +[Braille]
 Als u over een brailleleesregel beschikt, kan NVDA informatie in braille weergeven.
 Als uw brailleleesregel een toetsenbord heeft van het type Perkins kunt u ook zowel verkort als onverkort braille invoeren.
+Braille kan ook op het scherm worden weergegeven met behulp van de [Braille Viewer #BrailleViewer] in plaats van, of tegelijk met een fysieke  brailleleesregel.
 
 Raadpleegde paragraaf [Ondersteunde Brailleleesregels #SupportedBrailleDisplays] voor informatie over de ondersteunde brailleleesregels.
 In deze paragraaf vindt u ook informatie over die brailleleesregels die door NVDA automatisch als zodanig herkend worden.
@@ -1061,6 +1069,7 @@ De beschikbare logniveaus zijn:
 - Debug: Naast info, waarschuwingen, en gegevens uit invoer/uitvoer worden ook debug-berichten  gelogd. 
  - Evenals voor   invoer/uitvoer geldt hier ook dat u niet voor dit logniveau moet kiezen, als u zich zorgen maakt over uw privacy.
 -
+
 
 ==== NVDA automatisch starten nadat ik me bij windows heb aangemeld ====[GeneralSettingsStartAfterLogOn]
 Als u het selectievakje aanvinkt, zal NVDA automatisch worden gestart zodra u zich bij Windows aanmeldt.
@@ -1539,11 +1548,13 @@ In deze categorie treft u de volgende keuzemogelijkheden aan:
 
 ==== Flitsberichten melden ====[ObjectPresentationReportToolTips]
 Als dit selectievakje aangevinkt is, zal NVDA eventuele flitsberichten (tooltips) laten horen wanneer deze op het scherm verschijnen.
-Bij veel Windows schermen en besturingselementen verschijnt een kort berichtje, – dat “tooltip” genoemd wordt, – wanneer deze zich onder de muisaanwijzer bevinden of soms wanneer deze gefocusseerd worden.
+Bij veel Windows schermen en besturingselementen verschijnt een kort berichtje, – dat “tooltip” genoemd wordt, – wanneer deze zich onder de muisaanwijzer bevinden of soms wanneer deze de focus krijgen.
 
-==== Hulpballonnen melden ====[ObjectPresentationReportBalloons]
-Als dit selectievakje aangevinkt is, zal NVDA eventuele hulpballonnen laten horen wanneer deze op het scherm verschijnen.
-Hulpballonnen lijken op tooltips maar ze bevatten meer informatie dan tooltips. Ze hebben te maken met dingen die aan of met uw computer gebeuren zoals het verwijderen van een netwerk kabel of wellicht wordt u er attent op gemaakt dat er een beveiligingsprobleem is.
+==== Notificaties melden ====[ObjectPresentationReportBalloons]
+Als dit selectievakje aangevinkt is, zal NVDA eventuele hulpballonnen en toast meldingen weergeven wanneer deze op het scherm verschijnen.
+- Hulpballonnen lijken op tooltips maar ze bevatten meer informatie dan tooltips. Ze hebben te maken met dingen die aan of met uw computer gebeuren zoals het verwijderen van een netwerk kabel of wellicht wordt u er attent op gemaakt dat er een beveiligingsprobleem is.
+- Met Windows 10 zijn er zogenaamde 'toast' meldingen gekomen die in het  actiecentrum in het systeemvak te vinden zijn. Deze meldingen zijn van uiteenlopende aard  (bijv. dat er een update gedownload is, dat er een nieuw e-mailbericht  is binnengekomen, etc.).
+
 
 ==== Objectsneltoetsen melden ====[ObjectPresentationShortcutKeys]
 Als dit selectievakje is aangevinkt, zal NVDA bij de aankondiging van een bepaald object of element ook de bijbehorende sneltoetscombinatie vermelden.
@@ -2029,7 +2040,7 @@ Met de toetscombinatie NVDA+F1 opent u het logboekvenster en dit toont informati
 Dit kunt u doen via het Logboek-menu (alt+l).
 
 ++ Spraakweergavevenster (schermweergave gesproken tekst)++[SpeechViewer]
-Goed-ziende software-ontwikkelaars of mensen die NVDA demonstreren voor een goed-ziend publiek is er een zwevend kader waarin alles op het scherm wordt getoond wat NVDA bezig is voor te lezen.
+Voor goedziende softwareontwikkelaars of mensen die NVDA demonstreren voor een goedziend publiek is er een zwevend kader waarin alles op het scherm wordt getoond wat NVDA bezig is voor te lezen.
 
 Om het spraakweergavevenster in te schakelen zet u een vinkje voor spraakweergavevenster onder Extra in het NVDA-menu.
 Haal dit vinkje weg om de speech viewer uit te schakelen.
@@ -2043,6 +2054,21 @@ Maar klikt u in of verplaatst u de focus naar het viewer venster, dan wordt het 
 
 Als u het Spraakweergavevenster altijd en overal wilt kunnen in- of uischakelen, kunt u daarvoor aangepaste invoerhandelingen aanmaken met behulp van [Invoerhandelingen koppelen onder Opties #InputGestures].
 
+++ Braille Viewer (Brailleweergavevenster) ++[BrailleViewer]
+Voor goedziende softwareontwikkelaars of voor mensen die NVDA demonstreren aan een goedziend publiek is er een zwevend kader waarin alle brailleuitvoer  met het tekstequivalent voor elk brailleteken op het scherm wordt weergegeven.
+De braille viewer (brailleweergavevenster) kan tegelijk met een fysieke leesregel worden gebruikt, het aantal cellen  komt overeen met het aantal op het fysieke apparaat.
+Als de braille viewer ingeschakeld is, wordt de inhoud van het venster voortdurend ververst met wat er weergegeven wordt op de fysieke leesregel.
+
+Om het brailleweergavevenster in te schakelen zet u een vinkje voor brailleweergavevenster onder Extra in het NVDA-menu.
+Haal het vinkje weg om het uit te schakelen.
+
+Fysieke brailleleesregels zijn uiteraard der zaak voorzien van knoppen om vooruit of terug te scrollen; om scrollen met de braille viewer mogelijk te maken kunt u in het [dialoogvenster Invoerhandelingen #InputGestures] een sneltoets toewijzen waarmee u de brailleweergave 'terug- en vooruit scrollt'
+
+In het braille weergavevenster treft u een selectievakje aan met het bijschrift 'braille viewer tonen bij start".
+Als dit vakje is aangevinkt, opent de braille viewer wanneer  NVDA wordt gestart.
+Het brailleweergavevenster zal in principe elke keer dat het wordt geopend dezelfde plaats en grootte hebben als toen het de laatste keer gesloten werd.
+
+++ Add-Ons Beheren ++[AddonsManager]
 ++ Add-Ons Beheren ++[AddonsManager]
 Met "Add-ons Beheren" onder Extra in het NVDA menu kunt u uitbreidingspakketten voor NVDA installeren, verwijderen alsmede in- en uitschakelen.
 Deze pakketten worden door de NVDA gemeenschap beschikbaar gesteld en ze bevatten aangepaste programmacode die het mogelijk maakt bepaalde functies van NVDA uit te breiden of te wijzigen. Ook zijn er Add-ons voor ondersteuning van extra brailleleesregels en spraaksynthesizers.
@@ -2547,7 +2573,7 @@ Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van t
 
 ++ Seika Brailleleesregels ++[Seika]
 De modellen Seika Version 3, 4 en 5 (40 cellen) en de Seika80 (80 cellen) van [Nippon Telesoft https://www.nippontelesoft.com/] worden ondersteund.
-Meer informatie over deze leesregels vindt u op https://en.seika-braille.com/down/index.html/ 
+Meer informatie over deze leesregels en over de benodigde drivers vindt u op https://en.seika-braille.com/down/index.html 
 U moet eerst de usb-driver van de fabrikant installeren voordat u de leesregel op de computer aansluit.
 
 Deze leesregel heeft nog geen ondersteuning voor de op de achtergrond uitgevoerde automatische leesregelherkenning van NVDA.
