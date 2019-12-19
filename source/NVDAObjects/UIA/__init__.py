@@ -698,11 +698,17 @@ class UIATextInfo(textInfos.TextInfo):
 		if debug:
 			log.debug("_getTextWithFieldsForUIARange end")
 
+	_withRemoteOps=True
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
-		return UIARemote.getTextWithFields(self.obj.UIAElement,self._rangeObj,formatConfig)
-		fields=list(self._getTextWithFieldsForUIARange(self.obj.UIAElement,self._rangeObj,formatConfig))
+		startTime=time.time()
+		if self._withRemoteOps:
+			fields = UIARemote.getTextWithFields(self.obj.UIAElement,self._rangeObj,formatConfig)
+		else:
+			fields=list(self._getTextWithFieldsForUIARange(self.obj.UIAElement,self._rangeObj,formatConfig))
+		endTime=time.time()
+		log.info(f"getTextWithFields remote:{self._withRemoteOps} took {endTime-startTime}")
 		return fields
 
 	def _get_text(self):
