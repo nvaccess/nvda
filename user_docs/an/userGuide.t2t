@@ -94,7 +94,7 @@ Amás d'a incapacidat d'encetar-se automaticament entre y/u dimpués de l'autent
 - A incapacidat de leyer as pantallas d'o Control de Cuentas d'Usuario (UAC) quan tracte d'encetar una aplicación con privilechios d'administrador.
 - Windows 8 y superiors: a incapacidat pa suportar a dentrada dende una pantalla tactil.
 - Windows 8 y superior: L'achiquida d'audio no ye suportada.
-- Windows 8 y superiors: a incapacidat d'amanir caracteristicas tals como lo modo de navegación y verbalización de caracters en escribir en aplicacions d'o Windows Store.
+- Windows 8 y superiors: a incapacidat d'amanir caracteristicas tals como lo modo de navegación y lo charrau d'os caracters en escribir-los en aplicacions d'o Windows Store.
 
 
 ++ Instalando lo NVDA ++[InstallingNVDA]
@@ -142,15 +142,17 @@ Preta Acceptar ta zarrar iste dialogo.
 + Prencipiando con o NVDA +[GettingStartedWithNVDA]
 
 ++ Lanzando lo NVDA ++[LaunchingNVDA]
-Si has instalau o NVDA con l'instalador, allora encetar NVDA ye tant facil como pretar control+Alt+n, u trigar NVDA dende o menú NVDA en Menú Inicio, submenú Programas. 
-Adicionalment puetz tecliar NVDA en o dialogo Executar y pretar l'Intro. 
-Tamién puetz pasar-le bellas [opcions de linia de comandos #CommandLineOptions] que te permiten reenchegar o NVDA (-r), salir (-q), desenchegar os complementos (--disable-addons), etc.
+Si has instalau o NVDA con l'instalador, allora rancar NVDA ye tant facil como pretar control+Alt+n, u trigar NVDA dende lo menú d'o NVDA en o menú d'inicio, submenú Programas. 
+Adicionalment puetz tecliar NVDA en o dialogo Executar y pretar l'Intro.
+Si lo NVDA ya se ye executando allora se renchegará.
+Tamién puetz pasar-le bellas [opcions de linia de comandos #CommandLineOptions] que te permiten salir (-q), desenchegar os complementos (--disable-addons), etc.
 
 Pa las copias instaladas, o NVDA almagazena la configuración en a carpeta roaming application data de l'usuario actual por defecto (p. eix. "C:\Users\<user>\AppData\Roaming").
-Ye posible cambiar ixo de forma que o NVDA cargue a suya configuración dende a carpeta local de datos d'aplicación en cuenta.
+Ye posible cambiar ixo de forma que lo NVDA cargue a suya configuración dende a carpeta local de datos d'aplicación en cuenta.
 Consulta la sección arredol de [parámetros d'o sistema #SystemWideParameters] pa mas detalles.
 
-Pa encetar a versión portable, ves t'o directorio an descomprimiés o NVDA y preta l'intro u fe dople clic sobre nvda.exe.
+Pa rancar la versión portable, ves t'o directorio que i descomprimiés lo NVDA y preta l'intro u fe doble clic sobre nvda.exe.
+Si lo NVDA ya yera en execución, s'aturará automaticament dimpués de rancar la versión portable.
 
 En que o NVDA ranque en primeras escuitarás un grupo ascendent de tons (que te dicen que o NVDA ye cargando-se). 
 Pendendo cuán rapido siga o tuyo ordinador, u si yes executando lo NVDA dende un lapiz USB u belatro meyo lento, podrá demorar un poquet mientras ranca. 
@@ -400,7 +402,9 @@ As siguients ordens son disponibles ta revisión de texto:
 | Leyer-lo tot con revisión | Mas teclau numerico | NVDA+mayus+Flecha abaixo | eslizar con 3 didos enta abaixo (modo de texto) | Leye dende a posición actual d'o cursor de revisión, movendo-lo seguntes baixa |
 | Seleccionar y copiar dende o cursor de revisión | NVDA+f9 | NVDA+f9 | no | Prencipia o proceso de selección y copia dende a posición actual d'o cursor de revisión. L'acción actual no se leva ta cabo dica que digas a NVDA dó ye o final de rango de texto |
 | Seleccionar y copiar en o cursor de revisión | NVDA+f10 | NVDA+f10 | no | Copia En a primer pretada se copia o texto dende a posición previament  establida como marcador d'inicio dica la posición actual d'o cursor de revisión incluindo-la.  Dimpués de pretar ista tecla una segunda vez se copiará o texto  en o portafuellas d'o Windows |
+| Mover-se-ne t'a marca d'inicio pa copiar en a revisión | NVDA+shift+f9 | NVDA+shift+f9 | no | Mueve lo cursor de revisión t'a posición achustada previament como marca d'inicio pa copiar |
 | Anunciar o formato d'o texto | NVDA+f | NVDA+f | no | Informa d'o formato d'o texto an siga situau actualment o cursor de revisión. Pretando-lo dos veces amuestra a información en o modo de navegación |
+| Anunciar lo remplazo d'o simbolo actual | Garra | Garra | Garra | Diz o simbolo en do siga colocau lo cursor de revisión. Pretau dos veces, amuestra lo simbolo y lo texto emplegau pa decir-lo en o modo de navegación. |
 %kc:endInclude
 
 nota: as teclas d'o teclau numerico requieren que a tecla BloqNum siga desenchegada `pa funcionar apropiadament.
@@ -566,11 +570,8 @@ Una vez haigas trigau un elemento, puetz emplegar os botons proporcionaus en o d
 ++ Mirar texto ++[SearchingForText]
 Iste dialogo te permite mirar termins en o documento actual.
 En o campo "Tecleya lo texto que deseyes trobar", puede calar-se-bi lo texto pa trobar.
-Mientras sigas en o campo de texto, tamién puetz emplegar las flechas alto y abaixo pa trigar los termins miraus dinantis.
 La caixeta de verificación "sensible a las mayusclas" fa que la busca considere letras en mayusclas y en minusclas de modo diferent.
 Por eixemplo, con "sensible a las mayusclas" trigada puetz trobar "NV Access" pero no pas "nv access".
-No s'alzará las diferencias de caso en l'historico de buscas.
-En que se reenchegue lo NVDA, la lista d'os termins miraus dinantis se lasa.
 Fe servir las siguients teclas pa rializar  buscas:
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
@@ -941,6 +942,21 @@ Quan se siga en a tabla d'envista de libros adhibius:
 | Menú de Contexto | aplicacions | Ubre o menú de contexto pa o libro seleccionau. |
 %kc:endInclude
 
+++ Consola d'o Windows ++[WinConsole]
+Lo NVDA furneix compatibilidat pa la consola de comandos d'o Windows emplegada por l'indicativo d'o sistema, PowerShell, y lo  subsistema Windows pa Linux.
+La finestra d'a consola ye de grandaria fixa, por un regular muito mas chica que no la memoria que contiene la salida.
+En que s'escribe un nuevo texto, lo conteniu se desplaza enta alto y lo texto anterior ya no ye visible.
+Lo texto que no s'amuestra visiblement en a finestra no ye accesible con os comandos de revisión de texto d'o NVDA.
+Por tanto, ye necesario desplazar-se por la finestra d'a consola pa leyer lo texto anterior.
+%kc:beginInclude
+Los siguients metodos abreviaus de teclau incorporaus en a Consola d'o Windows pueden estar utils a lo [revisar texto #ReviewingText] con o NVDA:
+|| Nombre | Tecla | Descripción |
+| Desplazar t'alto | control+flecha alto | Desplaza la finestra d'a consola enta alto, asinas se puede leyer lo texto anterior. |
+| Desplazar t'abaixo | control+flecha abaixo | Desplaza la finestra d'a consola enta baixo, asinas se puede leyer lo texto posterior. |
+| Desplazar t'o cobalto | control+inicio | Desplaza la finestra d'a consola t'o cobalto d'a memoria. |
+| Desplazar t'o cobaixo | control+fin | Desplaza la finestra d'a consola t'o cobalto d'a meemoria. |
+%kc:endInclude
+
 + Configurando lo NVDA +[ConfiguringNVDA]
 La mas gran parti d'a configuración puet realizar-se fendo servir dialogos que se i accede por meyo d'o submenú de preferencias d'o menú NVDA.
 Muitas d'istas opcions pueden trobar-sen en o dialogo multipachina d'[opcions d'o NVDA #NVDASettings].
@@ -1091,7 +1107,9 @@ Tecla: NVDA+p
 
 Ixo te permite trigar la cantidat de puntuación y atros simbolos que habría de charrar-sen como parolas.
 Por eixemplo, quan se configura a toda, totz los simbolos se charrarán como parolas.
-Ista opción s'aplica a totz os sintetizadors, no solament a lo sintetizador activo actualment.
+Ista opción s'aplica a totz os sintetizadors, no nomás a lo sintetizador activo actualment.
+
+Pa cambiar la inclusión de datos de l'Unicode Consortium dende do siga, asigna un cenyo personalizau fendo servir lo [dialogo de cenyos de dentrada #InputGestures].
 
 ==== Confidar en l'idioma d'a voz en procesar caracters y simbolos ====[SpeechSettingsTrust]
 Enchegada por defecto, ista opción le diz a lo NVDA si se puet confidar en l'idioma d'a voz actual en procesar simbolos y caracters .
@@ -1322,16 +1340,16 @@ Por tanto, lo dialogo d'opcions d'o NVDA amostrará un mensache d'error si todas
 Dimpués de zarrar lo mensache d'error, has de trigar-ne a lo menos una antis de no poder pretar l'acceptar pa zarrar lo dialogo correctament.
 
 %kc:setting
-==== Charrar os caracters en escribir-los ====[KeyboardSettingsSpeakTypedCharacters]
+==== Charrar los caracters en escribir-los ====[KeyboardSettingsSpeakTypedCharacters]
 Tecla: NVDA+2
 
-Quan ye marcada significa que o NVDA anunciará totz os caracters seguntes los escribas en o teclau. 
+Quan ye marcada significa que o NVDA anunciará totz los caracters seguntes los escribas en o teclau. 
 
 %kc:setting
-==== Charrar as parolas en escribir-las ====[KeyboardSettingsSpeakTypedWords]
+==== Charrar las parolas en escribir-las ====[KeyboardSettingsSpeakTypedWords]
 Tecla: NVDA+3
 
-Quan siga marcada significa que o NVDA anunciará todas as parolas en escribir-las en o teclau. 
+Quan siga marcada significa que o NVDA anunciará todas las parolas en escribir-las en o teclau. 
 
 ==== Aturar a Voz quan s'escribe Caracters ====[KeyboardSettingsSpeechInteruptForCharacters]
 Si ye activada, ista opción causará que a voz s'ature cada vez que s'escriba un caracter. Isto ye activau de traza predeterminada.
@@ -1609,6 +1627,7 @@ Puetz configurar l'anunciau de:
  - Citas
  - Zonas
  - Bastidas
+ - Articlos
  - Clicable
  -
 -
@@ -1667,8 +1686,31 @@ Iste botón nomás ye habilitau si lo NVDA ye configurau pa permitir la carga de
 Quan ista opción siga activada, lo NVDA intentará utilizar l'API d'accesibilidat de Microsoft UI Automation pa obtener información d'os controls de documentos d'o Microsoft Word.
 Ixo incluye lo mesmo Microsoft Word, y tamién lo visor de mensaches y la redacción d'o Microsoft Outlook.
  Pa las versions mas recients d'o Microsoft Office 2016/365 que s'executa en o Windows 10, la compatibilidat con l'UI Automation  ye prou completa como pa furnir acceso ta documentos d'o Microsoft Word quasi igual como la compatibilidat con o Microsoft Word existent d'o NVDA, con l'avantalla anyadida que la capacidat de respuesta aumenta considerablement.
-Manimenos, puet haber-bi bella información que no siga exposada u que siga exposada incorrectament en qualques versions d'o Microsoft Office, lo que significa que no siempre se puet confidar en iste suporte de l'UI automation.
+Manimenos, puet haber-bi bella información que no siga exposada u que siga exposada incorrectament en qualques versions d'o Microsoft Office, lo que significa que no siempre se puet confidar con ixe suporte de l'UI automation.
 Encara no recomendamos que la mayoría d'os usuarios activen ista opción de traza predeterminada, encara que convidamos a los usuarios de l'Office 2016/365 a que preben ista función y nos ninvien los suyos comentarios.
+
+==== Suporte pa la Consola d'o Windows ====[AdvancedSettingsConsoleUIA]
+Ista opción triga cómo interactuga lo NVDA con a consola d'o Windows feita servir por la linia de comandos, lo PowerShell y lo subsistema de Windows pa Linux.
+No afecta a lo terminal moderno d'o Windows.
+En a versión 1709 d'o Windows 10, Microsoft [adhibió suporte pa la suya API d'automatización d'interficie d'usuario a la consola https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], lo que alporta un rendimiento y una estabilidat amplament amilloradas pa los lectors de pantalla que lo suporten.
+En situgacions en que la UI Automation no siga disponible u se sepa que resulta en una experiencia d'usuario pior, la compatibilidat con a consola anterior d'o NVDA ye disponible como solución alternativa.
+Lo quadro combinau de compatibilidat con a Consola d'o Windows tiene tres opcions:
+- Automatico: Emplega l'UI Automation en as consolas con o Windows 10 versión 1809 y posteriors. Ista opción se recomienda y se configura por defecto.
+- Preferir l'UIA: Emplega l'UI Automation en as consolas si ye disponible, mesmo en versions d'o Windows con implementacions incompletas u fallidas. Encara que ixa funcionalidat limitada podrá estar util (y mesmo prou pa lo tuyo uso), la utilización d'ixa opción ye totalment baixo lo tuyo propio risgo y no se furnirá suporte pa ella.
+- Heredau: L'UI Automation en a consola d'o Windows se desenchegará de raso, conque siempre s'usará l'alternativa heredada.
+-
+
+==== Verbalizar as Claus en a consola d'o Windows ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Ista opción controla si los caracters se charran por [charrar los caracters en escribir-los #KeyboardSettingsSpeakTypedCharacters] u [charrar las parolas en escribir-las #KeyboardSettingsSpeakTypedWords] en situgacions en que la pantalla no s'actualice (tal como la dentrada de contraseñas) en qualques programas de terminal, tals como la consola d'o Windows con a compatibilidat con l'UI automation enchegada y lo Mintty.
+Por razons de seguridat, ixa opción ha de deixar-se desenchegada.
+Manimenos, ye posible que deseyes enchegar-lo si experimentas problemas de rendimiento u inestabilidat con l'anunciau d'os caracters y/u las parolas escritas en as consolas, u si treballas en entornos de confidanza y prefiers l'anunciau d'as claus.
+
+==== Fer servir lo suporte nuevo de caracters escritos en as consolas d'o Windows heredadas quan siga disponible ====[AdvancedSettingsKeyboardSupportInLegacy]
+Ista opción enchega un metodo alternativo pa detectar caracters en escribir en consolas heredadas d'o Windows.
+Encara que amillora lo rendimiento y priva que s'especifique la salida d'a consola, puede estar incompatible con qualques programas de terminal.
+Ista caracteristica ye disponible y enchegada por defecto en versions d'o Windows 10 1607, 1703, 1709 y 1803 asinas como en versions d'o Windows 10 mas modernas quan l'UI Automation no siga disponible u desenchegau.
+Alvertencia: con ista opción enchegada, los caracters escritos que no amaneixcan en a pantalla, tals como las claus, no se suprimirán.
+En entornos no confidables, podrás desenchegar temporalment lo [charrar los caracters en escribir-los #KeyboardSettingsSpeakTypedCharacters] y lo [charrar las parolas en escribir-las #KeyboardSettingsSpeakTypedWords] en ficar claus.
 
 ==== Meter Automaticament lo Foco d'o Sistema en os Elementos enfocables en o Modo de navegación ====[BrowseModeSettingsAutoFocusFocusableElements]
 Tecla: NVDA+8
@@ -1888,10 +1930,11 @@ Pa cambiar cómo se configura lo NVDA en as pantallas d'inicio de sesión y UAC,
 + Ferramientas Extra +[ExtraTools]
 
 ++ Visor d'o rechistro ++[LogViewer]
-O visor d'o rechistro, trobau en Ferramientas en o menú NVDA, te permiten veyer toda la salida que haiga ocurriu dica agora dende quan encetés NVDA por zaguera vez.
+Lo visor d'o rechistro, trobau en Ferramientas en o menú NVDA, te permiten veyer toda la salida que haiga ocurriu dica agora dende quan iniciés lo NVDA por zaguer vez.
+Fendo servir NVDA+F1 s'ubrirá lo visor d'o rechistro y amostrará información de desemboliqe sobre lo navegador d'obchectos actual.
 
-Amás de leyer o conteniu, tamién puetz alzar una copia d'o fichero de rechistro, u refrescar o visor pa que s'amuestre a salida mas recient dende que s'ubrió lo visor d'o rechistro.
-Istas accions son disponibles baixo o menú d'o visor d'o rechistro.
+Antiparti de leyer lo conteniu, tamién puetz alzar una copia d'o fichero de rechistro, u refrescar lo visor pa que s'amuestre la salida mas recient dende que s'ubrió lo visor d'o rechistro.
+Ixas accions son disponibles baixo lo menú d'o visor d'o rechistro.
 
 ++ Visor d'a Voz ++[SpeechViewer]
 Pa desembolicadors vidents de Software u chent contrimostrando lo NVDA a una audiencia vident, ye disponible una finestra flotant que te permite veyer tot o texto que o NVDA siga charrando actualment.
@@ -2858,8 +2901,7 @@ O NVDA puet acceptar una u más opcions adicionals en rancar que alteran o suyo 
 Puetz pasar-le tantas d'opcions como amenistes
 Ixas opcions se pueden pasar en rancar-ne dende un acceso dreito (en as propiedatz de l'acceso dreito), dende o dialogo d'executar (Menú inicio -> Executar u Windows+r) u dende una consola de comandos d'o Windows.
 As opcions han d'estar deseparadas d'o nombre d'o fichero executable d'o NVDA y d'atras opcions por spacios.
-Por eixemplo, l'acceso dreito d'o escritorio que o NVDA creya entre a instalación tien a opción -r, que diz a lo NVDA que zarre a copia actualment en execución antis de no rancar a nueva.
-Unatra opción util ye --disable-addons, que diz a lo NVDA que suspenda totz os complementos en execución.
+Por eixemplo, una opción util ye --disable-addons, que diz a lo NVDA que suspenda totz os complementos en execución.
 Ixo te permite de determinar si un problema ye causau por un complemento y recuperar-lo de problemas serios causaus por complementos.
 
 A modo d'eixemplo, puetz salir d'a copia actualment en execución d'o NVDA metendo lo siguient en o dialogo d'executar:
@@ -2868,11 +2910,11 @@ nvda -q
 
 Belunas d'as opcions d'a linia de comandos tienen una versión curta y unatra larga entre que atras en tienen nomás versión larga.
 Pa ixas que tienen una versión curta, puetz combinar-las asinas
-| nvda -rm | Ixo saldrá d'a copia actualment en execución d'o NVDA y rancará una copia nueva con os sons de ranque desenchegaus, etc. |
-| nvda -rm --disable-addons | O mesmo que alto, pero con os complementos desenchegaus |
+| nvda -mc rotaDeConfiguración | Ixo iniciará lo NVDA con sons de rancada y lo mensache desenchegau, y la configuración especificada |
+| nvda -mc rotaDeConfiguración --disable-addons | Lo mesmo que la d'alto, pero con os complementos desenchegaus |
 
 Belunas d'as opcions acceptan parametros adicionals; p. eix. quanto s'ha de detallar o libel de rechistro u la rota t'o directorio de configuración de l'usuario.
-Ixos parametros han d'estar mesos dimpués d'a opción, separaus d'a opción por un espacio quan se fa servir a versión curta u un simbolo igual (=) quan se fa servir a versión larga; p.eix.:
+Ixos parametros han d'estar mesos dimpués d'a opción, deseparaus d'a opción por un espacio quan se fa servir a versión curta u un simbolo igual (=) quan se fa servir a versión larga; p.eix.:
 | nvda -l 10 | Diz a lo NVDA que ranque con o libel de rechistro establiu a depuración |
 | nvda --log-file=c:\nvda.log |  Diz a lo NVDA que escriba o suyo rechistro en c:\nvda.log |
 | nvda --log-level=20 -f c:\nvda.log | Diz a lo  NVDA que ranque con o libel de rechistro establiu a información y que escriba o suyo rechistro en c:\nvda.log |
@@ -2881,8 +2923,7 @@ As siguients son as opcions d'a linia de comandos d'o NVDA:
 || Curta | Larga | Descripción |
 | -h | --help | Amostrar l'aduya d'a linia de comandos y salir |
 | -q | --quit | Salir d'a copia ya en execución d'o NVDA |
-| -r | --replace | Salir d'a copia ya en execución d'o NVDA y rancar ista |
-| -k | --check-running | Anunciar si o NVDA se ye executando a traviés d'o codigo de salida; 0 si se'n ye executando, 1 si not se'n ye executando |
+| -k | --check-running | Anunciar si lo NVDA se ye executando a traviés d'o codigo de salida; 0 si se ye executando, 1 si not se ye executando |
 | -f nombre_fichero | --log-file=nombre_fichero | O fichero an s'han d'escribir os mensaches de rechistro |
 | -l LOGLEVEL | --log-level=LOGLEVEL | Lo libel mas baixo de mensaches registraus (depuración 10, dentrada/salida 12, alvertencia de depuración 15, información 20, alvertencia 30, error 40, critico 50, desenchegau 100), predeterminadament ye alvertencia |
 | -c rota_de_configuración | --config-path=rota_de_configuración | A rota an son almagazenadas todas as opcions d'o NVDA |

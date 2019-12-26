@@ -114,7 +114,7 @@ Bevor Sie auf die Schaltfläche "Fortfahren" klicken können, müssen Sie zuerst
 Es ist auch eine Schaltfläche zur Überprüfung inkompatibler Erweiterungen, welche nach der Installation deaktiviert werden, vorhanden.
 Weitere Informationen zu dieser Schaltfläche finden Sie im Abschnitt [Inkompatible Erweiterungen #incompatibleAddonsManager].
 
-+++ NVDA bei der Windows-Anmeldung starten +++[StartAtWindowsLogon]
++++ NVDA während der Windows-Anmeldung verwenden +++[StartAtWindowsLogon]
 Mit dieser Option können Sie entscheiden, ob NVDA beim Erscheinen des Windows-anmeldebildschirms gestartet werden soll, bevor Sie ein Passwort eingegeben haben.
 Dies betrifft auch die Benutzerkontensteuerung und andere Sicherheitsbildschirme.
 Diese Option ist standardmäßig für Neuinstallationen aktiviert.
@@ -442,7 +442,7 @@ Bei Eingabefeldern ist das üblicherweise der eingegebene Text.
 Bei anderen Objekten wird hier der Name, die Beschriftung und der Wert des Objekts angezeigt.
 
 +++ Dokumentbetrachtung +++[DocumentReview]
-Wenn sich das aktuelle Navigator-Objekt in einem virtuellen Dokument (Lotus-Symphony-Dokument, Webseiten o. ä.) befindet, können Sie mit dem Dokumentbetrachter navigieren.
+Wenn sich das aktuelle Navigator-Objekt in einem virtuellen Dokument (Lotus-Symphony-Dokument, Webseiten, o. ä.) befindet, können Sie mit dem Dokumentbetrachter navigieren.
 Im Dokumentbetrachter können Sie sich den Text des gesamten Dokuments anzeigen lassen.
 
 Wenn Sie aus dem Objektbetrachter im Dokumentbetrachter wechseln, wird der NVDA-Cursor an die Position des aktuellen Navigator-Objekts gesetzt.
@@ -485,8 +485,8 @@ Zum Navigieren mit der Maus sollte eine richtige Maus oder eine Mauskugel benutz
 %kc:endInclude
 
 + Lesemodus +[BrowseMode]
-Umfangreiche schreibgeschützte Dokumente - wie beispielsweise Webseiten - werden in NVDA im so genannten Lesemodus dargestellt. 
-Dies betrifft Dokumente in den folgenden Anwendungen:
+Dokumente, wie z. B. Webseiten, werden in NVDA im sogenannten Lesemodus dargestellt.
+Dies betrifft folgende Anwendungen:
 - Mozilla Firefox
 - Microsoft Internet Explorer
 - Mozilla Thunderbird
@@ -501,7 +501,7 @@ Dies betrifft Dokumente in den folgenden Anwendungen:
 
 Der Lesemodus ist optional auch in Microsoft Word- und Microsoft Excel-Dokumenten verfügbar. 
 
-Im Lesemodus wird der Inhalt von Dokumenten in einer flächenähnliche Struktur dargestellt, sodass Sie sich mit den Pfeiltasten durch das Dokument bewegen können, als ob es ein Textdokument wäre. Dabei wird ein virtueller Cursor verwendet, der unsichtbar ist.
+Im Lesemodus wird der Inhalt von Dokumenten in einer flächenähnlichen Struktur dargestellt, sodass Sie sich mit den Pfeiltasten durch den Text navigieren können. Dabei wird ein virtueller, nicht sichtbarer Cursor verwendet.
 Alle [Befehle zum Navigieren mit dem System-Cursor #SystemCaret] sind im Lesemodus verfügbar. So z. B. Alles Lesen, Formatierung ansagen, Befehle zur Tabellen-Navigation, etc.
 Wenn [Fokus hervorheben #VisionFocusHighlight] aktiviert ist, wird die Position des virtuellen Cursors im Lesemodus visuell dargestellt.
 Informationen darüber, ob der Text beispielsweise ein Link, eine Überschrift, o. ä. ist, wird Ihnen beim Navigieren unmittelbar mitgeteilt.
@@ -527,7 +527,7 @@ Zusätzlich können Sie auch den Fokusmodus erzwingen. In diesem Fall bleibt der
 %kc:endInclude
 
 ++ Die Schnellnavigationstasten ++[SingleLetterNavigation]
-Um im Lesemodus eine schnellere Navigation zu ermöglichen, stellt NVDA die so genannten Schnellnavigationstasten für das Ansteuern bestimmter Seitenelemente zur Verfügung.
+Um im Lesemodus eine schnellere Navigation zu ermöglichen, stellt NVDA die sogenannten Schnellnavigationstasten für das Ansteuern bestimmter Seitenelemente zur Verfügung.
 Bitte beachten Sie, dass nicht alle Schnellnavigationstasten in jedem Dokumententyp verfügbar sind.
 
 %kc:beginInclude
@@ -3010,32 +3010,32 @@ Die Parameter müssen durch ein Leerzeichen von der Option getrennt angegeben we
 | nvda --log-file=C:\nvda.log | Speichert das Protokoll in der Datei "C:\nvda.log" |
 | nvda --log-level=20 -f C:\nvda.log | Legt die Protokollierungsstufe "Informationen" fest und speichert das Protokoll in der Datei C:\nvda.log |
 
-Folgende Kommandozeilenoptionen werden akzeptiert:
+Folgende Kommandozeilenoptionen gibt es:
 || Kurzform | Langform | Beschreibung |
 | -h | --help | Zeigt eine Hilfe zur Befehlszeile an und beendet NVDA. |
 | -q | --quit | Beendet eine laufende Instanz von NVDA. |
-| -k | --check-running | Meldet, ob NVDA bereits ausgeführt wird. Falls ja, wird ein Fehlercode von 0 zurückgegeben, anderenfalls wird 1 zurückgegeben. |
-| -f Protokolldateiname | --log-file=Protokolldateiname | Legt die Datei fest, in der NVDA sein Protokoll schreiben soll. |
+| -k | --check-running | Prüft, ob NVDA bereits ausgeführt wird. Falls ja, wird ein Fehlercode 0 zurückgegeben, anderenfalls wird 1 zurückgegeben. |
+| -f Protokolldateiname | --log-file=Protokolldateiname | Legt die Datei fest, in der die Protokollierung stattfinden soll. |
 | -l Protokollierungsstufe | --log-level=Protokollierungsstufe | Die niedrigste Stufe der protokollierten Nachricht (Debug 10, Input/Output 12, Debug-Warnung 15, Info 20, Warnung 30, Fehler 40, kritisch 50, deaktiviert 100), Standard ist Warnung. |
 | -c Konfigurationspfad | --config-path=KonfigurationsPfad | Gibt den Ordner an, in dem alle NVDA-Einstellungen gespeichert werden sollen. |
 | -m | --minimal | Startet NVDA minimalistisch (keine Klänge, keine Benutzeroberfläche). |
-| -s | --secure | Sicherer Modus (deaktiviert die Python-Konsole und Protokollierungsfunktionen, die häufig in sicheren Bildschirmen verwendet werden). |
+| -s | --secure | Sicherer Modus (deaktiviert die Python-Konsole und Protokollierungsfunktionen, die häufig in Sicherheitsmeldungen verwendet werden). |
 | Keine | --disable-addons | Deaktiviert alle Erweiterungen. |
 | Keine | --debug-logging | Aktivieren Sie die Protokollierung nur für diesen Lauf. Diese Einstellung überschreibt alle anderen Argumente der Protokollebene ( ""--loglevel"", -l), einschließlich der Option keine Protokollierung. |
 | Keine | --no-logging | Deaktivieren Sie die Protokollierung vollständig, während Sie NVDA verwenden. Diese Einstellung kann überschrieben werden, wenn eine Protokollebene ("--loglevel"", -l) von der Kommandozeile aus angegeben wird oder wenn die Debug-Protokollierung eingeschaltet ist. |
 | Keine | --no-sr-flag | Keine Mitteilung in Windows über einen installierten Screenreader. |
 | Keine | --install | Installiert NVDA ohne Ausgabe von Rückmeldungen und startet die neu installierte Version. |
 | Keine | --install-silent | Installiert NVDA ohne Ausgabe von Rückmeldungen, startet die Version aber nicht. |
-| Keine | --enable-start-on-logon=True/False | Aktivieren Sie bei der Installation [NVDA starten im Anmeldebildschirm #StartAtWindowsLogon]. |
+| Keine | --enable-start-on-logon=True/False | Aktivieren Sie bei der Installation [NVDA während der Windows-Anmeldung verwenden #StartAtWindowsLogon]. |
 | Keine | --create-portable | Erstellt und startet eine neue portable NVDA-Version. Hierfür müssen Sie außerdem den Parameter --portable-path angeben. |
 | Keine | --create-portable-silent | Erstellt eine neue portable Kopie von NVDA, ohne diese zu starten. Hierfür müssen Sie außerdem den Parameter --portable-path angeben. |
 | Keine | --portable-path=Ordner | Gibt den Ordner an, in dem die portable Version erstellt werden soll. |
 
 ++ Systemparameter ++[SystemWideParameters]
-Sie können einige Werte in der Registrierdatenbank von Windows verwenden, um das Verhalten von NVDA zu beeinflussen.
+Sie können einige Werte in der Registrierungsdatenbank von Windows verwenden, um das Verhalten von NVDA zu beeinflussen.
 Diese Werte werden unter einem der folgenden Schlüssel gespeichert:
-- 32-bit-Systeme: "HKEY_LOCAL_MACHINE\SOFTWARE\NVDA"
-- 64-bit-systeme: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\NVDA"
+- Für 32-Bit-Systeme: "HKEY_LOCAL_MACHINE\SOFTWARE\NVDA"
+- Für 64-Bit-Systeme: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\NVDA"
 -
 
 Die folgenden Werte können geändert werden:
@@ -3044,6 +3044,6 @@ Die folgenden Werte können geändert werden:
 | serviceDebug | DWORD | 0 (Standard) zum Deaktivieren, 1 zum Aktivieren | Das Aktivieren dieser Einstellung wird nicht empfohlen. Diese Einstellung deaktiviert den sicheren Modus in der Windows-Anmeldung. Gleichzeitig wird der Protokollbetrachter und die Python-Konsole aktiviert. |
 
 + Weitere Informationen +[FurtherInformation]
-Wenn Sie mehr Informationen oder Hilfe bezüglich NVDA benötigen, besuchen Sie bitte die englische Internetseite unter NVDA_URL.
-Dort finden Sie auch neben der Community und dem Technischen Support auch die zusätzlichen Dokumentationen.
-Auf dieser Webseite finden Sie auch Informationen und Ressourcen zur NVDA-Entwicklung.
+Wenn Sie weitere Informationen oder Hilfe bezüglich NVDA benötigen, besuchen Sie bitte die NVDA-Homepage unter NVDA_URL.
+Neben Ressourcen der Community und dem technischen Support finden Sie auch zusätzliche Dokumentationen.
+Auf diesen Seiten werden Informationen und Ressourcen zur NVDA-Entwicklung ebenfalls bereitgestellt.
