@@ -2242,6 +2242,12 @@ class SpeechWithoutPauses:
 			finalSpeechSequence = self._flushPendingSpeech()
 		else:  # Handling normal speech
 			finalSpeechSequence = self._getSpeech(speechSequence)
+		return self._doSpeechIfValid(finalSpeechSequence)
+
+	def _doSpeechIfValid(
+			self,
+			finalSpeechSequence: SpeechSequence
+	) -> bool:
 		if finalSpeechSequence:
 			self.speak(finalSpeechSequence)
 			return True
@@ -2257,12 +2263,20 @@ class SpeechWithoutPauses:
 		for index in range(sequenceLen):
 			if isinstance(speechSequence[index], EndUtteranceCommand):
 				if index > 0 and lastStartIndex < index:
-					self.speakWithoutPauses(speechSequence[lastStartIndex:index], detectBreaks=False)
-				self.speakWithoutPauses(None)
+					subSequence = speechSequence[lastStartIndex:index]
+					self._doSpeechIfValid(
+						self._getSpeech(subSequence)
+					)
+				self._doSpeechIfValid(
+					self._flushPendingSpeech()
+				)
 				spoke = True
 				lastStartIndex = index + 1
 		if lastStartIndex < sequenceLen:
-			spoke = self.speakWithoutPauses(speechSequence[lastStartIndex:], detectBreaks=False)
+			subSequence = speechSequence[lastStartIndex:]
+			spoke = self._doSpeechIfValid(
+				self._getSpeech(subSequence)
+			)
 		return spoke
 
 	def _flushPendingSpeech(self) -> SpeechSequence:
@@ -2315,6 +2329,7 @@ class SpeechWithoutPauses:
 			pendingSpeechSequence.reverse()
 			self._pendingSpeechSequence.extend(pendingSpeechSequence)
 		return finalSpeechSequence
+
 
 _speakWithoutPauses = SpeechWithoutPauses(speakFunc=speak)
 
