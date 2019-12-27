@@ -917,6 +917,20 @@ def _extendSpeechSequence_addMathForTextInfo(
 		return
 
 
+class GeneratorWithReturn:
+	"""Helper class, used with generator functions to access the 'return' value after there are no more values
+	to iterate over.
+	"""
+	def __init__(self, gen, defaultReturnValue=None):
+		self.gen = gen
+		self.returnValue = defaultReturnValue
+		self.iterationFinished = False
+
+	def __iter__(self):
+		self.returnValue = yield from self.gen
+		self.iterationFinished = True
+
+
 # C901 'speakTextInfo' is too complex
 # Note: when working on speakTextInfo, look for opportunities to simplify
 # and move logic out into smaller helper functions.
@@ -2201,6 +2215,12 @@ def getTableInfoSpeech(
 	return textList
 
 
+def _yieldIfNonEmpty(seq: SpeechSequence):
+	"""Helper method to yield the sequence if it is not None or empty."""
+	if seq:
+		yield seq
+
+
 class SpeechWithoutPauses:
 	_pendingSpeechSequence: SpeechSequence
 	re_last_pause = re.compile(
@@ -2221,7 +2241,7 @@ class SpeechWithoutPauses:
 	def reset(self):
 		self._pendingSpeechSequence = []
 
-	def speakWithoutPauses(  # noqa: C901
+	def speakWithoutPauses(
 			self,
 			speechSequence: Optional[SpeechSequence],
 			detectBreaks: bool = True
@@ -2233,51 +2253,69 @@ class SpeechWithoutPauses:
 		@return: C{True} if something was actually spoken,
 			C{False} if only buffering occurred.
 		"""
+		speech = GeneratorWithReturn(self.getSpeechWithoutPauses(
+			speechSequence,
+			detectBreaks
+		))
+		for seq in speech:
+			self.speak(seq)
+		return speech.returnValue
+
+	def getSpeechWithoutPauses(  # noqa: C901
+			self,
+			speechSequence: Optional[SpeechSequence],
+			detectBreaks: bool = True
+	) -> Generator[SpeechSequence, None, bool]:
+		"""
+		Generate speech sequences over multiple calls,
+		only returning a speech sequence at acceptable phrase or sentence boundaries,
+		or when given None for the speech sequence.
+		@return: The speech sequence that can be spoken without pauses. The 'return' for this generator function,
+		is a bool which indicates whether this sequence should be considered valid speech. Use
+		L{GeneratorWithReturn} to retain the return value. A generator is used because the previous
+		implementation had several calls to speech, this approach replicates that.
+		"""
 		# Break on all explicit break commands
 		if detectBreaks and speechSequence:
-			return self._detectBreaksAndSpeak(speechSequence)
+			speech = GeneratorWithReturn(self._detectBreaksAndGetSpeech(speechSequence))
+			yield from speech
+			return speech.returnValue  # Don't fall through to flush / normal speech
 
-		finalSpeechSequence = []
 		if speechSequence is None:  # Requesting flush
-			finalSpeechSequence = self._flushPendingSpeech()
-		else:  # Handling normal speech
-			finalSpeechSequence = self._getSpeech(speechSequence)
-		return self._doSpeechIfValid(finalSpeechSequence)
+			pending = self._flushPendingSpeech()
+			yield from _yieldIfNonEmpty(pending)
+			return bool(pending)  # Don't fall through to handle normal speech
 
-	def _doSpeechIfValid(
-			self,
-			finalSpeechSequence: SpeechSequence
-	) -> bool:
-		if finalSpeechSequence:
-			self.speak(finalSpeechSequence)
-			return True
-		return False
+		# Handling normal speech
+		speech = self._getSpeech(speechSequence)
+		yield from _yieldIfNonEmpty(speech)
+		return bool(speech)
 
-	def _detectBreaksAndSpeak(
+	def _detectBreaksAndGetSpeech(
 			self,
 			speechSequence: SpeechSequence
-	) -> bool:
+	) -> Generator[SpeechSequence, None, bool]:
 		lastStartIndex = 0
 		sequenceLen = len(speechSequence)
-		spoke = False
-		for index in range(sequenceLen):
-			if isinstance(speechSequence[index], EndUtteranceCommand):
+		gotValidSpeech = False
+		for index, item in enumerate(speechSequence):
+			if isinstance(item, EndUtteranceCommand):
 				if index > 0 and lastStartIndex < index:
 					subSequence = speechSequence[lastStartIndex:index]
-					self._doSpeechIfValid(
+					yield from _yieldIfNonEmpty(
 						self._getSpeech(subSequence)
 					)
-				self._doSpeechIfValid(
+				yield from _yieldIfNonEmpty(
 					self._flushPendingSpeech()
 				)
-				spoke = True
+				gotValidSpeech = True
 				lastStartIndex = index + 1
 		if lastStartIndex < sequenceLen:
 			subSequence = speechSequence[lastStartIndex:]
-			spoke = self._doSpeechIfValid(
-				self._getSpeech(subSequence)
-			)
-		return spoke
+			seq = self._getSpeech(subSequence)
+			gotValidSpeech = bool(seq)
+			yield from _yieldIfNonEmpty(seq)
+		return gotValidSpeech
 
 	def _flushPendingSpeech(self) -> SpeechSequence:
 		"""
