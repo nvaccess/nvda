@@ -854,7 +854,7 @@ class UIA(Window):
 		elif UIAControlType==UIAHandler.UIA_ToolTipControlTypeId:
 			clsList.append(ToolTip)
 		elif(
-			self.UIAElement.cachedFrameworkID in ("InternetExplorer","MicrosoftEdge")
+			self.UIAElement.cachedFrameworkID in ("InternetExplorer", "MicrosoftEdge")
 			# But not for Internet Explorer
 			and not self.appModule.appName == 'iexplore'
 		):
