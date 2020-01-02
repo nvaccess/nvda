@@ -104,6 +104,3 @@ class AppModule(appModuleHandler.AppModule):
 				if isinstance(resultsScreen, UIA) and resultsScreen.UIAElement.cachedClassName == "LandmarkTarget":
 					# And no, do not allow focus to move.
 					queueHandler.queueFunction(queueHandler.eventQueue, resultsScreen.firstChild.reportFocus)
-
-	# Without this, gesture binding fails even with script decorator deployed.
-	__gestures = {}
