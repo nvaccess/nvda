@@ -68,23 +68,21 @@ def browseableMessage(message,title=None,isHtml=False):
 	gui.mainFrame.postPopup() 
 
 
-def message(text: str, speechPriority: Optional[int] = None):
+def message(text: str, speechPriority: Optional[speech.Spri] = None):
 	"""Present a message to the user.
 	The message will be presented in both speech and braille.
 	@param text: The text of the message.
 	@param speechPriority: The speech priority.
-		One of the C{speech.priorities.SPRI_*} constants.
 	"""
 	speech.speakMessage(text, priority=speechPriority)
 	braille.handler.message(text)
 
 
-def reviewMessage(text: str, speechPriority: Optional[int] = None):
+def reviewMessage(text: str, speechPriority: Optional[speech.Spri] = None):
 	"""Present a message from review or object navigation to the user.
 	The message will always be presented in speech, and also in braille if it is tethered to review or when auto tethering is on.
 	@param text: The text of the message.
 	@param speechPriority: The speech priority.
-		One of the C{speech.priorities.SPRI_*} constants.
 	"""
 	speech.speakMessage(text, priority=speechPriority)
 	if braille.handler.shouldAutoTether or braille.handler.getTether() == braille.handler.TETHER_REVIEW:

@@ -592,8 +592,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
-		# Create the message window on the ui thread.
-		wx.CallAfter(self.create_message_window)
 		self.numCells = 0
 		self._model = None
 		self._ignoreKeyReleases = False
@@ -638,12 +636,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				self._model.postInit()
 				log.info("Found {device} connected via {type} ({port})".format(
 					device=self._model.name, type=portType, port=port))
+				# Create the message window on the ui thread.
+				wx.CallAfter(self.create_message_window)
 				break
 			self._dev.close()
 
 		else:
-			# Make sure this is called on the ui thread
-			wx.CallAfter(self.destroy_message_window)
 			raise RuntimeError("No Handy Tech display found")
 
 	def create_message_window(self):
