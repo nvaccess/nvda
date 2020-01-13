@@ -539,8 +539,8 @@ Sellaisinaan nämä komennot siirtävät seuraavan ja Vaihto-näppäimen kanssa 
 - k: linkki
 - n: teksti, joka ei ole linkki
 - f: lomakekenttä
-- u: vierailematon linkki
-- v: vierailtu linkki
+- u: käymätön linkki
+- v: käyty linkki
 - e: muokkauskenttä
 - b: painike
 - x: valintaruutu
@@ -683,7 +683,7 @@ Jotta pistenäytölle mahtuisi mahdollisimman paljon tietoa, seuraavat lyhenteet
 | ohj | ohjeselite |
 | kp | kiintopiste |
 | lnk | linkki |
-| vlnk | vierailtu linkki |
+| klnk | käyty linkki |
 | lst | luettelo |
 | vko | valikko |
 | vkorvi | valikkorivi |
@@ -2057,7 +2057,7 @@ Lisäosien hallinnalla, johon pääsee NVDA-valikosta Työkalut-valikon alta koh
 Lisäosat, jotka ovat NVDA-yhteisön toimittamia, saattavat lisätä tai muuttaa ominaisuuksia tai jopa tarjota tuen uusille pistenäytöille tai puhesyntetisaattoreille.
 
 Lisäosien hallinnassa on luettelo, jossa näkyvät kaikki nykyisen käyttäjän asentamat lisäosat.
-Jokaisesta lisäosasta näytetään nimi, tila, versio sekä tekijä, ja lisätietoja kuten kuvausta ja URL-osoitetta voidaan tarkastella valitsemalla haluttu lisäosa ja painamalla Tietoa lisäosasta -painiketta.
+Jokaisesta lisäosasta näytetään nimi, tila, versio sekä tekijä, ja lisätietoja kuten kuvausta ja URL-osoitetta voidaan tarkastella valitsemalla haluttu lisäosa ja painamalla Tietoja lisäosasta -painiketta.
 Jos valitulle lisäosalle on saatavana ohje, se voidaan avata painamalla Ohje-painiketta.
 
 Verkossa saatavilla olevia lisäosia on mahdollista selata ja ladata painamalla Hae lisäosia -painiketta.
@@ -2107,7 +2107,7 @@ Lisäosat näytetään luettelossa, jossa on seuraavat sarakkeet:
 + Yhteensopimattomuuden syy (miksi lisäosaa pidetään yhteensopimattomana)
 +
 
-Valintaikkunassa on myös "Tietoa lisäosasta..." -painike.
+Valintaikkunassa on myös "Tietoja lisäosasta..." -painike.
 Sitä painamalla saa näkyviin kaikki lisäosan tiedot, joista on apua otettaessa yhteyttä lisäosan tekijään.
 
 

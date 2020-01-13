@@ -22,13 +22,13 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 - No Internet Explorer, Google Chrome e Mozilla Firefox, agora você pode navegar por artigo e agrupamento usando scripts de navegação rápida. Esses scripts são independentes ""[sem comandos]"" por padrão e podem ser atribuídos no diálogo Definir Comandos quando a caixa de diálogo é aberta em um documento no modo de navegação. (#9485, #9227)
  - Figuras também são informadas. Elas são consideradas objetos e, portanto, navegáveis com tecla de navegação rápida o.
 - No Internet Explorer, Google Chrome e Mozilla Firefox, os elementos artigos agora são informados com a navegação de objetos e, opcionalmente, no modo de navegação, se ativado nas configurações de Formatação de documentos. (#10424)
-- Suporte para iframes fora de processo no Mozilla Firefox. (#9672)
 - Adicionada cortina de tela, que quando ativada, torna a tela completamente preta no Windows 8 e posteriores. (#7857)
  - Adicionado um script para ativar a cortina de tela (até a próxima reinicialização com um pressionamento, ou sempre enquanto o NVDA estiver sendo executado com dois pressionamentos), nenhum comando ""[gesto]"" padrão está atribuído.
  - Pode ser ativado e configurado através da categoria 'visão' no diálogo de configurações do NVDA.
 - Adicionada funcionalidade de realce da tela ao NVDA. (#971, #9064)
  - O realce do foco, objeto de navegação e posição do cursor do modo de navegação pode ser ativado e configurado através da categoria 'visão' no diálogo de configurações do NVDA.
  - Nota: esse recurso é incompatível com o complemento realce do foco ""[focus highlight]"", no entanto, o complemento ainda pode ser usado enquanto o realçador embutido estiver desativado.
+- Adicionada ferramenta Visualizador Braille, permite visualizar a saída de braille através de uma janela na tela. (#7788)
 
 
 == Alterações ==
@@ -46,6 +46,7 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 - Ao focalizar um agrupamento no modo de navegação, a descrição agora também é lida. (#10095)
 - O Java Access Bridge agora está incluído no NVDA para permitir o acesso a aplicativos Java, inclusive para VMs ""[máquinas virtuais]"" Java de 64 bit. (#7724)
 - Se o Java Access Bridge não estiver ativado para o usuário, o NVDA o ativará automaticamente na inicialização do NVDA. (#7952)
+- Atualizado o eSpeak-NG para 1.51-dev, submissão ""[commit]"" ca65812ac6019926f2fbd7f12c92d7edd3701e0c. (#10581)
 
 
 == Correção de Falhas ==
@@ -74,6 +75,12 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 - Alguns problemas raros de transcrição braille e erros com o liblouis foram resolvidos. (#9982)
 - Os aplicativos Java iniciados antes do NVDA agora estão acessíveis sem a necessidade de reiniciar o aplicativo Java. (#10296)
 - No Mozilla Firefox, quando o elemento focalizado fica marcado como atual (aria-current), essa alteração não é mais falada várias vezes. (#8960)
+- O NVDA agora tratará certos caracteres unicode compostos, como e-agudo, como um único caractere ao se mover pelo texto. (#10550)
+- Spring Tool Suite Versão 4 agora é suportado. (#10001)
+- Não fala o nome duas vezes quando o destino da relação aria-labelledby for um elemento interno. (#10552)
+- No Windows 10 versão 1607 e posteriores, os caracteres digitados nos teclados Braille são falados em mais situações. (#10569)
+- Ao alterar o dispositivo de saída de áudio, os tons tocados pelo NVDA agora serão reproduzidos através do dispositivo recém-selecionado. (#2167)
+- No Mozilla Firefox, mover o foco no modo de navegação é mais rápido. Isso torna o movimento do cursor no modo de navegação mais responsivo em muitos casos. (#10584)
 
 
 == Alterações para Desenvolvedores ==

@@ -171,6 +171,13 @@ Med den første check box kan du bestemme, om NVDA skal bruge capslock som en NV
 Den anden bestemmer, om NVDA skal starte automatisk, efter du har logget på Windows. Denne indstilling er kun tilgængelig i installerede kopier af NVDA.
 Den tredje lader dig styre, om denne Velkomstdialog boks skal vises hver gang NVDA starter.
 
++++ Dialog om brugsstatistik +++[UsageStatsDialog]
+Hvis du kører NVDA 2018.3 eller nyere, vil en dialog fremkomme der beder dig tage stilling til om hvorvidt du ønsker at dele din brugsdata med NV Access. Disse data medvirker til at forbedre fremtidige versioner af NVDA.
+Når du kører NVDA første gang, vil denne dialog blive vist. Her kan du acceptere eller afvise indsamlingen af brugsstatistik til forbedring af NVDA.
+Du kan læse yderligere information om, hvilke data indsamles nedenunder i kapitel 11.
+Bemærk: Når du trykker "Ja" eller "Nej", vil denne dialog ikke fremkomme igen med mindre du geninstallerer NVDA.
+Du kan aktivere eller deaktivere denne indstilling i NVDAs generelle indstillinger ved at ændre indstillingen [Tillad at NVDA-projektet indsamler brugsdata om NVDA #GeneralSettingsGatherUsageStats].
+
 ++ Om NVDA tastaturkommandoer ++[AboutNVDAKeyboardCommands]
 
 +++ NVDA-tasten +++[TheNVDAModifierKey]
@@ -641,6 +648,7 @@ Når du vil tilbage til dokumentet, skal du blot trykke på Escape-tasten.
 + Punktskrift +
 Hvis du ejer et punktdisplay, kan NVDA vise information på punkt.
 Hvis dit punktdisplay har et punkttastatur, kan du også indtaste forkortet og uforkortet punkt.
+En visuel gengivelse af punktskrift kan også vises på skærmen ved at benytte [punktskriftsviseren #BrailleViewer]. Denne funktion kan bruges alene eller sammenkoblet med et fysisk punktdisplay.
 
 Se venligst afsnittet [Understøttede Punktdisplays #SupportedBrailleDisplays] for oplysninger om understøttede punktdisplays.
 Dette afsnit indeholder også yderligere oplysninger om NVDAs automatiske tilkobling af punktdisplays.
@@ -1053,7 +1061,7 @@ De tilgængelige logningsmuligheder er:
  - Hvis du bekymre dig om dit privatliv, benyt ikke denne valgmulighed.
 - Fejlfinding: Udover diverse informationer, input/output, og beskeder om advarsler, vil yderligere fejlbeskeder logges ved brug af denne indstilling.
  - Hvis du ligeledes bekymre dig om dit privatliv, skal du ikke aktivere denne indstilling, da alt vil blive logget.
--
+
 
 ==== Start NVDA automatisk, når jeg har logget på Windows ====[GeneralSettingsStartAfterLogOn]
 Hvis denne funktion er slået til, vil NVDA starte, så snart du er logget på Windows.
@@ -1531,9 +1539,11 @@ Denne indstillingskategori indeholder følgende indstillingsmuligheder:
 Dette er en check box der, når den er markeret, bevirker, at NVDA oplyser værktøjstips, når de kommer til syne.
 En del vinduer og kontroller viser en lille meddelelse (eller et værktøjstip), når musemarkøren flyttes hen over dem, eller i visse tilfælde når fokus flyttes til dem.
 
-==== Oplys hjælpeballoner ====[ObjectPresentationReportBalloons]
-Når denne check box er markeret, oplyser NVDA hjælpeballonerne, når de fremkommer.
-Hjælpeballoner ligner værktøjstips med den forskel, at de som regel er større og er tilknyttet systemhændelser såsom at et netværkskabel er fjernet eller muligvis for at henlede opmærksomheden på Windows sikkerhedsproblemer.
+==== Oplys meddelelser ====[ObjectPresentationReportBalloons]
+Når denne check box er markeret, oplyser NVDA meddelelser og hjælpeballonerne, når de fremkommer.
+- Hjælpeballoner ligner værktøjstips med den forskel, at de som regel er større og er tilknyttet systemhændelser såsom at et netværkskabel er fjernet eller muligvis for at henlede opmærksomheden på Windows sikkerhedsproblemer.
+- Toast-meddelelser og bliver vist i handlingscenteret i systembakken, og informerer dig om diverse hændelser (f.eks. hvis en opdatering til Windows er blevet downloadet, en ny e-mail ankommet, osv).
+
 
 ==== Oplys objektets genvejstaster ====[ObjectPresentationShortcutKeys]
 Når denne check box er markeret, medtager NVDA den genvejstast, der hører til et objekt eller en kontrol, under rapporteringen af det givne element.
@@ -2027,6 +2037,20 @@ Så længe talevisning er slået til, opdateres den konstant med den tekst, der 
 Hvis du klikker i viseren, eller hvis den får fokus, stoppes opdateringen dog midlertidigt, så det er muligt at markere eller kopiere det aktuelle indhold.
 
 Hvis du gerne vil kunne slå talevisning til og fra, uanset hvor du befinder dig på computeren, kan du tilknytte en speciel inputbevægelse med [dialogen inputbevægelser #InputGestures].
+
+++ Punktskriftsviser ++[BrailleViewer]
+Af hensyn til seende software-udviklere og personer, der ønsker at demonstrere NVDA for seende indeholder NVDA et flydende vindue, der giver mulighed for at se al den tekst, som NVDA i øjeblikket læser op gengivet som punktskrift visuelt på skærmen.
+Denne funktion kan bruges samtidigt med et fysisk punktdisplay, hvor mængden af punktceller på skærmen vil tilpasse sig det aktuelt tilkoblede display.
+Når funktionen er aktiveret, vil vinduet konstant blive opdateret med den punktskrift, som NVDA gengiver.
+
+Punktskriftsviseren slås til ved at markere menupunktet  "Punktskriftsviser" under Værktøjer" i NVDA-menuen.
+Fjern markeringen fra punktet for at slå det fra.
+
+Fysiske punktdisplays har typisk knapper til at panorere displayet frem og tilbage. For at tildele kommandoer til disse funktioner, når punktskriftsviseren benyttes, skal du tildele dem via [inputbevægelser #InputGestures] for kommandoerne "Ruller punktdisplay tilbage" og "Ruller punktdisplay fremad".
+
+Vinduet til punktskriftsviseren viser en check box med navnet "Vis punktskriftsviser ved opstart".
+Hvis denne er valgt, vil viseren automatisk åbnes når NVDA startes.
+Dette vindue vil altid forsøge at åbne med samme dimensioner og samme placering, som de var, da vinduet blev lukket.
 
 ++ Styring af tilføjelsesprogrammer++[AddonsManager]
 Du kan administrere dine tilføjelsesprogrammer til NVDA ved at gå til "Administrer tilføjelsesprogrammer" under Værktøjer i NVDA-menuen. Dette værktøj giver dig mulighed for at installere tilføjelser til skærmlæseren, samt afinstallere, aktivére eller deaktivére tilføjelserne.
@@ -2529,7 +2553,7 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 
 ++ Seika Braille Displays ++[Seika]
 Seika Version 3, 4 og 5 (40 celler) og Seika80 (80 celler) punktdisplaysfra [Nippon Telesoft https://www.nippontelesoft.com/] er understøttede.
-Du kan finde yderligere information om disse displays her https://www.seika-braille.com/.
+Du kan finde yderligere information om disse displays  og påkrævede drivere på siden https://en.seika-braille.com/down/index.html
 Du skal først installere USB-driveren fra leverandøren, før du kan bruge dette punktdisplay.
 
 Disse displays understøtter ikke NVDAs automatiske tilkobling af punktdisplays.
