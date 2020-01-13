@@ -150,11 +150,13 @@ class CustomWindow(AutoPropertyObject):
 				raise RuntimeError(f"Only one instance of {cls.__qualname__} may exist at a time")
 		return super().__new__(cls, *args, **kwargs)
 
+	_wClass: WNDCLASSEXW
+
 	@classmethod
 	def _get__wClass(cls):
 		return WNDCLASSEXW(
 			cbSize=ctypes.sizeof(WNDCLASSEXW),
-			lpfnWndProc=_rawWindowProc,
+			lpfnWndProc=cls._rawWindowProc,
 			hInstance=appInstance,
 			lpszClassName=cls.className,
 		)
@@ -255,18 +257,18 @@ class CustomWindow(AutoPropertyObject):
 		"""
 		return None
 
-
-@WNDPROC
-def _rawWindowProc(hwnd, msg, wParam, lParam):
-	try:
-		inst = CustomWindow._hwndsToInstances[hwnd]
-	except KeyError:
-		log.debug("CustomWindow rawWindowProc called for unknown window %d" % hwnd)
+	@staticmethod
+	@WNDPROC
+	def _rawWindowProc(hwnd, msg, wParam, lParam):
+		try:
+			inst = CustomWindow._hwndsToInstances[hwnd]
+		except KeyError:
+			log.debug("CustomWindow rawWindowProc called for unknown window %d" % hwnd)
+			return ctypes.windll.user32.DefWindowProcW(hwnd, msg, wParam, lParam)
+		try:
+			res = inst.windowProc(hwnd, msg, wParam, lParam)
+			if res is not None:
+				return res
+		except:
+			log.exception("Error in wndProc")
 		return ctypes.windll.user32.DefWindowProcW(hwnd, msg, wParam, lParam)
-	try:
-		res = inst.windowProc(hwnd, msg, wParam, lParam)
-		if res is not None:
-			return res
-	except:
-		log.exception("Error in wndProc")
-	return ctypes.windll.user32.DefWindowProcW(hwnd, msg, wParam, lParam)
