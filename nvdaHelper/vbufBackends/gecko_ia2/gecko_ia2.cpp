@@ -287,13 +287,13 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	SysFreeString(toolkitVersion);
 }
 
-experimental::optional<int>
+optional<int>
 getIAccessible2UniqueID(IAccessible2* targetAcc) {
 	int ID = 0;
 	//Get ID -- IAccessible2 uniqueID
 	if (targetAcc->get_uniqueID((long*)&ID) != S_OK) {
 		LOG_DEBUG(L"pacc->get_uniqueID failed");
-		return experimental::optional<int>();
+		return optional<int>();
 	}
 	return ID;
 }
@@ -301,10 +301,10 @@ getIAccessible2UniqueID(IAccessible2* targetAcc) {
 class LabelInfo {
 public:
 	bool isVisible;
-	std::experimental::optional<int> ID;
+	optional<int> ID;
 };
 
-using OptionalLabelInfo = std::experimental::optional< LabelInfo >;
+using OptionalLabelInfo = optional< LabelInfo >;
 OptionalLabelInfo GeckoVBufBackend_t::getLabelInfo(IAccessible2* pacc2) {
 	CComQIPtr<IAccessible2_2> pacc2_2=pacc2;
 	if (!pacc2_2) return OptionalLabelInfo();
@@ -657,14 +657,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	// Whether the name of this node has been explicitly set (as opposed to calculated by descendant)
 	const bool nameIsExplicit = IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true";
 	// Whether the name is the content of this node.
-<<<<<<< HEAD
-	std::optional<bool> isLabelVisibleVal_;
-	// A version of the isLabelVisible function that caches its result
-	auto isLabelVisibleCached=[&]() {
-		if(!isLabelVisibleVal_) {
-			isLabelVisibleVal_=isLabelVisible(pacc);
-=======
-	std::experimental::optional<LabelInfo> labelInfo_;
+	optional<LabelInfo> labelInfo_;
 	// A version of the getIdForVisibleLabel function that caches its result
 	auto isLabelVisibleCached = [&]() {
 		if (!labelInfo_) {
@@ -673,7 +666,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		bool isVisible = false;
 		if (labelInfo_) {
 			isVisible = labelInfo_->isVisible;
->>>>>>> origin/master
 		}
 		return isVisible;
 	};
@@ -681,7 +673,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		if (!labelInfo_) {
 			labelInfo_ = getLabelInfo(pacc);
 		}
-		experimental::optional<int> id;
+		optional<int> id;
 		if (labelInfo_) {
 			id = labelInfo_->ID;
 		}

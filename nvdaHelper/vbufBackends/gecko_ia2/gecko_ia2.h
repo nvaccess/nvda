@@ -16,7 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define VIRTUALBUFFER_BACKENDS_EXAMPLE_H
 
 #include <vbufBase/backend.h>
-#include <boost/optional.hpp>
+#include <optional>
 
 class LabelInfo;
 
@@ -42,7 +42,7 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 	bool hasEncodedAccDescription;
 	std::wstring toolkitName;
 
-	std::experimental::optional< LabelInfo > getLabelInfo(IAccessible2* pacc2);
+	std::optional< LabelInfo > getLabelInfo(IAccessible2* pacc2);
 	CComPtr<IAccessible2> getLabelElement(IAccessible2_2* element);
 	CComPtr<IAccessible2> getSelectedItem(IAccessible2* container,
 		const std::map<std::wstring, std::wstring>& attribs);
