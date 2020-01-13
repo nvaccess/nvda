@@ -150,6 +150,8 @@ class CustomWindow(AutoPropertyObject):
 				raise RuntimeError(f"Only one instance of {cls.__qualname__} may exist at a time")
 		return super().__new__(cls, *args, **kwargs)
 
+	_wClass: WNDCLASSEXW
+
 	@classmethod
 	def _get__wClass(cls):
 		return WNDCLASSEXW(
@@ -160,6 +162,8 @@ class CustomWindow(AutoPropertyObject):
 		)
 
 	_abstract_className = True
+
+	className: str
 
 	@classmethod
 	def _get_className(cls) -> str:
@@ -253,6 +257,7 @@ class CustomWindow(AutoPropertyObject):
 		"""
 		return None
 
+	@staticmethod
 	@WNDPROC
 	def _rawWindowProc(hwnd, msg, wParam, lParam):
 		try:
