@@ -1638,7 +1638,7 @@ Bu seçenek, tarama kipindeki bağlantı ve metin gibi içeriklerin her birinin 
 Etkinleştirilirse, ekrandaki içerik, görsel olarak nasıl görünüyorsa öyle sergilenir. ancak devre dışı bırakılırsa, her alan ayrı satırlara yerleştirilir.
 
 ==== Sayfa yüklendiğinde tarama kipini etkinleştir ====[BrowseModeSettingsEnableOnPageLoad]
-Bu onay kutusu, bir sayfayı yüklendiğinde göz tarama kipinin otomatik olarak etkinleştirilip etkinleştirilmeyeceğini belirler.
+Bu onay kutusu, bir sayfa yüklendiğinde tarama kipinin otomatik olarak etkinleştirilip etkinleştirilmeyeceğini belirler.
 Bu seçenek devre dışı bırakılsa bile, sayfalarda veya tarama kipinin desteklendiği belgelerde tarama kipi manuel olarak etkinleştirilebilir.
 tarama kipinin  desteklendiği uygulamaların listesi için [tarama kipi bölümüne #BrowseMode] bakın.
 Bu seçeneğin, tarama kipinin her zaman isteğe bağlı olduğu durumlar için geçerli olmadığını unutmayın; mesela Microsoft Word'de.
@@ -1799,11 +1799,11 @@ Bu özellik, varsayılan olarak Windows 10 sürüm 1607, 1703, 1709 ve 1803'te v
 Dikkat: bu seçenek etkin durumdayken, şifreler gibi ekranda görünmeyen yazılan karakterler gizlenmez.
 Güvensiz ortamlarda parola girerken [karakterleri seslendir #KeyboardSettingsSpeakTypedCharacters] ve [sözcükleri seslendir #KeyboardSettingsSpeakTypedWords] özelliklerini geçici olarak kapatabilirsiniz.
 
-==== Tarama kipinde sistem odağını otomatik olarak odaklanabilir öğelere taşı ====[BrowseModeSettingsAutoFocusFocusableElements]
+==== Sistem Odağı Tarama kipi imlecini takip etsin ====[BrowseModeSettingsAutoFocusFocusableElements]
 Kısayol: NVDA+8
 
-Varsayılan olarak etkinleştirildiğinde, bu seçenek, tarama kipi imleci ile içerikte gezinirken, sistem odağının otomatik olarak odaklanılabilecek öğelere (bağlantılar, form alanları vb.) taşınıp taşınmayacağını belirlemenizi sağlar.
-Etkinleştirilirse, bu NVDA’nın 2019.1 ve önceki sürümlerindeki gibi sonuç verir.
+Seçenek varsayılan olarak etkindir ve tarama kipi imleci ile içerikte gezinirken, sistem odağının otomatik olarak odaklanılabilecek öğelere (bağlantılar, form alanları vb.) taşınıp taşınmayacağını belirlemenizi sağlar.
+Etkinleştirildiğinde, NVDA’nın 2019.1 ve önceki sürümlerindeki gibi sonuç verir.
 Bu seçenek devre dışı bırakılırsa, tarama kipi imleci ile üzewrlerine gelindiğinde  sistem odağı odaklanabilir öğelerin üzerine  otomatik olarak taşınmaz.
 Bu, tarama kipinde daha hızlı dolaşma ve daha iyi tepki deneyimi sunabilir.
 Sistem odağı Yine de, herhangi bir öğeyle  etkileşime girildiğinde güncellenecektir ve o öğe üzerine taşınacaktır (örneğin, bir düğmeye basıldığında, bir onay kutusu işaretlendiğinde).

@@ -17,16 +17,18 @@ Nyheder i NVDA
 - Alle brugerdefinerede inputbevægelser kan nu fjernes ved hjælp af knappen "Gendan til fabriksindstillinger" i dialogen "Inputbevægelser". (#10293)
 - Rapportering af skrifttype i Microsoft Word meddeler nu,hvis teksten er markeret som skjult. (#8713)
 - Tilføjet en kommando, der flytter læsemarkørens position til markeringen, der tidligere var indstillet som starten af markeringen eller til kopiering: NVDA+shift+F9. (#1969)
-- Landmærker vil nu blive oplyst, når du benytter fokustilstand eller objektnavigation i Explorer, Microsoft Edge og nylige versioner af Firefox og Chrome. (#10101)
+- Landmærker vil nu blive oplyst, når du benytter fokustilstand eller objektnavigation i Internet Explorer, Microsoft Edge og nylige versioner af Firefox og Chrome. (#10101)
 - Du kan nu navigere til landmærket for artikler ved brug af bogstavnavigation i Internet Explorer, Google Chrome og Mozilla Firefox. Denne kommando har dog ikke et bogstav tildelt som standard, så du skal gøre dette ved at åbne indstillingerne for Inputbevægelser, når du er i gennemsynstilstand. (#9227)
  - Figurer oplyses også, og kan flyttes til ved at bruge bogstavet O i gennemsynstilstand.
 - Artikelelementer oplyses nu i Internet Explorer, Google Chrome og Mozilla Firefox, når du bruger objektnavigation. Du kan også få disse oplyst i gennemsynstilstand, hvis du slår landmærket til i indstillingerne for dokumentformatering. (#10424)
 - Skærmtæppe gør skærmen sort, når funktionen er aktiveret. Dette gælder Windows 8 og nyere udgaver af Windows. (#7857)
  - Tilføjet en inputbevægelse til denne funktion, således skærmtæppet kan aktiveres og deaktiveres fra hvor som helst. Et tryk bevarer indstillingen indtil du genstarter programmet, og to tryk bevarer indstillingen permanent. Denne kommando skal tildeles i NVDA-menuen>Opsætning>Inputbevægelser, og har derfor ingen standardkommando.
  - Skærmtæppet kan aktiveres og konfigureres i kategorien "Syn" under indstillingerne.
-- Tilføjelse funktion for fremhævelse af fokus på skærmen til NVDA. (#971, #9064)
+- Tilføjede funktion for fremhævelse af fokus på skærmen til NVDA. (#971, #9064)
  - Fremhævelse af systemfokus, navigatorobjektet og markøren i gennemsynstilstand kan konfigureres i indstillingskategorien "Syn" i NVDAs indstillinger.
  - Bemærk: Tilføjelsespakken "Fremhævelse af fokus" er ikke kompatibel, hvis den indbyggede funktion til fremhævelse af fokus er aktiveret. Du kan stadig bruge tilføjelsen, hvis den indbyggede funktion slås fra i NVDA.
+- Tilføjede "Punktviser", som er et værktøj, der viser punkt visuelt på skærmen i et vindue. (#7788)
+
 
 == Ændringer ==
 - Brugervejledningen beskriver nu, hvordan man bruger Windows-konsollen. (#9957)
@@ -43,6 +45,8 @@ Nyheder i NVDA
 - Beskrivelsen af en gruppe bliver nu læst op, når denne får fokus. (#10095)
 - Java Access Bridge er nu en del af NVDA for at programmet kan få nemmere adgang til Java-applikationer, herunder 64 bit Java VMs. (#7724)
 - Hvis Java Access Bridge ikke er aktiveret, vil NVDA automatisk gøre dette, når NVDA starter. (#7952)
+- Opdaterede eSpeak-NG til 1.51-dev, commit ca65812ac6019926f2fbd7f12c92d7edd3701e0c. (#10581)
+
 
 == Fejlrettelser ==
 - Emoji og andre 32 bit unicode-tegn optager nu mindre plads på punktdisplays, når disse vises som heksadecimale værdier. (#6695)
@@ -71,6 +75,12 @@ Nyheder i NVDA
 - Java-applikationer, der blev startet før NVDA, vil nu ikke længere være nød til at genstarte for at NVDA kunne bruge disse. (#10296)
 - Når et element bliver markeret som "aktuelt" ved brug af (aria-current), vil dette ikke oplyses flere gange i Mozilla Firefox. (#8960)
 - NVDA vil nu behandle bestemte komposit unicode tegn som e-igu (é), når du bevæger dig gennem tekst. (#10550)
+- Spring Tool Suite Version 4 er nu understøttet. (#10001)
+- NVDA vil ikke udtale navne to gange, når aria-labelledby er angivet. (#10552)
+- Indtastede tegn på punkttastaturer i Windows 10 version 1607 og nyere, vil nu udtales i flere situationer. (#10569)
+- Når du ændre NVDAs output-enhed, vil toner NVDA afspiller korrekt udsendes gennem den valgte enhed. (#2167)
+- Reaktionshastigheden, når fokus flyttes i gennemsynstilstand, vil nu være forbedret. Dette har også indflydelse på reaktionshastigheden, når du bruger markøren i gennemsynstilstand i den pågældende browser. (#10584)
+
 
 == Ændringer for udviklere ==
 For nyheder relateret til udvikling se venligst det engelske "What's New"-dokument.
