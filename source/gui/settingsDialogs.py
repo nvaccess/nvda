@@ -2394,7 +2394,7 @@ class AdvancedPanelControls(wx.Panel):
 			and self.autoFocusFocusableElementsCheckBox.IsChecked() == self.autoFocusFocusableElementsCheckBox.defaultValue
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
-			True  # reduce noise in diff when the list is extended.
+			and True  # reduce noise in diff when the list is extended.
 		)
 
 	def restoreToDefaults(self):
