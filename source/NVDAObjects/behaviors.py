@@ -436,7 +436,7 @@ class KeyboardHandlerBasedTypedCharSupport(Terminal):
 				config.conf['keyboard']['speakTypedCharacters']
 				or config.conf['keyboard']['speakTypedWords']
 			)
-			and not config.conf['UIA']['winConsoleSpeakPasswords']
+			and not config.conf['terminals']['speakPasswords']
 			and self._supportsTextChange
 		):
 			self._queuedChars.append(ch)
