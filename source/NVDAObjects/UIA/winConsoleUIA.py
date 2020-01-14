@@ -12,7 +12,6 @@ import UIAHandler
 
 from comtypes import COMError
 from UIAUtils import isTextRangeOffscreen
-from winVersion import isWin10
 from . import UIATextInfo
 from ..behaviors import KeyboardHandlerBasedTypedCharSupport
 from ..window import Window
@@ -50,9 +49,7 @@ class consoleUIATextInfo(UIATextInfo):
 		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
 
 	def collapse(self, end=False):
-		"""Works around a UIA bug on Windows 10 1903 and later."""
-		if not isWin10(1903):
-			return super(consoleUIATextInfo, self).collapse(end=end)
+		"""Works around a UIA bug on Windows 10 1803 and later."""
 		# When collapsing, consoles seem to incorrectly push the start of the
 		# textRange back one character.
 		# Correct this by bringing the start back up to where the end is.
