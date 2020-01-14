@@ -12,6 +12,7 @@ import UIAHandler
 
 from comtypes import COMError
 from UIAUtils import isTextRangeOffscreen
+from winVersion import isWin10
 from . import UIATextInfo
 from ..behaviors import KeyboardHandlerBasedTypedCharSupport
 from ..window import Window
@@ -48,13 +49,15 @@ class consoleUIATextInfo(UIATextInfo):
 			_rangeObj = first._rangeObj
 		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
 
-	def collapse(self, end=False):
-		"""Works around a UIA bug on Windows 10 1803 and later."""
+	def collapse(self,end=False):
+		"""Works around a UIA bug on Windows 10 1903 and later."""
+		if not isWin10(1903):
+			return super(consoleUIATextInfo, self).collapse(end=end)
 		# When collapsing, consoles seem to incorrectly push the start of the
 		# textRange back one character.
 		# Correct this by bringing the start back up to where the end is.
-		oldInfo = self.copy()
-		super(consoleUIATextInfo, self).collapse(end=end)
+		oldInfo=self.copy()
+		super(consoleUIATextInfo,self).collapse(end=end)
 		if not end:
 			self._rangeObj.MoveEndpointByRange(
 				UIAHandler.TextPatternRangeEndpoint_Start,
@@ -258,9 +261,9 @@ class consoleUIATextInfo(UIATextInfo):
 			min(end.value, max(1, lineTextLen - 2))
 		)
 
-	def __ne__(self, other):
+	def __ne__(self,other):
 		"""Support more accurate caret move detection."""
-		return not self == other
+		return not self==other
 
 	def _get_text(self):
 		# #10036: return a space if the text range is empty.
