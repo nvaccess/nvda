@@ -174,7 +174,7 @@ The third lets you control if this Welcome dialog should appear each time NVDA s
 +++ Data usage statistics dialog +++[UsageStatsDialog]
 Starting from NVDA 2018.3, the user is asked if they want to allow usage data to be sent to NV Access in order to help improve NVDA in the future. 
 When starting NVDA for the first time, a dialog will appear which will ask you if you want to accept sending data to NV Access while using NVDA.
-You can read more info about the data gathered by NV Access in [this section #GeneralSettingsGatherUsageStats].
+You can read more info about the data gathered by NV Access in the general settings section, [Allow the NVDA project to gather NVDA usage statistics #GeneralSettingsGatherUsageStats].
 Note: pressing on "yes" or "no" will save this setting and the dialog will never appear again unless you reinstall NVDA.
 However, you can enable or disable the data gathering process manually in NVDA's general settings panel. For changing this setting manually, you can check or uncheck the checkbox called [Allow the NVDA project to gather NVDA usage statistics #GeneralSettingsGatherUsageStats].
 
@@ -3012,7 +3012,7 @@ Following are the command line options for NVDA:
 | -l LOGLEVEL | --log-level=LOGLEVEL | The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning |
 | -c CONFIGPATH | --config-path=CONFIGPATH | The path where all settings for NVDA are stored |
 | -m | --minimal | No sounds, no interface, no start message, etc. |
-| -s | --secure | Secure mode: disables Python console, profile features such as creation, deletion, renaming profiles etc., update check, some checkboxes in the welcome dialog and in general settings cathegory (e.g. start NVDA after logon, save configuration after exit etc.), as well as logviewer and logging features (used often in secure screens). Note also that this command will disable the possibility to save settings in system config and the gesture map will not be saved on the disk. |
+| -s | --secure | Secure mode: disables Python console, profile features such as creation, deletion, renaming profiles etc., update check, some checkboxes in the welcome dialog and in general settings category (e.g. start NVDA after logon, save configuration after exit etc.), as well as logviewer and logging features (used often in secure screens). Note also that this command will disable the possibility to save settings in system config and the gesture map will not be saved on the disk. |
 | None | --disable-addons | Addons will have no effect |
 | None | --debug-logging | Enable debug level logging just for this run. This setting will override any other log level ( ""--loglevel"", -l) argument given, including no logging option. |
 | None | --no-logging | Disable logging altogether while using NVDA. This setting can be overwritten if a log level ( ""--loglevel"", -l) is specified from command line or if debug logging is turned on. |
