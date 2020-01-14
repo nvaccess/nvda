@@ -60,4 +60,3 @@ def upgradeConfigFrom_2_to_3(profile):
 		if "terminals" not in profile:
 			profile["terminals"] = {}
 		profile["terminals"]["speakPasswords"] = speakPasswords
-		
