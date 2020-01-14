@@ -49,7 +49,6 @@ from . import nvdaControls
 from autoSettingsUtils.utils import UnsupportedConfigParameterError
 from autoSettingsUtils.autoSettings import AutoSettings
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting, DriverSetting
-from UIAUtils import shouldUseUIAConsole
 import touchHandler
 import winVersion
 import weakref
