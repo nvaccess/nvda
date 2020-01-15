@@ -3,6 +3,152 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.3 =
+
+== New Features ==
+- In Command Prompt, PowerShell, and the Windows Subsystem for Linux on Windows 10 October 2018 Update and later:
+ - Vastly improved performance and stability. (#9771)
+ - Reporting of typed text that does not appear onscreen (such as passwords) can now be enabled via an option in NVDA's advanced settings panel. (#9649)
+- The accuracy of the move mouse to navigator object command has been improved in text fields in Java applications. (#10157)
+- Added support for  the following Handy Tech Braille displays (#8955):
+ - Basic Braille Plus 40
+ - Basic Braille Plus 32
+ - Connect Braille
+- All user-defined gestures can now be removed via a new "Reset to factory defaults" button in the Input Gestures dialog. (#10293)
+- Font reporting in Microsoft Word now includes if text is marked as hidden. (#8713)
+- Added a command to move the review cursor to the position previously set as start marker for selection or copy: NVDA+shift+F9. (#1969)
+- In Internet Explorer, Microsoft Edge and recent versions of Firefox and Chrome, landmarks are now reported in focus mode and object navigation. (#10101)
+- In Internet Explorer, Google Chrome and Mozilla Firefox, You can now navigate by article and grouping using quick navigation scripts. These scripts are unbound by default and can be assigned in the Input Gestures dialog when the dialog is opened from a browse mode document. (#9485, #9227)
+ - Figures are also reported. They are considered objects and therefore navigable with the o quick navigation key.
+- In Internet Explorer, Google Chrome and Mozilla Firefox, article elements are now reported with object navigation, and optionally in browse mode if turned on in Document Formatting settings. (#10424)
+- Added screen curtain, which when enabled, makes the whole screen black on Windows 8 and later. (#7857)
+ - Added a script to enable screen curtain (until next restart with one press, or always while NVDA is running with two presses), no default gesture is assigned.
+ - Can be enabled and configured via the 'vision' category in NVDA's settings dialog.
+- Added screen highlight functionality to NVDA. (#971, #9064)
+ - Highlighting of the focus, navigator object, and browse mode caret position can be enabled and configured via the 'vision' category in NVDA's settings dialog.
+ - Note: This feature is incompatible with the focus highlight add-on, however, the add-on can still be used while the built-in highlighter is disabled.
+- Added Braille Viewer tool, allows viewing braille output via an on-screen window. (#7788)
+
+
+== Changes ==
+- The user guide now describes how to use NVDA in the Windows Console. (#9957)
+- Running nvda.exe now defaults to replacing an already running copy of NVDA. The -r|--replace command line parameter is still accepted, but ignored. (#8320)
+- On Windows 8 and later, NVDA will now report product name and version information for hosted apps such as apps downloaded from Microsoft Store using information provided by the app. (#4259, #10108)
+- When toggling track changes on and off with the keyboard in Microsoft Word, NVDA will announce the state of the setting. (#942) 
+- The NVDA version number is now logged as the first message in the log. This occurs even if logging has been disabled from the GUI. (#9803)
+- The settings dialog no longer allows for changing the configured log level if it has been overridden from the command line. (#10209)
+- In Microsoft Word, NVDA now announces the display state of non printable characters when pressing the toggle shortcut Ctrl+Shift+8 . (#10241)
+- Updated Liblouis braille translator to commit 58d67e63. (#10094)
+- When CLDR characters (including emojis) reporting is enabled, they are announced at all punctuation levels. (#8826)
+- Third party python packages included in NVDA, such as comtypes, now log their warnings and errors to the NVDA log. (#10393)
+- Updated Unicode Common Locale Data Repository emoji annotations to version 36.0. (#10426)
+- When focussing a grouping in browse mode, the description is now also read. (#10095)
+- The Java Access Bridge is now included with NVDA to enable access to Java applications, including for 64 bit Java VMs. (#7724)
+- If the Java Access Bridge is not enabled for the user, NVDA automatically enables it at NVDA startup. (#7952)
+- Updated eSpeak-NG to 1.51-dev, commit ca65812ac6019926f2fbd7f12c92d7edd3701e0c. (#10581)
+
+
+== Bug Fixes ==
+- Emoji and other 32 bit unicode characters now take less space on a braille display when they are shown as hexadecimal values. (#6695)
+- In Windows 10, NVDA will announce tooltips from universal apps if NVDA is configured to report tooltips in object presentation dialog. (#8118)
+- On Windows 10 Anniversary Update and later, typed text is now reported in Mintty. (#1348)
+- On Windows 10 Anniversary Update and later, output in the Windows Console that appears close to the caret is no longer spelled out. (#513)
+- Controls in Audacitys compressor dialog are now announced when navigating the dialog. (#10103)
+- NVDA no longer treats spaces as words in object review in Scintilla based editors such as Notepad++. (#8295)
+- NVDA will prevent the  system from entering sleep mode when scrolling through text with braille display gestures. (#9175)
+- On Windows 10, braille will now follow when editing cell contents in Microsoft Excel and in other UIA text controls where it was lagging behind. (#9749)
+- NVDA will once again report suggestions in the Microsoft Edge address bar. (#7554)
+- NVDA is no longer silent when focusing an HTML tab control header in Internet Explorer. (#8898)
+- In Microsoft Edge based on EdgeHTML, NVDA will no longer play search suggestion sound when the window becomes maximized. (#9110, #10002)
+- ARIA 1.1 combo boxes are now supported in Mozilla Firefox and Google Chrome. (#9616)
+- NVDA will no longer report content of visually hidden columns for list items in SysListView32 controls. (#8268)
+- The settings dialog no longer shows "info" as the current log level when in secure mode. (#10209)
+- In Start menu for Windows 10 Anniversary Update and later, NVDA will announce details of search results. (#10232)
+- In browse mode, if moving the cursor or using quick navigation causes the document to change, NVDA no longer speaks incorrect content in some cases. (#8831, #10343)
+- Some bullet names in Microsoft Word have been corrected. (#10399)
+- In Windows 10 May 2019 Update and later, NVDA will once again announce first selected emoji or clipboard item when emoji panel and clipboard history opens, respectively. (#9204)
+- In Poedit, it is once again possible to view some translations for right to left languages. (#9931)
+- In the Settings app in Windows 10 April 2018 Update and later, NVDA will no longer announce progress bar information for volume meters found in the System/Sound page. (#10284)
+- Invalid regular expressions in speech dictionaries no longer completely break speech in NVDA. (#10334)
+- When reading bulleted items in Microsoft Word with UIA enabled, the bullet from the next list item is no longer inappropriately announced. (#9613)
+- Some rare braille translation issues and errors with liblouis have been resolved. (#9982)
+- Java applications started before NVDA are now accessible without the need to restart the Java app. (#10296)
+- In Mozilla Firefox, when the focused element becomes marked as current (aria-current), this change is no longer spoken multiple times. (#8960)
+- NVDA will now treat certain composit unicode characters such as e-acute as one single character when moving through text. (#10550)
+- Spring Tool Suite Version 4 is now supported. (#10001)
+- Don't double speak name when aria-labelledby relation target is an inner element. (#10552)
+- On Windows 10 version 1607 and later, typed characters from Braille keyboards are spoken in more situations. (#10569)
+- When changing the audio output device, tones played by NVDA will now play through the newly selected device. (#2167)
+- In Mozilla Firefox, moving focus in browse mode is faster. This makes moving the cursor in browse mode more responsive in many cases. (#10584)
+
+
+== Changes for Developers ==
+- Updated Python to 3.7. (#7105)
+- Updated pySerial to version 3.4. (#8815)
+- Updated wxPython to 4.0.3 to support Python 3.5 and later. (#9630)
+- Updated six to version 1.12.0. (#9630)
+- Updated py2exe to version 0.9.3.2 (in development, commit b372a8e from albertosottile/py2exe#13). (#9856)
+- Updated UIAutomationCore.dll comtypes module to version 10.0.18362. (#9829)
+- The tab-completion in the Python console only suggests attributes starting with an underscore if the underscore is first typed. (#9918)
+- Flake8 linting tool has been integrated with SCons reflecting code requirements for Pull Requests. (#5918)
+- As NVDA no longer depends on pyWin32, modules such as win32api and win32con are no longer available to add-ons. (#9639)
+ - win32api calls can be replaced with direct calls to win32 dll functions via ctypes.
+ - win32con constants should be defined in your files.
+- The "async" argument in nvwave.playWaveFile has been renamed to "asynchronous". (#8607)
+- speakText and speakCharacter methods on synthDriver objects are no longer supported.
+ - This functionality is handled by SynthDriver.speak.
+- SynthSetting classes in synthDriverHandler have been removed. Now use driverHandler.DriverSetting classes instead.
+- SynthDriver classes should no longer expose index via the lastIndex property.
+ - Instead, they should notify the synthDriverHandler.synthIndexReached action with the index, once all previous audio has finished playing before that index.
+- SynthDriver classes must now notify the synthDriverHandler.synthDoneSpeaking action, once all audio from a SynthDriver.speak call has completed playing.
+- SynthDriver classes must support the speech.PitchCommand in their speak method, as changes in pitch for speak spelling now depends on this functionality.
+- The speech function getSpeechTextForProperties has been renamed to getPropertiesSpeech. (#10098)
+- The braille function getBrailleTextForProperties has been renamed to getPropertiesBraille. (#10469)
+- Several speech functions have been changed to return speech sequences. (#10098)
+ - getControlFieldSpeech
+ - getFormatFieldSpeech
+ - getSpeechTextForProperties now called getPropertiesSpeech
+ - getIndentationSpeech
+ - getTableInfoSpeech
+- Added a textUtils module to simplify string differences between Python 3 strings and Windows unicode strings. (#9545)
+ - See the module documentation and textInfos.offsets module for example implementations.
+- Deprecated functionality now removed. (#9548)
+ - AppModules removed:
+  - Windows XP sound recorder.
+  - Klango Player, which is abandoned software.
+ - configobj.validate wrapper removed.
+  - New code should use from configobj import validate instead of import validate
+ - textInfos.Point and textInfos.Rect replaced by locationHelper.Point and locationHelper.RectLTRB respectively.
+ - braille.BrailleHandler._get_tether and braille.BrailleHandler.set_tether have been removed.
+ - config.getConfigDirs has been removed.
+ - config.ConfigManager.getConfigValidationParameter has been replaced by getConfigValidation
+ - inputCore.InputGesture.logIdentifier property has been removed.
+   - Use _get_identifiers in inputCore.InputGesture instead.
+ - synthDriverHandler.SynthDriver.speakText/speakCharacter have been removed.
+ - Removed several synthDriverHandler.SynthSetting classes.
+   - Previously kept for backwards compatibility (#8214), now considered obsolete.
+   - Drivers that used the SynthSetting classes should be updated to use the DriverSetting classes.
+ - Some legacy code has been removed, particularly:
+  - Support for the Outlook pre 2003 message list.
+  - An overlay class for the classic start menu, only found in Windows Vista and earlier.
+  - Dropped support for Skype 7, as it is definitely not working any more.
+- Added a framework to create vision enhancement providers; modules that can change screen contents, optionally based on input from NVDA about object locations. (#9064)
+ - Add-ons can bundle their own providers in a visionEnhancementProviders folder.
+ - See the vision and visionEnhancementProviders modules for the implementation of the framework and examples, respectively.
+ - Vision enhancement providers are enabled and configured via the 'vision' category in NVDA's settings dialog.
+- Abstract class properties are now supported on objects that inherit from baseObject.AutoPropertyObject (e.g. NVDAObjects and TextInfos). (#10102)
+- Introduced displayModel.UNIT_DISPLAYCHUNK as a textInfos unit constant specific to DisplayModelTextInfo. (#10165)
+ - This new constant allows walking over the text in a DisplayModelTextInfo in a way that more closely resembles how the text chunks are saved in the underlying model.
+- displayModel.getCaretRect now returns an instance of locationHelper.RectLTRB. (#10233)
+- The UNIT_CONTROLFIELD and UNIT_FORMATFIELD constants have been moved from virtualBuffers.VirtualBufferTextInfo to the textInfos package. (#10396)
+- For every entry in the NVDA log, information about the originating thread is now included. (#10259)
+- UIA TextInfo objects can now be moved/expanded by the page, story and formatField text units. (#10396)
+- External modules (appModules and globalPlugins) are now less likely to be able to break the creation of NVDAObjects. 
+ - Exceptions caused by the "chooseNVDAObjectOverlayClasses" and "event_NVDAObject_init" methods are now properly caught and logged.
+- The aria.htmlNodeNameToAriaLandmarkRoles dictionary has been renamed to aria.htmlNodeNameToAriaRoles. It now also contains roles that aren't landmarks.
+- scriptHandler.isCurrentScript has been removed due to lack of use. There is no replacement. (#8677)
+
+
 = 2019.2.1 =
 This is a minor release to fix several crashes present in 2019.2. Fixes include:
 - Addressed several crashes in Gmail seen in both Firefox and Chrome when interacting with particular popup menus such as when creating filters or changing certain Gmail settings. (#10175, #9402, #8924)

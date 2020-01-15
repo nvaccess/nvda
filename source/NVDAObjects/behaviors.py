@@ -577,11 +577,14 @@ class RowWithFakeNavigation(NVDAObject):
 	def script_moveToNextColumn(self, gesture):
 		cur = api.getNavigatorObject()
 		if cur == self:
-			new = self.simpleFirstChild
+			new = self.firstChild
 		elif cur.parent != self:
-			new = self
+			self._moveToColumn(self)
+			return
 		else:
-			new = cur.simpleNext
+			new = cur.next
+		while new and new.hasIrrelevantLocation:
+			new = new.next
 		self._moveToColumn(new)
 	script_moveToNextColumn.canPropagate = True
 	# Translators: The description of an NVDA command.
@@ -591,10 +594,12 @@ class RowWithFakeNavigation(NVDAObject):
 		cur = api.getNavigatorObject()
 		if cur == self:
 			new = None
-		elif cur.parent != self or not cur.simplePrevious:
+		elif cur.parent != self or not cur.previous:
 			new = self
 		else:
-			new = cur.simplePrevious
+			new = cur.previous
+			while new and new.hasIrrelevantLocation:
+				new = new.previous
 		self._moveToColumn(new)
 	script_moveToPreviousColumn.canPropagate = True
 	# Translators: The description of an NVDA command.

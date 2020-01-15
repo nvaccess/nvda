@@ -142,21 +142,28 @@ before_test:
      } catch {
       echo NVDA installer process timed out
       $errorCode=1
+      Add-AppveyorMessage "Unable to install NVDA prior to tests."
      }
      Push-AppveyorArtifact $installerLogFilePath
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
 test_script:
+# Unit Tests (Python)
  - ps: |
      $errorCode=0
      $outDir = (Resolve-Path .\testOutput\unit\)
      $unitTestsXml = "$outDir\unitTests.xml"
      py -m nose -sv --with-xunit --xunit-file="$unitTestsXml" ./tests/unit
-     if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
+     if($LastExitCode -ne 0) {
+      $errorCode=$LastExitCode
+      Add-AppveyorMessage "Unit test failure"
+     }
      Push-AppveyorArtifact $unitTestsXml
      $wc = New-Object 'System.Net.WebClient'
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", $unitTestsXml)
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
+
+# Flake8 Linting
  - ps: |
     if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
       $lintOutput = (Resolve-Path .\testOutput\lint\)
@@ -179,6 +186,8 @@ test_script:
       $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", $junitXML)
       if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
     }
+
+# System tests
  - ps: |
      $testOutput = (Resolve-Path .\testOutput\)
      $systemTestOutput = (Resolve-Path "$testOutput\system")
@@ -186,13 +195,25 @@ test_script:
      py -m robot --loglevel DEBUG -d $systemTestOutput -x systemTests.xml -v whichNVDA:installed -P "$testSource/libraries" "$testSource"
      Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
      Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
-     if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
+     if($LastExitCode -ne 0) {
+      $errorCode=$LastExitCode
+      Add-AppveyorMessage "System test failure"
+     }
      $wc = New-Object 'System.Net.WebClient'
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$systemTestOutput\systemTests.xml"))
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
-on_finish:
+# Artifacts are required by deploy code,
+artifacts:
+  - path: output\*
+  - path: output\*\*
+
+# Still upload artifacts on failure, they are useful for testing PR builds despite the build perhaps
+# failing for a minor reason (eg linting)
+on_failure:
+#  `- path` is not allowed in `on_failure` use powerShell instead
  - ps: |
+    # Upload artifacts, preserving directory structure.
     $uploadFromFolder = "output\"
     if( Test-Path $uploadFromFolder ){
       $root = Resolve-Path .\
@@ -203,6 +224,8 @@ on_finish:
       }
     }
 
+# The server side deploy code ('nvdaAppveyorHook') relies on artifacts, they must be uploaded first.
+# For ordering of appveyor yml phases, see: https://www.appveyor.com/docs/build-configuration/#build-pipeline
 deploy_script:
  - ps: |
      if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:versionType) {
@@ -230,3 +253,13 @@ deploy_script:
       py -m pip install requests
       py appveyor\mozillaSyms.py
      }
+
+on_finish:
+  # add a message to point to the NVDA build, to make testing PR's easier.
+  - ps: |
+      $appVeyorUrl = "https://ci.appveyor.com"
+      $exe = Get-ChildItem -Name output\*.exe
+      if($?){
+        $exeUrl="$appVeyorUrl/api/buildjobs/$env:APPVEYOR_JOB_ID/artifacts/output/$exe"
+        Add-AppveyorMessage "[Build (for testing PR)]($exeUrl)"
+      }

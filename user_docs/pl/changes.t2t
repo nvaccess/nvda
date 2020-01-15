@@ -3,8 +3,16 @@
 
 %!includeconf: ../changes.t2tconf
 
+
+= 2019.2.1 =
+Ta wersja poprawia wiele istotnych błędów obecnych w wersji 2019.2. Poprawki obejmują:
+- Naprawiono kilka błędów związanych z obsługą interfejsu sieciowego poczty Gmail, zarówno w Firefox, jak i w Chrome. Błędy te występowały podczas interakcji z niektórymi menu oraz przy zmianie pewnych ustawień poczty.(#10175, #9402, #8924)
+- W systemie Windows 7, NVDA nie powoduje awarii modułu Explorer podczas używania myszy w menu start. (#9435) 
+- NVDA nie zawiesza się podczas interakcji z adresami URI zakodowanymi w standardzie Base64 w przeglądarce Mozilla Firefox. (#10227)
+
+ 
 = 2019.2 =
-Najważniejsze zmiany w tej wersji, to automatyczne wykrywanie linijek brajlowskich Freedom Scientific, eksperymentalne ustawienie zaawansowane wyłączenia podążania fokusu systemowego za kursorem trybu czytania (co może poprawić wydajność), możliwość podkręcania szybkości głosów mobilnych Windows,  oraz wiele poprawek.
+Najważniejsze zmiany w tej wersji to automatyczne wykrywanie linijek brajlowskich Freedom Scientific, eksperymentalne ustawienie zaawansowane wyłączenia podążania fokusu systemowego za kursorem trybu czytania (co może poprawić wydajność), możliwość podkręcania szybkości głosów mobilnych Windows,  oraz wiele poprawek.
 
 == Nowości ==
 - Wsparcie NVDA dla Miranda NG działa z nowszymi wersjami klienta. (#9053) 

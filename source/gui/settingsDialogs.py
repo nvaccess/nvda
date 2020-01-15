@@ -1000,6 +1000,11 @@ class SynthesizerSelectionDialog(SettingsDialog):
 			config.conf['audio']['audioDuckingMode']=index
 			audioDucking.setAudioDuckingMode(index)
 
+		# Reinitialize the tones module to update the audio device
+		import tones
+		tones.terminate()
+		tones.initialize()
+
 		if self.IsModal():
 			# Hack: we need to update the synth in our parent window before closing.
 			# Otherwise, NVDA will report the old synth even though the new synth is reflected visually.
@@ -2008,7 +2013,7 @@ class DocumentFormattingPanel(SettingsPanel):
 			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 			_("Tones"),
 			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-			_("Both  Speech and Tones")
+			_("Both Speech and Tones")
 		]
 		self.lineIndentationCombo = pageAndSpaceGroup.addLabeledControl(lineIndentationText, wx.Choice, choices=indentChoices)
 		#We use bitwise operations because it saves us a four way if statement.
