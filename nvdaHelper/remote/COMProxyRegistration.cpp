@@ -140,7 +140,11 @@ COMProxyRegistration_t* registerCOMProxy(wchar_t* dllPath) {
 			IID iid=*(fileInfo.pStubVtblList[idx]->header.piid);
 			CLSID clsidBackup={0};
 			int nameLength=MultiByteToWideChar(CP_UTF8,0,			fileInfo.pNamesArray[idx],-1,NULL,0);
-			wstring name;
+			if (nameLength == 0) {
+				LOG_ERROR(L"Unable to  get name length for MultiByteToWideChar conversion for entry "<<idx<<L" in ProxyFileInfo, error "<<GetLastError());
+				continue;
+			}
+			wstring name(nameLength,L'\0');
 			if (MultiByteToWideChar(CP_UTF8,0,			fileInfo.pNamesArray[idx],-1,name.data(),nameLength) == 0) {
 				LOG_ERROR(L"Unable to perform MultiByteToWideChar conversion for entry "<<idx<<L" in ProxyFileInfo, error "<<GetLastError());
 				continue;
