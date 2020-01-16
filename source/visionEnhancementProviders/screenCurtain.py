@@ -88,23 +88,16 @@ class Magnification:
 		MagShowSystemCursor = None
 
 
-# Translators: Description of a vision enhancement provider that disables output to the screen,
+# Translators: Name for a vision enhancement provider that disables output to the screen,
 # making it black.
 screenCurtainTranslatedName = _("Screen Curtain")
 
-warnOnLoadCheckBoxText = (
-	# Translators: Description for a screen curtain setting that shows a warning when loading
-	# the screen curtain.
-	_("Always &show a warning when loading {screenCurtainTranslatedName}").format(
-		screenCurtainTranslatedName=screenCurtainTranslatedName
-	)
-)
-
+# Translators: Description for a Screen Curtain setting that shows a warning when loading
+# the screen curtain.
+warnOnLoadCheckBoxText = _("Always &show a warning when loading Screen Curtain")
 
 # Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-playToggleSoundsCheckBoxText = _("&Play sound when toggling {screenCurtainTranslatedName}").format(
-	screenCurtainTranslatedName=screenCurtainTranslatedName
-)
+playToggleSoundsCheckBoxText = _("&Play sound when toggling Screen Curtain")
 
 
 class ScreenCurtainSettings(providerBase.VisionEnhancementProviderSettings):
