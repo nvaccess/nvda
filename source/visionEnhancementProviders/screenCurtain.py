@@ -317,8 +317,12 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 		super().__init__()
 		log.debug(f"Starting ScreenCurtain")
 		Magnification.MagInitialize()
-		Magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
-		Magnification.MagShowSystemCursor(False)
+		try:
+			Magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
+			Magnification.MagShowSystemCursor(False)
+		except Exception as e:
+			Magnification.MagUninitialize()
+			raise e
 		if self.getSettings().playToggleSounds:
 			try:
 				nvwave.playWaveFile(r"waves\screenCurtainOn.wav")
