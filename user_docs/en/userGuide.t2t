@@ -659,7 +659,7 @@ In order to fit as much information as possible on a braille display, the follow
 
 || Abbreviation | Control type |
 | app | application |
-| art | article
+| art | article |
 | bqt | block quote |
 | btn | button |
 | drbtn | drop down button |
@@ -778,7 +778,7 @@ These positions are highlighted with a colored rectangle outline.
 - Solid yellow highlights the virtual caret used in browse mode (where there is no physical caret such as in web browsers).
 -
 
-When Focus Highlight is enabled in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog, you can [change whether or not to highlight the focus, navigator object or browse mode caret #VisionSettingsFocusHighlight]
+When Focus Highlight is enabled in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog, you can [change whether or not to highlight the focus, navigator object or browse mode caret #VisionSettingsFocusHighlight].
 
 ++ Screen Curtain ++[VisionScreenCurtain]
 As a blind or vision impaired user, it is often not possible or necessary to see the contents of the screen.
@@ -1404,7 +1404,7 @@ When you want to change this behavior, you can uncheck the "Play sound when togg
 ==== Settings for third party visual aids ====[VisionSettingsThirdPartyVisualAids]
 Additional vision enhancement providers can be provided in [NVDA add-ons #AddonsManager].
 When these providers have adjustable settings, they will be shown in this settings category in separate groupings.
-For the supported settings per provider, please refer to de documentation for that provider.
+For the supported settings per provider, please refer to the documentation for that provider.
 
 +++ Keyboard (NVDA+control+k) +++[KeyboardSettings]
 The Keyboard category in the NVDA Settings dialog contains options that set how NVDA behaves as you use and type on your keyboard.
@@ -2153,7 +2153,7 @@ To use these voices, you will need to install two components:
 ++ Windows OneCore Voices ++[OneCore]
 Windows 10 includes new voices known as "OneCore" or "mobile" voices.
 Voices are provided for many languages, and they are more responsive than the Microsoft voices available using Microsoft Speech API version 5.
-On Windows 10, NVDA uses Windows OneCore voices by default ([[eSpeak NG #eSpeakNG] is used in other releases).
+On Windows 10, NVDA uses Windows OneCore voices by default ([eSpeak NG #eSpeakNG] is used in other releases).
 
 Please see this Microsoft article for a list of available voices and instructions to install them: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
@@ -2965,7 +2965,7 @@ When configuring the display and port to use, be sure to pay close attention to 
 For displays which have a braille keyboard, BRLTTY currently handles braille input itself.
 Therefore, NVDA's braille input table setting is not relevant.
 
-BRLTYY is not involved in NVDA's automatic background braille display detection functionality.
+BRLTTY is not involved in NVDA's automatic background braille display detection functionality.
 
 Following are the BRLTTY command assignments for NVDA.
 Please see the [BRLTTY key binding lists https://mielke.cc/brltty/doc/KeyBindings/] for information about how BRLTTY commands are mapped to controls on braille displays.
