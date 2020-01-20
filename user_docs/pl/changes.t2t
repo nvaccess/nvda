@@ -3,6 +3,88 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.3 =
+
+== Nowości ==
+- Dla klasycznej konsoli systemu Windows, Powershella jak i podsystemu Linux dla Windows wprowadzono następujące zmiany: 
+ - Znaczne poprawki szybkości i stabilności działania. (#9771)
+- Odczytywanie wpisywanego tekstu który nie pojawia się na ekranie (na przykład hasła) może teraz być włączone lub wyłączone w ustawieniach zaawansowanych NVDA. (#9649)
+- Dokładność komendy "przesunięcie kursora do bierzącego obiektu nawigatora" została poprawiona dla pól tekstowych w aplikacjach Java. (#10157)
+- Dodano wsparcie dla następujących monitorów brajlowskich firmy HandyTech (#8955):
+ - Basic Braille Plus 40
+ - Basic Braille Plus 32
+ - Connect Braille
+- Wszystkie zdarzenia wejścia zdefiniowane przez użytkownika mogą teraz zostać usunięte poprzez przycisk "Zresetuj do domyślnych" w dialogu "Zdarzenia Wejścia". (#10293)
+- Zgłaszanie czcionki w programie Microsoft Word od teraz informuje czy tekst jest oznaczony jako ukryty. (#8713)
+- Dodano polecenie przenoszące kursor nawigatora do początku zaznaczenia (NVDA+Shift+F9). (#1969)
+- W przeglądarkach Internet Explorer, Microsoft Edge i nowszych wersjach Firefox i Chrome, znaczniki są teraz odczytywane w trybie przeglądania fokusa. (#10101)
+- W przeglądarkach Internet Explorer, Google Chrome oraz Mozilla Firefox możliwa jest teraz nawigacja po artykułach i grupach przy pomocy nowych skryptów nawigacji. Te skrypty nie mają jednak przypisanych wartości domyślnych, można je przypisać z ekranu "zdarzenia wejścia" otwartego z poziomu obsługiwanego dokumentu. (#9485, #9227)
+ - Figury również są teraz zgłaszane. Są one traktowane jako obiekty, to też można po nich nawigować klawiszem O.
+- W Internet Explorer, Mozilla Firefox, artykuły są od teraz zgłaszane podczas poruszania się nawigacją obiektową, oraz w trybie przeglądania (wymaga włączenia w ustawieniach formatowania dokumentów. (#10424)
+- Dodano kurtynę. Po jej włączeniu ekran jest całkowicie czarny na Windows 8 i późniejszych. (#7857)
+ - Dodano skrypt do tymczasowego włączania kurtyny, jak i do stałego jej włączenia. Skrypt nie ma domyślnie przypisanego skrótu klawiszowego.
+ - Konfiguracja odbywa się poprzez odpowiednią zakładkę w oknie "Zdarzenia Wejścia"
+- Added screen highlight functionality to NVDA. (#971, #9064)
+ - Highlighting of the focus, navigator object, and browse mode caret position can be enabled and configured via the 'vision' category in NVDA's settings dialog.
+ - Note: This feature is incompatible with the focus highlight add-on, however, the add-on can still be used while the built-in highlighter is disabled.
+- Dodano okno podglądu brajla. Pozwala ono na patrzenie na wyjście brajlowskie w małym oknie. (#7788)
+
+
+== Zmiany ==
+- Podręcznik użytkownika od teraz opisuje jak używać NVDA w oknie konsoli. (#9957)
+- Uruchomienie pliku NVDA.exe od teraz resetuje program. Poprzednio używany przełącznik -r jest wciąż akceptowany, ale ignorowany. (#8320)
+- W systemach Windows 8 i późniejszych, NVDA zgłasza teraz numer wersji i nazwę aplikacji UWP poprzez jej plik Manifest. (#4259, #10108)
+- W wypadku zmiany ustawienia śledzenia zmian w programie Microsoft Office Word, NVDA od teraz zgłąsza stan tego przełącznika. (#942)
+- Numer wersji NVDA jest od teraz logowany jako pierwszy element w dzienniku zdarzeń NVDA. Zachodzi to nawet w wypadku wyłączenia logowania. (#9803)
+- Dialog ustawień od teraz nie pozwala na zmianę ustawień logowania jeżeli została ona dokonana poprzez przełaczniki wiersza poleceń. (#10209)
+- In Microsoft Word, NVDA now announces the display state of non printable characters when pressing the toggle shortcut Ctrl+Shift+8 . (#10241)
+- Zaktualizowano Liblouis Braille Translator do najnowszej wersji. (#10094)
+- Gdy włączona jest opcja ogłaszania znaków CLDR, takich jak Emoji, są one odczytywane na wszystkich poziomach interpunkcji. (#8826)
+- Pakiety firm trzecich języka Python, takie jak Comtypes zgłaszają swoje błędy bezpośrednio do dziennika zdarzeń NVDA. (#10393)
+- Zaktualizowano repozytorium znaków Unicode do wersji 36.0. (#10426)
+- W wypadku poświetlenia grupy elementów w trybie przeglądania, jej opis jest również odczytywany. (#10095)
+- Java Access Bridge od teraz jest częścią NVDA. Pozwala to na dostęp do aplikacji pisanych w języku JAVA, łącznie z programami 64-bitowymi. (#7724)
+- Jeżeli Java Access Bridge nie jest domyślnie aktywny dla użytkownika, NVDA dokonuje jego uruchomienia przy starcie. (#7952)
+Zaktualizowano Espeak-NG do wersji 1.51. (#10581)
+
+
+== Poprawki błędów ==
+Emoji i inne 32-bitowe znaki Unicode od teraz zajmują mniej miejsca na monitorach brajlowskich. (#6695)
+- W systemie Windows 10, NVDA może odczytywać dymki powiadomień aplikacji UWP zakładając, że odczytywanie dymków jest włączone. (#8118)
+- W Windows 10 Anniversary Update i późniejszych, wpisywany tekst jest teraz odczytywany w programie Mintty. (#1348)
+- W Windows 10 Anniversary Update i późniejszych tekst w konsoli pojawiający się blizko kursora nie jest literowany. (#513)
+- Kontrolki w kompresorze programu Audacity są od teraz odczytywane podczas nawigacji po oknie.  (#10103)
+- NVDA nie traktuje już spacji jako słów podczas przeglądania obiektowego w edytorach bazowanych na "Scintilla" takich jak Notepad ++. (#8295)
+- NVDA od teraz nie pozwoli przejść systemowi w stan uśpienia gdy wykryte zostanie przeglądanie przy pomocy monitora brajlowskiego. (#9175)
+- On Windows 10, braille will now follow when editing cell contents in Microsoft Excel and in other UIA text controls where it was lagging behind. (#9749)
+- NVDA ponownie zgłasza sugestie w pasku adresu przeglądarki Microsoft Edge. (#7554)
+- NVDA is no longer silent when focusing an HTML tab control header in Internet Explorer. (#8898)
+- In Microsoft Edge based on EdgeHTML, NVDA will no longer play search suggestion sound when the window becomes maximized. (#9110, #10002)
+- Listy rozwijane Aria 1.1 od teraz są wspierane w przeglądarkach Mozilla Firefox i Chrome. (#9616)
+- NVDA nie odczytuje niewidocznych kolumn dla kontrolki SysList32. (#8268)
+- The settings dialog no longer shows "info" as the current log level when in secure mode. (#10209)
+- W menu Start systemu Windows 10 Anniversary Update i późniejszych, NVDA odczytuje szczegóły wnikó wyszukiwania. (#10232)
+- In browse mode, if moving the cursor or using quick navigation causes the document to change, NVDA no longer speaks incorrect content in some cases. (#8831, #10343)
+- Some bullet names in Microsoft Word have been corrected. (#10399)
+- In Windows 10 May 2019 Update and later, NVDA will once again announce first selected emoji or clipboard item when emoji panel and clipboard history opens, respectively. (#9204)
+- In Poedit, it is once again possible to view some translations for right to left languages. (#9931)
+- In the Settings app in Windows 10 April 2018 Update and later, NVDA will no longer announce progress bar information for volume meters found in the System/Sound page. (#10284)
+- Niepoprawnie skonfigurowane wyrażenia regularne od teraz nie powodują całkowitego zawieszenia mowy. (#10334)
+- When reading bulleted items in Microsoft Word with UIA enabled, the bullet from the next list item is no longer inappropriately announced. (#9613)
+- Kilka bardzo rzadkich błędów związanych z modułem Liblouis zostało naprawione. (#9982)
+- Aplikacje Java uruchomione przed NVDA są od razu dostępne i nie wymagają restartu. (#10296)
+- W przeglądarce Mozilla Firefox gdy podświetlony element otrzymuje flagę "aria-current" nie występują błędy mowy. (#8960)
+- NVDA od teraz będzie traktował niektóre znaki Unicode jako pojedynczy tekst podczas poruszania kursora. (#10550)
+- Dodano wsparcie dla aplikacji Spring Tool Suite 4. (#10001)
+- Naprawiono błąd z podwujnym czytaniem znaków gdy są one oznaczone elementami ARIA. (#10552)
+- W systemie Windows 10 wersji 1607 i późniejszych znaki wpisywane z klawiatur brajlowskich są od teraz odczytywane w większej ilości sytuacji. (#10569)
+- W wypadku zmiany karty dźwiękowej w ustawieniach NVDA, dźwięki czytnika ekranu będą teraz odtwarzane przez nowowybraną kartę. (#2167)
+- W przeglądarce Mozilla Firefox, przesuwania kursora w trybie przeglądania jest szybsze. Powoduje to znaczne przyspieszenie działania w niektórych wypadkach. (#10584)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
+
 
 = 2019.2.1 =
 Ta wersja poprawia wiele istotnych błędów obecnych w wersji 2019.2. Poprawki obejmują:

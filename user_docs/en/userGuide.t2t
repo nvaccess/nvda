@@ -174,7 +174,7 @@ The third lets you control if this Welcome dialog should appear each time NVDA s
 +++ Data usage statistics dialog +++[UsageStatsDialog]
 Starting from NVDA 2018.3, the user is asked if they want to allow usage data to be sent to NV Access in order to help improve NVDA in the future. 
 When starting NVDA for the first time, a dialog will appear which will ask you if you want to accept sending data to NV Access while using NVDA.
-You can read more info about the data gathered by NV Access in Chapter 11 below.
+You can read more info about the data gathered by NV Access in the general settings section, [Allow the NVDA project to gather NVDA usage statistics #GeneralSettingsGatherUsageStats].
 Note: pressing on "yes" or "no" will save this setting and the dialog will never appear again unless you reinstall NVDA.
 However, you can enable or disable the data gathering process manually in NVDA's general settings panel. For changing this setting manually, you can check or uncheck the checkbox called [Allow the NVDA project to gather NVDA usage statistics #GeneralSettingsGatherUsageStats].
 
@@ -659,7 +659,7 @@ In order to fit as much information as possible on a braille display, the follow
 
 || Abbreviation | Control type |
 | app | application |
-| art | article
+| art | article |
 | bqt | block quote |
 | btn | button |
 | drbtn | drop down button |
@@ -778,7 +778,7 @@ These positions are highlighted with a colored rectangle outline.
 - Solid yellow highlights the virtual caret used in browse mode (where there is no physical caret such as in web browsers).
 -
 
-When Focus Highlight is enabled in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog, you can [change whether or not to highlight the focus, navigator object or browse mode caret #VisionSettingsFocusHighlight]
+When Focus Highlight is enabled in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog, you can [change whether or not to highlight the focus, navigator object or browse mode caret #VisionSettingsFocusHighlight].
 
 ++ Screen Curtain ++[VisionScreenCurtain]
 As a blind or vision impaired user, it is often not possible or necessary to see the contents of the screen.
@@ -1061,7 +1061,7 @@ The available logging levels are:
  - If you are concerned about privacy, do not set the logging level to this option.
 - Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
  - Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
-
+-
 
 ==== Automatically start NVDA after I log on to Windows ====[GeneralSettingsStartAfterLogOn]
 If this option is enabled, NVDA will start automatically as soon as you log on to Windows.
@@ -1084,7 +1084,7 @@ The following information is always sent:
 - Current NVDA version
 - Operating System version
 - Whether the Operating System is 64 or 32 bit
-
+-
 
 ==== Allow the NVDA project to gather NVDA usage statistics ====[GeneralSettingsGatherUsageStats]
 If this is enabled, NV Access will use the information from update checks in order to track  the number of NVDA users including particular demographics such as Operating system and country of origin.
@@ -1095,7 +1095,7 @@ Apart from the mandatory information required to check for updates, the followin
 - Name of the current speech synthesizer in use (including the name of the add-on the driver comes from)
 - Name of the current Braille display in use (including the name of the add-on the driver comes from)
 - The current output Braille table (if Braille is in use)
-
+-
 
 This information greatly aides NV Access to prioritize future development of NVDA.
 
@@ -1404,7 +1404,7 @@ When you want to change this behavior, you can uncheck the "Play sound when togg
 ==== Settings for third party visual aids ====[VisionSettingsThirdPartyVisualAids]
 Additional vision enhancement providers can be provided in [NVDA add-ons #AddonsManager].
 When these providers have adjustable settings, they will be shown in this settings category in separate groupings.
-For the supported settings per provider, please refer to de documentation for that provider.
+For the supported settings per provider, please refer to the documentation for that provider.
 
 +++ Keyboard (NVDA+control+k) +++[KeyboardSettings]
 The Keyboard category in the NVDA Settings dialog contains options that set how NVDA behaves as you use and type on your keyboard.
@@ -1779,24 +1779,14 @@ This includes Microsoft Word itself, and also the Microsoft Outlook message view
 However, There may be some information which is either not exposed, or exposed incorrectly in some versions of Microsoft Office, which means this UI automation support cannot always be relied upon.
 We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Office 2016/365 to test this feature and provide feedback.
 
-==== Windows Console support ====[AdvancedSettingsConsoleUIA]
-This option selects how NVDA interacts with the Windows Console used by command prompt, PowerShell, and the Windows Subsystem for Linux.
-It does not affect the modern Windows Terminal.
-In Windows 10 version 1709, Microsoft [added support for its UI Automation API to the console https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], bringing vastly improved performance and stability for screen readers that support it.
-In situations where UI Automation is unavailable or known to result in an inferior user experience, NVDA's legacy console support is available as a fallback.
-The Windows Console support combo box has three options:
-- Automatic: Uses UI Automation in consoles on Windows 10 version 1809 and later. This option is recommended and set by default.
-- Prefer UIA: Uses UI Automation in consoles if available, even on Windows versions with incomplete or buggy implementations. While this limited functionality may be useful (and even sufficient for your usage), use of this option is entirely at your own risk and no support for it will be provided.
-- Legacy: UI Automation in the Windows Console will be completely disabled, so the legacy fallback will always be used.
--
+==== Use UI Automation to access the Windows Console when available ====[AdvancedSettingsConsoleUIA]
+When this option is enabled, NVDA will use a new, work in progress version of its support for Windows Console which takes advantage of [accessibility improvements made by Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. This feature is highly experimental and is still incomplete, so its use is not yet recommended. However, once completed, it is anticipated that this new support will become the default, improving NVDA's performance and stability in Windows command consoles.
 
-==== Speak passwords in Windows Console ====[AdvancedSettingsWinConsoleSpeakPasswords]
-This setting controls whether characters are spoken by [speak typed characters #KeyboardSettingsSpeakTypedCharacters] or [speak typed words #KeyboardSettingsSpeakTypedWords] in situations where the screen does not update (such as password entry) in some terminal programs, such as the Windows Console with UI automation support enabled and Mintty.
-For security purposes, this setting should be left disabled.
-However, you may wish to enable it if you experience performance issues or instability with typed character and/or word reporting in consoles, or work in trusted environments and prefer password announcement.
+==== Speak passwords in UIA consoles ====[AdvancedSettingsWinConsoleSpeakPasswords]
+This setting controls whether characters are spoken by [speak typed characters #KeyboardSettingsSpeakTypedCharacters] or [speak typed words #KeyboardSettingsSpeakTypedWords] in situations where the screen does not update (such as password entry) in the Windows Console with UI automation support enabled. For security purposes, this setting should be left disabled. However, you may wish to enable it if you experience performance issues or instability with typed character and/or word reporting while using NVDA's new experimental console support.
 
-==== Use the new typed character support in legacy Windows consoles when available ====[AdvancedSettingsKeyboardSupportInLegacy]
-This option enables an alternative method for detecting typed characters in legacy Windows consoles.
+==== Use the new typed character support in Windows Console when available ====[AdvancedSettingsKeyboardSupportInLegacy]
+This option enables an alternative method for detecting typed characters in Windows command consoles.
 While it improves performance and prevents some console output from being spelled out, it may be incompatible with some terminal programs.
 This feature is available and enabled by default on Windows 10 versions 1607, 1703, 1709 and 1803 as well as on newer Windows 10 releases when UI Automation is unavailable or disabled.
 Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
@@ -2163,7 +2153,7 @@ To use these voices, you will need to install two components:
 ++ Windows OneCore Voices ++[OneCore]
 Windows 10 includes new voices known as "OneCore" or "mobile" voices.
 Voices are provided for many languages, and they are more responsive than the Microsoft voices available using Microsoft Speech API version 5.
-On Windows 10, NVDA uses Windows OneCore voices by default ([[eSpeak NG #eSpeakNG] is used in other releases).
+On Windows 10, NVDA uses Windows OneCore voices by default ([eSpeak NG #eSpeakNG] is used in other releases).
 
 Please see this Microsoft article for a list of available voices and instructions to install them: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
@@ -2975,7 +2965,7 @@ When configuring the display and port to use, be sure to pay close attention to 
 For displays which have a braille keyboard, BRLTTY currently handles braille input itself.
 Therefore, NVDA's braille input table setting is not relevant.
 
-BRLTYY is not involved in NVDA's automatic background braille display detection functionality.
+BRLTTY is not involved in NVDA's automatic background braille display detection functionality.
 
 Following are the BRLTTY command assignments for NVDA.
 Please see the [BRLTTY key binding lists https://mielke.cc/brltty/doc/KeyBindings/] for information about how BRLTTY commands are mapped to controls on braille displays.
@@ -3010,7 +3000,7 @@ For those which have a short version, you can combine them like this:
 Some of the command line options accept additional parameters; e.g. how detailed the logging should be or the path to the user configuration directory.
 Those parameters should be placed after the option, separated from the option by a space when using the short version or an equals sign (=) when using the long version; e.g.:
 | nvda -l 10 | Tells NVDA to start with log level set to debug |
-| nvda --log-file=c:\nvda.log |  Tells NVDA to write its log to c:\nvda.log |
+| nvda --log-file=c:\nvda.log | Tells NVDA to write its log to c:\nvda.log |
 | nvda --log-level=20 -f c:\nvda.log | Tells NVDA to start with log level set to info and to write its log to c:\nvda.log |
 
 Following are the command line options for NVDA:
@@ -3022,7 +3012,7 @@ Following are the command line options for NVDA:
 | -l LOGLEVEL | --log-level=LOGLEVEL | The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning |
 | -c CONFIGPATH | --config-path=CONFIGPATH | The path where all settings for NVDA are stored |
 | -m | --minimal | No sounds, no interface, no start message, etc. |
-| -s | --secure | Secure mode (disables Python console and logging features, used often in secure screens) |
+| -s | --secure | Secure mode: disables Python console, profile features such as creation, deletion, renaming profiles etc., update check, some checkboxes in the welcome dialog and in general settings category (e.g. start NVDA after logon, save configuration after exit etc.), as well as logviewer and logging features (used often in secure screens). Note also that this command will disable the possibility to save settings in system config and the gesture map will not be saved on the disk. |
 | None | --disable-addons | Addons will have no effect |
 | None | --debug-logging | Enable debug level logging just for this run. This setting will override any other log level ( ""--loglevel"", -l) argument given, including no logging option. |
 | None | --no-logging | Disable logging altogether while using NVDA. This setting can be overwritten if a log level ( ""--loglevel"", -l) is specified from command line or if debug logging is turned on. |

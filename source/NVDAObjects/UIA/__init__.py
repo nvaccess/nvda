@@ -26,7 +26,6 @@ import api
 import textInfos
 from logHandler import log
 from UIAUtils import *
-from UIAUtils import shouldUseUIAConsole
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import (
@@ -930,7 +929,7 @@ class UIA(Window):
 		# Support Windows Console's UIA interface
 		if (
 			self.windowClassName == "ConsoleWindowClass"
-			and shouldUseUIAConsole()
+			and config.conf['UIA']['winConsoleImplementation'] == "UIA"
 		):
 			from . import winConsoleUIA
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
