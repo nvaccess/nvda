@@ -36,7 +36,7 @@ The NVDA source depends on several other packages to run correctly.
 The following dependencies need to be installed on your system:
 
 * [Python](https://www.python.org/), version 3.7, 32 bit
-	* Use latest minor version if possible.
+	* Don't use `3.7.6` it causes an error while building, for now use `3.7.5` see #10696.
 * Microsoft Visual Studio 2017 Community, Version 15.3 or later:
 	* Download from https://visualstudio.microsoft.com/vs/older-downloads/
 	* When installing Visual Studio, you need to enable the following:
