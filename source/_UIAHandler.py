@@ -1,6 +1,6 @@
 # _UIAHandler.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2011-2020 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -149,7 +149,7 @@ UIAPropertyIdsToNVDAEventNames={
 
 UIALandmarkTypeIdsToLandmarkNames: Dict[int, str] = {
 	UIA.UIA_FormLandmarkTypeId: "form",
-	UIA.UIA_NavigationLandmarkTypeId: "nav",
+	UIA.UIA_NavigationLandmarkTypeId: "navigation",
 	UIA.UIA_MainLandmarkTypeId: "main",
 	UIA.UIA_SearchLandmarkTypeId: "search",
 }
