@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Babbage B.V., Mozilla Corporation
+# Copyright (C) 2008-2020 NV Access Limited, Babbage B.V., Mozilla Corporation
 
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import treeInterceptorHandler
@@ -172,13 +172,8 @@ class Gecko_ia2(VirtualBuffer):
 			isDefunct=True
 		return not isDefunct
 
-
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
-		try:
-			pacc=self.rootNVDAObject.IAccessibleObject.accChild(ID)
-		except COMError:
-			return None
-		return NVDAObjects.IAccessible.IAccessible(windowHandle=docHandle,IAccessibleObject=IAccessibleHandler.normalizeIAccessible(pacc),IAccessibleChildID=0)
+		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
 
 	def getIdentifierFromNVDAObject(self,obj):
 		docHandle=obj.windowHandle
