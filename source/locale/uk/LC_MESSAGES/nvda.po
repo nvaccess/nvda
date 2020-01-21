@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-25 06:30+1000\n"
-"PO-Revision-Date: 2019-09-25 10:46+0300\n"
+"POT-Creation-Date: 2019-12-20 00:10+1000\n"
+"PO-Revision-Date: 2019-12-23 11:28+0200\n"
 "Last-Translator: Volodymyr Pyrih <vp88.mobile@gmail.com>\n"
 "Language-Team: Volodymyr Pyrih <vp88.mobile@gmail.com>\n"
 "Language: uk\n"
@@ -12,7 +12,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.2.4\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -36,15 +38,15 @@ msgstr "Режим часткової форми"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
 msgid "half alphanumeric"
-msgstr "Частково буквенно-цифровий"
+msgstr "частково буквенно-цифровий"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
 msgid "half katakana"
-msgstr "Частково katakana"
+msgstr "частково katakana"
 
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
 msgid "alphanumeric"
-msgstr "Буквенно-цифровий"
+msgstr "буквенно-цифровий"
 
 #. Translators: For Japanese character input: Hiragana input mode.
 msgid "hiragana"
@@ -56,7 +58,7 @@ msgstr "katakana"
 
 #. Translators: For Japanese character input: half katakana roman input mode.
 msgid "half katakana roman"
-msgstr "Частково katakana roman"
+msgstr "частково katakana roman"
 
 #. Translators: For Japanese character input: Hiragana Roman input mode.
 msgid "hiragana roman"
@@ -76,11 +78,11 @@ msgstr "Закритий IME"
 
 #. Translators: the label for an unknown language when switching input methods.
 msgid "unknown language"
-msgstr "Невідома мова"
+msgstr "невідома мова"
 
 #. Translators: The label for an unknown input method when switching input methods.
 msgid "unknown input method"
-msgstr "Невідомий метод вводу"
+msgstr "невідомий метод вводу"
 
 #. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
@@ -104,9 +106,10 @@ msgstr "граматика: {text}"
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
-msgstr "Невідомо"
+msgstr "невідомо"
 
-#. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
+#. Translators: This is presented when errors are found in an appModule
+#. (example output: error in appModule explorer).
 #, python-format
 msgid "Error in appModule %s"
 msgstr "Помилка у модулі %s"
@@ -114,7 +117,7 @@ msgstr "Помилка у модулі %s"
 #. Translators: Reported for the banner landmark, normally found on web pages.
 msgctxt "aria"
 msgid "banner"
-msgstr "Банер"
+msgstr "банер"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
 msgctxt "aria"
@@ -145,11 +148,6 @@ msgstr "пошук"
 msgctxt "aria"
 msgid "form"
 msgstr "форма"
-
-#. Translators: Reported for a significant region, normally found on web pages.
-msgctxt "aria"
-msgid "region"
-msgstr "регіон"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -226,7 +224,7 @@ msgstr "спс"
 msgid "gra"
 msgstr "граф"
 
-#. Translators: Displayed in braille for an object which is a
+#. Translators: Displayed in braille for toast notifications and for an object which is a
 #. help balloon.
 msgid "hlp"
 msgstr "всп"
@@ -307,6 +305,11 @@ msgid "grp"
 msgstr "грп"
 
 #. Translators: Displayed in braille for an object which is a
+#. caption.
+msgid "cap"
+msgstr "підп"
+
+#. Translators: Displayed in braille for an object which is a
 #. embedded object.
 msgid "embedded"
 msgstr "вбуд"
@@ -373,6 +376,22 @@ msgstr "вид-но"
 #. Translators: Displayed in braille for an object which is inserted.
 msgid "ins"
 msgstr "встав-но"
+
+#. Translators: Displayed in braille for a landmark.
+msgid "lmk"
+msgstr "орі"
+
+#. Translators: Displayed in braille for an object which is an article.
+msgid "art"
+msgstr "ста"
+
+#. Translators: Displayed in braille for an object which is a region.
+msgid "rgn"
+msgstr "ргн"
+
+#. Translators: Displayed in braille for an object which is a figure.
+msgid "fig"
+msgstr "фіг"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -477,11 +496,6 @@ msgctxt "braille landmark abbreviation"
 msgid "form"
 msgstr "форм"
 
-#. Translators: Displayed in braille for a significant region, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "rgn"
-msgstr "ргн"
-
 #. Translators: The description of a braille cursor shape.
 msgid "Dots 7 and 8"
 msgstr "Крапки 7 і 8"
@@ -512,6 +526,9 @@ msgid "Only when scrolling back"
 msgstr "Лише під час прокрутки назад"
 
 #. Translators: String representing automatic port selection for braille displays.
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA determine its Windows Console implementation
+#. automatically.
 msgid "Automatic"
 msgstr "Автоматично"
 
@@ -577,7 +594,7 @@ msgstr "с{columnNumber}"
 #. %s is replaced with the control's role.
 #, python-format
 msgid "%s end"
-msgstr "кінець %s "
+msgstr "кінець %s"
 
 #. Translators: The label for a braille setting indicating that braille should be
 #. tethered to focus or review cursor automatically.
@@ -636,20 +653,20 @@ msgstr "{modifier} натиснуто"
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
 msgid "dot"
-msgstr "Крапка"
+msgstr "крапка"
 
 #. Translators: Reported when braille space is pressed with dots in input help mode.
 msgid "space with dot"
-msgstr "Простір з крапками"
+msgstr "простір з крапками"
 
 #. Translators: Reported when braille space is pressed in input help mode.
 #. Translators: This is the name of a key on the keyboard.
 msgid "space"
-msgstr "Пробіл"
+msgstr "пробіл"
 
 #. Translators: Used when describing keys on a braille keyboard.
 msgid "braille keyboard"
-msgstr "Брайлівська клавіатура"
+msgstr "брайлівська клавіатура"
 
 #. Translators: Used to describe the press of space
 #. along with any dots on a braille keyboard.
@@ -898,8 +915,8 @@ msgstr "Gujarati grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Koine Greek"
-msgstr "Koine Greek"
+msgid "Greek international braille"
+msgstr "Greek international braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1250,19 +1267,19 @@ msgstr "Передає жест до програми"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
-msgstr "Переходить до наступного заголовка"
+msgstr "переходить до наступного заголовка"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading"
-msgstr "Немає наступного заголовка"
+msgstr "немає наступного заголовка"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading"
-msgstr "Переходить до попереднього заголовка"
+msgstr "переходить до попереднього заголовка"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading"
-msgstr "Немає попереднього заголовка"
+msgstr "немає попереднього заголовка"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 1"
@@ -1270,7 +1287,7 @@ msgstr "переходить до наступного заголовка рів
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 1"
-msgstr "Немає наступного заголовка рівня 1"
+msgstr "немає наступного заголовка рівня 1"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 1"
@@ -1278,7 +1295,7 @@ msgstr "переходить до попереднього заголовка р
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 1"
-msgstr "Немає попереднього заголовка рівня 1"
+msgstr "немає попереднього заголовка рівня 1"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 2"
@@ -1286,7 +1303,7 @@ msgstr "переходить до наступного заголовка рів
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 2"
-msgstr "Немає наступного заголовка рівня 2"
+msgstr "немає наступного заголовка рівня 2"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 2"
@@ -1294,7 +1311,7 @@ msgstr "переходить до попереднього заголовка р
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 2"
-msgstr "Немає попереднього заголовка рівня 2"
+msgstr "немає попереднього заголовка рівня 2"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 3"
@@ -1302,7 +1319,7 @@ msgstr "переходить до наступного заголовка рів
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 3"
-msgstr "Немає наступного заголовка рівня 3"
+msgstr "немає наступного заголовка рівня 3"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 3"
@@ -1310,7 +1327,7 @@ msgstr "переходить до попереднього заголовка р
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 3"
-msgstr "Немає попереднього заголовка рівня 3"
+msgstr "немає попереднього заголовка рівня 3"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 4"
@@ -1318,7 +1335,7 @@ msgstr "переходить до наступного заголовка рів
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 4"
-msgstr "Немає наступного заголовка рівня 4"
+msgstr "немає наступного заголовка рівня 4"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 4"
@@ -1326,7 +1343,7 @@ msgstr "переходить до попереднього заголовка р
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 4"
-msgstr "Немає попереднього заголовка рівня 4"
+msgstr "немає попереднього заголовка рівня 4"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 5"
@@ -1334,7 +1351,7 @@ msgstr "переходить до наступного заголовка рів
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 5"
-msgstr "Немає наступного заголовка рівня 5"
+msgstr "немає наступного заголовка рівня 5"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 5"
@@ -1342,7 +1359,7 @@ msgstr "переходить до попереднього заголовка р
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 5"
-msgstr "Немає попереднього заголовка рівня 5"
+msgstr "немає попереднього заголовка рівня 5"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 6"
@@ -1350,7 +1367,7 @@ msgstr "переходить до наступного заголовка рів
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 6"
-msgstr "Немає наступного заголовка рівня 6"
+msgstr "немає наступного заголовка рівня 6"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 6"
@@ -1358,7 +1375,7 @@ msgstr "переходить до попереднього заголовка р
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 6"
-msgstr "Немає попереднього заголовка рівня 6"
+msgstr "немає попереднього заголовка рівня 6"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next table"
@@ -1366,7 +1383,7 @@ msgstr "переходить до наступної таблиці"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next table"
-msgstr "Немає наступної таблиці"
+msgstr "немає наступної таблиці"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous table"
@@ -1374,63 +1391,63 @@ msgstr "переходить до попередньої таблиці"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous table"
-msgstr "Немає попередньої таблиці"
+msgstr "немає попередньої таблиці"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next link"
-msgstr "Переходить до наступного посилання"
+msgstr "переходить до наступного посилання"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next link"
-msgstr "Немає наступного посилання"
+msgstr "немає наступного посилання"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous link"
-msgstr "Переходить до попереднього посилання"
+msgstr "переходить до попереднього посилання"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous link"
-msgstr "Немає попереднього посилання"
+msgstr "немає попереднього посилання"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next visited link"
-msgstr "Переходить до наступного відвіданого посилання"
+msgstr "переходить до наступного відвіданого посилання"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next visited link"
-msgstr "Немає наступного відвіданого посилання"
+msgstr "немає наступного відвіданого посилання"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous visited link"
-msgstr "Переходить до попереднього відвіданого посилання"
+msgstr "переходить до попереднього відвіданого посилання"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous visited link"
-msgstr "Немає попереднього відвіданого посилання"
+msgstr "немає попереднього відвіданого посилання"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next unvisited link"
-msgstr "Переходить до наступного невідвіданого посилання"
+msgstr "переходить до наступного невідвіданого посилання"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next unvisited link"
-msgstr "Немає наступного невідвіданого посилання"
+msgstr "немає наступного невідвіданого посилання"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous unvisited link"
-msgstr "Переходить до попереднього невідвіданого посилання"
+msgstr "переходить до попереднього невідвіданого посилання"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous unvisited link"
-msgstr "Немає попереднього невідвіданого посилання"
+msgstr "немає попереднього невідвіданого посилання"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next form field"
-msgstr "Переходить до наступного поля форми"
+msgstr "переходить до наступного поля форми"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next form field"
-msgstr "Немає наступного поля форми"
+msgstr "немає наступного поля форми"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous form field"
@@ -1438,7 +1455,7 @@ msgstr "переходить до попереднього поля форми"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous form field"
-msgstr "Немає попереднього поля форми"
+msgstr "немає попереднього поля форми"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next list"
@@ -1446,239 +1463,239 @@ msgstr "переходить до наступного списку"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next list"
-msgstr "Немає наступного списку"
+msgstr "немає наступного списку"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous list"
-msgstr "Переходить до попереднього списку"
+msgstr "переходить до попереднього списку"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous list"
-msgstr "Немає попереднього списку"
+msgstr "немає попереднього списку"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next list item"
-msgstr "Переходить до наступного елемента списку"
+msgstr "переходить до наступного елемента списку"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next list item"
-msgstr "Немає наступного елемента списку"
+msgstr "немає наступного елемента списку"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous list item"
-msgstr "Переходить до попереднього елемента списку"
+msgstr "переходить до попереднього елемента списку"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous list item"
-msgstr "Немає попереднього елемента списку"
+msgstr "немає попереднього елемента списку"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next button"
-msgstr "Переходить до наступної кнопки"
+msgstr "переходить до наступної кнопки"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next button"
-msgstr "Немає наступної кнопки"
+msgstr "немає наступної кнопки"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous button"
-msgstr "Переходить до попередньої кнопки"
+msgstr "переходить до попередньої кнопки"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous button"
-msgstr "Немає попередньої кнопки"
+msgstr "немає попередньої кнопки"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next edit field"
-msgstr "Переходить до наступного поля редактора"
+msgstr "переходить до наступного поля редактора"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next edit field"
-msgstr "Немає наступного поля редактора"
+msgstr "немає наступного поля редагування"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous edit field"
-msgstr "Переходить до попереднього поля редактора"
+msgstr "переходить до попереднього поля редактора"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous edit field"
-msgstr "Немає попереднього поля редактора"
+msgstr "немає попереднього поля редактора"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next frame"
-msgstr "Переходить до наступного фрейму"
+msgstr "переходить до наступного фрейму"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next frame"
-msgstr "Немає наступного фрейму"
+msgstr "немає наступного фрейму"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous frame"
-msgstr "Переходить до попереднього фрейму"
+msgstr "переходить до попереднього фрейму"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous frame"
-msgstr "Немає попереднього фрейму"
+msgstr "немає попереднього фрейму"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next separator"
-msgstr "Переходить до наступного роздільника"
+msgstr "переходить до наступного роздільника"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next separator"
-msgstr "Немає наступного роздільника"
+msgstr "немає наступного роздільника"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous separator"
-msgstr "Переходить до попереднього роздільника"
+msgstr "переходить до попереднього роздільника"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous separator"
-msgstr "Немає попереднього роздільника"
+msgstr "немає попереднього роздільника"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next radio button"
-msgstr "Переходить до наступної радіокнопки"
+msgstr "переходить до наступної радіокнопки"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next radio button"
-msgstr "Немає наступної радіокнопки"
+msgstr "немає наступної радіокнопки"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous radio button"
-msgstr "Переходить до попередньої радіокнопки"
+msgstr "переходить до попередньої радіокнопки"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous radio button"
-msgstr "Немає попередньої радіокнопки"
+msgstr "немає попередньої радіокнопки"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next combo box"
-msgstr "Переходить до наступного комбінованого списку"
+msgstr "переходить до наступного комбінованого списку"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next combo box"
-msgstr "Немає наступного комбінованого списку"
+msgstr "немає наступного комбінованого списку"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous combo box"
-msgstr "Переходить до попереднього комбінованого списку"
+msgstr "переходить до попереднього комбінованого списку"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous combo box"
-msgstr "Немає попереднього комбінованого списку"
+msgstr "немає попереднього комбінованого списку"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next check box"
-msgstr "Переходить до наступного прапорця"
+msgstr "переходить до наступного прапорця"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next check box"
-msgstr "Немає наступного прапорця"
+msgstr "немає наступного прапорця"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous check box"
-msgstr "Переходить до попереднього прапорця"
+msgstr "переходить до попереднього прапорця"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous check box"
-msgstr "Немає попереднього прапорця"
+msgstr "немає попереднього прапорця"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next graphic"
-msgstr "Переходить до наступної графіки"
+msgstr "переходить до наступної графіки"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next graphic"
-msgstr "Немає наступної графіки"
+msgstr "немає наступної графіки"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous graphic"
-msgstr "Переходить до попередньої графіки"
+msgstr "переходить до попередньої графіки"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous graphic"
-msgstr "Немає попередньої графіки"
+msgstr "немає попередньої графіки"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next block quote"
-msgstr "Переходить до наступної цитати"
+msgstr "переходить до наступної цитати"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next block quote"
-msgstr "Немає наступної цитати"
+msgstr "немає наступної цитати"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous block quote"
-msgstr "Переходить до попередньої цитати"
+msgstr "переходить до попередньої цитати"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous block quote"
-msgstr "Немає попередньої цитати"
+msgstr "немає попередньої цитати"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "skips forward past a block of links"
-msgstr "Переходить на текст після групи посилань"
+msgstr "переходить на текст після блоку посилань"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no more text after a block of links"
-msgstr "Більше немає тексту після блоку посилань"
+msgstr "більше немає тексту після блоку посилань"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "skips backward past a block of links"
-msgstr "Переходить на текст перед блоком посилань"
+msgstr "переходить на текст перед блоком посилань"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no more text before a block of links"
-msgstr "Більше немає тексту перед блоком посилань"
+msgstr "більше немає тексту перед блоком посилань"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next landmark"
-msgstr "Переходить до наступного орієнтира"
+msgstr "переходить до наступного орієнтира"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next landmark"
-msgstr "Немає наступного орієнтира"
+msgstr "немає наступного орієнтира"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous landmark"
-msgstr "Переходить до попереднього орієнтира"
+msgstr "переходить до попереднього орієнтира"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous landmark"
-msgstr "Немає попереднього орієнтира"
+msgstr "немає попереднього орієнтира"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next embedded object"
-msgstr "Переходить до наступного вбудованого об'єкта"
+msgstr "переходить до наступного вбудованого об'єкта"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next embedded object"
-msgstr "Немає наступного вбудованого об'єкта"
+msgstr "немає наступного вбудованого об'єкта"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous embedded object"
-msgstr "Переходить до попереднього вбудованого об'єкта"
+msgstr "переходить до попереднього вбудованого об'єкта"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous embedded object"
-msgstr "Немає попереднього вбудованого об'єкта"
+msgstr "немає попереднього вбудованого об'єкта"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next annotation"
-msgstr "Переходить до наступної анотації"
+msgstr "переходить до наступної анотації"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next annotation"
-msgstr "Немає наступної анотації"
+msgstr "немає наступної анотації"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous annotation"
-msgstr "Переходить до попередньої анотації"
+msgstr "переходить до попередньої анотації"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous annotation"
-msgstr "Немає попередньої анотації"
+msgstr "немає попередньої анотації"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next error"
@@ -1695,6 +1712,38 @@ msgstr "переходить до попередньої помилки"
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous error"
 msgstr "немає попередньої помилки"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next article"
+msgstr "переходить до наступної статті"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next article"
+msgstr "немає наступної статті"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous article"
+msgstr "переходить до попередньої статті"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous article"
+msgstr "немає попередньої статті"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next grouping"
+msgstr "переходить до наступного групування"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next grouping"
+msgstr "немає наступного групування"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous grouping"
+msgstr "переходить до попереднього групування"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous grouping"
+msgstr "немає попереднього групування"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -1722,8 +1771,6 @@ msgstr "&Кнопки"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings panel.
 msgid "Lan&dmarks"
 msgstr "Оріє&нтири"
 
@@ -1751,22 +1798,13 @@ msgstr "&Активувати"
 msgid "&Move to"
 msgstr "&Перейти до"
 
-#, python-format
-msgid "%s landmark"
-msgstr "%s орієнтир"
-
-#. Translators: This is brailled to indicate a landmark (example output: lmk main).
-#, python-format
-msgid "lmk %s"
-msgstr "орі %s"
-
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
 msgstr "Немає детального опису"
 
 #. Translators: the description for the activateLongDescription script on browseMode documents.
 msgid "Shows the long description at this position if one is found."
-msgstr "Відображає повний опис у поточній позиції, якщо його буде знайдено"
+msgstr "Відображає повний опис у поточній позиції, якщо його буде знайдено."
 
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
@@ -1787,45 +1825,44 @@ msgstr "Нижній"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
-msgstr ""
-"Переходить в кінець елемента-контейнера, наприклад, списку або таблиці."
+msgstr "Переходить в кінець елемента-контейнера, наприклад, списку або таблиці"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
-msgstr "Нічого"
+msgstr "нічого"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "some"
-msgstr "Деякі"
+msgstr "деякі"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "most"
-msgstr "Більшість"
+msgstr "більшість"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "all"
-msgstr "Усі"
+msgstr "усі"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "character"
-msgstr "Символ"
+msgstr "символ"
 
 #. Translators: An option for when a symbol itself will be sent to the synthesizer.
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
 msgctxt "symbolPreserve"
 msgid "never"
-msgstr "Ніколи"
+msgstr "ніколи"
 
 #. Translators: An option for when a symbol itself will be sent to the synthesizer.
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
 msgctxt "symbolPreserve"
 msgid "always"
-msgstr "Завжди"
+msgstr "завжди"
 
 #. Translators: An option for when a symbol itself will be sent to the synthesizer.
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
@@ -2040,146 +2077,146 @@ msgstr "коричнево-жовтий"
 # Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 #. Translators: The word for window of a program such as document window.
 msgid "window"
-msgstr "Вікно"
+msgstr "вікно"
 
 #. Translators: Used to identify title bar of a program.
 msgid "title bar"
-msgstr "Заголовок вікна"
+msgstr "заголовок вікна"
 
 #. Translators: The word used for pane such as desktop pane.
 msgid "pane"
-msgstr "Область"
+msgstr "область"
 
 #. Translators: The word used to denote a dialog box such as open dialog.
 msgid "dialog"
-msgstr "Діалог"
+msgstr "діалог"
 
 #. Translators: The text used to identify check boxes such as select check box.
 msgid "check box"
-msgstr "Прапорець"
+msgstr "прапорець"
 
 #. Translators: The text used to identify radio buttons such as yes or no radio button.
 msgid "radio button"
-msgstr "Радіокнопка"
+msgstr "радіокнопка"
 
 #. Translators: The word used to identify a static text such as dialog text.
 msgid "text"
-msgstr "Текст"
+msgstr "текст"
 
 #. Translators: The word used to identify edit fields such as subject edit field.
 msgid "edit"
-msgstr "Редактор"
+msgstr "редактор"
 
 #. Translators: The word used to identify a button such as OK button.
 msgid "button"
-msgstr "Кнопка"
+msgstr "кнопка"
 
 #. Translators: Text used to identify menu bar of a program.
 msgid "menu bar"
-msgstr "Рядок меню"
+msgstr "рядок меню"
 
 #. Translators: Used to identify a menu item such as an item in file menu.
 msgid "menu item"
-msgstr "Елемент меню"
+msgstr "елемент меню"
 
 #. Translators: The word used for menus such as edit menu.
 #. Translators: Identifies a menu such as file menu.
 msgid "menu"
-msgstr "Меню"
+msgstr "меню"
 
 #. Translators: Used to identify combo boxes such as file type combo box.
 msgid "combo box"
-msgstr "Комбінованый список"
+msgstr "комбінованый список"
 
 #. Translators: The word used for lists such as folder list.
 msgid "list"
-msgstr "Список"
+msgstr "список"
 
 #. Translators: Used to identify a list item such as email list items.
 msgid "list item"
-msgstr "Елемент списку"
+msgstr "елемент списку"
 
 #. Translators: The word used to identify graphics such as webpage graphics.
 msgid "graphic"
-msgstr "Графіка"
+msgstr "графіка"
 
 #. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
 msgid "help balloon"
-msgstr "Виринаюче системне повідомлення"
+msgstr "виринаюче системне повідомлення"
 
 #. Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
 msgid "tool tip"
-msgstr "Підказка"
+msgstr "підказка"
 
 #. Translators: Identifies a link in webpage documents.
 msgid "link"
-msgstr "Посилання"
+msgstr "посилання"
 
 #. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
 msgid "tree view"
-msgstr "Дерево"
+msgstr "дерево"
 
 #. Translators: Identifies a tree view item.
 msgid "tree view item"
-msgstr "Елемент дерева"
+msgstr "елемент дерева"
 
 #. Translators: The word presented for tabs in a tab enabled window.
 msgctxt "controlType"
 msgid "tab"
-msgstr "Вкладка"
+msgstr "вкладка"
 
 #. Translators: Identifies a tab control such as webpage tabs in web browsers.
 msgid "tab control"
-msgstr "Вкладка"
+msgstr "вкладка"
 
 #. Translators: Identifies a slider such as volume slider.
 msgid "slider"
-msgstr "Повзунок"
+msgstr "повзунок"
 
 #. Translators: Identifies a progress bar such as NvDA update progress.
 msgid "progress bar"
-msgstr "Індикатор виконання"
+msgstr "індикатор виконання"
 
 #. Translators: Identifies a scroll bar.
 msgid "scroll bar"
-msgstr "Прокрутка"
+msgstr "прокрутка"
 
 #. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a document).
 msgid "status bar"
-msgstr "Рядок стану"
+msgstr "рядок стану"
 
 #. Translators: Identifies a table such as ones used in various websites.
 msgid "table"
-msgstr "Таблиця"
+msgstr "таблиця"
 
 #. Translators: Identifies a cell in a table.
 msgid "cell"
-msgstr "Комірка"
+msgstr "комірка"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
 msgid "column"
-msgstr "Стовпчик"
+msgstr "стовпчик"
 
 #. Translators: Identifies a row (a group of horizontal cells in a table).
 msgid "row"
-msgstr "Рядок"
+msgstr "рядок"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
 #. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
-msgstr "Фрейм"
+msgstr "фрейм"
 
 #. Translators: Identifies a tool bar.
 msgid "tool bar"
-msgstr "Панель інструментів"
+msgstr "панель інструментів"
 
 #. Translators: Identifies a column header in tables and spreadsheets.
 msgid "column header"
-msgstr "Заголовок стовпчика"
+msgstr "заголовок стовпчика"
 
 #. Translators: Identifies a row header in tables and spreadsheets.
 msgid "row header"
-msgstr "Заголовок рядка"
+msgstr "заголовок рядка"
 
 #. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
 msgid "drop down button"
@@ -2187,43 +2224,43 @@ msgstr "кнопка з випадаючим меню"
 
 #. Translators: Identifies an element.
 msgid "clock"
-msgstr "Годинник"
+msgstr "годинник"
 
 #. Translators: Identifies a separator (a horizontal line drawn on the screen).
 msgid "separator"
-msgstr "Роздільник"
+msgstr "роздільник"
 
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
-msgstr "Форма"
+msgstr "форма"
 
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
-msgstr "Заголовок"
+msgstr "заголовок"
 
 #. Translators: Identifies a heading level.
 msgid "heading 1"
-msgstr "Заголовок 1"
+msgstr "заголовок 1"
 
 #. Translators: Identifies a heading level.
 msgid "heading 2"
-msgstr "Заголовок 2"
+msgstr "заголовок 2"
 
 #. Translators: Identifies a heading level.
 msgid "heading 3"
-msgstr "Заголовок 3"
+msgstr "заголовок 3"
 
 #. Translators: Identifies a heading level.
 msgid "heading 4"
-msgstr "Заголовок 4"
+msgstr "заголовок 4"
 
 #. Translators: Identifies a heading level.
 msgid "heading 5"
-msgstr "Заголовок 5"
+msgstr "заголовок 5"
 
 #. Translators: Identifies a heading level.
 msgid "heading 6"
-msgstr "Заголовок 6"
+msgstr "заголовок 6"
 
 #. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
 msgid "paragraph"
@@ -2233,11 +2270,11 @@ msgstr "абзац"
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
 #. See http://en.wikipedia.org/wiki/Block_quotation
 msgid "block quote"
-msgstr "Цитата"
+msgstr "цитата"
 
 #. Translators: Identifies a table header (a short text at the start of a table which describes what the table is about).
 msgid "table header"
-msgstr "Заголовок таблиці"
+msgstr "заголовок таблиці"
 
 #. Translators: Identifies a table body (the main body of the table).
 msgid "table body"
@@ -2245,23 +2282,23 @@ msgstr "тіло таблиці"
 
 #. Translators: Identifies a table footer (text placed at the end of the table).
 msgid "table footer"
-msgstr "Нижній колонтитул таблиці"
+msgstr "нижній колонтитул таблиці"
 
 #. Translators: Identifies a document (for example, a webpage document).
 msgid "document"
-msgstr "Документ"
+msgstr "документ"
 
 #. Translators: Identifies an animation in a document or a webpage.
 msgid "animation"
-msgstr "Анімація"
+msgstr "анімація"
 
 #. Translators: Identifies an application in webpages.
 msgid "application"
-msgstr "Додаток"
+msgstr "додаток"
 
 #. Translators: Identifies a box element.
 msgid "box"
-msgstr "Блок"
+msgstr "блок"
 
 #. Translators: Identifies a grouping (a number of related items grouped together, such as related options in dialogs).
 msgid "grouping"
@@ -2269,117 +2306,117 @@ msgstr "групування"
 
 #. Translators: Identifies a property page such as drive properties dialog.
 msgid "property page"
-msgstr "Сторінка властивостей"
+msgstr "сторінка властивостей"
 
 #. Translators: Identifies a canvas element on webpages (a box with some background color with some text drawn on the box, like a canvas).
 msgid "canvas"
-msgstr "Підкладка"
+msgstr "підкладка"
 
 #. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
 msgid "caption"
-msgstr "Підпис"
+msgstr "підпис"
 
 #. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's name).
 msgid "check menu item"
-msgstr "Елемент меню позначено"
+msgstr "елемент меню позначено"
 
 #. Translators: Identifies a data edit field.
 msgid "date edit"
-msgstr "Редактор дати"
+msgstr "редактор дати"
 
 #. Translators: Identifies an icon.
 msgid "icon"
-msgstr "Іконка"
+msgstr "іконка"
 
 #. Translators: Identifies a directory pane.
 msgid "directory pane"
-msgstr "Область папок"
+msgstr "область папок"
 
 #. Translators: Identifies an embedded object such as flash content on webpages.
 msgid "embedded object"
-msgstr "Вбудований об'єкт"
+msgstr "вбудований об'єкт"
 
 #. Translators: Identifies an end note.
 msgid "end note"
-msgstr "Пояснення"
+msgstr "пояснення"
 
 #. Translators: Identifies a footer (usually text).
 msgid "footer"
-msgstr "Нижній колонтитул"
+msgstr "нижній колонтитул"
 
 #. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
 msgid "foot note"
-msgstr "Зноска"
+msgstr "виноска"
 
 #. Translators: Reported for an object which is a glass pane; i.e.
 #. a pane that is guaranteed to be on top of all panes beneath it.
 msgid "glass pane"
-msgstr "Дзеркальна область"
+msgstr "дзеркальна область"
 
 #. Translators: Identifies a header (usually text at top of documents or on tops of pages).
 msgid "header"
-msgstr "Верхній колонтитул"
+msgstr "верхній колонтитул"
 
 #. Translators: Identifies an image map (a type of graphical link).
 msgid "image map"
-msgstr "Малюнок"
+msgstr "малюнок"
 
 #. Translators: Identifies an input window.
 msgid "input window"
-msgstr "Вікно введення"
+msgstr "вікно введення"
 
 #. Translators: Identifies a label.
 msgid "label"
-msgstr "Ярлик"
+msgstr "ярлик"
 
 #. Translators: Identifies a note field.
 msgid "note"
-msgstr "Нотатка"
+msgstr "нотатка"
 
 #. Translators: Identifies a page.
 msgid "page"
-msgstr "Сторінка"
+msgstr "сторінка"
 
 #. Translators: Identifies a radio menu item.
 msgid "radio menu item"
-msgstr "Елемент радіоменю"
+msgstr "елемент радіоменю"
 
 #. Translators: Identifies a layered pane.
 msgid "layered pane"
-msgstr "Багатошарова область"
+msgstr "багатошарова область"
 
 #. Translators: Identifies a redundant object.
 msgid "redundant object"
-msgstr "Збитковий об'єкт"
+msgstr "збитковий об'єкт"
 
 #. Translators: Identifies a root pane.
 msgid "root pane"
-msgstr "Коренева область"
+msgstr "коренева область"
 
 #. Translators: May be reported for an editable text object in a toolbar.
 #. This is deprecated and is not often (if ever) used.
 msgid "edit bar"
-msgstr "Рядок редагування"
+msgstr "рядок редагування"
 
 #. Translators: Identifies a terminal window such as command prompt.
 msgid "terminal"
-msgstr "Термінал"
+msgstr "термінал"
 
 #. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in addition to text; encountered on webpages and NvDA log viewer).
 msgid "rich edit"
-msgstr "Багаторядковий редактор"
+msgstr "багаторядковий редактор"
 
 #. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
 msgid "ruler"
-msgstr "Лінійка"
+msgstr "лінійка"
 
 #. Translators: Identifies a scroll pane.
 msgid "scroll pane"
-msgstr "Область прокрутки"
+msgstr "область прокрутки"
 
 #. Translators: Identifies a section of text.
 msgid "section"
-msgstr "Секція"
+msgstr "секція"
 
 #. Translators: Identifies a shape.
 msgid "shape"
@@ -2387,54 +2424,54 @@ msgstr "фігура"
 
 #. Translators: Identifies a split pane.
 msgid "split pane"
-msgstr "Область роздільника"
+msgstr "область роздільника"
 
 #. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
 #. which represents the portion of the entire data that the user can see.
 #. As the user manipulates the scroll bars, the contents of the view port can change.
 msgid "view port"
-msgstr "Вікно огляду"
+msgstr "вікно огляду"
 
 #. Translators: Reported for an object that forms part of a menu system
 #. but which can be undocked from or torn off the menu system
 #. to exist as a separate window.
 msgid "tear off menu"
-msgstr "Розривне меню"
+msgstr "розривне меню"
 
 #. Translators: Identifies a text frame (a frame window which contains text).
 msgid "text frame"
-msgstr "Текстовий фрейм"
+msgstr "текстовий фрейм"
 
 #. Translators: Identifies a toggle button (a button used to toggle something).
 msgid "toggle button"
-msgstr "Кнопка-перемикач"
+msgstr "кнопка-перемикач"
 
 msgid "border"
-msgstr "Рамка"
+msgstr "рамка"
 
 #. Translators: Identifies a caret object.
 msgid "caret"
-msgstr "Знак вставки"
+msgstr "знак вставки"
 
 #. Translators: Identifies a character field (should not be confused with edit fields).
 msgid "character"
-msgstr "Символ"
+msgstr "символ"
 
 #. Translators: Identifies a chart (commonly seen on some websites and in some Office documents).
 msgid "chart"
-msgstr "Схема"
+msgstr "схема"
 
 #. Translators: Identifies a cursor object.
 msgid "cursor"
-msgstr "Курсор"
+msgstr "курсор"
 
 #. Translators: Identifies a diagram (seen on some websites and on Office documents).
 msgid "diagram"
-msgstr "Діаграма"
+msgstr "діаграма"
 
 #. Translators: Identifies a dial object.
 msgid "dial"
-msgstr "Набірний диск"
+msgstr "набірний диск"
 
 #. Translators: Identifies a drop list.
 msgid "drop list"
@@ -2442,11 +2479,11 @@ msgstr "випадаючий список"
 
 #. Translators: Identifies a split button (a control which performs different actions when different parts are clicked).
 msgid "split button"
-msgstr "Кнопка-роздільник"
+msgstr "кнопка-роздільник"
 
 #. Translators: Identifies a menu button (a button which opens a menu of items).
 msgid "menu button"
-msgstr "Кнопка меню"
+msgstr "кнопка меню"
 
 #. Translators: Reported for a button which expands a grid when it is pressed.
 msgid "drop down button grid"
@@ -2454,15 +2491,15 @@ msgstr "кнопка комірки з випадаючим меню"
 
 #. Translators: Identifies mathematical content.
 msgid "math"
-msgstr "Математичний вираз"
+msgstr "математичний вираз"
 
 #. Translators: Identifies a grip control.
 msgid "grip"
-msgstr "Комірка"
+msgstr "комірка"
 
 #. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as assigning shortcut for icons on the desktop).
 msgid "hot key field"
-msgstr "Поле гарячої клавіші"
+msgstr "поле гарячої клавіші"
 
 #. Translators: Identifies an indicator control.
 msgid "indicator"
@@ -2470,11 +2507,11 @@ msgstr "індикатор"
 
 #. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
 msgid "spin button"
-msgstr "Кнопка прокрутки"
+msgstr "кнопка прокрутки"
 
 #. Translators: Identifies a sound clip on websites.
 msgid "sound"
-msgstr "Звук"
+msgstr "звук"
 
 #. Translators: Identifies a whitespace.
 msgid "white space"
@@ -2482,7 +2519,7 @@ msgstr "чистий простір"
 
 #. Translators: Identifies a tree view button.
 msgid "tree view button"
-msgstr "Кнопка дерева"
+msgstr "кнопка дерева"
 
 #. Translators: Identifies an IP address (an IP address field element).
 msgid "IP address"
@@ -2490,116 +2527,116 @@ msgstr "IP-адреса"
 
 #. Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts for programs).
 msgid "desktop icon"
-msgstr "Іконка робочого столу"
+msgstr "іконка робочого столу"
 
 #. Translators: Identifies an alert message such as file download alert in Internet explorer 9 and above.
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
-msgstr "Попередження"
+msgstr "попередження"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
-msgstr "Область робочого столу"
+msgstr "область робочого столу"
 
 #. Translators: Identifies an option pane.
 msgid "option pane"
-msgstr "Область параметра"
+msgstr "область параметра"
 
 #. Translators: Identifies a color chooser.
 msgid "color chooser"
-msgstr "Вибір кольору"
+msgstr "вибір кольору"
 
 #. Translators: Identifies a file chooser (to select a file or groups of files from a list).
 msgid "file chooser"
-msgstr "Вибір файла"
+msgstr "вибір файла"
 
 msgid "filler"
-msgstr "Заповнювач"
+msgstr "заповнювач"
 
 #. Translators: Identifies a panel control for grouping related options.
 msgid "panel"
-msgstr "Панель"
+msgstr "панель"
 
 #. Translators: Identifies a password field (a protected edit field for entering passwords such as when logging into web-based email sites).
 msgid "password edit"
-msgstr "Редактор пароля"
+msgstr "редактор пароля"
 
 #. Translators: Identifies a font chooser.
 msgid "font chooser"
-msgstr "Вибір шрифта"
+msgstr "вибір шрифта"
 
 msgid "line"
-msgstr "Рядок"
+msgstr "рядок"
 
 #. Translators: Identifies a font name.
 msgid "font name"
-msgstr "Назва шрифта"
+msgstr "назва шрифта"
 
 #. Translators: Identifies font size.
 msgid "font size"
-msgstr "Розмір шрифта"
+msgstr "розмір шрифта"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported when text is bolded.
 msgid "bold"
-msgstr "Напівжирний"
+msgstr "напівжирний"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported when text is italicized.
 msgid "italic"
-msgstr "Курсив"
+msgstr "курсив"
 
 #. Translators: Describes text formatting.
 msgid "underline"
-msgstr "Підкреслення"
+msgstr "підкреслення"
 
 #. Translators: Describes text formatting.
 msgid "foreground color"
-msgstr "Колір переднього фону"
+msgstr "колір переднього фону"
 
 #. Translators: Describes text formatting.
 msgid "background color"
-msgstr "Колір заднього фону"
+msgstr "колір заднього фону"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
 msgid "superscript"
-msgstr "Надрядковий"
+msgstr "надрядковий"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
 msgid "subscript"
-msgstr "Підрядковий"
+msgstr "підрядковий"
 
 #. Translators: Describes style of text.
 #. Translators: a Microsoft Word revision type (style change)
 msgid "style"
-msgstr "Стиль"
+msgstr "стиль"
 
 #. Translators: Describes text formatting.
 msgid "indent"
-msgstr "Відступ"
+msgstr "відступ"
 
 #. Translators: Describes text formatting.
 msgid "alignment"
-msgstr "Вирівнювання"
+msgstr "вирівнювання"
 
 #. Translators: Identifies a data grid control (a grid which displays data).
 msgid "data grid"
-msgstr "Сітка даних"
+msgstr "сітка даних"
 
 msgid "data item"
-msgstr "Елемент даних"
+msgstr "елемент даних"
 
 msgid "header item"
-msgstr "Заголовок елемента"
+msgstr "заголовок елемента"
 
 #. Translators: Identifies a thumb control (a button-like control for changing options).
 msgid "thumb control"
-msgstr "Бігунець лінійки прокрутки"
+msgstr "бігунець лінійки прокрутки"
 
 msgid "calendar"
-msgstr "Календар"
+msgstr "календар"
 
 msgid "video"
 msgstr "відео"
@@ -2614,76 +2651,92 @@ msgstr "елемент діаграми"
 #. Translators: Identifies deleted content.
 #. Translators: Reported when text is marked as having been deleted
 msgid "deleted"
-msgstr "Видалено"
+msgstr "видалено"
 
 #. Translators: Identifies inserted content.
 #. Translators: Reported when text is marked as having been inserted
 msgid "inserted"
-msgstr "Вставлено"
+msgstr "вставлено"
+
+#. Translators: Identifies a landmark.
+msgid "landmark"
+msgstr "орієнтир"
+
+#. Translators: Identifies an article.
+msgid "article"
+msgstr "стаття"
+
+#. Translators: Identifies a region.
+msgid "region"
+msgstr "регіон"
+
+#. Translators: Identifies a figure (commonly seen on some websites).
+msgid "figure"
+msgstr "фігура"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
-msgstr "Недоступно"
+msgstr "недоступно"
 
 #. Translators: This is presented when a control has focus.
 msgid "focused"
-msgstr "Активно"
+msgstr "у фокусі"
 
 #. Translators: This is presented when the control is selected.
 msgid "selected"
-msgstr "Виділено"
+msgstr "виділено"
 
 #. Translators: This is presented when a document is busy.
 msgid "busy"
-msgstr "Зайнято"
+msgstr "зайнято"
 
 #. Translators: This is presented when a button is pressed.
 msgid "pressed"
-msgstr "Натиснуто"
+msgstr "натиснуто"
 
 #. Translators: This is presented when a check box is checked.
 msgid "checked"
-msgstr "Позначено"
+msgstr "позначено"
 
 #. Translators: This is presented when a three state check box is half checked.
 msgid "half checked"
-msgstr "Частково позначено"
+msgstr "частково позначено"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
-msgstr "Лише для читання"
+msgstr "лише для читання"
 
 #. Translators: This is presented when a tree view or submenu item is expanded.
 msgid "expanded"
-msgstr "Розгорнуто"
+msgstr "розгорнуто"
 
 #. Translators: This is presented when a tree view or submenu is collapsed.
 msgid "collapsed"
-msgstr "Згорнуто"
+msgstr "згорнуто"
 
 #. Translators: This is presented when a control or a document becomes invisible.
 msgid "invisible"
-msgstr "Невидимо"
+msgstr "невидимо"
 
 #. Translators: This is presented when a visited link is encountered.
 msgid "visited"
-msgstr "Відвідане"
+msgstr "відвідане"
 
 #. Translators: This is presented when a link is encountered.
 msgid "linked"
-msgstr "Пов'язане"
+msgstr "пов'язане"
 
 #. Translators: This is presented when the control menu item has a submenu.
 msgid "subMenu"
-msgstr "Підменю"
+msgstr "підменю"
 
 #. Translators: This is presented when a protected control or a document is encountered.
 msgid "protected"
-msgstr "Захищено"
+msgstr "захищено"
 
 #. Translators: This is presented when a required form field is encountered.
 msgid "required"
-msgstr "Необхідно"
+msgstr "необхідно"
 
 #. Translators: Reported when an object no longer exists in the user interface;
 #. i.e. it is dead and is no longer usable.
@@ -2692,29 +2745,29 @@ msgstr "більше неіснує"
 
 #. Translators: This is presented when an invalid entry has been made.
 msgid "invalid entry"
-msgstr "Неправильне введення"
+msgstr "неправильне введення"
 
 msgid "modal"
-msgstr "Модальний"
+msgstr "модальний"
 
 #. Translators: This is presented when a field supports auto completion of entered text such as email address field in Microsoft Outlook.
 msgid "has auto complete"
-msgstr "Містить автоматичне заповнення"
+msgstr "містить автоматичне заповнення"
 
 #. Translators: This is presented when an edit field allows typing multiple lines of text such as comment fields on websites.
 msgid "multi line"
-msgstr "Багаторядковий"
+msgstr "багаторядковий"
 
 msgid "iconified"
-msgstr "Означений"
+msgstr "означений"
 
 #. Translators: Presented when the current control is located off screen.
 msgid "off screen"
-msgstr "Екранне"
+msgstr "екранне"
 
 #. Translators: Presented when the control allows selection such as text fields.
 msgid "selectable"
-msgstr "Доступне для виділення"
+msgstr "доступне для виділення"
 
 #. Translators: Presented when a control can be moved to using system focus.
 msgid "focusable"
@@ -2722,54 +2775,54 @@ msgstr "можливий фокус"
 
 #. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
 msgid "clickable"
-msgstr "За кліком"
+msgstr "за кліком"
 
 msgid "editable"
 msgstr "можливо редагувати"
 
 msgid "checkable"
-msgstr "Позначуваний"
+msgstr "позначуваний"
 
 msgid "draggable"
-msgstr "Можливо перетягувати"
+msgstr "можливо перетягувати"
 
 msgid "dragging"
-msgstr "Перетягування"
+msgstr "перетягування"
 
 #. Translators: Reported where an object which is being dragged can be dropped.
 #. This is only reported for objects that support accessible drag and drop.
 msgid "drop target"
-msgstr "Кінцевий пункт перетягування"
+msgstr "кінцевий пункт перетягування"
 
 msgid "sorted"
-msgstr "Сортувати"
+msgstr "сортувати"
 
 msgid "sorted ascending"
-msgstr "Сортувати за зростанням"
+msgstr "сортувати за зростанням"
 
 msgid "sorted descending"
-msgstr "Сортувати за спаданням"
+msgstr "сортувати за спаданням"
 
 #. Translators: a state that denotes that an object (usually a graphic) has a long description.
 msgid "has long description"
-msgstr "Містить детальний опис"
+msgstr "містить детальний опис"
 
 #. Translators: a state that denotes that an object is pinned in its current location
 msgid "pinned"
-msgstr "Прикріплено"
+msgstr "прикріплено"
 
 #. Translators: a state that denotes the existance of a formula on a spreadsheet cell
 msgid "has formula"
-msgstr "Містить формулу"
+msgstr "містить формулу"
 
 #. Translators: a state that denotes the existance of a comment.
 #. Translators: Reported when text contains a comment.
 msgid "has comment"
-msgstr "Містить коментар"
+msgstr "містить коментар"
 
 #. Translators: a state that denotes that the object is covered partially or fully by another object
 msgid "obscured"
-msgstr "Перекрито"
+msgstr "перекрито"
 
 #. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the allocated/available space
 msgid "cropped"
@@ -2777,15 +2830,15 @@ msgstr "обрізано"
 
 #. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
 msgid "overflowing"
-msgstr "Переповнено"
+msgstr "переповнено"
 
 #. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
 msgid "unlocked"
-msgstr "Розбллоковано"
+msgstr "розблоковано"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
-msgstr "Не виділено"
+msgstr "не виділено"
 
 #. Translators: This is presented when a button is not pressed.
 msgid "not pressed"
@@ -2793,12 +2846,12 @@ msgstr "не натиснуто"
 
 #. Translators: This is presented when a checkbox is not checked.
 msgid "not checked"
-msgstr "Не позначено"
+msgstr "не позначено"
 
 #. Translators: This is presented when drag and drop is finished.
 #. This is only reported for objects which support accessible drag and drop.
 msgid "done dragging"
-msgstr "Перетягування завершено"
+msgstr "перетягування завершено"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -2830,7 +2883,7 @@ msgstr "поточний час"
 #. %s will be replaced with the full identifier of the negated state (e.g. selected).
 #, python-format
 msgid "not %s"
-msgstr "Не %s"
+msgstr "не %s"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -2850,11 +2903,11 @@ msgid ""
 "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
-"вВаш файл із прив'язкою жестів містить помилки.\n"
+"Ваш файл із прив'язкою жестів містить помилки.\n"
 "Більше інформації про них можна знайти у журнальному файлі."
 
 msgid "gesture map File Error"
-msgstr "Помилка файла з прив'язкою жестів"
+msgstr "Помилка файла з прив'язкою жестів."
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
@@ -2897,7 +2950,7 @@ msgstr "Враховувати &регістр"
 
 #, python-format
 msgid "text \"%s\" not found"
-msgstr "Текст \"%s\" не знайдено"
+msgstr "текст \"%s\" не знайдено"
 
 msgid "Find Error"
 msgstr "Помилка пошуку"
@@ -2910,15 +2963,13 @@ msgstr "пошук текстового рядка із поточної поз�
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
-msgstr ""
-"Пошук наступного входження текстового рядка із поточної позиції курсора"
+msgstr "Пошук наступного текстового рядка від поточної позиції курсора"
 
 #. Translators: Input help message for find previous command.
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
-msgstr ""
-"Пошук попереднього входження текстового рядка із поточної позиції курсора"
+msgstr "пошук попереднього текстового рядка від поточної позиції курсора"
 
 #. Translators: Reported when there is no text selected (for copying).
 msgid "No selection"
@@ -3003,6 +3054,11 @@ msgid "Braille"
 msgstr "Брайль"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the vision panel
+msgid "Vision"
+msgstr "Візуальне сприйняття"
+
+#. Translators: The name of a category of NVDA commands.
 msgctxt "script category"
 msgid "Tools"
 msgstr "Інструменти"
@@ -3042,11 +3098,11 @@ msgstr ""
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
-msgstr "Режим допомоги при введенні увімкнено"
+msgstr "режим допомоги при введенні увімкнено"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help off"
-msgstr "Режим допомоги при введенні вимкнено"
+msgstr "режим допомоги при введенні вимкнено"
 
 #. Translators: Input help mode message for toggle input help command.
 msgid ""
@@ -3125,7 +3181,7 @@ msgid ""
 "no selection it says so."
 msgstr ""
 "Читає виділений фрагмент у редакторі або у елементі редагування. Якщо "
-"виділення відсутнє - також сповіщає про це"
+"виділення відсутнє - також сповіщає про це."
 
 #. Translators: Input help mode message for report date and time command.
 msgid ""
@@ -3159,11 +3215,11 @@ msgstr ""
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
-msgstr "Промовляти символи при введенні вимкнено"
+msgstr "промовляти символи при введенні вимкнено"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters on"
-msgstr "Промовляти символи при введенні увімкнено"
+msgstr "промовляти символи при введенні увімкнено"
 
 #. Translators: Input help mode message for toggle speaked typed characters command.
 msgid "Toggles on and off the speaking of typed characters"
@@ -3171,11 +3227,11 @@ msgstr "Перемикає промовляння символів при вве
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
-msgstr "Промовляти слова при введенні вимкнено"
+msgstr "промовляти слова при введенні вимкнено"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words on"
-msgstr "Промовляти слова при введенні увімкнено"
+msgstr "промовляти слова при введенні увімкнено"
 
 #. Translators: Input help mode message for toggle speak typed words command.
 msgid "Toggles on and off the speaking of typed words"
@@ -3183,11 +3239,11 @@ msgstr "Перемикає промовляння слів під час вве�
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
-msgstr "Промовляти командні клавіші вимкнено"
+msgstr "промовляти командні клавіші вимкнено"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys on"
-msgstr "Промовляти командні клавіші увімкнено"
+msgstr "промовляти командні клавіші увімкнено"
 
 #. Translators: Input help mode message for toggle speak command keys command.
 msgid ""
@@ -3197,11 +3253,11 @@ msgstr "Перемикає промовляння клавіш, які не є �
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
-msgstr "Промовляти назву шрифта вимкнено"
+msgstr "промовляти назву шрифта вимкнено"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name on"
-msgstr "Промовляти назву шрифта увімкнено"
+msgstr "промовляти назву шрифта увімкнено"
 
 #. Translators: Input help mode message for toggle report font name command.
 msgid "Toggles on and off the reporting of font changes"
@@ -3209,11 +3265,11 @@ msgstr "Вмикає або вимикає промовляння зміни ш�
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size off"
-msgstr "Промовляти розмір шрифта вимкнено"
+msgstr "промовляти розмір шрифта вимкнено"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size on"
-msgstr "Промовляти розмір шрифта увімкнено"
+msgstr "промовляти розмір шрифта увімкнено"
 
 #. Translators: Input help mode message for toggle report font size command.
 msgid "Toggles on and off the reporting of font size changes"
@@ -3221,11 +3277,11 @@ msgstr "Вмикає або вимикає промовляння про змі�
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes off"
-msgstr "Промовляти атрибути шрифта вимкнено"
+msgstr "промовляти атрибути шрифта вимкнено"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes on"
-msgstr "Промовляти атрибути шрифта увімкнено"
+msgstr "промовляти атрибути шрифта увімкнено"
 
 #. Translators: Input help mode message for toggle report font attributes command.
 msgid "Toggles on and off the reporting of font attributes"
@@ -3233,11 +3289,11 @@ msgstr "Вмикає або вимикає промовляння атрибут
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
-msgstr "Повідомляти про ревізії вимкнено"
+msgstr "повідомляти про ревізії вимкнено"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions on"
-msgstr "Повідомляти про ревізії увімкнено"
+msgstr "повідомляти про ревізії увімкнено"
 
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
@@ -3245,11 +3301,11 @@ msgstr "Вмикає або вимикає промовляння ревізій
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis off"
-msgstr "Промовляти виділення у тексті вимкнено"
+msgstr "промовляти виділення у тексті вимкнено"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis on"
-msgstr "Промовляти виділення у тексті увімкнено"
+msgstr "промовляти виділення у тексті увімкнено"
 
 #. Translators: Input help mode message for toggle report emphasis command.
 msgid "Toggles on and off the reporting of emphasis"
@@ -3257,11 +3313,11 @@ msgstr "Вмикає або вимикає читання виділених ф�
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
-msgstr "Промовляти кольори вимкнено"
+msgstr "промовляти кольори вимкнено"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors on"
-msgstr "Промовляти кольори увімкнено"
+msgstr "промовляти кольори увімкнено"
 
 #. Translators: Input help mode message for toggle report colors command.
 msgid "Toggles on and off the reporting of colors"
@@ -3269,11 +3325,11 @@ msgstr "Вмикає або вимикає промовляння кольорі
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment off"
-msgstr "Промовляти вирівнювання вимкнено"
+msgstr "промовляти вирівнювання вимкнено"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment on"
-msgstr "Промовляти вирівнювання увімкнено"
+msgstr "промовляти вирівнювання увімкнено"
 
 #. Translators: Input help mode message for toggle report alignment command.
 msgid "Toggles on and off the reporting of text alignment"
@@ -3281,11 +3337,11 @@ msgstr "Вмикає або вимикає промовляння вирівню
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style off"
-msgstr "Промовляти стиль вимкнено"
+msgstr "промовляти стиль вимкнено"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style on"
-msgstr "Промовляти стиль увімкнено"
+msgstr "промовляти стиль увімкнено"
 
 #. Translators: Input help mode message for toggle report style command.
 msgid "Toggles on and off the reporting of style changes"
@@ -3293,11 +3349,11 @@ msgstr "Вмикає або вимикає повідомлення про зм�
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
-msgstr "Промовляти орфографічні помилки вимкнено"
+msgstr "промовляти орфографічні помилки вимкнено"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors on"
-msgstr "Промовляти орфографічні помилки увімкнено"
+msgstr "промовляти орфографічні помилки увімкнено"
 
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
@@ -3305,11 +3361,11 @@ msgstr "Вмикає або вимикає повідомлення про ор�
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
-msgstr "Промовляти сторінки вимкнено"
+msgstr "промовляти сторінки вимкнено"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages on"
-msgstr "Промовляти сторінки увімкнено"
+msgstr "промовляти сторінки увімкнено"
 
 #. Translators: Input help mode message for toggle report pages command.
 msgid "Toggles on and off the reporting of pages"
@@ -3317,11 +3373,11 @@ msgstr "Вмикає або вимикає промовляння сторіно
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers off"
-msgstr "Промовляти номери рядків вимкнено"
+msgstr "промовляти номери рядків вимкнено"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers on"
-msgstr "Промовляти номери рядків увімкнено"
+msgstr "промовляти номери рядків увімкнено"
 
 #. Translators: Input help mode message for toggle report line numbers command.
 msgid "Toggles on and off the reporting of line numbers"
@@ -3350,11 +3406,11 @@ msgstr "Перемикає по колу налаштування промовл
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
-msgstr "Повідомляти про відступ абзаца вимкнено"
+msgstr "промовляння відступу абзаца вимкнено"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation on"
-msgstr "Повідомляти про відступ абзаца увімкнено"
+msgstr "промовляння відступу абзаца вимкнено"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -3374,11 +3430,11 @@ msgstr "Вмикає або вимикає повідомлення інформ
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
-msgstr "Повідомляти про таблиці вимкнено"
+msgstr "повідомляти про таблиці вимкнено"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables on"
-msgstr "Повідомляти про таблиці увімкнено"
+msgstr "повідомляти про таблиці увімкнено"
 
 #. Translators: Input help mode message for toggle report tables command.
 msgid "Toggles on and off the reporting of tables"
@@ -3386,11 +3442,11 @@ msgstr "Вмикає або вимикає промовляння про таб�
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers off"
-msgstr "Читати заголовки рядків і стовпчиків таблиці вимкнено"
+msgstr "читання заголовків рядків і стовпчиків таблиці вимкнено"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers on"
-msgstr "Читати заголовки рядків і стовпчиків таблиці увімкнено"
+msgstr "читання заголовків рядків і стовпчиків таблиці увімкнено"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
 msgid "Toggles on and off the reporting of table row and column headers"
@@ -3398,11 +3454,11 @@ msgstr "Вмикає чи вимикає промовляння заголовк
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
-msgstr "Повідомляти координати комірки таблиці вимкнено"
+msgstr "промовляння координат комірки таблиці вимкнено"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates on"
-msgstr "Повідомляти координати комірки таблиці увімкнено"
+msgstr "промовляння координат комірки таблиці увімкнено"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
@@ -3410,11 +3466,11 @@ msgstr "Вмикає або вимикає промовляння координ
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
-msgstr "Повідомляти про посилання вимкнено"
+msgstr "повідомляти про посилання вимкнено"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links on"
-msgstr "Повідомляти про посилання увімкнено"
+msgstr "повідомляти про посилання увімкнено"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3422,7 +3478,7 @@ msgstr "Вмикає або вимикає промовляння посилан
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
-msgstr "Промовляти коментарі вимкнено"
+msgstr "промовляти коментарі вимкнено"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments on"
@@ -3434,11 +3490,11 @@ msgstr "Вмикає або вимикає промовляння комента
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists off"
-msgstr "Повідомляти про списки вимкнено"
+msgstr "повідомляти про списки вимкнено"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists on"
-msgstr "Повідомляти про списки увімкнено"
+msgstr "повідомляти про списки увімкнено"
 
 #. Translators: Input help mode message for toggle report lists command.
 msgid "Toggles on and off the reporting of lists"
@@ -3446,47 +3502,71 @@ msgstr "Вмикає або вимикає читання списків"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings off"
-msgstr "Повідомляти заголовки вимкнено"
+msgstr "промовляння заголовків вимкнено"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings on"
-msgstr "Повідомляти заголовки увімкнено"
+msgstr "промовляння заголовків увімкнено"
 
 #. Translators: Input help mode message for toggle report headings command.
 msgid "Toggles on and off the reporting of headings"
 msgstr "Вмикає або вимикає читання заголовків"
 
+#. Translators: Input help mode message for toggle report groupings command.
+msgid "Toggles on and off the reporting of groupings"
+msgstr "Вмикає й вимикає промовляння про групування"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report groupings off"
+msgstr "промовляти про групування вимкнено"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report groupings on"
+msgstr "промовляти про групування увімкнено"
+
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
-msgstr "Повідомляти про цитати вимкнено"
+msgstr "повідомляти про цитати вимкнено"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes on"
-msgstr "Повідомляти про цитати увімкнено"
+msgstr "повідомляти про цитати увімкнено"
 
 #. Translators: Input help mode message for toggle report block quotes command.
 msgid "Toggles on and off the reporting of block quotes"
 msgstr "Вмикає або вимикає промовляння цитат"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-msgid "report landmarks off"
-msgstr "Повідомляти орієнтири вимкнено"
+msgid "report landmarks and regions off"
+msgstr "повідомляти орієнтири та регіони вимкнено"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-msgid "report landmarks on"
-msgstr "Повідомляти орієнтири увімкнено"
+msgid "report landmarks and regions on"
+msgstr "повідомляти орієнтири й регіони увімкнено"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
 msgstr "Вмикає або вимикає читання орієнтирів"
 
+#. Translators: Input help mode message for toggle report articles command.
+msgid "Toggles on and off the reporting of articles"
+msgstr "Вмикає й вимикає промовляння про статті"
+
+#. Translators: The message announced when toggling the report articles document formatting setting.
+msgid "report articles off"
+msgstr "повідомляти про статті вимкнено"
+
+#. Translators: The message announced when toggling the report articles document formatting setting.
+msgid "report articles on"
+msgstr "повідомляти про статті увімкнено"
+
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
-msgstr "Читати фрейми вимкнено"
+msgstr "читати фрейми вимкнено"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames on"
-msgstr "Читати фрейми увімкнено"
+msgstr "читати фрейми увімкнено"
 
 #. Translators: Input help mode message for toggle report frames command.
 msgid "Toggles on and off the reporting of frames"
@@ -3494,11 +3574,11 @@ msgstr "Вмикає або вимикає читання фреймів"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
-msgstr "Повідомляти, якщо клікабельно вимкнено"
+msgstr "повідомляти, якщо клікабельно вимкнено"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable on"
-msgstr "Повідомляти, якщо клікабельно увімкнено"
+msgstr "повідомляти, якщо клікабельно увімкнено"
 
 #. Translators: Input help mode message for toggle report if clickable command.
 msgid "Toggles on and off reporting if clickable"
@@ -3604,7 +3684,7 @@ msgid ""
 "cursor. Pressing twice may provide further detail."
 msgstr ""
 "Повідомляє інформацію про текст чи об'єкт, розташований у позиції "
-"переглядового курсора. Натисніть двічі для отримання детальнішої інформації"
+"переглядового курсора. Натисніть двічі для отримання детальнішої інформації."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
@@ -3616,7 +3696,7 @@ msgid ""
 "position of the caret inside it, if possible."
 msgstr ""
 "Встановлює навігатор на поточний об'єкт у фокусі, а переглядовий курсор в "
-"позицію системної каретки в цьому об'єкті, якщо можливо"
+"позицію системної каретки в цьому об'єкті, якщо можливо."
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3688,8 +3768,8 @@ msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
 msgstr ""
-"Виконує встановлену дію для поточного об'єкта, наприклад, натискає його, "
-"якщо це кнопка"
+"Виконує встановлену дію для поточного об'єкта (наприклад, натискає його, "
+"якщо це кнопка)."
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 msgid "Top"
@@ -3751,7 +3831,7 @@ msgid ""
 msgstr ""
 "Промовляє слово, на якому знаходиться переглядовий курсор. Натисніть двічі "
 "для посимвольного читання, а при потрійному натисканні ви отримаєте опис або "
-"зразок використання кожного із символів."
+"зразок використання кожного із символів"
 
 #. Translators: Input help mode message for move review cursor to next word command.
 msgid ""
@@ -3790,7 +3870,7 @@ msgid ""
 msgstr ""
 "Промовляє символ, на якому знаходиться переглядовий курсор. Натисніть двічі "
 "для отримання опису символа або зразків його використання. Натисніть тричі "
-"для отримання його десяткового та шістнадцятиричного значень."
+"для отримання його десяткового та шістнадцятиричного значень"
 
 #. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
 msgid "Right"
@@ -3819,7 +3899,7 @@ msgid ""
 msgstr ""
 "Повідомляє символ, на якому розташований переглядовий курсор. При подвійному "
 "натисканні показує символ і текст, який використовується для його вимови в "
-"режимі огляду."
+"режимі огляду"
 
 #. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
 msgid "No symbol replacement"
@@ -3858,7 +3938,7 @@ msgstr ""
 "Перемикає режим озвучення NVDA між вимкнено, Сигналы, Мовлення. При "
 "Вимкнено, NVDA нічого не читає. При режимі Сигналы - NVDA видає "
 "високочастотні звуки, коли на екрані з'являється нова інформація. При режимі "
-"Мовлення NVDA озвучує події активним синтезатором"
+"Мовлення NVDA озвучує події активним синтезатором."
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
@@ -3888,12 +3968,11 @@ msgstr "Перезавантажує NVDA!"
 msgid "Shows the NVDA menu"
 msgstr "Викликає меню NVDA"
 
-#. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"Reads from the review cursor up to end of current text, moving the review "
-"cursor as it goes"
+"Reads from the review cursor up to the end of the current text, moving the "
+"review cursor as it goes"
 msgstr ""
-"Читає від переглядового курсора до кінця тексту, із переміщеннямм "
+"Читає від переглядового курсора до кінця поточного тексту, із переміщенням "
 "переглядового курсора за текстом"
 
 #. Translators: Input help mode message for say all with system caret command.
@@ -3931,11 +4010,11 @@ msgstr "Рядок стану невиявлено"
 
 #. Translators: Reported when status line exist, but is empty.
 msgid "no status bar information"
-msgstr "Немає інформації рядка стану"
+msgstr "немає інформації рядка стану"
 
 #. Translators: Reported when user attempts to copy content of the empty status line.
 msgid "unable to copy status bar content to clipboard"
-msgstr "Неможливо скопіювати вміст рядка стану до буферу обміну"
+msgstr "неможливо скопіювати вміст рядка стану до буферу обміну"
 
 #. Translators: Input help mode message for report status line text command.
 msgid ""
@@ -3943,7 +4022,7 @@ msgid ""
 "pressed twice, spells the information. If pressed three times, copies the "
 "status bar to the clipboard"
 msgstr ""
-"читає рядок стану поточного додатка і приводить туди навігатор. Натисніть "
+"Читає рядок стану поточного додатка і приводить туди навігатор. Натисніть "
 "двічі для посимвольного читання. При потрійному натисканні рядок стану "
 "копіюється в буфер обміну"
 
@@ -3995,7 +4074,7 @@ msgid ""
 "state of GUI components."
 msgstr ""
 "Відкриває WX Widget Inspection Tool. Використовується для отримання "
-"додаткової інформації про елементи графічного інтерфейсу"
+"додаткової інформації про елементи графічного інтерфейсу."
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
@@ -4003,7 +4082,7 @@ msgid ""
 "developers and activates the log viewer so the information can be examined."
 msgstr ""
 "Записує в журнал корисну для розробників інформацію про поточний об'єкт і "
-"відкриває переглядач журналу"
+"відкриває переглядач журналу."
 
 #. Translators: A mode where no progress bar updates are given.
 msgid "No progress bar updates"
@@ -4031,11 +4110,11 @@ msgstr ""
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
-msgstr "Повідомляти про зміни динамічного контенту вимкнено"
+msgstr "повідомляти про зміни динамічного контенту вимкнено"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes on"
-msgstr "Повідомляти про зміни динамічного контенту увімкнено"
+msgstr "повідомляти про зміни динамічного контенту увімкнено"
 
 #. Translators: Input help mode message for toggle dynamic content changes command.
 msgid ""
@@ -4047,26 +4126,26 @@ msgstr ""
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
-msgstr "Прив'язку переглядового курсора до системного вимкнено"
+msgstr "прив'язку переглядового курсора до системного вимкнено"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor on"
-msgstr "Прив'язку переглядового курсора до системного увімкнено"
+msgstr "прив'язку переглядового курсора до системного увімкнено"
 
 #. Translators: Input help mode message for toggle caret moves review cursor command.
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
 "Вмикає або вимикає переміщення переглядового курсора під час руху системного "
-"курсора"
+"курсора."
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
-msgstr "Прив'язку навігатора до фокусу вимкнено"
+msgstr "прив'язку навігатора до фокусу вимкнено"
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object on"
-msgstr "Прив'язку навігатора до фокусу увімкнено"
+msgstr "прив'язку навігатора до фокусу увімкнено"
 
 #. Translators: Input help mode message for toggle focus moves navigator object command.
 msgid ""
@@ -4131,7 +4210,7 @@ msgstr ""
 #. This message will not be presented if there is no module for the current program.
 #, python-format
 msgid " %s module is loaded. "
-msgstr " модуль %s завантажено."
+msgstr " модуль %s завантажено. "
 
 #. Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
@@ -4226,7 +4305,7 @@ msgid ""
 "state. Pressing three times reverts to factory defaults."
 msgstr ""
 "Натисніть один раз для повернення до попередньої конфігурації, або ж "
-"натисніть тричі для того, щоб скинути налаштування до стандартних"
+"натисніть тричі для того, щоб скинути налаштування до стандартних."
 
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
@@ -4242,11 +4321,11 @@ msgstr ""
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
-msgstr "Переглядач мовлення вимкнено"
+msgstr "переглядач мовлення вимкнено"
 
 #. Translators: The message announced when enabling speech viewer.
 msgid "speech viewer enabled"
-msgstr "Переглядач мовлення увімкнено"
+msgstr "переглядач мовлення увімкнено"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
@@ -4312,7 +4391,7 @@ msgstr "У буфері обміну немає тексту"
 #, python-format
 msgid ""
 "The clipboard contains a large portion of text. It is %s characters long"
-msgstr "Буфер обміну містить великий об'єм тексту. він становить %s символів."
+msgstr "Буфер обміну містить завеликий об'єм тексту. він становить %s символів"
 
 #. Translators: Input help mode message for report clipboard text command.
 msgid "Reports the text on the Windows clipboard"
@@ -4330,6 +4409,14 @@ msgstr ""
 "Помічає поточну позицію переглядового курсора в тексті як початкову для "
 "виділення чи копіювання"
 
+msgid ""
+"Move the review cursor to the position marked as the start of text to be "
+"selected or copied"
+msgstr ""
+"Переміщає переглядовий курсор до позиції, поміченої для виділення чи "
+"копіювання тексту"
+
+#. Translators: Presented when attempting to move to the start marker for copy but none has been set.
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 msgid "No start marker set"
 msgstr "Початок невідмічено"
@@ -4348,7 +4435,7 @@ msgstr "Не можу виділити текст, натисніть двічі
 
 #. Translators: Presented when some review text has been copied to clipboard.
 msgid "Review selection copied to clipboard"
-msgstr "виділення перегляду скопійовано до буферу обміну"
+msgstr "Виділення перегляду скопійовано до буферу обміну"
 
 #. Translators: Presented when unable to copy to the clipboard because of an error.
 msgid "Unable to copy"
@@ -4366,11 +4453,11 @@ msgstr ""
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
-msgstr "Прокручує назад на брайлівському дисплеї"
+msgstr "Прокрутити назад на брайлівському дисплеї"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display forward"
-msgstr "Прокручує вперед на брайлівському дисплеї"
+msgstr "Прокрутити вперед на брайлівському дисплеї"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Routes the cursor to or activates the object under this braille cell"
@@ -4535,6 +4622,53 @@ msgid ""
 msgstr ""
 "Розпізнає вміст в позиції об'єктного навігатора за допомогою Windows 10 OCR"
 
+#. Translators: Input help mode message for toggle report CLDR command.
+msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
+msgstr "Вмикає й вимикає читання емодзі"
+
+#. Translators: presented when the report CLDR is toggled.
+msgid "report CLDR characters off"
+msgstr "читати емодзі вимкнено"
+
+#. Translators: presented when the report CLDR is toggled.
+msgid "report CLDR characters on"
+msgstr "читати емодзі увімкнено"
+
+msgid ""
+"Toggles the state of the screen curtain, enable to make the screen black or "
+"disable to show the contents of the screen. Pressed once, screen curtain is "
+"enabled until you restart NVDA. Pressed twice, screen curtain is enabled "
+"until you disable it"
+msgstr ""
+"Перемикає стан екранної завіси, роблячи екран чорним, або відключає її для "
+"відображення вмісту екрана. Натиснувши один раз, екранна завіса буде "
+"увімкненою, поки ви не перезапустите NVDA. Натиснувши двічі, екранна завіса "
+"буде увімкненою, допоки ви її не вимкнете"
+
+#. Translators: Reported when the screen curtain is disabled.
+msgid "Screen curtain disabled"
+msgstr "Екранну завісу вимкнено"
+
+#. Translators: Reported when the screen curtain could not be enabled.
+msgid "Could not disable screen curtain"
+msgstr "Не вдалося вимкнути наекранну завісу"
+
+#. Translators: Reported when the screen curtain is not available.
+msgid "Screen curtain not available"
+msgstr "Екранна завіса недоступна"
+
+#. Translators: Reported when the screen curtain is enabled.
+msgid "Screen curtain enabled"
+msgstr "Екранну завісу увімкнено"
+
+#. Translators: Reported when the screen curtain is temporarily enabled.
+msgid "Temporary Screen curtain, enabled until next restart"
+msgstr "Тимчасова екранна завіса працюватиме до наступного перезапуску"
+
+#. Translators: Reported when the screen curtain could not be enabled.
+msgid "Could not enable screen curtain"
+msgstr "Не вдалося увімкнути наекранну завісу"
+
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
 msgid "Can't change the active profile while an NVDA dialog is open"
@@ -4605,55 +4739,55 @@ msgstr "Пакетний файл додатків NVDA"
 
 #. Translators: This is the name of the back key found on multimedia keyboards for controlling the web-browser.
 msgid "back"
-msgstr "Назад"
+msgstr "назад"
 
 #. Translators: This is the name of the forward key found on multimedia keyboards for controlling the web-browser.
 msgid "forward"
-msgstr "Вперед"
+msgstr "вперед"
 
 #. Translators: This is the name of the refresh key found on multimedia keyboards for controlling the web-browser.
 msgid "refresh"
-msgstr "Оновити"
+msgstr "оновити"
 
 #. Translators: This is the name of the stop key found on multimedia keyboards for controlling the web-browser.
 msgid "browser stop"
-msgstr "Зупинка оглядача"
+msgstr "зупинка оглядача"
 
 #. Translators: This is the name of the back key found on multimedia keyboards to goto the search page of the web-browser.
 msgid "search page"
-msgstr "Пошукова сторінка"
+msgstr "пошукова сторінка"
 
 #. Translators: This is the name of the favorites key found on multimedia keyboards to open favorites in the web-browser.
 msgid "favorites"
-msgstr "Закладки"
+msgstr "закладки"
 
 #. Translators: This is the name of the home key found on multimedia keyboards to goto the home page in the web-browser.
 msgid "home page"
-msgstr "Домашня сторінка"
+msgstr "домашня сторінка"
 
 #. Translators: This is the name of the mute key found on multimedia keyboards to control playback volume.
 msgid "mute"
-msgstr "Вимкнути звук"
+msgstr "вимкнути звук"
 
 #. Translators: This is the name of the volume down key found on multimedia keyboards to reduce playback volume.
 msgid "volume down"
-msgstr "Зменшити гучність"
+msgstr "зменшити гучність"
 
 #. Translators: This is the name of the volume up key found on multimedia keyboards to increase playback volume.
 msgid "volume up"
-msgstr "Збільшити гучність"
+msgstr "збільшити гучність"
 
 #. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
 msgid "next track"
-msgstr "Наступний трек"
+msgstr "наступний трек"
 
 #. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
 msgid "previous track"
-msgstr "Попередній трек"
+msgstr "попередній трек"
 
 #. Translators: This is the name of the stop key found on multimedia keyboards to stop the current playing track in the mediaplayer.
 msgid "stop"
-msgstr "Зупинити"
+msgstr "зупинити"
 
 #. Translators: This is the name of the play/pause key found on multimedia keyboards to play/pause the current playing track in the mediaplayer.
 msgid "play pause"
@@ -4661,19 +4795,19 @@ msgstr "відтворити пауза"
 
 #. Translators: This is the name of the launch email key found on multimedia keyboards to open an email client.
 msgid "email"
-msgstr "Електронна пошта"
+msgstr "електронна пошта"
 
 #. Translators: This is the name of the launch mediaplayer key found on multimedia keyboards to launch the mediaplayer.
 msgid "media player"
-msgstr "Медіаплеєр"
+msgstr "медіаплеєр"
 
 #. Translators: This is the name of the launch custom application 1 key found on multimedia keyboards to launch a user-defined application.
 msgid "custom application 1"
-msgstr "Додаток користувача 1"
+msgstr "додаток користувача 1"
 
 #. Translators: This is the name of the launch custom application 2 key found on multimedia keyboards to launch a user-defined application.
 msgid "custom application 2"
-msgstr "Додаток користувача 2"
+msgstr "додаток користувача 2"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "backspace"
@@ -4716,11 +4850,11 @@ msgstr "ескейп"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "page up"
-msgstr "Сторінка вгору"
+msgstr "сторінка вгору"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "page down"
-msgstr "Сторінка вниз"
+msgstr "сторінка вниз"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "end"
@@ -4736,7 +4870,7 @@ msgstr "деліт"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad delete"
-msgstr "Додатковий деліт"
+msgstr "додатковий деліт"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left arrow"
@@ -4764,7 +4898,7 @@ msgstr "num lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "print screen"
-msgstr "Друк екрана"
+msgstr "друк екрана"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "scroll lock"
@@ -4824,7 +4958,7 @@ msgstr "додатковий плюс"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad decimal"
-msgstr "Десятковий роздільник"
+msgstr "десятковий роздільник"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad insert"
@@ -4908,7 +5042,7 @@ msgstr "права windows"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "break"
-msgstr "Розрив"
+msgstr "розрив"
 
 #. Translators: This is the name of a key on the keyboard.
 msgctxt "keyLabel"
@@ -4917,26 +5051,26 @@ msgstr "таб"
 
 #. Translators: One of the keyboard layouts for NVDA.
 msgid "desktop"
-msgstr "Desktop"
+msgstr "desktop"
 
 #. Translators: One of the keyboard layouts for NVDA.
 msgid "laptop"
-msgstr "Laptop"
+msgstr "laptop"
 
 #. Translators: Reported for an unknown key press.
 #. %s will be replaced with the key code.
 #, python-format
 msgid "unknown %s"
-msgstr "Невідомо %s"
+msgstr "невідомо %s"
 
 msgid "on"
-msgstr "Увімкнено"
+msgstr "увімкнено"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 msgid "off"
-msgstr "Вимкнено"
+msgstr "вимкнено"
 
 #. Translators: Used when describing keys on the system keyboard with a particular layout.
 #. %s is replaced with the layout name.
@@ -4947,7 +5081,7 @@ msgstr "Клавіатура %s"
 
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
 msgid "keyboard, all layouts"
-msgstr "Клавіатура, усі розкладки"
+msgstr "клавіатура, усі розкладки"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
@@ -4972,7 +5106,7 @@ msgstr "Бірманська"
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Somali"
-msgstr "сомалійська"
+msgstr "Сомалійська"
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -5144,7 +5278,7 @@ msgstr "Кут"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "four snipped corners"
-msgstr "Чотири прямокутних трикутники"
+msgstr "чотири прямокутні трикутники"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6073,408 +6207,11 @@ msgstr "Екранний перегляд"
 msgid "Emulates pressing %s on the system keyboard"
 msgstr "Емулює натиснення %s на системній клавіатурі"
 
-#. Translators: This is spoken when NVDA moves to an empty line.
-#. Translators: This is spoken when the line is considered blank.
-msgid "blank"
-msgstr "Порожньо"
-
-#. Translators: cap will be spoken before the given letter when it is capitalized.
-#, python-format
-msgid "cap %s"
-msgstr "велика %s"
-
-#. Translators: This is spoken when the given line has no indentation.
-msgid "no indent"
-msgstr "Немає відступу"
-
-#. Translators: This is spoken to indicate that some text is already selected.
-#. 'selected' preceding text is intentional.
-#. For example 'selected hello world'
-#, python-format
-msgid "selected %s"
-msgstr "Виділено %s"
-
-#. Translators: This is spoken to indicate what has just been selected.
-#. The text preceding 'selected' is intentional.
-#. For example 'hello world selected'
-#, python-format
-msgid "%s selected"
-msgstr "%s виділено"
-
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
-#, python-format
-msgid "%d characters"
-msgstr "%d Символів"
-
-#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
-#, python-format
-msgid "%s unselected"
-msgstr "%s не виділено"
-
-#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
-#, python-format
-msgid "%s selected instead"
-msgstr "%s виділено замість"
-
-#. Translators: Reported when selection is removed.
-msgid "selection removed"
-msgstr "Виділення видалено"
-
-#. Translators: Speaks current row number (example output: row 3).
-#, python-format
-msgid "row %s"
-msgstr "Рядок %s"
-
-#. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "по %s"
-
-#. Translators: Speaks current column number (example output: column 3).
-#, python-format
-msgid "column %s"
-msgstr "Стовпчик %s"
-
-#. Translators: Speaks the row and column span added to the current row and column numbers
-#. (example output: through row 5 column 3).
-#, python-brace-format
-msgid "through row {row} column {column}"
-msgstr "по  рядок {row} column {column}"
-
-#. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
-msgid "with {rowCount} rows and {columnCount} columns"
-msgstr "із {rowCount} рядків і {columnCount} стовпців"
-
-#. Translators: Speaks number of columns (example output: with 4 columns).
-#, python-format
-msgid "with %s columns"
-msgstr "із %s стовпців"
-
-#. Translators: Speaks number of rows (example output: with 2 rows).
-#, python-format
-msgid "with %s rows"
-msgstr "із %s рядків"
-
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "Рівень %s"
-
-#. Translators: Number of items in a list (example output: list with 5 items).
-#, python-format
-msgid "with %s items"
-msgstr "із %s елементів"
-
-#. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
-#, python-format
-msgid "out of %s"
-msgstr "поза %s"
-
-#. Translators: Indicates the page number in a document.
-#. %s will be replaced with the page number.
-#, python-format
-msgid "page %s"
-msgstr "Сторінка %s"
-
-#. Translators: Indicates the section number in a document.
-#. %s will be replaced with the section number.
-#, python-format
-msgid "section %s"
-msgstr "Секція %s"
-
-#. Translators: Indicates the text column number in a document.
-#. {0} will be replaced with the text column number.
-#. {1} will be replaced with the number of text columns.
-#, python-brace-format
-msgid "column {0} of {1}"
-msgstr "Стовпець {0} із {1}"
-
-#. Translators: Indicates the text column number in a document.
-#. %s will be replaced with the number of text columns.
-#, python-format
-msgid "%s columns"
-msgstr "%s стовпців"
-
-msgid "continuous section break"
-msgstr "Розрив розділу і новий розділ на тій самій сторінці"
-
-msgid "new column section break"
-msgstr "Розрив розділу і новий розділ у тій самій колонці"
-
-msgid "new page section break"
-msgstr "Розрив розділу і новий розділ на наступній сторінці"
-
-msgid "even pages section break"
-msgstr "Розрив розділу і новий розділ на наступній парній сторінці"
-
-msgid "odd pages section break"
-msgstr "Розрив розділу і новий розділ на наступній непарній сторінці"
-
-msgid "column break"
-msgstr "Розрив стовпчика"
-
-#. Translators: Speaks the heading level (example output: heading level 2).
-#, python-format
-msgid "heading level %d"
-msgstr "Заголовок рівня %d"
-
-#. Translators: Indicates the style of text.
-#. A style is a collection of formatting settings and depends on the application.
-#. %s will be replaced with the name of the style.
-#, python-format
-msgid "style %s"
-msgstr "Стиль %s"
-
-#. Translators: Indicates that text has reverted to the default style.
-#. A style is a collection of formatting settings and depends on the application.
-msgid "default style"
-msgstr "Типовий стиль"
-
-#. Translators: Indicates that cell does not have border lines.
-msgid "no border lines"
-msgstr "немає рамок рядків"
-
-#. Translators: Reported when there are two background colors.
-#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
-#. {color1} will be replaced with the first background color.
-#. {color2} will be replaced with the second background color.
-#, python-brace-format
-msgid "{color1} to {color2}"
-msgstr "{color1} на {color2}"
-
-#. Translators: Reported when both the text and background colors change.
-#. {color} will be replaced with the text color.
-#. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
-msgid "{color} on {backgroundColor}"
-msgstr "{color} на {backgroundColor}"
-
-#. Translators: Reported when the text color changes (but not the background color).
-#. {color} will be replaced with the text color.
-#, python-brace-format
-msgid "{color}"
-msgstr "{color}"
-
-#. Translators: Reported when the background color changes (but not the text color).
-#. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
-msgid "{backgroundColor} background"
-msgstr "{backgroundColor} Задній фон"
-
-#, python-brace-format
-msgid "background pattern {pattern}"
-msgstr "background pattern {pattern}"
-
-#. Translators: Indicates the line number of the text.
-#. %s will be replaced with the line number.
-#, python-format
-msgid "line %s"
-msgstr "Рядок %s"
-
-#. Translators: Reported when text is no longer marked as having been inserted.
-msgid "not inserted"
-msgstr "Не вставлено"
-
-#. Translators: Reported when text is no longer marked as having been  deleted.
-msgid "not deleted"
-msgstr "Не видалено"
-
-#. Translators: Reported when text is revised.
-#, python-format
-msgid "revised %s"
-msgstr "Перевірено %s"
-
-#. Translators: Reported when text is not revised.
-#, python-format
-msgid "no revised %s"
-msgstr "Не перевірено %s"
-
-#. Translators: Reported when text is marked
-msgid "marked"
-msgstr "Помічено"
-
-#. Translators: Reported when text is no longer marked
-msgid "not marked"
-msgstr "Не помічено"
-
-#. Translators: Reported when text is marked as strong (e.g. bold)
-msgid "strong"
-msgstr "Жирний"
-
-#. Translators: Reported when text is no longer marked as strong (e.g. bold)
-msgid "not strong"
-msgstr "Не жирний"
-
-#. Translators: Reported when text is marked as emphasised
-msgid "emphasised"
-msgstr "Виділено"
-
-#. Translators: Reported when text is no longer marked as emphasised
-msgid "not emphasised"
-msgstr "Не виділено"
-
-#. Translators: Reported when text is not bolded.
-msgid "no bold"
-msgstr "не напівжирний"
-
-#. Translators: Reported when text is not italicized.
-msgid "no italic"
-msgstr "не курсив"
-
-#. Translators: Reported when text is formatted with double strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
-msgid "double strikethrough"
-msgstr "подвійний закреслений"
-
-#. Translators: Reported when text is formatted with strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
-msgid "strikethrough"
-msgstr "Закреслений"
-
-#. Translators: Reported when text is formatted without strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
-msgid "no strikethrough"
-msgstr "не закреслений"
-
-#. Translators: Reported when text is underlined.
-msgid "underlined"
-msgstr "Підкреслений"
-
-#. Translators: Reported when text is not underlined.
-msgid "not underlined"
-msgstr "Не підкреслений"
-
-#. Translators: Reported for text which is at the baseline position;
-#. i.e. not superscript or subscript.
-msgid "baseline"
-msgstr "Базова лінія"
-
-#. Translators: Reported when text is left-aligned.
-msgid "align left"
-msgstr "Вирівнювання за лівим краєм"
-
-#. Translators: Reported when text is centered.
-msgid "align center"
-msgstr "Вирівнювання за центром"
-
-#. Translators: Reported when text is right-aligned.
-msgid "align right"
-msgstr "Вирівнювання за правим краєм"
-
-#. Translators: Reported when text is justified.
-#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
-msgid "align justify"
-msgstr "Вирівнювання за шириною"
-
-#. Translators: Reported when text is justified with character spacing (Japanese etc)
-#. See http://kohei.us/2010/01/21/distributed-text-justification/
-msgid "align distributed"
-msgstr "align distributed"
-
-#. Translators: Reported when text has reverted to default alignment.
-msgid "align default"
-msgstr " Типове вирівнювання "
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "Вертикальне вирівнювання зверху"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "Вертикальне вирівнювання посередині"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "Вертикальне вирівнювання знизу"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "Вертикальне вирівнювання базової лінії"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "Вертикальне вирівнювання по ширині"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "Вертикальне розподілене вирівнювання"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "Типове вертикальне вирівнювання"
-
-#. Translators: the label for paragraph format left indent
-msgid "left indent"
-msgstr "Відступ зліва"
-
-#. Translators: the message when there is no paragraph format left indent
-msgid "no left indent"
-msgstr "Немає відступу зліва"
-
-#. Translators: the label for paragraph format right indent
-msgid "right indent"
-msgstr "Відступ справа"
-
-#. Translators: the message when there is no paragraph format right indent
-msgid "no right indent"
-msgstr "Немає відступу справа"
-
-#. Translators: the label for paragraph format hanging indent
-msgid "hanging indent"
-msgstr "Висячий відступ"
-
-#. Translators: the message when there is no paragraph format hanging indent
-msgid "no hanging indent"
-msgstr "Немає висячого відступу"
-
-#. Translators: the label for paragraph format first line indent
-msgid "first line indent"
-msgstr "Відступ першого рядка"
-
-#. Translators: the message when there is no paragraph format first line indent
-msgid "no first line indent"
-msgstr "Немає відступу першого рядка"
-
-#. Translators: a type of line spacing (E.g. single line spacing)
-#, python-format
-msgid "line spacing %s"
-msgstr "Міжрядковий інтервал %s"
-
-#. Translators: Reported when text no longer contains a comment.
-msgid "out of comment"
-msgstr "Поза коментарем"
-
-#. Translators: Reported when text contains a spelling error.
-msgid "spelling error"
-msgstr "орфографічна помилка"
-
-#. Translators: Reported when moving out of text containing a spelling error.
-msgid "out of spelling error"
-msgstr "поза орфографічною помилкою"
-
-#. Translators: Reported when text contains a grammar error.
-msgid "grammar error"
-msgstr "граматична помилка"
-
-#. Translators: Reported when moving out of text containing a grammar error.
-msgid "out of grammar error"
-msgstr "поза граматичною помилкою"
-
-#. Translators: Indicates end of a table.
-msgid "out of table"
-msgstr "Поза таблицею"
-
-#. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
-msgid "table with {columnCount} columns and {rowCount} rows"
-msgstr "таблиця із {columnCount} стовпців і {rowCount} рядків"
-
 msgid "NVDA Speech Viewer"
 msgstr "Переглядач мовлення NVDA"
 
-#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+#. Translators: The label for a setting in the speech viewer that controls
+#. whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
 msgstr "&Показувати переглядач мовлення при запуску"
 
@@ -6552,10 +6289,10 @@ msgid "Inflection"
 msgstr "Інтонація"
 
 msgid "text mode"
-msgstr "Текстовий режим"
+msgstr "текстовий режим"
 
 msgid "object mode"
-msgstr "Об'єктний режим"
+msgstr "об'єктний режим"
 
 #. Translators: a touch screen action performed once
 #, python-brace-format
@@ -6570,12 +6307,12 @@ msgstr "подвійний {action}"
 #. Translators: a touch screen action performed 3 times
 #, python-brace-format
 msgid "tripple {action}"
-msgstr "Потрійно {action}"
+msgstr "потрійно {action}"
 
 #. Translators: a touch screen action performed 4 times
 #, python-brace-format
 msgid "quadruple {action}"
-msgstr "Чотирикратно {action}"
+msgstr "чотирикратно {action}"
 
 #. Translators: a touch screen action using multiple fingers
 #, python-brace-format
@@ -6585,52 +6322,52 @@ msgstr "{numFingers} палець {action}"
 #. Translators: a very quick touch and release of a finger on a touch screen
 msgctxt "touch action"
 msgid "tap"
-msgstr "Дотик"
+msgstr "дотик"
 
 #. Translators: a very quick touch and release, then another touch with no release, on a touch screen
 msgctxt "touch action"
 msgid "tap and hold"
-msgstr "Дотик і утримання"
+msgstr "дотик і утримання"
 
 #. Translators: a touch with no release, on a touch screen.
 msgctxt "touch action"
 msgid "hold"
-msgstr "Утримання"
+msgstr "утримання"
 
 #. Translators: a quick swipe of a finger in an up direction, on a touch screen.
 msgctxt "touch action"
 msgid "flick up"
-msgstr "Пролистати вгору"
+msgstr "пролистати вгору"
 
 #. Translators: a quick swipe of a finger in an down direction, on a touch screen.
 msgctxt "touch action"
 msgid "flick down"
-msgstr "Пролистати вниз"
+msgstr "пролистати вниз"
 
 #. Translators: a quick swipe of a finger in a left direction, on a touch screen.
 msgctxt "touch action"
 msgid "flick left"
-msgstr "Пролистати вліво"
+msgstr "пролистати вліво"
 
 #. Translators: a quick swipe of a finger in a right direction, on a touch screen.
 msgctxt "touch action"
 msgid "flick right"
-msgstr "Пролистати вправо"
+msgstr "пролистати вправо"
 
 #. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
 msgctxt "touch action"
 msgid "hover down"
-msgstr "Прокрутити вниз"
+msgstr "прокрутити вниз"
 
 #. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
 msgctxt "touch action"
 msgid "hover"
-msgstr "Прокрутити"
+msgstr "прокрутити"
 
 #. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
 msgctxt "touch action"
 msgid "hover up"
-msgstr "Прокрутити вгору"
+msgstr "прокрутити вгору"
 
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
 msgid "NVDA Message"
@@ -6646,7 +6383,7 @@ msgstr "Перевірка наявності оновлень"
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 msgid "Error checking for update."
-msgstr "Помилка під час перевірки оновлень"
+msgstr "Помилка під час перевірки оновлення."
 
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message when a downloaded update file could not be preserved.
@@ -6772,7 +6509,7 @@ msgstr "Завантаження"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
-msgstr "Помилка при завантаженні оновлень"
+msgstr "Помилка при завантаженні оновлення."
 
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
@@ -6837,7 +6574,7 @@ msgid ""
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} is developed by NV Access, a non-profit organisation committed to "
@@ -6858,7 +6595,7 @@ msgstr ""
 "застосовується для оригінальної версії цього програмного забезпечення, його "
 "змінених копій та інших похідних робіт.\n"
 "Для подробиць перегляньте ліцензію в меню «Довідка».\n"
-"Також її можна прочитати онлайн: http://www.gnu.org/licenses/old-licenses/"
+"Також її можна прочитати онлайн: https://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} розробляє NV Access – некомерційна організація, яку створено для "
@@ -6940,10 +6677,6 @@ msgstr ""
 msgid "Cann't find the documentation window."
 msgstr "Неможливо знайти вікно документації."
 
-#. Translators: The title of Start menu/screen in your language (only the word start).
-msgid "Start"
-msgstr "старт"
-
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
 msgstr "Немає трека, який відтворюється"
@@ -6976,11 +6709,11 @@ msgstr "Сторінка {pageNumber}"
 
 #. Translators: Reported when text is highlighted.
 msgid "highlight"
-msgstr "Цікавий фрагмент"
+msgstr "цікавий фрагмент"
 
 #. Translators: Reported when text is not highlighted.
 msgid "no highlight"
-msgstr "Нецікавий фрагмент"
+msgstr "немає підсвічування"
 
 #. Translators: Reported in Kindle when text has been identified as a popular highlight;
 #. i.e. it has been highlighted by several people.
@@ -6991,7 +6724,7 @@ msgstr "%s позначили фрагмент як цікавий"
 
 #. Translators: Reported when moving out of a popular highlight.
 msgid "out of popular highlight"
-msgstr "Поза цікавим фрагментом"
+msgstr "поза цікавим фрагментом"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -7004,11 +6737,11 @@ msgstr "Відображає одне з останніх отриманих п�
 #. Translators: This Outlook Express message has an attachment
 #. Translators: when an email has attachments
 msgid "has attachment"
-msgstr "Містить вкладення"
+msgstr "містить вкладення"
 
 #. Translators: this Outlook Express message is flagged
 msgid "flagged"
-msgstr "Позначено"
+msgstr "позначено"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
@@ -7065,7 +6798,7 @@ msgstr "Прихована копія:"
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
 #. Translators: when an email is unread
 msgid "unread"
-msgstr "Непрочитано"
+msgstr "непрочитано"
 
 #. Translators: A message announcing what configuration profile is currently being edited.
 #, python-brace-format
@@ -7082,34 +6815,34 @@ msgstr "відповів(ла) всім"
 
 #. Translators: the last action taken on an Outlook mail message
 msgid "forwarded"
-msgstr "Переслано"
+msgstr "переслано"
 
 #. Translators: for a high importance email
 msgid "high importance"
-msgstr "Висока важливість"
+msgstr "висока важливість"
 
 #. Translators: For a low importance email
 msgid "low importance"
-msgstr "Низька важливість"
+msgstr "низька важливість"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
 msgid "subject: %s"
-msgstr "Тема: %s"
+msgstr "тема: %s"
 
 #. Translators: This is presented in outlook or live mail, email received time
 #, python-format
 msgid "received: %s"
-msgstr "Отримано: %s"
+msgstr "отримано: %s"
 
 #. Translators: This is presented in outlook or live mail, indicating email attachments
 msgid "attachment"
-msgstr "Вкладення"
+msgstr "вкладення"
 
 #. Translators: This is presented in outlook or live mail, email sent date
 #, python-format
 msgid "sent: %s"
-msgstr "Відправлено: %s"
+msgstr "відправлено: %s"
 
 #. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
@@ -7136,7 +6869,7 @@ msgstr "Містить призначення"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
-msgstr "Зустрічний запит"
+msgstr "зустрічний запит"
 
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
@@ -7349,7 +7082,7 @@ msgstr "behind {otherShape}"
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
 #, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
-msgstr "{distance:.3g} "
+msgstr "{distance:.3g} точок від лівого краю слайда"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
 #, python-brace-format
@@ -7422,65 +7155,31 @@ msgstr "Порожній слайд"
 msgid "Waiting for Powerpoint..."
 msgstr "Очікування запуску PowerPoint..."
 
-#. Translators: The name of the NVDA command category for Skype specific commands.
-msgid "Skype"
-msgstr "Скайп"
-
-msgid "Reports and moves the review cursor to a recent message"
-msgstr "Переміщає переглядовий курсор на попереднє повідомлення і читає його"
-
-#. Translators: Indicates that a contact stopped typing.
-msgid "Typing stopped"
-msgstr "Припинив друкувати"
-
-# An open-source (and free) Screen Reader for the Windows Operating System
-# Created by Michael Curran, with help from James Teh and others
-# Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
-#. Translators: This is the name of a button in sound recorder.
-msgid "Rewind"
-msgstr "Перемотати"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Fast forward"
-msgstr "Швидше вперед"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Play"
-msgstr "Відтворити"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Stop"
-msgstr "Зупинити"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Record"
-msgstr "Запис"
-
 msgid "left"
-msgstr "Лівий"
+msgstr "лівий"
 
 msgid "right"
-msgstr "Правий"
+msgstr "правий"
 
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 msgctxt "shuffle"
 msgid "on"
-msgstr "Увімкнено"
+msgstr "увімкнено"
 
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now off.
 msgctxt "shuffle"
 msgid "off"
-msgstr "Вимкнено"
+msgstr "вимкнено"
 
 #. Translators: the user has pressed the repeat track toggle in winamp, repeat is now on.
 msgctxt "repeat"
 msgid "on"
-msgstr "Увімкнено"
+msgstr "увімкнено"
 
 #. Translators: the user has pressed the repeat track toggle in winamp, repeat is now off.
 msgctxt "repeat"
 msgid "off"
-msgstr "Вимкнено"
+msgstr "вимкнено"
 
 #. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
 msgid "No emoji"
@@ -7541,11 +7240,11 @@ msgstr "Freedom Scientific Focus/PAC Mate series"
 #. Translators: The name of a key on a braille display, that scrolls the display
 #. to show previous/next part of a long line.
 msgid "display scroll"
-msgstr "Прокрутити екран"
+msgstr "прокрутити екран"
 
 #. Translators: The name of a key on a braille display, that scrolls the display to show the next/previous line.
 msgid "line scroll"
-msgstr "Прокрутити рядок"
+msgstr "прокрутити рядок"
 
 #. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
@@ -7590,6 +7289,15 @@ msgstr "Seika braille displays"
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
 msgstr "SuperBraille"
+
+#. Translators: The title of the NVDA Braille Viewer tool window.
+msgid "NVDA Braille Viewer"
+msgstr "Переглядач Брайля"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether the braille viewer is shown at startup or not.
+msgid "&Show Braille Viewer on Startup"
+msgstr "&Показувати переглядач Брайля при запуску"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -7772,6 +7480,10 @@ msgstr "Переглянути журнал роботи"
 msgid "Speech viewer"
 msgstr "Переглядач мовлення"
 
+#. Translators: The label for the menu item to toggle Braille Viewer.
+msgid "Braille viewer"
+msgstr "Переглядач Брайля"
+
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
 msgstr "Консоль Python"
@@ -7825,7 +7537,7 @@ msgstr "С&писок розробників"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
 msgid "We&lcome dialog..."
-msgstr "Діалог \"Ла&скаво просимо\""
+msgstr "Діалог \"Ла&скаво просимо\"..."
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -8027,12 +7739,16 @@ msgstr ""
 #. Translators: The label of a Yes button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
 #. the add-on
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. agree to enabling the curtain.
 msgid "&Yes"
 msgstr "&Так"
 
 #. Translators: The label of a No button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to decide not to
 #. install the add-on
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. disagree to enabling the curtain.
 msgid "&No"
 msgstr "&Ні"
 
@@ -8078,7 +7794,7 @@ msgstr "URL: {url}"
 
 #. Translators: the minimum NVDA version part of the About Add-on information
 msgid "Minimum required NVDA version: {}"
-msgstr "потребує мінімум версії NVDA {}"
+msgstr "потребує мінімум версії NVDA: {}"
 
 #. Translators: the last NVDA version tested part of the About Add-on information
 msgid "Last NVDA version tested: {}"
@@ -8347,7 +8063,7 @@ msgstr "&видалити"
 #. in the Configuration Profiles dialog.
 #. See the Configuration Profiles section of the User Guide for details.
 msgid "&Triggers..."
-msgstr "&Автоперемикачі профілів"
+msgstr "&Автоперемикачі профілів..."
 
 #. Translators: The label of a checkbox in the Configuration Profiles dialog.
 msgid "Temporarily d&isable all triggers"
@@ -8361,17 +8077,17 @@ msgstr "(нормальна конфігурація)"
 #. Translators: Reported for a profile which is being edited
 #. in the Configuration Profiles dialog.
 msgid "editing"
-msgstr "Редагування"
+msgstr "редагування"
 
 #. Translators: Reported for a profile which has been manually activated
 #. in the Configuration Profiles dialog.
 msgid "manual"
-msgstr "Вручну"
+msgstr "вручну"
 
 #. Translators: Reported for a profile which is currently triggered
 #. in the Configuration Profiles dialog.
 msgid "triggered"
-msgstr "Активний"
+msgstr "активний"
 
 #. Translators: An error displayed when activating a configuration profile fails.
 msgid "Error activating profile."
@@ -8414,7 +8130,7 @@ msgid "That profile already exists. Please choose a different name."
 msgstr "Профіль з таким іменем вже існує. Вкажіть, будь ласка, інше ім'я."
 
 msgid "Error renaming profile."
-msgstr "Помилка при перейменуванні профіля"
+msgstr "Помилка при перейменуванні профіля."
 
 #. Translators: Displayed for the configuration profile trigger for the current application.
 #. %s is replaced by the application executable name.
@@ -8480,7 +8196,7 @@ msgstr ""
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
 msgstr ""
-"Помилка при створенні профілю - можливо, ваша система - лише для читання"
+"Помилка при створенні профілю - можливо, ваша система - лише для читання."
 
 #. Translators: The prompt asking the user whether they wish to
 #. manually activate a configuration profile that has just been created.
@@ -8540,11 +8256,11 @@ msgstr ""
 
 #. Translators: The message displayed when NVDA has been successfully installed.
 msgid "Successfully installed NVDA. "
-msgstr "NVDA встановлено успішно."
+msgstr "NVDA встановлено успішно. "
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 msgid "Successfully updated your installation of NVDA. "
-msgstr "Оновлення попередньо встановленої версії NVDA пройшло успішно."
+msgstr "Оновлення попередньо встановленої версії NVDA пройшло успішно. "
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
@@ -8553,7 +8269,7 @@ msgstr "Будь ласка, натисніть \"Гаразд\" для  зап�
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
 msgid "Success"
-msgstr "успішно"
+msgstr "Успішно"
 
 #. Translators: The title of the Install NVDA dialog.
 msgid "Install NVDA"
@@ -8656,7 +8372,7 @@ msgstr "&Запустити нову портабельну копію післ�
 #. in the Create Portable NVDA dialog.
 msgid "Please specify a directory in which to create the portable copy."
 msgstr ""
-"Будь ласка, вкажіть папку, в яку ви бажаєте встановити портабельну копію"
+"Будь ласка, вкажіть папку, в яку ви бажаєте встановити портабельну копію."
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
@@ -8736,19 +8452,19 @@ msgstr "вимкнено"
 
 #. Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 msgid "info"
-msgstr "Інфо"
+msgstr "інфо"
 
 #. Translators: One of the log levels of NVDA (the debug warning shows debugging messages and warnings as NVDA runs).
 msgid "debug warning"
-msgstr "Попередження відлагодження"
+msgstr "попередження відлагодження"
 
 #. Translators: One of the log levels of NVDA (the input/output shows keyboard commands and/or braille commands as well as speech and/or braille output of NVDA).
 msgid "input/output"
-msgstr "Введення/Вивід"
+msgstr "введення/вивід"
 
 #. Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
 msgid "debug"
-msgstr "Відлагодження"
+msgstr "відлагодження"
 
 #. Translators: The label for a setting in general settings to select NVDA's interface language (once selected, NVDA must be restarted; the option user default means the user's Windows language will be used).
 msgid "&Language (requires restart to fully take effect):"
@@ -8768,7 +8484,7 @@ msgstr "Відтворювати звук під час запуску прог�
 
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
-msgstr "Рівень запису у журнал &звіту"
+msgstr "Рівень запису у журнал &звіту:"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
@@ -8884,7 +8600,7 @@ msgstr "&Синтезатор:"
 #. of an output device are default soundcard, usb
 #. headphones, etc.
 msgid "Output &device:"
-msgstr "Пристрій &виводу"
+msgstr "Пристрій &виводу:"
 
 #. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 msgid "Audio &ducking mode:"
@@ -8910,7 +8626,8 @@ msgid "Automatic language switching (when supported)"
 msgstr "Автоматично переключатися між мовами (якщо підтримується)"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings panel (if checked, different voices for dialects will be used to read text in that dialect).
+#. voice settings panel (if checked, different voices for dialects will be used to
+#. read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
 msgstr "Автоматично переключатися між діалектами (якщо підтримується)"
 
@@ -8924,9 +8641,6 @@ msgstr "&Рівень символів та пунктуації:"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Довіряти голосу для вибраної мови обробку знаків та символів"
 
-#. Translators: This is the label for a checkbox in the
-#. voice settings panel (if checked, data from the unicode CLDR will be used
-#. to speak emoji descriptions).
 msgid ""
 "Include Unicode Consortium data (including emoji) when processing characters "
 "and symbols"
@@ -8934,9 +8648,10 @@ msgstr ""
 "Включити дані Консорціуму Юнікоду (включно з емодзі) при обробці знаків та "
 "символів"
 
-#. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
+#. Translators: This is a label for a setting in voice settings (an edit box to change
+#. voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
-msgstr "Змінювати висоту голосу для великих букв у відсотках:"
+msgstr "Змінювати висоту голосу для великих літер у відсотках"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
@@ -8946,7 +8661,7 @@ msgstr "Промовляти \"&Велика\" перед великими лі�
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
 msgid "&Beep for capitals"
-msgstr "&Сигнал перед великими літерами"
+msgstr "&Сигнал для великих літер"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
@@ -9026,7 +8741,7 @@ msgstr "Увімкнути відстеження &мишки"
 #. Translators: This is the label for a combobox in the
 #. mouse settings panel.
 msgid "Text &unit resolution:"
-msgstr "Роздільна здатність &текстового блоку"
+msgstr "Роздільна здатність &текстового блоку:"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -9151,7 +8866,7 @@ msgstr "Передбачати позицію об'єкта, коли точна
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "Report object &descriptions"
-msgstr "читати &опис об'єкта"
+msgstr "Читати &опис об'єкта"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings panel.
@@ -9330,8 +9045,8 @@ msgid "Tones"
 msgstr "Звукові сигнали"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both  Speech and Tones"
-msgstr "Мовлення та звукові сигнали"
+msgid "Both Speech and Tones"
+msgstr "Мовлення й сигнали"
 
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -9400,6 +9115,21 @@ msgstr "&Цитата"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+msgid "&Groupings"
+msgstr "&Групування"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+msgid "Lan&dmarks and regions"
+msgstr "Орі&єнтири й регіони"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+msgid "Arti&cles"
+msgstr "Стат&ті"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "Fra&mes"
 msgstr "Фрей&ми"
 
@@ -9460,21 +9190,46 @@ msgstr ""
 "Використовувати UI Automation для доступу до документів Microsoft &Word якщо "
 "можливо"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid "Use UI Automation to access the Windows Console when available"
-msgstr ""
-"Використовувати UI Automation для доступу до консолі Windows, якщо можливо"
+#. Translators: This is the label for a combo box for selecting the
+#. active console implementation in the advanced settings panel.
+#. Choices are automatic, prefer UIA, and legacy.
+msgid "Windows C&onsole support:"
+msgstr "Підтримка консолі &Windows:"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use UIA in the Windows Console when available.
+msgid "Prefer UIA"
+msgstr "Надавати перевагу UIA"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use its legacy Windoes Console support
+#. in all cases.
+msgid "Legacy"
+msgstr "Застаріла"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Terminal programs"
+msgstr "Термінальні програми"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in UIA consoles (may improve performance)"
-msgstr "Промовляти &паролі в консолях UIA (може поліпшити продуктивність)"
+msgid "Speak &passwords in Windows Console (may improve performance)"
+msgstr "Промовляти &паролі в консолях Windows (може поліпшити продуктивність)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid ""
+"Use the new t&yped character support in legacy Windows consoles when "
+"available"
+msgstr ""
+"Використовувати нову підтримку &введення символів у застарілих консолях "
+"Windows, якщо доступно"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Automatically set system &focus to focusable elements"
-msgstr "автоматично встановлювати &системний фокус на фокусовані елементи"
+msgstr "Автоматично встановлювати &системний фокус на фокусовані елементи"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9589,7 +9344,7 @@ msgstr "Заміна"
 
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is case sensitive or not.
 msgid "case"
-msgstr "Регістр"
+msgstr "регістр"
 
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
 msgid "Type"
@@ -9625,10 +9380,14 @@ msgstr "Брайлівський &Дисплей:"
 msgid "&Port:"
 msgstr "&Порт:"
 
-#, python-format
-msgid "Could not load the %s display."
-msgstr "Не вдалося завантажити дисплей %s."
+#. Translators: The message in a dialog presented when NVDA is unable to load the selected
+#. braille display.
+#, python-brace-format
+msgid "Could not load the {display} display."
+msgstr "Не вдалося завантажити дисплей {display}."
 
+#. Translators: The title in a dialog presented when NVDA is unable to load the selected
+#. braille display.
 msgid "Braille Display Error"
 msgstr "Помилка брайлівського дисплея"
 
@@ -9688,6 +9447,68 @@ msgstr "Уникати розбивання &слів, якщо можливо"
 msgid "Focus context presentation:"
 msgstr "Подання контексту:"
 
+#. Translators: This message is presented when
+#. NVDA is unable to load a single vision enhancement provider.
+#, python-brace-format
+msgid "Could not load the {providerName} vision enhancement provider"
+msgstr ""
+"Неможливо завантажити  постачальника покращення візуального сприйняття "
+"{providerName}"
+
+#. Translators: This message is presented when NVDA is unable to
+#. load multiple vision enhancement providers.
+#, python-brace-format
+msgid ""
+"Could not load the following vision enhancement providers:\n"
+"{providerNames}"
+msgstr ""
+"Неможливо завантажити перелічених нижче постачальників покращення "
+"візуального сприйняття:\n"
+"{providerNames}"
+
+#. Translators: The title of the vision enhancement provider error message box.
+msgid "Vision Enhancement Provider Error"
+msgstr "Помилка постачальника покращення візуального сприйняття"
+
+#. Translators: This message is presented when
+#. NVDA is unable to gracefully terminate a single vision enhancement provider.
+#, python-brace-format
+msgid ""
+"Could not gracefully terminate the {providerName} vision enhancement provider"
+msgstr ""
+"Не вдалося коректно завершити постачальника покращення візуального "
+"сприйняття {providerName}"
+
+#, python-brace-format
+msgid ""
+"Could not gracefully terminate the following vision enhancement providers:\n"
+"{providerNames}"
+msgstr ""
+"Не вдалося коректно завершити перелічених нижче постачальників покращення "
+"візуального сприйняття:\n"
+"{providerNames}"
+
+#. Translators: This is a label appearing on the vision settings panel.
+msgid "Configure visual aids."
+msgstr "Налаштуйте візуальну допомогу."
+
+#. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
+msgid "Enable"
+msgstr "Увімкнути"
+
+#. Translators: Options label on a vision enhancement provider on the vision settings category panel
+#. Translators: The label for a group box containing the NVDA highlighter options.
+msgid "Options:"
+msgstr "Параметри:"
+
+#. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
+msgid ""
+"Unable to configure user interface for Vision Enhancement Provider, it can "
+"not be enabled."
+msgstr ""
+"Неможливо налаштувати інтерфейс для постачальника покращення візуального "
+"сприйняття, його не можна увімкнути."
+
 #. Translators: This is the label for the NVDA settings dialog.
 msgid "NVDA Settings"
 msgstr "Налаштування NVDA"
@@ -9713,7 +9534,7 @@ msgstr "Вимова символів та знаків пунктуації (%s
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
 msgctxt "speechSymbols"
 msgid "&Filter by:"
-msgstr "&Фільтрувати за"
+msgstr "&Фільтрувати за:"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
 msgid "&Symbols"
@@ -9762,6 +9583,10 @@ msgctxt "inputGestures"
 msgid "&Filter by:"
 msgstr "&Фільтрувати за:"
 
+#. Translators: The label of a button to reset all gestures in the Input Gestures dialog.
+msgid "Reset to factory &defaults"
+msgstr "Повернути до типових &значень"
+
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
@@ -9773,11 +9598,25 @@ msgstr "{main} ({source})"
 msgid "Enter input gesture:"
 msgstr "Введіть жест вводу:"
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid ""
+"Are you sure you want to reset all gestures to their factory defaults?\n"
+"\t\t\t\n"
+"\t\t\tAll of your user defined gestures, whether previously set or defined "
+"during this session, will be lost.\n"
+"\t\t\tThis cannot be undone."
+msgstr ""
+"Ви впевнені, що хочете повернути усі жести до їхніх типових значень?\n"
+"\t\t\t\n"
+"\t\t\tУсі користувацькі жести, призначені раніше чи під час цього сеансу, "
+"буде втрачено.\n"
+"\t\t\tЦя дія незворотна."
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
-"Не вдалося зберегти користувацькі жести - можливо, файлова система - лише "
-"для читання"
+"Не вдалося зберегти користувацькі жести - можливо, файлова система лише для "
+"читання."
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -9788,10 +9627,416 @@ msgstr "Завершити математичну взаємодію"
 msgid "Math interaction not supported."
 msgstr "Математична взаємодія не підтримується."
 
+#. Translators: This is spoken when NVDA moves to an empty line.
+#. Translators: This is spoken when the line is considered blank.
+msgid "blank"
+msgstr "порожньо"
+
+#. Translators: cap will be spoken before the given letter when it is capitalized.
+#, python-format
+msgid "cap %s"
+msgstr "велика %s"
+
+#. Translators: This is spoken when the given line has no indentation.
+msgid "no indent"
+msgstr "немає відступу"
+
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "виділено %s"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s виділено"
+
+#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#, python-format
+msgid "%d characters"
+msgstr "%d Символів"
+
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
+#, python-format
+msgid "%s unselected"
+msgstr "%s не виділено"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s виділено замість"
+
+#. Translators: Reported when selection is removed.
+msgid "selection removed"
+msgstr "виділення видалено"
+
+#. Translators: Speaks current row number (example output: row 3).
+#, python-format
+msgid "row %s"
+msgstr "рядок %s"
+
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-format
+msgid "through %s"
+msgstr "по %s"
+
+#. Translators: Speaks current column number (example output: column 3).
+#, python-format
+msgid "column %s"
+msgstr "стовпчик %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "по  рядок {row} column {column}"
+
+#. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
+#, python-brace-format
+msgid "with {rowCount} rows and {columnCount} columns"
+msgstr "із {rowCount} рядків і {columnCount} стовпців"
+
+#. Translators: Speaks number of columns (example output: with 4 columns).
+#, python-format
+msgid "with %s columns"
+msgstr "із %s стовпців"
+
+#. Translators: Speaks number of rows (example output: with 2 rows).
+#, python-format
+msgid "with %s rows"
+msgstr "із %s рядків"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "рівень %s"
+
+#. Translators: Number of items in a list (example output: list with 5 items).
+#, python-format
+msgid "with %s items"
+msgstr "із %s елементів"
+
+#. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
+#, python-format
+msgid "out of %s"
+msgstr "поза %s"
+
+#. Translators: Indicates the page number in a document.
+#. %s will be replaced with the page number.
+#, python-format
+msgid "page %s"
+msgstr "сторінка %s"
+
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "секція %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+#, python-brace-format
+msgid "column {0} of {1}"
+msgstr "стовпець {0} із {1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s стовпців"
+
+msgid "continuous section break"
+msgstr "розрив розділу і новий розділ на тій самій сторінці"
+
+msgid "new column section break"
+msgstr "розрив розділу і новий розділ у тій самій колонці"
+
+msgid "new page section break"
+msgstr "розрив розділу і новий розділ на наступній сторінці"
+
+msgid "even pages section break"
+msgstr "розрив розділу і новий розділ на наступній парній сторінці"
+
+msgid "odd pages section break"
+msgstr "розрив розділу і новий розділ на наступній непарній сторінці"
+
+msgid "column break"
+msgstr "розрив стовпчика"
+
+#. Translators: Speaks the heading level (example output: heading level 2).
+#, python-format
+msgid "heading level %d"
+msgstr "заголовок рівня %d"
+
+#. Translators: Indicates the style of text.
+#. A style is a collection of formatting settings and depends on the application.
+#. %s will be replaced with the name of the style.
+#, python-format
+msgid "style %s"
+msgstr "стиль %s"
+
+#. Translators: Indicates that text has reverted to the default style.
+#. A style is a collection of formatting settings and depends on the application.
+msgid "default style"
+msgstr "типовий стиль"
+
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "немає рамок рядків"
+
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+#, python-brace-format
+msgid "{color1} to {color2}"
+msgstr "{color1} на {color2}"
+
+#. Translators: Reported when both the text and background colors change.
+#. {color} will be replaced with the text color.
+#. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
+msgid "{color} on {backgroundColor}"
+msgstr "{color} на {backgroundColor}"
+
+#. Translators: Reported when the text color changes (but not the background color).
+#. {color} will be replaced with the text color.
+#, python-brace-format
+msgid "{color}"
+msgstr "{color}"
+
+#. Translators: Reported when the background color changes (but not the text color).
+#. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
+msgid "{backgroundColor} background"
+msgstr "{backgroundColor} Задній фон"
+
+#, python-brace-format
+msgid "background pattern {pattern}"
+msgstr "background pattern {pattern}"
+
+#. Translators: Indicates the line number of the text.
+#. %s will be replaced with the line number.
+#, python-format
+msgid "line %s"
+msgstr "рядок %s"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "не вставлено"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "не видалено"
+
+#. Translators: Reported when text is revised.
+#, python-format
+msgid "revised %s"
+msgstr "перевірено %s"
+
+#. Translators: Reported when text is not revised.
+#, python-format
+msgid "no revised %s"
+msgstr "не перевірено %s"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "помічено"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "не помічено"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "жирний"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "не жирний"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "виділено"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "не виділено"
+
+#. Translators: Reported when text is not bolded.
+msgid "no bold"
+msgstr "не напівжирний"
+
+#. Translators: Reported when text is not italicized.
+msgid "no italic"
+msgstr "не курсив"
+
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "подвійний закреслений"
+
+#. Translators: Reported when text is formatted with strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "strikethrough"
+msgstr "закреслений"
+
+#. Translators: Reported when text is formatted without strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "no strikethrough"
+msgstr "не закреслений"
+
+#. Translators: Reported when text is underlined.
+msgid "underlined"
+msgstr "підкреслений"
+
+#. Translators: Reported when text is not underlined.
+msgid "not underlined"
+msgstr "не підкреслений"
+
+#. Translators: Reported when text is hidden.
+msgid "hidden"
+msgstr "приховано"
+
+#. Translators: Reported when text is not hidden.
+msgid "not hidden"
+msgstr "не приховано"
+
+#. Translators: Reported for text which is at the baseline position;
+#. i.e. not superscript or subscript.
+msgid "baseline"
+msgstr "базова лінія"
+
+#. Translators: Reported when text is left-aligned.
+msgid "align left"
+msgstr "вирівнювання за лівим краєм"
+
+#. Translators: Reported when text is centered.
+msgid "align center"
+msgstr "вирівнювання за центром"
+
+#. Translators: Reported when text is right-aligned.
+msgid "align right"
+msgstr "вирівнювання за правим краєм"
+
+#. Translators: Reported when text is justified.
+#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
+msgid "align justify"
+msgstr "вирівнювання за шириною"
+
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "align distributed"
+
+#. Translators: Reported when text has reverted to default alignment.
+msgid "align default"
+msgstr "типове вирівнювання"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "вертикальне вирівнювання зверху"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "вертикальне вирівнювання посередині"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "вертикальне вирівнювання знизу"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "вертикальне вирівнювання базової лінії"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "вертикальне вирівнювання по ширині"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "вертикальне розподілене вирівнювання"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "типове вертикальне вирівнювання"
+
+#. Translators: the label for paragraph format left indent
+msgid "left indent"
+msgstr "відступ зліва"
+
+#. Translators: the message when there is no paragraph format left indent
+msgid "no left indent"
+msgstr "немає відступу зліва"
+
+#. Translators: the label for paragraph format right indent
+msgid "right indent"
+msgstr "відступ справа"
+
+#. Translators: the message when there is no paragraph format right indent
+msgid "no right indent"
+msgstr "немає відступу справа"
+
+#. Translators: the label for paragraph format hanging indent
+msgid "hanging indent"
+msgstr "висячий відступ"
+
+#. Translators: the message when there is no paragraph format hanging indent
+msgid "no hanging indent"
+msgstr "немає висячого відступу"
+
+#. Translators: the label for paragraph format first line indent
+msgid "first line indent"
+msgstr "відступ першого рядка"
+
+#. Translators: the message when there is no paragraph format first line indent
+msgid "no first line indent"
+msgstr "немає відступу першого рядка"
+
+#. Translators: a type of line spacing (E.g. single line spacing)
+#, python-format
+msgid "line spacing %s"
+msgstr "міжрядковий інтервал %s"
+
+#. Translators: Reported when text no longer contains a comment.
+msgid "out of comment"
+msgstr "поза коментарем"
+
+#. Translators: Reported when text contains a spelling error.
+msgid "spelling error"
+msgstr "орфографічна помилка"
+
+#. Translators: Reported when moving out of text containing a spelling error.
+msgid "out of spelling error"
+msgstr "поза орфографічною помилкою"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "граматична помилка"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "поза граматичною помилкою"
+
+#. Translators: Indicates end of a table.
+msgid "out of table"
+msgstr "поза таблицею"
+
+#. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
+#, python-brace-format
+msgid "table with {columnCount} columns and {rowCount} rows"
+msgstr "таблиця із {columnCount} стовпців і {rowCount} рядків"
+
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
 msgid "none"
-msgstr "Нічого"
+msgstr "нічого"
 
 #. Translators: Description for a speech synthesizer.
 msgid "Windows OneCore voices"
@@ -9802,7 +10047,7 @@ msgid "No speech"
 msgstr "Без мовлення"
 
 msgid "word"
-msgstr "Слово"
+msgstr "слово"
 
 #. Translators: the current position's screen coordinates in pixels
 #, python-brace-format
@@ -9846,6 +10091,60 @@ msgid ""
 msgstr ""
 "Вмикає та вимикає екранне представлення вмісту документа, не змінюючи його"
 
+#. Translators: shown for a highlighter setting that toggles
+#. highlighting the system focus.
+msgid "Highlight system fo&cus"
+msgstr "Підсвічувати системний &фокус"
+
+#. Translators: shown for a highlighter setting that toggles
+#. highlighting the browse mode cursor.
+msgid "Highlight browse &mode cursor"
+msgstr "Підсвічувати каретку &режиму огляду"
+
+#. Translators: shown for a highlighter setting that toggles
+#. highlighting the navigator object.
+msgid "Highlight navigator &object"
+msgstr "Підсвічувати &об'єктний навігатор"
+
+#. Translators: Description for NVDA's built-in screen highlighter.
+msgid "Focus Highlight"
+msgstr "Підсвічування фокуса"
+
+#. Translators: The label for a checkbox that enables / disables focus highlighting
+#. in the NVDA Highlighter vision settings panel.
+msgid "&Enable Highlighting"
+msgstr "&Увімкнути підсвічування"
+
+#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. making it black.
+msgid "Screen Curtain"
+msgstr "Екранна завіса"
+
+#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. the screen curtain.
+#, python-brace-format
+msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
+msgstr "Завжди попереджати, коли вмикається {screenCurtainTranslatedName}"
+
+#. Translators: A warning shown when activating the screen curtain.
+#. the translation of "Screen Curtain" should match the "translated name"
+msgid ""
+"Enabling Screen Curtain will make the screen of your computer completely "
+"black. Ensure you will be able to navigate without any use of your screen "
+"before continuing. \n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"Увімкнення екранної завіси зробить екран вашого комп'ютера повністю чорним. "
+"Перед продовженням переконайтеся, що зможете користуватися комп'ютером без "
+"екрана.\n"
+"\n"
+"Бажаєте продовжити?"
+
+#. Translators: option to enable screen curtain in the vision settings panel
+msgid "Make screen black (immediate effect)"
+msgstr "Зробити екран чорним (миттєвий результат)"
+
 msgid "Taskbar"
 msgstr "Панель завдань"
 
@@ -9867,7 +10166,7 @@ msgid ""
 "Formatting Settings"
 msgstr ""
 "Не вдається встановити заголовок. Будь ласка, увімкніть читання заголовків "
-"таблиці у діалозі \"Форматування документа\"."
+"таблиці у діалозі \"Форматування документа\""
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
@@ -9945,7 +10244,7 @@ msgid "Not in table"
 msgstr "Поза таблицею"
 
 msgid "invoke"
-msgstr "Активізувати"
+msgstr "активізувати"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -9970,7 +10269,7 @@ msgstr "видалення: {text}"
 #. Translators: The general label shown for track changes
 #, python-brace-format
 msgid "track change: {text}"
-msgstr "Відстежується зміна: {text}"
+msgstr "відстежується зміна: {text}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #, python-brace-format
@@ -9983,7 +10282,7 @@ msgid "{comment} by {author} on {date}"
 msgstr "{comment} від {author} в {date}"
 
 msgid "Desktop"
-msgstr "робочий стіл"
+msgstr "Робочий стіл"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -10178,7 +10477,7 @@ msgstr "Розрізана кільцева діаграма"
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line"
-msgstr "рядок"
+msgstr "Рядок"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -10350,11 +10649,11 @@ msgstr "slice"
 #. Translators: A column in a column chart.
 msgctxt "chart"
 msgid "column"
-msgstr "Стовпчик"
+msgstr "стовпчик"
 
 #. Translators: A data point in a line chart.
 msgid "data point"
-msgstr "Точка даних"
+msgstr "точка даних"
 
 #. Translators: A segment of a chart for charts which don't have a specific name for segments.
 msgid "item"
@@ -10502,7 +10801,7 @@ msgstr "Збільшено на {incrementValue} у точці {previousIndex}, 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr "Зменшено на {decrementValue} у точці {previousIndex}, "
+msgstr "зменшено на {decrementValue} у точці {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
@@ -10600,7 +10899,7 @@ msgstr "Степенева"
 
 #. Translators: Substitute superscript two by square for R square value
 msgid " square "
-msgstr " квадрат"
+msgstr " квадрат "
 
 #. Translators: Substitute - by minus in trendline equations.
 msgid " minus "
@@ -10641,7 +10940,7 @@ msgstr ""
 
 #. Translators: Indicates the chart area of a Microsoft Office chart.
 msgid "Chart area "
-msgstr "Область діаграми"
+msgstr "Область діаграми "
 
 #. Translators: Details about the plot area of a Microsoft Office chart.
 #, python-brace-format
@@ -10681,7 +10980,7 @@ msgstr "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 #. Translators: The default background color  when a color has not been set by the author.
 #. Translators: the default (automatic) color in Microsoft Word
 msgid "default color"
-msgstr "Типовий колір"
+msgstr "типовий колір"
 
 #. Translators: The color of text cannot be detected.
 #. Translators: The background color cannot be detected.
@@ -10691,7 +10990,7 @@ msgstr "Невідомий колір"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Excel controls the pattern.
 msgid "automatic"
-msgstr "Автоматично"
+msgstr "автоматично"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
@@ -10921,19 +11220,19 @@ msgstr "{firstAddress} {firstContent} до {lastAddress} {lastContent}"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "top edge"
-msgstr "Межа зверху"
+msgstr "верхній край"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "bottom edge"
-msgstr "Межа знизу"
+msgstr "нижній край"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "left edge"
-msgstr "Ліва межа"
+msgstr "лівий край"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "right edge"
-msgstr "Права межа"
+msgstr "правий край"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "up-right diagonal line"
@@ -10941,7 +11240,7 @@ msgstr "up-right diagonal line"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "down-right diagonal line"
-msgstr "Діагональ вниз направо"
+msgstr "діагональ вниз направо"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "horizontal borders except outside"
@@ -10949,7 +11248,7 @@ msgstr "horizontal borders except outside"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "vertical borders except outside"
-msgstr "Вертикальні межі в середині"
+msgstr "вертикальні межі в середині"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "continuous"
@@ -10957,19 +11256,19 @@ msgstr "continuous"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "dashed"
-msgstr "Штрих"
+msgstr "штрих"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "dash dot"
-msgstr "Штрихпунктирна"
+msgstr "штрихпунктирна"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "dash dot dot"
-msgstr "Штрихпунктирна з двома крапками"
+msgstr "штрихпунктирна з двома крапками"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "dotted"
-msgstr "Пунктирна"
+msgstr "пунктирна"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "double"
@@ -10981,7 +11280,7 @@ msgstr "slanted dash dot"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "hair"
-msgstr "Надтонка"
+msgstr "надтонка"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "thin"
@@ -10989,7 +11288,7 @@ msgstr "thin"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "medium"
-msgstr "Середня"
+msgstr "середня"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "thick"
@@ -11044,71 +11343,71 @@ msgstr "{desc} {position}"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
-msgstr "Вставка"
+msgstr "вставка"
 
 #. Translators: a Microsoft Word revision type (deleted content)
 msgid "deletion"
-msgstr "Видалення"
+msgstr "видалення"
 
 #. Translators: a Microsoft Word revision type (changed content property, e.g. font, color)
 msgid "property"
-msgstr "Властивість"
+msgstr "властивість"
 
 #. Translators: a Microsoft Word revision type (changed paragraph number)
 msgid "paragraph number"
-msgstr "Номер абзаца"
+msgstr "номер абзаца"
 
 #. Translators: a Microsoft Word revision type (display field)
 msgid "display field"
-msgstr "Поле індикації"
+msgstr "поле індикації"
 
 #. Translators: a Microsoft Word revision type (reconcile)
 msgid "reconcile"
-msgstr "Погодити"
+msgstr "погодити"
 
 #. Translators: a Microsoft Word revision type (conflicting revision)
 msgid "conflict"
-msgstr "Конфлікт"
+msgstr "конфлікт"
 
 #. Translators: a Microsoft Word revision type (replaced content)
 msgid "replace"
-msgstr "Заміна"
+msgstr "заміна"
 
 #. Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
 msgid "paragraph property"
-msgstr "Властивості абзаца"
+msgstr "властивості абзаца"
 
 #. Translators: a Microsoft Word revision type (table)
 msgid "table property"
-msgstr "Властивості таблиці"
+msgstr "властивості таблиці"
 
 #. Translators: a Microsoft Word revision type (section property)
 msgid "section property"
-msgstr "Властивості секції"
+msgstr "властивості секції"
 
 #. Translators: a Microsoft Word revision type (style definition)
 msgid "style definition"
-msgstr "Визначення стилю"
+msgstr "визначення стилю"
 
 #. Translators: a Microsoft Word revision type (moved from)
 msgid "moved from"
-msgstr "Перемістити з"
+msgstr "перемістити з"
 
 #. Translators: a Microsoft Word revision type (moved to)
 msgid "moved to"
-msgstr "Перемістити до"
+msgstr "перемістити до"
 
 #. Translators: a Microsoft Word revision type (inserted table cell)
 msgid "cell insertion"
-msgstr "Вставка комірки"
+msgstr "вставка комірки"
 
 #. Translators: a Microsoft Word revision type (deleted table cell)
 msgid "cell deletion"
-msgstr "Видалення комірки"
+msgstr "видалення комірки"
 
 #. Translators: a Microsoft Word revision type (merged table cells)
 msgid "cell merge"
-msgstr "Об'єднання комірок"
+msgstr "об'єднання комірок"
 
 msgid "Comments"
 msgstr "Коментарі"
@@ -11230,7 +11529,7 @@ msgstr "Вирівняно зліва"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "centered"
-msgstr "Центровано"
+msgstr "центровано"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Right aligned"
@@ -11280,6 +11579,22 @@ msgstr "{styleName} style, outline level {outlineLevel}"
 msgid "{size:g} point font"
 msgstr "{size:g} point font"
 
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking on"
+msgstr "Відстеження змін увімкнено"
+
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking off"
+msgstr "Відстеження змін вимкнено"
+
+#. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
+msgid "Display nonprinting characters"
+msgstr "Показувати недруковані символи"
+
+#. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
+msgid "Hide nonprinting characters"
+msgstr "Приховати недруковані символи"
+
 #. Translators: a measurement in Microsoft Word
 #, python-brace-format
 msgid "{offset:.3g} characters"
@@ -11322,6 +11637,51 @@ msgstr "Подвійний міжрядковий інтервал"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Полуторний міжрядковий інтервал"
+
+#, fuzzy
+#~ msgid "Highlighter"
+#~ msgstr "Цікавий фрагмент"
+
+#, fuzzy
+#~ msgid "NVDA Highlighter"
+#~ msgstr "%s позначили фрагмент як цікавий"
+
+#~ msgid "Koine Greek"
+#~ msgstr "Koine Greek"
+
+#~ msgid "lmk %s"
+#~ msgstr "орі %s"
+
+#~ msgid "Start"
+#~ msgstr "старт"
+
+#~ msgid "Skype"
+#~ msgstr "Скайп"
+
+#~ msgid "Reports and moves the review cursor to a recent message"
+#~ msgstr ""
+#~ "Переміщає переглядовий курсор на попереднє повідомлення і читає його"
+
+#~ msgid "Typing stopped"
+#~ msgstr "Припинив друкувати"
+
+# An open-source (and free) Screen Reader for the Windows Operating System
+# Created by Michael Curran, with help from James Teh and others
+# Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
+#~ msgid "Rewind"
+#~ msgstr "Перемотати"
+
+#~ msgid "Fast forward"
+#~ msgstr "Швидше вперед"
+
+#~ msgid "Play"
+#~ msgstr "Відтворити"
+
+#~ msgid "Stop"
+#~ msgstr "Зупинити"
+
+#~ msgid "Record"
+#~ msgstr "Запис"
 
 #~ msgid "Selected %s"
 #~ msgstr "Виділено %s"

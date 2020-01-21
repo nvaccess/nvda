@@ -1026,9 +1026,8 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_previousLine(self,gesture):
 		info=api.getReviewPosition().copy()
-		if info._expandCollapseBeforeReview:
-			info.expand(textInfos.UNIT_LINE)
-			info.collapse()
+		info.expand(textInfos.UNIT_LINE)
+		info.collapse()
 		res=info.move(textInfos.UNIT_LINE,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
@@ -1058,9 +1057,8 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_nextLine(self,gesture):
 		info=api.getReviewPosition().copy()
-		if info._expandCollapseBeforeReview:
-			info.expand(textInfos.UNIT_LINE)
-			info.collapse()
+		info.expand(textInfos.UNIT_LINE)
+		info.collapse()
 		res=info.move(textInfos.UNIT_LINE,1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
@@ -1086,9 +1084,8 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_previousWord(self,gesture):
 		info=api.getReviewPosition().copy()
-		if info._expandCollapseBeforeReview:
-			info.expand(textInfos.UNIT_WORD)
-			info.collapse()
+		info.expand(textInfos.UNIT_WORD)
+		info.collapse()
 		res=info.move(textInfos.UNIT_WORD,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
@@ -1117,9 +1114,8 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_nextWord(self,gesture):
 		info=api.getReviewPosition().copy()
-		if info._expandCollapseBeforeReview:
-			info.expand(textInfos.UNIT_WORD)
-			info.collapse()
+		info.expand(textInfos.UNIT_WORD)
+		info.collapse()
 		res=info.move(textInfos.UNIT_WORD,1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
@@ -1148,9 +1144,8 @@ class GlobalCommands(ScriptableObject):
 		lineInfo=api.getReviewPosition().copy()
 		lineInfo.expand(textInfos.UNIT_LINE)
 		charInfo=api.getReviewPosition().copy()
-		if charInfo._expandCollapseBeforeReview:
-			charInfo.expand(textInfos.UNIT_CHARACTER)
-			charInfo.collapse()
+		charInfo.expand(textInfos.UNIT_CHARACTER)
+		charInfo.collapse()
 		res=charInfo.move(textInfos.UNIT_CHARACTER,-1)
 		if res==0 or charInfo.compareEndPoints(lineInfo,"startToStart")<0:
 			# Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
@@ -1195,9 +1190,8 @@ class GlobalCommands(ScriptableObject):
 		lineInfo=api.getReviewPosition().copy()
 		lineInfo.expand(textInfos.UNIT_LINE)
 		charInfo=api.getReviewPosition().copy()
-		if charInfo._expandCollapseBeforeReview:
-			charInfo.expand(textInfos.UNIT_CHARACTER)
-			charInfo.collapse()
+		charInfo.expand(textInfos.UNIT_CHARACTER)
+		charInfo.collapse()
 		res=charInfo.move(textInfos.UNIT_CHARACTER,1)
 		if res==0 or charInfo.compareEndPoints(lineInfo,"endToEnd")>=0:
 			# Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
@@ -1364,7 +1358,10 @@ class GlobalCommands(ScriptableObject):
 	def script_review_sayAll(self,gesture):
 		sayAllHandler.readText(sayAllHandler.CURSOR_REVIEW)
 	# Translators: Input help mode message for say all in review cursor command.
-	script_review_sayAll.__doc__ = _("Reads from the review cursor up to end of current text, moving the review cursor as it goes")
+	script_review_sayAll.__doc__ = _(
+		"Reads from the review cursor up to the end of the current text,"
+		" moving the review cursor as it goes"
+	)
 	script_review_sayAll.category=SCRCAT_TEXTREVIEW
 
 	def script_sayAll(self,gesture):
@@ -2462,10 +2459,11 @@ class GlobalCommands(ScriptableObject):
 					enableMessage = _("Temporary Screen curtain, enabled until next restart")
 
 				try:
-					vision.handler.initializeProvider(
-						screenCurtainProviderInfo,
-						temporary=tempEnable,
-					)
+					if not alreadyRunning:
+						vision.handler.initializeProvider(
+							screenCurtainProviderInfo,
+							temporary=tempEnable,
+						)
 				except Exception:
 					log.error("Screen curtain initialization error", exc_info=True)
 					# Translators: Reported when the screen curtain could not be enabled.

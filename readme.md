@@ -36,9 +36,9 @@ The NVDA source depends on several other packages to run correctly.
 The following dependencies need to be installed on your system:
 
 * [Python](https://www.python.org/), version 3.7, 32 bit
-	* Use latest minor version if possible.
-* Microsoft Visual Studio 2019 Community, Version 16. or later:
-	* Download from https://visualstudio.microsoft.com/downloads/
+	* Don't use `3.7.6` it causes an error while building, for now use `3.7.5` see #10696.
+* Microsoft Visual Studio 2017 Community, Version 15.3 or later:
+	* Download from https://visualstudio.microsoft.com/vs/older-downloads/
 	* When installing Visual Studio, you need to enable the following:
 		* On the Workloads tab
 			* in the Windows group:
@@ -63,7 +63,7 @@ For reference, the following run time dependencies are included in Git submodule
 
 * [comtypes](https://github.com/enthought/comtypes), version 1.1.7
 * [wxPython](https://www.wxpython.org/), version 4.0.3
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit 86e67a
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit ca65812a
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit 21bbb176
 * [ConfigObj](https://github.com/DiffSK/configobj), commit 5b5de48

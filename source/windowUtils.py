@@ -54,14 +54,9 @@ try:
 	_logicalToPhysicalPoint = ctypes.windll.user32.LogicalToPhysicalPointForPerMonitorDPI
 	_physicalToLogicalPoint = ctypes.windll.user32.PhysicalToLogicalPointForPerMonitorDPI
 except AttributeError:
-	try:
-		# Windows Vista..Windows 8
-		_logicalToPhysicalPoint = ctypes.windll.user32.LogicalToPhysicalPoint
-		_physicalToLogicalPoint = ctypes.windll.user32.PhysicalToLogicalPoint
-	except AttributeError:
-		# Windows <= XP
-		_logicalToPhysicalPoint = None
-		_physicalToLogicalPoint = None
+	# Windows Vista..Windows 8
+	_logicalToPhysicalPoint = ctypes.windll.user32.LogicalToPhysicalPoint
+	_physicalToLogicalPoint = ctypes.windll.user32.PhysicalToLogicalPoint
 
 def logicalToPhysicalPoint(window, x, y):
 	"""Converts the logical coordinates of a point in a window to physical coordinates.
@@ -74,10 +69,11 @@ def logicalToPhysicalPoint(window, x, y):
 	@return: The physical x and y coordinates.
 	@rtype: tuple of (int, int)
 	"""
-	if not _logicalToPhysicalPoint:
-		return x, y
 	point = ctypes.wintypes.POINT(x, y)
-	_logicalToPhysicalPoint(window, ctypes.byref(point))
+	if not _logicalToPhysicalPoint(window, ctypes.byref(point)):
+		raise RuntimeError(
+			f"Couldn't convert point(x={x}, y={y}) from logical to physical coordinates for window {window}"
+		)
 	return point.x, point.y
 
 def physicalToLogicalPoint(window, x, y):
@@ -91,10 +87,11 @@ def physicalToLogicalPoint(window, x, y):
 	@return: The logical x and y coordinates.
 	@rtype: tuple of (int, int)
 	"""
-	if not _physicalToLogicalPoint:
-		return x, y
 	point = ctypes.wintypes.POINT(x, y)
-	_physicalToLogicalPoint(window, ctypes.byref(point))
+	if not _physicalToLogicalPoint(window, ctypes.byref(point)):
+		raise RuntimeError(
+			f"Couldn't convert point(x={x}, y={y}) from physical to logical coordinates for window {window}"
+		)
 	return point.x, point.y
 
 DEFAULT_DPI_LEVEL = 96.0
@@ -150,6 +147,8 @@ class CustomWindow(AutoPropertyObject):
 				raise RuntimeError(f"Only one instance of {cls.__qualname__} may exist at a time")
 		return super().__new__(cls, *args, **kwargs)
 
+	_wClass: WNDCLASSEXW
+
 	@classmethod
 	def _get__wClass(cls):
 		return WNDCLASSEXW(
@@ -160,6 +159,8 @@ class CustomWindow(AutoPropertyObject):
 		)
 
 	_abstract_className = True
+
+	className: str
 
 	@classmethod
 	def _get_className(cls) -> str:
@@ -253,6 +254,7 @@ class CustomWindow(AutoPropertyObject):
 		"""
 		return None
 
+	@staticmethod
 	@WNDPROC
 	def _rawWindowProc(hwnd, msg, wParam, lParam):
 		try:

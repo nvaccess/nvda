@@ -280,10 +280,6 @@ class TextInfo(baseObject.AutoPropertyObject):
 	@type bookmark: L{Bookmark}
 	"""
 
-	#: whether this textInfo should be expanded then collapsed around its enclosing unit before review.
-	#: This can be problematic for some implementations.
-	_expandCollapseBeforeReview = True
-
 	def __init__(self,obj,position):
 		"""Constructor.
 		Subclasses must extend this, calling the superclass method first.

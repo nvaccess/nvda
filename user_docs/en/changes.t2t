@@ -3,12 +3,18 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.1 =
+
+== Changes for Developers ==
+- Developer documentation is now build using sphinx. (#9840)
+
+
 = 2019.3 =
+NVDA 2019.3 is a very significant release containing many under-the-hood changes including the upgrade of Python 2 to Python 3, and a major re-write of NVDA's speech subsystem.
+Although these changes do break compatibility with older NVDA add-ons, the upgrade to Python 3 is necessary for security, and the changes to speech allow for  some exciting innovations in the near future.
+ Other highlights in this release include 64 bit support for Java VMs, Screen Curtain and Focus Highlight functionality, support for more braille displays and a new Braille viewer, and many many other bug fixes.
 
 == New Features ==
-- In Command Prompt, PowerShell, and the Windows Subsystem for Linux on Windows 10 October 2018 Update and later:
- - Vastly improved performance and stability. (#9771)
- - Reporting of typed text that does not appear onscreen (such as passwords) can now be enabled via an option in NVDA's advanced settings panel. (#9649)
 - The accuracy of the move mouse to navigator object command has been improved in text fields in Java applications. (#10157)
 - Added support for  the following Handy Tech Braille displays (#8955):
  - Basic Braille Plus 40
@@ -27,6 +33,7 @@ What's New in NVDA
 - Added screen highlight functionality to NVDA. (#971, #9064)
  - Highlighting of the focus, navigator object, and browse mode caret position can be enabled and configured via the 'vision' category in NVDA's settings dialog.
  - Note: This feature is incompatible with the focus highlight add-on, however, the add-on can still be used while the built-in highlighter is disabled.
+- Added Braille Viewer tool, allows viewing braille output via an on-screen window. (#7788)
 
 
 == Changes ==
@@ -44,6 +51,7 @@ What's New in NVDA
 - When focussing a grouping in browse mode, the description is now also read. (#10095)
 - The Java Access Bridge is now included with NVDA to enable access to Java applications, including for 64 bit Java VMs. (#7724)
 - If the Java Access Bridge is not enabled for the user, NVDA automatically enables it at NVDA startup. (#7952)
+- Updated eSpeak-NG to 1.51-dev, commit ca65812ac6019926f2fbd7f12c92d7edd3701e0c. (#10581)
 
 
 == Bug Fixes ==
@@ -72,6 +80,12 @@ What's New in NVDA
 - Some rare braille translation issues and errors with liblouis have been resolved. (#9982)
 - Java applications started before NVDA are now accessible without the need to restart the Java app. (#10296)
 - In Mozilla Firefox, when the focused element becomes marked as current (aria-current), this change is no longer spoken multiple times. (#8960)
+- NVDA will now treat certain composit unicode characters such as e-acute as one single character when moving through text. (#10550)
+- Spring Tool Suite Version 4 is now supported. (#10001)
+- Don't double speak name when aria-labelledby relation target is an inner element. (#10552)
+- On Windows 10 version 1607 and later, typed characters from Braille keyboards are spoken in more situations. (#10569)
+- When changing the audio output device, tones played by NVDA will now play through the newly selected device. (#2167)
+- In Mozilla Firefox, moving focus in browse mode is faster. This makes moving the cursor in browse mode more responsive in many cases. (#10584)
 
 
 == Changes for Developers ==
