@@ -209,7 +209,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [UIA]
 	enabled = boolean(default=true)
 	useInMSWordWhenAvailable = boolean(default=false)
-	winConsoleImplementation= option("auto", "legacy", "UIA", default="auto")
+	winConsoleImplementation= option("auto", "legacy", "UIA", default="legacy")
 
 [terminals]
 	speakPasswords = boolean(default=false)
