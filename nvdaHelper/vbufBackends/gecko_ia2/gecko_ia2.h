@@ -44,7 +44,7 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 
 	std::optional< LabelInfo > getLabelInfo(IAccessible2* pacc2);
 	CComPtr<IAccessible2> getLabelElement(IAccessible2_2* element);
-	CComPtr<IAccessible2> getSelectedItem(IAccessible2* container,
+	std::vector<CComPtr<IAccessible2>> getSelectedItems(IAccessible2* container,
 		const std::map<std::wstring, std::wstring>& attribs);
 
 	protected:

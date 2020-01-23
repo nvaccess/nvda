@@ -339,45 +339,60 @@ bool hasAriaHiddenAttribute(const map<wstring,wstring>& IA2AttribsMap){
 /**
  * Get the selected item or the first item if no item is selected.
  */
-CComPtr<IAccessible2> GeckoVBufBackend_t::getSelectedItem(
+std::vector<CComPtr<IAccessible2>> GeckoVBufBackend_t::getSelectedItems(
 	IAccessible2* container, const map<wstring, wstring>& attribs
 ) {
+	std::vector<CComPtr<IAccessible2>> selectedItems;
 	CComVariant selection;
 	HRESULT hr = container->get_accSelection(&selection);
 	if (FAILED(hr)) {
 		LOG_DEBUGWARNING(L"accSelection failed with " << hr);
-		return nullptr;
+		return selectedItems;
 	}
 
 	if (selection.vt == VT_DISPATCH) {
 		// Single selected item, so just return it.
-		return CComQIPtr<IAccessible2>(selection.pdispVal);
+		selectedItems.push_back(
+			CComQIPtr<IAccessible2>(selection.pdispVal)
+		);
+		return selectedItems;
 	}
 
 	if (selection.vt == VT_UNKNOWN) {
 		// One or more selected items in an IEnumVARIANT.
 		auto enumVar = CComQIPtr<IEnumVARIANT>(selection.punkVal);
 		if (!enumVar) {
-			return nullptr;
+			return selectedItems;
 		}
-		// We only care about the first selected item.
-		CComVariant items[1];
-		if (FAILED(enumVar->Next(1, items, nullptr))) {
-			return nullptr;
+		// We only care about the first few selected items, a dedicated
+		const int MAX_SELECTED_ITEMS = 5;
+		std::vector<CComVariant> items(MAX_SELECTED_ITEMS);
+		unsigned long fetchedItems = 0;
+		if (FAILED(enumVar->Next(MAX_SELECTED_ITEMS, items.data(), &fetchedItems))) {
+			return selectedItems;
 		}
-		if (items[0].vt != VT_DISPATCH) {
-			return nullptr;
+		items.resize(fetchedItems);
+		for(auto& item : items) {
+			if (item.vt != VT_DISPATCH) {
+				// something went wrong? Skip this item?
+				continue;
+			}
+			selectedItems.push_back(
+				CComQIPtr<IAccessible2>(item.pdispVal)
+			);
 		}
-		return CComQIPtr<IAccessible2>(items[0].pdispVal);
+		return selectedItems;
 	}
 
 	// No selection, so return the first child.
 	CComPtr<IDispatch> child;
 	if (SUCCEEDED(container->get_accChild(CComVariant(1), &child))) {
-		return CComQIPtr<IAccessible2>(child);
+		selectedItems.push_back(
+		 	CComQIPtr<IAccessible2>(child)
+		);
 	}
 
-	return nullptr;
+	return selectedItems;
 }
 
 /**
@@ -1041,8 +1056,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 			free(varChildren);
 
 		} else if (renderSelectedItemOnly) {
-			CComPtr<IAccessible2> item = this->getSelectedItem(pacc, IA2AttribsMap);
-			if (item) {
+			auto items = this->getSelectedItems(pacc, IA2AttribsMap);
+			for(CComPtr<IAccessible2>& item : items) {
 				tempNode = this->fillVBuf(
 					item,
 					buffer,
