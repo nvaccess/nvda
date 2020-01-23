@@ -37,6 +37,7 @@ WIN10_VERSIONS_TO_BUILDS = {
 	1809: 17763,
 	1903: 18362,
 	1909: 18363,
+	2004: 19551, # Placeholder, fix once it goes stable
 }
 
 
