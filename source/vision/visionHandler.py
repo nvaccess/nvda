@@ -99,10 +99,30 @@ class VisionHandler(AutoPropertyObject):
 
 	_allProviders: List[providerInfo.ProviderInfo] = []
 
+	def _getBuiltInProviderIds(self):
+		from visionEnhancementProviders.NVDAHighlighter import NVDAHighlighterSettings
+		from visionEnhancementProviders.screenCurtain import ScreenCurtainSettings
+		return [
+			NVDAHighlighterSettings.getId(),
+			ScreenCurtainSettings.getId()
+		]
+
 	def _updateAllProvidersList(self):
-		self._allProviders = list(_getProvidersFromFileSystem())
-		# Sort the providers alphabetically by name.
-		self._allProviders.sort(key=lambda info: info.displayName.lower())
+		# Sort the providers alphabetically by id.
+		# id is used because it will not vary by locale
+		all = sorted(
+			_getProvidersFromFileSystem(),
+			key=lambda info: info.providerId.lower()
+		)
+		# Built in providers should come first
+		# Python list.sort is stable sort again by 'built-in'
+		builtInProviderIds = self._getBuiltInProviderIds()
+		all = sorted(
+			all,
+			key=lambda info: info.providerId in builtInProviderIds,
+			reverse=True  # Because False comes before True, we want built-ins first.
+		)
+		self._allProviders = list(all)
 
 	def getProviderList(
 			self,
