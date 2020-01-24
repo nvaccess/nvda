@@ -2104,7 +2104,7 @@ def getFormatFieldSpeech(  # noqa: C901
 		link=attrs.get("link")
 		oldLink=attrsCache.get("link") if attrsCache is not None else None
 		if (link or oldLink is not None) and link!=oldLink:
-			text=_("link") if link else _("%s end")%_("link")
+			text=_("link") if link else _("%s end") % _("link")
 			textList.append(text)
 	if  formatConfig["reportComments"]:
 		comment=attrs.get("comment")
