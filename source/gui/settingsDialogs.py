@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # settingsDialogs.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler
 # This file is covered by the GNU General Public License.
@@ -2423,16 +2423,19 @@ class AdvancedPanelControls(wx.Panel):
 
 	def haveConfigDefaultsBeenRestored(self):
 		return (
-			self._defaultsRestored and
-			self.scratchpadCheckBox.IsChecked() == self.scratchpadCheckBox.defaultValue and
-			self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue and
-			self.consoleCombo.GetSelection() == self.consoleCombo.defaultValue and
-			self.speakPasswordsCheckBox.IsChecked() == self.speakPasswordsCheckBox.defaultValue and
-			self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue and
-			self.autoFocusFocusableElementsCheckBox.IsChecked() == self.autoFocusFocusableElementsCheckBox.defaultValue and
-			self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue and
-			set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems) and
-			True  # reduce noise in diff when the list is extended.
+			self._defaultsRestored
+			and self.scratchpadCheckBox.IsChecked() == self.scratchpadCheckBox.defaultValue
+			and self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue
+			and self.consoleCombo.GetSelection() == self.consoleCombo.defaultValue
+			and self.speakPasswordsCheckBox.IsChecked() == self.speakPasswordsCheckBox.defaultValue
+			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
+			and (
+				self.autoFocusFocusableElementsCheckBox.IsChecked()
+				== self.autoFocusFocusableElementsCheckBox.defaultValue
+			)
+			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
+			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
+			and True  # reduce noise in diff when the list is extended.
 		)
 
 	def restoreToDefaults(self):

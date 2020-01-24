@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2019 NV Access Limited
+# Copyright (C) 2006-2020 NV Access Limited, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -37,7 +37,7 @@ WIN10_VERSIONS_TO_BUILDS = {
 	1809: 17763,
 	1903: 18362,
 	1909: 18363,
-	2004: 19551, # Placeholder, fix once it goes stable
+	2004: 19551, #  Placeholder, fix once it goes stable
 }
 
 

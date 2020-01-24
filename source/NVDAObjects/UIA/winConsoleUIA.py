@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2019 Bill Dengler
+# Copyright (C) 2019-2020 Bill Dengler
 
 import ctypes
 import NVDAHelper
@@ -111,7 +111,6 @@ class consoleUIATextInfoPre2004(consoleUIATextInfo):
 				oldInfo._rangeObj,
 				UIAHandler.TextPatternRangeEndpoint_Start
 			)
-
 
 	def compareEndPoints(self, other, which):
 		"""Works around a UIA bug on Windows 10 1803 to 2004."""
@@ -276,7 +275,6 @@ class consoleUIATextInfoPre2004(consoleUIATextInfo):
 		text range. A collapsed range will not have any characters
 		and will return an empty string."""
 		return not bool(self._rangeObj.getText(1))
-
 
 	def _get_isCollapsed(self):
 		# To decide if the textRange is collapsed,
