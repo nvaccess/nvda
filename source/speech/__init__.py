@@ -1005,7 +1005,7 @@ def speakTextInfo(  # noqa: C901
 			break
 
 	# #2591: Only if the reason is not focus, Speak the exit of any controlFields not in the new stack.
-	# We don't do this for focus because hearing "out of list", etc. isn't useful when tabbing or using quick navigation and makes navigation less efficient.
+	# We don't do this for focus because hearing "list end", etc. isn't useful when tabbing or using quick navigation and makes navigation less efficient.
 	if reason!=controlTypes.REASON_FOCUS:
 		endingBlock=False
 		for count in reversed(range(commonFieldCount,len(controlFieldStackCache))):
@@ -1695,7 +1695,7 @@ def getControlFieldSpeech(  # noqa: C901
 		if all(isinstance(item, str) for item in roleTextSequence):
 			joinedRoleText = " ".join(roleTextSequence)
 			out = [
-				# Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
+				# Translators: Indicates end of something (example output: at the end of a list, speaks "list end").
 				_("%s end") % joinedRoleText,
 			]
 		else:
@@ -2116,7 +2116,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				textList.append(text)
 			elif extraDetail:
 				# Translators: Reported when text no longer contains a comment.
-				text=_("out of comment")
+				text=_("comment end")
 				textList.append(text)
 	if formatConfig["reportSpellingErrors"]:
 		invalidSpelling=attrs.get("invalid-spelling")
@@ -2127,7 +2127,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				text=_("spelling error")
 			elif extraDetail:
 				# Translators: Reported when moving out of text containing a spelling error.
-				text=_("out of spelling error")
+				text=_("spelling error end")
 			else:
 				text=""
 			if text:
@@ -2140,7 +2140,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				text=_("grammar error")
 			elif extraDetail:
 				# Translators: Reported when moving out of text containing a grammar error.
-				text=_("out of grammar error")
+				text=_("grammar error end")
 			else:
 				text=""
 			if text:
@@ -2171,7 +2171,7 @@ def getTableInfoSpeech(
 	if tableInfo is None and oldTableInfo is not None:
 		return [
 			# Translators: Indicates end of a table.
-			_("out of table")
+			_("table end")
 		]
 	if not oldTableInfo or tableInfo.get("table-id")!=oldTableInfo.get("table-id"):
 		newTable=True
