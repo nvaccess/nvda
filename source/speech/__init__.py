@@ -1005,7 +1005,8 @@ def speakTextInfo(  # noqa: C901
 			break
 
 	# #2591: Only if the reason is not focus, Speak the exit of any controlFields not in the new stack.
-	# We don't do this for focus because hearing "list end", etc. isn't useful when tabbing or using quick navigation and makes navigation less efficient.
+	# We don't do this for focus because hearing "list end", etc. isn't useful when tabbing 
+	# or using quick navigation and makes navigation less efficient.
 	if reason!=controlTypes.REASON_FOCUS:
 		endingBlock=False
 		for count in reversed(range(commonFieldCount,len(controlFieldStackCache))):
@@ -2104,7 +2105,7 @@ def getFormatFieldSpeech(  # noqa: C901
 		link=attrs.get("link")
 		oldLink=attrsCache.get("link") if attrsCache is not None else None
 		if (link or oldLink is not None) and link!=oldLink:
-			text=_("link") if link else _("%s end") % _("link")
+			text = _("link") if link else _("%s end") % _("link")
 			textList.append(text)
 	if  formatConfig["reportComments"]:
 		comment=attrs.get("comment")
@@ -2116,7 +2117,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				textList.append(text)
 			elif extraDetail:
 				# Translators: Reported when text no longer contains a comment.
-				text=_("comment end")
+				text = _("comment end")
 				textList.append(text)
 	if formatConfig["reportSpellingErrors"]:
 		invalidSpelling=attrs.get("invalid-spelling")
@@ -2127,7 +2128,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				text=_("spelling error")
 			elif extraDetail:
 				# Translators: Reported when moving out of text containing a spelling error.
-				text=_("spelling error end")
+				text = _("spelling error end")
 			else:
 				text=""
 			if text:
@@ -2140,7 +2141,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				text=_("grammar error")
 			elif extraDetail:
 				# Translators: Reported when moving out of text containing a grammar error.
-				text=_("grammar error end")
+				text = _("grammar error end")
 			else:
 				text=""
 			if text:
