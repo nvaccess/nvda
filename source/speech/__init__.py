@@ -1005,7 +1005,7 @@ def speakTextInfo(  # noqa: C901
 			break
 
 	# #2591: Only if the reason is not focus, Speak the exit of any controlFields not in the new stack.
-	# We don't do this for focus because hearing "list end", etc. isn't useful when tabbing 
+	# We don't do this for focus because hearing "list end", etc. isn't useful when tabbing
 	# or using quick navigation and makes navigation less efficient.
 	if reason!=controlTypes.REASON_FOCUS:
 		endingBlock=False
