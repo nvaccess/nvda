@@ -251,8 +251,14 @@ class VisionHandler(AutoPropertyObject):
 				raise exceptions.ProviderInitException(
 					f"Trying to initialize provider {providerId} which reported being unable to start"
 				)
-			# Initialize the provider.
-			providerInst = providerCls()
+			try:
+				# Initialize the provider.
+				providerInst = providerCls()
+			except Exception as e:
+				# Disable the provider, so that it does not error every startup.
+				providerCls.enableInConfig(False)
+				log.warning(f"Error initialising {providerId}. Disabling in config.")
+				raise e
 			# Register extension points.
 			try:
 				providerInst.registerEventExtensionPoints(self.extensionPoints)
