@@ -10,38 +10,49 @@ from . import UIA
 
 class ExcelCell(UIA):
 
-	shouldAllowDuplicateUIAFocusEvent=True
+	shouldAllowDuplicateUIAFocusEvent = True
 
-	name=u""
+	name = u""
 	role = controlTypes.ROLE_TABLECELL
 	rowHeaderText = None
 	columnHeaderText = None
 
 	def _get_value(self):
-		if self.selectionContainer and self.selectionContainer.getSelectedItemsCount()>1:
+		if self.selectionContainer and self.selectionContainer.getSelectedItemsCount() > 1:
 			return
 		return super().value
 
 	def _get_description(self):
-		if self.selectionContainer and self.selectionContainer.getSelectedItemsCount()>1:
+		if self.selectionContainer and self.selectionContainer.getSelectedItemsCount() > 1:
 			return
 		return self.UIAElement.currentItemStatus
 
 	def _get_cellCoordsText(self):
-		if self.selectionContainer and self.selectionContainer.getSelectedItemsCount()>1:
-			sc = self._getUIACacheablePropertyValue(UIAHandler.UIA_SelectionItemSelectionContainerPropertyId).QueryInterface(UIAHandler.IUIAutomationElement)
-			firstSelected = sc.GetCurrentPropertyValue(UIAHandler.UIA_Selection2FirstSelectedItemPropertyId).QueryInterface(UIAHandler.IUIAutomationElement)
-			firstAddress = firstSelected.GetCurrentPropertyValue(UIAHandler.UIA_NamePropertyId).replace('"','')
+		if self.selectionContainer and self.selectionContainer.getSelectedItemsCount() > 1:
+			sc = self._getUIACacheablePropertyValue(UIAHandler.UIA_SelectionItemSelectionContainerPropertyId)
+			sc = sc.QueryInterface(UIAHandler.IUIAutomationElement)
+			firstSelected = sc.GetCurrentPropertyValue(UIAHandler.UIA_Selection2FirstSelectedItemPropertyId)
+			firstSelected = firstSelected.QueryInterface(UIAHandler.IUIAutomationElement)
+			firstAddress = firstSelected.GetCurrentPropertyValue(UIAHandler.UIA_NamePropertyId)
+			firstAddress = firstAddress.replace('"', '')
 			firstValue = firstSelected.GetCurrentPropertyValue(UIAHandler.UIA_ValueValuePropertyId)
-			lastSelected = sc.GetCurrentPropertyValue(UIAHandler.UIA_Selection2LastSelectedItemPropertyId).QueryInterface(UIAHandler.IUIAutomationElement)
-			lastAddress = lastSelected.GetCurrentPropertyValue(UIAHandler.UIA_NamePropertyId).replace('"','')
+			lastSelected = sc.GetCurrentPropertyValue(UIAHandler.UIA_Selection2LastSelectedItemPropertyId)
+			lastSelected = lastSelected.QueryInterface(UIAHandler.IUIAutomationElement)
+			lastAddress = lastSelected.GetCurrentPropertyValue(UIAHandler.UIA_NamePropertyId)
+			lastAddress = lastAddress.replace('"', '')
 			lastValue = lastSelected.GetCurrentPropertyValue(UIAHandler.UIA_ValueValuePropertyId)
-			return _("{firstAddress} {firstValue} through {lastAddress} {lastValue}").format(firstAddress=firstAddress,firstValue=firstValue,lastAddress=lastAddress,lastValue=lastValue)
+			return _("{firstAddress} {firstValue} through {lastAddress} {lastValue}").format(
+				firstAddress=firstAddress,
+				firstValue=firstValue,
+				lastAddress=lastAddress,
+				lastValue=lastValue
+			)
 		name = super().name
 		# Later builds of Excel 2016 quote the letter coordinate.
 		# We don't want the quotes.
 		name = name.replace('"', '')
 		return name
+
 
 class ExcelWorksheet(UIA):
 	role = controlTypes.ROLE_TABLE
