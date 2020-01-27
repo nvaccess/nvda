@@ -10,6 +10,8 @@ from . import UIA
 
 class ExcelCell(UIA):
 
+	shouldAllowDuplicateUIAFocusEvent=True
+
 	name=u""
 	role = controlTypes.ROLE_TABLECELL
 	rowHeaderText = None
