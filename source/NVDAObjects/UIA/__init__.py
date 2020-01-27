@@ -814,6 +814,8 @@ class UIATextInfo(textInfos.TextInfo):
 
 class UIA(Window):
 
+	shouldAllowDuplicateUIAFocusEvent=False
+
 	def _get__coreCycleUIAPropertyCacheElementCache(self):
 		"""
 		A dictionary per core cycle that is ready to map UIA property IDs to UIAElements with that property already cached.
