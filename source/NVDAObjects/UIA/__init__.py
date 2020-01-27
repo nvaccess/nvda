@@ -814,7 +814,7 @@ class UIATextInfo(textInfos.TextInfo):
 
 class UIA(Window):
 
-	shouldAllowDuplicateUIAFocusEvent=False
+	shouldAllowDuplicateUIAFocusEvent = False
 
 	def _get__coreCycleUIAPropertyCacheElementCache(self):
 		"""

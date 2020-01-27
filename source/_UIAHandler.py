@@ -520,7 +520,7 @@ class UIAHandler(COMObject):
 			return
 		import NVDAObjects.UIA
 		if isinstance(eventHandler.lastQueuedFocusObject,NVDAObjects.UIA.UIA):
-			lastFocusObj=eventHandler.lastQueuedFocusObject
+			lastFocusObj = eventHandler.lastQueuedFocusObject
 			# Ignore duplicate focus events.
 			# It seems that it is possible for compareElements to return True, even though the objects are different.
 			# Therefore, don't ignore the event if the last focus object has lost its hasKeyboardFocus state.
