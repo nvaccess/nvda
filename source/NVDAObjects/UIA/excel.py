@@ -41,6 +41,7 @@ class ExcelCell(UIA):
 			lastAddress = lastSelected.GetCurrentPropertyValue(UIAHandler.UIA_NamePropertyId)
 			lastAddress = lastAddress.replace('"', '')
 			lastValue = lastSelected.GetCurrentPropertyValue(UIAHandler.UIA_ValueValuePropertyId)
+			# Translators: The message when selecting a range of cells in Excel.
 			return _("{firstAddress} {firstValue} through {lastAddress} {lastValue}").format(
 				firstAddress=firstAddress,
 				firstValue=firstValue,
