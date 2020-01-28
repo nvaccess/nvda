@@ -110,19 +110,19 @@ class VisionHandler(AutoPropertyObject):
 	def _updateAllProvidersList(self):
 		# Sort the providers alphabetically by id.
 		# id is used because it will not vary by locale
-		all = sorted(
+		allProviders = sorted(
 			_getProvidersFromFileSystem(),
 			key=lambda info: info.providerId.lower()
 		)
 		# Built in providers should come first
 		# Python list.sort is stable sort again by 'built-in'
 		builtInProviderIds = self._getBuiltInProviderIds()
-		all = sorted(
-			all,
+		allProviders = sorted(
+			allProviders,
 			key=lambda info: info.providerId in builtInProviderIds,
 			reverse=True  # Because False comes before True, we want built-ins first.
 		)
-		self._allProviders = list(all)
+		self._allProviders = list(allProviders)
 
 	def getProviderList(
 			self,
