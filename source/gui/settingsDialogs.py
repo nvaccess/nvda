@@ -3163,7 +3163,7 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 			providerInfo: vision.providerInfo.ProviderInfo
 	):
 		self._providerInfo = providerInfo
-		self._parent = parent
+		self._parent = weakref.ref(parent)  # don't keep parent dialog alive with a circular reference.
 
 	def getProviderInfo(self) -> vision.providerInfo.ProviderInfo:
 		return self._providerInfo
@@ -3181,7 +3181,7 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 		"""
 		success = self._doStartProvider()
 		if not success and shouldPromptOnError:
-			showStartErrorForProviders(self._parent, [self._providerInfo, ])
+			showStartErrorForProviders(self._parent(), [self._providerInfo, ])
 		return success
 
 	def terminateProvider(
@@ -3194,7 +3194,7 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 		"""
 		success = self._doTerminate()
 		if not success and shouldPromptOnError:
-			showTerminationErrorForProviders(self._parent, [self._providerInfo, ])
+			showTerminationErrorForProviders(self._parent(), [self._providerInfo, ])
 		return success
 
 	def _doStartProvider(self) -> bool:
@@ -3295,8 +3295,7 @@ class VisionSettingsPanel(SettingsPanel):
 		"""
 		errorProviders: List[vision.providerInfo.ProviderInfo] = []
 		for provider in providers:
-			with VisionProviderStateControl(self, provider) as control:
-				success = control.startProvider(shouldPromptOnError=False)
+			success = VisionProviderStateControl(self, provider).startProvider(shouldPromptOnError=False)
 			if not success:
 				errorProviders.append(provider)
 		showStartErrorForProviders(self, errorProviders)
