@@ -9,6 +9,10 @@ What's New in NVDA
 - Developer documentation is now build using sphinx. (#9840)
 
 
+== Bug Fixes ==
+- Fixed not announcing Unicode minus symbol (U+2212) (#10633)
+
+
 = 2019.3 =
 NVDA 2019.3 is a very significant release containing many under-the-hood changes including the upgrade of Python 2 to Python 3, and a major re-write of NVDA's speech subsystem.
 Although these changes do break compatibility with older NVDA add-ons, the upgrade to Python 3 is necessary for security, and the changes to speech allow for  some exciting innovations in the near future.
