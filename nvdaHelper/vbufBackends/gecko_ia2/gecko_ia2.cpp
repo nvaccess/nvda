@@ -342,13 +342,6 @@ bool hasAriaHiddenAttribute(const map<wstring,wstring>& IA2AttribsMap){
 CComPtr<IAccessible2> GeckoVBufBackend_t::getSelectedItem(
 	IAccessible2* container, const map<wstring, wstring>& attribs
 ) {
-	if (this->toolkitName.compare(L"Chrome") == 0) {
-		// #9364: Google Chrome crashes when fetching the currently selected item from some listboxes.
-		// Specifically when calling IEnumVARIANT::next.
-		// Due to this, and other issues around incorrect focus state setting, it is best to disable fetching of currently selected item in listboxes in Chrome all together.
-		return nullptr;
-	}
-
 	CComVariant selection;
 	HRESULT hr = container->get_accSelection(&selection);
 	if (FAILED(hr)) {
