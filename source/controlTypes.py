@@ -679,6 +679,7 @@ isCurrentLabels: Dict[Union[bool, str], str] = {
 	"time":_("current time"),
 }
 
+
 def processPositiveStates(role, states, reason: OutputReason, positiveStates=None):
 	"""Processes the states for an object and returns the positive states to output for a specified reason.
 	For example, if C{STATE_CHECKED} is in the returned states, it means that the processed object is checked.
@@ -735,6 +736,7 @@ def processPositiveStates(role, states, reason: OutputReason, positiveStates=Non
 	if STATE_FOCUSABLE not in states:
 		positiveStates.discard(STATE_EDITABLE)
 	return positiveStates
+
 
 def processNegativeStates(role, states, reason: OutputReason, negativeStates=None):
 	"""Processes the states for an object and returns the negative states to output for a specified reason.
