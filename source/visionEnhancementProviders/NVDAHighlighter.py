@@ -253,7 +253,7 @@ class NVDAHighlighterGuiPanel(
 			providerControl: VisionProviderStateControl
 	):
 		self._providerControl = providerControl
-		initiallyEnabledInConfig = providerControl._providerInfo.providerClass.isEnabledInConfig()
+		initiallyEnabledInConfig = NVDAHighlighter.isEnabledInConfig()
 		if not initiallyEnabledInConfig:
 			settingsStorage = self._getSettingsStorage()
 			settingsToCheck = [
@@ -316,50 +316,57 @@ class NVDAHighlighterGuiPanel(
 		self.lastControl = self.optionsText
 
 	def _updateEnabledState(self):
-		settings = self._getSettingsStorage()
+		settingsStorage = self._getSettingsStorage()
 		settingsToTriggerActivation = [
-			settings.highlightBrowseMode,
-			settings.highlightFocus,
-			settings.highlightNavigator,
+			settingsStorage.highlightBrowseMode,
+			settingsStorage.highlightFocus,
+			settingsStorage.highlightNavigator,
 		]
-		if any(settingsToTriggerActivation):
-			if all(settingsToTriggerActivation):
-				self._enabledCheckbox.Set3StateValue(wx.CHK_CHECKED)
-			else:
-				self._enabledCheckbox.Set3StateValue(wx.CHK_UNDETERMINED)
-			self._ensureEnableState(True)
+		isAnyEnabled = any(settingsToTriggerActivation)
+		if all(settingsToTriggerActivation):
+			self._enabledCheckbox.Set3StateValue(wx.CHK_CHECKED)
+		elif isAnyEnabled:
+			self._enabledCheckbox.Set3StateValue(wx.CHK_UNDETERMINED)
 		else:
 			self._enabledCheckbox.Set3StateValue(wx.CHK_UNCHECKED)
-			self._ensureEnableState(False)
 
-	def _ensureEnableState(self, shouldBeEnabled: bool):
+		if not self._ensureEnableState(isAnyEnabled) and isAnyEnabled:
+			self._onEnableFailure()
+
+	def _onEnableFailure(self):
+		""" Initialization of Highlighter failed. Reset settings / GUI
+		"""
+		settingsStorage = self._getSettingsStorage()
+		settingsStorage.highlightBrowseMode = False
+		settingsStorage.highlightFocus = False
+		settingsStorage.highlightNavigator = False
+		self.updateDriverSettings()
+		self._updateEnabledState()
+
+	def _ensureEnableState(self, shouldBeEnabled: bool) -> bool:
 		currentlyEnabled = bool(self._providerControl.getProviderInstance())
 		if shouldBeEnabled and not currentlyEnabled:
-			self._providerControl.startProvider()
+			return self._providerControl.startProvider()
 		elif not shouldBeEnabled and currentlyEnabled:
-			self._providerControl.terminateProvider()
+			return self._providerControl.terminateProvider()
+		return True
 
 	def _onCheckEvent(self, evt: wx.CommandEvent):
 		settingsStorage = self._getSettingsStorage()
 		if evt.GetEventObject() is self._enabledCheckbox:
-			settingsStorage.highlightBrowseMode = evt.IsChecked()
-			settingsStorage.highlightFocus = evt.IsChecked()
-			settingsStorage.highlightNavigator = evt.IsChecked()
-			self._ensureEnableState(evt.IsChecked())
+			isEnableAllChecked = evt.IsChecked()
+			settingsStorage.highlightBrowseMode = isEnableAllChecked
+			settingsStorage.highlightFocus = isEnableAllChecked
+			settingsStorage.highlightNavigator = isEnableAllChecked
+			if not self._ensureEnableState(isEnableAllChecked) and isEnableAllChecked:
+				self._onEnableFailure()
 			self.updateDriverSettings()
 		else:
 			self._updateEnabledState()
+
 		providerInst: Optional[NVDAHighlighter] = self._providerControl.getProviderInstance()
 		if providerInst:
 			providerInst.refresh()
-		elif evt.IsChecked():
-			# One or more check boxes are enabled, so the provider instance must be there.
-			# Yet, there is no instance. This must be a case where initialization failed.
-			settingsStorage.highlightBrowseMode = False
-			settingsStorage.highlightFocus = False
-			settingsStorage.highlightNavigator = False
-			self.updateDriverSettings()
-			self._updateEnabledState()
 
 
 class NVDAHighlighter(providerBase.VisionEnhancementProvider):
@@ -432,11 +439,10 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		try:
 			if vision._isDebug():
 				log.debug("Starting NVDAHighlighter thread")
-			try:
-				window = self._window = self.customWindowClass(self)
-				timer = winUser.WinTimer(window.handle, 0, self._refreshInterval, None)
-			finally:
-				self._highlighterRunningEvent.set()
+
+			window = self._window = self.customWindowClass(self)
+			timer = winUser.WinTimer(window.handle, 0, self._refreshInterval, None)
+			self._highlighterRunningEvent.set()  # notify main thread that initialisation was successful
 			msg = MSG()
 			# Python 3.8 note, Change this to use an Assignment expression to catch a return value of -1.
 			# See the remarks section of
