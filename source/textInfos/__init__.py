@@ -17,6 +17,7 @@ from typing import Any, Union, List, Optional, Dict
 import baseObject
 import config
 import controlTypes
+from controlTypes import OutputReason
 import locationHelper
 
 
@@ -521,7 +522,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 			fieldType: str,
 			formatConfig: Optional[Dict[str, bool]] = None,
 			extraDetail: bool = False,
-			reason: Optional[str] = None
+			reason: Optional[OutputReason] = None
 	) -> SpeechSequence:
 		# Import late to avoid circular import.
 		import speech
@@ -541,7 +542,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 			attrs: Field,
 			attrsCache: Optional[Field] = None,
 			formatConfig: Optional[Dict[str, bool]] = None,
-			reason: Optional[str] = None,
+			reason: Optional[OutputReason] = None,
 			unit: Optional[str] = None,
 			extraDetail: bool = False,
 			initialFormat: bool = False,
