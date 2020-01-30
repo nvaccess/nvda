@@ -8,6 +8,7 @@ from logHandler import log
 import queueHandler
 import synthDriverHandler
 from .commands import *
+from commands import IndexCommand
 from .priorities import Spri, SPEECH_PRIORITIES
 
 class ParamChangeTracker(object):
@@ -148,7 +149,7 @@ class SpeechManager(object):
 		#: Maps indexes to BaseCallbackCommands.
 		self._indexesToCallbacks = {}
 		#: a list of indexes currently being spoken by the synthesizer
-		self._indexesSpeaking=[]
+		self._indexesSpeaking = []
 		#: Whether to push more speech when the synth reports it is done speaking.
 		self._shouldPushWhenDoneSpeaking = False
 
@@ -292,7 +293,7 @@ class SpeechManager(object):
 			# Record all indexes that will be sent to the synthesizer
 			# So that we can handle any accidentally skipped indexes.
 			for item in seq:
-				if isinstance(item,IndexCommand):
+				if isinstance(item, IndexCommand):
 					self._indexesSpeaking.append(item.index)
 			getSynth().speak(seq)
 
@@ -373,20 +374,19 @@ class SpeechManager(object):
 		return True, endOfUtterance
 
 	def _handleIndex(self, index, handleSkippedIndexes=True):
-		print("_handleIndex: %s"%index)
 		try:
 			self._indexesSpeaking.remove(index)
 		except ValueError:
-			log.debugWarning("Unknown index %s"%index)
+			log.debugWarning("Unknown index %s" % index)
 			return
 		# A synth (such as OneCore) may skip indexes
 		# If before another index, with no text content in between.
 		# Therefore, detect this and ensure we handle all skipped indexes.
 		if handleSkippedIndexes:
 			for oldIndex in list(self._indexesSpeaking):
-				if oldIndex<index:
-					log.debugWarning("Handling skipped index %s"%oldIndex)
-					self._handleIndex(oldIndex,False)
+				if oldIndex < index:
+					log.debugWarning("Handling skipped index %s" % oldIndex)
+					self._handleIndex(oldIndex, False)
 		valid, endOfUtterance = self._removeCompletedFromQueue(index)
 		if not valid:
 			return
