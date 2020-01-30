@@ -21,6 +21,8 @@ What's New in NVDA
   Private changes that should not affect addon developers:
   - _speakPlaceholderIfEmpty is now _getPlaceholderSpeechIfTextEmpty
   - _speakTextInfo_addMath is now _extendSpeechSequence_addMathForTextInfo
+- Speech 'reason' has been converted to an Enum, see controlTypes.OutputReason class. (#10703)
+  - Module level 'REASON_*' constants are deprecated.
 
 
 == Bug Fixes ==
