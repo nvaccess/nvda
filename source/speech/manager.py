@@ -8,7 +8,7 @@ from logHandler import log
 import queueHandler
 import synthDriverHandler
 from .commands import *
-from commands import IndexCommand
+from .commands import IndexCommand
 from .priorities import Spri, SPEECH_PRIORITIES
 
 class ParamChangeTracker(object):
