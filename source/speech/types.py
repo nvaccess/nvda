@@ -13,7 +13,8 @@ import config
 from logHandler import log
 from .commands import SpeechCommand
 
-SpeechSequence = List[Union[SpeechCommand, str]]
+SequenceItemT = Union[SpeechCommand, str]
+SpeechSequence = List[SequenceItemT]
 
 
 def _isDebugForSpeech() -> bool:

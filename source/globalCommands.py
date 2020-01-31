@@ -2459,7 +2459,9 @@ class GlobalCommands(ScriptableObject):
 					enableMessage = _("Temporary Screen curtain, enabled until next restart")
 
 				try:
-					if not alreadyRunning:
+					if alreadyRunning:
+						screenCurtainProviderInfo.providerClass.enableInConfig(True)
+					else:
 						vision.handler.initializeProvider(
 							screenCurtainProviderInfo,
 							temporary=tempEnable,
