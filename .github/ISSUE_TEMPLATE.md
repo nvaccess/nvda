@@ -29,7 +29,7 @@ https://github.com/nvaccess/nvda/wiki/Github-issue-template-explanation-and-exam
 #### Other information about your system:
 
 ### Other questions
-#### Does the issue still occur after restarting your machine?
+#### Does the issue still occur after restarting your computer?
 
 #### Have you tried any other versions of NVDA? If so, please report their behaviors.
 
