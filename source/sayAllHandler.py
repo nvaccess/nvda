@@ -118,7 +118,7 @@ class _TextReader(object):
 		self.numBufferedLines = 0
 
 	def nextLine(self):
-		if not self.reader:
+		if not hasattr(self, "reader") or not self.reader:
 			log.debug("no self.reader")
 			# We were stopped.
 			return
@@ -225,7 +225,7 @@ class _TextReader(object):
 		])
 
 	def stop(self):
-		if not self.reader:
+		if not hasattr(self, "reader") or not self.reader:
 			return
 		self.reader = None
 		self.trigger.exit()
