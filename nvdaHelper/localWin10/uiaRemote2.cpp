@@ -64,12 +64,16 @@ UiaArray<UiaTextRange> _remoteable_splitTextRangeByUnit(UiaOperationScope& scope
 		scope.If(startDelta>=0,[&](){
 			scope.Break();
 		});
-		// Move the end forward by the given unit
-		auto moved=tempRange.MoveEndpointByUnit(TextPatternRangeEndpoint_End, unit, 1);
-		scope.If(moved<=0,[&]() {
-			// We couldn't move forward, so break
-			scope.Break();
+		// Expand to the enclosing unit
+		auto oldTempRange=tempRange.Clone();
+		tempRange.ExpandToEnclosingUnit(unit);
+		// Ensure we have not expanded back before where we started.
+		startDelta = tempRange.CompareEndpoints(TextPatternRangeEndpoint_Start,oldTempRange,TextPatternRangeEndpoint_Start);
+		scope.If(startDelta<0,[&](){
+			// Clip the range to keep it bounded to where we started.
+			tempRange.MoveEndpointByRange(TextPatternRangeEndpoint_Start,oldTempRange,TextPatternRangeEndpoint_Start);
 		});
+		//tempRange.MoveEndpointByRange(TextPatternRangeEndpoint_Start,oldTempRange,TextPatternRangeEndpoint_Start);
 		// Find out if we are past the end of the over all textRange yet
 		endDelta = tempRange.CompareEndpoints(TextPatternRangeEndpoint_End,textRange,TextPatternRangeEndpoint_End);
 		scope.If(endDelta>0,[&](){
@@ -88,7 +92,12 @@ UiaArray<UiaTextRange> _remoteable_splitTextRangeByUnit(UiaOperationScope& scope
 			scope.Break();
 		});
 		// collapse the tempRange up to the end, ready to go through the loop again
-		tempRange.MoveEndpointByRange(TextPatternRangeEndpoint_Start,tempRange,TextPatternRangeEndpoint_End);
+		tempRange.MoveEndpointByRange(TextPatternRangeEndpoint_End,tempRange,TextPatternRangeEndpoint_Start);
+		auto moved=tempRange.Move(unit,1);
+		scope.If(moved==0,[&](){
+			// We could not move further. Break.
+			scope.Break();
+		});
 	}); // loop end
 	scope.If(endDelta<0,[&](){ 
 		// For some reason we never reached the end of the over all textRange.
