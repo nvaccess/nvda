@@ -29,8 +29,9 @@ Lo más reseñable incluye:
 - Soporte para Sistemas Operativos Windows modernos incluyendo variantes de 32 y 64 bit
 - Capacidad para ejecutarse en el inicio de sesión de Windows  y otras pantallas seguras 
 - Anunciado de controles y texto mientras se utilizan gestos táctiles
-- Soporte para interfaces comunes de accesibilidad tales como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 y UI Automation (UI Automation sólo es compatible con Windows 7 y versiones posteriores))
+- Soporte para interfaces comunes de accesibilidad tales como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 y UI Automation
 - Soporte para el símbolo del sistema de Windows y aplicaciones de consola
+- La capacidad de resaltar el foco del sistema
 -
 
 ++ Internacionalización ++[Internationalization]
@@ -70,7 +71,7 @@ Para más detalles, puedes [ver la licencia completa.  https://www.gnu.org/licen
 -
 
 + Obteniendo e Instalando NVDA +[GettingAndSettingUpNVDA]
-Si todavía no tienes una copia de NVDA, puedes descargarla de [www.nvaccess.org NVDA_URL].
+Si todavía no tienes una copia de NVDA, puedes descargarla de [NV Access website NVDA_URL].
 
 Vé a la sección download y encontrarás un enlace para descargar la última versión de NVDA.
 
@@ -144,13 +145,15 @@ Pulsa Aceptar para cerrar este diálogo.
 ++ Lanzando NVDA ++[LaunchingNVDA]
 Si has instalado NVDA con el instalador, entonces iniciar NVDA es tan fácil como o pulsar control+Alt+n, o elegir NVDA desde el menú NVDA en Menú Inicio, submenú Programas. 
 Además, puedes teclear NVDA en el diálogo Ejecutar y pulsar Intro. 
-También puedes pasar algunas [opciones de línea de órdenes #CommandLineOptions] las cuales te permiten reiniciar NVDA (-r), salir (-q), deshabilitar complementos (--disable-addons), etc.
+Si NVDA ya se está ejecutando, se reiniciará.
+También puedes pasar algunas [opciones de línea de órdenes #CommandLineOptions] que te permiten salir (-q), desactivar complementos (--disable-addons), etc.
 
 Para las copias instaladas, NVDA almacena la configuración en la carpeta roaming application data del usuario actual por omisión (por ejemplo: "C:\Users\<user>\AppData\Roaming").
 Es posible cambiar esto de forma que NVDA cargue su configuración desde la carpeta local de datos de aplicación en su lugar.
 Consulta la sección acerca de [parámetros del sistema #SystemWideParameters] para más detalles.
 
 Para iniciar la versión portátil, vé al directorio donde descomprimiste NVDA, y pulsa intro o haz doble clic sobre nvda.exe.
+Si NVDA ya estaba en ejecución, se detendrá automáticamente después de arrancar la versión portable.
 
 Cuando NVDA arranca, primero escucharás un grupo ascendente de tonos (que te dicen que NVDA está cargándose). 
 Dependiendo cuán rápido sea tu ordenador, o si estás ejecutando NVDA desde un lápiz USB u otro medio más lento, podrá demorar un poco mientras arranca. 
@@ -167,6 +170,13 @@ El cuadro combinado te permite seleccionar la distribución de teclado.
 La primera casilla de verificación te permite controlar si NVDA debería utilizar BloqMayus como una tecla modificadora de NVDA. 
 La segunda especifica si NVDA debería arrancar automáticamente después del inicio de sesión de Windows y sólo está disponible para copias instaladas de NVDA.
 La tercera te permite controlar si este cuadro de bienvenida debería aparecer cada vez que NVDA arranque.
+
++++ Diálogo Estadísticas de Datos de Uso +++[UsageStatsDialog]
+A partir de NVDA 2018.3, se pregunta al usuario si quiere permitir que los datos de uso se envíen a NV Access para ayudar a mejorarlo en el futuro. 
+Al iniciar NVDA por primera vez, aparecerá un diálogo que te preguntará si quieres aceptar el envío de datos a NV Access mientras lo utilizas.
+Puedes leer más información sobre los datos recopilados por NV Access en el capítulo 11 más adelante.
+Nota: al pulsar en "sí" o "no" se guardará este ajuste y el diálogo no aparecerá nunca más a menos que reinstales NVDA.
+Sin embargo, puedes activar o desactivar el proceso de recopilación de datos manualmente en el panel de las opciones generales de NVDA. Para cambiar esta opción manualmente, puedes marcar o desmarcar la casilla de verificación llamada [Permitir al proyecto de NVDA recolectar estadísticas de uso de NVDA #GeneralSettingsGatherUsageStats].
 
 ++ Acerca de Órdenes de teclado de NVDA ++[AboutNVDAKeyboardCommands]
 
@@ -290,6 +300,7 @@ Por ejemplo, si estás escribiendo en un campo de texto editable, el campo de te
 
 El modo más común de navegar por Windows con NVDA, es sólo moverse con las órdenes de teclado normales, tales como tab. Y shift tab. Para moverse adelante y atrás entre controles, pulsando Alt. Para desplegar la barra de menú y luego utilizando las teclas de cursor para navegar por los menús, utilizando Alt-tab. Para moverse entre aplicaciones en ejecución. 
 Cuando hagas esto, NVDA anunciará información sobre lo que tiene el foco, tal como su nombre, tipo, valor, estado, descripción, atajo de teclado e información posicional.
+Cuando [Resaltar Foco #VisionFocusHighlight] esté habilitado, la localización del foco del sistema actual también se expone visualmente.
 
 Hay algunas órdenes de teclado útiles cuando nos movamos con el foco:
 %kc:beginInclude
@@ -345,6 +356,7 @@ Del mismo modo, en una barra de herramientas conteniendo controles, debes movert
  
 El objeto actualmente en revisión se llama navegador de objetos.
 Una vez que navegues a un objeto, puedes revisar su contenido utilizando las [órdenes de revisión de texto #ReviewingText] mientras se esté en [modo revisión de objetos #ObjectReview].
+Cuando [Resaltar Foco #VisionFocusHighlight] esté habilitado, la localización del foco del sistema actual también se expone visualmente.
 De forma predeterminada, el navegador de objetos se mueve junto con el foco  del Sistema aunque este comportamiento puede activarse y desactivarse.
 
 Ten en cuenta que el braille sigue al [foco #SystemFocus] y al [cursor #SystemCaret] así como por omisión a la navegación de objetos y a la revisión de texto.
@@ -400,6 +412,7 @@ Las siguientes órdenes están disponibles para revisión de texto:
 | Leer todo con revisión | Más teclado numérico | NVDA+shift+a | deslizar con 3 dedos abajo (modo texto) | Lee desde la posición actual del cursor de revisión, moviéndolo según baja |
 | Seleccionar después Copiar desde cursor de revisión | NVDA+f9 | NVDA+f9 | none | Comienza la selección después procesa la copia desde la posición actual del cursor de revisión. La acción actual no se lleva a cabo hasta que digas a NVDA dónde está el final del rango de texto |
 | Seleccionar después copiar a cursor de revisión | NVDA+f10 | NVDA+f10 | none | En la primera pulsación, el texto se selecciona desde encima de la posición previamente fijada como marca de comienzo e incluyendo la posición actual del cursor de revisión. Después de pulsar esta tecla una segunda vez, el texto se copiará al portapapeles de Windows |
+| Mover a marca de inicio para copiar en la revisión | NVDA+shift+f9 | NVDA+shift+f9 | no | Mueve el cursor de revisión a la posición ajustada previamente como marca de comienzo para copiar |
 | Anunciar formato del texto | NVDA+f | NVDA+f | no | Informa del formato del texto donde esté situado actualmente el cursor de revisión. Pulsando dos veces muestra la información en modo exploración |
 | Anunciar reemplazo de símbolo actual | No | No | no | Verbaliza el símbolo donde esté colocado el cursor de revisión. Pulsado dos veces, muestra el símbolo y el texto utilizado para verbalizarlo en modo exploración. |
 %kc:endInclude
@@ -485,10 +498,12 @@ Esto incluye documentos en las siguientes aplicaciones:
 - Adobe Flash.
 - Libros admitidos en Amazon Kindle for PC
 -
+
 El modo Exploración también está opcionalmente disponible para documentos de Microsoft Word.
 
 En el Modo Exploración, el contenido del documento está disponible mediante una representación plana por el que te puedes mover con las teclas de cursor como si se tratara de un documento de texto normal. 
 Todas las teclas de órdenes de [cursor del sistema #SystemCaret] de NVDA funcionarán en este modo; por ejemplo: leer todo, anunciar formato, órdenes de navegación de tabla, etc.
+Cuando [Resaltar Foco #VisionFocusHighlight] esté habilitado, la localización del foco del sistema actual también se expone visualmente.
 La información tal como si el texto es un enlace,  encabezado, etc. se anuncia junto con el texto según te muevas.
 
 A veces, necesitarás interactuar directamente con controles en estos documentos.
@@ -597,7 +612,9 @@ MathPlayer está disponible como una descarga gratuita desde: https://www.dessci
 NVDA admite los siguientes tipos de contenidos matemáticos:
 - MathML en Mozilla Firefox Microsoft Internet Explorer y Google Chrome..
 - Design Science MathType en Microsoft Word y PowerPoint.
-MathType tiene que estar instalado para que esto funcione. La versión de prueba es suficiente.
+MathType tiene que estar instalado para que esto funcione.
+La versión de prueba es suficiente.
+Puede descargarse desde https://www.dessci.com/en/products/mathtype/
 - MathML en Adobe Reader.
 Ten en cuenta que esto no es un estándar official aún, así que no hay actualmente software disponible al público que pueda producir este contenido.
 - Matemáticas en Kindle para PC para libros con matemáticas accesibles.
@@ -631,6 +648,7 @@ Cuando desees volver al documento, simplemente pulsa la tecla escape.
 + Braille +[Braille]
 Si tienes una pantalla braille, NVDA puede mostrar información en braille.
 Si tu pantalla braille tiene un teclado tipo Perkins, también puedes introducir braille contraído o sin contraer.
+El Braille también puede mostrarse en pantalla utilizando el [Visualizador de Braille #BrailleViewer] en su lugar, o al mismo tiempo, utilizando una pantalla braille física.
 
 Por favor consulta la sección [Pantallas Braille admitidas  #SupportedBrailleDisplays] para información  acerca de las pantallas braille soportadas.
 Esta sección también contiene información sobre qué pantallas son compatibles con la función de detección automática de pantallas braille de NVDA.
@@ -641,11 +659,13 @@ Con el fin de tener la mayor cantidad de información posible en una pantalla br
 
 || Abreviatura | Tipo de Control |
 | apl | aplicación |
+| art | artículo
 | cit | cita |
 | bt | botón |
 | btdsp | botón desplegable |
 | btrot | botón rotatorio |
 | btdiv | botón divisor |
+| tlo | título |
 | btcom | botón conmutable |
 | cc | cuadro combinado |
 | cv | casilla de verificación |
@@ -655,6 +675,7 @@ Con el fin de tener la mayor cantidad de información posible en una pantalla br
 | pwdedt | edición de contraseña |
 | integrado | objeto integrado |
 | notaf | nota final |
+| fig | figura |
 | notap | nota al pie |
 | gra | gráfico |
 | grp | grupo |
@@ -738,6 +759,33 @@ Al pulsar el punto 7 borras la última celda o carácter introducido.
 El punto 8 transcribe cualquier entrada braille y pulsa la tecla intro.
 Pulsando los puntos 7 + 8 transcribe cualquier entrada braille, pero sin añadir un espacio o pulsando intro.
 %kc:endInclude
+
++ Visión +[Vision]
+Mientras que NVDA está dirigido principalmente a personas ciegas o con problemas de visión que utilicen principalmente la voz y/o el braille para manejar un ordenador, también ofrece funciones incorporadas para cambiar el contenido de la pantalla.
+Dentro de NVDA, esta ayuda visual se denomina proveedor de mejora de visión.
+
+NVDA ofrece varios provedores de mejora de visión incorporados que se describen  a continuación.
+Se pueden proporcionar provedores adicionales de mejora de visión en [complementos de NVDA #AddonsManager].
+
+Las opciones de visión de NVDA pueden cambiarse en la [categoría visión #VisionSettings] del diálogo [Opciones de NVDA #NVDASettings].
+
+++ Foco Resaltado ++[VisionFocusHighlight]
+El Foco resaltado puede ayudar a identificar las posiciones del [foco del sistema #SystemFocus], [del navegador de objetos #ObjectNavigation] y [del modo Exploración #BrowseMode].
+Estas posiciones se resaltan con un rectángulo de color.
+- El azul sólido resalta una combinación de la localización del navegador de objetos y del foco del sistema (ej.: porque [el navegador de objetos siga al foco del sistema #ReviewCursorFollowFocus]).
+- El azul discontínuo resalta sólo el objeto del foco del sistema.
+- El rosa sólido resalta sólo el navegador de objetos.
+- El amarillo sólido resalta el cursor virtual utilizado en modo Exploración (donde no hay cursor físico como en los navegadores web).
+-
+
+Cuando Resaltar Foco está habilitado en la [categoría visión #VisionSettings] del diálogo [Opciones de NVDA #NVDASettings], [puedes cambiar si deseas o no resaltar el cursor del foco, del navegador de objetos o del modo Exploración #VisionSettingsFocusHighlight]
+
+++ Cortina de Pantalla ++[VisionScreenCurtain]
+Como usuario ciego o con problemas de visión, a menudo no es posible o necesario ver el contenido de la pantalla.
+Además, puede ser difícil asegurarte de que no haya nadie mirando por encima de tu hombro.
+Para esta situación, NVDA contiene una característica llamada "cortina de pantalla" que puede activarse para hacer que la pantalla sea negra.
+
+Puedes habilitar la Cortina de Pantalla en la [categoría visión #VisionSettings] del diálogo [Opciones de NVDA #NVDASettings].
 
 + Reconocimiento de Contenidos +[ContentRecognition]
 Cuando los autores no proporcionan suficiente información para que un usuario de lector de pantalla determine el contenido de algo, pueden utilizarse varias herramientas para intentar reconocer el contenido desde una imagen.
@@ -939,6 +987,21 @@ Cuando se esté en la tabla de vista de libros añadidos:
 | Menú de Contexto | aplicaciones | Abre el menú de contexto para el libro seleccionado. |
 %kc:endInclude
 
+++ Consola de Windows ++[WinConsole]
+NVDA proporciona compatibilidad para la consola de órdenes de Windows utilizada por el indicativo del sistema, PowerShell, y el  subsistema Windows para Linux.
+La ventana de la consola es de tamaño fijo, normalmente mucho más pequeña que el búfer que contiene la salida.
+A medida que se escribe un nuevo texto, el contenido se desplaza hacia arriba y el texto anterior ya no es visible.
+El texto que no se muestra visiblemente en la ventana no es accesible con los comandos de revisión de texto de NVDA.
+Por lo tanto, es necesario desplazarse por la ventana de la consola para leer el texto anterior.
+%kc:beginInclude
+Los siguientes métodos abreviados de teclado incorporados en la Consola de Windows pueden ser útiles al [revisar texto #ReviewingText] con NVDA:
+|| Nombre | Tecla | Descripción |
+| Desplazar arriba | control+flecha arriba | Desplaza la ventana de la consola hacia arriba, así se puede leer el texto anterior. |
+| Desplazar abajo | control+flecha abajo | Desplaza la ventana de la consola hacia abajo, así se puede leer el texto posterior. |
+| Desplazar al comienzo | control+inicio | Desplaza la ventana de la consola al comienzo del búfer. |
+| Desplazar al final | control+fin | Desplaza la ventana de la consola al final del búfer. |
+%kc:endInclude
+
 + Configurando NVDA +[ConfiguringNVDA]
 La mayor parte de la configuración puede realizarse utilizando cuadros de diálogo a los que se accede mediante el submenú Preferencias del menú NVDA.
 Muchas de estas opciones pueden encontrarse en el cuadro de diálogo multipágina [Opciones de NVDA #NVDASettings].
@@ -994,9 +1057,10 @@ Los niveles disponibles del registro son:
 - Deshabilitado: Aparte de un breve mensaje de inicio, NVDA no registrará nada mientras se ejecute.
 - Información: NVDA registrará información básica tal como mensajes de inicio e información útil para los desarrolladores.
 - Advertencia de depuración: se registrarán mensajes de advertencia que no sean causados por errores graves.
-- Entrada/salida: se registrarán las entradas de las pantallas braille y de los teclados, así como la salida de la voz y del braille. Si te preocupa la privacidad, no configures esta opción de nivel de registro.
-- Depuración: además de los mensajes de información, advertencia y entrada/salida, se registrarán mensajes de depuración adicionales. Al igual que con la Entrada/salida, si te preocupa la privacidad, no deberías configurar el nivel de registro en esta opción.
--
+- Entrada/salida: se registrarán las entradas de las pantallas braille y de los teclados, así como la salida de la voz y del braille.
+ - Si te preocupa la privacidad, no configures esta opción de nivel de registro.
+- Depuración: además de los mensajes de información, advertencia y entrada/salida, se registrarán mensajes de depuración adicionales.
+ - Al igual que con la Entrada/salida, si te preocupa la privacidad, no deberías configurar el nivel de registro en esta opción.
 
 ==== Arrancar automáticamente NVDA después de Iniciar sesión en Windows ====[GeneralSettingsStartAfterLogOn]
 Si esta opción está activada, NVDA arrancará automáticamente tan pronto como inicies sesión en Windows. 
@@ -1058,6 +1122,7 @@ Las flechas izquierda y arriba suben por la lista, mientras que las flechas dere
 Si estás utilizando el sintetizador Espeak NG empaquetado junto con NVDA, este es un cuadro combinado que te permite seleccionar la variante con la que el sintetizador debería hablar. 
 Las variantes de Espeak NG son bastante parecidas a las voces, pero proporcionan atributos ligeramente diferentes para la voz de ESpeak NG. 
 Algunas variantes sonarán como un hombre, algunas como una mujer, y algunas como si tuvieran carraspera.
+Si utilizas un sintetizador de terceros, también podrás cambiar este valor si la voz elegida lo admite.
 
 ==== Velocidad ====[SpeechSettingsRate]
 Esta opción te permite cambiar la velocidad de la voz. 
@@ -1076,7 +1141,6 @@ Esta opción es un deslizador que te permite elegir cuánta entonación (subida 
 ==== Cambio Automático de Idioma ====[SpeechSettingsLanguageSwitching]
 Esta casilla de verificación te permite activar o desactivar si NVDA debería cambiar automáticamente los idiomas del sintetizador de voz si el texto a leer lo especifica .
 Esta opción está activada de manera predeterminada.
-Actualmente sólo el sintetizador eSpeak NG sopporta el cambio automático de idioma.
 
 ==== Cambio Automático de Dialecto ====[SpeechSettingsDialectSwitching]
 Esta casilla de verificación te permite activar o desactivar  si se deberían hacer los cambios de dialecto, en lugar de sólo cambiar el idioma actual. 
@@ -1097,7 +1161,7 @@ Si notas que NVDA está leyendo la puntuación en un idioma  incorrecto para un 
 
 ==== Incluir datos Unicode Consortium (incluyendo emoji) al procesar caracteres y símbolos ====[SpeechSettingsCLDR]
 Cuando esta casilla de verificación esté activada, NVDA incluirá los diccionarios de pronunciación de símbolos adicional cuando pronuncie caracteres y símbolos.
-Estos diccionarios contienen descripciones para símbolos (en particular emoji) que se proporcionan por el [Unicode Consortium http://www.unicode.org/consortium/] como parte de su [Common Locale Data Repository http://cldr.unicode.org/].
+Estos diccionarios contienen descripciones para símbolos (en particular emoji) que se proporcionan por el [Unicode Consortium https://www.unicode.org/consortium/] como parte de su [Common Locale Data Repository http://cldr.unicode.org/].
 Si quieres que NVDA verbalice descripciones de caracteres emoji basados en estos datos, deberías habilitar esta opción.
 Por lo tanto, si estás utilizando un sintetizador de voz que admita la verbalización de descripciones de emoji nativamente, deberías desactivar esto.
 
@@ -1105,10 +1169,14 @@ Ten en cuenta que las descripciones de caracteres añadidas o editadas manualmen
 Por lo tanto, si cambias la descripción de un emoji en particular, tu descripción personalizada se verbalizará para ese emoji sin importar si esta opción está habilitada.
 Puedes añadir, editar o eliminar descripciones de símbolos en el [diálogo de pronunciación de puntuación y símbolos #SymbolPronunciation] de NVDA.
 
+Para activar o desactivar la inclusión de Unicode Consortium data desde cualquier lugar, por favor asigna un gesto personalizado utilizando el [diálogo Gestos de EntradaInput Gestures dialog #InputGestures].
+
 ==== Cambio de Porcentaje de Tono para Mayúsculas ====[SpeechSettingsCapPitchChange]
 Este campo de edición te permite teclear la cantidad en que el tono de la voz cambiará cuando se verbalice una letra mayúscula.
 Este valor es un porcentaje, donde un valor negativo baja el tono y un valor positivo lo sube.
 Para no cambiar el tono utilizarías el 0.
+Normalmente, NVDA eleva el tono ligeramente para cualquier letra en mayúsculas, pero algunos sintetizadores pueden no admitir esto bien.
+En caso de que no se admita el cambio de tono para las mayúsculas, considera utilizar [Verbalizar "mayus" antes de mayúsculas #SpeechSettingsSayCapBefore] y/o [Pitar  para mayúsculas #SpeechSettingsBeepForCaps] en su lugar.
 
 ==== Decir" Mayus" antes de Mayúsculas ====[SpeechSettingsSayCapBefore]
 Esta opción es una casilla de verificación, que cuando está marcada dice a NVDA que diga la palabra "mayus" antes de cualquier letra en mayúscula, cuando se navega sobre ella o verbalizándolo cuando está siendo escrita. 
@@ -1116,7 +1184,6 @@ Normalmente, NVDA eleva el tono ligeramente para cualquier letra mayúscula, per
 
 ==== Pitar para Mayúsculas ====[SpeechSettingsBeepForCaps]
 Si esta casilla de verificación está marcada, NVDA emitirá un pequeño pitido cada vez que esté verbalizando un carácter en mayúscula. 
-Como la casilla de verificación 'decir mayus para mayúsculas', esta es útil para sintetizadores que no puedan modificar su tono para las letras mayúsculas.
 
 ==== Utilizar funcionalidad de deletreo si está soportada ====[SpeechSettingsUseSpelling]
 Algunas palabras consisten en sólo un carácter, pero la pronunciación es diferente dependiendo de si el carácter va a ser verbalizado como un carácter individual (tal como cuando se deletrea) o una palabra.
@@ -1301,6 +1368,41 @@ Esta opción no estará disponible si tu pantalla braille sólo admite detecció
 
 Puedes consultar la documentación para tu pantalla braille en la sección [Pantallas Braille Admitidas #SupportedBrailleDisplays] para buscar más detalles sobre los tipos compatibles de comunicación y puertos disponibles.
 
++++ Visión +++[VisionSettings]
+La categoría Visión en el diálogo opciones de NVDA te permite habilitar, deshabilitar y configurar [ayudas visuales #Vision].
+
+Ten en cuenta que las opciones disponibles en esta categoría podrían ampliarse con [complementos de NVDA #AddonsManager].
+Por defecto, esta categoría de ajustes contiene las siguientes opciones:
+
+==== Resaltar Foco ====[VisionSettingsFocusHighlight]
+Las casillas de verificación en el grupo de Resaltar Foco controlan el comportamiento de la función integrada [Resaltar Foco #VisionFocusHighlight] de NVDA.
+
+- Habilitar Resaltado: activa y desactiva el resaltado del foco.
+- Resaltar foco del sistema: conmutará si se resalta o no el [foco del sistema #SystemFocus].
+- Resaltar navegador de objetos: conmuta si se resaltará o no el [navegador de objetos #ObjectNavigation].
+- Resaltar cursor de modo Exploración: conmuta si se resaltará o no el [cursor virtual del modo Exploración #BrowseMode].
+-
+
+Ten en cuenta que marcar y desmarcar la casilla de verificación "Habilitar Resaltado" también cambiará el estado de las otras casillas de verificación del árbol en concordancia.
+Por lo tanto, si "Habilitar Resaltado" está desactivada y la marcas, las otras tres casillas de verificación también se marcarán automáticamente.
+Si sólo quieres resaltar el foco y dejar las casillas navegador de objetos y modo Exploración desmarcadas, el estado de la casilla de verificación "Habilitar Resaltado" será semi marcado.
+
+==== Cortina de Pantalla ====[VisionSettingsScreenCurtain]
+Puedes habilitar la [Cortina de Pantalla #VisionScreenCurtain] marcando la casilla de verificación "poner la pantalla en negro (efecto inmediato)".
+Aparecerá una advertencia de que la pantalla se volverá negra después de la activación.
+Antes de continuar (seleccionando "Sí"), asegúrate de tener activados la voz y el braille y podrás controlar tu ordenador sin utilizar la pantalla.
+Selecciona "No" si ya no deseas habilitar la Cortina de Pantalla.
+Si estás seguro, puedes elegir el botón Sí para activar la Cortina de Pantalla.
+Si ya no quieres ver este mensaje de advertencia cada vez, puedes cambiar este comportamiento en el diálogo que lo muestra.
+Siempre puedes restaurar la advertencia marcando la casilla de verificación "Mostrar siempre una advertencia cuando se cargue la Cortina de Pantalla" junto a la casilla de verificación "Poner la pantalla en negro".
+
+Para conmutar la Cortina de Pantalla desde cualquier lugar, por favor asigna un gesto personalizado utilizando el diálogo [Gestos de Entrada #InputGestures].
+
+==== Opciones para Ayudas Visuales de Terceros ====[VisionSettingsThirdPartyVisualAids]
+Se pueden proporcionar proveedores de mejora de visión adicionales en [complementos de NVDA #AddonsManager].
+Cuando estos proveedores tengan opciones ajustables, se mostrarán en esta categoría de opciones en grupos separados.
+Para obtener más información acerca de la configuración de cada proveedor, por favor consulta la documentación de ese proveedor.
+
 +++ Teclado (NVDA+control+k)+++[KeyboardSettings]
 La categoría Teclado en el cuadro de diálogo Opciones de NVDA contiene ajustes que establecen el comportamiento de NVDA cuando usas y escribes en tu teclado.
 Esta categoría Opciones contiene los siguientes ajustes:
@@ -1437,9 +1539,10 @@ Esta categoría contiene las siguientes opciones:
 Una casilla de verificación que cuando está marcada dice a NVDA que anuncie consejos según aparezcan. 
 Muchas ventanas y controles muestran un pequeño mensaje (o consejo) cuando mueves el puntero del ratón sobre ellos, o algunas veces cuando te mueves con el foco por ellos.
 
-==== Anunciar globos de ayuda ====[ObjectPresentationReportBalloons]
-Esta casilla de verificación cuando está marcada dice a NVDA que anuncie los globos de ayuda cuando aparezcan. 
-Los globos de ayuda son como los consejos, pero normalmente son más grandes, y están asociados con eventos del Sistema tales como la desconexión de un cable de red, o quizás alertarte acerca de problemas de seguridad de Windows.
+==== Anunciar notificaciones ====[ObjectPresentationReportNotifications]
+Esta casilla de verificación, cuando está marcada, dice a NVDA que anuncie los globos de ayuda y las notificaciones a medida que aparezcan.
+- Los globos de ayuda son como consejos, pero normalmente son de mayor tamaño y están asociados con eventos del sistema tales como la desconexión de un cable de red, o tal vez para alertarte sobre problemas de seguridad de Windows.
+- Las notificaciones se han introducido en Windows 10 y aparecen en el centro de notificaciones en la bandeja del sistema, informando sobre varios eventos (por ejemplo: si se ha descargado una actualización, ha aparecido un nuevo correo electrónico en tu bandeja de entrada, etc.).
 
 ==== Anunciar Teclas de Atajo de los Objetos ====[ObjectPresentationShortcutKeys]
 Cuando esta casilla de verificación está verificada, NVDA incluirá la tecla de atajo que esté asociada con cierto objeto o control cuando sea anunciado. 
@@ -1453,7 +1556,7 @@ Si el anunciado de información de posición del objeto está activado, esta opc
 Cuando esté activada, NVDA anunciará información de posición para más controles tales como menús y barras de herramientas, no obstante esta información podrá ser ligeramente incorrecta. 
 
 ==== Anunciar Descripciones de Objetos ========[ObjectPresentationReportDescriptions]
-Desmarca esta casilla de verificación si crees que no necesitas escuchar la descripción anunciada junto con los objetos.
+Desmarca esta casilla de verificación si crees que no necesitas escuchar la descripción anunciada junto con los objetos (es decir, sugerencias de búsqueda, anunciado de toda la ventana de diálogo justo después de que se abra el diálogo, etc.).
 
 %kc:setting
 ==== Salida en las Barras de Progreso ====[ObjectPresentationProgressBarOutput]
@@ -1561,7 +1664,8 @@ Por ejemplo, cuando estás en una página Web, si pulsas tab. y caes sobre un fo
 
 ==== Modo foco automático para movimiento de cursor ====[BrowseModeSettingsAutoPassThroughOnCaretMove]
 Esta opción, cuando está marcada, permite a NVDA entrar y salir del modo foco cuando se utilizan las flechas. 
-Por ejemplo, si se va pulsando flecha abajo por una página Web y caes sobre un cuadro de edición, NVDA activará automáticamente el modo foco. Si pulsas las flechas para salir del cuadro de edición, NVDA te volverá a poner en modo revisión.
+Por ejemplo, si se va pulsando flecha abajo por una página Web y caes sobre un cuadro de edición, NVDA activará automáticamente el modo foco. 
+Si pulsas las flechas para salir del cuadro de edición, NVDA te volverá a poner en modo revisión.
 
 ==== Indicación de Audio de los modos Foco y Navegación ====[BrowseModeSettingsPassThroughAudioIndication]
 Si esta opción está activada, NVDA reproducirá sonidos especiales cuando cambie entre modo exploración y modo foco en lugar de verbalizar el cambio.
@@ -1569,6 +1673,7 @@ Si esta opción está activada, NVDA reproducirá sonidos especiales cuando camb
 ==== Capturar los gestos que no sean de órdenes  para que no alcancen el  documento ====[BrowseModeSettingsTrapNonCommandGestures]
 Habilitada de modo predeterminado, esta opción te permite elegir si los gestos (tales como la pulsación de teclas) que no sean una orden de NVDA y que no se considere que sea una tecla de orden en general, deberían capturarse para no pasar al documento que esté en el foco actualmente. 
 Como un ejemplo, al estar activada, si se pulsó la letra j, debería capturarse para no alcanzar el documento, ya que no es ni una tecla de navegación rápida ni es probable que sea una orden de la misma aplicación.
+En este caso, NVDA pedirá a Windows que reproduzca un sonido predeterminado cada vez que se pulse una tecla que quede atrapada.
 
 +++ Formateado de Documento (NVDA+control+d) +++[DocumentFormattingSettings]
 La mayoría de las casillas de verificación en este diálogo son para configurar qué tipo de formato deseas escuchar automáticamente cuando muevas el cursor por los documentos. 
@@ -1604,7 +1709,9 @@ Puedes configurar el anunciado de:
  - Enlaces
  - Listas
  - Citas
+ - Grupos
  - Regiones
+ - Artículos
  - Marcos
  - Cliqueable
  -
@@ -1668,11 +1775,28 @@ Esto incluye el mismo Microsoft Word, y también el visor de mensajes y el compo
 Sin embargo, puede haber alguna información que no esté expuesta o que esté incorrectamente expuesta en algunas versiones de Microsoft Office, lo que significa que no siempre se puede confiar en este soporte de la UI automation.
 Todavía no recomendamos que la mayoría de los usuarios activen esta opción de forma predeterminada, aunque invitamos a los usuarios de Office 2016/365 a que prueben esta función y nos envíen sus comentarios.
 
-==== Utilizar UI Automation para acceder a la Consola de Windows cuando esté disponible ====[AdvancedSettingsConsoleUIA]
-Cuando esta opción esté activada, NVDA utilizará una versión nueva de trabajo en curso de su soporte para la Consola de Windows que aprovecha las ventajas de las [mejoras de accesibilidad hechas por Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Esta característica es altamente experimental y todavía incompleta, así que su uso aún no está recomendado. Sin embargo, una vez completado, se prevé que este nuevo soporte se convierta  en el predeterminado, mejorando el rendimiento y la estabilidad de NVDA en las consolas de órdenes de Windows.
+==== Compatibilidad con la Consola de Windows ====[AdvancedSettingsConsoleUIA]
+Esta opción selecciona cómo interactúa NVDA con la consola de Windows utilizada por la línea de órdenes, PowerShell y el subsistema de Windows para Linux.
+No afecta al terminal moderno de Windows.
+En la versión 1709 de Windows 10, Microsoft [agregó soporte para su API de automatización de interfaz de usuario a la consola https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], lo que aporta un rendimiento y una estabilidad ampliamente mejoradas para los lectores de pantalla que lo admitan.
+En situaciones en las que la UI Automation no esté disponible o se sepa que resulta en una experiencia de usuario inferior, la compatibilidad con la consola anterior de NVDA está disponible como solución alternativa.
+El cuadro combinado de compatibilidad con la Consola de Windows tiene tres opciones:
+- Automático: utiliza UI Automation en consolas con Windows 10 versión 1809 y posteriores. Esta opción se recomienda y se configura por defecto.
+- Preferir UIA: utiliza UI Automation en consolas si está disponible, incluso en versiones de Windows con implementaciones incompletas o fallidas. Aunque esta funcionalidad limitada podrá ser útil (e incluso suficiente para tu uso), la utilización de esta opción está totalmente bajo tu propio riesgo y no se proporcionará soporte para ella.
+- Heredado: UI Automation en la consola de Windows se desactivará completamente, así que siempre se usará la alternativa heredada.
+-
 
-==== Verbalizar contraseñas en consolas UIA ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Esta opción controla si se verbalizan los caracteres por [verbalizar caracteres al escribir #KeyboardSettingsSpeakTypedCharacters] o [verbalizar palabras al escribir #KeyboardSettingsSpeakTypedWords] en situaciones donde la pantalla no se actualice (tales como entrada de contraseña) en la Consola de Windows con el soporte UI automation activado. Por razones de seguridad, esta opción debería dejarse deshabilitada. Sin embargo, es posible que desees habilitarla si experimentas problemas de rendimiento o de inestabilidad con el anuncio de caracteres y/o palabras al escribir mientras utilizas el nuevo soporte experimental de NVDA para la Consola.
+==== Verbalizar Contraseñas en la Consola de Windows ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Esta opción controla si los caracteres se verbalizan por [verbalizar caracteres al escribir #KeyboardSettingsSpeakTypedCharacters] o [verbalizar palabras al escribir #KeyboardSettingsSpeakTypedWords] en situaciones donde la pantalla no se actualice (tal como entrada de conraseñas) en algunos programas de terminal, tales como la Consola de Windows con la compatibilidad con UI automation activada y Mintty.
+Por razones de seguridad, esta opción debe dejarse desactivada.
+Sin embargo, es posible que desees habilitarlo si experimentas problemas de rendimiento o inestabilidad con el anunciado de caracteres y/o palabras escritos en las consolas, o si trabajas en entornos de confianza y prefieres el anunciado de contraseñas.
+
+==== Utilizar el soporte nuevo de caracteres escritos en las Consolas de Windows heredadas cuando esté disponible ====[AdvancedSettingsKeyboardSupportInLegacy]
+Esta opción activa un método alternativo para detectar caracteres al escribir en Consolas heredadas de Windows.
+Aunque mejora el rendimiento y evita que se especifique la salida de la consola, puede ser incompatible con algunos programas de terminal.
+Esta característica está disponible y activada por omisión en versiones de Windows 10 1607, 1703, 1709 y 1803 así como en versiones de Windows 10 más modernas cuando UI Automation no esté disponible o desactivado.
+Advertencia: con esta opción activada, los caracteres escritos que no aparezcan en pantalla, tales como contraseñas, no se suprimirán.
+En entornos no confiables, podrás desactivar temporalmente [Verbalizar caracteres al escribir #KeyboardSettingsSpeakTypedCharacters] y [verbalizar palabras al escribir #KeyboardSettingsSpeakTypedWords] al introducir contraseñas.
 
 ==== Poner Automáticamente el Foco del Sistema en los Elementos enfocables en Modo Exploración ====[BrowseModeSettingsAutoFocusFocusableElements]
 Tecla: NVDA+8
@@ -1912,6 +2036,20 @@ No obstante, si haces clic o colocas el foco dentro del visualizador,  NVDA dete
 
 Para conmutar el visualizador de voz desde cualquier lugar, por favor asigna un gesto personalizado utilizando el [diálogo Gestos de Entrada #InputGestures].
 
+++ Visualizador Braille ++[BrailleViewer]
+Para los desarrolladores de software videntes o las personas que hagan demostraciones de NVDA para audiencias con visión, hay disponible una ventana flotante que les permite ver la salida braille y el texto equivalente para cada carácter braille.
+El Visualizador Braille puede utilizarse al mismo tiempo que una pantalla braille física, el cual coincidirá con el número de celdas del dispositivo físico.
+Mientras el Visualizador Braille esté activado, se actualiza constantemente para mostrarte el braille que se mostraría en la pantalla Braille física.
+
+Para activar el Visualizador Braille, marca el elemento de menú "Visualizador Braille" en Herramientas en el menú NVDA.
+Desmarca el elemento de menú para desactivarlo.
+
+Las pantallas braille físicas suelen tener botones para desplazarse hacia adelante o atrás, para activar el desplazamiento con la herramienta Visualizador Braille utiliza el [diálogo Gestos de Entrada #InputGestures] para asignar atajos de teclado que "Desplace la pantalla braille atrás" y "Desplace la pantalla braille adelante"
+
+La ventana del Visualizador Braille contiene una casilla de verificación etiquetada "Mostrar Visualizador de Braille al arrancar".
+Si esta opción está marcada, el Visualizador Braille se abrirá cuando se inicie NVDA.
+La ventana del Visualizador Braille siempre intentará volver a abrirse con las mismas dimensiones y ubicación que cuando se cerró.
+
 ++ Administrador de Complementos ++[AddonsManager]
 El Administrador de Complementos, al que se accede seleccionando Gestionar Complementos en Herramientas en el menú NVDA, te permite instalar, desinstalar, habilitar y deshabilitar paquetes de complementos para NVDA.
 Estos paquetes se proporcionan por la comunidad y contienen código personalizado que podrá añadir o cambiar características en NVDA o también proporcionan soporte para pantallas Braille o sintetizadores de voz extra.
@@ -1983,7 +2121,7 @@ Para una lista más extensa de los sintetizadores libres y comerciales que puede
 
 ++ eSpeak NG ++[eSpeakNG]
 El sintetizador [Espeak NG https://github.com/espeak-ng/espeak-ng] se compila directamente en NVDA y no requiere ningún otro controlador o componentes especiales para instalarse.
-NVDA se inicia utilizando Espeak NG de forma predeterminada.
+En Windows 7, 8 y 8.1, NVDA utiliza Espeak NG de forma predeterminada ([Windows OneCore #OneCore] se utiliza en Windows 10 por defecto).
 Como este sintetizador se compiló en NVDA, es una gran elección para cuando se ejecuta NVDA en  una memoria USB o en un CD en otros sistemas.
 
 Cada voz que viene con Espeak NG habla un idioma diferente.
@@ -2019,20 +2157,10 @@ Para utilizar estas voces, necesitarás instalar dos componentes:
 ++ Voces Windows OneCore ++[OneCore]
 Windows 10 incluye nuevas voces conocidas como voces "OneCore" o "mobile".
 Se proporcionan voces para muchos idiomas y son más ágiles que las voces Microsoft disponibles al utilizar Microsoft Speech API versión 5.
+En Windows 10, NVDA utiliza voces Windows OneCore por defecto ([[eSpeak NG #eSpeakNG] se utiliza en otras versiones).
 
 Porfavor consulta este artículo de Microsoft para una lista de voces disponibles e instrucciones para instalarlas: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
-Por favor ten en cuenta que actualmente no están disponibles con NVDA las velocidades más rápidas disponibles con Narrator.
-También, la velocidad seleccionada en la configuración de Windows afecta a la configurada en NVDA.
-Estos problemas no se pueden resolver sin cambios en Windows.
-Deseamos que esto se solucione en una actualización futura de Windows.
-
-++ Audiologic Tts3 ++[Audiologic]
-Este es un sintetizador de voz comercial específicamente para el idioma italiano.
-Debes tener este sintetizador instalado en tu sistema para poder utilizarlo con NVDA.
-Para más información, por favor visita el sitio Web de Audiologic en www.audiologic.it.
-
-Este sintetizador no soporta la [funcionalidad de deletreo #SpeechSettingsUseSpelling].
 
 + Pantallas Braille Admitidas +[SupportedBrailleDisplays]
 Esta sección contiene información acerca de las pantallas braille compatibles con NVDA.
@@ -2861,9 +2989,8 @@ NVDA puede aceptar una o más opciones adicionales al arrancar que alteren su co
 Puedes pasar tantas opciones como necesites.
 Estas opciones pueden pasarse al arrancar desde un atajo de teclado (en las propiedades del atajo de teclado), desde el diálogo Ejecutar(Menú Inicio -> Ejecutar o Windows+r) o desde una consola de órdenes de Windows.
 Las opciones deberían separarse del nombre del fichero ejecutable de NVDA y de otras opciones por espacios.
-Por ejemplo, el atajo de teclado del escritorio que crea NVDA durante la instalación tiene la opción -r, que dice a NVDA que cierre la copia actual en ejecucución antes de iniciar una nueva.
-Otra opción útil es --disable-addons, que dice a NVDA que suspenda todos los complementos en ejecución.
-Esto te permite determinar si un problema es causado por un complemento y recuperarte de problemas serios causados por complementos.
+Por ejemplo, una opción útil es --disable-addons, que dice a NVDA que suspenda todos los complementos en ejecución.
+Esto te permite determinar si un problema está causado por un complemento y recuperarte de problemas serios causados por complementos.
 
 Como un ejemplo, puedes salir de la copia actualmente en ejecución de NVDA introduciendo lo siguiente en el diálogo Ejecutar:
 
@@ -2871,8 +2998,8 @@ nvda -q
 
 Algunas de las opciones de línea de órdenes tienen una versión corta y una larga, mientras otras sólo tienen una versión larga.
 Para aquellas que tengan una versión corta, puedes combinarlas así:
-| nvda -rm | Esto saldrá de la copia actualmente en ejecución de NVDA e iniciará una copia nueva con los sonidos de inicio deshabilitados, etc. |
-| nvda -rm --disable-addons | Igual que el anterior, pero con los complementos deshabilitados |
+| nvda -mc CONFIGPATH | Esto iniciará NVDA con sonidos de arranque y el mensaje desactivado, y la configuración especificada |
+| nvda -mc CONFIGPATH --disable-addons | Lo mismo que la de arriba, pero con complementos desactivados |
 
 Algunas de las opciones de línea de órdenes aceptan parámetros adicionales; por ejemplo: cómo debería ser el grado de detalle del registro o la ruta para el directorio de configuración del usuario.
 Esos parámetros deberían colocarse después de la opción, separados de la opción por un espacio cuando se utiliza la versión o un signo igual (=) cuando se utiliza  la versión larga; por ejemplo:
@@ -2884,7 +3011,6 @@ Seguidamente van las opciones de línea de órdenes para NVDA:
 || Corta | Larga | Descripción |
 | -h | --help | muestra la ayuda en línea de órdenes y sale |
 | -q | --quit | Sale de la copia que ya se esté ejecutando de NVDA |
-| -r | --replace | Sale de la copia que ya se esté ejecutando de NVDA y arranca esta otra |
 | -k | --check-running | Informa si NVDA está en ejecución a través del código de salida; 0 si está en ejecución, 1 si no está en ejecución |
 | -f LOGFILENAME | --log-file=LOGFILENAME | El fichero donde deberían escribirse los mensajes de registro |
 | -l LOGLEVEL | --log-level=LOGLEVEL | El nivel más bajo de mensaje registrado (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning |

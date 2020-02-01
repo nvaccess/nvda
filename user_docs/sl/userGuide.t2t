@@ -144,13 +144,15 @@ Pritisnite V redu, da zaprete to pogovorno okno.
 ++ Zagon NVDA ++[LaunchingNVDA]
 Če ste namestili NVDA z namestitvenega paketa, potem je zagon NVDA preprost. Zaženete jo lahko s pritiskom kombinacije tipk control+alt+a ali pa z izbiro menija NVDA v Začetnem meniju, kjer razprete seznam vseh nameščenih programov.
 Kot dodatno možnost lahko uporabite pogovorno okno Zaženi, kjer vnesete NVDA in pritisnete Enter.
-Lahko uporabite tudi [možnosti v ukazni vrstici, #CommandLineOptions] ki vam omogočajo ponovni zagon NVDA (-r), izhod iz NVDA (-q), onemogočanje dodatkov (--disable-addons) in drugo.
+Če je NVDA v pogonu, se bo ponovno zagnala.
+Lahko podate tudi nekaj [možnosti v ukazni vrstici, #CommandLineOptions] ki vam omogočajo izhod iz NVDA (-q), onemogočanje dodatkov (--disable-addons) in drugo.
 
 Za nameščene kopije, NVDA privzeto hrani konfiguracijo v mapi sleddenja programskih datotek trenutnega uporabnika (npr. "C:\Users\<uporabnik>\AppData\Roaming").
 To je možno spremeniti na način, da NVDA naloži svojo konfiguracijo iz mape z lokalnimi programskimi podatki.
 Oglejte si razdelek o [splošnih sistemskih parametrih #SystemWideParameters] za več podrobnosti.
 
 Za zagon prenosljive kopije pojdite v imenik, kjer ste ustvarili prenosljivo kopijo NVDA in pritisnite Enter nad NVDA.exe ali to ikono dvakrat kliknite.
+Če je bila NVDA že v pogonu, se bo samodejno zaustavila pred zagonom prenosljive različice.
 
 Ko se bo NVDA zagnala, boste slišali višajoč skupek tonov,  (ki povedo, da se NVDA nalaga).
 Odvisno od tega, kako hiter je vaš računalnik, ali teče NVDA preko USB ključka ali drugega počasnejšega medija, lahko mine nekaj trenutkov, da se NVDA zažene.
@@ -400,6 +402,7 @@ Za pregled besedila so na voljo naslednji ukazi:
 | Govori vse s pregledom | številski delPlus | NVDA+shift+a | troprstni švig dol (delovanje besedila) | Začetek branja od trenutnega položaja pregledne utripalke in se pri tem premikajoč tako, kot se giblje utripalka |
 | Izbor in preslikava od pregledne utripalke | NVDA+f9 | NVDA+f9 | brez | začetek izbora in preslikave besedila od trenutnega položaja pregledne utripalke. Aktualno dejanje se ne bo izvedlo, dokler ne boste NVDA sporočili, kje se konča območje besedila |
 | Izbor in preslikava do pregledne utripalke | NVDA+f10 | NVDA+f10 | brez | Ob prvem pritisku se označi območje od zaznamka, ki zaznamuje začetek besedila do vključno trenutnega položaja pregledne utripalke.ob drugem pritisku, se vsebina preslika v odložišče Oken |
+| Premakni se na zaznačen začetek za preslikavo v pregledu | NVDA+shift+f9 | NVDA+shift+f9 | brez | Premakne pregledno utripalko na položaj, kjer se je že prej postavil zaznačevalec za preslikavo |
 | Sporoči oblikovanje besedila | NVDA+f | NVDA+f | brez | Poroča o oblikovanju besedila, nad katerim je trenutno postavljena pregledna utripalka. Dvojni pritisk informacijo predstavi v brskalniškem delovanju. |
 | Sporoči zamenjavo trenutnega simbola | Ni določeno | Ni določeno | ni določeno | Izgovori simbol, kjer je postavljena pregledna utripalka. Dvojni pritisk pokaže simbol in besedilo za izgovorjavo tega v brskalniškem delovanju. |
 %kc:endInclude
@@ -939,6 +942,21 @@ Ko ste v tabelaričnem pogledu dodanih knjig:
 | Kontekstni meni | applications | Odpre kontekstni meni za izbrano knjigo. |
 %kc:endInclude
 
+++ Windows Konzola ++[WinConsole]
+NVDA oskrbuje podporo za Windows ukazno konzolo, ki se uporablja v Ukaznem Pozivu, konzoli PowerShell in Windows Podsistemu za Linux.
+Konzolsko okno ima nespremenljivo velikost, običajno precej manjšo, kot je predpomnilnik, ki ohranja iznos.
+Ko je napisano novo besedilo, se vsebina odvrti navzgor in predhodno besedilo ni več vidno. 
+Besedilo, ki ni vidno prikazano v oknu, ni dostopno z NVDA ukazi za pregled besedila.
+Tako je potrebno vrteti to konzolsko okno za branje zgodnejšega besedila.
+%kc:beginInclude
+Sledeče vgrajene bližnjične tipke Windows Konzole bodo morda uporabne ob [pregledu besedila #ReviewingText] z NVDA:
+|| Ime | Tipka | Opis |
+| Zavrti gor | control+puščicaGor | Zavrti konzolsko okno navzgor, da se lahko prebere zgodnejše besedilo. |
+| Zavrti dol | control+puščicaDol | Zavrti konzolsko okno navzdol, da se lahko prebere kasnejše besedilo. |
+| Zavrti na začetek | control+home | Zavrti konzolsko okno na začetek medpomnilnika. |
+| Zavrti na konec | control+end | Zavrti konzolsko okno na konec medpomnilnika. |
+%kc:endInclude
+
 + Konfiguracija NVDA +[ConfiguringNVDA]
 Večino konfiguracije se lahko opravi v pogovornih oknih, ki so dostopna prek podmenija Izbire v meniju NVDA.
 Večje število teh nastavitev se lahko najde v mnogostranskem pogovornem oknu imenovanem [pogovorno okno NVDA Nastavitev #NVDASettings].
@@ -1104,6 +1122,8 @@ Vendar, če uporabljate govorno sintezo, ki že samapodpira izgovorjavo opise em
 Pomnite, da so ročno dodani ali urejeni opisi znakov shranjeni kot del vaših osebnih nastavitev.
 Torej, če boste spremenili opis določenega emojia, se bo vaš opis po meri tega emojia izgovoril neglede na to ali je ta možnost izbrana.
 Vi lahko dodajate, urejate ali odstranite opise simbolov v NVDA [pogovornem oknu izgovorjave ločil/simbolov #SymbolPronunciation].
+
+Za vklop ali izklop  vključitve podatkov konzorcija Unicode od kjerkoli, prosimo, dodelite kretnjo po meri z uporabo pogovornega okna [Kretenj Vnosa #InputGestures].
 
 ==== Sprememba višine glasu ob velikih črkah v odstotkih ====[SpeechSettingsCapPitchChange]
 To vnosno polje omogoča vnos vrednosti razlike v tonu glasu, za katero se bo glas zvišal, ko bo sinteza izgovarjala veliko črko.
@@ -1606,6 +1626,7 @@ V NVDA lahko nastavite poročanje za:
  - Sezname
  - Navedke
  - Mejnike
+ - Članke
  - Okvirje
  - Ko je nekaj klikljivo
  -
@@ -1668,11 +1689,28 @@ Za najbolj posodobljene različice Microsoft Offica 2016/365, ki tečejo v windo
 Toda, lahko obstaja tudi nekaj informacij, ki bodisi se ne morejo osvetljiti ali so osvetljene napačno v nekaj različicah Microsoft Offica, kar pomeni, da se na to UI (UV) automation podporo ne moremo vselej zanesti.
 Tako mi še ne priporočamo, da bi večina uporabnikov to možnost imela privzeto vklopljeno, čeprav s hvaležnostjo pozdravljamo uporabnike Offica 2016/365, da testirajo to zmožnost in sporočijo povratne informacije.
 
-==== Uporabi UI (UV) Automation za dostop do Okenske Konzole, ko je na voljo ====[AdvancedSettingsConsoleUIA]
-Ko je ta možnost vključena, bo NVDA uporabljala novo (še v izgradnji) različico njene podpore Okenski Konzoli, ki izkorišča prednosti [izboljšav dostopnosti narejene pri Microsoftu https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Ta zmožnost je res še v zelo zgodnji preizkusni fazi in je še nedokončana, tako njena uporaba še ni priporočljiva. Toda enkrat, ko bo končana, si obetamo, da bo ta nova podpora postala privzeta in tako izboljšala učinkovitost NVDA in njeno stabilnost v Okenskih ukaznih konzolah.
+==== Podpora Windows Konzoli ====[AdvancedSettingsConsoleUIA]
+Ta možnost določa, kako NVDA sodeluje z Windows Konzolo, ki jo uporablja ukazni poziv, PowerShell in Windows Podsistem za Linux.
+To ne učinkuje na moderen Windos Terminal.
+V Windows 10 različici 1709, je Microsoft [dodal podporo za njihov UI (UV) Automation API v konzolo https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] in s tem prinesel precejšnje izboljšave učinkovitosti in stabilnosti za bralnike zaslona, ki ta vmesnik podpirajo.
+V situacijah, kjer UI (UV) Automation ni na voljo ali se ve, da uporaba tega predstavlja slabšo uporabniško izkušnjo, je še vedno na voljo podpora v NVDA kot rezerva sicer opuščeni konzoli.
+Spustni seznam podpore Windows Konzoli ima tri možnosti:
+- Samodedjno: Uporabi UI (UV) Automation v konzolah v Windows 10 različici 1809 in kasnejših. Ta možnost se priporoča in je privzeta izbira.
+- Izberi UIA: Uporabi UI (UV) Automation v konzolah, če je na voljo, tudi v različicah Oken z nepopolno ali hroščato implementacijo. Čeprav je lahko taka omejena funkcionalnost uporabna (in celo zadostna za vašo uporabo), gre uporaba te možnosti popolnoma na vašo lastno odgovornost in prav tako se ne bo nudilo nikakršne podpore za to.
+- Opuščeno: UI (UV) Automation v Windows Konzoli bo popolnoma onemogočen, tako se bo vedno uporabila sicer opuščena rezerva .
+-
 
-==== Izgovori gesla v UIA konzolah ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Ta nastavitev nadzira ali se znaki izgovarjajo prek možnosti [izgovori natipkane znake #KeyboardSettingsSpeakTypedCharacters] ali [izgovori natipkane besede #KeyboardSettingsSpeakTypedWords] v situacijah, ko se ekran ne posodablja (kot je vnos gesla) v Okenski Konzoli z UI (UV) automation podporo, ki je vključena. Zaradi varnostnih zadržkov bi morali to nastavitev pustiti onemogočeno. Toda, lahko boste želeli to omogočiti, če boste zaznavali težave z učinkovitostjo ali nestabilno delovanje ob vključenih možnostih sporočanja tipkanih znakov in/ali besed med tem uporabo nove preizkusne NVDA podpore konzoli.
+==== Izgovori gesla v Windows Konzoli ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Ta nastavitev nadzira ali se znaki izgovarjajo prek [izgovori natipkane znake #KeyboardSettingsSpeakTypedCharacters] ali [izgovori natipkane besede #KeyboardSettingsSpeakTypedWords] v situacijah, kjer se ekran ne posodablja (kot je vnos gesla) v nekaterih terminalskih programih, kot je Windows Konzola z UI (UV) automation podporo omogočeno in v programu Mintty.
+Zaradi varnostnih razlogov bi morala biti ta nastavitev onemogočena.
+Toda, lahko bi jo želeli omogočiti, če se boste srečevali s težavami z učinkovitostjo  ali nestabilnostjo s sporočanjem natipkanih znakov in/ali besed v konzolah ali delate v zaupanja vrednih okoljih in vam ugaja naznanilo gesla.
+ 
+==== Uporabi novo podporo za natipkane znake v opuščenih Windows konzolah, ko je na voljo ====[AdvancedSettingsKeyboardSupportInLegacy]
+Ta možnost omogoči alternativno metodo za zaznavo natipkanih znakov v opuščenih Windows konzolah.
+Čeprav izboljša učinkovitost in prepreči prevents nekaj konzolskega iznosa, da se ne bi izgovoril, je to lahko nezdružljivo z nekaj terminalskimi programi.
++Ta zmožnost je na voljo in je privzeto omogočena v različicah Windows 10 1607, 1703, 1709 in 1803 kot tudi v novejših izdajah Windows 10, ko UI (UV) Automation ni na voljo ali je onemogočena.
+Opozorilo: ko je ta možnost omogočena, natipkani znaki, ki niso vidni na ekranu, kot so gesla, ne bodo odušeni.
+V okoljih, ki niso vredna zaupanja, boste morda začasno onemogočili [izgovori natipkane znake #KeyboardSettingsSpeakTypedCharacters] in [izgovori natipkane besede #KeyboardSettingsSpeakTypedWords], ko boste vnašali gesla.
 
 ==== Samodejno postavi sistemsko žarišče na elemente, ki so lahko v žarišču v Brskalniškem Delovanju ====[BrowseModeSettingsAutoFocusFocusableElements]
 Tipka: NVDA+8
@@ -2386,7 +2424,7 @@ Prosimo, oglejte si dokumentacijo posamezne vrstice, za točno lokacijo posamezn
 | tipka control+home | dot1+dot2+dot3+space |
 | tipka alt+f4 | dot1+dot3+dot5+dot6+space |
 | tipka puščicaLevo | dot3+space, leftSideLeftArrow |
-| tipka control+shift+puščiaLevo | dot2+dot8+space+f1 |
+| tipka control+shift+puščicaLevo | dot2+dot8+space+f1 |
 | tipka control+puščicaLevo | dot2+space |
 | tipka shift+alt+puščicaLevo | dot2+dot7+f1 |
 | tipka alt+puščicaLevo | dot2+dot7 |
@@ -2398,7 +2436,7 @@ Prosimo, oglejte si dokumentacijo posamezne vrstice, za točno lokacijo posamezn
 | tipka pageUp | dot1+dot2+dot6+space |
 | tipka control+pageUp | dot1+dot2+dot6+dot8+space |
 | tipka upArrow | dot1+space, leftSideUpArrow |
-| tipka control+shift+puščiaGor | dot2+dot3+dot8+space+f1 |
+| tipka control+shift+puščicaGor | dot2+dot3+dot8+space+f1 |
 | tipka control+puščicaGor | dot2+dot3+space |
 | tipka shift+alt+puščicaGor | dot2+dot3+dot7+f1 |
 | tipka alt+puščicaGor | dot2+dot3+dot7 |

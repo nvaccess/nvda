@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2019 NV Access Limited, Babbage B.V., Mozilla Corporation
+#Copyright (C) 2008-2017 NV Access Limited, Babbage B.V., Mozilla Corporation
 
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import treeInterceptorHandler
@@ -20,8 +20,6 @@ from comtypes import COMError
 import aria
 import config
 from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
-
-IA2_RELATION_CONTAINING_DOCUMENT = "containingDocument"
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
@@ -93,6 +91,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
 			role=controlTypes.ROLE_TEXTFRAME
 		level=attrs.get('IAccessible2::attribute_level',"")
+
 		xmlRoles=attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")
 		landmark = next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
 		if landmark and role != controlTypes.ROLE_LANDMARK and landmark != xmlRoles[0]:
@@ -100,6 +99,10 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			landmark = None
 		if role == controlTypes.ROLE_DOCUMENT and xmlRoles[0] == "article":
 			role = controlTypes.ROLE_ARTICLE
+		elif role == controlTypes.ROLE_GROUPING and xmlRoles[0] == "figure":
+			role = controlTypes.ROLE_FIGURE
+		elif role in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_SECTION) and xmlRoles[0] == "region":
+			role = controlTypes.ROLE_REGION
 		attrs['role']=role
 		attrs['states']=states
 		if level is not "" and level is not None:
@@ -132,56 +135,18 @@ class Gecko_ia2(VirtualBuffer):
 			return False
 		return True
 
-	def _getEmbedderOfContainingDocument(self, acc):
-		"""Get the embedder of the given object's containing document.
-		For example, if acc is a button inside an iframe, this will return the iframe (embedder).
-		"""
-		try:
-			# 1. Get the containing document.
-			if not isinstance(acc, IAccessibleHandler.IAccessible2_2):
-				# IAccessible NVDAObjects currently fetch IA2, but we need IA2_2 for relationTargetsOfType.
-				# (Out-of-process, for a single relation, this is cheaper than IA2::relations.)
-				acc = acc.QueryInterface(IAccessibleHandler.IAccessible2_2)
-			targets, count = acc.relationTargetsOfType(IA2_RELATION_CONTAINING_DOCUMENT, 1)
-			if count == 0:
-				return None
-			doc = targets[0].QueryInterface(IAccessibleHandler.IAccessible2_2)
-			# 2. Get its parent (the embedder); e.g. iframe.
-			embedder = doc.accParent
-			if not embedder:
-				return None
-			return embedder.QueryInterface(IAccessibleHandler.IAccessible2_2)
-		except COMError:
-			return None
-
 	def __contains__(self,obj):
 		if not (isinstance(obj,NVDAObjects.IAccessible.IAccessible) and isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2)) or not obj.windowClassName.startswith('Mozilla') or not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle):
 			return False
-		acc = obj.IAccessibleObject
-		accId = obj.IA2UniqueID
-		while True:
-			if not accId:
+		if self.rootNVDAObject.windowHandle==obj.windowHandle:
+			ID=obj.IA2UniqueID
+			if not ID:
 				# Dead object.
 				return False
-			if accId == self.rootID:
-				return True
 			try:
-				self.rootNVDAObject.IAccessibleObject.accChild(accId)
-				# The object is definitely a descendant of the document.
-				break
+				self.rootNVDAObject.IAccessibleObject.accChild(ID)
 			except COMError:
-				pass
-			# accChild failed. This might be because the object is in an
-			# out-of-process iframe, in which case the embedder document won't know
-			# about it. Try the embedder iframe.
-			acc = self._getEmbedderOfContainingDocument(acc)
-			if not acc:
-				return False
-			try:
-				accId = acc.uniqueID
-			except COMError:
-				# Dead object.
-				return False
+				return ID==self.rootNVDAObject.IA2UniqueID
 
 		return not self._isNVDAObjectInApplication(obj)
 
@@ -207,8 +172,13 @@ class Gecko_ia2(VirtualBuffer):
 			isDefunct=True
 		return not isDefunct
 
+
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
-		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
+		try:
+			pacc=self.rootNVDAObject.IAccessibleObject.accChild(ID)
+		except COMError:
+			return None
+		return NVDAObjects.IAccessible.IAccessible(windowHandle=docHandle,IAccessibleObject=IAccessibleHandler.normalizeIAccessible(pacc),IAccessibleChildID=0)
 
 	def getIdentifierFromNVDAObject(self,obj):
 		docHandle=obj.windowHandle
@@ -323,7 +293,7 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType=="landmark":
 			attrs = [
 				{"IAccessible::role": [IAccessibleHandler.IA2_ROLE_LANDMARK]},
-				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles if lr != "region"]},
+				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]},
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("region")],
 					"name": [VBufStorage_findMatch_notEmpty]}
 				]
@@ -331,9 +301,25 @@ class Gecko_ia2(VirtualBuffer):
 			attrs = [
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("article")]}
 			]
+		elif nodeType == "grouping":
+			attrs = [
+				{
+					"IAccessible2::attribute_xml-roles": [
+						VBufStorage_findMatch_word(r) for r in ("group", "radiogroup")
+					],
+					"name": [VBufStorage_findMatch_notEmpty]
+				},
+				{
+					"IAccessible2::attribute_tag": self._searchableTagValues(["fieldset"]),
+					"name": [VBufStorage_findMatch_notEmpty]
+				},
+			]
 		elif nodeType=="embeddedObject":
 			attrs=[
-				{"IAccessible2::attribute_tag":self._searchableTagValues(["embed","object","applet","audio","video"])},
+				{
+					"IAccessible2::attribute_tag":
+					self._searchableTagValues(["embed", "object", "applet", "audio", "video", "figure"])
+				},
 				{"IAccessible::role":[oleacc.ROLE_SYSTEM_APPLICATION,oleacc.ROLE_SYSTEM_DIALOG]},
 			]
 		else:

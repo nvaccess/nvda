@@ -36,7 +36,8 @@ import collections
 import extensionPoints
 import hwPortUtils
 import bdDetect
-import winUser
+import brailleViewer
+import queueHandler
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is a
@@ -75,7 +76,7 @@ roleLabels = {
 	# Translators: Displayed in braille for an object which is a
 	# graphic.
 	controlTypes.ROLE_GRAPHIC: _("gra"),
-	# Translators: Displayed in braille for an object which is a
+	# Translators: Displayed in braille for toast notifications and for an object which is a
 	# help balloon.
 	controlTypes.ROLE_HELPBALLOON: _("hlp"),
 	# Translators: Displayed in braille for an object which is a
@@ -127,6 +128,9 @@ roleLabels = {
 	# grouping.
 	controlTypes.ROLE_GROUPING: _("grp"),
 	# Translators: Displayed in braille for an object which is a
+	# caption.
+	controlTypes.ROLE_CAPTION: _("cap"),
+	# Translators: Displayed in braille for an object which is a
 	# embedded object.
 	controlTypes.ROLE_EMBEDDEDOBJECT: _("embedded"),
 	# Translators: Displayed in braille for an object which is a
@@ -173,6 +177,10 @@ roleLabels = {
 	controlTypes.ROLE_LANDMARK: _("lmk"),
 	# Translators: Displayed in braille for an object which is an article.
 	controlTypes.ROLE_ARTICLE: _("art"),
+	# Translators: Displayed in braille for an object which is a region.
+	controlTypes.ROLE_REGION: _("rgn"),
+	# Translators: Displayed in braille for an object which is a figure.
+	controlTypes.ROLE_FIGURE: _("fig"),
 }
 
 positiveStateLabels = {
@@ -239,9 +247,6 @@ landmarkLabels = {
 	"search": pgettext("braille landmark abbreviation", "srch"),
 	# Translators: Displayed in braille for the form landmark, normally found on web pages.
 	"form": pgettext("braille landmark abbreviation", "form"),
-	# Strictly speaking, region isn't a landmark, but it is very similar.
-	# Translators: Displayed in braille for a significant region, normally found on web pages.
-	"region": pgettext("braille landmark abbreviation", "rgn"),
 }
 
 #: Cursor shapes
@@ -637,22 +642,30 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
 	# Cache this for later use.
 	field._presCat = presCat
+	role = field.get("role", controlTypes.ROLE_UNKNOWN)
 	if reportStart:
 		# If this is a container, only report it if this is the start of the node.
 		if presCat == field.PRESCAT_CONTAINER and not field.get("_startOfNode"):
 			return None
 	else:
-		# We only report ends for containers
+		# We only report ends for containers that are not landmarks/regions
 		# and only if this is the end of the node.
-		if presCat != field.PRESCAT_CONTAINER or not field.get("_endOfNode"):
+		if (
+			presCat != field.PRESCAT_CONTAINER
+			or not field.get("_endOfNode")
+			or role == controlTypes.ROLE_LANDMARK
+		):
 			return None
 
-	role = field.get("role", controlTypes.ROLE_UNKNOWN)
 	states = field.get("states", set())
 	value=field.get('value',None)
 	current=field.get('current', None)
 	placeholder=field.get('placeholder', None)
 	roleText = field.get('roleTextBraille', field.get('roleText'))
+	landmark = field.get("landmark")
+	if not roleText and role == controlTypes.ROLE_LANDMARK and landmark:
+		roleText = f"{roleLabels[controlTypes.ROLE_LANDMARK]} {landmarkLabels[landmark]}"
+
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []
 		if current:
@@ -681,8 +694,13 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			# Don't report the role for math here.
 			# However, we still need to pass it (hence "_role").
 			"_role" if role == controlTypes.ROLE_MATH else "role": role,
-			"states": states,"value":value, "current":current, "placeholder":placeholder,"roleText":roleText}
-		if formatConfig["reportLandmarks"] and field.get("landmark") and field.get("_startOfNode"):
+			"states": states,
+			"value": value,
+			"current": current,
+			"placeholder": placeholder,
+			"roleText": roleText
+		}
+		if field.get('alwaysReportName', False):
 			# Ensure that the name of the field gets presented even if normally it wouldn't.
 			name = field.get("name")
 			if name:
@@ -1187,7 +1205,6 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			yield RegionWithPositions(region, start, end)
 			start = end
 
-	_cache_rawToBraillePos=True
 	def _get_rawToBraillePos(self):
 		"""@return: a list mapping positions in L{rawText} to positions in L{brailleCells} for the entire buffer.
 		@rtype: [int, ...]
@@ -1197,7 +1214,8 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			rawToBraillePos.extend(p+regionStart for p in region.rawToBraillePos)
 		return rawToBraillePos
 
-	_cache_brailleToRawPos=True
+	brailleToRawPos: List[int]
+
 	def _get_brailleToRawPos(self):
 		"""@return: a list mapping positions in L{brailleCells} to positions in L{rawText} for the entire buffer.
 		@rtype: [int, ...]
@@ -1232,7 +1250,25 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		raise LookupError("No such position")
 
 	def bufferPositionsToRawText(self, startPos, endPos):
-		return self.rawText[self.brailleToRawPos[startPos]:self.brailleToRawPos[endPos-1]+1]
+		brailleToRawPos = self.brailleToRawPos
+		if not brailleToRawPos or not self.rawText:
+			# if either are empty, just return an empty string.
+			return ""
+		try:
+			lastIndex = len(brailleToRawPos) - 1
+			rawTextStart = brailleToRawPos[min(lastIndex, startPos)]
+			rawTextEnd = brailleToRawPos[min(lastIndex, endPos)] + 1
+			lastIndex = len(self.rawText)
+			return self.rawText[rawTextStart:min(lastIndex, rawTextEnd)]
+		except IndexError:
+			log.debugWarning(
+				f"Unable to get raw text for buffer positions"
+				f"(startPos-endPos): {startPos}-{endPos}, "
+				f"for rawText: {self.rawText}, "
+				f"with brailleToRawPos: {brailleToRawPos}",
+				exc_info=True
+			)
+			return ""
 
 	def bufferPosToWindowPos(self, bufferPos):
 		if not (self.windowStartPos <= bufferPos < self.windowEndPos):
@@ -1571,14 +1607,13 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def __init__(self):
 		louisHelper.initialize()
 		self.display: Optional[BrailleDisplayDriver] = None
-		self.displaySize = 0
+		#: Number of cells the connected device (or if no device connected, what braille viewer has)
+		#: Zero cells disables braille. See L{_get_enabled}
+		self._displaySize: int = 0
 		self.mainBuffer = BrailleBuffer(self)
 		self.messageBuffer = BrailleBuffer(self)
 		self._messageCallLater = None
 		self.buffer = self.mainBuffer
-		#: Whether braille is enabled.
-		#: @type: bool
-		self.enabled = False
 		self._keyCountForLastMessage=0
 		self._cursorPos = None
 		self._cursorBlinkUp = True
@@ -1588,6 +1623,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._tether = config.conf["braille"]["tetherTo"]
 		self._detectionEnabled = False
 		self._detector = None
+		self._rawText = u""
+		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
 
 	def terminate(self):
 		bgThreadStopTimeout = 2.5 if self._detectionEnabled else None
@@ -1621,6 +1658,24 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def _get_shouldAutoTether(self):
 		return self.enabled and config.conf["braille"]["autoTether"]
 
+	displaySize: int
+
+	def _get_displaySize(self):
+		if self._displaySize == 0 and brailleViewer.isBrailleViewerActive():
+			return brailleViewer.DEFAULT_NUM_CELLS
+		return self._displaySize
+
+	def _set_displaySize(self, numCells):
+		"""The display size can be changed while a display is connected, for instance
+			see L{brailleDisplayDrivers.alva.BrailleDisplayDriver} split point feature.
+		"""
+		self._displaySize = numCells
+
+	enabled: bool
+
+	def _get_enabled(self):
+		return bool(self.displaySize)
+
 	_lastRequestedDisplayName=None #: the name of the last requested braille display driver with setDisplayByName, even if it failed and has fallen back to no braille.
 	def setDisplayByName(self, name, isFallback=False, detected=None):
 		if not isFallback:
@@ -1648,13 +1703,14 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 		try:
 			newDisplay = _getDisplayDriver(name)
+			oldDisplay = self.display
 			if detected and bdDetect._isDebug():
 				log.debug("Possibly detected display '%s'" % newDisplay.description)
-			if newDisplay == self.display.__class__:
+			if newDisplay == oldDisplay.__class__:
 				# This is the same driver as was already set, so just re-initialise it.
 				log.debug("Reinitializing %s braille display"%name)
-				self.display.terminate()
-				newDisplay = self.display
+				oldDisplay.terminate()
+				newDisplay = oldDisplay
 				try:
 					newDisplay.__init__(**kwargs)
 				except TypeError:
@@ -1679,8 +1735,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 						log.error("Error terminating previous display driver", exc_info=True)
 				self.display = newDisplay
 			newDisplay.initSettings()
-			self.displaySize = newDisplay.numCells
-			self.enabled = bool(self.displaySize)
+			self._displaySize = newDisplay.numCells
 			if isFallback:
 				if self._detectionEnabled and not self._detector:
 					# As this is the fallback display, which is usually noBraille,
@@ -1692,14 +1747,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			else: # detected:
 				self._disableDetection()
 			log.info("Loaded braille display driver %s, current display has %d cells." %(name, self.displaySize))
-			try:
-				self.initialDisplay()
-			except:
-				# #8877: initialDisplay might fail because NVDA tries to focus
-				# an object for which property fetching raises an exception.
-				# We should handle this more gracefully, since this is no reason
-				# to stop a display from loading successfully.
-				log.debugWarning("Error in initial display after display load", exc_info=True)
+			queueHandler.queueFunction(queueHandler.eventQueue, self.initialDisplay)
 			if detected and 'bluetoothName' in detected.deviceInfo:
 				self._enableDetection(bluetooth=False, keepCurrentDisplay=True, limitToDevices=[name])
 			return True
@@ -1711,6 +1759,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				log.debugWarning("Couldn't initialize display driver for kwargs %r"%(kwargs,), exc_info=True)
 			self.setDisplayByName("noBraille", isFallback=True)
 			return False
+
+	def _onBrailleViewerChangedState(self, created):
+		if created:
+			self._updateDisplay()
+		log.debug("Braille Viewer enabled: {}".format(self.enabled))
 
 	def _updateDisplay(self):
 		if self._cursorBlinkTimer:
@@ -1729,6 +1782,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			wx.CallAfter(self._cursorBlinkTimer.Start,blinkRate)
 
 	def _writeCells(self, cells):
+		brailleViewer.update(cells, self._rawText)
 		if not self.display.isThreadSafe:
 			try:
 				self.display.display(cells)
@@ -1764,6 +1818,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def update(self):
 		cells = self.buffer.windowBrailleCells
+		self._rawText = self.buffer.windowRawText
 		if log.isEnabledFor(log.IO):
 			log.io("Braille window dots: %s" % formatCellsForLog(cells))
 		# cells might not be the full length of the display.
@@ -1982,10 +2037,15 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if not self.enabled or not api.getDesktopObject():
 			# Braille is disabled or focus/review hasn't yet been initialised.
 			return
-		if self.getTether() == self.TETHER_FOCUS:
-			self.handleGainFocus(api.getFocusObject(), shouldAutoTether=False)
-		else:
-			self.handleReviewMove(shouldAutoTether=False)
+		try:
+			if self.getTether() == self.TETHER_FOCUS:
+				self.handleGainFocus(api.getFocusObject(), shouldAutoTether=False)
+			else:
+				self.handleReviewMove(shouldAutoTether=False)
+		except Exception:
+			# #8877: initialDisplay might fail because NVDA tries to focus
+			# an object for which property fetching raises an exception.
+			log.debugWarning("Error in initial display", exc_info=True)
 
 	def handlePostConfigProfileSwitch(self):
 		display = config.conf["braille"]["display"]
