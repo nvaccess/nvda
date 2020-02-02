@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#config/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov, Joseph Lee, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista,
+# Zahari Yurukov, Joseph Lee, Babbage B.V., Łukasz Golonka
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Manages NVDA configuration.
 The heart of NVDA's configuration is Configuration Manager, which records current options, profile information and functions to load, save, and switch amongst configuration profiles.
@@ -17,6 +17,7 @@ import ctypes
 import ctypes.wintypes
 import os
 import sys
+import errno
 import itertools
 import contextlib
 from copy import deepcopy
@@ -167,6 +168,19 @@ def initConfigPath(configPath=None):
 		configPath=globalVars.appArgs.configPath
 	if not os.path.isdir(configPath):
 		os.makedirs(configPath)
+	else:
+		OLD_CODE_DIRS = ("appModules", "brailleDisplayDrivers", "globalPlugins", "synthDrivers")
+		# #10014: Since #9238 code from these directories is no longer loaded.
+		# However they still exist in config for older installations. Remove them if empty to minimize confusion.
+		for dir in OLD_CODE_DIRS:
+			dir = os.path.join(configPath, dir)
+			if os.path.isdir(dir):
+				try:
+					os.rmdir(dir)
+					log.info("Removed old plugins dir: %s", dir)
+				except OSError as ex:
+					if ex.errno == errno.ENOTEMPTY:
+						log.info("Failed to remove old plugins dir: %s. Directory not empty.", dir)
 	subdirs=["speechDicts","profiles"]
 	if not isAppX:
 		subdirs.append("addons")
