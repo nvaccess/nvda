@@ -88,6 +88,7 @@ def reviewMessage(text: str, speechPriority: Optional[speech.Spri] = None):
 	if braille.handler.shouldAutoTether or braille.handler.getTether() == braille.handler.TETHER_REVIEW:
 		braille.handler.message(text)
 
+
 def openUserConfigurationDirectory():
 	"""Opens directory containing config files for the current user"""
 	import config
