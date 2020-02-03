@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2019 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
-# Joseph Lee, Babbage B.V., Łukasz Golonka
+# Copyright (C) 2006-2020 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista,
+# Zahari Yurukov, Joseph Lee, Babbage B.V., Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
