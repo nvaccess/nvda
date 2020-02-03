@@ -174,7 +174,7 @@ Hộp kiểm thứ ba cho phép bạn hiển thị hộp thoại chào mừng n�
 +++ Hộp thoại thống kê sử dụng dữ liệu +++[UsageStatsDialog]
 Từ phiên bản NVDA 2018.3, người dùng được yêu cầu gửi dữ liệu sử dụng cho NV Access, giúp cải thiện các bản NVDA trong tương lai.
 Ở lần khởi động đầu tiên, sẽ xuất hiện một hộp thoại yêu cầu bạn chấp nhận gửi dữ liệu cho NV Access trong khi dùng NVDA.
-Bạn có thể xem thêm thông tin về việc thu thập dữ liệu bởi NV Access trong chương 11 bên dưới.
+Bạn có thể xem thêm thông tin về việc thu thập dữ liệu bởi NV Access trong phần thiết lập chung, [Cho phép dự án NVDA thu thập thống kê sử dụng NVDA #GeneralSettingsGatherUsageStats].
 Lưu ý: chọn "có" hay "không" đều lưu thiết lập và hộp thoại sẽ không xuất hiện lại cho tới khi bạn cài lại NVDA.
 Tuy nhiên, bạn có thể bật hay tắt thủ công việc thu thập dữ liệu trong bản cài đặt chung của NVDA. Để thay đổi thiết lập này, bạn có thể chọn hay bỏ chọn hộp kiểm [Cho phép dự án NVDA thu thập thống kê sử dụng NVDA #GeneralSettingsGatherUsageStats].
 
@@ -757,17 +757,17 @@ Ví dụ, nếu bạn sử dụng mã chữ nổi có dấu báo số đứng tr
 %kc:beginInclude
 Bấm chấm 7 để xóa ô hoặc ký tự vừa nhập.
 Chấm 8 dùng để chuyển dịch phần chữ nổi nhập liệu và bấm phím enter.
-Bấm chấm 7 + 8 để chuyển dịch phần chữ nổi nhập liệu nhưng không không thêm vào khoảng trắng hay bấm phím enter.
+Bấm chấm 7 + 8 để chuyển dịch phần chữ nổi nhập liệu nhưng không thêm vào khoảng trắng hay bấm phím enter.
 %kc:endInclude
 
 + Hỗ trợ nhìn +[Vision]
-Trong khi NVDA hướng đến người mù hoặc nhìn kém chủ yếu sử dụng bộ đọc hay chữ nổi để vận hành một máy vi tính, nó cũng cung cấp chức năng dựng sẵn để thay đổi nội dung trên màn hình.
+Trong khi NVDA chủ yếu hướng đến người mù hoặc nhìn kém sử dụng bộ đọc hay chữ nổi để vận hành một máy vi tính, nó cũng cung cấp chức năng dựng sẵn để thay đổi nội dung trên màn hình.
 Trong NVDA, hỗ trợ nhìn được gọi là trình  cải thiện tầm nhìn.
 
 NVDA đưa ra vài trình cải thiện tầm nhìn dựng sẵn được mô tả dưới đây.
 Các trình cải thiện tầm nhìn bổ sung có thể được cung cấp qua [các add-on của NVDA #AddonsManager].
 
-Có thể thay đổi các thiết lập về hỗ trợ nhìn của NVDA trong [phân loại nhìn #VisionSettings] của hộp thoại [Cấu hình NVDA #NVDASettings].
+Có thể thay đổi các thiết lập hỗ trợ nhìn của NVDA trong [phân loại hỗ trợ nhìn #VisionSettings] của hộp thoại [Cấu hình NVDA #NVDASettings].
 
 ++ Làm Nổi Focus ++[VisionFocusHighlight]
 Làm Nổi Focus có thể giúp xác định [focus hệ thống #SystemFocus], [đối tượng điều hướng hiện tại #ObjectNavigation] và vị trí con trỏ [chế độ duyệt #BrowseMode].
@@ -778,14 +778,14 @@ Những vị trí này được làm nổi bật với một đường viền m�
 - Toàn bộ màu vàng làm nổi dấu nháy ảo được dùng trong chế độ duyệt (những nơi không có dấu nháy thật như trong các trình duyệt web).
 -
 
-+Khi bật chức năng Làm Nổi  Focus trong [phân loại nhìn #VisionSettings] của hộp thoại [Cấu Hình NVDA #NVDASettings], bạn có thể [thay đổi việc làm nổi focus, đối tượng điều hướng hoặc dấu nháy chế độ duyệt #VisionSettingsFocusHighlight]
+Khi bật chức năng Làm Nổi  Focus trong [phân loại hỗ trợ nhìn #VisionSettings] của hộp thoại [Cấu Hình NVDA #NVDASettings], bạn có thể [thay đổi việc làm nổi focus, đối tượng điều hướng hoặc dấu nháy chế độ duyệt #VisionSettingsFocusHighlight]
 
 ++ Che màn hình ++[VisionScreenCurtain]
 Là người mù hay nhìn kém, sẽ có những lúc không thể hoặc không cần nhìn những gì trên màn hình.
 Hơn nữa, cũng có thể khó để biết có ai đó nhìn màn hình của bạn từ đằng sau hay không.
 Tình huống này, NVDA có một tính năng tên gọi "che màn hình", có thể bật lên để làm đen màn hình.
 
-Bạn có thể bật tính năng này trong [phân loại nhìn #VisionSettings] của hộp thoại [Cấu Hình NVDA #NVDASettings].
+Bạn có thể bật tính năng này trong [phân loại hỗ trợ nhìn #VisionSettings] của hộp thoại [Cấu Hình NVDA #NVDASettings].
 
 + Nhận Dạng Nội Dung +[ContentRecognition]
 Khi tác giả không cung cấp đầy đủ thông tin của ứng dụng cho trình đọc màn hình, sẽ có nhiều công cụ khác nhau hỗ trợ để có thể nhận dạng nội dung của một hình ảnh chẳng hạn.
@@ -1061,7 +1061,7 @@ Các mức độ log bao gồm:
  - Nếu quan ngại về sự riêng tư thì đừng chọn cấp độ log này.
 - Gỡ lỗi: ngoài các thông tin, cảnh báo và thông điệp  đầu vào / đầu ra, các thông điệp gỡ lỗi bổ sung cũng sẽ được ghi lại.
  - Cũng giống như đầu vào / đầu ra, Nếu quan ngại về sự riêng tư thì đừng nên chọn cấp độ log này.
-
+-
 
 ==== Tự khởi động NVDA sau khi đăng nhập vào Windows ====[GeneralSettingsStartAfterLogOn]
 Nếu chọn mục này thì NVDA sẽ tự khởi động sau khi bạn đăng nhập vào Windows.
@@ -1095,7 +1095,7 @@ Ngoài những thông tin bắt buộc cho việc kiểm tra cập nhật, các 
 - Tên bộ đọc đang dùng (bao gồm tên add-on và driver của nó)
 - Tên màn hình chữ nổi đang dùng (bao gồm tên driver của nó)
 - Đầu ra chữ nổi (nếu đang dùng màn hình nổi)
-
+-
 
 Đây là những thông tin hữu ích để NV Access ưu tiên phát triển tính năng mới cho các bản NVDA trong tương lai.
 
@@ -1368,8 +1368,8 @@ Một số lựa chọn thường gặp là: "tự động" (yêu cầu NVDA t�
 
 Bạn nên tham khảo tài liệu của màn hình nổi tại phần [Các màn hình nổi được hỗ trợ #SupportedBrailleDisplays] để kiểm tra các phương thức nào được hỗ trợ cho dòng màn hình chữ nổi của bạn.
 
-+++ Nhìn +++[VisionSettings]
-Phân loại nhìn trong hộp thoại cấu hình NVDA cho phép bạn bật, tắt và cấu hình việc [hỗ trợ  nhìn #Vision].
++++ Hỗ trợ nhìn +++[VisionSettings]
+Phân loại hỗ trợ nhìn trong hộp thoại cấu hình NVDA cho phép bạn bật, tắt và cấu hình việc [hỗ trợ  nhìn #Vision].
 
 Lưu ý rằng các tùy chọn trong phân loại này có thể được mở rộng bởi [các add-on của NVDA #AddonsManager].
 Mặc định, phân loại này có các tùy chọn sau:
@@ -1397,7 +1397,10 @@ Nếu không muốn hiển thị thông điệp cảnh báo này nữa, bạn c�
 Bạn cũng có thể bật lại thông điệp cảnh báo bằng cách chọn hộp kiểm "Luôn hiện cảnh báo khi bật che màn hình" ở kế bên hộp kiểm "Làm đen màn hình".
 
 Để bật / tắt tính năng Che Màn Hình ở bất cứ đâu, hãy gán thao tác / phím tắt thông qua [hộp thoại Quản lý thao tác #InputGestures].
-+
+
+Mặc Định, sẽ có âm thanh phát lên khi bật / tắt tính năng che màn hình.
+Muốn thay đổi điều này, bạn có thể bỏ chọn hộp kiểm "Phát âm thanh khi bật / tắt che màn hình".
+
 ==== Thiết lập cho công cụ hỗ trợ nhìn của bên thứ ba ====[VisionSettingsThirdPartyVisualAids]
 Các trình cải thiện khả năng nhìn bổ sung có thể được cung cấp trong [các gói add-on của NVDA #AddonsManager].
 Khi các trình hỗ trợ tồn tại các cài đặt có thể thiết lập, chúng sẽ hiển thị theo từng nhóm phân biệt trong phân loại cài đặt này.
@@ -1776,24 +1779,14 @@ Nó được tích hợp trong chính Microsoft Word cũng như trình xem và s
  Tuy nhiên, có thể một vài thông tin không được thể hiện hoặc thể hiện không chính xác trong vài phiên bản của Microsoft Office, có nghĩa là hỗ trợ UI automation không thể luôn được dựa vào.
  Chúng tôi vẫn không khuyến khích đa số người dùng bật tính năng này làm mặc định, dù rằng vẫn hoan nghênh những người dùng Office 2016/365 thử nghiệm tính năng này và cung cấp phản hồi.
 
-==== Hỗ trợ Windows Console ====[AdvancedSettingsConsoleUIA]
-Tùy chọn này là cách mà NVDA tương tác với Windows Console, được dùng bởi command prompt, PowerShell và Windows Subsystem for Linux.
-Nó không ảnh hưởng gì đến  Windows Terminal.
-Trong Windows 10 phiên bản 1709, Microsoft [đã thêm hỗ trợ UI Automation API của mình cho console https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], mang đến cải thiện hiệu suất vận hành triệt để và ổn định cho các trình đọc màn hình có hỗ trợ nó.
-Trường hợp UI Automation không hoạt động hoặc biết trước kết quả là trải nghiệm không tốt cho người dùng, hỗ trợ  Console cũ (legacy console) của NVDA sẽ tồn tại như là để dự phòng.
-Hộp xổ hỗ trợ Windows Console có ba tùy chọn:
-- Tự động: sử dụng UI Automation cho console trên Windows 10 phiên bản 1809 trở lên. Tùy chọn này được khuyên dùng và mặc định được chọn.
-- Ưu tiên UIA: sử dụng UI Automation cho console nếu có thể, thậm chí trên các phiên bản Windows chưa hoàn thiện hoặc triển khai bị lỗi. Trong khi các tính năng giới hạn của nó có thể hữu ích (và thậm chí đủ cho việc sử dụng của bạn), rủi ro của việc sử dụng tùy chọn này hoàn toàn là do bạn và không có hỗ trợ nào cho nó được cung cấp.
-- Bản cũ: UI Automation trong  Windows Console sẽ bị vô hiệu hoàn toàn, bản dự phòng sẽ luôn được dùng.
--
+==== Sử dụng UI Automation để truy cập Windows Console khi có thể ====[AdvancedSettingsConsoleUIA]
+Khi bật tùy chọn này, NVDA sẽ sử dụng một phiên bản mới, đang được hoàn thiện hỗ trợ cho Windows Console, có lợi thế trong việc  [cải tiến tính tiếp cận bởi Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Tính năng này đang được thử nghiệm và vẫn chưa hoàn chỉnh nên việc sử dụng nó chưa được khuyến khích. Tuy nhiên, khi hoàn chỉnh, nó được dự đoán  sẽ là hỗ trợ mặc định, cải thiện hiệu năng và tính ổn định của NVDA trong Windows command consoles.
 
-==== Nói mật khẩu trong UIA consoles ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Thiết lập này điều khiển việc các kí tự sẽ được đọc bởi [đọc ký tự khi gõ #KeyboardSettingsSpeakTypedCharacters] hay [đọc từ khi gõ #KeyboardSettingsSpeakTypedWords] trong tình huống mà màn hình không được cập nhật (ô nhập mật khẩu chẳng hạn) trong vài ứng dụng terminal như Windows Console khi đã bật hỗ trợ UI automation và Mintty.
-Vì mục đích bảo mật, thiết lập này nên được để nguyên, tức là tắt.
-Tuy nhiên, có thể bạn muốn bật nó khi gặp các vấn đề  về hiệu suất vận hành hoặc việc đọc khi gõ kí tự hay từ  trong console, hay đang làm việc ở những nơi an toàn và thích nghe đọc mật khẩu.
+==== Nói mật khẩu trong UIA console ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Thiết lập này điều khiển việc các kí tự sẽ được đọc bởi [đọc ký tự khi gõ #KeyboardSettingsSpeakTypedCharacters] hay [đọc từ khi gõ #KeyboardSettingsSpeakTypedWords] trong các tình huống mà màn hình không được cập nhật (ô nhập mật khẩu chẳng hạn) trong Windows Console khi đã bật hỗ trợ UI automation. Vì mục đích bảo mật, thiết lập này nên được để nguyên, tức là tắt. Tuy nhiên, có thể bạn muốn bật nó khi gặp các vấn đề  về hiệu suất vận hành hoặc  việc đọc từ / kí tự   đã nhập không ổn định khi dùng tính năng console mới, đang được thử nghiệm của NVDA.
 
-==== Dùng hỗ trợ nhập văn bản mới trong  Windows console bản cũ nếu có thể ====[AdvancedSettingsKeyboardSupportInLegacy]
-Tùy chọn này  gọi một phương thức thay thế để nhận các kí tự đã nhập trong Windows console bản cũ.
+==== Dùng hỗ trợ nhập văn bản mới trong  Windows console khi có thể ====[AdvancedSettingsKeyboardSupportInLegacy]
+Tùy chọn này  gọi một phương thức thay thế để nhận các kí tự đã nhập trong Windows command console.
 Trong khi nó cải thiện hiệu suất và ngăn chặn việc đánh vần thông tin đầu ra của console, nó cũng có thể không tương thích với vài ứng dụng terminal .
 Tính năng này tồn tại và mặc định được bật trên Windows 10 phiên bản 1607, 1703, 1709 và 1803, cũng như các phiên bản Windows 10 mới hơn, phát hành khi  UI Automation không có hoặc bị vô hiệu.
 Cảnh báo: khi bật tùy chọn này, các kí tự được nhập mà không hiển thị trên màn hình như mật khẩu chẳng hạn sẽ không bị bỏ qua.
@@ -2160,7 +2153,7 @@ Những giọng đọc đó có thể được sử dụng với NVDA.
 ++ Giọn Windows OneCore ++[OneCore]
 Windows 10 đi kèm với những giọng đọc mới được gọi là OneCore, hoặc còn gọi là "Mobil voices".
 Những giọng đọc mới này hỗ trợ cho khá nhiều ngôn ngữ khác nhau và có tính phản hồi nhanh hơn so với những giọng theo chuân SAPI-5.
-Trên Windows 10, NVDA mặc định dùng các giọng Windows OneCore ([[eSpeak NG #eSpeakNG] thì dùng cho các bản phát hành khác).
+Trên Windows 10, NVDA mặc định dùng các giọng Windows OneCore ([eSpeak NG #eSpeakNG] thì dùng cho các bản phát hành khác).
 
 Vui lòng xem bài viết sau của Microsoft để biết danh sách các giọng và cách cài đặt: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
@@ -2972,7 +2965,7 @@ Khi cấu hình cổng và màn hình để sử dụng, bạn hãy đọc kỹ 
 Đối với những màn hình có bàn phím chữ nổi, hiện BRLTTY bản thân nó cũng hỗ trợ nhập liệu kiểu chữ nổi.
 Vì vậy, sẽ không cần bảng mã chữ nổi đầu vào của NVDA.
 
-BRLTYY không liên quan đến việc hỗ trợ tính năng  ngầm tự nhận biết của NVDA.
+BRLTTY không liên quan đến việc hỗ trợ tính năng  ngầm tự nhận biết của NVDA.
 
 Sau đây là các lệnh của BRLTTY được gán cho NVDA.
 Vui lòng xem [Danh sách phím tắt BRLTTY https://mielke.cc/brltty/doc/KeyBindings/] để biết thêm thông tin về cách thức các lệnh của BRLTTY kết hợp với các điều khiển trên màn hình nổi.
@@ -3007,7 +3000,7 @@ Có một số tùy chọn có cả phần viết tắt và đầy đủ; trong 
 Một số tùy chọn chấp nhận thêm các tham số; ví dụ như chỉ định bao nhiêu thông tin sẽ được ghi lại hoặc chỉ định thư mục lưu tập tin cấu hình người dùng.
 Những tham số này sẽ nằm sau phần tùy chọn, phân cách với tùy chọn bằng khoảng trắng nếu tùy chọn được viết tắt; và phân cách bằng dấu bằng (=) nếu tùy chọn được viết đầy đủ. Ví dụ:
 | nvda -l 10 | yêu cầu NVDA chạy với cấp độ log là dò lỗi. |
-| nvda --log-file=c:\nvda.log |  yêu cầu NVDA chạy với chức năng ghi log vào tập tin c:\nvda.log |
+| nvda --log-file=c:\nvda.log |  yêu cầu NVDA  ghi log vào tập tin c:\nvda.log |
 | nvda --log-level=20 -f c:\nvda.log | Yêu cầu NVDA chạy với cấp độ log là info và ghi log vào c:\nvda.log |
 
 Sau đây là các tùy chọn dòng lệnh cho NVDA:
@@ -3018,8 +3011,8 @@ Sau đây là các tùy chọn dòng lệnh cho NVDA:
 | -f LOGFILENAME | --log-file=LOGFILENAME | Tập tin để ghi các thông điệp log vào |
 | -l LOGLEVEL | --log-level=LOGLEVEL | Cấp độ thấp nhất của thông điệp log (dò lỗi 10, đầu vào / đầu ra 12, cảnh báo gỡ lỗi 15, thông tin 20, cảnh báo 30, lỗi 40, nghiêm trọng 50, tắt 100), mặc định là cảnh báo |
 | -c CONFIGPATH | --config-path=CONFIGPATH | Đường dẫn để lưu tất cả cấu hình của NVDA |
-| -m | --minimal | Không âm thanh, không giao diện, không thông báo bắt đầu vvv |
-| -s | --secure | Chế độ an toàn (tắt Python console và tính năng log, thường dùng trong các màn hình bảo vệ) |
+| -m | --minimal | Không âm thanh, không giao diện, không thông báo bắt đầu, v...v... |
+| -s | --secure | Chế độ an toàn: tắt Python console, các tính năng của hồ sơ như tạo, xóa, đổi tên hồ sơ, v...v..., kiểm tra cập nhật vài hộp kiểm trong hộp thoại chào mừng và phân loại thiết lập chung (ví dụ: khởi động NVDA sau khi đăng nhập, lưu cấu hình sau khi thoát, v...v...),  cũng như trình xem log và tính năng ghi log (thường dùng ở màn hình bảo vệ). Lưu ý rằng lệnh này cũng sẽ vô hiệu hóa việc lưu thiết lập trong cấu hình hệ thống và gesture map sẽ không được lưu xuống đĩa. |
 | Không có | --disable-addons | Các add-on không có hiệu lực |
 | Không có | --debug-logging | Bật cấp độ bản ghi dò lỗi cho lần chạy này. Thiết lập này được ghi đè lên các cấp độ bản ghi khác ( ""--loglevel"", -l) tham số được cung cấp, bao gồm tùy chọn tắt log. |
 | Không có | --no-logging | Tắt log hoàn toàn khi dùng NVDA. Thiết lập này có thể bị ghi đè nếu một cấp độ log ( ""--loglevel"", -l) được chỉ định từ dòng lệnh hoặc bản ghi dò lỗi đã được bật. |
