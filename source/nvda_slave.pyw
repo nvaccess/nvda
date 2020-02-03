@@ -67,8 +67,8 @@ def main():
 			import config
 			config._setStartOnLogonScreen(enable)
 		elif action == "explore_userConfigPath":
-			import config
-			config.openConfigurationDirectory()
+			from ui import openUserConfigurationDirectory
+			openUserConfigurationDirectory()
 		elif action == "addons_installAddonPackage":
 			try:
 				addonPath=args[0]

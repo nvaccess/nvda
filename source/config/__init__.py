@@ -1,9 +1,8 @@
 # -*- coding: UTF-8 -*-
-# A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista,
-# Zahari Yurukov, Joseph Lee, Babbage B.V., Łukasz Golonka
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2006-2020 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov, Joseph Lee, Babbage B.V.
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
 
 """Manages NVDA configuration.
 The heart of NVDA's configuration is Configuration Manager, which records current options, profile information and functions to load, save, and switch amongst configuration profiles.
@@ -315,15 +314,6 @@ def setStartOnLogonScreen(enable):
 		if execElevated(SLAVE_FILENAME, (u"config_setStartOnLogonScreen", u"%d" % enable), wait=True) != 0:
 			raise RuntimeError("Slave failed to set startOnLogonScreen")
 
-
-def openConfigurationDirectory():
-	path = getUserDefaultConfigPath()
-	if not path:
-		raise ValueError("no user default config path")
-	initConfigPath(path)
-	import shellapi
-	import winUser
-	shellapi.ShellExecute(0, None, path, None, None, winUser.SW_SHOWNORMAL)
 
 def getConfigDirs(subpath=None):
 	"""Retrieve all directories that should be used when searching for configuration.
