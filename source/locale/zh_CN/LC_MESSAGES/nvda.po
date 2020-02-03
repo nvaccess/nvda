@@ -12,11 +12,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-09 11:28+1000\n"
-"PO-Revision-Date: 2019-12-07 18:26+0800\n"
-"Last-Translator: dingpengyu <dingpengyu06@gmail.com>\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
+"PO-Revision-Date: 2020-02-01 20:48+0800\n"
+"Last-Translator: Larry Wang <larry.wang.801@gmail.com>\n"
 "Language-Team: NVDASimplified Chinese team All volunteers <Copyright (C) "
-"2010-2019>\n"
+"2010-2020>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -534,9 +534,6 @@ msgid "Only when scrolling back"
 msgstr "仅在回滚时"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "自动"
 
@@ -884,7 +881,7 @@ msgstr "波斯语一级点字"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Finnish 6 dot"
-msgstr "丹麦语6点点字"
+msgstr "芬兰语6点点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3057,7 +3054,7 @@ msgstr "盲文"
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the vision panel
 msgid "Vision"
-msgstr "视觉"
+msgstr "视觉辅助"
 
 #. Translators: The name of a category of NVDA commands.
 msgctxt "script category"
@@ -4529,32 +4526,32 @@ msgid ""
 "enabled until you restart NVDA. Pressed twice, screen curtain is enabled "
 "until you disable it"
 msgstr ""
-"切换屏幕变黑的开关，启用可使屏幕变黑或禁用以显示屏幕内容。 按一次，启用屏幕变"
-"黑，直到您重启NVDA。 按两次，启用屏幕变黑，直到将其禁用为止"
+"切换黑屏的开关，开启可使屏幕变黑，关闭则正常显示屏幕内容。 按一次，临时开启黑"
+"屏，重启NVDA后将自动恢复。连按两次，开启黑屏，若想恢复屏幕显示，需手动关闭"
 
 #. Translators: Reported when the screen curtain is disabled.
 msgid "Screen curtain disabled"
-msgstr "屏幕黑屏已停用"
+msgstr "关闭黑屏"
 
 #. Translators: Reported when the screen curtain could not be enabled.
 msgid "Could not disable screen curtain"
-msgstr "无法停用变黑"
+msgstr "不能关闭黑屏"
 
 #. Translators: Reported when the screen curtain is not available.
 msgid "Screen curtain not available"
-msgstr "屏幕黑屏 不可用"
+msgstr "黑屏不可用"
 
 #. Translators: Reported when the screen curtain is enabled.
 msgid "Screen curtain enabled"
-msgstr "屏幕黑屏启用"
+msgstr "开启黑屏"
 
 #. Translators: Reported when the screen curtain is temporarily enabled.
 msgid "Temporary Screen curtain, enabled until next restart"
-msgstr "临时屏幕黑屏已启用，直到下次重启生效"
+msgstr "开启临时黑屏，重启NVDA后恢复"
 
 #. Translators: Reported when the screen curtain could not be enabled.
 msgid "Could not enable screen curtain"
-msgstr "无法启用屏幕黑屏"
+msgstr "无法开启黑屏"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -8017,7 +8014,7 @@ msgid ""
 "Are you sure you want to continue?"
 msgstr ""
 "此关联已经与其他配置连接。如果您继续，旧的配置连接将被此连接替换。\n"
-"\v您希望继续吗？"
+"您希望继续吗？"
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
@@ -8983,22 +8980,15 @@ msgid ""
 "Use UI Automation to access Microsoft &Word document controls when available"
 msgstr "在Word调用UI Automation接口 (&u)"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Windows控制台支持(&W):"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr "在Windows控制台调用UI Automation接口 （如果可用） (&u)"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "UIA"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "旧版"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "在Windows控制台读出密码 （可提高性能） (&S)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9007,15 +8997,8 @@ msgstr "终端程序"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
-msgstr "在Windows控制台读出密码 可提高性能(&S)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
-msgstr "在旧版Windows控制台掉用新的类型字符支持(&U)"
+msgid "Use the new t&yped character support in Windows Console when available"
+msgstr "在旧版Windows控制台掉用新的类型字符支持 （如果可用 ）(&U)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9882,27 +9865,30 @@ msgstr "高亮显示浏览模式光标(&T)"
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the navigator object.
 msgid "Highlight navigator &object"
-msgstr "高亮显示导航器对象(&D)"
+msgstr "高亮显示导航对象(&D)"
 
 #. Translators: Description for NVDA's built-in screen highlighter.
 msgid "Focus Highlight"
-msgstr "焦点高亮"
+msgstr "焦点高亮显示"
 
 #. Translators: The label for a checkbox that enables / disables focus highlighting
 #. in the NVDA Highlighter vision settings panel.
 msgid "&Enable Highlighting"
-msgstr "启用高粱显示(&E)"
+msgstr "启用焦点高亮显示(&E)"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
-msgstr "屏幕变黑"
+msgstr "黑屏"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
-msgstr "加载 {screenCurtainTranslatedName} 时始终显示警告(&A)"
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "开启黑屏时始终显示警告(&A)"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "开启黑屏时播放声音(&P)"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -9913,13 +9899,13 @@ msgid ""
 "\n"
 "Do you wish to continue?"
 msgstr ""
-"启用屏幕变黑将使计算机的屏幕完全变黑。在继续操作之前，请确保无需使用屏幕即可"
-"进行浏览。\n"
+"开启黑屏将使计算机的屏幕完全变黑。在继续操作之前，请确保无需使用屏幕即可进行"
+"浏览。\n"
 "您想继续吗？"
 
 #. Translators: option to enable screen curtain in the vision settings panel
 msgid "Make screen black (immediate effect)"
-msgstr "使屏幕变黑 (立即生效)"
+msgstr "开启黑屏 (立即生效)(&B)"
 
 msgid "Taskbar"
 msgstr "任务栏"
@@ -11390,6 +11376,15 @@ msgstr "双倍行间距"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5倍行间距"
+
+#~ msgid "Windows C&onsole support:"
+#~ msgstr "Windows控制台支持(&W):"
+
+#~ msgid "Prefer UIA"
+#~ msgstr "UIA"
+
+#~ msgid "Legacy"
+#~ msgstr "旧版"
 
 #~ msgid "Magnifier"
 #~ msgstr "放大镜"
