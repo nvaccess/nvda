@@ -4,11 +4,11 @@ Ce este nou în NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2019.3 =
+NVDA 2019.3 este o versiune foarte importantă care conține modificări printre care se regăsesc actualizarea de la Python 2 la Python 3 și o rescriere majoră a subsistemului vorbirii NVDA.
+Deși aceste modificări anulează compatibilitatea cu suplimentele NVDA mai vechi, actualizarea Python 3 este necesară pentru securitate, iar modificările la vorbire permit inovații în viitorul apropiat.
+ Printre alte noutăți pe care le aduce această versiune se regăsesc suportul pentru VM-urile Java pe 64 de biți, funcționalitățile Cortină Ecran și Evidențiere Focalizare, suportul pentru mai multe afișaje braille și un nou monitor braille, precum și multe defecte rezolvate.
 
 == Noi Funcționalități ==
-- În Linia de Comandă, PowerShell și în Subsistemul Windows pentru Linux din Windows 10 versiunea 1809 sau mai nouă:
- - S-au îmbunătățit într-un mod remarcabil performanța și stabilitatea. (#9771)
- - Anunțarea textului scris care nu apare pe ecran )cum ar fi parolele) poate fi activată printr-o opțiune care se află în panoul setărilor avansate NVDA. (#9649)
 - Acuratețea cu care mausul se deplasează la comanda obiectului navigator a fost îmbunătățită în câmpurile de text din aplicațiile Java. (#10157)
 - S-a adăugat suportul pentru următoarele afișaje braille de la Handy Tech:
  - Basic Braille Plus 40
@@ -21,7 +21,6 @@ Ce este nou în NVDA
 - În Internet Explorer, Google Chrome și Mozilla Firefox, puteți naviga la articole folosind scripturile navigării rapide. Aceste scripturi sunt neasciate în mod implicit și pot fi atribuite în dialogul gesturilor de intrare atunci când acesta este deschis dintr-un document în care modul de navigare este prezent. (#9227)
  - Și Figurile sunt raportate. Ele sunt considerate obiecte, prin urmare sunt navigabile cu tasta o a navigării rapide.
 - În Internet Explorer, Google Chrome și Mozilla Firefox, elementele articolelor sunt raportate cu navigarea obiectului și opțional în modul de navigare dacă acesta este activat din setările de formatare a documentului. (#10424)
-- Suport pentru procesele care nu au loc în iframe-urile din Mozilla Firefox. (#9672)
 - S-a adăugat cortina ecranului, care face întregul ecran negru în Windows 8 și/sau în versiunile mai noi. (#7857)
  - S-a adăugat un script care activează cortina ecranului (până la următoarea repornire a NVDA cu o singură apăsare, ori cât timp rulează NVDA cu două apăsări), niciun gest implicit nu este atribuit.
  - Cortina poate fi activată și configurată în secțiunea „viziune” a ferestrei de dialog a setărilor NVDA.

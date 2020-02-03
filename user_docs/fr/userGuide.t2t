@@ -174,7 +174,7 @@ La troisième permet d'indiquer si ce dialogue d'accueil doit apparaître à cha
 +++ Dialogue de statistiques d'utilisation des données +++[UsageStatsDialog]
 Depuis NVDA 2018.3, il est demandé à l'utilisateur s'il veut autoriser l'envoi de données d'utilisation à NV Access dans le but d'aider à l'amélioration de NVDA dans le futur. 
 Au premier démarrage de NVDA, un dialogue vous demandant si vous désirer envoyer des données à NV Access durant l'utilisation de NVDA apparaîtra.
-Vous pouvez obtenir plus d'informations concernant les données rassemblées par NV Access dans le chapitre 11 ci-dessous.
+Vous pouvez obtenir plus d'informations concernant les données rassemblées par NV Access dans la section paramètres généraux, [Autoriser le projet NVDA à recueillir des statistiques d'utilisation #GeneralSettingsGatherUsageStats].
 Note : l'appui sur "oui" ou "non" sauvegardera ce choix et ce dialogue n'apparaîtra plus à moins que vous réinstalliez NVDA.
 Cependant, vous pouvez activer ou désactiver le processus de collecte de données manuellement dans l'écran de paramètres généraux de NVDA. Pour modifier ce paramètre manuellement, vous pouvez cocher ou décocher la case appelée [Autoriser le projet NVDA à recueillir des statistiques d'utilisation #GeneralSettingsGatherUsageStats].
 
@@ -659,7 +659,7 @@ Dans le but de loger autant d'informations que possible sur un afficheur braille
 
 || Abréviation | Type de contrôle |
 | app | application |
-| art | article
+| art | article |
 | ctn | citation |
 | btn | bouton |
 | btnd | bouton déroulant |
@@ -778,7 +778,7 @@ Ces positions sont surlignées avec un contour rectangulaire coloré.
 - Le jaune continu surligne le curseur virtuel utilisé en mode navigation (quand il n'y a pas de curseur physique comme dans les navigateurs web).
 -
 
-Quand le surlignage du focus est activé dans la [catégorie vision #VisionSettings] du dialogue [Paramètres de NVDA #NVDASettings], vous pouvez [choisir de surligner ou non le focus, l'objet navigateur ou le curseur du mode navigation #VisionSettingsFocusHighlight]
+Quand le surlignage du focus est activé dans la [catégorie vision #VisionSettings] du dialogue [Paramètres de NVDA #NVDASettings], vous pouvez [choisir de surligner ou non le focus, l'objet navigateur ou le curseur du mode navigation #VisionSettingsFocusHighlight].
 
 ++ Le Rideau d'Écran ++[VisionScreenCurtain]
 En tant qu'utilisateur aveugle ou malvoyant, il est parfois impossible ou inutile de voir le contenu de l'écran.
@@ -1061,7 +1061,7 @@ Les niveaux de journalisation disponibles sont :
  - Si la confidentialité vous préoccupe, ne définissez pas le niveau de journalisation sur cette option.
 - Débogage : En plus des messages d'info, avertissements et entrées/sorties, des messages additionnels de débogage seront journalisés.
  - Tout comme pour entrées/sorties, si la confidentialité vous préoccupe, vous ne devez pas définir le niveau de journalisation sur cette option.
--
+- 
 
 ==== Démarrer NVDA automatiquement après ma connexion à Windows ====[GeneralSettingsStartAfterLogOn]
 Si cette option est activée, NVDA démarrera automatiquement dès que vous vous connecterez à Windows.
@@ -1084,7 +1084,7 @@ Les informations suivantes sont toujours envoyées :
 - Version courante de NVDA
 - Version du système d'exploitation
 - Système d'exploitation 32 ou 64 bits
-
+-
 
 ==== Autoriser le projet NVDA à collecter certaines informations statistiques d'utilisation ====[GeneralSettingsGatherUsageStats]
 Si ceci est activé, NV Access utilisera les informations de la vérification de mises à jour pour connaître le nombre d'utilisateurs de NVDA en incluant certaines informations démographiques telles que le système d'exploitation et le pays d'origine.
@@ -1095,7 +1095,7 @@ En plus des informations obligatoires nécessaires à la mise à jour, les infor
 - Le nom du synthétiseur vocal actuellement utilisé (incluant le nom de l'extension dont provient le pilote)
 - Le nom du terminal braille actuellement utilisé (incluant le nom de l'extension dont provient le pilote)
 - La table d'affichage braille en cours (si le braille est activé)
-
+-
 
 Ces informations aident grandement NV Access pour prioritiser les futurs développements de NVDA.
 
@@ -1398,6 +1398,9 @@ Vous pouvez toujours restaurer l'avertissement en cochant la case "Toujours affi
 
 Pour activer ou désactiver le Rideau d'Écran de n'importe où, veuillez assigner un geste personnalisé en utilisant le dialogue [Gestes de Commandes #InputGestures].
 
+Par défaut, des sons sont émis quand le Rideau d'Écran est activé ou désactivé.
+Si vous souhaitez changer ce comportement, vous pouvez décocher la case " Émettre un son lors du basculement du rideau d'écran ".
+
 ==== Paramètres des aides visuelles tierses ====[VisionSettingsThirdPartyVisualAids]
 Des services d'aide visuelle additionnels peuvent être fournis dans des [Extensions NVDA #AddonsManager].
 Si ces services ont des paramètres ajustables, ils seront affichés dans cette catégorie de paramètres dans des groupes séparés.
@@ -1541,8 +1544,9 @@ De nombreuses fenêtres et commandes font apparaître un court message (ou sugge
 
 ==== Annoncer les notifications ====[ObjectPresentationReportNotifications]
 Quand cette case est cochée, NVDA annonce les bulles d'aide et les notifications d'invitation à leur apparition. 
-Les bulles d'aide sont semblables aux suggestions mais généralement de plus grande taille, et sont associées à des évènements système tels que le débranchement d'un câble réseau, ou bien des alertes relatives à la sécurité.
+- Les bulles d'aide sont semblables aux suggestions mais généralement de plus grande taille, et sont associées à des évènements système tels que le débranchement d'un câble réseau, ou bien des alertes relatives à la sécurité.
 - Les notifications d'invitation ont été introduites dans Windows 10 et apparaissent dans le centre de notification  dans la barre d'état système, informant sur divers événements (ex : une mise à jour a été téléchargée, un ouveau courriel est arrivé dans votre boîte de réception, etc.).
+
 
 ==== Annoncer les raccourcis clavier des objets ====[ObjectPresentationShortcutKeys]
 Quand cette case est cochée, NVDA inclut, à l'annonce d'un objet ou d'une commande, le raccourci clavier qui lui est associé. 
@@ -1771,28 +1775,18 @@ Ce bouton n'est disponible que si NVDA est configuré pour permettre le chargeme
 ==== Utiliser UI automation pour accéder aux contrôles des documents Microsoft Word quand disponible ====[AdvancedSettingsUseUiaForWord]
 Quand cette option est activée, NVDA essaie d'utiliser l'API d'accessibilité Microsoft UI Automation pour récupérer les informations des contrôles de documents Microsoft Word.
 Ceci inclut Microsoft Word lui-même, et aussi l'afficheur et le composeur de message de Microsoft Outlook.
- Pour les versions les plus récentes de Microsoft Office 2016/365 exécutées sous Windows 10, le support UI Automation est assez complet pour fournir un accès aux documents Microsoft Word presque égal au support existant de Microsoft Word par NVDA, avec l'avantage que la réactivité est nettement accrue.
+Pour les versions les plus récentes de Microsoft Office 2016/365 exécutées sous Windows 10, le support UI Automation est assez complet pour fournir un accès aux documents Microsoft Word presque égal au support existant de Microsoft Word par NVDA, avec l'avantage que la réactivité est nettement accrue.
 Cependant, il peut exister certaines informations qui ne sont pas exposées, ou exposées incorrectement sous certaines versions de Microsoft Office, ce qui signifie qu'on ne peut pas toujours se fier à ce support UI automation.
 Nous ne recommandons pas encore à la majorité des utilisateurs d'activer cette option par défaut, bien que nous encouragions les utilisateurs d'Office 2016/365 à tester cette fonctionnalité et à nous faire des retours d'expérience.
 
-==== Support de la Console Windows ====[AdvancedSettingsConsoleUIA]
-Cette option définit comment NVDA interagit avec la Console Windows utilisée par l'invite de commandes, PowerShell, et le sous-système Windows pour Linux.
-Elle n'affecte pas le terminal moderne de Windows.
-Sous Windows 10 version 1709, Microsoft [a ajouté le support de son API UI Automation à la console https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], apportant des performances et une stabilité grandement améliorées aux revues d'écran qui la supportent.
-Dans les situations où UI Automation n'est pas disponible ou connue pour dégrader l'expérience utilisateur, le support ancien de la console de NVDA est disponible comme recours.
-La liste déroulant Support de la Console Windows a trois options :
-- Automatique : Utilise UI Automation dans les consoles sous Windows 10 version 1809 et au-delà. Cette option est recommandée et définie par défaut.
-- Préférer UIA : Utilise UI Automation dans les consoles quand disponible, même sous les versions de Windows avec une implémentation incomplète ou boguée. Bien que cette fonctionnalité limitée puisse être utile (et même suffisante pour votre usage), l'utilisation de cette option est entièrement à vos risques et aucun support ne sera fourni pour elle.
-- Héritage : UI Automation dans la console Windows sera entièrement désactivée, et l'ancienne méthode sera toujours utilisée.
--
+==== Utilisez UI Automation pour accéder à la console Windows quand elle est disponible ====[AdvancedSettingsConsoleUIA]
+Si cette option est activée, NVDA utilisera une nouvelle version en cours de développement de son support de la console Windows qui tire parti des [améliorations de l'accessibilité apportées par Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] Cette fonctionnalité est très expérimentale et est encore incomplète, son utilisation n'est donc pas encore recommandée. Cependant, une fois terminée, il est prévu que cette nouvelle prise en charge deviendra la valeur par défaut, améliorant les performances et la stabilité de NVDA dans les consoles de commande Windows.
 
-==== Dire les mots de passe dans la Console Windows ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Cette option définit si les caractères sont annoncés par [Écho clavier par caractère #KeyboardSettingsSpeakTypedCharacters] ou [Écho clavier par mot #KeyboardSettingsSpeakTypedWords] dans les situation où l'écran ne se met pas à jour (telles que les zones de saisie de mot de passe) dans certains programmes de terminaux, comme la Console Windows avec le support UI automation activé et Mintty.
-Pour des raisons de sécurité, ce paramètre devrait rester désactivé.
-Cependant, vous pouvez souhaiter l'activer si vous ressentez des problèmes de performances ou d'instabilité avec l'écho par caractère ou par mot dans la console, ou si vous travaillez dans un environnement de confiance et préférez l'annonce des mots de passe.
+==== Énoncer les mots de passe dans les consoles UIA ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Cette option définit si les caractères sont annoncés par [Écho clavier par caractère #KeyboardSettingsSpeakTypedCharacters] ou [Écho clavier par mot #KeyboardSettingsSpeakTypedWords] dans les situation où l'écran ne se met pas à jour (telles que les zones de saisie de mot de passe) dans certains programmes de terminaux, comme la Console Windows avec le support UI automation activé. Pour des raisons de sécurité, ce paramètre devrait rester désactivé. Cependant, vous pouvez souhaiter l'activer si vous ressentez des problèmes de performances ou d'instabilité avec l'écho par caractère ou par mot dans la console, ou si vous travaillez dans un environnement de confiance et préférez l'annonce des mots de passe.
  
 ==== Utiliser le nouveau support de l'écho par caractère dans les anciennes consoles Windows quand disponible ====[AdvancedSettingsKeyboardSupportInLegacy]
-Cette option active une méthode alternative pour détecter la frappe des caractères dans les anciennes consoles Windows.
+Cette option active une méthode alternative pour détecter la frappe des caractères dans les consoles de commandes Windows.
 Bien qu'elle améliore les performances et empêche certains affichages de console d'être épelés, elle peut être incompatible avec certains programmes de terminaux.
 Cette fonctionnalité est disponible et activée par défaut sous Windows 10 versions 1607, 1703, 1709 et 1803 ainsi que sous les versions plus récentes de Windows 10 quand UI Automation n'est pas disponible ou désactivée.
 Avertissement : quand cette option est activée, les caractères tapés qui n'apparaissent pas à l'écran comme les mots de passe, ne seront pas supprimés.
@@ -2159,7 +2153,7 @@ Pour utiliser ces voix, vous devrez installer deux composants :
 ++ Voix Windows OneCore ++[OneCore]
 Windows 10 inclut de nouvelles voix appelées "OneCore" ou voix "mobile".
 Des voix sont fournies pour beaucoup de langues, et elles sont plus réactives que les voix Microsoft disponibles en utilisant Microsoft Speech API version 5.
-Sous Windows 10, NVDA utilise les voix Windows OneCore par défaut ([[eSpeak NG #eSpeakNG] est utilisé dans les autres versions).
+Sous Windows 10, NVDA utilise les voix Windows OneCore par défaut ([eSpeak NG #eSpeakNG] est utilisé dans les autres versions).
 
 Pour installer des voix pour des langues supplémentaires, veuillez consulter cet article de Microsoft : https://support.office.com/fr-fr/article/T%C3%A9l%C3%A9charger-les-langues-de-synth%C3%A8se-vocale-pour-Windows-10-d5a6b612-b3ae-423f-afa5-4f6caf1ec5d3
 
@@ -3018,7 +3012,7 @@ Voici les options de ligne de commande de NVDA :
 | -l NIVEAUDEJOURNALISATION | --log-level=NIVEAUDEJOURNALISATION | Le niveau minimal de messages journalisés (débogage 10, info 20, avertissement 30, erreur 40, critique 50, désactivé 100), le défaut est avertissement |
 | -c CHEMINDECONFIG | --config-path=CHEMINDECONFIG | Le chemin vers lequel tous les paramètres de NVDA sont stockés |
 | -m | --minimal | Pas de sons, pas d'interface, pas de message de démarrage etc. |
-| -s | --secure | Mode sécurisé (désactive la console Python et la journalisation, parfois utilisé dans les écrans sécurisés) |
+| -s | --secure | Mode sécurisé : (désactive la console Python et la journalisation, parfois utilisé dans les écrans sécurisés) |
 | Aucune | --disable-addons | Les extensions n'auront pas d'effet |
 | Aucune | --no-logging | Désactive complètement la journalisation durant l'utilisation de NVDA. Ce paramètre peut être ignoré si un niveau de journalisation ( ""--loglevel"", -l) est spécifié dans la ligne de commande ou si la journalisation de débogage est activée. |
 | Aucune | --debug-logging | Active le niveau de journalisation débogage seulement pour cette session. Ce paramètre remplacera tout autre niveau de journalisation ( ""--loglevel"", -l) argument donné, incluant l'option pas de journalisation. |

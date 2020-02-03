@@ -179,7 +179,7 @@ Het inschakelen van het derde selectievakje zorgt ervoor dat dit welkomsscherm v
 +++ Dialoogvenster Gebruiksgegevensstatistiek +++[UsageStatsDialog]
 Met ingang van NVDA 2018.3, wordt de gebruiker gevraagd of hij / zij toestaat dat gegevens over het gebruik naar NV Access worden gestuurd met het doel NVDA verder te verbeteren. 
 Wanneer NVDA de eerste keer start, verschijnt er een dialoogvenster  met de vraag of u ermee akkoord gaat dat er gegevens naar NV Access worden gestuurd tijdens uw gebruik van NVDA.
-U leest meer over de door NV Access verzamelde data in Hoofdstuk 11 hierna.
+U leest meer over de door NV Access verzamelde data in het onderdeel Algemene  Instellingen , [ het NVDA project toestaan NVDA gebruiksstatistieken te verzamelen #GeneralSettingsGatherUsageStats].
 Merk op dat  door op "ja" of "nee"  te drukken  uw keuze wordt opgeslagen en dat  dit dialoogvenster dan niet meer zal verschijnen, tenzij u NVDA opnieuw installeert.
 U kunt het verzamelen van data echter handmatig in- of uitschakelen via de Instellingen van NVDA in de categorie Algemeen. Om de instelling handmatig te wijzigen zet of verwijdert u een vinkje in het selectievakje  met bijschrift Sta het NVDA project toe NVDA gebruiksstatistieken te verzamelen #GeneralSettingsGatherUsageStats].
 
@@ -668,7 +668,7 @@ Om zoveel mogelijk informatie op een brailleleesregel te krijgen zijn de volgend
 || Afkorting | Type besturingselement |
 | afb | afbeelding |
 | app | applicatie / toepassing |
-| art | artikel
+| art | artikel |
 | bct | blokcitaat |
 | bst | boomstructuur |
 | bsitem | boomstructuuritem |
@@ -1068,7 +1068,6 @@ De beschikbare logniveaus zijn:
  - Als u zich zorgen maakt over uw privacy, kies dan niet voor dit logniveau.
 - Debug: Naast info, waarschuwingen, en gegevens uit invoer/uitvoer worden ook debug-berichten  gelogd. 
  - Evenals voor   invoer/uitvoer geldt hier ook dat u niet voor dit logniveau moet kiezen, als u zich zorgen maakt over uw privacy.
--
 
 
 ==== NVDA automatisch starten nadat ik me bij windows heb aangemeld ====[GeneralSettingsStartAfterLogOn]
@@ -1092,6 +1091,7 @@ De volgende informatie wordt altijd verstuurd
 - Huidige NVDA-versie
 - Versie besturingssysteem
 - Of het besturingssysteem 64- of 32-bit is
+
 
 ==== NVDA toestaan dat gebruiksstatistieken worden verzameld ten behoeve van het NVDA-project ====[GeneralSettingsGatherUsageStats]
 Als dit wordt toegestaan zal NV Access de informatie van update checks gebruiken om het aantal NVDA-gebruikers vast te stellen met inbegrip van specifieke demografische gegevens zoals besturingssysteem en land van oorsprong.
@@ -1403,6 +1403,9 @@ Als u niet langer wilt dat deze waarschuwing telkens opnieuw verschijnt, kunt u 
 U kunt te allen tijde het tonen van deze waarschuwing weer inschakelen door het selectievakje "Altijd waarschuwing tonen wanneer Scherm dimmen wordt geladen" dat u naast het vakje "Maak scherm donker" vindt.
 
 Om Scherm dimmen vanaf elke willekeurige plaats in of uit te kunnen schakelen kunt u een aangepaste invoerhandeling aanmaken  in het dialoogvenster [Invoerhandelingen #InputGestures].
+
+Standaard worden bij in- of uitschakelen van Scherm dimmen geluidssignalen afgespeeld.
+Als u niet wilt dat dit gebeurt, kunt u het vinkje in hetselectievakje 'Geluid afspelen bij in- / uitschakelen Scherm dimmen' weghalen.
 
 ==== Instellingen visuele ondersteuning van derden ====[VisionSettingsThirdPartyVisualAids]
 Elementen met optische meerwaarde kunnen via [NVDA add-ons #AddonsManager] worden toegevoegd.
@@ -1791,24 +1794,14 @@ Voor de meest recente versies van Microsoft Office 2016/365 die onder windows 10
 Het kan echter voorkomen dat informatie of niet of onjuist wordt weergegeven in sommige versies van Microsoft Office, waardoor  men niet in alle gevallen kan vertrouwen op deze UI automation ondersteuning.
 Vooralsnog raden we de meeste gebruikers NIET aan dit standaard aan te zetten, al juichen we het toe dat gebruikers van Office 2016/365 de optie activeren om uit te proberen en ons  feedback te geven over hun ervaringen.
 
-==== Ondersteuning voor Windows-consool ====[AdvancedSettingsConsoleUIA]
-Met deze optie kunt u selecteren hoe NVDA moet omgaan met de Windows-consool wanneer die gebruikt wordt door de opdrachtprompt, PowerShell, en het Subsysteem van Windows voor Linux.
-Dit heeft geen effectop de moderne Windows Terminal.
-In Windows 10 versie 1709, heeft Microsoft [ondersteuning voor de UI Automation API toegevoegd aan de consool https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], bringing vastly improved performance and stability for screen readers that support it.
-In situaties waar UI Automation niet beschikbaar is of waar bekend is dat het een slechte gebruikerservaring oplevert, kan men terugvallen op de ondersteuning voor de legacy consool van NVDA.
-De ondersteuning voor de Windows-consool heeft een vervolgkeuzemenu met 3 opties:
-- Automatisch: gebruikt UI Automation in consools in Windows 10 versie 1809 en later. Deze optie is aanbevolen en is standaard ingesteld.
-Bij voorkeur UIA: UI Automation wordt gebruikt in consoolss indien beschikbaar zelfs in versies van Windows die onvolledig zijn uitgvoerd of bugs hebben. Hoewel deze beperkte fucntionaliteit nuttig en zelfs voldoende kan zijn voor uw doeleinden, gebruikt u deze optie geheel op eigen risico en wordt hiervoor geen ondersteuning geboden.
-- Legacy: UI Automation in de Windows-consool wordt volledig uitgeschakeld zodat u altijd met legacy werkt.
--
+==== UI Automation gebruiken om toegang te krijgen tot Windows-consool wanneer beschikbaar ====[AdvancedSettingsConsoleUIA]
+Wanneer deze optie ingeschakeld is, zal NVDA een nieuwe, nog in otwikkeling zijnde, versie van haar ondersteuning voor de Windows-consool gebruiken waarmee toegankelijkheidsverbeteringen worden benut die Microsoft heeft doorgevoerd https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Deze mogelijkheid is nog zeer experimenteel van aard en  nog incompleet, dus wordt het gebruik ervan nog niet aanbevolen. Wanneer deze echter volledig is uitontwikkeld, dan is de verwachting dat deze nieuwe vorm van ondersteuning de standaard gaat worden waarmee de prestaties en stabiliteit van NVDA in opdrachtmodules van Windows worden verbeterd. 
 
 ==== Wachtwoorden uitspreken in  Windows-consool ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Met deze instelling bepaalt u Of tekens worden uitgesproken door getypte tekens uitspreken#KeyboardSettingsSpeakTypedCharacters] of door  getypte woorden uitspreken#KeyboardSettingsSpeakTypedWords] in situaties waar het scherm niet ververst wordtzoals bij de invoer van wachtwoorden in sommige terminal-programma's zoals de Windows-consool terwijl ondersteuning voor UI automation (UIA) ingeschakeld is, alsmede Mintty. 
-Om veiligheidsredenen moet deze instelling uitgeschakeld blijven. 
-Het kan echter voorkomen dat u de instelling  zou willen inschakelen als het mis gaat met het uitsprken van getypte tekens / worden   in een consool-omgeving   of in een werkomgeving die u vertrouwtt, en u er dan toch de voorkeur aangeeft om wachtwoorden te laten uitspreken.
-
-==== Gebruik de nieuwe ondersteuning voor getypte karakters in legacy Windows-consools wanneer beschikbaar ====[AdvancedSettingsKeyboardSupportInLegacy]
-Met deze optie stelt u een alternatieve methode in voor het detecteren van getypte karakters in legacy Windows-consools.
+Hiermee bepaalt u of [getypte karakters uitspreken #KeyboardSettingsSpeakTypedCharacters] nof [getypte woorden uitspreken #KeyboardSettingsSpeakTypedWords] actief is in situaties waar het  scherm niet wordt ververst zoals bij het invoeren van een wachtwoord in het Windows-consool als ondersteuning voor UI automation ingeschakeld is. Om veiligheidsredenen moet deze instelling uitgeschakeld blijven. Het kan echter voorkomen dat u de instelling  zou willen inschakelen als het mis gaat met het uitsprken van getypte tekens / worden    bij gebruik van de nieuwe, experimentele consool-ondersteuning van NVDA. 
+		
+==== Gebruik de nieuwe ondersteuning voor getypte karakters in het Windows-consool wanneer beschikbaar ====[AdvancedSettingsKeyboardSupportInLegacy]
+Met deze optie stelt u een alternatieve methode in voor het detecteren van getypte karakters in opdrachtmodules van Windows.
 Terwijl de prestatie hiermee verbetert en voorkomen wordt dat consool-uitvoer wordt uitgespeld, kan deze methode incompatibel zijn  met enkele terminal-programma's.
 Dit alternatief is beschikbaar en staat standaard aan in Windows 10 versies 1607, 1703, 1709 en 1803 alsmede in later uitgekomen versies van Windows 10 wanneer UI Automation niet beschikbaar is of uitgezet is.
 Waarschuwing: Als deze optie is ingeschakeld, worden getypte karakters die niet op het scherm te zien zijn zoals wachtwoorden, niet onderdrukt.
@@ -2068,7 +2061,7 @@ In het braille weergavevenster treft u een selectievakje aan met het bijschrift 
 Als dit vakje is aangevinkt, opent de braille viewer wanneer  NVDA wordt gestart.
 Het brailleweergavevenster zal in principe elke keer dat het wordt geopend dezelfde plaats en grootte hebben als toen het de laatste keer gesloten werd.
 
-++ Add-Ons Beheren ++[AddonsManager]
+
 ++ Add-Ons Beheren ++[AddonsManager]
 Met "Add-ons Beheren" onder Extra in het NVDA menu kunt u uitbreidingspakketten voor NVDA installeren, verwijderen alsmede in- en uitschakelen.
 Deze pakketten worden door de NVDA gemeenschap beschikbaar gesteld en ze bevatten aangepaste programmacode die het mogelijk maakt bepaalde functies van NVDA uit te breiden of te wijzigen. Ook zijn er Add-ons voor ondersteuning van extra brailleleesregels en spraaksynthesizers.
@@ -2176,7 +2169,7 @@ Om van deze stemmen gebruik te maken dient u 2 componenten te installeren:
 ++ Windows OneCore-stemmen ++[OneCore]
 In Windows 10 zijn nieuwe stemmen beschikbaar die bekend staan als "OneCore" of "mobiele" stemmen.
 Deze stemmen zijn er voor vele talen en ze reageren sneller dan de Microsoft-stemmen die beschikbaar zijn bij gebruik van Microsoft Speech API versie 5.
-In Windows 10 gebruikt NVDA standaard de Windows OneCore stemmen ([[eSpeak NG #eSpeakNG] wordt in andere versies gebruikt).
+In Windows 10 gebruikt NVDA standaard de Windows OneCore stemmen ([eSpeak NG #eSpeakNG] wordt in andere versies gebruikt).
 
 Een lijst met beschikbare talen en de installatieinstructie vindt u op de navolgende webpagina van Microsoft: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
@@ -2990,9 +2983,9 @@ Wanneer u de leesregel configureert en de te gebruiken poort instelt, moet u erv
 Het Brltty-programma zorgt zelf voor de verwerking van brailleïnvoer van leesregels die over een brailletoetsenbord beschikken.
 Het is dan ook niet relevant dat een invoertabel in NVDA wordt ingesteld.
 
-DBRLTYY blijft buiten de op de achtergrond uitgevoerde automatische leesregelherkenning van NVDA.
+BRLTTY blijft buiten de op de achtergrond uitgevoerde automatische leesregelherkenning van NVDA.
 
-De volgende brltty-commando's worden in NVDA ondersteund.
+De volgende BRLTTY-commando's worden in NVDA ondersteund.
 Voor informatie over toetsenbordtabellen kunt u de [BRLTTY-Documentatie op https://mielke.cc/brltty/doc/KeyBindings/] raadplegen.
 
 %kc:beginInclude
@@ -3037,7 +3030,7 @@ Hieronder volgen de commandoregelopties voor NVDA:
 | -l LOGLEVEL | --log-level=LOGLEVEL | Het laagste niveau gelogd bericht (debug 10, invoer/uitvoer 12, debugmelding 15,info 20, waarschuwing 30, fout 40, kritiek 50, uitgeschakeld 100), standaardinstelling is waarschuwing |
 | -c CONFIGPATH | --config-path=CONFIGPATH | Het pad waar alle instellingen voor NVDA worden opgeslagen. |
 | -m | --minimal | Geen geluiden, geen interface, geen opstartbericht etc. |
-| -s | --secure | Veilige modus (schakelt Python consool en logopties vaak gebruikt in beveiligde schermen uit) |
+| -s | --secure | Veilige modus: schakelt Python consool-eigenschappen  uit zoals profielen voor aanmaken, verwijderen, hernoemen etc., op update controleren, een selectievakje in het Welkomsscherm en in Instellingen in de categorie Algemeen, (bijv. NVDA starten na het inloggen, Configuratie opslaan bij afsluiten) alsmede     logviewer en log-eigenschappen vaak gebruikt in beveiligde schermen. Merk ook op  dat dit commando het onmogelijk maakt  instellingen  in system config op te slaan en de map Handelingen wordt niet op schijf bewaard. |
 | Geen | --disable-addons | Addons buiten werking gesteld. |
 | geen | --debug-logging | Loggen op Debug niveau alleen voor deze sessie inschakelen. Met deze instelling wordt elk ander niveau van loggen buiten werking gesteld ( ""--loglevel"", -l) gegeven argument, optie niet loggen inbegrepen. |
 | Geen | --no-logging | loggen volledig uitschakelen terwijl NVDA in gebruik is. Deze instelling kan overschreven worden als een logniveau ( ""--loglevel"", -l) wordt gespecifieerd vanuit commandoregel of als debug-loggen wordt ingeschakeld. |

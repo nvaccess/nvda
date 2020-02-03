@@ -174,7 +174,7 @@ Treći potvrdni okvir određuje, hoće li se ovaj dijaloški okvir prikazivati t
 +++ Dijaloški okvir o prikupljanju podataka +++[UsageStatsDialog]
 Počevši s verzijom NVDA 2018.3, korisnika se pita želi li pristati davati statističke podatke NV Accessu koji pomažu razvijati NVDA. 
 Prilikom prvog pokretanja NVDA, otvorit će se dijaloški okvir u kojem ćete biti pitani, želite li slati korisničke podatke NV Accessu kakda koristite NVDA.
-O tome koji se podaci prikupljaju možete pročitati u 11-om poglavlju ispod.
+O tome koji se podaci prikupljaju, možete pročitati u poglavlju o općenitim postavkama, [Dozvoli NV accessu prikupljanje statistike o korištenju #GeneralSettingsGatherUsageStats].
 Upozorenje: pritiskom gumba "Da" ili "Ne" ova će se postavka spremiti, a dijaloški okvir se više nikada neće pojavljivati osim u slučaju kad ponovo instalirate NVDA.
 Međutim, možete uključiti ili isključiti proces prikupljanja podataka ručno u ploči općih postavki. Kako biste tu postavku promijenili ručno, možete označiti ili odznačiti potvrdni okvir [Dozvoli NVDA projektu prikupljanje statistike o korištenju #GeneralSettingsGatherUsageStats].
 
@@ -1061,7 +1061,7 @@ Dostupne razine zapisivanja su:
  - Ako se bojite za svoju privatnost, ne postavljajte ovu razinu zapisnika.
 - Debug: Uz informacije, upozorenja te poruke o ulazima/izlazima, zapisivat će se dodatne poruke koje služe za ispravljanje grešaka.
  - Kao u slučaju ulaz/izlaz, ako se bojite za svoju privatnost, ne postavljajte ovu razinu zapisnika.
-
+-
 
 ==== Automatski pokreni NVDA nakon što se prijavim u Windows sustav ====[GeneralSettingsStartAfterLogOn]
 Ako je ova opcija aktivirana, NVDA će se automatski pokrenuti nakon što se prijavite u Windows.
@@ -1084,7 +1084,7 @@ Sljedeće informacije se uvijek šalju:
 - Aktualna NVDA verzija
 - Verzija operacijskog sustava
 - Radi li se o 64 ili 32 bitnom operacijskom sustavu
-
+-
 
 ==== Dozvoli NVDA projektu prikupljanje statistike korištenja ====[GeneralSettingsGatherUsageStats]
 Ako je ova opcija aktivirana, NV Access će koristiti informacije dobivene od servera za nadogradnje kako bi pratila broj korisnika uključujući opće demografske statistike kao što su to operacijski sustav i zamlja porijekla.
@@ -1095,7 +1095,7 @@ Osim obaveznih informacija koje se šalju pri provjeri nadogradnje, trenutačno 
 - Ime trenutačno korištene govorne jedinice (uključujući ime dodatka od kojeg potiče driver)
 - Ime trenutačno korištenog brajičnog retka (uključujući ime dodatka od kojeg potiče driver)
 - trenutačno korištena brajična tablica (ako se koristi brajični redak)
-
+-
 
 Ove informacije puno pomažu programu NV Access postaviti prioritete za budući razvoj NVDA.
 
@@ -1397,6 +1397,9 @@ Ako ne želite vidjeti ovu poruku svaki put, možete to promijeniti u dijaloško
 Upozorenje možete uvijek vratiti. Označite odabirni okvir "Uvijek prikaži upozorenje tijekom učitavanja ekranske zavjese" koji se nalazi pored potvrdnog okvira "Zatamni ekran".
 
 Kako biste ekransku zavjesu uključili i isključili s bilo kojeg mjesta, dodijelite prilagođeni prečac u dijaloškom okviru [Ulazne geste #InputGestures].
+
+Kada se zaslonska zavjesa uključuje, reproducirat će se zvuk.
+Kada želite promjeniti status te opcije, možete maknuti kvačicu sa potvrdnog okvira "reproduciraj zvuk prilikom uključivanja zaslonske zavjese".
 
 ==== Postavke za vizualna pomagala treće strane ====[VisionSettingsThirdPartyVisualAids]
 Dodatne pružatelja vizualnih poboljšanja je moguće pružiti putem [NVDA dodataka #AddonsManager].
@@ -1750,7 +1753,7 @@ Ovaj odabirni okvir omogućuje izbor jezika koji će se koristiti za prepoznavan
 Upozorenje! Ove postavke mogu prouzroćiti nepravilno funkcionireanje NVDA, ako su konfigurirane nepravilno.
 Radite ove izmjene ako znate što radite, ili vas je na to uputio NVDA razvojni programer.
 
-==== Mijenjanje narednih postavki ====[AdvancedSettingsMakingChanges]
+==== Mijenjanje naprednih postavki ====[AdvancedSettingsMakingChanges]
 U slučaju da želite promijeniti napredne postavke, kontrole se moraju aktivirati potvrdnim okvirom, kojim potvrđujete, da razumijete da postoji rizik kad se postavke mijenjaju 
 
 ==== Vraćanje na standardne postavke ====[AdvancedSettingsRestoringDefaults]
@@ -1776,24 +1779,14 @@ Ovo uključuje Microsoft Word, te sastavljač i preglednik poruka u Microsoft Ou
 Međutim, postoje neke informacije koje se ne mogu dohvatiti koristeći ovu podršku, stoga se na nju ne možemo potpuno pouzdati.
 Još uvijek ne preporučujemo uključivanje ove opcije za stalno korištenje, ali pozivamo korisnike Microsoft Office 2016/365 da testiraju ovu značajku, te da šalju povratne informacije.
 
-==== Podrška Windows naredbenog retka ====[AdvancedSettingsConsoleUIA]
-Ova opcija regulira kako NVDA pristupa naredbenim redcima koje koriste aplikacija naredbenog retka, PowerShell, i podsustav sustava Linux za Windows.
-Ovo ne utjeće na suvremeni Windows terminal.
-U Windows 10 verziji 1709, Microsoft [je dodao podršku za svoj UI automation API u naredbeni redak https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], dajući mogućnost drastično unapređenih performansi za čitače ekrana koji to podržavaju.
-U situacijama kad je UI automation podrška nedostupna ili kad prouzrokuje loše korisničko iskustvo, NVDAova stara podrška naredbenog retka dostupna je kao rezervno rješenje.
-Odabirni okvir za podršku Windows konzole ima tri opcije:
-- Automatski: koristi UI automation u naredbenim redcima u Windows 10 verziji 1809 i novijima. Preporučuje se upotreba ove opcije i ona je standardno postavljena.
-- Preferiraj UIA: koristi UI automation u naredbenim redcima kad je to dostupno, čak i u Windows verzijama s nekompletnim ili bubičastim implementacijama. Iako ta ograničena implementacija može biti korisna (pa čak i dostatna za vašu upotrebu), koristite ju na vlastitu odgovornost. Za nju se ne pruža tehnička podrška.
-- Stara implementacija: UI Automation u Windows naredbenim redcima će se kompletno deaktivirati, te će uvijek koristiti stari način.
--
+==== Koristi UI Automation za pristup windows naredbenom retku kada je to dostupno ====[AdvancedSettingsConsoleUIA]
+Kada je ova opcija uključena, NVDA će koristiti nove, u toku razvoja [unapređenja pristupačnosti koje je napravio Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Ova je značajka još uvijek eksperimentalna, te njeno korištenje se ne preporučuje. Međutim, ista će podrazumjevano postati standard, kada se isprave sve pogreške.
 
-==== Izgovori lozinke u Windows naredbenim redcima ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Ova opcija regulira izgovaranje znakova kad su opcije [izgovori upisane znakove #KeyboardSettingsSpeakTypedCharacters] ili [izgovori upisane riječi #KeyboardSettingsSpeakTypedWords] uključene kad se ekran ne osvježava (kao što je to slučaj s upisivanjem lozinki) u nekim programima naredbenom retka, kao što je to windows naredbeni redak s UI automation podrškom i Mintty.
-Iz sigurnosnih razloga, ova postavka treba biti deaktivirana.
-Međutim, možda biste je htjeli uključiti, ako osjećate probleme s performansama ili nestabilnost s izgovaranjem upisanih znakova ili riječi u naredbenim redcima ili ako radite u povjerljivom okruženju i preferirate najavu lozinke.
+==== Izgovaraj lozinke u UIA naredbenim retcima ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Ova opcija regulira izgovor lozinki uz pomoć opcije [izgovori upisane znakove #KeyboardSettingsSpeakTypedCharacters] ili [izgovori upisane riječi #KeyboardSettingsSpeakTypedWords] u slučajevima kada se ekran ne osvježava (kao što je to upis lozinke) u naredbenim retcima s uključenim UIA. U cilju veće sigurnosti, preporučuje se isključivanje ove postavke. Međutim, možete ju uključiti ako osjećate nestabilnost pri korištenju nove podrške naredbenog retka.
 
-==== Koristi novu podršku za utipkane &znakove u starim Windowsovim naredbenim redcima kad je dostupno ====[AdvancedSettingsKeyboardSupportInLegacy]
-Ova opcija uključuje alternativnu metodu otkrivanja upisanih znakova u windows naredbenom retku.
+==== Koristi novu podršku upisanih znakova u Windowsovom naredbenom retku kada je to podržano ====[AdvancedSettingsKeyboardSupportInLegacy]
+Ova opcija pruža alternativnu metodu otkrivanja upisanih znakova u Windowsovom naredbenom retku.
 Iako ova opcija  donosi unapređenja performansi i ispravlja problem slovkanja neželjenih stavki, ista može biti nekompatibilna s nekim programima naredbenog retka.
 Ova je opcija dostupna i standardno je uključena u Windows 10 verzijama 1607, 1703, 1709 i 1803 kao i na novim Windows 10 verzijama, gdje je UIA nedostupno ili deaktivirano.
 Upozorenje: s uključenom ovom opcijom, izgovoreni znakovi koji se ne pokazuju na ekranu, poput lozinki, neće biti spriječeni u izgovoru.
@@ -3019,7 +3012,7 @@ Slijede opcije naredbenog retka za NVDA:
 | -l LOGLEVEL | --log-level=LOGLEVEL | Najniža razina poruka zapisivana (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), standardno je warning |
 | -c CONFIGPATH | --config-path=CONFIGPATH | određuje mapu u kojoj su pospremljene sve postavke |
 | -m | --minimal | bez zvuka, bez sučelja, bez poruke dobrodošlice itd |
-| -s | --secure | siguran modus (deaktivira python konzolu) |
+| -s | --secure | sigurni modus: onemogućuje Python konzolu značajke profila poput stvaranja, brisanja, preimenovanja profila itd., provjeru nadogradnji, neke potvrdne okvire u dijaloškom okviru dobrodošlice i u kategoriji općenitih postavki (npr. pokreni NVDA poslje prijave, spremi konfiguraciju poslje izlaza itd.), kao i zapisnik dnevnika i funkcije zapisa  (koristi se često na sigurnim ekranima). Imajte na umu da se postavke neće odavde spremati u mapu konfiguracije sustava te isto tako neće se spremati definirani prečaci. |
 | nema | --disable-addons | dodaci neće imati utjecaja |
 | nema | --debug-logging | Omogućuje dijagnostiku samo pri trenutačno pokrenutoj kopiji. Ova postavka natpisuje bilo koju drugu razinu vođenja zapisnika ( ""--loglevel"", -l) specificirani argument uključujući i opciju bez logiranja. |
 | nema | --no-logging | Potpuno isključuje vođenje zapisnika. OVa postavka može biti nadpisana ako razina loga ( ""--loglevel"", -l) je specificiran iz naredbenog retka, ili je uključeno vođenje zapisnika. |
