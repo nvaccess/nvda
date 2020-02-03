@@ -174,7 +174,7 @@ Kolmannella on mahdollista valita, halutaanko Tervetuloa-valintaikkunan tulevan 
 +++ Käyttötilastojen keräämisen valintaikkuna +++[UsageStatsDialog]
 NVDA 2018.3:sta alkaen käyttäjältä kysytään, haluaako hän sallia käyttötietojen lähettämisen NV Accessille NVDA:n parantamiseksi tulevaisuudessa.
 Kun NVDA käynnistetään ensimmäistä kertaa, näkyviin tulee valintaikkuna, jossa sinulta kysytään, hyväksytkö tietojen lähettämisen.
-Voit lukea lisätietoja kerättävistä tiedoista luvusta 11.
+Voit lukea lisätietoja NV Accessin keräämistä tiedoista yleisten asetusten kappaleesta [Salli käyttötilastojen kerääminen. #GeneralSettingsGatherUsageStats]
 Huom: Asetus tallennetaan painaessasi "Kyllä" tai "Ei", eikä valintaikkunaa enää näytetä, ellet asenna NVDA:ta uudelleen.
 Voit kuitenkin ottaa käyttöön tai poistaa käytöstä tiedonkeruun manuaalisesti NVDA:n yleisten asetusten paneelista. Muuta asetusta valitsemalla tai poistamalla valinta [Salli käyttötilastojen kerääminen #GeneralSettingsGatherUsageStats] -valintaruudusta.
 
@@ -659,7 +659,7 @@ Jotta pistenäytölle mahtuisi mahdollisimman paljon tietoa, seuraavat lyhenteet
 
 || Lyhenne | Säätimen tyyppi |
 | sov | sovellus |
-| art | artikkeli
+| art | artikkeli |
 | sln | sisennetty lainaus |
 | pnk | painike |
 | avpnk | avattava painike |
@@ -675,7 +675,7 @@ Jotta pistenäytölle mahtuisi mahdollisimman paljon tietoa, seuraavat lyhenteet
 | slsmuo | salasanan muokkauskenttä |
 | upotettu | upotettu objekti |
 | lvt | loppuviite |
-| prs | piirustus |
+| kuv | kuva |
 | avt | alaviite |
 | gra | grafiikka |
 | rhm | ryhmä |
@@ -1061,7 +1061,7 @@ Käytettävissä ovat seuraavat lokitasot:
  - Mikäli olet huolissasi yksityisyydestäsi, älä määritä lokitasoksi tätä vaihtoehtoa.
 - Virheenkorjaus: Lokiin tallennetaan tiedot-, varoitukset- ja syöttö/tulostus-ilmoitusten lisäksi virheenkorjauksen lisäilmoituksia.
  - Kuten syöttö/tulostus-tasolla, mikäli olet huolissasi yksityisyydestäsi, lokitasoksi ei tule määrittää tätä vaihtoehtoa.
-
+-
 
 ==== Käynnistä automaattisesti sisäänkirjautumisen jälkeen ====[GeneralSettingsStartAfterLogOn]
 Jos tämä asetus on käytössä, NVDA käynnistyy automaattisesti heti, kun Windowsiin on kirjauduttu sisään.
@@ -1084,18 +1084,18 @@ Seuraavat tiedot lähetetään aina:
 - Nykyinen NVDA:n versio
 - Käyttöjärjestelmän versio
 - Onko käyttöjärjestelmä 64- vai 32-bittinen
-
+-
 
 ==== Salli käyttötilastojen kerääminen ====[GeneralSettingsGatherUsageStats]
 Jos tämä on käytössä, NV Access käyttää päivitystarkistusten tietoja NVDA-käyttäjien määrän seuraamiseen, mukaan lukien tietyt väestötilastolliset tiedot kuten käyttöjärjestelmä sekä alkuperämaa.
 Huom: IP-osoitetta ei säilytetä, vaikka sitä käytetäänkin päivitystarkistuksen aikana käyttäjän maan selvittämiseen.
 Päivitysten tarkistamiseen tarvittavien pakollisten tietojen lisäksi lähetetään tällä hetkellä myös seuraavat lisätiedot:
 - NVDA:n käyttöliittymän kieli
-- Onko NVDA asennettu vai käytetäänkö massamuistiversiota
+- Käytetäänkö NVDA:n asennettua vai massamuistiversiota
 - Käytössä olevan puhesyntetisaattorin nimi (mukaan lukien lisäosan nimi, johon ajuri kuuluu)
 - Käytössä olevan pistenäytön nimi (mukaan lukien lisäosan nimi, johon ajuri kuuluu)
 - Nykyinen pistekirjoituksen tulostustaulukko (jos pistenäyttö on käytössä)
-
+-
 
 Nämä tiedot auttavat huomattavasti NV Accessia priorisoimaan NVDA:n tulevaa kehitystä.
 
@@ -1397,6 +1397,9 @@ Jos et halua enää nähdä tätä varoitusta, voit poistaa sen käytöstä sama
 Voit milloin tahansa palauttaa varoituksen käyttöön valitsemalla "Näytä varoitus aina, kun näyttöverho otetaan käyttöön" -valintaruudun.
 
 Muuta näyttöverhon tilaa mistä tahansa määrittämällä mukautettu syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
+
+Oletusarvoisesti toistetaan ääni, kun näyttöverho otetaan käyttöön tai poistetaan käytöstä.
+ Jos haluat muuttaa tätä, voit poistaa valinnan "Toista ääni, kun näyttöverho otetaan käyttöön tai poistetaan käytöstä" -valintaruudusta.
 
 ==== Kolmannen osapuolen näön apuvälineiden asetukset ====[VisionSettingsThirdPartyVisualAids]
 Muita näönparannuksen tarjoajia voidaan asentaa [lisäosina. #AddonsManager]
@@ -1776,24 +1779,14 @@ Uusimpien Microsoft Office 2016/365 -versioiden UI Automation -tuki on windows 1
 Joissakin Microsoft Officen versioissa ei ehkä kuitenkaan ole saatavilla kaikkea tietoa tai ne ilmaistaan väärin, minkä vuoksi UI automation -tukeen ei voi aina luottaa.
 Tämän asetuksen käyttöön ottamista ei vielä suositella, mutta Office 2016/365 -käyttäjien palaute on kuitenkin tervetullutta.
 
-==== Windows-konsolin tuki ====[AdvancedSettingsConsoleUIA]
-Tämä asetus valitsee, miten NVDA on vuorovaikutuksessa Windows-konsolin kanssa, jota komentokehote, PowerShell ja Windows-alijärjestelmä Linuxille käyttävät.
-Se ei vaikuta moderniin Windows-päätteeseen.
-Microsoft [lisäsi konsoliin tuen UI Automation -rajapinnalleen https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] Windows 10:n versioon 1709, mikä paransi huomattavasti sitä tukevien ruudunlukijoiden suorituskykyä ja vakautta.
-Tilanteissa, joissa UI Automation -rajapinta ei ole käytettävissä tai sen tiedetään johtavan huonompaan käyttäjäkokemukseen, NVDA:n vanha konsolituki on käytettävissä varalla.
-Windows-konsolin tuki -yhdistelmäruudussa on kolme vaihtoehtoa:
-- Automaattinen: Käyttää UI Automation -rajapintaa konsoleissa Windows 10:n versiossa 1809 ja uudemmissa. Tätä vaihtoehtoa suositellaan, ja se on oletusarvoisesti valittuna.
-- UIA etusijalla: Käyttää UI Automation -rajapintaa konsoleissa, mikäli se on käytettävissä, jopa sellaisissa Windows-versioissa, joissa sen tuki on keskeneräinen tai buginen. Vaikka tämä rajoitettu toiminnallisuus voi olla hyödyllinen (ja jopa riittävä käyttötarkoituksiisi), käytät sitä kokonaan omalla vastuullasi, eikä sille tarjota tukea.
-- Vanha: Windows-konsolin UI Automation -rajapinnan tuki poistetaan kokonaan käytöstä, jolloin käytetään aina vanhaa varatukea.
--
+==== Käytä UI Automation -rajapintaa Windows-konsolissa, kun käytettävissä ====[AdvancedSettingsConsoleUIA]
+Kun tämä asetus on käytössä, NVDA käyttää uutta, työn alla olevaa versiota Windows-konsolin tuesta, joka hyödyntää [Microsoftin tekemiä saavutettavuusparannuksia. https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] Ominaisuus on vielä kokeellinen ja keskeneräinen, joten sen käyttöä ei vielä suositella. Valmistuttuaan uuden tuen odotetaan kuitenkin tulevan oletukseksi, mikä parantaa NVDA:n suorituskykyä ja vakautta Windowsin komentokonsoleissa.
 
-==== Puhu salasanat Windows-konsolissa ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Tämä asetus säätää, puhutaanko merkit [Puhu kirjoitetut merkit- #KeyboardSettingsSpeakTypedCharacters] tai [Puhu kirjoitetut sanat #KeyboardSettingsSpeakTypedWords] -asetusta käytettäessä tilanteissa, joissa ruutu ei päivity (kuten salasanaa syötettäessä) joissakin pääteohjelmissa, kuten Windows-konsolissa UI automation -tuen ollessa käytössä ja Mintty:ssä.
-Turvallisuussyistä tämä asetus tulisi pitää poissa käytöstä.
-Voit kuitenkin halutessasi ottaa sen käyttöön, mikäli konsoleissa on suorituskykyongelmia tai epävakautta kirjoitettujen merkkien ja/tai sanojen puhumisessa, tai työskentelet luotetuissa ympäristöissä ja haluat, että salasanat puhutaan.
+==== Puhu salasanat UIA-konsoleissa ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Tämä asetus säätää, puhutaanko merkit [Puhu kirjoitetut merkit- #KeyboardSettingsSpeakTypedCharacters] tai [Puhu kirjoitetut sanat #KeyboardSettingsSpeakTypedWords] -asetusta käytettäessä tilanteissa, joissa ruutu ei päivity (kuten salasanaa syötettäessä) Windows-konsolissa UI automation -tuen ollessa käytössä. Turvallisuussyistä tämä asetus tulisi pitää poissa käytöstä. Voit kuitenkin halutessasi ottaa sen käyttöön, mikäli sinulla on suorituskykyongelmia tai epävakautta kirjoitettujen merkkien ja/tai sanojen puhumisessa NVDA:n uutta konsolitukea käytettäessä.
 
-==== Käytä uutta kirjoitettujen merkkien tukea vanhoissa Windows-konsoleissa (kun käytettävissä) ====[AdvancedSettingsKeyboardSupportInLegacy]
-Tämä asetus ottaa käyttöön vaihtoehtoisen menetelmän kirjoitettujen merkkien tunnistamiseen vanhoissa Windows-konsoleissa.
+==== Käytä uutta kirjoitettujen merkkien tukea Windows-konsolissa, kun käytettävissä ====[AdvancedSettingsKeyboardSupportInLegacy]
+Tämä asetus ottaa käyttöön vaihtoehtoisen menetelmän kirjoitettujen merkkien tunnistamiseen Windowsin komentokonsoleissa.
 Vaikka se parantaa suorituskykyä ja estää konsolitulosteen tavaamista, se ei ehkä ole yhteensopiva joidenkin pääteohjelmien kanssa.
 Tämä ominaisuus on käytettävissä ja käytössä oletusarvoisesti Windows 10:n versioissa 1607, 1703, 1709 ja 1803 sekä uudemmissa, kun UI Automation -rajapinta ei ole käytettävissä tai se on poistettu käytöstä.
 Varoitus: Kun tämä asetus on käytössä, ruudulla näkymättömät kirjoitetut merkit, kuten salasanat, puhutaan.
@@ -2160,7 +2153,7 @@ Niiden käyttämiseksi on asennettava seuraavat kaksi osaa:
 ++ Windows OneCore ++[OneCore]
 Windows 10 sisältää uusia ääniä, jotka tunnetaan OneCore- tai matkapuhelinääninä.
 Ääniä on saatavilla useille kielille, ja ne reagoivat nopeammin kuin Microsoftin Speech API 5 -rajapinnan kautta käytettävät.
-NVDA käyttää oletusarvoisesti Windows 10:ssä Windows OneCore -ääniä (muissa versioissa [[eSpeak NG:tä #eSpeakNG]).
+Windows 10:ssä NVDA käyttää oletusarvoisesti Windows OneCore -ääniä ( muissa Windows-versioissa [eSpeak NG:tä #eSpeakNG]).
 
 Katso luettelo saatavilla olevista äänistä ja ohjeet niiden asentamiseen [tästä https://support.microsoft.com/fi-fi/help/22797/windows-10-narrator-tts-voices/] Microsoftin artikkelista.
 
@@ -3019,7 +3012,7 @@ Seuraavassa on luettelo NVDA:n komentorivivalitsimista:
 | -l LOKITASO | --log-level=LOKITASO | Alin taso, jonka ilmoitukset tallennetaan lokiin (virheenkorjaus = 10, syöttö/tulostus = 12, virheenkorjausvaroitus = 15, tiedot = 20, varoitus = 30, virhe = 40, kriittinen = 50, ei käytössä = 100). Oletustaso on "varoitus". |
 | -c ASETUSPOLKU | --config-path=ASETUSPOLKU | Hakemistopolku, johon kaikki NVDA:n asetukset tallennetaan. |
 | -m | --minimal | Ei ääniä, käyttöliittymää tai käynnistysilmoitusta jne. |
-| -s | --secure | Suojattu tila (poistaa käytöstä Python-konsolin ja lokin tallennuksen, joita käytetään usein suojatuissa ruuduissa) |
+| -s | --secure | Suojattu tila: poistaa käytöstä Python-konsolin, profiilitoiminnot, kuten luonnin, poiston, uudelleennimeämisen jne., päivitystarkistuksen, joitakin Tervetuloa-valintaikkunan ja yleisten asetusten kategorian valintaruutuja (esim. Käynnistä automaattisesti sisäänkirjautumisen jälkeen, Tallenna asetukset suljettaessa jne.) sekä lokin tarkastelun ja lokin tallennuksen (käytetään usein suojatuissa ruuduissa). Huomaa myös, että tämä komento poistaa käytöstä järjestelmäasetuksiin tallentamisen sekä syötekomentokartan tallentamisen levylle. |
 | Ei mitään | --disable-addons | Poistaa lisäosat käytöstä. |
 | Ei mitään | --debug-logging | Ottaa käyttöön virheenkorjaus-lokitason vain nykyisessä istunnossa. Tämä asetus korvaa minkä tahansa muun annetun lokitason (""--loglevel"", -l) argumentin, lokin käytöstä poistava valitsin mukaan lukien. |
 | Ei mitään | --no-logging | Poistaa lokin kokonaan käytöstä NVDA:ta käytettäessä. Tämä asetus voidaan korvata, mikäli lokitaso (""--loglevel"", -l) määritetään komentoriviparametrilla tai jos virheenkorjauslokin tallennus otetaan käyttöön. |
