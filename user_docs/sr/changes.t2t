@@ -4,11 +4,11 @@
 %!includeconf: ../changes.t2tconf
 
 = 2019.3 =
+NVDA 2019.3 je veoma značajno ažuriranje koje uključuje puno promena u strukturi kao što su prelazak sa Python 2 na Python 3, kao i nove mogućnosti u kodu za govor programa NVDA.
+Iako ove promene izazivaju nekompatibilnosti starijih NVDA dodataka, ažuriranje na Python 3 je neophodno zbog bolje bezbednosti, a promene u govoru dozvoljavaju vrlo uzbudljive inovacije u bliskoj budućnosti.
+ Druge prednosti ove verzije uključuju podršku za 64 bitne Java aplikacije, funkcije zatamnjivanja ekrana i označavanja fokusa, podršku za nove brajeve redove i novi preglednik brajevog reda, i puno drugih ispravljenih grešaka.
 
 == Nove karakteristike ==
-- U komandnoj liniji, PowerShell, i Windows Subsistemu za Linux na Windowsu 10 ažuriranje iz oktobra 2019 i novijim:
- - Značajno poboljšana brzina i stabilnost. (#9771)
- - Prijavljivanje ukucanog teksta koji se ne pojavljuje na ekranu (na primer lozinke) sada može biti omogućeno u panelu naprednih podešavanja za NVDA. (#9649)
 - Preciznost komande postavi miš na navigacioni objekat je značajno poboljšana u tekstualnim poljima u Java aplikacijama. (#10157)
 - Dodata podrška za sledeće  Handy Tech brajeve redove (#8955):
  - Basic Braille Plus 40
