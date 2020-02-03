@@ -89,7 +89,7 @@ def reviewMessage(text: str, speechPriority: Optional[speech.Spri] = None):
 		braille.handler.message(text)
 
 def openUserConfigurationDirectory():
-	"""OPens directory containing config files for the current user"""
+	"""Opens directory containing config files for the current user"""
 	import config
 	path = config.getUserDefaultConfigPath()
 	if not path:
