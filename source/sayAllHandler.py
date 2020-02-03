@@ -111,6 +111,7 @@ class _TextReader(object):
 			try:
 				self.reader = api.getCaretObject().makeTextInfo(textInfos.POSITION_CARET)
 			except (NotImplementedError, RuntimeError):
+				self.reader = None
 				return
 		else:
 			self.reader = api.getReviewPosition()
@@ -118,7 +119,7 @@ class _TextReader(object):
 		self.numBufferedLines = 0
 
 	def nextLine(self):
-		if not hasattr(self, "reader") or not self.reader:
+		if not self.reader:
 			log.debug("no self.reader")
 			# We were stopped.
 			return
@@ -225,7 +226,7 @@ class _TextReader(object):
 		])
 
 	def stop(self):
-		if not hasattr(self, "reader") or not self.reader:
+		if not self.reader:
 			return
 		self.reader = None
 		self.trigger.exit()
