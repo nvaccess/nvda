@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-09 11:28+1000\n"
-"PO-Revision-Date: 2019-12-24 10:41+0300\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
+"PO-Revision-Date: 2020-02-04 11:34+0300\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
@@ -524,9 +524,6 @@ msgid "Only when scrolling back"
 msgstr "Sadece geri kaydırırken"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "Otomatik"
 
@@ -4123,11 +4120,11 @@ msgstr "Nesne sunucusunun odağı takip etmesiyle ilgili ayarı açıp kapatır"
 
 #. Translators: presented when toggled.
 msgid "Automatically set system focus to focusable elements off"
-msgstr "Sistem odağını otomatik olarak odaklanabilir öğelere taşı, kapalı"
+msgstr "Sistem odağı tarama kipi imlecini takip etsin, kapalı"
 
 #. Translators: presented when toggled.
 msgid "Automatically set system focus to focusable elements on"
-msgstr "Sistem odağını otomatik olarak odaklanabilir öğelere taşı, açık"
+msgstr "Sistem odağı tarama kipi imlecini takip etsin, açık"
 
 #. Translators: Input help mode message for toggle auto focus focusable elements command.
 msgid ""
@@ -4605,10 +4602,11 @@ msgid ""
 "enabled until you restart NVDA. Pressed twice, screen curtain is enabled "
 "until you disable it"
 msgstr ""
-"Ekranı karartarak ya da ekranda olanları göstererek ekran perdesi statüsünü "
-"değiştirir. Perde devre dışıyken, bir kez basılırsa ekran perdesi NVDA'yı "
-"yeniden başlatana kadar etkindir. İki kez basılırsa, devre dışı bırakılana "
-"kadar ekran karartılacaktır."
+"Ekranı karartarak ya da ekranda olanları göstererek ekran Perdesi statüsünü "
+"değiştirir. Ekran perdesi devre dışıyken, bir kez basılırsa ekran perdesi "
+"NVDA'yı yeniden başlatana kadar etkinleştirilir. Ekran perdesi etkinse, bu "
+"tuş kombinasyonu perdeyi devre dışı bırakır. İki kez basılırsa, devre dışı "
+"bırakılana kadar ekran karartılacaktır."
 
 #. Translators: Reported when the screen curtain is disabled.
 msgid "Screen curtain disabled"
@@ -9145,22 +9143,17 @@ msgid ""
 msgstr ""
 "Varsa Microsoft &Word doküman kontrollerine erişmek için UI Otomasyonu kullan"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Windows &Konsolu desteği:"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr ""
+"Kullanılabilir olduğunda Windows K&onsoluna erişmek için UI Otomasyonu'nu "
+"kullan"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "UIA'yı tercih et"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Eskisi gibi"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "UIA konsollarında &şifreleri seszlendir (performansı artırabilir)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9169,17 +9162,10 @@ msgstr "Terminal programları"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
-msgstr "Windows Konsolunda &şifreleri seslendir (performansı artırabilir)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
 "&Yeni eklenen girilen karakter desteğini, kullanılabilir olduğunda eski "
-"Windows konsollarında kullanın"
+"Windows konsollarında kullan"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10068,16 +10054,19 @@ msgstr "Odak vurgulaması"
 msgid "&Enable Highlighting"
 msgstr "Vurgulamayı &Etkinleştir"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
-msgstr "Ekran perdesi"
+msgstr "Ekran Perdesi"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
-msgstr "{screenCurtainTranslatedName}ni etkinleştirmeden &önce daima uyar"
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "Ekran Perde&si etkinleştirilince daima bir uyarı mesajı göster"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "Ekran Perdesi açılıp kapanırken ses &çal"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -10089,7 +10078,7 @@ msgid ""
 "Do you wish to continue?"
 msgstr ""
 "Ekran Perdesini Etkinleştirmek, bilgisayarınızın ekranını tamamen karartır. "
-"Devam etmeden önce ekran kullanmadan bilgisayar kullanabileceğinizden emin "
+"Devam etmeden önce ekran olmaksızın bilgisayar kullanabileceğinizden emin "
 "olun. \n"
 "\n"
 "Devam etmek istiyor musunuz?"
@@ -11583,6 +11572,15 @@ msgstr "Çift satır aralığı"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 satır aralığı"
+
+#~ msgid "Windows C&onsole support:"
+#~ msgstr "Windows &Konsolu desteği:"
+
+#~ msgid "Prefer UIA"
+#~ msgstr "UIA'yı tercih et"
+
+#~ msgid "Legacy"
+#~ msgstr "Eskisi gibi"
 
 #~ msgid "Magnifier"
 #~ msgstr "Büyüteç"
