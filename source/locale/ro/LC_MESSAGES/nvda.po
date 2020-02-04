@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-06 07:28+1000\n"
-"PO-Revision-Date: 2019-12-06 20:34+0200\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
+"PO-Revision-Date: 2020-01-18 10:52+0200\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, "
 "florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
@@ -525,9 +525,6 @@ msgid "Only when scrolling back"
 msgstr "Doar la derularea înapoi"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "Automat"
 
@@ -6237,7 +6234,8 @@ msgstr "Emulează apăsarea %s pe tastatura sistemului"
 msgid "NVDA Speech Viewer"
 msgstr "Monitorul de vorbire NVDA"
 
-#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+#. Translators: The label for a setting in the speech viewer that controls
+#. whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
 msgstr "&Arată monitorul de vorbire la pornire"
 
@@ -9240,22 +9238,17 @@ msgstr ""
 "Folosește UI Automation pentru a accesa comenzile documentelor Microsoft "
 "&Word dacă sunt disponibile"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Suport Consolă &Windows:"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr ""
+"&Folosește UI Automation pentru a accesa Consola Windows dacă este "
+"disponibilă"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "Prefer UIA"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Tradițional"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "&Spune parolele în consolele UIA (poate îmbunătăți performanța)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9264,17 +9257,10 @@ msgstr "Programe terminale"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
-msgstr "&Spune parolele în Consola Windows (poate îmbunătăți performanța)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
-"Folosește noul suport pentru caracterele &tastate în consolele tradiționale "
-"de Windows când este disponibil"
+"Folosește noul suport pentru caracterele &tastate în Consola Windows când "
+"este disponibil"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10166,18 +10152,20 @@ msgstr "Evidențiere Focalizare"
 msgid "&Enable Highlighting"
 msgstr "&Activează evidențierea"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "Cortină Ecran"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
+msgid "Always &show a warning when loading Screen Curtain"
 msgstr ""
-"Afi&șează întotdeauna un mesaj de avertizare la încărcarea "
-"{screenCurtainTranslatedName}"
+"Afi&șează întotdeauna un mesaj de avertizare la încărcarea cortinei ecranului"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "&Redă un sunet la activarea sau dezactivarea cortinei ecranului"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -11696,6 +11684,15 @@ msgstr "Spațiere de două linii"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Spațiere de 1.5 linii"
+
+#~ msgid "Windows C&onsole support:"
+#~ msgstr "Suport Consolă &Windows:"
+
+#~ msgid "Prefer UIA"
+#~ msgstr "Prefer UIA"
+
+#~ msgid "Legacy"
+#~ msgstr "Tradițional"
 
 #~ msgid "Magnifier"
 #~ msgstr "Lupă"
