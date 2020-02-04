@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-06 07:28+1000\n"
-"PO-Revision-Date: 2019-12-07 20:26+0900\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
+"PO-Revision-Date: 2020-01-26 20:10+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -526,9 +526,6 @@ msgid "Only when scrolling back"
 msgstr "スクロールして戻ったら表示"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "自動設定"
 
@@ -2445,7 +2442,7 @@ msgstr "ボーダー"
 
 #. Translators: Identifies a caret object.
 msgid "caret"
-msgstr "キャレット"
+msgstr "テキストカーソル"
 
 #. Translators: Identifies a character field (should not be confused with edit fields).
 msgid "character"
@@ -3021,7 +3018,7 @@ msgstr "オブジェクトナビゲーション"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "System caret"
-msgstr "キャレット"
+msgstr "テキストカーソル"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the mouse settings panel.
@@ -3122,8 +3119,8 @@ msgid ""
 "twice will spell the current line. Pressing three times will spell the line "
 "using character descriptions."
 msgstr ""
-"キャレットのある現在行の報告。2回押すと現在の行のスペルの報告。3回押すと文字"
-"説明で行を報告"
+"テキストカーソルのある現在行の報告。2回押すと現在の行のスペルの報告。3回押す"
+"と文字説明で行を報告"
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -3678,7 +3675,7 @@ msgid ""
 "position of the caret inside it, if possible."
 msgstr ""
 "ナビゲーターオブジェクトを現在のフォーカスに設定。可能ならレビューカーソルを"
-"オブジェクト内のキャレットの位置に設定"
+"オブジェクト内のテキストカーソルの位置に設定"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3692,15 +3689,15 @@ msgstr "フォーカスを移動"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
 msgid "No caret"
-msgstr "キャレットなし"
+msgstr "テキストカーソルなし"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
 msgid ""
 "Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
-"フォーカスをナビゲーターオブジェクトに移動、2回押すとキャレットをレビューカー"
-"ソルの位置に移動"
+"フォーカスをナビゲーターオブジェクトに移動、2回押すとテキストカーソルをレ"
+"ビューカーソルの位置に移動"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
@@ -3943,7 +3940,7 @@ msgstr "レビューカーソルを移動しながらテキストを最後まで
 msgid ""
 "Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
-msgstr "キャレットを移動しながらテキストを最後まで読み上げ"
+msgstr "テキストカーソルを移動しながらテキストを最後まで読み上げ"
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 msgid "No formatting information"
@@ -4083,16 +4080,16 @@ msgstr ""
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
-msgstr "キャレットをレビューカーソルが追跡しない"
+msgstr "テキストカーソルをレビューカーソルが追跡しない"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor on"
-msgstr "キャレットをレビューカーソルが追跡する"
+msgstr "テキストカーソルをレビューカーソルが追跡する"
 
 #. Translators: Input help mode message for toggle caret moves review cursor command.
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "キャレットをレビューカーソルが追跡するモードの切り替え"
+msgstr "テキストカーソルをレビューカーソルが追跡するモードの切り替え"
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
@@ -6124,7 +6121,8 @@ msgstr "システムキーボードの%sを押す機能をエミュレート"
 msgid "NVDA Speech Viewer"
 msgstr "NVDAスピーチビューアー"
 
-#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+#. Translators: The label for a setting in the speech viewer that controls
+#. whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
 msgstr "NVDA起動時にスピーチビューアーを表示(&S)"
 
@@ -8664,7 +8662,7 @@ msgstr "フォーカスを追跡(&F)"
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
 msgid "Follow System &Caret"
-msgstr "キャレットを追跡(&C)"
+msgstr "テキストカーソルを追跡(&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
@@ -8819,7 +8817,7 @@ msgstr "フォーカスの変化を追跡する自動フォーカスモード"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatic focus mode for caret movement"
-msgstr "キャレットの移動を追跡する自動フォーカスモード"
+msgstr "テキストカーソルの移動を追跡する自動フォーカスモード"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -9072,22 +9070,15 @@ msgid ""
 "Use UI Automation to access Microsoft &Word document controls when available"
 msgstr "Microsoft Word ドキュメントに UI オートメーションを使用(&W)"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Windows コンソール(&O)"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr "Windows コンソールに UI オートメーションを使用(&C)"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "UI オートメーション優先"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "レガシー"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "UI オートメーションの Windows コンソールでパスワードを報告(&P)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9096,15 +9087,8 @@ msgstr "ターミナル"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
-msgstr "Windows コンソールでパスワードを報告(&P)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
-msgstr "従来の Windows コンソールで新しい入力文字サポートを使用(&Y)"
+msgid "Use the new t&yped character support in Windows Console when available"
+msgstr "Windows コンソールで新しい入力文字サポートを使用(&Y)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9119,7 +9103,7 @@ msgstr "編集可能テキスト"
 #. Translators: This is the label for a numeric control in the
 #. Advanced settings panel.
 msgid "Caret movement timeout (in ms)"
-msgstr "キャレット移動タイムアウト (ミリ秒)"
+msgstr "テキストカーソル移動タイムアウト (ミリ秒)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9657,7 +9641,7 @@ msgstr "%sスタイル"
 #. Translators: Indicates that text has reverted to the default style.
 #. A style is a collection of formatting settings and depends on the application.
 msgid "default style"
-msgstr "標準スタイル"
+msgstr "既定のスタイル"
 
 #. Translators: Indicates that cell does not have border lines.
 msgid "no border lines"
@@ -9989,16 +9973,19 @@ msgstr "フォーカスハイライト"
 msgid "&Enable Highlighting"
 msgstr "ハイライトあり(&E)"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "スクリーンカーテン"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
-msgstr "{screenCurtainTranslatedName}を開始するときに警告を表示(&S)"
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "スクリーンカーテンを開始するときに警告を表示(&S)"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "スクリーンカーテンの開始と終了のサウンド(&P)"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -10105,7 +10092,7 @@ msgstr "コメントなし"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
-msgstr "キャレット位置のコメントの報告"
+msgstr "テキストカーソル位置のコメントの報告"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
@@ -10836,7 +10823,7 @@ msgstr "系列{seriesName}の凡例キー {seriesIndex}の{seriesCount}"
 #. Translators: The default background color  when a color has not been set by the author.
 #. Translators: the default (automatic) color in Microsoft Word
 msgid "default color"
-msgstr "標準色"
+msgstr "既定の色"
 
 #. Translators: The color of text cannot be detected.
 #. Translators: The background color cannot be detected.

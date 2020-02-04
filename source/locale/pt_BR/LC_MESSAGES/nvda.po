@@ -1,13 +1,13 @@
 # Brazilian Portuguese translation of NVDA [Tradução para Português Brasileiro do NVDA].
 # A part of NonVisual Desktop Access (NVDA) [Uma parte do Acesso Não Visual ao Ambiente de Trabalho (NVDA)].
-# Copyright (C) 2006-2019 NVDA Contributors [Colaboradores do NVDA], Cleverson Casarin Uliana, Marlin Rodrigues da Silva, Tiago Melo Casal.
+# Copyright (C) 2006-2020 NVDA Contributors [Colaboradores do NVDA], Cleverson Casarin Uliana, Marlin Rodrigues da Silva, Tiago Melo Casal.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-09 11:28+1000\n"
-"PO-Revision-Date: 2019-12-08 22:49-0300\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
+"PO-Revision-Date: 2020-01-17 19:47-0300\n"
 "Last-Translator: Cleverson Casarin Uliana <clever97@gmail.com>\n"
 "Language-Team: Equipe de tradução do NVDA para Português do Brasil "
 "<clever97@gmail.com>\n"
@@ -121,7 +121,7 @@ msgstr "Erro no módulo de aplicativo %s"
 #. Translators: Reported for the banner landmark, normally found on web pages.
 msgctxt "aria"
 msgid "banner"
-msgstr "bâner"
+msgstr "banner"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
 msgctxt "aria"
@@ -383,7 +383,7 @@ msgstr "ins"
 
 #. Translators: Displayed in braille for a landmark.
 msgid "lmk"
-msgstr "lnk"
+msgstr "mrc"
 
 #. Translators: Displayed in braille for an object which is an article.
 msgid "art"
@@ -530,9 +530,6 @@ msgid "Only when scrolling back"
 msgstr "Somente ao rolar para a esquerda"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "Automático"
 
@@ -4824,15 +4821,15 @@ msgstr "tocador"
 
 #. Translators: This is the name of the launch custom application 1 key found on multimedia keyboards to launch a user-defined application.
 msgid "custom application 1"
-msgstr "aplicativo pessoal 1"
+msgstr "aplicativo personalizado 1"
 
 #. Translators: This is the name of the launch custom application 2 key found on multimedia keyboards to launch a user-defined application.
 msgid "custom application 2"
-msgstr "aplicativo pessoal 2"
+msgstr "aplicativo personalizado 2"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "backspace"
-msgstr "béc speice"
+msgstr "backspace"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "caps lock"
@@ -4848,7 +4845,7 @@ msgstr "alt"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "shift"
-msgstr "chift"
+msgstr "shift"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "windows"
@@ -4856,23 +4853,23 @@ msgstr "windows"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "enter"
-msgstr "ênter"
+msgstr "enter"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad enter"
-msgstr "ênter do teclado numérico"
+msgstr "enter do teclado numérico"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "escape"
-msgstr "squeipe"
+msgstr "escape"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "page up"
-msgstr "peige ap"
+msgstr "page up"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "page down"
-msgstr "peije dáun"
+msgstr "page down"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "end"
@@ -4880,7 +4877,7 @@ msgstr "end"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "home"
-msgstr "roume"
+msgstr "home"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "delete"
@@ -4916,7 +4913,7 @@ msgstr "num lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "print screen"
-msgstr "print scrin"
+msgstr "print screen"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "scroll lock"
@@ -5040,11 +5037,11 @@ msgstr "windows esquerdo"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left shift"
-msgstr "chift esquerdo"
+msgstr "shift esquerdo"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right shift"
-msgstr "chift direito"
+msgstr "shift direito"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left alt"
@@ -5397,7 +5394,7 @@ msgstr "Onda dupla"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Down Arrow"
-msgstr "Seta baixo"
+msgstr "Seta Baixo"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6584,7 +6581,7 @@ msgstr "Um leitor de tela livre e de código aberto para o Microsoft Windows"
 
 #, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
-msgstr "Copyright (C) {years} Colaboradores do NVDA"
+msgstr "Copyright (C) {years} NVDA Contributors [Colaboradores do NVDA]"
 
 #, python-brace-format
 msgid ""
@@ -9211,22 +9208,16 @@ msgstr ""
 "Usar UI Automation para acessar controles de documento no Microsoft &Word "
 "quando disponível"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Suporte ao c&onsole do Windows:"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr ""
+"Usar UI Automation para acessar o C&onsole do Windows quando disponível"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "Preferir UIA"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Legado"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "Falar senhas em Consoles UIA (pode melhorar o desem&penho)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9235,17 +9226,10 @@ msgstr "Programas de terminal"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
-msgstr "Falar senhas em Consoles do Windows (pode melhorar o desem&penho)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
-"Usar o no&vo suporte a caracteres digitados em Consoles legados do Windows "
-"quando disponível"
+"Usar o no&vo suporte a caracteres digitados no Console do Windows quando "
+"disponível"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9665,7 +9649,7 @@ msgstr "sem recuo"
 #. For example 'selected hello world'
 #, python-format
 msgid "selected %s"
-msgstr "%s selecionado"
+msgstr "selecionado %s"
 
 #. Translators: This is spoken to indicate what has just been selected.
 #. The text preceding 'selected' is intentional.
@@ -10135,17 +10119,19 @@ msgstr "Realce de foco"
 msgid "&Enable Highlighting"
 msgstr "Ativar realce"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "Cortina de tela"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
-msgstr ""
-"&Sempre mostrar um alerta antes de carregar a {screenCurtainTranslatedName}"
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "&Sempre mostrar um alerta ao carregar Cortina de Tela"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "&Tocar som ao alternar Cortina de Tela"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -10913,7 +10899,7 @@ msgstr "Logarítmica"
 
 #. Translators: Indicates that trendline type is Moving Average
 msgid "Moving Average"
-msgstr "Média de movimento"
+msgstr "Média Móvel"
 
 #. Translators: Indicates that trendline type is Polynomial
 msgid "Polynomial"
@@ -10937,14 +10923,15 @@ msgid ""
 "{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: "
 "{trendlineLabel} "
 msgstr ""
-"{seriesName} tipo de trendline: {trendlineType}, nome: {trendlineName}, "
-"rótulo: {trendlineLabel} "
+"{seriesName} tipo de linha de tendência: {trendlineType}, nome: "
+"{trendlineName}, rótulo: {trendlineLabel} "
 
 #. Translators: This message gives trendline type and name for selected series
 #, python-brace-format
 msgid "{seriesName} trendline type: {trendlineType}, name: {trendlineName} "
 msgstr ""
-"{seriesName} tipo de trendline: {trendlineType}, nome: {trendlineName} "
+"{seriesName} tipo de linha de tendência: {trendlineType}, nome: "
+"{trendlineName} "
 
 #. Translators: Details about a chart title in Microsoft Office.
 #, python-brace-format
@@ -11302,7 +11289,7 @@ msgstr "duplo"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "slanted dash dot"
-msgstr "estilo hífen e ponto"
+msgstr "hífen e ponto inclinado"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "hair"
@@ -11502,7 +11489,7 @@ msgstr "duplo"
 #. Translators:  line spacing of 1.5 lines
 msgctxt "line spacing value"
 msgid "1.5 lines"
-msgstr "1.5 linhas"
+msgstr "1,5 linhas"
 
 #. Translators: exact (minimum) line spacing
 msgctxt "line spacing value"
@@ -11663,6 +11650,15 @@ msgstr "Espaçamento de linha duplo"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Espaçamento de linhas 1,5"
+
+#~ msgid "Windows C&onsole support:"
+#~ msgstr "Suporte ao c&onsole do Windows:"
+
+#~ msgid "Prefer UIA"
+#~ msgstr "Preferir UIA"
+
+#~ msgid "Legacy"
+#~ msgstr "Legado"
 
 #~ msgid "Magnifier"
 #~ msgstr "Ampliador"

@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-10 00:10+1000\n"
-"PO-Revision-Date: 2020-01-12 22:52+0800\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
+"PO-Revision-Date: 2020-01-21 09:12+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -525,9 +525,6 @@ msgid "Only when scrolling back"
 msgstr "Только при прокрутке назад"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "Определять автоматически"
 
@@ -9228,22 +9225,17 @@ msgstr ""
 "Использовать UI Automation для доступа к документам Microsoft &Word (если "
 "возможно)"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "&Поддержка Windows Console:"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr ""
+"Использовать UI Automation для доступа к Windows C&onsole (если возможно)"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "Предпочитать UIA"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Устаревшая"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr ""
+"Проговаривать &пароли в UIA-консолях (может улучшить производительность)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9252,18 +9244,10 @@ msgstr "Терминальные программы"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
-"Проговаривать &пароли в Windows Console (может улучшить производительность)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
-msgstr ""
-"Использовать новую поддержку &ввода символов в устаревших консолях Windows "
-"(если возможно)"
+"Использовать новую поддержку &ввода символов в Windows Console (если "
+"возможно)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10151,18 +10135,19 @@ msgstr "Подсветка фокуса"
 msgid "&Enable Highlighting"
 msgstr "Включить &подсветку"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "Затемнение экрана"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
-msgstr ""
-"&Всегда показывать предупреждения, когда активируется "
-"{screenCurtainTranslatedName}"
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "&Всегда показывать предупреждения при активации затемнения экрана"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "&Воспроизводить звук при переключении затемнения экрана"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"

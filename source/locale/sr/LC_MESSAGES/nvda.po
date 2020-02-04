@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-13 00:10+1000\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nikola Jović <wwenikola123@gmail.com>\n"
 "Language-Team: NVDA Serbian translation\n"
@@ -526,12 +526,9 @@ msgstr "Uvek prikaži na brajevom redu"
 #. always shows the object with focus at the very left of the braille display
 #. (i.e. you will have to scroll back for focus context information).
 msgid "Only when scrolling back"
-msgstr "Samo kada se red pomera unazad"
+msgstr "Samo kada se red pomera nazad"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "automatski"
 
@@ -1645,7 +1642,7 @@ msgstr "nema više teksta posle bloka linkova"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "skips backward past a block of links"
-msgstr "preskače unazad blok linkova"
+msgstr "preskače nazad blok linkova"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no more text before a block of links"
@@ -4456,11 +4453,11 @@ msgstr ""
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
-msgstr "Pomera brajev red unazad"
+msgstr "Pomera brajev red nazad"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display forward"
-msgstr "Pomera brajev red unapred"
+msgstr "Pomera brajev red napred"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Routes the cursor to or activates the object under this braille cell"
@@ -4818,7 +4815,7 @@ msgstr "prilagođena aplikacija 2"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "backspace"
-msgstr "taster za brisanje unazad"
+msgstr "taster za brisanje nazad"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "caps lock"
@@ -9189,22 +9186,15 @@ msgstr ""
 "Koristi UI Automation za pristup kontrolama dokumenata u programu Microsoft "
 "&Word kada je dostupan"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Podrška za Windows &konzole:"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr "Koristi UI Automation za pristup Windows k&onzoli kada je dostupan"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "Preferiraj UIA"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Stara podrška"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "Izgovaraj &lozinke u UIA konzolama (može poboljšati brzinu)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9213,17 +9203,9 @@ msgstr "Terminal programi"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
-msgstr "Izgovaraj &lozinke u Windows konzoli (može poboljšati brzinu)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
-"Koristi novu podršku za &unos znakova u starijoj podršci za Windows konzole "
-"kada je dostupna"
+"Koristi novu podršku za &unos znakova u Windows konzoli kada je dostupna"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10116,18 +10098,19 @@ msgstr "Označavanje fokusa"
 msgid "&Enable Highlighting"
 msgstr "&omogući označavanje"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "Zatamnjivanje ekrana"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
-msgstr ""
-"Uvek &prikaži upozorenje pri učitavanju zatamnjenog "
-"ekrana{screenCurtainTranslatedName}"
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "Uvek &prikaži upozorenje kada se omogući zatamnjivanje ekrana"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "&Reprodukuj zvuk kada se zatamnjivanje ekrana omogući ili onemogući"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -11636,6 +11619,15 @@ msgstr "odvajanje više redova "
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 odvajanje redova"
+
+#~ msgid "Windows C&onsole support:"
+#~ msgstr "Podrška za Windows &konzole:"
+
+#~ msgid "Prefer UIA"
+#~ msgstr "Preferiraj UIA"
+
+#~ msgid "Legacy"
+#~ msgstr "Stara podrška"
 
 #, fuzzy
 #~ msgid "Highlighter"
