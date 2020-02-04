@@ -5,6 +5,8 @@ from comtypes import BSTR
 from comtypes.safearray import _midlSAFEARRAY as SAFEARRAY
 from comtypes.automation import VARIANT
 import colors
+import aria
+import languageHandler
 from logHandler import log
 import NVDAHelper
 import controlTypes
@@ -21,12 +23,19 @@ _UIAPropIDs=[
 	UIAHandler.UIA_NamePropertyId,
 	UIAHandler.UIA_LocalizedControlTypePropertyId,
 	UIAHandler.UIA_ControlTypePropertyId,
+	UIAHandler.UIA_AutomationIdPropertyId,
+	UIAHandler.UIA_ClassNamePropertyId,
+	UIAHandler.UIA_AriaPropertiesPropertyId,
+	UIAHandler.UIA_LandmarkTypePropertyId,
+	UIAHandler.UIA_AriaRolePropertyId,
 	UIAHandler.UIA_IsTogglePatternAvailablePropertyId,
+	UIAHandler.UIA_IsKeyboardFocusablePropertyId,
 	UIAHandler.UIA_IsPasswordPropertyId,
 	UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId,
 	UIAHandler.UIA_SelectionItemIsSelectedPropertyId,
 	UIAHandler.UIA_IsOffscreenPropertyId,
 	UIAHandler.UIA_IsRequiredForFormPropertyId,
+	UIAHandler.UIA_IsTextPatternAvailablePropertyId,
 	UIAHandler.UIA_IsValuePatternAvailablePropertyId,
 	UIAHandler.UIA_ValueIsReadOnlyPropertyId,
 	UIAHandler.UIA_IsExpandCollapsePatternAvailablePropertyId,
@@ -41,14 +50,29 @@ _UIAPropIDs=[
 
 def _getControlField(UIARuntimeID,props):
 	field=textInfos.ControlField()
-	field['runtimeID'] = UIARuntimeID
+	field['_UIARuntimeID'] = UIARuntimeID
 	UIAControlType = props[UIAHandler.UIA_ControlTypePropertyId]
+	field['_UIAControlType'] = UIAControlType
+	UIAAutomationID = props[UIAHandler.UIA_AutomationIdPropertyId]
+	field['_UIAAutomationID'] = UIAAutomationID
+	UIAClassName = props[UIAHandler.UIA_ClassNamePropertyId]
+	field['_UIAClassName'] = UIAClassName
+	UIALandmarkType = props[UIAHandler.UIA_LandmarkTypePropertyId]
+	field['_UIALandmarkType'] = UIALandmarkType
+	UIAAriaProperties = props[UIAHandler.UIA_AriaPropertiesPropertyId]
+	field['_UIAAriaProperties'] = UIAAriaProperties
+	UIAAriaRole = props[UIAHandler.UIA_AriaRolePropertyId]
+	field['_UIAAriaRole'] = UIAAriaRole
+	UIAIsTextPatternAvailable = props[UIAHandler.UIA_IsTextPatternAvailablePropertyId]
+	field['_UIAIsTextPatternAvailable'] = UIAIsTextPatternAvailable
 	role = UIAHandler.UIAControlTypesToNVDARoles.get(UIAControlType,controlTypes.ROLE_UNKNOWN)
 	UIAIsTogglePatternAvailable = props[UIAHandler.UIA_IsTogglePatternAvailablePropertyId]
 	if role==controlTypes.ROLE_BUTTON and UIAIsTogglePatternAvailable:
 		role = controlTypes.ROLE_TOGGLEBUTTON
 	field['role'] = role
 	states = set()
+	if props[UIAHandler.UIA_IsKeyboardFocusablePropertyId]:
+		states.add(controlTypes.STATE_FOCUSABLE)
 	if props[UIAHandler.UIA_IsPasswordPropertyId]:
 		states.add(controlTypes.STATE_PROTECTED)
 	UIAIsSelectionItemPatternAvailable = props[UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId]
@@ -89,14 +113,29 @@ def _getControlField(UIARuntimeID,props):
 		field["table-rowcount"] = props[UIAHandler.UIA_GridRowCountPropertyId]
 		field["table-columncount"] = props[UIAHandler.UIA_GridColumnCountPropertyId]
 	elif role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_DATAITEM,controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER,controlTypes.ROLE_HEADERITEM):
-		field["table-rownumber"] = props[UIAHandler.UIA_GridItemRowPropertyId]
+		field["table-rownumber"] = props[UIAHandler.UIA_GridItemRowPropertyId]+1
 		field["table-rowsspanned"] = 1
-		field["table-columnnumber"] = props[UIAHandler.UIA_GridItemColumnPropertyId]
+		field["table-columnnumber"] = props[UIAHandler.UIA_GridItemColumnPropertyId]+1
 		field["table-columnsspanned"] = 1
 		field["table-id"] = 1
 		field['role']=controlTypes.ROLE_TABLECELL
 		field['table-columnheadertext'] = None
 		field['table-rowheadertext'] = None
+	# landmarks
+	landmarkRole = None
+	if UIALandmarkType:
+		landmarkRole = UIAHandler.UIALandmarkTypeIdsToLandmarkNames.get(UIALandmarkType)
+		if landmarkRole:
+			field['landmark'] = landmarkRole
+	if not landmarkRole:
+		ariaRoles = field.get('_UIAAriaRole','').lower()
+		# #7333: It is valid to provide multiple, space separated aria roles in HTML
+		# If multiple roles or even multiple landmark roles are provided, the first one is used
+		ariaRole = ariaRoles.split(" ")[0]
+		if ariaRole in aria.landmarkRoles and (ariaRole != 'region' or field['name']):
+			field['landmark'] = ariaRole
+	field['_startOfNode']=True
+	field['_endOfNode']=True
 	return field
 
 def _getUIATextAttributeIDsForFormatConfig(formatConfig):
@@ -127,6 +166,9 @@ def _getUIATextAttributeIDsForFormatConfig(formatConfig):
 		IDs.append(UIAHandler.UIA_StyleNameAttributeId)
 	if formatConfig["reportHeadings"]:
 		IDs.append(UIAHandler.UIA_StyleIdAttributeId)
+	if formatConfig["reportSpellingErrors"] or formatConfig["reportComments"] or formatConfig["reportRevisions"]:
+		pass # IDs.append(UIAHandler.UIA_AnnotationTypesAttributeId)
+	IDs.append(UIAHandler.UIA_CultureAttributeId)
 	return IDs
 
 def _getFormatField(attribs,formatConfig):
@@ -205,6 +247,28 @@ def _getFormatField(attribs,formatConfig):
 		# In Python 3, comparing an int with a pointer raises a TypeError.
 		if isinstance(styleIDValue, int) and UIAHandler.StyleId_Heading1 <= styleIDValue <= UIAHandler.StyleId_Heading9:
 			formatField["heading-level"] = (styleIDValue - UIAHandler.StyleId_Heading1) + 1
+	annotationTypes=attribs.get(UIAHandler.UIA_AnnotationTypesAttributeId,())
+	if not isinstance(annotationTypes,tuple):
+		annotationTypes=()
+	if formatConfig["reportSpellingErrors"]:
+		if UIAHandler.AnnotationType_SpellingError in annotationTypes:
+			formatField["invalid-spelling"]=True
+		if UIAHandler.AnnotationType_GrammarError in annotationTypes:
+			formatField["invalid-grammar"]=True
+	if formatConfig["reportComments"]:
+		if UIAHandler.AnnotationType_Comment in annotationTypes:
+			formatField["comment"]=True
+	if formatConfig["reportRevisions"]:
+		if UIAHandler.AnnotationType_InsertionChange in annotationTypes:
+			formatField["revision-insertion"]=True
+		elif UIAHandler.AnnotationType_DeletionChange in annotationTypes:
+			formatField["revision-deletion"]=True
+	cultureVal=attribs.get(UIAHandler.UIA_CultureAttributeId)
+	if cultureVal and isinstance(cultureVal,int):
+		try:
+			formatField['language']=languageHandler.windowsLCIDToLocaleName(cultureVal)
+		except:
+			log.debugWarning("language error",exc_info=True)
 	return formatField
 
 textContentCommand_elementStart=1
@@ -261,4 +325,13 @@ def getTextWithFields(rootElement,textRange,formatConfig):
 			fields.append(textInfos.FieldCommand("controlEnd",controlField))
 		else:
 			raise RuntimeError(f"unknown command {cmd}")
+	isEmbedded=False
+	for field in reversed(fields):
+		if isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd":
+			isEmbedded=True
+		elif isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
+			field.field['embedded']=isEmbedded
+			isEmbeded=False
+		else:
+			isEmbedded=False
 	return fields

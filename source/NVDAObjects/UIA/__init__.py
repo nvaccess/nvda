@@ -402,7 +402,7 @@ class UIATextInfo(textInfos.TextInfo):
 		role = obj.role
 		field = textInfos.ControlField()
 		# Ensure this controlField is unique to the object
-		runtimeID=field['runtimeID']=obj.UIAElement.getRuntimeId()
+		runtimeID=field['_UIARuntimeID']=obj.UIAElement.getRuntimeId()
 		field['_startOfNode']=startOfNode
 		field['_endOfNode']=endOfNode
 		field["role"] = obj.role
@@ -698,6 +698,9 @@ class UIATextInfo(textInfos.TextInfo):
 		if debug:
 			log.debug("_getTextWithFieldsForUIARange end")
 
+	def preprocessControlField(self,field):
+		pass
+
 	_withRemoteOps=True
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:
@@ -705,6 +708,9 @@ class UIATextInfo(textInfos.TextInfo):
 		startTime=time.time()
 		if self._withRemoteOps:
 			fields = UIARemote.getTextWithFields(self.obj.UIAElement,self._rangeObj,formatConfig)
+			for field in fields:
+				if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
+					self.preprocessControlField(field.field)
 		else:
 			fields=list(self._getTextWithFieldsForUIARange(self.obj.UIAElement,self._rangeObj,formatConfig))
 		endTime=time.time()
