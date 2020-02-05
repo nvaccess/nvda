@@ -112,6 +112,8 @@ class _TextReader(object):
 				self.reader = api.getCaretObject().makeTextInfo(textInfos.POSITION_CARET)
 			except (NotImplementedError, RuntimeError):
 				self.reader = None
+				self.speakTextInfoState = None
+				self.numBufferedLines = None
 				return
 		else:
 			self.reader = api.getReviewPosition()
