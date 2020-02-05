@@ -1956,7 +1956,7 @@ class IENotificationBar(Dialog,IAccessible):
 
 
 class UIItem(IAccessible):
-	"""List items in Windows Explorer repeate the name as the value"""
+	"""List items in Windows Explorer repeat the name as the value"""
 
 	def _get_value(self):
 		return ""
