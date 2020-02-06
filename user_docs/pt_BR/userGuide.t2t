@@ -174,7 +174,7 @@ A terceira permite configurar se este diálogo de boas vindas aparecerá sempre 
 +++ Diálogo de estatísticas de uso de dados +++[UsageStatsDialog]
 A partir do NVDA 2018.3, o usuário é perguntado se deseja permitir que os dados de uso sejam enviados à NV Access para ajudar a melhorar o NVDA no futuro.
 Ao iniciar o NVDA pela primeira vez, será exibida uma caixa de diálogo perguntando se você deseja aceitar o envio de dados à NV Access enquanto estiver usando o NVDA.
-Você pode ler mais informações sobre os dados coletados pela NV Access no Capítulo 11 abaixo.
+Você pode ler mais informações sobre os dados coletados pela NV Access na seção de configurações gerais, [Permitir que o projeto NVDA colete estatísticas de uso do NVDA #GeneralSettingsGatherUsageStats].
 Nota: pressionar "sim" ou "não" salvará essa configuração e o diálogo nunca aparecerá novamente, a menos que você reinstale o NVDA.
 No entanto, você pode ativar ou desativar o processo de coleta de dados manualmente no painel de configurações gerais do NVDA. Para alterar essa configuração manualmente, você pode marcar ou desmarcar a caixa de seleção chamada [Permitir que o Projeto NVDA colete estatísticas de uso do NVDA #GeneralSettingsGatherUsageStats].
 
@@ -1061,7 +1061,7 @@ Os níveis de log disponíveis são:
  - Se você estiver preocupado com a privacidade, não defina o nível de log para essa opção.
 - Depuração ""[Debug]"": Além de informações, alertas e mensagens de entrada/saída, mensagens de depuração adicionais serão registradas.
  - Assim como entrada/saída, se você está preocupado com a privacidade, você não deve definir o nível de log para essa opção.
-
+-
 
 ==== Iniciar o NVDA Automaticamente Após o Logon no Windows ====[GeneralSettingsStartAfterLogOn]
 Se essa opção estiver marcada, o NVDA será executado automaticamente logo que iniciar sessão no Windows.
@@ -1084,7 +1084,7 @@ As seguintes informações são sempre enviadas:
 - Versão atual do NVDA
 - Versão do Sistema Operacional
 - Se o Sistema Operacional é 64 ou 32 bit
-
+-
 
 ==== Permitir que o Projeto NVDA colete estatísticas de uso do NVDA ====[GeneralSettingsGatherUsageStats]
 Se isso estiver ativado, a NV Access usará as informações das procuras de atualização para rastrear o número de usuários do NVDA, incluindo informações demográficas específicas, como Sistema operacional e país de origem.
@@ -1095,7 +1095,7 @@ Além das informações obrigatórias necessárias para procurar por atualizaç�
 - Nome do sintetizador de fala atual em uso (incluindo o nome do complemento que vem com o driver)
 - Nome da linha Braille atual em uso (incluindo o nome do complemento que vem com o driver)
 - A tabela de saída Braille atual (se o Braille estiver em uso)
-
+-
 
 Essa informação auxilia imensamente a NV Access a priorizar o desenvolvimento futuro do NVDA.
 
@@ -1397,6 +1397,9 @@ Se você não quiser mais ver essa mensagem de aviso todas as vezes, poderá alt
 Você sempre pode restaurar o aviso marcando a caixa de seleção "Sempre mostrar um aviso ao carregar a Cortina de Tela" ao lado da caixa de seleção "Tornar a tela preta".
 
 Para alternar a Cortina de Tela de qualquer lugar, atribua um comando personalizado usando o [diálogo Definir Comandos #InputGestures].
+
+Por padrão, sons são reproduzidos quando a Cortina de Tela é alternada.
+Quando você precisa mudar esse comportamento, pode desmarcar a caixa de seleção "Reproduzir som ao alternar a Cortina de Tela".
 
 ==== Configurações para recursos visuais de terceiros ====[VisionSettingsThirdPartyVisualAids]
 Provedores adicionais de aprimoramento da visão podem ser fornecidos nos [complementos do NVDA #AddonsManager].
@@ -1776,24 +1779,14 @@ Isso inclui o próprio Microsoft Word, e também o visualizador e compositor de 
 No entanto, pode haver algumas informações que não são expostas ou expostas incorretamente em algumas versões do Microsoft Office, o que significa que esse suporte de UI automation nem sempre pode ser invocado.
 Ainda não recomendamos que a maioria dos usuários ative isso por padrão, embora acolhemos os usuários do Office 2016/365 para testar esse recurso e fornecer retroinformação ""[feedback]"".
 
-==== Suporte ao Console do Windows ====[AdvancedSettingsConsoleUIA]
-Essa opção seleciona como o NVDA interage com o Console do Windows usado pelo prompt de comando, PowerShell e o Subsistema do Windows para Linux.
-Não afeta o moderno terminal do Windows.
-No Windows 10 versão 1709, a Microsoft [adicionou suporte para sua UI Automation API ao console https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], trazendo desempenho e estabilidade muito melhores para os leitores de tela que o suportam.
-Nas situações em que UI Automation ""[Automação da Interface do Usuário]"" não está disponível ou é conhecida por resultar em uma experiência inferior do usuário, o suporte ao console legado do NVDA está disponível como um substituto.
-A caixa de combinação de suporte do Console do Windows tem três opções:
-- Automático: usa UI Automation ""[Automação da Interface do Usuário]"" em consoles no Windows 10 versão 1809 e posteriores. Esta opção é recomendada e definida por padrão.
-- Preferir UIA: usa UI Automation ""[Automação da Interface do Usuário]"" nos consoles, se disponível, mesmo nas versões do Windows com implementações incompletas ou com erros. Embora essa funcionalidade limitada possa ser útil (e até suficiente para o seu uso), o uso desta opção é inteiramente por seu próprio risco e não será fornecido suporte para ela.
-- Legado: UI Automation ""[Automação da Interface do Usuário]"" no console do Windows será completamente desativada, portanto o recuo legado será sempre usado.
--
+==== Use UI Automation [Automação da Interface do Usuário] para acessar o Console do Windows quando disponível ====[AdvancedSettingsConsoleUIA]
+Quando essa opção está ativada, o NVDA utilizará uma nova, versão com trabalho em desenvolvimento do suporte ao Console do Windows, que tira proveito das [melhorias de acessibilidade feitas pela Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Esse recurso é altamente experimental e ainda está incompleto; portanto, seu uso ainda não é recomendado. No entanto, uma vez concluído, prevê-se que esse novo suporte se torne o padrão, melhorando o desempenho e a estabilidade do NVDA nos consoles de comando do Windows.
 
-==== Falar senhas em Console do Windows ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Essa configuração controla se os caracteres são falados por [falar caracteres digitados #KeyboardSettingsSpeakTypedCharacters] ou [falar palavras digitadas #KeyboardSettingsSpeakTypedWords] em situações em que a tela não é atualizada (como digitação de senha) em alguns programas de terminal, como o Console do Windows com suporte à UI automation ""[Automação da Interface do Usuário]"" habilitado e Mintty.
-Por motivos de segurança, essa configuração deve ser desativada.
-No entanto, você pode habilitá-la se você tiver problemas de desempenho ou instabilidade com caracteres digitados e/ou reportando palavras em consoles, ou trabalhe em ambientes confiáveis e preferir o anúncio de senha.
+==== Falar senhas nos consoles UIA [Automação da Interface do Usuário] ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Essa configuração controla se os caracteres são falados por [falar caracteres digitados #KeyboardSettingsSpeakTypedCharacters] ou [falar palavras digitadas #KeyboardSettingsSpeakTypedWords] em situações em que a tela não é atualizada (como digitação de senha) no Console do Windows com o suporte à UI automation ""[automação da Interface do Usuário]"" habilitado. Por motivos de segurança, essa configuração deve ser deixada desabilitada. No entanto, você pode habilitá-lo se tiver problemas de desempenho ou instabilidade com anúncio de caracteres digitados e/ou palavras enquanto estiver usando o novo suporte experimental do console do NVDA.
 
-==== Use o novo suporte a caracteres digitados nos consoles legados do Windows quando disponível ====[AdvancedSettingsKeyboardSupportInLegacy]
-Essa opção habilita um método alternativo para detectar caracteres digitados nos consoles legados do Windows.
+==== Use o novo suporte de caracteres digitados no Console do Windows quando disponível ====[AdvancedSettingsKeyboardSupportInLegacy]
+Essa opção permite um método alternativo para detectar caracteres digitados nos consoles de comando do Windows.
 Embora melhore o desempenho e evite que algumas saídas do console sejam soletradas, pode ser incompatível com alguns programas de terminal.
 Esse recurso está disponível e ativado por padrão nas versões 1607, 1703, 1709 e 1803 do Windows 10, bem como nas versões mais recentes do Windows 10 quando a UI Automation ""[Automação da Interface do Usuário]"" está indisponível ou desabilitada.
 Alerta: com essa opção ativada, os caracteres digitados que não aparecem na tela, como senhas, não serão suprimidos.
@@ -3019,7 +3012,7 @@ A seguir estão as opções de linha de comando para o NVDA:
 | -l NÍVELDELOG | --log-level=NÍVELDELOG | O nível mais baixo de mensagem registrada (depuração 10, entrada/saída 12, alerta de depuração 15, informação 20, alerta 30, erro 40, crítico 50, desativado 100), o padrão é alerta |
 | -c CAMINHODASCONFIGURAÇÕES | --config-path=CAMINHODASCONFIGURAÇÕES | O caminho onde todas as configurações do NVDA são armazenadas |
 | -m | --minimal | Sem sons, sem interface, sem mensagem de início, etc. |
-| -s | --secure | Modo seguro (desativa os recursos Console Python e log, usados frequentemente em telas seguras) |
+| -s | --secure | Modo seguro: desabilita o console Python, recursos de perfil como criação, exclusão, renomeação de perfis etc., verificação de atualização, algumas caixas de diálogo no diálogo de boas-vindas e na categoria de configurações gerais (por exemplo, iniciar o NVDA após o logon, salvar a configuração após a saída etc.), bem como os recursos de visualizador de log e registração de eventos (geralmente usados em telas seguras). Observe também que esse comando desativará a possibilidade de salvar as definições ""[configurações]"" na configuração do sistema e o mapa de comandos ""[gestos]"" não serão salvos no disco. |
 | Nenhuma | --disable-addons | Complementos não funcionarão |
 | Nenhuma | --debug-logging | Ative o log de nível de depuração apenas para esta execução. Esta configuração substituirá qualquer outro argumento de nível de log ( ""--loglevel"", -l) fornecido, incluindo nenhuma opção de log. |
 | Nenhuma | --no-logging | Desativa completamente o registro ""[log]"" enquanto estiver usando o NVDA. Essa configuração pode ser sobrescrita se um nível de log ( ""--loglevel"", -l) for especificado na linha de comando ou se o log de depuração estiver ativado. |

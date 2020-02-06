@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2019.3beta1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-13 00:10+1000\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
 "PO-Revision-Date: 2019-12-12 19:37+0800\n"
 "Last-Translator: Eric Yip <cyeric20@yahoo.com.hk>\n"
 "Language-Team: Eric Yip@ HKBU <ericyip@hkbu.org.hk>\n"
@@ -527,9 +527,6 @@ msgid "Only when scrolling back"
 msgstr "僅當顯示左邊文字時"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "自動"
 
@@ -8981,22 +8978,17 @@ msgid ""
 "Use UI Automation to access Microsoft &Word document controls when available"
 msgstr "盡量利用自動化技術來存取 Microsoft Word 文件的控制項(&W)"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Windows 主控台支援(&O)"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+#, fuzzy
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr "盡量利用自動化技術來存取 Microsoft Word 文件的控制項(&W)"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "優先使用　UIA"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "舊版"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+#, fuzzy
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "在 Windows 主控台讀出密碼(可能提高效能)(&P)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9005,14 +8997,8 @@ msgstr "終端程式"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
-msgstr "在 Windows 主控台讀出密碼(可能提高效能)(&P)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
+#, fuzzy
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr "可能的話在舊版 Windows 主控台中使用新的輸入支援(&Y)"
 
 #. Translators: This is the label for a checkbox in the
@@ -9889,15 +9875,20 @@ msgstr "焦點加亮"
 msgid "&Enable Highlighting"
 msgstr "啟用焦點加亮(&E)"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "螢幕變黑"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
+#, fuzzy
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "當啟用{screenCurtainTranslatedName}時，總是顯示警告(&S)"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+#, fuzzy
+msgid "&Play sound when toggling Screen Curtain"
 msgstr "當啟用{screenCurtainTranslatedName}時，總是顯示警告(&S)"
 
 #. Translators: A warning shown when activating the screen curtain.
@@ -11381,6 +11372,15 @@ msgstr "2倍行高"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5倍行高"
+
+#~ msgid "Windows C&onsole support:"
+#~ msgstr "Windows 主控台支援(&O)"
+
+#~ msgid "Prefer UIA"
+#~ msgstr "優先使用　UIA"
+
+#~ msgid "Legacy"
+#~ msgstr "舊版"
 
 #, fuzzy
 #~ msgid "Highlighter"

@@ -171,11 +171,11 @@ Mit dem ersten Kontrollkästchen können Sie steuern, ob NVDA die Dauergroßschr
 Mit dem zweiten Kontrollkästchen können Sie bestimmen, ob NVDA nach der Anmeldung automatisch gestartet werden soll. Diese Option steht nur bei installierten NVDA-Versionen zur Verfügung.
 Mit dem dritten Kontrollkästchen legen Sie fest, ob bei jedem Start der Willkommensdialog angezeigt werden soll.
 
-+++ Dialogfeld zur Sammlung von Nutzerdaten für statistische Zwecke +++[UsageStatsDialog]
++++ Dialogfeld zur Datennutzungsstatistik +++[UsageStatsDialog]
 Seit NVDA 2018.3 wird der Benutzer gefragt, ob Nutzungsdaten an NV Access gesendet werden sollen, um in Zukunft zur Verbesserung von NVDA beizutragen.
 Beim ersten Start von NVDA erscheint ein Dialogfeld, in dem Sie gefragt werden, ob Sie das Senden der Nutzungsdaten an NV Access während der Verwendung von NVDA akzeptieren möchten.
-Weitere Informationen zu den von NV Access erfassten Daten finden Sie in Kapitel 12 weiter unten.
-Hinweis: Durch Klicken auf "Ja" oder "Nein" wird diese Einstellung gespeichert. Das Dialogfeld erscheint nie wieder, bis Sie NVDA neu installieren.
+Weitere Informationen zu den von NV Access erfassten Daten finden Sie im Abschnitt "[NVDA-Nutzungsdaten sammeln und an NV Access übermitteln #GeneralSettingsGatherUsageStats]" in "Allgemeine Einstellungen".
+Hinweis: Durch Klicken auf "Ja" oder "Nein" wird diese Einstellung gespeichert. Das Dialogfeld erscheint nicht wieder, bis Sie NVDA neu installieren.
 Sie können den Datenerhebungsprozess jedoch manuell in den NVDA-Einstellungen in der Kategorie "Allgemein" aktivieren oder deaktivieren. Um diese Einstellung manuell zu ändern, können Sie das Kontrollkästchen [NVDA-Nutzungsdaten sammeln und an NV Access übermitteln #GeneralSettingsGatherUsageStats] aktivieren oder deaktivieren.
 
 ++ Über die NVDA-Tastenkombinationen ++[AboutNVDAKeyboardCommands]
@@ -659,7 +659,7 @@ Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende 
 
 || Abkürzung | Steuerelementtyp |
 | app | Anwendung |
-| art | Artikel
+| art | Artikel |
 | zb | Zitatblock |
 | sltr | Schalter |
 | aklsltr | Ausklapplistenschalter |
@@ -778,9 +778,9 @@ Diese Positionen werden mit einem farbigen Rechteck hervorgehoben.
 - Kräftiges Gelb hebt den virtuellen System-Cursor hervor, welcher im Lesemodus verwendet wird. (In diesen Dokumenten gibt es keinen physischen Cursor, wie z. B. in Internet-Browsern).
 -
 
-Wenn "Fokus hervorheben" im Dialogfeld der Kategorie [Visuelle Darstellungen #VisionSettings] der [NVDA-Einstellungen #NVDASettings] aktiviert ist, [können Sie ändern, ob Sie den Fokus, das Navigator-Objekt oder den Lesemodus #VisionSettingsFocusHighlight hervorheben oder nicht].
+Wenn die Fokus-Hervorhebung in der Kategorie "[Visuelle Darstellungen #VisionSettings]" der [NVDA-Einstellungen #NVDASettings] aktiviert ist, können Sie [ändern, ob Sie den Fokus, das Navigator-Objekt oder den Cursor im Lesemodus #VisionSettingsFocusHighlight] hervorheben möchten.
 
-++ Bildschirmvorhang ++[VisionScreenCurtain]
+++ Der Bildschirmvorhang ++[VisionScreenCurtain]
 Für blinde oder sehbehinderte Benutzer ist es oft nicht möglich oder notwendig, den Inhalt des Bildschirms zu sehen.
 Zudem könnte es schwierig sein, sicherzustellen, dass Ihnen niemand über die Schulter schaut.
 In NVDA gibt es dafür den Bildschirmvorhang, der aktiviert werden kann, um den Bildschirm zu verdunkeln.
@@ -1045,23 +1045,23 @@ Mit diesem Kontrollkästchen legen Sie fest, ob beim Beenden von NVDA ein Dialog
 Wenn das Kontrollkästchen aktiviert ist, können Sie in diesem Dialogfeld auswählen, ob Sie NVDA beenden, neu starten, mit deaktivierten Erweiterungen neu starten oder ein ausstehendes Update installieren möchten.
 Wenn das Kontrollkästchen nicht aktiviert ist, wird NVDA sofort beendet.
 
-==== Klänge abspielen, wenn NVDA gestartet oder beendet wird ====[GeneralSettingsPlaySounds]
-Dieses Kontrollfeld legt fest, ob NVDA Klänge abspielen soll, wenn es gestartet oder beendet wird.
+==== Sounds beim Starten und Beenden von NVDA ====[GeneralSettingsPlaySounds]
+Dieses Kontrollkästchen legt fest, ob NVDA beim Starten oder Beenden einen Sound wiedergeben soll.
 
 ==== Protokollierungsstufe ====[GeneralSettingsLogLevel]
-Dies ist ein Kombinationsfeld, in dem Sie auswählen können, wie viel NVDA während der Ausführung protokollieren soll.
+Mit diesem Kombinationsfeld können Sie einstellen, wie viel NVDA während der Ausführung protokollieren soll.
 Normalerweise müssen Anwender diese Option nicht verändern, weil keine unnötigen Informationen protokolliert werden.
 Wenn Sie jedoch Informationen in einem Fehlerbericht bereitstellen oder die Protokollierung ganz aktivieren oder deaktivieren möchten, kann dies eine nützliche Option sein.
 
 Die verfügbaren Protokollierungsstufen sind:
-- Deaktiviert: Abgesehen von einer kurzen Startmeldung protokolliert NVDA während der Ausführung nichts.
-- Info: NVDA protokolliert grundlegende Informationen wie Startmeldungen und Informationen, die für Entwickler nützlich sind.
-- Debug-Warnung: Warnmeldungen, die nicht durch schwere Fehler verursacht werden, werden protokolliert.
-- Ein-/Ausgaben: Eingaben von Tastatur- und Braillezeilen sowie Sprach- und Braillezeilen werden protokolliert.
+- Ausgeschaltet: Neben einer kurzen Startmeldung protokolliert NVDA während der Ausführung keine weiteren Meldungen.
+- Informationen: NVDA protokolliert grundlegende Informationen wie Startmeldungen und Informationen, die für Entwickler nützlich sind.
+- Debug-Warnungen: Warnmeldungen, die nicht durch schwere Fehler verursacht werden, werden protokolliert.
+- Ein- und Ausgaben: Mit dieser Option werden Eingaben via Tastatur und Braillezeile sowie Ausgaben via Sprachausgabe und Braillezeile protokolliert.
  - Wenn Sie sich Sorgen um den Datenschutz machen, verwenden Sie diese Option nicht.
-- Debuggen: Zusätzlich zu den Info-, Warn- und Ein-/Ausgabemeldungen werden weitere Debug-Meldungen protokolliert.
+- Nur Debug-Meldungen: Zusätzlich zu den Informationen, Warn- und Ein-/Ausgabemeldungen werden weitere Debug-Meldungen protokolliert.
  - Genau wie bei der Ein-/Ausgabe, wenn Sie sich um den Datenschutz sorgen, sollten Sie diese Option nicht benutzen.
-
+-
 
 ==== NVDA automatisch nach der Windows-Anmeldung starten ====[GeneralSettingsStartAfterLogOn]
 Wenn Sie dieses Kontrollfeld aktiviert haben, wird NVDA gleich nach der Anmeldung in Windows automatisch gestartet.
@@ -1084,7 +1084,7 @@ Die folgenden Informationen werden dabei gesendet:
 - Aktuelle NVDA-Version
 - Betriebssystem-Version
 - Systemarchitektur (32- oder 64-Bit)
-
+-
 
 ==== NVDA-Nutzungsdaten sammeln und an NV Access übermitteln ====[GeneralSettingsGatherUsageStats]
 Ist diese Option aktiviert, sammelt NV Access zusätzliche Informationen wie die Landessprache, das Land oder die geografische Region. Diese Informationen werden benutzt, um Nutzungsstatistiken über die Anzahl der NVDA-Nutzer zu erstellen.
@@ -1092,10 +1092,10 @@ Auch wenn die IP-Adresse zum Ermitteln des (ungefähren) geografischen Standorte
 Wenn die Option aktiviert ist, werden die folgenden Daten zusätzlich gesendet:
 - Eingestellte Landessprache in NVDA.
 - Art der NVDA-Instanz (portabel oder installiert).
-- Name der verwendeten Sprachausgabe (inklusiv Name der Erweiterung, aus der die Sprachausgabe stammt).
-- Name der verwendeten Braillezeile (inklusiv Name der Erweiterung, aus der der Treiber stammt).
+- Name der verwendeten Sprachausgabe (einschließlich Name der Erweiterung, aus der die Sprachausgabe stammt).
+- Name der verwendeten Braillezeile (einschließlich Name der Erweiterung, aus der der Treiber stammt).
 - Aktuelle Ausgabetabelle (sofern Braille benutzt wird).
-
+-
 
 Diese Informationen helfen NV Access bei der zukünftigen Entwicklung von NVDA.
 
@@ -1397,6 +1397,9 @@ Wenn Sie diese Warnmeldung nicht länger erhalten möchten, können Sie dieses V
 Sie können die Warnung jederzeit zurücksetzen, indem Sie das Kontrollkästchen "Beim Laden des Bildschirmvorhangs immer eine Warnung anzeigen" unter dem Kontrollkästchen "Bildschirm verdunkeln" aktivieren.
 
 Um den Bildschirmvorhang überall umzuschalten, weisen Sie eine Tastenkombination über das Dialogfeld für die [Tastenbefehle #InputGestures] zu.
+
+Standardmäßig ist auch ein Sound beim Umschalten des Bildschirmvorhangs zu hören.
+Wenn Sie dieses Verhalten ändern möchten, können Sie das Kontrollkästchen "Sound beim Umschalten des Bildschirmvorhangs" deaktivieren.
 
 ==== Einstellungen für visuelle Hilfsmittel von Drittanbietern (Verbesserungen visueller Darstellungen) ====[VisionSettingsThirdPartyVisualAids]
 Zusätzliche Quellen für die Verbesserung der visuellen Darstellungen können mittels [NVDA-Erweiterungen #AddonsManager] von Drittanbietern bereitgestellt werden.
@@ -1776,24 +1779,14 @@ Dazu gehört Microsoft Word selbst, aber auch in Microsoft Outlook die Nachricht
 Es kann jedoch einige Informationen geben, die in einigen Versionen von Microsoft Office entweder nicht oder falsch angezeigt werden, so dass man sich nicht immer auf diese Unterstützung der UIA verlassen kann.
 Wir empfehlen noch nicht diese Funktion standardmäßig zu aktivieren. Allerdings ist ausdrücklich erwünscht, dass Benutzer von Office 2016 / 365 diese Funktion testen und Rückmeldung geben können.
 
-==== Die Unterstützung der Windows-Konsole ====[AdvancedSettingsConsoleUIA]
-Diese Option legt fest, wie NVDA mit der von der Eingabeaufforderung, PowerShell und dem Windows-SubSystem für Linux verwendeten Windows-Konsole interagiert.
-Es hat keinen Einfluss auf das moderne Windows-Terminal.
-In Windows 10 Version 1709 hat Microsoftdie [Unterstützung für die API für die UIA in die Konsole https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] integriert, welches der Konsole eine erheblich verbesserte Leistung und Stabilität für Screenreader bietet, die unterstützt werden.
-In Situationen, in denen die UIA nicht verfügbar ist oder bekanntermaßen zu einer schlechteren Benutzererfahrung führt, ist die Unterstützung der Legacy-Konsole von NVDA als Fallback verfügbar.
-Das Kombinationsfeld für die Unterstützung der Windows-Konsole hat drei Optionen:
-- Automatisch: Verwendet die UIA in Konsolen unter Windows 10 Version 1809 und neuer. Diese Option wird empfohlen und ist standardmäßig eingestellt.
-- UIA bevorzugen: Verwendet die UIA in Konsolen, falls verfügbar, auch bei Windows-Versionen mit unvollständigen oder fehlerhaften Implementierungen. Obwohl diese eingeschränkte Funktion nützlich (und sogar ausreichend für Ihre Nutzung) sein kann, geschieht die Nutzung dieser Option auf eigene Gefahr und wird nicht unterstützt.
-- Veraltet: Die UIA in der Windows-Konsole wird vollständig deaktiviert, so dass immer die Legacy-Variante verwendet wird.
--
+==== Für den Zugriff auf die Windows-Konsole UIA verwenden (falls verfügbar) ====[AdvancedSettingsConsoleUIA]
+Wenn diese Option aktiviert ist, verwendet NVDA eine neue, experimentelle Version der Unterstützung für die Windows-Konsole, die die Vorteile von [Verbesserungen der Zugänglichkeit durch Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] nutzt. Diese Funktion ist sehr experimentell und noch unvollständig, daher wird ihre Verwendung noch nicht empfohlen. Es wird jedoch erwartet, dass diese neue Unterstützung nach ihrer Fertigstellung zur Standardeinstellung wird und die Leistung und Stabilität von NVDA in Windows-Kommandokonsolen verbessert.
 
-==== Passwörter in der Windows-Konsole ansagen ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Diese Einstellung steuert, ob Zeichen durch [Zeichen während der Eingabe ansagen #KeyboardSettingsSpeakTypedCharacters] oder [Wörter während der Eingabe ansagen #KeyboardSettingsSpeakTypedWords] gesprochen werden, wenn der Bildschirm in einigen Terminal-Programmen, wie der Windows-Konsole mit aktivierter Unterstützung der UIA und Mintty, nicht aktualisiert wird.
-Aus Sicherheitsgründen sollte diese Einstellung deaktiviert bleiben.
-Sie können es jedoch aktivieren, wenn Sie Leistungsprobleme oder Instabilität bei der Eingabe von Zeichen und/oder Wörtern in Konsolen haben, oder in vertrauenswürdigen Umgebungen arbeiten und die Bekanntgabe von Passwörtern bevorzugen.
+==== Passwörter vorlesen in der Windows-Konsole mit UIA-Unterstützung ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Diese Einstellung steuert, ob Zeichen während der Eingabe #KeyboardSettingsSpeakTypedCharacters] oder [Wörter während der Eingabe #KeyboardSettingsSpeakTypedWords] in Situationen vorgelesen werden sollen, in denen der Bildschirm in der Windows-Konsole bei aktivierter Unterstützung von UIA nicht aktualisiert wird (z. B. bei der Kennworteingabe). Aus Sicherheitsgründen sollte diese Einstellung deaktiviert bleiben. Sie sollten sie jedoch aktivieren, wenn Sie bei der Verwendung der neuen experimentellen Konsolenunterstützung von NVDA Leistungsprobleme oder Instabilität bei der Meldung von Zeichen und/oder Wörtern während der Eingabe feststellen.
 
-==== Neue Unterstützung für das Ansagen von Zeichen verwenden, falls verfügbar ====[AdvancedSettingsKeyboardSupportInLegacy]
-Diese Option stellt eine alternative Methode zur Erkennung von eingegebenen Zeichen in älteren Windows-Konsolen zur Verfügung.
+==== Unterstützung bei neu eingegebenen Zeichen in der Windows-Konsole (falls verfügbar) ====[AdvancedSettingsKeyboardSupportInLegacy]
+Diese Option aktiviert eine alternative Methode zur Erkennung von Zeichen während der Eingabe in der Windows-Konsole.
 Durch das Aktivieren dieser Option wird zwar die Leistung gesteigert und das Buchstabieren mancher Ausgaben in Windows-Konsolen verhindert; es könnten jedoch Probleme mit einigen Terminals auftreten.
 Diese Funktion ist verfügbar und seit Windows 10 Version 1607 standardmäßig aktiviert, wenn die UIA nicht verfügbar oder deaktiviert ist.
 Das eingeben von Zeichen, die nicht auf dem Bildschirm erscheinen (z. B. bei Passwörtern) wird nicht unterstützt, wenn diese Option aktiviert ist.
@@ -2160,7 +2153,7 @@ Um diese Stimmen verwenden zu können, müssen Sie folgende 2 Komponenten instal
 ++ Windows OneCore-Stimmen ++[OneCore]
 Windows 10 enthält neue Stimmen, die als "Mobile" oder "OneCore"-Stimmen bekannt sind.
 Diese Stimmen sind in vielen Sprachen verfügbar. Sie sind außerdem sehr viel reaktionsfreudiger als die Microsoft SAPI 5-Stimmen in früheren Windows-versionen.
-Unter Windows 10 verwendet NVDA standardmäßig Windows OneCore-Stimmen ([eSpeak NG #eSpeakNG] wird in älteren Windows-Versionen standardmäßig verwendet).
+Unter Windows 10 verwendet NVDA standardmäßig Windows OneCore-Stimmen ([eSpeak-NG #eSpeakNG] wird in anderen Versionen verwendet).
 
 Im [Artikel vom Microsoft Support-Center https://support.microsoft.com/de-de/help/22797/windows-10-narrator-tts-voices] finden Sie eine Beschreibung, wie Sie zusätzliche Stimmen und Sprachen installieren können.
 
@@ -3006,9 +2999,9 @@ Die Kurzformen mehrerer Optionen können beispielsweise wie folgt kombiniert wer
 
 Einige Optionen akzeptieren zusätzliche Parameter, mit denen Sie z. B. den Umfang der Protokollierung oder den Namen einer Konfigurationsdatei angeben können.
 Die Parameter müssen durch ein Leerzeichen von der Option getrennt angegeben werden, wenn Sie die Kurzform verwenden. Wenn Sie die Langform benutzen, müssen Sie den Parameter mit einem Gleichheitszeichen von der Option trennen. Beispiele:
-| nvda -l 10 | Startet NVDA mit der Protokollierungsstufe "Fehlerkorrektur" |
-| nvda --log-file=C:\nvda.log | Speichert das Protokoll in der Datei "C:\nvda.log" |
-| nvda --log-level=20 -f C:\nvda.log | Legt die Protokollierungsstufe "Informationen" fest und speichert das Protokoll in der Datei C:\nvda.log |
+| nvda -l 10 | Startet NVDA mit der Protokollierungsstufe "Fehlerkorrektur". |
+| nvda --log-file=C:\nvda.log | Speichert das Protokoll in der Datei "C:\nvda.log". |
+| nvda --log-level=20 -f C:\nvda.log | Legt die Protokollierungsstufe "Informationen" fest und speichert das Protokoll in der Datei C:\nvda.log. |
 
 Folgende Kommandozeilenoptionen gibt es:
 || Kurzform | Langform | Beschreibung |
@@ -3019,7 +3012,7 @@ Folgende Kommandozeilenoptionen gibt es:
 | -l Protokollierungsstufe | --log-level=Protokollierungsstufe | Die niedrigste Stufe der protokollierten Nachricht (Debug 10, Input/Output 12, Debug-Warnung 15, Info 20, Warnung 30, Fehler 40, kritisch 50, deaktiviert 100), Standard ist Warnung. |
 | -c Konfigurationspfad | --config-path=KonfigurationsPfad | Gibt den Ordner an, in dem alle NVDA-Einstellungen gespeichert werden sollen. |
 | -m | --minimal | Startet NVDA minimalistisch (keine Klänge, keine Benutzeroberfläche). |
-| -s | --secure | Sicherer Modus (deaktiviert die Python-Konsole und Protokollierungsfunktionen, die häufig in Sicherheitsmeldungen verwendet werden). |
+| -s | --secure | Sicherer Modus: Deaktiviert die Python-Konsole, Profil-Funktionen wie Erstellen, Löschen, Umbenennen von Profilen, etc., Update-Check, einige Kontrollkästchen im Willkommensdialog und in der Kategorie "Allgemeine Einstellungen" (z. B. NVDA nach der Anmeldung starten, Konfiguration nach dem Beenden speichern, etc.) sowie im Protokoll-Betrachter- und Funktionen zur Protokollierung (werden oft in Sicherheitsmeldungen verwendet). Beachten Sie auch, dass dieser Befehl die Möglichkeit zum Speichern von Einstellungen in der Systemkonfiguration deaktiviert und die Tastenbefehle nicht gespeichert wird. |
 | Keine | --disable-addons | Deaktiviert alle Erweiterungen. |
 | Keine | --debug-logging | Aktivieren Sie die Protokollierung nur für diesen Lauf. Diese Einstellung überschreibt alle anderen Argumente der Protokollebene ( ""--loglevel"", -l), einschließlich der Option keine Protokollierung. |
 | Keine | --no-logging | Deaktivieren Sie die Protokollierung vollständig, während Sie NVDA verwenden. Diese Einstellung kann überschrieben werden, wenn eine Protokollebene ("--loglevel"", -l) von der Kommandozeile aus angegeben wird oder wenn die Debug-Protokollierung eingeschaltet ist. |

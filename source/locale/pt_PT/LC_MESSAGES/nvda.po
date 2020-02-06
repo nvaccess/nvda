@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-09 11:28+1000\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Ângelo Miguel Abrantes <ampa4374@gmail.com>\n"
 "Language-Team: NVDA portuguese team <rui.fontes@tiflotecnia.com>; "
@@ -525,9 +525,6 @@ msgstr ""
 "Mostrar apenas informação de contexto ao deslocar a linha para a esquerda"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "Automática"
 
@@ -1917,7 +1914,7 @@ msgstr "Laranja avermelhado"
 #. Translators: The color orange (HSV hue 30 degrees)
 msgctxt "color hue"
 msgid "orange"
-msgstr "Laranja\v"
+msgstr "Laranja"
 
 #. Translators: The color between  orange and yellow (HSV hue 45 degrees)
 msgctxt "color hue"
@@ -9221,22 +9218,15 @@ msgstr ""
 "Usar UI Automation para aceder a controlos de documentos do Microsoft &Word "
 "se disponível"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Suporte à consola &Windows"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr "Usar UI Automation para aceder à &Consola Windows quando disponível"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "Preferir UIA"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Modo antigo"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "Falar &palavras passe em consolas UIA (pode melhorar a performance)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9245,15 +9235,7 @@ msgstr "Programas em linha de comando"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
-msgstr ""
-"Anunciar &palavras-passe em consolas Windows (pode melhorar a performance)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
 "Use o novo suporte para caracteres &digitados em aplicações de consola "
 "Windows quando disponível"
@@ -10148,17 +10130,19 @@ msgstr "Realçar foco"
 msgid "&Enable Highlighting"
 msgstr "Activar &realce"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "Cortina de ecrã"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
-msgstr ""
-"Sempre &mostrar um aviso antes de activar a {screenCurtainTranslatedName}"
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "Sempre &mostrar um aviso antes de activar a Cortina de ecrã"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "Reproduzir &som ao activar/desactivar  a Cortina de ecrã"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -11678,6 +11662,15 @@ msgstr "espaçamento duplo"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "espaçamento  1,5 linhas"
+
+#~ msgid "Windows C&onsole support:"
+#~ msgstr "Suporte à consola &Windows"
+
+#~ msgid "Prefer UIA"
+#~ msgstr "Preferir UIA"
+
+#~ msgid "Legacy"
+#~ msgstr "Modo antigo"
 
 #~ msgid "Magnifier"
 #~ msgstr "Magnificação"

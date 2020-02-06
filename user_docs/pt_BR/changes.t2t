@@ -5,11 +5,11 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 %!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
 
 = 2019.3 =
+O NVDA 2019.3 é uma versão muito significativa que contém muitas alterações ocultas incluindo a atualização do Python 2 para o Python 3, e uma importante reescrita do subsistema de fala do NVDA.
+Embora essas alterações quebrem a compatibilidade com os complementos NVDA mais antigos, a atualização para o Python 3 é necessária para segurança, e as alterações na fala permitem algumas inovações interessantes no futuro próximo.
+ Outros destaques desta versão incluem suporte a 64 bit para Java VMs ""[Máquinas Virtuais Java]"", funcionalidade Cortina de Tela e Realce de Foco, suporte para mais linhas braille e um novo Visualizador de Braille, além de muitas outras correções.
 
 == Novas Características ==
-- No Prompt de Comando, no PowerShell e no Subsistema do Windows para Linux em Windows 10 Atualização de Outubro de 2018 e posteriores:
- - Desempenho e estabilidade consideravelmente melhorados. (#9771)
- - O anúncio de texto digitado que não aparece na tela (como senhas) agora pode ser ativado através de uma opção no painel de configurações avançadas do NVDA. (#9649)
 - A precisão do comando mover o mouse para o objeto de navegação foi aprimorada nos campos de texto nos aplicativos Java. (#10157)
 - Adicionado suporte para as seguintes Linhas braille da Handy Tech (#8955):
  - Basic Braille Plus 40

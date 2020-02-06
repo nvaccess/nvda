@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-06 07:28+1000\n"
-"PO-Revision-Date: 2019-12-06 09:33+0100\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
+"PO-Revision-Date: 2020-01-17 11:49+0100\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
@@ -523,9 +523,6 @@ msgid "Only when scrolling back"
 msgstr "Solo scorrendo indietro"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "Automatica"
 
@@ -608,11 +605,11 @@ msgstr "cursore di controllo"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Dot firm&ness"
-msgstr "Resistenza del punto"
+msgstr "Resiste&nza del punto"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Braille inp&ut"
-msgstr "Immissione braille"
+msgstr "Immissione braille (&p)"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "&HID keyboard input simulation"
@@ -1763,7 +1760,7 @@ msgstr "campi (&f)"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Buttons"
-msgstr "Pulsanti"
+msgstr "Pulsanti (&b)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -1782,7 +1779,7 @@ msgstr "Tipo:"
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
 msgid "Filter b&y:"
-msgstr "Filtra per"
+msgstr "Filtra per (&y)"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -6234,7 +6231,8 @@ msgstr "Simula la pressione del tasto %s sulla tastiera di sistema"
 msgid "NVDA Speech Viewer"
 msgstr "Visualizzatore sintesi vocale di NVDA"
 
-#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+#. Translators: The label for a setting in the speech viewer that controls
+#. whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
 msgstr "Mo&stra il visualizzatore sintesi vocale all'avvio"
 
@@ -6267,7 +6265,7 @@ msgstr "Variante"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Rate"
-msgstr "Ve&locità)"
+msgstr "Velocità (&r)"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -6295,7 +6293,7 @@ msgstr "Volume"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
-msgstr "&Tono)"
+msgstr "Tono (&p)"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -6468,7 +6466,7 @@ msgstr "&Installa NVDA {version}"
 
 #. Translators: The label of a button to re-download a pending NVDA update.
 msgid "Re-&download update"
-msgstr "&Riscarica aggiornamento"
+msgstr "Riscarica aggiornamento (&d)"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -9249,22 +9247,17 @@ msgstr ""
 "Utilizza UI Automation per accedere ai controlli dei documenti Microsoft "
 "&Word quando disponibili"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Supporto Windows C&onsole"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr ""
+"Utilizza UI Automation per accedere alla c&onsole di Windows quando "
+"disponibile"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "UIA quando disponibile"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Supporto precedente"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "Leggi le &password in Windows console (può migliorare le prestazioni)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9273,17 +9266,10 @@ msgstr "Programmi da terminale"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
-msgstr "Leggi &password in Windows console (può migliorare le prestazioni)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
 "Utilizza il nuovo supporto per la digitazione caratteri nella Console di "
-"Windows quando disponibile"
+"Windows quando disponibile (&y)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10170,17 +10156,19 @@ msgstr "Evidenziatore del focus"
 msgid "&Enable Highlighting"
 msgstr "Abilita &evidenziatore"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "Tenda Schermo"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
-msgstr ""
-"Mo&stra sempre un avviso all'attivazione della {screenCurtainTranslatedName}"
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "Mo&stra sempre un avviso all'attivazione della tenda schermo"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "Ri&produci un suono quando si attiva o disattiva la tenda schermo"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -11696,6 +11684,15 @@ msgstr "spaziatura righe doppia"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "spaziatura righe 1.5"
+
+#~ msgid "Windows C&onsole support:"
+#~ msgstr "Supporto Windows C&onsole"
+
+#~ msgid "Prefer UIA"
+#~ msgstr "UIA quando disponibile"
+
+#~ msgid "Legacy"
+#~ msgstr "Supporto precedente"
 
 #~ msgid "Magnifier"
 #~ msgstr "Ingrandimento"

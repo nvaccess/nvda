@@ -4,11 +4,11 @@
 %!includeconf: ../changes.t2tconf
 
 = 2019.3 =
+NVDA 2019.3 on erittäin merkittävä julkaisu, joka sisältää monia konepellin alla tapahtuneita muutoksia, mukaan lukien Python 2:n päivittäminen Python 3:ksi sekä NVDA:n puhealijärjestelmän huomattava uudelleenkirjoittaminen.
+Vaikka nämä muutokset rikkovat yhteensopivuuden vanhempien NVDA-lisäosien kanssa, päivitys Python 3:een on turvallisuuden kannalta välttämätön, ja puhemuutokset mahdollistavat lähitulevaisuudessa jännittäviä innovaatioita.
+Muita merkittäviä muutoksia tässä versiossa ovat mm. 64-bittinen tuki Java-virtuaalikoneille, näyttöverho sekä kohdistuksen korostustoiminnallisuus, tuki useammille pistenäytöille, uusi pistekirjoituksen tarkastelutoiminto sekä useita virhekorjauksia.
 
 == Uudet ominaisuudet ==
-- Komentokehote, PowerShell ja Windows-alijärjestelmä Linuxille Windows 10:n lokakuun 2018 -päivityksessä ja uudemmissa:
- - Suorituskykyä ja vakautta parannettu huomattavasti. (#9771)
- - Ruudulla näkymättömän kirjoitetun tekstin (kuten salasanat) ilmaiseminen voidaan nyt ottaa käyttöön NVDA:n lisäasetusten paneelissa olevalla asetuksella. (#9649)
 - Siirrä hiiri navigointiobjektiin -komennon  tarkkuutta parannettu Java-sovellusten tekstikentissä. (#10157)
 - Lisätty tuki seuraaville Handy Tech -pistenäytöille (#8955):
  - Basic Braille Plus 40
@@ -19,14 +19,14 @@
 - Lisätty komento  tarkastelukohdistimen siirtämiseksi aiemmin asetetun, valittavaksi tai kopioitavaksi merkityn tekstin alkukohdan sijaintiin. (#1969)
 - Kiintopisteet ilmaistaan nyt Internet Explorerissa, Microsoft Edgessä sekä Firefoxin ja Chromen uusimmissa versioissa vuorovaikutustilassa ja objektinavigointia käytettäessä. (#10101)
 - Pikaselauskomennoilla on nyt mahdollista liikkua artikkeleittain ja ryhmittäin Internet Explorerissa, Google Chromessa sekä Mozilla Firefoxissa. Näihin komentoihin ei oletusarvoisesti ole liitetty näppäimiä, mutta ne voidaan määrittää Syötekomennot-valintaikkunasta, kun se avataan selaustila-asiakirjan ollessa avoimena. (#9485, #9227)
- - Myös piirustukset ilmaistaan. Niitä käsitellään objekteina, ja ovat siksi navigoitavissa O-pikaselausnäppäimellä.
+ - Myös kuvat ilmaistaan. Niitä käsitellään objekteina, ja ovat siksi navigoitavissa O-pikaselausnäppäimellä.
 - Artikkelielementit ilmaistaan nyt Internet Explorerissa, Google Chromessa ja Mozilla Firefoxissa objektinavigointia käytettäessä ja vaihtoehtoisesti selaustilassa, mikäli kyseinen asetus on otettu käyttöön asiakirjojen muotoiluasetuksista. (#10424)
 - Lisätty näyttöverho, joka käytössä ollessaan pimentää koko ruudun Windows 8:ssa ja uudemmissa. (#7857)
  - Lisätty skripti näyttöverhon käyttöön ottamiselle (yhdellä painalluksella seuraavaan uudelleenkäynnistykseen saakka tai kahdella painalluksella aina NVDA:n ollessa käynnissä), oletusarvoista syötekomentoa ei ole määritelty.
  - Voidaan ottaa käyttöön ja määrittää NVDA:n asetusvalintaikkunan Näkö-kategoriasta.
 - Lisätty ruudun korostustoiminnallisuus. (#971, #9064)
  - Kohdistuksen, navigointiobjektin ja selaustilakohdistimen sijainnin korostaminen voidaan ottaa käyttöön ja määrittää NVDA:n asetusvalintaikkunan Näkö-kategoriasta.
- - Huom: Tämä toiminto ei ole yhteensopiva Kohdistuksen korostus -lisäosan kanssa, mutta sen käyttäminen on edelleen mahdollista, kun sisäänrakennettu korostaja on poistettu käytössä.
+ - Huom: Tämä toiminto ei ole yhteensopiva Kohdistuksen korostus -lisäosan kanssa, mutta sen käyttäminen on edelleen mahdollista, kun sisäänrakennettu korostaja on poistettu käytöstä.
 - Lisätty Pistekirjoituksen tarkastelu -työkalu, jonka avulla voi tarkastella pistekirjoitustulostetta ruudulla näkyvässä ikkunassa. (#7788)
 
 

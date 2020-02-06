@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-20 00:10+1000\n"
-"PO-Revision-Date: 2019-12-23 11:28+0200\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
+"PO-Revision-Date: 2020-01-22 18:59+0200\n"
 "Last-Translator: Volodymyr Pyrih <vp88.mobile@gmail.com>\n"
 "Language-Team: Volodymyr Pyrih <vp88.mobile@gmail.com>\n"
 "Language: uk\n"
@@ -526,9 +526,6 @@ msgid "Only when scrolling back"
 msgstr "Лише під час прокрутки назад"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "Автоматично"
 
@@ -1814,7 +1811,7 @@ msgstr "Поза контейнером"
 #. Translators: Description for the Move to start of container command in browse mode.
 msgid "Moves to the start of the container element, such as a list or table"
 msgstr ""
-"переходить до початку елемента-контейнера, наприклад, списку або таблиці"
+"Переходить до початку елемента-контейнера, наприклад, списку або таблиці"
 
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
@@ -2907,7 +2904,7 @@ msgstr ""
 "Більше інформації про них можна знайти у журнальному файлі."
 
 msgid "gesture map File Error"
-msgstr "Помилка файла з прив'язкою жестів."
+msgstr "помилка файла з прив'язкою жестів"
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
@@ -2963,7 +2960,7 @@ msgstr "пошук текстового рядка із поточної поз�
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
-msgstr "Пошук наступного текстового рядка від поточної позиції курсора"
+msgstr "пошук наступного текстового рядка від поточної позиції курсора"
 
 #. Translators: Input help message for find previous command.
 msgid ""
@@ -7794,7 +7791,7 @@ msgstr "URL: {url}"
 
 #. Translators: the minimum NVDA version part of the About Add-on information
 msgid "Minimum required NVDA version: {}"
-msgstr "потребує мінімум версії NVDA: {}"
+msgstr "Потребує мінімум версії NVDA: {}"
 
 #. Translators: the last NVDA version tested part of the About Add-on information
 msgid "Last NVDA version tested: {}"
@@ -9190,22 +9187,16 @@ msgstr ""
 "Використовувати UI Automation для доступу до документів Microsoft &Word якщо "
 "можливо"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Підтримка консолі &Windows:"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr ""
+"Використовувати UI Automation для доступу до &консолі Windows якщо доступно"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "Надавати перевагу UIA"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Застаріла"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "Промовляти &паролі в консолях UIA (може поліпшити продуктивність)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9214,17 +9205,10 @@ msgstr "Термінальні програми"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
-msgstr "Промовляти &паролі в консолях Windows (може поліпшити продуктивність)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
-"Використовувати нову підтримку &введення символів у застарілих консолях "
-"Windows, якщо доступно"
+"Використовувати за можливості &нову підтримку введення символів у консолях "
+"Windows"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10115,16 +10099,19 @@ msgstr "Підсвічування фокуса"
 msgid "&Enable Highlighting"
 msgstr "&Увімкнути підсвічування"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "Екранна завіса"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
-msgstr "Завжди попереджати, коли вмикається {screenCurtainTranslatedName}"
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "Завжди попереджати &при увімкненні екранної завіси"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "&відтворювати звук при увімкненні чи вимкненні екранної завіси"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -11637,6 +11624,15 @@ msgstr "Подвійний міжрядковий інтервал"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Полуторний міжрядковий інтервал"
+
+#~ msgid "Windows C&onsole support:"
+#~ msgstr "Підтримка консолі &Windows:"
+
+#~ msgid "Prefer UIA"
+#~ msgstr "Надавати перевагу UIA"
+
+#~ msgid "Legacy"
+#~ msgstr "Застаріла"
 
 #, fuzzy
 #~ msgid "Highlighter"
