@@ -1,17 +1,51 @@
 # -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2019 NV Access Limited
-from typing import cast, Dict, Any, List, Tuple
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2020 NV Access Limited
 
-from logHandler import log
 import queueHandler
 import synthDriverHandler
+import config
 from .types import SpeechSequence
-from .commands import *
-from .commands import IndexCommand
+from .commands import (
+	# Commands that are used in this file.
+	EndUtteranceCommand,
+	SynthParamCommand,
+	BaseCallbackCommand,
+	ConfigProfileTriggerCommand,
+	IndexCommand,
+)
+from .commands import (  # noqa: F401
+	# F401 imported but unused:
+	# These are imported explicitly to maintain backwards compatibility and will be removed in
+	# 2021.1. Rather than rely on these imports, import directly from the commands module.
+	# New commands added to commands.py should be directly imported only where needed.
+	SpeechCommand,
+	PitchCommand,
+	LangChangeCommand,
+	BeepCommand,
+	CharacterModeCommand,
+	SynthCommand,
+	BreakCommand,
+	BaseProsodyCommand,
+	VolumeCommand,
+	RateCommand,
+	PhonemeCommand,
+	CallbackCommand,
+	WaveFileCommand,
+)
 from .priorities import Spri, SPEECH_PRIORITIES
+from logHandler import log
+from synthDriverHandler import getSynth
+from typing import (
+	Dict,
+	Any,
+	List,
+	Tuple,
+	Optional,
+)
+
 
 class ParamChangeTracker(object):
 	"""Keeps track of commands which change parameters from their defaults.
