@@ -703,7 +703,7 @@ def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> Spe
 def speak(  # noqa: C901
 		speechSequence: SpeechSequence,
 		symbolLevel: Optional[int] = None,
-		priority: Optional[Spri] = None
+		priority: Spri = Spri.NORMAL
 ):
 	"""Speaks a sequence of text and speech commands
 	@param speechSequence: the sequence of text and L{SpeechCommand} objects to speak
@@ -711,9 +711,10 @@ def speak(  # noqa: C901
 	@param priority: The speech priority.
 	"""
 	logBadSequenceTypes(speechSequence)
-	if priority is None:
-		priority = Spri.NORMAL
-	if not speechSequence: #Pointless - nothing to speak 
+	# in case priority was explicitly passed in as None, set to default.
+	priority: Spri = Spri.NORMAL if priority is None else priority
+
+	if not speechSequence:  # Pointless - nothing to speak
 		return
 	import speechViewer
 	if speechViewer.isActive:
