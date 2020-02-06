@@ -36,6 +36,9 @@ import NVDAObjects.JAB
 import eventHandler
 from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer, ToolTip, Notification
 from locationHelper import RectLTWH
+from typing import (
+	Optional,
+)
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
@@ -680,15 +683,9 @@ the NVDAObject for IAccessible
 			return False
 		return obj.event_windowHandle==self.event_windowHandle and obj.event_objectID==self.event_objectID and obj.event_childID==self.event_childID
 
-	def _get_shouldAllowIAccessibleFocusEvent(self):
-		"""Determine whether a focus event should be allowed for this object.
-		Normally, this checks for the focused state to help eliminate redundant or invalid focus events.
-		However, some implementations do not correctly set the focused state, so this must be overridden.
-		@return: C{True} if the focus event should be allowed.
-		@rtype: bool
-		"""
-		#this object or one of its ancestors must have state_focused.
+	def _getIndirectionsToParentWithFocus(self) -> Optional[int]:
 		testObj = self
+		indirections = 0
 		while testObj:
 			if controlTypes.STATE_FOCUSED in testObj.states:
 				break
@@ -696,9 +693,21 @@ the NVDAObject for IAccessible
 			# Cache the parent.
 			testObj.parent = parent
 			testObj = parent
+			indirections += 1
 		else:
-			return False
-		return True
+			return None
+		return indirections
+
+	def _get_shouldAllowIAccessibleFocusEvent(self):
+		"""Determine whether a focus event should be allowed for this object.
+		Normally, this checks for the focused state to help eliminate redundant or invalid focus events.
+		However, some implementations do not correctly set the focused state, so this must be overridden.
+		@return: C{True} if the focus event should be allowed.
+		@rtype: bool
+		"""
+		# this object or one of its ancestors must have state_focused.
+		indirectionsToFocus = self._getIndirectionsToParentWithFocus()
+		return indirectionsToFocus is not None
 
 	def _get_TextInfo(self):
 		if hasattr(self,'IAccessibleTextObject'):

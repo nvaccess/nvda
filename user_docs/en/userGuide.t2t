@@ -1787,6 +1787,10 @@ This feature is available and enabled by default on Windows 10 versions 1607and 
 Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
 In untrusted environments, you may temporarily disable [speak typed characters #KeyboardSettingsSpeakTypedCharacters] and [speak typed words #KeyboardSettingsSpeakTypedWords] when entering passwords.
 
+==== Attempt to cancel speech for expired focus events ====[CancelExpiredFocusSpeech]
+This option enables behaviour which attempts to cancel speech for expired focus events.
+In particular moving quickly through messages in Gmail with Chrome can cause NVDA to speak outdated information.
+
 ==== Automatically set system focus to focusable elements in Browse Mode ====[BrowseModeSettingsAutoFocusFocusableElements]
 Key: NVDA+8
 
