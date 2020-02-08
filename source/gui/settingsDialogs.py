@@ -3463,7 +3463,8 @@ class VisionProviderSubPanel_Wrapper(
 		gui.messageBox(
 			# Translators: Shown when there is an error showing the GUI for a vision enhancement provider
 			_("Unable to configure user interface for Vision Enhancement Provider, it can not be enabled."),
-			# Translators: The title of the error dialog displayed when there is an error showing the GUI for a vision enhancement provider
+			# Translators: The title of the error dialog displayed when there is an error showing the GUI
+			# for a vision enhancement provider
 			_("Error"),
 			parent=self,
 		)
