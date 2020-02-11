@@ -79,11 +79,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			inputCore.manager.executeGesture(InputGestureKeys(2))
 			self._serial.waitForRead(1)
 			arg = self._serial.read(2)
-  		elif int(command) == 4:
+		elif int(command) == 4:
 			inputCore.manager.executeGesture(InputGestureKeys(3))
 			self._serial.waitForRead(1)
 			arg = self._serial.read(2) 
- 		elif int(command) == 5:
+		elif int(command) == 5:
 			inputCore.manager.executeGesture(InputGestureKeys(4))
 			self._serial.waitForRead(1)
 			arg = self._serial.read(2)
