@@ -82,31 +82,31 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
              self.numCells = int(arg)
 
             elif int(command) == 2:
-             log.debug("up")
+             
              inputCore.manager.executeGesture(InputGestureKeys(1))
              self._serial.waitForRead(1)
              arg = self._serial.read(2)
              
             elif int(command) == 3:
-             log.debug("down")
+             
              inputCore.manager.executeGesture(InputGestureKeys(2))
              self._serial.waitForRead(1)
              arg = self._serial.read(2)
              
             elif int(command) == 4:
-             log.debug("right")
+           
              inputCore.manager.executeGesture(InputGestureKeys(3))
              self._serial.waitForRead(1)
              arg = self._serial.read(2)
              
             elif int(command) == 5:
-             log.debug("left")
+           
              inputCore.manager.executeGesture(InputGestureKeys(4))
              self._serial.waitForRead(1)
              arg = self._serial.read(2)
              
             elif int(command) == 1:
-             log.debug("routing")
+           
              arg = self._serial.read(2)
              try:
                  inputCore.manager.executeGesture(RoutingInputGesture(int(arg)))
@@ -150,11 +150,11 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 		super(InputGestureKeys, self).__init__() 
 		if keys == 1:
 		    self.id = "tback"
-		elif keys ==2:
+		elif keys == 2:
                     self.id = "tadvance"    
-		elif keys ==3:
+		elif keys == 3:
                     self.id = "tnext"    
-		elif keys ==4:
+		elif keys == 4:
                     self.id = "tprevious"    
 
 class RoutingInputGesture(braille.BrailleDisplayGesture):
