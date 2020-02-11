@@ -1,19 +1,16 @@
-#brailleDisplayDrivers/nattiqbraille.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# brailleDisplayDrivers/nattiqbraille.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 # Copyright (C) 2011-2020
 
 
-from collections import OrderedDict
-import itertools
 import serial
 import braille
-import brailleInput
 import inputCore
 from logHandler import log
 import hwIo
-import bdDetect
+
 
 BAUD_RATE = 10000000
 TIMEOUT = 0.3
@@ -22,7 +19,7 @@ INIT_TAG = "0"
 
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
-        name = "nattiqbraille"
+	name = "nattiqbraille"
         # Translators: Names of braille displays
         description = _("Nattiq nBraille")
         isThreadSafe = True
@@ -52,10 +49,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
         def terminate(self):
                 try:
-                        
-                        super(BrailleDisplayDriver, self).terminate()
-                        
-                        
+                        super(BrailleDisplayDriver, self).terminate()        
                 finally:
                         self._serial.write("reset".encode())
                         self._serial.close()
@@ -77,60 +71,38 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
         
         def _onReceive(self, command):
             if int(command) == 0:
-            
              arg = self._serial.read(2)
              self.numCells = int(arg)
-
-            elif int(command) == 2:
-             
+            elif int(command) == 2:     
              inputCore.manager.executeGesture(InputGestureKeys(1))
              self._serial.waitForRead(1)
-             arg = self._serial.read(2)
-             
-            elif int(command) == 3:
-             
+             arg = self._serial.read(2)   
+            elif int(command) == 3:  
              inputCore.manager.executeGesture(InputGestureKeys(2))
              self._serial.waitForRead(1)
              arg = self._serial.read(2)
-             
             elif int(command) == 4:
-           
              inputCore.manager.executeGesture(InputGestureKeys(3))
              self._serial.waitForRead(1)
-             arg = self._serial.read(2)
-             
+             arg = self._serial.read(2) 
             elif int(command) == 5:
-           
              inputCore.manager.executeGesture(InputGestureKeys(4))
              self._serial.waitForRead(1)
              arg = self._serial.read(2)
-             
             elif int(command) == 1:
-           
              arg = self._serial.read(2)
              try:
-                 inputCore.manager.executeGesture(RoutingInputGesture(int(arg)))
+                     inputCore.manager.executeGesture(RoutingInputGesture(int(arg)))
              except ValueError:
                      pass
 
-             
-            else:
-                    log.debug(command)
-                    
         def _dispatch(self, command, arg):
                 return
-
+	
         def display(self, cells):
-                
                 cells = "-".join(str(cell) for cell in cells)
-               
                 log.debug(cells)
-                
                 self._serial.write(cells)
-               
-                
-
-
 
         gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
@@ -145,7 +117,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 class InputGestureKeys(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
-
 	def __init__(self, keys):
 		super(InputGestureKeys, self).__init__() 
 		if keys == 1:
@@ -158,9 +129,7 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
                     self.id = "tprevious"    
 
 class RoutingInputGesture(braille.BrailleDisplayGesture):
-
 	source = BrailleDisplayDriver.name
-
 	def __init__(self, routingIndex):
 		super(RoutingInputGesture, self).__init__()
 		self.routingIndex = routingIndex
