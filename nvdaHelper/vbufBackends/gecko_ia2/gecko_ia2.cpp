@@ -1194,6 +1194,7 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 		case EVENT_OBJECT_SELECTIONREMOVE:
 		case EVENT_OBJECT_SELECTIONWITHIN:
 		case IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED:
+		case EVENT_OBJECT_HIDE:
 		break;
 		default:
 		return;
@@ -1230,6 +1231,19 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 		VBufStorage_controlFieldNode_t* node=backend->getControlFieldNodeWithIdentifier(docHandle,ID);
 		if(!node)
 			continue;
+		if (eventID == EVENT_OBJECT_HIDE) {
+			// When an accessible is moved, events are fired as if the accessible were
+			// removed and then inserted. The insertion events are fired as if it were
+			// a new subtree; i.e. only one insertion for the root of the subtree.
+			// This means that if new descendants are inserted at the same time as the
+			// root is moved, we don't get specific events for those insertions.
+			// Because of that, we mustn't reuse the subtree. Otherwise, we wouldn't
+			// walk inside it and thus wouldn't know about the new descendants.
+			node->alwaysRerenderDescendants = true;
+			// We'll get a text removed event for the parent, so no need to invalidate
+			// this node.
+			continue;
+		}
 		backend->invalidateSubtree(node);
 	}
 }
