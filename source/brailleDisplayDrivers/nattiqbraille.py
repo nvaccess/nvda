@@ -32,8 +32,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			log.debug("Checking port %s for a Nattiq nBraille", port)
 			try:
-				self._serial = hwIo.Serial(port, baudrate=BAUD_RATE, timeout=TIMEOUT, writeTimeout=TIMEOUT,
-										   parity=serial.PARITY_NONE, onReceive=self._onReceive)
+				self._serial = hwIo.Serial(
+				port, baudrate=BAUD_RATE, timeout=TIMEOUT, writeTimeout=TIMEOUT,
+				parity=serial.PARITY_NONE, onReceive=self._onReceive
+				)
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
 				continue
