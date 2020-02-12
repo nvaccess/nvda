@@ -32,7 +32,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			log.debug("Checking port %s for a Nattiq nBraille", port)
 			try:
-				self._serial = hwIo.Serial(port, baudrate=BAUD_RATE, timeout=0.3, writeTimeout=0.3, parity=serial.PARITY_NONE, onReceive=self._onReceive)
+				self._serial = hwIo.Serial(port, baudrate=BAUD_RATE, timeout=TIMEOUT, writeTimeout=TIMEOUT,
+										   parity=serial.PARITY_NONE, onReceive=self._onReceive)
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
 				continue
@@ -47,7 +48,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def terminate(self):
 		try:
-			super(BrailleDisplayDriver, self).terminate()        
+			super(BrailleDisplayDriver, self).terminate()
 		finally:
 			self._serial.write("reset".encode())
 			self._serial.close()
@@ -63,26 +64,26 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._serial.waitForRead(3)
 		# If a valid response was received, _onReceive will have set numCells.
 		if self.numCells:
-				return True
+			return True
 		log.debug("Not a Nattiq nBraille")
 		return False
-        
+
 	def _onReceive(self, command):
 		if int(command) == 0:
 			arg = self._serial.read(2)
 			self.numCells = int(arg)
-		elif int(command) == 2:     
+		elif int(command) == 2:
 			inputCore.manager.executeGesture(InputGestureKeys(1))
 			self._serial.waitForRead(1)
-			arg = self._serial.read(2)   
-		elif int(command) == 3:  
+			arg = self._serial.read(2)
+		elif int(command) == 3:
 			inputCore.manager.executeGesture(InputGestureKeys(2))
 			self._serial.waitForRead(1)
 			arg = self._serial.read(2)
 		elif int(command) == 4:
 			inputCore.manager.executeGesture(InputGestureKeys(3))
 			self._serial.waitForRead(1)
-			arg = self._serial.read(2) 
+			arg = self._serial.read(2)
 		elif int(command) == 5:
 			inputCore.manager.executeGesture(InputGestureKeys(4))
 			self._serial.waitForRead(1)
@@ -115,19 +116,22 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 class InputGestureKeys(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
+
 	def __init__(self, keys):
-		super(InputGestureKeys, self).__init__() 
+		super(InputGestureKeys, self).__init__()
 		if keys == 1:
 			self.id = "tback"
 		elif keys == 2:
-			self.id = "tadvance"    
+			self.id = "tadvance"
 		elif keys == 3:
-			self.id = "tnext"    
+			self.id = "tnext"
 		elif keys == 4:
-			self.id = "tprevious"    
+			self.id = "tprevious"
+
 
 class RoutingInputGesture(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
+
 	def __init__(self, routingIndex):
 		super(RoutingInputGesture, self).__init__()
 		self.routingIndex = routingIndex
