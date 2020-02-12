@@ -1041,6 +1041,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		try:
 			return mathType.getMathMl(obj)
 		except:
+			log.debugWarning("Error fetching math with mathType",exc_info=True)
 			raise LookupError("Couldn't get MathML from MathType")
 
 class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
