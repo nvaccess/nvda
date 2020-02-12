@@ -97,7 +97,7 @@ class ImeCandidateItem(CandidateItemBehavior, UIA):
 				def delayed():
 					speech.cancelSpeech()
 					ui.message(newText)
-				core.callLater(100,delayed)
+				core.callLater(100, delayed)
 				self.appModule._lastImeCandidateVisibleText = newText
 		# Now just report the currently selected candidate item.
 		self.reportFocus()
