@@ -519,7 +519,7 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 	value = propertyValues.get("value")
 	if value and role not in controlTypes.silentValuesForRoles:
 		textList.append(value)
-	if states:
+	if states is not None:
 		textList.extend(
 			controlTypes.processAndLabelStates(role, states, controlTypes.REASON_FOCUS, states, None, positiveStateLabels, negativeStateLabels)
 		)

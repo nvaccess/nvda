@@ -1499,10 +1499,16 @@ def getPropertiesSpeech(  # noqa: C901
 		textList.append(roleText if roleText else controlTypes.roleLabels[role])
 	if value:
 		textList.append(value)
-	states=propertyValues.get('states',set())
+	states = propertyValues.get('states')
 	realStates=propertyValues.get('_states',states)
 	negativeStates=propertyValues.get('negativeStates',set())
-	if states or negativeStates:
+	# If the caller didn't want states, states will be None.
+	# However, empty states means the caller still wants states, but the object
+	# had no states; e.g. an unchecked check box with no other states.
+	if states is not None or negativeStates:
+		if states is None:
+			# processAndLabelStates won't accept None for states.
+			states = set()
 		labelStates = controlTypes.processAndLabelStates(role, realStates, reason, states, negativeStates)
 		textList.extend(labelStates)
 	# sometimes description key is present but value is None
