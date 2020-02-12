@@ -11,6 +11,7 @@ This is applicable on Windows 10 Fall Creators Update and later."""
 
 import appModuleHandler
 import api
+import core
 import eventHandler
 import speech
 import braille
@@ -85,16 +86,23 @@ class ImeCandidateItem(CandidateItemBehavior, UIA):
 
 	def event_UIA_elementSelected(self):
 		speech.cancelSpeech()
+		# Report the entire current page of candidate items if it is newly shown  or it has changed.
 		if config.conf["inputComposition"]["autoReportAllCandidates"]:
-			# Report the entire current page of candidate items if it is newly shown  or it has changed.
 			oldText = getattr(self.appModule, '_lastImeCandidateVisibleText', '')
 			newText = self.visibleCandidateItemsText
 			if newText != oldText:
-				ui.message(newText)
+				# cancel speech and speak the new page
+				# But delayed a little
+				# to ensure that it is not interupted by duplicate elementSelected events.
+				def delayed():
+					speech.cancelSpeech()
+					ui.message(newText)
+				core.callLater(100,delayed)
 				self.appModule._lastImeCandidateVisibleText = newText
 		# Now just report the currently selected candidate item.
 		self.reportFocus()
 		api.setNavigatorObject(self)
+
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -199,6 +207,9 @@ class AppModule(appModuleHandler.AppModule):
 		# Therefore pass these events straight on.
 		if isinstance(obj, ImeCandidateItem):
 			return nextHandler()
+		elif isinstance(obj, ImeCandidateUI):
+			return nextHandler()
+
 		# On some systems, touch keyboard keys keeps firing name change event.
 		# In build 17704, whenever skin tones are selected, name change is fired by emoji entries (GridViewItem).
 		if ((obj.UIAElement.cachedClassName in ("CRootKey", "GridViewItem"))
