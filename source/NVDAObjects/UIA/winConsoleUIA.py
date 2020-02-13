@@ -326,3 +326,8 @@ def findExtraOverlayClasses(obj, clsList):
 		clsList.append(WinConsoleUIA)
 	elif obj.UIAElement.cachedAutomationId == "Console Window":
 		clsList.append(consoleUIAWindow)
+
+
+class WinTerminalUIA(KeyboardHandlerBasedTypedCharSupport):
+	def _get_TextInfo(self):
+		return consoleUIATextInfo

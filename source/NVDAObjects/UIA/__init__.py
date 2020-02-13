@@ -937,6 +937,10 @@ class UIA(Window):
 		):
 			from . import winConsoleUIA
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
+		elif UIAClassName == "TermControl":
+			from . import winConsoleUIA
+			clsList.append(winConsoleUIA.WinTerminalUIA)
+
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:
 			if UIAHandler.autoSelectDetectionAvailable:
