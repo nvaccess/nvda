@@ -18,6 +18,8 @@ from NVDAObjects.behaviors import Dialog, WebDialog
 from . import IAccessible
 from .ia2TextMozilla import MozillaCompoundTextInfo
 import aria
+import api
+import speech
 
 class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib=True
@@ -80,6 +82,15 @@ class Ia2Web(IAccessible):
 			return landmark
 		return super().landmark
 
+	def event_IA2AttributeChange(self):
+		super().event_IA2AttributeChange()
+		if self is api.getFocusObject():
+			# Report aria-current if it changed.
+			speech.speakObjectProperties(
+				self, current=True, reason=controlTypes.REASON_CHANGE)
+		# super calls event_stateChange which updates braille, so no need to
+		# update braille here.
+
 
 class Document(Ia2Web):
 	value = None
@@ -96,6 +107,14 @@ class BlockQuote(Ia2Web):
 
 class Article(Ia2Web):
 	role = controlTypes.ROLE_ARTICLE
+
+
+class Region(Ia2Web):
+	role = controlTypes.ROLE_REGION
+
+
+class Figure(Ia2Web):
+	role = controlTypes.ROLE_FIGURE
 
 
 class Editor(Ia2Web, DocumentWithTableNavigation):
@@ -177,6 +196,10 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 		clsList.append(BlockQuote)
 	elif iaRole == oleacc.ROLE_SYSTEM_DOCUMENT and xmlRoles[0] == "article":
 		clsList.append(Article)
+	elif xmlRoles[0] == "region" and obj.name:
+		clsList.append(Region)
+	elif xmlRoles[0] == "figure":
+		clsList.append(Figure)
 	elif iaRole == oleacc.ROLE_SYSTEM_ALERT:
 		clsList.append(Dialog)
 	elif iaRole == oleacc.ROLE_SYSTEM_EQUATION:
