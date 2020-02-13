@@ -37,19 +37,20 @@ The following dependencies need to be installed on your system:
 
 * [Python](https://www.python.org/), version 3.7, 32 bit
 	* Don't use `3.7.6` it causes an error while building, for now use `3.7.5` see #10696.
-* Microsoft Visual Studio 2017 Community, Version 15.3 or later:
-	* Download from https://visualstudio.microsoft.com/vs/older-downloads/
+* Microsoft Visual Studio 2019 Community, Version 16.3 or later:
+	* Download from https://visualstudio.microsoft.com/vs/
 	* When installing Visual Studio, you need to enable the following:
-		On the Workloads tab, in the Windows group:
-			* Universal Windows Platform Development
-			* Desktop development with C++
-		* Then in the Installation details section, under Desktop for C++, Optional grouping, ensure the following are selected:
-			* VC++ 2017 v141 toolset (x86,x64)
-			* Windows 10 SDK (10.0.17134.0) for Desktop C++ x86 and x64
-			* Visual C++ ATL for x86 and x64
-		* In the Installation details section, under Individual components, ensure the following are selected:
-			* Visual C++ compilers and libraries for ARM64
-			* Visual C++ ATL for ARM64
+		* On the Workloads tab
+			* in the Windows group:
+				* Desktop development with C++
+			* Then in the Installation details section, under Desktop for C++, Optional grouping, ensure the following are selected:
+				* MSVC v142 - VS 2019 C++ x64/x86 build tools
+				* Windows 10 SDK (10.0.18362.0)
+				* C++ ATL for v142 build tools (x86 & x64)
+				* C++ Clang tools for Windows
+		* On the Individual components tab, ensure the following items are selected:
+			* MSVC v142 - VS 2019 C++ ARM64 build tools
+			* C++ ATL for v142 build tools (ARM64)
 
 
 ### Git Submodules
@@ -84,7 +85,7 @@ Additionally, the following build time dependencies are included in Git submodul
 * [Py2Exe](https://github.com/albertosottile/py2exe/), version 0.9.3.2 commit b372a8e
 * [Python Windows Extensions](https://sourceforge.net/projects/pywin32/ ), build 224, required by py2exe
 * [txt2tags](https://txt2tags.org/), version 2.5
-* [SCons](https://www.scons.org/), version 3.0.4
+* [SCons](https://www.scons.org/), version 3.1.2
 * [Nulsoft Install System](https://nsis.sourceforge.io/Main_Page/), version 2.51
 * [NSIS UAC plug-in](https://nsis.sourceforge.io/UAC_plug-in), version 0.2.4, ansi
 * xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
