@@ -254,9 +254,9 @@ deploy_script:
       # dump_syms needs to locate msdia140.dll which in the vs 2019 appveyor image is no longer in the path it seems. 
       # dump_syms was producing the error: CoCreateInstance CLSID_DiaSource {E6756135-1E65-4D17-8576-610761398C3C} failed (msdia*.dll unregistered?)
       # Add its directory to path as recommended by https://groups.google.com/a/chromium.org/forum/#!topic/crashpad-dev/0xUdfp8_LqA
-      regsvr32 /s "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Remote Debugger\x86\msdia140.dll"
-      $env:PATH = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Remote Debugger\x86;$env:PATH"
-      py appveyor\mozillaSyms.py
+      # regsvr32 /s "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Remote Debugger\x86\msdia140.dll"
+      # $env:PATH = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Remote Debugger\x86;$env:PATH"
+      # py appveyor\mozillaSyms.py
      }
 
 on_finish:
