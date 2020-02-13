@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2019 Bill Dengler
+# Copyright (C) 2019-2020 Bill Dengler
 
 import ctypes
 import NVDAHelper
@@ -18,7 +18,6 @@ from ..window import Window
 
 
 class consoleUIATextInfo(UIATextInfo):
-
 	def __init__(self, obj, position, _rangeObj=None):
 		# We want to limit  textInfos to just the visible part of the console.
 		# Therefore we specifically handle POSITION_FIRST, POSITION_LAST and POSITION_ALL.
@@ -48,6 +47,56 @@ class consoleUIATextInfo(UIATextInfo):
 			_rangeObj = first._rangeObj
 		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
 
+	def move(self, unit, direction, endPoint=None):
+		oldInfo = None
+		if self.basePosition != textInfos.POSITION_CARET:
+			# Insure we haven't gone beyond the visible text.
+			# UIA adds thousands of blank lines to the end of the console.
+			boundingInfo = self.obj.makeTextInfo(textInfos.POSITION_ALL)
+			oldInfo = self.copy()
+		res = self._move(unit, direction, endPoint)
+		# Console textRanges have access to the entire console buffer.
+		# However, we want to limit ourselves to onscreen text.
+		# Therefore, if the textInfo was originally visible,
+		# but we are now above or below the visible range,
+		# Restore the original textRange and pretend the move didn't work.
+		if oldInfo:
+			try:
+				if (
+					(
+						self.compareEndPoints(boundingInfo, "startToStart") < 0
+						or self.compareEndPoints(boundingInfo, "startToEnd") >= 0
+					)
+					and not (
+						oldInfo.compareEndPoints(boundingInfo, "startToStart") < 0
+						or oldInfo.compareEndPoints(boundingInfo, "startToEnd") >= 0
+					)
+				):
+					self._rangeObj = oldInfo._rangeObj
+					return 0
+			except (COMError, RuntimeError):
+				pass
+		return res
+
+	def _move(self, unit, direction, endPoint=None):
+		"Perform a move without respect to bounding."
+		return super(consoleUIATextInfo, self).move(unit, direction, endPoint)
+
+	def __ne__(self, other):
+		"""Support more accurate caret move detection."""
+		return not self == other
+
+	def _get_text(self):
+		# #10036: return a space if the text range is empty.
+		# Consoles don't actually store spaces, the character is merely left blank.
+		res = super(consoleUIATextInfo, self)._get_text()
+		if not res:
+			return ' '
+		else:
+			return res
+
+
+class consoleUIATextInfoEndInclusive(consoleUIATextInfo):
 	def collapse(self, end=False):
 		"""Works around a UIA bug on Windows 10 1803 and later."""
 		# When collapsing, consoles seem to incorrectly push the start of the
@@ -62,13 +111,62 @@ class consoleUIATextInfo(UIATextInfo):
 				UIAHandler.TextPatternRangeEndpoint_Start
 			)
 
-	def move(self, unit, direction, endPoint=None):
-		oldInfo = None
-		if self.basePosition != textInfos.POSITION_CARET:
-			# Insure we haven't gone beyond the visible text.
-			# UIA adds thousands of blank lines to the end of the console.
-			boundingInfo = self.obj.makeTextInfo(textInfos.POSITION_ALL)
-			oldInfo = self.copy()
+	def compareEndPoints(self, other, which):
+		"""Works around a UIA bug on Windows 10 1803 and later."""
+		# Even when a console textRange's start and end have been moved to the
+		# same position, the console incorrectly reports the end as being
+		# past the start.
+		# Compare to the start (not the end) when collapsed.
+		selfEndPoint, otherEndPoint = which.split("To")
+		if selfEndPoint == "end" and self._isCollapsed():
+			selfEndPoint = "start"
+		if otherEndPoint == "End" and other._isCollapsed():
+			otherEndPoint = "Start"
+		which = f"{selfEndPoint}To{otherEndPoint}"
+		return super().compareEndPoints(other, which=which)
+
+	def setEndPoint(self, other, which):
+		"""Override of L{textInfos.TextInfo.setEndPoint}.
+		Works around a UIA bug on Windows 10 1803 and later that means we can
+		not trust the "end" endpoint of a collapsed (empty) text range
+		for comparisons.
+		"""
+		selfEndPoint, otherEndPoint = which.split("To")
+		# In this case, there is no need to check if self is collapsed
+		# since the point of this method is to change its text range, modifying the "end" endpoint of a collapsed
+		# text range is fine.
+		if otherEndPoint == "End" and other._isCollapsed():
+			otherEndPoint = "Start"
+		which = f"{selfEndPoint}To{otherEndPoint}"
+		return super().setEndPoint(other, which=which)
+
+	def expand(self, unit):
+		if unit == textInfos.UNIT_WORD:
+			# UIA doesn't implement word movement, so we need to do it manually.
+			lineInfo = self.copy()
+			lineInfo.expand(textInfos.UNIT_LINE)
+			offset = self._getCurrentOffsetInThisLine(lineInfo)
+			start, end = self._getWordOffsetsInThisLine(offset, lineInfo)
+			wordEndPoints = (
+				(offset - start) * -1,
+				end - offset - 1
+			)
+			if wordEndPoints[0]:
+				self._rangeObj.MoveEndpointByUnit(
+					UIAHandler.TextPatternRangeEndpoint_Start,
+					UIAHandler.NVDAUnitsToUIAUnits[textInfos.UNIT_CHARACTER],
+					wordEndPoints[0]
+				)
+			if wordEndPoints[1]:
+				self._rangeObj.MoveEndpointByUnit(
+					UIAHandler.TextPatternRangeEndpoint_End,
+					UIAHandler.NVDAUnitsToUIAUnits[textInfos.UNIT_CHARACTER],
+					wordEndPoints[1]
+				)
+		else:
+			return super(consoleUIATextInfo, self).expand(unit)
+
+	def _move(self, unit, direction, endPoint=None):
 		if unit == textInfos.UNIT_WORD and direction != 0:
 			# UIA doesn't implement word movement, so we need to do it manually.
 			# Relative to the current line, calculate our offset
@@ -128,97 +226,7 @@ class consoleUIATextInfo(UIATextInfo):
 			# after moving.
 			# Therefore manually collapse.
 			self.collapse()
-		# Console textRanges have access to the entire console buffer.
-		# However, we want to limit ourselves to onscreen text.
-		# Therefore, if the textInfo was originally visible,
-		# but we are now above or below the visible range,
-		# Restore the original textRange and pretend the move didn't work.
-		if oldInfo:
-			try:
-				if (
-					(
-						self.compareEndPoints(boundingInfo, "startToStart") < 0
-						or self.compareEndPoints(boundingInfo, "startToEnd") >= 0
-					)
-					and not (
-						oldInfo.compareEndPoints(boundingInfo, "startToStart") < 0
-						or oldInfo.compareEndPoints(boundingInfo, "startToEnd") >= 0
-					)
-				):
-					self._rangeObj = oldInfo._rangeObj
-					return 0
-			except (COMError, RuntimeError):
-				pass
 		return res
-
-	def expand(self, unit):
-		if unit == textInfos.UNIT_WORD:
-			# UIA doesn't implement word movement, so we need to do it manually.
-			lineInfo = self.copy()
-			lineInfo.expand(textInfos.UNIT_LINE)
-			offset = self._getCurrentOffsetInThisLine(lineInfo)
-			start, end = self._getWordOffsetsInThisLine(offset, lineInfo)
-			wordEndPoints = (
-				(offset - start) * -1,
-				end - offset - 1
-			)
-			if wordEndPoints[0]:
-				self._rangeObj.MoveEndpointByUnit(
-					UIAHandler.TextPatternRangeEndpoint_Start,
-					UIAHandler.NVDAUnitsToUIAUnits[textInfos.UNIT_CHARACTER],
-					wordEndPoints[0]
-				)
-			if wordEndPoints[1]:
-				self._rangeObj.MoveEndpointByUnit(
-					UIAHandler.TextPatternRangeEndpoint_End,
-					UIAHandler.NVDAUnitsToUIAUnits[textInfos.UNIT_CHARACTER],
-					wordEndPoints[1]
-				)
-		else:
-			return super(consoleUIATextInfo, self).expand(unit)
-
-	def compareEndPoints(self, other, which):
-		"""Works around a UIA bug on Windows 10 1803 and later."""
-		# Even when a console textRange's start and end have been moved to the
-		# same position, the console incorrectly reports the end as being
-		# past the start.
-		# Compare to the start (not the end) when collapsed.
-		selfEndPoint, otherEndPoint = which.split("To")
-		if selfEndPoint == "end" and self._isCollapsed():
-			selfEndPoint = "start"
-		if otherEndPoint == "End" and other._isCollapsed():
-			otherEndPoint = "Start"
-		which = f"{selfEndPoint}To{otherEndPoint}"
-		return super().compareEndPoints(other, which=which)
-
-	def setEndPoint(self, other, which):
-		"""Override of L{textInfos.TextInfo.setEndPoint}.
-		Works around a UIA bug on Windows 10 1803 and later that means we can
-		not trust the "end" endpoint of a collapsed (empty) text range
-		for comparisons.
-		"""
-		selfEndPoint, otherEndPoint = which.split("To")
-		# In this case, there is no need to check if self is collapsed
-		# since the point of this method is to change its text range, modifying the "end" endpoint of a collapsed
-		# text range is fine.
-		if otherEndPoint == "End" and other._isCollapsed():
-			otherEndPoint = "Start"
-		which = f"{selfEndPoint}To{otherEndPoint}"
-		return super().setEndPoint(other, which=which)
-
-	def _isCollapsed(self):
-		"""Works around a UIA bug on Windows 10 1803 and later that means we
-		cannot trust the "end" endpoint of a collapsed (empty) text range
-		for comparisons.
-		Instead we check to see if we can get the first character from the
-		text range. A collapsed range will not have any characters
-		and will return an empty string."""
-		return not bool(self._rangeObj.getText(1))
-
-	def _get_isCollapsed(self):
-		# To decide if the textRange is collapsed,
-		# Check if it has no text.
-		return self._isCollapsed()
 
 	def _getCurrentOffsetInThisLine(self, lineInfo):
 		"""
@@ -258,18 +266,19 @@ class consoleUIATextInfo(UIATextInfo):
 			min(end.value, max(1, lineTextLen - 2))
 		)
 
-	def __ne__(self, other):
-		"""Support more accurate caret move detection."""
-		return not self == other
+	def _isCollapsed(self):
+		"""Works around a UIA bug on Windows 10 1803 and later that means we
+		cannot trust the "end" endpoint of a collapsed (empty) text range
+		for comparisons.
+		Instead we check to see if we can get the first character from the
+		text range. A collapsed range will not have any characters
+		and will return an empty string."""
+		return not bool(self._rangeObj.getText(1))
 
-	def _get_text(self):
-		# #10036: return a space if the text range is empty.
-		# Consoles don't actually store spaces, the character is merely left blank.
-		res = super(consoleUIATextInfo, self)._get_text()
-		if not res:
-			return ' '
-		else:
-			return res
+	def _get_isCollapsed(self):
+		# To decide if the textRange is collapsed,
+		# Check if it has no text.
+		return self._isCollapsed()
 
 
 class consoleUIAWindow(Window):
@@ -302,7 +311,7 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		on NVDAObjects.UIA.UIA
 		consoleUIATextInfo fixes expand/collapse, implements word movement, and
 		bounds review to the visible text."""
-		return consoleUIATextInfo
+		return consoleUIATextInfoEndInclusive
 
 	def _getTextLines(self):
 		# This override of _getTextLines takes advantage of the fact that
