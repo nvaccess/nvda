@@ -28,6 +28,7 @@ DOWN_KEY_PRESS = 2
 RIGHT_KEY_PRESS = 3
 LEFT_KEY_PRESS = 4
 
+
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "nattiqbraille"
 	# Translators: Names of braille displays
@@ -92,22 +93,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		elif int(command) == UP_KEY_RESP:
 			inputCore.manager.executeGesture(InputGestureKeys(UP_KEY_PRESS))
 			self._serial.waitForRead(self.timeout * 10)
-			KEY_CONFIRM = self._serial.read(2)
 			log.debug("Up Key Pressed")
 		elif int(command) == DOWN_KEY_RESP:
 			inputCore.manager.executeGesture(InputGestureKeys(DOWN_KEY_PRESS))
 			self._serial.waitForRead(self.timeout * 10)
-			KEY_CONFIRM = self._serial.read(2)
 			log.debug("Down Key Pressed")
 		elif int(command) == RIGHT_KEY_RESP:
 			inputCore.manager.executeGesture(InputGestureKeys(RIGHT_KEY_PRESS))
 			self._serial.waitForRead(self.timeout * 10)
-			KEY_CONFIRM = self._serial.read(2)
 			log.debug("Right Key Pressed")
 		elif int(command) == LEFT_KEY_RESP:
 			inputCore.manager.executeGesture(InputGestureKeys(LEFT_KEY_PRESS))
 			self._serial.waitForRead(self.timeout * 10)
-			KEY_CONFIRM = self._serial.read(2)
 			log.debug("Left Key Pressed")
 
 	def display(self, cells):
