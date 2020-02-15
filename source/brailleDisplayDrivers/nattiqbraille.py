@@ -12,9 +12,21 @@ from logHandler import log
 import hwIo
 
 BAUD_RATE = 10000000
-TIMEOUT = 0.3
-INIT_TAG = "0"
-
+INIT_TAG = b"0"
+RESET_TAG = b"reset"
+# Initilization response id
+INIT_RESP = 0
+# Keys response id
+ROUTE_RESP = 1
+UP_KEY_RESP = 2
+DOWN_KEY_RESP = 3
+RIGHT_KEY_RESP = 4
+LEFT_KEY_RESP = 5
+# Keys pressed id
+UP_KEY_PRESS = 1
+DOWN_KEY_PRESS = 2
+RIGHT_KEY_PRESS = 3
+LEFT_KEY_PRESS = 4
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "nattiqbraille"
@@ -33,7 +45,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			log.debug("Checking port %s for a Nattiq nBraille", port)
 			try:
 				self._serial = hwIo.Serial(
-					port, baudrate=BAUD_RATE, timeout=TIMEOUT, writeTimeout=TIMEOUT,
+					port, baudrate=BAUD_RATE, timeout=self.timeout, writeTimeout=self.timeout,
 					parity=serial.PARITY_NONE, onReceive=self._onReceive
 				)
 			except EnvironmentError:
@@ -52,18 +64,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		try:
 			super(BrailleDisplayDriver, self).terminate()
 		finally:
-			self._serial.write("reset".encode())
+			self._serial.write(RESET_TAG)
 			self._serial.close()
 			self._serial = None
 
 	def _describe(self):
 		self.numCells = 0
 		log.debug("Writing reset tag")
-		self._serial.write("reset".encode())
-		self._serial.waitForRead(3)
+		self._serial.write(RESET_TAG)
+		self._serial.waitForRead(self.timeout * 10)
 		log.debug("Writing init tag")
 		self._serial.write(INIT_TAG)
-		self._serial.waitForRead(3)
+		self._serial.waitForRead(self.timeout * 10)
 		# If a valid response was received, _onReceive will have set numCells.
 		if self.numCells:
 			return True
@@ -71,37 +83,35 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		return False
 
 	def _onReceive(self, command):
-		if int(command) == 0:
-			arg = self._serial.read(2)
-			self.numCells = int(arg)
-		elif int(command) == 2:
-			inputCore.manager.executeGesture(InputGestureKeys(1))
-			self._serial.waitForRead(1)
-			arg = self._serial.read(2)
-		elif int(command) == 3:
-			inputCore.manager.executeGesture(InputGestureKeys(2))
-			self._serial.waitForRead(1)
-			arg = self._serial.read(2)
-		elif int(command) == 4:
-			inputCore.manager.executeGesture(InputGestureKeys(3))
-			self._serial.waitForRead(1)
-			arg = self._serial.read(2)
-		elif int(command) == 5:
-			inputCore.manager.executeGesture(InputGestureKeys(4))
-			self._serial.waitForRead(1)
-			arg = self._serial.read(2)
-		elif int(command) == 1:
-			arg = self._serial.read(2)
-			try:
-				inputCore.manager.executeGesture(RoutingInputGesture(int(arg)))
-			except ValueError:
-				pass
+		if int(command) == INIT_RESP:
+			CELLS_NUM = self._serial.read(2)
+			self.numCells = int(CELLS_NUM)
+		elif int(command) == ROUTE_RESP:
+			ROUTE_KEY = self._serial.read(2)
+			inputCore.manager.executeGesture(RoutingInputGesture(int(ROUTE_KEY)))
+		elif int(command) == UP_KEY_RESP:
+			inputCore.manager.executeGesture(InputGestureKeys(UP_KEY_PRESS))
+			self._serial.waitForRead(self.timeout * 10)
+			KEY_CONFIRM = self._serial.read(2)
+			log.debug("Up Key Pressed")
+		elif int(command) == DOWN_KEY_RESP:
+			inputCore.manager.executeGesture(InputGestureKeys(DOWN_KEY_PRESS))
+			self._serial.waitForRead(self.timeout * 10)
+			KEY_CONFIRM = self._serial.read(2)
+			log.debug("Down Key Pressed")
+		elif int(command) == RIGHT_KEY_RESP:
+			inputCore.manager.executeGesture(InputGestureKeys(RIGHT_KEY_PRESS))
+			self._serial.waitForRead(self.timeout * 10)
+			KEY_CONFIRM = self._serial.read(2)
+			log.debug("Right Key Pressed")
+		elif int(command) == LEFT_KEY_RESP:
+			inputCore.manager.executeGesture(InputGestureKeys(LEFT_KEY_PRESS))
+			self._serial.waitForRead(self.timeout * 10)
+			KEY_CONFIRM = self._serial.read(2)
+			log.debug("Left Key Pressed")
 
-	def _dispatch(self, command, arg):
-		return
-	
 	def display(self, cells):
-		cells = "-".join(str(cell) for cell in cells)
+		cells = b"-".join(str(cell) for cell in cells)
 		log.debug(cells)
 		self._serial.write(cells)
 
@@ -121,13 +131,13 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 
 	def __init__(self, keys):
 		super(InputGestureKeys, self).__init__()
-		if keys == 1:
+		if keys == UP_KEY_PRESS:
 			self.id = "tback"
-		elif keys == 2:
+		elif keys == DOWN_KEY_PRESS:
 			self.id = "tadvance"
-		elif keys == 3:
+		elif keys == RIGHT_KEY_PRESS:
 			self.id = "tnext"
-		elif keys == 4:
+		elif keys == LEFT_KEY_PRESS:
 			self.id = "tprevious"
 
 
