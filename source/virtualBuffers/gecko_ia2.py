@@ -106,6 +106,12 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			role = controlTypes.ROLE_FIGURE
 		elif role in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_SECTION) and xmlRoles[0] == "region":
 			role = controlTypes.ROLE_REGION
+		elif xmlRoles[0] == "switch":
+			# role="switch" gets mapped to IA2_ROLE_TOGGLE_BUTTON, but it uses the
+			# checked state instead of pressed. The simplest way to deal with this
+			# identity crisis is to map it to a check box.
+			role = controlTypes.ROLE_CHECKBOX
+			states.discard(controlTypes.STATE_PRESSED)
 		attrs['role']=role
 		attrs['states']=states
 		if level is not "" and level is not None:
@@ -351,7 +357,10 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType=="comboBox":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX]}
 		elif nodeType=="checkBox":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_CHECKBUTTON]}
+			attrs = [
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_CHECKBUTTON]},
+				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("switch")]},
+			]
 		elif nodeType=="graphic":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_GRAPHIC]}
 		elif nodeType=="blockQuote":
