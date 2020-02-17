@@ -104,9 +104,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			log.debug("Left Key Pressed")
 
 	def display(self, cells):
-		cells = b"-".join(cell.to_bytes(1, "little") for cell in cells)
+		cells = "-".join(str(cell) for cell in cells)
 		log.debug(cells)
-		self._serial.write(cells)
+		self._serial.write(cells.encode())
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
