@@ -111,8 +111,8 @@ class SynthDriver(SynthDriver):
 		if charMode:
 			# Some synths stay in character mode if we don't explicitly disable it.
 			textList.append("\\RmS=0\\")
-		#Some SAPI4 synthesizers complete speech sequence just after the last text and ignore any indexes passed at the end
-		#Therefore we add the pause of 1ms at the end
+		# Some SAPI4 synthesizers complete speech sequence just after the last text and ignore any indexes passed at the end
+		# Therefore we add the pause of 1ms at the end
 		textList.append("\\PAU=1\\")
 		text="".join(textList)
 		flags=TTSDATAFLAG_TAGGED
