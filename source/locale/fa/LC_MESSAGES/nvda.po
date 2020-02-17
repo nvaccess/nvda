@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-12 00:10+1000\n"
-"PO-Revision-Date: 2019-07-12 01:09+0330\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
+"PO-Revision-Date: 2020-02-02 23:02+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@groups.io>\n"
 "Language: fa\n"
@@ -106,7 +106,8 @@ msgstr "خطای دستوری: {text}"
 msgid "unknown"
 msgstr "نامشخص"
 
-#. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
+#. Translators: This is presented when errors are found in an appModule
+#. (example output: error in appModule explorer).
 #, python-format
 msgid "Error in appModule %s"
 msgstr "خطا در ماژولِ برنامه‌ی %s"
@@ -145,11 +146,6 @@ msgstr "جستجو"
 msgctxt "aria"
 msgid "form"
 msgstr "فرم"
-
-#. Translators: Reported for a significant region, normally found on web pages.
-msgctxt "aria"
-msgid "region"
-msgstr "ناحیه"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -226,7 +222,7 @@ msgstr "فهر"
 msgid "gra"
 msgstr "گرا"
 
-#. Translators: Displayed in braille for an object which is a
+#. Translators: Displayed in braille for toast notifications and for an object which is a
 #. help balloon.
 msgid "hlp"
 msgstr "کمک"
@@ -307,6 +303,11 @@ msgid "grp"
 msgstr "گر"
 
 #. Translators: Displayed in braille for an object which is a
+#. caption.
+msgid "cap"
+msgstr "شرح"
+
+#. Translators: Displayed in braille for an object which is a
 #. embedded object.
 msgid "embedded"
 msgstr "تو"
@@ -373,6 +374,22 @@ msgstr "حذف"
 #. Translators: Displayed in braille for an object which is inserted.
 msgid "ins"
 msgstr "درج"
+
+#. Translators: Displayed in braille for a landmark.
+msgid "lmk"
+msgstr "بخش"
+
+#. Translators: Displayed in braille for an object which is an article.
+msgid "art"
+msgstr "مقل"
+
+#. Translators: Displayed in braille for an object which is a region.
+msgid "rgn"
+msgstr "ناح"
+
+#. Translators: Displayed in braille for an object which is a figure.
+msgid "fig"
+msgstr "فیگ"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -476,11 +493,6 @@ msgstr "جست"
 msgctxt "braille landmark abbreviation"
 msgid "form"
 msgstr "فرم"
-
-#. Translators: Displayed in braille for a significant region, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "rgn"
-msgstr "ناح"
 
 #. Translators: The description of a braille cursor shape.
 msgid "Dots 7 and 8"
@@ -898,8 +910,8 @@ msgstr "گُجَراتی درجه‌ی 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Koine Greek"
-msgstr "یونانیِ کُینه"
+msgid "Greek international braille"
+msgstr "بریلِ یونانیِ بین‌المللی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1695,6 +1707,38 @@ msgstr "به خطای قبلی میبَرَد"
 msgid "no previous error"
 msgstr "هیچ خطای قبلی‌ای نیست"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next article"
+msgstr "به مقاله‌ی بعدی میبَرَد."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next article"
+msgstr "هیچ مقاله‌ی بعدی‌ای نیست"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous article"
+msgstr "به مقاله‌ی قبلی میبَرَد."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous article"
+msgstr "هیچ مقاله‌ی قبلی‌ای نیست"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next grouping"
+msgstr "به گروهِ بعدی میبَرَد"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next grouping"
+msgstr "هیچ گروهِ بعدی‌ای نیست"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous grouping"
+msgstr "به گروهِ قبلی میبَرَد"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous grouping"
+msgstr "هیچ گروهِ قبلی‌ای نیست"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -1721,8 +1765,6 @@ msgstr "&دکمه"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings panel.
 msgid "Lan&dmarks"
 msgstr "&بخشها"
 
@@ -1749,15 +1791,6 @@ msgstr "&فعال کردن"
 #. in the browse mode Elements List dialog.
 msgid "&Move to"
 msgstr "&رفتن به"
-
-#, python-format
-msgid "%s landmark"
-msgstr "بخشِ %s"
-
-#. Translators: This is brailled to indicate a landmark (example output: lmk main).
-#, python-format
-msgid "lmk %s"
-msgstr "بخش %s"
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
@@ -2616,6 +2649,22 @@ msgstr "حذف‌شده"
 msgid "inserted"
 msgstr "درج‌شده"
 
+#. Translators: Identifies a landmark.
+msgid "landmark"
+msgstr "بخش"
+
+#. Translators: Identifies an article.
+msgid "article"
+msgstr "مقاله"
+
+#. Translators: Identifies a region.
+msgid "region"
+msgstr "ناحیه"
+
+#. Translators: Identifies a figure (commonly seen on some websites).
+msgid "figure"
+msgstr "فیگور"
+
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
 msgstr "بیرون از دسترس"
@@ -2996,6 +3045,11 @@ msgstr "گروه‌های پیکره‌بندی"
 #. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "بریل"
+
+#. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the vision panel
+msgid "Vision"
+msgstr "بینایی"
 
 #. Translators: The name of a category of NVDA commands.
 msgctxt "script category"
@@ -3450,6 +3504,18 @@ msgstr "سرنوشتارها اعلام میشوند."
 msgid "Toggles on and off the reporting of headings"
 msgstr "اعلام شدنِ سرنوشتارها را فعال یا غیرِ فعال میکند."
 
+#. Translators: Input help mode message for toggle report groupings command.
+msgid "Toggles on and off the reporting of groupings"
+msgstr "اعلام شدنِ گروه‌ها را فعال یا غیرِ فعال میکند."
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report groupings off"
+msgstr "گروه‌ها اعلام نمیشوند."
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report groupings on"
+msgstr "گروه‌ها اعلام میشوند."
+
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
 msgstr "نقلِ قول‌ها اعلام نمیشوند."
@@ -3463,16 +3529,28 @@ msgid "Toggles on and off the reporting of block quotes"
 msgstr "اعلام شدنِ نقلِ قول‌ها را فعال یا غیرِ فعال میکند."
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-msgid "report landmarks off"
-msgstr "بخشهای اصلیِ صفحه اعلام نمیشوند."
+msgid "report landmarks and regions off"
+msgstr "بخشهای اصلی و ناحیه‌های صفحه اعلام نمیشوند."
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-msgid "report landmarks on"
-msgstr "بخشهای اصلیِ صفحه اعلام میشوند."
+msgid "report landmarks and regions on"
+msgstr "بخشهای اصلی و ناحیه‌های صفحه اعلام میشوند."
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
 msgstr "اعلام شدنِ بخشهای اصلیِ صفحه را فعال یا غیرِ فعال میکند."
+
+#. Translators: Input help mode message for toggle report articles command.
+msgid "Toggles on and off the reporting of articles"
+msgstr "اعلام شدنِ مقاله‌ها را فعال یا غیرِ فعال میکند."
+
+#. Translators: The message announced when toggling the report articles document formatting setting.
+msgid "report articles off"
+msgstr "مقاله‌ها اعلام نمیشوند."
+
+#. Translators: The message announced when toggling the report articles document formatting setting.
+msgid "report articles on"
+msgstr "مقاله‌ها اعلام میشوند."
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
@@ -3868,10 +3946,9 @@ msgstr "NVDA را از نو راه می‌اندازد!"
 msgid "Shows the NVDA menu"
 msgstr "منوی NVDA را نشان میدهد"
 
-#. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"Reads from the review cursor up to end of current text, moving the review "
-"cursor as it goes"
+"Reads from the review cursor up to the end of the current text, moving the "
+"review cursor as it goes"
 msgstr ""
 "از محلِّ قرار‌گیریِ مکان‌نمای بازبینی تا پایانِ متنِ جاری را میخوانَد. هنگامِ خواندن، "
 "مکان‌نما را حرکت میدهد."
@@ -4306,6 +4383,14 @@ msgstr ""
 "موقعیتِ جاریِ مکان‌نمای بازبینی را به عنوانِ آغازِ متنی که قرار است انتخاب یا کپی "
 "شود نشانه‌گذاری میکند."
 
+msgid ""
+"Move the review cursor to the position marked as the start of text to be "
+"selected or copied"
+msgstr ""
+"مکان‌نمای بازبینی را به جایی که به عنوانِ آغازِ متنی که قرار است انتخاب یا کپی "
+"شود نشانه‌گذاری شده است میبَرَد."
+
+#. Translators: Presented when attempting to move to the start marker for copy but none has been set.
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 msgid "No start marker set"
 msgstr "نشانه‌ی آغاز گذاشته نشده است."
@@ -4509,6 +4594,53 @@ msgstr "نویسه‌خوانِ نوریِ ویندوزِ ۱۰ در دسترس �
 msgid ""
 "Recognizes the content of the current navigator object with Windows 10 OCR"
 msgstr "محتوای پیمایشگرِ جاری را با OCRِ ویندوز ۱۰ بازمیشناسد"
+
+#. Translators: Input help mode message for toggle report CLDR command.
+msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
+msgstr "اعلام شدنِ نویسه‌های CLDR، مانند ایموجی‌ها را فعال یا غیرِ فعال میکند."
+
+#. Translators: presented when the report CLDR is toggled.
+msgid "report CLDR characters off"
+msgstr "نویسه‌های CLDR اعلام نمیشوند."
+
+#. Translators: presented when the report CLDR is toggled.
+msgid "report CLDR characters on"
+msgstr "نویسه‌های CLDR اعلام میشوند."
+
+msgid ""
+"Toggles the state of the screen curtain, enable to make the screen black or "
+"disable to show the contents of the screen. Pressed once, screen curtain is "
+"enabled until you restart NVDA. Pressed twice, screen curtain is enabled "
+"until you disable it"
+msgstr ""
+"وضعیتِ پرده‌ی صفحه نمایش را فعال یا غیرفعال میکند. چنانچه فعال باشد، صفحه‌ی "
+"نمایش سیاه میشود. در صورت غیرفعال بودن، محتوای صفحه نمایش داده میشود. با یک "
+"بار فشردن، پرده تا وقتی NVDA را دوباره راه‌اندازی کنید فعال میمانَد. با دو بار "
+"فشردن، پرده تا هنگامی که غیرفعالش کنید فعال میمانَد."
+
+#. Translators: Reported when the screen curtain is disabled.
+msgid "Screen curtain disabled"
+msgstr "پرده غیرِ فعال شد"
+
+#. Translators: Reported when the screen curtain could not be enabled.
+msgid "Could not disable screen curtain"
+msgstr "نمیتوانم پرده را غیرفعال کنم"
+
+#. Translators: Reported when the screen curtain is not available.
+msgid "Screen curtain not available"
+msgstr "پرده موجود نیست"
+
+#. Translators: Reported when the screen curtain is enabled.
+msgid "Screen curtain enabled"
+msgstr "پرده فعال شد"
+
+#. Translators: Reported when the screen curtain is temporarily enabled.
+msgid "Temporary Screen curtain, enabled until next restart"
+msgstr "پرده‌ی موقتی. تا راه‌اندازیِ بَعدیِ NVDA فعال میمانَد."
+
+#. Translators: Reported when the screen curtain could not be enabled.
+msgid "Could not enable screen curtain"
+msgstr "نمیتوانم پرده را فعال کنم"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -6045,410 +6177,13 @@ msgstr "بازبینیِ صفحه‌ی نمایش"
 msgid "Emulates pressing %s on the system keyboard"
 msgstr "فِشُردنِ %s را روی صفحه کلیدِ سیستم تقلید میکند."
 
-#. Translators: This is spoken when NVDA moves to an empty line.
-#. Translators: This is spoken when the line is considered blank.
-msgid "blank"
-msgstr "خالی"
-
-#. Translators: cap will be spoken before the given letter when it is capitalized.
-#, python-format
-msgid "cap %s"
-msgstr "cap %s"
-
-#. Translators: This is spoken when the given line has no indentation.
-msgid "no indent"
-msgstr "بدونِ تورفتگی"
-
-#. Translators: This is spoken to indicate that some text is already selected.
-#. 'selected' preceding text is intentional.
-#. For example 'selected hello world'
-#, python-format
-msgid "selected %s"
-msgstr "%s انتخاب شد"
-
-#. Translators: This is spoken to indicate what has just been selected.
-#. The text preceding 'selected' is intentional.
-#. For example 'hello world selected'
-#, python-format
-msgid "%s selected"
-msgstr "%s انتخاب شد"
-
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
-#, python-format
-msgid "%d characters"
-msgstr "%d نویسه"
-
-#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
-#, python-format
-msgid "%s unselected"
-msgstr "%s انتخاب نشد"
-
-#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
-#, python-format
-msgid "%s selected instead"
-msgstr "%s به جایش انتخاب شد"
-
-#. Translators: Reported when selection is removed.
-msgid "selection removed"
-msgstr "انتخاب حذف شد."
-
-#. Translators: Speaks current row number (example output: row 3).
-#, python-format
-msgid "row %s"
-msgstr "سطرِ %s"
-
-#. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "تا %s"
-
-#. Translators: Speaks current column number (example output: column 3).
-#, python-format
-msgid "column %s"
-msgstr "ستونِ %s"
-
-#. Translators: Speaks the row and column span added to the current row and column numbers
-#. (example output: through row 5 column 3).
-#, python-brace-format
-msgid "through row {row} column {column}"
-msgstr "تا سطرِ {row} ستونِ {column}"
-
-#. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
-msgid "with {rowCount} rows and {columnCount} columns"
-msgstr "{rowCount} سطر و {columnCount} ستون دارد."
-
-#. Translators: Speaks number of columns (example output: with 4 columns).
-#, python-format
-msgid "with %s columns"
-msgstr "دارای %s ستون"
-
-#. Translators: Speaks number of rows (example output: with 2 rows).
-#, python-format
-msgid "with %s rows"
-msgstr "دارای %s سطر"
-
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "سطحِ %s"
-
-#. Translators: Number of items in a list (example output: list with 5 items).
-#, python-format
-msgid "with %s items"
-msgstr "دارای %s مورد"
-
-#. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
-#, python-format
-msgid "out of %s"
-msgstr "بیرونِ %s"
-
-#. Translators: Indicates the page number in a document.
-#. %s will be replaced with the page number.
-#, python-format
-msgid "page %s"
-msgstr "صفحه‌ی %s"
-
-#. Translators: Indicates the section number in a document.
-#. %s will be replaced with the section number.
-#, python-format
-msgid "section %s"
-msgstr "بخشِ %s"
-
-#. Translators: Indicates the text column number in a document.
-#. {0} will be replaced with the text column number.
-#. {1} will be replaced with the number of text columns.
-#, python-brace-format
-msgid "column {0} of {1}"
-msgstr "ستونِ {0} از {1}"
-
-#. Translators: Indicates the text column number in a document.
-#. %s will be replaced with the number of text columns.
-#, python-format
-msgid "%s columns"
-msgstr "%s ستون"
-
-msgid "continuous section break"
-msgstr "شکستِ بخشِ پیوسته"
-
-msgid "new column section break"
-msgstr "شکستِ بخشِ ستونِ جدید"
-
-msgid "new page section break"
-msgstr "شکستِ بخشِ صفحه‌ی جدید"
-
-msgid "even pages section break"
-msgstr "شکستِ بخشِ صفحاتِ زوج"
-
-msgid "odd pages section break"
-msgstr "شکستِ بخشِ صفحاتِ فرد"
-
-msgid "column break"
-msgstr "شکستِ ستون"
-
-#. Translators: Speaks the heading level (example output: heading level 2).
-#, python-format
-msgid "heading level %d"
-msgstr "سرنوشتارِ سطحِ %d"
-
-#. Translators: Indicates the style of text.
-#. A style is a collection of formatting settings and depends on the application.
-#. %s will be replaced with the name of the style.
-#, python-format
-msgid "style %s"
-msgstr "سبْکِ %s"
-
-#. Translators: Indicates that text has reverted to the default style.
-#. A style is a collection of formatting settings and depends on the application.
-msgid "default style"
-msgstr "سبْکِ پیش‌فرض"
-
-#. Translators: Indicates that cell does not have border lines.
-msgid "no border lines"
-msgstr "بدونِ خطوطِ حاشیه"
-
-#. Translators: Reported when there are two background colors.
-#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
-#. {color1} will be replaced with the first background color.
-#. {color2} will be replaced with the second background color.
-#, python-brace-format
-msgid "{color1} to {color2}"
-msgstr "{color1} به {color2}"
-
-#. Translators: Reported when both the text and background colors change.
-#. {color} will be replaced with the text color.
-#. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
-msgid "{color} on {backgroundColor}"
-msgstr "متنِ {color} روی پس‌زمینه‌ی {backgroundColor}"
-
-#. Translators: Reported when the text color changes (but not the background color).
-#. {color} will be replaced with the text color.
-#, python-brace-format
-msgid "{color}"
-msgstr "متنِ {color} رنگ"
-
-#. Translators: Reported when the background color changes (but not the text color).
-#. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
-msgid "{backgroundColor} background"
-msgstr "پس‌زمینه‌ی {backgroundColor} رنگ"
-
-#, python-brace-format
-msgid "background pattern {pattern}"
-msgstr "الگوی پس‌زمینه‌ی {pattern}"
-
-#. Translators: Indicates the line number of the text.
-#. %s will be replaced with the line number.
-#, python-format
-msgid "line %s"
-msgstr "خطِّ %s"
-
-#. Translators: Reported when text is no longer marked as having been inserted.
-msgid "not inserted"
-msgstr "درج‌نشده"
-
-#. Translators: Reported when text is no longer marked as having been  deleted.
-msgid "not deleted"
-msgstr "حذف‌نشده"
-
-#. Translators: Reported when text is revised.
-#, python-format
-msgid "revised %s"
-msgstr "%s بازنگری شد"
-
-#. Translators: Reported when text is not revised.
-#, python-format
-msgid "no revised %s"
-msgstr "%s بازبینی‌نشده"
-
-#. Translators: Reported when text is marked
-msgid "marked"
-msgstr "نشانه‌گذاری‌شده"
-
-#. Translators: Reported when text is no longer marked
-msgid "not marked"
-msgstr "نشانه‌گذاری‌نشده"
-
-#. Translators: Reported when text is marked as strong (e.g. bold)
-msgid "strong"
-msgstr "مهم"
-
-#. Translators: Reported when text is no longer marked as strong (e.g. bold)
-msgid "not strong"
-msgstr "غیرِ مهم"
-
-#. Translators: Reported when text is marked as emphasised
-msgid "emphasised"
-msgstr "تأکید‌شده"
-
-#. Translators: Reported when text is no longer marked as emphasised
-msgid "not emphasised"
-msgstr "تأکید‌نشده"
-
-#. Translators: Reported when text is not bolded.
-msgid "no bold"
-msgstr "کلفت‌نویس نیست"
-
-#. Translators: Reported when text is not italicized.
-msgid "no italic"
-msgstr "کج‌نویس نیست"
-
-#. Translators: Reported when text is formatted with double strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
-msgid "double strikethrough"
-msgstr "دوبار خط‌خورده"
-
-#. Translators: Reported when text is formatted with strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
-msgid "strikethrough"
-msgstr "خط‌خورده"
-
-#. Translators: Reported when text is formatted without strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
-msgid "no strikethrough"
-msgstr "خط‌نخورده"
-
-#. Translators: Reported when text is underlined.
-msgid "underlined"
-msgstr "زیرخط‌دار"
-
-#. Translators: Reported when text is not underlined.
-msgid "not underlined"
-msgstr "زیرخط‌دار نیست"
-
-#. Translators: Reported for text which is at the baseline position;
-#. i.e. not superscript or subscript.
-msgid "baseline"
-msgstr "روی خط"
-
-#. Translators: Reported when text is left-aligned.
-msgid "align left"
-msgstr "چپ‌چین"
-
-#. Translators: Reported when text is centered.
-msgid "align center"
-msgstr "وسط‌چین"
-
-#. Translators: Reported when text is right-aligned.
-msgid "align right"
-msgstr "راست‌چین"
-
-#. Translators: Reported when text is justified.
-#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
-msgid "align justify"
-msgstr "هم‌تراز"
-
-#. Translators: Reported when text is justified with character spacing (Japanese etc)
-#. See http://kohei.us/2010/01/21/distributed-text-justification/
-msgid "align distributed"
-msgstr "دو‌سو‌چین"
-
-#. Translators: Reported when text has reverted to default alignment.
-msgid "align default"
-msgstr "ترازِ پیش‌فرض"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "عمود‌چینِ بالا"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "عمود‌چینِ وسط"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "عمود‌چینِ پایین"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "عمود‌چینِ روی خط"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "عمود‌چینِ هم‌تراز"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "عمود‌چینِ پراکنده"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "عمود‌چینِ پیشفرض"
-
-#. Translators: the label for paragraph format left indent
-msgid "left indent"
-msgstr "تورفتگی از چپ"
-
-#. Translators: the message when there is no paragraph format left indent
-msgid "no left indent"
-msgstr "بدونِ تورفتگی از چپ"
-
-#. Translators: the label for paragraph format right indent
-msgid "right indent"
-msgstr "تورفتگی از راست"
-
-#. Translators: the message when there is no paragraph format right indent
-msgid "no right indent"
-msgstr "بدونِ تورفتگی از راست"
-
-#. Translators: the label for paragraph format hanging indent
-msgid "hanging indent"
-msgstr "تورفتگی"
-
-#. Translators: the message when there is no paragraph format hanging indent
-msgid "no hanging indent"
-msgstr "بدونِ تورفتگی"
-
-#. Translators: the label for paragraph format first line indent
-msgid "first line indent"
-msgstr "تورفتگیِ خطِّ اول"
-
-#. Translators: the message when there is no paragraph format first line indent
-msgid "no first line indent"
-msgstr "بدونِ تورفتگیِ خطِّ اول"
-
-#. Translators: a type of line spacing (E.g. single line spacing)
-#, python-format
-msgid "line spacing %s"
-msgstr "فاصله‌ی خطّیِ %s"
-
-#. Translators: Reported when text no longer contains a comment.
-msgid "out of comment"
-msgstr "هیچ دیدگاهی نیست"
-
-#. Translators: Reported when text contains a spelling error.
-msgid "spelling error"
-msgstr "خطای املایی"
-
-#. Translators: Reported when moving out of text containing a spelling error.
-msgid "out of spelling error"
-msgstr "بیرون از خطای املایی"
-
-#. Translators: Reported when text contains a grammar error.
-msgid "grammar error"
-msgstr "خطای گرامری"
-
-#. Translators: Reported when moving out of text containing a grammar error.
-msgid "out of grammar error"
-msgstr "بیرون از خطای دستوری"
-
-#. Translators: Indicates end of a table.
-msgid "out of table"
-msgstr "بیرون از جدول"
-
-#. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
-msgid "table with {columnCount} columns and {rowCount} rows"
-msgstr "جدولی با {columnCount} ستون و {rowCount} سطر"
-
 msgid "NVDA Speech Viewer"
 msgstr "سخن‌نمای NVDA"
 
-#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+#. Translators: The label for a setting in the speech viewer that controls
+#. whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
-msgstr "نشان دادَنِ &نمایشگرِ گفتار در آغاز"
+msgstr "&نمایشگرِ گفتار را در آغازِ کار نشان بده"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -6806,7 +6541,7 @@ msgid ""
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} is developed by NV Access, a non-profit organisation committed to "
@@ -6833,9 +6568,9 @@ msgstr ""
 "{name} توسط NV Access توسعه داده میشود؛ سازمانی غیرِ انتفاعی که متعهدِ کمک به "
 "افرادِ نابینا و کم‌بینا با فراهم‌آوری و ترویجِ راهِ حل‌های رایگان و متن‌باز برای "
 "این قشر است.\n"
-"اگر NVDA را قابلِ استفاده میدانید و میخواهید همچنان بهتر و بهتر شود، کمک مالی "
-"به NV Access را مدِّ نظر قرار دهید. شما میتوانید این کار را با انتخابِ گزینه‌ی "
-"کمکِ مالی از منوی NVDA انجام دهید."
+"اگر NVDA را مفید میدانید و میخواهید همچنان بهبود یافته، به‌روز بماند، کمک "
+"مالی به NV Access را مدِّ نظر قرار دهید. شما میتوانید این کار را با انتخابِ "
+"گزینه‌ی کمکِ مالی از منوی NVDA انجام دهید."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
 #, python-brace-format
@@ -6906,10 +6641,6 @@ msgstr "تلاش میکند راهنمای موردِ تکمیلِ خودکار�
 #. Translators: When the help popup cannot be found for the selected autocompletion item
 msgid "Cann't find the documentation window."
 msgstr "نمیتوانم پنجره‌ی راهنما را پیدا کنم."
-
-#. Translators: The title of Start menu/screen in your language (only the word start).
-msgid "Start"
-msgstr "شروع"
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
@@ -7391,38 +7122,6 @@ msgstr "اسلایدِ خالی"
 msgid "Waiting for Powerpoint..."
 msgstr "در انتظارِ پاورپوینت"
 
-#. Translators: The name of the NVDA command category for Skype specific commands.
-msgid "Skype"
-msgstr "اسکایپ"
-
-msgid "Reports and moves the review cursor to a recent message"
-msgstr ""
-"آخرین پیامِ رسیده را اعلام میکند و مکان‌نمای بازبینی را روی آن پیام میبَرَد"
-
-#. Translators: Indicates that a contact stopped typing.
-msgid "Typing stopped"
-msgstr "نوشتن متوقف شد"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Rewind"
-msgstr "عقب بردن"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Fast forward"
-msgstr "جلو بردن"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Play"
-msgstr "پخش"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Stop"
-msgstr "ایست"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Record"
-msgstr "ضبط کردن"
-
 msgid "left"
 msgstr "چپ"
 
@@ -7559,6 +7258,15 @@ msgstr "نمایشگرهای بریلِ Seika"
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
 msgstr "SuperBraille"
+
+#. Translators: The title of the NVDA Braille Viewer tool window.
+msgid "NVDA Braille Viewer"
+msgstr "نمایشگرِ بریلِ NVDA"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether the braille viewer is shown at startup or not.
+msgid "&Show Braille Viewer on Startup"
+msgstr "&نمایشگرِ بریل را در آغازِ کار نشان بده"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -7734,6 +7442,10 @@ msgstr "نمایشِ اِتِّفاقاتِ &ثبت شده (Log)"
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
 msgstr "نمایشگرِ &گفتار"
+
+#. Translators: The label for the menu item to toggle Braille Viewer.
+msgid "Braille viewer"
+msgstr "نمایشگرِ مجازیِ بریل"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -7989,12 +7701,16 @@ msgstr ""
 #. Translators: The label of a Yes button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
 #. the add-on
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. agree to enabling the curtain.
 msgid "&Yes"
 msgstr "&بله"
 
 #. Translators: The label of a No button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to decide not to
 #. install the add-on
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. disagree to enabling the curtain.
 msgid "&No"
 msgstr "&نه"
 
@@ -8860,7 +8576,8 @@ msgid "Automatic language switching (when supported)"
 msgstr "تعویضِ خودکارِ &زبان (هرگاه پشتیبانی شود)"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings panel (if checked, different voices for dialects will be used to read text in that dialect).
+#. voice settings panel (if checked, different voices for dialects will be used to
+#. read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
 msgstr "تعویضِ خودکارِ &لهجه (هرگاه پشتیبانی شود)"
 
@@ -8874,9 +8591,6 @@ msgstr "سطحِ خوانده شدنِ &علائمِ نقطه‌گذاری و ن
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "&اعتنا کردن به زبانِ صدای فعلی هنگامِ پردازشِ نویسه‌ها و نمادها"
 
-#. Translators: This is the label for a checkbox in the
-#. voice settings panel (if checked, data from the unicode CLDR will be used
-#. to speak emoji descriptions).
 msgid ""
 "Include Unicode Consortium data (including emoji) when processing characters "
 "and symbols"
@@ -8884,7 +8598,8 @@ msgstr ""
 "در بر گرفتنِ داده‌های کنسرسیومِ یونیکُد (از جمله ایموجی‌ها)، هنگامِ پردازشِ نویسه‌ها "
 "و نمادها"
 
-#. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
+#. Translators: This is a label for a setting in voice settings (an edit box to change
+#. voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "&درصدِ تغییرِ زیر و بمیِ صدای حروفِ بزرگ"
 
@@ -9276,8 +8991,8 @@ msgid "Tones"
 msgstr "بوق"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both  Speech and Tones"
-msgstr "گفتار و بوق"
+msgid "Both Speech and Tones"
+msgstr "گفتار و بوق با هم"
 
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -9346,6 +9061,21 @@ msgstr "&نقلِ قول‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+msgid "&Groupings"
+msgstr "&گروه‌ها"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+msgid "Lan&dmarks and regions"
+msgstr "بخش‌ها و نا&حیه‌ها"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+msgid "Arti&cles"
+msgstr "مق&اله‌ها"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "Fra&mes"
 msgstr "&قاب‌ها"
 
@@ -9405,14 +9135,26 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Use UI Automation to access the Windows Console when available"
+msgid "Use UI Automation to access the Windows C&onsole when available"
 msgstr ""
-"استفاده از UI Automation برای دستیابی به میزِ فرمانِ ویندوز در صورت موجود بودن"
+"استفاده از UI Automation برای دستیابی به میزِ &فرمانِ ویندوز در صورت موجود بودن"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Speak &passwords in UIA consoles (may improve performance)"
 msgstr "خواندنِ &گذرواژه‌ها در میزهای فرمانِ UIA (ممکن است اجرا را بهبود بخشد)"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Terminal programs"
+msgstr "برنامه‌های پایانه‌ای"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use the new t&yped character support in Windows Console when available"
+msgstr ""
+"استفاده از پشتیبانیِ جدید از نویسه‌های &تایپ‌شده در میزِ فرمانِ ویندوز در صورت "
+"موجود بودن"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9566,10 +9308,14 @@ msgstr "&نمایشگر بریل:"
 msgid "&Port:"
 msgstr "&درگاه:"
 
-#, python-format
-msgid "Could not load the %s display."
-msgstr "نمایشگرِ %s را نمیتوانم بارگذاری کنم."
+#. Translators: The message in a dialog presented when NVDA is unable to load the selected
+#. braille display.
+#, python-brace-format
+msgid "Could not load the {display} display."
+msgstr "نمایشگرِ {display} را نمیتوانم بارگذاری کنم."
 
+#. Translators: The title in a dialog presented when NVDA is unable to load the selected
+#. braille display.
 msgid "Braille Display Error"
 msgstr "خطا در نمایشگرِ بریل"
 
@@ -9628,6 +9374,61 @@ msgstr "&جلوگیری از از‌هم‌جدا شدنِ واژه ها در ص
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
 msgstr "ارائه‌ی اطلاعاتِ زمینه‌ایِ فکوس"
+
+#. Translators: This message is presented when
+#. NVDA is unable to load a single vision enhancement provider.
+#, python-brace-format
+msgid "Could not load the {providerName} vision enhancement provider"
+msgstr "نمیتوانم آسانسازِ بیناییِ {providerName} را بارگزاری کنم."
+
+#. Translators: This message is presented when NVDA is unable to
+#. load multiple vision enhancement providers.
+#, python-brace-format
+msgid ""
+"Could not load the following vision enhancement providers:\n"
+"{providerNames}"
+msgstr ""
+"نمیتوانم این آسانساز‌های بینایی را بارگزاری کنم:\n"
+"{providerNames}"
+
+#. Translators: The title of the vision enhancement provider error message box.
+msgid "Vision Enhancement Provider Error"
+msgstr "خطای آسانسازِ بینایی"
+
+#. Translators: This message is presented when
+#. NVDA is unable to gracefully terminate a single vision enhancement provider.
+#, python-brace-format
+msgid ""
+"Could not gracefully terminate the {providerName} vision enhancement provider"
+msgstr "نتوانستم بدرستی آسانسازِ بیناییِ {providerName} را تمام کنم."
+
+#, python-brace-format
+msgid ""
+"Could not gracefully terminate the following vision enhancement providers:\n"
+"{providerNames}"
+msgstr ""
+"نتوانستم بدرستی این آسانساز‌های بینایی را تمام کنم:\n"
+"{providerNames}"
+
+#. Translators: This is a label appearing on the vision settings panel.
+msgid "Configure visual aids."
+msgstr "دستیارهای بینایی را پیکره‌بندی کنید."
+
+#. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
+msgid "Enable"
+msgstr "فعال"
+
+#. Translators: Options label on a vision enhancement provider on the vision settings category panel
+#. Translators: The label for a group box containing the NVDA highlighter options.
+msgid "Options:"
+msgstr "گزینه ها:"
+
+#. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
+msgid ""
+"Unable to configure user interface for Vision Enhancement Provider, it can "
+"not be enabled."
+msgstr ""
+"نمیتوانم برای آسانسازِ بینایی رابطِ کاربری تنظیم کنم. آسانساز فعال نمیشود."
 
 #. Translators: This is the label for the NVDA settings dialog.
 msgid "NVDA Settings"
@@ -9703,6 +9504,10 @@ msgctxt "inputGestures"
 msgid "&Filter by:"
 msgstr "&فیلتر کردن با"
 
+#. Translators: The label of a button to reset all gestures in the Input Gestures dialog.
+msgid "Reset to factory &defaults"
+msgstr "بازگرداندنِ تنظیمات به &پیش‌فرضِ نرم‌افزار"
+
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
@@ -9713,6 +9518,20 @@ msgstr "{main} ({source})"
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 msgid "Enter input gesture:"
 msgstr "فرمانِ ورودی را وارد کنید:"
+
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid ""
+"Are you sure you want to reset all gestures to their factory defaults?\n"
+"\t\t\t\n"
+"\t\t\tAll of your user defined gestures, whether previously set or defined "
+"during this session, will be lost.\n"
+"\t\t\tThis cannot be undone."
+msgstr ""
+"آیا مطمئنید که میخواهید همه‌ی فرمان‌ها را به پیش‌فرض نرم‌افزار برگردانید؟\n"
+"\t\t\t\n"
+"\t\t\tهمه‌ی فرمان‌هایی که توسط شما چه در این نشست و یا در گذشته تعریف شده است "
+"از بین خواهد رفت.\n"
+"\t\t\tاین کار برگشتپذیر نیست."
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
@@ -9728,6 +9547,412 @@ msgstr "خروج از تعامل با محتوای ریاضی"
 #. but math interaction is not supported.
 msgid "Math interaction not supported."
 msgstr "تعاملِ ریاضی پشتیبانی نمیشود."
+
+#. Translators: This is spoken when NVDA moves to an empty line.
+#. Translators: This is spoken when the line is considered blank.
+msgid "blank"
+msgstr "خالی"
+
+#. Translators: cap will be spoken before the given letter when it is capitalized.
+#, python-format
+msgid "cap %s"
+msgstr "cap %s"
+
+#. Translators: This is spoken when the given line has no indentation.
+msgid "no indent"
+msgstr "بدونِ تورفتگی"
+
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "%s انتخاب شد"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s انتخاب شد"
+
+#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#, python-format
+msgid "%d characters"
+msgstr "%d نویسه"
+
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
+#, python-format
+msgid "%s unselected"
+msgstr "%s انتخاب نشد"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s به جایش انتخاب شد"
+
+#. Translators: Reported when selection is removed.
+msgid "selection removed"
+msgstr "انتخاب حذف شد."
+
+#. Translators: Speaks current row number (example output: row 3).
+#, python-format
+msgid "row %s"
+msgstr "سطرِ %s"
+
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-format
+msgid "through %s"
+msgstr "تا %s"
+
+#. Translators: Speaks current column number (example output: column 3).
+#, python-format
+msgid "column %s"
+msgstr "ستونِ %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "تا سطرِ {row} ستونِ {column}"
+
+#. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
+#, python-brace-format
+msgid "with {rowCount} rows and {columnCount} columns"
+msgstr "{rowCount} سطر و {columnCount} ستون دارد."
+
+#. Translators: Speaks number of columns (example output: with 4 columns).
+#, python-format
+msgid "with %s columns"
+msgstr "دارای %s ستون"
+
+#. Translators: Speaks number of rows (example output: with 2 rows).
+#, python-format
+msgid "with %s rows"
+msgstr "دارای %s سطر"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "سطحِ %s"
+
+#. Translators: Number of items in a list (example output: list with 5 items).
+#, python-format
+msgid "with %s items"
+msgstr "دارای %s مورد"
+
+#. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
+#, python-format
+msgid "out of %s"
+msgstr "بیرونِ %s"
+
+#. Translators: Indicates the page number in a document.
+#. %s will be replaced with the page number.
+#, python-format
+msgid "page %s"
+msgstr "صفحه‌ی %s"
+
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "بخشِ %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+#, python-brace-format
+msgid "column {0} of {1}"
+msgstr "ستونِ {0} از {1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s ستون"
+
+msgid "continuous section break"
+msgstr "شکستِ بخشِ پیوسته"
+
+msgid "new column section break"
+msgstr "شکستِ بخشِ ستونِ جدید"
+
+msgid "new page section break"
+msgstr "شکستِ بخشِ صفحه‌ی جدید"
+
+msgid "even pages section break"
+msgstr "شکستِ بخشِ صفحاتِ زوج"
+
+msgid "odd pages section break"
+msgstr "شکستِ بخشِ صفحاتِ فرد"
+
+msgid "column break"
+msgstr "شکستِ ستون"
+
+#. Translators: Speaks the heading level (example output: heading level 2).
+#, python-format
+msgid "heading level %d"
+msgstr "سرنوشتارِ سطحِ %d"
+
+#. Translators: Indicates the style of text.
+#. A style is a collection of formatting settings and depends on the application.
+#. %s will be replaced with the name of the style.
+#, python-format
+msgid "style %s"
+msgstr "سبْکِ %s"
+
+#. Translators: Indicates that text has reverted to the default style.
+#. A style is a collection of formatting settings and depends on the application.
+msgid "default style"
+msgstr "سبْکِ پیش‌فرض"
+
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "بدونِ خطوطِ حاشیه"
+
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+#, python-brace-format
+msgid "{color1} to {color2}"
+msgstr "{color1} به {color2}"
+
+#. Translators: Reported when both the text and background colors change.
+#. {color} will be replaced with the text color.
+#. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
+msgid "{color} on {backgroundColor}"
+msgstr "متنِ {color} روی پس‌زمینه‌ی {backgroundColor}"
+
+#. Translators: Reported when the text color changes (but not the background color).
+#. {color} will be replaced with the text color.
+#, python-brace-format
+msgid "{color}"
+msgstr "متنِ {color} رنگ"
+
+#. Translators: Reported when the background color changes (but not the text color).
+#. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
+msgid "{backgroundColor} background"
+msgstr "پس‌زمینه‌ی {backgroundColor} رنگ"
+
+#, python-brace-format
+msgid "background pattern {pattern}"
+msgstr "الگوی پس‌زمینه‌ی {pattern}"
+
+#. Translators: Indicates the line number of the text.
+#. %s will be replaced with the line number.
+#, python-format
+msgid "line %s"
+msgstr "خطِّ %s"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "درج‌نشده"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "حذف‌نشده"
+
+#. Translators: Reported when text is revised.
+#, python-format
+msgid "revised %s"
+msgstr "%s بازنگری شد"
+
+#. Translators: Reported when text is not revised.
+#, python-format
+msgid "no revised %s"
+msgstr "%s بازبینی‌نشده"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "نشانه‌گذاری‌شده"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "نشانه‌گذاری‌نشده"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "مهم"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "غیرِ مهم"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "تأکید‌شده"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "تأکید‌نشده"
+
+#. Translators: Reported when text is not bolded.
+msgid "no bold"
+msgstr "کلفت‌نویس نیست"
+
+#. Translators: Reported when text is not italicized.
+msgid "no italic"
+msgstr "کج‌نویس نیست"
+
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "دوبار خط‌خورده"
+
+#. Translators: Reported when text is formatted with strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "strikethrough"
+msgstr "خط‌خورده"
+
+#. Translators: Reported when text is formatted without strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "no strikethrough"
+msgstr "خط‌نخورده"
+
+#. Translators: Reported when text is underlined.
+msgid "underlined"
+msgstr "زیرخط‌دار"
+
+#. Translators: Reported when text is not underlined.
+msgid "not underlined"
+msgstr "زیرخط‌دار نیست"
+
+#. Translators: Reported when text is hidden.
+msgid "hidden"
+msgstr "مخفیست"
+
+#. Translators: Reported when text is not hidden.
+msgid "not hidden"
+msgstr "مخفی نیست"
+
+#. Translators: Reported for text which is at the baseline position;
+#. i.e. not superscript or subscript.
+msgid "baseline"
+msgstr "روی خط"
+
+#. Translators: Reported when text is left-aligned.
+msgid "align left"
+msgstr "چپ‌چین"
+
+#. Translators: Reported when text is centered.
+msgid "align center"
+msgstr "وسط‌چین"
+
+#. Translators: Reported when text is right-aligned.
+msgid "align right"
+msgstr "راست‌چین"
+
+#. Translators: Reported when text is justified.
+#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
+msgid "align justify"
+msgstr "هم‌تراز"
+
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "دو‌سو‌چین"
+
+#. Translators: Reported when text has reverted to default alignment.
+msgid "align default"
+msgstr "ترازِ پیش‌فرض"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "عمود‌چینِ بالا"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "عمود‌چینِ وسط"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "عمود‌چینِ پایین"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "عمود‌چینِ روی خط"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "عمود‌چینِ هم‌تراز"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "عمود‌چینِ پراکنده"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "عمود‌چینِ پیشفرض"
+
+#. Translators: the label for paragraph format left indent
+msgid "left indent"
+msgstr "تورفتگی از چپ"
+
+#. Translators: the message when there is no paragraph format left indent
+msgid "no left indent"
+msgstr "بدونِ تورفتگی از چپ"
+
+#. Translators: the label for paragraph format right indent
+msgid "right indent"
+msgstr "تورفتگی از راست"
+
+#. Translators: the message when there is no paragraph format right indent
+msgid "no right indent"
+msgstr "بدونِ تورفتگی از راست"
+
+#. Translators: the label for paragraph format hanging indent
+msgid "hanging indent"
+msgstr "تورفتگی"
+
+#. Translators: the message when there is no paragraph format hanging indent
+msgid "no hanging indent"
+msgstr "بدونِ تورفتگی"
+
+#. Translators: the label for paragraph format first line indent
+msgid "first line indent"
+msgstr "تورفتگیِ خطِّ اول"
+
+#. Translators: the message when there is no paragraph format first line indent
+msgid "no first line indent"
+msgstr "بدونِ تورفتگیِ خطِّ اول"
+
+#. Translators: a type of line spacing (E.g. single line spacing)
+#, python-format
+msgid "line spacing %s"
+msgstr "فاصله‌ی خطّیِ %s"
+
+#. Translators: Reported when text no longer contains a comment.
+msgid "out of comment"
+msgstr "هیچ دیدگاهی نیست"
+
+#. Translators: Reported when text contains a spelling error.
+msgid "spelling error"
+msgstr "خطای املایی"
+
+#. Translators: Reported when moving out of text containing a spelling error.
+msgid "out of spelling error"
+msgstr "بیرون از خطای املایی"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "خطای گرامری"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "بیرون از خطای دستوری"
+
+#. Translators: Indicates end of a table.
+msgid "out of table"
+msgstr "بیرون از جدول"
+
+#. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
+#, python-brace-format
+msgid "table with {columnCount} columns and {rowCount} rows"
+msgstr "جدولی با {columnCount} ستون و {rowCount} سطر"
 
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
@@ -9787,6 +10012,62 @@ msgid ""
 msgstr ""
 "هنگامِ ارائه‌ی محتوای سند، مرورِ صفحه را بر اساسِ چیدمانِ بصریِ صفحه یا بر اساس "
 "مرور خط به خط تغییر میدهد."
+
+#. Translators: shown for a highlighter setting that toggles
+#. highlighting the system focus.
+msgid "Highlight system fo&cus"
+msgstr "برجسته‌سازِ &فکوسِ سیستم"
+
+#. Translators: shown for a highlighter setting that toggles
+#. highlighting the browse mode cursor.
+msgid "Highlight browse &mode cursor"
+msgstr "برجسته‌سازِ مکان‌نمای &حالتِ مرور"
+
+#. Translators: shown for a highlighter setting that toggles
+#. highlighting the navigator object.
+msgid "Highlight navigator &object"
+msgstr "برجسته‌سازِ &پِیمایِشگر"
+
+#. Translators: Description for NVDA's built-in screen highlighter.
+msgid "Focus Highlight"
+msgstr "برجسته‌سازِ فکوس"
+
+#. Translators: The label for a checkbox that enables / disables focus highlighting
+#. in the NVDA Highlighter vision settings panel.
+msgid "&Enable Highlighting"
+msgstr "&فعال کردنِ برجسته‌سازی"
+
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
+#. making it black.
+msgid "Screen Curtain"
+msgstr "پرده‌ی صفحه نمایش"
+
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
+#. the screen curtain.
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "نشان دادَنِ همیشگیِ &هشدار هنگامِ اجرای پرده‌ی صفحه نمایش"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "&پخش کردنِ صدا هنگامِ فعال یا غیرفعال کردنِ پرده"
+
+#. Translators: A warning shown when activating the screen curtain.
+#. the translation of "Screen Curtain" should match the "translated name"
+msgid ""
+"Enabling Screen Curtain will make the screen of your computer completely "
+"black. Ensure you will be able to navigate without any use of your screen "
+"before continuing. \n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"با فعال کردنِ پرده‌ی صفحه نمایش، صفحه بطور کامل سیاه خواهد شد. پیش از اینکه "
+"ادامه بدهید، مطمئن شوید که بدون صفحه‌ی نمایش میتوانید با رایانه کار کنید.\n"
+"\n"
+"آیا میخواهید ادامه بدهید؟"
+
+#. Translators: option to enable screen curtain in the vision settings panel
+msgid "Make screen black (immediate effect)"
+msgstr "&سیاه کردنِ آنیِ صفحه"
 
 msgid "Taskbar"
 msgstr "نوارِ وظیفه"
@@ -11213,6 +11494,22 @@ msgstr "سبْک {styleName}، سطحِ اختصار {outlineLevel}"
 msgid "{size:g} point font"
 msgstr "قلم {size:g} نقطه ای"
 
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking on"
+msgstr "ردیابیِ تغییرات فعال شد"
+
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking off"
+msgstr "ردیابیِ تغییرات غیرفعال شد"
+
+#. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
+msgid "Display nonprinting characters"
+msgstr "نمایشِ نویسه‌های چاپ‌نشدنی"
+
+#. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
+msgid "Hide nonprinting characters"
+msgstr "مخفی کردنِ نویسه‌های چاپ‌نشدنی"
+
 #. Translators: a measurement in Microsoft Word
 #, python-brace-format
 msgid "{offset:.3g} characters"
@@ -11255,6 +11552,48 @@ msgstr "فاصله‌ی خطّیِ دوبرابر"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "فاصله‌ی یِکُنیم خطّی"
+
+#, fuzzy
+#~ msgid "Highlighter"
+#~ msgstr "برجسته"
+
+#, fuzzy
+#~ msgid "NVDA Highlighter"
+#~ msgstr "%s برجسته شد"
+
+#~ msgid "Koine Greek"
+#~ msgstr "یونانیِ کُینه"
+
+#~ msgid "lmk %s"
+#~ msgstr "بخش %s"
+
+#~ msgid "Start"
+#~ msgstr "شروع"
+
+#~ msgid "Skype"
+#~ msgstr "اسکایپ"
+
+#~ msgid "Reports and moves the review cursor to a recent message"
+#~ msgstr ""
+#~ "آخرین پیامِ رسیده را اعلام میکند و مکان‌نمای بازبینی را روی آن پیام میبَرَد"
+
+#~ msgid "Typing stopped"
+#~ msgstr "نوشتن متوقف شد"
+
+#~ msgid "Rewind"
+#~ msgstr "عقب بردن"
+
+#~ msgid "Fast forward"
+#~ msgstr "جلو بردن"
+
+#~ msgid "Play"
+#~ msgstr "پخش"
+
+#~ msgid "Stop"
+#~ msgstr "ایست"
+
+#~ msgid "Record"
+#~ msgstr "ضبط کردن"
 
 #~ msgid "Selected %s"
 #~ msgstr "%s انتخاب شد"

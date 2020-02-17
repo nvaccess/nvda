@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from typing import Dict
 import heapq
 import itertools
 import struct
@@ -345,7 +346,9 @@ def accessibleObjectFromEvent(window,objectID,childID):
 	try:
 		pacc,childID=oleacc.AccessibleObjectFromEvent(window,objectID,childID)
 	except Exception as e:
-		log.debugWarning("oleacc.AccessibleObjectFromEvent with window %s, objectID %s and childID %s: %s"%(window,objectID,childID,e))
+		log.debug(
+			f"oleacc.AccessibleObjectFromEvent with window {window}, objectID {objectID} and childID {childID}: {e}"
+		)
 		return None
 	return (normalizeIAccessible(pacc,childID),childID)
 
@@ -573,6 +576,10 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 				window=tempWindow
 
 		windowClassName=winUser.getClassName(window)
+		if windowClassName == "ConsoleWindowClass":
+			# #10113: we need to use winEvents to track the real thread for console windows.
+			consoleWindowsToThreadIDs[window] = threadID
+
 		# Modern IME candidate list windows fire menu events which confuse us
 		# and can't be used properly in conjunction with input composition support.
 		if windowClassName=="Microsoft.IME.UIManager.CandidateWindow.Host" and eventID in MENU_EVENTIDS:
@@ -1100,3 +1107,13 @@ def isMarshalledIAccessible(IAccessibleObject):
 	windll.kernel32.GetModuleHandleExW(6,addr,byref(handle))
 	windll.kernel32.GetModuleFileNameW(handle,buf,1024)
 	return not buf.value.lower().endswith('oleacc.dll')
+
+
+#: Maps from console windows (ConsoleWindowClass) to thread IDs
+# Windows hacks GetWindowThreadProcessId to return the input thread of the first attached process in a console
+# But NVDA really requires to know the actual thread the window was created in,
+# I.e. inside conhost,
+# In order to handle speaking of typed characters etc.
+# winEventCallback adds these whenever it sees an event for ConsoleWindowClass windows,
+# As winEvents always contain the true thread ID.
+consoleWindowsToThreadIDs: Dict[int, int] = {}
