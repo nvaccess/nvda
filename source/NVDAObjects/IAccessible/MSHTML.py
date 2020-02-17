@@ -27,7 +27,7 @@ from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
 from .. import InvalidNVDAObject
 from ..window import Window
 from NVDAObjects.UIA import UIA, UIATextInfo
-from locationHelper import RectLTRB, Point
+from locationHelper import RectLTRB
 from typing import Dict
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
@@ -487,20 +487,14 @@ class MSHTML(IAccessible):
 			
 		elif isinstance(relation,tuple):
 			windowHandle=kwargs.get('windowHandle')
-			if not windowHandle:
-				log.debugWarning("Error converting point to client coordinates, no window handle")
-				return False
-			try:
-				point = Point(*relation).toClient(windowHandle)
-			except WindowsError:
-				log.debugWarning("Error converting point to client coordinates", exc_info=True)
-				return False
+			p=ctypes.wintypes.POINT(x=relation[0],y=relation[1])
+			ctypes.windll.user32.ScreenToClient(windowHandle,ctypes.byref(p))
 			# #3494: MSHTML's internal coordinates are always at a hardcoded DPI (usually 96) no matter the system DPI or zoom level.
 			xFactor,yFactor=getZoomFactorsFromHTMLDocument(HTMLNode.document)
 			try:
-				HTMLNode = HTMLNode.document.elementFromPoint(point.x // xFactor, point.y // yFactor)
+				HTMLNode=HTMLNode.document.elementFromPoint(p.x // xFactor, p.y // yFactor)
 			except:
-				HTMLNode = None
+				HTMLNode=None
 			if not HTMLNode:
 				log.debugWarning("Error getting HTMLNode with elementFromPoint")
 				return False
