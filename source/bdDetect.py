@@ -581,3 +581,7 @@ addUsbDevices("superBrl", KEY_SERIAL, {
 	"VID_10C4&PID_EA60", # SuperBraille 3.2
 })
 
+# NattiqBraille
+addUsbDevices("nattiqbraille", KEY_SERIAL, {
+	"VID_2341&PID_8036", # Atmel-based USB Serial
+})
