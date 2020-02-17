@@ -25,6 +25,7 @@ import cursorManager
 from scriptHandler import isScriptWaiting, willSayAllResume
 import aria
 import controlTypes
+from controlTypes import OutputReason
 import config
 import textInfos
 import braille
@@ -35,11 +36,12 @@ import treeInterceptorHandler
 import inputCore
 import api
 import gui.guiHelper
+from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from NVDAObjects import NVDAObject
 from abc import ABCMeta, abstractmethod
 from typing import Optional
 
-REASON_QUICKNAV = "quickNav"
+REASON_QUICKNAV = OutputReason.QUICKNAV
 
 def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 	"""Reports the pass through mode if it has changed.
@@ -105,8 +107,8 @@ class QuickNavItem(object, metaclass=ABCMeta):
 	def __init__(self,itemType,document):
 		"""
 		@param itemType: the type that was searched for (e.g. link, heading, table etc)
-		@ type itemType: string
-		@ param document: the browse mode document this item is a part of.
+		@type itemType: string
+		@param document: the browse mode document this item is a part of.
 		@type document: L{BrowseModeTreeInterceptor}
 		"""
 		self.itemType=itemType
@@ -304,7 +306,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		controlTypes.ROLE_CHECKMENUITEM,
 		})
 
-	def shouldPassThrough(self, obj, reason=None):
+	def shouldPassThrough(self, obj, reason: Optional[OutputReason] = None):
 		"""Determine whether pass through mode should be enabled (focus mode) or disabled (browse mode) for a given object.
 		@param obj: The object in question.
 		@type obj: L{NVDAObjects.NVDAObject}
@@ -385,7 +387,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		@param itemType: the type being searched for (e.g. link, heading, table etc)
 		@type itemType: string
 		@param direction: the direction in which to search (next, previous, up)
-		@ type direction: string
+		@type direction: string
 		@param pos: the position in the document from where to start the search.
 		@type pos: Usually an L{textInfos.TextInfo} 
 		@raise NotImplementedError: This type is not supported by this BrowseMode implementation
@@ -847,7 +849,8 @@ qn(
 )
 del qn
 
-class ElementsListDialog(wx.Dialog):
+
+class ElementsListDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog):
 	ELEMENT_TYPES = (
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
@@ -871,9 +874,12 @@ class ElementsListDialog(wx.Dialog):
 	lastSelectedElementType=0
 
 	def __init__(self, document):
+		super().__init__(
+			parent=gui.mainFrame,
+			# Translators: The title of the browse mode Elements List dialog.
+			title=_("Elements List")
+		)
 		self.document = document
-		# Translators: The title of the browse mode Elements List dialog.
-		super(ElementsListDialog, self).__init__(gui.mainFrame, wx.ID_ANY, _("Elements List"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -885,7 +891,11 @@ class ElementsListDialog(wx.Dialog):
 		contentsSizer.Add(child, flag=wx.EXPAND)
 		contentsSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
-		self.tree = wx.TreeCtrl(self, size=wx.Size(500, 600), style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE | wx.TR_EDIT_LABELS)
+		self.tree = wx.TreeCtrl(
+			self,
+			size=self.scaleSize((500, 300)),  # height is chosen to ensure the dialog will fit on an 800x600 screen
+			style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE | wx.TR_EDIT_LABELS
+		)
 		self.tree.Bind(wx.EVT_SET_FOCUS, self.onTreeSetFocus)
 		self.tree.Bind(wx.EVT_CHAR, self.onTreeChar)
 		self.tree.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT, self.onTreeLabelEditBegin)
@@ -1751,9 +1761,10 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	def _iterNotLinkBlock(self, direction="next", pos=None):
 		links = self._iterNodesByType("link", direction=direction, pos=pos)
 		# We want to compare each link against the next link.
-		item1 = next(links)
-		while True:
-			item2 = next(links)
+		item1 = next(links, None)
+		if item1 is None:
+			return
+		for item2 in links:
 			# If the distance between the links is small, this is probably just a piece of non-link text within a block of links; e.g. an inactive link of a nav bar.
 			if direction=="previous":
 				textRange=item1.textInfo.copy()

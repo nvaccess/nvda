@@ -105,6 +105,7 @@ WS_EX_LAYERED = 0x80000
 WS_EX_TOOLWINDOW = 0x00000080
 WS_EX_TRANSPARENT = 0x00000020
 WS_EX_APPWINDOW = 0x00040000
+WS_EX_NOACTIVATE = 0x08000000
 BS_GROUPBOX=7
 ES_MULTILINE=4
 LBS_OWNERDRAWFIXED=0x0010
@@ -608,12 +609,14 @@ def VkKeyScanEx(ch, hkl):
 
 def ScreenToClient(hwnd, x, y):
 	point = POINT(x, y)
-	user32.ScreenToClient(hwnd, byref(point))
+	if not user32.ScreenToClient(hwnd, byref(point)):
+		raise WinError()
 	return point.x, point.y
 
 def ClientToScreen(hwnd, x, y):
 	point = POINT(x, y)
-	user32.ClientToScreen(hwnd, byref(point))
+	if not user32.ClientToScreen(hwnd, byref(point)):
+		raise WinError()
 	return point.x, point.y
 
 def NotifyWinEvent(event, hwnd, idObject, idChild):

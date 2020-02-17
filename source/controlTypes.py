@@ -4,6 +4,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2007-2016 NV Access Limited, Babbage B.V.
 from typing import Dict, Union, Set, Any, Optional, List
+from enum import Enum, auto
 
 ROLE_UNKNOWN=0
 ROLE_WINDOW=1
@@ -622,27 +623,44 @@ silentValuesForRoles={
 	ROLE_APPLICATION,
 }
 
-#{ Output reasons
-# These constants are used to specify the reason that a given piece of output was generated.
-#: An object to be reported due to a focus change or similar.
-REASON_FOCUS="focus"
-#: An ancestor of the focus object to be reported due to a focus change or similar.
-REASON_FOCUSENTERED="focusEntered"
-#: An item under the mouse.
-REASON_MOUSE="mouse"
-#: A response to a user query.
-REASON_QUERY="query"
-#: Reporting a change to an object.
-REASON_CHANGE="change"
-#: A generic, screen reader specific message.
-REASON_MESSAGE="message"
-#: Text reported as part of a say all.
-REASON_SAYALL="sayAll"
-#: Content reported due to caret movement or similar.
-REASON_CARET="caret"
-#: No output, but any state should be cached as if output had occurred.
-REASON_ONLYCACHE="onlyCache"
-#}
+
+class OutputReason(Enum):
+	"""Specify the reason that a given piece of output was generated.
+	"""
+	#: An object to be reported due to a focus change or similar.
+	FOCUS = auto()
+	#: An ancestor of the focus object to be reported due to a focus change or similar.
+	FOCUSENTERED = auto()
+	#: An item under the mouse.
+	MOUSE = auto()
+	#: A response to a user query.
+	QUERY = auto()
+	#: Reporting a change to an object.
+	CHANGE = auto()
+	#: A generic, screen reader specific message.
+	MESSAGE = auto()
+	#: Text reported as part of a say all.
+	SAYALL = auto()
+	#: Content reported due to caret movement or similar.
+	CARET = auto()
+	#: No output, but any state should be cached as if output had occurred.
+	ONLYCACHE = auto()
+
+	QUICKNAV = auto()
+
+# The following constants are kept for backwards compatibility.
+# In future, OutputReason should be used directly
+
+
+REASON_FOCUS = OutputReason.FOCUS
+REASON_FOCUSENTERED = OutputReason.FOCUSENTERED
+REASON_MOUSE = OutputReason.MOUSE
+REASON_QUERY = OutputReason.QUERY
+REASON_CHANGE = OutputReason.CHANGE
+REASON_MESSAGE = OutputReason.MESSAGE
+REASON_SAYALL = OutputReason.SAYALL
+REASON_CARET = OutputReason.CARET
+REASON_ONLYCACHE = OutputReason.ONLYCACHE
 
 #: Text to use for 'current' values. These describe if an item is the current item 
 #: within a particular kind of selection.
@@ -661,7 +679,8 @@ isCurrentLabels: Dict[Union[bool, str], str] = {
 	"time":_("current time"),
 }
 
-def processPositiveStates(role, states, reason, positiveStates=None):
+
+def processPositiveStates(role, states, reason: OutputReason, positiveStates=None):
 	"""Processes the states for an object and returns the positive states to output for a specified reason.
 	For example, if C{STATE_CHECKED} is in the returned states, it means that the processed object is checked.
 	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
@@ -669,7 +688,6 @@ def processPositiveStates(role, states, reason, positiveStates=None):
 	@param states: The raw states for an object to process.
 	@type states: set
 	@param reason: The reason to process the states (e.g. C{REASON_FOCUS}.
-	@type reason: str
 	@param positiveStates: Used for C{REASON_CHANGE}, specifies states changed from negative to positive;
 	@type positiveStates: set
 	@return: The processed positive states.
@@ -719,7 +737,8 @@ def processPositiveStates(role, states, reason, positiveStates=None):
 		positiveStates.discard(STATE_EDITABLE)
 	return positiveStates
 
-def processNegativeStates(role, states, reason, negativeStates=None):
+
+def processNegativeStates(role, states, reason: OutputReason, negativeStates=None):
 	"""Processes the states for an object and returns the negative states to output for a specified reason.
 	For example, if C{STATE_CHECKED} is in the returned states, it means that the processed object is not checked.
 	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
@@ -727,7 +746,6 @@ def processNegativeStates(role, states, reason, negativeStates=None):
 	@param states: The raw states for an object to process.
 	@type states: set
 	@param reason: The reason to process the states (e.g. C{REASON_FOCUS}.
-	@type reason: str
 	@param negativeStates: Used for C{REASON_CHANGE}, specifies states changed from positive to negative;
 	@type negativeStates: set
 	@return: The processed negative states.
@@ -787,7 +805,7 @@ def processNegativeStates(role, states, reason, negativeStates=None):
 def processAndLabelStates(
 		role: int,
 		states: Set[Any],
-		reason: str,
+		reason: OutputReason,
 		positiveStates: Optional[Set[Any]] = None,
 		negativeStates: Optional[Set[Any]] = None,
 		positiveStateLabelDict: Dict[int, str] = {},
