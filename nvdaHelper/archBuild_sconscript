@@ -73,9 +73,9 @@ def COMProxyDllBuilder(env,target,source,proxyClsid):
 	return proxyDll
 env.AddMethod(COMProxyDllBuilder,'COMProxyDll')
 
-# We only support compiling with MSVC 14.1 (2017)
-if not env.get('MSVC_VERSION')=='14.1':
-	raise RuntimeError("Visual C++ 14.1 (Visual Studio 2017) not found")
+# We only support compiling with MSVC 14.2 (2019)
+if not env.get('MSVC_VERSION')=='14.2':
+	raise RuntimeError("Visual C++ 14.2 (Visual Studio 2019) not found")
 
 
 TARGET_ARCH=env['TARGET_ARCH']
@@ -92,7 +92,11 @@ env.Append(
 		('_WIN32_WINNT','_WIN32_WINNT_WIN7')
 	]
 )
-env.Append(CCFLAGS=['/W3','/WX'])
+env.Append(CCFLAGS=[
+	'/W3',
+	'/WX',
+	'/std:c++17'
+])
 if 'analyze' in debug:
 	env.Append(CCFLAGS=['/analyze'])
 	# Disable: Inconsistent annotation for 'x': this instance has no annotations.

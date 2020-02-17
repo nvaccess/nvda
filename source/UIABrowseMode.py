@@ -422,7 +422,7 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 		elif nodeType == "landmark":
 			condition = UIAHandler.handler.clientObject.createNotCondition(
 				UIAHandler.handler.clientObject.createPropertyCondition(
-					UIAHandler.uia.UIA_LandmarkTypePropertyId,
+					UIAHandler.UIA.UIA_LandmarkTypePropertyId,
 					0
 				)
 			)

@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
 # settingsDialogs.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
-# Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler
+#  Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -51,7 +51,6 @@ from . import nvdaControls
 from autoSettingsUtils.utils import UnsupportedConfigParameterError
 from autoSettingsUtils.autoSettings import AutoSettings
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting, DriverSetting
-from UIAUtils import shouldUseUIAConsole
 import touchHandler
 import winVersion
 import weakref
@@ -999,6 +998,11 @@ class SynthesizerSelectionDialog(SettingsDialog):
 			index=self.duckingList.GetSelection()
 			config.conf['audio']['audioDuckingMode']=index
 			audioDucking.setAudioDuckingMode(index)
+
+		# Reinitialize the tones module to update the audio device
+		import tones
+		tones.terminate()
+		tones.initialize()
 
 		if self.IsModal():
 			# Hack: we need to update the synth in our parent window before closing.
@@ -2008,7 +2012,7 @@ class DocumentFormattingPanel(SettingsPanel):
 			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 			_("Tones"),
 			#Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-			_("Both  Speech and Tones")
+			_("Both Speech and Tones")
 		]
 		self.lineIndentationCombo = pageAndSpaceGroup.addLabeledControl(lineIndentationText, wx.Choice, choices=indentChoices)
 		#We use bitwise operations because it saves us a four way if statement.
@@ -2266,43 +2270,20 @@ class AdvancedPanelControls(wx.Panel):
 		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
 		self.UIAInMSWordCheckBox.defaultValue = self._getDefaultValue(["UIA", "useInMSWordWhenAvailable"])
 
-		# Translators: This is the label for a combo box for selecting the
-		# active console implementation in the advanced settings panel.
-		# Choices are automatic, prefer UIA, and legacy.
-		consoleComboText = _("Windows C&onsole support:")
-		consoleChoices = [
-			# Translators: A choice in a combo box in the advanced settings
-			# panel to have NVDA determine its Windows Console implementation
-			# automatically.
-			_("Automatic"),
-			# Translators: A choice in a combo box in the advanced settings
-			# panel to have NVDA use UIA in the Windows Console when available.
-			_("Prefer UIA"),
-			# Translators: A choice in a combo box in the advanced settings
-			# panel to have NVDA use its legacy Windoes Console support
-			# in all cases.
-			_("Legacy")
-		]
-		#: The possible console config values, in the order they appear
-		#: in the combo box.
-		self.consoleVals = (
-			"auto",
-			"UIA",
-			"legacy"
-		)
-		self.consoleCombo = UIAGroup.addLabeledControl(consoleComboText, wx.Choice, choices=consoleChoices)
-		self.consoleCombo.Bind(
-			wx.EVT_CHOICE,
-			self.enableConsolePasswordsCheckBox,
-			self.consoleCombo
-		)
-		curChoice = self.consoleVals.index(
-			config.conf['UIA']['winConsoleImplementation']
-		)
-		self.consoleCombo.SetSelection(curChoice)
-		self.consoleCombo.defaultValue = self.consoleVals.index(
-			self._getDefaultValue(["UIA", "winConsoleImplementation"])
-		)
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Use UI Automation to access the Windows C&onsole when available")
+		consoleUIADevMap = True if config.conf['UIA']['winConsoleImplementation'] == 'UIA' else False
+		self.ConsoleUIACheckBox = UIAGroup.addItem(wx.CheckBox(self, label=label))
+		self.ConsoleUIACheckBox.SetValue(consoleUIADevMap)
+		self.ConsoleUIACheckBox.defaultValue = self._getDefaultValue(["UIA", "winConsoleImplementation"])
+
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Speak &passwords in UIA consoles (may improve performance)")
+		self.winConsoleSpeakPasswordsCheckBox = UIAGroup.addItem(wx.CheckBox(self, label=label))
+		self.winConsoleSpeakPasswordsCheckBox.SetValue(config.conf["terminals"]["speakPasswords"])
+		self.winConsoleSpeakPasswordsCheckBox.defaultValue = self._getDefaultValue(["terminals", "speakPasswords"])
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -2314,14 +2295,7 @@ class AdvancedPanelControls(wx.Panel):
 		sHelper.addItem(terminalsGroup)
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
-		label = _("Speak &passwords in Windows Console (may improve performance)")
-		self.speakPasswordsCheckBox = terminalsGroup.addItem(wx.CheckBox(self, label=label))
-		self.speakPasswordsCheckBox.SetValue(config.conf["terminals"]["speakPasswords"])
-		self.speakPasswordsCheckBox.defaultValue = self._getDefaultValue(["terminals", "speakPasswords"])
-		self.enableConsolePasswordsCheckBox()
-		# Translators: This is the label for a checkbox in the
-		#  Advanced settings panel.
-		label = _("Use the new t&yped character support in legacy Windows consoles when available")
+		label = _("Use the new t&yped character support in Windows Console when available")
 		self.keyboardSupportInLegacyCheckBox=terminalsGroup.addItem(wx.CheckBox(self, label=label))
 		self.keyboardSupportInLegacyCheckBox.SetValue(config.conf["terminals"]["keyboardSupportInLegacy"])
 		self.keyboardSupportInLegacyCheckBox.defaultValue = self._getDefaultValue(["terminals", "keyboardSupportInLegacy"])
@@ -2402,13 +2376,6 @@ class AdvancedPanelControls(wx.Panel):
 		]
 		self.Layout()
 
-	def enableConsolePasswordsCheckBox(self, evt=None):
-		return self.speakPasswordsCheckBox.Enable(
-			shouldUseUIAConsole(self.consoleVals[
-				self.consoleCombo.GetSelection()
-			])
-		)
-
 	def onOpenScratchpadDir(self,evt):
 		path=config.getScratchpadDir(ensureExists=True)
 		os.startfile(path)
@@ -2418,23 +2385,26 @@ class AdvancedPanelControls(wx.Panel):
 
 	def haveConfigDefaultsBeenRestored(self):
 		return (
-			self._defaultsRestored and
-			self.scratchpadCheckBox.IsChecked() == self.scratchpadCheckBox.defaultValue and
-			self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue and
-			self.consoleCombo.GetSelection() == self.consoleCombo.defaultValue and
-			self.speakPasswordsCheckBox.IsChecked() == self.speakPasswordsCheckBox.defaultValue and
-			self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue and
-			self.autoFocusFocusableElementsCheckBox.IsChecked() == self.autoFocusFocusableElementsCheckBox.defaultValue and
-			self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue and
-			set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems) and
-			True  # reduce noise in diff when the list is extended.
+			self._defaultsRestored
+			and self.scratchpadCheckBox.IsChecked() == self.scratchpadCheckBox.defaultValue
+			and self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue
+			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
+			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
+			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
+			and (
+				self.autoFocusFocusableElementsCheckBox.IsChecked()
+				== self.autoFocusFocusableElementsCheckBox.defaultValue
+			)
+			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
+			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
+			and True  # reduce noise in diff when the list is extended.
 		)
 
 	def restoreToDefaults(self):
 		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
-		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue == 'UIA')
-		self.speakPasswordsCheckBox.SetValue(self.speakPasswordsCheckBox.defaultValue)
+		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue == 'UIA')
+		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
 		self.autoFocusFocusableElementsCheckBox.SetValue(self.autoFocusFocusableElementsCheckBox.defaultValue)
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
@@ -2445,11 +2415,11 @@ class AdvancedPanelControls(wx.Panel):
 		log.debug("Saving advanced config")
 		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
 		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
-		consoleChoice = self.consoleCombo.GetSelection()
-		config.conf['UIA']['winConsoleImplementation'] = (
-			self.consoleVals[consoleChoice]
-		)
-		config.conf["terminals"]["speakPasswords"] = self.speakPasswordsCheckBox.IsChecked()
+		if self.ConsoleUIACheckBox.IsChecked():
+			config.conf['UIA']['winConsoleImplementation'] = "UIA"
+		else:
+			config.conf['UIA']['winConsoleImplementation'] = "auto"
+		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = self.autoFocusFocusableElementsCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
@@ -2887,7 +2857,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			gui.messageBox(
 				# Translators: The message in a dialog presented when NVDA is unable to load the selected
 				# braille display.
-				message=_(f"Could not load the {display} display."),
+				message=_("Could not load the {display} display.").format(display=display),
 				# Translators: The title in a dialog presented when NVDA is unable to load the selected
 				# braille display.
 				caption=_("Braille Display Error"),
@@ -3131,12 +3101,16 @@ def showStartErrorForProviders(
 		providerName = providers[0].displayName
 		# Translators: This message is presented when
 		# NVDA is unable to load a single vision enhancement provider.
-		message = _(f"Could not load the {providerName} vision enhancement provider")
+		message = _("Could not load the {providerName} vision enhancement provider").format(
+			providerName=providerName
+		)
 	else:
 		providerNames = ", ".join(provider.displayName for provider in providers)
 		# Translators: This message is presented when NVDA is unable to
 		# load multiple vision enhancement providers.
-		message = _(f"Could not load the following vision enhancement providers:\n{providerNames}")
+		message = _("Could not load the following vision enhancement providers:\n{providerNames}").format(
+			providerNames=providerNames
+		)
 	gui.messageBox(
 		message,
 		# Translators: The title of the vision enhancement provider error message box.
@@ -3157,15 +3131,17 @@ def showTerminationErrorForProviders(
 		providerName = providers[0].displayName
 		# Translators: This message is presented when
 		# NVDA is unable to gracefully terminate a single vision enhancement provider.
-		message = _(f"Could not gracefully terminate the {providerName} vision enhancement provider")
+		message = _("Could not gracefully terminate the {providerName} vision enhancement provider").format(
+			providerName=providerName
+		)
 	else:
 		providerNames = ", ".join(provider.displayName for provider in providers)
 		# Translators: This message is presented when
 		# NVDA is unable to terminate multiple vision enhancement providers.
 		message = _(
 			"Could not gracefully terminate the following vision enhancement providers:\n"
-			f"{providerNames }"
-		)
+			"{providerNames}"
+		).format(providerNames=providerNames)
 	gui.messageBox(
 		message,
 		# Translators: The title of the vision enhancement provider error message box.
@@ -3187,7 +3163,7 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 			providerInfo: vision.providerInfo.ProviderInfo
 	):
 		self._providerInfo = providerInfo
-		self._parent = parent
+		self._parent = weakref.ref(parent)  # don't keep parent dialog alive with a circular reference.
 
 	def getProviderInfo(self) -> vision.providerInfo.ProviderInfo:
 		return self._providerInfo
@@ -3205,7 +3181,7 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 		"""
 		success = self._doStartProvider()
 		if not success and shouldPromptOnError:
-			showStartErrorForProviders(self._parent, [self._providerInfo, ])
+			showStartErrorForProviders(self._parent(), [self._providerInfo, ])
 		return success
 
 	def terminateProvider(
@@ -3218,7 +3194,7 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 		"""
 		success = self._doTerminate()
 		if not success and shouldPromptOnError:
-			showTerminationErrorForProviders(self._parent, [self._providerInfo, ])
+			showTerminationErrorForProviders(self._parent(), [self._providerInfo, ])
 		return success
 
 	def _doStartProvider(self) -> bool:
@@ -3319,8 +3295,7 @@ class VisionSettingsPanel(SettingsPanel):
 		"""
 		errorProviders: List[vision.providerInfo.ProviderInfo] = []
 		for provider in providers:
-			with VisionProviderStateControl(self, provider) as control:
-				success = control.startProvider(shouldPromptOnError=False)
+			success = VisionProviderStateControl(self, provider).startProvider(shouldPromptOnError=False)
 			if not success:
 				errorProviders.append(provider)
 		showStartErrorForProviders(self, errorProviders)
@@ -3485,9 +3460,12 @@ class VisionProviderSubPanel_Wrapper(
 		return True
 
 	def _nonEnableableGUI(self, evt):
-		wx.MessageBox(
+		gui.messageBox(
 			# Translators: Shown when there is an error showing the GUI for a vision enhancement provider
 			_("Unable to configure user interface for Vision Enhancement Provider, it can not be enabled."),
+			# Translators: The title of the error dialog displayed when there is an error showing the GUI
+			# for a vision enhancement provider
+			_("Error"),
 			parent=self,
 		)
 		self._checkBox.SetValue(False)
@@ -4068,6 +4046,8 @@ class InputGesturesDialog(SettingsDialog):
 			
 			All of your user defined gestures, whether previously set or defined during this session, will be lost.
 			This cannot be undone."""),
+			# Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+			_("Reset gestures"),
 			style=wx.YES | wx.NO | wx.NO_DEFAULT
 		) != wx.YES:
 			return

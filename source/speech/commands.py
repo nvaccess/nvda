@@ -253,11 +253,17 @@ class CallbackCommand(BaseCallbackCommand):
 		otherwise it will block production of further speech and or other functionality in NVDA.
 	"""
 
-	def __init__(self, callback):
+	def __init__(self, callback, name: Optional[str] = None):
 		self._callback = callback
+		self._name = name if name else repr(callback)
 
 	def run(self,*args, **kwargs):
 		return self._callback(*args,**kwargs)
+
+	def __repr__(self):
+		return "CallbackCommand(name={name})".format(
+			name=self._name
+		)
 
 class BeepCommand(BaseCallbackCommand):
 	"""Produce a beep.

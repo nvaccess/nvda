@@ -276,7 +276,7 @@ class AddonBase(object):
 class Addon(AddonBase):
 	""" Represents an Add-on available on the file system."""
 	def __init__(self, path):
-		""" Constructs an L[Addon} from.
+		""" Constructs an L{Addon} from.
 		@param path: the base directory for the addon data.
 		@type path: string
 		"""
@@ -431,7 +431,7 @@ class Addon(AddonBase):
 		""" loads a python module from the addon directory
 		@param name: the module name
 		@type name: string
-		@returns the python module with C[name}
+		@returns the python module with C{name}
 		@rtype python module
 		"""
 		log.debug("Importing module %s from plugin %s", name, self.name)
