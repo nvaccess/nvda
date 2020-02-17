@@ -309,7 +309,7 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 		gesture ="kb:NVDA+v",
 	)
 	def script_toggleScreenLayout(self, gesture):
-		#translators: The message reported for not supported toggling of screen layout
+		# Translators: The message reported for not supported toggling of screen layout
 		ui.message(_("Not supported in this document."))
 
 class WordDocumentNode(UIA):
