@@ -1153,8 +1153,9 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	@script(
 		# Translators: the description for the toggleScreenLayout script.
-		description = _("Toggles on and off if the screen layout is preserved while rendering the document content"),
-		gesture ="kb:NVDA+v",
+		description=_("Toggles on and off if the screen layout is preserved
+		while rendering the document content"),
+		gesture="kb:NVDA+v",
 	)
 	def script_toggleScreenLayout(self, gesture):
 		# Translators: The message reported for not supported toggling of screen layout
