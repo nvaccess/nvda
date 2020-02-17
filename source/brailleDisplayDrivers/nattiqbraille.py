@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2011-2020
+# Copyright (C) 2020 NV Access Limited, <Mohammed Noman>
 
 
 import serial
@@ -14,7 +14,7 @@ import hwIo
 BAUD_RATE = 10000000
 INIT_TAG = b"0"
 RESET_TAG = b"reset"
-# Initilization response id
+# Initialization response id
 INIT_RESP = 0
 # Keys response id
 ROUTE_RESP = 1
@@ -92,23 +92,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			inputCore.manager.executeGesture(RoutingInputGesture(int(ROUTE_KEY)))
 		elif int(command) == UP_KEY_RESP:
 			inputCore.manager.executeGesture(InputGestureKeys(UP_KEY_PRESS))
-			self._serial.waitForRead(self.timeout * 10)
 			log.debug("Up Key Pressed")
 		elif int(command) == DOWN_KEY_RESP:
 			inputCore.manager.executeGesture(InputGestureKeys(DOWN_KEY_PRESS))
-			self._serial.waitForRead(self.timeout * 10)
 			log.debug("Down Key Pressed")
 		elif int(command) == RIGHT_KEY_RESP:
 			inputCore.manager.executeGesture(InputGestureKeys(RIGHT_KEY_PRESS))
-			self._serial.waitForRead(self.timeout * 10)
 			log.debug("Right Key Pressed")
 		elif int(command) == LEFT_KEY_RESP:
 			inputCore.manager.executeGesture(InputGestureKeys(LEFT_KEY_PRESS))
-			self._serial.waitForRead(self.timeout * 10)
 			log.debug("Left Key Pressed")
 
 	def display(self, cells):
-		cells = b"-".join(str(cell) for cell in cells)
+		cells = b"-".join(cell.to_bytes(1, "little") for cell in cells)
 		log.debug(cells)
 		self._serial.write(cells)
 
