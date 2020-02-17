@@ -8,6 +8,7 @@ from logHandler import log
 import queueHandler
 import synthDriverHandler
 from .commands import *
+from .commands import IndexCommand
 from .priorities import Spri, SPEECH_PRIORITIES
 
 class ParamChangeTracker(object):
@@ -147,6 +148,8 @@ class SpeechManager(object):
 		self._curPriQueue = None
 		#: Maps indexes to BaseCallbackCommands.
 		self._indexesToCallbacks = {}
+		#: a list of indexes currently being spoken by the synthesizer
+		self._indexesSpeaking = []
 		#: Whether to push more speech when the synth reports it is done speaking.
 		self._shouldPushWhenDoneSpeaking = False
 
@@ -287,6 +290,11 @@ class SpeechManager(object):
 			return self._pushNextSpeech(True)
 		seq = self._buildNextUtterance()
 		if seq:
+			# Record all indexes that will be sent to the synthesizer
+			# So that we can handle any accidentally skipped indexes.
+			for item in seq:
+				if isinstance(item, IndexCommand):
+					self._indexesSpeaking.append(item.index)
 			getSynth().speak(seq)
 
 	def _getNextPriority(self):
@@ -366,16 +374,38 @@ class SpeechManager(object):
 		return True, endOfUtterance
 
 	def _handleIndex(self, index):
-		valid, endOfUtterance = self._removeCompletedFromQueue(index)
-		if not valid:
-			return
-		callbackCommand = self._indexesToCallbacks.pop(index, None)
-		if callbackCommand:
+		# A synth (such as OneCore) may skip indexes
+		# If before another index, with no text content in between.
+		# Therefore, detect this and ensure we handle all skipped indexes.
+		handleIndexes = []
+		for oldIndex in list(self._indexesSpeaking):
+			if oldIndex < index:
+				log.debugWarning("Handling skipped index %s" % oldIndex)
+				handleIndexes.append(oldIndex)
+		handleIndexes.append(index)
+		valid, endOfUtterance = False, False
+		for i in handleIndexes:
 			try:
-				callbackCommand.run()
-			except:
-				log.exception("Error running speech callback")
+				self._indexesSpeaking.remove(i)
+			except ValueError:
+				log.debug("Unknown index %s, speech probably cancelled from main thread." % i)
+				break  # try the rest, this is a very unexpected path.
+			if i != index:
+				log.debugWarning("Handling skipped index %s" % i)
+			# we must do the following for each index, any/all of them may be end of utterance, which must
+			# trigger _pushNextSpeech
+			_valid, _endOfUtterance = self._removeCompletedFromQueue(i)
+			valid = valid or _valid
+			endOfUtterance = endOfUtterance or _endOfUtterance
+			if _valid:
+				callbackCommand = self._indexesToCallbacks.pop(i, None)
+				if callbackCommand:
+					try:
+						callbackCommand.run()
+					except Exception:
+						log.exception("Error running speech callback")
 		if endOfUtterance:
+			# Even if we have many indexes, we should only push next speech once.
 			self._pushNextSpeech(False)
 
 	def _onSynthDoneSpeaking(self, synth=None):

@@ -171,7 +171,8 @@ class AudioDucker(object):
 		"""Tells NVDA that you require that background audio be ducked from now until you call disable.
 		This method may block for a short time while background audio ducks to a suitable level.
 		It is safe to call this method more than once.
-		@ returns: True if ducking was enabled, false if ducking was subsiquently disabled while waiting for the background audio to drop.
+		@returns: True if ducking was enabled,
+			false if ducking was subsiquently disabled while waiting for the background audio to drop.
 		"""
 		debug = _isDebug()
 		with self._lock:

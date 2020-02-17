@@ -262,26 +262,30 @@ class CallbackCommand(BaseCallbackCommand):
 		otherwise it will block production of further speech and or other functionality in NVDA.
 	"""
 
-	def __init__(self, callback: Union[SUPPORTED_CALLBACK_TYPES]):
+	def __init__(self, callback: Union[SUPPORTED_CALLBACK_TYPES], name: Optional[str] = None):
 		if not isinstance(callback, SUPPORTED_CALLBACK_TYPES):
 			raise TypeError(
 				"callback must be one of %s, not %s"
 				% (", ".join(SUPPORTED_CALLBACK_TYPES), type(callback))
 			)
 		self._callback = callback
+		if name:
+			self._name = name
+		elif isinstance(callback, partial):
+			self._name = "partial[{}]".format(callback.func.__qualname__)
+		else:
+			self.name = callback.__qualname__
+		self._signature = str(signature(callback))
 
 	def run(self,*args, **kwargs):
 		return self._callback(*args,**kwargs)
 
 	def __repr__(self):
-		if isinstance(self._callback, partial):
-			callBackName = "partial[{}]".format(self._callback.func.__qualname__)
-		else:
-			callBackName = self._callback.__qualname__
 		return "CallbackCommand({name}{signature})".format(
-			name=callBackName,
-			signature=str(signature(self._callback))
+			name=self._name,
+			signature=self._signature
 		)
+
 
 class BeepCommand(BaseCallbackCommand):
 	"""Produce a beep.

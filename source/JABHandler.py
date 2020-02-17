@@ -39,6 +39,17 @@ import NVDAObjects.JAB
 import core
 import textUtils
 import NVDAHelper
+import config
+import globalVars
+
+#: The path to the user's .accessibility.properties file, used
+#: to enable JAB.
+A11Y_PROPS_PATH = os.path.expanduser(r"~\.accessibility.properties")
+#: The content of ".accessibility.properties" when JAB is enabled.
+A11Y_PROPS_CONTENT = (
+	"assistive_technologies=com.sun.java.accessibility.AccessBridge\n"
+	"screen_magnifier_present=true\n"
+)
 
 #Some utility functions to help with function defines
 
@@ -738,6 +749,24 @@ def isJavaWindow(hwnd):
 		return False
 	return bridgeDll.isJavaWindow(hwnd)
 
+
+def isBridgeEnabled():
+	try:
+		data = open(A11Y_PROPS_PATH, "rt").read()
+	except OSError:
+		return False
+	return data == A11Y_PROPS_CONTENT
+
+
+def enableBridge():
+	try:
+		props = open(A11Y_PROPS_PATH, "wt")
+		props.write(A11Y_PROPS_CONTENT)
+		log.info("Enabled Java Access Bridge for user")
+	except OSError:
+		log.warning("Couldn't enable Java Access Bridge for user", exc_info=True)
+
+
 def initialize():
 	global bridgeDll, isRunning
 	try:
@@ -746,6 +775,11 @@ def initialize():
 	except WindowsError:
 		raise NotImplementedError("dll not available")
 	_fixBridgeFuncs()
+	if (
+		not globalVars.appArgs.secure and config.isInstalledCopy()
+		and not isBridgeEnabled()
+	):
+		enableBridge()
 	# Accept wm_copydata and any wm_user messages from other processes even if running with higher privileges
 	if not windll.user32.ChangeWindowMessageFilter(winUser.WM_COPYDATA, 1):
 		raise WinError()
