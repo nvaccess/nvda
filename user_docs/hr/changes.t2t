@@ -3,12 +3,16 @@
 
 %!includeconf: ../changes.t2tconf
 
+= Telegram kanal =
+- Kako biste bili obaviješteni o svim događanjima vezanim uz NVDA, pridružite se našem kanalu i grupi nvda_yu. na kanalu ćete moći diskusirati o svemu vezanom uz NVDA, koristeći vaš mobilni telefon ili računalo.
+
+
 = 2019.3 =
+NVDA 2019.3 je inačica koja sadrži puno značajnih promjena uključujući nadogradnju Pythona 2 na Python 3, te veliko prepisivanje podsistema govora.
+Iako ove izmjene stare dodatke čine nekompatibilnima, Nadogradnja na Python 3 bila je nužna radi sigurnosti, a izmjene u podsistemu govora će otvoriti put za nove inovativne mogućnosti u bliskoj budućnosti.
+ Ostale izmjene uključuju 64 bitnu podršku za Java virtualne mašine, zaslonsku zavjesu i označitelja fokusa, podrška za puno više brajičnih redaka te novi brajični preglednik, te puno drugih ispravaka grešaka.
 
 == Nove značajke ==
-- U naredbenom retku, PowerShellu, i linux podsistemu za windows u Windowsima 10 nadogradnji za listopad 2018 i novijim:
- - Značajno unapređene performanse i stabilnost. (#9771)
- - Izgovaranje napisanog teksta koji se ne pojavljuje na zaslonu poput lozinki može biti uključeno preko opcije u naprednoj kategoriji u NVDA postavkama. (#9649)
 - Točnost komande "premjesti miš na objekt navigatora", sada je unapređena u tekstualnim poljima u Java aplikacijama. (#10157)
 - Dodana podrška za sljedeće Handy Techove brajične retke (#8955):
  - Basic Braille Plus 40
@@ -25,7 +29,7 @@
  - Dodan prečac za omogućavanje zaslonske zavjese (do sljedećeg ponovnog pokretanja sa jednim pritiskom, ili uvijek kada je NVDA pokrenut sa dva pritiska). Ovaj prečac nije dodijeljen.
  - Može biti uključeno preko kategorije 'vid' u dijaloškom okviru NVDA postavki.
 - Dodana značajka označavanja zaslona u NVDA. (#971, #9064)
- - Označavanje fokusa, objekta navigatora, i kursora u modusu pregleda može biti omogućeno i podešeno preko vid u dijaloškom okviru NVDA postavki.
+ - Označavanje fokusa, objekta navigatora, i kursora u modusu pregleda može biti omogućeno i podešeno preko kategorije vid u dijaloškom okviru NVDA postavki.
  - Napomena: ova je značajka nekompatibilna s dodatkom Focus highlight, međutim, dodatak se moš uvjek može koristiti kada je ugrađeni označivač uključen.
 - Dodan brajični preglednik, koji omogućuje prikaz brajice na zaslonu. (#7788)
 

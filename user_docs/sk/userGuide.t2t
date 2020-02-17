@@ -174,7 +174,7 @@ Tretie začiarkavacie políčko umožňuje nastaviť, či sa uvítacie okno má 
 +++ Získavanie údajov od používateľov NVDA +++[UsageStatsDialog]
 Od verzie NVDA 2018.3 sa pýtame používateľov, či nám chcú posielať dáta, ktoré môžeme využiť na zlepšenie funkcií NVDA.
 Pri prvom spustení NVDA sa zobrazí otázka, či chcete povoliť zasielanie anonymných údajov do NV Access.
-Podrobnosti sú vysvetlené nižšie, v kapitole 11.
+Podrobnosti sú vysvetlené v kapitole [Povoliť zasielanie údajov #GeneralSettingsGatherUsageStats].
 Upozorňujeme, že odpoveď áno alebo nie automaticky zatvorí tento dialóg a táto otázka sa nezobrazí až dokým nepreinštalujete NVDA.
 Kedykoľvek môžete zasielanie štatistík zapnúť alebo vypnúť. Hľadajte začiarkávacie pole označené [Povoliť zasielanie údajov #GeneralSettingsGatherUsageStats] v časti všeobecné nastavenia.
 
@@ -659,7 +659,7 @@ Aby sa na braillovský riadok dostalo čo najviac informácií, pre prvky, oblas
 
 || skratka | typ prvku |
 | ap | aplikácia |
-| čln | článok +| art | article
+| čln | článok |
 | cit | citácia |
 | tlo | tlačidlo |
 | tloko | Tlačidlo s kontextovou ponukou |
@@ -1061,7 +1061,7 @@ Dostupné sú tieto možnosti:
 - Ak sa obávate o vaše súkromie, nepoužívajte túto úroveň záznamu.
 - Debug: Zaznamenáva závažné aj menej závažné chyby a tiež vstup a výstup.
 - Opäť, ak sa obávate o vaše súkromie, nepoužívajte túto úroveň záznamu.
-
+-
 
 ==== Automaticky spustiť NVDA po prihlásení do Windows ====[GeneralSettingsStartAfterLogOn]
 Ak je táto voľba zaškrtnutá, NVDA sa spustí hneď ako sa prihlásite do Windows.
@@ -1084,7 +1084,7 @@ Aby bolo možné poskytnúť aktualizáciu, zisťujeme:
 - Aktuálnu verziu NVDA, ktorú používate
 - Aktuálnu verziu vášho operačného systému
 - Či používate 32 alebo 64 bitovú verziu
-
+-
 
 ==== Zhromažďovanie údajov o používaní NVDA ====[GeneralSettingsGatherUsageStats]
 Ak začiarknete túto možnosť, NV Access využije tieto informácie na zisťovanie, koľko ľudí používa NVDA, z akých krajín pochádzajú. Informácie sú zasielané vždy pri kontrole dostupnosti novej verzie.
@@ -1094,8 +1094,8 @@ Okrem nevyhnutných údajov na získanie aktualizácie tiež po začiarknutí to
 - Či používate portable alebo nainštalovanú verziu NVDA
 - Aký hlasový výstup používate (vrátane názvu doplnku z ktorého je nainštalovaný ovládač)
 - Aký braillovský riadok používate (vrátane názvu doplnku z ktorého je nainštalovaný ovládač)
-- Akú braillovskú tabuľku používate (ak využívate rbaillovský výstup)
-
+- Akú braillovskú tabuľku používate (ak využívate braillovský výstup)
+-
 
 Tieto údaje nám umožnia určiť ďalšie priority pri vývoji NVDA.
 
@@ -1397,6 +1397,9 @@ Ak si neželáte zobrazovať toto varovanie, môžete začiarknuť príslušné 
 Zobrazovanie varovania môžete kedykoľvek obnoviť, ak začiarknete políčko "Varovať pred spustením tienenia obrazovky".
 
 Ak chcete zapínať a vypínať tienenie obrazovky pomocou klávesovej skratky, môžete ju nastaviť v dialógu [Klávesové skratky #InputGestures].
+
+Predvolene NVDA oznamuje zapnutie a vypnutie tienenia obrazovky zvukom.
+Ak to chcete zmeniť, odčiarknite možnosť "prehrať zvuk pri prepínaní funkcie tienenie obrazovky".
 
 ==== Nastavenia pre vizuálne rozšírenia tretích strán====[VisionSettingsThirdPartyVisualAids]
 Ďalšie vizuálne rozšírenia môžete nainštalovať do NVDA pomocou [doplnkov #AddonsManager].
@@ -1776,24 +1779,14 @@ Aktuálne verzie MS Office 2016/365 bežiace v systéme Windows 10 majú podporu
 Niektoré informácie sú však nedostatočne prezentované, alebo sú prezentované nesprávne, takže nemôžeme UI automation odporúčať vo všetkých prípadoch.
 Väčšine používateľov neodporúčame používať UI automation. Zároveň privítame odozvu od používateľov Office 2016/365, ktorí sú ochotný otestovať UI automation.
 
-==== Podpora konzoly Windows ====[AdvancedSettingsConsoleUIA]
-Tu môžete určiť, ako NVDA pracuje s Windows konzolou používanou v príkazovom riadku, PowerShell, a Windows Subsystéme pre Linux.
-Toto nastavenie ale neovplyvňuje moderný Windows terminál.
-V systéme Windows 10 od verzie 1709, Microsoft [Pridal podporu pre UI Automation API do vstavanej konzoly https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], čo značne zlepšilo odozvu a stabilitu pre čítače obrazovky.
-Ak nie je dostupná možnosť UI Automation, alebo by použitie UI Automation viedlo k horšej odozve, NVDA sa automaticky vráti k staršej podpore pre Windows konzolu.
-Na výber máte tieto možnosti:
-- Automaticky: Použije UI Automation v konzolách V systémoch od verzie Windows 10 1809. Toto je predvolené a odporúčané nastavenie.
-- UIA: Použije UI Automation v konzolách za každých okolností a to aj v prípade nedokončenej a nestabilnej implementácie. Hoci je táto možnosť pre vás užitočná a postačujúca, používajte ju na vlastné ryziko. Neposkytujeme v takýchto prípadoch žiadnu podporu.
-- Staršia verzia: UI Automation bude pre konzolu úplne vypnuté a za každých okolností sa použije staršia verzia podpory pre Windows konzolu.
--
+==== Použiť UIA na zobrazenie Windows konzoly ====[AdvancedSettingsConsoleUIA]
+Ak začiarknete túto možnosť, NVDA bude používať novú, rozpracovanú  [podporu pre UI Automation API https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. V súčasnosti je táto podpora experimentálna a nie je dokončená, preto jej používanie neodporúčame. Po dokončení sa predpokladá jej ostré nasadenie, čím bude nahradená doterajšia podpora pre Windows konzolu a zlepší sa stabilita a prístupnosť.
 
-==== Hovoriť heslá v konzole Windows ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Toto nastavenie určuje, či NVDA [číta napísané znaky #KeyboardSettingsSpeakTypedCharacters] alebo [číta po slovách #KeyboardSettingsSpeakTypedWords] v prípadoch, ak sa obrazovka neaktualizuje (napríklad pri písaní hesiel) v niektorých termináloch, ako napríklad Windows konzola s aktívnou podporou UI automation a Mintty.
-Z bezpečnostného hľadiska odporúčame toto nastavenie ponechať vypnuté.
-Toto nastavenie však môžete chcieť zapnúť, ak zaznamenáte zhoršenú odozvu alebo stabilitu vo Windows konzolách pri aktívnom čítaní po znakoch a po slovách a tiež v prípadoch, ak naozaj chcete, aby NVDA oznamovalo napísané heslá.
+==== Hovoriť heslá v UIA konzole====[AdvancedSettingsWinConsoleSpeakPasswords]
+Toto nastavenie určuje, či NVDA [číta napísané znaky #KeyboardSettingsSpeakTypedCharacters] alebo [číta po slovách #KeyboardSettingsSpeakTypedWords] v prípadoch, ak sa obrazovka neaktualizuje (napríklad pri písaní hesiel) v niektorých termináloch, ako napríklad Windows konzola s aktívnou podporou UI automation. Z bezpečnostného hľadiska odporúčame toto nastavenie ponechať vypnuté. Môžete ho zapnúť, ak zaznamenáte zhoršenú odozvu alebo stabilitu vo Windows konzolách pri aktívnom čítaní po znakoch a po slovách pri aktívnej podpore UIA.
 
-==== Použiť novú podporu oznamovania napísaných znakov v starších typoch konzoly Windows, ak je to možné ====[AdvancedSettingsKeyboardSupportInLegacy]
-Toto začiarkávacie pole aktivuje alternatívnu metódu oznamovania napísaných znakov v starších typoch Windows konzoly.
+==== Použiť novú podporu oznamovania napísaných znakov vo Windows konzolách====[AdvancedSettingsKeyboardSupportInLegacy]
+Toto začiarkávacie pole aktivuje alternatívnu metódu oznamovania napísaných znakov vo windows konzolách.
 Toto môže zlepšiť odozvu a odstrániť hláskovanie výstupu z konzoly, súčasne však toto nastavenie nie je vhodné pre všetky terminály.
 Táto možnosť je dostupná a predvolene aktivovaná v systémoch od verzie Windows 10 1607, 1703, 1709 a 1803 a tiež na novších vydaniach Windows 10 ak je vypnuté alebo nedostupné UI Automation.
 Pozor: Keď aktivujete túto funkciu, NVDA bude čítať napísané znaky a slová aj pri písaní hesiel.
@@ -3019,7 +3012,7 @@ NVDA v súčasnosti podporuje tieto parametre:
 | -l N | --log-level=n | Určuje úroveň záznamu (debug 10, Vstup a výstup 12, debug 15, info 20, upozornenia 30, chyby 40, kritické chyby 50, vypnuté 100), predvolene je úroveň nastavená na upozornenia |
 | -c C:\esta\k\profilu | --config-path=C:\esta\k\profilu | určuje cestu, kam sa ukladajú nastavenia NVDA |
 | -m | --minimal | spustí NVDA bez zvukov, bez používateľského rozhrania, bez úvodného dialógu a podobne |
-| -s | --secure | Zabezpečený režim (je zakázaná Python konzola a zaznamenávanie. Používa sa na zabezpečených obrazovkách) |
+| -s | --secure | Zabezpečený režim: Zakáže Python konzolu, úpravu, vytváranie a mazanie profilov, kontrolu aktualizácií, niektoré možnosti v dialógu vitajte a všeobecné nastavenia (spustenie NVDA po štarte systému, uloženie nastavení po ukončení a pod), tiež zapisovanie do logu a zobrazovač logu (rovnako ako na zabezpečených obrazovkách). Toto takisto zakáže zapisovanie nastavení a ukladanie zmien v klávesových skratkách.|
 | nie je | --disable-addons | Všetky doplnky budú vypnuté |
 | Nie je | --debug-logging | nastaví úroveň záznamu pre najbližšie spustenie NVDA na najvyššiu úroveň (debug). Toto nastavenie má prednosť pred ostatnými argumentmi ( ""--loglevel"", -l aj ak bolo zaznamenávanie vypnuté). |
 | Nie je | --no-logging | Vypne zaznamenávanie do logu. Toto nastavenie môže byť zmenené ak nastavíte úroveň záznamu cez príkazový riadok (""--loglevel"" -l) alebo ak zapnete zaznamenávanie najvyššej úrovne cez príkaz --debug-logging |

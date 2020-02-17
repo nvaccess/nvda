@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-13 00:10+1000\n"
-"PO-Revision-Date: 2019-12-19 11:05+0200\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
+"PO-Revision-Date: 2020-01-25 20:23+0200\n"
 "Last-Translator: Jani Kinnunen <janikinnunen340@gmail.com>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -390,7 +390,7 @@ msgstr "alu"
 
 #. Translators: Displayed in braille for an object which is a figure.
 msgid "fig"
-msgstr "prs"
+msgstr "kuv"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -525,9 +525,6 @@ msgid "Only when scrolling back"
 msgstr "vain taaksepäin vieritettäessä"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "Automaattinen"
 
@@ -2668,7 +2665,7 @@ msgstr "alue"
 
 #. Translators: Identifies a figure (commonly seen on some websites).
 msgid "figure"
-msgstr "piirustus"
+msgstr "kuva"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -9190,22 +9187,15 @@ msgstr ""
 "Käytä UI Automation -rajapintaa Microsoft &Wordin asiakirjasäätimille, kun "
 "käytettävissä"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Windows-k&onsolin tuki:"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr "Käytä UI Automation -rajapintaa Windows-k&onsolissa, kun käytettävissä"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "UIA etusijalla"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Vanha"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "Puhu &salasanat UIA-konsoleissa (voi parantaa suorituskykyä)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9214,17 +9204,10 @@ msgstr "Pääteohjelmat"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
-msgstr "Puhu &salasanat Windows-konsolissa (voi parantaa suorituskykyä)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
-"Käytä uutta k&irjoitettujen merkkien tukea vanhoissa Windows-konsoleissa "
-"(kun mahdollista)"
+"Käytä uutta k&irjoitettujen merkkien tukea Windows-konsolissa, kun "
+"käytettävissä"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10111,17 +10094,19 @@ msgstr "Kohdistuksen korostus"
 msgid "&Enable Highlighting"
 msgstr "&Ota korostus käyttöön"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "Näyttöverho"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
-msgstr ""
-"&Näytä varoitus aina, kun {screenCurtainTranslatedName} otetaan käyttöön"
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "&Näytä varoitus aina, kun näyttöverho otetaan käyttöön"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "T&oista ääni, kun näyttöverho otetaan käyttöön tai poistetaan käytöstä"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -11629,6 +11614,15 @@ msgstr "Kaksinkertainen riviväli"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Riviväli 1,5"
+
+#~ msgid "Windows C&onsole support:"
+#~ msgstr "Windows-k&onsolin tuki:"
+
+#~ msgid "Prefer UIA"
+#~ msgstr "UIA etusijalla"
+
+#~ msgid "Legacy"
+#~ msgstr "Vanha"
 
 #~ msgid "Magnifier"
 #~ msgstr "Suurennuslasi"

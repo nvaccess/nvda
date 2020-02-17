@@ -4,11 +4,11 @@
 %!includeconf: ../changes.t2tconf
 
 = 2019.3 =
+Táto verzia prináša významné zmeny pod kapotou. Ide o prechod z prostredia Python 2 na Python 3 a tiež výrazné prestavanie systému na spracovanie reči.
+Tieto zmeny spôsobili nekompatibilitu starších doplnkov. Prechod na Python 3 je dôležitý z bezpečnostného hľadiska a prepracovanie systému na spracovanie reči prinesie v blízkej budúcnosti zaujímavé funkcie.
+Táto verzia prináša okrem iného podporu pre 64 bit Java VMs, funkciu tienenia obrazovky, zvýraznenia fokusu, podporu pre ďalšie braillovské riadky, zobrazovač braillu a mnoho ďalšieho.
 
 == Nové vlastnosti ==
-- V príkazovom riadku, PowerShell, a Windows Subsystéme pre Linux od verzie Windows 10 Október 2018:
- - Značne zlepšená odozva a stabilita. (#9771)
- - V pokročilých nastaveniach NVDA je možné aktivovať oznamovanie napísaných znakov, ktoré sa neobjavujú na obrazovke (napríklad hesiel). (#9649)
 - Vylepšená presnosť presunu myši na navigačný objekt v editačných poliach v Java aplikáciách. (#10157)
 - Pridaná podpora pre nasledujúce braillovské riadky Handy Tech: (#8955):
  - Basic Braille Plus 40
@@ -28,6 +28,7 @@
  - Je možné nastaviť zvýraznenie navigačného objektu, fokusu a kurzora v režime prehliadania. Všetko sa dá nastaviť v nastaveniach v kategórii zrak.
  - Upozorňujeme, že doposiaľ používaný doplnok Zvýrazňovač fokusu (Focus highlight) nie je kompatibilný s touto funkciou. Doplnok môžete aj naďalej používať ale len vtedy, ak vypnete vstavané zvýraznenie objektov v NVDA.
 - Pridaná funkcia Zobrazovač braillu. Umožňuje na obrazovke zobraziť braillovský výstup, ktorý by inak NVDA posielalo do fyzického braillovského riadka. (#7788)
+
 
 == Zmeny ==
 - V používateľskej príručke je podrobne popísané, ako používať konzolu v prostredí operačného systému Windows. (#9957)

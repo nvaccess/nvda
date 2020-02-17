@@ -4,11 +4,11 @@ What's New in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2019.3 =
+NVDA 2019.3 is a very significant release containing many under-the-hood changes including the upgrade of Python 2 to Python 3, and a major re-write of NVDA's speech subsystem.
+Although these changes do break compatibility with older NVDA add-ons, the upgrade to Python 3 is necessary for security, and the changes to speech allow for  some exciting innovations in the near future.
+ Other highlights in this release include 64 bit support for Java VMs, Screen Curtain and Focus Highlight functionality, support for more braille displays and a new Braille viewer, and many many other bug fixes.
 
 == New Features ==
-- In Command Prompt, PowerShell, and the Windows Subsystem for Linux on Windows 10 October 2018 Update and later:
- - Vastly improved performance and stability. (#9771)
- - Reporting of typed text that does not appear onscreen (such as passwords) can now be enabled via an option in NVDA's advanced settings panel. (#9649)
 - The accuracy of the move mouse to navigator object command has been improved in text fields in Java applications. (#10157)
 - Added support for  the following Handy Tech Braille displays (#8955):
  - Basic Braille Plus 40

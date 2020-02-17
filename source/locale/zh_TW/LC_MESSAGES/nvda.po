@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA-TW\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-13 00:10+1000\n"
-"PO-Revision-Date: 2019-12-18 07:58+0800\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
+"PO-Revision-Date: 2020-01-29 19:04+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: NVDA-Taiwan Volunteers Team\n"
 "Language: zh_TW\n"
@@ -528,9 +528,6 @@ msgid "Only when scrolling back"
 msgstr "僅當往前捲動時"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "自動偵測"
 
@@ -4163,7 +4160,7 @@ msgstr "顯示NVDA「語音設定」對話框"
 
 #. Translators: Input help mode message for go to select braille display command.
 msgid "Shows the NVDA braille display selection dialog"
-msgstr "顯示NVDA「點顯器選擇」\v對話框"
+msgstr "顯示NVDA「點顯器選擇」對話框"
 
 #. Translators: Input help mode message for go to braille settings command.
 msgid "Shows NVDA's braille settings"
@@ -7004,8 +7001,8 @@ msgid ""
 "This does not change what is visible on-screen, but only what the user can "
 "read with NVDA"
 msgstr ""
-"切換讀出備忘稿或實際投影片內容。此動作不影響螢幕上的視覺操作，只供NVDA的語音"
-"提示"
+"切換報讀備忘稿或實際投影片內容，此操作不影響螢幕上的視覺呈現，僅改變 NVDA報讀"
+"的內容。 "
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
 #, python-brace-format
@@ -9005,22 +9002,15 @@ msgid ""
 "Use UI Automation to access Microsoft &Word document controls when available"
 msgstr "使用 UI Automation 抓取微軟 Word 中的控制項資訊 (若有支援)(&W)"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Windows 主控台支援 (&O)"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr "在Windows主控台中使用UI Automation(若有支援)(&O)"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "儘量使用 UIA"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "舊版"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "在 UIA 主控台讀出密碼(可能提高效能)(&P)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9029,15 +9019,8 @@ msgstr "終端程式"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
-msgstr "在 Windows 主控台讀出密碼(可能提高效能)(&P)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
-msgstr "在舊版 Windows 主控台中使用新的輸入支援 (若有支援) (&Y)"
+msgid "Use the new t&yped character support in Windows Console when available"
+msgstr "在Windows主控台中使用新的輸入支援 (若有支援)(&Y)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9917,16 +9900,19 @@ msgstr "強調焦點"
 msgid "&Enable Highlighting"
 msgstr "啟用醒目提示器(E)"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "螢幕簾幕"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
-msgstr "當啟用{screenCurtainTranslatedName}時，總是顯示警告訊息(S)"
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "當啟用螢幕簾幕時，總是顯示警告訊息(&S)"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "切換螢幕簾幕時播放音效(&P)"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -11372,11 +11358,11 @@ msgstr "追蹤修訂 關"
 
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
 msgid "Display nonprinting characters"
-msgstr "顯示不要列印的字元"
+msgstr "顯示非列印字元"
 
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
 msgid "Hide nonprinting characters"
-msgstr "隱藏不要列印的字元"
+msgstr "隱藏非列印字元"
 
 #. Translators: a measurement in Microsoft Word
 #, python-brace-format
@@ -11420,6 +11406,15 @@ msgstr "2倍行高"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5倍行高"
+
+#~ msgid "Windows C&onsole support:"
+#~ msgstr "Windows 主控台支援 (&O)"
+
+#~ msgid "Prefer UIA"
+#~ msgstr "儘量使用 UIA"
+
+#~ msgid "Legacy"
+#~ msgstr "舊版"
 
 #, fuzzy
 #~ msgid "Highlighter"

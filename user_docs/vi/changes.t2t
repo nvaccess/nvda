@@ -4,11 +4,11 @@
 %!includeconf: ../changes.t2tconf
 
 = 2019.3 =
-
+NVDA 2019.3 là bản phát hành rất quan trọng, có nhiều thay đổi bên trong, bao gồm việc  nâng cấp từ Python 2 lên Python 3, và viết lại một chút cho phần tiếng nói hệ thống phụ của NVDA.
+Dù rằng những thay đổi này làm mất tính tương thích với add-on của các bản NVDA cũ hơn, việc nâng cấp lên Python 3 là cần thiết cho tính bảo mật, và các thay đổi với tiếng nói  cho phép   vài cải tiến thú vị trong tương lai gần.
+ Những điểm nổi bật khác trong bản phát hành này bao gồm hỗ trợ cho Java VMs 64 bit, chức năng che màn hình và làm nổi Focus, hỗ trợ nhiều màn hình nổi cũng như trình xem chữ nổi mới và sửa nhiều lỗi khác.
+ 
 == Tính năng mới ==
-- Trong Command Prompt, PowerShell và Windows Subsystem for Linux trên Windows 10 October 2018 Update trở lên:
- - Cải thiện triệt để hiệu suất và tính ổn định. (#9771)
- - Việc đọc các văn bản đã nhập mà không hiển thị trên màn hình (mật khẩu chẳng hạn) có thể bật thông qua tùy chọn trong bảng cài đặt mở rộng của NVDA. (#9649)
 - Độ chính xác của lệnh di chuyển chuột đến đối tượng điều hướng đã được cải thiện ở các trường văn bản trong các ứng dụng Java. (#10157)
 - Thêm hỗ trợ cho các  màn hình nổi Handy Tech sau (#8955):
  - Basic Braille Plus 40

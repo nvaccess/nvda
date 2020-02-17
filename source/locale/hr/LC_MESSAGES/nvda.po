@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-09 11:28+1000\n"
-"PO-Revision-Date: 2019-12-09 14:50+0100\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
+"PO-Revision-Date: 2020-01-17 10:26+0100\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 1.6.10\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 
@@ -607,9 +607,6 @@ msgid "Only when scrolling back"
 msgstr "Samo pri klizanju unatrag"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "Automatski"
 
@@ -9298,22 +9295,17 @@ msgstr ""
 "Koristi automatizaciju korisničkog sučelja za pristup kontrolama Microsoft "
 "&Word dokumenata kad je dostupna"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "&Podrška Windows naredbenog retka:"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr ""
+"Koristi UI Automation za pristup Windows &naredbenom retku kada je dostupno"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "Preferiraj UIA"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Preferiraj stari način"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr ""
+"Izgovori &lozinke u UIA naredbenim retcima (može unaprijediti performance)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9322,19 +9314,10 @@ msgstr "Programi naredbenog retka"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
-"Izgovori &lozinke u Windows naredbenim redcima (može unaprijediti "
-"performanse)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
-msgstr ""
-"Koristi novu podršku za utipkane &znakove u starim Windowsovim naredbenim "
-"redcima kad je dostupno"
+"Koristi novu podršku &upisanih znakova u Windows naredbenim retcima kada je "
+"dostupno"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10226,17 +10209,19 @@ msgstr "Isticanje fokusa"
 msgid "&Enable Highlighting"
 msgstr "&Aktiviraj isticanje"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "Ekranska zavjesa"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
-msgstr ""
-"Uvijek &prikaži upozorenje tijekom učitavanja {screenCurtainTranslatedName}"
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "Uvijek &prikazuj upozorenje pri uključenju zaslonske zavjese"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "&Reproduciraj zvuk prilikom uključivanja zaslonske zavjese"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -11744,3 +11729,12 @@ msgstr "Dvostruki prored"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Jedan i pol prored"
+
+#~ msgid "Windows C&onsole support:"
+#~ msgstr "&Podrška Windows naredbenog retka:"
+
+#~ msgid "Prefer UIA"
+#~ msgstr "Preferiraj UIA"
+
+#~ msgid "Legacy"
+#~ msgstr "Preferiraj stari način"

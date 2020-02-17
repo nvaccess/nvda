@@ -174,7 +174,7 @@ NVDA 安裝版可提供額外功能，例如：登入後自動執行、可報讀
 +++ 使用資料收集對話框 +++[UsageStatsDialog]
 從 NVDA 2018.3 開始，使用者會被詢問是否同意將使用資料傳送給 NV Access 以協助改進未來的NVDA 版本。
 當第一次啟動 NVDA，會跳出一個對話框，詢問是否同意在使用 NVDA 時，將使用資料傳給 NV Access。
-您可以在以下的第 11 章中，了解更多有關 NV Access 收集的資訊。
+您可以在以下的一般設定章節中，了解更多有關 NV Access 收集的資訊，[讓 NVDA 專案蒐集 NVDA 使用數據 #GeneralSettingsGatherUsageStats]。
 註：按下「是」或「否」以後，此設定將會被儲存，直到您重新安裝 NVDA 才會再次詢問。
 然而，您也可以在 NVDA 的一般類別設定中手動關閉或開啟資料收集。您可以勾選或取消勾選名為「[允許 NVDA 專案收集 NVDA 使用情況統計 #GeneralSettingsGatherUsageStats]」的核取方塊。
 
@@ -907,7 +907,7 @@ Excel 工作表可含有表單區。
 ++ 微軟 PowerPoint ++[MicrosoftPowerPoint]
 %kc:beginInclude
 || 名稱 | 快速鍵 | 說明 |
-| 切換投影片講稿 | control+shift+s | 當投影片撥放時，此快速鍵可切換報讀投影片講稿內容及其備忘稿內容，此切換並沒有改變播放的呈現方式，而僅是讓 NVDA 讀出備忘稿內容。 |
+| 切換報讀備忘稿或實際投影片內容 | control+shift+s | 當投影片撥放時，此快速鍵可切換報讀備忘稿或實際投影片內容，此操作不影響螢幕上的視覺呈現，僅改變 NVDA 報讀的內容。 |
 %kc:endInclude
 
 ++ foobar2000 ++[Foobar2000]
@@ -1061,7 +1061,7 @@ NVDA 將套用您目前電腦系統所使用的語言。
  - 如果您較重視個人的隱私，則不要將事件紀錄等級設為此選項。
 - 偵錯：除了較低層級的警告、資訊、輸入/輸出以外的訊息，一些較小的錯誤訊息也會被紀錄下來。
  - 與「輸入/輸出」相同，如果您較重視隱私請不要將事件紀錄等級設定為此選項。
-
+-
 
 ====登入 Windows 後自動啟動 NVDA====[GeneralSettingsStartAfterLogOn]
 若勾選此核取方塊，當電腦開機登入後，隨即自動開啟 NVDA。
@@ -1084,7 +1084,7 @@ NVDA 將套用您目前電腦系統所使用的語言。
 - 當前 NVDA 版本
 - 作業系統版本
 - 作業系統是64位元或32位元
-
+-
 
 ==== 允許 NVDA 專案收集NVDA使用情況統計 ====[GeneralSettingsGatherUsageStats]
 如果啟用此功能，NV Access 將使用更新檢查中的資訊來追蹤 NVDA 用戶的數量，包括特定的人口統計，如作業系統和國家。
@@ -1095,7 +1095,7 @@ NVDA 將套用您目前電腦系統所使用的語言。
 - 目前正在使用的語音合成器之名稱（包括附加元件的驅動程序之名稱）
 - 目前正在使用的點字顯示器之名稱（包括附加元件的驅動程序之名稱）
 - 目前正在輸出的點字表（如果使用點字）
-
+-
 
 這些資訊將極大地幫助 NV Access 優先考慮 NVDA 的未來發展。
 
@@ -1397,6 +1397,9 @@ NVDA 會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸
 您也可以隨時將此警告訊息還原，只要勾選「使螢幕全黑」旁邊的「當啟用螢幕簾幕時，總是顯示警告訊息」核取方塊即可。
 
 要在任何地方切換螢幕簾幕，請至[輸入手勢對話框 #InputGestures]中自訂快速鍵。
+
+預設情況下，當切換螢幕簾幕時會有音效提示。
+若您想要更改此設定，可以取消勾選「切換螢幕簾幕時播放音效」核取方塊。
 
 ==== 第三方視覺輔助的設定 ====[VisionSettingsThirdPartyVisualAids]
 額外的視覺加強器可以由[NVDA 附加元件 #AddonsManager]提供。
@@ -1776,24 +1779,14 @@ NVDA 會偵測到編輯游標／檢閱游標所在位置的格式，在某些情
 然而在某些微軟 Office 中的一些資訊可能沒有顯示或顯示錯誤，因此 UI automation 目前還不能算是完全可靠。
 我們不建議大多數的使用者啟用此功能，但我們鼓厲使用 Office 2016/365 的使用者測試這項功能並給予我們回饋。
 
-==== Windows 主控台支援 ====[AdvancedSettingsConsoleUIA]9
-此選項用來選擇 NVDA 如何與那些使用 Windows 主控台應用程式互動的方式，包含命令提示字元、PowerShell，以及針對 Linux 的 Windows 子系統。
-但它並不影響新版的 Windows 終端機。
-自從 Windows 10 版本 1709 ，微軟[在主控台中加入 UI Automation API 支援 https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]，以提高對那些有支援的語音報讀軟體之操作效能及穩定性。
-若 UI Automation 無法使用，或發現會造成更差的使用者體驗， NVDA 會改採用傳統的主控台支援方式來遞補。
-「Windows 主控台支援」的下拉式方塊中有三個選項：
-- 自動：在 Windows 10 (1809 及之後的版本) 中的主控台使用 UI 自動化。這是建議的選項並設為預設值。
-- 儘量使用 UIA：若有支援，在 Windows 主控台中使用 UI Automation ，即使是正在開發，尚不穩定的版本。此功能雖然好用（或足夠您的使用需求），但不保證在任何地方皆能夠支援。
-- 舊版：UI Automation 在 Windows 主控台中會被全面停用，一律採用傳統的支援方式。
--
+==== 在 Windows 主控台中使用UI Automation(若有支援) ====[AdvancedSettingsConsoleUIA]
+當啟用此選項後，NVDA 會使用一個全新且正在嘗試的功能來支援 Windows 主控台，它是基於[微軟針對無障礙的改善 https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]。此功能還在測試階段，且尚未全部完成，因此目前並不推薦啟用。然而，當此功能完善後，可預期它會成為 NVDA 的預設功能，來提升在 Windows 主控台中操作的效能及穩定性。
 
-==== 在 Windows 主控台中讀出密碼 ====[AdvancedSettingsWinConsoleSpeakPasswords]
-此項設定用於輸入字元（如輸入密碼）時螢幕不會隨著變化的情況，例如在支援 UI Automation 的 Windows 主控台或 Mintty 等，此設定會依據[讀出輸入字元 #KeyboardSettingsSpeakTypedCharacters]或[讀出輸入字詞 #KeyboardSettingsSpeakTypedWords]的設定是開或關，而切換是否讀出所輸入的字元或字詞。
-為了隱私安全，此選項應該保持關閉。
-但當您發現在主控台中輸入文字時的效能或穩定性有問題，或者您信任當下使用的環境是足夠隱私的，則可以開啟該功能來報讀密碼
+==== 在 UIA 主控台中讀出密碼 ====[AdvancedSettingsWinConsoleSpeakPasswords]
+此項設定用於輸入字元（如輸入密碼）時螢幕不會隨著變化的情況，例如在支援 UI Automation 的 Windows 主控台，此設定會依據[讀出輸入字元 #KeyboardSettingsSpeakTypedCharacters]或[讀出輸入字詞 #KeyboardSettingsSpeakTypedWords]的設定是開或關，而切換是否讀出所輸入的字元或字詞。為了隱私安全，此選項應該保持關閉，但當您發現在使用 NVDA 新嘗試支援主控台的功能時，輸入文字時的效能或穩定性有問題，則可以開啟該功能來報讀密碼
 
-==== 在舊版 Windows 主控台中使用新的輸入支援 (若有支援) ====[AdvancedSettingsKeyboardSupportInLegacy]
-此選項會啟用一個替代的方式來偵側在舊版主控台輸入的文字。
+==== 在 Windows 主控台中使用新的輸入支援 (若有支援) ====[AdvancedSettingsKeyboardSupportInLegacy]
+此選項會啟用一個替代的方式來偵側在 Windows 主控台輸入的文字。
 雖然它可以改善效能，並避免主控台的輸出以拼讀的方式報讀，但它可能無法支援有些終端程式。
 這個選項在 Windows 10 版本 1607、 1703、 1709 及 1803 是預設開啟的，以及在後續的版本，當 UI Automation 無法使用或被停用的情況下，均是可用的。
 警告：當開啟此選項後，輸入的字元不會顯示在螢幕上 (如密碼) 也同樣會被報讀出來。
@@ -2161,7 +2154,7 @@ SAPI 5 是微軟語音合成器的標準版本。
 Windows 10 含有新的語音，一般稱之為「OneCore」或「mobile」語音。
 該語音提供了多種語系，且與微軟 SAPI 5合成器對接的語音相比，較之來的反應更快速。
 On Windows 10, NVDA uses Windows OneCore voices by default 
-在 Windows 10 中，NVDA 預設使用 Windows OneCore。（在其它版本中則預設是使用[[eSpeak NG #eSpeakNG]）
+在 Windows 10 中，NVDA 預設使用 Windows OneCore。（在其它版本中則預設是使用[eSpeak NG #eSpeakNG]）
 
 請參照微軟此篇文章之內容來安裝: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
@@ -3019,7 +3012,7 @@ nvda -q
 | -l LOGLEVEL | --log-level=LOGLEVEL | 事件記錄最低等級（偵錯 10；輸入/輸出 12；偵錯警告 15；資訊 20；警告 30；錯誤 40；嚴重錯誤 50；停用 100）預設是警告。 |
 | -c CONFIGPATH | --config-path=CONFIGPATH | 所有用在 NVDA 設定的路徑均已貯存。 |
 | -m | --minimal | 沒有音效、沒有介面、沒有啟動等資訊。 |
-| -s | --secure | 安全模式（停用 Python 主控台及事件紀錄，通常用於安全畫面） |
+| -s | --secure | 安全模式：會停用以下項目，包括 Python 主控台、組態設定(如新增、刪除重新命名組態檔等)、檢查更新、一些歡迎畫面及設定對話框中，一般類別的核取方塊(如「登入 Windows 後自動啟動 NVDA」、「關閉時儲存設定」等)，以及事件紀錄功能(此選項通常用於安全模式)。注意此選項也會讓您無法將自訂的輸入手勢儲存下來。 |
 | None | --disable-addons | 附加元件將不起作用 |
 | None | --debug-logging | 僅對本次執行啟用除錯等級的事件紀錄，這個設定會覆蓋其他事件紀錄的指定等級之內容。( ""--loglevel"", -l) |
 | None | --no-logging | 在使用 NVDA 時完全停用記錄功能。如果從命令列指定了事件記錄等級 ( ""--loglevel"", -l) 或者偵錯事件記錄為開啟，本設定將被覆寫掉。 |

@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-10 00:10+1000\n"
-"PO-Revision-Date: 2020-01-12 13:02+0100\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
+"PO-Revision-Date: 2020-02-02 10:47+0100\n"
 "Last-Translator: Ondrej Rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <https://nvda.venik.org>\n"
 "Language: sk\n"
@@ -524,9 +524,6 @@ msgid "Only when scrolling back"
 msgstr "Len pri návrate späť"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "Automatické"
 
@@ -4339,7 +4336,7 @@ msgstr ""
 #. (braille can be tethered automatically or to either focus or review position).
 #, python-format
 msgid "Braille tethered %s"
-msgstr "Braillovský kurzor zviazaný s %s"
+msgstr "Braillovský kurzor zviazaný %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
@@ -9157,22 +9154,15 @@ msgid ""
 "Use UI Automation to access Microsoft &Word document controls when available"
 msgstr "Na zobrazenie prvkov v Microsoft aplikáciách používať UI Automation "
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Podpora &Konzoly Windows"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr "Použiť UIA na zobrazenie Windows &konzoly"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "UIA"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Staršia verzia"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "&Hovoriť heslá v UIA konzole (môže zrýchliť odozvu)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9181,17 +9171,9 @@ msgstr "Terminály a príkazové riadky"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
-msgstr "Hovoriť &heslá v konzole Windows (môže zrýchliť odozvu)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
-"Použiť novú podporu oznamovania na&písaných znakov v starších typoch konzoly "
-"Windows, ak je to možné"
+"Použiť novú podporu oznamovania na&písaných znakov vo Windows konzolách"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10076,16 +10058,19 @@ msgstr "Zvýraznenie fokusu"
 msgid "&Enable Highlighting"
 msgstr "&Povoliť zvýraznenie"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "Tienenie obrazovky"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
-msgstr "&Varovať pred spustením funkcie {screenCurtainTranslatedName}"
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "&Varovať pred spustením tienenia obrazovky"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "Prehrať zvuk pri prepínaní &tienenia obrazovky"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -11597,6 +11582,15 @@ msgstr "dvojité riadkovanie"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 riadka"
+
+#~ msgid "Windows C&onsole support:"
+#~ msgstr "Podpora &Konzoly Windows"
+
+#~ msgid "Prefer UIA"
+#~ msgstr "UIA"
+
+#~ msgid "Legacy"
+#~ msgstr "Staršia verzia"
 
 #, fuzzy
 #~ msgid "Highlighter"

@@ -157,7 +157,7 @@ Dacă pornirea NVDA-ului necesită timp îndelungat, acesta ar trebui să anunț
 Dacă nu auziți nimic din toate acestea, sau dacă auziți sunetul de eroare al Windows, sau câteva tonuri descendente, asta înseamnă că NVDA are o eroare și e posibil să trebuiască să raportați un defect dezvoltatorilor.
 Vă rugăm verificați site-ul NVDA pentru informații despre cum să faceți asta.
 
-+++ Fereastra dialog de întâmpinare +++[DialogIntampinare]
++++ Fereastra dialog de întâmpinare +++[WelcomeDialog]
 Când NVDA pornește pentru prima dată, veți fi întâmpinat de o fereastră de dialog care vă oferă câteva informații de bază despre tasta de modificare NVDA și meniul NVDA.
 (Vă rugăm citiți secțiunile următoare în legătură cu aceste subiecte).
 Fereastra de dialog conține o casetă combinată și trei  casete de bifat.
@@ -165,6 +165,13 @@ Caseta combinată vă va lăsa să selectați aspectul tastaturii.
 Prima casetă de bifat vă va lăsa să alegeți dacă NVDA va folosi tasta „Caps Lock” drept tastă de modificare NVDA.
 A doua specifică dacă NVDA ar trebui să pornească automat după ce vă autentificați în Windows și este disponibilă doar pentru versiunile instalate.
 A treia vă va lăsa să alegeți dacă această fereastră de întâmpinare va apărea la fiecare pornire a NVDA.
+
++++ Dialogul de statistici cu privire la utilizarea datelor +++[UsageStatsDialog]
+Începând cu NVDA 2018.3, utilizatorul este întrebat dacă vrea sau nu să permită ca datele de utilizare să fie trimise la NV Access pentru a ajuta la îmbunătățirea NVDA în viitor. 
+La pornirea pentru prima dată a NVDA, va apărea o fereastră de dialog în care veți fi întrebat dacă acceptați trimiterea datelor către NV Access pe parcursul utilizării.
+Puteți citi mai multe despre datele adunate de NV Access în secțiunea setărilor generale, [Permite proiectului NVDA să adune statistici cu privire la utilizarea NVDA #GeneralSettingsGatherUsageStats].
+Notă: Dacă apăsați pe „da” sau pe „nu” setarea va fi salvată, iar dialogul nu va mai apărea până la reinstalarea NVDA.
+Cu toate acestea, puteți activa sau dezactiva manual procesul de colectare din panoul setărilor NVDA. Pentru a putea modifica manual această setare, puteți bifa sau debifa caseta numită [Permite proiectului NVDA să adune statistici cu privire la utilizarea NVDA #GeneralSettingsGatherUsageStats].
 
 ++ Despre comenzile din taste ale NVDA ++[AboutNVDAKeyboardCommands]
 
@@ -1065,7 +1072,7 @@ Următoarele informații sunt trimise actual către server:
 - Arhitectura sistemului de operare (64 sau 32 de biți).
 
 
-==== Acceptarea trimiterii statisticilor de folosire către NV Access ====
+==== Acceptarea trimiterii statisticilor de folosire către NV Access ====[GeneralSettingsGatherUsageStats]
 Dacă acceptați ca, în timpul verificării automate pentru actualizări noi, NVDA să trimită statisticile către NV Access, aceste informații vor fi folosite pentru a descoperi numărul de utilizatori și aspectele tipice precum țara și versiunea  sistemului de operare.
 Adresa de IP nu va fi salvată în niciun caz. Dar, notați că adresa de IP va fi folosită temporar pentru a se afla țara în care se folosește NVDA în acel moment.
 În afara informațiilor obligatorii pentru a face posibilă verificarea automată pentru actualizări noi, NVDA va trimite următoarele informații suplimentare:
