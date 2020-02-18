@@ -13,7 +13,6 @@ import controlTypes
 import api
 import textInfos
 import queueHandler
-from functools import partial
 import time
 import winKernel
 
@@ -167,7 +166,7 @@ class _TextReader(object):
 			_prefixSpeechCommand=cb,
 			_whiteSpaceReachedCallback=(
 				self.endOfWhiteSpaceReached
-				if config.conf["speech"]["increaseSayAllCaretUpdates"]
+				if config.conf["speech"][synthDriverHandler.getSynth().name]["increaseSayAllCaretUpdates"]
 				else None
 			),
 			useCache=self.speakTextInfoState

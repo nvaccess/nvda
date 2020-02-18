@@ -50,7 +50,6 @@ from .commands import (  # noqa: F401
 	WaveFileCommand,
 	ConfigProfileTriggerCommand,
 )
-from functools import partial
 from . import types
 from .types import SpeechSequence, SequenceItemT
 from typing import Optional, Dict, List, Any, Generator, Union, Callable, Iterator, Tuple
@@ -1066,6 +1065,7 @@ def speakTextInfo(
 		unit,
 		reason,
 		_prefixSpeechCommand,
+		_whiteSpaceReachedCallback,
 		onlyInitialFields,
 		suppressBlanks
 	)
@@ -1085,6 +1085,7 @@ def getTextInfoSpeech(  # noqa: C901
 		unit: Optional[str] = None,
 		reason: OutputReason = controlTypes.REASON_QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
+		_whiteSpaceReachedCallback: Optional[Callable[[Any], None]] = None,
 		onlyInitialFields: bool = False,
 		suppressBlanks: bool = False
 ) -> Generator[SpeechSequence, None, bool]:
@@ -1419,8 +1420,13 @@ def getTextInfoSpeech(  # noqa: C901
 					if whiteSpaceTracker.compareEndPoints(info, "startToEnd") > 0:
 						break
 					bookmark = whiteSpaceTracker.bookmark
-					callback = partial(_whiteSpaceReachedCallback, bookmark=bookmark)
-					curCommandSequence.append(CallbackCommand(callback))
+
+					def _onWhiteSpaceReached(bookmark=bookmark):
+						return _whiteSpaceReachedCallback(bookmark=bookmark)
+
+					curCommandSequence.append(
+						CallbackCommand(_onWhiteSpaceReached, name="getTextInfoSpeech:whiteSpaceReached")
+					)
 					# The whiteSpaceTracker shouldn't move past the end of the info we're speaking.
 					start = end
 				relativeSpeechSequence[index] = curCommandSequence
