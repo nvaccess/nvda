@@ -266,7 +266,7 @@ class CallbackCommand(BaseCallbackCommand):
 		if not isinstance(callback, SUPPORTED_CALLBACK_TYPES):
 			raise TypeError(
 				"callback must be one of %s, not %s"
-				% (", ".join(SUPPORTED_CALLBACK_TYPES), type(callback))
+				% (", ".join(str(t) for t in SUPPORTED_CALLBACK_TYPES), type(callback))
 			)
 		self._callback = callback
 		if name:

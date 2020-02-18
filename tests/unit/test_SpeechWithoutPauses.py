@@ -128,7 +128,7 @@ class TestOldImplVsNew(unittest.TestCase):
 	"""A test that verifies that the new implementation of SpeechWithoutPauses matches the old behavior.
 	"""
 	def test_stopsSpeakingCase(self):
-		callbackCommand = CallbackCommand(name="dummy", callback=None)
+		callbackCommand = CallbackCommand(name="dummy", callback=lambda: None)
 		lang_en = LangChangeCommand('en')
 		lang_default = LangChangeCommand(None)
 
