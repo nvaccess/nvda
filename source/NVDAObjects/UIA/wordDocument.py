@@ -305,8 +305,9 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 
 	@script(
 		# Translators: the description for the toggleScreenLayout script.
-		description=_("Toggles on and off if the screen layout is preserved
-		while rendering the document content"),
+		description=_(
+			"Toggles on and off if the screen layout is preserved while rendering the document content"
+		),
 		gesture="kb:NVDA+v",
 	)
 	def script_toggleScreenLayout(self, gesture):
