@@ -37,4 +37,3 @@ def getMathMl(oleFormat, runForConversion=True):
 	return mathPres.stripExtraneousXml(
 		mathMl.value.decode('utf8')
 	)
-
