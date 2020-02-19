@@ -21,7 +21,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <oleacc.h>
 #include <common/xml.h>
 #include <common/log.h>
-#include <boost/optional.hpp>
+#include <optional>
 #include "nvdaHelperRemote.h"
 #include "nvdaInProcUtils.h"
 #include "nvdaInProcUtils.h"
@@ -751,7 +751,7 @@ inline bool generateFootnoteEndnoteXML(IDispatch* pDispatchRange, wostringstream
 	return true;
 }
 
-std::experimental::optional<int> getSectionBreakType(IDispatchPtr pDispatchRange ) {
+std::optional<int> getSectionBreakType(IDispatchPtr pDispatchRange ) {
 	// The following case should handle where we have the page break character ('0x0c') shown with '|p|'
 	//	first section|p|
 	//	second section.
@@ -817,7 +817,7 @@ std::experimental::optional<int> getSectionBreakType(IDispatchPtr pDispatchRange
 	return type;
 }
 
-std::experimental::optional<float>
+std::optional<float>
 getStartOfRangeDistanceFromEdgeOfDocument(IDispatchPtr pDispatchRange) {
 	float rangePos = -1.0f;
 	auto res = _com_dispatch_raw_method( pDispatchRange, wdDISPID_RANGE_INFORMATION,
@@ -831,7 +831,7 @@ getStartOfRangeDistanceFromEdgeOfDocument(IDispatchPtr pDispatchRange) {
 	return rangePos;
 }
 
-std::experimental::optional< std::pair<float, float> >
+std::optional< std::pair<float, float> >
 calculatePreAndPostColumnOffsets(IDispatchPtr pDispatchPageSetup) {
 	float leftMargin = -1.0f;
 	auto res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_LEFTMARGIN,
@@ -1182,8 +1182,8 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		if(text) {
 			int noteCharOffset=-1;
 			bool isNoteChar=false;
-			std::experimental::optional<int> pageBreakCharIndex;
-			std::experimental::optional<int> columnBreakCharIndex;
+			std::optional<int> pageBreakCharIndex;
+			std::optional<int> columnBreakCharIndex;
 			if(!isFormField) {
 				//Force a new chunk before and after control+b (note characters)
 				for(int i=0;text[i]!=L'\0';++i) {

@@ -160,6 +160,9 @@ addTable("en-gb-g1.utb", _("English (U.K.) grade 1"))
 addTable("en-GB-g2.ctb", _("English (U.K.) grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("en-nabcc.utb", _("English North American Braille Computer Code"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("en-ueb-g1.ctb", _("Unified English Braille Code grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
@@ -301,10 +304,13 @@ addTable("mn-MN-g2.ctb", _("Mongolian grade 2"), contracted=True)
 addTable("mr-in-g1.utb", _("Marathi grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("nl-BE-g0.utb", _("Dutch (Belgium)"))
+addTable("nl-BE-g0.utb", _("Dutch (Belgium) 6 dot"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("nl-NL-g0.utb", _("Dutch (Netherlands)"))
+addTable("nl-NL-g0.utb", _("Dutch (Netherlands) 6 dot"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("nl-comp8.utb", _("Dutch 8 dot"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("no-no-8dot.utb", _("Norwegian 8 dot computer braille"))
