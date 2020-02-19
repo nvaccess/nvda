@@ -18,7 +18,6 @@ from UIABrowseMode import UIABrowseModeDocument, UIADocumentWithTableNavigation,
 from UIAUtils import *
 from . import UIA, UIATextInfo
 from NVDAObjects.window.winword import WordDocument as WordDocumentBase
-from scriptHandler import script
 
 """Support for Microsoft Word via UI Automation."""
 
@@ -302,17 +301,6 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 		return super(WordBrowseModeDocument,self)._iterNodesByType(nodeType,direction=direction,pos=pos)
 
 	ElementsListDialog=ElementsListDialog
-
-	@script(
-		# Translators: the description for the toggleScreenLayout script.
-		description=_(
-			"Toggles on and off if the screen layout is preserved while rendering the document content"
-		),
-		gesture="kb:NVDA+v",
-	)
-	def script_toggleScreenLayout(self, gesture):
-		# Translators: The message reported for not supported toggling of screen layout
-		ui.message(_("Not supported in this document."))
 
 class WordDocumentNode(UIA):
 	TextInfo=WordDocumentTextInfo

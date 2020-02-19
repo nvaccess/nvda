@@ -1151,17 +1151,6 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 		"kb:shift+pageDown":None,
 	}
 
-	@script(
-		# Translators: the description for the toggleScreenLayout script.
-		description=_(
-			"Toggles on and off if the screen layout is preserved while rendering the document content"
-		),
-		gesture="kb:NVDA+v",
-	)
-	def script_toggleScreenLayout(self, gesture):
-		# Translators: The message reported for not supported toggling of screen layout
-		ui.message(_("Not supported in this document."))
-
 class WordDocument(Window):
 
 	def winwordColorToNVDAColor(self,val):
