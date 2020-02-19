@@ -1791,6 +1791,61 @@ class ObjectPresentationPanel(SettingsPanel):
 				break
 		else:
 			log.debugWarning("Could not set progress list to current report progress bar updates setting")
+		self.progressList.Bind(wx.EVT_CHOICE, self.onProgressBarOutputModeChange)
+
+		# Translators: The label for a setting in presentation settings to change speech percentage interval
+		SpeechIntrLabelText = _("Progress bar &speech percentage Interval")
+		minSpeechIntr = int(config.conf.getConfigValidation(
+			("presentation", "progressBarUpdates", "speechPercentageInterval")
+		).kwargs["min"])
+		maxSpeechIntr = int(config.conf.getConfigValidation(
+			("presentation", "progressBarUpdates", "speechPercentageInterval")
+		).kwargs["max"])
+		self.SpeechIntrEdit = sHelper.addLabeledControl(
+			SpeechIntrLabelText,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=minSpeechIntr,
+			max=maxSpeechIntr,
+			initial=config.conf["presentation"]["progressBarUpdates"]["speechPercentageInterval"]
+		)
+		if self.progressList.GetSelection() == 0 or self.progressList.GetSelection() == 2:
+			self.SpeechIntrEdit.Disable()
+
+		# Translators: The label for a setting in presentation settings to change beep percentage interval
+		BeepIntrLabelText = _("Progress bar b&eep percentage Interval")
+		minBeepIntr = int(config.conf.getConfigValidation(
+			("presentation", "progressBarUpdates", "beepPercentageInterval")
+		).kwargs["min"])
+		maxBeepIntr = int(config.conf.getConfigValidation(
+			("presentation", "progressBarUpdates", "beepPercentageInterval")
+		).kwargs["max"])
+		self.BeepIntrEdit = sHelper.addLabeledControl(
+			BeepIntrLabelText,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=minBeepIntr,
+			max=maxBeepIntr,
+			initial=config.conf["presentation"]["progressBarUpdates"]["beepPercentageInterval"]
+		)
+		if self.progressList.GetSelection() == 0 or self.progressList.GetSelection() == 1:
+			self.BeepIntrEdit.Disable()
+
+		# Translators: The label for a setting in presentation settings to change minimum beep frequency
+		beepMinHZLabelText = _("Progress bar minimum beep &frequency (Hz)")
+		minBeepHZ = int(config.conf.getConfigValidation(
+			("presentation", "progressBarUpdates", "beepMinHZ")
+		).kwargs["min"])
+		maxBeepHZ = int(config.conf.getConfigValidation(
+			("presentation", "progressBarUpdates", "beepMinHZ")
+		).kwargs["max"])
+		self.beepMinHZEdit = sHelper.addLabeledControl(
+			beepMinHZLabelText,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=minBeepHZ,
+			max=maxBeepHZ,
+			initial=config.conf["presentation"]["progressBarUpdates"]["beepMinHZ"]
+		)
+		if self.progressList.GetSelection() == 0 or self.progressList.GetSelection() == 1:
+			self.beepMinHZEdit.Disable()
 
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings panel.
@@ -1810,6 +1865,11 @@ class ObjectPresentationPanel(SettingsPanel):
 		self.autoSuggestionSoundsCheckBox=sHelper.addItem(wx.CheckBox(self,label=autoSuggestionsLabelText))
 		self.autoSuggestionSoundsCheckBox.SetValue(config.conf["presentation"]["reportAutoSuggestionsWithSound"])
 
+	def onProgressBarOutputModeChange(self, evt):
+		self.SpeechIntrEdit.Enable(evt.GetSelection() == 1 or evt.GetSelection() == 3)
+		self.BeepIntrEdit.Enable(evt.GetSelection() == 2 or evt.GetSelection() == 3)
+		self.beepMinHZEdit.Enable(evt.GetSelection() == 2 or evt.GetSelection() == 3)
+
 	def onSave(self):
 		config.conf["presentation"]["reportTooltips"]=self.tooltipCheckBox.IsChecked()
 		config.conf["presentation"]["reportHelpBalloons"]=self.balloonCheckBox.IsChecked()
@@ -1818,6 +1878,9 @@ class ObjectPresentationPanel(SettingsPanel):
 		config.conf["presentation"]["guessObjectPositionInformationWhenUnavailable"]=self.guessPositionInfoCheckBox.IsChecked()
 		config.conf["presentation"]["reportObjectDescriptions"]=self.descriptionCheckBox.IsChecked()
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]=self.progressLabels[self.progressList.GetSelection()][0]
+		config.conf["presentation"]["progressBarUpdates"]["speechPercentageInterval"] = self.SpeechIntrEdit.Value
+		config.conf["presentation"]["progressBarUpdates"]["beepPercentageInterval"] = self.BeepIntrEdit.Value
+		config.conf["presentation"]["progressBarUpdates"]["beepMinHZ"] = self.beepMinHZEdit.Value
 		config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]=self.reportBackgroundProgressBarsCheckBox.IsChecked()
 		config.conf["presentation"]["reportDynamicContentChanges"]=self.dynamicContentCheckBox.IsChecked()
 		config.conf["presentation"]["reportAutoSuggestionsWithSound"]=self.autoSuggestionSoundsCheckBox.IsChecked()

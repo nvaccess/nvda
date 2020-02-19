@@ -92,9 +92,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		reportBackgroundProgressBars = boolean(default=false)
 		#output modes are beep, speak, both, or off
 		progressBarOutputMode = string(default="beep")
-		speechPercentageInterval = integer(default=10)
-		beepPercentageInterval = integer(default=1)
-		beepMinHZ = integer(default=110)
+		speechPercentageInterval = integer(default=10,min=1,max=20)
+		beepPercentageInterval = integer(default=1,min=1,max=20)
+		beepMinHZ = integer(default=110,min=55,max=220)
 
 [mouse]
 	enableMouseTracking = boolean(default=True) #must be true for any of the other settings to work

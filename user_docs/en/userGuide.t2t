@@ -1576,6 +1576,16 @@ It has the following options:
 - Beep and speak: This option tells NVDA to both beep and speak when a progress bar updates.
 -
 
+==== Progress bar speech percentage Interval ====[ObjectPresentationReportProgressBarSpeechPercentageInterval]
+This setting allows you to set after which percentage change the new progress bar state will be read by the synthesizer.
+
+==== Progress bar Beep percentage Interval ====[ObjectPresentationReportProgressBarBeepPercentageInterval]
+This setting allows you to set after which percentage change the new progress bar state will be indicated by the beep sound.
+
+==== Progress bar minimum beep frequency (HZ) ====[ObjectPresentationReportProgressBarMinimumBeepFrequency (HZ)]
+Here you can set what will be the initial frequency (in Hz), which will be used for the audio presentation of the progress bars.
+The default value of 110Hz corresponds to the sound A in the great octave.
+
 ==== Report background progress bars ====[ObjectPresentationReportBackgroundProgressBars]
 This is an option that, when checked, tells NVDA to keep reporting a progress bar, even if it is not physically in the foreground.
 If you minimize or switch away from a window that contains a progress bar, NVDA will keep track of it, allowing you to do other things while NVDA tracks the progress bar.
