@@ -322,7 +322,14 @@ def initialize(shouldDoRemoteLogging=False):
 				os.rename(globalVars.appArgs.logFileName, oldLogFileName)
 			except (IOError, WindowsError):
 				pass # Probably log does not exist, don't care.
-			logHandler = FileHandler(globalVars.appArgs.logFileName, mode="w",encoding="utf-8")
+			try:
+				logHandler = FileHandler(globalVars.appArgs.logFileName, mode="w", encoding="utf-8")
+			except IOError:
+				# if log cannot be opened, we use NullHandler to avoid logging preserving logger behaviour
+				# and set log filename to None to inform logViewer about it
+				globalVars.appArgs.logFileName = None
+				logHandler = logging.NullHandler()
+				log.error("Faile to open log file, redirecting to standard output")
 			logLevel = globalVars.appArgs.logLevel
 			if globalVars.appArgs.debugLogging:
 				logLevel = Logger.DEBUG
