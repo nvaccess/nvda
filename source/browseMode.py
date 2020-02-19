@@ -22,7 +22,7 @@ import queueHandler
 import gui
 import ui
 import cursorManager
-from scriptHandler import isScriptWaiting, willSayAllResume
+from scriptHandler import script, isScriptWaiting, willSayAllResume
 import aria
 import controlTypes
 from controlTypes import OutputReason
