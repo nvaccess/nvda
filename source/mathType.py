@@ -1,8 +1,8 @@
-#mathType.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2014 NV Access Limited
+# mathType.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2014-2020 NV Access Limited
 
 """Utilities for working with MathType.
 """
