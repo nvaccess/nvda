@@ -1,0 +1,60 @@
+###
+# This file is a part of the NVDA project.
+# URL: http://www.nvaccess.org/
+# Copyright 2019 NV Access Limited.
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2.0, as published by
+# the Free Software Foundation.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# This license can be found at:
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+###
+
+import os
+import sys
+
+import SCons
+
+Import("env")
+
+# Add system path to get access to git.
+externalEnv = Environment(
+	ENV = {'PATH' : os.environ['PATH']}
+)
+
+doLint = env.get("doLint")
+baseBranch = env.get("base")
+if doLint and not baseBranch:
+	errorMessage = (
+		"Lint can not complete without base branch. "
+		"Try: 'scons lint base=origin/master' "
+		"See also /tests/lint/readme.md"
+	)
+	raise SCons.SConf.SConfError(errorMessage)
+
+# Create a unified diff. Written to file for ease of manual inspection
+diffTarget = externalEnv.Command(
+	"current.diff",
+	None,
+	[[sys.executable, "tests/lint/genDiff.py", baseBranch, '$TARGET']]
+)
+
+# Pipe diff to flake8 for linting.
+lintTarget = externalEnv.Command(
+	"current.lint",
+	"current.diff",
+	[[
+		'type', '$SOURCE', '|',  # provide diff to stdin
+		sys.executable, "-m", "flake8",
+		'--diff',  # accept a unified diff from stdin
+		'--output-file=$TARGET',  # output to a file to allow easier inspection
+		'--tee',  # also output to stdout, so results appear in scons output
+		'--config="tests/lint/flake8.ini"',  # use config file of complex options
+		'--exit-zero',  # even if there are errors, don't stop the build.
+	]]
+)
+
+env.Depends(lintTarget, diffTarget)
+Return('diffTarget', 'lintTarget')

@@ -31,7 +31,7 @@ repoRoot = _abspath("./")
 whichNVDA = builtIn.get_variable_value("${whichNVDA}", "source")
 if whichNVDA == "source":
 	NVDACommandPathToCheckExists = _pJoin(repoRoot, "source/nvda.pyw")
-	baseNVDACommandline = "pythonw "+NVDACommandPathToCheckExists
+	baseNVDACommandline = f"pyw {NVDACommandPathToCheckExists}"
 elif whichNVDA == "installed":
 	NVDACommandPathToCheckExists = _pJoin(_expandvars('%PROGRAMFILES%'),'nvda','nvda.exe')
 	baseNVDACommandline='"%s"' % NVDACommandPathToCheckExists
@@ -63,8 +63,7 @@ def _findDepPath(depFileName, searchPaths):
 # relative to the python path
 requiredPythonImportsForSystemTestSpyPackage = [
 	r"robotremoteserver",
-	r"SimpleXMLRPCServer",
-	r"xmlrpclib",
+	r"xmlrpc",
 ]
 
 def _createNvdaSpyPackage():

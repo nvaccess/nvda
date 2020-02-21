@@ -7,6 +7,8 @@
 
 import time
 import itertools
+from typing import Optional
+
 import tones
 import audioDucking
 import touchHandler
@@ -32,6 +34,7 @@ import winKernel
 import treeInterceptorHandler
 import browseMode
 import scriptHandler
+from scriptHandler import script
 import ui
 import braille
 import brailleInput
@@ -42,6 +45,7 @@ from baseObject import ScriptableObject
 import core
 import winVersion
 from base64 import b16encode
+import vision
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -67,6 +71,9 @@ SCRCAT_CONFIG_PROFILES = _("Configuration profiles")
 #: Script category for Braille commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_BRAILLE = _("Braille")
+#: Script category for Vision commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_VISION = _("Vision")
 #: Script category for tools commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_TOOLS = pgettext('script category', 'Tools')
@@ -209,7 +216,7 @@ class GlobalCommands(ScriptableObject):
 		if not info or info.isCollapsed:
 			speech.speakMessage(_("No selection"))
 		else:
-			speech.speakMessage(_("Selected %s")%info.text)
+			speech.speakTextSelected(info.text)
 	# Translators: Input help mode message for report current selection command.
 	script_reportCurrentSelection.__doc__=_("Announces the current selection in edit controls and documents. If there is no selection it says so.")
 	script_reportCurrentSelection.category=SCRCAT_SYSTEMCARET
@@ -618,6 +625,22 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportHeadings.__doc__=_("Toggles on and off the reporting of headings")
 	script_toggleReportHeadings.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report groupings command.
+		description=_("Toggles on and off the reporting of groupings"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
+	def script_toggleReportGroupings(self, gesture):
+		if config.conf["documentFormatting"]["reportGroupings"]:
+			# Translators: The message announced when toggling the report block quotes document formatting setting.
+			state = _("report groupings off")
+			config.conf["documentFormatting"]["reportGroupings"] = False
+		else:
+			# Translators: The message announced when toggling the report block quotes document formatting setting.
+			state = _("report groupings on")
+			config.conf["documentFormatting"]["reportGroupings"] = True
+		ui.message(state)
+
 	def script_toggleReportBlockQuotes(self,gesture):
 		if config.conf["documentFormatting"]["reportBlockQuotes"]:
 			# Translators: The message announced when toggling the report block quotes document formatting setting.
@@ -635,16 +658,32 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportLandmarks(self,gesture):
 		if config.conf["documentFormatting"]["reportLandmarks"]:
 			# Translators: The message announced when toggling the report landmarks document formatting setting.
-			state = _("report landmarks off")
+			state = _("report landmarks and regions off")
 			config.conf["documentFormatting"]["reportLandmarks"]=False
 		else:
 			# Translators: The message announced when toggling the report landmarks document formatting setting.
-			state = _("report landmarks on")
+			state = _("report landmarks and regions on")
 			config.conf["documentFormatting"]["reportLandmarks"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report landmarks command.
 	script_toggleReportLandmarks.__doc__=_("Toggles on and off the reporting of landmarks")
 	script_toggleReportLandmarks.category=SCRCAT_DOCUMENTFORMATTING
+
+	@script(
+		# Translators: Input help mode message for toggle report articles command.
+		description=_("Toggles on and off the reporting of articles"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
+	def script_toggleReportArticles(self, gesture):
+		if config.conf["documentFormatting"]["reportArticles"]:
+			# Translators: The message announced when toggling the report articles document formatting setting.
+			state = _("report articles off")
+			config.conf["documentFormatting"]["reportArticles"] = False
+		else:
+			# Translators: The message announced when toggling the report articles document formatting setting.
+			state = _("report articles on")
+			config.conf["documentFormatting"]["reportArticles"] = True
+		ui.message(state)
 
 	def script_toggleReportFrames(self,gesture):
 		if config.conf["documentFormatting"]["reportFrames"]:
@@ -706,8 +745,8 @@ class GlobalCommands(ScriptableObject):
 				# Translators: Reported when the object has no location for the mouse to move to it.
 				ui.message(_("Object has no location"))
 				return
-			x=left+(width/2)
-			y=top+(height/2)
+			x=left+(width//2)
+			y=top+(height//2)
 		winUser.setCursorPos(x,y)
 		mouseHandler.executeMouseMoveEvent(x,y)
 	# Translators: Input help mode message for move mouse to navigator object command.
@@ -778,8 +817,9 @@ class GlobalCommands(ScriptableObject):
 		if scriptHandler.getLastScriptRepeatCount()>=1:
 			if curObject.TextInfo!=NVDAObjectTextInfo:
 				textList=[]
-				if curObject.name and isinstance(curObject.name, basestring) and not curObject.name.isspace():
-					textList.append(curObject.name)
+				name = curObject.name
+				if isinstance(name, str) and not name.isspace():
+					textList.append(name)
 				try:
 					info=curObject.makeTextInfo(textInfos.POSITION_SELECTION)
 					if not info.isCollapsed:
@@ -792,7 +832,10 @@ class GlobalCommands(ScriptableObject):
 					# No caret or selection on this object.
 					pass
 			else:
-				textList=[prop for prop in (curObject.name, curObject.value) if prop and isinstance(prop, basestring) and not prop.isspace()]
+				textList=[]
+				for prop in (curObject.name, curObject.value):
+					if isinstance(prop,str) and not prop.isspace():
+						textList.append(prop)
 			text=" ".join(textList)
 			if len(text)>0 and not text.isspace():
 				if scriptHandler.getLastScriptRepeatCount()==1:
@@ -1132,18 +1175,7 @@ class GlobalCommands(ScriptableObject):
 			try:
 				c = ord(info.text)
 			except TypeError:
-				# This might be a character taking multiple code points.
-				# If it is a 32 bit character, encode it to UTF-32 and calculate the ord manually.
-				# In Python 3, this is no longer necessary.
-				try:
-					encoded = info.text.encode("utf_32_le")
-				except UnicodeEncodeError:
-					c = None
-				else:
-					if len(encoded)==4:
-						c = sum(ord(cp)<<i*8 for i, cp in enumerate(encoded))
-					else:
-						c = None
+				c = None
 			if c is not None:
 				speech.speakMessage("%d," % c)
 				speech.speakSpelling(hex(c))
@@ -1187,6 +1219,42 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for move review cursor to end of current line command.
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
 	script_review_endOfLine.category=SCRCAT_TEXTREVIEW
+
+	def _getCurrentLanguageForTextInfo(self, info):
+		curLanguage = None
+		if config.conf['speech']['autoLanguageSwitching']:
+			for field in info.getTextWithFields({}):
+				if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
+					curLanguage = field.field.get('language')
+		if curLanguage is None:
+			curLanguage = speech.getCurrentLanguage()
+		return curLanguage
+
+	@script(
+		# Translators: Input help mode message for Review Current Symbol command.
+		description=_("Reports the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode"),
+		category=SCRCAT_TEXTREVIEW,
+	)
+	def script_review_currentSymbol(self,gesture):
+		info=api.getReviewPosition().copy()
+		info.expand(textInfos.UNIT_CHARACTER)
+		curLanguage = self._getCurrentLanguageForTextInfo(info)
+		text = info.text
+		expandedSymbol = characterProcessing.processSpeechSymbol(curLanguage, text)
+		if expandedSymbol == text:
+			# Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+			ui.message(_("No symbol replacement"))
+			return
+		repeats=scriptHandler.getLastScriptRepeatCount()
+		if repeats == 0:
+			ui.message(expandedSymbol)
+		else:
+			# Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+			message = _("Character: {}\nReplacement: {}").format(text, expandedSymbol)
+			languageDescription = languageHandler.getLanguageDescription(curLanguage)
+			# Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+			title = _("Expanded symbol ({})").format(languageDescription)
+			ui.browseableMessage(message, title)
 
 	def script_speechMode(self,gesture):
 		curMode=speech.speechMode
@@ -1290,7 +1358,10 @@ class GlobalCommands(ScriptableObject):
 	def script_review_sayAll(self,gesture):
 		sayAllHandler.readText(sayAllHandler.CURSOR_REVIEW)
 	# Translators: Input help mode message for say all in review cursor command.
-	script_review_sayAll.__doc__ = _("Reads from the review cursor up to end of current text, moving the review cursor as it goes")
+	script_review_sayAll.__doc__ = _(
+		"Reads from the review cursor up to the end of the current text,"
+		" moving the review cursor as it goes"
+	)
 	script_review_sayAll.category=SCRCAT_TEXTREVIEW
 
 	def script_sayAll(self,gesture):
@@ -1316,7 +1387,7 @@ class GlobalCommands(ScriptableObject):
 		line.expand(textInfos.UNIT_LINE)
 		indentation,content=speech.splitTextIndentation(line.text)
 		if indentation:
-			textList.append(speech.getIndentationSpeech(indentation, formatConfig))
+			textList.extend(speech.getIndentationSpeech(indentation, formatConfig))
 		
 		info=info.copy()
 		info.expand(textInfos.UNIT_CHARACTER)
@@ -1326,9 +1397,9 @@ class GlobalCommands(ScriptableObject):
 				formatField.update(field.field)
 
 		if not browseable:
-			text=info.getFormatFieldSpeech(formatField,formatConfig=formatConfig) if formatField else None
-			if text:
-				textList.append(text)
+			if formatField:
+				sequence = info.getFormatFieldSpeech(formatField, formatConfig=formatConfig)
+				textList.extend(sequence)
 
 			if not textList:
 			# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
@@ -1337,17 +1408,25 @@ class GlobalCommands(ScriptableObject):
 				
 			ui.message(" ".join(textList))
 		else:
-			text=info.getFormatFieldSpeech(formatField,formatConfig=formatConfig , separator="\n") if formatField else None
-			if text:
-				textList.append(text)
+			if formatField:
+				sequence = info.getFormatFieldSpeech(formatField, formatConfig=formatConfig)
+				textList.extend(sequence)
 
 			if not textList:
 				# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 				ui.message(_("No formatting information"))
 				return
 
-			# Translators: title for formatting information dialog.
-			ui.browseableMessage("\n".join(textList), _("Formatting"))
+			# browseable message only supports a string, remove commands:
+			message = "\n".join(
+				stringItem for stringItem in textList if isinstance(stringItem, str)
+			)
+
+			ui.browseableMessage(
+				message,
+				# Translators: title for formatting information dialog.
+				_("Formatting")
+			)
 
 	def script_reportFormatting(self,gesture):
 		info=api.getReviewPosition()
@@ -1454,9 +1533,9 @@ class GlobalCommands(ScriptableObject):
 	def script_title(self,gesture):
 		obj=api.getForegroundObject()
 		title=obj.name
-		if not isinstance(title,basestring) or not title or title.isspace():
+		if not isinstance(title,str) or not title or title.isspace():
 			title=obj.appModule.appName if obj.appModule else None
-			if not isinstance(title,basestring) or not title or title.isspace():
+			if not isinstance(title,str) or not title or title.isspace():
 				# Translators: Reported when there is no title text for current program or window.
 				title=_("No title")
 		repeatCount=scriptHandler.getLastScriptRepeatCount()
@@ -1569,6 +1648,20 @@ class GlobalCommands(ScriptableObject):
 	script_toggleFocusMovesNavigatorObject.__doc__=_("Toggles on and off the movement of the navigator object due to focus changes") 
 	script_toggleFocusMovesNavigatorObject.category=SCRCAT_OBJECTNAVIGATION
 
+	def script_toggleAutoFocusFocusableElements(self,gesture):
+		if config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+			# Translators: presented when toggled.
+			state = _("Automatically set system focus to focusable elements off")
+			config.conf["virtualBuffers"]["autoFocusFocusableElements"]=False
+		else:
+			# Translators: presented when toggled.
+			state = _("Automatically set system focus to focusable elements on")
+			config.conf["virtualBuffers"]["autoFocusFocusableElements"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle auto focus focusable elements command.
+	script_toggleAutoFocusFocusableElements.__doc__=_("Toggles on and off automatic movement of the system focus due to browse mode commands") 
+	script_toggleAutoFocusFocusableElements.category=inputCore.SCRCAT_BROWSEMODE
+
 	#added by Rui Batista<ruiandrebatista@gmail.com> to implement a battery status script
 	def script_say_battery_status(self,gesture):
 		UNKNOWN_BATTERY_STATUS = 0xFF
@@ -1588,7 +1681,7 @@ class GlobalCommands(ScriptableObject):
 		if sps.ACLineStatus & AC_ONLINE: text += _("AC power on")
 		elif sps.BatteryLifeTime!=0xffffffff: 
 			# Translators: This is the estimated remaining runtime of the laptop battery.
-			text += _("{hours:d} hours and {minutes:d} minutes remaining") .format(hours=sps.BatteryLifeTime / 3600, minutes=(sps.BatteryLifeTime % 3600) / 60)
+			text += _("{hours:d} hours and {minutes:d} minutes remaining") .format(hours=sps.BatteryLifeTime // 3600, minutes=(sps.BatteryLifeTime % 3600) // 60)
 		ui.message(text)
 	# Translators: Input help mode message for report battery status command.
 	script_say_battery_status.__doc__ = _("Reports battery status and time remaining if AC is not plugged in")
@@ -1862,7 +1955,7 @@ class GlobalCommands(ScriptableObject):
 			text = api.getClipData()
 		except:
 			text = None
-		if not text or not isinstance(text,basestring) or text.isspace():
+		if not text or not isinstance(text,str) or text.isspace():
 			# Translators: Presented when there is no text on the clipboard.
 			ui.message(_("There is no text on the clipboard"))
 			return
@@ -1886,6 +1979,27 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
 	script_review_markStartForCopy.__doc__ = _("Marks the current position of the review cursor as the start of text to be selected or copied")
 	script_review_markStartForCopy.category=SCRCAT_TEXTREVIEW
+
+	@script(
+		# Translators: Input help mode message for move review cursor to marked start position for a
+		# select or copy command
+		description=_(
+			"Move the review cursor to the position marked as the start of text to be selected or copied"
+		),
+		category=SCRCAT_TEXTREVIEW,
+		gesture="kb:NVDA+shift+F9",
+	)
+	def script_review_moveToStartMarkedForCopy(self, gesture):
+		pos = api.getReviewPosition()
+		if not getattr(pos.obj, "_copyStartMarker", None):
+			# Translators: Presented when attempting to move to the start marker for copy but none has been set.
+			ui.reviewMessage(_("No start marker set"))
+			return
+		startMarker = pos.obj._copyStartMarker.copy()
+		api.setReviewPosition(startMarker)
+		startMarker.collapse()
+		startMarker.expand(textInfos.UNIT_CHARACTER)
+		speech.speakTextInfo(startMarker, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.REASON_CARET)
 
 	def script_review_copy(self, gesture):
 		pos = api.getReviewPosition().copy()
@@ -2174,6 +2288,37 @@ class GlobalCommands(ScriptableObject):
 				obj.doAction()
 	script_touch_hoverUp.category=SCRCAT_TOUCH
 
+	def script_touch_rightClick(self, gesture):
+		obj = api.getNavigatorObject()
+		# Ignore invisible or offscreen objects as they cannot even be navigated with touch gestures.
+		if controlTypes.STATE_INVISIBLE in obj.states or controlTypes.STATE_OFFSCREEN in obj.states:
+			return
+		try:
+			p = api.getReviewPosition().pointAtStart
+		except (NotImplementedError, LookupError):
+			p = None
+		if p:
+			x = p.x
+			y = p.y
+		else:
+			try:
+				(left, top, width, height) = obj.location
+			# Flake8/E722: stems from object location script.
+			except: # noqa
+				# Translators: Reported when the object has no location for the mouse to move to it.
+				ui.message(_("object has no location"))
+				return
+			# Don't bother clicking when parts or the entire object is offscreen.
+			if min(left, top, width, height) < 0:
+				return
+			x = left + (width // 2)
+			y = top + (height // 2)
+		winUser.setCursorPos(x, y)
+		self.script_rightMouseClick(gesture)
+	# Translators: Input help mode message for touch right click command.
+	script_touch_rightClick.__doc__ = _("Clicks the right mouse button at the current touch position. This is generally used to activate a context menu.") # noqa Flake8/E501
+	script_touch_rightClick.category = SCRCAT_TOUCH
+
 	def script_activateConfigProfilesDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onConfigProfilesCommand, None)
 	# Translators: Describes the command to open the Configuration Profiles dialog.
@@ -2227,6 +2372,159 @@ class GlobalCommands(ScriptableObject):
 		recogUi.recognizeNavigatorObject(recog)
 	# Translators: Describes a command.
 	script_recognizeWithUwpOcr.__doc__ = _("Recognizes the content of the current navigator object with Windows 10 OCR")
+
+	_tempEnableScreenCurtain = True
+	_waitingOnScreenCurtainWarningDialog: Optional[wx.Dialog] = None
+	_toggleScreenCurtainMessage: Optional[str] = None
+	@script(
+		# Translators: Input help mode message for toggle report CLDR command.
+		description=_("Toggles on and off the reporting of CLDR characters, such as emojis"),
+		category=SCRCAT_SPEECH,
+	)
+	def script_toggleReportCLDR(self, gesture):
+		if config.conf["speech"]["includeCLDR"]:
+			# Translators: presented when the report CLDR is toggled.
+			state = _("report CLDR characters off")
+			config.conf["speech"]["includeCLDR"] = False
+		else:
+			# Translators: presented when the report CLDR is toggled.
+			state = _("report CLDR characters on")
+			config.conf["speech"]["includeCLDR"] = True
+		characterProcessing.clearSpeechSymbols()
+		ui.message(state)
+
+	@script(
+		# Translators: Describes a command.
+		description=_(
+			"Toggles the state of the screen curtain, "
+			"enable to make the screen black or disable to show the contents of the screen. "
+			"Pressed once, screen curtain is enabled until you restart NVDA. "
+			"Pressed twice, screen curtain is enabled until you disable it"
+		),
+		category=SCRCAT_VISION
+	)
+	def script_toggleScreenCurtain(self, gesture):
+		scriptCount = scriptHandler.getLastScriptRepeatCount()
+		if scriptCount == 0:  # first call should reset last message
+			self._toggleScreenCurtainMessage = None
+
+		from visionEnhancementProviders.screenCurtain import ScreenCurtainProvider
+		screenCurtainId = ScreenCurtainProvider.getSettings().getId()
+		screenCurtainProviderInfo = vision.handler.getProviderInfo(screenCurtainId)
+		alreadyRunning = bool(vision.handler.getProviderInstance(screenCurtainProviderInfo))
+
+		GlobalCommands._tempEnableScreenCurtain = scriptCount == 0
+
+		if self._waitingOnScreenCurtainWarningDialog:
+			# Already in the process of enabling the screen curtain, exit early.
+			# Ensure that the dialog is in the foreground, and read it again.
+			self._waitingOnScreenCurtainWarningDialog.Raise()
+
+			# Key presses interrupt speech, so it maybe that the dialog wasn't
+			# announced properly (if the user triggered the gesture more
+			# than once). So we speak the objects to imitate the dialog getting
+			# focus again. It might be useful to have something like this in a
+			# script: see https://github.com/nvaccess/nvda/issues/9147#issuecomment-454278313
+			speech.cancelSpeech()
+			speech.speakObject(
+				api.getForegroundObject(),
+				reason=controlTypes.REASON_FOCUS
+			)
+			speech.speakObject(
+				api.getFocusObject(),
+				reason=controlTypes.REASON_FOCUS
+			)
+			return
+
+		if scriptCount >= 2 and self._toggleScreenCurtainMessage:
+			# Only the first two presses have actions, all subsequent presses should just repeat the last outcome.
+			# This is important when not showing warning dialog, otherwise the script completion message can be
+			# suppressed.
+			# Must happen after the code to raise / read the warning dialog, since if there is a warning dialog
+			# it takes preference, and there shouldn't be a valid completion message in this case anyway.
+			ui.message(
+				self._toggleScreenCurtainMessage,
+				speechPriority=speech.priorities.Spri.NOW
+			)
+			return
+
+		# Disable if running
+		if (
+			alreadyRunning
+			and scriptCount == 0  # a second press might be trying to achieve non temp enable
+		):
+			# Translators: Reported when the screen curtain is disabled.
+			message = _("Screen curtain disabled")
+			try:
+				vision.handler.terminateProvider(screenCurtainProviderInfo)
+			except Exception:
+				# If the screen curtain was enabled, we do not expect exceptions.
+				log.error("Screen curtain termination error", exc_info=True)
+				# Translators: Reported when the screen curtain could not be enabled.
+				message = _("Could not disable screen curtain")
+			finally:
+				self._toggleScreenCurtainMessage = message
+				ui.message(message, speechPriority=speech.priorities.Spri.NOW)
+				return
+		elif (  # enable it
+			scriptCount in (0, 1)  # 1 press (temp enable) or 2 presses (enable)
+		):
+			# Check if screen curtain is available, exit early if not.
+			if not screenCurtainProviderInfo.providerClass.canStart():
+				# Translators: Reported when the screen curtain is not available.
+				message = _("Screen curtain not available")
+				self._toggleScreenCurtainMessage = message
+				ui.message(message, speechPriority=speech.priorities.Spri.NOW)
+				return
+
+			def _enableScreenCurtain(doEnable: bool = True):
+				self._waitingOnScreenCurtainWarningDialog = None
+				if not doEnable:
+					return  # exit early with no ui.message because the user has decided to abort.
+
+				tempEnable = GlobalCommands._tempEnableScreenCurtain
+				# Translators: Reported when the screen curtain is enabled.
+				enableMessage = _("Screen curtain enabled")
+				if tempEnable:
+					# Translators: Reported when the screen curtain is temporarily enabled.
+					enableMessage = _("Temporary Screen curtain, enabled until next restart")
+
+				try:
+					if alreadyRunning:
+						screenCurtainProviderInfo.providerClass.enableInConfig(True)
+					else:
+						vision.handler.initializeProvider(
+							screenCurtainProviderInfo,
+							temporary=tempEnable,
+						)
+				except Exception:
+					log.error("Screen curtain initialization error", exc_info=True)
+					# Translators: Reported when the screen curtain could not be enabled.
+					enableMessage = _("Could not enable screen curtain")
+				finally:
+					self._toggleScreenCurtainMessage = enableMessage
+					ui.message(enableMessage, speechPriority=speech.priorities.Spri.NOW)
+
+			#  Show warning if necessary and do enable.
+			settingsStorage = ScreenCurtainProvider.getSettings()
+			if settingsStorage.warnOnLoad:
+				from visionEnhancementProviders.screenCurtain import WarnOnLoadDialog
+				parent = gui.mainFrame
+				dlg = WarnOnLoadDialog(
+					screenCurtainSettingsStorage=settingsStorage,
+					parent=parent
+				)
+				self._waitingOnScreenCurtainWarningDialog = dlg
+				gui.runScriptModalDialog(
+					dlg,
+					lambda res: wx.CallLater(
+						millis=100,
+						callableObj=_enableScreenCurtain,
+						doEnable=res == wx.YES
+					)
+				)
+			else:
+				_enableScreenCurtain()
 
 	__gestures = {
 		# Basic
@@ -2292,6 +2590,8 @@ class GlobalCommands(ScriptableObject):
 		"ts:3finger_tap":"touch_changeMode",
 		"ts:2finger_double_tap":"showGui",
 		"ts:hoverUp":"touch_hoverUp",
+		"ts:tapAndHold": "touch_rightClick", # noqa (Flake8/ET121)
+
 		# Review cursor
 		"kb:shift+numpad7": "review_top",
 		"kb(laptop):NVDA+control+home": "review_top",
@@ -2386,6 +2686,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+5": "toggleReportDynamicContentChanges",
 		"kb:NVDA+6": "toggleCaretMovesReviewCursor",
 		"kb:NVDA+7": "toggleFocusMovesNavigatorObject",
+		"kb:NVDA+8": "toggleAutoFocusFocusableElements",
 		"kb:NVDA+control+t": "braille_toggleTether",
 
 		# Synth settings ring
@@ -2437,25 +2738,25 @@ class ConfigProfileActivationCommands(ScriptableObject):
 			if not c.isalnum() and c != "_":
 				invalidChars.add(c)
 		for c in invalidChars:
-			name=name.replace(c, b16encode(c))
-		return str("profile_%s" % name)
+			name=name.replace(c, b16encode(c.encode()).decode("ascii"))
+		return "profile_%s" % name
 
 	@classmethod
 	def _profileScript(cls, name):
 		if gui.shouldConfigProfileTriggersBeSuspended():
 			# Translators: a message indicating that configuration profiles can't be activated using gestures,
 			# due to profile activation being suspended.
-			state = _("Can't change the active configuration profile while an NVDA dialog is open")
+			state = _("Can't change the active profile while an NVDA dialog is open")
 		elif config.conf.profiles[-1].name == name:
 			config.conf.manualActivateProfile(None)
 			# Translators: a message when a configuration profile is manually deactivated.
 			# {profile} is replaced with the profile's name.
-			state = _("Configuration profile {profile} manually deactivated").format(profile=name)
+			state = _("{profile} profile deactivated").format(profile=name)
 		else:
 			config.conf.manualActivateProfile(name)
 			# Translators: a message when a configuration profile is manually activated.
 			# {profile} is replaced with the profile's name.
-			state = _("Configuration profile {profile} manually activated").format(profile=name)
+			state = _("{profile} profile activated").format(profile=name)
 		ui.message(state)
 
 	@classmethod

@@ -71,10 +71,14 @@ def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,sil
 			_("Success"))
 	if startAfterInstall:
 		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL  
-		shellapi.ShellExecute(None, None,
+		shellapi.ShellExecute(
+			None,
+			None,
 			os.path.join(installer.defaultInstallPath,'nvda.exe'),
-			u"-r",
-			None, winUser.SW_SHOWNORMAL)
+			None,
+			None,
+			winUser.SW_SHOWNORMAL
+		)
 	else:
 		wx.GetApp().ExitMainLoop()
 
@@ -260,7 +264,7 @@ class InstallingOverNewerVersionDialog(wx.Dialog, DpiScalingHelperMixin):
 def showInstallGui():
 	gui.mainFrame.prePopup()
 	previous = installer.comparePreviousInstall()
-	if previous > 0:
+	if previous is not None and previous > 0:
 		# The existing installation is newer, which means this will be a downgrade.
 		d = InstallingOverNewerVersionDialog()
 		with d:
@@ -379,7 +383,11 @@ def doCreatePortable(portableDirectory,copyUserConfig=False,silent=False,startAf
 			_("Success"))
 		if startAfterCreate:
 			# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL  
-			shellapi.ShellExecute(None, None,
-				os.path.join(os.path.abspath(unicode(portableDirectory)),'nvda.exe'),
-				u"-r",
-				None, winUser.SW_SHOWNORMAL)
+			shellapi.ShellExecute(
+				None,
+				None,
+				os.path.join(os.path.abspath(portableDirectory),'nvda.exe'),
+				None,
+				None,
+				winUser.SW_SHOWNORMAL
+			)

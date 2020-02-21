@@ -1,12 +1,13 @@
-#scriptHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# scriptHandler.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2019 NV Access Limited, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import time
 import weakref
 import inspect
+import types
 import config
 import speech
 import sayAllHandler
@@ -17,7 +18,9 @@ from logHandler import log
 import inputCore
 import globalPluginHandler
 import braille
+import vision
 import keyLabels
+import baseObject
 
 _numScriptsQueued=0 #Number of scripts that are queued to be executed
 #: Number of scripts that send their gestures on that are queued to be executed or are currently being executed.
@@ -32,9 +35,6 @@ def _makeKbEmulateScript(scriptName):
 	keyName = scriptName[3:]
 	emuGesture = keyboardHandler.KeyboardInputGesture.fromName(keyName)
 	func = lambda gesture: inputCore.manager.emulateGesture(emuGesture)
-	if isinstance(scriptName, unicode):
-		# __name__ must be str; i.e. can't be unicode.
-		scriptName = scriptName.encode("mbcs")
 	func.__name__ = "script_%s" % scriptName
 	func.__doc__ = _("Emulates pressing %s on the system keyboard") % emuGesture.displayName
 	return func
@@ -95,6 +95,19 @@ def findScript(gesture):
 		func = _getObjScript(app, gesture, globalMapScripts)
 		if func:
 			return func
+
+	# Braille display level
+	if isinstance(braille.handler.display, baseObject.ScriptableObject):
+		func = _getObjScript(braille.handler.display, gesture, globalMapScripts)
+		if func:
+			return func
+
+	# Vision enhancement provider level
+	for provider in vision.handler.getActiveProviderInstances():
+		if isinstance(provider, baseObject.ScriptableObject):
+			func = _getObjScript(provider, gesture, globalMapScripts)
+			if func:
+				return func
 
 	# Tree interceptor level.
 	treeInterceptor = focus.treeInterceptor
@@ -211,31 +224,6 @@ def getLastScriptRepeatCount():
 def isScriptWaiting():
 	return bool(_numScriptsQueued)
 
-def isCurrentScript(scriptFunc):
-	"""Finds out if the given script is equal to the script that L{isCurrentScript} is being called from.
-	@param scriptFunc: the script retreaved from ScriptableObject.getScript(gesture)
-	@type scriptFunc: Instance method
-	@returns: True if they are equal, False otherwise
-	@rtype: boolean
-	"""
-	try:
-	 	givenFunc=getattr(scriptFunc.im_self.__class__,scriptFunc.__name__)
-	except AttributeError:
-		log.debugWarning("Could not get unbound method from given script",exc_info=True) 
-		return False
-	parentFrame=inspect.currentframe().f_back
-	try:
-		realObj=parentFrame.f_locals['self']
-	except KeyError:
-		log.debugWarning("Could not get self instance from parent frame instance method",exc_info=True)
-		return False
-	try:
-		realFunc=getattr(realObj.__class__,parentFrame.f_code.co_name)
-	except AttributeError:
-		log.debugWarning("Could not get unbound method from parent frame instance",exc_info=True)
-		return False
-	return givenFunc==realFunc
-
 def script(
 	description="",
 	category=None,
@@ -267,9 +255,8 @@ def script(
 	if gestures is None:
 		gestures = []
 	def script_decorator(decoratedScript):
-		# Scripts are unbound instance methods in python 2 and functions in python 3.
-		# Therefore, we use inspect.isroutine to check whether a script is either a function or instance method.
-		if not inspect.isroutine(decoratedScript):
+		# Decoratable scripts are functions, not bound instance methods.
+		if not isinstance(decoratedScript, types.FunctionType):
 			log.warning(
 				"Using the script decorator is unsupported for %r" % decoratedScript,
 				stack_info=True

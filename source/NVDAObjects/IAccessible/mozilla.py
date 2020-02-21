@@ -17,38 +17,10 @@ from logHandler import log
 import textInfos.offsets
 from NVDAObjects.behaviors import RowWithFakeNavigation
 from virtualBuffers import VirtualBuffer
-import api
 from . import IA2TextTextInfo
 from . import ia2Web
 
 class Mozilla(ia2Web.Ia2Web):
-
-	def _getPhysicalFocus(self):
-		try:
-			paccParent=self.IAccessibleObject.accParent
-		except COMError:
-			paccParent=None
-		if not paccParent:
-			return
-		try:
-			paccFocus=paccParent.accFocus
-		except COMError:
-			paccFocus=None
-		if not paccFocus:
-			return
-		return IAccessible(IAccessibleObject=IAccessibleHandler.normalizeIAccessible(paccFocus),IAccessibleChildID=0)
-
-	def setFocus(self):
-		oldFocus=self._getPhysicalFocus()
-		super(Mozilla,self).setFocus()
-		# Although all versions of Firefox block inSetFocus or in accFocus until    the physical focus has moved,
-		# Firefox 57 and above return before they fire a focus winEvent communicating the focus change to ATs.
-		# Therefore, If the call to setFocus did change the physical focus,
-		# Wait for a focus event to be queued to NVDA before returning.
-		newFocus=self._getPhysicalFocus()
-		if newFocus and newFocus!=oldFocus:
-			while not eventHandler.isPendingEvents("gainFocus"):
-				api.processPendingEvents(processEventQueue=False)
 
 	def _get_parent(self):
 		#Special code to support Mozilla node_child_of relation (for comboboxes)
@@ -88,7 +60,7 @@ class Gecko1_9(Mozilla):
 
 	def _get_description(self):
 		rawDescription=super(Mozilla,self).description
-		if isinstance(rawDescription,basestring) and rawDescription.startswith('Description: '):
+		if isinstance(rawDescription,str) and rawDescription.startswith('Description: '):
 			return rawDescription[13:]
 		else:
 			return ""

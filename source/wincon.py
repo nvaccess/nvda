@@ -1,5 +1,11 @@
 from ctypes import *
 from ctypes.wintypes import *
+import textUtils
+
+"""
+Lower level utility functions and constants for NVDA's
+legacy Windows console support, for situations where UIA isn't available.
+"""
 
 CONSOLE_REAL_OUTPUT_HANDLE=-2
 
@@ -50,11 +56,12 @@ def GetConsoleSelectionInfo():
 	return info
 
 def ReadConsoleOutputCharacter(handle,length,x,y):
-	buf=create_unicode_buffer(length)
+	# Use a string buffer, as from an unicode buffer, we can't get the raw data.
+	buf=create_string_buffer(length * 2)
 	numCharsRead=c_int()
 	if windll.kernel32.ReadConsoleOutputCharacterW(handle,buf,length,COORD(x,y),byref(numCharsRead))==0:
 		raise WinError()
-	return buf.value
+	return textUtils.getTextFromRawBytes(buf.raw, numChars=numCharsRead.value, encoding=textUtils.WCHAR_ENCODING)
 
 def ReadConsoleOutput(handle, length, rect):
 	BufType=CHAR_INFO*length

@@ -1,21 +1,21 @@
 # -*- coding: UTF-8 -*-
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V., Davy Kager
+#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-from cStringIO import StringIO
+from io import StringIO
 from configobj import ConfigObj
 
 #: The version of the schema outlined in this file. Increment this when modifying the schema and 
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config 
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 2
+latestSchemaVersion = 3
 
 #: The configuration specification string
 #: @type: String
-configSpecString = ("""# NVDA Configuration File
+configSpecString = f"""# NVDA Configuration File
 schemaVersion = integer(min=0, default={latestSchemaVersion})
 [general]
 	language = string(default="Windows")
@@ -28,7 +28,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Speech settings
 [speech]
-	# The synthesiser to use
+	# The synthesizer to use
 	synth = string(default=auto)
 	symbolLevel = integer(default=100)
 	trustVoiceLanguage = boolean(default=true)
@@ -71,6 +71,13 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	[[__many__]]
 		port = string(default="")
 
+# Vision enhancement provider settings
+[vision]
+
+	# Vision enhancement provider settings
+	[[__many__]]
+		enabled = boolean(default=false)
+
 # Presentation settings
 [presentation]
 		reportKeyboardShortcuts = boolean(default=true)
@@ -106,11 +113,23 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [speechViewer]
 	showSpeechViewerAtStartup = boolean(default=false)
 	autoPositionWindow = boolean(default=True)
-	# values for positioning the window. Defaults are not used. They should not be read if autoPositionWindow is True
+	# Values for positioning the window.
+	# Defaults are not used.
+	# They should not be read if autoPositionWindow is True
 	x = integer()
 	y = integer()
 	width = integer()
 	height = integer()
+	displays = string_list()
+
+[brailleViewer]
+	showBrailleViewerAtStartup = boolean(default=false)
+	autoPositionWindow = boolean(default=True)
+	# Values for positioning the window.
+	# Defaults are not used.
+	# They should not be read if autoPositionWindow is True
+	x = integer()
+	y = integer()
 	displays = string_list()
 
 #Keyboard settings
@@ -139,13 +158,15 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	autoSayAllOnPageLoad = boolean(default=true)
 	trapNonCommandGestures = boolean(default=true)
 	enableOnPageLoad = boolean(default=true)
+	autoFocusFocusableElements = boolean(default=True)
 
 [touch]
 	touchTyping = boolean(default=False)
 
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
-	#These settings affect what information is reported when you navigate to text where the formatting  or placement has changed
+	# These settings affect what information is reported when you navigate
+	# to text where the formatting  or placement has changed
 	detectFormatAfterCursor = boolean(default=false)
 	reportFontName = boolean(default=false)
 	reportFontSize = boolean(default=false)
@@ -173,7 +194,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportLists = boolean(default=true)
 	reportHeadings = boolean(default=true)
 	reportBlockQuotes = boolean(default=true)
+	reportGroupings = boolean(default=true)
 	reportLandmarks = boolean(default=true)
+	reportArticles = boolean(default=false)
 	reportFrames = boolean(default=true)
 	reportClickable = boolean(default=true)
 
@@ -186,6 +209,11 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [UIA]
 	enabled = boolean(default=true)
 	useInMSWordWhenAvailable = boolean(default=false)
+	winConsoleImplementation= option("auto", "legacy", "UIA", default="auto")
+
+[terminals]
+	speakPasswords = boolean(default=false)
+	keyboardSupportInLegacy = boolean(default=True)
 
 [update]
 	autoCheck = boolean(default=true)
@@ -202,10 +230,13 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [debugLog]
 	hwIo = boolean(default=false)
+	UIA = boolean(default=false)
 	audioDucking = boolean(default=false)
 	gui = boolean(default=false)
 	louis = boolean(default=false)
 	timeSinceInput = boolean(default=false)
+	vision = boolean(default=false)
+	speech = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")
@@ -218,7 +249,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [development]
 	enableScratchpadDir = boolean(default=false)
-""").format(latestSchemaVersion=latestSchemaVersion)
+"""
 
 #: The configuration specification
 #: @type: ConfigObj

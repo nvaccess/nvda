@@ -11,13 +11,10 @@ import os
 import sys
 from collections import OrderedDict
 import ctypes
-try:
-	import _winreg as winreg # Python 2.7 import
-except ImportError:
-	import winreg # Python 3 import
+import winreg
 import wave
-import cStringIO
-from synthDriverHandler import SynthDriver, VoiceInfo
+from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
+import io
 from logHandler import log
 import config
 import nvwave
@@ -33,7 +30,9 @@ ocSpeech_Callback = ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.c_int, ctypes
 
 class _OcSsmlConverter(speechXml.SsmlConverter):
 
-	def _convertProsody(self, command, attr, default, base):
+	def _convertProsody(self, command, attr, default, base=None):
+		if base is None:
+			base = default
 		if command.multiplier == 1 and base == default:
 			# Returning to synth default.
 			return speechXml.DelAttrCommand("prosody", attr)
@@ -44,11 +43,13 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 			return speechXml.SetAttrCommand("prosody", attr, "%d%%" % val)
 
 	def convertRateCommand(self, command):
-		return self._convertProsody(command, "rate", 50, self._rate)
+		return self._convertProsody(command, "rate", 50)
+
 	def convertPitchCommand(self, command):
-		return self._convertProsody(command, "pitch", 50, self._pitch)
+		return self._convertProsody(command, "pitch", 50)
+
 	def convertVolumeCommand(self, command):
-		return self._convertProsody(command, "volume", 100, self._volume)
+		return self._convertProsody(command, "volume", 100)
 
 	def convertCharacterModeCommand(self, command):
 		# OneCore's character speech sounds weird and doesn't support pitch alteration.
@@ -82,6 +83,15 @@ class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 		for command in commands:
 			yield command
 
+	def convertRateCommand(self, command):
+		return self._convertProsody(command, "rate", 50, self._rate)
+
+	def convertPitchCommand(self, command):
+		return self._convertProsody(command, "pitch", 50, self._pitch)
+
+	def convertVolumeCommand(self, command):
+		return self._convertProsody(command, "volume", 100, self._volume)
+
 class SynthDriver(SynthDriver):
 
 	MIN_PITCH = 0.0
@@ -93,16 +103,22 @@ class SynthDriver(SynthDriver):
 	name = "oneCore"
 	# Translators: Description for a speech synthesizer.
 	description = _("Windows OneCore voices")
+	supportedCommands = {
+		speech.IndexCommand,
+		speech.CharacterModeCommand,
+		speech.LangChangeCommand,
+		speech.BreakCommand,
+		speech.PitchCommand,
+		speech.RateCommand,
+		speech.VolumeCommand,
+		speech.PhonemeCommand,
+	}
+	supportedNotifications = {synthIndexReached, synthDoneSpeaking}
 
 	@classmethod
 	def check(cls):
-		if not hasattr(sys, "frozen"):
-			# #3793: Source copies don't report the correct version on Windows 10 because Python isn't manifested for higher versions.
-			# We want this driver to work for source copies on Windows 10, so just return True here.
-			# If this isn't in fact Windows 10, it will fail when constructed, which is okay.
-			return True
-		# For binary copies, only present this as an available synth if this is Windows 10.
-		return winVersion.winVersion.major >= 10
+		# Only present this as an available synth if this is Windows 10.
+		return winVersion.isWin10()
 
 	def _get_supportsProsodyOptions(self):
 		self.supportsProsodyOptions = self._dll.ocSpeech_supportsProsodyOptions()
@@ -125,17 +141,19 @@ class SynthDriver(SynthDriver):
 		super(SynthDriver, self).__init__()
 		self._dll = NVDAHelper.getHelperLocalWin10Dll()
 		self._dll.ocSpeech_getCurrentVoiceLanguage.restype = ctypes.c_wchar_p
+		# Set initial values for parameters that can't be queried when prosody is not supported.
+		# This initialises our cache for the value.
+		# When prosody is supported, the values are used for cachign reasons.
+		self._rate = 50
+		self._pitch = 50
+		self._volume = 100
+
 		if self.supportsProsodyOptions:
 			self._dll.ocSpeech_getPitch.restype = ctypes.c_double
 			self._dll.ocSpeech_getVolume.restype = ctypes.c_double
 			self._dll.ocSpeech_getRate.restype = ctypes.c_double
 		else:
 			log.debugWarning("Prosody options not supported")
-			# Set initial values for parameters that can't be queried.
-			# This initialises our cache for the value.
-			self._rate = 50
-			self._pitch = 50
-			self._volume = 100
 		self._handle = self._dll.ocSpeech_initialize()
 		self._callbackInst = ocSpeech_Callback(self._callback)
 		self._dll.ocSpeech_setCallback(self._handle, self._callbackInst)
@@ -181,7 +199,7 @@ class SynthDriver(SynthDriver):
 		if self.supportsProsodyOptions:
 			# In this case however, we must keep any parameter changes.
 			self._queuedSpeech = [item for item in self._queuedSpeech
-				if not isinstance(item, basestring)]
+				if not isinstance(item, str)]
 		else:
 			self._queuedSpeech = []
 		if self._player:
@@ -220,8 +238,8 @@ class SynthDriver(SynthDriver):
 		return self._paramToPercent(rawPitch, self.MIN_PITCH, self.MAX_PITCH)
 
 	def _set_pitch(self, pitch):
+		self._pitch = pitch
 		if not self.supportsProsodyOptions:
-			self._pitch = pitch
 			return
 		rawPitch = self._percentToParam(pitch, self.MIN_PITCH, self.MAX_PITCH)
 		self._queuedSpeech.append((self._dll.ocSpeech_setPitch, rawPitch))
@@ -233,8 +251,8 @@ class SynthDriver(SynthDriver):
 		return int(rawVolume * 100)
 
 	def _set_volume(self, volume):
+		self._volume = volume
 		if not self.supportsProsodyOptions:
-			self._volume = volume
 			return
 		rawVolume = volume / 100.0
 		self._queuedSpeech.append((self._dll.ocSpeech_setVolume, rawVolume))
@@ -247,8 +265,8 @@ class SynthDriver(SynthDriver):
 		return self._paramToPercent(rawRate, self.MIN_RATE, maxRate)
 
 	def _set_rate(self, rate):
+		self._rate = rate
 		if not self.supportsProsodyOptions:
-			self._rate = rate
 			return
 		maxRate = self.BOOSTED_MAX_RATE if self._rateBoost else self.DEFAULT_MAX_RATE
 		rawRate = self._percentToParam(rate, self.MIN_RATE, maxRate)
@@ -262,7 +280,9 @@ class SynthDriver(SynthDriver):
 	def _set_rateBoost(self, enable):
 		if enable == self._rateBoost:
 			return
-		rate = self.rate
+		# Use the cached rate to calculate the new rate with rate boost enabled.
+		# If we don't, getting the rate property will return the default rate when initializing the driver and applying settings.
+		rate = self._rate
 		self._rateBoost = enable
 		self.rate = rate
 
@@ -273,6 +293,7 @@ class SynthDriver(SynthDriver):
 			# so by the time this is done, there might be something queued.
 			log.debug("Calling idle on audio player")
 			self._player.idle()
+			synthDoneSpeaking.notify(synth=self)
 		while self._queuedSpeech:
 			item = self._queuedSpeech.pop(0)
 			if isinstance(item, tuple):
@@ -300,7 +321,7 @@ class SynthDriver(SynthDriver):
 			self._processQueue()
 			return
 		# This gets called in a background thread.
-		stream = cStringIO.StringIO(ctypes.string_at(bytes, len))
+		stream = io.BytesIO(ctypes.string_at(bytes, len))
 		wav = wave.open(stream, "r")
 		self._maybeInitPlayer(wav)
 		data = wav.readframes(wav.getnframes())
@@ -308,7 +329,6 @@ class SynthDriver(SynthDriver):
 			markers = markers.split('|')
 		else:
 			markers = []
-		prevMarker = None
 		prevPos = 0
 
 		# Push audio up to each marker so we can sync the audio with the markers.
@@ -316,25 +336,20 @@ class SynthDriver(SynthDriver):
 			if self._wasCancelled:
 				break
 			name, pos = marker.split(':')
+			index = int(name)
 			pos = int(pos)
 			# pos is a time offset in 100-nanosecond units.
 			# Convert this to a byte offset.
 			# Order the equation so we don't have to do floating point.
-			pos = pos * self._bytesPerSec / HUNDRED_NS_PER_SEC
+			pos = pos * self._bytesPerSec // HUNDRED_NS_PER_SEC
 			# Push audio up to this marker.
-			self._player.feed(data[prevPos:pos])
-			# _player.feed blocks until the previous chunk of audio is complete, not the chunk we just pushed.
-			# Therefore, indicate that we've reached the previous marker.
-			if prevMarker:
-				self.lastIndex = prevMarker
-			prevMarker = int(name)
+			self._player.feed(data[prevPos:pos],
+				onDone=lambda index=index: synthIndexReached.notify(synth=self, index=index))
 			prevPos = pos
 		if self._wasCancelled:
 			log.debug("Cancelled, stopped pushing audio")
 		else:
 			self._player.feed(data[prevPos:])
-			if prevMarker:
-				self.lastIndex = prevMarker
 			log.debug("Done pushing audio")
 		self._processQueue()
 
@@ -355,10 +370,10 @@ class SynthDriver(SynthDriver):
 		for index,voiceStr in enumerate(voicesStr):
 			voiceInfo=self._getVoiceInfoFromOnecoreVoiceString(voiceStr)
 			# Filter out any invalid voices.
-			if not self._isVoiceValid(voiceInfo.ID):
+			if not self._isVoiceValid(voiceInfo.id):
 				continue
 			voiceInfo.onecoreIndex=index
-			voices[voiceInfo.ID] =  voiceInfo
+			voices[voiceInfo.id] =  voiceInfo
 		return voices
 
 	def _isVoiceValid(self,ID):
@@ -383,7 +398,7 @@ class SynthDriver(SynthDriver):
 		except WindowsError as e:
 			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)
 			return False
-		if not langDataPath or not isinstance(langDataPath[0], basestring):
+		if not langDataPath or not isinstance(langDataPath[0], str):
 			log.debugWarning("Invalid langDataPath value")
 			return False
 		if not os.path.isfile(os.path.expandvars(langDataPath[0])):
@@ -394,7 +409,7 @@ class SynthDriver(SynthDriver):
 		except WindowsError as e:
 			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)
 			return False
-		if not voicePath or not isinstance(voicePath[0],basestring):
+		if not voicePath or not isinstance(voicePath[0],str):
 			log.debugWarning("Invalid voicePath value")
 			return False
 		if not os.path.isfile(os.path.expandvars(voicePath[0] + '.apm')):
@@ -405,14 +420,14 @@ class SynthDriver(SynthDriver):
 	def _get_voice(self):
 		return self._dll.ocSpeech_getCurrentVoiceId(self._handle)
 
-	def _set_voice(self, ID):
+	def _set_voice(self, id):
 		voices = self.availableVoices
 		# Try setting the requested voice
-		for voice in voices.itervalues():
-			if voice.ID == ID:
+		for voice in voices.values():
+			if voice.id == id:
 				self._dll.ocSpeech_setVoice(self._handle, voice.onecoreIndex)
 				return
-		raise LookupError("No such voice: %s"%ID)
+		raise LookupError("No such voice: %s"%id)
 
 	def _getDefaultVoice(self):
 		"""
@@ -426,17 +441,17 @@ class SynthDriver(SynthDriver):
 		voices = self.availableVoices
 		# Try matching to NVDA language
 		fullLanguage=languageHandler.getWindowsLanguage()
-		for voice in voices.itervalues():
+		for voice in voices.values():
 			if voice.language==fullLanguage:
-				return voice.ID
+				return voice.id
 		baseLanguage=fullLanguage.split('_')[0]
 		if baseLanguage!=fullLanguage:
-			for voice in voices.itervalues():
+			for voice in voices.values():
 				if voice.language.startswith(baseLanguage):
-					return voice.ID
+					return voice.id
 		# Just use the first available
-		for voice in voices.itervalues():
-			return voice.ID
+		for voice in voices.values():
+			return voice.id
 		raise RuntimeError("No voices available")
 
 	def _get_language(self):

@@ -5,7 +5,7 @@ import sys
 import os
 import platform
 # Variables for storing required version of Python, and the version which is used to run this script.
-requiredPythonMajor ="2"
+requiredPythonMajor ="3"
 requiredPythonMinor = "7"
 requiredPythonArchitecture = "32bit"
 installedPythonMajor = str(sys.version_info.major)

@@ -15,6 +15,12 @@ import speech
 import textInfos
 import api
 import config
+import locationHelper
+
+"""
+Handler for NVDA's legacy Windows Console support,
+used in situations where UIA isn't available.
+"""
 
 #: How often to check whether the console is dead (in ms).
 CHECK_DEAD_INTERVAL = 100
@@ -123,11 +129,12 @@ def getConsoleVisibleLines():
 	lineCount=(consoleScreenBufferInfo.srWindow.Bottom-topLine)+1
 	lineLength=consoleScreenBufferInfo.dwSize.x
 	text=wincon.ReadConsoleOutputCharacter(consoleOutputHandle,lineCount*lineLength,0,topLine)
-	newLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
+	newLines=[text[x:x+lineLength] for x in range(0,len(text),lineLength)]
 	return newLines
 
 @winUser.WINEVENTPROC
 def consoleWinEventHook(handle,eventID,window,objectID,childID,threadID,timestamp):
+	from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
 	#We don't want to do anything with the event if the event is not for the window this console is in
 	if window!=consoleObject.windowHandle:
 		return
@@ -140,8 +147,15 @@ def consoleWinEventHook(handle,eventID,window,objectID,childID,threadID,timestam
 		x=winUser.GET_X_LPARAM(objectID)
 		y=winUser.GET_Y_LPARAM(objectID)
 		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
-		if x<consoleScreenBufferInfo.dwCursorPosition.x and (y==consoleScreenBufferInfo.dwCursorPosition.y or y==consoleScreenBufferInfo.dwCursorPosition.y+1):  
-			eventHandler.queueEvent("typedCharacter",consoleObject,ch=unichr(winUser.LOWORD(childID)))
+		if (
+			not isinstance(consoleObject, KeyboardHandlerBasedTypedCharSupport)
+			and x < consoleScreenBufferInfo.dwCursorPosition.x
+			and (
+				y == consoleScreenBufferInfo.dwCursorPosition.y
+				or y == consoleScreenBufferInfo.dwCursorPosition.y+1
+			)
+		):
+			eventHandler.queueEvent("typedCharacter",consoleObject,ch=chr(winUser.LOWORD(childID)))
 
 def initialize():
 	pass
@@ -167,36 +181,37 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 		consoleScreenBufferInfo=self.consoleScreenBufferInfo
 		x=offset%consoleScreenBufferInfo.dwSize.x
 		y=offset-x
-		y/=consoleScreenBufferInfo.dwSize.x
+		# #9641: add another slash because this is an integer, otherwise int/float conflict is seen and backspacing fails.
+		y//=consoleScreenBufferInfo.dwSize.x
 		y+=consoleScreenBufferInfo.srWindow.Top
 		return x,y
 
 	def _getOffsetFromPoint(self,x,y):
-		consoleScreenBufferInfo=self.consoleScreenBufferInfo
-		screenLeft,screenTop,screenWidth,screenHeight=self.obj.location
-		relativeX=x-screenLeft
-		relativeY=y-screenTop
-		lineLength=(consoleScreenBufferInfo.srWindow.Right+1)-consoleScreenBufferInfo.srWindow.Left
-		numLines=(consoleScreenBufferInfo.srWindow.Bottom+1)-consoleScreenBufferInfo.srWindow.Top
-		characterWidth=screenWidth/lineLength
-		characterHeight=screenHeight/numLines
-		characterX=(relativeX/characterWidth)+consoleScreenBufferInfo.srWindow.Left
-		characterY=(relativeY/characterHeight)+consoleScreenBufferInfo.srWindow.Top
+		consoleScreenBufferInfo = self.consoleScreenBufferInfo
+		screenLeft, screenTop, screenWidth, screenHeight = self.obj.location
+		relativeX = x - screenLeft
+		relativeY = y - screenTop
+		lineLength = (consoleScreenBufferInfo.srWindow.Right + 1) - consoleScreenBufferInfo.srWindow.Left
+		numLines = (consoleScreenBufferInfo.srWindow.Bottom + 1) - consoleScreenBufferInfo.srWindow.Top
+		characterWidth = screenWidth // lineLength
+		characterHeight = screenHeight // numLines
+		characterX = (relativeX // characterWidth) + consoleScreenBufferInfo.srWindow.Left
+		characterY = (relativeY // characterHeight) + consoleScreenBufferInfo.srWindow.Top
 		return self._offsetFromConsoleCoord(characterX,characterY)
 
 	def _getPointFromOffset(self,offset):
-		consoleScreenBufferInfo=self.consoleScreenBufferInfo
-		characterX,characterY=self._consoleCoordFromOffset(offset)
-		screenLeft,screenTop,screenWidth,screenHeight=self.obj.location
-		lineLength=(consoleScreenBufferInfo.srWindow.Right+1)-consoleScreenBufferInfo.srWindow.Left
-		numLines=(consoleScreenBufferInfo.srWindow.Bottom+1)-consoleScreenBufferInfo.srWindow.Top
-		characterWidth=screenWidth/lineLength
-		characterHeight=screenHeight/numLines
-		relativeX=(characterX-consoleScreenBufferInfo.srWindow.Left)*characterWidth
-		relativeY=(characterY-consoleScreenBufferInfo.srWindow.Top)*characterHeight
-		x=relativeX+screenLeft
-		y=relativeY+screenTop
-		return textInfos.Point(x,y)
+		consoleScreenBufferInfo = self.consoleScreenBufferInfo
+		characterX, characterY = self._consoleCoordFromOffset(offset)
+		screenLeft, screenTop, screenWidth, screenHeight = self.obj.location
+		lineLength = (consoleScreenBufferInfo.srWindow.Right + 1)- consoleScreenBufferInfo.srWindow.Left
+		numLines = (consoleScreenBufferInfo.srWindow.Bottom + 1) - consoleScreenBufferInfo.srWindow.Top
+		characterWidth = screenWidth // lineLength
+		characterHeight = screenHeight // numLines
+		relativeX = (characterX - consoleScreenBufferInfo.srWindow.Left) * characterWidth
+		relativeY = (characterY - consoleScreenBufferInfo.srWindow.Top) * characterHeight
+		x = relativeX + screenLeft
+		y = relativeY + screenTop
+		return locationHelper.Point(x,y)
 
 	def _getCaretOffset(self):
 		consoleScreenBufferInfo=self.consoleScreenBufferInfo
