@@ -50,7 +50,7 @@ class consoleUIATextInfo(UIATextInfo):
 	def move(self, unit, direction, endPoint=None):
 		oldInfo = None
 		if self.basePosition != textInfos.POSITION_CARET:
-			# Insure we haven't gone beyond the visible text.
+			# Ensure we haven't gone beyond the visible text.
 			# UIA adds thousands of blank lines to the end of the console.
 			boundingInfo = self.obj.makeTextInfo(textInfos.POSITION_ALL)
 			oldInfo = self.copy()
