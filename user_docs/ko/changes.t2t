@@ -5,7 +5,7 @@ NVDA 변경 이력
 
 = 2019.3 =
 NVDA 2019.3 버전은 내부적으로 많은 변화가 포함된 중요한 버전입니다. 이 버전은 파이썬 버전이 2에서 3으로 업그레이드되었으며, NVDA의 음성 서브시스템에도 주요한 재작업이 포함되어 있습니다.
-이런 변화들이 기존의 NVDA 애드온에 대한 호환성 문제를 일으키기는 합니다. 하지만 파이썬 3으로의 업그레이드는 보안 개선은 물론, 조만간 벌어질 흥미로운 혁신을 위한 음성 시스템의 변화를 위해 필요한 작업입니다.
+이런 변화들이 기존의 NVDA 추가 기능에 대한 호환성 문제를 일으키기는 합니다. 하지만 파이썬 3으로의 업그레이드는 보안 개선은 물론, 조만간 벌어질 흥미로운 혁신을 위한 음성 시스템의 변화를 위해 필요한 작업입니다.
 그 외에도 이번 버전은 Java VM 에 대한 64비트 지원, 스크린 가리기 기능과 포커스 강조 기능, 점자 디스플레이 및 새로운 점자표시 장치 추가 지원, 그리고 수많은 버그 수정 등의 주요 변경 사항을 포함하고 있습니다.
 
 == 새로 추가된 기능 ==
@@ -34,7 +34,7 @@ NVDA 2019.3 버전은 내부적으로 많은 변화가 포함된 중요한 버�
 - 이제 사용자 가이드에서 'Windows 콘솔에서 NVDA 사용하는 방법'을 설명합니다. (#9957)
 - nvda.exe 을 실행하면 앞서 실행 중이던 NVDA를 대체하는 방식을 기본 설정으로 바꾸었습니다. -r 혹은 --replace 명령어 파라미터는 여전히 사용할 수 있지만, 실제로는 아무 효력이 없게 됩니다. (#8320)
 - 윈도우즈 8 혹은 그 이후의 버전에서, NVDA 는 이제 마이크로소프트 스토어에서 다운로드 받은 앱들처럼 온라인 서버를 통해서 운용되는 제품의 이름과 버전 정보를 알려줍니다. 이 정보는 앱에서 제공하는 정보를 바탕으로 합니다. (#4259, #10108)
-- Microsoft Word에서 키보드로 트랙 변경을 켜고 끌 때 NVDA가 설정 상태를 알림 (#942) 
+- Microsoft Word에서 키보드로 변경 내용 추적을 켜고 끌 때 NVDA가 설정 상태를 알림 (#942) 
 - NVDA 버전 숫자가 앞으로는 로그 파일의 첫번째 문구로 기록됩니다. 이는 GUI에서 로그 기록이 비활성화된 경우에도 해당합니다. (#9803)
 - 명령어를 통해 설정한 로그 기록 수준을 설정 대화상자에서 바꿀 수 없습니다. (#10209)
 - Microsoft Word를 사용할 때, 인쇄되지 않는 문자의 표시 상태를 알려줍니다. Ctrl+Shift+8 를 눌러서 켜고 끌 수 있습니다. (#10241)
@@ -61,7 +61,7 @@ NVDA 2019.3 버전은 내부적으로 많은 변화가 포함된 중요한 버�
 - Internet Explorer 에서 HTML 탭 조작 헤더에 초점을 맞추고 있을 때, NVDA 가 내용을 읽습니다. (#8898)
 - Edge HTML을 기반으로 한 Microsoft Edge에서, 창이 최대화되어 있는 동안에는 검색 자동완성 효과음을 내지 않습니다. (#9110, #10002)
 - 모질라 파이어폭스와 구글 크롬 브라우저에서 ARIA 1.1 콤보박스를 지원합니다. (#9616)
-- SysListView32 조작 내용 중 화면에서 숨겨진 리스트 항목의 내용을 읽지 않습니다. (#8268)
+- SysListView32 컨트롤 내용 중 화면에서 숨겨진 리스트 항목의 내용을 읽지 않습니다. (#8268)
 - 보안 상태에 있는 동안 설정 대화상자에서 현재 로그 수준을 무조건 "정보"로 표시하지 않습니다. (#10209)
 - 윈도우즈 10 Anniversary Update 혹은 그 이후 버전의 '시작' 메뉴에서, 검색 결과의 상세 내용을 알려줍니다. (#10232)
 - 브라우저 상태에서 커서를 옮기거나 빠른 메뉴를 이용해서 문서가 바뀌는 경우 NVDA가 잘못된 내용을 읽지 않습니다. (#8831, #10343)
@@ -100,7 +100,7 @@ NVDA 2019.3 버전은 내부적으로 많은 변화가 포함된 중요한 버�
 == 새로 추가된 기능 ==
 - NVDA가 Miranda NG의 최근 버전 클라이언트와 함께 동작합니다. (#9053)
 - 브라우즈 모드 설정에 새로 추가된 "페이지가 로드되면 브라우즈 모드 활성화" 옵션을 비활성화하면, 이제 기본 설정으로 브라우즈 모드를 사용하지 않을 수 있습니다. (#8716)
- - 이 옵션이 비활성화되어 있을 때에도 NVSA+Space 키를 눌러서 수동으로 브라우저 모드를 활성화할 수 있습니다.
+ - 이 옵션이 비활성화되어 있을 때에도 NVDA+Space 키를 눌러서 수동으로 브라우저 모드를 활성화할 수 있습니다.
 - 요소 목록이나 제스처 입력 대화상자의 필터 기능과 비슷한 방식으로, 구두점/기호 발음 설정 대화상자에서 기호 목록에 필터를 적용할 수 있습니다. (#5761)
 - 마우스 텍스트 해상도(마우스가 움직일 때 읽어주는 글자는 분량)을 변경하기 위한 명령이 추가됐습니다. 이 명령에는 기본 제스처가 부여되어 있지 않습니다. (#9056)
 - Windows OneCore 음성합성기에 음성속도 향상 기능이 추가되어 훨씬 빨리 읽을 수 있게 됐습니다. (#7498)
@@ -109,52 +109,52 @@ NVDA 2019.3 버전은 내부적으로 많은 변화가 포함된 중요한 버�
  - "제스처 설정" 대화상자를 통해 제스처를 설정해야 합니다.
 - Eclipse의 코드 편집창에서 자동완성에 대한 지원이 추가됐습니다. (#5667)
  - 이 외에도, 편집기에서 NVDA+d 단축키로 Javadoc 정보가 표시됐을 때 그 내용을 읽을 수 있습니다.
-- Added an experimental option to the Advanced Settings panel that allows you to stop the system focus from following the browse mode cursor (Automatically set system focus to focusable elements). (#2039) Although this may not be suitable to turn off for all websites, this may fix: 
- - Rubber band effect: NVDA sporadically undoes the last browse mode keystroke by jumping to the previous location.
- - Edit boxes steal system focus when arrowing down through them on some websites.
- - Browse mode keystrokes are slow to respond.
-- For braille display drivers that support it, driver settings can now be changed from the braille settings category in NVDA's settings dialog. (#7452)
-- Freedom Scientific braille displays are now supported by braille display auto detection. (#7727)
-- Added a command to show the replacement for the symbol under the review cursor. (#9286)
-- Added an experimental option to the Advanced Settings panel that allows you to try out a new, work-in-progress rewrite of NVDA's Windows Console support using the Microsoft UI Automation API. (#9614)
-- In the Python Console, the input field now supports pasting multiple lines from the clipboard. (#9776)
+- 고급 설정 패널에 시스템 포커스가 브라우즈 모드 커서를 자동으로 추적하는 것을 중지하는 실험적인 기능이 추가되었습니다(자동으로 시스템 포커스 이동). (#2039) 모든 웹사이트를 탐색에 이 기능을 해제하는 것이 적합하지 않을 수 있으나 다음과 같은 경우의 문제가 해결될 수 있습니다.
+ - NVDA가 가끔 브라우저 모드 키 입력을 무시하고 이전 위치로 튕겨지는 경우 (고무줄 현상)
+ - 일부 웹사이트에서 아래 화살표 키를 통해 탐색할 때, 편집창이 시스템 포커스를 가리는 경우
+ - 키 입력에 따른 브라우즈 모드 반응속도가 느린 경우
+- 이제 지원하는 기기에 한에서 NVDA 설정 대화상자의 점자 카테고리에서 드라이버 설정을 변경할 수 있습니다. (#7452)
+- 이제 Freedom Scientific의 점자 디스플레이 제품군의 점자 디스플레이 자동 탐색이 지원됩니다. (#7727)
+- 리뷰 커서 아래에 있는 기호를 대신할 이름을 표시하는 명령을 추가했습니다. (#9286)
+- 고급 설정에 Microsoft UI Automation API를 사용하여 작업중인 Windows 콘솔을 편집하는 실험적인 기능이 추가되었습니다. (#9614)
+- 이제 파이썬 콘솔에서 클립보드로부터 여러줄의 텍스트를 붙여 넣을 수 있습니다. (#9776)
 
 
 == 변경된 기능 ==
-- Synthesizer volume is now increased and decreased by 5 instead of 10 when using the settings ring. (#6754)
-- Clarified the text in the add-on manager when NVDA is launched with the --disable-addons flag. (#9473)
-- Updated Unicode Common Locale Data Repository emoji annotations to version 35.0. (#9445)
-- The hotkey for the filter field in the elements list in browse mode has changed to alt+y. (#8728)
-- When an auto detected braille display is connected via Bluetooth, NVDA will keep searching for USB displays supported by the same driver and switch to a USB connection if it becomes available. (#8853)
-- Updated eSpeak-NG to commit 67324cc.
-- Updated liblouis braille translator to version 3.10.0. (#9439, #9678)
-- NVDA will now report the word 'selected' after reporting the text a user has just selected.(#9028, #9909)
-- In Microsoft Visual Studio Code, NVDA is in focus mode by default. (#9828)
+- 간단 음성 엔진 설정을 사용하여 음성 볼륨을 조절할 때 증가/감소하는 수치가 10에서 5로 조절되었습니다 (#6754)
+- NVDA가 --disable-addons 플래그와 함께 실행됐을 때 추가 기능 관리자에 표시되는 메시지를 좀더 명확하게 바꿨습니다. (#9473)
+- 유니코드 협회의 국제 표기양식 기록원(CLDR)에 따른 이모지 명칭을 35.0 버전으로 업데이트 했습니다. (#9445)
+- 브라우즈 모드에서 나타나는 요소 목록의 필터 양식 단축키가 alt+y로 바뀌었습니다. (#8728)
+- 점자 디스플레이가 블루투스를 통해서 자동적으로 인식되어 연결됐을 때, 같은 드라이버가 USB로도 연결이 되어 있는지를 확인하고 가능한 경우 USB로 연결을 전환합니다. (#8853)
+- eSpeak-NG를 업데이트 했습니다. commit 67324cc.
+- Liblouis 점자 번역기를 3.10.0 버전으로 업데이트 했습니다. (#9439, #9678)
+- 사용자가 문자를 선택하면 이제 그 문자를 읽은 후에 '선택됨' 이라는 말을 덧붙입니다. (#9028, #9909)
+- Microsoft Visual Studio Code 에서 NVDA의 기본 모드가 포커스 모드로 설정됐습니다. (#9828)
 
 
 == 버그 수정 ==
-- NVDA no longer crashes when an add-on directory is empty. (#7686)
-- LTR and RTL marks are no longer reported in Braille or per-character speech when accessing the properties window. (#8361)
-- When jumping to form fields with Browse Mode quick navigation, the entire form field is now announced rather than just the first line. (#9388)
-- NVDA will no longer become silent after exiting the Windows 10 Mail app. (#9341)
-- NVDA no longer fails to start when the users regional settings are set to a locale unknown to NVDA, such as English (Netherlands). (#8726)
-- When browse mode is enabled in Microsoft Excel and you switch to a browser in focus mode or vice versa, browse mode state is now reported appropriately. (#8846)
-- NVDA now properly reports the line at the mouse cursor in Notepad++ and other Scintilla based editors. (#5450)
-- In Google Docs (and other web-based editors), braille no longer sometimes incorrectly shows "lst end" before the cursor in the middle of a list item. (#9477)
-- In the Windows 10 May 2019 Update, NVDA no longer speaks many volume notifications if changing the volume with hardware buttons when File Explorer has focus. (#9466)
-- Loading the punctuation/symbol pronunciation dialog is now much faster when using symbol dictionaries containing over 1000 entries. (#8790)
-- In Scintilla controls such as Notepad++, NVDA can read the correct line when wordwrap is enabled. (#9424)
-- In Microsoft Excel, the cell location is announced after it changes due to the shift+enter or shift+numpadEnter gestures. (#9499)
-- In Visual Studio 2017 and up, in the Objects Explorer window, the selected item in objects tree or members tree with categories is now reported correctly. (#9311)
-- Add-ons with names that only differ in capitalization are no longer treated as separate add-ons. (#9334)
-- For Windows OneCore voices, the rate set in NVDA is no longer affected by the rate set in Windows 10 Speech Settings. (#7498)
-- The log can now be opened with NVDA+F1 when there is no developer info for the current navigator object. (#8613)
-- It is again possible to use NVDA's table navigation commands in Google Docs, in Firefox and Chrome. (#9494)
-- The bumper keys now work correctly on Freedom Scientific braille displays. (#8849)
-- When reading the first character of a document in Notepad++ 7.7 X64, NVDA no longer freezes for up to ten seconds. (#9609)
-- HTCom can now be used with a Handy Tech Braille display in combination with NVDA. (#9691)
-- In Mozilla Firefox, updates to a live region are no longer reported if the live region is in a background tab. (#1318)
-- NVDA's browse mode Find dialog no longer fails to function if NVDA's About dialog is currently open in the background. (#8566)
+- 추가 기능 목록이 비어 있을 때 NVDA가 동작을 멈추는 현상이 수정됐습니다. (#7686)
+- 점자나 글자별 읽기 모드에서 속성 윈도우에 접근할 때, 더이상 LTR 이나 RTL 표시를 읽지 않습니다. (#8361)
+- 이제는 브라우즈 모드의 빠른 탐색 기능으로 폼 양식에 들어갈 때, 첫 줄만 읽는 대신 폼 양식 전체를 읽습니다. (#9388)
+- Windows 10 Mail app 을 나간 후에 NVDA 가 조용해지는 현상을 수정했습니다. (#9341)
+- 사용자의 지역 설정이 '영어 (네델란드)'처럼 NVDA가 모르는 항목으로 설정됐을 때 NVDA가 시작되지 않는 문제가 해결됐습니다. (#8726)
+- 브라우즈 모드의 Microsoft Excel과 포커스 모드의 웹 브라우저 사이를 오갈 때, 브라우즈 모드 상태를 이제 정상적으로 알립니다. (#8846)
+- Notepad++ 나 다른 Scintilla 기반 편집기에서 마우스 커서가 있는 행을 이제 정상적으로 읽습니다. (#5450)
+- Google Docs (혹은 다른 웹 기반 편집기) 에서, 커서가 목록 항목의 중간에 있을 때 그 위치 앞에 점자로 "lst end"가 표시되는 현상이 수정되었습니다. (#9477)
+- Windows 10의 2019년 5월 업데이트에서, 파일 탐색기에 포커스를 맞춘 채 하드웨어 버튼으로 음량을 바꾸면 NVDA가 음량 알림 메시지를 여러 번 읽는 문제가 해결됐습니다. (#9466)
+- 기호 사전에 1000개 이상의 항목이 있는 경우 문장부호/기호 발음 대화상자가 훨씬 빨리 열립니다. (#8790)
+- Notepad++ 와 같은 Scintilla 기반 편집기에서 줄바꿈 옵션이 켜있는 경우에도 올바른 행을 읽습니다. (#9424)
+- Microsoft Excel에서 Shift+Enter 혹은 Shift+Numpad Enter 제스처로 바뀐 셀 위치를 알려줍니다. (#9499)
+- Visual Studio 2017 이후의 버전에서 객체 탐색기 창을 쓸 때, 객체 트리나 멤버 트리에서 선택한 항목이 분류 설정을 갖고 있는 경우에도 이제 정상적으로 읽어줍니다. (#9311)
+- 추가 기능 이름들 사이에 대소문자의 차이만 있는 경우에는 더이상 다른 추가 기능으로 취급하지 않습니다. (#9334)
+- Windows OneCore 음성을 사용할 때, Windows 10 음성 설정이 더이상 NVDA의 말하기 속도 설정에 영향을 미치지 않습니다. (#7498)
+- 현재 탐색 객체에 개발자 정보가 없을 때에도 NVDA+F1 을 눌러 로그를 열 수 있습니다. (#8613)
+- NVDA의 표 탐색 명령을 다시 Google Docs 에서 쓸 수 있게 됐습니다. 파이어폭스와 크롬에서 동작합니다. (#9494)
+- Freedom Scientific 점자 디스플레이에서 bumper key들이 이제 잘 동작합니다. (#8849)
+- Notepad++ 7.7 X64 버전에서 문서의 첫번째 문자를 읽을 때 NVDA가 10초 정도까지 동작을 멈추는 문제가 해결됐습니다. (#9609)
+- 이제 NVDA에서 HTCom을 Handy Tech 점자 디스플레이와 함께 쓸 수 있습니다. (#9691)
+- 모질라 파이어폭스에서 실시간 갱신 영역이 백그라운드 탭에 있는 경우에도 그 내용을 업데이트하는 문제가 해결됐습니다. (#1318)
+- NVDA의 브라우즈 모드에서 NVDA의 프로그램 정보 대화상자가 백그라운드에 열려 있는 경우 찾기 대화상자가 제대로 동작하지 않던 문제가 해결됐습니다. (#8566)
 
 
 ==개발자를 위한 내용 ==
@@ -188,29 +188,23 @@ NVDA의 이번 버전 부터 custom appModules, globalPlugins, 점자 디스플�
  - Firefox 66 이상에서 작동함.
  - Chrome의 특정 목록상자 (HTML select 컨트롤)는 작동하지 않음.
 - ARM64 (예 : Qualcomm Snapdragon) 프로세서가 장착 된 컴퓨터에서 Mozilla Firefox와 같은 응용 프로그램에 대한 초기 지원 (#9216)
-- 새로운 고급 설정 범주가 Microsoft UI 자동화 API를 통해 NVDA의 Microsoft Word에 대한 새로운 지원을 시도하는 옵션을 포함하여 NVDA의 설정 대화 상자에 추가됨. (#9200)
+- NVDA 설정 대화상자에 "고급 설정"카테고리가 추가되었습니다. 고급 설정 카테고리에는 Microsoft UI Automation API를 통해 NVDA의 Microsoft Word에 대한 새로운 지원을 시험해 볼 수 있는 옵션을 포함합니다. (#9200)
 - Windows 디스크 관리의 그래픽 보기 지원 추가. (#1486)
 - Handy Tech Connect Braille 및 Basic Braille 84 지원 추가. (#9249)
 
 
 == 변경된 기능 ==
 - 리브루이 점자  변환기 version 3.8.0 사용. (#9013)
-- Add-on authors now can enforce a minimum required NVDA version for their add-ons. NVDA will refuse to install or load an add-on whose minimum required NVDA version is higher than the current NVDA version. (#6275)
-- 추가 기능 제작자는 이제 추가 기능에 필요한 최소 NVDA 버전을 지정할 수 있음. NVDA는 필요한 최소 NVDA 버전이 현재 NVDA 버전보다 높은 추가 기능 설치 또는 로드를 거부함. (#6275)
-- Add-on authors can now specify the last version of NVDA the add-on has been tested against. If an add-on has been only tested against a  version of NVDA lower than the current version, then NVDA will refuse to install or load the add-on. (#6275)
-- 추가 기능 제작자는 이제 추가 기능을 테스트한 마지막 NVDA 버전을 지정할 수 있음. 추가 기능이 현재 NVDA 버전보다 낮은 NVDA 버전에 대해 테스트된 경우 NVDA는 추가 기능 설치 또는 로드를 거부함. (#6275)
-- This version of NVDA will allow installing and loading of add-ons  that do not yet contain Minimum and Last Tested NVDA version information, but upgrading to future versions of NVDA (E.g. 2019.2) may automatically cause these older add-ons to be disabled.
-- NVDA 2019.1 버전에서는 아직 최소 및 마지막 테스트된 NVDA 버전 정보가 포함되지 않은 추가 기능을 설치 및 로드할 수 있지만 향후 NVDA 버전 (예 : 2019.2)로 업그레이드하면 이러한 이전 추가 기능이 자동으로 비활성화될 수 있음.
+- 추가 기능 제작자는 이제 추가 기능에 필요한 최소 NVDA 버전을 지정할 수 있습니다. NVDA는 필요한 최소 NVDA 추가 기능이 지정된 값이 현재 NVDA 버전보다 높은 경우 추가 기능을 설치하거나 로드하지 않습니다. (#6275)
+- 추가 기능 제작자는 이제 추가 기능을 테스트한 마지막 NVDA 버전을 지정할 수 있습니다. 추가 기능이 현재 NVDA 버전보다 낮은 NVDA 버전에 대해 테스트된 경우 NVDA는 추가 기능을 설치하거나 로드하지 않습니다. (#6275)
+- NVDA 2019.1 버전에서는 아직 최소 버전, 마지막 테스트된 NVDA 버전 정보가 포함되지 않은 추가 기능을 설치 및 로드할 수 있지만 향후 NVDA 버전 (예 : 2019.2)로 업그레이드하면 이러한 이전 추가 기능이 자동으로 비활성화될 수 있습니다.
 - 마우스를 탐색 개체로 이동 명령을 Microsoft Word 및 UIA 컨트롤, 특히 Microsoft Edge에서 사용할 수 있음. (#7916, #8371)
 - 마우스가 위치한 텍스트 알림 기능이 Microsoft Edge 및 기타 UIA 응용 프로그램에서 향상됨. (#8370)
- - `--portable-path` 명령 줄 매개 변수로 NVDA를 시작하면 NVDA 메뉴를 사용하여 휴대용 NVDA 버전을 만들 때 제공된 경로가 휴대용 버전 설치 폴더 필드에 자동으로 채워짐. (#8623)
-- 2015년 기준을 반영하여 노르웨이 점자 테이블 경로가 업데이트됨. (#9170)
-- When navigating by paragraph (control+up or down arrows) or navigating by table cell (control+alt+arrows), the existence of spelling errors will no longer be announced, even if NVDA is configured to announce these automatically. This is because paragraphs and table cells can be quite large, and detecting spelling errors in some applications can be very costly. (#9217)
-- 단락 간 이동(control + 위쪽 또는 아래쪽 화살표)로 탐색하거나 테이블 셀 (control + alt + 화살표)로 탐색 할 때 NVDA가 자동으로 이를 알리도록 구성되어 있어도 더 이상 맞춤법 오류가 표시되지 않음. 단락과 표 셀이 상당히 클 수 있고 일부 응용 프로그램에서 철자 오류를 감지하는 데 성능 저하가 일어날 수 있기 때문임. (#9217)
-- NVDA no longer automatically loads custom appModules, globalPlugins and braille and synth drivers from the NVDA user configuration directory. This code should be instead packaged as an add-on with correct version information, ensuring that incompatible code is not run with current versions of NVDA. (#9238)
- - For developers who need to test code as it is being developed,  enable NVDA's developer scratchpad directory in the Advanced category of NVDA settings, and place your code in the 'scratchpad' directory found in the NVDA user configuration directory when this option is enabled.
-- NVDA는 더 이상 NVDA 사용자 구성 디렉토리(user configuration directory)에서 사용자 정의 appModules, globalPlugins 및 점자 및 신디사이저 드라이버를 자동으로로드하지 않음. 이 코드는 올바른 버전 정보가 포함된 추가 기능으로 패키지되어 현재 버전의 NVDA에서 호환되지 않는 코드가 실행되지 않도록 해야 함. (#9238)
- - 개발중인 코드를 테스트해야하는 개발자의 경우 고급 카테고리에 NVDA 설정에서 NVDA의 개발자 스크래치 패드 디렉토리를 활성화해야 함. 이 옵션이 활성화되면 NVDA 사용자 구성 디렉토리에 있는 '스크래치 패드'디렉토디에 개발 중인 코드를 배치해야 함.
+- `--portable-path` 명령 줄 매개 변수로 NVDA를 시작하면 NVDA 메뉴를 사용하여 휴대용 NVDA 버전을 만들 때 제공된 경로가 휴대용 버전 설치 폴더 필드에 자동으로 채워집니다. (#8623)
+- 2015년 기준을 반영하여 노르웨이 점자 테이블 경로가 업데이트되었습니다. (#9170)
+- 단락 간 이동(control + 위쪽 또는 아래쪽 화살표)로 탐색하거나 테이블 셀 (control + alt + 화살표)로 탐색할 때 NVDA가 자동으로 맞춤법 오류를  알리도록 설정되어 있어도 더 이상 맞춤법 오류를 알리지 않습니다. 단락과 표 셀이 상당히 클 수 있고 일부 응용 프로그램에서 맞춤법 오류를 감지하는 데 성능 저하가 일어날 수 있기 때문입니다. (#9217)
+- NVDA는 더 이상 NVDA 사용자 환경 설정 디렉토리에서 사용자 정의 appModules, globalPlugins, 점자 디스플레이, 신디사이저 드라이버를 자동으로 로드하지 않습니다. 이러한 모듈은 적절한 정보를 가지는 추가 기능으로 패키지되어야 합니다. 이러한 변경으로 인해 호환되지 않는 코드가 NVDA에서 실행되는 것을 방지합니다. (#9238)
+ - 개발중인 코드를 테스트해야하는 개발자의 경우 NVDA 설정의 고급 카테고리에서 NVDA의 개발자 스크래치 패드 디렉토리 옵션을 활성화해야 합니다. 이 옵션이 활성화되면 NVDA 사용자 환경 설정 디렉토리에 있는 '스크래치 패드'디렉토리에 개발 중인 코드를 복사해야 합니다.
 
 
 
@@ -224,25 +218,23 @@ NVDA의 이번 버전 부터 custom appModules, globalPlugins, 점자 디스플�
 - NVDA는 이제 Windows 10의 알람 및 시계 앱과 같은 특정 시간 피커의 대한 선택 변경 사항을 알림. (#5231)
 - Windows 10의 알림 센터에서 NVDA는 밝기 및 집중 지원과 같은 알림 동작을 전환할 때 상태 메시지를 알림. (#8954)
 - Windows 10 2018년 10월 업데이트 및 이전 버전의 알림 센터에서 NVDA는 밝기 빠른 알림 컨트롤을 토글 버튼 대신 버튼으로 인식함. (#8845)
-- NVDA will again track cursor and announce deleted characters in the Microsoft Excel  go to and find edit fields. (#9042)
 - NVDA는 Microsoft Excel의 이동 대화상자, 찾기 대하상자의 편집 필드에서 커서를 다시 탐색할 수 있고 삭제된 문자를 알림. (#9042)
 - Firefox에서 드물게 발생하는 브라우즈 모드 충돌 문제 수정. (#9152)
 - NVDA no longer fails to report the focus for some controls in the Microsoft Office 2016 ribbon when collapsed.
-- NVDA no longer fails to report the suggested contact when entering addresses in new messages in Outlook 2016. (#8502)
 - Outlook 2016에서 새 메시지에 주소를 입력할 때 NVDA가 더 이상 제안된 연락처를 알리지 않음. (#8502)
 - eurobraille 80 셀 점자 디스플레이에서 마지막 몇 개의 커서 라우팅 키는 더 이상 점자 라인 시작 시점 또는 직후 위치로 커서를 라우팅하지 않음. (#9160)
 - Mozilla Thunderbird의 스레드 보기 표 탐색 문제 수정. (#8396)
 - Mozilla Firefox 및 Google Chrome에서 특정 목록 상자 및 트리 (목록 상자 / 트리 자체가 초점을 맞출 수 없지만 항목이 있는 경우)에 대해 포커스 모드로 전환 시 탐색 가능. (#3573, #9157)
-- NVDA의 실험적인 Word 문서용 UI 자동화 지원을 사용하는 경우 Outlook 2016/365에서 메시지를 읽을 때 브라우즈 모드가 기본적으로 설정되도록 함. (#9188)
+- NVDA의 실험적인 Word 문서용 UI Automation 지원을 사용하는 경우 Outlook 2016/365에서 메시지를 읽을 때 브라우즈 모드가 기본적으로 설정되도록 함. (#9188)
 - NVDA is now less likely to freeze in such a way that the only way to escape is signing out from your current windows session. (#6291)
 - Windows 10 2018년 10월 업데이트 이상에서 클립보드가 비어있는 클라우드 클립보드 기록을 열면 NVDA가 클립 보드 상태를 알림. (#9103)
 - Windows 10 2018년 10월 업데이트 이상에서 이모티콘 패널에서 이모티콘을 검색하면 NVDA가 이모티콘  검색 결과를 알림. (#9105)
 - Oracle VirtualBox 5.2 이상의 기본 창에서 NVDA가 더 이상 정지되지 않음. (#9202)
 - 일부 문서에서 줄, 단락 또는 표 셀을 탐색 할 때 Microsoft Word의 응답성이 크게 향상됨. 최상의 성능을 얻으려면 문서를 연 후 alt+w,e를 사용하여 Microsoft Word를 초안보기로 설정 필요. (#9217)
-- Mozilla Firefox 및 Chrome에서 빈 알림을 더 이상 알리지 않음 (#5657)
+- Mozilla Firefox 및 Chrome에서 빈 알림을 더 이상 알리지 않음. (#5657)
 - Microsoft Excel에서 스프레드 시트에 주석 및 유효성 검사 드롭 다운 목록이 포함된 경우  셀을 탐색 할 때 성능이 크게 향상됨. (#7348)
 - Excel 2016/365에서 NVDA를 사용하여 셀 편집 컨트롤에 액세스하기 위해 Microsoft Excel 옵션에서 셀에서 직접 편집 허용을 더 이상 해제할 필요가 없습니다. (#8146).
-- Enhanced Aria 추가 기능을 사용하는 경우 랜드 마크로 빠르게 탐색 할 때 Firefox에서 가끔 멈추는 현상 수정 (#8980)
+- Enhanced Aria 추가 기능을 사용하는 경우 랜드 마크로 빠르게 탐색 할 때 Firefox에서 가끔 멈추는 현상 수정. (#8980)
 
 
 == 개발자를 위한 내용 ==
@@ -1201,7 +1193,7 @@ NVDA의 이번 버전 부터 custom appModules, globalPlugins, 점자 디스플�
 - 마이크로소프트 워드에서 탭을 누를때 페이지 좌측 가장자리로부터의 간격을 알리도록 함. (#1353)
 - 마이크로소프트 워드 사용 시 여러 서식(굵게 쓰기, 이태릭, 밑줄, 표시, outline 레벨 등) 변환 명령이 음성과 점자로 출력되도록 함. (#1353)
 - 마이크로소프트 엑셀에서 현재 셀에 주석이 존재하는 경우 NvDA+Alt+C를 눌러 주석을 확인할 수 ㅣㅇㅆ음. (#2920)
-- 마이크로소프트 엑셀에서 Shift+F2를 눌러 주석 편집 모드를 선택한 후 NVDA가 제공하는 주석 편집 대화상자를 통해 포커스된 셀에 주석을 삽입할 수 있음. (#2920)
+- 마이크로소프트 엑셀에서 Shift+F2를 눌러 주석 편��� 모드를 선택한 후 NVDA가 제공하는 주석 편집 대화상자를 통해 포커스된 셀에 주석을 삽입할 수 있음. (#2920)
 - 마이크로소프트 엑셀 사용 시 더 많은 셀 선택 및 이동 명령에 대한 피드백을 음성 및 점자로 확인 가능 (#4211):
  - 수직으로  페이지 이동 (pageUp/pageDown)
  - 수평으로 페이지 이동 (alt+pageUp/alt+pageDown)
