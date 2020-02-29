@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-09 11:28+1000\n"
-"PO-Revision-Date: 2019-12-11 07:47+0200\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
+"PO-Revision-Date: 2020-01-25 20:23+0200\n"
 "Last-Translator: Jani Kinnunen <janikinnunen340@gmail.com>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -390,7 +390,7 @@ msgstr "alu"
 
 #. Translators: Displayed in braille for an object which is a figure.
 msgid "fig"
-msgstr "prs"
+msgstr "kuv"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -525,9 +525,6 @@ msgid "Only when scrolling back"
 msgstr "vain taaksepäin vieritettäessä"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "Automaattinen"
 
@@ -547,7 +544,7 @@ msgstr "o%s"
 
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
-msgstr "vlnk"
+msgstr "klnk"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -1410,35 +1407,35 @@ msgstr "Ei edellisiä linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next visited link"
-msgstr "Siirtää seuraavan vieraillun linkin kohdalle."
+msgstr "Siirtää seuraavan käydyn linkin kohdalle."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next visited link"
-msgstr "Ei enempää vierailtuja linkkejä"
+msgstr "Ei enempää käytyjä linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous visited link"
-msgstr "Siirtää edellisen vieraillun linkin kohdalle."
+msgstr "Siirtää edellisen käydyn linkin kohdalle."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous visited link"
-msgstr "Ei edellisiä vierailtuja linkkejä"
+msgstr "Ei edellisiä käytyjä linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next unvisited link"
-msgstr "Siirtää seuraavan vierailemattoman linkin kohdalle."
+msgstr "Siirtää seuraavan käymättömän linkin kohdalle."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next unvisited link"
-msgstr "Ei enempää vierailemattomia linkkejä"
+msgstr "Ei enempää käymättömiä linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous unvisited link"
-msgstr "Siirtää edellisen vierailemattoman linkin kohdalle."
+msgstr "Siirtää edellisen käymättömän linkin kohdalle."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous unvisited link"
-msgstr "Ei edellisiä vierailemattomia linkkejä"
+msgstr "Ei edellisiä käymättömiä linkkejä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next form field"
@@ -2668,7 +2665,7 @@ msgstr "alue"
 
 #. Translators: Identifies a figure (commonly seen on some websites).
 msgid "figure"
-msgstr "piirustus"
+msgstr "kuva"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -2704,11 +2701,11 @@ msgstr "vain luku"
 
 #. Translators: This is presented when a tree view or submenu item is expanded.
 msgid "expanded"
-msgstr "laajennettu"
+msgstr "avoinna"
 
 #. Translators: This is presented when a tree view or submenu is collapsed.
 msgid "collapsed"
-msgstr "kutistettu"
+msgstr "suljettu"
 
 #. Translators: This is presented when a control or a document becomes invisible.
 msgid "invisible"
@@ -2716,7 +2713,7 @@ msgstr "ei näkyvissä"
 
 #. Translators: This is presented when a visited link is encountered.
 msgid "visited"
-msgstr "vierailtu"
+msgstr "käyty"
 
 #. Translators: This is presented when a link is encountered.
 msgid "linked"
@@ -7774,7 +7771,7 @@ msgstr "Käynnistä NVDA uudelleen"
 #. more information about the addon
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
-msgstr "T&ietoa lisäosasta..."
+msgstr "T&ietoja lisäosasta..."
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
@@ -7797,7 +7794,7 @@ msgstr ""
 #. Translators: the url part of the About Add-on information
 #, python-brace-format
 msgid "URL: {url}"
-msgstr "URL-osoite: {url}"
+msgstr "URL: {url}"
 
 #. Translators: the minimum NVDA version part of the About Add-on information
 msgid "Minimum required NVDA version: {}"
@@ -9190,22 +9187,15 @@ msgstr ""
 "Käytä UI Automation -rajapintaa Microsoft &Wordin asiakirjasäätimille, kun "
 "käytettävissä"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Windows-k&onsolin tuki:"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr "Käytä UI Automation -rajapintaa Windows-k&onsolissa, kun käytettävissä"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "UIA etusijalla"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Vanha"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "Puhu &salasanat UIA-konsoleissa (voi parantaa suorituskykyä)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9214,17 +9204,10 @@ msgstr "Pääteohjelmat"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
-msgstr "Puhu &salasanat Windows-konsolissa (voi parantaa suorituskykyä)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
-"Käytä uutta k&irjoitettujen merkkien tukea vanhoissa Windows-konsoleissa "
-"(kun mahdollista)"
+"Käytä uutta k&irjoitettujen merkkien tukea Windows-konsolissa, kun "
+"käytettävissä"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10111,17 +10094,19 @@ msgstr "Kohdistuksen korostus"
 msgid "&Enable Highlighting"
 msgstr "&Ota korostus käyttöön"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "Näyttöverho"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
-msgstr ""
-"&Näytä varoitus aina, kun {screenCurtainTranslatedName} otetaan käyttöön"
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "&Näytä varoitus aina, kun näyttöverho otetaan käyttöön"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "T&oista ääni, kun näyttöverho otetaan käyttöön tai poistetaan käytöstä"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -11629,6 +11614,15 @@ msgstr "Kaksinkertainen riviväli"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Riviväli 1,5"
+
+#~ msgid "Windows C&onsole support:"
+#~ msgstr "Windows-k&onsolin tuki:"
+
+#~ msgid "Prefer UIA"
+#~ msgstr "UIA etusijalla"
+
+#~ msgid "Legacy"
+#~ msgstr "Vanha"
 
 #~ msgid "Magnifier"
 #~ msgstr "Suurennuslasi"

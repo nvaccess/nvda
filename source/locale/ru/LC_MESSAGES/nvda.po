@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-06 07:28+1000\n"
-"PO-Revision-Date: 2019-12-06 07:56+0800\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
+"PO-Revision-Date: 2020-01-21 09:12+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -525,9 +525,6 @@ msgid "Only when scrolling back"
 msgstr "Только при прокрутке назад"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "Определять автоматически"
 
@@ -1682,7 +1679,7 @@ msgstr "Нет предыдущего встроенного объекта"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next annotation"
-msgstr "Переходит к следующей рецензии"
+msgstr "Переходит на следующую рецензию"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next annotation"
@@ -1690,7 +1687,7 @@ msgstr "Нет следующей рецензии"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous annotation"
-msgstr "Переходит к предыдущей рецензии"
+msgstr "Переходит на предыдущую рецензию"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous annotation"
@@ -1698,19 +1695,19 @@ msgstr "Нет предыдущей рецензии"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next error"
-msgstr "переходит на следующую ошибку"
+msgstr "Переходит на следующую ошибку"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next error"
-msgstr "нет следующей ошибки"
+msgstr "Нет следующей ошибки"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous error"
-msgstr "переходит на предыдущую ошибку"
+msgstr "Переходит на предыдущую ошибку"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous error"
-msgstr "нет предыдущей ошибки"
+msgstr "Нет предыдущей ошибки"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next article"
@@ -1730,19 +1727,19 @@ msgstr "Нет предыдущей статьи"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next grouping"
-msgstr "переходит на следующую группу"
+msgstr "Переходит на следующую группу"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next grouping"
-msgstr "нет следующей группы"
+msgstr "Нет следующей группы"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous grouping"
-msgstr "переходит на предыдущую группу"
+msgstr "Переходит на предыдущую группу"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous grouping"
-msgstr "нет предыдущей группы"
+msgstr "Нет предыдущей группы"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -6233,7 +6230,8 @@ msgstr "Эмулирует нажатие %s на клавиатуре"
 msgid "NVDA Speech Viewer"
 msgstr "Просмотрщик Речи NVDA"
 
-#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+#. Translators: The label for a setting in the speech viewer that controls
+#. whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
 msgstr "&Открывать просмотрщик речи при запуске NVDA"
 
@@ -9227,22 +9225,17 @@ msgstr ""
 "Использовать UI Automation для доступа к документам Microsoft &Word (если "
 "возможно)"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "&Поддержка Windows Console:"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr ""
+"Использовать UI Automation для доступа к Windows C&onsole (если возможно)"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "Предпочитать UIA"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Устаревшая"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr ""
+"Проговаривать &пароли в UIA-консолях (может улучшить производительность)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9251,18 +9244,10 @@ msgstr "Терминальные программы"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
-"Проговаривать &пароли в Windows Console (может улучшить производительность)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
-msgstr ""
-"Использовать новую поддержку &ввода символов в устаревших консолях Windows "
-"(если возможно)"
+"Использовать новую поддержку &ввода символов в Windows Console (если "
+"возможно)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10150,18 +10135,19 @@ msgstr "Подсветка фокуса"
 msgid "&Enable Highlighting"
 msgstr "Включить &подсветку"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "Затемнение экрана"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
-msgstr ""
-"&Всегда показывать предупреждения, когда активируется "
-"{screenCurtainTranslatedName}"
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "&Всегда показывать предупреждения при активации затемнения экрана"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "&Воспроизводить звук при переключении затемнения экрана"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -11688,39 +11674,3 @@ msgstr "Двойной междустрочный интервал"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Полуторный междустрочный интервал"
-
-#~ msgid "Koine Greek"
-#~ msgstr "Койне"
-
-#~ msgid "lmk %s"
-#~ msgstr "|ор %s|"
-
-#~ msgid "Start"
-#~ msgstr "Главное"
-
-#~ msgid "Skype"
-#~ msgstr "Skype"
-
-#~ msgid "Reports and moves the review cursor to a recent message"
-#~ msgstr "Читает недавнее сообщение и перемещает к нему просмотровый курсор"
-
-#~ msgid "Typing stopped"
-#~ msgstr "Набор прекращён"
-
-# An open-source (and free) Screen Reader for the Windows Operating System
-# Created by Michael Curran, with help from James Teh and others
-# Copyright (C) 2006-2008 Michael Curran <mick@kulgan.net>
-#~ msgid "Rewind"
-#~ msgstr "перемотка"
-
-#~ msgid "Fast forward"
-#~ msgstr "Быстро вперед"
-
-#~ msgid "Play"
-#~ msgstr "Играть"
-
-#~ msgid "Stop"
-#~ msgstr "Стоп"
-
-#~ msgid "Record"
-#~ msgstr "Запись"

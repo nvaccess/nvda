@@ -174,7 +174,7 @@ A terceira permíteche controlar se esta caixa de benvida debería aparecer cada
 +++ Diálogo Estadísticas de Datos de Uso +++[UsageStatsDialog]
 A partir do NVDA 2018.3, pregúntase ao usuario se quere permitir que os datos de uso se envíen a NV Access para axudar a melloralo no futuro. 
 Ao comezar NVDA por primeira vez, aparecerá un diálogo que che preguntará se queres aceptar o envío de datos a NV Access mentres o usas.
-Podes ler máis información sobre os datos recopilados por NV Access no capítulo 11 máis adiante.
+Podes ler máis información sobre a recopilación de datos por NV Access na seción Opcións Xerais, [Permitir ao proxeto do NVDA recopilar estadísticas de uso do NVDA #GeneralSettingsGatherUsageStats].
 Nota: ao premer en "si" ou "non" gardarase este axuste e o diálogo non aparecerá nunca máis a menos que reinstales o NVDA.
 Sen embargo, podes activar ou desactivar o proceso de recopilación de datos manualmente no panel das opcións xerais do NVDA. Para cambiar esta opción manualmente, podes marcar ou desmarcar a caixa de verificación chamada [Permitir ao proxecto de NVDA recolectar estadísticas de uso do NVDA #GeneralSettingsGatherUsageStats].
 
@@ -659,7 +659,7 @@ Co fin de ter a maior cantidade de información posible nunha pantalla braille, 
 
 || Abreviatura | Tipo de Control |
 | apl | aplicación |
-| art | artigo
+| art | artigo |
 | cit | cita |
 | bt | botón |
 | btdsp | botón despregable |
@@ -1061,6 +1061,7 @@ Os niveis dispoñibles do rexistro son:
  - Se che preocupa a privacidade, non configures a esta opción de nivel de rexistro.
 - Depuración: ademáis das mensaxes de información, aviso e entrada/saída, rexistraranse mensaxes de depuración adicionais.
  - Ao igual que coa Entrada/saída, se che preocupa a privacidade, non deberías configurar o nivel de rexistro nesta opción.
+-
 
 ==== Iniciar automáticamente nvda despois de autentificarse en windows ====[GeneralSettingsStartAfterLogOn]
 Se esta opción está activada, NVDA arrancará automáticamente tan pronto como te autentifiques en Windows. 
@@ -1083,7 +1084,7 @@ Envíase sempre a seguinte información:
 - Versión actual do NVDA
 - Versión do Sistema Operativo
 - Se o Sistema Operativo é de 64 ou de 32 bits
-
+-
 
 ==== Permitir que o Proxecto NVDA Recolla Estadísticas de Uso do NVDA ====[GeneralSettingsGatherUsageStats]
 Se esto está activado, NV Access usará a información das procuras de actualizacións para seguir o número de usuarios do NVDA incluíndo datos demográficos particulares coma o Sistema Operativo e o país de orixe.
@@ -1094,7 +1095,7 @@ Ademáis da información obrigatoria necesaria para procurar actualizacións, ta
 - O nome do sintetizador de voz actual en uso (incluíndo o nome do complemento que ven co controlador)
 - O nome da pantalla Braille actual en uso (incluíndo o nome do complemento que ven co controlador)
 - A táboa de saída braille actual (se o Braille está en uso)
-
+-
 
 Esta información axuda enormemente a NV Access a priorizar o desenvolvemento futuro do NVDA.
 
@@ -1397,6 +1398,9 @@ Se xa non queres ver esta mensaxe de advertencia cada vez, podes cambiar este co
 Sempre podes restaurar a advertencia marcando a caixa de verificación "Amosar sempre unha advertencia cando se cargue a Cortina de Pantalla" xunto á caixa de verificación "Por a pantalla en negro".
 
 Para conmutar a Cortina de Pantalla dende calquera sitio, por favor asigna un xesto persoalizado usando o diálogo [Xestos de Entrada #InputGestures].
+
+Por defecto, reprodúcense sons cando a Cortina de Pantalla se conmute.
+Cando queiras cambiar este comportamento, podes desmarcar a caixa de verificación "Reproducir son ao conmutar a Cortina de Pantalla".
 
 ==== Opcións para Axudas Visuais de Terceiros ====[VisionSettingsThirdPartyVisualAids]
 Pódense proporcionar proveedores de mellora de visión adicionais en [complementos do NVDA #AddonsManager].
@@ -1775,24 +1779,14 @@ Esto inclúe ao mesmo Microsoft Word, e tamén o visor de mensajes e o composito
 Sen embargo, pode haber algunha información que non estea exposta ou que estea incorrectamente exposta nalgunhas versións de Microsoft Office, o que significa que non sempre se pode confiar neste soporte da UI automation.
 Aínda non recomendamos que a maioría dos usuarios activen esta opción de xeito predeterminado, aínda que invitamos aos usuarios de Office 2016/365 a que proben esta función e que nos envíen os seus comentarios.
 
-==== Compatibilidade coa Consola de Windows ====[AdvancedSettingsConsoleUIA]
-Esta opción seleciona cómo interactúa o NVDA coa consola de Windows usada pola liña de ordes, PowerShell e o subsistema de Windows para Linux.
-Non afecta ao terminal moderno de Windows.
-Na versión 1709 de Windows 10, Microsoft [engadíu soporte para a súa API de automatización de interfaz de usuario á consola https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], o que aporta un rendemento e unha estabilidade moi melloradas para os lectores de pantalla que o admitan.
-En situacións nas que a UI Automation non estea dispoñible ou se sepa que resulta nunha experiencia de usuario inferior, a compatibilidade coa consola anterior de NVDA está dispoñible coma solución alternativa.
-A caixa combinada de compatibilidade coa Consola de Windows ten tres opcións:
-- Automático: usa UI Automation en consolas con Windows 10 versión 1809 e posteriores. Esta opción recoméndase e configúrase por defecto.
-- Preferir UIA: usa UI Automation en consolas se está dispoñible, incluso en versións de Windows con implementacións incompretas ou fallidas. Aíndaque esta funcionalidade limitada poderá ser útil (e incluso suficiente para o teu uso), a utilización desta opción está totalmente baixo a teu proprio resgo e non se proporcionará soporte para ela.
-- Herdado: UI Automation na consola de Windows desactivarase compretamente, así que sempre se usará a alternativa herdada.
--
+==== Usar UI Automation para acesar á Consola de Windows cando estea dispoñible ====[AdvancedSettingsConsoleUIA]
+Cando esta opción estea activada, o NVDA usará unha versión nova en progreso do seu soporte para a Consola de Windows que ten a ventalla da [mellora de accesibilidade feita por Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Esta característica é moi experimental e aínda está incompreta, así que o seu uso aínda non está recomendado. Sen embargo, unha vez compretada, cóidase que este novo soporte se converterá no predeterminado, mellorando o rendemento e a estabilidade do NVDA Nas consolas de ordes de Windows.
 
-==== Falar Contrasinais na Consola de Windows ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Esta opción controla se os caracteres se falan por [falar caracteres ao se escrebir #KeyboardSettingsSpeakTypedCharacters] ou [falar palabras ao se escrebir #KeyboardSettingsSpeakTypedWords] en situacións onde a pantalla non se actualice (coma entrada de contrasinais) nalgúns programas de terminal, como a Consola de Windows coa compatibilidade con UI automation activada e Mintty.
-Por razóns de seguridade, esta opción debe deixarse desactivada.
-Sen embargo, é posible que desexes habilitalo se experimentas problemas de rendemento ou inestabilidade co anunciado de caracteres e/ou palabras escrebidas nas consolas, ou se traballas en entornos de confianza e prefires o anunciado de contrasinais.
+==== Falar Contrasinais en Consolas UIA ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Esta opción controla se os caracteres se falan por [falar caracteres ao se escreber #KeyboardSettingsSpeakTypedCharacters] ou por [falar palabras ao se escreber #KeyboardSettingsSpeakTypedWords] en situacións nas que a pantalla non se actualiza (como a entrada de contrasinais) na Consola de Windows co soporte para UI automation activado. Por razóns de seguridade, esta opción debería permanecer desactivada. Sen embargo, é posible que desexes habilitalo se experimentas problemas de rendemento ou inestabilidade co anunciado de caracteres e/ou palabras ao se escreber mentres usas o novo soporte experimental de consolas do NVDA.
 
-==== Usar  o soporte novo de caracteres escrebidos nas Consolas de Windows herdadas cando estea dispoñible ====[AdvancedSettingsKeyboardSupportInLegacy]
-Esta opción activa un método alternativo para detectar caracteres ao escrebir en Consolas herdadas de Windows.
+==== Usar o novo soporte de Caracteres ao se Escreber na Consola de Windows cando estea Dispoñible ====[AdvancedSettingsKeyboardSupportInLegacy]
+Esta opción habilita un método alternativo para detectar caracteres escrebidos en Consolas de ordes de Windows.
 Aíndaque mellora o rendemento e evita que se especifique a saída da consola, pode ser incompatible con algúns programas de terminal.
 Esta característica está dispoñible e activada por omisión en versións de Windows 10 1607, 1703, 1709 e 1803 así coma en versións de Windows 10 máis novas cando UI Automation non estea dispoñible ou desactivado.
 Advertencia: con esta opción activada, os caracteres escrebidos que non aparezan en pantalla, como contrasinais, non se suprimirán.

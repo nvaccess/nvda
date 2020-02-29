@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-09 11:28+1000\n"
-"PO-Revision-Date: 2019-12-11 01:23+0100\n"
-"Last-Translator: Bachir BENANOU <ben_bach@yahoo.fr>\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
+"PO-Revision-Date: 2020-01-26 23:33+0100\n"
+"Last-Translator: Cyrille Bougot <cyrille.bougot2@laposte.net>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.6\n"
+"X-Generator: Poedit 1.8.12\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -526,9 +526,6 @@ msgid "Only when scrolling back"
 msgstr "Seulement lors d'un défilement arrière"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "Automatique"
 
@@ -9231,22 +9228,18 @@ msgstr ""
 "Utiliser UI Automation pour accéder aux Contrôles des documents Microsoft "
 "&Word  quand disponible"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Support de la C&onsole Windows :"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr ""
+"Utiliser UI Automation pour accéder à la C&onsole Windows quand disponible"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "Préférer UIA"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Préférer l'ancienne méthode"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr ""
+"Annoncer les mots de &passe dans les consoles Windows (peut améliorer les "
+"performances)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9255,18 +9248,9 @@ msgstr "Programmes de terminaux"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
-"Annoncer les mots de &passe dans les consoles Windows (peut améliorer les "
-"performances)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
-msgstr ""
-"Utiliser le nouveau support de la frappe de caractères dans les anciennes "
+"Utiliser le nouveau support de la &frappe de caractères dans les anciennes "
 "consoles Windows quand disponible"
 
 #. Translators: This is the label for a checkbox in the
@@ -10150,7 +10134,7 @@ msgstr "Surligner le curseur du mode &navigation"
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the navigator object.
 msgid "Highlight navigator &object"
-msgstr "Surligner l'objet navigateur"
+msgstr "Surligner l'&objet navigateur"
 
 #. Translators: Description for NVDA's built-in screen highlighter.
 msgid "Focus Highlight"
@@ -10161,18 +10145,20 @@ msgstr "Surligner le Focus"
 msgid "&Enable Highlighting"
 msgstr "Activer le &surlignage"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "Rideau d'Écran"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
+msgid "Always &show a warning when loading Screen Curtain"
 msgstr ""
-"Toujours &afficher un avertissement lors du chargement du "
-"{screenCurtainTranslatedName}"
+"Toujours &afficher un avertissement lors du chargement du Rideau d'Écran"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "Ém&ettre un son lors de l'activation/désactivation du Rideau d'Écran"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -11689,14 +11675,11 @@ msgstr "Interligne double"
 msgid "1.5 line spacing"
 msgstr "Interligne 1.5"
 
-#~ msgid "Magnifier"
-#~ msgstr "Loupe"
+#~ msgid "Windows C&onsole support:"
+#~ msgstr "Support de la C&onsole Windows :"
 
-#~ msgid "Highlighter"
-#~ msgstr "Surligneur"
+#~ msgid "Prefer UIA"
+#~ msgstr "Préférer UIA"
 
-#~ msgid "Color enhancer"
-#~ msgstr "Amélioreur de couleur"
-
-#~ msgid "NVDA Highlighter"
-#~ msgstr "surligneur de NVDA"
+#~ msgid "Legacy"
+#~ msgstr "Préférer l'ancienne méthode"

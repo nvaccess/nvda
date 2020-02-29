@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-09 11:28+1000\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
 "PO-Revision-Date: 2019-12-07 12:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
@@ -525,9 +525,6 @@ msgid "Only when scrolling back"
 msgstr "Csak visszagörgetéssel"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "Automatikus"
 
@@ -9185,22 +9182,19 @@ msgstr ""
 "UI Automation használata a Microsoft &Word dokumentumvezérlőihez, ha "
 "lehetséges."
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Windows &parancssor támogatása"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+#, fuzzy
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr ""
+"UI Automation használata a Microsoft &Word dokumentumvezérlőihez, ha "
+"lehetséges."
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "UI Automation"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Hagyományos"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+#, fuzzy
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "Jelszavak bemondása a parancssorban"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9209,14 +9203,8 @@ msgstr "Parancssori programok"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
-msgstr "Jelszavak bemondása a parancssorban"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
+#, fuzzy
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
 "Használja az új beírt karakter támogatást a hagyományos parancssori "
 "ablakoknál, ha elérhető"
@@ -10105,15 +10093,21 @@ msgstr "Fókuszkiemelő"
 msgid "&Enable Highlighting"
 msgstr "Kiemelés engedélyezése"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "Képernyőfüggöny"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
+#, fuzzy
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr ""
+"Mindig &figyelmeztessen a {screenCurtainTranslatedName} bekapcsolásakor"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+#, fuzzy
+msgid "&Play sound when toggling Screen Curtain"
 msgstr ""
 "Mindig &figyelmeztessen a {screenCurtainTranslatedName} bekapcsolásakor"
 
@@ -11626,6 +11620,15 @@ msgstr "dupla sorköz"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5-es sorköz"
+
+#~ msgid "Windows C&onsole support:"
+#~ msgstr "Windows &parancssor támogatása"
+
+#~ msgid "Prefer UIA"
+#~ msgstr "UI Automation"
+
+#~ msgid "Legacy"
+#~ msgstr "Hagyományos"
 
 #~ msgid "Highlighter"
 #~ msgstr "Kiemelő"

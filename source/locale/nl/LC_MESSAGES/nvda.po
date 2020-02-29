@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-11 16:32+1000\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Bart Simons <bart@bartsimons.be>\n"
 "Language-Team: \n"
@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.13\n"
+"X-Generator: Poedit 1.8.7\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,1472,-1,-1,-1,-1,-1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -150,11 +150,6 @@ msgctxt "aria"
 msgid "form"
 msgstr "formulier"
 
-#. Translators: Reported for a significant region, normally found on web pages.
-msgctxt "aria"
-msgid "region"
-msgstr "gebied"
-
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "No ducking"
@@ -230,7 +225,7 @@ msgstr "lst"
 msgid "gra"
 msgstr "afb"
 
-#. Translators: Displayed in braille for an object which is a
+#. Translators: Displayed in braille for toast notifications and for an object which is a
 #. help balloon.
 msgid "hlp"
 msgstr "hlp"
@@ -311,6 +306,11 @@ msgid "grp"
 msgstr "grp"
 
 #. Translators: Displayed in braille for an object which is a
+#. caption.
+msgid "cap"
+msgstr "byschrft"
+
+#. Translators: Displayed in braille for an object which is a
 #. embedded object.
 msgid "embedded"
 msgstr "ingebed"
@@ -379,14 +379,20 @@ msgid "ins"
 msgstr "ingvgd"
 
 #. Translators: Displayed in braille for a landmark.
-#, fuzzy
 msgid "lmk"
-msgstr "lnk"
+msgstr "ori"
 
 #. Translators: Displayed in braille for an object which is an article.
-#, fuzzy
 msgid "art"
-msgstr "dakje"
+msgstr "art"
+
+#. Translators: Displayed in braille for an object which is a region.
+msgid "rgn"
+msgstr "gbd"
+
+#. Translators: Displayed in braille for an object which is a figure.
+msgid "fig"
+msgstr "fig"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -491,11 +497,6 @@ msgctxt "braille landmark abbreviation"
 msgid "form"
 msgstr "form"
 
-#. Translators: Displayed in braille for a significant region, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "rgn"
-msgstr "gbd"
-
 #. Translators: The description of a braille cursor shape.
 msgid "Dots 7 and 8"
 msgstr "Punten 7 en 8"
@@ -526,9 +527,6 @@ msgid "Only when scrolling back"
 msgstr "Alleen bij terugscrollen"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "Automatisch"
 
@@ -1714,24 +1712,36 @@ msgid "no previous error"
 msgstr "geen vorige fout"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#, fuzzy
 msgid "moves to the next article"
-msgstr "gaat naar de volgende tabel"
+msgstr "gaat naar het volgende artikel"
 
 #. Translators: Message presented when the browse mode element is not found.
-#, fuzzy
 msgid "no next article"
-msgstr "geen volgende tabel"
+msgstr "geen volgend artikel"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#, fuzzy
 msgid "moves to the previous article"
-msgstr "gaat naar de vorige tabel"
+msgstr "gaat naar het vorige artikel"
 
 #. Translators: Message presented when the browse mode element is not found.
-#, fuzzy
 msgid "no previous article"
-msgstr "geen vorige tabel"
+msgstr "geen vorig artikel"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next grouping"
+msgstr "gaat naar de volgende groepering"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next grouping"
+msgstr "geen volgende groepering"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous grouping"
+msgstr "gaat naar de vorige groepering"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous grouping"
+msgstr "geen vorige groepering"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -1759,8 +1769,6 @@ msgstr "Kno&ppen"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings panel.
 msgid "Lan&dmarks"
 msgstr "&Oriëntatiepunten"
 
@@ -2647,13 +2655,20 @@ msgid "inserted"
 msgstr "ingevoegd"
 
 #. Translators: Identifies a landmark.
-#, fuzzy
 msgid "landmark"
-msgstr "%s oriëntatiepunt"
+msgstr "oriëntatiepunt"
 
 #. Translators: Identifies an article.
 msgid "article"
 msgstr "artikel"
+
+#. Translators: Identifies a region.
+msgid "region"
+msgstr "gebied"
+
+#. Translators: Identifies a figure (commonly seen on some websites).
+msgid "figure"
+msgstr "figuur"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -3039,9 +3054,9 @@ msgid "Braille"
 msgstr "Braille"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
+#. Translators: This is the label for the vision panel
 msgid "Vision"
-msgstr "Versie"
+msgstr "Zicht"
 
 #. Translators: The name of a category of NVDA commands.
 msgctxt "script category"
@@ -3498,6 +3513,18 @@ msgstr "koppen melden aan"
 msgid "Toggles on and off the reporting of headings"
 msgstr "Schakelt het uitspreken van koppen in en uit"
 
+#. Translators: Input help mode message for toggle report groupings command.
+msgid "Toggles on and off the reporting of groupings"
+msgstr "Schakelt het uitspreken van groeperingen in en uit"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report groupings off"
+msgstr "groeperingen melden uit"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report groupings on"
+msgstr "groeperingen melden aan"
+
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
 msgstr "citaatblokken melden uit"
@@ -3511,31 +3538,28 @@ msgid "Toggles on and off the reporting of block quotes"
 msgstr "Schakelt het uitspreken van citaatblokken in en uit"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-msgid "report landmarks off"
-msgstr "oriëntatiepunten melden uit"
+msgid "report landmarks and regions off"
+msgstr "oriëntatiepunten en gebieden melden uit"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-msgid "report landmarks on"
-msgstr "oriëntatiepunten melden aan"
+msgid "report landmarks and regions on"
+msgstr "oriëntatiepunten en gebieden melden aan"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
 msgstr "Schakelt het uitspreken van oriëntatiepunten in en uit"
 
 #. Translators: Input help mode message for toggle report articles command.
-#, fuzzy
 msgid "Toggles on and off the reporting of articles"
-msgstr "Schakelt het uitspreken van tabellen in en uit"
+msgstr "Schakelt het uitspreken van artikelen in en uit"
 
 #. Translators: The message announced when toggling the report articles document formatting setting.
-#, fuzzy
 msgid "report articles off"
-msgstr "tabellen melden uit"
+msgstr "artikelen melden uit"
 
 #. Translators: The message announced when toggling the report articles document formatting setting.
-#, fuzzy
 msgid "report articles on"
-msgstr "tabellen melden aan"
+msgstr "artikelen melden aan"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
@@ -3950,10 +3974,9 @@ msgstr "Herstart NVDA!"
 msgid "Shows the NVDA menu"
 msgstr "Toont het NVDA menu"
 
-#. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"Reads from the review cursor up to end of current text, moving the review "
-"cursor as it goes"
+"Reads from the review cursor up to the end of the current text, moving the "
+"review cursor as it goes"
 msgstr ""
 "Leest vanaf de leescursor tot aan het einde van het document, waarbij de "
 "leescursor tegelijkertijd verplaatst wordt"
@@ -4396,13 +4419,12 @@ msgstr ""
 "Markeert de huidige positie van de leescursor als beginpunt om tekst te "
 "selecteren of kopiëren"
 
-#, fuzzy
 msgid ""
 "Move the review cursor to the position marked as the start of text to be "
 "selected or copied"
 msgstr ""
-"Markeert de huidige positie van de leescursor als beginpunt om tekst te "
-"selecteren of kopiëren"
+"Verplaats de leescursor naar de positie die is gemarkeerd als het begin van "
+"de tekst die moet worden geselecteerd of gekopieerd"
 
 #. Translators: Presented when attempting to move to the start marker for copy but none has been set.
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
@@ -4613,49 +4635,51 @@ msgid ""
 msgstr "Herkent de inhoud van het huidige navigatorobject met Windows 10 OCR "
 
 #. Translators: Input help mode message for toggle report CLDR command.
-#, fuzzy
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
-msgstr "Schakelt het uitspreken van stijlveranderingen in en uit"
+msgstr "Schakelt het uitspreken van CLDR-karakters (zoals emoji) in en uit"
 
 #. Translators: presented when the report CLDR is toggled.
-#, fuzzy
 msgid "report CLDR characters off"
-msgstr "frames melden uit"
+msgstr "CLDR-karakters melden uit"
 
 #. Translators: presented when the report CLDR is toggled.
-#, fuzzy
 msgid "report CLDR characters on"
-msgstr "frames melden aan"
+msgstr "CLDR-karakters melden aan"
 
 msgid ""
-"Toggles the state of the screen curtain, either by making the screen black "
-"or SHOWING the contents of the screen. If pressed to enable once, the screen "
-"curtain is enabled until you restart NVDA. If pressed tree times, it is "
-"enabled until you disable it"
+"Toggles the state of the screen curtain, enable to make the screen black or "
+"disable to show the contents of the screen. Pressed once, screen curtain is "
+"enabled until you restart NVDA. Pressed twice, screen curtain is enabled "
+"until you disable it"
 msgstr ""
+"Schakelt het schermgordijn in en uit, schakel in om het scherm zwart te "
+"maken of uit om de inhoud van het scherm weer te geven. Bij één keer "
+"indrukken wordt schermgordijn ingeschakeld tot u NVDA opnieuw start. Twee "
+"keer drukken wordt schermgordijn ingeschakeld totdat u het uitschakelt"
+
+#. Translators: Reported when the screen curtain is disabled.
+msgid "Screen curtain disabled"
+msgstr "Schermgordijn uitgeschakeld"
+
+#. Translators: Reported when the screen curtain could not be enabled.
+msgid "Could not disable screen curtain"
+msgstr "Kan schermgordijn niet uitschakelen"
 
 #. Translators: Reported when the screen curtain is not available.
 msgid "Screen curtain not available"
-msgstr ""
+msgstr "Schermgordijn niet beschikbaar"
 
-#. Translators: Reported when the screen curtain is disabled.
-#, fuzzy
-msgid "Screen curtain disabled"
-msgstr "Braille-invoer uitgeschakeld"
-
-#. Translators: Reported when the screen curtain could not be enabled.
-#, fuzzy
-msgid "Could not enable screen curtain"
-msgstr "Kan de {description} add-on niet inschakelen."
+#. Translators: Reported when the screen curtain is enabled.
+msgid "Screen curtain enabled"
+msgstr "Schermgordijn ingeschakeld"
 
 #. Translators: Reported when the screen curtain is temporarily enabled.
 msgid "Temporary Screen curtain, enabled until next restart"
-msgstr ""
+msgstr "Tijdelijk schermgordijn, ingeschakeld tot volgende herstart"
 
-#. Translators: Reported when the screen curtain is enabled.
-#, fuzzy
-msgid "Screen curtain enabled"
-msgstr "Braille-invoer ingeschakeld"
+#. Translators: Reported when the screen curtain could not be enabled.
+msgid "Could not enable screen curtain"
+msgstr "Kan schermgordijn niet inschakelen"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -6196,7 +6220,8 @@ msgstr "Emuleert het drukken van %s op het toetsenbord"
 msgid "NVDA Speech Viewer"
 msgstr "NVDA spraakweergavevenster"
 
-#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+#. Translators: The label for a setting in the speech viewer that controls
+#. whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
 msgstr "&Spraakweergavevenster weergeven bij opstarten"
 
@@ -6557,7 +6582,7 @@ msgid ""
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} is developed by NV Access, a non-profit organisation committed to "
@@ -7281,6 +7306,15 @@ msgstr "Seika brailleleesregels"
 msgid "SuperBraille"
 msgstr "SuperBraille"
 
+#. Translators: The title of the NVDA Braille Viewer tool window.
+msgid "NVDA Braille Viewer"
+msgstr "NVDA Brailleweergavevenster"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether the braille viewer is shown at startup or not.
+msgid "&Show Braille Viewer on Startup"
+msgstr "&Brailleweergavevenster weergeven bij opstarten"
+
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
 msgstr "Resultaat"
@@ -7460,6 +7494,10 @@ msgstr "Logboek weergeven"
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
 msgstr "Spraakweergavevenster"
+
+#. Translators: The label for the menu item to toggle Braille Viewer.
+msgid "Braille viewer"
+msgstr "Brailleweergavevenster"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -7717,12 +7755,16 @@ msgstr ""
 #. Translators: The label of a Yes button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
 #. the add-on
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. agree to enabling the curtain.
 msgid "&Yes"
 msgstr "&Ja"
 
 #. Translators: The label of a No button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to decide not to
 #. install the add-on
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. disagree to enabling the curtain.
 msgid "&No"
 msgstr "&Nee"
 
@@ -8614,7 +8656,8 @@ msgid "Automatic language switching (when supported)"
 msgstr "Automatisch van taal wisselen (indien ondersteund)"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings panel (if checked, different voices for dialects will be used to read text in that dialect).
+#. voice settings panel (if checked, different voices for dialects will be used to
+#. read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
 msgstr "Automatisch van dialect wisselen (indien ondersteund)"
 
@@ -8628,9 +8671,6 @@ msgstr "Interpunctie-/symbool&niveau:"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Vertrouw taal van stem bij verwerken van karakters en symbolen"
 
-#. Translators: This is the label for a checkbox in the
-#. voice settings panel (if checked, data from the unicode CLDR will be used
-#. to speak emoji descriptions).
 msgid ""
 "Include Unicode Consortium data (including emoji) when processing characters "
 "and symbols"
@@ -8638,7 +8678,8 @@ msgstr ""
 "Gebruik Unicode Consortium gegevens (inclusief emoji) bij verwerken van "
 "karakters en symbolen"
 
-#. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
+#. Translators: This is a label for a setting in voice settings (an edit box to change
+#. voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "Percentage toonhoogteverandering bij hoofdletters"
 
@@ -9034,8 +9075,8 @@ msgid "Tones"
 msgstr "Pieptonen"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both  Speech and Tones"
-msgstr "zowel spraak als pieptonen"
+msgid "Both Speech and Tones"
+msgstr "Zowel spraak als pieptonen"
 
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -9104,6 +9145,16 @@ msgstr "Blok&citaten"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+msgid "&Groupings"
+msgstr "&Groeperingen"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+msgid "Lan&dmarks and regions"
+msgstr "&Oriëntatiepunten en gebieden"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "Arti&cles"
 msgstr "Arti&kelen"
 
@@ -9166,22 +9217,16 @@ msgstr ""
 "Gebruik UI Automation voor toegang tot Microsoft &Word-documenten indien "
 "beschikbaar"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Ondersteuning voor Windows C&onsole:"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr ""
+"Gebruik UI Automation voor toegang tot de Windows Console indien beschikbaar"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "Voorkeur voor UIA"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Legacy"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "Wachtwoorden uits&preken in UIA consoles (kan prestaties verbeteren)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9190,18 +9235,10 @@ msgstr "Terminalprogramma's"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
-msgid "Speak &passwords in Windows Console (may improve performance)"
-msgstr "Wachtwoorden uits&preken in UIA consoles (kan prestaties verbeteren)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-#, fuzzy
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
-"Gebruik UI Automation voor toegang tot de Windows Console indien beschikbaar"
+"Nieuwe ondersteuning voor ge&typte karakters in Windows consoles inschakelen "
+"indien beschikbaar"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9357,10 +9394,14 @@ msgstr "Braillelees&regel:"
 msgid "&Port:"
 msgstr "&Poort:"
 
-#, python-format
-msgid "Could not load the %s display."
-msgstr "De brailleleesregel %s kon niet geladen worden."
+#. Translators: The message in a dialog presented when NVDA is unable to load the selected
+#. braille display.
+#, python-brace-format
+msgid "Could not load the {display} display."
+msgstr "De brailleleesregel %{display} kon niet geladen worden."
 
+#. Translators: The title in a dialog presented when NVDA is unable to load the selected
+#. braille display.
 msgid "Braille Display Error"
 msgstr "Fout voor brailleleesregel"
 
@@ -9419,6 +9460,62 @@ msgstr "Waar mogelijk &woorden niet splitsen"
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
 msgstr "Te tonen Focuscontext:"
+
+#. Translators: This message is presented when
+#. NVDA is unable to load a single vision enhancement provider.
+#, python-brace-format
+msgid "Could not load the {providerName} vision enhancement provider"
+msgstr "De {providerName} beeldaanpassing kon niet geladen worden"
+
+#. Translators: This message is presented when NVDA is unable to
+#. load multiple vision enhancement providers.
+#, python-brace-format
+msgid ""
+"Could not load the following vision enhancement providers:\n"
+"{providerNames}"
+msgstr ""
+"De volgende beeldaanpassingen konden niet geladen worden:\n"
+"{providerNames}"
+
+#. Translators: The title of the vision enhancement provider error message box.
+msgid "Vision Enhancement Provider Error"
+msgstr "Fout in beeldaanpassing"
+
+#. Translators: This message is presented when
+#. NVDA is unable to gracefully terminate a single vision enhancement provider.
+#, python-brace-format
+msgid ""
+"Could not gracefully terminate the {providerName} vision enhancement provider"
+msgstr "Kon de {providerName} beeldaanpassing niet netjes beëindigen"
+
+#, python-brace-format
+msgid ""
+"Could not gracefully terminate the following vision enhancement providers:\n"
+"{providerNames}"
+msgstr ""
+"De volgende beeldaanpassingen konden niet netjes beëindigd worden:\n"
+"{providerNames}"
+
+#. Translators: This is a label appearing on the vision settings panel.
+msgid "Configure visual aids."
+msgstr "Visuele hulpmiddelen configureren."
+
+#. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
+msgid "Enable"
+msgstr "Inschakelen"
+
+#. Translators: Options label on a vision enhancement provider on the vision settings category panel
+#. Translators: The label for a group box containing the NVDA highlighter options.
+msgid "Options:"
+msgstr "Opties:"
+
+#. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
+msgid ""
+"Unable to configure user interface for Vision Enhancement Provider, it can "
+"not be enabled."
+msgstr ""
+"Kan gebruikersinterface voor beeldaanpassing niet configureren, deze kan "
+"niet worden ingeschakeld."
 
 #. Translators: This is the label for the NVDA settings dialog.
 msgid "NVDA Settings"
@@ -9495,9 +9592,8 @@ msgid "&Filter by:"
 msgstr "&Filter op:"
 
 #. Translators: The label of a button to reset all gestures in the Input Gestures dialog.
-#, fuzzy
 msgid "Reset to factory &defaults"
-msgstr "Zet de configu&ratie terug naar de fabrieksinstellingen"
+msgstr "&Herstellen naar fabrieksinstellingen"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -9518,6 +9614,12 @@ msgid ""
 "during this session, will be lost.\n"
 "\t\t\tThis cannot be undone."
 msgstr ""
+"Weet u zeker dat u alle invoerhandelingen wilt herstellen naar de "
+"fabrieksinstellingen??\n"
+"\t\t\t\n"
+"\t\t\tAl uw handmatig gedefinieerde invoerhandelingen, ongeacht of deze "
+"eerder zijn ingesteld of gedefinieerd tijdens deze sessie, gaan verloren.\n"
+"\t\t\tDit kan niet ongedaan gemaakt worden."
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
@@ -9809,11 +9911,11 @@ msgstr "onderstrepen uit"
 
 #. Translators: Reported when text is hidden.
 msgid "hidden"
-msgstr ""
+msgstr "verborgen"
 
 #. Translators: Reported when text is not hidden.
 msgid "not hidden"
-msgstr ""
+msgstr "niet verborgen"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
@@ -9999,49 +10101,62 @@ msgstr ""
 "In- en uitschakelen van het behouden van de schermlay-out tijdens het "
 "vernieuwen van het document"
 
-#. Translators: The name for a vision enhancement provider that magnifies (a part of) the screen.
-msgid "Magnifier"
-msgstr ""
-
-#. Translators: The name for a vision enhancement provider that highlights important areas on screen,
-#. such as the focus, caret or review cursor location.
-#, fuzzy
-msgid "Highlighter"
-msgstr "highlight"
-
-#. Translators: The name for a vision enhancement provider that enhances the color presentation.
-#. (i.e. color inversion, gray scale coloring, etc.)
-msgid "Color enhancer"
-msgstr ""
-
-#. Translators: Description for NVDA's built-in screen highlighter.
-#, fuzzy
-msgid "NVDA Highlighter"
-msgstr "%s gehighlight"
-
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the system focus.
-#, fuzzy
 msgid "Highlight system fo&cus"
-msgstr "Systeem&focus volgen"
+msgstr "Systeemfo&cus markeren"
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the browse mode cursor.
-#, fuzzy
 msgid "Highlight browse &mode cursor"
-msgstr "&Muiscursor volgen"
+msgstr "Blader&moduscursor markeren"
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the navigator object.
-#, fuzzy
 msgid "Highlight navigator &object"
-msgstr "Geen navigatorobject"
+msgstr "Navigator&object markeren"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Description for NVDA's built-in screen highlighter.
+msgid "Focus Highlight"
+msgstr "Focusmarkering"
+
+#. Translators: The label for a checkbox that enables / disables focus highlighting
+#. in the NVDA Highlighter vision settings panel.
+msgid "&Enable Highlighting"
+msgstr "Markeringen &inschakelen"
+
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
-#, fuzzy
 msgid "Screen Curtain"
-msgstr "Schermoverzichtmodus"
+msgstr "Schermgordijn"
+
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
+#. the screen curtain.
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "Geef &altijd waarschuwing weer bij laden van schermgordijn"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "&Geluid bij in- of uitschakelen schermgordijn"
+
+#. Translators: A warning shown when activating the screen curtain.
+#. the translation of "Screen Curtain" should match the "translated name"
+msgid ""
+"Enabling Screen Curtain will make the screen of your computer completely "
+"black. Ensure you will be able to navigate without any use of your screen "
+"before continuing. \n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"Als u Schermgordijn inschakelt, wordt het scherm van uw computer volledig "
+"zwart. Zorg ervoor dat u kunt navigeren zonder uw scherm te gebruiken "
+"voordat u doorgaat. \n"
+"\n"
+"Wilt u doorgaan?"
+
+#. Translators: option to enable screen curtain in the vision settings panel
+msgid "Make screen black (immediate effect)"
+msgstr "Scherm zwart maken (onmiddellijk effect)"
 
 msgid "Taskbar"
 msgstr "Taakbalk"
@@ -11471,23 +11586,20 @@ msgid "{size:g} point font"
 msgstr "lettergrootte {size:g} punten"
 
 #. Translators: a message when toggling change tracking in Microsoft word
-#, fuzzy
 msgid "Change tracking on"
-msgstr "Muis volgen aan"
+msgstr "Wijzigingen bijhouden aan"
 
 #. Translators: a message when toggling change tracking in Microsoft word
-#, fuzzy
 msgid "Change tracking off"
-msgstr "Muis volgen uit"
+msgstr "Wijzigingen bijhouden uit"
 
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
 msgid "Display nonprinting characters"
-msgstr ""
+msgstr "Niet-afdrukbare tekens weergeven"
 
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
-#, fuzzy
 msgid "Hide nonprinting characters"
-msgstr "%d karakters"
+msgstr "Niet-afdrukbare tekens verbergen"
 
 #. Translators: a measurement in Microsoft Word
 #, python-brace-format
@@ -11531,6 +11643,23 @@ msgstr "Dubbele regelafstand"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 regelafstand"
+
+#~ msgid "Windows C&onsole support:"
+#~ msgstr "Ondersteuning voor Windows C&onsole:"
+
+#~ msgid "Prefer UIA"
+#~ msgstr "Voorkeur voor UIA"
+
+#~ msgid "Legacy"
+#~ msgstr "Legacy"
+
+#, fuzzy
+#~ msgid "Highlighter"
+#~ msgstr "highlight"
+
+#, fuzzy
+#~ msgid "NVDA Highlighter"
+#~ msgstr "%s gehighlight"
 
 #~ msgid "Koine Greek"
 #~ msgstr "Koinè Grieks"

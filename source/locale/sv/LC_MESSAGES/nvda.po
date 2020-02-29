@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-06 07:28+1000\n"
-"PO-Revision-Date: 2019-12-05 16:58+0100\n"
+"POT-Creation-Date: 2020-01-31 00:10+1000\n"
+"PO-Revision-Date: 2020-01-26 20:38+0100\n"
 "Last-Translator: Karl Eick <hozosch@web.de>\n"
 "Language-Team: sv\n"
 "Language: sv\n"
@@ -527,9 +527,6 @@ msgid "Only when scrolling back"
 msgstr "Bara när man skrollar tillbaks"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "Automatisk"
 
@@ -6186,7 +6183,8 @@ msgstr "Emulerar tangentbordstrycket %s"
 msgid "NVDA Speech Viewer"
 msgstr "NVDA Talfönster"
 
-#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+#. Translators: The label for a setting in the speech viewer that controls
+#. whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
 msgstr "&Visa talfönster vid uppstart"
 
@@ -7265,15 +7263,13 @@ msgid "SuperBraille"
 msgstr "SuperBraille"
 
 #. Translators: The title of the NVDA Braille Viewer tool window.
-#, fuzzy
 msgid "NVDA Braille Viewer"
-msgstr "NVDA loggfilsvisare"
+msgstr "NVDA punktskriftsvisare"
 
 #. Translators: The label for a setting in the braille viewer that controls
 #. whether the braille viewer is shown at startup or not.
-#, fuzzy
 msgid "&Show Braille Viewer on Startup"
-msgstr "&Visa talfönster vid uppstart"
+msgstr "&Visa punktskriftsvisaren vid uppstart"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -7455,9 +7451,8 @@ msgid "Speech viewer"
 msgstr "Talruta"
 
 #. Translators: The label for the menu item to toggle Braille Viewer.
-#, fuzzy
 msgid "Braille viewer"
-msgstr "Punktskrift kopplad till %s"
+msgstr "Punktskriftsvisare"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -9022,7 +9017,6 @@ msgid "Tones"
 msgstr "Ljud"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-#, fuzzy
 msgid "Both Speech and Tones"
 msgstr "Både tal och ljud"
 
@@ -9166,22 +9160,17 @@ msgstr ""
 "Använd UI Automation för att interagera med Microsoft &Word dokument när det "
 "är  möjligt"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Windows K&ommandotolkstöd:"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr ""
+"Använd UI Automation för att interagera med Windows kommandotolk när det är "
+"möjligt"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "Föredra UIA"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Ursprunglig"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "Säg &lösenord i UIA konsoler (kan öka prestandan)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9190,17 +9179,10 @@ msgstr "Terminalprogram"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
-msgstr "Säg &lösenord i Windows kommandotolk (kan öka prestandan)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
-"Använd det n&ya stödet för skrivna tecken i den ursprungliga Windows "
-"kommandotolken när det är möjligt"
+"Använd det n&ya stödet för skrivna tecken i Windows kommandotolk när det är "
+"möjligt"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10089,16 +10071,19 @@ msgstr "Fokusmarkering"
 msgid "&Enable Highlighting"
 msgstr "Aktiv&era överstrykning"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "Skärmridå"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
+msgid "Always &show a warning when loading Screen Curtain"
 msgstr "Vi&sa alltid en varning när {screenCurtainTranslatedName} laddas"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "S&pela ljud när skärmridån växlas"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -11598,6 +11583,15 @@ msgstr "Dubbelt radavstånd"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 rader"
+
+#~ msgid "Windows C&onsole support:"
+#~ msgstr "Windows K&ommandotolkstöd:"
+
+#~ msgid "Prefer UIA"
+#~ msgstr "Föredra UIA"
+
+#~ msgid "Legacy"
+#~ msgstr "Ursprunglig"
 
 #~ msgid "Magnifier"
 #~ msgstr "Förstoringsglaset"

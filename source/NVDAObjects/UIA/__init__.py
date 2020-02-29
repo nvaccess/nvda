@@ -26,7 +26,6 @@ import api
 import textInfos
 from logHandler import log
 from UIAUtils import *
-from UIAUtils import shouldUseUIAConsole
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import (
@@ -853,7 +852,11 @@ class UIA(Window):
 		# Windows 8.x toast, although a form of tool tip, is covered separately.
 		elif UIAControlType==UIAHandler.UIA_ToolTipControlTypeId:
 			clsList.append(ToolTip)
-		elif self.UIAElement.cachedFrameworkID in ("InternetExplorer","MicrosoftEdge"):
+		elif(
+			self.UIAElement.cachedFrameworkID in ("InternetExplorer", "MicrosoftEdge")
+			# But not for Internet Explorer
+			and not self.appModule.appName == 'iexplore'
+		):
 			from . import edge
 			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
 				clsList.append(edge.EdgeHTMLRootContainer)
@@ -930,7 +933,7 @@ class UIA(Window):
 		# Support Windows Console's UIA interface
 		if (
 			self.windowClassName == "ConsoleWindowClass"
-			and shouldUseUIAConsole()
+			and config.conf['UIA']['winConsoleImplementation'] == "UIA"
 		):
 			from . import winConsoleUIA
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)

@@ -4,11 +4,11 @@ Qué hay de Nuevo en NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2019.3 =
+NVDA 2019.3 es una versión muy significativa que contiene muchos cambios bajo el capó, incluyendo la actualización de Python 2 a Python 3, y una importante reescritura del sistema de habla de NVDA.
+Aunque estos cambios rompan la compatibilidad con los antiguos complemenhtos de NVDA, la actualización a Python 3 es necesaria por motivos de seguridad, y los cambios en el habla permiten algunas innovaciones interesantes en un futuro próximo.
+Otros aspectos destacados en esta versión incluyen el soporte para 64 bits para Java VMs, las funcionalidades Cortina de Pantalla y Resaltado del Foco, admisión de más pantallas braille y un nuevo visor braille, y muchas otras correcciones de fallos.
 
 == Nuevas Características ==
-- En el indicativo de órdenes, en PowerShell y en el subsistema de  Windows para Linux en Windows 10 versión de octubre de 2018 y posterior:
- - Rendimiento y estabilidad enormemente mejorados (#9771)
- - El anunciado del texto escrito que no aparezca en pantalla  (tal como contraseñas) ahora puede activarse a través de una opción en el panel de opciones avanzadas de NVDA. (#9649)
 - La precisión de la orden mover el ratón al navegador de objetos se ha mejorado en campos de texto en aplicaciones Java. (#10157)
 - Añadido el soporte para las siguientes pantallas braille Handy Tech (#8955):
  - Basic Braille Plus 40

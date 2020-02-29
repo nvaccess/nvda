@@ -57,4 +57,6 @@ def upgradeConfigFrom_2_to_3(profile):
 		pass
 	else:
 		del profile["UIA"]["winConsoleSpeakPasswords"]
+		if "terminals" not in profile:
+			profile["terminals"] = {}
 		profile["terminals"]["speakPasswords"] = speakPasswords

@@ -17,6 +17,7 @@ from typing import Any, Union, List, Optional, Dict
 import baseObject
 import config
 import controlTypes
+from controlTypes import OutputReason
 import locationHelper
 
 
@@ -309,13 +310,13 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
-	def getTextWithFields(self,formatConfig=None):
-		"""Retreaves the text in this range, as well as any control/format fields associated therewith.
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> List[Union[str, FieldCommand]]:
+		"""Retrieves the text in this range, as well as any control/format fields associated therewith.
 		Subclasses may override this. The base implementation just returns the text.
-		@param formatConfig: Document formatting configuration, useful if you wish to force a particular configuration for a particular task.
+		@param formatConfig: Document formatting configuration, useful if you wish to force a particular
+			configuration for a particular task.
 		@type formatConfig: dict
 		@return: A sequence of text strings interspersed with associated field commands.
-		@rtype: list of str and L{FieldCommand}
 		""" 
 		return [self.text]
 
@@ -521,7 +522,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 			fieldType: str,
 			formatConfig: Optional[Dict[str, bool]] = None,
 			extraDetail: bool = False,
-			reason: Optional[str] = None
+			reason: Optional[OutputReason] = None
 	) -> SpeechSequence:
 		# Import late to avoid circular import.
 		import speech
@@ -541,7 +542,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 			attrs: Field,
 			attrsCache: Optional[Field] = None,
 			formatConfig: Optional[Dict[str, bool]] = None,
-			reason: Optional[str] = None,
+			reason: Optional[OutputReason] = None,
 			unit: Optional[str] = None,
 			extraDetail: bool = False,
 			initialFormat: bool = False,
