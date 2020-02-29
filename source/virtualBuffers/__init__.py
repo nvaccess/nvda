@@ -136,9 +136,6 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 
 	allowMoveToOffsetPastEnd=False #: no need for end insertion point as vbuf is not editable. 
 
-	UNIT_CONTROLFIELD = "controlField"
-	UNIT_FORMATFIELD = "formatField"
-
 	def _getControlFieldAttribs(self,  docHandle, id):
 		info = self.copy()
 		info.expand(textInfos.UNIT_CHARACTER)
@@ -336,9 +333,8 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 				textList.append(self.obj.makeTextInfo(textInfos.offsets.Offsets(start, end)).text)
 			attrs["table-%sheadertext" % axis] = "\n".join(textList)
 
-		if attrs.get("landmark") == "region" and not attrs.get("name"):
-			# We only consider region to be a landmark if it has a name.
-			del attrs["landmark"]
+		if attrs.get("role") in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_REGION):
+			attrs['alwaysReportName'] = True
 
 		# Expose a unique ID on the controlField for quick and safe comparison using the virtualBuffer field's docHandle and ID
 		docHandle=attrs.get('controlIdentifier_docHandle')
@@ -362,7 +358,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		return self._getFieldIdentifierFromOffset( self._startOffset)
 
 	def _getUnitOffsets(self, unit, offset):
-		if unit == self.UNIT_CONTROLFIELD:
+		if unit == textInfos.UNIT_CONTROLFIELD:
 			startOffset=ctypes.c_int()
 			endOffset=ctypes.c_int()
 			docHandle=ctypes.c_int()
@@ -370,7 +366,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 			node=VBufRemote_nodeHandle_t()
 			NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(docHandle),ctypes.byref(ID),ctypes.byref(node))
 			return startOffset.value,endOffset.value
-		elif unit == self.UNIT_FORMATFIELD:
+		elif unit == textInfos.UNIT_FORMATFIELD:
 			startOffset=ctypes.c_int()
 			endOffset=ctypes.c_int()
 			node=VBufRemote_nodeHandle_t()

@@ -64,8 +64,8 @@ def formatVersionForGUI(year, major, minor):
 
 
 name="NVDA"
-version_year=2019
-version_major=3
+version_year=2020
+version_major=1
 version_minor=0
 version_build=0
 version=_formatDevVersionString()

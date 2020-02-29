@@ -7,6 +7,7 @@
 import ctypes
 import NVDAHelper
 import textInfos
+import textUtils
 import UIAHandler
 
 from comtypes import COMError
@@ -17,26 +18,35 @@ from ..window import Window
 
 
 class consoleUIATextInfo(UIATextInfo):
-	#: At least on Windows 10 1903, expanding then collapsing the text info
-	#: caused review to get stuck, so disable it.
-	#: There may be no need to disable this anymore, but doing so doesn't seem
-	#: to do much good either.
-	_expandCollapseBeforeReview = False
 
 	def __init__(self, obj, position, _rangeObj=None):
+		# We want to limit  textInfos to just the visible part of the console.
+		# Therefore we specifically handle POSITION_FIRST, POSITION_LAST and POSITION_ALL.
+		# We could use IUIAutomationTextRange::getVisibleRanges, but it seems very broken in consoles
+		# once more than a few screens worth of content has been written to the console.
+		# Therefore we resort to using IUIAutomationTextPattern::rangeFromPoint
+		# for the top left, and bottom right of the console window.
+		if position is textInfos.POSITION_FIRST:
+			_rangeObj = self.__class__(obj, obj.location.topLeft)._rangeObj
+		elif position is textInfos.POSITION_LAST:
+			# Asking for the range at the bottom right of the window
+			# Seems to sometimes ignore the x coordinate.
+			# Therefore use the bottom left, then move   to the last character on that line.
+			tempInfo = self.__class__(obj, obj.location.bottomLeft)
+			tempInfo.expand(textInfos.UNIT_LINE)
+			# We must pull back the end by one character otherwise when we collapse to end,
+			# a console bug results in a textRange covering the entire console buffer!
+			# Strangely the *very* last character is a special blank point
+			# so we never seem to miss a real character.
+			UIATextInfo.move(tempInfo, textInfos.UNIT_CHARACTER, -1, endPoint="end")
+			tempInfo.setEndPoint(tempInfo, "startToEnd")
+			_rangeObj = tempInfo._rangeObj
+		elif position is textInfos.POSITION_ALL:
+			first = self.__class__(obj, textInfos.POSITION_FIRST)
+			last = self.__class__(obj, textInfos.POSITION_LAST)
+			first.setEndPoint(last, "endToEnd")
+			_rangeObj = first._rangeObj
 		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
-		# Re-implement POSITION_FIRST and POSITION_LAST in terms of
-		# visible ranges to fix review top/bottom scripts.
-		if position == textInfos.POSITION_FIRST:
-			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
-			firstVisiRange = visiRanges.GetElement(0)
-			self._rangeObj = firstVisiRange
-			self.collapse()
-		elif position == textInfos.POSITION_LAST:
-			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
-			lastVisiRange = visiRanges.GetElement(visiRanges.length - 1)
-			self._rangeObj = lastVisiRange
-			self.collapse(True)
 
 	def collapse(self, end=False):
 		"""Works around a UIA bug on Windows 10 1803 and later."""
@@ -53,14 +63,12 @@ class consoleUIATextInfo(UIATextInfo):
 			)
 
 	def move(self, unit, direction, endPoint=None):
-		oldRange = None
+		oldInfo = None
 		if self.basePosition != textInfos.POSITION_CARET:
 			# Insure we haven't gone beyond the visible text.
 			# UIA adds thousands of blank lines to the end of the console.
-			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
-			visiLength = visiRanges.length
-			if visiLength > 0:
-				oldRange = self._rangeObj.clone()
+			boundingInfo = self.obj.makeTextInfo(textInfos.POSITION_ALL)
+			oldInfo = self.copy()
 		if unit == textInfos.UNIT_WORD and direction != 0:
 			# UIA doesn't implement word movement, so we need to do it manually.
 			# Relative to the current line, calculate our offset
@@ -115,16 +123,32 @@ class consoleUIATextInfo(UIATextInfo):
 		else:  # moving by a unit other than word
 			res = super(consoleUIATextInfo, self).move(unit, direction,
 														endPoint)
-		try:
-			if (
-				oldRange
-				and isTextRangeOffscreen(self._rangeObj, visiRanges)
-				and not isTextRangeOffscreen(oldRange, visiRanges)
-			):
-				self._rangeObj = oldRange
-				return 0
-		except (COMError, RuntimeError):
-			pass
+		if not endPoint:
+			# #10191: IUIAutomationTextRange::move in consoles does not correctly produce a collapsed range
+			# after moving.
+			# Therefore manually collapse.
+			self.collapse()
+		# Console textRanges have access to the entire console buffer.
+		# However, we want to limit ourselves to onscreen text.
+		# Therefore, if the textInfo was originally visible,
+		# but we are now above or below the visible range,
+		# Restore the original textRange and pretend the move didn't work.
+		if oldInfo:
+			try:
+				if (
+					(
+						self.compareEndPoints(boundingInfo, "startToStart") < 0
+						or self.compareEndPoints(boundingInfo, "startToEnd") >= 0
+					)
+					and not (
+						oldInfo.compareEndPoints(boundingInfo, "startToStart") < 0
+						or oldInfo.compareEndPoints(boundingInfo, "startToEnd") >= 0
+					)
+				):
+					self._rangeObj = oldInfo._rangeObj
+					return 0
+			except (COMError, RuntimeError):
+				pass
 		return res
 
 	def expand(self, unit):
@@ -203,26 +227,15 @@ class consoleUIATextInfo(UIATextInfo):
 		This is necessary since Uniscribe requires indices into the text to
 		find word boundaries, but UIA only allows for relative movement.
 		"""
-		charInfo = self.copy()
-		res = 0
-		chars = None
-		while charInfo.compareEndPoints(
-			lineInfo,
-			"startToEnd"
-		) <= 0:
-			charInfo.expand(textInfos.UNIT_CHARACTER)
-			chars = charInfo.move(textInfos.UNIT_CHARACTER, -1) * -1
-			if chars != 0 and charInfo.compareEndPoints(
-				lineInfo,
-				"startToStart"
-			) >= 0:
-				res += chars
-			else:
-				break
-		return res
+		# position a textInfo from the start of the line up to the current position.
+		charInfo = lineInfo.copy()
+		charInfo.setEndPoint(self, "endToStart")
+		text = charInfo._rangeObj.getText(-1)
+		offset = textUtils.WideStringOffsetConverter(text).wideStringLength
+		return offset
 
 	def _getWordOffsetsInThisLine(self, offset, lineInfo):
-		lineText = lineInfo.text or u" "
+		lineText = lineInfo._rangeObj.getText(-1)
 		# Convert NULL and non-breaking space to space to make sure
 		# that words will break on them
 		lineText = lineText.translate({0: u' ', 0xa0: u' '})
@@ -232,35 +245,36 @@ class consoleUIATextInfo(UIATextInfo):
 		# not more than two alphanumeric chars in a row.
 		# Inject two alphanumeric characters at the end to fix this.
 		lineText += "xx"
+		lineTextLen = textUtils.WideStringOffsetConverter(lineText).wideStringLength
 		NVDAHelper.localLib.calculateWordOffsets(
 			lineText,
-			len(lineText),
+			lineTextLen,
 			offset,
 			ctypes.byref(start),
 			ctypes.byref(end)
 		)
 		return (
 			start.value,
-			min(end.value, max(1, len(lineText) - 2))
+			min(end.value, max(1, lineTextLen - 2))
 		)
 
 	def __ne__(self, other):
 		"""Support more accurate caret move detection."""
 		return not self == other
 
+	def _get_text(self):
+		# #10036: return a space if the text range is empty.
+		# Consoles don't actually store spaces, the character is merely left blank.
+		res = super(consoleUIATextInfo, self)._get_text()
+		if not res:
+			return ' '
+		else:
+			return res
+
 
 class consoleUIAWindow(Window):
-	def _get_focusRedirect(self):
-		"""
-		Sometimes, attempting to interact with the console too quickly after
-		focusing the window can make NVDA unable to get any caret or review
-		information or receive new text events.
-		To work around this, we must redirect focus to the console text area.
-		"""
-		for child in self.children:
-			if isinstance(child, WinConsoleUIA):
-				return child
-		return None
+	# This is the parent of the console text area, which sometimes gets focus after the text area.
+	shouldAllowUIAFocusEvent = False
 
 
 class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
@@ -272,6 +286,17 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
 	_caretMovementTimeoutMultiplier = 1.5
 
+	def _get_windowThreadID(self):
+		# #10113: Windows forces the thread of console windows to match the thread of the first attached process.
+		# However, To correctly handle speaking of typed characters,
+		# NVDA really requires the real thread the window was created in,
+		# I.e. a thread inside conhost.
+		from IAccessibleHandler import consoleWindowsToThreadIDs
+		threadID = consoleWindowsToThreadIDs.get(self.windowHandle, 0)
+		if not threadID:
+			threadID = super().windowThreadID
+		return threadID
+
 	def _get_TextInfo(self):
 		"""Overriding _get_TextInfo and thus the TextInfo property
 		on NVDAObjects.UIA.UIA
@@ -280,14 +305,12 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		return consoleUIATextInfo
 
 	def _getTextLines(self):
-		# Filter out extraneous empty lines from UIA
-		return (
-			self.makeTextInfo(textInfos.POSITION_ALL)
-			._rangeObj.getText(-1)
-			.rstrip()
-			.split("\r\n")
-		)
-
+		# This override of _getTextLines takes advantage of the fact that
+		# the console text contains linefeeds for every line
+		# Thus a simple string splitlines is much faster than splitting by unit line.
+		ti = self.makeTextInfo(textInfos.POSITION_ALL)
+		text = ti.text or ""
+		return text.splitlines()
 
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAElement.cachedAutomationId == "Text Area":
