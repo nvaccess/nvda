@@ -461,8 +461,8 @@ addBluetoothDevices("brailleNote", lambda m:
 addUsbDevices("brailliantB", KEY_HID, {
 	"VID_1C71&PID_C111",  # Mantis Q 40
 	"VID_1C71&PID_C101",  # Chameleon 20
-	"VID_1C71&PID_C121",  # Humanware BrailleOne 20 HID
-	"VID_1C71&PID_CE01",  # NLS eReader 20  HID
+	"VID_1C71&PID_C121",  # Humanware BrailleOne 20 HID
+	"VID_1C71&PID_CE01",  # NLS eReader 20 HID
 	"VID_1C71&PID_C006", # Brailliant BI 32, 40 and 80
 	"VID_1C71&PID_C022", # Brailliant BI 14
 	"VID_1C71&PID_C00A", # BrailleNote Touch
