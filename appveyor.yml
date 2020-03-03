@@ -1,4 +1,4 @@
-os: Visual Studio 2017
+os: Visual Studio 2019
 version: "{branch}-{build}"
 
 branches:
@@ -63,8 +63,8 @@ install:
  # Decrypt files.
  - ps: |
     if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
-     openssl enc -aes-256-cbc -d -pass pass:$env:encFileKey -in authenticode.pfx.enc -out authenticode.pfx
-     openssl enc -aes-256-cbc -d -pass pass:$env:encFileKey -in ssh_id_rsa.enc -out ssh_id_rsa
+     openssl enc -md md5 -aes-256-cbc -d -pass pass:$env:encFileKey -in authenticode.pfx.enc -out authenticode.pfx
+     openssl enc -md md5 -aes-256-cbc -d -pass pass:$env:encFileKey -in ssh_id_rsa.enc -out ssh_id_rsa
      # Install ssh stuff.
      copy ssh_id_rsa $env:userprofile\.ssh\id_rsa
     }
@@ -74,13 +74,12 @@ install:
 
 build_script:
  - ps: |
-     $sconsOutTargets = "launcher"
+     $sconsOutTargets = "launcher developerGuide  changes userGuide client"
      if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
       $sconsOutTargets += " appx"
      }
      $sconsArgs = "version=$env:version"
      if ($env:release) {
-      $sconsOutTargets += " changes userGuide developerGuide client"
       $sconsArgs += " release=1"
      }
      if ($env:versionType) {
@@ -120,6 +119,7 @@ build_script:
 
 before_test:
  # install required packages
+ - py -m pip install --upgrade pip
  - py -m pip install -r tests/system/requirements.txt -r tests/lint/lintInstall/requirements.txt
  - mkdir testOutput
  - mkdir testOutput\unit
@@ -249,9 +249,8 @@ deploy_script:
       }
       ConvertTo-Json -InputObject $data -Compress | ssh nvaccess@exbi.nvaccess.org nvdaAppveyorHook
       # Upload symbols to Mozilla.
-      Start-FileDownload https://github.com/mozilla/gecko-dev/raw/12c357c/toolkit/crashreporter/tools/win32/dump_syms_vc1800.exe -FileName appveyor\dump_syms.exe
-      py -m pip install requests
-      py appveyor\mozillaSyms.py
+      py -m pip install --no-warn-script-location requests
+       py appveyor\mozillaSyms.py
      }
 
 on_finish:

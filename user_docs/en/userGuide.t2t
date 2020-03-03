@@ -473,15 +473,15 @@ The further left or right the mouse is located on the screen, the further left o
 These extra mouse features are not turned on by default in NVDA.
 If you wish to take advantage of them, you can configure them from the [Mouse settings #MouseSettings] category of the [NVDA Settings #NVDASettings] dialog, found in the NVDA Preferences menu.
 
-Although a physical mouse or trackpad should be used to navigate with the mouse, NVDA has a few key commands related to the mouse:
+Although a physical mouse or trackpad should be used to navigate with the mouse, NVDA provides some commands related to the mouse:
 %kc:beginInclude
-|| Name | Desktop key | Laptop key | Description |
-| Left mouse button click | numpadDivide | NVDA+[ | clicks the left mouse button once. The common double click can be performed by pressing this key twice in quick succession |
-| Left mouse button lock | shift+numpadDivide | NVDA+control+[ | Locks the left mouse button down. Press again to release it. To drag the mouse, press this key to lock the left button down and then move the mouse either physically or use one of the other mouse routing commands |
-| Right mouse click | numpadMultiply | NVDA+] | Clicks the right mouse button once. |
-| Right mouse button lock | shift+numpadMultiply | NVDA+control+] | Locks the right mouse button down. Press again to release it. To drag the mouse, press this key to lock the right button down and then move the mouse either physically or use one of the other mouse routing commands |
-| Move mouse to current navigator object | NVDA+numpadDivide | NVDA+shift+m | Moves the mouse to the location of the current navigator object and review cursor |
-| Navigate to the object under the mouse | NVDA+numpadMultiply | NVDA+shift+n | Set the navigator object to the object located at the position of the mouse |
+|| Name | Desktop key | Laptop key | Touch | Description |
+| Left mouse button click | numpadDivide | NVDA+[ | none | Clicks the left mouse button once. The common double click can be performed by pressing this key twice in quick succession |
+| Left mouse button lock | shift+numpadDivide | NVDA+control+[ | none | Locks the left mouse button down. Press again to release it. To drag the mouse, press this key to lock the left button down and then move the mouse either physically or use one of the other mouse routing commands |
+| Right mouse click | numpadMultiply | NVDA+] | tap and hold | Clicks the right mouse button once, mostly used to open context menu at the location of the mouse. |
+| Right mouse button lock | shift+numpadMultiply | NVDA+control+] | none | Locks the right mouse button down. Press again to release it. To drag the mouse, press this key to lock the right button down and then move the mouse either physically or use one of the other mouse routing commands |
+| Move mouse to current navigator object | NVDA+numpadDivide | NVDA+shift+m | none | Moves the mouse to the location of the current navigator object and review cursor |
+| Navigate to the object under the mouse | NVDA+numpadMultiply | NVDA+shift+n | none | Set the navigator object to the object located at the position of the mouse |
 %kc:endInclude
 
 + Browse Mode +[BrowseMode]
@@ -1162,7 +1162,7 @@ If you find that NVDA is reading punctuation in the wrong language for a particu
 
 ==== Include Unicode Consortium data (including emoji) when processing characters and symbols ====[SpeechSettingsCLDR]
 When this checkbox is checked, NVDA will include additional symbol pronunciation dictionaries when pronouncing characters and symbols.
-These dictionaries contain descriptions for symbols (particularly emoji) that are provided by the [Unicode Consortium https://www.unicode.org/consortium/] as part of their [Common Locale Data Repository https://cldr.unicode.org/].
+These dictionaries contain descriptions for symbols (particularly emoji) that are provided by the [Unicode Consortium https://www.unicode.org/consortium/] as part of their [Common Locale Data Repository http://cldr.unicode.org/].
 If you want NVDA to speak descriptions of emoji characters based on this data, you should enable this option.
 However, if you are using a speech synthesizer that supports speaking emoji descriptions natively, you may wish to turn this off.
 
@@ -2425,7 +2425,12 @@ The Brailliant BI and B series of displays  from [HumanWare https://www.humanwar
 If connecting via USB with the protocol set to HumanWare, you must first install the USB drivers provided by the manufacturer.
 USB drivers are not required if the protocol is set to OpenBraille.
 
-The BrailleNote Touch is also supported, and does not require any drivers to be installed.
+The following extra devices are also supported (and do not require any special drivers to be installed):
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
+
 
 Following are the key assignments for  the Brailliant BI/B and BrailleNote touch displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
