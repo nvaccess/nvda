@@ -122,7 +122,7 @@ class consoleUIATextInfo(UIATextInfo):
 
 class consoleUIATextInfoEndInclusive(consoleUIATextInfo):
 	def collapse(self, end=False):
-		"""Works around a UIA bug on Windows 10 1803 and later."""
+		"""Works around a UIA bug on Windows 10 versions before 2104."""
 		# When collapsing, consoles seem to incorrectly push the start of the
 		# textRange back one character.
 		# Correct this by bringing the start back up to where the end is.
@@ -136,7 +136,7 @@ class consoleUIATextInfoEndInclusive(consoleUIATextInfo):
 			)
 
 	def compareEndPoints(self, other, which):
-		"""Works around a UIA bug on Windows 10 1803 and later."""
+		"""Works around a UIA bug on Windows 10 versions before 2104."""
 		# Even when a console textRange's start and end have been moved to the
 		# same position, the console incorrectly reports the end as being
 		# past the start.
@@ -151,7 +151,7 @@ class consoleUIATextInfoEndInclusive(consoleUIATextInfo):
 
 	def setEndPoint(self, other, which):
 		"""Override of L{textInfos.TextInfo.setEndPoint}.
-		Works around a UIA bug on Windows 10 1803 and later that means we can
+		Works around a UIA bug on Windows 10 versions before 2104 that means we can
 		not trust the "end" endpoint of a collapsed (empty) text range
 		for comparisons.
 		"""
@@ -192,7 +192,8 @@ class consoleUIATextInfoEndInclusive(consoleUIATextInfo):
 
 	def _move(self, unit, direction, endPoint=None):
 		if unit == textInfos.UNIT_WORD and direction != 0:
-			# UIA doesn't implement word movement, so we need to do it manually.
+			# On Windows 10 versions before 2104, UIA doesn't implement word
+			# movement, so we need to do it manually.
 			# Relative to the current line, calculate our offset
 			# and the current word's offsets.
 			lineInfo = self.copy()
@@ -291,7 +292,7 @@ class consoleUIATextInfoEndInclusive(consoleUIATextInfo):
 		)
 
 	def _isCollapsed(self):
-		"""Works around a UIA bug on Windows 10 1803 and later that means we
+		"""Works around a UIA bug on Windows 10 versions before 2104 that means we
 		cannot trust the "end" endpoint of a collapsed (empty) text range
 		for comparisons.
 		Instead we check to see if we can get the first character from the
