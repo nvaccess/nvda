@@ -390,8 +390,8 @@ class Terminal(LiveText, EditableText):
 		return False
 
 
-class KeyboardHandlerBasedTypedCharSupport(Terminal):
-	"""A Terminal object that also provides typed character support for
+class EnhancedTermTypedCharSupport(Terminal):
+	"""A Terminal object that optionally provides typed character support for
 	console applications via keyboardHandler events.
 	These events are queued from NVDA's global keyboard hook.
 	Therefore, an event is fired for every single character that is being typed,
@@ -400,12 +400,16 @@ class KeyboardHandlerBasedTypedCharSupport(Terminal):
 	characters close to the caret, or injecting in-process with NVDAHelper.
 	This class relies on the toUnicodeEx Windows function, and in particular
 	the flag to preserve keyboard state available in Windows 10 1607
-	and later."""
+	and later.
+	This class also can hold typed characters in a queue and only dispatch once
+	the screen updates. This is useful for suppression of passwords, etc."""
 	#: Whether this object quickly and reliably sends textChange events
 	#: when its contents update.
 	#: Timely and reliable textChange events are required
 	#: to support password suppression.
 	_supportsTextChange = True
+	#: Whether to use ToUnicodeEx for typed character events.
+	_shouldUseToUnicodeEx = True
 	#: A queue of typed characters, to be dispatched on C{textChange}.
 	#: This queue allows NVDA to suppress typed passwords when needed.
 	_queuedChars = []

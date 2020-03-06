@@ -104,7 +104,7 @@ def shouldUseToUnicodeEx(focus=None):
 	"Returns whether to use ToUnicodeEx to determine typed characters."
 	if not focus:
 		focus = api.getFocusObject()
-	from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
+	from NVDAObjects.behaviors import EnhancedTermTypedCharSupport
 	return (
 		# This is only possible in Windows 10 1607 and above
 		winVersion.isWin10(1607)
@@ -115,7 +115,10 @@ def shouldUseToUnicodeEx(focus=None):
 			# or the focus is within a UWP app, where WM_CHAR never gets sent
 			or focus.windowClassName.startswith('Windows.UI.Core')
 			# Or this is a console with keyboard support, where WM_CHAR messages are doubled
-			or isinstance(focus, KeyboardHandlerBasedTypedCharSupport)
+			or (
+				isinstance(focus, EnhancedTermTypedCharSupport)
+				and focus._shouldUseToUnicodeEx
+			)
 		)
 	)
 
