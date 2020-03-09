@@ -8,4 +8,6 @@ appModule for Visual Studio Code Insiders.
 Imports the appModule for Visual Studio Code.
 """
 
-from .code import AppModule
+# Normally these Flake8 errors shouldn't be ignored but here we are simply reusing existing ap module.
+
+from .code import *  # noqa: F401, F403
