@@ -1,8 +1,9 @@
-#NVDAObjects/UIA/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2009-2019 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V., Leonard de Ruijter
+# NVDAObjects/UIA/__init__.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2009-2020 NV Access Limited, Joseph Lee, Mohammad Suliman,
+# Babbage B.V., Leonard de Ruijter, Bill Dengler
 
 """Support for UI Automation (UIA) controls."""
 
