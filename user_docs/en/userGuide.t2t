@@ -56,10 +56,14 @@ NVDA supports braille codes for many languages, including contracted, uncontract
 ++ License and Copyright ++[LicenseAndCopyright]
 NVDA is copyright NVDA_COPYRIGHT_YEARS NVDA contributors.
 
-NVDA is covered by the GNU General Public License (Version 2).
+NVDA is available under the GNU General Public License version 2, with two special exceptions.
+The exceptions are outlined in the license document under the sections "Non-GPL Components in Plugins and Drivers" and "Microsoft Distributable Code".
+NVDA also includes and uses components which are made available under different free and open source licenses.
 You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it.
 This applies to both original and modified copies of this software, plus any derivative works.
+
 For further details, you can [view the full license. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+For details regarding exceptions, access the license document from the NVDA menu under the "help" section.
 
 + System Requirements +[SystemRequirements]
 - Operating Systems: all 32-bit and 64-bit editions of Windows 7, Windows 8, Windows 8.1, Windows 10, and all Server Operating Systems starting from Windows Server 2008 R2.
@@ -391,7 +395,7 @@ However, by default, when the System caret moves, the review cursor follows alon
 This can be toggled on and off.
 
 Note that braille follows the [focus #SystemFocus] and [caret #SystemCaret] by default, rather than object navigation and text review.
-If you want it to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
+If you want it to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review or automatically to focus or review.
 
 The following commands are available for reviewing text:
 %kc:beginInclude
@@ -411,7 +415,7 @@ The following commands are available for reviewing text:
 | Move to end of line in review | shift+numpad3 | NVDA+end | none | Moves the review cursor to the end of the current line of text |
 | Say all with review | numpadPlus | NVDA+shift+a | 3-finger flick down (text mode) | Reads from the current position of the review cursor, moving it as it goes |
 | Select then Copy from review cursor | NVDA+f9 | NVDA+f9 | none | Starts the select then copy process from the current position of the review cursor. The actual action is not performed until you tell NVDA where the end of the text range is |
-| Select then Copy to review cursor | NVDA+f10 | NVDA+f10 | none | On the first press, text is selected from the position previously set start marker up to and including the review cursor's current position. After pressing this key a second time, the text will be copied to the Windows clipboard |
+| Select then Copy to review cursor | NVDA+f10 | NVDA+f10 | none | On the first press, text is selected from the position previously set as start marker up to and including the review cursor's current position. If the system carret can reach the text, it will be moved to the selected text. After pressing this key stroke a second time, the text will be copied to the Windows clipboard |
 | Move to marked start for copy in review | NVDA+shift+f9 | NVDA+shift+f9 | none | Moves the review cursor to the position previously set start marker for copy |
 | Report text formatting | NVDA+f | NVDA+f | none | Reports the formatting of the text where the review cursor is currently situated. Pressing twice shows the information in browse mode |
 | Report current symbol replacement | None | None | none | Speaks the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode. |
@@ -890,7 +894,12 @@ Selecting a form field and pressing enter or the Move to button moves to that fi
 %kc:beginInclude
 To report any comments for the currently focused cell, press NVDA+alt+c.
 %kc:endInclude
-All comments for the worksheet can also be listed in the NVDA Elements List.
+All comments for the worksheet can also be listed in the NVDA Elements List after pressing NVDA+f7.
+
+NVDA can also display a specific dialog for editing a certain comment.
+%kc:beginInclude
+To edit a certain comment, in a focused cell, press shift+f2.
+%kc:endInclude
 
 +++ Reading Protected Cells +++[ExcelReadingProtectedCells]
 If a workbook has been protected, it may not be possible to move focus to particular cells that have been locked for editing.
