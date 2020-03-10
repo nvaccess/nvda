@@ -583,7 +583,7 @@ class RowWithFakeNavigation(NVDAObject):
 			return
 		else:
 			new = cur.next
-		while new and new.hasIrrelevantLocation:
+		while new and new.location and new.location.width == 0:
 			new = new.next
 		self._moveToColumn(new)
 	script_moveToNextColumn.canPropagate = True
@@ -598,7 +598,7 @@ class RowWithFakeNavigation(NVDAObject):
 			new = self
 		else:
 			new = cur.previous
-			while new and new.hasIrrelevantLocation:
+			while new and new.location and new.location.width == 0:
 				new = new.previous
 		self._moveToColumn(new)
 	script_moveToPreviousColumn.canPropagate = True
@@ -642,7 +642,8 @@ class RowWithFakeNavigation(NVDAObject):
 class RowWithoutCellObjects(NVDAObject):
 	"""An abstract class which creates cell objects for table rows which don't natively expose them.
 	Subclasses must override L{_getColumnContent} and can optionally override L{_getColumnHeader}
-	to retrieve information about individual columns.
+	to retrieve information about individual columns and L{_getColumnLocation} to support mouse or
+	magnification tracking or highlighting.
 	The parent (table) must support the L{columnCount} property.
 	"""
 
@@ -735,7 +736,7 @@ class _FakeTableCell(NVDAObject):
 
 	def _get_states(self):
 		states = self.parent.states.copy()
-		if not self.location or self.location.width == 0:
+		if self.location and self.location.width == 0:
 			states.add(controlTypes.STATE_INVISIBLE)
 		return states
 
