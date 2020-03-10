@@ -83,7 +83,7 @@ EE_OK=0
 #EE_BUFFER_FULL=1
 #EE_NOT_FOUND=2
 
-#eSpeak initialization flags
+# eSpeak initialization flags
 espeakINITIALIZE_DONT_EXIT = 0x8000
 
 class espeak_EVENT_id(Union):
@@ -332,8 +332,8 @@ def initialize(indexCallback=None):
 	espeakDLL.espeak_GetCurrentVoice.restype=POINTER(espeak_VOICE)
 	espeakDLL.espeak_SetVoiceByName.argtypes=(c_char_p,)
 	eSpeakPath=os.path.abspath("synthDrivers")
-	sampleRate=espeakDLL.espeak_Initialize(
-		AUDIO_OUTPUT_SYNCHRONOUS,300,
+	sampleRate = espeakDLL.espeak_Initialize(
+		AUDIO_OUTPUT_SYNCHRONOUS, 300,
 		os.fsencode(eSpeakPath),
 		# #10607: ensure espeak does not exit NVDA's process on errors such as the espeak path being invalid.
 		espeakINITIALIZE_DONT_EXIT
