@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-31 00:10+1000\n"
-"PO-Revision-Date: 2019-12-07 12:34+0100\n"
+"POT-Creation-Date: 2020-02-28 00:10+1000\n"
+"PO-Revision-Date: 2020-02-15 19:29+0100\n"
 "Last-Translator: \n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
@@ -156,7 +156,7 @@ msgstr "Soha"
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Duck when outputting speech and sounds"
-msgstr "Csak amikor az NVDA használja a hangkimenetet"
+msgstr "Csak amikor az NVDA hangot ad"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -9184,17 +9184,13 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
 msgid "Use UI Automation to access the Windows C&onsole when available"
-msgstr ""
-"UI Automation használata a Microsoft &Word dokumentumvezérlőihez, ha "
-"lehetséges."
+msgstr "UI Automation használata a Windows konzol eléréséhez, ha lehetséges"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
 msgid "Speak &passwords in UIA consoles (may improve performance)"
-msgstr "Jelszavak bemondása a parancssorban"
+msgstr "Jelszavak bemondása az UIA konzolokban"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9203,11 +9199,9 @@ msgstr "Parancssori programok"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
 msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
-"Használja az új beírt karakter támogatást a hagyományos parancssori "
-"ablakoknál, ha elérhető"
+"Használja az új beírt karakterek bemondását a Windows konzolban, ha elérhető"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10100,16 +10094,12 @@ msgstr "Képernyőfüggöny"
 
 #. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, fuzzy
 msgid "Always &show a warning when loading Screen Curtain"
-msgstr ""
-"Mindig &figyelmeztessen a {screenCurtainTranslatedName} bekapcsolásakor"
+msgstr "Mindig &figyelmeztessen a képernyőfüggöny betöltésekor"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-#, fuzzy
 msgid "&Play sound when toggling Screen Curtain"
-msgstr ""
-"Mindig &figyelmeztessen a {screenCurtainTranslatedName} bekapcsolásakor"
+msgstr "&Hangjelzés a képernyőfüggöny be- és kikapcsolásakor"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -11620,153 +11610,3 @@ msgstr "dupla sorköz"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5-es sorköz"
-
-#~ msgid "Windows C&onsole support:"
-#~ msgstr "Windows &parancssor támogatása"
-
-#~ msgid "Prefer UIA"
-#~ msgstr "UI Automation"
-
-#~ msgid "Legacy"
-#~ msgstr "Hagyományos"
-
-#~ msgid "Highlighter"
-#~ msgstr "Kiemelő"
-
-#~ msgid "NVDA Highlighter"
-#~ msgstr "NVDA kiemelő"
-
-#~ msgid "Koine Greek"
-#~ msgstr "Koiné Görög"
-
-#~ msgid "lmk %s"
-#~ msgstr "%s jp"
-
-#~ msgid "Start"
-#~ msgstr "Start"
-
-#~ msgid "Skype"
-#~ msgstr "Skype"
-
-#~ msgid "Reports and moves the review cursor to a recent message"
-#~ msgstr "Bemondja és elmozdítja az áttekintő kurzort egy új üzenetre."
-
-#~ msgid "Typing stopped"
-#~ msgstr "nem ír"
-
-#~ msgid "Rewind"
-#~ msgstr "Hátra"
-
-#~ msgid "Fast forward"
-#~ msgstr "előre"
-
-#~ msgid "Play"
-#~ msgstr "Lejátszás"
-
-#~ msgid "Stop"
-#~ msgstr "Leállítás"
-
-#~ msgid "Record"
-#~ msgstr "Felvétel"
-
-#~ msgid "Selected %s"
-#~ msgstr "%s Kijelölve"
-
-#~ msgid "Currently running application is %s"
-#~ msgstr "A jelenleg aktív alkalmazás neve: %s"
-
-#~ msgid " and currently loaded module is %s"
-#~ msgstr "A jelenleg betöltött szkript neve: %s"
-
-#~ msgid ""
-#~ "All add-ons are currently disabled. To enable add-ons you must restart "
-#~ "NVDA."
-#~ msgstr ""
-#~ "Minden bővítmény le van tiltva, a futtatásukhoz újra kell indítani az "
-#~ "NVDA-t"
-
-#~ msgid "%s Settings Category"
-#~ msgstr "%s beállítások"
-
-#~ msgid "NVDA"
-#~ msgstr "NVDA"
-
-#~ msgid "remove"
-#~ msgstr "eltávolítás"
-
-#~ msgid ""
-#~ "For the new language to take effect, the configuration must be saved and "
-#~ "NVDA must be restarted. Press enter to save and restart NVDA, or cancel "
-#~ "to manually save and exit at a later time."
-#~ msgstr ""
-#~ "A nyelvi beállítások megváltoztatásához mentenie kell a beállításokat, és "
-#~ "újra kell indítania az NVDA programot. Nyomja meg az Enter billentyűt a "
-#~ "beállítások elmentéséhez és az NVDA újraindításához. Ha később szeretné "
-#~ "újraindítani a programot, válassza a mégse gombot."
-
-#~ msgid "report gorupings off"
-#~ msgstr "Elemcsoportok bemondása kikapcsolva"
-
-#~ msgid ""
-#~ "Reads from the review cursor up to end of current text, moving the review "
-#~ "cursor as it goes"
-#~ msgstr ""
-#~ "Olvas az áttekintőkurzor pozíciójától a szöveg végéig, az áttekintőkurzor "
-#~ "mozgatásával."
-
-#~ msgid ""
-#~ "{longName} ({name})\n"
-#~ "Version: {version}\n"
-#~ "URL: {url}\n"
-#~ "{copyright}\n"
-#~ "\n"
-#~ "{name} is covered by the GNU General Public License (Version 2). You are "
-#~ "free to share or change this software in any way you like as long as it "
-#~ "is accompanied by the license and you make all source code available to "
-#~ "anyone who wants it. This applies to both original and modified copies of "
-#~ "this software, plus any derivative works.\n"
-#~ "For further details, you can view the license from the Help menu.\n"
-#~ "It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
-#~ "gpl-2.0.html\n"
-#~ "\n"
-#~ "{name} is developed by NV Access, a non-profit organisation committed to "
-#~ "helping and promoting free and open source solutions for blind and vision "
-#~ "impaired people.\n"
-#~ "If you find NVDA useful and want it to continue to improve, please "
-#~ "consider donating to NV Access. You can do this by selecting Donate from "
-#~ "the NVDA menu."
-#~ msgstr ""
-#~ "{longName} ({name})\n"
-#~ "Verzió: {version}\n"
-#~ "URL: {url}\n"
-#~ "{copyright}\n"
-#~ "\n"
-#~ "Az {name}-t a magyar NVDA honosítócsapat honosította. Ha valamilyen "
-#~ "nyelvtani hibát észlel vagy egyéb javaslata van, akkor látogassa meg a "
-#~ "https://www.nvda.hu weboldalt, ahol kapcsolatba léphet a "
-#~ "honosítócsapattal.\n"
-#~ "Ugyancsak ezen az oldalon talál újabb nyelvcsomagokat, valamint az {name}-"
-#~ "val kapcsolatos hasznos információkat. \n"
-#~ "\n"
-#~ "Az {name} a GNU általános Nyilvános Licensz (2-es verzió) alatt áll. A "
-#~ "szoftver szabadon közzétehető vagy módosítható a licensz és a forráskód "
-#~ "bárki számára elérhetővé tételével. Ez az eredeti és módosított "
-#~ "szoftverre, valamint bármilyen a szoftver forráskódjából származó "
-#~ "kódrészletre vonatkozik.\n"
-#~ "Ha többet szeretne megtudni, elolvashatja a Licensz szerződést a súgó "
-#~ "menüben.\n"
-#~ "Ezt a https://www.gnu.org/licenses/old-licenses/gpl-2.0.html oldalon is "
-#~ "megteheti.\n"
-#~ "\n"
-#~ "Az {name}-t az NV Access fejleszti, amely egy non-profit alapítvány. "
-#~ "Céljuk az ingyenes és nyílt forráskódú szoftverek terjesztése és segítése "
-#~ "látássérült és gyengénlátó felhasználók részére.\n"
-#~ "Ha hasznosnak ítéli a programot és szeretné, hogy továbbra is elérhető "
-#~ "legyen, kérjük adományozzon az NV Access-nek. Ezt a NVDA menü adományozás "
-#~ "menüpontjával érheti el."
-
-#~ msgid "Magnifier"
-#~ msgstr "Nagyító"
-
-#~ msgid "Color enhancer"
-#~ msgstr "Színkezelés"
