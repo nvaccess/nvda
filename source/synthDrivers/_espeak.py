@@ -339,7 +339,7 @@ def initialize(indexCallback=None):
 		espeakINITIALIZE_DONT_EXIT
 	)
 	if sampleRate <= 0:
-		raise OSError(f"espeak_Initialize failed with code {sampleRate}. Given Espeak data path of {eSpeakPath}") 
+		raise OSError(f"espeak_Initialize failed with code {sampleRate}. Given Espeak data path of {eSpeakPath}")
 	player = nvwave.WavePlayer(channels=1, samplesPerSec=sampleRate, bitsPerSample=16,
 		outputDevice=config.conf["speech"]["outputDevice"],
 		buffered=True)
