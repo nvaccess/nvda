@@ -18,20 +18,20 @@ complexSymbols:
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word -	(?<=[^\W_])[-]
-negative number	(?<!\w)-(?=[$£€¥.]?\d)
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	ponto	all	always
+. sentence ending	punto	all	always
 ! sentence ending	pechar admiración	all	always
 ? sentence ending	pechar interrogación	all	always
 ... sentence ending	elipse	all	always	
 … sentence ending	elipse	all	always	
-; phrase ending	ponto e coma	most	always
-: phrase ending	dous pontos	most	always
+; phrase ending	punto e coma	most	always
+: phrase ending	dous puntos	most	always
 decimal point		none	always
 in-word '	apóstrofo	all	norep
 in-word -	guión	all	norep
@@ -64,12 +64,13 @@ $	dólar	all	norep
 )	pechar paréntese	most	always
 *	asterisco	some
 +	máis	some
+−	menos	some
 ,	coma	all	always
 -	guión	most
-.	ponto	some
+.	punto	some
 /	barra 	some
-:	dous pontos	most	norep
-;	ponto e coma	most
+:	dous puntos	most	norep
+;	punto e coma	most
 <	menor que	some
 >	maior que	some
 =	igual	some
