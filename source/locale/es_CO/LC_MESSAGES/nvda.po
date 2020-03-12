@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-28 00:10+1000\n"
+"POT-Creation-Date: 2020-03-06 00:10+1000\n"
 "PO-Revision-Date: 2019-10-14 00:41-0500\n"
 "Last-Translator: Slann Tonic <reydelasmaquinas@outlook.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
@@ -849,6 +849,11 @@ msgstr "Inglés (Reino Unido) grado 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr ""
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
 msgstr "Código Braille Grado 1 Inglés Unificado"
 
@@ -1093,13 +1098,20 @@ msgstr "Maratí grado 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
+#, fuzzy
+msgid "Dutch (Belgium) 6 dot"
 msgstr "Holandés (Bélgica)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
+#, fuzzy
+msgid "Dutch (Netherlands) 6 dot"
 msgstr "Holandés (Holanda)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr ""
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4725,6 +4737,18 @@ msgstr ""
 "Anuncia el objeto nuevo o el contenido bajo tu dedo si es diferente a donde "
 "estuviera el dedo anteriormente"
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+#, fuzzy
+msgid "object has no location"
+msgstr "el objeto no tiene ubicación"
+
+#. Translators: Input help mode message for touch right click command.
+#, fuzzy
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr "Hace clic con el botón derecho una vez en la posición actual del ratón"
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Muestra el diálogo de Perfiles de configuración de NVDA"
@@ -6608,6 +6632,8 @@ msgstr "Error al buscar actualización"
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "Error"
 
@@ -9869,6 +9895,11 @@ msgid ""
 "\t\t\tThis cannot be undone."
 msgstr ""
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+#, fuzzy
+msgid "Reset gestures"
+msgstr "Gestos de Entrada"
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
@@ -9884,6 +9915,7 @@ msgstr "Sale de la interactuación matemática"
 msgid "Math interaction not supported."
 msgstr "Interactuación matemática no soportada."
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9912,7 +9944,8 @@ msgstr "seleccionado %s"
 msgid "%s selected"
 msgstr "%s seleccionado"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d caracteres"
