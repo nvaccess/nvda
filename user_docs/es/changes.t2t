@@ -3,6 +3,48 @@ Qué hay de Nuevo en NVDA
 
 %!includeconf: ../changes.t2tconf
 
++= 2020.1 =
++
+== Nuevas Características ==
+- El elemento actualmente seleccionado en cuadros de lista se presenta nuevamente en modo exploración en Chrome, similar a NVDA 2019.1. (#10713)
+- Ahora puedes realizar clics con el botón derecho del ratón en dispositivos táctiles haciendo un tap con un dedo y manteniéndolo. (#3886)
+- Soporte para pantallas braille nuevas: APH Chameleon 20, APH Mantis Q40, HumanWare BrailleOne, BrailleNote Touch v2, y NLS eReader. (#10830)
+
+
+== Cambios ==
+- NVDA evita que el sistema se bloquee o se suspenda cuando esté leyendo. (#10643)
+- Soporte para iframes fuera de proceso en Mozilla Firefox. (#10707)
+- Actualizado el transcriptor braille liblouis a la versión 3.12 (#10161)
+
+
+== Cambios para Desarrolladores ==
+- Ahora se compila la documentación para el desarrollador usando sphinx. (#9840)
+- Se han dividido en dos varias funciones del habla. (#10593)
+ La versión speakX permanece, pero ahora depende de una función getXSpeech la cual devuelve una secuencia de voz.
+  - speakObjectProperties ahora se basa en getObjectPropertiesSpeech
+  - speakObject ahora se basa en getObjectSpeech
+  - speakTextInfo ahora se basa en getTextInfoSpeech
+  - speakWithoutPauses se ha convertido en una clase, y se ha refactorizado, pero no debería romper la retrocompatibilidad.
+  - getSpeechForSpelling está obsoleta (aunque todavía disponible) utiliza getSpellingSpeech en su lugar.
+  Cambios privados que no deberían afectar a los desarrolladores de complementos:
+  - _speakPlaceholderIfEmpty ahora es _getPlaceholderSpeechIfTextEmpty
+  - _speakTextInfo_addMath ahora es _extendSpeechSequence_addMathForTextInfo
+- Speech 'reason' se ha convertido a un Enum, Consulta la clase controlTypes.OutputReason. (#10703)
+  - Las constantes Module level 'REASON_*' están obsoletas.
+- Las dependencias de compilación de NVDA ahora requieren Visual Studio 2019 (16.2 o más reciente). (#10169)
+- Actualizado SCons a la versión 3.1.1. (#10169)
+
+
+== Corrección de Fallos ==
+- Corregido el no anunciado del símbolo menos Unicode (U+2212) (#10633)
+- Al instalar complementos desde el administrador de complementos los nombres de los ficheros y carpetas en la ventana de exploración ya no se anuncian dos veces. (#10620, #2395)
+- En Firefox, al cargar Mastodon con la interface de web avanzada habilitada, ahora todas las cronologías se procesan correctamente en modo exploración. (#10776)
+- En modo exploración, NVDA ahora anuncia "no marcado" para casillas de verificación no marcadas donde no lo hacía en ocasiones anteriormente. (#10781)
+- Los controles ARIA switch ya no anuncian información confusa tal como "no pulsado marcado" o "pulsado marcado". (#9187)
+- Las voces SAPI4 ya no deberían rechazar verbalizar cierto texto. (#10792)
+- NVDA puede leer e interactuar de nuevo con ecuaciones matemáticas en Microsoft Word. (#10803)
+
+
 = 2019.3 =
 NVDA 2019.3 es una versión muy significativa que contiene muchos cambios bajo el capó, incluyendo la actualización de Python 2 a Python 3, y una importante reescritura del sistema de habla de NVDA.
 Aunque estos cambios rompan la compatibilidad con los antiguos complemenhtos de NVDA, la actualización a Python 3 es necesaria por motivos de seguridad, y los cambios en el habla permiten algunas innovaciones interesantes en un futuro próximo.
