@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-28 00:10+1000\n"
-"PO-Revision-Date: 2020-02-13 08:38+0100\n"
+"POT-Creation-Date: 2020-03-06 00:10+1000\n"
+"PO-Revision-Date: 2020-03-05 17:49+0100\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -891,6 +891,11 @@ msgstr "Engleski (Ujedinjeno Kraljevstvo) kratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr "Sjevernoamerička kompjutorska brajica"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
 msgstr "Unificirani engleski brajični kod puno pismo"
 
@@ -1126,13 +1131,18 @@ msgstr "Marati puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
-msgstr "Nizozemski (Belgija)"
+msgid "Dutch (Belgium) 6 dot"
+msgstr "Nizozemski (Belgija) puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
-msgstr "Nizozemski (Nizozemska)"
+msgid "Dutch (Netherlands) 6 dot"
+msgstr "Nizozemski (Nizozemska) puno pismo"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr "Nizozemska kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4686,6 +4696,18 @@ msgstr ""
 "Izvještava o novom objektu ili sadržaju koji se nalazi ispod tvog prsta, "
 "ukoliko se razlikuje od prethodnog objekta na kojem se tvoj prst nalazio"
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "Objekt nema lokacije"
+
+#. Translators: Input help mode message for touch right click command.
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr ""
+"Pritišće desni klik miša na trenutnoj poziciji dodirnog kursora. Ovo se "
+"uobičajeno koristi za aktivaciju kontekstnog izbornika."
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Prikazuje dijalog za konfiguracijske profile"
@@ -6494,6 +6516,8 @@ msgstr "Greška tijekom provjeravanja ažuriranja."
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "Greška"
 
@@ -9706,6 +9730,10 @@ msgstr ""
 "u ovoj sesiji bit će izgubljene.\n"
 "\t\t\tOva radnja je nepovratna."
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "Vraćanje gesti na tvorničke postavke"
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
@@ -9721,6 +9749,7 @@ msgstr "Izlazi iz interakcije s matematičkim sadržajem"
 msgid "Math interaction not supported."
 msgstr "Interakcija s matematičkim sadržajem nije podržana."
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9749,7 +9778,8 @@ msgstr "odabrano je %s"
 msgid "%s selected"
 msgstr "%s je odabrano"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d znakova"
