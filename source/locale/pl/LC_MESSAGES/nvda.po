@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-28 00:10+1000\n"
-"PO-Revision-Date: 2020-01-17 14:04+0100\n"
+"POT-Creation-Date: 2020-03-06 00:10+1000\n"
+"PO-Revision-Date: 2020-03-06 14:41+0100\n"
 "Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: killer@tyflonet.com\n"
 "Language: pl_PL\n"
@@ -801,6 +801,11 @@ msgstr "Angielski (U.K.) skróty"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr "Angielski północnoamerykański brajl komputerowy"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
 msgstr "Ujednolicony brajl angielski (UEB) pismo pełne"
 
@@ -1036,13 +1041,18 @@ msgstr "Marathi pismo pełne"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
-msgstr "Holenderski (Belgia)"
+msgid "Dutch (Belgium) 6 dot"
+msgstr "Flamancki pismo pełne"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
-msgstr "Holenderski (Holandia)"
+msgid "Dutch (Netherlands) 6 dot"
+msgstr "Holenderski (Holandia) pismo pełne"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr "Holenderski brajl komputerowy"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4563,6 +4573,18 @@ msgid ""
 "your finger was last"
 msgstr "Zgłasza nowy obiekt i treść pod palcem"
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "Brak danych o położeniu obiektu"
+
+#. Translators: Input help mode message for touch right click command.
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr ""
+"Klika prawy przycisk myszy na aktualnym położeniu obiektu. Jest to używane "
+"ogólnie, kiedy otwieramy meni kontekstowe."
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Otwiera okno dialogowe Ustawienia profili"
@@ -6374,6 +6396,8 @@ msgstr "Błąd podczas sprawdzania aktualizacji"
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "Błąd"
 
@@ -9570,6 +9594,10 @@ msgstr ""
 "sesji zostaną utracone.\n"
 "\t\t\tJest to nieodwracalne."
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "Przywracanie gestów do ustawień fabrycznych"
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
@@ -9585,6 +9613,7 @@ msgstr "Koniec interakcji z treścią matematyczną"
 msgid "Math interaction not supported."
 msgstr "Interakcja z treścią matematyczną nie jest obsługiwana."
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9613,7 +9642,8 @@ msgstr "zaznaczone %s"
 msgid "%s selected"
 msgstr "%s zaznaczone"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d znaków"
