@@ -473,15 +473,15 @@ Còn khi chuột thay đổi vị trí theo chiều ngang (trái hoặc phải) 
 Tính năng này mặc định không được bật.
 Nếu muốn bật tính năng này, bạn có thể cấu hình trong phân loại [Chuột #MouseSettings] của hộp thoại [cấu hình NVDA #NVDASettings], được tìm thấy trong trình đơn tùy chọn của NVDA.
 
-Bên cạnh sử dụng trực tiếp chuột thì NVDA cung cấp cho bạn thêm một số phím tương tác với chuột như sau:
+Bên cạnh sử dụng trực tiếp chuột thì NVDA cũng cung cấp cho bạn một số phím lệnh liên quan đến chuột:
 %kc:beginInclude
-|| chức năng | Phím máy bàn | Phím xách tay | Mô tả |
-| Kích hoạt nút chuột trái | dấu chia bàn phím số | NVDA+[ | Kích hoạt nút chuột trái, bấm nhanh hai lần sẽ tương tự như kích đúp nút chuột trái |
-| Khóa nút chuột trái | shift+dấu chia bàn phím số | NVDA+control+[ |  Khóa nút chuột trái, bấm tiếp để mở lại |
-| Kích hoạt nút chuột phải | dấu nhân bàn phím số | NVDA+] | Kích hoạt nút chuột phải |
-| Khóa nút chuột phải | shift+dấu nhân bàn phím số | NVDA+control+] | Khóa nút chuột phải, bấm tiếp một lần nữa để mở lại |
-| Di chuyển chuột đến vị trí đối tượng điều hướng | NVDA+dấu chia bàn phím số | NVDA+shift+m | Di chuyển chuột đến vị trí đối tượng điều hướng |
-| Chuyển đến đối tượng dưới con trỏ chuột | NVDA+dấu nhân bàn phím số | NVDA+shift+n | Đưa đối tượng điều hướng đến đối tượng tại vị trí chuột |
+|| Chức năng | Phím máy bàn | Phím xách tay | Cảm ứng | Mô tả |
+| Kích hoạt nút chuột trái | dấu chia bàn phím số | NVDA+[ | không có | Kích hoạt nút chuột trái, bấm nhanh hai lần sẽ tương tự như kích đúp nút chuột trái |
+| Khóa nút chuột trái | shift+dấu chia bàn phím số | NVDA+control+[ |  không có | Khóa nút chuột trái, bấm lần nữa để mở lại. Để kéo chuột, bấm lệnh này để khóa nút chuột trái rồi di chuyển bằng chuột  trên máy tính hoặc dùng các phím lệnh di chuyển chuột |
+| Kích hoạt nút chuột phải | dấu nhân bàn phím số | NVDA+] | Nhấn và giữ | Kích hoạt nút chuột phải, thường dùng để mở thực đơn ngữ cảnh tại vị trí chuột. |
+| Khóa nút chuột phải | shift+dấu nhân bàn phím số | NVDA+control+] | không có | Khóa nút chuột phải, bấm một lần nữa để mở lại. Để kéo chuột, bấm lệnh này để khóa nút chuột phải rồi di chuyển bằng chuột  trên máy tính hoặc dùng các phím lệnh di chuyển chuột |
+| Di chuyển chuột đến vị trí đối tượng điều hướng | NVDA+dấu chia bàn phím số | NVDA+shift+m | không có | Di chuyển chuột đến vị trí đối tượng điều hướng hiện tại và con trỏ duyệt |
+| Chuyển đến đối tượng dưới con trỏ chuột | NVDA+dấu nhân bàn phím số | NVDA+shift+n | không có | Đưa đối tượng điều hướng đến đối tượng tại vị trí chuột |
 %kc:endInclude
 
 + Chế độ duyệt tài liệu +[BrowseMode]
@@ -1162,7 +1162,7 @@ Nếu bạn thấy NVDA đọc dấu câu không đúng cho một ngôn ngữ v�
 
 ==== Tích hợp dữ liệu của Unicode Consortium (bao gồm biểu tượng cảm xúc) khi xử lý kí hiệu và kí tự ====[SpeechSettingsCLDR]
 Bật hộp kiểm này, NVDA sẽ bao gồm thêm các  từ điển phát âm kí hiệu khi phát âm kí tự và kí hiệu.
-Những từ điển này có mô tả cho các kí hiệu (đặc biệt là biểu tượng cảm xúc) được cung cấp bởi [Unicode Consortium http://www.unicode.org/consortium/] là một bộ phận của kho dữ liệu tên [Common Locale Data Repository http://cldr.unicode.org/].
+Những từ điển này chứa mô tả cho các kí hiệu (đặc biệt là biểu tượng cảm xúc) được cung cấp bởi [Unicode Consortium https://www.unicode.org/consortium/] là một phần của kho dữ liệu tên [Common Locale Data Repository http://cldr.unicode.org/].
 Nếu muốn NVDA đọc mô tả kí tự của các biểu tượng cảm xúc dựa trên kho dữ liệu đó, bạn phải bật tùy chọn này.
 Tuy nhiên, nếu bạn đang dùng một bộ đọc có hỗ trợ mô tả các biểu tượng cảm xúc một cách tự nhiên, bạn có thể tắt tùy chọn này.
 
@@ -2425,7 +2425,12 @@ Các dòng màn hình Brailliant BI và B của [HumanWare https://www.humanware
 Nếu kết nối qua cổng USB với thiết lập giao thức đến Humanware, bạn cần phải cài driver được cung cấp bởi nhà sản xuất.
 Sẽ không cần cài driver USB nếu thiết lập giao thức đến OpenBraille.
 
-BrailleNote Touch cũng đã được hỗ trợ, và không đòi hỏi  phải cài đặt bất cứ trình điều khiển nào.
+Các thiết bị thêm vào sau đây cũng được hỗ trợ, và không yêu cầu phải cài đặt bất cứ trình điều khiển đặc biệt nào:
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
+
 
 Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
 Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
