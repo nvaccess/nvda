@@ -199,7 +199,7 @@ Os destaques desta versão incluem a detecção automática de linhas braille da
 
 == Correção de Falhas ==
 - O NVDA não trava mais quando um diretório de complementos está vazio. (#7686)
-- As marcas LTR ""[da esquerda para a direita]"" e RTL ""[da direita para a esquerda]"" não são mais relatadas em braile ou fala por caractere ao acessar a janela de propriedades. (#8361)
+- As marcas LTR ""[da esquerda para a direita]"" e RTL ""[da direita para a esquerda]"" não são mais relatadas em braille ou fala por caractere ao acessar a janela de propriedades. (#8361)
 - Ao pular para campos de formulário com navegação rápida no Modo de Navegação, o campo inteiro do formulário agora é anunciado, e não apenas a primeira linha. (#9388)
 - O NVDA não ficará mais em silêncio após sair do aplicativo Email do Windows 10. (#9341)
 - O NVDA não falha mais ao iniciar quando as configurações regionais dos usuários estão definidas para uma localidade desconhecida para o NVDA, como Inglês (Holanda). (#8726)
@@ -251,7 +251,7 @@ Essas alterações são necessárias para garantir melhor compatibilidade do có
 Por favor, consulte a lista de alterações mais abaixo para obter mais detalhes sobre isso e como os complementos agora são melhor versionados.
 
 == Novas Características ==
-- Novas tabelas braile: Africâner, Árabe braille informático de 8 pontos, Árabe grau 2, Espanhol grau 2. (#4435, #9186)
+- Novas tabelas braille: Africâner, Árabe braille informático de 8 pontos, Árabe grau 2, Espanhol grau 2. (#4435, #9186)
 - Adicionado uma opção à configurações do mouse do NVDA para fazer com que o NVDA lide com situações em que o mouse é controlado por outro aplicativo. (#8452)
  - Isso permitirá que o NVDA rastreie o mouse quando um sistema for controlado remotamente usando o TeamViewer ou outro software de controle remoto.
 - Adicionado o parâmetro de linha de comando `--enable-start-on-logon` para permitir a configuração se as instalações silenciosas do NVDA configuram o NVDA para iniciar no logon do Windows ou não. Especifique true ""[verdadeiro]"" para iniciar no logon ou false ""[falso]"" para não iniciar no logon. Se o argumento --enable-start-on-logon não for especificado, o NVDA iniciará no logon, a menos que já tenha sido configurado para não fazer isso por uma instalação anterior. (#8574)

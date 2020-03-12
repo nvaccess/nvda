@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-31 00:10+1000\n"
-"PO-Revision-Date: 2020-01-17 10:26+0100\n"
+"POT-Creation-Date: 2020-02-28 00:10+1000\n"
+"PO-Revision-Date: 2020-02-13 08:38+0100\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -714,13 +714,13 @@ msgstr "Nepoznat brajični redak"
 #. Translators: Name of a Bluetooth serial communications port.
 #, python-brace-format
 msgid "Bluetooth Serial: {port} ({deviceName})"
-msgstr "Bluetooth serijalni priključak: {port} ({deviceName})"
+msgstr "Bluetooth serijski priključak: {port} ({deviceName})"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
 #, python-brace-format
 msgid "Serial: {portName}"
-msgstr "Serijalni priključak: {portName}"
+msgstr "serijski priključak: {portName}"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
@@ -2974,9 +2974,9 @@ msgid ""
 "to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
-"Tvoje konfiguracijska datoteka sadrži greške. Tvoja konfiguracija je "
+"Tvoja konfiguracijska datoteka sadrži greške. Tvoja konfiguracija je "
 "resetirana na tvorničke postavke.\n"
-"Više pojedinosti o greškama možeš pronaći u datoteci log zapisa."
+"Više pojedinosti o greškama možeš pronaći u datoteci zapisnika."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
 msgid "Configuration File Error"
@@ -8592,7 +8592,8 @@ msgstr "&Prikaži opcije izlaza pri izlasku iz NVDA programa"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
-msgstr "Sviraj &zvukove pri pokretanju ili izlasku iz NVDA programa"
+msgstr ""
+"Reproduciraj &zvučne signale pri pokretanju ili izlasku iz NVDA programa"
 
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
@@ -8825,7 +8826,7 @@ msgstr "Izgovori naredbene &tipke"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
 msgid "Play sound for &spelling errors while typing"
-msgstr "Sviraj zvuk za pravopi&sne greške tijekom tipkanja"
+msgstr "Reproduciraj zvuk za pravopi&sne greške tijekom tipkanja"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8859,7 +8860,7 @@ msgstr "Izvijesti o vrsti objekta kad miš &uđe u objekt"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
 msgid "&Play audio coordinates when mouse moves"
-msgstr "Sviraj zvučne &koordinate kad se miš pomiče"
+msgstr "Reproducirajzvučne &koordinate kad se miš pomiče"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -8994,7 +8995,7 @@ msgstr "Izvijesti o dinamičkim promjenama &sadržaja"
 #. Translators: This is the label for a combobox in the
 #. object presentation settings panel.
 msgid "Play a sound when &auto-suggestions appear"
-msgstr "Sviraj zvuk kad se pojave &automatski prijedlozi"
+msgstr "reproduciraj zvuk kad se pojave &automatski prijedlozi"
 
 #. Translators: This is the label for the browse mode settings panel.
 msgid "Browse Mode"
@@ -9367,8 +9368,8 @@ msgid ""
 "I understand that changing these settings may cause NVDA to function "
 "incorrectly."
 msgstr ""
-"Razumijem, da promjene na ovim postavkama mogu prouzročiti neispravno "
-"funkcioniranje NVDA čitača."
+"Razumijem da promjene ovih postavki mogu prouzročiti neispravno "
+"funkcioniranje NVDA čitača ekrana."
 
 #. Translators: This is the label for a button in the Advanced settings panel
 msgid "Restore defaults"
@@ -9756,7 +9757,7 @@ msgstr "%d znakova"
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
 msgid "%s unselected"
-msgstr "%s je neodabrano"
+msgstr "%s nije odabrano"
 
 #. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
 #, python-format
@@ -10731,12 +10732,12 @@ msgstr "Raspršeni sa crtama i bez oznaka podataka"
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Smoothed Lines"
-msgstr "Raspršeni s izgalđenim crtama"
+msgstr "Raspršeni s izglađenim crtama"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Smoothed Lines and No Data Markers"
-msgstr "Raspršeni s izgalđenim crtama i bez oznaka podataka"
+msgstr "Raspršeni s izglađenim crtama i bez oznaka podataka"
 
 #. Translators: A slice in a pie chart.
 msgid "slice"
@@ -11277,7 +11278,7 @@ msgid ""
 msgstr ""
 "Kad se pritisne jedanput, ova ćelija će se postaviti kao prvo zaglavlje "
 "redaka za svaku ćeliju ispod i desno od nje, unutar ovog područja. Kad se "
-"pritisne dvaput, uklonit će se trenutačno zaglavlje radaka za ovu ćeliju."
+"pritisne dvaput, uklonit će se trenutačno zaglavlje redaka za ovu ćeliju."
 
 #. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
 #, python-brace-format
@@ -11344,7 +11345,7 @@ msgstr "okomite granice osim vanjskih"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "continuous"
-msgstr "neogranićena"
+msgstr "neograničena"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "dashed"
@@ -11650,7 +11651,7 @@ msgstr "Premješteno ispod %s"
 
 #. Translators: a message reported when a paragraph is moved below a blank paragraph
 msgid "Moved below blank paragraph"
-msgstr "Premješteno ispod praznog odlomaka"
+msgstr "Premješteno ispod praznog odlomka"
 
 #. Translators: a message reported when a paragraph is moved above another paragraph
 #, python-format
@@ -11685,7 +11686,7 @@ msgstr "Prikaži znakove koji se ne ispisuju"
 
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
 msgid "Hide nonprinting characters"
-msgstr "Sakrij znakove koje se ne ispisuju"
+msgstr "Sakrij znakove koji se ne ispisuju"
 
 #. Translators: a measurement in Microsoft Word
 #, python-brace-format
