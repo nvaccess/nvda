@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-28 00:10+1000\n"
-"PO-Revision-Date: 2020-02-25 16:35+0900\n"
-"Last-Translator: DONGHEE.PARK <advck1123@gmail.com>\n"
+"POT-Creation-Date: 2020-03-06 00:10+1000\n"
+"PO-Revision-Date: 2020-03-05 22:05+0000\n"
+"Last-Translator: Stanley Chung <stanley@mail.com>\n"
 "Language-Team: NVDA Korean users and translations forum <advck1123@gmail."
 "com>\n"
 "Language: ko_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.13\n"
+"X-Generator: Poedit 2.3\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -804,6 +804,11 @@ msgstr "영어 (영국) 2종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr ""
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
 msgstr "영어 (통합) 점자 1종"
 
@@ -1039,13 +1044,18 @@ msgstr "마라타어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
-msgstr "네델란드어 (벨기에)"
+msgid "Dutch (Belgium) 6 dot"
+msgstr "네델란드어 (벨기에) 6점 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
-msgstr "네덜란드어 (네덜란드)"
+msgid "Dutch (Netherlands) 6 dot"
+msgstr "네델란드어 (네덜란드) 6점 점자"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr "네델란드어 8점 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4528,6 +4538,18 @@ msgid ""
 "your finger was last"
 msgstr "손가락을 다른 위치에 옮긴 경우 새 위치에 있는 객체나 내용을 알려줍니다"
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+#, fuzzy
+msgid "object has no location"
+msgstr "객체 위치 없음"
+
+#. Translators: Input help mode message for touch right click command.
+#, fuzzy
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr "현재 마우스 위치에서 오른쪽 마우스 버튼을 한 번 클릭합니다"
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "NVDA 환경 설정 프로필 대화상자를 표시합니다"
@@ -6327,6 +6349,8 @@ msgstr "업데이트를 확인하는 중 오류가 발생했습니다."
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "오류"
 
@@ -9492,6 +9516,11 @@ msgstr ""
 "\t\t\t과거에 사용자가 정의한 제스처는 모두 손실됩니다.\n"
 "\t\t\t이 작업을 취소 할 수 없습니다."
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+#, fuzzy
+msgid "Reset gestures"
+msgstr "제스처 설정"
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr "사용자 제스처 설정 저장 실패 - 읽기 전용 파일 시스템일 수 있음."
@@ -9505,6 +9534,7 @@ msgstr "수학 모드 종료"
 msgid "Math interaction not supported."
 msgstr "수학 모드 지원 안 됨."
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9533,7 +9563,8 @@ msgstr "%s 선택됨"
 msgid "%s selected"
 msgstr "%s 선택됨"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "글자 수: %d"
