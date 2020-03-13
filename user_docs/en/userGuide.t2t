@@ -896,10 +896,13 @@ To report any comments for the currently focused cell, press NVDA+alt+c.
 %kc:endInclude
 All comments for the worksheet can also be listed in the NVDA Elements List after pressing NVDA+f7.
 
-NVDA can also display a specific dialog for editing a certain comment.
+NVDA can also display a specific dialog for adding or editing a certain comment.
+NVDA overrwrites the native MS Excel comment editing region due to accessibility constraints, but the key stroke for displaying the dialog is inherited from MS Excel and therefore works also without NVDA running.
 %kc:beginInclude
-To edit a certain comment, in a focused cell, press shift+f2.
+To add or edit a certain comment, in a focused cell, press shift+f2.
 %kc:endInclude
+
+This key stroke does not appear and cannot be changed in NVDA's input gesture dialog.
 
 +++ Reading Protected Cells +++[ExcelReadingProtectedCells]
 If a workbook has been protected, it may not be possible to move focus to particular cells that have been locked for editing.
