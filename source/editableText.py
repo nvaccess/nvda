@@ -131,7 +131,7 @@ class EditableText(SelectableText, ScriptableObject):
 		return (False,newInfo)
 
 	def _caretScriptPostMovedHelper(self, speakUnit, gesture, info=None):
-		if isScriptWaiting() or eventHandler.isPendingEvents("gainFocus"):
+		if isScriptWaiting():
 			return
 		if not info:
 			try:

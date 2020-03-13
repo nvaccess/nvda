@@ -12,7 +12,7 @@ import controlTypes
 import speech
 import UIAHandler
 from . import IAccessible
-if UIAHandler.isUIAAvailable: from ..UIA import UIA
+from ..UIA import UIA
 from .. import NVDAObject
 from logHandler import log
 import watchdog

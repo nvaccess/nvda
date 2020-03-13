@@ -3,12 +3,57 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
-= 2019.3 =
+= 2020.1 =
 
 == New Features ==
-- In Command Prompt, PowerShell, and the Windows Subsystem for Linux on Windows 10 October 2018 Update and later:
- - Vastly improved performance and stability. (#9771)
- - Reporting of typed text that does not appear onscreen (such as passwords) can now be enabled via an option in NVDA's advanced settings panel. (#9649)
+- The currently selected item in listboxes is again presented in browse mode in Chrome, similar to NVDA 2019.1. (#10713)
+- You can now perform right mouse clicks on touch devices by doing a one finger tap and hold. (#3886)
+- Support for New braille displays: APH Chameleon 20, APH Mantis Q40, HumanWare BrailleOne, BrailleNote Touch v2, and NLS eReader. (#10830)
+
+
+== Changes ==
+- NVDA will prevent the system from locking or going to sleep when in say all. (#10643)
+- Support for out-of-process iframes in Mozilla Firefox. (#10707)
+- Updated liblouis braille translator to version 3.12. (#10161)
+- In Visual Studio Code Insiders, browse mode is now off by default as in Visual Studio Code stable. (#10858)
+
+
+== Bug Fixes ==
+- Fixed NVDA not announcing Unicode minus symbol (U+2212). (#10633)
+- When installing add-on from add-ons manager, names of files and folders in the browse window are no longer reported twice. (#10620, #2395)
+- In Firefox, when loading Mastodon with the advanced web interface enabled, all timelines now render correctly in browse mode. (#10776)
+- In browse mode, NVDA now reports "not checked" for unchecked check boxes where it sometimes didn't previously. (#10781)
+- ARIA switch controls no longer report confusing information such as "not pressed checked" or "pressed checked". (#9187)
+- SAPI4 voices should no longer refuse to speak certain text. (#10792)
+- NVDA can again read and interact with math equations in Microsoft Word. (#10803)
+- NVDA will again announce text being unselected in browse mode if pressing an arrow key while text is selected. (#10731).
+- NVDA no longer exits if there is an error initializing eSpeak. (#10607)
+
+
+== Changes for Developers ==
+- Developer documentation is now build using sphinx. (#9840)
+- Several speech functions have been split into two. (#10593)
+  The speakX version remains, but now depends on a getXSpeech function which returns a speech sequence.
+  - speakObjectProperties now relies on getObjectPropertiesSpeech
+  - speakObject now relies on getObjectSpeech
+  - speakTextInfo now relies on getTextInfoSpeech
+  - speakWithoutPauses has been converted into a class, and refactored, but should not break compatibility.
+  - getSpeechForSpelling is deprecated (though still available) use getSpellingSpeech instead.
+  Private changes that should not affect addon developers:
+  - _speakPlaceholderIfEmpty is now _getPlaceholderSpeechIfTextEmpty
+  - _speakTextInfo_addMath is now _extendSpeechSequence_addMathForTextInfo
+- Speech 'reason' has been converted to an Enum, see controlTypes.OutputReason class. (#10703)
+  - Module level 'REASON_*' constants are deprecated.
+- Compiling NVDA dependencies now requires Visual Studio 2019 (16.2 or newer). (#10169)
+- Updated SCons to version 3.1.1. (#10169)
+
+
+= 2019.3 =
+NVDA 2019.3 is a very significant release containing many under-the-hood changes including the upgrade of Python 2 to Python 3, and a major re-write of NVDA's speech subsystem.
+Although these changes do break compatibility with older NVDA add-ons, the upgrade to Python 3 is necessary for security, and the changes to speech allow for  some exciting innovations in the near future.
+ Other highlights in this release include 64 bit support for Java VMs, Screen Curtain and Focus Highlight functionality, support for more braille displays and a new Braille viewer, and many many other bug fixes.
+
+== New Features ==
 - The accuracy of the move mouse to navigator object command has been improved in text fields in Java applications. (#10157)
 - Added support for  the following Handy Tech Braille displays (#8955):
  - Basic Braille Plus 40
@@ -21,13 +66,13 @@ What's New in NVDA
 - In Internet Explorer, Google Chrome and Mozilla Firefox, You can now navigate by article and grouping using quick navigation scripts. These scripts are unbound by default and can be assigned in the Input Gestures dialog when the dialog is opened from a browse mode document. (#9485, #9227)
  - Figures are also reported. They are considered objects and therefore navigable with the o quick navigation key.
 - In Internet Explorer, Google Chrome and Mozilla Firefox, article elements are now reported with object navigation, and optionally in browse mode if turned on in Document Formatting settings. (#10424)
-- Support for out-of-process iframes in Mozilla Firefox. (#9672)
 - Added screen curtain, which when enabled, makes the whole screen black on Windows 8 and later. (#7857)
  - Added a script to enable screen curtain (until next restart with one press, or always while NVDA is running with two presses), no default gesture is assigned.
  - Can be enabled and configured via the 'vision' category in NVDA's settings dialog.
 - Added screen highlight functionality to NVDA. (#971, #9064)
  - Highlighting of the focus, navigator object, and browse mode caret position can be enabled and configured via the 'vision' category in NVDA's settings dialog.
  - Note: This feature is incompatible with the focus highlight add-on, however, the add-on can still be used while the built-in highlighter is disabled.
+- Added Braille Viewer tool, allows viewing braille output via an on-screen window. (#7788)
 
 
 == Changes ==
@@ -44,6 +89,8 @@ What's New in NVDA
 - Updated Unicode Common Locale Data Repository emoji annotations to version 36.0. (#10426)
 - When focussing a grouping in browse mode, the description is now also read. (#10095)
 - The Java Access Bridge is now included with NVDA to enable access to Java applications, including for 64 bit Java VMs. (#7724)
+- If the Java Access Bridge is not enabled for the user, NVDA automatically enables it at NVDA startup. (#7952)
+- Updated eSpeak-NG to 1.51-dev, commit ca65812ac6019926f2fbd7f12c92d7edd3701e0c. (#10581)
 
 
 == Bug Fixes ==
@@ -72,6 +119,12 @@ What's New in NVDA
 - Some rare braille translation issues and errors with liblouis have been resolved. (#9982)
 - Java applications started before NVDA are now accessible without the need to restart the Java app. (#10296)
 - In Mozilla Firefox, when the focused element becomes marked as current (aria-current), this change is no longer spoken multiple times. (#8960)
+- NVDA will now treat certain composit unicode characters such as e-acute as one single character when moving through text. (#10550)
+- Spring Tool Suite Version 4 is now supported. (#10001)
+- Don't double speak name when aria-labelledby relation target is an inner element. (#10552)
+- On Windows 10 version 1607 and later, typed characters from Braille keyboards are spoken in more situations. (#10569)
+- When changing the audio output device, tones played by NVDA will now play through the newly selected device. (#2167)
+- In Mozilla Firefox, moving focus in browse mode is faster. This makes moving the cursor in browse mode more responsive in many cases. (#10584)
 
 
 == Changes for Developers ==

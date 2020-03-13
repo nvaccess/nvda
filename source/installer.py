@@ -155,7 +155,7 @@ def removeOldLibFiles(destPath, rebootOK=False):
 	"""
 	Removes library files from previous versions of NVDA.
 	@param destPath: The path where NVDA is installed.
-	@ type destPath: string
+	@type destPath: string
 	@param rebootOK: If true then files can be removed on next reboot if trying to do so now fails.
 	@type rebootOK: boolean
 	"""

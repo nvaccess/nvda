@@ -1,8 +1,10 @@
-#appModules/winword.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# -*- coding: UTF-8 -*-
+# NVDAObjects/window/winword.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
 
 import ctypes
 import time
@@ -444,7 +446,8 @@ class WinWordCollectionQuicknavIterator(object):
 		"""
 		See L{QuickNavItemIterator} for itemType, document and direction definitions.
 		@param rangeObj: a Microsoft Word range object where the collection should be fetched from.
-		@ param includeCurrent: if true then any item at the initial position will be also emitted rather than just further ones. 
+		@param includeCurrent: if true then any item at the initial position will be also emitted
+			rather than just further ones.
 		"""
 		self.document=document
 		self.itemType=itemType
@@ -1040,6 +1043,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		try:
 			return mathType.getMathMl(obj)
 		except:
+			log.debugWarning("Error fetching math with mathType", exc_info=True)
 			raise LookupError("Couldn't get MathML from MathType")
 
 class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
