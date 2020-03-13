@@ -13,6 +13,8 @@ import os
 import tempfile
 import shutil
 import itertools
+from typing import Optional
+
 import shellapi
 import globalVars
 import languageHandler
@@ -29,42 +31,89 @@ def _getWSH():
 	global _wsh
 	if not _wsh:
 		import comtypes.client
-		_wsh=comtypes.client.CreateObject("wScript.Shell",dynamic=True)
+		_wsh=comtypes.client.CreateObject("wScript.Shell", dynamic=True)
 	return _wsh
 
 defaultStartMenuFolder=versionInfo.name
-with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, "SOFTWARE\Microsoft\Windows\CurrentVersion") as k: 
+with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows\CurrentVersion") as k:
 	programFilesPath=winreg.QueryValueEx(k, "ProgramFilesDir")[0] 
 defaultInstallPath=os.path.join(programFilesPath, versionInfo.name)
 
-def createShortcut(path,targetPath=None,arguments=None,iconLocation=None,workingDirectory=None,hotkey=None,prependSpecialFolder=None):
-	# #7696: The shortcut is only physically saved to disk if it does not already exist, or one or more properties have changed. 
-	wsh=_getWSH()
+
+def _getIShellLink(path):
+	global _shell
+	if not _shell:
+		import comtypes
+		_shell = comtypes.client.CreateObject("shell.application")
+
+	shortcutExists = os.path.isfile(path)
+	if not shortcutExists:
+		# we need an empty file to create a shortcut.
+		open(path, 'a').close()
+
+	folderPath = os.path.dirname(path)
+	objFolder = _shell.NameSpace(folderPath)
+	if objFolder is None:
+		raise RuntimeError(f"Unable to set objFolder at path: {folderPath}")
+	fileName = os.path.basename(path)
+	folderItem = objFolder.ParseName(fileName)
+	if folderItem is None:
+		raise RuntimeError(f"Unable to get folderItem {fileName} at path: {folderPath}")
+	iShellLink = folderItem.GetLink
+	if iShellLink is None:
+		raise RuntimeError(f"Unable to get link for {fileName} at path: {folderPath}")
+	return iShellLink
+
+
+_shell = None
+
+
+def createShortcut(
+		path,
+		targetPath=None,
+		arguments=None,
+		workingDirectory=None,
+		hotkey: Optional[int] = None,
+		prependSpecialFolder=None
+) -> None:
+	"""
+	:param path:
+	:param targetPath:
+	:param arguments:
+	:param workingDirectory:
+	:param hotkey: use createShortcutHotKey to create this value.
+	:param prependSpecialFolder:
+	"""
+	log.warning(f"creating shortcut for: {path}, hotkey: {hotkey}, log level: {log.getEffectiveLevel()}")
+	# #7696: Only saved to disk if it does not already exist, or one or more properties have changed. This is
+	# important if Controlled folder Access is enabled which won't allow saving the file.
+	wsh = _getWSH()
 	if prependSpecialFolder:
-		specialPath=wsh.SpecialFolders(prependSpecialFolder)
-		path=os.path.join(specialPath,path)
+		specialPath = wsh.SpecialFolders(prependSpecialFolder)
+		path = os.path.join(specialPath, path)
 	if not os.path.isdir(os.path.dirname(path)):
 		os.makedirs(os.path.dirname(path))
-	shortcutExists=os.path.isfile(path)
-	short=wsh.CreateShortcut(path)
-	needsSave=not shortcutExists
-	if short.targetPath!=targetPath:
-		short.TargetPath=targetPath
-		needsSave=True
-	if arguments and short.arguments!=arguments:
-		short.arguments=arguments
-		needsSave=True
-	if not shortcutExists and hotkey:
-		short.Hotkey=hotkey
-		needsSave=True
-	if iconLocation and short.iconLocation!=iconLocation:
-		short.IconLocation=iconLocation
-		needsSave=True
-	if workingDirectory and short.workingDirectory!=workingDirectory:
-		short.workingDirectory=workingDirectory
-		needsSave=True
+	shortcutExists = os.path.isfile(path)
+
+	shellLink = _getIShellLink(path)
+
+	needsSave = not shortcutExists
+	if shellLink.Path != targetPath:
+		shellLink.Path = targetPath
+		needsSave = True
+	if arguments and shellLink.Arguments != arguments:
+		shellLink.Arguments = arguments
+		needsSave = True
+	if not shortcutExists and hotkey is not None:
+		log.debug(f"assigning new hotkey: {hotkey}")
+		shellLink.Hotkey = hotkey
+		needsSave = True
+	if workingDirectory and shellLink.WorkingDirectory != workingDirectory:
+		shellLink.WorkingDirectory = workingDirectory
+		needsSave = True
 	if needsSave:
-		short.Save()
+		shellLink.Save()
+
 
 def getStartMenuFolder(noDefault=False):
 	try:
@@ -249,30 +298,78 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 		config._setStartOnLogonScreen(startOnLogonScreen)
 	NVDAExe=os.path.join(installDir,u"nvda.exe")
 	slaveExe=os.path.join(installDir,u"nvda_slave.exe")
+	try:
+		hotkeyCode = 0
+		_updateShortcuts(shouldCreateDesktopShortcut, hotkeyCode, NVDAExe, installDir, slaveExe, startMenuFolder)
+	except RuntimeError:
+		log.error("Unable to create shortcuts.", exc_info=True)
+	registerAddonFileAssociation(slaveExe)
+
+
+def _updateShortcuts(
+		shouldCreateDesktopShortcut: bool,
+		hotkeyCode: int,
+		NVDAExe: str,
+		installDir: str,
+		slaveExe: str,
+		startMenuFolder: str,
+):
 	if shouldCreateDesktopShortcut:
 		# #8320: -r|--replace is now the default. Nevertheless, keep creating
 		# the shortcut with the now superfluous argument in case a downgrade of
 		# NVDA is later performed.
-		# Translators: The shortcut key used to start NVDA.
-		# This should normally be left as is, but might be changed for some locales
-		# if the default key causes problems for the normal locale keyboard layout.
-		# The key must be formatted as described in this article:
-		# http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
-		createShortcut(u"NVDA.lnk",targetPath=slaveExe,arguments="launchNVDA -r",hotkey=_("CTRL+ALT+N"),workingDirectory=installDir,prependSpecialFolder="AllUsersDesktop")
-	createShortcut(os.path.join(startMenuFolder,"NVDA.lnk"),targetPath=NVDAExe,workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
-	# Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
-	createShortcut(os.path.join(startMenuFolder,_("NVDA web site")+".lnk"),targetPath=versionInfo.url,prependSpecialFolder="AllUsersPrograms")
-	# Translators: A label for a shortcut item in start menu to uninstall NVDA from the computer.
-	createShortcut(os.path.join(startMenuFolder,_("Uninstall NVDA")+".lnk"),targetPath=os.path.join(installDir,"uninstall.exe"),workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
-	# Translators: A label for a shortcut item in start menu to open current user's NVDA configuration directory.
-	createShortcut(os.path.join(startMenuFolder,_("Explore NVDA user configuration directory")+".lnk"),targetPath=slaveExe,arguments="explore_userConfigPath",workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
+		createShortcut(
+			u"NVDA.lnk",
+			targetPath=slaveExe,
+			arguments="launchNVDA -r",
+			workingDirectory=installDir,
+			prependSpecialFolder="AllUsersDesktop"
+		)
+	createShortcut(
+		os.path.join(startMenuFolder, "NVDA.lnk"),
+		targetPath=NVDAExe,
+		# Use startMenuFolder shortcut for hotkey because it is always created. To opt-out of the hotkey creation in
+		# the installer GUI
+		hotkey=hotkeyCode,
+		workingDirectory=installDir,
+		prependSpecialFolder="AllUsersPrograms"
+	)
+	createShortcut(
+		# Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
+		os.path.join(startMenuFolder, _("NVDA web site") + ".lnk"),
+		targetPath=versionInfo.url,
+		prependSpecialFolder="AllUsersPrograms"
+	)
+	createShortcut(
+		# Translators: A label for a shortcut item in start menu to uninstall NVDA from the computer.
+		os.path.join(startMenuFolder, _("Uninstall NVDA") + ".lnk"),
+		targetPath=os.path.join(installDir, "uninstall.exe"),
+		workingDirectory=installDir,
+		prependSpecialFolder="AllUsersPrograms"
+	)
+	createShortcut(
+		# Translators: A label for a shortcut item in start menu to open current user's NVDA configuration directory.
+		os.path.join(startMenuFolder, _("Explore NVDA user configuration directory") + ".lnk"),
+		targetPath=slaveExe,
+		arguments="explore_userConfigPath",
+		workingDirectory=installDir,
+		prependSpecialFolder="AllUsersPrograms"
+	)
 	# Translators: The label of the NVDA Documentation menu in the Start Menu.
-	docFolder=os.path.join(startMenuFolder,_("Documentation"))
-	# Translators: The label of the Start Menu item to open the Commands Quick Reference document.
-	createShortcut(os.path.join(docFolder,_("Commands Quick Reference")+".lnk"),targetPath=getDocFilePath("keyCommands.html",installDir),prependSpecialFolder="AllUsersPrograms")
-	# Translators: A label for a shortcut in start menu to open NVDA user guide.
-	createShortcut(os.path.join(docFolder,_("User Guide")+".lnk"),targetPath=getDocFilePath("userGuide.html",installDir),prependSpecialFolder="AllUsersPrograms")
-	registerAddonFileAssociation(slaveExe)
+	docFolder = os.path.join(startMenuFolder, _("Documentation"))
+	createShortcut(
+		# Translators: The label of the Start Menu item to open the Commands Quick Reference document.
+		os.path.join(docFolder, _("Commands Quick Reference") + ".lnk"),
+		targetPath=getDocFilePath("keyCommands.html", installDir),
+		prependSpecialFolder="AllUsersPrograms"
+	)
+	createShortcut(
+		# Translators: A label for a shortcut in start menu to open NVDA user guide.
+		os.path.join(docFolder, _("User Guide") + ".lnk"),
+		targetPath=getDocFilePath("userGuide.html", installDir),
+		prependSpecialFolder="AllUsersPrograms"
+	)
+
 
 def isDesktopShortcutInstalled():
 	wsh=_getWSH()
