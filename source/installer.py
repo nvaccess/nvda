@@ -283,7 +283,15 @@ uninstallerRegInfo={
 	"URLInfoAbout":versionInfo.url,
 }
 
-def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,startOnLogonScreen,configInLocalAppData=False):
+
+def registerInstallation(
+		installDir,
+		startMenuFolder,
+		shouldCreateDesktopShortcut,
+		startOnLogonScreen,
+		hotkeyCode,
+		configInLocalAppData=False
+):
 	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\NVDA",0,winreg.KEY_WRITE) as k:
 		for name,value in uninstallerRegInfo.items(): 
 			winreg.SetValueEx(k,name,None,winreg.REG_SZ,value.format(installDir=installDir))
@@ -517,7 +525,8 @@ def tryCopyFile(sourceFilePath,destFilePath):
 			errorCode=GetLastError()
 			raise OSError("Unable to copy file %s to %s, error %d"%(sourceFilePath,destFilePath,errorCode))
 
-def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
+
+def install(shouldCreateDesktopShortcut=True, shouldRunAtLogon=True, hotkeyCode=0):
 	prevInstallPath=getInstallPath(noDefault=True)
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, config.NVDA_REGKEY)
@@ -548,7 +557,14 @@ def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 			break
 	else:
 		raise RuntimeError("No available executable to use as nvda.exe")
-	registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,shouldRunAtLogon,configInLocalAppData)
+	registerInstallation(
+		installDir,
+		startMenuFolder,
+		shouldCreateDesktopShortcut,
+		shouldRunAtLogon,
+		hotkeyCode,
+		configInLocalAppData
+	)
 	removeOldLibFiles(installDir,rebootOK=True)
 	COMRegistrationFixes.fixCOMRegistrations()
 

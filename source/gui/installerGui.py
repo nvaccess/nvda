@@ -6,8 +6,11 @@
 
 import os
 import ctypes
+from enum import IntEnum
+from typing import Optional
 
 import buildVersion
+import keyboardHandler
 import shellapi
 import winUser
 import wx
@@ -17,11 +20,21 @@ import versionInfo
 import installer
 from logHandler import log
 import gui
-from gui import guiHelper
+from gui import guiHelper, ExpandoTextCtrl
+import inputCore
 from gui.dpiScalingHelper import DpiScalingHelperMixin
 import tones
 
-def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,silent=False,startAfterInstall=True):
+
+def doInstall(
+		createDesktopShortcut,
+		startOnLogon,
+		copyPortableConfig,
+		isUpdate,
+		silent=False,
+		startAfterInstall=True,
+		hotkeyCode: Optional[int] = 0
+):
 	progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
 		# Translators: The title of the dialog presented while NVDA is being updated.
 		_("Updating NVDA") if isUpdate
@@ -32,7 +45,17 @@ def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,sil
 		# Translators: The message displayed while NVDA is being installed.
 		else _("Please wait while NVDA is being installed"))
 	try:
-		res=config.execElevated(config.SLAVE_FILENAME,["install",str(int(createDesktopShortcut)),str(int(startOnLogon))],wait=True,handleAlreadyElevated=True)
+		res = config.execElevated(
+			config.SLAVE_FILENAME,
+			[
+				"install",
+				str(int(createDesktopShortcut)),
+				str(int(startOnLogon)),
+				str(int(hotkeyCode)),
+			],
+			wait=True,
+			handleAlreadyElevated=True
+		)
 		if res==2: raise installer.RetriableFailure
 		if copyPortableConfig:
 			installedUserConfigPath=config.getInstalledUserConfigPath()
@@ -165,11 +188,44 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 			self.createDesktopShortcutCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=keepShortCutText))
 		else:
 			# Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
-			# If the shortcut key has been changed for this locale,
-			# this change must also be reflected here.
-			createShortcutText = _("Create &desktop icon and shortcut key (control+alt+n)")
+			# Shortcuts defaults can no longer be set based on locale, instead they are set by the user.
+			createShortcutText = _("Create &desktop icon")
 			self.createDesktopShortcutCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=createShortcutText))
-		self.createDesktopShortcutCheckbox.Value = shortcutIsPrevInstalled if self.isUpdate else True 
+		self.createDesktopShortcutCheckbox.Value = shortcutIsPrevInstalled if self.isUpdate else True
+
+		# Translators: A label for the grouping to create a shortcut key in the install NVDA dialog.
+		shortcutGroupLabel = _("Shortcut key")
+		shortcutGroup = guiHelper.BoxSizerHelper(
+			parent=self,
+			sizer=wx.StaticBoxSizer(orient=wx.HORIZONTAL, parent=self, label=shortcutGroupLabel)
+		)
+		optionsSizer.addItem(shortcutGroup)
+
+		self.shortcutHotkeyCtrl: ExpandoTextCtrl = shortcutGroup.addItem(ExpandoTextCtrl(
+			self,
+			size=(self.scaleSize(250), -1),
+			value="",  # todo: fetch current shortcut value??
+			style=wx.TE_READONLY
+		))
+		self.hotkeycode = 0  # todo: set to current shortcut/hotkey value.
+
+		self.shortcutHotkeyCtrl.Bind(wx.EVT_SET_FOCUS, self._onSetFocusHotkeyChar)
+		self.shortcutHotkeyCtrl.Bind(wx.EVT_KILL_FOCUS, self._onKillFocusHotkeyChar)
+		self._listenForHotKeys = False
+		changeShortcutButton = wx.Button(
+			self,
+			# Translators: This is the label for the button used to change the shortcut for NVDA,
+			# It appears in the context of the install NVDA dialog.
+			label=_("Change...")
+		)
+
+		shortcutGroup.addItem(
+			guiHelper.associateElements(
+				self.shortcutHotkeyCtrl,
+				changeShortcutButton
+			)
+		)
+		changeShortcutButton.Bind(wx.EVT_BUTTON, self._onChangeShortcut)
 		
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		createPortableText = _("Copy &portable configuration to current user account")
@@ -204,9 +260,96 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 		mainSizer.Fit(self)
 		self.CentreOnScreen()
 
+	def _onChangeShortcut(self, evt):
+		self._listenForHotKeys = True
+		self.shortcutHotkeyCtrl.SetValue("")
+		self.shortcutHotkeyCtrl.SetFocus()
+
+	def _onKillFocusHotkeyChar(self, evt):
+		"""Focus can be lost by clicking elsewhere, cancel listen for hotkeys"""
+		evt.Skip()
+		log.debug("kill focus")
+		self._listenForHotKeys = False
+		inputCore.manager._captureFunc = None
+
+	def _onSetFocusHotkeyChar(self, evt: wx.FocusEvent):
+		evt.Skip()
+		log.debug("got focus")
+		if inputCore.manager._captureFunc or not self._listenForHotKeys:
+			log.debug(f"Not adding capture func: listenForHotKeys: {self._listenForHotKeys}")
+			return
+
+		def addGestureCaptor(gesture):
+			log.debug(f"Got gesture: {gesture}")
+			if gesture.isModifier:
+				return False
+			self._listenForHotKeys = False
+			inputCore.manager._captureFunc = None  # one capture per button press, don't want to get stuck in control
+			wx.CallAfter(self._showGesture, gesture)
+			return False
+		inputCore.manager._captureFunc = addGestureCaptor
+
+	@staticmethod
+	def _createHotkey(gesture: keyboardHandler.KeyboardInputGesture):
+		# From https://docs.microsoft.com/en-gb/windows/win32/shell/shelllinkobject-hotkey
+		# 	The link's keyboard shortcut. The virtual keyboard shortcut is in the low-order byte, and the modifier flags
+		# 	are in the high-order byte. Use hotKeyModifiers enum for modifiers
+		# See also the following link which contains a full explanation of the LNK file format, including limitations
+		# for the hotkey field:
+		# https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-shllink/16cb4ca1-9339-4d0c-a68d-bf1d6cc0f943?redirectedfrom=MSDN
+		class hotKeyModifier(IntEnum):
+			NONE = 0
+			SHIFT = 1
+			CTRL = 2
+			ALT = 4
+			Extended = 8
+
+			@classmethod
+			def fromVkey(cls, vkey: int):
+				vkeyMap = {
+					winUser.VK_LCONTROL: cls.CTRL,
+					winUser.VK_RCONTROL: cls.CTRL,
+					winUser.VK_CONTROL: cls.CTRL,
+					winUser.VK_LSHIFT: cls.SHIFT,
+					winUser.VK_RSHIFT: cls.SHIFT,
+					winUser.VK_SHIFT: cls.SHIFT,
+					winUser.VK_LMENU: cls.ALT,
+					winUser.VK_RMENU: cls.ALT,
+					winUser.VK_MENU: cls.ALT,
+				}
+				return vkeyMap.get(vkey, cls.NONE)
+
+		lowOrderByte = gesture.vkCode
+		log.debug(f"Low order (vkey): {lowOrderByte}")
+		highOrderByte = 0
+		for modVK, extended in gesture.modifiers:
+			mod = hotKeyModifier.fromVkey(modVK)
+			log.debug(f"High order (modifier key): {mod}, from: {modVK}")
+			highOrderByte |= mod.value
+		return int.from_bytes(
+			bytes(bytearray([lowOrderByte, highOrderByte])),
+			byteorder="little",
+			signed=False
+		)
+
+	def _showGesture(self, gesture: keyboardHandler.KeyboardInputGesture):
+		log.debug(f"show gesture: {gesture.normalizedIdentifiers}")
+		if not isinstance(gesture, keyboardHandler.KeyboardInputGesture):
+			log.debugWarning("Not a KeyboardInputGesture, discarding.")
+			return
+		self.shortcutHotkeyCtrl.SetValue(gesture.displayName)
+		self.hotkeycode = self._createHotkey(gesture)
+		wx.CallAfter(lambda: self.shortcutHotkeyCtrl.SelectAll())
+
 	def onInstall(self, evt):
 		self.Hide()
-		doInstall(self.createDesktopShortcutCheckbox.Value,self.startOnLogonCheckbox.Value,self.copyPortableConfigCheckbox.Value,self.isUpdate)
+		doInstall(
+			self.createDesktopShortcutCheckbox.Value,
+			self.startOnLogonCheckbox.Value,
+			self.copyPortableConfigCheckbox.Value,
+			self.isUpdate,
+			hotkeyCode=self.hotkeycode
+		)
 		self.Destroy()
 
 	def onCancel(self, evt):

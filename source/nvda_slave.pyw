@@ -44,7 +44,11 @@ def main():
 
 	try:
 		if action=="install":
-			installer.install(bool(int(args[0])),bool(int(args[1])))
+			installer.install(
+				shouldCreateDesktopShortcut=bool(int(args[0])),
+				shouldRunAtLogon=bool(int(args[1])),
+				hotkeyCode=int(args[2])
+			)
 		elif action=="unregisterInstall":
 			import installer
 			installer.unregisterInstallation()
