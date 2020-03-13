@@ -114,7 +114,7 @@ def main():
 
 if __name__ == "__main__":
 	logHandler.initialize(True)
-	logHandler.log.setLevel(0)
+	logHandler.log.setLevel(10)
 	import languageHandler
 	languageHandler.setLanguage("Windows")
 	main()
