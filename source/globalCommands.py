@@ -1555,7 +1555,7 @@ class GlobalCommands(ScriptableObject):
 		if obj:
 			sayAllHandler.readObjects(obj)
 	# Translators: Input help mode message for read foreground object command (usually the foreground window).
-	script_speakForeground.__doc__ = _("Speaks the current foreground object")
+	script_speakForeground.__doc__ = _("Reads all controls in the active window")
 	script_speakForeground.category=SCRCAT_FOCUS
 
 	def script_test_navigatorDisplayModelText(self,gesture):
