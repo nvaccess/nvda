@@ -146,10 +146,11 @@ class _TextReader(object):
 			return
 
 		# Copy the speakTextInfoState so that speak callbackCommand
-		# and its associated callback are using a copy isolated to this specific line. 
-		state=self.speakTextInfoState.copy()
+		# and its associated callback are using a copy isolated to this specific line.
+		state = self.speakTextInfoState.copy()
 		# Call lineReached when we start speaking this line.
 		# lineReached will move the cursor and trigger reading of the next line.
+
 		def _onLineReached(obj=self.reader.obj, state=state):
 			self.lineReached(obj, bookmark, state)
 
