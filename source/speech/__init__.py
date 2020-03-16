@@ -7,6 +7,7 @@
 """High-level functions to speak information.
 """ 
 
+import collections
 import itertools
 import weakref
 import unicodedata
@@ -695,6 +696,13 @@ def speak(  # noqa: C901
 	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
 	@param priority: The speech priority.
 	"""
+	# speechSequence may be a generator.
+	#  As speechViewer needs to iterate over it 
+	# before it is iterated over for actual speaking,
+	# Or similarly it may be iterated over for logging bad sequence types, 
+	# Flatten it into a list first.
+	if isinstance(speechSequence,collections.abc.Generator):
+		speechSequence = [i for i in speechSequence]
 	types.logBadSequenceTypes(speechSequence)
 	if priority is None:
 		priority = Spri.NORMAL
