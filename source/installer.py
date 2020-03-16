@@ -250,13 +250,13 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 	NVDAExe=os.path.join(installDir,u"nvda.exe")
 	slaveExe=os.path.join(installDir,u"nvda_slave.exe")
 	try:
-		_updateShotcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe, startMenuFolder)
+		_updateShortcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe, startMenuFolder)
 	except Exception:
 		log.error("Error while creating shortcuts", exc_info=True)
 	registerAddonFileAssociation(slaveExe)
 
 
-def _updateShotcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe, startMenuFolder) -> None:
+def _updateShortcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe, startMenuFolder) -> None:
 	if shouldCreateDesktopShortcut:
 		# Translators: The shortcut key used to start NVDA.
 		# This should normally be left as is, but might be changed for some locales
