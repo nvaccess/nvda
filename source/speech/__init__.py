@@ -1061,6 +1061,10 @@ def speakTextInfo(
 		onlyInitialFields,
 		suppressBlanks
 	)
+
+	if reason == controlTypes.REASON_SAYALL:
+		return _speakWithoutPauses.speakWithoutPauses(speechSequences)
+
 	speechSequences = GeneratorWithReturn(speechSequences)
 	for seq in speechSequences:
 		speak(seq, priority=priority)
@@ -1429,13 +1433,6 @@ def getTextInfoSpeech(  # noqa: C901
 
 	if reason == controlTypes.REASON_ONLYCACHE or not speechSequence:
 		return False
-
-	if reason == controlTypes.REASON_SAYALL:
-		withoutPauses = GeneratorWithReturn(
-			_speakWithoutPauses.getSpeechWithoutPauses(speechSequence)
-		)
-		yield from withoutPauses
-		return withoutPauses.returnValue
 
 	yield speechSequence
 	return True
