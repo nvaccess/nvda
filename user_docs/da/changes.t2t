@@ -1,14 +1,15 @@
 Nyheder i NVDA
 
 
+
 %!includeconf: ../changes.t2tconf
 
 = 2019.3 =
+NVDA 2019.3 er en meget markant opgradering, da den indeholder mange ændringer under motorhjelmen, herunder omskrivningen fra Python 2 til Python 3 og en omskrivning af NVDAs måde at behandle tale.
+Selvom denne ændring kan forårsage at nogle tilføjelser derfor ikke fungerer, så var denne ændring nødvendig på grund af sikkerhedsmæssige årsager. Denne opgradering af Python muliggør også nogle spændende innovationer i fremtiden i forhold til talesynteser.
+Af andre væsentlige ændringer i denne udgave af NVDA kan nævnes 64 bit support for Java VM, et skærmtæppe og mulighed for at fremhæve positionen af fokus på skærmen, understøttelse for flere punktdisplays og en ny viser for punktskrift og mange andre fejlrettelser.
 
 == Nye funktioner ==
-- I Kommandoprompt, PowerShell, og Windows Subsystem for Linux i Windows 10 version 1809 og nyere:
- - Markant forbedret stabilitet og ydeevne (#9771)
- - Rapportering af indtastet tekst, der ikke vises på skærmen (såsom adgangskoder) kan nu aktiveres i NVDAs indstillingspanel under "Avanceret". (#9649)
 - Nøjagtigheden af kommandoen der flytter musen til navigatorobjektet er forbedret i tekstfelter i Java-applikationer. (#10157)
 - Tilføjet understøttelse for følgende punktdisplays fra Handy Tech (#8955):
  - Basic Braille Plus 40

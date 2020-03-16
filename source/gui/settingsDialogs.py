@@ -3460,9 +3460,12 @@ class VisionProviderSubPanel_Wrapper(
 		return True
 
 	def _nonEnableableGUI(self, evt):
-		wx.MessageBox(
+		gui.messageBox(
 			# Translators: Shown when there is an error showing the GUI for a vision enhancement provider
 			_("Unable to configure user interface for Vision Enhancement Provider, it can not be enabled."),
+			# Translators: The title of the error dialog displayed when there is an error showing the GUI
+			# for a vision enhancement provider
+			_("Error"),
 			parent=self,
 		)
 		self._checkBox.SetValue(False)
@@ -4043,6 +4046,8 @@ class InputGesturesDialog(SettingsDialog):
 			
 			All of your user defined gestures, whether previously set or defined during this session, will be lost.
 			This cannot be undone."""),
+			# Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+			_("Reset gestures"),
 			style=wx.YES | wx.NO | wx.NO_DEFAULT
 		) != wx.YES:
 			return
