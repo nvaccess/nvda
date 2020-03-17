@@ -1063,6 +1063,8 @@ def speakTextInfo(
 	)
 
 	if reason == controlTypes.REASON_SAYALL:
+		# Deprecation warning: In 2021.1 speakTextInfo will no longer  send speech through speakWithoutPauses
+		# if reason is sayAll, as sayAllhandler does this manually now.
 		return _speakWithoutPauses.speakWithoutPauses(speechSequences)
 
 	speechSequences = GeneratorWithReturn(speechSequences)
