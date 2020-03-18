@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-28 00:10+1000\n"
-"PO-Revision-Date: 2020-03-05 16:11+0300\n"
+"POT-Creation-Date: 2020-03-06 00:10+1000\n"
+"PO-Revision-Date: 2020-03-09 12:25+0300\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
@@ -800,6 +800,11 @@ msgstr "İngilizce (B.K.) Derece 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr "İngilizce Kuzey Amerika Braille Bilgisayar Kodu"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
 msgstr "Birleşik İngilizce Braille kod derece 1"
 
@@ -1035,13 +1040,18 @@ msgstr "Marathi grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
-msgstr "Flamanca (Belçika)"
+msgid "Dutch (Belgium) 6 dot"
+msgstr "Felemenkçe (Belçika) 6 nokta"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
-msgstr "Flamanca (Hollanda) "
+msgid "Dutch (Netherlands) 6 dot"
+msgstr "Felemenkçe (Hollanda) 6 nokta"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr "Felemenkçe 8 nokta"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4542,6 +4552,18 @@ msgid ""
 "your finger was last"
 msgstr "Parmağınızın konumu değiştiğinde yeni nesne ve içeriği seslendirir"
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "nesnenin konumu yok"
+
+#. Translators: Input help mode message for touch right click command.
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr ""
+"Geçerli dokunma konumunda sağ fare düğmesini tıklatır. Bu genellikle bir "
+"bağlam menüsünü etkinleştirmek için kullanılır."
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "NVDA Konfigürasyon Profilleri iletişim kutusunu gösterir"
@@ -6350,6 +6372,8 @@ msgstr "Güncelleme kontrolünde hata."
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "Hata"
 
@@ -9550,6 +9574,10 @@ msgstr ""
 "tanımlı hareketler silinecek.\n"
 "\t\t\tBu geri alınamaz."
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "Hareketleri sıfırla"
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
@@ -9565,6 +9593,7 @@ msgstr "Matematiksel etkileşimden çık"
 msgid "Math interaction not supported."
 msgstr "Matematiksel etkileşim desteklenmiyor."
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9593,7 +9622,8 @@ msgstr "%s seçildi"
 msgid "%s selected"
 msgstr "%s seçildi"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d karakter"

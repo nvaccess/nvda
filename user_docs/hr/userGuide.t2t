@@ -473,15 +473,15 @@ Ako se miš na ekranu nalazi više lijevo ili desno, zvuk će se čuti više lij
 Ove značajke nisu standardno uključene u postavkama NVDA.
 Ako želite koristiti te značajke, možete ih konfigurirati u [postavkama Miša #MouseSettings], kategorija [NVDA Postavke #NVDASettings] u NVDA izborniku Postavke.
 
-Iako bi se za kretanje pomoću miša trebao koristiti miš ili trackpad, NVDA ima nekoliko prečaca povezanih uz miša:
+Iako bi se za kretanje pomoću miša trebao koristiti miš ili trackpad, NVDA ima neke prečace povezane uz miš:
 %kc:beginInclude
-|| Naziv | Tipka za stolna računala | Tipka za prijenosna računala | Opis |
-| Lijevi klik miša | numDijeljenje | NVDA+[ | Jednom pritišće lijevu tipku miša. Uobičajeni dvostruki klik se izvodi brzim dvostrukim pritiskom ove tipke |
-| Lijeva zaključana tipka miša | šift+numDijeljenje | NVDA+kontrol+[ | Zaključava lijevu tipku miša u pritisnutom stanju. Pritisnite ponovo da bi ste ju otpustili. Da biste povukli miša, pritisnite ovu tipku kako biste zaključali lijevu tipku miša u pritisnutom stanju i pomičite miša fizički ili koristite jednan od prečaca za micanje miša |
-| Desni klik miša | numMnoženje | NVDA+] | Jednom pritišće desnu tipku miša. |
-| Zaključana desna tipka miša | šift+numMnoženje | NVDA+kontrol+] | Zaključava desnu tipku miša u pritisnutom stanju. Pritisnite ponovo da biste je otpustili. Da biste povukli miša, pritisnite ovu tipku kako biste zaključali desnu tipku miša u pritisnutom stanju i pomičite miša fizički ili koristite jednan od prečaca za micanje miša |
-| Premjesti miša na trenutačni navigacijski objekt | NVDA+numDijeljenje | NVDA+šift+m | Premješta miša i pregledni kursor na mjesto trenutačnog navigacijskog objekta |
-| Premjesti se na objekta ispod miša | NVDA+numMnoženje | NVDA+šift+n | Postavlja navigacijski objekt na objekt koji se nalazi na poziciji miša |
+|| Naziv | Prečac za stolna računala | Prečac za prenosna računala | Dodir | Opis |
+| Lijeva tipka miša | Podijeljeno na numeričkoj tipkovnici | NVDA+[ | Nema | Pritišće lijevu tipku miša jedamput. Uobičajeni dvustruki pritisak postiže se pritiskom ove tipke dva puta brzo. |
+| Zaključavanje lijeve tipke miša | shift+Podijeljeno na numeričkoj tipkovnici | NVDA+control+[ | Nema | Zaključava lijevu tipku miša. Pritisnite opet za otpuštanje. Za premještanje miša, pritisnite ovu tipku kako biste zaključali miš i pomićite miš fizički ili ili koristite prečace za usmjeravanje miša |
+| Desna tipka miša | množenje na numeričkoj tipkovnici | NVDA+] | Dodirnite i držite | Jednokratan pritisak desne tipke miša U većini slučajeva koristi se za otvaranje kontekstnog izbornika na poziciji miša. |
+| Zaključavanje desne tipke miša | shift+numeričko množenje | NVDA+control+] | Nema | Zaključava desnu tipku miša. Pritisnite opet za otpuštanje. Kako biste premjestili miš, pritisnite ovu tipku i pomićite miš fizički ili koristite jedan od prečaca za premještavanje miša |
+| Premjesti miš na sljedeći objekt navigatora | NVDA+numeričko dijeljenje | NVDA+shift+m | nema | Premještava miš na sljedeći objekt navigatora i preglednog kursora |
+| Premjesti tipkovnicu na objekt pod mišem | NVDA+numeričko množenje | NVDA+shift+n | nema | postavlja objekt navigatora na poziciju miša |
 %kc:endInclude
 
 + Modus čitanja +[BrowseMode]
@@ -1162,7 +1162,7 @@ Ako shvatite da NVDA čita interpunkciju koristeći krivi jezik za određenu gov
 
 ==== Koristi Unicode bazu podataka za čitanje opisa znakova i simbola (uključujući emoji znakove) ====[SpeechSettingsCLDR]
 Kad se ovaj potvrdni okvir označi, NVDA će uključiti dodatne znakove i simbole tijekom čitanja.
-Ovi rječnici sadrže opise simbola (uglavnom Emojia) koje je dostavio [Unicode Consortium https://www.unicode.org/consortium/] kao dio njihovog [repozitorija općih jezičnih podataka https://cldr.unicode.org/].
+Ovi rječnici sadrže opise simbola (uglavnom Emojia) koje je dostavio [Unicode Consortium https://www.unicode.org/consortium/] kao dio njihovog [repozitorija općih jezičnih podataka http://cldr.unicode.org/].
 Ako želite da NVDA izgovara opise emoji znakova uz pomoć ovih podataka, uključite ovu opciju.
 Međutim, ako vaša govorna jedinica već sama po sebi izgovara opise emoji znakova, možete isključiti ovu opciju.
 
@@ -2425,7 +2425,12 @@ Brailliant BI i B serije brajični redci tvrtke [HumanWare https://www.humanware
 Ako brajični redak spajate putem USB veze, i protokolom postavljenim na Human Ware prvo morate instalirati USB upravljačke programe koje je napravio proizvođač.
 USB upravljački programi nisu potrebni ako  je protokol postavljen na OpenBraille.
 
-BrailleNote Touch je također podržan, i nisu potrebni dodatni upravljački programi.
+Podržani su također slijedeći dodatni uređaji, i za njih nisu potrebni dodatni upravljački programi za korištenje:
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
+
 
 Slijede prečaci za Brailliant BI/B i BrailleNote brajične retke s NVDA čitačem.
 Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.

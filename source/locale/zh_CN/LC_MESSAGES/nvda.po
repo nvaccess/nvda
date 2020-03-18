@@ -12,16 +12,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-28 00:10+1000\n"
-"PO-Revision-Date: 2020-02-01 20:48+0800\n"
-"Last-Translator: Larry Wang <larry.wang.801@gmail.com>\n"
+"POT-Creation-Date: 2020-03-06 00:10+1000\n"
+"PO-Revision-Date: 2020-03-06 05:01+0800\n"
+"Last-Translator: dingpengyu <dingpengyu06@gmail.com>\n"
 "Language-Team: NVDASimplified Chinese team All volunteers <Copyright (C) "
 "2010-2020>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -810,6 +810,11 @@ msgstr "英式英语二级点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr "英语北美 电脑点字码"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
 msgstr "通用英语一级点字码"
 
@@ -1045,13 +1050,18 @@ msgstr "马拉地语一级点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
-msgstr "荷兰语 (比利时)"
+msgid "Dutch (Belgium) 6 dot"
+msgstr "荷兰语(比利时)6点点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
-msgstr "荷兰语(荷兰)"
+msgid "Dutch (Netherlands) 6 dot"
+msgstr "荷兰语(荷兰)6点点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr "荷兰语8点点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4472,6 +4482,16 @@ msgid ""
 "your finger was last"
 msgstr "朗读新对象及其内容（若它与您上次触摸到的不相同）"
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "对象没有位置"
+
+#. Translators: Input help mode message for touch right click command.
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr "在鼠标所在位置，单击鼠标右键一次，通常用于激活上下文菜单。"
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "显示 NVDA “配置管理” 对话框"
@@ -6268,6 +6288,8 @@ msgstr "检查更新时出错。"
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "错误"
 
@@ -9376,6 +9398,10 @@ msgstr ""
 "都将丢失。\n"
 "\t\t\t确认后无法撤消操作。"
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "重置手势"
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr "保存手势设置时发生错误，文件系统可能处于只读状态."
@@ -9389,6 +9415,7 @@ msgstr "退出 math 交互"
 msgid "Math interaction not supported."
 msgstr "Math 交互不被支持。"
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9417,7 +9444,8 @@ msgstr "%s，已选择"
 msgid "%s selected"
 msgstr "%s，已选择"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d 个字符"

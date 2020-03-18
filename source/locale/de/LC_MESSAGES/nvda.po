@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-28 00:10+1000\n"
+"POT-Creation-Date: 2020-03-06 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
@@ -437,11 +437,11 @@ msgstr "klk"
 
 #. Translators: Displayed in braille when an object is sorted ascending.
 msgid "sorted asc"
-msgstr "auf. sort."
+msgstr "Auf. sort."
 
 #. Translators: Displayed in braille when an object is sorted descending.
 msgid "sorted desc"
-msgstr "ab. sort."
+msgstr "Ab. sort."
 
 #. Translators: Displayed in braille when an object (usually a graphic) has a long description.
 msgid "ldesc"
@@ -800,6 +800,11 @@ msgstr "Englische Kurzschrift (Großbritannien)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr "Englisch, nordamerikanischer Braille-Computer-Code"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
 msgstr "Englische Vollschrift (vereinheitlicht)"
 
@@ -1035,13 +1040,18 @@ msgstr "Indische Vollschrift (Marathi)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
+msgid "Dutch (Belgium) 6 dot"
 msgstr "Niederländisch (Belgien)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
+msgid "Dutch (Netherlands) 6 dot"
 msgstr "Niederländisch (Niederlande)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr "Niederländisch, 8 Punkt"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4220,7 +4230,7 @@ msgstr ""
 #. This message will not be presented if there is no module for the current program.
 #, python-format
 msgid " %s module is loaded. "
-msgstr "Modul für \"%s\" ist geladen."
+msgstr "Modul \"%s\" ist geladen. "
 
 #. Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
@@ -4609,6 +4619,19 @@ msgid ""
 msgstr ""
 "Gibt neue Inhalte oder neue Objekte auss, wenn Sie den Finger auf dem "
 "Touchscreen an eine andere Stelle bewegen"
+
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "Das Objekt enthält keine Informationen zur Position"
+
+#. Translators: Input help mode message for touch right click command.
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr ""
+"Klicken Sie mit der rechten Maustaste auf der aktuellen Position auf dem "
+"Touchscreen. Dies wird in der Regel zur Aktivierung eines Kontextmenüs "
+"verwendet."
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
@@ -6427,6 +6450,8 @@ msgstr "Fehler bei der Suche nach Updates."
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "Fehler"
 
@@ -6437,7 +6462,7 @@ msgstr "NVDA aktualisieren"
 
 #. Translators: A message indicating that no update to NVDA is available.
 msgid "No update available."
-msgstr "Es sind keine Updates verfügbar."
+msgstr "Kein Update verfügbar."
 
 #. Translators: A message indicating that an updated version of NVDA has been downloaded
 #. and is pending to be installed.
@@ -6918,7 +6943,7 @@ msgstr "Besprechungsanfrage"
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
 msgid "No notes for translators."
-msgstr "Keine Anmerkungen für Übersetzer"
+msgstr "Keine Anmerkungen für Übersetzer."
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'Notes for translators' window in poedit.
@@ -6932,13 +6957,13 @@ msgstr "Zeigt Anmerkungen für Übersetzer an"
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
 msgid "Could not find comment window."
-msgstr "Kein Kommentar-Fenster gefunden"
+msgstr "Kein Kommentar-Fenster gefunden."
 
 #. Translators: this message is reported when there are no
 #. comments to be presented to the user in the translator
 #. comments window in poedit.
 msgid "No comment."
-msgstr "Kein Kommentar"
+msgstr "Kein Kommentar."
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any comments in the comments window"
@@ -9682,6 +9707,10 @@ msgstr ""
 "dieser Sitzung definiert, gehen verloren.\n"
 "\t\t\tDies kann nicht rückgängig gemacht werden."
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "Tastenbefehle zurücksetzen"
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
@@ -9697,6 +9726,7 @@ msgstr "Beendet die Interaktion mit mathematischen Inhalten"
 msgid "Math interaction not supported."
 msgstr "Die Interaktion mit mathematischen Inhalten wird nicht unterstützt."
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9725,7 +9755,8 @@ msgstr "%s ausgewählt"
 msgid "%s selected"
 msgstr "%s ausgewählt"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d Zeichen"

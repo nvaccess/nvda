@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-28 00:10+1000\n"
-"PO-Revision-Date: 2020-02-02 23:02+0330\n"
+"POT-Creation-Date: 2020-03-06 00:10+1000\n"
+"PO-Revision-Date: 2020-03-08 14:05+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@groups.io>\n"
 "Language: fa\n"
@@ -800,6 +800,11 @@ msgstr "انگلیسی (بریتانیا) درجه‌ی 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr "کدِ بریلِ رایانه‌ایِ انگلیسیِ آمریکای شمالی"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
 msgstr "کدِ بریلِ انگلیسیِ یکپارچه درجه‌ی 1"
 
@@ -1035,13 +1040,18 @@ msgstr "ماراتی درجه‌ی 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
-msgstr "هلندی (بلژیک)"
+msgid "Dutch (Belgium) 6 dot"
+msgstr "هلندی (بلژیک) ۶ نقطه"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
-msgstr "هلندی (هلند)"
+msgid "Dutch (Netherlands) 6 dot"
+msgstr "هلندی (هلند) ۶ نقطه"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr "هلندیِ ۸ نقطه"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1761,7 +1771,7 @@ msgstr "فر&م‌ها"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Buttons"
-msgstr "&دکمه"
+msgstr "&دکمه‌ها"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -4557,6 +4567,18 @@ msgstr ""
 "شیء یا محتوای جدیدی را که زیرِ انگشتتان قرار دارد، در صورتی که با شیئی که "
 "قبلا انگشتتان روی آن بوده متفاوت باشد اعلام میکند."
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "شیء هیچ موقعیتی که موس بتواند روی آن قرار بگیرد ندارد."
+
+#. Translators: Input help mode message for touch right click command.
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr ""
+"روی محلِ لمس‌شده راست‌کلیکِ موس را انجام میدهد. این کار عموما برای فعال‌کردنِ منوی "
+"محتوایی انجام میشود."
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "صفحه‌ی گروه‌های پیکره‌بَندیِ NVDA را نشان میدهد."
@@ -6359,6 +6381,8 @@ msgstr "خطا هنگامِ بررسی برای به روزرسانی"
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "خطا"
 
@@ -9533,6 +9557,10 @@ msgstr ""
 "از بین خواهد رفت.\n"
 "\t\t\tاین کار برگشتپذیر نیست."
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "بازنشانیِ فرمان‌ها"
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
@@ -9548,6 +9576,7 @@ msgstr "خروج از تعامل با محتوای ریاضی"
 msgid "Math interaction not supported."
 msgstr "تعاملِ ریاضی پشتیبانی نمیشود."
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9576,7 +9605,8 @@ msgstr "%s انتخاب شد"
 msgid "%s selected"
 msgstr "%s انتخاب شد"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d نویسه"

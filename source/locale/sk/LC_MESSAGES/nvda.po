@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-28 00:10+1000\n"
-"PO-Revision-Date: 2020-02-02 10:47+0100\n"
+"POT-Creation-Date: 2020-03-06 00:10+1000\n"
+"PO-Revision-Date: 2020-03-06 11:25+0100\n"
 "Last-Translator: Ondrej Rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <https://nvda.venik.org>\n"
 "Language: sk\n"
@@ -800,6 +800,11 @@ msgstr "Britská angličtina skratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr "Anglický počítačový kód (Severná Amerika)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
 msgstr "Jednotný anglický brail plnopis"
 
@@ -1001,7 +1006,7 @@ msgstr "Litovčina 8 bodov"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Lithuanian 6 dot"
-msgstr "Litovčina 6 dot"
+msgstr "Litovčina 6 bodov"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1035,13 +1040,18 @@ msgstr "Maráthčina plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
-msgstr "Holandčina (Belgicko)"
+msgid "Dutch (Belgium) 6 dot"
+msgstr "Holandčina (Belgicko) 6-bodový braill"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
-msgstr "Holandčina (Holandsko)"
+msgid "Dutch (Netherlands) 6 dot"
+msgstr "Holandčina (Holandsko) 6-bodový braill"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr "Holandský 8-bodový braill"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4571,6 +4581,17 @@ msgid ""
 "your finger was last"
 msgstr "prečíta nový objekt alebo text pod prstom, ak sa zmenila poloha prsta"
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "Žiadna informácia o pozícii objektu"
+
+#. Translators: Input help mode message for touch right click command.
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr ""
+"Simuluje klik pravým tlačidlom myši. Zvyčajne aktivuje kontextovú ponuku."
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Zobrazí dialóg s nastaveniami konfiguračných profilov."
@@ -6372,6 +6393,8 @@ msgstr "Nastala chyba pri kontrole aktualizácií"
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "Chyba"
 
@@ -9556,6 +9579,10 @@ msgstr ""
 "odstránené a nahradené pôvodným nastavením NVDA.\n"
 "\t\t\tSkratky nebudú zálohované a budete ich musieť nanovo definovať ručne."
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "Obnovenie skratiek"
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
@@ -9571,6 +9598,7 @@ msgstr "Ukončí prepúšťanie klávesových príkazov do aplikácie MathPlayer
 msgid "Math interaction not supported."
 msgstr "práca s matematickým obsahom nie je podporovaná."
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9599,7 +9627,8 @@ msgstr "vybrané %s"
 msgid "%s selected"
 msgstr "%s vybraté"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d znakov"
