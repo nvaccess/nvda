@@ -145,9 +145,13 @@ class _TextReader(object):
 				self.finish()
 			return
 
+		# Copy the speakTextInfoState so that speak callbackCommand
+		# and its associated callback are using a copy isolated to this specific line.
+		state = self.speakTextInfoState.copy()
 		# Call lineReached when we start speaking this line.
 		# lineReached will move the cursor and trigger reading of the next line.
-		def _onLineReached(obj=self.reader.obj, state=self.speakTextInfoState.copy()):
+
+		def _onLineReached(obj=self.reader.obj, state=state):
 			self.lineReached(obj, bookmark, state)
 
 		cb = speech.CallbackCommand(
@@ -155,13 +159,23 @@ class _TextReader(object):
 			name="say-all:lineReached"
 		)
 
-		spoke = speech.speakTextInfo(
+		# Generate the speech sequence for the reader textInfo
+		# and insert the lineReached callback at the very beginning of the sequence.
+		# _linePrefix on speakTextInfo cannot be used here
+		# As it would be inserted in the sequence after all initial control starts which is too late.
+		speechGen = speech.getTextInfoSpeech(
 			self.reader,
 			unit=textInfos.UNIT_READINGCHUNK,
 			reason=controlTypes.REASON_SAYALL,
-			_prefixSpeechCommand=cb,
-			useCache=self.speakTextInfoState
+			useCache=state
 		)
+		speechGen = speech.GeneratorWithReturn(speechGen)
+		seq = speech._flattenNestedSequences(speechGen)
+		seq.insert(0, cb)
+		# Speak the speech sequence.
+		spoke = speech.speakWithoutPauses(seq)
+		# Update the textInfo state ready for when speaking the next line.
+		self.speakTextInfoState = state.copy()
 
 		# Collapse to the end of this line, ready to read the next.
 		try:
