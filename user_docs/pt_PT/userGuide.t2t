@@ -473,15 +473,15 @@ Quanto mais à esquerda ou à direita estiver o rato no ecrã, mais à esquerda 
 Esta funcionalidade adicional do NVDA não se encontra activa, por padrão.
 Se pretender utilizar a mesma, pode configurá-la na secção [configurações do rato #MouseSettings], que pode encontrar no diálogo [Configurações #NVDASettings] aberto através do Menu NVDA, "Preferências", "Configurações".
 
-Apesar de um rato físico ou de um touchpad terem de ser utilizados para navegar com o rato, o NVDA tem alguns comandos relacionados com o rato:
+Apesar de um rato físico, ou um touchpad, terem de ser utilizados para navegar com o rato, o NVDA tem alguns comandos relacionados com o rato:
 %kc:beginInclude
-|| Nome | Comandos de Teclado de Desktop | Comandos de Teclado de Laptop | Descrição |
-| Clicar com o botão esquerdo do rato | Barra do bloco numérico | NVDA+Sinal de Mais | Clica uma vez com o botão esquerdo do rato. O duplo clique pode ser realizado se pressionar este comando duas vezes, rapidamente |
-| Bloquear o botão esquerdo do rato | Shift+Barra do bloco numérico | NVDA+control+Sinal de Mais | Bloqueia o botão esquerdo do rato, na posição de  pressionado. Pressione novamente para desbloqueá-lo. Para arrastar o rato, pressione esta tecla de atalho para bloquear o botão esquerdo do rato, na posição de  pressionado e mova o rato quer seja fisicamente ou utilizando qualquer comando de movimento do rato |
-| Clicar com o botão direito do rato | Asterisco do bloco numérico | NVDA+Acento agudo | Clica uma vez com o botão direito do rato |
-| Bloquear o botão direito do rato | Shift+Asterisco do bloco numérico | NVDA+control+Acento agudo | Bloqueia o botão direito do rato, na posição de pressionado. Pressione novamente para desbloqueá-lo. Para arrastar o rato, pressione esta tecla de atalho para bloquear o botão direito do rato, na posição de pressionado e mova o rato quer seja fisicamente ou utilizando qualquer comando de movimento do rato |
-| Mover o rato para o objecto de navegação actual | NVDA+Barra do bloco numérico | NVDA+shift+m | Move o rato para a localização do objecto de navegação actual e do cursor de revisão |
-| Navegar para o objecto sob o rato | NVDA+Asterisco do bloco numérico | NVDA+shift+n | Define o objecto de navegação para o objecto localizado na posição do rato |
+|| Nome | Comandos de Teclado de Desktop | Comandos de Teclado de Laptop | Toque | Descrição |
+| Clicar com o botão esquerdo do rato | Barra do bloco numérico | NVDA+Sinal de Mais | nenhum | Clica uma vez com o botão esquerdo do rato. O duplo clique pode ser realizado se pressionar este comando duas vezes, rapidamente |
+| Bloquear o botão esquerdo do rato | Shift+Barra do bloco numérico | NVDA+control+Sinal de Mais | nenhum | Bloqueia o botão esquerdo do rato, na posição de  pressionado. Pressione novamente para desbloqueá-lo. Para arrastar o rato, pressione esta tecla de atalho para bloquear o botão esquerdo do rato, na posição de  pressionado e mova o rato quer seja fisicamente ou utilizando qualquer comando de movimento do rato |
+| Clicar com o botão direito do rato | Asterisco do bloco numérico | NVDA+Acento agudo | Tocar e manter | Clica uma vez com o botão direito do rato |
+| Bloquear o botão direito do rato | Shift+Asterisco do bloco numérico | NVDA+control+Acento agudo | nenhum | Bloqueia o botão direito do rato, na posição de pressionado. Pressione novamente para desbloqueá-lo. Para arrastar o rato, pressione esta tecla de atalho para bloquear o botão direito do rato, na posição de pressionado e mova o rato quer seja fisicamente ou utilizando qualquer comando de movimento do rato |
+| Mover o rato para o objecto de navegação actual | NVDA+Barra do bloco numérico | NVDA+shift+m | nenhum | Move o rato para a localização do objecto de navegação actual e do cursor de revisão |
+| Navegar para o objecto sob o rato | NVDA+Asterisco do bloco numérico | NVDA+shift+n | nenhum | Define o objecto de navegação para o objecto localizado na posição do rato |
 %kc:endInclude
 
 + Modo de Navegação +[BrowseMode]
@@ -1162,7 +1162,7 @@ Se quiser que o NVDA não leia a pontuação no idioma da voz, para um determina
 
 ==== Incluir dados do Unicode Consortium (incluindo emoji) ao processar caracteres e símbolos ====[SpeechSettingsCLDR]
 Quando esta caixa de verificação está marcada, o NVDA incluirá símbolos adicionais pronunciation dictionaries when pronouncing characters and symbols.
-Esses dicionários contêm descrições para símbolos (principalmente emoji) fornecidas pelo [Consórcio Unicode https://www.unicode.org/consortium/] como parte do seu [Common Locale Data Repository https://cldr.unicode.org/].
+Esses dicionários contêm descrições para símbolos (principalmente emoji) fornecidas pelo [Consórcio Unicode https://www.unicode.org/consortium/] como parte do seu [Common Locale Data Repository http://cldr.unicode.org/].
 Se quiser que o NVDA fale as descriçõess dos emojis desta base de dados, deve activar esta opção.
 Contudo, se estiver a utilizar um sintetizador que já suporte anunciar as descrições dos emojis, pode preferir desactivar esta opção.
 
@@ -2425,7 +2425,12 @@ A série de linhas braille Brailliant BI e B da [HumanWare https://www.humanware
 Se as ligar via USB, usando o protocolo Humanware, deverá instalar previamente os drivers fornecidos pelo fabricante.
 Os drivers USB não serão necessários se utilizar o protocolo OpenBraille.
 
-O BrailleNote Touch também é suportado, não necessitando de drivers para ser utilizado.
+Os seguintes dispositivos são também suportados, não necessitando de drivers para serem utilizados.
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
+
 
 Seguem-se as associações de teclas para estas linhas braille com o NVDA.
 Por favor, consulte a documentação da sua linha braille para obter a descrição de onde estas teclas podem ser encontradas.
