@@ -15,6 +15,7 @@
 - NVDA estää järjestelmää lukittumasta tai siirtymästä lepotilaan, kun jatkuva luku on käynnissä. (#10643)
 - Tuki prosessin ulkopuolisille tekstikehyksille Mozilla Firefoxissa. (#10707)
 - Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.12. (#10161)
+- Selaustila on nyt oletusarvoisesti poissa käytöstä Visual Studio Coden Insider-versiossa, kuten vakaassakin versiossa. (#10858)
 
 
 == Korjatut ohjelmavirheet ==
@@ -25,9 +26,12 @@
 - ARIA-kytkinsäätimistä ei enää puhuta sekavaa tietoa, kuten "ei painettu valittu" tai "painettu valittu". (#9187)
 - SAPI 4 -äänien ei pitäisi enää kieltäytyä puhumasta tiettyä tekstiä. (#10792)
 - NVDA voi jälleen lukea matemaattisia yhtälöitä Microsoft Wordissa ja olla vuorovaikutuksessa niiden kanssa. (#10803)
+- NVDA puhuu jälleen selaustilassa tekstin, jonka valinta perutaan, mikäli nuolinäppäintä painetaan tekstin ollessa valittuna. (#10731).
+- NVDA ei enää sulkeudu, mikäli eSpeakin alustuksessa tapahtuu virhe. (#10607)
 
 
 == Muutokset kehittäjille ==
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2019.3 =

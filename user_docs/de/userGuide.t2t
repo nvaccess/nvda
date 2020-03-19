@@ -2045,6 +2045,10 @@ Das Fenster des Braille-Betrachters enthält ein Kontrollkästchen mit der Bezei
 Wenn dies aktiviert ist, öffnet sich der Braille-Betrachter beim Starten von NVDA.
 Sofern möglich, wird dessen Fenster dieselbe Position sowie die gleiche Größe wie bei der letzten Verwendung einnehmen.
 
+++ Die Python-Konsole ++[PythonConsole]
+Die Python-Konsole in NVDA, zu finden im Menü "Werkzeuge" im NVDA-Menü, ist ein Entwicklungswerkzeug, das für das Debugging, die allgemeine Inspektion von NVDA-Interna oder die Inspektion der Zugänglichkeitshierarchie einer Anwendung nützlich ist.
+Weitere Informationen finden Sie im [NVDA-Entwicklerhandbuch https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+
 ++ Erweiterungen verwalten ++[AddonsManager]
 Im Dialogfeld "Erweiterungen verwalten", den Sie über das Untermenü "Werkzeuge" im NVDA-Menü erreichen, können Sie Erweiterungspakete für NVDA installieren, deinstallieren, aktivieren oder deaktivieren.
 Diese Pakete werden von der NVDA-Community bereitgestellt und können zusätzlichen Code enthalten, um NVDA-Funktionen zu verändern oder zu erweitern. Es ist auf diese Weise sogar möglich, neue Braillezeilen- oder Sprachausgabentreiber hinzuzufügen.
@@ -2090,7 +2094,7 @@ Um diese inkompatiblen Erweiterungen zu überprüfen, können Sie die Schaltflä
 
 Um das Dialogfeld "Erweiterungen verwalten" per Tastenkombination aufrufen zu können, müssen Sie diesem eine Tastenkombination zuweisen. Verwenden Sie hierzu das Dialogfeld für die [Tastenbefehle #InputGestures].
 
-++ Verwaltung inkompatibler Erweiterungen ++[incompatibleAddonsManager]
++++ Verwaltung inkompatibler Erweiterungen +++[incompatibleAddonsManager]
 Der Verwaltungsdialog, auf welchem Sie über die Schaltfläche "Inkompatible Erweiterungen anzeigen" im Dialogfeld "Erweiterungen verwalten" zugreifen können, ermöglicht alle inkompatiblen Erweiterungen zu überprüfen, einschließlich den Grund der Inkompatibilität.
 Erweiterungen gelten als inkompatibel, wenn sie nicht laufend aktualisiert wurden, um mit den aktuellen wesentlichen Änderungen im Kern des NVDA zu entsprechen. Ein Grund, warum ein Entwickler auf aktualisierungen verzichten könnte, wäre gegeben, wenn man auf eine Funktion angewiesen ist, die in der aktuellen verwendeten NVDA-Version nicht verfügbar ist.
 Die Verwaltung inkompatibler Erweiterungen benachrichtigt den Anwender entsprechend.
@@ -2103,10 +2107,31 @@ Die inkompatiblen Erweiterungen werden in einer Liste mit den folgenden Spalten 
 Die Verwaltung inkompatibler Erweiterungen hat auch eine Schaltfläche "Mehr Informationen".
 In diesem Dialogfeld werden alle Details der Erweiterungen angezeigt, was bei der Kontaktaufnahme mit dem Autor der Erweiterung hilfreich ist.
 
+++ Eine portable Version erstellen ++[CreatePortableCopy]
+Mit dieser Option können Sie eine portable Version aus einer installierten Version erstellen.
+Wird die portable Version ausgeführt, erscheint an der gleichen Stelle im Menü "Extras" stattdessen der Eintrag "NVDA auf diesem Computer installieren".
 
-++ Die Python-Konsole ++[PythonConsole]
-Die in NVDA integrierte Python-Konsole ist im NVDA-Menü unter "Werkzeuge" zu finden. Sie ist ein nützliches Entwicklungswerkzeug zum Beheben von Fehlern, zum allgemeinen Überprüfen der internen Komponente in NVDA sowie zur Überprüfung der Hierarchie der Zugänglichkeit einer Anwendung.
-Für weitere Informationen sehen Sie sich bitte das [NVDA-Entwicklerhandbuch https://www.nvaccess.org/files/nvda/documentation/developerGuide.html] an.
+In diesem Dialogfeld werden Sie zur Auswahl des jeweiligen Zielpfads aufgewfordert den Pfad für die portable bzw. für die installierte Version auszuwählen.
+
+In diesem Dialogfeld können Sie Folgendes aktivieren oder deaktivieren:
+- Kopieren der aktuellen Benutzerkonfiguration (inklusive der Dateien in "%appdata%\roaming\NVDA" oder in der Benutzerkonfiguration Ihrer portablen Version und Erweiterungen/Module).
+- Starten Sie die neue portable Version nach der Erstellung oder starten Sie NVDA nach der Installation (NVDA startet automatisch nach der Erstellung der portablen Kopie oder der Installation).
+-
+
+++ Behebungstool für die COM-Registrierung ausführen ++[RunCOMRegistrationFixingTool]
+Das Installieren und Deinstallieren von Programmen auf einem Computer kann in bestimmten Fällen dazu führen, dass COM-DLL-Dateien nicht mehr registriert sind.
+Da COM-Schnittstellen wie IAccessible von korrekten COM-DLL-Registrierungen abhängig sind, können  Probleme auftreten, sobald diese fehlen.
+
+Dies kann z. B. nach einer Installation und anschließender Deinstallation von Adobe Reader, MathPlayer und anderen Programmen vorkommen.
+
+Die fehlende Registrierung kann zu Problemen in Browsern, Desktop-Anwendungen, der Taskleiste und anderen Schnittstellen führen.
+
+Im Einzelnen können folgende Probleme durch den Einsatz dieses Tools gelöst werden:
+- NVDA meldet beim Navigieren in Firefox, Thunderbird, etc. anstelle "Unbekannt".
+- In NVDA funktioniert das Umschalten zwischen dem Fokus- und dem Lesemodus nicht mehr richtig.
+- NVDA reagiert sehr langsam beim Navigieren im Lesemodus in Web-Browsern.
+- Und möglicherweise andere Probleme.
+-
 
 ++ Plugins erneut laden ++[ReloadPlugins]
 Dieser Eintrag lädt alle Anwendungsmodule sowie globale Plugins neu, ohne dass NVDA extra neu gestartet wird.
@@ -2116,7 +2141,7 @@ Dieser Bereich beinhaltet Informationen über die in NVDA unterstützten Spracha
 Eine ausführliche Liste freier und kommerzieller Sprachausgaben, die zusammen mit NVDA verwendet werden können, finden Sie unter [https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
 ++ eSpeak NG ++[eSpeakNG]
-Die in NVDA fest integrierte Sprachausgabe [eSpeak NG https://github.com/espeak-ng/espeak-ng] benötigt keine speziellen Treiber oder andere extra installierten Komponenten.
+Die in NVDA integrierte Sprachausgabe [eSpeak NG https://github.com/espeak-ng/espeak-ng] benötigt keine speziellen Treiber oder andere extra installierten Komponenten.
 Die Sprachausgabe eSpeak wird unter Windows 7, 8 und 8.1 von NVDA standardmäßig verwendet, während unter Windows 10 [Windows OneCore #OneCore] standardmäßig verwendet wird.
 Das hat den enormen Vorteil, dass NVDA auf einen Betriebssystemen mit einem USB-Stick ohne weiteres betrieben werden kann.
 

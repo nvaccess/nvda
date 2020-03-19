@@ -13,9 +13,22 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 
 
 == Alterações ==
-- O NVDA evita que o sistema bloqueie ou entre no modo de suspensão quando em leitura contínua. (#10643)
+- O NVDA impedirá que o sistema bloqueie ou entre no modo de suspensão quando estiver em leitura contínua. (#10643)
 - Suporte para iframes fora de processo ""[out-of-process iframes]"" no Mozilla Firefox. (#10707)
-- Atualizado o transcritor braille liblouis para a versão 3.12 (#10161)
+- Atualizado o transcritor braille liblouis para a versão 3.12. (#10161)
+- No Visual Studio Code Insiders, o modo de navegação agora está desativado por padrão, como no Visual Studio Code estável. (#10858)
+
+
+== Correção de Falhas ==
+- Corrigido o NVDA não anunciar o símbolo de menos Unicode (U+2212). (#10633)
+- Ao instalar o complemento pelo gerenciador de complementos, os nomes de arquivos e pastas na janela de navegação não são mais informados duas vezes. (#10620, #2395)
+- No Firefox, ao carregar o Mastodon com a interface avançada da web ativada, todas as linhas de tempo agora são renderizadas corretamente no modo de navegação. (#10776)
+- No modo de navegação, o NVDA agora informa "não marcada" para caixas de seleção desmarcadas, onde às vezes não acontecia anteriormente. (#10781)
+- Os controles de chave ARIA não relatam mais informações confusas, como "não pressionado marcado" ou "pressionado marcado". (#9187)
+- As vozes SAPI4 não devem mais se recusar a falar determinado texto. (#10792)
+- O NVDA pode novamente ler e interagir com equações matemáticas no Microsoft Word. (#10803)
+- NVDA anunciará novamente que o texto não está selecionado no modo de navegação se pressionar uma tecla de seta enquanto o texto estiver selecionado. (#10731).
+- O NVDA não será mais encerrado se houver um erro ao inicializar o eSpeak. (#10607)
 
 
 == Alterações para Desenvolvedores ==
@@ -34,16 +47,6 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
   - As constantes 'REASON_*' de nível no módulo estão obsoletas.
 - A compilação de dependências do NVDA agora requer o Visual Studio 2019 (16.2 ou mais recente). (#10169)
 - SCons atualizado para a versão 3.1.1. (#10169)
-
-
-== Correção de Falhas ==
-- Corrigido não anunciar o símbolo Unicode menos (U+2212) (#10633)
-- Ao instalar o complemento proveniente do gestor de complementos, os nomes de arquivos e pastas na janela de navegação não são mais informados duas vezes. (#10620, #2395)
-- No Firefox, ao carregar o Mastodon com a interface avançada da web ativada, todas as linhas de tempo agora são renderizadas corretamente no modo de navegação. (#10776)
-- No modo de navegação, o NVDA agora informa "não marcada" para caixas de seleção desmarcadas, onde às vezes não acontecia anteriormente. (#10781)
-- Os controles de chave ARIA não relatam mais informações confusas, como "não pressionado marcado" ou "pressionado marcado". (#9187)
-- As vozes SAPI4 não devem mais se recusar a falar determinado texto. (#10792)
-- O NVDA pode novamente ler e interagir com equações matemáticas no Microsoft Word. (#10803)
 
 
 = 2019.3 =

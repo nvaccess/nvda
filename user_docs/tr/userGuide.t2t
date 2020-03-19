@@ -2045,6 +2045,10 @@ Braille görüntüleyici penceresinde "Başlangıçta braille görüntüleyicisi
 Bu işaretliyse, NVDA başlatıldığında braille görüntüleyici açılacaktır.
 Braille görüntüleme penceresi her zaman kapatıldığı zamanki boyut ve konumlarla yeniden açılmaya çalışır.
 
+++ Python Konsolu ++[PythonConsole]
+NVDA menüsündeki Araçlar altında bulunan NVDA Python konsolu, hata ayıklama, NVDA dahili bileşenlerinin genel denetimi veya bir uygulamanın erişilebilirlik hiyerarşisinin denetimi için yararlı olan bir geliştirme aracıdır.
+Daha fazla bilgi için lütfen [NVDA Geliştirici Kılavuzuna https://www.nvaccess.org/files/nvda/documentation/developerGuide.html] bakın.
+
 ++ Eklenti Yöneticisi ++[AddonsManager]
 NVDA Araçlar menüsü altında, Eklentileri Yönet ögesini seçerek ulaşacağınız Eklenti Yöneticisi, NVDA için geliştirilmiş eklenti paketlerini kurmanıza, etkinleştirip devre dışı bırakmanıza ve kaldırmanıza olanak tanır.
 BU paketler camia tarafından sağlanırlar ve NVDA'nın özelliklerini geliştiren ya da değiştiren kodlar barındırırlar. Hatta extra kabartma ekran ya da sentezleyici için destek sağlayabilirler.
@@ -2090,7 +2094,7 @@ Bu uyumsuz eklentileri incelemek için, Uyumsuz eklenti yöneticisini başlatmak
  
 Eklenti yöneticisine herhangi bir yerden ulaşmak için, lütfen [Girdi Hareketleri iletişim kutusunu #InputGestures] kullanarak özel bir kısayol belirleyin.
 
-++ Uyumsuz Eklenti Yöneticisi ++[incompatibleAddonsManager]
++++ Uyumsuz Eklenti Yöneticisi +++[incompatibleAddonsManager]
 Eklenti yöneticisindeki "uyumsuz eklentileri görüntüle" düğmeleriyle erişilebilen Uyumsuz Eklenti Yöneticisi, uyumsuz eklentileri ve bunların uyumsuz olarak değerlendirilmelerinin nedenini incelemenizi sağlar.
 Eklentiler, NVDA'da önemli değişikliklerle çalışmak üzere güncellenmediklerinde veya kullandığınız NVDA sürümünde bulunmayan bir özelliğe dayandıklarında uyumsuz olarak kabul edilir.
 Uyumsuz eklenti yöneticisi, amacını ve NVDA sürümünü açıklayan  kısa bir mesaj sunar.
@@ -2101,12 +2105,33 @@ Uyumsuz eklentiler aşağıdaki sütunları içeren bir listede sunulur:
 +
 
 Uyumsuz eklenti yöneticisinde ayrıca "Eklentiler hakkında ..." düğmesi bulunur.
-Bu açılır pencere, eklentinin yazarı ile iletişime geçerken yardımcı olacak eklentinin tüm ayrıntılarını size sunacaktır.
+Bu iletişim kutusu, eklentinin yazarı ile iletişime geçerken yardımcı olacak tüm ayrıntıları size sunacaktır.
 
+++ Taşınabilir kopya oluştur ++[CreatePortableCopy]
+Bu, kurulu sürümden NVDA'nın taşınabilir bir kopyasını oluşturmanıza izin veren bir iletişim kutusu açar.
+Her iki şekilde de, NVDA'nın taşınabilir bir kopyasını çalıştırıyorsanız, ekstra araç alt menüsünde menü öğesine "taşınabilir kopya oluştur" yerine "NVDA'yı bu bilgisayara kur" adı verilir.
 
-++ Python Konsolu ++[PythonConsole]
-NVDA menüsündeki araçlar altında bulunan Pithon konsolu, ayıklama, NVDA iç yapısının saptanması ve bir uygulamanın erişilebilirlik hiyerarşisinin saptanması gibi noktalar için yararlı olan bir geliştirme aracıdır.
-Daha fazla bilgi için lütfen [NVDA web sayfasındaki Python Konsolu makalesine bakın https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+NVDA'nın taşınabilir bir kopyasını oluşturma veya bu bilgisayara NVDA'yı kurma iletişim kutusu, NVDA'nın taşınabilir kopyayı oluşturması gereken veya NVDA'nın yüklenmesi gereken bir klasör seçmenizi sağlayacaktır.
+
+Bu iletişim kutusunda aşağıdakileri etkinleştirebilir veya devre dışı bırakabilirsiniz:
+- Mevcut kullanıcı konfigürasyonunu kopyala (% appdata% \ roaming \ NVDA içindeki dosyaları veya taşınabilir kopyanızın kullanıcı yapılandırmasındaki dosyaları içerir ve ayrıca eklentileri ve diğer modülleri içerir)
+- Oluşturulduktan sonra yeni taşınabilir kopyayı başlat veya kurulumdan sonra NVDA'yı başlat (taşınabilir kopya oluşturulduktan veya kurulumdan sonra NVDA'yı otomatik olarak başlatır)
+-
+
+++ COM kayıt tamir aracını çalıştır... ++[RunCOMRegistrationFixingTool]
+Programların bilgisayara yüklenmesi ve kaldırılması, bazı durumlarda COM DLL dosyalarının kaydedilmemesine neden olabilir.
+IAccessible gibi COM Arabirimleri doğru COM DLL kayıtlarına bağlı olduğundan, doğru kaydın eksik olması durumunda sorunlar yaşanabilir.
+
+Bu, örneğin Adobe Reader, Math Player ve diğer programları yükleyip kaldırdıktan sonra ortaya çıkabilir.
+
+Kayıp kayıt tarayıcılarda, masaüstü uygulamalarında, görev çubuğunda ve diğer arayüzlerde sorunlara neden olabilir.
+
+Özellikle, bu araç çalıştırılarak aşağıdaki sorunlar çözülebilir:
+- NVDA, Firefox, Thunderbird gibi tarayıcılarda gezinirken "bilinmeyen" diyorsa.
+- NVDA odak kipi ile tarama kipi arasında geçiş yapamıyorsa
+- Tarama kipini kullanırken tarayıcılarda gezinirken NVDA çok yavaşsa
+- Ve muhtemelen diğer konular.
+-
 
 ++ Pluginleri Yeniden Yükle ++[ReloadPlugins]
 Bu öge etkinleştirildiğinde, uygulama modüllerini ve genel pluginleri NVDA'yı yeniden başlatmaya gerek duymadan yeniden yükler, ve bu, geliştiriciler için oldukça yararlıdır.

@@ -2045,6 +2045,10 @@ Cửa sổ trình xem chữ nổi có một hộp kiểm tên "Hiển thị trì
 Nếu chọn, trình xem chữ nổi sẽ được mở khi khởi động NVDA.
 Cửa sổ trình xem chữ nổi sẽ luôn cố gắng mở lại với kích cỡ và vị trí mà nó đã bị đóng lại trước đó.
 
+++ Python Console ++[PythonConsole]
+Đây là công cụ hỗ trợ cho các lập trình viên trong việc phát hiện, kiểm tra lỗi trong NVDA, kiểm tra cấu trúc các đối tượng và tính tiếp cận của chúng.
+Để biết thêm thông tin chi tiết, xin xem tại phần  [Phát triển NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+
 ++ Quản lý Add-ons ++[AddonsManager]
 Bạn có thể mở cửa sổ này từ trình đơn công cụ của NVDA, nó cho phép bạn cài đặt hay gỡ bỏ các Add on của NVDA.
 Các Add on này thường được phát triển bởi cộng đồng nhằm hỗ trợ và bổ sung các tính năng cho NVDA cũng như hỗ trợ cho các ứng dụng, các thiết bị màn hình nổi hay các bộ tổng hợp tiếng nói.
@@ -2088,9 +2092,9 @@ Khi dùng một phiên bản NVDA cũ, vài add-on mới cũng có thể không 
 Việc cố gắng cài đặt một add-on không tương thích sẽ xuất hiện một thông điểp báo lỗi giải thích tại sao add-on lại được coi là không tương thích.
 Để xem xét các add-on không tương thích, bạn có thể dùng nút "xem các add-on không tương thích" để chạy trình quản lý các add-on không tương thích.
 
-Để mở trình quản lý add-on ở bất cứ đâu, bạn hãy gán phím tắt/thao tác cho nó trong hộp thoại [Quản lý thao tác #InputGestures].
+Để mở trình quản lý add-on ở bất cứ đâu, hãy gán phím tắt/thao tác cho nó trong hộp thoại [Quản lý thao tác #InputGestures].
 
-++ Trình Quản Lý Các Add-on không tương thích ++[incompatibleAddonsManager]
++++ Trình Quản Lý Các Add-on không tương thích +++[incompatibleAddonsManager]
 Trình Quản Lý Các Add-on không tương thích có thể được mở thông qua nút "xem các add-on không tương thích" trong trình quản lý Add-on, cho phép bạn xem xét bất cứ add-on nào không tương thích, và lí do mà chúng được coi là không tương thích.
 Các Add-on được coi là không tương thích khi chúng không được cập nhật để hoạt động với các thay đổi đáng kể của NVDA, hoặc khi chúng dựa vào một tính năng không tồn tại trong phiên bản NVDA bạn đang dùng.
 Trình quản lý các add-on không tương thích có một thông điệp ngắn để giải thích mục đích của nó cũng như phiên bản NVDA.
@@ -2103,11 +2107,32 @@ Các add-on không tương thích được trình bày trong một danh sách v�
 Trình quản lý các add-on không tương thích cũng có nút "Thông tin về Add  - on...".
 Hộp thoại này cho bạn biết đầy đủ các chi tiết của add-on, hữu ích khi liên lạc với tác giả của add-on.
 
+++ Tạo bản chạy trực tiếp ++[CreatePortableCopy]
+Tùy chọn này sẽ mở một hộp thoại cho phép bạn tạo một bản chạy trực tiếp của NVDA.
+Tương tự, khi đang dùng một bản NVDA chạy trực tiếp, mục này sẽ có tên là "cài đặt NVDA vào máy tính này" thay vì "tạo bản chạy trực tiếp".
 
-++ Python Console ++[PythonConsole]
-Đây là công cụ hỗ trợ cho các lập trình viên trong việc phát hiện, kiểm tra lỗi trong NVDA, kiểm tra cấu trúc các đối tượng và tính tiếp cận của chúng.
-Để biết thêm thông tin chi tiết, xin xem tại phần  [Phát triển NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+Hộp thoại tạo bản NVDA chạy trực tiếp hay cài đặt NVDA vào máy sẽ yêu cầu bạn chọn đường dẫn đến thư mục để tạo bản chạy trực tiếp hay cài đặt NVDA.
 
+Trong hộp thoại này, bạn có thể bật hay tắt các tùy chọn sau:
+- Sao chép cấu hình người dùng hiện tại (bao gồm các tập tin trong %appdata%\roaming\NVDA hay trong thư mục cấu hình người dùng của bản chạy trực tiếp và cũng bao gồm addons  và các module khác)
+- Khởi động bản chạy trực tiếp mới sau khi tạo hoặc chạy NVDA sau khi cài đặt (Chạy NVDA sau khi cài đặt hoặc tạo bản chạy trực tiếp)
+-
+
+++ Chạy công cụ sửa đăng ký COM... ++[RunCOMRegistrationFixingTool]
+Việc cài và tháo cài đặt các chương trình trên một máy vi tính trong vài trường hợp có thể làm cho các tập tin COM DLL bị hủy đăng kí.
+Ví dụ, các giao diện COM như IAccessible yêu cầu việc đăng kí đúng các tập tin COM DLL. Lỗi có thể xuất hiện trong trường hợp thiếu các tập tin đăng kí cần thiết.
+
+Điều đó có thể xảy ra sau khi cài và tháo cài đặt Adobe Reader, Math Player và các chương trình khác.
+
+Việc thiếu các tập tin cần đăng kí có thể gây ra lỗi trong các trình duyệt, các ứng dụng desktop, thanh tác vụ và các giao diện khác.
+
+Cụ thể, công cụ này có thể sửa các lỗi sau:
+- NVDA đọc "không xác định" khi điều hướng trong các trình duyệt như Firefox, Thunderbird, v...v...
+- NVDA không chuyển được giữa chế độ focus và chế độ duyệt
+- NVDA rất chậm chạp khi điều hướng trong các trình duyệt với chế độ duyệt
+- Và các lỗi khác nữa.
+-
+ 
 ++ Cập nhật lại plugins ++[ReloadPlugins]
 Chức năng này sẽ cập nhật lại tất cả các mô đun mở rộng trong NVDA mà không cần khởi động lại NVDA, nó rất tiện cho các lập trình viên.
 
