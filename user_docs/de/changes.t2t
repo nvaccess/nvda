@@ -16,6 +16,19 @@ Was ist neu in NVDA
 - Während beim Alles Lesen verhindert NVDA, dass das System sich abschaltet oder in den Schlafmodus wechselt. (#10643)
 - Unterstützung für veraltete Iframes in Mozilla Firefox. (#10707)
 - Braille-Übersetzer von Liblouis auf Version 3.12 aktualisiert. (#10161)
+- In Visual Studio Code für Insiders ist der Lesemodus nun standardmäßig ausgeschaltet, wie in Visual Studio Code für Stable. (#10858)
+
+
+== Fehlerbehebungen ==
+- Behoben, dass das Unicode-Minus-Symbol nicht angesagt wurde (U+2212). (#10633)
+- Bei der Installation von Erweiterungen in der Verwaltung für Erweiterungen werden die Dateiennamen und Ordner nicht mehr doppelt gemeldet. (#10620, #2395)
+- In Mozilla Firefox werden beim Laden von Mastodon mit aktivierter erweiterter Web-Schnittstelle alle Zeitleisten jetzt im Lesemodus korrekt gerendert. (#10776)
+- Im Lesemodus meldet NVDA nun die Kontrollkästchen, die nicht ausgewählt sind, wo dies früher manchmal nicht der Fall war. (#10781)
+- Die ARIA-Schalterelemente zur Steuerung melden nicht mehr verwirrende Informationen wie "nicht gedrückt gedrückt geprüft" oder "gedrückt geprüft". (#9187)
+- SAPI4-Stimmen werden nicht mehr ignoriert. (#10792)
+- NVDA kann wiederum mathematische Gleichungen in Microsoft Word lesen und mit ihnen interagieren. (#10803)
+- NVDA teilt wieder mit, dass der Text im Lesemodus nicht ausgewählt ist, wenn eine Pfeiltaste gedrückt wird, während der Text ausgewählt ist. (#10731).
+- NVDA beendet sich nicht mehr selbst, wenn ein Fehler bei der eSpeak-Initialisierung auftritt. (#10607)
 
 
 == Änderungen für Entwickler ==
@@ -34,16 +47,6 @@ Was ist neu in NVDA
   - Die Konstanten der Modulebene "REASON_*" sind veraltet.
 - Visual Studio 2019 (16.2 oder neuer) wird zum Kompilieren von NVDA-Abhängigkeiten benötigt. (#10169)
 - SCons auf Version 3.1.1 aktualisiert. (#10169)
-
-
-== Fehlerbehebungen ==
-- Behoben, dass das Unicode-Minus-Symbol nicht angesagt wurde (U+2212). (#10633)
-- Bei der Installation von Erweiterungen in der Verwaltung für Erweiterungen werden die Dateiennamen und Ordner nicht mehr doppelt gemeldet. (#10620, #2395)
-- In Mozilla Firefox werden beim Laden von Mastodon mit aktivierter erweiterter Web-Schnittstelle alle Zeitleisten jetzt im Lesemodus korrekt gerendert. (#10776)
-- Im Lesemodus meldet NVDA nun die Kontrollkästchen, die nicht ausgewählt sind, wo dies früher manchmal nicht der Fall war. (#10781)
-- Die ARIA-Schalterelemente zur Steuerung melden nicht mehr verwirrende Informationen wie "nicht gedrückt gedrückt geprüft" oder "gedrückt geprüft". (#9187)
-- SAPI4-Stimmen werden nicht mehr ignoriert. (#10792)
-- NVDA kann wiederum mathematische Gleichungen in Microsoft Word lesen und mit ihnen interagieren. (#10803)
 
 
 = 2019.3 =
