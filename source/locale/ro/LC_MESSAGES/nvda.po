@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-28 00:10+1000\n"
-"PO-Revision-Date: 2020-01-18 10:52+0200\n"
+"POT-Creation-Date: 2020-03-06 00:10+1000\n"
+"PO-Revision-Date: 2020-03-06 16:35+0200\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, "
 "florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -801,6 +801,11 @@ msgstr "Engleză (U.K.) grad 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr "Braille englezesc din America de Nord pentru cod mașină"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
 msgstr "Cod Braille Engleză Unificată grad 1"
 
@@ -1036,13 +1041,18 @@ msgstr "Marathi grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
-msgstr "Neerlandeză (Belgia)"
+msgid "Dutch (Belgium) 6 dot"
+msgstr "Neerlandeză (Belgia) 6 puncte"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
-msgstr "Neerlandeză (Țările de Jos)"
+msgid "Dutch (Netherlands) 6 dot"
+msgstr "Neerlandeză (Țările de Jos) 6 puncte"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr "Neerlandeză 8 puncte"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4606,6 +4616,18 @@ msgstr ""
 "Anunță noul obiect sau conținu sub degetul tău dacă diferă față de ultima "
 "poziție a degetului"
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "obiectul nu are nicio locație"
+
+#. Translators: Input help mode message for touch right click command.
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr ""
+"Apasă o dată butonul dreapta al mausului la poziția actuală a mausului. În "
+"general, această acțiune este utilizată la activarea unui meniu contextual."
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Arată fereastra de dialog a configurării de profiluri NVDA"
@@ -4667,7 +4689,7 @@ msgstr ""
 "Schimbă starea cortinei ecranului, fie făcând ecrranul negru, fie afișând "
 "conținutul acestuia. Dacă pentru activarea cortinei se apasă o dată, ea "
 "rămâne activă până la repornirea NVDA. Dacă se apasă de trei ori, rămâne "
-"activă pe o perioadă nnedeterminată. În consecință, dezactivarea acesteia "
+"activă pe o perioadă nedeterminată. În consecință, dezactivarea acesteia "
 "trebuie să fie efectuată manual"
 
 #. Translators: Reported when the screen curtain is disabled.
@@ -6413,6 +6435,8 @@ msgstr "Eroare la căutarea actualizărilor."
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "Eroare"
 
@@ -9617,7 +9641,7 @@ msgstr "Gesturi intrare"
 #. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 msgctxt "inputGestures"
 msgid "&Filter by:"
-msgstr "&Fltrează după:"
+msgstr "&Filtrează după:"
 
 #. Translators: The label of a button to reset all gestures in the Input Gestures dialog.
 msgid "Reset to factory &defaults"
@@ -9648,6 +9672,10 @@ msgstr ""
 "sau în această sesiune, vor fi șterse.\n"
 "\t\t\tAceastă acțiune este ireversibilă."
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "Resetare gesturi"
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
@@ -9663,6 +9691,7 @@ msgstr "Ieșire interacțiune mod matematic"
 msgid "Math interaction not supported."
 msgstr "Interacțiune mod matematic nesuportat."
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9691,7 +9720,8 @@ msgstr "selectat %s"
 msgid "%s selected"
 msgstr "%s selectat"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d caractere"
@@ -10110,7 +10140,7 @@ msgstr "Se încarcă document..."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
-msgstr "Actualizează conțiuntul documentului"
+msgstr "Actualizează conținutul documentului"
 
 #. Translators: Presented when use screen layout option is toggled.
 msgid "Use screen layout on"
@@ -10136,7 +10166,7 @@ msgstr "&Evidențiază focalizarea sistemului"
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the browse mode cursor.
 msgid "Highlight browse &mode cursor"
-msgstr "&Evidențiază modul de navigare"
+msgstr "&Evidențiază cursorul modului de navigare"
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the navigator object.

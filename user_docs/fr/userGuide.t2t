@@ -473,15 +473,15 @@ Plus la souris va à gauche ou à droite, plus le son viendra de gauche ou de dr
 Par défaut, ces fonctions additionnelles de la souris ne sont pas activées. 
 Si vous voulez en tirer profit, vous pouvez les configurer dans la catégorie [Souris #MouseSettings] du dialogue [Paramètres #NVDASettings] qui se trouve dans le menu "Préférences" de NVDA.
 
-Bien qu'une souris physique devrait être utilisée pour naviguer à la souris, NVDA possède quelques commandes clavier liées à la souris :
+Bien qu'une souris physique ou un pavé tactile devrait être utilisée pour naviguer à la souris, NVDA possède quelques commandes clavier liées à la souris :
 %kc:beginInclude
-|| Nom | Ordinateur de bureau | Ordinateur portable | Description |
-| Clic gauche | pavnumDiviser | NVDA+uAccentGrave | Simple clic gauche. Le double clic s'obtient par deux appuis rapides |
-| Verrouillage du bouton gauche de la souris | maj+pavnumDiviser | NVDA+maj+uAccentGrave | Verrouille le bouton gauche de la souris en position enfoncée. Un second appui déverrouille le bouton. Pour glisser-déposer avec la souris, verrouillez le bouton puis déplacez la souris soit physiquement ou par l'une des commandes NVDA prévues à cet effet |
-| Clic droit | pavnumMultiplier | NVDA+astérisque | Simple clic droit |
-| Verrouillage du bouton droit de la souris | maj+pavnumMultiplier | NVDA+maj+astérisque | Verrouille le bouton droit de la souris en position enfoncée, un second appui déverrouille le bouton. Pour glisser-déposer avec la souris, verrouillez le bouton puis déplacez la souris soit physiquement ou par l'une des commandes NVDA prévues à cet effet |
-| Amener la souris à l'objet navigateur courant | NVDA+pavnumDiviser | NVDA+maj+m | Amène la souris à la position de l'objet navigateur courant puis au curseur de revue |
-| Aller à l'objet sous la souris | NVDA+pavnumMultiplier | NVDA+maj+n | Amène l'objet navigateur à l'objet situé à la position de la souris |
+|| Nom | Ordinateur de bureau | Ordinateur portable | Geste | Description |
+| Clic gauche | pavnumDiviser | NVDA+uAccentGrave | Aucun | Simple clic gauche. Le double clic s'obtient par deux appuis rapides |
+| Verrouillage du bouton gauche de la souris | maj+pavnumDiviser | NVDA+maj+uAccentGrave | Aucun | Verrouille le bouton gauche de la souris en position enfoncée. Un second appui déverrouille le bouton. Pour glisser-déposer avec la souris, verrouillez le bouton puis déplacez la souris soit physiquement ou par l'une des commandes NVDA prévues à cet effet |
+| Clic droit | pavnumMultiplier | NVDA+astérisque | Taper et maintenir | Simple clic droit |
+| Verrouillage du bouton droit de la souris | maj+pavnumMultiplier | NVDA+maj+astérisque | Aucun | Verrouille le bouton droit de la souris en position enfoncée, un second appui déverrouille le bouton. Pour glisser-déposer avec la souris, verrouillez le bouton puis déplacez la souris soit physiquement ou par l'une des commandes NVDA prévues à cet effet |
+| Amener la souris à l'objet navigateur courant | NVDA+pavnumDiviser | NVDA+maj+m | Aucun | Amène la souris à la position de l'objet navigateur courant puis au curseur de revue |
+| Aller à l'objet sous la souris | NVDA+pavnumMultiplier | NVDA+maj+n | Aucun | Amène l'objet navigateur à l'objet situé à la position de la souris |
 %kc:endInclude
 
 + Le mode Navigation +[BrowseMode]
@@ -1162,7 +1162,7 @@ Si vous trouvez que NVDA lit les ponctuations dans la mauvaise langue pour une v
 
 ==== Inclure les données du Consortium Unicode (incluant les emoji) dans le traitement des caractères et symboles ====[SpeechSettingsCLDR]
 Quand cette case est cochée, NVDA inclura des dictionnaires de prononciation de symboles additionels lorsqu'il prononce des caractères et des symboles.
-Ces dictionnaires contiennent des descriptions de symboles (en particulier les emoji) qui sont fournies par le [Consortium Unicode http://www.unicode.org/consortium/] comme faisant partie de leur [référentiel commun de données locales Repository http://cldr.unicode.org/].
+Ces dictionnaires contiennent des descriptions de symboles (en particulier les emoji) qui sont fournies par le [Consortium Unicode https://www.unicode.org/consortium/] comme faisant partie de leur [référentiel commun de données locales Repository https://cldr.unicode.org/].
 Si vous voulez que NVDA annonce la descriptions des caractères emoji en se basant sur ces données, vous devez activer cette option.
 Cependant, si vous utilisez un synthétiseur vocal supportant nativement ces descriptions, vous pouvez la désactiver.
 
@@ -2425,7 +2425,12 @@ Les terminaux des séries Brailliant BI & B de [HumanWare https://www.humanware.
 S'ils sont connectés en USB avec le protocole réglé sur HumanWare, vous devez d'abord installer le pilote USB fourni par le constructeur.
 Les pilotes USB ne sont pas nécessaires si le protocole est réglé sur OpenBraille.
 
-Le BrailleNote Touch est également prise en charge et ne nécessite pas de pilotes à installer.
+Les terminaux suivants sont également supportés (et ne nécessitent aucun pilote spécial pour être installés):
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
+
 
 Voici les assignations de touches pour Brailliant BI/B et BrailleNote touch sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.

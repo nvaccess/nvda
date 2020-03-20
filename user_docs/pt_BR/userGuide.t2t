@@ -473,15 +473,15 @@ Quanto mais à esquerda ou à direita da tela estiver o mouse, mais à esquerda 
 Estas características adicionais do mouse não se encontram ativadas por padrão no NVDA.
 Se pretender, porém, tirar partido das mesmas, pode configurá-las a partir da categoria [Configurações do mouse #MouseSettings] da caixa de diálogo [Configurações do NVDA #NVDASettings], encontrada no menu Preferências do NVDA.
 
-Ainda que um mouse físico ou um trackpad ""[bloco de rastreio]"" precisem ser utilizados para navegar com o mouse, o NVDA possui alguns comandos relacionados a este:
+Ainda que um mouse físico ou um trackpad ""[bloco de rastreio]"" precisem ser utilizados para navegar com o mouse, o NVDA fornece alguns comandos relacionados ao mouse:
 %kc:beginInclude
-|| Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
-| Clicar com o botão esquerdo do mouse | Barra do teclado numérico | NVDA+abre colchete | Clica uma vez com o botão esquerdo do mouse. O duplo clique habitual pode ser realizado pressionando duas vezes rapidamente este comando |
-| Prender o botão esquerdo do mouse | shift+barra do teclado numérico | NVDA+control+abre colchete | Mantém o botão esquerdo do mouse pressionado. Execute-o novamente para liberá-lo. Para arrastar o mouse, pressione esta tecla de atalho para prender o botão esquerdo e em seguida mova o mouse quer seja fisicamente ou utilizando qualquer comando que o movimente |
-| Clicar com o botão direito do mouse | Asterisco do teclado numérico | NVDA+fecha colchete | Clica uma vez com o botão direito do mouse |
-| Prender o botão direito do mouse | shift+asterisco do teclado numérico | NVDA+control+fecha colchete | Mantém o botão direito do mouse pressionado. Execute-o novamente para liberá-lo. Para arrastar o mouse, pressione esta tecla de atalho para prender o botão direito e em seguida mova-o quer seja fisicamente ou utilizando qualquer comando que movimente o mesmo |
-| Mover o mouse para o objeto de navegação atual | NVDA+barra do teclado numérico | NVDA+shift+m | Move o mouse para a localização do objeto de navegação atual e do cursor de exploração |
-| Navegar para o objeto sob o mouse | NVDA+asterisco do teclado numérico | NVDA+shift+n | Coloca como objeto de navegação aquele que se encontra sob o ponteiro do mouse |
+|| Nome | Tecla de Desktop | Tecla de Laptop | Toque ""[Gesto]"" | Descrição |
+| Clicar com o botão esquerdo do mouse | Barra do teclado numérico | NVDA+abre colchete | nenhum | Clica uma vez com o botão esquerdo do mouse. O duplo clique habitual pode ser realizado pressionando duas vezes rapidamente este comando |
+| Prender o botão esquerdo do mouse | shift+barra do teclado numérico | NVDA+control+abre colchete | nenhum | Mantém o botão esquerdo do mouse pressionado. Execute-o novamente para liberá-lo. Para arrastar o mouse, pressione esta tecla de atalho para prender o botão esquerdo e em seguida mova o mouse quer seja fisicamente ou utilizando qualquer comando que o movimente |
+| Clicar com o botão direito do mouse | Asterisco do teclado numérico | NVDA+fecha colchete | toca e segura | Clica uma vez com o botão direito do mouse, usado principalmente para abrir o menu de contexto no local do mouse. |
+| Prender o botão direito do mouse | shift+asterisco do teclado numérico | NVDA+control+fecha colchete | nenhum | Mantém o botão direito do mouse pressionado. Execute-o novamente para liberá-lo. Para arrastar o mouse, pressione esta tecla de atalho para prender o botão direito e em seguida mova-o quer seja fisicamente ou utilizando qualquer comando que movimente o mesmo |
+| Mover o mouse para o objeto de navegação atual | NVDA+barra do teclado numérico | NVDA+shift+m | nenhum | Move o mouse para a localização do objeto de navegação atual e do cursor de exploração |
+| Navegar para o objeto sob o mouse | NVDA+asterisco do teclado numérico | NVDA+shift+n | nenhum | Coloca como objeto de navegação aquele que se encontra sob o ponteiro do mouse |
 %kc:endInclude
 
 + Modo de Navegação +[BrowseMode]
@@ -1162,7 +1162,7 @@ Se você achar que o NVDA está lendo a pontuação no idioma errado por um sint
 
 ==== Incluir dados do Consórcio Unicode (incluindo emoji) ao processar caracteres e símbolos ====[SpeechSettingsCLDR]
 Quando essa caixa de seleção está marcada, o NVDA incluirá dicionários de pronúncia de símbolos adicionais ao pronunciar caracteres e símbolos.
-Esses dicionários contêm descrições de símbolos (particularmente emoji) que são fornecidos pelo [Consórcio Unicode https://www.unicode.org/consortium/] como parte de seu [Repositório de Dados de Localidade Comum https://cldr.unicode.org/].
+Esses dicionários contêm descrições de símbolos (particularmente emoji) que são fornecidos pelo [Consórcio Unicode https://www.unicode.org/consortium/] como parte de seu [Repositório de Dados de Localidade Comum http://cldr.unicode.org/].
 Se você deseja que o NVDA fale descrições de caracteres emoji com base nesses dados, ative esta opção.
 No entanto, se você estiver usando um sintetizador de fala que ofereça suporte a fala de descrições de emojis nativamente, convém desativá-lo.
 
@@ -2425,7 +2425,12 @@ As linhas Brailliant séries BI e B da [HumanWare https://www.humanware.com/], i
 Caso queira conectar via USB com o protocolo configurado para HumanWare, você antes precisa instalar os drivers USB fornecidos pelo fabricante.
 Drivers USB não são necessários se o protocolo estiver configurado para OpenBraille.
 
-A BrailleNote Touch também é suportada e não requer que nenhum driver seja instalado.
+Os seguintes dispositivos extras também são suportados (e não exigem a instalação de drivers especiais):
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
+
 
 A seguir estão as teclas de comando para as linhas Brailliant BI/B e BrailleNote touch com o NVDA.
 Por favor consulte a documentação da mesma para obter descrições de onde essas teclas se encontram.

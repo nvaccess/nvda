@@ -4,6 +4,48 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 %!includeconf: ../changes.t2tconf
 %!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
 
+= 2020.1 =
+
+== Novas Características ==
+- O item atualmente selecionado nas caixas de listagem é novamente apresentado no modo de navegação no Chrome, semelhante ao NVDA 2019.1. (#10713)
+- Agora você pode executar cliques com o botão direito do mouse em dispositivos de toque, tocando e mantendo pressionado um dedo. (#3886)
+- Suporte para novas linhas braille: APH Chameleon 20, APH Mantis Q40, HumanWare BrailleOne, BrailleNote Touch v2 e NLS eReader. (#10830)
+
+
+== Alterações ==
+- O NVDA evita que o sistema bloqueie ou entre no modo de suspensão quando em leitura contínua. (#10643)
+- Suporte para iframes fora de processo ""[out-of-process iframes]"" no Mozilla Firefox. (#10707)
+- Atualizado o transcritor braille liblouis para a versão 3.12 (#10161)
+
+
+== Alterações para Desenvolvedores ==
+- A documentação do desenvolvedor agora é compilada usando o sphinx. (#9840)
+- Várias funções de speech ""[fala]"" foram divididas em duas. (#10593)
+  A versão speakX permanece, mas agora depende de uma função getXSpeech que retorna uma sequência de fala.
+  - speakObjectProperties agora conta com getObjectPropertiesSpeech
+  - speakObject agora conta com getObjectSpeech
+  - speakTextInfo agora conta com getTextInfoSpeech
+  - speakWithoutPauses foi convertido em uma classe e refatorado, mas não deve quebrar a compatibilidade.
+  - getSpeechForSpelling está obsoleto (embora ainda disponível) no lugar use getSpellingSpeech.
+  Alterações privadas que não devem afetar os desenvolvedores de complementos:
+  - _speakPlaceholderIfEmpty agora é _getPlaceholderSpeechIfTextEmpty
+  - _speakTextInfo_addMath agora é _extendSpeechSequence_addMathForTextInfo
+- 'reason' ""[motivo]"" de Speech ""[Fala]"" foi convertido em um Enum, consulte a classe controlTypes.OutputReason. (#10703)
+  - As constantes 'REASON_*' de nível no módulo estão obsoletas.
+- A compilação de dependências do NVDA agora requer o Visual Studio 2019 (16.2 ou mais recente). (#10169)
+- SCons atualizado para a versão 3.1.1. (#10169)
+
+
+== Correção de Falhas ==
+- Corrigido não anunciar o símbolo Unicode menos (U+2212) (#10633)
+- Ao instalar o complemento proveniente do gestor de complementos, os nomes de arquivos e pastas na janela de navegação não são mais informados duas vezes. (#10620, #2395)
+- No Firefox, ao carregar o Mastodon com a interface avançada da web ativada, todas as linhas de tempo agora são renderizadas corretamente no modo de navegação. (#10776)
+- No modo de navegação, o NVDA agora informa "não marcada" para caixas de seleção desmarcadas, onde às vezes não acontecia anteriormente. (#10781)
+- Os controles de chave ARIA não relatam mais informações confusas, como "não pressionado marcado" ou "pressionado marcado". (#9187)
+- As vozes SAPI4 não devem mais se recusar a falar determinado texto. (#10792)
+- O NVDA pode novamente ler e interagir com equações matemáticas no Microsoft Word. (#10803)
+
+
 = 2019.3 =
 O NVDA 2019.3 é uma versão muito significativa que contém muitas alterações ocultas incluindo a atualização do Python 2 para o Python 3, e uma importante reescrita do subsistema de fala do NVDA.
 Embora essas alterações quebrem a compatibilidade com os complementos NVDA mais antigos, a atualização para o Python 3 é necessária para segurança, e as alterações na fala permitem algumas inovações interessantes no futuro próximo.

@@ -3,6 +3,24 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.1 =
+
+== Tính năng mới ==
+- Thành phần đang được chọn trong các hộp danh sách lại được thể hiện ở chế độ duyệt trong Chrome, tương tự như NVDA 2019.1. (#10713)
+- Giờ bạn có thể thực hiện lệnh bấm chuột phải trên các thiết bị cảm ứng bằng thao tác nhấn giữ một ngón tay. (#3886)
+- Hỗ trợ các màn hình nổi mới: APH Chameleon 20, APH Mantis Q40, HumanWare BrailleOne, BrailleNote Touch v2và NLS eReader. (#10830)
+
+
+== Các thay đổi ==
+- NVDA chặn không cho hệ thống bị khóa hay bật chế độ ngủ khi đang đọc tất cả. (#10643)
+- Hỗ trợ cho out-of-process iframes trong Mozilla Firefox. (#10707)
+- Cập nhật thư viện phiên dịch chữ nổi liblouis lên phiên bản 3.12 (#10161)
+
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
+
 = 2019.3 =
 NVDA 2019.3 là bản phát hành rất quan trọng, có nhiều thay đổi bên trong, bao gồm việc  nâng cấp từ Python 2 lên Python 3, và viết lại một chút cho phần tiếng nói hệ thống phụ của NVDA.
 Dù rằng những thay đổi này làm mất tính tương thích với add-on của các bản NVDA cũ hơn, việc nâng cấp lên Python 3 là cần thiết cho tính bảo mật, và các thay đổi với tiếng nói  cho phép   vài cải tiến thú vị trong tương lai gần.

@@ -593,8 +593,12 @@ addBluetoothDevices("hims", lambda m: any(m.id.startswith(prefix) for prefix in 
 	"SmartBeetle",
 )))
 
+# NattiqBraille
+addUsbDevices("nattiqbraille", KEY_SERIAL, {
+	"VID_2341&PID_8036",  # Atmel-based USB Serial for Nattiq nBraille
+})
+
 # superBrl
 addUsbDevices("superBrl", KEY_SERIAL, {
 	"VID_10C4&PID_EA60", # SuperBraille 3.2
 })
-

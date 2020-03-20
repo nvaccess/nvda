@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-28 00:10+1000\n"
-"PO-Revision-Date: 2020-01-21 09:12+0800\n"
+"POT-Creation-Date: 2020-03-06 00:10+1000\n"
+"PO-Revision-Date: 2020-03-06 00:11+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -801,6 +801,11 @@ msgstr "Британский английский (вторая ступень)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr "Североамериканский Компьютерный Код Брайля"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
 msgstr "Унифицированный английский (первая ступень)"
 
@@ -1036,13 +1041,18 @@ msgstr "Маратхи (первая ступень)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
-msgstr "Голландский (Бельгия)"
+msgid "Dutch (Belgium) 6 dot"
+msgstr "Голландский (Бельгия) шеститочечный"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
-msgstr "Голландский (Нидерланды)"
+msgid "Dutch (Netherlands) 6 dot"
+msgstr "Голландский (Нидерланды) шеститочечный"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr "Голландский восьмиточечный"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4582,6 +4592,18 @@ msgstr ""
 "Сообщает новый объект или содержание под вашем пальцем если отличается, где "
 "ваш палец был последним"
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "объект не имеет расположения"
+
+#. Translators: Input help mode message for touch right click command.
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr ""
+"Выполняет щелчок правой кнопкой мыши в текущей точке касания. Обычно "
+"используется для вызова контекстного меню."
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Вызывает диалог профилей конфигурации"
@@ -6409,6 +6431,8 @@ msgstr "Ошибка при проверке наличия обновлений
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "Ошибка"
 
@@ -6800,7 +6824,7 @@ msgstr "Переслать:"
 
 #. Translators: This is presented in outlook or live mail
 msgid "Answer to:"
-msgstr "ответить:"
+msgstr "Ответить:"
 
 #. Translators: This is presented in outlook or live mail
 msgid "Organisation:"
@@ -6808,7 +6832,7 @@ msgstr "Организация:"
 
 #. Translators: This is presented in outlook or live mail
 msgid "Distribution:"
-msgstr "Дистрибуция:"
+msgstr "Рассылка:"
 
 #. Translators: This is presented in outlook or live mail
 msgid "Key words:"
@@ -6816,7 +6840,7 @@ msgstr "Ключевые слова:"
 
 #. Translators: This is presented in outlook or live mail, email blind carbon copy
 msgid "BCC:"
-msgstr "Скрытая Копия:"
+msgstr "Скрытая копия:"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
 #. Translators: when an email is unread
@@ -9633,6 +9657,10 @@ msgstr ""
 "пользовательские жесты будут удалены.\n"
 "Это действие не может быть отменено."
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "Сброс жестов"
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
@@ -9648,6 +9676,7 @@ msgstr "Завершить математическое взаимодейств
 msgid "Math interaction not supported."
 msgstr "Математическое взаимодействие не поддерживается."
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9676,7 +9705,8 @@ msgstr "Выделено %s"
 msgid "%s selected"
 msgstr "%s выделено"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d символов"

@@ -106,7 +106,7 @@ O diálogo de instalación que aparece confirmará se queres instalar NVDA, e ta
 Premendo o botón Continuar comezará a Instalación do NVDA.
 Hai tamén algunhas opcións neste diálogo que se explican máis abaixo.
 Unha vez se completara a instalación, aparecerá una mensaxe dicíndoche que foi satisfactoria.
-Premendo Aceptar neste ponto reiniciarase a copia nova instalada do NVDA.
+Premendo Aceptar neste punto reiniciarase a copia nova instalada do NVDA.
 
 +++ Aviso sobre complementos incompatibles +++[InstallWithIncompatibleAddons]
 Se xa tes complementos instalados tamén pode haber un aviso de que se deshabilitarán os complementos incompatibles.
@@ -203,7 +203,7 @@ Mentres NVDA estea en execución, toda a entrada tactil irá directamente ao NVD
 Polo tanto, as accións que poidan efectuarse normalmente sen o NVDA non funcionarán.
 
 +++ Explorando a Pantalla +++[ExploringTheScreen]
-A maioría das accións básicas que podes realizar ca pantalla tactil son anunciar o control ou o texto en calquera ponto na pantalla.
+A maioría das accións básicas que podes realizar ca pantalla tactil son anunciar o control ou o texto en calquera punto na pantalla.
 Para facer esto, pon un dedo en calqera lugar sobre da pantalla.
 Tamén podes manter o teu dedo sobre da pantalla e movelo arredor para ler outros controis e texto sobre o que vaias movéndoo.
 
@@ -473,15 +473,15 @@ Canto máis á esquerda ou á dereita estea o rato na pantalla, máis á esquerd
 Estas características extra do rato non están activadas de forma predeterminada no NVDA.
 Se desexas tirar partido delas, podes configuralas dende a categoría [Opcións do Rato #MouseSettings] do diálogo [Opcións do NVDA #NVDASettings] que se atopa no menú Preferencias do NVDA.
 
-Se ben se poderían usar un rato físico ou un trackpad para navegar co rato, NVDA ten unhas poucas teclas de ordes relacionadas co rato:
+Se ben se poderían usar un rato físico ou un trackpad para navegar co rato, NVDA proporciona algunhas ordes relacionadas con el:
 %kc:beginInclude
-|| Nome | Tecla Sobremesa | Tecla Portátil | Descripción |
-| Clic botón esquerdo do rato | Dividir teclado numérico | NVDA+[ | Fai clic no botón esquerdo do rato unha vez. O común doble clic pode levarse a cabo premendo esta tecla dúas veces en rápida sucesión |
-| Bloquear botón esquerdo do rato | shift+Dividir teclado numérico | NVDA+control+[ | Mantén pulsado o botón esquerdo do rato. Prémeo de novo para liberalo. Para arrastrar o rato,  preme esta tecla para bloquear o botón esquerdo e entón move o rato físicamente ou utiliza unha das outras ordes de seguimento do rato |
-| Clic botón dereito do rato | Multiplicar teclado numérico | NVDA+] | Fai Clic no botón dereito do rato unha vez. |
-| Bloquear botón dereito do rato | shift+Multiplicar teclado numérico | NVDA+control+] | Mantén pulsado o botón dereito do rato. Preme outra vez para liberalo. Para arrastrar o rato,  preme esta tecla  para bloquear o botón dereito e entón move o rato físicamente ou utiliza unha das outras ordes de seguemento do rato |
-| Mover rato ao navegador de obxectos actual | NVDA+Dividir teclado numérico | NVDA+shift+m | Move o rato á posición do navegador de obxectos actual e cursor de revisión |
-| navegar ao obxecto baixo o rato | NVDA+Multiplicar teclado numérico | NVDA+shift+n | Pon o navegador de obxectos no obxecto localizado na posición do rato |
+|| Nome | Tecla Escritorio | Tecla Portátil | Tactil | Descripción |
+| Clic botón esquerdo do rato | Dividir teclado numérico | NVDA+` (acento grave) | non | Fai clic no botón esquerdo do rato unha vez. O típipo doble clic pode realizarse premendo esta tecla dúas veces en sucesión rápida |
+| Bloquear botón esquerdo do rato | shift+Dividir teclado numérico | NVDA+control+` (acento grave) | Non | Mantén premedo o botón esquerdo do rato. Prémeo de novo para liberalo. Para arrastrar o rato, preme esta tecla para bloquear o botón esquerdo e entón move o rato físicamente ou usa unha das outras ordes de movemento do rato |
+| Clic botón dereito do rato | Multiplicar teclado numérico | NVDA++ (signo máis) | Tap e manter | Fai clic no botón dereito do rato unha vez, principalmente útil para abrir un menú de contexto na posición do rato. |
+| Bloquear botón dereito do rato | shift+Multiplicar teclado numérico | NVDA+control++ (signo máis) | Non | Mantén premedo o botón dereito do rato. Preme outra vez para liberalo. Para arrastrar o rato, preme esta tecla  para bloquear o botón dereito e entón move o rato físicamente ou usa unha das outras ordes de movemento do rato |
+| Mover rato a navegador de obxectos actual | NVDA+Dividir teclado numérico | NVDA+shift+m | Non | Move o rato á posición do navegador de obxectos actual e cursor de revisión |
+| navegar ao obxecto baixo o rato | NVDA+Multiplicar teclado numérico | NVDA+shift+n | Non | Pon o navegador de obxectos no obxecto localizado na posición do rato |
 %kc:endInclude
 
 + Modo Navegación +[BrowseMode]
@@ -639,7 +639,7 @@ Por omisión, o cursor de revisión segue ao cursor do sistema, así podes utili
 | Interactuar co contido matemático | NVDA+alt+m | Comeza a interactuación co contido matemático. |
 %kc:endInclude
 
-Neste ponto, podes utilizar ordes de MathPlayer como as teclas de cursor para explorar a  expresión.
+Neste punto, podes utilizar ordes de MathPlayer como as teclas de cursor para explorar a  expresión.
 Por exemplo, podes moverte a través da expresión cas teclas de frecha  esquerda ou dereita e achegarte a unha porción da expresión como unha fracción utilizando a tecla de frecha abaixo.
 Por favor consulta a [documentación de MathPlayer acerca de ordes de navegación https://www.dessci.com/en/products/mathplayer/navigation_commands.htm] para información adicional.
 
@@ -755,9 +755,9 @@ Ten en conta que a transcripción pode reflectir só a palabra braille que estea
 Por exempro, se estás usando un código braille que comeza os números cun signo de número e premes retroceso para moverte ao remate dun número, necesitarás teclear o signo de número de novo para introducir números adicionais.
 
 %kc:beginInclude
-Ao premer o ponto 7 borras a última celda ou carácter introducido.
-O ponto 8 transcribe calquera entrada braille e preme a tecla intro.
-Premendo os pontos 7 + 8 transcribe calquera entrada braille, pero sen engadir un espazo ou premendo intro.
+Ao premer o punto 7 borras a última celda ou carácter introducido.
+O punto 8 transcribe calquera entrada braille e preme a tecla intro.
+Premendo os puntos 7 + 8 transcribe calquera entrada braille, pero sen engadir un espazo ou premendo intro.
 %kc:endInclude
 
 + Visión +[Vision]
@@ -1149,16 +1149,16 @@ Por Exemplo Se se está lendo nunha voz Inglés U.S. pero partes dun documento t
 Esta opción está desactivada de forma predeterminada.
 
 %kc:setting
-==== Nivel de Pontoación e símbolos ====[SpeechSettingsSymbolLevel]
+==== Nivel de Puntuación e símbolos ====[SpeechSettingsSymbolLevel]
 Tecla: NVDA+p
 
-Esto permíteche escoller a cantidade de pontoación e outros símbolos que deberían dicirse como palabras.
+Esto permíteche escoller a cantidade de puntuación e outros símbolos que deberían dicirse como palabras.
 Por exemplo, cando se configura a toda, todos os símbolos diranse como palabras.
 Esta opción aplícase a todos os sintetizadores, non só ao sintetizador activo actualmente.
 
 ==== Confiar na Linguaxe da voz ao procesar símbolos e caracteres ====[SpeechSettingsTrust]
 Activada de xeito predeterminado, esta opción di ao NVDA se a lingua da voz actual pode ser de confianza ao procesar símbolos e caracteres.
-Se notas que o NVDA está lendo a pontoación nunha lingua incorrecta para un sintetizador ou voz en particular, poderás querer desactivar esta opción para forzar ao NVDA a usar a súa lingua global configurada no su lugar.
+Se notas que o NVDA está lendo a puntuación nunha lingua incorrecta para un sintetizador ou voz en particular, poderás querer desactivar esta opción para forzar ao NVDA a usar a súa lingua global configurada no su lugar.
 
 ==== Incluir datos Unicode Consortium (incluindo emoji) ao procesar caracteres e símbolos ====[SpeechSettingsCLDR]
 Cando esta caixa de verificación estea activada, o NVDA incluirá os diccionarios de pronunciación de símbolos adicional cando pronuncie caracteres e símbolos.
@@ -1168,7 +1168,7 @@ Polo tanto, se estás a usar un sintetizador de voz que admita a fala de descrip
 
 Ten en conta que as descripcións de caracteres engadidas ou editadas manualmente gárdanse como parte das túas opcións de usuario.
 Polo tanto, se cambias a descripción dun emoji en particular, a túa descripción persoalizada falarase para ese emoji sen importar se esta opción está habilitada.
-Podes engadir, editar ou borrar descripcións de símbolos no [diálogo de pronunciación de pontoación e símbolos #SymbolPronunciation] do NVDA.
+Podes engadir, editar ou borrar descripcións de símbolos no [diálogo de pronunciación de puntuación e símbolos #SymbolPronunciation] do NVDA.
 
 Para activar ou desactivar a inclusión de Unicode Consortium data dende calquera sitio, por favor asigna un xesto persoalizado usando o [diálogo Xestos de Entrada #InputGestures].
 
@@ -1268,18 +1268,18 @@ Aplícase ao cursor do sistema e ao cursor de revisión, pero non ao indicador d
 ==== Parpadeo de Cursor ====[BrailleSettingsBlinkCursor]
 Esta opción permite ao cursor braille parpadear.
 Se o parpadeo está desactivado, o cursor braille estará constantemente na posición "subida".
-O indicador de seleción non está afectado por esta opción, sempre é cos pontos 7 e 8 sen parpadear.
+O indicador de seleción non está afectado por esta opción, sempre é cos puntos 7 e 8 sen parpadear.
 
 ==== Velocidade de Parpadeo do Cursor (ms) ====[BrailleSettingsBlinkRate]
 Esta opción é un campo numérico que che permite cambiar a velocidade de palpebreo do cursor en milésimas de segundo.
 
 ==== Forma do Cursor para o Foco====[BrailleSettingsCursorShapeForFocus]
-Esta opción permíteche escoller a forma (patrón de pontos) do cursor braille cando o braille sega ao foco.
-O indicador de seleción non está afectado por esta opción, sempre son os pontos 7 e 8 sen palpebrar.
+Esta opción permíteche escoller a forma (patrón de puntos) do cursor braille cando o braille sega ao foco.
+O indicador de seleción non está afectado por esta opción, sempre son os puntos 7 e 8 sen palpebrar.
 
 ==== Forma do Cursor para a Revisión ====[BrailleSettingsCursorShapeForReview]
-Esta opción permíteche escoller a forma (patrón de pontos) do cursor braille cando o braille sega á revisión.
-O indicador de seleción non está afectado por esta opción, sempre son os pontos 7 e 8 sen palpebrar.
+Esta opción permíteche escoller a forma (patrón de puntos) do cursor braille cando o braille sega á revisión.
+O indicador de seleción non está afectado por esta opción, sempre son os puntos 7 e 8 sen palpebrar.
 
 ==== Duración da Mensaxe (en seg) ====[BrailleSettingsMessageTimeout]
 Esta opción é un campo numérico que controla durante canto tempo se amosan as mensaxes do sistema na pantalla braille.
@@ -1803,7 +1803,7 @@ O foco aínda se actualizará ao elemento en particular cando interactúes con e
 Esta funcionalidade é experimental a partires do NVDA 2019.2.
 
 ==== Tempo de espera para o movemento do cursor (en MS) ====[AdvancedSettingsCaretMoveTimeout]
-Esta opción permíteche configurar o número de milésimas de segundo que o NVDA esperará a que o cursor (ponto de inserción) se mova nos controis de texto editables.
+Esta opción permíteche configurar o número de milésimas de segundo que o NVDA esperará a que o cursor (punto de inserción) se mova nos controis de texto editables.
 Se ves que o NVDA semella estar seguindo incorrectamente o cursor, por exemplo, parece estar sempre un carácter por detrás ou repetindo liñas, entón podes tentar aumentar este valor.
 
 ==== Categorías de rexistro de depuración ====[AdvancedSettingsDebugLoggingCategories]
@@ -1848,7 +1848,7 @@ Polo tanto, utilizando o exemplo anterior da sustitución da palabra "paxaro" co
 Unha expresión regular é un patrón que contén símbolos especiais que che permiten emparellar máis de un caracter ao mesmo tempo, ou emparellar so números, ou so letras, segundo uns poucos exemplos. 
 As expresións regulares non están cubertas nesta Guía do Usuario, pero hai moitos titoriais na web que poden proporcionarche máis información.
 
-+++ Pronunciación de Pontoación/símbolos +++[SymbolPronunciation]
++++ Pronunciación de puntuación/símbolos +++[SymbolPronunciation]
 Este diálogo permíteche cambiar o modo no que se pronuncian a puntuación e outros símbolos, así como o nivel dos símbolos no que se falan. 
 
 A lingua cuia pronuncia de símbolo vai a seren editada amosarase No título do diálogo.
@@ -2202,28 +2202,28 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 | Moverse cara atrás utilizando acción de roda dereita | roda dereita cara arriba |
 | Moverse cara adiante utilizando acción de roda dereita | roda dereita cara abaixo |
 | Guiar cara a celda braille | sensor |
-| tecla shift+tab | barra espaciadora braille+ponto1+ponto2 |
-| tecla tab | barra espaciadora braille+ponto4+ponto5 |
-| tecla frecha abaixo | barra espaciadora braille+ponto1 |
-| tecla frecha arriba | barra espaciadora braille+ponto4 |
-| tecla control+frecha esquerda | barra espaciadora braille+ponto2 |
-| tecla control+frecha dereita | barra espaciadora braille+ponto5 |
-| tecla frecha esquerda | barra espaciadora braille+ponto3 |
-| tecla frecha dereita | barra espaciadora braille+ponto6 |
-| tecla inicio | barra espaciadora braille+ponto1+ponto3 |
-| tecla fin | barra espaciadora braille+ponto4+ponto6 |
-| tecla control+inicio | barra espaciadora braille+ponto1+ponto2+ponto3 |
-| tecla control+fin | barra espaciadora braille+ponto4+ponto5+ponto6 |
-| tecla alt | barra espaciadora braille+ponto1+ponto3+ponto4 |
-| tecla alt+tab | barra espaciadora braille+ponto2+ponto3+ponto4+ponto5 |
-| tecla alt+shift+tab | barra espaciadorabraille+ponto1+ponto2+ponto5+ponto6 |
-| tecla windows+tab | barra espaciadora braille+ponto2+ponto3+ponto4 |
-| tecla escape | barra espaciadora braille+ponto1+ponto5 |
-| tecla windows | barra espaciadora braille+ponto2+ponto4+ponto5+ponto6 |
+| tecla shift+tab | barra espaciadora braille+punto1+punto2 |
+| tecla tab | barra espaciadora braille+punto4+punto5 |
+| tecla frecha abaixo | barra espaciadora braille+punto1 |
+| tecla frecha arriba | barra espaciadora braille+punto4 |
+| tecla control+frecha esquerda | barra espaciadora braille+punto2 |
+| tecla control+frecha dereita | barra espaciadora braille+punto5 |
+| tecla frecha esquerda | barra espaciadora braille+punto3 |
+| tecla frecha dereita | barra espaciadora braille+punto6 |
+| tecla inicio | barra espaciadora braille+punto1+punto3 |
+| tecla fin | barra espaciadora braille+punto4+punto6 |
+| tecla control+inicio | barra espaciadora braille+punto1+punto2+punto3 |
+| tecla control+fin | barra espaciadora braille+punto4+punto5+punto6 |
+| tecla alt | barra espaciadora braille+punto1+punto3+punto4 |
+| tecla alt+tab | barra espaciadora braille+punto2+punto3+punto4+punto5 |
+| tecla alt+shift+tab | barra espaciadorabraille+punto1+punto2+punto5+punto6 |
+| tecla windows+tab | barra espaciadora braille+punto2+punto3+punto4 |
+| tecla escape | barra espaciadora braille+punto1+punto5 |
+| tecla windows | barra espaciadora braille+punto2+punto4+punto5+punto6 |
 | tecla espazo | barra espaciadora braille |
-| tecla windows+d (minimizar todas as aplicacións) | barra espaciadora braille+ponto1+ponto2+ponto3+ponto4+ponto5+ponto6 |
-| Anunciar Liña Actual | barra espaciadora braille+ponto1+ponto4 |
-| Menú NVDA | barra espaciadora braille+ponto1+ponto3+ponto4+ponto5 |
+| tecla windows+d (minimizar todas as aplicacións) | barra espaciadora braille+punto1+punto2+punto3+punto4+punto5+punto6 |
+| Anunciar Liña Actual | barra espaciadora braille+punto1+punto4 |
+| Menú NVDA | barra espaciadora braille+punto1+punto3+punto4+punto5 |
 
 Para os modelos máis recentes da Focus que conteñen teclas de balancíns (focus 40, focus 80 e focus blue):
 || Nome | Tecla |
@@ -2423,7 +2423,12 @@ As pantallas braille Brailliant series BI e B de [HumanWare https://www.humanwar
 Se a conectas a través de USB co protocolo configurado a HumanWare, primeiro debes instalar os controladores USB proporcionados polo fabricante.
 Non se requiren os controladores USB se o protocolo se configura a OpenBraille.
 
-Tamén se soporta a BrailleNote Touch, e non require instalar ningún controlador.
+Tamén se admiten os seguintes dispositivos extra (e non requiren ningún controlador en especial para seren instalados):
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
+-
 
 Seguidamente van as asignacións de teclas para as pantallas Brailliant BI/B e BrailleNote touch co NVDA.
 Por favor consulta a documentación da pantalla para descripcións de onde poden atoparse estas teclas.
@@ -2436,20 +2441,20 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 | Mover pantalla braille á liña seguinte | abaixo |
 | Guiar ata a celda braille | sensores |
 | Activar/desactivar seguemento de braille | arriba+abaixo |
-| tecla frecha arriba | espazo+ponto1 |
-| tecla frecha abaixo | espazo+ponto4 |
-| tecla frecha esquerda | espazo+ponto3 |
-| tecla frecha dereita | espazo+ponto6 |
-| tecla shift+tab | espazo+ponto1+ponto3 |
-| tecla tab | espazo+ponto4+ponto6 |
-| tecla alt | espazo+ponto1+ponto3+ponto4 (espazo+m) |
-| tecla escape | espazo+ponto1+ponto5 (espazo+e) |
-| tecla intro | ponto8 |
-| tecla windows | espazo+ponto3+ponto4 |
-| tecla alt+tab | espazo+ponto2+ponto3+ponto4+ponto5 (espazo+t) |
-| Menú NVDA | espazo+ponto1+ponto3+ponto4+ponto5 (espazo+n) |
+| tecla frecha arriba | espazo+punto1 |
+| tecla frecha abaixo | espazo+punto4 |
+| tecla frecha esquerda | espazo+punto3 |
+| tecla frecha dereita | espazo+punto6 |
+| tecla shift+tab | espazo+punto1+punto3 |
+| tecla tab | espazo+punto4+punto6 |
+| tecla alt | espazo+punto1+punto3+punto4 (espazo+m) |
+| tecla escape | espazo+punto1+punto5 (espazo+e) |
+| tecla intro | punto8 |
+| tecla windows | espazo+punto3+punto4 |
+| tecla alt+tab | espazo+punto2+punto3+punto4+punto5 (espazo+t) |
+| Menú NVDA | espazo+punto1+punto3+punto4+punto5 (espazo+n) |
 | tecla windows+d (minimizar todas las aplicaciones) | espacio+punto1+punto4+punto5 (espacio+d) |
-| Ler todo | espazo+ponto1+ponto2+ponto3+ponto4+ponto5+ponto6 |
+| Ler todo | espazo+punto1+punto2+punto3+punto4+punto5+punto6 |
 %kc:endInclude
 
 +++ Asignacións de teclas para Brailliant BI 32, BI 40 e B 80 +++ 
@@ -2491,53 +2496,53 @@ Por favor consulta a documentación das pantallas para descripcións de onde pod
 | Mover ao foco actual | leftSideScrollUp+leftSideScrollDown, rightSideScrollUp+rightSideScrollDown, leftSideScroll+rightSideScroll |
 | Tecla control | smartbeetle:f1, brailleedge:f3 |
 | Tecla windows | f7, smartbeetle:f2 |
-| tecla alt | ponto1+ponto3+ponto4+espazo, f2, smartbeetle:f3, brailleedge:f4 |
+| tecla alt | punto1+punto3+punto4+espazo, f2, smartbeetle:f3, brailleedge:f4 |
 | tecla shift | f5 |
-| tecla insert | ponto2+ponto4+espazo, f6 |
-| tecla aplicacións | ponto1+ponto2+ponto3+ponto4+espazo, f8 |
-| tecla bloqueo de maiúsculas | ponto1+ponto3+ponto6+espazo |
-| tecla tab | ponto4+ponto5+espazo, f3, brailleedge:f2 |
+| tecla insert | punto2+punto4+espazo, f6 |
+| tecla aplicacións | punto1+punto2+punto3+punto4+espazo, f8 |
+| tecla bloqueo de maiúsculas | punto1+punto3+punto6+espazo |
+| tecla tab | punto4+punto5+espazo, f3, brailleedge:f2 |
 | teclas shift+alt+tab | f2+f3+f1 |
 | teclas alt+tab | f2+f3 |
-| teclas shift+tab | ponto1+ponto2+espazo |
-| tecla fin | ponto4+ponto6+espazo |
-| teclas control+fin | ponto4+ponto5+ponto6+espazo |
-| tecla inicio | ponto1+ponto3+espazo, smartbeetle:f4 |
-| teclas control+inicio | ponto1+ponto2+ponto3+espazo |
-| teclas alt+f4 | ponto1+ponto3+ponto5+ponto6+espazo |
-| tecla frecha esquerda | ponto3+espazo, leftSideLeftArrow |
-| teclas control+shift+frecha esquerda | ponto2+ponto8+espazo+f1 |
-| teclas control+frecha esquerda | ponto2+espazo |
-| teclas shift+frecha esquerda | ponto2+ponto7+f1 |
-| teclas alt+frecha esquerda | ponto2+ponto7 |
-| tecla frecha dereita | ponto6+espazo, leftSideRightArrow |
-| teclas control+shift+frecha dereita | ponto5+ponto8+espazo+f1 |
-| teclas control+frecha dereita | ponto5+espazo |
-| teclas shift+alt+frecha dereita | ponto5+ponto7+f1 |
-| teclas alt+frecha dereita | ponto5+ponto7 |
-| tecla rePáx | ponto1+ponto2+ponto6+espazo |
-| teclas control+rePáx | ponto1+ponto2+ponto6+ponto8+espazo |
-| tecla frecha arriba | ponto1+espazo, leftSideUpArrow |
-| teclas control+shift+frecha arriba | ponto2+ponto3+ponto8+espazo+f1 |
-| teclas control+frecha arriba | ponto2+ponto3+espazo |
-| teclas shift+alt+frecha arriba | ponto2+ponto3+ponto7+f1 |
-| teclas alt+frecha arriba | ponto2+ponto3+ponto7 |
+| teclas shift+tab | punto1+punto2+espazo |
+| tecla fin | punto4+punto6+espazo |
+| teclas control+fin | punto4+punto5+punto6+espazo |
+| tecla inicio | punto1+punto3+espazo, smartbeetle:f4 |
+| teclas control+inicio | punto1+punto2+punto3+espazo |
+| teclas alt+f4 | punto1+punto3+punto5+punto6+espazo |
+| tecla frecha esquerda | punto3+espazo, leftSideLeftArrow |
+| teclas control+shift+frecha esquerda | punto2+punto8+espazo+f1 |
+| teclas control+frecha esquerda | punto2+espazo |
+| teclas shift+frecha esquerda | punto2+punto7+f1 |
+| teclas alt+frecha esquerda | punto2+punto7 |
+| tecla frecha dereita | punto6+espazo, leftSideRightArrow |
+| teclas control+shift+frecha dereita | punto5+punto8+espazo+f1 |
+| teclas control+frecha dereita | punto5+espazo |
+| teclas shift+alt+frecha dereita | punto5+punto7+f1 |
+| teclas alt+frecha dereita | punto5+punto7 |
+| tecla rePáx | punto1+punto2+punto6+espazo |
+| teclas control+rePáx | punto1+punto2+punto6+punto8+espazo |
+| tecla frecha arriba | punto1+espazo, leftSideUpArrow |
+| teclas control+shift+frecha arriba | punto2+punto3+punto8+espazo+f1 |
+| teclas control+frecha arriba | punto2+punto3+espazo |
+| teclas shift+alt+frecha arriba | punto2+punto3+punto7+f1 |
+| teclas alt+frecha arriba | punto2+punto3+punto7 |
 | teclas shift+frecha arriba | leftSideScrollDown+espazo |
-| tecla avPáx | ponto3+ponto4+ponto5+espazo |
-| teclas control+avPáx | ponto3+ponto4+ponto5+ponto8+espazo |
-| tecla frecha abaixo | ponto4+espazo, leftSideDownArrow |
-| teclas control+shift+frecha abaixo | ponto5+ponto6+ponto8+espazo+f1 |
-| teclas control+frecha abaixo | ponto5+ponto6+espazo |
-| teclas shift+alt+frecha abaixo | ponto5+ponto6+ponto7+f1 |
-| teclas alt+frecha abaixo | ponto5+ponto6+ponto7 |
+| tecla avPáx | punto3+punto4+punto5+espazo |
+| teclas control+avPáx | punto3+punto4+punto5+punto8+espazo |
+| tecla frecha abaixo | punto4+espazo, leftSideDownArrow |
+| teclas control+shift+frecha abaixo | punto5+punto6+punto8+espazo+f1 |
+| teclas control+frecha abaixo | punto5+punto6+espazo |
+| teclas shift+alt+frecha abaixo | punto5+punto6+punto7+f1 |
+| teclas alt+frecha abaixo | punto5+punto6+punto7 |
 | teclas shift+frecha abaixo | espacio+rightSideScrollDown |
-| tecla escape | ponto1+ponto5+espazo, f4, brailleedge:f1 |
-| tecla borrar | ponto1+ponto3+ponto5+espazo, ponto1+ponto4+ponto5+espazo |
-| tecla f1 | ponto1+ponto2+ponto5+espazo |
-| tecla f3 | ponto1+ponto2+ponto4+ponto8 |
-| tecla f4 | ponto7+f3 |
-| teclas windows+b | ponto1+ponto2+f1 |
-| teclas windows+d | ponto1+ponto4+ponto5+f1 |
+| tecla escape | punto1+punto5+espazo, f4, brailleedge:f1 |
+| tecla borrar | punto1+punto3+punto5+espazo, punto1+punto4+punto5+espazo |
+| tecla f1 | punto1+punto2+punto5+espazo |
+| tecla f3 | punto1+punto2+punto4+punto8 |
+| tecla f4 | punto7+f3 |
+| teclas windows+b | punto1+punto2+f1 |
+| teclas windows+d | punto1+punto4+punto5+f1 |
 | teclas control+insert | smartbeetle:f1+rightSideScroll |
 | teclas alt+insert | smartbeetle:f3+rightSideScroll |
 %kc:endInclude
@@ -2637,15 +2642,15 @@ As teclas interiores mapéanse a espazo.
 
 || Nome | Tecla |
 %kc:beginInclude
-| tecla escape | espazo co ponto 7 |
-| tecla frecha arriba | espazo co ponto  2 |
-| tecla frecha esquerda | espazo co ponto 1 |
-| tecla frecha dereita | espazo co ponto 4 |
-| tecla frecha abaixo | espazo co ponto 5 |
-| tecla control | lt+ponto2 |
-| tecla alt | lt+ponto3 |
-| tecla control+escape | espazo cos pontos 1 2 3 4 5 6 |
-| tecla tab | espazo cos pontos 3 7 |
+| tecla escape | espazo co punto 7 |
+| tecla frecha arriba | espazo co punto  2 |
+| tecla frecha esquerda | espazo co punto 1 |
+| tecla frecha dereita | espazo co punto 4 |
+| tecla frecha abaixo | espazo co punto 5 |
+| tecla control | lt+punto2 |
+| tecla alt | lt+punto3 |
+| tecla control+escape | espazo cos puntos 1 2 3 4 5 6 |
+| tecla tab | espazo cos puntos 3 7 |
 %kc:endInclude 
 
 ++ Modelos Antigos Papenmeier Braille BRAILLEX ++[PapenmeierOld]
@@ -2745,7 +2750,7 @@ Para o BrailleNote Touch, por favor consulta a seción [series das Brailliant BI
 
 Excepto para o BrailleNote PK, admítense ambos teclados braille (BT) e QWERTY (QT).
 Para o BrailleNote QT, non se admite a emulación do teclado do PC.
-Tamén podes introducir pontos braille usando o teclado QT.
+Tamén podes introducir puntos braille usando o teclado QT.
 Por favor consulta a seción de terminal braille da guía de manual do BrailleNote para detalles.
 
 Se o teu dispositivo soporta máis dun tipo de conexión, cando conectes o teu BrailleNote ao NVDA, debes configurar o porto da terminal braille nas opcións de terminal braille.
@@ -2756,8 +2761,8 @@ Se te estás a conectar utilizando un porto serie (ou un conversor de USB a seri
 
 Antes de conectar o teu BrailleNote Apex utilizando o seu cliente de interface USB, debes instalar os controladores proporcionados por HumanWare.
 
-No BrailleNote Apex BT, podes usar a roda de desprazamento ubicada entre os pontos 1 e 4 para varias ordes do NVDA.
-A roda consiste en  catro pontos direcionais, un clic no botón central, e unha roda que xira no sentido ou contra do sentido das agullas do reloxo.
+No BrailleNote Apex BT, podes usar a roda de desprazamento ubicada entre os puntos 1 e 4 para varias ordes do NVDA.
+A roda consiste en  catro puntos direcionais, un clic no botón central, e unha roda que xira no sentido ou contra do sentido das agullas do reloxo.
 
 Seguidamente van as asignacións de ordes do BrailleNote para o NVDA.
 Por favor consulta a documentación do BrailleNote para atopar onde se localizan estas teclas.
@@ -2769,26 +2774,26 @@ Por favor consulta a documentación do BrailleNote para atopar onde se localizan
 | Mover pantalla braille á liña anterior | anterior |
 | Mover pantalla braille á liña seguinte | seguinte |
 | Levar á celda braille | sensores |
-| menú NVDA | espazo+ponto1+ponto3+ponto4+ponto5 (espazo+n) |
+| menú NVDA | espazo+punto1+punto3+punto4+punto5 (espazo+n) |
 | Activar e desactivar seguemento do braille | anterior+seguinte |
-| Tecla frecha arriba | espazo+ponto1 |
-| Tecla frecha abaixo | espazo+ponto4 |
+| Tecla frecha arriba | espazo+punto1 |
+| Tecla frecha abaixo | espazo+punto4 |
 | Tecla frecha esquerda | espazo+ponmto3 |
-| Tecla frecha dereita | espazo+ponto6 |
-| Tecla retroceso de páxina | espazo+ponto1+ponto3 |
-| Tecla avance de páxina | espazo+ponto4+ponto6 |
-| Tecla inicio | espazo+ponto1+ponto2 |
-| Tecla Fin | espazo+ponto4+ponto5 |
-| teclas Control+inicio | espazo+ponto1+ponto2+ponto3 |
-| Teclas Control+fin | espazo+ponto4+ponto5+ponto6 |
+| Tecla frecha dereita | espazo+punto6 |
+| Tecla retroceso de páxina | espazo+punto1+punto3 |
+| Tecla avance de páxina | espazo+punto4+punto6 |
+| Tecla inicio | espazo+punto1+punto2 |
+| Tecla Fin | espazo+punto4+punto5 |
+| teclas Control+inicio | espazo+punto1+punto2+punto3 |
+| Teclas Control+fin | espazo+punto4+punto5+punto6 |
 | tecla espazo | espazo |
-| Intro | espazo+ponto8 |
-| Retroceso | espazo+ponto7 |
-| Tecla Tab | espazo+ponto2+ponto3+ponto4+ponto5 (espazo+t) |
-| Teclas Shift+tab | espazo+ponto1+ponto2punto5+ponto6 |
-| Tecla Windows | espazo+ponto2+ponto4+ponto5+ponto6 (espazo+w) |
-| Tecla Alt | espazo+ponto1+ponto3+ponto4 (espazo+m) |
-| Activar e desactivar axuda de entrada | espazo+ponto2+ponto3+ponto6 (espazo+h abaixo) |
+| Intro | espazo+punto8 |
+| Retroceso | espazo+punto7 |
+| Tecla Tab | espazo+punto2+punto3+punto4+punto5 (espazo+t) |
+| Teclas Shift+tab | espazo+punto1+punto2punto5+punto6 |
+| Tecla Windows | espazo+punto2+punto4+punto5+punto6 (espazo+w) |
+| Tecla Alt | espazo+punto1+punto3+punto4 (espazo+m) |
+| Activar e desactivar axuda de entrada | espazo+punto2+punto3+punto6 (espazo+h abaixo) |
 
 Seguidamente van as ordes asignadas ao BrailleNote QT cando non está en modo de entrada braille.
 
@@ -2897,60 +2902,60 @@ Por favor consulta a documentación da pantalla para descripcións de onde se po
 | Cambiar ao seguinte modo de revisión | joystick1Dereita+joystick1Abaixo |
 | Borrar a última celda braille ou carácter introducido | retroceso |
 | Transcribir calquera entrada braille e premer a tecla intro | retroceso+espazo |
-| tecla insert | ponto3+ponto5+espazo, l7 |
-| tecla suprimir | ponto3+ponto6+espazo |
-| tecla inicio | ponto1+ponto2+ponto3+espazo, joystick2Esquerda+joystick2Arriba |
-| tecla fin | ponto4+ponto5+ponto6+espazo, joystick2Dereita+joystick2Abaixo |
-| tecla frecha esquerda | ponto2+espazo, joystick2Esquerda, frecha esquerda |
-| tecla frecha dereita | ponto5+espazo, joystick2Dereita, frecha dereita |
-| tecla frecha arriba  | ponto1+espazo, joystick2Arriba, frecha arriba |
-| tecla frecha abaixo  | ponto6+espazo, joystick2Abaixo, frecha abaixo |
+| tecla insert | punto3+punto5+espazo, l7 |
+| tecla suprimir | punto3+punto6+espazo |
+| tecla inicio | punto1+punto2+punto3+espazo, joystick2Esquerda+joystick2Arriba |
+| tecla fin | punto4+punto5+punto6+espazo, joystick2Dereita+joystick2Abaixo |
+| tecla frecha esquerda | punto2+espazo, joystick2Esquerda, frecha esquerda |
+| tecla frecha dereita | punto5+espazo, joystick2Dereita, frecha dereita |
+| tecla frecha arriba  | punto1+espazo, joystick2Arriba, frecha arriba |
+| tecla frecha abaixo  | punto6+espazo, joystick2Abaixo, frecha abaixo |
 | tecla intro | joystick2Centro |
-| tecla RePáx | ponto1+ponto3+espazo |
-| tecla AvPáx | ponto4+ponto6+espazo |
-| tecla 1 numérico | ponto1+ponto6+retroceso |
-| tecla 2 numérico | ponto1+ponto2+ponto6+retroceso |
-| tecla 3 numérico | ponto1+ponto4+ponto6+retroceso |
-| tecla 4 numérico | ponto1+ponto4+ponto5+ponto6+retroceso |
-| tecla 5 numérico | ponto1+ponto5+ponto6+retroceso |
-| tecla 6 numérico | ponto1+ponto2+ponto4+ponto6+retroceso |
-| tecla 7 numérico | ponto1+ponto2+ponto4+ponto5+ponto6+retroceso |
-| tecla 8 numérico | ponto1+ponto2+ponto5+ponto6+retroceso |
-| tecla 9 numérico | ponto2+ponto4+ponto6+retroceso |
-| tecla Insert numérico | ponto3+ponto4+ponto5+ponto6+retroceso |
-| tecla ponto numérico | ponto2+retroceso |
-| tecla dividir numérico | ponto3+ponto4+retroceso |
-| tecla multiplicar numérico | ponto3+ponto5+retroceso |
-| tecla menos numérico | ponto3+ponto6+retroceso |
-| tecla máis numérico | ponto2+ponto3+ponto5+retroceso |
-| tecla intro numérico | ponto3+ponto4+ponto5+retroceso |
-| tecla escape | ponto1+ponto2+ponto4+ponto5+espazo, l2 |
-| tecla tab | ponto2+ponto5+ponto6+espazo, l3 |
-| tecla shift+tab | ponto2+ponto3+ponto5+espazo |
-| tecla imprimir pantalla | ponto1+ponto3+ponto4+ponto6+espazo |
-| tecla pausa | ponto1+ponto4+espazo |
-| tecla aplicacións | ponto5+ponto6+retroceso |
-| tecla f1 | ponto1+retroceso |
-| tecla f2 | ponto1+ponto2+retroceso |
-| tecla f3 | ponto1+ponto4+retroceso |
-| tecla f4 | ponto1+ponto4+ponto5+retroceso |
-| tecla f5 | ponto1+ponto5+retroceso |
-| tecla f6 | ponto1+ponto2+ponto4+retroceso |
-| tecla f7 | ponto1+ponto2+ponto4+ponto5+retroceso |
-| tecla f8 | ponto1+ponto2+ponto5+retroceso |
-| tecla f9 | ponto2+ponto4+retroceso |
-| tecla f10 | ponto2+ponto4+ponto5+retroceso |
-| tecla f11 | ponto1+ponto3+retroceso |
-| tecla f12 | ponto1+ponto2+ponto3+retroceso |
-| tecla windows | ponto1+ponto2+ponto3+ponto4+retroceso |
-| tecla bloqMayus | ponto7+retroceso, ponto8+retroceso |
-| tecla BloqNum | ponto3+retroceso, ponto6+retroceso |
-| tecla shift | ponto7+espazo, l4 |
-| Conmutar tecla shift | ponto1+ponto7+espazo, ponto4+ponto7+espazo |
-| tecla control | ponto7+ponto8+espazo, l5 |
-| Conmutar tecla control | ponto1+ponto7+ponto8+espazo, ponto4+ponto7+ponto8+espazo |
-| Tecla alt | ponto8+espazo, l6 |
-| Conmutar tecla alt | ponto1+ponto8+espazo, ponto4+ponto8+espazo |
+| tecla RePáx | punto1+punto3+espazo |
+| tecla AvPáx | punto4+punto6+espazo |
+| tecla 1 numérico | punto1+punto6+retroceso |
+| tecla 2 numérico | punto1+punto2+punto6+retroceso |
+| tecla 3 numérico | punto1+punto4+punto6+retroceso |
+| tecla 4 numérico | punto1+punto4+punto5+punto6+retroceso |
+| tecla 5 numérico | punto1+punto5+punto6+retroceso |
+| tecla 6 numérico | punto1+punto2+punto4+punto6+retroceso |
+| tecla 7 numérico | punto1+punto2+punto4+punto5+punto6+retroceso |
+| tecla 8 numérico | punto1+punto2+punto5+punto6+retroceso |
+| tecla 9 numérico | punto2+punto4+punto6+retroceso |
+| tecla Insert numérico | punto3+punto4+punto5+punto6+retroceso |
+| tecla punto numérico | punto2+retroceso |
+| tecla dividir numérico | punto3+punto4+retroceso |
+| tecla multiplicar numérico | punto3+punto5+retroceso |
+| tecla menos numérico | punto3+punto6+retroceso |
+| tecla máis numérico | punto2+punto3+punto5+retroceso |
+| tecla intro numérico | punto3+punto4+punto5+retroceso |
+| tecla escape | punto1+punto2+punto4+punto5+espazo, l2 |
+| tecla tab | punto2+punto5+punto6+espazo, l3 |
+| tecla shift+tab | punto2+punto3+punto5+espazo |
+| tecla imprimir pantalla | punto1+punto3+punto4+punto6+espazo |
+| tecla pausa | punto1+punto4+espazo |
+| tecla aplicacións | punto5+punto6+retroceso |
+| tecla f1 | punto1+retroceso |
+| tecla f2 | punto1+punto2+retroceso |
+| tecla f3 | punto1+punto4+retroceso |
+| tecla f4 | punto1+punto4+punto5+retroceso |
+| tecla f5 | punto1+punto5+retroceso |
+| tecla f6 | punto1+punto2+punto4+retroceso |
+| tecla f7 | punto1+punto2+punto4+punto5+retroceso |
+| tecla f8 | punto1+punto2+punto5+retroceso |
+| tecla f9 | punto2+punto4+retroceso |
+| tecla f10 | punto2+punto4+punto5+retroceso |
+| tecla f11 | punto1+punto3+retroceso |
+| tecla f12 | punto1+punto2+punto3+retroceso |
+| tecla windows | punto1+punto2+punto3+punto4+retroceso |
+| tecla bloqMayus | punto7+retroceso, punto8+retroceso |
+| tecla BloqNum | punto3+retroceso, punto6+retroceso |
+| tecla shift | punto7+espazo, l4 |
+| Conmutar tecla shift | punto1+punto7+espazo, punto4+punto7+espazo |
+| tecla control | punto7+punto8+espazo, l5 |
+| Conmutar tecla control | punto1+punto7+punto8+espazo, punto4+punto7+punto8+espazo |
+| Tecla alt | punto8+espazo, l6 |
+| Conmutar tecla alt | punto1+punto8+espazo, punto4+punto8+espazo |
 | Conmutar simulación de entrada de teclado HID | esytime):l1+joystick1Abaixo, esytime):l8+joystick1Abaixo |
 %kc:endInclude
 
