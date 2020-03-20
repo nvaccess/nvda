@@ -2200,6 +2200,7 @@ The following displays support this automatic detection functionality.
 - Optelec ALVA 6 series
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
 - Eurobraille Esys/Esytime/Iris displays
+- Nattiq nBraille displays
 -
 
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
@@ -2984,6 +2985,22 @@ Please see the display's documentation for descriptions of where these keys can 
 | alt key | dot8+space, l6 |
 | Toggle alt key | dot1+dot8+space, dot4+dot8+space |
 | ToggleHID keyboard input simulation | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
+%kc:endInclude
+
+++ Nattiq nBraille Displays ++[NattiqTechnologies]
+NVDA supports displays from [Nattiq Technologies https://www.nattiq.com/] when connected via USB.
+Windows 10 detects the Braille Displays once connected, you may need to install USB drivers if using older versions of Windows (below Win10).
+You can get them from the manufacturer's website.
+
+Following are the key assignments for Nattiq Technologies displays with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | up |
+| Scroll braille display forward | down |
+| Move braille display to previous line | left |
+| Move braille display to next line | right |
+| Route to braille cell | routing |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
