@@ -20,6 +20,7 @@ import gui
 from gui import guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixin
 import tones
+import systemUtils
 
 def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,silent=False,startAfterInstall=True):
 	progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
@@ -32,7 +33,12 @@ def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,sil
 		# Translators: The message displayed while NVDA is being installed.
 		else _("Please wait while NVDA is being installed"))
 	try:
-		res=config.execElevated(config.SLAVE_FILENAME,["install",str(int(createDesktopShortcut)),str(int(startOnLogon))],wait=True,handleAlreadyElevated=True)
+		res = systemUtils.execElevated(
+			config.SLAVE_FILENAME,
+			["install", str(int(createDesktopShortcut)), str(int(startOnLogon))],
+			wait=True,
+			handleAlreadyElevated=True
+		)
 		if res==2: raise installer.RetriableFailure
 		if copyPortableConfig:
 			installedUserConfigPath=config.getInstalledUserConfigPath()

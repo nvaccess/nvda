@@ -1,8 +1,8 @@
-# -*- coding: UTF-8 -*-
-# A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2020 NV Access Limited, Dinesh Kaushal, Davy Kager, Babbage B.V., Łukasz Golonka
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+#ui.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2008-2017 NV Access Limited, Dinesh Kaushal, Davy Kager, Babbage B.V.
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
 
 """User interface functionality.
 This refers to the user interface presented by the screen reader alone, not the graphical user interface.
@@ -87,15 +87,3 @@ def reviewMessage(text: str, speechPriority: Optional[speech.Spri] = None):
 	speech.speakMessage(text, priority=speechPriority)
 	if braille.handler.shouldAutoTether or braille.handler.getTether() == braille.handler.TETHER_REVIEW:
 		braille.handler.message(text)
-
-
-def openUserConfigurationDirectory():
-	"""Opens directory containing config files for the current user"""
-	import config
-	path = config.getUserDefaultConfigPath()
-	if not path:
-		raise ValueError("no user default config path")
-	config.initConfigPath(path)
-	import shellapi
-	import winUser
-	shellapi.ShellExecute(0, None, path, None, None, winUser.SW_SHOWNORMAL)

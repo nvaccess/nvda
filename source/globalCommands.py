@@ -1591,7 +1591,8 @@ class GlobalCommands(ScriptableObject):
 	def script_openUserConfigurationDirectory(self, gesture):
 		if globalVars.appArgs.secure:
 			return
-		ui.openUserConfigurationDirectory()
+		import systemUtils
+		systemUtils.openUserConfigurationDirectory()
 
 	def script_toggleProgressBarOutput(self,gesture):
 		outputMode=config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]
