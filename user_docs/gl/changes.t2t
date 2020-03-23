@@ -27,6 +27,8 @@ Que hai de Novo no NVDA
 - O NVDA pode ler e interactuar de novo con ecuacións matemáticas en Microsoft Word. (#10803)
 - O NVDA anunciará de novo o texto que se deselecione en modo exploración se se preme unha frecha mentres o texto se seleciona. (#10731).
 - O NVDA xa non sae se hai un erro inicializando o eSpeak. (#10607)
+- Os erros causados polo unicode en traduccións para atallos xa non deteñen o instalador, mitigados pola volta ao texto en inglés. (#5166, #6326)
+- O feito de saír  das listaxes e táboas en Ler todo coa lectura superficial activada xa non anuncia continuamente a saída da listaxe ou táboa. (#10706)
 
 
 == Cambios para Desenvolvedores ==
@@ -45,6 +47,7 @@ Que hai de Novo no NVDA
   - As constantes Module level 'REASON_*' están obsoletas.
 - As dependencias de compilación do NVDA agora requiren Visual Studio 2019 (16.2 ou máis recente). (#10169)
 - Actualizado SCons á versión 3.1.1. (#10169)
+- Novamente permíteselle a behaviors._FakeTableCell non teren unha localización definida (#10864)
 
 
 = 2019.3 =
