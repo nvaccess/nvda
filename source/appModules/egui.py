@@ -1,4 +1,3 @@
-#appModules/egui.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2020 Pavol Kecskemety <pavol.kecskemety@eset.sk>
 #This file is covered by the GNU General Public License.
