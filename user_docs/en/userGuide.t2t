@@ -363,10 +363,10 @@ Once you navigate to an object, you can review its content using the [text revie
 When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the current navigator object is also exposed visually.
 By default, the navigator object moves along with the System focus, though this behavior can be toggled on and off.
 
-Note that braille follows both the [focus #SystemFocus] and [caret #SystemCaret] as well as object navigation and text review by default.
-If you want it to follow the focus and caret only, you need to [configure braille to be tethered to #BrailleTether] focus.
-In this case, braille will not follow object navigation and text review.
-If you want braille to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
+Note that by default, braille tries to follow automatically both the system focus and system caret as well as the NVDA navigator and the review cursor.
+If you want it to follow the focus and caret only, you need to configure braille to be tethered to focus.
+In this case, braille will not follow the NVDA navigator during object navigation or the review cursor during review.
+If you want braille to follow object navigation and text review instead, you need to configure braille to be tethered to review.
 
 To navigate by object, use the following commands:
 
@@ -394,8 +394,10 @@ When moving the review cursor, the System caret does not follow along, so you ca
 However, by default, when the System caret moves, the review cursor follows along.
 This can be toggled on and off.
 
-Note that braille follows the [focus #SystemFocus] and [caret #SystemCaret] by default, rather than object navigation and text review.
-If you want it to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review or automatically to focus or review.
+Note that by default, braille tries to follow automatically both the system focus and system caret as well as the NVDA navigator and the review cursor.
+If you want it to follow the focus and caret only, you need to configure braille to be tethered to focus.
+In this case, braille will not follow the NVDA navigator during object navigation or the review cursor during text review.
+If you want braille to follow only object navigation and text review instead, you need to configure braille to be tethered to review.
 
 The following commands are available for reviewing text:
 %kc:beginInclude
