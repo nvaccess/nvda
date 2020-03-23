@@ -107,9 +107,11 @@ def getAvailableLanguages(presentational=False):
 		langs.sort(key=lambda lang: locale.strxfrm(lang[1] if lang[1] else lang[0]))
 	langs = [(lc, (f"{desc}, {lc}" if desc else lc)) for lc, desc in langs]
 	#include a 'user default, windows' language, which just represents the default language for this user account
-	langs.append(("Windows",
+	langs.insert(
+		0,
 		# Translators: the label for the Windows default NVDA interface language.
-		_("User default")))
+		("Windows", _("User default"))
+	)
 	return langs
 
 def makePgettext(translations):
