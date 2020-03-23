@@ -103,9 +103,14 @@ def getAvailableLanguages(presentational=False):
 		locales.sort()
 	# Prepare a 2-tuple list of language code and human readable language description.
 	langs = [(lc, getLanguageDescription(lc)) for lc in locales]
-	if presentational:
+	# Translators: The pattern defining how languages are displayed and sorted in in the general
+	# setting panel language list. Use "{desc}, {lc}" (most languages) to display first full anguage
+	# name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
+	fullDescPattern = _("{desc}, {lc}")
+	isDescFirst = fullDescPattern.find("{desc}") < fullDescPattern.find("{lc}")
+	if presentational and isDescFirst:
 		langs.sort(key=lambda lang: locale.strxfrm(lang[1] if lang[1] else lang[0]))
-	langs = [(lc, (f"{desc}, {lc}" if desc else lc)) for lc, desc in langs]
+	langs = [(lc, (fullDescPattern.format(desc=desc, lc=lc) if desc else lc)) for lc, desc in langs]
 	#include a 'user default, windows' language, which just represents the default language for this user account
 	langs.insert(
 		0,
