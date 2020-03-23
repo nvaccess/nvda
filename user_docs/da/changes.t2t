@@ -29,6 +29,8 @@ Nyheder i NVDA
 - NVDA kan nu igen læse og interagere med matematiske udtryk i Microsoft Word. (#10803)
 - NVDA vil nu igen annoncére, hvis tekst ikke længere er valgt, når du har valgt tekst og derefter bruger piletasterne i gennemsynstilstand. (#10731).
 - NVDA vil ikke længere afslutte, hvis der er en fejl under initialisering af eSpeak. (#10607)
+- Fejl forårsaget af Unicode-tegn i tastaturgenveje, der er en del af installationsprocessen, vil ikke længere forhindre installationen. Løst ved at benytte den engelske tekst i disse tilfælde. (#5166, #6326)
+- Konstante meddelelser om at du har navigeret ind i eller forladt en liste eller tabel vil ikke længere opstå under skimlæsning, når du bruger kommandoen "Sig alt". (#10706)
 
 
 == Ændringer for udviklere ==
