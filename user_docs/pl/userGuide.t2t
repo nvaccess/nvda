@@ -473,15 +473,15 @@ Im dalej z lewej lub prawej strony znajduje się wskaźnik, tym bardziej z lewej
 Wyżej opisane opcje dotyczące nawigacji myszą nie są domyślnie włączone.
 Możesz skonfigurować je, korzystając z kategorii [Ustawienia myszy #MouseSettings] w oknie [Preferencji NVDA #NVDASettings], znajdującym się w podmenu Ustawienia w menu NVDA.
 
-Although a physical mouse or trackpad should be used to navigate with the mouse, NVDA provides some commands related to the mouse:
+Do właściwego korzystania z funkcji oferowanych przez urządzenia wskazujące powinno się używać fizycznej myszy lub touch pada, pomimo tego NVDA posiada kilka funkcji które ułatwiają korzystanie z myszy.
 %kc:beginInclude
-|| Name | Desktop key | Laptop key | Touch | Description |
-| Left mouse button click | numpadDivide | NVDA+[ | none | Clicks the left mouse button once. The common double click can be performed by pressing this key twice in quick succession |
-| Left mouse button lock | shift+numpadDivide | NVDA+control+[ | none | Locks the left mouse button down. Press again to release it. To drag the mouse, press this key to lock the left button down and then move the mouse either physically or use one of the other mouse routing commands |
-| Right mouse click | numpadMultiply | NVDA+] | tap and hold | Clicks the right mouse button once, mostly used to open context menu at the location of the mouse. |
-| Right mouse button lock | shift+numpadMultiply | NVDA+control+] | none | Locks the right mouse button down. Press again to release it. To drag the mouse, press this key to lock the right button down and then move the mouse either physically or use one of the other mouse routing commands |
-| Move mouse to current navigator object | NVDA+numpadDivide | NVDA+shift+m | none | Moves the mouse to the location of the current navigator object and review cursor |
-| Navigate to the object under the mouse | NVDA+numpadMultiply | NVDA+shift+n | none | Set the navigator object to the object located at the position of the mouse |
+|| Nazwa | skrót układu desktop | Skrót układu laptop | Gest dotykowy | Opis |
+| Lewy przycisk myszy | Numeryczny slesz | NVDA+[ | brak | Wykonuje pojedyncze kliknięcie myszą. Popularny "dwuklik" może być wykonany poprzez dwukrotne szybkie naciśnięcie skrótu. |
+| Zablokowanie lewego przycisku myszy | shift+numeryczny slesz | NVDA+kontrol+[ | brak | Blokuje lewy przycisk myszy. Naciśnij ten skrut ponownie, aby go odblokować. W celu przeciągnięcia myszy przesuń fizyczne urządzenie w dane miejsce lub użyj innego przeznaczonego do tego skrutu |
+| Prawy przycisk myszy | Numeryczna gwiazdka | NVDA+] | długie naciśnięcie | Wykonuje kliknięcie prawym przyciskiem myszy. Skrót ten jest używany do otwierania menu kontekstowego w niektórych aplikacjach. |
+| Zablokowanie prawego przycisku myszy | shift+Numeryczna Gwiazdka | NVDA+kontrol+] | brak | Blokuje prawy przycisk myszy. Naciśnij ten skrut ponownie, aby go odblokować. W celu przeciągnięcia myszy przesuń fizyczne urządzenie w dane miejsce lub użyj innego przeznaczonego do tego skrutu |
+| Przeniesienie myszy do aktualnego obiektu nawigatora | NVDA+Numeryczny slesz | NVDA+shift+m | brak | Przenosi kursor myszy do pozycji aktualnego obiektu nawigatora. |
+| Przeniesienie pozycji nawigatora do obiektu pod myszą | NVDA+Numeryczny slesz | NVDA+shift+n | brak | Przenosi obiekt nawigatora do aktualnej pozycji myszy. |
 %kc:endInclude
 
 + Tryb czytania +[BrowseMode]
@@ -2425,7 +2425,7 @@ Serie monitorów Brailliant BI i B produkcji [HumanWare https://www.humanware.co
 Przy połączeniu przez USB z protokołem ustawionym na HumanWare, trzeba najpierw zainstalować sterowniki USB dostarczone przez producenta.
 Sterowniki USB nie są wymagane, jeśli protokół jest ustawiony na OpenBraille.
 
-The following extra devices are also supported (and do not require any special drivers to be installed):
+Następujące urządzenia również nie wymagają instalacji dodatkowych sterowników USB:
 - APH Mantis Q40
 - APH Chameleon 20
 - Humanware BrailleOne
