@@ -29,6 +29,8 @@ Was ist neu in NVDA
 - NVDA kann wiederum mathematische Gleichungen in Microsoft Word lesen und mit ihnen interagieren. (#10803)
 - NVDA teilt wieder mit, dass der Text im Lesemodus nicht ausgewählt ist, wenn eine Pfeiltaste gedrückt wird, während der Text ausgewählt ist. (#10731).
 - NVDA beendet sich nicht mehr selbst, wenn ein Fehler bei der eSpeak-Initialisierung auftritt. (#10607)
+- Während des Installationsvorgang bricht das Installationsprogramm nicht mehr ab, wenn ein Unicode-Zeichen in der Tastenkombination der Verknüpfung für den Desktop unerwarteter Weise auftritt. Es wird stattdessen die englische Originalbezeichnung verwendet. (#5166, #6326)
+- Beim Navigieren mit den Pfeiltasten bzw. beim Verlassen von Listen und Tabellen wird beim Alles Lesen das Verlassen der Liste oder Tabelle nicht mehr mitgeteilt. (#10706)
 
 
 == Änderungen für Entwickler ==
@@ -47,6 +49,7 @@ Was ist neu in NVDA
   - Die Konstanten der Modulebene "REASON_*" sind veraltet.
 - Visual Studio 2019 (16.2 oder neuer) wird zum Kompilieren von NVDA-Abhängigkeiten benötigt. (#10169)
 - SCons auf Version 3.1.1 aktualisiert. (#10169)
+- Die Funktion "behaviors._FakeTableCell" wieder ohne definierte Position. (#10864)
 
 
 = 2019.3 =
