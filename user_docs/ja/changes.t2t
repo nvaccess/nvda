@@ -3,10 +3,158 @@ NVDA最新情報
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.3 =
+NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3への移行や、NVDAの音声エンジン制御の大幅な改良など、多くの内部的な変更が行われました。
+これにより旧式のNVDAアドオンとは互換性がなくなりました。しかしセキュリティのためにPython 3への移行が必要です。また、音声エンジン制御の改良により、近い将来、魅力的な新機能を実現できます。
+このリリースのその他のハイライトは、64ビット Java VM への対応、スクリーンカーテンおよびフォーカスハイライト機能、点字ディスプレイ対応の追加、点字ビューアー、および多くのバグ修正です。
+
+== 新機能 ==
+- マウスカーソルをナビゲーターオブジェクトの位置に移動するコマンドが、Java アプリのテキストフィールドにおいてより正確に動作するようになりました。 (#10157)
+- 以下の Handy Tech 点字ディスプレイに対応しました (#8955):
+ - Basic Braille Plus 40
+ - Basic Braille Plus 32
+ - Connect Braille
+- 入力ジェスチャーダイアログの「設定のリセット」ボタンにより、ユーザーが定義したジェスチャーをすべて消去できるようになりました。 (#10293)
+- Microsoft Word において、テキストが非表示に設定されている場合でもフォントを報告できるようになりました。 (#8713)
+- テキストの選択またはコピーの開始位置にレビューカーソルを移動するコマンド NVDA+shift+F9 が追加されました。 (#1969)
+- Internet Explorer, Microsoft Edge および最近のバージョンの Firefox や Chrome のフォーカスモードとオブジェクトナビゲーションで、ランドマークを報告するようになりました。 (#10101)
+- Internet Explorer, Google Chrome および Mozilla Firefox において、記事（article 要素）やグループ (role="group") に対する1文字ナビゲーションが可能になりました。これらの機能には既定ではキーボード操作は割り当てられていません。入力ジェスチャーのダイアログから「ブラウズモード」の中のこれらの機能をカスタマイズしてください。 (#9485, #9227)
+ - 図も報告の対象になりました。図は「オブジェクト」として扱われます。1文字ナビゲーション o で移動できます。
+- Internet Explorer, Google Chrome および Mozilla Firefox において、記事（article 要素）をオブジェクトナビゲーションで報告するようになりました。また「書式とドキュメント情報」で設定した場合には、ブラウズモードにおいても報告が行われます。 (#10424)
+- スクリーンカーテン機能が追加されました。この機能を有効にすると、Windows 8 以降において、画面を完全に黒にできます。 (#7857)
+ - スクリーンカーテンを有効化するスクリプトが追加されました。1回押すと再起動されるまで、2回押すとNVDAの実行中に常に有効です。このスクリプトには既定のジェスチャーは割り当てられていません。
+ - スクリーンカーテンは NVDA 設定ダイアログの「ビジョン」カテゴリで有効化および設定ができます。
+- フォーカスハイライト機能が追加されました。 (#971, #9064)
+ - フォーカス、ナビゲーターオブジェクト、ブラウズモードのカーソル位置のそれぞれのハイライトを、NVDA設定ダイアログの「ビジョン」カテゴリで有効化および設定できます。
+ - 注意: この機能は「フォーカスハイライト」アドオンと互換性がありません。しかし、NVDA のハイライト機能を無効化すれば、このアドオンは利用可能です。
+- 点字ビューアーが追加されました。点字ディスプレイの出力がウィンドウに表示されます。 (#7788)
+
+
+== 変更点 ==
+- Windows コンソールで NVDA を使う方法の説明がユーザーガイドに追加されました。 (#9957)
+- nvda.exe を実行すると、それまで実行されていた NVDA を停止して新しいプロセスに置き換える挙動が既定の機能になりました。 -r または --replace のコマンドライン引数はエラーにはなりませんが無視されます。 (#8320)
+- Windows 8 とそれ以降において、NVDA は Microsoft Store からダウンロードされたアプリなどのプロダクト名とバージョン情報を、アプリが提供する情報に基づいて報告するようになりました。 (#4259, #10108)
+- Microsoft Word で変更の追跡の有効化または無効化をキーボードから行った場合に、設定状態の変更を NVDA が報告するようになりました。 (#942) 
+- NVDA のログに NVDA のバージョン番号を最初に出力するようになりました。NVDA 設定ダイアログでログ記録レベルを無効にした場合にもバージョン番号は出力されます。 (#9803)
+- NVDA のコマンドラインオプションでログ記録レベルが変更された場合に、NVDA設定ダイアログでログ記録レベルを変更できないようになりました。 (#10209)
+- Microsoft Word において Ctrl+Shift+8 で「編集記号の表示」を切り替えたときに結果を報告するようになりました。 (#10241)
+- Liblouis 点訳エンジンを commit 58d67e63 に更新しました。 (#10094)
+- Unicode 共通ロケールデータリポジトリ (CLDR) の記号（絵文字など）の報告を有効にした場合に、記号読み上げレベルの設定に関わらず報告を行うようになりました。 (#8826)
+- NVDA で使用している comtypes などのサードパーティ Python パッケージについて、警告やエラーを NVDA のログに記録するようになりました。 (#10393)
+- Unicode 共通ロケールデータリポジトリの絵文字データばバージョン 36.0 に更新しました。 (#10426)
+- ブラウズモードでグループ（role="group"など）にフォーカスが移動した場合に、その説明 (aria-describedby) を報告するようになりました。 (#10095)
+- Java Access Bridge は NVDA に同梱されるようになりました。追加のインストールを必要せず Java アプリが NVDA で利用できます。64 ビット Java VM にも対応しています。 (#7724)
+- Java Access Bridge がユーザーごとの設定で無効になっている場合は、NVDA は起動時にこの設定を有効化します。 (#7952)
+- eSpeak-NG を 1.51-dev commit ca65812ac6019926f2fbd7f12c92d7edd3701e0c に更新しました。 (#10581)
+
+
+== バグ修正 ==
+- 絵文字などの32ビットUnicode文字が点字ディスプレイで16進数の値として表示されるときに、より簡潔に表示されるようになりました。 (#6695)
+- NVDA設定のオブジェクト表示カテゴリでツールチップの報告を有効にした場合に、Windows 10 ユニバーサルアプリのツールチップを報告するようになりました。 (#8118)
+- Windows 10 Anniversary Update およびそれ以降において、Mintty で入力文字が報告されるようになりました。 (#1348)
+- Windows 10 Anniversary Update およびそれ以降において、Windows コンソールのキャレットに近い場所に出力されたテキストが不適切にスペル読みされていた問題に対応しました。 (#513)
+- Audacity の「コンプレッサー」ダイアログのコントロールが、ダイアログ内を移動したときに報告されるようになりました。 (#10103)
+- Notepad++ など Scintilla ベースのテキストエディタで NVDA のオブジェクトレビューを使ったときに、スペースが不適切に単語として扱われていた問題に対応しました。 (#8295)
+- 点字ディスプレイの入力ジェスチャーでテキストをスクロールしている間に、システムがスリープモードに切り替わることをNVDAが防ぐようになりました。 (#9175)
+- Windows 10 において、Microsoft Excel のセル内容の編集、および、その他の UI オートメーションを使用するテキストコントロールにおいて、点字ディスプレイが追従しない場合があった問題を修正しました。 (#9749)
+- Microsoft Edge のアドレスバーの自動入力候補が報告されなかった問題を修正しました。 (#7554)
+- Internet Explorer において HTML のタブコントロールヘッダーにフォーカスした場合に無反応になっていた問題を修正しました。 (#8898)
+- EdgeHTML ベースの Microsoft Edge において、ウィンドウを最大化したときに自動入力候補の音が再生されていた問題を修正しました。 (#9110, #10002)
+- Mozilla Firefox および Google Chrome において ARIA 1.1 コンボボックスに対応しました。 (#9616)
+- SysListView32 コントロールのリスト項目で非表示の列の内容を NVDA が報告しないようになりました。 (#8268)
+- セキュアモードでNVDA設定ダイアログのログ出力レベルが誤って「情報」と表示されていた問題を修正しました。 (#10209)
+- Windows 10 Anniversary Update およびそれ以降のスタートメニューにおいて、NVDA は検索結果の詳細を報告するようになりました。 (#10232)
+- ブラウズモードにおいて、テキストカーソルの移動や1文字ナビゲーションでドキュメントの内容が変化した場合に、NVDA が不適切な内容を読み上げることがあった問題を修正しました。 (#8831, #10343)
+- Microsoft Word においてビュレットの名前に誤りがあった問題を修正しました。 (#10399)
+- Windows 10 May 2019 Update およびそれ以降において、絵文字パネルやクリップボード履歴を開いたときに、最初に選択された絵文字や項目が報告されないことがあった問題を修正しました。 (#9204)
+- Poedit において、右書き(RTL)言語の翻訳を表示できなかった問題を修正しました。 (#9931)
+- Windows 10 April 2018 Update およびそれ以降の設定アプリにおいて、「システム」の「サウンド」ページで音量メーターとして使われているプログレスバーをNVDAが報告しないようになりました。 (#10284)
+- 読み上げ辞書の正規表現に誤りがあった場合に、NVDA の読み上げがすべて動かなくなっていた不具合を修正しました。 (#10334)
+- Microsoft Word で UI オートメーションを有効にした場合に、ビュレットを使って箇条書きにした項目を読み上げるときに、次のリスト項目のビュレットが不適切に報告されていた問題を修正しました。 (#9613)
+- liblouis における特定の点訳の不具合やエラーを修正しました。 (#9982)
+- NVDA が起動する前に実行されていた Java アプリを、アプリの再起動をしなくても NVDA で操作できるようになりました。 (#10296)
+- Mozilla Firefox において、要素がフォーカスされて「現在位置」(aria-current) に変わった場合に、このことを不必要に繰り返し報告していた問題を修正しました。 (#8960)
+- NVDA で文字単位の移動を行ったときに特定の Unicode の合字（「eにアキュート」など）を1文字として扱うようになりました。 (#10550)
+- Spring Tool Suite Version 4 に対応しました。 (#10001)
+- aria-labelledby で関連付けた対象が内側の要素である場合に、名前(name)を繰り返し報告しないようになりました。 (#10552)
+- Windows 10 version 1607 およびそれ以降において、点字ディスプレイから入力された文字が報告されなかった問題を改善しました。 (#10569)
+- 音声の出力デバイスを変更すると、新たに選択されたデバイスから NVDA のサウンドやビープ音が出るようになりました。 (#2167)
+- Mozilla Firefox において、ブラウズモードでのフォーカス移動の性能を改善しました。多くの場合にブラウズモードのテキストカーソルの移動がより高速になります。 (#10584)
+
+
+== 開発者向けの変更 ==
+- Python をバージョン 3.7 に更新しました。(#7105)
+- pySerial をバージョン 3.4 に更新しました。 (#8815)
+- wxPython をバージョン 4.0.3 に更新しました。これは Python 3.5 およびそれ以降に対応するためです。 (#9630)
+- six をバージョン 1.12.0 に更新しました。 (#9630)
+- py2exe をバージョン 0.9.3.2 (開発版 commit b372a8e from albertosottile/py2exe#13) に更新しました。 (#9856)
+- UIAutomationCore.dll comtypes モジュールをバージョン 10.0.18362 に更新しました。 (#9829)
+- Python コンソールの Tab 入力補完で最初にアンダースコアを入力したときに、アンダースコアで始まる属性だけを候補として表示するようになりました。 (#9918)
+- Flake8 linting tool を scons に統合しました。これはプルリクエストにおいてコーディング規約への適合を確認するためです。 (#5918)
+- NVDA は pyWin32 に依存しなくなりました。アドオンでは win32api および win32con モジュールは利用できません。 (#9639)
+ - win32api 呼び出しは ctypes 経由で直接 Win32 DLL 関数を呼び出すように書き換えてください。
+ - win32con 定数の代わりにあなたのソースコードで定数を定義してください。
+- nvwave.playWaveFile の "async" 引数は "asynchronous" という名前に変更されました。 (#8607)
+- synthDriver オブジェクトのメソッド speakText および speakCharacter は今後はサポートされません。
+ - この機能は SynthDriver.speak で処理されます。
+- synthDriverHandler の SynthSetting クラスは削除されました。代わりに driverHandler.DriverSetting クラスを使用してください。
+- SynthDriver クラスは今後は lastIndex プロパティ経由でのインデックスの通知を行いません。
+ - 代替手段として、特定のインデックスまでの音声がすべて再生されたときに、そのインデックスについて synthDriverHandler.synthIndexReached アクションが利用できます。
+- SynthDriver クラスは synthDriverHandler.synthDoneSpeaking アクションを通知する必要があります。これは、特定の SynthDriver.speak 呼び出しについての音声の再生がすべて終わったときに実行してください。
+- SynthDriver クラスは speak メソッドで speech.PitchCommand をサポートする必要があります。speakSpelling 機能におけるピッチの制御には、今後はこの機能が使用されます。
+- speech モジュールの getSpeechTextForProperties 関数の名前を getPropertiesSpeech に変更しました。 (#10098)
+- braille モジュールの getBrailleTextForProperties 関数の名前を getPropertiesBraille に変更しました。 (#10469)
+- speech モジュールの以下の関数は speech sequences を返すようになりました。 (#10098)
+ - getControlFieldSpeech
+ - getFormatFieldSpeech
+ - getSpeechTextForProperties から名前が変更された getPropertiesSpeech
+ - getIndentationSpeech
+ - getTableInfoSpeech
+- textUtils モジュールが追加されました。これは Python 3 の文字列と Windows Unicode 文字列の変換を支援します。 (#9545)
+ - 詳細はこのモジュールのドキュメントと、実装の例として textInfos.offsets モジュールを参照してください。
+- 非推奨としていた以下の機能を削除しました。 (#9548)
+ - AppModules から以下を削除:
+  - Windows XP サウンドレコーダー
+  - Klango Player, このアプリは開発が終了しました。
+ - configobj.validate ラッパーの削除
+  - import validate ではなく今後は from configobj import validate を使用してください。
+ - textInfos.Point および textInfos.Rect はそれぞれ locationHelper.Point および locationHelper.RectLTRB を使用してください。
+ - braille.BrailleHandler._get_tether および braille.BrailleHandler.set_tether は削除されました。
+ - config.getConfigDirs は削除されました。
+ - config.ConfigManager.getConfigValidationParameter ではなく getConfigValidation を使用してください。
+ - inputCore.InputGesture.logIdentifier プロパティは削除されました。
+   - inputCore.InputGesture の _get_identifiers を使用してください。
+ - synthDriverHandler.SynthDriver.speakText/speakCharacter は削除されました。
+ - いくつかの synthDriverHandler.SynthSetting クラスが削除されました。
+   - 後方互換性のために残されていましたが、非推奨でした。 (#8214) 
+   - SynthSetting クラスを使用していたドライバーは DriverSetting クラスを使って書き直す必要があります。
+ - レガシーなコードが削除されました。以下はその一部です:
+  - Outlook 2003 以前におけるメッセージリストへの対応
+  - Windows Vista 以前のスタートメニューに対応する処理
+  - Skype 7 への対応。このバージョンはもう使用できません。
+- ビジョン拡張プロバイダーのためのフレームワークが追加されました。画面に表示される内容を加工できます。オブジェクトの位置情報をNVDAから取得することも可能です。 (#9064)
+ - アドオンは visionEnhancementProviders フォルダーにビジョン拡張プロバイダーを追加できます。
+ - モジュール vision および visionEnhancementProviders はこのフレームワークの実装と使用例です。
+ - ビジョン拡張プロバイダーは NVDA 設定ダイアログの「ビジョン」カテゴリで有効化および設定できます。
+- baseObject.AutoPropertyObject を継承するオブジェクト(例えば NVDAObjects や TextInfos )で抽象クラスのプロパティが使用できます。 (#10102)
+- displayModel.UNIT_DISPLAYCHUNK が導入されました。これは DisplayModelTextInfo に関する textInfos の unit 定数です。 (#10165)
+ - この新しい定数を使うと DisplayModelTextInfo の中のテキストを移動するときに、このモデルにおけるテキストの区切られ方に近い方法で行うことができます。
+- displayModel.getCaretRect が locationHelper.RectLTRB のインスタンスを返すようになりました。 (#10233)
+- UNIT_CONTROLFIELD および UNIT_FORMATFIELD 定数は virtualBuffers.VirtualBufferTextInfo から textInfos パッケージに移動されました。 (#10396)
+- NVDA のログの各項目にその情報が発生したスレッドの情報を含むようになりました。 (#10259)
+- UIA TextInfo オブジェクトは page, story, formatField の単位で移動および拡張できるようになりました。 (#10396)
+- appModules や globalPlugins などの外部モジュールによる NVDAObject の生成の失敗が起こりにくくなりました。
+ - chooseNVDAObjectOverlayClasses および event_NVDAObject_init の各メソッドが例外を投げたときに適切にキャッチされログに残るようになりました。
+- aria.htmlNodeNameToAriaLandmarkRoles ディクショナリの名前は aria.htmlNodeNameToAriaRoles に変更されました。また、ランドマークではないロールを含むようになりました。
+- scriptHandler.isCurrentScript は使用されていないため削除されました。代替の機能はありません。 (#8677)
+
+
 = 2019.2.1 =
 これは 2019.2 で起きる複数の不具合を修正するマイナーリリースです。以下の変更を含みます:
 - Gmail を Firefox または Chrome で使用した場合に、フィルターの作成や特定の設定の変更などで、ポップアップメニューを操作したときにクラッシュする不具合を修正しました。(#10175, #9402, #8924)
 - Windows 7 において、スタートメニューでマウスを操作したときに Windows Explorer がクラッシュする不具合を修正しました。(#9435) 
+- Windows 7 において、Windows Explorer のメタデーターのエディットフィールドを操作するとクラッシュする不具合を修正しました。 (#5337) 
+- Mozilla Firefox または Google Chrome で base64 URI の画像を扱うときに NVDA がフリーズする不具合を修正しました。 (#10227)
 
 
 = 2019.2 =

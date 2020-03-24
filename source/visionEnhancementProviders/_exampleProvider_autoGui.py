@@ -5,7 +5,7 @@
 
 from vision import providerBase
 import driverHandler
-import wx
+import gui
 from autoSettingsUtils.utils import StringParameterInfo
 from autoSettingsUtils.autoSettings import SupportedSettingType
 from typing import Optional, Type, Any, List
@@ -179,7 +179,7 @@ class AutoGuiTestProvider(providerBase.VisionEnhancementProvider):
 			f"runtimeOnlySetting_externalValueLoad: {self._settings.runtimeOnlySetting_externalValueLoad}\n"
 			f"runtimeOnlySetting_localDefault: {self._settings.runtimeOnlySetting_localDefault}\n"
 		)
-		wx.MessageBox(result, caption="started")
+		gui.messageBox(result, caption="started")
 
 	def terminate(self):
 		self._settings.clearRuntimeSettingAvailability()

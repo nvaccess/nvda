@@ -1026,9 +1026,8 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_previousLine(self,gesture):
 		info=api.getReviewPosition().copy()
-		if info._expandCollapseBeforeReview:
-			info.expand(textInfos.UNIT_LINE)
-			info.collapse()
+		info.expand(textInfos.UNIT_LINE)
+		info.collapse()
 		res=info.move(textInfos.UNIT_LINE,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
@@ -1058,9 +1057,8 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_nextLine(self,gesture):
 		info=api.getReviewPosition().copy()
-		if info._expandCollapseBeforeReview:
-			info.expand(textInfos.UNIT_LINE)
-			info.collapse()
+		info.expand(textInfos.UNIT_LINE)
+		info.collapse()
 		res=info.move(textInfos.UNIT_LINE,1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
@@ -1086,9 +1084,8 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_previousWord(self,gesture):
 		info=api.getReviewPosition().copy()
-		if info._expandCollapseBeforeReview:
-			info.expand(textInfos.UNIT_WORD)
-			info.collapse()
+		info.expand(textInfos.UNIT_WORD)
+		info.collapse()
 		res=info.move(textInfos.UNIT_WORD,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
@@ -1117,9 +1114,8 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_nextWord(self,gesture):
 		info=api.getReviewPosition().copy()
-		if info._expandCollapseBeforeReview:
-			info.expand(textInfos.UNIT_WORD)
-			info.collapse()
+		info.expand(textInfos.UNIT_WORD)
+		info.collapse()
 		res=info.move(textInfos.UNIT_WORD,1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
@@ -1148,9 +1144,8 @@ class GlobalCommands(ScriptableObject):
 		lineInfo=api.getReviewPosition().copy()
 		lineInfo.expand(textInfos.UNIT_LINE)
 		charInfo=api.getReviewPosition().copy()
-		if charInfo._expandCollapseBeforeReview:
-			charInfo.expand(textInfos.UNIT_CHARACTER)
-			charInfo.collapse()
+		charInfo.expand(textInfos.UNIT_CHARACTER)
+		charInfo.collapse()
 		res=charInfo.move(textInfos.UNIT_CHARACTER,-1)
 		if res==0 or charInfo.compareEndPoints(lineInfo,"startToStart")<0:
 			# Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
@@ -1195,9 +1190,8 @@ class GlobalCommands(ScriptableObject):
 		lineInfo=api.getReviewPosition().copy()
 		lineInfo.expand(textInfos.UNIT_LINE)
 		charInfo=api.getReviewPosition().copy()
-		if charInfo._expandCollapseBeforeReview:
-			charInfo.expand(textInfos.UNIT_CHARACTER)
-			charInfo.collapse()
+		charInfo.expand(textInfos.UNIT_CHARACTER)
+		charInfo.collapse()
 		res=charInfo.move(textInfos.UNIT_CHARACTER,1)
 		if res==0 or charInfo.compareEndPoints(lineInfo,"endToEnd")>=0:
 			# Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
@@ -2294,6 +2288,37 @@ class GlobalCommands(ScriptableObject):
 				obj.doAction()
 	script_touch_hoverUp.category=SCRCAT_TOUCH
 
+	def script_touch_rightClick(self, gesture):
+		obj = api.getNavigatorObject()
+		# Ignore invisible or offscreen objects as they cannot even be navigated with touch gestures.
+		if controlTypes.STATE_INVISIBLE in obj.states or controlTypes.STATE_OFFSCREEN in obj.states:
+			return
+		try:
+			p = api.getReviewPosition().pointAtStart
+		except (NotImplementedError, LookupError):
+			p = None
+		if p:
+			x = p.x
+			y = p.y
+		else:
+			try:
+				(left, top, width, height) = obj.location
+			# Flake8/E722: stems from object location script.
+			except: # noqa
+				# Translators: Reported when the object has no location for the mouse to move to it.
+				ui.message(_("object has no location"))
+				return
+			# Don't bother clicking when parts or the entire object is offscreen.
+			if min(left, top, width, height) < 0:
+				return
+			x = left + (width // 2)
+			y = top + (height // 2)
+		winUser.setCursorPos(x, y)
+		self.script_rightMouseClick(gesture)
+	# Translators: Input help mode message for touch right click command.
+	script_touch_rightClick.__doc__ = _("Clicks the right mouse button at the current touch position. This is generally used to activate a context menu.") # noqa Flake8/E501
+	script_touch_rightClick.category = SCRCAT_TOUCH
+
 	def script_activateConfigProfilesDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onConfigProfilesCommand, None)
 	# Translators: Describes the command to open the Configuration Profiles dialog.
@@ -2465,10 +2490,13 @@ class GlobalCommands(ScriptableObject):
 					enableMessage = _("Temporary Screen curtain, enabled until next restart")
 
 				try:
-					vision.handler.initializeProvider(
-						screenCurtainProviderInfo,
-						temporary=tempEnable,
-					)
+					if alreadyRunning:
+						screenCurtainProviderInfo.providerClass.enableInConfig(True)
+					else:
+						vision.handler.initializeProvider(
+							screenCurtainProviderInfo,
+							temporary=tempEnable,
+						)
 				except Exception:
 					log.error("Screen curtain initialization error", exc_info=True)
 					# Translators: Reported when the screen curtain could not be enabled.
@@ -2562,6 +2590,8 @@ class GlobalCommands(ScriptableObject):
 		"ts:3finger_tap":"touch_changeMode",
 		"ts:2finger_double_tap":"showGui",
 		"ts:hoverUp":"touch_hoverUp",
+		"ts:tapAndHold": "touch_rightClick", # noqa (Flake8/ET121)
+
 		# Review cursor
 		"kb:shift+numpad7": "review_top",
 		"kb(laptop):NVDA+control+home": "review_top",

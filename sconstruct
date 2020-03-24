@@ -1,22 +1,58 @@
 ###
-#This file is a part of the NVDA project.
-#URL: https://www.nvaccess.org/
-#Copyright 2010-2019 NV Access Limited, Babbage B.V.
-#This program is free software: you can redistribute it and/or modify
-#it under the terms of the GNU General Public License version 2.0, as published by
-#the Free Software Foundation.
-#This program is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-#This license can be found at:
-#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# This file is a part of the NVDA project.
+# URL: https://www.nvaccess.org/
+# Copyright 2010-2020 NV Access Limited, Babbage B.V.
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2.0, as published by
+# the Free Software Foundation.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# This license can be found at:
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
 import sys
 import os
+import platform
+
+# Variables for storing required version of Python, and the version which is used to run this script.
+requiredPythonMajor ="3"
+requiredPythonMinor = "7"
+requiredPythonArchitecture = "32bit"
+installedPythonMajor = str(sys.version_info.major)
+installedPythonMinor = str(sys.version_info.minor)
+installedPythonArchitecture = platform.architecture()[0]
+# Ensure that we are running with required version of Python, otherwise inform the user and exit.
+if (
+	installedPythonArchitecture != requiredPythonArchitecture
+	or installedPythonMajor != requiredPythonMajor
+	or installedPythonMinor != requiredPythonMinor
+):
+	unsupportedPythonMsg = (
+		("This script is started with Python %s.%s %s, however to build NVDA you have to use Python %s.%s %s.\n"
+		"Please install the needed version of Python and launch SCons again, or if you have multiple "
+		"versions of Python installed start this script with required version explicitly.")
+	)
+	raise RuntimeError(unsupportedPythonMsg %(
+		installedPythonMajor,
+		installedPythonMinor,
+		installedPythonArchitecture,
+		requiredPythonMajor,
+		requiredPythonMinor,
+		requiredPythonArchitecture
+	)
+	)
+if sys.version_info.micro == 6:
+	# #10696: Building with Python 3.7.6 fails. Innform user and exit.
+	Py376FailMsg = "Building with Python 3.7.6 is not possible.\nPlease use more  recent version of Python 3."
+	raise RuntimeError(Py376FailMsg)
+sourceEnvPath = os.path.abspath(os.path.join(Dir('.').srcnode().path, "source"))
+sys.path.append(sourceEnvPath)
+import sourceEnv
+sys.path.remove(sourceEnvPath)
 import time
 from glob import glob
-import sourceEnv
 from py2exe.dllfinder import pydll
 import importlib.util
 import winreg
@@ -145,7 +181,6 @@ outFilePrefix = "nvda{type}_{version}".format(type="" if release else "_snapshot
 Export('outFilePrefix')
 outputDir=Dir(env['outputDir'])
 Export('outputDir')
-devDocsOutputDir=outputDir.Dir('devDocs')
 
 # An action to sign an executable with certFile.
 # we encrypt with SHA256 as this is the minimum required by the Windows Store for appx packages 
@@ -236,13 +271,6 @@ for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
 	env.SideEffect('_txt2tags',htmlFile)
 	# All of our t2t files require build.t2tConf.
 	env.Depends(htmlFile,t2tBuildConf)
-#And also build the developer guide -- which must be moved at some point
-htmlFile=env.txt2tags('developerGuide.t2t')
-env.Depends(htmlFile,t2tBuildConf)
-env.SideEffect('_txt2tags',htmlFile)
-devGuide=env.Command(devDocsOutputDir.File('developerGuide.html'),htmlFile,Move('$TARGET','$SOURCE'))
-env.Alias("developerGuide",devGuide)
-
 # Build unicode CLDR dictionaries
 env.SConscript('cldrDict_sconscript',exports=['env', 'sourceDir'])
 
@@ -419,24 +447,7 @@ def makePot(target, source, env):
 	os.remove(potFn)
 	os.rename(tmpFn, potFn)
 
-devDocs_nvdaHelper_temp=env.Doxygen(source='nvdaHelper/doxyfile')
-devDocs_nvdaHelper=env.Command(devDocsOutputDir.Dir('nvdaHelper'),devDocs_nvdaHelper_temp,Move('$TARGET','$SOURCE'))
-env.Alias('devDocs_nvdaHelper', devDocs_nvdaHelper)
-env.Clean('devDocs_nvdaHelper', devDocs_nvdaHelper)
-
-#devDocs_nvda = env.Command(devDocsOutputDir.Dir("nvda"), None, [[
-#	"cd", sourceDir.path, "&&",
-#	sys.executable, "-c", "import sourceEnv; from epydoc.cli import cli; cli()",
-#	"--output", "${TARGET.abspath}",
-#	"--quiet", "--html", "--include-log", "--no-frames",
-#	"--name", "NVDA", "--url", "https://www.nvaccess.org/",
-#	"*.py", "appModules", "brailleDisplayDrivers", r"comInterfaces\__init__.py",
-#	"config", "contentRecog", "extensionPoints", "globalPlugins", "gui", "mathPres", "NVDAObjects",
-#	"speechDictHandler", "synthDrivers", "textInfos", "virtualBuffers",
-#]])
-
-#env.Alias('devDocs', [devGuide, devDocs_nvda])
-#env.Clean('devDocs', [devGuide, devDocs_nvda])
+env.SConscript("devDocs/sconscript", exports=["env", "outputDir", "sourceDir", "t2tBuildConf"])
 
 pot = env.Command(outputDir.File("%s.pot" % outFilePrefix),
 	# Don't use sourceDir as the source, as this depends on comInterfaces and nvdaHelper.
