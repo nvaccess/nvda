@@ -86,7 +86,7 @@ class ChromeLib:
 		spy = _NvdaLib.getSpyLib()
 		path = self._writeTestFile(testCase)
 		self.start_chrome(path)
-		applicationTitle = f"{self._testCaseTitle} – Google Chrome"
+		applicationTitle = f"{self._testCaseTitle}   Google Chrome"
 		spy.wait_for_specific_speech(applicationTitle)  # to ensure chrome started
 		spy.wait_for_speech_to_finish()
 		afterReadAllSpeechIndex = spy.get_next_speech_index()
