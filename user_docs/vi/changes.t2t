@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2020.1 =
+Các cải tiến của bản phát hành này bao gồm hỗ trợ cho vài màn hình chữ nổi mới từ HumanWare và APH, thêm nữa là sửa nhiều lỗi quan trọng như khả năng đọc công thức toán trong Microsoft Word sử dụng MathPlayer / MathType.
 
 == Tính năng mới ==
 - Thành phần đang được chọn trong các hộp danh sách lại được thể hiện ở chế độ duyệt trong Chrome, tương tự như NVDA 2019.1. (#10713)
@@ -19,7 +20,7 @@
 
 
 == Sửa lỗi ==
-- Sửa lỗi NVDA không đọc kí hiệu dấu trừ bảng mã Unicode (U+2212). (#10633)
+- Sửa lỗi NVDA không đọc kí hiệu dấu âm bảng mã Unicode (U+2212). (#10633)
 - Khi cài add-on từ trình quản lý add-on, tên thư mục và tập tin trong cửa sổ duyệt tập tin không còn bị đọc hai lần. (#10620, #2395)
 - Trong Firefox, khi gọi Mastodon với chế độ giao diện web mở rộng được bật, tất cả dòng thời gian giờ đây đã trả về một cách chính xác trong chế độ duyệt. (#10776)
 - Trong chế độ duyệt, NVDA giờ đây đã đọc "chưa chọn" cho các hộp kiểm chưa chọn mà trước đây thỉnh thoảng nó không đọc. (#10781)

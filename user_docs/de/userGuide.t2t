@@ -58,7 +58,7 @@ Copyright NVDA_COPYRIGHT_YEARS NVDA-Mitwirkende.
 
 NVDA steht unter der GNU General Public License (Version 2).
 Es steht Ihnen frei, diese Software auf jede Art und Weise weiterzugeben oder zu verändern, solange Sie die Lizenz mitliefern und den gesamten Quellcode jedem zur Verfügung stellen.
-Dies gilt sowohl für Original- als auch für modifizierte Kopien dieser Software sowie für alle veränderten Versionen.
+Dies gilt sowohl für Original- als auch für modifizierte Versionen dieser Software sowie für alle veränderten Versionen.
 Für weitere Informationen lesen Sie [die vollständige Lizenz https://www.gnu.org/licenses/old-licenses/gpl-2.0.html] auf Englisch.
 
 + Systemvoraussetzungen +[SystemRequirements]
@@ -76,7 +76,7 @@ Wenn Sie NVDA noch nicht erhalten haben, können Sie es bei [NV Access NVDA_URL]
 Im Download-Bereich finden Sie einen Link zum Herunterladen der neuesten NVDA-Version.
 
 Wenn Sie die soeben heruntergeladene Datei ausführen, wird NVDA temporär entpackt und gestartet.
-Sie werden dann gefragt, ob Sie NVDA installieren, eine portable Kopie erstellen oder nur temporär weiter verwenden möchten.
+Sie werden dann gefragt, ob Sie NVDA installieren, eine portable Version erstellen oder nur temporär weiter verwenden möchten.
 
 Falls Sie vorhaben, NVDA auf diesem Computer dauerhaft einzusetzen, sollten Sie NVDA installieren.
 Eine solche installierte NVDA-Version hat gegenüber einer portablen Version Vorteile wie den automatischen Start nach der Anmeldung, die Erstellung von Verknüpfungen auf dem Desktop und im Startmenü oder die Windows-Anmeldung und -Sicherheitsdialoge auszulesen. Dies ist mit einer portablen oder temporären Version nicht möglich.
@@ -412,7 +412,7 @@ Die folgenden Tastenkombinationen zum Text betrachten sind verfügbar:
 | Alles Lesen | Num Plus | NVDA+Umschalt+A | Nach unten streichen mit drei Fingern (Textmodus) | Liest von der aktuellen Cursor-Position des NVDA-Cursors den Text vor und bewegt ihn mit. |
 | Vom NVDA-Cursor markieren und kopieren | NVDA+F9 | NVDA+F9 | Keine | Setzt eine Startmarke an der aktuellen Position des NVDA-Cursors ab, der markiert oder kopiert werden soll. Die Aktion (Markieren/Kopieren) wird nicht ausgeführt, bis Sie NVDA den Textende mitgeteilt haben. |
 | Bis zum NVDA-Cursor markieren und kopieren | NVDA+F10 | NVDA+F10 | Keine | Wird die Tastenkombination einmal gedrückt, markiert NVDA den Text zwischen der zuvor gesetzten Startmarke und der aktuellen Position des NVDA-Cursors. Wird die Tastenkombination zweimal gedrückt, so kopiert NVDA den Text zwischen der zuvor gesetzten Startmarke und der aktuellen Position des NVDA-Cursors in die Zwischenablage |
-| Springt zum markierten Start für die Kopie in der Ansicht | NVDA+Umschalt+F9 | NVDA+Umschalt+F9 | none | Zieht den NVDA-Cursor an die zuvor eingestellte Startmarkierung für das Kopieren. |
+| Springt zum markierten Start für die Kopie in der Ansicht | NVDA+Umschalt+F9 | NVDA+Umschalt+F9 | Keine | Zieht den NVDA-Cursor an die zuvor eingestellte Startmarkierung für das Kopieren. |
 | Textformatierung ausgeben | NVDA+F | NVDA+F | Keine | Gibt die Formatierungen unter dem NVDA-Cursor aus. Bei zweimaligen Drücken der Tastenkombination wird die Ausgabe in einem virtuellen Fenster dargestellt. |
 | Ansage des aktuellen Symbol-Ersatzes | Keine | Keine | Keine | Spricht das Symbol, an dem sich der NVDA-Cursor befindet. Zweimaliges Drücken zeigt das Symbol und den ausgesprochenen Text in einem virtuellen Fenster an. |
 %kc:endInclude
@@ -931,13 +931,6 @@ Hinweis: die obigen Tastenkombinationen funktionieren nur, wenn die Standard-Ein
 || Name | Tastenkombination | Beschreibung |
 | Kommentare ausgeben | Strg+Umschalt+C | Gibt alle Kommentare aus. |
 | Anmerkungen für Übersetzer ausgeben | Strg+Umschalt+A | Gibt alle Anmerkungen für Übersetzer aus. |
-%kc:endInclude
-
-++ Skype ++[Skype]
-%kc:beginInclude
-Innerhalb einer Konversation:
-|| Name | Tastenkombination | Beschreibung |
-| Nachricht anzeigen | NVDA+Strg+1 bis 0 | Setzt den NVDA-Cursor auf die zur Nummer passenden Nachricht NVDA+Strg+2 zeigt beispielsweise die vorletzte Nachricht an |
 %kc:endInclude
 
 ++ Kindle für PC ++[Kindle]
@@ -1845,7 +1838,7 @@ Schließlich enthält das Dialogfeld auch noch 3 Auswahlschalter, die festlegen,
 Wenn Sie das Muster auf "Ganze Wörter" anwenden, hat dies zur Folge, dass die Übersetzung nur angewandt wird, wenn das Wort nicht Teil eines längeren Wortes ist. Dies bedeutet, dass kein Sonderzeichen, wie ein Unterstrich, direkt vor bzw. hinter dem Muster stehen darf. Satzzeichen sind davon ausgenommen.
 Wenn Sie also das Wort "Vogel" wie im vorherigen Beispiel durch "Frosch" ersetzen und den Auswahlschalter auf "ganze Wörter setzen, wird die Regel nicht auf "Singvogel" oder "Vogelhaus" zutreffen.
 
-Ein sogenannter Regulärer Ausdruck ist ein Muster, welches spezielle Symbole enthält. Dies ermöglicht, dass das Muster auf Zahlen oder Buchstaben generell oder auf mehrere Zeichen gleichzeitig  zutrifft
+Ein sogenannter Regulärer Ausdruck ist ein Muster, welches spezielle Symbole enthält. Dies ermöglicht, dass das Muster auf Zahlen oder Buchstaben generell oder auf mehrere Zeichen gleichzeitig zutrifft
 Reguläre Ausdrücke werden hier nicht behandelt. Weiterführende Beispiele und Erklärungen finden Sie im [Kapitel über Reguläre Ausdrücke in der englischen Dokumentation zu Python https://docs.python.org/library/re.html]
 
 +++ Interpunktion und Symbol-Aussprache +++[SymbolPronunciation]
@@ -2115,12 +2108,12 @@ In diesem Dialogfeld werden Sie zur Auswahl des jeweiligen Zielpfads aufgewforde
 
 In diesem Dialogfeld können Sie Folgendes aktivieren oder deaktivieren:
 - Kopieren der aktuellen Benutzerkonfiguration (inklusive der Dateien in "%appdata%\roaming\NVDA" oder in der Benutzerkonfiguration Ihrer portablen Version und Erweiterungen/Module).
-- Starten Sie die neue portable Version nach der Erstellung oder starten Sie NVDA nach der Installation (NVDA startet automatisch nach der Erstellung der portablen Kopie oder der Installation).
+- Starten Sie die neue portable Version nach der Erstellung oder starten Sie NVDA nach der Installation (NVDA startet automatisch nach der Erstellung der portablen Version oder der Installation).
 -
 
 ++ Behebungstool für die COM-Registrierung ausführen ++[RunCOMRegistrationFixingTool]
 Das Installieren und Deinstallieren von Programmen auf einem Computer kann in bestimmten Fällen dazu führen, dass COM-DLL-Dateien nicht mehr registriert sind.
-Da COM-Schnittstellen wie IAccessible von korrekten COM-DLL-Registrierungen abhängig sind, können  Probleme auftreten, sobald diese fehlen.
+Da COM-Schnittstellen wie IAccessible von korrekten COM-DLL-Registrierungen abhängig sind, können Probleme auftreten, sobald diese fehlen.
 
 Dies kann z. B. nach einer Installation und anschließender Deinstallation von Adobe Reader, MathPlayer und anderen Programmen vorkommen.
 
@@ -3051,7 +3044,7 @@ Folgende Kommandozeilenoptionen gibt es:
 | Keine | --install-silent | Installiert NVDA ohne Ausgabe von Rückmeldungen, startet die Version aber nicht. |
 | Keine | --enable-start-on-logon=True/False | Aktivieren Sie bei der Installation [NVDA während der Windows-Anmeldung verwenden #StartAtWindowsLogon]. |
 | Keine | --create-portable | Erstellt und startet eine neue portable NVDA-Version. Hierfür müssen Sie außerdem den Parameter --portable-path angeben. |
-| Keine | --create-portable-silent | Erstellt eine neue portable Kopie von NVDA, ohne diese zu starten. Hierfür müssen Sie außerdem den Parameter --portable-path angeben. |
+| Keine | --create-portable-silent | Erstellt eine neue portable NVDA-Version, ohne diese zu starten. Hierfür müssen Sie außerdem den Parameter --portable-path angeben. |
 | Keine | --portable-path=Ordner | Gibt den Ordner an, in dem die portable Version erstellt werden soll. |
 
 ++ Systemparameter ++[SystemWideParameters]

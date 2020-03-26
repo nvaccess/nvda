@@ -933,13 +933,6 @@ Opisane komendy działają tylko dla domyślnego ustawienia formatowania paska s
 | Odczytaj uwagi dla tłumaczy | Ctrl+Shift+A | Zgłasza wszelkie uwagi dla tłumaczy. |
 %kc:endInclude
 
-++ Skype ++[Skype]
-%kc:beginInclude
-Wewnątrz konwersacji:
-|| Działanie | Skrót | Opis |
-| Przejrzyj wiadomość | NVDA+Ctrl+1-0 | Odczytuje ostatnią wiadomość i przenosi do niej punkt przeglądu, zależnie od naciśniętej cyfry; np. NVDA+Ctrl+2 odczytuje wiadomość drugą od końca. |
-%kc:endInclude
-
 ++ Kindle dla PC ++[Kindle]
 NVDA obsługuje odczyt i nawigację wewnątrz książek w aplikacji Amazon Kindle dla PC.
 Ta funkcjonalność jest dostępna tylko w książkach Kindle zaprojektowanych z właściwością "Czytnik ekranu: obsługiwany", co można sprawdzić na stronie szczegółów książki.
@@ -2045,6 +2038,10 @@ Okno podglądu brajla zawiera pole wyboru umożliwiające włączanie tej funkcj
 Jeżeli zostanie ono zaznaczone, to podgląd brajla będzie ładował się przy każdym starcie programu.
 Okno podglądu brajla dokona próby otwarcia się z takimi samymi wymiarami i w takiej samej pozycji, w jakiej zostało ono zamknięte.
 
+++ Konsola Pythona ++[PythonConsole]
+Konsola Pythona NVDA znajduje się w menu Narzędzia  w NVDA. Jest narzędziem dla programistów i jest używana do debugowania, przeglądania wewnątrz NVDA lub sprawdzania hierarchii dostępności aplikacji.
+Więcej informacji znajduje się w [podręczniku dla twórców https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+
 ++ Manager wtyczek ++[AddonsManager]
 Manager wtyczek, dostępny poprzez polecenie "Zarządzaj dodatkami" w menu NVDA: Narzędzia, pozwala na instalację, usuwanie, włączanie i wyłączanie dodatków NVDA.
 Dodatki to pakiety przygotowywane przez społeczność, zawierające oprogramowanie, które może dodawać lub zmieniać funkcje NVDA, czy nawet dostarczać wsparcie dodatkowych monitorów brajlowskich lub syntezatorów mowy.
@@ -2090,7 +2087,7 @@ Aby przejrzeć te niezgodne dodatki, możesz użyć przycisku "podgląd niezgodn
 
 Aby uruchamiać manager dodatków z każdego miejsca, określ własne zdarzenie wejścia używając [okna zdarzenia wejścia #InputGestures].
 
-++ Manager niezgodnych dodatków ++[incompatibleAddonsManager]
++++ Manager niezgodnych dodatków +++[incompatibleAddonsManager]
 Manager niezgodnych dodatków, dostępny pod przyciskiem "Przeglądaj niezgodne dodatki"  w managerze dodatków, pozwala badać niezgodne dodatki, oraz przyczyny, dla których są uznawane za niezgodne.
 Dodatki są uznawane za niezgodne, jeśli nie zostały zaktualizowane do działania po istotnych zmianach w NVDA, lub jeśli polegają na funkcji niedostępnej w używanej wersji NVDA.
 Manager niezgodnych dodatków zawiera informację wyjaśniającą  jego cel i wersję NVDA.
@@ -2103,10 +2100,31 @@ Niezgodne dodatki są prezentowane na liście z następującymi kolumnami:
 Manager niezgodnych dodatków zawiera również przycisk "O dodatku...".
 Pozwala przejrzeć wszystkie szczegóły dodatku, co jest przydatne przy kontakcie z autorem dodatku.
 
+++ Utwórz kopię przenośną ++[CreatePortableCopy]
+Polecenie to pozwala otworzyć okno, przy pomocy którego można utworzyć kopię przenośną NVDA z zainstalowanej na dysku wersji.
+Natomiast w wypadku, gdy NVDA jest już zainstalowane nazwa opcji będzie brzmiała "Zainstaluj przenośną kopię na dysku" zamiast "Utwórz przenośną kopię".
 
-++ Konsola Pythona ++[PythonConsole]
-Konsola Pythona NVDA znajduje się w menu Narzędzia  w NVDA. Jest narzędziem dla programistów i jest używana do debugowania, przeglądania wewnątrz NVDA lub sprawdzania hierarchii dostępności aplikacji.
-Więcej informacji znajduje się w [podręczniku dla twórców https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+Okno dialogowe tworzenia przenośnej kopii lub instalowania NVDA z przenośnej wersji pozwala wybrać użytkownikowi katalog w którym zostanie utworzona pzrenośna wersja albo katalog, w którym program zostanie zainstalowany.
+
+W oknie tym można również zmienić opcje takie jak:
+- Skopiuj aktualną konfigurację użytkownika: pozwala skopiować ustawienia, dodatki oraz inne moduly do nowo instalowanej wersji programu.
+- Uruchom nowo powstałą kopię przenośną NVDA lub uruchom nowo zainstalowaną kopię NVDA: pozwala uruchomić program po zakończeniu jego instalatora.
+-
+
+++ uruchom narzędzie do naprawy błędów rejestracji COM... ++[RunCOMRegistrationFixingTool]
+W pewnych przypadkach instalacja/deinstalacja programów może doprowadzić pliki .DLL i .COM do wyrejestrowania.
+Niektóre interfejsy .COM takie jak IAccessible2 wymagają poprawnej rejestracji innych plików .COM.
+
+Może się tak zdarzyć na przykład po odinstalowaniu programu Adobe Reader lub Math Player.
+
+Niepoprawnie zarejestrowane pliki .COM mogą powodować problemy na pasku zadań, w przeglądarkach, aplikacjach i innych interfejsach.
+
+Następujące problemy mogą zostać poprawione dzięki temu narzędziu:
+- NVDA nie odczytuje elementów podczas nawigacji w przeglądarkach Firefox, Thunderbird ETC.
+- NVDA nie może przełączać się pomiędzy trybem kursora i przeglądania.
+- NVDA reaguje bardzo powoli na polecenia w przeglądarkach.
+- I inne.
+-
 
 ++ przeładuj wtyczki ++[ReloadPlugins]
 Po aktywacji tego polecenia wszystkie moduły aplikacji oraz wtyczki zostaną przeładowane bez potrzeby restartu NVDA. Jest to użyteczne dla programistów.
