@@ -29,6 +29,7 @@ import api
 import ui
 import braille
 import nvwave
+from abc import ABCMeta, abstractmethod
 
 class ProgressBar(NVDAObject):
 
@@ -206,28 +207,20 @@ class EditableTextWithoutAutoSelectDetection(editableText.EditableTextWithoutAut
 
 	initOverlayClass = editableText.EditableTextWithoutAutoSelectDetection.initClass
 
-class LiveText(NVDAObject):
-	"""An object for which new text should be reported automatically.
-	These objects present text as a single chunk
-	and only fire an event indicating that some part of the text has changed; i.e. they don't provide the new text.
-	Monitoring must be explicitly started and stopped using the L{startMonitoring} and L{stopMonitoring} methods.
-	The object should notify of text changes using the textChange event.
-	"""
-	#: The time to wait before fetching text after a change event.
-	STABILIZE_DELAY = 0
-	# If the text is live, this is definitely content.
-	presentationType = NVDAObject.presType_content
 
-	announceNewLineText=False
+class Monitor(NVDAObject, metaclass=ABCMeta):
+	"""An object that reacts to particular changes. See LiveText for an example implementation."""
+	#: The time to wait before reacting to an event.
+	STABILIZE_DELAY = 0
+	#: The time to wait between checks for changes.
+	POLLING_DELAY = 0
 
 	def initOverlayClass(self):
-		self._event = threading.Event()
 		self._monitorThread = None
 		self._keepMonitoring = False
 
 	def startMonitoring(self):
-		"""Start monitoring for new text.
-		New text will be reported when it is detected.
+		"""Start monitoring for changes.
 		@note: If monitoring has already been started, this will have no effect.
 		@see: L{stopMonitoring}
 		"""
@@ -239,7 +232,6 @@ class LiveText(NVDAObject):
 		)
 		thread.daemon = True
 		self._keepMonitoring = True
-		self._event.clear()
 		thread.start()
 
 	def stopMonitoring(self):
@@ -250,14 +242,85 @@ class LiveText(NVDAObject):
 		if not self._monitorThread:
 			return
 		self._keepMonitoring = False
-		self._event.set()
 		self._monitorThread = None
+
+	def _monitor(self):
+		while self._keepMonitoring:
+			if self.hasChanged():
+				# wait for the object to stabilise.
+				time.sleep(self.STABILIZE_DELAY)
+				if not self._keepMonitoring:
+					# Monitoring was stopped while waiting.
+					break
+				self.reactToChange()
+			time.sleep(self.POLLING_DELAY)
+
+	@abstractmethod
+	def hasChanged(self):
+		"Returns True if this object had a change for which we are monitoring."
+		raise NotImplementedError
+
+	@abstractmethod
+	def reactToChange(self):
+		"React to a change."
+		raise NotImplementedError
+
+
+class LiveText(Monitor):
+	"""An object for which new text should be reported automatically.
+	These objects present text as a single chunk
+	and only fire an event indicating that some part of the text has changed;
+	i.e. they don't provide the new text.
+	Monitoring must be explicitly started and stopped using the L{startMonitoring} and L{stopMonitoring} methods.
+	The object should notify of text changes using the textChange event.
+	"""
+	# If the text is live, this is definitely content.
+	presentationType = NVDAObject.presType_content
+	announceNewLineText = False
+	_oldLines = None
+
+	def initOverlayClass(self):
+		self._event = threading.Event()
+
+	def startMonitoring(self):
+		super().startMonitoring()
+		self._event.clear()
+
+	def stopMonitoring(self):
+		super().stopMonitoring()
+		self._event.set()
 
 	def event_textChange(self):
 		"""Fired when the text changes.
 		@note: It is safe to call this directly from threads other than the main thread.
 		"""
 		self._event.set()
+
+	def hasChanged(self):
+		if self._oldLines is None:
+			try:
+				self._oldLines = self._getTextLines()
+			except Exception:
+				log.exception("Error getting initial lines")
+				self._oldLines = []
+		self._event.wait()
+		return True
+
+	def reactToChange(self):
+		try:
+			newLines = self._getTextLines()
+			if config.conf["presentation"]["reportDynamicContentChanges"]:
+				outLines = self._calculateNewText(newLines)
+				if len(outLines) == 1 and len(outLines[0].strip()) == 1:
+					# This is only a single character,
+					# which probably means it is just a typed character,
+					# so ignore it.
+					del outLines[0]
+				if outLines:
+					queueHandler.queueFunction(queueHandler.eventQueue, self._reportnewLines, outLines)
+			self._oldLines = newLines
+		except Exception:
+			log.exception("Error getting lines or calculating new text")
 
 	def _getTextLines(self):
 		"""Retrieve the text of this object in lines.
@@ -269,7 +332,7 @@ class LiveText(NVDAObject):
 		"""
 		return list(self.makeTextInfo(textInfos.POSITION_ALL).getTextInChunks(textInfos.UNIT_LINE))
 
-	def _reportNewLines(self, lines):
+	def _reportnewLines(self, lines):
 		"""
 		Reports new lines of text using _reportNewText for each new line.
 		Subclasses may override this method to provide custom filtering of new text,
@@ -283,45 +346,11 @@ class LiveText(NVDAObject):
 		"""
 		speech.speakText(line)
 
-	def _monitor(self):
-		try:
-			oldLines = self._getTextLines()
-		except:
-			log.exception("Error getting initial lines")
-			oldLines = []
-
-		while self._keepMonitoring:
-			self._event.wait()
-			if not self._keepMonitoring:
-				break
-			if self.STABILIZE_DELAY > 0:
-				# wait for the text to stabilise.
-				time.sleep(self.STABILIZE_DELAY)
-				if not self._keepMonitoring:
-					# Monitoring was stopped while waiting for the text to stabilise.
-					break
-			self._event.clear()
-
-			try:
-				newLines = self._getTextLines()
-				if config.conf["presentation"]["reportDynamicContentChanges"]:
-					outLines = self._calculateNewText(newLines, oldLines)
-					if len(outLines) == 1 and len(outLines[0].strip()) == 1:
-						# This is only a single character,
-						# which probably means it is just a typed character,
-						# so ignore it.
-						del outLines[0]
-					if outLines:
-						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewLines, outLines)
-				oldLines = newLines
-			except:
-				log.exception("Error getting lines or calculating new text")
-
-	def _calculateNewText(self, newLines, oldLines):
+	def _calculateNewText(self, newLines):
 		outLines = []
 
 		prevLine = None
-		for line in difflib.ndiff(oldLines, newLines):
+		for line in difflib.ndiff(self._oldLines, newLines):
 			if line[0] == "?":
 				# We're never interested in these.
 				continue
@@ -366,8 +395,8 @@ class LiveText(NVDAObject):
 			if text and not text.isspace():
 				outLines.append(text)
 			prevLine = line
-
 		return outLines
+
 
 class Terminal(LiveText, EditableText):
 	"""An object which both accepts text input and outputs text which should be reported automatically.
@@ -465,16 +494,16 @@ class KeyboardHandlerBasedTypedCharSupport(Terminal):
 		speech.clearTypedWordBuffer()
 		gesture.send()
 
-	def _calculateNewText(self, newLines, oldLines):
+	def _calculateNewText(self, newLines):
 		hasNewLines = (
 			self._findNonBlankIndices(newLines)
-			!= self._findNonBlankIndices(oldLines)
+			!= self._findNonBlankIndices(self._oldLines)
 		)
 		if hasNewLines:
 			# Clear the typed word buffer for new text lines.
 			speech.clearTypedWordBuffer()
 			self._queuedChars = []
-		return super()._calculateNewText(newLines, oldLines)
+		return super()._calculateNewText(newLines)
 
 	def _dispatchQueue(self):
 		"""Sends queued typedCharacter events through to NVDA."""

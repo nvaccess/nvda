@@ -1356,13 +1356,25 @@ class UIA(Window):
 		try:
 			cachedChildren = self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
 		except COMError:
-			return super(UIA, self).children[index]
+			return super(UIA, self).getChild(index)
 		if not cachedChildren:
 			# GetCachedChildren returns null if there are no children.
-			raise IndexError
+			return None
 		e = cachedChildren.getElement(index)
 		windowHandle = self.windowHandle
 		return self.correctAPIForRelation(UIA(windowHandle=windowHandle, UIAElement=e))
+
+	def _get_childCount(self):
+		childrenCacheRequest = UIAHandler.handler.baseCacheRequest.clone()
+		childrenCacheRequest.TreeScope = UIAHandler.TreeScope_Children
+		try:
+			cachedChildren = self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
+		except COMError:
+			return super().childCount
+		if not cachedChildren:
+			# GetCachedChildren returns null if there are no children.
+			return 0
+		return cachedChildren.length
 
 	def _get_rowNumber(self):
 		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridItemRowPropertyId,True)
