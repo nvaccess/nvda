@@ -1,8 +1,9 @@
-#NVDAObjects/UIA/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2009-2019 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V., Leonard de Ruijter
+# NVDAObjects/UIA/__init__.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2009-2020 NV Access Limited, Joseph Lee, Mohammad Suliman,
+# Babbage B.V., Leonard de Ruijter, Bill Dengler
 
 """Support for UI Automation (UIA) controls."""
 
@@ -1349,6 +1350,32 @@ class UIA(Window):
 			windowHandle=self.windowHandle
 			children.append(self.correctAPIForRelation(UIA(windowHandle=windowHandle,UIAElement=e)))
 		return children
+
+	def getChild(self, index):
+		childrenCacheRequest = UIAHandler.handler.baseCacheRequest.clone()
+		childrenCacheRequest.TreeScope = UIAHandler.TreeScope_Children
+		try:
+			cachedChildren = self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
+		except COMError:
+			return super(UIA, self).getChild(index)
+		if not cachedChildren:
+			# GetCachedChildren returns null if there are no children.
+			return None
+		e = cachedChildren.getElement(index)
+		windowHandle = self.windowHandle
+		return self.correctAPIForRelation(UIA(windowHandle=windowHandle, UIAElement=e))
+
+	def _get_childCount(self):
+		childrenCacheRequest = UIAHandler.handler.baseCacheRequest.clone()
+		childrenCacheRequest.TreeScope = UIAHandler.TreeScope_Children
+		try:
+			cachedChildren = self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
+		except COMError:
+			return super().childCount
+		if not cachedChildren:
+			# GetCachedChildren returns null if there are no children.
+			return 0
+		return cachedChildren.length
 
 	def _get_rowNumber(self):
 		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridItemRowPropertyId,True)
