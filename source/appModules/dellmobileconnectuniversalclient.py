@@ -92,7 +92,7 @@ class MessageTextBody(UIA):
 			self.appModule._lastMessage = self.notification
 			speech.speak(
 				(title, speech.EndUtteranceCommand(), content),
-				priority=speech.priorities.SpeechPriority.NEXT
+				priority=speech.priorities.SpeechPriority.NOW
 			)
 			braille.handler.message(f"{title}: {content}")
 
