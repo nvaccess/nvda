@@ -94,9 +94,8 @@ class ChromeLib:
 		# Rather than try to get the separator right, wait for the doc title, then wait for the 'Google Chrome'
 		# part. Note: this also works with "Chrome Canary"
 		spy.wait_for_specific_speech("Google Chrome")
-		spy.wait_for_speech_to_finish()
 		# Read all is configured, but just test interacting with the sample.
-		afterReadAllSpeechIndex = spy.get_next_speech_index()
+		spy.wait_for_speech_to_finish()
 
 		# move to start marker
 		for i in range(10):  # set a limit on the number of tries.
@@ -113,7 +112,7 @@ class ChromeLib:
 					" See NVDA log for full speech."
 				)
 				spy.dump_speech_to_log()
-		else: # Exceeded the number of tries
+		else:  # Exceeded the number of tries
 			builtIn.fail(
 				"Unable to tab to 'before sample' marker."
 				f" Too many attempts looking for '{ChromeLib._beforeMarker}  button'"
