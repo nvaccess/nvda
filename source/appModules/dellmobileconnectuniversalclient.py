@@ -99,6 +99,7 @@ class MessageTextBody(UIA):
 
 class MessagesListView(Monitor):
 	_lastMessage = None
+	POLLING_DELAY = 0.1
 
 	def _getMostRecentMessage(self):
 		try:
