@@ -8,6 +8,7 @@ What's New in NVDA
 == New Features ==
 - Support for new braille displays:
   - Nattiq nBraille (#10778)
+- Added script to open NVDA configuration directory (no default gesture). (#2214)
 
 
 == Changes ==
@@ -15,6 +16,10 @@ What's New in NVDA
 
 == Bug Fixes ==
 - NVDA starts correctly when log file cannot be created. (#6330)
+
+
+== Changes For Developers ==
+- execElevated and hasUiAcces have moved from config module to systemUtils module. Usage via config module is deprecated. (#10493)
 
 
 = 2020.1 =
