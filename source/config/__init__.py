@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#config/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov, Joseph Lee, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
+# Joseph Lee, Babbage B.V., Łukasz Golonka
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Manages NVDA configuration.
 The heart of NVDA's configuration is Configuration Manager, which records current options, profile information and functions to load, save, and switch amongst configuration profiles.
@@ -30,7 +30,6 @@ import shlobj
 import baseObject
 import easeOfAccess
 from fileUtils import FaultTolerantFile
-import winKernel
 import extensionPoints
 from . import profileUpgrader
 from .configSpec import confspec
@@ -214,31 +213,6 @@ def canStartOnSecureScreens():
 	# This function will be transformed into a flag in a future release.
 	return isInstalledCopy()
 
-def execElevated(path, params=None, wait=False,handleAlreadyElevated=False):
-	import subprocess
-	import shellapi
-	import winUser
-	if params is not None:
-		params = subprocess.list2cmdline(params)
-	sei = shellapi.SHELLEXECUTEINFO(lpFile=os.path.abspath(path), lpParameters=params, nShow=winUser.SW_HIDE)
-	#IsUserAnAdmin is apparently deprecated so may not work above Windows 8
-	if not handleAlreadyElevated or not ctypes.windll.shell32.IsUserAnAdmin():
-		sei.lpVerb=u"runas"
-	if wait:
-		sei.fMask = shellapi.SEE_MASK_NOCLOSEPROCESS
-	shellapi.ShellExecuteEx(sei)
-	if wait:
-		try:
-			h=ctypes.wintypes.HANDLE(sei.hProcess)
-			msg=ctypes.wintypes.MSG()
-			while ctypes.windll.user32.MsgWaitForMultipleObjects(1,ctypes.byref(h),False,-1,255)==1:
-				while ctypes.windll.user32.PeekMessageW(ctypes.byref(msg),None,0,0,1):
-					ctypes.windll.user32.TranslateMessage(ctypes.byref(msg))
-					ctypes.windll.user32.DispatchMessageW(ctypes.byref(msg))
-			return winKernel.GetExitCodeProcess(sei.hProcess)
-		finally:
-			winKernel.closeHandle(sei.hProcess)
-
 SLAVE_FILENAME = u"nvda_slave.exe"
 
 #: The name of the registry key stored under  HKEY_LOCAL_MACHINE where system wide NVDA settings are stored.
@@ -268,7 +242,8 @@ def setSystemConfigToCurrentConfig():
 	if ctypes.windll.shell32.IsUserAnAdmin():
 		_setSystemConfig(fromPath)
 	else:
-		res=execElevated(SLAVE_FILENAME, (u"setNvdaSystemConfig", fromPath), wait=True)
+		import systemUtils
+		res = systemUtils.execElevated(SLAVE_FILENAME, ("setNvdaSystemConfig", fromPath), wait=True)
 		if res==2:
 			import installer
 			raise installer.RetriableFailure
@@ -312,7 +287,12 @@ def setStartOnLogonScreen(enable):
 		_setStartOnLogonScreen(enable)
 	except WindowsError:
 		# We probably don't have admin privs, so we need to elevate to do this using the slave.
-		if execElevated(SLAVE_FILENAME, (u"config_setStartOnLogonScreen", u"%d" % enable), wait=True) != 0:
+		import systemUtils
+		if systemUtils.execElevated(
+			SLAVE_FILENAME,
+			("config_setStartOnLogonScreen", "%d" % enable),
+			wait=True
+		) != 0:
 			raise RuntimeError("Slave failed to set startOnLogonScreen")
 
 def getConfigDirs(subpath=None):
@@ -1180,16 +1160,16 @@ class ProfileTrigger(object):
 	def __exit__(self, excType, excVal, traceback):
 		self.exit()
 
-TokenUIAccess = 26
-def hasUiAccess():
-	token = ctypes.wintypes.HANDLE()
-	ctypes.windll.advapi32.OpenProcessToken(ctypes.windll.kernel32.GetCurrentProcess(),
-		winKernel.MAXIMUM_ALLOWED, ctypes.byref(token))
-	try:
-		val = ctypes.wintypes.DWORD()
-		ctypes.windll.advapi32.GetTokenInformation(token, TokenUIAccess,
-			ctypes.byref(val), ctypes.sizeof(ctypes.wintypes.DWORD),
-			ctypes.byref(ctypes.wintypes.DWORD()))
-		return bool(val.value)
-	finally:
-		ctypes.windll.kernel32.CloseHandle(token)
+# The below functions are moved to systemUtils module.
+# They are kept here for backwards compatibility.
+# They would be removed from the config module in NVDA 2021.1.
+
+
+def execElevated(*args, **kwargs):
+	import systemUtils
+	systemUtils.execElevated(*args, **kwargs)
+
+
+def hasUiAccess(*args, **kwargs):
+	import systemUtils
+	systemUtils.hasUiAccess(*args, **kwargs)
