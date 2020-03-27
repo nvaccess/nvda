@@ -4,12 +4,54 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 %!includeconf: ../changes.t2tconf
 %!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
 
-= 2019.3 =
+= 2020.1 =
 
 == Novas Características ==
-- No Prompt de Comando, no PowerShell e no Subsistema do Windows para Linux em Windows 10 Atualização de Outubro de 2018 e posteriores:
- - Desempenho e estabilidade consideravelmente melhorados. (#9771)
- - O anúncio de texto digitado que não aparece na tela (como senhas) agora pode ser ativado através de uma opção no painel de configurações avançadas do NVDA. (#9649)
+- O item atualmente selecionado nas caixas de listagem é novamente apresentado no modo de navegação no Chrome, semelhante ao NVDA 2019.1. (#10713)
+- Agora você pode executar cliques com o botão direito do mouse em dispositivos de toque, tocando e mantendo pressionado um dedo. (#3886)
+- Suporte para novas linhas braille: APH Chameleon 20, APH Mantis Q40, HumanWare BrailleOne, BrailleNote Touch v2 e NLS eReader. (#10830)
+
+
+== Alterações ==
+- O NVDA evita que o sistema bloqueie ou entre no modo de suspensão quando em leitura contínua. (#10643)
+- Suporte para iframes fora de processo ""[out-of-process iframes]"" no Mozilla Firefox. (#10707)
+- Atualizado o transcritor braille liblouis para a versão 3.12 (#10161)
+
+
+== Alterações para Desenvolvedores ==
+- A documentação do desenvolvedor agora é compilada usando o sphinx. (#9840)
+- Várias funções de speech ""[fala]"" foram divididas em duas. (#10593)
+  A versão speakX permanece, mas agora depende de uma função getXSpeech que retorna uma sequência de fala.
+  - speakObjectProperties agora conta com getObjectPropertiesSpeech
+  - speakObject agora conta com getObjectSpeech
+  - speakTextInfo agora conta com getTextInfoSpeech
+  - speakWithoutPauses foi convertido em uma classe e refatorado, mas não deve quebrar a compatibilidade.
+  - getSpeechForSpelling está obsoleto (embora ainda disponível) no lugar use getSpellingSpeech.
+  Alterações privadas que não devem afetar os desenvolvedores de complementos:
+  - _speakPlaceholderIfEmpty agora é _getPlaceholderSpeechIfTextEmpty
+  - _speakTextInfo_addMath agora é _extendSpeechSequence_addMathForTextInfo
+- 'reason' ""[motivo]"" de Speech ""[Fala]"" foi convertido em um Enum, consulte a classe controlTypes.OutputReason. (#10703)
+  - As constantes 'REASON_*' de nível no módulo estão obsoletas.
+- A compilação de dependências do NVDA agora requer o Visual Studio 2019 (16.2 ou mais recente). (#10169)
+- SCons atualizado para a versão 3.1.1. (#10169)
+
+
+== Correção de Falhas ==
+- Corrigido não anunciar o símbolo Unicode menos (U+2212) (#10633)
+- Ao instalar o complemento proveniente do gestor de complementos, os nomes de arquivos e pastas na janela de navegação não são mais informados duas vezes. (#10620, #2395)
+- No Firefox, ao carregar o Mastodon com a interface avançada da web ativada, todas as linhas de tempo agora são renderizadas corretamente no modo de navegação. (#10776)
+- No modo de navegação, o NVDA agora informa "não marcada" para caixas de seleção desmarcadas, onde às vezes não acontecia anteriormente. (#10781)
+- Os controles de chave ARIA não relatam mais informações confusas, como "não pressionado marcado" ou "pressionado marcado". (#9187)
+- As vozes SAPI4 não devem mais se recusar a falar determinado texto. (#10792)
+- O NVDA pode novamente ler e interagir com equações matemáticas no Microsoft Word. (#10803)
+
+
+= 2019.3 =
+O NVDA 2019.3 é uma versão muito significativa que contém muitas alterações ocultas incluindo a atualização do Python 2 para o Python 3, e uma importante reescrita do subsistema de fala do NVDA.
+Embora essas alterações quebrem a compatibilidade com os complementos NVDA mais antigos, a atualização para o Python 3 é necessária para segurança, e as alterações na fala permitem algumas inovações interessantes no futuro próximo.
+ Outros destaques desta versão incluem suporte a 64 bit para Java VMs ""[Máquinas Virtuais Java]"", funcionalidade Cortina de Tela e Realce de Foco, suporte para mais linhas braille e um novo Visualizador de Braille, além de muitas outras correções.
+
+== Novas Características ==
 - A precisão do comando mover o mouse para o objeto de navegação foi aprimorada nos campos de texto nos aplicativos Java. (#10157)
 - Adicionado suporte para as seguintes Linhas braille da Handy Tech (#8955):
  - Basic Braille Plus 40
@@ -199,7 +241,7 @@ Os destaques desta versão incluem a detecção automática de linhas braille da
 
 == Correção de Falhas ==
 - O NVDA não trava mais quando um diretório de complementos está vazio. (#7686)
-- As marcas LTR ""[da esquerda para a direita]"" e RTL ""[da direita para a esquerda]"" não são mais relatadas em braile ou fala por caractere ao acessar a janela de propriedades. (#8361)
+- As marcas LTR ""[da esquerda para a direita]"" e RTL ""[da direita para a esquerda]"" não são mais relatadas em braille ou fala por caractere ao acessar a janela de propriedades. (#8361)
 - Ao pular para campos de formulário com navegação rápida no Modo de Navegação, o campo inteiro do formulário agora é anunciado, e não apenas a primeira linha. (#9388)
 - O NVDA não ficará mais em silêncio após sair do aplicativo Email do Windows 10. (#9341)
 - O NVDA não falha mais ao iniciar quando as configurações regionais dos usuários estão definidas para uma localidade desconhecida para o NVDA, como Inglês (Holanda). (#8726)
@@ -251,7 +293,7 @@ Essas alterações são necessárias para garantir melhor compatibilidade do có
 Por favor, consulte a lista de alterações mais abaixo para obter mais detalhes sobre isso e como os complementos agora são melhor versionados.
 
 == Novas Características ==
-- Novas tabelas braile: Africâner, Árabe braille informático de 8 pontos, Árabe grau 2, Espanhol grau 2. (#4435, #9186)
+- Novas tabelas braille: Africâner, Árabe braille informático de 8 pontos, Árabe grau 2, Espanhol grau 2. (#4435, #9186)
 - Adicionado uma opção à configurações do mouse do NVDA para fazer com que o NVDA lide com situações em que o mouse é controlado por outro aplicativo. (#8452)
  - Isso permitirá que o NVDA rastreie o mouse quando um sistema for controlado remotamente usando o TeamViewer ou outro software de controle remoto.
 - Adicionado o parâmetro de linha de comando `--enable-start-on-logon` para permitir a configuração se as instalações silenciosas do NVDA configuram o NVDA para iniciar no logon do Windows ou não. Especifique true ""[verdadeiro]"" para iniciar no logon ou false ""[falso]"" para não iniciar no logon. Se o argumento --enable-start-on-logon não for especificado, o NVDA iniciará no logon, a menos que já tenha sido configurado para não fazer isso por uma instalação anterior. (#8574)

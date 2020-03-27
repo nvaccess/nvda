@@ -73,9 +73,9 @@ def COMProxyDllBuilder(env,target,source,proxyClsid):
 	return proxyDll
 env.AddMethod(COMProxyDllBuilder,'COMProxyDll')
 
-# We only support compiling with MSVC 14.1 (2017)
-if not env.get('MSVC_VERSION')=='14.1':
-	raise RuntimeError("Visual C++ 14.1 (Visual Studio 2017) not found")
+# We only support compiling with MSVC 14.2 (2019)
+if not env.get('MSVC_VERSION')=='14.2':
+	raise RuntimeError("Visual C++ 14.2 (Visual Studio 2019) not found")
 
 
 TARGET_ARCH=env['TARGET_ARCH']

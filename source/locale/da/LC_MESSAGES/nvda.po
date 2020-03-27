@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-09 11:28+1000\n"
+"POT-Creation-Date: 2020-03-06 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nicolai Svendsen <chojiro1990@gmail.com>\n"
 "Language-Team: Dansk NVDA <dansk@nvda.dk>\n"
@@ -526,9 +526,6 @@ msgid "Only when scrolling back"
 msgstr "Kun når der rulles tilbage"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "Automatisk"
 
@@ -805,6 +802,11 @@ msgstr "Engelsk (U.K.) Niveau 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr ""
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
 msgstr "Unified English Braille Code niveau 1"
 
@@ -1040,13 +1042,20 @@ msgstr "Marathi niveau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
+#, fuzzy
+msgid "Dutch (Belgium) 6 dot"
 msgstr "Hollandsk (Belgien)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
+#, fuzzy
+msgid "Dutch (Netherlands) 6 dot"
 msgstr "Hollandsk (Holland)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr ""
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1383,7 +1392,7 @@ msgstr "flytter til næste tabel"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next table"
-msgstr "ingen næste tabell"
+msgstr "ingen næste tabel"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous table"
@@ -3811,7 +3820,7 @@ msgid ""
 "speaks it"
 msgstr ""
 "Flytter læsemarkøren til næste linje i det aktuelle navigatorobjekt og læser "
-"den op.\v"
+"den op."
 
 #. Translators: Input help mode message for move review cursor to bottom line command.
 msgid ""
@@ -4584,6 +4593,18 @@ msgstr ""
 "Oplyser det nye objekt eller indhold under fingeren hvis forskelligt fra din "
 "fingers sidste position ."
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+#, fuzzy
+msgid "object has no location"
+msgstr "Objekt har ingen placering"
+
+#. Translators: Input help mode message for touch right click command.
+#, fuzzy
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr "Udfører et enkelt højre museklik på musens aktuelle position"
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Viser dialogboksen med NVDAs indstillingsprofiler"
@@ -4666,7 +4687,7 @@ msgstr "Skærmtæppe aktiveret"
 
 #. Translators: Reported when the screen curtain is temporarily enabled.
 msgid "Temporary Screen curtain, enabled until next restart"
-msgstr "Midlertidigt skærmtæppe, der forbliver aktiveret indtil næste genstart"
+msgstr "Midlertidigt skærmtæppe (aktiv indtil NVDA genstartes)"
 
 #. Translators: Reported when the screen curtain could not be enabled.
 msgid "Could not enable screen curtain"
@@ -6390,6 +6411,8 @@ msgstr "Fejl under søgning efter opdatering."
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "Fejl"
 
@@ -9190,22 +9213,17 @@ msgstr ""
 "Benyt UI Automation til at få adgang til kontrolelementer for Microsoft "
 "&Word-dokumenter, når disse er tilgængelige"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Understøttelse af Windows-K&onsoller:"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr ""
+"Benyt UI Automation til at få adgang til Windows-&konsollen, når denne er "
+"tilgængelig"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "Foretræk UIA"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Forældet"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "Udtal &adgangskoder i UIA-konsoller (kan forbedre ydeevnen)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9214,17 +9232,10 @@ msgstr "Terminalprogrammer"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
-msgstr "Udtal &adgangskoder i Windows-konsoller (kan forbedre ydeevnen)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
-"Benyt den nye understøttelse for &indtastede tegn i forældede Windows-"
-"konsoller når tilgængelig"
+"Benyt den nye understøttelse for indtastede &tegn i Windows-konsoller, når "
+"denne er tilgængelig"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9608,6 +9619,11 @@ msgstr ""
 "eller defineret i løbet af denne session, vil gå tabt.\n"
 "\t\t\tDette kan ikke fortrydes."
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+#, fuzzy
+msgid "Reset gestures"
+msgstr "Inputbevægelser"
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
@@ -9623,6 +9639,7 @@ msgstr "Slutter interaktion med matematikindhold"
 msgid "Math interaction not supported."
 msgstr "Matematikindhold ikke understøttet."
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9651,7 +9668,8 @@ msgstr "valgt %s"
 msgid "%s selected"
 msgstr "%s valgt"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d tegn"
@@ -10112,16 +10130,19 @@ msgstr "Fremhæv fokus"
 msgid "&Enable Highlighting"
 msgstr "Aktivér &fremhævelse"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "Skærmtæppe"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
-msgstr "&Vis altid en advarsel, når {screenCurtainTranslatedName} indlæses"
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "&Vis altid en advarsel, når Skærmtæppe indlæses"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "Afspil altid en &lyd, når skærmtæppet indlæses"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -10162,8 +10183,8 @@ msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
 msgstr ""
-"Kan ikke sætte overskrifter. Aktivér venligst oplæsning af tabeloverskrifter "
-"i indstillingerne for Dokumentformatering."
+"Kan ikke indstille overskrifter. Aktivér venligst oplæsning af "
+"tabeloverskrifter i indstillingerne for Dokumentformatering."
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
@@ -10230,7 +10251,7 @@ msgid ""
 "and to the right of it within this table. Pressing twice will forget the "
 "current row header for this cell."
 msgstr ""
-"Tryk en gang for at sætte denne celle som rækkeoverskrift for celler "
+"Tryk en gang for at indstille denne celle som rækkeoverskrift for celler "
 "nedenunder og til højre i denne tabel. Tryk to gange for at annullere "
 "rækkeoverskriften for denne celle"
 
@@ -11630,6 +11651,15 @@ msgstr "dobbelt linjeafstand"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 linjeafstand"
+
+#~ msgid "Windows C&onsole support:"
+#~ msgstr "Understøttelse af Windows-K&onsoller:"
+
+#~ msgid "Prefer UIA"
+#~ msgstr "Foretræk UIA"
+
+#~ msgid "Legacy"
+#~ msgstr "Forældet"
 
 #~ msgid "Magnifier"
 #~ msgstr "Forstørrelsesglas"

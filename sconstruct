@@ -1,22 +1,58 @@
 ###
-#This file is a part of the NVDA project.
-#URL: https://www.nvaccess.org/
-#Copyright 2010-2019 NV Access Limited, Babbage B.V.
-#This program is free software: you can redistribute it and/or modify
-#it under the terms of the GNU General Public License version 2.0, as published by
-#the Free Software Foundation.
-#This program is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-#This license can be found at:
-#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# This file is a part of the NVDA project.
+# URL: https://www.nvaccess.org/
+# Copyright 2010-2020 NV Access Limited, Babbage B.V.
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2.0, as published by
+# the Free Software Foundation.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# This license can be found at:
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
 import sys
 import os
+import platform
+
+# Variables for storing required version of Python, and the version which is used to run this script.
+requiredPythonMajor ="3"
+requiredPythonMinor = "7"
+requiredPythonArchitecture = "32bit"
+installedPythonMajor = str(sys.version_info.major)
+installedPythonMinor = str(sys.version_info.minor)
+installedPythonArchitecture = platform.architecture()[0]
+# Ensure that we are running with required version of Python, otherwise inform the user and exit.
+if (
+	installedPythonArchitecture != requiredPythonArchitecture
+	or installedPythonMajor != requiredPythonMajor
+	or installedPythonMinor != requiredPythonMinor
+):
+	unsupportedPythonMsg = (
+		("This script is started with Python %s.%s %s, however to build NVDA you have to use Python %s.%s %s.\n"
+		"Please install the needed version of Python and launch SCons again, or if you have multiple "
+		"versions of Python installed start this script with required version explicitly.")
+	)
+	raise RuntimeError(unsupportedPythonMsg %(
+		installedPythonMajor,
+		installedPythonMinor,
+		installedPythonArchitecture,
+		requiredPythonMajor,
+		requiredPythonMinor,
+		requiredPythonArchitecture
+	)
+	)
+if sys.version_info.micro == 6:
+	# #10696: Building with Python 3.7.6 fails. Innform user and exit.
+	Py376FailMsg = "Building with Python 3.7.6 is not possible.\nPlease use more  recent version of Python 3."
+	raise RuntimeError(Py376FailMsg)
+sourceEnvPath = os.path.abspath(os.path.join(Dir('.').srcnode().path, "source"))
+sys.path.append(sourceEnvPath)
+import sourceEnv
+sys.path.remove(sourceEnvPath)
 import time
 from glob import glob
-import sourceEnv
 from py2exe.dllfinder import pydll
 import importlib.util
 import winreg

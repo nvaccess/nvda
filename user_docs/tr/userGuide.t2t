@@ -174,7 +174,7 @@ ikincisi, NVDA'nın Windows başladıktan sonra otomatik olarak devreye girmesiy
 +++ Veri kullanım istatistikleri iletişim kutusu +++[UsageStatsDialog]
 NVDA 2018.3'ten başlayarak, kullanıcılara NVDA'yı iyileştirmek için kullanım verilerinin NV Access'e gönderilmesine izin vermek isteyip istemedikleri sorulur. 
 NVDA'yı ilk kez başlatırken, NVDA'yı kullanırken NV Access'e veri göndermeyi kabul etmek isteyip istemediğinizi soran bir iletişim kutusu açılacaktır.
-NV Access tarafından toplanan veriler hakkında daha fazla bilgiyi aşağıdaki 11. Bölümde okuyabilirsiniz.
+NV Access tarafından toplanan veriler hakkında daha fazla bilgiyi genel ayarlar bölümünde, [NVDA projesinin NVDA kullanım istatistiklerini toplamasına izin verin #GeneralSettingsGatherUsageStats] diyerek okuyabilirsiniz.
 Not: "evet" veya "hayır" a basmak bu ayarı kaydeder ve NVDA'yı yeniden yüklemediğiniz sürece iletişim kutusu bir daha asla gösterilmez.
 Ancak, NVDA'nın genel ayarlar panelinde veri toplama işlemini manuel olarak etkinleştirip  devre dışı bırakabilirsiniz. Bu ayarı manuel olarak değiştirmek için, [NVDA kullanım verilerini toplaması için NVDA projesine izin ver #GeneralSettingsGatherUsageStats] adlı onay kutusunu işaretleyebilir veya işaretini kaldırabilirsiniz.
 
@@ -473,15 +473,15 @@ Fare ekranın sağ veya sol tarafına doğru hareket ettikçe, kullanıcıların
 Bu ekstra fare seçenekleri varsayılan olarak kapalıdır.
 Ancak bunların avantajlarından faydalanmak isterseniz, tercihler menüsü içinde bulunan [NVDA ayarlar #NVDASettings] iletişim kutusundaki [Fare ayarları #MouseSettings] kategorisinden    bu özellikleri konfigüre edebilirsiniz.
 
-NVDA, fareyi hareket ettirmek için, ek bir işleve sahip değildir. Fiziksel fare veya dizüstü bilgisayarlarda fare pedlerini kullanabilirsiniz. Ancak, farenin nesne sunucusunun konumuna ya da nesne sunucusunun fare konumuna taşınması için kullanılan ve sol ve sağ fare tuşlarıyla ilgili birkaç komut bulunmaktadır:
+NVDA, fareyi hareket ettirmek için, ek bir işleve sahip değildir. Fiziksel fare veya dizüstü bilgisayarlarda fare pedlerini kullanabilirsiniz. Ancak, farenin nesne sunucusunun konumuna ya da nesne sunucusunun fare konumuna taşınması, sol tık, sağ tık gibi çeşitli  işlevler için kullanılan  bazı  komutlar bulunmaktadır:
 %kc:beginInclude
-|| Ad | Masaüstü Kısayol tuşu | Dizüstü Kısayol tuşu | Tarif |
-| Sol fare tıklaması | numaratörBölü | NVDA+ğ | Sol fare düğmesine bir kez tıklar çift tıklamak için tuşlara peşpeşe 2 kez basılabilir |
-| Sol fare kilidi | şift+numaratörbölü | NVDA+kontrol+ğ | Sol fareyi kilitler. kilidi açmak için tuşa tekrar basılmalıdır. bulunulan yeri taşımak için, bu tuşla fareyi kilitleyin ve fareyi fiziksel olarak veya diğer fare komutlarıyla hareket ettirin |
-| Sağ fare tıklaması | numaratörÇarpı | NVDA+ü | sağ fare düğmesine bir kez tıklar. |
-| sağ fare kilidi | şift+numaratörÇarpı | NVDA+kontrol+ü | sağ fareyi kilitler. kilidi açmak için tuşa tekrar basılmalıdır. fareyi taşımak için, bu tuşla fareyi kilitleyin ve fareyi fiziksel olarak veya diğer fare komutlarıyla hareket ettirin |
-| Fareyi nesne sunucusunun üzerinde bulunduğu nesneye taşıma | NVDA+numaratörbölü | NVDA+şift+m | Fareyi nesne sunucusunun konumundaki nesnenin üzerine taşır |
-| farenin altındaki nesneye gitme | NVDA+numaratörÇarpı | NVDA+şift+n | nesne sunucusunu farenin konumundaki nesneye taşır. |
+|| Ad | Masaüstü Kısayol tuşu | Dizüstü Kısayol tuşu | Dokunma | Tarif |
+| Sol fare tıklaması | numaratörBölü | NVDA+ğ | yok | Sol fare düğmesine bir kez tıklar çift tıklamak için tuşlara peşpeşe 2 kez basılabilir |
+| Sol fare kilidi | şift+numaratörbölü | NVDA+kontrol+ğ | yok | Sol fareyi kilitler. kilidi açmak için tuşa tekrar basılmalıdır. bulunulan yeri taşımak için, bu tuşla fareyi kilitleyin ve fareyi fiziksel olarak veya diğer fare komutlarıyla hareket ettirin |
+| Sağ fare tıklaması | numaratörÇarpı | NVDA+ü | dokun ve tut | sağ fare düğmesine bir kez tıklar. |
+| sağ fare kilidi | şift+numaratörÇarpı | NVDA+kontrol+ü | yok | sağ fareyi kilitler. kilidi açmak için tuşa tekrar basılmalıdır. fareyi taşımak için, bu tuşla fareyi kilitleyin ve fareyi fiziksel olarak veya diğer fare komutlarıyla hareket ettirin |
+| Fareyi nesne sunucusunun üzerinde bulunduğu nesneye taşıma | NVDA+numaratörbölü | NVDA+şift+m | yok | Fareyi nesne sunucusunun konumundaki nesnenin üzerine taşır |
+| farenin altındaki nesneye gitme | NVDA+numaratörÇarpı | NVDA+şift+n | yok | nesne sunucusunu farenin konumundaki nesneye taşır. |
 %kc:endInclude
 
 + Tarama Kipi +[BrowseMode]
@@ -659,8 +659,8 @@ Braille ekranaa mümkün olduğunca fazla bilgi sığdırmak amacıyla, kontrol 
 
 || Kısaltma | Kontrol türü |
 | uyg | uygulama |
-| mkl | makale
-| lnt | alıntı bloğu |
+| mkl | makale |
+| lnt | alıntı bloku |
 | dğm | düğme |
 | drdğm | açılır düğme |
 | döndğm | dönen düğme |
@@ -778,10 +778,10 @@ Bu konumlar renkli bir dikdörtgen çizgiyle vurgulanır.
 - Düz sarı (web tarayıcılarındaki gibi fiziksel bir imlecin bulunmadığı yerlerde ) tarama kipinde kullanılan sanal imleci vurgular.
 -
 
-[NVDA Ayarları #NVDASettings] iletişim kutusunda [görsellik kategorisi #VisionSettings] altındaki Odak Vurgulaması etkinse, you can [odağın, nesne sunucusunun ya da tarama kipi imleci konumunun  vurgulanıp vurgulanmayacağını değiştirebilirsiniz #VisionSettingsFocusHighlight]
+[NVDA Ayarları #NVDASettings] iletişim kutusunda [görsellik kategorisi #VisionSettings] altındaki Odak Vurgulaması etkinse, [odağın, nesne sunucusunun ya da tarama kipi imleci konumunun  vurgulanıp vurgulanmayacağını değiştirebilirsiniz #VisionSettingsFocusHighlight]
 
 ++ Ekran perdesi ++[VisionScreenCurtain]
-Kör ya da az gören bir kullanıcı iseniz, ekranda ne olduğunu sıklıkla mümkün ya da gerekli değildir.
+Kör ya da az gören bir kullanıcı iseniz, ekranda ne olduğunu algılamanız yüksek olasılıkla mümkün ya da gerekli değildir.
 Dahası, omzunuzun üzerinden biri ekranınızı dikizliyor olabilir.
 Bu tür durumlar için  NVDA, ekranı karartmak için etkinleştirilebilen "ekran perdesi" adı verilen bir özelliğe sahiptir.
 
@@ -1061,7 +1061,7 @@ Mevcut günlük tutma seviyeleri:
 - Gizlilik konusunda endişeleriniz varsa, günlük düzeyini bu seçeneğe ayarlamayın.
 - Hata ayıklama: Bilgi, uyarı ve girdi/çıktı mesajlarına ek olarak, ek hata ayıklama mesajları kaydedilecektir.
 - Girdi/çıktı ayarında  olduğu gibi, gizlilikten endişe duyuyorsanız, günlük kaydı seviyesini bu seçeneğe ayarlamamalısınız.
-
+-
  
 ==== NVDA'yı Windowsu açınca Otomatik Olarak Başlat ====[GeneralSettingsStartAfterLogOn]
 Bu seçenek etkinleştirilirse, Windowsta oturum açar açmaz NVDA otomatik olarak başlayacaktır.
@@ -1084,7 +1084,7 @@ Aşağıdaki bilgiler, her zaman gönderilir:
 - Mevcut NVDA sürümü
 - İşletim Sistemi sürümü
 - İşletim Sisteminin 64 veya 32 bit mi olduğu bilgisi
-
+-
 
 ==== NVDA projesine NVDA kullanım istatistiklerini toplamak için izin ver ====[GeneralSettingsGatherUsageStats]
 Etkinleştirilmişse, NV Access NVDA kullanıcı sayısını takip etmek için güncelleme kontrollerinden topladığı işletim sistemi, ülke gibi bazı demografik bilgileri kullanır.
@@ -1095,7 +1095,7 @@ Güncellemeleri kontrol etmek için zorunlu olan bilgilerin yanında, aşağıda
 - Kullanılan geçerli konuşma sentezleyici adı (eklentinin adı ve kaynağı dahil)
 - Kullanılan geçerli Braille ekranın adı (eklentinin adı ve kaynağı dahil)
 - Braille çıktısı için kullanılan tablo (tabii braille kullanılıyorsa)
-
+-
 
 Bu bilgi, NVAccess'e NVDA gelişim sürecindeki öncelikleri belirlemesinde önemli bir destek sunmaktadır.
 
@@ -1162,7 +1162,7 @@ NVDA'nın noktalama işaretlerini herhangi bir sentezleyici ya da ses için yanl
 
 ==== Karakter ve sembooleri işlerken (emoji dahil) Unicode Konsorsiyumu verisini dahil et ====[SpeechSettingsCLDR]
 Bu onay kutusu etkinleştirildiğinde, NVDA karakter ve sembolleri tellaffuz ederken  ek  telaffuz sözlüklerini kullanır.
-Bu sözlükler çeşitli sembollerin telaffuzunu içerir  (özellikle emoji) ve [Unicode Consortium https://www.unicode.org/consortium/] tarafından [Ortak Yerel Veri Deposu https://cldr.unicode.org/] içinde sağlanırlar.
+Bu sözlükler çeşitli sembollerin telaffuzunu içerir  (özellikle emoji) ve [Unicode Consortium https://www.unicode.org/consortium/] tarafından [Ortak Yerel Veri Deposu http://cldr.unicode.org/] içinde sağlanırlar.
 Emojilerin bu verilere dayanılarak seslendirilmesini istiyorsanız bu onay kutusunu işaretleyin.
 Ancak, emojilerin kullandığınız sentezleyici tarafından seslendirilmesini istiyorsanız bu onay kutusunu işaretlememelisiniz.
 
@@ -1394,9 +1394,12 @@ Devam etmeden önce ("Evet" i seçerek), konuşma / braille özelliğini etkinle
 Ekran Perdesini etkinleştirmek istemiyorsanız "Hayır" ı seçin.
 Eminseniz, ekran perdesini etkinleştirmek için Evet düğmesini seçebilirsiniz.
 Her seferinde bu uyarı mesajıyla karşılaşmak istemiyorsanız, mesajı gösteren iletişim kutusundan bu davranışı değiştirebilirsiniz.
-"Ekranı karart" onay kutusunun yanındaki "Ekran Perdesi'ni yüklerken her zaman bir uyarı göster" onay kutusunu işaretleyerek uyarıyı her zaman geri yükleyebilirsiniz.
+"Ekranı karart" onay kutusunun yanındaki "Ekran Perdesi'ni etkinleştirmeden önce daima uyar" onay kutusunu işaretleyerek uyarının  her durumda gösterilmesini tekrar sağlayabilirsiniz.
 
-Ekran Perdesini herhangi bir yerden değiştirmek için, [girdi hareketleri iletişim kutusundan #InputGestures] bir hareket atayabilirsiniz.
+Ekran Perdesi statüsünü herhangi bir yerden değiştirmek için, [girdi hareketleri iletişim kutusundan #InputGestures] bir hareket atayabilirsiniz.
+
+Varsayılan olarak, Ekran Perdesi statüsü değiştiğinde ses çalınır.
+Bu davranışı değiştirmek isterseniz, "Ekran Perdesi statüsü değiştiğinde ses çal" onay kutusunun işaretini kaldırabilirsiniz.
 
 ==== Üçüncü taraf görsel yardım ayarları ====[VisionSettingsThirdPartyVisualAids]
 Ek görsellik geliştirme sağlayıcıları [NVDA eklentileri #AddonsManager] ile sağlanabilir.
@@ -1776,28 +1779,18 @@ Buna, Microsoft Word’ün yanı sıra,  Microsoft Outlook mesaj görüntüleyic
 Ancak, Microsoft Office'in bazı sürümlerinde ya açığa çıkmamış ya da yanlış açıklanmış bazı bilgiler olabilir; bu, bu UI otomasyon desteğinin her zaman güvenilemeyeceği anlamına gelir.
 Kullanıcıların çoğunun varsayılan olarak bunu açmasını önermiyoruz, ancak Office 2016/365 kullanıcılarının bu özelliği test etmesini ve geri bildirimde bulunmasını memnuniyetle karşılarız.
 
-==== Windows Konsolu desteği ====[AdvancedSettingsConsoleUIA]
-Bu seçenek NVDA'nın komut istemi, PowerShell ve Linux için Windows Alt Sistemi tarafından kullanılan Windows Konsolu ile nasıl etkileşime gireceğini belirler.
-Modern Windows Terminalini etkilemez.
-Windows 10 1709 sürümüyle, Microsoft, onu destekleyen ekran okuyucular için son derece gelişmiş performans ve kararlılık getiren [UI Automation API'si için konsola destek eklendi https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/].
-Kullanıcı Arayüzü Otomasyonunun kullanılamadığı veya daha düşük bir kullanıcı deneyimine neden olduğu bilinen durumlarda, NVDA'nın eski konsol desteği kullanılabilir.
-Windows Konsolu desteği seçim kutusunda üç seçenek vardır:
-- Otomatik: Windows 10 sürüm 1809 ve sonraki sürümlerinde konsollarda UI Otomasyonu kullanır. Bu seçenek önerilir ve varsayılan olarak ayarlanmıştır.
-- UIA'yı tercih et: Eksikse veya buggy uygulamaları olan Windows sürümlerinde bile, konsollarda UI Otomasyonu kullanır. Bu sınırlı işlevsellik yararlı olabilir (ve kullanımınız için bile yeterli olsa da), bu seçeneğin kullanımı tamamen kendi sorumluluğunuzdadır ve bu konuda destek sağlanmaz.
-- Legacy: Windows Konsolu'ndaki UI Otomasyonu tamamen devre dışı bırakılır, bu nedenle her durumda eski metod  kullanılır.
--
+==== Windows Konsoluna erişmek için mevcut olduğunda UI Otomasyonunu kullan ====[AdvancedSettingsConsoleUIA]
+Bu seçenek etkinleştirildiğinde, NVDA, [Microsoft tarafından yapılan erişilebilirlik geliştirmelerinin https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] Windows Konsolu desteğinden yararlanan yeni ve devam eden bir çalışmadan faydalanacaktır. Bu özellik oldukça deneyseldir ve hala eksiktir, bu nedenle kullanımı henüz tavsiye edilmez. Ancak, tamamlandığında, bu yeni desteğin varsayılan olacağı ve NVDA'nın Windows komut konsollarındaki performansını ve kararlılığını artıracağı tahmin edilmektedir.
 
-==== Windows Konsolunda şifreleri Seslendir ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Bu ayar, karakterlerin [yazılan karakterleri seslendir  #KeyboardSettingsSpeakTypedCharacters] ya da  [yazılan sözcükleri seslendir #KeyboardSettingsSpeakTypedWords] UI otomasyon desteği etkinleştirilmiş Windows Konsolu ve Mintty gibi bazı terminal programlarında ekranın güncellenmediği durumlarda (parola girişi gibi) ayarlarına göre seslendirilip seslendirilmeyeceğini kontrol eder.
-Güvenlik nedeniyle bu ayar devre dışı bırakılmalıdır.
-Ancak, konsollarda yazılan karakterlerin  ve / veya sözcüklerin bildirimiyle ilgili performans sorunları veya kararsızlığı yaşarsanız veya güvenilir ortamlarda çalışıyorsanız ve parolaların seslendirilmesini istiyorsanız, bunu etkinleştirmek isteyebilirsiniz.
+==== UIA konsollarında şifreleri seslendir ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Bu ayar ekranın güncellenmediği durumlarda (şifre girişi gibi) UI otomasyon desteği etkin Windows Konsolu'nda [yazılan karakterleri seslendir #KeyboardSettingsSpeakTypedCharacters] veya [yazılan sözcükleri seslendir #KeyboardSettingsSpeakTypedWords] ayrlarına bağlı olarak karakterlerin seslendirilip seslendirilmeyeceğini belirler. Güvenlik nedeniyle, bu ayar devre dışı bırakılmalıdır. Bununla birlikte, NVDA'nın yeni deneysel konsol desteğini kullanırken yazılan karakter ve / veya kelime bildiriminde performans sorunları veya kararsızlık yaşıyorsanız etkinleştirmek isteyebilirsiniz.
 
-==== Yeni girilen karakter desteğini, kullanılabilir olduğunda eski Windows konsollarında kullanın ====[AdvancedSettingsKeyboardSupportInLegacy]
-Bu seçenek, eski Windows konsollarında yazılan karakterleri algılamak için alternatif bir yöntem sağlar.
+==== Mevcutsa Windows Konsolu'nda yeni yazılan karakter desteğini kullan ====[AdvancedSettingsKeyboardSupportInLegacy]
+Bu seçenek, Windows komut konsollarında yazılan karakterleri algılamak için alternatif bir yöntem sunar.
 Performansı artırıp bazı konsol çıktılarının hecelenmesini engellerken, bazı terminal programlarıyla uyumlu olmayabilir.
 Bu özellik, varsayılan olarak Windows 10 sürüm 1607, 1703, 1709 ve 1803'te ve UI Automation kullanılamadığında veya devre dışı bırakıldığında daha yeni Windows 10 sürümlerinde kullanılabilir.
 Dikkat: bu seçenek etkin durumdayken, şifreler gibi ekranda görünmeyen yazılan karakterler gizlenmez.
-Güvensiz ortamlarda parola girerken [karakterleri seslendir #KeyboardSettingsSpeakTypedCharacters] ve [sözcükleri seslendir #KeyboardSettingsSpeakTypedWords] özelliklerini geçici olarak kapatabilirsiniz.
+Güvensiz ortamlarda, parola girerken [karakterleri seslendir #KeyboardSettingsSpeakTypedCharacters] ve [sözcükleri seslendir #KeyboardSettingsSpeakTypedWords] özelliklerini geçici olarak kapatabilirsiniz.
 
 ==== Sistem Odağı Tarama kipi imlecini takip etsin ====[BrowseModeSettingsAutoFocusFocusableElements]
 Kısayol: NVDA+8
@@ -2432,7 +2425,12 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 USB bağlantısını ve HumanWare protokolünü kullanıyorsanız, öncelikle üretici tarafından sağlanan USB sürücülerini kurmalısınız.
 OpenBraille protokolü için USB sürücüleri gerekmez.
 
-ayrıca BrailleNote Touch da desteklenir, ve herhangi bir sürücü yüklü olmasını gerektirmez.
+Ek olarak aşağıdaki aygıtlar da desteklenir (ve herhangi bir özel sürücünün yüklenmesini gerektirmez):
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
+
 
 Aşağıda Brailliant BI/B ve BrailleNote touch braille ekranları NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
 Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
@@ -3020,6 +3018,7 @@ Aşağıdakiler NVDA komut satırı seçenekleridir:
 | -c CONFIGPATH | --config-path=CONFIGPATH | NVDA ile ilgili tüm ayarların kaydedileceği adres |
 | -m | --minimal | Ses, arayüz, başlangıç mesajı vb olmaz |
 | -s | --secure | Güvenli kip (Python konsolu ve genellikle güvenli ekranlarda kullanılan kayıt özelliklerini devre dışı bırakır) |
+| -s | --secure | Güvenli kip: Python konsolu, profil oluşturma, silme, profilleri yeniden adlandırma gibi profil özellikleri, Güncelleme kontrolü, hoş geldiniz iletişim kutusundaki ve genel ayarlar kategorisindeki bazı onay kutuları (Örneğin. Oturum açtıktan sonra NVDA'yı başlatın, kapatılırken konfigürasyonu kaydet vb.), logviewer ve log özellikleri (güvenli ekranlarda sıklıkla kullanılır) devre dışı bırakır. Ayrıca, bu komutun sistem yapılandırmasında ayarları kaydetme olasılığını devre dışı bırakacağını ve hareket haritasının diske kaydedilmeyeceğini unutmayın. |
 | None | --disable-addons | Eklentiler etkisizdir |
 | None | --debug-logging | Yalnızca bu çalıştırma için hata ayıklama seviyesi günlüğünü etkinleştirin. Bu ayar, herhangi bir kayıt seçeneği de dahil olmak üzere verilen herhangi bir günlük seviyesi ("" --loglevel "", -l) argümanını geçersiz kılar. |
 | None | --no-logging | NVDA'yı kullanırken günlüğü tamamen devre dışı bırakın. Komut satırından bir günlük seviyesi ("" --loglevel "", -l) belirtilirse veya hata ayıklama günlüğü açıksa bu ayarın üzerine yazılabilir. |

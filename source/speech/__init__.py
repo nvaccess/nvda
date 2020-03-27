@@ -7,6 +7,7 @@
 """High-level functions to speak information.
 """ 
 
+import collections
 import itertools
 import weakref
 import unicodedata
@@ -695,6 +696,13 @@ def speak(  # noqa: C901
 	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
 	@param priority: The speech priority.
 	"""
+	# speechSequence may be a generator.
+	#  As speechViewer needs to iterate over it
+	# before it is iterated over for actual speaking,
+	# Or similarly it may be iterated over for logging bad sequence types,
+	# Flatten it into a list first.
+	if isinstance(speechSequence, collections.abc.Generator):
+		speechSequence = [i for i in speechSequence]
 	types.logBadSequenceTypes(speechSequence)
 	if priority is None:
 		priority = Spri.NORMAL
@@ -1061,6 +1069,12 @@ def speakTextInfo(
 		onlyInitialFields,
 		suppressBlanks
 	)
+
+	if reason == controlTypes.REASON_SAYALL:
+		# Deprecation warning: In 2021.1 speakTextInfo will no longer  send speech through speakWithoutPauses
+		# if reason is sayAll, as sayAllhandler does this manually now.
+		return _speakWithoutPauses.speakWithoutPauses(speechSequences)
+
 	speechSequences = GeneratorWithReturn(speechSequences)
 	for seq in speechSequences:
 		speak(seq, priority=priority)
@@ -1430,13 +1444,6 @@ def getTextInfoSpeech(  # noqa: C901
 	if reason == controlTypes.REASON_ONLYCACHE or not speechSequence:
 		return False
 
-	if reason == controlTypes.REASON_SAYALL:
-		withoutPauses = GeneratorWithReturn(
-			_speakWithoutPauses.getSpeechWithoutPauses(speechSequence)
-		)
-		yield from withoutPauses
-		return withoutPauses.returnValue
-
 	yield speechSequence
 	return True
 
@@ -1499,10 +1506,16 @@ def getPropertiesSpeech(  # noqa: C901
 		textList.append(roleText if roleText else controlTypes.roleLabels[role])
 	if value:
 		textList.append(value)
-	states=propertyValues.get('states',set())
+	states = propertyValues.get('states')
 	realStates=propertyValues.get('_states',states)
 	negativeStates=propertyValues.get('negativeStates',set())
-	if states or negativeStates:
+	# If the caller didn't want states, states will be None.
+	# However, empty states means the caller still wants states, but the object
+	# had no states; e.g. an unchecked check box with no other states.
+	if states is not None or negativeStates:
+		if states is None:
+			# processAndLabelStates won't accept None for states.
+			states = set()
 		labelStates = controlTypes.processAndLabelStates(role, realStates, reason, states, negativeStates)
 		textList.extend(labelStates)
 	# sometimes description key is present but value is None

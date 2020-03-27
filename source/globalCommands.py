@@ -1583,6 +1583,17 @@ class GlobalCommands(ScriptableObject):
 	script_navigatorObject_devInfo.__doc__ = _("Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined.")
 	script_navigatorObject_devInfo.category=SCRCAT_TOOLS
 
+	@script(
+		# Translators: Input help mode message for Open user configuration directory command.
+		description=_("Opens NVDA configuration directory for the current user."),
+		category=SCRCAT_TOOLS
+	)
+	def script_openUserConfigurationDirectory(self, gesture):
+		if globalVars.appArgs.secure:
+			return
+		import systemUtils
+		systemUtils.openUserConfigurationDirectory()
+
 	def script_toggleProgressBarOutput(self,gesture):
 		outputMode=config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]
 		if outputMode=="both":
@@ -2288,6 +2299,37 @@ class GlobalCommands(ScriptableObject):
 				obj.doAction()
 	script_touch_hoverUp.category=SCRCAT_TOUCH
 
+	def script_touch_rightClick(self, gesture):
+		obj = api.getNavigatorObject()
+		# Ignore invisible or offscreen objects as they cannot even be navigated with touch gestures.
+		if controlTypes.STATE_INVISIBLE in obj.states or controlTypes.STATE_OFFSCREEN in obj.states:
+			return
+		try:
+			p = api.getReviewPosition().pointAtStart
+		except (NotImplementedError, LookupError):
+			p = None
+		if p:
+			x = p.x
+			y = p.y
+		else:
+			try:
+				(left, top, width, height) = obj.location
+			# Flake8/E722: stems from object location script.
+			except: # noqa
+				# Translators: Reported when the object has no location for the mouse to move to it.
+				ui.message(_("object has no location"))
+				return
+			# Don't bother clicking when parts or the entire object is offscreen.
+			if min(left, top, width, height) < 0:
+				return
+			x = left + (width // 2)
+			y = top + (height // 2)
+		winUser.setCursorPos(x, y)
+		self.script_rightMouseClick(gesture)
+	# Translators: Input help mode message for touch right click command.
+	script_touch_rightClick.__doc__ = _("Clicks the right mouse button at the current touch position. This is generally used to activate a context menu.") # noqa Flake8/E501
+	script_touch_rightClick.category = SCRCAT_TOUCH
+
 	def script_activateConfigProfilesDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onConfigProfilesCommand, None)
 	# Translators: Describes the command to open the Configuration Profiles dialog.
@@ -2559,6 +2601,8 @@ class GlobalCommands(ScriptableObject):
 		"ts:3finger_tap":"touch_changeMode",
 		"ts:2finger_double_tap":"showGui",
 		"ts:hoverUp":"touch_hoverUp",
+		"ts:tapAndHold": "touch_rightClick", # noqa (Flake8/ET121)
+
 		# Review cursor
 		"kb:shift+numpad7": "review_top",
 		"kb(laptop):NVDA+control+home": "review_top",

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-06 07:28+1000\n"
-"PO-Revision-Date: 2019-12-06 20:34+0200\n"
+"POT-Creation-Date: 2020-03-06 00:10+1000\n"
+"PO-Revision-Date: 2020-03-06 16:35+0200\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, "
 "florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -525,9 +525,6 @@ msgid "Only when scrolling back"
 msgstr "Doar la derularea înapoi"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "Automat"
 
@@ -804,6 +801,11 @@ msgstr "Engleză (U.K.) grad 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr "Braille englezesc din America de Nord pentru cod mașină"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
 msgstr "Cod Braille Engleză Unificată grad 1"
 
@@ -1039,13 +1041,18 @@ msgstr "Marathi grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
-msgstr "Neerlandeză (Belgia)"
+msgid "Dutch (Belgium) 6 dot"
+msgstr "Neerlandeză (Belgia) 6 puncte"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
-msgstr "Neerlandeză (Țările de Jos)"
+msgid "Dutch (Netherlands) 6 dot"
+msgstr "Neerlandeză (Țările de Jos) 6 puncte"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr "Neerlandeză 8 puncte"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4609,6 +4616,18 @@ msgstr ""
 "Anunță noul obiect sau conținu sub degetul tău dacă diferă față de ultima "
 "poziție a degetului"
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "obiectul nu are nicio locație"
+
+#. Translators: Input help mode message for touch right click command.
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr ""
+"Apasă o dată butonul dreapta al mausului la poziția actuală a mausului. În "
+"general, această acțiune este utilizată la activarea unui meniu contextual."
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Arată fereastra de dialog a configurării de profiluri NVDA"
@@ -4670,7 +4689,7 @@ msgstr ""
 "Schimbă starea cortinei ecranului, fie făcând ecrranul negru, fie afișând "
 "conținutul acestuia. Dacă pentru activarea cortinei se apasă o dată, ea "
 "rămâne activă până la repornirea NVDA. Dacă se apasă de trei ori, rămâne "
-"activă pe o perioadă nnedeterminată. În consecință, dezactivarea acesteia "
+"activă pe o perioadă nedeterminată. În consecință, dezactivarea acesteia "
 "trebuie să fie efectuată manual"
 
 #. Translators: Reported when the screen curtain is disabled.
@@ -6237,7 +6256,8 @@ msgstr "Emulează apăsarea %s pe tastatura sistemului"
 msgid "NVDA Speech Viewer"
 msgstr "Monitorul de vorbire NVDA"
 
-#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+#. Translators: The label for a setting in the speech viewer that controls
+#. whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
 msgstr "&Arată monitorul de vorbire la pornire"
 
@@ -6415,6 +6435,8 @@ msgstr "Eroare la căutarea actualizărilor."
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "Eroare"
 
@@ -9240,22 +9262,17 @@ msgstr ""
 "Folosește UI Automation pentru a accesa comenzile documentelor Microsoft "
 "&Word dacă sunt disponibile"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Suport Consolă &Windows:"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr ""
+"&Folosește UI Automation pentru a accesa Consola Windows dacă este "
+"disponibilă"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "Prefer UIA"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Tradițional"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "&Spune parolele în consolele UIA (poate îmbunătăți performanța)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9264,17 +9281,10 @@ msgstr "Programe terminale"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
-msgstr "&Spune parolele în Consola Windows (poate îmbunătăți performanța)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
-"Folosește noul suport pentru caracterele &tastate în consolele tradiționale "
-"de Windows când este disponibil"
+"Folosește noul suport pentru caracterele &tastate în Consola Windows când "
+"este disponibil"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9631,7 +9641,7 @@ msgstr "Gesturi intrare"
 #. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 msgctxt "inputGestures"
 msgid "&Filter by:"
-msgstr "&Fltrează după:"
+msgstr "&Filtrează după:"
 
 #. Translators: The label of a button to reset all gestures in the Input Gestures dialog.
 msgid "Reset to factory &defaults"
@@ -9662,6 +9672,10 @@ msgstr ""
 "sau în această sesiune, vor fi șterse.\n"
 "\t\t\tAceastă acțiune este ireversibilă."
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "Resetare gesturi"
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
@@ -9677,6 +9691,7 @@ msgstr "Ieșire interacțiune mod matematic"
 msgid "Math interaction not supported."
 msgstr "Interacțiune mod matematic nesuportat."
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9705,7 +9720,8 @@ msgstr "selectat %s"
 msgid "%s selected"
 msgstr "%s selectat"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d caractere"
@@ -10124,7 +10140,7 @@ msgstr "Se încarcă document..."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
-msgstr "Actualizează conțiuntul documentului"
+msgstr "Actualizează conținutul documentului"
 
 #. Translators: Presented when use screen layout option is toggled.
 msgid "Use screen layout on"
@@ -10150,7 +10166,7 @@ msgstr "&Evidențiază focalizarea sistemului"
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the browse mode cursor.
 msgid "Highlight browse &mode cursor"
-msgstr "&Evidențiază modul de navigare"
+msgstr "&Evidențiază cursorul modului de navigare"
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the navigator object.
@@ -10166,18 +10182,20 @@ msgstr "Evidențiere Focalizare"
 msgid "&Enable Highlighting"
 msgstr "&Activează evidențierea"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "Cortină Ecran"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
+msgid "Always &show a warning when loading Screen Curtain"
 msgstr ""
-"Afi&șează întotdeauna un mesaj de avertizare la încărcarea "
-"{screenCurtainTranslatedName}"
+"Afi&șează întotdeauna un mesaj de avertizare la încărcarea cortinei ecranului"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "&Redă un sunet la activarea sau dezactivarea cortinei ecranului"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -11696,6 +11714,15 @@ msgstr "Spațiere de două linii"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Spațiere de 1.5 linii"
+
+#~ msgid "Windows C&onsole support:"
+#~ msgstr "Suport Consolă &Windows:"
+
+#~ msgid "Prefer UIA"
+#~ msgstr "Prefer UIA"
+
+#~ msgid "Legacy"
+#~ msgstr "Tradițional"
 
 #~ msgid "Magnifier"
 #~ msgstr "Lupă"

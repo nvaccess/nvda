@@ -174,7 +174,7 @@ Den tredje lader dig styre, om denne Velkomstdialog boks skal vises hver gang NV
 +++ Dialog om brugsstatistik +++[UsageStatsDialog]
 Hvis du kører NVDA 2018.3 eller nyere, vil en dialog fremkomme der beder dig tage stilling til om hvorvidt du ønsker at dele din brugsdata med NV Access. Disse data medvirker til at forbedre fremtidige versioner af NVDA.
 Når du kører NVDA første gang, vil denne dialog blive vist. Her kan du acceptere eller afvise indsamlingen af brugsstatistik til forbedring af NVDA.
-Du kan læse yderligere information om, hvilke data indsamles nedenunder i kapitel 11.
+Du kan læse yderligere information om, hvilke data indsamles i NVDAs generelle indstillinger under [Tillad at NVDA-projektet indsamler brugsdata #GeneralSettingsGatherUsageStats].
 Bemærk: Når du trykker "Ja" eller "Nej", vil denne dialog ikke fremkomme igen med mindre du geninstallerer NVDA.
 Du kan aktivere eller deaktivere denne indstilling i NVDAs generelle indstillinger ved at ændre indstillingen [Tillad at NVDA-projektet indsamler brugsdata om NVDA #GeneralSettingsGatherUsageStats].
 
@@ -778,7 +778,7 @@ Disse positioner er fremhævet ved hjælp af et farvet rektangulært omrids.
 - Solid gul fremhæver markøren for gennemsynstilstand (hvor der ikke befinder sig en fysisk markør som i web-browsere).
 -
 
-Når "Fremhæv fokus" er aktiveret i [ indstillingskategorien Syn #VisionSettings] i [NVDAs indstillinger #NVDASettings], kan du [bestemme om du vil fremhæve systemfokus, navigatorobjektet eller markøren brugt i gennemsynstilstand #VisionSettingsFocusHighlight].
+Når "Fremhæv fokus" er aktiveret i [indstillingskategorien Syn #VisionSettings] i [NVDAs indstillinger #NVDASettings], kan du [bestemme om du vil fremhæve systemfokus, navigatorobjektet eller markøren brugt i gennemsynstilstand #VisionSettingsFocusHighlight].
 
 ++ Skærmtæppe ++[VisionScreenCurtain]
 Som en blind eller svagtseende bruger er det ofte ikke muligt eller nødvendigt at se indholdet på skærmen.
@@ -1061,7 +1061,7 @@ De tilgængelige logningsmuligheder er:
  - Hvis du bekymre dig om dit privatliv, benyt ikke denne valgmulighed.
 - Fejlfinding: Udover diverse informationer, input/output, og beskeder om advarsler, vil yderligere fejlbeskeder logges ved brug af denne indstilling.
  - Hvis du ligeledes bekymre dig om dit privatliv, skal du ikke aktivere denne indstilling, da alt vil blive logget.
-
+-
 
 ==== Start NVDA automatisk, når jeg har logget på Windows ====[GeneralSettingsStartAfterLogOn]
 Hvis denne funktion er slået til, vil NVDA starte, så snart du er logget på Windows.
@@ -1084,7 +1084,7 @@ Følgende informationer bliver altid sendt:
 - Aktuelle version af NvDA
 - Version af dit operativsystem
 - Om dit system er 64- eller 32 bit.
-
+-
 
 ==== Tillad at NVDA-projektet indsamler brugsdata om NVDA ====[GeneralSettingsGatherUsageStats]
 Hvis dette er aktiveret, bruger NV Access oplysningerne indsendt under søgning af opdateringer til at spore antallet af NVDA-brugere, herunder bestemte demografiske forhold som operativsystem og oprindelsesland.
@@ -1095,7 +1095,7 @@ Bortset fra de obligatoriske oplysninger, der kræves for at kontrollere efter o
 - Navn på den aktuelle talesyntese i brug (herunder navnet på tilføjelsesprogrammet, som driveren tilhører)
 - Navn på det aktuelle punktdisplay i brug (herunder navnet på tilføjelsen, som driveren tilhører)
 - Den aktuelle oversættelsestabel (hvis punkt er i brug)
-
+-
 
 Disse informationer hjælper i høj grad NV Access med at prioritere fremtidig udvikling af NVDA.
 
@@ -1397,6 +1397,9 @@ Hvis du ikke vil se denne advarsel, hver gang du aktivererer funktionen, kan du 
 Du kan altid få advarslen til at komme frem igen, hvis du markerer "Vis altid en advarsel, når Skærmtæppe indlæses".
 
 Hvis du vil slå funktionen til og fra ved hjælp af en tastaturkommando, kan du tildele et tastetryk ved at bruge [dialogen til inputbevægelser #InputGestures].
+
+Som standard vil en lyd blive afspillet, når NVDA starter og NVDA aktiverer skærmtæppet automatisk.
+Du kan ændre denne adfærd ved at fjerne markeringen fra den pågældende boks i indstillingerne.
 
 ==== Indstillinger for synshjælpemidler fra tredjeparter ====[VisionSettingsThirdPartyVisualAids]
 Yderligere synshjælpemidler kan tilføjes via [tilføjelsespakker til NVDA #AddonsManager].
@@ -1776,24 +1779,14 @@ For de seneste versioner af Microsoft Office 2016/365 kørende på windows 10 er
 Vær dog opmærksom på, at dette også kan betyde at noget information ikke er synligt, eller vises forkert, hvilket betyder at denne understøttelse ikke altid kan forekomme pålidelig.
 Vi anbefaler ikke at størstedelen af brugere slår denne indstilling til, men vi ønsker gerne henvendelser fra brugere af Office 2016/365.
 
-==== Understøttelse af Windows-konsoller ====[AdvancedSettingsConsoleUIA]
-Denne indstilling bestemmer hvordan NVDA fungerer med Windows-konsolvinduer brugt af Kommandoprompt, PowerShell, og Windows Subsystem for Linux.
-Dette påvirker ikke den moderne Windows-terminal.
-I Windows 10 version 1709, Microsoft [tilføjede understøttelse for deres UI Automation API til konsollen https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], hvilket forbedrede ydeevnen for skærmlæser der understøtter denne.
-I situationer hvor UI Automation ikke er tilgængeligt eller vil resultere i en forværret brugeroplevelse, vil NVDAs understøttelse for forældet metoder være tilgængelige.
-Indstillingen har tre muligheder i den tilsvarende combo box:
-- Automatisk: Bruger UI Automation i Windows-konsoller i Windows 10 version 1809 og nyere. Denne indstilling anbefales og er standardindstillingen.
-- Foretræk UIA: Bruger UI Automation i konsoller, hvis denne er tilgængelig. Dette er også tilfældet i Windows-versioner, hvor implementeringen af denne er fejlagtig. Brug af denne indstilling er på egen hånd, og intet support er tilgængelig for denne.
-- Forældet: UI Automation vil være deaktiveret fuldstændigt, og den forældede metode vil altid benyttes.
--
+==== Benyt UI Automation til at få adgang til Windows-konsollen, når denne er tilgængelig ====[AdvancedSettingsConsoleUIA]
+Når denne indstilling er aktiveret, vil NVDA benytte [tilgængelighedsforbedringer fra Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Denne funktion er dog ikke færdigudviklet, så brug af denne anbefales ikke. Når denne funktion er fuldt udviklet forventer vi at denne indstilling bliver indstillet som standard.
 
 ==== Udtal adgangskoder i Windows-konsoller ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Denne funktion bestemmer om tegn udtales ved brug af indstillingen [sig indtastede tegn #KeyboardSettingsSpeakTypedCharacters] eller [sig indtastede ord #KeyboardSettingsSpeakTypedWords]. Dette kan evt. være nyttigt i situationer hvor skærmen ikke opdateres (som ved indtastning af adgangskoder i konsolvinduer), i nogle terminalprogrammer som Windows-konsollen med understøttelse for UIA aktiveret, samt Mintty. 
-På grund af sikkerhedsårsager bør denne indstilling forblive deaktiveret.
-Du kan dog ønske at aktivere indstillingen, hvis du oplever problemer med udtale af indtastede ord og tegn eller arbejder i sikre miljøer, hvor du foretrækker at adgangskoder udtales.
+Denne funktion bestemmer om tegn udtales ved brug af indstillingen [sig indtastede tegn #KeyboardSettingsSpeakTypedCharacters] eller [sig indtastede ord #KeyboardSettingsSpeakTypedWords]. Dette kan evt. være nyttigt i situationer hvor skærmen ikke opdateres (som ved indtastning af adgangskoder i konsolvinduer), i nogle terminalprogrammer som Windows-konsollen med understøttelse for UIA aktiveret. På grund af sikkerhedsårsager bør denne indstilling forblive deaktiveret. Du kan dog ønske at aktivere indstillingen, hvis du oplever problemer med udtale af indtastede ord og tegn.
 
-==== Benyt den nye understøttelse for indtastede tegn i forældede Windows-konsoller når tilgængelig ====[AdvancedSettingsKeyboardSupportInLegacy]
-Denne indstilling aktivere en alternative metode til at opdage indtastede tegn i forældede konsolvinduer. 
+==== Benyt den nye understøttelse for indtastede tegn i Windows-konsoller, når denne er tilgængelig ====[AdvancedSettingsKeyboardSupportInLegacy]
+Denne indstilling aktivere en alternative metode til at opdage indtastede tegn i konsolvinduer.
 Selvom denne indstilling kan forbedre ydeevnen og forhindre at noget konsolindhold staves, kan denne indstilling forekomme inkompatibel med nogle terminalprogrammer.
 Denne funktion kan aktiveres i Windows 10 version 1607, 1703, 1709 og 1803 såvel som nyere versioner af Windows 10, hvor UI AAutomation ikke er tilgængelig.
 Advarsel: Med denne indstilling aktiveret vil indtastede tegn, der ikke vises på skærmen såsom adgangskoder ikke blive undertrykket.
@@ -2160,7 +2153,7 @@ For a tbruge disse stemmer, er det nødvendigt at installere to komponenter:
 ++ Windows OneCore Stemmer ++[OneCore]
 Windows 10 indeholder nu stemmer kendt som "OneCore" eller" Mobile."
 Der er stemmer tilgængelige på mange sprog, og disse stemmer er hurtigere til at reagere end de tilgængelige Microsoft-stemmer der benytter Microsoft Speech API version 5.
-NVDA vil benytte Windows OneCore som standardtalesyntese i windows 10 ([[eSpeak NG #eSpeakNG] benyttes i andre versioner af Windows).
+NVDA vil benytte Windows OneCore som standardtalesyntese i windows 10 ([eSpeak NG #eSpeakNG] benyttes i andre versioner af Windows).
 
 For at installere stemmer til brug på yderligere sprog, samt hvordan disse installeres, se artiklen fra Microsoft: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
@@ -2972,7 +2965,7 @@ Under konfigurationen af displayet og den port, der skal bruges, skal du følge 
 BRLTTY håndtere selv indtastning på punkt, hvis det tilkoblede punktdisplay har et punkttastatur.
 NVDAs indstilling for oversættelsestabel er derfor ikke relevant.
 
-BRLTYY har ikke noget med NVDAs automatiske tilkobling af punktdisplays at gøre.
+BRLTTY har ikke noget med NVDAs automatiske tilkobling af punktdisplays at gøre.
 
 Dette er tastekombinationerne til BRLTTY til brug med NVDA.
 Se venligst [BRLTTY dokumentationen for tastekombinationer https://mielke.cc/brltty/doc/KeyBindings/] for yderliger information om, hvordan BRLTTY kommandoer er indstillet til kontroller på diverse punktdisplays.
@@ -3007,7 +3000,7 @@ Dem  som har en kort version, kan kombineres på denne måde:
 Med nogle af kommandolinjeparametrene kan du angive yderlige parametre, fx. hvor detaljeret loggen skal være, eller stien til mappen med brugerprofiler.
 Disse yderligere parametre skal skrives efter indstillingen og adskilles fra indstillingen af et mellemrum i den korte version og af et lighedstegn (=) i den lange version, fx.
 | nvda -l 10 | Starter NVDA med logningsniveau sat til fejlfinding |
-| nvda --log-file=c:\nvda.log |  Får NVDA til at skrive sin log til c:\nvda.log |
+| nvda --log-file=c:\nvda.log | Får NVDA til at skrive sin log til c:\nvda.log |
 | nvda --log-level=20 -f c:\nvda.log | Får NVDA til at starte med logniveau sat til "info" og gemme sin log i filen c:\nvda.log |
 
 De mulige kommandolinjeparametre til NVDA er følgende:
@@ -3019,7 +3012,7 @@ De mulige kommandolinjeparametre til NVDA er følgende:
 | -l LOGLEVEL | --log-level=LOGLEVEL | Det laveste niveau af meddelelser, som skal logges (fejlfinding 10, input/output 12, fejlfinding og advarsler 15, info 20, advarsler 30, fejl 40, kritiske fejl 50, deaktiveret 100). Standard er advarsler. |
 | -c CONFIGPATH | --config-path=CONFIGPATH | Stien hvor alle indstillinger i NVDA bliver gemt |
 | -m | --minimal | Ingen lyde, ingen brugergrænseflade, ingen opstartsmeddelelser osv. |
-| -s | --secure | Sikker tilstand (deaktiverer Python console og logningsfunktioner, ofte brugt på sikre skærme) |
+| -s | --secure | Sikker tilstand: Deaktiverer Python console, profilfunktioner som oprettelse, omdøbning og sletning af profiler, osv. Søgning efter opdateringer er også deaktiveret. Nogle bokse i velkomstdialogen deaktiveres ligeledes. Nogle indstillinger deaktiveres også i NVDAs generelle indstillinger (f.eks. "Start NVDA automatisk, når jeg har logget på Windows" "Gem konfiguration ved afslutning" osv). Logningsfunktioner kan heller ikke benyttes i denne tilstand herunder logviseren N(såsom dem, der benyttes på sikre skærme). Bemærk også at denne kommando vil forhindre at NVDAs indstillinger gemmes til systemkonfigurationen, og inputbevægelser ligeledes ikke gemmes. |
 | Ingen | --disable-addons | ingen tilføjelsesprogrammer |
 | Ingen | --debug-logging | Aktivér logningsniveau til brug ved fejlfinding for kun denne opstart. Denne indstilling vil overstyre alle logningsniveau ( ""--loglevel"", -l) argumenter. |
 | Ingen | --no-logging | Deaktivér logning fuldstændigt under brugen af NVDA. Denne indstilling kan blive tilsidesat hvis ( ""--loglevel"", -l) angives fra kommandolinjen eller såfremt logning for fejlfinding er slået til. |

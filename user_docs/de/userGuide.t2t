@@ -171,11 +171,11 @@ Mit dem ersten Kontrollkästchen können Sie steuern, ob NVDA die Dauergroßschr
 Mit dem zweiten Kontrollkästchen können Sie bestimmen, ob NVDA nach der Anmeldung automatisch gestartet werden soll. Diese Option steht nur bei installierten NVDA-Versionen zur Verfügung.
 Mit dem dritten Kontrollkästchen legen Sie fest, ob bei jedem Start der Willkommensdialog angezeigt werden soll.
 
-+++ Dialogfeld zur Sammlung von Nutzerdaten für statistische Zwecke +++[UsageStatsDialog]
++++ Dialogfeld zur Datennutzungsstatistik +++[UsageStatsDialog]
 Seit NVDA 2018.3 wird der Benutzer gefragt, ob Nutzungsdaten an NV Access gesendet werden sollen, um in Zukunft zur Verbesserung von NVDA beizutragen.
 Beim ersten Start von NVDA erscheint ein Dialogfeld, in dem Sie gefragt werden, ob Sie das Senden der Nutzungsdaten an NV Access während der Verwendung von NVDA akzeptieren möchten.
-Weitere Informationen zu den von NV Access erfassten Daten finden Sie in Kapitel 12 weiter unten.
-Hinweis: Durch Klicken auf "Ja" oder "Nein" wird diese Einstellung gespeichert. Das Dialogfeld erscheint nie wieder, bis Sie NVDA neu installieren.
+Weitere Informationen zu den von NV Access erfassten Daten finden Sie im Abschnitt "[NVDA-Nutzungsdaten sammeln und an NV Access übermitteln #GeneralSettingsGatherUsageStats]" in "Allgemeine Einstellungen".
+Hinweis: Durch Klicken auf "Ja" oder "Nein" wird diese Einstellung gespeichert. Das Dialogfeld erscheint nicht wieder, bis Sie NVDA neu installieren.
 Sie können den Datenerhebungsprozess jedoch manuell in den NVDA-Einstellungen in der Kategorie "Allgemein" aktivieren oder deaktivieren. Um diese Einstellung manuell zu ändern, können Sie das Kontrollkästchen [NVDA-Nutzungsdaten sammeln und an NV Access übermitteln #GeneralSettingsGatherUsageStats] aktivieren oder deaktivieren.
 
 ++ Über die NVDA-Tastenkombinationen ++[AboutNVDAKeyboardCommands]
@@ -321,7 +321,7 @@ NVDA wird hierbei jedes Zeichen, jedes Wort oder auch jede Zeile ansagen, wenn S
 Folgende Tastenkombinationen stehen im Zusammenhang mit dem System-Cursor zur Verfügung:
 %kc:beginInclude
 || Name | Desktop-Tastenkombination | Laptop-Tastenkombination | Beschreibung |
-| Alles ansagen | NVDA+Pfeil nach unten | NVDA+A | Liest von der aktuellen Position des System-Cursors bis zum Textende und bewegt dabei den System-Cursor mit. |
+| Alles Lesen | NVDA+Pfeil nach unten | NVDA+A | Liest von der aktuellen Position des System-Cursors bis zum Textende und bewegt dabei den System-Cursor mit. |
 | Aktuelle Zeile lesen | NVDA+Pfeil nach oben | NVDA+L | Liest die Zeile, auf der sich der System-Cursor befindet. Wird diese Tastenkombination zweimal gedrückt, wird die Zeile buchstabiert, wird die Tastenkombination 3-mal gedrückt, wird die Zeile phonetisch buchstabiert. |
 | Markierten Text lesen | NVDA+Umschalt+Pfeil nach oben | NVDA+Umschalt+S | Liest den markierten Text, sofern vorhanden. |
 | Nächsten Satz lesen | Alt+Pfeiltaste nach unten | Alt+Pfeiltaste nach unten | Zieht die Schreibmarke zum nächsten Satz und gibt ihn aus (nur in Microsoft Word und Microsoft Outlook unterstützt). |
@@ -409,7 +409,7 @@ Die folgenden Tastenkombinationen zum Text betrachten sind verfügbar:
 | Aktuelles Zeichen unter dem NVDA-Cursor ansagen | Num 2 | NVDA+Punkt | Sagt das aktuelle Zeichen in der Zeile im Text an, an dem sich der NVDA-Cursor befindet. Bei zweimal Drücken wird das Zeichen phonetisch buchstabiert. Bei dreimal Drücken werden die numerischen Dezimal- und Hexadezimalwerte angesagt. |
 | Zum nächsten Zeichen navigieren | Num 3 | NVDA+Pfeiltaste nach rechts | Nach rechts streichen (Textmodus) | Zieht den NVDA-Cursor zum nächsten Zeichen der aktuellen Zeile im Text. |
 | Zum Zeilenende navigieren | Umschalt+Num 3 | NVDA+Ende | Keine | Zieht den NVDA-Cursor zum Zeilenende im Text. |
-| Alles ansagen | Num Plus | NVDA+Umschalt+A | Nach unten streichen mit drei Fingern (Textmodus) | Liest von der aktuellen Cursor-Position des NVDA-Cursors den Text vor und bewegt ihn mit. |
+| Alles Lesen | Num Plus | NVDA+Umschalt+A | Nach unten streichen mit drei Fingern (Textmodus) | Liest von der aktuellen Cursor-Position des NVDA-Cursors den Text vor und bewegt ihn mit. |
 | Vom NVDA-Cursor markieren und kopieren | NVDA+F9 | NVDA+F9 | Keine | Setzt eine Startmarke an der aktuellen Position des NVDA-Cursors ab, der markiert oder kopiert werden soll. Die Aktion (Markieren/Kopieren) wird nicht ausgeführt, bis Sie NVDA den Textende mitgeteilt haben. |
 | Bis zum NVDA-Cursor markieren und kopieren | NVDA+F10 | NVDA+F10 | Keine | Wird die Tastenkombination einmal gedrückt, markiert NVDA den Text zwischen der zuvor gesetzten Startmarke und der aktuellen Position des NVDA-Cursors. Wird die Tastenkombination zweimal gedrückt, so kopiert NVDA den Text zwischen der zuvor gesetzten Startmarke und der aktuellen Position des NVDA-Cursors in die Zwischenablage |
 | Springt zum markierten Start für die Kopie in der Ansicht | NVDA+Umschalt+F9 | NVDA+Umschalt+F9 | none | Zieht den NVDA-Cursor an die zuvor eingestellte Startmarkierung für das Kopieren. |
@@ -473,15 +473,15 @@ Richtig ausgerichtete Stereolautsprecher oder Kopfhörer vorausgesetzt, wird der
 Diese zusätzlichen Mausfunktionen sind in NVDA standardmäßig deaktiviert.
 Sie können Sie jedoch in den [Maus-Einstellungen #MouseSettings] aktivieren, die Sie in den NVDA-Einstellungen in der Kategorie "Maus" finden.
 
-Zum Navigieren mit der Maus sollte eine richtige Maus oder eine Mauskugel benutzt werden. Folgende Tastenbefehle stehen zur Verfügung:
+Zum Navigieren mit der Maus sollte eine richtige Maus oder eine Mauskugel benutzt werden. Folgende Tastenbefehle stehen in NVDA zur Verfügung:
 %kc:beginInclude
-|| Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Beschreibung |
-| Linksklick | Num Schrägstrich | NVDA+Ü | Führt einen Linksklick aus. Bei zwei mal Drücken wird ein Doppelklick ausgeführt. |
-| Linke Maustaste feststellen | Umschalt+Num Schrägstrich | NVDA+Strg+Ü | Hält die linke Maustaste gedrückt. Wird die Tastenkombination erneut gedrückt, wird die Maustaste wieder losgelassen. Um "Drag and Drop" durchzuführen, führen Sie diesen Schritt auf einem Objekt aus und wandern anschließend mit der Maus oder auch mit den Navigationstasten für die Simulation der Maus an eine andere Stelle des Bildschirms und lösen die linke Maustaste wieder. |
-| Rechtsklick | Num Stern | NVDA+Plus | Führt einen Rechtsklick aus. |
-| Rechte Maustaste feststellen | Umschalt+Num Stern | NVDA+Strg+Plus | Hält die rechte Maustaste gedrückt. Wird die Tastenkombination erneut gedrückt, wird die Maustaste wieder losgelassen. Um "Drag and Drop" durchzuführen, führen Sie diesen Schritt auf einem Objekt aus und wandern anschließend mit der Maus oder auch mit den Navigationstasten für die Simulation der Maus an eine andere Stelle des Bildschirms und lösen die rechte Maustaste wieder. |
-| Die Maus zum aktuellen Navigator-Objekt ziehen | NVDA+Num Schrägstrich | NVDA+Umschalt+M | Zieht die Maus zum aktuellen Standort des Navigator-Objektes oder des NVDA-Cursors. |
-| Zum Objekt unter der Maus navigieren | NVDA+Num Stern | NVDA+Umschalt+N | Zieht das Navigator-Objekt zur Objektposition an der Mausposition. |
+|| Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Touch-Geste | Beschreibung |
+| Linksklick | Num Schrägstrich | NVDA+Ü | Keine | Führt einen Linksklick aus. Bei zweimal Drücken wird ein Doppelklick ausgeführt. |
+| Linke Maustaste feststellen | Umschalt+Num Schrägstrich | NVDA+Strg+Ü | Keine | Hält die linke Maustaste gedrückt. Wird die Tastenkombination erneut gedrückt, wird die Maustaste wieder losgelassen. Um "Drag and Drop" durchzuführen, führen Sie diesen Schritt auf einem Objekt aus und wandern anschließend mit der Maus oder auch mit den Navigationstasten für die Simulation der Maus an eine andere Stelle des Bildschirms und lösen die linke Maustaste wieder. |
+| Rechtsklick | Num Stern | NVDA+Plus | Mit einem Finger tippen und halten | Führt einen Rechtsklick aus. |
+| Rechte Maustaste feststellen | Umschalt+Num Stern | NVDA+Strg+Plus | Keine | Hält die rechte Maustaste gedrückt. Wird die Tastenkombination erneut gedrückt, wird die Maustaste wieder losgelassen. Um "Drag and Drop" durchzuführen, führen Sie diesen Schritt auf einem Objekt aus und wandern anschließend mit der Maus oder auch mit den Navigationstasten für die Simulation der Maus an eine andere Stelle des Bildschirms und lösen die rechte Maustaste wieder. |
+| Die Maus zum aktuellen Navigator-Objekt ziehen | NVDA+Num Schrägstrich | NVDA+Umschalt+M | Keine | Zieht die Maus zum aktuellen Standort des Navigator-Objektes oder des NVDA-Cursors. |
+| Zum Objekt unter der Maus navigieren | NVDA+Num Stern | NVDA+Umschalt+N | Keine | Zieht das Navigator-Objekt zur Objektposition an der Mausposition. |
 %kc:endInclude
 
 + Der Lesemodus +[BrowseMode]
@@ -659,7 +659,7 @@ Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende 
 
 || Abkürzung | Steuerelementtyp |
 | app | Anwendung |
-| art | Artikel
+| art | Artikel |
 | zb | Zitatblock |
 | sltr | Schalter |
 | aklsltr | Ausklapplistenschalter |
@@ -778,9 +778,9 @@ Diese Positionen werden mit einem farbigen Rechteck hervorgehoben.
 - Kräftiges Gelb hebt den virtuellen System-Cursor hervor, welcher im Lesemodus verwendet wird. (In diesen Dokumenten gibt es keinen physischen Cursor, wie z. B. in Internet-Browsern).
 -
 
-Wenn "Fokus hervorheben" im Dialogfeld der Kategorie [Visuelle Darstellungen #VisionSettings] der [NVDA-Einstellungen #NVDASettings] aktiviert ist, [können Sie ändern, ob Sie den Fokus, das Navigator-Objekt oder den Lesemodus #VisionSettingsFocusHighlight hervorheben oder nicht].
+Wenn die Fokus-Hervorhebung in der Kategorie "[Visuelle Darstellungen #VisionSettings]" der [NVDA-Einstellungen #NVDASettings] aktiviert ist, können Sie [ändern, ob Sie den Fokus, das Navigator-Objekt oder den Cursor im Lesemodus #VisionSettingsFocusHighlight] hervorheben möchten.
 
-++ Bildschirmvorhang ++[VisionScreenCurtain]
+++ Der Bildschirmvorhang ++[VisionScreenCurtain]
 Für blinde oder sehbehinderte Benutzer ist es oft nicht möglich oder notwendig, den Inhalt des Bildschirms zu sehen.
 Zudem könnte es schwierig sein, sicherzustellen, dass Ihnen niemand über die Schulter schaut.
 In NVDA gibt es dafür den Bildschirmvorhang, der aktiviert werden kann, um den Bildschirm zu verdunkeln.
@@ -1045,23 +1045,23 @@ Mit diesem Kontrollkästchen legen Sie fest, ob beim Beenden von NVDA ein Dialog
 Wenn das Kontrollkästchen aktiviert ist, können Sie in diesem Dialogfeld auswählen, ob Sie NVDA beenden, neu starten, mit deaktivierten Erweiterungen neu starten oder ein ausstehendes Update installieren möchten.
 Wenn das Kontrollkästchen nicht aktiviert ist, wird NVDA sofort beendet.
 
-==== Klänge abspielen, wenn NVDA gestartet oder beendet wird ====[GeneralSettingsPlaySounds]
-Dieses Kontrollfeld legt fest, ob NVDA Klänge abspielen soll, wenn es gestartet oder beendet wird.
+==== Sounds beim Starten und Beenden von NVDA ====[GeneralSettingsPlaySounds]
+Dieses Kontrollkästchen legt fest, ob NVDA beim Starten oder Beenden einen Sound wiedergeben soll.
 
 ==== Protokollierungsstufe ====[GeneralSettingsLogLevel]
-Dies ist ein Kombinationsfeld, in dem Sie auswählen können, wie viel NVDA während der Ausführung protokollieren soll.
+Mit diesem Kombinationsfeld können Sie einstellen, wie viel NVDA während der Ausführung protokollieren soll.
 Normalerweise müssen Anwender diese Option nicht verändern, weil keine unnötigen Informationen protokolliert werden.
 Wenn Sie jedoch Informationen in einem Fehlerbericht bereitstellen oder die Protokollierung ganz aktivieren oder deaktivieren möchten, kann dies eine nützliche Option sein.
 
 Die verfügbaren Protokollierungsstufen sind:
-- Deaktiviert: Abgesehen von einer kurzen Startmeldung protokolliert NVDA während der Ausführung nichts.
-- Info: NVDA protokolliert grundlegende Informationen wie Startmeldungen und Informationen, die für Entwickler nützlich sind.
-- Debug-Warnung: Warnmeldungen, die nicht durch schwere Fehler verursacht werden, werden protokolliert.
-- Ein-/Ausgaben: Eingaben von Tastatur- und Braillezeilen sowie Sprach- und Braillezeilen werden protokolliert.
+- Ausgeschaltet: Neben einer kurzen Startmeldung protokolliert NVDA während der Ausführung keine weiteren Meldungen.
+- Informationen: NVDA protokolliert grundlegende Informationen wie Startmeldungen und Informationen, die für Entwickler nützlich sind.
+- Debug-Warnungen: Warnmeldungen, die nicht durch schwere Fehler verursacht werden, werden protokolliert.
+- Ein- und Ausgaben: Mit dieser Option werden Eingaben via Tastatur und Braillezeile sowie Ausgaben via Sprachausgabe und Braillezeile protokolliert.
  - Wenn Sie sich Sorgen um den Datenschutz machen, verwenden Sie diese Option nicht.
-- Debuggen: Zusätzlich zu den Info-, Warn- und Ein-/Ausgabemeldungen werden weitere Debug-Meldungen protokolliert.
+- Nur Debug-Meldungen: Zusätzlich zu den Informationen, Warn- und Ein-/Ausgabemeldungen werden weitere Debug-Meldungen protokolliert.
  - Genau wie bei der Ein-/Ausgabe, wenn Sie sich um den Datenschutz sorgen, sollten Sie diese Option nicht benutzen.
-
+-
 
 ==== NVDA automatisch nach der Windows-Anmeldung starten ====[GeneralSettingsStartAfterLogOn]
 Wenn Sie dieses Kontrollfeld aktiviert haben, wird NVDA gleich nach der Anmeldung in Windows automatisch gestartet.
@@ -1084,7 +1084,7 @@ Die folgenden Informationen werden dabei gesendet:
 - Aktuelle NVDA-Version
 - Betriebssystem-Version
 - Systemarchitektur (32- oder 64-Bit)
-
+-
 
 ==== NVDA-Nutzungsdaten sammeln und an NV Access übermitteln ====[GeneralSettingsGatherUsageStats]
 Ist diese Option aktiviert, sammelt NV Access zusätzliche Informationen wie die Landessprache, das Land oder die geografische Region. Diese Informationen werden benutzt, um Nutzungsstatistiken über die Anzahl der NVDA-Nutzer zu erstellen.
@@ -1092,10 +1092,10 @@ Auch wenn die IP-Adresse zum Ermitteln des (ungefähren) geografischen Standorte
 Wenn die Option aktiviert ist, werden die folgenden Daten zusätzlich gesendet:
 - Eingestellte Landessprache in NVDA.
 - Art der NVDA-Instanz (portabel oder installiert).
-- Name der verwendeten Sprachausgabe (inklusiv Name der Erweiterung, aus der die Sprachausgabe stammt).
-- Name der verwendeten Braillezeile (inklusiv Name der Erweiterung, aus der der Treiber stammt).
+- Name der verwendeten Sprachausgabe (einschließlich Name der Erweiterung, aus der die Sprachausgabe stammt).
+- Name der verwendeten Braillezeile (einschließlich Name der Erweiterung, aus der der Treiber stammt).
 - Aktuelle Ausgabetabelle (sofern Braille benutzt wird).
-
+-
 
 Diese Informationen helfen NV Access bei der zukünftigen Entwicklung von NVDA.
 
@@ -1162,7 +1162,7 @@ Sollte in NVDA die Aussprache von Symbolen und Sonderzeichen nicht korrekt funkt
 
 ==== Unicode-Konsortiumsdaten (einschließlich Emoji) bei der Verarbeitung von Zeichen und Symbolen einbeziehen ====[SpeechSettingsCLDR]
 Wenn dieses Kontrollkästchen aktiviert ist, wird NVDA bei der Aussprache von Zeichen und Symbolen zusätzliche Wörterbücher für die Aussprache der Symbole einbeziehen.
-Diese Wörterbücher enthalten Beschreibungen für Symbole (insbesondere Emoji), die vom [Unicode-Konsortium https://www.unicode.org/consortium/] als Teil ihres [Common Locale Data Repository https://cldr.unicode.org/] zur Verfügung gestellt werden.
+Diese Wörterbücher enthalten Beschreibungen für Symbole (insbesondere Emoji), die vom [Unicode-Konsortium https://www.unicode.org/consortium/] als Teil ihres [Common Locale Data Repository http://cldr.unicode.org/] zur Verfügung gestellt werden.
 Wenn Sie möchten, dass NVDA auf Basis dieser Daten Beschreibungen von Emoji-Zeichen vorliest, sollten Sie diese Option aktivieren.
 Falls eine Sprachausgabe verwendet wird, die das Vorlesen von Emoji-Beschreibungen nativ unterstützt, können Sie dies abschalten.
 
@@ -1397,6 +1397,9 @@ Wenn Sie diese Warnmeldung nicht länger erhalten möchten, können Sie dieses V
 Sie können die Warnung jederzeit zurücksetzen, indem Sie das Kontrollkästchen "Beim Laden des Bildschirmvorhangs immer eine Warnung anzeigen" unter dem Kontrollkästchen "Bildschirm verdunkeln" aktivieren.
 
 Um den Bildschirmvorhang überall umzuschalten, weisen Sie eine Tastenkombination über das Dialogfeld für die [Tastenbefehle #InputGestures] zu.
+
+Standardmäßig ist auch ein Sound beim Umschalten des Bildschirmvorhangs zu hören.
+Wenn Sie dieses Verhalten ändern möchten, können Sie das Kontrollkästchen "Sound beim Umschalten des Bildschirmvorhangs" deaktivieren.
 
 ==== Einstellungen für visuelle Hilfsmittel von Drittanbietern (Verbesserungen visueller Darstellungen) ====[VisionSettingsThirdPartyVisualAids]
 Zusätzliche Quellen für die Verbesserung der visuellen Darstellungen können mittels [NVDA-Erweiterungen #AddonsManager] von Drittanbietern bereitgestellt werden.
@@ -1776,24 +1779,14 @@ Dazu gehört Microsoft Word selbst, aber auch in Microsoft Outlook die Nachricht
 Es kann jedoch einige Informationen geben, die in einigen Versionen von Microsoft Office entweder nicht oder falsch angezeigt werden, so dass man sich nicht immer auf diese Unterstützung der UIA verlassen kann.
 Wir empfehlen noch nicht diese Funktion standardmäßig zu aktivieren. Allerdings ist ausdrücklich erwünscht, dass Benutzer von Office 2016 / 365 diese Funktion testen und Rückmeldung geben können.
 
-==== Die Unterstützung der Windows-Konsole ====[AdvancedSettingsConsoleUIA]
-Diese Option legt fest, wie NVDA mit der von der Eingabeaufforderung, PowerShell und dem Windows-SubSystem für Linux verwendeten Windows-Konsole interagiert.
-Es hat keinen Einfluss auf das moderne Windows-Terminal.
-In Windows 10 Version 1709 hat Microsoftdie [Unterstützung für die API für die UIA in die Konsole https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] integriert, welches der Konsole eine erheblich verbesserte Leistung und Stabilität für Screenreader bietet, die unterstützt werden.
-In Situationen, in denen die UIA nicht verfügbar ist oder bekanntermaßen zu einer schlechteren Benutzererfahrung führt, ist die Unterstützung der Legacy-Konsole von NVDA als Fallback verfügbar.
-Das Kombinationsfeld für die Unterstützung der Windows-Konsole hat drei Optionen:
-- Automatisch: Verwendet die UIA in Konsolen unter Windows 10 Version 1809 und neuer. Diese Option wird empfohlen und ist standardmäßig eingestellt.
-- UIA bevorzugen: Verwendet die UIA in Konsolen, falls verfügbar, auch bei Windows-Versionen mit unvollständigen oder fehlerhaften Implementierungen. Obwohl diese eingeschränkte Funktion nützlich (und sogar ausreichend für Ihre Nutzung) sein kann, geschieht die Nutzung dieser Option auf eigene Gefahr und wird nicht unterstützt.
-- Veraltet: Die UIA in der Windows-Konsole wird vollständig deaktiviert, so dass immer die Legacy-Variante verwendet wird.
--
+==== Für den Zugriff auf die Windows-Konsole UIA verwenden (falls verfügbar) ====[AdvancedSettingsConsoleUIA]
+Wenn diese Option aktiviert ist, verwendet NVDA eine neue, experimentelle Version der Unterstützung für die Windows-Konsole, die die Vorteile von [Verbesserungen der Zugänglichkeit durch Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] nutzt. Diese Funktion ist sehr experimentell und noch unvollständig, daher wird ihre Verwendung noch nicht empfohlen. Es wird jedoch erwartet, dass diese neue Unterstützung nach ihrer Fertigstellung zur Standardeinstellung wird und die Leistung und Stabilität von NVDA in Windows-Kommandokonsolen verbessert.
 
-==== Passwörter in der Windows-Konsole ansagen ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Diese Einstellung steuert, ob Zeichen durch [Zeichen während der Eingabe ansagen #KeyboardSettingsSpeakTypedCharacters] oder [Wörter während der Eingabe ansagen #KeyboardSettingsSpeakTypedWords] gesprochen werden, wenn der Bildschirm in einigen Terminal-Programmen, wie der Windows-Konsole mit aktivierter Unterstützung der UIA und Mintty, nicht aktualisiert wird.
-Aus Sicherheitsgründen sollte diese Einstellung deaktiviert bleiben.
-Sie können es jedoch aktivieren, wenn Sie Leistungsprobleme oder Instabilität bei der Eingabe von Zeichen und/oder Wörtern in Konsolen haben, oder in vertrauenswürdigen Umgebungen arbeiten und die Bekanntgabe von Passwörtern bevorzugen.
+==== Passwörter vorlesen in der Windows-Konsole mit UIA-Unterstützung ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Diese Einstellung steuert, ob Zeichen während der Eingabe #KeyboardSettingsSpeakTypedCharacters] oder [Wörter während der Eingabe #KeyboardSettingsSpeakTypedWords] in Situationen vorgelesen werden sollen, in denen der Bildschirm in der Windows-Konsole bei aktivierter Unterstützung von UIA nicht aktualisiert wird (z. B. bei der Kennworteingabe). Aus Sicherheitsgründen sollte diese Einstellung deaktiviert bleiben. Sie sollten sie jedoch aktivieren, wenn Sie bei der Verwendung der neuen experimentellen Konsolenunterstützung von NVDA Leistungsprobleme oder Instabilität bei der Meldung von Zeichen und/oder Wörtern während der Eingabe feststellen.
 
-==== Neue Unterstützung für das Ansagen von Zeichen verwenden, falls verfügbar ====[AdvancedSettingsKeyboardSupportInLegacy]
-Diese Option stellt eine alternative Methode zur Erkennung von eingegebenen Zeichen in älteren Windows-Konsolen zur Verfügung.
+==== Unterstützung bei neu eingegebenen Zeichen in der Windows-Konsole (falls verfügbar) ====[AdvancedSettingsKeyboardSupportInLegacy]
+Diese Option aktiviert eine alternative Methode zur Erkennung von Zeichen während der Eingabe in der Windows-Konsole.
 Durch das Aktivieren dieser Option wird zwar die Leistung gesteigert und das Buchstabieren mancher Ausgaben in Windows-Konsolen verhindert; es könnten jedoch Probleme mit einigen Terminals auftreten.
 Diese Funktion ist verfügbar und seit Windows 10 Version 1607 standardmäßig aktiviert, wenn die UIA nicht verfügbar oder deaktiviert ist.
 Das eingeben von Zeichen, die nicht auf dem Bildschirm erscheinen (z. B. bei Passwörtern) wird nicht unterstützt, wenn diese Option aktiviert ist.
@@ -1972,7 +1965,7 @@ Mit diesem Schalter können Sie einen Trigger bestimmen, über den ein Profil au
 
 Folgende Trigger stehen zur Verfügung:
 - Aktuelle Anwendung; wird ausgelöst, wenn Sie in die aktuelle Anwendung wechseln
-- Alles lesen; wird ausgelöst, sobald Sie den Befehl "Alles ansagen" verwenden.
+- Alles lesen; wird ausgelöst, sobald Sie den Befehl "Alles Lesen" verwenden.
 -
 
 Um das Profil zu bestimmen, das durch einen bestimmten Trigger aktiviert werden soll, wählen Sie zunächst den Trigger und anschließend das Profil aus.
@@ -2160,7 +2153,7 @@ Um diese Stimmen verwenden zu können, müssen Sie folgende 2 Komponenten instal
 ++ Windows OneCore-Stimmen ++[OneCore]
 Windows 10 enthält neue Stimmen, die als "Mobile" oder "OneCore"-Stimmen bekannt sind.
 Diese Stimmen sind in vielen Sprachen verfügbar. Sie sind außerdem sehr viel reaktionsfreudiger als die Microsoft SAPI 5-Stimmen in früheren Windows-versionen.
-Unter Windows 10 verwendet NVDA standardmäßig Windows OneCore-Stimmen ([eSpeak NG #eSpeakNG] wird in älteren Windows-Versionen standardmäßig verwendet).
+Unter Windows 10 verwendet NVDA standardmäßig Windows OneCore-Stimmen ([eSpeak-NG #eSpeakNG] wird in anderen Versionen verwendet).
 
 Im [Artikel vom Microsoft Support-Center https://support.microsoft.com/de-de/help/22797/windows-10-narrator-tts-voices] finden Sie eine Beschreibung, wie Sie zusätzliche Stimmen und Sprachen installieren können.
 
@@ -2174,24 +2167,24 @@ Dieses Verhalten wird durch die Auswahl der Option "Automatisch als bevorzugte B
 Standardmäßig ist diese Option aktiviert.
 
 Die folgenden Braillezeilen unterstützen diese automatische Erkennung.
-- HandyTech Braillezeilen
-- Baum/Humanware/APH/Orbit Braillezeilen
-- HumanWare Brailliant BI/B Serien
-- HumanWare BrailleNote
+- Braillezeilen von HandyTech
+- Braillezeilen von Baum/VisioBraille, Humanware, APH, Orbit
+- Humanware Brailliant-Serien BI/B
+- Humanware BrailleNote
 - SuperBraille
-- Optelec ALVA 6 Serien
-- HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serien
-- Eurobraille Esys/Esytime/Iris Braillezeilen
+- Optelec-Serien ALVA 6
+- HIMS-Serien Braille Sense, Braille EDGE, Smart Beetle, Sync Braille
+- Braillezeilen von Eurobraille Esys, Esytime, Iris
 -
 
 ++ Die Focus und PAC Mate von Freedom Scientific ++[FreedomScientificFocus]
 Die Braillezeilen Focus 40 Blue und alle PAC Mate von der amerikanischen Firma [Freedom Scientific https://www.freedomscientific.com/] werden unterstützt.
-Die Treiber für die Braillezeilen von Freedom Scientific müssen auf Ihrem System vorab installiert sein.
+Die Treiber für die Braillezeilen von Freedom Scientific können bei Bedarf auf Ihrem System vorab installiert sein. Diese sind aber nicht mehr Voraussetzung.
 Falls diese noch nicht installiert wurden, können Sie die Treiber von der Website [hier https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp] herunterladen.
 Obwohl auf dieser Seite nur Treiber für die Focus 40 Blue aufgeführt sind, werden die Treiber für alle Braillezeilen gleichermaßen von Freedom Scientific unterstützt.
 
-Für gewöhnlich kann NVDA den verwendeten Anschluss automatisch erkennen, gleichgültig ob die Braillezeile per USB oder per Bluetooth verbunden ist.
-Beim Konfigurieren der Braillezeile können Sie jedoch die Verbindungsart ausdrücklich festlegen, indem Sie als Anschluss entweder USB oder Bluetooth auswählen.
+Für gewöhnlich kann NVDA den verwendeten Anschluss automatisch erkennen, gleichgültig ob die Braillezeile via USB oder Bluetooth verbunden ist.
+Beim Konfigurieren der Braillezeile können Sie jedoch die Verbindungsart ausdrücklich festlegen, indem Sie für den Anschluss entweder USB oder Bluetooth auswählen.
 Dies kann sinnvoll sein, wenn Sie z. B. eine Focus-Braillezeile per Bluetooth mit NVDA verbinden wollen, aber dennoch den USB-Anschluss Ihres Rechners zum Laden der Zeile verwenden.
 Die automatische Braillezeilenerkennung von NVDA erkennt auch die Anzeige auf USB oder Bluetooth.
 
@@ -2230,7 +2223,7 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Informationen
 | Escape-Taste | Leertaste+Punkt1+Punkt5 |
 | Windows-Taste | Leertaste+Punkt2+Punkt4+Punkt5+Punkt6 |
 | Leertaste | Leertaste |
-| Windows-Taste+D (Alle Anwendungen minimieren) | Leertaste+Punkt1+Punkt2+Punkt3+Punkt4+Punkt5+Punkt6 |
+| Windows-Taste+M (Alle Anwendungen minimieren) | Leertaste+Punkt1+Punkt2+Punkt3+Punkt4+Punkt5+Punkt6 |
 | Aktuelle Zeile ausgeben | Leertaste+Punkt1+Punkt4 |
 | NVDA-Menü anzeigen | Leertaste+Punkt1+Punkt3+Punkt4+Punkt5 |
 
@@ -2286,7 +2279,7 @@ Folgende Tastenkombinationen für diese Braillezeilen sind in NVDA zugeordnet.
 | Eingabetaste | SpEingabe, Eingabe |
 | Datum/Uhrzeit anzeigen | Sp2+Sp3 |
 | NVDA-Menü | Sp1+Sp3 |
-| Windows-Taste+D (alle Anwendungen minimieren) | Sp1+Sp4 |
+| Windows-Taste+M (alle Anwendungen minimieren) | Sp1+Sp4 |
 | Windows-Taste+B (Infobereich anzeigen) | Sp3+Sp4 |
 | Windows-Taste | Sp1+Sp2, Windows |
 | Alt+Tab | Sp2+Sp4 |
@@ -2353,11 +2346,11 @@ Bitte lesen Sie in der Dokumentation zu ihrer Braillezeile nach, wo die entsprec
 | Alt+Umschalt+Tab-Taste | SUP |
 %kc:endInclude
 
-++ Braillezeilen von Baum/HumanWare/APH/Orbit ++[Baum]
-Mehrere Braillezeilen von [Baum https://www.visiobraille.de/index.php?article_id=1&clang=2], [HumanWare https://www.humanware.com/], [APH https://www.aph.org/] und [Orbit https://www.orbitresearch.com/] werden unterstützt, sobald sie über USB, Bluetooth oder seriell angeschlossen bzw. verbunden wurden.
+++ Braillezeilen von Baum/VisioBraille, Humanware, APH, Orbit ++[Baum]
+Mehrere Braillezeilen von [Baum/VisioBraille https://www.visiobraille.de/index.php?article_id=1&clang=2], [Humanware https://www.humanware.com/], [APH https://www.aph.org/] und [Orbit https://www.orbitresearch.com/] werden unterstützt, sobald sie über USB, Bluetooth oder seriell angeschlossen bzw. verbunden wurden.
 Dies sind auch:
-- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
-- HumanWare: Brailliant, BrailleConnect, Brailliant2
+- Baum/VisioBraille: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- Humanware: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
 - Orbit: Orbit Reader 20
 -
@@ -2405,7 +2398,7 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Braillezeile zur nächsten Zeile bewegen | B5 |
 | Cursor zum Braille-Modul bewegen | Routing-Taste |
 | Kopplung der Braillezeile umschalten | K2 |
-| Alles ansagen | B6 |
+| Alles Lesen | B6 |
 %kc:endInclude
 
 ++ Hedo MobilLine USB ++[HedoMobilLine]
@@ -2424,15 +2417,20 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Braillezeile zur nächsten Zeile bewegen | B5 |
 | Cursor zum Braille-Modul bewegen | Routing-Taste |
 | Kopplung der Braillezeile umschalten | K2 |
-| Alles ansagen | B6 |
+| Alles Lesen | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B-Serie / BrailleNote Touch ++[HumanWareBrailliant]
-Die Braillezeilen der Serien BI und B von [HumanWare https://www.humanware.de/], so auch die BI 14, BI 32, BI 40 und BI 80, werden unterstützt, sofern sie via USB oder Bluetooth verbunden sind.
-Wenn Sie die Zeile über USB anschließen wollen während das Übertragungsprotokoll HumanWare verwendet wird, müssen Sie zunächst den USB-Treiber des Herstellers installieren.
+++ Humanware Brailliant BI/B-Serie / BrailleNote Touch ++[HumanWareBrailliant]
+Die Braillezeilen der Serien BI und B von [Humanware https://www.humanware.de/], so auch die BI 14, BI 32, BI 40 und BI 80, werden unterstützt, sofern sie via USB oder Bluetooth verbunden sind.
+Wenn Sie die Zeile über USB anschließen wollen während das Übertragungsprotokoll Humanware verwendet wird, müssen Sie zunächst den USB-Treiber des Herstellers installieren.
 Verwenden Sie hingegen das Protokoll OpenBraille, wird kein USB-Treiber benötigt.
 
-Das Braillezeilenmodell Braillenote Touch wird ebenfalls unterstützt; hierfür wird kein zusätzlicher Treiber benötigt.
+Die folgenden zusätzlichen Geräte werden ebenfalls unterstützt (und erfordern keine speziellen Treiber, die installiert werden müssen):
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
+
 
 Folgende Tastenkombinationen sind bei diesen Braillezeilen verfügbar
 Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.
@@ -2443,30 +2441,30 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Braillezeile vorwärtsnavigieren | Rechts |
 | Braillezeile zur vorherigen Zeile bewegen | Auf |
 | Braillezeile zur nächsten Zeile bewegen | Ab |
-| Cursor zum Braille-modul bewegen | Routing-Taste |
+| Cursor zum Braille-Modul bewegen | Routing-Taste |
 | Braillezeile koppeln an | Auf+Ab |
 | Taste Pfeil nach oben | Leertaste+Punkt1 |
 | Taste Pfeil nach unten | Leertaste+Punkt4 |
 | Taste Pfeil nach links | Leertaste+Punkt3 |
 | Taste Pfeil nach rechts | Leertaste+Punkt6 |
-| Umschalt+Tab-Taste | Leertaste+Punkt1+Punkt3 |
+| Umschalt+Tab | Leertaste+Punkt1+Punkt3 |
 | Tab-Taste | Leertaste+Punkt4+Punkt6 |
 | Alt-Taste | Leertaste+Punkt1+Punkt3+Punkt4 (Leertaste+M) |
 | Escape-Taste | Leertaste+Punkt1+Punkt5 (Leertaste+E) |
 | Eingabetaste | Punkt8 |
 | Windows-Taste | Leertaste+Punkt3+Punkt4 |
-| Alt+Tab-Taste | Leertaste+Punkt2+Punkt3+Punkt4+Punkt5 (Leertaste+T) |
+| Alt+Tab | Leertaste+Punkt2+Punkt3+Punkt4+Punkt5 (Leertaste+T) |
 | NVDA-Menü | Lertaste+Punkt1+Punkt3+Punkt4+Punkt5 (Leerttaste+N) |
-| Windows-Taste+D (Alle Anwendungen minimieren) | Leertaste+Punkt1+Punkt4+Punkt5 (Leertaste+D) |
-| Alles ansagen | Leertaste+Punkt1+Punkt2+Punkt3+Punkt4+Punkt5+Punkt6 |
+| Windows-Taste+M (Alle Anwendungen minimieren) | Leertaste+Punkt1+Punkt4+Punkt5 (Leertaste+D) |
+| Alles Lesen | Leertaste+Punkt1+Punkt2+Punkt3+Punkt4+Punkt5+Punkt6 |
 %kc:endInclude
 
 +++ Tastenzuweisungen für Brailliant BI 32, BI 40 und B 80 +++
 %kc:beginInclude
 || Name | Taste |
 | NVDA-Menü | C1+C3+C4+C5 (Befehl n) |
-| Windows-Taste+D (Alle Anwendungen minimieren) | C1+C4+C5 (Befehl d) |
-| Alles ansagen | C1+C2+C3+C4+C5+C6 |
+| Windows-Taste+M (Alle Anwendungen minimieren) | C1+C4+C5 (Befehl d) |
+| Alles Lesen | C1+C2+C3+C4+C5+C6 |
 %kc:endInclude
 
 +++ Tastenzuweisungen für Brailliant BI 14 +++
@@ -2546,7 +2544,7 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | F3 | Punkt1+Punkt2+Punkt4+Punkt8 |
 | F4 | Punkt7+F3 |
 | Windows-Taste+B | Punkt1+Punkt2+F1 |
-| Windows-Taste+D | Punkt1+Punkt4+Punkt5+F1 |
+| Windows-Taste+M | Punkt1+Punkt4+Punkt5+F1 |
 | Strg+Einfg | smartbeetle:F1+Scrollen auf der rechten Seite |
 | Alt+Einfg | smartbeetle:F3+Scrollen auf der rechten Seite |
 %kc:endInclude
@@ -2567,7 +2565,7 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Braillezeile zur vorherigen Zeile bewegen | B3 |
 | Braillezeile zur nächsten Zeile bewegen | B4 |
 | Kopplung der Braillezeile umschalten | B5 |
-| Alles ansagen | B6 |
+| Alles Lesen | B6 |
 | Tab-Taste | B1 |
 | Umschalt+Tab-Taste | B2 |
 | Alt+Tab-Taste | B1+B2 |
@@ -2741,8 +2739,8 @@ BRAILLEX 2D Screen
 | Zum vorherigen Objekt bewegen | Rechts2 |
 %kc:endInclude
 
-++ HumanWare BrailleNote ++[HumanWareBrailleNote]
-NVDA unterstützt die BrailleNote-Modelle von [HumanWare https://www.humanware.com] sofern diese als Braillezeilen betrieben werden.
+++ Humanware BrailleNote ++[HumanWareBrailleNote]
+NVDA unterstützt die BrailleNote-Modelle von [Humanware https://www.humanware.com] sofern diese als Braillezeilen betrieben werden.
 Die folgenden Modelle werden unterstützt:
 - BrailleNote Classic (nur serielle Verbindung)
 - BrailleNote PK (Seriell und Bluetooth)
@@ -3006,9 +3004,9 @@ Die Kurzformen mehrerer Optionen können beispielsweise wie folgt kombiniert wer
 
 Einige Optionen akzeptieren zusätzliche Parameter, mit denen Sie z. B. den Umfang der Protokollierung oder den Namen einer Konfigurationsdatei angeben können.
 Die Parameter müssen durch ein Leerzeichen von der Option getrennt angegeben werden, wenn Sie die Kurzform verwenden. Wenn Sie die Langform benutzen, müssen Sie den Parameter mit einem Gleichheitszeichen von der Option trennen. Beispiele:
-| nvda -l 10 | Startet NVDA mit der Protokollierungsstufe "Fehlerkorrektur" |
-| nvda --log-file=C:\nvda.log | Speichert das Protokoll in der Datei "C:\nvda.log" |
-| nvda --log-level=20 -f C:\nvda.log | Legt die Protokollierungsstufe "Informationen" fest und speichert das Protokoll in der Datei C:\nvda.log |
+| nvda -l 10 | Startet NVDA mit der Protokollierungsstufe "Fehlerkorrektur". |
+| nvda --log-file=C:\nvda.log | Speichert das Protokoll in der Datei "C:\nvda.log". |
+| nvda --log-level=20 -f C:\nvda.log | Legt die Protokollierungsstufe "Informationen" fest und speichert das Protokoll in der Datei C:\nvda.log. |
 
 Folgende Kommandozeilenoptionen gibt es:
 || Kurzform | Langform | Beschreibung |
@@ -3019,7 +3017,7 @@ Folgende Kommandozeilenoptionen gibt es:
 | -l Protokollierungsstufe | --log-level=Protokollierungsstufe | Die niedrigste Stufe der protokollierten Nachricht (Debug 10, Input/Output 12, Debug-Warnung 15, Info 20, Warnung 30, Fehler 40, kritisch 50, deaktiviert 100), Standard ist Warnung. |
 | -c Konfigurationspfad | --config-path=KonfigurationsPfad | Gibt den Ordner an, in dem alle NVDA-Einstellungen gespeichert werden sollen. |
 | -m | --minimal | Startet NVDA minimalistisch (keine Klänge, keine Benutzeroberfläche). |
-| -s | --secure | Sicherer Modus (deaktiviert die Python-Konsole und Protokollierungsfunktionen, die häufig in Sicherheitsmeldungen verwendet werden). |
+| -s | --secure | Sicherer Modus: Deaktiviert die Python-Konsole, Profil-Funktionen wie Erstellen, Löschen, Umbenennen von Profilen, etc., Update-Check, einige Kontrollkästchen im Willkommensdialog und in der Kategorie "Allgemeine Einstellungen" (z. B. NVDA nach der Anmeldung starten, Konfiguration nach dem Beenden speichern, etc.) sowie im Protokoll-Betrachter- und Funktionen zur Protokollierung (werden oft in Sicherheitsmeldungen verwendet). Beachten Sie auch, dass dieser Befehl die Möglichkeit zum Speichern von Einstellungen in der Systemkonfiguration deaktiviert und die Tastenbefehle nicht gespeichert wird. |
 | Keine | --disable-addons | Deaktiviert alle Erweiterungen. |
 | Keine | --debug-logging | Aktivieren Sie die Protokollierung nur für diesen Lauf. Diese Einstellung überschreibt alle anderen Argumente der Protokollebene ( ""--loglevel"", -l), einschließlich der Option keine Protokollierung. |
 | Keine | --no-logging | Deaktivieren Sie die Protokollierung vollständig, während Sie NVDA verwenden. Diese Einstellung kann überschrieben werden, wenn eine Protokollebene ("--loglevel"", -l) von der Kommandozeile aus angegeben wird oder wenn die Debug-Protokollierung eingeschaltet ist. |

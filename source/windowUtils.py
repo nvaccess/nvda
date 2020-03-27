@@ -54,9 +54,14 @@ try:
 	_logicalToPhysicalPoint = ctypes.windll.user32.LogicalToPhysicalPointForPerMonitorDPI
 	_physicalToLogicalPoint = ctypes.windll.user32.PhysicalToLogicalPointForPerMonitorDPI
 except AttributeError:
-	# Windows Vista..Windows 8
-	_logicalToPhysicalPoint = ctypes.windll.user32.LogicalToPhysicalPoint
-	_physicalToLogicalPoint = ctypes.windll.user32.PhysicalToLogicalPoint
+	try:
+		# Windows Vista..Windows 8
+		_logicalToPhysicalPoint = ctypes.windll.user32.LogicalToPhysicalPoint
+		_physicalToLogicalPoint = ctypes.windll.user32.PhysicalToLogicalPoint
+	except AttributeError:
+		# Windows <= XP
+		_logicalToPhysicalPoint = None
+		_physicalToLogicalPoint = None
 
 def logicalToPhysicalPoint(window, x, y):
 	"""Converts the logical coordinates of a point in a window to physical coordinates.
@@ -69,11 +74,10 @@ def logicalToPhysicalPoint(window, x, y):
 	@return: The physical x and y coordinates.
 	@rtype: tuple of (int, int)
 	"""
+	if not _logicalToPhysicalPoint:
+		return x, y
 	point = ctypes.wintypes.POINT(x, y)
-	if not _logicalToPhysicalPoint(window, ctypes.byref(point)):
-		raise RuntimeError(
-			f"Couldn't convert point(x={x}, y={y}) from logical to physical coordinates for window {window}"
-		)
+	_logicalToPhysicalPoint(window, ctypes.byref(point))
 	return point.x, point.y
 
 def physicalToLogicalPoint(window, x, y):
@@ -87,11 +91,10 @@ def physicalToLogicalPoint(window, x, y):
 	@return: The logical x and y coordinates.
 	@rtype: tuple of (int, int)
 	"""
+	if not _physicalToLogicalPoint:
+		return x, y
 	point = ctypes.wintypes.POINT(x, y)
-	if not _physicalToLogicalPoint(window, ctypes.byref(point)):
-		raise RuntimeError(
-			f"Couldn't convert point(x={x}, y={y}) from physical to logical coordinates for window {window}"
-		)
+	_physicalToLogicalPoint(window, ctypes.byref(point))
 	return point.x, point.y
 
 DEFAULT_DPI_LEVEL = 96.0
