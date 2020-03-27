@@ -86,19 +86,40 @@ class ChromeLib:
 		spy = _NvdaLib.getSpyLib()
 		path = self._writeTestFile(testCase)
 		self.start_chrome(path)
-		applicationTitle = f"{self._testCaseTitle}   Google Chrome"
-		spy.wait_for_specific_speech(applicationTitle)  # to ensure chrome started
+		# Ensure chrome started
+		applicationTitle = f"{self._testCaseTitle}"
+		spy.wait_for_specific_speech(applicationTitle)
+		# Different versions of chrome have small variations in the separator between document name and
+		# application name. E.G. "htmlTest   Google Chrome", "html – Google Chrome"
+		# Rather than try to get the separator right, wait for the doc title, then wait for the 'Google Chrome'
+		# part. Note: this also works with "Chrome Canary"
+		spy.wait_for_specific_speech("Google Chrome")
 		spy.wait_for_speech_to_finish()
+		# Read all is configured, but just test interacting with the sample.
 		afterReadAllSpeechIndex = spy.get_next_speech_index()
 
 		# move to start marker
-		keyInputLib.send('\t')
-		spy.wait_for_speech_to_finish()
-		actualSpeech = spy.get_speech_at_index_until_now(afterReadAllSpeechIndex)
-		assertsLib.strings_match(
-			actualSpeech,
-			f"{ChromeLib._beforeMarker}  button"
-		)
+		for i in range(10):  # set a limit on the number of tries.
+			# Small changes in Chrome mean the number of tab presses to get into the document can vary.
+			builtIn.sleep(0.5)  # ensure application has time to receive input
+			actualSpeech = self.getSpeechAfterTab()
+			if actualSpeech == f"{ChromeLib._beforeMarker}  button":
+				break
+			if actualSpeech == f"{ChromeLib._afterMarker}  button":
+				# somehow missed the start marker!
+				builtIn.fail(
+					"Unable to tab to 'before sample' marker, reached 'after sample' marker first."
+					f" Looking for '{ChromeLib._beforeMarker}  button'"
+					" See NVDA log for full speech."
+				)
+				spy.dump_speech_to_log()
+		else: # Exceeded the number of tries
+			builtIn.fail(
+				"Unable to tab to 'before sample' marker."
+				f" Too many attempts looking for '{ChromeLib._beforeMarker}  button'"
+				" See NVDA log for full speech."
+			)
+			spy.dump_speech_to_log()
 
 	@staticmethod
 	def getSpeechAfterTab() -> str:
