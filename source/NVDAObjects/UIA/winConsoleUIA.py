@@ -308,7 +308,14 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		# This override of _getTextLines takes advantage of the fact that
 		# the console text contains linefeeds for every line
 		# Thus a simple string splitlines is much faster than splitting by unit line.
-		ti = self.makeTextInfo(textInfos.POSITION_ALL)
+		try:
+			ti = self.makeTextInfo(textInfos.POSITION_ALL)
+		except (AttributeError, COMError):
+			# When the console exits, the updated lines are retrieved, but this
+			# fails since the window no longer exists.
+			from logHandler import log
+			log.debugWarning("Couldn't get text lines.", exc_info=True)
+			return []
 		text = ti.text or ""
 		return text.splitlines()
 
