@@ -11,14 +11,17 @@ import shellapi
 import winUser
 import os
 
-
 def openUserConfigurationDirectory():
 	"""Opens directory containing config files for the current user"""
-	import config
-	path = config.getUserDefaultConfigPath()
-	if not path:
-		raise ValueError("no user default config path")
-	config.initConfigPath(path)
+	import globalVars
+	try:
+		path = globalVars.appArgs.configPath
+	except AttributeError:
+		import config
+		path = config.getUserDefaultConfigPath()
+		if not path:
+			raise ValueError("no user default config path")
+		config.initConfigPath(path)
 	shellapi.ShellExecute(0, None, path, None, None, winUser.SW_SHOWNORMAL)
 
 
