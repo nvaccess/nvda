@@ -1943,6 +1943,12 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
+		textPositionText = _("Te&xt position")
+		self.textPositionCheckBox = fontGroup.addItem(wx.CheckBox(self, label=textPositionText))
+		self.textPositionCheckBox.SetValue(config.conf["documentFormatting"]["reportTextPosition"])
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings panel.
 		emphasisText=_("E&mphasis")
 		self.emphasisCheckBox=fontGroup.addItem(wx.CheckBox(self,label=emphasisText))
 		self.emphasisCheckBox.SetValue(config.conf["documentFormatting"]["reportEmphasis"])
@@ -2145,6 +2151,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportFontName"]=self.fontNameCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFontSize"]=self.fontSizeCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFontAttributes"]=self.fontAttrsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportTextPosition"] = self.textPositionCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportColor"]=self.colorCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportComments"]=self.commentsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportRevisions"]=self.revisionsCheckBox.IsChecked()
