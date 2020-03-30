@@ -11,14 +11,18 @@ import shellapi
 import winUser
 import os
 
-
 def openUserConfigurationDirectory():
 	"""Opens directory containing config files for the current user"""
-	import config
-	path = config.getUserDefaultConfigPath()
-	if not path:
-		raise ValueError("no user default config path")
-	config.initConfigPath(path)
+	import globalVars
+	try:
+		# configPath is guaranteed to be correct for NVDA, however it will not exist for NVDA_slave.
+		path = globalVars.appArgs.configPath
+	except AttributeError:
+		import config
+		path = config.getUserDefaultConfigPath()
+		if not path:
+			raise ValueError("no user default config path")
+		config.initConfigPath(path)
 	shellapi.ShellExecute(0, None, path, None, None, winUser.SW_SHOWNORMAL)
 
 
