@@ -15,6 +15,7 @@ def openUserConfigurationDirectory():
 	"""Opens directory containing config files for the current user"""
 	import globalVars
 	try:
+		# configPath is guaranteed to be correct for NVDA, however it will not exist for NVDA_slave.
 		path = globalVars.appArgs.configPath
 	except AttributeError:
 		import config
