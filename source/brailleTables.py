@@ -355,7 +355,7 @@ addTable("pu-in-g1.utb", _("Punjabi grade 1"))
 addTable("ro.ctb", _("Romanian"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("ru.ctb", _("Russian braille for computer code"))
+addTable("ru.ctb", _("Russian computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ru-ru-g1.utb", _("Russian grade 1"))
