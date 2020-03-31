@@ -60,3 +60,10 @@ def upgradeConfigFrom_2_to_3(profile):
 		if "terminals" not in profile:
 			profile["terminals"] = {}
 		profile["terminals"]["speakPasswords"] = speakPasswords
+
+
+def upgradeConfigFrom_4_to_5(profile):
+	# #10014: Code from old plugin directories is not loaded Since #9238,
+	# however they still remains in the user config directory.
+	# This config schema upgrade step is used as a trigger to delete them.
+	pass
