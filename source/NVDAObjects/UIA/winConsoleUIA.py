@@ -291,7 +291,7 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		# However, To correctly handle speaking of typed characters,
 		# NVDA really requires the real thread the window was created in,
 		# I.e. a thread inside conhost.
-		from IAccessibleHandler import consoleWindowsToThreadIDs
+		from IAccessibleHandler.internalWinEventHandler import consoleWindowsToThreadIDs
 		threadID = consoleWindowsToThreadIDs.get(self.windowHandle, 0)
 		if not threadID:
 			threadID = super().windowThreadID
