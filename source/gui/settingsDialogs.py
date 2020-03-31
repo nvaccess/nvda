@@ -1943,6 +1943,16 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
+		superscriptsAndSubscriptsText = _("Su&perscripts and subscripts")
+		self.superscriptsAndSubscriptsCheckBox = fontGroup.addItem(
+			wx.CheckBox(self, label=superscriptsAndSubscriptsText)
+		)
+		self.superscriptsAndSubscriptsCheckBox.SetValue(
+			config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"]
+		)
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings panel.
 		emphasisText=_("E&mphasis")
 		self.emphasisCheckBox=fontGroup.addItem(wx.CheckBox(self,label=emphasisText))
 		self.emphasisCheckBox.SetValue(config.conf["documentFormatting"]["reportEmphasis"])
@@ -2145,6 +2155,9 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportFontName"]=self.fontNameCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFontSize"]=self.fontSizeCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFontAttributes"]=self.fontAttrsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"] = (
+			self.superscriptsAndSubscriptsCheckBox.IsChecked()
+		)
 		config.conf["documentFormatting"]["reportColor"]=self.colorCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportComments"]=self.commentsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportRevisions"]=self.revisionsCheckBox.IsChecked()
