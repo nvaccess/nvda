@@ -167,7 +167,7 @@ def _getUIATextAttributeIDsForFormatConfig(formatConfig):
 	if formatConfig["reportHeadings"]:
 		IDs.append(UIAHandler.UIA_StyleIdAttributeId)
 	if formatConfig["reportSpellingErrors"] or formatConfig["reportComments"] or formatConfig["reportRevisions"]:
-		pass # IDs.append(UIAHandler.UIA_AnnotationTypesAttributeId)
+		IDs.append(UIAHandler.UIA_AnnotationTypesAttributeId)
 	IDs.append(UIAHandler.UIA_CultureAttributeId)
 	return IDs
 
