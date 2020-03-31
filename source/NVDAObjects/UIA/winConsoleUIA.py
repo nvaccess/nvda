@@ -13,7 +13,7 @@ import UIAHandler
 from comtypes import COMError
 from UIAUtils import isTextRangeOffscreen
 from . import UIATextInfo
-from ..behaviors import EnhancedTermTypedCharSupport
+from ..behaviors import EnhancedTermTypedCharSupport, KeyboardHandlerBasedTypedCharSupport
 from ..window import Window
 
 
@@ -318,7 +318,7 @@ class consoleUIAWindow(Window):
 	shouldAllowUIAFocusEvent = False
 
 
-class WinConsoleUIA(EnhancedTermTypedCharSupport):
+class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 	#: Disable the name as it won't be localized
 	name = ""
 	#: Only process text changes every 30 ms, in case the console is getting
@@ -362,7 +362,5 @@ def findExtraOverlayClasses(obj, clsList):
 
 
 class WinTerminalUIA(EnhancedTermTypedCharSupport):
-	_shouldUseToUnicodeEx = False
-
 	def _get_TextInfo(self):
 		return consoleUIATextInfo

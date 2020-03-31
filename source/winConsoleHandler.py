@@ -134,7 +134,7 @@ def getConsoleVisibleLines():
 
 @winUser.WINEVENTPROC
 def consoleWinEventHook(handle,eventID,window,objectID,childID,threadID,timestamp):
-	from NVDAObjects.behaviors import EnhancedTermTypedCharSupport
+	from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
 	#We don't want to do anything with the event if the event is not for the window this console is in
 	if window!=consoleObject.windowHandle:
 		return
@@ -148,7 +148,7 @@ def consoleWinEventHook(handle,eventID,window,objectID,childID,threadID,timestam
 		y=winUser.GET_Y_LPARAM(objectID)
 		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 		if (
-			not isinstance(consoleObject, EnhancedTermTypedCharSupport)
+			not isinstance(consoleObject, KeyboardHandlerBasedTypedCharSupport)
 			and x < consoleScreenBufferInfo.dwCursorPosition.x
 			and (
 				y == consoleScreenBufferInfo.dwCursorPosition.y

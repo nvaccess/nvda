@@ -8,7 +8,7 @@
 """
 
 import oleacc
-from NVDAObjects.behaviors import EnhancedTermTypedCharSupport, Terminal
+from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport, Terminal
 from NVDAObjects.window import DisplayModelEditableText, DisplayModelLiveText
 import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible
@@ -25,6 +25,6 @@ class AppModule(appModuleHandler.AppModule):
 			except ValueError:
 				pass
 			if isWin10(1607):
-				clsList[0:0] = (EnhancedTermTypedCharSupport, DisplayModelLiveText)
+				clsList[0:0] = (KeyboardHandlerBasedTypedCharSupport, DisplayModelLiveText)
 			else:
 				clsList[0:0] = (Terminal, DisplayModelLiveText)
