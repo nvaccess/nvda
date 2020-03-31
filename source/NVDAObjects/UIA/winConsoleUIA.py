@@ -120,9 +120,9 @@ class consoleUIATextInfo(UIATextInfo):
 			return res
 
 
-class consoleUIATextInfoEndInclusive(consoleUIATextInfo):
+class consoleUIATextInfoPre21H1(consoleUIATextInfo):
 	def collapse(self, end=False):
-		"""Works around a UIA bug on Windows 10 versions before 2104."""
+		"""Works around a UIA bug on Windows 10 versions before 21H1."""
 		# When collapsing, consoles seem to incorrectly push the start of the
 		# textRange back one character.
 		# Correct this by bringing the start back up to where the end is.
@@ -136,7 +136,7 @@ class consoleUIATextInfoEndInclusive(consoleUIATextInfo):
 			)
 
 	def compareEndPoints(self, other, which):
-		"""Works around a UIA bug on Windows 10 versions before 2104."""
+		"""Works around a UIA bug on Windows 10 versions before 21H1."""
 		# Even when a console textRange's start and end have been moved to the
 		# same position, the console incorrectly reports the end as being
 		# past the start.
@@ -151,7 +151,7 @@ class consoleUIATextInfoEndInclusive(consoleUIATextInfo):
 
 	def setEndPoint(self, other, which):
 		"""Override of L{textInfos.TextInfo.setEndPoint}.
-		Works around a UIA bug on Windows 10 versions before 2104 that means we can
+		Works around a UIA bug on Windows 10 versions before 21H1 that means we can
 		not trust the "end" endpoint of a collapsed (empty) text range
 		for comparisons.
 		"""
@@ -192,7 +192,7 @@ class consoleUIATextInfoEndInclusive(consoleUIATextInfo):
 
 	def _move(self, unit, direction, endPoint=None):
 		if unit == textInfos.UNIT_WORD and direction != 0:
-			# On Windows 10 versions before 2104, UIA doesn't implement word
+			# On Windows 10 versions before 21H1, UIA doesn't implement word
 			# movement, so we need to do it manually.
 			# Relative to the current line, calculate our offset
 			# and the current word's offsets.
@@ -292,7 +292,7 @@ class consoleUIATextInfoEndInclusive(consoleUIATextInfo):
 		)
 
 	def _isCollapsed(self):
-		"""Works around a UIA bug on Windows 10 versions before 2104 that means we
+		"""Works around a UIA bug on Windows 10 versions before 21H1 that means we
 		cannot trust the "end" endpoint of a collapsed (empty) text range
 		for comparisons.
 		Instead we check to see if we can get the first character from the
@@ -334,9 +334,10 @@ class WinConsoleUIA(EnhancedTermTypedCharSupport):
 	def _get_TextInfo(self):
 		"""Overriding _get_TextInfo and thus the TextInfo property
 		on NVDAObjects.UIA.UIA
-		consoleUIATextInfo fixes expand/collapse, implements word movement, and
-		bounds review to the visible text."""
-		return consoleUIATextInfoEndInclusive
+		consoleUIATextInfo bounds review to the visible text.
+		ConsoleUIATextInfoPre21H1 fixes expand/collapse and implements word
+		movement."""
+		return consoleUIATextInfoPre21H1
 
 	def _getTextLines(self):
 		# This override of _getTextLines takes advantage of the fact that
