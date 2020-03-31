@@ -13,6 +13,7 @@ from configobj import ConfigObj
 #: (conforming to old schema versions) will not work correctly with the new schema.
 latestSchemaVersion = 5
 
+
 #: The configuration specification string
 #: @type: String
 configSpecString = f"""# NVDA Configuration File
@@ -173,6 +174,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportFontAttributes = boolean(default=false)
 	reportRevisions = boolean(default=true)
 	reportEmphasis = boolean(default=false)
+	reportSuperscriptsAndSubscripts = boolean(default=false)
 	reportColor = boolean(default=False)
 	reportAlignment = boolean(default=false)
 	reportLineSpacing = boolean(default=false)

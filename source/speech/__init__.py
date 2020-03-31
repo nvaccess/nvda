@@ -2178,6 +2178,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				else _("not hidden")
 			)
 			textList.append(text)
+	if formatConfig["reportSuperscriptsAndSubscripts"]:
 		textPosition=attrs.get("text-position")
 		oldTextPosition=attrsCache.get("text-position") if attrsCache is not None else None
 		if (textPosition or oldTextPosition is not None) and textPosition!=oldTextPosition:
