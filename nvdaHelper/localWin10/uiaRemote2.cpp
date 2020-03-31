@@ -246,19 +246,20 @@ void _remoteable_appendElementEndInfo(UiaOperationScope& scope, UiaElement& elem
 void _remoteable_visitChildRangesAndGaps(UiaOperationScope& scope, UiaTextRange& textRange, std::function<void(UiaOperationScope& scope, UiaTextRange& subrange, UiaElement& childElement)> visitorFunc) {
 	// collect the children
 	auto children=textRange.GetChildren();
+	localLog(INFO,L"Number of children: "<<(children.Size()));
 	// clone a new range, collapsing it to the beginning of the over all textRange
 	auto tempRange=textRange.Clone();
 	tempRange.MoveEndpointByRange(TextPatternRangeEndpoint_End,tempRange,TextPatternRangeEndpoint_Start);
 	// for all children:
 	_remoteable_visitUiaArrayElements(scope,children,[&](UiaOperationScope& scope, auto& child) {
 		scope.If(child.IsNull(),[&]() {
-			// child is NULL. Skipping.
+			localLog(INFO,L"Child is null. Skipping");
 			scope.Continue();
 		});
 		// fetch the subrange for the current child
 		auto textChildPattern=child.GetTextChildPattern(false);
 		scope.If(textChildPattern.IsNull(),[&]() {
-			// child does not support textchildPattern. Skipping.
+			localLog(INFO,L"child does not support TextChildPattern. Skipping");
 			scope.Continue();
 		});
 		auto childRange=textChildPattern.GetTextRange();
