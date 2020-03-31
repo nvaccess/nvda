@@ -19,57 +19,32 @@ from ..window import Window
 
 class consoleUIATextInfo(UIATextInfo):
 	def __init__(self, obj, position, _rangeObj=None):
-		# We want to limit  textInfos to just the visible part of the console.
-		# Therefore we specifically handle POSITION_FIRST, POSITION_LAST and POSITION_ALL.
+		collapseToEnd = None
+		if not _rangeObj and position in (
+			textInfos.POSITION_FIRST,
+			textInfos.POSITION_LAST,
+			textInfos.POSITION_ALL
+		):
+			_rangeObj, collapseToEnd = self._getBoundingRange(obj, position)
+		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
+		if collapseToEnd is not None:
+			self.collapse(end=collapseToEnd)
+
+	def _getBoundingRange(self, obj, position):
 		# microsoft/terminal#4495: In newer consoles,
 		# IUIAutomationTextRange::getVisibleRanges returns a reliable contiguous range.
-		visiRange = None
-		try:
-			visiRanges = obj.UIATextPattern.GetVisibleRanges()
-			if visiRanges.length == 1:
-				visiRange = visiRanges.GetElement(0)
-		except (COMError, RuntimeError):
-			pass
-		# In older consoles, IUIAutomationTextRange::getVisibleRanges is very
-		# broken once more than a few screens worth of content has been written
-		# to the console. Therefore we resort to using
-		# IUIAutomationTextPattern::rangeFromPoint for the top left and bottom
-		# right of the console window.
-		if position is textInfos.POSITION_FIRST:
-			if visiRange:
-				_rangeObj = visiRange
-			else:
-				_rangeObj = self.__class__(obj, obj.location.topLeft)._rangeObj
-		elif position is textInfos.POSITION_LAST:
-			if visiRange:
-				_rangeObj = visiRange
-			else:
-				# Asking for the range at the bottom right of the window
-				# Seems to sometimes ignore the x coordinate.
-				# Therefore use the bottom left, then move   to the last character on that line.
-				tempInfo = self.__class__(obj, obj.location.bottomLeft)
-				tempInfo.expand(textInfos.UNIT_LINE)
-				# We must pull back the end by one character otherwise when we collapse to end,
-				# a console bug results in a textRange covering the entire console buffer!
-				# Strangely the *very* last character is a special blank point
-				# so we never seem to miss a real character.
-				UIATextInfo.move(tempInfo, textInfos.UNIT_CHARACTER, -1, endPoint="end")
-				tempInfo.setEndPoint(tempInfo, "startToEnd")
-				_rangeObj = tempInfo._rangeObj
-		elif position is textInfos.POSITION_ALL:
-			if visiRange:
-				_rangeObj = visiRange
-			else:
-				first = self.__class__(obj, textInfos.POSITION_FIRST)
-				last = self.__class__(obj, textInfos.POSITION_LAST)
-				first.setEndPoint(last, "endToEnd")
-				_rangeObj = first._rangeObj
-		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
-		if visiRange and position is textInfos.POSITION_FIRST:
-			self.collapse(end=False)
-		elif visiRange and position is textInfos.POSITION_LAST:
-			self.move(textInfos.UNIT_CHARACTER, -1, endPoint="end")
-			self.collapse(end=True)
+		_rangeObj = obj.UIATextPattern.GetVisibleRanges().GetElement(0)
+		collapseToEnd = None
+		if position == textInfos.POSITION_FIRST:
+			collapseToEnd = False
+		elif position == textInfos.POSITION_LAST:
+			_rangeObj.MoveEndpointByUnit(
+				UIAHandler.TextPatternRangeEndpoint_End,
+				UIAHandler.NVDAUnitsToUIAUnits['character'],
+				-1
+			)
+			collapseToEnd = True
+		return (_rangeObj, collapseToEnd)
 
 	def move(self, unit, direction, endPoint=None):
 		oldInfo = None
@@ -121,6 +96,38 @@ class consoleUIATextInfo(UIATextInfo):
 
 
 class consoleUIATextInfoPre21H1(consoleUIATextInfo):
+	def _getBoundingRange(self, obj, position):
+		"""Returns the UIA text range to which the console should be bounded,
+		and whether the textInfo should be collapsed after instantiation."""
+		# We want to limit  textInfos to just the visible part of the console.
+		# Therefore we specifically handle POSITION_FIRST, POSITION_LAST and POSITION_ALL.
+		# We could use IUIAutomationTextRange::getVisibleRanges, but it seems very broken in consoles
+		# once more than a few screens worth of content has been written to the console.
+		# Therefore we resort to using IUIAutomationTextPattern::rangeFromPoint
+		# for the top left, and bottom right of the console window.
+		_rangeObj = None
+		if position is textInfos.POSITION_FIRST:
+			_rangeObj = self.__class__(obj, obj.location.topLeft)._rangeObj
+		elif position is textInfos.POSITION_LAST:
+			# Asking for the range at the bottom right of the window
+			# Seems to sometimes ignore the x coordinate.
+			# Therefore use the bottom left, then move   to the last character on that line.
+			tempInfo = self.__class__(obj, obj.location.bottomLeft)
+			tempInfo.expand(textInfos.UNIT_LINE)
+			# We must pull back the end by one character otherwise when we collapse to end,
+			# a console bug results in a textRange covering the entire console buffer!
+			# Strangely the *very* last character is a special blank point
+			# so we never seem to miss a real character.
+			UIATextInfo.move(tempInfo, textInfos.UNIT_CHARACTER, -1, endPoint="end")
+			tempInfo.setEndPoint(tempInfo, "startToEnd")
+			_rangeObj = tempInfo._rangeObj
+		elif position is textInfos.POSITION_ALL:
+			first = self.__class__(obj, textInfos.POSITION_FIRST)
+			last = self.__class__(obj, textInfos.POSITION_LAST)
+			first.setEndPoint(last, "endToEnd")
+			_rangeObj = first._rangeObj
+		return (_rangeObj, None)
+
 	def collapse(self, end=False):
 		"""Works around a UIA bug on Windows 10 versions before 21H1."""
 		# When collapsing, consoles seem to incorrectly push the start of the
