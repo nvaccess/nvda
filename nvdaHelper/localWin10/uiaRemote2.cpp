@@ -243,7 +243,7 @@ void _remoteable_appendElementEndInfo(UiaOperationScope& scope, UiaElement& elem
 	outArray.Append(UiaVariant(textContentCommand_elementEnd));
 }
 
-void _remoteable_visitChildRangesAndGaps(UiaOperationScope& scope, UiaTextRange& textRange, std::function<void(UiaOperationScope& scope, UiaTextRange& subrange, UiaElement& childElement)> visitorFunc) {
+void _remoteable_visitChildRangesAndGaps(UiaOperationScope& scope, UiaTextPattern& textPattern, UiaTextRange& textRange, std::function<void(UiaOperationScope& scope, UiaTextRange& subrange, UiaElement& childElement)> visitorFunc) {
 	// collect the children
 	auto children=textRange.GetChildren();
 	localLog(INFO,L"Number of children: "<<(children.Size()));
@@ -257,12 +257,11 @@ void _remoteable_visitChildRangesAndGaps(UiaOperationScope& scope, UiaTextRange&
 			scope.Continue();
 		});
 		// fetch the subrange for the current child
-		auto textChildPattern=child.GetTextChildPattern(false);
-		scope.If(textChildPattern.IsNull(),[&]() {
-			localLog(INFO,L"child does not support TextChildPattern. Skipping");
+		auto childRange=textPattern.RangeFromChild(child);
+		scope.If(childRange.IsNull(),[&]() {
+			localLog(INFO,L"Child range is null. Skipping");
 			scope.Continue();
 		});
-		auto childRange=textChildPattern.GetTextRange();
 		auto childStartDeltaFromEnd= childRange.CompareEndpoints(TextPatternRangeEndpoint_Start,textRange,TextPatternRangeEndpoint_End);
 		scope.If(childStartDeltaFromEnd>=0,[&]() {
 			// This child starts at or past the end of the over all textRange.
@@ -318,9 +317,14 @@ void _remoteable_visitChildRangesAndGaps(UiaOperationScope& scope, UiaTextRange&
 }
 
 UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaElement& rootElement, UiaTextRange& textRange, std::vector<int>& propIDs, const std::vector<int>& attribIDs) {
+	UiaArray<UiaVariant> content;
 	localLog(INFO,L"getTextcontent start");
 	localLog(INFO,L"Full text: "<<(textRange.GetText(256).get()));
-	UiaArray<UiaVariant> content;
+	auto textPattern=rootElement.GetTextPattern(false);
+	scope.If(textPattern.IsNull(),[&]() {
+		localLog(INFO,L"text pattern is NULL.");
+		return content;
+	});
 	// Split textRange into subranges by format unit. 
 	auto formatRanges=_remoteable_splitTextRangeByUnit(scope,textRange,TextUnit_Format);
 	UiaArray<UiaElement> oldAncestors;
@@ -351,7 +355,7 @@ UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaEle
 		// Splitting the format range into ranges for each embedded child,
 		// and the gaps between the children,
 		// Walk through the ranges:
-		_remoteable_visitChildRangesAndGaps(scope,formatRange,[&](UiaOperationScope& scope, UiaTextRange& subrange, UiaElement& child) {
+		_remoteable_visitChildRangesAndGaps(scope,textPattern,formatRange,[&](UiaOperationScope& scope, UiaTextRange& subrange, UiaElement& child) {
 			localLog(INFO,L"Handling childAndGaps subrange");
 			// If this range is for a embedded child, record its element start, including properties.
 			scope.If(!child.IsNull(),[&]() {
