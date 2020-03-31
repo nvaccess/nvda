@@ -338,13 +338,19 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 			threadID = super().windowThreadID
 		return threadID
 
+	def _get_is21H1Plus(self):
+		"Returns whether this is a newer version of Windows Console with an improved UIA implementation."
+		# microsoft/terminal#4495: In newer consoles,
+		# IUIAutomationTextRange::getVisibleRanges returns one visible range.
+		return self.UIATextPattern.GetVisibleRanges().length == 1
+
 	def _get_TextInfo(self):
 		"""Overriding _get_TextInfo and thus the TextInfo property
 		on NVDAObjects.UIA.UIA
 		consoleUIATextInfo bounds review to the visible text.
 		ConsoleUIATextInfoPre21H1 fixes expand/collapse and implements word
 		movement."""
-		return consoleUIATextInfoPre21H1
+		return consoleUIATextInfo if self.is21H1Plus else consoleUIATextInfoPre21H1
 
 	def _getTextLines(self):
 		# This override of _getTextLines takes advantage of the fact that
