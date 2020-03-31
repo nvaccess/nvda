@@ -1948,7 +1948,7 @@ class DocumentFormattingPanel(SettingsPanel):
 			wx.CheckBox(self, label=superscriptsAndSubscriptsText)
 		)
 		self.superscriptsAndSubscriptsCheckBox.SetValue(
-			config.conf["documentFormatting"]["reportsuperscriptsAndSubscripts"]
+			config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"]
 		)
 
 		# Translators: This is the label for a checkbox in the
@@ -2155,7 +2155,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportFontName"]=self.fontNameCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFontSize"]=self.fontSizeCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFontAttributes"]=self.fontAttrsCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportsuperscriptsAndSubscripts"] = (
+		config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"] = (
 			self.superscriptsAndSubscriptsCheckBox.IsChecked()
 		)
 		config.conf["documentFormatting"]["reportColor"]=self.colorCheckBox.IsChecked()
