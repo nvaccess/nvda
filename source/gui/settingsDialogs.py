@@ -661,8 +661,10 @@ class GeneralSettingsPanel(SettingsPanel):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self.languageNames = languageHandler.getAvailableLanguages(presentational=True)
 		languageChoices = [x[1] for x in self.languageNames]
-		# Translators: The label for a setting in general settings to select NVDA's interface language (once selected, NVDA must be restarted; the option user default means the user's Windows language will be used).
-		languageLabelText = _("&Language (requires restart of NVDA to fully take effect):")
+		# Translators: The label for a setting in general settings to select NVDA's interface language
+		# (once selected, NVDA must be restarted; the option user default means the user's Windows language
+		# will be used).
+		languageLabelText = _("NVDA &Language (requires restart):")
 		self.languageList=settingsSizerHelper.addLabeledControl(languageLabelText, wx.Choice, choices=languageChoices)
 		self.languageList.SetToolTip(wx.ToolTip("Choose the language NVDA's messages and user interface should be presented in."))
 		try:
@@ -674,8 +676,9 @@ class GeneralSettingsPanel(SettingsPanel):
 		if globalVars.appArgs.secure:
 			self.languageList.Disable()
 
-		# Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
-		self.saveOnExitCheckBox=wx.CheckBox(self,label=_("&Save configuration when exiting NVDA"))
+		# Translators: The label for a setting in general settings to save current configuration when NVDA
+		# exits (if it is not checked, user needs to save configuration before quitting NVDA).
+		self.saveOnExitCheckBox = wx.CheckBox(self, label=_("&Save configuration when exiting NVDA"))
 		self.saveOnExitCheckBox.SetValue(config.conf["general"]["saveConfigurationOnExit"])
 		if globalVars.appArgs.secure:
 			self.saveOnExitCheckBox.Disable()
@@ -691,7 +694,9 @@ class GeneralSettingsPanel(SettingsPanel):
 		self.playStartAndExitSoundsCheckBox.SetValue(config.conf["general"]["playStartAndExitSounds"])
 		settingsSizerHelper.addItem(self.playStartAndExitSoundsCheckBox)
 
-		# Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logging are found under comments for the logging level messages themselves).
+		# Translators: The label for a setting in general settings to select logging level of NVDA as it runs
+		# (available options and what they are logging are found under comments for the logging level messages
+		# themselves).
 		logLevelLabelText=_("L&ogging level:")
 		logLevelChoices = [name for level, name in self.LOG_LEVELS]
 		self.logLevelList = settingsSizerHelper.addLabeledControl(logLevelLabelText, wx.Choice, choices=logLevelChoices)
@@ -705,8 +710,10 @@ class GeneralSettingsPanel(SettingsPanel):
 		else:
 			log.debugWarning("Could not set log level list to current log level")
 
-		# Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
-		self.startAfterLogonCheckBox = wx.CheckBox(self, label=_("&Automatically start NVDA after logging on to Windows"))
+		# Translators: The label for a setting in general settings to allow NVDA to start after logging onto
+		# Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
+		# start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
+		self.startAfterLogonCheckBox = wx.CheckBox(self, label=_("St&art NVDA after Windows sign in"))
 		self.startAfterLogonCheckBox.SetValue(config.getStartAfterLogon())
 		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
@@ -957,7 +964,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 		self.deviceList.SetSelection(selection)
 
 		# Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
-		duckingListLabelText=_("Audio d&ucking mode:")
+		duckingListLabelText = _("Audio d&ucking mode:")
 		self.duckingList=settingsSizerHelper.addLabeledControl(duckingListLabelText, wx.Choice, choices=audioDucking.audioDuckingModes)
 		index=config.conf['audio']['audioDuckingMode']
 		self.duckingList.SetSelection(index)
@@ -1656,22 +1663,22 @@ class ReviewCursorPanel(SettingsPanel):
 	def makeSettings(self, settingsSizer):
 		# Translators: This is the label for a checkbox in the
 		# review cursor settings panel.
-		self.followFocusCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Follow system &focus"))
+		self.followFocusCheckBox = wx.CheckBox(self, label=_("Follow system &focus"))
 		self.followFocusCheckBox.SetValue(config.conf["reviewCursor"]["followFocus"])
 		settingsSizer.Add(self.followFocusCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# review cursor settings panel.
-		self.followCaretCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Follow System &Caret"))
+		self.followCaretCheckBox = wx.CheckBox(self, label=_("Follow System &Caret"))
 		self.followCaretCheckBox.SetValue(config.conf["reviewCursor"]["followCaret"])
 		settingsSizer.Add(self.followCaretCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# review cursor settings panel.
-		self.followMouseCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Follow &mouse cursor"))
+		self.followMouseCheckBox = wx.CheckBox(self, label=_("Follow &mouse cursor"))
 		self.followMouseCheckBox.SetValue(config.conf["reviewCursor"]["followMouse"])
 		settingsSizer.Add(self.followMouseCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# review cursor settings panel.
-		self.simpleReviewModeCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Simple review mode"))
+		self.simpleReviewModeCheckBox = wx.CheckBox(self, label=_("&Simple review mode"))
 		self.simpleReviewModeCheckBox.SetValue(config.conf["reviewCursor"]["simpleReviewMode"])
 		settingsSizer.Add(self.simpleReviewModeCheckBox,border=10,flag=wx.BOTTOM)
 
@@ -1769,7 +1776,7 @@ class ObjectPresentationPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings panel.
-		guessPositionInfoText=_("&Guess object &position information when unavailable")
+		guessPositionInfoText = _("&Guess object &position information when unavailable")
 		self.guessPositionInfoCheckBox=sHelper.addItem(wx.CheckBox(self,label=guessPositionInfoText))
 		self.guessPositionInfoCheckBox.SetValue(config.conf["presentation"]["guessObjectPositionInformationWhenUnavailable"])
 
@@ -2080,7 +2087,11 @@ class DocumentFormattingPanel(SettingsPanel):
 		]
 		# Translators: This is the label for a combobox in the
 		# document formatting settings panel.
-		self.borderComboBox=tablesGroup.addLabeledControl(_("Cell &borders:"), wx.Choice, choices=borderChoices)
+		self.borderComboBox = tablesGroup.addLabeledControl(
+			_("Cell &borders:"),
+			wx.Choice,
+			choices=borderChoices
+		)
 		curChoice = 0
 		if config.conf["documentFormatting"]["reportBorderStyle"]:
 			if config.conf["documentFormatting"]["reportBorderColor"]:
@@ -2144,7 +2155,7 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
-		detectFormatAfterCursorText =_("Report formatting chan&ges after the cursor (can cause a lag)")
+		detectFormatAfterCursorText = _("Report formatting chan&ges after the cursor (can cause a lag)")
 		self.detectFormatAfterCursorCheckBox=wx.CheckBox(self, label=detectFormatAfterCursorText)
 		self.detectFormatAfterCursorCheckBox.SetValue(config.conf["documentFormatting"]["detectFormatAfterCursor"])
 		sHelper.addItem(self.detectFormatAfterCursorCheckBox)
