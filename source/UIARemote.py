@@ -51,6 +51,7 @@ _UIAPropIDs=[
 def _getControlField(UIARuntimeID,props):
 	field=textInfos.ControlField()
 	field['_UIARuntimeID'] = UIARuntimeID
+	field['uniqueID']=UIARuntimeID
 	UIAControlType = props[UIAHandler.UIA_ControlTypePropertyId]
 	field['_UIAControlType'] = UIAControlType
 	UIAAutomationID = props[UIAHandler.UIA_AutomationIdPropertyId]
@@ -113,11 +114,10 @@ def _getControlField(UIARuntimeID,props):
 		field["table-rowcount"] = props[UIAHandler.UIA_GridRowCountPropertyId]
 		field["table-columncount"] = props[UIAHandler.UIA_GridColumnCountPropertyId]
 	elif role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_DATAITEM,controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER,controlTypes.ROLE_HEADERITEM):
-		field["table-rownumber"] = props[UIAHandler.UIA_GridItemRowPropertyId]+1
+		field["table-rownumber"] = props[UIAHandler.UIA_GridItemRowPropertyId] + 1
 		field["table-rowsspanned"] = 1
-		field["table-columnnumber"] = props[UIAHandler.UIA_GridItemColumnPropertyId]+1
+		field["table-columnnumber"] = props[UIAHandler.UIA_GridItemColumnPropertyId] + 1
 		field["table-columnsspanned"] = 1
-		field["table-id"] = 1
 		field['role']=controlTypes.ROLE_TABLECELL
 		field['table-columnheadertext'] = None
 		field['table-rowheadertext'] = None
@@ -306,6 +306,11 @@ def getTextWithFields(rootElement,textRange,formatConfig):
 			props={propIDs[x]:propValues[x] for x in range(propCount)}
 			controlField=_getControlField(ID,props)
 			fields.append(textInfos.FieldCommand("controlStart",controlField))
+			# Propagate table-id to a table's descendants
+			if len(controlStack)>0 and controlField.get('table-id') is None:
+				tableID=controlStack[-1].get('table-id')
+				if tableID is not None:
+					controlField['table-id']=tableID
 			controlStack.append(controlField)
 			index = endIndex
 		elif cmd==textContentCommand_text:
