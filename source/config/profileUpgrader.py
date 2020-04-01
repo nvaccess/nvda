@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
-# A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016 -2020 NV Access Limited, Łukasz Golonka
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2016 NV Access Limited
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
 
 from logHandler import log
 from .configSpec import latestSchemaVersion, confspec
@@ -20,12 +20,7 @@ def upgrade(profile, validator, writeProfileToFileFunc):
 	_ensureVersionProperty(profile)
 	startSchemaVersion = int(profile[SCHEMA_VERSION_KEY])
 	log.debug("Current config schema version: {0}, latest: {1}".format(startSchemaVersion, latestSchemaVersion))
-	upgradeSteps = range(startSchemaVersion, latestSchemaVersion)
-	if upgradeSteps:
-		# Use this opportunity to clean old, no longer required directories from user config
-		from config import removeOldPluginDirs
-		removeOldPluginDirs()
-	for fromVersion in upgradeSteps:
+	for fromVersion in range(startSchemaVersion, latestSchemaVersion):
 		_doConfigUpgrade(profile, fromVersion)
 	_doValidation(deepcopy(profile), validator) # copy the profile, since validating mutates the object
 	try:

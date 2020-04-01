@@ -71,10 +71,3 @@ def upgradeConfigFrom_3_to_4(profile):
 	except KeyError:
 		# Setting does not exist, no need for upgrade of this setting
 		log.debug("reportFontAttributes not present, no action taken.")
-
-
-def upgradeConfigFrom_4_to_5(profile):
-	# #10014: Code from old plugin directories is not loaded Since #9238,
-	# however they still remains in the user config directory.
-	# This config schema upgrade step is used as a trigger to delete them.
-	pass
