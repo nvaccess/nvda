@@ -2085,9 +2085,9 @@ class DocumentFormattingPanel(SettingsPanel):
 			# document formatting settings panel.
 			_("Both Colors and Styles"),
 		]
-		# Translators: This is the label for a combobox in the
-		# document formatting settings panel.
 		self.borderComboBox = tablesGroup.addLabeledControl(
+			# Translators: This is the label for a combobox in the
+			# document formatting settings panel.
 			_("Cell &borders:"),
 			wx.Choice,
 			choices=borderChoices
