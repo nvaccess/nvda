@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2011-2020 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka
+# Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka
 
 from ctypes import *
 from ctypes.wintypes import *
@@ -222,12 +222,6 @@ def removeOldProgramFiles(destPath):
 					tryRemoveFile(path)
 				except RetriableFailure:
 					log.warning(f"Couldn't remove file: {path!r}")
-	# Remove old plugin dirs from systemConfig and  userConfig.
-	# Even though tis is being done as a config upgrade step there are cases in which it does not work
-	# the main one being systemConfig without nvda.ini.
-	# Doing it here has also added advantage of being performed with each NVDA update.
-	config.removeOldPluginDirs(os.path.join(destPath, "systemConfig"))
-	config.removeOldPluginDirs(os.path.join(destPath, "userConfig"))
 
 uninstallerRegInfo={
 	"DisplayName":versionInfo.name,
