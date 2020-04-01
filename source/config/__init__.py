@@ -338,12 +338,17 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	module.__path__=pathList
 
 
-def removeOldPluginDirs():
+def removeOldPluginDirs(configDir=None):
+	"""Removes no longer used directories using configDir as a starting point.
+	If not configDir is provided path of the current config is used.
+	"""
 	OLD_CODE_DIRS = ("appModules", "brailleDisplayDrivers", "globalPlugins", "synthDrivers")
 	# #10014: Since #9238 code from these directories is no longer loaded.
-	# However they still exist in config for older installations. Remove them if empty to minimize confusion.
+	# However they still exist in config for older installations.
+	if not configDir:
+		configDir = globalVars.appArgs.configPath
 	for dir in OLD_CODE_DIRS:
-		dir = os.path.join(globalVars.appArgs.configPath, dir)
+		dir = os.path.join(configDir, dir)
 		if os.path.isdir(dir):
 			try:
 				os.rmdir(dir)
