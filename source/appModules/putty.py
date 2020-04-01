@@ -1,8 +1,8 @@
-# appModules/putty.py
-# A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2010-2020 NV Access Limited, Bill Dengler
+#appModules/putty.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2010-2019 NV Access Limited, Bill Dengler
 
 """App module for PuTTY
 """
