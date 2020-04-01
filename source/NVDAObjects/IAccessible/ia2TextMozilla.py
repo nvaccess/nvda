@@ -2,13 +2,12 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2015-2017 NV Access Limited
+#Copyright (C) 2015-2019 NV Access Limited, Mozilla Corporation
 
 """Support for the IAccessible2 rich text model first implemented by Mozilla.
 This is now used by other applications as well.
 """
 
-import itertools
 from comtypes import COMError
 import winUser
 import textInfos
@@ -18,14 +17,16 @@ import api
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 from . import IA2TextTextInfo, IAccessible
 from compoundDocuments import CompoundTextInfo
+import locationHelper
 
 class FakeEmbeddingTextInfo(textInfos.offsets.OffsetsTextInfo):
+	encoding = None
 
 	def _getStoryLength(self):
 		return self.obj.childCount
 
 	def _iterTextWithEmbeddedObjects(self, withFields, formatConfig=None):
-		return xrange(self._startOffset, self._endOffset)
+		return range(self._startOffset, self._endOffset)
 
 	def _getUnitOffsets(self,unit,offset):
 		if unit in (textInfos.UNIT_WORD,textInfos.UNIT_LINE):
@@ -110,7 +111,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				self._startObj = self._endObj = tempObj
 			else:
 				self._start, self._startObj, self._end, self._endObj = self._findUnitEndpoints(tempTi, position)
-		elif isinstance(position, textInfos.Point):
+		elif isinstance(position, locationHelper.Point):
 			startObj = api.getDesktopObject().objectFromPoint(position.x, position.y)
 			while startObj and startObj.role == controlTypes.ROLE_STATICTEXT:
 				# Skip text leaf nodes.
@@ -231,7 +232,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		for item in ti._iterTextWithEmbeddedObjects(controlStack is not None, formatConfig=formatConfig):
 			if item is None:
 				yield u""
-			elif isinstance(item, basestring):
+			elif isinstance(item, str):
 				yield item
 			elif isinstance(item, int): # Embedded object.
 				embedded = _getEmbedded(ti.obj, item)
@@ -323,11 +324,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				field = controlStack.pop()
 				if field:
 					fields.append(textInfos.FieldCommand("controlEnd", None))
-					if ti.compareEndPoints(self._makeRawTextInfo(obj, textInfos.POSITION_ALL), "endToEnd") == 0:
+				if ti.compareEndPoints(self._makeRawTextInfo(obj, textInfos.POSITION_ALL), "endToEnd") == 0:
+					if field:
 						field["_endOfNode"] = True
-					else:
-						# We're not at the end of this object, which also means we're not at the end of any ancestors.
-						break
+				else:
+					# We're not at the end of this object, which also means we're not at the end of any ancestors.
+					break
 				ti = self._getEmbedding(obj)
 				obj = ti.obj
 
@@ -626,7 +628,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		otherAncs = self._getAncestors(otherTi, otherObj)
 		# Find the first common ancestor.
 		maxAncIndex = min(len(selfAncs), len(otherAncs)) - 1
-		for (selfAncTi, selfAncObj), (otherAncTi, otherAncObj) in itertools.izip(selfAncs[maxAncIndex::-1], otherAncs[maxAncIndex::-1]):
+		for (selfAncTi, selfAncObj), (otherAncTi, otherAncObj) in zip(selfAncs[maxAncIndex::-1], otherAncs[maxAncIndex::-1]):
 			if selfAncObj == otherAncObj:
 				break
 		else:
@@ -644,3 +646,28 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		if embedded:
 			return embedded
 		return obj
+
+	def _get_boundingRects(self):
+		rects = []
+		copy = self.copy()
+		obj = copy._startObj
+		ti = copy._start
+		while obj:
+			if not obj.hasIrrelevantLocation:
+				try:
+					rects.extend(ti.boundingRects)
+				except (NotImplementedError, LookupError):
+					pass
+			if obj == copy._endObj:
+				# We're at the end of the range.
+				break
+			try:
+				ti, obj = copy._findNextContent(ti)
+			except LookupError:
+				# Can't move forward any further.
+				break
+			if obj == copy._endObj:
+				# Override ti with self._end, because self._end ends at the current range's end,
+				# while the ti for self._endObj might contain text that is after the current range.
+				ti = copy._end
+		return rects

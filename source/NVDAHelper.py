@@ -1,15 +1,12 @@
 #NVDAHelper.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2018 NV Access Limited, Peter Vagner, Davy Kager
+#Copyright (C) 2008-2019 NV Access Limited, Peter Vagner, Davy Kager, Mozilla Corporation
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import os
 import sys
-try:
-	import _winreg as winreg # Python 2.7 import
-except ImportError:
-	import winreg # Python 3 import
+import winreg
 import msvcrt
 import versionInfo
 import winKernel
@@ -28,7 +25,10 @@ import time
 import globalVars
 
 versionedLibPath='lib'
-versionedLib64Path='lib64'
+if os.environ.get('PROCESSOR_ARCHITEW6432') == 'ARM64':
+	versionedLib64Path = 'libArm64'
+else:
+	versionedLib64Path = 'lib64'
 if getattr(sys,'frozen',None):
 	# Not running from source. Libraries are in a version-specific directory
 	versionedLibPath=os.path.join(versionedLibPath,versionInfo.version)
@@ -145,7 +145,7 @@ def handleInputCompositionEnd(result):
 	import speech
 	import characterProcessing
 	from NVDAObjects.inputComposition import InputComposition
-	from NVDAObjects.behaviors import CandidateItem
+	from NVDAObjects.IAccessible.mscandui import ModernCandidateUICandidateItem
 	focus=api.getFocusObject()
 	result=result.lstrip(u'\u3000 ')
 	curInputComposition=None
@@ -159,6 +159,22 @@ def handleInputCompositionEnd(result):
 		#Candidate list is still up
 		curInputComposition=focus.parent
 		focus.parent=focus.parent.parent
+	if isinstance(focus, ModernCandidateUICandidateItem):
+		# Correct focus for ModernCandidateUICandidateItem
+		# Find the InputComposition object and
+		# correct focus to its parent
+		if isinstance(focus.container, InputComposition):
+			curInputComposition=focus.container
+			newFocus=curInputComposition.parent
+		else:
+			# Sometimes InputCompositon object is gone
+			# Correct to container of CandidateItem
+			newFocus=focus.container
+		oldSpeechMode=speech.speechMode
+		speech.speechMode=speech.speechMode_off
+		eventHandler.executeEvent("gainFocus",newFocus)
+		speech.speechMode=oldSpeechMode
+
 	if curInputComposition and not result:
 		result=curInputComposition.compositionString.lstrip(u'\u3000 ')
 	if result:
@@ -194,13 +210,15 @@ def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,is
 @WINFUNCTYPE(c_long,c_wchar_p,c_int,c_int,c_int)
 def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,isReading):
 	from NVDAObjects.inputComposition import InputComposition
+	from NVDAObjects.IAccessible.mscandui import ModernCandidateUICandidateItem
 	if selectionStart==-1:
 		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionEnd,compositionString)
 		return 0
 	focus=api.getFocusObject()
 	if isinstance(focus,InputComposition):
 		focus.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading)
-	else:
+	# Eliminate InputCompositionStart events from Microsoft Pinyin to avoid reading composition string instead of candidates
+	elif not isinstance(focus,ModernCandidateUICandidateItem):
 		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionStart,compositionString,selectionStart,selectionEnd,isReading)
 	return 0
 
@@ -283,7 +301,7 @@ def handleInputConversionModeUpdate(oldFlags,newFlags,lcid):
 		if msg:
 			textList.append(msg)
 	else:
-		for x in xrange(32):
+		for x in range(32):
 			x=2**x
 			msgs=inputConversionModeMessages.get(x)
 			if not msgs: continue
@@ -391,10 +409,13 @@ def nvdaControllerInternal_vbufChangeNotify(rootDocHandle, rootID):
 
 @WINFUNCTYPE(c_long, c_wchar_p)
 def nvdaControllerInternal_installAddonPackageFromPath(addonPath):
+	if globalVars.appArgs.launcher:
+		log.debugWarning("Unable to install addon into launcher.")
+		return
 	import wx
 	from gui import addonGui
 	log.debug("Requesting installation of add-on from %s", addonPath)
-	wx.CallAfter(addonGui.AddonsDialog.handleRemoteAddonInstall, addonPath)
+	wx.CallAfter(addonGui.handleRemoteAddonInstall, addonPath)
 	return 0
 
 class RemoteLoader64(object):
@@ -406,7 +427,9 @@ class RemoteLoader64(object):
 		pipeRead = self._duplicateAsInheritable(pipeReadOrig)
 		winKernel.closeHandle(pipeReadOrig)
 		# stdout/stderr of the loader process should go to nul.
-		with file("nul", "w") as nul:
+		# Though we aren't using pythonic functions to write to nul,
+		# open it in binary mode as opening it in text mode (the default) doesn't make sense.
+		with open("nul", "wb") as nul:
 			nulHandle = self._duplicateAsInheritable(msvcrt.get_osfhandle(nul.fileno()))
 		# Set the process to start with the appropriate std* handles.
 		si = winKernel.STARTUPINFO(dwFlags=winKernel.STARTF_USESTDHANDLES, hSTDInput=pipeRead, hSTDOutput=nulHandle, hSTDError=nulHandle)
@@ -493,7 +516,7 @@ def initialize():
 		log.error("Error installing IA2 support")
 	#Manually start the in-process manager thread for this NVDA main thread now, as a slow system can cause this action to confuse WX
 	_remoteLib.initInprocManagerThreadIfNeeded()
-	if os.environ.get('PROCESSOR_ARCHITEW6432')=='AMD64':
+	if os.environ.get('PROCESSOR_ARCHITEW6432') in ('AMD64', 'ARM64'):
 		_remoteLoader64=RemoteLoader64()
 
 def terminate():

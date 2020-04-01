@@ -1,4 +1,4 @@
-#locale/sk/symbols.dic
+﻿#locale/sk/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (c) 2011-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
@@ -65,7 +65,7 @@ $	dolár	all	norep
 \\	opačná lomka	some
 ^	vokáň	most
 _	podčiarkovník	most
-`	akcent	most
+`	prízvuk	most
 {	zložená zátvorka	most
 }	zložená zatvoriť	most
 |	zvislá čiara	most
@@ -75,7 +75,6 @@ _	podčiarkovník	most
 •	odrážka	some
 …	bodka bodka bodka	all	always
 ...	bodka bodka bodka	all	always
-	odrážka	some
 „	dolné úvodzovky	most
 “	horné úvodzovky	most
 ‚	dolné jednoduché úvodzovky	most
@@ -91,8 +90,20 @@ _	podčiarkovník	most
 ■	čierny štvorec	some
 ◾	čierny štvorec	some
 ▪	čierny štvorec	some
-â—¦	biela odrážka	some
-➔	šípka vpravo	some
+◦	biela odrážka	some
+⇒	dvojitá šípka vpravo	some
+⇨	biela šípka vpravo	some
+➢	hrot šípky ukazujúcej vpravo	some
+⮚	hrot šípky ukazujúcej v pravo	some
+❖	čierny štvorec bez bieleho x	some
+♠	pika	some
+♡	Biele srdce	some
+♢	Biele káro	some
+♣	kríž	some
+♤	biela pika	some
+♥	srdce	some
+♦	káro	some
+♧	Biely kríž	some
 §	paragraf	all
 °	stupňov	some
 «	dvojitá lomená zátvorka	most
@@ -113,6 +124,7 @@ _	podčiarkovník	most
 ↓	šípka dole	some
 ✓	začiarknutie	some
 ✔	tučné začiarknutie	some
+🡺	šípka vpravo	some
 
 #Mathematical Operators U+2200 to U+220F
 ∀	Pre všetky 	none
@@ -123,17 +135,17 @@ _	podčiarkovník	most
 ∅	Prázdna množina	none
 ∆	Prírastok	none
 ∇	NABLA	none
-∈	Prvok množiny	none
-∉	Nie je prvok množiny	none
-∊	Malé prvok množiny	none
-∋	obsahuje člen	none
-∌	Neobsahuje člen	none
-∍	Malé obsahuje člen	none
+∈	je prvkom	none
+∉	Nie je prvkom	none
+∊	Malé je prvkom	none
+∋	obsahuje ako člen	none
+∌	Neobsahuje ako člen	none
+∍	Malé obsahuje ako člen	none
 ∎	Koniec dôkazu	none
-∏	N-ARY PRODUkT	none
+∏	súčin	none
 
 # Miscellaneous Mathematical Operators
-∑	N-ARY súčet	none
+∑	súčet	none
 √	druhá odmocnina	none
 ∛	Tretia odmocnina	none
 ∜	Štvrtá odmocnina	none
@@ -154,10 +166,10 @@ _	podčiarkovník	most
 ∷	Proporcia	none
 ≤	menšie ako alebo rovné	none
 ≥	Väčšie ako alebo rovné	none
-⊂	Vlastná podmnožina	none
-⊃	Vlastná nadmnožina	none
-⊆	podmnožina	none
-⊇	Nadmnožina	none
+⊂	je podmnožina	none
+⊃	je nadmnožina	none
+⊆	podmnožina alebo sa rovná	none
+⊇	Nadmnožina alebo sa rovná	none
 
 # Vulgur Fractions U+2150 to U+215E
 ⅐	jedna sedmina	none
@@ -175,3 +187,6 @@ _	podčiarkovník	most
 ⅜	tri osminy	none
 ⅝	päť osmín	none
 ⅞	sedem osmín	none
+
+# Miscellaneous Technical
+⌘	command	none

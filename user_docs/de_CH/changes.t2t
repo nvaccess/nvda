@@ -1385,7 +1385,7 @@ Schwerpunkte in dieser Version sind: Unterstützung für asiatische Eingabemetod
  - Dies wird sowohl von NVDA selbst als auch von Erweiterungen unterstützt.
  - Sie müssen xgettext und msgfmt aus GNU gettext verwenden, um Mo- und po-dateien zu erstellen. Die Python-Werkzeuge unterstützen Meldungskontexte jedoch nicht.
  - Bei der Verwendung von xgettext müssen Sie den Kommandozeilenparameter --keyword=pgettext:1c,2 verwenden, um Meldungskontexte zu berücksichtigen.
- - Weitere Informationen zu Meldungskontexten finden Sie unter  http://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts
+ - Weitere Informationen zu Meldungskontexten finden Sie unter  https://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts
 - Es ist nun möglich, auf NVDA-interne Module zuzugreifen, wenn diese von Drittanbietern überschrieben wurden. Sehen Sie sich das Modul nvdaBuiltin für weitere Informationen an.
 - Die Übersetzung von Erweiterungen funktioniert nun auch innerhalb des Moduls für Installationsaufgaben. (#2715)
 
@@ -2042,7 +2042,7 @@ die wichtigsten Neuerungen dieser version sind u. a. die Unterstützung von 64-b
 - Beim Drücken der Rücktaste funktioniert nun auch das Wortecho korrekt. (#306)
 - Im Windows Explorer werden nun einige Kontextmenüs nicht mehr fälschlicherweise als Startmenü bezeichnet. (#257)
 - Wenn es keine anderen nützlichen Inhalte in Firefox-Dokumenten gibt, werden nun ARIA-Beschriftungen korrekt behandelt. (#156)
-- Wenn Sie auf Webseiten wie http://tigerdirect.com/ der Fokus bewegen und ein Eingabefeld dadurch seinen Wert ändert, schaltet NVDA nun nicht mehr irrtümlich in den Fokusmodus um. (#220)
+- Wenn Sie auf Webseiten wie https://tigerdirect.com/ der Fokus bewegen und ein Eingabefeld dadurch seinen Wert ändert, schaltet NVDA nun nicht mehr irrtümlich in den Fokusmodus um. (#220)
 - NVDA versucht nun, sich aus manchen Situationen zu retten, in denen er sich früher komplett festgefahren hat. Eine derartige Rettungsaktion kann bis zu 10 Sekunden dauern.
 - Wenn Sie die NVDA-Sprache auf "Benutzerspezifische Standardeinstellung" gesetzt haben, wird nun die anzeigesprache anstelle der Ländereinstellung verwendet. (#353)
 - NVDA erkennt nun auch die Steuerelemente in AIM 7.
@@ -2310,7 +2310,7 @@ die wichtigsten Neuerungen dieser version sind u. a. die Unterstützung von 64-b
 = 0.5 =
 - NVDA bringt jetzt den integrierten Synthesizer eSpeak mit, der von  Jonathan Duddington entwickelt wurde. Espeak ist Schnell, klein und unterstützt viele unterschiedliche Sprachen. SAPI-Sprachen werden zwar immer noch unterstützt, eSpeak wird jedoch standardmässig verwendet.
  - eSpeak ist unabhängig von jeglicher installierter Software und kann z. B. von einem USB-Speichermedium aus verwendet werden.
- - Weitere Informationen zu eSpeak finden Sie in englischer Sprache unter http://espeak.sourceforge.net/.
+ - Weitere Informationen zu eSpeak finden Sie in englischer Sprache unter https://espeak.sourceforge.net/.
 - Problem behoben, wonach beim Löschen eines Zeichens aus Eingabefeldern in Internet Explorer oder Outlook Express ein falsches Zeichen angesagt wurde.
 - Unterstützung für weitere Eingabefelder in Skype hinzugefügt.
 - Die virtuellen Puffer werden nur geladen, wenn sich der Fokus auch wirklich auf dem entsprechenden Fenster befindet. Dies behebt Probleme, wenn in Outlook Express das Vorschaufenster aktiviert ist.

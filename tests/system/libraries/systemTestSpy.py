@@ -9,7 +9,7 @@ package. This allows us to share utility methods between the global plugin and t
 """
 import globalPluginHandler
 import threading
-from systemTestUtils import _blockUntilConditionMet
+from .systemTestUtils import _blockUntilConditionMet
 from logHandler import log
 from time import clock as _timer
 
@@ -22,8 +22,6 @@ TOP_DIR = os.path.abspath(os.path.dirname(__file__))
 sys.path.append( os.path.join(TOP_DIR, "libs"))
 log.debug("after pathmod: {}".format(sys.path))
 from robotremoteserver import RobotRemoteServer
-
-whitespaceMinusSlashN = '\t\x0b\x0c\r '
 
 
 class SystemTestSpy(object):
@@ -59,12 +57,17 @@ class SystemTestSpy(object):
 
 	# Private helper methods
 	def _flattenCommandsSeparatingWithNewline(self, commandArray):
+		"""
+		Flatten many collections of speech sequences into a single speech sequence. Each original speech sequence
+		is separated by a newline string.
+		@param commandArray: is a collection of speechSequences
+		@return: speechSequence
+		"""
 		f = [c for commands in commandArray for newlineJoined in [commands, [u"\n"]] for c in newlineJoined]
 		return f
 
 	def _getJoinedBaseStringsFromCommands(self, speechCommandArray):
-		wsChars = whitespaceMinusSlashN
-		baseStrings = [c.strip(wsChars) for c in speechCommandArray if isinstance(c, basestring)]
+		baseStrings = [c for c in speechCommandArray if isinstance(c, str)]
 		return ''.join(baseStrings).strip()
 
 	# Public methods
@@ -95,7 +98,7 @@ class SystemTestSpy(object):
 		with threading.Lock():
 			for index, commands in enumerate(self._nvdaSpeech[startFromIndex:]):
 				index = index + startFromIndex
-				baseStrings = [c.strip() for c in commands if isinstance(c, basestring)]
+				baseStrings = [c.strip() for c in commands if isinstance(c, str)]
 				if any(speech in x for x in baseStrings):
 					return index
 			return -1

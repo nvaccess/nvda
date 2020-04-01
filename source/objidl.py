@@ -4,8 +4,8 @@
 #See the file COPYING for more details.
 
 from ctypes import *
-from ctypes.wintypes import HWND, HRESULT, BOOL
-from comtypes import GUID, COMMETHOD, IUnknown, tagBIND_OPTS2
+from ctypes.wintypes import HWND, BOOL
+from comtypes import HRESULT, GUID, COMMETHOD, IUnknown, tagBIND_OPTS2
 from comtypes.persist import IPersist
 WSTRING = c_wchar_p
 
@@ -189,7 +189,7 @@ class IEnumMoniker(IUnknown):
 	def __iter__(self):
 		return self
 
-	def next(self):
+	def __next__(self):
 		item, fetched = self.Next(1)
 		if fetched:
 			return item

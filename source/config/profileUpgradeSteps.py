@@ -45,3 +45,29 @@ def upgradeConfigFrom_1_to_2(profile):
 	else:
 		del profile["braille"]["cursorShape"]
 		profile["braille"]["cursorShapeFocus"] = cursorShape
+
+
+def upgradeConfigFrom_2_to_3(profile):
+	# The winConsoleSpeakPasswords option has been moved to the terminals section of the config.
+	try:
+		speakPasswords = profile["UIA"]["winConsoleSpeakPasswords"]
+	except KeyError:
+		# Setting does not exist, no need for upgrade of this setting
+		log.debug("winConsoleSpeakPasswords not present, no action taken.")
+		pass
+	else:
+		del profile["UIA"]["winConsoleSpeakPasswords"]
+		if "terminals" not in profile:
+			profile["terminals"] = {}
+		profile["terminals"]["speakPasswords"] = speakPasswords
+
+
+def upgradeConfigFrom_3_to_4(profile):
+	"Reporting of superscripts and subscripts can now be configured separately to font attributes."
+	try:
+		profile['documentFormatting']['reportSuperscriptsAndSubscripts'] = (
+			profile['documentFormatting']['reportFontAttributes']
+		)
+	except KeyError:
+		# Setting does not exist, no need for upgrade of this setting
+		log.debug("reportFontAttributes not present, no action taken.")

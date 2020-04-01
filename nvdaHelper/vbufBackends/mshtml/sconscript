@@ -14,23 +14,11 @@
 
 Import([
 	'env',
-	'vbufBaseStaticLib',
 ])
 
-mshtmlBackendLib=env.SharedLibrary(
-	target="VBufBackend_mshtml",
-	source=[
-		env['projectResFile'],
-		"mshtml.cpp",
-		"node.cpp",
-	],
-	LIBS=[
-		vbufBaseStaticLib,
-		"user32",
-		"kernel32",
-		"oleacc",
-		"oleaut32",
-	],
-)
+mshtmlBackendLib=[
+	env.Object("mshtml.cpp"),
+	env.Object("node.cpp"),
+]
 
 Return('mshtmlBackendLib')

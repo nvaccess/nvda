@@ -6,43 +6,49 @@
 complexSymbols:
 # identifier	regexp
 # Sentence endings.
-. sentence ending	((?<=[^\s.])\.(?=[\"'”’);\s]|$)|(?<=[^\s.]\s)\.(?=[\"'”’);\s]|$))
-! sentence ending	((?<=[^\s!])\!(?=[\"'”’);\s]|$)|(?<=[^\s!]\s)\!(?=[\"'”’);\s]|$))
-? sentence ending	((?<=[^\s?])\?(?=[\"'”’);\s]|$)|(?<=[^\s?]\s)\?(?=[\"'”’);\s]|$))
-... sentence ending	((?<=[^\s.])\.\.\.(?=[\"'”’);\s]|$)|(?<=[^\s.]\s)\.\.\.(?=[\"'”’);\s]|$))
-… sentence ending	((?<=[^\s…])\…(?=[\"'”’);\s]|$)|(?<=[^\s…]\s)\…(?=[\"'”’);\s]|$))
+. sentence ending	(?<=[^\s.])\s?\.(?=[\"'”’);\s]|$)
+! sentence ending	(?<=[^\s!])\s?\!(?=[\"'”’);\s]|$)
+? sentence ending	(?<=[^\s?])\s?\?(?=[\"'”’);\s]|$)
+... sentence ending	(?<=[^\s.])\s?\.\.\.(?=[\"'”’);\s]|$)
+… sentence ending	(?<=[^\s…])\s?\…(?=[\"'”’);\s]|$)
 # Phrase endings.
-; phrase ending	((?<=[^\s;]);(?=[\"'”’);\s]|$)|(?<=[^\s;]\s);(?=[\"'”’);\s]|$))
-: phrase ending	((?<=[^\s:]):(?=[\"'”’);\s]|$)|(?<=[^\s:]\s):(?=[\"'”’);\s]|$))
+; phrase ending	(?<=[^\s;])\s?;(?=\s|$)
+: phrase ending	(?<=[^\s:])\s?:(?=\s|$)
 # Others
 decimal point	(?<![^\d -])\,(?=\d)
+thousands separator	(?<![^\d -])\.(?=\d{3}(\D|$))
 in-word '	(?<=[^\W_])['’]
 in-word -	(?<=[^\W_])[-]
+between-words -	(?<=\s)[-](?=\s)
 negative number	(?<!\w)-(?=[$£€¥.]?\d)
 dates .	((?<=\b\d\d)\.(?=\d\d.(\d{2}|\d{4})\b))|((?<=\b\d\d.\d\d)\.(?=(\d{2}|\d{4})\b))
 dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
-after-number %	(?<=\d)((\%)|(\s\%))(?=\W|$)
+after-number %	(?<=\d)(\s?\%)(?=\W|$)
+n°	(?<=\b)[nN]°
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
 . sentence ending	point	# . fin de phrase
-! sentence ending	point dexclamation	# ! fin de phrase
-? sentence ending	point dinterrogation	# ? fin de phrase
+! sentence ending	point d'exclamation	# ! fin de phrase
+? sentence ending	point d'interrogation	# ? fin de phrase
 ... sentence ending	points de suspension	all	always	# ... fin de phrase
 … sentence ending	points de suspension	all	always	# … fin de phrase
 ; phrase ending	point virgule	# ; fin de phrase
 : phrase ending	deux points	# : fin de phrase
 
 decimal point		# virgule décimale
+thousands separator		# point des mille
 dates .	 	all	always	# point de date
 dates /	 	all	always	# barre oblique de date
 negative number	moins	none	norep	# - devant un nombre
 after-number %	pour cent	none	norep	# % après un nombre
 in-word '	apostrophe	# ' dans un mot
 in-word -	tiret	all	norep	# - dans un mot
+between-words -	tiret	all	norep	# - entre deux mots
+n°	numéro	none	norep	# numéro
 
 # Whitespace
 \0	nul
@@ -54,9 +60,9 @@ in-word -	tiret	all	norep	# - dans un mot
  	espace insécable	char	# espace insécable
 
 # Standard punctuation/symbols
-!	point dexclamation
+!	point d'exclamation
 "	guillemet
-\#	dièse
+\#	dièse	none
 $	dollar
 £	livre
 €	euro
@@ -81,8 +87,8 @@ $	dollar
 <	inférieur
 >	supérieur
 =	égal
-?	point dinterrogation
-¿	point dinterrogation renversé	some
+?	point d'interrogation
+¿	point d'interrogation renversé	some
 @	arobase	none
 [	crochet gauche
 ]	crochet droit
@@ -94,7 +100,7 @@ _	souligné
 {	accolade gauche
 }	accolade droite
 |	barre verticale
-~	tilde
+~	tilde	none
 ¿	point d'interrogation renversé	all
 ¡	point d'exclamation renversé	all
 
@@ -117,7 +123,9 @@ _	souligné
 ▪	carré noir
 ◾	carré noir
 ◦	puce blanche
+❖	losange noir avec croix	some
 ➔	flèche droite
+
 §	section
 °	degré	some	norep
 «	guillemet ouvert
@@ -139,14 +147,17 @@ _	souligné
 ¶	paragraphe	all
 ‰	pour-mille
 „	guillemet vers le bas	none
-↔	guillemet anglais fermé	none
+↔	flèche gauche droite	none
 ∞	infini	none
 	flèche gauche	some
 	flèche droite	some
 ↑	flèche haut	some
 ↓	flèche bas	some
-#Opérateurs Mathématiques U+2200 to U+220F
+⇨	flèche blanche droite	some
+⮚	pointe flèche droite	some
+🡺	flèche droite	some
 
+#Opérateurs Mathématiques U+2200 to U+220F
 ∀	pour tout 
 ∁	complément
 ∂	différencielle partielle
@@ -244,7 +255,7 @@ _	souligné
 ς	sigma	none	never
 ϲ	sigma lunaire	none	never
 Σ	sigma	none	never
-ÿ	igrec tréma	none	never
+ÿ	igrec tréma	char	norep
 β	bêta	none	never
 ϐ	bêta	none	never
 Β	bêta	none	never
@@ -274,13 +285,14 @@ _	souligné
 ξ	ksi	none	never
 Ψ	psi	none	never
 ψ	psi	none	never
+ρ	rhô	none	never
 Ρ	rhô	none	never
 ϱ	rhô	none	never
 χ	khi	none	never
 Χ	khi	none	never
 υ	upsilon	none	never
 Υ	upsilon	none	never
-ϒ	upsilon	none	never
+ϒ	upsilon crochet	none	never
 Ϛ	stigma	none	never
 ϛ	stigma	none	never
 Ϙ	koppa	none	never
@@ -301,9 +313,9 @@ _	souligné
 ϻ	san	none	never
 Ϸ	sho	none	never
 ϸ	sho	none	never
-῀	tilde	none	never
-ὶ	accent grave	none	never
-ὖ	accent circonflexe	none	never
+῀	accent circonflexe	none	never
+ὶ	iota accent grave	none	never
+ὖ	upsilon esprit doux circonflexe	none	never
 ⟶	flèche droite	none	never
 ⟵	flèche gauche	none	never
 ⇒	implication droite	none	never

@@ -1,0 +1,130 @@
+###
+#This file is a part of the NVDA project.
+#URL: http://www.nvda-project.org/
+#Copyright 2018 NV Access Limited, Babbage B.V.
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License version 2.0, as published by
+#the Free Software Foundation.
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#This license can be found at:
+#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+###
+
+Import(
+	'env', 'sourceDir', 
+)
+
+def createCLDRAnnotationsDict(sources, dest):
+	import codecs
+	from xml.etree import ElementTree
+	from collections import OrderedDict	
+	cldrDict = OrderedDict()
+	for source in sources:
+		tree = ElementTree.parse(source)
+		for element in tree.iter("annotation"):
+			if element.attrib.get("type") == "tts":
+				cldrDict[element.attrib['cp']] = element.text.replace(":","")
+	assert cldrDict, "cldrDict is empty"
+	with codecs.open(dest, "w", "utf_8_sig", errors="replace") as dictFile:
+		dictFile.write(u"symbols:\r\n")
+		for pattern, description in cldrDict.items():
+			# Punctuations are set to none for CLDR characters to be pronounced even if user set punctuation level to None
+			dictFile.write(u"{pattern}\t{description}\tnone\r\n".format(
+				pattern=pattern,
+				description=description
+			))
+
+cldrDictAction=env.Action(
+	lambda target,source,env: createCLDRAnnotationsDict([src.path for src in source], target[0].path),
+	lambda target,source,env: 'Generating %s'%target[0],
+)
+cldrDictBuilder=env.Builder(
+	action=cldrDictAction,
+	suffix='.dic',
+	src_suffix='.xml',
+)
+env['BUILDERS']['cldrDict']=cldrDictBuilder
+
+NVDAToCLDRLocales = {
+	"af_ZA":("af",),
+	"am":("am",),
+	#"an":(),
+	"ar":("ar",),
+	"as":("as",),
+	"bg":("bg",),
+	"bn":("bn",),
+	"ca":("ca",),
+	#"ckb":(),
+	"cs":("cs",),
+	"da":("da",),
+	"de":("de",),
+	"de_CH":("de_CH",),
+	"el":("el",),
+	"en":("en_001","en"),
+	"es":("es",),
+	#"es_CO":(),
+	"fa":("fa",),
+	"fi":("fi",),
+	"fr":("fr",),
+	"ga":("ga",),
+	"gl":("gl",),
+	"gu":("gu",),
+	"he":("he",),
+	"hi":("hi",),
+	"hr":("hr",),
+	"hu":("hu",),
+	"id":("id",),
+	"is":("is",),
+	"it":("it",),
+	"ja":("ja",),
+	"ka":("ka",),
+	#"kmr":(),
+	"kn":("kn",),
+	"ko":("ko",),
+	#"kok":(),
+	"ky":("ky",),
+	"lt":("lt",),
+	"mk":("mk",),
+	"ml":("ml",),
+	"mn":("mn",),
+	#"mni":(),
+	"my":("my",),
+	"nb_NO":("nb",),
+	"ne":("ne",),
+	"nl":("nl",),
+	"nn_NO":("nn",),
+	"pa":("pa",),
+	"pl":("pl",),
+	"pt_BR":("pt",),
+	"pt_pt":("pt","pt_PT"),
+	"ro":("ro",),
+	"ru":("ru",),
+	"sk":("sk",),
+	"sl":("sl",),
+	#"so":(),
+	"sq":("sq",),
+	"sr":("sr",),
+	"sv":("sv",),
+	"ta":("ta",),
+	"te":("te",),
+	"th":("th",),
+	"tr":("tr",),
+	"uk":("uk",),
+	"vi":("vi",),
+	"zh_cn":("zh",),
+	"zh_hk":("zh","zh_Hant_HK"),
+	"zh_tw":("zh","zh_Hant"),
+}
+
+annotationsDir = env.Dir("include/cldr-emoji-annotation/annotations")
+annotationsDerivedDir = env.Dir("include/cldr-emoji-annotation/annotationsDerived")
+for destLocale, sourceLocales in NVDAToCLDRLocales.items():
+	cldrSources = []
+	# First add all annotations, then the derived ones.
+	for sourceLocale in sourceLocales:
+		cldrSources.append(annotationsDir.File("%s.xml" % sourceLocale))
+	for sourceLocale in sourceLocales:
+		cldrSources.append(annotationsDerivedDir.File("%s.xml" % sourceLocale))
+	env.cldrDict(sourceDir.Dir("locale/%s" % destLocale).File("cldr.dic"), cldrSources)

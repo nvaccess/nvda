@@ -6,7 +6,6 @@ It expects the crash-stats auth token to be placed in the mozillaSymsAuthToken e
 To update the list of symbols uploaded to Mozilla, see the DLL_NAMES constant below.
 """
 
-from __future__ import print_function
 import argparse
 import os
 import subprocess
@@ -15,7 +14,7 @@ import zipfile
 import requests
 
 SCRIPT_DIR = os.path.abspath(os.path.dirname(__file__))
-DUMP_SYMS = os.path.join(SCRIPT_DIR, "dump_syms.exe")
+DUMP_SYMS = os.path.join(os.path.dirname(SCRIPT_DIR), "miscDeps", "tools", "dump_syms.exe")
 NVDA_SOURCE = os.path.join(os.path.dirname(SCRIPT_DIR), "source")
 NVDA_LIB = os.path.join(NVDA_SOURCE, "lib")
 NVDA_LIB64 = os.path.join(NVDA_SOURCE, "lib64")
@@ -29,8 +28,6 @@ DLL_NAMES = [
 	"ISimpleDOM.dll",
 	"minHook.dll",
 	"nvdaHelperRemote.dll",
-	"VBufBackend_adobeFlash.dll",
-	"VBufBackend_gecko_ia2.dll",
 ]
 DLL_FILES = [f
 	for dll in DLL_NAMES
@@ -45,7 +42,8 @@ class ProcError(Exception):
 def check_output(command):
 	proc = subprocess.Popen(command,
 		stdout=subprocess.PIPE,
-		stderr=subprocess.PIPE)
+		stderr=subprocess.PIPE,
+		text=True)
 	stdout, stderr = proc.communicate()
 	if proc.returncode != 0:
 		raise ProcError(proc.returncode, stderr)

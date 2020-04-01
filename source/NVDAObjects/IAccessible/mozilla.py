@@ -16,6 +16,7 @@ from . import IAccessible, Dialog, WindowRoot
 from logHandler import log
 import textInfos.offsets
 from NVDAObjects.behaviors import RowWithFakeNavigation
+from virtualBuffers import VirtualBuffer
 from . import IA2TextTextInfo
 from . import ia2Web
 
@@ -59,7 +60,7 @@ class Gecko1_9(Mozilla):
 
 	def _get_description(self):
 		rawDescription=super(Mozilla,self).description
-		if isinstance(rawDescription,basestring) and rawDescription.startswith('Description: '):
+		if isinstance(rawDescription,str) and rawDescription.startswith('Description: '):
 			return rawDescription[13:]
 		else:
 			return ""
@@ -198,7 +199,7 @@ def findExtraOverlayClasses(obj, clsList):
 			newParent = parent.parent
 			parent.parent = newParent
 			parent = newParent
-		if hasattr(parent, "IAccessibleTableObject"):
+		if hasattr(parent, "IAccessibleTableObject") or hasattr(parent, "IAccessibleTable2Object"):
 			clsList.append(RowWithFakeNavigation)
 
 	if iaRole in _IAccessibleRolesWithBrokenFocusedState:

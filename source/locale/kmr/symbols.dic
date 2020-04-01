@@ -1,4 +1,4 @@
-﻿#locale/en/symbols.dic
+﻿#locale/kmr/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
@@ -21,169 +21,169 @@ symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	dot	all	always
-! sentence ending	bang	all	always
-? sentence ending	question	all	always
-; phrase ending	semi	most	always
-: phrase ending	colon	most	always
-decimal point		none	always
-in-word '	tick	all	norep
-negative number	minus	none	norep
+. sentence ending	xal	all	always
+! sentence ending	baneşan	all	always
+? sentence ending	pirsşan	all	always
+; phrase ending	xalbêhnok	most	always
+: phrase ending	xala cot	most	always
+decimal xal		none	always
+in-word '	apostrof	all	norep
+negative number	derşan	none	norep
 
 # Whitespace
 \0	blank	char	# null
 \t	tab
-\n	line feed	char
-\f	page break	none
-\r	carriage return	char
- 	space	char
- 	space	char	# no-break space
+\n	rêza nû feed	char
+\f	derbaseya rûpelê	none
+\r	dawiya rêzê	char
+ 	navber	char
+ 	navber	char	# no-break space
 
 # Standard punctuation/symbols
-!	bang	all
-"	quote	most
+!	baneşan	all
+"	dunik	most
 \#	number	some
 $	dollar	all	norep
 £	pound	all	norep
 €	euro	all	norep
-¢	Cents	all	norep
+¢	Sens	all	norep
 ¥	Yen	all	norep
 ₹	Rupee	some	norep
-%	percent	some
-&	and	some
-'	tick	all
-(	left paren	most	always
-)	right paren	most	always
-*	star	some
-+	plus	some
-,	comma	all	always
--	dash	most
-.	dot	some
-/	slash	some
-:	colon	most	norep
-;	semi	most
-<	less	some
->	greater	some
-=	equals	some
-?	question	all
-@	at	some
-[	left bracket	most
-]	right bracket	most
-\\	backslash	most
-^	caret	most
-_	line	most
-`	graav	most
-{	left brace	most
-}	right brace	most
-|	bar	most
+%	sedane	some
+&	û	some
+'	apostrof	all
+(	kevaneyê veke	most	always
+)	kevaneyê bigire	most	always
+*	stêrk	some
++	tevşan	some
+,	bêhnok	all	always
+-	xêzika kin	most
+.	xal	some
+/	Parşan	some
+:	Xala cot	most	norep
+;	Xalbêhnok	most
+<	biçûktir	some
+>	mezintir	some
+=	yeksan	some
+?	pirsşan	all
+@	et	some
+[	kevaneya bi goşe veke	most
+]	kevaneya bi goşe bigire	most
+\\	Dabeşa çep	most
+^	Nîşana sererastkirinê	most
+_	Xêzika binî	most
+`	Dunika jor	most
+{	Kevaneya komikê veke	most
+}	Kevaneya komikê bigire	most
+|	Xêzika çik	most
 ~	tilda	most
 
 # Other characters
-•	bullet	some
-…	dot dot dot	all	always
-...	dot dot dot	all	always
-“	left quote	most
-”	right quote	most
+•	nîşana arîşeyê	some
+…	rêze sê xal	all	always
+...	rêze sê xal	all	always
+“	dunikê veke	most
+”	dunikê bigire	most
 ‘	left tick	most
 ’	right tick	most
-–	en dash	most	always
-—	em dash	most
+–	xêzika ortê	most	always
+—	xêzika dirêj	most
 ●	circle	most
 ¨	diaeresis	most
-‎	left to right mark	char
-‏	right to left mark	char
-■	black square	some
-▪	black square	some
-◾	black square	some
-◦	white bullet	some
-⇒	right double arrow	some
-⇨	right white arrow	some
-➢	right arrowhead	some
-❖	black diamond minus white X	some
-♣	black club	some
-♦	black diamond	some
-§	section	all
-°	degrees	some
+‎	nîşaneka ji çepê ber bi rastê ve	char
+‏	nîşaneka ji rastê ber bi çepê ve	char
+■	valatiya reş	some
+▪	valatiya reş	some
+◾	valatiya reş	some
+◦	nîşana arîşeya spî	some
+⇒	kevana cot a rastê	some
+⇨	kevana spî ya rastê	some
+➢	serê kevanê ya rastê	some
+❖	almasta reş kêmeka spî X	some
+♣	kuluba reş	some
+♦	almasta reş	some
+§	beş	all
+°	rade	some
 «	double left pointing angle bracket
 »	double right pointing angle bracket
-µ	micro	some
-¹	superscript 1	some
-²	superscript 2	some
-³	superscript 3	some
-®	registered	some
+µ	miKro	some
+¹	süperskript 1	some
+²	süperskript 2	some
+³	süperskript 3	some
+®	qeydkirî	some
 ™	Trademark	some
-©	Copyright	some
-±	Plus or Minus	some
-×	times	some
-÷	divide by	some
-←	left arrow	some
-↑	up arrow	some
-→	right arrow	some
-↓	down arrow	some
-✓	check	some
-✔	check	some
+©	Mafê jêgirtinê	some
+±	Derşan an Parşan	some
+×	carşan	some
+÷	parşan	some
+←	tîrika çepê	some
+↑	tîrika jor	some
+→	tîrika rastê	some
+↓	rîrika jêr	some
+✓	pejirandin	some
+✔	pejirandin	some
 
 #Mathematical Operators U+2200 to U+220F
-∀	for all	none
-∁	complement	none
-∂	partial derivative	none
-∃	there exists	none
-∄	there does not exist	none
-∅	empty set	none
-∆	increment	none
-∇	nabla	none
-∈	element of	none
-∉	not an element of	none
-∊	small element of	none
-∋	contains as member	none
-∌	does not contain as member	none
-∍	small contains as member	none
-∎	end of proof	none
-∏	n-ary product	none
+∀	her all	none
+∁	tevkir	none
+∂	sariştiya qismî	none
+∃	heye	none
+∄	qet yek	none
+∅	komika vala	none
+∆	pirbûnî	none
+∇	kêmbûnî	none
+∈	endama wê/wî ye	none
+∉	endama wê/wî nîne	none
+∊	endama wê/wî ya biçûk e	none
+∋	dihewîne	none
+∌	nahewîne	none
+∍	biçûk dihewîne	none
+∎	dawiya îspatê	none
+∏	lêkdan	none
 
 # Miscellaneous Mathematical Operators
-∑	n-ary summation	none
-√	square root	none
-∛	cube root	none
-∜	fourth root	none
-∝	proportional to	none
-∞	infinity	none
-∟	right angle	none
-∠	angle	none
-∥	parallel to	none
-∦	not parallel to	none
-∧	logical and	none
-∨	logical or	none
-∩	intersection	none
-∪	union	none
-∫	integral	none
-∴	therefore	none
-∵	because	none
-∶	ratio	none
-∷	proportion	none
-≤	less- than or equal to	none
-≥	greater-than or equal to	none
-⊂	subset of	none
-⊃	superset of	none
-⊆	subset of or equal to	none
-⊇	superset of or equal to	none
+∑	komînek	none
+√	rega ducar	none
+∛	rega kûpê	none
+∜	rega di radeya çaremîn de	none
+∝	rêjedar	none
+∞	bêdawî	none
+∟	goşeya tîk	none
+∠	goşe	none
+∥	hevhesû	none
+∦	hevhesû nîne	none
+∧	mantiq û	none
+∨	mantiq an jî	none
+∩	hevbirîn	none
+∪	pevgihan	none
+∫	întegral	none
+∴	lewma	none
+∵	ji ber ku	none
+∶	rêje	none
+∷	hevgirî	none
+≤	wekhev an jî kêmtir	none
+≥	wekhev an jî zêdetir	none
+⊂	komika jêr	none
+⊃	komika jor	none
+⊆	komika wekhev an jî jêr	none
+⊇	komika wekhev an jî jor	none
 
 # Vulgur Fractions U+2150 to U+215E
-⅐	one seventh	none
-⅑	one ninth	none
-⅒	one tenth	none
-⅓	one third	none
-⅔	two thirds	none
-⅕	one fifth	none
-⅖	two fifths	none
-⅗	three fifths	none
-⅘	four fifths	none
-⅙	one sixth	none
-⅚	five sixths	none
-⅛	one eighth	none
-⅜	three eights	none
-⅝	five eighths	none
-⅞	seven eighths	none
+⅐	ji heftan yek	none
+⅑	ji nehan yek	none
+⅒	ji dehan yek	none
+⅓	ji sisêyan yek	none
+⅔	ji sisêyan dudu	none
+⅕	ji pêncan yek	none
+⅖	ji pêncan dudu	none
+⅗	tji pêncan sisê	none
+⅘	ji pêncan çar	none
+⅙	ji şeşan yek	none
+⅚	fji şeşan pênc	none
+⅛	ji heştan yek	none
+⅜	ji heştan sê	none
+⅝	ji heştan bênc	none
+⅞	sji heştan heft	none
 
 # Miscellaneous Technical
-⌘	Mac Command key	none
+⌘	Bişkoka fermanê ya Mac’ê	none

@@ -3,20 +3,19 @@
 #Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
-symbols:
 complexSymbols:
 # identifier	regexp
 # Sentence endings.
-. sentence ending	chấm
-! sentence ending	chấm than
-? sentence ending	chấm hỏi
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
 # Phrase endings.
-; phrase ending	chấm phẩy
-: phrase ending	hai chấm
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
-in-word '	nháy đơn
-negative number	âm
+in-word '	(?<=[^\W_])['’]
++negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -28,8 +27,8 @@ symbols:
 ; phrase ending	chấm phẩy	most	always
 : phrase ending	hai chấm	most	always
 decimal point		none	always
-in-word '	phẩy trên	all	norep
-negative number	minus	trừ	norep
+in-word '	nháy đơn	all	norep
+negative number	âm	none	norep
 
 # Whitespace
 \0	dòng trắng	char	# null
@@ -57,6 +56,7 @@ $	đô la	all	norep
 )	đóng ngoặc tròn	most	always
 *	sao	some
 +	cộng	some
+−	trừ	some
 ,	phẩy	all	always
 -	gạch ngang	most
 .	chấm	some
@@ -100,6 +100,7 @@ _	gạch dưới	most
 ⇒	mũi tên phải	some
 ⇨	mũi tên phải	some
 ➢	mũi tên phải	some
+⮚	mũi tên phải	some
 ❖	black diamond minus white X	some
 ♣	black club	some
 ♦	black diamond	some
@@ -123,6 +124,7 @@ _	gạch dưới	most
 ↓	mũi tên xuống	some
 ✓	dấu kiểm	some
 ✔	dấu kiểm	some
+🡺	mũi tên phải	some
 
 #Mathematical Operators U+2200 to U+220F
 ∀	cho tất cả	none
@@ -184,7 +186,7 @@ _	gạch dưới	most
 ⅛	một phần tám	none
 ⅜	ba phần tám	none
 ⅝	năm phần tám	none
-⅞	năm phần tám	none
+⅞	bảy phần tám	none
 
 # Miscellaneous Technical
-⌘	Mac Command key	none
+⌘	Phím Mac Command	none

@@ -16,30 +16,42 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "vbufRemote.h"
 #include <vbufBase/backend.h>
 #include "dllmain.h"
+#include <common/log.h>
 
 using namespace std;
 
-map<VBufBackend_t*,HINSTANCE> backendLibHandles;
+const map<wstring,VBufBackend_create_proc> VBufBackendFactoryMap {
+	{L"adobeAcrobat",AdobeAcrobatVBufBackend_t_createInstance},
+	{L"adobeFlash",AdobeFlashVBufBackend_t_createInstance},
+	{L"gecko_ia2",GeckoVBufBackend_t_createInstance},
+	{L"mshtml",MshtmlVBufBackend_t_createInstance},
+	{L"lotusNotesRichText",lotusNotesRichTextVBufBackend_t_createInstance},
+	{L"webKit",WebKitVBufBackend_t_createInstance}
+};
 
 extern "C" {
 
 VBufRemote_bufferHandle_t VBufRemote_createBuffer(handle_t bindingHandle, int docHandle, int ID, const wchar_t* backendName) {
-	wchar_t backendPath[MAX_PATH];
-	wsprintf(backendPath,L"%s\\VBufBackend_%s.dll",dllDirectory,backendName);
-	HINSTANCE backendLibHandle=LoadLibrary(backendPath);
-	if(backendLibHandle==NULL) return NULL;
-	VBufBackend_create_proc createBackend=(VBufBackend_create_proc)GetProcAddress((HMODULE)(backendLibHandle),"VBufBackend_create");
-	if(createBackend==NULL) {
-		FreeLibrary(backendLibHandle);
-		return NULL;
-	} 
+	if(!backendName) {
+		LOG_ERROR(L"backendName is NULL");
+		return nullptr;
+	}
+	auto i=VBufBackendFactoryMap.find(backendName);
+	if(i==VBufBackendFactoryMap.end()) {
+		LOG_ERROR(L"Unknown backend: "<<backendName);
+		return nullptr;
+	}
+	VBufBackend_create_proc createBackend=i->second;
 	VBufBackend_t* backend=createBackend(docHandle,ID);
 	if(backend==NULL) {
-		FreeLibrary(backendLibHandle);
 		return NULL;
 	}
-	backendLibHandles[backend]=backendLibHandle;
 	backend->initialize();
+	// Stop nvdaHelperRemote from being unloaded while a backend exists.
+	HINSTANCE tempHandle=nullptr;
+	if(!GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,reinterpret_cast<LPCWSTR>(dllHandle),&tempHandle)) {
+		LOG_ERROR(L"Could not keep nvdaHelperRemote loaded for backend!");
+	}
 	return (VBufRemote_bufferHandle_t)backend;
 }
 
@@ -49,13 +61,9 @@ void VBufRemote_destroyBuffer(VBufRemote_bufferHandle_t* buffer) {
 	#endif
 	VBufBackend_t* backend=(VBufBackend_t*)*buffer;
 	backend->terminate();
-	map<VBufBackend_t*,HINSTANCE>::iterator i=backendLibHandles.find(backend);
-	if(i==backendLibHandles.end()) return;
-	HINSTANCE backendLibHandle=i->second;
-	backendLibHandles.erase(i); 
 	backend->lock.acquire();
 	backend->destroy();
-	FreeLibrary(backendLibHandle);
+	FreeLibrary(dllHandle);
 	*buffer=NULL;
 }
 
@@ -144,13 +152,13 @@ int VBufRemote_getTextLength(VBufRemote_bufferHandle_t buffer) {
 int VBufRemote_getTextInRange(VBufRemote_bufferHandle_t buffer, int startOffset, int endOffset, wchar_t** text, boolean useMarkup) {
 	VBufBackend_t* backend=(VBufBackend_t*)buffer;
 	backend->lock.acquire();
-	VBufStorage_textContainer_t* textContainer=backend->getTextInRange(startOffset,endOffset,useMarkup!=false);
+	 wstring textString;
+	 backend->getTextInRange(startOffset,endOffset,textString,useMarkup!=false);
 	backend->lock.release();
-	if(textContainer==NULL) {
+	if(textString.empty()) {
 		return false;
 	}
-	*text=SysAllocString(textContainer->getString().c_str());
-	textContainer->destroy();
+	*text=SysAllocString(textString.c_str());
 	return true;
 }
 

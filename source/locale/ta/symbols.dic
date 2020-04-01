@@ -18,7 +18,7 @@ decimal point	(?<=\d)\.(?=\d)
 in-word '	(?<=[^\W_])['’]
 negative number	(?<!\w)-(?=[$£€¥]?\d)
 # Treat dash differently when it is sandwitched between a number and a tamil character.
-# tamil unicode range is U+0B80–U+0BFF according to http://en.wikipedia.org/wiki/Tamil_script  
+# tamil unicode range is U+0B80–U+0BFF according to https://en.wikipedia.org/wiki/Tamil_script  
 tamilNumberDash	(?<=[0-9])\-(?=[஀-௿])
 
 symbols:
@@ -105,6 +105,7 @@ _	அடிக்கோடு	most
 ⇒	இரட்டை வலதம்பு	some
 ⇨	வெள்ளை வலதம்பு	some
 ➢	வலதம்பு முனை	some
+⮚	வலதம்பு முனை	some
 ❖	black diamond minus white X	some
 ♣	கருந்தடி முனை	some
 ♦	கரு வைரம்	some
@@ -128,6 +129,7 @@ _	அடிக்கோடு	most
 ↓	கீழம்பு	some
 ✓	தேர்வு	some
 ✔	தேர்வு	some
+🡺	வலதம்பு	some
 
 #Mathematical Operators U+2200 to U+220F
 
@@ -175,7 +177,26 @@ _	அடிக்கோடு	most
 ⊃	SUPERSET OF	none
 ⊆	SUBSET OF OR EQUAL TO	none
 ⊇	SUPERSET OF OR EQUAL TO	none
-π	பை	none
+
+# Vulgur Fractions U+2150 to U+215E
+⅐	one seventh	none
+⅑	one ninth	none
+⅒	one tenth	none
+⅓	one third	none
+⅔	two thirds	none
+⅕	one fifth	none
+⅖	two fifths	none
+⅗	three fifths	none
+⅘	four fifths	none
+⅙	one sixth	none
+⅚	five sixths	none
+⅛	one eighth	none
+⅜	three eights	none
+⅝	five eighths	none
+⅞	seven eighths	none
+
+# Miscellaneous Technical
+⌘	Mac கட்டளை விசை	none
 
 # Special Tamil Characters
 ௰	பத்து	none
