@@ -20,6 +20,8 @@ from ..window import Window
 class consoleUIATextInfo(UIATextInfo):
 	def __init__(self, obj, position, _rangeObj=None):
 		collapseToEnd = None
+		# We want to limit  textInfos to just the visible part of the console.
+		# Therefore we specifically handle POSITION_FIRST, POSITION_LAST and POSITION_ALL.
 		if not _rangeObj and position in (
 			textInfos.POSITION_FIRST,
 			textInfos.POSITION_LAST,
@@ -31,6 +33,8 @@ class consoleUIATextInfo(UIATextInfo):
 			self.collapse(end=collapseToEnd)
 
 	def _getBoundingRange(self, obj, position):
+		"""Returns the UIA text range to which the console should be bounded,
+		and whether the textInfo should be collapsed after instantiation."""
 		# microsoft/terminal#4495: In newer consoles,
 		# IUIAutomationTextRange::getVisibleRanges returns a reliable contiguous range.
 		_rangeObj = obj.UIATextPattern.GetVisibleRanges().GetElement(0)
@@ -38,6 +42,10 @@ class consoleUIATextInfo(UIATextInfo):
 		if position == textInfos.POSITION_FIRST:
 			collapseToEnd = False
 		elif position == textInfos.POSITION_LAST:
+			# We must pull back the end by one character otherwise when we collapse to end,
+			# a console bug results in a textRange covering the entire console buffer!
+			# Strangely the *very* last character is a special blank point
+			# so we never seem to miss a real character.
 			_rangeObj.MoveEndpointByUnit(
 				UIAHandler.TextPatternRangeEndpoint_End,
 				UIAHandler.NVDAUnitsToUIAUnits['character'],
@@ -97,10 +105,6 @@ class consoleUIATextInfo(UIATextInfo):
 
 class consoleUIATextInfoPre21H1(consoleUIATextInfo):
 	def _getBoundingRange(self, obj, position):
-		"""Returns the UIA text range to which the console should be bounded,
-		and whether the textInfo should be collapsed after instantiation."""
-		# We want to limit  textInfos to just the visible part of the console.
-		# Therefore we specifically handle POSITION_FIRST, POSITION_LAST and POSITION_ALL.
 		# We could use IUIAutomationTextRange::getVisibleRanges, but it seems very broken in consoles
 		# once more than a few screens worth of content has been written to the console.
 		# Therefore we resort to using IUIAutomationTextPattern::rangeFromPoint
