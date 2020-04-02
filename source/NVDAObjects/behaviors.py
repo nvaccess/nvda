@@ -492,7 +492,8 @@ class KeyboardHandlerBasedTypedCharSupport(EnhancedTermTypedCharSupport):
 	even when a character is not written to the console (e.g. in read only console applications).
 	This approach is an alternative to monitoring the console output for
 	characters close to the caret, or injecting in-process with NVDAHelper.
-	This class relies on the toUnicodeEx Windows function, and in particular
+	This class does not implement any specific functionality by itself.
+	Rather, it instructs keyboardHandler to use the toUnicodeEx Windows function, in particular
 	the flag to preserve keyboard state available in Windows 10 1607
 	and later."""
 	pass
