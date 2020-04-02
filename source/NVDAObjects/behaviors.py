@@ -392,8 +392,9 @@ class Terminal(LiveText, EditableText):
 
 class EnhancedTermTypedCharSupport(Terminal):
 	"""A Terminal object with keyboard support enhancements for console applications.
-	Notably, it holds typed characters in a queue and only dispatches once
-	the screen updates. This is useful for suppression of passwords, etc."""
+	Notably, it suppresses duplicate typed character announcements and can
+	hold typed characters in a queue and only dispatch once the screen updates.
+	This is useful for suppression of passwords, etc."""
 	#: Whether this object quickly and reliably sends textChange events
 	#: when its contents update.
 	#: Timely and reliable textChange events are required
