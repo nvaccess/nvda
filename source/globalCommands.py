@@ -1373,35 +1373,32 @@ class GlobalCommands(ScriptableObject):
 	def _reportFormattingHelper(self, info, browseable=False):
 		# Report all formatting-related changes regardless of user settings
 		# when explicitly requested.
-		formatConfig = {
-			"detectFormatAfterCursor": False,
-			"reportFontName": True,
-			"reportFontSize": True,
-			"reportFontAttributes": True,
-			"reportSuperscriptsAndSubscripts": True,
-			"reportColor": True,
-			"reportRevisions": False,
-			"reportEmphasis": False,
-			"reportStyle": True,
-			"reportAlignment": True,
-			"reportSpellingErrors": True,
-			"reportPage": False,
-			"reportLineNumber": False,
-			"reportLineIndentation": True,
-			"reportLineIndentationWithTones": False,
-			"reportParagraphIndentation": True,
-			"reportLineSpacing": True,
-			"reportTables": False,
-			"reportLinks": False,
-			"reportHeadings": False,
-			"reportLists": False,
-			"reportBlockQuotes": False,
-			"reportComments": False,
-			"reportBorderStyle": True,
-			"reportBorderColor": True,
-		}
-		textList=[]
+		# These are the options we want reported when reporting formatting manually.
+		# for full list of options that may be reported see the "documentFormatting" section of L{config.configSpec}
+		reportFormattingOptions = (
+			"reportFontName",
+			"reportFontSize",
+			"reportFontAttributes",
+			"reportSuperscriptsAndSubscripts",
+			"reportColor",
+			"reportStyle",
+			"reportAlignment",
+			"reportSpellingErrors",
+			"reportLineIndentation",
+			"reportParagraphIndentation",
+			"reportLineSpacing",
+			"reportBorderStyle",
+			"reportBorderColor",
+		)
 
+		# Create a dictionary to replace the config section that would normally be 
+		# passed to getFormatFieldsSpeech / getFormatFieldsBraille
+		formatConfig  = dict()
+		from config import conf
+		for i in conf["documentFormatting"]:
+			formatConfig [i] = i in reportFormattingOptions
+
+		textList=[]
 		# First, fetch indentation.
 		line=info.copy()
 		line.expand(textInfos.UNIT_LINE)
