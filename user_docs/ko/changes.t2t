@@ -3,6 +3,39 @@ NVDA 변경 이력
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.1 =
+Highlights of this release include support for several new braille displays from HumanWare and APH, plus many other important bug fixes such as the ability to again read math in Microsoft Word using MathPlayer / MathType.
+
+== 새로 추가된 기능 ==
+- The currently selected item in listboxes is again presented in browse mode in Chrome, similar to NVDA 2019.1. (#10713)
+- You can now perform right mouse clicks on touch devices by doing a one finger tap and hold. (#3886)
+- 새로운 점자 디스플레이 지원: APH Chameleon 20, APH Mantis Q40, HumanWare BrailleOne, BrailleNote Touch v2, 및 NLS eReader. (#10830)
+
+
+== 변경된 기능 ==
+-NVDA는 모두 읽기 시 시스템이 잠기거나 절전 모드 상태가 되는 것을 방지합니다. (#10643)
+- Mozilla Firefox에서 out-of-process iframe을 지원합니다. (#10707)
+- 점자 번역기 Liblouis를 3.12 버전으로 업데이트했습니다. (#10161)
+- Visual Studio Code Insiders 버전에서는 이제 Visual Studio Code 안정 버전과 같이 브라우즈 모드가 기본적으로 해제됩니다. (#10858)
+
+
+== 버그 수정 ==
+- Fixed NVDA not announcing Unicode minus symbol (U+2212). (#10633)
+- When installing add-on from add-ons manager, names of files and folders in the browse window are no longer reported twice. (#10620, #2395)
+- In Firefox, when loading Mastodon with the advanced web interface enabled, all timelines now render correctly in browse mode. (#10776)
+- In browse mode, NVDA now reports "not checked" for unchecked check boxes where it sometimes didn't previously. (#10781)
+- ARIA switch controls no longer report confusing information such as "not pressed checked" or "pressed checked". (#9187)
+- SAPI4 voices should no longer refuse to speak certain text. (#10792)
+- NVDA can again read and interact with math equations in Microsoft Word. (#10803)
+- NVDA will again announce text being unselected in browse mode if pressing an arrow key while text is selected. (#10731).
+- NVDA no longer exits if there is an error initializing eSpeak. (#10607)
+- Errors caused by unicode in translations for shortcuts no longer stop the installer, mitigated by falling back to the English text. (#5166, #6326)
+- Arrowing out and away from lists and tables in sayAll with skim reading enabled no longer continuously announces exiting the list or table. (#10706)
+
+
+== 개발자를 위한 내용 ==
+개발자를 위한 내용에 대해서는 영어판 changes.html 문서를 참조하세요. 
+
 = 2019.3 =
 NVDA 2019.3 버전은 내부적으로 많은 변화가 포함된 중요한 버전입니다. 이 버전은 파이썬 버전이 2에서 3으로 업그레이드되었으며, NVDA의 음성 서브시스템에도 주요한 재작업이 포함되어 있습니다.
 이런 변화들이 기존의 NVDA 추가 기능에 대한 호환성 문제를 일으키기는 합니다. 하지만 파이썬 3으로의 업그레이드는 보안 개선은 물론, 조만간 벌어질 흥미로운 혁신을 위한 음성 시스템의 변화를 위해 필요한 작업입니다.
