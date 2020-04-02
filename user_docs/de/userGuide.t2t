@@ -121,7 +121,7 @@ Diese Option ist standardmäßig während einer Neuinstallation aktiviert.
 
 +++ Desktop-Verknüpfung erstellen (Strg+Alt+N) +++[CreateDesktopShortcut]
 Mit dieser Option entscheiden Sie, ob NVDA eine Desktop-Verknüpfung anlegen soll.
-Wenn diese Verknüpfung erstellt wird, wird ihr auch eine Tastenkombination (Strg+Alt+N zugewiesen, so dass Sie NVDA jederzeit mit dieser Tastenkombination von überall aus starten können.
+Wenn diese Verknüpfung erstellt wird, wird ihr auch eine Tastenkombination (Strg+Alt+N zugewiesen, sodass Sie NVDA jederzeit mit dieser Tastenkombination von überall aus starten können.
 
 +++ Portable Konfiguration in das aktuelle Benutzerkonto kopieren +++[CopyPortableConfigurationToCurrentUserAccount]
 Hiermit legen Sie fest, ob NVDA die Konfiguration der momentan laufenden NVDA-Instanz in das Konfigurationsverzeichnis des aktuell angemeldeten Benutzers kopieren soll.
@@ -989,8 +989,8 @@ Daher ist es notwendig, im Konsolenfenster zu navigieren, um frühere Texte zu l
 %kc:beginInclude
 Die folgenden integrierten Tastenkombinationen der Windows-Konsole können nützlich sein, wenn Sie [Text #ReviewingText] mit NVDA lesen möchten:
 || Name | Tastenkombination | Beschreibung |
-| Nach oben rollen | Strg+Pfeiltaste nach oben | Rollt das Konsolenfenster nach oben, so dass früherer Text gelesen werden kann. |
-| Nach unten rollen | Strg+Pfeiltaste nach unten | Rollt das Konsolenfenster nach unten, so dass späterer Text gelesen werden kann. |
+| Nach oben rollen | Strg+Pfeiltaste nach oben | Rollt das Konsolenfenster nach oben, sodass früherer Text gelesen werden kann. |
+| Nach unten rollen | Strg+Pfeiltaste nach unten | Rollt das Konsolenfenster nach unten, sodass späterer Text gelesen werden kann. |
 | Zum Anfang rollen | Strg+Pos1 | Rollt das Konsolenfenster zum Anfang des Puffers. |
 | Zum Ende rollen | Strg+Ende | Rollt das Konsolenfenster zum Ende des Puffers. |
 %kc:endInclude
@@ -1481,7 +1481,7 @@ Um die Auflösung der Texteinheiten von überall her umzuschalten, weisen Sie bi
 Wenn diese Option aktiviert ist, sagt NVDA den Typ an, sobald sich der Mauszeiger auf dem Objekt befindet.
 
 ==== Audio-Koordinaten bei Maus-Bewegungen ====[MouseSettingsAudio]
-Das Aktivieren dieser Option bewirkt, dass NVDA die Position des Mauszeigers durch Signaltöne an Ort und Stelle wiedergibt, so dass der Anwender die Mausposition auf dem Bildschirm akustisch mitverfolgen und selbst ermitteln kann.
+Das Aktivieren dieser Option bewirkt, dass NVDA die Position des Mauszeigers durch Signaltöne an Ort und Stelle wiedergibt, sodass der Anwender die Mausposition auf dem Bildschirm akustisch mitverfolgen und selbst ermitteln kann.
 Je näher sich der Mauszeiger am oberen Bildschirmrand befindet, desto höher ist der Signalton.
 Richtig ausgerichtete Stereolautsprecher oder Kopfhörer vorausgesetzt, wird der Signalton umso mehr links oder rechts abgespielt, je weiter links oder rechts sich der Mauszeiger bewegt.
 
@@ -1590,19 +1590,19 @@ Die Vorschlagsliste wird geschlossen, sobald Sie mit dem Fokus das Eingabefeld v
 Mit den Optionen aus dieser Kategorie können Sie steuern, wie NVDA die Eingabe von Zeichen asiatischer sprachen wiedergibt. dies betrifft sowohl IME als auch die Textdienste.
 Hinweis: Eingabemethoden variieren sehr in der Verfügbarkeit von Funktionen sowie in der Informationsweitergabe. Somit müssen diese Optionen für die jeweils verwendete Eingabemethode festgelegt werden, um die bestmögliche Effizienz beim Tippen zu erhalten.
 
-==== Verfügbare Kandidaten automatisch anzeigen ====[InputCompositionReportAllCandidates]
-Diese Option, die standardmäßig aktiviert ist, legt fest, ob automatisch eine Liste aller sichtbaren Kandidaten wiedergegeben wird.
-Das Aktivieren dieser Option ist z. B. für die Eingabe piktographischer Zeichen wie ChangJie oder Boshiami sinnvoll, weil Sie ein Zeichen nebst seiner zugehörigen Nummer angezeigt bekommen.
+==== Verfügbare Zeichensätze automatisch anzeigen ====[InputCompositionReportAllCandidates]
+Diese Option, die standardmäßig aktiviert ist, legt fest, ob automatisch eine Liste aller sichtbaren Zeichensätze wiedergegeben werden.
+Das Aktivieren dieser Option ist z. B. für die Eingabe piktografischer Zeichen wie ChangJie oder Boshiami sinnvoll, weil Sie ein Zeichen nebst seiner zugehörigen Nummer angezeigt bekommen.
 Bei phonetischen Eingabemethoden ist es jedoch sinnvoll, die Option abzuschalten, weil Sie das passende Zeichen ohnehin mit den Pfeiltasten auswählen müssen, um es einzufügen.
 
-==== Ausgewählten Kandidaten angeben ====[InputCompositionAnnounceSelectedCandidate]
-Diese Option weist NVDA an, den ausgewählten Kandidaten auszugeben, sobald die Kandidatenliste erscheint oder wenn Sie einen Kandidaten auswählen.
+==== Ausgewählten Schriftsatz angeben ====[InputCompositionAnnounceSelectedCandidate]
+Diese Option weist NVDA an, den ausgewählten Schriftsatz auszugeben, sobald die Liste der Zeichensätze erscheint oder wenn Sie einen Schriftsatz auswählen.
 Für Eingabemethoden, bei denen Sie die Auswahl mit den Pfeiltasten ändern können (wie z. B. Chinese New Phonetic) ist das Aktivieren dieser Option notwendig, bei anderen Eingabemethoden kann es jedoch effektiver sein, diese Option abzuschalten.
-Auch wenn Sie diese Option deaktiviert haben, wird der NVDA-Cursor auf den ausgewählten Kandidaten gesetzt, sodass Sie den Navigator oder die Befehle zum Text betrachten benutzen können, um andere Kandidaten zu sehen.
+Auch wenn Sie diese Option deaktiviert haben, wird der NVDA-Cursor auf den ausgewählten Schriftsatz gesetzt, sodass Sie den Navigator oder die Befehle zum Text betrachten benutzen können, um andere Schriftsatz zu sehen.
 
-==== Bei der Angabe von Kandidaten immer kurze Zeichenbeschreibungen einbeziehen ====[InputCompositionCandidateIncludesShortCharacterDescription]
-mit dieser Option, die standardmäßig aktiviert ist, können Sie festlegen, ob NVDA eine kurze Beschreibung für einen Kandidaten ausgeben soll - entweder wenn Sie ihn auswählen oder wenn NVDA die Liste der Kandidaten ausgibt, sobald diese erscheint.
-In manchen Sprachräumen - wie etwa im chinesischen, hat diese Option jedoch keinen Einfluss auf die Ausgabe von Beschreibungen für Kandidaten.
+==== Bei Angabe der Schriftsätze immer kurze Zeichenbeschreibungen einbeziehen ====[InputCompositionCandidateIncludesShortCharacterDescription]
+mit dieser Option, die standardmäßig aktiviert ist, können Sie festlegen, ob NVDA eine kurze Beschreibung für einen zeichensatz ausgeben soll - entweder wenn Sie ihn auswählen oder wenn NVDA die Liste der Schriftsätze ausgibt, sobald diese erscheint.
+In einigen Sprachräumen, wie etwa im Chinesischen, hat diese Option jedoch keinen Einfluss auf die Ausgabe der Beschreibungen für die Zeichensätze.
 Diese Option ist lediglich für japanische und koreanische Eingabemethoden sinnvoll.
 
 ==== Änderungen zu Leseketten ansagen ====[InputCompositionReadingStringChanges]
@@ -1769,7 +1769,7 @@ Diese Schaltfläche ist nur aktiviert, wenn NVDA so konfiguriert ist, dass benut
 Wenn diese Option aktiviert ist, versucht NVDA, die Microsoft die API für die Zugänglichkeit der UIA zu verwenden, um Informationen von Steuerelementen in Microsoft Word-Dokumenten abzurufen.
 Dazu gehört Microsoft Word selbst, aber auch in Microsoft Outlook die Nachrichtenansicht und Nachrichten verfassen.
  Für die neuesten Versionen von Microsoft Office 2016 / 365 unter Windows 10 ist die Unterstützung der Benutzeroberfläche vollständig genug, um den Zugriff auf Microsoft Word-Dokumente zu ermöglichen, die nahezu der bestehenden Microsoft Word-Unterstützung von NVDA entsprechen, mit dem zusätzlichen Vorteil, dass die Reaktionsfähigkeit erheblich beschleunigt wird.
-Es kann jedoch einige Informationen geben, die in einigen Versionen von Microsoft Office entweder nicht oder falsch angezeigt werden, so dass man sich nicht immer auf diese Unterstützung der UIA verlassen kann.
+Es kann jedoch einige Informationen geben, die in einigen Versionen von Microsoft Office entweder nicht oder falsch angezeigt werden, sodass man sich nicht immer auf diese Unterstützung der UIA verlassen kann.
 Wir empfehlen noch nicht diese Funktion standardmäßig zu aktivieren. Allerdings ist ausdrücklich erwünscht, dass Benutzer von Office 2016 / 365 diese Funktion testen und Rückmeldung geben können.
 
 ==== Für den Zugriff auf die Windows-Konsole UIA verwenden (falls verfügbar) ====[AdvancedSettingsConsoleUIA]
@@ -1943,7 +1943,7 @@ Wählen Sie anderenfalls einen Trigger aus, durch den das Profil automatisch akt
 Wenn Sie keinen Namen vergeben und einen Trigger auswählen, wird automatisch ein passender Name für das Profil eingetragen.
 Weitere Informationen über die Funktion finden Sie im Abschnitt [Trigger bei Konfigurationsprofilen #ConfigProfileTriggers].
 
-Wenn Sie das Dialogfeld mit "OK" schließen, wird das Profil erstellt und das Dialogfeld "Konfigurationsprofile verwalten" geschlossen, so dass Sie das Profil bearbeiten können.
+Wenn Sie das Dialogfeld mit "OK" schließen, wird das Profil erstellt und das Dialogfeld "Konfigurationsprofile verwalten" geschlossen, sodass Sie das Profil bearbeiten können.
 
 +++ Manuelle Aktivierung +++[ConfigProfileManual]
 Sie können ein Konfigurationsprofil manuell aktivieren, indem Sie den Schalter "Manuell aktivieren" verwenden.
@@ -2006,7 +2006,7 @@ Um NVDA im Anmeldebildschirm und auch in den Sicherheitsmeldungen der Benutzerko
 Den Protokollbetrachter finden Sie im NVDA-Menü unter "Werkzeuge". Dieses Werkzeug gibt Ihnen die Möglichkeit, alles was seit dem Start von NVDA intern abläuft, einzusehen.
 Mit NVDA+F1 wird der Protokollbetrachter geöffnet und Entwickler-Informationen über das aktuelle Navigator-Objekt angezeigt.
 
-Den Protokollinhalt können Sie auch abspeichern oder den Betrachter aktualisieren, so dass lediglich die Einträge angezeigt werden, die seit dem Aufruf des Protokollbetrachters aufgelistet sind.
+Den Protokollinhalt können Sie auch abspeichern oder den Betrachter aktualisieren, sodass lediglich die Einträge angezeigt werden, die seit dem Aufruf des Protokollbetrachters aufgelistet sind.
 Diese Optionen sind entsprechend im Menü des Protokollbetrachters verfügbar.
 
 ++ Der Sprachausgaben-Betrachter ++[SpeechViewer]
@@ -2020,7 +2020,7 @@ Wenn dieses Kontrollkästchen aktiviert ist, wird der Sprachausgaben-Betrachter 
 Sofern möglich, wird dessen Fenster dieselbe Position sowie die gleiche Größe wie bei der letzten Verwendung einnehmen.
 
 Während der Sprachausgaben-Betrachter eingeschaltet ist, aktualisiert sich sogleich der Text beim Sprechen.
-Wenn Sie in das Fenster des Betrachters klicken, unterbricht NVDA augenblicklich die weitere Aktualisierung des vorgelesenen Textes, so dass Sie nun die entsprechenden Einträge markieren und in die Zwischenablage kopieren können.
+Wenn Sie in das Fenster des Betrachters klicken, unterbricht NVDA augenblicklich die weitere Aktualisierung des vorgelesenen Textes, sodass Sie nun die entsprechenden Einträge markieren und in die Zwischenablage kopieren können.
 
 Um den Sprachausgaben-Betrachter per Tastenkombination ein- oder auszuschalten, müssen Sie über das Dialogfeld für die [Tastenbefehle #InputGestures] eine eigene Tastenkombination zuweisen.
 
