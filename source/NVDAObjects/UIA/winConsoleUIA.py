@@ -111,6 +111,9 @@ class consoleUIATextInfo(UIATextInfo):
 
 
 class consoleUIATextInfoPre21H1(consoleUIATextInfo):
+	"""Fixes expand/collapse on end inclusive UIA text ranges, uses rangeFromPoint
+	instead of broken GetVisibleRanges for bounding, and implements word
+	movement support."""
 	def _getBoundingRange(self, obj, position):
 		# We could use IUIAutomationTextRange::getVisibleRanges, but it seems very broken in consoles
 		# once more than a few screens worth of content has been written to the console.
