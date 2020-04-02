@@ -1371,14 +1371,32 @@ class GlobalCommands(ScriptableObject):
 	script_sayAll.category=SCRCAT_SYSTEMCARET
 
 	def _reportFormattingHelper(self, info, browseable=False):
-		formatConfig={
-			"detectFormatAfterCursor":False,
-			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,"reportEmphasis":False,
-			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
-			"reportPage":False,"reportLineNumber":False,"reportLineIndentation":True,"reportLineIndentationWithTones":False,"reportParagraphIndentation":True,"reportLineSpacing":True,"reportTables":False,
-			"reportLinks":False,"reportHeadings":False,"reportLists":False,
-			"reportBlockQuotes":False,"reportComments":False,
-			"reportBorderStyle":True,"reportBorderColor":True,
+		formatConfig = {
+			"detectFormatAfterCursor": False,
+			"reportFontName": True,
+			"reportFontSize": True,
+			"reportFontAttributes": True,
+			"reportSuperscriptsAndSubscripts": True,
+			"reportColor": True,
+			"reportRevisions": False,
+			"reportEmphasis": False,
+			"reportStyle": True,
+			"reportAlignment": True,
+			"reportSpellingErrors": True,
+			"reportPage": False,
+			"reportLineNumber": False,
+			"reportLineIndentation": True,
+			"reportLineIndentationWithTones": False,
+			"reportParagraphIndentation": True,
+			"reportLineSpacing": True,
+			"reportTables": False,
+			"reportLinks": False,
+			"reportHeadings": False,
+			"reportLists": False,
+			"reportBlockQuotes": False,
+			"reportComments": False,
+			"reportBorderStyle": True,
+			"reportBorderColor": True,
 		}
 		textList=[]
 
