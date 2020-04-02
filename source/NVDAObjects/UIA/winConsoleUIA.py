@@ -27,7 +27,14 @@ class consoleUIATextInfo(UIATextInfo):
 			textInfos.POSITION_LAST,
 			textInfos.POSITION_ALL
 		):
-			_rangeObj, collapseToEnd = self._getBoundingRange(obj, position)
+			try:
+				_rangeObj, collapseToEnd = self._getBoundingRange(obj, position)
+			except (COMError, RuntimeError):
+				# We couldn't bound the console.
+				from logHandler import log
+				log.warning("Couldn't get bounding range for console", exc_info=True)
+				# Fall back to presenting the entire buffer.
+				_rangeObj, collapseToEnd = None, None
 		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
 		if collapseToEnd is not None:
 			self.collapse(end=collapseToEnd)
@@ -133,10 +140,10 @@ class consoleUIATextInfoPre21H1(consoleUIATextInfo):
 		return (_rangeObj, None)
 
 	def collapse(self, end=False):
-		"""Works around a UIA bug on Windows 10 versions before 21H1."""
-		# When collapsing, consoles seem to incorrectly push the start of the
-		# textRange back one character.
-		# Correct this by bringing the start back up to where the end is.
+		"""Works around a UIA bug on Windows 10 versions before 21H1.
+		When collapsing, consoles seem to incorrectly push the start of the
+		textRange back one character.
+		Correct this by bringing the start back up to where the end is."""
 		oldInfo = self.copy()
 		super(consoleUIATextInfo, self).collapse(end=end)
 		if not end:
@@ -147,11 +154,11 @@ class consoleUIATextInfoPre21H1(consoleUIATextInfo):
 			)
 
 	def compareEndPoints(self, other, which):
-		"""Works around a UIA bug on Windows 10 versions before 21H1."""
-		# Even when a console textRange's start and end have been moved to the
-		# same position, the console incorrectly reports the end as being
-		# past the start.
-		# Compare to the start (not the end) when collapsed.
+		"""Works around a UIA bug on Windows 10 versions before 21H1.
+		Even when a console textRange's start and end have been moved to the
+		same position, the console incorrectly reports the end as being
+		past the start.
+		Compare to the start (not the end) when collapsed."""
 		selfEndPoint, otherEndPoint = which.split("To")
 		if selfEndPoint == "end" and self._isCollapsed():
 			selfEndPoint = "start"
