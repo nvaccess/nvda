@@ -1371,6 +1371,8 @@ class GlobalCommands(ScriptableObject):
 	script_sayAll.category=SCRCAT_SYSTEMCARET
 
 	def _reportFormattingHelper(self, info, browseable=False):
+		# Report all formatting-related changes regardless of user settings
+		# when explicitly requested.
 		formatConfig = {
 			"detectFormatAfterCursor": False,
 			"reportFontName": True,
