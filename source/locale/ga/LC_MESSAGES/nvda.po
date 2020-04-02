@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA 2019.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-23 15:50+1000\n"
-"PO-Revision-Date: 2020-03-25 15:07+0000\n"
+"POT-Creation-Date: 2020-03-27 00:10+1000\n"
+"PO-Revision-Date: 2020-03-31 10:26+0100\n"
 "Last-Translator: Ronan McGuirk <ronan.mcguirk@gmail.com>\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -3022,9 +3022,8 @@ msgid "layout tables on"
 msgstr "Tabhair tuairisc ar tháblaí le haghaidh leagain amach"
 
 #. Translators: Input help mode message for include layout tables command.
-#, fuzzy
 msgid "Toggles on and off the inclusion of layout tables in browse mode"
-msgstr "Tuairiscigh nó ná tuairiscigh táblaí"
+msgstr "Scorántar táblaí leagan amach sa mhodh brabhsála"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -3121,15 +3120,15 @@ msgstr ""
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
-msgstr "Mód codlata: stoptha"
+msgstr "mód codlata: stoptha"
 
 #. Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
 msgid "Sleep mode on"
-msgstr "Mód codlata: ar siúl"
+msgstr "mód codlata: ar siúl"
 
 #. Translators: Input help mode message for toggle sleep mode command.
 msgid "Toggles sleep mode on and off for the active application."
-msgstr "Scorántar an modh codlata don fheidhmchlár reatha"
+msgstr "Scorántar an mód codlata don fheidhmchlár reatha"
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
@@ -3624,7 +3623,7 @@ msgstr ""
 
 #. Translators: reported when there are no other available review modes for this object
 msgid "No next review mode"
-msgstr "Níl aon Mód athbhreithnithe eile ann "
+msgstr "Níl aon mód athbhreithnithe eile ann "
 
 #. Translators: Script help message for next review mode command.
 msgid ""
@@ -3650,11 +3649,11 @@ msgstr ""
 
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode off"
-msgstr "Mód simplí athbhreithnithe múchta"
+msgstr "mód simplí athbhreithnithe múchta"
 
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode on"
-msgstr "Mód simplí athbhreithnithe ar siúl"
+msgstr "mód simplí athbhreithnithe ar siúl"
 
 #. Translators: Input help mode message for toggle simple review mode command.
 msgid "Toggles simple review mode on and off"
@@ -4054,9 +4053,9 @@ msgstr "Rianaigh nó ná rianaigh an luch"
 #. Translators: Reports the new state of the mouse text unit resolution:.
 #. %s will be replaced with the new label.
 #. For example, the full message might be "Mouse text unit resolution character"
-#, fuzzy, python-format
+#, python-format
 msgid "Mouse text unit resolution %s"
-msgstr "Taifeach aonaid téacs na luiche %s"
+msgstr "Gléine téacs na luiche %s"
 
 #. Translators: Input help mode message for toggle mouse text unit resolution command.
 msgid "Toggles how much text will be spoken when the mouse moves"
@@ -4180,13 +4179,12 @@ msgstr ""
 "gcórais."
 
 #. Translators: Input help mode message for toggle auto focus focusable elements command.
-#, fuzzy
 msgid ""
 "Toggles on and off automatic movement of the system focus due to browse mode "
 "commands"
 msgstr ""
-"Tosaítear nó múchtar gluaiseacht oibiachta an nascleantóra mar gheall ar "
-"athraithe fócais."
+"Scorántar bogadh uathoibríoch fócais an chórais mar thoradh ar orduithe an "
+"mhodha brábhsála."
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
@@ -4274,20 +4272,16 @@ msgid "Shows NVDA's mouse settings"
 msgstr "Taispeántar socruithe luiche NVDA"
 
 #. Translators: Input help mode message for go to review cursor settings command.
-#, fuzzy
 msgid "Shows NVDA's review cursor settings"
-msgstr ""
-"Taispeántar an dialóg le haghaidh socruithe   an chursóra athbhreithnithe   "
+msgstr "Taispeántar socruithe an chúrsóra athbhreithnithe "
 
 #. Translators: Input help mode message for go to input composition settings command.
-#, fuzzy
 msgid "Shows NVDA's input composition settings"
-msgstr "Taispeáintear dialog sainroghanna ionchuir"
+msgstr "Taispeántar socruithe comhdhéanaimh ionchuir"
 
 #. Translators: Input help mode message for go to object presentation settings command.
-#, fuzzy
 msgid "Shows NVDA's object presentation settings"
-msgstr "Taispeáin socruithe maidir le léiriú réada NVDA"
+msgstr "Taispeántar socruithe cur i láthair oibiachtaí NVDA"
 
 #. Translators: Input help mode message for go to browse mode settings command.
 msgid "Shows NVDA's browse mode settings"
@@ -5842,10 +5836,9 @@ msgstr "Tagrán gan teorainn ina bhfuil mírlínte ann mar chuma an litear U"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Line inverse"
-msgstr "uimhreacha lí&ne"
+msgstr "Líne chontrártha"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -8725,9 +8718,8 @@ msgstr "méarchlár"
 
 #. Translators: This is the label for a list of checkboxes
 #. controlling which keys are NVDA modifier keys.
-#, fuzzy
 msgid "&Select NVDA Modifier Keys"
-msgstr "&Úsáid CapsLock mar eochair mhionathraithe in NVDA"
+msgstr "Roghnaigh eochracha mionathraithe NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8965,7 +8957,7 @@ msgstr "Úsáid leagan amach an &scáileáin (más féidir)"
 #. Translators: The label for a checkbox in browse mode settings to
 #. enable browse mode on page load.
 msgid "&Enable browse mode on page load"
-msgstr "Cumasaigh an modh brabhsála agus an leathanach á luchtú"
+msgstr "Cumasaigh an mód brabhsála agus an leathanach á luchtú"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -9205,7 +9197,7 @@ msgstr "Idirghníomhú tadhaill"
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
 msgid "&Touch typing mode"
-msgstr "modh clóscríofa &tadhaill"
+msgstr "mód clóscríofa &tadhaill"
 
 #. Translators: The title of the Windows 10 OCR panel.
 msgid "Windows 10 OCR"
