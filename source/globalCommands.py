@@ -1391,14 +1391,14 @@ class GlobalCommands(ScriptableObject):
 			"reportBorderColor",
 		)
 
-		# Create a dictionary to replace the config section that would normally be 
+		# Create a dictionary to replace the config section that would normally be
 		# passed to getFormatFieldsSpeech / getFormatFieldsBraille
-		formatConfig  = dict()
+		formatConfig = dict()
 		from config import conf
 		for i in conf["documentFormatting"]:
-			formatConfig [i] = i in reportFormattingOptions
+			formatConfig[i] = i in reportFormattingOptions
 
-		textList=[]
+		textList = []
 		# First, fetch indentation.
 		line=info.copy()
 		line.expand(textInfos.UNIT_LINE)
