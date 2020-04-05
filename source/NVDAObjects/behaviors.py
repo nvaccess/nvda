@@ -416,6 +416,9 @@ class EnhancedTermTypedCharSupport(Terminal):
 			and len(lines[0].strip()) < max(len(speech.curWordChars) + 1, 3)
 		):
 			return
+		# Clear the typed word buffer for new text lines.
+		speech.clearTypedWordBuffer()
+		self._queuedChars = []
 		super()._reportNewLines(lines)
 
 	def event_typedCharacter(self, ch):
@@ -459,29 +462,12 @@ class EnhancedTermTypedCharSupport(Terminal):
 		speech.clearTypedWordBuffer()
 		gesture.send()
 
-	def _calculateNewText(self, newLines, oldLines):
-		hasNewLines = (
-			self._findNonBlankIndices(newLines)
-			!= self._findNonBlankIndices(oldLines)
-		)
-		if hasNewLines:
-			# Clear the typed word buffer for new text lines.
-			speech.clearTypedWordBuffer()
-			self._queuedChars = []
-		return super()._calculateNewText(newLines, oldLines)
 
 	def _dispatchQueue(self):
 		"""Sends queued typedCharacter events through to NVDA."""
 		while self._queuedChars:
 			ch = self._queuedChars.pop(0)
 			super().event_typedCharacter(ch)
-
-	def _findNonBlankIndices(self, lines):
-		"""
-		Given a list of strings, returns a list of indices where the strings
-		are not empty.
-		"""
-		return [index for index, line in enumerate(lines) if line]
 
 
 class KeyboardHandlerBasedTypedCharSupport(EnhancedTermTypedCharSupport):
