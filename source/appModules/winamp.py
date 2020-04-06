@@ -56,7 +56,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		global hwndWinamp
-		hwndWinamp=windll.user32.FindWindowA("Winamp v1.x",None)
+		hwndWinamp = winUser.FindWindow("Winamp v1.x", None)
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName
