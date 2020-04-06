@@ -730,7 +730,12 @@ class GeneralSettingsPanel(SettingsPanel):
 		settingsSizerHelper.addItem(self.startOnLogonScreenCheckBox)
 
 		# Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
-		self.copySettingsButton= wx.Button(self, label=_("Use currently saved settings on the logon and other secure screens (requires administrator privileges)"))
+		self.copySettingsButton = wx.Button(
+			self,
+			label=_(
+				"Use currently saved settings before sign-in and on secure screens (requires administrator privileges)"
+			)
+		)
 		self.copySettingsButton.Bind(wx.EVT_BUTTON,self.onCopySettings)
 		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
 			self.copySettingsButton.Disable()
