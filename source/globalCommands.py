@@ -1843,6 +1843,11 @@ class GlobalCommands(ScriptableObject):
 	script_activateInputGesturesDialog.__doc__ = _("Shows the NVDA input gestures dialog")
 	script_activateInputGesturesDialog.category=SCRCAT_CONFIG
 
+	@script(
+		# Translators: Input help mode message for the report current configuration profile command.
+		description=_("Reports the name of the current NVDA configuration profile" ),
+		category=SCRCAT_CONFIG,
+	)
 	def script_reportActiveConfigurationProfile(self, gesture):
 		activeProfileName = config.conf.profiles[-1].name
 
@@ -1855,9 +1860,7 @@ class GlobalCommands(ScriptableObject):
 			# is active. The placeholder '{profilename}' is replaced with the name of the current active profile.
 			activeProfileMessage = _("{profileName} configuration profile active").format(profileName=activeProfileName)
 		ui.message(activeProfileMessage)
-	# Translators: Input help mode message for the report current configuration profile command.
-	script_reportActiveConfigurationProfile.__doc__ = _("Reports the name of the current NVDA configuration profile")
-	script_reportActiveConfigurationProfile.category = SCRCAT_CONFIG
+
 
 	def script_saveConfiguration(self,gesture):
 		wx.CallAfter(gui.mainFrame.onSaveConfigurationCommand, None)
