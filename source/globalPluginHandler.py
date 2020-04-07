@@ -6,6 +6,7 @@
 
 import sys
 import pkgutil
+import importlib
 import config
 import baseObject
 from logHandler import log
@@ -19,7 +20,7 @@ def listPlugins():
 		if name.startswith("_"):
 			continue
 		try:
-			plugin = __import__("globalPlugins.%s" % name, globals(), locals(), ("globalPlugins",)).GlobalPlugin
+			plugin = importlib.import_module("globalPlugins.%s" % name, package="globalPlugins").GlobalPlugin
 		except:
 			log.error("Error importing global plugin %s" % name, exc_info=True)
 			continue
@@ -47,7 +48,7 @@ def reloadGlobalPlugins():
 	global globalPlugins
 	terminate()
 	del globalPlugins
-	mods=[k for k,v in sys.modules.iteritems() if k.startswith("globalPlugins") and v is not None]
+	mods=[k for k,v in sys.modules.items() if k.startswith("globalPlugins") and v is not None]
 	for mod in mods:
 		del sys.modules[mod]
 	import globalPlugins

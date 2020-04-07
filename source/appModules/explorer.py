@@ -1,10 +1,11 @@
+# -*- coding: UTF-8 -*-
 #appModules/explorer.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Joseph Lee
+#Copyright (C) 2006-2019 NV Access Limited, Joseph Lee, Łukasz Golonka
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-"""App module for Windows Explorer (aka Windows shell).
+"""App module for Windows Explorer (aka Windows shell and renamed to File Explorer in Windows 8).
 Provides workarounds for controls such as identifying Start button, notification area and others.
 """
 
@@ -13,13 +14,15 @@ import time
 import appModuleHandler
 import controlTypes
 import winUser
+import winVersion
 import api
 import speech
 import eventHandler
 import mouseHandler
 from NVDAObjects.window import Window
-from NVDAObjects.IAccessible import sysListView32, IAccessible, List
+from NVDAObjects.IAccessible import IAccessible, List
 from NVDAObjects.UIA import UIA
+from NVDAObjects.window.edit import RichEdit50, EditTextInfo
 
 # Suppress incorrect Win 10 Task switching window focus
 class MultitaskingViewFrameWindow(UIA):
@@ -52,31 +55,21 @@ class SearchBoxClient(IAccessible):
 
 
 # Class for menu items  for Windows Places and Frequently used Programs (in start menu)
-class SysListView32MenuItem(sysListView32.ListItemWithoutColumnSupport):
+# Also used for desktop items
+class SysListView32EmittingDuplicateFocusEvents(IAccessible):
 
 	# #474: When focus moves to these items, an extra focus is fired on the parent
 	# However NVDA redirects it to the real focus.
 	# But this means double focus events on the item, so filter the second one out
+	# #2988: Also seen when coming back to the Windows 7 desktop from different applications.
 	def _get_shouldAllowIAccessibleFocusEvent(self):
-		res=super(SysListView32MenuItem,self).shouldAllowIAccessibleFocusEvent
+		res = super().shouldAllowIAccessibleFocusEvent
 		if not res:
 			return False
-		focus=eventHandler.lastQueuedFocusObject
+		focus = eventHandler.lastQueuedFocusObject
 		if type(focus)!=type(self) or (self.event_windowHandle,self.event_objectID,self.event_childID)!=(focus.event_windowHandle,focus.event_objectID,focus.event_childID):
 			return True
 		return False
-
-
-class ClassicStartMenu(Window):
-	# Override the name, as Windows names this the "Application" menu contrary to all documentation.
-	# Translators: The title of Start menu/screen in your language (only the word start).
-	name = _("Start")
-
-	def event_gainFocus(self):
-		# In Windows XP, the Start button will get focus first, so silence this.
-		speech.cancelSpeech()
-		super(ClassicStartMenu, self).event_gainFocus()
-
 
 class NotificationArea(IAccessible):
 	"""The Windows notification area, a.k.a. system tray.
@@ -178,6 +171,29 @@ class UIProperty(UIA):
 			return value
 		return value.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 
+class ReadOnlyEditBox(IAccessible):
+#Used for read-only edit boxes in a properties window.
+#These can contain dates that include unwanted left-to-right and right-to-left indicator characters.
+
+	def _get_windowText(self):
+		windowText = super(ReadOnlyEditBox, self).windowText
+		if windowText is not None:
+			return windowText.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
+		return windowText
+
+
+class MetadataEditField(RichEdit50):
+	""" Used for metadata edit fields in Windows Explorer in Windows 7.
+	By default these fields would use ITextDocumentTextInfo ,
+	but to avoid Windows Explorer crashes we need to use EditTextInfo here. """
+	@classmethod
+	def _get_TextInfo(cls):
+		if ((winVersion.winVersion.major, winVersion.winVersion.minor) == (6, 1)):
+			cls.TextInfo = EditTextInfo
+		else:
+			cls.TextInfo = super().TextInfo
+		return cls.TextInfo
+
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -190,14 +206,7 @@ class AppModule(appModuleHandler.AppModule):
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if windowClass == "ToolbarWindow32":
-			if role == controlTypes.ROLE_POPUPMENU:
-				parent = obj.parent
-				if parent and parent.windowClassName == "SysPager" and obj.windowStyle & 0x80:
-					clsList.insert(0, ClassicStartMenu)
-			else:
-				# Check whether this is the notification area, a.k.a. system tray.
-				if isinstance(obj.parent, ClassicStartMenu):
-					return # This can't be a notification area
+			if role != controlTypes.ROLE_POPUPMENU:
 				try:
 					# The toolbar's immediate parent is its window object, so we need to go one further.
 					toolbarParent = obj.parent.parent
@@ -208,10 +217,23 @@ class AppModule(appModuleHandler.AppModule):
 					toolbarParent = None
 				if toolbarParent and toolbarParent.windowClassName == "SysPager":
 					clsList.insert(0, NotificationArea)
+			return 
+
+		if windowClass == "Edit" and controlTypes.STATE_READONLY in obj.states:
+			clsList.insert(0, ReadOnlyEditBox)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
-		if windowClass == "SysListView32" and role == controlTypes.ROLE_MENUITEM:
-			clsList.insert(0, SysListView32MenuItem)
+		if windowClass == "SysListView32":
+			if(
+				role == controlTypes.ROLE_MENUITEM
+				or(
+					role == controlTypes.ROLE_LISTITEM
+					and obj.simpleParent
+					and obj.simpleParent.simpleParent
+					and obj.simpleParent.simpleParent == api.getDesktopObject()
+				)
+			):
+				clsList.insert(0, SysListView32EmittingDuplicateFocusEvents)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		# #5178: Start button in Windows 8.1 and 10 should not have been a list in the first place.
@@ -220,6 +242,10 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.remove(List)
 			clsList.insert(0, StartButton)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
+
+		if windowClass == 'RICHEDIT50W' and obj.windowControlID == 256:
+			clsList.insert(0, MetadataEditField)
+			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if isinstance(obj, UIA):
 			uiaClassName = obj.UIAElement.cachedClassName
@@ -267,7 +293,7 @@ class AppModule(appModuleHandler.AppModule):
 			return
 
 		if windowClass == "DV2ControlHost" and role == controlTypes.ROLE_PANE:
-			# Windows Vista/7 start menu.
+			# Windows 7 start menu.
 			obj.presentationType=obj.presType_content
 			obj.isPresentableFocusAncestor = True
 			# In Windows 7, the description of this pane is extremely verbose help text, so nuke it.
@@ -278,6 +304,16 @@ class AppModule(appModuleHandler.AppModule):
 		# Lets hide that
 		if windowClass=="msctls_progress32" and winUser.getClassName(winUser.getAncestor(obj.windowHandle,winUser.GA_PARENT))=="Address Band Root":
 			obj.presentationType=obj.presType_layout
+			return
+
+		if windowClass == "DirectUIHWND" and role == controlTypes.ROLE_LIST:
+			if obj.parent and obj.parent.parent:
+				parent = obj.parent.parent.parent
+				if parent is not None and parent.windowClassName == "Desktop Search Open View":
+					# List containing search results in Windows 7 start menu.
+					# Its name is not useful so discard it.
+					obj.name = None
+					return
 
 	def event_gainFocus(self, obj, nextHandler):
 		wClass = obj.windowClassName
@@ -298,4 +334,25 @@ class AppModule(appModuleHandler.AppModule):
 			# #6671: Never allow WorkerW thread to send gain focus event, as it causes 'pane" to be announced when minimizing windows or moving to desktop.
 			return
 
+		nextHandler()
+
+	def isGoodUIAWindow(self, hwnd):
+		# #9204: shell raises window open event for emoji panel in build 18305 and later.
+		if winVersion.isWin10(version=1903) and winUser.getClassName(hwnd) == "ApplicationFrameWindow":
+			return True
+		return False
+
+	def event_UIA_window_windowOpen(self, obj, nextHandler):
+		# Send UIA window open event to input app window.
+		if isinstance(obj, UIA) and obj.UIAElement.cachedClassName == "ApplicationFrameWindow":
+			inputPanelWindow = obj.firstChild
+			inputPanelAppName = (
+				# 19H2 and earlier
+				"windowsinternal_composableshell_experiences_textinput_inputapp",
+				# 20H1 and later
+				"textinputhost"
+			)
+			if inputPanelWindow and inputPanelWindow.appModule.appName in inputPanelAppName:
+				eventHandler.executeEvent("UIA_window_windowOpen", inputPanelWindow)
+				return
 		nextHandler()

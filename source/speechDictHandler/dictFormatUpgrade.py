@@ -103,9 +103,7 @@ def _doSynthVoiceDictBackupAndMove(synthName, oldFileNameToNewFileNameList=None)
 def _doEspeakDictUpgrade():
 	synthName = "espeak"
 	def getNextVoice():
-		for ID, oldNewTuple in espeakNameChanges.items():
-			oldName = oldNewTuple[0]
-			newName = oldNewTuple[1]
+		for ID, (oldName, newName) in espeakNameChanges.items():
 			yield (
 					createVoiceDictFileName(synthName, oldName),
 					createVoiceDictFileName(synthName, newName)

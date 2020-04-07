@@ -57,20 +57,24 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		if placeholder:
 			attrs['placeholder']=placeholder
 		accRole=attrs.get('IAccessible::role',0)
-		accRole=int(accRole) if isinstance(accRole,basestring) and accRole.isdigit() else accRole
+		accRole=int(accRole) if isinstance(accRole,str) and accRole.isdigit() else accRole
 		nodeName=attrs.get('IHTMLDOMNode::nodeName',"")
-		ariaRoles=attrs.get("HTMLAttrib::role", "").split(" ")
+		roleAttrib = attrs.get("HTMLAttrib::role", "")
+		ariaRoles = [ar for ar in roleAttrib.split(" ") if ar]
 		#choose role
 		#Priority is aria role -> HTML tag name -> IAccessible role
-		role=next((aria.ariaRolesToNVDARoles[ar] for ar in ariaRoles if ar in aria.ariaRolesToNVDARoles),controlTypes.ROLE_UNKNOWN)
-		if not role and nodeName:
+		role = next(
+			(aria.ariaRolesToNVDARoles[ar] for ar in ariaRoles if ar in aria.ariaRolesToNVDARoles),
+			controlTypes.ROLE_UNKNOWN
+		)
+		if role == controlTypes.ROLE_UNKNOWN and nodeName:
 			role=NVDAObjects.IAccessible.MSHTML.nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_UNKNOWN)
-		if not role:
+		if role == controlTypes.ROLE_UNKNOWN:
 			role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
 		roleText=attrs.get('HTMLAttrib::aria-roledescription')
 		if roleText:
 			attrs['roleText']=roleText
-		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		if attrs.get('HTMLAttrib::longdesc'):
 			states.add(controlTypes.STATE_HASLONGDESC)
 		#IE exposes destination anchors as links, this is wrong
@@ -140,11 +144,11 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			# MSHTML puts the unavailable state on all graphics when the showing of graphics is disabled.
 			# This is rather annoying and irrelevant to our users, so discard it.
 			states.discard(controlTypes.STATE_UNAVAILABLE)
-		lRole = aria.htmlNodeNameToAriaLandmarkRoles.get(nodeName.lower())
+		lRole = aria.htmlNodeNameToAriaRoles.get(nodeName.lower())
 		if lRole:
 			ariaRoles.append(lRole)
-		# Get the first landmark role, if any.
-		landmark=next((ar for ar in ariaRoles if ar in aria.landmarkRoles),None)
+		# If the first role is a landmark role, use it.
+		landmark = ariaRoles[0] if ariaRoles and ariaRoles[0] in aria.landmarkRoles else None
 		ariaLevel=attrs.get('HTMLAttrib::aria-level',None)
 		ariaLevel=int(ariaLevel) if ariaLevel is not None else None
 		if ariaLevel:
@@ -297,15 +301,42 @@ class MSHTML(VirtualBuffer):
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="landmark":
 			attrs = [
-				{"HTMLAttrib::role": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles if lr != "region"]},
-				{"HTMLAttrib::role": [VBufStorage_findMatch_word("region")],
-					"name": [VBufStorage_findMatch_notEmpty]},
-				{"IHTMLDOMNode::nodeName": [VBufStorage_findMatch_word(lr.upper()) for lr in aria.htmlNodeNameToAriaLandmarkRoles]}
-				]
+				{"HTMLAttrib::role": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]},
+				{
+					"HTMLAttrib::role": [VBufStorage_findMatch_word("region")],
+					"name": [VBufStorage_findMatch_notEmpty]
+				},
+				{"IHTMLDOMNode::nodeName": [
+					VBufStorage_findMatch_word(node.upper()) for node, lr in aria.htmlNodeNameToAriaRoles.items()
+					if lr in aria.landmarkRoles
+				]},
+				{
+					"IHTMLDOMNode::nodeName": [VBufStorage_findMatch_word("SECTION")],
+					"name": [VBufStorage_findMatch_notEmpty]
+				},
+			]
+		elif nodeType == "article":
+			attrs = [
+				{"HTMLAttrib::role": [VBufStorage_findMatch_word("article")]},
+				{"IHTMLDOMNode::nodeName": [VBufStorage_findMatch_word("ARTICLE")]},
+			]
+		elif nodeType == "grouping":
+			attrs = [
+				{
+					"HTMLAttrib::role": [
+						VBufStorage_findMatch_word(r) for r in ("group", "radiogroup")
+					],
+					"name": [VBufStorage_findMatch_notEmpty]
+				},
+				{
+					"IHTMLDOMNode::nodeName": [VBufStorage_findMatch_word("FIELDSET")],
+					"name": [VBufStorage_findMatch_notEmpty]
+				},
+			]
 		elif nodeType == "embeddedObject":
 			attrs = [
-				{"IHTMLDOMNode::nodeName": ["OBJECT","EMBED","APPLET","AUDIO","VIDEO"]},
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_APPLICATION,oleacc.ROLE_SYSTEM_DIALOG]},
+				{"IHTMLDOMNode::nodeName": ["OBJECT", "EMBED", "APPLET", "AUDIO", "VIDEO", "FIGURE"]},
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_APPLICATION, oleacc.ROLE_SYSTEM_DIALOG]},
 			]
 		elif nodeType == "separator":
 			attrs = {"IHTMLDOMNode::nodeName": ["HR"]}

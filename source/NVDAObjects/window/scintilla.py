@@ -1,3 +1,9 @@
+# -*- coding: UTF-8 -*-
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2009-2019 NV Access Limited, Arnold Loubriat, Babbage B.V., Łukasz Golonka
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
 import ctypes
 import IAccessibleHandler
 import speech
@@ -13,8 +19,10 @@ from ..behaviors import EditableTextWithAutoSelectDetection
 import locale
 import watchdog
 import eventHandler
+import locationHelper
+import textUtils
 
-#Window messages
+# Window messages
 SCI_POSITIONFROMPOINT=2022
 SCI_POINTXFROMPOSITION=2164
 SCI_POINTYFROMPOSITION=2165
@@ -35,6 +43,7 @@ SCI_LINEFROMPOSITION=2166
 SCI_POSITIONFROMLINE=2167
 SCI_LINELENGTH=2350
 SCI_GETSTYLEAT=2010
+SCI_GETCHARAT = 2007
 SCI_STYLEGETFONT=2486
 SCI_STYLEGETSIZE=2485
 SCI_STYLEGETBOLD=2483
@@ -48,8 +57,11 @@ SCI_GETCODEPAGE=2137
 SCI_POSITIONAFTER=2418
 
 #constants
+#: Represents an invalid position within a document.
+INVALID_POSITION=-1
 STYLE_DEFAULT=32
 SC_CP_UTF8=65001
+space = 32
 
 class CharacterRangeStruct(ctypes.Structure):
 	_fields_=[
@@ -65,15 +77,23 @@ class TextRangeStruct(ctypes.Structure):
 
 class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 
+	def _get_encoding(self):
+		cp=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETCODEPAGE,0,0)
+		if cp==SC_CP_UTF8:
+			return "utf-8"
+		else:
+			return locale.getlocale()[1]
+
 	def _getOffsetFromPoint(self,x,y):
+		x, y = winUser.ScreenToClient(self.obj.windowHandle, x, y)
 		return watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,x,y)
 
 	def _getPointFromOffset(self,offset):
-		point=textInfos.Point(
-		watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTXFROMPOSITION,None,offset),
-		watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
-		)
-		if point.x and point.y:
+		point=locationHelper.Point(
+			watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTXFROMPOSITION,None,offset),
+			watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
+		).toScreen(self.obj.windowHandle)
+		if point.x is not None and point.y is not None:
 			return point
 		else:
 			raise NotImplementedError
@@ -109,7 +129,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 				winKernel.readProcessMemory(self.obj.processHandle,internalBuf,fontNameBuf,len(fontNameBuf),None)
 			finally:
 				winKernel.virtualFreeEx(self.obj.processHandle,internalBuf,0,winKernel.MEM_RELEASE)
-			formatField["font-name"]=fontNameBuf.value
+			formatField["font-name"]=fontNameBuf.value.decode("utf-8")
 		if formatConfig["reportFontSize"]:
 			formatField["font-size"]="%spt"%watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_STYLEGETSIZE,style,0)
 		if formatConfig["reportLineNumber"]:
@@ -152,29 +172,25 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETLINECOUNT,0,0)
 
 	def _getTextRange(self,start,end):
-		bufLen=(end-start)+1
-		textRange=TextRangeStruct()
-		textRange.chrg.cpMin=start
-		textRange.chrg.cpMax=end
-		processHandle=self.obj.processHandle
-		internalBuf=winKernel.virtualAllocEx(processHandle,None,bufLen,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		bufLen = (end - start) + 1
+		textRange = TextRangeStruct()
+		textRange.chrg.cpMin = start
+		textRange.chrg.cpMax = end
+		processHandle = self.obj.processHandle
+		internalBuf = winKernel.virtualAllocEx(processHandle, None, bufLen, winKernel.MEM_COMMIT, winKernel.PAGE_READWRITE)
 		try:
-			textRange.lpstrText=internalBuf
-			internalTextRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(textRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+			textRange.lpstrText = internalBuf
+			internalTextRange = winKernel.virtualAllocEx(processHandle, None, ctypes.sizeof(textRange), winKernel.MEM_COMMIT, winKernel.PAGE_READWRITE)
 			try:
-				winKernel.writeProcessMemory(processHandle,internalTextRange,ctypes.byref(textRange),ctypes.sizeof(textRange),None)
-				watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETTEXTRANGE,0,internalTextRange)
+				winKernel.writeProcessMemory(processHandle, internalTextRange, ctypes.byref(textRange), ctypes.sizeof(textRange), None)
+				numBytes = watchdog.cancellableSendMessage(self.obj.windowHandle, SCI_GETTEXTRANGE, 0, internalTextRange)
 			finally:
-				winKernel.virtualFreeEx(processHandle,internalTextRange,0,winKernel.MEM_RELEASE)
-			buf=ctypes.create_string_buffer(bufLen)
-			winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
+				winKernel.virtualFreeEx(processHandle, internalTextRange, 0, winKernel.MEM_RELEASE)
+			buf = ctypes.create_string_buffer(bufLen)
+			winKernel.readProcessMemory(processHandle, internalBuf, buf, bufLen, None)
 		finally:
-			winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
-		cp=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETCODEPAGE,0,0)
-		if cp==SC_CP_UTF8:
-			return unicode(buf.value, errors="replace", encoding="utf-8")
-		else:
-			return unicode(buf.value, errors="replace", encoding=locale.getlocale()[1])
+			winKernel.virtualFreeEx(processHandle, internalBuf, 0, winKernel.MEM_RELEASE)
+		return textUtils.getTextFromRawBytes(buf.raw, numChars=numBytes, encoding=self.encoding, errorsFallback="surrogateescape")
 
 	def _getWordOffsets(self,offset):
 		start=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_WORDSTARTPOSITION,offset,0)
@@ -182,6 +198,12 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if end<=offset:
 			start=end
 			end=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_WORDENDPOSITION,offset,0)
+		# #8295: When calculating offsets with Scintilla messages spaces are considered to be words.
+		# Therefore check if character at offset is  a space, and if so calculate it again.
+		if watchdog.cancellableSendMessage(self.obj.windowHandle, SCI_GETCHARAT, end, 0) == space:
+			end = watchdog.cancellableSendMessage(self.obj.windowHandle, SCI_WORDENDPOSITION, end, 0)
+		if watchdog.cancellableSendMessage(self.obj.windowHandle, SCI_GETCHARAT, start, 0) == space:
+			start = watchdog.cancellableSendMessage(self.obj.windowHandle, SCI_WORDSTARTPOSITION, start, 0)
 		return [start,end]
 
 	def _getLineNumFromOffset(self,offset):
@@ -191,13 +213,13 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETWRAPMODE,None,None)!=SC_WRAP_NONE:
 			# Lines in Scintilla refer to document lines, not wrapped lines.
 			# There's no way to retrieve wrapped lines, so use screen coordinates.
-			y=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
-			top,left,width,height=self.obj.location
-			start = self._getOffsetFromPoint(0,y)
-			end=self._getOffsetFromPoint(width,y)
+			y = self._getPointFromOffset(offset).y
+			location=self.obj.location
+			start = self._getOffsetFromPoint(location.left, y)
+			end=self._getOffsetFromPoint(location.right, y)
 			# If this line wraps to the next line,
 			# end is the first offset of the next line.
-			if watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,end)==y:
+			if self._getPointFromOffset(end).y==y:
 				# This is the end of the document line.
 				# Include the EOL characters in the returned offsets.
 				end=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,end,None)
@@ -216,7 +238,8 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		end=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,offset,0)
 		start=offset
 		tempOffset=offset-1
-		while True:
+		
+		while tempOffset > INVALID_POSITION:
 			start=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,tempOffset,0)
 			if start<end:
 				break

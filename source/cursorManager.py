@@ -14,6 +14,7 @@ import core
 import baseObject
 import documentBase
 import gui
+from gui import guiHelper
 import sayAllHandler
 import review
 from scriptHandler import willSayAllResume
@@ -22,6 +23,7 @@ import api
 import speech
 import config
 import braille
+import vision
 import controlTypes
 from inputCore import SCRCAT_BROWSEMODE
 import ui
@@ -37,21 +39,16 @@ class FindDialog(wx.Dialog):
 		# Have a copy of the active cursor manager, as this is needed later for finding text.
 		self.activeCursorManager = cursorManager
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
-
-		findSizer = wx.BoxSizer(wx.HORIZONTAL)
+		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		# Translators: Dialog text for NvDA's find command.
-		textToFind = wx.StaticText(self, wx.ID_ANY, label=_("Type the text you wish to find"))
-		findSizer.Add(textToFind)
-		self.findTextField = wx.TextCtrl(self, wx.ID_ANY)
-		self.findTextField.SetValue(text)
-		findSizer.Add(self.findTextField)
-		mainSizer.Add(findSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
+		findLabelText = _("Type the text you wish to find")
+		self.findTextField = sHelper.addLabeledControl(findLabelText, wx.TextCtrl, value=text)
 		# Translators: An option in find dialog to perform case-sensitive search.
 		self.caseSensitiveCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Case &sensitive"))
 		self.caseSensitiveCheckBox.SetValue(caseSensitivity)
-		mainSizer.Add(self.caseSensitiveCheckBox,border=10,flag=wx.BOTTOM)
-
-		mainSizer.Add(self.CreateButtonSizer(wx.OK|wx.CANCEL), flag=wx.ALIGN_RIGHT)
+		sHelper.addItem(self.caseSensitiveCheckBox)
+		sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK | wx.CANCEL))
+		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
 		mainSizer.Fit(self)
@@ -111,6 +108,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		info.updateSelection()
 		review.handleCaretMove(info)
 		braille.handler.handleCaretMove(self)
+		vision.handler.handleCaretMove(self)
 
 	def _caretMovementScriptHelper(self,gesture,unit,direction=None,posConstant=textInfos.POSITION_SELECTION,posUnit=None,posUnitEnd=False,extraDetail=False,handleSymbols=False):
 		oldInfo=self.makeTextInfo(posConstant)
@@ -140,11 +138,15 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 					pass
 				else:
 					info=self.makeTextInfo(textInfos.POSITION_FIRST if direction>0 else textInfos.POSITION_LAST)
-		self.selection=info
+		# #10343: Speak before setting selection because setting selection might
+		# move the focus, which might mutate the document, potentially invalidating
+		# info if it is offset-based.
+		selection = info.copy()
 		info.expand(unit)
 		if not willSayAllResume(gesture): speech.speakTextInfo(info,unit=unit,reason=controlTypes.REASON_CARET)
 		if not oldInfo.isCollapsed:
-			speech.speakSelectionChange(oldInfo,self.selection)
+			speech.speakSelectionChange(oldInfo, selection)
+		self.selection = selection
 
 	def doFindText(self,text,reverse=False,caseSensitive=False):
 		if not text:
@@ -162,10 +164,13 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		CursorManager._lastCaseSensitivity=caseSensitive
 
 	def script_find(self,gesture):
-		d = FindDialog(gui.mainFrame, self, self._lastFindText, self._lastCaseSensitivity)
-		gui.mainFrame.prePopup()
-		d.Show()
-		gui.mainFrame.postPopup()
+		# #8566: We need this to be a modal dialog, but it mustn't block this script.
+		def run():
+			gui.mainFrame.prePopup()
+			d = FindDialog(gui.mainFrame, self, self._lastFindText, self._lastCaseSensitivity)
+			d.ShowModal()
+			gui.mainFrame.postPopup()
+		wx.CallAfter(run)
 	# Translators: Input help message for NVDA's find command.
 	script_find.__doc__ = _("find a text string from the current cursor position")
 

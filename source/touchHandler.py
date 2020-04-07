@@ -206,10 +206,9 @@ class TouchInputGesture(inputCore.InputGesture):
 inputCore.registerGestureSource("ts", TouchInputGesture)
 
 class TouchHandler(threading.Thread):
-
 	def __init__(self):
 		self.pendingEmitsTimer=gui.NonReEntrantTimer(core.requestPump)
-		super(TouchHandler,self).__init__()
+		super().__init__(name=f"{self.__class__.__module__}.{self.__class__.__qualname__}")
 		self._curTouchMode='object'
 		self.initializedEvent=threading.Event()
 		self.threadExc=None
@@ -290,16 +289,15 @@ class TouchHandler(threading.Thread):
 		@param obj: The NVDAObject with which the user is interacting.
 		@type obj: L{NVDAObjects.NVDAObject}
 		"""
-		l, t, w, h = obj.location
 		oledll.oleacc.AccNotifyTouchInteraction(gui.mainFrame.Handle, obj.windowHandle,
-			POINT(l + (w / 2), t + (h / 2)))
+			obj.location.center.toPOINT())
 
 handler=None
 
 def touchSupported():
 	"""Returns if the system and current NVDA session supports touchscreen interaction.
 	"""
-	if not config.isInstalledCopy():
+	if not config.isInstalledCopy() and not config.isAppX:
 		log.debugWarning("Touch only supported on installed copies")
 		return False
 	if (winVersion.winVersion.major*10+winVersion.winVersion.minor)<62:

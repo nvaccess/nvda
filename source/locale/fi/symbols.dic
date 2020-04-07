@@ -6,7 +6,7 @@
 complexSymbols:
 # identifier	regexp
 decimal point	(?<![^\d -])\,(?=\d)
-negative number	(?<!\w)-(?=[$£€¥,]?\d)
+negative number	(?<!\w)[-−]{1}(?=[$£€¥,.]?\d)
 percent	(?<=\d)\ ?\%(?!\w)
 dates	(((0?[1-9]|[12]\d|3[01])[\.](0?[13578]|1[02])[\.]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.](0?[13456789]|1[012])[\.]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.]0?2[\.]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.]0?2[\.]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))
 euro	^(0|(([1-9]{1}|[1-9]{1}[0-9]{1}|[1-9]{1}[0-9]{2}){1}(\ [0-9]{3}){0,})),(([0-9]{2})|\-\-)([\ ]{1})(€){1}$
@@ -54,6 +54,7 @@ $	dollari	all	norep
 )	loppusulku	most	always
 *	tähti	some
 +	plus	some
+−	miinus	some
 ,	pilkku	all	always
 -	viiva	most
 .	piste	some
@@ -77,7 +78,7 @@ _	alaviiva	most
 ~	aaltoviiva	most
 
 # Other characters
-•	luetelmapallo	most
+•	luetelmapallo	some
 …	piste piste piste	all	always
 ...	piste piste piste	all	always
 “	käänteinen alkulainaus	most
@@ -96,7 +97,6 @@ _	alaviiva	most
 ↑	nuoli ylös	some
 →	nuoli oikealle	some
 ↓	nuoli alas	some
-−	miinus	some
 ►	musta osoitin oikealle	most
 ♥	hertta	most
 ♡	valkoinen hertta	most
@@ -111,12 +111,13 @@ _	alaviiva	most
 ◾	musta neliö	some
 ◦	valkoinen luettelomerkki	some
 ■	musta neliö	most
-⇒	kaksoisnuoli oikealle	most
-⇨	valkoinen nuoli oikealle	most
-➢	nuolenpää oikealle	most
-❖	musta ruutu miinus valkoinen X	most
-♣	musta risti	most
-♦	musta ruutu	most
+⇒	kaksoisnuoli oikealle	some
+⇨	valkoinen nuoli oikealle	some
+➢	nuolenpää oikealle	some
+⮚	nuolenpää oikealle	some
+❖	musta ruutu miinus valkoinen X	some
+♣	musta risti	some
+♦	musta ruutu	some
 ¡	käänteinen huuto	most
 ¦	katkopystyviiva	most
 ª	feminiinisen järjestysluvun merkki	most
@@ -144,6 +145,7 @@ _	alaviiva	most
 ×	kertaa	some
 ✓	valintamerkki	most
 ✔	valintamerkki	most
+🡺	nuoli oikealle	some
 °	aste	some
 ¢	sentti	all	norep
 ¤	valuuttamerkki	some
@@ -275,3 +277,5 @@ _	alaviiva	most
 ⅜	kolme kahdeksasosaa	none
 ⅝	viisi kahdeksasosaa	none
 ⅞	seitsemän kahdeksasosaa	none
+# Miscellaneous Technical
+⌘	Macin komentonäppäin	none
