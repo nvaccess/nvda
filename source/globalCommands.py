@@ -1845,7 +1845,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for the report current configuration profile command.
-		description=_("Reports the name of the current NVDA configuration profile" ),
+		description=_("Reports the name of the current NVDA configuration profile"),
 		category=SCRCAT_CONFIG,
 	)
 	def script_reportActiveConfigurationProfile(self, gesture):
@@ -1858,9 +1858,10 @@ class GlobalCommands(ScriptableObject):
 		else:
 			# Translators: Message announced when the command to report the current configuration profile
 			# is active. The placeholder '{profilename}' is replaced with the name of the current active profile.
-			activeProfileMessage = _("{profileName} configuration profile active").format(profileName=activeProfileName)
+			activeProfileMessage = _("{profileName} configuration profile active").format(
+				profileName=activeProfileName
+			)
 		ui.message(activeProfileMessage)
-
 
 	def script_saveConfiguration(self,gesture):
 		wx.CallAfter(gui.mainFrame.onSaveConfigurationCommand, None)
