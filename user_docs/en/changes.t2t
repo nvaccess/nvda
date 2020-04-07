@@ -8,13 +8,25 @@ What's New in NVDA
 == New Features ==
 - Support for new braille displays:
   - Nattiq nBraille (#10778)
+- Added script to open NVDA configuration directory (no default gesture). (#2214)
+- Better support for ESET antivirus GUI. (#10894)
+- Added support for Windows Terminal. (#10305)
 
 
 == Changes ==
+- Updated liblouis braille translator to [3.13.0 https://github.com/liblouis/liblouis/releases/tag/v3.13.0] (from 3.12.0). (#10832)
+- The reporting of superscripts and subscripts is now controlled separately to the reporting of font attributes. (#10919)
 
 
 == Bug Fixes ==
 - NVDA starts correctly when log file cannot be created. (#6330)
+- In recent releases of Microsoft Word 365, NVDA will no longer announce "delete back word" when Control+Backspace is pressed while editing a document. (#10851)
+- In Winamp, NVDA will once again announce toggle status of shuffle and repeat. (#10945)
+
+
+== Changes For Developers ==
+- execElevated and hasUiAcces have moved from config module to systemUtils module. Usage via config module is deprecated. (#10493)
+- Updated configobj to 5.1.0dev commit f9a265c4. (#10939)
 
 
 = 2020.1 =

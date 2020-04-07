@@ -1690,6 +1690,7 @@ You can configure reporting of:
  - Font name
  - Font size
  - Font attributes
+ - Superscripts and subscripts
  - Emphasis
  - Style
  - Colors
@@ -1788,7 +1789,7 @@ This setting controls whether characters are spoken by [speak typed characters #
 ==== Use the new typed character support in Windows Console when available ====[AdvancedSettingsKeyboardSupportInLegacy]
 This option enables an alternative method for detecting typed characters in Windows command consoles.
 While it improves performance and prevents some console output from being spelled out, it may be incompatible with some terminal programs.
-This feature is available and enabled by default on Windows 10 versions 1607, 1703, 1709 and 1803 as well as on newer Windows 10 releases when UI Automation is unavailable or disabled.
+This feature is available and enabled by default on Windows 10 versions 1607and later when UI Automation is unavailable or disabled.
 Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
 In untrusted environments, you may temporarily disable [speak typed characters #KeyboardSettingsSpeakTypedCharacters] and [speak typed words #KeyboardSettingsSpeakTypedWords] when entering passwords.
 
@@ -2001,7 +2002,8 @@ Portable versions of NVDA store all settings and add-ons in a directory called u
 
 Installed versions of NVDA store all settings and add-ons in a special NVDA directory located in your Windows user profile.
 This means that each user on the system can have their own NVDA settings.
-To get to your settings directory for an installed version of NVDA, on the start menu you can go to programs -> NVDA -> explore user configuration directory.
+To open your settings directory from anywhere you can use [Input Gestures dialog #InputGestures] to add a custom gesture.
+In addition for an installed version of NVDA, on the start menu you can go to programs -> NVDA -> explore user configuration directory.
 
 Settings for NVDA when running on the logon or UAC screens are stored in the systemConfig directory in NVDA's installation directory.
 Usually, this configuration should not be touched.
