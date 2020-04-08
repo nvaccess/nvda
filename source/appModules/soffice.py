@@ -1,8 +1,8 @@
-#appModules/soffice.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2019 NV Access Limited, Bill Dengler
+# -*- coding: UTF-8 -*-
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2020 NV Access Limited, Bill Dengler, Łukasz Golonka
 
 from comtypes import COMError
 import IAccessibleHandler
@@ -220,8 +220,13 @@ class SymphonyTableCell(IAccessible):
 			# #8988: Cells in Libre Office do not have the selected state when a single cell is selected (i.e. has focus).
 			# Since #8898, the negative selected state is announced for table cells with the selectable state.
 			states.add(controlTypes.STATE_SELECTED)
-		if self.IA2Attributes.get('Formula'):
-			# #860: Recent versions of Calc expose has formula state via IAccessible 2.
+		# #860: Recent versions of Calc expose has formula state via IAccessible 2.
+		# #10759: However in Libre Office 6.4 the attribute contains "!!br0ken!!"
+		# when there is no formula in the cell.
+		if (
+			self.IA2Attributes.get('Formula')
+			and self.IA2Attributes.get('Formula') != "!!br0ken!!"
+		):
 			states.add(controlTypes.STATE_HASFORMULA)
 		return states
 
