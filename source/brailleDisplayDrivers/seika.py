@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#brailleDisplayDrivers/seika.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2012/20 Ulf Beckmann <beckmann@flusoft.de>
+# brailleDisplayDrivers/seika.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2012/20 Ulf Beckmann <beckmann@flusoft.de>
 
 # Parts of this code are inherited from the baum braille driver
 # written by James Teh <jamie@jantrid.net>
@@ -102,7 +102,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		writeBytes: List[bytes] = [self.s40, ]
 		# every transmitted line consists of the preamble SEIKA_SENDHEADER and the Cells
 		if self.numCells==80:
-			lineBytes : bytes = self.s40 + bytes(cells) + cellPadding
+			lineBytes: bytes = self.s40 + bytes(cells) + cellPadding
 		else:
 			for cell in cells:
 				writeBytes.append(b"\x00")
@@ -196,4 +196,3 @@ class InputGestureRouting(braille.BrailleDisplayGesture):
 
 		self.id = "routing"
 		self.routingIndex = index
-
