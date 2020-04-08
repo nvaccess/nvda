@@ -33,7 +33,8 @@ import ctypes.wintypes
 import ssl
 import wx
 import languageHandler
-import speech
+# Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
+import synthDriverHandler  # noqa: E402
 import braille
 import gui
 from gui import guiHelper
@@ -110,8 +111,8 @@ def checkForUpdate(auto=False):
 		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
 	}
 	if auto and allowUsageStats:
-		synthDriverClass=speech.getSynth().__class__
-		brailleDisplayClass=braille.handler.display.__class__ if braille.handler else None
+		synthDriverClass = synthDriverHandler.getSynth().__class__
+		brailleDisplayClass = braille.handler.display.__class__ if braille.handler else None
 		# Following are parameters sent purely for stats gathering.
 		#  If new parameters are added here, they must be documented in the userGuide for transparency.
 		extraParams={
@@ -225,7 +226,10 @@ class UpdateChecker(object):
 	def check(self):
 		"""Check for an update.
 		"""
-		t = threading.Thread(target=self._bg)
+		t = threading.Thread(
+			name=f"{self.__class__.__module__}.{self.check.__qualname__}",
+			target=self._bg
+		)
 		t.daemon = True
 		self._started()
 		t.start()
@@ -580,7 +584,10 @@ class UpdateDownloader(object):
 			style=wx.PD_CAN_ABORT | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE,
 			parent=gui.mainFrame)
 		self._progressDialog.Raise()
-		t = threading.Thread(target=self._bg)
+		t = threading.Thread(
+			name=f"{self.__class__.__module__}.{self.start.__qualname__}",
+			target=self._bg
+		)
 		t.daemon = True
 		t.start()
 
@@ -744,7 +751,7 @@ def saveState():
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
 		with open(_stateFilename, "wb") as f:
-			pickle.dump(state, f)
+			pickle.dump(state, f, protocol=0)
 	except:
 		log.debugWarning("Error saving state", exc_info=True)
 

@@ -1,14 +1,12 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2015-2019 NV Access Limited, Bill Dengler
+# Copyright (C) 2015-2016 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import operator
 from comtypes import COMError
-import config
 import ctypes
 import UIAHandler
-from winVersion import isWin10
 
 def createUIAMultiPropertyCondition(*dicts):
 	"""
@@ -126,6 +124,11 @@ def iterUIARangeByUnit(rangeObj,unit,reverse=False):
 		if pastEnd:
 			return
 		tempRange.MoveEndpointByRange(Endpoint_relativeStart,tempRange,Endpoint_relativeEnd)
+		delta = tempRange.CompareEndpoints(Endpoint_relativeStart, rangeObj, Endpoint_relativeEnd)
+		if relativeGTOperator(delta, -1):
+			# tempRange is now already entirely past the end of the given range.
+			# Can be seen with MS Word bullet points: #9613
+			return
 	# Ensure that we always reach the end of the outer range, even if the units seem to stop somewhere inside
 	if relativeLTOperator(tempRange.CompareEndpoints(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd),0):
 		tempRange.MoveEndpointByRange(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd)
@@ -221,22 +224,3 @@ class BulkUIATextRangeAttributeValueFetcher(UIATextRangeAttributeValueFetcher):
 		if not ignoreMixedValues and val==UIAHandler.handler.ReservedMixedAttributeValue:
 			raise UIAMixedAttributeError
 		return val
-
-
-def shouldUseUIAConsole(setting=None):
-	"""Determines whether to use UIA in the Windows Console.
-@param setting: the config value to base this check on (if not provided,
-it is retrieved from config).
-	"""
-	if not setting:
-		setting = config.conf['UIA']['winConsoleImplementation']
-	if setting == "legacy":
-		return False
-	elif setting == "UIA":
-		return True
-	# #7497: Windows 10 Fall Creators Update has an incomplete UIA
-	# implementation for console windows, therefore for now we should
-	# ignore it.
-	# It does not implement caret/selection, and probably has no
-	# new text events.
-	return isWin10(1803)
