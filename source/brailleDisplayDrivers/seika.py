@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012 Ulf Beckmann <beckmann@flusoft.de>
+#Copyright (C) 2012/20 Ulf Beckmann <beckmann@flusoft.de>
 
 # Parts of this code are inherited from the baum braille driver
 # written by James Teh <jamie@jantrid.net>
@@ -11,7 +11,7 @@
 # This file represents the braille display driver for
 # Seika3 V2.00, Seika80, a product from Nippon Telesoft
 # see www.seika-braille.com for more details
-# 18.08.2012 13:54
+# 2020-02-15 11:46
 
 from typing import List
 
@@ -21,6 +21,7 @@ import braille
 import inputCore
 import hwPortUtils
 from logHandler import log
+from hwIo import intToByte
 
 TIMEOUT = 0.2
 BAUDRATE = 9600
@@ -29,16 +30,14 @@ READ_INTERVAL = 50
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "seika"
 	# Translators: Names of braille displays.
-	description = _("Seika braille displays")
+	description = _("Seika Braille V3/5/80")
 	numCells = 0
 
 	@classmethod
 	def check(cls):
 		return True
-
 	def __init__(self):
 		super(BrailleDisplayDriver, self).__init__()
-
 		for portInfo in hwPortUtils.listComPorts(onlyAvailable=True):
 			port = portInfo["port"]
 			hwID = portInfo["hardwareID"]
@@ -57,12 +56,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# Read out the input buffer
 			versionS = self._ser.read(13)
 			log.debug("receive {p}".format(p=versionS))
-			if versionS.startswith("seika80"):
+			if versionS.startswith(b"seika80"):
 				log.info("Found Seika80 connected via {port} Version {versionS}".format(port=port, versionS=versionS))
 				self.numCells = 80
+				self.s40 = b"\xff\xff\x73\x38\x30\x00\x00\x00"
 				break
-			if versionS.startswith("seika3"):
-				log.info("Found Seika40 connected via {port} Version {versionS}".format(port=port, versionS=versionS))
+			if versionS.startswith(b"seika3"):
+				log.info("Found Seika3/5 connected via {port} Version {versionS}".format(port=port, versionS=versionS))
 				self.numCells = 40
 				self.s40 = b"\xFF\xFF\x73\x65\x69\x6B\x61\x00"
 				break
@@ -83,7 +83,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				break
 			self._ser.close()
 		else:
-			raise RuntimeError("No SEIKA40/80 display found")
+			raise RuntimeError("No SEIKA3/5/80 display found")
 		self._readTimer = wx.PyTimer(self.handleResponses)
 		self._readTimer.Start(READ_INTERVAL)
 
@@ -96,18 +96,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._ser.close()
 
 	def display(self, cells: List[int]):
+
+		# add padding so total length is 1 + numberOfStatusCells + numberOfRegularCells
+		cellPadding: bytes = bytes(self.numCells - len(cells))
+		writeBytes: List[bytes] = [self.s40, ]
 		# every transmitted line consists of the preamble SEIKA_SENDHEADER and the Cells
 		if self.numCells==80:
-			lineBytes = b"".join([
-				b"\xff\xff\x73\x38\x30\x00\x00\x00",
-				bytes(cells)
-			])
+			lineBytes : bytes = self.s40 + bytes(cells) + cellPadding
 		else:
-			lineBytes = b"".join([
-				self.s40,
-				b"\0",
-				bytes(cells)
-			])
+			for cell in cells:
+				writeBytes.append(b"\x00")
+				writeBytes.append(intToByte(cell))
+			lineBytes = b"".join(writeBytes)
+			# + cellPadding		self._ser.write(lineBytes)
 		self._ser.write(lineBytes)
 
 	def handleResponses(self):
@@ -195,3 +196,4 @@ class InputGestureRouting(braille.BrailleDisplayGesture):
 
 		self.id = "routing"
 		self.routingIndex = index
+
