@@ -71,7 +71,7 @@ Več podrobnosti je na voljo [na strani z besedilom licence. https://www.gnu.org
 -
 
 + Kako Dobiti in Postaviti NVDA +[GettingAndSettingUpNVDA]
-Če še nimate svoje kopije NVDA, jo lahko snamete iz: [s spletišča NV Access NVDA_URL].
+Če še nimate svoje kopije NVDA, jo lahko snamete s: [spletišča NV Access NVDA_URL].
 
 Pojdite na razdelek download in tam boste našli povezavo za prenos najnovejše različice NVDA.
 
@@ -172,7 +172,7 @@ Drugi določa ali naj se NVDA po prijavi v Windows zažene samodejno in je na vo
 Tretji sprašuje, če naj se to pogovorno okno pokaže vedno, ko se NVDA zažene.
 
 +++ Pogovorno okno uporabe statističnih podatkov +++[UsageStatsDialog]
-Od različice NVDA 2018.3, so uporabniki naprošani,, če  bi želeli dovoliti poslati podatke o uporabi organizaciji NV Access kot pomoč za izboljšanje NVDA v prihodnosti. 
+Od različice NVDA 2018.3, se uporabnike naproša, če  bi želeli dovoliti poslati podatke o uporabi organizaciji NV Access kot pomoč za izboljšanje NVDA v prihodnosti. 
 Ob prvem zagonu  NVDA se bo prikazalo pogovorno okno, ki vas bo zaprosilo za vaše soglasje k pošiljanju podatkov NV Access med uporabo NVDA.
 Več o zbiranju podatkov s strani NV Access lahko preberete in dobite informacije v razdelku Splošno v [Dovoli projektu NVDA zbiranje statistike rabe NVDA #GeneralSettingsGatherUsageStats].
 Pomnite: pritisk na "da" ali "ne" bo shranil to nastavitev in pogovorno okno se ne bo prikazalo nikdar več razen, če boste NVDA ponovno namestili.
@@ -933,13 +933,6 @@ Pomnite: Zgornje bližnjice  delajo samo s privzetim oblikovanjem niza za foobar
 | Sporočaj opombe za prevajalce | control+shift+a | Sporoča katerokoli sporočilo namenjeno prevajalcem. |
 %kc:endInclude
 
-++ Skype ++[Skype]
-%kc:beginInclude
-Ko smo v pogovoru:
-|| Ime | Tipka | Opis |
-| Preglej sporočilo | NVDA+control+1-0 | Sporoči zadnje sporočilo in nanj premakne pregledno utripalko, odvisno od številke, ki ste jo pritisnili; npr. NVDA+control+2 prebere predzadnje sporočilo. |
-%kc:endInclude
-
 ++ Kindle za Osebni Računalnik ++[Kindle]
 NVDA podpira branje knjig in premikanje po njih v aplikaciji Amazon Kindle za osebne računalnike.
 Ta funkcionalnost je na voljo samo v knjigah Kindle, ki so zaznamovane z oznako "Screen Reader: Supported", (aplikacija je samo v Angleščini), kar lahko preverite na strani, ki prikazuje podrobne informacije o lastnostih knjige.
@@ -1013,7 +1006,7 @@ Nekatere nastavitve se lahko spremenijo tudi z uporabo bližnjičnih tipk, ki so
 ++ NVDA Nastavitve ++[NVDASettings]
 %kc:settingsSection: || Ime | Običajna razporeditev | razporeditev Prenosnik | Opis |
 Pogovorno okno NVDA Nastavitev vsebuje precej konfiguracijskih parametrov, ki se lahko spreminjajo.
-To pogovorno okno vsebuje seznam nekaj zvrsti nastavitev, med katerimi lahko izbirate.
+To pogovorno okno vsebuje seznam z nekaj zvrstmi nastavitev, med katerimi lahko izbirate.
 Ko boste izbrali zvrst, se bo pokazalo več nastavitev, ki so povezane s to zvrstjo.
 Te nastavitve se lahko uporabijo z uporabo gumba Uporabi in v tem primeru bo pogovorno okno ostalo odprto.
 Če želite shraniti vaše nastavitve in zapreti pogovorno okno NVDA Nastavitev, lahko uporabite gumb V redu.
@@ -1021,7 +1014,7 @@ Te nastavitve se lahko uporabijo z uporabo gumba Uporabi in v tem primeru bo pog
 Nekaj zvrsti nastavitev ima dodeljene bližnjične tipke.
 Če jih pritisnete, bodo te bližnjične tipke odprle pogovorno okno NVDA Nastavitev v tej nadrobni zvrsti.
 Privzeto niso vse zvrsti dostopne prek tipkovničnih ukazov.
-Če želite dostopati do zvrsti ki nima določenih bližnjičnih tipk, uporabite [pogovorno okno Kretenj Vnosa, #InputGestures] da boste lahko določili bližnjico po meri taki zvrsti, kot je tipkovnični ukaz ali dotikabilna kretnja.
+Če želite dostopati do zvrsti, ki nima določenih bližnjičnih tipk, uporabite [pogovorno okno Kretenj Vnosa, #InputGestures] da boste lahko določili bližnjico po meri taki zvrsti, kot je tipkovnični ukaz ali dotikabilna kretnja.
 
 Zzvrsti nastavitev, ki se nahajajo v pogovornem oknu NVDA Nastavitev, so orisane v nadaljevanju.
 
@@ -1060,7 +1053,8 @@ Na voljo so tile nivoji beleženja:
 - Vhod/izhod: Vnos prek tipkovnice in brajevih vrstic, kot seveda povratna govorna informacija in informacija v brajici se bo beležila.
  - Če vas skrbi zasebnost, nivo beleženja ne nastavite na to možnost.
 - Razhroščevanje: Poleg info, opozorila in sporočil vhoda/izhoda, se bodo beležila dodatna sporočila za razhroščevanje.
- - Kot velja za vhod/izhod,ravno tako tudi tu velja, če vas skrbi zasebnost, ne smete nastaviti ravni beleženja na to možnost.
+ - Kot velja za vhod/izhod, ravno tako tudi tu velja, če vas skrbi zasebnost, ne smete nastaviti ravni beleženja na to možnost.
+ -
 -
 
 ==== Samodejno zaženi NVDA, ko se prijavim v Okna ====[GeneralSettingsStartAfterLogOn]
@@ -1092,8 +1086,8 @@ Pomnite, čeprav se bo s pomočjo vašega IP naslova izračunala vaša država m
 Razen obveznih informacij, ki so potrebne za preverbo posodobitve, se trenutno pošiljajo tudi dodatne informacije:
 - jezik NVDA vmesnika
 - Ali je ta kopija prenosljiva ali nameščena
-- Ime trenutne govorne sinteze v uporabi (vključno z imenom dodatka s katerim prihaja)
-- Ime trenotne brajeve vrstice v uporabi (vključno z imenom dodatka s katerim prihaja)
+- Ime trenutne govorne sinteze v uporabi (vključno z imenom dodatka, s katerim prihaja)
+- Ime trenotne brajeve vrstice v uporabi (vključno z imenom dodatka, s katerim prihaja)
 - Trenutna brajeva tabela za prikaz znakov, (če se brajica uporablja)
 -
 
@@ -1779,24 +1773,14 @@ Za najbolj posodobljene različice Microsoft Offica 2016/365, ki tečejo v windo
 Toda, lahko obstaja tudi nekaj informacij, ki bodisi se ne morejo osvetljiti ali so osvetljene napačno v nekaj različicah Microsoft Offica, kar pomeni, da se na to UI (UV) automation podporo ne moremo vselej zanesti.
 Tako mi še ne priporočamo, da bi večina uporabnikov to možnost imela privzeto vklopljeno, čeprav s hvaležnostjo pozdravljamo uporabnike Offica 2016/365, da testirajo to zmožnost in sporočijo povratne informacije.
 
-==== Podpora Windows Konzoli ====[AdvancedSettingsConsoleUIA]
-Ta možnost določa, kako NVDA sodeluje z Windows Konzolo, ki jo uporablja ukazni poziv, PowerShell in Windows Podsistem za Linux.
-To ne učinkuje na moderen Windos Terminal.
-V Windows 10 različici 1709 je Microsoft [dodal podporo za njihov UI (UV) Automation API v konzolo https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] in s tem prinesel precejšnje izboljšave učinkovitosti in stabilnosti za bralnike zaslona, ki ta vmesnik podpirajo.
-V situacijah, kjer UI (UV) Automation ni na voljo ali se ve, da uporaba tega predstavlja slabšo uporabniško izkušnjo, je še vedno na voljo podpora v NVDA kot rezerva sicer opuščeni konzoli.
-Spustni seznam podpore Windows Konzoli ima tri možnosti:
-- Samodedjno: Uporabi UI (UV) Automation v konzolah v Windows 10 različici 1809 in kasnejših. Ta možnost se priporoča in je privzeta izbira.
-- Izberi UIA: Uporabi UI (UV) Automation v konzolah, če je na voljo, tudi v različicah Oken z nepopolno ali hroščato implementacijo. Čeprav je lahko taka omejena funkcionalnost uporabna (in celo zadostna za vašo uporabo), gre uporaba te možnosti popolnoma na vašo lastno odgovornost in prav tako se ne bo nudilo nikakršne podpore za to.
-- Opuščeno: UI (UV) Automation v Windows Konzoli bo popolnoma onemogočen, tako se bo vedno uporabila sicer opuščena rezerva .
--
+==== Uporabi UI (UV) Automation za dostop do  Windows Konzole, ko je na voljo ====[AdvancedSettingsConsoleUIA]
+Ko je ta možnost omogočena, bo NVDA uporabljala novo različico podpore (še v izdelavi) za Windows Konzolo, ki izkorišča prednosti [izboljšav dostopnosti, narejenih s strani  Microsofta https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Ta zmožnost je še globoko v preizkusni fazi in je še vedno nepopolna, tako se njeno uporabo za zdaj odsvetuje. Toda, ko bo enkrat popolna, se pričakuje, da bo ta nova podpora postala privzeta pri izboljšavi učinkovitosti in stabilnosti NVDA v Windows ukaznih konzolah.
 
-==== Izgovori gesla v Windows Konzoli ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Ta nastavitev nadzira, ali se znaki izgovarjajo prek [izgovori natipkane znake #KeyboardSettingsSpeakTypedCharacters] ali [izgovori natipkane besede #KeyboardSettingsSpeakTypedWords] v situacijah, kjer se ekran ne posodablja, (kot je vnos gesla), v nekaterih terminalskih programih, kot je Windows Konzola z UI (UV) automation podporo omogočeno in v programu Mintty.
-Zaradi varnostnih razlogov bi morala biti ta nastavitev onemogočena.
-Toda, lahko bi jo želeli omogočiti, če se boste srečevali s težavami z učinkovitostjo  ali nestabilnostjo s sporočanjem natipkanih znakov in/ali besed v konzolah ali delate v zaupanja vrednih okoljih in vam ugaja naznanilo gesla.
- 
-==== Uporabi novo podporo za natipkane znake v opuščenih Windows konzolah, ko je na voljo ====[AdvancedSettingsKeyboardSupportInLegacy]
-Ta možnost omogoči alternativno metodo za zaznavo natipkanih znakov v opuščenih Windows konzolah.
+==== Izgovori gesla v UIA konzolah ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Ta nastavitev nadzira, kako se izgovarjajo znaki ob dejavnih možnostih [izgovori natipkane znake #KeyboardSettingsSpeakTypedCharacters] ali [izgovori natipkane besede #KeyboardSettingsSpeakTypedWords] v situacijah, ko se ekran ne osvežuje samodejno (kot je vnos gesla) v Windows Konzoli z UI (UV) automation podporo omogočeno. Zaradi varnostnih razlogov bi morala biti ta nastavitev onemogočena. Toda, mogoče jo boste želeli omogočiti, če boste imeli težave z učinkovitostjo ali s stabilnostjo ob sporočanju natipkanega znaka in/ali besede med uporabo nove poskusne podpore konzolam s strani NVDA.
+
+==== Uporabi novo podporo za natipkane znake v Windows Konzoli, ko je na voljo ====[AdvancedSettingsKeyboardSupportInLegacy]
+Ta možnost omogoči alternativno metodo za zaznavo natipkanih znakov v Windows ukaznih konzolah.
 Čeprav izboljša učinkovitost in prepreči nekaj konzolskega iznosa, da se ne bi izgovoril, je to lahko nezdružljivo z nekaj terminalskimi programi.
 Ta zmožnost je na voljo in je privzeto omogočena v različicah Windows 10 1607, 1703, 1709 in 1803 kot tudi v novejših izdajah Windows 10, ko UI (UV) Automation ni na voljo ali je onemogočena.
 Opozorilo: ko je ta možnost omogočena, natipkani znaki, ki niso vidni na ekranu, kot so gesla, ne bodo odušeni.
@@ -2055,6 +2039,10 @@ Prikazovalnik brajice vsebuje izbirnik imenovan "Pokaži Prikazovalnik brajice o
 Če je izbran, se bo prikazovalnik brajice odprl, ko se bo NVDA zagnala.
 Okno prikazovalnika brajice se bo vedno poskušalo ponovno odpreti po isti širini in višini ter na istem položaju, kjer se je zaprlo.
 
+++ Python Konzola ++[PythonConsole]
+NVDA Python konzola, ki se nahaja v Orodjih menija NVDA, je orodje za razvijalce, ki je uporabno za razhroščevanje, splošno inšpekcijo NVDA notranjosti ali inšpekcijo hierarhije dostopnosti v programu.
+Več informacij, prosimo, poiščite v [Vodiču za Razvijalce  NVDA (v Angleščini) https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+
 ++ Upravitelj Dodatkov ++[AddonsManager]
 Upravitelj dodatkov, dostopen preko izbire Orodij v meniju NVDA, vam omogoča namestitev in odstranitev paketov z dodatki za NVDA ter njihovo začasno izključitev ali vključitev.
 Te dodatke je oskrbela skupnost in vsebujejo prilagojeno kodo, ki lahko doda ali spremeni značilnosti v NVDA ali celo doda podporo večim brajevim vrsticam ali govornim sintezam.
@@ -2100,7 +2088,7 @@ Za pregled teh nezdružljivih dodatkov , lahko uporabite gumb "poglejte nezdruž
 
 Za dostop do Upravitelja dodatkov od kjerkoli, prosimo, dodelite lastno kretnjo z uporabo [pogovornega okna Kretenj Vnosa. #InputGestures]
 
-++ Upravitelj Nezdružljivih Dodatkov ++[incompatibleAddonsManager]
++++ Upravitelj Nezdružljivih Dodatkov +++[incompatibleAddonsManager]
 Upravitelj Nezdružljivih Dodatkov, do katerega se lahko dostopa prek gumba "preglej nezdružljive dodatke" v Upravitelju dodatkov, vam dovoljuje pregled kateregakoli nezdružljivega dodatka in razlog, zakaj je bil ocenjen kot nezdružljiv.
 Dodatki se ocenijo kot nezdružljivi takrat, ko se niso posodobili tako, da bi delovali skladno z večjimi spremembami v NVDA ali, ko se zanašajo na zmožnost, ki ni na voljo v različici NVDA, katera se uporablja.
 Upravitelj nezdružljivih dodatkov vsebuje kratko sporočilo o njegovem namenu kot tudi različico NVDA.
@@ -2113,10 +2101,31 @@ Nezdružljivi dodatki so predstavljeni na seznamu z naslednjimi stolpci:
 Upravitelj nezdružljivih dodatkov ima tudi gumb "O dodatku...".
 To pogovorno okno vas bo oskrbelo s podrobnimi informacijami o dodatku, kar vam bo v pomoč, ko boste skušali stopiti v stik z avtorjem dodatka.
 
+++ Ustvari prenosljivo kopijo ++[CreatePortableCopy]
+To bo odprlo pogovorno okno, ki vam dovoljuje ustvarjanje prenosljive kopije NVDA iz nameščene različice.
+Po drugi strani, ko bo tekla prenosljiva kopija NVDA, se bo v dodatnem podmeniju Orodij pokazala menijska postavka "namesti NVDA na ta PC" namesto "ustvari prenosljivo kopijo".
 
-++ Python Konzola ++[PythonConsole]
-NVDA Python konzola, ki se nahaja v Orodjih menija NVDA, je orodje za razvijalce, ki je uporabno za razhroščevanje, splošno inšpekcijo NVDA notranjosti ali inšpekcijo hierarhije dostopnosti v programu.
-Več informacij, prosimo, poiščite v [Vodiču za Razvijalce  NVDA (v Angleščini) https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+Pogovorno okno za ustvarjanje prenosljive kopije NVDA ali za namestitev NVDA na ta PC vasbo pozval k izbiri poti za mapo, kjer bi morala NVDA ustvariti prenosljivo kopijo ali v katero bi se morala NVDA namestiti.
+
+V tem pogovornem oknu lahko omogočite ali onemogočite sledeče:
+- Preslikaj trenutno uporabniško konfiguracijo  (to vključuje datoteke v %appdata%\roaming\NVDA ali v uporabniški konfiguraciji vaše prenosljive kopije in vključuje tudi dodatke in druge module)
+- Zaženi novo prenosljivo kopijo po njeni stvaritvi ali zaženi NVDA po namestitvi (samodejno zažene NVDA po stvaritvi prenosljive kopije ali po namestitvi)
+-
+
+++ Zaženi orodje za odpravljanje težav z registracijo COM knjižnic... ++[RunCOMRegistrationFixingTool]
+Nameščanje in odstranjevanje programov v računalnik lahko v nekaterih slučajih povzroči deregistracijo COM DLL datotek.
+Ker se COM Vmesniki, kot je IAccessible, zanašajo na pravilne COM DLL registracije, se težave lahko pojavijo v slučajih, ko manjka pravilna registracija.
+
+To se lahko zgodi NPR. po namestitvi in odstranitvi Adobe Readerja, Math Playerja in drugih programov.
+
+Manjkajoča registracija lahko povzroči težave v brskalnikih, namiznih aplikacijah, opravilni vrstici in v drugih vmesnikih.
+
+Bolj natančno, z zagonom tega orodja se lahko rešijo naslednje težave:
+- NVDA sporoča "neznano", ko se krmili v brskalnikih, kot so Firefox, Thunderbird in drugi.
+- NVDA ne uspe pretikati med delovanjem žarišča in brskalniškim delovanjem
+- NVDA je zelo počasna, ko se krmili v brskalnikih ob uporabi brskalniškega delovanja
+- In verjetno tudi druge težave.
+-
 
 ++ Ponovno Naloži vtičnike ++[ReloadPlugins]
 Ta postavka, ko jo sprožite, ponovno naloži aplikacijske module in globalne vtičnike brez potrebe po ponovnem zagonu NVDA, kar je lahko uporabno za razvijalce.
@@ -2439,7 +2448,7 @@ Sledeče posebne naprave so tudi podprte (in ne potrebujejo nobenih dodatnih gon
 - APH Mantis Q40
 - APH Chameleon 20
 - Humanware BrailleOne
-- NLS eReader
+- NLS eBralnik
 
 
 Sledeče tipke na vrsticah Brailliant BI/B and BrailleNote touch so prirejene za delovanje z NVDA.
