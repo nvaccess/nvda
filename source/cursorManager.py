@@ -145,7 +145,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		info.expand(unit)
 		if not willSayAllResume(gesture): speech.speakTextInfo(info,unit=unit,reason=controlTypes.REASON_CARET)
 		if not oldInfo.isCollapsed:
-			speech.speakSelectionChange(oldInfo,self.selection)
+			speech.speakSelectionChange(oldInfo, selection)
 		self.selection = selection
 
 	def doFindText(self,text,reverse=False,caseSensitive=False):
