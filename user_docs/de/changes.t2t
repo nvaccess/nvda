@@ -14,9 +14,8 @@ Zu den Highlights dieser Version gehört die Unterstützung mehrerer neuer Brail
 
 == Änderungen ==
 - Während beim Alles Lesen verhindert NVDA, dass das System sich abschaltet oder in den Schlafmodus wechselt. (#10643)
-- Unterstützung für veraltete Iframes in Mozilla Firefox. (#10707)
+- Unterstützung für veraltete iFrames in Mozilla Firefox. (#10707)
 - Braille-Übersetzer von Liblouis auf Version 3.12 aktualisiert. (#10161)
-- In Visual Studio Code für Insiders ist der Lesemodus nun standardmäßig ausgeschaltet, wie in Visual Studio Code für Stable. (#10858)
 
 
 == Fehlerbehebungen ==
@@ -132,17 +131,17 @@ Obwohl diese Änderungen die Kompatibilität mit älteren NVDA-Erweiterungen nic
 
 
 == Änderungen für Entwickler ==
-- Python aktualisiert auf 3.7. (#7105)
-- pySerial aktualisiert auf version 3.4. (#8815)
+- Python auf 3.7 aktualisiert. (#7105)
+- pySerial auf Version 3.4 aktualisiert. (#8815)
 - wxPython wurde auf 4.0.3 aktualisiert, um Python 3.5 und neuer zu unterstützen. (#9630)
-- Six aktualisiert auf Version 1.12.0 (#9630)
-- py2exe aktualisiert auf Version 0.9.3.2 (in Entwicklung, Commit b372a8e von albertosottile/py2exe#13). (#9856)
-- Modul "comtypes" der UIAutomationCore.dll aktualisiert auf Version 10.0.18362. (#9829)
+- Six auf Version 1.12.0 aktualisiert. (#9630)
+- Py2Exe auf Version 0.9.3.2 aktualisiert (in Entwicklung, Commit b372a8e von albertosottile/py2exe#13). (#9856)
+- Modul "comtypes" der Datei "UIAutomationCore.dll" auf Version 10.0.18362 aktualisiert. (#9829)
 - Die Tab-Vervollständigung in der Python-Konsole schlägt nur dann Attribute vor, die mit einem Unterstrich beginnen, wenn der Unterstrich zuerst eingegeben wird. (#9918)
 - Das Werkzeug Flake8 Linting wurde in SCons integriert, die die Code-Anforderungen für Pull-Requests widerspiegeln. (#5918)
 - Da NVDA nicht mehr von pyWin32 abhängig ist, sind Module wie win32api und win32con für Erweiterungen nicht mehr verfügbar. (#9639)
- - win32api-Aufrufe können durch direkte Aufrufe von win32.dll-Funktionen über ctypes ersetzt werden.
- - win32con-Konstanten sollten in Ihren Dateien definiert werden.
+ - "win32api"-Aufrufe können durch direkte Aufrufe von "win32.dll"-Funktionen über "ctypes" ersetzt werden.
+ - "win32con"-Konstanten sollten in Ihren Dateien definiert werden.
 - Das Argument "async" in nvwave.playWaveFile wurde in "asynchronous" umbenannt. (#8607)
 - Methoden von speakText und speakCharacter in synthDriver-Objekten werden nicht mehr unterstützt.
  - Diese Funktionalität wird verwendet von SynthDriver.speak.
