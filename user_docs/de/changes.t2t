@@ -4,10 +4,52 @@ Was ist neu in NVDA
 %!includeconf: ../changes.t2tconf
 
 
+= 2020.1 =
+
+== Neue Features ==
+- Das aktuell ausgewählte Element in den Listen wird wieder im Lesemodus in Google Chrome dargestellt, ähnlich wie in NVDA 2019.1. (#10713)
+- Sie können nun Rechtsklicks mit der Maus auf Geräten mit Touchscreens ausführen, indem Sie mit einem Finger tippen und halten. (#3886)
+- Unterstützung für neue Braillezeilen: APH Chameleon 20, APH Mantis Q40, Humanware BrailleOne, BrailleNote Touch v2 und NLS eReader. (#10830)
+
+
+== Änderungen ==
+- Während beim Alles Lesen verhindert NVDA, dass das System sich abschaltet oder in den Schlafmodus wechselt. (#10643)
+- Unterstützung für veraltete Iframes in Mozilla Firefox. (#10707)
+- Braille-Übersetzer von Liblouis auf Version 3.12 aktualisiert. (#10161)
+
+
+== Änderungen für Entwickler ==
+- Die Entwickler-Dokumentation wird zukünftig mit Sphinx erstellt. (#9840)
+- Mehrere Sprachfunktionen wurden in zwei Teile aufgeteilt. (#10593)
+  Die speakX-Version bleibt bestehen, hängt aber nun von einer getXSpeech-Funktion ab, die eine Sprachsequenz zurückgibt.
+  - Die Klasse "speakObjectProperties" verlässt sich jetzt auf "getObjectPropertiesSpeech".
+  - Die Klasse "speakObject" verlässt sich jetzt auf "getObjectSpeech".
+  - Die Klasse "speakTextInfo" setzt jetzt auf "getTextInfoSpeech".
+  - Die Klasse "speakWithoutPauses" wurde refaktorisiert, sollte aber die Kompatibilität nicht beeinträchtigen.
+  - Die Klasse "getSpeechForSpelling" ist veraltet (aber immer noch verfügbar), verwenden Sie stattdessen "getSpellingSpeech".
+  Persönliche Änderungen, die die Entwickler von Erweiterungen nicht betreffen sollten:
+  - Die Klasse "_speakPlaceholderIfEmpty" wurde in "_getPlaceholderSpeechIfTextEmpty" umbenannt.
+  - Die Klasse "_speakTextInfo_addMath" wurde in "_extendSpeechSequence_addMathForTextInfo" umbenannt.
+- Die Funktion "reason" für die Sprachausgabe wurde in eine Enum umgewandelt (Klasse "controlTypes.OutputReason"). (#10703)
+  - Die Konstanten der Modulebene "REASON_*" sind veraltet.
+- Visual Studio 2019 (16.2 oder neuer) wird zum Kompilieren von NVDA-Abhängigkeiten benötigt. (#10169)
+- SCons auf Version 3.1.1 aktualisiert. (#10169)
+
+
+== Fehlerbehebungen ==
+- Behoben, dass das Unicode-Minus-Symbol nicht angesagt wurde (U+2212). (#10633)
+- Bei der Installation von Erweiterungen in der Verwaltung für Erweiterungen werden die Dateiennamen und Ordner nicht mehr doppelt gemeldet. (#10620, #2395)
+- In Mozilla Firefox werden beim Laden von Mastodon mit aktivierter erweiterter Web-Schnittstelle alle Zeitleisten jetzt im Lesemodus korrekt gerendert. (#10776)
+- Im Lesemodus meldet NVDA nun die Kontrollkästchen, die nicht ausgewählt sind, wo dies früher manchmal nicht der Fall war. (#10781)
+- Die ARIA-Schalterelemente zur Steuerung melden nicht mehr verwirrende Informationen wie "nicht gedrückt gedrückt geprüft" oder "gedrückt geprüft". (#9187)
+- SAPI4-Stimmen werden nicht mehr ignoriert. (#10792)
+- NVDA kann wiederum mathematische Gleichungen in Microsoft Word lesen und mit ihnen interagieren. (#10803)
+
+
 = 2019.3 =
-NVDA 2019.3 ist eine sehr wichtige Version, die viele Änderungen unter der Haube enthält, einschließlich des Upgrades von Python 2 auf Python 3 und eines umfassenden Umschreibens des Sprach-Subsystems von NVDA.
-Obwohl diese Änderungen die Kompatibilität mit älteren NVDA-Erweiterungen beeinträchtigen, ist das Upgrade auf Python 3 aus Sicherheitsgründen erforderlich, und die Sprachänderungen ermöglichen in naher Zukunft einige spannende Innovationen.
-Weitere Highlights in dieser Version sind die 64-Bit-Unterstützung für Java-VMs, die Funktionalität des Bildschirmvorhangs sowie der visuellen Hervorhebung des Fokusses, die Unterstützung für mehr Braillezeilen und einen neuen Braille-Betrachter sowie viele weitere Fehlerkorrekturen.
+NVDA 2019.3 ist ein umfangreiches Release, das viele Änderungen unter der Haube mit sich bringt. Darunter das Upgrade von Python 2 auf Python 3 und ein komplett neu überarbeitetes Subsystem für die Sprachausgaben in NVDA.
+Obwohl diese Änderungen die Kompatibilität mit älteren NVDA-Erweiterungen nicht mehr besteht, ist das Upgrade auf Python 3 aus Sicherheitsgründen notwendig. Weitere Änderungen an der Sprachausgabe folgen in naher Zukunft.
+ Weitere Highlights in dieser Version sind die 64-Bit-Unterstützung für Java-VMs, die Funktionalität für den Bildschirmvorhang und die Fokus-Hervorhebung, die Unterstützung weiterer Braillezeilen und einem neuen Braille-Betrachter sowie diverse Fehlerbehebungen.
 
 == Neue Features ==
 - Die Genauigkeit des Befehls zum Ziehen der Maus zum Navigator-Objekt wurde in Textfeldern in Java-Anwendungen verbessert. (#10157)
@@ -32,7 +74,7 @@ Weitere Highlights in dieser Version sind die 64-Bit-Unterstützung für Java-VM
 
 
 == Änderungen ==
-- Das Benutzerhandbuch beschreibt nun, wie Sie NVDA in der Windows-Konsole verwenden können. (#9957)
+- Im Benutzerhandbuch wird nun beschrieben, wie Sie NVDA in der Windows-Konsole verwenden können. (#9957)
 - Wenn Sie die Datei "nvda.exe" ausführen, wird nun standardmäßig ein bereits laufender Prozess von NVDA ersetzt. Der Befehlszeilenparameter "-r" oder "---replace" wird weiterhin akzeptiert, jedoch ignoriert. (#8320)
 - Unter Windows 8 und neuer wird NVDA nun Produktnamen und Versionsinformationen für gehostete Anwendungen, wie beispielsweise Anwendungen, die aus dem Microsoft Store heruntergeladen wurden, unter Verwendung der von der Anwendung bereitgestellten Informationen mitteilen. (#4259, #10108)
 - Beim Ein- und Ausschalten der Änderungsverfolgung mit der Tastatur in Microsoft Word meldet NVDA den Status der Einstellung. (#942) 

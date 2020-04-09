@@ -4,7 +4,35 @@
 %!includeconf: ../changes.t2tconf
 
 = Telegram kanal =
-- Kako biste bili obaviješteni o svim događanjima vezanim uz NVDA, pridružite se našem kanalu i grupi nvda_yu. na kanalu ćete moći diskusirati o svemu vezanom uz NVDA, koristeći vaš mobilni telefon ili računalo.
+- Kako biste bili obaviješteni o svim događanjima vezanim uz NVDA, pridružite se našem kanalu i grupi nvda_yu. Na kanalu ćete moći raspravljati o svemu vezanom uz NVDA, koristeći vaš mobilni telefon ili računalo.
+
+
+= 2020.1 =
+
+== Nove značajke ==
+- Označena stavka se sada ponovno pokazuje u načinu pregleda u Chromeu, slično kao u  NVDA 2019.1. (#10713)
+- Sada možete izvoditi desni klik miša na dodirnim uređajima tako da dodirnete i držite jedan prst na ekranu. (#3886)
+- Podrška za nove brajične retke: APH Chameleon 20, APH Mantis Q40, HumanWare BrailleOne, BrailleNote Touch v2, and NLS eReader. (#10830)
+
+
+== Izmjene ==
+- NVDA će spriječiti sustav u pokušaju odlaska u status mirovanja prilikom izvršavanja naredbe čitaj sve. (#10643)
+- Podrška za izvanprocesne okvire u Mozilla Firefoxu. (#10707)
+- Nadograđen liblouis brajični prevoditelj na inačicu 3.12 (#10161)
+
+
+== Izmjene za razvojne programere ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
+
+== Ispravke grešaka ==
+- Ispravljena pogreška, koja je onemogučavala čitanje znaka za minus (U+2212) (#10633)
+- Prilikom instalacije dodataka iz upravitelja dodataka, Imena datoteka i mapa se ne izgovaraju dva puta. (#10620, #2395)
+- U Firefoxu, prilikom učitavanja Mastodona sa uključenim naprednim web sučeljem, sve se vremenske osi prikazuju pravilno u načinu čitanja. (#10776)
+- U načinu pregleda, NVDA sada izgovara "nije odabrano" za potvrdne okvire u kojima to prethodno nije bilo činjeno. (#10781)
+- ARIA kontrole preklopnika više ne izgovaraju zbunjujuće informacije kao što su to "nije pritisnuto odabrano" ili "pritisnuto odabrano". (#9187)
+- SAPI4 glasovi više ne odbijaju izgovarati većinu teksta. Bilješka prevoditelja: To se tiče sintetizatora govora koji ne stignu poslati informaciju čitaču zaslona da su primili informaciju o izgovorenom tekstu. (#10792)
+- NVDA može ponovno čitati i ulaziti u intterakciju sa matematičkim jednadžbama u Microsoft Wordu. (#10803)
 
 
 = 2019.3 =
