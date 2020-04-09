@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2009-2020 NV Access Limited, Joseph Lee, Mohammad Suliman,
-# Babbage B.V., Leonard de Ruijter, Bill Dengler
+# Babbage B.V., Leonard de Ruijter, Bill Dengler, Jakub Lukowicz
 
 """Support for UI Automation (UIA) controls."""
 
@@ -242,9 +242,15 @@ class UIATextInfo(textInfos.TextInfo):
 			val=fetcher.getValue(UIAHandler.UIA_BackgroundColorAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if isinstance(val,int):
 				formatField['background-color']=colors.RGB.fromCOLORREF(val)
+			else:
+				# Translators: a message for reporting a default background color
+				formatField['background-color'] = "default"
 			val=fetcher.getValue(UIAHandler.UIA_ForegroundColorAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if isinstance(val,int):
 				formatField['color']=colors.RGB.fromCOLORREF(val)
+			else:
+				# Translators: a message for reporting a default  foreground color
+				formatField['color'] = "default"
 		if formatConfig['reportLineSpacing']:
 			val=fetcher.getValue(UIAHandler.UIA_LineSpacingAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
