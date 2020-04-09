@@ -360,6 +360,22 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportFontAttributes.__doc__=_("Toggles on and off the reporting of font attributes")
 	script_toggleReportFontAttributes.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report font attributes command.
+		description=_("Toggles on and off the reporting of superscripts and subscripts"),
+		category=SCRCAT_DOCUMENTFORMATTING,
+	)
+	def script_toggleReportSuperscriptsAndSubscripts(self,gesture):
+		if config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"]:
+			# Translators: The message announced when toggling the report superscripts and subscripts document formatting setting.
+			state = _("report superscripts and subscripts off")
+			config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"] = False
+		else:
+			# Translators: The message announced when toggling the report superscripts and subscripts document formatting setting.
+			state = _("report superscripts and subscripts on")
+			config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"] = True
+		ui.message(state)
+	
 	def script_toggleReportRevisions(self,gesture):
 		if config.conf["documentFormatting"]["reportRevisions"]:
 			# Translators: The message announced when toggling the report revisions document formatting setting.
