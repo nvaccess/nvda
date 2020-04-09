@@ -209,7 +209,7 @@ Muita säätimiä ja tekstiä voidaan lukea myös pitämällä ja siirtämällä
 
 +++ Kosketuseleet +++[TouchGestures]
 Kun NVDA-komentoja kuvaillaan edempänä tässä käyttöoppaassa, niissä saatetaan mainita kosketusele, jota voidaan käyttää kosketusnäytöllä kyseisen komennon suorittamiseen.
-Seuraavassa on joitakin tietoja NVDA-komentojen suorittamisesta kosketusnäytöllä eri kosketuseleiden avulla.
+Seuraavassa on tietoja NVDA-komentojen suorittamisesta kosketusnäytöllä eri kosketuseleiden avulla.
 
 ==== Napautukset ====
 Napauta näyttöä nopeasti yhdellä tai useammalla sormella.
@@ -475,13 +475,13 @@ Ne voidaan ottaa haluttaessa käyttöön [Hiiren asetukset #MouseSettings] -kate
 
 Vaikka hiiren avulla liikkumiseen tulisikin käyttää fyysistä hiirtä tai kosketuslevyä, on NVDA:ssa joitakin hiiren käyttöön tarkoitettuja näppäinkomentoja:
 %kc:beginInclude
-|| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
-| Vasemman hiiripainikkeen napsautus | Numeronäppäimistön kautta | NVDA+Ö | Napsauttaa kerran hiiren vasenta painiketta. Kaksoisnapsautus tehdään painamalla tätä näppäinkomentoa kaksi kertaa nopeasti peräkkäin. |
-| Vasemman hiiripainikkeen lukitus | Vaihto+numeronäppäimistön kautta | NVDA+Ctrl+Ö | Lukitsee vasemman hiiripainikkeen alas. Lukitus vapautetaan painamalla tätä näppäinkomentoa uudelleen. Hiirellä vetäminen tehdään painamalla tätä näppäinkomentoa vasemman painikkeen lukitsemiseksi ja siirtämällä sitten hiirtä joko fyysisesti tai käyttämällä jotakin muista hiiren siirtämiskomennoista. |
-| Oikean hiiripainikkeen napsautus | Numeronäppäimistön tähti | NVDA+Ä | Napsauttaa kerran hiiren oikeaa painiketta. |
-| Oikean hiiripainikkeen lukitus | Vaihto+numeronäppäimistön tähti | NVDA+Ctrl+Ä | Lukitsee oikean hiiripainikkeen alas. Lukitus vapautetaan painamalla tätä näppäinkomentoa uudelleen. Hiirellä vetäminen tehdään painamalla tätä komentoa oikean painikkeen lukitsemiseksi ja siirtämällä sitten hiirtä joko fyysisesti tai käyttämällä jotakin muista hiiren siirtämiskomennoista. |
-| Siirrä hiiri nykyiseen navigointiobjektiin | NVDA+numeronäppäimistön kautta | NVDA+Vaihto+M | Siirtää hiiren nykyisen navigointiobjektin ja tarkastelukohdistimen sijaintiin. |
-| Siirrä hiiren alla olevaan objektiin | NVDA+numeronäppäimistön tähti | NVDA+Vaihto+N | Siirtää navigointiobjektin hiiren alla olevaan objektiin. |
+|| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kosketusele | Kuvaus |
+| Vasemman hiiripainikkeen napsautus | Numeronäppäimistön kautta (/) | NVDA+Ö | Ei mitään | Napsauttaa kerran hiiren vasenta painiketta. Kaksoisnapsautus tehdään painamalla tätä näppäinkomentoa kaksi kertaa nopeasti peräkkäin. |
+| Vasemman hiiripainikkeen lukitus | Vaihto+numeronäppäimistön kautta (/) | NVDA+Ctrl+Ö | Ei mitään | Lukitsee vasemman hiiripainikkeen alas. Lukitus vapautetaan painamalla tätä näppäinkomentoa uudelleen. Hiirellä vetäminen tehdään painamalla tätä näppäinkomentoa vasemman painikkeen lukitsemiseksi ja siirtämällä sitten hiirtä joko fyysisesti tai käyttämällä jotakin muista hiiren siirtämiskomennoista. |
+| Oikean hiiripainikkeen napsautus | Numeronäppäimistön tähti (*) | NVDA+Ä | Napauta ja pidä | Napsauttaa kerran hiiren oikeaa painiketta. Käytetään useimmiten pikavalikon avaamiseen hiiren sijainnissa. |
+| Oikean hiiripainikkeen lukitus | Vaihto+numeronäppäimistön tähti (*) | NVDA+Ctrl+Ä | Ei mitään | Lukitsee oikean hiiripainikkeen alas. Lukitus vapautetaan painamalla tätä näppäinkomentoa uudelleen. Hiirellä vetäminen tehdään painamalla tätä komentoa oikean painikkeen lukitsemiseksi ja siirtämällä sitten hiirtä joko fyysisesti tai käyttämällä jotakin muista hiiren siirtämiskomennoista. |
+| Siirrä hiiri nykyiseen navigointiobjektiin | NVDA+numeronäppäimistön kautta (/) | NVDA+Vaihto+M | Ei mitään | Siirtää hiiren nykyisen navigointiobjektin ja tarkastelukohdistimen sijaintiin. |
+| Siirrä hiiren alla olevaan objektiin | NVDA+numeronäppäimistön tähti (*) | NVDA+Vaihto+N | Ei mitään | Siirtää navigointiobjektin hiiren alla olevaan objektiin. |
 %kc:endInclude
 
 + Selaustila +[BrowseMode]
@@ -1162,7 +1162,7 @@ Mikäli välimerkit luetaan väärällä kielellä tiettyä syntetisaattoria tai
 
 ==== Käytä Unicode-konsortion dataa (emojit mukaan lukien) merkkejä ja symboleita käsiteltäessä ====[SpeechSettingsCLDR]
 Kun tämä valintaruutu on valittuna, NVDA käyttääsymboleiden lisäsanastoja merkkejä ja symboleita puhuttaessa.
-Nämä sanastot sisältävät merkkien kuvauksia (erityisesti emojeille), jotka tarjoaa [Unicode-konsortio https://www.unicode.org/consortium/] osana [Common Locale Data -tietokantaa https://cldr.unicode.org/].
+Nämä sanastot sisältävät merkkien kuvauksia (erityisesti emojeille), jotka tarjoaa [Unicode-konsortio https://www.unicode.org/consortium/] osana [Common Locale Data -tietokantaa http://cldr.unicode.org/].
 Mikäli NVDA:n halutaan puhuvan emoji-merkkien kuvaukset tähän dataan perustuen, tämän valintaruudun tulee olla valittuna.
 Jos kuitenkin käytössä on puhesyntetisaattori, joka jo valmiiksi tukee emojien puhumista, tämä asetus kannattaa ehkä poistaa käytöstä.
 
@@ -2425,7 +2425,12 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 Mikäli käytetään USB-liitäntää ja protokollaksi on määritetty HumanWare, valmistajan toimittamat ajurit on asennettava ensin.
 OpenBraille-protokollaa käytettäessä ajureita ei tarvita.
 
-Myös BrailleNote Touchia tuetaan, eikä sitä varten tarvitse asentaa ajureita.
+Myös seuraavia laitteita tuetaan, eikä niitä varten tarvitse asentaa ajureita.
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
+
 
 Seuraavassa on Brailliant BI/B- ja BrailleNote Touch -näyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso laitteiden käyttöohjeista kuvaukset näppäinten paikoista.

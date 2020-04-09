@@ -3,6 +3,33 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.1 =
+
+== Uudet ominaisuudet ==
+- Listaruuduissa valittuna oleva kohde näytetään jälleen selaustilassa Chromessa samalla tavoin kuin NVDA 2019.1:ssä. (#10713)
+- Voit nyt suorittaa kosketusnäyttölaitteissa oikean hiirinäppäimen napsautuksen napauttamalla ja pitämällä yhtä sormea näytöllä. (#3886)
+- Tuki uusille pistenäytöille: APH Chameleon 20, APH Mantis Q40, HumanWare BrailleOne, BrailleNote Touch v2 ja NLS eReader. (#10830)
+
+
+== Muutokset ==
+- NVDA estää järjestelmää lukittumasta tai siirtymästä lepotilaan, kun jatkuva luku on käynnissä. (#10643)
+- Tuki prosessin ulkopuolisille tekstikehyksille Mozilla Firefoxissa. (#10707)
+- Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.12. (#10161)
+
+
+== Korjatut ohjelmavirheet ==
+- Unicode-miinusmerkkiä (U+2212) ei puhuttu. (#10633)
+- Kun lisäosa asennetaan lisäosien hallinnasta, tiedostojen ja kansioiden nimiä ei enää puhuta Selaa-ikkunassa kahdesti. (#10620, #2395)
+- Kun Mastodon ladataan Firefoxissa edistyneen web-käyttöliittymän ollessa käytössä, kaikki aikajanat näytetään nyt oikein selaustilassa. (#10776)
+- NVDA ilmoittaa nyt selaustilassa "ei valittu" sellaisille ei-valituille valintaruuduille, joista sitä ei aiemmin ilmoitettu. (#10781)
+- ARIA-kytkinsäätimistä ei enää puhuta sekavaa tietoa, kuten "ei painettu valittu" tai "painettu valittu". (#9187)
+- SAPI 4 -äänien ei pitäisi enää kieltäytyä puhumasta tiettyä tekstiä. (#10792)
+- NVDA voi jälleen lukea matemaattisia yhtälöitä Microsoft Wordissa ja olla vuorovaikutuksessa niiden kanssa. (#10803)
+
+
+== Muutokset kehittäjille ==
+
+
 = 2019.3 =
 NVDA 2019.3 on erittäin merkittävä julkaisu, joka sisältää monia konepellin alla tapahtuneita muutoksia, mukaan lukien Python 2:n päivittäminen Python 3:ksi sekä NVDA:n puhealijärjestelmän huomattava uudelleenkirjoittaminen.
 Vaikka nämä muutokset rikkovat yhteensopivuuden vanhempien NVDA-lisäosien kanssa, päivitys Python 3:een on turvallisuuden kannalta välttämätön, ja puhemuutokset mahdollistavat lähitulevaisuudessa jännittäviä innovaatioita.

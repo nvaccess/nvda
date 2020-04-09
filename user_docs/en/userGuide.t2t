@@ -1690,6 +1690,7 @@ You can configure reporting of:
  - Font name
  - Font size
  - Font attributes
+ - Superscripts and subscripts
  - Emphasis
  - Style
  - Colors
@@ -1788,7 +1789,7 @@ This setting controls whether characters are spoken by [speak typed characters #
 ==== Use the new typed character support in Windows Console when available ====[AdvancedSettingsKeyboardSupportInLegacy]
 This option enables an alternative method for detecting typed characters in Windows command consoles.
 While it improves performance and prevents some console output from being spelled out, it may be incompatible with some terminal programs.
-This feature is available and enabled by default on Windows 10 versions 1607, 1703, 1709 and 1803 as well as on newer Windows 10 releases when UI Automation is unavailable or disabled.
+This feature is available and enabled by default on Windows 10 versions 1607and later when UI Automation is unavailable or disabled.
 Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
 In untrusted environments, you may temporarily disable [speak typed characters #KeyboardSettingsSpeakTypedCharacters] and [speak typed words #KeyboardSettingsSpeakTypedWords] when entering passwords.
 
@@ -2001,7 +2002,8 @@ Portable versions of NVDA store all settings and add-ons in a directory called u
 
 Installed versions of NVDA store all settings and add-ons in a special NVDA directory located in your Windows user profile.
 This means that each user on the system can have their own NVDA settings.
-To get to your settings directory for an installed version of NVDA, on the start menu you can go to programs -> NVDA -> explore user configuration directory.
+To open your settings directory from anywhere you can use [Input Gestures dialog #InputGestures] to add a custom gesture.
+In addition for an installed version of NVDA, on the start menu you can go to programs -> NVDA -> explore user configuration directory.
 
 Settings for NVDA when running on the logon or UAC screens are stored in the systemConfig directory in NVDA's installation directory.
 Usually, this configuration should not be touched.
@@ -2044,6 +2046,10 @@ Physical braille displays typically have buttons to scroll forwards or backwards
 The braille viewer window contains a check box labeled "Show braille viewer on startup".
 If this is checked, the braille viewer will open when NVDA is started.
 The braille viewer window will always attempt to re-open with the same dimensions and location as when it was closed.
+
+++ Python Console ++[PythonConsole]
+The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
+For more information, please see the [NVDA Developer Guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
 ++ Add-ons Manager ++[AddonsManager]
 The Add-ons Manager, accessed by selecting Manage add-ons under Tools in the NVDA menu, allows you to install, uninstall, enable and disable add-on packages for NVDA.
@@ -2090,7 +2096,7 @@ To inspect these incompatible add-ons, you can use the "view incompatible add-on
 
 To access the Add-ons Manager from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
-++ Incompatible Add-ons Manager ++[incompatibleAddonsManager]
++++ Incompatible Add-ons Manager +++[incompatibleAddonsManager]
 The Incompatible Add-ons Manager, which can be accessed via the "view incompatible add-ons" button in the Add-on manager, allows you to inspect any incompatible add-ons, and the reason they are considered incompatible.
 Add-ons are considered incompatible when they have not been updated to work with significant changes to NVDA, or when they rely on a feature not available in the version of NVDA you are using.
 The Incompatible add-ons manager has a short message to explain its purpose as well as the version of NVDA.
@@ -2103,10 +2109,31 @@ The incompatible add-ons are presented in a list with the following columns:
 The Incompatible add-ons manager also has an "About add-on..." button.
 This dialog will provide you with the full details of the add-on, which is helpful when contacting the add-on author.
 
+++ Create portable copy ++[CreatePortableCopy]
+This will open a dialog which allows you to create a portable copy of NVDA out of the installed version.
+Either way, when running a portable copy of NVDA, in the extra tool sub menu the menu item will be called "install NVDA on this PC" instead of "create portable copy).
 
-++ Python Console ++[PythonConsole]
-The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
-For more information, please see the [NVDA Developer Guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+The dialog to create a portable copy of NVDA or to install NVDA on this PC will promt you to choose a folder path in which NVDA should create the portable copy or in which NVDA should be installed.
+
+In this dialog you can enable or disable the following:
+- Copy current user configuration (this includes the files in %appdata%\roaming\NVDA or in the user configuration of your portable copy and includes also addons and other modules)
+- Start the new portable copy after creation or start NVDA after installation (starts NVDA automatically after the portable copy creation or the installation)
+-
+
+++ Run COM registration fixing tool... ++[RunCOMRegistrationFixingTool]
+Installing and uninstalling programs on a computer can, in certain cases, cause COM DLL files to get unregistered.
+As COM Interfaces such as IAccessible depend on correct COM DLL registrations, issues can appear in case the correct registration is missing.
+
+This can happen i.e. after installing and uninstalling Adobe Reader, Math Player and other programs.
+
+The missing registration can cause issues in browsers, desktop apps, task bar and other interfaces.
+
+Specifically, following issues can be solved by running this tool:
+- NVDA reports "unknown" when navigating in browsers such as Firefox, Thunderbird etc.
+- NVDA fails to switch between focus mode and browse mode
+- NVDA is very slow when navigating in browsers while using browse mode
+- And possibly other issues.
+-
 
 ++ Reload plugins ++[ReloadPlugins]
 This item, once activated, reloads app modules and global plugins without restarting NVDA, which can be useful for developers.
@@ -2175,6 +2202,7 @@ The following displays support this automatic detection functionality.
 - Optelec ALVA 6 series
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
 - Eurobraille Esys/Esytime/Iris displays
+- Nattiq nBraille displays
 -
 
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
@@ -2425,7 +2453,12 @@ The Brailliant BI and B series of displays  from [HumanWare https://www.humanwar
 If connecting via USB with the protocol set to HumanWare, you must first install the USB drivers provided by the manufacturer.
 USB drivers are not required if the protocol is set to OpenBraille.
 
-The BrailleNote Touch is also supported, and does not require any drivers to be installed.
+The following extra devices are also supported (and do not require any special drivers to be installed):
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
+
 
 Following are the key assignments for  the Brailliant BI/B and BrailleNote touch displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -2954,6 +2987,22 @@ Please see the display's documentation for descriptions of where these keys can 
 | alt key | dot8+space, l6 |
 | Toggle alt key | dot1+dot8+space, dot4+dot8+space |
 | ToggleHID keyboard input simulation | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
+%kc:endInclude
+
+++ Nattiq nBraille Displays ++[NattiqTechnologies]
+NVDA supports displays from [Nattiq Technologies https://www.nattiq.com/] when connected via USB.
+Windows 10 detects the Braille Displays once connected, you may need to install USB drivers if using older versions of Windows (below Win10).
+You can get them from the manufacturer's website.
+
+Following are the key assignments for Nattiq Technologies displays with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | up |
+| Scroll braille display forward | down |
+| Move braille display to previous line | left |
+| Move braille display to next line | right |
+| Route to braille cell | routing |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]

@@ -1371,17 +1371,34 @@ class GlobalCommands(ScriptableObject):
 	script_sayAll.category=SCRCAT_SYSTEMCARET
 
 	def _reportFormattingHelper(self, info, browseable=False):
-		formatConfig={
-			"detectFormatAfterCursor":False,
-			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,"reportEmphasis":False,
-			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
-			"reportPage":False,"reportLineNumber":False,"reportLineIndentation":True,"reportLineIndentationWithTones":False,"reportParagraphIndentation":True,"reportLineSpacing":True,"reportTables":False,
-			"reportLinks":False,"reportHeadings":False,"reportLists":False,
-			"reportBlockQuotes":False,"reportComments":False,
-			"reportBorderStyle":True,"reportBorderColor":True,
-		}
-		textList=[]
+		# Report all formatting-related changes regardless of user settings
+		# when explicitly requested.
+		# These are the options we want reported when reporting formatting manually.
+		# for full list of options that may be reported see the "documentFormatting" section of L{config.configSpec}
+		reportFormattingOptions = (
+			"reportFontName",
+			"reportFontSize",
+			"reportFontAttributes",
+			"reportSuperscriptsAndSubscripts",
+			"reportColor",
+			"reportStyle",
+			"reportAlignment",
+			"reportSpellingErrors",
+			"reportLineIndentation",
+			"reportParagraphIndentation",
+			"reportLineSpacing",
+			"reportBorderStyle",
+			"reportBorderColor",
+		)
 
+		# Create a dictionary to replace the config section that would normally be
+		# passed to getFormatFieldsSpeech / getFormatFieldsBraille
+		formatConfig = dict()
+		from config import conf
+		for i in conf["documentFormatting"]:
+			formatConfig[i] = i in reportFormattingOptions
+
+		textList = []
 		# First, fetch indentation.
 		line=info.copy()
 		line.expand(textInfos.UNIT_LINE)
@@ -1582,6 +1599,17 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 	script_navigatorObject_devInfo.__doc__ = _("Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined.")
 	script_navigatorObject_devInfo.category=SCRCAT_TOOLS
+
+	@script(
+		# Translators: Input help mode message for Open user configuration directory command.
+		description=_("Opens NVDA configuration directory for the current user."),
+		category=SCRCAT_TOOLS
+	)
+	def script_openUserConfigurationDirectory(self, gesture):
+		if globalVars.appArgs.secure:
+			return
+		import systemUtils
+		systemUtils.openUserConfigurationDirectory()
 
 	def script_toggleProgressBarOutput(self,gesture):
 		outputMode=config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]

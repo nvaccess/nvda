@@ -1,7 +1,7 @@
-# A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
+# A part of NonVisual Desktop Access (NVDA)
 # See the file COPYING for more details.
-# Copyright (C) 2016-2019 NV Access Limited, Jakub Lukowicz
+# Copyright (C) 2016-2020 NV Access Limited, Joseph Lee, Jakub Lukowicz
 
 from comtypes import COMError
 from collections import defaultdict
@@ -334,6 +334,13 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 
 	# Microsoft Word duplicates the full title of the document on this control, which is redundant as it appears in the title of the app itself.
 	name=u""
+
+	def event_UIA_notification(self, activityId=None, **kwargs):
+		# #10851: in recent Word 365 releases, UIA notification will cause NVDA to announce edit functions
+		# such as "delete back word" when Control+Backspace is pressed.
+		if activityId == "AccSN2":  # Delete activity ID
+			return
+		super(WordDocument, self).event_UIA_notification(**kwargs)
 
 	@script(
 		gesture="kb:NVDA+alt+c",

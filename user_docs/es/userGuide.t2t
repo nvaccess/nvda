@@ -473,15 +473,15 @@ Cuanto más a la izquierda o a la derecha esté el ratón en la pantalla, más a
 Estas características extra del ratón no están activadas de forma predeterminada en NVDA. 
 Si deseas sacar partido de ellas, puedes configurarlas desde la categoría [Opciones del Ratón #MouseSettings], del diálogo [Opciones de NVDA #NVDASettings] que se encuentra en el menú Preferencias de NVDA.
 
-Si bien un ratón físico o un trackpad se podrían utilizar para navegar con el ratón, NVDA tiene unas pocas teclas de órdenes relacionadas con el ratón:
+Si bien un ratón físico o un trackpad se podrían utilizar para navegar con el ratón, NVDA proporciona algunas órdenes relacionadas con él:
 %kc:beginInclude
-|| Nombre | Tecla Escritorio | Tecla Portátil | Descripción |
-| Clic botón izquierdo del ratón | Dividir teclado numérico | NVDA+` (acento grave) | Hace clic en el botón izquierdo del ratón una vez. El común doble clic puede llevarse a cabo pulsando esta tecla dos veces en rápida sucesión |
-| Bloquear botón izquierdo del ratón | shift+Dividir teclado numérico | NVDA+control+` (acento grave) | Mantiene pulsado el botón izquierdo del ratón. Púlsalo de nuevo para liberarlo. Para arrastrar el ratón,  pulsa esta tecla para bloquear el botón izquierdo y entonces mueve el ratón físicamente o utiliza una de las otras órdenes de enrutamiento del ratón |
-| Clic botón derecho del ratón | Multiplicar teclado numérico | NVDA++ (signo más) | Hace Clic en el botón derecho del ratón una vez. |
-| Bloquear botón derecho del ratón | shift+Multiplicar teclado numérico | NVDA+control++ (signo más) | Mantiene pulsado el botón derecho del ratón. Pulsa otra vez para liberarlo. Para arrastrar el ratón,  pulsa esta tecla  para bloquear el botón derecho y entonces mueve el ratón físicamente o utiliza una de las otras órdenes de enrutamiento del ratón |
-| Mover ratón a navegador de objetos actual | NVDA+Dividir teclado numérico | NVDA+shift+m | Mueve el ratón a la posición del navegador de objetos actual y cursor de revisión |
-| navegar al objeto bajo el ratón | NVDA+Multiplicar teclado numérico | NVDA+shift+n | Pone el navegador de objetos en el objeto localizado en la posición del ratón |
+|| Nombre | Tecla Escritorio | Tecla Portátil | Táctil | Descripción |
+| Clic botón izquierdo del ratón | Dividir teclado numérico | NVDA+` (acento grave) | no | Hace clic en el botón izquierdo del ratón una vez. El típipo doble clic puede realizarse pulsando esta tecla dos veces en sucesión rápida |
+| Bloquear botón izquierdo del ratón | shift+Dividir teclado numérico | NVDA+control+` (acento grave) | no | Mantiene pulsado el botón izquierdo del ratón. Púlsalo de nuevo para liberarlo. Para arrastrar el ratón,  pulsa esta tecla para bloquear el botón izquierdo y entonces mueve el ratón físicamente o utiliza una de las otras órdenes de movimiento del ratón |
+| Clic botón derecho del ratón | Multiplicar teclado numérico | NVDA++ (signo más) | Tap y mantener | Hace Clic en el botón derecho del ratón una vez, principalmente útil para abrir un menú de contexto en la posición del ratón. |
+| Bloquear botón derecho del ratón | shift+Multiplicar teclado numérico | NVDA+control++ (signo más) | No | Mantiene pulsado el botón derecho del ratón. Pulsa otra vez para liberarlo. Para arrastrar el ratón,  pulsa esta tecla  para bloquear el botón derecho y entonces mueve el ratón físicamente o utiliza una de las otras órdenes de movimiento del ratón |
+| Mover ratón a navegador de objetos actual | NVDA+Dividir teclado numérico | NVDA+shift+m | No | Mueve el ratón a la posición del navegador de objetos actual y cursor de revisión |
+| navegar al objeto bajo el ratón | NVDA+Multiplicar teclado numérico | NVDA+shift+n | No | Pone el navegador de objetos en el objeto localizado en la posición del ratón |
 %kc:endInclude
 
 + Modo Exploración +[BrowseMode]
@@ -2423,7 +2423,12 @@ Las pantallas braille Brailliant series BI y B de [HumanWare https://www.humanwa
 Si la conectas a través de USB con el protocolo configurado a HumanWare, primero debes instalar los controladores USB proporcionados por el fabricante.
 Los controladores USB no se requieren si el protocolo se configura a OpenBraille.
 
-También se admite la BrailleNote Touch, y no requiere instalar ningún controlador.
+También se admiten los siguientes dispositivos extra (y no requieren ningún controlador en especial para ser instalados):
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
+-
 
 Seguidamente van las asignaciones de teclas para las pantallas Brailliant BI/B y BrailleNote touch con NVDA.
 Por favor conhsulta la documentación de la pantalla para descripciones de dónde pueden encontrarse estas teclas.

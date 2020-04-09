@@ -249,30 +249,148 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 		config._setStartOnLogonScreen(startOnLogonScreen)
 	NVDAExe=os.path.join(installDir,u"nvda.exe")
 	slaveExe=os.path.join(installDir,u"nvda_slave.exe")
+	try:
+		_updateShortcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe, startMenuFolder)
+	except Exception:
+		log.error("Error while creating shortcuts", exc_info=True)
+	registerAddonFileAssociation(slaveExe)
+
+
+def _createShortcutWithFallback(
+		path,
+		targetPath=None,
+		arguments=None,
+		iconLocation=None,
+		workingDirectory=None,
+		hotkey=None,
+		prependSpecialFolder=None,
+		fallbackHotkey=None,
+		fallbackPath=None,
+):
+	"""Sometimes translations are used (for `path` or `hotkey` arguments) which include unicode characters
+	which cause the createShortcut method to fail. In these cases, try again using the English string if it is
+	provided via the `fallbackHotkey` / `fallbackPath` arguments.
+	"""
+	try:
+		createShortcut(
+			path,
+			targetPath,
+			arguments,
+			iconLocation,
+			workingDirectory,
+			hotkey,
+			prependSpecialFolder
+		)
+	except Exception:
+		if hotkey is not None and fallbackHotkey is not None:
+			log.error(f"Error creating {path}. With hotkey ({hotkey}). Trying fallback hotkey: {fallbackHotkey}")
+			_createShortcutWithFallback(
+				hotkey=fallbackHotkey,
+				fallbackHotkey=None,
+				path=path,
+				fallbackPath=fallbackPath,
+				targetPath=targetPath,
+				arguments=arguments,
+				prependSpecialFolder=prependSpecialFolder,
+			)
+		elif fallbackPath is not None:
+			log.error(f"Error creating {path}. Trying without translation of filename, instead using: {fallbackPath}")
+			_createShortcutWithFallback(
+				path=fallbackPath,
+				fallbackPath=None,
+				targetPath=targetPath,
+				arguments=arguments,
+				hotkey=hotkey,
+				prependSpecialFolder=prependSpecialFolder,
+				fallbackHotkey=fallbackHotkey,
+			)
+		else:
+			log.error(
+				f"Error creating {path}, no mitigation possible. "
+				f"Perhaps controlled folder access is active for this directory."
+			)
+
+
+def _updateShortcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe, startMenuFolder) -> None:
 	if shouldCreateDesktopShortcut:
-		# #8320: -r|--replace is now the default. Nevertheless, keep creating
-		# the shortcut with the now superfluous argument in case a downgrade of
-		# NVDA is later performed.
 		# Translators: The shortcut key used to start NVDA.
 		# This should normally be left as is, but might be changed for some locales
 		# if the default key causes problems for the normal locale keyboard layout.
 		# The key must be formatted as described in this article:
 		# http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
-		createShortcut(u"NVDA.lnk",targetPath=slaveExe,arguments="launchNVDA -r",hotkey=_("CTRL+ALT+N"),workingDirectory=installDir,prependSpecialFolder="AllUsersDesktop")
-	createShortcut(os.path.join(startMenuFolder,"NVDA.lnk"),targetPath=NVDAExe,workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
+		hotkeyTranslated = _("CTRL+ALT+N")
+
+		# #8320: -r|--replace is now the default. Nevertheless, keep creating
+		# the shortcut with the now superfluous argument in case a downgrade of
+		# NVDA is later performed.
+		_createShortcutWithFallback(
+			path="NVDA.lnk",
+			targetPath=slaveExe,
+			arguments="launchNVDA -r",
+			hotkey=hotkeyTranslated,
+			fallbackHotkey="CTRL+ALT+N",
+			workingDirectory=installDir,
+			prependSpecialFolder="AllUsersDesktop",
+		)
+
+	_createShortcutWithFallback(
+		path=os.path.join(startMenuFolder, "NVDA.lnk"),
+		targetPath=NVDAExe,
+		workingDirectory=installDir,
+		prependSpecialFolder="AllUsersPrograms"
+	)
+
 	# Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
-	createShortcut(os.path.join(startMenuFolder,_("NVDA web site")+".lnk"),targetPath=versionInfo.url,prependSpecialFolder="AllUsersPrograms")
+	webSiteTranslated = _("NVDA web site")
+	_createShortcutWithFallback(
+		path=os.path.join(startMenuFolder, webSiteTranslated + ".lnk"),
+		fallbackPath=os.path.join(startMenuFolder, "NVDA web site.lnk"),
+		targetPath=versionInfo.url,
+		prependSpecialFolder="AllUsersPrograms"
+	)
+
 	# Translators: A label for a shortcut item in start menu to uninstall NVDA from the computer.
-	createShortcut(os.path.join(startMenuFolder,_("Uninstall NVDA")+".lnk"),targetPath=os.path.join(installDir,"uninstall.exe"),workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
+	uninstallTranslated = _("Uninstall NVDA")
+	_createShortcutWithFallback(
+		path=os.path.join(startMenuFolder, uninstallTranslated + ".lnk"),
+		fallbackPath=os.path.join(startMenuFolder, "Uninstall NVDA.lnk"),
+		targetPath=os.path.join(installDir, "uninstall.exe"),
+		workingDirectory=installDir,
+		prependSpecialFolder="AllUsersPrograms"
+	)
+
 	# Translators: A label for a shortcut item in start menu to open current user's NVDA configuration directory.
-	createShortcut(os.path.join(startMenuFolder,_("Explore NVDA user configuration directory")+".lnk"),targetPath=slaveExe,arguments="explore_userConfigPath",workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
+	exploreConfDirTranslated = _("Explore NVDA user configuration directory")
+	_createShortcutWithFallback(
+		path=os.path.join(startMenuFolder, exploreConfDirTranslated + ".lnk"),
+		fallbackPath=os.path.join(startMenuFolder, "Explore NVDA user configuration directory.lnk"),
+		targetPath=slaveExe,
+		arguments="explore_userConfigPath",
+		workingDirectory=installDir,
+		prependSpecialFolder="AllUsersPrograms"
+	)
+
 	# Translators: The label of the NVDA Documentation menu in the Start Menu.
-	docFolder=os.path.join(startMenuFolder,_("Documentation"))
+	docFolder = os.path.join(startMenuFolder, _("Documentation"))
+
 	# Translators: The label of the Start Menu item to open the Commands Quick Reference document.
-	createShortcut(os.path.join(docFolder,_("Commands Quick Reference")+".lnk"),targetPath=getDocFilePath("keyCommands.html",installDir),prependSpecialFolder="AllUsersPrograms")
+	commandsRefTranslated = _("Commands Quick Reference")
+	_createShortcutWithFallback(
+		path=os.path.join(docFolder, commandsRefTranslated + ".lnk"),
+		fallbackPath=os.path.join(docFolder, "Commands Quick Reference.lnk"),
+		targetPath=getDocFilePath("keyCommands.html", installDir),
+		prependSpecialFolder="AllUsersPrograms"
+	)
+
 	# Translators: A label for a shortcut in start menu to open NVDA user guide.
-	createShortcut(os.path.join(docFolder,_("User Guide")+".lnk"),targetPath=getDocFilePath("userGuide.html",installDir),prependSpecialFolder="AllUsersPrograms")
-	registerAddonFileAssociation(slaveExe)
+	userGuideTranslated = _("User Guide")
+	_createShortcutWithFallback(
+		path=os.path.join(docFolder, userGuideTranslated + ".lnk"),
+		fallbackPath=os.path.join(docFolder, "User Guide.lnk"),
+		targetPath=getDocFilePath("userGuide.html", installDir),
+		prependSpecialFolder="AllUsersPrograms"
+	)
+
 
 def isDesktopShortcutInstalled():
 	wsh=_getWSH()
