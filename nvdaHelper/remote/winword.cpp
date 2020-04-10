@@ -626,7 +626,7 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 			if((formatConfig&formatConfig_reportColor)&&(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_COLOR,VT_I4,&iVal)==S_OK)) {
 				formatAttribsStream<<L"color=\""<<iVal<<L"\" ";
 			}
-			if(formatConfig&formatConfig_reportFontAttributes) {if(formatConfig&formatConfig_reportFontAttributes) {
+			if(formatConfig&formatConfig_reportFontAttributes) {
 				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_BOLD,VT_I4,&iVal)==S_OK&&iVal) {
 					formatAttribsStream<<L"bold=\"1\" ";
 				}
