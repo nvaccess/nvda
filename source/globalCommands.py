@@ -365,13 +365,15 @@ class GlobalCommands(ScriptableObject):
 		description=_("Toggles on and off the reporting of superscripts and subscripts"),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
-	def script_toggleReportSuperscriptsAndSubscripts(self,gesture):
+	def script_toggleReportSuperscriptsAndSubscripts(self, gesture):
 		if config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"]:
-			# Translators: The message announced when toggling the report superscripts and subscripts document formatting setting.
+			# Translators: The message announced when toggling the report superscripts and subscripts
+			# document formatting setting.
 			state = _("report superscripts and subscripts off")
 			config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"] = False
 		else:
-			# Translators: The message announced when toggling the report superscripts and subscripts document formatting setting.
+			# Translators: The message announced when toggling the report superscripts and subscripts
+			# document formatting setting.
 			state = _("report superscripts and subscripts on")
 			config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"] = True
 		ui.message(state)
