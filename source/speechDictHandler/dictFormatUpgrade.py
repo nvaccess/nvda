@@ -10,6 +10,7 @@
 import globalVars
 import os
 import api
+from config import conf
 import glob
 from logHandler import log
 from .speechDictVars import speechDictsPath
@@ -26,6 +27,16 @@ def createVoiceDictFileName(synthName, voiceName):
 			synth = synthName,
 			voice = api.filterFileName(voiceName)
 			)
+
+
+def getProfileVoiceDictsPath():
+	profile = conf.getActiveProfile()
+	return os.path.join(speechDictsPath, profile.name or "", r"voiceDicts.v1")
+
+
+def getProfileVoiceDictsBackupPath():
+	profile = conf.getActiveProfile()
+	return os.path.join(speechDictsPath, profile.name or "", r"voiceDictsBackup.v0")
 
 def doAnyUpgrades(synth):
 	""" Do any upgrades required for the synth passed in.

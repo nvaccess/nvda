@@ -24,6 +24,7 @@ import languageHandler
 import speech
 import gui
 import gui.contextHelp
+import os
 import globalVars
 from logHandler import log
 import nvwave
@@ -2985,8 +2986,11 @@ class DictionaryDialog(SettingsDialog):
 	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.items()}
 	helpId = "SpeechDictionaries"
 
+	PATTERN_COL = 1
+
 	def __init__(self,parent,title,speechDict):
-		self.title = title
+		self._profile = config.conf.getActiveProfile()
+		self.title = self._makeTitle(title)
 		self.speechDict = speechDict
 		self.tempSpeechDict=speechDictHandler.SpeechDict()
 		self.tempSpeechDict.extend(self.speechDict)
@@ -2998,6 +3002,11 @@ class DictionaryDialog(SettingsDialog):
 		self.SetSize(576, 502)
 		self.CentreOnScreen()
 
+	def _makeTitle(self, title):
+		# Translators: The profile name for normal configuration
+		profileName = self._profile.name or _("normal configuration")
+		return f"{title} - {profileName}"
+	
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: The label for the list box of dictionary entries in speech dictionary dialog.
@@ -3040,10 +3049,23 @@ class DictionaryDialog(SettingsDialog):
 			label=_("&Remove")
 		).Bind(wx.EVT_BUTTON, self.OnRemoveClick)
 
+		if(self._profile.name):
+			bHelper.addButton(
+				parent=self,
+				# Translators: The label for the import entries from default profile dictionary
+				label=_("&import entries from default profile dictionary")
+			).Bind(wx.EVT_BUTTON, self.onImportEntriesClick)
+
 		sHelper.addItem(bHelper)
 
 	def postInit(self):
 		self.dictList.SetFocus()
+
+	def hasEntry(self, pattern):
+		for row in range(self.dictList.GetItemCount()):
+			if self.dictList.GetItem(row, self.PATTERN_COL).GetText() == pattern:
+				return True
+		return False
 
 	def onCancel(self,evt):
 		globalVars.speechDictionaryProcessing=True
@@ -3054,9 +3076,33 @@ class DictionaryDialog(SettingsDialog):
 		if self.tempSpeechDict!=self.speechDict:
 			del self.speechDict[:]
 			self.speechDict.extend(self.tempSpeechDict)
+
+			newDictionary = not os.path.exists(self.speechDict.fileName)
 			self.speechDict.save()
+			if newDictionary:
+				# if we are saving a dictionary that didn't exist before (user just performed the first edition)
+				# we have to activate it now, otherwise it will be effective only on next profile switch.
+				log.debug(f"Activating new dictionary {self.speechDict.fileName}")
+				speechDictHandler.reloadDictionaries()
 		super(DictionaryDialog, self).onOk(evt)
 
+	def onImportEntriesClick(self, evt):
+		sourceFileName = self.speechDict.fileName.replace(f"{self._profile.name}\\", "")
+		log.debug(f"Importing entries from default dictionary at {sourceFileName}")
+		source = speechDictHandler.SpeechDict()
+		source.load(sourceFileName)
+		self.tempSpeechDict.syncFrom(source)
+		for entry in self.tempSpeechDict:
+			if not self.hasEntry(entry.pattern):
+				self.dictList.Append((
+					entry.comment,
+					entry.pattern,
+					entry.replacement,
+					self.offOn[int(entry.caseSensitive)],
+					DictionaryDialog.TYPE_LABELS[entry.type]
+				))
+		self.dictList.SetFocus()
+	
 	def OnAddClick(self,evt):
 		# Translators: This is the label for the add dictionary entry dialog.
 		entryDialog=DictionaryEntryDialog(self,title=_("Add Dictionary Entry"))
@@ -3995,7 +4041,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 
 	def _doOnCategoryChange(self):
 		global NvdaSettingsDialogActiveConfigProfile
-		NvdaSettingsDialogActiveConfigProfile = config.conf.profiles[-1].name
+		NvdaSettingsDialogActiveConfigProfile = config.conf.getActiveProfile().name
 		if not NvdaSettingsDialogActiveConfigProfile or isinstance(self.currentCategory, GeneralSettingsPanel):
 			# Translators: The profile name for normal configuration
 			NvdaSettingsDialogActiveConfigProfile = _("normal configuration")

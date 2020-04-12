@@ -386,9 +386,11 @@ class ConfigManager(object):
 		init = currentRootSection is None
 		# Reset the cache.
 		self.rootSection = AggregatedSection(self, (), self.spec, self.profiles)
+		
 		if init:
 			# We're still initialising, so don't notify anyone about this change.
 			return
+		
 		if shouldNotify:
 			post_configProfileSwitch.notify(prevConf=currentRootSection.dict())
 
@@ -628,6 +630,11 @@ class ConfigManager(object):
 				if trigger._profile == delProfile:
 					del self._suspendedTriggers[trigger]
 
+	def getActiveProfile(self):
+		if globalVars.appArgs.secure:
+			return
+		return self.profiles[-1]
+	
 	def renameProfile(self, oldName, newName):
 		"""Rename a profile.
 		@param oldName: The current name of the profile.
