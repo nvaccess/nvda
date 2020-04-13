@@ -326,9 +326,9 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 	]
 
 	def event_UIA_notification(self, activityId=None, **kwargs):
-		# #10851: in recent Word 365 releases, UIA notification will cause NVDA to announce edit functions
-		# such as "delete back word" when Control+Backspace is pressed.
-		if activityId == "AccSN2":  # Delete activity ID
+		# In recent Word 365 releases, UIA notification will cause NVDA to announce edit functions
+		# such as "delete back word" when Control+Backspace is pressed or font attributes are toggled.
+		if activityId in self.noNotificationActivityIds:
 			return
 		super(WordDocument, self).event_UIA_notification(**kwargs)
 
