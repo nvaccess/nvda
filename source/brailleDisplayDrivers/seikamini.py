@@ -1,14 +1,16 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2012/20 Ulf Beckmann <beckmann@flusoft.de>
-# 20/02/10 8:57
+# Copyright (C) 2012-2020 NV Access Limited, Ulf Beckmann <beckmann@flusoft.de>
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 # This file represents the braille display driver for
 # Seika Mini, a product from Nippon Telesoft
 # see www.seika-braille.com for more details
 # 09.06.2012
 # Dec14/Jan15 add BrilleInput
+
+# 02.10.2020
+# Update by using Python 3.
 
 from typing import Optional, List
 from ctypes import *
@@ -35,20 +37,20 @@ DOT_8 = 0x80
 
 
 _keyNames = {
- 0x000001: "BACKSPACE",
- 0x000002: "SPACE",
- 0x000004: "LB",
- 0x000008: "RB",
- 0x000010: "LJ_CENTER", 
- 0x000020: "LJ_LEFT", 
- 0x000040: "LJ_RIGHT", 
- 0x000080: "LJ_UP",
- 0x000100: "LJ_DOWN",
- 0x000200: "RJ_CENTER", 
- 0x000400: "RJ_LEFT", 
- 0x000800: "RJ_RIGHT", 
- 0x001000: "RJ_UP", 
- 0x002000: "RJ_DOWN"
+    0x000001: "BACKSPACE",
+    0x000002: "SPACE",
+    0x000004: "LB",
+    0x000008: "RB",
+    0x000010: "LJ_CENTER",
+    0x000020: "LJ_LEFT",
+    0x000040: "LJ_RIGHT",
+    0x000080: "LJ_UP",
+    0x000100: "LJ_DOWN",
+    0x000200: "RJ_CENTER",
+    0x000400: "RJ_LEFT",
+    0x000800: "RJ_RIGHT",
+    0x001000: "RJ_UP",
+    0x002000: "RJ_DOWN"
 }
 
 _dotNames = {}
@@ -66,7 +68,7 @@ for i in range(1, 9):
 # after loading, set the path back to the work path
 
 BASE_PATH = os.path.dirname(__file__)
-DLLNAME = "Seika\\SeikaDevice.dll"
+DLLNAME = "SeikaDevice.dll"
 WORK_PATH = os.getcwd()
 
 if not os.path.isfile(BASE_PATH + "\\" + DLLNAME):
@@ -121,7 +123,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 		seikaDll.BrailleClose.restype = c_int
 
-		if seikaDll.BrailleOpen(2,0):  # test USB
+		if seikaDll.BrailleOpen(2, 0):  # test USB
 			seikaDll.GetBrailleDisplayInfo(nCells, nBut)
 			log.info("seikamini an USB-HID, Cells {c} Buttons {b}".format(c=nCells[0], b=nBut[0]))
 			self.numCells = nCells[0]
@@ -168,7 +170,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def display(self, cells: List[int]):
 		# cells will already be padded up to numCells.
 		cellBytes = bytes(cells)
-		seikaDll.UpdateBrailleDisplay(cellBytes,self.numCells)
+		seikaDll.UpdateBrailleDisplay(cellBytes, self.numCells)
 
 	def handleResponses(self):
 		pint = c_int * 1
@@ -179,18 +181,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		Rou = 0
 		Btn = 0
 		keys = set()
-		if seikaDll.GetBrailleKey(nKey,nRou):
+		if seikaDll.GetBrailleKey(nKey, nRou):
 			Rou = nRou[0]
 			Btn = (nKey[0] & 0xff) << 16
 			Brl = (nKey[0] >> 8) & 0xff
 			Key = (nKey[0] >> 16) & 0xffff
 			space = (nKey[0] >> 16) & 0x2
 			log.info("GBK Key{c}-Brl{a}-Routing{b}".format(c=Key, b=Rou, a=Brl))
-#			log.info("Seika Brl {brl} Key {c} Buttons {b} Route {r}".format(brl=Brl, c=Key, b=Btn, r=Rou))
+			# log.info("Seika Brl {brl} Key {c} Buttons {b} Route {r}".format(brl=Brl, c=Key, b=Btn, r=Rou))
 			if not (Rou or Key or Btn or Brl):
 				pass
 			if Rou:  # Routing key is pressed
-				gesture = InputGestureRouting(Rou-1)
+				gesture = InputGestureRouting(Rou - 1)
 				try:
 					inputCore.manager.executeGesture(gesture)
 				except inputCore.NoInputGestureAction:
@@ -209,7 +211,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				except inputCore.NoInputGestureAction:
 					log.debug("No Action for keys ")
 					pass
-
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
