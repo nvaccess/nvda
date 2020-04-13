@@ -320,6 +320,11 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 	# Microsoft Word duplicates the full title of the document on this control, which is redundant as it appears in the title of the app itself.
 	name=u""
 
+	noNotificationActivityIds = [
+		"AccSN1",  # #10950: font attributes
+		"AccSN2",  # #10851: delete activity ID
+	]
+
 	def event_UIA_notification(self, activityId=None, **kwargs):
 		# #10851: in recent Word 365 releases, UIA notification will cause NVDA to announce edit functions
 		# such as "delete back word" when Control+Backspace is pressed.
