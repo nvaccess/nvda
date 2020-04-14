@@ -366,17 +366,18 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportSuperscriptsAndSubscripts(self, gesture):
-		if config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"]:
-			# Translators: The message announced when toggling the report superscripts and subscripts
-			# document formatting setting.
-			state = _("report superscripts and subscripts off")
-			config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"] = False
-		else:
+		shouldReport: bool = not config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"]
+		config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"] =  shouldReport
+		if shouldReport:
 			# Translators: The message announced when toggling the report superscripts and subscripts
 			# document formatting setting.
 			state = _("report superscripts and subscripts on")
-			config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"] = True
+		else:
+			# Translators: The message announced when toggling the report superscripts and subscripts
+			# document formatting setting.
+			state = _("report superscripts and subscripts off")
 		ui.message(state)
+
 	
 	def script_toggleReportRevisions(self,gesture):
 		if config.conf["documentFormatting"]["reportRevisions"]:
@@ -2873,4 +2874,3 @@ class ConfigProfileActivationCommands(ScriptableObject):
 #: The single instance for the configuration profile activation commands.
 #: @type: L{ConfigProfileActivationCommands}
 configProfileActivationCommands = ConfigProfileActivationCommands()
-
