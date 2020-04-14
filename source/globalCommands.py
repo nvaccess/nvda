@@ -361,7 +361,7 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportFontAttributes.category=SCRCAT_DOCUMENTFORMATTING
 
 	@script(
-		# Translators: Input help mode message for toggle report font attributes command.
+		# Translators: Input help mode message for toggle superscripts and subscripts command.
 		description=_("Toggles on and off the reporting of superscripts and subscripts"),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
