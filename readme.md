@@ -70,7 +70,7 @@ For reference, the following run time dependencies are included in Git submodule
 * [ConfigObj](https://github.com/DiffSK/configobj), commit f9a265c
 * [Six](https://pypi.python.org/pypi/six), version 1.12.0, required by wxPython and ConfigObj
 * [liblouis](http://www.liblouis.org/), version 3.13.0
-* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/) Emoji Annotations, version 36.0
+* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/) Emoji Annotations, version 36.1
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * Adobe FlashAccessibility interface typelib
