@@ -367,7 +367,7 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_toggleReportSuperscriptsAndSubscripts(self, gesture):
 		shouldReport: bool = not config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"]
-		config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"] =  shouldReport
+		config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"] = shouldReport
 		if shouldReport:
 			# Translators: The message announced when toggling the report superscripts and subscripts
 			# document formatting setting.
@@ -377,7 +377,6 @@ class GlobalCommands(ScriptableObject):
 			# document formatting setting.
 			state = _("report superscripts and subscripts off")
 		ui.message(state)
-
 	
 	def script_toggleReportRevisions(self,gesture):
 		if config.conf["documentFormatting"]["reportRevisions"]:
