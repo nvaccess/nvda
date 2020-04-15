@@ -2,8 +2,9 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2019 NV Access Limited, Babbage B.V., Mozilla Corporation
+# Copyright (C) 2008-2020 NV Access Limited, Babbage B.V., Mozilla Corporation
 
+import weakref
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import treeInterceptorHandler
 import controlTypes
@@ -93,6 +94,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
 			role=controlTypes.ROLE_TEXTFRAME
 		level=attrs.get('IAccessible2::attribute_level',"")
+
 		xmlRoles=attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")
 		landmark = next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
 		if landmark and role != controlTypes.ROLE_LANDMARK and landmark != xmlRoles[0]:
@@ -100,6 +102,16 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			landmark = None
 		if role == controlTypes.ROLE_DOCUMENT and xmlRoles[0] == "article":
 			role = controlTypes.ROLE_ARTICLE
+		elif role == controlTypes.ROLE_GROUPING and xmlRoles[0] == "figure":
+			role = controlTypes.ROLE_FIGURE
+		elif role in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_SECTION) and xmlRoles[0] == "region":
+			role = controlTypes.ROLE_REGION
+		elif xmlRoles[0] == "switch":
+			# role="switch" gets mapped to IA2_ROLE_TOGGLE_BUTTON, but it uses the
+			# checked state instead of pressed. The simplest way to deal with this
+			# identity crisis is to map it to a check box.
+			role = controlTypes.ROLE_CHECKBOX
+			states.discard(controlTypes.STATE_PRESSED)
 		attrs['role']=role
 		attrs['states']=states
 		if level is not "" and level is not None:
@@ -119,6 +131,12 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 class Gecko_ia2(VirtualBuffer):
 
 	TextInfo=Gecko_ia2_TextInfo
+	#: Maps NVDAObjects to a list of iframes/frames in that object's ancestry,
+	#: ordered from deepest to shallowest. The key is held as a weak reference so
+	#: that the cache for an object is cleaned up when that object dies. Each
+	#: frame/iframe in the lists is a tuple of (IAccessible2_2, uniqueId). This
+	#: cache is used across instances.
+	_framesCache = weakref.WeakKeyDictionary()
 
 	def __init__(self,rootNVDAObject):
 		super(Gecko_ia2,self).__init__(rootNVDAObject,backendName="gecko_ia2")
@@ -132,9 +150,10 @@ class Gecko_ia2(VirtualBuffer):
 			return False
 		return True
 
-	def _getEmbedderOfContainingDocument(self, acc):
-		"""Get the embedder of the given object's containing document.
-		For example, if acc is a button inside an iframe, this will return the iframe (embedder).
+	@staticmethod
+	def _getEmbedderFrame(acc):
+		"""Get the iframe/frame (if any) which contains the given object.
+		For example, if acc is a button inside an iframe, this will return the iframe.
 		"""
 		try:
 			# 1. Get the containing document.
@@ -150,19 +169,57 @@ class Gecko_ia2(VirtualBuffer):
 			embedder = doc.accParent
 			if not embedder:
 				return None
-			return embedder.QueryInterface(IAccessibleHandler.IAccessible2_2)
+			embedder = embedder.QueryInterface(IAccessibleHandler.IAccessible2_2)
+			# 3. Make sure this is an iframe/frame.
+			attribs = embedder.attributes
+			if "tag:browser;" in attribs:
+				# This is a top level browser, not an iframe/frame.
+				return None
+			return embedder
 		except COMError:
 			return None
+
+	@classmethod
+	def _iterIdsToTryWithAccChild(cls, obj):
+		"""Return the child ids we should try with accChild in order to determine
+		whether this object is a descendant of a particular document.
+		"""
+		# 1. Try the object itself.
+		acc = obj.IAccessibleObject
+		accId = obj.IA2UniqueID
+		yield accId
+		# 2. If this fails, this might be because the object is in an
+		# out-of-process frame, in which case the embedder document won't know
+		# about it. Try embedder frames.
+		# 2.1. Try cached frames. We cache because walking frames is expensive,
+		# and when trying to work out what TreeInterceptor this object belongs to,
+		# we'll need to query these frames for each TreeInterceptor.
+		cache = cls._framesCache.setdefault(obj, [])
+		for acc, accId in cache:
+			if not acc:
+				# All frames were cached in a previous run. There are no more.
+				return
+			yield accId
+		# 2.2. Walk remaining ancestor embedder frames, filling the cache as we go.
+		while True:
+			acc = cls._getEmbedderFrame(acc)
+			if not acc:
+				# No more. Signal this in the cache.
+				cache.append((None, None))
+				return
+			try:
+				accId = acc.uniqueID
+			except COMError:
+				# Dead object.
+				cache.append((None, None))
+				return
+			cache.append((acc, accId))
+			yield accId
 
 	def __contains__(self,obj):
 		if not (isinstance(obj,NVDAObjects.IAccessible.IAccessible) and isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2)) or not obj.windowClassName.startswith('Mozilla') or not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle):
 			return False
-		acc = obj.IAccessibleObject
-		accId = obj.IA2UniqueID
-		while True:
-			if not accId:
-				# Dead object.
-				return False
+		for accId in self._iterIdsToTryWithAccChild(obj):
 			if accId == self.rootID:
 				return True
 			try:
@@ -171,17 +228,9 @@ class Gecko_ia2(VirtualBuffer):
 				break
 			except COMError:
 				pass
-			# accChild failed. This might be because the object is in an
-			# out-of-process iframe, in which case the embedder document won't know
-			# about it. Try the embedder iframe.
-			acc = self._getEmbedderOfContainingDocument(acc)
-			if not acc:
-				return False
-			try:
-				accId = acc.uniqueID
-			except COMError:
-				# Dead object.
-				return False
+		else:
+			# The object is definitely not a descendant of the document.
+			return False
 
 		return not self._isNVDAObjectInApplication(obj)
 
@@ -308,7 +357,10 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType=="comboBox":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX]}
 		elif nodeType=="checkBox":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_CHECKBUTTON]}
+			attrs = [
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_CHECKBUTTON]},
+				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("switch")]},
+			]
 		elif nodeType=="graphic":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_GRAPHIC]}
 		elif nodeType=="blockQuote":
@@ -323,7 +375,7 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType=="landmark":
 			attrs = [
 				{"IAccessible::role": [IAccessibleHandler.IA2_ROLE_LANDMARK]},
-				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles if lr != "region"]},
+				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]},
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("region")],
 					"name": [VBufStorage_findMatch_notEmpty]}
 				]
@@ -331,9 +383,25 @@ class Gecko_ia2(VirtualBuffer):
 			attrs = [
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("article")]}
 			]
+		elif nodeType == "grouping":
+			attrs = [
+				{
+					"IAccessible2::attribute_xml-roles": [
+						VBufStorage_findMatch_word(r) for r in ("group", "radiogroup")
+					],
+					"name": [VBufStorage_findMatch_notEmpty]
+				},
+				{
+					"IAccessible2::attribute_tag": self._searchableTagValues(["fieldset"]),
+					"name": [VBufStorage_findMatch_notEmpty]
+				},
+			]
 		elif nodeType=="embeddedObject":
 			attrs=[
-				{"IAccessible2::attribute_tag":self._searchableTagValues(["embed","object","applet","audio","video"])},
+				{
+					"IAccessible2::attribute_tag":
+					self._searchableTagValues(["embed", "object", "applet", "audio", "video", "figure"])
+				},
 				{"IAccessible::role":[oleacc.ROLE_SYSTEM_APPLICATION,oleacc.ROLE_SYSTEM_DIALOG]},
 			]
 		else:
