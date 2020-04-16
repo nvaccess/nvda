@@ -2177,269 +2177,269 @@ NVDA на Windows 10 по умолчанию использует голоса W
 Обратитесь к этой статье Microsoft для получения списка доступных голосов и инструкции по их установке: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
 
-+ Поддерживаемые брайлевские дисплеи (оставлено без перевода)+[SupportedBrailleDisplays]
++ Поддерживаемые брайлевские дисплеи +[SupportedBrailleDisplays]
 Этот раздел содержит информацию о брайлевских дисплеях, поддерживаемых в NVDA.
 
-++ Displays supporting automatic detection in the background ++[AutomaticDetection]
-NVDA has the ability to detect many braille displays in the background automatically, either via USB or bluetooth.
-This behavior is achieved by selecting the Automatic option as the preferred braille display from NVDA's [Braille Settings dialog #BrailleSettings].
-This option is selected by default.
+++ Автоматически определяемые брайлевские дисплеи ++[AutomaticDetection]
+NVDA имеет возможность автоматического определения многих брайлевских дисплеев, подключённых по USB или Bluetooth.
+Такое поведение достигается путём выбора опции «Определять автоматически» из соответствующего комбинированного списка в [диалоге настроек брайля #BrailleSettings].
+Эта опция выбрана по умолчанию.
 
-The following displays support this automatic detection functionality.
-- Handy Tech displays
-- Baum/Humanware/APH/Orbit braille displays
-- HumanWare Brailliant BI/B series
+Функция автоматического определения подключений поддерживает следующие брайлевские дисплеи.
+- Дисплеи Handy Tech
+- Дисплеи Baum/Humanware/APH/Orbit
+- Дисплеи HumanWare Brailliant линеек BI/B
 - HumanWare BrailleNote
 - SuperBraille
-- Optelec ALVA 6 series
+- Дисплеи Optelec линеек ALVA 6
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
-- Eurobraille Esys/Esytime/Iris displays
+- Дисплеи Eurobraille Esys/Esytime/Iris
 -
 
-++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
-Все брайлевские дисплеи Focus и PAC Mate от компании [Freedom Scientific https://www.freedomscientific.com/] поддерживаются посредством USB или bluetooth-подключения.
-На вашей системе должны быть установлены драйвера брайлевских дисплеев компании Freedom Scientific.
+++ Freedom Scientific Focus/PAC Mate ++[FreedomScientificFocus]
+Все брайлевские дисплеи Focus и PAC Mate от компании [Freedom Scientific https://www.freedomscientific.com/] поддерживаются посредством USB или Bluetooth-подключения.
+На вашей системе должны быть установлены драйвера брайлевских дисплеев от Freedom Scientific.
 Если у вас ещё нет этих драйверов, то вы можете скачать их на странице https://support.freedomscientific.com/Downloads/Focus/FocusBlueBrailleDisplayDriver.
-Несмотря на то, что на этой страничке упоминается лишь брайлевский дисплей Focus Blue, драйвера поддерживают все дисплеи Focus и Pacmate компании Freedom Scientific.
+Несмотря на то, что на этой странице упоминается только брайлевский дисплей Focus Blue, драйвера поддерживают все дисплеи Focus и Pacmate компании Freedom Scientific.
 
-По умолчанию NVDA автоматически определяет и устанавливает соединение с этими дисплеями как по USB-, так и по bluetooth-связи.
-Однако, при настройке дисплея вы можете явно указать порты «USB» или «Bluetooth» для ограничения использования типов связи.
-Это может быть полезным, например если вы хотите подключить дисплей focus к NVDA по bluetooth, при этом заряжая его через USB-порт.
-Функция автоматического определения брайлевского дисплея также определяет USB или Bluetooth подключение.
+По умолчанию, NVDA автоматически определяет и устанавливает соединение с этими дисплеями как через USB, так и через Bluetooth-подключение.
+Однако, при настройке дисплея вы можете выбрать порт, «USB» или «Bluetooth», для явного указания желаемого типа подключения.
+Это может быть полезно, например если вы хотите подключить дисплей Focus к NVDA по Bluetooth, при этом заряжая его через USB-порт.
+Функция автоматического определения брайлевского дисплея также определит USB или Bluetooth подключение.
 
 В NVDA используются следующие комбинации клавиш для этого дисплея.
-Для описания расположения клавиш, пожалуйста, обратитесь к руководству для брайлевского дисплея.
+Для описания расположения клавиш, пожалуйста, обратитесь к документации по брайлевскому дисплею.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | topRouting1 (first cell on display) |
-| Scroll braille display forward | topRouting20/40/80 (last cell on display) |
-| Scroll braille display back | leftAdvanceBar |
-| Scroll braille display forward | rightAdvanceBar |
-| Toggle braille tethered to | leftGDFButton+rightGDFButton |
-| Toggle left wiz wheel action | leftWizWheelPress |
-| Move back using left wiz wheel action | leftWizWheelUp |
-| Move forward using left wiz wheel action | leftWizWheelDown |
-| Toggle right wiz wheel action | rightWizWheelPress |
-| Move back using right wiz wheel action | rightWizWheelUp |
-| Move forward using right wiz wheel action | rightWizWheelDown |
-| Route to braille cell | routing |
-| shift+tab key | brailleSpaceBar+dot1+dot2 |
-| tab key | brailleSpaceBar+dot4+dot5 |
-| upArrow key | brailleSpaceBar+dot1 |
-| downArrow key | brailleSpaceBar+dot4 |
-| control+leftArrow key | brailleSpaceBar+dot2 |
-| control+rightArrow key | brailleSpaceBar+dot5 |
-| leftArrow | brailleSpaceBar+dot3 |
-| rightArrow key | brailleSpaceBar+dot6 |
-| home key | brailleSpaceBar+dot1+dot3 |
-| end key | brailleSpaceBar+dot4+dot6 |
-| control+home key | brailleSpaceBar+dot1+dot2+dot3 |
-| control+end key | brailleSpaceBar+dot4+dot5+dot6 |
-| alt key | brailleSpaceBar+dot1+dot3+dot4 |
-| alt+tab key | brailleSpaceBar+dot2+dot3+dot4+dot5 |
-| alt+shift+tab key | brailleSpaceBar+dot1+dot2+dot5+dot6 |
-| windows+tab key | brailleSpaceBar+dot2+dot3+dot4 |
-| escape key | brailleSpaceBar+dot1+dot5 |
-| windows key | brailleSpaceBar+dot2+dot4+dot5+dot6 |
-| space key | brailleSpaceBar |
-| windows+d key (minimize all applications) | brailleSpaceBar+dot1+dot2+dot3+dot4+dot5+dot6 |
-| Report Current Line | brailleSpaceBar+dot1+dot4 |
-| NVDA menu | brailleSpaceBar+dot1+dot3+dot4+dot5 |
+|| Имя | клавишная комбинация |
+| Прокручивает фрагмент текста на брайлевском дисплее назад | topRouting1 (первая клетка на брайлевском дисплее) |
+| Прокручивает фрагмент текста на брайлевском дисплее вперёд | topRouting20/40/80 (последняя клетка на брайлевском дисплее) |
+| Прокручивает фрагмент текста на брайлевском дисплее назад | leftAdvanceBar |
+| Прокручивает фрагмент текста на брайлевском дисплее вперёд | rightAdvanceBar |
+| Переключает между привязками брайля | leftGDFButton+rightGDFButton |
+| Переключает между действиями левого колеса | leftWizWheelPress |
+| Прокрутка назад, используя левое колесо | leftWizWheelUp |
+| Прокрутка вперёд, используя левое колесо | leftWizWheelDown |
+| Переключает между действиями правого колеса | rightWizWheelPress |
+| Прокрутка назад, используя правое колесо | rightWizWheelUp |
+| Прокрутка вперёд, используя правое колесо | rightWizWheelDown |
+| переключает на брайлевскую ячейку | routing |
+| shift+tab | БрайлевскийПробел+точка1+точка2 |
+| tab | брайлевскийПробел+точка4+точка5 |
+| стрелкавВерх | брайлевскийПробел+точка1 |
+| стрелкавНиз | брайлевскийПробел+точка4 |
+| control+стрелкавЛево | брайлевскийПробел+точка2 |
+| control+стрелкавПраво | брайлевскийПробел+точка5 |
+| стрелкавЛево | брайлевскийПробел+точка3 |
+| стрелкавПраво | брайлевскийПробел+точка6 |
+| клавиша home | брайлевскийПробел+точка1+точка3 |
+| клавиша end | брайлевскийПробел+точка4+точка6 |
+| нажатие клавиш control+home | брайлевскийПробел+точка1+точка2+точка3 |
+| Нажатие клавиш control+end | брайлевскийПробел+точка4+точка5+точка6 |
+| клавиша alt | брайлевскийПробел+точка1+точка3+точка4 |
+| alt+tab | брайлевскийПробел+точка2+точка3+точка4+точка5 |
+| alt+shift+tab | брайлевскийПробел+точка1+точка2+точка5+точка6 |
+| windows+tab | БрайлевскийПробел+точка2+точка3+точка4 |
+| escape | брайлевскийПробел+точка1+точка5 |
+| Клавиша Windows | брайлевскийПробел+точка2+точка4+точка5+точка6 |
+| Пробел | брайлевскийПробел |
+| windows+d (сворачивает все приложения) | брайлевскийПробел+точка1+точка2+точка3+точка4+точка5+точка6 |
+| Прочитать актуальную строку | брайлевскийПробел+точка1+точка4 |
+| Меню NVDA | БрайлевскийПробел+Точка1+точка3+точка4+точка5 |
 
-For newer Focus models that contain rocker bar keys (focus 40, focus 80 and focus blue):
-|| Name | Key |
-| Move braille display to previous line | leftRockerBarUp, rightRockerBarUp |
-| Move braille display to next line | leftRockerBarDown, rightRockerBarDown |
+Для новых моделей брайлевских дисплеев Focus с клавишами rocker bar (focus 40, focus 80 и focus blue):
+|| Имя | Клавишная комбинация |
+| Прокрутка брайлевского дисплея к предыдущей строке | leftRockerBarUp, rightRockerBarUp |
+| Прокрутка брайлевского дисплея к следующей строке | leftRockerBarDown, rightRockerBarDown |
 
-For Focus 80 only:
-|| Name | Key |
-| Scroll braille display back | leftBumperBarUp, rightBumperBarUp |
-| Scroll braille display forward | leftBumperBarDown, rightBumperBarDown |
+Только для Focus 80:
+|| Имя | Клавишная комбинация |
+| Прокрутка брайлевского дисплея назад | leftBumperBarUp, rightBumperBarUp |
+| Прокрутка брайлевского дисплея вперёд | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
-++ Optelec ALVA 6 series/protocol converter ++[OptelecALVA]
-Both the ALVA BC640 and BC680 displays from [Optelec https://www.optelec.com/] are supported when connected via USB or bluetooth.
-Alternatively, you can connect an older Optelec display, such as a Braille Voyager, using a protocol converter supplied by Optelec.
-You do not need any specific drivers to be installed to use these displays.
-Just plug in the display and configure NVDA to use it.
+++ Брайлевские дисплеи Optelec ALVA 6/переходник протоколов ++[OptelecALVA]
+Оба брайлевских дисплеев ALVA BC640 и BC680 от компании [Optelec https://www.optelec.com/] поддерживаются при подключении через USB или bluetooth.
+Альтернативно, существует возможность подключиения старших брайлевских дисплеев, таких как Braille Voyager, пользуясь переходником протоколов предоставленного поставщиком.
+Чтобы пользщваться этими брайлевскими дисплеями, вам не нужны драйвера.
+Подключите брайлевский дисплей и настройте его для использования с программой NVDA.
 
-Note: NVDA might be unable to use an ALVA BC6 display over Bluetooth when it is paired using the ALVA Bluetooth utility.
-When you have paired your device using this utility and NVDA is unable to detect your device, we recommend you to pair your ALVA display the regular way using the Windows Bluetooth settings.
+Внимание: NVDA не будет использовать ALVA BC6 брайлевский дисплей через Bluetooth когда он подключен с помощью инструмента ALVA Bluetooth.
+Когда вы подключили свой брайлевский дисплей с помощью этого инструмента, и вы заметили, что ваш брайлевский дисплей не подключается, мы рекомендуем вам подключать ваш брайлевский дисплей  стандартным образом, используя настройки Bluetooth системы Windows.
 
-Note: while some of these displays do have a braille keyboard, they handle translation from braille to text themselves by default.
-This means that NVDA's braille input system is not in use in the default situation (i.e. the input braille table setting has no effect).
-For ALVA displays with recent firmware, it is possible to disable this HID keyboard simulation using an input gesture.
+Примечание: хоть у этих брайлевских дисплеев есть брайлевская клавиатура, перевод написанного текста обрабатывается на уровне устройства по умолчанию.
+Это обозначает, что система обработки написанного текста NVDA не используется (т.е настройка брайлевской таблицы ввода не применяется).
+Для брайлевских дисплеев ALVA с последней прошивкой, существует возможность выключить эмуляцию клавиатуры  используя жест ввода.
 
-Following are key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+В NVDA используются следующие комбинации клавиш для этого дисплея.
+Для описания расположения клавиш, пожалуйста, обратитесь к документации по брайлевскому дисплею.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | t1, etouch1 |
-| Move braille display to previous line | t2 |
-| Move to current focus | t3 |
-| Move braille display to next line | t4 |
-| Scroll braille display forward | t5, etouch3 |
-| Route to braille cell | routing |
-| Report text formatting under braille cell | secondary routing |
-| Toggle HID keyboard simulation | t1+spEnter |
-| Move to top line in review | t1+t2 |
-| Move to bottom line in review | t4+t5 |
-| Toggle braille tethered to | t1+t3 |
-| Report title | etouch2 |
-| Report status bar | etouch4 |
-| shift+tab key | sp1 |
-| alt key | sp2, alt |
+|| Имя | Клавишная комбинация |
+| Прокрутка брайлевского дисплея назад | t1, etouch1 |
+| Прокрутка брайлевского дисплея к предыдущей строке | t2 |
+| Перемещение к актуальному фокусу | t3 |
+| Прокрутка брайлевского дисплея к следующей строке | t4 |
+| Прокрутка брайлевского дисплея вперёд | t5, etouch3 |
+| Перемещение на брайлевскую ячейку | routing |
+| Произносить форматирование текста под брайлевской ячейкой | secondary routing |
+| Переключать эмуляцию клавиатуры HID | t1+spEnter |
+| Перемещение на первую строку в просмотре | t1+t2 |
+| Перемещение на последнюю строку в просмотре | t4+t5 |
+| Переключение привязки брайля | t1+t3 |
+| Произносить название окна | etouch2 |
+| Произносить строку состояния | etouch4 |
+| shift+tab | sp1 |
+| alt | sp2, alt |
 | escape key | sp3 |
-| tab key | sp4 |
-| upArrow key | spUp |
-| downArrow key | spDown |
-| leftArrow key | spLeft |
-| rightArrow key | spRight |
-| enter key | spEnter, enter |
-| Report date/time | sp2+sp3 |
-| NVDA Menu | sp1+sp3 |
-| windows+d key (minimize all applications) | sp1+sp4 |
-| windows+b key (focus system tray) | sp3+sp4 |
-| windows key | sp1+sp2, windows |
-| alt+tab key | sp2+sp4 |
-| control+home key | t3+spUp |
-| control+end key | t3+spDown |
-| home key | t3+spLeft |
-| end key | t3+spRight |
-| control key | control |
+| tab | sp4 |
+| СтрелкавВерх | spUp |
+| СтрелкавНиз | spDown |
+| СтрелкавЛево | spLeft |
+| СтрелкавПраво | spRight |
+| enter | spEnter, enter |
+| Произнести дату и час | sp2+sp3 |
+| NVDA Меню | sp1+sp3 |
+| windows+d (сворачивает все приложения) | sp1+sp4 |
+| windows+b (показывает панель уведомлений) | sp3+sp4 |
+| windows | sp1+sp2, windows |
+| alt+tab | sp2+sp4 |
+| control+home | t3+spUp |
+| control+end | t3+spDown |
+| home | t3+spLeft |
+| end | t3+spRight |
+| control | control |
 %kc:endInclude
 
-++ Handy Tech Displays ++[HandyTech]
-NVDA supports most displays from [Handy Tech https://www.handytech.de/] when connected via USB, serial port or bluetooth.
-For older USB displays, you will need to install the USB drivers from Handy Tech on your system.
+++ Брайлевские дисплеи Handy Tech ++[HandyTech]
+NVDA поддерживает большинство брайлевских дисплеев компании [Handy Tech https://www.handytech.de/] когда они подключаются через последовательный порт или bluetooth.
+Для старших дисплеев подключаемых по USB вы должны установить драйвера на ваш компьютер.
 
-The following displays are not supported out of the box, but can be used via [Handy Tech's universal driver https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] and NVDA add-on:
+Следующие дисплеи не поддерживаются из коробки, но их возможно использовать через [Универсальный драйвер Handy Tech https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] и дополнение для NVDA:
 - Braillino
 - Bookworm
-- Modular displays with firmware version 1.13 or lower. Please note that the firmware of this displays can be updated.
+- Modular с прошивкой в версии 1.13 или ниже. Имейте в виду, что прошивка этих брайлевских дисплеев может быть обновлена.
 -
-Following are the key assignments for Handy Tech displays with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+Следующие клавишные комбинации пользуются для брайлевских дисплеев Handy Tech с NVDA.
+Пожалуйста, посмотрите документацию, чтобы узнать размещение клавиш.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | left, up, b3 |
-| Scroll braille display forward | right, down, b6 |
-| Move braille display to previous line | b4 |
-| Move braille display to next line | b5 |
-| Route to braille cell | routing |
-| shift+tab key | esc, left triple action key up+down |
-| alt key | b2+b4+b5 |
-| escape key | b4+b6 |
-| tab key | enter, right triple action key up+down |
-| enter key | esc+enter, left+right triple action key up+down, joystickAction |
-| upArrow key | joystickUp |
-| downArrow key | joystickDown |
-| leftArrow key | joystickLeft |
-| rightArrow key | joystickRight |
-| NVDA Menu | b2+b4+b5+b6 |
-| Toggle braille tethered to | b2 |
-| Toggle the braille cursor | b1 |
-| Toggle focus context presentation | b7 |
-| Toggle braille input | space+b1+b3+b4 (space+capital B) |
+|| Имя | Клавишная комбинация |
+| прокрутка текста на барайлевском дисплее назад | left, up, b3 |
+| Прокрутка брайлевского дисплея вперёд | right, down, b6 |
+| Прокрутка брайлевского дисплея к предыдущей строке | b4 |
+| Прокрутка брайлевского дисплея к следующей строке | b5 |
+| перемещаться на следующую брайлевскую клетку | routing |
+| shift+tab | esc, left triple action key up+down |
+| alt | b2+b4+b5 |
+| escape | b4+b6 |
+| tab | enter, right triple action key up+down |
+| enter | esc+enter, left+right triple action key up+down, joystickAction |
+| стрелкавВерх | joystickUp |
+| стрелкавНиз | joystickDown |
+| СтрелкавЛево | joystickLeft |
+| СтрелкавПраво | joystickRight |
+| NVDA Меню | b2+b4+b5+b6 |
+| Переключение между привязками брайля | b2 |
+| Переключение брайлевского курсора | b1 |
+| Переключать представление брайля | b7 |
+| Переключение брайлевского ввода | space+b1+b3+b4 (Пробел+большая буква б) |
 %kc:endInclude
 
 ++ MDV Lilli ++[MDVLilli]
-The Lilli braille display available from [MDV https://www.mdvbologna.it/] is supported.
-You do not need any specific drivers to be installed to use this display.
-Just plug in the display and configure NVDA to use it.
+Брайлевский дисплей Lilli компании [MDV https://www.mdvbologna.it/] поддерживается.
+Чтобы пользоваться этим брайлевским дисплеем, не требуются специальные пдрайвера.
+Настройте брайлевский дисплей и пользуйтесь.
 
-This display does not support NVDA's automatic background braille display detection functionality.
+Этот брайлевский дисплей не поддерживает функционал автоопределения брайлевских дисплеев.
 
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+Следующие клавишные комбинации доступны с NVDA.
+Пожалуйста, посмотрите документацию, чтобы узнать размещение клавиш.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display backward | LF |
-| Scroll braille display forward | RG |
-| Move braille display to previous line | UP |
-| Move braille display to next line | DN |
-| Route to braille cell | route |
-| shift+tab key | SLF |
-| tab key | SRG |
-| alt+tab key | SDN |
-| alt+shift+tab key | SUP |
+|| Имя | Клавишная комбинация |
+| Прокрутка брайлевского дисплея назад | LF |
+| Прокрутка брайлевского дисплея вперёд | RG |
+| Прокрутка брайлевского дисплея к предыдущей строке | UP |
+| Прокрутка брайлевского дисплея к следующей строке | DN |
+| Перемещение к брайлевской ячейке | route |
+| shift+tab | SLF |
+| tab | SRG |
+| alt+tab | SDN |
+| alt+shift+tab | SUP |
 %kc:endInclude
 
-++ Baum/Humanware/APH/Orbit Braille Displays ++[Baum]
-Several [Baum https://www.visiobraille.de/index.php?article_id=1&clang=2], [HumanWare https://www.humanware.com/], [APH https://www.aph.org/] and [Orbit https://www.orbitresearch.com/] displays are supported when connected via USB, bluetooth or serial.
-These include:
+++ Брайлевские дисплеи Baum/Humanware/APH/Orbit ++[Baum]
+Некоторые брайлевские дисплеи компаний [Baum https://www.visiobraille.de/index.php?article_id=1&clang=2], [HumanWare https://www.humanware.com/], [APH https://www.aph.org/] и [Orbit https://www.orbitresearch.com/] поддерживаются при подключении через USB, bluetooth или последовательный порт.
+Поддерживаются следующие брайлевские дисплеи:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
 - HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
 - Orbit: Orbit Reader 20
 -
-Some other displays manufactured by Baum may also work, though this has not been tested.
+Некоторые брайлевские дисплеи компании Baum могут также работать, но это не проверено.
 
-If connecting via USB to displays which do not use HID, you must first install the USB drivers provided by the manufacturer.
-The VarioUltra and Pronto! use HID.
-The Refreshabraille and Orbit Reader 20 can use HID if configured appropriately.
+Если подключаете брайлевские дисплеи, не использующие HID, сначала надо установить USB драйвера которые предоставляет компания.
+VarioUltra и Pronto! используют HID протокол.
+Брайлевские дисплеи Refreshabraille и Orbit Reader 20 могут использовать HID протокол, если брайлевский дисплей настроен таким образом.
 
-The USB serial mode of the Orbit Reader 20 is currently only supported in Windows 10.
-USB HID should generally be used instead.
+Режим USB serial брайлевского дисплея Orbit Reader 20 поддерживается только в Windows 10.
+Вместе этого, лучше использовать USB HID.
 
-Following are the key assignments for these displays with NVDA.
-Please see your display's documentation for descriptions of where these keys can be found.
+Следующие клавишные комбинации доступны при использовании с NVDA.
+Пожалуйста, посмотрите документацию, чтобы узнать размещение клавиш.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | d2 |
-| Scroll braille display forward | d5 |
-| Move braille display to previous line | d1 |
-| Move braille display to next line | d3 |
-| Route to braille cell | routing |
+|| Имя | Клавишная комбинация |
+| Прокрутка брайлевского дисплея назад | d2 |
+| Прокрутка брайлевского дисплея вперёд | d5 |
+| Перемещение брайлевского дисплея к предыдущей строке | d1 |
+| Перемещение брайлевского дисплея к следующей строке | d3 |
+| Перемещение к брайлевской клетке | routing |
 
-For displays which have a joystick:
-|| Name | Key |
-| upArrow key | up |
-| downArrow key | down |
-| leftArrow key | left |
-| rightArrow key | right |
-| enter key | select |
+Для брайлевских дисплеев с джойстиком:
+|| Имя | Клавишная комбинация |
+| СтрелкавВерх | вверх |
+| СтрелкаВниз | вниз |
+| СтрелкавЛево | влево |
+| СтрелкавПраво | вправо |
+| enter | Середина джойстика |
 %kc:endInclude
 
 ++ hedo ProfiLine USB ++[HedoProfiLine]
-The hedo ProfiLine USB from [hedo Reha-Technik https://www.hedo.de/] is supported.
-You must first install the USB drivers provided by the manufacturer.
+Hedo ProfiLine USB компании [hedo Reha-Technik https://www.hedo.de/] поддерживается.
+Сначала установите драйвера предоставленные производителем.
 
-This display does not yet support NVDA's automatic background braille display detection functionality.
+Этот брайлевский дисплей еще не поддерживает автоопределение брайлевских дисплеев NVDA.
 
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+Это список клавишных комбинаций для взаимодействия NVDA с этим брайлевским дисплеем.
+Пожалуйста, посмотрите документацию, чтобы узнать размещение клавишPlease see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | K1 |
-| Scroll braille display forward | K3 |
-| Move braille display to previous line | B2 |
-| Move braille display to next line | B5 |
-| Route to braille cell | routing |
-| Toggle braille tethered to | K2 |
-| Say all | B6 |
+|| Имя | Клавишная комбинация |
+| Прокрутка брайлевского дисплея назад | K1 |
+| Прокрутка брайлевского дисплея вперёд | K3 |
+| Перемещение брайлевского дисплея к предыдущей строке | B2 |
+| Перемещение брайлевского дисплея к следующей строке | B5 |
+| Перемещение к брайлевской клетке | routing |
+| Переключение брайлевской привязки | K2 |
+| Читай всё | B6 |
 %kc:endInclude
 
 ++ hedo MobilLine USB ++[HedoMobilLine]
-The hedo MobilLine USB from [hedo Reha-Technik https://www.hedo.de/] is supported.
-You must first install the USB drivers provided by the manufacturer.
+Hedo MobilLine USB компании [hedo Reha-Technik https://www.hedo.de/] поддерживается.
+Сначала установите USB драйвера предоставленные производителем.
 
-This display does not yet support NVDA's automatic background braille display detection functionality.
+Этот брайлевский дисплей еще не поддерживает автоопределение брайлевских дисплеев NVDA.
 
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+Это список клавишных комбинаций для взаимодействия NVDA с этим брайлевским дисплеем.
+Пожалуйста, посмотрите документацию, чтобы узнать размещение клавишPlease see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | K1 |
-| Scroll braille display forward | K3 |
-| Move braille display to previous line | B2 |
-| Move braille display to next line | B5 |
-| Route to braille cell | routing |
-| Toggle braille tethered to | K2 |
-| Say all | B6 |
+|| Имя | Клавишная комбинация |
+| Прокрутка брайлевского дисплея назад | K1 |
+| Прокрутка брайлевского дисплея вперёд | K3 |
+| Перемещение брайлевского дисплея к предыдущей строке | B2 |
+| Перемещение брайлевского дисплея к следующей строке | B5 |
+| Перемещение к брайлевской клетке | routing |
+| Переключение брайлевской привязки | K2 |
+| Читай всё | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B Series / BrailleNote Touch ++[HumanWareBrailliant]
+++ HumanWare Brailliant BI/B брайлевские дисплеи и BrailleNote Touch ++[HumanWareBrailliant]
 The Brailliant BI and B series of displays  from [HumanWare https://www.humanware.com/], including the BI 14, BI 32, BI 40 and B 80, are supported when connected via USB or bluetooth.
 If connecting via USB with the protocol set to HumanWare, you must first install the USB drivers provided by the manufacturer.
 USB drivers are not required if the protocol is set to OpenBraille.
