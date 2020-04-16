@@ -360,6 +360,24 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportFontAttributes.__doc__=_("Toggles on and off the reporting of font attributes")
 	script_toggleReportFontAttributes.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle superscripts and subscripts command.
+		description=_("Toggles on and off the reporting of superscripts and subscripts"),
+		category=SCRCAT_DOCUMENTFORMATTING,
+	)
+	def script_toggleReportSuperscriptsAndSubscripts(self, gesture):
+		shouldReport: bool = not config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"]
+		config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"] = shouldReport
+		if shouldReport:
+			# Translators: The message announced when toggling the report superscripts and subscripts
+			# document formatting setting.
+			state = _("report superscripts and subscripts on")
+		else:
+			# Translators: The message announced when toggling the report superscripts and subscripts
+			# document formatting setting.
+			state = _("report superscripts and subscripts off")
+		ui.message(state)
+	
 	def script_toggleReportRevisions(self,gesture):
 		if config.conf["documentFormatting"]["reportRevisions"]:
 			# Translators: The message announced when toggling the report revisions document formatting setting.
@@ -2875,4 +2893,3 @@ class ConfigProfileActivationCommands(ScriptableObject):
 #: The single instance for the configuration profile activation commands.
 #: @type: L{ConfigProfileActivationCommands}
 configProfileActivationCommands = ConfigProfileActivationCommands()
-
