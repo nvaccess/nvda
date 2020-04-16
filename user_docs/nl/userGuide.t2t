@@ -483,13 +483,13 @@ Als u deze functionaliteit wilt gebruiken, kunt u deze inschakelen in de categor
 
 Hoewel u voor het navigeren met de muis een fysieke muis of een muispad moet gebruiken, zijn er een aantal toetscombinaties in NVDA waarmee muisbewegingen en muiskliks kunnen worden gesimuleerd:
 %kc:beginInclude
-|| Naam | Desktoptoets | Laptoptoets | Beschrijving |
-| Klikken met linker muisknop | numeriek Gedeeld Door | NVDA+[ (vierkante haak openen | Dit is hetzelfde als éénmaal klikken met linker muisknop. Deze toets tweemaal snel drukken is gelijk aan dubbelklikken met de muis. |
-| Linker muisknop vergrendelen | shift+numeriek Gedeeld Door | NVDA+control+[ (vierkante haak openen) | Hiermee houdt u de linker muisknop ingedrukt. Door nogmaals te drukken wordt de knop weer los gelaten. Om te kunnen slepen met de muis drukt u deze toetscombinatie zodat de linker muisknop ingedrukt blijft. Vervolgens kunt u de muis fysiek verplaatsen of met een van de andere daarvoor bestemde commando’s. |
-| Klikken met rechter muisknop | numeriek Vermenigvuldig | NVDA+] (vierkante haak sluiten) | Dit is gelijk aan eenmaal klikken met rechter muisknop. |
-| Rechter muisknop vergrendelen | shift+numeriek Vermenigvuldig | NVDA+control+] (vierkante haak sluiten) | Hiermee wordt rechter muisknop ingedrukt gehouden. Door nogmaals te drukken wordt de vergrendeling opgeheven. Om te kunnen slepen met de muis drukt u deze toetscombinatie zodat de rechter muisknop ingedrukt blijft. Vervolgens kunt u de muis fysiek verplaatsen of met een van de andere daarvoor bestemde commando’s. |
-| Muis naar huidige navigator object verplaatsen | NVDA+numeriek Gedeeld Door | NVDA+shift+m | Muis wordt verplaatst naar huidig object en de leescursor |
-| naar het object onder de muisaanwijzer gaan | NVDA+numeriek Vermenigvuldig | NVDA+shift+n | Verplaats het navigator object naar de muispositie |
+|| Naam | Desktoptoets | Laptoptoets | Aanrakgebaar | Beschrijving |
+| Klikken met linker muisknop | numeriek Gedeeld Door | NVDA+[  | geen | Dit is hetzelfde als éénmaal klikken met linker muisknop. Deze toets tweemaal snel drukken is gelijk aan dubbelklikken met de muis. |
+| Linker muisknop vergrendelen | shift+numeriek Gedeeld Door | NVDA+control+[ | geen | Hiermee houdt u de linker muisknop ingedrukt. Door nogmaals te drukken wordt de knop weer los gelaten. Om te kunnen slepen met de muis drukt u deze toetscombinatie zodat de linker muisknop ingedrukt blijft. Vervolgens kunt u de muis fysiek verplaatsen of met een van de andere daarvoor bestemde commando’s. |
+| Klikken met rechter muisknop | numeriek Vermenigvuldig | NVDA+] |  tik en hou vinger op scherm | Dit is gelijk aan eenmaal klikken met rechter muisknop, meestal gebruikt voor openen van contextmenu bij muispositie. |
+| Rechter muisknop vergrendelen | shift+numeriek Vermenigvuldig | NVDA+control+] | geen | Hiermee wordt rechter muisknop ingedrukt gehouden. Door nogmaals te drukken wordt de vergrendeling opgeheven. Om te kunnen slepen met de muis drukt u deze toetscombinatie zodat de rechter muisknop ingedrukt blijft. Vervolgens kunt u de muis fysiek verplaatsen of met een van de andere daarvoor bestemde commando’s. |
+| Muis naar huidige navigator object verplaatsen | NVDA+numeriek Gedeeld Door | NVDA+shift+m | geen | Muis wordt verplaatst naar huidig object en de leescursor |
+| naar het object onder de muisaanwijzer gaan | NVDA+numeriek Vermenigvuldig | NVDA+shift+n | geen | Verplaats het navigator object naar het object van de muispositie |
 %kc:endInclude
 
 + Bladermodus +[BrowseMode]
@@ -940,13 +940,6 @@ Merk op dat bovengenoemde sneltoetscombinaties alleen werken met de standaard op
 | Opmerkingen voor vertalers melden | control+shift+a | Meldt eventuele opmerkingen voor vertalers.
 %kc:endInclude
 
-++ Skype ++[Skype]
-%kc:beginInclude
-Wanneer u zich in een berichtenreeks bevindt:
-|| Naam | Toets | Beschrijving |
-| Bericht lezen | NVDA+control+1-0 | Afhankelijk van het cijfer dat u indrukt, wordt de leescursor naar het daarbijbehorende bericht verplaatst en kan het gelezen worden; als u bij voorbeeld NVDA+control+2 indrukt, wordt het bericht dat u op één na het laatst hebt ontvangen gelezen. |
-%kc:endInclude
-
 ++ Kindle voor de PC ++[Kindle]
 NVDA ondersteunt het lezen van en het navigeren in boeken met Amazon Kindle voor de PC.
 Deze functionaliteit is alleen beschikbaar voor Kindle-boeken met het kenmerk "Schermlezers: worden ondersteund" (Screen Reader: supported). U kunt dit nagaan op de pagina met gegevens over het boek in kwestie.
@@ -1062,13 +1055,14 @@ Als u evenwel informatie wilt doorgeven over mogelijke bugs van het programma ka
 
 De beschikbare logniveaus zijn:
 - Uitgeschakeld: Behalve een korte melding bij opstarten zal NVDA niets loggen.
-- Info: NVDA logt basale informatie zoals opstartmeldingen en informatie die nuttig is voor ontwikkelaars.
-- Debug-waarschuwing: Waarschuwingen die niet voortkomen uit ernstige fouten worden gelogd.
-- Invoer/Uitvoer: Toetsenbordinvoer en invoer van brailleleesregels, alsmede spraak- en braille-uitvoer worden gelogd. 
+ - Info: NVDA logt basale informatie zoals opstartmeldingen en informatie die nuttig is voor ontwikkelaars.
+ - Debug-waarschuwing: Waarschuwingen die niet voortkomen uit ernstige fouten worden gelogd.
+ - Invoer/Uitvoer: Toetsenbordinvoer en invoer van brailleleesregels, alsmede spraak- en braille-uitvoer worden gelogd. 
  - Als u zich zorgen maakt over uw privacy, kies dan niet voor dit logniveau.
-- Debug: Naast info, waarschuwingen, en gegevens uit invoer/uitvoer worden ook debug-berichten  gelogd. 
+ - Debug: Naast info, waarschuwingen, en gegevens uit invoer/uitvoer worden ook debug-berichten  gelogd. 
  - Evenals voor   invoer/uitvoer geldt hier ook dat u niet voor dit logniveau moet kiezen, als u zich zorgen maakt over uw privacy.
-
+ -
+-
 
 ==== NVDA automatisch starten nadat ik me bij windows heb aangemeld ====[GeneralSettingsStartAfterLogOn]
 Als u het selectievakje aanvinkt, zal NVDA automatisch worden gestart zodra u zich bij Windows aanmeldt.
@@ -1170,7 +1164,7 @@ Als u vaststelt dat NVDA interpunctie in de verkeerde taal leest, een taal die n
 
 ==== Unicode Consortium data (met inbegrip van emoji) opnemen bij het verwerken van karakters en symbolen ====[SpeechSettingsCLDR]
 Wanneer dit selectievakje aangevinkt is, zal NVDA extra uitspraakwoordenboeken raadplegen bij het uitspreken van (letter)tekens en symbolen.
-In deze woordenboeken staan beschrijvingen van symbolenin het bijzonder emoji) die afkomstig zijn van [het Unicode Consortium https://www.unicode.org/consortium/] as part of their [Common Locale Data Repository https://cldr.unicode.org/].
+In deze woordenboeken staan beschrijvingen van symbolenin het bijzonder emoji) die afkomstig zijn van [het Unicode Consortium https://www.unicode.org/consortium/] als onderdeel van hun [Common Locale Data Repository http://cldr.unicode.org/].unicode.org/].
 Als u wilt dat NVDA de op basis van deze data gebaseerde beschrijving van emoji-tekens leest, moet u deze optie inschakelen.
 Als u evenwel een spraaksynthesizer gebruikt die zelf zorgt voor het uitspreken van emoji-beschrijvingen, wilt u deze mogelijk uitschakelen.
 
@@ -2061,6 +2055,9 @@ In het braille weergavevenster treft u een selectievakje aan met het bijschrift 
 Als dit vakje is aangevinkt, opent de braille viewer wanneer  NVDA wordt gestart.
 Het brailleweergavevenster zal in principe elke keer dat het wordt geopend dezelfde plaats en grootte hebben als toen het de laatste keer gesloten werd.
 
+++ Python-console ++[PythonConsole]
+Het NVDA Python-console, dat u aantreft in het NVDA-menu onder Extra, is een ontwikkelinstrument dat goed van pas komt bij het oplossen van bugs, algemene inspectie van het inwendige van NVDA  of het inspecteren van  de toegankelijkheidsopbouw van een toepassing.
+Voor meer informatie gaat u naar de [NVDA Developer Guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
 ++ Add-Ons Beheren ++[AddonsManager]
 Met "Add-ons Beheren" onder Extra in het NVDA menu kunt u uitbreidingspakketten voor NVDA installeren, verwijderen alsmede in- en uitschakelen.
@@ -2106,7 +2103,7 @@ U kunt deze incompatibele add-ons inspecteren dor op de knop "Incompatibele add-
 
 Als u Add-Ons Beheren altijd en overal wilt kunnen oproepen, kunt u daarvoor aangepaste invoerhandelingen aanmaken met behulp van [Invoerhandelingen koppelen onder Opties #InputGestures].
 
-++ Incompatibele Add-ons Manager ++[incompatibleAddonsManager]
++++ Incompatibele Add-ons Manager +++[incompatibleAddonsManager]
 Met de Manager Incompatibele Add-ons, die u bereikt via de knop "Incompatibele add-ons bekijken" in Add-ons Beheren, kunt u incompatibele add-ons, inspecteren en nagaan waarom ze als niet compatibel beschouwd worden.
 Add-ons worden als incompatibel beschouwd wanneer ze niet zijn bijgewerkt waardoor ze niet kunnen werken met significante aanpassingen  in NVDA, of wanneer ze afhankelijk zijn van een optie die niet beschikbaar is in de versie van NVDA die u gebruikt.
 De Manager incompatibele add-ons geeft een beknopte uitleg over het doel ervan  en tevens wordt de versie van NVDA gemeld.
@@ -2114,15 +2111,36 @@ De incompatibele add-ons worden weergegeven in  een lijst met de volgende kolomm
 + Pakket,dhe naam van de add-on
 + Versie, de versie van de add-on
 + Reden incompatibel, uitleg waarom addon als incompatibel wordt beschouwd
-+
 
 De Manager incompatible add-ons  heeft ook een knop "Over add-on...".
-Door op deze knop te drukken laat het dialoogvenster de volledige details van de add-on zien, wat handig is als u contact opneemt met de auteur van de add-on.
+Door op deze knop te drukken laat het dialoogvenster de volledige details van de add-on zien, wat handig is als u contact opneemt met de maker van de add-on.
 
+++ Draagbare versie aanmaken ++[CreatePortableCopy]
+Hiermee opent u een dialoogvenster dat u in staat stelt een draagbare kopie van NVDA aan te maken vanuit de geïnstalleerde versie.
+Zowel in het ene als in het andere geval geldt dat, wanneer u een draagbare versie van NVDA draait, er onder Extra in het NVDA-menu  het desbetreffende item vermeld staat als "NVDA op deze PC installeren" (in plaats van "Draagbare versie aanmaken').
+ 
 
-++ Python Console ++[PythonConsole]
-Met de Python console die u vindt onder Extra in het NVDA-menu kunnen fouten in de programmacode worden opgespoord en hersteld, algemene inspecties van de programmatuur worden uitgevoerd of de mate van toegankelijkheid van een toepassing worden gecontroleerd.
-Zie voor meer informatie de handleiding voor ontwikkelaars, dit document is beschikbaar in [de sectie voor ontwikkelaars op de NVDA website (Engelstalig) https://www.nvaccess.org/files/nvda/documentation/developerGuide.html]].].
+Het dialoogvenster dat u in staat stelt een draagbare versie van NVDA aan te maken of NVDA op deze PC te installeren, laat u een pad naar een map kiezen waarin NVDA de draagbare versie moet aanmaken of waarin NVDA moet worden geïnstalleerd.
+
+In dit dialoogvenster  kunt u het volgende in- of uitschakelen:
+- Kopieer  configuratie van huidige gebruiker (dat is inclusief de bestanden in %appdata%\roaming\NVDA of in de gebruikersconfiguratie van uw draagbare kopie alsmede addons en andere modules)
+- Nieuwe draagbare kopie van NVDA na het aanmaken starten  of NVDA na installatie starten (Hiermee start NVDA automatisch op nadat de draagbare versie is aangemaakt of nadat die  is geïnstalleerd)
+-
+
+++ Hulpprogramma voor herstel van COM-registrfoutenn ++[RunCOMRegistrationFixingTool]
+Het installeren en deïnstalleren van programma's op een computer kan, er in bepaalde gevallen toe leiden dat COM DLL-bestanden niet langer in het register staan.
+Omdat COM Interfaces zoals IAccessible afhankelijk zijn van een correcte COM DLL registratie, kunnen zich problemen voordoen in het geval dat er bij de registratie iets fout is gegaan.
+
+Dit kan bijv gebeuren na het installeren en deïnstalleren  van Adobe Reader, Math Player en andere programma's.
+
+Het ontbreken van een registeropname kan leiden tot problemen in browsers, desktop apps, de taakbalk en andere interfaces.
+
+Met name kunnen navolgende problemen worden opgelost door dit hulpprogrammaatje uit te voeren:
+- NVDA meldt "onbekend" bij het navigeren in browsers zoals Firefox, Thunderbird etc.
+- NVDA schakelt niet tussen focusmodus en bladermodus
+- NVDA is heel traag wanneer  u navigeert in browsers bij gebruik van de bladermodus
+- En mogelijk andere problemen.
+
 
 ++ Plugins herladen ++[ReloadPlugins]
 Zodra deze optie wordt geactiveerd, zullen alle app modules en globale plugins opnieuw worden geladen zonder dat NVDA wordt herstart. Dit is handig voor ontwikkelaars.
@@ -2445,7 +2463,11 @@ De brailleleesregels uit de serie BI en B van [HumanWare https://www.humanware.c
 Als u de leesregels via usb, waarbij het protocol op HumanWare is ingesteld, wilt aansluiten, moet u eerst de usb-drivers van de fabrikant installeren.
 USB drivers zijn niet nodig als u van het OpenBraille protocol gebruik maakt.
 
-De BrailleNote Touch wordt ook ondersteund en hiervoor hoeven geen drivers te worden geïnstalleerd.
+Aanvullend worden ook de volgende  toestellen  ondersteund en hiervoor hoeven geen speciale drivers te worden geïnstalleerd.
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
 
 Bij gebruik van de Brailliant BI/B en de BrailleNote touch met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)

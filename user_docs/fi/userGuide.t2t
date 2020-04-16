@@ -933,13 +933,6 @@ Huom: Yllä olevat näppäinkomennot toimivat vain foobar2000:n tilarivin muotoi
 | Lue huomautukset kääntäjille | Ctrl+Vaihto+A | Lukee kääntäjille tarkoitetut huomautukset. |
 %kc:endInclude
 
-++ Skype ++[Skype]
-%kc:beginInclude
-Keskustelussa oltaessa:
-|| Nimi | Näppäinkomento | Kuvaus |
-| Lue viesti | NVDA+Ctrl+1-0 | Lukee painettua numeroa vastaavan uusimman viestin ja siirtää tarkastelukohdistimen siihen; esim. NVDA+Ctrl+2 lukee toiseksi uusimman. |
-%kc:endInclude
-
 ++ Kindle for PC ++[Kindle]
 NVDA tukee kirjojen lukemista ja niissä liikkumista Amazonin Kindle for PC -sovelluksessa.
 Tämä toiminnallisuus on käytettävissä vain kirjoissa, joihin on merkitty "Screen Reader: Supported", minkä voi tarkistaa kirjan Tiedot-sivulta (Details).
@@ -1061,6 +1054,7 @@ Käytettävissä ovat seuraavat lokitasot:
  - Mikäli olet huolissasi yksityisyydestäsi, älä määritä lokitasoksi tätä vaihtoehtoa.
 - Virheenkorjaus: Lokiin tallennetaan tiedot-, varoitukset- ja syöttö/tulostus-ilmoitusten lisäksi virheenkorjauksen lisäilmoituksia.
  - Kuten syöttö/tulostus-tasolla, mikäli olet huolissasi yksityisyydestäsi, lokitasoksi ei tule määrittää tätä vaihtoehtoa.
+ -
 -
 
 ==== Käynnistä automaattisesti sisäänkirjautumisen jälkeen ====[GeneralSettingsStartAfterLogOn]
@@ -2045,6 +2039,10 @@ Pistekirjoituksen tarkastelu -ikkunassa on "Näytä pistekirjoituksen tarkastelu
 Mikäli se on valittuna, pistekirjoituksen tarkastelu -ikkuna avautuu, kun NVDA käynnistetään.
 Ikkuna yrittää avautua uudelleen aina samoilla mitoilla ja sijainnilla, jotka sillä oli suljettaessa.
 
+++ Python-konsoli ++[PythonConsole]
+NVDA:n Python-konsoli, joka löytyy NVDA-valikon Työkalut-alivalikosta, on kehitystyökalu, joka on hyödyllinen virheiden etsinnässä, yleisessä NVDA:n sisäisen toiminnan tai sovelluksen esteettömyyshierarkian tutkimisessa.
+Lisätietoja on [NVDA-kehittäjän oppaassa. https://www.nvaccess.org/files/nvda/documentation/developerGuide.html]
+
 ++ Lisäosien hallinta ++[AddonsManager]
 Lisäosien hallinnalla, johon pääsee NVDA-valikosta Työkalut-valikon alta kohdasta Lisäosien hallinta, voi asentaa, poistaa, ottaa käyttöön sekä poistaa käytöstä NVDA:n lisäosapaketteja.
 Lisäosat, jotka ovat NVDA-yhteisön toimittamia, saattavat lisätä tai muuttaa ominaisuuksia tai jopa tarjota tuen uusille pistenäytöille tai puhesyntetisaattoreille.
@@ -2083,14 +2081,14 @@ NVDA on käynnistettävä uudelleen, jotta muutokset tulevat voimaan, aivan kute
 Valintaikkunassa on myös Sulje-painike, josta lisäosien hallinta voidaan sulkea.
 Jos lisäosia on asennettu tai poistettu tai niiden tilaa on muutettu, NVDA kysyy, halutaanko se käynnistää uudelleen, jotta muutokset tulevat voimaan.
 
-Jotkin vanhemmat lisäosat eivät ehkä ole enää yhteensopivia käytettävän NVDA:n version kanssa.
+Jotkin vanhemmat lisäosat eivät ehkä ole enää yhteensopivia käytettävän NVDA-version kanssa.
 Vanhempaa NVDA:n versiota käytettäessä myös uudet lisäosat voivat olla yhteensopimattomia.
 Yhteensopimattoman lisäosan asennusta yritettäessä näytetään virheilmoitus, joka kertoo, miksi kyseinen lisäosa ei ole yhteensopiva.
-Näitä lisäosia on mahdollista tarkastella yhteensopimattomien lisäosien hallinnassa painamalla "Näytä yhteensopimattomat lisäosat" -painiketta.
+Tällaisia lisäosia on mahdollista tarkastella yhteensopimattomien lisäosien hallinnassa painamalla "Näytä yhteensopimattomat lisäosat" -painiketta.
 
 Lisäosien hallinta voidaan avata mistä tahansa määrittämällä sille oma syötekomento [Syötekomennot-valintaikkunaa käyttäen. #InputGestures]
 
-++ Yhteensopimattomien lisäosien hallinta ++[incompatibleAddonsManager]
++++ Yhteensopimattomien lisäosien hallinta +++[incompatibleAddonsManager]
 Yhteensopimattomien lisäosien hallinnan, johon pääsee painamalla Lisäosien hallinnassa "Näytä yhteensopimattomat lisäosat" -painiketta, avulla voi tarkastella kaikkia yhteensopimattomia lisäosia sekä syytä, miksi ne eivät ole yhteensopivia.
 Lisäosia pidetään yhteensopimattomina, kun niitä ei ole päivitetty toimimaan merkittävien NVDA:han tehtyjen muutosten kanssa tai kun ne hyödyntävät ominaisuutta, jota ei ole käytettävissä NVDA:n käytössä olevassa versiossa.
 Yhteensopimattomien lisäosien hallinnassa näytetään lyhyt ilmoitus, joka kertoo sen tarkoituksen sekä NVDA:n version.
@@ -2103,10 +2101,31 @@ Lisäosat näytetään luettelossa, jossa on seuraavat sarakkeet:
 Valintaikkunassa on myös "Tietoja lisäosasta..." -painike.
 Sitä painamalla saa näkyviin kaikki lisäosan tiedot, joista on apua otettaessa yhteyttä lisäosan tekijään.
 
+++ Luo massamuistiversio ++[CreatePortableCopy]
+Tämä vaihtoehto avaa valintaikkunan, jossa  voit luoda NVDA:n asennetusta versiosta massamuistiversion.
+Massamuistiversiota käytettäessä Työkalut-alivalikossa  on "Luo massamuistiversio" -valikkokohteen sijaan vaihtoehto "Asenna NVDA".
 
-++ Python-konsoli ++[PythonConsole]
-NVDA:n Python-konsoli, joka löytyy NVDA-valikon Työkalut-alivalikosta, on kehitystyökalu, joka on hyödyllinen virheiden etsinnässä, yleisessä NVDA:n sisäisen toiminnan tai sovelluksen esteettömyyshierarkian tutkimisessa.
-Lisätietoja on [NVDA-kehittäjän oppaassa. https://www.nvaccess.org/files/nvda/documentation/developerGuide.html]
+Massamuistiversion luomisen tai NVDA:n asentava valintaikkuna kehottaa valitsemaan kansiopolun, johon massamuistiversio luodaan tai asennettava versio asennetaan.
+
+Tässä valintaikkunassa voit ottaa käyttöön tai poistaa käytöstä seuraavat vaihtoehdot:
+- Kopioi nykyisen käyttäjän asetukset (tämä sisältää tiedostot sijainnista %appdata%\roaming\NVDA tai massamuistiversion asetushakemistosta, ja sisältää lisäosat sekä muut moduulit)
+- Käynnistä uusi massamuistiversio luonnin jälkeen tai käynnistä NVDA asennuksen jälkeen (käynnistää NVDA:n automaattisesti massamuistiversion luonnin tai asennuksen jälkeen)
+-
+
+++ Suorita COM-rekisteröintien korjaustyökalu... ++[RunCOMRegistrationFixingTool]
+Ohjelmien asentaminen ja poistaminen voi tietyissä tapauksissa aiheuttaa COM DLL -tiedostojen rekisteröintien poistamista.
+Koska COM-liitännät, kuten IAccessible, ovat riippuvaisia oikeista COM DLL -rekisteröinneistä, ongelmia saattaa ilmetä, mikäli oikea rekisteröinti puuttuu.
+
+Näin voi käydä esim. Adobe Readerin, Math Playerin ja muiden ohjelmien asennuksen ja poiston jälkeen.
+
+Puuttuvat rekisteröinnit voivat aiheuttaa ongelmia selaimissa, työpöytäsovelluksissa, tehtäväpalkissa sekä muissa käyttöliittymissä.
+
+Erityisesti seuraavat ongelmat voidaan ratkaista suorittamalla tämä työkalu:
+- NVDA ilmoittaa "tuntematon" selaimia, kuten Firefoxia, Thunderbirdiä jne. käytettäessä
+- NVDA ei vaihda kohdistus- ja selaustilojen välillä
+- NVDA on erittäin hidas selaimissa navigoitaessa selaustilaa käytettäessä
+- Ja mahdollisesti muita ongelmia
+-
 
 ++ Lataa liitännäiset uudelleen ++[ReloadPlugins]
 Tällä voidaan ladata uudelleen sovellusmoduulit ja yleisliitännäiset ilman NVDA:n uudelleenkäynnistystä, mistä voi olla hyötyä kehittäjille.

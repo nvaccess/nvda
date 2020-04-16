@@ -14,7 +14,7 @@ complexSymbols:
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥.]?\d)
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -55,6 +55,7 @@ $	錢號	all	norep
 )	半形右括號	most	always
 *	star	some
 +	plus	some
+−	minus	some
 ,	comma	all	always
 -	dash	most
 .	dot	some
@@ -253,6 +254,7 @@ negative number	負
 ≒	約等於	some
 ≌	全等於	some
 ﹢	正號	some
+†	拉丁十字	some
 ﹣	負號	some
 ～	波浪號	some
 ⊥	垂直	some

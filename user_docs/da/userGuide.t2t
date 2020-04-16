@@ -268,7 +268,7 @@ Når menuen kommer op, kan du bruge piletasterne til at navigere rundt i menuen,
 
 ++ Grundlæggende NVDA-kommandoer ++[BasicNVDACommands]
 %kc:beginInclude
-|| Navn | Desktop tast | Laptop tast | Bevægelse | Beskrivelse |
+|| Navn | Desktop tast | Laptop tast | Touchbevægelse | Beskrivelse |
 | Stop tale | Kontrol | Kontrol | enkelt tryk med to fingre | stopper talen med det samme |
 | Pause Tale | Shift | Shift | Ingen | Sætter talen på pause. Når du trykker igen, fortsætter talen, hvor den slap (hvis pause er understøttet af den aktuelle talesyntese) |
 | NVDA-menu | NVDA+n | NVDA+n | Dobbelttryk med to fingre | Fremkalder NVDA-menuen, så du får adgang til indstillinger, værktøjer og hjælp osv. |
@@ -367,7 +367,7 @@ Hvis du derimod ønsker at punkt skal følge objektnavigation og læsemarkøren 
 For at navigere imellem objekter, skal du benytte følgende kommandoer:
 
 %kc:beginInclude
-|| Navn | Desktop tast | Laptop tast | Bevægelse | Beskrivelse |
+|| Navn | Desktop tast | Laptop tast | Touchbevægelse | Beskrivelse |
 | Sig aktuelle objekt | NVDA+Numpad5 | NVDA+Shift+o | Ingen | Annoncerer det aktuelle navigatorobjekt. Tryk to gange for at få stavet oplysningerne, og tryk tre gange for at kopiere objektets navn og værdi til udklipsholderen. |
 | Flyt til det overordnede objekt | NVDA+Numpad8 | NVDA+Shift+Pil-op | Svirp op (objekttilstand) | Navigerer til det overordnede objekt i forhold til det aktuelle navigatorobjekt |
 | Gå til forrige objekt | NVDA+Numpad4 | NVDA+Shift+Venstre-pil | Svirp til venstre (objekttilstand) | Flytter til objektet før det aktuelle navigatorobjekt |
@@ -376,7 +376,7 @@ For at navigere imellem objekter, skal du benytte følgende kommandoer:
 | Gå til objektet i fokus | NVDA+Numpad-Minus | NVDA+Backmellemrum | Ingen | Flytter til det objekt, som er i fokus. Placerer også læsemarkøren ved systemmarkøren, hvis den er synlig. |
 | Aktivér aktuelle navigatorobjekt | NVDA+Numpad-Enter | NVDA+Enter | Dobbelttryk | Aktiverer det nuværende navigatorobjekt (svarende til at klikke med musen eller trykke på mellemrums tasten, når det er i fokus) |
 | Flyt systemfokus eller systemmarkør til den aktuelle læseposition | NVDA+Shift+Numpad-Minus | NVDA+Shift+Backmellemrum | Ingen | Tryk en gang for at flytte systemfokus til det nuværende navigatorobjekt. Tryk to gange for at flytte systemmarkøren til læsemarkøren.
-| Sig læsemarkørens position | NVDA+Numpad-del | NVDA+Del Ingen | Giver information om placeringen af teksten eller objektet ved læsemarkøren. Fx. procentdel af dokumentet, afstand fra venstre kant af siden eller den præcise position på skærmen. To tryk kan give flere detaljer. |
+| Sig læsemarkørens position | NVDA+Numpad-del | NVDA+Del | Ingen | Giver information om placeringen af teksten eller objektet ved læsemarkøren. Fx. procentdel af dokumentet, afstand fra venstre kant af siden eller den præcise position på skærmen. To tryk kan give flere detaljer. |
 %kc:endInclude
 
 Bemærk: For at det numeriske tastatur skal fungere korrekt, skal Num Lock-tasten være slået fra.
@@ -395,7 +395,7 @@ Hvis du derimod ønsker at punkt skal følge objekt navigation og tekstgennemsyn
 
 Følgende tastekommandoer er tilgængelige for gennemsyn af tekst:
 %kc:beginInclude
-|| Navn | Desktop tast | Laptop tast | Bevægelse | Beskrivelse |
+|| Navn | Desktop tast | Laptop tast | Touchbevægelse | Beskrivelse |
 | Gå til øverste linje i læsetilstand | Shift+Numpad-7 | NVDA+Ctrl+Home | Ingen | Flytter læsemarkøren til den øverste linje af teksten |
 | Gå til forrige linje i læsetilstand | Numpad-7 | NVDA+Pil-op | Svirp op (teksttilstand) | Flytter læsemarkøren til forrige linje i teksten |
 | Læs aktuelle linje i læsetilstand | Numpad8 | NVDA+Shift+. | Ingen | Læser den linje, hvor læsemarkøren er placeret. Tryk to gange for at få linjen stavet. Tryk tre gange for at få linjen stavet fonetisk. |
@@ -431,7 +431,7 @@ Læsetilstand er en erstatning for det ældre koncept Flad Visning.
 
 Du skifter mellem læsetilstandene med følgende kommandoer:
 %kc:beginInclude
-|| Navn | Desktop tast | Laptop tast | Bevægelse | Beskrivelse |
+|| Navn | Desktop tast | Laptop tast | Touchbevægelse | Beskrivelse |
 | skift til næste læsetilstand | NVDA+Numpad7 | NVDA+sideOp | svirp op med to fingre | skifter til den næste tilgængelige læsetilstand. |
 | skift til forrige læsetilstand | NVDA+Numpad1 | NVDA+sideNed | Svirp ned med to fingre | skifter til den forrige tilgængelige læsetilstand. |
 %kc:endInclude
@@ -475,13 +475,13 @@ Hvis du ønsker at drage fordel af dem, kan de konfigureres fra [Indstillingskat
 
 Selv om du bør bruge en fysisk mus eller et pegefelt til at navigere med musen, har NVDA et par vigtige kommandoer relateret til brugen af mus:
 %kc:beginInclude
-|| Navn | Desktop tast | Laptop tast | Beskrivelse |
-| Venstre museklik | Numpad-skråstreg | NVDA+[ | Klikker en enkelt gang med venstre museknap. Det almindelige dobbeltklik kan udføres ved at trykke på denne tastekombination to gange hurtigt efter hinanden. |
-| Lås venstre museknap | Shift+Numpad-divideret-med | NVDA+ctrl+[ | Låser venstre museknap i nedtrykket tilstand. Tryk igen for at slippe den. Hvis du vil trække med musen, så tryk på denne tast for at låse museknappen, og flyt så musen, enten fysisk eller med en af de andre musekommandoer. |
-| Højre museklik | Numpad-stjerne | NVDA+] | Klikker en enkelt gang med højre museknap. |
-| Lås højre museknap | Shift+Numpad-stjerne | NVDA+ctrl+] | Låser højre museknap i nedtrykket tilstand. Tryk igen for at slippe den. Hvis du vil trække med musen, så tryk på denne tast for at låse museknappen, og flyt så musen, enten fysisk eller med en af de andre musekommandoer. |
-| Flyt musen til det aktuelle navigatorobjekt | NVDA+Numpad-skråstreg | NVDA+Shift+m | Flytter musen til positionen for det aktuelle navigatorobjekt og læsemarkøren |
-| Flyt til objektet ved musen | NVDA+Numpad-stjerne NVDA+Shift+n | Sætter navigatorobjektet til at være objektet på musens position |
+|| Navn | Desktop tast | Laptop tast | Touchbevægelse | Beskrivelse |
+| Venstre museklik | Numpad-skråstreg | NVDA+[ | Ingen | Klikker en enkelt gang med venstre museknap. Det almindelige dobbeltklik kan udføres ved at trykke på denne tastekombination to gange hurtigt efter hinanden. |
+| Lås venstre museknap | Shift+Numpad-divideret-med | NVDA+ctrl+[ | Ingen | Låser venstre museknap i nedtrykket tilstand. Tryk igen for at slippe den. Hvis du vil trække med musen, så tryk på denne tast for at låse museknappen, og flyt så musen, enten fysisk eller med en af de andre musekommandoer. |
+| Højre museklik | Numpad-stjerne | NVDA+] | Tryk og hold | Klikker en enkelt gang med højre museknap. |
+| Lås højre museknap | Shift+Numpad-stjerne | NVDA+ctrl+] | Ingen | Låser højre museknap i nedtrykket tilstand. Tryk igen for at slippe den. Hvis du vil trække med musen, så tryk på denne tast for at låse museknappen, og flyt så musen, enten fysisk eller med en af de andre musekommandoer. |
+| Flyt musen til det aktuelle navigatorobjekt | NVDA+Numpad-skråstreg | NVDA+Shift+m | Ingen | Flytter musen til positionen for det aktuelle navigatorobjekt og læsemarkøren |
+| Flyt til objektet ved musen | NVDA+Numpad-stjerne NVDA+Shift+n | Ingen | Sætter navigatorobjektet til at være objektet på musens position |
 %kc:endInclude
 
 + Gennemsynstilstand +[BrowseMode]
@@ -933,13 +933,6 @@ Bemærk: Ovenstående genveje virker kun, når statuslinjen i Foobar er formater
 | Læs oversætternoter | Ctrl+Shift+a | Læser oversætternoter. |
 %kc:endInclude
 
-++ Skype ++[Skype]
-%kc:beginInclude
-Under en samtale:
-|| Navn | Tast | Beskrivelse |
-| Læs meddelelse | NVDA+Ctrl+1-0 | Læser og flytter læsemarkøren til en af de nyeste meddelelser alt efter, hvilket tal du trykker. F.eks. NVDA+Ctrl+2 læser den næstnyeste meddelelse. |
-%kc:endInclude
-
 ++ Kindle for PC ++[Kindle]
 NVDA understøtter navigering og læsning i Amazon Kindle for PC.
 Denne funktionalitet er kun tilgængelig i Kindle bøger,hvor der står "Screen Reader: Supported." Du kan undersøge dette på detaljesiden for bogen.
@@ -1162,7 +1155,7 @@ Hvis du opdager, at NVDA læser tegn og symboler på et forkert sprog med en bes
 
 ==== Benyt Unicode Consortium data (herunder emoji) under behandling af tegn og symboler ====[SpeechSettingsCLDR]
 Når denne check box er valgt, vil NVDA benytte yderligere udtaleordbøger til udtale af symboler og tegn. 
-Disse ordbøger indeholder symboler (særligt emoji) der er angivet af [Unicode Consortium http://www.unicode.org/consortium/] som en del af deres [Common Locale Data Repository http://cldr.unicode.org/].
+Disse ordbøger indeholder symboler (særligt emoji) der er angivet af [Unicode Consortium https://www.unicode.org/consortium/] som en del af deres [Common Locale Data Repository http://cldr.unicode.org/].
 Hvis du ønsker, at NVDA skal udtale beskrivelser af emoji ved brug af denne data, skal indstillingen være slået til.
 Hvis du derimod bruger en talesyntese, der har denne funktionalitet indbygget, vil det evt. være nødvendigt at slå denne funktion fra.
 
@@ -2045,6 +2038,10 @@ Vinduet til punktskriftsviseren viser en check box med navnet "Vis punktskriftsv
 Hvis denne er valgt, vil viseren automatisk åbnes når NVDA startes.
 Dette vindue vil altid forsøge at åbne med samme dimensioner og samme placering, som de var, da vinduet blev lukket.
 
+++ Python-konsol ++[PythonConsole]
+Python-konsollen, der er at finde i menuen "Værktøjer" i NVDA-menuen fungerer som et udviklingsværktøj. Dette værktøj kan benyttes til generel fejlfinding, undersøgelse af interne komponenter i NVDA eller tilgængeligheden af en applikation.
+For yderligere information, læs [NVDA Developer Guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+
 ++ Styring af tilføjelsesprogrammer++[AddonsManager]
 Du kan administrere dine tilføjelsesprogrammer til NVDA ved at gå til "Administrer tilføjelsesprogrammer" under Værktøjer i NVDA-menuen. Dette værktøj giver dig mulighed for at installere tilføjelser til skærmlæseren, samt afinstallere, aktivére eller deaktivére tilføjelserne.
 Disse pakker kan indeholde tilpasset kode der kan ændre eller tilføje funktionalitet i NVDA, såsom understøttelse af bestemte talesynteser eller punktdisplays. Pakkerne er udgivet og bliver stillet til rådighed af fællesskabet.
@@ -2090,7 +2087,7 @@ For at gennemgå disse inkompatible tilføjelser, kan du bruge knappen "Vis inko
 
 Hvis du gerne vil kunne nå dialogen til styring af tilføjelsesprogrammer fra hvor som helst på computeren, kan du tilknytte en inputbevægelse med [dialogen inputbevægelser [InputGestures].
 
-++ Styring af inkompatible tilføjelser ++[incompatibleAddonsManager]
++++ Styring af inkompatible tilføjelser +++[incompatibleAddonsManager]
 Knappen "Vis inkompatible tilføjelser...", der kan tilgåes fra dialogen til styring af tilføjelsesprogrammer, vil åbne en dialog, hvorfra du kan administrere og gennemse inkompatible tilføjelser, samt hvorfor disse anses for at være inkompatible med din version af NVDA.
 Tilføjelser anses som inkompatible, når de ikke har været opdateret således at de virker med markante ændringer til NVDA, eller benytter en funktion i NVDA der ikke længere er tilgængelig.
 Styringen af inkompatible tilføjelser viser en kort besked om dialogens formål, samt din NVDA-version.
@@ -2103,10 +2100,31 @@ Inkompatible tilføjelser vises i en list omfattende følgende kolonner:
 Dialogen har også en knap ved navn "Om tilføjelsesprogram...".
 Denne knap viser alle detaljer om tilføjelsen, så du evt. kan kontakte udvikleren af det pågældende tilføjelsesprogram.
 
+++ Opret flytbar kopi ++[CreatePortableCopy]
+Dette vil åbne en dialog, således du kan oprette en flytbar kopi fra den installerede version af NVDA.
+Når du kører en flytbar kopi, vil dette menu punkt hedde "Installér NVDA på denne PC".
 
-++ Python konsollen ++[PythonConsole]
-NVDAs Python-konsol, der ligger under Værktøjer i NVDA-menuen, er et udviklerværktøj. Det er især velegnet til brug ved fejlfinding, generel inspektion af interne processer i NVDA eller inspektion af tilgængelighedshierarkiet i en applikation.
-For yderligere oplysninger henvises til [udviklingsguiden til NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+Den tilsvarende dialog der vil åbne, vil bede om en sti, hvor NVDA skal oprette en flytbar kopi eller installeres på PC'en.
+
+I denne dialog kan du deaktivere følgende:
+- Kopiér aktuelle brugerindstillinger (dette inkluderer filerne i %appdata%\roaming\NVDA eller brugerkonfigurationen for din flytbare kopi samt installerede tilføjelser og andre moduler)
+- "Start den nye flytbare kopi efter oprettelse" eller "Start NVDA efter installation" (starter NVDA automatisk efter oprettelse af den flytbare kopi eller efter installation på computeren)
+-
+
+++ Kør værktøj til løsning af almindelige problemer... ++[RunCOMRegistrationFixingTool]
+Installation og afinstallation af programmer på computeren kan i nogle tilfælde resultere i at nogle COM DLL filer bliver afregistrerede.
+Eftersom COM-interfaces som IAccessible afhænger af korrekte registrering af COM DLL, vil problemer nogle gange opstå, hvis nogle filregistreringer mangler.
+
+Dette kan eksempelvis forekomme, hvis du har installeret og derefter afinstalleret Adobe Reader, Math Player og andre programmer.
+
+De manglende filregistreringer kan forårsage problemer med diverse browsere, skrivebordsprogrammer, joblinjen og andre brugergrænseflader.
+
+Følgende problemer kan løses ved at køre dette værktøj:
+- NVDA rapporterer "Ukendt", når der navigeres i browsere som Firefox, Thunderbird osv.
+- NVDA er ikke i stand til at skifte korrekt mellem fokus- og gennemsynstilstand.
+- NVDA forekommer meget langsom, når du navigere i gennemsynstilstand.
+- Evt. andre problemer.
+-
 
 ++ Genindlæs plugins++[ReloadPlugins]
 Denne indstilling vil genindlæse alle app moduler og globale tilføjelsesprogrammer uden at genstarte NVDA. Dette kan være nyttigt for udviklere.
@@ -2425,7 +2443,12 @@ Brailliant BI og B serierne af punktdisplays fra [HumanWare https://www.humanwar
 Hvis du ønsker at koble displayet til ved brug af USB med protokollen sat til HumanWare, skal du først installere driveren fra leverandøren.
 USB drivere kræves ikke, hvis protokollen er sat til OpenBraille.
 
-BrailleNote Touch er også understøttet, men kræver ingen driver for at fungere.
+Følgende yderligere enheder understøttes også, men kræver ingen driver for at fungere:
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
+
 
 Dette er tastekombinationerne til Brailliant BI/B og BrailleNote Touch displays til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.

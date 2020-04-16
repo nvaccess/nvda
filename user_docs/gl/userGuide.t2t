@@ -933,13 +933,6 @@ Nota: os atallos de teclado de arriba só funcionan coa cadea de formato predete
 | Anunciar notas para traductores | control+shift+a | Anuncia calquera nota para os traductores.  |
 %kc:endInclude
 
-++ Skype ++[Skype]
-%kc:beginInclude
-Cando se está nunha conversa:
-|| Nome | Tecla | Descripción |
-| Revisar mensaxe | NVDA+control+1-0 | Anuncia e move o cursor de revisión a unha mensaxe recente, dependendo do número premedo; por ex.: NVDA+control+2 le a segunda mensaxe máis recente. |
-%kc:endInclude
-
 ++ Kindle para PC ++[Kindle]
 NVDA soporta a lectura e a navegación de libros no Amazon Kindle para PC.
 Esta funcionalidade só está dispoñible en libros de Kindle designados con "Lector de Pantalla: Soportado" o que podes verificar na páxina de detalles para o libro.
@@ -1061,6 +1054,7 @@ Os niveis dispoñibles do rexistro son:
  - Se che preocupa a privacidade, non configures a esta opción de nivel de rexistro.
 - Depuración: ademáis das mensaxes de información, aviso e entrada/saída, rexistraranse mensaxes de depuración adicionais.
  - Ao igual que coa Entrada/saída, se che preocupa a privacidade, non deberías configurar o nivel de rexistro nesta opción.
+ -
 -
 
 ==== Iniciar automáticamente nvda despois de autentificarse en windows ====[GeneralSettingsStartAfterLogOn]
@@ -2012,6 +2006,7 @@ Para cambiar como se configura NVDA nas pantallas de logon/UAC, configura a NVDA
 ++ Visualizador do Rexistro ++[LogViewer]
 O visualizador do rexistro, atopado en Ferramentas no menú NVDA, permítenche ver toda a saída que ocurrira ata agora dende cando iniciaches NVDA por última vez.
 Usando NVDA+F1 abrirase o visualizador do rexistro e amosarase a información do desenvolvedor sobre o navegador de obxectos actual.
+
 Ademáis de ler o contido, tamén podes gardar unha copia do ficheiro do rexistro, ou refrescar o visualizador tal que se amose a saída máis recente dende que o visualizador do rexistro foi aberto.
 Estas accións están dispoñibles baixo o menú de visualizador do Rexistro.
 
@@ -2043,6 +2038,10 @@ As pantallas braille físicas soen ter botóns para desprazarse cara adiante ou 
 A ventá do Visualizador Braille contén unha caixa de verificación etiquetada "Amosar Visualizador de Braille ao comezar".
 Se esta opción está marcada, o Visualizador Braille abrirase cando se inicie o NVDA.
 A ventá do Visualizador Braille sempre tentará voltar a abrirse coas mesmas dimensións e colocación que cando se pechou.
+
+++ Consola de Python ++[PythonConsole]
+A consola de Python do NVDA, atopada baixo Ferramentas no menú NVDA, é unha ferramenta de desenvolvemento que é útil para depuración, inspección xeral do interior  do NVDA ou inspeción da xerarquía de accesibilidade de unha aplicación.
+Para máis información, por favor olla a Guía do desenvolvedor dispoñible na [sección de desenvolvemento da páxina web do NVDA https://community.nvda-project.org/wiki/Development].
 
 ++ Administrador de Complementos ++[AddonsManager]
 O Administrador de Complementos, ao que se accesa selecionando Xestionar Complementos baixo Ferramentas no menú NVDA, permíteche instalar, desinstalar, habilitar e deshabilitar os paquetes de complementos para o NVDA.
@@ -2088,7 +2087,7 @@ Tentar instalar un complemento incompatible resultará nun erro explicando por q
 
 Para aceder ao Administrador de Complementos dende calquera lugar, por favor asigna un xesto persoalizado utilizando o [diálogho Xestos de Entrada #InputGestures].
 
-++ Administrador de Complementos Incompatibles ++[incompatibleAddonsManager]
++++ Administrador de Complementos Incompatibles +++[incompatibleAddonsManager]
 O Administrador de Complementos Incompatibles, ao que se pode acesar a través dos botóns "ver complementos incompatibles" no Administrador de Complementos, permíteche examinar calquera complemento incompatible e a razón pola que se consideran incompatibles.
 Os complementos considéranse incompatibles cando non foron actualizados para funcionar con cambios significativos do NVDA, ou cando se basean nunha característica non dispoñible na versión do NVDA que estás usando.
 O Administrador de Complementos Incompatibles ten unha mensaxe curta para explicar o seu propósito así como a versión do NVDA.
@@ -2102,9 +2101,30 @@ O Administrador de Complementos Incompatibles tamén ten un botón "Acerca do co
 Esto abre o que che permitirá conocer todos os detalles do complemento, o que é de axuda cando contactes co autor do complemento.
 
 
-++ Consola de Python ++[PythonConsole]
-A consola de Python do NVDA, atopada baixo Ferramentas no menú NVDA, é unha ferramenta de desenvolvemento que é útil para depuración, inspección xeral do interior  do NVDA ou inspeción da xerarquía de accesibilidade de unha aplicación.
-Para máis información, por favor olla a Guía do desenvolvedor dispoñible na [sección de desenvolvemento da páxina web do NVDA https://community.nvda-project.org/wiki/Development].
+++ Crear copia portable ++[CreatePortableCopy]
+Esto abrirá un diálogo que che permite crear unha copia portable do NVDA a partires da versión instalada.
+De calquer xeito, ao executar unha copia portable do NVDA, no submenú Ferramentas extra o elemento de menú chamarase "instalar NVDA neste PC" en lugar de "crear copia portable).
+O diálogo para crear unha copia portable do NVDA ou para instalar NVDA neste PC indicarache para selecionar unha ruta do cartafol na que debería crear a copia portable ou na que o NVDA debería instalarse.
+
+Neste diálogo podes habilitar ou deshabilitar o seguinte:
+- Copiar a configuración actual do usuario (esto inclúe os ficheiros en %appdata%\roaming\NVDA ou na configuración do usuario da túa copia portable e tamén inclúe os complementos e outros módulos)
+- Arrancar a nova copia portable despois da creación ou arrancar o NVDA despois da instalación (inicia o NVDA automáticamente despois da creación da copia portable ou da instalación)
+-
+
+++ Executar a ferramenta COM registration fixing... ++[RunCOMRegistrationFixingTool]
+A instalación ou desinstalación de programas nunha computadora pode, en certos casos, producir que os ficheiros COM DLL non se rexistren.
+Dado que as COM Interfaces como IAccessible dependen dos rexistros correctos de COM DLL, poden aparecer problemas en caso de que falte o rexistro correcto.
+
+Esto pode suceder, por exemplo, despois de instalar e desinstalar Adobe Reader, Math Player e outros programas.
+
+O rexistro faltante pode causar problemas nos navegadores, aplicacións de escritorio, barra de tarefas e outras interfaces.
+
+Específicamente, os seguintes problemas poden resolverse executando esta ferramenta:
+- O NVDA anuncia "descoñecido" ao navegar con navegadores coma Firefox, Thunderbird etc.
+- O NVDA falla ao cambiar entre modo foco e modo exploración
+- O NVDA é moi lento ao navegar cos navegadores mentres se usa o modo exploración
+- E posiblemente outros fallos.
+-
 
 ++ Recargar plugins ++[ReloadPlugins]
 Este elemento, unha vez activado, recarga app modules e plugins globais sen reiniciar ao NVDA, o cal é útil para desenvolvedores.

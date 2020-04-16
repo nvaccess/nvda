@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2020.1 =
+Các cải tiến của bản phát hành này bao gồm hỗ trợ cho vài màn hình chữ nổi mới từ HumanWare và APH, thêm nữa là sửa nhiều lỗi quan trọng như khả năng đọc công thức toán trong Microsoft Word sử dụng MathPlayer / MathType.
 
 == Tính năng mới ==
 - Thành phần đang được chọn trong các hộp danh sách lại được thể hiện ở chế độ duyệt trong Chrome, tương tự như NVDA 2019.1. (#10713)
@@ -12,9 +13,23 @@
 
 
 == Các thay đổi ==
-- NVDA chặn không cho hệ thống bị khóa hay bật chế độ ngủ khi đang đọc tất cả. (#10643)
+- NVDA sẽ chặn không cho hệ thống bị khóa hay bật chế độ ngủ khi đang đọc tất cả. (#10643)
 - Hỗ trợ cho out-of-process iframes trong Mozilla Firefox. (#10707)
-- Cập nhật thư viện phiên dịch chữ nổi liblouis lên phiên bản 3.12 (#10161)
+- Cập nhật thư viện phiên dịch chữ nổi liblouis lên phiên bản 3.12. (#10161)
+
+
+== Sửa lỗi ==
+- Sửa lỗi NVDA không đọc kí hiệu dấu âm bảng mã Unicode (U+2212). (#10633)
+- Khi cài add-on từ trình quản lý add-on, tên thư mục và tập tin trong cửa sổ duyệt tập tin không còn bị đọc hai lần. (#10620, #2395)
+- Trong Firefox, khi gọi Mastodon với chế độ giao diện web mở rộng được bật, tất cả dòng thời gian giờ đây đã trả về một cách chính xác trong chế độ duyệt. (#10776)
+- Trong chế độ duyệt, NVDA giờ đây đã đọc "chưa chọn" cho các hộp kiểm chưa chọn mà trước đây thỉnh thoảng nó không đọc. (#10781)
+- Các điều khiển chuyển ARIA  không còn đọc các thông tin gây bối rối như  "chưa kích hoạt đã chọn" hay "đã kích hoạt đã chọn". (#9187)
+- Các giọng SAPI4 không còn từ chối đọc một số nội dung nhất định. (#10792)
+- NVDA lại có thể đọc và tương tác với các công thức toán trong Microsoft Word. (#10803)
+- NVDA sẽ lại đọc các văn bản hiện chưa được chọn trong chế độ duyệt nếu bấm một phím mũi tên trong khi văn bản đã được chọn. (#10731).
+- NVDA không còn bị thoát khi có lỗi trong quá trình khởi động eSpeak. (#10607)
+- Các lỗi gây ra bởi unicode trong việc phiên dịch cho biểu tượng không còn làm cho trình cài đặt bị dừng, nó sẽ trở lại nội dung bằng tiếng Anh. (#5166, #6326)
+- Việc bấm mũi tên để thoát khỏi danh sách và bảng biểu trong khi đọc tất cả với chế độ thay đổi vị trí trong khi đọc được bật không còn liên tục thông báo đang thoát khỏi danh sách hay bảng biểu. (#10706)
 
 
 == Các thay đổi cho nhà phát triển ==

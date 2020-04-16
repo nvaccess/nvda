@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mongolian Translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-06 00:10+1000\n"
-"PO-Revision-Date: 2020-01-20 15:40+0800\n"
+"POT-Creation-Date: 2020-04-03 10:29+1000\n"
+"PO-Revision-Date: 2020-03-30 15:07+0800\n"
 "Last-Translator: \n"
 "Language-Team: MongolianNVDATranslationTeam <mongoliannvdatranslation@gmail."
 "com>\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
-msgstr "цоожтой дэлгэц"
+msgstr "дэлгэц цоожтой "
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -88,7 +88,7 @@ msgstr "Оруулах аргагүй"
 #. {text} will be replaced with the text of the spelling error.
 #, python-brace-format
 msgid "spelling and grammar: {text}"
-msgstr "зөв бичих дүрэм: {text}"
+msgstr "зөв бичих дүрэм бичвэр: {text}"
 
 #. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
@@ -106,7 +106,7 @@ msgstr "зөв бичих дүрэм: {text}"
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
-msgstr "цонх ажиллаж байна."
+msgstr "цонх идэвхгүй. olt, tab товчыг дарж идэвжүүлнэ үү"
 
 #. Translators: This is presented when errors are found in an appModule
 #. (example output: error in appModule explorer).
@@ -117,7 +117,7 @@ msgstr "%s програмийн хэсэгт алдаа гарлаа"
 #. Translators: Reported for the banner landmark, normally found on web pages.
 msgctxt "aria"
 msgid "banner"
-msgstr "том гарчиг"
+msgstr "хуудас"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
 msgctxt "aria"
@@ -127,7 +127,7 @@ msgstr "үзүүлж"
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
 msgctxt "aria"
 msgid "content info"
-msgstr "агуулгын мэдээлэл"
+msgstr "контент мэдээлэл"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
 msgctxt "aria"
@@ -142,7 +142,7 @@ msgstr "шилжих хуудас"
 #. Translators: Reported for the search landmark, normally found on web pages.
 msgctxt "aria"
 msgid "search"
-msgstr "хайлт"
+msgstr "хайлт хийх хэсэг"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
 msgctxt "aria"
@@ -484,7 +484,7 @@ msgstr "голд"
 #. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
 msgctxt "braille landmark abbreviation"
 msgid "navi"
-msgstr "үйлдэл"
+msgstr "шилжих"
 
 #. Translators: Displayed in braille for the search landmark, normally found on web pages.
 msgctxt "braille landmark abbreviation"
@@ -635,7 +635,7 @@ msgstr "Serial дугаар: {portName}"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
-msgstr "оруулалт танигдсангүй"
+msgstr "оролт танигдсангүй"
 
 #. Translators: Reported when a braille input modifier is released.
 #, python-brace-format
@@ -803,7 +803,7 @@ msgstr "English (U.K.) grade 2"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English North American Braille Computer Code"
-msgstr ""
+msgstr "English North American Braille Computer Code"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1042,20 +1042,18 @@ msgstr "Marathi grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Dutch (Belgium) 6 dot"
-msgstr "Dutch (Belgium)"
+msgstr "Dutch (Belgium) 6 dot"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Dutch (Netherlands) 6 dot"
-msgstr "Dutch (Netherlands)"
+msgstr "Dutch (Netherlands) 6 dot"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Dutch 8 dot"
-msgstr ""
+msgstr "Dutch 8 dot"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1236,7 +1234,7 @@ msgstr "үзэх хэлбэр"
 
 #. Translators: Reported label in the elements list for an element which which has no name and value
 msgid "Unlabeled"
-msgstr "Тэмдэг тавиагүй"
+msgstr "бичвэргүй"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -4590,16 +4588,16 @@ msgstr ""
 "your finger was last"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
-#, fuzzy
 msgid "object has no location"
-msgstr "объектийн байршил тодорхойгүй"
+msgstr "байршилгүй объект"
 
 #. Translators: Input help mode message for touch right click command.
-#, fuzzy
 msgid ""
 "Clicks the right mouse button at the current touch position. This is "
 "generally used to activate a context menu."
-msgstr "тухайн байршилд хулганы заагчаар баруун товшиж болно."
+msgstr ""
+"тухайн байршилд заагчаар баруун товшиж болно.гэхдээ хулганы цэсийг "
+"идэвхжүүлэх комманд хийж болно"
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
@@ -9653,9 +9651,8 @@ msgstr ""
 "\t\t\tThis cannot be undone."
 
 #. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
-#, fuzzy
 msgid "Reset gestures"
-msgstr "Зангаа оруулах тохиргооны"
+msgstr "reset буюу Зангааны үндсэн тохируулга хийх "
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."

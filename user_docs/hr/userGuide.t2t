@@ -933,13 +933,6 @@ Napomena: ovi prečaci rade samo s Foobarovim standardnim stringovima za oblikov
 | Izvijesti o napomenama za prevoditelje | kontrol+šift+a | Izvještava o napomenama za prevoditelje. |
 %kc:endInclude
 
-++ Skype ++[Skype]
-%kc:beginInclude
-Kad se nalazite u razgovoru:
-|| Naziv | Tipka | Opis |
-| Pregledaj poruke | NVDA+kontrol+1-0 | Izvještava o poruci i premješta pregledni kursor na jednu nedavnu poruku, ovisno o pritisnutom broju; npr. NVDA+kontrol+2 čita drugu najnedavniju poruku. |
-%kc:endInclude
-
 ++ Kindle za osobna računala ++[Kindle]
 NVDA podržava čitanje i kretanje po knjigama u Amazonovom Kindlu za osobna računala.
 Ova je funkcionalnost dostupna samo u Kindle knjigama označenima sa "Screen Reader: Supported", što možete provjeriti na stranici s detaljima o knjizi.
@@ -1061,6 +1054,7 @@ Dostupne razine zapisivanja su:
  - Ako se bojite za svoju privatnost, ne postavljajte ovu razinu zapisnika.
 - Debug: Uz informacije, upozorenja te poruke o ulazima/izlazima, zapisivat će se dodatne poruke koje služe za ispravljanje grešaka.
  - Kao u slučaju ulaz/izlaz, ako se bojite za svoju privatnost, ne postavljajte ovu razinu zapisnika.
+ -
 -
 
 ==== Automatski pokreni NVDA nakon što se prijavim u Windows sustav ====[GeneralSettingsStartAfterLogOn]
@@ -2045,6 +2039,10 @@ Prozor preglednika brajice sadrži potvrdni okvir označen "pokaži brajični pr
 Ako je ovo odabrano, prozob brajičnog preglednika će se otvoriti poslije pokretanja NVDA.
 Preglednik brajice će se uvijek pokušati otvoriti sa istim dimenzijama i pozicijom sa kojom je bio zatvoren.
 
+++ Python Konzola ++[PythonConsole]
+NVDA Python konzola koju možemo pronaći u alatima u NVDA izborniku je alat za razvoj koji služi za otkrivanje grešaka, opći nadzor NVDA unutarnjih komponenata ili nadzor hijerarhije aplikacije.
+Za više informacija, Molimo pogledajte [NVDA priručnik za programere https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+
 ++ Upravljanje dodacima ++[AddonsManager]
 Upravljanju dodacima se može pristupiti u NVDA izborniku u podizborniku Alati pod stavkom Upravljanje dodacima. Omogućuje instaliranje, deinstaliranje, aktiviranje i deaktiviranje NVDA dodataka.
 Ove pakete pruža zajednica i mogu sadržavati prilagođeni kod koji možda dodaje ili izmijenjuje neke funkcije u NVDA čitaču ili čak pružaju podršku za dodatne brajične retke ili govorne jedinice.
@@ -2090,7 +2088,7 @@ Provjerite nekompatibilne dodatke pomoću gumba "Prikaži nekompatibilne dodatke
 
 Za pristupanje upravljanju dodacima s bilo kojeg mjesta, dodijelite odgovarajuću prilagođenu gestu koristeći dijaloški okvir [Ulazne geste #InputGestures].
 
-++ Upravljanje nekompatibilnim dodacima ++[incompatibleAddonsManager]
++++ Upravitelj nekompatibilnih dodataka +++[incompatibleAddonsManager]
 Upravljanju nekompatibilnim dodacima se može pristupiti putem gumba "Prikaži nekompatibilne dodatke" u Upravljanju dodacima. Omogućuje provjeru svakog nekompatibilnog dodatka, te saznati razlog za njihovu nekompatibilnost.
 Dodaci se smatraju nekompatibilnima kad su pisani za stariju NVDA verziju od one koju koristite ili ovise o skupu funkcija koja su nedostupne u vašoj NVDA verziji.
 Upravljanje nekompatibilnim dodacima sadrži poruku o njenoj svrsi kao i informaciju o NVDA verziji.
@@ -2103,10 +2101,31 @@ Nekompatibilni dodaci se prikazuju u popisu sa sljedećim stupcima:
 Upravljanje nekompatibilnim dodacima sadrži gumb "O dodatku".
 Kad se otvori, prikazat će se sve informacije o dodatku, što je korisno kad se želi kontaktirati autora.
 
+++ Stvori prijenosnu kopiju ++[CreatePortableCopy]
+Ovo otvara dijaloški okvir koji služi za stvaranje prijenosne verzije iz instalacijske.
+Na ovaj način, kada pokrećemo prijenosnu inačicu NVDA, u podizborniku Alati stavka izbornika će se zvati "Instaliraj NVDA na ovaj PC" umjesto "Stvori prijenosnu kopiju).
 
-++ Python konzola ++[PythonConsole]
-NVDA Python konzola, koja se može pronaći u podizborniku Alati u NVDA izborniku, je alat za razvojne programere. Koristan je za otkrivanje grešaka, opću provjeru NVDA unutarnjih funkcija ili provjeru hijerarhije pristupačnosti neke aplikacije.
-Za više informacija pogledajte [vodič za razvojne programere https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+Dijaloški okvir za stvaranje prijenosne verzije  NVDA odnosno instalacije NVDA na ovaj Pc će vas pitati gdje želite stvoriti prijenosnu kopiju odnosno instalirati NVDA.
+
+U ovom dijaloškom okviru možete uključiti ili isključiti slijedeće:
+- Kopiraj trenutnu korisničku konfiguraciju (ovo uključuje datoteke u %appdata%\roaming\NVDA ili u korisničkoj konfiguraciji prijenosne verzije te uključuje tekođer dodatke i druge komponente)
+- Pokreni novu prijenosnu kopiju poslije stvaranja odnosno pokreni instalacijsku verziju poslije instalacije (Pokreće NVDA poslije stvaranja prijenosne kopije ili poslije instalacijske)
+-
+
+++ Pokreni alat za popravak Com registracija... ++[RunCOMRegistrationFixingTool]
+U nekim slučajevima, instalacija i deinstalacija nekih programa može odjaviti registraciju com dll datoteke.
+Budući da Com sučelja poput IAccessible ovise o ispravnoj Com registraciji, mogu se pojaviti problemi ako nedostaje ispravna registracija.
+
+Ovo se može dogoditi u slučaju uklanjanja Adobe Readera, Math Playera ili drugih programa.
+
+Registracije koje nedostaju mogu prouzročiti probkeme u internetskim preglednicima, aplikacijama za stolna računala, traci zadataka i drugim sučeljima.
+
+Točnije govoreći, slijedeći problemi mogu biti rješeni koristeći ovaj alat:
+- NVDA izgovara "nepoznato" prilikom kretanja u internetskim preglednicima poput Firefoxa, Thunderbirda itd.
+- NVDA odbija prebacivanje između modusa pregleda i čitanja
+- NVDA is very slow when navigating in browsers while using browse mode
+- te moguće druge probleme.
+-
 
 ++ Ponovo učitaj dodatke ++[ReloadPlugins]
 Jednom kad se ova stavka aktivira, NVDA dodaci će se ponovo učitati bez potrebe za ponovnim pokretanjem NVDA, što može biti korisno za razvojne programere.

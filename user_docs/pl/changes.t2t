@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2020.1 =
+Najważniejsze zmiany w tej wersji to wsparcie niektórych monitorów brajlowskich od producentów HumanWare i APH, a także dużo ważnych poprawek błędów, takich jak ponowna możliwość odczytywania treści matematycznych W programie Microsoft Word, używając programów MathPlayer / MathType.
 
 == Nowości ==
 - Aktualnie zaznaczony element na listach jest ponownie odczytywany w trybie przeglądania w przeglądarce Google Chrome, tak jak to było w NVDA 2019.1. (#10713)
@@ -14,21 +15,25 @@
 == Zmiany ==
 - NVDA od teraz nie pozwala przejść systemowi w stan uśpienia, gdy aktywny jest tryb "czytaj wszystko". (#10643)
 - Wsparcie dla ramek renderowanych poza procesem w przeglądarce Mozilla Firefox. (#10707)
-- Zaktualizowano liblouis braille translator do wersji 3.12 (#10161)
-
-
-== Zmiany dla programistów ==
-Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
+- Zaktualizowano liblouis braille translator do wersji 3.12. (#10161)
 
 
 == Poprawki błędów ==
-- Poprawiono błąd uniemożliwiający poprawnne odczytywanie symbolu Unicode (U+2212) (#10633)
+- Poprawiono błąd uniemożliwiający poprawne odczytywanie symbolu Unicode (U+2212) (#10633)
 - Podczas wybierania plików w menedżerze dodatków, ich nazwy nie są odczytywanie podwujnie w oknie przeglądania. (#10620, #2395)
 - W przeglądarce Mozilla Firefox wczytanie programu mastodon renderuje od teraz poprawnie wszystkie osie czasu. (#10776)
 - W trybie przeglądania NVDA od teraz ogłasza poprawnie stany pól wyboru. (#10781)
 - Stan przełączników Aria od teraz jest poprawnie odczytywany. (#9187)
 - Głosy SAPI 4 powinny ponownie działać poprawnie. (#10792)
 - NVDA może ponownie odczytywać i interagować z równaniami matematycznymi w programie Microsoft Word. (#10803)
+- NVDA ponownie oznajmia usuwanie zaznaczenia z tekstu, jeżeli aktywny jest tryb przeglądania. (#10731).
+- NVDA nie zamyka się, gdy występuje błąd inicjalizacji syntezatora mowy Espeak. (#10607)
+- W razie błędu z dekodowaniem Unicode podczas instalacji, używane będą angielskie nazwy skrótów. (#5166, #6326)
+- Wyjście strzałką z listy lub tabeli w trybie szybkiego czytania nie powoduje już ciągłego oznajmiania stanu elementu. (#10706)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
 
 
 = 2019.3 =
