@@ -973,7 +973,12 @@ def findGroupboxObject(obj):
 				and (top + height) <= (groupTop + groupHeight)
 			):
 				return groupObj
-		prevWindow = winUser.getPreviousWindow(prevWindow)
+		tempWindow = winUser.getPreviousWindow(prevWindow)
+		if tempWindow == prevWindow:
+			# In rare cases (e.g. HWND 65554 "Message"), getPreviousWindow can return
+			# the window passed to it, causing an infinite loop.
+			break
+		prevWindow = tempWindow
 
 
 # C901 'getRecursiveTextFromIAccessibleTextObject'
