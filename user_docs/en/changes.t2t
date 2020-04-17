@@ -24,12 +24,14 @@ What's New in NVDA
 - NVDA starts correctly when log file cannot be created. (#6330)
 - In recent releases of Microsoft Word 365, NVDA will no longer announce "delete back word" when Control+Backspace is pressed while editing a document. (#10851)
 - In Winamp, NVDA will once again announce toggle status of shuffle and repeat. (#10945)
+- NVDA is no longer extremely sluggish when moving within the list of items in 1Password. (#10508)
 
 
 == Changes For Developers ==
 - execElevated and hasUiAcces have moved from config module to systemUtils module. Usage via config module is deprecated. (#10493)
 - Updated configobj to 5.1.0dev commit f9a265c4. (#10939)
 - Automated testing of NVDA with Chrome and a HTML sample is now possible. (#10553)
+- IAccessibleHandler has been converted into a package, OrderedWinEventLimiter has been extracted to a module and unit tests added (#10934)
 
 
 = 2020.1 =
