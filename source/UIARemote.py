@@ -20,6 +20,7 @@ _getTextContent=_dll.uiaRemote_getTextContent
 _getTextContent.restype=SAFEARRAY(VARIANT)
 
 _UIAPropIDs=[
+	UIAHandler.UIA_RuntimeIdPropertyId,
 	UIAHandler.UIA_NamePropertyId,
 	UIAHandler.UIA_LocalizedControlTypePropertyId,
 	UIAHandler.UIA_ControlTypePropertyId,
@@ -48,8 +49,9 @@ _UIAPropIDs=[
 	UIAHandler.UIA_GridItemColumnPropertyId,
 ]
 
-def _getControlField(UIARuntimeID,props):
+def _getControlField(props):
 	field=textInfos.ControlField()
+	UIARuntimeID = props[UIAHandler.UIA_RuntimeIdPropertyId]
 	field['_UIARuntimeID'] = UIARuntimeID
 	field['uniqueID']=UIARuntimeID
 	UIAControlType = props[UIAHandler.UIA_ControlTypePropertyId]
@@ -296,15 +298,10 @@ def getTextWithFields(rootElement,textRange,formatConfig):
 		cmd=content[index]
 		index+=1
 		if cmd==textContentCommand_elementStart:
-			IDLength=content[index]
-			index+=1
-			endIndex=index+IDLength
-			ID=content[index:endIndex]
-			index=endIndex
 			endIndex=index+propCount
 			propValues=content[index:endIndex]
 			props={propIDs[x]:propValues[x] for x in range(propCount)}
-			controlField=_getControlField(ID,props)
+			controlField = _getControlField(props)
 			fields.append(textInfos.FieldCommand("controlStart",controlField))
 			# Propagate table-id to a table's descendants
 			if len(controlStack)>0 and controlField.get('table-id') is None:
