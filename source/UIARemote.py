@@ -319,11 +319,15 @@ def getTextWithFields(rootElement,textRange,formatConfig):
 			text=content[endIndex]
 			if text:
 				fields.append(text)
+				if not text.isspace() and len(controlStack)>0:
+					controlStack[-1]['_containsValidText']=True
 			else:
 				del fields[-1]
 			index=endIndex+1
 		elif cmd==textContentCommand_elementEnd:
 			controlField=controlStack.pop()
+			if len(controlStack)>0 and controlField.get('_containsValidTexdt'):
+				controlStack[-1]['_containsValidText']=True
 			fields.append(textInfos.FieldCommand("controlEnd",controlField))
 		else:
 			raise RuntimeError(f"unknown command {cmd}")
