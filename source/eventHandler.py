@@ -20,6 +20,7 @@ import globalPluginHandler
 import config
 import winUser
 import extensionPoints
+import ui
 
 #Some dicts to store event counts by name and or obj
 _pendingEventCountsByName={}
@@ -27,6 +28,23 @@ _pendingEventCountsByObj={}
 _pendingEventCountsByNameAndObj={}
 # Needed to ensure updates are atomic, as these might be updated from multiple threads simultaneously.
 _pendingEventCountsLock=threading.RLock()
+_lastDesktopName = None
+
+
+def handlePossibleDesktopNameChange():
+	"""
+	Reports the new virtual desktop name if changed.
+	On Windows versions lower than Windows 10, this function does nothing.
+	"""
+	global _lastDesktopName
+	desktop = api.getDesktopObject()
+	if not desktop.desktopsHaveNames:
+		return
+	newName = desktop.name
+	if newName != _lastDesktopName:
+		ui.message(newName)
+		_lastDesktopName = newName
+
 
 #: the last object queued for a gainFocus event. Useful for code running outside NVDA's core queue 
 lastQueuedFocusObject=None
@@ -230,6 +248,7 @@ def doPreGainFocus(obj,sleepMode=False):
 				newForeground=obj
 		api.setForegroundObject(newForeground)
 		executeEvent('foreground',newForeground)
+	handlePossibleDesktopNameChange()
 	if sleepMode: return True
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
 	for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:

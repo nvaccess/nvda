@@ -426,8 +426,12 @@ def main():
 
 	import api
 	import winUser
-	import NVDAObjects.window
-	desktopObject=NVDAObjects.window.Window(windowHandle=winUser.getDesktopWindow())
+	import NVDAObjects.IAccessible
+	desktopObject = NVDAObjects.IAccessible.getNVDAObjectFromEvent(
+		winUser.getDesktopWindow(),
+		winUser.OBJID_CLIENT,
+		winUser.CHILDID_SELF
+	)
 	api.setDesktopObject(desktopObject)
 	api.setFocusObject(desktopObject)
 	api.setNavigatorObject(desktopObject)

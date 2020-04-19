@@ -34,8 +34,10 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
+import core
 from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer, ToolTip, Notification
 from locationHelper import RectLTWH
+import winVersion
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
@@ -1969,9 +1971,44 @@ class UIItem(IAccessible):
 		return ""
 
 
+class Desktop(IAccessible):
+	"""
+	An IAccessible overlay class for the Desktop (root of all windows on the system).
+	"""
+
+	isPresentableFocusAncestor = False
+	# In the past, The Desktop NVDAObject was just a Window, not IAccessible. But
+	# now with the introduction of Virtual Desktops in Windows 10, Desktops can
+	# have names, so IAccessible is used.
+	# However, we still want to maintain compatibility with the existing tree
+	# structure, thus its role is still Window, and it has no parent, next or
+	# previous objects.
+	role = controlTypes.ROLE_WINDOW
+	parent = None
+	next = None
+	previous = None
+
+	def initOverlayClass(self):
+		# Desktop name reporting can only be supported on Windows 10 May 2019
+		# Update and above. Previous Windows 10 builds could experience delays
+		# and incorrect desktop names. Before Windows 10, desktops didn't have names
+		# at all.
+		self.desktopsHaveNames = winVersion.winVersion >= (10, 0, 18334)
+		if not self.desktopsHaveNames:
+			self.name = NVDAObjects.window.Desktop._get_name(self)
+
+	def event_nameChange(self):
+		if self.desktopsHaveNames:
+			# Instruct eventHandler to detect and handle a possible desktop name change,
+			# if it has not already. It is slightly delayed just in case a focus event is
+			# already going to occur, which will handle the name change itself.
+			core.callLater(250, eventHandler.handlePossibleDesktopNameChange)
+
+
 ###class mappings
 
 _staticMap={
+	("#32769", oleacc.ROLE_SYSTEM_CLIENT): "Desktop",
 	("ReBarWindow32",oleacc.ROLE_SYSTEM_CLIENT):"ReBarWindow32Client",
 	("Static",oleacc.ROLE_SYSTEM_STATICTEXT):"StaticText",
 	("msctls_statusbar32",oleacc.ROLE_SYSTEM_STATICTEXT):"StaticText",
