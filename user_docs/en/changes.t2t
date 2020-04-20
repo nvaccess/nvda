@@ -12,13 +12,11 @@ What's New in NVDA
 - Better support for ESET antivirus GUI. (#10894)
 - Added support for Windows Terminal. (#10305)
 - Added a command to report the active configuration profile. (#9325)
-- Added a command to toggle reporting of subscripts and superscripts. (#10985)
 
 
 == Changes ==
 - Updated liblouis braille translator to [3.13.0 https://github.com/liblouis/liblouis/releases/tag/v3.13.0] (from 3.12.0). (#10832)
-- The reporting of superscripts and subscripts is now controlled separately to the reporting of font attributes. (#10919)
-
+- The reporting of superscripts and subscripts is now controlled separately to the reporting of font attributes, via a new input gesture and setting in document formatting preferences. (#10919)
 
 == Bug Fixes ==
 - NVDA starts correctly when log file cannot be created. (#6330)
