@@ -727,6 +727,22 @@ class UIAHandler(COMObject):
 				and not config.conf['UIA']['useInMSWordWhenAvailable']
 			):
 				return False
+			# MS Excel spreadsheets now have a fairly usable UI Automation implementation.
+			# However,
+			# Builds of MS Office 2016 before build 9000 or so had bugs which we cannot work around.
+			# And even current builds of Office 2016 are still missing enough info from UIA
+			# that it is still impossible to switch to UIA completely.
+			# Therefore, if we can inject in-process,
+			# refuse to use UIA and instead fall back to the MS Excel object model.
+			elif (
+				# An MS Excel spreadsheet window
+				windowClass == "EXCEL7"
+				# Disabling is only useful if we can inject in-process (and use our older code)
+				and appModule.helperLocalBindingHandle
+				# Allow the user to explisitly force UIA support for MS Excel spreadsheets no matter the Office version
+				and not config.conf['UIA']['useInMSExcelWhenAvailable']
+			):
+				return False
 			# Unless explicitly allowed, all Chromium implementations (including Edge) should not be UIA,
 			# As their IA2 implementation is still better at the moment.
 			elif (
