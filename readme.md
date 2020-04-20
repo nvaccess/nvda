@@ -53,6 +53,16 @@ The following dependencies need to be installed on your system:
 			* MSVC v142 - VS 2019 C++ ARM64 build tools
 			* C++ ATL for v142 build tools (ARM64)
 
+### Note
+
+When you show the NVDA\extras\.vsconfig file in the source folder of NVDA to Visual Studio Istaller by following the steps of:
+1. Visual Studio Installer
+2. More
+3. Import configuration
+4. browse
+
+VSInstaller will automatically check the components.  
+You can then click on the Review details -> Modify or install button.
 
 ### Git Submodules
 Most of the dependencies are contained in Git submodules.
