@@ -21,10 +21,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	supportedSettings=[]
 
 	def speak(self, speechSequence):
-		self.lastIndex = None
-		for item in speechSequence:
-			if isinstance(item, speech.IndexCommand):
-				self.lastIndex = item.index
+		...
 
 	def cancel(self):
-		self.lastIndex = None
+		...
