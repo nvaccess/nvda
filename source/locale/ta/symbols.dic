@@ -16,7 +16,7 @@ complexSymbols:
 # Others
 decimal point	(?<=\d)\.(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥]?\d)
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 # Treat dash differently when it is sandwitched between a number and a tamil character.
 # tamil unicode range is U+0B80–U+0BFF according to https://en.wikipedia.org/wiki/Tamil_script  
 tamilNumberDash	(?<=[0-9])\-(?=[஀-௿])
@@ -62,6 +62,7 @@ $	டாலர்	all	norep
 )	வலப்பிறை	most
 *	பெருக்கல்	some
 +	கூட்டல்	some
+−	கழித்தல்	some
 ,	கால் புள்ளி	all	always
 -	இணைக்கோடு	most
 .	புள்ளி	some
@@ -105,6 +106,7 @@ _	அடிக்கோடு	most
 ⇒	இரட்டை வலதம்பு	some
 ⇨	வெள்ளை வலதம்பு	some
 ➢	வலதம்பு முனை	some
+⮚	வலதம்பு முனை	some
 ❖	black diamond minus white X	some
 ♣	கருந்தடி முனை	some
 ♦	கரு வைரம்	some
@@ -128,6 +130,7 @@ _	அடிக்கோடு	most
 ↓	கீழம்பு	some
 ✓	தேர்வு	some
 ✔	தேர்வு	some
+🡺	வலதம்பு	some
 
 #Mathematical Operators U+2200 to U+220F
 

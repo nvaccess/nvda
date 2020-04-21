@@ -103,7 +103,7 @@ def findScript(gesture):
 			return func
 
 	# Vision enhancement provider level
-	for provider in vision.handler.providers.values():
+	for provider in vision.handler.getActiveProviderInstances():
 		if isinstance(provider, baseObject.ScriptableObject):
 			func = _getObjScript(provider, gesture, globalMapScripts)
 			if func:
@@ -223,31 +223,6 @@ def getLastScriptRepeatCount():
 
 def isScriptWaiting():
 	return bool(_numScriptsQueued)
-
-def isCurrentScript(scriptFunc):
-	"""Finds out if the given script is equal to the script that L{isCurrentScript} is being called from.
-	@param scriptFunc: the script retreaved from ScriptableObject.getScript(gesture)
-	@type scriptFunc: Instance method
-	@returns: True if they are equal, False otherwise
-	@rtype: boolean
-	"""
-	try:
-	 	givenFunc=getattr(scriptFunc.im_self.__class__,scriptFunc.__name__)
-	except AttributeError:
-		log.debugWarning("Could not get unbound method from given script",exc_info=True) 
-		return False
-	parentFrame=inspect.currentframe().f_back
-	try:
-		realObj=parentFrame.f_locals['self']
-	except KeyError:
-		log.debugWarning("Could not get self instance from parent frame instance method",exc_info=True)
-		return False
-	try:
-		realFunc=getattr(realObj.__class__,parentFrame.f_code.co_name)
-	except AttributeError:
-		log.debugWarning("Could not get unbound method from parent frame instance",exc_info=True)
-		return False
-	return givenFunc==realFunc
 
 def script(
 	description="",
