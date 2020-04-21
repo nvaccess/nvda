@@ -2,6 +2,35 @@
 
 
 %!includeconf: ../changes.t2tconf
+= 2020.1 =
+Ebben a kiadásban: bővült a támogatott braille kijelzők köre a HumanWare és az APH néhány termékével; az NVDA újra kezeli a matematikai kifejezéseket a Microsoft Wordben  MathPlayer vagy MathType használatakor; és még néhány további fontos hibajavítás.
+
+== Újdonságok ==
+- Google Chrome: A listamezők kijelölt elemét ismét bejelenti a program. Most ismét úgy működik, mint az NVDA 2019.1 kiadásában. (#10713)
+- Az érintőkijelzőkön már előhívható a helyi menü az egyujjas érintés és nyomvatartás mozdulattal. (#3886)
+- Új, támogatott braille kijelzők: APH Chameleon 20, APH Mantis Q40, HumanWare BrailleOne, BrailleNote Touch v2, és NLS eReader. (#10830)
+
+
+== Változások ==
+- Folyamatos felolvasás közben az NVDA megakadályozza a Windows zárolását vagy alvó módba kapcsolását. (#10643)
+- Mozilla firefox: támogatás out-of-process iframe elemekhez. (#10707)
+-  A liblouis braille translator frissült a 3.12. verzióra. (#10161)
+
+
+== Hibajavítások ==
+- Az NVDA már bejelenti az Unicode minusz karaktert. (U+2212). (#10633)
+- Bővítmények: Ha a bővítménykezelőből telepítünk egy bővítményt, a böngészőablakban az NVDA már nem jelenti be kétszer a fájlok és mappák nevét. (#10620, #2395)
+- Firefox, ha a Mastodon az  advanced web interface opció engedélyezésével töltődik be, akkor böngészőmódban minden idővonal megfelelően jelenik meg. (#10776)
+- Böngészőmódban az NVDA már bejelenti a nem bejelölt jelölőnégyzetek állapotát,ahol ezt korábban még nem tette. (#10781)
+- Az ARIA kapcsoló vezérlők már nem adnak zavaró információkat az NVDA-nak, mint pl. "nincs lenyomva, bejelölt" és "lenyomva, bejelölt". (#9187)
+- A SAPI4 hangok már nem némulnak el bizonyos szövegeknél. (#10792)
+- Microsoft word: az NVDA ismét képes olvasni és kezelni a matematikai egyenleteket. (#10803)
+- Böngészőmódban az NVDA ismét bejelenti a szöveg kijelölési állapotának megváltozását, amennyiben lenyomjuk valamelyik nyílbillentyűt. ilyenkor ismét bejelenti, hogy "nincs kielölve". (#10731).
+- Az NVDA már nem zárul be, ha az eSpeak betöltése közben valami hiba lép fel. (#10607)
+- Bizonyos nyelveknél, ahol a parancsikon létrehozásánál korábban hibát okozott az unicode, már nem áll le az NVDA telepítése hibaüzenettel. (#5166, #6326)
+- Ha folyamatos felolvasás közben az átfutás engedélyezve van, a táblázatokból és listákból való kilépéskor az NVDA nem jelenti be a lista vége vagy a táblázat vége helyzetet. (#10706)
+
+
 = 2019.3 =
 
 Ebben a kiadásban jelentős változások a motorháztető alatt: az NVDA programkódja mostantól már nem a Python 2-es, hanem a 3-as verziójára épül, emellett jelentősen átírták a beszéd alrendszert is. 

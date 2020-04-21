@@ -7,48 +7,48 @@ Was ist neu in NVDA
 Zu den Highlights dieser Version gehört die Unterstützung mehrerer neuer Braillezeilen von Humanware und APH sowie viele andere wichtige Fehlerbehebungen, wie z. B. die Möglichkeit, mit MathPlayer / MathType wieder Mathematik in Microsoft Word lesen zu können.
 
 == Neue Features ==
-- Das aktuell ausgewählte Element in den Listen wird wieder im Lesemodus in Google Chrome dargestellt, ähnlich wie in NVDA 2019.1. (#10713)
-- Sie können nun Rechtsklicks mit der Maus auf Geräten mit Touchscreens ausführen, indem Sie mit einem Finger tippen und halten. (#3886)
+- Das aktuell ausgewählte Element in Ausklapplisten wird im Lesemodus in Google Chrome wieder angezeigt, ähnlich wie in NVDA 2019.1. (#10713)
+- Sie können nun einen rechthen Mausklick auf Geräten mit Touchscreens ausführen, indem Sie mit einem Finger tippen und halten. (#3886)
 - Unterstützung für neue Braillezeilen: APH Chameleon 20, APH Mantis Q40, Humanware BrailleOne, BrailleNote Touch v2 und NLS eReader. (#10830)
 
 
 == Änderungen ==
-- Während beim Alles Lesen verhindert NVDA, dass das System sich abschaltet oder in den Schlafmodus wechselt. (#10643)
-- Unterstützung für veraltete iFrames in Mozilla Firefox. (#10707)
-- Braille-Übersetzer von Liblouis auf Version 3.12 aktualisiert. (#10161)
+- NVDA verhindert nun, dass das System sich abschaltet oder in den Schlafmodus wechselt, während alles lesen aktiviert ist. (#10643)
+- Unterstützung für Out-of-Process iFrames in Mozilla Firefox. (#10707)
+- Der Liblouis Braille-Übersetzer wurde auf Version 3.12 aktualisiert. (#10161)
 
 
 == Fehlerbehebungen ==
-- Behoben, dass das Unicode-Minus-Symbol nicht angesagt wurde (U+2212). (#10633)
-- Bei der Installation von Erweiterungen in der Verwaltung für Erweiterungen werden die Dateiennamen und Ordner nicht mehr doppelt gemeldet. (#10620, #2395)
-- In Mozilla Firefox werden beim Laden von Mastodon mit aktivierter erweiterter Web-Schnittstelle alle Zeitleisten jetzt im Lesemodus korrekt gerendert. (#10776)
-- Im Lesemodus meldet NVDA nun die Kontrollkästchen, die nicht ausgewählt sind, wo dies früher manchmal nicht der Fall war. (#10781)
-- Die ARIA-Schalterelemente zur Steuerung melden nicht mehr verwirrende Informationen wie "nicht gedrückt gedrückt geprüft" oder "gedrückt geprüft". (#9187)
-- SAPI4-Stimmen werden nicht mehr ignoriert. (#10792)
-- NVDA kann wiederum mathematische Gleichungen in Microsoft Word lesen und mit ihnen interagieren. (#10803)
-- NVDA teilt wieder mit, dass der Text im Lesemodus nicht ausgewählt ist, wenn eine Pfeiltaste gedrückt wird, während der Text ausgewählt ist. (#10731).
-- NVDA beendet sich nicht mehr selbst, wenn ein Fehler bei der eSpeak-Initialisierung auftritt. (#10607)
-- Während des Installationsvorgang bricht das Installationsprogramm nicht mehr ab, wenn ein Unicode-Zeichen in der Tastenkombination der Verknüpfung für den Desktop unerwarteter Weise auftritt. Es wird stattdessen die englische Originalbezeichnung verwendet. (#5166, #6326)
-- Beim Navigieren mit den Pfeiltasten bzw. beim Verlassen von Listen und Tabellen wird beim Alles Lesen das Verlassen der Liste oder Tabelle nicht mehr mitgeteilt. (#10706)
+- Ein Problem wurde behoben, bei dem das Unicode-Minus-Symbol nicht angesagt wurde (U+2212). (#10633)
+- Bei der Installation von Erweiterungen aus dem Dialog "Erweiterungen verwalten" werden die Datei- und Ordnernamen nicht mehr doppelt gemeldet. (#10620, #2395)
+- In Mozilla Firefox werden nun beim Laden von Mastodon mit aktivierter erweiterter Web-Oberfläche im Lesemodus alle Zeitleisten korrekt gerendert. (#10776)
+- Ein Problem wurde behoben, bei dem nicht ausgewählte Kontrollkästchen im Lesemodus manchmal nicht angesagt wurden. (#10781)
+- Die ARIA-Umschaltelemente melden nicht mehr verwirrende Informationen wie "nicht gedrückt aktiviert" oder "gedrückt aktiviert". (#9187)
+- Ein Problem wurde behoben, bei dem SAPI4-Stimmen bestimmte Texte nicht ansagten. (#10792)
+- NVDA kann wieder mathematische Gleichungen in Microsoft Word lesen und mit ihnen interagieren. (#10803)
+- NVDA sagt wieder an, dass der Text im Lesemodus nicht ausgewählt ist, wenn nach dem Auswählen des Textes eine Pfeiltaste gedrückt wird. (#10731).
+- NVDA beendet sich nicht mehr selbst, wenn ein Fehler bei der Initialisierung von eSpeak auftritt. (#10607)
+- Während des Installationsvorgangs bricht das Installationsprogramm nicht mehr ab, wenn ein Unicode-Zeichen in der Tastenkombination für die Desktopverknüpfung unerwarteter Weise auftritt. Es wird stattdessen die englische Originalbezeichnung verwendet. (#5166, #6326)
+- Beim Navigieren mit den Pfeiltasten bzw. beim Verlassen von Listen und Tabellen wird während Alles Lesen nicht mehr ständig "listenende" oder tabellenende" angesagt. (#10706)
 
 
 == Änderungen für Entwickler ==
 - Die Entwickler-Dokumentation wird zukünftig mit Sphinx erstellt. (#9840)
 - Mehrere Sprachfunktionen wurden in zwei Teile aufgeteilt. (#10593)
   Die speakX-Version bleibt bestehen, hängt aber nun von einer getXSpeech-Funktion ab, die eine Sprachsequenz zurückgibt.
-  - Die Klasse "speakObjectProperties" verlässt sich jetzt auf "getObjectPropertiesSpeech".
-  - Die Klasse "speakObject" verlässt sich jetzt auf "getObjectSpeech".
-  - Die Klasse "speakTextInfo" setzt jetzt auf "getTextInfoSpeech".
-  - Die Klasse "speakWithoutPauses" wurde refaktorisiert, sollte aber die Kompatibilität nicht beeinträchtigen.
+  - speakObjectProperties verlässt sich jetzt auf getObjectPropertiesSpeech.
+  - speakObject verlässt sich jetzt auf getObjectSpeech.
+  - speakTextInfo setzt jetzt auf getTextInfoSpeech.
+  - speakWithoutPauses wurde zu einer Class konvertiert und refaktorisiert, sollte aber die Kompatibilität nicht beeinträchtigen.
   - Die Klasse "getSpeechForSpelling" ist veraltet (aber immer noch verfügbar), verwenden Sie stattdessen "getSpellingSpeech".
-  Persönliche Änderungen, die die Entwickler von Erweiterungen nicht betreffen sollten:
-  - Die Klasse "_speakPlaceholderIfEmpty" wurde in "_getPlaceholderSpeechIfTextEmpty" umbenannt.
-  - Die Klasse "_speakTextInfo_addMath" wurde in "_extendSpeechSequence_addMathForTextInfo" umbenannt.
-- Die Funktion "reason" für die Sprachausgabe wurde in eine Enum umgewandelt (Klasse "controlTypes.OutputReason"). (#10703)
-  - Die Konstanten der Modulebene "REASON_*" sind veraltet.
+  Kernänderungen, die jedoch die Entwickler von Erweiterungen nicht betreffen sollten:
+  - _speakPlaceholderIfEmpty wurde in _getPlaceholderSpeechIfTextEmpty umbenannt.
+  - _speakTextInfo_addMath wurde in _extendSpeechSequence_addMathForTextInfo umbenannt.
+- Die Klasse Speech 'reason' wurde in eine Enum umgewandelt (siehe Klasse controlTypes.OutputReason). (#10703)
+  - Die Konstanten der Modulebene "REASON_*" sind nicht mehr verfügbar.
 - Visual Studio 2019 (16.2 oder neuer) wird zum Kompilieren von NVDA-Abhängigkeiten benötigt. (#10169)
 - SCons auf Version 3.1.1 aktualisiert. (#10169)
-- Die Funktion "behaviors._FakeTableCell" wieder ohne definierte Position. (#10864)
+- Die Funktion behaviors._FakeTableCell kann wieder ohne definierte Position genutzt werden. (#10864)
 
 
 = 2019.3 =
