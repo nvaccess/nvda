@@ -417,6 +417,14 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug("HandlePropertyChangedEvent: event received while not fully initialized")
 			return
+		try:
+			processId = sender.CachedProcessID
+		except COMError:
+			pass
+		else:
+			appMod = appModuleHandler.getAppModuleFromProcessID(processId)
+			if not appMod.shouldProcessUIAPropertyChangedEvent(sender, propertyId):
+				return
 		NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
 		if not NVDAEventName:
 			if _isDebug():

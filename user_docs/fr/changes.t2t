@@ -4,45 +4,51 @@ Quoi de Neuf dans NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2020.1 =
+Les points forts de cette version incluent la prise en charge de nombreux nouveaux afficheurs Braille de HumanWare et APH, et beaucoup d'autres corrections de bogues comme la possibilité de lire à nouveau du contenu mathématiques dans Microsoft Word en utilisant MathPlayer/MathType.
 
 == Nouvelles Fonctionnalités ==
-- L'élément actuellement sélectionné dans une liste déroulante est à nouveau annoncé en mode navigation dans Chrome, comme c'était le cas jusqu'à NVDA 2019.1. (#10713)
-- Vous pouvez maintenant réaliser un clic droit souris sur les appareils tactiles en maintenant un doigt appuyé. (#3886)
+- L'élément actuellement sélectionné dans une zone de liste est à nouveau annoncé en mode navigation dans Chrome, comme c'était le cas pour NVDA 2019.1. (#10713)
+- Vous pouvez maintenant effectuer des clics droit souris sur les appareils tactiles en maintenant un doigt appuyé. (#3886)
 - Support de nouveaux afficheurs Braille : APH Chameleon 20, APH Mantis Q40, HumanWare BrailleOne, BrailleNote Touch v2, et NLS eReader. (#10830)
 
 
 == Changements ==
-- NVDA empêche maintenant le système de se verrouiller ou de passer en veille en mode dire tout. (#10643)
-- Support des cadres iframes or processus sous Firefox. (#10707)
+- NVDA empêchera le système de se verrouiller ou de passer en veille pendant Dire Tout. (#10643)
+- Support des cadres IFrames hors-processus dans Mozilla Firefox. (#10707)
 - Mise à jour du transcripteur Braille Liblouis à la version 3.12. (#10161)
+
+
+== Corrections de Bogues ==
+- Correction de la non annonce par NVDA du symbole Unicode moins (U+2212) (#10633)
+- Quand on installe une extension à partir du gestionnaire d'extensions, les noms des fichiers et des dossiers dans le dialogue parcourir ne sont plus annoncés deux fois. (#10620, #2395)
+- Dans Firefox, lors du chargement de Mastodon avec l'interface Web avancée activée, toutes les chronologies sont désormais correctement rendues en mode navigation. (#10776)
+- En mode navigation, NVDA annonce désormais " non coché " pour les cases à cocher décochées alors qu'il ne le faisait pas toujours avant. (#10781)
+- Les contrôles de bascule ARIA ne provoquent plus l'annonce d'informations confuses telles que " non enfoncé coché " ou " enfoncé coché ". (#9187)
+- Les voix SAPI4 ne devraient plus refuser de lire certains textes. (#10792)
+- NVDA peut à nouveau lire et interagir avec des équations mathématiques dans Microsoft Word. (#10803)
+- NVDA annoncera de nouveau correctement le texte désélectionné lorsque vous pressez une touche fléchée en mode navigation quand du texte est sélectionné. (#10731).
+- NVDA ne se fermera plus en cas d'erreur à l'initialisation d'eSpeak. (#10607)
+- Les erreurs dues aux caractères unicode dans la traduction d'un raccourci n'arrêteront plus l'installeur, provocant leur correction par retour au texte anglais. (#5166, #6326)
+- Le mouvement par flèches en mode dire tout vers la sortie ou loin des listes et des tableaux n'annoncera plus constamment la sortie de ces derniers si le survol est activé. (#10706)
 
 
 == Changements pour les développeurs ==
 - La documentation développeur est maintenant compilée avec Sphinx. (#9840)
-- De nombreuses fonctionnalités de parole ont été regroupées en 2 (#10593)
-  La version speakX est de retour, mais dépend maintenant d'une fonction getXSpeech qui retourne une séquence de parole.
-  - speakObjectProperties est maintenant lié à getObjectPropertiesSpeech
-  - speakObject est maintenant lié à getObjectSpeech
-  - speakTextInfo est maintenant lié à getTextInfoSpeech
+- Plusieurs fonctions vocales ont été divisées en deux. (#10593)
+  La version speakX reste, mais elle dépend maintenant d'une fonction getXSpeech qui retourne une séquence de parole.
+  - speakObjectProperties s'appuie maintenant sur getObjectPropertiesSpeech
+  - speakObject s'appuie maintenant sur getObjectSpeech
+  - speakTextInfo s'appuie maintenant sur getTextInfoSpeech
   - speakWithoutPauses a été converti en une classe et réécrite, mais cela ne rompt pas la compatibilité.
   - getSpeechForSpelling est maintenant déprécié, utilisez getSpellingSpeech à la place.
-  Changements internes qui n'affectent pas le développement d'extensions :
+  Changements internes qui n'affectent pas le développement d'extensions :
   - _speakPlaceholderIfEmpty est devenu _getPlaceholderSpeechIfTextEmpty
   - _speakTextInfo_addMath est devenu _extendSpeechSequence_addMathForTextInfo
 - La parole 'reason' a été converti en une énumération, consultez la classe controlTypes.OutputReason. (#10703)
   - Les constantes de niveau de module 'REASON_*' sont dépréciées.
-- La compilation des dépendances de NVDA nécessitent maintenant Visual Studio 2019 (16.2 ou suppérieur). (#10169)
+- La compilation des dépendances de NVDA nécessitent maintenant Visual Studio 2019 (16.2 ou supérieur). (#10169)
 - Mise à jour de SCons à la version 3.1.1. (#10169)
-
-
-== Corrections de bogues ==
-- Correction de la non annonce du caractère Unicode moins (U+2212) (#10633)
-- Lors de l'installation d'une extension via le gestionnaire d'extensions, le nom des fichiers ou dossiers dans la boîte de dialogue parcourir n'est plus annoncé 2 fois. (#10620, #2395)
-- Sous Firefox, lors du chargement de Mastodon avec l'interface Web avancée active, l'intégralité des chronologies est reportée correctement. (#10776)
-- En mode navigation, l'état "non coché" est correctement reporté sur les cases à cocher alors que ce n'était pas toujours le cas précédemment. (#10781)
-- Les contrôles ARIA switchs ne provoquent plus l'annonce d'informations confuses telles que "non enfoncé coché" ou "enfoncé coché". (#9187)
-- Les voix SAPI4 ne devraient plus refuser de lire certains textes. (#10792)
-- NVDA peut à nouveau lire et interagir avec des équations mathématiques dans Microsoft Word. (#10803)
+- Réautorisation de n'avoir aucun emplacement défini pour behaviors._FakeTableCell (#10864)
 
 
 = 2019.3 =

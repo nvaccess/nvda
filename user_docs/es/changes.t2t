@@ -3,8 +3,9 @@ Qué hay de Nuevo en NVDA
 
 %!includeconf: ../changes.t2tconf
 
-+= 2020.1 =
-+
+= 2020.1 =
+Lo reseñable de esta versión incluye la admisión de varias nuevas pantallas braille de HumanWare y de APH, más muchas otras importantes correcciones de fallos tales como la capacidad de leer de nuevo matemáticas en Microsoft Word utilizando MathPlayer y MathType.
+
 == Nuevas Características ==
 - El elemento actualmente seleccionado en cuadros de lista se presenta nuevamente en modo exploración en Chrome, similar a NVDA 2019.1. (#10713)
 - Ahora puedes realizar clics con el botón derecho del ratón en dispositivos táctiles haciendo un tap con un dedo y manteniéndolo. (#3886)
@@ -12,9 +13,23 @@ Qué hay de Nuevo en NVDA
 
 
 == Cambios ==
-- NVDA evita que el sistema se bloquee o se suspenda cuando esté leyendo. (#10643)
+- NVDA evitará que el sistema se bloquee o se suspenda cuando esté leyendo todo. (#10643)
 - Soporte para iframes fuera de proceso en Mozilla Firefox. (#10707)
-- Actualizado el transcriptor braille liblouis a la versión 3.12 (#10161)
+- Actualizado el transcriptor braille liblouis a la versión 3.12. (#10161)
+
+
+== Corrección de Fallos ==
+- Corregido el no anunciado del símbolo menos Unicode (U+2212) (#10633)
+- Al instalar complementos desde el administrador de complementos los nombres de los ficheros y carpetas en la ventana de exploración ya no se anuncian dos veces. (#10620, #2395)
+- En Firefox, al cargar Mastodon con la interface de web avanzada habilitada, ahora todas las cronologías se procesan correctamente en modo exploración. (#10776)
+- En modo exploración, NVDA ahora anuncia "no marcado" para casillas de verificación no marcadas donde no lo hacía en ocasiones anteriormente. (#10781)
+- Los controles ARIA switch ya no anuncian información confusa tal como "no pulsado marcado" o "pulsado marcado". (#9187)
+- Las voces SAPI4 ya no deberían rechazar verbalizar cierto texto. (#10792)
+- NVDA puede leer e interactuar de nuevo con ecuaciones matemáticas en Microsoft Word. (#10803)
+- NVDA anunciará de nuevo el texto que se deselecione en modo exploración si se pulsa una flecha mientras el texto se selecciona. (#10731).
+- NVDA ya no sale si hay un error inicializando eSpeak. (#10607)
+- Los errores causados por unicode en traducciones para atajos ya no detienen el instalador, mitigados por la vuelta al texto en inglés. (#5166, #6326)
+- El hecho de salir  de las listas y tablas en Leer todo con la lectura superficial habilitada ya no anuncia continuamente la salida de la lista o tabla. (#10706)
 
 
 == Cambios para Desarrolladores ==
@@ -33,16 +48,7 @@ Qué hay de Nuevo en NVDA
   - Las constantes Module level 'REASON_*' están obsoletas.
 - Las dependencias de compilación de NVDA ahora requieren Visual Studio 2019 (16.2 o más reciente). (#10169)
 - Actualizado SCons a la versión 3.1.1. (#10169)
-
-
-== Corrección de Fallos ==
-- Corregido el no anunciado del símbolo menos Unicode (U+2212) (#10633)
-- Al instalar complementos desde el administrador de complementos los nombres de los ficheros y carpetas en la ventana de exploración ya no se anuncian dos veces. (#10620, #2395)
-- En Firefox, al cargar Mastodon con la interface de web avanzada habilitada, ahora todas las cronologías se procesan correctamente en modo exploración. (#10776)
-- En modo exploración, NVDA ahora anuncia "no marcado" para casillas de verificación no marcadas donde no lo hacía en ocasiones anteriormente. (#10781)
-- Los controles ARIA switch ya no anuncian información confusa tal como "no pulsado marcado" o "pulsado marcado". (#9187)
-- Las voces SAPI4 ya no deberían rechazar verbalizar cierto texto. (#10792)
-- NVDA puede leer e interactuar de nuevo con ecuaciones matemáticas en Microsoft Word. (#10803)
+- De nuevo se permite a behaviors._FakeTableCell no tener una localización definida (#10864)
 
 
 = 2019.3 =

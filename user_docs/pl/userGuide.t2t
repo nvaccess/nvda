@@ -473,15 +473,15 @@ Im dalej z lewej lub prawej strony znajduje się wskaźnik, tym bardziej z lewej
 Wyżej opisane opcje dotyczące nawigacji myszą nie są domyślnie włączone.
 Możesz skonfigurować je, korzystając z kategorii [Ustawienia myszy #MouseSettings] w oknie [Preferencji NVDA #NVDASettings], znajdującym się w podmenu Ustawienia w menu NVDA.
 
-Although a physical mouse or trackpad should be used to navigate with the mouse, NVDA provides some commands related to the mouse:
+Do właściwego korzystania z funkcji oferowanych przez urządzenia wskazujące powinno się używać fizycznej myszy lub touch pada, pomimo tego NVDA posiada kilka funkcji które ułatwiają korzystanie z myszy.
 %kc:beginInclude
-|| Name | Desktop key | Laptop key | Touch | Description |
-| Left mouse button click | numpadDivide | NVDA+[ | none | Clicks the left mouse button once. The common double click can be performed by pressing this key twice in quick succession |
-| Left mouse button lock | shift+numpadDivide | NVDA+control+[ | none | Locks the left mouse button down. Press again to release it. To drag the mouse, press this key to lock the left button down and then move the mouse either physically or use one of the other mouse routing commands |
-| Right mouse click | numpadMultiply | NVDA+] | tap and hold | Clicks the right mouse button once, mostly used to open context menu at the location of the mouse. |
-| Right mouse button lock | shift+numpadMultiply | NVDA+control+] | none | Locks the right mouse button down. Press again to release it. To drag the mouse, press this key to lock the right button down and then move the mouse either physically or use one of the other mouse routing commands |
-| Move mouse to current navigator object | NVDA+numpadDivide | NVDA+shift+m | none | Moves the mouse to the location of the current navigator object and review cursor |
-| Navigate to the object under the mouse | NVDA+numpadMultiply | NVDA+shift+n | none | Set the navigator object to the object located at the position of the mouse |
+|| Nazwa | skrót układu desktop | Skrót układu laptop | Gest dotykowy | Opis |
+| Lewy przycisk myszy | Numeryczny slesz | NVDA+[ | brak | Wykonuje pojedyncze kliknięcie myszą. Popularny "dwuklik" może być wykonany poprzez dwukrotne szybkie naciśnięcie skrótu. |
+| Zablokowanie lewego przycisku myszy | shift+numeryczny slesz | NVDA+kontrol+[ | brak | Blokuje lewy przycisk myszy. Naciśnij ten skrut ponownie, aby go odblokować. W celu przeciągnięcia myszy przesuń fizyczne urządzenie w dane miejsce lub użyj innego przeznaczonego do tego skrutu |
+| Prawy przycisk myszy | Numeryczna gwiazdka | NVDA+] | długie naciśnięcie | Wykonuje kliknięcie prawym przyciskiem myszy. Skrót ten jest używany do otwierania menu kontekstowego w niektórych aplikacjach. |
+| Zablokowanie prawego przycisku myszy | shift+Numeryczna Gwiazdka | NVDA+kontrol+] | brak | Blokuje prawy przycisk myszy. Naciśnij ten skrut ponownie, aby go odblokować. W celu przeciągnięcia myszy przesuń fizyczne urządzenie w dane miejsce lub użyj innego przeznaczonego do tego skrutu |
+| Przeniesienie myszy do aktualnego obiektu nawigatora | NVDA+Numeryczny slesz | NVDA+shift+m | brak | Przenosi kursor myszy do pozycji aktualnego obiektu nawigatora. |
+| Przeniesienie pozycji nawigatora do obiektu pod myszą | NVDA+Numeryczny slesz | NVDA+shift+n | brak | Przenosi obiekt nawigatora do aktualnej pozycji myszy. |
 %kc:endInclude
 
 + Tryb czytania +[BrowseMode]
@@ -933,13 +933,6 @@ Opisane komendy działają tylko dla domyślnego ustawienia formatowania paska s
 | Odczytaj uwagi dla tłumaczy | Ctrl+Shift+A | Zgłasza wszelkie uwagi dla tłumaczy. |
 %kc:endInclude
 
-++ Skype ++[Skype]
-%kc:beginInclude
-Wewnątrz konwersacji:
-|| Działanie | Skrót | Opis |
-| Przejrzyj wiadomość | NVDA+Ctrl+1-0 | Odczytuje ostatnią wiadomość i przenosi do niej punkt przeglądu, zależnie od naciśniętej cyfry; np. NVDA+Ctrl+2 odczytuje wiadomość drugą od końca. |
-%kc:endInclude
-
 ++ Kindle dla PC ++[Kindle]
 NVDA obsługuje odczyt i nawigację wewnątrz książek w aplikacji Amazon Kindle dla PC.
 Ta funkcjonalność jest dostępna tylko w książkach Kindle zaprojektowanych z właściwością "Czytnik ekranu: obsługiwany", co można sprawdzić na stronie szczegółów książki.
@@ -1061,6 +1054,7 @@ Dostępne poziomy logowania, to:
  - Jeżeli boisz się o swoją prywatność, nie włączaj tej opcji.
 - Debugowanie: Poza wiadomościami debugowania, wejściem klawiatury i mowy dodatkowe informacje będą zapisywane.
  - Tak samo jak w poprzednim, jeżeli boisz się o swoją prywatność, nie włączaj tej opcji.
+ -
 -
 
 ==== Automatycznie uruchom NVDA po zalogowaniu się do systemu Windows ====[GeneralSettingsStartAfterLogOn]
@@ -2045,6 +2039,10 @@ Okno podglądu brajla zawiera pole wyboru umożliwiające włączanie tej funkcj
 Jeżeli zostanie ono zaznaczone, to podgląd brajla będzie ładował się przy każdym starcie programu.
 Okno podglądu brajla dokona próby otwarcia się z takimi samymi wymiarami i w takiej samej pozycji, w jakiej zostało ono zamknięte.
 
+++ Konsola Pythona ++[PythonConsole]
+Konsola Pythona NVDA znajduje się w menu Narzędzia  w NVDA. Jest narzędziem dla programistów i jest używana do debugowania, przeglądania wewnątrz NVDA lub sprawdzania hierarchii dostępności aplikacji.
+Więcej informacji znajduje się w [podręczniku dla twórców https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+
 ++ Manager wtyczek ++[AddonsManager]
 Manager wtyczek, dostępny poprzez polecenie "Zarządzaj dodatkami" w menu NVDA: Narzędzia, pozwala na instalację, usuwanie, włączanie i wyłączanie dodatków NVDA.
 Dodatki to pakiety przygotowywane przez społeczność, zawierające oprogramowanie, które może dodawać lub zmieniać funkcje NVDA, czy nawet dostarczać wsparcie dodatkowych monitorów brajlowskich lub syntezatorów mowy.
@@ -2090,7 +2088,7 @@ Aby przejrzeć te niezgodne dodatki, możesz użyć przycisku "podgląd niezgodn
 
 Aby uruchamiać manager dodatków z każdego miejsca, określ własne zdarzenie wejścia używając [okna zdarzenia wejścia #InputGestures].
 
-++ Manager niezgodnych dodatków ++[incompatibleAddonsManager]
++++ Manager niezgodnych dodatków +++[incompatibleAddonsManager]
 Manager niezgodnych dodatków, dostępny pod przyciskiem "Przeglądaj niezgodne dodatki"  w managerze dodatków, pozwala badać niezgodne dodatki, oraz przyczyny, dla których są uznawane za niezgodne.
 Dodatki są uznawane za niezgodne, jeśli nie zostały zaktualizowane do działania po istotnych zmianach w NVDA, lub jeśli polegają na funkcji niedostępnej w używanej wersji NVDA.
 Manager niezgodnych dodatków zawiera informację wyjaśniającą  jego cel i wersję NVDA.
@@ -2103,10 +2101,31 @@ Niezgodne dodatki są prezentowane na liście z następującymi kolumnami:
 Manager niezgodnych dodatków zawiera również przycisk "O dodatku...".
 Pozwala przejrzeć wszystkie szczegóły dodatku, co jest przydatne przy kontakcie z autorem dodatku.
 
+++ Utwórz kopię przenośną ++[CreatePortableCopy]
+Polecenie to pozwala otworzyć okno, przy pomocy którego można utworzyć kopię przenośną NVDA z zainstalowanej na dysku wersji.
+Natomiast w wypadku, gdy NVDA jest już zainstalowane nazwa opcji będzie brzmiała "Zainstaluj przenośną kopię na dysku" zamiast "Utwórz przenośną kopię".
 
-++ Konsola Pythona ++[PythonConsole]
-Konsola Pythona NVDA znajduje się w menu Narzędzia  w NVDA. Jest narzędziem dla programistów i jest używana do debugowania, przeglądania wewnątrz NVDA lub sprawdzania hierarchii dostępności aplikacji.
-Więcej informacji znajduje się w [podręczniku dla twórców https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+Okno dialogowe tworzenia przenośnej kopii lub instalowania NVDA z przenośnej wersji pozwala wybrać użytkownikowi katalog w którym zostanie utworzona pzrenośna wersja albo katalog, w którym program zostanie zainstalowany.
+
+W oknie tym można również zmienić opcje takie jak:
+- Skopiuj aktualną konfigurację użytkownika: pozwala skopiować ustawienia, dodatki oraz inne moduly do nowo instalowanej wersji programu.
+- Uruchom nowo powstałą kopię przenośną NVDA lub uruchom nowo zainstalowaną kopię NVDA: pozwala uruchomić program po zakończeniu jego instalatora.
+-
+
+++ uruchom narzędzie do naprawy błędów rejestracji COM... ++[RunCOMRegistrationFixingTool]
+W pewnych przypadkach instalacja/deinstalacja programów może doprowadzić pliki .DLL i .COM do wyrejestrowania.
+Niektóre interfejsy .COM takie jak IAccessible2 wymagają poprawnej rejestracji innych plików .COM.
+
+Może się tak zdarzyć na przykład po odinstalowaniu programu Adobe Reader lub Math Player.
+
+Niepoprawnie zarejestrowane pliki .COM mogą powodować problemy na pasku zadań, w przeglądarkach, aplikacjach i innych interfejsach.
+
+Następujące problemy mogą zostać poprawione dzięki temu narzędziu:
+- NVDA nie odczytuje elementów podczas nawigacji w przeglądarkach Firefox, Thunderbird ETC.
+- NVDA nie może przełączać się pomiędzy trybem kursora i przeglądania.
+- NVDA reaguje bardzo powoli na polecenia w przeglądarkach.
+- I inne.
+-
 
 ++ przeładuj wtyczki ++[ReloadPlugins]
 Po aktywacji tego polecenia wszystkie moduły aplikacji oraz wtyczki zostaną przeładowane bez potrzeby restartu NVDA. Jest to użyteczne dla programistów.
@@ -2425,7 +2444,7 @@ Serie monitorów Brailliant BI i B produkcji [HumanWare https://www.humanware.co
 Przy połączeniu przez USB z protokołem ustawionym na HumanWare, trzeba najpierw zainstalować sterowniki USB dostarczone przez producenta.
 Sterowniki USB nie są wymagane, jeśli protokół jest ustawiony na OpenBraille.
 
-The following extra devices are also supported (and do not require any special drivers to be installed):
+Następujące urządzenia również nie wymagają instalacji dodatkowych sterowników USB:
 - APH Mantis Q40
 - APH Chameleon 20
 - Humanware BrailleOne

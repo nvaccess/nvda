@@ -933,13 +933,6 @@ Note : Les raccourcis ci-dessus fonctionnent seulement avec le format de chaîne
 | Annonce des notes pour les traducteurs | contrôle+maj+a | Annonce les notes pour les traducteurs. |
 %kc:endInclude
 
-++ Skype ++[Skype]
-%kc:beginInclude
-Durant une conversation :
-|| Nom | Touche | Description |
-| Revoir un message | NVDA+control+1-0 | Annonce et amène le curseur de revue à un message récent, en fonction du nombre pressé ; ex : NVDA+control+2 lit le second message plus récent. |
-%kc:endInclude
-
 ++ Kindle pour PC ++[Kindle]
 NVDA supporte la lecture et la navigation dans les livres sous Amazon Kindle pour PC.
 Cette fonctionnalité est disponible seulement dans les livres Kindle signalés par "Support des revues d'écran", ce que vous pouvez vérifier sur la page de détails du livre.
@@ -1061,6 +1054,7 @@ Les niveaux de journalisation disponibles sont :
  - Si la confidentialité vous préoccupe, ne définissez pas le niveau de journalisation sur cette option.
 - Débogage : En plus des messages d'info, avertissements et entrées/sorties, des messages additionnels de débogage seront journalisés.
  - Tout comme pour entrées/sorties, si la confidentialité vous préoccupe, vous ne devez pas définir le niveau de journalisation sur cette option.
+ -
 - 
 
 ==== Démarrer NVDA automatiquement après ma connexion à Windows ====[GeneralSettingsStartAfterLogOn]
@@ -2045,6 +2039,10 @@ La fenêtre de la visionneuse Braille contient une case à cocher étiquetée "M
 Si elle est cochée, la visionneuse Braille s'affichera au démarrage de NVDA.
 La visionneuse Braille essaiera toujours de se rouvrir avec les mêmes dimensions et à la même position que lors de sa fermeture.
 
+++ Console Python ++[PythonConsole]
+La console Python de NVDA, disponible sous Outils dans le menu NVDA, est un outil de développement utile pour le débogage, l'inspection générale des internes de NVDA ou l'inspection de la hiérarchie d'accessibilité d'une application.
+Pour plus d'informations, veuillez consulter le [Guide de développement NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+
 ++ Gestionnaire d'Extensions ++[AddonsManager]
 Le Gestionnaire d'extensions, accessible en sélectionnant "Gestion des Extensions" dans le menu "Outils" du menu NVDA, permet d'installer, désinstaller, activer ou désactiver des paquets d'extensions pour NVDA.
 Ces paquets sont fournis par la communauté et contiennent du code qui peut ajouter ou modifier des fonctionnalités dans NVDA ou proposer le support de plages braille ou synthèses vocales supplémentaires.
@@ -2090,7 +2088,7 @@ Pour inspecter ces extensions incompatibles, vous pouvez utiliser le bouton "Voi
 
 Pour activer le gestionnaire d'extensions de n'importe où, Veuillez assigner un geste personnalisé en utilisant le [dialogue Gestes de Commandes #InputGestures].
 
-++ Le Gestionnaire d'Extensions Incompatibles ++[incompatibleAddonsManager]
++++ Le Gestionnaire d'Extensions Incompatibles +++[incompatibleAddonsManager]
 Le Gestionnaire d'Extensions Incompatibles, auquel on accède via le bouton "voir les extensions incompatibles" dans le gestionnaire d'extensions, vous permet d'inspecter toutes les extensions incompatibles, et la raison pour laquelle elles sont considérées comme tel.
 Les extensions sont considérées comme incompatibles quand elles n'ont pas été mises à jour pour fonctionner avec des changements significatifs de NVDA, ou quand elles s'appuient sur une fonctionnalité non disponible dans la version de NVDA que vous utilisez.
 Le gestionnaire d'extensions incompatibles contient un court message qui explique son but et indique la version de NVDA.
@@ -2103,10 +2101,31 @@ Les extensions incompatibles sont présentées dans une liste avec les colonnes 
 Le gestionnaire d'extensions incompatible a également un bouton "À propos de l'extension...".
 Il vous permet de connaître tous les détails concernant l'extension, ce qui est utile pour contacter son auteur.
 
+++ Créer une copie portable ++[CreatePortableCopy]
+Ceci ouvrira un dialogue vous permettant de créer une copie portable de NVDA à partir de la version installée.
+Au contraire, lors de l'exécution d'une copie portable de NVDA, dans le sous-menu Outils l'élément s'intitulera "installer NVDA sur ce PC" au lieu de "créer une copie portable".
 
-++ Console Python ++[PythonConsole]
-La console Python NVDA, située dans "Outils" du menu NVDA, est un outil de développement utile pour dépanner, inspecter le code ou inspecter la hiérarchie d'accessibilité d'une application.
-Pour plus d'informations, veuillez consulter le "Guide du Développeur" disponible dans [la section développement du site Web de NVDA https://community.nvda-project.org/wiki/Development].
+Le dialogue de création d'une copie portable ou d'installation de NVDA sur ce PC vous demandera de choisir un dossier où créer la copie portable ou installer NVDA.
+
+Dans ce dialogue vous pourrez activer ou désactiver ce qui suit :
+- Copier la configuration utilisateur actuelle (Ceci inclut les fichiers contenus dans %appdata%\roaming\NVDA ou dans la configuration utilisateur de votre copie portable et inclut également les extensions ou autres modules)
+- Démarrer la nouvelle copie portable après création ou démarrer NVDA après installation (démarre automatiquement NVDA après création de la copie portable ou après installation)
+-
+
+++ Run COM registration fixing tool... ++[RunCOMRegistrationFixingTool]
+Installing and uninstalling programs on a computer can, in certain cases, cause COM DLL files to get unregistered.
+As COM Interfaces such as IAccessible depend on correct COM DLL registrations, issues can appear in case the correct registration is missing.
+
+This can happen i.e. after installing and uninstalling Adobe Reader, Math Player and other programs.
+
+The missing registration can cause issues in browsers, desktop apps, task bar and other interfaces.
+
+Specifically, following issues can be solved by running this tool:
+- NVDA reports "unknown" when navigating in browsers such as Firefox, Thunderbird etc.
+- NVDA fails to switch between focus mode and browse mode
+- NVDA is very slow when navigating in browsers while using browse mode
+- And possibly other issues.
+-
 
 ++ Rechargement des Extensions ++[ReloadPlugins]
 Cet élément, quand on l'active, recharge les extensions d'applications et les extensions globales sans avoir à redémarrer NVDA, ce qui peut être utile pour les développeurs.

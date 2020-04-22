@@ -27,7 +27,7 @@ Major highlights include:
 - Easy to use talking installer
 - Translated into 54 languages
 - Support for modern Windows Operating Systems including both 32 and 64 bit variants
-- Ability to run before Windows sign-in and at secure screens
+- Ability to run during Windows sign-in and at secure screens
 - Announcing controls and text while using touch gestures
 - Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation
 - Support for Windows Command Prompt and console applications
@@ -114,7 +114,7 @@ Before you're able to press the Continue button you will have to use the checkbo
 There will also be a button present to review the add-ons that will be disabled.
 Refer to the [incompatible add-ons dialog section #incompatibleAddonsManager] for more help on this button.
 
-+++ Start NVDA before Windows sign-in for everyone +++[StartAtWindowsLogon]
++++ Start NVDA during sign-in +++[StartAtWindowsLogon]
 This option allows you to choose whether or not NVDA should automatically start while at the Windows sign-in screen, before you have entered a password.
 This also includes User Account Control and other secure screens.
 This option is enabled by default for fresh installations.
@@ -125,7 +125,7 @@ If created, this shortcut will also be assigned a  shortcut key of control+alt+n
 
 +++ Copy Portable Configuration to Current User Account +++[CopyPortableConfigurationToCurrentUserAccount]
 This option allows you to choose whether or not NVDA should copy the user configuration from the currently running NVDA into the configuration for the currently logged on  user, for the installed copy of NVDA. 
-This will not  copy the configuration for   any other users  of this system nor to the system configuration for use before Windows sign-in and other secure screens.
+This will not  copy the configuration for   any other users  of this system nor to the system configuration for use during Windows sign-in and other secure screens.
 This option is only available when installing from a portable copy, not when installing directly from the downloaded Launcher package.
 
 ++ Creating a Portable Copy ++[CreatingAPortableCopy]
@@ -933,13 +933,6 @@ Note: The above shortcuts work only with the default formatting string for fooba
 | Report notes for translators | control+shift+a | Reports any notes for translators. |
 %kc:endInclude
 
-++ Skype ++[Skype]
-%kc:beginInclude
-When in a conversation:
-|| Name | Key | Description |
-| Review message | NVDA+control+1-0 | Reports and moves the review cursor to a recent message, depending on the number pressed; e.g. NVDA+control+2 reads the second most recent message. |
-%kc:endInclude
-
 ++ Kindle for PC ++[Kindle]
 NVDA supports reading and navigating books in Amazon Kindle for PC.
 This functionality is only available in Kindle books designated with "Screen Reader: Supported" which you can check on the details page for the book.
@@ -1063,16 +1056,16 @@ The available logging levels are:
  - Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
 
 
-==== Start NVDA after Windows sign-in for me ====[GeneralSettingsStartAfterLogOn]
+==== Start NVDA after I sign in ====[GeneralSettingsStartAfterLogOn]
 If this option is enabled, NVDA will start automatically as soon as you sign into Windows.
 This option is only available for installed copies of NVDA.
 
-==== Start NVDA before Windows sign-in for everyone (requires administrator privileges) ====[GeneralSettingsStartOnLogOnScreen]
+==== Start NVDA during sign-in (requires administrator privileges) ====[GeneralSettingsStartOnLogOnScreen]
 If you sign into Windows by providing a user name and password, then enabling this option will make NVDA start automatically at the sign-in screen when Windows starts.
 This option is only available for installed copies of NVDA.
 
-==== Use currently saved settings before sign-in and on secure screens (requires administrator privileges) ====[GeneralSettingsCopySettings]
-Pressing this button copies your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it before sign-in and when running on User Account Control (UAC) and other secure Windows screens.
+==== Use currently saved settings during sign-in and on secure screens (requires administrator privileges) ====[GeneralSettingsCopySettings]
+Pressing this button copies your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it during sign-in and when running on User Account Control (UAC) and other secure Windows screens.
 To make sure that all your settings are transferred, make sure to save your configuration first with control+NVDA+c or Save configuration in the NVDA menu.
 This option is only available for installed copies of NVDA.
 
@@ -1462,7 +1455,7 @@ This option is only available if reporting of spelling errors is enabled in NVDA
 
 ==== Handle keys from other applications ====[KeyboardSettingsHandleKeys]
 This option allows the user to control if key presses generated by applications such as on-screen keyboards and speech recognition software should be processed by NVDA. 
-This option is on by default, though certain users may wish to turn this off, such as those typing Vietnamese with the Unikey typing software as it will  cause incorrect character input.
+This option is on by default, though certain users may wish to turn this off, such as those typing Vietnamese with the UniKey typing software as it will  cause incorrect character input.
 
 +++ Mouse (NVDA+control+m) +++[MouseSettings]
 The Mouse category in the NVDA Settings dialog allows NVDA to track the mouse, play mouse coordinate beeps and sets other mouse usage options.
@@ -1789,7 +1782,7 @@ This setting controls whether characters are spoken by [speak typed characters #
 ==== Use the new typed character support in Windows Console when available ====[AdvancedSettingsKeyboardSupportInLegacy]
 This option enables an alternative method for detecting typed characters in Windows command consoles.
 While it improves performance and prevents some console output from being spelled out, it may be incompatible with some terminal programs.
-This feature is available and enabled by default on Windows 10 versions 1607, 1703, 1709 and 1803 as well as on newer Windows 10 releases when UI Automation is unavailable or disabled.
+This feature is available and enabled by default on Windows 10 versions 1607and later when UI Automation is unavailable or disabled.
 Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
 In untrusted environments, you may temporarily disable [speak typed characters #KeyboardSettingsSpeakTypedCharacters] and [speak typed words #KeyboardSettingsSpeakTypedWords] when entering passwords.
 
@@ -2005,9 +1998,9 @@ This means that each user on the system can have their own NVDA settings.
 To open your settings directory from anywhere you can use [Input Gestures dialog #InputGestures] to add a custom gesture.
 In addition for an installed version of NVDA, on the start menu you can go to programs -> NVDA -> explore user configuration directory.
 
-Settings for NVDA when running before sign-in or on UAC screens are stored in the systemConfig directory in NVDA's installation directory.
+Settings for NVDA when running during sign-in or on UAC screens are stored in the systemConfig directory in NVDA's installation directory.
 Usually, this configuration should not be touched.
-To change NVDA's configuration before sign-in or on UAC screens, configure NVDA as you wish while logged into Windows, save the configuration, and then press the "" button in the General category of the [NVDA Settings #NVDASettings] dialog.
+To change NVDA's configuration during sign-in or on UAC screens, configure NVDA as you wish while logged into Windows, save the configuration, and then press the "" button in the General category of the [NVDA Settings #NVDASettings] dialog.
 
 + Extra Tools +[ExtraTools]
 
@@ -3068,7 +3061,7 @@ Following are the command line options for NVDA:
 | None | --no-sr-flag  | Don't change the global system screen reader flag |
 | None | --install | Installs NVDA (starting the newly installed copy) |
 | None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
-| None | --enable-start-on-logon=True|False | When installing, enable NVDA's [start before Windows sign-in #StartAtWindowsLogon] |
+| None | --enable-start-on-logon=True|False | When installing, enable NVDA's [start during Windows sign-in #StartAtWindowsLogon] |
 | None | --create-portable | Creates a portable copy of NVDA (starting the newly created copy). Requires --portable-path to be specified |
 | None | --create-portable-silent | Creates a portable copy of NVDA (does not start the newly installed copy). Requires --portable-path to be specified |
 | None | --portable-path=PORTABLEPATH | The path where a portable copy will be created |
