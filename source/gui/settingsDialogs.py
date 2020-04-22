@@ -733,7 +733,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		self.copySettingsButton = wx.Button(
 			self,
 			label=_(
-				"Use currently saved settings before sign-in and on secure screens (requires administrator privileges)"
+				"Use currently saved settings during sign-in and on secure screens (requires administrator privileges)"
 			)
 		)
 		self.copySettingsButton.Bind(wx.EVT_BUTTON,self.onCopySettings)
