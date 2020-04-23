@@ -172,8 +172,12 @@ def _getFocusLossCancellableSpeechCommand(
 		isLastFocusObj: bool = obj is lastQueuedFocusObject
 		stillValid = isLastFocusObj or not previouslyHadFocus
 
-		log.debug(
-			f"checked if valid (isLast: {isLastFocusObj}, previouslyHad: {previouslyHadFocus}): {obj.name}")
+		log._speechManagerDebug(
+			"checked if valid (isLast: %s, previouslyHad: %s): %s",
+			isLastFocusObj,
+			previouslyHadFocus,
+			obj.name
+		)
 		return stillValid
 
 	return _CancellableSpeechCommand(isSpeechStillValid)
@@ -194,7 +198,7 @@ def executeEvent(eventName, obj, **kwargs):
 			obj=obj.focusRedirect
 		sleepMode=obj.sleepMode
 		if isGainFocus and speech.manager._shouldCancelExpiredFocusEvents():
-			log.debug("executeEvent: Removing cancelled speech commands.")
+			log._speechManagerDebug("executeEvent: Removing cancelled speech commands.")
 			# ask speechManager to check if any of it's queued utterances should be cancelled
 			speech._manager.removeCancelledSpeechCommands()
 			# Don't skip objects without focus here. Even if an object no longer has focus, it needs to be processed
