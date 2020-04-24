@@ -2,9 +2,9 @@
 # Copyright (C) 2006-2017 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
+
 import weakref
 import speech
-from speech import _flattenNestedSequences
 import synthDriverHandler
 from logHandler import log
 import config
@@ -169,7 +169,7 @@ class _TextReader(object):
 			reason=controlTypes.REASON_SAYALL,
 			useCache=state
 		)
-		seq = list(_flattenNestedSequences(speechGen))
+		seq = list(speech._flattenNestedSequences(speechGen))
 		seq.insert(0, cb)
 		# Speak the speech sequence.
 		spoke = speech.speakWithoutPauses(seq)
