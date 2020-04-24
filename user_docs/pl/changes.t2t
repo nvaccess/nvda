@@ -4,7 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2020.1 =
-Najważniejsze zmiany w tej wersji to wsparcie niektórych monitorów brajlowskich od producentów HumanWare i APH, a także dużo ważnych poprawek błędów, takich jak ponowna możliwość odczytywania treści matematycznych W programie Microsoft Word, używając programów MathPlayer / MathType.
+Najważniejsze zmiany w tej wersji to wsparcie niektórych monitorów brajlowskich HumanWare i APH, wiele ważnych poprawek błędów, takich jak ponowna możliwość odczytywania treści matematycznych W programie Microsoft Word przy użyciu MathPlayer / MathType.
 
 == Nowości ==
 - Aktualnie zaznaczony element na listach jest ponownie odczytywany w trybie przeglądania w przeglądarce Google Chrome, tak jak to było w NVDA 2019.1. (#10713)
@@ -19,10 +19,10 @@ Najważniejsze zmiany w tej wersji to wsparcie niektórych monitorów brajlowski
 
 
 == Poprawki błędów ==
-- Poprawiono błąd uniemożliwiający poprawne odczytywanie symbolu Unicode (U+2212) (#10633)
-- Podczas wybierania plików w menedżerze dodatków, ich nazwy nie są odczytywanie podwujnie w oknie przeglądania. (#10620, #2395)
+- Poprawiono błąd uniemożliwiający prawidłowe odczytywanie symbolu Unicode (U+2212) (#10633)
+- Podczas wybierania plików w menedżerze dodatków, ich nazwy nie są odczytywane podwójnie w oknie przeglądania. (#10620, #2395)
 - W przeglądarce Mozilla Firefox wczytanie programu mastodon renderuje od teraz poprawnie wszystkie osie czasu. (#10776)
-- W trybie przeglądania NVDA od teraz ogłasza poprawnie stany pól wyboru. (#10781)
+- W trybie przeglądania NVDA od teraz ogłasza poprawnie stany niektórych niezaznaczonych pól wyboru, które dawniej nie były odczytywane. (#10781)
 - Stan przełączników Aria od teraz jest poprawnie odczytywany. (#9187)
 - Głosy SAPI 4 powinny ponownie działać poprawnie. (#10792)
 - NVDA może ponownie odczytywać i interagować z równaniami matematycznymi w programie Microsoft Word. (#10803)
