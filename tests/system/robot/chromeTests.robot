@@ -4,7 +4,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 *** Settings ***
 Documentation	HTML test cases in Chrome
-Default Tags	NVDA	smoke test	browser	chrome
+Force Tags	NVDA	smoke test	browser	chrome
 
 # for start & quit in Test Setup and Test Test Teardown
 Library	NvdaLib.py
@@ -18,4 +18,6 @@ Test Teardown	quit NVDA
 
 checkbox labelled by inner element
 	[Documentation]	A checkbox labelled by an inner element should not read the label element twice.
+	# Excluded due to intermittent failure: #11053
+	[Tags]	excluded_from_build
 	checkbox_labelled_by_inner_element
