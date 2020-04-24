@@ -49,8 +49,8 @@ _UIAPropIDs=[
 	UIAHandler.UIA_GridItemColumnPropertyId,
 ]
 
-def _getControlField(props):
-	field=textInfos.ControlField()
+def _fillControlField(field,ancestors):
+	props = field['_UIAProperties']
 	UIARuntimeID = props[UIAHandler.UIA_RuntimeIdPropertyId]
 	field['_UIARuntimeID'] = UIARuntimeID
 	field['uniqueID']=UIARuntimeID
@@ -111,6 +111,10 @@ def _getControlField(props):
 	if not nameIsContent:
 		field['name'] = props[UIAHandler.UIA_NamePropertyId]
 	field['description'] = props[UIAHandler.UIA_HelpTextPropertyId]
+	if len(ancestors) > 0:
+		parentTableID = ancestors[-1].get('table-id')
+		if parentTableID is not None:
+			field['table-id'] = parentTableID
 	if role==controlTypes.ROLE_TABLE:
 		field["table-id"] = UIARuntimeID
 		field["table-rowcount"] = props[UIAHandler.UIA_GridRowCountPropertyId]
@@ -136,9 +140,26 @@ def _getControlField(props):
 		ariaRole = ariaRoles.split(" ")[0]
 		if ariaRole in aria.landmarkRoles and (ariaRole != 'region' or field['name']):
 			field['landmark'] = ariaRole
+	# Fields should be treated as block for certain roles.
+	# This can affect whether the field is presented as a container (e.g.  announcing entering and exiting) 
+	if role in (
+		controlTypes.ROLE_GROUPING,
+		controlTypes.ROLE_SECTION,
+		controlTypes.ROLE_PARAGRAPH,
+		controlTypes.ROLE_ARTICLE,
+		controlTypes.ROLE_LANDMARK,
+		controlTypes.ROLE_REGION,
+	):
+		field['isBlock']=True
+	ariaProperties = splitUIAElementAttribs(
+			props[UIAHandler.UIA_AriaPropertiesPropertyId]
+		)
+	# ARIA roledescription
+	field['roleText'] = ariaProperties.get('roledescription')
+	if role==controlTypes.ROLE_COMBOBOX and UIAIsTextPatternAvailable:
+		field['states'].add(controlTypes.STATE_EDITABLE)
 	field['_startOfNode']=True
 	field['_endOfNode']=True
-	return field
 
 def _getUIATextAttributeIDsForFormatConfig(formatConfig):
 	IDs=[]
@@ -173,8 +194,8 @@ def _getUIATextAttributeIDsForFormatConfig(formatConfig):
 	IDs.append(UIAHandler.UIA_CultureAttributeId)
 	return IDs
 
-def _getFormatField(attribs,formatConfig):
-	formatField=textInfos.FormatField()
+def _fillFormatField(formatField,ancestors):
+	attribs = field['_UIATextAttributes']
 	if formatConfig["reportFontName"]:
 		val=attribs.get(UIAHandler.UIA_FontNameAttributeId)
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
@@ -271,7 +292,6 @@ def _getFormatField(attribs,formatConfig):
 			formatField['language']=languageHandler.windowsLCIDToLocaleName(cultureVal)
 		except:
 			log.debugWarning("language error",exc_info=True)
-	return formatField
 
 textContentCommand_elementStart=1
 textContentCommand_text=2
@@ -301,43 +321,44 @@ def getTextWithFields(rootElement,textRange,formatConfig):
 			endIndex=index+propCount
 			propValues=content[index:endIndex]
 			props={propIDs[x]:propValues[x] for x in range(propCount)}
-			controlField = _getControlField(props)
+			controlField = textInfos.ControlField()
+			controlField['_UIAProperties'] = props
+			controlField['embedded'] = True
+			if len(controlStack)>0:
+				controlStack[-1]['embedded'] = False
 			fields.append(textInfos.FieldCommand("controlStart",controlField))
-			# Propagate table-id to a table's descendants
-			if len(controlStack)>0 and controlField.get('table-id') is None:
-				tableID=controlStack[-1].get('table-id')
-				if tableID is not None:
-					controlField['table-id']=tableID
 			controlStack.append(controlField)
 			index = endIndex
 		elif cmd==textContentCommand_text:
 			endIndex=index+attribCount
 			attribValues=content[index:endIndex]
 			attribs={attribIDs[x]:attribValues[x] for x in range(attribCount)}
-			formatField=_getFormatField(attribs,formatConfig)
+			formatField = textInfos.FormatField()
+			formatField['_UIATextAttributes'] = attribs
 			fields.append(textInfos.FieldCommand("formatChange",formatField))
 			text=content[endIndex]
 			if text:
 				fields.append(text)
 				if not text.isspace() and len(controlStack)>0:
-					controlStack[-1]['_containsValidText']=True
+					controlStack[-1]['containsValidText'] = True
 			else:
 				del fields[-1]
 			index=endIndex+1
 		elif cmd==textContentCommand_elementEnd:
 			controlField=controlStack.pop()
 			if len(controlStack)>0 and controlField.get('_containsValidTexdt'):
-				controlStack[-1]['_containsValidText']=True
+				controlStack[-1]['containsValidText']=True
 			fields.append(textInfos.FieldCommand("controlEnd",controlField))
 		else:
 			raise RuntimeError(f"unknown command {cmd}")
-	isEmbedded=False
-	for field in reversed(fields):
-		if isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd":
-			isEmbedded=True
-		elif isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
-			field.field['embedded']=isEmbedded
-			isEmbeded=False
-		else:
-			isEmbedded=False
+	controlStack=[]
+	for field in fields:
+		if isinstance(field,textInfos.FieldCommand)
+			if field.command == "controlStart":
+				_fillControlField(field.field,ancestors=controlStack)
+				controlStack.append(field.field)
+			elif field.command == "formatChange":
+				_fillFormatField(field.field,ancestors=controlStack)
+			elif field.command == "controlEnd":
+				controlStack.pop()
 	return fields
