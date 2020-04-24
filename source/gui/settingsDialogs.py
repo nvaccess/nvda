@@ -720,7 +720,10 @@ class GeneralSettingsPanel(SettingsPanel):
 		settingsSizerHelper.addItem(self.startAfterLogonCheckBox)
 		self.startOnLogonScreenCheckBox = wx.CheckBox(
 			self,
-			# Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
+			# Translators: The label for a setting in general settings to
+			# allow NVDA to come up in Windows login screen (useful if user
+			# needs to enter passwords or if multiple user accounts are present
+			# to allow user to choose the correct account).
 			label=_("Start NVDA during sign-in (requires administrator privileges)")
 		)
 		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
