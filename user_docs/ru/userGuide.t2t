@@ -1456,7 +1456,7 @@ NVDA предоставляет поддержку для командной к�
 
 ==== Обрабатывать клавиши из других приложений ====[KeyboardSettingsHandleKeys]
 При помощи этой опции пользователи могут управлять тем, как NVDA следует обрабатывать нажатия клавиш, которые генерируются такими приложениями как экранные клавиатуры и программы для распознавания речи.
-По умолчанию этот флажок установлен, хотя определенная часть пользователей, возможно, предпочтёт отключить эту опцию, например пользователи набирающие вьетнамские тексты при помощи программы «Unikey», так как это приведет к некорректному вводу символов.
+По умолчанию этот флажок установлен, хотя определенная часть пользователей, возможно, предпочтёт отключить эту опцию, например пользователи набирающие вьетнамские тексты при помощи программы «UniKey», так как это приведет к некорректному вводу символов.
 
 +++ Мышь (NVDA+Control+M) +++[MouseSettings]
 Категория «Мышь» диалогового окна настроек NVDA позволяет включать режим отслеживание указателя мыши, звуковые сигналы при перемещении мыши, а также другие параметры взаимодействия с мышью.
@@ -2427,7 +2427,7 @@ Hedo MobilLine USB компании [hedo Reha-Technik https://www.hedo.de/] п�
 Этот брайлевский дисплей еще не поддерживает автоопределение брайлевских дисплеев NVDA.
 
 Это список клавишных комбинаций для взаимодействия NVDA с этим брайлевским дисплеем.
-Пожалуйста, посмотрите документацию, чтобы узнать размещение клавишPlease see the display's documentation for descriptions of where these keys can be found.
+Пожалуйста, посмотрите документацию, чтобы узнать размещение клавиш.
 %kc:beginInclude
 || Имя | Клавишная комбинация |
 | Прокрутка брайлевского дисплея назад | K1 |
@@ -2440,63 +2440,63 @@ Hedo MobilLine USB компании [hedo Reha-Technik https://www.hedo.de/] п�
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B брайлевские дисплеи и BrailleNote Touch ++[HumanWareBrailliant]
-The Brailliant BI and B series of displays  from [HumanWare https://www.humanware.com/], including the BI 14, BI 32, BI 40 and B 80, are supported when connected via USB or bluetooth.
-If connecting via USB with the protocol set to HumanWare, you must first install the USB drivers provided by the manufacturer.
-USB drivers are not required if the protocol is set to OpenBraille.
+Брайлевские дисплеи Brailliant BI и B компании [HumanWare https://www.humanware.com/], включая BI 14, BI 32, BI 40 и B 80, поддерживаются при подключении через USB или bluetooth.
+Если подключаете брайлевский дисплей через USB с настроенным протоколом  HumanWare, Вы должны установить USB драйвера предоставленные разработчиком.
+Драйвера для USB соединения не нужны, если протокол настроен как OpenBraille.
 
-The following extra devices are also supported (and do not require any special drivers to be installed):
+Следующие дополнительные устройства поддерживаются, и никакие дополнительные компоненты не требуются:
 - APH Mantis Q40
 - APH Chameleon 20
 - Humanware BrailleOne
 - NLS eReader
 -
 
-Following are the key assignments for the Brailliant BI/B and BrailleNote touch displays with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
-+++ Key assignments for All models +++
+Здесь приводятся клавишные комбинации для  брайлевских дисплеев Brailliant BI/B и BrailleNote touch  для работы с NVDA.
+Пожалуйста, посмотрите документацию, чтобы узнать размещение клавиш.
++++ KКлавишные комбинации для всех моделей +++
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | left |
-| Scroll braille display forward | right |
-| Move braille display to previous line | up |
-| Move braille display to next line | down |
-| Route to braille cell | routing |
-| Toggle braille tethered to | up+down |
-| upArrow key | space+dot1 |
-| downArrow key | space+dot4 |
-| leftArrow key | space+dot3 |
-| rightArrow key | space+dot6 |
-| shift+tab key | space+dot1+dot3 |
-| tab key | space+dot4+dot6 |
-| alt key | space+dot1+dot3+dot4 (space+m) |
-| escape key | space+dot1+dot5 (space+e) |
-| enter key | dot8 |
-| windows key | space+dot3+dot4 |
-| alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
-| NVDA Menu | space+dot1+dot3+dot4+dot5 (space+n) |
-| windows+d key (minimize all applications) | space+dot1+dot4+dot5 (space+d) |
-| Say all | space+dot1+dot2+dot3+dot4+dot5+dot6 |
+|| Имя | Клавишная комбинация |
+| Прокрутка брайлевского дисплея назад | left |
+| Прокрутка брайлевского диспллея вперёд | right |
+| Перемещение брайлевского дисплея на предыдущую строку | up |
+| Перемещение брайлевского дисплея на следующую строку | down |
+| Перемещение к брайлевской клетке | routing |
+| Переключение привязки брайля | up+down |
+| СтрелкавВерх | пробел+точка1 |
+| стрелкавНиз | пробел+точка4 |
+| СтрелкавЛево | пробел+точка3 |
+| СтрелкавПраво | пробел+точка6 |
+| shift+tab | пробел+точка1+точка3 |
+| tab | space+точка4+точка6 |
+| alt | пробел+точка1+точка3+точка4 (пробел+m) |
+| escape | пробел+точка1+точка5 (пробел+e) |
+| enter | точка8 |
+| windows | пробел+точка3+точка4 |
+| alt+tab | пробел+точка2+точка3+точка4+точка5 (пробел+t) |
+| NVDA меню | пробел+точка1+точка3+точка4+точка5 (пробел+n) |
+| windows+d (свернуть все приложения) | пробел+точка1+точка4+точка5 (пробел+d) |
+| Читай всё | пробел+точка1+точка2+точка3+точка4+точка5+точка6 |
 %kc:endInclude
 
-+++ Key assignments for Brailliant BI 32, BI 40 and B 80 +++ 
++++ Сочетания клавиш для Brailliant BI 32, BI 40 и B 80 +++ 
 %kc:beginInclude
-|| Name | Key |
-| NVDA Menu | c1+c3+c4+c5 (command n) |
-| windows+d key (minimize all applications) | c1+c4+c5 (command d) |
-| Say all | c1+c2+c3+c4+c5+c6 |
+|| Имя | Клавишная комбинация |
+| NVDA Меню | c1+c3+c4+c5 (command n) |
+| windows+d (свернуть все приложения) | c1+c4+c5 (command d) |
+| Читать всё | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-+++ Key assignments for Brailliant BI 14 +++ 
++++ Сочетания клавиш для Brailliant BI 14 +++ 
 %kc:beginInclude
-|| Name | Key |
-| up arrow key | joystick up |
-| down arrow key | joystick down |
-| left arrow key | joystick left |
-| right arrow key | joystick right |
-| enter key | joystick action |
+|| Имя | Клавишная комбинация |
+| СтрелкавВерх | джойстик вверх |
+| Стрелка вниз | джойстик вниз |
+| Стрелка влево | Джойстик влево |
+| Стрелка вправо | Джойстик вправо |
+| enter | joystick action |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series ++[Hims]
+++ Брайлевские дисплеи HIMS Braille/Braille EDGE/Smart Beetle/Sync Braille ++[Hims]
 NVDA supports Braille Sense, Braille EDGE, Smart Beetle and Sync Braille displays from [Hims https://www.hims-inc.com/] when connected via USB or bluetooth.
 If connecting via USB, you will need to install the USB drivers from HIMS on your system.
 You can download these from here: https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
