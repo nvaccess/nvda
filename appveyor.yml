@@ -193,9 +193,9 @@ test_script:
      $systemTestOutput = (Resolve-Path "$testOutput\system")
      $testSource = ".\tests\system\robot"
 
-     $robotArgs = '--argumentfile .\tests\system\robotArgs.robot'
+     $robotArgs = '--argumentfile', '.\tests\system\robotArgs.robot'
      # useInstalledNVDA must come after args file to override the whichNVDA value
-     $useInstalledNVDA = '--variable whichNVDA:installed'
+     $useInstalledNVDA = '--variable', 'whichNVDA:installed'
 
      py -m robot $robotArgs $useInstalledNVDA $testSource
      Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
