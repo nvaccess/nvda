@@ -224,7 +224,7 @@ windowsPrimaryLCIDsToLocaleNames={
 	1:'ar',
 	2:'bg',
 	3:'ca',
-	4:'zh',
+	4:'zh_CN',
 	5:'cs',
 	6:'da',
 	7:'de',
