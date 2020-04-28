@@ -191,8 +191,13 @@ test_script:
  - ps: |
      $testOutput = (Resolve-Path .\testOutput\)
      $systemTestOutput = (Resolve-Path "$testOutput\system")
-     $testSource = "./tests/system"
-     py -m robot --loglevel DEBUG -d $systemTestOutput -x systemTests.xml -v whichNVDA:installed -P "$testSource/libraries" "$testSource"
+     $testSource = ".\tests\system\robot"
+
+     $robotArgs = '--argumentfile', '.\tests\system\robotArgs.robot'
+     # useInstalledNVDA must come after args file to override the whichNVDA value
+     $useInstalledNVDA = '--variable', 'whichNVDA:installed'
+
+     py -m robot $robotArgs $useInstalledNVDA $testSource
      Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
      Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
      if($LastExitCode -ne 0) {
