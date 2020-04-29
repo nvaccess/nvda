@@ -258,6 +258,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [featureFlag]
 	# 0:default, 1:yes, 2:no
 	cancelExpiredFocusSpeech = integer(0, 2, default=0)
+
+[iaccessible]
+	specificObjEvents = boolean(default=false)
 """
 
 #: The configuration specification

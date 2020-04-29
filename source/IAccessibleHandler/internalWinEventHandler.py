@@ -13,6 +13,7 @@ from typing import Dict, Callable
 
 import core
 import winUser
+import config
 
 from comInterfaces.IAccessible2Lib import (
 	IA2_EVENT_TEXT_CARET_MOVED,
@@ -65,6 +66,19 @@ winEventIDsToNVDAEventNames = {
 }
 
 _processDestroyWinEvent = None
+
+
+EVENTS_ALLOWED_FOR_ALL_OBJS = (
+	winUser.EVENT_OBJECT_FOCUS, winUser.EVENT_SYSTEM_FOREGROUND, *MENU_EVENTIDS,
+	winUser.EVENT_SYSTEM_SWITCHEND,
+	winUser.EVENT_SYSTEM_ALERT,
+	# We need valueChange events for progress bars.
+	winUser.EVENT_OBJECT_VALUECHANGE,
+	# In IA2 rich text editors, caret events can come from a descendant of the
+	# focus. The simplest way to deal with this is to just allow this event for
+	# all objects, since they're unlikely to flood us anyway.
+	IA2_EVENT_TEXT_CARET_MOVED,
+)
 
 
 # C901: winEventCallback is too complex
@@ -144,6 +158,15 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 			# WM_NULL to this window at this point (which happens in accessibleObjectFromEvent), Messenger will
 			# silently exit (#677). Therefore, completely ignore these events, which is useless to us anyway.
 			return
+		if config.conf["iaccessible"]["specificObjEvents"] and not (
+			objectID == winUser.OBJID_CARET
+			or eventID in EVENTS_ALLOWED_FOR_ALL_OBJS
+			or any(
+				isEventForNVDAObject(window, objectID, childID, obj)
+				for obj in getNVDAObjectsToMonitor()
+			)
+		):
+			return
 		if winEventLimiter.addEvent(eventID, window, objectID, childID, threadID):
 			core.requestPump()
 	except:  # noqa: E722 Bare except
@@ -211,3 +234,25 @@ def _shouldGetEvents():
 # winEventCallback adds these whenever it sees an event for ConsoleWindowClass windows,
 # As winEvents always contain the true thread ID.
 consoleWindowsToThreadIDs: Dict[int, int] = {}
+
+
+def getNVDAObjectsToMonitor():
+	import api
+	objs = [
+		*api.getFocusAncestors(),
+		api.getFocusObject(),
+		# The desktop object should be in the focus ancestry, but include it here just
+		# in case.
+		api.getDesktopObject()
+	]
+	return objs
+
+
+def isEventForNVDAObject(windowHandle, objectId, childId, obj):
+	import NVDAObjects.IAccessible
+	return (
+		isinstance(obj, NVDAObjects.IAccessible.IAccessible)
+		and windowHandle == obj.event_windowHandle
+		and objectId == obj.event_objectID
+		and childId == obj.event_childID
+	)
