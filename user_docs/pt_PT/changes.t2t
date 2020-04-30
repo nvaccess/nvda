@@ -3,6 +3,57 @@ Traduzido pela Equipa portuguesa do NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.1 =
+Os destaques desta versão incluem:
+- Suporte para várias novas linhas Braille da HumanWare e APH;
+- Várias outras importantes correções de bugs, como a capacidade de ler novamente matemática no Microsoft Word usando o MathPlayer / MathType.
+-
+
+== Novas funcionalidades ==
+- O item, actualmente seleccionado, numa caixa de lista, é novamente apresentado no modo de navegação, no Chrome, tal como era até ao NVDA 2019.1. (#10713)
+- Já pode executar o clique direito do rato  num ecrã táctil, tocando com um dedo e mantendo. (#3886)
+- Suporte para as novas linhas Braille: APH Chameleon 20, APH Mantis Q40, HumanWare BrailleOne, BrailleNote Touch v2, e NLS eReader. (#10830)
+-
+
+== Alterações ==
+- O NVDA impede o sistema de hibernar ou fechar durante a leitura contínua. (#10643)
+- Suporte para "out-of-process iframes" no Mozilla Firefox. (#10707)
+- actualização do conversor Braille liblouis para a versão 3.12 (#10161)
+-
+
+== Correcção de erros ==
+- Corrigido o não anúncio do símbolo "Unicode minus" (U+2212). (#10633)
+- Ao instalar extras pelo Gestor de extras, os nomes dos ficheiros e pastas no diálogo de pesquisa já não são anunciados em duplicado. (#10620, #2395)
+- No Firefox, quando se carrega Mastodon com a interface web avançada activada, todas as linhas de tempo já são renderizadas corretamente em modo de navegação. (#10776)
+- Em modo de navegação, o NVDA já anuncia "Não marcado" nas caixas de verificação em que antigamente não anunciava. (#10781)
+- Os controlos "ARIA switch" já não anunciam informações confusas, como "Não pressionado Marcado" ou "Pressionado marcado". (#9187)
+- As vozes SAPI4 já devem conseguir falar certos textos. (#10792)
+- O NVDA volta a poder ler e interagir com equações matemáticas no Microsoft Word. (#10803)
+- O NVDA volta a anunciar, em modo de navegação, quando o texto que se está a seleccionar é desseleccionado pelo movimento das setas. (#10731).
+- O NVDA já não se fecha se existirem erros ao iniciar o eSpeak. (#10607)
+- Erros causados pela codificação unicode na traduçãodos atalhos, já não fecham o instalador, mitigado por usar a predefinição do texto em inglês. (#5166, #6326)
+- Ao navegar com as setas para fora de listas e tabelas, no modo de leitura contínua com a navegação rápida activada já não é continuamente anunciado o fim de listas e tabelas. (#10706)
+-
+
+== Changes for Developers ==
+- Developer documentation is now build using sphinx. (#9840)
+- Several speech functions have been split into two. (#10593)
+  The speakX version remains, but now depends on a getXSpeech function which returns a speech sequence.
+  - speakObjectProperties now relies on getObjectPropertiesSpeech
+  - speakObject now relies on getObjectSpeech
+  - speakTextInfo now relies on getTextInfoSpeech
+  - speakWithoutPauses has been converted into a class, and refactored, but should not break compatibility.
+  - getSpeechForSpelling is deprecated (though still available) use getSpellingSpeech instead.
+  Private changes that should not affect addon developers:
+  - _speakPlaceholderIfEmpty is now _getPlaceholderSpeechIfTextEmpty
+  - _speakTextInfo_addMath is now _extendSpeechSequence_addMathForTextInfo
+- Speech 'reason' has been converted to an Enum, see controlTypes.OutputReason class. (#10703)
+  - Module level 'REASON_*' constants are deprecated.
+- Compiling NVDA dependencies now requires Visual Studio 2019 (16.2 or newer). (#10169)
+- Updated SCons to version 3.1.1. (#10169)
+- Again allow behaviors._FakeTableCell to have no location defined (#10864)
+
+
 = 2019.3 =
 O NVDA 2019.3 é uma versão muito significativa que contém muitas alterações ocultas, incluindo a actualização do Python 2 para o Python 3 e uma importante reescrita do subsistema de fala do NVDA.
 Embora essas alterações quebrem a compatibilidade com os extras mais antigos do NVDA, a actualização para o Python 3 é necessária para a segurança, e as alterações no sistema de a fala permitem algumas inovações interessantes num futuro próximo.
