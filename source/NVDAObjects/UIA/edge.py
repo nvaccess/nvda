@@ -141,10 +141,15 @@ class EdgeTextInfo(UIATextInfo):
 			controlTypes.ROLE_SECTION,
 			controlTypes.ROLE_PARAGRAPH,
 			controlTypes.ROLE_ARTICLE,
+			controlTypes.ROLE_LANDMARK,
+			controlTypes.ROLE_REGION,
 		):
 			field['isBlock']=True
+		ariaProperties = splitUIAElementAttribs(
+			obj._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
+		)
 		# ARIA roledescription and landmarks
-		field['roleText']=obj.roleText
+		field['roleText'] = ariaProperties.get('roledescription')
 		# provide landmarks
 		field['landmark']=obj.landmark
 		# Combo boxes with a text pattern are editable
@@ -156,9 +161,8 @@ class EdgeTextInfo(UIATextInfo):
 			field['placeholder']=obj.placeholder
 		# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
 		# Later processing in Edge's getTextWithFields will remove descendant content from fields with a content attribute.
-		ariaProperties=obj._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
-		hasAriaLabel=('label=' in ariaProperties)
-		hasAriaLabelledby=('labelledby=' in ariaProperties)
+		hasAriaLabel = 'label' in ariaProperties
+		hasAriaLabelledby = 'labelledby' in ariaProperties
 		if field.get('nameIsContent'):
 			content=""
 			field.pop('name',None)
@@ -176,6 +180,8 @@ class EdgeTextInfo(UIATextInfo):
 				field['role']=controlTypes.ROLE_EMBEDDEDOBJECT
 				if not obj.value:
 					field['content']=obj.name
+		elif hasAriaLabel or hasAriaLabelledby:
+			field['alwaysReportName'] = True
 		# Give lists an item count
 		if obj.role==controlTypes.ROLE_LIST:
 			child=UIAHandler.handler.clientObject.ControlViewWalker.GetFirstChildElement(obj.UIAElement)
@@ -516,13 +522,17 @@ class EdgeNode(UIA):
 		landmarkId=self._getUIACacheablePropertyValue(UIAHandler.UIA_LandmarkTypePropertyId)
 		if not landmarkId: # will be 0 for non-landmarks
 			return None
+		landmarkRole = UIAHandler.UIALandmarkTypeIdsToLandmarkNames.get(landmarkId)
+		if landmarkRole:
+			return landmarkRole
 		ariaRoles=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
 		# #7333: It is valid to provide multiple, space separated aria roles in HTML
 		# If multiple roles or even multiple landmark roles are provided, the first one is used
-		for ariaRole in ariaRoles.split():
-			if ariaRole in aria.landmarkRoles and (ariaRole!='region' or self.name):
-				return ariaRole
+		ariaRole = ariaRoles.split(" ")[0]
+		if ariaRole in aria.landmarkRoles and (ariaRole != 'region' or self.name):
+			return ariaRole
 		return None
+
 
 class EdgeList(EdgeNode):
 

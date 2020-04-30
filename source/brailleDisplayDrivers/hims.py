@@ -381,8 +381,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return
 
 	def _sendPacket(
-			self, packetType: bytes, mode: bytes,
-			data1: bytes, data2: bytes = b""
+			self,
+			packetType: bytes,
+			mode: bytes,
+			data1: bytes,
+			data2: bytes = b""
 	):
 		d1Len = len(data1)
 		d2Len = len(data2)
@@ -395,7 +398,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# Data block 1 start
 			b"\xf0",
 			# Data block 1 length
-			d1Len.to_bytes(2, "little", signed=False),
+			d1Len.to_bytes(length=2, byteorder="little", signed=False),
 			# Data block 1
 			data1,
 			# Data block 1 end
@@ -404,21 +407,26 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# Data block 2 start
 			b"\xf2",
 			# Data block 1 length
-			d2Len.to_bytes(2, "little", signed=False),
+			d2Len.to_bytes(length=2, byteorder="little", signed=False),
 			# Data block 2
 			data2,
 			# Data block 2 end
 			b"\xf3",
 			# Reserved bytes
-			b"\x00"*4,
+			b"\x00" * 4,
 			# Reserved space for checksum
+			# Note that the checksum has the -3rd position in the final packet bytearray,
+			# whereas it has the -2nd position in the packet list
 			b"\x00",
 			# Packet end
-			b"\xfd"*2,
+			b"\xfd" * 2,
 		]
 		packetB = bytearray(b"".join(packet))
+		#  checksum is the 3rd index from the end because 'packet end' takes up
+		# two bytes and 'packetB' is a bytearray
+		checksumIndexInPacketB: int = -3
 		checksum: int = 0xff & sum(packetB)
-		packetB[-2] = checksum
+		packetB[checksumIndexInPacketB] = checksum
 
 		# check that the packet is the size we expect:
 		ptLen = len(packetType)

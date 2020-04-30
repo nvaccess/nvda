@@ -333,9 +333,8 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 				textList.append(self.obj.makeTextInfo(textInfos.offsets.Offsets(start, end)).text)
 			attrs["table-%sheadertext" % axis] = "\n".join(textList)
 
-		if attrs.get("landmark") == "region" and not attrs.get("name"):
-			# We only consider region to be a landmark if it has a name.
-			del attrs["landmark"]
+		if attrs.get("role") in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_REGION):
+			attrs['alwaysReportName'] = True
 
 		# Expose a unique ID on the controlField for quick and safe comparison using the virtualBuffer field's docHandle and ID
 		docHandle=attrs.get('controlIdentifier_docHandle')

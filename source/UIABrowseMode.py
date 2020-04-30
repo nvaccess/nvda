@@ -1,7 +1,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2015-2017 NV Access Limited, Babbage B.V.
+#Copyright (C) 2015-2020 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
 
 from ctypes import byref
 from comtypes import COMError
@@ -437,14 +437,33 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 				},
 			)
 			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
-		elif nodeType=="landmark":
-			condition=UIAHandler.handler.clientObject.createNotCondition(UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_LandmarkTypePropertyId,0))
-			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
+		elif nodeType == "landmark":
+			condition = UIAHandler.handler.clientObject.createNotCondition(
+				UIAHandler.handler.clientObject.createPropertyCondition(
+					UIAHandler.UIA.UIA_LandmarkTypePropertyId,
+					0
+				)
+			)
+			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
 		elif nodeType == "article":
 			condition = createUIAMultiPropertyCondition({
 				UIAHandler.UIA_ControlTypePropertyId: UIAHandler.UIA.UIA_GroupControlTypeId,
 				UIAHandler.UIA_AriaRolePropertyId: ["article"]
 			})
+			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
+		elif nodeType == "grouping":
+			condition = UIAHandler.handler.clientObject.CreateAndConditionFromArray([
+				UIAHandler.handler.clientObject.createPropertyCondition(
+					UIAHandler.UIA.UIA_ControlTypePropertyId,
+					UIAHandler.UIA.UIA_GroupControlTypeId
+				),
+				UIAHandler.handler.clientObject.createNotCondition(
+					UIAHandler.handler.clientObject.createPropertyCondition(
+						UIAHandler.UIA.UIA_NamePropertyId,
+						""
+					)
+				)
+			])
 			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
 		elif nodeType=="nonTextContainer":
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:True},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ComboBoxControlTypeId})
