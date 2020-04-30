@@ -18,6 +18,7 @@ What's New in NVDA
 == Changes ==
 - Updated liblouis braille translator to [3.13.0 https://github.com/liblouis/liblouis/releases/tag/v3.13.0] (from 3.12.0). (#10832)
 - The reporting of superscripts and subscripts is now controlled separately to the reporting of font attributes. (#10919)
+- Due to changes made in VS Code, NVDA no longer disables browse mode in Code by default. (#10888)
 
 
 == Bug Fixes ==
@@ -35,6 +36,7 @@ What's New in NVDA
 - Automated testing of NVDA with Chrome and a HTML sample is now possible. (#10553)
 - IAccessibleHandler has been converted into a package, OrderedWinEventLimiter has been extracted to a module and unit tests added (#10934)
 - Updated BrlApi to version 0.8 (BRLTTY 6.1). (#11065)
+- Status bar retrieval may now be customized by an AppModule. (#2125, #4640)
 
 
 = 2020.1 =
