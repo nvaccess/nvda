@@ -1664,7 +1664,6 @@ class GlobalCommands(ScriptableObject):
 			return
 		import systemUtils
 		systemUtils.openUserConfigurationDirectory()
->>>>>>> master
 
 	def script_toggleProgressBarOutput(self,gesture):
 		outputMode=config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]
