@@ -545,7 +545,8 @@ class UIAHandler(COMObject):
 			# Fixes: strange reporting of context menu items(#9252),
 			# fixes: not being able to report ribbon sections when they starts with an edit  field (#7067)
 			# Note that #7067 is not fixed for Office 2016 and never.
-			# Using IAccessible for NetUIHWND controls causes focus changes not to be reported when the ribbon is collabsed.
+			# Using IAccessible for NetUIHWND controls causes focus changes not to be reported
+			# when the ribbon is collapsed.
 			# Testing shows that these controls emits proper events but they are ignored by NVDA.
 			if(
 				appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
