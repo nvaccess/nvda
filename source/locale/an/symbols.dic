@@ -20,7 +20,7 @@ complexSymbols:
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word -	(?<=[^\W_])[-]
-negative number	(?<!\w)-(?=[$£€¥.]?\d)
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
 symbols:
@@ -66,6 +66,7 @@ $	dólar	all	norep
 )	zarrar parentesi	most	always
 *	asterisco	some
 +	mas	some
+−	menos	some
 ,	coma	all	always
 -	guión	most
 ­	guión	most
@@ -122,6 +123,7 @@ _	guión baixo	most
 ⇒	flecha dople t'a dreita	some
 ⇨	flecha blanca t'a dreita	some
 ➢	flecha con cabeza t'a dreita	some
+⮚	flecha con cabeza t'a dreita	some
 ❖	diamant negro menos X blanca	some
 ♣	club negro	some
 ♦	diamant negro	some
@@ -154,6 +156,7 @@ _	guión baixo	most
 ↓	flecha entabaixo	some
 ✓	marcau	some
 ✔	marcau	some
+🡺	flecha dreita	some
 
 #Mathematical Operators U+2200 to U+220F
 

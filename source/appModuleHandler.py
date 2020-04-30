@@ -487,6 +487,18 @@ class AppModule(baseObject.ScriptableObject):
 		"""
 		return False
 
+	def shouldProcessUIAPropertyChangedEvent(self, sender, propertyId):
+		"""
+		Determines whether NVDA should process a UIA property changed event.
+		Returning False will cause the event to be dropped completely. This can be
+		used to work around UIA implementations which flood events and cause poor
+		performance.
+		Returning True means that the event will be processed, but it might still
+		be rejected later; e.g. because it isn't native UIA, because
+		shouldAcceptEvent returns False, etc.
+		"""
+		return True
+
 	def dumpOnCrash(self):
 		"""Request that this process writes a minidump when it crashes for debugging.
 		This should only be called if instructed by a developer.
