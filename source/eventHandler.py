@@ -244,6 +244,8 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		return True
 	if eventName == "valueChange" and config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]:
 		return True
+	if eventName == "hide":
+		return False
 	if eventName == "show":
 		# Only accept 'show' events for specific cases, as otherwise we get flooded.
 		return wClass in (
