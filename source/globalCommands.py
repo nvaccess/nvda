@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#globalCommands.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions, Julien Cochuyt
+# globalCommands.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions, Julien Cochuyt
 
 import time
 import itertools
