@@ -539,16 +539,16 @@ class UIAHandler(COMObject):
 		if appModule and appModule.isBadUIAWindow(hwnd):
 			return False
 		if windowClass == "NetUIHWND":
-			# This class is used for various controls in MS Office.
-			# In versions of Office older than 2016 using IAccessible avoids some issues.
-			# Problems include lack of focus reporting (#4207), strange reporting of context menu items )#9252)
-			# and not being able to report ribbon sections when they starts with an edit  field (#7067)
-			# The last problem also exiists for Office 2016, however using IAccessible for collabsed ribbons
-			# causes NVDA not to report focus changes.
-			# FIX ME!
-			# Quick testing shows that prorer focus event are emitted yet they are ignored by NVDA.
+			# NetUIHWND is used for various controls in MS Office.
+			# IAccessible should be used for NetUIHWND in versions older than 2016
+			# Fixes: lack of focus reporting (#4207),
+			# Fixes: strange reporting of context menu items(#9252),
+			# fixes: not being able to report ribbon sections when they starts with an edit  field (#7067)
+			# Note that #7067 is not fixed for Office 2016 and never.
+			# Using IAccessible for NetUIHWND controls causes focus changes not to be reported when the ribbon is collabsed.
+			# Testing shows that these controls emits proper events but they are ignored by NVDA.
 			if(
-				appModule.productName.startswith("Microsoft Office")
+				appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
 				and int(appModule.productVersion.split(".")[0]) < 16
 			):
 				parentHwnd = winUser.getAncestor(hwnd, winUser.GA_PARENT)
