@@ -737,9 +737,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			# current user settings to system settings (to allow current
 			# settings to be used in secure screens such as User Account
 			# Control (UAC) dialog).
-			label=_(
-				"Use currently saved settings during sign-in and on secure screens (requires administrator privileges)"
-			)
+			label=_("Use currently saved settings during sign-in and on secure screens (requires administrator privileges)")  # noqa: E501 line too long
 		)
 		self.copySettingsButton.Bind(wx.EVT_BUTTON,self.onCopySettings)
 		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
