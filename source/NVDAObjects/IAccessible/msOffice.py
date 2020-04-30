@@ -182,7 +182,7 @@ class SDMSymbols(SDM):
 	}
 
 
-class statusBar (IAccessible):
+class StatusBar (IAccessible):
 
 	def _get_role(self):
 		""" #4257: Status bar in Office applications does not  expose proper role via IAccessible.
@@ -206,7 +206,7 @@ Fortunately accValue contains "status bar" and is not localized.
 		return super().isPresentableFocusAncestor
 
 
-class ribbonSection (IAccessible):
+class RibbonSection (IAccessible):
 
 	def _get_role(self):
 		accValue = self.IAccessibleObject.accValue(self.IAccessibleChildID)
