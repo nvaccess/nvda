@@ -538,7 +538,7 @@ class UIAHandler(COMObject):
 		# allow the appModule for the window to also choose if this window is bad
 		if appModule and appModule.isBadUIAWindow(hwnd):
 			return False
-		if windowClass == "NetUIHWND":
+		if windowClass == "NetUIHWND" and appModule:
 			# NetUIHWND is used for various controls in MS Office.
 			# IAccessible should be used for NetUIHWND in versions older than 2016
 			# Fixes: lack of focus reporting (#4207),
@@ -548,10 +548,9 @@ class UIAHandler(COMObject):
 			# Using IAccessible for NetUIHWND controls causes focus changes not to be reported
 			# when the ribbon is collapsed.
 			# Testing shows that these controls emits proper events but they are ignored by NVDA.
-			if(
-				appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
-				and int(appModule.productVersion.split(".")[0]) < 16
-			):
+			isOfficeApp = appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
+			isOffice2013OrOlder = int(appModule.productVersion.split(".")[0]) < 16
+			if isOfficeApp and isOffice2013OrOlder:
 				parentHwnd = winUser.getAncestor(hwnd, winUser.GA_PARENT)
 				while parentHwnd:
 					if winUser.getClassName(parentHwnd) in ("Net UI Tool Window", "MsoCommandBar",):
