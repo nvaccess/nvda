@@ -19,7 +19,8 @@ import textInfos
 import UIAHandler
 from UIABrowseMode import UIABrowseModeDocument, UIABrowseModeDocumentTextInfo, UIATextRangeQuickNavItem,UIAControlQuicknavIterator
 from UIAUtils import *
-from . import UIA, UIATextInfo, web
+from . import UIA, web
+
 
 class EdgeTextInfo(web.UIAWebTextInfo):
 	...

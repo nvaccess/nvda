@@ -220,7 +220,10 @@ class UIAWebTextInfo(UIATextInfo):
 				field['_childcontrolcount'] = child.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
 		return field
 
-	def getTextWithFields(self, formatConfig=None):
+	# C901 'getTextWithFields' is too complex
+	# Note: when working on getTextWithFields, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def getTextWithFields(self, formatConfig=None):  # noqa: C901
 		# We don't want fields for collapsed ranges.
 		# This would normally be a general rule, but MS Word currently needs fields for collapsed ranges,
 		# thus this code is not in the base.
@@ -389,9 +392,10 @@ class UIAWebTreeInterceptor(cursorManager.ReviewCursorManager, UIABrowseModeDocu
 			return super().makeTextInfo(position)
 		except RuntimeError as e:
 			# sometimes the stored TextRange we have for the caret/selection can die if the page mutates too much.
-			# Therefore, if we detect this, just give back the first position in the document, updating our stored version as we go.
+			# Therefore, if we detect this, just give back the first position in the document,
+			# updating our stored version as we go.
 			if position in (textInfos.POSITION_SELECTION, textInfos.POSITION_CARET):
-				log.debugWarning("%s died. Using first position instead."%position)
+				log.debugWarning(f"{position} died. Using first position instead")
 				info = self.makeTextInfo(textInfos.POSITION_FIRST)
 				self._selection = info
 				return info
