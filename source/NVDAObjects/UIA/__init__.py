@@ -882,6 +882,15 @@ class UIA(Window):
 				clsList.append(edge.EdgeList)
 			else:
 				clsList.append(edge.EdgeNode)
+		elif self.windowClassName == "Chrome_RenderWidgetHostHWND":
+			from . import chromium
+			if (self.UIATextPattern and
+				self.role == controlTypes.ROLE_DOCUMENT
+				and self.parent and self.parent.role == controlTypes.ROLE_PANE
+			): 
+				clsList.append(chromium.ChromiumUIARoot)
+			else:
+				clsList.append(chromium.ChromiumUIA)
 		elif self.role==controlTypes.ROLE_DOCUMENT and self.UIAElement.cachedAutomationId=="Microsoft.Windows.PDF.DocumentView":
 				# PDFs
 				from . import edge
