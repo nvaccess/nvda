@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2008-2020 NV Access Limited, James Teh, Dinesh Kaushal, Davy Kager, André-Abush Clause, Babbage B.V., Leonard de Ruijter, Michael Curran, Accessolutions, Julien Cochuyt  # noqa: E501
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
