@@ -19,10 +19,10 @@ import textInfos
 import UIAHandler
 from UIABrowseMode import UIABrowseModeDocument, UIABrowseModeDocumentTextInfo, UIATextRangeQuickNavItem,UIAControlQuicknavIterator
 from UIAUtils import *
-from . import UIA, UIATextInfo
+from . import UIA, web
 
 
-class EdgeTextInfo(UIATextInfo):
+class EdgeTextInfo(web.UIAWebTextInfo):
 	...
 
 class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
@@ -197,7 +197,8 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 		log.debug("Done walking parents to yield controlEnds and recurse unbalanced endRanges")
 		log.debug("_getTextWithFieldsForUIARange (unbalanced) end")
 
-class EdgeNode(UIA):
+
+class EdgeNode(web.UIAWeb):
 
 	_edgeIsPreGapRemoval=winVersion.winVersion.build<15048
 
@@ -240,8 +241,9 @@ class EdgeNode(UIA):
 		return False
 
 
-class EdgeList(EdgeNode):
+class EdgeList(web.List):
 	...
+
 
 class EdgeHTMLRootContainer(EdgeNode):
 
@@ -252,9 +254,8 @@ class EdgeHTMLRootContainer(EdgeNode):
 			return
 		return super(EdgeHTMLRootContainer,self).event_gainFocus()
 
-class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,UIABrowseModeDocument):
 
-	TextInfo=UIABrowseModeDocumentTextInfo
+class EdgeHTMLTreeInterceptor(web.UIAWebTreeInterceptor):
 
 	def _get_documentConstantIdentifier(self):
 		return self.rootNVDAObject.parent.name

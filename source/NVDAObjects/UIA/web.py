@@ -15,10 +15,23 @@ import cursorManager
 import re
 import aria
 import textInfos
+from UIABrowseMode import (
+	UIABrowseModeDocument,
+	UIABrowseModeDocumentTextInfo,
+	UIATextRangeQuickNavItem,
+	UIAControlQuicknavIterator,
+)
+from UIAUtils import (
+	createUIAMultiPropertyCondition,
+	getUIATextAttributeValueFromRange,
+)
 import UIAHandler
-from UIABrowseMode import UIABrowseModeDocument, UIABrowseModeDocumentTextInfo, UIATextRangeQuickNavItem,UIAControlQuicknavIterator
-from UIAUtils import *
-from . import UIA, UIATextInfo
+
+"""
+UIA.web module provides a common base for behavior and utilities relevant to web browsers.
+There are specialisations for families of browsers and further specialisations for individual browsers where
+necessary. Note that not all browsers support UIA.
+"""
 
 
 def splitUIAElementAttribs(attribsString):
@@ -59,7 +72,7 @@ def splitUIAElementAttribs(attribsString):
 	return attribsDict
 
 
-class EdgeTextInfo(UIATextInfo):
+class UIAWebTextInfo(UIATextInfo):
 
 	def _get_UIAElementAtStartWithReplacedContent(self):
 		"""Fetches the deepest UIAElement at the start of the text range whos name has been overridden by the author (such as aria-label)."""
@@ -108,14 +121,14 @@ class EdgeTextInfo(UIATextInfo):
 	def _collapsedMove(self,unit,direction,skipReplacedContent):
 		"""A simple collapsed move (i.e. both ends move together), but whether it classes replaced content as one character stop can be configured via the skipReplacedContent argument."""
 		if not skipReplacedContent:
-			return super(EdgeTextInfo,self).move(unit,direction)
+			return super().move(unit, direction)
 		if direction==0:
 			return
 		chunk=1 if direction>0 else -1
 		finalRes=0
 		while finalRes!=direction:
 			self._moveToEdgeOfReplacedContent(back=direction<0)
-			res=super(EdgeTextInfo,self).move(unit,chunk)
+			res = super().move(unit, chunk)
 			if res==0:
 				break
 			finalRes+=res
@@ -132,7 +145,12 @@ class EdgeTextInfo(UIATextInfo):
 			return res
 
 	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
-		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
+		field = super()._getControlFieldForObject(
+			obj,
+			isEmbedded=isEmbedded,
+			startOfNode=startOfNode,
+			endOfNode=endOfNode
+		)
 		field['embedded']=isEmbedded
 		role=field.get('role')
 		# Fields should be treated as block for certain roles.
@@ -195,7 +213,7 @@ class EdgeTextInfo(UIATextInfo):
 		# This would normally be a general rule, but MS Word currently needs fields for collapsed ranges, thus this code is not in the base.
 		if self.isCollapsed:
 			return []
-		fields=super(EdgeTextInfo,self).getTextWithFields(formatConfig)
+		fields = super().getTextWithFields(formatConfig)
 		seenText=False
 		curStarts=[]
 		# remove clickable state on descendants of controls with clickable state
@@ -247,10 +265,14 @@ class EdgeTextInfo(UIATextInfo):
 		return fields
 
 
-class EdgeNode(UIA):
+class UIAWeb(UIA):
+
+	_TextInfo = UIAWebTextInfo
+
 	def _get_role(self):
-		role=super(EdgeNode,self).role
-		if not isinstance(self,EdgeHTMLRoot) and role==controlTypes.ROLE_PANE and self.UIATextPattern:
+		role = super().role
+		from .edge import EdgeHTMLRoot
+		if not isinstance(self, EdgeHTMLRoot) and role==controlTypes.ROLE_PANE and self.UIATextPattern:
 			return controlTypes.ROLE_INTERNALFRAME
 		ariaRole=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
 		# #7333: It is valid to provide multiple, space separated aria roles in HTML
@@ -263,8 +285,8 @@ class EdgeNode(UIA):
 		return role
 
 	def _get_states(self):
-		states=super(EdgeNode,self).states
-		if self.role in (controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_GROUPING,controlTypes.ROLE_SECTION,controlTypes.ROLE_GRAPHIC) and self.UIAInvokePattern:
+		states = super().states
+		if self.role in (controlTypes.ROLE_STATICTEXT, controlTypes.ROLE_GROUPING, controlTypes.ROLE_SECTION, controlTypes.ROLE_GRAPHIC) and self.UIAInvokePattern:
 			states.add(controlTypes.STATE_CLICKABLE)
 		return states
 
@@ -317,17 +339,17 @@ class EdgeNode(UIA):
 		return None
 
 
-class EdgeList(EdgeNode):
+class List(UIAWeb):
 
 	# non-focusable lists are readonly lists (ensures correct NVDA presentation category)
 	def _get_states(self):
-		states=super(EdgeList,self).states
+		states = super().states
 		if controlTypes.STATE_FOCUSABLE not in states:
 			states.add(controlTypes.STATE_READONLY)
 		return states
 
 
-class EdgeHeadingQuickNavItem(UIATextRangeQuickNavItem):
+class HeadingControlQuickNavItem(UIATextRangeQuickNavItem):
 
 	@property
 	def level(self):
@@ -340,12 +362,12 @@ class EdgeHeadingQuickNavItem(UIATextRangeQuickNavItem):
 		return self.level>parent.level
 
 
-def EdgeHeadingQuicknavIterator(itemType,document,position,direction="next"):
+def HeadingControlQuicknavIterator(itemType,document,position,direction="next"):
 	"""
-	A helper for L{EdgeHTMLTreeInterceptor._iterNodesByType} that specifically yields L{EdgeHeadingQuickNavItem} objects found in the given document, starting the search from the given position,  searching in the given direction.
+	A helper for L{UIAWebTreeInterceptor._iterNodesByType} that specifically yields L{HeadingControlQuickNavItem} objects found in the given document, starting the search from the given position,  searching in the given direction.
 	See L{browseMode._iterNodesByType} for details on these specific arguments.
 	"""
-	# Edge exposes all headings as UIA elements with a controlType of text, and a level. Thus we can quickly search for these.
+	# Some UI Automation web implementations expose all headings as UIA elements with a controlType of text, and a level. Thus we can quickly search for these.
 	# However, sometimes when ARIA is used, the level on the element may not match the level in the text attributes.
 	# Therefore we need to search for all levels 1 through 6, even if a specific level is specified.
 	# Though this is still much faster than searching text attributes alone
@@ -353,13 +375,16 @@ def EdgeHeadingQuicknavIterator(itemType,document,position,direction="next"):
 	levels=list(range(1,7))
 	condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_TextControlTypeId,UIAHandler.UIA_LevelPropertyId:levels})
 	levelString=itemType[7:]
-	for item in UIAControlQuicknavIterator(itemType,document,position,condition,direction=direction,itemClass=EdgeHeadingQuickNavItem):
+	for item in UIAControlQuicknavIterator(itemType,document,position,condition,direction=direction,itemClass=HeadingControlQuickNavItem):
 		# Verify this is the correct heading level via text attributes 
 		if item.level and (not levelString or levelString==str(item.level)): 
 			yield item
 
 
-class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,UIABrowseModeDocument):
+class UIAWebTreeInterceptor(cursorManager.ReviewCursorManager,UIABrowseModeDocument):
+
+	TextInfo=UIABrowseModeDocumentTextInfo
+	
 	def makeTextInfo(self,position):
 		try:
 			return super().makeTextInfo(position)
@@ -381,11 +406,11 @@ class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,UIABrowseModeDoc
 				and controlTypes.STATE_SELECTABLE in obj.states
 		):
 			return True
-		return super(EdgeHTMLTreeInterceptor,self).shouldPassThrough(obj,reason=reason)
+		return super().shouldPassThrough(obj, reason=reason)
 
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
 		if nodeType.startswith("heading"):
-			return EdgeHeadingQuicknavIterator(nodeType,self,pos,direction=direction)
+			return HeadingControlQuicknavIterator(nodeType,self,pos,direction=direction)
 		else:
-			return super(EdgeHTMLTreeInterceptor,self)._iterNodesByType(nodeType,direction=direction,pos=pos)
+			return super()._iterNodesByType(nodeType,direction=direction,pos=pos)
 
