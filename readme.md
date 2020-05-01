@@ -40,6 +40,13 @@ The following dependencies need to be installed on your system:
 	* Don't use `3.7.6` it causes an error while building, see #10696.
 * Microsoft Visual Studio 2019 Community, Version 16.3 or later:
 	* Download from https://visualstudio.microsoft.com/vs/
+	*When installing Visual Studio, you can import the config:
+	*When you show the `nvda\extras\.vsconfig` file in the source folder of NVDA to Visual Studio Installer by following the steps of:
+		*1. Visual Studio Installer
+		*2. More
+		*3. Import configuration
+		*4. browse
+		*Visual Studio Installer automatically checks components.
 	* When installing Visual Studio, you need to enable the following:
 		* On the Workloads tab
 			* in the Windows group:
@@ -52,15 +59,6 @@ The following dependencies need to be installed on your system:
 		* On the Individual components tab, ensure the following items are selected:
 			* MSVC v142 - VS 2019 C++ ARM64 build tools
 			* C++ ATL for v142 build tools (ARM64)
-
-When installing Visual Studio, you can import the config:
-When you show the `nvda\extras\.vsconfig` file in the source folder of NVDA to Visual Studio Installer by following the steps of:
-1. Visual Studio Installer
-2. More
-3. Import configuration
-4. browse
-
-Visual Studio Installer automatically checks components.
 
 ### Git Submodules
 Most of the dependencies are contained in Git submodules.
