@@ -6,6 +6,8 @@
 
 from ctypes import *
 from ctypes.wintypes import *
+from enum import Enum
+
 import comtypes.client
 from comtypes.automation import VT_EMPTY
 from comtypes import COMError
@@ -203,6 +205,21 @@ ignoreWinEventsMap = {
 }
 for id in UIAEventIdsToNVDAEventNames.keys():
 	ignoreWinEventsMap[id] = [0]
+
+
+class AllowUiaInChromium(Enum):
+	_DEFAULT = 0  # maps to 'when necessary'
+	WHEN_NECESSARY = 1  # the current default
+	YES = 2
+	NO = 3
+
+	@staticmethod
+	def getConfig() -> 'AllowUiaInChromium':
+		allow = AllowUiaInChromium(config.conf['UIA']['allowInChromium'])
+		if allow == AllowUiaInChromium._DEFAULT:
+			return AllowUiaInChromium.WHEN_NECESSARY
+		return allow
+
 
 class UIAHandler(COMObject):
 	_com_interfaces_ = [
@@ -641,9 +658,6 @@ class UIAHandler(COMObject):
 			return
 		eventHandler.queueEvent("UIA_notification",obj, notificationKind=NotificationKind, notificationProcessing=NotificationProcessing, displayString=displayString, activityId=activityId)
 
-	def _allowUiaInChromium(self):
-		return True  # todo: config.conf['UIA']['allowInChromium']
-
 	def _isBadUIAWindowClassName(self, windowClass):
 		"Given a windowClassName, returns True if this is a known problematic UIA implementation."
 		# #7497: Windows 10 Fall Creators Update has an incomplete UIA
@@ -652,10 +666,6 @@ class UIAHandler(COMObject):
 		# It does not implement caret/selection, and probably has no new text
 		# events.
 		if windowClass == "ConsoleWindowClass" and config.conf['UIA']['winConsoleImplementation'] != "UIA":
-			return True
-		# Unless explicitly allowed, all Chromium implementations (including Edge) should not be UIA,
-		# As their IA2 implementation is still better at the moment.
-		elif windowClass == "Chrome_RenderWidgetHostHWND" and not self._allowUiaInChromium():
 			return True
 		return windowClass in badUIAWindowClassNames
 
@@ -706,13 +716,28 @@ class UIAHandler(COMObject):
 			# Builds of MS Office 2016 before build 9000 or so had bugs which we cannot work around.
 			# And even current builds of Office 2016 are still missing enough info from UIA that it is still impossible to switch to UIA completely.
 			# Therefore, if we can inject in-process, refuse to use UIA and instead fall back to the MS Word object model.
+			canUseOlderInProcessApproach = bool(appModule.helperLocalBindingHandle)
 			if (
 				# An MS Word document window 
 				windowClass=="_WwG" 
 				# Disabling is only useful if we can inject in-process (and use our older code)
-				and appModule.helperLocalBindingHandle 
+				and canUseOlderInProcessApproach
 				# Allow the user to explisitly force UIA support for MS Word documents no matter the Office version 
 				and not config.conf['UIA']['useInMSWordWhenAvailable']
+			):
+				return False
+			# Unless explicitly allowed, all Chromium implementations (including Edge) should not be UIA,
+			# As their IA2 implementation is still better at the moment.
+			elif (
+				windowClass == "Chrome_RenderWidgetHostHWND"
+				and (
+						AllowUiaInChromium.getConfig() == AllowUiaInChromium.NO
+						# Disabling is only useful if we can inject in-process (and use our older code)
+						or (
+								canUseOlderInProcessApproach
+								and AllowUiaInChromium.getConfig() != AllowUiaInChromium.YES  # Users can prefer to use UIA
+						)
+				)
 			):
 				return False
 		return bool(res)
