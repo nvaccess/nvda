@@ -514,7 +514,7 @@ class UIAHandler(COMObject):
 			return True
 		# Unless explicitly allowed, all Chromium implementations (including Edge) should not be UIA,
 		# As their IA2 implementation is still better at the moment.
-		elif windowClass == "Chrome_RenderWidgetHostHWND" and not config.conf['UIA']['allowInChromium']:
+		elif windowClass == "Chrome_RenderWidgetHostHWND" and config.conf['UIA']['allowInChromium'] != "yes":
 			return True
 		return windowClass in badUIAWindowClassNames
 

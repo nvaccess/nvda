@@ -2322,9 +2322,18 @@ class AdvancedPanelControls(wx.Panel):
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
 		label = _("Allow &Chromium based browsers to use UI Automation when available")
-		self.UIAInChromiumCheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
-		self.UIAInChromiumCheckBox.SetValue(config.conf["UIA"]["allowInChromium"])
-		self.UIAInChromiumCheckBox.defaultValue = self._getDefaultValue(["UIA", "allowInChromium"])
+		chromiumChoicesAndLabels = {
+			# Translators: The label of a combobox option in the advanced settings panel.
+			"auto": _("Default (no)"),
+			# Translators: The label of a combobox option in the advanced settings panel.
+			"yes": _("Yes"),
+			# Translators: The label of a combobox option in the advanced settings panel.
+			"no": _("no")
+		}
+		self.chromiumChoices = list(chromiumChoicesAndLabels.keys())
+		self.UIAInChromiumCombo = UIAGroup.addLabeledControl(label, wx.Choice, choices=self.chromiumChoices)
+		self.UIAInChromiumCombo.SetSelection(self.chromiumChoices.index(config.conf["UIA"]["allowInChromium"]))
+		self.UIAInChromiumCombo.defaultValue = self.chromiumChoices.index(self._getDefaultValue(["UIA", "allowInChromium"]))
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -2431,7 +2440,7 @@ class AdvancedPanelControls(wx.Panel):
 			and self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue
 			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
-			and self.UIAInChromiumCheckBox.IsChecked() == self.UIAInChromiumCheckBox.defaultValue
+			and self.UIAInChromiumCombo.selection == self.UIAInChromiumCombo.defaultValue
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
 			and (
 				self.autoFocusFocusableElementsCheckBox.IsChecked()
@@ -2446,7 +2455,7 @@ class AdvancedPanelControls(wx.Panel):
 		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
 		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue == 'UIA')
-		self.UIAInChromiumCheckBox.SetValue(self.UIAInChromiumCheckBox.defaultValue)
+		self.UIAInChromiumCombo.SetSelection(self.UIAInChromiumCombo.defaultValue)
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
 		self.autoFocusFocusableElementsCheckBox.SetValue(self.autoFocusFocusableElementsCheckBox.defaultValue)
@@ -2463,7 +2472,7 @@ class AdvancedPanelControls(wx.Panel):
 		else:
 			config.conf['UIA']['winConsoleImplementation'] = "auto"
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
-		config.conf["UIA"]["allowInChromium"] = self.UIAInChromiumCheckBox.IsChecked()
+		config.conf["UIA"]["allowInChromium"] = self.chromiumChoices[self.UIAInChromiumCombo.GetSelection()]
 		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = self.autoFocusFocusableElementsCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()

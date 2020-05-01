@@ -3,21 +3,24 @@
 # See the file COPYING for more details.
 # Copyright (C) 2020 NV Access limited, Leonard de Ruijter
 
+import UIAHandler
 import cursorManager
-from . import UIA
+from . import UIA, web
 from UIABrowseMode import UIABrowseModeDocument, UIABrowseModeDocumentTextInfo
 import controlTypes
 
 
-class ChromiumUIA(UIA):
-	pass
+class ChromiumUIA(web.UIAWeb):
+	...
 
 
-class ChromiumUIATreeInterceptor(cursorManager.ReviewCursorManager, UIABrowseModeDocument):
-	TextInfo = UIABrowseModeDocumentTextInfo
+class ChromiumUIATreeInterceptor(web.UIAWebTreeInterceptor):
+
+	def _get_documentConstantIdentifier(self):
+		return self.rootNVDAObject.parent._getUIACacheablePropertyValue(UIAHandler.UIA_AutomationIdPropertyId)
 
 
-class ChromiumUIARoot(ChromiumUIA):
+class ChromiumUIADocument(ChromiumUIA):
 	treeInterceptorClass = ChromiumUIATreeInterceptor
 
 	def _get_shouldCreateTreeInterceptor(self):

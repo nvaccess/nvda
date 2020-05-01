@@ -888,7 +888,7 @@ class UIA(Window):
 				self.role == controlTypes.ROLE_DOCUMENT
 				and self.parent and self.parent.role == controlTypes.ROLE_PANE
 			): 
-				clsList.append(chromium.ChromiumUIARoot)
+				clsList.append(chromium.ChromiumUIADocument)
 			else:
 				clsList.append(chromium.ChromiumUIA)
 		elif self.role==controlTypes.ROLE_DOCUMENT and self.UIAElement.cachedAutomationId=="Microsoft.Windows.PDF.DocumentView":
