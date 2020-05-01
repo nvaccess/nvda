@@ -4,9 +4,7 @@
 # Copyright (C) 2020 NV Access limited, Leonard de Ruijter
 
 import UIAHandler
-import cursorManager
-from . import UIA, web
-from UIABrowseMode import UIABrowseModeDocument, UIABrowseModeDocumentTextInfo
+from . import web
 import controlTypes
 
 

@@ -3,22 +3,14 @@
 # See the file COPYING for more details.
 # Copyright (C) 2015-2020 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
-from comtypes import COMError
-from comtypes.automation import VARIANT
-from ctypes import byref
-import winVersion
 from logHandler import log
-import eventHandler
-import config
 import controlTypes
 import cursorManager
 import re
 import aria
-import textInfos
 import UIAHandler
-from UIABrowseMode import UIABrowseModeDocument, UIABrowseModeDocumentTextInfo, UIATextRangeQuickNavItem,UIAControlQuicknavIterator
-from UIAUtils import *
-from . import UIA, UIATextInfo
+from UIABrowseMode import UIABrowseModeDocument, UIABrowseModeDocumentTextInfo
+from . import UIA
 
 
 def splitUIAElementAttribs(attribsString):
@@ -58,26 +50,32 @@ def splitUIAElementAttribs(attribsString):
 		attribsDict[key] = tmp
 	return attribsDict
 
+
 class UIAWeb(UIA):
 
 	def _get_role(self):
 		role = super().role
 		from .edge import EdgeHTMLRoot
-		if not isinstance(self, EdgeHTMLRoot) and role==controlTypes.ROLE_PANE and self.UIATextPattern:
+		if not isinstance(self, EdgeHTMLRoot) and role == controlTypes.ROLE_PANE and self.UIATextPattern:
 			return controlTypes.ROLE_INTERNALFRAME
-		ariaRole=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
+		ariaRole = self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
 		# #7333: It is valid to provide multiple, space separated aria roles in HTML
 		# The role used is the first role in the list that has an associated NVDA role in aria.ariaRolesToNVDARoles
 		for ariaRole in ariaRole.split():
-			newRole=aria.ariaRolesToNVDARoles.get(ariaRole)
+			newRole = aria.ariaRolesToNVDARoles.get(ariaRole)
 			if newRole:
-				role=newRole
+				role = newRole
 				break
 		return role
 
 	def _get_states(self):
 		states = super().states
-		if self.role in (controlTypes.ROLE_STATICTEXT, controlTypes.ROLE_GROUPING, controlTypes.ROLE_SECTION, controlTypes.ROLE_GRAPHIC) and self.UIAInvokePattern:
+		if self.role in (
+			controlTypes.ROLE_STATICTEXT,
+			controlTypes.ROLE_GROUPING,
+			controlTypes.ROLE_SECTION,
+			controlTypes.ROLE_GRAPHIC
+		) and self.UIAInvokePattern:
 			states.add(controlTypes.STATE_CLICKABLE)
 		return states
 
@@ -89,10 +87,10 @@ class UIAWeb(UIA):
 	# character and before the ';' character.
 	# This could be one of: "false", "true", "page", "step", "location", "date", "time"
 	# "false" is ignored by the regEx and will not produce a match
-	RE_ARIA_CURRENT_PROP_VALUE = re.compile("current=(?!false)(\w+);")
+	RE_ARIA_CURRENT_PROP_VALUE = re.compile(r"current=(?!false)(\w+);")
 
 	def _get_isCurrent(self):
-		ariaProperties=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
+		ariaProperties = self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
 		match = self.RE_ARIA_CURRENT_PROP_VALUE.search(ariaProperties)
 		log.debug("aria props = %s" % ariaProperties)
 		if match:
@@ -112,13 +110,13 @@ class UIAWeb(UIA):
 		return ariaPlaceholder
 
 	def _get_landmark(self):
-		landmarkId=self._getUIACacheablePropertyValue(UIAHandler.UIA_LandmarkTypePropertyId)
-		if not landmarkId: # will be 0 for non-landmarks
+		landmarkId = self._getUIACacheablePropertyValue(UIAHandler.UIA_LandmarkTypePropertyId)
+		if not landmarkId:  # will be 0 for non-landmarks
 			return None
 		landmarkRole = UIAHandler.UIALandmarkTypeIdsToLandmarkNames.get(landmarkId)
 		if landmarkRole:
 			return landmarkRole
-		ariaRoles=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
+		ariaRoles = self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
 		# #7333: It is valid to provide multiple, space separated aria roles in HTML
 		# If multiple roles or even multiple landmark roles are provided, the first one is used
 		ariaRole = ariaRoles.split(" ")[0]
@@ -137,12 +135,15 @@ class List(UIAWeb):
 		return states
 
 
-class UIAWebTreeInterceptor(cursorManager.ReviewCursorManager,UIABrowseModeDocument):
+class UIAWebTreeInterceptor(cursorManager.ReviewCursorManager, UIABrowseModeDocument):
+	TextInfo = UIABrowseModeDocumentTextInfo
 
-	TextInfo=UIABrowseModeDocumentTextInfo
-
-	def shouldPassThrough(self,obj,reason=None):
+	def shouldPassThrough(self, obj, reason=None):
 		# Enter focus mode for selectable list items (<select> and role=listbox)
-		if reason==controlTypes.REASON_FOCUS and obj.role==controlTypes.ROLE_LISTITEM and controlTypes.STATE_SELECTABLE in obj.states:
+		if (
+			reason == controlTypes.REASON_FOCUS
+			and obj.role == controlTypes.ROLE_LISTITEM
+			and controlTypes.STATE_SELECTABLE in obj.states
+		):
 			return True
-		return super().shouldPassThrough(obj,reason=reason)
+		return super().shouldPassThrough(obj, reason=reason)

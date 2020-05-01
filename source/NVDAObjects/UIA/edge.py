@@ -380,6 +380,7 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 		log.debug("Done walking parents to yield controlEnds and recurse unbalanced endRanges")
 		log.debug("_getTextWithFieldsForUIARange (unbalanced) end")
 
+
 class EdgeNode(web.UIAWeb):
 
 	_edgeIsPreGapRemoval=winVersion.winVersion.build<15048
@@ -445,6 +446,7 @@ class EdgeHTMLRootContainer(EdgeNode):
 			return
 		return super(EdgeHTMLRootContainer,self).event_gainFocus()
 
+
 class EdgeHeadingQuickNavItem(UIATextRangeQuickNavItem):
 
 	@property
@@ -456,6 +458,7 @@ class EdgeHeadingQuickNavItem(UIATextRangeQuickNavItem):
 
 	def isChild(self,parent):
 		return self.level>parent.level
+
 
 def EdgeHeadingQuicknavIterator(itemType,document,position,direction="next"):
 	"""
@@ -474,6 +477,7 @@ def EdgeHeadingQuicknavIterator(itemType,document,position,direction="next"):
 		# Verify this is the correct heading level via text attributes 
 		if item.level and (not levelString or levelString==str(item.level)): 
 			yield item
+
 
 class EdgeHTMLTreeInterceptor(web.UIAWebTreeInterceptor):
 

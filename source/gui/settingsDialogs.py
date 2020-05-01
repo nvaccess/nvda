@@ -2333,7 +2333,9 @@ class AdvancedPanelControls(wx.Panel):
 		self.chromiumChoices = list(chromiumChoicesAndLabels.keys())
 		self.UIAInChromiumCombo = UIAGroup.addLabeledControl(label, wx.Choice, choices=self.chromiumChoices)
 		self.UIAInChromiumCombo.SetSelection(self.chromiumChoices.index(config.conf["UIA"]["allowInChromium"]))
-		self.UIAInChromiumCombo.defaultValue = self.chromiumChoices.index(self._getDefaultValue(["UIA", "allowInChromium"]))
+		self.UIAInChromiumCombo.defaultValue = self.chromiumChoices.index(
+			self._getDefaultValue(["UIA", "allowInChromium"])
+		)
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
