@@ -6,10 +6,12 @@
 import calendar
 import collections
 import time
-
 import api
 import appModuleHandler
+from NVDAObjects.IAccessible import getNVDAObjectFromEvent
 import ui
+import windowUtils
+import winUser
 
 # A named tuple for holding the elapsed and total playing times from Foobar2000's status bar
 statusBarTimes = collections.namedtuple('StatusBarTimes', ['elapsed', 'total'])
@@ -41,11 +43,18 @@ def parseIntervalToTimestamp(interval):
 	return calendar.timegm(time.strptime(interval.strip(), format))
 
 class AppModule(appModuleHandler.AppModule):
-	statusBar=None
 
-	def event_gainFocus(self, obj, nextHandler):
-		if not self.statusBar: self.statusBar=api.getStatusBar()
-		nextHandler()
+	def _get_statusBar(self):
+		# #11080: retrieve status bar handle and resulting NVDA object from playlist window.
+		try:
+			statusBarHwnd = windowUtils.findDescendantWindow(
+				api.getForegroundObject().windowHandle,
+				className="ATL:msctls_statusbar32"
+			)
+		except LookupError:
+			# No status bar handle from places other than playlist window.
+			return None
+		return getNVDAObjectFromEvent(statusBarHwnd, winUser.OBJID_CLIENT, 0)
 
 	def getElapsedAndTotal(self):
 		empty = statusBarTimes(None, None)
