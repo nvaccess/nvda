@@ -45,7 +45,7 @@ def parseIntervalToTimestamp(interval):
 class AppModule(appModuleHandler.AppModule):
 
 	def _get_statusBar(self):
-		# #11080: retrieve status bar handle and resulting NVDA object from playlist window.
+		# #11082: retrieve status bar handle and resulting NVDA object from playlist window.
 		try:
 			statusBarHwnd = windowUtils.findDescendantWindow(
 				api.getForegroundObject().windowHandle,
