@@ -67,9 +67,6 @@ badUIAWindowClassNames=[
 	"Button",
 	# #8944: The Foxit UIA implementation is incomplete and should not be used for now.
 	"FoxitDocWnd",
-	# All Chromium implementations (including Edge) should not be UIA,
-	# As their IA2 implementation is still better at the moment.
-	"Chrome_RenderWidgetHostHWND",
 ]
 
 # #8405: used to detect UIA dialogs prior to Windows 10 RS5.
@@ -514,6 +511,10 @@ class UIAHandler(COMObject):
 		# It does not implement caret/selection, and probably has no new text
 		# events.
 		if windowClass == "ConsoleWindowClass" and config.conf['UIA']['winConsoleImplementation'] != "UIA":
+			return True
+		# Unless explicitly allowed, all Chromium implementations (including Edge) should not be UIA,
+		# As their IA2 implementation is still better at the moment.
+		elif windowClass == "Chrome_RenderWidgetHostHWND" and not config.conf['UIA']['allowInChromium']:
 			return True
 		return windowClass in badUIAWindowClassNames
 
