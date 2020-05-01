@@ -573,7 +573,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		isBlockElement=TRUE;
 	} else if((IA2AttribsMapIt=IA2AttribsMap.find(L"display"))!=IA2AttribsMap.end()) {
 		// If there is a display attribute, we can rely solely on this to determine whether this is a block element or not.
-		isBlockElement=(IA2AttribsMapIt->second!=L"inline"&&IA2AttribsMapIt->second!=L"inline-block");
+		isBlockElement = IA2AttribsMapIt->second != L"inline"
+			&& IA2AttribsMapIt->second != L"inline-block"
+			&& IA2AttribsMapIt->second != L"inline-flex";
 	} else if((IA2AttribsMapIt=IA2AttribsMap.find(L"formatting"))!=IA2AttribsMap.end()&&IA2AttribsMapIt->second==L"block") {
 		isBlockElement=TRUE;
 	} else if(role==ROLE_SYSTEM_TABLE||role==ROLE_SYSTEM_CELL||role==IA2_ROLE_SECTION||role==ROLE_SYSTEM_DOCUMENT||role==IA2_ROLE_INTERNAL_FRAME||role==IA2_ROLE_UNKNOWN||role==ROLE_SYSTEM_SEPARATOR) {
