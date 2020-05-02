@@ -3,6 +3,51 @@ NVDA更新日志
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.1 =
+
+== 新特性 ==
+- 恢复NVDA 2019.1的功能，在Chrome浏览器中，再次以浏览模式显示列表框中当前选择的项目。 (#10713)
+- 当前，您可以使用单指按下的首饰在触摸设备上单击鼠标右键。 (#3886)
+- 支持新的盲文点显器： APH Chameleon 20，APH Mantis Q40，HumanWare BrailleOne，BrailleNote Touch v2和NLS eReader。 (#10830)
+
+
+== 修改 ==
+- NVDA现在可以防止系统锁定或进入休眠状态。 (#10643)
+- 在Mozilla Firefox中支持iframe。 (#10707)
+- 更新liblouis盲文翻译器为版本3.12。 (#10161)
+- 在Visual Studio Code 预览版中，现在默认浏览模式为关闭，这与Visual Studio Code 稳定版一致。 (#10858)
+
+
+== 错误修复 ==
+- 修复了NVDA不朗读Unicode (U+2212)的问题。 (#10633)
+- NVDA现在安装插件时，插件管理器浏览窗口中的文件和文件夹的名称不再朗读两次。 (#10620, #2395)
+- 在Firefox中，当在启用了高级Web界面的情况下加载Mastodon时，所有时间轴现在都可以在浏览模式下正确呈现。 (#10776)
+- 在浏览模式下，NVDA现在朗读“未选中”的未选中复选框，而以前有时没有选中。 (#10781)
+- 当前ARIA开关不再读出令人困惑的信息，例如“未按下选中”或“按下选中”。 (#9187)
+- SAPI4语音合成器不应再拒绝报读某些文本。 (#10792)
+- NVDA现在可以再次读取Microsoft Word中的数学方程式并与之交互。 (#10803)
+- 如果在选择文本时按下光标键，NVDA将再次读出在浏览模式下未选择的文本。 (#10731).
+- 当前如果初始化eSpeak时出错，则NVDA不再退出。 (#10607)
+
+
+== NVDA核心开发者需要了解的变动 ==
+- Developer documentation is now build using sphinx. (#9840)
+- Several speech functions have been split into two. (#10593)
+  The speakX version remains, but now depends on a getXSpeech function which returns a speech sequence.
+  - speakObjectProperties now relies on getObjectPropertiesSpeech
+  - speakObject now relies on getObjectSpeech
+  - speakTextInfo now relies on getTextInfoSpeech
+  - speakWithoutPauses has been converted into a class, and refactored, but should not break compatibility.
+  - getSpeechForSpelling is deprecated (though still available) use getSpellingSpeech instead.
+  Private changes that should not affect addon developers:
+  - _speakPlaceholderIfEmpty is now _getPlaceholderSpeechIfTextEmpty
+  - _speakTextInfo_addMath is now _extendSpeechSequence_addMathForTextInfo
+- Speech 'reason' has been converted to an Enum, see controlTypes.OutputReason class. (#10703)
+  - Module level 'REASON_*' constants are deprecated.
+- Compiling NVDA dependencies now requires Visual Studio 2019 (16.2 or newer). (#10169)
+- Updated SCons to version 3.1.1. (#10169)
+
+
 = 2019.3 =
 {NVDA 2019.3是一个非常重要的版本，包含许多幕后更改，包括将Python 2升级到Python 3，以及对NVDA语音子系统的重大重写。尽管这些更改确实破坏了与旧版NVDA插件的兼容性，但是为了安全起见，必须升级到Python 3，并且语音框架允许在不久的将来进行一些激动人心的创新。此发行版中的其他重点新特性包括对Java VM的64位支持，新增，黑屏和焦点高亮功能，对更多盲文点显器和新增的盲文查看器的支持以及许多其他错误修复。}
 

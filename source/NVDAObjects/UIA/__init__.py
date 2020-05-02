@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2009-2020 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2009-2020 NV Access Limited, Joseph Lee, Mohammad Suliman,
+# Babbage B.V., Leonard de Ruijter, Bill Dengler
 
 """Support for UI Automation (UIA) controls."""
 
@@ -156,7 +157,17 @@ class UIATextInfo(textInfos.TextInfo):
 			if formatConfig["reportFontSize"]:
 				IDs.add(UIAHandler.UIA_FontSizeAttributeId)
 			if formatConfig["reportFontAttributes"]:
-				IDs.update({UIAHandler.UIA_FontWeightAttributeId,UIAHandler.UIA_IsItalicAttributeId,UIAHandler.UIA_UnderlineStyleAttributeId,UIAHandler.UIA_StrikethroughStyleAttributeId,UIAHandler.UIA_IsSuperscriptAttributeId,UIAHandler.UIA_IsSubscriptAttributeId,})
+				IDs.update({
+					UIAHandler.UIA_FontWeightAttributeId,
+					UIAHandler.UIA_IsItalicAttributeId,
+					UIAHandler.UIA_UnderlineStyleAttributeId,
+					UIAHandler.UIA_StrikethroughStyleAttributeId
+				})
+			if formatConfig["reportSuperscriptsAndSubscripts"]:
+				IDs.update({
+					UIAHandler.UIA_IsSuperscriptAttributeId,
+					UIAHandler.UIA_IsSubscriptAttributeId
+				})
 			if formatConfig["reportAlignment"]:
 				IDs.add(UIAHandler.UIA_HorizontalTextAlignmentAttributeId)
 			if formatConfig["reportColor"]:
@@ -195,6 +206,7 @@ class UIATextInfo(textInfos.TextInfo):
 			val=fetcher.getValue(UIAHandler.UIA_StrikethroughStyleAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				formatField['strikethrough']=bool(val)
+		if formatConfig["reportSuperscriptsAndSubscripts"]:
 			textPosition=None
 			val=fetcher.getValue(UIAHandler.UIA_IsSuperscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue and val:
@@ -941,6 +953,10 @@ class UIA(Window):
 		):
 			from . import winConsoleUIA
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
+		elif UIAClassName == "TermControl":
+			from . import winConsoleUIA
+			clsList.append(winConsoleUIA.WinTerminalUIA)
+
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:
 			if UIAHandler.autoSelectDetectionAvailable:

@@ -3,6 +3,54 @@ Qué bi ha de Nuevo en o NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.1 =
+Lo resinyable d'ista versión inclui l'admisión de quantas nuevas linias braille de HumanWare y d'APH, mas muitas atras correccions importants de fallos tals como la capacidat de leyer de nuevo matematicas en o Microsoft Word fendo servir lo MathPlayer y lo MathType.
+
+== Nuevas Caracteristicas ==
+- L'elemento actualment trigau en quadros de lista se presienta atra vez en o modo de navegación en o Chrome, semellant a NVDA 2019.1. (#10713)
+- Agora puetz fer clics con o botón dreito d'o churi en dispositivos tactils tocando con un dido y mantenendo-lo. (#3886)
+- Suporte pa linias braille nuevas: APH Chameleon 20, APH Mantis Q40, HumanWare BrailleOne, BrailleNote Touch v2, y NLS eReader. (#10830)
+
+
+== Cambeos ==
+- Lo NVDA privará que lo sistema se bloque u se suspenda quan siga leyendo-lo tot. (#10643)
+- Suporte pa iframes difuera de proceso en o Mozilla Firefox. (#10707)
+- S'ha esviellau lo transcriptor braille liblouis t'a versión 3.12. (#10161)
+
+
+== Corrección d'errors ==
+- S'ha correchiu lo no anunciau d'o simbolo Unicode menos (U+2212) (#10633)
+- En instalar complementos dende l'administrador de complementos los nombres d'os fichers y carpetas en a finestra d'exploración ya no s'anuncian dos veces. (#10620, #2395)
+- En o Firefox, en cargar Mastodon con a interficie de web abanzada enchegada, agora todas las cronolochías se procesan correctament en modo de navegación. (#10776)
+- En o modo de navegación, lo NVDA agora anuncia "no marcau" pa caixetas de verificación no marcadas que no lo i feba en ocasions anteriorment. (#10781)
+- Los controls ARIA switch ya no anuncian información trafuquera tal como "no pretau marcau" u "pretau marcau". (#9187)
+- Las voces SAPI4 ya no habrían de refusar charrar cierto texto. (#10792)
+- Lo NVDA puede leyer y interactugar de nuevas con equacions matematicas en o Microsoft Word. (#10803)
+- Lo NVDA anunciará unatra vez lo texto que se deseleccione en o modo de navegación si se preta una flecha mientras lo texto se triga. (#10731).
+- Lo NVDA ya no sale si bi ha una error inicializando lo eSpeak. (#10607)
+- Las errors causadas por unicode en traduccions pa alcorces ya no aturan l'instalador, fizconiadas por la tornada t'o texto en anglés. (#5166, #6326)
+- Lo feito de salir  d'as listas y tablas en Leyer-lo tot con a lectura superficial enchegada ya no anuncia de contino la salida d'a lista u tabla. (#10706)
+
+
+== Cambeos pa los Desembolicadors ==
+- Agora se compila la documentación pa lo desembolicador fendo servir lo Sphinx. (#9840)
+- S'ha trestallau en dos quantas funcions d'a fabla. (#10593)
+ La versión speakX remaneix, pero agora pende en una función getXSpeech la quala torna una seqüencia de voz.
+  - speakObjectProperties agora se basa en getObjectPropertiesSpeech
+  - speakObject agora se basa en getObjectSpeech
+  - speakTextInfo agora se basa en getTextInfoSpeech
+  - speakWithoutPauses s'ha convertiu en una clase, y s'ha refactorizau, pero no habría de crebar la retrocompatibilidad.
+  - getSpeechForSpelling ye obsoleta (encara que agún disponible) fendo servir getSpellingSpeech en o suyo puesto.
+  Cambeos privaus que no habrían d'afectar a los desembolicadors de complementos:
+  - _speakPlaceholderIfEmpty agora ye _getPlaceholderSpeechIfTextEmpty
+  - _speakTextInfo_addMath agora ye _extendSpeechSequence_addMathForTextInfo
+- Speech 'reason' s'ha convertiu en un Enum, Consulta la clase controlTypes.OutputReason. (#10703)
+  - Las constants Module level 'REASON_' son obsoletas.
+- Las pendencias de compilación d'o NVDA agora requieren lo Visual Studio 2019 (16.2 u mas recient). (#10169)
+- S'ha esviellau lo SCons t'a versión 3.1.1. (#10169)
+- Se torna a permitir a behaviors._FakeTableCell no tener una localización definida (#10864)
+
+
 = 2019.3 =
 Lo NVDA 2019.3 ye una versión bien significativa que contién a saber-los cambios en o nuclio incluindo l'esvielle d'o Python 2 t'o Python 3, y una reescritura mayor d'o subsistema de fabla d'o NVDA.
 Anque ixos cambios creban la compatibilidat con os complementos mas antigos d'o NVDA, l'esvielle t'o Python 3 ye menester por seguridat, y los cambios en a fabla permiten bellas innovacions emocionants en o futuro cercano.

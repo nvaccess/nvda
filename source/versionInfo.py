@@ -16,7 +16,7 @@ from buildVersion import *
 longName = _("NonVisual Desktop Access")
 description = _("A free and open source screen reader for Microsoft Windows")
 url = "https://www.nvaccess.org/"
-copyrightYears = "2006-2019"
+copyrightYears = "2006-2020"
 copyright = _("Copyright (C) {years} NVDA Contributors").format(
 	years=copyrightYears)
 aboutMessage = _(u"""{longName} ({name})

@@ -10,7 +10,7 @@
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥.]?\d)
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -20,7 +20,7 @@ symbols:
 ! sentence ending	Uzvičnik	all	always
 ? sentence ending	Upitnik	all	always
 ; phrase ending	tačkazarez	most	always
-: phrase ending	Dvotačka	most	always
+: phrase ending	Dve tačke	most	always
 decimal point		none	always
 in-word '	Apostrof	all	norep
 negative number	minus	none	norep
@@ -51,11 +51,12 @@ $	dolar	all	norep
 )	Zatvorena zagrada	most	always
 *	Zvezdica	some
 +	plus	some
+−	minus	some
 ,	Zarez	all	always
 -	Crtica	most
 .	Tačka	some
 /	Kosa crta	some
-:	Dvotačka	most	norep
+:	Dve tačke	most	norep
 ;	Tačkazarez	most
 <	Manje od	some
 >	Veće od	some
