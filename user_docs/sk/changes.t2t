@@ -3,6 +3,35 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.1 =
+Prednosti tejto verzie zahŕňajú podporu pre nové braillovské riadky od HumanWare a APH a drobné opravy, napríklad opätovnú možnosť čítať matematický zápis v aplikácii MS Word cez Math player.
+
+== Nové vlastnosti ==
+- NVDA opätovne hlási vybratú položku v zozname v prehliadači Google Chrome. (#10713)
+- Tlačidlo kontextovej ponuky resp. kliknutie pravým tlačidlom myši je možné vykonať aj pomocou dotykového gesta klepnúť a podržať. (#3886)
+- Pridaná podpora pre nové braillovské riadky: APH Chameleon 20, APH Mantis Q40, HumanWare BrailleOne, BrailleNote Touch v2, a NLS eReader. (#10830)
+
+
+== zmeny ==
+- Windows sa viac nezamkne a neprejde do režimu spánku počas plynulého čítania. (#10643)
+- Pridaná podpora pre rámiky v prehliadači Mozilla Firefox, ktoré sú spracované v samostatnom procese. (#10707)
+- Prekladová tabuľka liblouis aktualizovaná na verziu 3.12. (#10161)
+
+
+== opravy ==
+- NVDA opäť správne hlási znak mínus (unicode U+2212). (#10633)
+- V správcovi doplnkov pri prehľadávaní súborov NVDA viac neoznamuje názov súboru dvakrát. (#10620, #2395)
+- Všetky časové osy v aplikácii Mastodon sa zobrazujú správne v prehliadači firefox pri použití pokročilého zobrazenia. (#10776)
+- NVDA správne oznamuje v režime prehliadania nezačiarknuté políčka. (#10781)
+- NVDA viac v režime prehliadania nehlási mätúce informácie, ako napríklad nestlačené začiarknuté, alebo stlačené začiarknuté. (#9187)
+- Hlasové syntézy sapi4 viac nevynechávajú text. (#10792)
+- NVDA opäť podporuje čítanie matematického zápisu v MS Word. (#10803)
+- NVDA opäť oznámi zrušenie výberu textu v režime prehliadania. (#10731)
+- NVDA sa viac nezrúti, ak sa nepodarí inicializovať hlasový výstup eSpeak. (#10607)
+- Ak sa v prekladoch do národných jazykov objavia nepresnosti pri preklade klávesových skratiek, NVDA viac nespadne, ale použije nastavenie z anglickej lokalizácie. (#5166, #6326)
+- NVDA viac opakovane dookola nehlási opustenie zoznamu a tabuľky, ak je aktívne plynulé čítanie. (#10706)
+
+
 = 2019.3 =
 Táto verzia prináša významné zmeny pod kapotou. Ide o prechod z prostredia Python 2 na Python 3 a tiež výrazné prestavanie systému na spracovanie reči.
 Tieto zmeny spôsobili nekompatibilitu starších doplnkov. Prechod na Python 3 je dôležitý z bezpečnostného hľadiska a prepracovanie systému na spracovanie reči prinesie v blízkej budúcnosti zaujímavé funkcie.

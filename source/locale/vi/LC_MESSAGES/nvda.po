@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Vietnamese Language for NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-31 00:10+1000\n"
-"PO-Revision-Date: 2020-01-23 23:17+0700\n"
+"POT-Creation-Date: 2020-04-24 00:10+1000\n"
+"PO-Revision-Date: 2020-04-15 16:38+0700\n"
 "Last-Translator: Dang Manh Cuong <dangmanhcuong@gmail.com>\n"
 "Language-Team: Sao Mai Center for the Blind <danghoaiphuc@gmail.com>\n"
 "Language: vi_VN\n"
@@ -801,6 +801,11 @@ msgstr "Anh (Anh) cấp 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr "Mã chữ nổi tiếng Anh Bắc Mỹ"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
 msgstr "Unified English Braille Code cấp 1"
 
@@ -1036,13 +1041,18 @@ msgstr "Marathi cấp 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
-msgstr "Hà Lan (Bỉ)"
+msgid "Dutch (Belgium) 6 dot"
+msgstr "Hà Lan (Bỉ) 6 chấm"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
-msgstr "Hà Lan (Hà Lan)"
+msgid "Dutch (Netherlands) 6 dot"
+msgstr "Hà Lan (Hà Lan) 6 chấm"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr "Hà Lan 8 chấm"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2166,7 +2176,7 @@ msgstr "thanh trượt"
 
 #. Translators: Identifies a progress bar such as NvDA update progress.
 msgid "progress bar"
-msgstr "thanh tiến trình"
+msgstr "thanh tiến độ"
 
 #. Translators: Identifies a scroll bar.
 msgid "scroll bar"
@@ -2565,7 +2575,7 @@ msgstr "tên phông chữ"
 
 #. Translators: Identifies font size.
 msgid "font size"
-msgstr "kích cỡ phông chữ"
+msgstr "Cỡ chữ"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported when text is bolded.
@@ -4079,8 +4089,8 @@ msgid ""
 "Toggles between beeps, speech, beeps and speech, and off, for reporting "
 "progress bar updates"
 msgstr ""
-"Chuyển đổi giữa các tùy chọn thông báo cho thanh tiến trình như: thông báo "
-"bằng tiếng nói, bằng tiếng bip, hoặc cả hai hay im lặng"
+"Chuyển đổi giữa các tùy chọn thông báo cho thanh tiến độ như: thông báo bằng "
+"tiếng nói, bằng tiếng bip, cả hai hay tắt"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
@@ -4535,6 +4545,18 @@ msgid ""
 msgstr ""
 "Thông báo đối tượng hoặc nội dung tại vị trí tiếp xúc khác so với lần chạm "
 "trước"
+
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "đối tượng không có vị trí"
+
+#. Translators: Input help mode message for touch right click command.
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr ""
+"Bấm nút chuột phải tại điểm cảm ứng hiện tại. Thao tác này thường dùng để "
+"kích hoạt trình đơn ngữ cảnh."
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
@@ -6337,6 +6359,8 @@ msgstr "Lỗi kiểm tra cập nhật."
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "Lỗi"
 
@@ -8523,7 +8547,7 @@ msgstr "Thiết bị đầu &ra:"
 
 #. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 msgid "Audio &ducking mode:"
-msgstr "Chế độ &giảm âm lượng ứng dụng khác:"
+msgstr "Chế độ &giảm âm:"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
@@ -8788,12 +8812,12 @@ msgstr "Thông báo &mô tả của đối tượng"
 #. Translators: This is the label for a combobox in the
 #. object presentation settings panel.
 msgid "Progress &bar output:"
-msgstr "Cách thông báo thanh &tiến trình:"
+msgstr "Cách thông báo thanh &tiến độ:"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "Report background progress bars"
-msgstr "Thông báo các thanh tiến trình ngầm"
+msgstr "Thông báo các thanh tiến độ ngầm"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -8837,17 +8861,17 @@ msgstr "Tự động đọc tất cả khi &trang được mở"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Include l&ayout tables"
-msgstr "Hỗ trợ thông báo cho các bảng có kiểu &trình bày khác nhau"
+msgstr "Đọc các bảng &bố cục"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatic focus mode for focus changes"
-msgstr "Tự động chuyển sang chế độ focus khi focus thay đổi"
+msgstr "Tự chuyển sang chế độ focus khi focus thay đổi"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatic focus mode for caret movement"
-msgstr "Tự động chuyển sang chế độ focus khi di chuyển con trỏ nháy"
+msgstr "Tự chuyển sang chế độ focus khi di chuyển con trỏ nháy"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -9505,6 +9529,10 @@ msgstr ""
 "việc này sẽ bị xóa.\n"
 "\t\t\tTác vụ này không thể phục hồi."
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "Đặt lại Thao Tác"
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
@@ -9520,6 +9548,7 @@ msgstr "Thoát tương tác với Toán"
 msgid "Math interaction not supported."
 msgstr "Không hỗ trợ tương tác với Toán."
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9548,7 +9577,8 @@ msgstr "đã chọn %s"
 msgid "%s selected"
 msgstr "đã chọn %s"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d ký tự"

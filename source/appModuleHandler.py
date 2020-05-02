@@ -487,6 +487,18 @@ class AppModule(baseObject.ScriptableObject):
 		"""
 		return False
 
+	def shouldProcessUIAPropertyChangedEvent(self, sender, propertyId):
+		"""
+		Determines whether NVDA should process a UIA property changed event.
+		Returning False will cause the event to be dropped completely. This can be
+		used to work around UIA implementations which flood events and cause poor
+		performance.
+		Returning True means that the event will be processed, but it might still
+		be rejected later; e.g. because it isn't native UIA, because
+		shouldAcceptEvent returns False, etc.
+		"""
+		return True
+
 	def dumpOnCrash(self):
 		"""Request that this process writes a minidump when it crashes for debugging.
 		This should only be called if instructed by a developer.
@@ -496,6 +508,27 @@ class AppModule(baseObject.ScriptableObject):
 		NVDAHelper.localLib.nvdaInProcUtils_dumpOnCrash(
 			self.helperLocalBindingHandle, path)
 		print("Dump path: %s" % path)
+
+	def _get_statusBar(self):
+		"""Retrieve the status bar object of the application.
+		If C{NotImplementedError} is raised, L{api.getStatusBar} will resort to
+		perform a lookup by position.
+		If C{None} is returned, L{GlobalCommands.script_reportStatusLine} will
+		in turn resort to reading the bottom line of text written to the
+		display.
+		@rtype: NVDAObject
+		"""
+		raise NotImplementedError()
+
+	def _get_statusBarTextInfo(self):
+		"""Retrieve a L{TextInfo} positioned at the status bar of the application.
+		This is used by L{GlobalCommands.script_reportStatusLine} in cases where
+		L{api.getStatusBar} could not locate a proper L{NVDAObject} for the
+		status bar.
+		For this method to get called, L{_get_statusBar} must return C{None}.
+		@rtype: TextInfo
+		"""
+		raise NotImplementedError()
 
 class AppProfileTrigger(config.ProfileTrigger):
 	"""A configuration profile trigger for when a particular application has focus.

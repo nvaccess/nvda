@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-31 00:10+1000\n"
+"POT-Creation-Date: 2020-04-24 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Ângelo Miguel Abrantes <ampa4374@gmail.com>\n"
 "Language-Team: NVDA portuguese team <rui.fontes@tiflotecnia.com>; "
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -801,6 +801,11 @@ msgstr "Inglês (Reino Unido) grau 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr "Inglês (América do Norte) Código Braille de Computador"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
 msgstr "Código Braille Unificado Inglês grau 1"
 
@@ -1036,13 +1041,18 @@ msgstr "Marathi grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
-msgstr "Holandês (bélgica)"
+msgid "Dutch (Belgium) 6 dot"
+msgstr "Holandês (bélgica) 6 pontos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
-msgstr "Holandês (Holanda)"
+msgid "Dutch (Netherlands) 6 dot"
+msgstr "Holandês (Países Baixos) 6 pontos"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr "Holandês 8 pontos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3022,7 +3032,7 @@ msgstr "Revisão de texto"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Object navigation"
-msgstr "navegação por objectos"
+msgstr "Navegação por objectos"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "System caret"
@@ -4602,6 +4612,18 @@ msgid ""
 msgstr ""
 "Anuncia o novo objecto ou conteúdo sob o seu dedo se diferente de onde o "
 "dedo se encontrava antes"
+
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "O objecto não tem localização"
+
+#. Translators: Input help mode message for touch right click command.
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr ""
+"Clica uma vez com o botão direito na posição actual do toque, normalmente "
+"para abrir um menu de contexto"
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
@@ -6407,6 +6429,8 @@ msgstr "Erro ao verificar a actualização."
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "Erro"
 
@@ -9626,6 +9650,10 @@ msgstr ""
 "sessão do NVDA, serão perdidos, voltando ao seu padrão.\n"
 "\t\t\tEsta acção não pode ser desfeita."
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "Re-definir comandos"
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
@@ -9641,6 +9669,7 @@ msgstr "Sair da interação com conteúdo matemático"
 msgid "Math interaction not supported."
 msgstr "Interação com conteúdo matemático não suportada."
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9669,7 +9698,8 @@ msgstr "seleccionado %s"
 msgid "%s selected"
 msgstr "%s seleccionado"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d caracteres"
