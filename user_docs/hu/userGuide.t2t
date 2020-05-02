@@ -30,7 +30,7 @@ Főbb jellemzői:
 
 ++ Honosítás ++
 
-Fontos, hogy az emberek a világ bármely részén, nyelvi korlátok nélkül, egyenlően hozzáférhessenek a különböző, a technológia nyújtotta lehetőségekhez. Az NVDA már több mint 50 nyelvre lett lefordítva, ezek: Afrikaans, Amhara, Aragóniai, Albán, Arab, Bolgár, Burmai, Cseh, Dán, Farsi, Finn, Francia, Gallego, Görög, Grúz, Héber, Hindi, Holland, Horvát, Indonéz, Izlandi, Ír, Japán, Kannada, Katalán, Kirgiz, Kínai (hagyományos és egyszerűsített), Koreai, Lengyel, Litván, Macedón, Magyar, Német (németországi és svájci), Nepáli, Norvég (bokmal és nynorsk), Olasz, Orosz, Pandzsábi, Portugál (portugáliai és brazíliai), Román, Spanyol (kasztíliai és kolumbiai), Svéd, Szerb (latin betűs), Szlovák, Szlovén, Tamil, Thai, Török, Ukrán, Urdu és Vietnami nyelvre, sőt még eszperantóra is.
+Fontos, hogy az emberek a világ bármely részén, nyelvi korlátok nélkül, egyenlően hozzáférhessenek a különböző, a technológia nyújtotta lehetőségekhez. Az NVDA már 52 nyelvre lett lefordítva, ezek: Afrikaans, Amhara, Aragóniai, Albán, Arab, Bolgár, Burmai, Cseh, Dán, Farsi, Finn, Francia, Gallego, Görög, Grúz, Héber, Hindi, Holland, Horvát, Indonéz, Izlandi, Ír, Japán, Kannada, Katalán, Kirgiz, Kínai (hagyományos és egyszerűsített), Koreai, Lengyel, Litván, Macedón, Magyar, Német (németországi és svájci), Nepáli, Norvég (bokmal és nynorsk), Olasz, Orosz, Pandzsábi, Portugál (portugáliai és brazíliai), Román, Spanyol (kasztíliai és kolumbiai), Svéd, Szerb (latin betűs), Szlovák, Szlovén, Tamil, Thai, Török, Ukrán, Urdu és Vietnami nyelvre, sőt még eszperantóra is.
 
 ++ Beszédszintetizátor Támogatás ++
 
@@ -56,11 +56,9 @@ vagy nézze meg a szoftverhez mellékelt Copying.txt fájlt.
 
 + Rendszerkövetelmények +
 
-- Operációs rendszerek: 32 és 64 bites Windows XP, Windows Vista, Windows 7,  Windows 8, Windows 8.1, és Windows 10 bármely verziója (beleértve a szerver operációs rendszereket is)
-- Windows XP 32-bit esetén az NVDA igényli a Szerviz csomag 2 vagy újabb meglétét.
-- Windows Server 2003 esetén az NVDA igényli a Szerviz csomag 1 vagy újabb meglétét.
-- Windows Vista esetén NVDA igényli a szerviz csomag 2 meglétét, és a  [KB2763674 https://support.microsoft.com/en-us/kb/2763674] frissítését.
-Mindkettő automatikusan feltelepítésre kerül,  ha a frissítések engedélyezve vannak.
+- Operációs rendszerek: 32 és 64 bites Windows 7,  Windows 8, Windows 8.1, Windows 10, illetve bármely szerver operációs rendszer a Windows Server 2008 R2 verziótól kezdve
+- Windows 7 esetén NVDA igényli a szerviz csomag 2 meglétét
+- Windows Server 2008 R2 esetén az NVDA igényli a Szerviz csomag 1 vagy újabb meglétét.
 - Memória: 256 mb vagy több
 - Processzor sebesség: 1.0 ghz vagy gyorsabb
 - Kb. 90 mb szabad hely a merevlemezen.
@@ -484,7 +482,7 @@ Egymagukban a következő, a shifttel együtt használva az előző területre u
 - G: ábra 
 - D: Jelzőpont
 - N: hivatkozás nélküli szöveg
-- O: beágyazott objektum
+- O: beágyazott objektum (audio és videolejátszó, webes alkallmazások, felugró ablakok, stb)
 - a: Mellékszöveg (megjegyzés, korrektúra szöveg, stb)
 - 1-től 6-ig: elsőtől hatodikig terjedő szintű címsorokra történő ugrás 
 - w: Helyesírási hiba
@@ -504,7 +502,7 @@ Az egykarakteres navigáció ki/bekapcsolásához a jelenlegi dokumentumban nyom
  
 ++ Az elemek listája ++
 
-Az aktuális virtuális kijelzőben az elemek listájának megjelenítéséhez nyomja meg az NVDA+f7 billentyűparancsot. Ez a hivatkozások,  címsorok, és a jelzőpontok listáját tartalmazza. Egy választógombbal lehet kiválasztani, hogy melyik típusú elemek listáját szeretné megjeleníteni. A "szűrés" mezőbe beírhatja a keresett elem első pár karakterét, így a shift+tabbal visszalépve csak a feltételnek megfelelő elemek listája jelenik meg. Egy elemet az enterrel, vagy az "aktiválás" gombbal aktiválhat. Az "Ugrás gomb" lenyomásakor a kurzor arra az elemre ugrik, de nem aktiválja azt.
+Az aktuális virtuális kijelzőben az elemek listájának megjelenítéséhez nyomja meg az NVDA+f7 billentyűparancsot. Ez a hivatkozások,  címsorok, űrlap mezők, gombok, és a jelzőpontok listáját tartalmazza. Egy választógombbal lehet kiválasztani, hogy melyik típusú elemek listáját szeretné megjeleníteni. A "szűrés" mezőbe beírhatja a keresett elem első pár karakterét, így a shift+tabbal visszalépve csak a feltételnek megfelelő elemek listája jelenik meg. Egy elemet az enterrel, vagy az "aktiválás" gombbal aktiválhat. Az "Ugrás gomb" lenyomásakor a kurzor arra az elemre ugrik, de nem aktiválja azt.
 %kc:beginInclude
 || Funkció | billentyűparancs | leírás |
 | A virtuális kijelző elemeinek listája | NVDA+f7 | A billentyűparancs lenyomására egy ablak bukkan fel, amely tartalmazza a virtuális kijelző címsorainak, hivatkozásainak, és jelzőpontjainak listáját. |
@@ -551,7 +549,7 @@ Alapértelmezetten az áttekintő kurzor követi a rendszerfókuszt, így ezt me
 Ettől a ponttól kezdve használhatja a MathPlayer billentyűparancsait (pl. a nyíl billentyűket) a tartalom áttekintésére.
 Így például bejárhatja a teljes kifejezést a jobbra és balra nyíl használatával, de megtekintheti annak csak egy részletét is (pl. egy zárójel tartalmát) a lefele nyíl megnyomásával.
 
-Bővebb információkért olvassa el a MathPlayer súgóját.
+Bővebb információkért olvassa el a MathPlayer súgóját: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm
 
 Amennyiben szeretne visszatérni a fődokumentumba, nyomja meg az escape billentyűt.
 
@@ -1710,6 +1708,7 @@ Az alábbiakban felsoroljuk azokat a kijelzőn lévő parancsbillentyűket (és 
 | A kijelzőt a következő sorhoz helyezi | t4 |
 | Egy kijelzőnyivel visszalép | t5 vagy etouch3 |
 | A kurzor az aktuális braille cellához helyezése | routing |
+| Kiírja az adott cellához tartozó formázási információt | másodlagos routing |
 | A kurzor a legfelső sorhoz helyezése áttekintő módban | t1+t2 |
 | A kurzor legalsó sorhoz helyezése áttekintő módban | t4+t5 |
 | a braille követés váltása | t1+t3 |
@@ -1846,12 +1845,14 @@ Az alábbiakban felsoroljuk azokat a kijelzőn lévő parancsbillentyűket (és 
 | Folyamatos olvasás | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B sorozat ++
-Az NVDA támogatja a Brailliant BI és B sorozatába tartozó kijelzőket (gyártó: [HumanWare https://www.humanware.com/]). Ez a sorozat magában foglalja a BI 32, BI 40 és a B 80 modelleket, mind USB, mind bluetooth csatlakoztatási módban.
+++ HumanWare Brailliant BI/B sorozat / BrailleNote Touch ++[HumanWareBrailliant]
+Az NVDA támogatja a Brailliant BI és B sorozatába tartozó kijelzőket (gyártó: [HumanWare https://www.humanware.com/]). Ez a sorozat magában foglalja a BI 14, BI 32, BI 40 és a B 80 modelleket, mind USB, mind bluetooth csatlakoztatási módban.
 Ha a kijelzőt USB-n keresztül csatlakoztatja, használat előtt telepítse a gyártótól kapott USB vezérlőprogramot.
 Az OpenBraille protokoll használata esetén nem szükséges az USB vezérlőprogram telepítése.
+A BrailleNote Touch kijelző is támogatott, nem szükséges hozzá semmilyen egyéb driver feltelepítése.
 
 Az alábbiakban felsoroljuk azokat a kijelzőn lévő parancsbillentyűket (és a hozzájuk tartozó parancsokat), amiket az NVDA programban használhat. A kijelző dokumentációjában találhatja meg, hogy ezek a billentyűk hol helyezkednek el.
++++ Billentyűparancsok az összes modellhez +++
 %kc:beginInclude
 || Parancs | Parancsbillentyű |
 | Léptetés visszafelé | bal |
@@ -1864,21 +1865,37 @@ Az alábbiakban felsoroljuk azokat a kijelzőn lévő parancsbillentyűket (és 
 | Lenyíl szimulálása | szóköz+4-es |
 | Balnyíl szimulálása | szóköz+3-as |
 | Jobbnyíl szimulálása | szóköz+6-os |
-| NVDA Menü előhívása | c1+c3+c4+c5 (n parancs) |
 | shift+tab szimulálása | szóköz+1-es+3-as |
 | tab szimulálása | szóköz+4-es+6-os |
 | alt szimulálása | szóköz+1-es+3-as+4-es (szóköz+m) |
 | escape szimulálása | szóköz+1-es+5-ös (szóköz+e) |
 | enter szimulálása | 8-as |
-| windows+d szimulálása (az összes alkalmazás kis méretre állítása) | c1+c4+c5 (d parancs) |
 | windows gomb szimulálása | szóköz+3-as+4-es |
 | alt+tab szimulálása | szóköz+2-es+3-as+4-es+5-ös (szóköz+t) |
+| NVDA Menü előhívása | c1+c3+c4+c5 (n parancs) |
+| windows+d szimulálása (az összes alkalmazás kis méretre állítása) 
 | Folyamatos olvasás | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
++++ Billentyűparancsok Brailliant BI 32, BI 40 and B 80 modellekhez +++
+%kc:beginInclude
+|| Parancs | Parancsbillentyű |
+| NVDA Menü előhívása | c1+c3+c4+c5 (n parancs) |
+| windows+d szimulálása (az összes alkalmazás kis méretre állítása) 
+| Folyamatos olvasás | c1+c2+c3+c4+c5+c6 |
+ %kc:endInclude
++++ Billentyűparancsok Brailliant BI 32, BI 40 and B 80 modellekhez +++
+%kc:beginInclude
+|| Parancs | Parancsbillentyű |
+| Felnyíl szimulálása | joystick fel |
+| Lenyíl szimulálása | joystick le |
+| Balnyíl szimulálása | joystick bal |
+| Jobbnyíl szimulálása | joystick jobb |
+| enter szimulálása | joystick megnyomása |
+%kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle sorozat ++
-Az NVDA támogatja a Braille Sense,  Braille EDGE, és Smart Beetle kijelzőket (gyártó: [Hims https://www.hims-inc.com/]), mind USB, mind bluetooth csatlakoztatási módban.
-Ha a kijelzőt USB-n keresztül csatlakoztatja, használat előtt telepítse a gyártótól kapott USB vezérlőprogramot. Ezt a következő oldalról töltheti le: https://www.himsintl.com/?c=2/13&uid=2319
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille sorozat [Hims]++
+Az NVDA támogatja a Braille Sense,  Braille EDGE, Smart Beetle, és Sync Braille kijelzőket (gyártó: [Hims http://www.hims-inc.com/]), mind USB, mind bluetooth csatlakoztatási módban.
+Ha a kijelzőt USB-n keresztül csatlakoztatja, használat előtt telepítse a gyártótól kapott USB vezérlőprogramot. Ezt a következő oldalról töltheti le: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Az alábbiakban felsoroljuk azokat a kijelzőn lévő parancsbillentyűket (és a hozzájuk tartozó parancsokat), amiket az NVDA programban használhat. A kijelző dokumentációjában találhatja meg, hogy ezek a billentyűk hol helyezkednek el.
 %kc:beginInclude
@@ -1935,6 +1952,21 @@ Az alábbiakban felsoroljuk azokat a kijelzőn lévő parancsbillentyűket (és 
 | windows+d szimulálása | 1-es+4-es+5-ös+advance1 |
 %kc:endInclude
 
+<<<<<<< .mine
+||||||| .r43479
+++ HIMS SyncBraille ++
+Az NVDA támogatja a SyncBraille kijelzőt (gyártó: [HIMS http://www.hims-inc.com/]).
+Használat előtt telepítse a HIMS cég USB vezérlőprogramját.
+
+Az alábbiakban felsoroljuk azokat a kijelzőn lévő parancsbillentyűket (és a hozzájuk tartozó parancsokat), amiket az NVDA programban használhat. A kijelző dokumentációjában találhatja meg, hogy ezek a billentyűk hol helyezkednek el.
+%kc:beginInclude
+|| Parancs | Parancsbillentyű |
+| Léptetés visszafelé | bal oldali scroll down |
+| Léptetés előre | jobb oldali scroll down |
+| Braille cella aktiválása | cellákhoz tartozó gombok |
+%kc:endInclude
+
+=======
 ++ HIMS SyncBraille ++
 Az NVDA támogatja a SyncBraille kijelzőt (gyártó: [HIMS https://www.hims-inc.com/]).
 Használat előtt telepítse a HIMS cég USB vezérlőprogramját.
@@ -1947,6 +1979,7 @@ Az alábbiakban felsoroljuk azokat a kijelzőn lévő parancsbillentyűket (és 
 | Braille cella aktiválása | cellákhoz tartozó gombok |
 %kc:endInclude
 
+>>>>>>> .r45280
 ++ Seika braille kijelzők ++
 Az NVDA támogatja a Seika 3, 4 és 5 (40 cellás), valamint a Seika80 (80 cellás) braille kijelzőket (gyártó: [Nippon Telesoft https://www.nippontelesoft.com/]).
 A https://www.seika-braille.com/ weboldalon bővebb információt talál ezekről a kijelzőkről.
@@ -2067,7 +2100,7 @@ EAB-ot tartalmazó kijelzők:
 | Mozgatás az első tartalmazott objektumhoz | dn2 |
 | Mozgatás a következő objektumhoz | right2 |
 | Mozgatás az előző objektumhoz | left2 |
-| Szövegformázás bejelentése | Upper routing strip |
+| Kiírja az adott cellához tartozó formázási információt | Upper routing row |
 
 BRAILLEX Tiny:
 || Név | Billentyű |
@@ -2082,14 +2115,14 @@ BRAILLEX Tiny:
 | Mozgatás az első tartalmazott objektumra | r1+dn |
 | Mozgatás az előző objektumra | r1+left |
 | Mozgatás a következő objektumra | r1+right |
-| Szövegformázás bejelentése | reportf |
+| Kiírja az adott cellához tartozó formázási információt | Upper routing strip |
 
 BRAILLEX 2D Screen:
 || Név | Billentyű |
 | Aktuális karakter bejelentése az áttekintő módban | l1 |
 | A navigátor kurzornál lévő objektum aktiválása | l2 |
 | A Braille követés ki- és bekapcsolása | r2 |
-| Szövegformázás bejelentése | reportf |
+| Kiírja az adott cellához tartozó formázási információt | upper routing strip |
 | A Braille kijelzés mozgatása az előző sorra | up |
 | A Braille kijelzés görgetése visszafelé | left |
 | A Braille kijelzés görgetése előre | right |
@@ -2108,6 +2141,9 @@ A következő tipusok támogatottak:
 - BrailleNote MPower (Soros és Bluetooth kapcsolattal)
 - BrailleNote Apex (USB és Bluetooth kapcsolattal)
 -
+
+A BrailleNote Touch támogatásához nézze meg a [Brailliant BI Sorozat / BrailleNote Touch HumanWareBrailliant] szekciót.
+
 Ha az eszköze egynél több csatlakozási módot támogat, az NVDA-hoz való csatlakoztatás során meg kell adnia a Braille terminál portot a Braille terminál beállításoknál (Braille terminal options).
 A részletekért kérjük olvassa át a BrailleNote kézikönyvét.
 
