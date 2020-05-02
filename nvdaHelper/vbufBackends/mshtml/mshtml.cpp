@@ -890,7 +890,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	} else if(oldNode&&oldNode->getParent()) {
 		formatState=((MshtmlVBufStorage_controlFieldNode_t*)(oldNode->getParent()))->formatState;
 	}
-if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
+	if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 		formatState|=FORMATSTATE_INSERTED;
 	}
 	if(!(formatState&FORMATSTATE_DELETED)&&nodeName.compare(L"DEL")==0) {
@@ -1053,8 +1053,8 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 		contentString=L" ";
 		isBlock=true;
 		IARole=ROLE_SYSTEM_SEPARATOR;
-		} else if(IARole==ROLE_SYSTEM_SLIDER||IARole==ROLE_SYSTEM_PROGRESSBAR) {
-			contentString=IAValue;
+	} else if(IARole==ROLE_SYSTEM_SLIDER||IARole==ROLE_SYSTEM_PROGRESSBAR) {
+		contentString=IAValue;
 	} else if ((nodeName.compare(L"OBJECT")==0 || nodeName.compare(L"APPLET")==0)) {
 		isBlock=true;
 		contentString=L" ";
@@ -1152,8 +1152,10 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 	if (!nameIsContent && !IAName.empty() && (nameFromAuthor || (
 		attribsMap.find(L"HTMLAttrib::aria-label") != attribsMap.end() || attribsMap.find(L"HTMLAttrib::aria-labelledby") != attribsMap.end()
 		|| attribsMap.find(L"HTMLAttrib::title") != attribsMap.end() || attribsMap.find(L"HTMLAttrib::alt") != attribsMap.end()
-	)))
+	))) {
 		attribsMap[L"name"]=IAName;
+		attribsMap[L"alwaysReportName"]=L"true";
+	}
 
 	//Add a textNode to the buffer containing any special content retreaved
 	if(!hidden&&!contentString.empty()) {

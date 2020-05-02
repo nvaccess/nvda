@@ -17,6 +17,7 @@ from typing import Any, Union, List, Optional, Dict
 import baseObject
 import config
 import controlTypes
+from controlTypes import OutputReason
 import locationHelper
 
 
@@ -67,12 +68,15 @@ class ControlField(Field):
 					table = None
 			if not table or (not formatConfig["includeLayoutTables"] and table.get("table-layout", None)) or table.get('isHidden',False):
 				return self.PRESCAT_LAYOUT
+
+		name = self.get("name")
 		landmark = self.get("landmark")
 		if reason in (controlTypes.REASON_CARET, controlTypes.REASON_SAYALL, controlTypes.REASON_FOCUS) and (
 			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"])
 			or (role == controlTypes.ROLE_GRAPHIC and not formatConfig["reportGraphics"])
 			or (role == controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"])
 			or (role == controlTypes.ROLE_BLOCKQUOTE and not formatConfig["reportBlockQuotes"])
+			or (role == controlTypes.ROLE_GROUPING and (not name or not formatConfig["reportGroupings"]))
 			or (role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"])
 			or (role in (controlTypes.ROLE_LIST, controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
 			or (role == controlTypes.ROLE_ARTICLE and not formatConfig["reportArticles"])
@@ -82,6 +86,7 @@ class ControlField(Field):
 				(role == controlTypes.ROLE_LANDMARK or landmark)
 				and not formatConfig["reportLandmarks"]
 			)
+			or (role == controlTypes.ROLE_REGION and (not name or not formatConfig["reportLandmarks"]))
 		):
 			# This is just layout as far as the user is concerned.
 			return self.PRESCAT_LAYOUT
@@ -107,21 +112,19 @@ class ControlField(Field):
 				controlTypes.ROLE_MENUBUTTON, 
 				controlTypes.ROLE_TREEVIEW, 
 				controlTypes.ROLE_CHECKMENUITEM, 
-				controlTypes.ROLE_RADIOMENUITEM
+				controlTypes.ROLE_RADIOMENUITEM,
+				controlTypes.ROLE_CAPTION,
 			)
 			or (role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states))
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
 		):
 			return self.PRESCAT_SINGLELINE
-		elif (
-			role in (
-				controlTypes.ROLE_SEPARATOR,
-				controlTypes.ROLE_FOOTNOTE,
-				controlTypes.ROLE_ENDNOTE,
-				controlTypes.ROLE_EMBEDDEDOBJECT,
-				controlTypes.ROLE_MATH
-			)
-			or (role == controlTypes.ROLE_LANDMARK or landmark)
+		elif role in (
+			controlTypes.ROLE_SEPARATOR,
+			controlTypes.ROLE_FOOTNOTE,
+			controlTypes.ROLE_ENDNOTE,
+			controlTypes.ROLE_EMBEDDEDOBJECT,
+			controlTypes.ROLE_MATH
 		):
 			return self.PRESCAT_MARKER
 		elif role in (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG):
@@ -132,6 +135,9 @@ class ControlField(Field):
 		elif (
 			role in (
 				controlTypes.ROLE_BLOCKQUOTE,
+				controlTypes.ROLE_GROUPING,
+				controlTypes.ROLE_FIGURE,
+				controlTypes.ROLE_REGION,
 				controlTypes.ROLE_FRAME,
 				controlTypes.ROLE_INTERNALFRAME,
 				controlTypes.ROLE_TOOLBAR,
@@ -145,6 +151,7 @@ class ControlField(Field):
 				or controlTypes.STATE_FOCUSABLE in states
 			) and controlTypes.STATE_MULTILINE in states)
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states)
+			or (role == controlTypes.ROLE_LANDMARK or landmark)
 			or (controlTypes.STATE_FOCUSABLE in states and controlTypes.STATE_EDITABLE in states)
 		):
 			return self.PRESCAT_CONTAINER
@@ -275,10 +282,6 @@ class TextInfo(baseObject.AutoPropertyObject):
 	@type bookmark: L{Bookmark}
 	"""
 
-	#: whether this textInfo should be expanded then collapsed around its enclosing unit before review.
-	#: This can be problematic for some implementations.
-	_expandCollapseBeforeReview = True
-
 	def __init__(self,obj,position):
 		"""Constructor.
 		Subclasses must extend this, calling the superclass method first.
@@ -308,13 +311,13 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
-	def getTextWithFields(self,formatConfig=None):
-		"""Retreaves the text in this range, as well as any control/format fields associated therewith.
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> List[Union[str, FieldCommand]]:
+		"""Retrieves the text in this range, as well as any control/format fields associated therewith.
 		Subclasses may override this. The base implementation just returns the text.
-		@param formatConfig: Document formatting configuration, useful if you wish to force a particular configuration for a particular task.
+		@param formatConfig: Document formatting configuration, useful if you wish to force a particular
+			configuration for a particular task.
 		@type formatConfig: dict
 		@return: A sequence of text strings interspersed with associated field commands.
-		@rtype: list of str and L{FieldCommand}
 		""" 
 		return [self.text]
 
@@ -520,7 +523,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 			fieldType: str,
 			formatConfig: Optional[Dict[str, bool]] = None,
 			extraDetail: bool = False,
-			reason: Optional[str] = None
+			reason: Optional[OutputReason] = None
 	) -> SpeechSequence:
 		# Import late to avoid circular import.
 		import speech
@@ -540,7 +543,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 			attrs: Field,
 			attrsCache: Optional[Field] = None,
 			formatConfig: Optional[Dict[str, bool]] = None,
-			reason: Optional[str] = None,
+			reason: Optional[OutputReason] = None,
 			unit: Optional[str] = None,
 			extraDetail: bool = False,
 			initialFormat: bool = False,
