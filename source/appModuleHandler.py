@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#appModuleHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee, Babbage B.V., Mozilla Corporation
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
+# Babbage B.V., Mozilla Corporation
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Manages appModules.
 @var runningTable: a dictionary of the currently running appModules, using their application's main window handle as a key.
@@ -25,7 +25,6 @@ import baseObject
 import globalVars
 from logHandler import log
 import NVDAHelper
-import ui
 import winUser
 import winKernel
 import config
@@ -172,9 +171,15 @@ def fetchAppModule(processID,appName):
 		try:
 			return importlib.import_module("appModules.%s" % modName, package="appModules").AppModule(processID, appName)
 		except:
-			log.error("error in appModule %r"%modName, exc_info=True)
-			# Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
-			ui.message(_("Error in appModule %s")%modName)
+			log.exception(f"error in appModule {modName!r}")
+			import ui
+			import speech.priorities
+			ui.message(
+				# Translators: This is presented when errors are found in an appModule
+				# (example output: error in appModule explorer).
+				_("Error in appModule %s") % modName,
+				speechPriority=speech.priorities.Spri.NOW
+			)
 
 	# Use the base AppModule.
 	return AppModule(processID, appName)
@@ -482,6 +487,18 @@ class AppModule(baseObject.ScriptableObject):
 		"""
 		return False
 
+	def shouldProcessUIAPropertyChangedEvent(self, sender, propertyId):
+		"""
+		Determines whether NVDA should process a UIA property changed event.
+		Returning False will cause the event to be dropped completely. This can be
+		used to work around UIA implementations which flood events and cause poor
+		performance.
+		Returning True means that the event will be processed, but it might still
+		be rejected later; e.g. because it isn't native UIA, because
+		shouldAcceptEvent returns False, etc.
+		"""
+		return True
+
 	def dumpOnCrash(self):
 		"""Request that this process writes a minidump when it crashes for debugging.
 		This should only be called if instructed by a developer.
@@ -491,6 +508,27 @@ class AppModule(baseObject.ScriptableObject):
 		NVDAHelper.localLib.nvdaInProcUtils_dumpOnCrash(
 			self.helperLocalBindingHandle, path)
 		print("Dump path: %s" % path)
+
+	def _get_statusBar(self):
+		"""Retrieve the status bar object of the application.
+		If C{NotImplementedError} is raised, L{api.getStatusBar} will resort to
+		perform a lookup by position.
+		If C{None} is returned, L{GlobalCommands.script_reportStatusLine} will
+		in turn resort to reading the bottom line of text written to the
+		display.
+		@rtype: NVDAObject
+		"""
+		raise NotImplementedError()
+
+	def _get_statusBarTextInfo(self):
+		"""Retrieve a L{TextInfo} positioned at the status bar of the application.
+		This is used by L{GlobalCommands.script_reportStatusLine} in cases where
+		L{api.getStatusBar} could not locate a proper L{NVDAObject} for the
+		status bar.
+		For this method to get called, L{_get_statusBar} must return C{None}.
+		@rtype: TextInfo
+		"""
+		raise NotImplementedError()
 
 class AppProfileTrigger(config.ProfileTrigger):
 	"""A configuration profile trigger for when a particular application has focus.

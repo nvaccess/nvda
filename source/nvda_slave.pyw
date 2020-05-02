@@ -8,6 +8,14 @@
 Performs miscellaneous tasks which need to be performed in a separate process.
 """
 
+# Initialise comtypes.client.gen_dir and the comtypes.gen search path 
+# and Append our comInterfaces directory to the comtypes.gen search path.
+import comtypes
+import comtypes.client
+import comtypes.gen
+import comInterfaces
+comtypes.gen.__path__.append(comInterfaces.__path__[0])
+
 import gettext
 import locale
 #Localization settings
@@ -59,14 +67,8 @@ def main():
 			import config
 			config._setStartOnLogonScreen(enable)
 		elif action == "explore_userConfigPath":
-			import config
-			path=config.getUserDefaultConfigPath()
-			if not path:
-				raise ValueError("no user default config path")
-			config.initConfigPath(path)
-			import shellapi
-			import winUser
-			shellapi.ShellExecute(0,None,path,None,None,winUser.SW_SHOWNORMAL)
+			import systemUtils
+			systemUtils.openUserConfigurationDirectory()
 		elif action == "addons_installAddonPackage":
 			try:
 				addonPath=args[0]

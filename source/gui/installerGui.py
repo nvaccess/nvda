@@ -20,6 +20,7 @@ import gui
 from gui import guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixin
 import tones
+import systemUtils
 
 
 def doInstall(
@@ -40,7 +41,12 @@ def doInstall(
 		# Translators: The message displayed while NVDA is being installed.
 		else _("Please wait while NVDA is being installed"))
 	try:
-		res=config.execElevated(config.SLAVE_FILENAME,["install",str(int(createDesktopShortcut)),str(int(startOnLogon))],wait=True,handleAlreadyElevated=True)
+		res = systemUtils.execElevated(
+			config.SLAVE_FILENAME,
+			["install", str(int(createDesktopShortcut)), str(int(startOnLogon))],
+			wait=True,
+			handleAlreadyElevated=True
+		)
 		if res==2: raise installer.RetriableFailure
 		if copyPortableConfig:
 			installedUserConfigPath=config.getInstalledUserConfigPath()
@@ -170,7 +176,7 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 		)))
 
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
-		startOnLogonText = _("Use NVDA on the Windows &logon screen")
+		startOnLogonText = _("Start NVDA during sign-in")
 		self.startOnLogonCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=startOnLogonText))
 		if globalVars.appArgs.enableStartOnLogon is not None:
 			self.startOnLogonCheckbox.Value = globalVars.appArgs.enableStartOnLogon
