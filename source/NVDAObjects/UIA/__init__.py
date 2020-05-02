@@ -1189,7 +1189,7 @@ class UIA(Window):
 			return ""
 
 	def _get_description(self):
-		return self.UIAFullDescription
+		return self.UIAFullDescription or self.UIAHelpText
 
 	def _get_keyboardShortcut(self):
 		# Build the keyboard shortcuts list early for readability.
