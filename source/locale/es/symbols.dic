@@ -18,7 +18,7 @@ complexSymbols:
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word -	(?<=[^\W_])[-]
-negative number	(?<!\w)-(?=[$£€¥.]?\d)
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
 symbols:
@@ -64,6 +64,7 @@ $	dólar	all	norep
 )	cerrar paréntesis	most	always
 *	asterisco	some
 +	más	some
+−	menos	some
 ,	coma	all	always
 -	guión	most
 .	punto	some

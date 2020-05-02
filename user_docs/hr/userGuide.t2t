@@ -473,15 +473,15 @@ Ako se miš na ekranu nalazi više lijevo ili desno, zvuk će se čuti više lij
 Ove značajke nisu standardno uključene u postavkama NVDA.
 Ako želite koristiti te značajke, možete ih konfigurirati u [postavkama Miša #MouseSettings], kategorija [NVDA Postavke #NVDASettings] u NVDA izborniku Postavke.
 
-Iako bi se za kretanje pomoću miša trebao koristiti miš ili trackpad, NVDA ima nekoliko prečaca povezanih uz miša:
+Iako bi se za kretanje pomoću miša trebao koristiti miš ili trackpad, NVDA ima neke prečace povezane uz miš:
 %kc:beginInclude
-|| Naziv | Tipka za stolna računala | Tipka za prijenosna računala | Opis |
-| Lijevi klik miša | numDijeljenje | NVDA+[ | Jednom pritišće lijevu tipku miša. Uobičajeni dvostruki klik se izvodi brzim dvostrukim pritiskom ove tipke |
-| Lijeva zaključana tipka miša | šift+numDijeljenje | NVDA+kontrol+[ | Zaključava lijevu tipku miša u pritisnutom stanju. Pritisnite ponovo da bi ste ju otpustili. Da biste povukli miša, pritisnite ovu tipku kako biste zaključali lijevu tipku miša u pritisnutom stanju i pomičite miša fizički ili koristite jednan od prečaca za micanje miša |
-| Desni klik miša | numMnoženje | NVDA+] | Jednom pritišće desnu tipku miša. |
-| Zaključana desna tipka miša | šift+numMnoženje | NVDA+kontrol+] | Zaključava desnu tipku miša u pritisnutom stanju. Pritisnite ponovo da biste je otpustili. Da biste povukli miša, pritisnite ovu tipku kako biste zaključali desnu tipku miša u pritisnutom stanju i pomičite miša fizički ili koristite jednan od prečaca za micanje miša |
-| Premjesti miša na trenutačni navigacijski objekt | NVDA+numDijeljenje | NVDA+šift+m | Premješta miša i pregledni kursor na mjesto trenutačnog navigacijskog objekta |
-| Premjesti se na objekta ispod miša | NVDA+numMnoženje | NVDA+šift+n | Postavlja navigacijski objekt na objekt koji se nalazi na poziciji miša |
+|| Naziv | Prečac za stolna računala | Prečac za prenosna računala | Dodir | Opis |
+| Lijeva tipka miša | Podijeljeno na numeričkoj tipkovnici | NVDA+[ | Nema | Pritišće lijevu tipku miša jedamput. Uobičajeni dvustruki pritisak postiže se pritiskom ove tipke dva puta brzo. |
+| Zaključavanje lijeve tipke miša | shift+Podijeljeno na numeričkoj tipkovnici | NVDA+control+[ | Nema | Zaključava lijevu tipku miša. Pritisnite opet za otpuštanje. Za premještanje miša, pritisnite ovu tipku kako biste zaključali miš i pomićite miš fizički ili ili koristite prečace za usmjeravanje miša |
+| Desna tipka miša | množenje na numeričkoj tipkovnici | NVDA+] | Dodirnite i držite | Jednokratan pritisak desne tipke miša U većini slučajeva koristi se za otvaranje kontekstnog izbornika na poziciji miša. |
+| Zaključavanje desne tipke miša | shift+numeričko množenje | NVDA+control+] | Nema | Zaključava desnu tipku miša. Pritisnite opet za otpuštanje. Kako biste premjestili miš, pritisnite ovu tipku i pomićite miš fizički ili koristite jedan od prečaca za premještavanje miša |
+| Premjesti miš na sljedeći objekt navigatora | NVDA+numeričko dijeljenje | NVDA+shift+m | nema | Premještava miš na sljedeći objekt navigatora i preglednog kursora |
+| Premjesti tipkovnicu na objekt pod mišem | NVDA+numeričko množenje | NVDA+shift+n | nema | postavlja objekt navigatora na poziciju miša |
 %kc:endInclude
 
 + Modus čitanja +[BrowseMode]
@@ -933,13 +933,6 @@ Napomena: ovi prečaci rade samo s Foobarovim standardnim stringovima za oblikov
 | Izvijesti o napomenama za prevoditelje | kontrol+šift+a | Izvještava o napomenama za prevoditelje. |
 %kc:endInclude
 
-++ Skype ++[Skype]
-%kc:beginInclude
-Kad se nalazite u razgovoru:
-|| Naziv | Tipka | Opis |
-| Pregledaj poruke | NVDA+kontrol+1-0 | Izvještava o poruci i premješta pregledni kursor na jednu nedavnu poruku, ovisno o pritisnutom broju; npr. NVDA+kontrol+2 čita drugu najnedavniju poruku. |
-%kc:endInclude
-
 ++ Kindle za osobna računala ++[Kindle]
 NVDA podržava čitanje i kretanje po knjigama u Amazonovom Kindlu za osobna računala.
 Ova je funkcionalnost dostupna samo u Kindle knjigama označenima sa "Screen Reader: Supported", što možete provjeriti na stranici s detaljima o knjizi.
@@ -1061,6 +1054,7 @@ Dostupne razine zapisivanja su:
  - Ako se bojite za svoju privatnost, ne postavljajte ovu razinu zapisnika.
 - Debug: Uz informacije, upozorenja te poruke o ulazima/izlazima, zapisivat će se dodatne poruke koje služe za ispravljanje grešaka.
  - Kao u slučaju ulaz/izlaz, ako se bojite za svoju privatnost, ne postavljajte ovu razinu zapisnika.
+ -
 -
 
 ==== Automatski pokreni NVDA nakon što se prijavim u Windows sustav ====[GeneralSettingsStartAfterLogOn]
@@ -1162,7 +1156,7 @@ Ako shvatite da NVDA čita interpunkciju koristeći krivi jezik za određenu gov
 
 ==== Koristi Unicode bazu podataka za čitanje opisa znakova i simbola (uključujući emoji znakove) ====[SpeechSettingsCLDR]
 Kad se ovaj potvrdni okvir označi, NVDA će uključiti dodatne znakove i simbole tijekom čitanja.
-Ovi rječnici sadrže opise simbola (uglavnom Emojia) koje je dostavio [Unicode Consortium https://www.unicode.org/consortium/] kao dio njihovog [repozitorija općih jezičnih podataka https://cldr.unicode.org/].
+Ovi rječnici sadrže opise simbola (uglavnom Emojia) koje je dostavio [Unicode Consortium https://www.unicode.org/consortium/] kao dio njihovog [repozitorija općih jezičnih podataka http://cldr.unicode.org/].
 Ako želite da NVDA izgovara opise emoji znakova uz pomoć ovih podataka, uključite ovu opciju.
 Međutim, ako vaša govorna jedinica već sama po sebi izgovara opise emoji znakova, možete isključiti ovu opciju.
 
@@ -1462,7 +1456,7 @@ Ova je opcija dostupna samo ako je izvještavanje o pravopisnim pogrreškama akt
 
 ==== Rukovanje tipkama iz drugih aplikacija ====[KeyboardSettingsHandleKeys]
 Ova opcija omogućuje korisniku kontrolu nad time, hoće li ili neće NVDA obraditi kombinacije tipaka koje su namijenjene nekoj drugoj aplikaciji, poput ekranskih tipkovnica i softvera za prepoznavanje govora. 
-Ova je opcija standardno aktivirana, ali neki korisnici bi to htjeli isključiti, npr. korisnici koji upisuju vijetnamski pomoću Unikey programa za tipkanje, jer će to prouzrokovati pogrešan unos znakova.
+Ova je opcija standardno aktivirana, ali neki korisnici bi to htjeli isključiti, npr. korisnici koji upisuju vijetnamski pomoću UniKey programa za tipkanje, jer će to prouzrokovati pogrešan unos znakova.
 
 +++ Miš (NVDA+kontrol+m) +++[MouseSettings]
 Kategorija Miš u dijaloškom okviru NVDA Postavke, omogućuje praćenje miša, reproduciranje zvučnih koordinata te postavljanje drugih opcija.
@@ -2045,6 +2039,10 @@ Prozor preglednika brajice sadrži potvrdni okvir označen "pokaži brajični pr
 Ako je ovo odabrano, prozob brajičnog preglednika će se otvoriti poslije pokretanja NVDA.
 Preglednik brajice će se uvijek pokušati otvoriti sa istim dimenzijama i pozicijom sa kojom je bio zatvoren.
 
+++ Python Konzola ++[PythonConsole]
+NVDA Python konzola koju možemo pronaći u alatima u NVDA izborniku je alat za razvoj koji služi za otkrivanje grešaka, opći nadzor NVDA unutarnjih komponenata ili nadzor hijerarhije aplikacije.
+Za više informacija, Molimo pogledajte [NVDA priručnik za programere https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+
 ++ Upravljanje dodacima ++[AddonsManager]
 Upravljanju dodacima se može pristupiti u NVDA izborniku u podizborniku Alati pod stavkom Upravljanje dodacima. Omogućuje instaliranje, deinstaliranje, aktiviranje i deaktiviranje NVDA dodataka.
 Ove pakete pruža zajednica i mogu sadržavati prilagođeni kod koji možda dodaje ili izmijenjuje neke funkcije u NVDA čitaču ili čak pružaju podršku za dodatne brajične retke ili govorne jedinice.
@@ -2090,7 +2088,7 @@ Provjerite nekompatibilne dodatke pomoću gumba "Prikaži nekompatibilne dodatke
 
 Za pristupanje upravljanju dodacima s bilo kojeg mjesta, dodijelite odgovarajuću prilagođenu gestu koristeći dijaloški okvir [Ulazne geste #InputGestures].
 
-++ Upravljanje nekompatibilnim dodacima ++[incompatibleAddonsManager]
++++ Upravitelj nekompatibilnih dodataka +++[incompatibleAddonsManager]
 Upravljanju nekompatibilnim dodacima se može pristupiti putem gumba "Prikaži nekompatibilne dodatke" u Upravljanju dodacima. Omogućuje provjeru svakog nekompatibilnog dodatka, te saznati razlog za njihovu nekompatibilnost.
 Dodaci se smatraju nekompatibilnima kad su pisani za stariju NVDA verziju od one koju koristite ili ovise o skupu funkcija koja su nedostupne u vašoj NVDA verziji.
 Upravljanje nekompatibilnim dodacima sadrži poruku o njenoj svrsi kao i informaciju o NVDA verziji.
@@ -2103,10 +2101,31 @@ Nekompatibilni dodaci se prikazuju u popisu sa sljedećim stupcima:
 Upravljanje nekompatibilnim dodacima sadrži gumb "O dodatku".
 Kad se otvori, prikazat će se sve informacije o dodatku, što je korisno kad se želi kontaktirati autora.
 
+++ Stvori prijenosnu kopiju ++[CreatePortableCopy]
+Ovo otvara dijaloški okvir koji služi za stvaranje prijenosne verzije iz instalacijske.
+Na ovaj način, kada pokrećemo prijenosnu inačicu NVDA, u podizborniku Alati stavka izbornika će se zvati "Instaliraj NVDA na ovaj PC" umjesto "Stvori prijenosnu kopiju).
 
-++ Python konzola ++[PythonConsole]
-NVDA Python konzola, koja se može pronaći u podizborniku Alati u NVDA izborniku, je alat za razvojne programere. Koristan je za otkrivanje grešaka, opću provjeru NVDA unutarnjih funkcija ili provjeru hijerarhije pristupačnosti neke aplikacije.
-Za više informacija pogledajte [vodič za razvojne programere https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+Dijaloški okvir za stvaranje prijenosne verzije  NVDA odnosno instalacije NVDA na ovaj Pc će vas pitati gdje želite stvoriti prijenosnu kopiju odnosno instalirati NVDA.
+
+U ovom dijaloškom okviru možete uključiti ili isključiti slijedeće:
+- Kopiraj trenutnu korisničku konfiguraciju (ovo uključuje datoteke u %appdata%\roaming\NVDA ili u korisničkoj konfiguraciji prijenosne verzije te uključuje tekođer dodatke i druge komponente)
+- Pokreni novu prijenosnu kopiju poslije stvaranja odnosno pokreni instalacijsku verziju poslije instalacije (Pokreće NVDA poslije stvaranja prijenosne kopije ili poslije instalacijske)
+-
+
+++ Pokreni alat za popravak Com registracija... ++[RunCOMRegistrationFixingTool]
+U nekim slučajevima, instalacija i deinstalacija nekih programa može odjaviti registraciju com dll datoteke.
+Budući da Com sučelja poput IAccessible ovise o ispravnoj Com registraciji, mogu se pojaviti problemi ako nedostaje ispravna registracija.
+
+Ovo se može dogoditi u slučaju uklanjanja Adobe Readera, Math Playera ili drugih programa.
+
+Registracije koje nedostaju mogu prouzročiti probkeme u internetskim preglednicima, aplikacijama za stolna računala, traci zadataka i drugim sučeljima.
+
+Točnije govoreći, slijedeći problemi mogu biti rješeni koristeći ovaj alat:
+- NVDA izgovara "nepoznato" prilikom kretanja u internetskim preglednicima poput Firefoxa, Thunderbirda itd.
+- NVDA odbija prebacivanje između modusa pregleda i čitanja
+- NVDA is very slow when navigating in browsers while using browse mode
+- te moguće druge probleme.
+-
 
 ++ Ponovo učitaj dodatke ++[ReloadPlugins]
 Jednom kad se ova stavka aktivira, NVDA dodaci će se ponovo učitati bez potrebe za ponovnim pokretanjem NVDA, što može biti korisno za razvojne programere.
@@ -2425,7 +2444,12 @@ Brailliant BI i B serije brajični redci tvrtke [HumanWare https://www.humanware
 Ako brajični redak spajate putem USB veze, i protokolom postavljenim na Human Ware prvo morate instalirati USB upravljačke programe koje je napravio proizvođač.
 USB upravljački programi nisu potrebni ako  je protokol postavljen na OpenBraille.
 
-BrailleNote Touch je također podržan, i nisu potrebni dodatni upravljački programi.
+Podržani su također slijedeći dodatni uređaji, i za njih nisu potrebni dodatni upravljački programi za korištenje:
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
+
 
 Slijede prečaci za Brailliant BI/B i BrailleNote brajične retke s NVDA čitačem.
 Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.

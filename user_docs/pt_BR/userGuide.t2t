@@ -71,7 +71,7 @@ Para mais detalhes, pode [ver a licença completa ""[em inglês]"" https://www.g
 -
 
 + Obtendo e Instalando o NVDA +[GettingAndSettingUpNVDA]
-Se ainda não tem uma cópia do NVDA, pode baixá-la na (Página web da NV Access NVDA_URL].
+Se ainda não tem uma cópia do NVDA, pode baixá-la na [Página web da NV Access NVDA_URL].
 
 Entre na seção download e encontrará o link para baixar a última versão deste leitor de telas.
 
@@ -473,15 +473,15 @@ Quanto mais à esquerda ou à direita da tela estiver o mouse, mais à esquerda 
 Estas características adicionais do mouse não se encontram ativadas por padrão no NVDA.
 Se pretender, porém, tirar partido das mesmas, pode configurá-las a partir da categoria [Configurações do mouse #MouseSettings] da caixa de diálogo [Configurações do NVDA #NVDASettings], encontrada no menu Preferências do NVDA.
 
-Ainda que um mouse físico ou um trackpad ""[bloco de rastreio]"" precisem ser utilizados para navegar com o mouse, o NVDA possui alguns comandos relacionados a este:
+Ainda que um mouse físico ou um trackpad ""[bloco de rastreio]"" precisem ser utilizados para navegar com o mouse, o NVDA fornece alguns comandos relacionados ao mouse:
 %kc:beginInclude
-|| Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
-| Clicar com o botão esquerdo do mouse | Barra do teclado numérico | NVDA+abre colchete | Clica uma vez com o botão esquerdo do mouse. O duplo clique habitual pode ser realizado pressionando duas vezes rapidamente este comando |
-| Prender o botão esquerdo do mouse | shift+barra do teclado numérico | NVDA+control+abre colchete | Mantém o botão esquerdo do mouse pressionado. Execute-o novamente para liberá-lo. Para arrastar o mouse, pressione esta tecla de atalho para prender o botão esquerdo e em seguida mova o mouse quer seja fisicamente ou utilizando qualquer comando que o movimente |
-| Clicar com o botão direito do mouse | Asterisco do teclado numérico | NVDA+fecha colchete | Clica uma vez com o botão direito do mouse |
-| Prender o botão direito do mouse | shift+asterisco do teclado numérico | NVDA+control+fecha colchete | Mantém o botão direito do mouse pressionado. Execute-o novamente para liberá-lo. Para arrastar o mouse, pressione esta tecla de atalho para prender o botão direito e em seguida mova-o quer seja fisicamente ou utilizando qualquer comando que movimente o mesmo |
-| Mover o mouse para o objeto de navegação atual | NVDA+barra do teclado numérico | NVDA+shift+m | Move o mouse para a localização do objeto de navegação atual e do cursor de exploração |
-| Navegar para o objeto sob o mouse | NVDA+asterisco do teclado numérico | NVDA+shift+n | Coloca como objeto de navegação aquele que se encontra sob o ponteiro do mouse |
+|| Nome | Tecla de Desktop | Tecla de Laptop | Toque ""[Gesto]"" | Descrição |
+| Clicar com o botão esquerdo do mouse | Barra do teclado numérico | NVDA+abre colchete | nenhum | Clica uma vez com o botão esquerdo do mouse. O duplo clique habitual pode ser realizado pressionando duas vezes rapidamente este comando |
+| Prender o botão esquerdo do mouse | shift+barra do teclado numérico | NVDA+control+abre colchete | nenhum | Mantém o botão esquerdo do mouse pressionado. Execute-o novamente para liberá-lo. Para arrastar o mouse, pressione esta tecla de atalho para prender o botão esquerdo e em seguida mova o mouse quer seja fisicamente ou utilizando qualquer comando que o movimente |
+| Clicar com o botão direito do mouse | Asterisco do teclado numérico | NVDA+fecha colchete | toca e segura | Clica uma vez com o botão direito do mouse, usado principalmente para abrir o menu de contexto no local do mouse. |
+| Prender o botão direito do mouse | shift+asterisco do teclado numérico | NVDA+control+fecha colchete | nenhum | Mantém o botão direito do mouse pressionado. Execute-o novamente para liberá-lo. Para arrastar o mouse, pressione esta tecla de atalho para prender o botão direito e em seguida mova-o quer seja fisicamente ou utilizando qualquer comando que movimente o mesmo |
+| Mover o mouse para o objeto de navegação atual | NVDA+barra do teclado numérico | NVDA+shift+m | nenhum | Move o mouse para a localização do objeto de navegação atual e do cursor de exploração |
+| Navegar para o objeto sob o mouse | NVDA+asterisco do teclado numérico | NVDA+shift+n | nenhum | Coloca como objeto de navegação aquele que se encontra sob o ponteiro do mouse |
 %kc:endInclude
 
 + Modo de Navegação +[BrowseMode]
@@ -933,13 +933,6 @@ Nota: Os atalhos acima funcionam apenas com a sequência ""[string]"" de formata
 | Anunciar notas para tradutores | control+shift+a | Anuncia quaisquer notas para tradutores. |
 %kc:endInclude
 
-++ Skype ++[Skype]
-%kc:beginInclude
-Quando em uma conversa:
-|| Nome | Tecla | Descrição |
-| Rever mensagem | NVDA+control+1-0 | Anuncia e move o cursor de exploração para uma mensagem recente, dependendo do número pressionado, isto é, NVDA+control+2 lê a segunda mensagem mais recente. |
-%kc:endInclude
-
 ++ Kindle para PC ++[Kindle]
 O NVDA suporta a leitura e a navegação em livros no Kindle da Amazon para PC.
 Essa funcionalidade está disponível apenas em livros da Kindle designados com "Screen Reader: Supported" ""[Leitor de Tela: Suportado]"" que você pode checar na página de detalhes do livro.
@@ -1061,6 +1054,7 @@ Os níveis de log disponíveis são:
  - Se você estiver preocupado com a privacidade, não defina o nível de log para essa opção.
 - Depuração ""[Debug]"": Além de informações, alertas e mensagens de entrada/saída, mensagens de depuração adicionais serão registradas.
  - Assim como entrada/saída, se você está preocupado com a privacidade, você não deve definir o nível de log para essa opção.
+ -
 -
 
 ==== Iniciar o NVDA Automaticamente Após o Logon no Windows ====[GeneralSettingsStartAfterLogOn]
@@ -1162,7 +1156,7 @@ Se você achar que o NVDA está lendo a pontuação no idioma errado por um sint
 
 ==== Incluir dados do Consórcio Unicode (incluindo emoji) ao processar caracteres e símbolos ====[SpeechSettingsCLDR]
 Quando essa caixa de seleção está marcada, o NVDA incluirá dicionários de pronúncia de símbolos adicionais ao pronunciar caracteres e símbolos.
-Esses dicionários contêm descrições de símbolos (particularmente emoji) que são fornecidos pelo [Consórcio Unicode https://www.unicode.org/consortium/] como parte de seu [Repositório de Dados de Localidade Comum https://cldr.unicode.org/].
+Esses dicionários contêm descrições de símbolos (particularmente emoji) que são fornecidos pelo [Consórcio Unicode https://www.unicode.org/consortium/] como parte de seu [Repositório de Dados de Localidade Comum http://cldr.unicode.org/].
 Se você deseja que o NVDA fale descrições de caracteres emoji com base nesses dados, ative esta opção.
 No entanto, se você estiver usando um sintetizador de fala que ofereça suporte a fala de descrições de emojis nativamente, convém desativá-lo.
 
@@ -1462,7 +1456,7 @@ Esta opção só estará disponível se o anúncio de erros ortográficos estive
 
 ==== Processar Teclas de outros Aplicativos ====[KeyboardSettingsHandleKeys]
 Esta opção permite ao usuário controlar se o pressionamento de teclas gerado por aplicações tais como teclados na tela e softwares de reconhecimento de voz deverão ser processados pelo NVDA.
-Tal opção está ativada por padrão, embora certos usuários podem querer desativá-la, como por exemplo durante a digitação de texto Vietnamita por meio do software de digitação Unikey, pois isso ocasionará a inserção de caracteres incorretos.
+Tal opção está ativada por padrão, embora certos usuários podem querer desativá-la, como por exemplo durante a digitação de texto Vietnamita por meio do software de digitação Unikey, pois isso ocasionará a inserção incorreta de caracteres.
 
 +++ Mouse (NVDA+control+m) +++[MouseSettings]
 A categoria Mouse ""[Rato]"" no diálogo de Configurações do NVDA permite que o NVDA rastreie o mouse, reproduza bipes de coordenadas do mouse e defina outras opções de uso do mouse.
@@ -2045,6 +2039,10 @@ A janela do visualizador de braille contém uma caixa de seleção denominada "M
 Se isso estiver marcado, o visualizador de braille será aberto quando o NVDA for iniciado.
 A janela do visualizador de braille sempre tentará reabrir com as mesmas dimensões e localização de quando foi fechada.
 
+++ Console Python ++[PythonConsole]
+O Console Python do NVDA, encontrado dentro das Ferramentas no menu do NVDA, é uma ferramenta de desenvolvimento muito útil para depuração, inspeção geral dos componentes internos do NVDA ou inspeção da hierarquia de acessibilidade de uma aplicação.
+Para mais informações, consulte por favor o [Guia do Desenvolvedor do NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+
 ++ Gerenciador de Complementos ++[AddonsManager]
 O gerenciador de complementos, que pode ser acessado selecionando Gerir Complementos no submenu ferramentas no menu do NVDA, permite-lhe instalar, desinstalar, ativar e desativar pacotes adicionais ""[complementos/add-ons]"" para o NVDA.
 Esses pacotes são fornecidos pela comunidade e contêm códigos com personalizações que podem acrescentar ou modificar recursos do NVDA ou mesmo fornecer suporte para linhas Braille ou sintetizadores de voz extras.
@@ -2090,7 +2088,7 @@ Para inspecionar esses complementos incompatíveis, você pode usar o botão "ex
 
 Para acessar o Gerenciador de Complementos de qualquer lugar, por favor atribua-lhe um comando personalizado usando o [Diálogo Definir Comandos #InputGestures].
 
-++ Gerenciador de Complementos Incompatíveis ++[incompatibleAddonsManager]
++++ Gerenciador de Complementos Incompatíveis +++[incompatibleAddonsManager]
 O Gerenciador de Complementos Incompatíveis, que pode ser acessado através do botão "exibir complementos incompatíveis" no gerenciador de Complementos, permite inspecionar quaisquer complementos incompatíveis e o motivo pelo qual eles são considerados incompatíveis.
 Os complementos são considerados incompatíveis quando não foram atualizados para funcionar com alterações significativas no NVDA ou quando dependem de um recurso não disponível na versão do NVDA que você está usando.
 O gerenciador de complementos incompatíveis tem uma mensagem curta para explicar sua finalidade, bem como a versão do NVDA.
@@ -2103,10 +2101,31 @@ Os complementos incompatíveis são apresentados em uma lista com as seguintes c
 O Gerenciador de Complementos Incompatíveis também possui um botão "Sobre o complemento ...".
 Esse diálogo fornecerá todos os detalhes do complemento, o que é útil ao entrar em contato com o autor do complemento.
 
+++ Criar cópia portátil ++[CreatePortableCopy]
+Isso abrirá uma caixa de diálogo que permite criar uma cópia portátil do NVDA a partir da versão instalada.
+De qualquer forma, ao executar uma cópia portátil do NVDA, no submenu extra de ferramentas, o item de menu será chamado "instalar NVDA neste PC" em vez de "criar cópia portátil".
 
-++ Console Python ++[PythonConsole]
-O Console Python do NVDA, encontrado dentro das Ferramentas no menu do NVDA, é uma ferramenta de desenvolvimento muito útil para depuração, inspeção geral dos componentes internos do NVDA ou inspeção da hierarquia de acessibilidade de uma aplicação.
-Para mais informações, consulte por favor o [Guia do Desenvolvedor do NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+O diálogo para criar uma cópia portátil do NVDA ou instalar o NVDA neste PC solicitará que você escolha um caminho de pasta no qual o NVDA deve criar a cópia portátil ou no qual o NVDA deve ser instalado.
+
+Neste diálogo, você pode ativar ou desativar o seguinte:
+- Copiar a configuração atual do usuário (isso inclui os arquivos em %appdata%\roaming\NVDA ou na configuração do usuário da sua cópia portátil e inclui também complementos e outros módulos)
+- Iniciar a nova cópia portátil após a criação ou iniciar o NVDA após a instalação (inicia o NVDA automaticamente após a criação ou instalação da cópia portátil)
+-
+
+++ Executar ferramenta de correção de registro COM... ++[RunCOMRegistrationFixingTool]
+A instalação e desinstalação de programas em um computador pode, em certos casos, fazer com que os arquivos COM DLL não sejam registrados.
+Como interfaces COM, como IAccessible, dependem dos registros corretos de DLL COM, problemas podem aparecer caso o registro correto esteja ausente.
+
+Isso pode acontecer, ou seja, após a instalação e desinstalação do Adobe Reader, Math Player e outros programas.
+
+O registro ausente pode causar problemas em navegadores, aplicativos da área de trabalho, barra de tarefas e outras interfaces.
+
+Especificamente, os seguintes problemas podem ser resolvidos executando esta ferramenta:
+- NVDA relata "desconhecido" ao navegar em navegadores como Firefox, Thunderbird etc.
+- NVDA falha ao alternar entre o modo de foco e o modo de navegação
+- NVDA fica muito lento ao navegar nos navegadores enquanto usa o modo de navegação
+- E possivelmente outros problemas.
+-
 
 ++ Recarregar plug-ins ++[ReloadPlugins]
 Esse item, quando ativado, recarrega app modules ""[módulos de aplicativos]"" e global plugins ""[plug-ins globais]"" sem reiniciar o NVDA, o que pode ser muito útil para desenvolvedores.
@@ -2425,7 +2444,12 @@ As linhas Brailliant séries BI e B da [HumanWare https://www.humanware.com/], i
 Caso queira conectar via USB com o protocolo configurado para HumanWare, você antes precisa instalar os drivers USB fornecidos pelo fabricante.
 Drivers USB não são necessários se o protocolo estiver configurado para OpenBraille.
 
-A BrailleNote Touch também é suportada e não requer que nenhum driver seja instalado.
+Os seguintes dispositivos extras também são suportados (e não exigem a instalação de drivers especiais):
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
+
 
 A seguir estão as teclas de comando para as linhas Brailliant BI/B e BrailleNote touch com o NVDA.
 Por favor consulte a documentação da mesma para obter descrições de onde essas teclas se encontram.

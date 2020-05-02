@@ -1,8 +1,10 @@
-#appModules/winword.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# -*- coding: UTF-8 -*-
+# NVDAObjects/window/winword.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
 
 import ctypes
 import time
@@ -325,6 +327,7 @@ formatConfigFlagsMap={
 	"reportRevisions":0x8000,
 	"reportParagraphIndentation":0x10000,
 	"reportLineSpacing":0x40000,
+	"reportSuperscriptsAndSubscripts": 0x80000,
 }
 formatConfigFlag_includeLayoutTables=0x20000
 
@@ -1041,6 +1044,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		try:
 			return mathType.getMathMl(obj)
 		except:
+			log.debugWarning("Error fetching math with mathType", exc_info=True)
 			raise LookupError("Couldn't get MathML from MathType")
 
 class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
