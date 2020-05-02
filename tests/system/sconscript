@@ -28,15 +28,12 @@ env = Environment(
 
 cmd = [
 	sys.executable, "-m", "robot",
-	"--loglevel", "DEBUG",
-	"-d", "testOutput/system",
-	"-x", "systemTests.xml",
-	"-P", "./tests/system/libraries",
-	"-v", "whichNVDA:source",
+	"--argumentfile", "./tests/system/robotArgs.robot",
 ]
 if tests:
 	# run specific tests
 	cmd += ['--test="{}"'.format(tests)]
-cmd.append("./tests/system")
+
+cmd.append("./tests/system/robot")  # must be the final argument
 target = env.Command(".", None, [cmd])
 Return('target')

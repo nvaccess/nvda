@@ -20,7 +20,7 @@ symbols:
 : phrase ending	dvojbodka	most	always	# dvojbodka v prostriedku vety
 decimal point		none	always	#desatinné číslo
 in-word '	apostrof	all	norep	# apostrof vo vnútri slova
-negative number	mínus	none	norep	# záporné číslo
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
 # Whitespace
 \0	prázdny	char	# znak 0
@@ -49,6 +49,7 @@ $	dolár	all	norep
 )	zatvoriť	most	always
 *	hviezda	some
 +	plus	some
+−	mínus	some
 ,	čiarka	all	always
 -	spojovník	most
 .	bodka	some

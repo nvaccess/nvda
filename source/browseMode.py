@@ -226,12 +226,12 @@ class TextInfoQuickNavItem(QuickNavItem):
 			or "lambda property: getattr(self.obj, property, None)" for an L{NVDAObject}.
 		"""
 		content = self.textInfo.text.strip()
-		if self.itemType is "heading":
+		if self.itemType == "heading":
 			# Output: displayed text of the heading.
 			return content
 		labelParts = None
 		name = labelPropertyGetter("name")
-		if self.itemType is "landmark":
+		if self.itemType == "landmark":
 			landmark = aria.landmarkRoles.get(labelPropertyGetter("landmark"))
 			# Example output: main menu; navigation
 			labelParts = (name, landmark)
@@ -242,7 +242,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 			unlabeled = _("Unlabeled")
 			realStates = labelPropertyGetter("states")
 			labeledStates = " ".join(controlTypes.processAndLabelStates(role, realStates, controlTypes.REASON_FOCUS))
-			if self.itemType is "formField":
+			if self.itemType == "formField":
 				if role in (controlTypes.ROLE_BUTTON,controlTypes.ROLE_DROPDOWNBUTTON,controlTypes.ROLE_TOGGLEBUTTON,controlTypes.ROLE_SPLITBUTTON,controlTypes.ROLE_MENUBUTTON,controlTypes.ROLE_DROPDOWNBUTTONGRID,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_TREEVIEWBUTTON):
 					# Example output: Mute; toggle button; pressed
 					labelParts = (content or name or unlabeled, roleText, labeledStates)
