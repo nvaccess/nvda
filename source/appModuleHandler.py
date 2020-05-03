@@ -509,6 +509,27 @@ class AppModule(baseObject.ScriptableObject):
 			self.helperLocalBindingHandle, path)
 		print("Dump path: %s" % path)
 
+	def _get_statusBar(self):
+		"""Retrieve the status bar object of the application.
+		If C{NotImplementedError} is raised, L{api.getStatusBar} will resort to
+		perform a lookup by position.
+		If C{None} is returned, L{GlobalCommands.script_reportStatusLine} will
+		in turn resort to reading the bottom line of text written to the
+		display.
+		@rtype: NVDAObject
+		"""
+		raise NotImplementedError()
+
+	def _get_statusBarTextInfo(self):
+		"""Retrieve a L{TextInfo} positioned at the status bar of the application.
+		This is used by L{GlobalCommands.script_reportStatusLine} in cases where
+		L{api.getStatusBar} could not locate a proper L{NVDAObject} for the
+		status bar.
+		For this method to get called, L{_get_statusBar} must return C{None}.
+		@rtype: TextInfo
+		"""
+		raise NotImplementedError()
+
 class AppProfileTrigger(config.ProfileTrigger):
 	"""A configuration profile trigger for when a particular application has focus.
 	"""
