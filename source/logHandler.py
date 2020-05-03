@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2020 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V., Accessolutions, Julien Cochuyt
+# Copyright (C) 2007-2020 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V., Accessolutions, Julien Cochuyt  # noqa: E501 line too long
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
