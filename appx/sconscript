@@ -14,6 +14,7 @@
 
 import subprocess
 import versionInfo
+import os
 
 Import([
 	'env',
@@ -26,11 +27,15 @@ def getCertPublisher(env):
 	If no signing certificate is provided, then the given publisher is used as is.
 	If a signing certificate is given, then the publisher is extracted from the certificate.
 	"""
-	certFile=env.get('certFile')
-	if not certFile:
+	certFilePath = env.get('certFile')
+	if not certFilePath:
 		return env['publisher']
 	certPassword=env.get('certPassword','')
-	cmd=['certutil','-dump','-p',certPassword,File('#'+certFile).abspath.replace('/','\\')]
+	if not os.path.isabs(certFilePath):
+		# If path is not absolute it is assumed that it is being given relative to the top dir of the repo
+		repoTopDir = Dir('#').abspath
+		certFilePath = os.path.abspath(os.path.normpath(os.path.join(repoTopDir, certFilePath)))
+	cmd=['certutil', '-dump', '-p', certPassword, certFilePath]
 	lines=subprocess.run(cmd,check=True,capture_output=True,text=True).stdout.splitlines()
 	linePrefix='Subject: '
 	for line in lines:

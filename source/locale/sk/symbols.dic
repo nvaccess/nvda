@@ -1,4 +1,4 @@
-#locale/sk/symbols.dic
+﻿#locale/sk/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (c) 2011-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
@@ -20,7 +20,7 @@ symbols:
 : phrase ending	dvojbodka	most	always	# dvojbodka v prostriedku vety
 decimal point		none	always	#desatinné číslo
 in-word '	apostrof	all	norep	# apostrof vo vnútri slova
-negative number	mínus	none	norep	# záporné číslo
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
 # Whitespace
 \0	prázdny	char	# znak 0
@@ -49,6 +49,7 @@ $	dolár	all	norep
 )	zatvoriť	most	always
 *	hviezda	some
 +	plus	some
+−	mínus	some
 ,	čiarka	all	always
 -	spojovník	most
 .	bodka	some
@@ -94,6 +95,7 @@ _	podčiarkovník	most
 ⇒	dvojitá šípka vpravo	some
 ⇨	biela šípka vpravo	some
 ➢	hrot šípky ukazujúcej vpravo	some
+⮚	hrot šípky ukazujúcej v pravo	some
 ❖	čierny štvorec bez bieleho x	some
 ♠	pika	some
 ♡	Biele srdce	some
@@ -123,6 +125,7 @@ _	podčiarkovník	most
 ↓	šípka dole	some
 ✓	začiarknutie	some
 ✔	tučné začiarknutie	some
+🡺	šípka vpravo	some
 
 #Mathematical Operators U+2200 to U+220F
 ∀	Pre všetky 	none
