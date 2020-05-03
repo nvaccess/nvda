@@ -1,8 +1,7 @@
-#tests/checkPot.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2017-2019 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2017-2020 NV Access Limited, James Teh, Ethan Holliger, Dinesh Kaushal, Leonard de Ruijter, Joseph Lee, Reef Turner, Julien Cochuyt  # noqa: E501 line too long
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 """Check a translation template (pot) for strings without translator comments.
 """
@@ -98,6 +97,24 @@ EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
 	'Primary footer',
 	'Primary header',
 	'Text frame',
+	# core.py:87
+	r'Your gesture map file contains errors.\n"More details about the errors can be found in the log file."',
+	# NVDAObjects\IAccessible\winword.py:229
+	'Pressing once will set this cell as the first column header for any cells '
+	'"lower and to the right of it within this table. Pressing twice will forget '
+	'"the current column header for this cell."',
+	# NVDAObjects\IAccessible\winword.py:257
+	'Pressing once will set this cell as the first row header for any cells lower '
+	'"and to the right of it within this table. Pressing twice will forget the '
+	'"current row header for this cell."',
+	# NVDAObjects\window\excel.py:1222
+	'Pressing once will set this cell as the first column header for any cells '
+	'"lower and to the right of it within this region. Pressing twice will forget '
+	'"the current column header for this cell."',
+	# NVDAObjects\window\excel.py:1244
+	'Pressing once will set this cell as the first row header for any cells lower '
+	'"and to the right of it within this region. Pressing twice will forget the '
+	'"current row header for this cell."',
 }
 
 def checkPot(fileName):
@@ -112,6 +129,7 @@ def checkPot(fileName):
 	expectedErrors = 0
 	unexpectedSuccesses = 0
 	with open(fileName, "rt") as pot:
+		passedHeader = False
 		for line in pot:
 			line = line.rstrip()
 			if not line:
@@ -120,8 +138,9 @@ def checkPot(fileName):
 				sourceLines = []
 				context = ""
 				continue
-			if line == 'msgid ""':
+			if line == 'msgid ""' and not passedHeader:
 				# Header.
+				passedHeader = True
 				continue
 			if line.startswith("#. Translators: "):
 				# This is a comment for translators.
