@@ -27,11 +27,11 @@ def getCaretRect(obj: Optional[TextContainerObject] = None) -> locationHelper.Re
 		obj = obj.treeInterceptor
 	if api.isNVDAObject(obj):
 		# Import late to avoid circular import
-		from displayModel import getCaretRect
+		import displayModel
 		# Check whether there is a caret in the window.
 		# Note that, even windows that don't have navigable text could have a caret, such as in Excel.
 		try:
-			return locationHelper.RectLTRB.fromCompatibleType(getCaretRect(obj))
+			return displayModel.getCaretRect(obj)
 		except RuntimeError:
 			if not obj._hasNavigableText:
 				raise LookupError

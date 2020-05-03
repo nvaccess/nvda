@@ -15,7 +15,7 @@ complexSymbols:
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥.]?\d)
++negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -56,6 +56,7 @@ $	đô la	all	norep
 )	đóng ngoặc tròn	most	always
 *	sao	some
 +	cộng	some
+−	trừ	some
 ,	phẩy	all	always
 -	gạch ngang	most
 .	chấm	some
@@ -99,6 +100,7 @@ _	gạch dưới	most
 ⇒	mũi tên phải	some
 ⇨	mũi tên phải	some
 ➢	mũi tên phải	some
+⮚	mũi tên phải	some
 ❖	black diamond minus white X	some
 ♣	black club	some
 ♦	black diamond	some
@@ -122,6 +124,7 @@ _	gạch dưới	most
 ↓	mũi tên xuống	some
 ✓	dấu kiểm	some
 ✔	dấu kiểm	some
+🡺	mũi tên phải	some
 
 #Mathematical Operators U+2200 to U+220F
 ∀	cho tất cả	none

@@ -3,13 +3,82 @@ Wat is Nieuw in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.3 =
+NVDA 2019.3 is een zeer belangrijke release die veel veranderingen onder de motorkap bevat, waaronder de upgrade van Python 2 naar Python 3 en een belangrijke herschrijving van het spraaksubsysteem van NVDA.
+Hoewel deze wijzigingen de compatibiliteit met oudere NVDA-add-ons verbreken, is de upgrade naar Python 3 noodzakelijk voor de veiligheid. De veranderingen in het spraaksysteem zorgen daarnaast voor belangrijke innovatiemogelijkheden in de nabije toekomst.
+ Andere hoogtepunten in deze release zijn 64-bits ondersteuning voor Java, schermgordijn en focusmarkeringsffunctionaliteit, ondersteuning voor meer brailleleesregels en een nieuw spraakweergavevenster, en vele andere probleemojplossingen.
+
+== Nieuwe Functies ==
+- In Opdrachtprompt, PowerShell en het Windows Subsystem for Linux op Windows 10 version 1809 en nieuwer:
+ - Sterk verbeterde prestaties en stabiliteit. (#9771)
+ - Het melden van getypte tekst die niet op het scherm verschijnt (zoals wachtwoorden) kan nu worden ingeschakeld via een optie in het geavanceerde instellingenpaneel van NVDA. (#9649)
+- De nauwkeurigheid van het commando muis naar navigatorobject verplaatsen is verbeterd in tekstvelden in Java-toepassingen. (#10157)
+- Schermgordijn, dat, indien ingeschakeld, het hele scherm zwart maakt op Windows 8 en hoger. (#7857)
+- Ondersteuning voor de volgende Handy Tech brailleleesregels toegevoegd (#8955):
+ - Basic Braille Plus 40
+ - Basic Braille Plus 32
+ - Connect Braille
+- Alle door de gebruiker gedefinieerde invoerhandelingen kunnen nu worden verwijderd via een nieuwe knop "Fabrieksinstellingen herstellen" in het dialoogvenster Invoerhandelingen. (#10293)
+- Het melden van het lettertype in Microsoft Word omvat nu ook of tekst is gemarkeerd als verborgen. (#8713)
+- Een commando toegevoegd om de leescursor te verplaatsen naar de positie die eerder was ingesteld als startmarkering voor selectie of kopiëren: NVDA+shift+F9. (#1969)
+- In Internet Explorer, Microsoft Edge en recente versies van Firefox en Chrome worden oriëntatiepunten (landmarks) nu gemeld in focusmodus en bij objectnavigatie. (#10101)
+- In Internet Explorer, Google Chrome en Mozilla Firefox kunt u nu navigeren per artikel met gebruik van snelnavigatiescripts. Deze scripts zijn standaard niet toegewezen en kunnen worden toegewezen in het dialoogvenster Invoerhandelingen wanneer het dialoogvenster wordt geopend vanuit een bladermodusdocument. (#9227)
+- In Internet Explorer, Google Chrome en Mozilla Firefox worden artikel-elementen nu gemeld bij objectnavigatie en optioneel in de bladermodus indien ingeschakeld in de instellingen voor documentopmaak. (#10424)
+
+
+== Veranderingen ==
+- De gebruikershandleiding beschrijft nu hoe NVDA te gebruiken in de Windows Console. (#9957)
+- Het uitvoeren van nvda.exe zal nu een ​​reeds actief exemplaar van NVDA afsluiten alvorens NVDA te starten. De opdrachtregelparameter -r | --replace wordt nog steeds geaccepteerd, maar genegeerd. (#8320)
+- In Windows 8 en nieuwer meldt NVDA nu productnaam- en versiegegevens voor gehoste apps zoals apps die zijn gedownload vanuit de Microsoft Store. Deze informatie wordt door de app verstrekt. (#4259, #10108)
+- Bij het met het toetsenbord in- en uitschakelen van wijzigingen bijhouden in Microsoft Word zal NVDA de status van de instelling melden. (#942) 
+- Het NVDA-versienummer wordt nu vastgelegd als het eerste bericht in het logboek. Dit gebeurt zelfs als logboekregistratie is uitgeschakeld in de instellingen. (#9803)
+- In het instellingendialoogvenster kunt u het geconfigureerde logniveau niet meer wijzigen als dit is overschreven vanaf de opdrachtregel. (#10209)
+- In Microsoft Word meldt NVDA nu de weergavestatus van niet-afdrukbare tekens bij het indrukken van de sneltoets Ctrl+Shift+8. (#10241)
+- Wanneer het melden van CLDR-tekens (inclusief emoji) is ingeschakeld worden ze nu uitgesproken op alle symboolniveaus. (#8826)
+- Pythonpakketten van derden die zijn opgenomen in NVDA, zoals comtypes, registreren nu hun waarschuwingen en fouten in het NVDA-logboek. (#10393)
+
+
+== Opgeloste Problemen ==
+- Emoji en andere 32-bits unicode-tekens nemen nu minder ruimte in op een brailleleesregel wanneer ze worden weergegeven als hexadecimale waarden. (#6695)
+- In Windows 10 zal NVDA flitsberichten van universele apps aankondigen als NVDA is geconfigureerd om flitsberichten te rapporteren in de instellingen voor objectweergave. (#8118)
+- In Windows 10 versie 1607 en nieuwer wordt getypte tekst nu gemeld in Mintty. (#1348)
+- In Windows 10 versie 1607 en hoger wordt de uitvoer in de Windows-console die dicht bij de cursor verschijnt niet meer gespeld. (#513)
+- Besturingselementen in het Compressor dialoogvenster in Audacity worden nu gemeld tijdens het navigeren in het venster. (#10103)
+- NVDA behandelt spaties niet langer als woorden bij het gebruik van de leescursor in op Scintilla gebaseerde tessktverwerkers zoals Notepad++. (#8295)
+- NVDA zal voorkomen dat het systeem in de slaapstand gaat wanneer er door tekst wordt gescrolld met een brailleleesregel. (#9175)
+- In Windows 10 zullen veranderingen correct weergegeven worden in braille bij het bewerken van celinhoud in Microsoft Excel en in andere UIA-tekstbesturingselementen waar dit eerder niet het geval was. (#9749)
+- NVDA meldt opnieuw suggesties in de adresbalk van Microsoft Edge. (#7554)
+- NVDA blijft niet langer stil bij het focussen van een HTML-tabbesturingselement in Internet Explorer. (#8898)
+- In Microsoft Edge op basis van EdgeHTML speelt NVDA geen geluid voor zoeksuggesties meer af wanneer het venster wordt gemaximaliseerd. (#9110, #10002)
+- ARIA 1.1 vervolgkeuezelijsten worden nu ondersteund in Mozilla Firefox en Google Chrome. (#9616)
+- NVDA meldt niet langer de inhoud van visueel verborgen kolommen voor lijstitems in SysListView32-besturingselementen. (#8268)
+- Het dialoogvenster Instellingen laat niet langer "informatie" zien als het huidige logniveau wanneer gebruikt op een beveiligd bureaublad. (#10209)
+- In het Start-menu van de Windows 10 Verjaardagsupdate en niewuer zal NVDA details van zoekresultaten melden. (#10232)
+- Als in de bladermodus het document wordt gewijzigd als de cursor wordt verplaatst of snelnavigatie wordt gebruikt, spreekt NVDA in sommige gevallen niet langer onjuiste inhoud uit. (#8831, #10343)
+- Sommige namen van opsommingstekens in Microsoft Word zijn gecorrigeerd. (#10399)
+- In de Windows 10 mei 2019 Update en nieuwer zal NVDA opnieuw de eerst geselecteerde emoji of het eerste klemborditem melden wanneer respectievelijk het emoji-paneel en de klembordgeschiedenis worden geopend. (#9204)
+- In Poedit is het opnieuw mogelijk om sommige vertalingen te bekijken voor talen van rechts naar links. (#9931)
+- In de Instellingen-app in de Windows 10 april 2018 Update en nieuwer meldt NVDA niet langer voortgangsbalkinformatie voor volumemeters op de pagina Systeem / Geluid. (#10284)
+- Ongeldige reguliere expressies in spraakwoordenboeken zorgen er niet langer voor dat de spraak in NVDA stopt met werken. (#10334)
+- Bij het lezen van items met opsommingstekens in Microsoft Word met UIA ingeschakeld, wordt het opsommingsteken van het volgende lijstitem niet langer ten onrechte gemeld. (#9613)
+
+
+== Veranderingen voor ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
+
+
+= 2019.2.1 =
+In deze versie van NVDA zijn er diverse crashes opgelost die zich voordeden in 2019.2, waaronder:
+- Verschillende crashes opgelost in Gmail die merkbaar waren in zowel Firefox als Chrome bij interactie met bepaalde pop-upmenu's zoals bij het maken van filters of het wijzigen van bepaalde Gmail-instellingen. (#10175, #9402, #8924)
+- In Windows 7 veroorzaakt NVDA niet langer een crash van de Windows Verkenner wanneer de muis wordt gebruikt in het startmenu. (#9435) 
+- Windows Verkenner in Windows 7 crasht niet langer bij het gebruik van metadata-invoervelden. (#5337) 
+- NVDA crasht niet langer bij interactie met afbeeldingen met een base64 URI in Mozilla Firefox of Google Chrome. (#10227)
+
+
 = 2019.2 =
 Hoogtepunten in deze versie zijn automatische detectie van Freedom Scientific brailleleesregels, een expirimentele functie in de geavanceerde instellingencategorie waardoor de bladermodus de focus niet langer automatisch verplaatst (wat mogelijk prestatieverbeteringen oplevert), toevoeging van de optie snelheidsboost voor de Windows OneCore synthesizer voor het gebruiken van zeer snelle spraak, en vele andere oplossingen voor problemen.
 
-
 == Nieuwe Functies ==
-- Het dialoogvenster Zoeken bevat nu een geschiedenis van de laatste 20 zoekopdrachten. (#8482)
- - De zoekgeschiedenis wordt gewist wanneer NVDA wordt afgesloten of opnieuw wordt gestart.
 - NVDA's ondersteuning voor Miranda NG werkt met nieuwere versies van de client. (#9053) 
 - U kunt nu standaard de bladermodus uitschakelen door het uitschakelen van de optie "Bladermodus inschakelen bij laden van pagina" in de NVDA-instellingen voor de bladermodus. (#8716) 
  - Merk op dat wanneer deze optie is uitgeschakeld, u nog steeds de bladermodus handmatig kunt inschakelen door op NVDA+spatie te drukken.
@@ -21,20 +90,26 @@ Hoogtepunten in deze versie zijn automatische detectie van Freedom Scientific br
  - De invoerhandeling moet worden ingesteld in het dialoogvenster "Invoerhandelingen".
 - In Eclipse, ondersteuning toegevoegd voor automatische aanvullingen in de code editor. (#5667)
  - Bovendien kan Javadoc-informatie worden gelezen vanuit de editor wanneer deze aanwezig is door NVDA + d te gebruiken.
-- Een experimentele optie toegevoegd aan het paneel met Geavanceerde instellingen waarmee u kunt voorkomen dat de systeemfocus de bladermoduscursor volgt (Systeemfocus automatisch verplaatsen naar focusbare elementen). (#2039) Hoewel dit misschien niet geschikt is om voor alle websites uit te schakelen , kan dit mogelijk de volgende problemen oplossen: 
+- Er is een experimentele optie toegevoegd aan het paneel met Geavanceerde instellingen waarmee u kunt voorkomen dat de systeemfocus de bladermoduscursor volgt (Systeemfocus automatisch verplaatsen naar focusbare elementen). (#2039) Hoewel dit misschien niet geschikt is om voor alle websites uit te schakelen , kan dit mogelijk de volgende problemen oplossen: 
  - Rubberen band effect: NVDA maakt de laatste toetsaanslag binnen de bladermodus sporadisch ongedaan door naar de vorige locatie te springen.
  - Invoervelden die de systeemfocus stelen wanneer u op sommige websites door deze invoervelden loopt.
  - De toetsaanslagen in de bladermodus reageren traag.
 - Voor ondersteunde brailleleesregels kunnen de instellingen van de driver nu gewijzigd worden vanuit de categorie braillein NVDA's instellingenvenster. (#7452)
 - Automatische detectie van Freedom Scientific brailleleesregels wordt nu ondersteund. (#7727)
+- Er is een commando toegevoegd om de vervanging weer te geven van het symbool onder de leescursor. (#9286)
+- Er is een experimentele optie toegevoegd aan het paneel met Geavanceerde instellingen die u in staat stel om een nieuwe, in ontwikkeling zijnde herschreven implementatie te proberen van NVDA's Windows Console ondersteuning die gebruik maakt van de Microsoft UI Automation API. (#9614)
+- In the Python Console ondersteunt het invoerveld nu het plakken van meerdere regels vanaf het klembord. (#9776)
 
 
 == Veranderingen ==
 - Synthesizervolume wordt nu verhoogd en verlaagd met 5 in plaats van 10 bij gebruik van de instellingenring. (#6754)
 - De tekst in add-onbeheer verduidelijkt wanneer NVDA wordt gestart met de --disable-addons parameter. (#9473)
 - Unicode Common Locale Data Repository (uitspraak van emoji) bnbijgewerkt naar versie 35.0. (#9445)
-- Liblouis braillevertaler bijgewerkt naar versie 3.9.0. (#9439)
 - Wanneer een automatisch gedetecteerde brailleleesregel via Bluetooth verbonden is, zal NVDA blijven zoeken naar USB-leesregels die door dezelfde driver worden aangestuurd en overschakelen naar een USB-verbinding als deze beschikbaar komt. (#8853)
+- eSpeak-NG is bijgewerkt naar commit 67324cc.
+- Liblouis braillevertaler bijgewerkt naar versie 3.10.0. (#9439, #9678)
+- NVDA meldt het woord 'geselecteerd' nu na de zojuist door de gebruiker geselecteerde tekst. (#9028, #9909)
+- In Microsoft Visual Studio Code is de bladermodus nu standaard uitgeschakeld. (#9828)
 
 
 == Opgeloste Problemen ==
@@ -57,6 +132,9 @@ Hoogtepunten in deze versie zijn automatische detectie van Freedom Scientific br
 - Het is opnieuw mogelijk om NVDA's tabelnavigatiecommando's te gebruiken in Google Docs, in Firefox en Chrome. (#9494)
 - De bumpertoetsen op Freedom Scientific brailleleesregels werken nu correct. (#8849)
 - Bij het lezen van het eerste teken van een document in Notepad++ 7.7 X64 zal NVDA niet langer tot wel tien seconden bevriezen. (#9609)
+- HTCom kan nu gebruikt worden met een Handy Tech brailleleesregel in combinatie met NVDA. (#9691)
+- In Mozilla Firefox worden updates in een live region niet langer gemeld wanneer de live region zich in een achtergrondtablad bevindt. (#1318)
+- Het zoekvenster van de NVDA bladermodus functioneert nu ook wanneer het Over dialoogvenster momenteel in de achtergrond is geopend. (#8566)
 
 
 == Veranderingen voor ontwikkelaars ==
@@ -64,7 +142,7 @@ Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit docum
 
 
 = 2019.1.1 =
-In deze kleine versie van NVDA zijn de volgende problemen opgelost:
+In deze versie van NVDA zijn de volgende problemen opgelost:
 - NVDA veroorzaakt niet langer een crash van Excel 2007 en weigert niet langer om te melden wanneer een cel een formule heeft. (#9431)
 - Google Chrome crasht niet langer bij interactie met bepaalde keuzelijsten. (#9364)
 - Er is een probleem opgelost waardoor de gebruikersconfiguratie mogelijk niet naar het systeemconfiguratieprofiel kon worden gekopieerd. (#9448)
@@ -190,11 +268,11 @@ Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit docum
 
 
 = 2018.3.2 =
-Dit is een kleine versie die een probleem oplost dat een crash in Google Chrome veroorzaakte bij het navigeren tussen tweets op www.twitter.com. (#8777)
+Deze versie lost een probleem op dat een crash in Google Chrome veroorzaakte bij het navigeren tussen tweets op www.twitter.com. (#8777)
 
 
 = 2018.3.1 =
-Dit is een kleine versie die een kritiek probleem oplost in NVDA dat ervoor zorgde dat 32-bit versies van Mozilla Firefox konden crashen. (#8759)
+Deze versie lost een kritiek probleem op in NVDA dat ervoor zorgde dat 32-bit versies van Mozilla Firefox konden crashen. (#8759)
 
 
 = 2018.3 =

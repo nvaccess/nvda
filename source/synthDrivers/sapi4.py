@@ -1,6 +1,6 @@
 #synthDrivers/sapi4.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited 
+# Copyright (C) 2006-2020 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -15,20 +15,26 @@ import speech
 from ._sapi4 import *
 import config
 import nvwave
+import weakref
+
 
 class SynthDriverBufSink(COMObject):
 	_com_interfaces_ = [ITTSBufNotifySink]
 
-	def __init__(self,synthDriver):
-		self._synthDriver=synthDriver
+	def __init__(self, synthRef: weakref.ReferenceType):
+		self.synthRef = synthRef
 		self._allowDelete = True
 		super(SynthDriverBufSink,self).__init__()
 
 	def ITTSBufNotifySink_BookMark(self, this, qTimeStamp, dwMarkNum):
-		synthIndexReached.notify(synth=self._synthDriver,index=dwMarkNum)
-		if self._synthDriver._finalIndex==dwMarkNum:
-			self._synthDriver._finalIndex=None
-			synthDoneSpeaking.notify(synth=self._synthDriver)
+		synth = self.synthRef()
+		if synth is None:
+			log.debugWarning("Called ITTSBufNotifySink_BookMark method on ITTSBufNotifySink while driver is dead")
+			return
+		synthIndexReached.notify(synth=synth, index=dwMarkNum)
+		if synth._finalIndex == dwMarkNum:
+			synth._finalIndex = None
+			synthDoneSpeaking.notify(synth=synth)
 
 	def IUnknown_Release(self, this, *args, **kwargs):
 		if not self._allowDelete and self._refcnt.value == 1:
@@ -69,7 +75,7 @@ class SynthDriver(SynthDriver):
 
 	def __init__(self):
 		self._finalIndex=None
-		self._bufSink=SynthDriverBufSink(self)
+		self._bufSink = SynthDriverBufSink(weakref.ref(self))
 		self._bufSinkPtr=self._bufSink.QueryInterface(ITTSBufNotifySink)
 		# HACK: Some buggy engines call Release() too many times on our buf sink.
 		# Therefore, don't let the buf sink be deleted before we release it ourselves.
@@ -105,6 +111,10 @@ class SynthDriver(SynthDriver):
 		if charMode:
 			# Some synths stay in character mode if we don't explicitly disable it.
 			textList.append("\\RmS=0\\")
+		# Some SAPI4 synthesizers complete speech sequence just after the last text
+		# and ignore any indexes passed after it
+		# Therefore we add the pause of 1ms at the end
+		textList.append("\\PAU=1\\")
 		text="".join(textList)
 		flags=TTSDATAFLAG_TAGGED
 		self._ttsCentral.TextData(VOICECHARSET.CHARSET_TEXT, flags,TextSDATA(text),self._bufSinkPtr,ITTSBufNotifySink._iid_)

@@ -7,8 +7,9 @@
 """Commands that can be embedded in a speech sequence for changing synth parameters, playing sounds or running other callbacks."""
  
 from abc import ABCMeta, abstractmethod
+from typing import Optional
+
 import config
-import languageHandler
 from synthDriverHandler import getSynth
 
 class SpeechCommand(object):
@@ -69,12 +70,11 @@ class CharacterModeCommand(SynthParamCommand):
 class LangChangeCommand(SynthParamCommand):
 	"""A command to switch the language within speech."""
 
-	def __init__(self,lang):
+	def __init__(self, lang: Optional[str]):
 		"""
 		@param lang: the language to switch to: If None then the NVDA locale will be used.
-		@type lang: string
 		"""
-		self.lang=lang # if lang else languageHandler.getLanguage()
+		self.lang = lang
 		self.isDefault = not lang
 
 	def __repr__(self):
@@ -253,11 +253,17 @@ class CallbackCommand(BaseCallbackCommand):
 		otherwise it will block production of further speech and or other functionality in NVDA.
 	"""
 
-	def __init__(self, callback):
+	def __init__(self, callback, name: Optional[str] = None):
 		self._callback = callback
+		self._name = name if name else repr(callback)
 
 	def run(self,*args, **kwargs):
 		return self._callback(*args,**kwargs)
+
+	def __repr__(self):
+		return "CallbackCommand(name={name})".format(
+			name=self._name
+		)
 
 class BeepCommand(BaseCallbackCommand):
 	"""Produce a beep.

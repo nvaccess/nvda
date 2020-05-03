@@ -26,6 +26,17 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 		if isinstance(self, KeyboardHandlerBasedTypedCharSupport):
 			self._supportsTextChange = False
 
+	def _get_windowThreadID(self):
+		# #10113: Windows forces the thread of console windows to match the thread of the first attached process.
+		# However, To correctly handle speaking of typed characters,
+		# NVDA really requires the real thread the window was created in,
+		# I.e. a thread inside conhost.
+		from IAccessibleHandler.internalWinEventHandler import consoleWindowsToThreadIDs
+		threadID = consoleWindowsToThreadIDs.get(self.windowHandle, 0)
+		if not threadID:
+			threadID = super().windowThreadID
+		return threadID
+
 	def _get_TextInfo(self):
 		consoleObject=winConsoleHandler.consoleObject
 		if consoleObject and self.windowHandle == consoleObject.windowHandle:
@@ -78,11 +89,6 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 				winConsoleHandler.connectConsole(self)
 				self.startMonitoring()
 		core.callLater(200,reconnect)
-
-	def _get_caretMovementDetectionUsesEvents(self):
-		"""Using caret events in consoles sometimes causes the last character of the
-		prompt to be read when quickly deleting text."""
-		return False
 
 	@script(gestures=[
 		"kb:enter",
