@@ -12,6 +12,7 @@ import sayAllHandler
 import api
 from scriptHandler import willSayAllResume, isScriptWaiting
 import controlTypes
+from controlTypes import OutputReason
 import treeInterceptorHandler
 from cursorManager import ReviewCursorManager
 import browseMode
@@ -277,7 +278,7 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 			attrs: textInfos.Field,
 			attrsCache: Optional[textInfos.Field] = None,
 			formatConfig: Optional[Dict[str, bool]] = None,
-			reason: Optional[str] = None,
+			reason: Optional[OutputReason] = None,
 			unit: Optional[str] = None,
 			extraDetail: bool = False,
 			initialFormat: bool = False

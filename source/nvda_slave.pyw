@@ -67,14 +67,8 @@ def main():
 			import config
 			config._setStartOnLogonScreen(enable)
 		elif action == "explore_userConfigPath":
-			import config
-			path=config.getUserDefaultConfigPath()
-			if not path:
-				raise ValueError("no user default config path")
-			config.initConfigPath(path)
-			import shellapi
-			import winUser
-			shellapi.ShellExecute(0,None,path,None,None,winUser.SW_SHOWNORMAL)
+			import systemUtils
+			systemUtils.openUserConfigurationDirectory()
 		elif action == "addons_installAddonPackage":
 			try:
 				addonPath=args[0]

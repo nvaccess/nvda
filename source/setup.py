@@ -228,6 +228,7 @@ setup(
 		("libArm64/%s"%version, glob("libArm64/*.dll") + glob("libArm64/*.exe")),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
+		("fonts", glob("fonts/*.ttf")),
 		("louis/tables",glob("louis/tables/*")),
 		("COMRegistrationFixes", glob("COMRegistrationFixes/*.reg")),
 		(".", glob("../miscDeps/python/*.dll")),

@@ -58,14 +58,14 @@ def formatVersionForGUI(year, major, minor):
 		raise ValueError(
 			"Three values must be provided. Got year={}, major={}, minor={}".format(year, major, minor)
 		)
-	if minor is 0:
+	if minor == 0:
 		return "{y}.{M}".format(y=year, M=major)
 	return "{y}.{M}.{m}".format(y=year, M=major, m=minor)
 
 
 name="NVDA"
-version_year=2019
-version_major=3
+version_year=2020
+version_major=1
 version_minor=0
 version_build=0
 version=_formatDevVersionString()
