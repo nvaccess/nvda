@@ -1,8 +1,7 @@
-# appModules/nvda.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2019 NV Access Limited
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2008-2020 NV Access Limited, James Teh, Michael Curran, Leonard de Ruijter, Reef Turner, Julien Cochuyt  # noqa: E501 line too long
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 
 import typing
@@ -55,6 +54,7 @@ class NvdaDialogEmptyDescription(IAccessible):
 		return ""
 
 
+# Translators: The name of a category of NVDA commands.
 SCRCAT_PYTHON_CONSOLE = _("Python Console")
 
 
@@ -64,6 +64,7 @@ class NvdaPythonConsoleUIOutputClear(ScriptableObject):
 
 	@script(
 		gesture="kb:control+l",
+		# Translators: Description of a command to clear the Python Console output pane
 		description=_("Clear the output pane"),
 		category=SCRCAT_PYTHON_CONSOLE,
 	)
@@ -78,6 +79,7 @@ class NvdaPythonConsoleUIOutputCtrl(ScriptableObject):
 
 	@script(
 		gesture="kb:alt+downArrow",
+		# Translators: Description of a command to move to the next result in the Python Console output pane
 		description=_("Move to the next result"),
 		category=SCRCAT_PYTHON_CONSOLE
 	)
@@ -86,6 +88,8 @@ class NvdaPythonConsoleUIOutputCtrl(ScriptableObject):
 
 	@script(
 		gesture="kb:alt+upArrow",
+		# Translators: Description of a command to move to the previous result
+		# in the Python Console output pane
 		description=_("Move to the previous result"),
 		category=SCRCAT_PYTHON_CONSOLE
 	)
@@ -94,6 +98,8 @@ class NvdaPythonConsoleUIOutputCtrl(ScriptableObject):
 
 	@script(
 		gesture="kb:alt+downArrow+shift",
+		# Translators: Description of a command to select from the current caret position to the end
+		# of the current result in the Python Console output pane
 		description=_("Select until the end of the current result"),
 		category=SCRCAT_PYTHON_CONSOLE
 	)
@@ -102,6 +108,8 @@ class NvdaPythonConsoleUIOutputCtrl(ScriptableObject):
 
 	@script(
 		gesture="kb:alt+shift+upArrow",
+		# Translators: Description of a command to select from the current caret position to the start
+		# of the current result in the Python Console output pane
 		description=_("Select until the start of the current result"),
 		category=SCRCAT_PYTHON_CONSOLE
 	)
@@ -120,14 +128,18 @@ class NvdaPythonConsoleUIOutputCtrl(ScriptableObject):
 				if pos < curPos:
 					break
 			else:
-				speech.speakMessage(_("top"))
+				# Translators: Reported when attempting to move to the previous result in the Python Console
+				# output pane while there is no previous result.
+				speech.speakMessage(_("Top"))
 				return
 		elif direction == "next":
 			for pos in consoleUI.outputPositions:
 				if pos > curPos:
 					break
 			else:
-				speech.speakMessage(_("bottom"))
+				# Translators: Reported when attempting to move to the next result in the Python Console
+				# output pane while there is no next result.
+				speech.speakMessage(_("Bottom"))
 				return
 		else:
 			raise ValueError(u"Unexpected direction: {!r}".format(direction))
