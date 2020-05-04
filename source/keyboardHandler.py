@@ -99,6 +99,27 @@ def getNVDAModifierKeys():
 		keys.append(vkCodes.byName["capslock"])
 	return keys
 
+
+def shouldUseToUnicodeEx(focus=None):
+	"Returns whether to use ToUnicodeEx to determine typed characters."
+	if not focus:
+		focus = api.getFocusObject()
+	from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
+	return (
+		# This is only possible in Windows 10 1607 and above
+		winVersion.isWin10(1607)
+		and (  # Either of
+			# We couldn't inject in-process, and its not a legacy console window without keyboard support.
+			# console windows have their own specific typed character support.
+			(not focus.appModule.helperLocalBindingHandle and focus.windowClassName != 'ConsoleWindowClass')
+			# or the focus is within a UWP app, where WM_CHAR never gets sent
+			or focus.windowClassName.startswith('Windows.UI.Core')
+			# Or this is a console with keyboard support, where WM_CHAR messages are doubled
+			or isinstance(focus, KeyboardHandlerBasedTypedCharSupport)
+		)
+	)
+
+
 def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by winInputHook when it receives a keyDown.
 	"""
@@ -197,23 +218,12 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		# #6017: handle typed characters in Win10 RS2 and above where we can't detect typed characters in-process 
 		# This code must be in the 'finally' block as code above returns in several places yet we still want to execute this particular code.
 		focus=api.getFocusObject()
-		from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
 		if (
-			# This is only possible in Windows 10 1607 and above
-			winVersion.isWin10(1607)
+			shouldUseToUnicodeEx(focus)
 			# And we only want to do this if the gesture did not result in an executed action 
 			and not gestureExecuted 
 			# and not if this gesture is a modifier key
 			and not isNVDAModifierKey(vkCode,extended) and not vkCode in KeyboardInputGesture.NORMAL_MODIFIER_KEYS
-			and ( # Either of
-				# We couldn't inject in-process, and its not a legacy console window without keyboard support.
-				# console windows have their own specific typed character support.
-				(not focus.appModule.helperLocalBindingHandle and focus.windowClassName!='ConsoleWindowClass')
-				# or the focus is within a UWP app, where WM_CHAR never gets sent 
-				or focus.windowClassName.startswith('Windows.UI.Core')
-				#Or this is a console with keyboard support, where WM_CHAR messages are doubled
-				or isinstance(focus, KeyboardHandlerBasedTypedCharSupport)
-			)
 		):
 			keyStates=(ctypes.c_byte*256)()
 			for k in range(256):

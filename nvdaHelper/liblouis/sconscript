@@ -14,6 +14,8 @@
 
 import os
 import re
+import glob
+from SCons.Tool.MSCommon.vc import find_vc_pdir
 
 Import([
 	"env",
@@ -37,6 +39,19 @@ def getLouisVersion():
 
 env = env.Clone()
 
+# Liblouis is build with Clang, as Microsoft Visual C++ is unable to build C99 code.
+clangDirs = glob.glob(os.path.join(
+    find_vc_pdir(env.get("MSVC_VERSION")),
+    r"Tools\Llvm\bin"
+))
+if len(clangDirs) == 0:
+	raise RuntimeError(
+		"Could not find the Clang compiler. "
+		"Perhaps the C++ Clang tools for Windows component in visual Studio is not installed"
+	) 
+env['ENV']['PATH'] += "".join(f";{d}" for d in clangDirs)
+env['CC'] = 'clang-cl'
+
 # Don't analyze the code as not our project
 if 'analyze' in env['nvdaHelperDebugFlags']:
 	env.Append(CCFLAGS='/analyze-')
@@ -45,10 +60,6 @@ if 'analyze' in env['nvdaHelperDebugFlags']:
 env.Replace(CCFLAGS='/W2')
 
 env.Append(CPPDEFINES=[
-	# The Visual C++ C Runtime deprecates several standard library functions in
-	# preference for _s variants that are specific to Visual C++. This removes
-	# those deprecation warnings.
-	"_CRT_SECURE_NO_WARNINGS",
 	# The Visual C++ C Runtime deprecates standard POSIX APIs that conflict with
 	# reserved ISO C names (like strdup) in favour of non-portable conforming
 	# variants that start with an '_'. This removes those deprecation warnings. */
