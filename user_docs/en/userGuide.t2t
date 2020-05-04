@@ -27,7 +27,7 @@ Major highlights include:
 - Easy to use talking installer
 - Translated into 54 languages
 - Support for modern Windows Operating Systems including both 32 and 64 bit variants
-- Ability to run on Windows logon and other secure screens
+- Ability to run during Windows sign-in and at secure screens
 - Announcing controls and text while using touch gestures
 - Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation
 - Support for Windows Command Prompt and console applications
@@ -56,10 +56,14 @@ NVDA supports braille codes for many languages, including contracted, uncontract
 ++ License and Copyright ++[LicenseAndCopyright]
 NVDA is copyright NVDA_COPYRIGHT_YEARS NVDA contributors.
 
-NVDA is covered by the GNU General Public License (Version 2).
+NVDA is available under the GNU General Public License version 2, with two special exceptions.
+The exceptions are outlined in the license document under the sections "Non-GPL Components in Plugins and Drivers" and "Microsoft Distributable Code".
+NVDA also includes and uses components which are made available under different free and open source licenses.
 You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it.
 This applies to both original and modified copies of this software, plus any derivative works.
+
 For further details, you can [view the full license. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+For details regarding exceptions, access the license document from the NVDA menu under the "help" section.
 
 + System Requirements +[SystemRequirements]
 - Operating Systems: all 32-bit and 64-bit editions of Windows 7, Windows 8, Windows 8.1, Windows 10, and all Server Operating Systems starting from Windows Server 2008 R2.
@@ -79,7 +83,7 @@ Running the file you have just downloaded will start a temporary copy of NVDA.
 You will then be asked if you want to install NVDA, create a portable copy or just continue using the temporary copy.
 
 If you plan to  always use NVDA on this computer, you will want to choose to install NVDA.
-Installing NVDA will allow for additional functionality such as automatic starting after logon, the ability to read the Windows Logon and Windows security screens (which cannot be done with portable and temporary copies) and creation of Start Menu and desktop shortcuts.
+Installing NVDA will allow for additional functionality such as automatic starting after sign-in, the ability to read the Windows sign-in and security screens (which cannot be done with portable and temporary copies) and creation of Start Menu and desktop shortcuts.
 The installed copy is also able to create a portable copy itself at any time.
 
 If you want to take NVDA with you on a USB thumb drive or other writable  media, then you  should choose to create a portable copy.
@@ -114,8 +118,8 @@ Before you're able to press the Continue button you will have to use the checkbo
 There will also be a button present to review the add-ons that will be disabled.
 Refer to the [incompatible add-ons dialog section #incompatibleAddonsManager] for more help on this button.
 
-+++ Start at Windows Logon +++[StartAtWindowsLogon]
-This option allows you to choose whether or not NVDA should automatically start while on the Windows Logon screen, before you have entered a password.
++++ Start NVDA during sign-in +++[StartAtWindowsLogon]
+This option allows you to choose whether or not NVDA should automatically start while at the Windows sign-in screen, before you have entered a password.
 This also includes User Account Control and other secure screens.
 This option is enabled by default for fresh installations.
 
@@ -125,7 +129,7 @@ If created, this shortcut will also be assigned a  shortcut key of control+alt+n
 
 +++ Copy Portable Configuration to Current User Account +++[CopyPortableConfigurationToCurrentUserAccount]
 This option allows you to choose whether or not NVDA should copy the user configuration from the currently running NVDA into the configuration for the currently logged on  user, for the installed copy of NVDA. 
-This will not  copy the configuration for   any other users  of this system nor to the system configuration for use at Windows Logon and other secure screens.
+This will not  copy the configuration for   any other users  of this system nor to the system configuration for use during Windows sign-in and other secure screens.
 This option is only available when installing from a portable copy, not when installing directly from the downloaded Launcher package.
 
 ++ Creating a Portable Copy ++[CreatingAPortableCopy]
@@ -359,10 +363,7 @@ Once you navigate to an object, you can review its content using the [text revie
 When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the current navigator object is also exposed visually.
 By default, the navigator object moves along with the System focus, though this behavior can be toggled on and off.
 
-Note that braille follows both the [focus #SystemFocus] and [caret #SystemCaret] as well as object navigation and text review by default.
-If you want it to follow the focus and caret only, you need to [configure braille to be tethered to #BrailleTether] focus.
-In this case, braille will not follow object navigation and text review.
-If you want braille to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
+Note: Braille following Object Navigation can be configured via [Braille Tether #BrailleTether].
 
 To navigate by object, use the following commands:
 
@@ -390,8 +391,7 @@ When moving the review cursor, the System caret does not follow along, so you ca
 However, by default, when the System caret moves, the review cursor follows along.
 This can be toggled on and off.
 
-Note that braille follows the [focus #SystemFocus] and [caret #SystemCaret] by default, rather than object navigation and text review.
-If you want it to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
+Note: Braille following the review cursor can be configured via [Braille Tether #BrailleTether].
 
 The following commands are available for reviewing text:
 %kc:beginInclude
@@ -411,7 +411,7 @@ The following commands are available for reviewing text:
 | Move to end of line in review | shift+numpad3 | NVDA+end | none | Moves the review cursor to the end of the current line of text |
 | Say all with review | numpadPlus | NVDA+shift+a | 3-finger flick down (text mode) | Reads from the current position of the review cursor, moving it as it goes |
 | Select then Copy from review cursor | NVDA+f9 | NVDA+f9 | none | Starts the select then copy process from the current position of the review cursor. The actual action is not performed until you tell NVDA where the end of the text range is |
-| Select then Copy to review cursor | NVDA+f10 | NVDA+f10 | none | On the first press, text is selected from the position previously set start marker up to and including the review cursor's current position. After pressing this key a second time, the text will be copied to the Windows clipboard |
+| Select then Copy to review cursor | NVDA+f10 | NVDA+f10 | none | On the first press, text is selected from the position previously set as start marker up to and including the review cursor's current position. If the system carret can reach the text, it will be moved to the selected text. After pressing this key stroke a second time, the text will be copied to the Windows clipboard |
 | Move to marked start for copy in review | NVDA+shift+f9 | NVDA+shift+f9 | none | Moves the review cursor to the position previously set start marker for copy |
 | Report text formatting | NVDA+f | NVDA+f | none | Reports the formatting of the text where the review cursor is currently situated. Pressing twice shows the information in browse mode |
 | Report current symbol replacement | None | None | none | Speaks the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode. |
@@ -890,7 +890,18 @@ Selecting a form field and pressing enter or the Move to button moves to that fi
 %kc:beginInclude
 To report any comments for the currently focused cell, press NVDA+alt+c.
 %kc:endInclude
-All comments for the worksheet can also be listed in the NVDA Elements List.
+All comments for the worksheet can also be listed in the NVDA Elements List after pressing NVDA+f7.
+
+NVDA can also display a specific dialog for adding or editing a certain comment.
+NVDA overrwrites the native MS Excel comment editing region due to accessibility constraints, but the key stroke for displaying the dialog is inherited from MS Excel and therefore works also without NVDA running.
+%kc:beginInclude
+To add or edit a certain comment, in a focused cell, press shift+f2.
+%kc:endInclude
+
+This key stroke does not appear and cannot be changed in NVDA's input gesture dialog.
+
+Note: it is possible to open the comment editing region in MS Excel also from the context menu of any cell of the work sheet.
+However, this will open the inaccessible comment editing region and not the NVDA specific comment editing dialog.
 
 +++ Reading Protected Cells +++[ExcelReadingProtectedCells]
 If a workbook has been protected, it may not be possible to move focus to particular cells that have been locked for editing.
@@ -1054,19 +1065,18 @@ The available logging levels are:
  - If you are concerned about privacy, do not set the logging level to this option.
 - Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
  - Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
- -
--
 
-==== Automatically start NVDA after I log on to Windows ====[GeneralSettingsStartAfterLogOn]
-If this option is enabled, NVDA will start automatically as soon as you log on to Windows.
+
+==== Start NVDA after I sign in ====[GeneralSettingsStartAfterLogOn]
+If this option is enabled, NVDA will start automatically as soon as you sign into Windows.
 This option is only available for installed copies of NVDA.
 
-==== Use NVDA on the Windows Logon screen (requires administrator privileges) ====[GeneralSettingsStartOnLogOnScreen]
-If you log on to Windows by providing a user name and password, then enabling this option will make NVDA start automatically at the logon screen when Windows starts.
+==== Start NVDA during sign-in (requires administrator privileges) ====[GeneralSettingsStartOnLogOnScreen]
+If you sign into Windows by providing a user name and password, then enabling this option will make NVDA start automatically at the sign-in screen when Windows starts.
 This option is only available for installed copies of NVDA.
 
-==== Use currently saved settings on the logon and other secure screens (requires administrator privileges) ====[GeneralSettingsCopySettings]
-Pressing this button copies your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it when running on the logon, User Account Control (UAC) and other secure Windows screens.
+==== Use currently saved settings during sign-in and on secure screens (requires administrator privileges) ====[GeneralSettingsCopySettings]
+Pressing this button copies your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it during sign-in and when running on User Account Control (UAC) and other secure Windows screens.
 To make sure that all your settings are transferred, make sure to save your configuration first with control+NVDA+c or Save configuration in the NVDA menu.
 This option is only available for installed copies of NVDA.
 
@@ -1285,9 +1295,13 @@ This option allows NVDA messages to be displayed on the braille display indefini
 ==== Tether Braille ====[BrailleTether]
 Key: NVDA+control+t
 
-This option allows you to choose whether the braille display will follow the system focus, the navigator object / review cursor, or both.
+This option allows you to choose whether the braille display will follow the system focus / carret, the navigator object / review cursor, or both.
 When "automatically" is selected, NVDA will follow the system focus and caret by default.
 In this case, when the navigator object or the review cursor position is changed by means of explicit user interaction, NVDA will tether to review temporarily, until the focus or the caret changes.
+If you want it to follow the focus and caret only, you need to configure braille to be tethered to focus.
+In this case, braille will not follow the NVDA navigator during object navigation or the review cursor during review.
+If you want braille to follow object navigation and text review instead, you need to configure braille to be tethered to review.
+In this case, Braille  will not follow system focus and system carret.
 
 ==== Read by Paragraph ====[BrailleSettingsReadByParagraph]
 If enabled, braille will be displayed by paragraphs instead of lines.
@@ -1999,9 +2013,9 @@ This means that each user on the system can have their own NVDA settings.
 To open your settings directory from anywhere you can use [Input Gestures dialog #InputGestures] to add a custom gesture.
 In addition for an installed version of NVDA, on the start menu you can go to programs -> NVDA -> explore user configuration directory.
 
-Settings for NVDA when running on the logon or UAC screens are stored in the systemConfig directory in NVDA's installation directory.
+Settings for NVDA when running during sign-in or on UAC screens are stored in the systemConfig directory in NVDA's installation directory.
 Usually, this configuration should not be touched.
-To change NVDA's configuration on the logon/UAC screens, configure NVDA as you wish while logged into Windows, save the configuration, and then press the "Use currently saved settings on the logon and other secure screens" button in the General category of the [NVDA Settings #NVDASettings] dialog.
+To change NVDA's configuration during sign-in or on UAC screens, configure NVDA as you wish while signed into Windows, save the configuration, and then press the "use currently saved settings during sign-in and on secure screens" button in the General category of the [NVDA Settings #NVDASettings] dialog.
 
 + Extra Tools +[ExtraTools]
 
@@ -3055,14 +3069,14 @@ Following are the command line options for NVDA:
 | -l LOGLEVEL | --log-level=LOGLEVEL | The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning |
 | -c CONFIGPATH | --config-path=CONFIGPATH | The path where all settings for NVDA are stored |
 | -m | --minimal | No sounds, no interface, no start message, etc. |
-| -s | --secure | Secure mode: disables Python console, profile features such as creation, deletion, renaming profiles etc., update check, some checkboxes in the welcome dialog and in general settings category (e.g. start NVDA after logon, save configuration after exit etc.), as well as logviewer and logging features (used often in secure screens). Note also that this command will disable the possibility to save settings in system config and the gesture map will not be saved on the disk. |
+| -s | --secure | Secure mode: disables Python console, profile features such as creation, deletion, renaming profiles etc., update check, some checkboxes in the welcome dialog and in general settings category (e.g. start NVDA after sign-in, save configuration after exit etc.), as well as logviewer and logging features (used often in secure screens). Note also that this command will disable the possibility to save settings in system config and the gesture map will not be saved on the disk. |
 | None | --disable-addons | Addons will have no effect |
 | None | --debug-logging | Enable debug level logging just for this run. This setting will override any other log level ( ""--loglevel"", -l) argument given, including no logging option. |
 | None | --no-logging | Disable logging altogether while using NVDA. This setting can be overwritten if a log level ( ""--loglevel"", -l) is specified from command line or if debug logging is turned on. |
 | None | --no-sr-flag  | Don't change the global system screen reader flag |
 | None | --install | Installs NVDA (starting the newly installed copy) |
 | None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
-| None | --enable-start-on-logon=True|False | When installing, enable NVDA's [start on the logon screen #StartAtWindowsLogon] |
+| None | --enable-start-on-logon=True|False | When installing, enable NVDA's [start during Windows sign-in #StartAtWindowsLogon] |
 | None | --create-portable | Creates a portable copy of NVDA (starting the newly created copy). Requires --portable-path to be specified |
 | None | --create-portable-silent | Creates a portable copy of NVDA (does not start the newly installed copy). Requires --portable-path to be specified |
 | None | --portable-path=PORTABLEPATH | The path where a portable copy will be created |
