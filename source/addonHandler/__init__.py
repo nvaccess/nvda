@@ -276,7 +276,7 @@ class AddonBase(object):
 class Addon(AddonBase):
 	""" Represents an Add-on available on the file system."""
 	def __init__(self, path):
-		""" Constructs an L[Addon} from.
+		""" Constructs an L{Addon} from.
 		@param path: the base directory for the addon data.
 		@type path: string
 		"""
@@ -292,6 +292,9 @@ class Addon(AddonBase):
 					translatedInput = open(p, 'rb')
 					break
 			self.manifest = AddonManifest(f, translatedInput)
+			if self.manifest.errors is not None:
+				_report_manifest_errors(self.manifest)
+				raise AddonError("Manifest file has errors.")
 
 	@property
 	def isPendingInstall(self):
@@ -428,7 +431,7 @@ class Addon(AddonBase):
 		""" loads a python module from the addon directory
 		@param name: the module name
 		@type name: string
-		@returns the python module with C[name}
+		@returns the python module with C{name}
 		@rtype python module
 		"""
 		log.debug("Importing module %s from plugin %s", name, self.name)
@@ -714,6 +717,8 @@ docFileName = string(default=None)
 
 def validate_apiVersionString(value):
 	from configobj.validate import ValidateError
+	if not value or value == "None":
+		return (0, 0, 0)
 	if not isinstance(value, string_types):
 		raise ValidateError('Expected an apiVersion in the form of a string. EG "2019.1.0"')
 	try:

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2019 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.
+# Copyright (C) 2007-2020 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -17,6 +17,7 @@ import traceback
 from types import MethodType, FunctionType
 import globalVars
 import buildVersion
+from typing import Optional
 
 ERROR_INVALID_WINDOW_HANDLE = 1400
 ERROR_TIMEOUT = 1460
@@ -267,8 +268,9 @@ def redirectStdout(logger):
 # Register our logging class as the class for all loggers.
 logging.setLoggerClass(Logger)
 #: The singleton logger instance.
-#: @type: L{Logger}
-log = logging.getLogger("nvda")
+log: Logger = logging.getLogger("nvda")
+#: The singleton log handler instance.
+logHandler: Optional[logging.Handler] = None
 
 def _getDefaultLogFilePath():
 	if getattr(sys, "frozen", None):
@@ -290,7 +292,7 @@ def initialize(shouldDoRemoteLogging=False):
 	@var shouldDoRemoteLogging: True if all logging should go to the real NVDA via rpc (for slave)
 	@type shouldDoRemoteLogging: bool
 	"""
-	global log
+	global log, logHandler
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
 	logging.addLevelName(Logger.IO, "IO")
 	logging.addLevelName(Logger.OFF, "OFF")
@@ -307,7 +309,7 @@ def initialize(shouldDoRemoteLogging=False):
 			# #8516: also if logging is completely turned off.
 			logHandler = logging.NullHandler()
 			# There's no point in logging anything at all, since it'll go nowhere.
-			log.setLevel(Logger.OFF)
+			log.root.setLevel(Logger.OFF)
 		else:
 			if not globalVars.appArgs.logFileName:
 				globalVars.appArgs.logFileName = _getDefaultLogFilePath()
@@ -320,13 +322,21 @@ def initialize(shouldDoRemoteLogging=False):
 				os.rename(globalVars.appArgs.logFileName, oldLogFileName)
 			except (IOError, WindowsError):
 				pass # Probably log does not exist, don't care.
-			logHandler = FileHandler(globalVars.appArgs.logFileName, mode="w",encoding="utf-8")
+			try:
+				logHandler = FileHandler(globalVars.appArgs.logFileName, mode="w", encoding="utf-8")
+			except IOError:
+				# if log cannot be opened, we use NullHandler to avoid logging preserving logger behaviour
+				# and set log filename to None to inform logViewer about it
+				globalVars.appArgs.logFileName = None
+				logHandler = logging.NullHandler()
+				log.error("Faile to open log file, redirecting to standard output")
 			logLevel = globalVars.appArgs.logLevel
 			if globalVars.appArgs.debugLogging:
 				logLevel = Logger.DEBUG
 			elif logLevel <= 0:
 				logLevel = Logger.INFO
 			log.setLevel(logLevel)
+			log.root.setLevel(max(logLevel, logging.WARN))
 	else:
 		logHandler = RemoteHandler()
 		logFormatter = Formatter(
@@ -334,7 +344,7 @@ def initialize(shouldDoRemoteLogging=False):
 			style="{"
 		)
 	logHandler.setFormatter(logFormatter)
-	log.addHandler(logHandler)
+	log.root.addHandler(logHandler)
 	redirectStdout(log)
 	sys.excepthook = _excepthook
 	warnings.showwarning = _showwarning
@@ -368,3 +378,4 @@ def setLogLevelFromConfig():
 		level = log.INFO
 		config.conf["general"]["loggingLevel"] = logging.getLevelName(log.INFO)
 	log.setLevel(level)
+	log.root.setLevel(max(level, logging.WARN))
