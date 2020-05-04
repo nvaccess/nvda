@@ -139,7 +139,9 @@ def checkPot(fileName):
 				context = ""
 				continue
 			if line == 'msgid ""' and not passedHeader:
-				# Header.
+				# The first msgid in POT files is expected to be empty, and considered part of the header.
+				# Once it has been passed, any subsequent empty msgid marks the start of a long msgid split
+				# accross multiple lines.
 				passedHeader = True
 				continue
 			if line.startswith("#. Translators: "):
@@ -161,8 +163,13 @@ def checkPot(fileName):
 				# This is the untranslated message.
 				# Get the message.
 				if line == 'msgid ""':
-					# Multi-line msgid.
+					# Long msgid, split across multiple lines.
 					# Subsequent lines are just quoted strings which should be concatenated.
+					# Example:
+					# 	msgid ""
+					# 	"Toggles single letter navigation on and off. When on, single letter keys in "
+					# 	"browse mode jump to various kinds of elements on the page. When off, these "
+					# 	"keys are passed to the application"
 					msgid = ""
 					for line in pot:
 						if line.startswith("msgstr "):
@@ -170,7 +177,7 @@ def checkPot(fileName):
 							break
 						msgid += getStringFromLine(line)
 				else:
-					# Single line msgid.
+					# Short msgid, presented on a single line.
 					# Example: msgid "Secure Desktop"
 					msgid = getStringFromLine(line)
 				if context:
