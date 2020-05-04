@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2019 NV Access Limited, Joseph Lee, Babbage B.V.
+# Copyright (C) 2008-2020 NV Access Limited, Joseph Lee, Babbage B.V., Julien Cochuyt
 
 """Manages information about available braille translation tables.
 """
@@ -177,6 +177,9 @@ def initialize():
 	addTable("en-GB-g2.ctb", _("English (U.K.) grade 2"), contracted=True)
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	addTable("en-nabcc.utb", _("English North American Braille Computer Code"))
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	addTable("en-ueb-g1.ctb", _("Unified English Braille Code grade 1"))
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
@@ -318,10 +321,13 @@ def initialize():
 	addTable("mr-in-g1.utb", _("Marathi grade 1"))
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	addTable("nl-BE-g0.utb", _("Dutch (Belgium)"))
+	addTable("nl-BE-g0.utb", _("Dutch (Belgium) 6 dot"))
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	addTable("nl-NL-g0.utb", _("Dutch (Netherlands)"))
+	addTable("nl-NL-g0.utb", _("Dutch (Netherlands) 6 dot"))
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	addTable("nl-comp8.utb", _("Dutch 8 dot"))
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	addTable("no-no-8dot.utb", _("Norwegian 8 dot computer braille"))
@@ -366,7 +372,7 @@ def initialize():
 	addTable("ro.ctb", _("Romanian"))
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	addTable("ru.ctb", _("Russian braille for computer code"))
+	addTable("ru.ctb", _("Russian computer braille"))
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	addTable("ru-ru-g1.utb", _("Russian grade 1"))

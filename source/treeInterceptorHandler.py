@@ -15,6 +15,7 @@ import config
 import braille
 import vision
 from speech.types import SpeechSequence
+from controlTypes import OutputReason
 
 runningTable=set()
 
@@ -246,7 +247,7 @@ class RootProxyTextInfo(textInfos.TextInfo):
 			attrs: textInfos.Field,
 			attrsCache: Optional[textInfos.Field] = None,
 			formatConfig: Optional[Dict[str, bool]] = None,
-			reason: Optional[str] = None,
+			reason: Optional[OutputReason] = None,
 			unit: Optional[str] = None,
 			extraDetail: bool = False,
 			initialFormat: bool = False,
