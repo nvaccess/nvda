@@ -46,6 +46,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def _get_statusBar(self):
 		# #11082: retrieve status bar handle and resulting NVDA object from playlist window.
+		# If only default status bar routine is used to assign status bar object, it can result in recursion limit error.
 		try:
 			statusBarHwnd = windowUtils.findDescendantWindow(
 				api.getForegroundObject().windowHandle,
