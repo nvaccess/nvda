@@ -1375,8 +1375,8 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_sayAll(self,gesture):
 		sayAllHandler.readText(sayAllHandler.CURSOR_REVIEW)
-	# Translators: Input help mode message for say all in review cursor command.
 	script_review_sayAll.__doc__ = _(
+		# Translators: Input help mode message for say all in review cursor command.
 		"Reads from the review cursor up to the end of the current text,"
 		" moving the review cursor as it goes"
 	)
@@ -2052,9 +2052,9 @@ class GlobalCommands(ScriptableObject):
 	script_review_markStartForCopy.category=SCRCAT_TEXTREVIEW
 
 	@script(
-		# Translators: Input help mode message for move review cursor to marked start position for a
-		# select or copy command
 		description=_(
+			# Translators: Input help mode message for move review cursor to marked start position for a
+			# select or copy command
 			"Move the review cursor to the position marked as the start of text to be selected or copied"
 		),
 		category=SCRCAT_TEXTREVIEW,
@@ -2465,8 +2465,8 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
-		# Translators: Describes a command.
 		description=_(
+			# Translators: Describes a command.
 			"Toggles the state of the screen curtain, "
 			"enable to make the screen black or disable to show the contents of the screen. "
 			"Pressed once, screen curtain is enabled until you restart NVDA. "

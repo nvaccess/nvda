@@ -19,7 +19,9 @@ url = "https://www.nvaccess.org/"
 copyrightYears = "2006-2020"
 copyright = _("Copyright (C) {years} NVDA Contributors").format(
 	years=copyrightYears)
-aboutMessage = _(u"""{longName} ({name})
+aboutMessage = _(
+	# Translators: "About NVDA" dialog box message
+	u"""{longName} ({name})
 Version: {version}
 URL: {url}
 {copyright}
@@ -29,4 +31,5 @@ For further details, you can view the license from the Help menu.
 It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 {name} is developed by NV Access, a non-profit organisation committed to helping and promoting free and open source solutions for blind and vision impaired people.
-If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu.""").format(**globals())
+If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."""  # noqa: E501 line too long
+).format(**globals())
