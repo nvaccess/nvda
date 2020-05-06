@@ -1658,8 +1658,8 @@ class GlobalCommands(ScriptableObject):
 	script_toggleProgressBarOutput.category=SCRCAT_SPEECH
 
 	@script(
-		# Translators: Input help mode message for toggle object coordinate announcement command.
 		description=_(
+			# Translators: Input help mode message for toggle object coordinate announcement command.
 			"Toggles when object coordinate tone will be heard between off, "
 			"object navigation only, focus only, or always"
 		),
