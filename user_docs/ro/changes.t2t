@@ -3,6 +3,54 @@ Ce este nou în NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.1 =
+Caracteristicile principale ale acestei versiuni includ suportul pentru câteva noi afișaje braille de la HumanWare și APH, precum și reparări ale unor erori importante precum cea a citirii conținutului matematic în Microsoft Word utilizându-se MathPlayer / MathType.
+
+== Noi Funcționalități ==
+- Elementul curent selectat din casetele de liste este prezentat din nou în modul de navigare din Google Chrome, așa cum se întâmpla și în NVDA 2019.1. (#10713)
+- Acum, puteți da click dreapta și dacă folosiți un dispozitiv cu ecran tactil, ca și cum ați folosi un maus fizic, apăsând o dată cu un deget și ținând apăsat. (#3886)
+- Suport pentru următoarele afișaje braille: APH Chameleon 20, APH Mantis Q40, HumanWare BrailleOne, BrailleNote Touch v2 și NLS eReader. (#10830)
+
+
+== Modificări ==
+- NVDA va împiedica sistemul să se blocheze sau să intre în modul de repaus atunci când va citi tot. (#10643)
+- Suport pentru iframe-urile out-of-process din Mozilla Firefox. (#10707)
+- S-a actualizat traducătorul braille liblouis la versiunea 3.12. (#10161)
+
+
+== Defecte Rezolvate ==
+- Am făcut astfel încât NVDA să nu mai anunțe simbolul Unicode „minus” (U+2212). (#10633)
+- La instalarea suplimentelor din administratorul de suplimente, numele dosarelor și fișierelor din fereastra de navigare nu mai sunt raportate de două ori. (#10620, #2395)
+- În Firefox, la încărcarea Mastodon având activată interfața web avansată, toate cronologiile sunt redate corect în modul de navigare. (#10776)
+- În modul de navigare, NVDA raportează „nebifat” pentru casetele care nu sunt bifate acolo unde uneori nu o făcea. (#10781)
+- Controalele de comutare ARIA nu mai raportează informații precum „nu este apăsat bifat” sau „apăsat bifat”, menite să genereze confuzie în rândul utilizatorilor. (#9187)
+- Nu ar mai trebui ca vocile SAPI4 să refuze să pronunțe un anume text. (#10792)
+- NVDA poate din nou să citească ecuațiile matematice din Microsoft Word și să interacționeze cu ele. (#10803)
+- NVDA va anunța din nou textul neselectat din modul de navigare la apăsarea unei taste săgeată cât timp textul este selectat. (#10731)
+- NVDA nu se mai închide dacă există o eroare la pornirea eSpeak. (#10607)
+- Erorile cauzate de Unicode în traduceri ăpentru scurtături nu mai opresc instalatorul, atenuate de revenirea la textul în engleză. (#5166, #6326)
+- Ieșirea listelor și a tabelelor dinn sayAll, cu citirea de suprafață activată, nu mai anunță în continuu ieșirea din listă sau tabel.
+
+
+== Modificări pentru Dezvoltatori ==
+- Ghidul dezvoltatorului este construit acum cu Sphinx. (#9840)
+- Câteva funcții de vorbire au fost împărțite în două. (#10593)
+  - Versiunea speakX rămâne, însă acum depinde de o funcție getXSpeech, care întoarce o frecvență de vorbire.
+  - Acum, speakObjectProperties se bazează pe getObjectPropertiesSpeech
+  - Acum, speakObject se bazează pe getObjectSpeech
+  - Acum, speakTextInfo se bazează pe getTextInfoSpeech
+  - speakWithoutPauses a fost convertită într-o clasă și refabricată, însă nu ar trebui să afecteze în vreun fel compatibilitatea.
+  - getSpeechForSpelling este depreciată, (deși încă este disponibilă) utilizați în schimb getSpellingSpeech.
+  - Modificări private care nu ar trebui să îi afecteze pe dezvoltatorii de suplimente:
+  - Acum, _speakPlaceholderIfEmpty este _getPlaceholderSpeechIfTextEmpty
+  - Acum, _speakTextInfo_addMath este _extendSpeechSequence_addMathForTextInfo
+- Vorbirea 'reason' a fost convertită într-un Enum, vedeți clasa controlTypes.OutputReason. (#10703)
+  - Constantele nivelurilor de modul 'reason' sunt depreciate.
+- Dependințele de compilare ale NVDA necesită Visual Studio 2019 (16.2 sau mai nou). (#10169)
+- S-a actualizat SCons la versiunea 3.1.1. (#10169)
+- Se permite din nou behaviors._FakeTableCell să nu aibă nicio locație definită. (#10864)
+
+
 = 2019.3 =
 NVDA 2019.3 este o versiune foarte importantă care conține modificări printre care se regăsesc actualizarea de la Python 2 la Python 3 și o rescriere majoră a subsistemului vorbirii NVDA.
 Deși aceste modificări anulează compatibilitatea cu suplimentele NVDA mai vechi, actualizarea Python 3 este necesară pentru securitate, iar modificările la vorbire permit inovații în viitorul apropiat.

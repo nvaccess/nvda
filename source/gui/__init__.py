@@ -417,14 +417,33 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onNVDASettingsCommand, item)
 		subMenu_speechDicts = wx.Menu()
 		if not globalVars.appArgs.secure:
-			# Translators: The label for the menu item to open Default speech dictionary dialog.
-			item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Default dictionary..."),_("A dialog where you can set default dictionary by adding dictionary entries to the list"))
+			item = subMenu_speechDicts.Append(
+				wx.ID_ANY,
+				# Translators: The label for the menu item to open Default speech dictionary dialog.
+				_("&Default dictionary..."),
+				# Translators: The help text for the menu item to open Default speech dictionary dialog.
+				_("A dialog where you can set default dictionary by adding dictionary entries to the list")
+			)
 			self.Bind(wx.EVT_MENU, frame.onDefaultDictionaryCommand, item)
-			# Translators: The label for the menu item to open Voice specific speech dictionary dialog.
-			item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Voice dictionary..."),_("A dialog where you can set voice-specific dictionary by adding dictionary entries to the list"))
+			item = subMenu_speechDicts.Append(
+				wx.ID_ANY,
+				# Translators: The label for the menu item to open Voice specific speech dictionary dialog.
+				_("&Voice dictionary..."),
+				_(
+					# Translators: The help text for the menu item
+					# to open Voice specific speech dictionary dialog.
+					"A dialog where you can set voice-specific dictionary by adding"
+					" dictionary entries to the list"
+				)
+			)
 			self.Bind(wx.EVT_MENU, frame.onVoiceDictionaryCommand, item)
-		# Translators: The label for the menu item to open Temporary speech dictionary dialog.
-		item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Temporary dictionary..."),_("A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
+		item = subMenu_speechDicts.Append(
+			wx.ID_ANY,
+			# Translators: The label for the menu item to open Temporary speech dictionary dialog.
+			_("&Temporary dictionary..."),
+			# Translators: The help text for the menu item to open Temporary speech dictionary dialog.
+			_("A dialog where you can set temporary dictionary by adding dictionary entries to the edit box")
+		)
 		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
 		# Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 		menu_preferences.AppendSubMenu(subMenu_speechDicts,_("Speech &dictionaries"))
@@ -655,9 +674,10 @@ class WelcomeDialog(wx.Dialog):
 	This dialog is displayed the first time NVDA is started with a new configuration.
 	"""
 
-	# Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
 	WELCOME_MESSAGE_DETAIL = _(
-		"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
+		# Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
+		"Most commands for controlling NVDA require you to hold down"
+		" the NVDA key while pressing other keys.\n"
 		"By default, the numpad Insert and main Insert keys may both be used as the NVDA key.\n"
 		"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 		"Press NVDA+n at any time to activate the NVDA menu.\n"
@@ -703,7 +723,7 @@ class WelcomeDialog(wx.Dialog):
 		self.capsAsNVDAModifierCheckBox = sHelper.addItem(wx.CheckBox(self, label=capsAsNVDAModifierText))
 		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
 		# Translators: The label of a checkbox in the Welcome dialog.
-		startAfterLogonText = _("&Automatically start NVDA after I log on to Windows")
+		startAfterLogonText = _("St&art NVDA after I sign in")
 		self.startAfterLogonCheckBox = sHelper.addItem(wx.CheckBox(self, label=startAfterLogonText))
 		self.startAfterLogonCheckBox.Value = config.getStartAfterLogon()
 		if globalVars.appArgs.secure or config.isAppX or not config.isInstalledCopy():

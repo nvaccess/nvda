@@ -344,8 +344,9 @@ class UpdateResultDialog(wx.Dialog, DpiScalingHelperMixin):
 				backCompatToAPIVersion=self.backCompatTo
 			))
 			if showAddonCompat:
-				# Translators: A message indicating that some add-ons will be disabled unless reviewed before installation.
 				message = message + _(
+					# Translators: A message indicating that some add-ons will be disabled
+					# unless reviewed before installation.
 					"\n\n"
 					"However, your NVDA configuration contains add-ons that are incompatible with this version of NVDA. "
 					"These add-ons will be disabled after installation. If you rely on these add-ons, "
@@ -460,8 +461,9 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 			backCompatToAPIVersion=self.backCompatTo
 		))
 		if showAddonCompat:
-			# Translators: A message indicating that some add-ons will be disabled unless reviewed before installation.
 			message = message + _(
+				# Translators: A message indicating that some add-ons will be disabled
+				# unless reviewed before installation.
 				"\n"
 				"However, your NVDA configuration contains add-ons that are incompatible with this version of NVDA. "
 				"These add-ons will be disabled after installation. If you rely on these add-ons, "
@@ -698,8 +700,8 @@ class UpdateDownloader(object):
 		))
 
 class DonateRequestDialog(wx.Dialog):
-	# Translators: The message requesting donations from users.
 	MESSAGE = _(
+		# Translators: The message requesting donations from users.
 		"We need your help in order to continue to improve NVDA.\n"
 		"This project relies primarily on donations and grants. By donating, you are helping to fund full time development.\n"
 		"If even $10 is donated for every download, we will be able to cover all of the ongoing costs of the project.\n"

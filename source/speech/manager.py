@@ -1,15 +1,51 @@
 # -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2019 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2020 NV Access Limited
 
-from logHandler import log
 import queueHandler
 import synthDriverHandler
-from .commands import *
-from .commands import IndexCommand
+import config
+from .types import SpeechSequence
+from .commands import (
+	# Commands that are used in this file.
+	EndUtteranceCommand,
+	SynthParamCommand,
+	BaseCallbackCommand,
+	ConfigProfileTriggerCommand,
+	IndexCommand,
+)
+from .commands import (  # noqa: F401
+	# F401 imported but unused:
+	# These are imported explicitly to maintain backwards compatibility and will be removed in
+	# 2021.1. Rather than rely on these imports, import directly from the commands module.
+	# New commands added to commands.py should be directly imported only where needed.
+	SpeechCommand,
+	PitchCommand,
+	LangChangeCommand,
+	BeepCommand,
+	CharacterModeCommand,
+	SynthCommand,
+	BreakCommand,
+	BaseProsodyCommand,
+	VolumeCommand,
+	RateCommand,
+	PhonemeCommand,
+	CallbackCommand,
+	WaveFileCommand,
+)
 from .priorities import Spri, SPEECH_PRIORITIES
+from logHandler import log
+from synthDriverHandler import getSynth
+from typing import (
+	Dict,
+	Any,
+	List,
+	Tuple,
+	Optional,
+)
+
 
 class ParamChangeTracker(object):
 	"""Keeps track of commands which change parameters from their defaults.
@@ -51,16 +87,16 @@ class _ManagerPriorityQueue(object):
 	is preempted by a higher priority queue.
 	"""
 
-	def __init__(self, priority):
+	def __init__(self, priority: Spri):
 		self.priority = priority
 		#: The pending speech sequences to be spoken.
 		#: These are split at indexes,
 		#: so a single utterance might be split over multiple sequences.
-		self.pendingSequences = []
+		self.pendingSequences: List[SpeechSequence] = []
 		#: The configuration profile triggers that have been entered during speech.
-		self.enteredProfileTriggers = []
+		self.enteredProfileTriggers: List[config.ProfileTrigger] = []
 		#: Keeps track of parameters that have been changed during an utterance.
-		self.paramTracker = ParamChangeTracker()
+		self.paramTracker: ParamChangeTracker = ParamChangeTracker()
 
 class SpeechManager(object):
 	"""Manages queuing of speech utterances, calling callbacks at desired points in the speech, profile switching, prioritization, etc.
@@ -113,6 +149,8 @@ class SpeechManager(object):
 	Note:
 	All of this activity is (and must be) synchronized and serialized on the main thread.
 	"""
+	_priQueues: Dict[Any, _ManagerPriorityQueue]
+	_curPriQueue: Optional[_ManagerPriorityQueue]
 
 	def __init__(self):
 		#: A counter for indexes sent to the synthesizer for callbacks, etc.
@@ -153,7 +191,7 @@ class SpeechManager(object):
 		#: Whether to push more speech when the synth reports it is done speaking.
 		self._shouldPushWhenDoneSpeaking = False
 
-	def speak(self, speechSequence, priority):
+	def speak(self, speechSequence: SpeechSequence, priority: Spri):
 		# If speech isn't already in progress, we need to push the first speech.
 		push = self._curPriQueue is None
 		interrupt = self._queueSpeechSequence(speechSequence, priority)
@@ -163,7 +201,7 @@ class SpeechManager(object):
 		if push:
 			self._pushNextSpeech(True)
 
-	def _queueSpeechSequence(self, inSeq, priority):
+	def _queueSpeechSequence(self, inSeq: SpeechSequence, priority: Spri):
 		"""
 		@return: Whether to interrupt speech.
 		@rtype: bool
@@ -179,34 +217,34 @@ class SpeechManager(object):
 			return True
 		return False
 
-	def _processSpeechSequence(self, inSeq):
+	def _processSpeechSequence(self, inSeq: SpeechSequence):
 		paramTracker = ParamChangeTracker()
 		enteredTriggers = []
-		outSeq = []
 		outSeqs = []
 
-		def ensureEndUtterance(outSeq):
+		def ensureEndUtterance(seq: SpeechSequence):
 			# We split at EndUtteranceCommands so the ends of utterances are easily found.
-			if outSeq:
+			if seq:
 				# There have been commands since the last split.
-				outSeqs.append(outSeq)
-				lastOutSeq = outSeq
+				outSeqs.append(seq)
+				lastOutSeq = seq
 				# Re-apply parameters that have been changed from their defaults.
-				outSeq = paramTracker.getChanged()
+				seq = paramTracker.getChanged()
 			else:
 				lastOutSeq = outSeqs[-1] if outSeqs else None
 			lastCommand = lastOutSeq[-1] if lastOutSeq else None
 			if not lastCommand or isinstance(lastCommand, (EndUtteranceCommand, ConfigProfileTriggerCommand)):
 				# It doesn't make sense to start with or repeat EndUtteranceCommands.
 				# We also don't want an EndUtteranceCommand immediately after a ConfigProfileTriggerCommand.
-				return outSeq
+				return seq
 			if not isinstance(lastCommand, IndexCommand):
 				# Add an index so we know when we've reached the end of this utterance.
 				speechIndex = next(self._indexCounter)
 				lastOutSeq.append(IndexCommand(speechIndex))
 			outSeqs.append([EndUtteranceCommand()])
-			return outSeq
+			return seq
 
+		outSeq = []
 		for command in inSeq:
 			if isinstance(command, BaseCallbackCommand):
 				# When the synth reaches this point, we want to call the callback.
@@ -248,7 +286,7 @@ class SpeechManager(object):
 			outSeqs.append([command])
 		return outSeqs
 
-	def _pushNextSpeech(self, doneSpeaking):
+	def _pushNextSpeech(self, doneSpeaking: bool):
 		queue = self._getNextPriority()
 		if not queue:
 			# No more speech.
@@ -330,7 +368,7 @@ class SpeechManager(object):
 		# This needs to be handled in the main thread.
 		queueHandler.queueFunction(queueHandler.eventQueue, self._handleIndex, index)
 
-	def _removeCompletedFromQueue(self, index):
+	def _removeCompletedFromQueue(self, index: int) -> Tuple[bool, bool]:
 		"""Removes completed speech sequences from the queue.
 		@param index: The index just reached indicating a completed sequence.
 		@return: Tuple of (valid, endOfUtterance),
@@ -373,7 +411,7 @@ class SpeechManager(object):
 		del self._curPriQueue.pendingSequences[:seqIndex + 1]
 		return True, endOfUtterance
 
-	def _handleIndex(self, index):
+	def _handleIndex(self, index: int):
 		# A synth (such as OneCore) may skip indexes
 		# If before another index, with no text content in between.
 		# Therefore, detect this and ensure we handle all skipped indexes.
@@ -408,7 +446,7 @@ class SpeechManager(object):
 			# Even if we have many indexes, we should only push next speech once.
 			self._pushNextSpeech(False)
 
-	def _onSynthDoneSpeaking(self, synth=None):
+	def _onSynthDoneSpeaking(self, synth: Optional[synthDriverHandler.SynthDriver] = None):
 		if synth != getSynth():
 			return
 		# This needs to be handled in the main thread.

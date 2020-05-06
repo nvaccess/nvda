@@ -1,8 +1,8 @@
-#NVDAObjects/IAccessible/msOffice.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
+# -*- coding: UTF-8 -*-
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Manish Agrawal, Łukasz Golonka
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 import oleacc
 import IAccessibleHandler
@@ -180,3 +180,36 @@ class SDMSymbols(SDM):
 		"kb:leftArrow": "selectGraphic",
 		"kb:rightArrow": "selectGraphic",
 	}
+
+
+class StatusBar (IAccessible):
+
+	def _get_role(self):
+		""" #4257: Status bar in Office applications does not  expose proper role via IAccessible.
+We cannot acces it via UIA because it does not fire focus events when focused for the first time.
+Fortunately accValue contains "status bar" and is not localized.
+"""
+		accValue = self.IAccessibleObject.accValue(self.IAccessibleChildID)
+		if accValue == 'Ribbon Tab':
+			return controlTypes.ROLE_TAB
+		if accValue == 'Status Bar':
+			return controlTypes.ROLE_STATUSBAR
+		return super()._get_role()
+
+	def _get_description(self):
+		return ""
+
+	def _get_isPresentableFocusAncestor(self):
+		accValue = self.IAccessibleObject.accValue(self.IAccessibleChildID)
+		if accValue == "Ribbon":
+			return False
+		return super().isPresentableFocusAncestor
+
+
+class RibbonSection (IAccessible):
+
+	def _get_role(self):
+		accValue = self.IAccessibleObject.accValue(self.IAccessibleChildID)
+		if accValue == "Group":
+			return controlTypes.ROLE_GROUPING
+		return super()._get_role()

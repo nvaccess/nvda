@@ -75,7 +75,7 @@ For reference, the following run time dependencies are included in Git submodule
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * Adobe FlashAccessibility interface typelib
 * [MinHook](https://github.com/RaMMicHaeL/minhook), tagged version 1.2.2
-* brlapi Python bindings, version 0.7.0 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html/brltty/), version 4.2-2
+* brlapi Python bindings, version 0.8 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html), version 6.1
 * lilli.dll, version 2.1.0.0
 * [pySerial](https://pypi.python.org/pypi/pyserial), version 3.4
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
@@ -280,17 +280,12 @@ To be warned about linting errors faster, you may wish to integrate Flake8 other
 For more details, see `tests/lint/readme.md`
 
 ### System Tests
-You may also use scons to run the system tests, though this will still rely on having set up the dependencies (see `tests/system/readme.md`).
+You may also use `scons` to run the system tests,
+ though this will still require the dependencies to be set up.
+For more details (including filtering and exclusion of tests) see `tests/system/readme.md`.
 
 ```
 scons systemTests
-```
-
-To run only specific system tests, specify them using the `filter` variable on the command line.
-This filter accepts wildcard characters.
-
-```
-scons systemTests filter="Read welcome dialog"
 ```
 
 ## Contributing to NVDA

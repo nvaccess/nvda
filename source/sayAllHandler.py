@@ -169,8 +169,7 @@ class _TextReader(object):
 			reason=controlTypes.REASON_SAYALL,
 			useCache=state
 		)
-		speechGen = speech.GeneratorWithReturn(speechGen)
-		seq = speech._flattenNestedSequences(speechGen)
+		seq = list(speech._flattenNestedSequences(speechGen))
 		seq.insert(0, cb)
 		# Speak the speech sequence.
 		spoke = speech.speakWithoutPauses(seq)
