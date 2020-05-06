@@ -57,17 +57,6 @@ class Gecko1_9(Mozilla):
 class BrokenFocusedState(Mozilla):
 	shouldAllowIAccessibleFocusEvent=True
 
-class RootApplication(Mozilla):
-	"""Mozilla exposes a root application accessible as the parent of all top level frames.
-	See MozillaBug:555861.
-	This is non-standard; the top level accessible should be the top level window.
-	NVDA expects the standard behaviour, so we never want to see this object.
-	"""
-
-	def __nonzero__(self):
-		# As far as NVDA is concerned, this is a useless object.
-		return False
-
 class Document(ia2Web.Document):
 
 	def _get_treeInterceptorClass(self):
@@ -150,13 +139,7 @@ def findExtraOverlayClasses(obj, clsList):
 	iaRole = obj.IAccessibleRole
 
 	cls = None
-	if iaRole == oleacc.ROLE_SYSTEM_APPLICATION:
-		try:
-			if not obj.IAccessibleObject.windowHandle:
-				cls = RootApplication
-		except COMError:
-			pass
-	elif iaRole == oleacc.ROLE_SYSTEM_TEXT:
+	if iaRole == oleacc.ROLE_SYSTEM_TEXT:
 		# Check if this is a text leaf.
 		iaStates = obj.IAccessibleStates
 		# Text leaves are never focusable.
