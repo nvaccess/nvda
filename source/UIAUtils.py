@@ -224,3 +224,40 @@ class BulkUIATextRangeAttributeValueFetcher(UIATextRangeAttributeValueFetcher):
 		if not ignoreMixedValues and val==UIAHandler.handler.ReservedMixedAttributeValue:
 			raise UIAMixedAttributeError
 		return val
+
+def splitUIAElementAttribs(attribsString):
+	"""Split an UIA Element attributes string into a dict of attribute keys and values.
+	An invalid attributes string does not cause an error, but strange results may be returned.
+	@param attribsString: The UIA Element attributes string to convert.
+	@type attribsString: str
+	@return: A dict of the attribute keys and values, where values are strings
+	@rtype: {str: str}
+	"""
+	attribsDict = {}
+	tmp = ""
+	key = ""
+	inEscape = False
+	for char in attribsString:
+		if inEscape:
+			tmp += char
+			inEscape = False
+		elif char == "\\":
+			inEscape = True
+		elif char == "=":
+			# We're about to move on to the value, so save the key and clear tmp.
+			key = tmp
+			tmp = ""
+		elif char == ";":
+			# We're about to move on to a new attribute.
+			if key:
+				# Add this key/value pair to the dict.
+				attribsDict[key] = tmp
+			key = ""
+			tmp = ""
+		else:
+			tmp += char
+	# If there was no trailing semi-colon, we need to handle the last attribute.
+	if key:
+		# Add this key/value pair to the dict.
+		attribsDict[key] = tmp
+	return attribsDict

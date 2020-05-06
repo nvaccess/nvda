@@ -4,6 +4,7 @@ from ctypes import POINTER, c_int
 from comtypes import BSTR
 from comtypes.safearray import _midlSAFEARRAY as SAFEARRAY
 from comtypes.automation import VARIANT
+import re
 import colors
 import aria
 import languageHandler
@@ -11,6 +12,7 @@ from logHandler import log
 import NVDAHelper
 import controlTypes
 import UIAHandler
+from UIAUtils import splitUIAElementAttribs
 import textInfos
 import NVDAObjects.UIA
 
@@ -18,6 +20,13 @@ _dll=NVDAHelper.getHelperLocalWin10Dll()
 initialize=_dll.uiaRemote_initialize
 _getTextContent=_dll.uiaRemote_getTextContent
 _getTextContent.restype=SAFEARRAY(VARIANT)
+
+# RegEx to get the value for the aria-current property. This will be looking for a the value of 'current'
+# in a list of strings like "something=true;current=date;". We want to capture one group, after the '='
+# character and before the ';' character.
+# This could be one of: "false", "true", "page", "step", "location", "date", "time"
+# "false" is ignored by the regEx and will not produce a match
+RE_ARIA_CURRENT_PROP_VALUE = re.compile("current=(?!false)(\w+);")
 
 _UIAPropIDs=[
 	UIAHandler.UIA_RuntimeIdPropertyId,
@@ -39,10 +48,11 @@ _UIAPropIDs=[
 	UIAHandler.UIA_IsTextPatternAvailablePropertyId,
 	UIAHandler.UIA_IsValuePatternAvailablePropertyId,
 	UIAHandler.UIA_ValueIsReadOnlyPropertyId,
+	UIAHandler.UIA_ValueValuePropertyId,
 	UIAHandler.UIA_IsExpandCollapsePatternAvailablePropertyId,
 	UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,
 	UIAHandler.UIA_ToggleToggleStatePropertyId,
-	UIAHandler.UIA_HelpTextPropertyId,
+	UIAHandler.UIA_FullDescriptionPropertyId,
 	UIAHandler.UIA_GridRowCountPropertyId,
 	UIAHandler.UIA_GridColumnCountPropertyId,
 	UIAHandler.UIA_GridItemRowPropertyId,
@@ -50,6 +60,7 @@ _UIAPropIDs=[
 ]
 
 def _fillControlField(field,ancestors):
+	containsValidText = field.get('containsValidText')
 	props = field['_UIAProperties']
 	UIARuntimeID = props[UIAHandler.UIA_RuntimeIdPropertyId]
 	field['_UIARuntimeID'] = UIARuntimeID
@@ -108,9 +119,6 @@ def _fillControlField(field,ancestors):
 	field['states'] = states
 	nameIsContent = UIAControlType in NVDAObjects.UIA.UIATextInfo.UIAControlTypesWhereNameIsContent
 	field['nameIsContent'] = nameIsContent
-	if not nameIsContent:
-		field['name'] = props[UIAHandler.UIA_NamePropertyId]
-	field['description'] = props[UIAHandler.UIA_HelpTextPropertyId]
 	if len(ancestors) > 0:
 		parentTableID = ancestors[-1].get('table-id')
 		if parentTableID is not None:
@@ -152,12 +160,45 @@ def _fillControlField(field,ancestors):
 	):
 		field['isBlock']=True
 	ariaProperties = splitUIAElementAttribs(
-			props[UIAHandler.UIA_AriaPropertiesPropertyId]
-		)
+		UIAAriaProperties
+	)
 	# ARIA roledescription
 	field['roleText'] = ariaProperties.get('roledescription')
 	if role==controlTypes.ROLE_COMBOBOX and UIAIsTextPatternAvailable:
 		field['states'].add(controlTypes.STATE_EDITABLE)
+	isCurrentMatch = RE_ARIA_CURRENT_PROP_VALUE.search(UIAAriaProperties)
+	if isCurrentMatch:
+		field['current'] = isCurrentMatch.group(1)
+	placeholder = ariaProperties.get('placeholder', None)
+	if placeholder and not containsValidText:
+		field['placeholder'] = placeholder
+	name = props[UIAHandler.UIA_NamePropertyId]
+	if not nameIsContent:
+		field['name'] = name
+	description = props[UIAHandler.UIA_FullDescriptionPropertyId]
+	field['description'] = description
+	value = props[UIAHandler.UIA_ValueValuePropertyId]
+	# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
+	# Later processing in Edge's getTextWithFields will remove descendant content from fields with a content attribute.
+	hasAriaLabel = 'label' in ariaProperties
+	hasAriaLabelledby = 'labelledby' in ariaProperties
+	if nameIsContent:
+		content=""
+		if hasAriaLabel or hasAriaLabelledby:
+			content = name
+		if not content:
+			if role not in (controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_EDITABLETEXT) and not containsValidText:
+				content = description or name
+		if content:
+			field['content']=content
+	elif role!=controlTypes.ROLE_EDITABLETEXT and field.get('embedded'):
+		field['content'] = value
+		if role == controlTypes.ROLE_GROUPING:
+			field['role']=controlTypes.ROLE_EMBEDDEDOBJECT
+			if not value:
+				field['content'] = name
+	elif hasAriaLabel or hasAriaLabelledby:
+		field['alwaysReportName'] = True
 	field['_startOfNode']=True
 	field['_endOfNode']=True
 
@@ -194,8 +235,8 @@ def _getUIATextAttributeIDsForFormatConfig(formatConfig):
 	IDs.append(UIAHandler.UIA_CultureAttributeId)
 	return IDs
 
-def _fillFormatField(formatField,ancestors):
-	attribs = field['_UIATextAttributes']
+def _fillFormatField(formatField,ancestors,formatConfig):
+	attribs = formatField['_UIATextAttributes']
 	if formatConfig["reportFontName"]:
 		val=attribs.get(UIAHandler.UIA_FontNameAttributeId)
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
@@ -314,10 +355,12 @@ def getTextWithFields(rootElement,textRange,formatConfig):
 	index=0
 	contentCount=len(content)
 	controlStack=[]
+	controlFieldJustEnded = False
 	while index<contentCount:
 		cmd=content[index]
 		index+=1
 		if cmd==textContentCommand_elementStart:
+			controlFieldJustEnded = False
 			endIndex=index+propCount
 			propValues=content[index:endIndex]
 			props={propIDs[x]:propValues[x] for x in range(propCount)}
@@ -337,28 +380,57 @@ def getTextWithFields(rootElement,textRange,formatConfig):
 			formatField['_UIATextAttributes'] = attribs
 			fields.append(textInfos.FieldCommand("formatChange",formatField))
 			text=content[endIndex]
-			if text:
+			containsValidText = text and not text.isspace()
+			if text and not (controlFieldJustEnded and not containsValidText):
 				fields.append(text)
-				if not text.isspace() and len(controlStack)>0:
+				if containsValidText and len(controlStack)>0:
 					controlStack[-1]['containsValidText'] = True
 			else:
+				# As we didn't adde the text
+				# Also remove the previously added formatField for that text.
 				del fields[-1]
 			index=endIndex+1
 		elif cmd==textContentCommand_elementEnd:
+			controlFieldJustEnded = True
 			controlField=controlStack.pop()
-			if len(controlStack)>0 and controlField.get('_containsValidTexdt'):
+			if len(controlStack)>0 and controlField.get('containsValidTexdt'):
 				controlStack[-1]['containsValidText']=True
 			fields.append(textInfos.FieldCommand("controlEnd",controlField))
 		else:
 			raise RuntimeError(f"unknown command {cmd}")
 	controlStack=[]
 	for field in fields:
-		if isinstance(field,textInfos.FieldCommand)
+		if isinstance(field,textInfos.FieldCommand):
 			if field.command == "controlStart":
 				_fillControlField(field.field,ancestors=controlStack)
 				controlStack.append(field.field)
 			elif field.command == "formatChange":
-				_fillFormatField(field.field,ancestors=controlStack)
+				_fillFormatField(field.field,controlStack,formatConfig)
 			elif field.command == "controlEnd":
 				controlStack.pop()
+	# chop fields off the end incorrectly placed there by Edge
+	# This can happen if expanding to line covers element start chars at its end
+	startCount=0
+	lastStartIndex=None
+	numFields=len(fields)
+	for index in range(numFields-1,-1,-1):
+		field=fields[index]
+		if isinstance(field,str):
+			break
+		elif isinstance(field,textInfos.FieldCommand) and field.command=="controlStart" and not field.field.get('embedded'):
+			startCount+=1
+			lastStartIndex=index
+	if lastStartIndex:
+		del fields[lastStartIndex:lastStartIndex+(startCount*2)]
+	# Remove any content from fields with a content attribute
+	numFields=len(fields)
+	curField=None
+	for index in range(numFields-1,-1,-1):
+		field=fields[index]
+		if not curField and isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd" and field.field.get('content'):
+			curField=field.field
+			endIndex=index
+		elif curField and isinstance(field,textInfos.FieldCommand) and field.command=="controlStart" and field.field is curField:
+			fields[index+1:endIndex]=" "
+			curField=None
 	return fields
