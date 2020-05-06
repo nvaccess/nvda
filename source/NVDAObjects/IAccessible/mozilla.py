@@ -34,9 +34,6 @@ class Mozilla(ia2Web.Ia2Web):
 				presType=self.presType_layout
 		return presType
 
-class BrokenFocusedState(Mozilla):
-	shouldAllowIAccessibleFocusEvent=True
-
 class Document(ia2Web.Document):
 
 	def _get_parent(self):
@@ -136,9 +133,6 @@ def findExtraOverlayClasses(obj, clsList):
 		if hasattr(parent, "IAccessibleTableObject") or hasattr(parent, "IAccessibleTable2Object"):
 			clsList.append(RowWithFakeNavigation)
 
-	if iaRole in _IAccessibleRolesWithBrokenFocusedState:
-		clsList.append(BrokenFocusedState)
-
 	ia2Web.findExtraOverlayClasses(obj, clsList,
 		baseClass=Mozilla, documentClass=Document)
 
@@ -148,14 +142,3 @@ _IAccessibleRolesToOverlayClasses = {
 	"embed": EmbeddedObject,
 	"object": EmbeddedObject,
 }
-
-#: Roles that mightn't set the focused state when they are focused.
-_IAccessibleRolesWithBrokenFocusedState = frozenset((
-	oleacc.ROLE_SYSTEM_COMBOBOX,
-	oleacc.ROLE_SYSTEM_LIST,
-	oleacc.ROLE_SYSTEM_LISTITEM,
-	oleacc.ROLE_SYSTEM_DOCUMENT,
-	oleacc.ROLE_SYSTEM_APPLICATION,
-	oleacc.ROLE_SYSTEM_TABLE,
-	oleacc.ROLE_SYSTEM_OUTLINE,
-))
