@@ -22,23 +22,6 @@ from . import ia2Web
 
 class Mozilla(ia2Web.Ia2Web):
 
-	def _get_parent(self):
-		#Special code to support Mozilla node_child_of relation (for comboboxes)
-		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVRELATION_NODE_CHILD_OF)
-		if res and res!=(self.IAccessibleObject,self.IAccessibleChildID):
-			#Gecko can sometimes give back a broken application node with a windowHandle of 0
-			#The application node is annoying, even if it wasn't broken
-			#So only use the node_child_of object if it has a valid IAccessible2 windowHandle
-			try:
-				windowHandle=res[0].windowHandle
-			except (COMError,AttributeError):
-				windowHandle=None
-			if windowHandle:
-				newObj=IAccessible(windowHandle=windowHandle,IAccessibleObject=res[0],IAccessibleChildID=res[1])
-				if newObj:
-					return newObj
-		return super(Mozilla,self).parent
-
 	def _get_states(self):
 		states = super(Mozilla, self).states
 		if self.IAccessibleStates & oleacc.STATE_SYSTEM_MARQUEED:
