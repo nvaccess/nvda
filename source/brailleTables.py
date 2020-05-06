@@ -15,9 +15,6 @@ from typing import BinaryIO, Generator
 #: The directory in which liblouis braille tables are located.
 TABLES_DIR = r"louis\tables"
 
-#: Table to use for both input and output if configuration is invalid.
-FALLBACK_TABLE_NAME = "en-ueb-g1.ctb"
-
 #: List of directories for braille tables lookup, including custom tables.
 tablesDirs = [TABLES_DIR]
 
@@ -59,10 +56,6 @@ def getTable(fileName: str) -> BrailleTable:
 	@raise LookupError: If there is no table registered with this file name.
 	"""
 	return _tables[fileName]
-
-
-def getFallbackTable() -> BrailleTable:
-	return getTable(FALLBACK_TABLE_NAME)
 
 
 def listTables():

@@ -2080,11 +2080,12 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			try:
 				self._table = brailleTables.getTable(tableName)
 			except LookupError:
+				defaultTableName = config.conf.getConfigValidation(("braille", "translationTable")).default
 				log.error(
 					f"Invalid translation table ({tableName}), "
-					f"falling back to default ({brailleTables.FALLBACK_TABLE_NAME})."
+					f"falling back to default ({defaultTableName})."
 				)
-				self._table = brailleTables.getFallbackTable()
+				self._table = brailleTables.getTable(defaultTableName)
 
 	def handleDisplayUnavailable(self):
 		"""Called when the braille display becomes unavailable.
