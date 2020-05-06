@@ -5,12 +5,9 @@
 #See the file COPYING for more details.
 #Copyright (C) 2006-2017 NV Access Limited, Peter Vágner
 
-from collections import namedtuple
 import IAccessibleHandler
 import oleacc
 import winUser
-from comtypes import IServiceProvider, COMError
-import eventHandler
 import controlTypes
 from . import IAccessible, Dialog, WindowRoot
 from logHandler import log
@@ -37,21 +34,6 @@ class Mozilla(ia2Web.Ia2Web):
 				presType=self.presType_layout
 		return presType
 
-class Gecko1_9(Mozilla):
-
-	def _get_description(self):
-		rawDescription=super(Mozilla,self).description
-		if isinstance(rawDescription,str) and rawDescription.startswith('Description: '):
-			return rawDescription[13:]
-		else:
-			return ""
-
-	def event_scrollingStart(self):
-		#Firefox 3.6 fires scrollingStart on leaf nodes which is not useful to us.
-		#Bounce the event up to the node's parent so that any possible virtualBuffers will detect it.
-		if self.role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in self.states:
-			eventHandler.queueEvent("scrollingStart",self.parent)
-
 class BrokenFocusedState(Mozilla):
 	shouldAllowIAccessibleFocusEvent=True
 
@@ -73,15 +55,9 @@ class Document(ia2Web.Document):
 		return IAccessible(IAccessibleObject=res[0], IAccessibleChildID=res[1])
 
 	def _get_treeInterceptorClass(self):
-		ver=getGeckoVersion(self)
-		if (not ver or ver.full.startswith('1.9')) and self.windowClassName!="MozillaContentWindowClass":
-			return super(Document,self).treeInterceptorClass
 		if controlTypes.STATE_EDITABLE not in self.states:
 			import virtualBuffers.gecko_ia2
-			if ver and ver.major < 14:
-				return virtualBuffers.gecko_ia2.Gecko_ia2Pre14
-			else:
-				return virtualBuffers.gecko_ia2.Gecko_ia2
+			return virtualBuffers.gecko_ia2.Gecko_ia2
 		return super(Document,self).treeInterceptorClass
 
 class EmbeddedObject(Mozilla):
@@ -94,24 +70,6 @@ class EmbeddedObject(Mozilla):
 			return False
 		return super(EmbeddedObject, self).shouldAllowIAccessibleFocusEvent
 
-GeckoVersion = namedtuple("GeckoVersion", ("full", "major"))
-def getGeckoVersion(obj):
-	appMod = obj.appModule
-	try:
-		return appMod._geckoVersion
-	except AttributeError:
-		pass
-	try:
-		full = obj.IAccessibleObject.QueryInterface(IServiceProvider).QueryService(IAccessibleHandler.IAccessibleApplication._iid_, IAccessibleHandler.IAccessibleApplication).toolkitVersion
-	except COMError:
-		return None
-	try:
-		major = int(full.split(".", 1)[0])
-	except ValueError:
-		major = None
-	ver = appMod._geckoVersion = GeckoVersion(full, major)
-	return ver
-
 class GeckoPluginWindowRoot(WindowRoot):
 	parentUsesSuperOnWindowRootIAccessible = False
 
@@ -121,20 +79,18 @@ class GeckoPluginWindowRoot(WindowRoot):
 			# Skip the window wrapping the plugin window,
 			# which doesn't expose a Gecko accessible in Gecko >= 11.
 			parent=parent.parent.parent
-		ver=getGeckoVersion(parent)
-		if ver and ver.major!=1:
-			res=IAccessibleHandler.accNavigate(parent.IAccessibleObject,0,IAccessibleHandler.NAVRELATION_EMBEDS)
-			if res:
-				obj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
-				if obj:
-					if controlTypes.STATE_OFFSCREEN not in obj.states:
-						return obj
-					else:
-						log.debugWarning("NAVRELATION_EMBEDS returned an offscreen document, name %r" % obj.name)
+		res = IAccessibleHandler.accNavigate(parent.IAccessibleObject, 0, IAccessibleHandler.NAVRELATION_EMBEDS)
+		if res:
+			obj = IAccessible(IAccessibleObject=res[0], IAccessibleChildID=res[1])
+			if obj:
+				if controlTypes.STATE_OFFSCREEN not in obj.states:
+					return obj
 				else:
-					log.debugWarning("NAVRELATION_EMBEDS returned an invalid object")
+					log.debugWarning("NAVRELATION_EMBEDS returned an offscreen document, name %r" % obj.name)
 			else:
-				log.debugWarning("NAVRELATION_EMBEDS failed")
+				log.debugWarning("NAVRELATION_EMBEDS returned an invalid object")
+		else:
+			log.debugWarning("NAVRELATION_EMBEDS failed")
 		return parent
 
 class TextLeaf(Mozilla):
@@ -146,7 +102,6 @@ def findExtraOverlayClasses(obj, clsList):
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
 	"""
 	if not isinstance(obj.IAccessibleObject, IAccessibleHandler.IAccessible2):
-		# We require IAccessible2; i.e. Gecko >= 1.9.
 		return
 
 	iaRole = obj.IAccessibleRole
@@ -183,10 +138,6 @@ def findExtraOverlayClasses(obj, clsList):
 
 	if iaRole in _IAccessibleRolesWithBrokenFocusedState:
 		clsList.append(BrokenFocusedState)
-
-	ver = getGeckoVersion(obj)
-	if ver and ver.full.startswith("1.9"):
-		clsList.append(Gecko1_9)
 
 	ia2Web.findExtraOverlayClasses(obj, clsList,
 		baseClass=Mozilla, documentClass=Document)

@@ -96,17 +96,6 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 		elif not isWindow:
 			return
 
-		if childID < 0:
-			tempWindow = window
-			while (
-				tempWindow
-				and not winUser.getWindowStyle(tempWindow) & winUser.WS_POPUP
-				and winUser.getClassName(tempWindow) == "MozillaWindowClass"
-			):
-				tempWindow = winUser.getAncestor(tempWindow, winUser.GA_PARENT)
-			if tempWindow and winUser.getClassName(tempWindow).startswith('Mozilla'):
-				window = tempWindow
-
 		windowClassName = winUser.getClassName(window)
 		if windowClassName == "ConsoleWindowClass":
 			# #10113: we need to use winEvents to track the real thread for console windows.
