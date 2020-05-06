@@ -9,12 +9,9 @@ import IAccessibleHandler
 import oleacc
 import winUser
 import controlTypes
-from . import IAccessible, Dialog, WindowRoot
+from . import IAccessible, WindowRoot
 from logHandler import log
-import textInfos.offsets
 from NVDAObjects.behaviors import RowWithFakeNavigation
-from virtualBuffers import VirtualBuffer
-from . import IA2TextTextInfo
 from . import ia2Web
 
 class Mozilla(ia2Web.Ia2Web):
