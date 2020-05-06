@@ -50,7 +50,7 @@ from .commands import (  # noqa: F401
 	WaveFileCommand,
 	ConfigProfileTriggerCommand,
 )
-
+from . import types
 from .types import (
 	SpeechSequence,
 	SequenceItemT,
