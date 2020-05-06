@@ -1,6 +1,6 @@
 #locale/de/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2018 NVDA Contributors
+#Copyright (c) 2011-2020 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -15,7 +15,7 @@ complexSymbols:
 # Others
 decimal point	(?<![^\d -])\,(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥₹.]?\d)
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 thousands separator	(?<=\d)\.(?=\d{3})
 date separator	(?<=\d\d)\.(?=\d\d)
 
@@ -60,6 +60,7 @@ $	Dollar	all	norep
 )	Runde Klammer zu	most	always
 *	Stern	some
 +	Plus	some
+−	Minus	some
 ,	Komma	all	always
 -	Bindestrich	most
 .	Punkt	some

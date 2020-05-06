@@ -15,7 +15,7 @@ complexSymbols:
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥.]?\d)
++negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -56,6 +56,7 @@ $	đô la	all	norep
 )	đóng ngoặc tròn	most	always
 *	sao	some
 +	cộng	some
+−	trừ	some
 ,	phẩy	all	always
 -	gạch ngang	most
 .	chấm	some

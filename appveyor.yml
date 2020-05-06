@@ -119,6 +119,7 @@ build_script:
 
 before_test:
  # install required packages
+ - py -m pip install --upgrade pip
  - py -m pip install -r tests/system/requirements.txt -r tests/lint/lintInstall/requirements.txt
  - mkdir testOutput
  - mkdir testOutput\unit
@@ -172,7 +173,7 @@ test_script:
       git diff -U0 FETCH_HEAD...HEAD > $prDiff
       $flake8Config = "$lintSource\flake8.ini"
       $flake8Output = "$lintOutput\PR-Flake8.txt"
-      type "$prDiff" | py -m flake8 --diff --output-file="$flake8Output" --tee --config="$flake8Config"
+      type "$prDiff" | py -Xutf8 -m flake8 --diff --output-file="$flake8Output" --tee --config="$flake8Config"
       if($LastExitCode -ne 0) {
        $errorCode=$LastExitCode
        Add-AppveyorMessage "PR introduces Flake8 errors"
@@ -190,8 +191,13 @@ test_script:
  - ps: |
      $testOutput = (Resolve-Path .\testOutput\)
      $systemTestOutput = (Resolve-Path "$testOutput\system")
-     $testSource = "./tests/system"
-     py -m robot --loglevel DEBUG -d $systemTestOutput -x systemTests.xml -v whichNVDA:installed -P "$testSource/libraries" "$testSource"
+     $testSource = ".\tests\system\robot"
+
+     $robotArgs = '--argumentfile', '.\tests\system\robotArgs.robot'
+     # useInstalledNVDA must come after args file to override the whichNVDA value
+     $useInstalledNVDA = '--variable', 'whichNVDA:installed'
+
+     py -m robot $robotArgs $useInstalledNVDA $testSource
      Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
      Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
      if($LastExitCode -ne 0) {
@@ -248,9 +254,8 @@ deploy_script:
       }
       ConvertTo-Json -InputObject $data -Compress | ssh nvaccess@exbi.nvaccess.org nvdaAppveyorHook
       # Upload symbols to Mozilla.
-      Start-FileDownload https://github.com/mozilla/gecko-dev/raw/12c357c/toolkit/crashreporter/tools/win32/dump_syms_vc1800.exe -FileName appveyor\dump_syms.exe
-      py -m pip install requests
-      py appveyor\mozillaSyms.py
+      py -m pip install --no-warn-script-location requests
+       py appveyor\mozillaSyms.py
      }
 
 on_finish:

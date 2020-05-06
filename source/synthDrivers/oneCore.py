@@ -288,9 +288,19 @@ class SynthDriver(SynthDriver):
 
 	def _processQueue(self):
 		if not self._queuedSpeech:
-			# There are no more queued utterances at this point, so call idle.
+			# There are no more queued utterances at this point, so call sync.
 			# This blocks while waiting for the final chunk to play,
 			# so by the time this is done, there might be something queued.
+			# #10721: We use sync instead of idle because idle closes the audio
+			# device. If there's something in the queue after playing the final chunk,
+			# that will result in WaveOutOpen being called in the callback when we
+			# push the next chunk of audio. We *really* don't want this because calling
+			# WaveOutOpen blocks for ~100 ms if called from the callback when the SSML
+			# includes marks, resulting in lag between utterances.
+			log.debug("Calling sync on audio player")
+			self._player.sync()
+		if not self._queuedSpeech:
+			# There's still nothing in the queue, so it's okay to call idle now.
 			log.debug("Calling idle on audio player")
 			self._player.idle()
 			synthDoneSpeaking.notify(synth=self)

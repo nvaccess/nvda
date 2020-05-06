@@ -609,14 +609,12 @@ def VkKeyScanEx(ch, hkl):
 
 def ScreenToClient(hwnd, x, y):
 	point = POINT(x, y)
-	if not user32.ScreenToClient(hwnd, byref(point)):
-		raise WinError()
+	user32.ScreenToClient(hwnd, byref(point))
 	return point.x, point.y
 
 def ClientToScreen(hwnd, x, y):
 	point = POINT(x, y)
-	if not user32.ClientToScreen(hwnd, byref(point)):
-		raise WinError()
+	user32.ClientToScreen(hwnd, byref(point))
 	return point.x, point.y
 
 def NotifyWinEvent(event, hwnd, idObject, idChild):
