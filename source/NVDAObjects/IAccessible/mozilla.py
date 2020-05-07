@@ -59,6 +59,21 @@ class BrokenFocusedState(Mozilla):
 
 class Document(ia2Web.Document):
 
+	def _get_parent(self):
+		res = IAccessibleHandler.accParent(
+			self.IAccessibleObject, self.IAccessibleChildID
+		)
+		if not res:
+			# accParent is broken in Firefox for same-process iframe documents.
+			# Use NODE_CHILD_OF instead.
+			res = IAccessibleHandler.accNavigate(
+				self.IAccessibleObject, self.IAccessibleChildID,
+				IAccessibleHandler.NAVRELATION_NODE_CHILD_OF
+			)
+		if not res:
+			return None
+		return IAccessible(IAccessibleObject=res[0], IAccessibleChildID=res[1])
+
 	def _get_treeInterceptorClass(self):
 		ver=getGeckoVersion(self)
 		if (not ver or ver.full.startswith('1.9')) and self.windowClassName!="MozillaContentWindowClass":
