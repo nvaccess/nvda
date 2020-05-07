@@ -28,6 +28,11 @@ What's New in NVDA
 - NVDA is no longer extremely sluggish when moving within the list of items in 1Password. (#10508)
 - The Windows OneCore speech synthesizer no longer lags between utterances. (#10721)
 - NVDA no longer freezes when you open the context menu for 1Password in the system notification area. (#11017)
+- In Office 2013 and older:
+  - Ribbons are announced when focus moves to them for the first time. (#4207)
+  - Context menu items  are once again reported properly. (#9252)
+  - Ribbon sections are consistently announced when navigating with Control+arrows. (#7067)
+- In browse mode in Mozilla Firefox and Google Chrome, text no longer incorrectly appears on a separate line when web content uses CSS display: inline-flex. (#11075)
 
 
 == Changes For Developers ==

@@ -733,11 +733,14 @@ class GeneralSettingsPanel(SettingsPanel):
 
 		self.copySettingsButton = wx.Button(
 			self,
-			# Translators: The label for a button in general settings to copy
-			# current user settings to system settings (to allow current
-			# settings to be used in secure screens such as User Account
-			# Control (UAC) dialog).
-			label=_("Use currently saved settings during sign-in and on secure screens (requires administrator privileges)")  # noqa: E501 line too long
+			label=_(
+				# Translators: The label for a button in general settings to copy
+				# current user settings to system settings (to allow current
+				# settings to be used in secure screens such as User Account
+				# Control (UAC) dialog).
+				"Use currently saved settings during sign-in and on secure screens"
+				" (requires administrator privileges)"
+			)
 		)
 		self.copySettingsButton.Bind(wx.EVT_BUTTON,self.onCopySettings)
 		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
@@ -768,9 +771,9 @@ class GeneralSettingsPanel(SettingsPanel):
 	def onCopySettings(self,evt):
 		addonsDirPath = os.path.join(globalVars.appArgs.configPath, 'addons')
 		if os.path.isdir(addonsDirPath) and 0 < len(os.listdir(addonsDirPath)):
-			# Translators: A message to warn the user when attempting to copy current
-			# settings to system settings.
 			message = _(
+				# Translators: A message to warn the user when attempting to copy current
+				# settings to system settings.
 				"Add-ons were detected in your user settings directory. "
 				"Copying these to the system profile could be a security risk. "
 				"Do you still wish to copy your settings?"
@@ -1409,10 +1412,10 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.trustVoiceLanguageCheckbox.SetValue(config.conf["speech"]["trustVoiceLanguage"])
 
-		# Translators: This is the label for a checkbox in the
-		# voice settings panel (if checked, data from the unicode CLDR will be used
-		# to speak emoji descriptions).
 		includeCLDRText = _(
+			# Translators: This is the label for a checkbox in the
+			# voice settings panel (if checked, data from the unicode CLDR will be used
+			# to speak emoji descriptions).
 			"Include Unicode Consortium data (including emoji) when processing characters and symbols"
 		)
 		self.includeCLDRCheckbox = settingsSizerHelper.addItem(
@@ -2490,8 +2493,8 @@ class AdvancedPanel(SettingsPanel):
 	# Advanced settings panel
 	warningHeader = _("Warning!")
 
-	# Translators: This is a label appearing on the Advanced settings panel.
 	warningExplanation = _(
+		# Translators: This is a label appearing on the Advanced settings panel.
 		"The following settings are for advanced users. "
 		"Changing them may cause NVDA to function incorrectly. "
 		"Please only change these if you know what you are doing or "
@@ -2519,8 +2522,8 @@ class AdvancedPanel(SettingsPanel):
 		self.windowText = warningGroup.addItem(wx.StaticText(warningBox, label=self.warningExplanation))
 		self.windowText.Wrap(self.scaleSize(544))
 
-		# Translators: This is the label for a checkbox in the Advanced settings panel.
 		enableAdvancedControlslabel = _(
+			# Translators: This is the label for a checkbox in the Advanced settings panel.
 			"I understand that changing these settings may cause NVDA to function incorrectly."
 		)
 		self.enableControlsCheckBox = warningGroup.addItem(
@@ -3191,9 +3194,9 @@ def showTerminationErrorForProviders(
 		)
 	else:
 		providerNames = ", ".join(provider.displayName for provider in providers)
-		# Translators: This message is presented when
-		# NVDA is unable to terminate multiple vision enhancement providers.
 		message = _(
+			# Translators: This message is presented when
+			# NVDA is unable to terminate multiple vision enhancement providers.
 			"Could not gracefully terminate the following vision enhancement providers:\n"
 			"{providerNames}"
 		).format(providerNames=providerNames)
