@@ -2324,10 +2324,10 @@ class AdvancedPanelControls(wx.Panel):
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
-		label = _("Allow &Chromium based browsers to use UI Automation when available")
+		label = _("Allow Microsoft Edge and other &Chromium based browsers to use UI Automation when available")
 		chromiumChoicesAndLabels = {
 			# Translators: The label of a combobox option in the advanced settings panel.
-			"auto": _("Default (no)"),
+			"auto": _("Only when necessary"),
 			# Translators: The label of a combobox option in the advanced settings panel.
 			"yes": _("Yes"),
 			# Translators: The label of a combobox option in the advanced settings panel.
