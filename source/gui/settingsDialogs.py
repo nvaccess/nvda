@@ -2251,6 +2251,7 @@ class UwpOcrPanel(SettingsPanel):
 		lang = self.languageCodes[self.languageChoice.Selection]
 		config.conf["uwpOcr"]["language"] = lang
 
+
 class AdvancedPanelControls(wx.Panel):
 	"""Holds the actual controls for the Advanced Settings panel, this allows the state of the controls to
 	be more easily managed.
@@ -2340,6 +2341,41 @@ class AdvancedPanelControls(wx.Panel):
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
+		label = _("Speech")
+		speechGroup = guiHelper.BoxSizerHelper(
+			parent=self,
+			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+		)
+		sHelper.addItem(speechGroup)
+
+		expiredFocusSpeechChoices = [
+			# Translators: Label for the 'Cancel speech for expired &focus events' combobox
+			# in the Advanced settings panel.
+			_("Default (No)"),
+			# Translators: Label for the 'Cancel speech for expired &focus events' combobox
+			# in the Advanced settings panel.
+			_("Yes"),
+			# Translators: Label for the 'Cancel speech for expired &focus events' combobox
+			# in the Advanced settings panel.
+			_("No"),
+		]
+
+		# Translators: This is the label for combobox in the Advanced settings panel.
+		cancelExpiredFocusSpeechText = _("Attempt to cancel speech for expired focus events:")
+		self.cancelExpiredFocusSpeechCombo: wx.Choice = speechGroup.addLabeledControl(
+			cancelExpiredFocusSpeechText,
+			wx.Choice,
+			choices=expiredFocusSpeechChoices
+		)
+		self.cancelExpiredFocusSpeechCombo.SetSelection(
+			config.conf["featureFlag"]["cancelExpiredFocusSpeech"]
+		)
+		self.cancelExpiredFocusSpeechCombo.defaultValue = self._getDefaultValue(
+			["featureFlag", "cancelExpiredFocusSpeech"]
+		)
+
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
 		label = _("Browse mode")
 		browseModeGroup = guiHelper.BoxSizerHelper(
 			parent=self,
@@ -2393,6 +2429,7 @@ class AdvancedPanelControls(wx.Panel):
 			"timeSinceInput",
 			"vision",
 			"speech",
+			"speechManager",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
@@ -2427,6 +2464,7 @@ class AdvancedPanelControls(wx.Panel):
 			and self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue
 			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
+			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
 			and (
 				self.autoFocusFocusableElementsCheckBox.IsChecked()
@@ -2442,6 +2480,7 @@ class AdvancedPanelControls(wx.Panel):
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
 		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue == 'UIA')
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
+		self.cancelExpiredFocusSpeechCombo.SetValue(self.cancelExpiredFocusSpeechCombo.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
 		self.autoFocusFocusableElementsCheckBox.SetValue(self.autoFocusFocusableElementsCheckBox.defaultValue)
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
@@ -2457,6 +2496,7 @@ class AdvancedPanelControls(wx.Panel):
 		else:
 			config.conf['UIA']['winConsoleImplementation'] = "auto"
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
+		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = self.cancelExpiredFocusSpeechCombo.GetSelection()
 		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = self.autoFocusFocusableElementsCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
