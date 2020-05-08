@@ -40,16 +40,16 @@ def parseIntervalToTimestamp(interval):
 	return calendar.timegm(time.strptime(interval.strip(), format))
 
 class AppModule(appModuleHandler.AppModule):
-	statusBar=None
+	_statusBar=None
 
 	def event_gainFocus(self, obj, nextHandler):
-		if not self.statusBar: self.statusBar=api.getStatusBar()
+		if not self._statusBar: self._statusBar=api.getStatusBar()
 		nextHandler()
 
 	def getElapsedAndTotal(self):
 		empty = statusBarTimes(None, None)
-		if not self.statusBar: return empty
-		statusBarContents = self.statusBar.firstChild.name
+		if not self._statusBar: return empty
+		statusBarContents = self._statusBar.firstChild.name
 		try:
 			playingTimes = statusBarContents.split("|")[4].split("/")
 			return statusBarTimes(playingTimes[0], playingTimes[1])
