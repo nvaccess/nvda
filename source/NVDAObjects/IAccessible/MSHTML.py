@@ -330,7 +330,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			else:
 				raise TypeError("Bookmark was for %s type, not for %s type"%(position.infoClass.__name__,self.__class__.__name__))
 		else:
-			raise NotImplementedError("position: %s"%position)
+			raise NotImplementedError("position: %s" % (position,))
 
 	def expand(self,unit):
 		if unit==textInfos.UNIT_PARAGRAPH:

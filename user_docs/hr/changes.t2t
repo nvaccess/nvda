@@ -8,6 +8,7 @@
 
 
 = 2020.1 =
+Novosti u ovoj inačici uključuju podrška novih brajičnih redaka firmi HumanWare i APH, te puno važnih ispravaka grešaka poput ponovnog omogućavanja čitanja matematičkog sadržaja u Microsoft Wordu koristeći MathPlayer / MathType.
 
 == Nove značajke ==
 - Označena stavka se sada ponovno pokazuje u načinu pregleda u Chromeu, slično kao u  NVDA 2019.1. (#10713)
@@ -18,21 +19,25 @@
 == Izmjene ==
 - NVDA će spriječiti sustav u pokušaju odlaska u status mirovanja prilikom izvršavanja naredbe čitaj sve. (#10643)
 - Podrška za izvanprocesne okvire u Mozilla Firefoxu. (#10707)
-- Nadograđen liblouis brajični prevoditelj na inačicu 3.12 (#10161)
-
-
-== Izmjene za razvojne programere ==
-Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+- Nadograđen liblouis brajični prevoditelj na inačicu 3.12. (#10161)
 
 
 == Ispravke grešaka ==
-- Ispravljena pogreška, koja je onemogučavala čitanje znaka za minus (U+2212) (#10633)
+- Ispravljena pogreška, koja je onemogućavala čitanje znaka za minus (U+2212) (#10633)
 - Prilikom instalacije dodataka iz upravitelja dodataka, Imena datoteka i mapa se ne izgovaraju dva puta. (#10620, #2395)
 - U Firefoxu, prilikom učitavanja Mastodona sa uključenim naprednim web sučeljem, sve se vremenske osi prikazuju pravilno u načinu čitanja. (#10776)
 - U načinu pregleda, NVDA sada izgovara "nije odabrano" za potvrdne okvire u kojima to prethodno nije bilo činjeno. (#10781)
 - ARIA kontrole preklopnika više ne izgovaraju zbunjujuće informacije kao što su to "nije pritisnuto odabrano" ili "pritisnuto odabrano". (#9187)
 - SAPI4 glasovi više ne odbijaju izgovarati većinu teksta. Bilješka prevoditelja: To se tiče sintetizatora govora koji ne stignu poslati informaciju čitaču zaslona da su primili informaciju o izgovorenom tekstu. (#10792)
-- NVDA može ponovno čitati i ulaziti u intterakciju sa matematičkim jednadžbama u Microsoft Wordu. (#10803)
+- NVDA može ponovno čitati i ulaziti u interakciju sa matematičkim jednadžbama u Microsoft Wordu. (#10803)
+- NVDA će od sada izgovarati neoznačeni tekst u modusu pregleda prilikom pritiska strelice kada je tekst označen. (#10731).
+- NVDA se više ne isključuje ako postoji greška inicijalizacije Espeaka. (#10607)
+- Greške prouzročeneUnicode kodnom stranicom pri prevedenom tipkovničkom prečacu više ne onemogućavaju stvaranje prečaca radne površine, Rješeno tako da će se instalacijski program vratiti na engleski tekst. (#5166, #6326)
+- Ulazeći i izlazeći iz popisa i tablica prilikom čitanja svega ili letimičnog čitanja više ne izgovara činjenicu o izlazu iz tablice ili popisa. (#10706)
+
+
+== Izmjene za razvojne programere ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
 = 2019.3 =

@@ -128,8 +128,9 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 				# Translators: a message in the installer telling the user NVDA is now located in a different place.
 				msg+=" "+_("The installation path for NVDA has changed. it will now  be installed in {path}").format(path=installer.defaultInstallPath)
 		if shouldAskAboutAddons:
-			# Translators: A message in the installer to let the user know that some addons are not compatible.
 			msg+=_(
+				# Translators: A message in the installer to let the user know that
+				# some addons are not compatible.
 				"\n\n"
 				"However, your NVDA configuration contains add-ons that are incompatible with this version of NVDA. "
 				"These add-ons will be disabled after installation. If you rely on these add-ons, "
@@ -157,7 +158,7 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 		)))
 
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
-		startOnLogonText = _("Use NVDA on the Windows &logon screen")
+		startOnLogonText = _("Start NVDA during sign-in")
 		self.startOnLogonCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=startOnLogonText))
 		if globalVars.appArgs.enableStartOnLogon is not None:
 			self.startOnLogonCheckbox.Value = globalVars.appArgs.enableStartOnLogon
@@ -236,11 +237,13 @@ class InstallingOverNewerVersionDialog(wx.Dialog, DpiScalingHelperMixin):
 		contentSizer = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		text = wx.StaticText(
 			self,
-			# Translators: A warning presented when the user attempts to downgrade NVDA
-			# to an older version.
 			label=_(
-				"You are attempting to install an earlier version of NVDA than the version currently installed. "
-				"If you really wish to revert to an earlier version, you should first cancel this installation "
+				# Translators: A warning presented when the user attempts to downgrade NVDA
+				# to an older version.
+				"You are attempting to install an earlier version of NVDA "
+				"than the version currently installed. "
+				"If you really wish to revert to an earlier version, "
+				"you should first cancel this installation "
 				"and completely uninstall NVDA before installing the earlier version."
 			))
 		text.Wrap(self.scaleSize(600))

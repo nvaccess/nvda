@@ -51,8 +51,9 @@ constexpr int formatConfig_reportRevisions = 0x8000;
 constexpr int formatConfig_reportParagraphIndentation = 0x10000;
 constexpr int formatConfig_includeLayoutTables = 0x20000;
 constexpr int formatConfig_reportLineSpacing = 0x40000;
+constexpr int formatConfig_reportSuperscriptsAndSubscripts = 0x80000;
 
-constexpr int formatConfig_fontFlags =(formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor);
+constexpr int formatConfig_fontFlags =(formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor|formatConfig_reportSuperscriptsAndSubscripts);
 constexpr int formatConfig_initialFormatFlags =(formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings|formatConfig_includeLayoutTables);
 
 constexpr wchar_t PAGE_BREAK_VALUE = L'\x0c';
@@ -635,11 +636,6 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_UNDERLINE,VT_I4,&iVal)==S_OK&&iVal) {
 					formatAttribsStream<<L"underline=\"1\" ";
 				}
-				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SUPERSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
-					formatAttribsStream<<L"text-position=\"super\" ";
-				} else if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SUBSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
-					formatAttribsStream<<L"text-position=\"sub\" ";
-				}
 				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_STRIKETHROUGH,VT_I4,&iVal)==S_OK&&iVal) {
 					formatAttribsStream<<L"strikethrough=\"1\" ";
 				} else if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_DOUBLESTRIKETHROUGH,VT_I4,&iVal)==S_OK&&iVal) {
@@ -648,6 +644,13 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_HIDDEN,VT_I4,&iVal)==S_OK&&iVal) {
 					formatAttribsStream<<L"hidden=\"1\" ";
 				}			
+			}
+			if(formatConfig&formatConfig_reportSuperscriptsAndSubscripts) {
+			    if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SUPERSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
+					formatAttribsStream<<L"text-position=\"super\" ";
+				} else if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SUBSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
+					formatAttribsStream<<L"text-position=\"sub\" ";
+				}
 			}
 		}
 	}

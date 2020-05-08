@@ -2026,6 +2026,8 @@ _staticMap={
 	("AkelEditW",oleacc.ROLE_SYSTEM_CLIENT):"akelEdit.AkelEdit",
 	("AkelEditA",oleacc.ROLE_SYSTEM_CLIENT):"akelEdit.AkelEdit",
 	("MSOUNISTAT",oleacc.ROLE_SYSTEM_CLIENT):"msOffice.MSOUNISTAT",
+	("NetUIHWND", oleacc.ROLE_SYSTEM_PROPERTYPAGE): "msOffice.StatusBar",
+	("NetUIHWND", oleacc.ROLE_SYSTEM_TOOLBAR): "msOffice.RibbonSection",
 	("QWidget",oleacc.ROLE_SYSTEM_CLIENT):"qt.Client",
 	("QWidget",oleacc.ROLE_SYSTEM_LIST):"qt.Container",
 	("Qt5QWindowIcon",oleacc.ROLE_SYSTEM_LIST):"qt.Container",

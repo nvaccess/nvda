@@ -4,6 +4,7 @@ What's New in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2020.1 =
+Highlights of this release include support for several new braille displays from HumanWare and APH, plus many other important bug fixes such as the ability to again read math in Microsoft Word using MathPlayer / MathType.
 
 == New Features ==
 - The currently selected item in listboxes is again presented in browse mode in Chrome, similar to NVDA 2019.1. (#10713)
@@ -12,9 +13,23 @@ What's New in NVDA
 
 
 == Changes ==
-- NVDA prevents the system from locking or going to sleep when in say all. (#10643)
+- NVDA will prevent the system from locking or going to sleep when in say all. (#10643)
 - Support for out-of-process iframes in Mozilla Firefox. (#10707)
-- Updated liblouis braille translator to version 3.12 (#10161)
+- Updated liblouis braille translator to version 3.12. (#10161)
+
+
+== Bug Fixes ==
+- Fixed NVDA not announcing Unicode minus symbol (U+2212). (#10633)
+- When installing add-on from add-ons manager, names of files and folders in the browse window are no longer reported twice. (#10620, #2395)
+- In Firefox, when loading Mastodon with the advanced web interface enabled, all timelines now render correctly in browse mode. (#10776)
+- In browse mode, NVDA now reports "not checked" for unchecked check boxes where it sometimes didn't previously. (#10781)
+- ARIA switch controls no longer report confusing information such as "not pressed checked" or "pressed checked". (#9187)
+- SAPI4 voices should no longer refuse to speak certain text. (#10792)
+- NVDA can again read and interact with math equations in Microsoft Word. (#10803)
+- NVDA will again announce text being unselected in browse mode if pressing an arrow key while text is selected. (#10731).
+- NVDA no longer exits if there is an error initializing eSpeak. (#10607)
+- Errors caused by unicode in translations for shortcuts no longer stop the installer, mitigated by falling back to the English text. (#5166, #6326)
+- Arrowing out and away from lists and tables in sayAll with skim reading enabled no longer continuously announces exiting the list or table. (#10706)
 
 
 == Changes for Developers ==
@@ -33,16 +48,7 @@ What's New in NVDA
   - Module level 'REASON_*' constants are deprecated.
 - Compiling NVDA dependencies now requires Visual Studio 2019 (16.2 or newer). (#10169)
 - Updated SCons to version 3.1.1. (#10169)
-
-
-== Bug Fixes ==
-- Fixed not announcing Unicode minus symbol (U+2212) (#10633)
-- When installing add-on from add-ons manager names of files and folders in the browse window are no longer reported twice. (#10620, #2395)
-- In Firefox, when loading Mastodon with the advanced web interface enabled, all timelines now render correctly in browse mode. (#10776)
-- In browse mode, NVDA now reports "not checked" for unchecked check boxes where it sometimes didn't previously. (#10781)
-- ARIA switch controls no longer report confusing information such as "not pressed checked" or "pressed checked". (#9187)
-- SAPI4 voices should no longer refuse to speak certain text. (#10792)
-- NVDA can again read and interact with math equations in Microsoft Word. (#10803)
+- Again allow behaviors._FakeTableCell to have no location defined (#10864)
 
 
 = 2019.3 =

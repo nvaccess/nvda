@@ -114,7 +114,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			states.discard(controlTypes.STATE_PRESSED)
 		attrs['role']=role
 		attrs['states']=states
-		if level is not "" and level is not None:
+		if level != "" and level is not None:
 			attrs['level']=level
 		if landmark:
 			attrs["landmark"]=landmark
