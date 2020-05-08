@@ -179,6 +179,19 @@ class Math(Ia2Web):
 				"Not supported in this browser or ISimpleDOM COM proxy not registered.", exc_info=True)
 			raise LookupError
 
+
+class Switch(Ia2Web):
+	# role="switch" gets mapped to IA2_ROLE_TOGGLE_BUTTON, but it uses the
+	# checked state instead of pressed. The simplest way to deal with this
+	# identity crisis is to map it to a check box.
+	role = controlTypes.ROLE_CHECKBOX
+
+	def _get_states(self):
+		states = super().states
+		states.discard(controlTypes.STATE_PRESSED)
+		return states
+
+
 def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	"""Determine the most appropriate class if this is an IA2 web object.
 	This should be called after finding any classes for the specific web implementation.
@@ -204,6 +217,8 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 		clsList.append(Dialog)
 	elif iaRole == oleacc.ROLE_SYSTEM_EQUATION:
 		clsList.append(Math)
+	elif xmlRoles[0] == "switch":
+		clsList.append(Switch)
 
 	if iaRole==oleacc.ROLE_SYSTEM_APPLICATION:
 		clsList.append(Application)

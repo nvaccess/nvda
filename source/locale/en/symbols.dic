@@ -15,7 +15,7 @@ complexSymbols:
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥.]?\d)
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -56,6 +56,7 @@ $	dollar	all	norep
 )	right paren	most	always
 *	star	some
 +	plus	some
+−	minus	some
 ,	comma	all	always
 -	dash	most
 .	dot	some

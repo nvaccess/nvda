@@ -15,7 +15,7 @@ import speech
 import controlTypes
 import textInfos
 import eventHandler
-
+import scriptHandler
 from . import IAccessible
 from displayModel import EditableTextDisplayModelTextInfo
 from NVDAObjects.window import DisplayModelEditableText
