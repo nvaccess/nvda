@@ -260,7 +260,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	scriptCategory = inputCore.SCRCAT_BROWSEMODE
-	disableAutoPassThrough = False
+	_disableAutoPassThrough = False
 	APPLICATION_ROLES = (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG)
 
 	def _get_currentNVDAObject(self):
@@ -551,6 +551,19 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		self.disableAutoPassThrough = False
 		reportPassThrough(self)
 	script_disablePassThrough.ignoreTreeInterceptorPassThrough = True
+
+	def _set_disableAutoPassThrough(self, state):
+		if (
+			state
+			and not config.conf["virtualBuffers"]["autoFocusFocusableElements"]
+			and self.passThrough
+		):
+			self._focusLastFocusableObject()
+		self._disableAutoPassThrough = state
+
+	def _get_disableAutoPassThrough(self):
+		return self._disableAutoPassThrough
+
 
 	__gestures={
 		"kb:NVDA+f7": "elementsList",
