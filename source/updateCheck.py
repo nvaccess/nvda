@@ -33,7 +33,8 @@ import ctypes.wintypes
 import ssl
 import wx
 import languageHandler
-import speech
+# Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
+import synthDriverHandler  # noqa: E402
 import braille
 import gui
 from gui import guiHelper
@@ -110,8 +111,8 @@ def checkForUpdate(auto=False):
 		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
 	}
 	if auto and allowUsageStats:
-		synthDriverClass=speech.getSynth().__class__
-		brailleDisplayClass=braille.handler.display.__class__ if braille.handler else None
+		synthDriverClass = synthDriverHandler.getSynth().__class__
+		brailleDisplayClass = braille.handler.display.__class__ if braille.handler else None
 		# Following are parameters sent purely for stats gathering.
 		#  If new parameters are added here, they must be documented in the userGuide for transparency.
 		extraParams={
@@ -225,7 +226,10 @@ class UpdateChecker(object):
 	def check(self):
 		"""Check for an update.
 		"""
-		t = threading.Thread(target=self._bg)
+		t = threading.Thread(
+			name=f"{self.__class__.__module__}.{self.check.__qualname__}",
+			target=self._bg
+		)
 		t.daemon = True
 		self._started()
 		t.start()
@@ -340,8 +344,9 @@ class UpdateResultDialog(wx.Dialog, DpiScalingHelperMixin):
 				backCompatToAPIVersion=self.backCompatTo
 			))
 			if showAddonCompat:
-				# Translators: A message indicating that some add-ons will be disabled unless reviewed before installation.
 				message = message + _(
+					# Translators: A message indicating that some add-ons will be disabled
+					# unless reviewed before installation.
 					"\n\n"
 					"However, your NVDA configuration contains add-ons that are incompatible with this version of NVDA. "
 					"These add-ons will be disabled after installation. If you rely on these add-ons, "
@@ -456,8 +461,9 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 			backCompatToAPIVersion=self.backCompatTo
 		))
 		if showAddonCompat:
-			# Translators: A message indicating that some add-ons will be disabled unless reviewed before installation.
 			message = message + _(
+				# Translators: A message indicating that some add-ons will be disabled
+				# unless reviewed before installation.
 				"\n"
 				"However, your NVDA configuration contains add-ons that are incompatible with this version of NVDA. "
 				"These add-ons will be disabled after installation. If you rely on these add-ons, "
@@ -580,7 +586,10 @@ class UpdateDownloader(object):
 			style=wx.PD_CAN_ABORT | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE,
 			parent=gui.mainFrame)
 		self._progressDialog.Raise()
-		t = threading.Thread(target=self._bg)
+		t = threading.Thread(
+			name=f"{self.__class__.__module__}.{self.start.__qualname__}",
+			target=self._bg
+		)
 		t.daemon = True
 		t.start()
 
@@ -691,8 +700,8 @@ class UpdateDownloader(object):
 		))
 
 class DonateRequestDialog(wx.Dialog):
-	# Translators: The message requesting donations from users.
 	MESSAGE = _(
+		# Translators: The message requesting donations from users.
 		"We need your help in order to continue to improve NVDA.\n"
 		"This project relies primarily on donations and grants. By donating, you are helping to fund full time development.\n"
 		"If even $10 is donated for every download, we will be able to cover all of the ongoing costs of the project.\n"
@@ -744,7 +753,7 @@ def saveState():
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
 		with open(_stateFilename, "wb") as f:
-			pickle.dump(state, f)
+			pickle.dump(state, f, protocol=0)
 	except:
 		log.debugWarning("Error saving state", exc_info=True)
 

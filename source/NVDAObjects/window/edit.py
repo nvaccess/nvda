@@ -264,6 +264,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			formatField["italic"]=bool(charFormat.dwEffects&CFE_ITALIC)
 			formatField["underline"]=bool(charFormat.dwEffects&CFE_UNDERLINE)
 			formatField["strikethrough"]=bool(charFormat.dwEffects&CFE_STRIKEOUT)
+		if formatConfig["reportSuperscriptsAndSubscripts"]:
 			if charFormat.dwEffects&CFE_SUBSCRIPT:
 				formatField["text-position"]="sub"
 			elif charFormat.dwEffects&CFE_SUPERSCRIPT:

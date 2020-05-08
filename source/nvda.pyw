@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #nvda.pyw
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee
+#Copyright (C) 2006-2019 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -193,20 +194,11 @@ if isSecureDesktop:
 # #8516: because config manager isn't ready yet, we must let start and exit messages be logged unless disabled via --no-logging switch.
 # However, do log things if debug logging or log level other than 0 (not set) is requested from command line switches.
 
-logLevel=globalVars.appArgs.logLevel
-if globalVars.appArgs.noLogging and (not globalVars.appArgs.debugLogging and logLevel == 0):
-	logLevel = log.OFF
-else:
-	if logLevel<=0:
-		logLevel=log.INFO
-	if globalVars.appArgs.debugLogging:
-		logLevel=log.DEBUG
 logHandler.initialize()
-logHandler.log.setLevel(logLevel)
-if logLevel is log.DEBUG:
+if logHandler.log.getEffectiveLevel() is log.DEBUG:
 	log.debug("Provided arguments: {}".format(sys.argv[1:]))
-
-log.info("Starting NVDA")
+import buildVersion
+log.info("Starting NVDA version %s" % buildVersion.version)
 log.debug("Debug level logging enabled")
 if globalVars.appArgs.changeScreenReaderFlag:
 	winUser.setSystemScreenReaderFlag(True)

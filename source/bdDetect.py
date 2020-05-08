@@ -459,23 +459,40 @@ addBluetoothDevices("brailleNote", lambda m:
 
 # brailliantB
 addUsbDevices("brailliantB", KEY_HID, {
+	"VID_1C71&PID_C111",  # Mantis Q 40
+	"VID_1C71&PID_C101",  # Chameleon 20
+	"VID_1C71&PID_C121",  # Humanware BrailleOne 20 HID
+	"VID_1C71&PID_CE01",  # NLS eReader 20 HID
 	"VID_1C71&PID_C006", # Brailliant BI 32, 40 and 80
 	"VID_1C71&PID_C022", # Brailliant BI 14
 	"VID_1C71&PID_C00A", # BrailleNote Touch
+	"VID_1C71&PID_C00E",  # BrailleNote Touch v2
 })
 addUsbDevices("brailliantB", KEY_SERIAL, {
 	"VID_1C71&PID_C005", # Brailliant BI 32, 40 and 80
 	"VID_1C71&PID_C021", # Brailliant BI 14
 })
-addBluetoothDevices("brailliantB", lambda m: (
-	m.type==KEY_SERIAL
-		and (m.id.startswith("Brailliant B")
-		or m.id == "Brailliant 80"
-		or "BrailleNote Touch" in m.id
-	)) or (m.type==KEY_HID
+addBluetoothDevices(
+	"brailliantB", lambda m: (
+		m.type == KEY_SERIAL
+		and (
+			m.id.startswith("Brailliant B")
+			or m.id == "Brailliant 80"
+			or "BrailleNote Touch" in m.id
+		)
+	)
+	or (
+		m.type == KEY_HID
 		and m.deviceInfo.get("manufacturer") == "Humanware"
-		and m.deviceInfo.get("product") == "Brailliant HID"
-))
+		and m.deviceInfo.get("product") in (
+			"Brailliant HID",
+			"APH Chameleon 20",
+			"APH Mantis Q40",
+			"Humanware BrailleOne",
+			"NLS eReader",
+		)
+	)
+)
 
 # eurobraille
 addUsbDevices("eurobraille", KEY_HID, {
@@ -524,6 +541,8 @@ addUsbDevices("handyTech", KEY_SERIAL, {
 addUsbDevices("handyTech", KEY_HID, {
 	"VID_1FE4&PID_0054", # Active Braille
 	"VID_1FE4&PID_0055", # Connect Braille
+	"VID_1FE4&PID_0061",  # Actilino
+	"VID_1FE4&PID_0064",  # Active Star 40
 	"VID_1FE4&PID_0081", # Basic Braille 16
 	"VID_1FE4&PID_0082", # Basic Braille 20
 	"VID_1FE4&PID_0083", # Basic Braille 32
@@ -535,8 +554,6 @@ addUsbDevices("handyTech", KEY_HID, {
 	"VID_1FE4&PID_008C", # Basic Braille 84
 	"VID_1FE4&PID_0093", # Basic Braille Plus 32
 	"VID_1FE4&PID_0094", # Basic Braille Plus 40
-	"VID_1FE4&PID_0061", # Actilino
-	"VID_1FE4&PID_0064", # Active Star 40
 })
 
 # Some older HT displays use a HID converter and an internal serial interface
@@ -576,8 +593,12 @@ addBluetoothDevices("hims", lambda m: any(m.id.startswith(prefix) for prefix in 
 	"SmartBeetle",
 )))
 
+# NattiqBraille
+addUsbDevices("nattiqbraille", KEY_SERIAL, {
+	"VID_2341&PID_8036",  # Atmel-based USB Serial for Nattiq nBraille
+})
+
 # superBrl
 addUsbDevices("superBrl", KEY_SERIAL, {
 	"VID_10C4&PID_EA60", # SuperBraille 3.2
 })
-

@@ -15,7 +15,7 @@ complexSymbols:
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥.]?\d)
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -56,6 +56,7 @@ $	dollar	all	norep
 )	right paren	most	always
 *	star	some
 +	plus	some
+−	minus	some
 ,	comma	all	always
 -	dash	most
 .	dot	some
@@ -99,6 +100,7 @@ _	line	most
 ⇒	right double arrow	some
 ⇨	right white arrow	some
 ➢	right arrowhead	some
+⮚	right arrowhead	some
 ❖	black diamond minus white X	some
 ♣	black club	some
 ♦	black diamond	some
@@ -122,6 +124,7 @@ _	line	most
 ↓	down arrow	some
 ✓	check	some
 ✔	check	some
+🡺	right arrow	some
 
 #Mathematical Operators U+2200 to U+220F
 ∀	for all	none
