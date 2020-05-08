@@ -36,9 +36,6 @@ import NVDAObjects.JAB
 import eventHandler
 from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer, ToolTip, Notification
 from locationHelper import RectLTWH
-from typing import (
-	Optional,
-)
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
@@ -683,21 +680,6 @@ the NVDAObject for IAccessible
 			return False
 		return obj.event_windowHandle==self.event_windowHandle and obj.event_objectID==self.event_objectID and obj.event_childID==self.event_childID
 
-	def _getIndirectionsToParentWithFocus(self) -> Optional[int]:
-		testObj = self
-		indirections = 0
-		while testObj:
-			if controlTypes.STATE_FOCUSED in testObj.states:
-				break
-			parent = testObj.parent
-			# Cache the parent.
-			testObj.parent = parent
-			testObj = parent
-			indirections += 1
-		else:
-			return None
-		return indirections
-
 	def _get_shouldAllowIAccessibleFocusEvent(self):
 		"""Determine whether a focus event should be allowed for this object.
 		Normally, this checks for the focused state to help eliminate redundant or invalid focus events.
@@ -705,9 +687,18 @@ the NVDAObject for IAccessible
 		@return: C{True} if the focus event should be allowed.
 		@rtype: bool
 		"""
-		# this object or one of its ancestors must have state_focused.
-		indirectionsToFocus = self._getIndirectionsToParentWithFocus()
-		return indirectionsToFocus is not None
+		#this object or one of its ancestors must have state_focused.
+		testObj = self
+		while testObj:
+			if controlTypes.STATE_FOCUSED in testObj.states:
+				break
+			parent = testObj.parent
+			# Cache the parent.
+			testObj.parent = parent
+			testObj = parent
+		else:
+			return False
+		return True
 
 	def _get_TextInfo(self):
 		if hasattr(self,'IAccessibleTextObject'):
