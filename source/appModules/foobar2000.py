@@ -1,14 +1,13 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2009-2018 NV Access Limited, Aleksey Sadovoy, James Teh, Joseph Lee, Tuukka Ojala
-# This file may be used under the terms of the GNU General Public License, version 2 or later.
-# For more details see: https://www.gnu.org/licenses/gpl-2.0.htmlimport appModuleHandler
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
 
+import appModuleHandler
 import calendar
 import collections
 import time
-
 import api
-import appModuleHandler
 import ui
 
 # A named tuple for holding the elapsed and total playing times from Foobar2000's status bar
