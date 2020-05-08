@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2009-2018 NV Access Limited, Aleksey Sadovoy, James Teh, Joseph Lee, Tuukka Ojala
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import appModuleHandler
 import calendar
@@ -40,15 +40,17 @@ def parseIntervalToTimestamp(interval):
 	return calendar.timegm(time.strptime(interval.strip(), format))
 
 class AppModule(appModuleHandler.AppModule):
-	_statusBar=None
+	_statusBar = None
 
 	def event_gainFocus(self, obj, nextHandler):
-		if not self._statusBar: self._statusBar=api.getStatusBar()
+		if not self._statusBar:
+			self._statusBar = api.getStatusBar()
 		nextHandler()
 
 	def getElapsedAndTotal(self):
 		empty = statusBarTimes(None, None)
-		if not self._statusBar: return empty
+		if not self._statusBar:
+			return empty
 		statusBarContents = self._statusBar.firstChild.name
 		try:
 			playingTimes = statusBarContents.split("|")[4].split("/")
