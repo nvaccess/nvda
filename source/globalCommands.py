@@ -1502,8 +1502,8 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for report formatting command.
-		"Reports formatting info for the current review cursor position."
-" If pressed twice, presents the information in browse mode"
+			"Reports formatting info for the current review cursor position."
+			" If pressed twice, presents the information in browse mode"
 		),
 		category=SCRCAT_TEXTREVIEW,
 		gesture="kb:NVDA+shift+f",
