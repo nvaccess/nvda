@@ -1500,10 +1500,10 @@ class GlobalCommands(ScriptableObject):
 		self._reportFormattingHelper(api.getReviewPosition(), True)
 
 	@script(
-		# Translators: Input help mode message for report formatting command.
 		description=_(
-			"""Reports formatting info for the current review cursor position.
- If pressed twice, presents the information in browse mode"""
+			# Translators: Input help mode message for report formatting command.
+		"Reports formatting info for the current review cursor position."
+" If pressed twice, presents the information in browse mode"
 		),
 		category=SCRCAT_TEXTREVIEW,
 		gesture="kb:NVDA+shift+f",
@@ -1532,10 +1532,10 @@ class GlobalCommands(ScriptableObject):
 		self._reportFormattingHelper(self._getTIAtCaret(), True)
 
 	@script(
-		# Translators: Input help mode message for report formatting at caret command.
 		description=_(
-			"""Reports formatting info for the thext under the caret.
- If pressed twice, presents the information in browse mode"""
+			# Translators: Input help mode message for report formatting at caret command.
+			"Reports formatting info for the thext under the caret."
+			" If pressed twice, presents the information in browse mode"
 		),
 		category=SCRCAT_SYSTEMCARET,
 		gesture="kb:NVDA+f",
