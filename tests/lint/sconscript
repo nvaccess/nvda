@@ -47,7 +47,9 @@ lintTarget = externalEnv.Command(
 	"current.diff",
 	[[
 		'type', '$SOURCE', '|',  # provide diff to stdin
-		sys.executable, "-m", "flake8",
+		sys.executable,
+		"-Xutf8",  # UTF-8 mode (PEP 540, Python >= 3.7)
+		"-m", "flake8",
 		'--diff',  # accept a unified diff from stdin
 		'--output-file=$TARGET',  # output to a file to allow easier inspection
 		'--tee',  # also output to stdout, so results appear in scons output
