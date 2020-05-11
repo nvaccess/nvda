@@ -1626,9 +1626,9 @@ class GlobalCommands(ScriptableObject):
 	script_navigatorObject_devInfo.category=SCRCAT_TOOLS
 
 	@script(
-		# Translators: Input help mode message for a command to delimit then
-		# copy a fragment of the log to clipboard
 		description=_(
+			# Translators: Input help mode message for a command to delimit then
+			# copy a fragment of the log to clipboard
 			"Mark the current end of the log as the start of the fragment to be"
 			" copied to clipboard by pressing again."
 		),
