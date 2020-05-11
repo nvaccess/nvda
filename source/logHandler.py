@@ -205,8 +205,7 @@ class Logger(logging.Logger):
 			not globalVars.appArgs
 			or globalVars.appArgs.secure
 			or not globalVars.appArgs.logFileName
-			or not self.handlers
-			or not isinstance(self.handlers[0], FileHandler)
+			or not isinstance(logHandler, FileHandler)
 		):
 			return False
 		import codecs
@@ -229,8 +228,7 @@ class Logger(logging.Logger):
 			or not globalVars.appArgs
 			or globalVars.appArgs.secure
 			or not globalVars.appArgs.logFileName
-			or not self.handlers
-			or not isinstance(self.handlers[0], FileHandler)
+			or not isinstance(logHandler, FileHandler)
 		):
 			return None
 		import codecs
