@@ -575,9 +575,12 @@ class UIAHandler(COMObject):
 			elif (
 				windowClass == "Chrome_RenderWidgetHostHWND"
 				and (
-					config.conf['UIA']['allowInChromium'] == "no"
+					config.conf['UIA']['allowInChromium'] == 3  # No
 					# Disabling is only useful if we can inject in-process (and use our older code)
-					or (appModule.helperLocalBindingHandle and config.conf['UIA']['allowInChromium'] == "auto")
+					or (
+						appModule.helperLocalBindingHandle
+						and config.conf['UIA']['allowInChromium'] in (0, 1)  # Only when necessary
+					)
 				)
 			):
 				return False

@@ -211,7 +211,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enabled = boolean(default=true)
 	useInMSWordWhenAvailable = boolean(default=false)
 	winConsoleImplementation= option("auto", "legacy", "UIA", default="auto")
-	allowInChromium = option("auto", "yes", "no", default="auto")
+	# 0:default, 1:Only when necessary, 2:yes, 3:no
+	allowInChromium = integer(0, 3, default=0)
 
 [terminals]
 	speakPasswords = boolean(default=false)
@@ -239,6 +240,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	timeSinceInput = boolean(default=false)
 	vision = boolean(default=false)
 	speech = boolean(default=false)
+	speechManager = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")
@@ -251,6 +253,10 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [development]
 	enableScratchpadDir = boolean(default=false)
+
+[featureFlag]
+	# 0:default, 1:yes, 2:no
+	cancelExpiredFocusSpeech = integer(0, 2, default=0)
 """
 
 #: The configuration specification
