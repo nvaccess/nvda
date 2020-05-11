@@ -1,8 +1,9 @@
-#treeInterceptorHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Davy Kager
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# treeInterceptorHandler.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Davy Kager, Accessolutions, Julien Cochuyt
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
 from typing import Optional, Dict
 
 from logHandler import log
