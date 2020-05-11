@@ -208,10 +208,9 @@ class Logger(logging.Logger):
 			or not isinstance(logHandler, FileHandler)
 		):
 			return False
-		import codecs
-		with codecs.open(globalVars.appArgs.logFileName, "r", encoding="UTF-8") as f:
-			# io.IOBase.seek: whence=2 -- end of stream
-			f.seek(0, whence=2)
+		with open(globalVars.appArgs.logFileName, "r", encoding="UTF-8") as f:
+			# _io.TextIOWrapper.seek: whence=2 -- end of stream
+			f.seek(0, 2)
 			self.fragmentStart = f.tell()
 			return True
 
@@ -231,8 +230,7 @@ class Logger(logging.Logger):
 			or not isinstance(logHandler, FileHandler)
 		):
 			return None
-		import codecs
-		with codecs.open(globalVars.appArgs.logFileName, "r", encoding="UTF-8") as f:
+		with open(globalVars.appArgs.logFileName, "r", encoding="UTF-8") as f:
 			f.seek(self.fragmentStart)
 			fragment = f.read()
 			if fragment:
