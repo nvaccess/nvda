@@ -153,11 +153,16 @@ By default, builds also do not use any compiler optimizations.
 Please see the `release` keyword argument for what compiler optimizations it will enable.
 
 ## Running the Source Code
-To start NVDA from source code, run `nvda.pyw` located in the source directory.
+Most developers run directly from source by:
+```
+cd source
+pythonw.exe nvda.pyw
+```
+Note: Since NVDA is a Windows application (rather than command line), it is best to run it with `pythonw.exe`.
+However, if during development you encounter an error early in the startup of NVDA, you can use `python.exe` which is likely to give more information about the error.
+
 To view help on the arguments that NVDA will accept, use the `-h` or `--help` option.
 These arguments are also documented in the user guide.
-Since NVDA is a Windows application (rather than command line), it is best to run it with `pythonw.exe`.
-However, if during development you encounter an error early in the startup of NVDA, you can use `python.exe` which is likely to give more information about the error.
 
 ## Building NVDA
 A binary build of NVDA can be run on a system without Python and all of NVDA's other dependencies installed (as we do for snapshots and releases).
