@@ -35,15 +35,20 @@ What's New in NVDA
   - Context menu items  are once again reported properly. (#9252)
   - Ribbon sections are consistently announced when navigating with Control+arrows. (#7067)
 - In browse mode in Mozilla Firefox and Google Chrome, text no longer incorrectly appears on a separate line when web content uses CSS display: inline-flex. (#11075)
+- In browse mode with Automatically set system focus to focusable elements disabled, it is now possible to activate elements that aren't focusable.
+- In browse mode with Automatically set system focus to focusable elements disabled, it is now possible to activate elements reached by pressing the tab key. (#8528)
+- In browse mode with Automatically set system focus to focusable elements disabled, activating certain elements no longer clicks in an incorrect location. (#9886)
+- NVDA error sounds are no longer heard when accessing DevExpress text controls. (#10918)
 
 
 == Changes For Developers ==
-- execElevated and hasUiAcces have moved from config module to systemUtils module. Usage via config module is deprecated. (#10493)
+- execElevated and hasUiAccess have moved from config module to systemUtils module. Usage via config module is deprecated. (#10493)
 - Updated configobj to 5.1.0dev commit f9a265c4. (#10939)
 - Automated testing of NVDA with Chrome and a HTML sample is now possible. (#10553)
 - IAccessibleHandler has been converted into a package, OrderedWinEventLimiter has been extracted to a module and unit tests added (#10934)
 - Updated BrlApi to version 0.8 (BRLTTY 6.1). (#11065)
 - Status bar retrieval may now be customized by an AppModule. (#2125, #4640)
+- NVDA no longer listens for IAccessible EVENT_OBJECT_REORDER. (#11076)
 
 
 = 2020.1 =

@@ -312,9 +312,6 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 			"mscandui21.candidate", "mscandui40.candidate", "MSCandUIWindow_Candidate", # IMM candidates
 			"TTrayAlert", # 5405: Skype
 		)
-	if eventName == "reorder":
-		# Prevent another flood risk.
-		return wClass == "TTrayAlert" # #4841: Skype
 	if eventName == "alert" and winUser.getClassName(winUser.getAncestor(windowHandle, winUser.GA_PARENT)) == "ToastChildWindowClass":
 		# Toast notifications.
 		return True
