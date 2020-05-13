@@ -223,10 +223,8 @@ class SymphonyTableCell(IAccessible):
 		# #860: Recent versions of Calc expose has formula state via IAccessible 2.
 		# #10759: However in Libre Office 6.4 the attribute contains "!!br0ken!!"
 		# when there is no formula in the cell.
-		if (
-			self.IA2Attributes.get('Formula')
-			and self.IA2Attributes.get('Formula') != "!!br0ken!!"
-		):
+		formula = self.IA2Attributes.get('Formula')
+		if formula and formula != "!!br0ken!!":
 			states.add(controlTypes.STATE_HASFORMULA)
 		return states
 
