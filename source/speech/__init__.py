@@ -2,7 +2,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler
+# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Julien Cochuyt
 
 """High-level functions to speak information.
 """ 
@@ -1281,7 +1282,7 @@ def getTextInfoSpeech(  # noqa: C901
 	if onlyInitialFields or (
 		isWordOrCharUnit
 		and len(textWithFields) > 0
-		and len(textWithFields[0]) == 1
+		and len(textWithFields[0].strip() if not textWithFields[0].isspace() else textWithFields[0]) == 1
 		and all(isControlEndFieldCommand(x) for x in itertools.islice(textWithFields, 1, None))
 	):
 		if not onlyCache:
