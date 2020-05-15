@@ -57,7 +57,8 @@ def _getObjScript(obj, gesture, globalMapScripts):
 	try:
 		# Search the object itself for in-built bindings.
 		return obj.getScript(gesture)
-	except:  # noqa: E722 do not use bare 'except'
+	except Exception:
+
 		log.exception()
 
 def findScript(gesture):
@@ -284,4 +285,3 @@ def script(
 			decoratedScript.resumeSayAllMode = resumeSayAllMode
 		return decoratedScript
 	return script_decorator
-
