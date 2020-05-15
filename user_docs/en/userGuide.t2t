@@ -648,7 +648,7 @@ When you wish to return to the document, simply press the escape key.
 + Braille +[Braille]
 If you own a braille display, NVDA can display information in braille.
 If your braille display has a Perkins-style keyboard, you can also enter contracted or uncontracted braille.
-Braille can be also be displayed on screen using the [Braille Viewer #BrailleViewer] instead of, or at the same time as, using a physical braille display.
+Braille can also be displayed on screen using the [Braille Viewer #BrailleViewer] instead of, or at the same time as, using a physical braille display.
 
 Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for information about the supported braille displays.
 This section also contains information about what displays support NVDA's automatic background braille display detection functionality.
@@ -1801,6 +1801,10 @@ This feature is available and enabled by default on Windows 10 versions 1607and 
 Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
 In untrusted environments, you may temporarily disable [speak typed characters #KeyboardSettingsSpeakTypedCharacters] and [speak typed words #KeyboardSettingsSpeakTypedWords] when entering passwords.
 
+==== Attempt to cancel speech for expired focus events ====[CancelExpiredFocusSpeech]
+This option enables behaviour which attempts to cancel speech for expired focus events.
+In particular moving quickly through messages in Gmail with Chrome can cause NVDA to speak outdated information.
+
 ==== Automatically set system focus to focusable elements in Browse Mode ====[BrowseModeSettingsAutoFocusFocusableElements]
 Key: NVDA+8
 
@@ -1851,7 +1855,8 @@ The Add rule dialog also contains a checkbox to say whether or not you want the 
 NVDA ignores case by default).
 
 Finally, a set of radio buttons allows you to tell NVDA whether your pattern should match anywhere, should only match if it is a complete word or should be treated as a "Regular expression".
-Setting the pattern to match as a whole word means that the replacement will only be made if the pattern does not occur as part of a larger word; i.e. a character other than an alphanumeric character or an underscore (or no character at all) comes both immediately before and after the pattern.
+Setting the pattern to match as a whole word means that the replacement will only be made if the pattern does not occur as part of a larger word.
+This condition is met if the characters immediately before and after the word are anything other than a letter, a number, or an underscore, or if there are no characters at all.
 Thus, using the earlier example of replacing the word "bird" with "frog", if you were to make this a whole word replacement, it would not match "birds" or "bluebird".
 
 A regular expression is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples.
@@ -2516,7 +2521,7 @@ Please see the display's documentation for descriptions of where these keys can 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series ++[Hims]
 NVDA supports Braille Sense, Braille EDGE, Smart Beetle and Sync Braille displays from [Hims https://www.hims-inc.com/] when connected via USB or bluetooth. 
 If connecting via USB, you will need to install the USB drivers from HIMS on your system.
-You can download these from here: https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+You can download these from here: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Following are the key assignments for these displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -2784,7 +2789,7 @@ The following models are supported:
 - BrailleNote Apex (USB and Bluetooth connections)
 -
 
-For BrailleNote Touch, please refer to  the [Brailliant BI Series / BrailleNote Touch HumanWareBrailliant] section.
+For BrailleNote Touch, please refer to  the [Brailliant BI Series / BrailleNote Touch #HumanWareBrailliant] section.
 
 Except for BrailleNote PK, both braille (BT) and QWERTY (QT) keyboards are supported.
 For BrailleNote QT, PC keyboard emulation isn't supported.
@@ -3025,7 +3030,7 @@ Therefore, NVDA's braille input table setting is not relevant.
 BRLTTY is not involved in NVDA's automatic background braille display detection functionality.
 
 Following are the BRLTTY command assignments for NVDA.
-Please see the [BRLTTY key binding lists https://mielke.cc/brltty/doc/KeyBindings/] for information about how BRLTTY commands are mapped to controls on braille displays.
+Please see the [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings/] for information about how BRLTTY commands are mapped to controls on braille displays.
 %kc:beginInclude
 || Name | BRLTTY command |
 | Scroll braille display back | fwinlt (go left one window) |
