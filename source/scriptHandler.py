@@ -57,8 +57,7 @@ def _getObjScript(obj, gesture, globalMapScripts):
 	try:
 		# Search the object itself for in-built bindings.
 		return obj.getScript(gesture)
-	except Exception:
-
+	except Exception:  # Prevent a faulty add-on from breaking script handling altogether (#5446)
 		log.exception()
 
 def findScript(gesture):
