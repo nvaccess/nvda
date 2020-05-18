@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-# appModules/explorer.py
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2019 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt
 # This file is covered by the GNU General Public License.
