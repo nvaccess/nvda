@@ -79,7 +79,8 @@ class IndexCommand(SynthCommand):
 		@param index: the value of this index
 		@type index: integer
 		"""
-		if not isinstance(index, int): raise ValueError("index must be int, not %s" % type(index))
+		if not isinstance(index, int):
+			raise ValueError("index must be int, not %s" % type(index))
 		self.index = index
 
 	def __repr__(self):
