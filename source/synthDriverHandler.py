@@ -182,6 +182,11 @@ class SynthDriver(driverHandler.Driver):
 			"pitch",
 			# Translators: Label for a setting in voice settings dialog.
 			_("&Pitch"),
+			# Set minVal to 1 so it can never be zero and cause ZeroDivisionError.
+			minVal=1,
+			# If maxVal if set to 100 while minVal is 1, the value of 99 is lost due to scaling.
+			# setting maxVal to 101 solves this problem.
+			maxVal=101,
 			minStep=minStep,
 			availableInSettingsRing=True,
 			# Translators: Label for a setting in synth settings ring.

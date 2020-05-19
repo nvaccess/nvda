@@ -15,6 +15,7 @@ that no information is lost, while updating the ConfigObj to meet the requiremen
 """
 
 from logHandler import log
+import configobj
 
 def upgradeConfigFrom_0_to_1(profile):
 	# Schema has been modified to set a new minimum blink rate
@@ -71,3 +72,18 @@ def upgradeConfigFrom_3_to_4(profile):
 	except KeyError:
 		# Setting does not exist, no need for upgrade of this setting
 		log.debug("reportFontAttributes not present, no action taken.")
+
+
+def upgradeConfigFrom_4_to_5(profile):
+	# Pitch setting range has been changed from 0-100 to 1-101.
+	# Pitch could be set to 0 earlier which resulted in a ZeroDivisionError
+	# when changing pitch with a multiplier.
+	try:
+		for item in profile["speech"]:
+			# synth specs are stored as config.Section objects while other specs are not.
+			if isinstance(profile["speech"][item], configobj.Section):
+				if profile["speech"][item].get("pitch") is not None:
+					# increment previously set value by 1
+					profile["speech"][item]["pitch"] = str(int(profile["speech"][item]["pitch"]) + 1)
+	except KeyError:
+		log.error("Speech attributes not present.")
