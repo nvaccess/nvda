@@ -104,7 +104,8 @@ class CharacterModeCommand(SynthParamCommand):
 		@param state: if true character mode is on, if false its turned off.
 		@type state: boolean
 		"""
-		if not isinstance(state, bool): raise ValueError("state must be boolean, not %s" % type(state))
+		if not isinstance(state, bool):
+			raise ValueError("state must be boolean, not %s" % type(state))
 		self.state = state
 		self.isDefault = not state
 
