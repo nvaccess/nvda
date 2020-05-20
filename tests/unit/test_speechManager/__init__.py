@@ -9,6 +9,7 @@ import unittest
 import config
 import speech
 from .speechManagerTestHarness import (
+	_IndexT,
 	ExpectedIndex,
 	SpeechManagerInteractions,
 )
@@ -17,6 +18,114 @@ from .speechManagerTestHarness import (
 # Hard coding this to True where it is defined makes creating new unit tests easier, since all interactions
 # can be tracked.
 speech.manager.IS_UNIT_TEST_LOG_ENABLED = True
+
+
+_isIndexABeforeIndexB = speech.manager.SpeechManager._isIndexABeforeIndexB
+MAX_INDEX = speech.manager.SpeechManager.MAX_INDEX
+WRAPPED_INDEX_MAGNITUDE = speech.manager.SpeechManager._WRAPPED_INDEX_MAGNITUDE
+
+
+class TestSpeechIndexComparison(unittest.TestCase):
+	"""Speech indexes wrap around after a limit which must be considered when comparing relative positions of
+	indexes
+	"""
+
+	def testSimple_before(self):
+		self.assertTrue(_isIndexABeforeIndexB(2, 3))
+
+	def testSimple_equal(self):
+		self.assertFalse(_isIndexABeforeIndexB(2, 2))
+
+	def testSimple_after(self):
+		self.assertFalse(_isIndexABeforeIndexB(3, 2))
+
+	def testWrapped_beforeAfter(self):
+		lastIndex = MAX_INDEX  # last index
+		firstIndex: _IndexT = 1  # first index after wrapping.
+		self.assertTrue(_isIndexABeforeIndexB(lastIndex, firstIndex))
+		self.assertFalse(_isIndexABeforeIndexB(firstIndex, lastIndex))
+
+	def testExtents_relativeToFirstIndex(self):
+		"""How far ahead of the first index can b get before a is no longer considered before
+		"""
+		firstIndex: _IndexT = 1
+		boundaryAfterFirstIndex = WRAPPED_INDEX_MAGNITUDE + 1
+		boundaryBeforeFirstIndex = boundaryAfterFirstIndex + 1
+		# Relative to firstIndex
+		self.assertTrue(_isIndexABeforeIndexB(firstIndex, boundaryAfterFirstIndex))
+		self.assertFalse(_isIndexABeforeIndexB(firstIndex, boundaryBeforeFirstIndex))
+		# And ensure symmetry
+		self.assertTrue(_isIndexABeforeIndexB(boundaryBeforeFirstIndex, firstIndex))
+		self.assertFalse(_isIndexABeforeIndexB(boundaryAfterFirstIndex, firstIndex))
+
+	def testExtents_relativeToLastIndex(self):
+		"""How far ahead of the "last index" can b get before a is no longer considered before
+		"""
+		lastIndex = MAX_INDEX
+
+		boundaryAfterLastIndex = WRAPPED_INDEX_MAGNITUDE
+		boundaryBeforeLastIndex = boundaryAfterLastIndex + 1
+
+		self.assertTrue(_isIndexABeforeIndexB(lastIndex, boundaryAfterLastIndex))
+		self.assertFalse(_isIndexABeforeIndexB(lastIndex, boundaryBeforeLastIndex))
+		# And ensure symmetry
+		self.assertFalse(_isIndexABeforeIndexB(boundaryAfterLastIndex, lastIndex))
+		self.assertTrue(_isIndexABeforeIndexB(boundaryBeforeLastIndex, lastIndex))
+
+	def testExtents_relativeToMidPoint(self):
+		""" Despite the largest possible index being odd, there is an even number of possible indexes since
+		zero is not used as an index. For a given A value there will be a B value (in a space of 9998
+		values) that is equal, leaving 9997 values which can not be split evenly into before / after.
+		"""
+		lastIndex = MAX_INDEX
+		firstIndex: _IndexT = 1
+
+		self.assertTrue(_isIndexABeforeIndexB(firstIndex, WRAPPED_INDEX_MAGNITUDE))
+		self.assertTrue(_isIndexABeforeIndexB(WRAPPED_INDEX_MAGNITUDE + 1, lastIndex))
+		# And ensure symmetry
+		self.assertFalse(_isIndexABeforeIndexB(lastIndex, WRAPPED_INDEX_MAGNITUDE + 1))
+		self.assertFalse(_isIndexABeforeIndexB(WRAPPED_INDEX_MAGNITUDE, firstIndex))
+
+	def testAllValuesHaveSymmetry(self):
+		"""Test all B values for a given A value.
+		Confirm the number of equivalent, A-before, B-before, and assert no B values are both before and after!
+		"""
+		stationary: _IndexT = WRAPPED_INDEX_MAGNITUDE
+		stationaryBeforeCount = 0
+		movingBeforeCount = 0
+		bothBefore = []  # a before b and b before a should never happen
+		indexesWithEquivalence = []
+		for moving in range(1, MAX_INDEX):
+			isStationaryBefore = _isIndexABeforeIndexB(stationary, moving)
+			isMovingBefore = _isIndexABeforeIndexB(moving, stationary)
+			if isMovingBefore and isStationaryBefore:
+				bothBefore.append((stationary, moving))
+			elif isStationaryBefore:
+				stationaryBeforeCount = stationaryBeforeCount + 1
+			elif isMovingBefore:
+				movingBeforeCount = movingBeforeCount + 1
+			else:
+				indexesWithEquivalence.append((stationary, moving))
+
+		# There should only be one pair with equivalence (the equal pair)
+		self.assertEqual(
+			len(indexesWithEquivalence), 1,
+			msg=f"Indexes with neither true: {indexesWithEquivalence!r}"
+		)
+		# Ensure equivalent indexes really are equal
+		self.assertEqual(indexesWithEquivalence[0][0], indexesWithEquivalence[0][1])
+
+		# None should be: A < B < A
+		self.assertEqual(
+			len(bothBefore), 0,
+			msg=f"Indexes with both true: {bothBefore!r}"
+		)
+		# Check that the number of B values before and after is as expected.
+		self.assertAlmostEqual(
+			stationaryBeforeCount,
+			movingBeforeCount,
+			delta=1  # Odd number of available indexes since 0 is excluded and one pair is equivalent.
+		)
 
 
 class SayAllEmulatedTests(unittest.TestCase):

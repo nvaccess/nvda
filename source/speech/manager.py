@@ -3,11 +3,12 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2006-2020 NV Access Limited
+import typing
 
 import queueHandler
 import synthDriverHandler
 import config
-from .types import SpeechSequence
+from .types import SpeechSequence, _IndexT
 from .commands import (
 	# Commands that are used in this file.
 	EndUtteranceCommand,
@@ -194,7 +195,8 @@ class SpeechManager(object):
 	Note:
 	All of this activity is (and must be) synchronized and serialized on the main thread.
 	"""
-	_cancelableSpeechCallbacks: Dict[_CancellableSpeechCommand, Callable[[_CancellableSpeechCommand, ], None]]
+
+	_cancelCommandsForUtteranceBeingSpokenBySynth: Dict[_CancellableSpeechCommand, _IndexT]
 	_priQueues: Dict[Any, _ManagerPriorityQueue]
 	_curPriQueue: Optional[_ManagerPriorityQueue]
 
@@ -206,8 +208,9 @@ class SpeechManager(object):
 		synthDriverHandler.synthDoneSpeaking.register(self._onSynthDoneSpeaking)
 
 	#: Maximum index number to pass to synthesizers.
-	MAX_INDEX = 9999
-	def _generateIndexes(self):
+	MAX_INDEX: _IndexT = 9999
+
+	def _generateIndexes(self) -> typing.Generator[_IndexT, None, None]:
 		"""Generator of index numbers.
 		We don't want to reuse index numbers too quickly,
 		as there can be race conditions when cancelling speech which might result
@@ -461,6 +464,33 @@ class SpeechManager(object):
 				self._cancelCommandsForUtteranceBeingSpokenBySynth[item] = utteranceIndex
 		return True
 
+	_WRAPPED_INDEX_MAGNITUDE = int(MAX_INDEX / 2)
+
+	@classmethod
+	def _isIndexABeforeIndexB(cls, indexA: _IndexT, indexB: _IndexT) -> bool:
+		"""Was indexB created before indexB
+		Because indexes wrap after MAX_INDEX, custom logic is needed to compare relative positions.
+		The boundary for considering a wrapped value as before another value is based on the distance
+		between the indexes. If the distance is greater than half the available index space it is no longer
+		before.
+		@return True if indexA was created before indexB, else False
+		"""
+		w = cls._WRAPPED_INDEX_MAGNITUDE
+		return (
+			indexA != indexB and (
+				(indexA < indexB and w >= indexB - indexA) or (
+					# Test for wrapped values
+					indexB < indexA
+					# Avoid dealing with wrapping logic, check distance in the other direction.
+					and w < indexA - indexB
+				)
+			)
+		)
+
+	@classmethod
+	def _isIndexAAfterIndexB(cls, indexA: _IndexT, indexB: _IndexT) -> bool:
+		return indexA != indexB and not cls._isIndexABeforeIndexB(indexA, indexB)
+
 	def removeCancelledSpeechCommands(self):
 		log._speechManagerUnitTest("removeCancelledSpeechCommands")
 		self._doRemoveCancelledSpeechCommands()
@@ -478,7 +508,13 @@ class SpeechManager(object):
 		for command, index in self._cancelCommandsForUtteranceBeingSpokenBySynth.items():
 			if command.isCancelled:
 				# we must not risk deleting commands while iterating over _cancelCommandsForUtteranceBeingSpokenBySynth
-				if not latestCanceledUtteranceIndex or latestCanceledUtteranceIndex < index:
+				if (
+					not latestCanceledUtteranceIndex
+					or self._isIndexABeforeIndexB(
+						latestCanceledUtteranceIndex,
+						index
+					)
+				):
 					latestCanceledUtteranceIndex = index
 		log._speechManagerDebug(f"Last index: {latestCanceledUtteranceIndex}")
 		if latestCanceledUtteranceIndex is not None:
@@ -521,7 +557,7 @@ class SpeechManager(object):
 		for seqIndex, seq in enumerate(self._curPriQueue.pendingSequences):
 			lastCommand = seq[-1] if isinstance(seq, list) else None
 			if isinstance(lastCommand, IndexCommand):
-				if index > lastCommand.index:
+				if self._isIndexAAfterIndexB(index, lastCommand.index):
 					log.debugWarning(f"Reached speech index {index :d}, but index {lastCommand.index :d} never handled")
 				elif index == lastCommand.index:
 					endOfUtterance = isinstance(self._curPriQueue.pendingSequences[seqIndex + 1][0], EndUtteranceCommand)
@@ -572,7 +608,7 @@ class SpeechManager(object):
 		# Therefore, detect this and ensure we handle all skipped indexes.
 		handleIndexes = []
 		for oldIndex in list(self._indexesSpeaking):
-			if oldIndex < index:
+			if self._isIndexABeforeIndexB(oldIndex, index):
 				log.debugWarning("Handling skipped index %s" % oldIndex)
 				handleIndexes.append(oldIndex)
 		handleIndexes.append(index)

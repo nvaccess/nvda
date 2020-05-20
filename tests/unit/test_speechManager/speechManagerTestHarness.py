@@ -28,8 +28,8 @@ from speech import (
 	CallbackCommand,
 	SpeechSequence,
 )
+from speech.types import _IndexT
 
-_IndexT = int
 _SentSequenceIndex = int
 
 
