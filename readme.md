@@ -34,6 +34,7 @@ You can also get  direct support from NV Access. See the [NV Access](http://www.
 * [NVDA Controller Client](http://www.nvda-project.org/nvdaControllerClient/nvdaControllerClient_20100219.7z) (2010-02-19): NVDA API for external applications to directly speak or braille messages, etc.
 * [Contributing to NVDA](https://github.com/nvaccess/nvda/wiki/Contributing): Guidelines for contributing to the NVDA source code
 * [NVDA commits email list](https://lists.sourceforge.net/lists/listinfo/nvda-commits): Notifications for all commits to the Git repository
+* [Old email archives](http://nabble.nvda-project.org/Development-f1.html): contain discussions about NVDA development
 
 ## Getting the Source Code
 The NVDA project uses the [Git](https://www.git-scm.com/) version control system for its source code and documentation.
