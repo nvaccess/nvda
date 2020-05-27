@@ -151,10 +151,13 @@ UIAPropertyIdsToNVDAEventNames={
 }
 
 globalEventHandlerGroupUIAPropertyIds = {
-	UIA_RangeValueValuePropertyId
+	UIA.UIA_RangeValueValuePropertyId
 }
 
-localEventHandlerGroupUIAPropertyIds = set(UIAPropertyIdsToNVDAEventNames) - globalEventHandlerGroupUIAPropertyIds
+localEventHandlerGroupUIAPropertyIds = (
+	set(UIAPropertyIdsToNVDAEventNames)
+	- globalEventHandlerGroupUIAPropertyIds
+)
 
 UIALandmarkTypeIdsToLandmarkNames: Dict[int, str] = {
 	UIA.UIA_FormLandmarkTypeId: "form",
@@ -303,11 +306,11 @@ class UIAHandler(COMObject):
 		finally:
 			self.MTAThreadInitEvent.set()
 		while True:
-			func=self.MTAThreadQueue.get()
+			func = self.MTAThreadQueue.get()
 			if func:
 				try:
 					func()
-				except:
+				except Exception:
 					log.error("Exception in function queued to UIA MTA thread", exc_info=True)
 			else:
 				break
@@ -320,16 +323,25 @@ class UIAHandler(COMObject):
 		else:
 			self.globalEventHandlerGroup = UIAUtils.FakeEventHandlerGroup(self.clientObject)
 		self.globalEventHandlerGroup.AddPropertyChangedEventHandler(
-			TreeScope_Subtree,
+			UIA.TreeScope_Subtree,
 			self.baseCacheRequest,
 			self,
 			*self.clientObject.IntSafeArrayToNativeArray(globalEventHandlerGroupUIAPropertyIds)
 		)
 		for eventId in globalEventHandlerGroupUIAEventIds:
-			self.globalEventHandlerGroup.AddAutomationEventHandler(eventId, TreeScope_Subtree, self.baseCacheRequest, self)
+			self.globalEventHandlerGroup.AddAutomationEventHandler(
+				eventId,
+				UIA.TreeScope_Subtree,
+				self.baseCacheRequest,
+				self
+			)
 		# #7984: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
-		if isinstance(self.clientObject, IUIAutomation5):
-			self.globalEventHandlerGroup.AddNotificationEventHandler(TreeScope_Subtree, self.baseCacheRequest, self)
+		if isinstance(self.clientObject, UIA.IUIAutomation5):
+			self.globalEventHandlerGroup.AddNotificationEventHandler(
+				UIA.TreeScope_Subtree,
+				self.baseCacheRequest,
+				self
+			)
 		self.addEventHandlerGroup(self.rootElement, self.globalEventHandlerGroup)
 
 	def _createLocalEventHandlerGroup(self):

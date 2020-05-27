@@ -254,19 +254,19 @@ class FakeEventHandlerGroup:
 			raise RuntimeError
 		self._notificationEventHandlers[(scope, cacheRequest)] = handler
 
-	def AddPropertyChangedEventHandler(self, scope                          , cacheRequest, handler, propertyArray, propertyCount):
+	def AddPropertyChangedEventHandler(self, scope, cacheRequest, handler, propertyArray, propertyCount):
 		properties = self.clientObject.IntNativeArrayToSafeArray(propertyArray, propertyCount)
-		self._propertyChangedEventHandlers[(scope                          , cacheRequest, properties)] = handler
+		self._propertyChangedEventHandlers[(scope, cacheRequest, properties)] = handler
 
 	def registerToClientObject(self, element):
 		try:
 			for (eventId, scope, cacheRequest), handler in self._automationEventHandlers.items():
 				self.clientObject.AddAutomationEventHandler(eventId, element, scope, cacheRequest, handler)
 			if isinstance(self.clientObject, UIAHandler.UIA.IUIAutomation5):
-				for (scope, cacheRequest), handler in self._notificationEventHandlers.items():	
+				for (scope, cacheRequest), handler in self._notificationEventHandlers.items():
 					self.clientObject.AddNotificationEventHandler(element, scope, cacheRequest, handler)
-			for (scope                          , cacheRequest, properties), handler in self._propertyChangedEventHandlers.items():	
-				self.clientObject.AddPropertyChangedEventHandler(element, scope                          , cacheRequest, handler, properties)
+			for (scope, cacheRequest, properties), handler in self._propertyChangedEventHandlers.items():
+				self.clientObject.AddPropertyChangedEventHandler(element, scope, cacheRequest, handler, properties)
 		except COMError as e:
 			try:
 				self.unregisterFromClientObject(element)
