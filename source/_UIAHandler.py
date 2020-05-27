@@ -377,7 +377,11 @@ class UIAHandler(COMObject):
 				# The old UIAElement has probably died as the window was closed.
 				# The system should forget the old event registration itself.
 				pass
-		if self.clientObject.CompareElements(self.clientObject.GetFocusedElement(), newElement):
+		try:
+			isStillFocus = self.clientObject.CompareElements(self.clientObject.GetFocusedElement(), newElement)
+		except COMError:
+			isStillFocus = False
+		if isStillFocus:
 			try:
 				self.addEventHandlerGroup(newElement, self.localEventHandlerGroup)
 			except COMError:
