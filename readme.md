@@ -4,19 +4,37 @@ NVDA (NonVisual Desktop Access) is a free, open source screen reader for Microso
 It is developed by NV Access in collaboration with a global community of contributors.
 To learn more about NVDA or download a copy, visit the main [NV Access](http://www.nvaccess.org/) website.
 
-## Key Project Links
-* [NV Access](https://www.nvaccess.org/): The main home of NVDA
+## Get support
+Either if you are a beginner, an advanced user, a new or a long time developer, or if you are an organization willing to know more or to contribute to NVDA, you can get support through the documentation in place as well as several communication channels dedicated for the NVDA screen reader. Here is an overview of the most important support sources.
+
+### Documentation
+* [NVDA User Guide](https://www.nvaccess.org/files/nvda/documentation/userGuide.html)
+* [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
+* [NVDA Add-ons Development Internals](https://github.com/nvdaaddons/DevGuide/wiki)
+* [NVDA ControllerClient manual](https://github.com/nvaccess/nvda/tree/master/extras/controllerClient)
+* Further documentation is included in the Wiki of this repository and in the [Community Wiki](https://github.com/nvaccess/nvda-community/wiki)
+
+### Communication channels
+* [NVDA Users Mailing List](https://nvda.groups.io/g/nvda)
+* [NVDA Developers Mailing List](https://groups.io/g/nvda-devel)
+* [NVDA Add-ons Mailing List](https://nvda-addons.groups.io/g/nvda-addons)
+* [Instant Messaging channel for NVDA Support](https://gitter.im/nvaccess/NVDA)
+* [Other sources including groups and profiles on social media channels, language specific websites and mailing lists etc.](https://github.com/nvaccess/nvda-community/wiki/Connect)
+
+You can also get  direct support from NV Access. See the [NV Access](http://www.nvaccess.org/) website for more details.
+
+## Other Key Project Links
 * [NVDA on GitHub](https://github.com/nvaccess/nvda)
 * [NVDA issues on GitHub](https://github.com/nvaccess/nvda/issues): Bug reports, feature requests, etc.
 * [NVDA development snapshots](https://www.nvaccess.org/files/nvda/snapshots/): Automatically generated builds of the project in its current state of development
 * [NVDA add-ons](https://addons.nvda-project.org/): Get add-ons to enhance NVDA
+* [NVDA Add-ons coordination and support center](https://github.com/nvdaaddons): all about NVDA's addons environment
+* [NVDA Add-ons Template](https://github.com/nvdaaddons/AddonTemplate): A repository for generating the Add-ons template
 * [Translating NVDA](https://github.com/nvaccess/nvda/wiki/Translating): Information about how to translate NVDA into another language
-* [NVDA community wiki](https://github.com/nvaccess/nvda-community/wiki): Articles contributed by the community
 * [NVDA Controller Client](http://www.nvda-project.org/nvdaControllerClient/nvdaControllerClient_20100219.7z) (2010-02-19): NVDA API for external applications to directly speak or braille messages, etc.
-* [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
 * [Contributing to NVDA](https://github.com/nvaccess/nvda/wiki/Contributing): Guidelines for contributing to the NVDA source code
-* [NVDA development email list](https://nvda-devel.groups.io/) ([Old archives](http://nabble.nvda-project.org/Development-f1.html)): Discussion about NVDA development
 * [NVDA commits email list](https://lists.sourceforge.net/lists/listinfo/nvda-commits): Notifications for all commits to the Git repository
+* [Old email archives](http://nabble.nvda-project.org/Development-f1.html): contain discussions about NVDA development
 
 ## Getting the Source Code
 The NVDA project uses the [Git](https://www.git-scm.com/) version control system for its source code and documentation.
