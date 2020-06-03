@@ -42,6 +42,14 @@ class TestCheckPot(unittest.TestCase):
 		statusLine = outLines[-2]
 		return errorCount, statusLine
 
+	def test_checkPot_allOk(self):
+		"""Test that no error is reported when every message has translators comment."""
+		self.assertEqual(
+			self.doCheckPot("allOk.pot"),
+			(0, "0 errors, 0 unexpected successes, 0 expected errors"),
+			"checkPot error count and/or status message do not meet expectations."
+		)
+
 	def test_checkPot_firstMessage(self):
 		"""Test that missing translators comment on the first message are reported."""
 		self.assertEqual(
