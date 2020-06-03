@@ -168,20 +168,20 @@ def _getFocusLossCancellableSpeechCommand(
 	)
 
 	def isSpeechStillValid():
-		from eventHandler import lastQueuedFocusObject
 		isLastFocusObj: bool = obj is lastQueuedFocusObject
 		stillValid = isLastFocusObj or not previouslyHadFocus
-
-		log._speechManagerDebug(
-			"checked if valid (isLast: %s, previouslyHad: %s): %s",
-			isLastFocusObj,
-			previouslyHadFocus,
-			obj.name
-		)
 		return stillValid
 
-	return _CancellableSpeechCommand(isSpeechStillValid)
+	if not speech.manager._shouldDoSpeechManagerLogging():
+		return _CancellableSpeechCommand(isSpeechStillValid)
 
+	def getDevInfo():
+		isLastFocusObj: bool = obj is lastQueuedFocusObject
+		return (
+			f"isLast: {isLastFocusObj},"
+			f" previouslyHad: {previouslyHadFocus}"
+		)
+	return _CancellableSpeechCommand(isSpeechStillValid, getDevInfo)
 
 def executeEvent(eventName, obj, **kwargs):
 	"""Executes an NVDA event.

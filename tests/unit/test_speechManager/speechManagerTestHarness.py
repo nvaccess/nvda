@@ -51,6 +51,7 @@ class SpeechManagerInteractions:
 	Inputs:
 	- SpeechManager.speak()
 	- SpeechManager.cancel()
+	- SpeechManager.removeCancelledSpeechCommands: Normally via eventHandler.executeEvent
 	- SpeechManager._onSynthIndexReached(): Normally via synthDriverHandler.synthIndexReached extensionPoint
 	- SpeechManager._onSynthDoneSpeaking(): Normally via synthDriverHandler.synthDoneSpeaking extensionPoint
 	- queueHandler.pumpAll(): handles all pending _onSynthIndexReached and _onSynthDoneSpeaking calls.
@@ -165,6 +166,10 @@ class SpeechManagerInteractions:
 
 	def cancel(self):
 		self.sManager.cancel()
+
+	def removeCancelledSpeechCommands(self):
+		"""Call SpeechManager.removeCancelledSpeechCommands"""
+		self.sManager.removeCancelledSpeechCommands()
 
 	def indexReached(self, index: _IndexT):
 		self._assertSpeechManagerKnowsAboutIndex(index)

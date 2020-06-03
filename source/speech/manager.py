@@ -68,9 +68,28 @@ def _speechManagerDebug(msg, *args, **kwargs) -> None:
 	log._log(log.DEBUG, f"SpeechManager- " + msg, args, **kwargs)
 
 
-# Install the custom log handler.
+#: Turns on unit test logging, logs the key interactions that happen with speech manager. When False,
+# log messages are sent to _speechManagerDebug
+IS_UNIT_TEST_LOG_ENABLED = False
 
+
+def _speechManagerUnitTest(msg, *args, **kwargs) -> None:
+	"""Log 'msg % args' with severity 'DEBUG' if .
+		'SpeechManUnitTest-' is prefixed to all messages to make searching the log easier.
+		When
+	"""
+	if not IS_UNIT_TEST_LOG_ENABLED:
+		return _speechManagerDebug(msg, *args, **kwargs)
+	log._log(log.INFO, f"SpeechManUnitTest- " + msg, args, **kwargs)
+
+# Install the custom log handlers.
+#: For extra debug level logging, this is a category that must be enabled in the advanced settings panel.
 log._speechManagerDebug = _speechManagerDebug
+
+#: Info level logging (only enabled if IS_UNIT_TEST_LOG_ENABLED hardcoded to True). This is a developer
+# tool to ease the creation of unit tests for SpeechManager. It should log all external interactions with
+# SpeechManager so they can be recreated in tests.
+log._speechManagerUnitTest = _speechManagerUnitTest
 
 
 class ParamChangeTracker(object):
@@ -220,9 +239,9 @@ class SpeechManager(object):
 		self._cancelCommandsForUtteranceBeingSpokenBySynth = {}
 
 	def speak(self, speechSequence: SpeechSequence, priority: Spri):
-		log._speechManagerDebug("Speak called: %r", speechSequence)  # expensive string to build - defer
+		log._speechManagerUnitTest("speak (priority %r): %r", priority, speechSequence)
 		interrupt = self._queueSpeechSequence(speechSequence, priority)
-		self.removeCancelledSpeechCommands()
+		self._doRemoveCancelledSpeechCommands()
 		# If speech isn't already in progress, we need to push the first speech.
 		push = self._curPriQueue is None or 1 > len(self._indexesSpeaking)
 		if interrupt:
@@ -374,11 +393,11 @@ class SpeechManager(object):
 			return self._pushNextSpeech(True)
 		seq = self._buildNextUtterance()
 		if seq:
-			log.io(f"Sending to synth: {seq}")
 			# So that we can handle any accidentally skipped indexes.
 			for item in seq:
 				if isinstance(item, IndexCommand):
 					self._indexesSpeaking.append(item.index)
+			log._speechManagerUnitTest(f"Assert Synth Gets: {seq}")
 			getSynth().speak(seq)
 
 	def _getNextPriority(self):
@@ -443,6 +462,10 @@ class SpeechManager(object):
 		return True
 
 	def removeCancelledSpeechCommands(self):
+		log._speechManagerUnitTest("removeCancelledSpeechCommands")
+		self._doRemoveCancelledSpeechCommands()
+
+	def _doRemoveCancelledSpeechCommands(self):
 		if not _shouldCancelExpiredFocusEvents():
 			return
 		latestCanceledUtteranceIndex = None
@@ -475,6 +498,7 @@ class SpeechManager(object):
 		return indexItem.index
 
 	def _onSynthIndexReached(self, synth=None, index=None):
+		log._speechManagerUnitTest(f"synthReachedIndex: {index}, synth: {synth}")
 		if synth != getSynth():
 			return
 		# This needs to be handled in the main thread.
@@ -570,7 +594,9 @@ class SpeechManager(object):
 				callbackCommand = self._indexesToCallbacks.pop(i, None)
 				if callbackCommand:
 					try:
+						log._speechManagerUnitTest(f"CallbackCommand Start: {callbackCommand!r}")
 						callbackCommand.run()
+						log._speechManagerUnitTest("CallbackCommand End")
 					except Exception:
 						log.exception("Error running speech callback")
 		if endOfUtterance:
@@ -578,6 +604,7 @@ class SpeechManager(object):
 			self._pushNextSpeech(False)
 
 	def _onSynthDoneSpeaking(self, synth: Optional[synthDriverHandler.SynthDriver] = None):
+		log._speechManagerUnitTest(f"synthDoneSpeaking synth:{synth}")
 		if synth != getSynth():
 			return
 		# This needs to be handled in the main thread.
@@ -625,6 +652,7 @@ class SpeechManager(object):
 		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
 
 	def cancel(self):
+		log._speechManagerUnitTest("Cancel")
 		getSynth().cancel()
 		if self._curPriQueue and self._curPriQueue.enteredProfileTriggers:
 			self._exitProfileTriggers(self._curPriQueue.enteredProfileTriggers)

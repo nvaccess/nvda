@@ -7,10 +7,16 @@
 """
 import unittest
 import config
+import speech
 from .speechManagerTestHarness import (
 	ExpectedIndex,
 	SpeechManagerInteractions,
 )
+
+#: Enable logging used to aid in the development of unit
+# Hard coding this to True where it is defined makes creating new unit tests easier, since all interactions
+# can be tracked.
+speech.manager.IS_UNIT_TEST_LOG_ENABLED = True
 
 
 class SayAllEmulatedTests(unittest.TestCase):
