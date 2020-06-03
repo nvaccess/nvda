@@ -53,7 +53,7 @@ class TestCheckPot(unittest.TestCase):
 	def test_checkPot_lastMessage(self):
 		"""Test that missing translators comment on the last message are reported."""
 		self.assertEqual(
-			self.doCheckPot("firstMessage.pot"),
+			self.doCheckPot("lastMessage.pot"),
 			(1, "1 errors, 0 unexpected successes, 0 expected errors"),
 			"checkPot error count and/or status message do not meet expectations."
 		)
