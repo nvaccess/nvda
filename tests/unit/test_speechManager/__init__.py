@@ -16,6 +16,7 @@ import speech.manager
 from speech.commands import (
 	PitchCommand,
 	ConfigProfileTriggerCommand,
+	_CancellableSpeechCommand,
 )
 from .speechManagerTestHarness import (
 	_IndexT,
@@ -147,6 +148,156 @@ class TestExpectedClasses(unittest.TestCase):
 		p = speech.PitchCommand(offset=2)
 		e = ExpectedProsody(speech.PitchCommand(offset=5))
 		self.assertNotEqual(p, e)
+
+
+class CancellableSpeechTests(unittest.TestCase):
+	"""Tests behaviour related to CancellableSpeech"""
+
+	def setUp(self):
+		import speechDictHandler
+		speechDictHandler.initialize()  # setting the synth depends on dictionary["voice"]
+		config.conf['featureFlag']['cancelExpiredFocusSpeech'] = 1  # yes
+
+	def test_validSpeechSpoken(self):
+		"""Tests the outcome when speech stays valid. It should not be cancelled."""
+		smi = SpeechManagerInteractions(self)
+
+		with smi.expectation():
+			text = "This stays valid"
+			smi.speak([text, _CancellableSpeechCommand(lambda: True)])
+			smi.expect_synthSpeak(sequence=[text, smi.create_ExpectedIndex(expectedToBecomeIndex=1)])
+
+	def test_invalidSpeechNotSpoken(self):
+		"""Ensure that invalid speech is not sent to the synth"""
+		smi = SpeechManagerInteractions(self)
+
+		with smi.expectation():
+			text = "This stays invalid"
+			smi.speak([text, _CancellableSpeechCommand(lambda: False)])
+
+	def test_invalidated_indexHit(self):
+		"""Hitting an index should cause a cancellation of speech that has become
+			invalid after being sent to the synth.
+			For particularly long utterances with many indexes, the speech can be
+			stopped sooner.
+		"""
+		smi = SpeechManagerInteractions(self)
+		isSpeechNumberValid = {}
+
+		def _checkIfValid(speechNumber):
+			return isSpeechNumberValid.get(speechNumber, False)
+
+		with smi.expectation():
+			initiallyValidSequence = [
+				"text 1",
+				smi.create_CallBackCommand(expectedToBecomeIndex=1),
+				"text 2",
+				smi.create_ExpectedIndex(expectedToBecomeIndex=2),
+				_CancellableSpeechCommand(lambda: _checkIfValid(1)),
+			]
+			isSpeechNumberValid[1] = True  # initially valid
+			smi.speak(initiallyValidSequence)
+			smi.expect_synthSpeak(sequence=initiallyValidSequence[:4])
+
+		with smi.expectation():
+			isSpeechNumberValid[1] = False  # becomes invalid
+			smi.indexReached(1)
+			smi.expect_indexReachedCallback(forIndex=1)
+			smi.pumpAll()
+			# Todo: Fix SpeechManager. Invalid speech should be cancelled
+			#  smi.expect_synthCancel()  # Expected here
+
+	def test_invalidated_newSpeech(self):
+		"""New speech should cause a cancellation of speech that has become
+			invalid after being sent to the synth.
+			Ensure that new speech can be started as soon as possible to reduce
+			the stammering of the synth.
+		"""
+		smi = SpeechManagerInteractions(self)
+		isSpeechNumberValid = {}
+
+		def _checkIfValid(speechNumber):
+			return isSpeechNumberValid.get(speechNumber, False)
+
+		with smi.expectation():
+			initiallyValidSequence = [
+				"text 1",
+				smi.create_CallBackCommand(expectedToBecomeIndex=1),
+				"text 2",
+				smi.create_ExpectedIndex(expectedToBecomeIndex=2),
+				_CancellableSpeechCommand(lambda: _checkIfValid(1)),
+			]
+			isSpeechNumberValid[1] = True  # initially valid
+			smi.speak(initiallyValidSequence)
+			smi.expect_synthSpeak(sequence=initiallyValidSequence[:4])
+
+		isSpeechNumberValid[1] = False
+		with smi.expectation():
+			newSequence = [
+				"text 3",
+				smi.create_CallBackCommand(expectedToBecomeIndex=3),
+				"text 4",
+				smi.create_ExpectedIndex(expectedToBecomeIndex=4),
+			]
+			smi.speak(newSequence)
+			smi.expect_synthCancel()
+			smi.expect_synthSpeak(sequence=newSequence[:4])
+
+	def test_invalidated_newSpeechWithCancellable(self):
+		"""New speech that contains a cancellableSpeechCommand should cause a
+			cancellation of speech that has become invalid after being sent to the
+			synth.
+			Similar to test_invalidated_newSpeech, but ensure that the
+			cancellableSpeechCommand does not affect the behaviour.
+			"""
+		smi = SpeechManagerInteractions(self)
+		isSpeechNumberValid = {}
+
+		def _checkIfValid(speechNumber):
+			return isSpeechNumberValid.get(speechNumber, False)
+
+		with smi.expectation():
+			initiallyValidSequence = [
+				"text 1",
+				smi.create_CallBackCommand(expectedToBecomeIndex=1),
+				"text 2",
+				smi.create_ExpectedIndex(expectedToBecomeIndex=2),
+				_CancellableSpeechCommand(lambda: _checkIfValid(1)),
+			]
+			isSpeechNumberValid[1] = True  # initially valid
+			smi.speak(initiallyValidSequence)
+			smi.expect_synthSpeak(sequence=initiallyValidSequence[:4])
+
+		isSpeechNumberValid[1] = False
+		isSpeechNumberValid[2] = True
+		with smi.expectation():
+			newValidSequence = [
+				"text 3",
+				smi.create_CallBackCommand(expectedToBecomeIndex=3),
+				"text 4",
+				smi.create_ExpectedIndex(expectedToBecomeIndex=4),
+				_CancellableSpeechCommand(lambda: _checkIfValid(2)),
+			]
+			smi.speak(newValidSequence)
+			smi.expect_synthCancel()
+			smi.expect_synthSpeak(sequence=newValidSequence[:4])
+
+	def test_validSpeechAfterInvalid(self):
+		"""Tests that calling speak with invalid speech will not lock up the SpeechManager.
+		Under certain circumstances this resulted in NVDA going silent when more speech was in the queue.
+		"""
+		smi = SpeechManagerInteractions(self)
+
+		with smi.expectation():
+			smi.speak([
+				"Stays invalid",
+				_CancellableSpeechCommand(lambda: False),
+				smi.create_ExpectedIndex(expectedToBecomeIndex=1)
+			])
+
+		with smi.expectation():
+			smi.speak(["Stays valid", _CancellableSpeechCommand(lambda: True)])
+			smi.expect_synthSpeak(sequence=["Stays valid", smi.create_ExpectedIndex(expectedToBecomeIndex=2)])
 
 
 class SayAllEmulatedTests(unittest.TestCase):
