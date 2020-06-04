@@ -215,6 +215,8 @@ class UIAHandler(COMObject):
 
 	def __init__(self):
 		super(UIAHandler,self).__init__()
+		self.globalEventHandlerGroup = None
+		self.localEventHandlerGroup = None
 		self.MTAThreadInitEvent=threading.Event()
 		self.MTAThreadQueue = Queue()
 		self.MTAThreadInitException=None
@@ -299,7 +301,8 @@ class UIAHandler(COMObject):
 			self.rootElement=self.clientObject.getRootElementBuildCache(self.baseCacheRequest)
 			self.reservedNotSupportedValue=self.clientObject.ReservedNotSupportedValue
 			self.ReservedMixedAttributeValue=self.clientObject.ReservedMixedAttributeValue
-			self._createLocalEventHandlerGroup()
+			if config.conf['UIA']['selectiveEventRegistration']:
+				self._createLocalEventHandlerGroup()
 			self._registerGlobalEventHandlers()
 		except Exception as e:
 			self.MTAThreadInitException=e
@@ -326,9 +329,17 @@ class UIAHandler(COMObject):
 			UIA.TreeScope_Subtree,
 			self.baseCacheRequest,
 			self,
-			*self.clientObject.IntSafeArrayToNativeArray(globalEventHandlerGroupUIAPropertyIds)
+			*self.clientObject.IntSafeArrayToNativeArray(
+				globalEventHandlerGroupUIAPropertyIds
+				if config.conf['UIA']['selectiveEventRegistration']
+				else UIAPropertyIdsToNVDAEventNames
+			)
 		)
-		for eventId in globalEventHandlerGroupUIAEventIds:
+		for eventId in (
+			globalEventHandlerGroupUIAEventIds
+			if config.conf['UIA']['selectiveEventRegistration']
+			else UIAEventIdsToNVDAEventNames
+		):
 			self.globalEventHandlerGroup.AddAutomationEventHandler(
 				eventId,
 				UIA.TreeScope_Subtree,
@@ -472,7 +483,8 @@ class UIAHandler(COMObject):
 			return
 		previousFocusedUIAElement = self.lastFocusedUIAElement
 		self.lastFocusedUIAElement = sender
-		self.MTAThreadQueue.put_nowait(lambda: self._onFocusChange(previousFocusedUIAElement, sender))
+		if config.conf['UIA']['selectiveEventRegistration']:
+			self.MTAThreadQueue.put_nowait(lambda: self._onFocusChange(previousFocusedUIAElement, sender))
 		if not self.isNativeUIAElement(sender):
 			if _isDebug():
 				log.debug("HandleFocusChangedEvent: Ignoring for non native element")
