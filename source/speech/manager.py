@@ -256,7 +256,7 @@ class SpeechManager(object):
 		interrupt = self._queueSpeechSequence(speechSequence, priority)
 		self._doRemoveCancelledSpeechCommands()
 		# If speech isn't already in progress, we need to push the first speech.
-		push = self._hasNoMoreSpeech()
+		push = self._hasNoMoreSpeech() or not self._synthStillSpeaking()
 		log._speechManagerDebug(
 			f"Will interrupt: {interrupt}"
 			f" Will push: {push}"

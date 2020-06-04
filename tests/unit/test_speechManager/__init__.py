@@ -297,11 +297,9 @@ class CancellableSpeechTests(unittest.TestCase):
 
 		with smi.expectation():
 			smi.speak(["Stays valid", _CancellableSpeechCommand(lambda: True)])
-			# ToDo: Fix SpeechManager. Valid speech should be sent to synth
-			# 	Expected:
-			# smi.expect_synthSpeak(sequence=[
-			# 	"Stays valid", smi.create_ExpectedIndex(expectedToBecomeIndex=2)
-			# ])
+			smi.expect_synthSpeak(sequence=[
+				"Stays valid", smi.create_ExpectedIndex(expectedToBecomeIndex=2)
+			])
 
 
 class SayAllEmulatedTests(unittest.TestCase):
