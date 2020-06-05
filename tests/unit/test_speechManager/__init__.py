@@ -204,8 +204,7 @@ class CancellableSpeechTests(unittest.TestCase):
 			smi.indexReached(1)
 			smi.expect_indexReachedCallback(forIndex=1)
 			smi.pumpAll()
-			# Todo: Fix SpeechManager. Invalid speech should be cancelled
-			#  smi.expect_synthCancel()  # Expected here
+			smi.expect_synthCancel()
 
 	def test_invalidated_newSpeech(self):
 		"""New speech should cause a cancellation of speech that has become

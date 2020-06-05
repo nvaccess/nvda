@@ -670,6 +670,7 @@ class SpeechManager(object):
 						log._speechManagerUnitTest("CallbackCommand End")
 					except Exception:
 						log.exception("Error running speech callback")
+		self._doRemoveCancelledSpeechCommands()
 		shouldPush = (
 			endOfUtterance
 			and not self._synthStillSpeaking()  # stops double speaking errors
