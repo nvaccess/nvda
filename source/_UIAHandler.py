@@ -229,7 +229,6 @@ class UIAHandler(COMObject):
 		self.MTAThreadInitEvent.wait(2)
 		if self.MTAThreadInitException:
 			raise self.MTAThreadInitException
-		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
 
 	def terminate(self):
 		MTAThreadHandle=HANDLE(windll.kernel32.OpenThread(winKernel.SYNCHRONIZE,False,self.MTAThread.ident))
@@ -484,7 +483,7 @@ class UIAHandler(COMObject):
 			return
 		previousFocusedUIAElement = self.lastFocusedUIAElement
 		self.lastFocusedUIAElement = sender
-		if config.conf['UIA']['selectiveEventRegistration']:
+		if self.localEventHandlerGroup:
 			self.MTAThreadQueue.put_nowait(lambda: self._onFocusChange(previousFocusedUIAElement, sender))
 		if not self.isNativeUIAElement(sender):
 			if _isDebug():
@@ -759,22 +758,6 @@ class UIAHandler(COMObject):
 				# Therefore, we must use UIA here.
 				return True
 		return False
-
-	def reinitializeEventHandlers(self):
-		self.MTAThreadQueue.put_nowait(self._reinitializeEventHandlers)
-
-	def _reinitializeEventHandlers(self):
-		self.clientObject.RemoveAllEventHandlers()
-		self.globalEventHandlerGroup = None
-		self.localEventHandlerGroup = None
-		if config.conf['UIA']['selectiveEventRegistration']:
-			self._createLocalEventHandlerGroup()
-		self._registerGlobalEventHandlers()
-
-	def handlePostConfigProfileSwitch(self, prevConf):
-		if config.conf['UIA']['selectiveEventRegistration'] is prevConf['UIA']['selectiveEventRegistration']:
-			return
-		self.reinitializeEventHandlers()
 
 
 def _isDebug():
