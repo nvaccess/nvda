@@ -1148,6 +1148,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	//If the name isn't being rendered as the content, then add the name as a field attribute.
 	if (!nameIsContent && name) {
 		parentNode->addAttribute(L"name", name);
+		// Determine whether this node is labelled by its content. We only need to do
+		// this if the node has a name and the name is explicit, since this is what
+		// browsers expose in this case.
 		if (nameIsExplicit) {
 			auto labelId = getLabelIDCached();
 			if (labelId) {
