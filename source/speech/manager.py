@@ -498,6 +498,28 @@ class SpeechManager(object):
 	def _isIndexAAfterIndexB(cls, indexA: _IndexT, indexB: _IndexT) -> bool:
 		return indexA != indexB and not cls._isIndexABeforeIndexB(indexA, indexB)
 
+	def _getMostRecentlyCancelledUtterance(self) -> Optional[_IndexT]:
+		# Index of the most recently cancelled utterance.
+		latestCancelledUtteranceIndex: Optional[_IndexT] = None
+		log._speechManagerDebug(
+			f"Length of _cancelCommandsForUtteranceBeingSpokenBySynth: "
+			f"{len(self._cancelCommandsForUtteranceBeingSpokenBySynth)} "
+			f"Length of _indexesSpeaking: "
+			f"{len(self._indexesSpeaking)} "
+		)
+		cancelledIndexes = (
+			index for command, index
+			in self._cancelCommandsForUtteranceBeingSpokenBySynth.items()
+			if command.isCancelled
+		)
+		for index in cancelledIndexes:
+			if (
+				not latestCancelledUtteranceIndex
+				or self._isIndexABeforeIndexB(latestCancelledUtteranceIndex, index)
+			):
+				latestCancelledUtteranceIndex = index
+		return latestCancelledUtteranceIndex
+
 	def removeCancelledSpeechCommands(self):
 		log._speechManagerUnitTest("removeCancelledSpeechCommands")
 		self._doRemoveCancelledSpeechCommands()
@@ -505,28 +527,14 @@ class SpeechManager(object):
 	def _doRemoveCancelledSpeechCommands(self):
 		if not _shouldCancelExpiredFocusEvents():
 			return
-		latestCanceledUtteranceIndex = None
-		log._speechManagerDebug(
-			f"Length of _cancelCommandsForUtteranceBeingSpokenBySynth: "
-			f"{len(self._cancelCommandsForUtteranceBeingSpokenBySynth)} "
-			f"Length of _indexesSpeaking: "
-			f"{len(self._indexesSpeaking)} "
-		)
-		for command, index in self._cancelCommandsForUtteranceBeingSpokenBySynth.items():
-			if command.isCancelled:
-				# we must not risk deleting commands while iterating over _cancelCommandsForUtteranceBeingSpokenBySynth
-				if (
-					not latestCanceledUtteranceIndex
-					or self._isIndexABeforeIndexB(
-						latestCanceledUtteranceIndex,
-						index
-					)
-				):
-					latestCanceledUtteranceIndex = index
-		log._speechManagerDebug(f"Last index: {latestCanceledUtteranceIndex}")
-		if latestCanceledUtteranceIndex is not None:
+		# Don't delete commands while iterating over _cancelCommandsForUtteranceBeingSpokenBySynth.
+		latestCancelledUtteranceIndex = self._getMostRecentlyCancelledUtterance()
+		log._speechManagerDebug(f"Last index: {latestCancelledUtteranceIndex}")
+		if latestCancelledUtteranceIndex is not None:
 			log._speechManagerDebug(f"Cancel and push speech")
-			self._removeCompletedFromQueue(latestCanceledUtteranceIndex)
+			# Minimise the number of calls to _removeCompletedFromQueue by using the most recently cancelled
+			# utterance index. This will remove all older queued speech also.
+			self._removeCompletedFromQueue(latestCancelledUtteranceIndex)
 			getSynth().cancel()
 			self._cancelCommandsForUtteranceBeingSpokenBySynth.clear()
 			self._indexesSpeaking.clear()
@@ -592,19 +600,25 @@ class SpeechManager(object):
 						self._curPriQueue.paramTracker.update(command)
 		# This sequence is done, so we don't need to track it any more.
 		toRemove = self._curPriQueue.pendingSequences[:seqIndex + 1]
-		for seq in toRemove:
-			log._speechManagerDebug("Removing: %r", seq)
-			if _shouldCancelExpiredFocusEvents():
-				# Debug logging for cancelling expired focus events.
-				for item in seq:
-					if isinstance(item, _CancellableSpeechCommand):
-						if log.isEnabledFor(log.DEBUG) and _shouldDoSpeechManagerLogging():
-							log._speechManagerDebug(
-								f"Item is in _cancelCommandsForUtteranceBeingSpokenBySynth: "
-								f"{item in self._cancelCommandsForUtteranceBeingSpokenBySynth.keys()}"
-							)
-						self._cancelCommandsForUtteranceBeingSpokenBySynth.pop(item, None)
-			self._curPriQueue.pendingSequences.remove(seq)
+		log._speechManagerDebug("Removing: %r", seq)
+		if _shouldCancelExpiredFocusEvents():
+			cancellables = (
+				item
+				for seq in toRemove
+				for item in seq
+				if isinstance(
+					item, _CancellableSpeechCommand
+				)
+			)
+			for item in cancellables:
+				if log.isEnabledFor(log.DEBUG) and _shouldDoSpeechManagerLogging():
+					# Debug logging for cancelling expired focus events.
+					log._speechManagerDebug(
+						f"Item is in _cancelCommandsForUtteranceBeingSpokenBySynth: "
+						f"{item in self._cancelCommandsForUtteranceBeingSpokenBySynth.keys()}"
+					)
+				self._cancelCommandsForUtteranceBeingSpokenBySynth.pop(item, None)
+		del self._curPriQueue.pendingSequences[:seqIndex + 1]
 
 		return True, endOfUtterance
 
