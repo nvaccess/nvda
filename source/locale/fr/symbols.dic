@@ -9,7 +9,7 @@ complexSymbols:
 . sentence ending	(?<=[^\s.])\s?\.(?=[\"'”’);\s]|$)
 ! sentence ending	(?<=[^\s!])\s?\!(?=[\"'”’);\s]|$)
 ? sentence ending	(?<=[^\s?])\s?\?(?=[\"'”’);\s]|$)
-... sentence ending	(?<=[^\s.])\s?\.\.\.(?=[\"'”’);\s]|$)
+... sentence ending	(?<=[^\s.])\s?\.{3}(?=[\"'”’);\s]|$)
 … sentence ending	(?<=[^\s…])\s?\…(?=[\"'”’);\s]|$)
 # Phrase endings.
 ; phrase ending	(?<=[^\s;])\s?;(?=\s|$)
@@ -20,12 +20,11 @@ thousands separator	(?<![^\d -])\.(?=\d{3}(\D|$))
 in-word '	(?<=[^\W_])['’]
 in-word -	(?<=[^\W_])[-]
 between-words -	(?<=\s)[-](?=\s)
-negative number	(?<!\w)-(?=[$£€¥.]?\d)
-dates .	((?<=\b\d\d)\.(?=\d\d.(\d{2}|\d{4})\b))|((?<=\b\d\d.\d\d)\.(?=(\d{2}|\d{4})\b))
-dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
+dates .	\b(\d\d)[/.](\d\d)[/.](\d{2}|\d{4})\b
 
 after-number %	(?<=\d)(\s?\%)(?=\W|$)
-n°	(?<=\b)[nN]°
+n°	\b[nN]°
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -41,8 +40,7 @@ symbols:
 
 decimal point		# virgule décimale
 thousands separator		# point des mille
-dates .	 	all	always	# point de date
-dates /	 	all	always	# barre oblique de date
+dates .	\1 \2 \3 	all	always	# point de date
 negative number	moins	none	norep	# - devant un nombre
 after-number %	pour cent	none	norep	# % après un nombre
 in-word '	apostrophe	# ' dans un mot
@@ -100,6 +98,7 @@ _	souligné
 {	accolade gauche
 }	accolade droite
 |	barre verticale
+¦	barre brisée	most
 ~	tilde	none
 ¿	point d'interrogation renversé	all
 ¡	point d'exclamation renversé	all
@@ -115,25 +114,61 @@ _	souligné
 ’	apostrophe droite
 –	tiret demicadratin
 —	tiret cadratin
+⁃	puce tiret	none
 ●	cercle
+○	cercle blanc	most
 ¨	tréma
+¯	macron	most
+´	accent aigu	most
 ‎	gauche à droite
 ‏	droite à gauche
 ■	carré noir
 ▪	carré noir
 ◾	carré noir
+□	carré blanc	some
 ◦	puce blanche
 ❖	losange noir avec croix	some
 ➔	flèche droite
+➢	pointe de flèche droite	some
 
 §	section
 °	degré	some	norep
 «	guillemet ouvert
 »	guillemet fermé
 µ	micro
+º	ordinal
+ª	puissance a	some
+⁰	puissance 0	some
 ¹	puissance 1
 ²	puissance 2
 ³	puissance 3
+⁴	puissance 4	some
+⁵	puissance 5	some
+⁶	puissance 6	some
+⁷	puissance 7	some
+⁸	puissance 8	some
+⁹	puissance 9	some
+⁺	puissance plus	some
+⁻	puissance moins	some
+⁼	puissance égal	some
+⁽	puissance parenthèse gauche	some
+⁾	puissance parenthèse droite	some
+ⁿ	puissance n	some
+₀	indice 0	some
+₁	indice 1	some
+₂	indice 2	some
+₃	indice 3	some
+₄	indice 4	some
+₅	indice 5	some
+₆	indice 6	some
+₇	indice 7	some
+₈	indice 8	some
+₉	indice 9	some
+₊	indice plus	some
+₋	indice moins	some
+₌	indice égal	some
+₍	indice parenthèse gauche	some
+₎	indice parenthèse droite	some
 ®	marque déposée
 ™	marque de fabrique
 ©	Copyright
@@ -156,6 +191,8 @@ _	souligné
 ⇨	flèche blanche droite	some
 ⮚	pointe flèche droite	some
 🡺	flèche droite	some
+✗	puce en x	some
+￼	caractère de remplacement d'objet	all	always
 
 #Opérateurs Mathématiques U+2200 to U+220F
 ∀	pour tout 
@@ -189,6 +226,7 @@ _	souligné
 ∦	non parallèle à
 ∧	et logique
 ∨	ou logique
+¬	non logique
 ∩	intersection
 ∪	union
 ∫	intégrale
@@ -218,6 +256,7 @@ _	souligné
 ‾	Ligne au dessus
 ‼	Double exclamation
 ♦	Carreau noir
+◆	carreau noir
 Δ	delta	none	never	# Δ
 δ	delta	none	never	# Δ
 τ	tau	none	never
@@ -272,6 +311,8 @@ _	souligné
 	guillemet vers le bas	none	never
 ↦	a pour image	none	never
 ′	prime	none	never
+″	double prime	some
+‴	triple prime	some
 η	êta	none	never
 Η	êta	none	never
 ε	epsilon	none	never
@@ -330,6 +371,9 @@ _	souligné
 ≫	très supérieur à	none	never
 
 # Vulgur Fractions U+2150 to U+215E
+¼	un quart
+½	un demi
+¾	trois quarts
 ⅐	un septième
 ⅑	un neuvième
 ⅒	un dixième
