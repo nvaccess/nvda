@@ -241,6 +241,9 @@ class SpeechManager(object):
 		#: Whether to push more speech when the synth reports it is done speaking.
 		self._shouldPushWhenDoneSpeaking = False
 		self._cancelCommandsForUtteranceBeingSpokenBySynth = {}
+		#: True if the synth.cancel was called due to cancellableSpeech no longer being valid
+		# and no new speech has been sent.
+		self._cancelledLastSpeechWithSynth = False
 
 	def _synthStillSpeaking(self) -> bool:
 		return 0 < len(self._indexesSpeaking)
@@ -254,6 +257,14 @@ class SpeechManager(object):
 		self._doRemoveCancelledSpeechCommands()
 		# If speech isn't already in progress, we need to push the first speech.
 		push = self._hasNoMoreSpeech() or not self._synthStillSpeaking()
+		log._speechManagerDebug(
+			f"Will interrupt: {interrupt}"
+			f" Will push: {push}"
+			f" | _indexesSpeaking: {self._indexesSpeaking!r}"
+			f" | _curPriQueue valid: {not self._hasNoMoreSpeech()}"
+			f" | _shouldPushWhenDoneSpeaking: {self._shouldPushWhenDoneSpeaking}"
+			f" | _cancelledLastSpeechWithSynth {self._cancelledLastSpeechWithSynth}"
+		)
 		if interrupt:
 			log._speechManagerDebug("Interrupting speech")
 			getSynth().cancel()
@@ -361,6 +372,7 @@ class SpeechManager(object):
 		return outSeqs
 
 	def _pushNextSpeech(self, doneSpeaking: bool):
+		log._speechManagerDebug(f"pushNextSpeech - doneSpeaking: {doneSpeaking}")
 		queue = self._getNextPriority()
 		if not queue:
 			# No more speech.
@@ -407,6 +419,7 @@ class SpeechManager(object):
 			for item in seq:
 				if isinstance(item, IndexCommand):
 					self._indexesSpeaking.append(item.index)
+			self._cancelledLastSpeechWithSynth = False
 			log._speechManagerUnitTest(f"Assert Synth Gets: {seq}")
 			getSynth().speak(seq)
 
@@ -536,6 +549,7 @@ class SpeechManager(object):
 			# utterance index. This will remove all older queued speech also.
 			self._removeCompletedFromQueue(latestCancelledUtteranceIndex)
 			getSynth().cancel()
+			self._cancelledLastSpeechWithSynth = True
 			self._cancelCommandsForUtteranceBeingSpokenBySynth.clear()
 			self._indexesSpeaking.clear()
 			self._pushNextSpeech(True)
@@ -657,6 +671,11 @@ class SpeechManager(object):
 					except Exception:
 						log.exception("Error running speech callback")
 		if endOfUtterance:
+			if self._indexesSpeaking:
+				log._speechManagerDebug(
+					f"Indexes speaking: {self._indexesSpeaking!r},"
+					f" queue: {self._curPriQueue.pendingSequences}"
+				)
 			# Even if we have many indexes, we should only push next speech once.
 			self._pushNextSpeech(False)
 
