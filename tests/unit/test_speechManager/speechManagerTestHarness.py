@@ -314,7 +314,7 @@ class SpeechManagerInteractions:
 		return ExpectedProsody(expectedProsody)
 
 	def create_BeepCommand(self, hz, length, left=50, right=50, expectedToBecomeIndex=None):
-		"""BeepCommands get converted into IndexCommands by speechManger. The expectedToBecomeIndex argument
+		"""BeepCommands get converted into IndexCommands by speechManager. The expectedToBecomeIndex argument
 		allow us to track that.
 		@note: the expectedToBecomeIndex is tested to be ordered, contiguous, and unique with respect to other
 		indexed commands to help to prevent errors in the tests.
@@ -329,7 +329,7 @@ class SpeechManagerInteractions:
 		return b
 
 	def create_ConfigProfileTriggerCommand(self, trigger, enter=True, expectedToBecomeIndex=None):
-		"""ConfigProfileTriggerCommands get converted into IndexCommands by speechManger. The
+		"""ConfigProfileTriggerCommands get converted into IndexCommands by speechManager. The
 		expectedToBecomeIndex argument allows tracking that.
 		@note: the expectedToBecomeIndex is tested to be ordered, contiguous, and unique with respect to other
 		indexed commands to help to prevent errors in the tests.
@@ -344,7 +344,7 @@ class SpeechManagerInteractions:
 		return t
 
 	def create_WaveFileCommand(self, filename, expectedToBecomeIndex=None):
-		"""WaveFileCommands get converted into IndexCommands by speechManger. The expectedToBecomeIndex argument
+		"""WaveFileCommands get converted into IndexCommands by speechManager. The expectedToBecomeIndex argument
 		allows tracking that.
 		@note: the expectedToBecomeIndex is tested to be ordered, contiguous, and unique with respect to other
 		indexed commands to help to prevent errors in the tests.
@@ -359,7 +359,7 @@ class SpeechManagerInteractions:
 		return w
 
 	def create_EndUtteranceCommand(self, expectedToBecomeIndex=None):
-		"""EndUtteranceCommand get converted into IndexCommands by speechManger. The expectedToBecomeIndex argument
+		"""EndUtteranceCommand get converted into IndexCommands by speechManager. The expectedToBecomeIndex argument
 		allow tracking that.
 		@note: the expectedToBecomeIndex is tested to be ordered, contiguous, and unique with respect to other
 		indexed commands to help to prevent errors in the tests.

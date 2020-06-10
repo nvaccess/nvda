@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2020 NV Access Limited
 
-"""Unit tests for speech/manger module
+"""Unit tests for speech/manager module
 """
 import unittest
 import config

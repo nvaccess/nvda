@@ -233,7 +233,7 @@ def doPreGainFocus(obj,sleepMode=False):
 		# - lastQueuedFocusObject & obj.WAS_GAIN_FOCUS_OBJ_ATTR_NAME
 		#   - Set in stack: _trackFocusObject, eventHandler.queueEvent
 		#   - Which results in executeEvent being called, then doPreGainFocus
-		# - api.getFocusAncestors() via api.setFocusOject() called in doPreGainFocus
+		# - api.getFocusAncestors() via api.setFocusObject() called in doPreGainFocus
 		speech._manager.removeCancelledSpeechCommands()
 
 	if globalVars.focusDifferenceLevel<=1:
