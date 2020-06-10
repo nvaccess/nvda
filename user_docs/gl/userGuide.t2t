@@ -1852,7 +1852,7 @@ Para cambiar un símbolo, primeiro selecciónao na lísta de Símbolos.
 Podes filtrar os símbolos introducindo o símbolo ou unha parte da súa sustitución no cuadro de edición Filtrar por.
 
 - O campo Reemprazar permíteche cambiar o texto que debería falarse en lugar deste símbolo.
-- Utilizando o campo Nível, podes axustar o nivel máis baixo do símbolo ao que este símbolo debería se falar.
+- Utilizando o campo Nivel, podes axustar o nivel máis baixo do símbolo ao que este símbolo se debería falar.
 - O campo Enviar símbolo actual ao sintetizador especifica cando o proprio símbolo (en contraposición co seu reemplazamento) debería enviarse ao sintetizador.
 Esto é útil se o símbolo causa que o sintetizador faga unha pausa ou cambie a entoación da voz.
 Por exemplo, unha coma causa que o sintetizador faga unha pausa.
@@ -1860,7 +1860,7 @@ Hai tres opcións:
  - nunca: nunca envía o símbolo actual ao sintetizador.
  - Sempre: envía sempre o símbolo actual ao sintetizador.
  - só baixo nivel dos símbolos: Envía o símbolo actual só se o nivel de voz do símbolo configurado é máis baixo que o nivel posto por este símbolo.
- Por exemplo, poderías utilizar esto tal que un símbolo terá o seu reemplazamento falado en níveis máis altos sen pausar, mentres aínda estea indicado cunha pausa nos níveis máis baixos.
+ Por exemplo, poderías utilizar esto tal que un símbolo terá o seu reemplazamento falado en niveis máis altos sen pausar, mentres aínda estea indicado cunha pausa nos niveis máis baixos.
  -
 -
 
@@ -3032,14 +3032,14 @@ Seguidamente van as opcións de liña de ordes para o NVDA:
 | -q | --quit | Sae da copia que xa se estea a executar do NVDA |
 | -k | --check-running | Informa se NVDA está en execución a través do código de saída; 0 se está en execución, 1 se non está en execución |
 | -f LOGFILENAME | --log-file=LOGFILENAME | O ficheiro onde se deberían escreber as mesaxes de rexistro |
-| -l LOGLEVEL | --log-level=LOGLEVEL | O nível máis baixo de mensaxe rexistrada (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning |
+| -l LOGLEVEL | --log-level=LOGLEVEL | O nivel máis baixo de mensaxe rexistrada (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning |
 | -c CONFIGPATH | --config-path=CONFIGPATH | A vía  onde se almacenan todos os axustes para o NVDA |
 | -m | --minimal | Sen sons, sen interface, sen mesaxe de inicio etc |
 | -s | --secure | Modo seguro (deshabilita a consola Python e as características de rexistro, a menudo usado en pantallas seguras) |
 | None | --disable-addons | Os complementos non terán efecto |
 | None | --no-sr-flag  | Non cambia a bandeira global do sistema do lector de pantalla |
-| None | --debug-logging | Habilita o nível de rexistro de depuración só para esta execución. Esta configuración sobreescribirá calquera outro nível de rexistro ( ""--loglevel"", -l) argumento dado, incluindo a opción non rexistro. |
-| None | --no-logging | Deshabilita o rexistro durante o uso do NVDA. Esta opción pode sobreescribirse se se especifica un nível de rexistro ( ""--loglevel"", -l) dende a liña de ordes ou se o rexistro de depuración está activado. |
+| None | --debug-logging | Habilita o nivel de rexistro de depuración só para esta execución. Esta configuración sobreescribirá calquera outro nivel de rexistro ( ""--loglevel"", -l) argumento dado, incluindo a opción non rexistro. |
+| None | --no-logging | Deshabilita o rexistro durante o uso do NVDA. Esta opción pode sobreescribirse se se especifica un nivel de rexistro ( ""--loglevel"", -l) dende a liña de ordes ou se o rexistro de depuración está activado. |
 | None | --install | Instálase o NVDA comezando a nova copia instalada |
 | None | --install-silent | Instala en silenzo NVDA (Non comeza a nova copia instalada) |
 | None | --enable-start-on-logon=True|False | Ao instalar, habilita [arrancar na pantalla de inicio #StartAtWindowsLogon] do NVDA |
