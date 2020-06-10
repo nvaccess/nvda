@@ -144,6 +144,7 @@ class _ManagerPriorityQueue(object):
 		#: Keeps track of parameters that have been changed during an utterance.
 		self.paramTracker: ParamChangeTracker = ParamChangeTracker()
 
+
 class SpeechManager(object):
 	"""Manages queuing of speech utterances, calling callbacks at desired points in the speech, profile switching, prioritization, etc.
 	This is intended for internal use only.
@@ -198,7 +199,7 @@ class SpeechManager(object):
 
 	_cancelCommandsForUtteranceBeingSpokenBySynth: Dict[_CancellableSpeechCommand, _IndexT]
 	_priQueues: Dict[Any, _ManagerPriorityQueue]
-	_curPriQueue: Optional[_ManagerPriorityQueue]
+	_curPriQueue: Optional[_ManagerPriorityQueue]  # None indicates no more speech.
 
 	def __init__(self):
 		#: A counter for indexes sent to the synthesizer for callbacks, etc.
@@ -241,12 +242,18 @@ class SpeechManager(object):
 		self._shouldPushWhenDoneSpeaking = False
 		self._cancelCommandsForUtteranceBeingSpokenBySynth = {}
 
+	def _synthStillSpeaking(self) -> bool:
+		return 0 < len(self._indexesSpeaking)
+
+	def _hasNoMoreSpeech(self):
+		return self._curPriQueue is None
+
 	def speak(self, speechSequence: SpeechSequence, priority: Spri):
 		log._speechManagerUnitTest("speak (priority %r): %r", priority, speechSequence)
 		interrupt = self._queueSpeechSequence(speechSequence, priority)
 		self._doRemoveCancelledSpeechCommands()
 		# If speech isn't already in progress, we need to push the first speech.
-		push = self._curPriQueue is None or 1 > len(self._indexesSpeaking)
+		push = self._hasNoMoreSpeech() or not self._synthStillSpeaking()
 		if interrupt:
 			log._speechManagerDebug("Interrupting speech")
 			getSynth().cancel()
@@ -360,7 +367,7 @@ class SpeechManager(object):
 			log._speechManagerDebug("No more speech")
 			self._curPriQueue = None
 			return
-		if not self._curPriQueue:
+		if self._hasNoMoreSpeech():
 			# First utterance after no speech.
 			self._curPriQueue = queue
 		elif queue.priority > self._curPriQueue.priority:
