@@ -256,7 +256,7 @@ class SpeechManager(object):
 		interrupt = self._queueSpeechSequence(speechSequence, priority)
 		self._doRemoveCancelledSpeechCommands()
 		# If speech isn't already in progress, we need to push the first speech.
-		push = self._hasNoMoreSpeech() or not self._synthStillSpeaking()
+		push = self._hasNoMoreSpeech()
 		log._speechManagerDebug(
 			f"Will interrupt: {interrupt}"
 			f" Will push: {push}"
@@ -670,7 +670,11 @@ class SpeechManager(object):
 						log._speechManagerUnitTest("CallbackCommand End")
 					except Exception:
 						log.exception("Error running speech callback")
-		if endOfUtterance:
+		shouldPush = (
+			endOfUtterance
+			and not self._synthStillSpeaking()  # stops double speaking errors
+		)
+		if shouldPush:
 			if self._indexesSpeaking:
 				log._speechManagerDebug(
 					f"Indexes speaking: {self._indexesSpeaking!r},"
