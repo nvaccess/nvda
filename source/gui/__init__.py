@@ -36,17 +36,13 @@ import api
 from . import guiHelper
 import winVersion
 
-# Temporary: #8599: add cp65001 codec
-#            #7105: upgrading to python 3 should fix this issue. See https://bugs.python.org/issue13216
-codecs.register(lambda name: codecs.lookup('utf-8') if name == 'cp65001' else None)
-
 try:
 	import updateCheck
 except RuntimeError:
 	updateCheck = None
 
 ### Constants
-NVDA_PATH = os.getcwdu()
+NVDA_PATH = os.getcwd()
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
 DONATE_URL = "http://www.nvaccess.org/donate/"
 
@@ -108,7 +104,8 @@ class MainFrame(wx.Frame):
 		#: @type: list of L{NVDAObject}
 		self.prevFocusAncestors = None
 		# If NVDA has the uiAccess privilege, it can always set the foreground window.
-		if not config.hasUiAccess():
+		import systemUtils
+		if not systemUtils.hasUiAccess():
 			# This makes Windows return to the previous foreground window and also seems to allow NVDA to be brought to the foreground.
 			self.Show()
 			self.Hide()
@@ -152,11 +149,9 @@ class MainFrame(wx.Frame):
 
 	def showGui(self):
 		# The menu pops up at the location of the mouse, which means it pops up at an unpredictable location.
-		# Therefore, move the mouse to the centre of the screen so that the menu will always pop up there.
-		left, top, width, height = api.getDesktopObject().location
-		x = width / 2
-		y = height / 2
-		winUser.setCursorPos(x, y)
+		# Therefore, move the mouse to the center of the screen so that the menu will always pop up there.
+		location = api.getDesktopObject().location
+		winUser.setCursorPos(*location.center)
 		self.evaluateUpdatePendingUpdateMenuItemCommand()
 		self.sysTrayIcon.onActivate(None)
 
@@ -319,6 +314,18 @@ class MainFrame(wx.Frame):
 		else:
 			speechViewer.deactivate()
 
+	def onBrailleViewerChangedState(self, created):
+		# its possible for this to be called after the sysTrayIcon is destroyed if we are exiting NVDA
+		if self.sysTrayIcon and self.sysTrayIcon.menu_tools_toggleBrailleViewer:
+			self.sysTrayIcon.menu_tools_toggleBrailleViewer.Check(created)
+
+	def onToggleBrailleViewerCommand(self, evt):
+		import brailleViewer
+		if brailleViewer.isBrailleViewerActive():
+			brailleViewer.destroyBrailleViewer()
+		else:
+			brailleViewer.createBrailleViewerTool()
+
 	def onPythonConsoleCommand(self, evt):
 		import pythonConsole
 		if not pythonConsole.consoleUI:
@@ -373,7 +380,8 @@ class MainFrame(wx.Frame):
 			_("Please wait while NVDA tries to fix your system's COM registrations.")
 		)
 		try:
-			config.execElevated(config.SLAVE_FILENAME,["fixCOMRegistrations"])
+			import systemUtils
+			systemUtils.execElevated(config.SLAVE_FILENAME, ["fixCOMRegistrations"])
 		except:
 			log.error("Could not execute fixCOMRegistrations command",exc_info=True) 
 		progressDialog.done()
@@ -388,7 +396,7 @@ class MainFrame(wx.Frame):
 		if isInMessageBox:
 			return
 		self.prePopup()
-		from configProfiles import ProfilesDialog
+		from .configProfiles import ProfilesDialog
 		ProfilesDialog(gui.mainFrame).Show()
 		self.postPopup()
 
@@ -409,14 +417,33 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onNVDASettingsCommand, item)
 		subMenu_speechDicts = wx.Menu()
 		if not globalVars.appArgs.secure:
-			# Translators: The label for the menu item to open Default speech dictionary dialog.
-			item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Default dictionary..."),_("A dialog where you can set default dictionary by adding dictionary entries to the list"))
+			item = subMenu_speechDicts.Append(
+				wx.ID_ANY,
+				# Translators: The label for the menu item to open Default speech dictionary dialog.
+				_("&Default dictionary..."),
+				# Translators: The help text for the menu item to open Default speech dictionary dialog.
+				_("A dialog where you can set default dictionary by adding dictionary entries to the list")
+			)
 			self.Bind(wx.EVT_MENU, frame.onDefaultDictionaryCommand, item)
-			# Translators: The label for the menu item to open Voice specific speech dictionary dialog.
-			item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Voice dictionary..."),_("A dialog where you can set voice-specific dictionary by adding dictionary entries to the list"))
+			item = subMenu_speechDicts.Append(
+				wx.ID_ANY,
+				# Translators: The label for the menu item to open Voice specific speech dictionary dialog.
+				_("&Voice dictionary..."),
+				_(
+					# Translators: The help text for the menu item
+					# to open Voice specific speech dictionary dialog.
+					"A dialog where you can set voice-specific dictionary by adding"
+					" dictionary entries to the list"
+				)
+			)
 			self.Bind(wx.EVT_MENU, frame.onVoiceDictionaryCommand, item)
-		# Translators: The label for the menu item to open Temporary speech dictionary dialog.
-		item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Temporary dictionary..."),_("A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
+		item = subMenu_speechDicts.Append(
+			wx.ID_ANY,
+			# Translators: The label for the menu item to open Temporary speech dictionary dialog.
+			_("&Temporary dictionary..."),
+			# Translators: The help text for the menu item to open Temporary speech dictionary dialog.
+			_("A dialog where you can set temporary dictionary by adding dictionary entries to the edit box")
+		)
 		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
 		# Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 		menu_preferences.AppendSubMenu(subMenu_speechDicts,_("Speech &dictionaries"))
@@ -438,6 +465,18 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		# Translators: The label for the menu item to toggle Speech Viewer.
 		item=self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
 		self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
+
+		self.menu_tools_toggleBrailleViewer: wx.MenuItem = menu_tools.AppendCheckItem(
+			wx.ID_ANY,
+			# Translators: The label for the menu item to toggle Braille Viewer.
+			_("Braille viewer")
+		)
+		item = self.menu_tools_toggleBrailleViewer
+		self.Bind(wx.EVT_MENU, frame.onToggleBrailleViewerCommand, item)
+		import brailleViewer
+		self.menu_tools_toggleBrailleViewer.Check(brailleViewer.isBrailleViewerActive())
+		brailleViewer.postBrailleViewerToolToggledAction.register(frame.onBrailleViewerChangedState)
+
 		if not globalVars.appArgs.secure and not config.isAppX:
 			# Translators: The label for the menu item to open NVDA Python Console.
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
@@ -553,7 +592,10 @@ def initialize():
 	wx.GetApp().SetTopWindow(mainFrame)
 
 def terminate():
-	for instance, state in gui.SettingsDialog._instances.iteritems():
+	import brailleViewer
+	brailleViewer.destroyBrailleViewer()
+
+	for instance, state in gui.SettingsDialog._instances.items():
 		if state is gui.SettingsDialog._DIALOG_DESTROYED_STATE:
 			log.error(
 				"Destroyed but not deleted instance of settings dialog exists: {!r}".format(instance)
@@ -632,9 +674,10 @@ class WelcomeDialog(wx.Dialog):
 	This dialog is displayed the first time NVDA is started with a new configuration.
 	"""
 
-	# Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
 	WELCOME_MESSAGE_DETAIL = _(
-		"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
+		# Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
+		"Most commands for controlling NVDA require you to hold down"
+		" the NVDA key while pressing other keys.\n"
 		"By default, the numpad Insert and main Insert keys may both be used as the NVDA key.\n"
 		"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 		"Press NVDA+n at any time to activate the NVDA menu.\n"
@@ -680,7 +723,7 @@ class WelcomeDialog(wx.Dialog):
 		self.capsAsNVDAModifierCheckBox = sHelper.addItem(wx.CheckBox(self, label=capsAsNVDAModifierText))
 		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
 		# Translators: The label of a checkbox in the Welcome dialog.
-		startAfterLogonText = _("&Automatically start NVDA after I log on to Windows")
+		startAfterLogonText = _("St&art NVDA after I sign in")
 		self.startAfterLogonCheckBox = sHelper.addItem(wx.CheckBox(self, label=startAfterLogonText))
 		self.startAfterLogonCheckBox.Value = config.getStartAfterLogon()
 		if globalVars.appArgs.secure or config.isAppX or not config.isInstalledCopy():
@@ -847,7 +890,10 @@ class ExitDialog(wx.Dialog):
 		self.actionsList = contentSizerHelper.addLabeledControl(labelText, wx.Choice, choices=self.actions)
 		self.actionsList.SetSelection(0)
 
-		contentSizerHelper.addItem( self.CreateButtonSizer(wx.OK | wx.CANCEL))
+		contentSizerHelper.addItem(
+			self.CreateButtonSizer(wx.OK | wx.CANCEL),
+			flag=wx.ALIGN_RIGHT
+		)
 
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
@@ -898,7 +944,10 @@ class ExecAndPump(threading.Thread):
 		self.func=func
 		self.args=args
 		self.kwargs=kwargs
-		super(ExecAndPump,self).__init__()
+		fname = repr(func)
+		super().__init__(
+			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}({fname})"
+		)
 		self.threadExc=None
 		self.start()
 		time.sleep(0.1)

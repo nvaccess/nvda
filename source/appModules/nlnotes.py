@@ -15,8 +15,7 @@ import virtualBuffers.lotusNotes
 class IrisTedit(IAccessible):
 
 	def _get_name(self):
-		left,top,width,height=self.location
-		label=api.getDesktopObject().objectFromPoint(left+(width/2),top+(height/2))
+		label=api.getDesktopObject().objectFromPoint(*self.location.center)
 		if label:
 			return label.name
 

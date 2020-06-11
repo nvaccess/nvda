@@ -4,19 +4,18 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from ctypes.wintypes import BOOL
+from typing import Any, Tuple, Optional
 import wx
+from comtypes import GUID
 from wx.lib.mixins import listctrl as listmix
-from gui import accPropServer
-from gui.dpiScalingHelper import DpiScalingHelperMixin
+from . import accPropServer
+from .dpiScalingHelper import DpiScalingHelperMixin
+from . import guiHelper
 import oleacc
 import winUser
 import winsound
-try:
-	# Python 3 import
-	from collections.abc import Callable
-except ImportError:
-	# Python 2 import
-	from collections import Callable
+from collections.abc import Callable
 
 class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 	"""
@@ -104,17 +103,17 @@ class AccPropertyOverride(accPropServer.IAccPropServer_Impl):
 	def _getPropValue(self, pIDString, dwIDStringLen, idProp):
 		control = self.control()  # self.control held as a weak ref, ensure it stays alive for the duration of this method
 		if control is None or not self.propertyAnnotations:
-			return self.NO_RETURN_VALUE
+			return None
 
 		try:
 			val = self.propertyAnnotations[idProp]
 			if callable(val):
 				val = val()
-			return val, self.HAS_PROP
+			return self._hasProp(val)
 		except KeyError:
 			pass
 
-		return self.NO_RETURN_VALUE
+		return None
 
 	def _cleanup(self):
 		# could contain references (via lambda) of our owner, set it to None to avoid a circular reference which
@@ -135,19 +134,19 @@ class ListCtrlAccPropServer(accPropServer.IAccPropServer_Impl):
 			annotateChildren=True
 		)
 
-	def _getPropValue(self, pIDString, dwIDStringLen, idProp):
+	def _getPropValue(self, pIDString: str, dwIDStringLen: int, idProp: GUID) -> Optional[Tuple[BOOL, Any]]:
 		control = self.control()  # self.control held as a weak ref, ensure it stays alive for the duration of this method
 		if control is None:
-			return self.NO_RETURN_VALUE
+			return None
 
 		# Import late to prevent circular import.
 		from IAccessibleHandler import accPropServices
 		handle, objid, childid = accPropServices.DecomposeHwndIdentityString(pIDString, dwIDStringLen)
 		if childid == winUser.CHILDID_SELF:
-			return self.NO_RETURN_VALUE
+			return None
 
 		if idProp == oleacc.PROPID_ACC_ROLE:
-			return oleacc.ROLE_SYSTEM_CHECKBUTTON, self.HAS_PROP
+			return self._hasProp(oleacc.ROLE_SYSTEM_CHECKBUTTON)
 
 		if idProp == oleacc.PROPID_ACC_STATE:
 			states = oleacc.STATE_SYSTEM_SELECTABLE|oleacc.STATE_SYSTEM_FOCUSABLE
@@ -157,7 +156,7 @@ class ListCtrlAccPropServer(accPropServer.IAccPropServer_Impl):
 				# wx doesn't seem to  have a method to check whether a list item is focused.
 				# Therefore, assume that a selected item is focused,which is the case in single select list boxes.
 				states |= oleacc.STATE_SYSTEM_SELECTED | oleacc.STATE_SYSTEM_FOCUSED
-			return states, self.HAS_PROP
+			return self._hasProp(states)
 
 class CustomCheckListBox(wx.CheckListBox):
 	"""Custom checkable list to fix a11y bugs in the standard wx checkable list box."""
@@ -199,12 +198,12 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		self.Bind(wx.EVT_LEFT_DOWN, self.onLeftDown)
 
 	def GetCheckedItems(self):
-		return tuple(i for i in xrange(self.ItemCount) if self.IsChecked(i))
+		return tuple(i for i in range(self.ItemCount) if self.IsChecked(i))
 
 	def SetCheckedItems(self, indexes):
 		for i in indexes:
 			assert 0 <= i < self.ItemCount, "Index (%s) out of range" % i
-		for i in xrange(self.ItemCount):
+		for i in range(self.ItemCount):
 			self.CheckItem(i, i in indexes)
 
 	CheckedItems = property(fget=GetCheckedItems, fset=SetCheckedItems)
@@ -307,6 +306,11 @@ class MessageDialog(DPIScaledDialog):
 		)
 		cancel.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
 
+	def _addContents(self, contentsSizer: guiHelper.BoxSizerHelper):
+		"""Adds additional contents  to the dialog, before the buttons.
+		Subclasses may implement this method.
+		"""
+
 	def _setIcon(self, type):
 		try:
 			iconID = self._DIALOG_TYPE_ICON_ID_MAP[type]
@@ -333,14 +337,15 @@ class MessageDialog(DPIScaledDialog):
 		self._setIcon(dialogType)
 		self._setSound(dialogType)
 		self.Bind(wx.EVT_SHOW, self._onShowEvt, source=self)
+		self.Bind(wx.EVT_ACTIVATE, self._onDialogActivated, source=self)
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
-		from . import guiHelper
 		contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
 
 		text = wx.StaticText(self, label=message)
 		text.Wrap(self.scaleSize(self.GetSize().Width))
 		contentsSizer.addItem(text)
+		self._addContents(contentsSizer)
 
 		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		self._addButtons(buttonHelper)
@@ -355,6 +360,9 @@ class MessageDialog(DPIScaledDialog):
 		self.SetSizer(mainSizer)
 		self.CentreOnScreen()
 
+	def _onDialogActivated(self, evt):
+		evt.Skip()
+
 	def _onShowEvt(self, evt):
 		"""
 		:type evt: wx.ShowEvent
@@ -362,3 +370,39 @@ class MessageDialog(DPIScaledDialog):
 		if evt.IsShown():
 			self._playSound()
 		evt.Skip()
+
+
+class EnhancedInputSlider(wx.Slider):
+
+	def __init__(self,*args, **kwargs):
+		super(EnhancedInputSlider,self).__init__(*args,**kwargs)
+		self.Bind(wx.EVT_CHAR, self.onSliderChar)
+
+	def SetValue(self,i):
+		super(EnhancedInputSlider, self).SetValue(i)
+		evt = wx.CommandEvent(wx.wxEVT_COMMAND_SLIDER_UPDATED,self.GetId())
+		evt.SetInt(i)
+		self.ProcessEvent(evt)
+		# HACK: Win events don't seem to be sent for certain explicitly set values,
+		# so send our own win event.
+		# This will cause duplicates in some cases, but NVDA will filter them out.
+		winUser.user32.NotifyWinEvent(winUser.EVENT_OBJECT_VALUECHANGE,self.Handle,winUser.OBJID_CLIENT,winUser.CHILDID_SELF)
+
+	def onSliderChar(self, evt):
+		key = evt.KeyCode
+		if key == wx.WXK_UP:
+			newValue = min(self.Value + self.LineSize, self.Max)
+		elif key == wx.WXK_DOWN:
+			newValue = max(self.Value - self.LineSize, self.Min)
+		elif key == wx.WXK_PAGEUP:
+			newValue = min(self.Value + self.PageSize, self.Max)
+		elif key == wx.WXK_PAGEDOWN:
+			newValue = max(self.Value - self.PageSize, self.Min)
+		elif key == wx.WXK_HOME:
+			newValue = self.Max
+		elif key == wx.WXK_END:
+			newValue = self.Min
+		else:
+			evt.Skip()
+			return
+		self.SetValue(newValue)

@@ -1,15 +1,12 @@
-#installer.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2011-2017 NV Access Limited, Joseph Lee, Babbage B.V.
+# -*- coding: UTF-8 -*-
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka
 
 from ctypes import *
 from ctypes.wintypes import *
-try:
-	import _winreg as winreg # Python 2.7 import
-except ImportError:
-	import winreg # Python 3 import
+import winreg
 import threading
 import time
 import os
@@ -25,6 +22,7 @@ from logHandler import log
 import addonHandler
 import easeOfAccess
 import COMRegistrationFixes
+import winKernel
 
 _wsh=None
 def _getWSH():
@@ -77,7 +75,7 @@ def getStartMenuFolder(noDefault=False):
 
 def getInstallPath(noDefault=False):
 	try:
-		k=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
+		k=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
 		return winreg.QueryValueEx(k,"UninstallDirectory")[0]
 	except WindowsError:
 		return defaultInstallPath if not noDefault else None
@@ -91,11 +89,15 @@ def comparePreviousInstall():
 	if not path or not os.path.isdir(path):
 		return None
 	try:
-		return cmp(
-			os.path.getmtime(os.path.join(path, "nvda_slave.exe")),
-			os.path.getmtime("nvda_slave.exe"))
+		oldTime=os.path.getmtime(os.path.join(path, "nvda_slave.exe"))
+		newTime=os.path.getmtime("nvda_slave.exe")
 	except OSError:
 		return None
+	# cmp no longer exists in Python3.
+	# Per the Python3 What's New docs:
+	# cmp can be replaced with (a>b)-(a<b).
+	# In other words, False and True coerce to 0 and 1 respectively.
+	return (oldTime>newTime)-(oldTime<newTime)
 
 def getDocFilePath(fileName,installDir):
 	rootPath=os.path.join(installDir,'documentation')
@@ -119,7 +121,7 @@ def getDocFilePath(fileName,installDir):
 				return tryPath
 
 def copyProgramFiles(destPath):
-	sourcePath=os.getcwdu()
+	sourcePath=os.getcwd()
 	detectUserConfig=True
 	detectNVDAExe=True
 	for curSourceDir,subDirs,files in os.walk(sourcePath):
@@ -148,33 +150,34 @@ def copyUserConfig(destPath):
 			destFilePath=os.path.join(destPath,os.path.relpath(sourceFilePath,sourcePath))
 			tryCopyFile(sourceFilePath,destFilePath)
 
-def removeOldLibFiles(destPath,rebootOK=False):
+
+def removeOldLibFiles(destPath, rebootOK=False):
 	"""
 	Removes library files from previous versions of NVDA.
 	@param destPath: The path where NVDA is installed.
-	@ type destPath: string
+	@type destPath: string
 	@param rebootOK: If true then files can be removed on next reboot if trying to do so now fails.
 	@type rebootOK: boolean
 	"""
-	for topDir in ('lib','lib64'):
-		currentLibPath=os.path.join(destPath,topDir,versionInfo.version)
-		for parent,subdirs,files in os.walk(os.path.join(destPath,topDir),topdown=False):
+	for topDir in ('lib', 'lib64', 'libArm64'):
+		currentLibPath = os.path.join(destPath, topDir, versionInfo.version)
+		for parent, subdirs, files in os.walk(os.path.join(destPath, topDir), topdown=False):
 			if parent==currentLibPath:
 				# Lib dir for current installation. Don't touch this!
 				log.debug("Skipping current install lib path: %r"%parent)
 				continue
 			for d in subdirs:
-				path=os.path.join(parent,d)
+				path = os.path.join(parent, d)
 				log.debug("Removing old lib directory: %r"%path)
 				try:
 					os.rmdir(path)
 				except OSError:
 					log.warning("Failed to remove a directory no longer needed. This can be manually removed after a reboot or the  installer will try removing it again next time. Directory: %r"%path)
 			for f in files:
-				path=os.path.join(parent,f)
+				path = os.path.join(parent, f)
 				log.debug("Removing old lib file: %r"%path)
 				try:
-					tryRemoveFile(path,numRetries=2,rebootOK=rebootOK)
+					tryRemoveFile(path, numRetries=2, rebootOK=rebootOK)
 				except RetriableFailure:
 					log.warning("A file no longer needed could not be removed. This can be manually removed after a reboot, or  the installer will try again next time. File: %r"%path)
 
@@ -197,11 +200,28 @@ def removeOldProgramFiles(destPath):
 			else:
 				os.remove(fn)
 
-	# #4235: mpr.dll is a Windows system dll accidentally included with
-	# earlier versions of NVDA. Its presence causes problems in Windows Vista.
-	fn = os.path.join(destPath, "mpr.dll")
-	if os.path.isfile(fn):
-		tryRemoveFile(fn)
+	# #9960: If compiled python files from older versions aren't removed correctly,
+	# this could cause strange errors when Python tries to create tracebacks
+	# in a newer version of NVDA.
+	#  However don't touch user and system config.
+	#  Also remove old .dll and .manifest files.
+	for curDestDir,subDirs,files in os.walk(destPath):
+		if curDestDir == destPath:
+			subDirs[:] = [x for x in subDirs if os.path.basename(x).lower() not in (
+				'userconfig',
+				'systemconfig',
+				#  Do not remove old libraries here. It is done by removeOldLibFiles.
+				'lib',
+				'lib64',
+				'libarm64')]
+		for f in files:
+			if f.endswith((".pyc", ".pyo", ".pyd", ".dll", ".manifest")):
+				path=os.path.join(curDestDir, f)
+				log.debug(f"Removing old byte compiled python file: {path!r}")
+				try:
+					tryRemoveFile(path)
+				except RetriableFailure:
+					log.warning(f"Couldn't remove file: {path!r}")
 
 uninstallerRegInfo={
 	"DisplayName":versionInfo.name,
@@ -216,7 +236,7 @@ uninstallerRegInfo={
 
 def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,startOnLogonScreen,configInLocalAppData=False):
 	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\NVDA",0,winreg.KEY_WRITE) as k:
-		for name,value in uninstallerRegInfo.iteritems(): 
+		for name,value in uninstallerRegInfo.items(): 
 			winreg.SetValueEx(k,name,None,winreg.REG_SZ,value.format(installDir=installDir))
 	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\nvda.exe",0,winreg.KEY_WRITE) as k:
 		winreg.SetValueEx(k,"",None,winreg.REG_SZ,os.path.join(installDir,"nvda.exe"))
@@ -229,27 +249,157 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 		config._setStartOnLogonScreen(startOnLogonScreen)
 	NVDAExe=os.path.join(installDir,u"nvda.exe")
 	slaveExe=os.path.join(installDir,u"nvda_slave.exe")
+	try:
+		_updateShortcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe, startMenuFolder)
+	except Exception:
+		log.error("Error while creating shortcuts", exc_info=True)
+	registerAddonFileAssociation(slaveExe)
+
+
+def _createShortcutWithFallback(
+		path,
+		targetPath=None,
+		arguments=None,
+		iconLocation=None,
+		workingDirectory=None,
+		hotkey=None,
+		prependSpecialFolder=None,
+		fallbackHotkey=None,
+		fallbackPath=None,
+):
+	"""Sometimes translations are used (for `path` or `hotkey` arguments) which include unicode characters
+	which cause the createShortcut method to fail. In these cases, try again using the English string if it is
+	provided via the `fallbackHotkey` / `fallbackPath` arguments.
+	"""
+	try:
+		createShortcut(
+			path,
+			targetPath,
+			arguments,
+			iconLocation,
+			workingDirectory,
+			hotkey,
+			prependSpecialFolder
+		)
+	except Exception:
+		if hotkey is not None and fallbackHotkey is not None:
+			log.error(f"Error creating {path}. With hotkey ({hotkey}). Trying fallback hotkey: {fallbackHotkey}")
+			_createShortcutWithFallback(
+				hotkey=fallbackHotkey,
+				fallbackHotkey=None,
+				path=path,
+				fallbackPath=fallbackPath,
+				targetPath=targetPath,
+				arguments=arguments,
+				prependSpecialFolder=prependSpecialFolder,
+			)
+		elif fallbackPath is not None:
+			log.error(f"Error creating {path}. Trying without translation of filename, instead using: {fallbackPath}")
+			_createShortcutWithFallback(
+				path=fallbackPath,
+				fallbackPath=None,
+				targetPath=targetPath,
+				arguments=arguments,
+				hotkey=hotkey,
+				prependSpecialFolder=prependSpecialFolder,
+				fallbackHotkey=fallbackHotkey,
+			)
+		else:
+			log.error(
+				f"Error creating {path}, no mitigation possible. "
+				f"Perhaps controlled folder access is active for this directory."
+			)
+
+
+def _updateShortcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe, startMenuFolder) -> None:
 	if shouldCreateDesktopShortcut:
 		# Translators: The shortcut key used to start NVDA.
 		# This should normally be left as is, but might be changed for some locales
 		# if the default key causes problems for the normal locale keyboard layout.
 		# The key must be formatted as described in this article:
 		# http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
-		createShortcut(u"NVDA.lnk",targetPath=slaveExe,arguments="launchNVDA -r",hotkey=_("CTRL+ALT+N"),workingDirectory=installDir,prependSpecialFolder="AllUsersDesktop")
-	createShortcut(os.path.join(startMenuFolder,"NVDA.lnk"),targetPath=NVDAExe,workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
+		hotkeyTranslated = _("CTRL+ALT+N")
+
+		# #8320: -r|--replace is now the default. Nevertheless, keep creating
+		# the shortcut with the now superfluous argument in case a downgrade of
+		# NVDA is later performed.
+		_createShortcutWithFallback(
+			path="NVDA.lnk",
+			targetPath=slaveExe,
+			arguments="launchNVDA -r",
+			hotkey=hotkeyTranslated,
+			fallbackHotkey="CTRL+ALT+N",
+			workingDirectory=installDir,
+			prependSpecialFolder="AllUsersDesktop",
+		)
+
+	_createShortcutWithFallback(
+		path=os.path.join(startMenuFolder, "NVDA.lnk"),
+		targetPath=NVDAExe,
+		workingDirectory=installDir,
+		prependSpecialFolder="AllUsersPrograms"
+	)
+
 	# Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
-	createShortcut(os.path.join(startMenuFolder,_("NVDA web site")+".lnk"),targetPath=versionInfo.url,prependSpecialFolder="AllUsersPrograms")
+	webSiteTranslated = _("NVDA web site")
+	_createShortcutWithFallback(
+		path=os.path.join(startMenuFolder, webSiteTranslated + ".lnk"),
+		fallbackPath=os.path.join(startMenuFolder, "NVDA web site.lnk"),
+		targetPath=versionInfo.url,
+		prependSpecialFolder="AllUsersPrograms"
+	)
+
 	# Translators: A label for a shortcut item in start menu to uninstall NVDA from the computer.
-	createShortcut(os.path.join(startMenuFolder,_("Uninstall NVDA")+".lnk"),targetPath=os.path.join(installDir,"uninstall.exe"),workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
+	uninstallTranslated = _("Uninstall NVDA")
+	_createShortcutWithFallback(
+		path=os.path.join(startMenuFolder, uninstallTranslated + ".lnk"),
+		fallbackPath=os.path.join(startMenuFolder, "Uninstall NVDA.lnk"),
+		targetPath=os.path.join(installDir, "uninstall.exe"),
+		workingDirectory=installDir,
+		prependSpecialFolder="AllUsersPrograms"
+	)
+
 	# Translators: A label for a shortcut item in start menu to open current user's NVDA configuration directory.
-	createShortcut(os.path.join(startMenuFolder,_("Explore NVDA user configuration directory")+".lnk"),targetPath=slaveExe,arguments="explore_userConfigPath",workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
+	exploreConfDirTranslated = _("Explore NVDA user configuration directory")
+	_createShortcutWithFallback(
+		path=os.path.join(startMenuFolder, exploreConfDirTranslated + ".lnk"),
+		fallbackPath=os.path.join(startMenuFolder, "Explore NVDA user configuration directory.lnk"),
+		targetPath=slaveExe,
+		arguments="explore_userConfigPath",
+		workingDirectory=installDir,
+		prependSpecialFolder="AllUsersPrograms"
+	)
+
 	# Translators: The label of the NVDA Documentation menu in the Start Menu.
-	docFolder=os.path.join(startMenuFolder,_("Documentation"))
+	docFolder = os.path.join(startMenuFolder, _("Documentation"))
+
 	# Translators: The label of the Start Menu item to open the Commands Quick Reference document.
-	createShortcut(os.path.join(docFolder,_("Commands Quick Reference")+".lnk"),targetPath=getDocFilePath("keyCommands.html",installDir),prependSpecialFolder="AllUsersPrograms")
+	commandsRefTranslated = _("Commands Quick Reference")
+	_createShortcutWithFallback(
+		path=os.path.join(docFolder, commandsRefTranslated + ".lnk"),
+		fallbackPath=os.path.join(docFolder, "Commands Quick Reference.lnk"),
+		targetPath=getDocFilePath("keyCommands.html", installDir),
+		prependSpecialFolder="AllUsersPrograms"
+	)
+
 	# Translators: A label for a shortcut in start menu to open NVDA user guide.
-	createShortcut(os.path.join(docFolder,_("User Guide")+".lnk"),targetPath=getDocFilePath("userGuide.html",installDir),prependSpecialFolder="AllUsersPrograms")
-	registerAddonFileAssociation(slaveExe)
+	userGuideTranslated = _("User Guide")
+	_createShortcutWithFallback(
+		path=os.path.join(docFolder, userGuideTranslated + ".lnk"),
+		fallbackPath=os.path.join(docFolder, "User Guide.lnk"),
+		targetPath=getDocFilePath("userGuide.html", installDir),
+		prependSpecialFolder="AllUsersPrograms"
+	)
+
+	# Translators: A label for a shortcut in start menu to open NVDA what's new.
+	changesTranslated = _("What's new")
+	_createShortcutWithFallback(
+		path=os.path.join(docFolder, changesTranslated + ".lnk"),
+		fallbackPath=os.path.join(docFolder, "What's new.lnk"),
+		targetPath=getDocFilePath("changes.html", installDir),
+		prependSpecialFolder="AllUsersPrograms"
+	)
+
 
 def isDesktopShortcutInstalled():
 	wsh=_getWSH()
@@ -349,7 +499,7 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 		os.rename(path,tempPath)
 	except (WindowsError,IOError):
 		raise RetriableFailure("Failed to rename file %s before  remove"%path)
-	for count in xrange(numRetries):
+	for count in range(numRetries):
 		try:
 			if os.path.isdir(tempPath):
 				shutil.rmtree(tempPath)
@@ -361,8 +511,14 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 		time.sleep(retryInterval)
 	if rebootOK:
 		log.debugWarning("Failed to delete file %s, marking for delete on reboot"%tempPath)
-		MoveFileEx=windll.kernel32.MoveFileExW if isinstance(tempPath,unicode) else windll.kernel32.MoveFileExA
-		MoveFileEx("\\\\?\\"+tempPath,None,4)
+		try:
+			# Use escapes in a unicode string instead of raw.
+			# In a raw string the trailing slash escapes the closing quote leading to a python syntax error.
+			pathQualifier=u"\\\\?\\"
+			# #9847: Move file to None to delete it.
+			winKernel.moveFileEx(pathQualifier+tempPath,None,winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
+		except WindowsError:
+			log.debugWarning("Failed to delete file %s, marking for delete on reboot"%tempPath, exc_info=True)
 		return
 	try:
 		os.rename(tempPath,path)
@@ -386,7 +542,7 @@ def tryCopyFile(sourceFilePath,destFilePath):
 		except (WindowsError,OSError):
 			log.error("Failed to rename %s after failed overwrite"%destFilePath,exc_info=True)
 			raise RetriableFailure("Failed to rename %s after failed overwrite"%destFilePath) 
-		windll.kernel32.MoveFileExW(tempPath,None,4)
+		winKernel.moveFileEx(tempPath,None,winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
 		if windll.kernel32.CopyFileW(sourceFilePath,destFilePath,False)==0:
 			errorCode=GetLastError()
 			raise OSError("Unable to copy file %s to %s, error %d"%(sourceFilePath,destFilePath,errorCode))
