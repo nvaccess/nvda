@@ -54,6 +54,7 @@ What's New in NVDA
 - Updated BrlApi to version 0.8 (BRLTTY 6.1). (#11065)
 - Status bar retrieval may now be customized by an AppModule. (#2125, #4640)
 - NVDA no longer listens for IAccessible EVENT_OBJECT_REORDER. (#11076)
+- A broken ScriptableObject (such as a GlobalPlugin missing a call to its base class' __init__ method) no longer breaks NVDA's script handling. (#5446)
 
 
 = 2020.1 =
