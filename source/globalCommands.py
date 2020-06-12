@@ -1036,7 +1036,6 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_FIRST)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
-		ui.reviewMessage(_("Top"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to top line command.
 	script_review_top.__doc__=_("Moves the review cursor to the top line of the current navigator object and speaks it")
@@ -1094,7 +1093,6 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_LAST)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
-		ui.reviewMessage(_("Bottom"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to bottom line command.
 	script_review_bottom.__doc__=_("Moves the review cursor to the bottom line of the current navigator object and speaks it")
@@ -1152,7 +1150,6 @@ class GlobalCommands(ScriptableObject):
 		info.collapse()
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
-		ui.reviewMessage(_("Left"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to start of current line command.
 	script_review_startOfLine.__doc__=_("Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it")
@@ -1232,7 +1229,6 @@ class GlobalCommands(ScriptableObject):
 		info.move(textInfos.UNIT_CHARACTER,-1)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
-		ui.reviewMessage(_("Right"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to end of current line command.
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
@@ -1375,8 +1371,8 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_sayAll(self,gesture):
 		sayAllHandler.readText(sayAllHandler.CURSOR_REVIEW)
-	# Translators: Input help mode message for say all in review cursor command.
 	script_review_sayAll.__doc__ = _(
+		# Translators: Input help mode message for say all in review cursor command.
 		"Reads from the review cursor up to the end of the current text,"
 		" moving the review cursor as it goes"
 	)
@@ -1493,17 +1489,22 @@ class GlobalCommands(ScriptableObject):
 		if obj:
 			text = api.getStatusBarText(obj)
 			api.setNavigatorObject(obj)
-			found=True
+			found = True
 		else:
-			info=api.getForegroundObject().flatReviewPosition
+			foreground = api.getForegroundObject()
+			try:
+				info = foreground.appModule.statusBarTextInfo
+			except NotImplementedError:
+				info = foreground.flatReviewPosition
+				if info:
+					info.expand(textInfos.UNIT_STORY)
+					info.collapse(True)
+					info.expand(textInfos.UNIT_LINE)
 			if info:
-				info.expand(textInfos.UNIT_STORY)
-				info.collapse(True)
-				info.expand(textInfos.UNIT_LINE)
-				text=info.text
+				text = info.text
 				info.collapse()
 				api.setReviewPosition(info)
-				found=True
+				found = True
 		if not found:
 			# Translators: Reported when there is no status line for the current program or window.
 			ui.message(_("No status line found"))
@@ -2047,9 +2048,9 @@ class GlobalCommands(ScriptableObject):
 	script_review_markStartForCopy.category=SCRCAT_TEXTREVIEW
 
 	@script(
-		# Translators: Input help mode message for move review cursor to marked start position for a
-		# select or copy command
 		description=_(
+			# Translators: Input help mode message for move review cursor to marked start position for a
+			# select or copy command
 			"Move the review cursor to the position marked as the start of text to be selected or copied"
 		),
 		category=SCRCAT_TEXTREVIEW,
@@ -2460,8 +2461,8 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
-		# Translators: Describes a command.
 		description=_(
+			# Translators: Describes a command.
 			"Toggles the state of the screen curtain, "
 			"enable to make the screen black or disable to show the contents of the screen. "
 			"Pressed once, screen curtain is enabled until you restart NVDA. "

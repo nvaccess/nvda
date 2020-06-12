@@ -1,8 +1,7 @@
-#gui/configProfiles.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2013-2018 NV Access Limited, Joseph Lee
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2013-2018 NV Access Limited, Joseph Lee, Julien Cochuyt
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import wx
 import config
@@ -215,13 +214,30 @@ class ProfilesDialog(wx.Dialog):
 	def onRename(self, evt):
 		index = self.profileList.Selection
 		oldName = self.profileNames[index]
-		# Translators: The label of a field to enter a new name for a configuration profile.
-		with wx.TextEntryDialog(self, _("New name:"),
+		while True:
+			with wx.TextEntryDialog(
+				self,
+				# Translators: The label of a field to enter a new name for a configuration profile.
+				_("New name:"),
 				# Translators: The title of the dialog to rename a configuration profile.
-				_("Rename Profile"), value=oldName) as d:
-			if d.ShowModal() == wx.ID_CANCEL:
-				return
-			newName = api.filterFileName(d.Value)
+				caption=_("Rename Profile"),
+				value=oldName
+			) as d:
+				if d.ShowModal() == wx.ID_CANCEL:
+					return
+			newName = d.Value
+			if newName:
+				break
+			gui.messageBox(
+				# Translators: An error displayed when the user attempts to rename a configuration profile
+				# with an empty name.
+				_("A profile cannot have an empty name."),
+				# Translators: The title of an error message dialog.
+				caption=_("Error"),
+				style=wx.ICON_ERROR,
+				parent=self
+			)
+		newName = api.filterFileName(newName)
 		try:
 			config.conf.renameProfile(oldName, newName)
 		except ValueError:
@@ -412,9 +428,20 @@ class NewProfileDialog(wx.Dialog):
 		) == wx.NO:
 			return
 
-		name = api.filterFileName(self.profileName.Value)
+		name = self.profileName.Value
 		if not name:
+			gui.messageBox(
+				# Translators: An error displayed when the user attempts to create a configuration profile
+				# with an empty name.
+				_("You must choose a name for this profile."),
+				# Translators: The title of an error message dialog.
+				caption=_("Error"),
+				style=wx.ICON_ERROR,
+				parent=self
+			)
+			self.profileName.SetFocus()
 			return
+		name = api.filterFileName(name)
 		try:
 			config.conf.createProfile(name)
 		except ValueError:

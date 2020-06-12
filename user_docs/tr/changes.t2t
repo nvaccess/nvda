@@ -30,6 +30,7 @@ Highlights of this release include support for several new braille displays from
 - NVDA no longer exits if there is an error initializing eSpeak. (#10607)
 - Errors caused by unicode in translations for shortcuts no longer stop the installer, mitigated by falling back to the English text. (#5166, #6326)
 - Arrowing out and away from lists and tables in sayAll with skim reading enabled no longer continuously announces exiting the list or table. (#10706)
+- Fix mouse tracking for some MSHTML elements in Internet Explorer. (#10736)
 
 
 == Changes for Developers ==
