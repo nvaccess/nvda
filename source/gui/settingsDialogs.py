@@ -713,21 +713,35 @@ class GeneralSettingsPanel(SettingsPanel):
 		# Translators: The label for a setting in general settings to allow NVDA to start after logging onto
 		# Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
 		# start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
-		self.startAfterLogonCheckBox = wx.CheckBox(self, label=_("St&art NVDA after Windows sign in"))
+		self.startAfterLogonCheckBox = wx.CheckBox(self, label=_("St&art NVDA after I sign in"))
 		self.startAfterLogonCheckBox.SetValue(config.getStartAfterLogon())
 		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
 		settingsSizerHelper.addItem(self.startAfterLogonCheckBox)
-
-		# Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
-		self.startOnLogonScreenCheckBox = wx.CheckBox(self, label=_("Use NVDA on the Windows logon screen (requires administrator privileges)"))
+		self.startOnLogonScreenCheckBox = wx.CheckBox(
+			self,
+			# Translators: The label for a setting in general settings to
+			# allow NVDA to come up in Windows login screen (useful if user
+			# needs to enter passwords or if multiple user accounts are present
+			# to allow user to choose the correct account).
+			label=_("Start NVDA during sign-in (requires administrator privileges)")
+		)
 		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
 		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
 			self.startOnLogonScreenCheckBox.Disable()
 		settingsSizerHelper.addItem(self.startOnLogonScreenCheckBox)
 
-		# Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
-		self.copySettingsButton= wx.Button(self, label=_("Use currently saved settings on the logon and other secure screens (requires administrator privileges)"))
+		self.copySettingsButton = wx.Button(
+			self,
+			label=_(
+				# Translators: The label for a button in general settings to copy
+				# current user settings to system settings (to allow current
+				# settings to be used in secure screens such as User Account
+				# Control (UAC) dialog).
+				"Use currently saved settings during sign-in and on secure screens"
+				" (requires administrator privileges)"
+			)
+		)
 		self.copySettingsButton.Bind(wx.EVT_BUTTON,self.onCopySettings)
 		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
 			self.copySettingsButton.Disable()
@@ -757,9 +771,9 @@ class GeneralSettingsPanel(SettingsPanel):
 	def onCopySettings(self,evt):
 		addonsDirPath = os.path.join(globalVars.appArgs.configPath, 'addons')
 		if os.path.isdir(addonsDirPath) and 0 < len(os.listdir(addonsDirPath)):
-			# Translators: A message to warn the user when attempting to copy current
-			# settings to system settings.
 			message = _(
+				# Translators: A message to warn the user when attempting to copy current
+				# settings to system settings.
 				"Add-ons were detected in your user settings directory. "
 				"Copying these to the system profile could be a security risk. "
 				"Do you still wish to copy your settings?"
@@ -1398,10 +1412,10 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.trustVoiceLanguageCheckbox.SetValue(config.conf["speech"]["trustVoiceLanguage"])
 
-		# Translators: This is the label for a checkbox in the
-		# voice settings panel (if checked, data from the unicode CLDR will be used
-		# to speak emoji descriptions).
 		includeCLDRText = _(
+			# Translators: This is the label for a checkbox in the
+			# voice settings panel (if checked, data from the unicode CLDR will be used
+			# to speak emoji descriptions).
 			"Include Unicode Consortium data (including emoji) when processing characters and symbols"
 		)
 		self.includeCLDRCheckbox = settingsSizerHelper.addItem(
@@ -1776,7 +1790,7 @@ class ObjectPresentationPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings panel.
-		guessPositionInfoText = _("&Guess object &position information when unavailable")
+		guessPositionInfoText = _("&Guess object position information when unavailable")
 		self.guessPositionInfoCheckBox=sHelper.addItem(wx.CheckBox(self,label=guessPositionInfoText))
 		self.guessPositionInfoCheckBox.SetValue(config.conf["presentation"]["guessObjectPositionInformationWhenUnavailable"])
 
@@ -2237,6 +2251,7 @@ class UwpOcrPanel(SettingsPanel):
 		lang = self.languageCodes[self.languageChoice.Selection]
 		config.conf["uwpOcr"]["language"] = lang
 
+
 class AdvancedPanelControls(wx.Panel):
 	"""Holds the actual controls for the Advanced Settings panel, this allows the state of the controls to
 	be more easily managed.
@@ -2326,6 +2341,41 @@ class AdvancedPanelControls(wx.Panel):
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
+		label = _("Speech")
+		speechGroup = guiHelper.BoxSizerHelper(
+			parent=self,
+			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+		)
+		sHelper.addItem(speechGroup)
+
+		expiredFocusSpeechChoices = [
+			# Translators: Label for the 'Cancel speech for expired &focus events' combobox
+			# in the Advanced settings panel.
+			_("Default (No)"),
+			# Translators: Label for the 'Cancel speech for expired &focus events' combobox
+			# in the Advanced settings panel.
+			_("Yes"),
+			# Translators: Label for the 'Cancel speech for expired &focus events' combobox
+			# in the Advanced settings panel.
+			_("No"),
+		]
+
+		# Translators: This is the label for combobox in the Advanced settings panel.
+		cancelExpiredFocusSpeechText = _("Attempt to cancel speech for expired focus events:")
+		self.cancelExpiredFocusSpeechCombo: wx.Choice = speechGroup.addLabeledControl(
+			cancelExpiredFocusSpeechText,
+			wx.Choice,
+			choices=expiredFocusSpeechChoices
+		)
+		self.cancelExpiredFocusSpeechCombo.SetSelection(
+			config.conf["featureFlag"]["cancelExpiredFocusSpeech"]
+		)
+		self.cancelExpiredFocusSpeechCombo.defaultValue = self._getDefaultValue(
+			["featureFlag", "cancelExpiredFocusSpeech"]
+		)
+
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
 		label = _("Browse mode")
 		browseModeGroup = guiHelper.BoxSizerHelper(
 			parent=self,
@@ -2379,6 +2429,7 @@ class AdvancedPanelControls(wx.Panel):
 			"timeSinceInput",
 			"vision",
 			"speech",
+			"speechManager",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
@@ -2413,6 +2464,7 @@ class AdvancedPanelControls(wx.Panel):
 			and self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue
 			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
+			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
 			and (
 				self.autoFocusFocusableElementsCheckBox.IsChecked()
@@ -2428,6 +2480,7 @@ class AdvancedPanelControls(wx.Panel):
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
 		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue == 'UIA')
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
+		self.cancelExpiredFocusSpeechCombo.SetValue(self.cancelExpiredFocusSpeechCombo.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
 		self.autoFocusFocusableElementsCheckBox.SetValue(self.autoFocusFocusableElementsCheckBox.defaultValue)
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
@@ -2443,6 +2496,7 @@ class AdvancedPanelControls(wx.Panel):
 		else:
 			config.conf['UIA']['winConsoleImplementation'] = "auto"
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
+		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = self.cancelExpiredFocusSpeechCombo.GetSelection()
 		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = self.autoFocusFocusableElementsCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
@@ -2458,8 +2512,8 @@ class AdvancedPanel(SettingsPanel):
 	# Advanced settings panel
 	warningHeader = _("Warning!")
 
-	# Translators: This is a label appearing on the Advanced settings panel.
 	warningExplanation = _(
+		# Translators: This is a label appearing on the Advanced settings panel.
 		"The following settings are for advanced users. "
 		"Changing them may cause NVDA to function incorrectly. "
 		"Please only change these if you know what you are doing or "
@@ -2487,8 +2541,8 @@ class AdvancedPanel(SettingsPanel):
 		self.windowText = warningGroup.addItem(wx.StaticText(warningBox, label=self.warningExplanation))
 		self.windowText.Wrap(self.scaleSize(544))
 
-		# Translators: This is the label for a checkbox in the Advanced settings panel.
 		enableAdvancedControlslabel = _(
+			# Translators: This is the label for a checkbox in the Advanced settings panel.
 			"I understand that changing these settings may cause NVDA to function incorrectly."
 		)
 		self.enableControlsCheckBox = warningGroup.addItem(
@@ -3159,9 +3213,9 @@ def showTerminationErrorForProviders(
 		)
 	else:
 		providerNames = ", ".join(provider.displayName for provider in providers)
-		# Translators: This message is presented when
-		# NVDA is unable to terminate multiple vision enhancement providers.
 		message = _(
+			# Translators: This message is presented when
+			# NVDA is unable to terminate multiple vision enhancement providers.
 			"Could not gracefully terminate the following vision enhancement providers:\n"
 			"{providerNames}"
 		).format(providerNames=providerNames)
