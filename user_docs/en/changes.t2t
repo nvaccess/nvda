@@ -14,14 +14,16 @@ What's New in NVDA
 - Added a command to report the active configuration profile. (#9325)
 - Added a command to toggle reporting of subscripts and superscripts. (#10985)
 - Web applications (EG Gmail) no longer speak outdated information when moving focus rapidly. (#10885)
-  - Must be manually enabled via the 'Attempt to cancel speech for expired focus events' option in the advanced settings panel.
+  - This experimental fix must be manually enabled via the 'Attempt to cancel speech for expired focus events' option in the advanced settings panel.
 - Adds more symbols. (#11105)
 
 
 == Changes ==
-- Updated liblouis braille translator to [3.13.0 https://github.com/liblouis/liblouis/releases/tag/v3.13.0] (from 3.12.0). (#10832)
+- Updated liblouis braille translator to [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0] (from 3.12.0). (#10832, #11221)
 - The reporting of superscripts and subscripts is now controlled separately to the reporting of font attributes. (#10919)
 - Due to changes made in VS Code, NVDA no longer disables browse mode in Code by default. (#10888)
+- Removed "top" and "bottom" messages when moving the review cursor to the first or last line of the current navigator object. (#9551)
+- Removed "left" and "right" messages when moving the refiew cursor to the first or last character of the line for the current navigator object. (#9551)
 
 
 == Bug Fixes ==
@@ -40,6 +42,8 @@ What's New in NVDA
 - In browse mode with Automatically set system focus to focusable elements disabled, it is now possible to activate elements reached by pressing the tab key. (#8528)
 - In browse mode with Automatically set system focus to focusable elements disabled, activating certain elements no longer clicks in an incorrect location. (#9886)
 - NVDA error sounds are no longer heard when accessing DevExpress text controls. (#10918)
+- The tool-tips of the icons in the system tray are no longer reported upon keyboard navigation if their text is equal to the name of the icons, to avoid a double announcing. (#6656)
+- In browse mode with 'Automatically set system focus to focusable elements' disabled, switching to focus mode with NVDA+space now focuses the element under the caret. (#11206)
 
 
 == Changes For Developers ==
@@ -50,6 +54,7 @@ What's New in NVDA
 - Updated BrlApi to version 0.8 (BRLTTY 6.1). (#11065)
 - Status bar retrieval may now be customized by an AppModule. (#2125, #4640)
 - NVDA no longer listens for IAccessible EVENT_OBJECT_REORDER. (#11076)
+- A broken ScriptableObject (such as a GlobalPlugin missing a call to its base class' __init__ method) no longer breaks NVDA's script handling. (#5446)
 
 
 = 2020.1 =

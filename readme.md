@@ -4,19 +4,37 @@ NVDA (NonVisual Desktop Access) is a free, open source screen reader for Microso
 It is developed by NV Access in collaboration with a global community of contributors.
 To learn more about NVDA or download a copy, visit the main [NV Access](http://www.nvaccess.org/) website.
 
-## Key Project Links
-* [NV Access](https://www.nvaccess.org/): The main home of NVDA
+## Get support
+Either if you are a beginner, an advanced user, a new or a long time developer, or if you are an organization willing to know more or to contribute to NVDA, you can get support through the documentation in place as well as several communication channels dedicated for the NVDA screen reader. Here is an overview of the most important support sources.
+
+### Documentation
+* [NVDA User Guide](https://www.nvaccess.org/files/nvda/documentation/userGuide.html)
+* [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
+* [NVDA Add-ons Development Internals](https://github.com/nvdaaddons/DevGuide/wiki)
+* [NVDA ControllerClient manual](https://github.com/nvaccess/nvda/tree/master/extras/controllerClient)
+* Further documentation is included in the Wiki of this repository and in the [Community Wiki](https://github.com/nvaccess/nvda-community/wiki)
+
+### Communication channels
+* [NVDA Users Mailing List](https://nvda.groups.io/g/nvda)
+* [NVDA Developers Mailing List](https://groups.io/g/nvda-devel)
+* [NVDA Add-ons Mailing List](https://nvda-addons.groups.io/g/nvda-addons)
+* [Instant Messaging channel for NVDA Support](https://gitter.im/nvaccess/NVDA)
+* [Other sources including groups and profiles on social media channels, language specific websites and mailing lists etc.](https://github.com/nvaccess/nvda-community/wiki/Connect)
+
+You can also get  direct support from NV Access. See the [NV Access](http://www.nvaccess.org/) website for more details.
+
+## Other Key Project Links
 * [NVDA on GitHub](https://github.com/nvaccess/nvda)
 * [NVDA issues on GitHub](https://github.com/nvaccess/nvda/issues): Bug reports, feature requests, etc.
 * [NVDA development snapshots](https://www.nvaccess.org/files/nvda/snapshots/): Automatically generated builds of the project in its current state of development
 * [NVDA add-ons](https://addons.nvda-project.org/): Get add-ons to enhance NVDA
+* [NVDA Add-ons coordination and support center](https://github.com/nvdaaddons): all about NVDA's addons environment
+* [NVDA Add-ons Template](https://github.com/nvdaaddons/AddonTemplate): A repository for generating the Add-ons template
 * [Translating NVDA](https://github.com/nvaccess/nvda/wiki/Translating): Information about how to translate NVDA into another language
-* [NVDA community wiki](https://github.com/nvaccess/nvda-community/wiki): Articles contributed by the community
 * [NVDA Controller Client](http://www.nvda-project.org/nvdaControllerClient/nvdaControllerClient_20100219.7z) (2010-02-19): NVDA API for external applications to directly speak or braille messages, etc.
-* [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
 * [Contributing to NVDA](https://github.com/nvaccess/nvda/wiki/Contributing): Guidelines for contributing to the NVDA source code
-* [NVDA development email list](https://nvda-devel.groups.io/) ([Old archives](http://nabble.nvda-project.org/Development-f1.html)): Discussion about NVDA development
 * [NVDA commits email list](https://lists.sourceforge.net/lists/listinfo/nvda-commits): Notifications for all commits to the Git repository
+* [Old email archives](http://nabble.nvda-project.org/Development-f1.html): contain discussions about NVDA development
 
 ## Getting the Source Code
 The NVDA project uses the [Git](https://www.git-scm.com/) version control system for its source code and documentation.
@@ -46,7 +64,7 @@ The following dependencies need to be installed on your system:
 				* Desktop development with C++
 			* Then in the Installation details section, under Desktop for C++, Optional grouping, ensure the following are selected:
 				* MSVC v142 - VS 2019 C++ x64/x86 build tools
-				* Windows 10 SDK (10.0.18362.0)
+				* Windows 10 SDK (10.0.19041.0)
 				* C++ ATL for v142 build tools (x86 & x64)
 				* C++ Clang tools for Windows
 		* On the Individual components tab, ensure the following items are selected:
@@ -69,7 +87,7 @@ For reference, the following run time dependencies are included in Git submodule
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit 21bbb176
 * [ConfigObj](https://github.com/DiffSK/configobj), commit f9a265c
 * [Six](https://pypi.python.org/pypi/six), version 1.12.0, required by wxPython and ConfigObj
-* [liblouis](http://www.liblouis.org/), version 3.13.0
+* [liblouis](http://www.liblouis.org/), version 3.14.0
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/) Emoji Annotations, version 36.1
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)

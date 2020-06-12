@@ -361,7 +361,7 @@ Similarly, a toolbar contains controls, so you must move inside the toolbar to a
 The object currently being reviewed is called the navigator object.
 Once you navigate to an object, you can review its content using the [text review commands #ReviewingText] while in [Object review mode #ObjectReview].
 When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the current navigator object is also exposed visually.
-By default, the navigator object moves along with the System focus, though this behavior can be toggled on and off.
+By default, the navigator object moves along with the System focus, though this behaviour can be toggled on and off.
 
 Note: Braille following Object Navigation can be configured via [Braille Tether #BrailleTether].
 
@@ -411,7 +411,7 @@ The following commands are available for reviewing text:
 | Move to end of line in review | shift+numpad3 | NVDA+end | none | Moves the review cursor to the end of the current line of text |
 | Say all with review | numpadPlus | NVDA+shift+a | 3-finger flick down (text mode) | Reads from the current position of the review cursor, moving it as it goes |
 | Select then Copy from review cursor | NVDA+f9 | NVDA+f9 | none | Starts the select then copy process from the current position of the review cursor. The actual action is not performed until you tell NVDA where the end of the text range is |
-| Select then Copy to review cursor | NVDA+f10 | NVDA+f10 | none | On the first press, text is selected from the position previously set as start marker up to and including the review cursor's current position. If the system carret can reach the text, it will be moved to the selected text. After pressing this key stroke a second time, the text will be copied to the Windows clipboard |
+| Select then Copy to review cursor | NVDA+f10 | NVDA+f10 | none | On the first press, text is selected from the position previously set as start marker up to and including the review cursor's current position. If the system caret can reach the text, it will be moved to the selected text. After pressing this key stroke a second time, the text will be copied to the Windows clipboard |
 | Move to marked start for copy in review | NVDA+shift+f9 | NVDA+shift+f9 | none | Moves the review cursor to the position previously set start marker for copy |
 | Report text formatting | NVDA+f | NVDA+f | none | Reports the formatting of the text where the review cursor is currently situated. Pressing twice shows the information in browse mode |
 | Report current symbol replacement | None | None | none | Speaks the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode. |
@@ -771,7 +771,7 @@ NVDA's vision settings can be changed in the [vision category #VisionSettings] o
 
 ++ Focus Highlight ++[VisionFocusHighlight]
 Focus Highlight can help to identify the [system focus #SystemFocus], [navigator object #ObjectNavigation] and [browse mode #BrowseMode] positions.
-These positions are highlighted with a colored rectangle outline.
+These positions are highlighted with a coloured rectangle outline.
 - Solid blue highlights a combined navigator object and system focus location (e.g. because [the navigator object follows the system focus #ReviewCursorFollowFocus]).
 - Dashed blue highlights just the system focus object.
 - Solid pink highlights just the navigator object.
@@ -893,7 +893,7 @@ To report any comments for the currently focused cell, press NVDA+alt+c.
 All comments for the worksheet can also be listed in the NVDA Elements List after pressing NVDA+f7.
 
 NVDA can also display a specific dialog for adding or editing a certain comment.
-NVDA overrwrites the native MS Excel comment editing region due to accessibility constraints, but the key stroke for displaying the dialog is inherited from MS Excel and therefore works also without NVDA running.
+NVDA overrides the native MS Excel comment editing region due to accessibility constraints, but the key stroke for displaying the dialog is inherited from MS Excel and therefore works also without NVDA running.
 %kc:beginInclude
 To add or edit a certain comment, in a focused cell, press shift+f2.
 %kc:endInclude
@@ -1030,7 +1030,7 @@ If you wish to access categories which do not have dedicated shortcut keys, use 
 The settings categories found in the NVDA Settings dialog will be outlined below.
 
 +++ General (NVDA+control+g) +++[GeneralSettings]
-The General category of the NVDA Settings dialog sets NVDA's overall behavior such as interface language and whether or not it should check for updates.
+The General category of the NVDA Settings dialog sets NVDA's overall behaviour such as interface language and whether or not it should check for updates.
 This category contains the following options:
 
 ==== Language ====[GeneralSettingsLanguage]
@@ -1046,7 +1046,7 @@ This option is a checkbox that, when checked, tells NVDA to automatically save t
 
 ==== Show exit options when exiting NVDA ====[GeneralSettingsShowExitOptions]
 This option is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks what action you want to perform.
-When checked, a dialog will appear when you attempt to exit NVDA asking whether you want to exit, restart, restart with addons disabled or install pending updates (if any).
+When checked, a dialog will appear when you attempt to exit NVDA asking whether you want to exit, restart, restart with add-ons disabled or install pending updates (if any).
 When unchecked, NVDA will exit immediately.
 
 ==== Play sounds when starting or exiting NVDA ====[GeneralSettingsPlaySounds]
@@ -1295,13 +1295,13 @@ This option allows NVDA messages to be displayed on the braille display indefini
 ==== Tether Braille ====[BrailleTether]
 Key: NVDA+control+t
 
-This option allows you to choose whether the braille display will follow the system focus / carret, the navigator object / review cursor, or both.
+This option allows you to choose whether the braille display will follow the system focus / caret, the navigator object / review cursor, or both.
 When "automatically" is selected, NVDA will follow the system focus and caret by default.
 In this case, when the navigator object or the review cursor position is changed by means of explicit user interaction, NVDA will tether to review temporarily, until the focus or the caret changes.
 If you want it to follow the focus and caret only, you need to configure braille to be tethered to focus.
 In this case, braille will not follow the NVDA navigator during object navigation or the review cursor during review.
 If you want braille to follow object navigation and text review instead, you need to configure braille to be tethered to review.
-In this case, Braille  will not follow system focus and system carret.
+In this case, Braille  will not follow system focus and system caret.
 
 ==== Read by Paragraph ====[BrailleSettingsReadByParagraph]
 If enabled, braille will be displayed by paragraphs instead of lines.
@@ -1340,7 +1340,7 @@ When this option is set to always fill the display, NVDA will try to show as muc
 This has the advantage that NVDA will fit as much information as possible on the display.
 However, the downside is that there is always a difference in the position where the focus starts on the braille display.
 This can make it difficult to skim a long list of items, for example, as you will need to continually move your finger to find the start of the item.
-This was the default behavior for NVDA 2017.2 and before.
+This was the default behaviour for NVDA 2017.2 and before.
 
 When you set the focus context presentation option to only show the context information when scrolling back, NVDA never shows context information on your braille display by default.
 Thus, in the example above, NVDA will display that you focused a list item.
@@ -1383,7 +1383,7 @@ Note that the available options in this category could be extended by [NVDA add-
 By default, this settings category contains the following options:
 
 ==== Focus Highlight ====[VisionSettingsFocusHighlight]
-The check boxes in the Focus Highlight grouping control the behavior of NVDA's built-in [Focus Highlight #VisionFocusHighlight] facility.
+The check boxes in the Focus Highlight grouping control the behaviour of NVDA's built-in [Focus Highlight #VisionFocusHighlight] facility.
 
 - Enable Highlighting: Toggles Focus Highlight on and off.
 - Highlight system focus: toggles whether the [system focus #SystemFocus] will be highlighted.
@@ -1401,13 +1401,13 @@ A warning that your screen will become black after activation will be displayed.
 Before continuing (selecting "Yes"), ensure you have enabled speech / braille and will be able to control your computer without the use of the screen.
 Select "No" if you no longer wish to enable the Screen Curtain.
 If you are sure, you can choose the Yes button to enable the screen curtain.
-If you no longer want to see this warning message every time, you can change this behavior in the dialog that displays the message.
+If you no longer want to see this warning message every time, you can change this behaviour in the dialog that displays the message.
 You can always restore the warning by checking the "Always show a warning when loading Screen Curtain" check box next to the "Make screen black" check box.
 
 To toggle the Screen Curtain from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
 By default, sounds are played when the Screen Curtain is toggled.
-When you want to change this behavior, you can uncheck the "Play sound when toggling Screen Curtain" check box.
+When you want to change this behaviour, you can uncheck the "Play sound when toggling Screen Curtain" check box.
 
 ==== Settings for third party visual aids ====[VisionSettingsThirdPartyVisualAids]
 Additional vision enhancement providers can be provided in [NVDA add-ons #AddonsManager].
@@ -1519,7 +1519,7 @@ If this checkbox is checked, when you locate a key on the touch keyboard, you ca
 If this is unchecked, you need to double-tap on the key of the touch keyboard to press the key.
 
 +++ Review Cursor +++[ReviewCursorSettings]
-The Review Cursor category in the NVDA Settings dialog is used to configure NVDA's review cursor behavior.
+The Review Cursor category in the NVDA Settings dialog is used to configure NVDA's review cursor behaviour.
 This category contains the following options:
 
 %kc:setting
@@ -1553,7 +1553,7 @@ Many Windows and controls show a small message (or tooltip) when you move the mo
 ==== Report notifications ====[ObjectPresentationReportNotifications]
 This checkbox, when checked, tells NVDA to report help balloons and toast notifications as they appear.
 - Help Balloons are like tooltips, but are usually larger in size, and are associated with system events such as a network cable being unplugged, or perhaps to alert you about Windows security issues.
-- Toast notifications have been introduced in Windows 10 and appear in the notification center in the system tray, informing about several events (i.e. if an update has been downloaded, a new e-mail arived in your inbox, etc.).
+- Toast notifications have been introduced in Windows 10 and appear in the notification centre in the system tray, informing about several events (i.e. if an update has been downloaded, a new e-mail arrived in your inbox, etc.).
 
 
 ==== Report Object Shortcut Keys ====[ObjectPresentationShortcutKeys]
@@ -1632,7 +1632,7 @@ This option allows you to choose whether or not NVDA should report new symbols a
 This option is on by default.
 
 +++ Browse Mode (NVDA+control+b) +++[BrowseModeSettings]
-The Browse Mode category in the NVDA Settings dialog is used to configure NVDA's behavior when you read and navigate complex documents such as web pages.
+The Browse Mode category in the NVDA Settings dialog is used to configure NVDA's behaviour when you read and navigate complex documents such as web pages.
 This category contains the following options:
 
 ==== Maximum Number of Characters on One Line ====[BrowseModeSettingsMaxLength]
@@ -1701,7 +1701,7 @@ You can configure reporting of:
  - Superscripts and subscripts
  - Emphasis
  - Style
- - Colors
+ - Colours
 - Document information
  - Comments
  - Editor revisions
@@ -1717,7 +1717,7 @@ You can configure reporting of:
  - Tables
  - Row/column headers
  - Cell coordinates
- - Cell borders [(Off, Styles, Both Colors and Styles)
+ - Cell borders [(Off, Styles, Both Colours and Styles)
 - Elements
  - Headings
  - Links
@@ -1804,12 +1804,13 @@ In untrusted environments, you may temporarily disable [speak typed characters #
 ==== Attempt to cancel speech for expired focus events ====[CancelExpiredFocusSpeech]
 This option enables behaviour which attempts to cancel speech for expired focus events.
 In particular moving quickly through messages in Gmail with Chrome can cause NVDA to speak outdated information.
+This functionality is experimental as of NVDA 2020.2.
 
 ==== Automatically set system focus to focusable elements in Browse Mode ====[BrowseModeSettingsAutoFocusFocusableElements]
 Key: NVDA+8
 
 Enabled by default, this option allows you to choose if the system focus should automatically be set to elements that can take the system focus (links, form fields, etc.) when navigating content with the browse mode caret.
-If enabled, this represents default behavior of NVDA as of version 2019.1 and before.
+If enabled, this represents default behaviour of NVDA as of version 2019.1 and before.
 Disabling this option will not automatically focus focusable elements when they are selected with the browse mode caret.
 This might result in faster browsing experience and better responsiveness in browse mode.
 The focus will yet be updated to the particular element when interacting with it (e.g. pressing a button, checking a check box).
@@ -2037,7 +2038,7 @@ For sighted software developers or people demoing NVDA to sighted audiences, a f
 To enable the speech viewer, check the "Speech Viewer" menu item under Tools in the NVDA menu.
 Uncheck the menu item to disable it.
 
-The speech viewer window contains a check box labeled "Show speech viewer on startup".
+The speech viewer window contains a check box labelled "Show speech viewer on startup".
 If this is checked, the speech viewer will open when NVDA is started.
 The speech viewer window will always attempt to re-open with the same dimensions and location as when it was closed.
 
@@ -2056,7 +2057,7 @@ Uncheck the menu item to disable it.
 
 Physical braille displays typically have buttons to scroll forwards or backwards, to enable scrolling with the braille viewer tool use the [Input Gestures dialog #InputGestures] to assign keyboard shortcuts which "Scrolls the braille display back" and "Scrolls the braille display forward"
 
-The braille viewer window contains a check box labeled "Show braille viewer on startup".
+The braille viewer window contains a check box labelled "Show braille viewer on startup".
 If this is checked, the braille viewer will open when NVDA is started.
 The braille viewer window will always attempt to re-open with the same dimensions and location as when it was closed.
 
@@ -2116,7 +2117,7 @@ The Incompatible add-ons manager has a short message to explain its purpose as w
 The incompatible add-ons are presented in a list with the following columns:
 + Package, the name of the add-on
 + Version, the version of the add-on
-+ Incompatible reason, an explanation of why the addon is considered incompatible
++ Incompatible reason, an explanation of why the add-on is considered incompatible
 +
 
 The Incompatible add-ons manager also has an "About add-on..." button.
@@ -2126,10 +2127,10 @@ This dialog will provide you with the full details of the add-on, which is helpf
 This will open a dialog which allows you to create a portable copy of NVDA out of the installed version.
 Either way, when running a portable copy of NVDA, in the extra tool sub menu the menu item will be called "install NVDA on this PC" instead of "create portable copy).
 
-The dialog to create a portable copy of NVDA or to install NVDA on this PC will promt you to choose a folder path in which NVDA should create the portable copy or in which NVDA should be installed.
+The dialog to create a portable copy of NVDA or to install NVDA on this PC will prompt you to choose a folder path in which NVDA should create the portable copy or in which NVDA should be installed.
 
 In this dialog you can enable or disable the following:
-- Copy current user configuration (this includes the files in %appdata%\roaming\NVDA or in the user configuration of your portable copy and includes also addons and other modules)
+- Copy current user configuration (this includes the files in %appdata%\roaming\NVDA or in the user configuration of your portable copy and also includes add-ons and other modules)
 - Start the new portable copy after creation or start NVDA after installation (starts NVDA automatically after the portable copy creation or the installation)
 -
 
@@ -2203,7 +2204,7 @@ This section contains information about the Braille displays supported by NVDA.
 
 ++ Displays supporting automatic detection in the background ++[AutomaticDetection]
 NVDA has the ability to detect many braille displays in the background automatically, either via USB or bluetooth.
-This behavior is achieved by selecting the Automatic option as the preferred braille display from NVDA's [Braille Settings dialog #BrailleSettings].
+This behaviour is achieved by selecting the Automatic option as the preferred braille display from NVDA's [Braille Settings dialog #BrailleSettings].
 This option is selected by default.
 
 The following displays support this automatic detection functionality.
@@ -2805,7 +2806,7 @@ If connecting using a legacy serial port (or a USB to serial converter) or if no
 Before connecting your BrailleNote Apex using its USB client interface, you must install the drivers provided by HumanWare.
 
 On the BrailleNote Apex BT, you can use the scroll wheel located between dots 1 and 4 for various NVDA commands.
-The wheel consists of four directional dots, a center click button, and a wheel that spins clockwise or counterclockwise.
+The wheel consists of four directional dots, a centre click button, and a wheel that spins clockwise or counterclockwise.
 
 Following are the BrailleNote command assignments for NVDA.
 Please check your BrailleNote's documentation to find where these keys are located.
@@ -2817,7 +2818,7 @@ Please check your BrailleNote's documentation to find where these keys are locat
 | Move braille display to previous line | previous |
 | Move braille display to next line | next |
 | Route to braille cell | routing |
-| NvDA menu | space+dot1+dot3+dot4+dot5 (space+n) |
+| NVDA menu | space+dot1+dot3+dot4+dot5 (space+n) |
 | Toggle braille tethered to | previous+next |
 | Up arrow key | space+dot1 |
 | Down arrow key | space+dot4 |
@@ -2841,7 +2842,7 @@ Please check your BrailleNote's documentation to find where these keys are locat
 Following are commands assigned to BrailleNote QT when it is not in braille input mode.
 
 || Name | Key |
-| NvDA menu | read+n |
+| NVDA menu | read+n |
 | Up arrow key | upArrow |
 | Down arrow key | downArrow |
 | Left Arrow key | leftArrow|
@@ -2867,7 +2868,7 @@ Following are commands assigned to the scroll wheel:
 | Down arrow key | downArrow |
 | Left Arrow key | leftArrow |
 | Right arrow key | rightArrow |
-| Enter key | center button |
+| Enter key | centre button |
 | Tab key | scroll wheel clockwise |
 | Shift+tab keys | scroll wheel counterclockwise |
 %kc:endInclude
@@ -2953,7 +2954,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | rightArrow key | dot5+space, joystick2Right, rightArrow |
 | upArrow key | dot1+space, joystick2Up, upArrow |
 | downArrow key | dot6+space, joystick2Down, downArrow |
-| enter key | joystick2Center |
+| enter key | joystick2centre |
 | pageUp key | dot1+dot3+space |
 | pageDown key | dot4+dot6+space |
 | numpad1 key | dot1+dot6+backspace |
@@ -3043,7 +3044,7 @@ Please see the [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings
 + Advanced Topics +[AdvancedTopics]
 
 ++ Command Line Options ++[CommandLineOptions]
-NVDA can accept one or more additional options when it starts which alter its behavior.
+NVDA can accept one or more additional options when it starts which alter its behaviour.
 You can pass as many options as you need.
 These options can be passed when starting from a shortcut (in the shortcut properties), from the Run dialog (Start Menu -> Run or Windows+r) or from a Windows command console.
 Options should be separated from the name of NVDA's executable file and from other options by spaces.
@@ -3075,9 +3076,9 @@ Following are the command line options for NVDA:
 | -c CONFIGPATH | --config-path=CONFIGPATH | The path where all settings for NVDA are stored |
 | -m | --minimal | No sounds, no interface, no start message, etc. |
 | -s | --secure | Secure mode: disables Python console, profile features such as creation, deletion, renaming profiles etc., update check, some checkboxes in the welcome dialog and in general settings category (e.g. start NVDA after sign-in, save configuration after exit etc.), as well as logviewer and logging features (used often in secure screens). Note also that this command will disable the possibility to save settings in system config and the gesture map will not be saved on the disk. |
-| None | --disable-addons | Addons will have no effect |
+| None | --disable-addons | Add-ons will have no effect |
 | None | --debug-logging | Enable debug level logging just for this run. This setting will override any other log level ( ""--loglevel"", -l) argument given, including no logging option. |
-| None | --no-logging | Disable logging altogether while using NVDA. This setting can be overwritten if a log level ( ""--loglevel"", -l) is specified from command line or if debug logging is turned on. |
+| None | --no-logging | Disable logging altogether while using NVDA. This setting can be overridden if a log level ( ""--loglevel"", -l) is specified from command line or if debug logging is turned on. |
 | None | --no-sr-flag  | Don't change the global system screen reader flag |
 | None | --install | Installs NVDA (starting the newly installed copy) |
 | None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
@@ -3087,7 +3088,7 @@ Following are the command line options for NVDA:
 | None | --portable-path=PORTABLEPATH | The path where a portable copy will be created |
 
 ++ System Wide Parameters ++[SystemWideParameters]
-NVDA allows some values to be set in the system registry which alter the system wide behavior of NVDA.
+NVDA allows some values to be set in the system registry which alter the system wide behaviour of NVDA.
 These values are stored in the registry under one of the following keys:
 - 32-bit system: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
 - 64-bit system: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
