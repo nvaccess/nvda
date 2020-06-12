@@ -45,6 +45,7 @@ What's New in NVDA
 - The tool-tips of the icons in the system tray are no longer reported upon keyboard navigation if their text is equal to the name of the icons, to avoid a double announcing. (#6656)
 - In browse mode with 'Automatically set system focus to focusable elements' disabled, switching to focus mode with NVDA+space now focuses the element under the caret. (#11206)
 - It is once again possible to check for NVDA updates on certain systems; e.g. clean Windows installs. (#11253)
+- Do not change focus in Java application when selection is change in not focused tree, table or list. (#5989)
 
 
 == Changes For Developers ==
