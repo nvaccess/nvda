@@ -73,7 +73,8 @@ def getCommentInfoFromPosition(position):
 		if (
 			not obj.parent
 			# Because the name of this object is language sensetive check if it has UIA Annotation Pattern
-			or not obj.parent.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId)):
+			or not obj.parent.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId)
+		):
 			continue
 		comment=obj.makeTextInfo(textInfos.POSITION_ALL).text
 		tempObj = obj.previous.previous
