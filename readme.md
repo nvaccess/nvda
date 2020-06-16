@@ -4,19 +4,37 @@ NVDA (NonVisual Desktop Access) is a free, open source screen reader for Microso
 It is developed by NV Access in collaboration with a global community of contributors.
 To learn more about NVDA or download a copy, visit the main [NV Access](http://www.nvaccess.org/) website.
 
-## Key Project Links
-* [NV Access](https://www.nvaccess.org/): The main home of NVDA
+## Get support
+Either if you are a beginner, an advanced user, a new or a long time developer, or if you are an organization willing to know more or to contribute to NVDA, you can get support through the documentation in place as well as several communication channels dedicated for the NVDA screen reader. Here is an overview of the most important support sources.
+
+### Documentation
+* [NVDA User Guide](https://www.nvaccess.org/files/nvda/documentation/userGuide.html)
+* [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
+* [NVDA Add-ons Development Internals](https://github.com/nvdaaddons/DevGuide/wiki)
+* [NVDA ControllerClient manual](https://github.com/nvaccess/nvda/tree/master/extras/controllerClient)
+* Further documentation is included in the Wiki of this repository and in the [Community Wiki](https://github.com/nvaccess/nvda-community/wiki)
+
+### Communication channels
+* [NVDA Users Mailing List](https://nvda.groups.io/g/nvda)
+* [NVDA Developers Mailing List](https://groups.io/g/nvda-devel)
+* [NVDA Add-ons Mailing List](https://nvda-addons.groups.io/g/nvda-addons)
+* [Instant Messaging channel for NVDA Support](https://gitter.im/nvaccess/NVDA)
+* [Other sources including groups and profiles on social media channels, language specific websites and mailing lists etc.](https://github.com/nvaccess/nvda-community/wiki/Connect)
+
+You can also get  direct support from NV Access. See the [NV Access](http://www.nvaccess.org/) website for more details.
+
+## Other Key Project Links
 * [NVDA on GitHub](https://github.com/nvaccess/nvda)
 * [NVDA issues on GitHub](https://github.com/nvaccess/nvda/issues): Bug reports, feature requests, etc.
 * [NVDA development snapshots](https://www.nvaccess.org/files/nvda/snapshots/): Automatically generated builds of the project in its current state of development
 * [NVDA add-ons](https://addons.nvda-project.org/): Get add-ons to enhance NVDA
+* [NVDA Add-ons coordination and support center](https://github.com/nvdaaddons): all about NVDA's addons environment
+* [NVDA Add-ons Template](https://github.com/nvdaaddons/AddonTemplate): A repository for generating the Add-ons template
 * [Translating NVDA](https://github.com/nvaccess/nvda/wiki/Translating): Information about how to translate NVDA into another language
-* [NVDA community wiki](https://github.com/nvaccess/nvda-community/wiki): Articles contributed by the community
 * [NVDA Controller Client](http://www.nvda-project.org/nvdaControllerClient/nvdaControllerClient_20100219.7z) (2010-02-19): NVDA API for external applications to directly speak or braille messages, etc.
-* [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
 * [Contributing to NVDA](https://github.com/nvaccess/nvda/wiki/Contributing): Guidelines for contributing to the NVDA source code
-* [NVDA development email list](https://nvda-devel.groups.io/) ([Old archives](http://nabble.nvda-project.org/Development-f1.html)): Discussion about NVDA development
 * [NVDA commits email list](https://lists.sourceforge.net/lists/listinfo/nvda-commits): Notifications for all commits to the Git repository
+* [Old email archives](http://nabble.nvda-project.org/Development-f1.html): contain discussions about NVDA development
 
 ## Getting the Source Code
 The NVDA project uses the [Git](https://www.git-scm.com/) version control system for its source code and documentation.
@@ -36,7 +54,8 @@ The NVDA source depends on several other packages to run correctly.
 The following dependencies need to be installed on your system:
 
 * [Python](https://www.python.org/), version 3.7, 32 bit
-	* Don't use `3.7.6` it causes an error while building, for now use `3.7.5` see #10696.
+	* Use latest minor version if possible.
+	* Don't use `3.7.6` it causes an error while building, see #10696.
 * Microsoft Visual Studio 2019 Community, Version 16.3 or later:
 	* Download from https://visualstudio.microsoft.com/vs/
 	* When installing Visual Studio, you need to enable the following:
@@ -45,7 +64,7 @@ The following dependencies need to be installed on your system:
 				* Desktop development with C++
 			* Then in the Installation details section, under Desktop for C++, Optional grouping, ensure the following are selected:
 				* MSVC v142 - VS 2019 C++ x64/x86 build tools
-				* Windows 10 SDK (10.0.18362.0)
+				* Windows 10 SDK (10.0.19041.0)
 				* C++ ATL for v142 build tools (x86 & x64)
 				* C++ Clang tools for Windows
 		* On the Individual components tab, ensure the following items are selected:
@@ -66,15 +85,15 @@ For reference, the following run time dependencies are included in Git submodule
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit ca65812a
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit 21bbb176
-* [ConfigObj](https://github.com/DiffSK/configobj), commit 5b5de48
+* [ConfigObj](https://github.com/DiffSK/configobj), commit f9a265c
 * [Six](https://pypi.python.org/pypi/six), version 1.12.0, required by wxPython and ConfigObj
-* [liblouis](http://www.liblouis.org/), version 3.12.0
-* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/) Emoji Annotations, version 36.0
+* [liblouis](http://www.liblouis.org/), version 3.14.0
+* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/) Emoji Annotations, version 36.1
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * Adobe FlashAccessibility interface typelib
 * [MinHook](https://github.com/RaMMicHaeL/minhook), tagged version 1.2.2
-* brlapi Python bindings, version 0.7.0 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html/brltty/), version 4.2-2
+* brlapi Python bindings, version 0.8 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html), version 6.1
 * lilli.dll, version 2.1.0.0
 * [pySerial](https://pypi.python.org/pypi/pyserial), version 3.4
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
@@ -152,11 +171,16 @@ By default, builds also do not use any compiler optimizations.
 Please see the `release` keyword argument for what compiler optimizations it will enable.
 
 ## Running the Source Code
-To start NVDA from source code, run `nvda.pyw` located in the source directory.
+Most developers run directly from source by:
+```
+cd source
+pythonw.exe nvda.pyw
+```
+Note: Since NVDA is a Windows application (rather than command line), it is best to run it with `pythonw.exe`.
+However, if during development you encounter an error early in the startup of NVDA, you can use `python.exe` which is likely to give more information about the error.
+
 To view help on the arguments that NVDA will accept, use the `-h` or `--help` option.
 These arguments are also documented in the user guide.
-Since NVDA is a Windows application (rather than command line), it is best to run it with `pythonw.exe`.
-However, if during development you encounter an error early in the startup of NVDA, you can use `python.exe` which is likely to give more information about the error.
 
 ## Building NVDA
 A binary build of NVDA can be run on a system without Python and all of NVDA's other dependencies installed (as we do for snapshots and releases).
@@ -279,17 +303,12 @@ To be warned about linting errors faster, you may wish to integrate Flake8 other
 For more details, see `tests/lint/readme.md`
 
 ### System Tests
-You may also use scons to run the system tests, though this will still rely on having set up the dependencies (see `tests/system/readme.md`).
+You may also use `scons` to run the system tests,
+ though this will still require the dependencies to be set up.
+For more details (including filtering and exclusion of tests) see `tests/system/readme.md`.
 
 ```
 scons systemTests
-```
-
-To run only specific system tests, specify them using the `filter` variable on the command line.
-This filter accepts wildcard characters.
-
-```
-scons systemTests filter="Read welcome dialog"
 ```
 
 ## Contributing to NVDA

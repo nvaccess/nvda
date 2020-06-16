@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA Translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-28 00:10+1000\n"
-"PO-Revision-Date: 2020-02-06 20:33+0100\n"
+"POT-Creation-Date: 2020-05-29 00:10+1000\n"
+"PO-Revision-Date: 2020-05-02 14:41-0700\n"
 "Last-Translator: \n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.8.9\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,1285,1351,-1\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
@@ -805,6 +805,11 @@ msgstr "Angleška (Združeno kraljestvo) razvrstitev 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr "Angleška  Severno ameriška Računalniška Brajeva kodna tabela"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
 msgstr "Vseuporabna angleška brajeva kodna tabela (razvrstitev 1)"
 
@@ -1040,13 +1045,18 @@ msgstr "Maratska razvrstitev 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
-msgstr "Nizozemska (Belgija)"
+msgid "Dutch (Belgium) 6 dot"
+msgstr "Nizozemska (Belgija) 6 pična"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
-msgstr "Nizozemska (Nizozemska)"
+msgid "Dutch (Netherlands) 6 dot"
+msgstr "Nizozemska (Nizozemska) 6 pična"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr "Nizozemska 8 pična"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4161,7 +4171,7 @@ msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
 msgstr ""
-"Vključi/izključi poročanje o dinamičnih spremembah vsebine kot je novo "
+"Vključi/izključi poročanje o dinamičnih spremembah vsebine, kot je novo "
 "besedilo v dos konzoli oken."
 
 #. Translators: presented when toggled.
@@ -4625,8 +4635,20 @@ msgid ""
 "Reports the new object or content under your finger if different to where "
 "your finger was last"
 msgstr ""
-"Sporoča novi predmet in vsebino neposredno pod vašim prstom, če je drugačen "
+"Sporoča novi predmet in vsebino neposredno pod vašim prstom, če je drugačen, "
 "kot je bil tisti, kjer je bil vaš prst pred tem"
+
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "predmet nima lokacije"
+
+#. Translators: Input help mode message for touch right click command.
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr ""
+"Klik desnega miškinega gumba na trenutnem položaju dotika. V splošnem se to "
+"uporablja za aktivacijo kontekstnega menija."
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
@@ -4724,13 +4746,13 @@ msgstr ""
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
 msgid "{profile} profile deactivated"
-msgstr "profil konfiguracije {profile} onemogočen"
+msgstr "profil konfiguracije {profile} je sedaj ne dejaven"
 
 #. Translators: a message when a configuration profile is manually activated.
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
 msgid "{profile} profile activated"
-msgstr "profil {profile} omogočen"
+msgstr "profil konfiguracije {profile} je dejaven"
 
 #. Translators: The description shown in input help for a script that
 #. activates or deactivates a config profile.
@@ -6255,7 +6277,7 @@ msgstr "Pregled zaslona"
 
 #, python-format
 msgid "Emulates pressing %s on the system keyboard"
-msgstr "Oponaša pritisk %s, kot na sistemski tipkovnici"
+msgstr "Oponaša pritisk %s kot na sistemski tipkovnici"
 
 msgid "NVDA Speech Viewer"
 msgstr "NVDA Prikazovalnik Govora"
@@ -6440,6 +6462,8 @@ msgstr "Napaka pri preverjanju nove posodobitve."
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "Napaka"
 
@@ -7710,7 +7734,7 @@ msgstr "&Uporabljaj CapsLock kot prikrojevalno tipko NVDA"
 #. Translators: The label of a checkbox in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "&Automatically start NVDA after I log on to Windows"
-msgstr "&Samodejno zaženi NVDA, ko se prijavim v Okna"
+msgstr "&Samodejno zaženi NVDA po prijavi v Okna"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Show this dialog when NVDA starts"
@@ -8434,7 +8458,7 @@ msgstr "Izberi prenosljiv prostor"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
-msgstr "Preslikaj konfiguracijo trenutnega &uporabnika"
+msgstr "Preslikaj trenutno &uporabniško konfiguracijo"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "&Start the new portable copy after creation"
@@ -9679,6 +9703,10 @@ msgstr ""
 "izgubljene.\n"
 "\t\t\tTo je nepovratno."
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "Ponastavi kretnje"
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
@@ -9694,6 +9722,7 @@ msgstr "Zaključi interakcijo z matematično vsebino"
 msgid "Math interaction not supported."
 msgstr "Matematična interakcija ni podprta."
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9722,7 +9751,8 @@ msgstr "označeno %s"
 msgid "%s selected"
 msgstr "%s označeno"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d znakov"
@@ -11726,93 +11756,3 @@ msgstr "Dvojni razmik med vrsticami"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 razmik med vrsticami"
-
-#~ msgid "Windows C&onsole support:"
-#~ msgstr "Podpora Windows K&onzoli:"
-
-#~ msgid "Prefer UIA"
-#~ msgstr "Izberi  UIA"
-
-#~ msgid "Legacy"
-#~ msgstr "Opuščeno"
-
-#, fuzzy
-#~ msgid "Highlighter"
-#~ msgstr "poudarek"
-
-#, fuzzy
-#~ msgid "NVDA Highlighter"
-#~ msgstr "%s poudarjeno"
-
-#~ msgid "Koine Greek"
-#~ msgstr "Koine Grška"
-
-#~ msgid "lmk %s"
-#~ msgstr "%s mjn"
-
-#~ msgid "Start"
-#~ msgstr "Zagon"
-
-#~ msgid "Skype"
-#~ msgstr "Skype"
-
-#~ msgid "Reports and moves the review cursor to a recent message"
-#~ msgstr "Sporoči zadnje sporočilo in nanj premakne pregledno utripalko"
-
-#~ msgid "Typing stopped"
-#~ msgstr "Tipkanje ustavljeno"
-
-#~ msgid "Rewind"
-#~ msgstr "zavrti nazaj"
-
-#~ msgid "Fast forward"
-#~ msgstr "Hitro naprej"
-
-#~ msgid "Play"
-#~ msgstr "Predvajaj"
-
-#~ msgid "Stop"
-#~ msgstr "Ustavi"
-
-#~ msgid "Record"
-#~ msgstr "Snemaj"
-
-#~ msgid "Selected %s"
-#~ msgstr "Označeno %s"
-
-#~ msgid "Currently running application is %s"
-#~ msgstr "Trenutno teče program %s"
-
-#~ msgid " and currently loaded module is %s"
-#~ msgstr " in trenutno je naložen modul %s"
-
-#~ msgid ""
-#~ "All add-ons are currently disabled. To enable add-ons you must restart "
-#~ "NVDA."
-#~ msgstr ""
-#~ "Vsi dodatki so sedaj onemogočeni. Če želite omogočiti dodatke, morate "
-#~ "NVDA ponovno zagnati."
-
-#~ msgid "Focus follows browse mode off"
-#~ msgstr "Žarišče ne sledi brskalniškemu delovanju"
-
-#~ msgid "Focus follows browse mode on"
-#~ msgstr "Žarišče sledi brskalniškemu delovanju"
-
-#~ msgid "%s Settings Category"
-#~ msgstr "%s Zvrst Nastavitev"
-
-#~ msgid "NVDA"
-#~ msgstr "NVDA"
-
-#~ msgid "remove"
-#~ msgstr "odstrani"
-
-#~ msgid ""
-#~ "For the new language to take effect, the configuration must be saved and "
-#~ "NVDA must be restarted. Press enter to save and restart NVDA, or cancel "
-#~ "to manually save and exit at a later time."
-#~ msgstr ""
-#~ "Za vzpostavitev novega jezika morate konfiguracijo shraniti in zapreti "
-#~ "NVDA. Pritisnite Enter, da shranite konfiguracijo in zaprete program ali "
-#~ "Prekliči da boste ročno shranili spremembe in ga kasneje zaprli."

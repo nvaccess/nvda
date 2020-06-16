@@ -360,6 +360,24 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportFontAttributes.__doc__=_("Toggles on and off the reporting of font attributes")
 	script_toggleReportFontAttributes.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle superscripts and subscripts command.
+		description=_("Toggles on and off the reporting of superscripts and subscripts"),
+		category=SCRCAT_DOCUMENTFORMATTING,
+	)
+	def script_toggleReportSuperscriptsAndSubscripts(self, gesture):
+		shouldReport: bool = not config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"]
+		config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"] = shouldReport
+		if shouldReport:
+			# Translators: The message announced when toggling the report superscripts and subscripts
+			# document formatting setting.
+			state = _("report superscripts and subscripts on")
+		else:
+			# Translators: The message announced when toggling the report superscripts and subscripts
+			# document formatting setting.
+			state = _("report superscripts and subscripts off")
+		ui.message(state)
+	
 	def script_toggleReportRevisions(self,gesture):
 		if config.conf["documentFormatting"]["reportRevisions"]:
 			# Translators: The message announced when toggling the report revisions document formatting setting.
@@ -1018,7 +1036,6 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_FIRST)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
-		ui.reviewMessage(_("Top"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to top line command.
 	script_review_top.__doc__=_("Moves the review cursor to the top line of the current navigator object and speaks it")
@@ -1076,7 +1093,6 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_LAST)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
-		ui.reviewMessage(_("Bottom"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to bottom line command.
 	script_review_bottom.__doc__=_("Moves the review cursor to the bottom line of the current navigator object and speaks it")
@@ -1134,7 +1150,6 @@ class GlobalCommands(ScriptableObject):
 		info.collapse()
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
-		ui.reviewMessage(_("Left"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to start of current line command.
 	script_review_startOfLine.__doc__=_("Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it")
@@ -1214,7 +1229,6 @@ class GlobalCommands(ScriptableObject):
 		info.move(textInfos.UNIT_CHARACTER,-1)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
-		ui.reviewMessage(_("Right"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to end of current line command.
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
@@ -1357,8 +1371,8 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_sayAll(self,gesture):
 		sayAllHandler.readText(sayAllHandler.CURSOR_REVIEW)
-	# Translators: Input help mode message for say all in review cursor command.
 	script_review_sayAll.__doc__ = _(
+		# Translators: Input help mode message for say all in review cursor command.
 		"Reads from the review cursor up to the end of the current text,"
 		" moving the review cursor as it goes"
 	)
@@ -1371,17 +1385,34 @@ class GlobalCommands(ScriptableObject):
 	script_sayAll.category=SCRCAT_SYSTEMCARET
 
 	def _reportFormattingHelper(self, info, browseable=False):
-		formatConfig={
-			"detectFormatAfterCursor":False,
-			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,"reportEmphasis":False,
-			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
-			"reportPage":False,"reportLineNumber":False,"reportLineIndentation":True,"reportLineIndentationWithTones":False,"reportParagraphIndentation":True,"reportLineSpacing":True,"reportTables":False,
-			"reportLinks":False,"reportHeadings":False,"reportLists":False,
-			"reportBlockQuotes":False,"reportComments":False,
-			"reportBorderStyle":True,"reportBorderColor":True,
-		}
-		textList=[]
+		# Report all formatting-related changes regardless of user settings
+		# when explicitly requested.
+		# These are the options we want reported when reporting formatting manually.
+		# for full list of options that may be reported see the "documentFormatting" section of L{config.configSpec}
+		reportFormattingOptions = (
+			"reportFontName",
+			"reportFontSize",
+			"reportFontAttributes",
+			"reportSuperscriptsAndSubscripts",
+			"reportColor",
+			"reportStyle",
+			"reportAlignment",
+			"reportSpellingErrors",
+			"reportLineIndentation",
+			"reportParagraphIndentation",
+			"reportLineSpacing",
+			"reportBorderStyle",
+			"reportBorderColor",
+		)
 
+		# Create a dictionary to replace the config section that would normally be
+		# passed to getFormatFieldsSpeech / getFormatFieldsBraille
+		formatConfig = dict()
+		from config import conf
+		for i in conf["documentFormatting"]:
+			formatConfig[i] = i in reportFormattingOptions
+
+		textList = []
 		# First, fetch indentation.
 		line=info.copy()
 		line.expand(textInfos.UNIT_LINE)
@@ -1458,17 +1489,22 @@ class GlobalCommands(ScriptableObject):
 		if obj:
 			text = api.getStatusBarText(obj)
 			api.setNavigatorObject(obj)
-			found=True
+			found = True
 		else:
-			info=api.getForegroundObject().flatReviewPosition
+			foreground = api.getForegroundObject()
+			try:
+				info = foreground.appModule.statusBarTextInfo
+			except NotImplementedError:
+				info = foreground.flatReviewPosition
+				if info:
+					info.expand(textInfos.UNIT_STORY)
+					info.collapse(True)
+					info.expand(textInfos.UNIT_LINE)
 			if info:
-				info.expand(textInfos.UNIT_STORY)
-				info.collapse(True)
-				info.expand(textInfos.UNIT_LINE)
-				text=info.text
+				text = info.text
 				info.collapse()
 				api.setReviewPosition(info)
-				found=True
+				found = True
 		if not found:
 			# Translators: Reported when there is no status line for the current program or window.
 			ui.message(_("No status line found"))
@@ -1582,6 +1618,17 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 	script_navigatorObject_devInfo.__doc__ = _("Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined.")
 	script_navigatorObject_devInfo.category=SCRCAT_TOOLS
+
+	@script(
+		# Translators: Input help mode message for Open user configuration directory command.
+		description=_("Opens NVDA configuration directory for the current user."),
+		category=SCRCAT_TOOLS
+	)
+	def script_openUserConfigurationDirectory(self, gesture):
+		if globalVars.appArgs.secure:
+			return
+		import systemUtils
+		systemUtils.openUserConfigurationDirectory()
 
 	def script_toggleProgressBarOutput(self,gesture):
 		outputMode=config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]
@@ -1815,6 +1862,26 @@ class GlobalCommands(ScriptableObject):
 	script_activateInputGesturesDialog.__doc__ = _("Shows the NVDA input gestures dialog")
 	script_activateInputGesturesDialog.category=SCRCAT_CONFIG
 
+	@script(
+		# Translators: Input help mode message for the report current configuration profile command.
+		description=_("Reports the name of the current NVDA configuration profile"),
+		category=SCRCAT_CONFIG,
+	)
+	def script_reportActiveConfigurationProfile(self, gesture):
+		activeProfileName = config.conf.profiles[-1].name
+
+		if not activeProfileName:
+			# Translators: Message announced when the command to report the current configuration profile and
+			# the default configuration profile is active.
+			activeProfileMessage = _("normal configuration profile active")
+		else:
+			# Translators: Message announced when the command to report the current configuration profile
+			# is active. The placeholder '{profilename}' is replaced with the name of the current active profile.
+			activeProfileMessage = _("{profileName} configuration profile active").format(
+				profileName=activeProfileName
+			)
+		ui.message(activeProfileMessage)
+
 	def script_saveConfiguration(self,gesture):
 		wx.CallAfter(gui.mainFrame.onSaveConfigurationCommand, None)
 	# Translators: Input help mode message for save current configuration command.
@@ -1981,9 +2048,9 @@ class GlobalCommands(ScriptableObject):
 	script_review_markStartForCopy.category=SCRCAT_TEXTREVIEW
 
 	@script(
-		# Translators: Input help mode message for move review cursor to marked start position for a
-		# select or copy command
 		description=_(
+			# Translators: Input help mode message for move review cursor to marked start position for a
+			# select or copy command
 			"Move the review cursor to the position marked as the start of text to be selected or copied"
 		),
 		category=SCRCAT_TEXTREVIEW,
@@ -2394,8 +2461,8 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
-		# Translators: Describes a command.
 		description=_(
+			# Translators: Describes a command.
 			"Toggles the state of the screen curtain, "
 			"enable to make the screen black or disable to show the contents of the screen. "
 			"Pressed once, screen curtain is enabled until you restart NVDA. "
@@ -2827,4 +2894,3 @@ class ConfigProfileActivationCommands(ScriptableObject):
 #: The single instance for the configuration profile activation commands.
 #: @type: L{ConfigProfileActivationCommands}
 configProfileActivationCommands = ConfigProfileActivationCommands()
-

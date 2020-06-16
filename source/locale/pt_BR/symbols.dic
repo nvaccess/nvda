@@ -6,7 +6,7 @@
 complexSymbols:
 # identifier	regexp
 # Others
-# pt_BR: em português o separador decimal é , (vírgula) e o separador de milhares clássico é . (ponto)
+# pt_BR: em português o separador decimal é , (vírgula) e o separador de milhares clássico é . (ponto).
 decimal point	(?<![^\d -])\,(?=\d)
 thousands separator	(?<=\d)\.(?=\d)
 
@@ -52,6 +52,7 @@ $	cifrão
 )	fecha parêntesis
 *	asterisco
 +	mais
+−	menos
 ,	vírgula
 -	hífen
 .	ponto

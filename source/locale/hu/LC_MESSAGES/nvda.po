@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-28 00:10+1000\n"
-"PO-Revision-Date: 2020-02-15 19:29+0100\n"
+"POT-Creation-Date: 2020-05-29 00:10+1000\n"
+"PO-Revision-Date: 2020-04-08 10:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
@@ -801,6 +801,11 @@ msgstr "Angol (Egyesült Királyságbeli), rövidítési fokozat 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr "Angol észak-amerikai braille számítógépes kód"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
 msgstr "Egységes angol braille kód, rövidítési fokozat 1"
 
@@ -1036,13 +1041,18 @@ msgstr "marathi, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
-msgstr "Holland (belgiumi)"
+msgid "Dutch (Belgium) 6 dot"
+msgstr "Holland (belgiumi) 6 pontos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
-msgstr "Holland (hollandiai)"
+msgid "Dutch (Netherlands) 6 dot"
+msgstr "Holland (hollandiai) 6 pontos"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr "Holland 8 pontos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4567,6 +4577,18 @@ msgstr ""
 "Bemondja az ujja alatt lévő elemet vagy tartalmat, ha az eltér a legutoljára "
 "bemondottól"
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "az elem helye nem ismert"
+
+#. Translators: Input help mode message for touch right click command.
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr ""
+"Egyszeri jobb egérkattintást végez az érintési ponton. Ez általában a helyi "
+"menüt hívja elő."
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Megnyitja az NVDA profil beállítások párbeszédablakát."
@@ -6377,6 +6399,8 @@ msgstr "Hiba történt a frissítés keresésekor"
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "hiba"
 
@@ -9583,6 +9607,10 @@ msgstr ""
 "\t\t\tMinden korábban beállított egyéni parancsa el fog veszni.\n"
 "\t\t\tA művelet nem visszavonható."
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "Beviteli parancsok visszaállítása"
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
@@ -9598,6 +9626,7 @@ msgstr "Kilép a matematikai áttekintőből"
 msgid "Math interaction not supported."
 msgstr "matematikai áttekintés nem támogatott."
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9626,7 +9655,8 @@ msgstr "%s Kijelölve"
 msgid "%s selected"
 msgstr "%s kijelölve"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d karakter"

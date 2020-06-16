@@ -15,7 +15,7 @@ complexSymbols:
 # Others
 decimal point	(?<=\d)\.(?=\d)
 in-word '	(?<=[a-zA-Z0-9])'(?=[a-zA-Z])
-negative number	(?<!\w)-(?=\d)
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -56,6 +56,7 @@ $	долар
 )	дясна скоба
 *	звезда
 +	плюс
+−	минус
 ,	запетая
 -	тире	-	norep
 .	точка

@@ -1,8 +1,8 @@
-#NVDAObjects/UIA/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2009-2019 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V., Leonard de Ruijter
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2009-2020 NV Access Limited, Joseph Lee, Mohammad Suliman,
+# Babbage B.V., Leonard de Ruijter, Bill Dengler
 
 """Support for UI Automation (UIA) controls."""
 
@@ -157,7 +157,17 @@ class UIATextInfo(textInfos.TextInfo):
 			if formatConfig["reportFontSize"]:
 				IDs.add(UIAHandler.UIA_FontSizeAttributeId)
 			if formatConfig["reportFontAttributes"]:
-				IDs.update({UIAHandler.UIA_FontWeightAttributeId,UIAHandler.UIA_IsItalicAttributeId,UIAHandler.UIA_UnderlineStyleAttributeId,UIAHandler.UIA_StrikethroughStyleAttributeId,UIAHandler.UIA_IsSuperscriptAttributeId,UIAHandler.UIA_IsSubscriptAttributeId,})
+				IDs.update({
+					UIAHandler.UIA_FontWeightAttributeId,
+					UIAHandler.UIA_IsItalicAttributeId,
+					UIAHandler.UIA_UnderlineStyleAttributeId,
+					UIAHandler.UIA_StrikethroughStyleAttributeId
+				})
+			if formatConfig["reportSuperscriptsAndSubscripts"]:
+				IDs.update({
+					UIAHandler.UIA_IsSuperscriptAttributeId,
+					UIAHandler.UIA_IsSubscriptAttributeId
+				})
 			if formatConfig["reportAlignment"]:
 				IDs.add(UIAHandler.UIA_HorizontalTextAlignmentAttributeId)
 			if formatConfig["reportColor"]:
@@ -196,6 +206,7 @@ class UIATextInfo(textInfos.TextInfo):
 			val=fetcher.getValue(UIAHandler.UIA_StrikethroughStyleAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				formatField['strikethrough']=bool(val)
+		if formatConfig["reportSuperscriptsAndSubscripts"]:
 			textPosition=None
 			val=fetcher.getValue(UIAHandler.UIA_IsSuperscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue and val:
@@ -871,10 +882,15 @@ class UIA(Window):
 			else:
 				clsList.append(edge.EdgeNode)
 		elif self.role==controlTypes.ROLE_DOCUMENT and self.UIAElement.cachedAutomationId=="Microsoft.Windows.PDF.DocumentView":
-				# PDFs
-				from . import edge
-				clsList.append(edge.EdgeHTMLRoot)
-		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
+			# PDFs
+			from . import edge
+			clsList.append(edge.EdgeHTMLRoot)
+		elif (
+			self.UIAElement.cachedAutomationId == "RichEditControl"
+			and "DevExpress.XtraRichEdit" in self.UIAElement.cachedProviderDescription
+		):
+			clsList.insert(0, DevExpressXtraRichEdit)
+		if UIAControlType == UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.append(ProgressBar)
 		if UIAClassName=="ControlPanelLink":
 			clsList.append(ControlPanelLink)
@@ -937,6 +953,10 @@ class UIA(Window):
 		):
 			from . import winConsoleUIA
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
+		elif UIAClassName == "TermControl":
+			from . import winConsoleUIA
+			clsList.append(winConsoleUIA.WinTerminalUIA)
+
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:
 			if UIAHandler.autoSelectDetectionAvailable:
@@ -1805,3 +1825,15 @@ class PlaceholderNetUITWMenuItem(UIA):
 			if parent.role==controlTypes.ROLE_POPUPMENU:
 				return parent
 			parent=parent.parent
+
+
+class DevExpressXtraRichEdit(UIA):
+	""""At least some versions of the DevExpress Xtra Rich Edit control
+	have a broken implementation of the UIA Text Pattern.
+	Work around this by checking whether the document range is valid.
+	"""
+
+	def _get_TextInfo(self):
+		if self.UIATextPattern and self.UIATextPattern.DocumentRange:
+			return super().TextInfo
+		return super(UIA, self).TextInfo
