@@ -1591,7 +1591,7 @@ class GlobalCommands(ScriptableObject):
 		if obj:
 			sayAllHandler.readObjects(obj)
 	# Translators: Input help mode message for read foreground object command (usually the foreground window).
-	script_speakForeground.__doc__ = _("Speaks the current foreground object")
+	script_speakForeground.__doc__ = _("Reads all controls in the active window")
 	script_speakForeground.category=SCRCAT_FOCUS
 
 	def script_test_navigatorDisplayModelText(self,gesture):
@@ -1894,8 +1894,11 @@ class GlobalCommands(ScriptableObject):
 			gui.mainFrame.onRevertToSavedConfigurationCommand(None)
 		elif scriptCount==2:
 			gui.mainFrame.onRevertToDefaultConfigurationCommand(None)
-	# Translators: Input help mode message for apply last saved or default settings command.
-	script_revertConfiguration.__doc__ = _("Pressing once reverts the current configuration to the most recently saved state. Pressing three times reverts to factory defaults.")
+	script_revertConfiguration.__doc__ = _(
+		# Translators: Input help mode message for apply last saved or default settings command.
+		"Pressing once reverts the current configuration to the most recently saved state."
+		" Pressing three times resets to factory defaults."
+	)
 	script_revertConfiguration.category=SCRCAT_CONFIG
 
 	def script_activatePythonConsole(self,gesture):
