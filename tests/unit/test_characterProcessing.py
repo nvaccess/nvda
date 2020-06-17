@@ -78,6 +78,17 @@ class TestComplex(unittest.TestCase):
 				replacement=r"\a"
 			)
 
+	def test_missing_group(self):
+		"""Test that a reference in the replacement to an non-existing
+		group raises an error
+		"""
+		with self.assertRaises(IndexError):
+			self._replace(
+				string="1",
+				pattern=r"(\d)",
+				replacement=r"\2"
+			)
+
 	def test_unterminated_escape(self):
 		"""Test that an escape at the end of replacement raises an
 		error, since there is nothing to be escaped there
