@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-29 00:10+1000\n"
+"POT-Creation-Date: 2020-06-05 00:10+1000\n"
 "PO-Revision-Date: 2020-06-01 12:00+0100\n"
 "Last-Translator: Rojanu <aliustek@gmail.com>\n"
 "Language-Team: \n"
@@ -16,10 +16,6 @@ msgstr ""
 "X-Launchpad-Export-Date: 2018-12-24 22:24+0000\n"
 "X-Generator: Poedit 2.3.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-
-#. Translators: For Japanese character input: Hiragana input mode.
-msgid "hiragana"
-msgstr "Hiragana"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -52,6 +48,10 @@ msgstr "nîv katakana  (yek ji sembolên nivîsa japonî)"
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
 msgid "alphanumeric"
 msgstr "alfanumerîk"
+
+#. Translators: For Japanese character input: Hiragana input mode.
+msgid "hiragana"
+msgstr "Hiragana"
 
 #. Translators: For Japanese character input: Katacana input mode.
 msgid "katakana"
@@ -109,7 +109,8 @@ msgstr "gramer : {text}"
 msgid "unknown"
 msgstr "nayê zanîn"
 
-#. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
+#. Translators: This is presented when errors are found in an appModule
+#. (example output: error in appModule explorer).
 #, python-format
 msgid "Error in appModule %s"
 msgstr "di appModul de çewtî %s"
@@ -148,11 +149,6 @@ msgstr "lêgerîn"
 msgctxt "aria"
 msgid "form"
 msgstr "Form"
-
-#. Translators: Reported for a significant region, normally found on web pages.
-msgctxt "aria"
-msgid "region"
-msgstr "Herêm"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -229,7 +225,7 @@ msgstr "lîste"
 msgid "gra"
 msgstr "Grafîk"
 
-#. Translators: Displayed in braille for an object which is a
+#. Translators: Displayed in braille for toast notifications and for an object which is a
 #. help balloon.
 msgid "hlp"
 msgstr "Alîkarî"
@@ -308,6 +304,12 @@ msgstr "Sepan"
 #. grouping.
 msgid "grp"
 msgstr "Komkirin"
+
+#. Translators: Displayed in braille for an object which is a
+#. caption.
+#, fuzzy
+msgid "cap"
+msgstr "Sepan"
 
 #. Translators: Displayed in braille for an object which is a
 #. embedded object.
@@ -11496,3 +11498,7 @@ msgstr "navbera cotrêz"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr ""
+
+#~ msgctxt "aria"
+#~ msgid "region"
+#~ msgstr "Herêm"
