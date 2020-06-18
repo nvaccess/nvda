@@ -68,6 +68,7 @@ def getConfigLanguage():
 	return initial
 
 class UwpOcr(ContentRecognizer):
+	allowAutoRefresh = True
 
 	def getResizeFactor(self, width, height):
 		# UWP OCR performs poorly with small images, so increase their size.

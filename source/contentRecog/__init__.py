@@ -22,6 +22,12 @@ class ContentRecognizer(object, metaclass=ABCMeta):
 	"""Implementation of a content recognizer.
 	"""
 
+	#: Whether to allow automatic, periodic refresh when using this recognizer.
+	#: This allows the user to see live changes as they occur. However, if a
+	#: recognizer uses an internet service or is very resource intensive, this
+	#: may be undesirable.
+	allowAutoRefresh = False
+
 	def getResizeFactor(self, width, height):
 		"""Return the factor by which an image must be resized
 		before it is passed to this recognizer.
