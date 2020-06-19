@@ -36,7 +36,6 @@ import collections
 import extensionPoints
 import hwPortUtils
 import bdDetect
-import brailleViewer
 import queueHandler
 
 roleLabels = {
@@ -1624,6 +1623,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._detectionEnabled = False
 		self._detector = None
 		self._rawText = u""
+
+		import brailleViewer
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
 
 	def terminate(self):
@@ -1661,6 +1662,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	displaySize: int
 
 	def _get_displaySize(self):
+
+		import brailleViewer
 		if self._displaySize == 0 and brailleViewer.isBrailleViewerActive():
 			return brailleViewer.DEFAULT_NUM_CELLS
 		return self._displaySize
@@ -1782,6 +1785,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			wx.CallAfter(self._cursorBlinkTimer.Start,blinkRate)
 
 	def _writeCells(self, cells):
+
+		import brailleViewer
 		brailleViewer.update(cells, self._rawText)
 		if not self.display.isThreadSafe:
 			try:
