@@ -41,7 +41,11 @@ class BrailleViewerFrame(wx.Frame):
 			log.debug("Setting brailleViewer window position")
 			brailleViewSection = config.conf["brailleViewer"]
 			dialogPos = wx.Point(x=brailleViewSection["x"], y=brailleViewSection["y"])
-
+		self._secondsOfHoverToActivate = config.conf["brailleViewer"]["secondsOfHoverToActivate"]
+		self._lastMouseOverChar = None
+		self._mouseOverTime = None
+		self._secondsBeforeReturnToNormal = self._secondsOfHoverToActivate + 0.4
+		self._doneRouteCall = False
 		super(BrailleViewerFrame, self).__init__(
 			gui.mainFrame,
 			title=self._title,
@@ -137,15 +141,6 @@ class BrailleViewerFrame(wx.Frame):
 		wx.TE_HT_BEYOND: "TE_HT_BEYOND",
 	}
 
-	_lastMouseOverChar = None
-	_mouseOverTime = None
-	_secondsBeforeRouting = 1.0
-	_secondsBeforeReturnToNormal = _secondsBeforeRouting + 0.4
-	_doneRouteCall = False
-	driverName = "brailleViewer"
-	keyRouting = "route"
-
-
 	def _linearInterpolate(self, value, start, end):
 		difference = tuple(map(lambda i, j: i - j, end, start))
 		return tuple(map(lambda i, j: i + value * j, start, difference))
@@ -174,6 +169,9 @@ class BrailleViewerFrame(wx.Frame):
 		self._hoverCellStyle = wx.TextAttr()
 		self._hoverCellStyle.SetBackgroundColour(newColor)
 
+	driverName = "brailleViewer"
+	keyRouting = "route"
+
 	def _doRouting(self, routeToIndex):
 		result2, index2 = self._brailleOutput.HitTestPos(
 			self._brailleOutput.ScreenToClient(wx.GetMousePosition())
@@ -181,11 +179,11 @@ class BrailleViewerFrame(wx.Frame):
 		if result2 != wx.TE_HT_ON_TEXT or not (index2 == self._lastMouseOverChar == routeToIndex):
 			return  # cancel
 		timeElapsed = time.time() - self._mouseOverTime
-		if timeElapsed < self._secondsBeforeRouting:
+		if timeElapsed < self._secondsOfHoverToActivate:
 			self._updateHoverStyleColor(
 				self._calculateHoverColour(
 					timeElapsed,
-					self._secondsBeforeRouting,
+					self._secondsOfHoverToActivate,
 					startValue=0.2,
 					startColor=self._normalBGColor,
 					finalColor=wx.Colour(255, 205, 60)
@@ -195,8 +193,8 @@ class BrailleViewerFrame(wx.Frame):
 			return
 		elif timeElapsed < self._secondsBeforeReturnToNormal:
 			self._updateHoverStyleColor(self._calculateHoverColour(
-				timeElapsed - self._secondsBeforeRouting,
-				totalTime=self._secondsBeforeReturnToNormal - self._secondsBeforeRouting,
+				timeElapsed - self._secondsOfHoverToActivate,
+				totalTime=self._secondsBeforeReturnToNormal - self._secondsOfHoverToActivate,
 				startValue=0.0,
 				startColor=wx.Colour(81, 215, 81),
 				finalColor=self._normalBGColor

@@ -125,6 +125,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [brailleViewer]
 	showBrailleViewerAtStartup = boolean(default=false)
 	shouldHoverRouteToCell = boolean(default=false)
+	secondsOfHoverToActivate = float(min=0.0, default=1.0)
 	autoPositionWindow = boolean(default=True)
 	# Values for positioning the window.
 	# Defaults are not used.
