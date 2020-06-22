@@ -100,7 +100,7 @@ class ChromeLib:
 		# move to start marker
 		for i in range(10):  # set a limit on the number of tries.
 			# Small changes in Chrome mean the number of tab presses to get into the document can vary.
-			builtIn.sleep(0.5)  # ensure application has time to receive input
+			builtIn.sleep("0.5 seconds")  # ensure application has time to receive input
 			actualSpeech = self.getSpeechAfterTab()
 			if actualSpeech == f"{ChromeLib._beforeMarker}  button":
 				break
