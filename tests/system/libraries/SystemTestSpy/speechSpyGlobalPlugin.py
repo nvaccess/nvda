@@ -126,8 +126,21 @@ class NVDASpyLib:
 		with threading.Lock():
 			return self.SPEECH_HAS_FINISHED_SECONDS < _timer() - self._lastSpeechTime_requiresLock
 
+	def _devInfoToLog(self):
+		import api
+		obj = api.getNavigatorObject()
+		if hasattr(obj, "devInfo"):
+			log.info("Developer info for navigator object:\n%s" % "\n".join(obj.devInfo))
+		else:
+			log.info("No developer info for navigator object")
+
 	def dump_speech_to_log(self):
 		with threading.Lock():
+			try:
+				self._devInfoToLog()
+			except Exception:
+				log.error("Unable to log dev info")
+
 			log.debug(f"All speech:\n{repr(self._nvdaSpeech_requiresLock)}")
 
 	def _minTimeout(self, timeout: float) -> float:
