@@ -108,19 +108,19 @@ class ChromeLib:
 				break
 			if actualSpeech == f"{ChromeLib._afterMarker}  button":
 				# somehow missed the start marker!
+				spy.dump_speech_to_log()
 				builtIn.fail(
 					"Unable to tab to 'before sample' marker, reached 'after sample' marker first."
 					f" Looking for '{ChromeLib._beforeMarker}  button'"
 					" See NVDA log for full speech."
 				)
-				spy.dump_speech_to_log()
 		else:  # Exceeded the number of tries
+			spy.dump_speech_to_log()
 			builtIn.fail(
 				"Unable to tab to 'before sample' marker."
 				f" Too many attempts looking for '{ChromeLib._beforeMarker}  button'"
 				" See NVDA log for full speech."
 			)
-			spy.dump_speech_to_log()
 
 	@staticmethod
 	def getSpeechAfterTab() -> str:
