@@ -87,13 +87,15 @@ class ChromeLib:
 		path = self._writeTestFile(testCase)
 		self.start_chrome(path)
 		# Ensure chrome started
+		# Different versions of chrome have variations in how the title is presented
+		# This may mean that there is a separator between document name and
+		# application name. E.G. "htmlTest   Google Chrome", "html – Google Chrome" or perhaps no applcation
+		# name at all.
+		# Rather than try to get this right, just wait for the doc title.
+		# If this continues to be unreliable we could use solenium or similar to start chrome and inform us when
+		# it is ready.
 		applicationTitle = f"{self._testCaseTitle}"
 		spy.wait_for_specific_speech(applicationTitle)
-		# Different versions of chrome have small variations in the separator between document name and
-		# application name. E.G. "htmlTest   Google Chrome", "html – Google Chrome"
-		# Rather than try to get the separator right, wait for the doc title, then wait for the 'Google Chrome'
-		# part. Note: this also works with "Chrome Canary"
-		spy.wait_for_specific_speech("Google Chrome")
 		# Read all is configured, but just test interacting with the sample.
 		spy.wait_for_speech_to_finish()
 
