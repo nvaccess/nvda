@@ -15,7 +15,7 @@ import globalPluginHandler
 import threading
 from .blockUntilConditionMet import _blockUntilConditionMet
 from logHandler import log
-from time import clock as _timer
+from time import perf_counter as _timer
 
 import sys
 import os
