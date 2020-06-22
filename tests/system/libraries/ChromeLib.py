@@ -104,21 +104,21 @@ class ChromeLib:
 			# Small changes in Chrome mean the number of tab presses to get into the document can vary.
 			builtIn.sleep("0.5 seconds")  # ensure application has time to receive input
 			actualSpeech = self.getSpeechAfterTab()
-			if actualSpeech == f"{ChromeLib._beforeMarker}  button":
+			if ChromeLib._beforeMarker in actualSpeech:
 				break
-			if actualSpeech == f"{ChromeLib._afterMarker}  button":
+			if ChromeLib._afterMarker in actualSpeech:
 				# somehow missed the start marker!
 				spy.dump_speech_to_log()
 				builtIn.fail(
 					"Unable to tab to 'before sample' marker, reached 'after sample' marker first."
-					f" Looking for '{ChromeLib._beforeMarker}  button'"
+					f" Looking for '{ChromeLib._beforeMarker}'"
 					" See NVDA log for full speech."
 				)
 		else:  # Exceeded the number of tries
 			spy.dump_speech_to_log()
 			builtIn.fail(
 				"Unable to tab to 'before sample' marker."
-				f" Too many attempts looking for '{ChromeLib._beforeMarker}  button'"
+				f" Too many attempts looking for '{ChromeLib._beforeMarker}'"
 				" See NVDA log for full speech."
 			)
 
