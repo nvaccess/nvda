@@ -10,9 +10,16 @@ Force Tags	NVDA	smoke test	browser	chrome
 Library	NvdaLib.py
 # for test cases
 Library	chromeTests.py
+Library	ScreenCapLibrary
 
 Test Setup	start NVDA	standard-dontShowWelcomeDialog.ini
-Test Teardown	quit NVDA
+Test Teardown	default teardown
+
+*** Keywords ***
+default teardown
+	${screenshotName}=	create_preserved_test_output_filename	failedTest.png
+	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
+	quit NVDA
 
 *** Test Cases ***
 
