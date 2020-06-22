@@ -25,6 +25,4 @@ default teardown
 
 checkbox labelled by inner element
 	[Documentation]	A checkbox labelled by an inner element should not read the label element twice.
-	# Excluded due to intermittent failure: #11053
-	[Tags]	excluded_from_build
 	checkbox_labelled_by_inner_element
