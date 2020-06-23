@@ -161,6 +161,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	autoFocusFocusableElements = boolean(default=True)
 
 [touch]
+	enabled = boolean(default=true)
 	touchTyping = boolean(default=False)
 
 #Settings for document reading (such as MS Word and wordpad)
