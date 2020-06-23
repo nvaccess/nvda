@@ -214,6 +214,7 @@ class UIAHandler(COMObject):
 		super(UIAHandler,self).__init__()
 		self.globalEventHandlerGroup = None
 		self.localEventHandlerGroup = None
+		self._localEventHandlerGroupElements = set()
 		self.MTAThreadInitEvent=threading.Event()
 		self.MTAThreadQueue = Queue()
 		self.MTAThreadInitException=None
@@ -387,32 +388,38 @@ class UIAHandler(COMObject):
 		else:
 			raise NotImplementedError
 
-	def removeLocalEventHandlerGroupFromOldFocus(self, oldFocusElement):
+	def addLocalEventHandlerGroupToElement(self, element, isFocus=False):
+		if not self.localEventHandlerGroup:
+			return
+		def func():
+			if isFocus:
+				try:
+					isStillFocus = self.clientObject.CompareElements(self.clientObject.GetFocusedElement(), element)
+				except COMError:
+					isStillFocus = False
+				if not isStillFocus:
+					return
+			try:
+				self.addEventHandlerGroup(element, self.localEventHandlerGroup)
+			except COMError:
+				log.error("Could not register for UIA events for element", exc_info=True)
+			else:
+				self._localEventHandlerGroupElements.add(element)
+		self.MTAThreadQueue.put_nowait(func)
+
+	def removeLocalEventHandlerGroupFromElement(self, element):
 		if not self.localEventHandlerGroup:
 			return
 		def func():
 			try:
-				self.removeEventHandlerGroup(oldFocusElement, self.localEventHandlerGroup)
+				self.removeEventHandlerGroup(element, self.localEventHandlerGroup)
 			except COMError:
 				# The old UIAElement has probably died as the window was closed.
 				# The system should forget the old event registration itself.
 				return
-			self.MTAThreadQueue.put_nowait(func)
-
-	def addLocalEventHandlerGroupToNewFocus(self, newFocusElement):
-		if not self.localEventHandlerGroup:
-			return
-		def func():
-			try:
-				isStillFocus = self.clientObject.CompareElements(self.clientObject.GetFocusedElement(), newFocusElement)
-			except COMError:
-				isStillFocus = False
-			if not isStillFocus:
-				return
-			try:
-				self.addEventHandlerGroup(newFocusElement, self.localEventHandlerGroup)
-			except COMError:
-				log.error("Could not register for UIA events for new focus", exc_info=True)
+			else:
+				if element in self._localEventHandlerGroupElements:
+					self._localEventHandlerGroupElements.remove(element)
 		self.MTAThreadQueue.put_nowait(func)
 
 	def IUIAutomationEventHandler_HandleAutomationEvent(self,sender,eventID):
