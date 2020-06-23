@@ -391,6 +391,7 @@ class UIAHandler(COMObject):
 	def addLocalEventHandlerGroupToElement(self, element, isFocus=False):
 		if not self.localEventHandlerGroup:
 			return
+
 		def func():
 			if isFocus:
 				try:
@@ -410,6 +411,7 @@ class UIAHandler(COMObject):
 	def removeLocalEventHandlerGroupFromElement(self, element):
 		if not self.localEventHandlerGroup:
 			return
+
 		def func():
 			try:
 				self.removeEventHandlerGroup(element, self.localEventHandlerGroup)
