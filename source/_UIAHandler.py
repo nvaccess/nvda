@@ -180,10 +180,7 @@ UIAEventIdsToNVDAEventNames={
 	UIA_SystemAlertEventId:"UIA_systemAlert",
 }
 
-localEventHandlerGroupUIAEventIds = {
-	UIA.UIA_SelectionItem_ElementAddedToSelectionEventId,
-	UIA.UIA_SelectionItem_ElementRemovedFromSelectionEventId,
-}
+localEventHandlerGroupUIAEventIds = {}
 
 autoSelectDetectionAvailable = False
 if winVersion.isWin10():
