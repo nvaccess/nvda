@@ -1048,6 +1048,14 @@ class UIA(Window):
 		except:
 			return False
 
+	def event_gainFocus(self):
+		UIAHandler.handler.addLocalEventHandlerGroupToNewFocus(self.UIAElement)
+		super().event_gainFocus()
+
+	def event_loseFocus(self):
+		super().event_loseFocus()
+		UIAHandler.handler.addLocalEventHandlerGroupToNewFocus(self.UIAElement)
+
 	def _get_shouldAllowUIAFocusEvent(self):
 		try:
 			return bool(self._getUIACacheablePropertyValue(UIAHandler.UIA_HasKeyboardFocusPropertyId))

@@ -180,7 +180,7 @@ UIAEventIdsToNVDAEventNames={
 	UIA_SystemAlertEventId:"UIA_systemAlert",
 }
 
-localEventHandlerGroupUIAEventIds = {}
+localEventHandlerGroupUIAEventIds = set()
 
 autoSelectDetectionAvailable = False
 if winVersion.isWin10():
@@ -387,25 +387,33 @@ class UIAHandler(COMObject):
 		else:
 			raise NotImplementedError
 
-	def _onFocusChange(self, oldElement, newElement):
-		if oldElement == newElement:
+	def removeLocalEventHandlerGroupFromOldFocus(self, oldFocusElement):
+		if not self.localEventHandlerGroup:
 			return
-		if oldElement:
+		def func():
 			try:
-				self.removeEventHandlerGroup(oldElement, self.localEventHandlerGroup)
+				self.removeEventHandlerGroup(oldFocusElement, self.localEventHandlerGroup)
 			except COMError:
 				# The old UIAElement has probably died as the window was closed.
 				# The system should forget the old event registration itself.
-				pass
-		try:
-			isStillFocus = self.clientObject.CompareElements(self.clientObject.GetFocusedElement(), newElement)
-		except COMError:
-			isStillFocus = False
-		if isStillFocus:
+				return
+			self.MTAThreadQueue.put_nowait(func)
+
+	def addLocalEventHandlerGroupToNewFocus(self, newFocusElement):
+		if not self.localEventHandlerGroup:
+			return
+		def func():
 			try:
-				self.addEventHandlerGroup(newElement, self.localEventHandlerGroup)
+				isStillFocus = self.clientObject.CompareElements(self.clientObject.GetFocusedElement(), newFocusElement)
+			except COMError:
+				isStillFocus = False
+			if not isStillFocus:
+				return
+			try:
+				self.addEventHandlerGroup(newFocusElement, self.localEventHandlerGroup)
 			except COMError:
 				log.error("Could not register for UIA events for new focus", exc_info=True)
+		self.MTAThreadQueue.put_nowait(func)
 
 	def IUIAutomationEventHandler_HandleAutomationEvent(self,sender,eventID):
 		if not self.MTAThreadInitEvent.isSet():
@@ -478,10 +486,7 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug("HandleFocusChangedEvent: event received while not fully initialized")
 			return
-		previousFocusedUIAElement = self.lastFocusedUIAElement
 		self.lastFocusedUIAElement = sender
-		if self.localEventHandlerGroup:
-			self.MTAThreadQueue.put_nowait(lambda: self._onFocusChange(previousFocusedUIAElement, sender))
 		if not self.isNativeUIAElement(sender):
 			if _isDebug():
 				log.debug("HandleFocusChangedEvent: Ignoring for non native element")
