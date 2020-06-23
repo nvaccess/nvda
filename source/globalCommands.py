@@ -1466,7 +1466,7 @@ class GlobalCommands(ScriptableObject):
 			)
 
 	def _getTIAtCaret(self):
-		# Returns text info at the caret position if there is a caret in the current control, None othervise.
+		# Returns text info at the caret position if there is a caret in the current control, None otherwise.
 		# Note that if there is  no caret this fact is announced  in speech and braille.
 		obj = api.getFocusObject()
 		treeInterceptor = obj.treeInterceptor
@@ -1534,7 +1534,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for report formatting at caret command.
-			"Reports formatting info for the thext under the caret."
+			"Reports formatting info for the text under the caret."
 			" If pressed twice, presents the information in browse mode"
 		),
 		category=SCRCAT_SYSTEMCARET,
