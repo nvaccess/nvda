@@ -53,7 +53,6 @@ from .commands import (  # noqa: F401
 	WaveFileCommand,
 	ConfigProfileTriggerCommand,
 )
-
 from . import types
 from .types import (
 	SpeechSequence,
@@ -1824,6 +1823,7 @@ def getControlFieldSpeech(  # noqa: C901
 		types.logBadSequenceTypes(tableCellSequence)
 		return tableCellSequence
 
+	content = attrs.get("content")
 	# General cases.
 	if ((
 		speakEntry and ((
@@ -1842,7 +1842,6 @@ def getControlFieldSpeech(  # noqa: C901
 		and fieldType == "start_inControlFieldStack"
 	)):
 		out = []
-		content = attrs.get("content")
 		if content and speakContentFirst:
 			out.append(content)
 		if placeholderValue:
@@ -1906,7 +1905,9 @@ def getControlFieldSpeech(  # noqa: C901
 		out = []
 		if ariaCurrent:
 			out.extend(ariaCurrentSequence)
-			types.logBadSequenceTypes(out)
+		if role == controlTypes.ROLE_GRAPHIC and content:
+			out.append(content)
+		types.logBadSequenceTypes(out)
 		return out
 	else:
 		return []

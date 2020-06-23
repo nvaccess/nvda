@@ -601,6 +601,22 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportLinks.__doc__=_("Toggles on and off the reporting of links")
 	script_toggleReportLinks.category=SCRCAT_DOCUMENTFORMATTING
 
+	@scriptHandler.script(
+		# Translators: Input help mode message for toggle report graphics command.
+		description=_("Toggles on and off the reporting of graphics"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
+	def script_toggleReportGraphics(self, gesture):
+		if config.conf["documentFormatting"]["reportGraphics"]:
+			# Translators: The message announced when toggling the report graphics document formatting setting.
+			state = _("report graphics off")
+			config.conf["documentFormatting"]["reportGraphics"] = False
+		else:
+			# Translators: The message announced when toggling the report graphics document formatting setting.
+			state = _("report graphics on")
+			config.conf["documentFormatting"]["reportGraphics"] = True
+		ui.message(state)
+
 	def script_toggleReportComments(self,gesture):
 		if config.conf["documentFormatting"]["reportComments"]:
 			# Translators: The message announced when toggling the report comments document formatting setting.
