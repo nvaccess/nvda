@@ -4,7 +4,7 @@ What's New in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2020.2 =
-Highlights of this release include support for a new braille display from Nattiq, better support for ESET antivirus GUI and Windows Terminal, performance improvements 1Password, and with Windows OneCore synthesizer. Plus many other important bug fixes and improvements.
+Highlights of this release include support for a new braille display from Nattiq, better support for ESET antivirus GUI and Windows Terminal, performance improvements in 1Password, and with Windows OneCore synthesizer. Plus many other important bug fixes and improvements.
 
 == New Features ==
 - Support for new braille displays:
@@ -12,23 +12,23 @@ Highlights of this release include support for a new braille display from Nattiq
 - Added script to open NVDA configuration directory (no default gesture). (#2214)
 - Better support for ESET antivirus GUI. (#10894)
 - Added support for Windows Terminal. (#10305)
-- Added a command to report the active configuration profile. (#9325)
-- Added a command to toggle reporting of subscripts and superscripts. (#10985)
-- Web applications (EG Gmail) no longer speak outdated information when moving focus rapidly. (#10885)
+- Added a command to report the active configuration profile (no default gesture). (#9325)
+- Added a command to toggle reporting of subscripts and superscripts (no default gesture). (#10985)
+- Web applications (E.G. Gmail) no longer speak outdated information when moving focus rapidly. (#10885)
   - This experimental fix must be manually enabled via the 'Attempt to cancel speech for expired focus events' option in the advanced settings panel.
-- Adds more symbols. (#11105)
+- Many more symbols have been added to the default symbols dictionary. (#11105)
 
 
 == Changes ==
-- Updated liblouis braille translator to [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0] (from 3.12.0). (#10832, #11221)
+- Updated liblouis braille translator from 3.12 to [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0]. (#10832, #11221)
 - The reporting of superscripts and subscripts is now controlled separately to the reporting of font attributes. (#10919)
 - Due to changes made in VS Code, NVDA no longer disables browse mode in Code by default. (#10888)
 - Removed "top" and "bottom" messages when moving the review cursor to the first or last line of the current navigator object. (#9551)
-- Removed "left" and "right" messages when moving the refiew cursor to the first or last character of the line for the current navigator object. (#9551)
+- Removed "left" and "right" messages when moving the review cursor to the first or last character of the line for the current navigator object. (#9551)
 
 
 == Bug Fixes ==
-- NVDA starts correctly when log file cannot be created. (#6330)
+- NVDA now starts correctly when the log file cannot be created. (#6330)
 - In recent releases of Microsoft Word 365, NVDA will no longer announce "delete back word" when Control+Backspace is pressed while editing a document. (#10851)
 - In Winamp, NVDA will once again announce toggle status of shuffle and repeat. (#10945)
 - NVDA is no longer extremely sluggish when moving within the list of items in 1Password. (#10508)
@@ -43,10 +43,10 @@ Highlights of this release include support for a new braille display from Nattiq
 - In browse mode with Automatically set system focus to focusable elements disabled, it is now possible to activate elements reached by pressing the tab key. (#8528)
 - In browse mode with Automatically set system focus to focusable elements disabled, activating certain elements no longer clicks in an incorrect location. (#9886)
 - NVDA error sounds are no longer heard when accessing DevExpress text controls. (#10918)
-- The tool-tips of the icons in the system tray are no longer reported upon keyboard navigation if their text is equal to the name of the icons, to avoid a double announcing. (#6656)
+- The tool-tips of the icons in the system tray are no longer reported upon keyboard navigation if their text is equal to the name of the icons, to avoid double announcing. (#6656)
 - In browse mode with 'Automatically set system focus to focusable elements' disabled, switching to focus mode with NVDA+space now focuses the element under the caret. (#11206)
 - It is once again possible to check for NVDA updates on certain systems; e.g. clean Windows installs. (#11253)
-- Do not change focus in Java application when selection is change in not focused tree, table or list. (#5989)
+- Focus is not moved in Java application when the selection is changed in an unfocused tree, table or list. (#5989)
 
 
 == Changes For Developers ==
