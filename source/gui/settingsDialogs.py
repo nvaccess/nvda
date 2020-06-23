@@ -724,7 +724,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			# allow NVDA to come up in Windows login screen (useful if user
 			# needs to enter passwords or if multiple user accounts are present
 			# to allow user to choose the correct account).
-			label=_("Start NVDA during sign-in (requires administrator privileges)")
+			label=_("Use NVDA during sign-in (requires administrator privileges)")
 		)
 		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
 		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
