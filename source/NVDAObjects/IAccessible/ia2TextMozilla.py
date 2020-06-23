@@ -246,7 +246,13 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 						controlField["_startOfNode"] = True
 						yield textInfos.FieldCommand("controlStart", controlField)
 				if notText:
-					yield u" "
+					# A 'stand-in' character is necessary to make routing work on braille devices.
+					# Note #11291:
+					# Using a space character (EG " ") causes 'space' to be announced after objects like graphics.
+					# If this is replaced with an empty string, routing to cell becomes innaccurate.
+					# Using the OBJECT REPLACEMENT CHARACTER (EG "\uFFFC") results in '"0xFFFC' being displayed on
+					# the braille device.
+					yield " "
 				else:
 					for subItem in self._iterRecursiveText(self._makeRawTextInfo(embedded, textInfos.POSITION_ALL), controlStack, formatConfig):
 						yield subItem

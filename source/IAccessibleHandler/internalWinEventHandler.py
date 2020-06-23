@@ -51,7 +51,6 @@ winEventIDsToNVDAEventNames = {
 	winUser.EVENT_OBJECT_DESCRIPTIONCHANGE: "descriptionChange",
 	winUser.EVENT_OBJECT_LOCATIONCHANGE: "locationChange",
 	winUser.EVENT_OBJECT_NAMECHANGE: "nameChange",
-	winUser.EVENT_OBJECT_REORDER: "reorder",
 	winUser.EVENT_OBJECT_SELECTION: "selection",
 	winUser.EVENT_OBJECT_SELECTIONADD: "selectionAdd",
 	winUser.EVENT_OBJECT_SELECTIONREMOVE: "selectionRemove",
@@ -117,15 +116,14 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 		# and can't be used properly in conjunction with input composition support.
 		if windowClassName == "Microsoft.IME.UIManager.CandidateWindow.Host" and eventID in MENU_EVENTIDS:
 			return
-		# At the moment we can't handle show, hide or reorder events on Mozilla Firefox Location bar,
-		# as there are just too many of them Ignore show, hide and reorder on MozillaDropShadowWindowClass
+		# At the moment we can't handle show or hide events on Mozilla Firefox Location bar,
+		# as there are just too many of them. Ignore show and hide on MozillaDropShadowWindowClass
 		# windows.
 		if (
 			windowClassName.startswith('Mozilla')
 			and eventID in (
 				winUser.EVENT_OBJECT_SHOW,
-				winUser.EVENT_OBJECT_HIDE,
-				winUser.EVENT_OBJECT_REORDER
+				winUser.EVENT_OBJECT_HIDE
 			) and childID < 0
 		):
 			# Mozilla Gecko can sometimes fire win events on a catch-all window which isn't really the real window

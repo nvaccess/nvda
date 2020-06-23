@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#globalCommands.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
+# Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka
 
 import time
 import itertools
@@ -1052,7 +1052,6 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_FIRST)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
-		ui.reviewMessage(_("Top"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to top line command.
 	script_review_top.__doc__=_("Moves the review cursor to the top line of the current navigator object and speaks it")
@@ -1110,7 +1109,6 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_LAST)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
-		ui.reviewMessage(_("Bottom"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to bottom line command.
 	script_review_bottom.__doc__=_("Moves the review cursor to the bottom line of the current navigator object and speaks it")
@@ -1168,7 +1166,6 @@ class GlobalCommands(ScriptableObject):
 		info.collapse()
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
-		ui.reviewMessage(_("Left"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to start of current line command.
 	script_review_startOfLine.__doc__=_("Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it")
@@ -1248,7 +1245,6 @@ class GlobalCommands(ScriptableObject):
 		info.move(textInfos.UNIT_CHARACTER,-1)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
-		ui.reviewMessage(_("Right"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to end of current line command.
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
@@ -1407,6 +1403,8 @@ class GlobalCommands(ScriptableObject):
 	def _reportFormattingHelper(self, info, browseable=False):
 		# Report all formatting-related changes regardless of user settings
 		# when explicitly requested.
+		if info is None:
+			return
 		# These are the options we want reported when reporting formatting manually.
 		# for full list of options that may be reported see the "documentFormatting" section of L{config.configSpec}
 		reportFormattingOptions = (
@@ -1479,16 +1477,87 @@ class GlobalCommands(ScriptableObject):
 				_("Formatting")
 			)
 
-	def script_reportFormatting(self,gesture):
-		info=api.getReviewPosition()
-		repeats=scriptHandler.getLastScriptRepeatCount()
-		if repeats==0:
-			self._reportFormattingHelper(info,False)
-		elif repeats==1:
-			self._reportFormattingHelper(info,True)
-	# Translators: Input help mode message for report formatting command.
-	script_reportFormatting.__doc__ = _("Reports formatting info for the current review cursor position within a document. If pressed twice, presents the information in browse mode")
-	script_reportFormatting.category=SCRCAT_TEXTREVIEW
+	def _getTIAtCaret(self):
+		# Returns text info at the caret position if there is a caret in the current control, None otherwise.
+		# Note that if there is  no caret this fact is announced  in speech and braille.
+		obj = api.getFocusObject()
+		treeInterceptor = obj.treeInterceptor
+		if(
+			isinstance(treeInterceptor, treeInterceptorHandler.DocumentTreeInterceptor)
+			and not treeInterceptor.passThrough
+		):
+			obj = treeInterceptor
+		try:
+			info = obj.makeTextInfo(textInfos.POSITION_CARET)
+			return info
+		except (NotImplementedError, RuntimeError):
+			# Translators: Reported when there is no caret.
+			ui.message(_("No caret"))
+			return
+
+	@script(
+		# Translators: Input help mode message for report formatting command.
+		description=_("Reports formatting info for the current review cursor position."),
+		category=SCRCAT_TEXTREVIEW,
+	)
+	def script_reportFormattingAtReview(self, gesture):
+		self._reportFormattingHelper(api.getReviewPosition(), False)
+
+	@script(
+		# Translators: Input help mode message for show formatting at review cursor command.
+		description=_("Presents, in browse mode, formatting info for the current review cursor position."),
+		category=SCRCAT_TEXTREVIEW,
+	)
+	def script_showFormattingAtReview(self, gesture):
+		self._reportFormattingHelper(api.getReviewPosition(), True)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for report formatting command.
+			"Reports formatting info for the current review cursor position."
+			" If pressed twice, presents the information in browse mode"
+		),
+		category=SCRCAT_TEXTREVIEW,
+		gesture="kb:NVDA+shift+f",
+	)
+	def script_reportFormatting(self, gesture):
+		repeats = scriptHandler.getLastScriptRepeatCount()
+		if repeats == 0:
+			self.script_reportFormattingAtReview(gesture)
+		elif repeats == 1:
+			self.script_showFormattingAtReview(gesture)
+
+	@script(
+		# Translators: Input help mode message for report formatting at caret command.
+		description=_("Reports formatting info for the text under the caret."),
+		category=SCRCAT_SYSTEMCARET,
+	)
+	def script_reportFormattingAtCaret(self, gesture):
+		self._reportFormattingHelper(self._getTIAtCaret(), False)
+
+	@script(
+		# Translators: Input help mode message for show formatting at caret position command.
+		description=_("Presents, in browse mode, formatting info for the text under the caret."),
+		category=SCRCAT_SYSTEMCARET,
+	)
+	def script_showFormattingAtCaret(self, gesture):
+		self._reportFormattingHelper(self._getTIAtCaret(), True)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for report formatting at caret command.
+			"Reports formatting info for the text under the caret."
+			" If pressed twice, presents the information in browse mode"
+		),
+		category=SCRCAT_SYSTEMCARET,
+		gesture="kb:NVDA+f",
+	)
+	def script_reportOrShowFormattingAtCaret(self, gesture):
+		repeats = scriptHandler.getLastScriptRepeatCount()
+		if repeats == 0:
+			self.script_reportFormattingAtCaret(gesture)
+		elif repeats == 1:
+			self.script_showFormattingAtCaret(gesture)
 
 	def script_reportCurrentFocus(self,gesture):
 		focusObject=api.getFocusObject()
@@ -1611,7 +1680,7 @@ class GlobalCommands(ScriptableObject):
 		if obj:
 			sayAllHandler.readObjects(obj)
 	# Translators: Input help mode message for read foreground object command (usually the foreground window).
-	script_speakForeground.__doc__ = _("Speaks the current foreground object")
+	script_speakForeground.__doc__ = _("Reads all controls in the active window")
 	script_speakForeground.category=SCRCAT_FOCUS
 
 	def script_test_navigatorDisplayModelText(self,gesture):
@@ -1914,8 +1983,11 @@ class GlobalCommands(ScriptableObject):
 			gui.mainFrame.onRevertToSavedConfigurationCommand(None)
 		elif scriptCount==2:
 			gui.mainFrame.onRevertToDefaultConfigurationCommand(None)
-	# Translators: Input help mode message for apply last saved or default settings command.
-	script_revertConfiguration.__doc__ = _("Pressing once reverts the current configuration to the most recently saved state. Pressing three times reverts to factory defaults.")
+	script_revertConfiguration.__doc__ = _(
+		# Translators: Input help mode message for apply last saved or default settings command.
+		"Pressing once reverts the current configuration to the most recently saved state."
+		" Pressing three times resets to factory defaults."
+	)
 	script_revertConfiguration.category=SCRCAT_CONFIG
 
 	def script_activatePythonConsole(self,gesture):
@@ -2641,8 +2713,6 @@ class GlobalCommands(ScriptableObject):
 		"kb(laptop):NVDA+l": "reportCurrentLine",
 		"kb(desktop):NVDA+shift+upArrow": "reportCurrentSelection",
 		"kb(laptop):NVDA+shift+s": "reportCurrentSelection",
-		"kb:NVDA+f": "reportFormatting",
-
 		# Object navigation
 		"kb:NVDA+numpad5": "navigatorObject_current",
 		"kb(laptop):NVDA+shift+o": "navigatorObject_current",

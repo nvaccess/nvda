@@ -49,7 +49,10 @@ $	dollar	all	norep
 ¢	Cents	all	norep
 ¥	Yen	all	norep
 ₹	Rupee	some	norep
+ƒ	florin	all	norep
+¤	currency sign	all	norep
 %	percent	some
+‰	per mille	some
 &	and	some
 '	tick	all
 (	left paren	most	always
@@ -77,7 +80,16 @@ _	line	most
 {	left brace	most
 }	right brace	most
 |	bar	most
+¦	broken bar	most
 ~	tilda	most
+¡	inverted exclamation point	some
+¿	inverted question mark	some
+·	middle dot	most
+‚	single low quote	most
+„	double low quote	most
+′	prime	some
+″	double prime	some
+‴	triple prime	some
 
 # Other characters
 •	bullet	some
@@ -89,29 +101,69 @@ _	line	most
 ’	right tick	most
 –	en dash	most	always
 —	em dash	most
+­	soft hyphen	most
+⁃	hyphen bullet	none
 ●	circle	most
+○	white circle	most
 ¨	diaeresis	most
+¯	macron	most
+´	acute	most
+¸	cedilla	most
 ‎	left to right mark	char
 ‏	right to left mark	char
+¶	paragraph marker	most
 ■	black square	some
 ▪	black square	some
 ◾	black square	some
+□	white square	some
 ◦	white bullet	some
 ⇒	right double arrow	some
 ⇨	right white arrow	some
+➔	right-pointing arrow	some
 ➢	right arrowhead	some
 ⮚	right arrowhead	some
 ❖	black diamond minus white X	some
 ♣	black club	some
 ♦	black diamond	some
+◆	black diamond	some
 §	section	all
 °	degrees	some
 «	double left pointing angle bracket
 »	double right pointing angle bracket
 µ	micro	some
+º	ordinal	some
+ª	superscript a	some
+⁰	superscript 0	some
 ¹	superscript 1	some
 ²	superscript 2	some
 ³	superscript 3	some
+⁴	superscript 4	some
+⁵	superscript 5	some
+⁶	superscript 6	some
+⁷	superscript 7	some
+⁸	superscript 8	some
+⁹	superscript 9	some
+⁺	superscript plus	some
+⁻	superscript minus	some
+⁼	superscript equals	some
+⁽	superscript left paren	some
+⁾	superscript right paren	some
+ⁿ	superscript n	some
+₀	subscript 0	some
+₁	subscript 1	some
+₂	subscript 2	some
+₃	subscript 3	some
+₄	subscript 4	some
+₅	subscript 5	some
+₆	subscript 6	some
+₇	subscript 7	some
+₈	subscript 8	some
+₉	subscript 9	some
+₊	subscript plus	some
+₋	subscript minus	some
+₌	subscript equals	some
+₍	subscript left paren	some
+₎	subscript right paren	some
 ®	registered	some
 ™	Trademark	some
 ©	Copyright	some
@@ -125,6 +177,11 @@ _	line	most
 ✓	check	some
 ✔	check	some
 🡺	right arrow	some
+†	dagger	some
+‡	double dagger	some
+‣	triangular bullet	none
+✗	x-shaped bullet	none
+￼	object replacement character	none
 
 #Mathematical Operators U+2200 to U+220F
 ∀	for all	none
@@ -157,6 +214,7 @@ _	line	most
 ∦	not parallel to	none
 ∧	logical and	none
 ∨	logical or	none
+¬	logical not	none
 ∩	intersection	none
 ∪	union	none
 ∫	integral	none
@@ -172,6 +230,9 @@ _	line	most
 ⊇	superset of or equal to	none
 
 # Vulgur Fractions U+2150 to U+215E
+¼	one quarter	none
+½	one half	none
+¾	three quarters	none
 ⅐	one seventh	none
 ⅑	one ninth	none
 ⅒	one tenth	none

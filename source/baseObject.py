@@ -1,8 +1,7 @@
-#baseObject.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2018 NV Access Limited, Christopher Toth, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2020 NV Access Limited, Christopher Toth, Babbage B.V., Julien Cochuyt
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Contains the base classes that many of NVDA's classes such as NVDAObjects, virtualBuffers, appModules, synthDrivers inherit from. These base classes provide such things as auto properties, and methods and properties for scripting and key binding.
 """
@@ -283,6 +282,12 @@ class ScriptableObject(AutoPropertyObject, metaclass=ScriptableType):
 				return self._gestureMap[identifier].__get__(self, self.__class__)
 			except KeyError:
 				continue
+			except AttributeError:
+				log.exception((
+					"Base class may not have been initialized."
+					f"\nMRO={self.__class__.__mro__}"
+				) if not hasattr(self, "_gestureMap") else None)
+				return None
 		else:
 			return None
 

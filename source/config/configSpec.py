@@ -239,6 +239,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	timeSinceInput = boolean(default=false)
 	vision = boolean(default=false)
 	speech = boolean(default=false)
+	speechManager = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")
@@ -251,6 +252,10 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [development]
 	enableScratchpadDir = boolean(default=false)
+
+[featureFlag]
+	# 0:default, 1:yes, 2:no
+	cancelExpiredFocusSpeech = integer(0, 2, default=0)
 """
 
 #: The configuration specification
