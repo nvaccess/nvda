@@ -1917,7 +1917,7 @@ class BrowseModePanel(SettingsPanel):
 		# browse mode settings panel.
 		autoFocusFocusableElementsText = _("Automatically set system &focus to focusable elements")
 		self.autoFocusFocusableElementsCheckBox = sHelper.addItem(
-			wx.CheckBox(self, wx.ID_ANY, label=autoFocusFocusableElementsText)
+			wx.CheckBox(self, label=autoFocusFocusableElementsText)
 		)
 		self.autoFocusFocusableElementsCheckBox.SetValue(
 			config.conf["virtualBuffers"]["autoFocusFocusableElements"]
