@@ -88,6 +88,7 @@ _	alaviiva	most
 –	lyhyt ajatusviiva	most	always
 —	pitkä ajatusviiva	most
 ­	pehmeä tavuviiva	most
+	⁃	luetteloviiva	none
 ●	tähti	some
 ¨	treema	most
 ‎	nuoli vasemmalta oikealle	char
@@ -111,33 +112,71 @@ _	alaviiva	most
 ◾	musta neliö	some
 ◦	valkoinen luettelomerkki	some
 ■	musta neliö	most
+□	valkoinen neliö	some
+➔	nuoli oikealle	some
 ⇒	kaksoisnuoli oikealle	some
 ⇨	valkoinen nuoli oikealle	some
 ➢	nuolenpää oikealle	some
 ⮚	nuolenpää oikealle	some
+◆	musta timantti	some
 ❖	musta ruutu miinus valkoinen X	some
 ♣	musta risti	some
 ♦	musta ruutu	some
-¡	käänteinen huuto	most
+¡	käänteinen huuto	some
 ¦	katkopystyviiva	most
-ª	feminiinisen järjestysluvun merkki	most
-º	maskuliinisen järjestysluvun merkki	most
-¹	potenssiin 1	some	# yläindeksi 1
-²	potenssiin 2	some	# yläindeksi 2
-³	potenssiin 3	some	# yläindeksi 3
+º	maskuliinisen järjestysluvun merkki	ordinal	some
+ª	yläindeksi a	some
+⁰	yläindeksi 0	some
+¹	yläindeksi 1	some
+²	yläindeksi 2	some
+³	yläindeksi 3	some
+⁴	yläindeksi 4	some
+⁵	yläindeksi 5	some
+⁶	yläindeksi 6	some
+⁷	yläindeksi 7	some
+⁸	yläindeksi 8	some
+⁹	yläindeksi 9	some
+⁺	yläindeksi plus	some
+⁻	yläindeksi miinus	some
+⁼	yläindeksi on yhtä kuin	some
+⁽	yläindeksi alkusulku	some
+⁾	yläindeksi loppusulku	some
+ⁿ	yläindeksi n	some
+₀	alaindeksi 0	some
+₁	alaindeksi 1	some
+₂	alaindeksi 2	some
+₃	alaindeksi 3	some
+₄	alaindeksi 4	some
+₅	alaindeksi 5	some
+₆	alaindeksi 6	some
+₇	alaindeksi 7	some
+₈	alaindeksi 8	some
+₉	alaindeksi 9	some
+₊	alaindeksi plus	some
+₋	alaindeksi miinus	some
+₌	alaindeksi on yhtä kuin	some
+₍	alaindeksi alkusulku	some
+₎	alaindeksi loppusulku	some
 ´	akuutti	most
 ·	rivinkeskinen piste	most
+‚	alennettu puolilainaus	most
+„	alennettu lainaus	most
+′	yläpuolinen indeksointipilkku	some
+″	kaksinkertainen yläpuolinen indeksointipilkku	some
+‴	kolminkertainen yläpuolinen indeksointipilkku	some
 ¸	sedilji	most
-‣	kolmikulmainen luettelomerkki	most
+‣	kolmikulmainen luettelomerkki	none
+✗	rasti	none
+￼	objektin korvausmerkki	none
 «	vasen kulmalainaus
 »	oikea kulmalainaus
 µ	mikro	some
-¿	käänteinen kysymys	most
-†	risti	most
-‡	kaksoisristi	most
+¿	käänteinen kysymys	some
+†	risti	some
+‡	kaksoisristi	some
 ☼	säteilevä aurinko	most
 ˜	pieni aaltoviiva	most
-‰	promille	most
+‰	promille	some
 §	pykälä	some
 ¶	kappale	most
 ¯	pituusmerkki	most
@@ -148,15 +187,13 @@ _	alaviiva	most
 🡺	nuoli oikealle	some
 °	aste	some
 ¢	sentti	all	norep
-¤	valuuttamerkki	some
+¤	valuuttamerkki	all	norep
 ≠	eri suuri kuin	some
-½	puolikas	some
-¾	kolme neljäsosaa	some
-¼	neljäsosa	some
-¬	negaatio	some
+¬	negaatio	none
 ±	plus miinus	some
-₨	rupia	some
-₹	rupia	some
+₨	rupia	some	norep
+₹	rupia	some	norep
+ƒ	floriini	all	norep
 ™	tavaramerkki	most
 ®	rekisteröity tavaramerkki	most
 ©	copyright	some
@@ -262,20 +299,24 @@ _	alaviiva	most
 ⊇	on ylijoukko tai yhtäsuuri kuin	none
 
 # Vulgur Fractions U+2150 to U+215E
-⅐	seitsemäsosa	none
-⅑	yhdeksäsosa	none
-⅒	kymmenesosa	none
-⅓	kolmasosa	none
+¼	yksi neljäsosaa	none
+½	puolikas	none
+¾	kolme neljäsosaa	none
+⅐	yksi seitsemäsosaa	none
+⅑	yksi yhdeksäsosaa	none
+⅒	yksi kymmenesosaa	none
+⅓	yksi kolmasosaa	none
 ⅔	kaksi kolmasosaa	none
-⅕	viidesosa	none
+⅕	yksi viidesosaa	none
 ⅖	kaksi viidesosaa	none
 ⅗	kolme viidesosaa	none
 ⅘	neljä viidesosaa	none
-⅙	kuudesosa	none
+⅙	yksi kuudesosaa	none
 ⅚	viisi kuudesosaa	none
-⅛	kahdeksasosa	none
+⅛	yksi kahdeksasosaa	none
 ⅜	kolme kahdeksasosaa	none
 ⅝	viisi kahdeksasosaa	none
 ⅞	seitsemän kahdeksasosaa	none
+
 # Miscellaneous Technical
 ⌘	Macin komentonäppäin	none
