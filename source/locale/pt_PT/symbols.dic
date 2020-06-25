@@ -37,7 +37,7 @@ negative number	menos	none	norep
 \f	quebra de página	none
 \r	retorno	char
  	espaço	char
- 	space	char	# no-break space
+ 	espaço	char	# no-break space
 
 # Standard punctuation/symbols
 !	exclamação	all
@@ -48,14 +48,18 @@ $	cifrão	all	norep
 €	euro	all	norep
 ¢	Cêntimos	all	norep
 ¥	Yene	all	norep
-₹	Rúpia	some	norep
+₹	Rúpia	all	norep
+ƒ	florim	all	norep
+¤	símbolo monetário	all	norep
 %	porcento	some
+‰	por mil	some
 &	and	some
 '	apóstrofo	all
 (	abrir parênteses	most	always
 )	fechar parênteses	most	always
 *	asterisco	some
 +	mais	some
+−	menos	some
 ,	vírgula	all	always
 -	hífen	most
 .	ponto	some
@@ -76,7 +80,16 @@ _	sublinhado	most
 {	abrir chavetas	most
 }	fechar chavetas	most
 |	barra vertical	most
+¦	barra vertical cortada	most
 ~	til	most
+¡	exclamação pinvertida	some
+¿	interrogação invertida	some
+·	ponto centrado	most
+‚	aspas simples baixas	most
+„	aspas duplas baixas	most
+′	primordial	some
+″	primordial duplo	some
+‴	primordial triplo	some
 ´	agudo	most
 
 # Other characters
