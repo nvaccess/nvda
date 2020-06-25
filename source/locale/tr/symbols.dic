@@ -49,10 +49,15 @@ $	dolar	all	norep
 €	euro	all	norep
 ₹	Rupi	some	norep
 ₺	TL	all	norep
+ƒ	florin	all	norep
+¤	para birimi işareti	all	norep
 %	yüzde	some
+‰	binde	some
 &	ve	some
 ′	apostrof	all
-'	apostrof	all
+″	ikili apostrof	some
+‴	üçlü apostrof	some
+'	kesme işareti	all
 (	açparantez	most	always
 )	kapaparantez	most	always
 *	yıldız	some
@@ -69,7 +74,9 @@ $	dolar	all	norep
 ┐	tire	most
 ╗	tire	most
 .	nokta	all
-·	nokta	all
+·	orta nokta	all
+‚	tek alt tırnak	most
+„	çift alt tırnak	most
 /	bölü	some
 :	ikinokta	most	norep
 ;	noktalıvirgül	most
@@ -108,32 +115,69 @@ _	alt çizgi	most
 	tırnak	most
 –	ORTA TİRE	most	always
 —	uzuntire	most
-●	yıldız	most
+­	ince tire	most
+⁃	kalın tire	none
+●	daire	most
+○	çember	most
 ¨	diaeresis	most
 ���	soldan sağa işareti	char
 ���	sağdan sola işareti	char
 ■	siyah boşluk	some
 ▪	siyah boşluk	some
 ◾	siyah boşluk	some
+□	boş kare	some
 ◦	beyaz madde imi	some
 ⇒	sağ çift ok	some
 ⇨	sağ beyaz ok	some
+➔	sağ ok	some
 ➢	sağ ok ucu	some
 ⮚	sağ ok ucu	some
-❖	siyah elmas eksi beyaz X	some
-♣	siyah kulüp	some
-♦	siyah elmas	some
+❖	çizgili karo	some
+♣	siyah sinek	some
+♦	siyah karo	some
 ¡	ters ünlem	most
 ¦	kırık çizgi	most
 «	çift kancalı parantezaç	most
 ¸	cedila	most
+¶	paragraf işareti	most
 »	çift kancalı parantez kapa	most
 µ	mikro	some
-¹	süperskript 1	some
-²	süperskript 2	some
-³	süperskript 3	some
+º	derece	some
+ª	üssü a	some
+⁰	üssü 0	some
+¹	üssü 1	some
+²	üssü 2	some
+³	üssü 3	some
+⁴	üssü 4	some
+⁵	üssü 5	some
+⁶	üssü 6	some
+⁷	üssü 7	some
+⁸	üssü 8	some
+⁹	üssü 9	some
+⁺	üssü artı	some
+⁻	üssü eksi	some
+⁼	üssü eşittir	some
+⁽	üssü aç parantez	some
+⁾	üssü parantez kapa	some
+ⁿ	üssü n	some
+₀	alt simge 0	some
+₁	alt simge 1	some
+₂	alt simge 2	some
+₃	alt simge 3	some
+₄	alt simge 4	some
+₅	alt simge 5	some
+₆	alt simge 6	some
+₇	alt simge 7	some
+₈	alt simge 8	some
+₉	alt simge 9	some
+₊	alt simge artı	some
+₋	alt simge eksi	some
+₌	alt simge eşittir	some
+₍	alt simge sol parantez	some
+₎	alt simge sağ parantez	some
 ¿	ters soru	most
 ‣	üçgen madde imi	most
+◆	siyah karo	some
 §	bölüm	all
 ÷	bölü	some
 ×	çarpı	some
@@ -156,6 +200,10 @@ _	alt çizgi	most
 ✓	onay	some
 ✔	onay	some
 🡺	sağ ok	some
+†	kama işareti	some
+‡	çift kama işareti	some
+✗	x şeklinde madde imi	none
+￼	obje	none
 
 ¥	yen	some
 √	karekök	some
