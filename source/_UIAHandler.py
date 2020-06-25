@@ -389,7 +389,7 @@ class UIAHandler(COMObject):
 			raise NotImplementedError
 
 	def addLocalEventHandlerGroupToElement(self, element, isFocus=False):
-		if not self.localEventHandlerGroup:
+		if not self.localEventHandlerGroup or element in self._localEventHandlerGroupElements:
 			return
 
 		def func():
@@ -409,7 +409,7 @@ class UIAHandler(COMObject):
 		self.MTAThreadQueue.put_nowait(func)
 
 	def removeLocalEventHandlerGroupFromElement(self, element):
-		if not self.localEventHandlerGroup:
+		if not self.localEventHandlerGroup or element not in self._localEventHandlerGroupElements:
 			return
 
 		def func():
@@ -418,10 +418,9 @@ class UIAHandler(COMObject):
 			except COMError:
 				# The old UIAElement has probably died as the window was closed.
 				# The system should forget the old event registration itself.
-				return
-			else:
-				if element in self._localEventHandlerGroupElements:
-					self._localEventHandlerGroupElements.remove(element)
+				# Yet, as we don't expect this to happen very often, log a debug warning.
+				log.debugWarning("Could not unregister for UIA events for element", exc_info=True)
+			self._localEventHandlerGroupElements.remove(element)
 		self.MTAThreadQueue.put_nowait(func)
 
 	def IUIAutomationEventHandler_HandleAutomationEvent(self,sender,eventID):
