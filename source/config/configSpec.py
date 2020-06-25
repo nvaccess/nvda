@@ -161,6 +161,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	autoFocusFocusableElements = boolean(default=False)
 
 [touch]
+	enabled = boolean(default=true)
 	touchTyping = boolean(default=False)
 
 #Settings for document reading (such as MS Word and wordpad)
@@ -191,6 +192,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportBorderStyle = boolean(default=False)
 	reportBorderColor = boolean(default=False)
 	reportLinks = boolean(default=true)
+	reportGraphics = boolean(default=True)
 	reportComments = boolean(default=true)
 	reportLists = boolean(default=true)
 	reportHeadings = boolean(default=true)
