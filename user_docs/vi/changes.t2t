@@ -3,6 +3,56 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.2 =
+Các cải tiến của bản phát hành này bao gồm hỗ trợ một màn hình chữ nổi mới từ Nattiq, hỗ trợ tốt hơn cho ESET antivirus giao diện đồ họa và Windows Terminal, cải thiện hiệu năng vận hành với 1Password và bộ đọc Windows OneCore. Nhiều lỗi quan trọng khác cũng được sửa.
+
+== Tính năng mới ==
+- Hỗ trợ các màn hình chữ nổi mới:
+  - Nattiq nBraille (#10778)
+- Đã thêm kịch bản để mở thư mục cấu hình của NVDA (không có thao tác / phím tắt mặc định). (#2214)
+- Hỗ trợ tốt hơn cho giao diện đồ họa của ESET antivirus. (#10894)
+- Đã thêm hỗ trợ cho Windows Terminal. (#10305)
+- Đã thêm lệnh để thông báo hồ sơ cấu hình đang hoạt động. (#9325)
+- Đã thêm lệnh để bật / tắt đọc  chỉ số dưới và chỉ số trên. (#10985)
+- Các ứng dụng web (Gmail chẳng hạn) không còn đọc các thông tin lỗi thời khi chuyển focus một cách nhanh chóng. (#10885)
+  - Thử nghiệm sửa lỗi này phải được bật thủ công thông qua tùy chọn 'Cố gắng không đọc các sự kiện lỗi thời của focus' trong bảng cài đặt mở rộng.
+- Thêm nhiều kí hiệu hơn. (#11105)
+
+
+== Các thay đổi ==
+- Cập nhật thư viện phiên dịch chữ nổi liblouis lên [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0] (từ 3.12.0). (#10832, #11221)
+- Việc đọc các chỉ số trên và chỉ số dưới  giờ đây được điều khiển riêng biệt với việc đọc thuộc tính phông. (#10919)
+- Do các thay đổi trong VS Code, NVDA không còn mặc định tắt chế độ duyệt trong Code. (#10888)
+- Gỡ bỏ thông điệp "trên cùng" và "cuối" khi di chuyển con trỏ duyệt đến dòng đầu hay cuối của đối tượng điều hướng hiện tại. (#9551)
+- gỡ bỏ thông điệp "trái" và "phải" khi di chuyển con trỏ duyệt đến kí tự đầu hay cuối dòng của đối tượng điều hướng hiện tại. (#9551)
+
+
+== Sửa lỗi ==
+- NVDA khởi động được khi không thể tạo tập tin log. (#6330)
+- Trong các bản phát hành gần đây của Microsoft Word 365, NVDA không còn đọc "delete back word" khi bấm Control+Xóa lùi trong lúc soạn thảo một tài liệu. (#10851)
+- Trong Winamp, NVDA lại một lần nữa sẽ đọc trạng thái chuyển của chế độ ngẫu nhiên (shuffle) và lặp lại (repeat). (#10945)
+- NVDA không còn vận hành chậm chạp khi di chuyển trong danh sách thành phần trong 1Password. (#10508)
+- Bộ đọc Windows OneCore không còn bị chậm chạp giữa các câu nói. (#10721)
+- NVDA không còn treo khi bạn mở trình đơn ngữ cảnh của 1Password trong vùng thông báo hệ thống. (#11017)
+- Trong Office 2013 về trước:
+  - Ribbons đã được đọc khi focus chuyển đến chúng lần đầu tiên. (#4207)
+  - Các thành phần trên trình đơn ngữ cảnh lại được đọc chính xác. (#9252)
+  - Các phần của ribbon đã được đọc nhất quán khi điều hướng với Control+mũi tên. (#7067)
+- Ở chế độ duyệt trong Mozilla Firefox và Google Chrome, văn bản không còn hiển thị không chính xác trên một dòng riêng biệt khi nội dung web dùng CSS display: inline-flex. (#11075)
+- Ở chế độ duyệt với tùy chọn Tắt tự đưa con trỏ hệ thống đến các thành phần có thể có focus bị tắt, giờ đây có thể kích hoạt các thành phần không thể có focus.
+- Ở chế độ duyệt với tùy chọn Tắt tự đưa con trỏ hệ thống đến các thành phần có thể có focus bị tắt, giờ đây có thể kích hoạt các thành phần tiếp cận được bằng cách bấm phím tab. (#8528)
+- Ở chế độ duyệt với tùy chọn Tắt tự đưa con trỏ hệ thống đến các thành phần có thể có focus bị tắt, việc kích hoạt vài thành phần nhất định không còn kích hoạt sai vị trí. (#9886)
+- Không còn nghe âm báo lỗi của NVDA khi truy cập các điều khiển DevExpress text. (#10918)
+- Thông báo trên các biểu tượng trong khay hệ thống không còn được đọc khi điều hướng bằng bàn phím nếu nội dung đó giống với tên của biểu tượng, nhằm tránh đọc lại hai lần. (#6656)
+- Ở chế độ duyệt với tùy chọn Tắt tự đưa con trỏ hệ thống đến các thành phần có thể có focus bị tắt, việc chuyện sang chế độ focus với NVDA+khoảng trắng giờ đây sẽ đặt thành phần  ở vị trí con trỏ nháy. (#11206)
+- Lại có thể  kiểm tra cập nhật NVDA trên một số hệ thống nhất định; bản cài Windows mới hoàn toàn chẳng hạn. (#11253)
+- Không thay đổi focus trong các ứng dụng Java khi lựa chọn bị thay đổi ở các thành phần không có focus như cây thư mục, bảng hay danh sách. (#5989)
+
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
+
 = 2020.1 =
 Các cải tiến của bản phát hành này bao gồm hỗ trợ cho vài màn hình chữ nổi mới từ HumanWare và APH, thêm nữa là sửa nhiều lỗi quan trọng như khả năng đọc công thức toán trong Microsoft Word sử dụng MathPlayer / MathType.
 

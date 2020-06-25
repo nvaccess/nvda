@@ -9,9 +9,11 @@ complexSymbols:
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
 ? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
+
 # Others
 decimal point	(?<![^\d -])\,(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -38,7 +40,7 @@ date separator		none	always
 \0	Leer	# Null
 \t	Tab
 \n	Zeilenumbruch	char
-\f	Seitenumbruch	none
+\f	Seitenwechsel	none
 \r	Neue Zeile	char
  	Leerzeichen	char
  	Geschütztes Leerzeichen	char
@@ -53,7 +55,10 @@ $	Dollar	all	norep
 ¢	Cent	all	norep
 ¥	Yen	all	norep
 ₹	Rupie	some	norep
+ƒ	florin	all	norep
+¤	Internationales Währungszeichen	all	norep
 %	Prozent	some
+‰	Promille	some
 &	Und	some
 '	Apostroph	all
 (	Runde Klammer auf	most	always
@@ -71,7 +76,7 @@ $	Dollar	all	norep
 >	Größer Als	some
 =	Gleichheitszeichen	some
 ?	Fragezeichen	all
-@	Ät	some
+@	At-Zeichen	some
 [	Eckige Klammer auf	most
 ]	Eckige Klammer zu	most
 \	Bäcksläsch	most
@@ -81,11 +86,20 @@ _	Unterstrich	most
 {	Geschweifte Klammer auf	most
 }	Geschweifte Klammer zu	most
 |	Senkrechter Strich	most
+¦	Unterbrochener Strich	most
 ~	Tilde	most
+¡	Umgekehrtes Ausrufezeichen	some
+¿	Umgekehrtes Fragezeichen	some
+·	Mittelpunkt	most
+‚	Einfaches Anführungszeichen unten	most
+′	Minutenzeichen	some
+″	Sekundenzeichen	some
+‴	Dreistrich	some
+⁗	Vierstrich	some
 
 # Andere Zeichen
 •	Aufzählungszeichen	some
-…	Punkt Punkt Punkt	all	always
+…	Waagerechtes Auslassungszeichen	all	always
 ...	Punkt Punkt Punkt	all	always
 “	Typografisches Anführungszeichen rechts	most
 ”	Anführungszeichen rechts	most
@@ -94,30 +108,68 @@ _	Unterstrich	most
 ’	Apostroph rechts	most
 –	Strich	most	always
 —	Gedankenstrich	most
+­	Weiches Trennzeichen	most
+⁃	Bindestrich-Aufzählungszeichen	none
 ●	Kreis	most
+○	Weißer kreis	most
 ¨	Trema	most
+¯	Makron	most
+´	Akut	most
+¸	Cedille	most
 ‎	Pfeil von links nach rechts	char
 ‏	Pfeil von rechts nach links	char
-■	Großes gefülltes, schwarzes Quadrat	some
-▪	Kleines gefülltes, schwarzes Quadrat	some
-◾	Schwarzes, kleines bis mittelgroßes Quadrat	some
+¶	Absatzmarke	most
+■	Großes, gefülltes, schwarzes Quadrat	some
+▪	Kleines, gefülltes, schwarzes Quadrat	some
+◾	Schwarzes mittelkleines Quadrat	some
+□	Weißes Quadrat	some
 ◦	Weißes Aufzählungszeichen	some
-⇒	doppelter rechtsweisender Pfeil	some
-⇨	rechtsweisender weißer Pfeil	some
-➢	rechtsweisende Pfeilspitze	some
-⮚	rechtsweisende Pfeilspitze	some
-❖	Schwarzer Diamand umschließt weißes X	some
-♣	Spielkarte Schwarzes Kreuz	some
-♦	schwarzer Diamand	some
-
+⇒	Doppelter rechtsweisender Pfeil	some
+⇨	Nach rechtsweisender weißer Pfeil	some
+➔	Nach rechtsweisender Pfeil	some
+➢	Rechtsweisende Pfeilspitze	some
+⮚	Rechtsweisende Pfeilspitze	some
+❖	Schwarzes Karo ohne weißes X	some
+♣	Schwarzes Kreuz	some
+◆	Schwarzes Karo	some
 §	Paragraf	all
 °	Grad	some
-«	Doppelte gewinkelte Klammer auf
-»	Doppelte gewinkelte Klammer zu
-µ	Mü	some
+«	Doppelte, gewinkelte Klammer auf
+»	Doppelte, gewinkelte Klammer zu
+µ	Mikro-Zeichen	some
+º	Ordnungszeichen	some
+ª	Hochgestelltes A	some
+⁰	Hochgestellte 0	some
 ¹	Hochgestellte 1	some
 ²	Hochgestellte 2	some
 ³	Hochgestellte 3	some
+⁴	Hochgestellte 4	some
+₅	Hochgestellte 5	some
+₆	Hochgestellte 6	some
+₇	Hochgestellte 7	some
+₈	Hochgestellte 8	some
+₉	Hochgestellte 9	some
+⁺	Hochgestelltes Plus	some
+⁻	Hochgestelltes Minus	some
+⁼	Hochgestelltes Gleichheitszeichen	some
+⁽	Hochgestellte runde Klammer links	some
+⁾	Hochgestellte runde Klammer rechts	some
+ⁿ	Hochgestelltes n	some
+₀	Tiefgestellte 0	some
+₁	Tiefgestellte 1	some
+₂	Tiefgestellte 2	some
+₃	Tiefgestellte 3	some
+₄	Tiefgestellte 4	some
+₅	Tiefgestellte 5	some
+₆	Tiefgestellte 6	some
+₇	Tiefgestellte 7	some
+₈	Tiefgestellte 8	some
+₉	Tiefgestellte 9	some
+₊	Tiefgestelltes Plus	some
+₋	Tiefgestelltes Minus	some
+₌	Tiefgestelltes Gleichheitszeichen	some
+₍	Tiefgestellte runde Klammer links	some
+₎	Tiefgestellte runde Klammer rechts	some
 ®	Registriertes Warenzeichen	some
 ™	Eingetragenes Warenzeichen	some
 ©	Copyright	some
@@ -131,6 +183,11 @@ _	Unterstrich	most
 ✓	Häkchen	some
 ✔	Fettes Häkchen	some
 🡺	rechtsweisender Pfeil	some
+†	Dolch	some
+‡	Doppeldolch	some
+‣	Dreieckiges Aufzählungszeichen	none
+✗	Stimmkästchen-X	none
+￼	Objekt-Ersetzungszeichen	none
 ℃	Grad Celsius	some
 
 # Mathematische Operatoren U+2200 bis U+220F
@@ -164,6 +221,7 @@ _	Unterstrich	most
 ∦	Nicht parallel zu	none
 ∧	Logisches Und	none
 ∨	Logisches Oder	none
+¬	Nicht-Zeichen	none
 ∩	Schnittmengenzeichen	none
 ∪	Vereinigungsmengenzeichen	none
 ∫	Integralzeichen	none
@@ -179,6 +237,9 @@ _	Unterstrich	most
 ⊇	Obermenge oder gleich	none
 
 # Vulgur-Teilmengen U+2150 bis U+215E
+¼	Ein Viertel	none
+½	Ein Halb	none
+¾	Drei Viertel	none
 ⅐	Ein Siebtel	none
 ⅑	Ein Neuntel	none
 ⅒	Ein Zehntel	none

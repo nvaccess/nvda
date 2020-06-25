@@ -3,6 +3,64 @@ NVDA更新日志
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.2 =
+此版本的新特性包括
+对Nattiq的盲文点显器的支持，对ESET杀毒软件GUI和Windows Terminal的支持，改进1Password的性能，以及Windows OneCore合成器。和其他许多重要的错误修复。
+
+== 新特性 ==
+- 新的盲文点显器：
+  - Nattiq nBraille (#10778)
+- 新增打开NVDA配置目录手势注意（无默认手势）。 (#2214)
+- 更好地支持ESET防病毒程序。 (#10894)
+- 新增了对Windows Terminal的支持。 (#10305)
+- 新增朗读活动配置文件的手势。 (#9325)
+- 新增用于切换上下标朗读的手势。 (#10985)
+- 快速移动焦点时，Web应用程序（EG Gmail）不再朗读过时的信息。 (#10885)
+  - 必须通过“高级设置”面板中的“尝试为过期的焦点事件取消语音”选项手动启用此实验性修复程序。
+- 新增更多符号。 (#11105)
+
+
+== 修复 ==
+- 将liblouis盲文翻译器更新为[3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0](从3.12.0开始)。 (#10832, #11221)
+- 现在，上下标朗读与字体属性的报告分开设置。 (#10919)
+- 由于在VS Code中进行了更改，默认情况下，NVDA不再禁用Code中的浏览模式。 (#10888)
+- 将浏览光标移动到当前导航器对象的第一行或最后一行时，删除了“顶部”和“底部”消息。 (#9551)
+- 将刷新光标移动到当前导航器对象的行的第一个或最后一个字符时，删除了“左”和“右”消息。 (#9551)
+
+
+== 错误修复 ==
+- 无法创建日志文件时，NVDA将正确启动。 (#6330)
+- 在最新版本的Microsoft Word 365中，在编辑文档时按Control + Backspace键时，NVDA将不再读出“删除后退单词”。 (#10851)
+- 在Winamp中，NVDA现在将再次朗读随机播放和重复播放的切换状态。 (#10945)
+- 在1Password中的项目列表移动时，NVDA不再变的迟钝。 (#10508)
+- Windows OneCore语音合成器不再在话语之间滞后。 (#10721)
+- 当您在系统通知区域中打开1Password的上下文菜单时，NVDA不再冻结。 (#11017)
+- 在Office 2013及更早版本中：
+  - 当焦点首次移动到功能区时，将读出功能区。 (#4207)
+  - 上下文菜单项将再次正确朗读。 (#9252)
+  - 使用Control +光标导航时，功能区部分会始终提示。 (#7067)
+- 在Mozilla Firefox和Google Chrome的浏览模式下，当Web内容使用CSS显示时，文本不再错误地显示在单独的行上: inline-flex。 (#11075)
+- 在"自动将系统焦点设置为禁用可聚焦元素"的浏览模式下，现在可以激活不可对焦的元素。
+- 在"自动将系统焦点设置为禁用可聚焦元素"的浏览模式下，现在可以通过按Tab激活已到达的元素。 (#8528)
+- 在"自动将系统焦点设置为禁用可聚焦元素"的浏览模式下，激活某些元素不再在错误的位置单击。 (#9886)
+- 访问DevExpress文本控件时，不再听到NVDA错误声音。 (#10918)
+- 如果对象文字与图标名称相同，则不再键盘导航时读出系统托盘中图标工具的提示，以避免重复朗读。 (#6656)
+- 在"自动将系统焦点设置为禁用可聚焦元素"的浏览模式下，切换到具有NVDA +空格的聚焦模式现在可以将元素聚焦在插入符号下。 (#11206)
+- 再次可以检查某些系统上的NVDA更新。例如，干净的Windows安装。 (#11253)
+- 当选择在未聚焦的树、表或列表中更改时，不在更改 Java 应用程序中的焦点。 (#5989)
+
+
+== NVDA核心开发者需要了解的变动 ==
+- execElevated and hasUiAccess have moved from config module to systemUtils module. Usage via config module is deprecated. (#10493)
+- Updated configobj to 5.1.0dev commit f9a265c4. (#10939)
+- Automated testing of NVDA with Chrome and a HTML sample is now possible. (#10553)
+- IAccessibleHandler has been converted into a package, OrderedWinEventLimiter has been extracted to a module and unit tests added (#10934)
+- Updated BrlApi to version 0.8 (BRLTTY 6.1). (#11065)
+- Status bar retrieval may now be customized by an AppModule. (#2125, #4640)
+- NVDA no longer listens for IAccessible EVENT_OBJECT_REORDER. (#11076)
+- A broken ScriptableObject (such as a GlobalPlugin missing a call to its base class' __init__ method) no longer breaks NVDA's script handling. (#5446)
+
+
 = 2020.1 =
 
 == 新特性 ==
@@ -28,6 +86,8 @@ NVDA更新日志
 - NVDA现在可以再次读取Microsoft Word中的数学方程式并与之交互。 (#10803)
 - 如果在选择文本时按下光标键，NVDA将再次读出在浏览模式下未选择的文本。 (#10731).
 - 当前如果初始化eSpeak时出错，则NVDA不再退出。 (#10607)
+- 快捷方式翻译中的unicode所引起的错误不再停止安装，这可以通过退回到英文文本来解决。 (#5166, #6326)
+- 在启用了略读功能的情况下，在sayAll中的列表和表格上现在箭头移开和移出不再继续朗读退出列表或表格。 (#10706)}+
 
 
 == NVDA核心开发者需要了解的变动 ==
@@ -46,6 +106,7 @@ NVDA更新日志
   - Module level 'REASON_*' constants are deprecated.
 - Compiling NVDA dependencies now requires Visual Studio 2019 (16.2 or newer). (#10169)
 - Updated SCons to version 3.1.1. (#10169)
+- Again allow behaviors._FakeTableCell to have no location defined (#10864)
 
 
 = 2019.3 =

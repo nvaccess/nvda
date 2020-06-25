@@ -3,6 +3,63 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.2 =
+O subliñable desta versión inclúe o soporte dunha nova pantalla braille de Nattiq, un soporte mellor para a interfaz gráfica de usuario do antivirus ESET e a Terminal de Windows, melloras de rendemento de 1Password e co sintetizador Windows OneCore. Ademáiss de moitas outras importantes melloras e correccións de fallos.
+
+== Novas Características ==
+- Admisión de novas pantallas braille:
+  - Nattiq nBraille (#10778)
+- Engadido un script para abrir o directorio de configuración do NVDA (sen xesto predeterminado). (#2214)
+- Mellor soporte para a interface gráfica de usuario do antivirus ESET. (#10894)
+- Engadido o soporte para a Terminal de Windows. (#10305)
+- Engadida unha orde para anunciar o perfil de configuración activo. (#9325)
+- Engadida unha orde para conmutar o anunciado de subíndices e superíndices. (#10985)
+- As aplicacións web (Ex. Gmail) xa non falan información incorrecta cando se mova o foco rápidamente. (#10885)
+  - Esta solución experimental debe activarse manualmente a través da opción 'tentar cancelar a voz para eventos de enfoque caducados'  no panel de opcións avanzadas.
+- Engádense máis símbolos. (#11105)
+
+
+== Cambios ==
+- Actualizado o transcriptor braille liblouis a [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0] (from 3.12.0). (#10832, #11221)
+- O anunciado de superíndices e subíndices agora contrólase por separado ao anunciado de atributos de fonte. (#10919)
+- Debido a cambios feitos en VS Code, o NVDA xa non desactiva o modo Exploración en Code por defecto. (#10888)
+- Borráronse as mensaxes "superior" e "inferior" ao mover o cursor de revisión á primeira ou última liña do actual navegador de obxectos. (#9551)
+- Borráronse as mensaxes "esquerda" e "dereita" ao mover o cursor de revisión ao primeiro ou último carácter da liña actual no navegador de obxectos. (#9551)
+
+
+== Corección de Erros ==
+- O NVDA arranca correctamente cando o ficheiro de rexistro non se poda crear. (#6330)
+- En versións recentes de Microsoft Word 365, o NVDA xa non anunciará "borrar palabra atrás" cando se prema Control+Retroceso mentres se edita un documento. (#10851)
+- En Winamp, o NVDA anunciará de novo o estado de conmutación de aleatorio ou de repetir. (#10945)
+- O NVDA xa non é extremadamente lento ao te mover dentro da listaxe de elementos en 1Password. (#10508)
+- O sintetizador de voz Windows OneCore xa non ten retraso entre as frases. (#10721)
+- O NVDA xa non se conxela cando abres o menú  de contexto para 1Password na área de notificacións do sistema. (#11017)
+- En Office 2013 e anteriores:
+  - As cintas anúncianse cando o foco se mova cara elas por primeira vez. (#4207)
+  - Os elementos do menú de contexto anúncianse de novo apropriadamente. (#9252)
+  - As secións das cintas anúncianse consistentemente ao navegar con Control+frechas. (#7067)
+- En modo Exploración en Mozilla Firefox e Google Chrome, o texto xa non aparece incorectamente nunha liña separada cando o contido web usa no CSS display: inline-flex. (#11075)
+- En modo Exploración co foco automático do sistema configurado a elementos enfocables desactivado, agora é posible activar elementos que non sexan enfocables.
+- En modo Exploración co foco automático do sistema configurado a elementos enfocables desactivado, agora é posible activar elementos alcanzables premendo a tecla tab. (#8528)
+- En modo Exploración co foco automático do sistema configurado a elementos enfocables desactivado, activar certos elementos xa non fai clic nun lugar incorrecto. (#9886)
+- Os sons de erro do NVDA xa non se escoitan cando se aceda a controis de texto de DevExpress. (#10918)
+- Os consellos das iconass na bandexa do sistema xa non se anuncian ao navegar co teclado se o seu texto é igual ao seu nome, para evitar un anunciado duplicado. (#6656)
+- En modo Exploración co foco automático do sistema configurado a elementos enfocables desactivado, cambiar a modo Foco con NVDA+espazo agora enfoca o elemento baixo o cursor. (#11206)
+- De novo é posible procurar actualizacións do NVDA en certos sistemas; ex.: instalacións limpas de Windows. (#11253)
+- Non se cambia o foco nunha aplicación Java cando a seleción se cambie nunha árbore, táboa ou listaxe non enfocable. (#5989)
+
+
+== Cambios para Desenroladores ==
+- execElevated y hasUiAccess movéronse do módulo  config ao módulo systemUtils. O uso a través do módulo config é obsoleta. (#10493)
+- Actualizado configobj a 5.1.0dev commit f9a265c4. (#10939)
+- Agora é posible a comprobación automatizada do NVDA con Chrome e un exemplo HTML. (#10553)
+- IAccessibleHandler convertééuse nun paquete, OrderedWinEventLimiter extraíuse a un módulo e engadíronse probas de unidade (#10934)
+- Actualizado BrlApi á versión 0.8 (BRLTTY 6.1). (#11065)
+- A recuperación da barra de estado agora pode seren persoalizada por un AppModule. (#2125, #4640)
+- O NVDA xa non escoita ao IAccessible EVENT_OBJECT_REORDER. (#11076)
+- Un ScriptableObject rompido (coma un GlobalPlugin que perda unha chamada á súa crase base ' método __init__ ) xa non rompe o manexo dos scripts do NVDA. (#5446)
+
+
 = 2020.1 =
 O subliñable desta versión inclúe o soporte de varias novas pantallas braille de HumanWare e de APH, máis moitos outros arranxos importantes  de fallos como a capacidade de ler de novo matemáticas en Microsoft Word usando MathPlayer e MathType.
 
