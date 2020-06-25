@@ -3,6 +3,64 @@ Was ist neu in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.2 =
+Zu den Highlights dieser Version gehören die Unterstützung für eine neue Braillezeile von Nattiq, eine verbesserte Unterstützung für ESET Antivirus und Windows-Terminal, Leistungsverbesserungen bei 1Password und mit Windows OneCore-Synthesizer. Plus viele andere wichtige Fehlerbehebungen und Verbesserungen.
+
+
+== Neue Features ==
+- Unterstützungen neuer braillezeilen::
+  - Nattiq nBraille (#10778)
+- Ein Skript zum Öffnen des NVDA-Benutzerverzeichnis wurde hinzugefügt (ist keinem Tastenbefehl zugeordnet). (#2214)
+- Verbesserte Unterstützung für die Oberfläche von ESET Antivirus. (#10894)
+- Unterstützung für das Windows-Terminal hinzugefügt. (#10305)
+- Ein Befehl zum Melden des aktiven Konfigurationsprofils wurde hinzugefügt. (#9325)
+- Ein Tastenbefehl wurde hinzugefügt, um die Ansage von hoch- und tiefgestellten Zeichen umzuschalten. (#10985)
+- Web-Anwendungen (z. B. Gmail) lesen keine veralteten Informationen mehr vor, wenn der Schwerpunkt schnell verschoben wird. (#10885)
+  - Diese experimentelle Funktion muss manuell über die Option "Sprachausgabe unterbrechen, wenn das Ereignis für den Fokus abgelaufen ist" im Erweiterten Einstellungsfenster aktiviert werden.
+- Weitere Symbole hinzugefügt. (#11105)
+
+
+== Änderungen ==
+- Liblouis-Braille-Übersetzer von Version 3.12.0 auf Version [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0] aktualisiert. (#10832, #11221)
+- Die Ansage von hoch- und tiefgestellte Zeichen werden nun getrennt von den Meldungen der Schrift-Attribute gesteuert. (#10919)
+- Auf Grund von Änderungen im VS-Code deaktiviert NVDA den Lesemodus im Code standardmäßig nicht mehr. (#10888)
+- Die Meldungen "oben" und "unten" beim Bewegen des NVDA-Cursors zur ersten oder letzten Zeile des aktuellen Navigator-Objekts wurden entfernt. (#9551)
+- Die Meldungen "links" und "rechts" beim Bewegen des NVDA-Cursors auf das erste oder letzte Zeichen der Zeile für das aktuelle Navigator-Objekt wurden entfernt. (#9551)
+
+
+== Fehlerbehebungen ==
+- NVDA startet nun korrekt, wenn keine Protokolldatei angelegt werden konnte. (#6330)
+- In neueren Versionen von Microsoft Word 365 meldet NVDA nicht mehr, dass "Rückwort löschen" beim Drücken von Strg+Rücktaste während der Bearbeitung eines Dokuments gelöscht wird. (#10851)
+- In Winamp meldet NVDA wieder die Umschaltung von der Zufallswiedergabe und der Wiederholen. (#10945)
+- Korrektur der Mausverfolgung für einige MSHTML-Elemente in Internet Explorer. (#10736)
+- NVDA reagiert nicht mehr extrem langsam beim navigieren in den Listeneinträgen in 1Password. (#10508)
+- Die Windows OneCore-Sprachausgabe verzögert nicht mehr bei den Ansagen. (#10721)
+- NVDA hängt sich nicht mehr auf, sobald Sie das Kontextmenü für 1Passwort aus dem Infobereich heraus öffnen. (#11017)
+- In Microsoft Office 2013 und älter:
+  - Die Menübänder werden angesagt, sobald sie fokussiert werden. (#4207)
+  - Kontextmenüeinträge werden wieder korrekt vorgelesen. (#9252)
+  - Die Menübänder werden beim Navigieren mit Strg+Pfeiltasten durchgehend angesagt. (#7067)
+- Im Lesemodus in Mozilla Firefox und Google Chrome wird Text nicht mehr fälschlicherweise in einer separaten Zeile angezeigt, wenn Web-Inhalte die CSS-Darstellung verwenden: Inline-Flex. (#11075)
+- Im Lesemodus mit deaktiviertem automatischen Setzen des System-Fokus auf fokussierbare Elemente ist es nun möglich, Elemente zu aktivieren, die durch Drücken der Tabulatortaste erreicht werden. (#8528)
+- Im Lesemodus mit deaktiviertem automatischen Setzen des System-Fokus auf fokussierbare Elemente werden bestimmte Elemente aktiviert und der Klick wird nicht mehr an einer falschen Stelle ausgeführt. (#9886)
+- Es sind keine NVDA-Fehlertöne mehr zu hören, wenn auf Textsteuerelemente von DevExpress zugegriffen wird. (#10918)
+- Die Tool-Tipps der Symbole im Infobereich werden bei der Tastatur-Navigation nicht mehr gemeldet, wenn ihr Text mit dem Namen der Icons übereinstimmt, um eine doppelte Ansage zu vermeiden. (#6656)
+- Im Lesemodus mit deaktiviertem "Automatisch den System-Fokus auf fokussierbare Elemente setzen" fokussiert der Wechsel in den Fokusmodus mit NVDA+Leertaste nun das Element unter dem Cursor. (#11206)
+- Auf bestimmten Systemen kann wieder nach NVDA-Updates gesucht werden, z. B. nach einer sauberen Windows-Installationen. (#11253)
+- Ändert den Fokus in einer Java-Anwendung nicht mehr, wenn die Auswahl in einem nicht fokussierten Baum, einer Tabelle oder einer Liste geändert wird. (#5989)
+
+
+== Änderungen für Entwickler ==
+- Die Funktionen "execElevated" und "hasUiAccess" sind vom Konfigurationsmodul in das "systemUtils"-Modul umgezogen. Die Verwendung über das Konfigurationsmodul ist veraltet. (#10493)
+- Das Python-Modul "configObj" wurde auf Version 5.1.0dev Commit f9a265c4 aktualisiert. (#10939)
+- Automatisiertes Testen von NVDA mit Google Chrome und einem HTML-Beispiel ist nun möglich. (#10553)
+- Das Modul "IAccessibleHandler" wurde in ein Paket umgewandelt, "OrderedWinEventLimiter" wurde in ein Modul ausgelagert und Unit-Tests hinzugefügt. (#10934)
+- BrlApi auf Version 0.8 (BRLTTY 6.1) aktualisiert. (#11065)
+- Die Ansage der Statusleiste kann nun durch ein Anwendungsmodul angepasst werden. (#2125, #4640)
+- NVDA reagiert nicht mehr auf "EVENT_OBJECT_REORDER" von "IAccessible". (#11076)
+- Ein defektes ScriptableObject (z. B. ein GlobalPlugin, bei dem ein Aufruf der "__init__"-Methode dessen Basisklasse fehlt) unterbricht nicht mehr die Skriptbehandlung von NVDA. (#5446)
+
+
 = 2020.1 =
 Zu den Highlights dieser Version gehört die Unterstützung mehrerer neuer Braillezeilen von Humanware und APH sowie viele andere wichtige Fehlerbehebungen, wie z. B. die Möglichkeit, mit MathPlayer / MathType wieder Mathematik in Microsoft Word lesen zu können.
 
