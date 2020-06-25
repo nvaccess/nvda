@@ -9,8 +9,6 @@ complexSymbols:
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
 ? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
-... sentence ending	(?<=[^\s.])(\s\.|\.)\.\.(?=[\"'”’)\s]|$)
-… sentence ending	(?<=[^\s.])\…(?=[\"'”’)\s]|$)
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
@@ -19,7 +17,6 @@ complexSymbols:
 decimal point	(?<![^\d -])\.(?=\d)
 in-word -	(?<=[^\W_])[-]
 negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
-dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -28,8 +25,6 @@ symbols:
 . sentence ending	punto	all	always
 ! sentence ending	cerrar exclamación	all	always
 ? sentence ending	cerrar interrogación	all	always
-... sentence ending	puntos suspensivos	all	always	
-… sentence ending	elipsis	all	always	
 ; phrase ending	punto y coma	most	always
 : phrase ending	dos puntos	most	always
 decimal point		none	always
@@ -57,7 +52,10 @@ $	dólar	all	norep
 ¢	Centavos	all	norep
 ¥	Yen	all	norep
 ₹	Rupia	some	norep
+ƒ	florín	all	norep
+¤	signo de moneda	all	norep
 %	porciento	some
+‰	por mil	some
 &	et	some
 '	apóstrofo	all
 (	abrir paréntesis	most	always
@@ -85,9 +83,16 @@ _	subrayado	most
 {	abrir llave	most
 }	cerrar llave	most
 |	barra vertical	most
+¦	barra cortada	most
 ~	tilde	most
 ¿	abrir interrogación	all
 ¡	abrir exclamación	all
+·	punto centrado	most
+‚	Comillas bajas sencillas	most
+„	comillas bajas dobles	most
+′	primo	some
+″	primo doble	some
+‴	primo triple	some
 
 # Other characters
 •	viñeta	some
@@ -95,33 +100,73 @@ _	subrayado	most
 ...	puntos suspensivos	all	always
 “	abrir comillas	most
 ”	cerrar comillas	most
-‘	apóstrofo	most
-’	apóstrofo	most
+‘	apóstrofo izquierdo	most
+’	apóstrofo derecho	most
 –	guión	most	always
 —	raya	most
+­	guión suave	most
+⁃	guión viñeta	none
 ●	círculo	most
+○	círculo blanco	most
 ¨	diéresis	most
-‎	marca de izquierda a derecha	char
+¯	macron	most
+´	agudo	most
+¸	cedilla	most
+‎‎	marca de izquierda a derecha	char
 ‏	marca de derecha a izquierda	char
-■	Barra vertical cortada	some
-▪	Barra vertical cortada	some
-◾	Barra vertical cortada	some
+¶	marca de párrafo	most
+■	cuadrado negro	some
+▪	cuadrado negro	some
+◾	cuadrado negro	some
+□	cuadrado blanco	some
 ◦	Viñeta blanca	some
 ⇒	flecha doble a la derecha	some
 ⇨	flecha blanca a la derecha	some
+➔	flecha apuntando a la derecha	some
 ➢	flecha con cabeza a la derecha	some
 ⮚	flecha con cabeza a la derecha	some
 ❖	diamante negro menos X blanca	some
 ♣	club negro	some
 ♦	diamante negro	some
+◆	diamante negro	some
 §	Sección	most
 °	grados	some
 «	Abrir Comillas angulares
 »	Cerrar comillas angulares
 µ	micro	some
-¹	1 sobreescrito	some
-²	Al cuadrado	some
-³	al cubo	some
+º	ordinal masculino	some
+ª	ordinal femenino	some
+⁰	superíndice 0	some
+¹	superíndice 1	some
+²	superíndice 2	some
+³	superíndice 3	some
+⁴	superíndice 4	some
+⁵	superíndice 5	some
+⁶	superíndice 6	some
+⁷	superíndice 7	some
+⁸	superíndice 8	some
+⁹	superíndice 9	some
+⁺	superíndice más	some
+⁻	superíndice menos	some
+⁼	superíndice igual	some
+⁽	superíndice abrir paréntesis	some
+⁾	superíndice cerrar paréntesis	some
+ⁿ	superíndice n	some
+₀	subíndice 0	some
+₁	subíndice 1	some
+₂	subíndice 2	some
+₃	subíndice 3	some
+₄	subíndice 4	some
+₅	subíndice 5	some
+₆	subíndice 6	some
+₇	subíndice 7	some
+₈	subíndice 8	some
+₉	subíndice 9	some
+₊	subíndice más	some
+₋	subíndice menos	some
+₌	subíndice igual	some
+₍	subíndice abrir paréntesis	some
+₎	subíndice cerrar paréntesis	some
 ®	registrado	some
 ™	Marca registrada	some
 ©	marca registrada	some	norep
@@ -135,6 +180,11 @@ _	subrayado	most
 ✓	marcado	some
 ✔	marcado	some
 🡺	Flecha derecha	some
+†	daga	some
+‡	doble daga	some
+‣	viñeta triangular	none
+✗	viñenta en forma de x	none
+￼	carácter de reemplazo de objeto	none
 
 #Mathematical Operators U+2200 to U+220F
 ∀	Por Todos	none
@@ -153,6 +203,7 @@ _	subrayado	most
 ∍	Contiene como Miembro Pequeño a	none
 ∎	Fin de Prueba	none
 ∏	N-Producto Aritmético	none
+
 # Miscellaneous Mathematical Operators
 ∑	N-Suma Aritmética	none
 √	Raíz Cuadrada	none
@@ -166,11 +217,12 @@ _	subrayado	most
 ∦	No Paralelo A	none
 ∧	Y Lógico	none
 ∨	O Lógico	none
+¬	no lógico	none
 ∩	Intersección	none
 ∪	Unión	none
 ∫	Integral	none
 ∴	Por Tanto	none
-∵	Porrque	none
+∵	Porque	none
 ∶	RATIO	none
 ∷	Proporción	none
 ≤	Menor o Igual a	none
@@ -179,6 +231,7 @@ _	subrayado	most
 ⊃	Superconjunto de 	none
 ⊆	Subconjunto de O Igual A	none
 ⊇	Superconjunto de O Igual A	none
+
 # Vulgur Fractions U+2150 to U+215E
 ⅐	un séptimo	none
 ⅑	un noveno	none
