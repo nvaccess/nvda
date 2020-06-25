@@ -1,4 +1,4 @@
-﻿NVDA NVDA_VERSION 用戶指南
+﻿NVDA_VERSION 用戶指南
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -56,10 +56,14 @@ NVDA 提供多語系點字碼，通常含括一級、二級與電腦點字。
 ++ 授權與著作權 ++[LicenseAndCopyright]
 NVDA 著作權2006-2018 是歸屬於所有參與的開發者。
 
-NVDA 受到「GNU 通用公共授權條款（第二版）」所保護。
+NVDA 受到「GNU 通用公共授權條款（第二版）」所保護，但有兩個特殊例外。
+例外狀況列在許可證文件 (copying.txt) 的 "Non-GPL Components in Plugins and Drivers" 和 "Microsoft Distributable Code" 段落中。
+NVDA 同時也包含並使用了那些受其他免費且開放板權的組件。
 只要將此公開授權辦法隨附於軟體，您可以自由地以任何形式分享或改變此軟體，並將所有的原始碼提供給需要的人，
 這個規則適用於原始發佈的軟體或任何以此軟體修改之後發佈的軟體，以及所有採用此軟體內的程式碼所產生的軟體。
+
 更詳細的內容，請上網[查看完整版授權辦法 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]。
+關於詳細的例外狀況說明，請參考 NVDA 功能表中，「說明」內的「授權文件」。
 
 + 系統需求 +[SystemRequirements]
 - 作業系統：32或64位元的微軟 Windows 7、Windows 8、Windows 8.1 及 Window 10，及 Windows Server 2008 R2 以上所有的伺服器作業系統。
@@ -114,8 +118,8 @@ NVDA 安裝版可提供額外功能，例如：登入後自動執行、可報讀
 此視窗也會有個按鈕，讓您逐一檢視將被停用的附加元件。
 關於此按鈕的更多資訊，請參考[不相容的附加元件對話框這一章節 #incompatibleAddonsManager]。
 
-+++ 在登入畫面啟用 NVDA +++[StartAtWindowsLogon]
-此選項是讓您可選擇是否在登入畫面時，在鍵入密碼前就開啟 NVDA。
++++ 在登入畫面啟動 NVDA +++[StartAtWindowsLogon]
+此選項是讓您可選擇是否在登入畫面時，在鍵入密碼前就啟動 NVDA。
 此選項也包括使用者帳戶控制對話框和其他安全畫面。
 此選項在初次安裝時，預設是啟用的。
 
@@ -124,8 +128,8 @@ NVDA 安裝版可提供額外功能，例如：登入後自動執行、可報讀
 一旦建立此捷徑，您可以在任何時候按快速鍵 control+alt+n 來開啟 NVDA。
 
 +++ 複製可攜式版的組態到目前的使用者帳戶 +++[CopyPortableConfigurationToCurrentUserAccount]
-此選項讓您可選擇是否讓 NVDA 複製可攜式版的組態，從目前正在執行的 NVDA 到此已登入的使用者組態。
-這將不會複製此組態到其他使用者
+此選項讓您可選擇是否讓 NVDA 複製可攜式版的組態，從目前正在執行的 NVDA 到目前登入的使用者安裝版 NVDA 的組態。
+這將不會複製此組態到系統上的其他使用者，也不會覆蓋在登入及其他安全畫面時的系統組態。
 此選項只適用於從可攜式版另外安裝於電腦上，而對於直接從下載套件上安裝 NVDA 則不適用。
 
 ++ 建立可攜式版 ++[CreatingAPortableCopy]
@@ -360,11 +364,9 @@ NVDA 可讓使用者以不同的方式在系統間導航並與之互動，包括
 當有啟用[焦點醒目提示 #VisionFocusHighlight]時，當前導航器物件所在的位置會在螢幕上呈現出來。
 預設狀況下，「導航器物件」會跟隨系統焦點移動，這個功能可以來回切換成開或關的狀態。
 
-附註：點字游標預設是跟隨 [系統焦點 #SystemFocus] 或 [編輯游標 #SystemCaret] 移動，而不是物件導航或文字檢閱。
-若想要讓點字游標跟隨物件導航或文字檢閱，可開啟偏好設定內的 [點字游標跟隨 #BrailleTether] 選擇「檢閱游標」。
+附註：點字游標跟隨物件導航的設定可至[點字游標跟隨 #BrailleTether]中進行調整。
 
-
-要進行物件檢閱，可利用以下的指令：
+要使用物件導航，可利用以下的指令：
 
 %kc:beginInclude
 || 名稱 | 桌電快速鍵 | 筆電快速鍵 | 觸控 | 說明 |
@@ -390,9 +392,7 @@ NVDA 允許您以逐一字元、字詞及逐行方式，讀出視窗畫面、目
 然而，在預設狀況下，檢閱游標會跟隨系統游標移動。
 此設定可被啟用或停用。
 
-附註：點字視窗預設是跟隨 [系統焦點 #SystemFocus] 或 [編輯游標 #SystemCaret]，而不是物件導航或檢閱文字。
-若要改變此設定，可開啟偏好設定內的 [點字游標跟隨 #BrailleTether] 來修改。
-
+附註：點字游標跟隨檢閱游標的設定可至[點字游標跟隨 #BrailleTether]中進行調整。
 下列的快速鍵可用來檢閱文字：
 %kc:beginInclude
 || 名稱 | 桌電快速鍵 | 筆電快速鍵 | 觸控 | 說明 |
@@ -645,13 +645,17 @@ NVDA 支援以下數學格式的內容：
 
 當您要回到原來文件時，只需按一下 Escape 鍵。
 
-+ 點顯器 +[Braille]
-如果您擁有一台點顯器，NVDA 可以以點字的形式提供資訊。
-如果您的點顯器是屬於柏金斯型態的鍵盤，您也可以使用壓縮或沒壓縮的點字輸入。
-除了可以在點顯器上顯示實體點字，您也可以使用[點字檢視器 #BrailleViewer]在畫面上顯示點字。
+有時數學內容可能會以按鈕或其他類型的元件呈現，此時若與這些數學內容互動，將會開啟一個對話框或提供更多該方程式的資訊。
+要啟用含有方程式的按鈕或其他元件，按 Ctrl+Enter。
+
+
++ 點字 +[Braille]
+如果您的電腦有接上一台點顯器，NVDA 可以以點字的形式提供資訊。
+如果您的點顯器是屬於柏金斯類型的鍵盤，您也可以使用壓縮或沒壓縮的點字輸入。
+除了可以在點顯器上顯示實體點字，您也可以使用[點字檢視器 #BrailleViewer]在畫面上檢視點字。
 
 請參閱 [支援的點顯器 #SupportedBrailleDisplays] 這章節的內容。
-此章節也說明哪些點顯器能支援 NVDA 背景自動偵測的功能。
+此章節也說明了哪些點顯器能支援 NVDA 背景自動偵測的功能。
 您也可以利用[NVDA 設定 #NVDASettings] 對話框的 [點字類別 #BrailleSettings] 類別來設定個別需求。
 
 ++ 控制型態、狀態與地標之縮寫 ++[BrailleAbbreviations]
@@ -769,8 +773,8 @@ NVDA 提供了一些內建的視覺加強器，說明如下：
 
 NVDA 的視覺相關設定可以從[NVDA 設定 #NVDASettings]對話框中的[視覺類別 #VisionSettings]中進行調整。
 
-++ 強調焦點 ++[VisionFocusHighlight]
-「強調焦點」可以用來提示畫面上的[系統焦點 #SystemFocus]、[導航器物件 #ObjectNavigation]及[瀏覽模式 #BrowseMode]中的所在位置。
+++ 焦點醒目提示 ++[VisionFocusHighlight]
+「焦點醒目提示」可以用來提示畫面上的[系統焦點 #SystemFocus]、[導航器物件 #ObjectNavigation]及[瀏覽模式 #BrowseMode]中的所在位置。
 它是使用一個帶有顏色的長方形外框來標示焦點的所在位置。
 - 藍色實線代表系統焦點結合導航器物件同在的位置，（這是因為[導航器物件是跟隨系統焦點。 #ReviewCursorFollowFocus]）
 - 藍色虛線僅代表系統焦點的位置。
@@ -890,7 +894,18 @@ NVDA 也可讓您在微軟 Word 上使用瀏覽模式，此類似於在網頁上
 %kc:beginInclude
 要讀出目前焦點所在儲存格的註解，按 NVDA+alt+c。
 %kc:endInclude
-工作表內所有加上註解的儲存格均也可以在「元件清單」上列出。
+在工作表上按了 NVDA+F7 之後，其內所有的註解均會列在元件清單中。
+
+NVDA 也可以顯示一個特定的對話框用來新增及編輯註解。
+由於無障礙的限制，NVDA 使用此對話框來覆蓋原先微軟 Excel 的註解編輯區域。但這個用以顯示對話框的快速鍵是繼承自 Excel 的，因此在沒有啟動 NVDA 的情況下，此快速鍵依然有作用。
+kc:beginInclude
+在目前焦點的儲存格新增或編輯註解，按 Shift+F2。
+%kc:endInclude
+
+此快速鍵不會顯示在 NVDA 的輸入手勢對話框中，亦無法允許更改。
+
+附註：您仍然可以在 Excel 中，在儲存格上從快顯功能表中開啟編輯注解區域。
+然而，此方式開啟的會是一個非無障礙的編輯注解區域，並非前述 NVDA 專為編輯註解設計的對話框。
 
 +++ 報讀受保護的儲存格 +++[ExcelReadingProtectedCells]
 如果工作表受保護了，就無法將焦點移到某一個已被鎖定編輯的儲存格。
@@ -996,12 +1011,12 @@ NVDA 支援 Windows 命令主控台，包括命令提示字元、PowerShell 及 
 %kc:endInclude
 
 + NVDA 設定 +[ConfiguringNVDA]
-大部分的組態可以經由開啟 NVDA 功能表內的「偏好設定」子功能表中的各項之對話框來執行其設定值。
-大部分的設定可以在[NVDA 設定對話框 #NVDASettings]的多頁籤中找到。
+大部分的設定可以經由開啟 NVDA 功能表內的「偏好設定」子功能表來變更。
+這些設定可以在[NVDA 設定對話框 #NVDASettings]的多頁籤中找到，且所有的設定值組成了一個組態檔儲存在電腦裡。
 在所有的對話框中，只要最後按了「確認」按鈕，即可接受您所做的任何改變。
 要取消更改，則按「取消」按鈕，或 Esc 鍵即可。
-對於一些對話框，可以按「套用」按鈕讓設置立即生效，卻不關閉對話框。
-有一些設定項目也可以使用快速鍵來開啟，此將於以下的相關章節中予以列出。
+有一些對話框，可以按「套用」按鈕讓設置立即生效，而還不需要關閉對話框。
+而有一些常需要設定的項目可以使用快速鍵來開啟其對話框，這些將於以下的章節中介紹。
 
 ++ NVDA 設定 ++[NVDASettings]
 %kc:settingsSection: || 名稱 | 桌電快速鍵 | 筆電快速鍵 | 說明 |
@@ -1022,7 +1037,7 @@ NVDA 設定對話框包含許多組態參數可以修改。
 「NVDA 設定」對話框中「一般」類別，可以設定 NVDA 整體的狀態，例如介面使用的語言，以及是否應該檢查更新。
 此類別包含以下選項：
 
-====語言====[GeneralSettingsLanguage]
+==== 語言 ====[GeneralSettingsLanguage]
 這是一個選擇語言的下拉式清單，在 NVDA 的使用者介面及訊息視窗會在畫面上顯示。
 有許多語言可供您選擇，預設的選擇為「使用者預設值」。
 NVDA 將套用您目前電腦系統所使用的語言。
@@ -1030,18 +1045,18 @@ NVDA 將套用您目前電腦系統所使用的語言。
 附註：若變更語言設定，您需要重新啟動 NVDA。
 當確認對話框出現時，您可以依照自己的需要選擇「立即重新啟動」或「稍候重新啟動」。當選擇「稍候重新啟動」，無論您是否有勾選「關閉時儲存設定」，NVDA 皆會自動儲存該設定。
 
-====關閉時儲存設定====[GeneralSettingsSaveConfig]
+==== 關閉時儲存設定 ====[GeneralSettingsSaveConfig]
 此為一核取方塊，勾選後，在關閉 NVDA時，會自動儲存此次所做的變更設定。
 
-====關閉 NVDA時顯示對話框選項====[GeneralSettingsShowExitOptions]
+==== 關閉 NVDA時顯示對話框選項 ====[GeneralSettingsShowExitOptions]
 此為一核取方塊，決定當關閉 NVDA 時，是否要開啟一個對話框，來詢問接下來要採取何動作。
 若勾選此項目，彈出的對話框會詢問將採以下四個選項中的哪一項，包括：「關閉」、「重新啟動」、「重新啟動並停用附加元件」或「安裝有待更新的版本（如果有的話）」，選定後需按「確認」按鈕。
 若沒有勾選此項目，當關閉 NVDA 時，則直接立即關閉。
 
-====啟動或關閉 NVDA 時播放音效====[GeneralSettingsPlaySounds]
+==== 啟動或關閉 NVDA 時播放音效 ====[GeneralSettingsPlaySounds]
 此為一核取方塊，勾選後，當開啟或關閉 NVDA 時會播放音效。
 
-====事件記錄等級====[GeneralSettingsLogLevel]
+==== 事件記錄等級 ====[GeneralSettingsLogLevel]
 此為一下拉選單，選擇當 NVDA 啟動時，需要記錄的事件項目。
 對於一般的使用者只需使用預設的選項，不需變更，因為沒有太多的資料可供記錄。
 然而如果是想提供一份錯誤訊息的報告，則此稱得上是一項很好的功能。
@@ -1054,23 +1069,22 @@ NVDA 將套用您目前電腦系統所使用的語言。
  - 如果您較重視個人的隱私，則不要將事件紀錄等級設為此選項。
 - 偵錯：除了較低層級的警告、資訊、輸入/輸出以外的訊息，一些較小的錯誤訊息也會被紀錄下來。
  - 與「輸入/輸出」相同，如果您較重視隱私請不要將事件紀錄等級設定為此選項。
- -
--
 
-====登入 Windows 後自動啟動 NVDA====[GeneralSettingsStartAfterLogOn]
-若勾選此核取方塊，當電腦開機登入後，隨即自動開啟 NVDA。
+
+==== 當我登入後啟動 NVDA ====[GeneralSettingsStartAfterLogOn]
+若啟用此選項，NVDA 會在你登入 Windows 後自動啟動。
 只有安裝版才有這個選項。
 
-====在登入畫面啟用 NVDA（需要系統管理員權限）====[GeneralSettingsStartOnLogOnScreen]
-若您的電腦在開機時需要輸入帳號與密碼，勾選此控制項可在登入的畫面上立即提供NVDA的語音提示，接著才開啟 WINDOWS 作業系統。
+==== 在登入畫面啟動 NVDA（需要系統管理員權限） ====[GeneralSettingsStartOnLogOnScreen]
+若您的電腦在開機時需要輸入帳號與密碼，啟用此選項可在啟動 Windows 時的登入畫面中自動啟動 NVDA。
 只有在安裝版上才有這個選項。
 
 ==== 將目前儲存的設定套用到登入或其他安全畫面（需要系統管理員權限）====[GeneralSettingsCopySettings]
-按下這個按鈕將複製目前儲存的 NVDA 使用者設定值到 NVDA 系統設定目錄中。如此，在登錄畫面、使用者帳戶控制」（UAC）畫面與其它安全性視窗畫面等，NVDA 將可使用這些設定。
+按下這個按鈕將複製目前儲存的 NVDA 使用者組態到 NVDA 系統組態目錄中。如此，在登錄畫面、使用者帳戶控制」（UAC）畫面與其它安全視窗畫面等，NVDA 將可使用這些設定。
 為確認這些設定變更均生效，請確認按下 Ctrl+NVDA+C，或按一下 NVDA 功能表的「儲存設定」。
 只有在安裝版上才有這個選項。
 
-====自動檢查 NVDA 的更新 ====[GeneralSettingsCheckForUpdates]
+==== 自動檢查 NVDA 的更新 ====[GeneralSettingsCheckForUpdates]
 當勾選此核取方塊，NVDA 會自動檢查更新版本並通知。
 您也可透過手動來做版本更新檢查，請在 NVDA 功能表中的「說明」選擇「檢查更新。」
 當手動或自動檢查更新時，NVDA 需要將一些訊息發送到更新服務器以便為您的系統接收正確的更新。
@@ -1108,29 +1122,29 @@ NVDA 設定對話框中的「語音」類別包含可變更語音合成器，以
 這個對話框會在「NVDA 設定」對話框的上面打開。
 確認或取消「選擇語音合成器」對話框中的設定，將返回到「NVDA 設定」對話框。
 
-====語音====[SpeechSettingsVoice]
+==== 語音 ====[SpeechSettingsVoice]
 這個語音選項是一個下拉方塊，可以選擇目前的語音合成器中所有的語音。
 您可按方向鍵的上鍵或左鍵以選擇選單中的上一個語音選項，或是按下鍵或右鍵以選擇下一個選項。
 每次移動時，會以對應的語音引擎聲音發出該選項的名稱，以供確認。
 
-====變聲====[SpeechSettingsVariant]
+==== 變聲 ====[SpeechSettingsVariant]
 如果是使用內嵌的 Espeak NG 語音合成器，則此為一下拉式清單，您可選擇不同的變聲。
 ESpeak NG 的變聲聽起來像似原來的語音，僅是發音方式有些微的變化，
 包括聽起來像男生、女生或青蛙聲等的選項。
 如果您使用第三方的語音合成器，它可能也同時支援此選項。
 
-====速度====[SpeechSettingsRate]
+==== 速度 ====[SpeechSettingsRate]
 這是一個以滑桿呈現的控制選項，其範圍介於 0% 至 100%，
 數值愈小速度愈慢，反之愈大則報讀的速度愈快。
 
-====音調====[SpeechSettingsPitch]
+==== 音調 ====[SpeechSettingsPitch]
 這是一個以滑桿呈現的控制選項，其範圍介於 0% 至 100%，
 數值愈小音調愈低，反之則愈大則報讀的音調愈高。
 
-====音量====[SpeechSettingsVolume]
+==== 音量 ====[SpeechSettingsVolume]
 這是以滑桿呈現的控制選項，其範圍介於 0% 至 100%，數字愈小音量愈小，反之愈大則報讀的音量愈大。
 
-====語調====[SpeechSettingsInflection]
+==== 語調 ====[SpeechSettingsInflection]
 這是一個以滑桿呈現的控制選項，讓您可調整語調的高低，目前僅有 eSpeak NG 提供此功能。
 
 ==== 自動切換語言 ====[SpeechSettingsLanguageSwitching]
@@ -1266,12 +1280,12 @@ NVDA 會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸
 ==== 游標閃爍率 (毫秒) ====[BrailleSettingsBlinkRate]
 此為一個可編輯的數字方塊，用以設定點字游標閃爍的時間長短，以毫秒為單位。
 
-==== 焦點游標型態 ====[BrailleSettingsCursorShapeForFocus]
-當點字游標跟隨焦點游標時，此選項允許使用者選擇以不同的凸點型態來呈現。
+==== 焦點游標形狀 ====[BrailleSettingsCursorShapeForFocus]
+當點字游標跟隨焦點游標時，此選項允許使用者選擇以不同的凸點形狀來呈現。
 這種選用的方式並不會影響點字內容的呈現，它總是以不閃爍的第7及第8點來代表。
 
-==== 檢閱游標型態 ====[BrailleSettingsCursorShapeForReview]
-當點字游標跟隨檢閱游標時，此選項允許使用者選擇以不同的凸點型態來呈現。
+==== 檢閱游標形狀 ====[BrailleSettingsCursorShapeForReview]
+當點字游標跟隨檢閱游標時，此選項允許使用者選擇以不同的凸點形狀來呈現。
 這種選用的方式並不會影響點字內容的呈現，它總是以不閃爍的第7及第8點來代表。
 
 ==== 訊息顯示的時間(以秒計 ====[BrailleSettingsMessageTimeout]
@@ -1285,9 +1299,13 @@ NVDA 會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸
 ==== 點字游標跟隨 ====[BrailleTether]
 快速鍵: NVDA+Ctrl+t
 
-這個選項可切換顯示在點顯器上的訊息是跟隨那種游標，有三個選項包括系統焦點、檢閱游標（導航器物件）及自動（即前述二項均有）。
+這個選項可讓你選擇顯示在點顯器上的訊息是要跟隨系統焦點 / 編輯游標，或是導航器物件 / 檢閱游標，或是兩者均有。
 若選擇「自動」這個選項，在預設狀況是跟隨系統焦點或編輯游標。
-當在使用者手動變更了檢閱游標（導航器物件）的位置時，NVDA 會暫時切換點字游標跟隨檢閱游標，直到焦點或編輯游標又有了改變。
+當使用者手動變更選擇了檢閱游標（導航器物件）時，NVDA 會暫時切換點字游標跟隨檢閱游標，直到焦點或編輯游標又有了改變。
+如果您只想讓它跟隨焦點及編輯游標，則需將點字設定為跟隨系統焦點。
+在此情況下，使用檢閱游標檢閱時，或以導航器進行物件導航時，點字游標均不會跟隨檢閱游標或導航器。
+如果您想要讓點字跟隨物件導航及檢閱游標，您必須將點字設定為跟隨檢閱游標。
+在此情況下，點字就不會跟隨系統焦點或系統游標。
 
 ==== 逐段閱讀 ====[BrailleSettingsReadByParagraph]
 當啟用時，點字將會逐段顯示，而非逐行顯示。
@@ -1479,7 +1497,7 @@ NVDA 會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸
 要在任何地方調整朗讀文字範圍，您可以在[輸入手勢對話框 #InputGestures]中自訂快速鍵。
 
 ==== 讀出鼠標所指物件類型 ====[MouseSettingsRole]
-若勾選此控制項，則當鼠標移至物件時，NVDA 會讀出該物件的形態。
+若勾選此控制項，則當鼠標移至物件時，NVDA 會讀出該物件的類型。
 
 ==== 隨鼠標移動發出聲音指示相對位置 ====[MouseSettingsAudio]
 若勾選此控制項，則當鼠標移動時，會隨鼠標所在位置發出不同音調，以協助使用者了解目前鼠標所在螢幕上的相對座標。
@@ -1684,6 +1702,7 @@ NVDA 會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸
  - 字型名稱
  - 字型大小
  - 字型屬性
+ - 上標及下標
  - 強調標記
  - 樣式
  - 色彩
@@ -1786,6 +1805,11 @@ NVDA 會偵測到編輯游標／檢閱游標所在位置的格式，在某些情
 警告：當開啟此選項後，輸入的字元不會顯示在螢幕上 (如密碼) 也同樣會被報讀出來。
 若要在比較沒有隱私的環境下輸入密碼，您可以暫時停用「[讀出輸入字元 #KeyboardSettingsSpeakTypedCharacters]」及「[讀出輸入字詞 #KeyboardSettingsSpeakTypedWords]」兩個選項。
 
+==== 嘗試將已過期焦點事件的語音取消 ====[CancelExpiredFocusSpeech]
+此選項會啟用一個功能來嘗試將已過期的焦點事件之語音取消。
+尤其是以 Chrome 瀏覽 Gmail 中快速移動的訊息，常引發 NVDA 報讀過時的資訊。
+這是 NVDA 2020.2 的實驗性功能。
+
 ==== 在瀏覽模式下自動將系統焦點移至可聚焦項目 ====[BrowseModeSettingsAutoFocusFocusableElements]
 快速鍵: NVDA+8
 
@@ -1835,7 +1859,8 @@ NVDA 提供的功能遠超過僅將該字串的讀音改變而已。
 您也可以設定「大小寫需相符」（此處是指英文字母）的控制，這是由一個核取方塊來決定，預設值是忽略大小寫，也就是沒勾選。
 
 最後接著的是一組選擇鈕，用以告訴 NVDA 欲修改的字串要選擇符合那一類型，包括：「任意字」、「完整的單字」及「正規表達式」等三種。
-前述的「完整的單字」係指僅有那些符合單一完整的單字，才會 修改其讀音，其它如果僅是一個較大字串的其中一部份的字，例如一個英文與數字組成的字串、以底線串在一起包含一個以上的字串，或是在該字的前後沒有空格，著均不會改變其讀音。
+「完整的單字」是指僅有那些符合單一完整的單字，才會 修改其讀音。
+此條件需在字詞前後均為空格或不含其他字元的情況下才批配，若字詞前後包括其他字元、數字、底線等等均不符合。
 試著舉前述將"bird"改變讀成 "frog"為例，如果選擇「完整的單字」這個選項，則遇到那些"birds"，或"bluebird"，均不會改變其讀音。
 
 「正規表達式」是指一個包含特殊符號的「樣式」，它可用以一次對應到數個字元或一組數字，「正規表達式」這個主題並不在本使用手冊的介紹範籌，但您可上網找到許多入門教學的資訊。（中文版附註：修改讀音字庫的功能在一些簡寫或縮寫的英文字尤其好用，例如原來的讀法不易理解，就可採用此功能將其改變成個人可理解的讀音。
@@ -1993,9 +2018,10 @@ NVDA 允許您使用修改「組態設定檔」來達成前述的功能。
 ++ 組態檔案儲存位置 ++[LocationOfConfigurationFiles]
 針對 NVDA 的可攜式版，所有的設定、自行安裝的附加元件等，均儲存在 NVDA 目錄下的一個名為userConfig（使用者組態）的目錄中。
 
-針對安裝版則是將所有的設定、自行安裝的附加元件等，儲存在Windows的 user profile 中的 NVDA 目錄內，
-這表示在同一台電腦中，每一個使用者可以擁有自己的 NVDA 的設定。
-在安裝版中，您可以從「開始」功能表進到「所有程式 [NVDA] 中，找到使用者設定檔目錄。
+安裝版的 NVDA 則是將所有設定及附加元件等，儲存在一個 NVDA 特殊路徑，其位於 Windows 使用者組態中。
+這表示在同一台電腦中，每一個使用者可以擁有自己的 NVDA 設定。
+要從任何地方開啟您的設定目錄，可以至[輸入手勢對話框 #InputGestures]來自訂一個快速鍵。
+在安裝版中，您可以從「開始」功能表進到「所有程式 [NVDA] 中，找到「開啟 NVDA 使用者組態目錄」。
 
 關於登入畫面或 UAC 畫面中的 NVDA 使用設定，儲存在 NVDA 安裝目錄中的 systemConfig（系統組態）的目錄下。
 通常這個組態不建議直接將其開啟來編輯。
@@ -2172,10 +2198,10 @@ SAPI 5 是微軟語音合成器的標準版本。
 ++ Windows OneCore 語音 ++[OneCore]
 Windows 10 含有新的語音，一般稱之為「OneCore」或「mobile」語音。
 該語音提供了多種語系，且與微軟 SAPI 5合成器對接的語音相比，較之來的反應更快速。
-On Windows 10, NVDA uses Windows OneCore voices by default 
 在 Windows 10 中，NVDA 預設使用 Windows OneCore。（在其它版本中則預設是使用[eSpeak NG #eSpeakNG]）
 
 請參照微軟此篇文章之內容來安裝: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
+
 
 + 支援的點顯器 +[SupportedBrailleDisplays]
 這一節的內容包含 NVDA 支援的點顯器的資訊。
@@ -2194,6 +2220,7 @@ On Windows 10, NVDA uses Windows OneCore voices by default
 - Optelec ALVA 6 系列
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille 系列
 - Eurobraille Esys/Esytime/Iris 點顯器
+- Nattiq nBraille 點顯器
 -
 
 ++ Freedom Scientific Focus/PAC Mate 系列 ++[FreedomScientificFocus]
@@ -2499,7 +2526,7 @@ NVDA可以支援由 [hedo Reha-Technik https://www.hedo.de/] 出品的點顯器 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille 點顯器系列 ++[Hims]
 NVDA 透過 USB 或藍芽連結時，支援 Braille Sense、Braille EDGE、Smart Beetle 和 Sync Braille，顯示在 [Hims https://www.hims-inc.com/]
 如果是透過 USB 連接，您需要安裝由 HIMS 所提供的驅動程式安裝在您的電腦系統上。
-您可以從此連結下載: https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+您可以從此連結下載: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 以下是與 NVDA 相關按鍵的說明，
 請參考此設備的相關參考文件，以瞭解各按鍵的位置。
@@ -2569,8 +2596,7 @@ NVDA 透過 USB 或藍芽連結時，支援 Braille Sense、Braille EDGE、Smart
 %kc:endInclude
 
 ++ Seika Braille Displays ++[Seika]
-The Seika Version 3, 4 and 5 (40 cells) and Seika80 (80 cells) braille displays 從[Nippon Telesoft https://www.nippontelesoft.com/] 有被支援。
-
+可以支援來自[Nippon Telesoft https://www.nippontelesoft.com/] 的 Seika Version 3, 4 及 5 (40 方) 及 Seika80 (80 方) 等點顯器。
 您可以從以下網址得到更多相關顯示器資訊 https://en.seika-braille.com/down/index.html
 您需要請供應商提供 USB 驅動程式並安裝到您的系統。
 
@@ -2768,18 +2794,18 @@ NVDA 支援 BrailleNote notetakers，請參閱網址[Humanware https://www.human
 - BrailleNote Apex (USB and Bluetooth connections)
 -
 
-關於 BrailleNote Touch，請參閱 [Brailliant BI 系列 / BrailleNote Touch HumanWareBrailliant] 章節。
+關於 BrailleNote Touch，請參閱 [Brailliant BI 系列 / BrailleNote Touch #HumanWareBrailliant] 章節。
 
 除 BrailleNote PK 外，還支持 braille (BT) 和 QWERTY (QT) 鍵盤。
 對於 BrailleNote QT，不支持 PC 鍵盤模擬。
 您也可以使用 QT 鍵盤輸入點字。
 有關詳細資訊，請查閱 BrailleNote 手冊指南的點字終端部分。
 
+如果您的裝置支援超過一種類型的連接，當您將 BrailleNote 與 NVDA 連接時，您必須至點字連接部選項中進行設定。
 請參閱 BrailleNote 使用說明以獲得詳細資訊。
-在 NVDA 中，
-您或需在[選擇點顯器 #SelectBrailleDisplay]對話框中
-設定連接埠。
-當您連接至 USB 或藍芽，可視可使用的裝置將連接埠設定到「自動」、「USB」或「藍芽」。
+在 NVDA 中，您或許需要至[選擇點顯器 #SelectBrailleDisplay]對話框中設定連接埠。
+當您使用 USB 或藍芽連接，可視可使用的裝置將連接埠設定到「自動」、「USB」或「藍芽」。
+如果使用傳統序列部（或是傳統接口與 USB 轉接器），或其他非上述所提及的方式，您必須從硬體端明確的指定要使用的序列部接口。
 
 在連結 BrailleNote Apex 的 USB 客戶端介面之前，您必須安裝 HumanWare 提供的驅動程式。
 
@@ -2796,7 +2822,7 @@ NVDA 支援 BrailleNote notetakers，請參閱網址[Humanware https://www.human
 | Move braille display to previous line | previous |
 | Move braille display to next line | next |
 | Route to braille cell | routing |
-| NvDA menu | space+dot1+dot3+dot4+dot5 (space+n) |
+| NVDA menu | space+dot1+dot3+dot4+dot5 (space+n) |
 | Toggle braille tethered to | previous+next |
 | Up arrow key | space+dot1 |
 | Down arrow key | space+dot4 |
@@ -2820,7 +2846,7 @@ NVDA 支援 BrailleNote notetakers，請參閱網址[Humanware https://www.human
 以下是 BrailleNote QT 不是在點字輸入模式時的指令。
 
 || 名稱 | 按鍵 |
-| NvDA menu | read+n |
+| NVDA menu | read+n |
 | Up arrow key | upArrow |
 | Down arrow key | downArrow |
 | Left Arrow key | leftArrow|
@@ -2846,7 +2872,7 @@ NVDA 支援 BrailleNote notetakers，請參閱網址[Humanware https://www.human
 | Down arrow key | downArrow |
 | Left Arrow key | leftArrow |
 | Right arrow key | rightArrow |
-| Enter key | center button |
+| Enter key | centre button |
 | Tab key | scroll wheel clockwise |
 | Shift+tab keys | scroll wheel counterclockwise |
 %kc:endInclude
@@ -2932,7 +2958,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | rightArrow key | dot5+space, joystick2Right, rightArrow |
 | upArrow key | dot1+space, joystick2Up, upArrow |
 | downArrow key | dot6+space, joystick2Down, downArrow |
-| enter key | joystick2Center |
+| enter key | joystick2Centre |
 | pageUp key | dot1+dot3+space |
 | pageDown key | dot4+dot6+space |
 | numpad1 key | dot1+dot6+backspace |
@@ -2981,6 +3007,23 @@ Please see the display's documentation for descriptions of where these keys can 
 | ToggleHID keyboard input simulation | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
 %kc:endInclude
 
+++ Nattiq nBraille 點顯器 ++[NattiqTechnologies]
+NVDA 支援使用 USB 連接來自 [Nattiq Technologies https://www.nattiq.com/] 的點顯器。
+Windows 10 可自動偵測到該點顯器，若您使用舊版 Windows （Windows 10 以下），則可能需自行安裝 USB 驅動程式。
+您可以從製造商的網站上取得它們。
+
+以下是針對 Nattiq Technologies 點顯器操作 NVDA 的快速鍵。
+Please see the display's documentation for descriptions of where these keys can be found.
+請參閱點顯器的說明文件來了解這些按鍵的位置。
+%kc:beginInclude
+|| 名稱 | 按鍵 |
+| Scroll braille display back | up |
+| Scroll braille display forward | down |
+| Move braille display to previous line | left |
+| Move braille display to next line | right |
+| Route to braille cell | routing |
+%kc:endInclude
+
 ++ BRLTTY ++[BRLTTY]
 [BRLTTY https://www.brltty.com/] 是一個可以用來支援許多點顯器的應用程式。
 使用時，必須安裝BRLTTY視窗版本 （[BRLTTY for Windows https://www.brltty.com/download.html]）。
@@ -2992,7 +3035,7 @@ Please see the display's documentation for descriptions of where these keys can 
 BRLTTY 並不支援NVDA背景自動偵側的功能。
 
 下列為 BRLTTY 指令在 NVDA 的配置狀況。
-請參見 [BRLTTY key binding lists https://mielke.cc/brltty/doc/KeyBindings/] 以進一步瞭解其控制點顯器的對應方式。
+請參見 [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings/] 以進一步瞭解其控制點顯器的對應方式。
 %kc:beginInclude
 || 名稱 | BRLTTY 指令 |
 | Scroll braille display back | fwinlt (go left one window) |
@@ -3043,7 +3086,7 @@ nvda -q
 | None | --no-sr-flag | 不改變系統螢幕報讀軟體旗標 |
 | None | --install | 安裝 NVDA（啟動新安裝的版本） |
 | None | --install-silent | 靜默安裝 NVDA（不啟動新安裝的版本） |
-| None | --enable-start-on-logon=True|False | 當安裝時，啟用 [在登入畫面啟用 NVDA #StartAtWindowsLogon] |
+| None | --enable-start-on-logon=True|False | 當安裝時，啟用 [在登入畫面啟動 NVDA #StartAtWindowsLogon] |
 | None | --create-portable | 建立可攜式版 NVDA（啟動新建立的版本）。 需求 --可攜式路徑需要指定 |
 | None | --create-portable-silent | 建立可攜式版 NVDA（啟動新安裝的版本）。 需求 --可攜式路徑需要指定 |
 | None | --portable-path=PORTABLEPATH | 可攜式版的路徑將被建立 |
