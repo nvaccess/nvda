@@ -23,8 +23,8 @@ Highlights of this release include support for a new braille display from Nattiq
 - Updated liblouis braille translator from 3.12 to [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0]. (#10832, #11221)
 - The reporting of superscripts and subscripts is now controlled separately to the reporting of font attributes. (#10919)
 - Due to changes made in VS Code, NVDA no longer disables browse mode in Code by default. (#10888)
-- Removed "top" and "bottom" messages when moving the review cursor to the first or last line of the current navigator object. (#9551)
-- Removed "left" and "right" messages when moving the review cursor to the first or last character of the line for the current navigator object. (#9551)
+- NVDA no longer reports "top" and "bottom" messages when moving the review cursor directly to the first or last line of the current navigator object with the move to top and move to bottom review cursor scripts respectively. (#9551)
+- NVDA no longer reports  "left" and "right" messages when directly moving the review cursor to the first or last character of the line for the current navigator object with the move to beginning of line and move to end of line review cursor scripts respectively. (#9551)
 
 
 == Bug Fixes ==
