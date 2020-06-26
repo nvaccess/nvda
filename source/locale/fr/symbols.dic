@@ -9,7 +9,7 @@ complexSymbols:
 . sentence ending	(?<=[^\s.])\s?\.(?=[\"'”’);\s]|$)
 ! sentence ending	(?<=[^\s!])\s?\!(?=[\"'”’);\s]|$)
 ? sentence ending	(?<=[^\s?])\s?\?(?=[\"'”’);\s]|$)
-... sentence ending	(?<=[^\s.])\s?\.{3}(?=[\"'”’);\s]|$)
+... sentence ending	(?<=[^\s.])\s?\.\.\.(?=[\"'”’);\s]|$)
 … sentence ending	(?<=[^\s…])\s?\…(?=[\"'”’);\s]|$)
 # Phrase endings.
 ; phrase ending	(?<=[^\s;])\s?;(?=\s|$)
@@ -192,7 +192,6 @@ _	souligné
 ⮚	pointe flèche droite	some
 🡺	flèche droite	some
 ✗	puce en x	some
-￼	caractère de remplacement d'objet	all	always
 
 #Opérateurs Mathématiques U+2200 to U+220F
 ∀	pour tout 
