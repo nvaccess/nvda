@@ -165,9 +165,16 @@ class BrailleViewerFrame(wx.Frame):
 		return wx.Colour(*currentColor)
 
 	def _updateHoverCell(self):
+		normalStyle = wx.TextAttr()
+		normalStyle.SetBackgroundColour(self._normalBGColor)
 		index = self._lastMouseOverChar
+		length = len(self._brailleOutput.GetValue())
 		if index is not None:
 			self._brailleOutput.SetStyle(index, index + 1, self._hoverCellStyle)
+			self._brailleOutput.SetStyle(0, index, normalStyle)
+			self._brailleOutput.SetStyle(index + 1, length, normalStyle)
+		else:
+			self._brailleOutput.SetStyle(0, length, normalStyle)
 
 	def _updateHoverStyleColor(self, newColor: wx.Colour):
 		self._hoverCellStyle = wx.TextAttr()
@@ -181,6 +188,7 @@ class BrailleViewerFrame(wx.Frame):
 			self._brailleOutput.ScreenToClient(wx.GetMousePosition())
 		)
 		if result2 != wx.TE_HT_ON_TEXT or not (index2 == self._lastMouseOverChar == routeToIndex):
+			self._resetPendingHover()
 			return  # cancel
 		timeElapsed = time.time() - self._mouseOverTime
 		if timeElapsed < self._secondsOfHoverToActivate:
@@ -218,7 +226,7 @@ class BrailleViewerFrame(wx.Frame):
 	def _hoverFinished(self):
 		self.Freeze()
 		self._updateHoverStyleColor(self._normalBGColor)
-		self._brailleOutput.SetBackgroundColour(self._normalBGColor)
+		self._updateHoverCell()
 		self.Thaw()
 		self.Refresh()
 		self.Update()
@@ -237,13 +245,8 @@ class BrailleViewerFrame(wx.Frame):
 		# result, index = self._brailleOutput.HitTestPos(evt.GetPosition())
 		if result == wx.TE_HT_ON_TEXT:
 			if self._lastMouseOverChar != index:
-				lastIndex = self._lastMouseOverChar
 				self._lastMouseOverChar = index
 				self._doneRouteCall = False
-				if lastIndex is not None:
-					normalText = wx.TextAttr()
-					normalText.SetBackgroundColour(self._normalBGColor)
-					self._brailleOutput.SetStyle(lastIndex, lastIndex + 1, normalText)
 				self._mouseOverTime = time.time()
 				self._doRouting(index)
 		elif self._lastMouseOverChar is not None:
