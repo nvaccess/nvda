@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import time
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 
 import wx
 import gui
@@ -17,6 +17,7 @@ BRAILLE_UNICODE_PATTERNS_START = 0x2800
 BRAILLE_SPACE_CHARACTER = chr(BRAILLE_UNICODE_PATTERNS_START)
 BRAILLE_INIT_CHARACTER = chr(BRAILLE_UNICODE_PATTERNS_START + 1)
 SPACE_CHARACTER = u" "
+TIMER_INTERVAL = 32
 
 
 # Inherit from wx.Frame because these windows show in the alt+tab menu (where miniFrame does not)
@@ -46,6 +47,10 @@ class BrailleViewerFrame(wx.Frame):
 		self._mouseOverTime = None
 		self._secondsBeforeReturnToNormal = self._secondsOfHoverToActivate + 0.4
 		self._doneRouteCall = False
+		self._newBraille: Optional[str] = None
+		self._newRawText: Optional[str] = None
+		self._newSize: Optional[int] = None
+
 		super(BrailleViewerFrame, self).__init__(
 			gui.mainFrame,
 			title=self._title,
@@ -63,6 +68,7 @@ class BrailleViewerFrame(wx.Frame):
 		self.frameContentsSizer = wx.BoxSizer(wx.HORIZONTAL)
 		self.SetSizer(self.frameContentsSizer)
 		self.panel = wx.Panel(self)
+		self.panel.SetDoubleBuffered(on=True)  # fix for flickering during rapid updates.
 		self.frameContentsSizer.Add(self.panel, proportion=1, flag=wx.EXPAND)
 
 		self.panelContentsSizer = wx.BoxSizer(wx.VERTICAL)
@@ -75,10 +81,11 @@ class BrailleViewerFrame(wx.Frame):
 			flag=wx.EXPAND | wx.ALL,
 			border=5,
 		)
+		self._timer = wx.Timer(self)
+		self.Bind(wx.EVT_TIMER, lambda evt: self._updateGui())
 		self._createControls(borderSizer, self.panel)
 		self.ShowWithoutActivating()
 		self.Fit()
-
 
 	def _createControls(self, sizer, parent):
 		# Hack: use Static text to calculate the width of the dialog required for the number of cells.
@@ -99,7 +106,6 @@ class BrailleViewerFrame(wx.Frame):
 		self._brailleOutput.Font = self._setBrailleFont(self._brailleOutput.GetFont())
 		log.debug(f"Font for braille: {self._brailleOutput.Font.GetNativeFontInfoUserDesc()}")
 		sizer.Add(self._brailleOutput, flag=wx.EXPAND, proportion=1)
-		self._brailleOutput.Bind(wx.EVT_MOTION, self._mouseMotion)
 
 		self._normalBGColor = self._brailleOutput.GetBackgroundColour()
 		self._hoverCellStyle = self._normalBGColor
@@ -131,10 +137,12 @@ class BrailleViewerFrame(wx.Frame):
 			parent=parent,
 			label=hoverRoutesCellText
 		)
-		self._shouldHoverRouteToCellCheckBox.SetValue(config.conf["brailleViewer"]["shouldHoverRouteToCell"])
+		shouldDoHover = config.conf["brailleViewer"]["shouldHoverRouteToCell"]
+		self._shouldHoverRouteToCellCheckBox.SetValue(shouldDoHover)
 		self._shouldHoverRouteToCellCheckBox.Bind(wx.EVT_CHECKBOX, self._onShouldHoverRouteToCellCheckBoxChanged)
 		optionsSizer.Add(self._shouldHoverRouteToCellCheckBox)
-
+		if shouldDoHover:
+			self._timer.Start(milliseconds=TIMER_INTERVAL)
 		sizer.Add(optionsSizer, flag=wx.EXPAND|wx.TOP, border=5)
 
 	hitResMap = {
@@ -183,73 +191,97 @@ class BrailleViewerFrame(wx.Frame):
 	driverName = "brailleViewer"
 	keyRouting = "route"
 
-	def _doRouting(self, routeToIndex):
-		result2, index2 = self._brailleOutput.HitTestPos(
-			self._brailleOutput.ScreenToClient(wx.GetMousePosition())
-		)
-		if result2 != wx.TE_HT_ON_TEXT or not (index2 == self._lastMouseOverChar == routeToIndex):
-			self._resetPendingHover()
-			return  # cancel
+	def _updateGui(self):
+		self.Freeze()
+		if self._newBraille is not None:
+			self._brailleOutput.SetValue(self._newBraille)
+			self._newBraille = None
+		if self._newRawText is not None:
+			self._rawTextOutput.SetValue(self._newRawText)
+			self._newRawText = None
+		if self._newSize is not None:
+			# do resize
+			log.debug(
+				f"Updating brailleViewer cell count to: {self._newSize}"
+				f", old braille label size: {self._brailleSizeTest.GetSize()}"
+			)
+			self._numCells = self._newSize
+			self._brailleSizeTest.Label = (self._numCells + 5) * " "
+			labelSize = self._brailleSizeTest.GetSize()
+			log.debug(f"New braille label size {labelSize}")
+			self._brailleOutput.SetMinSize(size=wx.Size(labelSize.x, -1))
+			# Ensure that any variation in the number of characters displayed is still shown by calling `Fit`.
+			# This should really only happen when an external display with a different cell count is connected.
+			# If there is some other reason, it is better for the window size to adjust, than to miss content.
+			self.Fit()
+			self._newSize = None
+		self._mouseMotion()
+		self._updateHoverCell()
+		self.Thaw()
+
+	def _doPreActivate(self, secondsSinceHoverStart):
+		self._updateHoverStyleColor(
+			self._calculateHoverColour(
+				secondsSinceHoverStart,
+				self._secondsOfHoverToActivate,
+				startValue=0.2,
+				startColor=self._normalBGColor,
+				finalColor=wx.Colour(255, 205, 60)  # orange-yellow
+			))
+
+	def _doPostActivate(self, secondsSinceHoverStart):
+		self._updateHoverStyleColor(self._calculateHoverColour(
+			secondsSinceHoverStart - self._secondsOfHoverToActivate,
+			totalTime=self._secondsBeforeReturnToNormal - self._secondsOfHoverToActivate,
+			startValue=0.0,
+			startColor=wx.Colour(81, 215, 81),  # green
+			finalColor=self._normalBGColor
+		))
+
+	def _doRouting(self):
 		timeElapsed = time.time() - self._mouseOverTime
 		if timeElapsed < self._secondsOfHoverToActivate:
-			self._updateHoverStyleColor(
-				self._calculateHoverColour(
-					timeElapsed,
-					self._secondsOfHoverToActivate,
-					startValue=0.2,
-					startColor=self._normalBGColor,
-					finalColor=wx.Colour(255, 205, 60)
-			))
-			self._updateHoverCell()
-			wx.CallLater(5, self._doRouting, routeToIndex)
+			self._doPreActivate(timeElapsed)
 			return
 		elif timeElapsed < self._secondsBeforeReturnToNormal:
-			self._updateHoverStyleColor(self._calculateHoverColour(
-				timeElapsed - self._secondsOfHoverToActivate,
-				totalTime=self._secondsBeforeReturnToNormal - self._secondsOfHoverToActivate,
-				startValue=0.0,
-				startColor=wx.Colour(81, 215, 81),
-				finalColor=self._normalBGColor
-			))
-			self._updateHoverCell()
+			self._doPostActivate(timeElapsed)
 			if not self._doneRouteCall:
 				self._doneRouteCall = True
 				import globalCommands
 				inputCore.manager.executeGesture(
-					BrailleViewerInputGesture(self.keyRouting, routeToIndex)
+					BrailleViewerInputGesture(self.keyRouting, self._lastMouseOverChar)
 				)
-			wx.CallLater(5, self._doRouting, routeToIndex)
 			return
-		else:
-			self._hoverFinished()
+		# This hover is now complete, don't reset _lastMouseOverChar, the hover shouldn't start again.
+		self._hoverFinished()
 
 	def _hoverFinished(self):
-		self.Freeze()
 		self._updateHoverStyleColor(self._normalBGColor)
-		self._updateHoverCell()
-		self.Thaw()
-		self.Refresh()
-		self.Update()
 
 	def _resetPendingHover(self):
 		self._lastMouseOverChar = None  # cancels a pending hover action
 		self._doneRouteCall = False
 		self._hoverFinished()
 
-	def _mouseMotion(self, evt: wx.MouseEvent):
+	def _mouseMotion(self):
 		if not self._shouldHoverRouteToCellCheckBox.Value:
 			return
+		mousePos = wx.GetMousePosition()
+		toClient = self._brailleOutput.ScreenToClient(mousePos)
+		# This hit test is inaccurate, there seems to be a bug in wx.
+		# When the mouse is above or before the window it is counted as a hit.
+		# Above: mouseY is less than windowY I.E. when 'toClient.y' < 0
+		# Before: mouseX is less than winsowX I.E. when 'toClient.x' < 0
 		result, index = self._brailleOutput.HitTestPos(
-			self._brailleOutput.ScreenToClient(wx.GetMousePosition())
+			toClient
 		)
-		# result, index = self._brailleOutput.HitTestPos(evt.GetPosition())
-		if result == wx.TE_HT_ON_TEXT:
+		if result == wx.TE_HT_ON_TEXT and toClient.y > 0 and toClient.x > 0:
 			if self._lastMouseOverChar != index:
 				self._lastMouseOverChar = index
 				self._doneRouteCall = False
 				self._mouseOverTime = time.time()
-				self._doRouting(index)
-		elif self._lastMouseOverChar is not None:
+			self._doRouting()
+		else:
 			self._resetPendingHover()
 
 	def _onShouldShowOnStartupChanged(self, evt):
@@ -258,7 +290,11 @@ class BrailleViewerFrame(wx.Frame):
 	def _onShouldHoverRouteToCellCheckBoxChanged(self, evt: wx.CommandEvent):
 		config.conf["brailleViewer"]["shouldHoverRouteToCell"] = self._shouldHoverRouteToCellCheckBox.IsChecked()
 		if not evt.IsChecked():
+			self._timer.Stop()
 			self._resetPendingHover()
+			self._updateHoverCell()
+		else:
+			self._timer.Start(milliseconds=TIMER_INTERVAL)
 
 	def _doDisplaysMatchConfig(self):
 		configSizes = config.conf["brailleViewer"]["displays"]
@@ -292,41 +328,18 @@ class BrailleViewerFrame(wx.Frame):
 		if brailleEqual and textEqual:
 			# Exit early if we do not have to update either label.
 			return
-
-		# Update the GUI
-		# Freeze so that we don't see flickering while updates take place.
-		self.Freeze()
 		if not brailleEqual:
 			self._brailleOutputLastSet = adjustOffsetsToUnicode
 			# Create a unicode string that is at least as long as expected.
 			# A later call to `Fit` will ensure that strings that are too long are handled.
 			paddedBraille = adjustOffsetsToUnicode.ljust(padToLen, BRAILLE_SPACE_CHARACTER)
-			self._brailleOutput.SetValue(paddedBraille)
-			self._updateHoverCell()
+			self._newBraille = paddedBraille
 		if not textEqual:
 			self._rawTextOutputLastSet = rawText
 			paddedRawText = rawText.ljust(padToLen, " ")
-			self._rawTextOutput.SetValue(paddedRawText)
-
+			self._newRawText = paddedRawText
 		if self._numCells != currentCellCount:
-			# do resize
-			log.debug(
-				f"Updating brailleViewer cell count to: {currentCellCount}"
-				f", old braille label size: {self._brailleSizeTest.GetSize()}"
-			)
-			self._numCells = currentCellCount
-			self._brailleSizeTest.Label = (self._numCells + 5) * " "
-			labelSize = self._brailleSizeTest.GetSize()
-			log.debug(f"New braille label size {labelSize}")
-			self._brailleOutput.SetMinSize(size=wx.Size(labelSize.x, -1))
-			# Ensure that any variation in the number of characters displayed is still shown by calling `Fit`.
-			# This should really only happen when an external display with a different cell count is connected.
-			# If there is some other reason, it is better for the window size to adjust, than to miss content.
-			self.Fit()
-
-		self.Thaw()
-		self.Refresh()
-		self.Update()
+			self._newSize = currentCellCount
 
 	def _setBrailleFont(self, font: wx.Font) -> wx.Font:
 		fonts.importFonts()
