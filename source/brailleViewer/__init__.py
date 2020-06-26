@@ -7,6 +7,7 @@ from typing import Optional, List
 
 import gui
 import extensionPoints
+import config
 from .brailleViewerGui import BrailleViewerFrame
 
 """
@@ -55,8 +56,7 @@ _brailleGui: Optional[BrailleViewerFrame] = None
 # Callback definition: Callable(created: bool) -> None
 #   created - True for created/shown, False for hidden/destructed.
 postBrailleViewerToolToggledAction = extensionPoints.Action()
-# Devices with 40 cells are quite common.
-DEFAULT_NUM_CELLS = 40
+DEFAULT_NUM_CELLS = config.conf['brailleViewer']['defaultCellCount']
 
 
 def isBrailleViewerActive() -> bool:
