@@ -1700,6 +1700,15 @@ Enabled by default, this option allows you to choose if gestures (such as key pr
 As an example, if enabled and the letter j was pressed, it would be trapped from reaching the document, even though it is not a quick navigation command nor is it likely to be a command in the application itself.
 In this case NVDA will tell Windows to play a default sound whenever a key which gets trapped is pressed.
 
+==== Automatically set system focus to focusable elements ====[BrowseModeSettingsAutoFocusFocusableElements]
+Key: NVDA+8
+
+Disabled by default, this option allows you to choose if the system focus should automatically be set to elements that can take the system focus (links, form fields, etc.) when navigating content with the browse mode caret.
+Leaving this option disabled will not automatically focus focusable elements when they are selected with the browse mode caret.
+This might result in faster browsing experience and better responsiveness in browse mode.
+The focus will yet be updated to the particular element when interacting with it (e.g. pressing a button, checking a check box).
+Enabling this option may improve support for some websites at the cost of performance and stability.
+
 +++ Document Formatting (NVDA+control+d) +++[DocumentFormattingSettings]
 Most of the checkboxes in this category are for configuring what type of formatting you wish to have reported as you move the cursor around documents.
 For example, if you check the report font name checkbox, each time you arrow onto text with a different font, the name of the font will be announced.
@@ -1818,16 +1827,6 @@ In untrusted environments, you may temporarily disable [speak typed characters #
 This option enables behaviour which attempts to cancel speech for expired focus events.
 In particular moving quickly through messages in Gmail with Chrome can cause NVDA to speak outdated information.
 This functionality is experimental as of NVDA 2020.2.
-
-==== Automatically set system focus to focusable elements in Browse Mode ====[BrowseModeSettingsAutoFocusFocusableElements]
-Key: NVDA+8
-
-Enabled by default, this option allows you to choose if the system focus should automatically be set to elements that can take the system focus (links, form fields, etc.) when navigating content with the browse mode caret.
-If enabled, this represents default behaviour of NVDA as of version 2019.1 and before.
-Disabling this option will not automatically focus focusable elements when they are selected with the browse mode caret.
-This might result in faster browsing experience and better responsiveness in browse mode.
-The focus will yet be updated to the particular element when interacting with it (e.g. pressing a button, checking a check box).
-This functionality is experimental as of NVDA 2019.2.
 
 ==== Caret move timeout (in MS) ====[AdvancedSettingsCaretMoveTimeout]
 This option allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.
