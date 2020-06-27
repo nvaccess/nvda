@@ -2412,7 +2412,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Describes a command.
 		description=_("Toggles on and off the support of touch interaction"),
 		category=SCRCAT_TOUCH,
-		gesture="kb:NVDA+shift+t",
+		gesture="kb:NVDA+alt+t",
 	)
 	def script_toggleTouchSupport(self, gesture):
 		enabled = not bool(config.conf["touch"]["enabled"])
