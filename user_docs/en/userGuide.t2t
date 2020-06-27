@@ -1803,6 +1803,13 @@ If you wish to distribute custom code to others, you should package it as an NVD
 This button opens the directory where you can place custom code while developing it.
 This button is only enabled if NVDA is configured to enable loading custom code from the Developer Scratchpad Directory.
 
+==== Enable selective registration for UI Automation events and property changes ====[AdvancedSettingsSelectiveUIAEventRegistration]
+This option changes how NVDA registers for events fired by the Microsoft UI Automation accessibility API.
+When this option is disabled, NVDA registers for many UIA events that are processed and discarded within NVDA itself.
+This has a major negative impact on performance, especially in applications like Microsoft Visual Studio.
+Therefore, when this option is enabled, NVDA will limit event registration to the system focus for most events.
+If you suffer from performance issues in one or more applications, We recommend you to try this functionality to see whether performance improves.
+
 ==== Use UI automation to access Microsoft Word document controls when available ====[AdvancedSettingsUseUiaForWord]
 When this option is enabled, NVDA will try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Word document controls.
 This includes Microsoft Word itself, and also the Microsoft Outlook message viewer and composer.
