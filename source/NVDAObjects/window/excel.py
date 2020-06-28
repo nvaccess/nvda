@@ -322,7 +322,7 @@ class ExcelFormulaQuickNavItem(ExcelRangeBasedQuickNavItem):
 
 class ExcelQuicknavIterator(object):
 	"""
-	Allows iterating over an MS excel collection (e.g. Comments, Formulas or charts) emitting L{QuickNavItem} objects.
+	Allows iterating over an MS excel collection (e.g. notes, Formulas or charts) emitting L{QuickNavItem} objects.
 	"""
 
 	def __init__(self, itemType , document , direction , includeCurrent):
@@ -338,7 +338,7 @@ class ExcelQuicknavIterator(object):
 
 	def collectionFromWorksheet(self,worksheetObject):
 		"""
-		Fetches a Microsoft Excel collection object from a Microsoft excel worksheet object. E.g. charts, comments, or formula.
+		Fetches a Microsoft Excel collection object from a Microsoft excel worksheet object. E.g. charts, notes, or formula.
 		@param worksheetObject: a Microsoft excel worksheet object.
 		@return: a Microsoft excel collection object.
 		"""
@@ -582,7 +582,7 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		("chart", _("&Charts")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("comment", _("C&omments")),
+		("comment", _("N&otes")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("formula", _("Fo&rmulas")),
@@ -1400,24 +1400,25 @@ class ExcelCell(ExcelBase):
 		level=max(self.excelCellInfo.outlineLevel-1,0) or None
 		return {'level':level}
 
+	# In Office 2016, 365 and newer, comments are now called notes. Thus, messages dialog title and so on should refer to notes.
 	def script_reportComment(self,gesture):
 		commentObj=self.excelCellObject.comment
 		text=commentObj.text() if commentObj else None
 		if text:
 			ui.message(text)
 		else:
-			# Translators: A message in Excel when there is no comment
-			ui.message(_("Not on a comment"))
+			# Translators: A message in Excel when there is no note
+			ui.message(_("Not on a note"))
 	# Translators: the description  for a script for Excel
-	script_reportComment.__doc__=_("Reports the comment on the current cell")
+	script_reportComment.__doc__=_("Reports the note on the current cell")
 
 	def script_editComment(self,gesture):
 		commentObj=self.excelCellObject.comment
 		d = wx.TextEntryDialog(gui.mainFrame, 
 			# Translators: Dialog text for 
-			_("Editing comment for cell {address}").format(address=self.cellCoordsText),
-			# Translators: Title of a dialog edit an Excel comment 
-			_("Comment"),
+			_("Editing note for cell {address}").format(address=self.cellCoordsText),
+			# Translators: Title of a dialog edit an Excel note 
+			_("Note"),
 			value=commentObj.text() if commentObj else u"",
 			style=wx.TE_MULTILINE|wx.OK|wx.CANCEL)
 		def callback(result):
@@ -1453,7 +1454,7 @@ class ExcelCell(ExcelBase):
 		"kb:NVDA+shift+r": "setRowHeader",
 		"kb:shift+f2":"editComment",
 		"kb:alt+downArrow":"openDropdown",
-		"kb:NVDA+alt+c":"reportComment",
+		"kb:NVDA+alt+n":"reportComment",
 	}
 
 class ExcelSelection(ExcelBase):
