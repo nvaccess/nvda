@@ -106,6 +106,8 @@ class BrailleViewerFrame(wx.Frame):
 		self._brailleOutput.Font = self._setBrailleFont(self._brailleOutput.GetFont())
 		log.debug(f"Font for braille: {self._brailleOutput.Font.GetNativeFontInfoUserDesc()}")
 		sizer.Add(self._brailleOutput, flag=wx.EXPAND, proportion=1)
+		if self._shouldDoHover():
+			self._brailleOutput.Bind(wx.EVT_MOTION, self._mouseOver)
 
 		self._normalBGColor = self._brailleOutput.GetBackgroundColour()
 		self._hoverCellStyle = self._normalBGColor
@@ -137,13 +139,13 @@ class BrailleViewerFrame(wx.Frame):
 			parent=parent,
 			label=hoverRoutesCellText
 		)
-		shouldDoHover = config.conf["brailleViewer"]["shouldHoverRouteToCell"]
-		self._shouldHoverRouteToCellCheckBox.SetValue(shouldDoHover)
+		self._shouldHoverRouteToCellCheckBox.SetValue(self._shouldDoHover())
 		self._shouldHoverRouteToCellCheckBox.Bind(wx.EVT_CHECKBOX, self._onShouldHoverRouteToCellCheckBoxChanged)
 		optionsSizer.Add(self._shouldHoverRouteToCellCheckBox)
-		if shouldDoHover:
-			self._timer.Start(milliseconds=TIMER_INTERVAL)
 		sizer.Add(optionsSizer, flag=wx.EXPAND|wx.TOP, border=5)
+
+	def _shouldDoHover(self):
+		return config.conf["brailleViewer"]["shouldHoverRouteToCell"]
 
 	hitResMap = {
 		wx.TE_HT_UNKNOWN: "TE_HT_UNKNOWN",  # this means HitTest() is simply not implemented
@@ -152,6 +154,14 @@ class BrailleViewerFrame(wx.Frame):
 		wx.TE_HT_BELOW: "TE_HT_BELOW",  # below [the last line]
 		wx.TE_HT_BEYOND: "TE_HT_BEYOND",
 	}
+
+	def _mouseOver(self, evt: wx.MouseEvent):
+		if (
+			self._shouldDoHover()
+			# If the timer is already running, updateHover is already being called.
+			and not self._timer.IsRunning()
+		):
+			self._updateHover()
 
 	def _linearInterpolate(self, value, start, end):
 		difference = tuple(map(lambda i, j: i - j, end, start))
@@ -215,11 +225,38 @@ class BrailleViewerFrame(wx.Frame):
 			# If there is some other reason, it is better for the window size to adjust, than to miss content.
 			self.Fit()
 			self._newSize = None
-		self._mouseMotion()
+
+		if self._debugGuiUpdate:
+			self._doDebugGuiUpdate()
+
+		self._updateHover()
 		self._updateHoverCell()
 		self.Thaw()
 
-	def _doPreActivate(self, secondsSinceHoverStart):
+	_debugGuiIndex = 0
+	_debugGuiUpdate = False
+
+	def _doDebugGuiUpdate(self):
+		normalColour = self._rawTextOutput.GetForegroundColour()
+		normalStyle = wx.TextAttr(normalColour, colBack=self._normalBGColor)
+		self._rawTextOutput.SetStyle(2 + self._debugGuiIndex, 2 + self._debugGuiIndex + 1, normalStyle)
+
+		self._debugGuiIndex = (self._debugGuiIndex + 1) % 4
+		activeIndexStyle = wx.TextAttr(normalColour, colBack=wx.Colour(0, 0, 255))
+		self._rawTextOutput.SetStyle(2 + self._debugGuiIndex, 2 + self._debugGuiIndex + 1, activeIndexStyle)
+
+		enabledStyle = wx.TextAttr(normalColour, colBack=wx.Colour(0, 255, 0))
+		disableStyle = wx.TextAttr(normalColour, colBack=wx.Colour(255, 0, 0))
+		if self._timer.IsOneShot():
+			self._rawTextOutput.SetStyle(1, 2, enabledStyle)
+		else:
+			self._rawTextOutput.SetStyle(1, 2, disableStyle)
+		if self._timer.IsRunning():
+			self._rawTextOutput.SetStyle(0, 1, enabledStyle)
+		else:
+			self._rawTextOutput.SetStyle(0, 1, disableStyle)
+
+	def _setPreActivateStyle(self, secondsSinceHoverStart):
 		self._updateHoverStyleColor(
 			self._calculateHoverColour(
 				secondsSinceHoverStart,
@@ -229,7 +266,7 @@ class BrailleViewerFrame(wx.Frame):
 				finalColor=wx.Colour(255, 205, 60)  # orange-yellow
 			))
 
-	def _doPostActivate(self, secondsSinceHoverStart):
+	def _setPostActivateStyle(self, secondsSinceHoverStart):
 		self._updateHoverStyleColor(self._calculateHoverColour(
 			secondsSinceHoverStart - self._secondsOfHoverToActivate,
 			totalTime=self._secondsBeforeReturnToNormal - self._secondsOfHoverToActivate,
@@ -238,34 +275,17 @@ class BrailleViewerFrame(wx.Frame):
 			finalColor=self._normalBGColor
 		))
 
-	def _doRouting(self):
-		timeElapsed = time.time() - self._mouseOverTime
-		if timeElapsed < self._secondsOfHoverToActivate:
-			self._doPreActivate(timeElapsed)
-			return
-		elif timeElapsed < self._secondsBeforeReturnToNormal:
-			self._doPostActivate(timeElapsed)
-			if not self._doneRouteCall:
-				self._doneRouteCall = True
-				import globalCommands
-				inputCore.manager.executeGesture(
-					BrailleViewerInputGesture(self.keyRouting, self._lastMouseOverChar)
-				)
-			return
-		# This hover is now complete, don't reset _lastMouseOverChar, the hover shouldn't start again.
-		self._hoverFinished()
-
-	def _hoverFinished(self):
-		self._updateHoverStyleColor(self._normalBGColor)
-
-	def _resetPendingHover(self):
+	def _cancelPendingHover(self):
 		self._lastMouseOverChar = None  # cancels a pending hover action
 		self._doneRouteCall = False
-		self._hoverFinished()
+		self._mouseOverTime = time.time()
+		self._updateHoverStyleColor(self._normalBGColor)
 
-	def _mouseMotion(self):
-		if not self._shouldHoverRouteToCellCheckBox.Value:
-			return
+	def _startPendingHover(self, index):
+		self._cancelPendingHover()
+		self._lastMouseOverChar = index
+
+	def _getBrailleIndexUnderMouse(self) -> Optional[int]:
 		mousePos = wx.GetMousePosition()
 		toClient = self._brailleOutput.ScreenToClient(mousePos)
 		# This hit test is inaccurate, there seems to be a bug in wx.
@@ -276,25 +296,59 @@ class BrailleViewerFrame(wx.Frame):
 			toClient
 		)
 		if result == wx.TE_HT_ON_TEXT and toClient.y > 0 and toClient.x > 0:
-			if self._lastMouseOverChar != index:
-				self._lastMouseOverChar = index
-				self._doneRouteCall = False
-				self._mouseOverTime = time.time()
-			self._doRouting()
+			return index
+		return None
+
+	def _updateHover(self):
+		if not self._shouldDoHover():
+			return
+		index = self._getBrailleIndexUnderMouse()
+		if index is None:
+			# Mouse no longer over braille cells
+			self._cancelPendingHover()
+			self._timer.Stop()
+			self._timer.StartOnce()
+			return
+		elif not self._timer.IsRunning() or self._timer.IsOneShot():
+			self._timer.Start(milliseconds=TIMER_INTERVAL)
+		if index != self._lastMouseOverChar:
+			# Mouse over a new braille cell, start hover process again.
+			self._startPendingHover(index)
+		self._updateHoverStage()
+
+	def _activateRouteToCell(self):
+		import globalCommands
+		inputCore.manager.executeGesture(
+			BrailleViewerInputGesture(self.keyRouting, self._lastMouseOverChar)
+		)
+
+	def _updateHoverStage(self):
+		""" Update visualization of hover, over time.
+		"""
+		timeElapsed = time.time() - self._mouseOverTime
+		if timeElapsed < self._secondsOfHoverToActivate:
+			self._setPreActivateStyle(timeElapsed)
+		elif timeElapsed < self._secondsBeforeReturnToNormal:
+			self._setPostActivateStyle(timeElapsed)
+			if not self._doneRouteCall:  # ensure activation only happens once.
+				self._activateRouteToCell()
+				self._doneRouteCall = True
 		else:
-			self._resetPendingHover()
+			# This hover is now complete, don't reset _lastMouseOverChar, the hover shouldn't start again.
+			self._updateHoverStyleColor(self._normalBGColor)
 
 	def _onShouldShowOnStartupChanged(self, evt):
 		config.conf["brailleViewer"]["showBrailleViewerAtStartup"] = self._shouldShowOnStartupCheckBox.IsChecked()
 
 	def _onShouldHoverRouteToCellCheckBoxChanged(self, evt: wx.CommandEvent):
-		config.conf["brailleViewer"]["shouldHoverRouteToCell"] = self._shouldHoverRouteToCellCheckBox.IsChecked()
+		config.conf["brailleViewer"]["shouldHoverRouteToCell"] = evt.IsChecked()
 		if not evt.IsChecked():
+			self._brailleOutput.Unbind(wx.EVT_MOTION, source=None, handler=self._mouseOver)
+			self._cancelPendingHover()
 			self._timer.Stop()
-			self._resetPendingHover()
-			self._updateHoverCell()
+			self._timer.StartOnce()
 		else:
-			self._timer.Start(milliseconds=TIMER_INTERVAL)
+			self._brailleOutput.Bind(wx.EVT_MOTION, handler=self._mouseOver)
 
 	def _doDisplaysMatchConfig(self):
 		configSizes = config.conf["brailleViewer"]["displays"]
@@ -340,6 +394,8 @@ class BrailleViewerFrame(wx.Frame):
 			self._newRawText = paddedRawText
 		if self._numCells != currentCellCount:
 			self._newSize = currentCellCount
+		if not self._timer.IsRunning():
+			self._timer.StartOnce()
 
 	def _setBrailleFont(self, font: wx.Font) -> wx.Font:
 		fonts.importFonts()
