@@ -44,7 +44,11 @@ class ChromeLib:
 	def start_chrome(self, filePath):
 		builtIn.log(f"starting chrome: {filePath}")
 		self.chromeHandle = process.start_process(
-			f"start chrome \"{filePath}\"",
+			"start chrome"
+			" --force-renderer-accessibility"
+			" --suppress-message-center-popups"
+			" --disable-notifications"
+			f' "{filePath}"',
 			shell=True,
 			alias='chromeAlias',
 		)
