@@ -135,13 +135,16 @@ class NVDASpyLib:
 			log.info("No developer info for navigator object")
 
 	def dump_speech_to_log(self):
+		log.debug("dump_speech_to_log.")
 		with threading.Lock():
 			try:
 				self._devInfoToLog()
 			except Exception:
 				log.error("Unable to log dev info")
-
-			log.debug(f"All speech:\n{repr(self._nvdaSpeech_requiresLock)}")
+			try:
+				log.debug(f"All speech:\n{repr(self._nvdaSpeech_requiresLock)}")
+			except Exception:
+				log.error("Unable to log speech")
 
 	def _minTimeout(self, timeout: float) -> float:
 		"""Helper to get the minimum value, the timeout passed in, or self._maxKeywordDuration"""
