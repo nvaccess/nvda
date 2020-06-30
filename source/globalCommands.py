@@ -2408,6 +2408,29 @@ class GlobalCommands(ScriptableObject):
 	script_navigatorObject_previousInFlow.__doc__=_("Moves to the previous object in a flattened view of the object navigation hierarchy")
 	script_navigatorObject_previousInFlow.category=SCRCAT_OBJECTNAVIGATION
 
+	@script(
+		# Translators: Describes a command.
+		description=_("Toggles the support of touch interaction"),
+		category=SCRCAT_TOUCH,
+		gesture="kb:NVDA+control+alt+t",
+	)
+	def script_toggleTouchSupport(self, gesture):
+		enabled = not bool(config.conf["touch"]["enabled"])
+		try:
+			touchHandler.setTouchSupport(enabled)
+		except NotImplementedError:
+			# Translators: Presented when attempting to toggle touch interaction support
+			ui.message(_("Touch interaction not supported"))
+			return
+		# Set configuration upon success
+		config.conf["touch"]["enabled"] = enabled
+		if enabled:
+			# Translators: Presented when support of touch interaction has been enabled
+			ui.message(_("Touch interaction enabled"))
+		else:
+			# Translators: Presented when support of touch interaction has been disabled
+			ui.message(_("Touch interaction disabled"))
+
 	def script_touch_changeMode(self,gesture):
 		mode=touchHandler.handler._curTouchMode
 		index=touchHandler.availableTouchModes.index(mode)
