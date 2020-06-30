@@ -2410,7 +2410,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Describes a command.
-		description=_("Toggles on and off the support of touch interaction"),
+		description=_("Toggles the support of touch interaction"),
 		category=SCRCAT_TOUCH,
 		gesture="kb:NVDA+alt+t",
 	)
