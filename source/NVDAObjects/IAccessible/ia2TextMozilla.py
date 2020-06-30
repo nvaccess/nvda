@@ -307,7 +307,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		while fields[-1] is not None:
 			# The end hasn't yet been reached, which means it isn't a descendant of obj.
 			# Therefore, continue from where obj was embedded.
-			if withFields:
+			if withFields and controlStack:
 				field = controlStack.pop()
 				if field:
 					# This object had a control field.
