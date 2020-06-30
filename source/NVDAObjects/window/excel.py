@@ -509,49 +509,49 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 		eventHandler.executeEvent('gainFocus',obj)
 
 	@script(
-		gesture = ("kb:leftArrow")
+		gesture=("kb:leftArrow")
 	)
 	def script_moveLeft(self,gesture):
 		self.navigationHelper("left")
 
 	@script(
-		gesture = ("kb:rightArrow")
+		gesture=("kb:rightArrow")
 	)
 	def script_moveRight(self,gesture):
 		self.navigationHelper("right")
 
 	@script(
-		gesture = ("kb:upArrow")
+		gesture=("kb:upArrow")
 	)
 	def script_moveUp(self,gesture):
 		self.navigationHelper("up")
 
 	@script(
-		gesture = ("kb:downArrow")
+		gesture=("kb:downArrow")
 	)
 	def script_moveDown(self,gesture):
 		self.navigationHelper("down")
 
 	@script(
-		gesture = ("kb:control+upArrow")
+		gesture=("kb:control+upArrow")
 	)
 	def script_startOfColumn(self,gesture):
 		self.navigationHelper("startcol")
 
 	@script(
-		gesture = ("kb:control+leftArrow")
+		gesture=("kb:control+leftArrow")
 	)
 	def script_startOfRow(self,gesture):
 		self.navigationHelper("startrow")
 
 	@script(
-		gesture = ("kb:control+rightArrow")
+		gesture=("kb:control+rightArrow")
 	)
 	def script_endOfRow(self,gesture):
 		self.navigationHelper("endrow")
 
 	@script(
-		gesture = ("kb:control+downArrow")
+		gesture=("kb:control+downArrow")
 	)
 	def script_endOfColumn(self,gesture):
 		self.navigationHelper("endcol")
