@@ -104,7 +104,8 @@ def getAvailableLanguages(presentational=False):
 	# Prepare a 2-tuple list of language code and human readable language description.
 	langs = [(lc, getLanguageDescription(lc)) for lc in locales]
 	# Translators: The pattern defining how languages are displayed and sorted in in the general
-	# setting panel language list. Use "{desc}, {lc}" (most languages) to display first full anguage
+	# setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
+
 	# name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
 	fullDescPattern = _("{desc}, {lc}")
 	isDescFirst = fullDescPattern.find("{desc}") < fullDescPattern.find("{lc}")
@@ -336,4 +337,3 @@ windowsPrimaryLCIDsToLocaleNames={
 	136:'wo',
 	140:'gbz'
 }
-
