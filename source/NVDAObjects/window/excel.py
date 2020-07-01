@@ -509,49 +509,49 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 		eventHandler.executeEvent('gainFocus',obj)
 
 	@script(
-		gesture=("kb:leftArrow")
+		gesture="kb:leftArrow"
 	)
 	def script_moveLeft(self,gesture):
 		self.navigationHelper("left")
 
 	@script(
-		gesture=("kb:rightArrow")
+		gesture="kb:rightArrow"
 	)
 	def script_moveRight(self,gesture):
 		self.navigationHelper("right")
 
 	@script(
-		gesture=("kb:upArrow")
+		gesture="kb:upArrow"
 	)
 	def script_moveUp(self,gesture):
 		self.navigationHelper("up")
 
 	@script(
-		gesture=("kb:downArrow")
+		gesture="kb:downArrow"
 	)
 	def script_moveDown(self,gesture):
 		self.navigationHelper("down")
 
 	@script(
-		gesture=("kb:control+upArrow")
+		gesture="kb:control+upArrow"
 	)
 	def script_startOfColumn(self,gesture):
 		self.navigationHelper("startcol")
 
 	@script(
-		gesture=("kb:control+leftArrow")
+		gesture="kb:control+leftArrow"
 	)
 	def script_startOfRow(self,gesture):
 		self.navigationHelper("startrow")
 
 	@script(
-		gesture=("kb:control+rightArrow")
+		gesture="kb:control+rightArrow"
 	)
 	def script_endOfRow(self,gesture):
 		self.navigationHelper("endrow")
 
 	@script(
-		gesture=("kb:control+downArrow")
+		gesture="kb:control+downArrow"
 	)
 	def script_endOfColumn(self,gesture):
 		self.navigationHelper("endcol")
@@ -899,18 +899,55 @@ class ExcelWorksheet(ExcelBase):
 			states.add(controlTypes.STATE_PROTECTED)
 		return states
 
-	@script(
-		gestures=("kb:tab", "kb:shift+tab", "kb:enter", "kb:numpadEnter", "kb:shift+enter", "kb:shift+numpadEnter", 
-		"kb:upArrow", "kb:downArrow", "kb:leftArrow", "kb:rightArrow", "kb:control+upArrow", "kb:control+downArrow", 
-		"kb:control+leftArrow", "kb:control+rightArrow", "kb:home", "kb:end", "kb:control+home", "kb:control+end", 
-		"kb:shift+upArrow", "kb:shift+downArrow", "kb:shift+leftArrow", "kb:shift+rightArrow", 
-		"kb:shift+control+upArrow", "kb:shift+control+downArrow", "kb:shift+control+leftArrow", 
-		"kb:shift+control+rightArrow", "kb:shift+home", "kb:shift+end", "kb:shift+control+home", 
-		"kb:shift+control+end", "kb:shift+space", "kb:control+space", "kb:pageUp", "kb:pageDown", "kb:shift+pageUp", 
-		"kb:shift+pageDown", "kb:alt+pageUp", "kb:alt+pageDown", "kb:alt+shift+pageUp", "kb:alt+shift+pageDown", 
-		"kb:control+shift+8", "kb:control+pageUp", "kb:control+pageDown", "kb:control+a", "kb:control+v", 
-		"kb:shift+f11")
-	)
+	@scriptHandler.script(gestures=(
+		"kb:tab",
+		"kb:shift+tab",
+		"kb:enter",
+		"kb:numpadEnter",
+		"kb:shift+enter",
+		"kb:shift+numpadEnter",
+		"kb:upArrow",
+		"kb:downArrow",
+		"kb:leftArrow",
+		"kb:rightArrow",
+		"kb:control+upArrow",
+		"kb:control+downArrow",
+		"kb:control+leftArrow",
+		"kb:control+rightArrow",
+		"kb:home",
+		"kb:end",
+		"kb:control+home",
+		"kb:control+end",
+		"kb:shift+upArrow",
+		"kb:shift+downArrow",
+		"kb:shift+leftArrow",
+		"kb:shift+rightArrow",
+		"kb:shift+control+upArrow",
+		"kb:shift+control+downArrow",
+		"kb:shift+control+leftArrow",
+		"kb:shift+control+rightArrow",
+		"kb:shift+home",
+		"kb:shift+end",
+		"kb:shift+control+home",
+		"kb:shift+control+end",
+		"kb:shift+space",
+		"kb:control+space",
+		"kb:pageUp",
+		"kb:pageDown",
+		"kb:shift+pageUp",
+		"kb:shift+pageDown",
+		"kb:alt+pageUp",
+		"kb:alt+pageDown",
+		"kb:alt+shift+pageUp",
+		"kb:alt+shift+pageDown",
+		"kb:control+shift+8",
+		"kb:control+pageUp",
+		"kb:control+pageDown",
+		"kb:control+a",
+		"kb:control+v",
+		"kb:shift+f11",
+	), canPropagate=True)
+
 	def script_changeSelection(self,gesture):
 		oldSelection=api.getFocusObject()
 		gesture.send()
@@ -934,7 +971,6 @@ class ExcelWorksheet(ExcelBase):
 			if oldSelection.parent==newSelection.parent:
 				newSelection.parent=oldSelection.parent
 			eventHandler.executeEvent('gainFocus',newSelection)
-	script_changeSelection.canPropagate = True
 
 class ExcelCellTextInfo(NVDAObjectTextInfo):
 
@@ -1161,7 +1197,7 @@ class ExcelCell(ExcelBase):
 	@script(
 		# Translators: the description  for a script for Excel
 		description=_("opens a dropdown item at the current cell"),
-		gesture=("kb:alt+downArrow")
+		gesture="kb:alt+downArrow"
 	)
 	def script_openDropdown(self,gesture):
 		gesture.send()
@@ -1188,7 +1224,7 @@ class ExcelCell(ExcelBase):
 	@script(
 		# Translators: the description  for a script for Excel
 		description=_("Sets the current cell as start of column header"),
-		gesture=("kb:NVDA+shift+c")
+		gesture="kb:NVDA+shift+c"
 	)
 	def script_setColumnHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
@@ -1215,7 +1251,7 @@ class ExcelCell(ExcelBase):
 	@script(
 		# Translators: the description  for a script for Excel
 		description=_("sets the current cell as start of row header"),
-		gesture=("kb:NVDA+shift+r")
+		gesture="kb:NVDA+shift+r"
 	)
 	def script_setRowHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
@@ -1401,7 +1437,7 @@ class ExcelCell(ExcelBase):
 	@script(
 		# Translators: the description  for a script for Excel
 		description=_("Reports the note on the current cell"),
-		gesture=("kb:NVDA+alt+c")
+		gesture="kb:NVDA+alt+c"
 	)
 	def script_reportComment(self,gesture):
 		commentObj=self.excelCellObject.comment
@@ -1415,7 +1451,7 @@ class ExcelCell(ExcelBase):
 	@script(
 		# Translators: the description  for a script for Excel
 		description=_("Opens the note editing dialog"),
-		gesture=("kb:shift+f2")
+		gesture="kb:shift+f2"
 	)
 	def script_editComment(self,gesture):
 		commentObj=self.excelCellObject.comment
@@ -1883,7 +1919,7 @@ class ExcelFormControlListBox(ExcelFormControl):
 			return self.getChildAtIndex(self.listSize-1)
 
 	@script(
-		gesture=("kb:upArrow")
+		gesture="kb:upArrow"
 	)
 	def script_moveUp(self, gesture):
 		if self.selectedItemIndex > 1:
@@ -1899,7 +1935,7 @@ class ExcelFormControlListBox(ExcelFormControl):
 	script_moveUp.canPropagate = True
 
 	@script(
-		gesture=("kb:downArrow")
+		gesture="kb:downArrow"
 	)
 	def script_moveDown(self, gesture):
 		if self.selectedItemIndex < self.listSize:
@@ -1938,7 +1974,7 @@ class ExcelFormControlDropDown(ExcelFormControl):
 			self.selectedItemIndex=0
 
 	@script(
-		gesture=("kb:upArrow")
+		gesture="kb:upArrow"
 	)
 	def script_moveUp(self, gesture):
 		if self.selectedItemIndex > 1:
@@ -1948,7 +1984,7 @@ class ExcelFormControlDropDown(ExcelFormControl):
 	script_moveUp.canPropagate = True
 
 	@script(
-		gesture=("kb:downArrow")
+		gesture="kb:downArrow"
 	)
 	def script_moveDown(self, gesture):
 		if self.selectedItemIndex < self.listSize:
@@ -2001,25 +2037,25 @@ class ExcelFormControlScrollBar(ExcelFormControl):
 		eventHandler.queueEvent("valueChange",self)
 
 	@script(
-		gesture=("kb:upArrow")
+		gesture="kb:upArrow"
 	)
 	def script_moveUpSmall(self,gesture):
 		self.moveValue(True,False)
 
 	@script(
-		gesture=("kb:downArrow")
+		gesture="kb:downArrow"
 	)
 	def script_moveDownSmall(self,gesture):
 		self.moveValue(False,False)
 
 	@script(
-		gesture=("kb:pageUp")
+		gesture="kb:pageUp"
 	)
 	def script_moveUpLarge(self,gesture):
 		self.moveValue(True,True)
 
 	@script(
-		gesture=("kb:pageDown")
+		gesture="kb:pageDown"
 	)
 	def script_moveDownLarge(self,gesture):
 		self.moveValue(False,True)
