@@ -18,6 +18,7 @@ from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 from . import IA2TextTextInfo, IAccessible
 from compoundDocuments import CompoundTextInfo
 import locationHelper
+from logHandler import log
 
 class FakeEmbeddingTextInfo(textInfos.offsets.OffsetsTextInfo):
 	encoding = None
@@ -307,8 +308,16 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		while fields[-1] is not None:
 			# The end hasn't yet been reached, which means it isn't a descendant of obj.
 			# Therefore, continue from where obj was embedded.
-			if withFields and controlStack:
-				field = controlStack.pop()
+			if withFields:
+				try:
+					field = controlStack.pop()
+				except IndexError:
+					# We're trying to walk up past our root. This can happen if a descendant
+					# object within the range died, in which case _iterRecursiveText will
+					# never reach our end object and thus won't yield None. This means this
+					# range is invalid, so just return nothing.
+					log.debugWarning("Tried to walk up past the root. Objects probably dead.")
+					return []
 				if field:
 					# This object had a control field.
 					field["_endOfNode"] = True
