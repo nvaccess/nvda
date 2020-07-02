@@ -118,7 +118,7 @@ Prije nego što ćete moći pritisnuti gumb Nastavi, morat ćete označiti potvr
 Također postoji gumb, koji omogućuje pregled nekompatibilnih dodataka.
 Pogledajte poglavlje [Upravljanje nekompatibilnim dodacima #incompatibleAddonsManager] za daljnje informacije o ovom gumbu.
 
-+++ Pokreni tijekom prijave na Windows sustav +++[StartAtWindowsLogon]
++++ Koristi NVDDDA prilikom prijave  +++[StartAtWindowsLogon]
 Ova opcija omogućuje automatsko pokretanje NVDA čitača na Windows ekranu za prijavu, prije upisivanja lozinke.
 To također uključuje kontrolu korisničkog računa i ostale sigurne ekrane.
 Ova je opcija standardno aktivirana za nove instalacije.
@@ -3079,7 +3079,7 @@ Slijede opcije naredbenog retka za NVDA:
 | -l LOGLEVEL | --log-level=LOGLEVEL | Najniža razina poruka zapisivana (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), standardno je warning |
 | -c CONFIGPATH | --config-path=CONFIGPATH | određuje mapu u kojoj su pospremljene sve postavke |
 | -m | --minimal | bez zvuka, bez sučelja, bez poruke dobrodošlice itd |
-| -s | --secure | sigurni modus: onemogućuje Python konzolu značajke profila poput stvaranja, brisanja, preimenovanja profila itd., provjeru nadogradnji, neke potvrdne okvire u dijaloškom okviru dobrodošlice i u kategoriji općenitih postavki (npr. pokreni NVDA poslje prijave, spremi konfiguraciju poslje izlaza itd.), kao i zapisnik dnevnika i funkcije zapisa  (koristi se često na sigurnim ekranima). Imajte na umu da se postavke neće odavde spremati u mapu konfiguracije sustava te isto tako neće se spremati definirani prečaci. |
+| -s | --secure | sigurni modus: onemogućuje Python konzolu značajke profila poput stvaranja, brisanja, preimenovanja profila itd., provjeru nadogradnji, neke potvrdne okvire u dijaloškom okviru dobrodošlice i u kategoriji općenitih postavki (npr. koristi NVDA prilikom prijave, spremi konfiguraciju poslje izlaza itd.), kao i zapisnik dnevnika i funkcije zapisa  (koristi se često na sigurnim ekranima). Imajte na umu da se postavke neće odavde spremati u mapu konfiguracije sustava te isto tako neće se spremati definirani prečaci. |
 | nema | --disable-addons | dodaci neće imati utjecaja |
 | nema | --debug-logging | Omogućuje dijagnostiku samo pri trenutačno pokrenutoj kopiji. Ova postavka natpisuje bilo koju drugu razinu vođenja zapisnika ( ""--loglevel"", -l) specificirani argument uključujući i opciju bez logiranja. |
 | nema | --no-logging | Potpuno isključuje vođenje zapisnika. OVa postavka može biti nadpisana ako razina loga ( ""--loglevel"", -l) je specificiran iz naredbenog retka, ili je uključeno vođenje zapisnika. |
