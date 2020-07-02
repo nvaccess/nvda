@@ -154,21 +154,13 @@ class SettingsDialog(wx.Dialog, DpiScalingHelperMixin, metaclass=guiHelper.SIPAB
 		self.makeSettings(self.settingsSizer)
 
 		self.mainSizer.Add(self.settingsSizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL | wx.EXPAND, proportion=1)
-		self.mainSizer.Add(wx.StaticLine(self), flag=wx.EXPAND)
-
-		buttonSizer = guiHelper.ButtonHelper(wx.HORIZONTAL)
-		# Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
-		buttonSizer.addButton(self, label=_("OK"), id=wx.ID_OK)
-		# Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
-		buttonSizer.addButton(self, label=_("Cancel"), id=wx.ID_CANCEL)
+		buttons = wx.OK | wx.CANCEL
 		if hasApplyButton:
-			# Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
-			buttonSizer.addButton(self, label=_("Apply"), id=wx.ID_APPLY)
-
+			buttons |= wx.APPLY
 		self.mainSizer.Add(
-			buttonSizer.sizer,
+			self.CreateSeparatedButtonSizer(buttons),
 			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.ALL | wx.ALIGN_RIGHT
+			flag=wx.EXPAND | wx.BOTTOM | wx.LEFT | wx.RIGHT
 		)
 
 		self.mainSizer.Fit(self)
@@ -2627,9 +2619,9 @@ class DictionaryEntryDialog(wx.Dialog):
 		typeChoices = [DictionaryEntryDialog.TYPE_LABELS[i] for i in DictionaryEntryDialog.TYPE_LABELS_ORDERING]
 		self.typeRadioBox=sHelper.addItem(wx.RadioBox(self,label=typeText, choices=typeChoices))
 
-		sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK|wx.CANCEL))
+		sHelper.addDialogDismissButtons(wx.OK | wx.CANCEL, separated=True)
 
-		mainSizer.Add(sHelper.sizer,border=20,flag=wx.ALL)
+		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		self.setType(speechDictHandler.ENTRY_TYPE_ANYWHERE)
