@@ -60,17 +60,14 @@ class AppModule(appModuleHandler.AppModule):
 		nextHandler()
 
 	def event_UIA_notification(self, obj, nextHandler, activityId=None, **kwargs):
-		# From May 2018 onwards, unit converter uses a different automation iD.
-		# Changed significantly in July 2018 thanks to UI redesign, and as a result, attribute error is raised.
 		try:
 			shouldAnnounceNotification = (
 				obj.previous.UIAElement.cachedAutomationID in
 				("numberPad", "UnitConverterRootGrid")
 			)
 		except AttributeError:
-			# Another UI redesign in 2019, causing attribute error when changing categories.
 			resultElement = api.getForegroundObject().children[1].lastChild
-			# Another redesign in 2019 due to introduction of "always on top" i.e. compact overlay mode.
+			# Redesigned in 2019 due to introduction of "always on top" i.e. compact overlay mode.
 			if resultElement.UIAElement.cachedClassName != "LandmarkTarget":
 				resultElement = resultElement.parent.children[1]
 			shouldAnnounceNotification = (
