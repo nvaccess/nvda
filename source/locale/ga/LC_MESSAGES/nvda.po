@@ -8,15 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA 2019.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-19 00:10+1000\n"
-"PO-Revision-Date: 2020-05-02 14:43-0700\n"
+"POT-Creation-Date: 2020-06-30 23:50+1000\n"
+"PO-Revision-Date: 2020-06-28 12:59+0100\n"
 "Last-Translator: Ronan McGuirk <ronan.mcguirk@gmail.com>\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 2.0.7\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -1145,9 +1145,8 @@ msgstr "Rómánais"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Russian computer braille"
-msgstr "Gearmáinis, ríomhbhraille 8-ponc"
+msgstr "ríomhbhraille Rúisis 8-ponc"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1206,8 +1205,15 @@ msgstr "Tuircis, grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Ukrainian"
-msgstr "Úcráinis"
+#, fuzzy
+msgid "Ukrainian grade 1"
+msgstr "k Cróitis,  grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Ukrainian computer braille"
+msgstr "Gearmáinis, ríomhbhraille 8-ponc"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3320,13 +3326,12 @@ msgstr "Tuairiscigh nó ná tuairiscigh arbéim"
 #. Translators: The message announced when toggling the report superscripts and subscripts
 #. document formatting setting.
 msgid "report superscripts and subscripts on"
-msgstr ""
+msgstr "Tabhair tuairisc ar fhorscripteanna agus ar fhoscripteanna."
 
 #. Translators: The message announced when toggling the report superscripts and subscripts
 #. document formatting setting.
-#, fuzzy
 msgid "report superscripts and subscripts off"
-msgstr "Ná tabhair tuairisc ar sainchomharthaí ná ar réigiúin"
+msgstr "Ná tabhair tuairisc ar fhorscripteanna ná ar fhoscripteanna"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
@@ -4115,9 +4120,8 @@ msgstr ""
 "dtí an ghearrthaisce."
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-#, fuzzy
 msgid "Reads all controls in the active window"
-msgstr "Léigh aon nótaí tráchta i bhfuinneog na nótaí"
+msgstr "Léitear gach rialtán san fhuinneog ghníomhach"
 
 #. Translators: GUI development tool, to get information about the components used in the NVDA GUI
 msgid ""
@@ -4357,9 +4361,8 @@ msgid "Shows the NVDA input gestures dialog"
 msgstr "Taispeáintear an dialog gothaí ionchuir"
 
 #. Translators: Input help mode message for the report current configuration profile command.
-#, fuzzy
 msgid "Reports the name of the current NVDA configuration profile"
-msgstr "Sábháil an chumraíocht NVDA seo"
+msgstr "Tuairiscítear ainm na próifíle cumraíochta reatha"
 
 #. Translators: Message announced when the command to report the current configuration profile and
 #. the default configuration profile is active.
@@ -4369,9 +4372,9 @@ msgstr "gnáthchumraíocht"
 
 #. Translators: Message announced when the command to report the current configuration profile
 #. is active. The placeholder '{profilename}' is replaced with the name of the current active profile.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{profileName} configuration profile active"
-msgstr "próifíl {profile} ar siúl profile "
+msgstr "Tá an phróifíl {profileName} ar siúl p"
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
@@ -4833,9 +4836,8 @@ msgid "User Guide"
 msgstr "Treoirleabhar"
 
 #. Translators: A label for a shortcut in start menu to open NVDA what's new.
-#, fuzzy
 msgid "What's new"
-msgstr "Gnéithe &nua"
+msgstr "Nuacht"
 
 #. Translators: A file extension label for NVDA add-on package.
 msgid "NVDA add-on package"
@@ -7780,7 +7782,7 @@ msgstr "&Úsáid CapsLock mar eochair mhionathraithe in NVDA"
 #. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
 #. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "St&art NVDA after I sign in"
-msgstr ""
+msgstr "Cuir tús le NVDA t&ar éis dom síniú isteach."
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Show this dialog when NVDA starts"
@@ -8178,7 +8180,7 @@ msgstr ""
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 msgid "Incompatible add-ons"
-msgstr " níos déanaíaigh an Breiseán "
+msgstr "Breiseáin neamh-chomhoiriúnacha"
 
 #. Translators: The label for a column in add-ons list used to provide some explanation about incompatibility
 msgid "Incompatible reason"
@@ -8282,7 +8284,7 @@ msgstr "Athainmnigh an phróifíl."
 #. Translators: An error displayed when the user attempts to rename a configuration profile
 #. with an empty name.
 msgid "A profile cannot have an empty name."
-msgstr ""
+msgstr "Ní féidir ainm folamh a bheith ar phróifíl.a"
 
 #. Translators: An error displayed when renaming a configuration profile
 #. and a profile with the new name already exists.
@@ -8358,7 +8360,7 @@ msgstr ""
 #. Translators: An error displayed when the user attempts to create a configuration profile
 #. with an empty name.
 msgid "You must choose a name for this profile."
-msgstr ""
+msgstr "Is gá ainm a roghnú don phróifíl seo."
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
@@ -8463,8 +8465,8 @@ msgstr ""
 "D’aithrigh cosán na suiteála NVDA.  Beidh sé suiteáilte anois sa {path}."
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-msgid "Start NVDA during sign-in"
-msgstr ""
+msgid "Use NVDA during sign-in"
+msgstr "Bain úsáid as NVDA agus tú ag síniú isteach."
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "&Keep existing desktop shortcut"
@@ -8596,9 +8598,8 @@ msgid "Error saving log: %s"
 msgstr "Earráid agus logchomhad á shábháil: %s"
 
 #. Translators: A message indicating that log cannot be loaded to LogViewer.
-#, fuzzy
 msgid "Log is unavailable"
-msgstr "dofhaighte"
+msgstr "Níl an log ar fáil."
 
 #. Translators: A cancel button on a message dialog.
 #. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
@@ -8640,15 +8641,13 @@ msgstr "dífhabhtú"
 #. Translators: The label for a setting in general settings to select NVDA's interface language
 #. (once selected, NVDA must be restarted; the option user default means the user's Windows language
 #. will be used).
-#, fuzzy
 msgid "NVDA &Language (requires restart):"
-msgstr "&Teanga (is gá atosú chun an t-athrú seo a chur i bhfeidhm):"
+msgstr "Teanga NVDA (is gá atosú chun an t-athrú seo a chur i bhfeidhm):"
 
 #. Translators: The label for a setting in general settings to save current configuration when NVDA
 #. exits (if it is not checked, user needs to save configuration before quitting NVDA).
-#, fuzzy
 msgid "&Save configuration when exiting NVDA"
-msgstr "&Sábháil an chumraíocht ag am scortha"
+msgstr "&Sábháil an chumraíocht ag am scortha."
 
 #. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
 msgid "Sho&w exit options when exiting NVDA"
@@ -8668,11 +8667,10 @@ msgstr "Leibhéal l&ogála:"
 #. allow NVDA to come up in Windows login screen (useful if user
 #. needs to enter passwords or if multiple user accounts are present
 #. to allow user to choose the correct account).
-#, fuzzy
-msgid "Start NVDA during sign-in (requires administrator privileges)"
+msgid "Use NVDA during sign-in (requires administrator privileges)"
 msgstr ""
 "Úsáid NVDA ar an scáileán logála isteach Windows (riarthóir an chórais "
-"amháin)"
+"amháin)."
 
 #. Translators: The label for a button in general settings to copy
 #. current user settings to system settings (to allow current
@@ -8900,10 +8898,9 @@ msgstr "Ceadaigh léamh scimeála sa mhód ‘Abair Uile’"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#, fuzzy
 msgid "&Beep if typing lowercase letters when caps lock is on"
 msgstr ""
-"Déan bíp nuair a chlóscríobhtar litreacha beaga agus glas ceannlitreacha ann"
+"Déan bíp nuair a chlóscríobhtar litreacha beaga agus glas ceannlitreacha ann."
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -9060,11 +9057,10 @@ msgstr "Tuairiscigh eolas ar &shuíomh oibiachta"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#, fuzzy
 msgid "&Guess object position information when unavailable"
 msgstr ""
-"Tabhair buille faoi thuairim ar eolas an shuímh oibiachta nuair nach mbíonn "
-"sé ar fáil"
+"Déan buille faoi thuairim ar shuíomh na hoibiachta nuair nach bhfuil an "
+"suíomh le fáil."
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -9180,7 +9176,7 @@ msgstr "Aitrea&búidí clófhoirne"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Su&perscripts and subscripts"
-msgstr ""
+msgstr "Forscripteanna agus foscripteanna"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9303,7 +9299,6 @@ msgstr "idir dhathanna agus stíleanna"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-#, fuzzy
 msgid "Cell &borders:"
 msgstr "imlínte cille"
 
@@ -9349,11 +9344,10 @@ msgstr "in&chliceáilte"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#, fuzzy
 msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr ""
-"Fógair athraithe formáidithe i ndiaidh an chúrsóra (is féidir moill a bheith "
-"ann)"
+"Tabhair tuairisc ar athraithe formáidithe i ndiaidh an chúrsóra (d’fhéadfadh "
+"moill a bheith ann)"
 
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
@@ -9750,9 +9744,8 @@ msgid "Add Symbol"
 msgstr "Cuir siombail leis"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#, fuzzy
 msgid "&Symbol:"
-msgstr "Siombail"
+msgstr "&Siombail"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
@@ -11870,6 +11863,9 @@ msgstr "spásáil línte dúbalta"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "spásáil línte 1.5"
+
+#~ msgid "Ukrainian"
+#~ msgstr "Úcráinis"
 
 #~ msgid "Russian braille for computer code"
 #~ msgstr "Rúisis, ríomhbhraille"
