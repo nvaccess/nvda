@@ -4,7 +4,7 @@ Was ist neu in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2020.2 =
-Zu den Highlights dieser Version gehören die Unterstützung für eine neue Braillezeile von Nattiq, eine verbesserte Unterstützung für ESET Antivirus und Windows-Terminal, Leistungsverbesserungen bei 1Password und mit Windows OneCore-Synthesizer. Plus viele andere wichtige Fehlerbehebungen und Verbesserungen.
+Zu den Highlights dieser Version gehören die Unterstützung für eine neue Braillezeile von Nattiq, verbessere Unterstützung für ESET Antivirus und Windows-Terminal, Leistungsverbesserungen in 1Password und mit Windows OneCore-Sprachausgaben und viele wietere wichtige Fehlerbehebungen und Verbesserungen.
 
 
 == Neue Features ==
@@ -13,19 +13,19 @@ Zu den Highlights dieser Version gehören die Unterstützung für eine neue Brai
 - Ein Skript zum Öffnen des NVDA-Benutzerverzeichnis wurde hinzugefügt (ist keinem Tastenbefehl zugeordnet). (#2214)
 - Verbesserte Unterstützung für die Oberfläche von ESET Antivirus. (#10894)
 - Unterstützung für das Windows-Terminal hinzugefügt. (#10305)
-- Ein Befehl zum Melden des aktiven Konfigurationsprofils wurde hinzugefügt. (#9325)
-- Ein Tastenbefehl wurde hinzugefügt, um die Ansage von hoch- und tiefgestellten Zeichen umzuschalten. (#10985)
-- Web-Anwendungen (z. B. Gmail) lesen keine veralteten Informationen mehr vor, wenn der Schwerpunkt schnell verschoben wird. (#10885)
+- Ein Befehl zum Ansagen des aktiven Konfigurationsprofils wurde hinzugefügt (ohne Standard-Tastenbefehl). (#9325)
+- Ein Tastenbefehl wurde hinzugefügt, um die Ansage von hoch- und tiefgestellten Zeichen umzuschalten (ohne Standard-Tastenbefehl). (#10985)
+- In Web-Anwendungen (z. B. Gmail) werden beim schnellen Navigieren mit dem Fokus nicht länger veraltete Informationen mehr angesagt. (#10885)
   - Diese experimentelle Funktion muss manuell über die Option "Sprachausgabe unterbrechen, wenn das Ereignis für den Fokus abgelaufen ist" im Erweiterten Einstellungsfenster aktiviert werden.
-- Weitere Symbole hinzugefügt. (#11105)
+- Viele weitere Symbole wurden ergänzt. (#11105)
 
 
 == Änderungen ==
-- Liblouis-Braille-Übersetzer von Version 3.12.0 auf Version [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0] aktualisiert. (#10832, #11221)
+- Liblouis-Braille-Übersetzer wurde von Version 3.12.0 auf [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0] aktualisiert. (#10832, #11221)
 - Die Ansage von hoch- und tiefgestellte Zeichen werden nun getrennt von den Meldungen der Schrift-Attribute gesteuert. (#10919)
 - Auf Grund von Änderungen im VS-Code deaktiviert NVDA den Lesemodus im Code standardmäßig nicht mehr. (#10888)
-- Die Meldungen "oben" und "unten" beim Bewegen des NVDA-Cursors zur ersten oder letzten Zeile des aktuellen Navigator-Objekts wurden entfernt. (#9551)
-- Die Meldungen "links" und "rechts" beim Bewegen des NVDA-Cursors auf das erste oder letzte Zeichen der Zeile für das aktuelle Navigator-Objekt wurden entfernt. (#9551)
+- NVDA sagt nicht mehr "Nach oben" und "Nach unten" an, wenn der NVDA-Cursor direkt auf das erste oder letzte Zeichen der Zeile für das aktuelle Navigator-Objekt mit der Bewegung zum Anfang der Zeile bzw. zum Ende der Zeile bewegt wird. (#9551)
+- NVDA sagt nicht mehr "Nach links" und "Nach rechts" an, wenn der NVDA-Cursor direkt auf das erste oder letzte Zeichen der Zeile für das aktuelle Navigator-Objekt mit der Bewegung zum Anfang der Zeile bzw. zum Ende der Zeile bewegt wird. (#9551)
 
 
 == Fehlerbehebungen ==
@@ -47,7 +47,7 @@ Zu den Highlights dieser Version gehören die Unterstützung für eine neue Brai
 - Die Tool-Tipps der Symbole im Infobereich werden bei der Tastatur-Navigation nicht mehr gemeldet, wenn ihr Text mit dem Namen der Icons übereinstimmt, um eine doppelte Ansage zu vermeiden. (#6656)
 - Im Lesemodus mit deaktiviertem "Automatisch den System-Fokus auf fokussierbare Elemente setzen" fokussiert der Wechsel in den Fokusmodus mit NVDA+Leertaste nun das Element unter dem Cursor. (#11206)
 - Auf bestimmten Systemen kann wieder nach NVDA-Updates gesucht werden, z. B. nach einer sauberen Windows-Installationen. (#11253)
-- Ändert den Fokus in einer Java-Anwendung nicht mehr, wenn die Auswahl in einem nicht fokussierten Baum, einer Tabelle oder einer Liste geändert wird. (#5989)
+- Der Fokus wird in einer Java-Anwendung nicht mehr verschoben, wenn die Auswahl in einem unfokussierten Bereich geändert wird. (#5989)
 
 
 == Änderungen für Entwickler ==

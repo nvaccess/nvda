@@ -3,6 +3,21 @@
 #Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<![^\d -])\.(?=\d)
+decimal comma	(?<![^\d -]),(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
+
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
@@ -13,13 +28,15 @@ symbols:
 ; phrase ending	точка с запятой	most	always	# ; в конце фразы
 : phrase ending	двоеточие	most	always	# : в конце фразы
 decimal point		none	always	# десятичная точка
+decimal comma		none	always	# десятичная запятая
 in-word '	апостроф	all	norep	# ' в слове
-negative number	минус	none	norep	# отрицательное число
+negative number	минус	none	norep	# знак отрицательного числа
 
 # Whitespace
 \0	чисто	char	# null
 \t	таб
 \n	перевод строки	char
+\v	вертикальная табуляция	char
 \f	разделитель страниц	none
 \r	возврат каретки	char
  	пробел	char	# обычный пробел
@@ -155,7 +172,6 @@ _	подчёркивание	most
 ◆	чёрный ромб	some
 ‣	треугольный маркер	none
 ✗	x маркер	none
-￼	заменяющий символ объекта	none
 ⌘	Mac Command key	none
 
 # Playing card suit

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-19 00:10+1000\n"
-"PO-Revision-Date: 2020-06-24 07:51+0100\n"
+"POT-Creation-Date: 2020-06-30 23:50+1000\n"
+"PO-Revision-Date: 2020-07-02 09:04+0100\n"
 "Last-Translator: Stanley Chung <stanley@mail.com>\n"
 "Language-Team: NVDA Korean users and translations forum <advck1123@gmail."
 "com>\n"
@@ -1200,8 +1200,15 @@ msgstr "터키어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Ukrainian"
-msgstr "우크라이나어"
+#, fuzzy
+msgid "Ukrainian grade 1"
+msgstr "크로아티아어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Ukrainian computer braille"
+msgstr "러시아어 컴퓨터 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -7667,7 +7674,7 @@ msgstr "CapsLock을 NVDA 기능키로 사용"
 #. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
 #. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "St&art NVDA after I sign in"
-msgstr ""
+msgstr "로그인 후에 NVDA 시작 (&A)"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Show this dialog when NVDA starts"
@@ -8168,7 +8175,7 @@ msgstr "프로필 이름 변경"
 #. Translators: An error displayed when the user attempts to rename a configuration profile
 #. with an empty name.
 msgid "A profile cannot have an empty name."
-msgstr ""
+msgstr "프로필 이름을 비워둘 수 없습니다."
 
 #. Translators: An error displayed when renaming a configuration profile
 #. and a profile with the new name already exists.
@@ -8241,7 +8248,7 @@ msgstr ""
 #. Translators: An error displayed when the user attempts to create a configuration profile
 #. with an empty name.
 msgid "You must choose a name for this profile."
-msgstr ""
+msgstr "이 프로필에 대한 이름을 선택해야 합니다."
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
@@ -8341,8 +8348,8 @@ msgstr ""
 "NVDA 설치 경로가 변경되었습니다. 새로운 경로 {path}에 NVDA를 설치합니다."
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-msgid "Start NVDA during sign-in"
-msgstr "Windows 로그온 창에서 NVDA 실행"
+msgid "Use NVDA during sign-in"
+msgstr "로그인 중에 NVDA 사용"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "&Keep existing desktop shortcut"
@@ -8542,8 +8549,8 @@ msgstr "로깅 레벨 (&O)"
 #. allow NVDA to come up in Windows login screen (useful if user
 #. needs to enter passwords or if multiple user accounts are present
 #. to allow user to choose the correct account).
-msgid "Start NVDA during sign-in (requires administrator privileges)"
-msgstr "Windows 로그인 창에서 NVDA 사용 (관리자 권한 필요)"
+msgid "Use NVDA during sign-in (requires administrator privileges)"
+msgstr "로그인 중에 NVDA 사용 (관리자 권한 필요)"
 
 #. Translators: The label for a button in general settings to copy
 #. current user settings to system settings (to allow current
@@ -11685,6 +11692,9 @@ msgstr "두 줄 간격"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 줄 간격"
+
+#~ msgid "Ukrainian"
+#~ msgstr "우크라이나어"
 
 #~ msgid "Russian braille for computer code"
 #~ msgstr "러시아어 컴퓨터 점자"

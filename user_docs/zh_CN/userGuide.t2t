@@ -35,8 +35,8 @@ NVDA允许盲人和低视力人群访问 Windows 操作系统以及与许多第�
 -
 
 ++ 国际化 ++[Internationalization]
-让世界上所有的人，不管使用何种语言，都可以无障碍的公平使用辅助工具是非常重要的。
-除了英语之外，NVDA 还被翻译成54种语言，包括：南非荷兰语，阿尔巴尼亚语，阿姆哈拉语，阿拉伯语，阿拉贡语，保加利亚语，加泰罗尼亚语，中文（繁体和简体），克罗地亚语，捷克语，丹麦语，荷兰语，波斯语，芬兰语，法语，加利西亚语，希腊语，格鲁吉亚语，德语（德国和瑞典），希伯来语，印地语，匈牙利语，冰岛语，爱尔兰语，意大利语，日本语，韩语，尼泊尔语，挪威语，波兰语，蒙古语，葡萄牙语（巴西和葡萄牙），旁遮普语，罗马尼亚语，俄语，塞尔维亚语，斯洛伐克语，斯洛文尼亚语，西班牙语（哥伦比亚和西班牙），瑞典语，泰米尔语，泰语，土耳其语，乌克兰语和越南语。
+让世界上所有的人，无论使用何种语言，都可以公平且无障碍的使用辅助工具是非常重要的。
+除了英语之外，NVDA 还被翻译成54种语言，包括：南非荷兰语，阿尔巴尼亚语，阿姆哈拉语，阿拉伯语，阿拉贡语，保加利亚语，加泰罗尼亚语，中文（繁体和简体），克罗地亚语，捷克语，丹麦语，荷兰语，波斯语，芬兰语，法语，加利西亚语，希腊语，格鲁吉亚语，德语（德国和瑞士），希伯来语，印地语，匈牙利语，冰岛语，爱尔兰语，意大利语，日本语，韩语，尼泊尔语，挪威语，波兰语，蒙古语，葡萄牙语（巴西和葡萄牙），旁遮普语，罗马尼亚语，俄语，塞尔维亚语，斯洛伐克语，斯洛文尼亚语，西班牙语（哥伦比亚和西班牙），瑞典语，泰米尔语，泰语，土耳其语，乌克兰语和越南语。
 
 ++ 支持的语音合成器 ++[SpeechSynthesizerSupport]
 除了提供相应语言的消息和界面之外，只要它们有一个能讲述那一种语言的语音合成器，NVDA也可让用户阅读任何语言的内容，
@@ -2031,19 +2031,16 @@ NVDA 的语音字典比之单词替换更为强大。
 
 要想在任何地方切换朗读查看器的开关，请在[输入手势对话框 #InputGestures]定义一个自定义手势。
 
-++ Braille Viewer ++[BrailleViewer]
-For sighted software developers or people demoing NVDA to sighted audiences, a floating window is available that allows you to view braille output, and the text equivalent for each braille character.
-The braille viewer can be used at the same time as a physical braille display, it will match the number of cells on the physical device.
-While the braille viewer is enabled, it constantly updates to show you the braille that would be displayed on a physical braille display.
-
-To enable the braille viewer, check the "Braille Viewer" menu item under Tools in the NVDA menu.
-Uncheck the menu item to disable it.
-
-Physical braille displays typically have buttons to scroll forwards or backwards, to enable scrolling with the braille viewer tool use the [Input Gestures dialog #InputGestures] to assign keyboard shortcuts which "Scrolls the braille display back" and "Scrolls the braille display forward"
-
-The braille viewer window contains a check box labeled "Show braille viewer on startup".
-If this is checked, the braille viewer will open when NVDA is started.
-The braille viewer window will always attempt to re-open with the same dimensions and location as when it was closed.
+++ 盲文查看器 ++[BrailleViewer]
+在视障者向明眼人演示 NVDA 时，显示一个悬浮窗口，其中显示盲文信息，以及每个盲文单元的对应文本。
+盲文查看器可以與实体点显器同時使用，并显示与实体设备相同数量的盲文单元。
+打开盲文查看器后，其会实时同步点显器上的信息。
+要想使用盲文查看器，可以再 NVDA 的“工具”菜单选中“盲文查看器”。 取消选中菜单即可关闭。
+实体点显器通常有“向前（或向后）滚动”的按钮，要想使用该功能可在[输入手势对话框#InputGestures]指定“模拟点显器向后滚动”和“模拟点显器向前滚动”的快捷键。
+向后滚动点字显示器 "和 "向前滚动点字显示器"。
+盲文查看器窗口包含一个 “启动时显示盲文查看器"的复选框。
+如果选中此复选框，当 NVDA 启动时，盲文查看器将自动启用。
+盲文查看器会记忆上次打开时的尺寸和位置。
 
 ++ 插件管理器 ++[AddonsManager]
 您可以通过 NVDA 的“工具”菜单的“插件管理器”访问插件管理器，插件管理器允许您安装、移除、启用或停用 NVDA 的插件。

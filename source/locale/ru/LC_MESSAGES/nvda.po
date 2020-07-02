@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-19 00:10+1000\n"
-"PO-Revision-Date: 2020-06-23 21:00+0800\n"
+"POT-Creation-Date: 2020-06-30 23:50+1000\n"
+"PO-Revision-Date: 2020-06-30 06:23+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -1197,8 +1197,13 @@ msgstr "Турецкий (первая ступень)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Ukrainian"
-msgstr "Украинский"
+msgid "Ukrainian grade 1"
+msgstr "Украинский (первая ступень)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Ukrainian computer braille"
+msgstr "Украинский компьютерный брайль"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3032,17 +3037,15 @@ msgstr "Переходит на предыдущий столбец таблиц
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
-msgstr "чтение таблиц используемых для разметки выключено"
+msgstr "чтение макетных таблиц выключено"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables on"
-msgstr "чтение таблиц используемых для разметки включено"
+msgstr "чтение макетных таблиц включено"
 
 #. Translators: Input help mode message for include layout tables command.
 msgid "Toggles on and off the inclusion of layout tables in browse mode"
-msgstr ""
-"Включает и выключает объявление таблиц используемых для разметки в режиме "
-"обзора"
+msgstr "Включает и выключает объявление макетных таблиц в режиме обзора"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -3715,7 +3718,7 @@ msgstr ""
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
-msgstr "Нет информации о местоположении"
+msgstr "Нет информации о расположении"
 
 #. Translators: Description for report review cursor location command.
 msgid ""
@@ -6732,7 +6735,7 @@ msgstr ""
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
-msgstr "Защищённый рабочий стол"
+msgstr "Безопасный рабочий стол"
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
 #, python-brace-format
@@ -7464,8 +7467,8 @@ msgstr "Конфигурация сброшена к заводским наст
 #. Translators: Reported when current configuration cannot be saved while NVDA is running in secure mode such as in Windows login screen.
 msgid "Cannot save configuration - NVDA in secure mode"
 msgstr ""
-"Конфигурация не может быть сохранена, поскольку NVDA работает на защищённом "
-"рабочем столе"
+"Конфигурация не может быть сохранена, поскольку NVDA работает в безопасном "
+"режиме"
 
 #. Translators: Reported when current configuration has been saved.
 msgid "Configuration saved"
@@ -8466,8 +8469,8 @@ msgstr ""
 "папку {path}"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-msgid "Start NVDA during sign-in"
-msgstr "Запускать NVDA во время входа в систему"
+msgid "Use NVDA during sign-in"
+msgstr "Использовать NVDA на экране входа в систему"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "&Keep existing desktop shortcut"
@@ -8673,9 +8676,9 @@ msgstr "Уровень ведения &журнала:"
 #. allow NVDA to come up in Windows login screen (useful if user
 #. needs to enter passwords or if multiple user accounts are present
 #. to allow user to choose the correct account).
-msgid "Start NVDA during sign-in (requires administrator privileges)"
+msgid "Use NVDA during sign-in (requires administrator privileges)"
 msgstr ""
-"Запускать NVDA во время входа в систему (требуются права администратора)"
+"Использовать NVDA на экране входа в систему (требуются права администратора)"
 
 #. Translators: The label for a button in general settings to copy
 #. current user settings to system settings (to allow current
@@ -8685,7 +8688,7 @@ msgid ""
 "Use currently saved settings during sign-in and on secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"Использовать последнюю сохранённую конфигурацию во время входа в систему и "
+"Использовать последнюю сохранённую конфигурацию на экране входа в систему и "
 "на других защищённых экранах (требуются права администратора)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
@@ -9092,7 +9095,7 @@ msgstr "&Максимальное число символов на строку"
 #. Translators: This is the label for a textfield in the
 #. browse mode settings panel.
 msgid "&Number of lines per page"
-msgstr "Число &строк на странице"
+msgstr "Число &строк на страницу"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -9112,7 +9115,7 @@ msgstr "Автоматическое &чтение страницы при её 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Include l&ayout tables"
-msgstr "Учитывать таблицы, используем&ые для разметки"
+msgstr "Учитывать макетные &таблицы"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -9168,17 +9171,17 @@ msgstr "&Атрибуты шрифта"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Su&perscripts and subscripts"
-msgstr "Надстрочное и подстрочное &расположение"
+msgstr "Надстрочное и подстрочное располо&жение"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "E&mphasis"
-msgstr "А&кцентирование"
+msgstr "Акц&ентирование"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "St&yle"
-msgstr "&Стиль"
+msgstr "Сти&ль"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9198,12 +9201,12 @@ msgstr "&Примечания"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Editor revisions"
-msgstr "Исп&равления редактора"
+msgstr "&Исправления редактора"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Spelling e&rrors"
-msgstr "Ор&фографические ошибки"
+msgstr "Орфографи&ческие ошибки"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
@@ -9223,7 +9226,7 @@ msgstr "&Номера строк"
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
 msgid "Line &indentation reporting:"
-msgstr "Чтение &отступов строк:"
+msgstr "Чтение отст&упов строк:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 #. Translators: This is the label for a combobox in the
@@ -9272,12 +9275,12 @@ msgstr "&Таблицы"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Row/column h&eaders"
-msgstr "Заголовки строк и столбцов в &таблицах"
+msgstr "Заголовки с&трок и столбцов"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Cell c&oordinates"
-msgstr "Координаты ячеек в &таблицах"
+msgstr "Коор&динаты ячеек"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
@@ -9292,7 +9295,7 @@ msgstr "Цвет и стиль"
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
 msgid "Cell &borders:"
-msgstr "&Границы ячеек:"
+msgstr "Границы &ячеек:"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
@@ -9307,7 +9310,7 @@ msgstr "&Списки"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Block &quotes"
-msgstr "&Цитаты"
+msgstr "Цитат&ы"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9317,12 +9320,12 @@ msgstr "&Группы"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Lan&dmarks and regions"
-msgstr "&Ориентиры и области"
+msgstr "Ориентиры и о&бласти"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Arti&cles"
-msgstr "Ст&атьи"
+msgstr "Стат&ьи"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9332,13 +9335,13 @@ msgstr "&Фреймы"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Clickable"
-msgstr "&Интерактивные элементы"
+msgstr "Интерактивные &элементы"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr ""
-"Сообщать изменения &форматирования после курсора (может вызвать отставание)"
+"Сооб&щать изменения форматирования после курсора (может вызвать отставание)"
 
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
@@ -11863,15 +11866,3 @@ msgstr "Двойной междустрочный интервал"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Полуторный междустрочный интервал"
-
-#~ msgid "Russian braille for computer code"
-#~ msgstr "Русский компьютерный брайль"
-
-#~ msgid "Speaks the current foreground object"
-#~ msgstr "Читает объект на переднем плане"
-
-#~ msgid "&Automatically start NVDA after I log on to Windows"
-#~ msgstr "&Автозагрузка NVDA после входа в Windows"
-
-#~ msgid "Use NVDA on the Windows &logon screen"
-#~ msgstr "Использовать NVDA на экране &входа в Windows"

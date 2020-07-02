@@ -118,7 +118,7 @@ NVDA 安裝版可提供額外功能，例如：登入後自動執行、可報讀
 此視窗也會有個按鈕，讓您逐一檢視將被停用的附加元件。
 關於此按鈕的更多資訊，請參考[不相容的附加元件對話框這一章節 #incompatibleAddonsManager]。
 
-+++ 在登入畫面啟動 NVDA +++[StartAtWindowsLogon]
++++ 在登入畫面使用 NVDA +++[StartAtWindowsLogon]
 此選項是讓您可選擇是否在登入畫面時，在鍵入密碼前就啟動 NVDA。
 此選項也包括使用者帳戶控制對話框和其他安全畫面。
 此選項在初次安裝時，預設是啟用的。
@@ -1075,8 +1075,8 @@ NVDA 將套用您目前電腦系統所使用的語言。
 若啟用此選項，NVDA 會在你登入 Windows 後自動啟動。
 只有安裝版才有這個選項。
 
-==== 在登入畫面啟動 NVDA（需要系統管理員權限） ====[GeneralSettingsStartOnLogOnScreen]
-若您的電腦在開機時需要輸入帳號與密碼，啟用此選項可在啟動 Windows 時的登入畫面中自動啟動 NVDA。
+==== 在登入畫面使用 NVDA（需要系統管理員權限） ====[GeneralSettingsStartOnLogOnScreen]
+若您的電腦在開機時需要輸入使用者名稱與密碼，啟用此選項可在啟動 Windows 時的登入畫面中自動啟動 NVDA。
 只有在安裝版上才有這個選項。
 
 ==== 將目前儲存的設定套用到登入或其他安全畫面（需要系統管理員權限）====[GeneralSettingsCopySettings]
@@ -3079,14 +3079,14 @@ nvda -q
 | -l LOGLEVEL | --log-level=LOGLEVEL | 事件記錄最低等級（偵錯 10；輸入/輸出 12；偵錯警告 15；資訊 20；警告 30；錯誤 40；嚴重錯誤 50；停用 100）預設是警告。 |
 | -c CONFIGPATH | --config-path=CONFIGPATH | 所有用在 NVDA 設定的路徑均已貯存。 |
 | -m | --minimal | 沒有音效、沒有介面、沒有啟動等資訊。 |
-| -s | --secure | 安全模式：會停用以下項目，包括 Python 主控台、設定檔(如新增、刪除重新命名設定檔等)、檢查更新、一些歡迎畫面及設定對話框中，一般類別的核取方塊(如「登入 Windows 後自動啟動 NVDA」、「關閉時儲存設定」等)，以及事件紀錄功能(此選項通常用於安全模式)。注意此選項也會讓您無法將自訂的輸入手勢儲存下來。 |
+| -s | --secure | 安全模式：會停用以下項目，包括 Python 主控台、設定檔(如新增、刪除重新命名設定檔等)、檢查更新、一些歡迎畫面及設定對話框中，一般類別的核取方塊(如「在登入畫面使用 NVDA」、「關閉時儲存設定」等)，以及事件紀錄功能(此選項通常用於安全模式)。注意此選項也會讓您無法將自訂的輸入手勢儲存下來。 |
 | None | --disable-addons | 附加元件將不起作用 |
 | None | --debug-logging | 僅對本次執行啟用除錯等級的事件紀錄，這個設定會覆蓋其他事件紀錄的指定等級之內容。( ""--loglevel"", -l) |
 | None | --no-logging | 在使用 NVDA 時完全停用記錄功能。如果從命令列指定了事件記錄等級 ( ""--loglevel"", -l) 或者偵錯事件記錄為開啟，本設定將被覆寫掉。 |
 | None | --no-sr-flag | 不改變系統螢幕報讀軟體旗標 |
 | None | --install | 安裝 NVDA（啟動新安裝的版本） |
 | None | --install-silent | 靜默安裝 NVDA（不啟動新安裝的版本） |
-| None | --enable-start-on-logon=True|False | 當安裝時，啟用 [在登入畫面啟動 NVDA #StartAtWindowsLogon] |
+| None | --enable-start-on-logon=True|False | 當安裝時，啟用 [在登入畫面使用 NVDA #StartAtWindowsLogon] |
 | None | --create-portable | 建立可攜式版 NVDA（啟動新建立的版本）。 需求 --可攜式路徑需要指定 |
 | None | --create-portable-silent | 建立可攜式版 NVDA（啟動新安裝的版本）。 需求 --可攜式路徑需要指定 |
 | None | --portable-path=PORTABLEPATH | 可攜式版的路徑將被建立 |

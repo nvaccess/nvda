@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-19 00:10+1000\n"
-"PO-Revision-Date: 2020-06-21 18:28+0100\n"
+"POT-Creation-Date: 2020-06-30 23:50+1000\n"
+"PO-Revision-Date: 2020-06-28 10:14+0200\n"
 "Last-Translator: José Manuel Delicado <jmdaweb@hotmail.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.11\n"
+"X-Generator: Poedit 2.3.1\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
@@ -247,7 +247,7 @@ msgstr "elvár"
 #. Translators: Displayed in braille for an object which is a
 #. tab control.
 msgid "tabctl"
-msgstr "pesctl"
+msgstr "peslst"
 
 #. Translators: Displayed in braille for an object which is a
 #. progress bar.
@@ -1197,8 +1197,13 @@ msgstr "Turco grado 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Ukrainian"
-msgstr "Ucraniano"
+msgid "Ukrainian grade 1"
+msgstr "Ucraniano grado 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Ukrainian computer braille"
+msgstr "Braille ucraniano computerizado"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1308,7 +1313,7 @@ msgstr "se mueve al siguiente encabezado de nivel 1"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 1"
-msgstr "Sin siguiente encabezado de nivel 1"
+msgstr "sin siguiente encabezado de nivel 1"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 1"
@@ -2187,7 +2192,7 @@ msgstr "pestaña"
 
 #. Translators: Identifies a tab control such as webpage tabs in web browsers.
 msgid "tab control"
-msgstr "pestaña"
+msgstr "lista de pestañas"
 
 #. Translators: Identifies a slider such as volume slider.
 msgid "slider"
@@ -2232,11 +2237,11 @@ msgstr "barra de herramientas"
 
 #. Translators: Identifies a column header in tables and spreadsheets.
 msgid "column header"
-msgstr "encabezado de columna"
+msgstr "cabecera de columna"
 
 #. Translators: Identifies a row header in tables and spreadsheets.
 msgid "row header"
-msgstr "encabezado de fila"
+msgstr "cabecera de fila"
 
 #. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
 msgid "drop down button"
@@ -2294,7 +2299,7 @@ msgstr "cita"
 
 #. Translators: Identifies a table header (a short text at the start of a table which describes what the table is about).
 msgid "table header"
-msgstr "encabezado de tabla"
+msgstr "cabecera de tabla"
 
 #. Translators: Identifies a table body (the main body of the table).
 msgid "table body"
@@ -2375,7 +2380,7 @@ msgstr "panel transparente"
 
 #. Translators: Identifies a header (usually text at top of documents or on tops of pages).
 msgid "header"
-msgstr "encabezado"
+msgstr "cabecera"
 
 #. Translators: Identifies an image map (a type of graphical link).
 msgid "image map"
@@ -2450,7 +2455,7 @@ msgstr "panel divisible"
 #. which represents the portion of the entire data that the user can see.
 #. As the user manipulates the scroll bars, the contents of the view port can change.
 msgid "view port"
-msgstr "ver puerto"
+msgstr "porción visible"
 
 #. Translators: Reported for an object that forms part of a menu system
 #. but which can be undocked from or torn off the menu system
@@ -2581,7 +2586,7 @@ msgid "font chooser"
 msgstr "selector de fuentes"
 
 msgid "line"
-msgstr "Línea"
+msgstr "línea"
 
 #. Translators: Identifies a font name.
 msgid "font name"
@@ -2648,7 +2653,7 @@ msgid "data item"
 msgstr "elemento de dato"
 
 msgid "header item"
-msgstr "elemento de encabezado"
+msgstr "elemento de cabecera"
 
 #. Translators: Identifies a thumb control (a button-like control for changing options).
 msgid "thumb control"
@@ -4110,7 +4115,7 @@ msgstr "Unidad de resolución de texto %s"
 #. Translators: Input help mode message for toggle mouse text unit resolution command.
 msgid "Toggles how much text will be spoken when the mouse moves"
 msgstr ""
-"Cambia la cantidad de texto que se verbalizará cuando el ratón se mueva."
+"Cambia la cantidad de texto que se verbalizará cuando el ratón se mueva"
 
 #. Translators: Reported when there is no title text for current program or window.
 msgid "No title"
@@ -4240,7 +4245,7 @@ msgid ""
 "commands"
 msgstr ""
 "Activa y desactiva el movimiento automático del foco del sistema debido a "
-"las órdenes del modo Exploración."
+"las órdenes del modo Exploración"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
@@ -4738,11 +4743,11 @@ msgstr ""
 
 #. Translators: presented when the report CLDR is toggled.
 msgid "report CLDR characters off"
-msgstr "Anunciar caracteres CLDR desactivado"
+msgstr "anunciar caracteres CLDR desactivado"
 
 #. Translators: presented when the report CLDR is toggled.
 msgid "report CLDR characters on"
-msgstr "Anunciar caracteres CLDR activado"
+msgstr "anunciar caracteres CLDR activado"
 
 #. Translators: Describes a command.
 msgid ""
@@ -4784,8 +4789,7 @@ msgstr "No se pudo habilitar la Cortina de pantalla"
 #. due to profile activation being suspended.
 msgid "Can't change the active profile while an NVDA dialog is open"
 msgstr ""
-"No se puede cambiar el perfil activo mientras esté abierto un diálogo de "
-"NVDA."
+"No se puede cambiar el perfil activo mientras esté abierto un diálogo de NVDA"
 
 #. Translators: a message when a configuration profile is manually deactivated.
 #. {profile} is replaced with the profile's name.
@@ -4804,7 +4808,7 @@ msgstr "Perfil {profile} activado"
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
 msgid "Activates or deactivates the {profile} configuration profile"
-msgstr "Activa o desactiva el perfil de configuración {profile}."
+msgstr "Activa o desactiva el perfil de configuración {profile}"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -4848,7 +4852,7 @@ msgstr "Guía del Usuario"
 
 #. Translators: A label for a shortcut in start menu to open NVDA what's new.
 msgid "What's new"
-msgstr "¿Qué hay de nuevo?"
+msgstr "Novedades"
 
 #. Translators: A file extension label for NVDA add-on package.
 msgid "NVDA add-on package"
@@ -6541,10 +6545,10 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"Por lo tanto, tu configuración de NVDA contiene complementos que son "
+"Sin embargo, tu configuración de NVDA contiene complementos que son "
 "incompatibles con esta versión de NVDA. Estos complementos se deshabilitarán "
-"después de la instalación. Si confías en ellos, por favor revisa la lista "
-"para decidir si deseas continuar con la instalación "
+"después de la instalación. Si dependes de ellos, por favor revisa la lista "
+"para decidir si deseas continuar con la instalación"
 
 #. Translators: A message to confirm that the user understands that addons that have not been
 #. reviewed and made available, will be disabled after installation.
@@ -7669,7 +7673,7 @@ msgstr "&Referencia Rápida de Órdenes"
 
 #. Translators: The label for the menu item to open What's New document.
 msgid "What's &new"
-msgstr "¿Qué hay de &nuevo?"
+msgstr "&Novedades"
 
 msgid "NVDA &web site"
 msgstr "Sitio &web de NVDA"
@@ -7793,7 +7797,7 @@ msgstr "&Utilizar BloqueoMayúsculas como tecla modificadora de NVDA"
 #. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
 #. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "St&art NVDA after I sign in"
-msgstr "&Arracar NVDA después de que me identifique"
+msgstr "&Arrancar NVDA después de iniciar sesión"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Show this dialog when NVDA starts"
@@ -7950,7 +7954,7 @@ msgstr "Versión mínima de NVDA requerida: {}"
 
 #. Translators: the last NVDA version tested part of the About Add-on information
 msgid "Last NVDA version tested: {}"
-msgstr "última versión de NVDA probada: {}"
+msgstr "Última versión de NVDA probada: {}"
 
 #. Translators: title for the Addon Information dialog
 msgid "Add-on Information"
@@ -8483,8 +8487,8 @@ msgstr ""
 "La ruta de instalación para NVDA ha cambiado. Ahora se instalará en {path}"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-msgid "Start NVDA during sign-in"
-msgstr "Arracnar NVDA durante el inicio de sesión"
+msgid "Use NVDA during sign-in"
+msgstr "Usar NVDA durante el inicio de sesión"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "&Keep existing desktop shortcut"
@@ -8686,10 +8690,9 @@ msgstr "Nivel de mensajes guardados en el &Registro:"
 #. allow NVDA to come up in Windows login screen (useful if user
 #. needs to enter passwords or if multiple user accounts are present
 #. to allow user to choose the correct account).
-msgid "Start NVDA during sign-in (requires administrator privileges)"
+msgid "Use NVDA during sign-in (requires administrator privileges)"
 msgstr ""
-"Arrancar NVDA durante el inicio de sesión (requiere privilegios de "
-"administrador)"
+"Usar NVDA durante el inicio de sesión (requiere privilegios de administrador)"
 
 #. Translators: The label for a button in general settings to copy
 #. current user settings to system settings (to allow current
@@ -9571,7 +9574,7 @@ msgstr "Reemplazar por"
 
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is case sensitive or not.
 msgid "case"
-msgstr "¿Mayúsculas?"
+msgstr "mayúsculas"
 
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
 msgid "Type"
@@ -9678,7 +9681,7 @@ msgstr "Presentación de contexto para el foco:"
 #. NVDA is unable to load a single vision enhancement provider.
 #, python-brace-format
 msgid "Could not load the {providerName} vision enhancement provider"
-msgstr "No se pudo cargar el provedor de mejora de visión {providerName} "
+msgstr "No se pudo cargar el proveedor de mejora de visión {providerName}"
 
 #. Translators: This message is presented when NVDA is unable to
 #. load multiple vision enhancement providers.
@@ -9713,7 +9716,7 @@ msgstr ""
 
 #. Translators: This is a label appearing on the vision settings panel.
 msgid "Configure visual aids."
-msgstr "Configurar ayudas visuales"
+msgstr "Configurar ayudas visuales."
 
 #. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
 msgid "Enable"
@@ -9868,7 +9871,7 @@ msgstr "mayus %s"
 
 #. Translators: This is spoken when the given line has no indentation.
 msgid "no indent"
-msgstr "Sin sangría"
+msgstr "sin sangría"
 
 #. Translators: This is spoken to indicate that some text is already selected.
 #. 'selected' preceding text is intentional.
@@ -11882,6 +11885,9 @@ msgstr "Espaciado de línea doble"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "espaciado de línea a 1.5"
+
+#~ msgid "Ukrainian"
+#~ msgstr "Ucraniano"
 
 #~ msgid "Russian braille for computer code"
 #~ msgstr "Ruso para código computerizado"

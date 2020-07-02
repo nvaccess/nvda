@@ -118,7 +118,7 @@ Trước khi bấm nút tiếp tục, bạn cần phải chọn vào hộp kiể
 Cũng có một nút bấm để bạn xem qua các add-on sẽ bị vô hiệu.
 Xem phần [hộp thoại các add-on không tương thích #incompatibleAddonsManager] để biết thêm thông tin về nút này.
 
-+++ Khởi động NVDA trong khi đăng nhập +++[StartAtWindowsLogon]
++++ Dùng NVDA trong khi đăng nhập +++[StartAtWindowsLogon]
 Tùy chọn này cho phép NVDA chạy  hoặc không chạy tự động tại màn hình đăng nhập của Windows, trước khi bạn nhập mật khẩu.
 Tùy chọn này cũng áp dụng cho màn hình User Account và các màn hình bảo vệ khác.
 Tùy chọn này mặc định được bật cho các bản cài đặt mới.
@@ -1075,8 +1075,8 @@ Các mức độ log bao gồm:
 Nếu chọn mục này thì NVDA sẽ tự khởi động khi bạn đăng nhập vào Windows.
 Tùy chọn này chỉ có trên bản cài đặt của NVDA.
 
-==== Khởi động NVDA ở màn hình đăng nhập ( yêu cầu quyền quản trị) ====[GeneralSettingsStartOnLogOnScreen]
-Nếu đăng nhập vào Windows bằng cách cung cấp tên truy cập và mật khẩu, bật tùy chọn này để NVDA tự khởi động trong màn hình đăng nhập của Windows.
+==== Dùng NVDA trong khi đăng nhập ( yêu cầu quyền quản trị) ====[GeneralSettingsStartOnLogOnScreen]
+Nếu đăng nhập vào Windows bằng cách cung cấp tên truy cập và mật khẩu, bật tùy chọn này để NVDA tự khởi động trong màn hình đăng nhập khi khởi động Windows.
 Tùy chọn này chỉ có trong phiên bản cài đặt của NVDA.
 
 ==== Sử dụng cấu hình hiện tại trong khi đăng nhập và các màn hình bảo vệ (yêu cầu quyền quản trị) ====[GeneralSettingsCopySettings]
@@ -3079,14 +3079,14 @@ Sau đây là các tùy chọn dòng lệnh cho NVDA:
 | -l LOGLEVEL | --log-level=LOGLEVEL | Cấp độ thấp nhất của thông điệp log (dò lỗi 10, đầu vào / đầu ra 12, cảnh báo gỡ lỗi 15, thông tin 20, cảnh báo 30, lỗi 40, nghiêm trọng 50, tắt 100), mặc định là cảnh báo |
 | -c CONFIGPATH | --config-path=CONFIGPATH | Đường dẫn để lưu tất cả cấu hình của NVDA |
 | -m | --minimal | Không âm thanh, không giao diện, không thông báo bắt đầu, v...v... |
-| -s | --secure | Chế độ an toàn: tắt Python console, các tính năng của hồ sơ như tạo, xóa, đổi tên hồ sơ, v...v..., kiểm tra cập nhật, vài hộp kiểm trong hộp thoại chào mừng và phân loại thiết lập chung (ví dụ: khởi động NVDA sau khi đăng nhập, lưu cấu hình sau khi thoát, v...v...),  cũng như trình xem log và tính năng ghi log (thường dùng ở màn hình bảo vệ). Lưu ý rằng lệnh này cũng sẽ vô hiệu hóa việc lưu thiết lập trong cấu hình hệ thống và hệ thống thao tác sẽ không được lưu xuống đĩa. |
+| -s | --secure | Chế độ an toàn: tắt Python console, các tính năng của hồ sơ như tạo, xóa, đổi tên hồ sơ, v...v..., kiểm tra cập nhật, vài hộp kiểm trong hộp thoại chào mừng và phân loại thiết lập chung (ví dụ: dùng NVDA trong khi đăng nhập, lưu cấu hình sau khi thoát, v...v...),  cũng như trình xem log và tính năng ghi log (thường dùng ở màn hình bảo vệ). Lưu ý rằng lệnh này cũng sẽ vô hiệu hóa việc lưu thiết lập trong cấu hình hệ thống và hệ thống thao tác sẽ không được lưu xuống đĩa. |
 | Không có | --disable-addons | Các add-on không có hiệu lực |
 | Không có | --debug-logging | Bật cấp độ bản ghi dò lỗi cho lần chạy này. Thiết lập này được ghi đè lên các cấp độ bản ghi khác ( ""--loglevel"", -l) tham số được cung cấp, bao gồm tùy chọn tắt log. |
 | Không có | --no-logging | Tắt log hoàn toàn khi dùng NVDA. Thiết lập này có thể bị ghi đè nếu một cấp độ log ( ""--loglevel"", -l) được chỉ định từ dòng lệnh hoặc bản ghi dò lỗi đã được bật. |
 | Không có | --no-sr-flag  | Không thay đổi flag trình đọc màn hình hệ thống toàn cục |
 | Không có | --install | Cài NVDA (cài một bản mới của NVDA) |
 | Không có | --install-silent | Cài đặt NVDA ở chế độ im lặng (không chạy lên sau khi cài đặt) |
-| Không có | --enable-start-on-logon=True|False | trong khi cài đặt, bật NVDA [chạy trong khi đăng nhập Windows #StartAtWindowsLogon] |
+| Không có | --enable-start-on-logon=True|False | trong khi cài đặt, cho NVDA [chạy trong khi đăng nhập Windows #StartAtWindowsLogon] |
 | Không có | --create-portable | Tạo bản NVDA chạy trực tiếp (chạy lên sau khi tạo). yêu cầu khai báo đường dẫn cho bản chạy trực tiếp |
 | Không có | --create-portable-silent | Tạo bản NVDA chạy trực tiếp ở chế độ im lặng (không chạy lên sau khi cài). yêu cầu khai báo đường dẫn cho bản chạy trực tiếp |
 | Không có | --portable-path=PORTABLEPATH | đường dẫn để tạo bản chạy trực tiếp |
