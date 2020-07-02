@@ -1,4 +1,3 @@
-# appModules/calculator.py
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2020 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
