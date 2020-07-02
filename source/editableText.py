@@ -305,10 +305,13 @@ class EditableText(TextContainerObject,ScriptableObject):
 		"kb:control+home": "caret_moveByLine",
 		"kb:control+end": "caret_moveByLine",
 		"kb:delete": "caret_deleteCharacter",
+		"kb:shift+delete": "caret_deleteCharacter",
 		"kb:numpadDelete": "caret_deleteCharacter",
+		"kb:shift+numpadDelete": "caret_deleteCharacter",
 		"kb:control+delete": "caret_deleteWord",
 		"kb:control+numpadDelete": "caret_deleteWord",
 		"kb:backspace": "caret_backspaceCharacter",
+		"kb:shift+backspace": "caret_backspaceCharacter",
 		"kb:control+backspace": "caret_backspaceWord",
 	}
 
