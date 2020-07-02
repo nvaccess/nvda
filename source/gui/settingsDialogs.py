@@ -4096,6 +4096,7 @@ class InputGesturesDialog(SettingsDialog):
 
 	def _filter(self, token: object, filter: str):
 		if not filter:
+			time.sleep(0.1)  # Workarround for #11326: "Selection removed" is not announced properly
 			wx.CallAfter(self.refreshTree, token, self.flattenedGestures)
 			return
 		filteredGestures = []
