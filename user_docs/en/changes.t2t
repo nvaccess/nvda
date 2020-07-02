@@ -14,6 +14,7 @@ What's New in NVDA
 - The Report formatting script (NVDA+f) has now been changed to report the formatting at the system caret rather than at the review cursor position. To report formatting at the review cursor position now use NVDA+shift+f. (#9505)
 - NVDA no longer automatically sets the system focus to focusable elements by default in browse mode, improving performance and stability. (#11190)
 - CLDR updated from version 36.1 to version 37. (#11303)
+- Updated eSpeak-NG to 1.51-dev, commit f2939490e
 
 
 == Bug Fixes ==
@@ -21,9 +22,12 @@ What's New in NVDA
 - In applications using QT 5.11 or newer, object descriptions are again reported. (#8604)
 - When deleting a word with control+delete, NVDA no longer remains silent. (#3298, #11029)
   - Now the word to the right of the deleted word is announced.
+- In general settings panel, the language list is now sorted correctly. (#10348)
+- In the Input Gestures dialog, significantly improved performance while filtering. (#10307)(
 
 
 == Changes For Developers ==
+- The GUI Helper's BoxSizerHelper.addDialogDismissButtons supports a new "separated" keyword argument, for adding a standard horizontal separator to dialogs (other than messages and single input dialogs). (#6468)
 
 
 = 2020.2 =

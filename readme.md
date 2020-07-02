@@ -82,7 +82,7 @@ For reference, the following run time dependencies are included in Git submodule
 
 * [comtypes](https://github.com/enthought/comtypes), version 1.1.7
 * [wxPython](https://www.wxpython.org/), version 4.0.3
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit ca65812a
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit f2939490e 
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit 21bbb176
 * [ConfigObj](https://github.com/DiffSK/configobj), commit f9a265c

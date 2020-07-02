@@ -890,10 +890,7 @@ class ExitDialog(wx.Dialog):
 		self.actionsList = contentSizerHelper.addLabeledControl(labelText, wx.Choice, choices=self.actions)
 		self.actionsList.SetSelection(0)
 
-		contentSizerHelper.addItem(
-			self.CreateButtonSizer(wx.OK | wx.CANCEL),
-			flag=wx.ALIGN_RIGHT
-		)
+		contentSizerHelper.addDialogDismissButtons(wx.OK | wx.CANCEL)
 
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
