@@ -6,6 +6,7 @@
 
 import threading
 from ctypes import *
+from ctypes import oledll
 import time
 import config
 from logHandler import log
@@ -141,7 +142,10 @@ _isAudioDuckingSupported=None
 def isAudioDuckingSupported():
 	global _isAudioDuckingSupported
 	if _isAudioDuckingSupported is None:
-		_isAudioDuckingSupported=config.isInstalledCopy() and hasattr(oledll.oleacc,'AccSetRunningUtilityState')
+		_isAudioDuckingSupported = (
+			config.isInstalledCopy()
+			or config.isAppX
+		) and hasattr(oledll.oleacc, 'AccSetRunningUtilityState')
 	return _isAudioDuckingSupported
 
 def handlePostConfigProfileSwitch():
@@ -167,7 +171,8 @@ class AudioDucker(object):
 		"""Tells NVDA that you require that background audio be ducked from now until you call disable.
 		This method may block for a short time while background audio ducks to a suitable level.
 		It is safe to call this method more than once.
-		@ returns: True if ducking was enabled, false if ducking was subsiquently disabled while waiting for the background audio to drop.
+		@returns: True if ducking was enabled,
+			false if ducking was subsiquently disabled while waiting for the background audio to drop.
 		"""
 		debug = _isDebug()
 		with self._lock:

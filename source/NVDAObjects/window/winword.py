@@ -1,8 +1,10 @@
-#appModules/winword.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# -*- coding: UTF-8 -*-
+# NVDAObjects/window/winword.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
 
 import ctypes
 import time
@@ -306,41 +308,43 @@ NVDAUnitsToWordUnits={
 	textInfos.UNIT_READINGCHUNK:wdSentence,
 }
 
-formatConfigFlagsMap={
-	"reportFontName":0x1,
-	"reportFontSize":0x2,
-	"reportFontAttributes":0x4,
-	"reportColor":0x8,
-	"reportAlignment":0x10,
-	"reportStyle":0x20,
-	"reportSpellingErrors":0x40,
-	"reportPage":0x80,
-	"reportLineNumber":0x100,
-	"reportTables":0x200,
-	"reportLists":0x400,
-	"reportLinks":0x800,
-	"reportComments":0x1000,
-	"reportHeadings":0x2000,
-	"autoLanguageSwitching":0x4000,
-	"reportRevisions":0x8000,
-	"reportParagraphIndentation":0x10000,
-	"reportLineSpacing":0x40000,
+formatConfigFlagsMap = {
+	"reportFontName": 0x1,
+	"reportFontSize": 0x2,
+	"reportFontAttributes": 0x4,
+	"reportColor": 0x8,
+	"reportAlignment": 0x10,
+	"reportStyle": 0x20,
+	"reportSpellingErrors": 0x40,
+	"reportPage": 0x80,
+	"reportLineNumber": 0x100,
+	"reportTables": 0x200,
+	"reportLists": 0x400,
+	"reportLinks": 0x800,
+	"reportComments": 0x1000,
+	"reportHeadings": 0x2000,
+	"autoLanguageSwitching": 0x4000,
+	"reportRevisions": 0x8000,
+	"reportParagraphIndentation": 0x10000,
+	"reportLineSpacing": 0x40000,
+	"reportSuperscriptsAndSubscripts": 0x80000,
+	"reportGraphics": 0x100000,
 }
-formatConfigFlag_includeLayoutTables=0x20000
+formatConfigFlag_includeLayoutTables = 0x20000
 
-# Map some characters from PUA to Unicode. Meant to be used with bullets only.
+# Map some characters from 0 to Unicode. Meant to be used with bullets only.
 # Doesn't care about the actual font, so can give incorrect Unicode in rare cases.
 mapPUAToUnicode = {
 	# from : to # fontname
-	u'\uF06E' : u'\u25A0', # Wingdings
-	u'\uF076' : u'\u2756', # Wingdings
-	u'\uF0A7' : u'\u2663', # Symbol
-	u'\uF0A8' : u'\u2666', # Symbol
-	u'\uF0B7' : u'\u2022', # Symbol
-	u'\uF0D8' : u'\u27A2', # Wingdings
-	u'\uF0E8' : u'\u21D2', # Wingdings
-	u'\uF0F0' : u'\u21E8', # Wingdings
-	u'\uF0FC' : u'\u2714', # Wingdings
+	u'\uF06E': u'\u25A0',  # Wingdings (black square)
+	u'\uF076': u'\u2756',  # Wingdings (black diamond minus white x
+	u'\uF0A7': u'\u25AA',  # Symbol (black small square)
+	u'\uF0A8': u'\u2666',  # Symbol (black diamond suit)
+	u'\uF0B7': u'\u2022',  # Symbol (bullet)
+	u'\uF0D8': u'\u2B9A',  # Wingdings (three-D top-lighted RIGHTWARDS equilateral arrowhead)
+	u'\uF0E8': u'\U0001f87a',  # Wingdings (wide-headed rightwards heavy barb arrow)
+	u'\uF0F0': u'\u21E8',  # Wingdings (right white arrow)
+	u'\uF0FC': u'\u2714',  # Wingdings (heavy check mark)
 }
 
 class WordDocumentHeadingQuickNavItem(browseMode.TextInfoQuickNavItem):
@@ -444,7 +448,8 @@ class WinWordCollectionQuicknavIterator(object):
 		"""
 		See L{QuickNavItemIterator} for itemType, document and direction definitions.
 		@param rangeObj: a Microsoft Word range object where the collection should be fetched from.
-		@ param includeCurrent: if true then any item at the initial position will be also emitted rather than just further ones. 
+		@param includeCurrent: if true then any item at the initial position will be also emitted
+			rather than just further ones.
 		"""
 		self.document=document
 		self.itemType=itemType
@@ -1040,6 +1045,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		try:
 			return mathType.getMathMl(obj)
 		except:
+			log.debugWarning("Error fetching math with mathType", exc_info=True)
 			raise LookupError("Couldn't get MathML from MathType")
 
 class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
