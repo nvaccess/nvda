@@ -12,23 +12,23 @@ Lo reseñable de esta versión incluye el soporte de una nueva pantalla braille 
 - Añadido un script para abrir el directorio de configuración de NVDA (sin gesto predeterminado). (#2214)
 - Mejor soporte para la interface gráfica de usuario del antivirus ESET. (#10894)
 - Añadido el soporte para la Terminal de Windows. (#10305)
-- Añadida una orden para anunciar el perfil de configuración activo. (#9325)
-- Añadida una orden para conmutar el anunciado de subíndices y superíndices. (#10985)
+- Añadida una orden para anunciar el perfil de configuración activo (no hay gesto predeterminado). (#9325)
+- Añadida una orden para conmutar el anunciado de subíndices y superíndices (no hay gesto predeterminado). (#10985)
 - Las aplicaciones web (Ej. Gmail) ya no verbalizan información incorrecta cuando se mueva el foco rápidamente. (#10885)
   - Esta solución experimental debe activarse manualmente a través de la opción 'Intentar cancelar la voz para eventos de enfoque caducados'  en el panel de opciones avanzadas.
-- Se añaden más símbolos. (#11105)
+- Se han añadido más símbolos al diccionario de símbolos predeterminado. (#11105)
 
 
 == Cambios ==
-- Actualizado el transcriptor braille liblouis a [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0] (from 3.12.0). (#10832, #11221)
+- Actualizado el transcriptor braille liblouis de 3.12 a [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0] (from 3.12.0). (#10832, #11221)
 - El anunciado de superíndices y subíndices ahora se controla por separado al anunciado de atributos de fuente. (#10919)
 - Debido a cambios hechos en VS Code, NVDA ya no desactiva el modo Exploración en Code por defecto. (#10888)
-- Se eleiminaron los mensajes "superior" e "inferior" al mover el cursor de revisión a la primera o última línea del actual navegador de objetos. (#9551)
-- Se eliminaron los mensajes "izquierda" y "derecha" al mover el cursor de revisión al primer o último carácter de la línea actual en el navegador de objetos. (#9551)
+- NVDA ya no anuncia los mensajes "superior" e "inferior" al mover el cursor de revisión directamente a la primera o última línea del actual navegador de objetos con los scripts mover cursor de revisión arriba o abajo respectivamente. (#9551)
+- NVDA ya no anuncia los mensajes "izquierda" y "derecha" al mover el cursor de revisión directamente al primer o último carácter del actual navegador de objetos con los scripts mover cursor de revisión a la izquierda o a la derecha respectivamente. (#9551)
 
 
 == Corección de Errores ==
-- NVDA arranca correctamente cuando el fichero de registro no se pueda crear. (#6330)
+- NVDA ahora arranca correctamente cuando el fichero de registro no se pueda crear. (#6330)
 - En versiones recientes de Microsoft Word 365, NVDA ya no anunciará "borrar palabra atrás" cuando se pulse Control+Retroceso mientras se edita un documento. (#10851)
 - En Winamp, NVDA anunciará de nuevo el estado de conmutación de aleatorio o de repetir. (#10945)
 - NVDA ya no es extremadamente lento al moverte dentro de la lista de elementos en 1Password. (#10508)
@@ -46,7 +46,7 @@ Lo reseñable de esta versión incluye el soporte de una nueva pantalla braille 
 - Los consejos de los iconos en la bandeja del sistema ya no se anuncian al navegar con el teclado si su texto es igual a su nombre, para evitar un anunciado duplicado. (#6656)
 - En modo Exploración con el foco automático del sistema configurado a elementos enfocables desactivado, cambiar a modo Foco con NVDA+espacio ahora enfoca el elemento bajo el cursor. (#11206)
 - De nuevo es posible buscar actualizaciones de NVDA en ciertos sistemas; ej.: instalaciones limpias de Windows. (#11253)
-- No se cambia el foco en una aplicación Java cuando la selección se cambie en un árbol, tabla o lista no enfocable. (#5989)
+- El foco no se mueve en una aplicación Java cuando la selección se cambie en un árbol, tabla o lista no enfocable. (#5989)
 
 
 == Cambios para Desarrolladores ==
