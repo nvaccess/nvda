@@ -69,7 +69,7 @@ Pentru alte detalii, puteți [vedea licența online. https://www.gnu.org/license
 -
 
 + Obținerea și configurarea NVDA +[ObtSiConfigNVDA]
-Dacă încă nu ați obținut o copie a NVDA, o puteți descărca de la [www.nvaccess.org NVDA_URL].
+Dacă încă nu ați obținut o copie a NVDA, o puteți descărca de pe [site-ul NV Access NVDA_URL].
 
 Mergeți la secțiunea Download și veți găsi un link pentru descărcarea ultimei versiuni de NVDA.
 
@@ -157,7 +157,7 @@ Dacă pornirea NVDA-ului necesită timp îndelungat, acesta ar trebui să anunț
 Dacă nu auziți nimic din toate acestea, sau dacă auziți sunetul de eroare al Windows, sau câteva tonuri descendente, asta înseamnă că NVDA are o eroare și e posibil să trebuiască să raportați un defect dezvoltatorilor.
 Vă rugăm verificați site-ul NVDA pentru informații despre cum să faceți asta.
 
-+++ Fereastra dialog de întâmpinare +++[DialogIntampinare]
++++ Fereastra dialog de întâmpinare +++[WelcomeDialog]
 Când NVDA pornește pentru prima dată, veți fi întâmpinat de o fereastră de dialog care vă oferă câteva informații de bază despre tasta de modificare NVDA și meniul NVDA.
 (Vă rugăm citiți secțiunile următoare în legătură cu aceste subiecte).
 Fereastra de dialog conține o casetă combinată și trei  casete de bifat.
@@ -165,6 +165,13 @@ Caseta combinată vă va lăsa să selectați aspectul tastaturii.
 Prima casetă de bifat vă va lăsa să alegeți dacă NVDA va folosi tasta „Caps Lock” drept tastă de modificare NVDA.
 A doua specifică dacă NVDA ar trebui să pornească automat după ce vă autentificați în Windows și este disponibilă doar pentru versiunile instalate.
 A treia vă va lăsa să alegeți dacă această fereastră de întâmpinare va apărea la fiecare pornire a NVDA.
+
++++ Dialogul de statistici cu privire la utilizarea datelor +++[UsageStatsDialog]
+Începând cu NVDA 2018.3, utilizatorul este întrebat dacă vrea sau nu să permită ca datele de utilizare să fie trimise la NV Access pentru a ajuta la îmbunătățirea NVDA în viitor. 
+La pornirea pentru prima dată a NVDA, va apărea o fereastră de dialog în care veți fi întrebat dacă acceptați trimiterea datelor către NV Access pe parcursul utilizării.
+Puteți citi mai multe despre datele adunate de NV Access în secțiunea setărilor generale, [Permite proiectului NVDA să adune statistici cu privire la utilizarea NVDA #GeneralSettingsGatherUsageStats].
+Notă: Dacă apăsați pe „da” sau pe „nu” setarea va fi salvată, iar dialogul nu va mai apărea până la reinstalarea NVDA.
+Cu toate acestea, puteți activa sau dezactiva manual procesul de colectare din panoul setărilor NVDA. Pentru a putea modifica manual această setare, puteți bifa sau debifa caseta numită [Permite proiectului NVDA să adune statistici cu privire la utilizarea NVDA #GeneralSettingsGatherUsageStats].
 
 ++ Despre comenzile din taste ale NVDA ++[AboutNVDAKeyboardCommands]
 
@@ -1036,8 +1043,10 @@ Nivelele de înregistrare disponibile sunt:
 Dezactivat: În afară de un scurt mesaj de pornire, NVDA nu va înregistra nimic cât timp rulează.
 - Info: NVDA va înregistra informații de bază precum mesaje de pornire și informații utile pentru dezvoltatori.
 - Avertisment la diagnosticare: Mesajele de avertisment care nu sunt cauzate de erori grave vor fi înregistrate.
-- Intrare/ieșire: Intrare de la tastatură și de la afișajele braille, dar și ieșirea și vorbirea braille vor fi înregistrate. Dacă sunteți preocupat de confidențialitate, nu setați nivelul de înregistrare la această opțiune.
-- Diagnosticare: În plus față de info, avertisment și mesajele de intrare/ieșire, mesajele suplimentare de diagnosticare vor fi înregistrate. Ca și în cazul opțiunii intrare/ieșire, dacă sunteți preocupat de confidențialitate, nu activați această opțiune.
+- Intrare/ieșire: Intrare de la tastatură și de la afișajele braille, dar și ieșirea și vorbirea braille vor fi înregistrate.
+ - Dacă sunteți preocupat de confidențialitate, nu setați nivelul de înregistrare la această opțiune.
+- Diagnosticare: În plus față de info, avertisment și mesajele de intrare/ieșire, mesajele suplimentare de diagnosticare vor fi înregistrate.
+ - Ca și în cazul opțiunii intrare/ieșire, dacă sunteți preocupat de confidențialitate, nu activați această opțiune.
 -
 
 ==== Pornește NVDA automat după ce mă autentific în Windows ====[GeneralSettingsStartAfterLogOn]
@@ -1063,7 +1072,7 @@ Următoarele informații sunt trimise actual către server:
 - Arhitectura sistemului de operare (64 sau 32 de biți).
 
 
-==== Acceptarea trimiterii statisticilor de folosire către NV Access ====
+==== Acceptarea trimiterii statisticilor de folosire către NV Access ====[GeneralSettingsGatherUsageStats]
 Dacă acceptați ca, în timpul verificării automate pentru actualizări noi, NVDA să trimită statisticile către NV Access, aceste informații vor fi folosite pentru a descoperi numărul de utilizatori și aspectele tipice precum țara și versiunea  sistemului de operare.
 Adresa de IP nu va fi salvată în niciun caz. Dar, notați că adresa de IP va fi folosită temporar pentru a se afla țara în care se folosește NVDA în acel moment.
 În afara informațiilor obligatorii pentru a face posibilă verificarea automată pentru actualizări noi, NVDA va trimite următoarele informații suplimentare:
@@ -1139,7 +1148,7 @@ Dacă descoperiți că NVDA citește punctuația în limba greșită pentru un a
 
 ==== Include datele Unicode Consortium (inclusiv emoji) atunci când se procesează caractere și simboluri ====[SpeechSettingsCLDR]
 Atunci când această casetă este bifată, NVDA va include dicționare adiționale de pronunțare a simbolurilor când se pronunță caractere și simboluri.
-Dicționarele conțin descrieri pentru simboluri (particular emoji) care sunt furnizate de [Unicode Consortium http://www.unicode.org/consortium/] ca parte a [depozitului lor de date locale comune http://cldr.unicode.org/].
+Dicționarele conțin descrieri pentru simboluri (particular emoji) care sunt furnizate de [Unicode Consortium https://www.unicode.org/consortium/] ca parte a [depozitului lor de date locale comune https://cldr.unicode.org/].
 Dacă vreți ca NVDA să rostească descrieri ale caracterelor emoji bazate pe aceste date, trebuie să activați această opțiune.
 Totuși, dacă folosiți o sinteză vocală care are suport nativ pentru rostirea descrierilor emoji, puteți dori să opriți asta.
 
@@ -1433,7 +1442,7 @@ Această opțiune este disponibilă doar dacă raportarea erorilor de ortografie
 
 ==== Tratează taste din alte aplicații ====[KeyboardSettingsHandleKeys]
 Această opțiune permite utilizatorului să controleze dacă apăsările de tastă generate de aplicații, cum ar fi tastaturi pe ecran și aplicații de recunoaștere a vorbirii, ar trebui să fie procesate de NVDA. 
-Opțiunea este activată implcit, deși anumiți utilizatori vor dori să o dezactiveze, cum ar fi cei care tastează în Vietnameză cu software-ul de tastare Unikey, pentru care se vor produce intrări de caractere incorecte.
+Opțiunea este activată implcit, deși anumiți utilizatori vor dori să o dezactiveze, cum ar fi cei care tastează în Vietnameză cu software-ul de tastare UniKey, pentru care se vor produce intrări de caractere incorecte.
 
 +++ Maus (NVDA+control+m) +++[OptiuniMaus]
 Categoria „Maus„ din dialogul setărilor NVDA conține următoarele opțiuni:
@@ -1519,7 +1528,7 @@ Dacă anunțul poziției obiectului este activat, această opțiune permite NVDA
 Când este activă, NVDA va anunța informații despre poziție pentru mai multe obiecte control, cum ar fi meniuri și bare de instrumente; cu toate acestea informația poate fi ușor inexactă.
 
 ==== Anunță descrierile obiectului ====[ObjectPresentationReportDescriptions]
-Debifați această casetă dacă considerați că nu aveți nevoie să auziți descrierea anunțată alături de obiecte.
+Debifați această casetă dacă considerați că nu aveți nevoie să auziți descrierea anunțată alături de obiecte (e.x. sugestiile căutării, raportarea întregii ferestre de dialog chiar după ce dialogul se deschide, etc.).
 
 %kc:setting
 ==== Tip de anunț pentru bara de progres ====[ObjectPresentationProgressBarOutput]
@@ -1989,6 +1998,20 @@ Totuși, dacă faceți clic sau focalizați în ecranul de vorbire, NVDA va opri
 
 Pentru a activa monitorul de vorbire de oriunde, trebuie să-i atribuiți un gest personalizat folosind [fereastra de dialog pentru Gesturi de intrare #GesturiIntrare].
 
+++ Monitorul Braille ++[BrailleViewer]
+Pentru programatorii văzători sau persoanele care prezintă NVDA unui public văzător, este disponibilă o fereastră mobilă care vă permite să vedeți ieșirea braille și textul echivalent pentru fiecare caracter braille.
+Monitorul braille poate fi folosit în același timp pe post de afișaj braille fizic, el va potrivi numărul de celule cu cel care s-ar afla pe un dispozitiv fizic.
+Atâta timp cât monitorul braille este în funcțiune, se actualizează constant pentru a vă afișa conținutul braille care ar fi afișat pe un afișaj braille fizic.
+
+Pentru a activa monitorul braille, activați elementul de meniu „Monitor Braille”, aflat în submeniul Instrumente din meniul NVDA.
+Debifați elementul de meniu pentru a-l dezactiva.
+
+În mod obișnuit, afișajele braille fizice au butoane pentru derularea înainte și înapoi, însă pentru activarea derulării cu monitorul braille trebuie să folosiți [fereastra de dialog a gesturilor de intrare #InputGestures], pentru a atribui combinații de taste care să deruleze afișajul braille înainte sau înapoi.
+
+Fereastra monitorului braille conține o casetă de bifat numită „Afișează monitorul braille la pornire”.
+Dacă e bifată, monitorul braille va porni odată cu NVDA.
+Fereastra monitorului braille va încerca întotdeauna să se redeschidă cu aceeași locație și cu aceleași dimensiuni pe care le avea setate atunci când s-a închis.
+
 ++ Administratorul suplimentelor ++[AddonsManager]
 Administratorul suplimentelor, accesat din meniul de „Instrumente”, elementul „Administrare suplimente”, vă permite instalarea, dezinstalarea, activarea și dezactivarea de pachete cu suplimente pentru NVDA.
 Aceste pachete sunt furnizate de comunitate și conțin cod specific care poate adăuga sau schimba funcționalități ale NVDA, sau chiar pot furniza compatibilitate pentru afișaje Braille adiționale sau sintetizatoare de vorbire.
@@ -2037,7 +2060,7 @@ Pentru a vedea care sunt suplimentele incompatibile, puteți folosi butonul „V
 
 Pentru a accesa Managerul de suplimente de oriunde, trebuie să-i atribuiți un gest personalizat folosind [fereastra de dialog pentru Gesturi de intrare #GesturiIntrare].
 
-++ Administratorul suplimentelor incompatibile ++[incompatibleAddonsManager]
++++ Administratorul suplimentelor incompatibile +++[incompatibleAddonsManager]
 Administratorul suplimentelor, care poate fi accesat prin apăsarea butonului „Vizualizare suplimente incompatibile” din administratorul de suplimente, vă permite să vedeți orice supliment incompatibil și motivul pentru care este considerat incompatibil.
 Suplimentele sunt considerate incompatibile atunci când nu au fost actualizate ca să lucreze cu modificări semnificative aduse NVDA-ului, sau atunci când se bazează pe o caracteristică inexistentă în versiunea de NVDA pe care o utilizați.
 Acest manager are un mesaj scurt în care își explică obiectivul, la fel ca și versiunea de NVDA.
@@ -2384,6 +2407,13 @@ Afișajele Brailliant din gamele BI și B de la [HumanWare https://www.humanware
 Dacă sunt conectate prin USB cu protocolul setat pe HumanWare, va trebui mai întâi să instalați driverele USB puse la dispoziție de producător.
 Nu sunt necesare drivere USB, dacă protocolul este setat pe OpenBraille.
 Pentru Braillenote Touch nu mai este necesară instalarea unui driver.
+
+Sunt suportate și dispozitivele adiționale menționate mai jos. Ele nu necesită instalarea vreunui driver special. Acestea sunt:
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
+
 
 Urmează asocierile de taste în NVDA pentru display-urile Brailliant BI/B și BrailleNote touch.
 Vă rugăm să consultați Documentația afișajului pentru informații despre localizarea tastelor pe dispozitiv.

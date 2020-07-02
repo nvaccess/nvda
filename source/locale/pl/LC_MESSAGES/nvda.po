@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-06 07:28+1000\n"
-"PO-Revision-Date: 2019-12-06 22:06+0100\n"
+"POT-Creation-Date: 2020-06-12 00:10+1000\n"
+"PO-Revision-Date: 2020-05-02 14:41-0700\n"
 "Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: killer@tyflonet.com\n"
 "Language: pl_PL\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-Bookmarks: -1,216,-1,-1,128,-1,-1,-1,-1,-1\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.8.9\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -525,9 +525,6 @@ msgid "Only when scrolling back"
 msgstr "Tylko przy przechodzeniu wstecz"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "Automatyczne"
 
@@ -622,7 +619,7 @@ msgstr "&Symulacja klawiatury HID"
 
 #. Translators: Displayed when the source driver of a braille display gesture is unknown.
 msgid "Unknown braille display"
-msgstr "Nieznana linijka brajlowska"
+msgstr "Nieznany monitor brajlowski"
 
 #. Translators: Name of a Bluetooth serial communications port.
 #, python-brace-format
@@ -801,6 +798,11 @@ msgstr "Angielski (U.K.) pismo pełne"
 #. braille settings dialog.
 msgid "English (U.K.) grade 2"
 msgstr "Angielski (U.K.) skróty"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr "Angielski północnoamerykański brajl komputerowy"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1039,13 +1041,18 @@ msgstr "Marathi pismo pełne"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
-msgstr "Holenderski (Belgia)"
+msgid "Dutch (Belgium) 6 dot"
+msgstr "Flamancki pismo pełne"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
-msgstr "Holenderski (Holandia)"
+msgid "Dutch (Netherlands) 6 dot"
+msgstr "Holenderski (Holandia) pismo pełne"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr "Holenderski brajl komputerowy"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4225,7 +4232,7 @@ msgstr "Otwiera okno dialogowe ustawień mowy"
 
 #. Translators: Input help mode message for go to select braille display command.
 msgid "Shows the NVDA braille display selection dialog"
-msgstr "Otwiera okno dialogowe służące do wyboru linijki brajlowskiej"
+msgstr "Otwiera okno dialogowe służące do wyboru monitora brajlowskiego"
 
 #. Translators: Input help mode message for go to braille settings command.
 msgid "Shows NVDA's braille settings"
@@ -4300,7 +4307,7 @@ msgid ""
 "Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
 "for NVDA"
 msgstr ""
-"Aktywuje menadżer dodatków, pozwalający instalować i usuwać wtyczki NVDA"
+"Aktywuje menedżer dodatków, pozwalający instalować i usuwać wtyczki NVDA"
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
@@ -4327,7 +4334,7 @@ msgstr "Brajl powiązany z %s"
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
-"Przełącza powiązanie tekstu prezentowanego na linijce brajlowskiej pomiędzy "
+"Przełącza powiązanie tekstu prezentowanego na monitorze brajlowskim pomiędzy "
 "fokusem a punktem przeglądu"
 
 #. Translators: Reports the new state of braille focus context presentation.
@@ -4446,8 +4453,8 @@ msgstr "Przewija brajl w przód"
 #. Translators: Input help mode message for a braille command.
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr ""
-"Umieszcza kursor, lub aktywuje obiekt pod daną komórką na linijce "
-"brajlowskiej"
+"Umieszcza kursor, lub aktywuje obiekt pod daną komórką na monitorze "
+"brajlowskim"
 
 #. Translators: Input help mode message for Braille report formatting command.
 msgid "Reports formatting info for the text under this braille cell"
@@ -4565,6 +4572,18 @@ msgid ""
 "Reports the new object or content under your finger if different to where "
 "your finger was last"
 msgstr "Zgłasza nowy obiekt i treść pod palcem"
+
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "Brak danych o położeniu obiektu"
+
+#. Translators: Input help mode message for touch right click command.
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr ""
+"Klika prawy przycisk myszy na aktualnie dotykanym obiekcie. Zazwyczaj "
+"otwiera to menu kontekstowe."
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
@@ -6198,7 +6217,8 @@ msgstr "Emuluje wciśnięcie %s na klawiaturze"
 msgid "NVDA Speech Viewer"
 msgstr "Podgląd mowy NVDA"
 
-#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+#. Translators: The label for a setting in the speech viewer that controls
+#. whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
 msgstr "&Pokaż podgląd mowy przy starcie"
 
@@ -6376,6 +6396,8 @@ msgstr "Błąd podczas sprawdzania aktualizacji"
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "Błąd"
 
@@ -6586,8 +6608,8 @@ msgstr ""
 "powołana w celu świadczenia pomocy i promowania bezpłatnych i otwartych "
 "rozwiązań dla osób z dysfunkcją wzroku.\n"
 "jeśli twoim zdaniem NVDA to przydatne rozwiązanie, które powinno się "
-"rozwijać, Rozważ przekazania wsparcia finansowego dla NV Access. Możesz to "
-"zrobić, wybierając \"Wesprzyj\" z meni NVDA."
+"rozwijać, Rozważ przekazanie wsparcia finansowego dla NV Access. Możesz to "
+"zrobić, wybierając \"Wesprzyj\" z menu NVDA."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
 #, python-brace-format
@@ -7191,7 +7213,7 @@ msgstr "Włącza lub wyłącza symulację klawiatury HID"
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
-msgstr "Linijki brajlowskie Baum/HumanWare/APH/Orbit"
+msgstr "Monitory brajlowskie Baum/HumanWare/APH/Orbit"
 
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
@@ -7203,11 +7225,11 @@ msgstr "HumanWare Brailliant BI/B series / BrailleNote Touch"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
-msgstr "Linijki EcoBraille "
+msgstr "Monitory brajlowskie EcoBraille "
 
 #. Translators: Names of braille displays.
 msgid "Eurobraille Esys/Esytime/Iris displays"
-msgstr "Linijki Eurobraille Esys/Esytime/Iris"
+msgstr "Monitory Eurobraille Esys/Esytime/Iris"
 
 #. Translators: Message when HID keyboard simulation is unavailable.
 msgid "HID keyboard input simulation is unavailable."
@@ -7232,7 +7254,7 @@ msgstr "przewiń linię"
 
 #. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
-msgstr "Linijki brajlowskie Handy Tech"
+msgstr "Monitory brajlowskie Handy Tech"
 
 #. Translators: message when braille input is enabled
 msgid "Braille input enabled"
@@ -7268,7 +7290,7 @@ msgstr "Starsze modele Papenmeier BRAILLEX"
 
 #. Translators: Names of braille displays.
 msgid "Seika braille displays"
-msgstr "Linijki brajlowskie seika"
+msgstr "Monitory brajlowskie seika"
 
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
@@ -7371,11 +7393,11 @@ msgid ""
 "make changes to the System registry and therefore requires administrative "
 "access. Are you sure you wish to proceed?"
 msgstr ""
-"Uruchamiasz narzędzie do naprawiania błędów rejestracji COM. To narzędzie "
-"naprawia najczęściej spotykane błędy systemowe, uniemożliwiające NVDA "
-"interakcję z niektórymi programami, m.in Firefox i internet explorer. To "
-"narzędzie wprowadza konieczne zmiany w rejestrze, których nie można "
-"wprowadzić bez uprawnień administratora. Czy chcesz kontynuować?"
+"Uruchamiasz narzędzie naprawy błędów rejestracji COM. Naprawia najczęściej "
+"spotykane błędy systemowe, uniemożliwiające NVDA interakcję z niektórymi "
+"programami, m.in. Firefox i internet explorer. Narzędzie wprowadza konieczne "
+"zmiany w rejestrze, których nie można wprowadzić bez uprawnień "
+"administratora. Czy chcesz kontynuować?"
 
 #. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
 #. Translators: The title of a warning dialog.
@@ -7387,7 +7409,7 @@ msgstr "Ostrzeżenie"
 #. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
 #. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
 msgid "COM Registration Fixing Tool"
-msgstr "Narzędzie do naprawiania błędów rejestracji COM"
+msgstr "Narzędzie naprawy błędów rejestracji COM"
 
 #. Translators: The message displayed while NVDA is running the COM Registration fixing tool
 msgid "Please wait while NVDA tries to fix your system's COM registrations."
@@ -7395,8 +7417,7 @@ msgstr "Proszę czekać, gdy NVDA naprawia błędy rejestracji COM w systemie."
 
 #. Translators: The message displayed when the COM Registration Fixing tool completes.
 msgid "COM Registration Fixing tool complete"
-msgstr ""
-"Narzędzie do naprawiania błędów rejestracji COM wykonało żądaną operację."
+msgstr "Narzędzie naprawy błędów rejestracji COM wykonało żądaną operację."
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
 msgid "&Settings..."
@@ -7481,7 +7502,7 @@ msgstr "&Zainstaluj NVDA..."
 
 #. Translators: The label for the menu item to run the COM registration fix tool
 msgid "Run COM Registration Fixing tool..."
-msgstr "Uruchom narzędzie do naprawiania błędów rejestracji COM..."
+msgstr "Uruchom narzędzie naprawy błędów rejestracji COM..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -7705,10 +7726,10 @@ msgstr ""
 "\n"
 "Dane zawierają wersję systemu operacyjnego, wersję NVDA, język, kraj "
 "pochodzenia, oraz pewne ustawienia, takie jak aktualnie używany syntezator "
-"mowy, linijkę brajlowską lub tablica brajlowska. Ani treść wypowiadana, ani "
-"wyświetlana na linijce brajlowskiej nigdy nie będzie wysyłana do NV Access.  "
-"Prosimy zajrzeć do podręcznika użytkownika, aby się zapoznać z aktualną "
-"listą zbieranych danych.\n"
+"mowy, monitor brajlowski lub tablica brajlowska. Ani treść wypowiadana, ani "
+"wyświetlana na monitorze brajlowskim nigdy nie będzie wysyłana do NV "
+"Access.  Prosimy zajrzeć do podręcznika użytkownika, aby się zapoznać z "
+"aktualną listą zbieranych danych.\n"
 "\n"
 "Czy zgadzasz się, aby organizacja NV Access zbierała te dane w celu "
 "ulepszania NVDA?"
@@ -9164,22 +9185,18 @@ msgstr ""
 "Użyj Microsoft UI automation do interakcji z kontrolkami dokumentów "
 "Microsoft &Word gdy jest to możliwe"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "Wsparcie K&onsoli systemu Windows:"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr ""
+"Użyj UI Automation do interakcji z wierszem poleceń systemu Windows, gdy "
+"jest to możliwe"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "Preferować UIA"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Stare wsparcie"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr ""
+"Wymawiaj &hasła w wierszu poleceń systemu windows (może zwiększyć wydajność)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9188,18 +9205,10 @@ msgstr "Programy konsolowe"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
+msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
-"Wymawiaj &hasła w wierszu poleceń systemu windows (może zwiększyć wydajność)"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
-msgstr ""
-"Użyj nowego wsparcia wpisywania znakó&w gdy jest użyte stare wsparcie "
-"wiersza poleceń gdy jest to możliwe"
+"Użyj nowego wsparcia wpisywania &znaków  w konsoli systemu Windows gdy jest "
+"to możliwe"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9343,15 +9352,15 @@ msgstr "Dodaj wpis słownika"
 
 #. Translators: A label for the braille display on the braille panel.
 msgid "Braille &display"
-msgstr "&Linijka brajlowska"
+msgstr "&Monitor brajlowski"
 
 #. Translators: This is the label for the braille display selection dialog.
 msgid "Select Braille Display"
-msgstr "Wybór linijki brajlowskiej"
+msgstr "Wybór monitora brajlowskiego"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
-msgstr "&Linijka brajlowska"
+msgstr "&Monitor brajlowski:"
 
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
@@ -9361,12 +9370,12 @@ msgstr "&Port:"
 #. braille display.
 #, python-brace-format
 msgid "Could not load the {display} display."
-msgstr "Nie można załadować linijki {display}."
+msgstr "Nie można załadować monitora brajlowskiego {display}."
 
 #. Translators: The title in a dialog presented when NVDA is unable to load the selected
 #. braille display.
 msgid "Braille Display Error"
-msgstr "Błąd linijki brajlowskiej"
+msgstr "Błąd monitora brajlowskiego"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
@@ -9584,6 +9593,10 @@ msgstr ""
 "sesji zostaną utracone.\n"
 "\t\t\tJest to nieodwracalne."
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "Przywracanie gestów do ustawień fabrycznych"
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
@@ -9599,6 +9612,7 @@ msgstr "Koniec interakcji z treścią matematyczną"
 msgid "Math interaction not supported."
 msgstr "Interakcja z treścią matematyczną nie jest obsługiwana."
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9627,7 +9641,8 @@ msgstr "zaznaczone %s"
 msgid "%s selected"
 msgstr "%s zaznaczone"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d znaków"
@@ -10088,18 +10103,19 @@ msgstr "Podświetlacz fokusu"
 msgid "&Enable Highlighting"
 msgstr "&Włącz podświetlenie"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "Kurtyna"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
-msgstr ""
-"Zawsze &pokazuy powiadomienie gdy kurtyna się wczytuje "
-"{screenCurtainTranslatedName}"
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "Zawsze &pokazuj powiadomienie gdy kurtyna się wczytuje"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "&Odtwarzaj dźwięk przy wczytywaniu kurtyny"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -11610,90 +11626,3 @@ msgstr "Interlinia podwójna"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Interlinia 1.5"
-
-#~ msgid "Magnifier"
-#~ msgstr "Lupa"
-
-#~ msgid "Highlighter"
-#~ msgstr "Podświetlacz"
-
-#~ msgid "Color enhancer"
-#~ msgstr "Ulepszacz kolorow"
-
-#~ msgid "NVDA Highlighter"
-#~ msgstr "Podświetlacz NVDA"
-
-#~ msgid "Koine Greek"
-#~ msgstr "Greka koine"
-
-#~ msgid "lmk %s"
-#~ msgstr "⠇⠍⠅ %s"
-
-#~ msgid "Start"
-#~ msgstr "Start"
-
-#~ msgid "Skype"
-#~ msgstr "Skype"
-
-#~ msgid "Reports and moves the review cursor to a recent message"
-#~ msgstr "Zgłasza ostatnią wiadomość i przesuwa do niej kursor przeglądu"
-
-#~ msgid "Typing stopped"
-#~ msgstr "Wpisywanie przerwane"
-
-#~ msgid "Rewind"
-#~ msgstr "Przewiń wstecz"
-
-#~ msgid "Fast forward"
-#~ msgstr "Przewiń w przód"
-
-#~ msgid "Play"
-#~ msgstr "Odtwarzaj"
-
-#~ msgid "Stop"
-#~ msgstr "Zatrzymaj"
-
-#~ msgid "Record"
-#~ msgstr "Nagrywaj"
-
-#~ msgid "Selected %s"
-#~ msgstr "%s zaznaczone"
-
-#~ msgid "Currently running application is %s"
-#~ msgstr "Bieżąca aplikacja to %s"
-
-#~ msgid " and currently loaded module is %s"
-#~ msgstr " załadowany moduł%s"
-
-#~ msgid ""
-#~ "All add-ons are currently disabled. To enable add-ons you must restart "
-#~ "NVDA."
-#~ msgstr ""
-#~ "Wszystkie dodatki są wyłączone. Aby je włączyć, musisz zrestartować NVDA."
-
-#~ msgid "Focus follows browse mode off"
-#~ msgstr "Fokus śledzi tryb przeglądania wyłączone"
-
-#~ msgid "Focus follows browse mode on"
-#~ msgstr "Fokus śledzi tryb przeglądania włączone"
-
-#~ msgid "%s Settings Category"
-#~ msgstr "Kategoria ustawień %s"
-
-#~ msgid "System focus follows browse mode focus automatically"
-#~ msgstr "Fokus systemowy automatycznie śledzi fokus trybu przeglądania"
-
-#~ msgid "NVDA"
-#~ msgstr "NVDA"
-
-#~ msgid "remove"
-#~ msgstr "usuń"
-
-#~ msgid ""
-#~ "For the new language to take effect, the configuration must be saved and "
-#~ "NVDA must be restarted. Press enter to save and restart NVDA, or cancel "
-#~ "to manually save and exit at a later time."
-#~ msgstr ""
-#~ "Aby nowy język zaczął w pełni działać, należy zapisać ustawienia i "
-#~ "zrestartować NVDA. Naciśnij enter, aby zapisać i zrestartować NVDA teraz, "
-#~ "lub anuluj, żeby zrobić to ręcznie później."

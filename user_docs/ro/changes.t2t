@@ -3,12 +3,60 @@ Ce este nou în NVDA
 
 %!includeconf: ../changes.t2tconf
 
-= 2019.3 =
+= 2020.1 =
+Caracteristicile principale ale acestei versiuni includ suportul pentru câteva noi afișaje braille de la HumanWare și APH, precum și reparări ale unor erori importante precum cea a citirii conținutului matematic în Microsoft Word utilizându-se MathPlayer / MathType.
 
 == Noi Funcționalități ==
-- În Linia de Comandă, PowerShell și în Subsistemul Windows pentru Linux din Windows 10 versiunea 1809 sau mai nouă:
- - S-au îmbunătățit într-un mod remarcabil performanța și stabilitatea. (#9771)
- - Anunțarea textului scris care nu apare pe ecran )cum ar fi parolele) poate fi activată printr-o opțiune care se află în panoul setărilor avansate NVDA. (#9649)
+- Elementul curent selectat din casetele de liste este prezentat din nou în modul de navigare din Google Chrome, așa cum se întâmpla și în NVDA 2019.1. (#10713)
+- Acum, puteți da click dreapta și dacă folosiți un dispozitiv cu ecran tactil, ca și cum ați folosi un maus fizic, apăsând o dată cu un deget și ținând apăsat. (#3886)
+- Suport pentru următoarele afișaje braille: APH Chameleon 20, APH Mantis Q40, HumanWare BrailleOne, BrailleNote Touch v2 și NLS eReader. (#10830)
+
+
+== Modificări ==
+- NVDA va împiedica sistemul să se blocheze sau să intre în modul de repaus atunci când va citi tot. (#10643)
+- Suport pentru iframe-urile out-of-process din Mozilla Firefox. (#10707)
+- S-a actualizat traducătorul braille liblouis la versiunea 3.12. (#10161)
+
+
+== Defecte Rezolvate ==
+- Am făcut astfel încât NVDA să nu mai anunțe simbolul Unicode „minus” (U+2212). (#10633)
+- La instalarea suplimentelor din administratorul de suplimente, numele dosarelor și fișierelor din fereastra de navigare nu mai sunt raportate de două ori. (#10620, #2395)
+- În Firefox, la încărcarea Mastodon având activată interfața web avansată, toate cronologiile sunt redate corect în modul de navigare. (#10776)
+- În modul de navigare, NVDA raportează „nebifat” pentru casetele care nu sunt bifate acolo unde uneori nu o făcea. (#10781)
+- Controalele de comutare ARIA nu mai raportează informații precum „nu este apăsat bifat” sau „apăsat bifat”, menite să genereze confuzie în rândul utilizatorilor. (#9187)
+- Nu ar mai trebui ca vocile SAPI4 să refuze să pronunțe un anume text. (#10792)
+- NVDA poate din nou să citească ecuațiile matematice din Microsoft Word și să interacționeze cu ele. (#10803)
+- NVDA va anunța din nou textul neselectat din modul de navigare la apăsarea unei taste săgeată cât timp textul este selectat. (#10731)
+- NVDA nu se mai închide dacă există o eroare la pornirea eSpeak. (#10607)
+- Erorile cauzate de Unicode în traduceri ăpentru scurtături nu mai opresc instalatorul, atenuate de revenirea la textul în engleză. (#5166, #6326)
+- Ieșirea listelor și a tabelelor dinn sayAll, cu citirea de suprafață activată, nu mai anunță în continuu ieșirea din listă sau tabel.
+
+
+== Modificări pentru Dezvoltatori ==
+- Ghidul dezvoltatorului este construit acum cu Sphinx. (#9840)
+- Câteva funcții de vorbire au fost împărțite în două. (#10593)
+  - Versiunea speakX rămâne, însă acum depinde de o funcție getXSpeech, care întoarce o frecvență de vorbire.
+  - Acum, speakObjectProperties se bazează pe getObjectPropertiesSpeech
+  - Acum, speakObject se bazează pe getObjectSpeech
+  - Acum, speakTextInfo se bazează pe getTextInfoSpeech
+  - speakWithoutPauses a fost convertită într-o clasă și refabricată, însă nu ar trebui să afecteze în vreun fel compatibilitatea.
+  - getSpeechForSpelling este depreciată, (deși încă este disponibilă) utilizați în schimb getSpellingSpeech.
+  - Modificări private care nu ar trebui să îi afecteze pe dezvoltatorii de suplimente:
+  - Acum, _speakPlaceholderIfEmpty este _getPlaceholderSpeechIfTextEmpty
+  - Acum, _speakTextInfo_addMath este _extendSpeechSequence_addMathForTextInfo
+- Vorbirea 'reason' a fost convertită într-un Enum, vedeți clasa controlTypes.OutputReason. (#10703)
+  - Constantele nivelurilor de modul 'reason' sunt depreciate.
+- Dependințele de compilare ale NVDA necesită Visual Studio 2019 (16.2 sau mai nou). (#10169)
+- S-a actualizat SCons la versiunea 3.1.1. (#10169)
+- Se permite din nou behaviors._FakeTableCell să nu aibă nicio locație definită. (#10864)
+
+
+= 2019.3 =
+NVDA 2019.3 este o versiune foarte importantă care conține modificări printre care se regăsesc actualizarea de la Python 2 la Python 3 și o rescriere majoră a subsistemului vorbirii NVDA.
+Deși aceste modificări anulează compatibilitatea cu suplimentele NVDA mai vechi, actualizarea Python 3 este necesară pentru securitate, iar modificările la vorbire permit inovații în viitorul apropiat.
+ Printre alte noutăți pe care le aduce această versiune se regăsesc suportul pentru VM-urile Java pe 64 de biți, funcționalitățile Cortină Ecran și Evidențiere Focalizare, suportul pentru mai multe afișaje braille și un nou monitor braille, precum și multe defecte rezolvate.
+
+== Noi Funcționalități ==
 - Acuratețea cu care mausul se deplasează la comanda obiectului navigator a fost îmbunătățită în câmpurile de text din aplicațiile Java. (#10157)
 - S-a adăugat suportul pentru următoarele afișaje braille de la Handy Tech:
  - Basic Braille Plus 40
@@ -21,13 +69,13 @@ Ce este nou în NVDA
 - În Internet Explorer, Google Chrome și Mozilla Firefox, puteți naviga la articole folosind scripturile navigării rapide. Aceste scripturi sunt neasciate în mod implicit și pot fi atribuite în dialogul gesturilor de intrare atunci când acesta este deschis dintr-un document în care modul de navigare este prezent. (#9227)
  - Și Figurile sunt raportate. Ele sunt considerate obiecte, prin urmare sunt navigabile cu tasta o a navigării rapide.
 - În Internet Explorer, Google Chrome și Mozilla Firefox, elementele articolelor sunt raportate cu navigarea obiectului și opțional în modul de navigare dacă acesta este activat din setările de formatare a documentului. (#10424)
-- Suport pentru procesele care nu au loc în iframe-urile din Mozilla Firefox. (#9672)
 - S-a adăugat cortina ecranului, care face întregul ecran negru în Windows 8 și/sau în versiunile mai noi. (#7857)
  - S-a adăugat un script care activează cortina ecranului (până la următoarea repornire a NVDA cu o singură apăsare, ori cât timp rulează NVDA cu două apăsări), niciun gest implicit nu este atribuit.
  - Cortina poate fi activată și configurată în secțiunea „viziune” a ferestrei de dialog a setărilor NVDA.
 - Noua versiune de NVDA vine la pachet și cu funcționalitatea de evidențiere a ecranului. (#971, #9064)
  - Evidențierea focalizării, obiectul navigator și poziția cursorului de scriere al modului de navigare pot fi activate și configurate în secțiunea „Vedere” a ferestrei de dialog a setărilor NVDA.
  - Notă: această caracteristică este incompatibilă cu suplimentul Focus Higlight, însă suplimentul încă poate fi utilizat atât timp cât commpilarea în evidențiator este inactivă.
+- S-a adăugat unealta Monitor Braille, care vă permite să vizualizați ieșirea braille printr-o fereastră pe ecran. (#7788)
 
 
 == Modificări ==
@@ -45,6 +93,7 @@ Ce este nou în NVDA
 - La focalizarea unei grupări din modul de navigare, și descrierea este citită. (#10095)
 - Java Access Bridge este inclus cu NVDA pentru activarea accesului la aplicațiile Java, inclusiv pentru VM-urile Java bazate pe 64 de biți. (#7724)
 - Dacă Java Access Bridge nu este activat pentru utilizator, NVDA îl activează automat la pornire. (#7952)
+- S-a actualizat eSpeak-NG la 1.51-dev, commit ca65812ac6019926f2fbd7f12c92d7edd3701e0c. (#10581)
 
 
 == Defecte Rezolvate ==
@@ -74,6 +123,11 @@ Ce este nou în NVDA
 - Aplicațiile Java pornite înaintea NVDA sunt accesibile. Nu mai este necesară repornirea acestora. (#10296)
 - În Mozilla Firefox, când elementul focalizat devine marcat ca actual (aria-current), această modificare nu mai este anunțată în mod repetat. (#8960)
 - NVDA nu va mai trata anumite caractere unicode compuse precum e-ul cu accent ascuțit ca un singur caracter la deplasarea prin text. (#10550)
+- Este suportată versiunea 4 a Spring Tool Suite. (#10001)
+- Nu rosti de două ori numele atunci când relația țintă aria-labelledby este un element interior. (#10552)
+- În versiunea 1607 a Windows 10 și în versiunile mai noi, caracterele la tastarea cărora sunt utilizate tastaturi braille sunt rostite în multe situații. (#10569)
+- La modificarea dispozitivului audio de ieșire, tonurile redate de NVDA vor fi redate prin noul dispozitiv audio selectat. (#2167)
+- În Mozilla Firefox, mutarea focalizării în modul de navigare este mai rapidă. Aceasta face ca deplasarea cursorului din modul de navigare să aibă o viteză de reacție mult mai bună în multe situații. (#10584)
 
 
 == Modificări pentru Dezvoltatori ==

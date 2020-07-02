@@ -16,7 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <functional>
 #include <vector>
 #include <map>
-#include <boost/optional.hpp>
+#include <optional>
 #include <windows.h>
 #include <set>
 #include <string>
@@ -287,13 +287,13 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	SysFreeString(toolkitVersion);
 }
 
-experimental::optional<int>
+optional<int>
 getIAccessible2UniqueID(IAccessible2* targetAcc) {
 	int ID = 0;
 	//Get ID -- IAccessible2 uniqueID
 	if (targetAcc->get_uniqueID((long*)&ID) != S_OK) {
 		LOG_DEBUG(L"pacc->get_uniqueID failed");
-		return experimental::optional<int>();
+		return optional<int>();
 	}
 	return ID;
 }
@@ -301,10 +301,10 @@ getIAccessible2UniqueID(IAccessible2* targetAcc) {
 class LabelInfo {
 public:
 	bool isVisible;
-	std::experimental::optional<int> ID;
+	optional<int> ID;
 };
 
-using OptionalLabelInfo = std::experimental::optional< LabelInfo >;
+using OptionalLabelInfo = optional< LabelInfo >;
 OptionalLabelInfo GeckoVBufBackend_t::getLabelInfo(IAccessible2* pacc2) {
 	CComQIPtr<IAccessible2_2> pacc2_2=pacc2;
 	if (!pacc2_2) return OptionalLabelInfo();
@@ -342,13 +342,6 @@ bool hasAriaHiddenAttribute(const map<wstring,wstring>& IA2AttribsMap){
 CComPtr<IAccessible2> GeckoVBufBackend_t::getSelectedItem(
 	IAccessible2* container, const map<wstring, wstring>& attribs
 ) {
-	if (this->toolkitName.compare(L"Chrome") == 0) {
-		// #9364: Google Chrome crashes when fetching the currently selected item from some listboxes.
-		// Specifically when calling IEnumVARIANT::next.
-		// Due to this, and other issues around incorrect focus state setting, it is best to disable fetching of currently selected item in listboxes in Chrome all together.
-		return nullptr;
-	}
-
 	CComVariant selection;
 	HRESULT hr = container->get_accSelection(&selection);
 	if (FAILED(hr)) {
@@ -580,7 +573,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		isBlockElement=TRUE;
 	} else if((IA2AttribsMapIt=IA2AttribsMap.find(L"display"))!=IA2AttribsMap.end()) {
 		// If there is a display attribute, we can rely solely on this to determine whether this is a block element or not.
-		isBlockElement=(IA2AttribsMapIt->second!=L"inline"&&IA2AttribsMapIt->second!=L"inline-block");
+		isBlockElement = IA2AttribsMapIt->second != L"inline"
+			&& IA2AttribsMapIt->second != L"inline-block"
+			&& IA2AttribsMapIt->second != L"inline-flex";
 	} else if((IA2AttribsMapIt=IA2AttribsMap.find(L"formatting"))!=IA2AttribsMap.end()&&IA2AttribsMapIt->second==L"block") {
 		isBlockElement=TRUE;
 	} else if(role==ROLE_SYSTEM_TABLE||role==ROLE_SYSTEM_CELL||role==IA2_ROLE_SECTION||role==ROLE_SYSTEM_DOCUMENT||role==IA2_ROLE_INTERNAL_FRAME||role==IA2_ROLE_UNKNOWN||role==ROLE_SYSTEM_SEPARATOR) {
@@ -657,7 +652,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	// Whether the name of this node has been explicitly set (as opposed to calculated by descendant)
 	const bool nameIsExplicit = IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true";
 	// Whether the name is the content of this node.
-	std::experimental::optional<LabelInfo> labelInfo_;
+	optional<LabelInfo> labelInfo_;
 	// A version of the getIdForVisibleLabel function that caches its result
 	auto isLabelVisibleCached = [&]() {
 		if (!labelInfo_) {
@@ -673,7 +668,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		if (!labelInfo_) {
 			labelInfo_ = getLabelInfo(pacc);
 		}
-		experimental::optional<int> id;
+		optional<int> id;
 		if (labelInfo_) {
 			id = labelInfo_->ID;
 		}
@@ -905,10 +900,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 			value=NULL;
 		}
 	}
-
-	//If the name isn't being rendered as the content, then add the name as a field attribute.
-	if (!nameIsContent && name)
-		parentNode->addAttribute(L"name", name);
 
 	if(nameIsContent) {
 		// We may render an accessible name for this node if it has been explicitly set or it has no useful content. 
@@ -1154,17 +1145,25 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		}
 	}
 
-	auto labelId = getLabelIDCached();
-	if (labelId) {
-		auto labelControlFieldNode = buffer->getControlFieldNodeWithIdentifier(docHandle, labelId.value());
-		if (labelControlFieldNode) {
-			bool isDescendant = buffer->isDescendantNode(parentNode, labelControlFieldNode);
-			if (isDescendant) {
-				parentNode->addAttribute(L"labelledByContent", L"true");
+	//If the name isn't being rendered as the content, then add the name as a field attribute.
+	if (!nameIsContent && name) {
+		parentNode->addAttribute(L"name", name);
+		// Determine whether this node is labelled by its content. We only need to do
+		// this if the node has a name and the name is explicit, since this is what
+		// browsers expose in this case.
+		if (nameIsExplicit) {
+			auto labelId = getLabelIDCached();
+			if (labelId) {
+				auto labelControlFieldNode = buffer->getControlFieldNodeWithIdentifier(docHandle, labelId.value());
+				if (labelControlFieldNode) {
+					bool isDescendant = buffer->isDescendantNode(parentNode, labelControlFieldNode);
+					if (isDescendant) {
+						parentNode->addAttribute(L"labelledByContent", L"true");
+					}
+				}
 			}
 		}
 	}
-
 
 	// Clean up.
 	if(name)
@@ -1201,6 +1200,7 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 		case EVENT_OBJECT_SELECTIONREMOVE:
 		case EVENT_OBJECT_SELECTIONWITHIN:
 		case IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED:
+		case EVENT_OBJECT_HIDE:
 		break;
 		default:
 		return;
@@ -1237,6 +1237,19 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 		VBufStorage_controlFieldNode_t* node=backend->getControlFieldNodeWithIdentifier(docHandle,ID);
 		if(!node)
 			continue;
+		if (eventID == EVENT_OBJECT_HIDE) {
+			// When an accessible is moved, events are fired as if the accessible were
+			// removed and then inserted. The insertion events are fired as if it were
+			// a new subtree; i.e. only one insertion for the root of the subtree.
+			// This means that if new descendants are inserted at the same time as the
+			// root is moved, we don't get specific events for those insertions.
+			// Because of that, we mustn't reuse the subtree. Otherwise, we wouldn't
+			// walk inside it and thus wouldn't know about the new descendants.
+			node->alwaysRerenderDescendants = true;
+			// We'll get a text removed event for the parent, so no need to invalidate
+			// this node.
+			continue;
+		}
 		backend->invalidateSubtree(node);
 	}
 }

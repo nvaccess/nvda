@@ -4,12 +4,61 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 %!includeconf: ../changes.t2tconf
 %!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
 
-= 2019.3 =
+= 2020.1 =
+Os destaques desta versão incluem suporte para várias novas linhas braille da HumanWare e APH, além de muitas outras importantes correções de falhas como a capacidade de ler novamente matemática no Microsoft Word usando o MathPlayer / MathType.
 
 == Novas Características ==
-- No Prompt de Comando, no PowerShell e no Subsistema do Windows para Linux em Windows 10 Atualização de Outubro de 2018 e posteriores:
- - Desempenho e estabilidade consideravelmente melhorados. (#9771)
- - O anúncio de texto digitado que não aparece na tela (como senhas) agora pode ser ativado através de uma opção no painel de configurações avançadas do NVDA. (#9649)
+- O item atualmente selecionado nas caixas de lista é novamente apresentado no modo de navegação no Chrome, semelhante ao NVDA 2019.1. (#10713)
+- Agora você pode executar cliques com o botão direito do mouse em dispositivos de toque, tocando e mantendo pressionado um dedo. (#3886)
+- Suporte para novas linhas braille: APH Chameleon 20, APH Mantis Q40, HumanWare BrailleOne, BrailleNote Touch v2 e NLS eReader. (#10830)
+
+
+== Alterações ==
+- O NVDA impedirá que o sistema bloqueie ou entre no modo de suspensão quando estiver em leitura contínua. (#10643)
+- Suporte para iframes fora de processo ""[out-of-process iframes]"" no Mozilla Firefox. (#10707)
+- Atualizado o transcritor braille liblouis para a versão 3.12. (#10161)
+
+
+== Correção de Falhas ==
+- Corrigido o NVDA não anunciar o símbolo de menos Unicode (U+2212). (#10633)
+- Ao instalar o complemento pelo gestor de complementos, os nomes de arquivos e pastas na janela de navegação não são mais informados duas vezes. (#10620, #2395)
+- No Firefox, ao carregar o Mastodon com a interface avançada da web ativada, todas as linhas de tempo agora são renderizadas corretamente no modo de navegação. (#10776)
+- No modo de navegação, o NVDA agora informa "não marcada" para caixas de seleção desmarcadas, onde às vezes não acontecia anteriormente. (#10781)
+- Os controles de chave ""[switch]"" ARIA não relatam mais informações confusas, como "não pressionado marcado" ou "pressionado marcado". (#9187)
+- As vozes SAPI4 não devem mais se recusar a falar determinado texto. (#10792)
+- O NVDA pode novamente ler e interagir com equações matemáticas no Microsoft Word. (#10803)
+- NVDA anunciará novamente que o texto não está selecionado no modo de navegação se pressionar uma tecla de seta enquanto o texto estiver selecionado. (#10731).
+- O NVDA não será mais encerrado se houver um erro ao inicializar o eSpeak. (#10607)
+- Erros causados pelo unicode nas traduções dos atalhos não param mais o instalador, atenuados pelo retorno ao texto em inglês. (#5166, #6326)
+- Chegar e sair de listas e tabelas na leitura contínua com a leitura dinâmica habilitada não anuncia mais continuamente a saída de lista ou tabela. (#10706)
+- Corrige o rastreamento do mouse para alguns elementos MSHTML no Internet Explorer. (#10736)
+
+
+== Alterações para Desenvolvedores ==
+- A documentação do desenvolvedor agora é compilada usando o sphinx. (#9840)
+- Várias funções de speech ""[fala]"" foram divididas em duas. (#10593)
+  A versão speakX permanece, mas agora depende de uma função getXSpeech que retorna uma sequência de fala.
+  - speakObjectProperties agora conta com getObjectPropertiesSpeech
+  - speakObject agora conta com getObjectSpeech
+  - speakTextInfo agora conta com getTextInfoSpeech
+  - speakWithoutPauses foi convertido em uma classe e refatorado, mas não deve quebrar a compatibilidade.
+  - getSpeechForSpelling está obsoleto (embora ainda disponível) no lugar use getSpellingSpeech.
+  Alterações privadas que não devem afetar os desenvolvedores de complementos:
+  - _speakPlaceholderIfEmpty agora é _getPlaceholderSpeechIfTextEmpty
+  - _speakTextInfo_addMath agora é _extendSpeechSequence_addMathForTextInfo
+- 'reason' ""[motivo]"" de Speech ""[Fala]"" foi convertido em um Enum, consulte a classe controlTypes.OutputReason. (#10703)
+  - As constantes 'REASON_*' de nível no módulo estão obsoletas.
+- A compilação de dependências do NVDA agora requer o Visual Studio 2019 (16.2 ou mais recente). (#10169)
+- SCons atualizado para a versão 3.1.1. (#10169)
+- Novamente permite que behaviors._FakeTableCell não tenha um local definido (#10864)
+
+
+= 2019.3 =
+O NVDA 2019.3 é uma versão muito significativa que contém muitas alterações ocultas incluindo a atualização do Python 2 para o Python 3, e uma importante reescrita do subsistema de fala do NVDA.
+Embora essas alterações quebrem a compatibilidade com os complementos NVDA mais antigos, a atualização para o Python 3 é necessária para segurança, e as alterações na fala permitem algumas inovações interessantes no futuro próximo.
+ Outros destaques desta versão incluem suporte a 64 bit para Java VMs ""[Máquinas Virtuais Java]"", funcionalidade Cortina de Tela e Realce de Foco, suporte para mais linhas braille e um novo Visualizador de Braille, além de muitas outras correções.
+
+== Novas Características ==
 - A precisão do comando mover o mouse para o objeto de navegação foi aprimorada nos campos de texto nos aplicativos Java. (#10157)
 - Adicionado suporte para as seguintes Linhas braille da Handy Tech (#8955):
  - Basic Braille Plus 40
@@ -22,13 +71,13 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 - No Internet Explorer, Google Chrome e Mozilla Firefox, agora você pode navegar por artigo e agrupamento usando scripts de navegação rápida. Esses scripts são independentes ""[sem comandos]"" por padrão e podem ser atribuídos no diálogo Definir Comandos quando a caixa de diálogo é aberta em um documento no modo de navegação. (#9485, #9227)
  - Figuras também são informadas. Elas são consideradas objetos e, portanto, navegáveis com tecla de navegação rápida o.
 - No Internet Explorer, Google Chrome e Mozilla Firefox, os elementos artigos agora são informados com a navegação de objetos e, opcionalmente, no modo de navegação, se ativado nas configurações de Formatação de documentos. (#10424)
-- Suporte para iframes fora de processo no Mozilla Firefox. (#9672)
 - Adicionada cortina de tela, que quando ativada, torna a tela completamente preta no Windows 8 e posteriores. (#7857)
  - Adicionado um script para ativar a cortina de tela (até a próxima reinicialização com um pressionamento, ou sempre enquanto o NVDA estiver sendo executado com dois pressionamentos), nenhum comando ""[gesto]"" padrão está atribuído.
  - Pode ser ativado e configurado através da categoria 'visão' no diálogo de configurações do NVDA.
 - Adicionada funcionalidade de realce da tela ao NVDA. (#971, #9064)
  - O realce do foco, objeto de navegação e posição do cursor do modo de navegação pode ser ativado e configurado através da categoria 'visão' no diálogo de configurações do NVDA.
  - Nota: esse recurso é incompatível com o complemento realce do foco ""[focus highlight]"", no entanto, o complemento ainda pode ser usado enquanto o realçador embutido estiver desativado.
+- Adicionada ferramenta Visualizador Braille, permite visualizar a saída de braille através de uma janela na tela. (#7788)
 
 
 == Alterações ==
@@ -46,6 +95,7 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 - Ao focalizar um agrupamento no modo de navegação, a descrição agora também é lida. (#10095)
 - O Java Access Bridge agora está incluído no NVDA para permitir o acesso a aplicativos Java, inclusive para VMs ""[máquinas virtuais]"" Java de 64 bit. (#7724)
 - Se o Java Access Bridge não estiver ativado para o usuário, o NVDA o ativará automaticamente na inicialização do NVDA. (#7952)
+- Atualizado o eSpeak-NG para 1.51-dev, submissão ""[commit]"" ca65812ac6019926f2fbd7f12c92d7edd3701e0c. (#10581)
 
 
 == Correção de Falhas ==
@@ -74,6 +124,12 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 - Alguns problemas raros de transcrição braille e erros com o liblouis foram resolvidos. (#9982)
 - Os aplicativos Java iniciados antes do NVDA agora estão acessíveis sem a necessidade de reiniciar o aplicativo Java. (#10296)
 - No Mozilla Firefox, quando o elemento focalizado fica marcado como atual (aria-current), essa alteração não é mais falada várias vezes. (#8960)
+- O NVDA agora tratará certos caracteres unicode compostos, como e-agudo, como um único caractere ao se mover pelo texto. (#10550)
+- Spring Tool Suite Versão 4 agora é suportado. (#10001)
+- Não fala o nome duas vezes quando o destino da relação aria-labelledby for um elemento interno. (#10552)
+- No Windows 10 versão 1607 e posteriores, os caracteres digitados nos teclados Braille são falados em mais situações. (#10569)
+- Ao alterar o dispositivo de saída de áudio, os tons tocados pelo NVDA agora serão reproduzidos através do dispositivo recém-selecionado. (#2167)
+- No Mozilla Firefox, mover o foco no modo de navegação é mais rápido. Isso torna o movimento do cursor no modo de navegação mais responsivo em muitos casos. (#10584)
 
 
 == Alterações para Desenvolvedores ==
@@ -192,7 +248,7 @@ Os destaques desta versão incluem a detecção automática de linhas braille da
 
 == Correção de Falhas ==
 - O NVDA não trava mais quando um diretório de complementos está vazio. (#7686)
-- As marcas LTR ""[da esquerda para a direita]"" e RTL ""[da direita para a esquerda]"" não são mais relatadas em braile ou fala por caractere ao acessar a janela de propriedades. (#8361)
+- As marcas LTR ""[da esquerda para a direita]"" e RTL ""[da direita para a esquerda]"" não são mais relatadas em braille ou fala por caractere ao acessar a janela de propriedades. (#8361)
 - Ao pular para campos de formulário com navegação rápida no Modo de Navegação, o campo inteiro do formulário agora é anunciado, e não apenas a primeira linha. (#9388)
 - O NVDA não ficará mais em silêncio após sair do aplicativo Email do Windows 10. (#9341)
 - O NVDA não falha mais ao iniciar quando as configurações regionais dos usuários estão definidas para uma localidade desconhecida para o NVDA, como Inglês (Holanda). (#8726)
@@ -244,7 +300,7 @@ Essas alterações são necessárias para garantir melhor compatibilidade do có
 Por favor, consulte a lista de alterações mais abaixo para obter mais detalhes sobre isso e como os complementos agora são melhor versionados.
 
 == Novas Características ==
-- Novas tabelas braile: Africâner, Árabe braille informático de 8 pontos, Árabe grau 2, Espanhol grau 2. (#4435, #9186)
+- Novas tabelas braille: Africâner, Árabe braille informático de 8 pontos, Árabe grau 2, Espanhol grau 2. (#4435, #9186)
 - Adicionado uma opção à configurações do mouse do NVDA para fazer com que o NVDA lide com situações em que o mouse é controlado por outro aplicativo. (#8452)
  - Isso permitirá que o NVDA rastreie o mouse quando um sistema for controlado remotamente usando o TeamViewer ou outro software de controle remoto.
 - Adicionado o parâmetro de linha de comando `--enable-start-on-logon` para permitir a configuração se as instalações silenciosas do NVDA configuram o NVDA para iniciar no logon do Windows ou não. Especifique true ""[verdadeiro]"" para iniciar no logon ou false ""[falso]"" para não iniciar no logon. Se o argumento --enable-start-on-logon não for especificado, o NVDA iniciará no logon, a menos que já tenha sido configurado para não fazer isso por uma instalação anterior. (#8574)
