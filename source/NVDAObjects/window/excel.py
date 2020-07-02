@@ -1598,7 +1598,7 @@ class ExcelDropdown(Window):
 
 	@script(
 		gestures=("kb:downArrow", "kb:upArrow", "kb:leftArrow", "kb:rightArrow", "kb:home", "kb:end"),
-		canPropagate = True)
+		canPropagate=True)
 	def script_selectionChange(self,gesture):
 		gesture.send()
 		newFocus=self.selection or self
@@ -1607,7 +1607,7 @@ class ExcelDropdown(Window):
 
 	@script(
 		gestures=("kb:escape", "kb:enter", "kb:space"),
-		canPropagate = True)
+		canPropagate=True)
 	def script_closeDropdown(self,gesture):
 		gesture.send()
 		eventHandler.queueEvent("gainFocus",self.parent)
@@ -1741,7 +1741,7 @@ class ExcelFormControl(ExcelBase):
 
 	@script(
 		gestures=("kb:enter", "kb:space", "kb(desktop):numpadEnter"),
-		canPropagate = True)
+		canPropagate=True)
 	def script_doAction(self,gesture):
 		self.doAction()
 
@@ -1906,7 +1906,7 @@ class ExcelFormControlListBox(ExcelFormControl):
 
 	@script(
 		gesture="kb:upArrow",
-		canPropagate = True)
+		canPropagate=True)
 	def script_moveUp(self, gesture):
 		if self.selectedItemIndex > 1:
 			self.selectedItemIndex= self.selectedItemIndex - 1
@@ -1921,7 +1921,7 @@ class ExcelFormControlListBox(ExcelFormControl):
 
 	@script(
 		gesture="kb:downArrow",
-		canPropagate = True)
+		canPropagate=True)
 	def script_moveDown(self, gesture):
 		if self.selectedItemIndex < self.listSize:
 			self.selectedItemIndex= self.selectedItemIndex + 1
@@ -1959,7 +1959,7 @@ class ExcelFormControlDropDown(ExcelFormControl):
 
 	@script(
 		gesture="kb:upArrow",
-		canPropagate = True)
+		canPropagate=True)
 	def script_moveUp(self, gesture):
 		if self.selectedItemIndex > 1:
 			self.selectedItemIndex= self.selectedItemIndex - 1
@@ -1968,7 +1968,7 @@ class ExcelFormControlDropDown(ExcelFormControl):
 
 	@script(
 		gesture="kb:downArrow",
-		canPropagate = True)
+		canPropagate=True)
 	def script_moveDown(self, gesture):
 		if self.selectedItemIndex < self.listSize:
 			self.selectedItemIndex= self.selectedItemIndex + 1
