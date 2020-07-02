@@ -227,8 +227,6 @@ HIGH_SURROGATE_LAST = u"\uDBFF"
 
 def isHighSurrogate(ch: str) -> bool:
 	"""Returns if the given character is a high surrogate UTF-16 character."""
-	if ch is None:
-		return False
 	return HIGH_SURROGATE_FIRST <= ch <= HIGH_SURROGATE_LAST
 
 LOW_SURROGATE_FIRST = u"\uDC00"
@@ -236,6 +234,4 @@ LOW_SURROGATE_LAST = u"\uDFFF"
 
 def isLowSurrogate(ch: str) -> bool:
 	"""Returns if the given character is a low surrogate UTF-16 character."""
-	if ch is None:
-		return False
 	return LOW_SURROGATE_FIRST <= ch <= LOW_SURROGATE_LAST
