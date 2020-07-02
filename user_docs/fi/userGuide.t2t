@@ -118,7 +118,7 @@ Ennen kuin Jatka-painiketta voidaan painaa, on vahvistettava, että näiden lis�
 Käytettävissä on myös painike, joka näyttää luettelon käytöstä poistettavista lisäosista.
 Lisätietoja tästä painikkeesta on [Yhteensopimattomien lisäosien valintaikkuna -kappaleessa. #incompatibleAddonsManager]
 
-+++ Käynnistä sisäänkirjautumisen aikana +++[StartAtWindowsLogon]
++++ Käytä sisäänkirjautumisen aikana +++[StartAtWindowsLogon]
 Tällä asetuksella voit valita, käynnistyykö NVDA automaattisesti Windowsin kirjautumisikkunassa ennen kuin olet syöttänyt salasanan.
 Asetus vaikuttaa myös käyttäjätilien valvontaan sekä muihin suojattuihin ruutuihin.
 Se on oletusarvoisesti käytössä uusissa asennuksissa.
@@ -1066,16 +1066,16 @@ Käytettävissä ovat seuraavat lokitasot:
 - Tiedot: NVDA tallentaa lokiin perustietoja, kuten käynnistysilmoituksia ja kehittäjille hyödyllistä tietoa.
 - Virheenkorjausvaroitus: Lokiin tallennetaan varoituksia, jotka eivät ole vakavien virheiden aiheuttamia.
 - Syöttö/tulostus: Lokiin tallennetaan näppäimistön ja pistenäyttöjen syöte sekä puhe- ja pistekirjoitustuloste.
- - Mikäli olet huolissasi yksityisyydestäsi, älä määritä lokitasoksi tätä vaihtoehtoa.
+ - Jos olet huolissasi yksityisyydestäsi, älä määritä lokitasoksi tätä vaihtoehtoa.
 - Virheenkorjaus: Lokiin tallennetaan tiedot-, varoitukset- ja syöttö/tulostus-ilmoitusten lisäksi virheenkorjauksen lisäilmoituksia.
  - Kuten syöttö/tulostus-tasolla, älä määritä lokitasoksi tätä vaihtoehtoa, mikäli olet huolissasi yksityisyydestäsi.
 
 
 ==== Käynnistä automaattisesti sisäänkirjautumisen jälkeen ====[GeneralSettingsStartAfterLogOn]
-Jos tämä asetus on käytössä, NVDA käynnistyy automaattisesti heti, kun olet kirjautunut sisään Windowsiin.
+Jos tämä asetus on käytössä, NVDA käynnistyy automaattisesti heti kirjautuessasi sisään Windowsiin.
 Asetus on käytettävissä vain NVDA:n asennetuissa versioissa.
 
-==== Käynnistä sisäänkirjautumisen aikana (edellyttää järjestelmänvalvojan oikeuksia) ====[GeneralSettingsStartOnLogOnScreen]
+==== Käytä sisäänkirjautumisen aikana (edellyttää järjestelmänvalvojan oikeuksia) ====[GeneralSettingsStartOnLogOnScreen]
 Jos kirjaudut Windowsiin käyttäjänimellä ja salasanalla, tämä asetus saa NVDA:n käynnistymään automaattisesti kirjautumisikkunassa aina käyttöjärjestelmän käynnistyessä.
 Asetus on käytettävissä vain NVDA:n asennetuissa versioissa.
 
@@ -3079,14 +3079,14 @@ Seuraavassa on luettelo NVDA:n komentorivivalitsimista:
 | -l LOKITASO | --log-level=LOKITASO | Alin taso, jonka ilmoitukset tallennetaan lokiin (virheenkorjaus = 10, syöttö/tulostus = 12, virheenkorjausvaroitus = 15, tiedot = 20, varoitus = 30, virhe = 40, kriittinen = 50, ei käytössä = 100). Oletustaso on "varoitus". |
 | -c ASETUSPOLKU | --config-path=ASETUSPOLKU | Hakemistopolku, johon kaikki NVDA:n asetukset tallennetaan. |
 | -m | --minimal | Ei ääniä, käyttöliittymää tai käynnistysilmoitusta jne. |
-| -s | --secure | Suojattu tila: poistaa käytöstä Python-konsolin, profiilitoiminnot, kuten luonnin, poiston, uudelleennimeämisen jne., päivitystarkistuksen, jotkin Tervetuloa-valintaikkunan ja yleisten asetusten kategorian valintaruudut (esim. Käynnistä automaattisesti sisäänkirjautumisen jälkeen, Tallenna asetukset suljettaessa jne.) sekä lokin tarkastelun ja lokin tallennuksen (käytetään usein suojatuissa ruuduissa). Huomaa myös, että tämä komento poistaa käytöstä järjestelmäasetuksiin tallentamisen sekä syötekomentokartan tallentamisen levylle. |
+| -s | --secure | Suojattu tila: poistaa käytöstä Python-konsolin, profiilitoiminnot, kuten luonnin, poiston, uudelleennimeämisen jne., päivitystarkistuksen, jotkin Tervetuloa-valintaikkunan ja yleisten asetusten kategorian valintaruudut (esim. Käytä sisäänkirjautumisen aikana, Tallenna asetukset suljettaessa jne.) sekä lokin tarkastelun ja lokin tallennuksen (käytetään usein suojatuissa ruuduissa). Huomaa myös, että tämä komento poistaa käytöstä järjestelmäasetuksiin tallentamisen sekä syötekomentokartan tallentamisen levylle. |
 | Ei mitään | --disable-addons | Poistaa lisäosat käytöstä. |
 | Ei mitään | --debug-logging | Ottaa käyttöön virheenkorjaus-lokitason vain nykyisessä istunnossa. Tämä asetus korvaa minkä tahansa muun annetun lokitason (""--loglevel"", -l) argumentin, lokin käytöstä poistava valitsin mukaan lukien. |
 | Ei mitään | --no-logging | Poistaa lokin kokonaan käytöstä NVDA:ta käytettäessä. Tämä asetus voidaan korvata, mikäli lokitaso (""--loglevel"", -l) määritetään komentoriviparametrilla tai jos virheenkorjauslokin tallennus otetaan käyttöön. |
 | Ei mitään | --no-sr-flag | Ei muuta järjestelmänlaajuista ruudunlukijalippua. |
 | Ei mitään | --install | Asentaa NVDA:n ja käynnistää asennetun kopion. |
 | Ei mitään | --install-silent | Asentaa NVDA:n ilman kehotteita ja asennetun kopion käynnistämistä. |
-| Ei mitään | --enable-start-on-logon=True|False | Ottaa asennettaessa käyttöön NVDA:n [käynnistämisen Windowsiin sisäänkirjautumisen aikana #StartAtWindowsLogon] |
+| Ei mitään | --enable-start-on-logon=True|False | Ottaa asennettaessa käyttöön NVDA:n [Käytä sisäänkirjautumisen aikana -asetuksen. #StartAtWindowsLogon] |
 | Ei mitään | --create-portable | Luo ja käynnistää NVDA:n massamuistiversion. Parametri --portable-path on myös määritettävä. |
 | Ei mitään | --create-portable-silent | Luo NVDA:n massamuistiversion, eikä käynnistä sitä luonnin jälkeen. Parametri --portable-path on myös määritettävä. |
 | Ei mitään | --portable-path=POLKU | Hakemistopolku, jonne massamuistiversio luodaan. |

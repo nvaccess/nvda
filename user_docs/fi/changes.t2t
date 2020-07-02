@@ -8,18 +8,18 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. tuki uudelle Natti
 
 == Uudet ominaisuudet ==
 - Tuki Nattiq nBraille -pistenäytöille. (#10778)
-- Lisätty skripti NVDA:n asetushakemiston avaamiseen (syötekomentoa ei määritetty). (#2214)
+- Lisätty skripti NVDA:n asetushakemiston avaamiseen (oletusarvoista syötekomentoa ei ole määritetty). (#2214)
 - Parempi tuki ESET Antivirus -ohjelmiston graafiselle käyttöliittymälle. (#10894)
 - Lisätty tuki Windows Terminalille. (#10305)
-- Lisätty komento aktiivisen asetusprofiilin ilmoittamiselle. (#9325)
-- Lisätty komento ala- ja yläindeksien ilmaisemisen käyttöön ottamiselle ja käytöstä poistamiselle. (#10985)
+- Lisätty komento aktiivisen asetusprofiilin ilmoittamiselle (oletusarvoista syötekomentoa ei ole määritetty). (#9325)
+- Lisätty komento ala- ja yläindeksien ilmaisemisen käyttöön ottamiselle ja käytöstä poistamiselle (oletusarvoista syötekomentoa ei ole määritetty). (#10985)
 - Verkkosovelluksissa (esim. Gmailissa) ei enää puhuta vanhentunutta tietoa, kun kohdistusta siirretään nopeasti. (#10885)
  - Tämä kokeellinen korjaus on otettava käyttöön manuaalisesti Lisäasetukset-paneelin "Yritä perua vanhentuneiden kohdistustapahtumien puhe" -asetuksella.
-- Symboleita lisätty. (#11105)
+- Lisätty oletussymbolisanastoon paljon uusia symboleita. (#11105)
 
 
 == Muutokset ==
-- Päivitetty liblouis-pistekirjoituskääntäjä versioksi [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0] (versiosta 3.12.0). (#10832, #11221)
+- Päivitetty liblouis-pistekirjoituskääntäjä versiosta 3.12 versioksi [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0]. (#10832, #11221)
 - Ylä- ja alaindeksien ilmaisemista säädetään nyt omalla erillisellä asetuksellaan, eikä fonttimääreiden ilmaiseminen vaikuta enää niihin. (#10919)
 - VS Codeen tehtyjen muutosten takia NVDA ei enää poista oletusarvoisesti selaustilaa käytöstä tässä sovelluksessa. (#10888)
 - Yläreuna- ja Alareuna-ilmoituksia ei enää puhuta, kun tarkastelukohdistin siirretään nykyisen navigointiobjektin ensimmäiselle tai viimeiselle riville. (#9551)
@@ -27,7 +27,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. tuki uudelle Natti
 
 
 == Bugikorjaukset ==
-- NVDA käynnistyy oikein, kun lokitiedostoa ei voi luoda. (#6330)
+- NVDA käynnistyy nyt oikein, kun lokitiedostoa ei voi luoda. (#6330)
 - NVDA ei enää sano Microsoft Word 365:n uusimmissa versioissa asiakirjaa muokattaessa "poista edellinen sana" Ctrl+Askelpalautin-näppäinyhdistelmää painettaessa. (#10851)
 - NVDA kertoo taas Winampissa sekoituksen ja jatkuvan toiston tilan. (#10945)
 - NVDA ei enää ole erittäin hidas liikuttaessa kohteiden luettelossa 1Passwordissa. (#10508)
@@ -45,7 +45,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. tuki uudelle Natti
 - Kahdesti puhumisen välttämiseksi ilmoitusalueen kuvakkeiden työkaluvihjeitä ei enää puhuta näppäimistön avulla liikuttaessa, mikäli niiden teksti on sama kuin kuvakkeiden nimet. (#6656)
 - Vuorovaikutustilaan vaihtaminen selaustilassa NVDA+Väli-näppäinyhdistelmällä siirtää nyt kohdistuksen kohdistimen alla olevaan elementtiin, kun Siirrä kohdistus automaattisesti kohdistettaviin elementteihin -asetus on poistettu käytöstä. (#11206)
 - NVDA-päivitysten tarkistaminen on taas mahdollista tietyissä järjestelmissä, esim. puhtaissa Windows-asennuksissa. (#11253)
-- Kohdistus ei muutu Java-sovelluksessa, kun valinta muuttuu ei-kohdistetussa puunäkymässä, taulukossa tai luettelossa. (#5989)
+- Kohdistus ei siirry Java-sovelluksessa, kun valinta muuttuu ei-kohdistetussa puunäkymässä, taulukossa tai luettelossa. (#5989)
 
 
 == Muutokset kehittäjille ==
