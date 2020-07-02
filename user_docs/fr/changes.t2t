@@ -12,23 +12,23 @@ Les points forts de cette version incluent le support d'un nouvel afficheur Brai
 - Ajout d'un script pour ouvrir le dossier de configuration de NVDA (aucun geste par défaut). (#2214)
 - Meilleur support pour l'interface de l'antivirus Eset. (#10894)
 - Ajout du support de Windows Terminal. (#10305)
-- Ajout d'une commande pour annoncer le profil de configuration actif. (#9325)
-- Ajout d'une commande pour basculer l'annonce des exposants et indices. (#10985)
+- Ajout d'une commande pour annoncer le profil de configuration actif (pas de geste par défaut). (#9325)
+- Ajout d'une commande pour basculer l'annonce des exposants et indices (pas de geste par défaut). (#10985)
 - Les applications Web (par exemple GMail) n'annonceront plus d'anciennes informations lors du déplacement rapide du curseur. (#10885)
   - Ce correctif expérimental doit être activé manuellement via l'option "Essayer de couper la parole pour les évènements focus expirés" dans les paramètres avancés.
-- Ajout de plus de symboles. (#11105)
+- Beaucoup de symboles ont été ajoutés au dictionnaire de symboles par défaut. (#11105)
 
 
 == Changements ==
-- Mise à jour du transcripteur Braille Liblouis vers la version [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0] (de la version 3.12.0). (#10832)
+- Mise à jour du transcripteur Braille Liblouis de la version 3.12.0 vers la version [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0]. (#10832)
 - L'annonce des exposants et indices est maintenant contrôlée séparément de l'annonce des attributs de la police. (#10919)
 - En raison de changements dans VS Code, NVDA ne désactivera plus le mode navigation dans Code par défaut. (#10888)
-- Suppression des messages "haut" et "bas" lors du déplacement du curseur de revue à la première ou dernière ligne de l'objet navigateur actuel. (#9551)
-- Suppression des messages "gauche" et "droite" lors du déplacement du curseur de revue au premier ou dernier caractère de la ligne actuelle de l'objet navigateur actuel. (#9551)
+- NVDA n'annonce plus "haut" et "bas" lors du déplacement du curseur de revue à la première ou dernière ligne de l'objet navigateur actuel. (#9551)
+- NVDA n'annonce plus "gauche" et "droite" lors du déplacement du curseur de revue au premier ou dernier caractère de la ligne actuelle de l'objet navigateur actuel. (#9551)
 
 
 == Corrections de bogues ==
-- NVDA démarre correctement quand le fichier journal ne peut être créé (#6330)
+- NVDA démarre maintenant correctement quand le fichier journal ne peut être créé (#6330)
 - Dans les versions récentes de Microsoft Word 365, NVDA n'annoncera plus "mot précédent supprimé" quand CTRL+retour arrière est pressé pendant l'édition d'un document. (#10851)
 - Dans Winamp, NVDA annoncera à nouveau le changement de statut des fonctions répétition et aléatoire. (#10945)
 - NVDA n'est plus extrêmement lent lors du déplacement dans la liste des éléments de 1Password. (#10508)
@@ -46,7 +46,7 @@ Les points forts de cette version incluent le support d'un nouvel afficheur Brai
 - Les infobulles des icônes de la zone de notifications ne sont plus annoncées lors de la navigation au clavier si elles sont identiques au texte de l'icône, pour éviter une double annonce. (#6656)
 - En mode navigation avec le positionnement automatique sur les éléments susceptibles d'être mis en focus désactivé, basculer en mode formulaire avec NVDA+espace met maintenant en focus l'élément sous le curseur. (#11206)
 - Il est à nouveau possible de vérifier les mises à jour de NVDA sur certains systèmes, par exemple les installations propres de Windows. (#11253)
-- Plus de changement de focus dans les applications Java lors d'un changement de sélection dans une liste, un onglet ou une arborressence ne pouvant avoir le focus. (#5989)
+- Dans les applications Java, le focus n'est plus déplacé lors d'un changement de sélection dans une liste, un onglet ou une arborressence ne pouvant avoir le focus. (#5989)
 
 
 == Changements pour les développeurs ==
