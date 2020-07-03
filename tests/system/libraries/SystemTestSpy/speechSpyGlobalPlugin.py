@@ -15,7 +15,7 @@ import globalPluginHandler
 import threading
 from .blockUntilConditionMet import _blockUntilConditionMet
 from logHandler import log
-from time import clock as _timer
+from time import perf_counter as _timer
 
 import sys
 import os
@@ -126,9 +126,25 @@ class NVDASpyLib:
 		with threading.Lock():
 			return self.SPEECH_HAS_FINISHED_SECONDS < _timer() - self._lastSpeechTime_requiresLock
 
+	def _devInfoToLog(self):
+		import api
+		obj = api.getNavigatorObject()
+		if hasattr(obj, "devInfo"):
+			log.info("Developer info for navigator object:\n%s" % "\n".join(obj.devInfo))
+		else:
+			log.info("No developer info for navigator object")
+
 	def dump_speech_to_log(self):
+		log.debug("dump_speech_to_log.")
 		with threading.Lock():
-			log.debug(f"All speech:\n{repr(self._nvdaSpeech_requiresLock)}")
+			try:
+				self._devInfoToLog()
+			except Exception:
+				log.error("Unable to log dev info")
+			try:
+				log.debug(f"All speech:\n{repr(self._nvdaSpeech_requiresLock)}")
+			except Exception:
+				log.error("Unable to log speech")
 
 	def _minTimeout(self, timeout: float) -> float:
 		"""Helper to get the minimum value, the timeout passed in, or self._maxKeywordDuration"""

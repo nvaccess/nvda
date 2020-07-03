@@ -257,7 +257,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		mainSizer.Add(
 			wx.StaticLine(self),
 			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.TOP | wx.BOTTOM | wx.EXPAND
+			flag=wx.ALL | wx.EXPAND
 		)
 
 		# Translators: The label of a button to close the Addons dialog.
@@ -730,8 +730,13 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		# Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
 		button = buttonSizer.addButton(self, label=_("&Close"), id=wx.ID_CLOSE)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
-		sHelper.addDialogDismissButtons(buttonSizer)
-		mainSizer.Add(settingsSizer, border=20, flag=wx.ALL | wx.EXPAND, proportion=1)
+		sHelper.addDialogDismissButtons(buttonSizer, separated=True)
+		mainSizer.Add(
+			settingsSizer,
+			border=guiHelper.BORDER_FOR_DIALOGS,
+			flag=wx.ALL | wx.EXPAND,
+			proportion=1
+		)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 
