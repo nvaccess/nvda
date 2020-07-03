@@ -3,11 +3,12 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2006-2020 NV Access Limited
+import typing
 
 import queueHandler
 import synthDriverHandler
 import config
-from .types import SpeechSequence
+from .types import SpeechSequence, _IndexT
 from .commands import (
 	# Commands that are used in this file.
 	EndUtteranceCommand,
@@ -15,6 +16,7 @@ from .commands import (
 	BaseCallbackCommand,
 	ConfigProfileTriggerCommand,
 	IndexCommand,
+	_CancellableSpeechCommand,
 )
 from .commands import (  # noqa: F401
 	# F401 imported but unused:
@@ -43,8 +45,52 @@ from typing import (
 	Any,
 	List,
 	Tuple,
+	Callable,
 	Optional,
+	cast,
 )
+
+
+def _shouldCancelExpiredFocusEvents():
+	# 0: default (no), 1: yes, 2: no
+	return config.conf["featureFlag"]["cancelExpiredFocusSpeech"] == 1
+
+
+def _shouldDoSpeechManagerLogging():
+	return config.conf["debugLog"]["speechManager"]
+
+
+def _speechManagerDebug(msg, *args, **kwargs) -> None:
+	"""Log 'msg % args' with severity 'DEBUG' if speech manager logging is enabled.
+		'SpeechManager-' is prefixed to all messages to make searching the log easier.
+	"""
+	if not log.isEnabledFor(log.DEBUG) or not _shouldDoSpeechManagerLogging():
+		return
+	log._log(log.DEBUG, f"SpeechManager- " + msg, args, **kwargs)
+
+
+#: Turns on unit test logging, logs the key interactions that happen with speech manager. When False,
+# log messages are sent to _speechManagerDebug
+IS_UNIT_TEST_LOG_ENABLED = False
+
+
+def _speechManagerUnitTest(msg, *args, **kwargs) -> None:
+	"""Log 'msg % args' with severity 'DEBUG' if .
+		'SpeechManUnitTest-' is prefixed to all messages to make searching the log easier.
+		When
+	"""
+	if not IS_UNIT_TEST_LOG_ENABLED:
+		return _speechManagerDebug(msg, *args, **kwargs)
+	log._log(log.INFO, f"SpeechManUnitTest- " + msg, args, **kwargs)
+
+# Install the custom log handlers.
+#: For extra debug level logging, this is a category that must be enabled in the advanced settings panel.
+log._speechManagerDebug = _speechManagerDebug
+
+#: Info level logging (only enabled if IS_UNIT_TEST_LOG_ENABLED hardcoded to True). This is a developer
+# tool to ease the creation of unit tests for SpeechManager. It should log all external interactions with
+# SpeechManager so they can be recreated in tests.
+log._speechManagerUnitTest = _speechManagerUnitTest
 
 
 class ParamChangeTracker(object):
@@ -98,6 +144,7 @@ class _ManagerPriorityQueue(object):
 		#: Keeps track of parameters that have been changed during an utterance.
 		self.paramTracker: ParamChangeTracker = ParamChangeTracker()
 
+
 class SpeechManager(object):
 	"""Manages queuing of speech utterances, calling callbacks at desired points in the speech, profile switching, prioritization, etc.
 	This is intended for internal use only.
@@ -149,8 +196,10 @@ class SpeechManager(object):
 	Note:
 	All of this activity is (and must be) synchronized and serialized on the main thread.
 	"""
+
+	_cancelCommandsForUtteranceBeingSpokenBySynth: Dict[_CancellableSpeechCommand, _IndexT]
 	_priQueues: Dict[Any, _ManagerPriorityQueue]
-	_curPriQueue: Optional[_ManagerPriorityQueue]
+	_curPriQueue: Optional[_ManagerPriorityQueue]  # None indicates no more speech.
 
 	def __init__(self):
 		#: A counter for indexes sent to the synthesizer for callbacks, etc.
@@ -160,8 +209,9 @@ class SpeechManager(object):
 		synthDriverHandler.synthDoneSpeaking.register(self._onSynthDoneSpeaking)
 
 	#: Maximum index number to pass to synthesizers.
-	MAX_INDEX = 9999
-	def _generateIndexes(self):
+	MAX_INDEX: _IndexT = 9999
+
+	def _generateIndexes(self) -> typing.Generator[_IndexT, None, None]:
 		"""Generator of index numbers.
 		We don't want to reuse index numbers too quickly,
 		as there can be race conditions when cancelling speech which might result
@@ -190,26 +240,61 @@ class SpeechManager(object):
 		self._indexesSpeaking = []
 		#: Whether to push more speech when the synth reports it is done speaking.
 		self._shouldPushWhenDoneSpeaking = False
+		self._cancelCommandsForUtteranceBeingSpokenBySynth = {}
+		#: True if the synth.cancel was called due to cancellableSpeech no longer being valid
+		# and no new speech has been sent.
+		self._cancelledLastSpeechWithSynth = False
+
+	def _synthStillSpeaking(self) -> bool:
+		return 0 < len(self._indexesSpeaking)
+
+	def _hasNoMoreSpeech(self):
+		return self._curPriQueue is None
 
 	def speak(self, speechSequence: SpeechSequence, priority: Spri):
-		# If speech isn't already in progress, we need to push the first speech.
-		push = self._curPriQueue is None
+		log._speechManagerUnitTest("speak (priority %r): %r", priority, speechSequence)
 		interrupt = self._queueSpeechSequence(speechSequence, priority)
+		self._doRemoveCancelledSpeechCommands()
+		# If speech isn't already in progress, we need to push the first speech.
+		push = self._hasNoMoreSpeech() or not self._synthStillSpeaking()
+		log._speechManagerDebug(
+			f"Will interrupt: {interrupt}"
+			f" Will push: {push}"
+			f" | _indexesSpeaking: {self._indexesSpeaking!r}"
+			f" | _curPriQueue valid: {not self._hasNoMoreSpeech()}"
+			f" | _shouldPushWhenDoneSpeaking: {self._shouldPushWhenDoneSpeaking}"
+			f" | _cancelledLastSpeechWithSynth {self._cancelledLastSpeechWithSynth}"
+		)
 		if interrupt:
+			log._speechManagerDebug("Interrupting speech")
 			getSynth().cancel()
+			self._indexesSpeaking.clear()
+			self._cancelCommandsForUtteranceBeingSpokenBySynth.clear()
 			push = True
 		if push:
+			log._speechManagerDebug("Pushing next speech")
 			self._pushNextSpeech(True)
+		else:
+			log._speechManagerDebug("Not pushing speech")
 
-	def _queueSpeechSequence(self, inSeq: SpeechSequence, priority: Spri):
+	def _queueSpeechSequence(self, inSeq: SpeechSequence, priority: Spri) -> bool:
 		"""
 		@return: Whether to interrupt speech.
-		@rtype: bool
 		"""
 		outSeq = self._processSpeechSequence(inSeq)
+		log._speechManagerDebug("Out Seq: %r", outSeq)  # expensive string to build - defer
 		queue = self._priQueues.get(priority)
+		log._speechManagerDebug(
+			f"Current priority: {priority},"
+			f" queLen: {0 if queue is None else len(queue.pendingSequences)}"
+		)
 		if not queue:
 			queue = self._priQueues[priority] = _ManagerPriorityQueue(priority)
+		else:
+			log._speechManagerDebug(
+				"current queue: %r",  # expensive string to build - defer
+				queue.pendingSequences
+			)
 		first = len(queue.pendingSequences) == 0
 		queue.pendingSequences.extend(outSeq)
 		if priority is Spri.NOW and first:
@@ -239,8 +324,8 @@ class SpeechManager(object):
 				return seq
 			if not isinstance(lastCommand, IndexCommand):
 				# Add an index so we know when we've reached the end of this utterance.
-				speechIndex = next(self._indexCounter)
-				lastOutSeq.append(IndexCommand(speechIndex))
+				reachedIndex = next(self._indexCounter)
+				lastOutSeq.append(IndexCommand(reachedIndex))
 			outSeqs.append([EndUtteranceCommand()])
 			return seq
 
@@ -287,12 +372,14 @@ class SpeechManager(object):
 		return outSeqs
 
 	def _pushNextSpeech(self, doneSpeaking: bool):
+		log._speechManagerDebug(f"pushNextSpeech - doneSpeaking: {doneSpeaking}")
 		queue = self._getNextPriority()
 		if not queue:
 			# No more speech.
+			log._speechManagerDebug("No more speech")
 			self._curPriQueue = None
 			return
-		if not self._curPriQueue:
+		if self._hasNoMoreSpeech():
 			# First utterance after no speech.
 			self._curPriQueue = queue
 		elif queue.priority > self._curPriQueue.priority:
@@ -328,11 +415,12 @@ class SpeechManager(object):
 			return self._pushNextSpeech(True)
 		seq = self._buildNextUtterance()
 		if seq:
-			# Record all indexes that will be sent to the synthesizer
 			# So that we can handle any accidentally skipped indexes.
 			for item in seq:
 				if isinstance(item, IndexCommand):
 					self._indexesSpeaking.append(item.index)
+			self._cancelledLastSpeechWithSynth = False
+			log._speechManagerUnitTest(f"Assert Synth Gets: {seq}")
 			getSynth().speak(seq)
 
 	def _getNextPriority(self):
@@ -360,15 +448,130 @@ class SpeechManager(object):
 				# The utterance ends here.
 				break
 			utterance.extend(seq)
+		# if any items are cancelled, cancel the whole utterance.
+		if utterance and not self._checkForCancellations(utterance):
+			return self._buildNextUtterance()
 		return utterance
 
+	def _checkForCancellations(self, utterance: SpeechSequence) -> bool:
+		"""
+		Checks utterance to ensure it is not cancelled (via a _CancellableSpeechCommand).
+		Because synthesizers do not expect CancellableSpeechCommands, they are removed from the utterance.
+		:arg utterance: The utterance to check for cancellations. Modified in place, CancellableSpeechCommands are
+		removed.
+		:return True if sequence is still valid, else False
+		"""
+		if not _shouldCancelExpiredFocusEvents():
+			return True
+		utteranceIndex = self._getUtteranceIndex(utterance)
+		if utteranceIndex is None:
+			log.error("no utterance index, cant save cancellable commands")
+			return False
+		cancellableItems = list(
+			item for item in reversed(utterance) if isinstance(item, _CancellableSpeechCommand)
+		)
+		for item in cancellableItems:
+			utterance.remove(item)  # CancellableSpeechCommands should not be sent to the synthesizer.
+			if item.isCancelled:
+				log._speechManagerDebug(f"item already cancelled, canceling up to: {utteranceIndex}")
+				self._removeCompletedFromQueue(utteranceIndex)
+				return False
+			else:
+				item._utteranceIndex = utteranceIndex
+				log._speechManagerDebug(
+					f"Speaking utterance with cancellable item, index: {utteranceIndex}"
+				)
+				self._cancelCommandsForUtteranceBeingSpokenBySynth[item] = utteranceIndex
+		return True
+
+	_WRAPPED_INDEX_MAGNITUDE = int(MAX_INDEX / 2)
+
+	@classmethod
+	def _isIndexABeforeIndexB(cls, indexA: _IndexT, indexB: _IndexT) -> bool:
+		"""Was indexB created before indexB
+		Because indexes wrap after MAX_INDEX, custom logic is needed to compare relative positions.
+		The boundary for considering a wrapped value as before another value is based on the distance
+		between the indexes. If the distance is greater than half the available index space it is no longer
+		before.
+		@return True if indexA was created before indexB, else False
+		"""
+		w = cls._WRAPPED_INDEX_MAGNITUDE
+		return (
+			indexA != indexB and (
+				(indexA < indexB and w >= indexB - indexA) or (
+					# Test for wrapped values
+					indexB < indexA
+					# Avoid dealing with wrapping logic, check distance in the other direction.
+					and w < indexA - indexB
+				)
+			)
+		)
+
+	@classmethod
+	def _isIndexAAfterIndexB(cls, indexA: _IndexT, indexB: _IndexT) -> bool:
+		return indexA != indexB and not cls._isIndexABeforeIndexB(indexA, indexB)
+
+	def _getMostRecentlyCancelledUtterance(self) -> Optional[_IndexT]:
+		# Index of the most recently cancelled utterance.
+		latestCancelledUtteranceIndex: Optional[_IndexT] = None
+		log._speechManagerDebug(
+			f"Length of _cancelCommandsForUtteranceBeingSpokenBySynth: "
+			f"{len(self._cancelCommandsForUtteranceBeingSpokenBySynth)} "
+			f"Length of _indexesSpeaking: "
+			f"{len(self._indexesSpeaking)} "
+		)
+		cancelledIndexes = (
+			index for command, index
+			in self._cancelCommandsForUtteranceBeingSpokenBySynth.items()
+			if command.isCancelled
+		)
+		for index in cancelledIndexes:
+			if (
+				not latestCancelledUtteranceIndex
+				or self._isIndexABeforeIndexB(latestCancelledUtteranceIndex, index)
+			):
+				latestCancelledUtteranceIndex = index
+		return latestCancelledUtteranceIndex
+
+	def removeCancelledSpeechCommands(self):
+		log._speechManagerUnitTest("removeCancelledSpeechCommands")
+		self._doRemoveCancelledSpeechCommands()
+
+	def _doRemoveCancelledSpeechCommands(self):
+		if not _shouldCancelExpiredFocusEvents():
+			return
+		# Don't delete commands while iterating over _cancelCommandsForUtteranceBeingSpokenBySynth.
+		latestCancelledUtteranceIndex = self._getMostRecentlyCancelledUtterance()
+		log._speechManagerDebug(f"Last index: {latestCancelledUtteranceIndex}")
+		if latestCancelledUtteranceIndex is not None:
+			log._speechManagerDebug(f"Cancel and push speech")
+			# Minimise the number of calls to _removeCompletedFromQueue by using the most recently cancelled
+			# utterance index. This will remove all older queued speech also.
+			self._removeCompletedFromQueue(latestCancelledUtteranceIndex)
+			getSynth().cancel()
+			self._cancelledLastSpeechWithSynth = True
+			self._cancelCommandsForUtteranceBeingSpokenBySynth.clear()
+			self._indexesSpeaking.clear()
+			self._pushNextSpeech(True)
+
+	def _getUtteranceIndex(self, utterance: SpeechSequence):
+		#  find the index command, should be the last in sequence
+		indexItem: IndexCommand = cast(IndexCommand, utterance[-1])
+		if not isinstance(indexItem, IndexCommand):
+			log.error("Expected last item to be an indexCommand.")
+			return None
+		return indexItem.index
+
 	def _onSynthIndexReached(self, synth=None, index=None):
+		log._speechManagerUnitTest(f"synthReachedIndex: {index}, synth: {synth}")
 		if synth != getSynth():
 			return
 		# This needs to be handled in the main thread.
 		queueHandler.queueFunction(queueHandler.eventQueue, self._handleIndex, index)
 
-	def _removeCompletedFromQueue(self, index: int) -> Tuple[bool, bool]:
+	# C901 'SpeechManager._removeCompletedFromQueue' is too complex
+	# SpeechManager needs unit tests and a breakdown of responsibilities.
+	def _removeCompletedFromQueue(self, index: int) -> Tuple[bool, bool]:  # noqa: C901
 		"""Removes completed speech sequences from the queue.
 		@param index: The index just reached indicating a completed sequence.
 		@return: Tuple of (valid, endOfUtterance),
@@ -383,7 +586,7 @@ class SpeechManager(object):
 		for seqIndex, seq in enumerate(self._curPriQueue.pendingSequences):
 			lastCommand = seq[-1] if isinstance(seq, list) else None
 			if isinstance(lastCommand, IndexCommand):
-				if index > lastCommand.index:
+				if self._isIndexAAfterIndexB(index, lastCommand.index):
 					log.debugWarning(f"Reached speech index {index :d}, but index {lastCommand.index :d} never handled")
 				elif index == lastCommand.index:
 					endOfUtterance = isinstance(self._curPriQueue.pendingSequences[seqIndex + 1][0], EndUtteranceCommand)
@@ -392,7 +595,9 @@ class SpeechManager(object):
 						seqIndex += 1
 					break # Found it!
 		else:
-			# Unknown index. Probably from a previous utterance which was cancelled.
+			log._speechManagerDebug(
+				"Unknown index. Probably from a previous utterance which was cancelled."
+			)
 			return False, False
 		if endOfUtterance:
 			# These params may not apply to the next utterance if it was queued separately,
@@ -408,16 +613,37 @@ class SpeechManager(object):
 					if isinstance(command, SynthParamCommand):
 						self._curPriQueue.paramTracker.update(command)
 		# This sequence is done, so we don't need to track it any more.
+		toRemove = self._curPriQueue.pendingSequences[:seqIndex + 1]
+		log._speechManagerDebug("Removing: %r", seq)
+		if _shouldCancelExpiredFocusEvents():
+			cancellables = (
+				item
+				for seq in toRemove
+				for item in seq
+				if isinstance(
+					item, _CancellableSpeechCommand
+				)
+			)
+			for item in cancellables:
+				if log.isEnabledFor(log.DEBUG) and _shouldDoSpeechManagerLogging():
+					# Debug logging for cancelling expired focus events.
+					log._speechManagerDebug(
+						f"Item is in _cancelCommandsForUtteranceBeingSpokenBySynth: "
+						f"{item in self._cancelCommandsForUtteranceBeingSpokenBySynth.keys()}"
+					)
+				self._cancelCommandsForUtteranceBeingSpokenBySynth.pop(item, None)
 		del self._curPriQueue.pendingSequences[:seqIndex + 1]
+
 		return True, endOfUtterance
 
 	def _handleIndex(self, index: int):
+		log._speechManagerDebug(f"Handle index: {index}")
 		# A synth (such as OneCore) may skip indexes
 		# If before another index, with no text content in between.
 		# Therefore, detect this and ensure we handle all skipped indexes.
 		handleIndexes = []
 		for oldIndex in list(self._indexesSpeaking):
-			if oldIndex < index:
+			if self._isIndexABeforeIndexB(oldIndex, index):
 				log.debugWarning("Handling skipped index %s" % oldIndex)
 				handleIndexes.append(oldIndex)
 		handleIndexes.append(index)
@@ -439,20 +665,36 @@ class SpeechManager(object):
 				callbackCommand = self._indexesToCallbacks.pop(i, None)
 				if callbackCommand:
 					try:
+						log._speechManagerUnitTest(f"CallbackCommand Start: {callbackCommand!r}")
 						callbackCommand.run()
+						log._speechManagerUnitTest("CallbackCommand End")
 					except Exception:
 						log.exception("Error running speech callback")
-		if endOfUtterance:
+		self._doRemoveCancelledSpeechCommands()
+		shouldPush = (
+			endOfUtterance
+			and not self._synthStillSpeaking()  # stops double speaking errors
+		)
+		if shouldPush:
+			if self._indexesSpeaking:
+				log._speechManagerDebug(
+					f"Indexes speaking: {self._indexesSpeaking!r},"
+					f" queue: {self._curPriQueue.pendingSequences}"
+				)
 			# Even if we have many indexes, we should only push next speech once.
 			self._pushNextSpeech(False)
 
 	def _onSynthDoneSpeaking(self, synth: Optional[synthDriverHandler.SynthDriver] = None):
+		log._speechManagerUnitTest(f"synthDoneSpeaking synth:{synth}")
 		if synth != getSynth():
 			return
 		# This needs to be handled in the main thread.
 		queueHandler.queueFunction(queueHandler.eventQueue, self._handleDoneSpeaking)
 
 	def _handleDoneSpeaking(self):
+		log._speechManagerDebug(
+			f"Synth done speaking, should push: {self._shouldPushWhenDoneSpeaking}"
+		)
 		if self._shouldPushWhenDoneSpeaking:
 			self._shouldPushWhenDoneSpeaking = False
 			self._pushNextSpeech(True)
@@ -491,6 +733,7 @@ class SpeechManager(object):
 		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
 
 	def cancel(self):
+		log._speechManagerUnitTest("Cancel")
 		getSynth().cancel()
 		if self._curPriQueue and self._curPriQueue.enteredProfileTriggers:
 			self._exitProfileTriggers(self._curPriQueue.enteredProfileTriggers)

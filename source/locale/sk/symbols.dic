@@ -7,7 +7,7 @@ complexSymbols:
 # identifier	regexp
 # Others
 decimal point	(?<![^\d -])[\.,](?=\d)
-negative number	(?<!\w)-(?=[$┬úÔéČ┬ą.]?\d)
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -20,7 +20,7 @@ symbols:
 : phrase ending	dvojbodka	most	always	# dvojbodka v prostriedku vety
 decimal point		none	always	#desatinné číslo
 in-word '	apostrof	all	norep	# apostrof vo vnútri slova
-negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
+negative number	mínus	none	norep
 
 # Whitespace
 \0	prázdny	char	# znak 0
