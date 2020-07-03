@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2020 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
-# Joseph Lee, Babbage B.V., Łukasz Golonka
+# Joseph Lee, Babbage B.V., Łukasz Golonka, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -585,6 +585,8 @@ class ConfigManager(object):
 		"""
 		if globalVars.appArgs.secure:
 			return
+		if not name:
+			raise ValueError("Missing name.")
 		fn = self._getProfileFn(name)
 		if os.path.isfile(fn):
 			raise ValueError("A profile with the same name already exists: %s" % name)
@@ -655,6 +657,8 @@ class ConfigManager(object):
 			return
 		if newName == oldName:
 			return
+		if not newName:
+			raise ValueError("Missing newName")
 		oldFn = self._getProfileFn(oldName)
 		newFn = self._getProfileFn(newName)
 		if not os.path.isfile(oldFn):
