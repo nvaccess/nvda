@@ -302,9 +302,9 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			return
 		addon = self.curAddons[index]
 		if gui.messageBox(
-			# Translators: Presented when attempting to remove the selected add-on.
-			# {addon} is replaced with the add-on name.
 			(_(
+				# Translators: Presented when attempting to remove the selected add-on.
+				# {addon} is replaced with the add-on name.
 				"Are you sure you wish to remove the {addon} add-on from NVDA? "
 				"This cannot be undone."
 			)).format(addon=addon.name),
