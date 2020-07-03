@@ -255,7 +255,7 @@ Viele NVDA-Befehle werden in den folgenden Abschnitten des Benutzerhandbuches au
 
 Zum Einschalten der Eingabehilfe drücken Sie die Tastenkombination NVDA+1.
 Zum Ausschalten betätigen Sie die Tastenkombination erneut.
-Bei eingeschalteter Eingabehilfe erhalten Sie bei jeder Eingabe - sei es eine Tastenkombination auf der Tastatur, eine Taste an einer Braillezeile oder eine Berührungsgeste auf einem Touchscreen - Informationen über deren zugewiesene Funktionen, sofern sie mit einer Funktion belegt sind.
+Bei eingeschalteter Eingabehilfe erhalten Sie bei jeder Eingabe - sei es eine Tastenkombination auf der Tastatur, eine Taste an einer Braillezeile oder eine Geste auf einem Touchscreen - Informationen über deren zugewiesene Funktionen, sofern sie mit einer Funktion belegt sind.
 Die Tasten und Tastenkombinationen führen ihre Funktion nicht aus, so lange Sie die Eingabehilfe eingeschaltet haben. Dies bedeutet, dass Sie jede beliebige Tastenkombination betätigen können.
 
 ++ Das NVDA-Menü ++[TheNVDAMenu]
@@ -406,7 +406,7 @@ Die folgenden Tastenkombinationen zum Text betrachten sind verfügbar:
 | Zum nächsten Wort navigieren | Num 6 | NVDA+Strg+Pfeiltaste nach rechts | Nach rechts streichen mit zwei Fingern (Textmodus) | Zieht den NVDA-Cursor zum nächsten Wort im Text. |
 | Zum Zeilenanfang navigieren | Umschalt+Num 1 | NVDA+Pos1 | Keine | Zieht den NVDA-Cursor zum Zeilenanfang im Text. |
 | Zum vorherigen Zeichen navigieren | Num 1 | NVDA+Pfeiltaste nach links | Nach links streichen (Textmodus) | Zieht den NVDA-Cursor zum vorherigen Zeichen der aktuellen Zeile im Text. |
-| Aktuelles Zeichen unter dem NVDA-Cursor ansagen | Num 2 | NVDA+Punkt | Sagt das aktuelle Zeichen in der Zeile im Text an, an dem sich der NVDA-Cursor befindet. Bei zweimal Drücken wird das Zeichen phonetisch buchstabiert. Bei dreimal Drücken werden die numerischen Dezimal- und Hexadezimalwerte angesagt. |
+| Aktuelles Zeichen unter dem NVDA-Cursor ansagen | Num 2 | NVDA+Punkt | Keine | Sagt das aktuelle Zeichen in der Zeile im Text an, an dem sich der NVDA-Cursor befindet. Bei zweimal Drücken wird das Zeichen phonetisch buchstabiert. Bei dreimal Drücken werden die numerischen Dezimal- und Hexadezimalwerte angesagt. |
 | Zum nächsten Zeichen navigieren | Num 3 | NVDA+Pfeiltaste nach rechts | Nach rechts streichen (Textmodus) | Zieht den NVDA-Cursor zum nächsten Zeichen der aktuellen Zeile im Text. |
 | Zum Zeilenende navigieren | Umschalt+Num 3 | NVDA+Ende | Keine | Zieht den NVDA-Cursor zum Zeilenende im Text. |
 | Alles Lesen | Num Plus | NVDA+Umschalt+A | Nach unten streichen mit drei Fingern (Textmodus) | Liest von der aktuellen Cursor-Position des NVDA-Cursors den Text vor und bewegt ihn mit. |
@@ -475,7 +475,7 @@ Sie können Sie jedoch in den [Maus-Einstellungen #MouseSettings] aktivieren, di
 
 Zum Navigieren mit der Maus sollte eine richtige Maus oder eine Mauskugel benutzt werden. Folgende Tastenbefehle stehen in NVDA zur Verfügung:
 %kc:beginInclude
-|| Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Touch-Geste | Beschreibung |
+|| Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Geste | Beschreibung |
 | Linksklick | Num Schrägstrich | NVDA+Ü | Keine | Führt einen Linksklick aus. Bei zweimal Drücken wird ein Doppelklick ausgeführt. |
 | Linke Maustaste feststellen | Umschalt+Num Schrägstrich | NVDA+Strg+Ü | Keine | Hält die linke Maustaste gedrückt. Wird die Tastenkombination erneut gedrückt, wird die Maustaste wieder losgelassen. Um "Drag and Drop" durchzuführen, führen Sie diesen Schritt auf einem Objekt aus und wandern anschließend mit der Maus oder auch mit den Navigationstasten für die Simulation der Maus an eine andere Stelle des Bildschirms und lösen die linke Maustaste wieder. |
 | Rechtsklick | Num Stern | NVDA+Plus | Mit einem Finger tippen und halten | Führt einen Rechtsklick aus. |
@@ -1599,7 +1599,7 @@ Bei phonetischen Eingabemethoden ist es jedoch sinnvoll, die Option abzuschalten
 ==== Ausgewählten Schriftsatz angeben ====[InputCompositionAnnounceSelectedCandidate]
 Diese Option weist NVDA an, den ausgewählten Schriftsatz auszugeben, sobald die Liste der Zeichensätze erscheint oder wenn Sie einen Schriftsatz auswählen.
 Für Eingabemethoden, bei denen Sie die Auswahl mit den Pfeiltasten ändern können (wie z. B. Chinese New Phonetic) ist das Aktivieren dieser Option notwendig, bei anderen Eingabemethoden kann es jedoch effektiver sein, diese Option abzuschalten.
-Auch wenn Sie diese Option deaktiviert haben, wird der NVDA-Cursor auf den ausgewählten Schriftsatz gesetzt, sodass Sie den Navigator oder die Befehle zum Text betrachten benutzen können, um andere Schriftsatz zu sehen.
+Auch wenn Sie diese Option deaktiviert haben, wird der NVDA-Cursor auf den ausgewählten Schriftsatz gesetzt, sodass Sie den Navigator oder die Befehle zum Betrachten von Text benutzen können, um diesen oder andere Schriftsätze zu lesen.
 
 ==== Bei Angabe der Schriftsätze immer kurze Zeichenbeschreibungen einbeziehen ====[InputCompositionCandidateIncludesShortCharacterDescription]
 mit dieser Option, die standardmäßig aktiviert ist, können Sie festlegen, ob NVDA eine kurze Beschreibung für einen zeichensatz ausgeben soll - entweder wenn Sie ihn auswählen oder wenn NVDA die Liste der Schriftsätze ausgibt, sobald diese erscheint.
@@ -1767,8 +1767,8 @@ Diese Schaltfläche öffnet das Verzeichnis, in dem Sie während der Entwicklung
 Diese Schaltfläche ist nur aktiviert, wenn NVDA so konfiguriert ist, dass benutzerdefinierter Code aus dem Developer Scratchpad-Verzeichnis geladen werden kann.
  
 ==== UIA für Steuerelemente in Microsoft Word verwenden (falls verfügbar) ====[AdvancedSettingsUseUiaForWord]
-Wenn diese Option aktiviert ist, versucht NVDA, die Microsoft die API für die Zugänglichkeit der UIA zu verwenden, um Informationen von Steuerelementen in Microsoft Word-Dokumenten abzurufen.
-Dazu gehört Microsoft Word selbst, aber auch in Microsoft Outlook die Nachrichtenansicht und Nachrichten verfassen.
+Wenn diese Option aktiviert ist, versucht NVDA, die Microsoft-API für die Zugänglichkeit der UIA zu verwenden, um Informationen von Steuerelementen in Microsoft Word-Dokumenten abzurufen.
+Dazu gehört Microsoft Word selbst, aber auch die Nachrichtenansicht und das Verfassen von Nachrichten in Microsoft Outlook.
  Für die neuesten Versionen von Microsoft Office 2016 / 365 unter Windows 10 ist die Unterstützung der Benutzeroberfläche vollständig genug, um den Zugriff auf Microsoft Word-Dokumente zu ermöglichen, die nahezu der bestehenden Microsoft Word-Unterstützung von NVDA entsprechen, mit dem zusätzlichen Vorteil, dass die Reaktionsfähigkeit erheblich beschleunigt wird.
 Es kann jedoch einige Informationen geben, die in einigen Versionen von Microsoft Office entweder nicht oder falsch angezeigt werden, sodass man sich nicht immer auf diese Unterstützung der UIA verlassen kann.
 Wir empfehlen noch nicht diese Funktion standardmäßig zu aktivieren. Allerdings ist ausdrücklich erwünscht, dass Benutzer von Office 2016 / 365 diese Funktion testen und Rückmeldung geben können.
@@ -1786,12 +1786,12 @@ Diese Funktion ist verfügbar und seit Windows 10 Version 1607 standardmäßig a
 Das eingeben von Zeichen, die nicht auf dem Bildschirm erscheinen (z. B. bei Passwörtern) wird nicht unterstützt, wenn diese Option aktiviert ist.
 In Umgebungen, die nicht unterstützt werden, können Sie vorübergehend [Zeichen beim Eingeben ansagen #KeyboardSettingsSpeakTypedCharacters] und [Wörter beim Eingeben ansagen #KeyboardSettingsSpeakTypedWords] deaktivieren, wenn Sie Passwörter eingeben.
 
-==== Automatisches Bewegen des System-Fokus auf hervorhebbare Elemente im Lesemodus ====[BrowseModeSettingsAutoFocusFocusableElements]
+==== Automatisches Bewegen des System-Fokus auf Fokussierbare Elemente im Lesemodus ====[BrowseModeSettingsAutoFocusFocusableElements]
 Tastenkombination: NVDA+8
 
 Sie können mit dieser standardmäßig aktivierten Option auswählen, ob der System-Fokus automatisch auf Elemente gesetzt werden soll, die den System-Fokus übernehmen können (Links, Formularfelder, etc.), wenn Sie mit den Pfeiltasten im Lesemodus durch Inhalte navigieren.
 Wenn aktiviert, stellt dies das Standardverhalten von NVDA ab Version 2019.1 und früher dar.
-Wenn Sie diese Option deaktivieren, werden hervorhebbare Elemente nicht automatisch hervorgehoben, wenn sie mit dem Pfeiltasten im Lesemodus ausgewählt werden.
+Wenn Sie diese Option deaktivieren, werden fokusierbare Elemente nicht automatisch fokusiert, wenn sie mit dem Pfeiltasten im Lesemodus ausgewählt werden.
 Dies kann zu einer schnelleren und besseren Reaktionsfähigkeit beim Lesen führen.
 Der Fokus wird aber trotzdem auf das jeweilige Element gezogen, wenn Sie mit ihm interagieren (z. B. durch Drücken einer Taste, aktivieren eines Kontrollkästchens etc.).
 Diese Funktionalität ist ab NVDA 2019.2 experimentell.

@@ -1,16 +1,7 @@
-###
-# This file is a part of the NVDA project.
-# URL: https://www.nvaccess.org/
-# Copyright 2010-2020 NV Access Limited, Babbage B.V.
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License version 2.0, as published by
-# the Free Software Foundation.
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-# This license can be found at:
-# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-###
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2010-2020 NV Access Limited, James Teh, Michael Curran, Peter Vágner, Joseph Lee, Reef Turner, Babbage B.V., Leonard de Ruijter, Łukasz Golonka, Accessolutions, Julien Cochuyt  # noqa: E501
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 import sys
 import os
@@ -425,6 +416,7 @@ def makePot(target, source, env):
 			"--foreign-user",
 			"--add-comments=Translators:",
 			"--keyword=pgettext:1c,2",
+			"--from-code", "utf-8",
 			# Needed because xgettext doesn't recognise the .pyw extension.
 			"--language=python",
 		] + [os.path.relpath(str(f), str(sourceDir)) for f in source]

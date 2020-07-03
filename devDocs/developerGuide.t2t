@@ -782,7 +782,9 @@ This allows the user to return to the session as it was left when it was closed,
 
 +++ Automatic Imports +++
 For convenience, the following modules and variables are automatically imported in the console:
-sys, os, wx, log (from logHandler), api, queueHandler, speech, braille
+sys, os, wx, log (from logHandler), api, queueHandler, config, controlTypes, textInfos, braille, speech, vision, appModules, globalPlugins
+
+See: pythonConsole.PythonConsole.initNamespace
 
 +++ Snapshot Variables +++[PythonConsoleSnapshotVariables]
 Whenever NVDA+control+z is pressed, certain variables available in the console will be assigned according to the current state of NVDA.
