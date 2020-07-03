@@ -1,9 +1,8 @@
 # -*- coding: UTF-8 -*-
-#appModules/explorer.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Joseph Lee, Łukasz Golonka
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """App module for Windows Explorer (aka Windows shell and renamed to File Explorer in Windows 8).
 Provides workarounds for controls such as identifying Start button, notification area and others.
@@ -22,7 +21,10 @@ import mouseHandler
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible import IAccessible, List
 from NVDAObjects.UIA import UIA
+from NVDAObjects.behaviors import ToolTip
 from NVDAObjects.window.edit import RichEdit50, EditTextInfo
+import config
+
 
 # Suppress incorrect Win 10 Task switching window focus
 class MultitaskingViewFrameWindow(UIA):
@@ -74,16 +76,25 @@ class SysListView32EmittingDuplicateFocusEvents(IAccessible):
 class NotificationArea(IAccessible):
 	"""The Windows notification area, a.k.a. system tray.
 	"""
+	lastKnownLocation = None
 
 	def event_gainFocus(self):
+		NotificationArea.lastKnownLocation = self.location
 		if mouseHandler.lastMouseEventTime < time.time() - 0.2:
 			# This focus change was not caused by a mouse event.
-			# If the mouse is on another toolbar control, the notification area toolbar will rudely
+			# If the mouse is on another systray control, the notification area toolbar will rudely
 			# bounce the focus back to the object under the mouse after a brief pause.
 			# Moving the mouse to the focus object isn't a good solution because
 			# sometimes, the focus can't be moved away from the object under the mouse.
 			# Therefore, move the mouse out of the way.
-			winUser.setCursorPos(0, 0)
+			if self.location:
+				systrayLeft, systrayTop, systrayWidth, systrayHeight = self.location
+				mouseLeft, mouseTop = winUser.getCursorPos()
+				if (
+					systrayLeft <= mouseLeft <= systrayLeft + systrayWidth
+					and systrayTop <= mouseTop <= systrayTop + systrayHeight
+				):
+					winUser.setCursorPos(0, 0)
 
 		if self.role == controlTypes.ROLE_TOOLBAR:
 			# Sometimes, the toolbar itself receives the focus instead of the focused child.
@@ -101,6 +112,49 @@ class NotificationArea(IAccessible):
 		if eventHandler.isPendingEvents("gainFocus"):
 			return
 		super(NotificationArea, self).event_gainFocus()
+
+
+class ExplorerToolTip(ToolTip):
+
+	def shouldReport(self):
+		# Avoid reporting systray tool-tips if their text equals the focused systray icon name (#6656)
+
+		# Don't bother checking if reporting of tool-tips is disabled
+		if not config.conf["presentation"]["reportTooltips"]:
+			return False
+
+		focus = api.getFocusObject()
+
+		# Report if either
+		#  - the mouse has just moved
+		#  - the focus is not in the systray
+		#  - we do not know (yet) where the systray is located
+		if (
+			mouseHandler.lastMouseEventTime >= time.time() - 0.2
+			or not isinstance(focus, NotificationArea)
+			or NotificationArea.lastKnownLocation is None
+		):
+			return True
+
+		# Report if the mouse is indeed located in the systray
+		systrayLeft, systrayTop, systrayWidth, systrayHeight = NotificationArea.lastKnownLocation
+		mouseLeft, mouseTop = winUser.getCursorPos()
+		if (
+			systrayLeft <= mouseLeft <= systrayLeft + systrayWidth
+			and systrayTop <= mouseTop <= systrayTop + systrayHeight
+		):
+			return True
+
+		# Report is the next are different
+		if focus.name != self.name:
+			return True
+
+		# Do not report otherwise
+		return False
+
+	def event_show(self):
+		if self.shouldReport():
+			super().event_show()
 
 
 class GridTileElement(UIA):
@@ -217,7 +271,11 @@ class AppModule(appModuleHandler.AppModule):
 					toolbarParent = None
 				if toolbarParent and toolbarParent.windowClassName == "SysPager":
 					clsList.insert(0, NotificationArea)
-			return 
+			return
+
+		if obj.role == controlTypes.ROLE_TOOLTIP:
+			clsList.insert(0, ExplorerToolTip)
+			return
 
 		if windowClass == "Edit" and controlTypes.STATE_READONLY in obj.states:
 			clsList.insert(0, ReadOnlyEditBox)
