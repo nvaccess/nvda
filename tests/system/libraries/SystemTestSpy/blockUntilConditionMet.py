@@ -9,7 +9,7 @@ package. This enables sharing utility methods between the global plugin and othe
 """
 
 from time import sleep as _sleep
-from time import clock as _timer
+from time import perf_counter as _timer
 from typing import Any, Callable, Optional, Tuple
 
 

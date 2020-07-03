@@ -665,11 +665,14 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	landmark = field.get("landmark")
 	if not roleText and role == controlTypes.ROLE_LANDMARK and landmark:
 		roleText = f"{roleLabels[controlTypes.ROLE_LANDMARK]} {landmarkLabels[landmark]}"
+	content = field.get("content")
 
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []
 		if current:
 			text.append(getPropertiesBraille(current=current))
+		if role == controlTypes.ROLE_GRAPHIC and content:
+			text.append(content)
 		return TEXT_SEPARATOR.join(text) if len(text) != 0 else None
 
 	elif role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER) and field.get("table-id"):
@@ -713,7 +716,6 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		if level:
 			props["positionInfo"] = {"level": level}
 		text = getPropertiesBraille(**props)
-		content = field.get("content")
 		if content:
 			if text:
 				text += TEXT_SEPARATOR
