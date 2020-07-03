@@ -308,28 +308,29 @@ NVDAUnitsToWordUnits={
 	textInfos.UNIT_READINGCHUNK:wdSentence,
 }
 
-formatConfigFlagsMap={
-	"reportFontName":0x1,
-	"reportFontSize":0x2,
-	"reportFontAttributes":0x4,
-	"reportColor":0x8,
-	"reportAlignment":0x10,
-	"reportStyle":0x20,
-	"reportSpellingErrors":0x40,
-	"reportPage":0x80,
-	"reportLineNumber":0x100,
-	"reportTables":0x200,
-	"reportLists":0x400,
-	"reportLinks":0x800,
-	"reportComments":0x1000,
-	"reportHeadings":0x2000,
-	"autoLanguageSwitching":0x4000,
-	"reportRevisions":0x8000,
-	"reportParagraphIndentation":0x10000,
-	"reportLineSpacing":0x40000,
+formatConfigFlagsMap = {
+	"reportFontName": 0x1,
+	"reportFontSize": 0x2,
+	"reportFontAttributes": 0x4,
+	"reportColor": 0x8,
+	"reportAlignment": 0x10,
+	"reportStyle": 0x20,
+	"reportSpellingErrors": 0x40,
+	"reportPage": 0x80,
+	"reportLineNumber": 0x100,
+	"reportTables": 0x200,
+	"reportLists": 0x400,
+	"reportLinks": 0x800,
+	"reportComments": 0x1000,
+	"reportHeadings": 0x2000,
+	"autoLanguageSwitching": 0x4000,
+	"reportRevisions": 0x8000,
+	"reportParagraphIndentation": 0x10000,
+	"reportLineSpacing": 0x40000,
 	"reportSuperscriptsAndSubscripts": 0x80000,
+	"reportGraphics": 0x100000,
 }
-formatConfigFlag_includeLayoutTables=0x20000
+formatConfigFlag_includeLayoutTables = 0x20000
 
 # Map some characters from 0 to Unicode. Meant to be used with bullets only.
 # Doesn't care about the actual font, so can give incorrect Unicode in rare cases.

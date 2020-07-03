@@ -10,10 +10,13 @@ import logging
 from abc import abstractmethod, ABCMeta
 import copy
 import re
+import threading
+from typing import Sequence, Tuple, Union
 import wx
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib import scrolledpanel
 from wx.lib.expando import ExpandoTextCtrl
+from wx.lib.mixins.treemixin import VirtualTree
 import wx.lib.newevent
 import winUser
 import logHandler
@@ -154,21 +157,13 @@ class SettingsDialog(wx.Dialog, DpiScalingHelperMixin, metaclass=guiHelper.SIPAB
 		self.makeSettings(self.settingsSizer)
 
 		self.mainSizer.Add(self.settingsSizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL | wx.EXPAND, proportion=1)
-		self.mainSizer.Add(wx.StaticLine(self), flag=wx.EXPAND)
-
-		buttonSizer = guiHelper.ButtonHelper(wx.HORIZONTAL)
-		# Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
-		buttonSizer.addButton(self, label=_("OK"), id=wx.ID_OK)
-		# Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
-		buttonSizer.addButton(self, label=_("Cancel"), id=wx.ID_CANCEL)
+		buttons = wx.OK | wx.CANCEL
 		if hasApplyButton:
-			# Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
-			buttonSizer.addButton(self, label=_("Apply"), id=wx.ID_APPLY)
-
+			buttons |= wx.APPLY
 		self.mainSizer.Add(
-			buttonSizer.sizer,
+			self.CreateSeparatedButtonSizer(buttons),
 			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.ALL | wx.ALIGN_RIGHT
+			flag=wx.EXPAND | wx.BOTTOM | wx.LEFT | wx.RIGHT
 		)
 
 		self.mainSizer.Fit(self)
@@ -724,7 +719,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			# allow NVDA to come up in Windows login screen (useful if user
 			# needs to enter passwords or if multiple user accounts are present
 			# to allow user to choose the correct account).
-			label=_("Start NVDA during sign-in (requires administrator privileges)")
+			label=_("Use NVDA during sign-in (requires administrator privileges)")
 		)
 		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
 		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
@@ -733,11 +728,14 @@ class GeneralSettingsPanel(SettingsPanel):
 
 		self.copySettingsButton = wx.Button(
 			self,
-			# Translators: The label for a button in general settings to copy
-			# current user settings to system settings (to allow current
-			# settings to be used in secure screens such as User Account
-			# Control (UAC) dialog).
-			label=_("Use currently saved settings during sign-in and on secure screens (requires administrator privileges)")  # noqa: E501 line too long
+			label=_(
+				# Translators: The label for a button in general settings to copy
+				# current user settings to system settings (to allow current
+				# settings to be used in secure screens such as User Account
+				# Control (UAC) dialog).
+				"Use currently saved settings during sign-in and on secure screens"
+				" (requires administrator privileges)"
+			)
 		)
 		self.copySettingsButton.Bind(wx.EVT_BUTTON,self.onCopySettings)
 		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
@@ -768,9 +766,9 @@ class GeneralSettingsPanel(SettingsPanel):
 	def onCopySettings(self,evt):
 		addonsDirPath = os.path.join(globalVars.appArgs.configPath, 'addons')
 		if os.path.isdir(addonsDirPath) and 0 < len(os.listdir(addonsDirPath)):
-			# Translators: A message to warn the user when attempting to copy current
-			# settings to system settings.
 			message = _(
+				# Translators: A message to warn the user when attempting to copy current
+				# settings to system settings.
 				"Add-ons were detected in your user settings directory. "
 				"Copying these to the system profile could be a security risk. "
 				"Do you still wish to copy your settings?"
@@ -1409,10 +1407,10 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.trustVoiceLanguageCheckbox.SetValue(config.conf["speech"]["trustVoiceLanguage"])
 
-		# Translators: This is the label for a checkbox in the
-		# voice settings panel (if checked, data from the unicode CLDR will be used
-		# to speak emoji descriptions).
 		includeCLDRText = _(
+			# Translators: This is the label for a checkbox in the
+			# voice settings panel (if checked, data from the unicode CLDR will be used
+			# to speak emoji descriptions).
 			"Include Unicode Consortium data (including emoji) when processing characters and symbols"
 		)
 		self.includeCLDRCheckbox = settingsSizerHelper.addItem(
@@ -1910,6 +1908,16 @@ class BrowseModePanel(SettingsPanel):
 		self.trapNonCommandGesturesCheckBox = sHelper.addItem(wx.CheckBox(self, label=trapNonCommandGesturesText))
 		self.trapNonCommandGesturesCheckBox.SetValue(config.conf["virtualBuffers"]["trapNonCommandGestures"])
 
+		# Translators: This is the label for a checkbox in the
+		# browse mode settings panel.
+		autoFocusFocusableElementsText = _("Automatically set system &focus to focusable elements")
+		self.autoFocusFocusableElementsCheckBox = sHelper.addItem(
+			wx.CheckBox(self, label=autoFocusFocusableElementsText)
+		)
+		self.autoFocusFocusableElementsCheckBox.SetValue(
+			config.conf["virtualBuffers"]["autoFocusFocusableElements"]
+		)
+
 	def onSave(self):
 		config.conf["virtualBuffers"]["maxLineLength"]=self.maxLengthEdit.GetValue()
 		config.conf["virtualBuffers"]["linesPerPage"]=self.pageLinesEdit.GetValue()
@@ -1921,6 +1929,10 @@ class BrowseModePanel(SettingsPanel):
 		config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]=self.autoPassThroughOnCaretMoveCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["passThroughAudioIndication"]=self.passThroughAudioIndicationCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["trapNonCommandGestures"]=self.trapNonCommandGesturesCheckBox.IsChecked()
+		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = (
+			self.autoFocusFocusableElementsCheckBox.IsChecked()
+		)
+
 
 class DocumentFormattingPanel(SettingsPanel):
 	# Translators: This is the label for the document formatting panel.
@@ -2129,6 +2141,11 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
+		self.graphicsCheckBox = elementsGroup.addItem(wx.CheckBox(self, label=_("&Graphics")))
+		self.graphicsCheckBox.SetValue(config.conf["documentFormatting"]["reportGraphics"])
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings panel.
 		self.listsCheckBox=elementsGroup.addItem(wx.CheckBox(self,label=_("&Lists")))
 		self.listsCheckBox.SetValue(config.conf["documentFormatting"]["reportLists"])
 
@@ -2200,6 +2217,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportBorderStyle"] = choice in (1,2)
 		config.conf["documentFormatting"]["reportBorderColor"] = (choice == 2)
 		config.conf["documentFormatting"]["reportLinks"]=self.linksCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportGraphics"] = self.graphicsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportHeadings"]=self.headingsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLists"]=self.listsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportBlockQuotes"]=self.blockQuotesCheckBox.IsChecked()
@@ -2214,14 +2232,21 @@ class TouchInteractionPanel(SettingsPanel):
 	title = _("Touch Interaction")
 
 	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is the label for a checkbox in the
 		# touch interaction settings panel.
-		self.touchTypingCheckBox=wx.CheckBox(self,label=_("&Touch typing mode"))
+		touchSupportEnableLabel = _("Enable touch interaction support")
+		self.enableTouchSupportCheckBox = sHelper.addItem(wx.CheckBox(self, label=touchSupportEnableLabel))
+		self.enableTouchSupportCheckBox.SetValue(config.conf["touch"]["enabled"])
+		# Translators: This is the label for a checkbox in the
+		# touch interaction settings panel.
+		self.touchTypingCheckBox = sHelper.addItem(wx.CheckBox(self, label=_("&Touch typing mode")))
 		self.touchTypingCheckBox.SetValue(config.conf["touch"]["touchTyping"])
-		settingsSizer.Add(self.touchTypingCheckBox,border=10,flag=wx.BOTTOM)
 
 	def onSave(self):
-		config.conf["touch"]["touchTyping"]=self.touchTypingCheckBox.IsChecked()
+		config.conf["touch"]["enabled"] = self.enableTouchSupportCheckBox.IsChecked()
+		config.conf["touch"]["touchTyping"] = self.touchTypingCheckBox.IsChecked()
+		touchHandler.setTouchSupport(config.conf["touch"]["enabled"])
 
 class UwpOcrPanel(SettingsPanel):
 	# Translators: The title of the Windows 10 OCR panel.
@@ -2247,6 +2272,7 @@ class UwpOcrPanel(SettingsPanel):
 	def onSave(self):
 		lang = self.languageCodes[self.languageChoice.Selection]
 		config.conf["uwpOcr"]["language"] = lang
+
 
 class AdvancedPanelControls(wx.Panel):
 	"""Holds the actual controls for the Advanced Settings panel, this allows the state of the controls to
@@ -2337,19 +2363,38 @@ class AdvancedPanelControls(wx.Panel):
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
-		label = _("Browse mode")
-		browseModeGroup = guiHelper.BoxSizerHelper(
+		label = _("Speech")
+		speechGroup = guiHelper.BoxSizerHelper(
 			parent=self,
 			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
 		)
-		sHelper.addItem(browseModeGroup)
+		sHelper.addItem(speechGroup)
 
-		# Translators: This is the label for a checkbox in the
-		# Advanced settings panel.
-		autoFocusFocusableElementsText = _("Automatically set system &focus to focusable elements")
-		self.autoFocusFocusableElementsCheckBox=browseModeGroup.addItem(wx.CheckBox(self,wx.ID_ANY,label=autoFocusFocusableElementsText))
-		self.autoFocusFocusableElementsCheckBox.SetValue(config.conf["virtualBuffers"]["autoFocusFocusableElements"])
-		self.autoFocusFocusableElementsCheckBox.defaultValue=self._getDefaultValue(["virtualBuffers","autoFocusFocusableElements"])
+		expiredFocusSpeechChoices = [
+			# Translators: Label for the 'Cancel speech for expired &focus events' combobox
+			# in the Advanced settings panel.
+			_("Default (No)"),
+			# Translators: Label for the 'Cancel speech for expired &focus events' combobox
+			# in the Advanced settings panel.
+			_("Yes"),
+			# Translators: Label for the 'Cancel speech for expired &focus events' combobox
+			# in the Advanced settings panel.
+			_("No"),
+		]
+
+		# Translators: This is the label for combobox in the Advanced settings panel.
+		cancelExpiredFocusSpeechText = _("Attempt to cancel speech for expired focus events:")
+		self.cancelExpiredFocusSpeechCombo: wx.Choice = speechGroup.addLabeledControl(
+			cancelExpiredFocusSpeechText,
+			wx.Choice,
+			choices=expiredFocusSpeechChoices
+		)
+		self.cancelExpiredFocusSpeechCombo.SetSelection(
+			config.conf["featureFlag"]["cancelExpiredFocusSpeech"]
+		)
+		self.cancelExpiredFocusSpeechCombo.defaultValue = self._getDefaultValue(
+			["featureFlag", "cancelExpiredFocusSpeech"]
+		)
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -2390,6 +2435,7 @@ class AdvancedPanelControls(wx.Panel):
 			"timeSinceInput",
 			"vision",
 			"speech",
+			"speechManager",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
@@ -2424,11 +2470,8 @@ class AdvancedPanelControls(wx.Panel):
 			and self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue
 			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
+			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
-			and (
-				self.autoFocusFocusableElementsCheckBox.IsChecked()
-				== self.autoFocusFocusableElementsCheckBox.defaultValue
-			)
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and True  # reduce noise in diff when the list is extended.
@@ -2439,8 +2482,8 @@ class AdvancedPanelControls(wx.Panel):
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
 		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue == 'UIA')
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
+		self.cancelExpiredFocusSpeechCombo.SetValue(self.cancelExpiredFocusSpeechCombo.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
-		self.autoFocusFocusableElementsCheckBox.SetValue(self.autoFocusFocusableElementsCheckBox.defaultValue)
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self._defaultsRestored = True
@@ -2454,8 +2497,8 @@ class AdvancedPanelControls(wx.Panel):
 		else:
 			config.conf['UIA']['winConsoleImplementation'] = "auto"
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
+		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = self.cancelExpiredFocusSpeechCombo.GetSelection()
 		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
-		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = self.autoFocusFocusableElementsCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
@@ -2469,8 +2512,8 @@ class AdvancedPanel(SettingsPanel):
 	# Advanced settings panel
 	warningHeader = _("Warning!")
 
-	# Translators: This is a label appearing on the Advanced settings panel.
 	warningExplanation = _(
+		# Translators: This is a label appearing on the Advanced settings panel.
 		"The following settings are for advanced users. "
 		"Changing them may cause NVDA to function incorrectly. "
 		"Please only change these if you know what you are doing or "
@@ -2498,8 +2541,8 @@ class AdvancedPanel(SettingsPanel):
 		self.windowText = warningGroup.addItem(wx.StaticText(warningBox, label=self.warningExplanation))
 		self.windowText.Wrap(self.scaleSize(544))
 
-		# Translators: This is the label for a checkbox in the Advanced settings panel.
 		enableAdvancedControlslabel = _(
+			# Translators: This is the label for a checkbox in the Advanced settings panel.
 			"I understand that changing these settings may cause NVDA to function incorrectly."
 		)
 		self.enableControlsCheckBox = warningGroup.addItem(
@@ -2579,9 +2622,9 @@ class DictionaryEntryDialog(wx.Dialog):
 		typeChoices = [DictionaryEntryDialog.TYPE_LABELS[i] for i in DictionaryEntryDialog.TYPE_LABELS_ORDERING]
 		self.typeRadioBox=sHelper.addItem(wx.RadioBox(self,label=typeText, choices=typeChoices))
 
-		sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK|wx.CANCEL))
+		sHelper.addDialogDismissButtons(wx.OK | wx.CANCEL, separated=True)
 
-		mainSizer.Add(sHelper.sizer,border=20,flag=wx.ALL)
+		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		self.setType(speechDictHandler.ENTRY_TYPE_ANYWHERE)
@@ -3170,9 +3213,9 @@ def showTerminationErrorForProviders(
 		)
 	else:
 		providerNames = ", ".join(provider.displayName for provider in providers)
-		# Translators: This message is presented when
-		# NVDA is unable to terminate multiple vision enhancement providers.
 		message = _(
+			# Translators: This message is presented when
+			# NVDA is unable to terminate multiple vision enhancement providers.
 			"Could not gracefully terminate the following vision enhancement providers:\n"
 			"{providerNames}"
 		).format(providerNames=providerNames)
@@ -3897,18 +3940,97 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self._refreshVisibleItems()
 		evt.Skip()
 
+
+#: A type hint used throughout the InputGesturesDialog
+FlattenedGestureMappings = Sequence[Tuple[str, Sequence[Tuple[str, inputCore.AllGesturesScriptInfo]]]]
+
+
 class InputGesturesDialog(SettingsDialog):
 	# Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 	title = _("Input Gestures")
 
-	def __init__(self, parent):
+	class GesturesTree(VirtualTree, wx.TreeCtrl):
+		def __init__(self, parent):
+			super().__init__(
+				parent,
+				size=wx.Size(600, 400),
+				style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE
+			)
+		
+		def OnGetChildrenCount(self, index: Tuple[int, ...]) -> int:
+			if not index:  # Root node
+				return len(self.Parent.filteredGestures)
+			commands = self.Parent.filteredGestures[index[0]][1]
+			if len(index) == 1:  # Category
+				return len(commands)
+			scriptInfo = commands[index[1]][1]
+			if len(index) == 2:  # Command
+				count = len(scriptInfo.gestures)
+				if (
+					self.Parent.newGesturePromptIndex
+					and self.Parent.newGesturePromptIndex[:2] == index
+				):
+					count += 1
+				return count
+			assert len(index) == 3
+			return 0  # Gesture
+
+		def OnGetItemText(self, index: Tuple[int, ...], column: int = 0) -> str:
+			if index == self.Parent.newGesturePromptIndex:
+				# Translators: The prompt to enter a gesture in the Input Gestures dialog.
+				return _("Enter input gesture:")
+			category, commands = self.Parent.filteredGestures[index[0]]
+			if len(index) == 1:
+				if self.Parent.filteredGestures is self.Parent.flattenedGestures:
+					return category
+				nbResults = len(commands)
+				if nbResults == 1:
+					# Translators: The label for a filtered category in the Input Gestures dialog.
+					return _("{category} (1 result)").format(category=category)
+				# Translators: The label for a filtered category in the Input Gestures dialog.
+				return _("{category} ({nbResults} results)").format(
+					category=category, nbResults=len(commands)
+				)
+			command, scriptInfo = commands[index[1]]
+			if len(index) == 2:
+				return command
+			assert len(index) == 3
+			return self.Parent._formatGesture(scriptInfo.gestures[index[2]])
+
+		def getData(self, index: Tuple[int, ...]) -> Union[inputCore.AllGesturesScriptInfo, str]:
+			assert 2 <= len(index) <= 3
+			category, commands = self.Parent.filteredGestures[index[0]]
+			command, scriptInfo = commands[index[1]]
+			if len(index) == 2:
+				return scriptInfo
+			return scriptInfo.gestures[index[2]]
+
+	def __init__(self, parent: "InputGesturesDialog"):
+		#: Token used to cancel async filtering
+		self.filterToken: object = False
+		#: The index in the GesturesTree of the prompt for entering a new gesture
+		self.newGesturePromptIndex: Tuple[int, int, int] = None
+		gestures = inputCore.manager.getAllGestureMappings(
+			obj=gui.mainFrame.prevFocus,
+			ancestors=gui.mainFrame.prevFocusAncestors
+		)
+		# Flatten the gestures mappings for faster access by the VirtualTree
+		self.flattenedGestures: FlattenedGestureMappings = []
+		for category in sorted(gestures):
+			commands = gestures[category]
+			self.flattenedGestures.append((
+				category,
+				[(command, commands[command]) for command in sorted(commands)]
+			))
+		#: The L{GesturesTree} actually reads from this attribute
+		self.filteredGestures: FlattenedGestureMappings = self.flattenedGestures
 		super().__init__(parent, resizeable=True)
 
 	def makeSettings(self, settingsSizer):
 		filterSizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 		filterLabel = wx.StaticText(self, label=pgettext("inputGestures", "&Filter by:"))
-		filter = self.filter = wx.TextCtrl(self)
+		filter = wx.TextCtrl(self)
 		filterSizer.Add(filterLabel, flag=wx.ALIGN_CENTER_VERTICAL)
 		filterSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
 		filterSizer.Add(filter, proportion=1)
@@ -3916,14 +4038,9 @@ class InputGesturesDialog(SettingsDialog):
 		settingsSizer.AddSpacer(5)
 		filter.Bind(wx.EVT_TEXT, self.onFilterChange, filter)
 
-		tree = self.tree = wx.TreeCtrl(self, size=wx.Size(600, 400), style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE )
-
-		self.treeRoot = tree.AddRoot("root")
+		tree = self.tree = self.GesturesTree(self)
 		tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.onTreeSelect)
 		settingsSizer.Add(tree, proportion=1, flag=wx.EXPAND)
-
-		self.gestures = inputCore.manager.getAllGestureMappings(obj=gui.mainFrame.prevFocus, ancestors=gui.mainFrame.prevFocusAncestors)
-		self.populateTree()
 
 		settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
 
@@ -3951,36 +4068,82 @@ class InputGesturesDialog(SettingsDialog):
 		settingsSizer.Add(bHelper.sizer, flag=wx.EXPAND)
 
 	def postInit(self):
+		self.tree.RefreshItems()
 		self.tree.SetFocus()
 
-	def populateTree(self, filter=''):
-		if filter:
-			#This regexp uses a positive lookahead (?=...) for every word in the filter, which just makes sure the word is present in the string to be tested without matching position or order.
-			# #5060: Escape the filter text to prevent unexpected matches and regexp errors.
-			# Because we're escaping, words must then be split on "\ ".
-			filter = re.escape(filter)
-			filterReg = re.compile(r'(?=.*?' + r')(?=.*?'.join(filter.split('\ ')) + r')', re.U|re.IGNORECASE)
-		for category in sorted(self.gestures):
-			treeCat = self.tree.AppendItem(self.treeRoot, category)
-			commands = self.gestures[category]
-			for command in sorted(commands):
-				if filter and not filterReg.match(command):
-					continue
-				treeCom = self.tree.AppendItem(treeCat, command)
-				commandInfo = commands[command]
-				self.tree.SetItemData(treeCom, commandInfo)
-				for gesture in commandInfo.gestures:
-					treeGes = self.tree.AppendItem(treeCom, self._formatGesture(gesture))
-					self.tree.SetItemData(treeGes, gesture)
-			if not self.tree.ItemHasChildren(treeCat):
-				self.tree.Delete(treeCat)
-			elif filter:
-				self.tree.Expand(treeCat)
+	def _onWindowDestroy(self, evt):
+		super()._onWindowDestroy(evt)
+		self.filterToken = None
 
 	def onFilterChange(self, evt):
-		filter=evt.GetEventObject().GetValue()
-		self.tree.DeleteChildren(self.treeRoot)
-		self.populateTree(filter)
+		filter = evt.GetEventObject().GetValue()
+		token = self.filterToken = object()
+		log.debug(f"new filter token {token}")
+		self.filter(token, filter)
+
+	def filter(self, token: object, filter: str):
+		
+		def run():
+			try:
+				self._filter(token, filter)
+			except:  # noqa: E722
+				log.exception()
+		
+		threading.Thread(
+			target=run,
+			name=f"{self.__class__.__module__}.{self.filter.__func__.__qualname__}",
+		).start()
+
+	def _filter(self, token: object, filter: str):
+		if not filter:
+			wx.CallAfter(self.refreshTree, token, self.flattenedGestures)
+			return
+		filteredGestures = []
+		# This regexp uses a positive lookahead (?=...) for every word in the filter, which just makes sure
+		# the word is present in the string to be tested without matching position or order.
+		# #5060: Escape the filter text to prevent unexpected matches and regexp errors.
+		# Because we're escaping, words must then be split on r"\ ".
+		filter = re.escape(filter)
+		pattern = re.compile(r"(?=.*?" + r")(?=.*?".join(filter.split(r"\ ")) + r")", re.U | re.IGNORECASE)
+		nbCommands = 0
+		for category, commands in self.flattenedGestures:
+			if token is not self.filterToken:
+				log.debug(f"filter token {token} superseded by {self.filterToken}")
+				return
+			filteredCommands = [
+				(command, scriptInfo)
+				for command, scriptInfo in commands
+				if pattern.match(command)
+			]
+			if filteredCommands:
+				filteredGestures.append((category, filteredCommands))
+				nbCommands += len(filteredCommands)
+		if token is not self.filterToken:
+			log.debug(f"filter token {token} superseded by {self.filterToken}")
+			return
+		# Expanding categories can be expensive: Only do it if there are few results.
+		wx.CallAfter(self.refreshTree, token, filteredGestures, expandCategories=nbCommands <= 10)
+	
+	def refreshTree(
+			self,
+			token: object,
+			filteredGestures: FlattenedGestureMappings,
+			expandCategories: bool = False,
+	):
+		if token is not self.filterToken:
+			log.debug(f"filter token {token} superseded by {self.filterToken}")
+			return
+		self.tree.CollapseAll()
+		self.filteredGestures = filteredGestures
+		self.tree.RefreshItems()
+		if not expandCategories:
+			return
+		for index in range(len(self.filteredGestures)):
+			if token is not self.filterToken:
+				log.debug(f"filter token {token} superseded by {self.filterToken}")
+				return
+			# Expand categories
+			self.tree.Expand(self.tree.GetItemByIndex((index,)))
 
 	def _formatGesture(self, identifier):
 		try:
@@ -3993,14 +4156,15 @@ class InputGesturesDialog(SettingsDialog):
 			return identifier
 
 	def onTreeSelect(self, evt):
+		if evt:
+			evt.Skip()
 		# #7077: Check if the treeview is still alive.
 		try:
-			item = self.tree.Selection
+			index = self.tree.GetIndexOfItem(self.tree.Selection)
 		except RuntimeError:
 			return
-		data = self.tree.GetItemData(item)
-		isCommand = isinstance(data, inputCore.AllGesturesScriptInfo)
-		isGesture = isinstance(data, str)
+		isCommand = len(index) == 2
+		isGesture = len(index) == 3
 		self.addButton.Enabled = isCommand or isGesture
 		self.removeButton.Enabled = isGesture
 
@@ -4008,25 +4172,28 @@ class InputGesturesDialog(SettingsDialog):
 		if inputCore.manager._captureFunc:
 			return
 
-		treeCom = self.tree.Selection
-		scriptInfo = self.tree.GetItemData(treeCom)
-		if not isinstance(scriptInfo, inputCore.AllGesturesScriptInfo):
-			treeCom = self.tree.GetItemParent(treeCom)
-			scriptInfo = self.tree.GetItemData(treeCom)
-		# Translators: The prompt to enter a gesture in the Input Gestures dialog.
-		treeGes = self.tree.AppendItem(treeCom, _("Enter input gesture:"))
-		self.tree.SelectItem(treeGes)
+		selIdx = self.tree.GetIndexOfItem(self.tree.Selection)
+		comIdx = selIdx[:2]
+		scriptInfo = self.tree.getData(comIdx)
+		gesIdx = self.newGesturePromptIndex = comIdx + (self.tree.OnGetChildrenCount(comIdx),)
+		catIdx = comIdx[:1]
+		catItem = self.tree.GetItemByIndex(catIdx)
+		self.tree.RefreshChildrenRecursively(catItem)
+		comItem = self.tree.GetItemByIndex(comIdx)
+		self.tree.Expand(comItem)
+		gesItem = self.tree.GetItemByIndex(gesIdx)
+		self.tree.SelectItem(gesItem)
 		self.tree.SetFocus()
 
 		def addGestureCaptor(gesture):
 			if gesture.isModifier:
 				return False
 			inputCore.manager._captureFunc = None
-			wx.CallAfter(self._addCaptured, treeGes, scriptInfo, gesture)
+			wx.CallAfter(self._addCaptured, scriptInfo, gesture)
 			return False
 		inputCore.manager._captureFunc = addGestureCaptor
 
-	def _addCaptured(self, treeGes, scriptInfo, gesture):
+	def _addCaptured(self, scriptInfo, gesture):
 		gids = gesture.normalizedIdentifiers
 		if len(gids) > 1:
 			# Multiple choices. Present them in a pop-up menu.
@@ -4034,44 +4201,48 @@ class InputGesturesDialog(SettingsDialog):
 			for gid in gids:
 				disp = self._formatGesture(gid)
 				item = menu.Append(wx.ID_ANY, disp)
-				self.Bind(wx.EVT_MENU,
-					lambda evt, gid=gid, disp=disp: self._addChoice(treeGes, scriptInfo, gid, disp),
-					item)
+				self.Bind(
+					wx.EVT_MENU,
+					lambda evt, gid=gid, disp=disp: self._addChoice(scriptInfo, gid, disp),
+					item
+				)
 			self.PopupMenu(menu)
-			if not self.tree.GetItemData(treeGes):
+			if self.newGesturePromptIndex:
 				# No item was selected, so use the first.
-				self._addChoice(treeGes, scriptInfo, gids[0],
-					self._formatGesture(gids[0]))
+				self._addChoice(scriptInfo, gids[0], self._formatGesture(gids[0]))
 			menu.Destroy()
 		else:
-			self._addChoice(treeGes, scriptInfo, gids[0],
-				self._formatGesture(gids[0]))
+			self._addChoice(scriptInfo, gids[0], self._formatGesture(gids[0]))
 
-	def _addChoice(self, treeGes, scriptInfo, gid, disp):
+	def _addChoice(self, scriptInfo, gid, disp):
 		entry = (gid, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName)
 		try:
 			# If this was just removed, just undo it.
 			self.pendingRemoves.remove(entry)
 		except KeyError:
 			self.pendingAdds.add(entry)
-		self.tree.SetItemText(treeGes, disp)
-		self.tree.SetItemData(treeGes, gid)
 		scriptInfo.gestures.append(gid)
+		catIdx = self.newGesturePromptIndex[:1]
+		catItem = self.tree.GetItemByIndex(catIdx)
+		self.newGesturePromptIndex = None
+		self.tree.RefreshChildrenRecursively(catItem)
 		self.onTreeSelect(None)
 
 	def onRemove(self, evt):
-		treeGes = self.tree.Selection
-		gesture = self.tree.GetItemData(treeGes)
-		treeCom = self.tree.GetItemParent(treeGes)
-		scriptInfo = self.tree.GetItemData(treeCom)
+		gesIdx = self.tree.GetIndexOfItem(self.tree.Selection)
+		gesture = self.tree.getData(gesIdx)
+		comIdx = gesIdx[:2]
+		scriptInfo = self.tree.getData(comIdx)
 		entry = (gesture, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName)
 		try:
 			# If this was just added, just undo it.
 			self.pendingAdds.remove(entry)
 		except KeyError:
 			self.pendingRemoves.add(entry)
-		self.tree.Delete(treeGes)
 		scriptInfo.gestures.remove(gesture)
+		catIdx = comIdx[:1]
+		catItem = self.tree.GetItemByIndex(catIdx)
+		self.tree.RefreshChildrenRecursively(catItem)
 		self.tree.SetFocus()
 
 	def onReset(self, evt):
