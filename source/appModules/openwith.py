@@ -8,6 +8,7 @@ import appModuleHandler
 import controlTypes
 from NVDAObjects.UIA import UIA
 from NVDAObjects.behaviors import Dialog
+import winUser
 
 #win8hack: the nondefault items in the list of applications are not labeled
 class NonDefaultAppTile(UIA):
@@ -43,3 +44,9 @@ class AppModule(appModuleHandler.AppModule):
 			elif automationID=="ImmersiveOpenWithFlyout":
 				clsList.insert(0,ImmersiveOpenWithFlyout)
 
+	def isGoodUIAWindow(self, hwnd):
+		# #11335: Open With dialog isn't read in Windows 10 Version 2004 (May 2020 Update).
+		# Note that treating the below window as a UIA window will make NVDA no longer announce "pane".
+		if winUser.getClassName(hwnd) == "Shell_Flyout":
+			return True
+		return False
