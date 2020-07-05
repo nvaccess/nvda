@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2009-2018 NV Access Limited, Aleksey Sadovoy, James Teh, Joseph Lee, Tuukka Ojala
+# Copyright (C) 2009-2020 NV Access Limited, Aleksey Sadovoy, James Teh, Joseph Lee, Tuukka Ojala, Bram Duvigneau
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -54,9 +54,14 @@ class AppModule(appModuleHandler.AppModule):
 		statusBarContents = self._statusBar.firstChild.name
 		try:
 			playingTimes = statusBarContents.split("|")[4].split("/")
-			return statusBarTimes(playingTimes[0], playingTimes[1])
 		except IndexError:
 			return empty
+		elapsed = playingTimes[0]
+		if len(playingTimes) > 1:
+			remaining = playingTimes[1]
+		else:
+			remaining = None
+		return statusBarTimes(elapsed, remaining)
 
 	def getElapsedAndTotalIfPlaying(self):
 		elapsedAndTotalTime = self.getElapsedAndTotal()
@@ -67,12 +72,14 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_reportRemainingTime(self,gesture):
 		elapsedTime, totalTime = self.getElapsedAndTotalIfPlaying()
-		if elapsedTime is not None and totalTime is not None:
+		if elapsedTime is None or totalTime is None:
+			msg = _("Unable to determine remaining time")
+		else:
 			parsedElapsedTime = parseIntervalToTimestamp(elapsedTime)
 			parsedTotalTime = parseIntervalToTimestamp(totalTime)
 			remainingTime = parsedTotalTime - parsedElapsedTime
 			msg = time.strftime(getOutputFormat(remainingTime), time.gmtime(remainingTime))
-			ui.message(msg)
+		ui.message(msg)
 	# Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 	script_reportRemainingTime.__doc__ = _("Reports the remaining time of the currently playing track, if any")
 
@@ -87,6 +94,8 @@ class AppModule(appModuleHandler.AppModule):
 		totalTime = self.getElapsedAndTotalIfPlaying()[1]
 		if totalTime is not None:
 			ui.message(totalTime)
+		else:
+			ui.message(_("Total time not available"))
 	# Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
 	script_reportTotalTime.__doc__ = _("Reports the length of the currently playing track, if any")
 
