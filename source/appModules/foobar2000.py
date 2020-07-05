@@ -74,6 +74,7 @@ class AppModule(appModuleHandler.AppModule):
 	def script_reportRemainingTime(self,gesture):
 		elapsedTime, totalTime = self.getElapsedAndTotalIfPlaying()
 		if elapsedTime is None or totalTime is None:
+			# Translators: Reported if the remaining time can not be calculated in Foobar2000
 			msg = _("Unable to determine remaining time")
 		else:
 			parsedElapsedTime = parseIntervalToTimestamp(elapsedTime)
@@ -96,6 +97,7 @@ class AppModule(appModuleHandler.AppModule):
 		if totalTime is not None:
 			ui.message(totalTime)
 		else:
+			# Translators: Reported if the total time is not available in Foobar2000
 			ui.message(_("Total time not available"))
 	# Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
 	script_reportTotalTime.__doc__ = _("Reports the length of the currently playing track, if any")
