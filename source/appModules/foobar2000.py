@@ -1,5 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2009-2020 NV Access Limited, Aleksey Sadovoy, James Teh, Joseph Lee, Tuukka Ojala, Bram Duvigneau
+# Copyright (C) 2009-2020 NV Access Limited, Aleksey Sadovoy, James Teh, Joseph Lee, Tuukka Ojala,
+# Bram Duvigneau
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
