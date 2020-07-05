@@ -1,8 +1,7 @@
-#appModules/openWith.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2011 NVDA Contributors <http://www.nvda-project.org/>
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2011-2020 NV Access Limited, Joseph Lee
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from comtypes import COMError
 import appModuleHandler
