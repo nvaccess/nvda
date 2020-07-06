@@ -119,7 +119,6 @@ ROLE_WHITESPACE=110
 ROLE_TREEVIEWBUTTON=111
 ROLE_IPADDRESS=112
 ROLE_DESKTOPICON=113
-ROLE_ALERT=114
 ROLE_INTERNALFRAME=115
 ROLE_DESKTOPPANE=116
 ROLE_OPTIONPANE=117
@@ -435,8 +434,6 @@ roleLabels: Dict[int, str] = {
 	ROLE_IPADDRESS:_("IP address"),
 	# Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts for programs).
 	ROLE_DESKTOPICON:_("desktop icon"),
-	# Translators: Identifies an alert message such as file download alert in Internet explorer 9 and above.
-	ROLE_ALERT:_("alert"),
 	# Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 	ROLE_INTERNALFRAME:_("frame"),
 	# Translators: Identifies desktop pane (the desktop window).
@@ -723,7 +720,13 @@ def processPositiveStates(role, states, reason: OutputReason, positiveStates=Non
 	positiveStates.discard(STATE_INVISIBLE)
 	if reason != REASON_CHANGE:
 		positiveStates.discard(STATE_LINKED)
-		if role in (ROLE_LISTITEM, ROLE_TREEVIEWITEM, ROLE_MENUITEM, ROLE_TABLEROW) and STATE_SELECTABLE in states:
+		if role in (
+			ROLE_LISTITEM,
+			ROLE_TREEVIEWITEM,
+			ROLE_MENUITEM,
+			ROLE_TABLEROW,
+			ROLE_CHECKBOX,
+		) and STATE_SELECTABLE in states:
 			positiveStates.discard(STATE_SELECTED)
 	if role not in (ROLE_EDITABLETEXT, ROLE_CHECKBOX):
 		positiveStates.discard(STATE_READONLY)
@@ -772,7 +775,8 @@ def processNegativeStates(role, states, reason: OutputReason, negativeStates=Non
 			ROLE_TABLEROW,
 			ROLE_TABLECELL,
 			ROLE_TABLECOLUMNHEADER,
-			ROLE_TABLEROWHEADER
+			ROLE_TABLEROWHEADER,
+			ROLE_CHECKBOX,
 		)
 	):
 		speakNegatives.add(STATE_SELECTED)

@@ -1,6 +1,6 @@
 # scriptHandler.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2019 NV Access Limited, Babbage B.V.
+# Copyright (C) 2007-2020 NV Access Limited, Babbage B.V., Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -54,8 +54,11 @@ def _getObjScript(obj, gesture, globalMapScripts):
 			except AttributeError:
 				pass
 
-	# Search the object itself for in-built bindings.
-	return obj.getScript(gesture)
+	try:
+		# Search the object itself for in-built bindings.
+		return obj.getScript(gesture)
+	except Exception:  # Prevent a faulty add-on from breaking script handling altogether (#5446)
+		log.exception()
 
 def findScript(gesture):
 	focus = api.getFocusObject()
@@ -281,4 +284,3 @@ def script(
 			decoratedScript.resumeSayAllMode = resumeSayAllMode
 		return decoratedScript
 	return script_decorator
-

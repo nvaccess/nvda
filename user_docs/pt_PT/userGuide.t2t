@@ -470,18 +470,18 @@ O NVDA fornece um modo para que os utilizadores compreendam onde está o rato, n
 Quanto mais para cima estiver o rato no ecrã, mais aguda será a entoação dos bips.
 Quanto mais à esquerda ou à direita estiver o rato no ecrã, mais à esquerda ou à direita o som será tocado (assumindo-se que o utilizador tem colunas stereo ou auscultadores).
 
-Esta funcionalidade adicional do NVDA não se encontra activa, por padrão.
-Se pretender utilizar a mesma, pode configurá-la na secção [configurações do rato #MouseSettings], que pode encontrar no diálogo [Configurações #NVDASettings] aberto através do Menu NVDA, "Preferências", "Configurações".
+Estas funcionalidades adicionais do NVDA não se encontram activas por padrão.
+Se pretender utilizar as mesmas, pode configurá-las na secção [configurações do rato #MouseSettings], que pode encontrar no diálogo [Configurações #NVDASettings] aberto através do Menu NVDA, "Preferências", "Configurações".
 
-Apesar de um rato físico ou de um touchpad terem de ser utilizados para navegar com o rato, o NVDA tem alguns comandos relacionados com o rato:
+Apesar de um rato físico, ou um touchpad, terem de ser utilizados para navegar com o rato, o NVDA fornece alguns comandos relacionados com o rato:
 %kc:beginInclude
-|| Nome | Comandos de Teclado de Desktop | Comandos de Teclado de Laptop | Descrição |
-| Clicar com o botão esquerdo do rato | Barra do bloco numérico | NVDA+Sinal de Mais | Clica uma vez com o botão esquerdo do rato. O duplo clique pode ser realizado se pressionar este comando duas vezes, rapidamente |
-| Bloquear o botão esquerdo do rato | Shift+Barra do bloco numérico | NVDA+control+Sinal de Mais | Bloqueia o botão esquerdo do rato, na posição de  pressionado. Pressione novamente para desbloqueá-lo. Para arrastar o rato, pressione esta tecla de atalho para bloquear o botão esquerdo do rato, na posição de  pressionado e mova o rato quer seja fisicamente ou utilizando qualquer comando de movimento do rato |
-| Clicar com o botão direito do rato | Asterisco do bloco numérico | NVDA+Acento agudo | Clica uma vez com o botão direito do rato |
-| Bloquear o botão direito do rato | Shift+Asterisco do bloco numérico | NVDA+control+Acento agudo | Bloqueia o botão direito do rato, na posição de pressionado. Pressione novamente para desbloqueá-lo. Para arrastar o rato, pressione esta tecla de atalho para bloquear o botão direito do rato, na posição de pressionado e mova o rato quer seja fisicamente ou utilizando qualquer comando de movimento do rato |
-| Mover o rato para o objecto de navegação actual | NVDA+Barra do bloco numérico | NVDA+shift+m | Move o rato para a localização do objecto de navegação actual e do cursor de revisão |
-| Navegar para o objecto sob o rato | NVDA+Asterisco do bloco numérico | NVDA+shift+n | Define o objecto de navegação para o objecto localizado na posição do rato |
+|| Nome | Comandos de Teclado de Desktop | Comandos de Teclado de Laptop | Toque | Descrição |
+| Clicar com o botão esquerdo do rato | Barra do bloco numérico | NVDA+Sinal de Mais | nenhum | Clica uma vez com o botão esquerdo do rato. O duplo clique pode ser realizado se pressionar este comando duas vezes, rapidamente |
+| Bloquear o botão esquerdo do rato | Shift+Barra do bloco numérico | NVDA+control+Sinal de Mais | nenhum | Bloqueia o botão esquerdo do rato, na posição de  pressionado. Pressione novamente para desbloqueá-lo. Para arrastar o rato, pressione esta tecla de atalho para bloquear o botão esquerdo do rato, na posição de  pressionado e mova o rato quer seja fisicamente ou utilizando qualquer comando de movimento do rato |
+| Clicar com o botão direito do rato | Asterisco do bloco numérico | NVDA+Acento agudo | Tocar e manter | Clica uma vez com o botão direito do rato |
+| Bloquear o botão direito do rato | Shift+Asterisco do bloco numérico | NVDA+control+Acento agudo | nenhum | Bloqueia o botão direito do rato, na posição de pressionado. Pressione novamente para desbloqueá-lo. Para arrastar o rato, pressione esta tecla de atalho para bloquear o botão direito do rato, na posição de pressionado e mova o rato quer seja fisicamente ou utilizando qualquer comando de movimento do rato |
+| Mover o rato para o objecto de navegação actual | NVDA+Barra do bloco numérico | NVDA+shift+m | nenhum | Move o rato para a localização do objecto de navegação actual e do cursor de revisão |
+| Navegar para o objecto sob o rato | NVDA+Asterisco do bloco numérico | NVDA+shift+n | nenhum | Define o objecto de navegação para o objecto localizado na posição do rato |
 %kc:endInclude
 
 + Modo de Navegação +[BrowseMode]
@@ -806,7 +806,7 @@ O Windows 10 inclui OCR para vários idiomas.
 O NVDA pode usá-lo para reconhecer texto de imagens ou de aplicações inacessíveis.
 
 Pode configurar o idioma a utilizar na secção [Windows 10 OCR #Win10OcrSettings] do diálogo [Configurações do NVDA #NVDASettings].
-Idiomas adicionais podem ser installados, abrindo o menu "Iniciar", escolhendo "configurações", seleccionando o separador "Hora e Idioma", depois "Região e Idioma", e, por fim, "Adicionar um idioma".
+Idiomas adicionais podem ser instalados, abrindo o menu "Iniciar", escolhendo "configurações", seleccionando o separador "Hora e Idioma", depois "Região e Idioma", e, por fim, "Adicionar um idioma".
 
 %kc:beginInclude
 Para reconhecer o texto no objecto de navegação actual, usando o Windows 10 OCR, pressione NVDA+r.
@@ -933,13 +933,6 @@ Nota: Os comandos acima apenas funcionam com a cadeia de caracteres de formataç
 | Anunciar notas para os tradutores | control+shift+a | Anuncia quaisquer notas para os tradutores. |
 %kc:endInclude
 
-++ Skype ++[Skype]
-%kc:beginInclude
-Numa conversa:
-|| Nome | Comando de Teclado | Descrição |
-| Rever mensagem | NVDA+control+1-0 | Anuncia e move o cursor de revisão para uma mensagem, dependendo do número utilizado, por exemplo, NVDA+control+2 lê a segunda mensagem mais recente. |
-%kc:endInclude
-
 ++ Kindle para PC ++[Kindle]
 O NVDA suporta a leitura e navegação em livros no "Kindle para PC", da Amazon.
 Esta funcionalidade está apenas disponível em livros Kindle que anunciem "Screen reader supported", o que pode verificar na página de detalhes do livro.
@@ -1061,7 +1054,7 @@ Os níveis de registo disponíveis são:
  - Se estiver preocupado com a privacidade, não defina o nível de registo para esta opção.
 - Depuração: Além do que é registado nos níveis anteriores, serão registadas mensagens de depuração adicionais.
  - Assim como no nível anterior, se estiver preocupado com a privacidade, não deve definir o nível de registo para esta opção.
--
+ -
 -
 
 ==== Iniciar o NVDA automaticamente depois de iniciar cessão no Windows ====[GeneralSettingsStartAfterLogOn]
@@ -1162,7 +1155,7 @@ Se quiser que o NVDA não leia a pontuação no idioma da voz, para um determina
 
 ==== Incluir dados do Unicode Consortium (incluindo emoji) ao processar caracteres e símbolos ====[SpeechSettingsCLDR]
 Quando esta caixa de verificação está marcada, o NVDA incluirá símbolos adicionais pronunciation dictionaries when pronouncing characters and symbols.
-Esses dicionários contêm descrições para símbolos (principalmente emoji) fornecidas pelo [Consórcio Unicode https://www.unicode.org/consortium/] como parte do seu [Common Locale Data Repository https://cldr.unicode.org/].
+Esses dicionários contêm descrições para símbolos (principalmente emoji) fornecidas pelo [Consórcio Unicode https://www.unicode.org/consortium/] como parte do seu [Common Locale Data Repository http://cldr.unicode.org/].
 Se quiser que o NVDA fale as descriçõess dos emojis desta base de dados, deve activar esta opção.
 Contudo, se estiver a utilizar um sintetizador que já suporte anunciar as descrições dos emojis, pode preferir desactivar esta opção.
 
@@ -2045,6 +2038,10 @@ A janela do Visualizador Braille tem uma caixa de verificação chamada "Mostrar
 Se esta caixa estiver marcada, o Visualizador Braille será aberto quando o NVDA é iniciado.
 O Visualizador Braille tentará sempre abrir na mesma localização e com o mesmo tamanho com que foi fechado.
 
+++ Consola de Python ++[PythonConsole]
+A Consola de Python do NVDA, encontrada em Ferramentas no menu do NVDA, é uma ferramenta de desenvolvimento útil para depuração, inspecção geral de componentes internos do NVDA ou inspecção da hierarquia de acessibilidade de uma aplicação.
+Para mais informações, leia o [Guia de desenvolvimento do NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+
 ++ Gestor de extras ++[AddonsManager]
 O gestor de extras, acessível seleccionando "Gestor de Extras", no menu de "ferramentas" do NVDA, permite-lhe que instale, desinstale, active ou desactive pacotes de extras para o NVDA.
 Estes pacotes, fornecidos pela comunidade, contêm código personalizado, que poderá adicionar ou modificar funcionalidades no NVDA, ou mesmo fornecer suporte para linhas braile ou sintetizadores adicionais.
@@ -2090,7 +2087,7 @@ Para inspecionar esses extras incompatíveis, você pode usar o botão "ver extr
 
 Para aceder ao Gestor de Extras, a partir de qualquer local, por favor associe-lhe um comando através da opção [Definir comandos #InputGestures].
 
-++ Gestor de extras Incompatíveis ++[incompatibleAddonsManager]
++++ Gestor de extras Incompatíveis +++[incompatibleAddonsManager]
 O Gestor de extras Incompatíveis, que pode aceder através do botão "ver extras incompatíveis" no gestor de extras, permite inspecionar quaisquer extras incompatíveis e o motivo pelo qual eles são considerados incompatíveis.
 Os extras são considerados incompatíveis quando não foram actualizados para funcionar com alterações significativas no NVDA ou quando dependem de um recurso não disponível na versão do NVDA que está a usar.
 O gestor de extras incompatíveis tem uma mensagem curta para explicar sua finalidade, bem como a versão do NVDA.
@@ -2100,14 +2097,35 @@ Os extras incompatíveis são apresentados numa lista com as seguintes colunas:
 - Razão, uma explicação de porque o extra é considerado incompatível
 -
 
-O Gerenciador de extras Incompatíveis também possui um botão "Sobre o extra...".
+O Gestor de extras Incompatíveis também possui um botão "Sobre o extra...".
 Este botão abre um diálogo contendo informações do extra, para conhecer os detalhes completos do extra, o que é útil ao entrar em contato com o autor do extra.
 
+++ Criar uma cópia portátil ++[CreatePortableCopy]
+Esta opção abre uma caixa de diálogo que permite criar uma cópia portátil do NVDA a partir da versão instalada.
+Quando estiver a executar uma cópia portátil do NVDA, terá uma opção adicional do menu Ferramentas, chamada "instalar o NVDA".
+ 
+A caixa de diálogo para criar uma cópia portátil, ou instalar o NVDA, solicitará que escolha o directório onde criar a cópia portátil ou instalar o NVDA.
 
-++ Consola de Python ++[PythonConsole]
-A Consola de Python do NVDA encontra-se dentro das Ferramentas do Menu do NVDA. É uma ferramenta de programação muito útil para depuração, inspecção interna geral do NVDA ou exploração da hierarquia de acessibilidade de uma aplicação.
-Para mais informação, consulte por favor, o [Guia do desenvolvedor do NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+Nesta caixa de diálogo, pode activar ou desactivar o seguinte:
+- "Copiar configuração actual do utilizador" ou "Copiar configuração portátil para a conta de utilizador actual" (isso inclui os ficheiros em% appdata% \ roaming \ NVDA, ou na sub-pasta userConfig dentro da pasta do NVDA portátil, e inclui também os extras e outros módulos);
+- "Iniciar a nova cópia portátil após ser criada" (inicia o NVDA automaticamente após a criação da cópia portátil).
+-
 
+++ Executar a Ferramenta de correcção de registo de DLLs... ++[RunCOMRegistrationFixingTool]
+A instalação e desinstalação de programas num computador pode, em certos casos, fazer com que os ficheiros COM DLL não sejam registrados.
+Como as Interfaces COM, tais como IAccessible, dependem do registo correcto das COM DLL, podem ocorrer problemas caso esse registo esteja incorrecto.
+
+Isto pode acontecer após a instalação ou remoção do Adobe Reader, Math Player, Office e outros programas.
+
+A falta do  registo pode causar problemas aos navegadores, vários programas, barra de tarefas e outras interfaces.
+
+Os seguintes problemas, especificamente,  podem ser resolvidos executando esta ferramenta:
+- O NVDA anuncia "Desconhecido" ao tentar navegar no Firefox, Thunderbird e outros navegadores;
+- O NVDA pode falhar ao alternar entre o modo de foco e o modo de navegação;
+- O NVDA fica muito lento ao deslocar-se nos navegadores, em modo de navegação;
+- E, possivelmente, outros problemas.
+-
+ 
 ++ Recarregar Plugins ++[ReloadPlugins]
 Este item, uma vez activado, recarrega todos os plugins globais e módulos de aplicação, sem reiniciar o NVDA, o que pode ser útil para programadores.
 
@@ -2425,7 +2443,12 @@ A série de linhas braille Brailliant BI e B da [HumanWare https://www.humanware
 Se as ligar via USB, usando o protocolo Humanware, deverá instalar previamente os drivers fornecidos pelo fabricante.
 Os drivers USB não serão necessários se utilizar o protocolo OpenBraille.
 
-O BrailleNote Touch também é suportado, não necessitando de drivers para ser utilizado.
+Os seguintes dispositivos são também suportados, não necessitando de drivers para serem utilizados.
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
+
 
 Seguem-se as associações de teclas para estas linhas braille com o NVDA.
 Por favor, consulte a documentação da sua linha braille para obter a descrição de onde estas teclas podem ser encontradas.
