@@ -4101,7 +4101,7 @@ class InputGesturesDialog(SettingsDialog):
 		def run():
 			try:
 				self._filter(token, filter)
-			except:  # noqa: E722
+			except Exception:
 				log.exception()
 		
 		threading.Thread(
@@ -4277,7 +4277,7 @@ class InputGesturesDialog(SettingsDialog):
 		inputCore.manager.userGestureMap.clear()
 		try:
 			inputCore.manager.userGestureMap.save()
-		except:  # noqa: E722
+		except Exception:
 			log.debugWarning("", exc_info=True)
 			# Translators: An error displayed when saving user defined input gestures fails.
 			gui.messageBox(
