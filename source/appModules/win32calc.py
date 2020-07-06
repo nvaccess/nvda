@@ -7,4 +7,4 @@
 """App module for Windows Calculator (desktop version) for Windows 10 LTSB (Long-Term Servicing Branch) and Server, only difference being executable name.
 """
 
-from calc import *
+from .calc import *

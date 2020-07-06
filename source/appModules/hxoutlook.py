@@ -4,4 +4,4 @@
 #See the file COPYING for more details.
 
 # An alias for hxmail appModule
-from hxmail import *
+from .hxmail import *

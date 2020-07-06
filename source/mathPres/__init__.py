@@ -12,6 +12,8 @@ using L{registerProvider}.
 """
 
 import re
+from typing import Optional
+
 from NVDAObjects.window import Window
 import controlTypes
 import api
@@ -29,16 +31,16 @@ class MathPresentationProvider(object):
 	def getSpeechForMathMl(self, mathMl):
 		"""Get speech output for specified MathML markup.
 		@param mathMl: The MathML markup.
-		@type mathMl: basestring
+		@type mathMl: str
 		@return: A speech sequence.
-		@rtype: list of unicode and/or L{speech.SpeechCommand}
+		@rtype: List[str, speech.SpeechCommand]
 		"""
 		raise NotImplementedError
 
 	def getBrailleForMathMl(self, mathMl):
 		"""Get braille output for specified MathML markup.
 		@param mathMl: The MathML markup.
-		@type mathMl: basestring
+		@type mathMl: str
 		@return: A string of Unicode braille.
 		@rtype: unicode
 		"""
@@ -50,9 +52,11 @@ class MathPresentationProvider(object):
 		"""
 		raise NotImplementedError
 
-speechProvider = None
-brailleProvider = None
-interactionProvider = None
+
+speechProvider: Optional[MathPresentationProvider] = None
+brailleProvider: Optional[MathPresentationProvider] = None
+interactionProvider: Optional[MathPresentationProvider] = None
+
 
 def registerProvider(provider, speech=False, braille=False, interaction=False):
 	"""Register a math presentation provider.
@@ -136,7 +140,7 @@ def getMathMlFromTextInfo(pos):
 	@param pos: The TextInfo in question.
 	@type pos: L{textInfos.TextInfo}
 	@return: The MathML or C{None} if there is no math.
-	@rtype: basestring
+	@rtype: str
 	"""
 	pos = pos.copy()
 	pos.expand(textInfos.UNIT_CHARACTER)
@@ -172,7 +176,7 @@ RE_MATH_LANG = re.compile(r"""<math.*? xml:lang=["']([^"']+)["'].*?>""")
 def getLanguageFromMath(mathMl):
 	"""Get the language specified in a math tag.
 	@return: The language or C{None} if unspeicifed.
-	@rtype: basestring
+	@rtype: str
 	"""
 	m = RE_MATH_LANG.search(mathMl)
 	if m:

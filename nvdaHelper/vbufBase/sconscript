@@ -1,6 +1,5 @@
 Import([
 	'env',
-	'remoteLib',
 ])
 
 vbufBaseObjs=[env.Object(x) for x in (
@@ -8,6 +7,5 @@ vbufBaseObjs=[env.Object(x) for x in (
 		"utils.cpp",
 		"backend.cpp",
 )]
-vbufBaseObjs.append(remoteLib[2])
 
 Return('vbufBaseObjs')

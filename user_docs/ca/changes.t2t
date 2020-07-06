@@ -715,7 +715,7 @@ Ara, les ordres de la navegació d'objectes (excepte l'informe de l'ordre de l'o
 - És suportat tant per NVDA com pels seus complements.
 - xgettext i msgfmt del GNU gettext s'han d'utilitzar per crear qualsevol fitxer PO i MO. Les eines Phyton no suporten els missatges contextuals.
 - For xgettext, pass the --keyword=pgettext:1c,2 command line argument to enable inclusion of message contexts.
-- Vegeu http://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts per saber-ne més.
+- Vegeu https://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts per saber-ne més.
 - Ara és possible accedir als mòduls incorporats al NVDA quan aquests s'han anul·lat per tercers mòduls. Vegeu el mòdul nvdaBuiltin per saber-ne més.
 - El complement de suport a la traducció es pot utilitzar amb el mòdul installTasks. (#2715)
 
@@ -1430,7 +1430,7 @@ Els aspectes més destacats d'aquesta versió inclouen suport per a edicions de 
 - El retrocés es manega ara correctament quan es parlen paraules escrites.  (#306)
 - Ja no es reporta incorrectament el "Menú Inici" en determinats contextos del explorador de Windows / interfície de Windows. (#257)
 - NVDA manega ara correctament les etiquetes ARIA al Mozilla Gecko quan no hi ha cap altre contingut útil. (#156)
-- NVDA ja no habilita de  forma incorrecta el mode focus per a camps de text editable, els quals actualitzen el seu valor quan el focus canvia; per exemple http://tigerdirect.com/. (#220)
+- NVDA ja no habilita de  forma incorrecta el mode focus per a camps de text editable, els quals actualitzen el seu valor quan el focus canvia; per exemple https://tigerdirect.com/. (#220)
 - NVDA intenta ara recuperar-se d'algunes situacions que abans el feien aturar-se completament. NVDA pot trigar més de 10 segons a detectar i recuperar-se d'una aturada. 
 - Quan l'idioma NVDA està en "Usuari per defecte", cal usar la configuració d'idioma de pantalla de l'usuari de Windows, enlloc de la configuració local de Windows. (#353)
 - NVDA reconeix ara l'existència de controls en AIM 7.
@@ -1687,7 +1687,7 @@ Els aspectes més destacats d'aquesta versió inclouen suport per a edicions de 
 = 0,5 =
 - NVDA té ara un sintetitzador incorporat anomenat eSpeak, desenvolupat per Jonathan Duddington. Es molt sensible, ocupa poc espai i ofereix suport per a diferents llenguatges. Es poden fer servir encara els sintetitzadors Sapi però es farà servir per defecte eSpeak. 
 - eSpeak no depèn de cap software en especial per a la seva instal·lació, de forma que pot ser usat conjuntament amb NVDA en qualsevol ordinador, en una unitat flaix USB o en qualsevol altre dispositiu.  . 
-- Per més informació sobre eSpeak, o per localitzar altres versions aneu a http://espeak.sourceforge.net/.
+- Per més informació sobre eSpeak, o per localitzar altres versions aneu a https://espeak.sourceforge.net/.
 - Corregit un error segons el qual s'anunciava un caràcter erroni quan es premia suprimir en els panells editables de Internet Explorer / Outlook Express.
 - S'ha afegit suport per més camps editables a l'Skype.
 - Els VirtualBuffers només es carreguen quan el focus és sobre la finestra que necessita ser carregada. Això soluciona alguns problemes que s'esdevenien quan el panell de previsualització s'activava en Outlook Express.

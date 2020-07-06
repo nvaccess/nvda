@@ -1,13 +1,15 @@
-#mathType.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2014 NV Access Limited
+# -*- coding: UTF-8 -*-
+# mathType.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2014-2020 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
 
 """Utilities for working with MathType.
 """
 
-import _winreg as winreg
+import winreg
 import ctypes
 import mathPres
 
@@ -34,4 +36,6 @@ def getMathMl(oleFormat, runForConversion=True):
 	finally:
 		# 1 is OLECLOSE_NOSAVE
 		lib.MTCloseOleObject(1, mt)
-	return mathPres.stripExtraneousXml(mathMl.value)
+	return mathPres.stripExtraneousXml(
+		mathMl.value.decode('utf8')
+	)

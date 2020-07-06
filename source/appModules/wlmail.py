@@ -10,7 +10,7 @@ import api
 import winUser
 from keyboardHandler import KeyboardInputGesture
 from NVDAObjects.IAccessible.MSHTML import MSHTML
-import msimn 
+from . import msimn 
 
 class AboutBlankDocument(MSHTML):
 	"""A document called about:blank which hosts the HTML message composer document using viewlink.

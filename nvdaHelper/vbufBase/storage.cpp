@@ -30,18 +30,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
-VBufStorage_textContainer_t::VBufStorage_textContainer_t(wstring str): wstring(str) {}
-
-VBufStorage_textContainer_t::~VBufStorage_textContainer_t() {}
-
-const wstring& VBufStorage_textContainer_t::getString() {
-	return *this;
-}
-
-void VBufStorage_textContainer_t::destroy() {
-	delete this;
-}
-
 //controlFieldNodeIdentifier implementation
 
 VBufStorage_controlFieldNodeIdentifier_t::VBufStorage_controlFieldNodeIdentifier_t(int docHandleArg, int IDArg) : docHandle(docHandleArg), ID(IDArg) {
@@ -134,7 +122,12 @@ VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::nextNodeInTree(int direction, 
 	return tempNode;
 }
 
-inline void outputEscapedAttribute(wostringstream& out, const wstring& text) {
+// @param out the stream to which the escaped attribute string should be written
+// @param text The attribute string to be escaped
+// @param maxLength the maximum length of the attribute string that should be copied. If maxLength is 0 or not specified, the entire string is copied.
+// @return the number of characters written to the output stream (before expansion / filtering). This number can be used to see if the string was truncated at all.
+inline size_t outputEscapedAttribute(wostringstream& out, const wstring& text, size_t maxLength=0) {
+	size_t count=0;
 	for (wstring::const_iterator it = text.begin(); it != text.end(); ++it) {
 		switch (*it) {
 			case L':':
@@ -144,10 +137,21 @@ inline void outputEscapedAttribute(wostringstream& out, const wstring& text) {
 			default:
 			out << *it;
 		}
+		count++;
+		if(maxLength>0) {
+			if(count==maxLength) {
+				break;
+			}
+		}
 	}
+	return count;
 }
 
 bool VBufStorage_fieldNode_t::matchAttributes(const std::vector<std::wstring>& attribs, const std::wregex& regexp) {
+	// The max length for a node attribute value when used in a regular expression for matching.
+	// regex_match throws regex_error (error_stack) In Firefox when a value is very large.
+	// Most values will be way under this limit, but for large ones such as name for example, as we only are checking whether it is not empty, then truncating is fine.
+	const size_t regexAttribValueLimit=100;
 	wostringstream regexpInput;
 	wstring parentPrefix=L"parent::";
 	for (vector<wstring>::const_iterator attribName = attribs.begin(); attribName != attribs.end(); ++attribName) {
@@ -160,18 +164,29 @@ bool VBufStorage_fieldNode_t::matchAttributes(const std::vector<std::wstring>& a
 		if(this->parent&&attribName->find(parentPrefix)==0) {
 			VBufStorage_attributeMap_t::const_iterator foundAttrib = this->parent->attributes.find(attribName->substr(parentPrefix.length()));
 			if (foundAttrib != this->parent->attributes.end()) {
-				outputEscapedAttribute(regexpInput, foundAttrib->second);
+				auto outLen=outputEscapedAttribute(regexpInput, foundAttrib->second,regexAttribValueLimit);
+				if(outLen<foundAttrib->second.length()) {
+					LOG_DEBUGWARNING(L"Truncated attribute "<<(*attribName));
+				}
 			}
 			regexpInput << L";";
 		} else { // not a parent attribute
 			VBufStorage_attributeMap_t::const_iterator foundAttrib = attributes.find(*attribName);
 			if (foundAttrib != attributes.end()) {
-				outputEscapedAttribute(regexpInput, foundAttrib->second);
+				auto outLen=outputEscapedAttribute(regexpInput, foundAttrib->second,regexAttribValueLimit);
+				if(outLen<foundAttrib->second.length()) {
+					LOG_DEBUGWARNING(L"Truncated attribute "<<(*attribName));
+				}
 			}
 			regexpInput << L";";
 		}
 	}
-	return regex_match(regexpInput.str(), regexp);
+	try {
+		return regex_match(regexpInput.str(), regexp);
+	} catch(const std::regex_error& e) {
+		LOG_DEBUGWARNING(L"regex_match threw "<<(e.what()));
+	}
+	return false;
 }
 
 int VBufStorage_fieldNode_t::calculateOffsetInTree() const {
@@ -292,7 +307,7 @@ void VBufStorage_fieldNode_t::disassociateFromBuffer(VBufStorage_buffer_t* buffe
 	LOG_DEBUG(L"Disassociating fieldNode from buffer");
 }
 
-VBufStorage_fieldNode_t::VBufStorage_fieldNode_t(int lengthArg, bool isBlockArg): parent(NULL), previous(NULL), next(NULL), firstChild(NULL), lastChild(NULL), length(lengthArg), isBlock(isBlockArg), isHidden(false), updateAncestor(NULL), attributes() {
+VBufStorage_fieldNode_t::VBufStorage_fieldNode_t(int lengthArg, bool isBlockArg): parent(NULL), previous(NULL), next(NULL), firstChild(NULL), lastChild(NULL), length(lengthArg), isBlock(isBlockArg), isHidden(false), attributes() {
 	LOG_DEBUG(L"field node initialization at "<<this<<L"length is "<<length);
 }
 
@@ -355,7 +370,7 @@ bool VBufStorage_controlFieldNode_t::getIdentifier(int* docHandle, int* ID) {
 
 std::wstring VBufStorage_controlFieldNode_t::getDebugInfo() const {
 	std::wostringstream s;
-	s<<L"control "<<this->VBufStorage_fieldNode_t::getDebugInfo()<<L", docHandle "<<identifier.docHandle<<L", ID is "<<identifier.ID;  
+	s<<L"control "<<this->VBufStorage_fieldNode_t::getDebugInfo()<<L", docHandle "<<identifier.docHandle<<L", ID is "<<identifier.ID<<L", requiresParentUpdate "<<requiresParentUpdate<<L", allowReuseInAncestorUpdate "<<allowReuseInAncestorUpdate<<L", denyReuseIfPreviousSiblingsChanged "<<denyReuseIfPreviousSiblingsChanged<<L", alwaysRerenderChildren "<<alwaysRerenderChildren;  
 	return s.str();
 }
 
@@ -547,6 +562,10 @@ VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufS
 		return NULL;
 	}
 	controlFieldNodesByIdentifier[controlFieldNode->identifier]=controlFieldNode;
+	// If the node's new parent requires descendants to always be rerendered, copy this etting to the node as well.
+	if(parent&&parent->alwaysRerenderDescendants) {
+		controlFieldNode->alwaysRerenderDescendants=true;
+	}
 	LOG_DEBUG(L"Added new controlFieldNode, returning node");
 	return controlFieldNode;
 }
@@ -579,6 +598,13 @@ VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage
 		delete textFieldNode;
 		return NULL;
 	}
+	if (needsStrip && subStart>0) {
+		// There are characters stripped from the start of the text.
+		// We save the number of these characters in an attribute, required for calculating offsets in IA2Text.
+		wostringstream s;
+		s << subStart;
+		textFieldNode->addAttribute(L"strippedCharsFromStart", s.str());
+	}
 	return textFieldNode;
 }
 
@@ -606,7 +632,7 @@ bool VBufStorage_buffer_t::replaceSubtrees(map<VBufStorage_fieldNode_t*,VBufStor
 	VBufStorage_fieldNode_t* previous=NULL;
 	//Using the current selection start, record a list of ancestor fields by their identifier, 
 	//and a relative offset of the selection start to those fields, so that the selection can be corrected after the replacement.
-	list<pair<VBufStorage_controlFieldNodeIdentifier_t,int>> identifierList;
+	VBufStorage_relativeSelection_t identifierList;
 	if(this->getTextLength()>0) {
 		int controlDocHandle, controlID, controlNodeStart, controlNodeEnd;
 		parent=this->locateControlFieldNodeAtOffset(this->selectionStart,&controlNodeStart,&controlNodeEnd,&controlDocHandle,&controlID);
@@ -616,9 +642,25 @@ bool VBufStorage_buffer_t::replaceSubtrees(map<VBufStorage_fieldNode_t*,VBufStor
 			for(previous=parent->previous;previous!=NULL;relativeSelectionStart+=previous->length,previous=previous->previous);
 		}
 	}
+	// For each buffer in the map,
+	// Reverse iterate over all reference nodes, replacing them with the existing nodes in the original buffer they point to.
+	// We must iterate in reverse as new nodes are always inserted using parent and previous as the location,
+	// iterating forward would cause a future reference node's previous to be come invalid as it had been replaced. 
+	for(auto subtreeEntryIter=m.cbegin();subtreeEntryIter!=m.cend();++subtreeEntryIter) {
+		auto node=subtreeEntryIter->first;
+		auto buffer=subtreeEntryIter->second;
+		for(auto referenceNodeIter=buffer->referenceNodes.rbegin();referenceNodeIter!=buffer->referenceNodes.rend();++referenceNodeIter) {
+			auto parent=(*referenceNodeIter)->parent;
+			auto previous=(*referenceNodeIter)->previous;
+			auto referenced=(*referenceNodeIter)->referenceNode;
+			buffer->removeFieldNode(*referenceNodeIter);
+			this->unlinkFieldNode(referenced);
+			buffer->insertNode(parent,previous,referenced);
+		}
+	}
 	//For each node in the map,
 	//Replace the node on this buffer, with the content of the buffer in the map for that node
-	//Note that controlField info will automatically be removed, but not added again
+	//Note that controlField info will automatically be removed, but not added again.
 	bool failedBuffers=false;
 	for(map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>::iterator i=m.begin();i!=m.end();) {
 		VBufStorage_fieldNode_t* node=i->first;
@@ -635,6 +677,12 @@ bool VBufStorage_buffer_t::replaceSubtrees(map<VBufStorage_fieldNode_t*,VBufStor
 			LOG_DEBUGWARNING(L"Error removing node. Skipping");
 			failedBuffers=true;
 			buffer->clearBuffer();
+			delete buffer;
+			m.erase(i++);
+			continue;
+		}
+		if(!buffer->rootNode) {
+			LOG_DEBUGWARNING(L"Empty temp buffer");
 			delete buffer;
 			m.erase(i++);
 			continue;
@@ -656,7 +704,7 @@ bool VBufStorage_buffer_t::replaceSubtrees(map<VBufStorage_fieldNode_t*,VBufStor
 	//Update the controlField info on this buffer using all the buffers in the map
 	//We do this all in one go instead of for each replacement in case there are issues with ordering
 	//e.g. an identifier appears in one place before its removed in another
-	for(map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>::iterator i=m.begin();i!=m.end();++i) {
+	for(auto i=m.begin();i!=m.end();++i) {
 		VBufStorage_buffer_t* buffer=i->second;
 		int failedIDs=0;
 		for(map<VBufStorage_controlFieldNodeIdentifier_t,VBufStorage_controlFieldNode_t*>::iterator j=buffer->controlFieldNodesByIdentifier.begin();j!=buffer->controlFieldNodesByIdentifier.end();++j) {
@@ -703,13 +751,13 @@ bool VBufStorage_buffer_t::replaceSubtrees(map<VBufStorage_fieldNode_t*,VBufStor
 	return !failedBuffers;
 }
 
-bool VBufStorage_buffer_t::removeFieldNode(VBufStorage_fieldNode_t* node,bool removeDescendants) {
+bool VBufStorage_buffer_t::unlinkFieldNode(VBufStorage_fieldNode_t* node, bool removeDescendants) {
 	if(!isNodeInBuffer(node)) {
 		LOG_DEBUGWARNING(L"Node at "<<node<<L" is not in buffer at "<<this<<L". Returnning false");
 		return false;
 	}
 	if(node==this->rootNode&&!removeDescendants) {
-		LOG_DEBUGWARNING(L"Cannot remove the rootNode without removing its descedants. Returnning false");
+		LOG_DEBUGWARNING(L"Cannot remove the rootNode without removing its descendants. Returnning false");
 		return false;
 	}
 	if((removeDescendants||!node->firstChild)&&node->length>0) {
@@ -736,16 +784,25 @@ bool VBufStorage_buffer_t::removeFieldNode(VBufStorage_fieldNode_t* node,bool re
 		for(VBufStorage_fieldNode_t* child=node->firstChild;child!=NULL;child=child->next) child->parent=node->parent;
 		if(node->firstChild) node->firstChild->previous=node->previous;
 		if(node->lastChild) node->lastChild->next=node->next;
-		deleteNode(node);
-	} else {
-		LOG_DEBUG(L"Deleting subtree");
-		deleteSubtree(node);
 	}
 	if(node==this->rootNode) {
 		LOG_DEBUG(L"Removing root node from buffer ");
 		this->rootNode=NULL;
 	}
 	LOG_DEBUG(L"Removed fieldNode and descendants, returning true");
+	return true;
+}
+
+bool VBufStorage_buffer_t::removeFieldNode(VBufStorage_fieldNode_t* node,bool removeDescendants) {
+	if(!unlinkFieldNode(node,removeDescendants)) {
+		LOG_DEBUGWARNING(L"Could not unlink field node");
+		return false;
+	}
+	if(removeDescendants) {
+		deleteSubtree(node);
+	} else {
+		deleteNode(node);
+	}
 	return true;
 }
 
@@ -887,19 +944,18 @@ int VBufStorage_buffer_t::getTextLength() const {
 	return length;
 }
 
-VBufStorage_textContainer_t*  VBufStorage_buffer_t::getTextInRange(int startOffset, int endOffset, bool useMarkup) {
+bool VBufStorage_buffer_t::getTextInRange(int startOffset, int endOffset, wstring& text, bool useMarkup) {
 	if(this->rootNode==NULL) {
 		LOG_DEBUGWARNING(L"buffer is empty, returning NULL");
-		return NULL;
+		return false;
 	}
 	if(startOffset<0||startOffset>=endOffset||endOffset>this->rootNode->length) {
 		LOG_DEBUGWARNING(L"Bad offsets of "<<startOffset<<L" and "<<endOffset<<L", returning NULL");
-		return NULL;
+		return false;
 	}
-	wstring text;
 	this->rootNode->getTextInRange(startOffset,endOffset,text,useMarkup);
 	LOG_DEBUG(L"Got text between offsets "<<startOffset<<L" and "<<endOffset<<L", returning true");
-	return new VBufStorage_textContainer_t(text);
+	return true;
 }
 
 VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, VBufStorage_findDirection_t direction, const std::wstring& attribs, const std::wstring &regexp, int *startOffset, int *endOffset) {
@@ -1157,6 +1213,17 @@ bool VBufStorage_buffer_t::isDescendantNode(VBufStorage_fieldNode_t* parent, VBu
 
 bool VBufStorage_buffer_t::isNodeInBuffer(VBufStorage_fieldNode_t* node) {
 	return this->nodes.count(node)?true:false;
+}
+
+VBufStorage_referenceNode_t*  VBufStorage_buffer_t::addReferenceNodeToBuffer(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_controlFieldNode_t* node) {
+	if(!node) return nullptr;
+	auto referenceNode=new VBufStorage_referenceNode_t(node->identifier.docHandle,node->identifier.ID,node);
+	if(!addControlFieldNode(parent,previous,referenceNode)) {
+		delete referenceNode;
+		return nullptr;
+	}
+	referenceNodes.push_back(referenceNode);
+	return referenceNode;
 }
 
 std::wstring VBufStorage_buffer_t::getDebugInfo() const {

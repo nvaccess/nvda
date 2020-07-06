@@ -3,9 +3,12 @@
 
 import sys
 import os
-sys.path.append(os.path.abspath(
-	os.path.join(__file__, "..", "source")))
-import sourceEnv
-del sys.path[-1]
-import SCons.Script
-SCons.Script.main()
+
+sconsPath = os.path.abspath(os.path.join(os.path.dirname(__file__), "include", "scons", "src", "engine"))
+
+if os.path.exists(sconsPath):
+	sys.path.append(sconsPath)
+	import SCons.Script
+	SCons.Script.main()
+else:
+	raise OSError("Path %s does not exist. Perhaps try running git submodule update --init" % sconsPath)

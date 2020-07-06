@@ -15,7 +15,7 @@ import speech
 import controlTypes
 import textInfos
 import eventHandler
-
+import scriptHandler
 from . import IAccessible
 from displayModel import EditableTextDisplayModelTextInfo
 from NVDAObjects.window import DisplayModelEditableText
@@ -63,7 +63,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 	def populateHeaderCellTrackerFromHeaderRows(self,headerCellTracker,table):
 		rows=table.rows
 		numHeaderRows=0
-		for rowIndex in xrange(rows.count): 
+		for rowIndex in range(rows.count): 
 			try:
 				row=rows.item(rowIndex+1)
 			except COMError:
@@ -175,7 +175,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		for info in headerCellTracker.iterPossibleHeaderCellInfosFor(rowNumber,columnNumber,columnHeader=columnHeader):
 			textList=[]
 			if columnHeader:
-				for headerRowNumber in xrange(info.rowNumber,info.rowNumber+info.rowSpan): 
+				for headerRowNumber in range(info.rowNumber,info.rowNumber+info.rowSpan): 
 					tempColumnNumber=columnNumber
 					while tempColumnNumber>=1:
 						try:
@@ -186,7 +186,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 						break
 					textList.append(headerCell.range.text)
 			else:
-				for headerColumnNumber in xrange(info.columnNumber,info.columnNumber+info.colSpan): 
+				for headerColumnNumber in range(info.columnNumber,info.columnNumber+info.colSpan): 
 					tempRowNumber=rowNumber
 					while tempRowNumber>=1:
 						try:
@@ -281,9 +281,9 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 				commentReference=field.field.get('comment')
 				if commentReference:
 					offset=int(commentReference)
-					range=self.WinwordDocumentObject.range(offset,offset+1)
+					textRange=self.WinwordDocumentObject.range(offset, offset + 1)
 					try:
-						text=range.comments[1].range.text
+						text = textRange.comments[1].range.text
 					except COMError:
 						break
 					if text:
@@ -339,7 +339,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 			ui.message(_("Edge of table"))
 			return False
 		newInfo=WordDocumentTextInfo(self,textInfos.POSITION_CARET,_rangeObj=foundCell)
-		speech.speakTextInfo(newInfo,reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_PARAGRAPH)
+		speech.speakTextInfo(newInfo,reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_CELL)
 		newInfo.collapse()
 		newInfo.updateCaret()
 		return True
@@ -410,7 +410,7 @@ class SpellCheckErrorField(IAccessible,WordDocument_WwN):
 		inBold=False
 		textList=[]
 		for field in fields:
-			if isinstance(field,basestring):
+			if isinstance(field,str):
 				if inBold: textList.append(field)
 			elif field.field:
 				inBold=field.field.get('bold',False)
@@ -438,10 +438,16 @@ class SpellCheckErrorField(IAccessible,WordDocument_WwN):
 		return False
 
 class ProtectedDocumentPane(IAccessible):
-	"""The pane that gets focus in case a document opens in protected mode in word
+	"""
+	The pane that directly contains a Word document control.
+	This pane exists no matter if the document is protected or not, but specifically gets focus when a document is opened in protected mode, and therefore handles moving focus back to the actual document.
+	This class also suppresses this pane from being presented in the focus ancestry as it contains  redundant information.
 	This is mapped to the window class _WWB and role oleacc.ROLE_SYSTEM_CLIENT
 	"""
-	
+
+	# This object should not be presented in the focus ancestry as it is redundant.
+	isPresentableFocusAncestor=False
+
 	def event_gainFocus(self):
 		"""On gaining focus, simply set the focus on a child of type word document. 
 		This is just a container window.

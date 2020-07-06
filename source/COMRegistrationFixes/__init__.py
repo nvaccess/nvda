@@ -23,7 +23,7 @@ def registerServer(fileName,wow64=False):
 	"""
 	Registers the COM proxy dll with the given file name
 	Using regsvr32.
-	@ param fileName: the path to the dll
+	@param fileName: the path to the dll
 	@type fileName: str
 	@param wow64: If true then the 32 bit (wow64) version of regsvr32 will be used.
 	@type wow64: bool
@@ -40,7 +40,7 @@ def applyRegistryPatch(fileName,wow64=False):
 	"""
 	Applies the registry patch with the given file name
 	using regedit.
-	@ param fileName: the path to the dll
+	@param fileName: the path to the dll
 	@type fileName: str
 	"""
 	regedit=os.path.join(sysWow64 if wow64 else systemRoot,'regedit.exe')

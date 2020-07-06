@@ -1,8 +1,10 @@
-#appModules/winword.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# -*- coding: UTF-8 -*-
+# NVDAObjects/window/winword.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
 
 import ctypes
 import time
@@ -17,7 +19,7 @@ import colorsys
 import sayAllHandler
 import eventHandler
 import braille
-import scriptHandler
+from scriptHandler import script
 import languageHandler
 import ui
 import NVDAHelper
@@ -40,6 +42,7 @@ from tableUtils import HeaderCellInfo, HeaderCellTracker
 from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 from . import _msOfficeChart
+import locationHelper
 
 #Word constants
 
@@ -65,6 +68,7 @@ wdActiveEndAdjustedPageNumber=1
 wdActiveEndPageNumber=3
 wdNumberOfPagesInDocument=4
 wdHorizontalPositionRelativeToPage=5
+wdVerticalPositionRelativeToPage=6
 wdFirstCharacterLineNumber=10
 wdWithInTable=12
 wdStartOfRangeRowNumber=13
@@ -304,41 +308,43 @@ NVDAUnitsToWordUnits={
 	textInfos.UNIT_READINGCHUNK:wdSentence,
 }
 
-formatConfigFlagsMap={
-	"reportFontName":0x1,
-	"reportFontSize":0x2,
-	"reportFontAttributes":0x4,
-	"reportColor":0x8,
-	"reportAlignment":0x10,
-	"reportStyle":0x20,
-	"reportSpellingErrors":0x40,
-	"reportPage":0x80,
-	"reportLineNumber":0x100,
-	"reportTables":0x200,
-	"reportLists":0x400,
-	"reportLinks":0x800,
-	"reportComments":0x1000,
-	"reportHeadings":0x2000,
-	"autoLanguageSwitching":0x4000,
-	"reportRevisions":0x8000,
-	"reportParagraphIndentation":0x10000,
-	"reportLineSpacing":0x40000,
+formatConfigFlagsMap = {
+	"reportFontName": 0x1,
+	"reportFontSize": 0x2,
+	"reportFontAttributes": 0x4,
+	"reportColor": 0x8,
+	"reportAlignment": 0x10,
+	"reportStyle": 0x20,
+	"reportSpellingErrors": 0x40,
+	"reportPage": 0x80,
+	"reportLineNumber": 0x100,
+	"reportTables": 0x200,
+	"reportLists": 0x400,
+	"reportLinks": 0x800,
+	"reportComments": 0x1000,
+	"reportHeadings": 0x2000,
+	"autoLanguageSwitching": 0x4000,
+	"reportRevisions": 0x8000,
+	"reportParagraphIndentation": 0x10000,
+	"reportLineSpacing": 0x40000,
+	"reportSuperscriptsAndSubscripts": 0x80000,
+	"reportGraphics": 0x100000,
 }
-formatConfigFlag_includeLayoutTables=0x20000
+formatConfigFlag_includeLayoutTables = 0x20000
 
-# Map some characters from PUA to Unicode. Meant to be used with bullets only.
+# Map some characters from 0 to Unicode. Meant to be used with bullets only.
 # Doesn't care about the actual font, so can give incorrect Unicode in rare cases.
 mapPUAToUnicode = {
 	# from : to # fontname
-	u'\uF06E' : u'\u25A0', # Wingdings
-	u'\uF076' : u'\u2756', # Wingdings
-	u'\uF0A7' : u'\u2663', # Symbol
-	u'\uF0A8' : u'\u2666', # Symbol
-	u'\uF0B7' : u'\u2022', # Symbol
-	u'\uF0D8' : u'\u27A2', # Wingdings
-	u'\uF0E8' : u'\u21D2', # Wingdings
-	u'\uF0F0' : u'\u21E8', # Wingdings
-	u'\uF0FC' : u'\u2714', # Wingdings
+	u'\uF06E': u'\u25A0',  # Wingdings (black square)
+	u'\uF076': u'\u2756',  # Wingdings (black diamond minus white x
+	u'\uF0A7': u'\u25AA',  # Symbol (black small square)
+	u'\uF0A8': u'\u2666',  # Symbol (black diamond suit)
+	u'\uF0B7': u'\u2022',  # Symbol (bullet)
+	u'\uF0D8': u'\u2B9A',  # Wingdings (three-D top-lighted RIGHTWARDS equilateral arrowhead)
+	u'\uF0E8': u'\U0001f87a',  # Wingdings (wide-headed rightwards heavy barb arrow)
+	u'\uF0F0': u'\u21E8',  # Wingdings (right white arrow)
+	u'\uF0FC': u'\u2714',  # Wingdings (heavy check mark)
 }
 
 class WordDocumentHeadingQuickNavItem(browseMode.TextInfoQuickNavItem):
@@ -442,7 +448,8 @@ class WinWordCollectionQuicknavIterator(object):
 		"""
 		See L{QuickNavItemIterator} for itemType, document and direction definitions.
 		@param rangeObj: a Microsoft Word range object where the collection should be fetched from.
-		@ param includeCurrent: if true then any item at the initial position will be also emitted rather than just further ones. 
+		@param includeCurrent: if true then any item at the initial position will be also emitted
+			rather than just further ones.
 		"""
 		self.document=document
 		self.itemType=itemType
@@ -479,7 +486,7 @@ class WinWordCollectionQuicknavIterator(object):
 		items=self.collectionFromRange(self.rangeObj)
 		itemCount=items.count
 		isFirst=True
-		for index in xrange(1,itemCount+1):
+		for index in range(1,itemCount+1):
 			if self.direction=="previous":
 				index=itemCount-(index-1)
 			collectionItem=items[index]
@@ -511,7 +518,7 @@ class LinkWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 		if t == FIELD_TYPE_REF:
 			fieldText = item.code.text.strip().split(' ')
 			# ensure that the text has a \\h in it
-			return any( fieldText[i] == '\\h' for i in xrange(2, len(fieldText)) )
+			return any( fieldText[i] == '\\h' for i in range(2, len(fieldText)) )
 		return t == FIELD_TYPE_HYPERLINK
 
 
@@ -562,6 +569,25 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			unit=textInfos.UNIT_SENTENCE
 		return unit
 
+	def _get_locationText(self):
+		textList=[]
+		# #8994: MS Word can only give accurate distances (taking paragraph indenting into account) when directly querying the selection. 
+		r=self._rangeObj
+		s=self.obj.WinwordSelectionObject
+		if s.isEqual(r):
+			r=s
+		else:
+			return super(WordDocumentTextInfo,self).locationText
+		offset=r.information(wdHorizontalPositionRelativeToPage)
+		distance=self.obj.getLocalizedMeasurementTextForPointSize(offset)
+		# Translators: a distance from the left edge of the page in Microsoft Word
+		textList.append(_("{distance} from left edge of page").format(distance=distance))
+		offset=r.information(wdVerticalPositionRelativeToPage)
+		distance=self.obj.getLocalizedMeasurementTextForPointSize(offset)
+		# Translators: a distance from the left edge of the page in Microsoft Word
+		textList.append(_("{distance} from top edge of page").format(distance=distance))
+		return ", ".join(textList)
+
 	def copyToClipboard(self):
 		self._rangeObj.copy()
 		return True
@@ -595,7 +621,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			return
 		tempRange.expand(wdParagraph)
 		fields=tempRange.fields
-		for field in (fields.item(i) for i in xrange(1, fields.count+1)):
+		for field in (fields.item(i) for i in range(1, fields.count+1)):
 			if field.type != FIELD_TYPE_REF:
 				continue
 			fResult = field.result
@@ -610,7 +636,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			# text will be something like ' REF _Ref457210120 \\h '
 			fieldText = field.code.text.strip().split(' ')
 			# the \\h field indicates that the field is a link
-			if not any( fieldText[i] == '\\h' for i in xrange(2, len(fieldText)) ):
+			if not any( fieldText[i] == '\\h' for i in range(2, len(fieldText)) ):
 				log.debugWarning("no \\h for field xref: %s" % field.code.text)
 				continue
 			bookmarkKey = fieldText[1] # we want the _Ref12345 part
@@ -640,7 +666,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if _rangeObj:
 			self._rangeObj=_rangeObj.Duplicate
 			return
-		if isinstance(position,textInfos.Point):
+		if isinstance(position, locationHelper.Point):
 			try:
 				self._rangeObj=self.obj.WinwordDocumentObject.activeWindow.RangeFromPoint(position.x,position.y)
 			except COMError:
@@ -680,7 +706,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		startOffset=self._rangeObj.start
 		endOffset=self._rangeObj.end
 		text=BSTR()
-		formatConfigFlags=sum(y for x,y in formatConfigFlagsMap.iteritems() if formatConfig.get(x,False))
+		# #9067: format config flags map is a dictionary.
+		formatConfigFlags=sum(y for x,y in formatConfigFlagsMap.items() if formatConfig.get(x,False))
 		if self.shouldIncludeLayoutTables:
 			formatConfigFlags+=formatConfigFlag_includeLayoutTables
 		if self.obj.ignoreEditorRevisions:
@@ -699,7 +726,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 					item.field=self._normalizeControlField(field)
 				elif isinstance(field,textInfos.FormatField):
 					item.field=self._normalizeFormatField(field,extraDetail=extraDetail)
-			elif index>0 and isinstance(item,basestring) and item.isspace():
+			elif index>0 and isinstance(item,str) and item.isspace():
 				 #2047: don't expose language for whitespace as its incorrect for east-asian languages 
 				lastItem=commandList[index-1]
 				if isinstance(lastItem,textInfos.FieldCommand) and isinstance(lastItem.field,textInfos.FormatField):
@@ -906,12 +933,13 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if end:
 			oldEndOffset=self._rangeObj.end
 		self._rangeObj.collapse(wdCollapseEnd if end else wdCollapseStart)
-		newEndOffset = self._rangeObj.end
-		# the new endOffset should not have become smaller than the old endOffset, this could cause an infinite loop in
-		# a case where you called move end then collapse until the size of the range is no longer being reduced.
-		# For an example of this see sayAll (specifically readTextHelper_generator in sayAllHandler.py)
-		if end and newEndOffset < oldEndOffset :
-			raise RuntimeError
+		if end:
+			newEndOffset = self._rangeObj.end
+			# the new endOffset should not have become smaller than the old endOffset, this could cause an infinite loop in
+			# a case where you called move end then collapse until the size of the range is no longer being reduced.
+			# For an example of this see sayAll (specifically readTextHelper_generator in sayAllHandler.py)
+			if newEndOffset < oldEndOffset :
+				raise RuntimeError
 
 	def copy(self):
 		return WordDocumentTextInfo(self.obj,None,_rangeObj=self._rangeObj)
@@ -985,6 +1013,19 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	def _get_bookmark(self):
 		return textInfos.offsets.Offsets(self._rangeObj.Start,self._rangeObj.End)
 
+	def _get_pointAtStart(self):
+		left = ctypes.c_int()
+		top = ctypes.c_int()
+		width = ctypes.c_int()
+		height = ctypes.c_int()
+		try:
+			self.obj.WinwordWindowObject.GetPoint(ctypes.byref(left), ctypes.byref(top), ctypes.byref(width), ctypes.byref(height), self._rangeObj)
+		except COMError:
+			raise LookupError
+		if not any((left.value, top.value, width.value, height.value)):
+			raise LookupError
+		return locationHelper.Point(left.value, top.value)
+
 	def updateCaret(self):
 		self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj)
 		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.Start)
@@ -998,12 +1039,13 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			import mathType
 		except:
 			raise LookupError("MathType not installed")
-		range = self._rangeObj.Duplicate
-		range.Start = int(field["shapeoffset"])
-		obj = range.InlineShapes[0].OLEFormat
+		rangeObj = self._rangeObj.Duplicate
+		rangeObj.Start = int(field["shapeoffset"])
+		obj = rangeObj.InlineShapes[0].OLEFormat
 		try:
 			return mathType.getMathMl(obj)
 		except:
+			log.debugWarning("Error fetching math with mathType", exc_info=True)
 			raise LookupError("Couldn't get MathML from MathType")
 
 class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
@@ -1324,6 +1366,44 @@ class WordDocument(Window):
 		# Translators: a message when increasing or decreasing font size in Microsoft Word
 		ui.message(_("{size:g} point font").format(size=val))
 
+	def script_toggleChangeTracking(self, gesture):
+		if not self.WinwordDocumentObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the status change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or it's within Windows Defender Application Guard.
+			# In this case, just let the gesture through and don't report anything.
+			return gesture.send()
+		val = self._WaitForValueChangeForAction(
+			lambda: gesture.send(),
+			lambda: self.WinwordDocumentObject.TrackRevisions
+		)
+		if val:
+			# Translators: a message when toggling change tracking in Microsoft word
+			ui.message(_("Change tracking on"))
+		else:
+			# Translators: a message when toggling change tracking in Microsoft word
+			ui.message(_("Change tracking off"))
+
+	@script(gesture="kb:control+shift+8")
+	def script_toggleDisplayNonprintingCharacters(self, gesture):
+		if not self.WinwordWindowObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the status change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or it's within Windows Defender Application Guard.
+			# In this case, just let the gesture through and don't report anything.
+			return gesture.send()
+		val = self._WaitForValueChangeForAction(
+			lambda: gesture.send(),
+			lambda: self.WinwordWindowObject.ActivePane.View.ShowAll
+		)
+		if val:
+			# Translators: a message when toggling Display Nonprinting Characters in Microsoft word
+			ui.message(_("Display nonprinting characters"))
+		else:
+			# Translators: a message when toggling Display Nonprinting Characters in Microsoft word
+			ui.message(_("Hide nonprinting characters"))
+
+	@script(gestures=["kb:tab", "kb:shift+tab"])
 	def script_tab(self,gesture):
 		"""
 		A script for the tab key which:
@@ -1396,6 +1476,13 @@ class WordDocument(Window):
 			# Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 			ui.message(_("1.5 line spacing"))
 
+	def initOverlayClass(self):
+		if isinstance(self, EditableTextWithoutAutoSelectDetection):
+			self.bindGesture("kb:alt+shift+home", "caret_changeSelection")
+			self.bindGesture("kb:alt+shift+end", "caret_changeSelection")
+			self.bindGesture("kb:alt+shift+pageUp", "caret_changeSelection",)
+			self.bindGesture("kb:alt+shift+pageDown", "caret_changeSelection",)
+
 	__gestures = {
 		"kb:control+[":"increaseDecreaseFontSize",
 		"kb:control+]":"increaseDecreaseFontSize",
@@ -1421,12 +1508,7 @@ class WordDocument(Window):
 		"kb:control+1":"changeLineSpacing",
 		"kb:control+2":"changeLineSpacing",
 		"kb:control+5":"changeLineSpacing",
-		"kb:tab": "tab",
-		"kb:shift+tab": "tab",
-		"kb:alt+shift+home":"caret_changeSelection",
-		"kb:alt+shift+end":"caret_changeSelection",
-		"kb:alt+shift+pageUp":"caret_changeSelection",
-		"kb:alt+shift+pageDown":"caret_changeSelection",
+		"kb:control+shift+e": "toggleChangeTracking",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 	}

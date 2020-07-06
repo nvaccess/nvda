@@ -1,24 +1,36 @@
 Nyheder i NVDA
 
 
+
 %!includeconf: ../changes.t2tconf
 
-= 2018.3 =
+= 2020.1 =
+Af væsentlige ændringer i denne udgave af NVDA kan nævnes understøttelse af nogle punktdisplays fra HumanWare og APH, samt mange andre vigtige fejlrettelser som den tilbagevendende evne til at læse matematisk indhold i Microsoft Word ved brug af MathPlayer/MathType.
 
-== Nye Funktioner ==
-- NVDA kan nu rapportere grammatikfejl på websider, når dette er passende angivet i Mozilla Firefox. (#8280)
-- Tilføjede understøttelse for BrailleNote QT og Apex BTs rullehjul, når BrailleNote benyttes som punktdisplay. (#6316)
-- Tilføjede scripts til rapportering af den forløbne tid af et spor, samt den aktuelle længde af sporet i Foobar2000. (#6596)
+== Nye funktioner ==
+- Det aktuelt valgte emne i listbokse vises nu i gennemsynstilstand i Google Chrome, lignende fremgangsmåden i NVDA 2019.1. (#10713)
+- Du kan nu udføre et højre klik på touch-enheder ved at trykke med en finger og holde nede. (#3886)
+- Understøttelse for nye punktdisplays: APH Chameleon 20, APH Mantis Q40, HumanWare BrailleOne, BrailleNote Touch v2, og NLS eReader. (#10830)
 
 
 == Ændringer ==
-- Listen over tilgængelige sprog i den generelle indstillingskategori sorteres nu efter navn på de pågældende sprog i stedet for ISO 639. (#7284)
-- Tilføjede standarddefineret inputbevægelse for ALT+Skift+Tab og Windows+Tab for alle Freedom Scientific punktdisplays. (#7387)
-- Brugeren bliver nu spurgt en gang når NVDA starter, om der ønskes at der indsendes brugsstatistikker til NV Access, når der søges efter opdateringer. (#8217)
-- Hvis brugeren har erklæret sig enig i indsendelsen af brugsstatistikker til NV Access under søgningen efter opdateringer, vil NVDA nu sende navnet på den aktuelle driver der benyttes som talesyntese og til punktskrift. Dette vil hjælpe med at prioritere fremtidigt arbejde på disse drivere. (#8217)
+- NVDA vil forhindre systemet i at låse eller slumre, når funktionen "sig alt" er aktiv. (#10643)
+- Understøttelse for iframes in Mozilla Firefox, der ikke håndteres af den oprindelig proces der gengiver indholdet. (#10707)
+- Opdaterede LibLouis punktoversættelse til version 3.12. (#10161)
 
 
 == Fejlrettelser ==
+- NVDA annoncérer nu korrekt Unicode minus symbol (U+2212). (#10633)
+- Når du installerer tilføjelser ved hjælp af dialogen til styring af tilføjelser, vil navne og filmapper ikke længere annoncéres to gange, når du leder efter filen ved brug af knappen "Installér". (#10620, #2395)
+- Når du indlæser Mastodon med det avancerede webinterface, vil alle tidslinjer nu gengives korrekt, når du bruger Mozilla Firefox. (#10776)
+- NVDA vil nu korrekt rapportere "ikke markeret" for nogle check boxe, hvor dette ikke før var tilfældet i gennemsynstilstand. (#10781)
+- ARIA-skifteknapper rapporterer ikke længere forvirrende information, såsom "ikke trykket markeret" eller "trykket markeret". (#9187)
+- SAPI4-stemmer skulle nu udtale al tekst. (#10792)
+- NVDA kan nu igen læse og interagere med matematiske udtryk i Microsoft Word. (#10803)
+- NVDA vil nu igen annoncére, hvis tekst ikke længere er valgt, når du har valgt tekst og derefter bruger piletasterne i gennemsynstilstand. (#10731).
+- NVDA vil ikke længere afslutte, hvis der er en fejl under initialisering af eSpeak. (#10607)
+- Fejl forårsaget af Unicode-tegn i tastaturgenveje, der er en del af installationsprocessen, vil ikke længere forhindre installationen. Løst ved at benytte den engelske tekst i disse tilfælde. (#5166, #6326)
+- Konstante meddelelser om at du har navigeret ind i eller forladt en liste eller tabel vil ikke længere opstå under skimlæsning, når du bruger kommandoen "Sig alt". (#10706)
 
 
 == Ændringer for udviklere ==

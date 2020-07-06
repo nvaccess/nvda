@@ -3,165 +3,190 @@
 #Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<![^\d -])\.(?=\d)
+in-word '	(?<=[^\W_])['’]
++negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
+
 symbols:
-# identifier	replacement[[
+# identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	chấm
-! sentence ending	chấm than
-? sentence ending	chấm hỏi
-; phrase ending	chấm phẩy
-: phrase ending	hai chấm
-in-word '	nháy đơn
-negative number	âm
+. sentence ending	chấm	all	always
+! sentence ending	chấm than	all	always
+? sentence ending	chấm hỏi	all	always
+; phrase ending	chấm phẩy	most	always
+: phrase ending	hai chấm	most	always
+decimal point		none	always
+in-word '	nháy đơn	all	norep
+negative number	âm	none	norep
 
 # Whitespace
-\0	dòng trắng	# null
+\0	dòng trắng	char	# null
 \t	táp
-\n	xuống dòng
-\f	hết trang
-\r	cuối dòng
- 	khoảng trắng
- 	khoảng trắng	# no-break space
+\n	xuống dòng	char
+\f	ngắt trang	none
+\r	xuống dòng	char
+ 	khoảng trắng	char
+ 	khoảng trắng	char	# no-break space
 
 # Standard punctuation/symbols
-!	chấm than
-"	ngoặc kép
-\#	báo số
-$	đô la
-£	đồng bảng
-€	u rô
-¢	Xen
-¥	Yên
-₹	Ru Bi Ấn
-%	phần trăm
-&	và
-'	nháy đơn
-(	mở ngoặc tròn
-)	đóng ngoặc tròn
-*	sao
-+	cộng
-,	phẩy
--	gạch ngang
-.	chấm
-/	gạch chéo
-:	hai chấm
-;	chấm phẩy
-<	nhỏ hơn
->	lớn hơn
-=	bằng
-?	chấm hỏi
-@	a còng
-[	Mở ngoặc vuông
-]	Đóng ngoặc vuông
-\\	chéo ngược
-^	dấu mũ
-_	gạch dưới
-`	dấu huyền
-{	Mở ngoặc móc
-}	Đóng ngoặc móc
-|	gạch đứng
-~	dấu ngã
+!	chấm than	all
+"	ngoặc kép	most
+\#	báo số	some
+$	đô la	all	norep
+£	bảng	all	norep
+€	ơ rô	all	norep
+¢	Xen	all	norep
+¥	Yên	all	norep
+₹	Ru pi	some	norep
+%	phần trăm	some
+&	và	some
+'	nháy đơn	all
+(	mở ngoặc tròn	most	always
+)	đóng ngoặc tròn	most	always
+*	sao	some
++	cộng	some
+−	trừ	some
+,	phẩy	all	always
+-	gạch ngang	most
+.	chấm	some
+/	trên	some
+:	hai chấm	most	norep
+;	chấm phẩy	most
+<	nhỏ hơn	some
+>	lớn hơn	some
+=	bằng	some
+?	chấm hỏi	all
+@	a móc	some
+[	mở ngoặc vuông	most
+]	đóng ngoặc vuông	most
+\\	chéo ngược	most
+^	mũ	most
+_	gạch dưới	most
+`	huyền	most
+{	mở ngoặc nhọn	most
+}	đóng ngoặc nhọn	most
+|	gạch đứng	most
+~	ngã	most
 
 # Other characters
-•	bun lét
-…	ba chấm
-...	ba chấm
-	bun lét
-“	mở ngoặc kép
-”	đóng ngoặc kép
-‘	nháy đơn trái
-’	nháy đơn phải
-–	gạch ngang
-—	gạch nối
-●	bun lét tròn
-¨	dấu tách đôi
-‎	dấu trái qua phải
-‏	dấu phải qua trái
-■	dấu vuông đen
-▪	dấu vuông đen
-◾	dấu vuông đen
-◦	bun lét ho lô
-➔	mũi tên phải
-§	phần
-°	độ
+•	bu lét	some
+…	ba chấm	all	always
+...	ba chấm	all	always
+“	mở ngoặc kép	most
+”	đóng ngoặc kép	most
+‘	mở ngoặc đơn	most
+’	đóng ngoặc đơn	most
+–	gạch ngang	most	always
+—	gạch nối	most
+●	bu lét tròn	most
+¨	tách đôi	most
+‎	dấu trái qua phải	char
+‏	dấu phải qua trái	char
+■	vuông đen	some
+▪	vuông đen	some
+◾	vuông đen	some
+◦	bu lét trắng	some
+⇒	mũi tên phải	some
+⇨	mũi tên phải	some
+➢	mũi tên phải	some
+⮚	mũi tên phải	some
+❖	black diamond minus white X	some
+♣	black club	some
+♦	black diamond	some
+§	phần	all
+°	độ	some
 «	mở ngoặc vuông kép
-»	đóng ngoặc vuông kép
-µ	mai rô
-¹	số một in trên
-²	số hai in trên
-³	số ba in trên
-®	đã được đăng ký
-™	Thương hiệu
-©	bản quyền
-±	cộng hoặc trừ
-×	lần
-÷	chia cho
-←	mũi tên trái
-↑	mũi tên lên
-→	mũi tên phải
-↓	mũi tên xuống
-✓	dấu kiểm
-✔	dấu kiểm
+đóng ngoặc vuông kép	double right pointing angle bracket
+µ	micro	some
+¹	superscript 1	some
+²	superscript 2	some
+³	superscript 3	some
+®	đã đăng kí	some
+™	Thương hiệu	some
+©	CopyrightBản quyền	some
+±	cộng hoặc trừ	some
+×	lần	some
+÷	chia cho	some
+←	mũi tên trái	some
+↑	mũi tên lên	some
+→	mũi tên phải	some
+↓	mũi tên xuống	some
+✓	dấu kiểm	some
+✔	dấu kiểm	some
+🡺	mũi tên phải	some
 
 #Mathematical Operators U+2200 to U+220F
-∀	cho tất cả 
-∁	Bù
-∂	Đạo hàm cục bộ
-∃	có tồn
-∄	Không có tồn
-∅	tập rỗng
-∆	số gia
-∇	NABLA
-∈	Thuộc
-∉	Không thuộc
-∊	phần tử thuộc
-∋	Tập hợp con của
-∌	Không phải tập hợp con của
-∍	Tập hợp con nhỏ của
-∎	kết quả của sự chứng minh
-∏	Tích
+∀	cho tất cả	none
+∁	Bù	none
+∂	Đạo hàm cục bộ	none
+∃	có tồn	none
+∄	Không có tồn	none
+∅	tập rỗng	none
+∆	số gia	none
+∇	nabla	none
+∈	Thuộc	none
+∉	Không thuộc	none
+∊	phần tử thuộc	none
+∋	Tập hợp con của	none
+∌	Không phải tập hợp con của	none
+∍	Tập hợp con nhỏ của	none
+∎	kết quả của sự chứng minh	none
+∏	Tích	none
 
 # Miscellaneous Mathematical Operators
-∑	Tổng
-√	Căn bậc hai
-∛	Căn bậc ba
-∜	Căn bậc bốn
-∝	Tỷ lệ
-∞	Vô cực
-∟	góc vuông
-∠	góc
-∥	song song với
-∦	không song song với
-∧	log và
-∨	log hoặc
-∩	giao
-∪	hợp
-∫	tích phân
-∴	kết luận
-∵	vì
-∶	Tỉ suất
-∷	Tỉ lệ
-≤	Nhỏ hơn hoặc bằng
-≥	Lớn hơn hoặc bằng
-⊂	Tập con của
-⊃	Tập cha của
-⊆	Tập con bằng của
-⊇	Tập cha bằng của
+∑	Tổng	none
+√	Căn bậc hai	none
+∛	Căn bậc ba	none
+∜	Căn bậc bốn	none
+∝	Tỷ lệ	none
+∞	Vô cực	none
+∟	góc vuông	none
+∠	góc	none
+∥	song song với	none
+∦	không song song với	none
+∧	log và	none
+∨	log hoặc	none
+∩	giao	none
+∪	hợp	none
+∫	tích phân	none
+∴	kết luận	none
+∵	vì	none
+∶	Tỉ suất	none
+∷	Tỉ lệ	none
+≤	Nhỏ hơn hoặc bằng	none
+≥	Lớn hơn hoặc bằng	none
+⊂	Tập con của	none
+⊃	Tập cha của	none
+⊆	Tập con bằng của	none
+⊇	Tập cha bằng của	none
 
 # Vulgur Fractions U+2150 to U+215E
-⅐	Một phần bảy
-⅑	Một phần chín
-⅒	Một phần mười
-⅓	Một phần ba
-⅔	Hai phần ba
-⅕	Một phần năm
-⅖	Hai phần năm
-⅗	Ba phần tư
-⅘	Bốn phần năm
-⅙	Một phần sáu
-⅚	Năm phần sáu
-⅛	Một phần tám
-⅜	Ba phần tám
-⅝	Năm phần tám
-⅞	Bảy phần tám
+⅐	Một phần bảy	none
+⅑	Một phần chín	none
+⅒	Một phần mười	none
+⅓	một phần ba	none
+⅔	hai phần ba	none
+⅕	một phần năm	none
+⅖	hai phần năm	none
+⅗	ba phần năm	none
+⅘	bốn phần năm	none
+⅙	một phần sáu	none
+⅚	năm phần sáu	none
+⅛	một phần tám	none
+⅜	ba phần tám	none
+⅝	năm phần tám	none
+⅞	bảy phần tám	none
+
+# Miscellaneous Technical
+⌘	Phím Mac Command	none

@@ -1,7 +1,54 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2009-2016 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2009-2019 NV Access Limited, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
+# Warning: no comtypes modules can be imported until ctypes.WINFUNCTYPE has been replaced further down.
+
+import ctypes
+import _ctypes
+import importlib
+
+
+# A version of ctypes.WINFUNCTYPE 
+# that produces a WinFunctionType class whose instance will convert COMError into a CallCancelled exception when called as a function.
+old_WINFUNCTYPE=ctypes.WINFUNCTYPE
+def new_WINFUNCTYPE(restype,*argtypes,**kwargs):
+	cls=old_WINFUNCTYPE(restype,*argtypes,**kwargs)
+	class WinFunctionType(cls):
+		# We must manually pull the mandatory class variables from the super class,
+		# as the metaclass of _ctypes.CFuncPtr seems to expect these on the outermost subclass.
+		_argtypes_=cls._argtypes_
+		_restype_=cls._restype_
+		_flags_=cls._flags_
+		def __call__(self,*args,**kwargs):
+			try:
+				return super().__call__(*args,**kwargs)
+			except _ctypes.COMError as e:
+				from core import CallCancelled, RPC_E_CALL_CANCELED
+				if e.args[0]==RPC_E_CALL_CANCELED:
+					# As this is a cancelled COM call,
+					# raise CallCancelled instead of the original COMError.
+					# Also raising from None gives a cleaner traceback,
+					# Hiding the fact we were already in an except block.
+					raise CallCancelled("COM call cancelled") from None
+				# Otherwise, just continue the original COMError exception up the stack.
+				raise
+	return WinFunctionType
+
+# While importing comtypes,
+# Replace WINFUNCTYPE in ctypes with our own version,
+# So that comtypes will use this in all its COM method calls. 
+# As comtypes imports WINFUNCTYPE from ctypes by name,
+# We only need to replace it for the duration of importing comtypes, 
+# as it will then have it for ever.
+ctypes.WINFUNCTYPE=new_WINFUNCTYPE
+try:
+	import comtypes
+finally:
+	ctypes.WINFUNCTYPE=old_WINFUNCTYPE
+
+# It is safe to import any comtypes modules from here on down.
 
 from logHandler import log
 
@@ -84,3 +131,19 @@ def _check_version(actual):
 	if actual != required:
 		raise ImportError("Wrong version")
 comtypes._check_version = _check_version
+
+
+# Monkeypatch comtypes to clear the importlib cache when importing a new module
+
+# We must import comtypes.client._generate here as it must be done after other monkeypatching
+import comtypes.client._generate  # noqa: E402
+
+old_my_import = comtypes.client._generate._my_import
+
+
+def new_my_import(fullname):
+	importlib.invalidate_caches()
+	return old_my_import(fullname)
+
+
+comtypes.client._generate._my_import = new_my_import

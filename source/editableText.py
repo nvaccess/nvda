@@ -1,8 +1,7 @@
-#editableText.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Davy Kager
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2020 NV Access Limited, Davy Kager, Julien Cochuyt
 
 """Common support for editable text.
 @note: If you want editable text functionality for an NVDAObject,
@@ -46,7 +45,13 @@ class EditableText(TextContainerObject,ScriptableObject):
 	#: When announcing new line text: should the entire line be announced, or just text after the caret?
 	announceEntireNewLine=False
 
-	_hasCaretMoved_minWordTimeoutMs=30 #: The minimum amount of time that should elapse before checking if the word under the caret has changed
+	#: The minimum amount of time that should elapse before checking if the word under the caret has changed
+	_hasCaretMoved_minWordTimeoutMs=30
+
+	#: The maximum amount of time that may elapse before we no longer rely on caret events to detect movement.
+	_useEvents_maxTimeoutMs = 10
+
+	_caretMovementTimeoutMultiplier = 1
 
 	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=None, origWord=None):
 		"""
@@ -69,6 +74,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 		else:
 			# This function's arguments are in seconds, but we want ms.
 			timeoutMs = timeout * 1000
+		timeoutMs *= self._caretMovementTimeoutMultiplier
 		# time.sleep accepts seconds, so retryInterval is in seconds.
 		# Convert to integer ms to avoid floating point precision errors when adding to elapsed.
 		retryMs = int(retryInterval * 1000)
@@ -87,7 +93,18 @@ class EditableText(TextContainerObject,ScriptableObject):
 				newInfo = self.makeTextInfo(textInfos.POSITION_CARET)
 			except (RuntimeError,NotImplementedError):
 				newInfo = None
-			# Caret events are unreliable in some controls.
+			else:
+				# Caret events are unreliable in some controls.
+				# Only use them if we consider them safe to rely on for a particular control,
+				# and only if they arrive within C{_useEvents_maxTimeoutMs} mili seconds
+				# after causing the event to occur.
+				if (
+					elapsed <= self._useEvents_maxTimeoutMs and
+					self.caretMovementDetectionUsesEvents and
+					(eventHandler.isPendingEvents("caret") or eventHandler.isPendingEvents("textChange"))
+				):
+					log.debug("Caret move detected using event. Elapsed: %d ms" % elapsed)
+					return (True,newInfo)
 			# Try to detect with bookmarks.
 			newBookmark = None
 			if newInfo:
@@ -124,6 +141,8 @@ class EditableText(TextContainerObject,ScriptableObject):
 				info = self.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
+		# Forget the word currently being typed as the user has moved the caret somewhere else.
+		speech.clearTypedWordBuffer()
 		review.handleCaretMove(info)
 		if speakUnit and not willSayAllResume(gesture):
 			info.expand(speakUnit)
@@ -142,6 +161,20 @@ class EditableText(TextContainerObject,ScriptableObject):
 		if not caretMoved and self.shouldFireCaretMovementFailedEvents:
 			eventHandler.executeEvent("caretMovementFailed", self, gesture=gesture)
 		self._caretScriptPostMovedHelper(unit,gesture,newInfo)
+
+	def _get_caretMovementDetectionUsesEvents(self) -> bool:
+		"""Returns whether or not to rely on caret and textChange events when
+		finding out whether the caret position has changed after pressing a caret movement gesture.
+		Note that if L{_useEvents_maxTimeoutMs} is elapsed,
+		relying on events is no longer reliable in most situations.
+		Therefore, any event should occur before that timeout elapses.
+		"""
+		# This class is a mixin that usually comes before other relevant classes in the mro.
+		# Therefore, try to call super first, and if that fails, return the default (C{True}.
+		try:
+			return super().caretMovementDetectionUsesEvents
+		except AttributeError:
+			return True
 
 	def script_caret_newLine(self,gesture):
 		try:
@@ -233,7 +266,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 	def script_caret_backspaceWord(self,gesture):
 		self._backspaceScriptHelper(textInfos.UNIT_WORD,gesture)
 
-	def script_caret_delete(self,gesture):
+	def _deleteScriptHelper(self, unit, gesture):
 		try:
 			info=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
@@ -245,8 +278,14 @@ class EditableText(TextContainerObject,ScriptableObject):
 		gesture.send()
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
 		caretMoved,newInfo=self._hasCaretMoved(bookmark,origWord=word)
-		self._caretScriptPostMovedHelper(textInfos.UNIT_CHARACTER,gesture,newInfo)
+		self._caretScriptPostMovedHelper(unit, gesture, newInfo)
 		braille.handler.handleCaretMove(self)
+
+	def script_caret_deleteCharacter(self, gesture):
+		self._deleteScriptHelper(textInfos.UNIT_CHARACTER, gesture)
+
+	def script_caret_deleteWord(self, gesture):
+		self._deleteScriptHelper(textInfos.UNIT_WORD, gesture)
 
 	__gestures = {
 		"kb:upArrow": "caret_moveByLine",
@@ -265,9 +304,14 @@ class EditableText(TextContainerObject,ScriptableObject):
 		"kb:end": "caret_moveByCharacter",
 		"kb:control+home": "caret_moveByLine",
 		"kb:control+end": "caret_moveByLine",
-		"kb:delete": "caret_delete",
-		"kb:numpadDelete": "caret_delete",
+		"kb:delete": "caret_deleteCharacter",
+		"kb:shift+delete": "caret_deleteCharacter",
+		"kb:numpadDelete": "caret_deleteCharacter",
+		"kb:shift+numpadDelete": "caret_deleteCharacter",
+		"kb:control+delete": "caret_deleteWord",
+		"kb:control+numpadDelete": "caret_deleteWord",
 		"kb:backspace": "caret_backspaceCharacter",
+		"kb:shift+backspace": "caret_backspaceCharacter",
 		"kb:control+backspace": "caret_backspaceWord",
 	}
 

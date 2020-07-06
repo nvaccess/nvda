@@ -1,12 +1,14 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2015-2016 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2015-2016 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import operator
 from comtypes import COMError
 import ctypes
 import UIAHandler
+import weakref
+
 
 def createUIAMultiPropertyCondition(*dicts):
 	"""
@@ -19,7 +21,7 @@ def createUIAMultiPropertyCondition(*dicts):
 	outerOrList=[]
 	for dict in dicts:
 		andList=[]
-		for key,values in dict.iteritems():
+		for key,values in dict.items():
 			innerOrList=[]
 			if not isinstance(values,(list,set)):
 				values=[values]
@@ -84,12 +86,12 @@ class UIAMixedAttributeError(ValueError):
 	"""Raised when a function would return a UIAutomation text attribute value that is mixed."""
 	pass
 
-def getUIATextAttributeValueFromRange(range,attrib,ignoreMixedValues=False):
+def getUIATextAttributeValueFromRange(rangeObj,attrib,ignoreMixedValues=False):
 	"""
 	Wraps IUIAutomationTextRange::getAttributeValue, returning UIAutomation's reservedNotSupportedValue on COMError, and raising UIAMixedAttributeError if a mixed value would be returned and ignoreMixedValues is False.
 	"""
 	try:
-		val=range.GetAttributeValue(attrib)
+		val = rangeObj.GetAttributeValue(attrib)
 	except COMError:
 		return UIAHandler.handler.reservedNotSupportedValue
 	if val==UIAHandler.handler.ReservedMixedAttributeValue:
@@ -124,6 +126,11 @@ def iterUIARangeByUnit(rangeObj,unit,reverse=False):
 		if pastEnd:
 			return
 		tempRange.MoveEndpointByRange(Endpoint_relativeStart,tempRange,Endpoint_relativeEnd)
+		delta = tempRange.CompareEndpoints(Endpoint_relativeStart, rangeObj, Endpoint_relativeEnd)
+		if relativeGTOperator(delta, -1):
+			# tempRange is now already entirely past the end of the given range.
+			# Can be seen with MS Word bullet points: #9613
+			return
 	# Ensure that we always reach the end of the outer range, even if the units seem to stop somewhere inside
 	if relativeLTOperator(tempRange.CompareEndpoints(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd),0):
 		tempRange.MoveEndpointByRange(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd)
@@ -172,6 +179,23 @@ def getChildrenWithCacheFromUIATextRange(textRange,cacheRequest):
 	c=CacheableUIAElementArray(c)
 	return c
 
+def isTextRangeOffscreen(textRange, visiRanges):
+	"""Given a UIA text range and a visible textRanges array (returned from obj.UIATextPattern.GetVisibleRanges), determines if the given textRange is not within the visible textRanges."""
+	visiLength = visiRanges.length
+	if visiLength > 0:
+		firstVisiRange = visiRanges.GetElement(0)
+		lastVisiRange = visiRanges.GetElement(visiLength - 1)
+		return textRange.CompareEndPoints(
+			UIAHandler.TextPatternRangeEndpoint_Start, firstVisiRange,
+			UIAHandler.TextPatternRangeEndpoint_Start
+		) < 0 or textRange.CompareEndPoints(
+			UIAHandler.TextPatternRangeEndpoint_Start, lastVisiRange,
+			UIAHandler.TextPatternRangeEndpoint_End) >= 0
+	else:
+		# Visible textRanges not available.
+		raise RuntimeError("Visible textRanges array is empty or invalid.")
+
+
 class UIATextRangeAttributeValueFetcher(object):
 
 	def __init__(self,textRange):
@@ -195,7 +219,7 @@ class BulkUIATextRangeAttributeValueFetcher(UIATextRangeAttributeValueFetcher):
 		super(BulkUIATextRangeAttributeValueFetcher,self).__init__(textRange)
 		IDsArray=(ctypes.c_long*len(IDs))(*IDs)
 		values=textRange.GetAttributeValues(IDsArray,len(IDsArray))
-		self.IDsToValues={IDs[x]:values[x] for x in xrange(len(IDs))}
+		self.IDsToValues={IDs[x]:values[x] for x in range(len(IDs))}
 
 	def getValue(self,ID,ignoreMixedValues=False):
 		val=self.IDsToValues[ID]
@@ -203,3 +227,58 @@ class BulkUIATextRangeAttributeValueFetcher(UIATextRangeAttributeValueFetcher):
 			raise UIAMixedAttributeError
 		return val
 
+
+class FakeEventHandlerGroup:
+	"""
+	Mimics the behavior of UiAutomation 6+ Event Handler Groups for older versions.
+	"""
+
+	@property
+	def clientObject(self):
+		clientObject = self._clientObjectRef()
+		if not clientObject:
+			raise RuntimeError
+		return clientObject
+
+	def __init__(self, clientObject):
+		self._clientObjectRef = weakref.ref(clientObject)
+		self._automationEventHandlers = weakref.WeakValueDictionary()
+		self._notificationEventHandlers = weakref.WeakValueDictionary()
+		self._propertyChangedEventHandlers = weakref.WeakValueDictionary()
+
+	def AddAutomationEventHandler(self, eventId, scope, cacheRequest, handler):
+		self._automationEventHandlers[(eventId, scope, cacheRequest)] = handler
+
+	def AddNotificationEventHandler(self, scope, cacheRequest, handler):
+		if not isinstance(self.clientObject, UIAHandler.UIA.IUIAutomation5):
+			raise RuntimeError
+		self._notificationEventHandlers[(scope, cacheRequest)] = handler
+
+	def AddPropertyChangedEventHandler(self, scope, cacheRequest, handler, propertyArray, propertyCount):
+		properties = self.clientObject.IntNativeArrayToSafeArray(propertyArray, propertyCount)
+		self._propertyChangedEventHandlers[(scope, cacheRequest, properties)] = handler
+
+	def registerToClientObject(self, element):
+		try:
+			for (eventId, scope, cacheRequest), handler in self._automationEventHandlers.items():
+				self.clientObject.AddAutomationEventHandler(eventId, element, scope, cacheRequest, handler)
+			if isinstance(self.clientObject, UIAHandler.UIA.IUIAutomation5):
+				for (scope, cacheRequest), handler in self._notificationEventHandlers.items():
+					self.clientObject.AddNotificationEventHandler(element, scope, cacheRequest, handler)
+			for (scope, cacheRequest, properties), handler in self._propertyChangedEventHandlers.items():
+				self.clientObject.AddPropertyChangedEventHandler(element, scope, cacheRequest, handler, properties)
+		except COMError as e:
+			try:
+				self.unregisterFromClientObject(element)
+			except COMError:
+				pass
+			raise e
+
+	def unregisterFromClientObject(self, element):
+		for (eventId, scope, cacheRequest), handler in self._automationEventHandlers.items():
+			self.clientObject.RemoveAutomationEventHandler(eventId, element, handler)
+		if isinstance(self.clientObject, UIAHandler.UIA.IUIAutomation5):
+			for handler in self._notificationEventHandlers.values():
+				self.clientObject.RemoveNotificationEventHandler(element, handler)
+		for handler in self._propertyChangedEventHandlers.values():
+			self.clientObject.RemovePropertyChangedEventHandler(element, handler)

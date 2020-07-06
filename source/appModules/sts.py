@@ -2,4 +2,4 @@
 This simply uses the app module for Eclipse.
 """
 
-from eclipse import *
+from .eclipse import *
