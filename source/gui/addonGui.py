@@ -298,13 +298,22 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			self.refreshAddonsList()
 
 	def onRemoveClick(self,evt):
-		index=self.addonsList.GetFirstSelected()
-		if index<0: return
-		# Translators: Presented when attempting to remove the selected add-on.
-		if gui.messageBox(_("Are you sure you wish to remove the selected add-on from NVDA?"),
+		index = self.addonsList.GetFirstSelected()
+		if index < 0:
+			return
+		addon = self.curAddons[index]
+		if gui.messageBox(
+			(_(
+				# Translators: Presented when attempting to remove the selected add-on.
+				# {addon} is replaced with the add-on name.
+				"Are you sure you wish to remove the {addon} add-on from NVDA? "
+				"This cannot be undone."
+			)).format(addon=addon.name),
 			# Translators: Title for message asking if the user really wishes to remove the selected Addon.
-			_("Remove Add-on"), wx.YES_NO|wx.ICON_WARNING) != wx.YES: return
-		addon=self.curAddons[index]
+			_("Remove Add-on"),
+			wx.YES_NO | wx.NO_DEFAULT | wx.ICON_WARNING
+		) != wx.YES:
+			return
 		addon.requestRemove()
 		self.refreshAddonsList(activeIndex=index)
 		self.addonsList.SetFocus()
