@@ -1016,20 +1016,40 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	bool isInteractive=isEditable||(!isRoot&&IAStates&STATE_SYSTEM_FOCUSABLE&&nodeName!=L"BODY"&&nodeName!=L"IFRAME")||(IAStates&STATE_SYSTEM_LINKED)||(attribsMap.find(L"HTMLAttrib::onclick")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmouseup")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmousedown")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::longdesc")!=attribsMap.end());
 	//Set up numbering for lists
 	int LIIndex=0;
-	if(nodeName.compare(L"OL")==0||nodeName.compare(L"UL")==0) {
+	constexpr auto ORDERED_LIST_TAG_NODE_NAME = L"OL";
+	constexpr auto UNORDERED_LIST_TAG_NODE_NAME = L"UL";
+	constexpr auto DEFINITION_LIST_TAG_NODE_NAME = L"DL";
+	if(
+		0 == nodeName.compare(ORDERED_LIST_TAG_NODE_NAME)
+		|| 0 == nodeName.compare(UNORDERED_LIST_TAG_NODE_NAME)
+	){
 		//Ordered lists should number their list items
 		LIIndex=1;
 		// set the list index if list has start attribute
-		if ((tempIter = attribsMap.find(L"HTMLAttrib::start")) != attribsMap.end()) {
-			if (!tempIter->second.empty()) {
-				LIIndex = stoi(tempIter->second);
+		auto startIter = attribsMap.find(L"HTMLAttrib::start");
+		if(
+			startIter != attribsMap.end()
+			&& !startIter->second.empty()
+		){
+			try {
+				LIIndex = stoi(startIter->second);
+			}
+			catch (std::invalid_argument&) {
+				// if no conversion could be performed
+				constexpr auto errorStr = L"invalid_argument - Unable to convert HTMLAttrib::start value to int: ";
+				LOG_ERROR(errorStr << startIter->second)
+			}
+			catch (std::out_of_range&) {
+				// if the converted value would fall out of the range of the result type
+				// or if the underlying function(std::strtol or std::strtoll) sets errno to ERANGE.)
+				constexpr auto errorStr = L"out_of_range - Unable to convert HTMLAttrib::start value to int: ";
+				LOG_ERROR(errorStr << startIter->second)
 			}
 		}
-
 		LIIndexPtr=&LIIndex;
-	} else if(nodeName.compare(L"DL")==0) {
-		//Unordered lists should not be numbered
-		LIIndexPtr=NULL;
+	} else if(nodeName.compare(DEFINITION_LIST_TAG_NODE_NAME) == 0) {
+		//Definition lists should not be numbered
+		LIIndexPtr=nullptr;
 	}
 
 	parentNode->isHidden=hidden;
