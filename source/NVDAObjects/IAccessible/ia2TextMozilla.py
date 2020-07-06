@@ -18,6 +18,7 @@ from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 from . import IA2TextTextInfo, IAccessible
 from compoundDocuments import CompoundTextInfo
 import locationHelper
+from logHandler import log
 
 class FakeEmbeddingTextInfo(textInfos.offsets.OffsetsTextInfo):
 	encoding = None
@@ -246,7 +247,13 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 						controlField["_startOfNode"] = True
 						yield textInfos.FieldCommand("controlStart", controlField)
 				if notText:
-					yield u" "
+					# A 'stand-in' character is necessary to make routing work on braille devices.
+					# Note #11291:
+					# Using a space character (EG " ") causes 'space' to be announced after objects like graphics.
+					# If this is replaced with an empty string, routing to cell becomes innaccurate.
+					# Using the OBJECT REPLACEMENT CHARACTER (EG "\uFFFC") results in '"0xFFFC' being displayed on
+					# the braille device.
+					yield " "
 				else:
 					for subItem in self._iterRecursiveText(self._makeRawTextInfo(embedded, textInfos.POSITION_ALL), controlStack, formatConfig):
 						yield subItem
@@ -302,7 +309,15 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			# The end hasn't yet been reached, which means it isn't a descendant of obj.
 			# Therefore, continue from where obj was embedded.
 			if withFields:
-				field = controlStack.pop()
+				try:
+					field = controlStack.pop()
+				except IndexError:
+					# We're trying to walk up past our root. This can happen if a descendant
+					# object within the range died, in which case _iterRecursiveText will
+					# never reach our end object and thus won't yield None. This means this
+					# range is invalid, so just return nothing.
+					log.debugWarning("Tried to walk up past the root. Objects probably dead.")
+					return []
 				if field:
 					# This object had a control field.
 					field["_endOfNode"] = True

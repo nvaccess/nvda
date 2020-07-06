@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#globalCommands.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
+# Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka
 
 import time
 import itertools
@@ -600,6 +600,22 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for toggle report links command.
 	script_toggleReportLinks.__doc__=_("Toggles on and off the reporting of links")
 	script_toggleReportLinks.category=SCRCAT_DOCUMENTFORMATTING
+
+	@scriptHandler.script(
+		# Translators: Input help mode message for toggle report graphics command.
+		description=_("Toggles on and off the reporting of graphics"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
+	def script_toggleReportGraphics(self, gesture):
+		if config.conf["documentFormatting"]["reportGraphics"]:
+			# Translators: The message announced when toggling the report graphics document formatting setting.
+			state = _("report graphics off")
+			config.conf["documentFormatting"]["reportGraphics"] = False
+		else:
+			# Translators: The message announced when toggling the report graphics document formatting setting.
+			state = _("report graphics on")
+			config.conf["documentFormatting"]["reportGraphics"] = True
+		ui.message(state)
 
 	def script_toggleReportComments(self,gesture):
 		if config.conf["documentFormatting"]["reportComments"]:
@@ -1387,6 +1403,8 @@ class GlobalCommands(ScriptableObject):
 	def _reportFormattingHelper(self, info, browseable=False):
 		# Report all formatting-related changes regardless of user settings
 		# when explicitly requested.
+		if info is None:
+			return
 		# These are the options we want reported when reporting formatting manually.
 		# for full list of options that may be reported see the "documentFormatting" section of L{config.configSpec}
 		reportFormattingOptions = (
@@ -1459,16 +1477,87 @@ class GlobalCommands(ScriptableObject):
 				_("Formatting")
 			)
 
-	def script_reportFormatting(self,gesture):
-		info=api.getReviewPosition()
-		repeats=scriptHandler.getLastScriptRepeatCount()
-		if repeats==0:
-			self._reportFormattingHelper(info,False)
-		elif repeats==1:
-			self._reportFormattingHelper(info,True)
-	# Translators: Input help mode message for report formatting command.
-	script_reportFormatting.__doc__ = _("Reports formatting info for the current review cursor position within a document. If pressed twice, presents the information in browse mode")
-	script_reportFormatting.category=SCRCAT_TEXTREVIEW
+	def _getTIAtCaret(self):
+		# Returns text info at the caret position if there is a caret in the current control, None otherwise.
+		# Note that if there is  no caret this fact is announced  in speech and braille.
+		obj = api.getFocusObject()
+		treeInterceptor = obj.treeInterceptor
+		if(
+			isinstance(treeInterceptor, treeInterceptorHandler.DocumentTreeInterceptor)
+			and not treeInterceptor.passThrough
+		):
+			obj = treeInterceptor
+		try:
+			info = obj.makeTextInfo(textInfos.POSITION_CARET)
+			return info
+		except (NotImplementedError, RuntimeError):
+			# Translators: Reported when there is no caret.
+			ui.message(_("No caret"))
+			return
+
+	@script(
+		# Translators: Input help mode message for report formatting command.
+		description=_("Reports formatting info for the current review cursor position."),
+		category=SCRCAT_TEXTREVIEW,
+	)
+	def script_reportFormattingAtReview(self, gesture):
+		self._reportFormattingHelper(api.getReviewPosition(), False)
+
+	@script(
+		# Translators: Input help mode message for show formatting at review cursor command.
+		description=_("Presents, in browse mode, formatting info for the current review cursor position."),
+		category=SCRCAT_TEXTREVIEW,
+	)
+	def script_showFormattingAtReview(self, gesture):
+		self._reportFormattingHelper(api.getReviewPosition(), True)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for report formatting command.
+			"Reports formatting info for the current review cursor position."
+			" If pressed twice, presents the information in browse mode"
+		),
+		category=SCRCAT_TEXTREVIEW,
+		gesture="kb:NVDA+shift+f",
+	)
+	def script_reportFormatting(self, gesture):
+		repeats = scriptHandler.getLastScriptRepeatCount()
+		if repeats == 0:
+			self.script_reportFormattingAtReview(gesture)
+		elif repeats == 1:
+			self.script_showFormattingAtReview(gesture)
+
+	@script(
+		# Translators: Input help mode message for report formatting at caret command.
+		description=_("Reports formatting info for the text under the caret."),
+		category=SCRCAT_SYSTEMCARET,
+	)
+	def script_reportFormattingAtCaret(self, gesture):
+		self._reportFormattingHelper(self._getTIAtCaret(), False)
+
+	@script(
+		# Translators: Input help mode message for show formatting at caret position command.
+		description=_("Presents, in browse mode, formatting info for the text under the caret."),
+		category=SCRCAT_SYSTEMCARET,
+	)
+	def script_showFormattingAtCaret(self, gesture):
+		self._reportFormattingHelper(self._getTIAtCaret(), True)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for report formatting at caret command.
+			"Reports formatting info for the text under the caret."
+			" If pressed twice, presents the information in browse mode"
+		),
+		category=SCRCAT_SYSTEMCARET,
+		gesture="kb:NVDA+f",
+	)
+	def script_reportOrShowFormattingAtCaret(self, gesture):
+		repeats = scriptHandler.getLastScriptRepeatCount()
+		if repeats == 0:
+			self.script_reportFormattingAtCaret(gesture)
+		elif repeats == 1:
+			self.script_showFormattingAtCaret(gesture)
 
 	def script_reportCurrentFocus(self,gesture):
 		focusObject=api.getFocusObject()
@@ -2319,6 +2408,29 @@ class GlobalCommands(ScriptableObject):
 	script_navigatorObject_previousInFlow.__doc__=_("Moves to the previous object in a flattened view of the object navigation hierarchy")
 	script_navigatorObject_previousInFlow.category=SCRCAT_OBJECTNAVIGATION
 
+	@script(
+		# Translators: Describes a command.
+		description=_("Toggles the support of touch interaction"),
+		category=SCRCAT_TOUCH,
+		gesture="kb:NVDA+control+alt+t",
+	)
+	def script_toggleTouchSupport(self, gesture):
+		enabled = not bool(config.conf["touch"]["enabled"])
+		try:
+			touchHandler.setTouchSupport(enabled)
+		except NotImplementedError:
+			# Translators: Presented when attempting to toggle touch interaction support
+			ui.message(_("Touch interaction not supported"))
+			return
+		# Set configuration upon success
+		config.conf["touch"]["enabled"] = enabled
+		if enabled:
+			# Translators: Presented when support of touch interaction has been enabled
+			ui.message(_("Touch interaction enabled"))
+		else:
+			# Translators: Presented when support of touch interaction has been disabled
+			ui.message(_("Touch interaction disabled"))
+
 	def script_touch_changeMode(self,gesture):
 		mode=touchHandler.handler._curTouchMode
 		index=touchHandler.availableTouchModes.index(mode)
@@ -2624,8 +2736,6 @@ class GlobalCommands(ScriptableObject):
 		"kb(laptop):NVDA+l": "reportCurrentLine",
 		"kb(desktop):NVDA+shift+upArrow": "reportCurrentSelection",
 		"kb(laptop):NVDA+shift+s": "reportCurrentSelection",
-		"kb:NVDA+f": "reportFormatting",
-
 		# Object navigation
 		"kb:NVDA+numpad5": "navigatorObject_current",
 		"kb(laptop):NVDA+shift+o": "navigatorObject_current",

@@ -44,7 +44,11 @@ class ChromeLib:
 	def start_chrome(self, filePath):
 		builtIn.log(f"starting chrome: {filePath}")
 		self.chromeHandle = process.start_process(
-			f"start chrome \"{filePath}\"",
+			"start chrome"
+			" --force-renderer-accessibility"
+			" --suppress-message-center-popups"
+			" --disable-notifications"
+			f' "{filePath}"',
 			shell=True,
 			alias='chromeAlias',
 		)
@@ -87,38 +91,40 @@ class ChromeLib:
 		path = self._writeTestFile(testCase)
 		self.start_chrome(path)
 		# Ensure chrome started
+		# Different versions of chrome have variations in how the title is presented
+		# This may mean that there is a separator between document name and
+		# application name. E.G. "htmlTest   Google Chrome", "html – Google Chrome" or perhaps no applcation
+		# name at all.
+		# Rather than try to get this right, just wait for the doc title.
+		# If this continues to be unreliable we could use solenium or similar to start chrome and inform us when
+		# it is ready.
 		applicationTitle = f"{self._testCaseTitle}"
 		spy.wait_for_specific_speech(applicationTitle)
-		# Different versions of chrome have small variations in the separator between document name and
-		# application name. E.G. "htmlTest   Google Chrome", "html – Google Chrome"
-		# Rather than try to get the separator right, wait for the doc title, then wait for the 'Google Chrome'
-		# part. Note: this also works with "Chrome Canary"
-		spy.wait_for_specific_speech("Google Chrome")
 		# Read all is configured, but just test interacting with the sample.
 		spy.wait_for_speech_to_finish()
 
 		# move to start marker
 		for i in range(10):  # set a limit on the number of tries.
 			# Small changes in Chrome mean the number of tab presses to get into the document can vary.
-			builtIn.sleep(0.5)  # ensure application has time to receive input
+			builtIn.sleep("0.5 seconds")  # ensure application has time to receive input
 			actualSpeech = self.getSpeechAfterTab()
-			if actualSpeech == f"{ChromeLib._beforeMarker}  button":
+			if ChromeLib._beforeMarker in actualSpeech:
 				break
-			if actualSpeech == f"{ChromeLib._afterMarker}  button":
+			if ChromeLib._afterMarker in actualSpeech:
 				# somehow missed the start marker!
+				spy.dump_speech_to_log()
 				builtIn.fail(
 					"Unable to tab to 'before sample' marker, reached 'after sample' marker first."
-					f" Looking for '{ChromeLib._beforeMarker}  button'"
+					f" Looking for '{ChromeLib._beforeMarker}'"
 					" See NVDA log for full speech."
 				)
-				spy.dump_speech_to_log()
 		else:  # Exceeded the number of tries
+			spy.dump_speech_to_log()
 			builtIn.fail(
 				"Unable to tab to 'before sample' marker."
-				f" Too many attempts looking for '{ChromeLib._beforeMarker}  button'"
+				f" Too many attempts looking for '{ChromeLib._beforeMarker}'"
 				" See NVDA log for full speech."
 			)
-			spy.dump_speech_to_log()
 
 	@staticmethod
 	def getSpeechAfterTab() -> str:
