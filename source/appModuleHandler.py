@@ -370,8 +370,8 @@ class AppModule(baseObject.ScriptableObject):
 		# Some apps such as File Explorer says it is an immersive process but error 15700 is shown.
 		# Others such as Store version of Office are not truly hosted apps but are distributed via Store.
 		length = ctypes.c_uint()
-		buf = ctypes.windll.kernel32.GetPackageFullName(self.processHandle, ctypes.byref(length), None)
-		packageFullName = ctypes.create_unicode_buffer(buf)
+		ctypes.windll.kernel32.GetPackageFullName(self.processHandle, ctypes.byref(length), None)
+		packageFullName = ctypes.create_unicode_buffer(length.value)
 		if ctypes.windll.kernel32.GetPackageFullName(
 			self.processHandle, ctypes.byref(length), packageFullName
 		) == 0:
