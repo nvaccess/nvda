@@ -125,6 +125,8 @@ def nvdaControllerInternal_reportLiveRegion(text, level):
 	focus = api.getFocusObject()
 	if focus.sleepMode == focus.SLEEP_FULL:
 		return -1
+	if not config.conf["presentation"]["reportDynamicContentChanges"]:
+		return -1
 	import queueHandler
 	import speech
 	queueHandler.queueFunction(queueHandler.eventQueue, speech.speakText, text)
