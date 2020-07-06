@@ -34,6 +34,7 @@ What's New in NVDA
 == Changes For Developers ==
 - The GUI Helper's BoxSizerHelper.addDialogDismissButtons supports a new "separated" keyword argument, for adding a standard horizontal separator to dialogs (other than messages and single input dialogs). (#6468)
 - Additional properties were added to app modules, including path for the executable (appPath), is a Windows Store app (isWindowsStoreApp), and machine architecture for the app (appArchitecture). (#7894)
+- It is now possible to create app modules for apps hosted inside wwahost.exe on Windows 8 and later. (#4569)
 
 
 = 2020.2 =
