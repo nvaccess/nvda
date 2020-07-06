@@ -261,7 +261,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			start,end,text = self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_CHAR)
 		except COMError:
 			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
-		if textUtils.isHighSurrogate(text) or textUtils.isLowSurrogate(text):
+		if text and (textUtils.isHighSurrogate(text) or textUtils.isLowSurrogate(text)):
 			# #8953: Some IA2 implementations, including Gecko and Chromium,
 			# erroneously report one offset for surrogates.
 			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
