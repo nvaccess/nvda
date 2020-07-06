@@ -2325,6 +2325,15 @@ class AdvancedPanelControls(wx.Panel):
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
+		label = _("Enable &selective registration for UI Automation events and property changes")
+		self.selectiveUIAEventRegistrationCheckBox = UIAGroup.addItem(wx.CheckBox(self, label=label))
+		self.selectiveUIAEventRegistrationCheckBox.SetValue(config.conf["UIA"]["selectiveEventRegistration"])
+		self.selectiveUIAEventRegistrationCheckBox.defaultValue = (
+			self._getDefaultValue(["UIA", "selectiveEventRegistration"])
+		)
+
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
 		label = _("Use UI Automation to access Microsoft &Word document controls when available")
 		self.UIAInMSWordCheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
 		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
@@ -2467,6 +2476,10 @@ class AdvancedPanelControls(wx.Panel):
 		return (
 			self._defaultsRestored
 			and self.scratchpadCheckBox.IsChecked() == self.scratchpadCheckBox.defaultValue
+			and (
+				self.selectiveUIAEventRegistrationCheckBox.IsChecked()
+				== self.selectiveUIAEventRegistrationCheckBox.defaultValue
+			)
 			and self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue
 			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
@@ -2479,6 +2492,7 @@ class AdvancedPanelControls(wx.Panel):
 
 	def restoreToDefaults(self):
 		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
+		self.selectiveUIAEventRegistrationCheckBox.SetValue(self.selectiveUIAEventRegistrationCheckBox.defaultValue)
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
 		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue == 'UIA')
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
@@ -2491,6 +2505,7 @@ class AdvancedPanelControls(wx.Panel):
 	def onSave(self):
 		log.debug("Saving advanced config")
 		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
+		config.conf["UIA"]["selectiveEventRegistration"] = self.selectiveUIAEventRegistrationCheckBox.IsChecked()
 		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
 		if self.ConsoleUIACheckBox.IsChecked():
 			config.conf['UIA']['winConsoleImplementation'] = "UIA"
