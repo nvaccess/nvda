@@ -150,7 +150,7 @@ addTable("de-g1.ctb", _("German grade 1"), input=False)
 
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("de-g1-bidi.ctb", _("German grade 1 (improved back-translation, experimental)"))
+addTable("de-g1-bidi.ctb", _("German grade 1 (detailed)"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("de-g2.ctb", _("German grade 2"), contracted=True, input=False)
