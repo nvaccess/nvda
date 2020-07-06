@@ -59,6 +59,7 @@ import weakref
 import time
 import keyLabels
 from .dpiScalingHelper import DpiScalingHelperMixin
+from locale import strxfrm
 
 class SettingsDialog(wx.Dialog, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCMeta):
 	"""A settings dialog.
@@ -2325,6 +2326,15 @@ class AdvancedPanelControls(wx.Panel):
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
+		label = _("Enable &selective registration for UI Automation events and property changes")
+		self.selectiveUIAEventRegistrationCheckBox = UIAGroup.addItem(wx.CheckBox(self, label=label))
+		self.selectiveUIAEventRegistrationCheckBox.SetValue(config.conf["UIA"]["selectiveEventRegistration"])
+		self.selectiveUIAEventRegistrationCheckBox.defaultValue = (
+			self._getDefaultValue(["UIA", "selectiveEventRegistration"])
+		)
+
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
 		label = _("Use UI Automation to access Microsoft &Word document controls when available")
 		self.UIAInMSWordCheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
 		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
@@ -2467,6 +2477,10 @@ class AdvancedPanelControls(wx.Panel):
 		return (
 			self._defaultsRestored
 			and self.scratchpadCheckBox.IsChecked() == self.scratchpadCheckBox.defaultValue
+			and (
+				self.selectiveUIAEventRegistrationCheckBox.IsChecked()
+				== self.selectiveUIAEventRegistrationCheckBox.defaultValue
+			)
 			and self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue
 			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
@@ -2479,6 +2493,7 @@ class AdvancedPanelControls(wx.Panel):
 
 	def restoreToDefaults(self):
 		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
+		self.selectiveUIAEventRegistrationCheckBox.SetValue(self.selectiveUIAEventRegistrationCheckBox.defaultValue)
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
 		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue == 'UIA')
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
@@ -2491,6 +2506,7 @@ class AdvancedPanelControls(wx.Panel):
 	def onSave(self):
 		log.debug("Saving advanced config")
 		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
+		config.conf["UIA"]["selectiveEventRegistration"] = self.selectiveUIAEventRegistrationCheckBox.IsChecked()
 		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
 		if self.ConsoleUIACheckBox.IsChecked():
 			config.conf['UIA']['winConsoleImplementation'] = "UIA"
@@ -4016,11 +4032,11 @@ class InputGesturesDialog(SettingsDialog):
 		)
 		# Flatten the gestures mappings for faster access by the VirtualTree
 		self.flattenedGestures: FlattenedGestureMappings = []
-		for category in sorted(gestures):
+		for category in sorted(gestures, key=strxfrm):
 			commands = gestures[category]
 			self.flattenedGestures.append((
 				category,
-				[(command, commands[command]) for command in sorted(commands)]
+				[(command, commands[command]) for command in sorted(commands, key=strxfrm)]
 			))
 		#: The L{GesturesTree} actually reads from this attribute
 		self.filteredGestures: FlattenedGestureMappings = self.flattenedGestures
@@ -4086,7 +4102,7 @@ class InputGesturesDialog(SettingsDialog):
 		def run():
 			try:
 				self._filter(token, filter)
-			except:  # noqa: E722
+			except Exception:
 				log.exception()
 		
 		threading.Thread(
@@ -4262,7 +4278,7 @@ class InputGesturesDialog(SettingsDialog):
 		inputCore.manager.userGestureMap.clear()
 		try:
 			inputCore.manager.userGestureMap.save()
-		except:  # noqa: E722
+		except Exception:
 			log.debugWarning("", exc_info=True)
 			# Translators: An error displayed when saving user defined input gestures fails.
 			gui.messageBox(

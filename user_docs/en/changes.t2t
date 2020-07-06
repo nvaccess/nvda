@@ -8,6 +8,7 @@ What's New in NVDA
 == New Features ==
 - You can now toggle reporting of graphics from NVDA's document formatting settings. Note that disabling this option will still read the alternative texts of graphics. (#4837)
 - You can now toggle NVDA's touchscreen support. An option has been added to the Touch Interaction panel of NVDA's settings. The default gesture is NVDA+control+alt+t. (#9682)
+- Added new German braille tables. (#11268)
 
 
 == Changes ==
@@ -15,6 +16,9 @@ What's New in NVDA
 - NVDA no longer automatically sets the system focus to focusable elements by default in browse mode, improving performance and stability. (#11190)
 - CLDR updated from version 36.1 to version 37. (#11303)
 - Updated eSpeak-NG to 1.51-dev, commit f2939490e
+- You can now utilize table navigation in list boxes with checkable list items when the particular list has multiple columns. (#8857)
+- In the Add-ons manager, when prompted to confirm removal of an add-on, "No" is now the default. (#10015)
+- In Microsoft Excel, the Elements List dialog now presents formulas in their localized form. (#9144)
 
 
 == Bug Fixes ==
@@ -25,10 +29,15 @@ What's New in NVDA
 - In general settings panel, the language list is now sorted correctly. (#10348)
 - In the Input Gestures dialog, significantly improved performance while filtering. (#10307)(
 - You can now send Unicode characters beyond U+FFFF from a braille display. (#10796)
+- NVDA will announce Open With dialog content in Windows 10 May 2020 Update. (#11335)
+- A new experimental option in Advanced settings (Enable selective registration for UI Automation events and property changes) can provide major performance improvements in Microsoft Visual Studio and other UIAutomation based applications if enabled. (#11077, #11209)
+- For checkable list items, the selected state is no longer announced redundantly, and if applicable, the unselected state is announced instead. (#8554)
 
 
 == Changes For Developers ==
 - The GUI Helper's BoxSizerHelper.addDialogDismissButtons supports a new "separated" keyword argument, for adding a standard horizontal separator to dialogs (other than messages and single input dialogs). (#6468)
+- Additional properties were added to app modules, including path for the executable (appPath), is a Windows Store app (isWindowsStoreApp), and machine architecture for the app (appArchitecture). (#7894)
+- It is now possible to create app modules for apps hosted inside wwahost.exe on Windows 8 and later. (#4569)
 
 
 = 2020.2 =

@@ -1,8 +1,7 @@
-#NVDAObjects/excel.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import abc
 import ctypes
@@ -318,7 +317,7 @@ class ExcelCommentQuickNavItem(ExcelRangeBasedQuickNavItem):
 class ExcelFormulaQuickNavItem(ExcelRangeBasedQuickNavItem):
 
 	def __init__( self , nodeType , document , formulaObject , formulaCollection ):
-		self.label = formulaObject.address(False,False,1,False) + " " + formulaObject.Formula
+		self.label = formulaObject.address(False, False, 1, False) + " " + formulaObject.FormulaLocal
 		super( ExcelFormulaQuickNavItem , self).__init__( nodeType , document , formulaObject , formulaCollection )
 
 class ExcelQuicknavIterator(object):
