@@ -140,13 +140,22 @@ addTable("da-dk-g28.ctb", _("Danish 8 dot grade 2"), contracted=True)
 addTable("de-de-comp8.ctb", _("German 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("de-g0.utb", _("German grade 0"))
+addTable("de-g0.utb", _("German grade 0"), input=False)
+
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("de-g1.ctb", _("German grade 1"))
+addTable("de-g0-bidi.utb", _("German grade 0 (detailed)"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("de-g2.ctb", _("German grade 2"), contracted=True)
+addTable("de-g1.ctb", _("German grade 1"), input=False)
+
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("de-g1-bidi.ctb", _("German grade 1 (detailed)"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("de-g2.ctb", _("German grade 2"), contracted=True, input=False)
+
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("el.ctb", _("Greek (Greece)"))
