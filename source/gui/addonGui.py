@@ -6,6 +6,7 @@
 
 import os
 import weakref
+from locale import strxfrm
 
 import addonAPIVersion
 import wx
@@ -355,7 +356,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.addonsList.DeleteAllItems()
 		self.curAddons=[]
 		anyAddonIncompatible = False
-		for addon in addonHandler.getAvailableAddons():
+		for addon in sorted(addonHandler.getAvailableAddons(), key=lambda a: strxfrm(a.manifest['summary'])):
 			self.addonsList.Append((
 				addon.manifest['summary'],
 				self.getAddonStatus(addon),

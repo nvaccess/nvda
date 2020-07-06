@@ -7,6 +7,7 @@
 """
 
 import collections
+from locale import strxfrm
 
 #: The directory in which liblouis braille tables are located.
 TABLES_DIR = r"louis\tables"
@@ -55,7 +56,7 @@ def listTables():
 	@return: A list of braille tables.
 	@rtype: list of L{BrailleTable}
 	"""
-	return sorted(_tables.values(), key=lambda table: table.displayName)
+	return sorted(_tables.values(), key=lambda table: strxfrm(table.displayName))
 
 #: Maps old table names to new table names for tables renamed in newer versions of liblouis.
 RENAMED_TABLES = {

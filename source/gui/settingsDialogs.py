@@ -59,6 +59,7 @@ import weakref
 import time
 import keyLabels
 from .dpiScalingHelper import DpiScalingHelperMixin
+from locale import strxfrm
 
 class SettingsDialog(wx.Dialog, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCMeta):
 	"""A settings dialog.
@@ -4031,11 +4032,11 @@ class InputGesturesDialog(SettingsDialog):
 		)
 		# Flatten the gestures mappings for faster access by the VirtualTree
 		self.flattenedGestures: FlattenedGestureMappings = []
-		for category in sorted(gestures):
+		for category in sorted(gestures, key=strxfrm):
 			commands = gestures[category]
 			self.flattenedGestures.append((
 				category,
-				[(command, commands[command]) for command in sorted(commands)]
+				[(command, commands[command]) for command in sorted(commands, key=strxfrm)]
 			))
 		#: The L{GesturesTree} actually reads from this attribute
 		self.filteredGestures: FlattenedGestureMappings = self.flattenedGestures
