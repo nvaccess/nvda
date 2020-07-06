@@ -13,6 +13,11 @@ import winKernel
 import config
 
 from ctypes import *
+from ctypes import (
+	WINFUNCTYPE,
+	c_long,
+	c_wchar_p,
+)
 from ctypes.wintypes import *
 from comtypes import BSTR
 import winUser
