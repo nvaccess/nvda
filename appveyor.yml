@@ -173,7 +173,7 @@ test_script:
       git diff -U0 FETCH_HEAD...HEAD > $prDiff
       $flake8Config = "$lintSource\flake8.ini"
       $flake8Output = "$lintOutput\PR-Flake8.txt"
-      type "$prDiff" | py -m flake8 --diff --output-file="$flake8Output" --tee --config="$flake8Config"
+      type "$prDiff" | py -Xutf8 -m flake8 --diff --output-file="$flake8Output" --tee --config="$flake8Config"
       if($LastExitCode -ne 0) {
        $errorCode=$LastExitCode
        Add-AppveyorMessage "PR introduces Flake8 errors"
@@ -191,8 +191,13 @@ test_script:
  - ps: |
      $testOutput = (Resolve-Path .\testOutput\)
      $systemTestOutput = (Resolve-Path "$testOutput\system")
-     $testSource = "./tests/system"
-     py -m robot --loglevel DEBUG -d $systemTestOutput -x systemTests.xml -v whichNVDA:installed -P "$testSource/libraries" "$testSource"
+     $testSource = ".\tests\system\robot"
+
+     $robotArgs = '--argumentfile', '.\tests\system\robotArgs.robot'
+     # useInstalledNVDA must come after args file to override the whichNVDA value
+     $useInstalledNVDA = '--variable', 'whichNVDA:installed'
+
+     py -m robot $robotArgs $useInstalledNVDA $testSource
      Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
      Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
      if($LastExitCode -ne 0) {

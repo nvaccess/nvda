@@ -2,9 +2,9 @@
 # Copyright (C) 2006-2017 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
+
 import weakref
 import speech
-from speech import _flattenNestedSequences
 import synthDriverHandler
 from logHandler import log
 import config
@@ -61,7 +61,7 @@ class _ObjectsReader(object):
 		if self.prevObj:
 			# We just started speaking this object, so move the navigator to it.
 			api.setNavigatorObject(self.prevObj, isFocus=lastSayAllMode==CURSOR_CARET)
-			winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED | winKernel.ES_DISPLAY_REQUIRED)
+			winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
 		# Move onto the next object.
 		self.prevObj = obj = next(self.walker, None)
 		if not obj:
@@ -169,7 +169,7 @@ class _TextReader(object):
 			reason=controlTypes.REASON_SAYALL,
 			useCache=state
 		)
-		seq = list(_flattenNestedSequences(speechGen))
+		seq = list(speech._flattenNestedSequences(speechGen))
 		seq.insert(0, cb)
 		# Speak the speech sequence.
 		spoke = speech.speakWithoutPauses(seq)
@@ -206,7 +206,7 @@ class _TextReader(object):
 			updater.updateCaret()
 		if self.cursor != CURSOR_CARET or config.conf["reviewCursor"]["followCaret"]:
 			api.setReviewPosition(updater, isCaret=self.cursor==CURSOR_CARET)
-		winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED | winKernel.ES_DISPLAY_REQUIRED)
+		winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
 		if self.numBufferedLines == 0:
 			# This was the last line spoken, so move on.
 			self.nextLine()

@@ -208,8 +208,8 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				# Get the last 16 bits of the line number
 				lineStart16=lineStart&0xFFFF
 				if lineStart16 > offset:
-					# There are cases where the last 16 bits of the line start are greather than the 16 bits offset.
-					# For example, this happens when the line start offset is 65534 (0xFFFE)
+					# There are cases where the last 16 bits of the line start are greater than the
+					# 16 bits offset. For example, this happens when the line start offset is 65534 (0xFFFE)
 					# and the offset we need ought to be 65537 (0x10001), which is a 17 bits number
 					# In that case, add 0x10000 to the offset, which will make the eventual formula return the correct offset,
 					# unless a line has more than 65535 characters, in which case we can't get a reliable offset.

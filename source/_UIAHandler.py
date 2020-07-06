@@ -538,6 +538,24 @@ class UIAHandler(COMObject):
 		# allow the appModule for the window to also choose if this window is bad
 		if appModule and appModule.isBadUIAWindow(hwnd):
 			return False
+		if windowClass == "NetUIHWND" and appModule:
+			# NetUIHWND is used for various controls in MS Office.
+			# IAccessible should be used for NetUIHWND in versions older than 2016
+			# Fixes: lack of focus reporting (#4207),
+			# Fixes: strange reporting of context menu items(#9252),
+			# fixes: not being able to report ribbon sections when they starts with an edit  field (#7067)
+			# Note that #7067 is not fixed for Office 2016 and never.
+			# Using IAccessible for NetUIHWND controls causes focus changes not to be reported
+			# when the ribbon is collapsed.
+			# Testing shows that these controls emits proper events but they are ignored by NVDA.
+			isOfficeApp = appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
+			isOffice2013OrOlder = int(appModule.productVersion.split(".")[0]) < 16
+			if isOfficeApp and isOffice2013OrOlder:
+				parentHwnd = winUser.getAncestor(hwnd, winUser.GA_PARENT)
+				while parentHwnd:
+					if winUser.getClassName(parentHwnd) in ("Net UI Tool Window", "MsoCommandBar",):
+						return False
+					parentHwnd = winUser.getAncestor(parentHwnd, winUser.GA_PARENT)
 		# Ask the window if it supports UIA natively
 		res=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
 		if res:
