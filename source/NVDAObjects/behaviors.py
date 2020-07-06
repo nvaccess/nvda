@@ -182,7 +182,7 @@ class EditableTextWithAutoSelectDetection(EditableText):
 	"""
 
 	def event_gainFocus(self):
-		super(EditableText, self).event_gainFocus()
+		super().event_gainFocus()
 		self.initAutoSelectDetection()
 
 	def event_caret(self):
