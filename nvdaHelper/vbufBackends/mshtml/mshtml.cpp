@@ -1019,16 +1019,13 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	constexpr auto ORDERED_LIST_TAG_NODE_NAME = L"OL";
 	constexpr auto UNORDERED_LIST_TAG_NODE_NAME = L"UL";
 	constexpr auto DEFINITION_LIST_TAG_NODE_NAME = L"DL";
-	if(
-		0 == nodeName.compare(ORDERED_LIST_TAG_NODE_NAME)
-		|| 0 == nodeName.compare(UNORDERED_LIST_TAG_NODE_NAME)
+	if (0 == nodeName.compare(ORDERED_LIST_TAG_NODE_NAME)
 	){
 		//Ordered lists should number their list items
 		LIIndex=1;
 		// set the list index if list has start attribute
 		auto startIter = attribsMap.find(L"HTMLAttrib::start");
-		if(
-			startIter != attribsMap.end()
+		if (startIter != attribsMap.end()
 			&& !startIter->second.empty()
 		){
 			try {
@@ -1047,8 +1044,10 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			}
 		}
 		LIIndexPtr=&LIIndex;
-	} else if(nodeName.compare(DEFINITION_LIST_TAG_NODE_NAME) == 0) {
-		//Definition lists should not be numbered
+	} else if (0 == nodeName.compare(UNORDERED_LIST_TAG_NODE_NAME)
+		|| 0 == nodeName.compare(DEFINITION_LIST_TAG_NODE_NAME)
+	) {
+		//Definition lists and unordered lists should not be numbered
 		LIIndexPtr=nullptr;
 	}
 
