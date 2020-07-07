@@ -1,6 +1,6 @@
 #synthDrivers/sapi4.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited 
+# Copyright (C) 2006-2020 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -111,6 +111,10 @@ class SynthDriver(SynthDriver):
 		if charMode:
 			# Some synths stay in character mode if we don't explicitly disable it.
 			textList.append("\\RmS=0\\")
+		# Some SAPI4 synthesizers complete speech sequence just after the last text
+		# and ignore any indexes passed after it
+		# Therefore we add the pause of 1ms at the end
+		textList.append("\\PAU=1\\")
 		text="".join(textList)
 		flags=TTSDATAFLAG_TAGGED
 		self._ttsCentral.TextData(VOICECHARSET.CHARSET_TEXT, flags,TextSDATA(text),self._bufSinkPtr,ITTSBufNotifySink._iid_)
