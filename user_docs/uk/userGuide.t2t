@@ -1605,35 +1605,35 @@ NVDA надає підтримку консолі Windows через коман�
 Для деяких полів редагування, таких як поля пошуку в різних додатках Windows 10, NVDA може повідомити вас про те, що при введенні тексту з’явився список пропозицій.
 Список пропозицій щодо введення буде закритий, як тільки ви покинете поле редагування, і для деяких полів NVDA може повідомити вас про це.
 
-+++ Налаштування формування вводу (англ.) +++[InputCompositionSettings]
-The Input Composition category allows you to control how NVDA reports the input of Asian characters, such as with IME or Text Service input methods.
-Note that due to the fact that input methods vary greatly by available features and by how they convey information, it will most likely be necessary to configure these options differently for each input method to get the most efficient typing experience.
++++ Введення ієрогліфів +++[InputCompositionSettings]
+У цій категорії ви можете керувати тим, як NVDA повинна читати введення ієрогліфів у редакторах методів введення чи текстових службах.
+Зверніть увагу, що методи введення залежать від наявних можливостей і від того, наскільки вони передають інформацію, тому буде потрібно налаштувати ці параметри окремо для кожного методу, щоб отримати найбільш ефективний метод при наборі тексту.
 
-==== Automatically report all available candidates ====[InputCompositionReportAllCandidates]
-This option, which is on by default,  allows you to choose whether or not all visible candidates should be reported automatically when a candidate list appears or its page is changed.
-Having this option on for pictographic input methods such as chinese New ChangJie or Boshiami is useful, as you can automatically hear all symbols and their numbers and you can choose one right away.
-However, for phonetic input methods such as chinese New Phonetic, it may be more useful to turn this option off, as all the symbols will sound the same and you will have to use the arrow keys to navigate the list items individually to gain more information  from the character descriptions for each candidate.
+==== Автоматично повідомляти всі доступні варіанти ієрогліфів ====[InputCompositionReportAllCandidates]
+Цей типово позначений прапорець вказує, чи повинна NVDA автоматично читати всі видимі варіанти ієрогліфів при появі списку варіантів або при зміні сторінки варіантів.
+Якщо цей параметр увімкнено для піктографічних методів введення, таких, як «Китайський новий ChangJie» або Boshiami, то це буде вкрай корисно, оскільки NVDA автоматично читає всі символи і їхні номери, і ви можете одразу вибрати один з них.
+Але для фонетичних методів введення, таких, як «Китайський новий фонетичний», цей параметр краще вимкнути, оскільки всі символи звучатимуть однаково, і вам доведеться використовувати курсорні стрілки для переміщення по елементах списку окремо, щоб отримати більше інформації з описів ієрогліфів для кожного варіанта.
 
-==== Announce Selected Candidate ====[InputCompositionAnnounceSelectedCandidate]
-This option, which is on by default, allows you to choose whether NVDA should announce the selected candidate when a candidate list appears or when the selection is changed.
-For input methods where the selection can be changed with the arrow keys  (such as Chinese New Phonetic) this is necessary, but for some input methods it may be more efficient typing with this option turned off.
-Note that even with this option off, the review cursor will still be placed on the selected candidate allowing you to use object navigation / review to manually read this or other candidates.
+==== Повідомляти обраний варіант ====[InputCompositionAnnounceSelectedCandidate]
+Цей типово позначений прапорець вказує, чи повинна NVDA автоматично читати виділений варіант ієрогліфа при появі списку варіантів або при зміні виділення.
+Для методів введення, де виділення можна змінювати за допомогою курсорних клавіш (наприклад, для  «Китайського нового фонетичного»), це буде корисним, але для деяких методів введення для кращої ефективності при наборі тексту цей параметр краще вимкнути.
+Зверніть увагу, що навіть при вимкненні цього параметра переглядовий курсор все ще перебуватиме на виділеному варіанті ієрогліфа, що дозволить вам використовувати об'єктну навігацію/переглядовий курсор, щоб вручну прочитати цей або інший варіанти.
 
-==== Always include short character descriptions for candidates ====[InputCompositionCandidateIncludesShortCharacterDescription]
-This option, which is on by default, allows you to choose whether or not NVDA should provide a short description for each character in a candidate, either when its selected or when its automatically read when the candidate list appears.
-Note that for locales such as Chinese, the announcement of extra character descriptions for the selected candidate is not affected by this option.
-This option may be useful for Korean and japanese input methods.
+==== Завжди включати короткий опис ієрогліфа при читанні варіантів ====[InputCompositionCandidateIncludesShortCharacterDescription]
+Цей типово позначений прапорець вказує, чи повинна NVDA давати короткий символьний опис ієрогліфа при його виділенні або при появі списку варіантів.
+Зверніть увагу, що для китайської мови цей параметр не впливає на читання додаткового символьного опису варіанта.
+Цей параметр може бути корисним для корейського та японського методів введення.
 
-==== Report changes to the reading string ====[InputCompositionReadingStringChanges]
-Some input methods such as Chinese New Phonetic and New ChangJie have a reading string (sometimes known as a precomposition string).
-You can choose whether or not NVDA should announce new characters being typed into this reading string with this option.
-This option is on by default.
-Note some older input methods such as Chinese ChangJie may not use the reading string to hold precomposition characters, but instead use the composition string directly. Please see the next option for configuring reporting of the composition string.
+==== Повідомляти зміни у рядку попереднього формування ====[InputCompositionReadingStringChanges]
+для деяких методів введення, таких, як «Китайський новий фонетичний» і «Новий ChangJie», є рядок читання, або рядок попереднього формування.
+Цей параметр вказує, чи повинна NVDA читати нові символи, які друкуються в рядку попереднього формування.
+Він типово увімкнений.
+Зверніть увагу, що деякі застарілі методи введення, такі як «Китайський ChangJie», можливо, не використовують такий тип рядка для накопичення символів попереднього формування, але замість цього ви можете скористатися безпосередньо рядком формування введення. Будь ласка, дивіться наступний параметр, щоб налаштувати читання рядків формування введення.
 
-==== Report changes to the composition string ====[InputCompositionCompositionStringChanges]
-After reading or precomposition data has been combined into a valid pictographic symbol, most input methods place this symbol into a composition string for temporary storage along with other combined symbols before they are finally inserted into the document.
-This option allows you to choose whether or not NVDA should report new symbols as they appear  in the composition string.
-This option is on by default.
+==== Повідомляти зміни у рядку формування ====[InputCompositionCompositionStringChanges]
+Після того, як правильний піктографічний символ буде скомпонований з даних попереднього формування, більшість методів введення поміщають його в рядок формування введення для тимчасового зберігання поряд з іншими готовими символами, перед тим як їх, нарешті, вставлять в документ.
+Цей параметр вказує, чи повинна NVDA читати нові символи при появі в рядку формування.
+Він типово увімкнений.
 
 +++ Режим огляду (NVDA+control+b) +++[BrowseModeSettings]
 Категорія «Режим огляду» у діалозі налаштувань NVDA містить параметри керування читанням і навігацією у складних документах, таких як web-сторінки.

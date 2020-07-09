@@ -123,7 +123,7 @@ Voordat u op de knop Doorgaan  kunt drukken dient u het selectievakje aan te vin
 Er is ook een knop waarmee u kunt nagaan welke add-ons zullen worden uitgeschakeld.
 Raadpleeg het dialoogvenster [incompatibele add-ons van #incompatibleAddonsManager] voor meer hulp bij deze knop.
 
-+++ Opstarten vanaf het Aanmeldscherm van Windows +++[StartAtWindowsLogon]
++++ Gebruik NVDA bij het aanmelden +++[StartAtWindowsLogon]
 Met deze optie bepaalt u of NVDA automatisch moet worden opgestart wanneer u zich in het Aanmeldscherm bevindt nog voordat u een wachtwoord hebt ingevoerd. 
 Dit geldt ook voor Gebruikersaccountbeheer en andere beveiligde schermen.
 In geval van een nieuwe (of her-)installatie is deze optie standaard ingeschakeld.
@@ -652,6 +652,10 @@ U kunt bij voorbeeld horizontaal door de stelling gaan met de linker en rechter 
 Raadpleeg de documentatie van MathPlayer over navigatiecommando's voor nadere informatie: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm
 
 Als u naar het document wilt teruggaan drukt u op Escape.
+
+Wiskundige inhoud kan soms worden weergegeven als een knop of een ander type besturingselement waarmee bij activering ervan , een dialoogvenster  of meer informatie kan worden getoond welke betrekking heeft op de formule.
+Om  de knop of het besturingselement metdaarin  de formule te activeren, gebruikt u de toetscombinatie ctrl+enter.
+
 
 + Braille +[Braille]
 Als u over een brailleleesregel beschikt, kan NVDA informatie in braille weergeven.
@@ -1821,6 +1825,7 @@ In een omgeving die u niet vertrouwt kunt u [Getypte karakters uitspreken #Keybo
 ==== Probeer spraak te annuleren bij verlopen gebeurtenissen met focus ====[CancelExpiredFocusSpeech]
 Met deze optie kunt u ervoor zorgen dat geprobeerd wordt spraak bij verlopen gebeurtenissen met focus uitte zetten.
 Met name als u snel met Chrome door berichten in Gmail gaat, doet de gesproken informatie die NVDA geeft er mogelijk niet meer toe.
+Met de introductie van NVDA 2020.2 is deze fucntionaliteit bij wijze van experiment beschikbaar.
 
 ==== Systeemfocus automatisch instellen op focusgevoelige elementen in de Bladermodus ====[BrowseModeSettingsAutoFocusFocusableElements]
 Toets: NVDA+8
@@ -3094,14 +3099,14 @@ Hieronder volgen de commandoregelopties voor NVDA:
 | -l LOGLEVEL | --log-level=LOGLEVEL | Het laagste niveau gelogd bericht (debug 10, invoer/uitvoer 12, debugmelding 15,info 20, waarschuwing 30, fout 40, kritiek 50, uitgeschakeld 100), standaardinstelling is waarschuwing |
 | -c CONFIGPATH | --config-path=CONFIGPATH | Het pad waar alle instellingen voor NVDA worden opgeslagen. |
 | -m | --minimal | Geen geluiden, geen interface, geen opstartbericht etc. |
-| -s | --secure | Veilige modus: schakelt Python consool-eigenschappen  uit zoals profielen voor aanmaken, verwijderen, hernoemen etc., op update controleren, een selectievakje in het Welkomsscherm en in Instellingen in de categorie Algemeen, (bijv. NVDA starten na het aanmelden, Configuratie opslaan bij afsluiten) alsmede     logviewer en log-eigenschappen vaak gebruikt in beveiligde schermen. Merk ook op  dat dit commando het onmogelijk maakt  instellingen  in system config op te slaan en de map Handelingen wordt niet op schijf bewaard. |
+| -s | --secure | Veilige modus: schakelt Python consool-eigenschappen  uit zoals profielen voor aanmaken, verwijderen, hernoemen etc., op update controleren, een selectievakje in het Welkomsscherm en in Instellingen in de categorie Algemeen, (bijv. NVDA gebruiken bij aanmelden, Configuratie opslaan bij afsluiten) alsmede     logviewer en log-eigenschappen vaak gebruikt in beveiligde schermen. Merk ook op  dat dit commando het onmogelijk maakt  instellingen  in system config op te slaan en de map Handelingen wordt niet op schijf bewaard. |
 | Geen | --disable-addons | Add-ons buiten werking gesteld. |
 | geen | --debug-logging | Loggen op Debug niveau alleen voor deze sessie inschakelen. Met deze instelling wordt elk ander niveau van loggen buiten werking gesteld ( ""--loglevel"", -l) gegeven argument, optie niet loggen inbegrepen. |
 | Geen | --no-logging | loggen volledig uitschakelen terwijl NVDA in gebruik is. Deze instelling kan onderdrukt worden als een logniveau ( ""--loglevel"", -l) wordt gespecifieerd vanuit commandoregel of als debug-loggen wordt ingeschakeld. |
 | Geen | --no-sr-flag | Verander de systeem-brede vlag voor de schermlezer niet. |
 | Geen | --install | Installeert NVDA (de zojuist geïnstalleerde kopie wordt gestart) |
 | Geen | --install-silent | Silently stille installatie van NVDA (de zojuist geïnstalleerde kopie wordt niet gestart) |
-| Geen | --enable-start-on-logon=True|False | Bij het installeren, NVDA laten [starten bij aanmelding #StartAtWindowsLogon] |
+| Geen | --enable-start-on-logon=True|False | Bij het installeren NVDA [ gebruiken  voor aanmelding bij Windows #StartAtWindowsLogon] |
 | Geen | --Create-portable | Draagbare kopie van NVDA wordt aangemaakt (waarbij de aangemaakte kopie vervolgens opstart). Het pad voor de draagbare kopie dient te worden opgegeven. |
 | Geen | --Create-portable-silent | Draagbare kopie van NVDA wordt aangemaakt (waarbij aangemaakte kopie vervolgens niet opstart). Het pad voor de draagbare kopie dient te worden opgegeven. |
 | Geen | --portable-path=PORTABLEPATH | Het pad waar een draagbare kopie wordt aangemaakt. |

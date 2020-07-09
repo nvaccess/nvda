@@ -631,7 +631,7 @@ Se ci si trova in modalità navigazione, sarà sufficiente spostare il cursore d
 Se non ci si trova in modalità navigazione:
 + Spostare il cursore di controllo in un contenuto di tipo matematico.
 Da impostazioni predefinite, il cursore di controllo segue il cursore di sistema, sicché sarà sufficiente muoversi col cursore standard alla posizione desiderata.
-+Poi, utilizzare il comando seguente:
++ Poi, utilizzare il comando seguente:
 +
 
 %kc:beginInclude
@@ -644,6 +644,10 @@ Ad esempio, ci si potrà spostare attraverso l'espressione con i tasti freccia s
 Si prega di consultare la [documentazione di MathPlayer sui comandi di navigazione https://www.dessci.com/en/products/mathplayer/navigation_commands.htm] per ulteriori informazioni.
 
 Quando si desidera tornare al documento, è sufficiente premere il tasto Esc.
+
+A volte il contenuto matematico può essere visualizzato come un pulsante o altri tipi di elementi che, se attivati, possono visualizzare una finestra di dialogo o ulteriori informazioni relative alla formula.
+Per attivare il pulsante o l'elemento contenente la formula, premere ctrl + invio.
+
 
 + Braille +[Braille]
 Se si possiede un Display Braille, NVDA sarà in grado di mostrare le informazioni sulla riga braille.
@@ -1146,10 +1150,10 @@ Un controllo che permette di selezionare con quanta inflessione (aumento e decad
 ==== Cambio automatico della lingua ====[VoiceSettingsLanguageSwitching]
 Questa casella di controllo permette di stabilire se NVDA debba cambiare al volo la lingua con cui parla, nel caso all'interno del testo che si sta leggendo siano presenti i marcatori appositi.
 Questa opzione risulta abilitata di default.
-Inoltre, si ricorda che soltanto Espeak NG al momento supporta questa funzionalità.
 
 ==== cambiamento automatico dialetti (quando supportato) ====[VoiceSettingsDialectSwitching]
-Se l'impostazione cambio automatico della lingua è attiva, questa casella di controllo farà in modo che NVDA modifichi anche il dialetto della lingua in uso. Ad esempio, potrebbe essere possibile passare da un "american English" ad un "british English".
+Se l'impostazione cambio automatico della lingua è attiva, questa casella di controllo farà in modo che NVDA modifichi anche il dialetto della lingua in uso.
+Ad esempio, potrebbe essere possibile passare da un "american English" ad un "british English".
 L'impostazione è disabilitata di default.
 
 %kc:setting
@@ -1173,20 +1177,21 @@ In ogni caso, si consiglia di disattivare questa opzione nella circostanza in cu
 Si noti che le descrizioni dei caratteri aggiunte manualmente vengono salvate nella propria configurazione utente.
 Perciò, se si modifica la descrizione di un'emoji, essa verrà letta a prescindere dal fatto che l'opzione sia attiva o meno.
 è possibile aggiungere, rimuovere o modificare le descrizioni dei simboli nella finestra [Pronuncia punteggiatura/simboli #SymbolPronunciation].
+
 Per attivare o disattivare l'inclusione dei dati del consorzio Unicode da qualsiasi punto ci si trovi, assegnare un gesto personalizzato usando la [Finestra di dialogo Tasti e gesti di immissione #InputGestures].
 
 ==== Percentuale di cambio tono  per lettere maiuscole ====[VoiceSettingsCapPitchChange]
 Questo campo editazione permette di digitare un numero che sarà equivalente alla variazione di altezza (pitch) effettuato dalla sintesi vocale in presenza di lettere maiuscole.
 Questo valore lavora in percentuale, perciò un valore negativo abbasserà il pitch, mentre uno positivo lo alzerà.
 Per non effettuare alcuna modifica, digitare 0.
+Di solito, NVDA aumenta leggermente il tono per qualsiasi lettera maiuscola, ma alcuni sintetizzatori potrebbero non supportare in maniera ottimale questa funzione.
+Nel caso in cui il cambiamento del tono per le lettere maiuscole non sia ben supportato, si consiglia di servirsi delle opzioni [Leggi "cap" prima delle maiuscole #SpeechSettingsSayCapBefore] e/o [ Emetti un beep per le maiuscole #SpeechSettingsBeepForCaps] instead.
 
 ==== Leggi Cap prima delle Maiuscole ====[VoiceSettingsSayCapBefore]
 Una casella di controllo che, se attivata, istruisce NVDA a dire la parola "CAP" in presenza di una lettera maiuscola, se raggiunta scorrendo il testo con le frecce o se digitata a mano. 
-Di solito, la parola CAP viene pronunciata con un'altezza di tono maggiore, ma poiché non tutti i sintetizzatori supportano questa opzione, è possibile che tale caratteristica non funzioni correttamente.
 
 ==== Emetti un beep per le maiuscole ====[VoiceSettingsBeepForCaps]
 Se questa casella di controllo viene attivata, NVDA emetterà un leggero beep ogni qualvolta verrà incontrata una lettera maiuscola. 
-Questa opzione, assieme alla precedente, è utile in quelle sintesi vocali che non possono modificare l'altezza in presenza di lettere maiuscole.
 
 ==== Utilizza la modalità spelling se supportata ====[VoiceSpellingFunctionality] ====[VoiceSpellingFunctionality]
 Alcune parole sono costituite soltanto da un singolo carattere, ma talvolta, la pronuncia può risultare diversa se il carattere viene annunciato da solo  (come quando viene fatto lo spelling), oppure come una parola.
@@ -1197,7 +1202,6 @@ La maggior parte dei sintetizzatori supportano questa funzione.
 Generalmente, si consiglia di abilitare questa impostazione.
 Talvolta, può succedere che alcune sintesi Microsoft Speech Api si comportino in modo strano nell'eseguire lo spelling.
 In caso ciò avvenga, consigliamo di disattivare questa caratteristica.
-
 
 +++ Seleziona sintetizzatore (NVDA+control+s) +++[SelectSynthesizer]
 La finestra Sintetizzatore, che si apre premendo il pulsante cambia... dalla categoria voce della finestra impostazioni di NVDA, consente di selezionare con quale sintesi vocale NVDA debba parlare.
@@ -1552,8 +1556,9 @@ Molte finestre o controlli visualizzano dei messaggi o suggerimenti quando si sp
 
 ==== Annuncia notifiche ====[ObjectPresentationReportNotifications]
 Questa casella di controllo, se attivata, istruisce NVDA ad annunciare i fumetti d'aiuto e le notifiche a scomparsa quando appaiono. 
-I fumetti assomigliano ai suggerimenti (tool-tips), ma in genere sono più larghi come dimensioni e vengono associati ad eventi di sistema come ad esempio il collegamento o scollegamento di un cavo di rete oppure avvisi inerenti la sicurezza.
-Le notifiche a scomparsa sono state introdotte in Windows10 e appaiono nel centro notifiche del system tray, informando su diversi eventi (ad es. se è stato scaricato un aggiornamento, se è arrivata una nuova e-mail nella posta in arrivo, ecc.).
+- I fumetti assomigliano ai suggerimenti (tool-tips), ma in genere sono più larghi come dimensioni e vengono associati ad eventi di sistema come ad esempio il collegamento o scollegamento di un cavo di rete oppure avvisi inerenti la sicurezza.
+- Le notifiche a scomparsa sono state introdotte in Windows10 e appaiono nel centro notifiche del system tray, informando su diversi eventi (ad es. se è stato scaricato un aggiornamento, se è arrivata una nuova e-mail nella posta in arrivo, ecc.).
+
 
 ==== Leggi i tasti di scelta rapida degli oggetti ====[ObjectPresentationShortcutKeys]
 Quando questa casella di controllo è attivata, NVDA pronuncerà il tasto caldo dell'oggetto o del controllo focalizzato. 
@@ -1803,6 +1808,7 @@ In ambienti non sicuri, è preferibile disattivare temporaneamente [Leggi i cara
 ==== Tenta di non leggere informazioni obsolete concernenti il focus ====
 Questa funzione cerca di inibire la lettura di informazioni obsolete che riguardano il focus di sistema.
 In particolare, lo spostamento rapido tra i messaggi in Gmail mentre si utilizza Chrome rischia di far leggere a NVDa informazioni non più accurate. Questa opzione cerca di risolvere il problema.
+Questa funzionalità è sperimentale a partire da NVDA 2020.2.
 
 ==== Spostamento automatico del focus in modalità navigazione ====[BrowseModeSettingsAutoFocusFocusableElements]
 Tasto: NVDA+8
