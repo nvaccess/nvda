@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-30 23:50+1000\n"
-"PO-Revision-Date: 2020-04-08 10:39+0100\n"
+"POT-Creation-Date: 2020-07-03 00:10+1000\n"
+"PO-Revision-Date: 2020-07-06 00:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
@@ -126,7 +126,7 @@ msgstr "Tartalom lábléc"
 #. Translators: Reported for the main landmark, normally found on web pages.
 msgctxt "aria"
 msgid "main"
-msgstr "fő"
+msgstr "fő régió"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
 msgctxt "aria"
@@ -629,7 +629,7 @@ msgstr "Soros: {portName}"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
-msgstr "A bevitt adatok nem megfelelőek"
+msgstr "Nem támogatott beviteli mód"
 
 #. Translators: Reported when a braille input modifier is released.
 #, python-brace-format
@@ -921,15 +921,13 @@ msgstr "Héber 8 pontos számítógépes braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Israeli grade 1"
-msgstr "Ír, rövidítési fokozat 1"
+msgstr "Izraeli, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Israeli 8 dot computer braille"
-msgstr "Olasz 8 pontos számítógépes braille"
+msgstr "Izraeli 8 pontos számítógépes braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1033,9 +1031,8 @@ msgstr "Manipuri, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Malay grade 2"
-msgstr "Malajálam, rövidítési fokozat 1"
+msgstr "Maláj, rövidítési fokozat 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1139,9 +1136,8 @@ msgstr "Román"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Russian computer braille"
-msgstr "Perzsa 8 pontos számítógépes braille"
+msgstr "Orosz számítógépes braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1200,21 +1196,18 @@ msgstr "Török, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Ukrainian grade 1"
-msgstr "Horvát, rövidítési fokozat 1"
+msgstr "Ukrán, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Ukrainian computer braille"
 msgstr "Perzsa 8 pontos számítógépes braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Uzbek grade 1"
-msgstr "Cseh, rövidítési fokozat 1"
+msgstr "Üzbég, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3321,20 +3314,18 @@ msgid "Toggles on and off the reporting of font attributes"
 msgstr "Betűtípus paraméterek bemondásának be és kikapcsolása"
 
 #. Translators: Input help mode message for toggle superscripts and subscripts command.
-#, fuzzy
 msgid "Toggles on and off the reporting of superscripts and subscripts"
-msgstr "Kiemelés jelzésének be és kikapcsolása"
+msgstr "Felső és alsó index jelzésének be és kikapcsolása"
 
 #. Translators: The message announced when toggling the report superscripts and subscripts
 #. document formatting setting.
 msgid "report superscripts and subscripts on"
-msgstr ""
+msgstr "Felső és alsó index jelzése bekapcsolva"
 
 #. Translators: The message announced when toggling the report superscripts and subscripts
 #. document formatting setting.
-#, fuzzy
 msgid "report superscripts and subscripts off"
-msgstr "Jelzőpontok és területek jelzése kikapcsolva"
+msgstr "Felső és alsó index jelzése kikapcsolva"
 
 # itt viszont inkább megáll a jelzés szó a report fordításaként, mert a
 # címsorokat elég megkülönböztetni környezetüktől a szintjük bemondásával
@@ -4118,9 +4109,8 @@ msgstr ""
 "háromszori lenyomásra a vágólapra másolja."
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-#, fuzzy
 msgid "Reads all controls in the active window"
-msgstr "Felolvassa a megjegyzés ablak tartalmát."
+msgstr "Felolvassa az aktív ablak minden vezérlőjét."
 
 #. Translators: GUI development tool, to get information about the components used in the NVDA GUI
 msgid ""
@@ -4140,9 +4130,8 @@ msgstr ""
 "adatokat."
 
 #. Translators: Input help mode message for Open user configuration directory command.
-#, fuzzy
 msgid "Opens NVDA configuration directory for the current user."
-msgstr "Az NVDA felhasználói beállításai könyvtárának böngészése"
+msgstr "Megnyitja az NVDA felhasználói beállításainak a mappáját."
 
 #. Translators: A mode where no progress bar updates are given.
 msgid "No progress bar updates"
@@ -4351,28 +4340,25 @@ msgid "Shows the NVDA input gestures dialog"
 msgstr "Megnyitja az NVDA Beviteli parancsok párbeszédablakát."
 
 #. Translators: Input help mode message for the report current configuration profile command.
-#, fuzzy
 msgid "Reports the name of the current NVDA configuration profile"
-msgstr "Elmenti a jelenlegi beállításokat."
+msgstr "Bejelenti az aktív NVDA beállítási profil nevét."
 
 #. Translators: Message announced when the command to report the current configuration profile and
 #. the default configuration profile is active.
-#, fuzzy
 msgid "normal configuration profile active"
-msgstr "Alapértelmezett konfiguráció"
+msgstr "Alapértelmezett profil aktív"
 
 #. Translators: Message announced when the command to report the current configuration profile
 #. is active. The placeholder '{profilename}' is replaced with the name of the current active profile.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{profileName} configuration profile active"
-msgstr "{profile} profil kézzel aktiválva"
+msgstr "{profileName} profil aktív"
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
 msgstr "Elmenti a jelenlegi beállításokat."
 
 #. Translators: Input help mode message for apply last saved or default settings command.
-#, fuzzy
 msgid ""
 "Pressing once reverts the current configuration to the most recently saved "
 "state. Pressing three times resets to factory defaults."
@@ -4818,9 +4804,8 @@ msgid "User Guide"
 msgstr "Felhasználói útmutató"
 
 #. Translators: A label for a shortcut in start menu to open NVDA what's new.
-#, fuzzy
 msgid "What's new"
-msgstr "ú&jdonságok"
+msgstr "Újdonságok"
 
 #. Translators: A file extension label for NVDA add-on package.
 msgid "NVDA add-on package"
@@ -6859,7 +6844,7 @@ msgstr "felolvassa az adott üzenetet"
 #. Translators: This Outlook Express message has an attachment
 #. Translators: when an email has attachments
 msgid "has attachment"
-msgstr "Van melléklet"
+msgstr "Melléklet"
 
 #. Translators: this Outlook Express message is flagged
 msgid "flagged"
@@ -6867,7 +6852,7 @@ msgstr "Megjelölve"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
-msgstr "Melléklet"
+msgstr "Mellékletek"
 
 #. Translators: This is presented in outlook or live mail when creating a new email 'to:' or 'recipient:'
 msgid "To:"
@@ -7392,9 +7377,8 @@ msgid "MDV Lilli"
 msgstr "MDV Lilli kijelző"
 
 #. Translators: Names of braille displays
-#, fuzzy
 msgid "Nattiq nBraille"
-msgstr "Nincs braille kijelző"
+msgstr "Nattiq nBraille"
 
 #. Translators: Is used to indicate that braille support will be disabled.
 msgid "No braille"
@@ -7769,7 +7753,7 @@ msgstr "A &CapsLock billentyű használata NVDA gombként"
 #. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
 #. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "St&art NVDA after I sign in"
-msgstr ""
+msgstr "Az NVDA elindítása bejelentkezés után"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Show this dialog when NVDA starts"
@@ -8268,7 +8252,7 @@ msgstr "Profil átnevezése"
 #. Translators: An error displayed when the user attempts to rename a configuration profile
 #. with an empty name.
 msgid "A profile cannot have an empty name."
-msgstr ""
+msgstr "A profil neve nem maradhat üresen."
 
 #. Translators: An error displayed when renaming a configuration profile
 #. and a profile with the new name already exists.
@@ -8344,7 +8328,7 @@ msgstr ""
 #. Translators: An error displayed when the user attempts to create a configuration profile
 #. with an empty name.
 msgid "You must choose a name for this profile."
-msgstr ""
+msgstr "El kell nevezni a profilt."
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
@@ -8449,7 +8433,7 @@ msgstr ""
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Use NVDA during sign-in"
-msgstr ""
+msgstr "Az NVDA elindítása bejelentkezéskor"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "&Keep existing desktop shortcut"
@@ -8581,9 +8565,8 @@ msgid "Error saving log: %s"
 msgstr "Hiba történt a(z) %s napló mentésekor"
 
 #. Translators: A message indicating that log cannot be loaded to LogViewer.
-#, fuzzy
 msgid "Log is unavailable"
-msgstr "nem érhető el"
+msgstr "A napló nem áll rendelkezésre"
 
 #. Translators: A cancel button on a message dialog.
 #. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
@@ -8625,13 +8608,11 @@ msgstr "nyomkövetés"
 #. Translators: The label for a setting in general settings to select NVDA's interface language
 #. (once selected, NVDA must be restarted; the option user default means the user's Windows language
 #. will be used).
-#, fuzzy
 msgid "NVDA &Language (requires restart):"
 msgstr "&Nyelv (az NVDA újraindítása szükséges a megváltoztatáshoz):"
 
 #. Translators: The label for a setting in general settings to save current configuration when NVDA
 #. exits (if it is not checked, user needs to save configuration before quitting NVDA).
-#, fuzzy
 msgid "&Save configuration when exiting NVDA"
 msgstr "A beállítások automatikus el&mentése kilépéskor"
 
@@ -8653,7 +8634,6 @@ msgstr "Na&plózási szint"
 #. allow NVDA to come up in Windows login screen (useful if user
 #. needs to enter passwords or if multiple user accounts are present
 #. to allow user to choose the correct account).
-#, fuzzy
 msgid "Use NVDA during sign-in (requires administrator privileges)"
 msgstr ""
 "A&z NVDA elindítása a Windows bejelentkező képernyő használatakor "
@@ -8663,7 +8643,6 @@ msgstr ""
 #. current user settings to system settings (to allow current
 #. settings to be used in secure screens such as User Account
 #. Control (UAC) dialog).
-#, fuzzy
 msgid ""
 "Use currently saved settings during sign-in and on secure screens (requires "
 "administrator privileges)"
@@ -8770,12 +8749,10 @@ msgstr "&Beszédszintetizátor:"
 #. device combo in the synthesizer dialog. Examples of
 #. of an output device are default soundcard, usb
 #. headphones, etc.
-#, fuzzy
 msgid "Audio output  &device:"
 msgstr "&Kimeneti hangeszköz"
 
 #. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
-#, fuzzy
 msgid "Audio d&ucking mode:"
 msgstr "&Hangerő-igazítás"
 
@@ -8864,13 +8841,11 @@ msgstr "&Szavak bemondása íráskor"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#, fuzzy
 msgid "Speech &interrupt for typed characters"
 msgstr "Beszéd &megszakítása íráskor"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#, fuzzy
 msgid "Speech i&nterrupt for Enter key"
 msgstr "Beszéd m&egszakítása az enterrel"
 
@@ -8881,13 +8856,11 @@ msgstr "&Átfutás engedélyezése folyamatos felolvasáskor"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#, fuzzy
 msgid "&Beep if typing lowercase letters when caps lock is on"
 msgstr "&Hangjelzés kisbetű beírásakor, ha a capslock be van kapcsolva"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-#, fuzzy
 msgid "Speak c&ommand keys"
 msgstr "&Parancsbillentyűk bemondása"
 
@@ -8961,7 +8934,6 @@ msgstr "Az &egérmutató követése"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
-#, fuzzy
 msgid "&Simple review mode"
 msgstr "Egyszerű &áttekintőmód"
 
@@ -9038,7 +9010,6 @@ msgstr "Az elemen belüli pozíció be&mondása"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#, fuzzy
 msgid "&Guess object position information when unavailable"
 msgstr "A &pozíció meghatározása akkor is, ha nem támogatott"
 
@@ -9054,7 +9025,6 @@ msgstr "&Folyamatjelző:"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#, fuzzy
 msgid "Report backg&round progress bars"
 msgstr "A háttérben lévő folyamatjelzők változásának jelzése"
 
@@ -9149,14 +9119,13 @@ msgstr "Betű&méret"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#, fuzzy
 msgid "Font attrib&utes"
 msgstr "Betűtípus &paraméterek"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Su&perscripts and subscripts"
-msgstr ""
+msgstr "Felső és alsó &index"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9281,7 +9250,6 @@ msgstr "Szín és stílus"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-#, fuzzy
 msgid "Cell &borders:"
 msgstr "Cellaszegélyek"
 
@@ -9327,7 +9295,6 @@ msgstr "K&attintható"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#, fuzzy
 msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr ""
 "A kurzor pozíciójánál lévő formázások &változásának jelzése (a visszajelzés "
@@ -9401,25 +9368,22 @@ msgstr ""
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#, fuzzy
 msgid "Default (No)"
-msgstr "alapértelmezett Szín"
+msgstr "Alapértelmezett (Nem)"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#, fuzzy
 msgid "Yes"
-msgstr "&Igen"
+msgstr "Igen"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#, fuzzy
 msgid "No"
-msgstr "&Nem"
+msgstr "Nem"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
-msgstr ""
+msgstr "Beszéd megszakítása az időközben lejárt fókuszeseményeknél"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9717,9 +9681,8 @@ msgid "Add Symbol"
 msgstr "Írásjel Hozzáadása"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#, fuzzy
 msgid "&Symbol:"
-msgstr "Írásjel:"
+msgstr "&Írásjel:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
