@@ -10,10 +10,13 @@ import logging
 from abc import abstractmethod, ABCMeta
 import copy
 import re
+import threading
+from typing import Sequence, Tuple, Union, Dict
 import wx
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib import scrolledpanel
 from wx.lib.expando import ExpandoTextCtrl
+from wx.lib.mixins.treemixin import VirtualTree
 import wx.lib.newevent
 import winUser
 import logHandler
@@ -350,7 +353,7 @@ class SettingsPanel(wx.Panel, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCM
 
 class MultiCategorySettingsDialog(SettingsDialog):
 	"""A settings dialog with multiple settings categories.
-	A multi category settings dialog consists of a list view with settings categories on the left side, 
+	A multi category settings dialog consists of a list view with settings categories on the left side,
 	and a settings panel on the right side of the dialog.
 	Furthermore, in addition to Ok and Cancel buttons, it has an Apply button by default,
 	which is different  from the default behavior of L{SettingsDialog}.
@@ -753,7 +756,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
-			# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering  
+			# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
 			item=self.allowUsageStatsCheckBox=wx.CheckBox(self,label=_("Allow the NVDA project to gather NVDA usage statistics"))
 			item.Value=config.conf["update"]["allowUsageStats"]
 			if globalVars.appArgs.secure:
@@ -1863,7 +1866,7 @@ class BrowseModePanel(SettingsPanel):
 		self.useScreenLayoutCheckBox = sHelper.addItem(wx.CheckBox(self, label=useScreenLayoutText))
 		self.useScreenLayoutCheckBox.SetValue(config.conf["virtualBuffers"]["useScreenLayout"])
 
-		# Translators: The label for a checkbox in browse mode settings to 
+		# Translators: The label for a checkbox in browse mode settings to
 		# enable browse mode on page load.
 		enableOnPageLoadText = _("&Enable browse mode on page load")
 		self.enableOnPageLoadCheckBox = sHelper.addItem(wx.CheckBox(self, label=enableOnPageLoadText))
@@ -1943,7 +1946,7 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		sHelper.addItem(wx.StaticText(self, label=self.panelDescription))
 
-		# Translators: This is the label for a group of document formatting options in the 
+		# Translators: This is the label for a group of document formatting options in the
 		# document formatting settings panel
 		fontGroupText = _("Font")
 		fontGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=fontGroupText), wx.VERTICAL))
@@ -1995,7 +1998,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.colorCheckBox=fontGroup.addItem(wx.CheckBox(self,label=colorsText))
 		self.colorCheckBox.SetValue(config.conf["documentFormatting"]["reportColor"])
 
-		# Translators: This is the label for a group of document formatting options in the 
+		# Translators: This is the label for a group of document formatting options in the
 		# document formatting settings panel
 		documentInfoGroupText = _("Document information")
 		docInfoGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=documentInfoGroupText), wx.VERTICAL))
@@ -2019,7 +2022,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.spellingErrorsCheckBox=docInfoGroup.addItem(wx.CheckBox(self,label=spellingErrorText))
 		self.spellingErrorsCheckBox.SetValue(config.conf["documentFormatting"]["reportSpellingErrors"])
 
-		# Translators: This is the label for a group of document formatting options in the 
+		# Translators: This is the label for a group of document formatting options in the
 		# document formatting settings panel
 		pageAndSpaceGroupText = _("Pages and spacing")
 		pageAndSpaceGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=pageAndSpaceGroupText), wx.VERTICAL))
@@ -2056,13 +2059,13 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.lineIndentationCombo.SetSelection(curChoice)
 
 		# Translators: This message is presented in the document formatting settings panelue
-		# If this option is selected, NVDA will report paragraph indentation if available. 
+		# If this option is selected, NVDA will report paragraph indentation if available.
 		paragraphIndentationText = _("&Paragraph indentation")
 		self.paragraphIndentationCheckBox=pageAndSpaceGroup.addItem(wx.CheckBox(self,label=paragraphIndentationText))
 		self.paragraphIndentationCheckBox.SetValue(config.conf["documentFormatting"]["reportParagraphIndentation"])
 
 		# Translators: This message is presented in the document formatting settings panelue
-		# If this option is selected, NVDA will report line spacing if available. 
+		# If this option is selected, NVDA will report line spacing if available.
 		lineSpacingText=_("&Line spacing")
 		self.lineSpacingCheckBox=pageAndSpaceGroup.addItem(wx.CheckBox(self,label=lineSpacingText))
 		self.lineSpacingCheckBox.SetValue(config.conf["documentFormatting"]["reportLineSpacing"])
@@ -2073,7 +2076,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.alignmentCheckBox=pageAndSpaceGroup.addItem(wx.CheckBox(self,label=alignmentText))
 		self.alignmentCheckBox.SetValue(config.conf["documentFormatting"]["reportAlignment"])
 
-		# Translators: This is the label for a group of document formatting options in the 
+		# Translators: This is the label for a group of document formatting options in the
 		# document formatting settings panel
 		tablesGroupText = _("Table information")
 		tablesGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=tablesGroupText), wx.VERTICAL))
@@ -2120,7 +2123,7 @@ class DocumentFormattingPanel(SettingsPanel):
 				curChoice = 1
 		self.borderComboBox.SetSelection(curChoice)
 
-		# Translators: This is the label for a group of document formatting options in the 
+		# Translators: This is the label for a group of document formatting options in the
 		# document formatting settings panel
 		elementsGroupText = _("Elements")
 		elementsGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=elementsGroupText), wx.VERTICAL))
@@ -2568,7 +2571,7 @@ class AdvancedPanel(SettingsPanel):
 			self.enableControlsCheckBox.IsChecked() or
 			self.advancedControls.haveConfigDefaultsBeenRestored()
 		):
-			self.advancedControls.onSave()	
+			self.advancedControls.onSave()
 
 
 	def onEnableControlsCheckBox(self, evt):
@@ -2938,7 +2941,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 				style=wx.OK | wx.ICON_WARNING,
 				parent=self
 			)
-			return 
+			return
 
 		if self.IsModal():
 			# Hack: we need to update the display in our parent window before closing.
@@ -3723,7 +3726,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		# generally the advice on the wx documentation is: "In general, it is recommended to skip all non-command events
 		# to allow the default handling to take place. The command events are, however, normally not skipped as usually
 		# a single command such as a button click or menu item selection must only be processed by one handler."
-		def skipEventAndCall(handler):	
+		def skipEventAndCall(handler):
 			def wrapWithEventSkip(event):
 				if event:
 					event.Skip()
@@ -3937,18 +3940,131 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self._refreshVisibleItems()
 		evt.Skip()
 
+
+#: A type hint used throughout the InputGesturesDialog
+FlattenedGestureMappings = List[
+	Tuple[
+		str,  # category
+		List[
+			Tuple[
+				str,  #  command name
+				inputCore.AllGesturesScriptInfo
+			]]]]
+
+
 class InputGesturesDialog(SettingsDialog):
 	# Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 	title = _("Input Gestures")
 
-	def __init__(self, parent):
+	class GesturesTree(VirtualTree, wx.TreeCtrl):
+		def __init__(self, parent):
+			super().__init__(
+				parent,
+				size=wx.Size(600, 400),
+				style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE
+			)
+
+		def OnGetChildrenCount(self, index: Tuple[int, ...]) -> int:
+			filteredGestures: FlattenedGestureMappings = self.Parent.filteredGestures
+			newGesturePromptIndex: Optional[Tuple[int, ...]] = self.Parent.newGesturePromptIndex
+			newEmulatedGesturePromptIndex: Optional[Tuple[int, ...]] = self.Parent.newEmulatedGesturePromptIndex
+			if not index:  # Root node
+				return len(filteredGestures)
+			commands = filteredGestures[index[0]][1]
+			if len(index) == 1:  # Category
+				if newEmulatedGesturePromptIndex and newEmulatedGesturePromptIndex[:1] == index:
+					return 1 + len(commands)
+				return len(commands)
+			if len(index) == 2:  # Command
+				commandIndex = index[1]
+				if commandIndex >= len(commands):
+					# adding a emulated gesture
+					return 0
+				command = commands[commandIndex]
+				scriptInfo = command[1]
+				count = len(scriptInfo.gestures)
+				if (
+					newGesturePromptIndex
+					and newGesturePromptIndex[:2] == index
+				):
+					count += 1
+				return count
+			assert len(index) == 3
+			return 0  # Gesture
+
+		def OnGetItemText(self, index: Tuple[int, ...], column: int = 0) -> str:
+			filteredGestures: FlattenedGestureMappings = self.Parent.filteredGestures
+			flattenedGestures: FlattenedGestureMappings = self.Parent.flattenedGestures
+			newGesturePromptIndex: Optional[Tuple[int, ...]] = self.Parent.newGesturePromptIndex
+			newEmulatedGesturePromptIndex = self.Parent.newEmulatedGesturePromptIndex
+			if index == newGesturePromptIndex:
+				# Translators: The prompt to enter a gesture in the Input Gestures dialog.
+				return _("Enter input gesture:")
+			elif index == newEmulatedGesturePromptIndex:
+				# Translators: The prompt to enter an emulated gesture in the Input Gestures dialog.
+				return _("Enter gesture to emulate:")
+			category, commands = filteredGestures[index[0]]
+			if len(index) == 1:
+				if filteredGestures is flattenedGestures:
+					return category
+				nbResults = len(commands)
+				if nbResults == 1:
+					# Translators: The label for a filtered category in the Input Gestures dialog.
+					return _("{category} (1 result)").format(category=category)
+				# Translators: The label for a filtered category in the Input Gestures dialog.
+				return _("{category} ({nbResults} results)").format(
+					category=category, nbResults=len(commands)
+				)
+			command, scriptInfo = commands[index[1]]
+			if len(index) == 2:
+				return command
+			assert len(index) == 3
+			return self.Parent._formatGesture(scriptInfo.gestures[index[2]])
+
+		def getData(self, index: Tuple[int, ...]) -> Union[inputCore.AllGesturesScriptInfo, str]:
+			assert 2 <= len(index) <= 3
+			category, commands = self.Parent.filteredGestures[index[0]]
+			command, scriptInfo = commands[index[1]]
+			if len(index) == 2:
+				return scriptInfo
+			return scriptInfo.gestures[index[2]]
+
+	def __init__(self, parent: "InputGesturesDialog"):
+		#: Token used to cancel async filtering
+		self.filterToken: object = False
+		#: The index in the GesturesTree of the prompt for entering a new gesture
+		self.newGesturePromptIndex: Optional[Tuple[int, ...]] = None
+		self.newEmulatedGesturePromptIndex: Optional[Tuple[int, ...]] = None
+		gestures: Dict[
+			str,  # category name
+			Dict[
+				str,  # command display name
+				inputCore.AllGesturesScriptInfo,
+			]
+		] = inputCore.manager.getAllGestureMappings(
+			obj=gui.mainFrame.prevFocus,
+			ancestors=gui.mainFrame.prevFocusAncestors
+		)
+		if inputCore.SCRCAT_KBEMU not in gestures:
+			self.gestures[inputCore.SCRCAT_KBEMU] = {}
+		self._kbEmuCategory = None
+		# Flatten the gestures mappings for faster access by the VirtualTree
+		self.flattenedGestures: FlattenedGestureMappings = []
+		for category in sorted(gestures):
+			commands = gestures[category]
+			self.flattenedGestures.append((
+				category,
+				[(command, commands[command]) for command in sorted(commands)]
+			))
+		#: The L{GesturesTree} actually reads from this attribute
+		self.filteredGestures: FlattenedGestureMappings = self.flattenedGestures
 		super().__init__(parent, resizeable=True)
 
 	def makeSettings(self, settingsSizer):
 		filterSizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 		filterLabel = wx.StaticText(self, label=pgettext("inputGestures", "&Filter by:"))
-		filter = self.filter = wx.TextCtrl(self)
+		filter = wx.TextCtrl(self)
 		filterSizer.Add(filterLabel, flag=wx.ALIGN_CENTER_VERTICAL)
 		filterSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
 		filterSizer.Add(filter, proportion=1)
@@ -3956,17 +4072,9 @@ class InputGesturesDialog(SettingsDialog):
 		settingsSizer.AddSpacer(5)
 		filter.Bind(wx.EVT_TEXT, self.onFilterChange, filter)
 
-		tree = self.tree = wx.TreeCtrl(self, size=wx.Size(600, 400), style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE )
-
-		self.treeRoot = tree.AddRoot("root")
+		tree = self.tree = self.GesturesTree(self)
 		tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.onTreeSelect)
 		settingsSizer.Add(tree, proportion=1, flag=wx.EXPAND)
-
-		self.gestures = inputCore.manager.getAllGestureMappings(obj=gui.mainFrame.prevFocus, ancestors=gui.mainFrame.prevFocusAncestors)
-		if inputCore.SCRCAT_KBEMU not in self.gestures:
-			self.gestures[inputCore.SCRCAT_KBEMU] = {}
-		self._kbEmuCategory = None
-		self.populateTree()
 
 		settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
 
@@ -3995,39 +4103,82 @@ class InputGesturesDialog(SettingsDialog):
 		settingsSizer.Add(bHelper.sizer, flag=wx.EXPAND)
 
 	def postInit(self):
+		self.tree.RefreshItems()
 		self.tree.SetFocus()
 
-	def populateTree(self, filter=''):
-		if filter:
-			#This regexp uses a positive lookahead (?=...) for every word in the filter, which just makes sure the word is present in the string to be tested without matching position or order.
-			# #5060: Escape the filter text to prevent unexpected matches and regexp errors.
-			# Because we're escaping, words must then be split on "\ ".
-			filter = re.escape(filter)
-			filterReg = re.compile(r'(?=.*?' + r')(?=.*?'.join(filter.split('\ ')) + r')', re.U|re.IGNORECASE)
-		self._kbEmuCategory = None
-		for category in sorted(self.gestures):
-			treeCat = self.tree.AppendItem(self.treeRoot, category)
-			if category == inputCore.SCRCAT_KBEMU:
-				self._kbEmuCategory = treeCat
-			commands = self.gestures[category]
-			for command in sorted(commands):
-				if filter and not filterReg.match(command):
-					continue
-				treeCom = self.tree.AppendItem(treeCat, command)
-				commandInfo = commands[command]
-				self.tree.SetItemData(treeCom, commandInfo)
-				for gesture in commandInfo.gestures:
-					treeGes = self.tree.AppendItem(treeCom, self._formatGesture(gesture))
-					self.tree.SetItemData(treeGes, gesture)
-			if not self.tree.ItemHasChildren(treeCat) and (treeCat != self._kbEmuCategory or filter):
-				self.tree.Delete(treeCat)
-			elif filter:
-				self.tree.Expand(treeCat)
+	def _onWindowDestroy(self, evt):
+		super()._onWindowDestroy(evt)
+		self.filterToken = None
 
 	def onFilterChange(self, evt):
-		filter=evt.GetEventObject().GetValue()
-		self.tree.DeleteChildren(self.treeRoot)
-		self.populateTree(filter)
+		filter = evt.GetEventObject().GetValue()
+		token = self.filterToken = object()
+		log.debug(f"new filter token {token}")
+		self.filter(token, filter)
+
+	def filter(self, token: object, filter: str):
+
+		def run():
+			try:
+				self._filter(token, filter)
+			except:  # noqa: E722
+				log.exception()
+
+		threading.Thread(
+			target=run,
+			name=f"{self.__class__.__module__}.{self.filter.__func__.__qualname__}",
+		).start()
+
+	def _filter(self, token: object, filter: str):
+		if not filter:
+			wx.CallAfter(self.refreshTree, token, self.flattenedGestures)
+			return
+		filteredGestures = []
+		# This regexp uses a positive lookahead (?=...) for every word in the filter, which just makes sure
+		# the word is present in the string to be tested without matching position or order.
+		# #5060: Escape the filter text to prevent unexpected matches and regexp errors.
+		# Because we're escaping, words must then be split on r"\ ".
+		filter = re.escape(filter)
+		pattern = re.compile(r"(?=.*?" + r")(?=.*?".join(filter.split(r"\ ")) + r")", re.U | re.IGNORECASE)
+		nbCommands = 0
+		for category, commands in self.flattenedGestures:
+			if token is not self.filterToken:
+				log.debug(f"filter token {token} superseded by {self.filterToken}")
+				return
+			filteredCommands = [
+				(command, scriptInfo)
+				for command, scriptInfo in commands
+				if pattern.match(command)
+			]
+			if filteredCommands:
+				filteredGestures.append((category, filteredCommands))
+				nbCommands += len(filteredCommands)
+		if token is not self.filterToken:
+			log.debug(f"filter token {token} superseded by {self.filterToken}")
+			return
+		# Expanding categories can be expensive: Only do it if there are few results.
+		wx.CallAfter(self.refreshTree, token, filteredGestures, expandCategories=nbCommands <= 10)
+
+	def refreshTree(
+			self,
+			token: object,
+			filteredGestures: FlattenedGestureMappings,
+			expandCategories: bool = False,
+	):
+		if token is not self.filterToken:
+			log.debug(f"filter token {token} superseded by {self.filterToken}")
+			return
+		self.tree.CollapseAll()
+		self.filteredGestures = filteredGestures
+		self.tree.RefreshItems()
+		if not expandCategories:
+			return
+		for index in range(len(self.filteredGestures)):
+			if token is not self.filterToken:
+				log.debug(f"filter token {token} superseded by {self.filterToken}")
+				return
+			# Expand categories
+			self.tree.Expand(self.tree.GetItemByIndex((index,)))
 
 	def _formatGesture(self, identifier):
 		try:
@@ -4040,50 +4191,59 @@ class InputGesturesDialog(SettingsDialog):
 			return identifier
 
 	def onTreeSelect(self, evt):
+		if evt:
+			evt.Skip()
 		# #7077: Check if the treeview is still alive.
 		try:
-			item = self.tree.Selection
+			index = self.tree.GetIndexOfItem(self.tree.Selection)
 		except RuntimeError:
 			return
-		data = self.tree.GetItemData(item)
-		isKbEmuCategory = item == self._kbEmuCategory
-		isCommand = isinstance(data, inputCore.AllGesturesScriptInfo)
-		isGesture = isinstance(data, str)
-		isObsoleteAddedKbEmuScriptInfo = (
-			isCommand
-			and data in self.addedKbEmuScriptInfos
-			and not self.tree.ItemHasChildren(item)
+		isCommand = len(index) == 2
+		isGesture = len(index) == 3
+		isKbEmuCategory = len(index) == 1 and self.filteredGestures[index[0]][0] == inputCore.SCRCAT_KBEMU
+		isObsoleteAddedKbEmuScriptInfo = ( # todo: what should this be
+			False
+			and isCommand
+			# and data in self.addedKbEmuScriptInfos
+			# and not self.tree.ItemHasChildren(item)
 		)
 		self.addButton.Enabled = isKbEmuCategory or isCommand or isGesture
-		self.removeButton.Enabled = isGesture or isObsoleteAddedKbEmuScriptInfo
+		self.removeButton.Enabled = isObsoleteAddedKbEmuScriptInfo or isGesture
 
 	def onAdd(self, evt):
 		if inputCore.manager._captureFunc:
 			return
 
-		treeSel = self.tree.Selection
-		if treeSel == self._kbEmuCategory:
-			# Translators: The prompt to enter an emulated gesture in the Input Gestures dialog.
-			treeCom = self.tree.AppendItem(treeSel, _("Enter gesture to emulate:"))
-			self.tree.SelectItem(treeCom)
-			self.tree.SetFocus()
+		selIdx = self.tree.GetIndexOfItem(self.tree.Selection)
+		log.info(f"selection: {self.tree.Selection} index: {selIdx}")
+
+		if len(selIdx) == 1:
+			selectedCategory = self.filteredGestures[selIdx[0]][0]
+			if selectedCategory != inputCore.SCRCAT_KBEMU:
+				log.error(f"selectedCategory: {selectedCategory!r}")
+				return
+			self.newEmulatedGesturePromptIndex = (selIdx[0], self.tree.OnGetChildrenCount(selIdx))
+			catItem = self.tree.GetItemByIndex(selIdx)
+			self.tree.Expand(catItem)
 
 			def addKbEmuGestureCaptor(gesture):
 				if not isinstance(gesture, keyboardHandler.KeyboardInputGesture) or gesture.isModifier:
 					return False
 				inputCore.manager._captureFunc = None
-				wx.CallAfter(self._addCapturedKbEmu, treeCom, gesture)
+				wx.CallAfter(self._addCapturedKbEmu, gesture)
 				return False
 			inputCore.manager._captureFunc = addKbEmuGestureCaptor
 		else:
-			treeCom = treeSel
-			scriptInfo = self.tree.GetItemData(treeCom)
-			if not isinstance(scriptInfo, inputCore.AllGesturesScriptInfo):
-				treeCom = self.tree.GetItemParent(treeCom)
-				scriptInfo = self.tree.GetItemPyData(treeCom)
-			# Translators: The prompt to enter a gesture in the Input Gestures dialog.
-			treeGes = self.tree.AppendItem(treeCom, _("Enter input gesture:"))
-			self.tree.SelectItem(treeGes)
+			comIdx = selIdx[:2]
+			scriptInfo = self.tree.getData(comIdx)
+			gesIdx = self.newGesturePromptIndex = comIdx + (self.tree.OnGetChildrenCount(comIdx),)
+			catIdx = comIdx[:1]
+			catItem = self.tree.GetItemByIndex(catIdx)
+			self.tree.RefreshChildrenRecursively(catItem)
+			comItem = self.tree.GetItemByIndex(comIdx)
+			self.tree.Expand(comItem)
+			gesItem = self.tree.GetItemByIndex(gesIdx)
+			self.tree.SelectItem(gesItem)
 			self.tree.SetFocus()
 
 			def addGestureCaptor(gesture):
@@ -4095,11 +4255,11 @@ class InputGesturesDialog(SettingsDialog):
 						# Disallow assigning an emulated gesture to itself
 						return False
 				inputCore.manager._captureFunc = None
-				wx.CallAfter(self._addCaptured, treeGes, scriptInfo, gesture)
+				wx.CallAfter(self._addCaptured, scriptInfo, gesture)
 				return False
 			inputCore.manager._captureFunc = addGestureCaptor
 
-	def _addCaptured(self, treeGes, scriptInfo, gesture):
+	def _addCaptured(self, scriptInfo, gesture):
 		gids = gesture.normalizedIdentifiers
 		if len(gids) > 1:
 			# Multiple choices. Present them in a pop-up menu.
@@ -4107,59 +4267,90 @@ class InputGesturesDialog(SettingsDialog):
 			for gid in gids:
 				disp = self._formatGesture(gid)
 				item = menu.Append(wx.ID_ANY, disp)
-				self.Bind(wx.EVT_MENU,
-					lambda evt, gid=gid, disp=disp: self._addChoice(treeGes, scriptInfo, gid, disp),
-					item)
+				self.Bind(
+					wx.EVT_MENU,
+					lambda evt, gid=gid, disp=disp: self._addChoice(scriptInfo, gid, disp),
+					item
+				)
 			self.PopupMenu(menu)
-			if not self.tree.GetItemData(treeGes):
+			if self.newGesturePromptIndex:
 				# No item was selected, so use the first.
-				self._addChoice(treeGes, scriptInfo, gids[0],
-					self._formatGesture(gids[0]))
+				self._addChoice(scriptInfo, gids[0], self._formatGesture(gids[0]))
 			menu.Destroy()
 		else:
-			self._addChoice(treeGes, scriptInfo, gids[0],
-				self._formatGesture(gids[0]))
+			self._addChoice(scriptInfo, gids[0], self._formatGesture(gids[0]))
 
-	def _addChoice(self, treeGes, scriptInfo, gid, disp):
+	def _addChoice(self, scriptInfo, gid, disp):
 		entry = (gid, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName)
 		try:
 			# If this was just removed, just undo it.
 			self.pendingRemoves.remove(entry)
 		except KeyError:
 			self.pendingAdds.add(entry)
-		self.tree.SetItemText(treeGes, disp)
-		self.tree.SetItemData(treeGes, gid)
 		scriptInfo.gestures.append(gid)
+		catIdx = self.newGesturePromptIndex[:1]
+		catItem = self.tree.GetItemByIndex(catIdx)
+		self.newGesturePromptIndex = None
+		self.tree.RefreshChildrenRecursively(catItem)
 		self.onTreeSelect(None)
 
-	def _addCapturedKbEmu(self, treeCom, gesture):
+	def _addCapturedKbEmu(self, gesture):
 		# Use the last normalized identifier, which is the most generic one
-		scriptName = gesture.normalizedIdentifiers[-1]
+		gestureToEmulate = gesture.normalizedIdentifiers[-1]
 		from globalCommands import GlobalCommands
-		scriptInfo = inputCore._AllGestureMappingsRetriever.makeKbEmuScriptInfo(GlobalCommands, scriptName)
-		self.tree.SetItemText(treeCom, scriptInfo.displayName)
-		self.tree.SetItemPyData(treeCom, scriptInfo)
-		self.addedKbEmuScriptInfos.add(scriptInfo)
+		scriptInfo = inputCore._AllGestureMappingsRetriever.makeKbEmuScriptInfo(GlobalCommands, gestureToEmulate)
+		item = (
+			# Translators: An gesture that will be emulated by some other new gesture. The token {emulateGesture}
+			# will be replaced by the gesture that can be triggered by a mapped gesture.
+			# E.G. Emulate key press: NVDA+b
+			_("Emulate key press: {emulateGesture}").format(emulateGesture=scriptInfo.displayName),
+			scriptInfo
+		)
+		for cat, gestures in self.flattenedGestures:
+			if cat == inputCore.SCRCAT_KBEMU:
+				gestures.append(item)
+				break
+		newEmulatedGesturePromptIndex = self.newEmulatedGesturePromptIndex
+		self.newEmulatedGesturePromptIndex = None
+		catIdx = newEmulatedGesturePromptIndex[:1]
+		log.info(f"catIdx: {catIdx!r}")
+		catItem = self.tree.GetItemByIndex(catIdx)
+		self.tree.RefreshChildrenRecursively(catItem)
+		gestureToEmulateItem = self.tree.GetItemByIndex(newEmulatedGesturePromptIndex)
+		self.tree.SelectItem(gestureToEmulateItem)
 		self.onTreeSelect(None)
 
 	def onRemove(self, evt):
-		treeSel = self.tree.Selection
-		data = self.tree.GetItemData(treeSel)
-		if data in self.addedKbEmuScriptInfos:
-			self.addedKbEmuScriptInfos.remove(data)
-		else:
-			treeCom = self.tree.GetItemParent(treeSel)
-			scriptInfo = self.tree.GetItemData(treeCom)
-			entry = (data, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName)
+		selectionId = self.tree.GetIndexOfItem(self.tree.Selection)
+		categoryId = selectionId[:1]
+		if len(selectionId) == 3:
+			gesture = self.tree.getData(selectionId)
+			comIdx = selectionId[:2]
+			scriptInfo = self.tree.getData(comIdx)
+			entry = (gesture, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName)
 			try:
 				# If this was just added, just undo it.
 				self.pendingAdds.remove(entry)
 			except KeyError:
 				self.pendingRemoves.add(entry)
-			scriptInfo.gestures.remove(data)
-		self.tree.Delete(treeSel)
-		# Explicitly trigger a selection here as the buttons don't get updated otherwise
-		self.onTreeSelect(None)
+			scriptInfo.gestures.remove(gesture)
+		elif len(selectionId) == 2:
+			catName, emuGestures = self.filteredGestures[categoryId[0]]
+			emuGestureId = selectionId[1]
+			if catName != inputCore.SCRCAT_KBEMU:
+				log.error(
+					f"Trying to remove command, only emulatedGestures can be removed from level of tree."
+					f" Trying to remove: {catName}"
+				)
+				return
+			del emuGestures[emuGestureId]
+		else:
+			log.error(
+				f"Unhandled selectionId: {selectionId}"
+			)
+			return
+		catItem = self.tree.GetItemByIndex(categoryId)
+		self.tree.RefreshChildrenRecursively(catItem)
 		self.tree.SetFocus()
 
 	def onReset(self, evt):
@@ -4190,12 +4381,8 @@ class InputGesturesDialog(SettingsDialog):
 			self.onCancel(None)
 			return
 		inputCore.manager.userGestureMap.save()
-		self.gestures = inputCore.manager.getAllGestureMappings(
-			obj=gui.mainFrame.prevFocus,
-			ancestors=gui.mainFrame.prevFocusAncestors
-		)
-		self.tree.DeleteChildren(self.treeRoot)
-		self.populateTree(filter=self.filter.GetValue())
+
+		self.refreshTree(self.filterToken, self.filteredGestures)
 		self.tree.SetFocus()
 
 	def onOk(self, evt):

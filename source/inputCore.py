@@ -15,6 +15,8 @@ import os
 import itertools
 import weakref
 import time
+from typing import Dict, Any
+
 import configobj
 import sayAllHandler
 import baseObject
@@ -569,6 +571,14 @@ class InputManager(baseObject.AutoPropertyObject):
 
 class _AllGestureMappingsRetriever(object):
 
+	results: Dict[
+		str,  # category name
+		Dict[
+			str,  # command display name
+			Any,  # AllGesturesScriptInfo
+		]
+	]
+
 	def __init__(self, obj, ancestors):
 		self.results = {}
 		self.scriptInfo = {}
@@ -619,6 +629,9 @@ class _AllGestureMappingsRetriever(object):
 		self.addObj(globalCommands.commands)
 
 	def addResult(self, scriptInfo):
+		"""
+		@type scriptInfo: AllGesturesScriptInfo
+		"""
 		self.scriptInfo[scriptInfo.cls, scriptInfo.scriptName] = scriptInfo
 		try:
 			cat = self.results[scriptInfo.category]
@@ -653,6 +666,9 @@ class _AllGestureMappingsRetriever(object):
 
 	@classmethod
 	def makeKbEmuScriptInfo(cls, scriptCls, scriptName):
+		"""
+		@rtype AllGesturesScriptInfo
+		"""
 		info = AllGesturesScriptInfo(scriptCls, scriptName)
 		info.category = SCRCAT_KBEMU
 		info.displayName = getDisplayTextForGestureIdentifier(
