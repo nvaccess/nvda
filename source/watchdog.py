@@ -58,6 +58,7 @@ def getFormattedStacksForAllThreads():
 	# If a Python function is entered by a thread that was not started by Python itself,
 	# It will have a frame, but won't be tracked by Python's threading module and therefore will have no name.
 	for ident, frame in sys._current_frames().items():
+		# The strings in the formatted stack all end with \n, so no join separator is necessary.
 		stack = "".join(traceback.format_stack(frame))
 		name = threadNamesByID.get(ident, "Unknown")
 		stacks.append(f"Python stack for thread {ident} ({name}):\n{stack}")
