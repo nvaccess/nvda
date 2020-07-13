@@ -456,7 +456,6 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 		macro_addHTMLAttributeToMap(L"scope",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	} else if (nodeName.compare(L"OL") == 0) {
 		macro_addHTMLAttributeToMap(L"start", false, pHTMLAttributeCollection2, attribsMap, tempVar, tempAttribNode);
-		macro_addHTMLAttributeToMap(L"type", false, pHTMLAttributeCollection2, attribsMap, tempVar, tempAttribNode);
 	}
 	macro_addHTMLAttributeToMap(L"longdesc",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"alt",true,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
