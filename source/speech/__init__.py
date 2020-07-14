@@ -2,7 +2,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler
+# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Julien Cochuyt
 
 """High-level functions to speak information.
 """ 
@@ -52,7 +53,6 @@ from .commands import (  # noqa: F401
 	WaveFileCommand,
 	ConfigProfileTriggerCommand,
 )
-
 from . import types
 from .types import (
 	SpeechSequence,
@@ -1281,7 +1281,7 @@ def getTextInfoSpeech(  # noqa: C901
 	if onlyInitialFields or (
 		isWordOrCharUnit
 		and len(textWithFields) > 0
-		and len(textWithFields[0]) == 1
+		and len(textWithFields[0].strip() if not textWithFields[0].isspace() else textWithFields[0]) == 1
 		and all(isControlEndFieldCommand(x) for x in itertools.islice(textWithFields, 1, None))
 	):
 		if not onlyCache:
@@ -1823,6 +1823,7 @@ def getControlFieldSpeech(  # noqa: C901
 		types.logBadSequenceTypes(tableCellSequence)
 		return tableCellSequence
 
+	content = attrs.get("content")
 	# General cases.
 	if ((
 		speakEntry and ((
@@ -1841,7 +1842,6 @@ def getControlFieldSpeech(  # noqa: C901
 		and fieldType == "start_inControlFieldStack"
 	)):
 		out = []
-		content = attrs.get("content")
 		if content and speakContentFirst:
 			out.append(content)
 		if placeholderValue:
@@ -1905,7 +1905,9 @@ def getControlFieldSpeech(  # noqa: C901
 		out = []
 		if ariaCurrent:
 			out.extend(ariaCurrentSequence)
-			types.logBadSequenceTypes(out)
+		if role == controlTypes.ROLE_GRAPHIC and content:
+			out.append(content)
+		types.logBadSequenceTypes(out)
 		return out
 	else:
 		return []
