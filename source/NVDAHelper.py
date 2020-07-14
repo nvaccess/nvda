@@ -400,7 +400,8 @@ def nvdaControllerInternal_typedCharacterNotify(threadID,ch):
 	if focus.windowClassName!="ConsoleWindowClass":
 		# Manually queue a call to executeEvent rather than using queueEvent,
 		# As Currently queueEvent uses a lock and there is a small chance it could deadlock
-		# If garbage collection within the lock caused a COM object from the same thread as the typed character to be released.
+		# If garbage collection within the lock
+		# caused a COM object from the same thread as the typed character to be released.
 		queueHandler.queueFunction(
 			queueHandler.eventQueue,
 			eventHandler.executeEvent, "typedCharacter", focus, ch=ch

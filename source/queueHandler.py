@@ -16,7 +16,7 @@ import core
 # as SimpleQueue is very light-weight, does not use locks
 # and ensures that garbage collection won't unexpectedly happen in the middle of queuing something
 # Which may cause a deadlock.
-eventQueue=SimpleQueue()
+eventQueue = SimpleQueue()
 
 generators={}
 lastGeneratorObjID=0
