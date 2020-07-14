@@ -4,7 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2020.2 =
-Highlights of this release include support for a new braille display from Nattiq, better support for ESET antivirus GUI and Windows Terminal, performance improvements in 1Password, and with Windows OneCore synthesizer. Plus many other important bug fixes and improvements.
+Najważniejsze zmiany w tej wersji to wsparcie nowego monitora brajlowskiego firmy Nattiq, lepsze wsparcie dla interfejsu graficznego programu antywirusowego ESET jak i programu Windows Terminal, poprawki wydajności w programie 1Password, poprawki wydajności w syntezatorach mowy OneCore jak i wiele ważnych zmian i poprawek.
 
 == Nowości ==
 - Wsparcie nowych monitorów brajlowskich:
@@ -12,23 +12,23 @@ Highlights of this release include support for a new braille display from Nattiq
 - Dodano skrypt służący do otwarcia katalogu konfiguracji użytkownika (skrót domyślnie nie przypisany). (#2214)
 - Lepsze wsparcie dla interfejsu graficznego programu Esed Antivirus. (#10894)
 - Dodano wsparcie dla terminala systemu Windows. (#10305)
-- Added a command to report the active configuration profile (no default gesture). (#9325)
-- Added a command to toggle reporting of subscripts and superscripts (no default gesture). (#10985)
-- Web applications (E.G. Gmail) no longer speak outdated information when moving focus rapidly. (#10885)
+- Dodano polecenie do odczytania aktualnego profilu konfiguracji (skrót domyślnie nieprzypisany). (#9325)
+- Dodano polecenie służące do przełączania odczytywania indeksów górnych i dolnych (skrót domyślnie nieprzypisany). (#10985)
+- W aplikacjach Internetowych, takich jak Gmail NVDA poprawnie odczytuje pozycję kursora, nawet jeżeli ten jest poruszany bardzo szybko. (#10885)
   - Ta eksperymentalna poprawka musi być ręcznie włączona poprzez opcję "Próba anulowania mowy dla wygasłych zdarzeń:" w panelu ustawieńń zaawansowanych.
-- Many more symbols have been added to the default symbols dictionary. (#11105)
+- Dodano wiele symboli do domyślnego słownika. (#11105)
 
 
 == Zmiany ==
-- Updated liblouis braille translator from 3.12 to [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0]. (#10832, #11221)
+- Zaktualizowano modół  liblouis braille translator z wersji 3.12 do [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0]. (#10832, #11221)
 - Odczytywanie indeksów górnych i dolnych jest teraz kontrolowane osobno od atrybutów czciąki. (#10919)
 - Przez zmiany w programie VS Code, NVDA nie wyłącza już trybu przeglądania w widoku kodu. (#10888)
-- NVDA no longer reports "top" and "bottom" messages when moving the review cursor directly to the first or last line of the current navigator object with the move to top and move to bottom review cursor scripts respectively. (#9551)
-- NVDA no longer reports  "left" and "right" messages when directly moving the review cursor to the first or last character of the line for the current navigator object with the move to beginning of line and move to end of line review cursor scripts respectively. (#9551)
+- NVDA nie wypowiada już wiadomości "Początek" i "Koniec" jeżeli kursor przeglądu  zostanie przeniesiony Na górę lub dół ekranu. (#9551)
+- NVDA nie wypowiada już wiadomości "Lewy" i "Prawy" kiedy kursor przeglądu przeniesiony zostaje na pierwszy lub ostatni znak. (#9551)
 
 
 == Poprawki błędów ==
-- NVDA now starts correctly when the log file cannot be created. (#6330)
+- NVDA startuje poprawnie nawet jeżeli niie da się utworzyć pliku dziennika. (#6330)
 - Naprawiono błąd powodujący niepoprawny komunikat odczytywany gdy zostanie usunięty wyraz przy pomocy skrótu CTRL+BACKSPACE w najnowszym wydaniu programu Microsoft Word 365. (#10851)
 - W programie Winamp, NVDA znowu będzie odczytywać status przełączników "powtarzanie" i "losowe odtwarzanie utworów". (#10945)
 - Naprawiono problem wydajności w programie 1Password. (#10508)
@@ -43,10 +43,10 @@ Highlights of this release include support for a new braille display from Nattiq
 - W trybie przeglądania z wyłączoną funkcją "Automatycznie ustaw kursor systemowy na elementach interaktywnych" możliwe jest teraz klikanie w elementy normalnie aktywowane przy pomocy klawisza TAB. (#8528)
 - W trybie przeglądania z wyłączoną funkcją "Automatycznie ustaw kursor systemowy na elementach interaktywnych", klikanie na niektóre elementy nie powoduje już zmian pozycji kursora. (#9886)
 - NVDA nie odgrywa już dźwięków błędów przy nawigacji po kontrolkach tekstowych Dev Express. (#10918)
-- The tool-tips of the icons in the system tray are no longer reported upon keyboard navigation if their text is equal to the name of the icons, to avoid double announcing. (#6656)
+- Naprawiono błąd powodujący podwujne odczytywanie ikoy zasobnika systemowego, jeżeli dymek podpowiedzi był taki sam jak jej nazwa. (#6656)
 - W trybie przeglądania z wyłączoną funkcją "Automatycznie ustaw kursor systemowy na elementach interaktywnych", przejście w tryb przeglądania przy pomocy skrótu NVDA+SPACJA podświetla element pod kursorem. (#11206)
 - Ponownie możliwym jest sprawdzenie aktualizacji NVDA na pewnych konfiguracjach na przykład czystych instalacjach systemu Windows. (#11253)
-- Focus is not moved in Java application when the selection is changed in an unfocused tree, table or list. (#5989)
+- Poprawiono błąd uniemożliwiający poprawne pozycjonowanie kursora w aplikacjach JAVA. (#5989)
 
 
 == Zmiany dla programistów ==
