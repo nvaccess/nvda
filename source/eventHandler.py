@@ -146,10 +146,12 @@ def _trackFocusObject(eventName, obj) -> None:
 	:param obj: the object to track if focused
 	"""
 	global lastQueuedFocusObject
+
 	if eventName == "gainFocus":
 		lastQueuedFocusObject = obj
-	setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, obj is lastQueuedFocusObject)
-
+		setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, True)
+	elif not hasattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME):
+		setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
 
 def _getFocusLossCancellableSpeechCommand(
 		obj,
@@ -161,27 +163,34 @@ def _getFocusLossCancellableSpeechCommand(
 	if not isinstance(obj, NVDAObject):
 		log.warning("Unhandled object type. Expected all objects to be descendant from NVDAObject")
 		return None
-	previouslyHadFocus: bool = getattr(
-		obj,
-		WAS_GAIN_FOCUS_OBJ_ATTR_NAME,
-		False
-	)
+
+	def previouslyHadFocus():
+		return getattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
+
+	def isLastFocusObj():
+		return obj is lastQueuedFocusObject
+
+	def isAncestorOfCurrentFocus():
+		return obj in api.getFocusAncestors()
 
 	def isSpeechStillValid():
-		from eventHandler import lastQueuedFocusObject
-		isLastFocusObj: bool = obj is lastQueuedFocusObject
-		stillValid = isLastFocusObj or not previouslyHadFocus
-
-		log._speechManagerDebug(
-			"checked if valid (isLast: %s, previouslyHad: %s): %s",
-			isLastFocusObj,
-			previouslyHadFocus,
-			obj.name
+		stillValid = (
+			isLastFocusObj()
+			or not previouslyHadFocus()
+			or isAncestorOfCurrentFocus()
 		)
 		return stillValid
 
-	return _CancellableSpeechCommand(isSpeechStillValid)
+	if not speech.manager._shouldDoSpeechManagerLogging():
+		return _CancellableSpeechCommand(isSpeechStillValid)
 
+	def getDevInfo():
+		return (
+			f"isLast: {isLastFocusObj()}"
+			f", previouslyHad: {previouslyHadFocus()}"
+			f", isAncestorOfCurrentFocus: {isAncestorOfCurrentFocus()}"
+		)
+	return _CancellableSpeechCommand(isSpeechStillValid, getDevInfo)
 
 def executeEvent(eventName, obj, **kwargs):
 	"""Executes an NVDA event.
@@ -197,14 +206,6 @@ def executeEvent(eventName, obj, **kwargs):
 		if isGainFocus and obj.focusRedirect:
 			obj=obj.focusRedirect
 		sleepMode=obj.sleepMode
-		if isGainFocus and speech.manager._shouldCancelExpiredFocusEvents():
-			log._speechManagerDebug("executeEvent: Removing cancelled speech commands.")
-			# ask speechManager to check if any of it's queued utterances should be cancelled
-			speech._manager.removeCancelledSpeechCommands()
-			# Don't skip objects without focus here. Even if an object no longer has focus, it needs to be processed
-			# to capture changes in document depth. For instance jumping into a list?
-			# This needs further investigation; when the next object gets focus, it should
-			# allow us to capture this information?
 		if isGainFocus and not doPreGainFocus(obj, sleepMode=sleepMode):
 			return
 		elif not sleepMode and eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):
@@ -219,6 +220,22 @@ def doPreGainFocus(obj,sleepMode=False):
 	oldFocus=api.getFocusObject()
 	oldTreeInterceptor=oldFocus.treeInterceptor if oldFocus else None
 	api.setFocusObject(obj)
+
+	if speech.manager._shouldCancelExpiredFocusEvents():
+		log._speechManagerDebug("executeEvent: Removing cancelled speech commands.")
+		# ask speechManager to check if any of it's queued utterances should be cancelled
+		# Note: Removing cancelled speech commands should happen after all dependencies for the isValid check
+		# have been updated:
+		# - lastQueuedFocusObject
+		# - obj.WAS_GAIN_FOCUS_OBJ_ATTR_NAME
+		# - api.getFocusAncestors()
+		# These are updated:
+		# - lastQueuedFocusObject & obj.WAS_GAIN_FOCUS_OBJ_ATTR_NAME
+		#   - Set in stack: _trackFocusObject, eventHandler.queueEvent
+		#   - Which results in executeEvent being called, then doPreGainFocus
+		# - api.getFocusAncestors() via api.setFocusObject() called in doPreGainFocus
+		speech._manager.removeCancelledSpeechCommands()
+
 	if globalVars.focusDifferenceLevel<=1:
 		newForeground=api.getDesktopObject().objectInForeground()
 		if not newForeground:

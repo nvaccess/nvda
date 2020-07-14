@@ -158,7 +158,7 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 		)))
 
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
-		startOnLogonText = _("Start NVDA during sign-in")
+		startOnLogonText = _("Use NVDA during sign-in")
 		self.startOnLogonCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=startOnLogonText))
 		if globalVars.appArgs.enableStartOnLogon is not None:
 			self.startOnLogonCheckbox.Value = globalVars.appArgs.enableStartOnLogon
@@ -320,7 +320,7 @@ class PortableCreaterDialog(wx.Dialog):
 		self.startAfterCreateCheckbox = sHelper.addItem(wx.CheckBox(self, label=startAfterCreateText))
 		self.startAfterCreateCheckbox.Value = False
 
-		bHelper = sHelper.addDialogDismissButtons(gui.guiHelper.ButtonHelper(wx.HORIZONTAL))
+		bHelper = sHelper.addDialogDismissButtons(gui.guiHelper.ButtonHelper(wx.HORIZONTAL), separated=True)
 		
 		continueButton = bHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
 		continueButton.SetDefault()
