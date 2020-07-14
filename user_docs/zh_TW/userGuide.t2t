@@ -3013,7 +3013,6 @@ Windows 10 可自動偵測到該點顯器，若您使用舊版 Windows （Window
 您可以從製造商的網站上取得它們。
 
 以下是針對 Nattiq Technologies 點顯器操作 NVDA 的快速鍵。
-Please see the display's documentation for descriptions of where these keys can be found.
 請參閱點顯器的說明文件來了解這些按鍵的位置。
 %kc:beginInclude
 || 名稱 | 按鍵 |
@@ -3032,6 +3031,7 @@ Please see the display's documentation for descriptions of where these keys can 
 
 針對附有點字鍵盤的顯示器，目前 BRLTTY 可自行處理點字輸入。
 因此，NVDA 的點字輸入轉譯表設定就與其無關聯了。
+
 BRLTTY 並不支援NVDA背景自動偵側的功能。
 
 下列為 BRLTTY 指令在 NVDA 的配置狀況。
@@ -3064,8 +3064,8 @@ nvda -q
 | nvda -mc CONFIGPATH | NVDA 會在沒有啟動音效和訊息的情況啟動 ，並套用使用者的組態 |
 | nvda -mc CONFIGPATH --disable-addons | 同上一個命令，另加上停用附加元件。 |
 
-有些命令列的附加選項也接受一些額外的參數，例如:記錄檔應多詳細，或使用者的組態資料夾的路徑。這些參數若是使用短型態的附加選項，應以空格隔開；若是使用長型態的附加選項，則應以等號 (=)隔開，例如:
-
+有些命令列的附加選項也接受一些額外的參數，例如:記錄檔應多詳細，或使用者組態資料夾的路徑。
+這些參數若是使用短型態的附加選項，應以空格隔開；若是使用長型態的附加選項，則應以等號 (=)隔開，例如:
 | nvda -l 10 | 要求 NVDA 啟動時，事件記錄等級設定為「偵錯」。 |
 | nvda --log-file=c:\nvda.log | 要求NVDA將事件記錄寫入 c:\nvda.log |
 | nvda --log-level=20 -f c:\nvda.log | 要求 NVDA 啟動時，事件記錄等級設定為「資訊」，並將其寫入 c:\nvda.log  |

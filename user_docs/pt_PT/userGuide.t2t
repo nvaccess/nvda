@@ -118,7 +118,7 @@ Antes de poder pressionar o botão "Continuar", terá de marcar a caixa de verif
 Também haverá um botão para poder analisar os extras que serão desativados.
 Consulte a [secção Extras incompatíveis #incompatibleAddonsManager] para obter mais informações sobre este botão.
 
-+++ Iniciar o NVDA para o início de sessão do Windows +++[StartAtWindowsLogon]
++++ Usar o NVDA no início de sessão do Windows +++[StartAtWindowsLogon]
 Esta opção permite-lhe que escolha se o NVDA deverá ou não iniciar, automaticamente, na janela de início de sessão do Windows, antes de escrever a palavra passe.
 Isto também engloba as janelas de controlo de acesso do utilizador (UAC) e outras em ambiente seguro.
 Por padrão, esta opção está activada em novas instalações.
@@ -1076,7 +1076,7 @@ Os níveis de registo disponíveis são:
 Se esta opção estiver marcada, o NVDA arrancará, automaticamente, assim que iniciar sessão no Windows.
 Esta opção só está disponível nas cópias instaladas do NVDA.
 
-==== Iniciar o NVDA para o início de sessão do Windows ====[GeneralSettingsStartOnLogOnScreen]
+==== Usar o NVDA no início de sessão do Windows ====[GeneralSettingsStartOnLogOnScreen]
 Caso inicie cessão no Windows, fornecendo o nome de utilizador e password, ao marcar esta opção, permitirá que o NVDA arranque automaticamente, durante o processo de autenticação, quando o Windows é executado.
 Esta opção só está disponível nas cópias instaladas do NVDA.
 
@@ -3079,14 +3079,14 @@ Seguidamente, apresentam-se as opções para a linha de comando para o NVDA
 | -l NivelDeRegisto | --log-level=NivelDeRegisto | O nível mais baixo de mensagens registadas (depuração 10, info 20, aviso 30, erro 40, crítico 50), o padrão é aviso |
 | -c CAMINHO | --config-path=CAMINHO | O caminho para onde estão as configurações do NVDA |
 | -m | --minimal | Sem sons, sem interface, sem mensagem de início, etc |
-| -s | --secure | Modo seguro: desactiva a consola de Python, funcionalidades dos perfis, tais como criação, remoção, renomiação, etc., verificação de actualizações, algumas caixas de verificação no diálogo de boas vindas, e na secção Gerais das Configurações (por exemplo, iniciar o NVDA após iniciar sessão, guardar configurações ao sair, etc.), e também as opções de registo. Note que este comando também desactiva a possibilidade guardar as configurações nas configurações do sistema e as alterações à janela "Definir comandos" não serão guardadas no disco. |
+| -s | --secure | Modo seguro: desactiva a consola de Python, funcionalidades dos perfis, tais como criação, remoção, renomiação, etc., verificação de actualizações, algumas caixas de verificação no diálogo de boas vindas, e na secção Gerais das Configurações (por exemplo, "Usar o NVDA no início de sessão do Windows", "guardar configurações ao sair", etc.), e também as opções de registo. Note que este comando também desactiva a possibilidade guardar as configurações nas configurações do sistema e as alterações à janela "Definir comandos" não serão guardadas no disco. |
 | None | --disable-addons | Os extras serão desacttivados |
 | None | --debug-logging | Activa o nível de registo para Depuração apenas para a próxima execução. Esta definição substitui qualquer outra definição para o nível de registo ( ""--loglevel"", -l) argumento dado, incluindo sem registo. |
 | None | --no-logging | Desactiva totalmente o registo ao usar o NVDA. Esta configuração pode ser sobreescrita se um nível de registo ( ""--loglevel"", -l) for especificado from pela linha de comando ou se o registo em depuração estiver activado. |
 | None | --no-sr-flag  | Não alterar a flag que sinaliza a presença de um leitor de ecrã no sistema |
 | None | --install | Installa o NVDA e inicia a cópia instalada |
 | None | --install-silent | Instala o NVDA silenciosamente e não inicia a cópia instalada |
-| None | --enable-start-on-logon=True|False | Ao instalar, activa o [Iniciar o NVDA para o início de sessão do Windows #StartAtWindowsLogon] |
+| None | --enable-start-on-logon=True|False | Ao instalar, activa o [Usar o NVDA no início de sessão do Windows #StartAtWindowsLogon] |
 | None | --create-portable | Cria uma cópia portátil do NVDA iniciando a cópia criada. Requer que --portable-path seja especificado |
 | None | --create-portable-silent | Cria uma cópia portátil do NVDA sem iniciar a cópia criada. Requer que --portable-path seja especificado |
 | None | --portable-path=PORTABLEPATH | O caminho da pasta onde a cópia portátil vai ser criada |

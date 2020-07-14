@@ -15,19 +15,19 @@ Os destaques desta versão incluem:
 - Adicionada função para abrir o diretório de configurações do NVDA sem comando definido. (# 2214)
 - Melhor suporte para a GUI do ESET antivírus. (# 10894)
 - Adicionado suporte para Windows Terminal. (# 10305)
-- Adicionado um comando para anunciar o perfil de configurações ativo. (# 9325)
-- Adicionado um comando para alternar o anúncio de subscrito e sobrescrito. (# 10985)
+- Adicionado um comando para anunciar o perfil de configurações activo sem comando definido. (# 9325)
+- Adicionado um comando para alternar o anúncio de subscrito e sobrescrito sem comando definido. (# 10985)
 - As aplicações Web (como o GMail) já não anunciam informações desatualizadas ao mover o foco rapidamente. (# 10885)
   - Esta correção experimental deve ser activada manualmente através da opção "Tentar cancelar a voz para eventos de foco expirados" na secção Avançadas das configurações do NVDA.
-- Adicionados mais símbolos. (# 11105)
+- Adicionados mais símbolos ao dicionário. (# 11105)
 
 
 == Alterações ==
-- Actualizado o conversor Braille Liblouis para a versão [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0] (de 3.12.0). (# 10832, # 11221)
+- Actualizado o conversor Braille Liblouis da versão de 3.12.0) para a [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0]. (# 10832, # 11221)
 - O anúncio de subscrito e sobrescrito passa a ser controlado separadamente dos atributos da fonte. (# 10919)
 - Devido às alterações feitas no VS Code, o NVDA já não desactiva, por padrão, o modo de navegação no Código. (# 10888)
-- Removidas as mensagens "topo" e "fundo" ao mover o cursor de revisão para a primeira ou última linha do objeto de navegação actual. (# 9551)
-- Removidas as mensagens "esquerda" e "direita" ao mover o cursor de revisão para o primeiro ou último caractere da linha do objeto de navegação actual. (# 9551)
+- O NVDA já não anuncia "topo" e "fundo" ao mover o cursor de revisão directamente para a primeira ou última linha do objeto de navegação actual. (# 9551)
+- O NVDA já não anuncia "esquerda" e "direita" ao mover o cursor de revisão directamente para o primeiro ou último caractere da linha do objeto de navegação actual. (# 9551)
 
 
 == Correcção de erros ==
