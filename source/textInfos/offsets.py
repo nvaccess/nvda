@@ -17,7 +17,6 @@ import api
 import textUtils
 from dataclasses import dataclass
 from typing import Optional, Tuple
-import locale
 from logHandler import log
 
 @dataclass
@@ -282,7 +281,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		if self.encoding == textUtils.WCHAR_ENCODING:
 			offsetConverter = textUtils.WideStringOffsetConverter(text)
 			start, end = offsetConverter.wideToStrOffsets(start, end)
-		elif self.encoding not in (None, "utf_32_le", locale.getlocale()[1]):
+		elif self.encoding not in (None, "utf_32_le", textUtils.USERANSICODEPAGE):
 			raise NotImplementedError
 		return text[start:end]
 
@@ -346,7 +345,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		return None
 
 	def _getCharacterOffsets(self, offset):
-		if self.encoding not in (textUtils.WCHAR_ENCODING, None, "utf_32_le", locale.getlocale()[1]):
+		if self.encoding not in (textUtils.WCHAR_ENCODING, None, "utf_32_le", textUtils.USERANSICODEPAGE):
 			raise NotImplementedError
 		lineStart, lineEnd = self._getLineOffsets(offset)
 		lineText = self._getTextRange(lineStart, lineEnd)
@@ -363,7 +362,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		return (offset, offset + 1)
 
 	def _getWordOffsets(self,offset):
-		if self.encoding not in (textUtils.WCHAR_ENCODING, None, "utf_32_le", locale.getlocale()[1]):
+		if self.encoding not in (textUtils.WCHAR_ENCODING, None, "utf_32_le", textUtils.USERANSICODEPAGE):
 			raise NotImplementedError
 		lineStart, lineEnd = self._getLineOffsets(offset)
 		lineText = self._getTextRange(lineStart,lineEnd)
@@ -397,7 +396,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			strStart=findStartOfLine(text, strOffset)
 			strEnd=findEndOfLine(text, strOffset)
 			return offsetConverter.strToWideOffsets(strStart, strEnd)
-		elif self.encoding not in (None, "utf_32_le", locale.getlocale()[1]):
+		elif self.encoding not in (None, "utf_32_le", textUtils.USERANSICODEPAGE):
 			raise NotImplementedError
 		start=findStartOfLine(text,offset)
 		end=findEndOfLine(text,offset)
