@@ -59,6 +59,16 @@ class ContentRecognizer(object, metaclass=ABCMeta):
 		"""
 		raise NotImplementedError
 
+	def validateNavigatorObject(self, nav):
+		"""Validation to be performed on the navigator object before content recognition
+		@param nav: The navigator object to be validated
+		@type nav: L{NVDAObjects.NVDAObject}
+		@return: C{True} or C{False}, depending on whether the navigator object is valid or not.
+			C{True} for no validation.
+		@rtype: bool
+		"""
+		return True
+
 class RecogImageInfo(object):
 	"""Encapsulates information about a recognized image and
 	provides functionality to convert coordinates.
