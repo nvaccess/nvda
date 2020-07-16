@@ -342,7 +342,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			log.debugWarning(f"LVM_GETSUBITEMRECT failed for index {index} in list")
 			return None
 		# #8268: this might be a malformed rectangle
-		# (i.e. with a left coordinate that is greather than the right coordinate).
+		# (i.e. with a left coordinate that is greater than the right coordinate).
 		# This happens in Becky! Internet Mail,
 		# as well in applications that expose zero width columns.
 		left = localRect.left

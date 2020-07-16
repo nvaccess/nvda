@@ -306,8 +306,9 @@ def handleAppSwitch(oldMods, newMods):
 class AppModule(baseObject.ScriptableObject):
 	"""Base app module.
 	App modules provide specific support for a single application.
-	Each app module should be a Python module in the appModules package named according to the executable it supports;
-	e.g. explorer.py for the explorer.exe application.
+	Each app module should be a Python module or a package in the appModules package
+	named according to the executable it supports;
+	e.g. explorer.py for the explorer.exe application or firefox/__init__.py for firefox.exe.
 	It should containa  C{AppModule} class which inherits from this base class.
 	App modules can implement and bind gestures to scripts.
 	These bindings will only take effect while an object in the associated application has focus.
@@ -362,6 +363,22 @@ class AppModule(baseObject.ScriptableObject):
 		fileinfo = getFileVersionInfo(fileName, "ProductName", "ProductVersion")
 		return (fileinfo["ProductName"], fileinfo["ProductVersion"])
 
+	def _getImmersivePackageInfo(self):
+		# Used to obtain full package structure for a hosted app.
+		# The package structure consists of product name, version, architecture, language, and app ID.
+		# This is useful for confirming whether an app is hosted or not despite an app reporting otherwise.
+		# Some apps such as File Explorer says it is an immersive process but error 15700 is shown.
+		# Others such as Store version of Office are not truly hosted apps but are distributed via Store.
+		length = ctypes.c_uint()
+		ctypes.windll.kernel32.GetPackageFullName(self.processHandle, ctypes.byref(length), None)
+		packageFullName = ctypes.create_unicode_buffer(length.value)
+		if ctypes.windll.kernel32.GetPackageFullName(
+			self.processHandle, ctypes.byref(length), packageFullName
+		) == 0:
+			return packageFullName.value
+		else:
+			return None
+
 	def _setProductInfo(self):
 		"""Set productName and productVersion attributes.
 		There are at least two ways of obtaining product info for an app:
@@ -378,22 +395,18 @@ class AppModule(baseObject.ScriptableObject):
 			# Some apps such as File Explorer says it is an immersive process but error 15700 is shown.
 			# Therefore resort to file version info behavior because it is not a hosted app.
 			# Others such as Store version of Office are not truly hosted apps,
-			# yet returns an internal version anyway.
+			# yet returns an internal version anyway because they are converted desktop apps.
 			# For immersive apps, default implementation is generic - returns Windows version information.
 			# Thus probe package full name and parse the serialized representation of package info structure.
-			length = ctypes.c_uint()
-			buf = ctypes.windll.kernel32.GetPackageFullName(self.processHandle, ctypes.byref(length), None)
-			packageFullName = ctypes.create_unicode_buffer(buf)
-			if ctypes.windll.kernel32.GetPackageFullName(
-				self.processHandle, ctypes.byref(length), packageFullName
-			) == 0:
+			packageInfo = self._getImmersivePackageInfo()
+			if packageInfo is not None:
 				# Product name is of the form publisher.name for a hosted app.
-				productInfo = packageFullName.value.split("_")
+				productInfo = packageInfo.split("_")
 			else:
 				# File Explorer and friends which are really native aps.
 				productInfo = self._getExecutableFileInfo()
 		else:
-			# Not only native apps, but also converted desktop aps such as Office.
+			# Not only native apps, but also some converted desktop aps such as Office.
 			productInfo = self._getExecutableFileInfo()
 		self.productName = productInfo[0]
 		self.productVersion = productInfo[1]
@@ -441,6 +454,16 @@ class AppModule(baseObject.ScriptableObject):
 	# optimisation: Make it easy to detect that this hasn't been overridden.
 	chooseNVDAObjectOverlayClasses._isBase = True
 
+	def _get_appPath(self):
+		"""Returns the full path for the executable e.g. 'C:\\Windows\\explorer.exe' for Explorer.
+		@rtype: str
+		"""
+		size = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
+		path = ctypes.create_unicode_buffer(size.value)
+		winKernel.kernel32.QueryFullProcessImageNameW(self.processHandle, 0, path, ctypes.byref(size))
+		self.appPath = path.value if path else None
+		return self.appPath
+
 	def _get_is64BitProcess(self):
 		"""Whether the underlying process is a 64 bit process.
 		@rtype: bool
@@ -467,6 +490,64 @@ class AppModule(baseObject.ScriptableObject):
 				return False
 			self.is64BitProcess = not res
 		return self.is64BitProcess
+
+	def _get_isWindowsStoreApp(self):
+		"""Whether this process is a Windows Store (immersive) process.
+		An immersive process is a Windows app that runs inside a Windows Runtime (WinRT) container.
+		These include Windows store apps on Windows 8 and 8.1,
+		and Universal Windows Platform (UWP) apps on Windows 10.
+		A special case is a converted desktop app distributed on Microsoft Store.
+		Not all immersive apps are packaged as a true Store app with a package info
+		e.g. File Explorer reports itself as immersive when it is not.
+		@rtype: bool
+		"""
+		if winVersion.winVersion.platform_version < (6, 2, 9200):
+			# Windows Store/UWP apps were introduced in Windows 8.
+			self.isWindowsStoreApp = False
+			return False
+		# Package info is much more accurate than IsImmersiveProcess
+		# because IsImmersive Process returns nonzero for File Explorer
+		# and zero for Store version of Office.
+		if self._getImmersivePackageInfo() is not None:
+			self.isWindowsStoreApp = True
+			return True
+		self.isWindowsStoreApp = False
+		return self.isWindowsStoreApp
+
+	def _get_appArchitecture(self):
+		"""Returns the target architecture for the specified app.
+		This is useful for detecting X86/X64 apps running on ARM64 releases of Windows 10.
+		The following strings are returned:
+		* x86: 32-bit x86 app on 32-bit or 64-bit Windows.
+		* AMD64: x64 app on x64 or ARM64 Windows.
+		* ARM: 32-bit ARM app on ARM64 Windows.
+		* ARM64: 64-bit ARM app on ARM64 Windows.
+		@rtype: str
+		"""
+		# Details: https://docs.microsoft.com/en-us/windows/desktop/SysInfo/image-file-machine-constants
+		# The only value missing is ARM64 (AA64)
+		# because it is only applicable if ARM64 app is running on ARM64 machines.
+		archValues2ArchNames = {
+			0x014c: "x86",  # I386-32
+			0x8664: "AMD64",  # X86-64
+			0x01c0: "ARM"  # 32-bit ARM
+		}
+		# IsWow64Process2 can be used on Windows 10 Version 1511 (build 10586) and later.
+		# Just assume this is an x64 (AMD64) app.
+		# if this is a64-bit app running on 7 through 10 Version 1507 (build 10240).
+		try:
+			# If a native app is running (such as x64 app on x64 machines), app architecture value is not set.
+			processMachine = ctypes.wintypes.USHORT()
+			ctypes.windll.kernel32.IsWow64Process2(self.processHandle, ctypes.byref(processMachine), None)
+			if not processMachine.value:
+				self.appArchitecture = os.environ.get("PROCESSOR_ARCHITEW6432")
+			else:
+				# On ARM64, two 32-bit architectures are supported: x86 (via emulation) and ARM (natively).
+				self.appArchitecture = archValues2ArchNames[processMachine.value]
+		except AttributeError:
+			# Windows 10 Version 1507 (build 10240) and earlier.
+			self.appArchitecture = "AMD64" if self.is64BitProcess else "x86"
+		return self.appArchitecture
 
 	def isGoodUIAWindow(self,hwnd):
 		"""

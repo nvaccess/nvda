@@ -260,11 +260,14 @@ class TextInfoQuickNavItem(QuickNavItem):
 
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	scriptCategory = inputCore.SCRCAT_BROWSEMODE
-	disableAutoPassThrough = False
+	_disableAutoPassThrough = False
 	APPLICATION_ROLES = (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG)
 
 	def _get_currentNVDAObject(self):
 		raise NotImplementedError
+
+	def _get_currentFocusableNVDAObject(self):
+		return self.makeTextInfo(textInfos.POSITION_CARET).focusableNVDAObjectAtStart
 
 	def event_treeInterceptor_gainFocus(self):
 		"""Triggered when this browse mode interceptor gains focus.
@@ -517,14 +520,26 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	script_activatePosition.__doc__ = _("Activates the current object in the document")
 
 	def _focusLastFocusableObject(self, activatePosition=False):
-		obj = self._lastFocusableObj
-		if not obj:
-			return
+		"""Used when auto focus focusable elements is disabled to sync the focus
+		to the browse mode cursor.
+		When auto focus focusable elements is disabled, NVDA doesn't focus elements
+		as the user moves the browse mode cursor. However, there are some cases
+		where the user always wants to interact with the focus; e.g. if they press
+		the applications key to open the context menu. In these cases, this method
+		is called first to sync the focus to the browse mode cursor.
+		"""
+		obj = self.currentFocusableNVDAObject
 		if obj!=self.rootNVDAObject and self._shouldSetFocusToObj(obj) and obj!= api.getFocusObject():
 			obj.setFocus()
-			speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
+			# We might be about to activate or pass through a key which will cause
+			# this object to change (e.g. checking a check box). However, we won't
+			# actually get the focus event until after the change has occurred.
+			# Therefore, we must cache properties for speech before the change occurs.
+			speech.speakObject(obj, controlTypes.REASON_ONLYCACHE)
+			self._objPendingFocusBeforeActivate = obj
 		if activatePosition:
-			self._activatePosition(obj=obj)
+			# Make sure we activate the object at the caret, which is not necessarily focusable.
+			self._activatePosition()
 
 	def script_passThrough(self,gesture):
 		if not config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
@@ -544,6 +559,24 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		self.disableAutoPassThrough = False
 		reportPassThrough(self)
 	script_disablePassThrough.ignoreTreeInterceptorPassThrough = True
+
+	def _set_disableAutoPassThrough(self, state):
+		# If the user manually switches to focus mode with NVDA+space, that enables
+		# pass-through and disables auto pass-through. If auto focusing of focusable
+		# elements is disabled, NVDA won't have synced the focus to the browse mode
+		# cursor. However, since the user is switching to focus mode, they probably
+		# want to interact with the focus, so sync the focus here.
+		if (
+			state
+			and not config.conf["virtualBuffers"]["autoFocusFocusableElements"]
+			and self.passThrough
+		):
+			self._focusLastFocusableObject()
+		self._disableAutoPassThrough = state
+
+	def _get_disableAutoPassThrough(self):
+		return self._disableAutoPassThrough
+
 
 	__gestures={
 		"kb:NVDA+f7": "elementsList",
@@ -1178,7 +1211,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		self._lastProgrammaticScrollTime = None
 		self.documentConstantIdentifier = self.documentConstantIdentifier
 		self._lastFocusObj = None
-		self._lastFocusableObj = None
+		self._objPendingFocusBeforeActivate = None
 		self._hadFirstGainFocus = False
 		self._enteringFromOutside = True
 		# We need to cache this because it will be unavailable once the document dies.
@@ -1281,7 +1314,6 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if reason == controlTypes.REASON_FOCUS:
 			self._lastCaretMoveWasFocus = True
 			focusObj = api.getFocusObject()
-			self._lastFocusableObj = None
 			if focusObj==self.rootNVDAObject:
 				return
 		else:
@@ -1297,8 +1329,6 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			if followBrowseModeFocus:
 				if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
 					focusObj.setFocus()
-			else:
-				self._lastFocusableObj = focusObj
 			obj.scrollIntoView()
 			if self.programmaticScrollMayFireEvent:
 				self._lastProgrammaticScrollTime = time.time()
@@ -1547,11 +1577,23 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 					# Note: this is usually called after the caret movement.
 					vision.handler.handleGainFocus(obj)
 				elif (
-					self._lastFocusableObj
-					and obj == self._lastFocusableObj
-					and obj is not self._lastFocusableObj
+					self._objPendingFocusBeforeActivate
+					and obj == self._objPendingFocusBeforeActivate
+					and obj is not self._objPendingFocusBeforeActivate
 				):
-					speech.speakObject(self._lastFocusableObj,controlTypes.REASON_CHANGE)
+					# With auto focus focusable elements disabled, when the user activates
+					# an element (e.g. by pressing enter) or presses a key which we pass
+					# through (e.g. control+enter), we call _focusLastFocusableObject.
+					# However, the activation/key press might cause a property change
+					# before we get the focus event, so NVDA's normal reporting of
+					# changes to the focus won't pick it up.
+					# The speech property cache on _objPendingFocusBeforeActivate reflects
+					# the properties before the activation/key, so use that to speak any
+					# changes.
+					speech.speakObject(
+						self._objPendingFocusBeforeActivate, controlTypes.REASON_CHANGE
+					)
+					self._objPendingFocusBeforeActivate = None
 			else:
 				self._replayFocusEnteredEvents()
 				return nextHandler()
