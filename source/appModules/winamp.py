@@ -116,7 +116,7 @@ class winampPlaylistEditor(winampMainWindow):
 			winKernel.virtualFreeEx(self.processHandle,internalInfo,0,winKernel.MEM_RELEASE)
 		# file title is fetched in the current locale encoding.
 		# We need to decode it to unicode first. 
-		encoding = textUtils.USERANSICODEPAGE
+		encoding = textUtils.USER_ANSI_CODE_PAGE
 		fileTitle=info.filetitle.decode(encoding,errors="replace")
 		return "%d.\t%s\t%s"%(curIndex+1,fileTitle,info.filelength)
 
