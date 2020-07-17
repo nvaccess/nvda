@@ -126,7 +126,7 @@ def recognizeNavigatorObject(recognizer):
 		ui.message(_("Already in a content recognition result"))
 		return
 	nav = api.getNavigatorObject()
-	if not recognizer.validateNavigatorObject(nav):
+	if not recognizer.validateObject(nav):
 		return
 	# Translators: Reported when content recognition (e.g. OCR) is attempted,
 	# but the content is not visible.

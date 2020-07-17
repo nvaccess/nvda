@@ -59,7 +59,7 @@ class ContentRecognizer(object, metaclass=ABCMeta):
 		"""
 		raise NotImplementedError
 
-	def validateNavigatorObject(self, nav):
+	def validateObject(self, nav):
 		"""Validation to be performed on the navigator object before content recognition
 		@param nav: The navigator object to be validated
 		@type nav: L{NVDAObjects.NVDAObject}
