@@ -908,10 +908,10 @@ class GlobalCommands(ScriptableObject):
 		gestures=("kb:NVDA+numpadMinus", "kb(laptop):NVDA+backspace"),
 	)
 	def script_navigatorObject_toFocus(self,gesture):
-		TIAtCaret = self._getTIAtCaret(True)
+		tIAtCaret = self._getTIAtCaret(True)
 		focusedObj = api.getFocusObject()
 		api.setNavigatorObject(focusedObj)
-		api.setReviewPosition(TIAtCaret)
+		api.setReviewPosition(tIAtCaret)
 		# Translators: Reported when attempting to move the navigator object to focus.
 		speech.speakMessage(_("Move to focus"))
 		speech.speakObject(api.getNavigatorObject(), reason=controlTypes.OutputReason.FOCUS)
