@@ -1487,7 +1487,14 @@ class ExcelSelection(ExcelBase):
 		firstCell=self.excelRangeObject.Item(1)
 		lastCell=self.excelRangeObject.Item(self.excelRangeObject.Count)
 		# Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-		return _("{firstAddress} {firstContent} through {lastAddress} {lastContent}").format(firstAddress=self.getCellAddress(firstCell),firstContent=firstCell.Text,lastAddress=self.getCellAddress(lastCell),lastContent=lastCell.Text)
+		# Beware to keep two spaces between the address and the content. Otherwise some synthesizer
+		# may mix the address and the content when the cell contains a 3-digit number.
+		return _("{firstAddress}  {firstContent} through {lastAddress}  {lastContent}").format(
+			firstAddress=self.getCellAddress(firstCell),
+			firstContent=firstCell.Text,
+			lastAddress=self.getCellAddress(lastCell),
+			lastContent=lastCell.Text
+		)
 
 	def _get_parent(self):
 		worksheet=self.excelRangeObject.Worksheet
