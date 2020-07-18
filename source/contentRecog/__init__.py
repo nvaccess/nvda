@@ -59,7 +59,7 @@ class ContentRecognizer(object, metaclass=ABCMeta):
 		"""
 		raise NotImplementedError
 
-	def validateCaptureBounds(self, left, top, width, height):
+	def validateCaptureBounds(self, left: int, top: int, width: int, height: int) -> bool:
 		"""Validate the capture coordinates before creating image for content recognition
 		@param left: x co-ordinate of top-left corner of capture box
 		@type left: int
