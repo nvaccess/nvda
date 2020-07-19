@@ -15,7 +15,7 @@ import os
 import itertools
 import weakref
 import time
-from typing import Dict, Any
+from typing import Dict, Any, Tuple, List
 
 import configobj
 import sayAllHandler
@@ -195,7 +195,14 @@ class GlobalGestureMap(object):
 		@param entries: Initial entries to add; see L{update} for the format.
 		@type entries: mapping of str to mapping
 		"""
-		self._map = {}
+		self._map: Dict[
+			str,  # Normalized gesture
+			List[
+				Tuple[
+					str,  # module
+					str,  # class name
+					str,  # script
+		]]] = {}
 		#: Indicates that the last load or update contained an error.
 		#: @type: bool
 		self.lastUpdateContainedError = False
@@ -669,7 +676,7 @@ class _AllGestureMappingsRetriever(object):
 		"""
 		@rtype AllGesturesScriptInfo
 		"""
-		info = AllGesturesScriptInfo(scriptCls, scriptName)
+		info = KbEmuScriptInfo(scriptCls, scriptName)
 		info.category = SCRCAT_KBEMU
 		info.displayName = getDisplayTextForGestureIdentifier(
 			normalizeGestureIdentifier(scriptName)
@@ -740,6 +747,9 @@ class AllGesturesScriptInfo(object):
 	@property
 	def className(self):
 		return self.cls.__name__
+
+class KbEmuScriptInfo(AllGesturesScriptInfo):
+	pass
 
 def normalizeGestureIdentifier(identifier):
 	"""Normalize a gesture identifier so that it matches other identifiers for the same gesture.
