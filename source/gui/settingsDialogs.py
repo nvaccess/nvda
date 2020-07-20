@@ -4451,6 +4451,7 @@ class InputGesturesDialog(SettingsDialog):
 
 	def onAdd(self, evt):
 		if inputCore.manager._captureFunc:
+			# don't add while already in process of adding.
 			return
 
 		selIdx = self.tree.GetIndexOfItem(self.tree.Selection)
