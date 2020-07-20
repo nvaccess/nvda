@@ -748,8 +748,10 @@ class AllGesturesScriptInfo(object):
 	def className(self):
 		return self.cls.__name__
 
+
 class KbEmuScriptInfo(AllGesturesScriptInfo):
 	pass
+
 
 def normalizeGestureIdentifier(identifier):
 	"""Normalize a gesture identifier so that it matches other identifiers for the same gesture.
