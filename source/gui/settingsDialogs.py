@@ -356,7 +356,7 @@ class SettingsPanel(wx.Panel, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCM
 
 class MultiCategorySettingsDialog(SettingsDialog):
 	"""A settings dialog with multiple settings categories.
-	A multi category settings dialog consists of a list view with settings categories on the left side,
+	A multi category settings dialog consists of a list view with settings categories on the left side, 
 	and a settings panel on the right side of the dialog.
 	Furthermore, in addition to Ok and Cancel buttons, it has an Apply button by default,
 	which is different  from the default behavior of L{SettingsDialog}.
@@ -759,7 +759,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
-			# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+			# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering  
 			item=self.allowUsageStatsCheckBox=wx.CheckBox(self,label=_("Allow the NVDA project to gather NVDA usage statistics"))
 			item.Value=config.conf["update"]["allowUsageStats"]
 			if globalVars.appArgs.secure:
@@ -1873,7 +1873,7 @@ class BrowseModePanel(SettingsPanel):
 		self.useScreenLayoutCheckBox = sHelper.addItem(wx.CheckBox(self, label=useScreenLayoutText))
 		self.useScreenLayoutCheckBox.SetValue(config.conf["virtualBuffers"]["useScreenLayout"])
 
-		# Translators: The label for a checkbox in browse mode settings to
+		# Translators: The label for a checkbox in browse mode settings to 
 		# enable browse mode on page load.
 		enableOnPageLoadText = _("&Enable browse mode on page load")
 		self.enableOnPageLoadCheckBox = sHelper.addItem(wx.CheckBox(self, label=enableOnPageLoadText))
@@ -1953,7 +1953,7 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		sHelper.addItem(wx.StaticText(self, label=self.panelDescription))
 
-		# Translators: This is the label for a group of document formatting options in the
+		# Translators: This is the label for a group of document formatting options in the 
 		# document formatting settings panel
 		fontGroupText = _("Font")
 		fontGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=fontGroupText), wx.VERTICAL))
@@ -2005,7 +2005,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.colorCheckBox=fontGroup.addItem(wx.CheckBox(self,label=colorsText))
 		self.colorCheckBox.SetValue(config.conf["documentFormatting"]["reportColor"])
 
-		# Translators: This is the label for a group of document formatting options in the
+		# Translators: This is the label for a group of document formatting options in the 
 		# document formatting settings panel
 		documentInfoGroupText = _("Document information")
 		docInfoGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=documentInfoGroupText), wx.VERTICAL))
@@ -2029,7 +2029,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.spellingErrorsCheckBox=docInfoGroup.addItem(wx.CheckBox(self,label=spellingErrorText))
 		self.spellingErrorsCheckBox.SetValue(config.conf["documentFormatting"]["reportSpellingErrors"])
 
-		# Translators: This is the label for a group of document formatting options in the
+		# Translators: This is the label for a group of document formatting options in the 
 		# document formatting settings panel
 		pageAndSpaceGroupText = _("Pages and spacing")
 		pageAndSpaceGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=pageAndSpaceGroupText), wx.VERTICAL))
@@ -2066,13 +2066,13 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.lineIndentationCombo.SetSelection(curChoice)
 
 		# Translators: This message is presented in the document formatting settings panelue
-		# If this option is selected, NVDA will report paragraph indentation if available.
+		# If this option is selected, NVDA will report paragraph indentation if available. 
 		paragraphIndentationText = _("&Paragraph indentation")
 		self.paragraphIndentationCheckBox=pageAndSpaceGroup.addItem(wx.CheckBox(self,label=paragraphIndentationText))
 		self.paragraphIndentationCheckBox.SetValue(config.conf["documentFormatting"]["reportParagraphIndentation"])
 
 		# Translators: This message is presented in the document formatting settings panelue
-		# If this option is selected, NVDA will report line spacing if available.
+		# If this option is selected, NVDA will report line spacing if available. 
 		lineSpacingText=_("&Line spacing")
 		self.lineSpacingCheckBox=pageAndSpaceGroup.addItem(wx.CheckBox(self,label=lineSpacingText))
 		self.lineSpacingCheckBox.SetValue(config.conf["documentFormatting"]["reportLineSpacing"])
@@ -2083,7 +2083,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.alignmentCheckBox=pageAndSpaceGroup.addItem(wx.CheckBox(self,label=alignmentText))
 		self.alignmentCheckBox.SetValue(config.conf["documentFormatting"]["reportAlignment"])
 
-		# Translators: This is the label for a group of document formatting options in the
+		# Translators: This is the label for a group of document formatting options in the 
 		# document formatting settings panel
 		tablesGroupText = _("Table information")
 		tablesGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=tablesGroupText), wx.VERTICAL))
@@ -2130,7 +2130,7 @@ class DocumentFormattingPanel(SettingsPanel):
 				curChoice = 1
 		self.borderComboBox.SetSelection(curChoice)
 
-		# Translators: This is the label for a group of document formatting options in the
+		# Translators: This is the label for a group of document formatting options in the 
 		# document formatting settings panel
 		elementsGroupText = _("Elements")
 		elementsGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=elementsGroupText), wx.VERTICAL))
@@ -2593,7 +2593,7 @@ class AdvancedPanel(SettingsPanel):
 			self.enableControlsCheckBox.IsChecked() or
 			self.advancedControls.haveConfigDefaultsBeenRestored()
 		):
-			self.advancedControls.onSave()
+			self.advancedControls.onSave()	
 
 
 	def onEnableControlsCheckBox(self, evt):
@@ -2963,7 +2963,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 				style=wx.OK | wx.ICON_WARNING,
 				parent=self
 			)
-			return
+			return 
 
 		if self.IsModal():
 			# Hack: we need to update the display in our parent window before closing.
@@ -3748,7 +3748,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		# generally the advice on the wx documentation is: "In general, it is recommended to skip all non-command events
 		# to allow the default handling to take place. The command events are, however, normally not skipped as usually
 		# a single command such as a button click or menu item selection must only be processed by one handler."
-		def skipEventAndCall(handler):
+		def skipEventAndCall(handler):	
 			def wrapWithEventSkip(event):
 				if event:
 					event.Skip()
@@ -4617,7 +4617,7 @@ class InputGesturesDialog(SettingsDialog):
 		inputCore.manager.userGestureMap.clear()
 		try:
 			inputCore.manager.userGestureMap.save()
-		except:  # noqa: E722
+		except Exception:
 			log.debugWarning("", exc_info=True)
 			# Translators: An error displayed when saving user defined input gestures fails.
 			gui.messageBox(
