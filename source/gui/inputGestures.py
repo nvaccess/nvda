@@ -535,8 +535,9 @@ class InputGesturesDialog(SettingsDialog):
 			log.exception()
 			return
 		item = self.tree.getData(index)
-		self.addButton.Enabled = bool(item and item.canAdd)
-		self.removeButton.Enabled = bool(item and item.canRemove)
+		pendingAdd = self.gesturesVM.isExpectingNewEmuGesture or self.gesturesVM.isExpectingNewGesture
+		self.addButton.Enabled = bool(item and item.canAdd and not pendingAdd)
+		self.removeButton.Enabled = bool(item and item.canRemove and not pendingAdd)
 
 	def onAdd(self, evt):
 		if inputCore.manager._captureFunc:
