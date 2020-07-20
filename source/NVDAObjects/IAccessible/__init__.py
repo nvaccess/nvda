@@ -261,7 +261,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			start,end,text = self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_CHAR)
 		except COMError:
 			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
-		if textUtils.isHighSurrogate(text) or textUtils.isLowSurrogate(text):
+		if text and (textUtils.isHighSurrogate(text) or textUtils.isLowSurrogate(text)):
 			# #8953: Some IA2 implementations, including Gecko and Chromium,
 			# erroneously report one offset for surrogates.
 			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
@@ -1996,6 +1996,7 @@ _staticMap={
 	("SysListView32",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("DirectUIHWND", oleacc.ROLE_SYSTEM_LISTITEM): "UIItem",
 	("SysListView32",oleacc.ROLE_SYSTEM_MENUITEM):"sysListView32.ListItemWithoutColumnSupport",
+	("SysListView32", oleacc.ROLE_SYSTEM_CHECKBUTTON): "sysListView32.ListItem",
 	("SysTreeView32",oleacc.ROLE_SYSTEM_OUTLINE):"sysTreeView32.TreeView",
 	("SysTreeView32",oleacc.ROLE_SYSTEM_OUTLINEITEM):"sysTreeView32.TreeViewItem",
 	("SysTreeView32",oleacc.ROLE_SYSTEM_MENUITEM):"sysTreeView32.TreeViewItem",

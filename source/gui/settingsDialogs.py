@@ -61,6 +61,7 @@ import weakref
 import time
 import keyLabels
 from .dpiScalingHelper import DpiScalingHelperMixin
+from locale import strxfrm
 
 class SettingsDialog(wx.Dialog, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCMeta):
 	"""A settings dialog.
@@ -2327,6 +2328,15 @@ class AdvancedPanelControls(wx.Panel):
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
+		label = _("Enable &selective registration for UI Automation events and property changes")
+		self.selectiveUIAEventRegistrationCheckBox = UIAGroup.addItem(wx.CheckBox(self, label=label))
+		self.selectiveUIAEventRegistrationCheckBox.SetValue(config.conf["UIA"]["selectiveEventRegistration"])
+		self.selectiveUIAEventRegistrationCheckBox.defaultValue = (
+			self._getDefaultValue(["UIA", "selectiveEventRegistration"])
+		)
+
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
 		label = _("Use UI Automation to access Microsoft &Word document controls when available")
 		self.UIAInMSWordCheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
 		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
@@ -2469,6 +2479,10 @@ class AdvancedPanelControls(wx.Panel):
 		return (
 			self._defaultsRestored
 			and self.scratchpadCheckBox.IsChecked() == self.scratchpadCheckBox.defaultValue
+			and (
+				self.selectiveUIAEventRegistrationCheckBox.IsChecked()
+				== self.selectiveUIAEventRegistrationCheckBox.defaultValue
+			)
 			and self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue
 			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
@@ -2481,6 +2495,7 @@ class AdvancedPanelControls(wx.Panel):
 
 	def restoreToDefaults(self):
 		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
+		self.selectiveUIAEventRegistrationCheckBox.SetValue(self.selectiveUIAEventRegistrationCheckBox.defaultValue)
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
 		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue == 'UIA')
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
@@ -2493,6 +2508,7 @@ class AdvancedPanelControls(wx.Panel):
 	def onSave(self):
 		log.debug("Saving advanced config")
 		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
+		config.conf["UIA"]["selectiveEventRegistration"] = self.selectiveUIAEventRegistrationCheckBox.IsChecked()
 		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
 		if self.ConsoleUIACheckBox.IsChecked():
 			config.conf['UIA']['winConsoleImplementation'] = "UIA"
@@ -4035,7 +4051,7 @@ class _CategoryVM:
 	def __init__(self, displayName: str, scripts: _CommandsModel):
 		self.displayName = displayName
 		self.scripts = []
-		for scriptName in sorted(scripts):
+		for scriptName in sorted(scripts, key=strxfrm):
 			scriptInfo = scripts[scriptName]
 			self.scripts.append(_ScriptVM(
 				displayName=scriptName,
@@ -4071,7 +4087,7 @@ class _EmuCategoryVM:
 		self.addedKbEmulation = []
 		self.removedKbEmulation = {}
 		self.scripts = []
-		for scriptName in sorted(emuGestures):
+		for scriptName in sorted(emuGestures, key=strxfrm):
 			emuG = emuGestures[scriptName]
 			self.scripts.append(_EmulatedGestureVM(
 				displayName=scriptName,
@@ -4119,7 +4135,7 @@ class _InputGesturesViewModel:
 		gestureMappings = _getAllGestureScriptInfo()
 
 		# load data into our view model
-		for catName in sorted(gestureMappings):
+		for catName in sorted(gestureMappings, key=strxfrm):
 			commands = gestureMappings[catName]
 			if catName == inputCore.SCRCAT_KBEMU:
 				self.allGestures.append(_EmuCategoryVM(
@@ -4597,7 +4613,7 @@ class InputGesturesDialog(SettingsDialog):
 		inputCore.manager.userGestureMap.clear()
 		try:
 			inputCore.manager.userGestureMap.save()
-		except Exception:
+		except:  # noqa: E722
 			log.debugWarning("", exc_info=True)
 			# Translators: An error displayed when saving user defined input gestures fails.
 			gui.messageBox(
