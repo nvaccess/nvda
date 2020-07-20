@@ -12,8 +12,6 @@ import copy
 import re
 from typing import Tuple, Union, Dict
 
-from dataclasses import dataclass
-
 import wx
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib import scrolledpanel
@@ -3964,14 +3962,15 @@ class SpeechSymbolsDialog(SettingsDialog):
 
 
 _CommandsModel = Dict[
-		str,  # command display name
-		inputCore.AllGesturesScriptInfo,
-	]
+	str,  # command display name
+	inputCore.AllGesturesScriptInfo,
+]
 
 _GesturesModel = Dict[
 	str,  # category name
 	_CommandsModel
-	]
+]
+
 
 def _getAllGestureScriptInfo() -> _GesturesModel:
 	gestureMappings = inputCore.manager.getAllGestureMappings(
@@ -3984,7 +3983,6 @@ def _getAllGestureScriptInfo() -> _GesturesModel:
 
 
 def _formatGesture(identifier):
-	# todo: resolve duplication
 	try:
 		source, main = inputCore.getDisplayTextForGestureIdentifier(identifier)
 		# Translators: Describes a gesture in the Input Gestures dialog.
@@ -3994,7 +3992,7 @@ def _formatGesture(identifier):
 	except LookupError:
 		return identifier
 
-@dataclass
+
 class _GestureVM:
 	displayName: str  #: How the gesture should be displayed
 	normalizedGestureIdentifier: str  #: As per items in inputCore.AllGesturesScriptInfo.gestures
@@ -4005,7 +4003,7 @@ class _GestureVM:
 		self.normalizedGestureIdentifier = normalizedGestureIdentifier
 		self.displayName = _formatGesture(normalizedGestureIdentifier)
 
-@dataclass
+
 class _ScriptVM:
 	displayName: str  #: Translated display name for the script
 	scriptInfo: inputCore.AllGesturesScriptInfo
@@ -4025,7 +4023,7 @@ class _ScriptVM:
 
 		for g in scriptInfo.gestures:
 			self.gestures.append(_GestureVM(g))
-		# todo: do gestures need to be sorted?
+		# todo: Gestures could be sorted?
 
 	def addGesture(self, normalizedGestureIdentifier: str) -> int:
 		gesture = self.removedGestures.pop(normalizedGestureIdentifier, None)
@@ -4045,7 +4043,7 @@ class _ScriptVM:
 			self.removedGestures[gestureVM.normalizedGestureIdentifier] = gestureVM
 		self.gestures.remove(gestureVM)
 
-@dataclass
+
 class _CategoryVM:
 	displayName: str  #: Translated display name for the category
 	scripts: List[_ScriptVM]
@@ -4062,7 +4060,7 @@ class _CategoryVM:
 				scriptInfo=scriptInfo
 			))
 
-@dataclass
+
 class _EmulatedGestureVM(_ScriptVM):
 	displayName: str  #: Display name for the gesture to be emulated
 	canAdd = True  #: able to add gestures that trigger this emulation
@@ -4075,7 +4073,7 @@ class _EmulatedGestureVM(_ScriptVM):
 	def canRemove(self) -> bool:
 		return not bool(self.gestures) and isinstance(self.scriptInfo, inputCore.KbEmuScriptInfo)
 
-@dataclass
+
 class _EmuCategoryVM:
 	displayName = inputCore.SCRCAT_KBEMU  #: Translated display name for the gesture emulation category
 	scripts: List[_EmulatedGestureVM]
@@ -4115,6 +4113,7 @@ class _EmuCategoryVM:
 		else:
 			self.removedKbEmulation[gestureEmulation.displayName] = gestureEmulation
 		self.scripts.remove(gestureEmulation)
+
 
 class _InputGesturesViewModel:
 	allGestures: List[Union[_CategoryVM, _EmuCategoryVM]]
@@ -4325,7 +4324,7 @@ class InputGesturesDialog(SettingsDialog):
 				return _("Enter gesture to emulate:")
 			scriptIndex = index[1]
 			scriptVm = catVM.scripts[scriptIndex]
-			if len(index) == 2: # Get the display name of a script / emulated gesture
+			if len(index) == 2:  # Get the display name of a script / emulated gesture
 				return scriptVm.displayName
 
 			assert len(index) == 3  # Get the display name of a gesture
@@ -4337,8 +4336,8 @@ class InputGesturesDialog(SettingsDialog):
 			return gesture.displayName
 
 		def getData(
-			self,
-			index: Tuple[int, ...]
+				self,
+				index: Tuple[int, ...]
 		) -> Optional[Union[_GestureVM, _CategoryVM, _EmuCategoryVM, _ScriptVM, _EmulatedGestureVM]]:
 			assert 1 <= len(index) <= 3
 			catVM = self.gesturesVM.filteredGestures[index[0]]
@@ -4635,9 +4634,13 @@ class InputGesturesDialog(SettingsDialog):
 		self.tree.Unbind(wx.EVT_TREE_SEL_CHANGED)
 		self.filterCtrl.Unbind(wx.EVT_TEXT)
 		if not self.tree.gesturesVM.commitChanges():
-			# Translators: An error displayed when saving user defined input gestures fails.
-			gui.messageBox(_("Error saving user defined gestures - probably read only file system."),
-				_("Error"), wx.OK | wx.ICON_ERROR)
+			gui.messageBox(
+				# Translators: An error displayed when saving user defined input gestures fails.
+				_("Error saving user defined gestures - probably read only file system."),
+				# Translators: An title for an error displayed when saving user defined input gestures fails.
+				_("Error"),
+				wx.OK | wx.ICON_ERROR
+			)
 
 		super(InputGesturesDialog, self).onOk(evt)
 
