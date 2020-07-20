@@ -319,151 +319,152 @@ class _InputGesturesViewModel:
 		self.filteredGestures = filteredGestures
 
 
+class _GesturesTree(VirtualTree, wx.TreeCtrl):
+
+	def __init__(self, parent, gesturesVM: _InputGesturesViewModel):
+		self.gesturesVM = gesturesVM
+		super().__init__(
+			parent,
+			size=wx.Size(600, 400),
+			style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE
+		)
+
+	def OnGetChildrenCount(self, index: Tuple[int, ...]) -> int:
+		vmfilteredGestures = self.gesturesVM.filteredGestures
+		if not index:  # Root node
+			return len(vmfilteredGestures)
+		catIndex = index[0]
+		categoryVM = vmfilteredGestures[catIndex]
+		isAddingEmuGestureToThisCategory = categoryVM == self.gesturesVM.isExpectingNewEmuGesture
+		if len(index) == 1:  # Get number of children of Category, IE the number of scripts
+			scriptCount = len(categoryVM.scripts)
+			if isAddingEmuGestureToThisCategory:
+				return 1 + scriptCount
+			return scriptCount
+		scriptsVM = categoryVM.scripts
+		if len(index) == 2:  # Get number of children of scripts , IE the number of gestures
+			scriptIndex = index[1]
+			isIndexInRange = scriptIndex < len(scriptsVM)
+			if isIndexInRange:
+				scriptVM = scriptsVM[scriptIndex]
+				count = len(scriptVM.gestures)
+				if self.gesturesVM.isExpectingNewGesture == scriptVM:
+					count += 1
+				return count
+
+			elif isAddingEmuGestureToThisCategory:
+				# the emulated gesture is still being added, it can not have any gestures yet.
+				# after it is added, gestures can be assigned.
+				return 0
+			else:
+				log.error(f"unknown situation: {index!r}")
+				return 0
+
+		assert len(index) == 3  # Get number of children for gesture, always 0
+		return 0  # Gestures have no children
+
+	def OnGetItemText(self, index: Tuple[int, ...], column: int = 0) -> str:
+		vmfilteredGestures = self.gesturesVM.filteredGestures
+
+		assert len(index) >= 1
+		catIndex = index[0]
+		catVM = vmfilteredGestures[catIndex]
+		if len(index) == 1:  # Get the display name of a category
+			if vmfilteredGestures is self.gesturesVM.allGestures:  # same object, no filtering applied
+				return catVM.displayName
+			nbResults = len(catVM.scripts)
+			if nbResults == 1:
+				# Translators: The label for a filtered category in the Input Gestures dialog.
+				return _("{category} (1 result)").format(
+					category=catVM.displayName
+				)
+			# Translators: The label for a filtered category in the Input Gestures dialog.
+			return _("{category} ({nbResults} results)").format(
+				category=catVM.displayName, nbResults=nbResults
+			)
+
+		assert len(index) >= 2
+		if index[1] >= len(catVM.scripts):
+			# Translators: The prompt to enter an emulated gesture in the Input Gestures dialog.
+			return _("Enter gesture to emulate:")
+		scriptIndex = index[1]
+		scriptVm = catVM.scripts[scriptIndex]
+		if len(index) == 2:  # Get the display name of a script / emulated gesture
+			return scriptVm.displayName
+
+		assert len(index) == 3  # Get the display name of a gesture
+		if index[2] >= len(scriptVm.gestures):
+			# Translators: The prompt to enter a gesture in the Input Gestures dialog.
+			return _("Enter input gesture:")
+		gestureIndex = index[2]
+		gesture = scriptVm.gestures[gestureIndex]
+		return gesture.displayName
+
+	def getData(
+		self,
+		index: Tuple[int, ...]
+	) -> Optional[Union[_GestureVM, _CategoryVM, _EmuCategoryVM, _ScriptVM, _EmulatedGestureVM]]:
+		assert 1 <= len(index) <= 3
+		catVM = self.gesturesVM.filteredGestures[index[0]]
+		if 1 == len(index):
+			return catVM
+		commandIndex = index[1]
+		lastScriptIndex = len(catVM.scripts) - 1
+		if commandIndex > lastScriptIndex:
+			if commandIndex != 1 + lastScriptIndex:
+				log.error(
+					"Exceeded expected command bounds, there should only ever be a single pending addition.",
+					stack_info=True,
+				)
+			return None  # Getting data for a command currently being added.
+		commandVM = catVM.scripts[commandIndex]
+		if 2 == len(index):
+			return commandVM
+		gestureIndex = index[2]
+		lastGestureIndex = len(commandVM.gestures) - 1
+		if gestureIndex > lastGestureIndex:
+			if gestureIndex != 1 + lastGestureIndex:
+				log.error(
+					"Exceeded expected gesture bounds, there should only ever be a single pending addition."
+					f"Trying to get index {gestureIndex}, current last script index is {lastGestureIndex}",
+					stack_info=True,
+				)
+			return None  # Getting data for a gesture currently being added.
+		gestureVM = commandVM.gestures[gestureIndex]
+		return gestureVM
+
+	def doRefresh(self, postFilter=False, focus: Optional[Tuple[int, ...]] = None):
+		with guiHelper.autoThaw(self):
+			self.RefreshItems()
+			if postFilter:
+				self.CollapseAll()
+				if 10 >= self.gesturesVM.getFilteredScriptCount():
+					catIndexes = range(len(self.gesturesVM.filteredGestures))
+					for index in catIndexes:
+						# Expand categories
+						self.Expand(self.GetItemByIndex((index,)))
+			if focus:
+				log.debug(f"focusing: {focus}")
+				assert 1 <= len(focus) <= 3
+				for i in range(1, len(focus)):
+					focusItem = self.GetItemByIndex(focus[:i])
+					self.Expand(focusItem)
+		if focus:
+			# selecting the item must be done after the freeze has completed (thawed) other wise WX calculates
+			# the wrong scrolling position and puts the item outside of the virtual window.
+			focusItem = self.GetItemByIndex(focus)
+			log.debug(f"selecting: {focusItem} at {focus}")
+			self.SelectItem(focusItem)
+		if not postFilter:
+			self.SetFocus()
+
+
 class InputGesturesDialog(SettingsDialog):
 	# Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 	title = _("Input Gestures")
 
-	class GesturesTree(VirtualTree, wx.TreeCtrl):
-
-		def __init__(self, parent, gesturesVM: _InputGesturesViewModel):
-			self.gesturesVM = gesturesVM
-			super().__init__(
-				parent,
-				size=wx.Size(600, 400),
-				style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE
-			)
-
-		def OnGetChildrenCount(self, index: Tuple[int, ...]) -> int:
-			vmfilteredGestures = self.gesturesVM.filteredGestures
-			if not index:  # Root node
-				return len(vmfilteredGestures)
-			catIndex = index[0]
-			categoryVM = vmfilteredGestures[catIndex]
-			isAddingEmuGestureToThisCategory = categoryVM == self.gesturesVM.isExpectingNewEmuGesture
-			if len(index) == 1:  # Get number of children of Category, IE the number of scripts
-				scriptCount = len(categoryVM.scripts)
-				if isAddingEmuGestureToThisCategory:
-					return 1 + scriptCount
-				return scriptCount
-			scriptsVM = categoryVM.scripts
-			if len(index) == 2:  # Get number of children of scripts , IE the number of gestures
-				scriptIndex = index[1]
-				isIndexInRange = scriptIndex < len(scriptsVM)
-				if isIndexInRange:
-					scriptVM = scriptsVM[scriptIndex]
-					count = len(scriptVM.gestures)
-					if self.gesturesVM.isExpectingNewGesture == scriptVM:
-						count += 1
-					return count
-
-				elif isAddingEmuGestureToThisCategory:
-					# the emulated gesture is still being added, it can not have any gestures yet.
-					# after it is added, gestures can be assigned.
-					return 0
-				else:
-					log.error(f"unknown situation: {index!r}")
-					return 0
-
-			assert len(index) == 3  # Get number of children for gesture, always 0
-			return 0  # Gestures have no children
-
-		def OnGetItemText(self, index: Tuple[int, ...], column: int = 0) -> str:
-			vmfilteredGestures = self.gesturesVM.filteredGestures
-
-			assert len(index) >= 1
-			catIndex = index[0]
-			catVM = vmfilteredGestures[catIndex]
-			if len(index) == 1:  # Get the display name of a category
-				if vmfilteredGestures is self.gesturesVM.allGestures:  # same object, no filtering applied
-					return catVM.displayName
-				nbResults = len(catVM.scripts)
-				if nbResults == 1:
-					# Translators: The label for a filtered category in the Input Gestures dialog.
-					return _("{category} (1 result)").format(
-						category=catVM.displayName
-					)
-				# Translators: The label for a filtered category in the Input Gestures dialog.
-				return _("{category} ({nbResults} results)").format(
-					category=catVM.displayName, nbResults=nbResults
-				)
-
-			assert len(index) >= 2
-			if index[1] >= len(catVM.scripts):
-				# Translators: The prompt to enter an emulated gesture in the Input Gestures dialog.
-				return _("Enter gesture to emulate:")
-			scriptIndex = index[1]
-			scriptVm = catVM.scripts[scriptIndex]
-			if len(index) == 2:  # Get the display name of a script / emulated gesture
-				return scriptVm.displayName
-
-			assert len(index) == 3  # Get the display name of a gesture
-			if index[2] >= len(scriptVm.gestures):
-				# Translators: The prompt to enter a gesture in the Input Gestures dialog.
-				return _("Enter input gesture:")
-			gestureIndex = index[2]
-			gesture = scriptVm.gestures[gestureIndex]
-			return gesture.displayName
-
-		def getData(
-			self,
-			index: Tuple[int, ...]
-		) -> Optional[Union[_GestureVM, _CategoryVM, _EmuCategoryVM, _ScriptVM, _EmulatedGestureVM]]:
-			assert 1 <= len(index) <= 3
-			catVM = self.gesturesVM.filteredGestures[index[0]]
-			if 1 == len(index):
-				return catVM
-			commandIndex = index[1]
-			lastScriptIndex = len(catVM.scripts) - 1
-			if commandIndex > lastScriptIndex:
-				if commandIndex != 1 + lastScriptIndex:
-					log.error(
-						"Exceeded expected command bounds, there should only ever be a single pending addition.",
-						stack_info=True,
-					)
-				return None  # Getting data for a command currently being added.
-			commandVM = catVM.scripts[commandIndex]
-			if 2 == len(index):
-				return commandVM
-			gestureIndex = index[2]
-			lastGestureIndex = len(commandVM.gestures) - 1
-			if gestureIndex > lastGestureIndex:
-				if gestureIndex != 1 + lastGestureIndex:
-					log.error(
-						"Exceeded expected gesture bounds, there should only ever be a single pending addition."
-						f"Trying to get index {gestureIndex}, current last script index is {lastGestureIndex}",
-						stack_info=True,
-					)
-				return None  # Getting data for a gesture currently being added.
-			gestureVM = commandVM.gestures[gestureIndex]
-			return gestureVM
-
-		def doRefresh(self, postFilter=False, focus: Optional[Tuple[int, ...]] = None):
-			with guiHelper.autoThaw(self):
-				self.RefreshItems()
-				if postFilter:
-					self.CollapseAll()
-					if 10 >= self.gesturesVM.getFilteredScriptCount():
-						catIndexes = range(len(self.gesturesVM.filteredGestures))
-						for index in catIndexes:
-							# Expand categories
-							self.Expand(self.GetItemByIndex((index,)))
-				if focus:
-					log.debug(f"focusing: {focus}")
-					assert 1 <= len(focus) <= 3
-					for i in range(1, len(focus)):
-						focusItem = self.GetItemByIndex(focus[:i])
-						self.Expand(focusItem)
-			if focus:
-				# selecting the item must be done after the freeze has completed (thawed) other wise WX calculates
-				# the wrong scrolling position and puts the item outside of the virtual window.
-				focusItem = self.GetItemByIndex(focus)
-				log.debug(f"selecting: {focusItem} at {focus}")
-				self.SelectItem(focusItem)
-			if not postFilter:
-				self.SetFocus()
-
 	def __init__(self, parent: "InputGesturesDialog"):
-		#: The index in the GesturesTree of the prompt for entering a new gesture
+		#: The index in the _GesturesTree of the prompt for entering a new gesture
 		super().__init__(parent, resizeable=True)
 
 	def makeSettings(self, settingsSizer):
@@ -478,8 +479,8 @@ class InputGesturesDialog(SettingsDialog):
 		settingsSizer.AddSpacer(5)
 		filterCtrl.Bind(wx.EVT_TEXT, self.onFilterChange, filterCtrl)
 
-		gestures = _InputGesturesViewModel()
-		tree = self.tree = self.GesturesTree(self, gestures)
+		self.gesturesVM = _InputGesturesViewModel()
+		tree = self.tree = _GesturesTree(self, self.gesturesVM)
 		tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.onTreeSelect)
 		settingsSizer.Add(tree, proportion=1, flag=wx.EXPAND)
 
@@ -518,7 +519,7 @@ class InputGesturesDialog(SettingsDialog):
 
 	def filter(self, filter: str):
 		try:
-			self.tree.gesturesVM.filter(filter)
+			self.gesturesVM.filter(filter)
 		except Exception:
 			log.exception()
 			return
@@ -697,14 +698,14 @@ class InputGesturesDialog(SettingsDialog):
 			)
 			self.onCancel(None)
 			return
-		self.tree.gesturesVM.reset()
+		self.gesturesVM.reset()
 		self.tree.doRefresh()
 		self.tree.SetFocus()
 
 	def onOk(self, evt):
 		self.tree.Unbind(wx.EVT_TREE_SEL_CHANGED)
 		self.filterCtrl.Unbind(wx.EVT_TEXT)
-		if not self.tree.gesturesVM.commitChanges():
+		if not self.gesturesVM.commitChanges():
 			gui.messageBox(
 				# Translators: An error displayed when saving user defined input gestures fails.
 				_("Error saving user defined gestures - probably read only file system."),
