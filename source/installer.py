@@ -391,6 +391,15 @@ def _updateShortcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe,
 		prependSpecialFolder="AllUsersPrograms"
 	)
 
+	# Translators: A label for a shortcut in start menu to open NVDA what's new.
+	changesTranslated = _("What's new")
+	_createShortcutWithFallback(
+		path=os.path.join(docFolder, changesTranslated + ".lnk"),
+		fallbackPath=os.path.join(docFolder, "What's new.lnk"),
+		targetPath=getDocFilePath("changes.html", installDir),
+		prependSpecialFolder="AllUsersPrograms"
+	)
+
 
 def isDesktopShortcutInstalled():
 	wsh=_getWSH()

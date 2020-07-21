@@ -260,7 +260,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	scriptCategory = inputCore.SCRCAT_BROWSEMODE
-	disableAutoPassThrough = False
+	_disableAutoPassThrough = False
 	APPLICATION_ROLES = (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG)
 
 	def _get_currentNVDAObject(self):
@@ -520,6 +520,14 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	script_activatePosition.__doc__ = _("Activates the current object in the document")
 
 	def _focusLastFocusableObject(self, activatePosition=False):
+		"""Used when auto focus focusable elements is disabled to sync the focus
+		to the browse mode cursor.
+		When auto focus focusable elements is disabled, NVDA doesn't focus elements
+		as the user moves the browse mode cursor. However, there are some cases
+		where the user always wants to interact with the focus; e.g. if they press
+		the applications key to open the context menu. In these cases, this method
+		is called first to sync the focus to the browse mode cursor.
+		"""
 		obj = self.currentFocusableNVDAObject
 		if obj!=self.rootNVDAObject and self._shouldSetFocusToObj(obj) and obj!= api.getFocusObject():
 			obj.setFocus()
@@ -551,6 +559,24 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		self.disableAutoPassThrough = False
 		reportPassThrough(self)
 	script_disablePassThrough.ignoreTreeInterceptorPassThrough = True
+
+	def _set_disableAutoPassThrough(self, state):
+		# If the user manually switches to focus mode with NVDA+space, that enables
+		# pass-through and disables auto pass-through. If auto focusing of focusable
+		# elements is disabled, NVDA won't have synced the focus to the browse mode
+		# cursor. However, since the user is switching to focus mode, they probably
+		# want to interact with the focus, so sync the focus here.
+		if (
+			state
+			and not config.conf["virtualBuffers"]["autoFocusFocusableElements"]
+			and self.passThrough
+		):
+			self._focusLastFocusableObject()
+		self._disableAutoPassThrough = state
+
+	def _get_disableAutoPassThrough(self):
+		return self._disableAutoPassThrough
+
 
 	__gestures={
 		"kb:NVDA+f7": "elementsList",
