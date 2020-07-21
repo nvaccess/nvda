@@ -71,11 +71,19 @@ class _GestureVM:
 		self.normalizedGestureIdentifier = normalizedGestureIdentifier
 		self.displayName = _formatGesture(normalizedGestureIdentifier)
 
+	def __repr__(self):
+		return f"Gesture: {self.normalizedGestureIdentifier}"
+
+
 class _PendingGesture:
 	# Translators: The prompt to enter a gesture in the Input Gestures dialog.
 	displayName = _("Enter input gesture:")
 	canAdd = False
 	canRemove = False
+
+	def __repr__(self):
+		return f"Pending Gesture"
+
 
 class _ScriptVM:
 	displayName: str  #: Translated display name for the script
@@ -99,18 +107,20 @@ class _ScriptVM:
 			self.gestures.append(_GestureVM(g))
 	# todo: Gestures could be sorted?
 
-	def createPendingGesture(self) -> int:
-		self.pending = _PendingGesture()
-		pendingItemIndex = len(self.gestures)
-		self.gestures.append(self.pending)
-		return pendingItemIndex
+	def __repr__(self):
+		return f"Script: {self.scriptInfo.scriptName}"
 
-	def finalisePending(self, normalizedGestureIdentifier: str) -> int:
+	def createPendingGesture(self) -> _PendingGesture:
+		self.pending = _PendingGesture()
+		self.gestures.append(self.pending)
+		return self.pending
+
+	def finalisePending(self, normalizedGestureIdentifier: str) -> _GestureVM:
 		assert self.pending is not None
 		self.gestures.remove(self.pending)
 		return self._addGesture(normalizedGestureIdentifier)
 
-	def _addGesture(self, normalizedGestureIdentifier: str) -> int:
+	def _addGesture(self, normalizedGestureIdentifier: str) -> _GestureVM:
 		gesture = self.removedGestures.pop(normalizedGestureIdentifier, None)
 		if not gesture:
 			gesture = _GestureVM(normalizedGestureIdentifier)
@@ -119,7 +129,7 @@ class _ScriptVM:
 					raise ValueError("Gesture already added!")
 			self.addedGestures.append(gesture)
 		self.gestures.append(gesture)
-		return self.gestures.index(gesture)
+		return gesture
 
 	def removeGesture(self, gestureVM: _GestureVM):
 		if gestureVM in self.addedGestures:
@@ -145,6 +155,9 @@ class _CategoryVM:
 				scriptInfo=scriptInfo
 			))
 
+	def __repr__(self):
+		return f"Category: {self.displayName}"
+
 
 class _EmulatedGestureVM(_ScriptVM):
 	displayName: str  #: Display name for the gesture to be emulated
@@ -158,11 +171,19 @@ class _EmulatedGestureVM(_ScriptVM):
 	def canRemove(self) -> bool:
 		return not bool(self.gestures) and isinstance(self.scriptInfo, inputCore.KbEmuScriptInfo)
 
+	def __repr__(self):
+		return f"KB emulated gesture: {self.scriptInfo.scriptName}"
+
+
 class _PendingEmulatedGestureVM:
 	# Translators: The prompt to enter an emulated gesture in the Input Gestures dialog.
 	displayName = _("Enter gesture to emulate:")
 	canAdd = False
 	canRemove = False
+
+	def __repr__(self):
+		return "PendingEmulatedGesture"
+
 
 class _EmuCategoryVM:
 	displayName = inputCore.SCRCAT_KBEMU  #: Translated display name for the gesture emulation category
@@ -172,6 +193,9 @@ class _EmuCategoryVM:
 	addedKbEmulation: List[_EmulatedGestureVM]  #: These will also be in self.scripts
 	#: These will not be in self.scripts anymore. Key is the display name.
 	removedKbEmulation: Dict[str, _EmulatedGestureVM]
+
+	def __repr__(self):
+		return "KB emulation category"
 
 	def __init__(self, displayName: str, emuGestures: _CommandsModel):
 		assert self.displayName == displayName
@@ -187,18 +211,25 @@ class _EmuCategoryVM:
 				emuGestureInfo=emuG
 			))
 
-	def createPendingEmuGesture(self) -> int:
+	def createPendingEmuGesture(self) -> _PendingEmulatedGestureVM:
 		self.pending = _PendingEmulatedGestureVM()
-		pendingItemIndex = len(self.scripts)
 		self.scripts.append(self.pending)
-		return pendingItemIndex
+		return self.pending
 
-	def finalisePending(self, gestureDisplayName, scriptInfo: inputCore.AllGesturesScriptInfo) -> int:
+	def finalisePending(
+			self,
+			gestureDisplayName,
+			scriptInfo: inputCore.AllGesturesScriptInfo
+	) -> _EmulatedGestureVM:
 		assert self.pending is not None
 		self.scripts.remove(self.pending)
 		return self._addEmulation(gestureDisplayName, scriptInfo)
 
-	def _addEmulation(self, gestureDisplayName, scriptInfo: inputCore.AllGesturesScriptInfo) -> int:
+	def _addEmulation(
+			self,
+			gestureDisplayName,
+			scriptInfo: inputCore.AllGesturesScriptInfo
+	) -> _EmulatedGestureVM:
 		emuGesture = self.removedKbEmulation.pop(gestureDisplayName, None)
 		if not emuGesture:
 			emuGesture = _EmulatedGestureVM(gestureDisplayName, scriptInfo)
@@ -207,7 +238,7 @@ class _EmuCategoryVM:
 					raise ValueError("Already added this emulated gesture!")
 			self.addedKbEmulation.append(emuGesture)
 		self.scripts.append(emuGesture)
-		return self.scripts.index(emuGesture)
+		return emuGesture
 
 	def removeEmulation(self, gestureEmulation: _EmulatedGestureVM):
 		if gestureEmulation in self.addedKbEmulation:
@@ -216,10 +247,18 @@ class _EmuCategoryVM:
 			self.removedKbEmulation[gestureEmulation.displayName] = gestureEmulation
 		self.scripts.remove(gestureEmulation)
 
+
 # convenience types.
 _CategoryVMTypes = Union[_CategoryVM, _EmuCategoryVM]
 _CommandVMTypes = Union[_ScriptVM, _EmulatedGestureVM, _PendingEmulatedGestureVM]
 _GestureVMTypes = Union[_GestureVM, _PendingGesture]
+
+_VmSelection = Tuple[
+	_CategoryVMTypes,
+	Optional[_CommandVMTypes],
+	Optional[_GestureVMTypes]
+]
+
 
 class _InputGesturesViewModel:
 	allGestures: List[_CategoryVMTypes]
@@ -239,6 +278,24 @@ class _InputGesturesViewModel:
 		for cat in self.filteredGestures:
 			scriptCount += len(cat.scripts)
 		return scriptCount
+
+	def getIndexInTree(self, vmSelection: _VmSelection):
+		catVM, scriptVM, gestureVM = vmSelection
+		catIndex = self.filteredGestures.index(catVM)
+		if gestureVM is not None:
+			return (
+				catIndex,
+				catVM.scripts.index(scriptVM),
+				scriptVM.gestures.index(gestureVM)
+			)
+		if scriptVM is not None:
+			return (
+				catIndex,
+				catVM.scripts.index(scriptVM),
+			)
+		return (
+			catIndex,
+		)
 
 	def _fillAllGestures(self):
 		gestureMappings = _getAllGestureScriptInfo()
@@ -387,13 +444,13 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 		return 0  # Gestures have no children
 
 	def OnGetItemText(self, index: Tuple[int, ...], column: int = 0) -> str:
-		vmfilteredGestures = self.gesturesVM.filteredGestures
+		filteredGesturesVM = self.gesturesVM.filteredGestures
 
 		assert len(index) >= 1
 		catIndex = index[0]
-		catVM = vmfilteredGestures[catIndex]
+		catVM = filteredGesturesVM[catIndex]
 		if len(index) == 1:  # Get the display name of a category
-			if vmfilteredGestures is self.gesturesVM.allGestures:  # same object, no filtering applied
+			if filteredGesturesVM is self.gesturesVM.allGestures:  # same object, no filtering applied
 				return catVM.displayName
 			nbResults = len(catVM.scripts)
 			if nbResults == 1:
@@ -417,49 +474,63 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 		gesture = scriptVm.gestures[gestureIndex]
 		return gesture.displayName
 
+	def getSelectedItemData(self) -> _VmSelection:
+		selection = self.GetSelection()
+		selIdx: Tuple[int, ...] = self.GetIndexOfItem(selection)
+		# ensure that the length of tuple is 3, missing elements replaced with None
+		nonesForMissingElements = ((None, ) * (3 - len(selIdx)))
+		selIdx: Tuple[int, Optional[int], Optional[int]] = selIdx + nonesForMissingElements
+		return self.getData(selIdx)
+
 	def getData(
-		self,
-		index: Tuple[int, ...]
-	) -> Optional[Union[
-		_CategoryVM, _EmuCategoryVM,  # category level (1)
-		_ScriptVM, _EmulatedGestureVM, _PendingEmulatedGestureVM,  # script level (2)
-		_GestureVM, _PendingGesture  # gesture level (3)
-	]]:
-		assert 1 <= len(index) <= 3
-		catVM: _CategoryVMTypes = self.gesturesVM.filteredGestures[index[0]]
-		if 1 == len(index):
-			return catVM
-		commandIndex = index[1]
+			self,
+			index: Tuple[int, Optional[int], Optional[int]]
+	) -> _VmSelection:
+		assert 3 == len(index) and index[0] is not None
+		catIndex, commandIndex, gestureIndex = index
+		log.debug(f"Getting data for item indexes {index}")
 		try:
-			commandVM: _CommandVMTypes = catVM.scripts[commandIndex]
+			catVM: _CategoryVMTypes = self.gesturesVM.filteredGestures[catIndex]
 		except IndexError:
 			log.error(
-				"Exceeded expected command bounds, use _PendingEmulatedGestureVM as a placeholder.",
+				f"Exceeded expected categories bounds,"
+				f" trying to access category with index {catIndex},"
+				f" but only {len(self.gesturesVM.filteredGestures)} exist.",
 				stack_info=True,
 			)
-			return None  # Getting data for a command currently being added.
-		if 2 == len(index):
-			return commandVM
-		gestureIndex = index[2]
+			raise
+		if commandIndex is None:
+			return (catVM, None, None)
+		try:
+			commandVM: Optional[_CommandVMTypes] = catVM.scripts[commandIndex]
+		except IndexError:
+			log.error(
+				"Exceeded expected command bounds, use _PendingEmulatedGestureVM as a placeholder."
+				f" Trying to get index {commandIndex}, number of gestures for script: {len(catVM.scripts)}",
+				stack_info=True,
+			)
+			raise
+		if gestureIndex is None:
+			return (catVM, commandVM, None)
 		try:
 			gestureVM: _GestureVMTypes = commandVM.gestures[gestureIndex]
 		except IndexError:
 			log.error(
 				"Exceeded expected gesture bounds, use _PendingGestureVM as a placeholder."
-				f"Trying to get index {gestureIndex}, number of gestures for script: {len(commandVM.gestures)}",
+				f" Trying to get index {gestureIndex}, number of gestures for script: {len(commandVM.gestures)}",
 				stack_info=True,
 			)
-			return None
+			raise
 		except AttributeError:
 			if not isinstance(commandVM, _PendingEmulatedGestureVM):
 				log.error(
 					"Pending emulated gestures can not have gestures yet. This indicates a logic error."
-					f"Trying to get index {gestureIndex} of pending emulation."
+					f" Trying to get index {gestureIndex} of pending emulation."
 				)
-			return None
-		return gestureVM
+			raise
+		return (catVM, commandVM, gestureVM)
 
-	def doRefresh(self, postFilter=False, focus: Optional[Tuple[int, ...]] = None):
+	def doRefresh(self, postFilter=False, focus: Optional[_VmSelection] = None):
 		with guiHelper.autoThaw(self):
 			self.RefreshItems()
 			if postFilter:
@@ -470,16 +541,19 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 						# Expand categories
 						self.Expand(self.GetItemByIndex((index,)))
 			if focus:
-				log.debug(f"focusing: {focus}")
-				assert 1 <= len(focus) <= 3
-				for i in range(1, len(focus)):
-					focusItem = self.GetItemByIndex(focus[:i])
-					self.Expand(focusItem)
+				log.debug(f"expanding: {focus}")
+				catVM, scriptVM, gestureVM = focus
+				catIndex = self.gesturesVM.filteredGestures.index(catVM)
+				self.Expand(self.GetItemByIndex((catIndex, )))
+				if scriptVM is not None:
+					scriptIndex = catVM.scripts.index(scriptVM)
+					self.Expand(self.GetItemByIndex((catIndex, scriptIndex, )))
 		if focus:
 			# selecting the item must be done after the freeze has completed (thawed) other wise WX calculates
 			# the wrong scrolling position and puts the item outside of the virtual window.
-			focusItem = self.GetItemByIndex(focus)
-			log.debug(f"selecting: {focusItem} at {focus}")
+			focusIndex = self.gesturesVM.getIndexInTree(focus)
+			focusItem = self.GetItemByIndex(focusIndex)
+			log.debug(f"selecting: {focus} at {focusIndex}")
 			self.SelectItem(focusItem)
 		if not postFilter:
 			self.SetFocus()
@@ -531,6 +605,7 @@ class InputGesturesDialog(SettingsDialog):
 		resetButton.Bind(wx.EVT_BUTTON, self.onReset)
 
 		settingsSizer.Add(bHelper.sizer, flag=wx.EXPAND)
+		self.tree.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroyTree)
 
 	def postInit(self):
 		self.tree.RefreshItems()
@@ -543,9 +618,9 @@ class InputGesturesDialog(SettingsDialog):
 		filterText = evt.GetEventObject().GetValue()
 		self.filter(filterText)
 
-	def filter(self, filter: str):
+	def filter(self, filterText: str):
 		try:
-			self.gesturesVM.filter(filter)
+			self.gesturesVM.filter(filterText)
 		except Exception:
 			log.exception()
 			return
@@ -557,13 +632,9 @@ class InputGesturesDialog(SettingsDialog):
 		self._refreshButtonState()
 
 	def _refreshButtonState(self):
-		# #7077: Check if the treeview is still alive.
-		try:
-			index = self.tree.GetIndexOfItem(self.tree.Selection)
-		except RuntimeError:
-			log.exception()
-			return
-		item = self.tree.getData(index)
+		selectedItems = self.tree.getSelectedItemData()
+		# get the leaf of the selection
+		item = next((item for item in reversed(selectedItems) if item is not None), None)
 		pendingAdd = self.gesturesVM.isExpectingNewEmuGesture or self.gesturesVM.isExpectingNewGesture
 		self.addButton.Enabled = bool(item and item.canAdd and not pendingAdd)
 		self.removeButton.Enabled = bool(item and item.canRemove and not pendingAdd)
@@ -573,55 +644,46 @@ class InputGesturesDialog(SettingsDialog):
 			# don't add while already in process of adding.
 			return
 
-		selIdx = self.tree.GetIndexOfItem(self.tree.Selection)
-		if not self.tree.IsExpanded(self.tree.Selection):
-			self.tree.Expand(self.tree.Selection)
-		log.info(f"selection: {self.tree.getData(selIdx).displayName} index: {selIdx}")
+		catVM, commandVM, gestureVM = self.tree.getSelectedItemData()
+		log.debug(f"selection: {catVM}, {commandVM}, {gestureVM}")
 
-		item = self.tree.getData(selIdx)
-		if isinstance(item, _EmuCategoryVM):
-			self.tree.gesturesVM.isExpectingNewEmuGesture = item
-			newItemIdx = (
-				*selIdx,
-				item.createPendingEmuGesture()
-			)
-			self.tree.doRefresh(focus=newItemIdx)
+		if commandVM is None and isinstance(catVM, _EmuCategoryVM):
+			self.gesturesVM.isExpectingNewEmuGesture = catVM
+			pending = catVM.createPendingEmuGesture()
+			self.tree.doRefresh(focus=(catVM, pending, None))
 			self._refreshButtonState()
 
 			def addKbEmuGestureCaptor(gesture):
 				if not isinstance(gesture, keyboardHandler.KeyboardInputGesture) or gesture.isModifier:
 					return False
 				inputCore.manager._captureFunc = None
-				wx.CallAfter(self._addCapturedKbEmu, gesture, selIdx)
+				wx.CallAfter(self._addCapturedKbEmu, gesture, catVM)
 				return False
 
 			inputCore.manager._captureFunc = addKbEmuGestureCaptor
-		elif isinstance(item, _ScriptVM):
-			self.tree.gesturesVM.isExpectingNewGesture = item
-			newItemIdx = (
-				*selIdx,
-				item.createPendingGesture()
-			)
-			self.tree.doRefresh(focus=newItemIdx)
+		elif gestureVM is None and isinstance(commandVM, _ScriptVM):
+			self.gesturesVM.isExpectingNewGesture = commandVM
+			pendingGesture = commandVM.createPendingGesture()
+			self.tree.doRefresh(focus=(catVM, commandVM, pendingGesture))
 			self._refreshButtonState()
 
 			def addGestureCaptor(gesture):
 				if gesture.isModifier:
 					return False
-				if item.scriptInfo.category == inputCore.SCRCAT_KBEMU:
+				if isinstance(catVM, _EmuCategoryVM):
 					gesName = keyLabels.getKeyCombinationLabel(gesture.normalizedIdentifiers[-1][3:])
-					if gesName == item.scriptInfo.displayName:
+					if gesName == commandVM.scriptInfo.displayName:
 						# Disallow assigning an emulated gesture to itself
 						return False
 				inputCore.manager._captureFunc = None
-				wx.CallAfter(self._addCaptured, item, selIdx, gesture)
+				wx.CallAfter(self._addCaptured, catVM, commandVM, gesture)
 				return False
 
 			inputCore.manager._captureFunc = addGestureCaptor
 		else:
-			log.error(f"unable to add for selected item: {item.displayName}")
+			log.error(f"unable to do 'add' action for selected item")
 
-	def _addCaptured(self, scriptVM: _ScriptVM, addingToIndex: Tuple[int, int], gesture):
+	def _addCaptured(self, catVM: _CategoryVMTypes, commmandVM: _CommandVMTypes, gesture):
 		gids = gesture.normalizedIdentifiers
 		if len(gids) > 1:
 			# Multiple choices. Present them in a pop-up menu.
@@ -631,33 +693,31 @@ class InputGesturesDialog(SettingsDialog):
 				item = menu.Append(wx.ID_ANY, gestureVM.displayName)
 				self.Bind(
 					wx.EVT_MENU,
-					lambda evt, gid=gid: self._addChoice(scriptVM, addingToIndex, gid),
+					lambda evt, gid=gid: self._addChoice(catVM, commmandVM, gid),
 					item
 				)
 			self.PopupMenu(menu)
-			if self.tree.gesturesVM.isExpectingNewGesture:
+			if self.gesturesVM.isExpectingNewGesture:
 				# No item was selected, so use the first.
-				self._addChoice(scriptVM, addingToIndex, gids[0])
+				self._addChoice(catVM, commmandVM, gids[0])
 			menu.Destroy()
 		else:
-			self._addChoice(scriptVM, addingToIndex, gids[0])
+			self._addChoice(catVM, commmandVM, gids[0])
 
-	def _addChoice(self, scriptVM: _ScriptVM, addingToIndex: Tuple[int, int], gid: str):
+	def _addChoice(self, catVM: _CategoryVMTypes, commandVM: _CommandVMTypes, gid: str):
 		"""
 		:param scriptVM: The script to add the gesture to
 		:param gid:  Normalized gesture ID to be added.
 		:return:
 		"""
-		newItemIndex = (
-			*addingToIndex,
-			scriptVM.finalisePending(gid)
-		)
-		log.info(f"newItemIndex = {newItemIndex}")
-		self.tree.gesturesVM.isExpectingNewGesture = None
-		self.tree.doRefresh(focus=newItemIndex)
+		newItem = commandVM.finalisePending(gid)
+		log.debug(f"New: {catVM}, {commandVM}, {newItem}")
+		self.gesturesVM.isExpectingNewGesture = None
+		self.tree.doRefresh(focus=(catVM, commandVM, newItem))
 		self._refreshButtonState()
 
-	def _addCapturedKbEmu(self, gesture, addingToIndex: Tuple[int]):
+	def _addCapturedKbEmu(self, gesture, catVM: _EmulatedGestureVM):
+		assert isinstance(catVM, _EmuCategoryVM)
 		# Use the last normalized identifier, which is the most generic one
 		gestureToEmulate = gesture.normalizedIdentifiers[-1]
 		from globalCommands import GlobalCommands
@@ -668,39 +728,28 @@ class InputGesturesDialog(SettingsDialog):
 		emuGestureDisplayName = _("Emulate key press: {emulateGesture}").format(
 			emulateGesture=scriptInfo.displayName
 		)
-		catVM = self.tree.gesturesVM.isExpectingNewEmuGesture
-		assert isinstance(catVM, _EmuCategoryVM)
-		newEmuItemIndex = (
-			*addingToIndex,
-			catVM.finalisePending(emuGestureDisplayName, scriptInfo)
-		)
-		self.tree.gesturesVM.isExpectingNewEmuGesture = None
-		self.tree.doRefresh(focus=newEmuItemIndex)
+		catVM = self.gesturesVM.isExpectingNewEmuGesture
+		newCommand = catVM.finalisePending(emuGestureDisplayName, scriptInfo)
+		self.gesturesVM.isExpectingNewEmuGesture = None
+		self.tree.doRefresh(focus=(catVM, newCommand, None,))
 		self._refreshButtonState()
 
 	def onRemove(self, evt):
-		selectionId = self.tree.GetIndexOfItem(self.tree.Selection)
-		categoryId = selectionId[:1]
-		if len(selectionId) == 3:  # removing a gesture
-			gestureVM = self.tree.getData(selectionId)
-			scriptVM = self.tree.getData(selectionId[:2])
+		catVM, scriptVM, gestureVM = self.tree.getSelectedItemData()
+		if gestureVM is not None:  # removing a gesture
 			scriptVM.removeGesture(gestureVM)
-		elif len(selectionId) == 2:  # removing a emulated KB gesture
-			emuCatVM = self.tree.getData(categoryId)
-			if not isinstance(emuCatVM, _EmuCategoryVM):
+		elif isinstance(scriptVM, _EmulatedGestureVM):  # removing a emulated KB gesture
+			if not isinstance(catVM, _EmuCategoryVM):
 				log.error(
 					f"Trying to remove command, only emulatedGestures can be removed from level of tree."
-					f" Trying to remove: {emuCatVM.displayName}"
+					f" Trying to remove: {catVM.displayName}"
 				)
 				return
-			emuGesture = self.tree.getData(selectionId)
-			emuCatVM.removeEmulation(emuGesture)
+			catVM.removeEmulation(scriptVM)
 		else:
-			log.error(f"Unhandled selectionId: {selectionId}, {self.tree.getData(selectionId).displayName}")
+			log.error(f"Unhandled selectionId: {catVM}, {scriptVM}")
 			return
-		catItem = self.tree.GetItemByIndex(categoryId)
-		self.tree.RefreshChildrenRecursively(catItem)
-		self.tree.SetFocus()
+		self.tree.doRefresh()
 		self._refreshButtonState()
 
 	def onReset(self, evt):
@@ -730,11 +779,8 @@ class InputGesturesDialog(SettingsDialog):
 			return
 		self.gesturesVM.reset()
 		self.tree.doRefresh()
-		self.tree.SetFocus()
 
 	def onOk(self, evt):
-		self.tree.Unbind(wx.EVT_TREE_SEL_CHANGED)
-		self.filterCtrl.Unbind(wx.EVT_TEXT)
 		if not self.gesturesVM.commitChanges():
 			gui.messageBox(
 				# Translators: An error displayed when saving user defined input gestures fails.
@@ -746,7 +792,7 @@ class InputGesturesDialog(SettingsDialog):
 
 		super(InputGesturesDialog, self).onOk(evt)
 
-	def onCancel(self, evt: wx.Event):
+	def _onDestroyTree(self, evt: wx.WindowDestroyEvent):
+		# #7077: Remove the binding when the tree is destroyed so that it can not be called during destruction
+		# of the dialog.
 		self.tree.Unbind(wx.EVT_TREE_SEL_CHANGED)
-		self.filterCtrl.Unbind(wx.EVT_TEXT)
-		super(InputGesturesDialog, self).onCancel(evt)
