@@ -59,6 +59,11 @@ class ContentRecognizer(object, metaclass=ABCMeta):
 		"""
 		raise NotImplementedError
 
+	def validateCaptureBounds(self, location: RectLTWH) -> bool:
+		"""Validate the capture coordinates before creating image for content recognition
+		"""
+		return True
+
 	def validateObject(self, nav):
 		"""Validation to be performed on the navigator object before content recognition
 		@param nav: The navigator object to be validated
