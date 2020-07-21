@@ -135,7 +135,7 @@ def recognizeNavigatorObject(recognizer):
 		log.debugWarning("Object returned location %r" % nav.location)
 		ui.message(notVisibleMsg)
 		return
-	if not recognizer.validateCaptureBounds(left, top, width, height):
+	if not recognizer.validateCaptureBounds(nav.location):
 		return
 	try:
 		imgInfo = RecogImageInfo.createFromRecognizer(left, top, width, height, recognizer)
