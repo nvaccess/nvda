@@ -17,10 +17,6 @@ from logHandler import log
 from typing import List, Optional
 import keyboardHandler
 from . import guiHelper
-try:
-	import updateCheck
-except RuntimeError:
-	updateCheck = None
 import inputCore
 import keyLabels
 from locale import strxfrm
