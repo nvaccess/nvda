@@ -5,19 +5,14 @@
 #See the file COPYING for more details.
 
 import types
-from queue import SimpleQueue
+from queue import Queue
 import globalVars
 from logHandler import log
 import watchdog
 import core
 
-# A queue for calls that should be made on NVDA's main thread
-# #11369: We use SimpleQueue rather than Queue here
-# as SimpleQueue is very light-weight, does not use locks
-# and ensures that garbage collection won't unexpectedly happen in the middle of queuing something
-# Which may cause a deadlock.
-eventQueue = SimpleQueue()
-
+eventQueue=Queue()
+eventQueue.__name__="eventQueue"
 generators={}
 lastGeneratorObjID=0
 
