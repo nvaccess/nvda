@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr 2013.1:6039\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-31 00:10+1000\n"
-"PO-Revision-Date: 2019-12-23 19:52+0545\n"
+"POT-Creation-Date: 2020-06-12 00:10+1000\n"
+"PO-Revision-Date: 2020-05-02 14:41-0700\n"
 "Last-Translator: drishtibachak@gmail.com\n"
 "Language-Team: Him Prasad Gautam <drishtibachak@gmail.com>\n"
 "Language: ne\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 1.8.9\n"
 "प्रथम अनुवाद मिति: २०६९ साल असार १५ गते\n"
 "पुनरावलोकन मिति: २०७१ साल श्रावण १५ गते\n"
 "अनुवादक: हिम प्रसाद गौतम(नेपाल) <drishtibachak@gmail.com>\n"
@@ -849,6 +849,11 @@ msgstr "अङ्ग्रेजी (बेलायत) श्रेणी २"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr ""
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
 msgstr "एकीकृत अङ्ग्रेजी ब्रेल कोड श्रेणी १"
 
@@ -1095,14 +1100,19 @@ msgstr "मराठी श्रेणी १"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #, fuzzy
-msgid "Dutch (Belgium)"
+msgid "Dutch (Belgium) 6 dot"
 msgstr "डच (बेल्जियम) श्रेणी १"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #, fuzzy
-msgid "Dutch (Netherlands)"
+msgid "Dutch (Netherlands) 6 dot"
 msgstr "डच (नेदरल्याण्ड) श्रेणी १"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr ""
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3066,12 +3076,10 @@ msgid ""
 msgstr "चालू कर्सरको स्थान भन्दा पछाडी रहेको पुर्व लिखित अर्को पाठ पदावलीलाई फेला पार ।"
 
 #. Translators: Reported when there is no text selected (for copying).
-#, fuzzy
 msgid "No selection"
 msgstr "अचयनीत"
 
 #. Translators: Message presented when text has been copied to clipboard.
-#, fuzzy
 msgid "Copied to clipboard"
 msgstr "क्लिप पाटीमा प्रतिलिपि उतारियो"
 
@@ -3103,14 +3111,12 @@ msgid "moves to the previous table column"
 msgstr "तालिकाको पछिल्लो महलमा सर्छ ।"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
-#, fuzzy
 msgid "layout tables off"
-msgstr "तालिका बताउदैन"
+msgstr "टेबल लेआउट  बन्द"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
-#, fuzzy
 msgid "layout tables on"
-msgstr "तालिका बताउछ"
+msgstr "टेबल लेआउट खुल्ला"
 
 #. Translators: Input help mode message for include layout tables command.
 msgid "Toggles on and off the inclusion of layout tables in browse mode"
@@ -3143,7 +3149,6 @@ msgid "Configuration"
 msgstr "अभियोजन"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "Configuration profiles"
 msgstr "अभियोजन पार्श्वचित्र"
 
@@ -3154,9 +3159,8 @@ msgstr "ब्रेल"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the vision panel
-#, fuzzy
 msgid "Vision"
-msgstr "संस्करण"
+msgstr "दृष्टी"
 
 #. Translators: The name of a category of NVDA commands.
 msgctxt "script category"
@@ -3240,7 +3244,6 @@ msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "सुलसुले रहेको स्थानमा वाञाँ टाँक एक पटक किचिनो्क पार्ने छ ।"
 
 #. Translators: Reported when right mouse button is clicked.
-#, fuzzy
 msgid "Right click"
 msgstr "दायाँ टाँक किचिनो्क"
 
@@ -4636,6 +4639,18 @@ msgid ""
 msgstr ""
 "यस अघि भन्दा हाल औँला रहेको स्थानको तल नया वस्तु अथवा सामाग्री पाएमा यसलाई बताइ "
 "दिनेछ ।"
+
+#. Translators: Reported when the object has no location for the mouse to move to it.
+#, fuzzy
+msgid "object has no location"
+msgstr "बस्तुको स्थानको टुङ्गो छैन"
+
+#. Translators: Input help mode message for touch right click command.
+#, fuzzy
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr "सुलसुले रहेको स्थानमा दायाँ टाँक एक पटक किचिनो्क पार्ने छ "
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
@@ -6476,6 +6491,8 @@ msgstr "अद्यावधिकरणको गल्ति परिक्�
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "गल्थी"
 
@@ -9646,6 +9663,11 @@ msgid ""
 "\t\t\tThis cannot be undone."
 msgstr ""
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+#, fuzzy
+msgid "Reset gestures"
+msgstr "सङ्केत लगानी"
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr "उपभोक्ता रोजाई सङ्केत बचतमा त्रुटी - सम्भवतः यो पठनीय मात्र फाइल हुनु पर्छ ।"
@@ -9659,6 +9681,7 @@ msgstr "गणित अन्तरक्रिया बाट बहिर्
 msgid "Math interaction not supported."
 msgstr "गणितिय अन्तरक्रियालाई समर्थन गर्दैन ।"
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9687,7 +9710,8 @@ msgstr "%s चयनित"
 msgid "%s selected"
 msgstr "%s चयनीत"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d वर्ण"
@@ -11682,72 +11706,3 @@ msgstr ""
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr ""
-
-#, fuzzy
-#~ msgid "NVDA Highlighter"
-#~ msgstr "दायाँ पङ्‌क्ति "
-
-#, fuzzy
-#~ msgid "Koine Greek"
-#~ msgstr "कागती हरियो"
-
-#~ msgid "Start"
-#~ msgstr "सुरुवात"
-
-#~ msgid "Skype"
-#~ msgstr "स्काइप"
-
-#~ msgid "Reports and moves the review cursor to a recent message"
-#~ msgstr "समीक्षा कर्सर ताजा सन्देसमा जान्छ र बताउँछ ।"
-
-#~ msgid "Typing stopped"
-#~ msgstr "टङ्कण रोकियो ।"
-
-#~ msgid "Rewind"
-#~ msgstr "प्रतिगमन"
-
-#~ msgid "Fast forward"
-#~ msgstr "तीव्र अग्रगमन"
-
-#~ msgid "Play"
-#~ msgstr "बजाउ"
-
-#~ msgid "Stop"
-#~ msgstr "विश्राम"
-
-#~ msgid "Record"
-#~ msgstr "अभिलेखन गर ।"
-
-#, fuzzy
-#~ msgid "Selected %s"
-#~ msgstr "%s चयनित"
-
-#~ msgid "Currently running application is %s"
-#~ msgstr "हाल चालू अनुप्रयोग %s हो ।"
-
-#~ msgid " and currently loaded module is %s"
-#~ msgstr "साथै चालू भारीत module %s हो ।"
-
-#, fuzzy
-#~ msgid ""
-#~ "All add-ons are currently disabled. To enable add-ons you must restart "
-#~ "NVDA."
-#~ msgstr ""
-#~ "अब सबै उप-कर्मी असक्षम भए । उप-कर्मीलाई सक्रिय गराउन नेत्रवाणीलाई तपाइले पुनः "
-#~ "सुरुवात गर्नु पर्छ ।"
-
-#, fuzzy
-#~ msgid "NVDA"
-#~ msgstr "नेत्रवाणीको वहिर्गमन"
-
-#~ msgid "remove"
-#~ msgstr "हटाउ"
-
-#~ msgid ""
-#~ "For the new language to take effect, the configuration must be saved and "
-#~ "NVDA must be restarted. Press enter to save and restart NVDA, or cancel "
-#~ "to manually save and exit at a later time."
-#~ msgstr ""
-#~ "नया भाषाले प्रभावकारी रूपमा काम गर्न अभियोजन लाई बचत गरी नेत्रवाणी पुनः सुरुवात "
-#~ "गर्नु पर्छ ।बचत गरी नेत्रवाणी सुरु गर्ने हो भने ठिक टाँकलाई दबाउनु होस्, यदी पछि आफैले "
-#~ "अभियोजन बचत गरेर बहिर्गमन गर्ने हो भने रद्द टाँकलाई दबाउनु होला ।"

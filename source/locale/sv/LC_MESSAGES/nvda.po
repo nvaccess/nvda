@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-31 00:10+1000\n"
-"PO-Revision-Date: 2020-01-26 20:38+0100\n"
+"POT-Creation-Date: 2020-06-12 00:10+1000\n"
+"PO-Revision-Date: 2020-05-02 14:41-0700\n"
 "Last-Translator: Karl Eick <hozosch@web.de>\n"
 "Language-Team: sv\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 1.8.9\n"
 "X-Poedit-Bookmarks: 2015,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -803,6 +803,11 @@ msgstr "Engelska (UK) grad 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr "Engelska Nordamerikansk datorpunktskrift"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
 msgstr "Enad engelsk punktskrift grad 1"
 
@@ -1038,13 +1043,18 @@ msgstr "Marathi grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
-msgstr "Nederländska (Belgien)"
+msgid "Dutch (Belgium) 6 dot"
+msgstr "Nederländska (Belgien) 6 punkter"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
-msgstr "Nederländska (Nederländerna)"
+msgid "Dutch (Netherlands) 6 dot"
+msgstr "Nederländska (Nederländerna) 6 punkter"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr "Nederländska 8 punkter"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4561,6 +4571,18 @@ msgstr ""
 "Rapporterar det nya objektet eller innehållet under ditt finger om det "
 "skiljer sig från var ditt finger var senast"
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "objektet har ingen placering"
+
+#. Translators: Input help mode message for touch right click command.
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr ""
+"Klickar med höger musknapp vid aktuell pekposition. Används vanligtvis för "
+"att visa en kontextmeny."
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Visar NVDA:s konfigurationsprofiler"
@@ -6365,6 +6387,8 @@ msgstr "Fel inträffade vid sökning efter uppdatering."
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "Fel"
 
@@ -9567,6 +9591,10 @@ msgstr ""
 "förlorade.\n"
 "\t\t\tDetta kan inte ångras."
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "Återställ inmatningsgesterInmatningsgester"
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
@@ -9582,6 +9610,7 @@ msgstr "Avsluta matematisk interaktion"
 msgid "Math interaction not supported."
 msgstr "Matematisk interaktion stöds inte."
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9610,7 +9639,8 @@ msgstr "markerade %s"
 msgid "%s selected"
 msgstr "%s markerad"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d tecken"
@@ -10079,7 +10109,7 @@ msgstr "Skärmridå"
 #. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
 msgid "Always &show a warning when loading Screen Curtain"
-msgstr "Vi&sa alltid en varning när {screenCurtainTranslatedName} laddas"
+msgstr "Vi&sa alltid en varning när skärmridån aktiveras"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
 msgid "&Play sound when toggling Screen Curtain"
@@ -11583,93 +11613,3 @@ msgstr "Dubbelt radavstånd"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 rader"
-
-#~ msgid "Windows C&onsole support:"
-#~ msgstr "Windows K&ommandotolkstöd:"
-
-#~ msgid "Prefer UIA"
-#~ msgstr "Föredra UIA"
-
-#~ msgid "Legacy"
-#~ msgstr "Ursprunglig"
-
-#~ msgid "Magnifier"
-#~ msgstr "Förstoringsglaset"
-
-#~ msgid "Highlighter"
-#~ msgstr "Highlighter"
-
-#~ msgid "Color enhancer"
-#~ msgstr "Färgförbättrare"
-
-#~ msgid "NVDA Highlighter"
-#~ msgstr "NVDA Överstrykningspenna"
-
-#~ msgid "Koine Greek"
-#~ msgstr "Koiné"
-
-#~ msgid "lmk %s"
-#~ msgstr "lmk %s"
-
-#~ msgid "Start"
-#~ msgstr "Start"
-
-#~ msgid "Skype"
-#~ msgstr "Skype"
-
-#~ msgid "Reports and moves the review cursor to a recent message"
-#~ msgstr ""
-#~ "Rapporterar och flyttar granskningsmarkören till ett nyligen läst "
-#~ "meddelande"
-
-#~ msgid "Typing stopped"
-#~ msgstr "Tangenttryckningar avbrutna"
-
-#~ msgid "Rewind"
-#~ msgstr "Spola bakåt"
-
-#~ msgid "Fast forward"
-#~ msgstr "Spola framåt"
-
-#~ msgid "Play"
-#~ msgstr "Spela"
-
-#~ msgid "Stop"
-#~ msgstr "Stopp"
-
-#~ msgid "Record"
-#~ msgstr "Spela in"
-
-#, fuzzy
-#~ msgid "Selected %s"
-#~ msgstr "markerade %s"
-
-#~ msgid "Currently running application is %s"
-#~ msgstr "Nuvarande applikation är %s"
-
-#~ msgid " and currently loaded module is %s"
-#~ msgstr "och nuvarande inladdad modul är %s"
-
-#, fuzzy
-#~ msgid ""
-#~ "All add-ons are currently disabled. To enable add-ons you must restart "
-#~ "NVDA."
-#~ msgstr ""
-#~ "Alla tillägg är nu inaktiverade. För att aktivera tilläggen igen måste du "
-#~ "starta om NVDA."
-
-#, fuzzy
-#~ msgid "NVDA"
-#~ msgstr "Avsluta NVDA"
-
-#~ msgid "remove"
-#~ msgstr "radera"
-
-#~ msgid ""
-#~ "For the new language to take effect, the configuration must be saved and "
-#~ "NVDA must be restarted. Press enter to save and restart NVDA, or cancel "
-#~ "to manually save and exit at a later time."
-#~ msgstr ""
-#~ "För att det nya språket ska träda i kraft måste konfigurationen sparas "
-#~ "och NVDA startas om. Tryck enter för att spara och starta om NVDA eller "
-#~ "avbryt för att manuellt spara och avsluta vid ett senare tillfälle."

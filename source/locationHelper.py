@@ -254,24 +254,18 @@ class _RectMixin:
 		return RECT(self.left,self.top,self.right,self.bottom)
 
 	def toLogical(self, hwnd):
-		try:
-			left, top = self.topLeft.toLogical(hwnd)
-			right, bottom = self.bottomRight.toLogical(hwnd)
-		except RuntimeError:
-			raise RuntimeError(f"Couldn't convert {self} to logical coordinates")
+		left,top=self.topLeft.toLogical(hwnd)
+		right,bottom=self.bottomRight.toLogical(hwnd)
 		if isinstance(self, RectLTWH):
-			return RectLTWH(left, top, right - left, bottom - top)
-		return RectLTRB(left, top, right, bottom)
+			return RectLTWH(left,top,right-left,bottom-top)
+		return RectLTRB(left,top,right,bottom)
 
 	def toPhysical(self, hwnd):
-		try:
-			left, top = self.topLeft.toPhysical(hwnd)
-			right, bottom = self.bottomRight.toPhysical(hwnd)
-		except RuntimeError:
-			raise RuntimeError(f"Couldn't convert {self} to physical coordinates")
+		left,top=self.topLeft.toPhysical(hwnd)
+		right,bottom=self.bottomRight.toPhysical(hwnd)
 		if isinstance(self, RectLTWH):
-			return RectLTWH(left, top, right - left, bottom - top)
-		return RectLTRB(left, top, right, bottom)
+			return RectLTWH(left,top,right-left,bottom-top)
+		return RectLTRB(left,top,right,bottom)
 
 	def toClient(self, hwnd):
 		left, top =self.topLeft.toClient(hwnd)
@@ -280,7 +274,7 @@ class _RectMixin:
 		return RectLTRB(left, top, left+self.width, top+self.height)
 
 	def toScreen(self, hwnd):
-		left, top = self.topLeft.toScreen(hwnd)
+		left,top=self.topLeft.toScreen(hwnd)
 		if isinstance(self, RectLTWH):
 			return RectLTWH(left, top, self.width, self.height)
 		return RectLTRB(left, top, left+self.width, top+self.height)
@@ -401,9 +395,9 @@ class RectLTRB(_RectMixin, namedtuple("RectLTRB",("left","top","right","bottom")
 
 	def __new__(cls, left, top, right, bottom):
 		if left>right:
-			raise ValueError("left=%d is greather than right=%d, which is not allowed"%(left,right))
+			raise ValueError("left=%d is greater than right=%d, which is not allowed" % (left, right))
 		if top>bottom:
-			raise ValueError("top=%d is greather than bottom=%d, which is not allowed"%(top,bottom))
+			raise ValueError("top=%d is greater than bottom=%d, which is not allowed" % (top, bottom))
 		return super(RectLTRB, cls).__new__(cls, left, top, right, bottom)
 
 	@property

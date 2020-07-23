@@ -373,9 +373,9 @@ Per navigare ad oggetti, utilizzare i tasti seguenti:
 | Spostarsi all'oggetto precedente | NVDA+4 del tastierino numerico | NVDA+shift+freccia sinistra | Scorrimento a sinistra (modo oggetti) | ci si Sposta all'oggetto precedente rispetto a quello attuale, sullo stesso livello |
 | Spostarsi all'oggetto successivo | NVDA+numpad6 | NVDA+shift+freccia destra | Scorrimento a destra (modo oggetti) | ci si Sposta all'oggetto successivo rispetto a quello attuale, sullo stesso livello) |
 | Spostarsi al primo oggetto contenuto | NVDA+2 del tastierino numerico | NVDA+shift+freccia giù | Scorrimento in basso (modo oggetti) | Ci si sposta al primo oggetto contenuto nell'oggetto attuale |
-| Spostarsi all'oggetto focalizzato | NVDA+Meno del tastierino numerico | NVDA+Backspazio | Nessuno | Sposta il navigatore ad oggetti sull'oggetto che attualmente ha il focus di sistema, e porta anche il cursore di controllo in quella posizione, se il cursore di sistema è visualizzato |
+| Spostarsi all'oggetto focalizzato | NVDA+Meno del tastierino numerico | NVDA+Backspace | Nessuno | Sposta il navigatore ad oggetti sull'oggetto che attualmente ha il focus di sistema, e porta anche il cursore di controllo in quella posizione, se il cursore di sistema è visualizzato |
 | Attivare l'oggetto corrente | NVDA+Invio del tastierino numerico | NVDA+Invio | Doppio tap | Attiva l'oggetto corrente (l'equivalente di cliccare col mouse o premere la barra spazio in presenza del focus) |
-| Spostare il focus di sistema sull'oggetto corrente | NVDA+Shift+meno del tastierino numerico | NVDA+Shift+backspazio | Nessuno | Sposta il focus di sistema alla posizione del navigatore ad oggetti se possibile, mentre se premuto due volte sposta il cursore di sistema alla posizione del cursore di controllo |
+| Spostare il focus di sistema sull'oggetto corrente | NVDA+Shift+meno del tastierino numerico | NVDA+Shift+Backspace | Nessuno | Sposta il focus di sistema alla posizione del navigatore ad oggetti se possibile, mentre se premuto due volte sposta il cursore di sistema alla posizione del cursore di controllo |
 | Annuncia posizione del cursore di controllo | NVDA+Canc del tastierino numerico | NVDA+Canc | Nessuno | Legge la posizione del testo o dell'oggetto sul cursore di controllo. Ad esempio, può significare la percentuale in un documento, la distanza dal bordo della pagina o l'esatta posizione sullo schermo. Una doppia pressione fornirà se possibile ulteriori dettagli. |
 %kc:endInclude
 
@@ -475,13 +475,13 @@ Se le si vuole provare sarà sufficiente configurarle dalla categoria [impostazi
 
 Sebbene un mouse o un trackpad risultino la maniera migliore per esplorare lo schermo in tale modalità, NVDA mette a disposizione qualche comando relativo al mouse:
 %kc:beginInclude
-|| Nome | tasto Desktop | tasto Laptop | Descrizione |
-| Click tasto sinistro del mouse | Barra del tastierino numerico | NVDA+è | Effettua un click con il tasto sinistro del mouse. Per operare un doppio click premere il tasto due volte in rapida successione |
-| Blocca tasto sinistro del mouse | Shift+Barra del tastierino numerico | NVDA+control+è | Blocca il tasto sinistro del mouse. Premere di nuovo tale combinazione per rilasciarlo. Per trascinare il mouse, premere la sequenza di tasti per bloccare il tasto sinistro e quindi spostare il mouse o fisicamente oppure con gli appositi comandi relativi al mouse |
-| Click tasto destro del mouse | Asterisco del tastierino numerico | NVDA++ | Effettua un click con il bottone destro del mouse. |
-| Blocca tasto destro del mouse | Shift+Asterisco del tastierino numerico | NVDA+control++ | Blocca il tasto destro del mouse. Premere di nuovo tale combinazione per rilasciarlo. Per trascinare il mouse, premere la sequenza di tasti per bloccare il tasto destro e quindi spostare il mouse o fisicamente oppure con gli appositi comandi relativi al mouse |
-| Spostare il mouse alla posizione del navigatore ad oggetti | NVDA+Barra del tastierino numerico | NVDA+Shift+m | Sposta il mouse alla posizione del navigatore ad oggetti e quindi del cursore di controllo |
-| Spostare il navigatore ad oggetti sul mouse | NVDA+Asterisco del tastierino numerico | NVDA+Shift+n | Sposta il navigatore ad oggetti sull'oggetto situato nella posizione del mouse |
+|| Nome | tasto Desktop | tasto Laptop | tocco | Descrizione |
+| Click tasto sinistro del mouse | Barra del tastierino numerico | NVDA+è | nessuno | Effettua un click con il tasto sinistro del mouse. Per operare un doppio click premere il tasto due volte in rapida successione |
+| Blocca tasto sinistro del mouse | Shift+Barra del tastierino numerico | NVDA+control+è | nessuno | Blocca il tasto sinistro del mouse. Premere di nuovo tale combinazione per rilasciarlo. Per trascinare il mouse, premere la sequenza di tasti per bloccare il tasto sinistro e quindi spostare il mouse o fisicamente oppure con gli appositi comandi relativi al mouse |
+| Click tasto destro del mouse | Asterisco del tastierino numerico | NVDA++ | Tap lungo | Effettua un click con il bottone destro del mouse, utilizzato per lo più per aprire i menu di contesto alla posizione del mouse |
+| Blocca tasto destro del mouse | Shift+Asterisco del tastierino numerico | NVDA+control++ | nessuno | Blocca il tasto destro del mouse. Premere di nuovo tale combinazione per rilasciarlo. Per trascinare il mouse, premere la sequenza di tasti per bloccare il tasto destro e quindi spostare il mouse o fisicamente oppure con gli appositi comandi relativi al mouse |
+| Spostare il mouse alla posizione del navigatore ad oggetti | NVDA+Barra del tastierino numerico | NVDA+Shift+m | nessuno | Sposta il mouse alla posizione del navigatore ad oggetti e quindi del cursore di controllo |
+| Spostare il navigatore ad oggetti sul mouse | NVDA+Asterisco del tastierino numerico | NVDA+Shift+n | nessuno | Sposta il navigatore ad oggetti sull'oggetto situato nella posizione del mouse |
 %kc:endInclude
 
 + Modalità navigazione +[BrowseMode]
@@ -752,7 +752,7 @@ NVDA supporta l'immissione di caratteri tramite la tastiera stile perkins presen
 Quando viene utilizzato il braille non contratto (ossia quello classico presente in Italia), il testo viene inserito nel momento in cui si digitano i caratteri.
 Quando invece si usa il braille contratto, il testo viene inserito alla pressione della barra spaziatrice oppure premendo invio alla fine di una parola.
 Si noti che il processo di traduzione funziona soltanto sulla parola digitata, non può quindi prendere in considerazione altro testo eventualmente esistente.
-Per esempio, se si utilizza un codice braille che prevede il segnanumero e poi un numero, nel caso si prema backspazio sarà necessario ridigitare il segnanumero per inserire altre cifre.
+Per esempio, se si utilizza un codice braille che prevede il segnanumero e poi un numero, nel caso si prema Backspace sarà necessario ridigitare il segnanumero per inserire altre cifre.
 
 %kc:beginInclude
 Punto 7 elimina l'ultimo carattere o segno braille.
@@ -931,13 +931,6 @@ Nota: Questi tasti caldi funzionano soltanto se la barra di stato di Foobar ha i
 || Nome | Tasto | Descrizione |
 | Annuncia finestra commenti | control+shift+c | Annuncia qualsiasi commento all'interno della finestra commenti. |
 | Annuncia note per traduttori | control+shift+a | Annuncia ogni nota presente per traduttori. |
-%kc:endInclude
-
-++ Skype ++[Skype]
-%kc:beginInclude
-In una conversazione:
-|| Nome | Tasto | Descrizione |
-| Annuncia messaggio | NVDA+control+1-0 | Legge il messaggio e vi sposta il cursore di controllo, a seconda del numero premuto. Ad esempio NVDA+control+2 legge il secondo messaggio più recente. |
 %kc:endInclude
 
 ++ Kindle per PC ++[Kindle]
@@ -2045,6 +2038,10 @@ La finestra visualizzatore braille contiene una casella di controllo chiamata "M
 Se tale casella è selezionata,  il visualizzatore braille si caricherà all'avvio di NVDA.
 La finestra cercherà sempre di riaprirsi con le stesse dimensioni e posizione di quando è stata chiusa in precedenza.
 
+++ Console Python ++[PythonConsole]
+La Console Python di NVDA, situata nel menu strumenti, è uno strumento per sviluppatori che risulta utile in fase di debug, di diagnosi delle funzioni interne di NVDA o di analisi della gerarchia degli oggetti accessibili presenti in un'applicazione.
+Per ulteriori informazioni, si veda la [guida agli sviluppatori per NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html], in lingua inglese.
+
 ++ Gestore componenti aggiuntivi ++[AddonsManager]
 Il gestore di componenti aggiuntivi, accessibile selezionando "gestisci componenti aggiuntivi" dal menu strumenti di NVDA, permette di installare, disinstallare, abilitare e disabilitare questo tipo di pacchetti. 
 Essi vengono prodotti  dalla comunità internazionale di NVDA  e contengono codice personalizzato che può aggiungere o modificare le caratteristiche dello screen reader, o anche fornire supporto per Display Braille o sintesi vocali extra.
@@ -2090,7 +2087,7 @@ Per controllare questi addon, sarà possibile  servirsi del pulsante "visualizza
 
 Per accedere al gestore componenti aggiuntivi da qualsiasi punto ci si trovi, servirsi della finestra [tasti e gesti di immissione #InputGestures] ed assegnare un gesto o tasto rapido personalizzato per quella funzione.
 
-++ Gestore componenti aggiuntivi non compatibili ++
++++ Gestore componenti aggiuntivi non compatibili +++
 Il Gestore componenti aggiuntivi non compatibili, che si raggiunge tramite l'apposito pulsante presente all'interno del gestore componenti aggiuntivi, consente di controllare tutti gli addon non compatibili e, conseguentemente, conoscere il motivo per il quale essi sono stati ritenuti non utilizzabili.
 Gli addon sono considerati non compatibili quando non vengono aggiornati da molto tempo e quindi non possono funzionare con i cambiamenti più significativi introdotti in NVDA, o quando si basano su caratteristiche che non sono disponibili nella versione dello screen reader in uso.
 Il gestore componenti aggiuntivi non compatibili mostrerà un breve messaggio che spiegherà i problemi individuati negli addon.
@@ -2102,11 +2099,6 @@ Tutti i componenti vengono presentati in un elenco con le seguenti colonne:
 
 Inoltre, il gestore componenti aggiuntivi non compatibili dispone di un pulsante "informazioni su".
 Come è semplice immaginare, verranno mostrate le informazioni sull'addon con la possibilità di contattare lo sviluppatore.
-
-
-++ Console Python ++[PythonConsole]
-La Console Python di NVDA, situata nel menu strumenti, è uno strumento per sviluppatori che risulta utile in fase di debug, di diagnosi delle funzioni interne di NVDA o di analisi della gerarchia degli oggetti accessibili presenti in un'applicazione.
-Per ulteriori informazioni, si veda la [guida agli sviluppatori per NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html], in lingua inglese.
 
 ++ Ricarica componenti aggiuntivi ++[ReloadPlugins]
 Questa voce, una volta attivata, ricarica tutti i plugin e i moduli specifici per le applicazioni senza riavviare NVDA. Risulta utile per gli sviluppatori.
@@ -2425,9 +2417,13 @@ Le Barre Braille Brailliant Serie BI e B prodotte dalla [HumanWare https://www.h
 In caso di connessione tramite USB con protocollo impostato su Humanware, è necessario prima installare i driver sviluppati dal produttore.
 Non è richiesto alcun driver USB invece nel caso in cui il protocollo sia impostato su OpenBraille.
 
-è supportato anche il BrailleNote Touch, e non richiede l'installazione di alcun driver.
+Sono supportati anche i dispositivi seguenti e non necessitano dell'installazione di alcun driver:
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
 
-Di seguito, ecco l'elenco dell'assegnazione dei tasti  per queste rigghe braille con NVDA.
+Di seguito, ecco l'elenco dell'assegnazione dei tasti  per queste righe braille con NVDA.
 Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
 +++ Assegnazione tasti per tutti i modelli +++
 %kc:beginInclude

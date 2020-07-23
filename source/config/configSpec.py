@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from io import StringIO
 from configobj import ConfigObj
@@ -11,7 +11,7 @@ from configobj import ConfigObj
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config 
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 3
+latestSchemaVersion = 4
 
 #: The configuration specification string
 #: @type: String
@@ -158,9 +158,10 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	autoSayAllOnPageLoad = boolean(default=true)
 	trapNonCommandGestures = boolean(default=true)
 	enableOnPageLoad = boolean(default=true)
-	autoFocusFocusableElements = boolean(default=True)
+	autoFocusFocusableElements = boolean(default=False)
 
 [touch]
+	enabled = boolean(default=true)
 	touchTyping = boolean(default=False)
 
 #Settings for document reading (such as MS Word and wordpad)
@@ -173,6 +174,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportFontAttributes = boolean(default=false)
 	reportRevisions = boolean(default=true)
 	reportEmphasis = boolean(default=false)
+	reportSuperscriptsAndSubscripts = boolean(default=false)
 	reportColor = boolean(default=False)
 	reportAlignment = boolean(default=false)
 	reportLineSpacing = boolean(default=false)
@@ -190,6 +192,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportBorderStyle = boolean(default=False)
 	reportBorderColor = boolean(default=False)
 	reportLinks = boolean(default=true)
+	reportGraphics = boolean(default=True)
 	reportComments = boolean(default=true)
 	reportLists = boolean(default=true)
 	reportHeadings = boolean(default=true)
@@ -210,6 +213,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enabled = boolean(default=true)
 	useInMSWordWhenAvailable = boolean(default=false)
 	winConsoleImplementation= option("auto", "legacy", "UIA", default="auto")
+	selectiveEventRegistration = boolean(default=false)
 
 [terminals]
 	speakPasswords = boolean(default=false)
@@ -237,6 +241,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	timeSinceInput = boolean(default=false)
 	vision = boolean(default=false)
 	speech = boolean(default=false)
+	speechManager = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")
@@ -249,6 +254,10 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [development]
 	enableScratchpadDir = boolean(default=false)
+
+[featureFlag]
+	# 0:default, 1:yes, 2:no
+	cancelExpiredFocusSpeech = integer(0, 2, default=0)
 """
 
 #: The configuration specification

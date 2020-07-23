@@ -15,7 +15,7 @@ complexSymbols:
 # Others
 decimal point	(?<![^\d -])\,(?=\d)
 in-word '	(?<=[^\W_])'
-negative number	(?<!\w)-(?=[$£€¥.]?\d)
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -56,6 +56,7 @@ $	dolar	some
 )	zatvorena zagrada	most	always
 *	zvjezdica	most
 +	plus	most
+−	minus	some
 ,	zarez	all	always
 -	crtica	most
 .	točka	all
