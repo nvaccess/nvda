@@ -1232,25 +1232,7 @@ class UIA(Window):
 		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsRequiredForFormPropertyId):
 			states.add(controlTypes.STATE_REQUIRED)
 
-		# Read-only state
-		try:
-			isReadOnly = self._getUIACacheablePropertyValue(UIAHandler.UIA_ValueIsReadOnlyPropertyId, True)
-		except COMError:
-			isReadOnly = UIAHandler.handler.reservedNotSupportedValue
-		if (
-			isReadOnly == UIAHandler.handler.reservedNotSupportedValue
-			and self.UIATextPattern
-		):
-			# Most UIA text controls don't support the "ValueIsReadOnly" property, so we need to look at
-			# 	root document "IsReadOnly" attribute.
-			try:
-				document = self.UIATextPattern.documentRange
-				isReadOnly = document.GetAttributeValue(UIAHandler.UIA_IsReadOnlyAttributeId)
-			except COMError:
-				isReadOnly = UIAHandler.handler.reservedNotSupportedValue
-
-		# We can check "isReadOnly" again
-		if isReadOnly is True:
+		if self._getReadOnlyState():
 			states.add(controlTypes.STATE_READONLY)
 
 		try:
@@ -1277,6 +1259,24 @@ class UIA(Window):
 				if s==UIAHandler.ToggleState_On:
 					states.add(controlTypes.STATE_CHECKED)
 		return states
+
+	def _getReadOnlyState(self) -> bool:
+		try:
+			isReadOnly = self._getUIACacheablePropertyValue(UIAHandler.UIA_ValueIsReadOnlyPropertyId, True)
+		except COMError:
+			isReadOnly = UIAHandler.handler.reservedNotSupportedValue
+		if (
+			isReadOnly == UIAHandler.handler.reservedNotSupportedValue
+			and self.UIATextPattern
+		):
+			# Most UIA text controls don't support the "ValueIsReadOnly" property,
+			# so we need to look at the root document "IsReadOnly" attribute.
+			try:
+				document = self.UIATextPattern.documentRange
+				isReadOnly = document.GetAttributeValue(UIAHandler.UIA_IsReadOnlyAttributeId)
+			except COMError:
+				isReadOnly = UIAHandler.handler.reservedNotSupportedValue
+		return isReadOnly
 
 	def _get_presentationType(self):
 		presentationType=super(UIA,self).presentationType
