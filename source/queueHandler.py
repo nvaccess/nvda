@@ -5,14 +5,13 @@
 #See the file COPYING for more details.
 
 import types
-from queue import Queue
+from queue import SimpleQueue
 import globalVars
 from logHandler import log
 import watchdog
 import core
 
-eventQueue=Queue()
-eventQueue.__name__="eventQueue"
+eventQueue = SimpleQueue()
 generators={}
 lastGeneratorObjID=0
 
