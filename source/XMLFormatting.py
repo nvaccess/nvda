@@ -58,13 +58,13 @@ class XMLTextParser(object):
 			cmdList.append(data)
 
 	def parse(self,XMLText):
-		parser=expat.ParserCreate('utf-8')
-		parser.StartElementHandler=self._startElementHandler
-		parser.EndElementHandler=self._EndElementHandler
-		parser.CharacterDataHandler=self._CharacterDataHandler
-		self._commandList=[]
+		parser = expat.ParserCreate('utf-8')
+		parser.StartElementHandler = self._startElementHandler
+		parser.EndElementHandler = self._EndElementHandler
+		parser.CharacterDataHandler = self._CharacterDataHandler
+		self._commandList = []
 		try:
 			parser.Parse(XMLText)
-		except:
-			log.error("XML: %s"%XMLText,exc_info=True)
+		except Exception:
+			log.error("XML: %s" % XMLText, exc_info=True)
 		return self._commandList
