@@ -8,6 +8,7 @@
 
 import ctypes
 import time
+import weakref
 from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
@@ -558,6 +559,30 @@ class ChartWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	def filter(self,item):
 		return item.type==wdInlineShapeChart
 
+class LazyControlField(textInfos.ControlField): 
+
+	def __init__(self,ti):
+		self._ti = ti
+		super().__init__()
+
+	def get(self,name,default=None):
+		if name=="table-rowheadertext":
+			try:
+				cell=self._ti._rangeObj.cells[1]
+			except IndexError:
+				log.debugWarning("no cells for table row, possibly on end of cell mark")
+				return super().get(name,default)
+			return self._ti.obj.fetchAssociatedHeaderCellText(cell,False)
+		elif name=="table-columnheadertext":
+			try:
+				cell=self._ti._rangeObj.cells[1]
+			except IndexError:
+				log.debugWarning("no cells for table row, possibly on end of cell mark")
+				return super().get(name,default)
+			return self._ti.obj.fetchAssociatedHeaderCellText(cell,True)
+		else:
+			return super().get(name,default)
+
 class WordDocumentTextInfo(textInfos.TextInfo):
 
 	# #4852: temporary fix.
@@ -798,25 +823,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				field['alwaysReportName']=True
 				field['role']=controlTypes.ROLE_FRAME
 		# Hack support for lazy fetching of row and column header text values
-		class ControlField(textInfos.ControlField): 
-			def get(d,name,default=None):
-				if name=="table-rowheadertext":
-					try:
-						cell=self._rangeObj.cells[1]
-					except IndexError:
-						log.debugWarning("no cells for table row, possibly on end of cell mark")
-						return super(ControlField,d).get(name,default)
-					return self.obj.fetchAssociatedHeaderCellText(cell,False)
-				elif name=="table-columnheadertext":
-					try:
-						cell=self._rangeObj.cells[1]
-					except IndexError:
-						log.debugWarning("no cells for table row, possibly on end of cell mark")
-						return super(ControlField,d).get(name,default)
-					return self.obj.fetchAssociatedHeaderCellText(cell,True)
-				else:
-					return super(ControlField,d).get(name,default)
-		newField=ControlField()
+		newField = LazyControlField(self)
 		newField.update(field)
 		return newField
 
