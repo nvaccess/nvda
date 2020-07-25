@@ -899,19 +899,23 @@ class GlobalCommands(ScriptableObject):
 	script_navigatorObject_currentDimensions.__doc__=_("Reports information about the location of the text or object at the review cursor. Pressing twice may provide further detail.") 
 	script_navigatorObject_currentDimensions.category=SCRCAT_OBJECTNAVIGATION
 
+	@script(
+		description=_(
+			# Translators: Input help mode message for move navigator object to current focus command.
+			"Sets the navigator object to the current focus,"
+			"and the review cursor to the position of the caret inside it, if possible."
+		),
+		category=SCRCAT_OBJECTNAVIGATION,
+		gestures=("kb:NVDA+numpadMinus", "kb(laptop):NVDA+backspace"),
+	)
 	def script_navigatorObject_toFocus(self,gesture):
-		obj=api.getFocusObject()
-		try:
-			pos=obj.makeTextInfo(textInfos.POSITION_CARET)
-		except (NotImplementedError,RuntimeError):
-			pos=obj.makeTextInfo(textInfos.POSITION_FIRST)
-		api.setReviewPosition(pos)
+		tIAtCaret = self._getTIAtCaret(True)
+		focusedObj = api.getFocusObject()
+		api.setNavigatorObject(focusedObj)
+		api.setReviewPosition(tIAtCaret)
 		# Translators: Reported when attempting to move the navigator object to focus.
 		speech.speakMessage(_("Move to focus"))
-		speech.speakObject(obj,reason=controlTypes.REASON_FOCUS)
-	# Translators: Input help mode message for move navigator object to current focus command.
-	script_navigatorObject_toFocus.__doc__=_("Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible.")
-	script_navigatorObject_toFocus.category=SCRCAT_OBJECTNAVIGATION
+		speech.speakObject(api.getNavigatorObject(), reason=controlTypes.OutputReason.FOCUS)
 
 	def script_navigatorObject_moveFocus(self,gesture):
 		obj=api.getNavigatorObject()
@@ -1478,7 +1482,8 @@ class GlobalCommands(ScriptableObject):
 				_("Formatting")
 			)
 
-	def _getTIAtCaret(self):
+	@staticmethod
+	def _getTIAtCaret(fallbackToPOSITION_FIRST=False):
 		# Returns text info at the caret position if there is a caret in the current control, None otherwise.
 		# Note that if there is  no caret this fact is announced  in speech and braille.
 		obj = api.getFocusObject()
@@ -1489,12 +1494,13 @@ class GlobalCommands(ScriptableObject):
 		):
 			obj = treeInterceptor
 		try:
-			info = obj.makeTextInfo(textInfos.POSITION_CARET)
-			return info
+			return obj.makeTextInfo(textInfos.POSITION_CARET)
 		except (NotImplementedError, RuntimeError):
-			# Translators: Reported when there is no caret.
-			ui.message(_("No caret"))
-			return
+			if fallbackToPOSITION_FIRST:
+				return obj.makeTextInfo(textInfos.POSITION_FIRST)
+			else:
+				# Translators: Reported when there is no caret.
+				ui.message(_("No caret"))
 
 	@script(
 		# Translators: Input help mode message for report formatting command.
@@ -2790,8 +2796,6 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+numpad2": "navigatorObject_firstChild",
 		"kb(laptop):NVDA+shift+downArrow": "navigatorObject_firstChild",
 		"ts(object):flickdown":"navigatorObject_firstChild",
-		"kb:NVDA+numpadMinus": "navigatorObject_toFocus",
-		"kb(laptop):NVDA+backspace": "navigatorObject_toFocus",
 		"kb:NVDA+numpadEnter": "review_activate",
 		"kb(laptop):NVDA+enter": "review_activate",
 		"ts:double_tap": "review_activate",
