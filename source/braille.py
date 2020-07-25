@@ -8,6 +8,7 @@
 import itertools
 import os
 from typing import Iterable, Union, Tuple, List, Optional
+from locale import strxfrm
 
 import driverHandler
 import pkgutil
@@ -363,7 +364,7 @@ def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
 				log.debugWarning("Braille display driver %s reports as unavailable, excluding" % name)
 		except:
 			log.error("", exc_info=True)
-	displayList.sort(key=lambda d : d[1].lower())
+	displayList.sort(key=lambda d: strxfrm(d[1]))
 	if lastDisplay:
 		displayList.append(lastDisplay)
 	return displayList
