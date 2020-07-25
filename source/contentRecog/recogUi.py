@@ -126,6 +126,8 @@ def recognizeNavigatorObject(recognizer):
 		ui.message(_("Already in a content recognition result"))
 		return
 	nav = api.getNavigatorObject()
+	if not recognizer.validateObject(nav):
+		return
 	# Translators: Reported when content recognition (e.g. OCR) is attempted,
 	# but the content is not visible.
 	notVisibleMsg = _("Content is not visible")
@@ -134,6 +136,8 @@ def recognizeNavigatorObject(recognizer):
 	except TypeError:
 		log.debugWarning("Object returned location %r" % nav.location)
 		ui.message(notVisibleMsg)
+		return
+	if not recognizer.validateCaptureBounds(nav.location):
 		return
 	try:
 		imgInfo = RecogImageInfo.createFromRecognizer(left, top, width, height, recognizer)

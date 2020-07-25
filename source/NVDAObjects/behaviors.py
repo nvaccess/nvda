@@ -182,7 +182,7 @@ class EditableTextWithAutoSelectDetection(EditableText):
 	"""
 
 	def event_gainFocus(self):
-		super(EditableText, self).event_gainFocus()
+		super().event_gainFocus()
 		self.initAutoSelectDetection()
 
 	def event_caret(self):
@@ -733,7 +733,9 @@ class _FakeTableCell(NVDAObject):
 		states = self.parent.states.copy()
 		if self.location and self.location.width == 0:
 			states.add(controlTypes.STATE_INVISIBLE)
+		states.discard(controlTypes.STATE_CHECKED)
 		return states
+
 
 class FocusableUnfocusableContainer(NVDAObject):
 	"""Makes an unfocusable container focusable using its first focusable descendant.
