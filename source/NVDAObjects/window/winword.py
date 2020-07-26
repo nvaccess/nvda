@@ -559,7 +559,7 @@ class ChartWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 		return item.type==wdInlineShapeChart
 
 
-class LazyControlField(textInfos.ControlField):
+class LazyControlField_RowAndColumnHeaderText(textInfos.ControlField):
 
 	def __init__(self, ti):
 		self._ti = ti
@@ -822,8 +822,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				field['name']=name
 				field['alwaysReportName']=True
 				field['role']=controlTypes.ROLE_FRAME
-		# Hack support for lazy fetching of row and column header text values
-		newField = LazyControlField(self)
+		newField = LazyControlField_RowAndColumnHeaderText(self)
 		newField.update(field)
 		return newField
 
