@@ -160,8 +160,14 @@ class _EmulatedGestureVM(_ScriptVM):
 	canAdd = True  #: able to add gestures that trigger this emulation
 	scriptInfo: Union[inputCore.AllGesturesScriptInfo, inputCore.KbEmuScriptInfo]
 
-	def __init__(self, displayName: str, emuGestureInfo: inputCore.AllGesturesScriptInfo):
-		super(_EmulatedGestureVM, self).__init__(displayName=displayName, scriptInfo=emuGestureInfo)
+	def __init__(self, emuGestureInfo: inputCore.AllGesturesScriptInfo):
+		# Translators: An gesture that will be emulated by some other new gesture. The token {emulateGesture}
+		# will be replaced by the gesture that can be triggered by a mapped gesture.
+		# E.G. Emulate key press: NVDA+b
+		emuGestureDisplayName = _("Emulate key press: {emulateGesture}").format(
+			emulateGesture=emuGestureInfo.displayName
+		)
+		super(_EmulatedGestureVM, self).__init__(displayName=emuGestureDisplayName, scriptInfo=emuGestureInfo)
 
 	@property
 	def canRemove(self) -> bool:
@@ -187,7 +193,7 @@ class _EmuCategoryVM:
 	canAdd = True  #: Can add new emulated gestures
 	canRemove = False  #: categories can not be removed
 	addedKbEmulation: List[_EmulatedGestureVM]  #: These will also be in self.scripts
-	#: These will not be in self.scripts anymore. Key is the display name.
+	#: These will not be in self.scripts anymore. Key is the scriptInfo display name.
 	removedKbEmulation: Dict[str, _EmulatedGestureVM]
 
 	def __repr__(self):
@@ -203,7 +209,6 @@ class _EmuCategoryVM:
 		for scriptName in sorted(emuGestures, key=strxfrm):
 			emuG = emuGestures[scriptName]
 			self.scripts.append(_EmulatedGestureVM(
-				displayName=scriptName,
 				emuGestureInfo=emuG
 			))
 
@@ -214,21 +219,19 @@ class _EmuCategoryVM:
 
 	def finalisePending(
 			self,
-			gestureDisplayName,
 			scriptInfo: inputCore.AllGesturesScriptInfo
 	) -> _EmulatedGestureVM:
 		assert self.pending is not None
 		self.scripts.remove(self.pending)
-		return self._addEmulation(gestureDisplayName, scriptInfo)
+		return self._addEmulation(scriptInfo)
 
 	def _addEmulation(
 			self,
-			gestureDisplayName,
 			scriptInfo: inputCore.AllGesturesScriptInfo
 	) -> _EmulatedGestureVM:
-		emuGesture = self.removedKbEmulation.pop(gestureDisplayName, None)
+		emuGesture = self.removedKbEmulation.pop(scriptInfo.displayName, None)
 		if not emuGesture:
-			emuGesture = _EmulatedGestureVM(gestureDisplayName, scriptInfo)
+			emuGesture = _EmulatedGestureVM(scriptInfo)
 			for a in self.addedKbEmulation:
 				if a.displayName == emuGesture.displayName:
 					raise ValueError("Already added this emulated gesture!")
@@ -240,7 +243,7 @@ class _EmuCategoryVM:
 		if gestureEmulation in self.addedKbEmulation:
 			self.addedKbEmulation.remove(gestureEmulation)
 		else:
-			self.removedKbEmulation[gestureEmulation.displayName] = gestureEmulation
+			self.removedKbEmulation[gestureEmulation.scriptInfo.displayName] = gestureEmulation
 		self.scripts.remove(gestureEmulation)
 
 
@@ -718,14 +721,9 @@ class InputGesturesDialog(SettingsDialog):
 		gestureToEmulate = gesture.normalizedIdentifiers[-1]
 		from globalCommands import GlobalCommands
 		scriptInfo = inputCore._AllGestureMappingsRetriever.makeKbEmuScriptInfo(GlobalCommands, gestureToEmulate)
-		# Translators: An gesture that will be emulated by some other new gesture. The token {emulateGesture}
-		# will be replaced by the gesture that can be triggered by a mapped gesture.
-		# E.G. Emulate key press: NVDA+b
-		emuGestureDisplayName = _("Emulate key press: {emulateGesture}").format(
-			emulateGesture=scriptInfo.displayName
-		)
+
 		catVM = self.gesturesVM.isExpectingNewEmuGesture
-		newScript = catVM.finalisePending(emuGestureDisplayName, scriptInfo)
+		newScript = catVM.finalisePending(scriptInfo)
 		self.gesturesVM.isExpectingNewEmuGesture = None
 		self.tree.doRefresh(focus=(catVM, newScript, None,))
 		self._refreshButtonState()
