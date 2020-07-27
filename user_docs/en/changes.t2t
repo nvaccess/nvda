@@ -9,17 +9,19 @@ What's New in NVDA
 - You can now toggle reporting of graphics from NVDA's document formatting settings. Note that disabling this option will still read the alternative texts of graphics. (#4837)
 - You can now toggle NVDA's touchscreen support. An option has been added to the Touch Interaction panel of NVDA's settings. The default gesture is NVDA+control+alt+t. (#9682)
 - Added new German braille tables. (#11268)
+- NVDA now detects read-only text UIA controls. (#10494)
 
 
 == Changes ==
 - The Report formatting script (NVDA+f) has now been changed to report the formatting at the system caret rather than at the review cursor position. To report formatting at the review cursor position now use NVDA+shift+f. (#9505)
 - NVDA no longer automatically sets the system focus to focusable elements by default in browse mode, improving performance and stability. (#11190)
 - CLDR updated from version 36.1 to version 37. (#11303)
-- Updated eSpeak-NG to 1.51-dev, commit f2939490e
+- Updated eSpeak-NG to 1.51-dev, commit 1fb68ffffea4
 - You can now utilize table navigation in list boxes with checkable list items when the particular list has multiple columns. (#8857)
 - In the Add-ons manager, when prompted to confirm removal of an add-on, "No" is now the default. (#10015)
 - In Microsoft Excel, the Elements List dialog now presents formulas in their localized form. (#9144)
 - NVDA now reports the correct terminology for notes in MS Excel. (#11311)
+- When using the "move review cursor to focus" command in browse mode, the review cursor is now set at the position of the virtual caret. (#9622)
 
 
 == Bug Fixes ==
@@ -35,6 +37,8 @@ What's New in NVDA
 - For checkable list items, the selected state is no longer announced redundantly, and if applicable, the unselected state is announced instead. (#8554)
 - On Windows 10 May 2020 Update, NVDA now shows the Microsoft Sound Mapper when viewing output devices from synthesizer dialog. (#11349)
 - In Internet Explorer, numbers are now announced correctly for ordered lists if the list does not start with 1. (#8438)
+- In Google chrome, NVDA will now report not checked for all checkable controls (not just check boxes) that are currently not checked. (#11377)
+- It is once again possible to navigate in various controls when NVDA's language is set to Aragonese. (#11384)
 
 
 == Changes For Developers ==
