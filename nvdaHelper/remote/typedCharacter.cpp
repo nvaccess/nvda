@@ -32,7 +32,8 @@ LRESULT CALLBACK typedCharacter_getMessageHook(int code, WPARAM wParam, LPARAM l
 		typedCharacter_window=pmsg->hwnd;
 		lastCharacter=0;
 	} else if((typedCharacter_window!=0)&&(pmsg->message==WM_CHAR)&&(pmsg->hwnd==typedCharacter_window)&&(pmsg->wParam!=lastCharacter)) { 
-		// Instruct NVDA's inproc manager thread to report the typed chracter to NVDA via rpc.
+		// Instruct NVDA's inproc manager thread to report the typed character to NVDA via rpc.
+
 		// If we were to call the rpc function directly, it might cause a deadlock
 		// if NvDA were to interact with this app's main thread while the rpc function was in progress.
 		QueueUserAPC(typedCharacter_apcFunc, inprocMgrThreadHandle, static_cast<ULONG_PTR>(pmsg->wParam));
