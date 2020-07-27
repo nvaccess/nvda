@@ -240,6 +240,8 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	// Unregister inproc winEvent callback
 	UnhookWinEvent(inprocWinEventHookID);
 	inprocWinEventHookID=0;
+	// Flush any remaining log messages to NVDA
+	log_terminate();
 	//Release and close the thread mutex
 	ReleaseMutex(threadMutex);
 	CloseHandle(threadMutex);
