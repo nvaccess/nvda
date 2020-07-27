@@ -194,8 +194,10 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	// Therefore, we must have a message loop.
 	// Otherwise, any out-of-context events will cause major lag which increases over time.
 	while(true) {
-		DWORD res=MsgWaitForMultipleObjectsEx(1,&nvdaUnregisteredEvent,INFINITE,QS_ALLINPUT,MWMO_ALERTABLE);
-		if(res==(WAIT_OBJECT_0+1)) {
+		const long handleCount=1;
+		const long WAIT_PENDING_MESSAGES=WAIT_OBJECT_0+handleCount;
+		DWORD res=MsgWaitForMultipleObjectsEx(handleCount,&nvdaUnregisteredEvent,INFINITE,QS_ALLINPUT,MWMO_ALERTABLE);
+		if(res==(WAIT_PENDING_MESSAGES)) {
 			// Consume and handle all pending messages.
 			MSG msg;
 			while(PeekMessage(&msg,NULL,0,0,PM_REMOVE)) {
