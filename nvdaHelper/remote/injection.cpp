@@ -206,7 +206,7 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 			}
 			continue;
 		} else if(res==WAIT_IO_COMPLETION) {
-			// Woke for an queued APC function. Keep going.
+			// Woke for a queued APC function. Keep going.
 			continue;
 		}
 		// anything else (the registrationEvent was set, there was an error) means we need to stop.
