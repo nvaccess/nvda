@@ -3706,7 +3706,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.filterEdit = sHelper.addLabeledControl(
 			labelText = filterText,
 			wxCtrlClass=wx.TextCtrl,
-			size=self.scaleSize((310, -1)),
+			size=(self.scaleSize(310), -1),
 		)
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
 
@@ -3758,7 +3758,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.replacementEdit = changeSymbolHelper.addLabeledControl(
 			labelText=replacementText,
 			wxCtrlClass=wx.TextCtrl,
-			size=self.scaleSize((300, -1)),
+			size=(self.scaleSize(300), -1),
 		)
 		self.replacementEdit.Bind(wx.EVT_TEXT, skipEventAndCall(self.onSymbolEdited))
 
