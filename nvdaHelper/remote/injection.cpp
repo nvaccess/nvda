@@ -193,19 +193,26 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	// Even though we only registered for in-context winEvents, we may still receive some out-of-context events; e.g. console events.
 	// Therefore, we must have a message loop.
 	// Otherwise, any out-of-context events will cause major lag which increases over time.
+	// We must also wait in an alertable state so that any APC functions queued to this thread by other NVDAHelper code will be executed.
 	while(true) {
-		const long handleCount=1;
-		const long WAIT_PENDING_MESSAGES=WAIT_OBJECT_0+handleCount;
-		DWORD res=MsgWaitForMultipleObjectsEx(handleCount,&nvdaUnregisteredEvent,INFINITE,QS_ALLINPUT,MWMO_ALERTABLE);
-		if(res==(WAIT_PENDING_MESSAGES)) {
+		const long handleCount = 1;
+		const long WAIT_PENDING_MESSAGES = WAIT_OBJECT_0 + handleCount;
+		DWORD res = MsgWaitForMultipleObjectsEx(
+			handleCount,
+			&nvdaUnregisteredEvent,
+			INFINITE,
+			QS_ALLINPUT,
+			MWMO_ALERTABLE // wait in an alert state so queued APC functions are executed.
+		);
+		if(res == WAIT_PENDING_MESSAGES) {
 			// Consume and handle all pending messages.
 			MSG msg;
-			while(PeekMessage(&msg,NULL,0,0,PM_REMOVE)) {
+			while(PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
 			}
 			continue;
-		} else if(res==WAIT_IO_COMPLETION) {
+		} else if(res == WAIT_IO_COMPLETION) {
 			// Woke for a queued APC function. Keep going.
 			continue;
 		}
