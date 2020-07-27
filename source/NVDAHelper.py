@@ -13,7 +13,7 @@ import winKernel
 import config
 
 from ctypes import *
-from ctyps import (
+from ctypes import (
 	WINFUNCTYPE,
 	c_long,
 	c_wchar,
