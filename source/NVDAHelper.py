@@ -13,6 +13,11 @@ import winKernel
 import config
 
 from ctypes import *
+from ctyps import (
+	WINFUNCTYPE,
+	c_long,
+	c_wchar,
+)
 from ctypes.wintypes import *
 from comtypes import BSTR
 import winUser
@@ -393,6 +398,7 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	lastLayoutString=layoutString
 	queueHandler.queueFunction(queueHandler.eventQueue,ui.message,msg)
 	return 0
+
 
 @WINFUNCTYPE(c_long, c_wchar)
 def nvdaControllerInternal_typedCharacterNotify(ch):
