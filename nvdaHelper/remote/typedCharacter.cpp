@@ -22,7 +22,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 HWND typedCharacter_window=NULL;
 
 void __stdcall typedCharacter_apcFunc(ULONG_PTR data) {
-	nvdaControllerInternal_typedCharacterNotify(GetCurrentThreadId(),static_cast<wchar_t>(data));
+	nvdaControllerInternal_typedCharacterNotify(static_cast<wchar_t>(data));
 }
 
 LRESULT CALLBACK typedCharacter_getMessageHook(int code, WPARAM wParam, LPARAM lParam) {

@@ -394,8 +394,8 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	queueHandler.queueFunction(queueHandler.eventQueue,ui.message,msg)
 	return 0
 
-@WINFUNCTYPE(c_long,c_long,c_wchar)
-def nvdaControllerInternal_typedCharacterNotify(threadID,ch):
+@WINFUNCTYPE(c_long, c_wchar)
+def nvdaControllerInternal_typedCharacterNotify(ch):
 	focus=api.getFocusObject()
 	if focus.windowClassName!="ConsoleWindowClass":
 		eventHandler.queueEvent("typedCharacter", focus, ch=ch)
