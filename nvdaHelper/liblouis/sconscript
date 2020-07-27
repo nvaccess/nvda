@@ -41,7 +41,7 @@ env = env.Clone()
 
 # Liblouis is build with Clang, as Microsoft Visual C++ is unable to build C99 code.
 clangDirs = glob.glob(os.path.join(
-    find_vc_pdir(env.get("MSVC_VERSION")),
+    find_vc_pdir(env, env.get("MSVC_VERSION")),
     r"Tools\Llvm\bin"
 ))
 if len(clangDirs) == 0:
