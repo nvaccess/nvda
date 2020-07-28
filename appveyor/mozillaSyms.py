@@ -89,7 +89,8 @@ def upload():
 			import time
 			time.sleep(15)
 		try:
-			r = requests.post(URL,
+			r = requests.post(
+				URL,
 				files={'symbols.zip': open(ZIP_FILE, 'rb')},
 				headers={'Auth-Token': os.getenv('mozillaSymsAuthToken')},
 				allow_redirects=False
