@@ -42,7 +42,10 @@ $	dolár	all	norep
 ¢	centov	all	norep
 ¥	jen	all	norep
 ₹	Rupia	some	norep
+ƒ	florén	all	norep
+¤	mena	all	norep
 %	percento	some
+‰	promile	some
 &	and	some
 '	apostrof	all
 (	zátvorka	most	always
@@ -70,7 +73,16 @@ _	podčiarkovník	most
 {	zložená zátvorka	most
 }	zložená zatvoriť	most
 |	zvislá čiara	most
+¦	prerušená čiara	most
 ~	vlnovka	most
+¡	obrátený výkričník	some
+¿	obrátený otáznik	some
+·	bodka v prostriedku	most
+‚	dolné jednoduché úvodzovkymost
+„	dolné úvodzovky	most
+′	indexová čiarka	some
+″	dvojitá indexová čiarka	some
+‴	trojitá indexová čiarka	some
 
 # Other characters
 •	odrážka	some
@@ -84,16 +96,25 @@ _	podčiarkovník	most
 ’	odsuvník	most
 –	pomlčka	most	always
 —	dlhá pomlčka	most
+­	voliteľný rozdeľovník	most
+⁃	odrážka v tvare pomlčky	none
 ●	čierny kruh	most
+○	biely kruh	most
 ¨	prehláska	most
+¯	pruh nad	most
+´	dĺžeň	most
+¸	cedila	most
 ‎	znak z ľava do prava 	char
 ‏	znak z prava do ľava	char
+¶	označenie odseku	most
 ■	čierny štvorec	some
 ◾	čierny štvorec	some
 ▪	čierny štvorec	some
+□	biely štvorec	some
 ◦	biela odrážka	some
 ⇒	dvojitá šípka vpravo	some
 ⇨	biela šípka vpravo	some
+➔	šípka v pravo	some
 ➢	hrot šípky ukazujúcej vpravo	some
 ⮚	hrot šípky ukazujúcej v pravo	some
 ❖	čierny štvorec bez bieleho x	some
@@ -105,14 +126,45 @@ _	podčiarkovník	most
 ♥	srdce	some
 ♦	káro	some
 ♧	Biely kríž	some
+◆	čierny diamant	some
 §	paragraf	all
 °	stupňov	some
 «	dvojitá lomená zátvorka	most
 »	dvojitá lomená zatvoriť	most
 µ	mí	some
+º	horný index O	some
+ª	horný index A	some
+⁰	Horný index nula	some
 ¹	horný index 1	some
 ²	horný index 2	some
 ³	horný index 3	some
+⁴	horný index 4	some
+⁵	horný index 5	some
+⁶	horný index 6	some
+⁷	horný index  7	some
+⁸	horný index  8	some
+⁹	horný index  9	some
+⁺	horný index  plus	some
+⁻	horný index mínus	some
+⁼	horný index  rovná sa	some
+⁽	horný index  zátvorka	some
+⁾	horný index zatvoriť	some
+ⁿ	horný index  n	some
+₀	dolný index  0	some
+₁	dolný index 1	some
+₂	dolný index  2	some
+₃	dolný index  3	some
+₄	dolný index  4	some
+₅	dolný index  5	some
+₆	dolný index  6	some
+₇	dolný index  7	some
+₈	dolný index  8	some
+₉	dolný index  9	some
+₊	dolný index  plus	some
+₋	dolný index mínus	some
+₌	dolný index rovná sa	some
+₍	dolný index zátvorka	some
+₎	dolný index zatvoriť	some
 ®	registrované	some
 ™	ochranná známka	some
 ©	kopirajt	some
@@ -126,6 +178,10 @@ _	podčiarkovník	most
 ✓	začiarknutie	some
 ✔	tučné začiarknutie	some
 🡺	šípka vpravo	some
+†	krížik	some
+‡	dvojitý krížik	some
+‣	trojuholníková odrážka	none
+✗	Odrážka v tvare X	none
 
 #Mathematical Operators U+2200 to U+220F
 ∀	Pre všetky 	none
@@ -158,6 +214,7 @@ _	podčiarkovník	most
 ∦	Nerovnobežka	none
 ∧	Logické a	none
 ∨	Logické alebo	none
+¬	logický zápor	none
 ∩	Prienik	none
 ∪	Zjednotenie	none
 ∫	Integrál	none
@@ -173,6 +230,9 @@ _	podčiarkovník	most
 ⊇	Nadmnožina alebo sa rovná	none
 
 # Vulgur Fractions U+2150 to U+215E
+¼	štvrtina	none
+½	polovica	none
+¾	tri štvrtiny	none
 ⅐	jedna sedmina	none
 ⅑	jedna devätina	none
 ⅒	jedna desatina	none

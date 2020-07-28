@@ -3,6 +3,63 @@ Ce este nou în NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.2 =
+Caracteristicile principale ale acestei versiuni includ suportul pentru un afișaj braille nou de la Nattiq, suportul îmbunătățit pentru interfața grafică a antivirusului ESET, dar și pentru Windows Terminal, și îmbunătățiri de performanță în ceea ce privește 1Password și sintetizatorul Windows OneCore. În plus, multe erori importante au fost remediate și multe alte îmbunătățiri au fost făcute.
+
+== Noi Funcționalități ==
+- Suport pentru noi afișaje braille:
+ - Nattiq nBraille (#10778)
+- S-a adăugat un script pentru deschiderea dosarului configurărilor NVDA (niciun gest implicit). (#2214)
+- Suport îmbunătățit pentru interfața grafică a antivirusului ESET. (#10894)
+- S-a adăugat suportul pentru Windows Terminal. (#10305)
+- S-a adăugat o comandă pentru raportarea profilului activ de configurare (niciun gest implicit). (#9325)
+- S-a adăugat o comandă pentru activarea sau dezactivarea raportării subscripturilor și a superscripturilor (niciun gest implicit). (#10985)
+- Aplicațiile web precum Gmail nu mai raportează informații învechite atunci când focalizarea se deplasează rapid. (#10885)
+ - Această remediere experimentală trebuie să fie activată manual prin opțiunea „Încearcă să anulezi vorbirea pentru evenimentele expirate ale focalizării”, care se află în panoul setărilor avansate.
+- Au fost adăugate multe alte simboluri în dicționarul implicit al acestora. (#11105)
+
+
+== Modificări ==
+- S-a actualizat traducătorul braille liblouis de la versiunea 3.12 la versiunea [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0]. (#10832, #11221)
+- Acum, raportarea superscripturilor și a subscripturilor este controlată separat de raportarea atributelor fontului. (#10919)
+- Datorită schimbărilor făcute în VS Code, NVDA nu mai dezactivează modul de navigare din Code în mod implicit. (#10888)
+- S-au șters mesajele „sus” și „jos” la deplasarea cursorului de examinare la primul sau ultimul rând al obiectului navigator curent. (#9551)
+- S-au șters mesajele „stânga” și „dreapta” la deplasarea cursorului de examinare la primul sau ultimul caracter al rândului obiectului navigator curent. (#9551)
+
+
+== Defecte Rezolvate ==
+- Acum, NVDA pornește cum trebuie atunci când nu poate crea fișierul de jurnal. (#6330)
+- În versiunile recente ale Microsoft Word 365, NVDA nu va mai anunța „delete back word” dacă este apăsată combinația de taste Control+Backspace în timpul editării unui document. (#10851)
+- În Winamp, NVDA va anunța din nou o singură dată activarea sau dezactivarea stărilor „aleator” și „repetare”. (#10945)
+- NVDA nu mai este extrem de lent la deplasarea prin lista de elemente în 1Password. (#10508)
+- Sintetizatorul Windows OneCore nu mai rămâne între pronunții. (#10721)
+- NVDA nu se mai blochează atunci când deschideți meniul contextual pentru 1Password din zona notificărilor de sistem (System Tray). (#11017)
+- În Office 2013 și mai vechi:
+ - Sunt anunțate pamblicile atunci când focalizarea se deplasează pentru prima dată la ele. (#4207)
+ - Elementele din meniul contextual sunt din nou raportate așa cum trebuie. (#9252)
+ - Secțiunile de pamblici sunt anunțate consistent la navigarea cu Control+săgeți. (#7067)
+- În modul de navigare din Mozilla Firefox și Google Chrome, textul nu mai apare incorect pe un rând separat atunci când conținutul web utilizează afișarea CSS: inline-flex. (#11075)
+- În modul de navigare cu setarea automată a sistemului la elementele focalizabile dezactivată, nu mai puteți activa elemente care nu sunt focalizabile.
+- În modul de navigare cu setarea automată a sistemului la elementele focalizabile dezactivată, nu mai puteți activa elemente la care se ajunge prin apăsarea tastei tab. (#8528)
+- În modul de navigare cu setarea automată a sistemului la elementele focalizabile dezactivată, activarea anumitor elemente nu mai duce la o locație incorectă. (#9886)
+- Nu se vor mai auzi sunetele de eroare ale NVDA la accesarea controalelor de text DevExpress. (#10918)
+- Indiciile iconițelor din din zona notificărilor de sistem nu mai sunt raportate la navigarea cu tastatura dacă textul lor și numele lor sunt identice, pentru a se evita anunțarea de două ori. (#6656)
+- În modul de navigare cu setarea automată a sistemului la elementele focalizabile dezactivată, comutarea la modul de focalizare cu NVDA+Spațiu focalizează elementul de sub cursorul de scriere al sistemului. (#11206)
+- Puteți din nou să căutați actualizări pentru NVDA pe anumite sisteme; e.x. curățări ale instalărilor de Windows. (#11253)
+- Nu mai este deplasată focalizarea în aplicațiile Java atunci când selecția este schimbată într-o vedere de listă extinsă nefocalizată, tabel sau listă. (#5989)
+
+
+== Modificări pentru Dezvoltatori ==
+- execElevated și hasUiAccess s-au mutat de la modulul config la modulul systemUtils. Utilizarea prin modulul config nu mai este de actualitate. (#10493)
+- S-a actualizat configobj la 5.1.0dev commit f9a265c4. (#10939)
+- Este posibilă testarea automată a NVDA cu Chrome și cu un sample HTML. (#10553)
+- IAccessibleHandler a fost transformat într-un pachet, OrderedWinEventLimiter a fost extras la un modul și s-au adăugat texte de unități. (#10934)
+- S-a actualizat BrlApi la versiunea 0.8 (BRLTTY 6.1). (#11065)
+- Recuperarea barei de stare poate să nu fie personalizată de un AppModule. (#2125, #4640)
+- NVDA nu mai ascultă IAccessible EVENT_OBJECT_REORDER. (#11076)
+- Un ScriptableObject defect (cum ar fi un GlobalPlugin căruia îi lipsește un apel către metoda __init__ a clasei sale de bază) nu mai afectează manipularea scripturilor NVDA. (#5446)
+
+
 = 2020.1 =
 Caracteristicile principale ale acestei versiuni includ suportul pentru câteva noi afișaje braille de la HumanWare și APH, precum și reparări ale unor erori importante precum cea a citirii conținutului matematic în Microsoft Word utilizându-se MathPlayer / MathType.
 
