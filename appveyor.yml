@@ -253,9 +253,15 @@ deploy_script:
        artifacts=$artifacts
       }
       ConvertTo-Json -InputObject $data -Compress | ssh nvaccess@exbi.nvaccess.org nvdaAppveyorHook
+
       # Upload symbols to Mozilla.
       py -m pip install --no-warn-script-location requests
-       py appveyor\mozillaSyms.py
+      py appveyor\mozillaSyms.py
+      if($LastExitCode -ne 0) {
+        $errorCode=$LastExitCode
+        echo Unable to upload symbols to Mozilla
+        Add-AppveyorMessage "Unable to upload symbols to Mozilla"
+      }
      }
 
 on_finish:

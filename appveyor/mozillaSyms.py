@@ -80,13 +80,32 @@ def generate():
 			count += 1
 	print('Added %d files to %s' % (count, ZIP_FILE))
 
+
 def upload():
-	r = requests.post(URL,
-		files={'symbols.zip': open(ZIP_FILE, 'rb')},
-		headers={'Auth-Token': os.getenv('mozillaSymsAuthToken')},
-		allow_redirects=False
-	)
-	if r.status_code >= 200 and r.status_code < 300:
+	errors = []  # capture errors, to report if all attempts fail.
+	for i in range(7):
+		if i > 0:
+			print("Sleeping for 15 seconds before next attempt.")
+			import time
+			time.sleep(15)
+		try:
+			r = requests.post(URL,
+				files={'symbols.zip': open(ZIP_FILE, 'rb')},
+				headers={'Auth-Token': os.getenv('mozillaSymsAuthToken')},
+				allow_redirects=False
+			)
+			break  # success
+		except requests.ConnectionError as e:
+			print(f"Attempt {i + 1} failed.")
+			errors.append(str(e))
+	else:  # no break in for loop
+		allErrors = "\n".join(
+			f"Attempt {index + 1} error: \n{e}"
+			for index, e in enumerate(errors)
+		)
+		raise RuntimeError(allErrors)
+
+	if 200 <= r.status_code < 300:
 		print('Uploaded successfully!')
 	elif r.status_code < 400:
 		print('Error: bad auth token? (%d)' % r.status_code)
