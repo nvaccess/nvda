@@ -21,18 +21,21 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 std::deque<std::tuple<int, std::wstring>> logQueue;
 
-// Fetch a  maximum number of messages from the log queue
+// Fetch all available messages from the queue
 // and send them onto NvDA via rpc.
-void __stdcall log_flushQueue(ULONG_PTR maxCount) {
-	while(!logQueue.empty()) {
-		if(maxCount < 1) break;
+void log_flushQueue() {
+	auto maxCount = logQueue.size();
+	for(auto i = maxCount; i > 0; --i) {
 		{
 			auto& [level, msg] = logQueue.front();
 			nvdaControllerInternal_logMessage(level, GetCurrentProcessId(), msg.c_str());
 		}
 		logQueue.pop_front();
-		--maxCount;
 	}
+}
+
+void __stdcall log_flushQueue_apcFunc(ULONG_PTR data) {
+	log_flushQueue();
 }
 
 void logMessage(int level, const wchar_t* msg) {
@@ -48,20 +51,15 @@ void logMessage(int level, const wchar_t* msg) {
 		// The message is queued for later fetching by  NVDA's inproc manager thread
 		logQueue.emplace_back(level, msg);
 		if(inprocMgrThreadHandle) {
-			QueueUserAPC(log_flushQueue, inprocMgrThreadHandle, 1);
+			QueueUserAPC(log_flushQueue_apcFunc, inprocMgrThreadHandle, 0);
 		}
 	} else {
 		// The message is being logged from NVDA's inproc manager thread.
 		// Log to NVDA via rpc directly.
 		// But first flush any pending log messages from other threads to ensure they are kept in the right order
-		log_flushQueue(logQueue.size());
+		log_flushQueue();
 		nvdaControllerInternal_logMessage(level,GetCurrentProcessId(),msg);
 	}
-}
-
-void log_terminate() {
-	// Send any remaining messages in the queue to NVDA
-	log_flushQueue(logQueue.size());
 }
 
 int NVDALogCrtReportHook(int reportType,const wchar_t *message,int *returnValue) {

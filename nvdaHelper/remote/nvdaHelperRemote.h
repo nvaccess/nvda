@@ -71,6 +71,6 @@ extern HANDLE inprocMgrThreadHandle;
 
 // Flushes any remaining log messages to NVDA.
 // This should only be called from the NVDA inproc manager thread as it blocks while sending to NVDA.
-void log_terminate();
+void log_flushQueue();
 
 #endif
