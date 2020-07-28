@@ -47,7 +47,9 @@ void logMessage(int level, const wchar_t* msg) {
 		// So as to not block any app threads,
 		// The message is queued to NVDA's inproc manager thread to be logged from there.
 		logQueue.emplace_back(level, msg);
-		QueueUserAPC(log_flushQueue, inprocMgrThreadHandle, 1);
+		if(inprocMgrThreadHandle) {
+			QueueUserAPC(log_flushQueue, inprocMgrThreadHandle, 1);
+		}
 	} else {
 		// The message is being logged from NVDA's inproc manager thread.
 		// Log to NVDA via rpc directly.
