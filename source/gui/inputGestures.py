@@ -161,6 +161,8 @@ class _EmulatedGestureVM(_ScriptVM):
 	scriptInfo: Union[inputCore.AllGesturesScriptInfo, inputCore.KbEmuScriptInfo]
 
 	def __init__(self, emuGestureInfo: inputCore.AllGesturesScriptInfo):
+		if not isinstance(emuGestureInfo, inputCore.KbEmuScriptInfo):
+			raise ValueError(f"Unexpected script type.")
 		# Translators: An gesture that will be emulated by some other new gesture. The token {emulateGesture}
 		# will be replaced by the gesture that can be triggered by a mapped gesture.
 		# E.G. Emulate key press: NVDA+b
@@ -171,7 +173,7 @@ class _EmulatedGestureVM(_ScriptVM):
 
 	@property
 	def canRemove(self) -> bool:
-		return not bool(self.gestures) and isinstance(self.scriptInfo, inputCore.KbEmuScriptInfo)
+		return not bool(self.gestures)
 
 	def __repr__(self):
 		return f"KB emulated gesture: {self.scriptInfo.scriptName}"
@@ -189,7 +191,7 @@ class _PendingEmulatedGestureVM:
 
 class _EmuCategoryVM:
 	displayName = inputCore.SCRCAT_KBEMU  #: Translated display name for the gesture emulation category
-	scripts: List[Union[_EmulatedGestureVM, _PendingEmulatedGestureVM]]
+	scripts: List[Union[_ScriptVM, _EmulatedGestureVM, _PendingEmulatedGestureVM]]
 	canAdd = True  #: Can add new emulated gestures
 	canRemove = False  #: categories can not be removed
 	addedKbEmulation: List[_EmulatedGestureVM]  #: These will also be in self.scripts
@@ -208,9 +210,14 @@ class _EmuCategoryVM:
 		self.pending: Optional[_PendingEmulatedGestureVM] = None
 		for scriptName in sorted(emuGestures, key=strxfrm):
 			emuG = emuGestures[scriptName]
-			self.scripts.append(_EmulatedGestureVM(
-				emuGestureInfo=emuG
-			))
+			if isinstance(emuG, inputCore.KbEmuScriptInfo):
+				self.scripts.append(_EmulatedGestureVM(
+					emuGestureInfo=emuG
+				))
+			elif isinstance(emuG, inputCore.AllGesturesScriptInfo):
+				self.scripts.append(_ScriptVM(scriptName, emuG))
+			else:
+				log.error(f"Unknown script type: {emuG}")
 
 	def createPendingEmuGesture(self) -> _PendingEmulatedGestureVM:
 		self.pending = _PendingEmulatedGestureVM()
