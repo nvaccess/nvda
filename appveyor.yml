@@ -140,7 +140,7 @@ before_test:
       $installerProcess | wait-process -Timeout 180
       $errorCode=$installerProcess.ExitCode
      } catch {
-      echo NVDA installer process timed out
+      echo "NVDA installer process timed out"
       $errorCode=1
       Add-AppveyorMessage "Unable to install NVDA prior to tests."
      }
@@ -259,7 +259,7 @@ deploy_script:
       py appveyor\mozillaSyms.py
       if($LastExitCode -ne 0) {
         $errorCode=$LastExitCode
-        echo Unable to upload symbols to Mozilla
+        echo "Unable to upload symbols to Mozilla"
         Add-AppveyorMessage "Unable to upload symbols to Mozilla"
       }
      }
