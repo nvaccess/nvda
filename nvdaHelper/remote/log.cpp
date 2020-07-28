@@ -45,7 +45,7 @@ void logMessage(int level, const wchar_t* msg) {
 		// either the NVDA inproc manager thread is not yet running,
 		// Or this message is being logged from outside NVDA's inproc manager thread.
 		// So as to not block any app threads,
-		// The message is queued to NVDA's inproc manager thread to be logged from there.
+		// The message is queued for later fetching by  NVDA's inproc manager thread
 		logQueue.emplace_back(level, msg);
 		if(inprocMgrThreadHandle) {
 			QueueUserAPC(log_flushQueue, inprocMgrThreadHandle, 1);
@@ -53,8 +53,8 @@ void logMessage(int level, const wchar_t* msg) {
 	} else {
 		// The message is being logged from NVDA's inproc manager thread.
 		// Log to NVDA via rpc directly.
-	// But first flush any pending log messages from other threads to ensure they are kept in the right order
-	log_flushQueue(logQueue.size());
+		// But first flush any pending log messages from other threads to ensure they are kept in the right order
+		log_flushQueue(logQueue.size());
 		nvdaControllerInternal_logMessage(level,GetCurrentProcessId(),msg);
 	}
 }
