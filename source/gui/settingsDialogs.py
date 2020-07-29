@@ -1993,9 +1993,13 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
-		highlightText=_("Highlight")
-		self.highlightCheckBox=fontGroup.addItem(wx.CheckBox(self,label=highlightText))
-		self.highlightCheckBox.SetValue(config.conf["documentFormatting"]["reportHighlight"])
+		highlightText = _("Highlight")
+		self.highlightCheckBox = fontGroup.addItem(
+			wx.CheckBox(self, label=highlightText)
+		)
+		self.highlightCheckBox.SetValue(
+			config.conf["documentFormatting"]["reportHighlight"]
+		)
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
@@ -2211,7 +2215,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportComments"]=self.commentsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportRevisions"]=self.revisionsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportEmphasis"]=self.emphasisCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportHighlight"]=self.highlightCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportHighlight"] = self.highlightCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportAlignment"]=self.alignmentCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportStyle"]=self.styleCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportSpellingErrors"]=self.spellingErrorsCheckBox.IsChecked()
