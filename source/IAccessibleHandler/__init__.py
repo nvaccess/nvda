@@ -97,6 +97,7 @@ from comInterfaces.IAccessible2Lib import (
 	IA2_ROLE_BLOCK_QUOTE,
 	IA2_ROLE_DESKTOP_ICON,
 	IA2_ROLE_FOOTER,
+	IA2_ROLE_MARK,
 )
 
 from . import internalWinEventHandler
@@ -256,6 +257,7 @@ IAccessibleRolesToNVDARoles = {
 	IA2_ROLE_CONTENT_INSERTION: controlTypes.ROLE_INSERTED_CONTENT,
 	IA2_ROLE_BLOCK_QUOTE: controlTypes.ROLE_BLOCKQUOTE,
 	IA2.IA2_ROLE_LANDMARK: controlTypes.ROLE_LANDMARK,
+	IA2_ROLE_MARK: controlTypes.ROLE_MARKED_CONTENT,
 	# some common string roles
 	"frame": controlTypes.ROLE_FRAME,
 	"iframe": controlTypes.ROLE_INTERNALFRAME,
