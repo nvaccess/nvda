@@ -14,23 +14,34 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <string>
 #include <queue>
+#include <mutex>
 #include <crtdbg.h>
 #include "nvdaControllerInternal.h"
 #include "nvdaHelperRemote.h"
 #include <common/log.h>
 
 std::deque<std::tuple<int, std::wstring>> logQueue;
+std::mutex logQueueLock;
 
 // Fetch all available messages from the queue
 // and send them onto NvDA via rpc.
 void log_flushQueue() {
-	auto maxCount = logQueue.size();
-	for(auto i = maxCount; i > 0; --i) {
-		{
-			auto& [level, msg] = logQueue.front();
-			nvdaControllerInternal_logMessage(level, GetCurrentProcessId(), msg.c_str());
-		}
-		logQueue.pop_front();
+	// Ensure this is never called from outside the manager thread.
+	if(
+		!inprocMgrThreadHandle
+		|| GetCurrentThreadId() != GetThreadId(inprocMgrThreadHandle)
+	) {
+		return;
+	}
+	std::deque<std::tuple<int, std::wstring>> tempQueue;
+	{
+		std::lock_guard lock{logQueueLock};
+		tempQueue.swap(logQueue);
+	}
+	while(!tempQueue.empty()) {
+		auto& [level, msg] = tempQueue.front();
+		nvdaControllerInternal_logMessage(level, GetCurrentProcessId(), msg.c_str());
+		tempQueue.pop_front();
 	}
 }
 
@@ -49,7 +60,10 @@ void logMessage(int level, const wchar_t* msg) {
 		// Or this message is being logged from outside NVDA's inproc manager thread.
 		// So as to not block any app threads,
 		// The message is queued for later fetching by  NVDA's inproc manager thread
-		logQueue.emplace_back(level, msg);
+		{
+			std::lock_guard lock{logQueueLock};
+			logQueue.emplace_back(level, msg);
+		}
 		if(inprocMgrThreadHandle) {
 			QueueUserAPC(log_flushQueue_apcFunc, inprocMgrThreadHandle, 0);
 		}
