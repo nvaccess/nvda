@@ -2112,7 +2112,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				# Translators: Reported when text is not revised.
 				text = _("no revised %s") % oldRevision
 			textList.append(text)
-	if  formatConfig["reportEmphasis"]:
+	if  formatConfig["reportHighlight"]:
 		# marked text 
 		marked=attrs.get("marked")
 		oldMarked=attrsCache.get("marked") if attrsCache is not None else None
