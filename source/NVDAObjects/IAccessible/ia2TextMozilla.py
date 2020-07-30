@@ -18,6 +18,7 @@ from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 from . import IA2TextTextInfo, IAccessible
 from compoundDocuments import CompoundTextInfo
 import locationHelper
+from logHandler import log
 
 class FakeEmbeddingTextInfo(textInfos.offsets.OffsetsTextInfo):
 	encoding = None
@@ -169,8 +170,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		return _getRawTextInfo(obj)(obj, position)
 
 	def _getEmbedding(self, obj):
+		parent = obj.parent
+		if not parent:
+			# obj is probably dead.
+			return None
 		# optimisation: Passing an Offsets position checks nCharacters, which is an extra call we don't need.
-		info = self._makeRawTextInfo(obj.parent, textInfos.POSITION_FIRST)
+		info = self._makeRawTextInfo(parent, textInfos.POSITION_FIRST)
 		if isinstance(info, FakeEmbeddingTextInfo):
 			info._startOffset = obj.indexInParent
 			info._endOffset = info._startOffset + 1
@@ -246,7 +251,13 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 						controlField["_startOfNode"] = True
 						yield textInfos.FieldCommand("controlStart", controlField)
 				if notText:
-					yield u" "
+					# A 'stand-in' character is necessary to make routing work on braille devices.
+					# Note #11291:
+					# Using a space character (EG " ") causes 'space' to be announced after objects like graphics.
+					# If this is replaced with an empty string, routing to cell becomes innaccurate.
+					# Using the OBJECT REPLACEMENT CHARACTER (EG "\uFFFC") results in '"0xFFFC' being displayed on
+					# the braille device.
+					yield " "
 				else:
 					for subItem in self._iterRecursiveText(self._makeRawTextInfo(embedded, textInfos.POSITION_ALL), controlStack, formatConfig):
 						yield subItem
@@ -287,6 +298,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 					fields.insert(0, textInfos.FieldCommand("controlStart", field))
 				controlStack.insert(0, field)
 				ti = self._getEmbedding(obj)
+				if not ti:
+					log.debugWarning(
+						"_getEmbedding returned None while getting initial fields. "
+						"Object probably dead."
+					)
+					return []
 				obj = ti.obj
 		else:
 			controlStack = None
@@ -302,12 +319,26 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			# The end hasn't yet been reached, which means it isn't a descendant of obj.
 			# Therefore, continue from where obj was embedded.
 			if withFields:
-				field = controlStack.pop()
+				try:
+					field = controlStack.pop()
+				except IndexError:
+					# We're trying to walk up past our root. This can happen if a descendant
+					# object within the range died, in which case _iterRecursiveText will
+					# never reach our end object and thus won't yield None. This means this
+					# range is invalid, so just return nothing.
+					log.debugWarning("Tried to walk up past the root. Objects probably dead.")
+					return []
 				if field:
 					# This object had a control field.
 					field["_endOfNode"] = True
 					fields.append(textInfos.FieldCommand("controlEnd", None))
 			ti = self._getEmbedding(obj)
+			if not ti:
+				log.debugWarning(
+					"_getEmbedding returned None while ascending to get more text. "
+					"Object probably dead."
+				)
+				return []
 			obj = ti.obj
 			if ti.move(textInfos.UNIT_OFFSET, 1) == 0:
 				# There's no more text in this object.

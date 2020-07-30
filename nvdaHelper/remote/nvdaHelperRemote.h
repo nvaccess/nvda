@@ -66,4 +66,7 @@ bool registerWindowsHook(int hookType, HOOKPROC hookProc);
  */
 bool unregisterWindowsHook(int hookType, HOOKPROC hookProc);
 
+// The handle for NVDA's inproc manager thread
+extern HANDLE inprocMgrThreadHandle;
+
 #endif

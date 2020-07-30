@@ -5,14 +5,19 @@
 #See the file COPYING for more details.
 
 import types
-from queue import Queue
+from queue import SimpleQueue
 import globalVars
 from logHandler import log
 import watchdog
 import core
 
-eventQueue=Queue()
-eventQueue.__name__="eventQueue"
+# A queue for calls that should be made on NVDA's main thread
+# #11369: We use SimpleQueue rather than Queue here
+# as SimpleQueue is very light-weight, does not use locks
+# and ensures that garbage collection won't unexpectedly happen in the middle of queuing something
+# Which may cause a deadlock.
+eventQueue = SimpleQueue()
+
 generators={}
 lastGeneratorObjID=0
 
@@ -49,7 +54,7 @@ def flushQueue(queue):
 			try:
 				func(*args,**kwargs)
 			except:
-				log.exception("Error in func %s from %s"%(func.__name__,queue.__name__))
+				log.exception(f"Error in func {func.__qualname__}")
 
 def isPendingItems(queue):
 	if not queue.empty():

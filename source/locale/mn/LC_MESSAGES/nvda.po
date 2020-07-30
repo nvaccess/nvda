@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mongolian Translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-10 00:10+1000\n"
-"PO-Revision-Date: 2020-01-13 21:44+0800\n"
+"POT-Creation-Date: 2020-06-12 00:10+1000\n"
+"PO-Revision-Date: 2020-05-02 14:42-0700\n"
 "Last-Translator: \n"
 "Language-Team: MongolianNVDATranslationTeam <mongoliannvdatranslation@gmail."
 "com>\n"
@@ -14,11 +14,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 1.8.9\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
-msgstr "цоожтой дэлгэц"
+msgstr "дэлгэц цоожтой "
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -88,7 +88,7 @@ msgstr "Оруулах аргагүй"
 #. {text} will be replaced with the text of the spelling error.
 #, python-brace-format
 msgid "spelling and grammar: {text}"
-msgstr "зөв бичих дүрэм: {text}"
+msgstr "зөв бичих дүрэм бичвэр: {text}"
 
 #. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
@@ -106,7 +106,7 @@ msgstr "зөв бичих дүрэм: {text}"
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
-msgstr "цонх ажиллаж байна."
+msgstr "цонх идэвхгүй. olt, tab товчыг дарж идэвжүүлнэ үү"
 
 #. Translators: This is presented when errors are found in an appModule
 #. (example output: error in appModule explorer).
@@ -117,7 +117,7 @@ msgstr "%s програмийн хэсэгт алдаа гарлаа"
 #. Translators: Reported for the banner landmark, normally found on web pages.
 msgctxt "aria"
 msgid "banner"
-msgstr "том гарчиг"
+msgstr "хуудас"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
 msgctxt "aria"
@@ -127,22 +127,22 @@ msgstr "үзүүлж"
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
 msgctxt "aria"
 msgid "content info"
-msgstr "агуулгын мэдээлэл"
+msgstr "контент мэдээлэл"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
 msgctxt "aria"
 msgid "main"
-msgstr "голд"
+msgstr "хуудасны голд"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
 msgctxt "aria"
 msgid "navigation"
-msgstr "хуудсанд  шилжих команд"
+msgstr "шилжих хуудас"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
 msgctxt "aria"
 msgid "search"
-msgstr "Хайлт"
+msgstr "хайлт хийх хэсэг"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
 msgctxt "aria"
@@ -306,9 +306,8 @@ msgstr "grp"
 
 #. Translators: Displayed in braille for an object which is a
 #. caption.
-#, fuzzy
 msgid "cap"
-msgstr "апп"
+msgstr "том"
 
 #. Translators: Displayed in braille for an object which is a
 #. embedded object.
@@ -387,13 +386,12 @@ msgid "art"
 msgstr "уран зураг"
 
 #. Translators: Displayed in braille for an object which is a region.
-#, fuzzy
 msgid "rgn"
 msgstr "rgn"
 
 #. Translators: Displayed in braille for an object which is a figure.
 msgid "fig"
-msgstr ""
+msgstr "fig"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -486,7 +484,7 @@ msgstr "голд"
 #. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
 msgctxt "braille landmark abbreviation"
 msgid "navi"
-msgstr "үйлдэл"
+msgstr "шилжих"
 
 #. Translators: Displayed in braille for the search landmark, normally found on web pages.
 msgctxt "braille landmark abbreviation"
@@ -528,9 +526,6 @@ msgid "Only when scrolling back"
 msgstr "зөвхөн буцааж гүйлгэх үед"
 
 #. Translators: String representing automatic port selection for braille displays.
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA determine its Windows Console implementation
-#. automatically.
 msgid "Automatic"
 msgstr "автомат "
 
@@ -640,7 +635,7 @@ msgstr "Serial дугаар: {portName}"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
-msgstr "оруулалт танигдсангүй"
+msgstr "оролт танигдсангүй"
 
 #. Translators: Reported when a braille input modifier is released.
 #, python-brace-format
@@ -804,6 +799,11 @@ msgstr "English (U.K.) grade 1"
 #. braille settings dialog.
 msgid "English (U.K.) grade 2"
 msgstr "English (U.K.) grade 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr "English North American Braille Computer Code"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1042,13 +1042,18 @@ msgstr "Marathi grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
-msgstr "Dutch (Belgium)"
+msgid "Dutch (Belgium) 6 dot"
+msgstr "Dutch (Belgium) 6 dot"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
-msgstr "Dutch (Netherlands)"
+msgid "Dutch (Netherlands) 6 dot"
+msgstr "Dutch (Netherlands) 6 dot"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr "Dutch 8 dot"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1229,7 +1234,7 @@ msgstr "үзэх хэлбэр"
 
 #. Translators: Reported label in the elements list for an element which which has no name and value
 msgid "Unlabeled"
-msgstr "Тэмдэг тавиагүй"
+msgstr "бичвэргүй"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -1730,24 +1735,20 @@ msgid "no previous article"
 msgstr "өмнө нь сэдэв алга"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#, fuzzy
 msgid "moves to the next grouping"
-msgstr "дараагийн зураг"
+msgstr "дараагийн бүлэг хэсэг"
 
 #. Translators: Message presented when the browse mode element is not found.
-#, fuzzy
 msgid "no next grouping"
-msgstr "дараа нь зураг алга"
+msgstr "дараа нь бүлэг хэсэг алга"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#, fuzzy
 msgid "moves to the previous grouping"
-msgstr "өмнөх зураг"
+msgstr "өмнөх бүлэг хэсэг"
 
 #. Translators: Message presented when the browse mode element is not found.
-#, fuzzy
 msgid "no previous grouping"
-msgstr "өмнө нь зураг алга"
+msgstr "өмнө нь бүлэг хэсэг алга"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -2661,20 +2662,19 @@ msgstr "оруулсан"
 
 #. Translators: Identifies a landmark.
 msgid "landmark"
-msgstr "байна"
+msgstr "байна."
 
 #. Translators: Identifies an article.
 msgid "article"
 msgstr "сэдэв"
 
 #. Translators: Identifies a region.
-#, fuzzy
 msgid "region"
 msgstr "бүс"
 
 #. Translators: Identifies a figure (commonly seen on some websites).
 msgid "figure"
-msgstr ""
+msgstr "figure"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -3522,19 +3522,16 @@ msgid "Toggles on and off the reporting of headings"
 msgstr "гарчиг сонсох үйлдлийг нээж хааж хэрэглэх боломжтой."
 
 #. Translators: Input help mode message for toggle report groupings command.
-#, fuzzy
 msgid "Toggles on and off the reporting of groupings"
-msgstr "хуудасны дугаар сонсох   үйлдлийг нээж хааж хэрэглэх боломжтой."
+msgstr "бүлэг хэсгийг сонсох   үйлдлийг нээж хааж хэрэглэх боломжтой."
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-#, fuzzy
 msgid "report groupings off"
-msgstr "хуудасны дугаарууд сонсох хаагдав."
+msgstr "бүлэг хэсгийг сонсох хаагдав."
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-#, fuzzy
 msgid "report groupings on"
-msgstr "хуудасны дугаарууд сонсох нээгдэв."
+msgstr "бүлэг хэсгийг сонсох нээгдэв."
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
@@ -3549,12 +3546,10 @@ msgid "Toggles on and off the reporting of block quotes"
 msgstr "хашилтанд бичсэнийг сонсох үйлдлийг нээж хааж хэрэглэх боломжтой."
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-#, fuzzy
 msgid "report landmarks and regions off"
 msgstr "чиглүүрийг сонсох хаагдав."
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-#, fuzzy
 msgid "report landmarks and regions on"
 msgstr "чиглүүрийг сонсох нээгдэв."
 
@@ -3984,13 +3979,12 @@ msgstr "Дэлгэц уншигч програмийг дахин эхлүүлэ
 msgid "Shows the NVDA menu"
 msgstr "Дэлгэц уншигч програмийн цэсийг нээх үйлдэл байна."
 
-#, fuzzy
 msgid ""
 "Reads from the review cursor up to the end of the current text, moving the "
 "review cursor as it goes"
 msgstr ""
-"Reads from the review cursor up to end of current text, moving the review "
-"cursor as it goes"
+"Reads from the review cursor up to the end of the current text, moving the "
+"review cursor as it goes"
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
@@ -4593,6 +4587,18 @@ msgstr ""
 "Reports the new object or content under your finger if different to where "
 "your finger was last"
 
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "байршилгүй объект"
+
+#. Translators: Input help mode message for touch right click command.
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr ""
+"тухайн байршилд заагчаар баруун товшиж болно.гэхдээ хулганы цэсийг "
+"идэвхжүүлэх комманд хийж болно"
+
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Дэлгэц уншигч програмийн профайлс тохируулгын харилцах цонхыг үзүүлэх"
@@ -4644,24 +4650,22 @@ msgstr "report CLDR characters off"
 msgid "report CLDR characters on"
 msgstr "report CLDR characters on"
 
-#, fuzzy
 msgid ""
 "Toggles the state of the screen curtain, enable to make the screen black or "
 "disable to show the contents of the screen. Pressed once, screen curtain is "
 "enabled until you restart NVDA. Pressed twice, screen curtain is enabled "
 "until you disable it"
 msgstr ""
-"Toggles the state of the screen curtain, either by making the screen black "
-"or SHOWING the contents of the screen. If pressed to enable once, the screen "
-"curtain is enabled until you restart NVDA. If pressed tree times, it is "
-"enabled until you disable it"
+"Toggles the state of the screen curtain, enable to make the screen black or "
+"disable to show the contents of the screen. Pressed once, screen curtain is "
+"enabled until you restart NVDA. Pressed twice, screen curtain is enabled "
+"until you disable it"
 
 #. Translators: Reported when the screen curtain is disabled.
 msgid "Screen curtain disabled"
 msgstr "дэлгэцний хаалт идэвхгүй"
 
 #. Translators: Reported when the screen curtain could not be enabled.
-#, fuzzy
 msgid "Could not disable screen curtain"
 msgstr "дэлгэцний хаалт идэвхжсэнгүй"
 
@@ -6399,6 +6403,8 @@ msgstr "Шинэчлэлтийг шалгах явцад алдаа гарлаа
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "Алдаа"
 
@@ -6578,7 +6584,7 @@ msgstr ""
 "ТӨВ \n"
 "Copyright (C) {years} NVDA Contributors"
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -6603,7 +6609,7 @@ msgid ""
 msgstr ""
 "дэлгэц уншигч програм хангамжийн цогц шийдэл \n"
 "Зохиогчийн эрхээр хамгаалагдсан Хараагүй Хүмүүсийн Инноваци Хөгжлийн Төв   "
-"2017 он\n"
+"2020 он\n"
 "Цахим брайль Технологи 2015 он\n"
 "Ярьдаг Програмын Технологи 2013-2019  он\n"
 "{longName} ({name})\n"
@@ -7313,13 +7319,11 @@ msgid "SuperBraille"
 msgstr "Super брайль"
 
 #. Translators: The title of the NVDA Braille Viewer tool window.
-#, fuzzy
 msgid "NVDA Braille Viewer"
-msgstr "Дэлгэц уншигч програмийн Log харагч"
+msgstr "Дэлгэц уншигч програмийн брайль харагч"
 
 #. Translators: The label for a setting in the braille viewer that controls
 #. whether the braille viewer is shown at startup or not.
-#, fuzzy
 msgid "&Show Braille Viewer on Startup"
 msgstr "&Speech Viewer эхлэл"
 
@@ -7504,9 +7508,8 @@ msgid "Speech viewer"
 msgstr "Ярианы ажиглагч"
 
 #. Translators: The label for the menu item to toggle Braille Viewer.
-#, fuzzy
 msgid "Braille viewer"
-msgstr "Брайль бичиг %s"
+msgstr "Брайлиар харах "
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -9105,7 +9108,6 @@ msgid "Tones"
 msgstr "Дуу эгшиглэх"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-#, fuzzy
 msgid "Both Speech and Tones"
 msgstr "Яриа болон дуу эгшиглэх хамт"
 
@@ -9176,15 +9178,13 @@ msgstr "&Хаалт, Хашилтууд"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#, fuzzy
 msgid "&Groupings"
-msgstr "бүлэгт"
+msgstr "бүлгүүдэд"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#, fuzzy
 msgid "Lan&dmarks and regions"
-msgstr "чиглүүрүүд"
+msgstr "Lan&dmarks and regions"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9249,22 +9249,15 @@ msgid ""
 msgstr ""
 "Use UI Automation to access Microsoft &Word document controls when available"
 
-#. Translators: This is the label for a combo box for selecting the
-#. active console implementation in the advanced settings panel.
-#. Choices are automatic, prefer UIA, and legacy.
-msgid "Windows C&onsole support:"
-msgstr "windows компьютерийн операторын удирдах хэрэгсэл дэмжих"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows C&onsole when available"
+msgstr "Use UI Automation to access the Windows C&onsole when available"
 
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use UIA in the Windows Console when available.
-msgid "Prefer UIA"
-msgstr "UIA илүү сайн"
-
-#. Translators: A choice in a combo box in the advanced settings
-#. panel to have NVDA use its legacy Windoes Console support
-#. in all cases.
-msgid "Legacy"
-msgstr "Legacy"
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "Speak &passwords in UIA consoles (may improve performance)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9273,15 +9266,8 @@ msgstr "Terminal programs"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Speak &passwords in Windows Console (may improve performance)"
-msgstr "Use UI Automation to access the Windows Console when available"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use the new t&yped character support in legacy Windows consoles when "
-"available"
-msgstr "Speak &passwords in UIA consoles (may improve performance)"
+msgid "Use the new t&yped character support in Windows Console when available"
+msgstr "Use the new t&yped character support in Windows Console when available"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9439,9 +9425,9 @@ msgstr "компьютерийн &Оролт:"
 
 #. Translators: The message in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Could not load the {display} display."
-msgstr "%s брайль дэлгэц ажилсангүй."
+msgstr "Could not load the {display} display."
 
 #. Translators: The title in a dialog presented when NVDA is unable to load the selected
 #. braille display.
@@ -9508,7 +9494,7 @@ msgstr "Дэлгэцэнд брайль үсэг уншигдах хэлбэр �
 #. NVDA is unable to load a single vision enhancement provider.
 #, python-brace-format
 msgid "Could not load the {providerName} vision enhancement provider"
-msgstr ""
+msgstr "Could not load the {providerName} vision enhancement provider"
 
 #. Translators: This message is presented when NVDA is unable to
 #. load multiple vision enhancement providers.
@@ -9517,10 +9503,12 @@ msgid ""
 "Could not load the following vision enhancement providers:\n"
 "{providerNames}"
 msgstr ""
+"Could not load the following vision enhancement providers:\n"
+"{providerNames}"
 
 #. Translators: The title of the vision enhancement provider error message box.
 msgid "Vision Enhancement Provider Error"
-msgstr ""
+msgstr "Vision Enhancement Provider Error"
 
 #. Translators: This message is presented when
 #. NVDA is unable to gracefully terminate a single vision enhancement provider.
@@ -9528,34 +9516,36 @@ msgstr ""
 msgid ""
 "Could not gracefully terminate the {providerName} vision enhancement provider"
 msgstr ""
+"Could not gracefully terminate the {providerName} vision enhancement provider"
 
 #, python-brace-format
 msgid ""
 "Could not gracefully terminate the following vision enhancement providers:\n"
 "{providerNames}"
 msgstr ""
+"Could not gracefully terminate the following vision enhancement providers:\n"
+"{providerNames}"
 
 #. Translators: This is a label appearing on the vision settings panel.
-#, fuzzy
 msgid "Configure visual aids."
-msgstr "Тохируулга хийгдлээ."
+msgstr "visual aids тохируулах."
 
 #. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
-#, fuzzy
 msgid "Enable"
-msgstr "ажиллаж байна"
+msgstr "идэвхжүүлэх"
 
 #. Translators: Options label on a vision enhancement provider on the vision settings category panel
 #. Translators: The label for a group box containing the NVDA highlighter options.
-#, fuzzy
 msgid "Options:"
-msgstr "Сонголтууд"
+msgstr "Сонголтууд:"
 
 #. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
 msgid ""
 "Unable to configure user interface for Vision Enhancement Provider, it can "
 "not be enabled."
 msgstr ""
+"Unable to configure user interface for Vision Enhancement Provider, it can "
+"not be enabled."
 
 #. Translators: This is the label for the NVDA settings dialog.
 msgid "NVDA Settings"
@@ -9660,6 +9650,10 @@ msgstr ""
 "during this session, will be lost.\n"
 "\t\t\tThis cannot be undone."
 
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "reset буюу Зангааны үндсэн тохируулга хийх "
+
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr "Error saving user defined gestures - probably read only file system."
@@ -9673,6 +9667,7 @@ msgstr "Математикийн үйлдлээс гарах"
 msgid "Math interaction not supported."
 msgstr "Математикийн үйлдэл танигдахгүй байна."
 
+#. Translators: This is spoken when the line is considered blank.
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
@@ -9701,7 +9696,8 @@ msgstr "идэвхжүүлсэн байна %s"
 msgid "%s selected"
 msgstr "%s идэвхжлээ"
 
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d үсэг тэмдгүүд"
@@ -9948,11 +9944,11 @@ msgstr "доогуур зураасгүй"
 
 #. Translators: Reported when text is hidden.
 msgid "hidden"
-msgstr ""
+msgstr "гарчиг"
 
 #. Translators: Reported when text is not hidden.
 msgid "not hidden"
-msgstr ""
+msgstr "гарчиг биш"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
@@ -10154,26 +10150,27 @@ msgid "Highlight navigator &object"
 msgstr "тодруулсан хөдөлгөөнт обект"
 
 #. Translators: Description for NVDA's built-in screen highlighter.
-#, fuzzy
 msgid "Focus Highlight"
-msgstr "тодруулаагүй"
+msgstr "Highlight байна"
 
 #. Translators: The label for a checkbox that enables / disables focus highlighting
 #. in the NVDA Highlighter vision settings panel.
-#, fuzzy
 msgid "&Enable Highlighting"
-msgstr "тодруулаагүй"
+msgstr "&Highlighting идэвхжүүлэх"
 
-#. Translators: Description of a vision enhancement provider that disables output to the screen,
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
 msgid "Screen Curtain"
 msgstr "дэлгэцний хаалт"
 
-#. Translators: Description for a screen curtain setting that shows a warning when loading
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
-#, python-brace-format
-msgid "Always &show a warning when loading {screenCurtainTranslatedName}"
-msgstr ""
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr "Always &show a warning when loading Screen Curtain"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "&Play sound when toggling Screen Curtain"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
@@ -10184,10 +10181,15 @@ msgid ""
 "\n"
 "Do you wish to continue?"
 msgstr ""
+"Enabling Screen Curtain will make the screen of your computer completely "
+"black. Ensure you will be able to navigate without any use of your screen "
+"before continuing. \n"
+"\n"
+"Do you wish to continue?"
 
 #. Translators: option to enable screen curtain in the vision settings panel
 msgid "Make screen black (immediate effect)"
-msgstr ""
+msgstr "Make screen black (immediate effect)"
 
 msgid "Taskbar"
 msgstr "ажиллах талбар"
@@ -11669,83 +11671,3 @@ msgstr "Давхар мөр хоорондын зай"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 мөр хоорондын зай"
-
-#~ msgid "Skype"
-#~ msgstr "Skype"
-
-#~ msgid "Reports and moves the review cursor to a recent message"
-#~ msgstr "Reports and moves the review cursor to a recent message"
-
-#~ msgid "Typing stopped"
-#~ msgstr "Бичиж дууссан."
-
-#~ msgid "Rewind"
-#~ msgstr "Ухраах "
-
-#~ msgid "Fast forward"
-#~ msgstr "Хурдлуулах"
-
-#~ msgid "Play"
-#~ msgstr "Тоглуулах"
-
-#~ msgid "Stop"
-#~ msgstr "Зогсоох"
-
-#~ msgid "Record"
-#~ msgstr "Бичлэг хийх"
-
-#~ msgid "Magnifier"
-#~ msgstr "томруулагч"
-
-#~ msgid "Highlighter"
-#~ msgstr "тодруулагч"
-
-#~ msgid "Color enhancer"
-#~ msgstr "өнгө тааруулагч"
-
-#~ msgid "NVDA Highlighter"
-#~ msgstr "NVDA тодруулагч"
-
-#~ msgid "Koine Greek"
-#~ msgstr "Koine Greek"
-
-#~ msgid "lmk %s"
-#~ msgstr "чиг %s"
-
-#~ msgid "Start"
-#~ msgstr "Эхлэх"
-
-#~ msgid "Selected %s"
-#~ msgstr "Сонгогдсон %s"
-
-#~ msgid "Currently running application is %s"
-#~ msgstr "одоо ажиллаж буй програмууд %s"
-
-#~ msgid " and currently loaded module is %s"
-#~ msgstr " and currently loaded module is %s"
-
-#~ msgid ""
-#~ "All add-ons are currently disabled. To enable add-ons you must restart "
-#~ "NVDA."
-#~ msgstr ""
-#~ "Бүх add-ons одоогоор ажиллагаагүй байна.\n"
-#~ " Дэлгэц уншигч програмыг дахин эхлүүлж бүгд ажиллагаанд орох ёстой."
-
-#~ msgid "%s Settings Category"
-#~ msgstr "%s Тохиргооны ангилал"
-
-#~ msgid "NVDA"
-#~ msgstr "Монгол дэлгэц уншигч програм"
-
-#~ msgid "remove"
-#~ msgstr "арилга"
-
-#~ msgid ""
-#~ "For the new language to take effect, the configuration must be saved and "
-#~ "NVDA must be restarted. Press enter to save and restart NVDA, or cancel "
-#~ "to manually save and exit at a later time."
-#~ msgstr ""
-#~ "Шинээр хэл сонгосон бол\n"
-#~ "та тохиргоог хадгалж Дэлгэц уншигч програмыг дахин эхлүүлэх ёстой.\n"
-#~ "Интер товчыг дарж програмыг дахин эхлүүл, эсхүүл\n"
-#~ "энэ хэлний сонголтыг хадгалснаар програмаас дараа гархад үйлдэл хийгдэнэ."

@@ -179,7 +179,7 @@ Het inschakelen van het derde selectievakje zorgt ervoor dat dit welkomsscherm v
 +++ Dialoogvenster Gebruiksgegevensstatistiek +++[UsageStatsDialog]
 Met ingang van NVDA 2018.3, wordt de gebruiker gevraagd of hij / zij toestaat dat gegevens over het gebruik naar NV Access worden gestuurd met het doel NVDA verder te verbeteren. 
 Wanneer NVDA de eerste keer start, verschijnt er een dialoogvenster  met de vraag of u ermee akkoord gaat dat er gegevens naar NV Access worden gestuurd tijdens uw gebruik van NVDA.
-U leest meer over de door NV Access verzamelde data in Hoofdstuk 11 hierna.
+U leest meer over de door NV Access verzamelde data in het onderdeel Algemene  Instellingen , [ het NVDA project toestaan NVDA gebruiksstatistieken te verzamelen #GeneralSettingsGatherUsageStats].
 Merk op dat  door op "ja" of "nee"  te drukken  uw keuze wordt opgeslagen en dat  dit dialoogvenster dan niet meer zal verschijnen, tenzij u NVDA opnieuw installeert.
 U kunt het verzamelen van data echter handmatig in- of uitschakelen via de Instellingen van NVDA in de categorie Algemeen. Om de instelling handmatig te wijzigen zet of verwijdert u een vinkje in het selectievakje  met bijschrift Sta het NVDA project toe NVDA gebruiksstatistieken te verzamelen #GeneralSettingsGatherUsageStats].
 
@@ -483,13 +483,13 @@ Als u deze functionaliteit wilt gebruiken, kunt u deze inschakelen in de categor
 
 Hoewel u voor het navigeren met de muis een fysieke muis of een muispad moet gebruiken, zijn er een aantal toetscombinaties in NVDA waarmee muisbewegingen en muiskliks kunnen worden gesimuleerd:
 %kc:beginInclude
-|| Naam | Desktoptoets | Laptoptoets | Beschrijving |
-| Klikken met linker muisknop | numeriek Gedeeld Door | NVDA+[ (vierkante haak openen | Dit is hetzelfde als éénmaal klikken met linker muisknop. Deze toets tweemaal snel drukken is gelijk aan dubbelklikken met de muis. |
-| Linker muisknop vergrendelen | shift+numeriek Gedeeld Door | NVDA+control+[ (vierkante haak openen) | Hiermee houdt u de linker muisknop ingedrukt. Door nogmaals te drukken wordt de knop weer los gelaten. Om te kunnen slepen met de muis drukt u deze toetscombinatie zodat de linker muisknop ingedrukt blijft. Vervolgens kunt u de muis fysiek verplaatsen of met een van de andere daarvoor bestemde commando’s. |
-| Klikken met rechter muisknop | numeriek Vermenigvuldig | NVDA+] (vierkante haak sluiten) | Dit is gelijk aan eenmaal klikken met rechter muisknop. |
-| Rechter muisknop vergrendelen | shift+numeriek Vermenigvuldig | NVDA+control+] (vierkante haak sluiten) | Hiermee wordt rechter muisknop ingedrukt gehouden. Door nogmaals te drukken wordt de vergrendeling opgeheven. Om te kunnen slepen met de muis drukt u deze toetscombinatie zodat de rechter muisknop ingedrukt blijft. Vervolgens kunt u de muis fysiek verplaatsen of met een van de andere daarvoor bestemde commando’s. |
-| Muis naar huidige navigator object verplaatsen | NVDA+numeriek Gedeeld Door | NVDA+shift+m | Muis wordt verplaatst naar huidig object en de leescursor |
-| naar het object onder de muisaanwijzer gaan | NVDA+numeriek Vermenigvuldig | NVDA+shift+n | Verplaats het navigator object naar de muispositie |
+|| Naam | Desktoptoets | Laptoptoets | Aanrakgebaar | Beschrijving |
+| Klikken met linker muisknop | numeriek Gedeeld Door | NVDA+[  | geen | Dit is hetzelfde als éénmaal klikken met linker muisknop. Deze toets tweemaal snel drukken is gelijk aan dubbelklikken met de muis. |
+| Linker muisknop vergrendelen | shift+numeriek Gedeeld Door | NVDA+control+[ | geen | Hiermee houdt u de linker muisknop ingedrukt. Door nogmaals te drukken wordt de knop weer los gelaten. Om te kunnen slepen met de muis drukt u deze toetscombinatie zodat de linker muisknop ingedrukt blijft. Vervolgens kunt u de muis fysiek verplaatsen of met een van de andere daarvoor bestemde commando’s. |
+| Klikken met rechter muisknop | numeriek Vermenigvuldig | NVDA+] |  tik en hou vinger op scherm | Dit is gelijk aan eenmaal klikken met rechter muisknop, meestal gebruikt voor openen van contextmenu bij muispositie. |
+| Rechter muisknop vergrendelen | shift+numeriek Vermenigvuldig | NVDA+control+] | geen | Hiermee wordt rechter muisknop ingedrukt gehouden. Door nogmaals te drukken wordt de vergrendeling opgeheven. Om te kunnen slepen met de muis drukt u deze toetscombinatie zodat de rechter muisknop ingedrukt blijft. Vervolgens kunt u de muis fysiek verplaatsen of met een van de andere daarvoor bestemde commando’s. |
+| Muis naar huidige navigator object verplaatsen | NVDA+numeriek Gedeeld Door | NVDA+shift+m | geen | Muis wordt verplaatst naar huidig object en de leescursor |
+| naar het object onder de muisaanwijzer gaan | NVDA+numeriek Vermenigvuldig | NVDA+shift+n | geen | Verplaats het navigator object naar het object van de muispositie |
 %kc:endInclude
 
 + Bladermodus +[BrowseMode]
@@ -668,7 +668,7 @@ Om zoveel mogelijk informatie op een brailleleesregel te krijgen zijn de volgend
 || Afkorting | Type besturingselement |
 | afb | afbeelding |
 | app | applicatie / toepassing |
-| art | artikel
+| art | artikel |
 | bct | blokcitaat |
 | bst | boomstructuur |
 | bsitem | boomstructuuritem |
@@ -940,13 +940,6 @@ Merk op dat bovengenoemde sneltoetscombinaties alleen werken met de standaard op
 | Opmerkingen voor vertalers melden | control+shift+a | Meldt eventuele opmerkingen voor vertalers.
 %kc:endInclude
 
-++ Skype ++[Skype]
-%kc:beginInclude
-Wanneer u zich in een berichtenreeks bevindt:
-|| Naam | Toets | Beschrijving |
-| Bericht lezen | NVDA+control+1-0 | Afhankelijk van het cijfer dat u indrukt, wordt de leescursor naar het daarbijbehorende bericht verplaatst en kan het gelezen worden; als u bij voorbeeld NVDA+control+2 indrukt, wordt het bericht dat u op één na het laatst hebt ontvangen gelezen. |
-%kc:endInclude
-
 ++ Kindle voor de PC ++[Kindle]
 NVDA ondersteunt het lezen van en het navigeren in boeken met Amazon Kindle voor de PC.
 Deze functionaliteit is alleen beschikbaar voor Kindle-boeken met het kenmerk "Schermlezers: worden ondersteund" (Screen Reader: supported). U kunt dit nagaan op de pagina met gegevens over het boek in kwestie.
@@ -1062,14 +1055,14 @@ Als u evenwel informatie wilt doorgeven over mogelijke bugs van het programma ka
 
 De beschikbare logniveaus zijn:
 - Uitgeschakeld: Behalve een korte melding bij opstarten zal NVDA niets loggen.
-- Info: NVDA logt basale informatie zoals opstartmeldingen en informatie die nuttig is voor ontwikkelaars.
-- Debug-waarschuwing: Waarschuwingen die niet voortkomen uit ernstige fouten worden gelogd.
-- Invoer/Uitvoer: Toetsenbordinvoer en invoer van brailleleesregels, alsmede spraak- en braille-uitvoer worden gelogd. 
+ - Info: NVDA logt basale informatie zoals opstartmeldingen en informatie die nuttig is voor ontwikkelaars.
+ - Debug-waarschuwing: Waarschuwingen die niet voortkomen uit ernstige fouten worden gelogd.
+ - Invoer/Uitvoer: Toetsenbordinvoer en invoer van brailleleesregels, alsmede spraak- en braille-uitvoer worden gelogd. 
  - Als u zich zorgen maakt over uw privacy, kies dan niet voor dit logniveau.
-- Debug: Naast info, waarschuwingen, en gegevens uit invoer/uitvoer worden ook debug-berichten  gelogd. 
+ - Debug: Naast info, waarschuwingen, en gegevens uit invoer/uitvoer worden ook debug-berichten  gelogd. 
  - Evenals voor   invoer/uitvoer geldt hier ook dat u niet voor dit logniveau moet kiezen, als u zich zorgen maakt over uw privacy.
+ -
 -
-
 
 ==== NVDA automatisch starten nadat ik me bij windows heb aangemeld ====[GeneralSettingsStartAfterLogOn]
 Als u het selectievakje aanvinkt, zal NVDA automatisch worden gestart zodra u zich bij Windows aanmeldt.
@@ -1092,6 +1085,7 @@ De volgende informatie wordt altijd verstuurd
 - Huidige NVDA-versie
 - Versie besturingssysteem
 - Of het besturingssysteem 64- of 32-bit is
+
 
 ==== NVDA toestaan dat gebruiksstatistieken worden verzameld ten behoeve van het NVDA-project ====[GeneralSettingsGatherUsageStats]
 Als dit wordt toegestaan zal NV Access de informatie van update checks gebruiken om het aantal NVDA-gebruikers vast te stellen met inbegrip van specifieke demografische gegevens zoals besturingssysteem en land van oorsprong.
@@ -1170,7 +1164,7 @@ Als u vaststelt dat NVDA interpunctie in de verkeerde taal leest, een taal die n
 
 ==== Unicode Consortium data (met inbegrip van emoji) opnemen bij het verwerken van karakters en symbolen ====[SpeechSettingsCLDR]
 Wanneer dit selectievakje aangevinkt is, zal NVDA extra uitspraakwoordenboeken raadplegen bij het uitspreken van (letter)tekens en symbolen.
-In deze woordenboeken staan beschrijvingen van symbolenin het bijzonder emoji) die afkomstig zijn van [het Unicode Consortium https://www.unicode.org/consortium/] as part of their [Common Locale Data Repository https://cldr.unicode.org/].
+In deze woordenboeken staan beschrijvingen van symbolenin het bijzonder emoji) die afkomstig zijn van [het Unicode Consortium https://www.unicode.org/consortium/] als onderdeel van hun [Common Locale Data Repository http://cldr.unicode.org/].unicode.org/].
 Als u wilt dat NVDA de op basis van deze data gebaseerde beschrijving van emoji-tekens leest, moet u deze optie inschakelen.
 Als u evenwel een spraaksynthesizer gebruikt die zelf zorgt voor het uitspreken van emoji-beschrijvingen, wilt u deze mogelijk uitschakelen.
 
@@ -1404,6 +1398,9 @@ U kunt te allen tijde het tonen van deze waarschuwing weer inschakelen door het 
 
 Om Scherm dimmen vanaf elke willekeurige plaats in of uit te kunnen schakelen kunt u een aangepaste invoerhandeling aanmaken  in het dialoogvenster [Invoerhandelingen #InputGestures].
 
+Standaard worden bij in- of uitschakelen van Scherm dimmen geluidssignalen afgespeeld.
+Als u niet wilt dat dit gebeurt, kunt u het vinkje in hetselectievakje 'Geluid afspelen bij in- / uitschakelen Scherm dimmen' weghalen.
+
 ==== Instellingen visuele ondersteuning van derden ====[VisionSettingsThirdPartyVisualAids]
 Elementen met optische meerwaarde kunnen via [NVDA add-ons #AddonsManager] worden toegevoegd.
 Wanneer  deze elementen aanpasbare instellingen hebben, zijn ze te vinden in de hier genoemde categorie instellingen onderverdeeld in afzonderlijke groeperingen.
@@ -1470,7 +1467,7 @@ Deze optie is alleen beschikbaar indien "Spelfouten melden" is ingeschakeld in h
 
 ==== Toetsen van andere toepassingen verwerken ====[KeyboardSettingsHandleKeys]
 Met deze optie kan de gebruiker bepalen of invoer die afkomstig is van toepassingen zoals virtuele (scherm)toetsenborden of spraakherkenningssoftware door NVDA moet worden verwerkt. 
-Deze optie is standaard ingeschakeld, maar sommige gebruikers,zoals mensen die werken met het Unikey typeprogramma voor Viëtnamees, zullen er wellicht de voorkeur aan geven deze optie uit te zetten omdat er anders invoerfouten ontstaan. 
+Deze optie is standaard ingeschakeld, maar bepaalde gebruikers,zoals mensen die werken met het UniKey typeprogramma voor Viëtnamees, zullen er wellicht de voorkeur aan geven deze optie uit te zetten omdat er anders fouten bij de invoer ontstaan. 
 
 +++ Muis (NVDA+control+m) +++[MouseSettings]
 Via de categorie Muis in het dialoogvenster Instellingen van NVDA kunt u de muis volgen, het afspelen van pieptonen voor muiscoórdinaten en andere opties voor het gebruik van een muis instellen.
@@ -1791,24 +1788,14 @@ Voor de meest recente versies van Microsoft Office 2016/365 die onder windows 10
 Het kan echter voorkomen dat informatie of niet of onjuist wordt weergegeven in sommige versies van Microsoft Office, waardoor  men niet in alle gevallen kan vertrouwen op deze UI automation ondersteuning.
 Vooralsnog raden we de meeste gebruikers NIET aan dit standaard aan te zetten, al juichen we het toe dat gebruikers van Office 2016/365 de optie activeren om uit te proberen en ons  feedback te geven over hun ervaringen.
 
-==== Ondersteuning voor Windows-consool ====[AdvancedSettingsConsoleUIA]
-Met deze optie kunt u selecteren hoe NVDA moet omgaan met de Windows-consool wanneer die gebruikt wordt door de opdrachtprompt, PowerShell, en het Subsysteem van Windows voor Linux.
-Dit heeft geen effectop de moderne Windows Terminal.
-In Windows 10 versie 1709, heeft Microsoft [ondersteuning voor de UI Automation API toegevoegd aan de consool https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], bringing vastly improved performance and stability for screen readers that support it.
-In situaties waar UI Automation niet beschikbaar is of waar bekend is dat het een slechte gebruikerservaring oplevert, kan men terugvallen op de ondersteuning voor de legacy consool van NVDA.
-De ondersteuning voor de Windows-consool heeft een vervolgkeuzemenu met 3 opties:
-- Automatisch: gebruikt UI Automation in consools in Windows 10 versie 1809 en later. Deze optie is aanbevolen en is standaard ingesteld.
-Bij voorkeur UIA: UI Automation wordt gebruikt in consoolss indien beschikbaar zelfs in versies van Windows die onvolledig zijn uitgvoerd of bugs hebben. Hoewel deze beperkte fucntionaliteit nuttig en zelfs voldoende kan zijn voor uw doeleinden, gebruikt u deze optie geheel op eigen risico en wordt hiervoor geen ondersteuning geboden.
-- Legacy: UI Automation in de Windows-consool wordt volledig uitgeschakeld zodat u altijd met legacy werkt.
--
+==== UI Automation gebruiken om toegang te krijgen tot Windows-consool wanneer beschikbaar ====[AdvancedSettingsConsoleUIA]
+Wanneer deze optie ingeschakeld is, zal NVDA een nieuwe, nog in otwikkeling zijnde, versie van haar ondersteuning voor de Windows-consool gebruiken waarmee toegankelijkheidsverbeteringen worden benut die Microsoft heeft doorgevoerd https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Deze mogelijkheid is nog zeer experimenteel van aard en  nog incompleet, dus wordt het gebruik ervan nog niet aanbevolen. Wanneer deze echter volledig is uitontwikkeld, dan is de verwachting dat deze nieuwe vorm van ondersteuning de standaard gaat worden waarmee de prestaties en stabiliteit van NVDA in opdrachtmodules van Windows worden verbeterd. 
 
 ==== Wachtwoorden uitspreken in  Windows-consool ====[AdvancedSettingsWinConsoleSpeakPasswords]
-Met deze instelling bepaalt u Of tekens worden uitgesproken door getypte tekens uitspreken#KeyboardSettingsSpeakTypedCharacters] of door  getypte woorden uitspreken#KeyboardSettingsSpeakTypedWords] in situaties waar het scherm niet ververst wordtzoals bij de invoer van wachtwoorden in sommige terminal-programma's zoals de Windows-consool terwijl ondersteuning voor UI automation (UIA) ingeschakeld is, alsmede Mintty. 
-Om veiligheidsredenen moet deze instelling uitgeschakeld blijven. 
-Het kan echter voorkomen dat u de instelling  zou willen inschakelen als het mis gaat met het uitsprken van getypte tekens / worden   in een consool-omgeving   of in een werkomgeving die u vertrouwtt, en u er dan toch de voorkeur aangeeft om wachtwoorden te laten uitspreken.
-
-==== Gebruik de nieuwe ondersteuning voor getypte karakters in legacy Windows-consools wanneer beschikbaar ====[AdvancedSettingsKeyboardSupportInLegacy]
-Met deze optie stelt u een alternatieve methode in voor het detecteren van getypte karakters in legacy Windows-consools.
+Hiermee bepaalt u of [getypte karakters uitspreken #KeyboardSettingsSpeakTypedCharacters] nof [getypte woorden uitspreken #KeyboardSettingsSpeakTypedWords] actief is in situaties waar het  scherm niet wordt ververst zoals bij het invoeren van een wachtwoord in het Windows-consool als ondersteuning voor UI automation ingeschakeld is. Om veiligheidsredenen moet deze instelling uitgeschakeld blijven. Het kan echter voorkomen dat u de instelling  zou willen inschakelen als het mis gaat met het uitsprken van getypte tekens / worden    bij gebruik van de nieuwe, experimentele consool-ondersteuning van NVDA. 
+		
+==== Gebruik de nieuwe ondersteuning voor getypte karakters in het Windows-consool wanneer beschikbaar ====[AdvancedSettingsKeyboardSupportInLegacy]
+Met deze optie stelt u een alternatieve methode in voor het detecteren van getypte karakters in opdrachtmodules van Windows.
 Terwijl de prestatie hiermee verbetert en voorkomen wordt dat consool-uitvoer wordt uitgespeld, kan deze methode incompatibel zijn  met enkele terminal-programma's.
 Dit alternatief is beschikbaar en staat standaard aan in Windows 10 versies 1607, 1703, 1709 en 1803 alsmede in later uitgekomen versies van Windows 10 wanneer UI Automation niet beschikbaar is of uitgezet is.
 Waarschuwing: Als deze optie is ingeschakeld, worden getypte karakters die niet op het scherm te zien zijn zoals wachtwoorden, niet onderdrukt.
@@ -2068,7 +2055,10 @@ In het braille weergavevenster treft u een selectievakje aan met het bijschrift 
 Als dit vakje is aangevinkt, opent de braille viewer wanneer  NVDA wordt gestart.
 Het brailleweergavevenster zal in principe elke keer dat het wordt geopend dezelfde plaats en grootte hebben als toen het de laatste keer gesloten werd.
 
-++ Add-Ons Beheren ++[AddonsManager]
+++ Python-console ++[PythonConsole]
+Het NVDA Python-console, dat u aantreft in het NVDA-menu onder Extra, is een ontwikkelinstrument dat goed van pas komt bij het oplossen van bugs, algemene inspectie van het inwendige van NVDA  of het inspecteren van  de toegankelijkheidsopbouw van een toepassing.
+Voor meer informatie gaat u naar de [NVDA Developer Guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+
 ++ Add-Ons Beheren ++[AddonsManager]
 Met "Add-ons Beheren" onder Extra in het NVDA menu kunt u uitbreidingspakketten voor NVDA installeren, verwijderen alsmede in- en uitschakelen.
 Deze pakketten worden door de NVDA gemeenschap beschikbaar gesteld en ze bevatten aangepaste programmacode die het mogelijk maakt bepaalde functies van NVDA uit te breiden of te wijzigen. Ook zijn er Add-ons voor ondersteuning van extra brailleleesregels en spraaksynthesizers.
@@ -2113,7 +2103,7 @@ U kunt deze incompatibele add-ons inspecteren dor op de knop "Incompatibele add-
 
 Als u Add-Ons Beheren altijd en overal wilt kunnen oproepen, kunt u daarvoor aangepaste invoerhandelingen aanmaken met behulp van [Invoerhandelingen koppelen onder Opties #InputGestures].
 
-++ Incompatibele Add-ons Manager ++[incompatibleAddonsManager]
++++ Incompatibele Add-ons Manager +++[incompatibleAddonsManager]
 Met de Manager Incompatibele Add-ons, die u bereikt via de knop "Incompatibele add-ons bekijken" in Add-ons Beheren, kunt u incompatibele add-ons, inspecteren en nagaan waarom ze als niet compatibel beschouwd worden.
 Add-ons worden als incompatibel beschouwd wanneer ze niet zijn bijgewerkt waardoor ze niet kunnen werken met significante aanpassingen  in NVDA, of wanneer ze afhankelijk zijn van een optie die niet beschikbaar is in de versie van NVDA die u gebruikt.
 De Manager incompatibele add-ons geeft een beknopte uitleg over het doel ervan  en tevens wordt de versie van NVDA gemeld.
@@ -2121,15 +2111,36 @@ De incompatibele add-ons worden weergegeven in  een lijst met de volgende kolomm
 + Pakket,dhe naam van de add-on
 + Versie, de versie van de add-on
 + Reden incompatibel, uitleg waarom addon als incompatibel wordt beschouwd
-+
 
 De Manager incompatible add-ons  heeft ook een knop "Over add-on...".
-Door op deze knop te drukken laat het dialoogvenster de volledige details van de add-on zien, wat handig is als u contact opneemt met de auteur van de add-on.
+Door op deze knop te drukken laat het dialoogvenster de volledige details van de add-on zien, wat handig is als u contact opneemt met de maker van de add-on.
 
+++ Draagbare versie aanmaken ++[CreatePortableCopy]
+Hiermee opent u een dialoogvenster dat u in staat stelt een draagbare kopie van NVDA aan te maken vanuit de geïnstalleerde versie.
+Zowel in het ene als in het andere geval geldt dat, wanneer u een draagbare versie van NVDA draait, er onder Extra in het NVDA-menu  het desbetreffende item vermeld staat als "NVDA op deze PC installeren" (in plaats van "Draagbare versie aanmaken').
+ 
 
-++ Python Console ++[PythonConsole]
-Met de Python console die u vindt onder Extra in het NVDA-menu kunnen fouten in de programmacode worden opgespoord en hersteld, algemene inspecties van de programmatuur worden uitgevoerd of de mate van toegankelijkheid van een toepassing worden gecontroleerd.
-Zie voor meer informatie de handleiding voor ontwikkelaars, dit document is beschikbaar in [de sectie voor ontwikkelaars op de NVDA website (Engelstalig) https://www.nvaccess.org/files/nvda/documentation/developerGuide.html]].].
+Het dialoogvenster dat u in staat stelt een draagbare versie van NVDA aan te maken of NVDA op deze PC te installeren, laat u een pad naar een map kiezen waarin NVDA de draagbare versie moet aanmaken of waarin NVDA moet worden geïnstalleerd.
+
+In dit dialoogvenster  kunt u het volgende in- of uitschakelen:
+- Kopieer  configuratie van huidige gebruiker (dat is inclusief de bestanden in %appdata%\roaming\NVDA of in de gebruikersconfiguratie van uw draagbare kopie alsmede addons en andere modules)
+- Nieuwe draagbare kopie van NVDA na het aanmaken starten  of NVDA na installatie starten (Hiermee start NVDA automatisch op nadat de draagbare versie is aangemaakt of nadat die  is geïnstalleerd)
+-
+
+++ Hulpprogramma voor herstel van COM-registrfoutenn ++[RunCOMRegistrationFixingTool]
+Het installeren en deïnstalleren van programma's op een computer kan, er in bepaalde gevallen toe leiden dat COM DLL-bestanden niet langer in het register staan.
+Omdat COM Interfaces zoals IAccessible afhankelijk zijn van een correcte COM DLL registratie, kunnen zich problemen voordoen in het geval dat er bij de registratie iets fout is gegaan.
+
+Dit kan bijv gebeuren na het installeren en deïnstalleren  van Adobe Reader, Math Player en andere programma's.
+
+Het ontbreken van een registeropname kan leiden tot problemen in browsers, desktop apps, de taakbalk en andere interfaces.
+
+Met name kunnen navolgende problemen worden opgelost door dit hulpprogrammaatje uit te voeren:
+- NVDA meldt "onbekend" bij het navigeren in browsers zoals Firefox, Thunderbird etc.
+- NVDA schakelt niet tussen focusmodus en bladermodus
+- NVDA is heel traag wanneer  u navigeert in browsers bij gebruik van de bladermodus
+- En mogelijk andere problemen.
+
 
 ++ Plugins herladen ++[ReloadPlugins]
 Zodra deze optie wordt geactiveerd, zullen alle app modules en globale plugins opnieuw worden geladen zonder dat NVDA wordt herstart. Dit is handig voor ontwikkelaars.
@@ -2176,7 +2187,7 @@ Om van deze stemmen gebruik te maken dient u 2 componenten te installeren:
 ++ Windows OneCore-stemmen ++[OneCore]
 In Windows 10 zijn nieuwe stemmen beschikbaar die bekend staan als "OneCore" of "mobiele" stemmen.
 Deze stemmen zijn er voor vele talen en ze reageren sneller dan de Microsoft-stemmen die beschikbaar zijn bij gebruik van Microsoft Speech API versie 5.
-In Windows 10 gebruikt NVDA standaard de Windows OneCore stemmen ([[eSpeak NG #eSpeakNG] wordt in andere versies gebruikt).
+In Windows 10 gebruikt NVDA standaard de Windows OneCore stemmen ([eSpeak NG #eSpeakNG] wordt in andere versies gebruikt).
 
 Een lijst met beschikbare talen en de installatieinstructie vindt u op de navolgende webpagina van Microsoft: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
@@ -2452,7 +2463,11 @@ De brailleleesregels uit de serie BI en B van [HumanWare https://www.humanware.c
 Als u de leesregels via usb, waarbij het protocol op HumanWare is ingesteld, wilt aansluiten, moet u eerst de usb-drivers van de fabrikant installeren.
 USB drivers zijn niet nodig als u van het OpenBraille protocol gebruik maakt.
 
-De BrailleNote Touch wordt ook ondersteund en hiervoor hoeven geen drivers te worden geïnstalleerd.
+Aanvullend worden ook de volgende  toestellen  ondersteund en hiervoor hoeven geen speciale drivers te worden geïnstalleerd.
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
 
 Bij gebruik van de Brailliant BI/B en de BrailleNote touch met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)
@@ -2990,9 +3005,9 @@ Wanneer u de leesregel configureert en de te gebruiken poort instelt, moet u erv
 Het Brltty-programma zorgt zelf voor de verwerking van brailleïnvoer van leesregels die over een brailletoetsenbord beschikken.
 Het is dan ook niet relevant dat een invoertabel in NVDA wordt ingesteld.
 
-DBRLTYY blijft buiten de op de achtergrond uitgevoerde automatische leesregelherkenning van NVDA.
+BRLTTY blijft buiten de op de achtergrond uitgevoerde automatische leesregelherkenning van NVDA.
 
-De volgende brltty-commando's worden in NVDA ondersteund.
+De volgende BRLTTY-commando's worden in NVDA ondersteund.
 Voor informatie over toetsenbordtabellen kunt u de [BRLTTY-Documentatie op https://mielke.cc/brltty/doc/KeyBindings/] raadplegen.
 
 %kc:beginInclude
@@ -3037,7 +3052,7 @@ Hieronder volgen de commandoregelopties voor NVDA:
 | -l LOGLEVEL | --log-level=LOGLEVEL | Het laagste niveau gelogd bericht (debug 10, invoer/uitvoer 12, debugmelding 15,info 20, waarschuwing 30, fout 40, kritiek 50, uitgeschakeld 100), standaardinstelling is waarschuwing |
 | -c CONFIGPATH | --config-path=CONFIGPATH | Het pad waar alle instellingen voor NVDA worden opgeslagen. |
 | -m | --minimal | Geen geluiden, geen interface, geen opstartbericht etc. |
-| -s | --secure | Veilige modus (schakelt Python consool en logopties vaak gebruikt in beveiligde schermen uit) |
+| -s | --secure | Veilige modus: schakelt Python consool-eigenschappen  uit zoals profielen voor aanmaken, verwijderen, hernoemen etc., op update controleren, een selectievakje in het Welkomsscherm en in Instellingen in de categorie Algemeen, (bijv. NVDA starten na het inloggen, Configuratie opslaan bij afsluiten) alsmede     logviewer en log-eigenschappen vaak gebruikt in beveiligde schermen. Merk ook op  dat dit commando het onmogelijk maakt  instellingen  in system config op te slaan en de map Handelingen wordt niet op schijf bewaard. |
 | Geen | --disable-addons | Addons buiten werking gesteld. |
 | geen | --debug-logging | Loggen op Debug niveau alleen voor deze sessie inschakelen. Met deze instelling wordt elk ander niveau van loggen buiten werking gesteld ( ""--loglevel"", -l) gegeven argument, optie niet loggen inbegrepen. |
 | Geen | --no-logging | loggen volledig uitschakelen terwijl NVDA in gebruik is. Deze instelling kan overschreven worden als een logniveau ( ""--loglevel"", -l) wordt gespecifieerd vanuit commandoregel of als debug-loggen wordt ingeschakeld. |

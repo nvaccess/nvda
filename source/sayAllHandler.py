@@ -61,7 +61,7 @@ class _ObjectsReader(object):
 		if self.prevObj:
 			# We just started speaking this object, so move the navigator to it.
 			api.setNavigatorObject(self.prevObj, isFocus=lastSayAllMode==CURSOR_CARET)
-			winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED | winKernel.ES_DISPLAY_REQUIRED)
+			winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
 		# Move onto the next object.
 		self.prevObj = obj = next(self.walker, None)
 		if not obj:
@@ -149,9 +149,13 @@ class _TextReader(object):
 				self.finish()
 			return
 
+		# Copy the speakTextInfoState so that speak callbackCommand
+		# and its associated callback are using a copy isolated to this specific line.
+		state = self.speakTextInfoState.copy()
 		# Call lineReached when we start speaking this line.
 		# lineReached will move the cursor and trigger reading of the next line.
-		def _onLineReached(obj=self.reader.obj, state=self.speakTextInfoState.copy()):
+
+		def _onLineReached(obj=self.reader.obj, state=state):
 			self.lineReached(obj, bookmark, state)
 
 		cb = speech.CallbackCommand(
@@ -159,13 +163,22 @@ class _TextReader(object):
 			name="say-all:lineReached"
 		)
 
-		spoke = speech.speakTextInfo(
+		# Generate the speech sequence for the reader textInfo
+		# and insert the lineReached callback at the very beginning of the sequence.
+		# _linePrefix on speakTextInfo cannot be used here
+		# As it would be inserted in the sequence after all initial control starts which is too late.
+		speechGen = speech.getTextInfoSpeech(
 			self.reader,
 			unit=textInfos.UNIT_READINGCHUNK,
 			reason=controlTypes.REASON_SAYALL,
-			_prefixSpeechCommand=cb,
-			useCache=self.speakTextInfoState
+			useCache=state
 		)
+		seq = list(speech._flattenNestedSequences(speechGen))
+		seq.insert(0, cb)
+		# Speak the speech sequence.
+		spoke = speech.speakWithoutPauses(seq)
+		# Update the textInfo state ready for when speaking the next line.
+		self.speakTextInfoState = state.copy()
 
 		# Collapse to the end of this line, ready to read the next.
 		try:
@@ -197,7 +210,7 @@ class _TextReader(object):
 			updater.updateCaret()
 		if self.cursor != CURSOR_CARET or config.conf["reviewCursor"]["followCaret"]:
 			api.setReviewPosition(updater, isCaret=self.cursor==CURSOR_CARET)
-		winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED | winKernel.ES_DISPLAY_REQUIRED)
+		winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
 		if self.numBufferedLines == 0:
 			# This was the last line spoken, so move on.
 			self.nextLine()

@@ -261,7 +261,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			start,end,text = self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_CHAR)
 		except COMError:
 			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
-		if textUtils.isHighSurrogate(text) or textUtils.isLowSurrogate(text):
+		if text and (textUtils.isHighSurrogate(text) or textUtils.isLowSurrogate(text)):
 			# #8953: Some IA2 implementations, including Gecko and Chromium,
 			# erroneously report one offset for surrogates.
 			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
@@ -1869,6 +1869,13 @@ class MenuItem(IAccessible):
 class Taskbar(IAccessible):
 	name = _("Taskbar")
 
+	def event_gainFocus(self):
+		api.processPendingEvents(False)
+		# Sometimes before Windows 7 start menu opens taskbar gains focus for a moment producing annoying speech.
+		if eventHandler.isPendingEvents("gainFocus"):
+			return
+		super().event_gainFocus()
+
 class Button(IAccessible):
 
 	def _get_name(self):
@@ -1954,6 +1961,14 @@ class IENotificationBar(Dialog,IAccessible):
 				speech.speakObject(child,reason=controlTypes.REASON_FOCUS)
 			child=child.simpleNext
 
+
+class UIItem(IAccessible):
+	"""List items in Windows Explorer repeat the name as the value"""
+
+	def _get_value(self):
+		return ""
+
+
 ###class mappings
 
 _staticMap={
@@ -1979,7 +1994,9 @@ _staticMap={
 	("SysListView32",oleacc.ROLE_SYSTEM_LIST):"sysListView32.List",
 	("SysListView32",oleacc.ROLE_SYSTEM_GROUPING):"sysListView32.List",
 	("SysListView32",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
+	("DirectUIHWND", oleacc.ROLE_SYSTEM_LISTITEM): "UIItem",
 	("SysListView32",oleacc.ROLE_SYSTEM_MENUITEM):"sysListView32.ListItemWithoutColumnSupport",
+	("SysListView32", oleacc.ROLE_SYSTEM_CHECKBUTTON): "sysListView32.ListItem",
 	("SysTreeView32",oleacc.ROLE_SYSTEM_OUTLINE):"sysTreeView32.TreeView",
 	("SysTreeView32",oleacc.ROLE_SYSTEM_OUTLINEITEM):"sysTreeView32.TreeViewItem",
 	("SysTreeView32",oleacc.ROLE_SYSTEM_MENUITEM):"sysTreeView32.TreeViewItem",
@@ -2010,6 +2027,8 @@ _staticMap={
 	("AkelEditW",oleacc.ROLE_SYSTEM_CLIENT):"akelEdit.AkelEdit",
 	("AkelEditA",oleacc.ROLE_SYSTEM_CLIENT):"akelEdit.AkelEdit",
 	("MSOUNISTAT",oleacc.ROLE_SYSTEM_CLIENT):"msOffice.MSOUNISTAT",
+	("NetUIHWND", oleacc.ROLE_SYSTEM_PROPERTYPAGE): "msOffice.StatusBar",
+	("NetUIHWND", oleacc.ROLE_SYSTEM_TOOLBAR): "msOffice.RibbonSection",
 	("QWidget",oleacc.ROLE_SYSTEM_CLIENT):"qt.Client",
 	("QWidget",oleacc.ROLE_SYSTEM_LIST):"qt.Container",
 	("Qt5QWindowIcon",oleacc.ROLE_SYSTEM_LIST):"qt.Container",
