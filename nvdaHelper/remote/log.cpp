@@ -23,14 +23,19 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 std::deque<std::tuple<int, std::wstring>> logQueue;
 std::mutex logQueueLock;
 
+// Forward declare an APC function for flushing the log queue. 
+void __stdcall log_flushQueue_apcFunc(ULONG_PTR data);
+
 // Fetch all available messages from the queue
 // and send them onto NvDA via rpc.
 void log_flushQueue() {
 	// Ensure this is never called from outside the manager thread.
-	if(
-		!inprocMgrThreadHandle
-		|| GetCurrentThreadId() != GetThreadId(inprocMgrThreadHandle)
-	) {
+	if(!inprocMgrThreadHandle) {
+		// the manager thread does not yet exist.
+		// just ignore the call as once it does exist it will flush itself.
+		return;
+	} else if(GetCurrentThreadId() != GetThreadId(inprocMgrThreadHandle)) {
+		// call it correctly in the manager thread with APC.
 		QueueUserAPC(log_flushQueue_apcFunc, inprocMgrThreadHandle, 0);
 		return;
 	}
@@ -42,7 +47,6 @@ void log_flushQueue() {
 	for(auto& [level, msg] : tempQueue) {
 		nvdaControllerInternal_logMessage(level, GetCurrentProcessId(), msg.c_str());
 	}
-
 }
 
 void __stdcall log_flushQueue_apcFunc(ULONG_PTR data) {
