@@ -78,7 +78,7 @@ def readText(cursor):
 	lastSayAllMode=cursor
 	try:
 		reader = _TextReader(cursor)
-	except NotImplementedError as e:
+	except NotImplementedError:
 		log.debugWarning("Unable to make reader", exc_info=True)
 		return
 	_activeSayAll = weakref.ref(reader)
