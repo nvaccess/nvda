@@ -31,6 +31,7 @@ void log_flushQueue() {
 		!inprocMgrThreadHandle
 		|| GetCurrentThreadId() != GetThreadId(inprocMgrThreadHandle)
 	) {
+		QueueUserAPC(log_flushQueue_apcFunc, inprocMgrThreadHandle, 0);
 		return;
 	}
 	std::deque<std::tuple<int, std::wstring>> tempQueue;
