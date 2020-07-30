@@ -162,6 +162,8 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 		return 0;
 	}
 	nhAssert(dllHandle==tempHandle);
+	// Flush any log messages from other threads queued before the manager thread was started. 
+	log_flushQueue();
 	//Register for all winEvents in this process.
 	inprocWinEventHookID=SetWinEventHook(EVENT_MIN,EVENT_MAX,dllHandle,inproc_winEventCallback,GetCurrentProcessId(),0,WINEVENT_INCONTEXT);
 	if(inprocWinEventHookID==0) {
@@ -240,6 +242,8 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	// Unregister inproc winEvent callback
 	UnhookWinEvent(inprocWinEventHookID);
 	inprocWinEventHookID=0;
+	// Flush any remaining log messages to NVDA
+	log_flushQueue();
 	//Release and close the thread mutex
 	ReleaseMutex(threadMutex);
 	CloseHandle(threadMutex);
