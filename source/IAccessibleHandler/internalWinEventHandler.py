@@ -79,6 +79,12 @@ EVENTS_ALLOWED_FOR_ALL_OBJS = (
 	# all objects, since they're unlikely to flood us anyway.
 	IA2_EVENT_TEXT_CARET_MOVED,
 )
+WINDOW_CLASSES_ALLOWED_FOR_SHOW_EVENTS = (
+	"Frame Notification Bar",  # notification bars
+	"tooltips_class32",  # tooltips
+	# IMM candidates
+	"mscandui21.candidate", "mscandui40.candidate", "MSCandUIWindow_Candidate",
+)
 
 
 # C901: winEventCallback is too complex
@@ -161,6 +167,10 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 		if config.conf["iaccessible"]["specificObjEvents"] and not (
 			objectID == winUser.OBJID_CARET
 			or eventID in EVENTS_ALLOWED_FOR_ALL_OBJS
+			or (
+				eventID == winUser.EVENT_OBJECT_SHOW
+				and windowClassName in WINDOW_CLASSES_ALLOWED_FOR_SHOW_EVENTS
+			)
 			or any(
 				isEventForNVDAObject(window, objectID, childID, obj)
 				for obj in getNVDAObjectsToMonitor()
