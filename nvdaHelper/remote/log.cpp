@@ -38,11 +38,10 @@ void log_flushQueue() {
 		std::lock_guard lock{logQueueLock};
 		tempQueue.swap(logQueue);
 	}
-	while(!tempQueue.empty()) {
-		auto& [level, msg] = tempQueue.front();
+	for(auto& [level, msg] : tempQueue) {
 		nvdaControllerInternal_logMessage(level, GetCurrentProcessId(), msg.c_str());
-		tempQueue.pop_front();
 	}
+
 }
 
 void __stdcall log_flushQueue_apcFunc(ULONG_PTR data) {
@@ -93,4 +92,3 @@ int NVDALogCrtReportHook(int reportType,const wchar_t *message,int *returnValue)
 	*returnValue=0;
 	return true;
 }
-
