@@ -1,18 +1,23 @@
 #queueHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2018 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import types
-from Queue import Queue
+from queue import SimpleQueue
 import globalVars
 from logHandler import log
 import watchdog
 import core
 
-eventQueue=Queue()
-eventQueue.__name__="eventQueue"
+# A queue for calls that should be made on NVDA's main thread
+# #11369: We use SimpleQueue rather than Queue here
+# as SimpleQueue is very light-weight, does not use locks
+# and ensures that garbage collection won't unexpectedly happen in the middle of queuing something
+# Which may cause a deadlock.
+eventQueue = SimpleQueue()
+
 generators={}
 lastGeneratorObjID=0
 
@@ -42,14 +47,14 @@ def isRunningGenerators():
 	log.debug("generators running: %s"%res)
 
 def flushQueue(queue):
-	for count in xrange(queue.qsize()+1):
+	for count in range(queue.qsize()+1):
 		if not queue.empty():
 			(func,args,kwargs)=queue.get_nowait()
 			watchdog.alive()
 			try:
 				func(*args,**kwargs)
 			except:
-				log.exception("Error in func %s from %s"%(func.__name__,queue.__name__))
+				log.exception(f"Error in func {func.__qualname__}")
 
 def isPendingItems(queue):
 	if not queue.empty():
@@ -59,8 +64,8 @@ def isPendingItems(queue):
 	return res
 
 def pumpAll():
-	# This dict can mutate during iteration, so use keys().
-	for ID in generators.keys():
+	# This dict can mutate during iteration, so wrap the keys in a list.
+	for ID in list(generators):
 		# KeyError could occur within the generator itself, so retrieve the generator first.
 		try:
 			gen = generators[ID]

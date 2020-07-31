@@ -1,8 +1,7 @@
-#gui/configProfiles.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2013-2018 NV Access Limited, Thomas Stivers
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2013-2018 NV Access Limited, Joseph Lee, Julien Cochuyt, Thomas Stivers
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import wx
 import config
@@ -11,7 +10,7 @@ import gui
 from logHandler import log
 import appModuleHandler
 import globalVars
-import guiHelper
+from . import guiHelper
 import contextHelp
 
 class ProfilesDialog(wx.Dialog):
@@ -90,11 +89,9 @@ class ProfilesDialog(wx.Dialog):
 		self.disableTriggersToggle.Value = not config.conf.profileTriggersEnabled
 		sHelper.addItem(guiHelper.associateElements(triggersButton,self.disableTriggersToggle))
 
-		# Translators: The label of a button to close a dialog.
-		closeButton = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
-		closeButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
-		sHelper.addDialogDismissButtons(closeButton)
-		self.Bind(wx.EVT_CLOSE, self.onClose)
+		sHelper.addDialogDismissButtons(wx.CLOSE, separated=True)
+		# Not binding wx.EVT_CLOSE here because of https://github.com/wxWidgets/Phoenix/issues/672
+		self.Bind(wx.EVT_BUTTON, self.onClose, id=wx.ID_CLOSE)
 		self.EscapeId = wx.ID_CLOSE
 
 		if globalVars.appArgs.secure:
@@ -106,7 +103,7 @@ class ProfilesDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.profileList.SetFocus()
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def __del__(self):
 		ProfilesDialog._instance = None
@@ -219,13 +216,30 @@ class ProfilesDialog(wx.Dialog):
 	def onRename(self, evt):
 		index = self.profileList.Selection
 		oldName = self.profileNames[index]
-		# Translators: The label of a field to enter a new name for a configuration profile.
-		with wx.TextEntryDialog(self, _("New name:"),
+		while True:
+			with wx.TextEntryDialog(
+				self,
+				# Translators: The label of a field to enter a new name for a configuration profile.
+				_("New name:"),
 				# Translators: The title of the dialog to rename a configuration profile.
-				_("Rename Profile"), defaultValue=oldName) as d:
-			if d.ShowModal() == wx.ID_CANCEL:
-				return
-			newName = api.filterFileName(d.Value)
+				caption=_("Rename Profile"),
+				value=oldName
+			) as d:
+				if d.ShowModal() == wx.ID_CANCEL:
+					return
+			newName = d.Value
+			if newName:
+				break
+			gui.messageBox(
+				# Translators: An error displayed when the user attempts to rename a configuration profile
+				# with an empty name.
+				_("A profile cannot have an empty name."),
+				# Translators: The title of an error message dialog.
+				caption=_("Error"),
+				style=wx.ICON_ERROR,
+				parent=self
+			)
+		newName = api.filterFileName(newName)
 		try:
 			config.conf.renameProfile(oldName, newName)
 		except ValueError:
@@ -264,6 +278,8 @@ class ProfilesDialog(wx.Dialog):
 		else:
 			config.conf.enableProfileTriggers()
 		self.Destroy()
+		# 7077: Nullify the instance flag, otherwise wxWidgets will think the dialog is active when it is gone.
+		ProfilesDialog._instance = None
 
 	def saveTriggers(self, parentWindow=None):
 		try:
@@ -305,7 +321,7 @@ class TriggersDialog(wx.Dialog):
 			triggers.append(TriggerInfo(spec, disp, profile))
 			processed.add(spec)
 		# Handle all other triggers.
-		for spec, profile in confTrigs.iteritems():
+		for spec, profile in confTrigs.items():
 			if spec in processed:
 				continue
 			if spec.startswith("app:"):
@@ -316,7 +332,6 @@ class TriggersDialog(wx.Dialog):
 				continue
 			triggers.append(TriggerInfo(spec, disp, profile))
 
-		
 		# Translators: The label of the triggers list in the Configuration Profile Triggers dialog.
 		triggersText = _("Triggers")
 		triggerChoices = [trig.display for trig in triggers]
@@ -330,18 +345,18 @@ class TriggersDialog(wx.Dialog):
 		self.profileList = sHelper.addLabeledControl(profileText, wx.Choice, choices=profileChoices)
 		self.profileList.Bind(wx.EVT_CHOICE, self.onProfileListChoice)
 
-		closeButton = sHelper.addDialogDismissButtons(wx.Button(self, wx.ID_CLOSE, label=_("&Close")))
-		closeButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
-		self.Bind(wx.EVT_CLOSE, self.onClose)
+		sHelper.addDialogDismissButtons(wx.CLOSE, separated=True)
+		# Not binding wx.EVT_CLOSE here because of https://github.com/wxWidgets/Phoenix/issues/672
+		self.Bind(wx.EVT_BUTTON, self.onClose, id=wx.ID_CLOSE)
 		self.AffirmativeId = wx.ID_CLOSE
-		closeButton.SetDefault()
 		self.EscapeId = wx.ID_CLOSE
 
 		self.onTriggerListChoice(None)
+
 		mainSizer.Add(sHelper.sizer, border = guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def onTriggerListChoice(self, evt):
 		trig = self.triggers[self.triggerList.Selection]
@@ -398,15 +413,17 @@ class NewProfileDialog(wx.Dialog):
 		self.autoProfileName = ""
 		self.onTriggerChoice(None)
 
-		sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK | wx.CANCEL))
+		sHelper.addDialogDismissButtons(wx.OK | wx.CANCEL, separated=True)
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
+		self.AffirmativeId = wx.ID_OK
+		self.EscapeId = wx.ID_CANCEL
 
 		mainSizer.Add(sHelper.sizer, border = guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.profileName.SetFocus()
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def onOk(self, evt):
 		confTrigs = config.conf.triggersToProfiles
@@ -421,9 +438,20 @@ class NewProfileDialog(wx.Dialog):
 		) == wx.NO:
 			return
 
-		name = api.filterFileName(self.profileName.Value)
+		name = self.profileName.Value
 		if not name:
+			gui.messageBox(
+				# Translators: An error displayed when the user attempts to create a configuration profile
+				# with an empty name.
+				_("You must choose a name for this profile."),
+				# Translators: The title of an error message dialog.
+				caption=_("Error"),
+				style=wx.ICON_ERROR,
+				parent=self
+			)
+			self.profileName.SetFocus()
 			return
+		name = api.filterFileName(name)
 		try:
 			config.conf.createProfile(name)
 		except ValueError:
@@ -471,6 +499,8 @@ class NewProfileDialog(wx.Dialog):
 		# The user is done with the Profiles dialog;
 		# let them get on with editing the profile.
 		parent.Destroy()
+		# Also nullify the instance flag as the profiles dialog itself is dead.
+		ProfilesDialog._instance = None
 
 	def onCancel(self, evt):
 		self.Parent.Enable()

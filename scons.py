@@ -3,9 +3,14 @@
 
 import sys
 import os
-sys.path.append(os.path.abspath(
-	os.path.join(__file__, "..", "source")))
-import sourceEnv
-del sys.path[-1]
-import SCons.Script
-SCons.Script.main()
+
+sconsPath = os.path.abspath(os.path.join(os.path.dirname(__file__), "include", "scons"))
+
+if os.path.exists(sconsPath):
+	# sys.path[0] will always be the current dir, which should take precedence.
+	# Insert path to the SCons folder after that.
+	sys.path[1:1] = (sconsPath,)
+	import SCons.Script
+	SCons.Script.Main.main()
+else:
+	raise OSError("Path %s does not exist. Perhaps try running git submodule update --init" % sconsPath)

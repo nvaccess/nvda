@@ -1,6 +1,6 @@
 #appModules/powerpnt.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2015 NV Access Limited
+#Copyright (C) 2012-2018 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -33,6 +33,7 @@ from cursorManager import ReviewCursorManager
 import controlTypes
 from logHandler import log
 import scriptHandler
+from locationHelper import RectLTRB
 from NVDAObjects.window._msOfficeChart import OfficeChart
 
 # Window classes where PowerPoint's object model should be used 
@@ -243,7 +244,7 @@ def getBulletText(ppBulletFormat):
 	if t==ppBulletNumbered:
 		return "%d."%ppBulletFormat.number #(ppBulletFormat.startValue+(ppBulletFormat.number-1))
 	elif t:
-		return unichr(ppBulletFormat.character)
+		return chr(ppBulletFormat.character)
 
 def walkPpShapeRange(ppShapeRange):
 	for ppShape in ppShapeRange:
@@ -419,15 +420,6 @@ class DocumentWindow(PaneClassDC):
 				eventHandler.queueEvent("gainFocus",obj)
 		finally:
 			self._isHandlingSelectionChange=False
-
-	def event_gainFocus(self):
-		"""Bounces focus to the currently selected slide, shape or Text frame."""
-		obj=self.selection
-		if obj:
-			eventHandler.queueEvent("focusEntered",self)
-			eventHandler.queueEvent("gainFocus",obj)
-		else:
-			super(DocumentWindow,self).event_gainFocus()
 
 	def script_selectionChange(self,gesture):
 		gesture.send()
@@ -738,9 +730,7 @@ class Shape(PpObject):
 		top=self.documentWindow.ppObjectModel.pointsToScreenPixelsY(pointTop)
 		right=self.documentWindow.ppObjectModel.pointsToScreenPixelsX(pointLeft+pointWidth)
 		bottom=self.documentWindow.ppObjectModel.pointsToScreenPixelsY(pointTop+pointHeight)
-		width=right-left
-		height=bottom-top
-		return (left,top,width,height)
+		return RectLTRB(left,top,right,bottom).toLTWH()
 
 	def _get_ppShapeType(self):
 		"""Fetches and caches the type of this shape."""
@@ -939,6 +929,7 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 			formatField['bold']=bool(font.bold)
 			formatField['italic']=bool(font.italic)
 			formatField['underline']=bool(font.underline)
+		if formatConfig['reportSuperscriptsAndSubscripts']:
 			if font.subscript:
 				formatField['text-position']='sub'
 			elif font.superscript:
@@ -1091,7 +1082,7 @@ class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 		else:
 			info = self.selection
 			if not info.isCollapsed:
-				speech.speakSelectionMessage(_("selected %s"), info.text)
+				speech.speakPreselectedText(info.text)
 			else:
 				info.expand(textInfos.UNIT_LINE)
 				speech.speakTextInfo(info, reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_LINE)
@@ -1261,13 +1252,16 @@ class AppModule(appModuleHandler.AppModule):
 		import gui
 		# Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 		d=wx.Dialog(None,title=_("Waiting for Powerpoint..."))
-		d.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		d.CentreOnScreen()
 		gui.mainFrame.prePopup()
 		d.Show()
 		self.hasTriedPpAppSwitch=True
 		#Make sure NVDA detects and reports focus on the waiting dialog
 		api.processPendingEvents()
-		comtypes.client.PumpEvents(1)
+		try:
+			comtypes.client.PumpEvents(1)
+		except WindowsError:
+			log.debugWarning("Error while pumping com events", exc_info=True)
 		d.Destroy()
 		gui.mainFrame.postPopup()
 

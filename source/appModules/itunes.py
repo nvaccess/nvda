@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2015 NV Access Limited
+#Copyright (C) 2009-2018 NV Access Limited, Leonard de Ruijter
 
 """App module for iTunes
 """
@@ -17,6 +17,7 @@ import treeInterceptorHandler
 import api
 import eventHandler
 import NVDAObjects.IAccessible
+import NVDAObjects.UIA
 from NVDAObjects.IAccessible import webKit
 
 class AppModule(appModuleHandler.AppModule):
@@ -39,6 +40,10 @@ class AppModule(appModuleHandler.AppModule):
 				obj.presentationType = obj.presType_layout
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if isinstance(obj,NVDAObjects.UIA.UIA):
+			# iTunes 12.9 implements UIA for many controls.
+			# Just leave them untouched for now.
+			return
 		windowClassName=obj.windowClassName
 		role=obj.role
 		if windowClassName in ('iTunesList','iTunesSources','iTunesTrackList') and role in (controlTypes.ROLE_LISTITEM,controlTypes.ROLE_TREEVIEWITEM):

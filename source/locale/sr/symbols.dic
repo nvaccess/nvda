@@ -10,7 +10,7 @@
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥.]?\d)
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -20,7 +20,7 @@ symbols:
 ! sentence ending	Uzvičnik	all	always
 ? sentence ending	Upitnik	all	always
 ; phrase ending	tačkazarez	most	always
-: phrase ending	Dvotačka	most	always
+: phrase ending	Dve tačke	most	always
 decimal point		none	always
 in-word '	Apostrof	all	norep
 negative number	minus	none	norep
@@ -51,11 +51,12 @@ $	dolar	all	norep
 )	Zatvorena zagrada	most	always
 *	Zvezdica	some
 +	plus	some
+−	minus	some
 ,	Zarez	all	always
 -	Crtica	most
 .	Tačka	some
 /	Kosa crta	some
-:	Dvotačka	most	norep
+:	Dve tačke	most	norep
 ;	Tačkazarez	most
 <	Manje od	some
 >	Veće od	some
@@ -77,7 +78,6 @@ _	Donja crta	most
 •	Znak za nabrajanje	some
 …	Tri tačke	all	always
 ...	Tri tačke	all	always
-	Znak za nabrajanje	some
 “	Levi navodnik	most
 ”	Desni navodnik	most
 ‘	Apostrof	most
@@ -92,7 +92,13 @@ _	Donja crta	most
 ▪	Crni kvadrat	some
 ◾	Crni kvadrat	some
 ◦	Bela tačka	some
-➔	Strelica desno	some
+⇒	Dvostruka strelica desno	some
+⇨	Bela strelica desno	some
+➢	Desna strelica prema gore	some
+⮚	Strelica desno	some
+❖	Crni romboid minus beli X	some
+♣	Crni tref	some
+♦	Crni karo	some
 §	Paragraf	all
 °	Stepeni	some
 «	Leva dupla izlomljena zagrada
@@ -113,6 +119,7 @@ _	Donja crta	most
 ↓	Strelica dole	some
 ✓	Označeno	some
 ✔	Podebljano označeno	some
+🡺	Strelica desno	some
 
 #Mathematical Operators U+2200 to U+220F
 ∀	Za svaki	none
@@ -175,3 +182,6 @@ _	Donja crta	most
 ⅜	Tri osmine	none
 ⅝	Pet osmina	none
 ⅞	Sedam osmina	none
+
+# Miscellaneous Technical
+⌘	Mac komandni taster	none

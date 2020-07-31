@@ -13,6 +13,7 @@ import comtypes.client
 from comtypes import COMError
 from comtypes.gen.MathPlayer import MPInterface, IMathSpeech, IMathSpeechSettings, IMathNavigation, IMathBraille
 import speech
+from synthDriverHandler import getSynth
 from keyboardHandler import KeyboardInputGesture
 import braille
 import mathPres
@@ -21,9 +22,9 @@ RE_MP_SPEECH = re.compile(
 	# Break.
 	r"<break time='(?P<break>\d+)ms'/> ?"
 	# Pronunciation of characters.
-	ur"|<say-as interpret-as='characters'>(?P<char>[^<])</say-as> ?"
+	r"|<say-as interpret-as='characters'>(?P<char>[^<])</say-as> ?"
 	# Specific pronunciation.
-	ur"|<phoneme alphabet='ipa' ph='(?P<ipa>[^']+)'> (?P<phonemeText>[^ <]+)</phoneme> ?"
+	r"|<phoneme alphabet='ipa' ph='(?P<ipa>[^']+)'> (?P<phonemeText>[^ <]+)</phoneme> ?"
 	# Prosody.
 	r"|<prosody(?: pitch='(?P<pitch>\d+)%')?(?: volume='(?P<volume>\d+)%')?(?: rate='(?P<rate>\d+)%')?> ?"
 	r"|(?P<prosodyReset></prosody>) ?"
@@ -41,7 +42,7 @@ PROSODY_COMMANDS = {
 def _processMpSpeech(text, language):
 	# MathPlayer's default rate is 180 wpm.
 	# Assume that 0% is 80 wpm and 100% is 450 wpm and scale accordingly.
-	synth = speech.getSynth()
+	synth = getSynth()
 	wpm = synth._percentToParam(synth.rate, 80, 450)
 	breakMulti = 180.0 / wpm
 	out = []

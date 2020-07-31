@@ -1,8 +1,8 @@
-#tests/unit/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2017 NV Access Limited
+# tests/unit/__init__.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2017-2019 NV Access Limited, Babbage B.V.
 
 """NVDA unit testing.
 All unit tests should reside within this package and should be
@@ -21,7 +21,7 @@ import locale
 import gettext
 #Localization settings
 locale.setlocale(locale.LC_ALL,'')
-gettext.install('nvda',unicode=True)
+gettext.install('nvda')
 
 # The path to the unit tests.
 UNIT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -31,7 +31,9 @@ TOP_DIR = os.path.dirname(os.path.dirname(UNIT_DIR))
 SOURCE_DIR = os.path.join(TOP_DIR, "source")
 # Let us import modules from the NVDA source.
 sys.path.insert(1, SOURCE_DIR)
-import sourceEnv
+# Suppress Flake8 warning F401 (module imported but unused)
+# as this module is imported to expand the system path.
+import sourceEnv  # noqa: F401
 
 # Set options normally taken from the command line.
 import globalVars
@@ -40,7 +42,7 @@ class AppArgs:
 	# Ideally, this would be an in-memory, default configuration.
 	# However, config currently requires a path.
 	# We use the unit test directory, since we want a clean config.
-	configPath = UNIT_DIR.decode("mbcs")
+	configPath = UNIT_DIR
 	secure = False
 	disableAddons = True
 	launcher = False
@@ -70,15 +72,21 @@ languageHandler.setLanguage("en")
 # NVDAObjects need appModuleHandler to be initialized.
 import appModuleHandler
 appModuleHandler.initialize()
-# Anything which notifies of cursor updates requires braille to be initialized.
+# Anything which notifies of cursor updates requires braille and vision to be initialized.
+# Suppress Flake8 warning E402 (Module level import not at top of file)
+import vision  # noqa: E402
+vision.initialize()
+
 import braille
+# Disable auto detection of braille displays when unit testing.
+config.conf['braille']['display'] = "noBraille"
 braille.initialize()
 # For braille unit tests, we need to construct a fake braille display as well as enable the braille handler
 # Give the display 40 cells
 braille.handler.displaySize=40
 braille.handler.enabled = True
 # The focus and navigator objects need to be initialized to something.
-from objectProvider import PlaceholderNVDAObject,NVDAObjectWithRole
+from .objectProvider import PlaceholderNVDAObject,NVDAObjectWithRole
 phObj = PlaceholderNVDAObject()
 import api
 api.setFocusObject(phObj)
@@ -88,5 +96,5 @@ api.setDesktopObject(phObj)
 # Stub speech functions to make them no-ops.
 # Eventually, these should keep track of calls so we can make assertions.
 import speech
-speech.speak = lambda speechSequence, symbolLevel=None: None
-speech.speakSpelling = lambda text, locale=None, useCharacterDescriptions=False: None
+speech.speak = lambda speechSequence, symbolLevel=None, priority=None: None
+speech.speakSpelling = lambda text, locale=None, useCharacterDescriptions=False, priority=None: None

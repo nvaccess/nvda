@@ -19,6 +19,7 @@ import winKernel
 from logHandler import log
 import globalVars
 import core
+from core import CallCancelled
 import NVDAHelper
 
 #settings
@@ -46,9 +47,23 @@ _suspended = False
 _watcherThread=None
 _cancelCallEvent = None
 
-class CallCancelled(Exception):
-	"""Raised when a call is cancelled.
+
+def getFormattedStacksForAllThreads():
 	"""
+	Generates a string containing a call stack for every Python thread in this process, suitable for logging.
+	"""
+	# First collect the names of all threads that have actually been started by Python itself.
+	threadNamesByID = {x.ident: x.name for x in threading.enumerate()}
+	stacks = []
+	# If a Python function is entered by a thread that was not started by Python itself,
+	# It will have a frame, but won't be tracked by Python's threading module and therefore will have no name.
+	for ident, frame in sys._current_frames().items():
+		# The strings in the formatted stack all end with \n, so no join separator is necessary.
+		stack = "".join(traceback.format_stack(frame))
+		name = threadNamesByID.get(ident, "Unknown")
+		stacks.append(f"Python stack for thread {ident} ({name}):\n{stack}")
+	return "\n".join(stacks)
+
 
 def alive():
 	"""Inform the watchdog that the core is alive.
@@ -94,8 +109,8 @@ def _watcher():
 		if _isAlive():
 			continue
 		if log.isEnabledFor(log.DEBUGWARNING):
-			log.debugWarning("Trying to recover from freeze, core stack:\n%s"%
-				"".join(traceback.format_stack(sys._current_frames()[core.mainThreadId])))
+			stacks = getFormattedStacksForAllThreads()
+			log.debugWarning(f"Trying to recover from freeze. Listing stacks for Python threads:\n{stacks}")
 		lastTime=time.time()
 		isAttemptingRecovery = True
 		# Cancel calls until the core is alive.
@@ -106,8 +121,11 @@ def _watcher():
 			curTime=time.time()
 			if curTime-lastTime>FROZEN_WARNING_TIMEOUT:
 				lastTime=curTime
-				log.warning("Core frozen in stack:\n%s"%
-					"".join(traceback.format_stack(sys._current_frames()[core.mainThreadId])))
+				# Core is completely frozen.
+				# Collect formatted stacks for all Python threads.
+				log.error("Core frozen in stack!")
+				stacks = getFormattedStacksForAllThreads()
+				log.info(f"Listing stacks for Python threads:\n{stacks}")
 			_recoverAttempt()
 			time.sleep(RECOVER_ATTEMPT_INTERVAL)
 			if _isAlive():
@@ -156,7 +174,9 @@ def _crashHandler(exceptionInfo):
 	# Write a minidump.
 	dumpPath = os.path.abspath(os.path.join(globalVars.appArgs.logFileName, "..", "nvda_crash.dmp"))
 	try:
-		with file(dumpPath, "w") as mdf:
+		# Though we aren't using pythonic functions to write to the dump file,
+		# open it in binary mode as opening it in text mode (the default) doesn't make sense.
+		with open(dumpPath, "wb") as mdf:
 			mdExc = MINIDUMP_EXCEPTION_INFORMATION(ThreadId=threadId,
 				ExceptionPointers=exceptionInfo, ClientPointers=False)
 			if not ctypes.windll.DbgHelp.MiniDumpWriteDump(
@@ -175,9 +195,8 @@ def _crashHandler(exceptionInfo):
 		log.critical("NVDA crashed! Minidump written to %s" % dumpPath)
 
 	# Log Python stacks for every thread.
-	for logThread, logFrame in sys._current_frames().iteritems():
-		log.info("Python stack for thread %d" % logThread,
-			stack_info=traceback.extract_stack(logFrame))
+	stacks = getFormattedStacksForAllThreads()
+	log.info(f"Listing stacks for Python threads:\n{stacks}")
 
 	log.info("Restarting due to crash")
 	core.restart()
@@ -195,13 +214,6 @@ def _notifySendMessageCancelled():
 			raise CallCancelled
 	sys.setprofile(sendMessageCallCanceller)
 
-RPC_E_CALL_CANCELED = -2147418110
-_orig_COMError_init = comtypes.COMError.__init__
-def _COMError_init(self, hresult, text, details):
-	if hresult == RPC_E_CALL_CANCELED:
-		raise CallCancelled
-	_orig_COMError_init(self, hresult, text, details)
-
 def initialize():
 	"""Initialize the watchdog.
 	"""
@@ -217,9 +229,10 @@ def initialize():
 		"cancelCallEvent")
 	# Handle cancelled SendMessage calls.
 	NVDAHelper._setDllFuncPointer(NVDAHelper.localLib, "_notifySendMessageCancelled", _notifySendMessageCancelled)
-	# Monkey patch comtypes to specially handle cancelled COM calls.
-	comtypes.COMError.__init__ = _COMError_init
-	_watcherThread=threading.Thread(target=_watcher)
+	_watcherThread = threading.Thread(
+		name=__name__,
+		target=_watcher
+	)
 	alive()
 	_watcherThread.start()
 
@@ -231,7 +244,6 @@ def terminate():
 		return
 	isRunning=False
 	oledll.ole32.CoDisableCallCancellation(None)
-	comtypes.COMError.__init__ = _orig_COMError_init
 	# Wake up the watcher so it knows to finish.
 	windll.kernel32.SetWaitableTimer(_coreDeadTimer,
 		ctypes.byref(ctypes.wintypes.LARGE_INTEGER(0)),
@@ -264,7 +276,9 @@ class CancellableCallThread(threading.Thread):
 		self._executionDoneEvent = ctypes.windll.kernel32.CreateEventW(None, False, False, None)
 		self.isUsable = True
 
-	def execute(self, func, args, kwargs, pumpMessages=True):
+	def execute(self, func, *args, pumpMessages=True, **kwargs):
+		fname = repr(func)
+		self.name = f"{self.__class__.__module__}.{self.execute.__qualname__}({fname})"
 		# Don't even bother making the call if the core is already dead.
 		if isAttemptingRecovery:
 			raise CallCancelled
@@ -290,7 +304,11 @@ class CancellableCallThread(threading.Thread):
 
 		exc = self._exc_info
 		if exc:
-			raise exc[0], exc[1], exc[2]
+			# The execution of the function in the other thread caused an exception.
+			# Re-raise it here.
+			# Note that in Python3, the traceback (stack) is now part of the exception,
+			# So the logged traceback will correctly show the stack for both this thread and the other thread. 
+			raise exc
 		return self._result
 
 	def run(self):
@@ -300,13 +318,13 @@ class CancellableCallThread(threading.Thread):
 			self._executeEvent.clear()
 			try:
 				self._result = self._func(*self._args, **self._kwargs)
-			except:
-				self._exc_info = sys.exc_info()
+			except Exception as e:
+				self._exc_info = e
 			ctypes.windll.kernel32.SetEvent(self._executionDoneEvent)
 		ctypes.windll.kernel32.CloseHandle(self._executionDoneEvent)
 
 cancellableCallThread = None
-def cancellableExecute(func, *args, **kwargs):
+def cancellableExecute(func, *args, ccPumpMessages=True, **kwargs):
 	"""Execute a function in the main thread, making it cancellable.
 	@param func: The function to execute.
 	@type func: callable
@@ -317,7 +335,6 @@ def cancellableExecute(func, *args, **kwargs):
 	@raise CallCancelled: If the call was cancelled.
 	"""
 	global cancellableCallThread
-	pumpMessages = kwargs.pop("ccPumpMessages", True)
 	if not isRunning or _suspended or not isinstance(threading.currentThread(), threading._MainThread):
 		# Watchdog is not running or this is a background thread,
 		# so just execute the call.
@@ -327,7 +344,7 @@ def cancellableExecute(func, *args, **kwargs):
 		# Create a new one.
 		cancellableCallThread = CancellableCallThread()
 		cancellableCallThread.start()
-	return cancellableCallThread.execute(func, args, kwargs, pumpMessages=pumpMessages)
+	return cancellableCallThread.execute(func, *args, pumpMessages=ccPumpMessages, **kwargs)
 
 def cancellableSendMessage(hwnd, msg, wParam, lParam, flags=0, timeout=60000):
 	"""Send a window message, making the call cancellable.

@@ -50,11 +50,15 @@ void inProcess_initialize() {
 	TSF_inProcess_initialize();
 	IME_inProcess_initialize();
 	winword_inProcess_initialize();
+#ifndef _M_ARM64
 	gdiHooks_inProcess_initialize();
+#endif
 }
 
 void inProcess_terminate() {
+#ifndef _M_ARM64
 	gdiHooks_inProcess_terminate();
+#endif
 	IME_inProcess_terminate();
 	TSF_inProcess_terminate();
 	winword_inProcess_terminate();
@@ -114,7 +118,7 @@ bool unregisterWindowsHook(int hookType, HOOKPROC hookProc) {
 
 //GetMessage hook callback
 LRESULT CALLBACK inProcess_getMessageHook(int code, WPARAM wParam, LPARAM lParam) {
-	if(code<0||wParam==PM_NOREMOVE) {
+	if(code<0||!(wParam&PM_REMOVE)) {
 		return CallNextHookEx(0,code,wParam,lParam);
 	}
 	MSG* pmsg=(MSG*)lParam;

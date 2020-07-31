@@ -1,5 +1,20 @@
+###
+#This file is a part of the NVDA project.
+#URL: https://www.nvaccess.org/
+#Copyright 2018-2019 NV Access Limited
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License version 2.0, as published by
+#the Free Software Foundation.
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#This license can be found at:
+#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+###
+
 import subprocess
 import versionInfo
+import os
 
 Import([
 	'env',
@@ -12,12 +27,16 @@ def getCertPublisher(env):
 	If no signing certificate is provided, then the given publisher is used as is.
 	If a signing certificate is given, then the publisher is extracted from the certificate.
 	"""
-	certFile=env.get('certFile')
-	if not certFile:
+	certFilePath = env.get('certFile')
+	if not certFilePath:
 		return env['publisher']
 	certPassword=env.get('certPassword','')
-	cmd=['certutil','-dump','-p',certPassword,File('#'+certFile).abspath.replace('/','\\')]
-	lines=subprocess.check_output(cmd).splitlines()
+	if not os.path.isabs(certFilePath):
+		# If path is not absolute it is assumed that it is being given relative to the top dir of the repo
+		repoTopDir = Dir('#').abspath
+		certFilePath = os.path.abspath(os.path.normpath(os.path.join(repoTopDir, certFilePath)))
+	cmd=['certutil', '-dump', '-p', certPassword, certFilePath]
+	lines=subprocess.run(cmd,check=True,capture_output=True,text=True).stdout.splitlines()
 	linePrefix='Subject: '
 	for line in lines:
 		if line.startswith(linePrefix):
@@ -46,18 +65,13 @@ excludedDistFiles=[
 	'nvda_eoaProxy.exe',
 	'nvda_service.exe',
 	'nvda_slave.exe',
-	'nvda_uiAccess.exe',
+	'nvda_noUIAccess.exe',
 	'lib/IAccessible2Proxy.dll',
 	'lib/ISimpleDOM.dll',
 	'lib/minHook.dll',
 	'lib/NVDAHelperRemote.dll',
-	'lib/VBufBackend_adobeAcrobat.dll',
-	'lib/VBufBackend_adobeFlash.dll',
-	'lib/VBufBackend_gecko_ia2.dll',
-	'lib/VBufBackend_lotusNotesRichText.dll',
-	'lib/VBufBackend_mshtml.dll',
-	'lib/VBufBackend_webKit.dll',
 	'lib64/',
+	'libArm64/',
 	'uninstall.exe',
 ]
 

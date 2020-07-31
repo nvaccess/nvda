@@ -7,6 +7,7 @@
 
 import time
 from ctypes import *
+import ctypes
 from ctypes.wintypes import *
 from comtypes import BSTR
 import oleacc
@@ -17,12 +18,13 @@ import speech
 import api
 import eventHandler
 import winKernel
-import winUser
 from . import IAccessible, List
 from ..window import Window
 import watchdog
 from NVDAObjects.behaviors import RowWithoutCellObjects, RowWithFakeNavigation
 import config
+from locationHelper import RectLTRB
+from logHandler import log
 
 #Window messages
 LVM_FIRST=0x1000
@@ -52,6 +54,15 @@ LVIF_STATE=0x08
 LVIF_INDENT=0x10
 LVIF_GROUPID=0x100
 LVIF_COLUMNS=0x200
+
+#GETSUBITEMRECT flags
+# Returns the bounding rectangle of the entire item, including the icon and label
+LVIR_BOUNDS = 0
+# Returns the bounding rectangle of the icon or small icon.
+LVIR_ICON = 1
+# Returns the bounding rectangle of the entire item, including the icon and label.
+# This is identical to LVIR_BOUNDS.
+LVIR_LABEL = 2
 
 #Item states
 LVIS_FOCUSED=0x01
@@ -214,6 +225,8 @@ class List(List):
 			res = watchdog.cancellableSendMessage(self.windowHandle,LVM_GETCOLUMNORDERARRAY, self.columnCount, internalCoa)
 			if res:
 				winKernel.readProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)
+			else:
+				log.debugWarning("LVM_GETCOLUMNORDERARRAY failed for list")
 		finally:
 			winKernel.virtualFreeEx(processHandle,internalCoa,0,winKernel.MEM_RELEASE)
 		return coa
@@ -298,17 +311,49 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 
 	def _getColumnLocationRaw(self,index):
 		processHandle=self.processHandle
-		localRect=RECT(left=2,top=index)
+		# LVM_GETSUBITEMRECT requires a pointer to a RECT structure that will receive the subitem bounding rectangle information.
+		localRect=RECT(
+			# Returns the bounding rectangle of the entire item, including the icon and label.
+			left=LVIR_LABEL,
+			# According to Microsoft, top should be the one-based index of the subitem.
+			# However, indexes coming from LVM_GETCOLUMNORDERARRAY are zero based.
+			top=index
+		)
 		internalRect=winKernel.virtualAllocEx(processHandle,None,sizeof(localRect),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		try:
 			winKernel.writeProcessMemory(processHandle,internalRect,byref(localRect),sizeof(localRect),None)
-			watchdog.cancellableSendMessage(self.windowHandle,LVM_GETSUBITEMRECT, (self.IAccessibleChildID-1), internalRect)
-			winKernel.readProcessMemory(processHandle,internalRect,byref(localRect),sizeof(localRect),None)
+			res = watchdog.cancellableSendMessage(
+				self.windowHandle,
+				LVM_GETSUBITEMRECT,
+				self.IAccessibleChildID - 1,
+				internalRect
+			)
+			if res:
+				winKernel.readProcessMemory(
+					processHandle,
+					internalRect,
+					ctypes.byref(localRect),
+					ctypes.sizeof(localRect),
+					None
+				)
 		finally:
 			winKernel.virtualFreeEx(processHandle,internalRect,0,winKernel.MEM_RELEASE)
-		windll.user32.ClientToScreen(self.windowHandle,byref(localRect))
-		windll.user32.ClientToScreen(self.windowHandle,byref(localRect,8))
-		return (localRect.left,localRect.top,localRect.right-localRect.left,localRect.bottom-localRect.top)
+		if res == 0:
+			log.debugWarning(f"LVM_GETSUBITEMRECT failed for index {index} in list")
+			return None
+		# #8268: this might be a malformed rectangle
+		# (i.e. with a left coordinate that is greater than the right coordinate).
+		# This happens in Becky! Internet Mail,
+		# as well in applications that expose zero width columns.
+		left = localRect.left
+		top = localRect.top
+		right = localRect.right
+		bottom = localRect.bottom
+		if left > right:
+			left = right
+		if top > bottom:
+			top = bottom
+		return RectLTRB(left, top, right, bottom).toScreen(self.windowHandle).toLTWH()
 
 	def _getColumnLocation(self,column):
 		return self._getColumnLocationRaw(self.parent._columnOrderArray[column - 1])
@@ -386,7 +431,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 				return self.displayText
 			return name
 		textList = []
-		for col in xrange(1, self.childCount + 1):
+		for col in range(1, self.childCount + 1):
+			location = self._getColumnLocation(col)
+			if location.width == 0:
+				continue
 			content = self._getColumnContent(col)
 			if not content:
 				continue
@@ -399,7 +447,8 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			else:
 				textList.append(content)
 		name = "; ".join(textList)
-		#Some list view items in Windows Vista and later can contain annoying left-to-right and right-to-left indicator characters which really should not be there.
+		# Some list view items in Windows Vista and later can contain annoying left-to-right and right-to-left
+		# indicator characters which really should not be there.
 		return name.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 
 	value = None

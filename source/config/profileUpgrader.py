@@ -20,7 +20,7 @@ def upgrade(profile, validator, writeProfileToFileFunc):
 	_ensureVersionProperty(profile)
 	startSchemaVersion = int(profile[SCHEMA_VERSION_KEY])
 	log.debug("Current config schema version: {0}, latest: {1}".format(startSchemaVersion, latestSchemaVersion))
-	for fromVersion in xrange(startSchemaVersion, latestSchemaVersion):
+	for fromVersion in range(startSchemaVersion, latestSchemaVersion):
 		_doConfigUpgrade(profile, fromVersion)
 	_doValidation(deepcopy(profile), validator) # copy the profile, since validating mutates the object
 	try:
@@ -66,7 +66,7 @@ def _doValidation(profile, validator):
 			raise ValueError(errorString)
 
 def _ensureVersionProperty(profile):
-	isEmptyProfile = 1 > len(profile.keys())
+	isEmptyProfile = 1 > len(profile)
 	if isEmptyProfile:
 		log.debug("Empty profile, triggering default schema version")
 		profile[SCHEMA_VERSION_KEY] = latestSchemaVersion

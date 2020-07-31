@@ -1,6 +1,6 @@
-﻿#locale/de/symbols.dic
+#locale/de/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2018 NVDA Contributors
+#Copyright (c) 2011-2020 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -15,7 +15,7 @@ complexSymbols:
 # Others
 decimal point	(?<![^\d -])\,(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥₹.]?\d)
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 thousands separator	(?<=\d)\.(?=\d{3})
 date separator	(?<=\d\d)\.(?=\d\d)
 
@@ -60,6 +60,7 @@ $	Dollar	all	norep
 )	Runde Klammer zu	most	always
 *	Stern	some
 +	Plus	some
+−	Minus	some
 ,	Komma	all	always
 -	Bindestrich	most
 .	Punkt	some
@@ -104,6 +105,7 @@ _	Unterstrich	most
 ⇒	doppelter rechtsweisender Pfeil	some
 ⇨	rechtsweisender weißer Pfeil	some
 ➢	rechtsweisende Pfeilspitze	some
+⮚	rechtsweisende Pfeilspitze	some
 ❖	Schwarzer Diamand umschließt weißes X	some
 ♣	Spielkarte Schwarzes Kreuz	some
 ♦	schwarzer Diamand	some
@@ -128,6 +130,7 @@ _	Unterstrich	most
 ↓	Pfeil abwärts	some
 ✓	Häkchen	some
 ✔	Fettes Häkchen	some
+🡺	rechtsweisender Pfeil	some
 ℃	Grad Celsius	some
 
 # Mathematische Operatoren U+2200 bis U+220F
@@ -191,3 +194,6 @@ _	Unterstrich	most
 ⅜	Drei Achtel	none
 ⅝	Fünf Achtel	none
 ⅞	Sieben Achtel	none
+
+# Technisch und verschiedenes
+⌘	Mac-Befehlstaste	none
