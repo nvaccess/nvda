@@ -1135,6 +1135,7 @@ class UIA(Window):
 	def _get_devInfo(self):
 		info=super(UIA,self).devInfo
 		info.append("UIAElement: %r"%self.UIAElement)
+		# #11445: allow exceptions to be recorded when presenting Automation Id.
 		try:
 			ret=self.UIAElement.currentAutomationID
 		except Exception as e:
