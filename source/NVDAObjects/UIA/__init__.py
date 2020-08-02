@@ -842,6 +842,8 @@ class UIA(Window):
 	def findOverlayClasses(self,clsList):
 		UIAControlType=self.UIAElement.cachedControlType
 		UIAClassName=self.UIAElement.cachedClassName
+		# #11445: to avoid COM errors, do not fetch cached UIA Automation Id from the underlying element.
+		UIAAutomationId = self.UIAAutomationId
 		if UIAClassName=="NetUITWMenuItem" and UIAControlType==UIAHandler.UIA_MenuItemControlTypeId and not self.name and not self.previous:
 			# Bounces focus from a netUI dead placeholder menu item when no item is selected up to the menu itself.
 			clsList.append(PlaceholderNetUITWMenuItem)
@@ -849,7 +851,7 @@ class UIA(Window):
 			clsList.append(WpfTextView)
 		elif UIAClassName=="NetUIDropdownAnchor":
 			clsList.append(NetUIDropdownAnchor)
-		elif self.TextInfo==UIATextInfo and (UIAClassName=='_WwG' or self.windowClassName=='_WwG' or self.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content')):
+		elif self.TextInfo==UIATextInfo and (UIAClassName=='_WwG' or self.windowClassName=='_WwG' or UIAAutomationId.startswith('UIA_AutomationId_Word_Content')):
 			from .wordDocument import WordDocument, WordDocumentNode
 			if self.role==controlTypes.ROLE_DOCUMENT:
 				clsList.append(WordDocument)
@@ -858,7 +860,7 @@ class UIA(Window):
 		# #5136: Windows 8.x and Windows 10 uses different window class and other attributes for toast notifications.
 		elif UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId: #Windows 8.x
 			clsList.append(Toast_win8)
-		elif self.windowClassName=="Windows.UI.Core.CoreWindow" and UIAControlType==UIAHandler.UIA_WindowControlTypeId and "ToastView" in self.UIAElement.cachedAutomationId: # Windows 10
+		elif self.windowClassName=="Windows.UI.Core.CoreWindow" and UIAControlType==UIAHandler.UIA_WindowControlTypeId and "ToastView" in UIAAutomationId: # Windows 10
 			clsList.append(Toast_win10)
 		# #8118: treat UIA tool tips (including those found in UWP apps) as proper tool tips, especially those found in Microsoft Edge and other apps.
 		# Windows 8.x toast, although a form of tool tip, is covered separately.
@@ -882,12 +884,12 @@ class UIA(Window):
 				clsList.append(edge.EdgeList)
 			else:
 				clsList.append(edge.EdgeNode)
-		elif self.role==controlTypes.ROLE_DOCUMENT and self.UIAElement.cachedAutomationId=="Microsoft.Windows.PDF.DocumentView":
+		elif self.role==controlTypes.ROLE_DOCUMENT and UIAAutomationId=="Microsoft.Windows.PDF.DocumentView":
 			# PDFs
 			from . import edge
 			clsList.append(edge.EdgeHTMLRoot)
 		elif (
-			self.UIAElement.cachedAutomationId == "RichEditControl"
+			UIAAutomationId == "RichEditControl"
 			and "DevExpress.XtraRichEdit" in self.UIAElement.cachedProviderDescription
 		):
 			clsList.insert(0, DevExpressXtraRichEdit)
@@ -928,7 +930,7 @@ class UIA(Window):
 			clsList.append(Dialog)
 		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
 		try:
-			if self.UIAElement.cachedAutomationID in ("SearchTextBox", "TextBox"):
+			if UIAAutomationId in ("SearchTextBox", "TextBox"):
 				clsList.append(SearchField)
 		except COMError:
 			log.debug("Failed to locate UIA search field", exc_info=True)
