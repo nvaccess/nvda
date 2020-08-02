@@ -851,7 +851,11 @@ class UIA(Window):
 			clsList.append(WpfTextView)
 		elif UIAClassName=="NetUIDropdownAnchor":
 			clsList.append(NetUIDropdownAnchor)
-		elif self.TextInfo==UIATextInfo and (UIAClassName=='_WwG' or self.windowClassName=='_WwG' or UIAAutomationId.startswith('UIA_AutomationId_Word_Content')):
+		elif self.TextInfo == UIATextInfo and (
+			UIAClassName == '_WwG'
+			or self.windowClassName == '_WwG'
+			or UIAAutomationId.startswith('UIA_AutomationId_Word_Content')
+		):
 			from .wordDocument import WordDocument, WordDocumentNode
 			if self.role==controlTypes.ROLE_DOCUMENT:
 				clsList.append(WordDocument)
@@ -860,7 +864,11 @@ class UIA(Window):
 		# #5136: Windows 8.x and Windows 10 uses different window class and other attributes for toast notifications.
 		elif UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId: #Windows 8.x
 			clsList.append(Toast_win8)
-		elif self.windowClassName=="Windows.UI.Core.CoreWindow" and UIAControlType==UIAHandler.UIA_WindowControlTypeId and "ToastView" in UIAAutomationId: # Windows 10
+		elif (
+			self.windowClassName == "Windows.UI.Core.CoreWindow"
+			and UIAControlType == UIAHandler.UIA_WindowControlTypeId
+			and "ToastView" in UIAAutomationId
+		):  # Windows 10
 			clsList.append(Toast_win10)
 		# #8118: treat UIA tool tips (including those found in UWP apps) as proper tool tips, especially those found in Microsoft Edge and other apps.
 		# Windows 8.x toast, although a form of tool tip, is covered separately.
@@ -884,7 +892,7 @@ class UIA(Window):
 				clsList.append(edge.EdgeList)
 			else:
 				clsList.append(edge.EdgeNode)
-		elif self.role==controlTypes.ROLE_DOCUMENT and UIAAutomationId=="Microsoft.Windows.PDF.DocumentView":
+		elif self.role == controlTypes.ROLE_DOCUMENT and UIAAutomationId == "Microsoft.Windows.PDF.DocumentView":
 			# PDFs
 			from . import edge
 			clsList.append(edge.EdgeHTMLRoot)
