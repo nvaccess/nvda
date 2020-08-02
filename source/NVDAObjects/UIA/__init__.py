@@ -1167,6 +1167,13 @@ class UIA(Window):
 		info.append("UIA patterns available: %s"%", ".join(patternsAvailable))
 		return info
 
+	def _get_UIAAutomationId(self):
+		try:
+			return self._getUIACacheablePropertyValue(UIAHandler.UIA_AutomationIdPropertyId)
+		except COMError:
+			# #11445: due to timing errors, elements will be instantiated with no automation Id present.
+			return ""
+
 	def _get_name(self):
 		try:
 			return self._getUIACacheablePropertyValue(UIAHandler.UIA_NamePropertyId)
