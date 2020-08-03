@@ -320,8 +320,10 @@ class UpdateResultDialog(wx.Dialog, DpiScalingHelperMixin):
 		# Translators: The title of the dialog informing the user about an NVDA update.
 		wx.Dialog.__init__(self, parent, title=_("NVDA Update"))
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
-		self.helpIds[self.GetId()] = "GeneralSettingsCheckForUpdates"
-		self.Bind(wx.EVT_HELP, lambda evt: contextHelp.showHelp(self.helpIds, evt), id=wx.ID_ANY)
+		self.Bind(
+			wx.EVT_HELP,
+			lambda evt: gui.contextHelp.showHelp("GeneralSettingsCheckForUpdates", evt),
+		)
 		self.updateInfo = updateInfo
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)

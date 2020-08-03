@@ -38,7 +38,7 @@ import api
 import gui.guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from NVDAObjects import NVDAObject
-import contextHelp
+import gui.contextHelp
 from abc import ABCMeta, abstractmethod
 from typing import Optional
 
@@ -915,8 +915,10 @@ class ElementsListDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog):
 			title=_("Elements List")
 		)
 		self.document = document
-		self.helpIds[self.GetId()] = "ElementsList"
-		self.Bind(wx.EVT_HELP, lambda evt: contextHelp.showHelp(self.helpIds, evt), id=wx.ID_ANY)
+		self.Bind(
+			wx.EVT_HELP,
+			lambda evt: gui.contextHelp.showHelp("ElementsList", evt)
+		)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizer = wx.BoxSizer(wx.VERTICAL)
 

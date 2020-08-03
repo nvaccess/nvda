@@ -21,7 +21,7 @@ import buildVersion
 from . import guiHelper
 from . import nvdaControls
 from .dpiScalingHelper import DpiScalingHelperMixin
-import contextHelp
+import gui.contextHelp
 def promptUserForRestart():
 	restartMessage = _(
 		# Translators: A message asking the user if they wish to restart NVDA
@@ -169,8 +169,10 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX,
 		)
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
-		self.helpIds[self.GetId()] = "AddonsManager"
-		self.Bind(wx.EVT_HELP, lambda evt: contextHelp.showHelp(self.helpIds, evt), id=wx.ID_ANY)
+		self.Bind(
+			wx.EVT_HELP,
+			lambda evt: gui.contextHelp.showHelp("AddonsManager", evt),
+		)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		firstTextSizer = wx.BoxSizer(wx.VERTICAL)
 		listAndButtonsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=wx.BoxSizer(wx.HORIZONTAL))

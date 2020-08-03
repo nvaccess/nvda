@@ -9,7 +9,7 @@ import gui
 import config
 from logHandler import log
 from speech import SpeechSequence
-import contextHelp
+import gui.contextHelp
 
 # Inherit from wx.Frame because these windows show in the alt+tab menu (where miniFrame does not)
 # We have to manually add a wx.Panel to get correct tab ordering behaviour.
@@ -37,8 +37,10 @@ class SpeechViewerFrame(wx.Frame):
 			pos=dialogPos,
 			style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP
 		)
-		self.helpIds[self.GetId()] = "SpeechViewer"
-		self.Bind(wx.EVT_HELP, lambda evt: contextHelp.showHelp(self.helpIds, evt), id=wx.ID_ANY)
+		self.Bind(
+			wx.EVT_HELP,
+			lambda evt: gui.contextHelp.showHelp("SpeechViewer", evt),
+		)
 		self._isDestroyed = False
 		self.onDestroyCallBack = onDestroyCallBack
 		self.Bind(wx.EVT_CLOSE, self.onClose)

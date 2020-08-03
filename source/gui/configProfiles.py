@@ -11,7 +11,7 @@ from logHandler import log
 import appModuleHandler
 import globalVars
 from . import guiHelper
-import contextHelp
+import gui.contextHelp
 
 class ProfilesDialog(wx.Dialog):
 	shouldSuspendConfigProfileTriggers = True
@@ -30,8 +30,11 @@ class ProfilesDialog(wx.Dialog):
 		ProfilesDialog._instance = self
 		# Translators: The title of the Configuration Profiles dialog.
 		super(ProfilesDialog, self).__init__(parent, title=_("Configuration Profiles"))
-		self.helpIds[self.GetId()] = "ConfigurationProfiles"
-		self.Bind(wx.EVT_HELP, lambda evt: contextHelp.showHelp(self.helpIds, evt), id=wx.ID_ANY)
+		self.Bind(
+			wx.EVT_HELP,
+			lambda evt: gui.contextHelp.showHelp("ConfigurationProfiles", evt),
+			id=wx.ID_ANY
+		)
 
 		self.currentAppName = (gui.mainFrame.prevFocus or api.getFocusObject()).appModule.appName
 		self.profileNames = [None]
@@ -304,8 +307,10 @@ class TriggersDialog(wx.Dialog):
 	def __init__(self, parent):
 		# Translators: The title of the configuration profile triggers dialog.
 		super(TriggersDialog, self).__init__(parent, title=_("Profile Triggers"))
-		self.helpIds[self.GetId()] = "ConfigProfileTriggers"
-		self.Bind(wx.EVT_HELP, lambda evt: contextHelp.showHelp(self.helpIds, evt), id=wx.ID_ANY)
+		self.Bind(
+			wx.EVT_HELP,
+			lambda evt: gui.contextHelp.showHelp("ConfigProfileTriggers", evt),
+		)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -393,8 +398,10 @@ class NewProfileDialog(wx.Dialog):
 	def __init__(self, parent):
 		# Translators: The title of the dialog to create a new configuration profile.
 		super(NewProfileDialog, self).__init__(parent, title=_("New Profile"))
-		self.helpIds[self.GetId()] = "ProfilesCreating"
-		self.Bind(wx.EVT_HELP, lambda evt: contextHelp.showHelp(self.helpIds, evt), id=wx.ID_ANY)
+		self.Bind(
+			wx.EVT_HELP,
+			lambda evt: gui.contextHelp.showHelp(self.helpIds, evt),
+		)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
