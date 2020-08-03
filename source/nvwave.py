@@ -339,6 +339,9 @@ class WavePlayer(object):
 			with self._waveout_lock:
 				if not self._waveout:
 					return
+				# We're explicitly closing, so kill the close timer.
+				if self._closeTimer and self._closeTimer.IsRunning():
+					self._callOnMainThread(self._closeTimer.Stop)
 				self._close()
 
 	def _close(self):
