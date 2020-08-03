@@ -76,7 +76,11 @@ class _ObjectsReader(object):
 def readText(cursor):
 	global lastSayAllMode, _activeSayAll
 	lastSayAllMode=cursor
-	reader = _TextReader(cursor)
+	try:
+		reader = _TextReader(cursor)
+	except NotImplementedError:
+		log.debugWarning("Unable to make reader", exc_info=True)
+		return
 	_activeSayAll = weakref.ref(reader)
 	reader.nextLine()
 
@@ -110,8 +114,8 @@ class _TextReader(object):
 		if cursor == CURSOR_CARET:
 			try:
 				self.reader = api.getCaretObject().makeTextInfo(textInfos.POSITION_CARET)
-			except (NotImplementedError, RuntimeError):
-				return
+			except (NotImplementedError, RuntimeError) as e:
+				raise NotImplementedError("Unable to make TextInfo: " + str(e))
 		else:
 			self.reader = api.getReviewPosition()
 		self.speakTextInfoState = speech.SpeakTextInfoState(self.reader.obj)
