@@ -16,6 +16,7 @@ import braille
 import ui
 import config
 import winVersion
+import eventHandler
 from NVDAObjects.UIA import UIA
 
 
@@ -99,7 +100,7 @@ class AppModule(appModuleHandler.AppModule):
 				"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton"
 			)
 		):
-			self.event_UIA_elementSelected(obj.lastChild.firstChild, nextHandler)
+			eventHandler.executeEvent("UIA_elementSelected", obj.lastChild.firstChild)
 		# Handle hardware keyboard suggestions.
 		# Treat it the same as CJK composition list - don't announce this if candidate announcement setting is off.
 		elif (
@@ -107,7 +108,7 @@ class AppModule(appModuleHandler.AppModule):
 			and config.conf["inputComposition"]["autoReportAllCandidates"]
 		):
 			try:
-				self.event_UIA_elementSelected(obj.firstChild.firstChild.firstChild, nextHandler)
+				eventHandler.executeEvent("UIA_elementSelected", obj.firstChild.firstChild.firstChild)
 			except AttributeError:
 				# Because this is dictation window.
 				pass
@@ -115,7 +116,7 @@ class AppModule(appModuleHandler.AppModule):
 		elif childAutomationID == "TEMPLATE_PART_ExpressionGroupedFullView":
 			self._emojiPanelJustOpened = True
 			try:
-				self.event_UIA_elementSelected(obj.firstChild.children[-2].firstChild.firstChild, nextHandler)
+				eventHandler.executeEvent("UIA_elementSelected", obj.firstChild.children[-2].firstChild.firstChild)
 			except AttributeError:
 				# In build 18272's emoji panel, emoji list becomes empty in some situations.
 				pass
@@ -124,7 +125,7 @@ class AppModule(appModuleHandler.AppModule):
 		# #9103: if clipboard is empty, a status message is displayed instead,
 		# and luckily it is located where clipboard data items can be found.
 		elif childAutomationID == "TEMPLATE_PART_ClipboardTitleBar":
-			self.event_UIA_elementSelected(obj.children[-2], nextHandler)
+			eventHandler.executeEvent("UIA_elementSelected", obj.children[-2])
 		nextHandler()
 
 	# Argh, name change event is fired right after emoji panel opens in build 17666 and later.
