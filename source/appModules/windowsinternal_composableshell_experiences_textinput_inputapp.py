@@ -90,12 +90,12 @@ class AppModule(appModuleHandler.AppModule):
 		if obj.firstChild is None:
 			return
 		# #9104: different aspects of modern input panel are represented by automation iD's.
-		childAutomationID = obj.firstChild.UIAElement.cachedAutomationID
+		inputPanelAutomationID = obj.firstChild.UIAElement.cachedAutomationID
 		# Emoji panel for build 16299 and 17134.
 		# This event is properly raised in build 17134.
 		if (
 			not winVersion.isWin10(version=1809)
-			and childAutomationID in (
+			and inputPanelAutomationID in (
 				"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarItemControl",
 				"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton"
 			)
@@ -104,7 +104,7 @@ class AppModule(appModuleHandler.AppModule):
 		# Handle hardware keyboard suggestions.
 		# Treat it the same as CJK composition list - don't announce this if candidate announcement setting is off.
 		elif (
-			childAutomationID == "CandidateWindowControl"
+			inputPanelAutomationID == "CandidateWindowControl"
 			and config.conf["inputComposition"]["autoReportAllCandidates"]
 		):
 			try:
@@ -113,7 +113,7 @@ class AppModule(appModuleHandler.AppModule):
 				# Because this is dictation window.
 				pass
 		# Emoji panel in build 17666 and later (unless this changes).
-		elif childAutomationID == "TEMPLATE_PART_ExpressionGroupedFullView":
+		elif inputPanelAutomationID == "TEMPLATE_PART_ExpressionGroupedFullView":
 			self._emojiPanelJustOpened = True
 			try:
 				eventHandler.executeEvent("UIA_elementSelected", obj.firstChild.children[-2].firstChild.firstChild)
@@ -124,7 +124,7 @@ class AppModule(appModuleHandler.AppModule):
 		# Move to clipboard list so element selected event can pick it up.
 		# #9103: if clipboard is empty, a status message is displayed instead,
 		# and luckily it is located where clipboard data items can be found.
-		elif childAutomationID == "TEMPLATE_PART_ClipboardTitleBar":
+		elif inputPanelAutomationID == "TEMPLATE_PART_ClipboardTitleBar":
 			eventHandler.executeEvent("UIA_elementSelected", obj.children[-2])
 		nextHandler()
 
