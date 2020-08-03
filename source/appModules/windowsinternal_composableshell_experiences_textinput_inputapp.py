@@ -22,6 +22,8 @@ from NVDAObjects.UIA import UIA
 
 class AppModule(appModuleHandler.AppModule):
 
+	# Inform NVDA that modern keyboard interface is active.
+	_modernKeyboardInterfaceActive = False
 	# Cache the most recently selected item.
 	_recentlySelected = None
 
@@ -118,7 +120,7 @@ class AppModule(appModuleHandler.AppModule):
 				pass
 		# Emoji panel in build 17666 and later (unless this changes).
 		elif inputPanelAutomationID == "TEMPLATE_PART_ExpressionGroupedFullView":
-			self._emojiPanelJustOpened = True
+			self._modernKeyboardInterfaceActive = True
 			# #10377: on some systems, there is something else besides grouping controls,
 			# so another child control must be used.
 			emojisList = inputPanel.children[-2]
@@ -141,9 +143,6 @@ class AppModule(appModuleHandler.AppModule):
 				clipboardHistory = clipboardHistory.next
 			eventHandler.executeEvent("UIA_elementSelected", clipboardHistory)
 		nextHandler()
-
-	# Argh, name change event is fired right after emoji panel opens in build 17666 and later.
-	_emojiPanelJustOpened = False
 
 	def event_nameChange(self, obj, nextHandler):
 		# On some systems, touch keyboard keys keeps firing name change event.
@@ -173,11 +172,11 @@ class AppModule(appModuleHandler.AppModule):
 			except AttributeError:
 				return
 			if (
-				not self._emojiPanelJustOpened
+				not self._modernKeyboardInterfaceActive
 				or obj.UIAAutomationId != "TEMPLATE_PART_ExpressionGroupedFullView"
 			):
 				speech.cancelSpeech()
-			self._emojiPanelJustOpened = False
+			self._modernKeyboardInterfaceActive = False
 		# Don't forget to add "Microsoft Candidate UI" as something that should be suppressed.
 		if obj.UIAAutomationId not in (
 			"TEMPLATE_PART_ExpressionFullViewItemsGrid", "TEMPLATE_PART_ClipboardItemIndex", "CandidateWindowControl"
