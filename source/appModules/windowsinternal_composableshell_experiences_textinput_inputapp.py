@@ -119,8 +119,13 @@ class AppModule(appModuleHandler.AppModule):
 		# Emoji panel in build 17666 and later (unless this changes).
 		elif inputPanelAutomationID == "TEMPLATE_PART_ExpressionGroupedFullView":
 			self._emojiPanelJustOpened = True
+			# #10377: on some systems, there is something else besides grouping controls,
+			# so another child control must be used.
+			emojisList = inputPanel.children[-2]
+			if emojisList.UIAElement.cachedAutomationID != "TEMPLATE_PART_Items_GridView":
+				emojisList = emojisList.previous
 			try:
-				eventHandler.executeEvent("UIA_elementSelected", inputPanel.children[-2].firstChild.firstChild)
+				eventHandler.executeEvent("UIA_elementSelected", emojisList.firstChild.firstChild)
 			except AttributeError:
 				# In build 18272's emoji panel, emoji list becomes empty in some situations.
 				pass
@@ -129,7 +134,12 @@ class AppModule(appModuleHandler.AppModule):
 		# #9103: if clipboard is empty, a status message is displayed instead,
 		# and luckily it is located where clipboard data items can be found.
 		elif inputPanelAutomationID == "TEMPLATE_PART_ClipboardTitleBar":
-			eventHandler.executeEvent("UIA_elementSelected", obj.children[-2])
+			# Under some cases, clipboard tip text isn't shown on screen,
+			# causing clipboard history title to be announced instead of most recently copied item.
+			clipboardHistory = obj.children[-2]
+			if clipboardHistory.UIAElement.cachedAutomationID == inputPanelAutomationID:
+				clipboardHistory = clipboardHistory.next
+			eventHandler.executeEvent("UIA_elementSelected", clipboardHistory)
 		nextHandler()
 
 	# Argh, name change event is fired right after emoji panel opens in build 17666 and later.
