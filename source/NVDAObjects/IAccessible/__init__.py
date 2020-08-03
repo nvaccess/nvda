@@ -1261,8 +1261,13 @@ the NVDAObject for IAccessible
 			# Each header must be fetched from the headers array once and only once,
 			# as it gets released when it gets garbage collected.
 			for i in range(nHeaders):
+				header = headers[i]
+				# When fetching a COM object from a indexed pointer
+				# comtypes does not initialize the Python object itself.
+				# We must do this hear.
+				header.__init__()
 				try:
-					text = headers[i].QueryInterface(IAccessibleHandler.IAccessible2).accName(0)
+					text = header.QueryInterface(IAccessibleHandler.IAccessible2).accName(0)
 				except COMError:
 					continue
 				if not text:
@@ -1433,7 +1438,13 @@ the NVDAObject for IAccessible
 		res = self.IAccessibleObject._IAccessible2__com__get_relations(size, relations, ctypes.byref(count))
 		if res != comtypes.hresult.S_OK:
 			raise NotImplementedError
-		return list(relations)
+		l = list(relations)
+		# When fetching a COM object from a indexed pointer
+		# comtypes does not initialize the Python object itself.
+		# We must do this hear.
+		for r in l:
+			r.__init__()
+		return l
 
 	def _getIA2RelationFirstTarget(self, relationType):
 		for relation in self._IA2Relations:

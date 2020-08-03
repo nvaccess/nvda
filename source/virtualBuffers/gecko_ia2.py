@@ -4,6 +4,7 @@
 #See the file COPYING for more details.
 # Copyright (C) 2008-2020 NV Access Limited, Babbage B.V., Mozilla Corporation
 
+import ctypes
 import weakref
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import treeInterceptorHandler
@@ -161,9 +162,19 @@ class Gecko_ia2(VirtualBuffer):
 				# IAccessible NVDAObjects currently fetch IA2, but we need IA2_2 for relationTargetsOfType.
 				# (Out-of-process, for a single relation, this is cheaper than IA2::relations.)
 				acc = acc.QueryInterface(IAccessibleHandler.IAccessible2_2)
-			targets, count = acc.relationTargetsOfType(IA2_RELATION_CONTAINING_DOCUMENT, 1)
+			targetsPtr, count = acc.relationTargetsOfType(IA2_RELATION_CONTAINING_DOCUMENT, 1)
 			if count == 0:
 				return None
+			targets = []
+			# Each target must be fetched from the targets array once and only once,
+			# as it gets released when it gets garbage collected.
+			for i in range(count):
+				target = targetsPtr[i]
+				# When fetching a COM object from a indexed pointer
+				# comtypes does not initialize the Python object itself.
+				# We must do this hear.
+				target.__init__()
+				targets.append(target)
 			doc = targets[0].QueryInterface(IAccessibleHandler.IAccessible2_2)
 			# 2. Get its parent (the embedder); e.g. iframe.
 			embedder = doc.accParent
