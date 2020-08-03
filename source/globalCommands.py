@@ -852,7 +852,7 @@ class GlobalCommands(ScriptableObject):
 			if curObject.TextInfo!=NVDAObjectTextInfo:
 				textList=[]
 				name = curObject.name
-				if isinstance(name, str) and not name.isspace():
+				if name and isinstance(name, str) and not name.isspace():
 					textList.append(name)
 				try:
 					info=curObject.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -868,7 +868,7 @@ class GlobalCommands(ScriptableObject):
 			else:
 				textList=[]
 				for prop in (curObject.name, curObject.value):
-					if isinstance(prop,str) and not prop.isspace():
+					if prop and isinstance(prop, str) and not prop.isspace():
 						textList.append(prop)
 			text=" ".join(textList)
 			if len(text)>0 and not text.isspace():
