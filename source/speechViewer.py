@@ -1,8 +1,7 @@
-#speechViewer.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Thomas Stivers
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Thomas Stivers
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import wx
 import gui
@@ -11,12 +10,16 @@ from logHandler import log
 from speech import SpeechSequence
 import gui.contextHelp
 
+
 # Inherit from wx.Frame because these windows show in the alt+tab menu (where miniFrame does not)
 # We have to manually add a wx.Panel to get correct tab ordering behaviour.
 # wx.Dialog causes a crash on destruction when multiple were created at the same time (brailleViewer
 # may start at the same time)
-class SpeechViewerFrame(wx.Frame):
-	helpIds = {}
+class SpeechViewerFrame(
+		gui.contextHelp.ContextHelpMixin,
+		wx.Frame  # wxPython does not seem to call base class initializer, put last in MRO
+):
+	helpId = "SpeechViewer"
 
 	def _getDialogSizeAndPosition(self):
 		dialogSize = wx.Size(500, 500)
@@ -36,10 +39,6 @@ class SpeechViewerFrame(wx.Frame):
 			size=dialogSize,
 			pos=dialogPos,
 			style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP
-		)
-		self.Bind(
-			wx.EVT_HELP,
-			lambda evt: gui.contextHelp.showHelp("SpeechViewer", evt),
 		)
 		self._isDestroyed = False
 		self.onDestroyCallBack = onDestroyCallBack

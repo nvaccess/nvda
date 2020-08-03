@@ -13,11 +13,16 @@ import globalVars
 from . import guiHelper
 import gui.contextHelp
 
-class ProfilesDialog(wx.Dialog):
+
+class ProfilesDialog(
+		gui.ContextHelpMixin,
+		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+):
 	shouldSuspendConfigProfileTriggers = True
-	helpIds = {}
+	helpId = "ConfigurationProfiles"
 
 	_instance = None
+
 	def __new__(cls, *args, **kwargs):
 		# Make this a singleton.
 		if ProfilesDialog._instance is None:
@@ -29,12 +34,7 @@ class ProfilesDialog(wx.Dialog):
 			return
 		ProfilesDialog._instance = self
 		# Translators: The title of the Configuration Profiles dialog.
-		super(ProfilesDialog, self).__init__(parent, title=_("Configuration Profiles"))
-		self.Bind(
-			wx.EVT_HELP,
-			lambda evt: gui.contextHelp.showHelp("ConfigurationProfiles", evt),
-			id=wx.ID_ANY
-		)
+		super().__init__(parent, title=_("Configuration Profiles"))
 
 		self.currentAppName = (gui.mainFrame.prevFocus or api.getFocusObject()).appModule.appName
 		self.profileNames = [None]
@@ -301,16 +301,16 @@ class TriggerInfo(object):
 		self.display = display
 		self.profile = profile
 
-class TriggersDialog(wx.Dialog):
-	helpIds = {}
+
+class TriggersDialog(
+		gui.ContextHelpMixin,
+		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+):
+	helpId = "ConfigProfileTriggers"
 
 	def __init__(self, parent):
 		# Translators: The title of the configuration profile triggers dialog.
-		super(TriggersDialog, self).__init__(parent, title=_("Profile Triggers"))
-		self.Bind(
-			wx.EVT_HELP,
-			lambda evt: gui.contextHelp.showHelp("ConfigProfileTriggers", evt),
-		)
+		super().__init__(parent, title=_("Profile Triggers"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -392,16 +392,16 @@ class TriggersDialog(wx.Dialog):
 		self.Parent.Enable()
 		self.Destroy()
 
-class NewProfileDialog(wx.Dialog):
-	helpIds = {}
+
+class NewProfileDialog(
+		gui.ContextHelpMixin,
+		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+):
+	helpIds = "ConfigurationProfiles"
 
 	def __init__(self, parent):
 		# Translators: The title of the dialog to create a new configuration profile.
-		super(NewProfileDialog, self).__init__(parent, title=_("New Profile"))
-		self.Bind(
-			wx.EVT_HELP,
-			lambda evt: gui.contextHelp.showHelp(self.helpIds, evt),
-		)
+		super().__init__(parent, title=_("New Profile"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
