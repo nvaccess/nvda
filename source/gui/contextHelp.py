@@ -8,9 +8,54 @@ import os
 import gui
 import ui
 import wx
+import wx.html2 as webview
 from logHandler import log
 
 
+class TestPanel(wx.Panel):
+	def __init__(self, parent, url):
+		wx.Panel.__init__(self, parent)
+
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		self.wv: webview.WebView = webview.WebView.New(self)
+		self.Bind(webview.EVT_WEBVIEW_NAVIGATING, self.OnWebViewNavigating, self.wv)
+		self.Bind(webview.EVT_WEBVIEW_LOADED, self.OnWebViewLoaded, self.wv)
+		self.wv.EnableHistory(False)
+		self.wv.EnableContextMenu(False)
+
+		sizer.Add(self.wv, flag=wx.EXPAND, proportion=1)
+		self.SetSizer(sizer)
+
+		self.wv.LoadURL(url)
+
+	def ShutdownDemo(self):
+		# put the frame title back
+		pass
+
+	# WebView events
+	def OnWebViewNavigating(self, evt):
+		pass
+
+	def OnWebViewLoaded(self, evt):
+		# The full document has loaded
+		self.wv.SetFocus()
+		self.wv.RunScript(
+			r"document.getElementsByName('NVDASettings').focus()"
+		)
+
+
+class HelpWindow(wx.Dialog):
+	def __init__(self, parent, url):
+		super().__init__(
+			parent,
+			# Translators: Title for the context help dialog.
+			title=_("NVDA Help"),
+			size=(800, 600)
+		)
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		self.panel = TestPanel(self, url)
+		mainSizer.Add(self.panel, flag=wx.EXPAND, proportion=1)
+		self.SetSizer(mainSizer)
 
 
 def showHelp(helpId: str, evt):
@@ -38,6 +83,7 @@ def showHelp(helpId: str, evt):
 	# Translators: The title for an NVDA help window.
 	helpTitle = _("NVDA Help")
 	try:
-		os.startfile(f"file://{helpFile}#{helpId}")
+		#os.startfile(f"file://{helpFile}#{helpId}")
+		HelpWindow(gui.mainFrame, url=f"file://{helpFile}#{helpId}").Show()
 	except KeyError as e:
 		ui.browseableMessage(str(e), helpTitle, True)
