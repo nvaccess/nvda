@@ -93,10 +93,11 @@ class AppModule(appModuleHandler.AppModule):
 		# child count is the same for both emoji panel and hardware keyboard candidates list.
 		# Thankfully first child automation ID's are different for each modern input technology.
 		# However this event is raised when the input panel closes.
-		if obj.firstChild is None:
+		inputPanel = obj.firstChild
+		if inputPanel is None:
 			return
 		# #9104: different aspects of modern input panel are represented by automation iD's.
-		inputPanelAutomationID = obj.firstChild.UIAElement.cachedAutomationID
+		inputPanelAutomationID = inputPanel.UIAElement.cachedAutomationID
 		# Emoji panel for build 16299 and 17134.
 		# This event is properly raised in build 17134.
 		if (
@@ -111,7 +112,7 @@ class AppModule(appModuleHandler.AppModule):
 			and config.conf["inputComposition"]["autoReportAllCandidates"]
 		):
 			try:
-				eventHandler.executeEvent("UIA_elementSelected", obj.firstChild.firstChild.firstChild)
+				eventHandler.executeEvent("UIA_elementSelected", inputPanel.firstChild.firstChild)
 			except AttributeError:
 				# Because this is dictation window.
 				pass
@@ -119,7 +120,7 @@ class AppModule(appModuleHandler.AppModule):
 		elif inputPanelAutomationID == "TEMPLATE_PART_ExpressionGroupedFullView":
 			self._emojiPanelJustOpened = True
 			try:
-				eventHandler.executeEvent("UIA_elementSelected", obj.firstChild.children[-2].firstChild.firstChild)
+				eventHandler.executeEvent("UIA_elementSelected", inputPanel.children[-2].firstChild.firstChild)
 			except AttributeError:
 				# In build 18272's emoji panel, emoji list becomes empty in some situations.
 				pass
