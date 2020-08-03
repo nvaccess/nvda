@@ -5,11 +5,10 @@
 
 # Warning: no comtypes modules can be imported until ctypes.WINFUNCTYPE has been replaced further down.
 
+import threading
 import ctypes
 import _ctypes
 import importlib
-
-
 # A version of ctypes.WINFUNCTYPE 
 # that produces a WinFunctionType class whose instance will convert COMError into a CallCancelled exception when called as a function.
 old_WINFUNCTYPE=ctypes.WINFUNCTYPE
@@ -51,6 +50,7 @@ finally:
 # It is safe to import any comtypes modules from here on down.
 
 from logHandler import log
+import core
 
 from comtypes import COMError
 from comtypes.hresult import *
@@ -89,19 +89,33 @@ def new__call__(self,*args,**kwargs):
 	return comtypes.client.dynamic.MethodCaller(0,self)(*args,**kwargs)
 comtypes.client.dynamic._Dispatch.__call__=new__call__
 
-# Work around an issue with comtypes where __del__ seems to be called twice on COM pointers.
-# This causes Release() to be called more than it should, which is very nasty and will eventually cause us to access pointers which have been freed.
 from comtypes import _compointer_base
+
+_cpbInit = _compointer_base.__init__
+def newCpbInit(self, *args, **kwargs):
+	self._initialThreadID = threading.currentThread().ident
+	_cpbInit(self)
+_compointer_base.__init__ = newCpbInit
+
 _cpbDel = _compointer_base.__del__
 def newCpbDel(self):
+	# Work around an issue with comtypes where __del__ seems to be called twice on COM pointers.
+	# This causes Release() to be called more than it should, which is very nasty and will eventually cause us to access pointers which have been freed.
 	if hasattr(self, "_deleted"):
 		# Don't allow this to be called more than once.
 		log.debugWarning("COM pointer %r already deleted" % self)
 		return
-	_cpbDel(self)
 	self._deleted = True
+	initialThreadID = getattr(self,'_initialThreadID',None)
+	if initialThreadID is None:
+		log.error(f"Unknown initial thread for {self}",stack_info=True)
+	curThreadID = threading.currentThread().ident
+	if curThreadID != initialThreadID and initialThreadID == core.mainThreadId:
+		log.error(f"{self} is trying to be deleted from a background thread yet it was initialized in  the main thread",stack_info=True)
+	_cpbDel(self)
 newCpbDel.__name__ = "__del__"
 _compointer_base.__del__ = newCpbDel
+
 del _compointer_base
 
 #Monkey patch to force dynamic Dispatch on all vt_dispatch variant values.
