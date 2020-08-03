@@ -7,55 +7,16 @@ import os
 
 import gui
 import ui
-import wx
-import wx.html2 as webview
 from logHandler import log
 
-
-class TestPanel(wx.Panel):
-	def __init__(self, parent, url):
-		wx.Panel.__init__(self, parent)
-
-		sizer = wx.BoxSizer(wx.VERTICAL)
-		self.wv: webview.WebView = webview.WebView.New(self)
-		self.Bind(webview.EVT_WEBVIEW_NAVIGATING, self.OnWebViewNavigating, self.wv)
-		self.Bind(webview.EVT_WEBVIEW_LOADED, self.OnWebViewLoaded, self.wv)
-		self.wv.EnableHistory(False)
-		self.wv.EnableContextMenu(False)
-
-		sizer.Add(self.wv, flag=wx.EXPAND, proportion=1)
-		self.SetSizer(sizer)
-
-		self.wv.LoadURL(url)
-
-	def ShutdownDemo(self):
-		# put the frame title back
-		pass
-
-	# WebView events
-	def OnWebViewNavigating(self, evt):
-		pass
-
-	def OnWebViewLoaded(self, evt):
-		# The full document has loaded
-		self.wv.SetFocus()
-		self.wv.RunScript(
-			r"document.getElementsByName('NVDASettings').focus()"
-		)
-
-
-class HelpWindow(wx.Dialog):
-	def __init__(self, parent, url):
-		super().__init__(
-			parent,
-			# Translators: Title for the context help dialog.
-			title=_("NVDA Help"),
-			size=(800, 600)
-		)
-		mainSizer = wx.BoxSizer(wx.VERTICAL)
-		self.panel = TestPanel(self, url)
-		mainSizer.Add(self.panel, flag=wx.EXPAND, proportion=1)
-		self.SetSizer(mainSizer)
+def writeRedirect(helpId: str, filePath:str):
+	redirect = rf"""
+<html><head>
+<meta http-equiv="refresh" content="0;url=userGuide.html#{helpId}" />
+</head></html>
+	"""
+	with open(filePath, 'w') as f:
+		f.write(redirect)
 
 
 def showHelp(helpId: str, evt):
@@ -66,24 +27,18 @@ def showHelp(helpId: str, evt):
 	if not helpId:
 		# Translators: Message indicating no context sensitive help is available.
 		noHelpMessage = _("No context sensitive help is available here at this time.")
-		ui.browseableMessage(noHelpMessage)
+		ui.message(noHelpMessage)
+	log.debug(f"Opening help: helpId = {helpId}")
 
 	helpFile = gui.getDocFilePath("userGuide.html")
-	window = evt.GetEventObject()
-	windowId = window.GetId()
-	helpText = window.GetHelpText()
-	label = window.GetLabel()
-	log.debug(
-		"Opening help:"
-		f"helpId = {helpId}"
-		f"\nwindowId = {windowId}"
-		f"\nlabel = {label}"
-	)
-
-	# Translators: The title for an NVDA help window.
-	helpTitle = _("NVDA Help")
+	contextHelpRedirect = os.path.join(os.path.dirname(helpFile), "contextHelp.html")
 	try:
-		#os.startfile(f"file://{helpFile}#{helpId}")
-		HelpWindow(gui.mainFrame, url=f"file://{helpFile}#{helpId}").Show()
-	except KeyError as e:
-		ui.browseableMessage(str(e), helpTitle, True)
+		writeRedirect(helpId, contextHelpRedirect)
+	except Exception:
+		log.error("Unable to write context help redirect file.", exc_info=True)
+		return
+
+	try:
+		os.startfile(f"file://{contextHelpRedirect}")
+	except Exception:
+		log.error("Unable to launch context help.", exc_info=True)
