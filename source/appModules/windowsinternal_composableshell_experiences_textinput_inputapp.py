@@ -176,12 +176,15 @@ class AppModule(appModuleHandler.AppModule):
 				or obj.UIAAutomationId != "TEMPLATE_PART_ExpressionGroupedFullView"
 			):
 				speech.cancelSpeech()
-			self._modernKeyboardInterfaceActive = False
 		# Don't forget to add "Microsoft Candidate UI" as something that should be suppressed.
 		if obj.UIAAutomationId not in (
 			"TEMPLATE_PART_ExpressionFullViewItemsGrid", "TEMPLATE_PART_ClipboardItemIndex", "CandidateWindowControl"
 		):
 			ui.message(obj.name)
+		# In Version 1809, name change event is fired just as emoji panel is being closed (entries are 0).
+		if not any(obj.location):
+			self._modernKeyboardInterfaceActive = False
+			self._recentlySelected = None
 		nextHandler()
 
 	def event_stateChange(self, obj, nextHandler):
