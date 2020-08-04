@@ -202,10 +202,12 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			if canModifiersPerformAction(gesture.generalizedModifiers):
 				# #3472: These modifiers can perform an action if pressed alone
 				# and we've just consumed the main key.
-				# Send special reserved vkcode (0xff) to at least notify the app's key state that something happendd.
+				# Send key down and key up for the special reserved vkcode (0xff). 
+				# this is to at least notify the app's key state that something happened.
 				# This allows alt and windows to be bound to scripts and
 				# stops control+shift from switching keyboard layouts in cursorManager selection scripts.
-				KeyboardInputGesture((),0xff,0,False).send()
+				winUser.keybd_event(winUser.VK_NONE, 0, 0, 0)
+				winUser.keybd_event(winUser.VK_NONE, 0, winUser.KEYEVENTF_KEYUP, 0)
 			return False
 		except inputCore.NoInputGestureAction:
 			if gesture.isNVDAModifierKey:
