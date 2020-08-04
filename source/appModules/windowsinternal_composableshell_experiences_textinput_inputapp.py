@@ -183,3 +183,11 @@ class AppModule(appModuleHandler.AppModule):
 		):
 			ui.message(obj.name)
 		nextHandler()
+
+	def event_stateChange(self, obj, nextHandler):
+		# Attempting to retrieve object location fails when emoji panel closes without selecting anything,
+		# especially in Version 1903 and later.
+		if obj.location is None and winVersion.isWin10(version=1903):
+			self._modernKeyboardInterfaceActive = False
+			self._recentlySelected = None
+		nextHandler()
