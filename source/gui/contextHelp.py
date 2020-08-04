@@ -31,9 +31,9 @@ def showHelp(helpId: str):
 		# Translators: Message indicating no context sensitive help is available.
 		noHelpMessage = _("No context sensitive help is available here at this time.")
 		ui.message(noHelpMessage)
-	log.debug(f"Opening help: helpId = {helpId}")
-
 	helpFile = gui.getDocFilePath("userGuide.html")
+	log.debug(f"Opening help: helpId = {helpId}, userGuidePath: {helpFile}")
+
 	contextHelpRedirect = os.path.join(os.path.dirname(helpFile), "contextHelp.html")
 	try:
 		writeRedirect(helpId, contextHelpRedirect)
