@@ -62,15 +62,23 @@ stickyNVDAModifier = None
 #: Whether the sticky NVDA modifier is locked.
 stickyNVDAModifierLocked = False
 
-_ignoreInjectionLock = threading.Lock()
+# #9463: This lock *must* be reentrant,
+# As a keyHook may call keybd_event or sendInput, which in turn may run the keyHook.
+_ignoreInjectionLock = threading.RLock()
 @contextmanager
 def ignoreInjection():
 	"""Context manager that allows ignoring injected keys temporarily by using a with statement."""
 	global ignoreInjected
 	with _ignoreInjectionLock:
-		ignoreInjected=True
-		yield
-		ignoreInjected=False
+		if ignoreInjected:
+			# ignoreInjected was already true; This must be a reentrant call.
+			# Just yield and do nothing else
+			# as the outer context will set it to false some time after this context ends.
+			yield
+		else:
+			ignoreInjected = True
+			yield
+			ignoreInjected = False
 
 def passNextKeyThrough():
 	global passKeyThroughCount
