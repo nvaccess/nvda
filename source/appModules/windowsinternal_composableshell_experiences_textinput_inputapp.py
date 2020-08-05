@@ -97,9 +97,12 @@ class AppModule(appModuleHandler.AppModule):
 		# However this event is raised when the input panel closes.
 		inputPanel = obj.firstChild
 		if inputPanel is None:
+			self._modernKeyboardInterfaceActive = False
+			self._recentlySelected = None
 			return
 		# #9104: different aspects of modern input panel are represented by automation iD's.
 		inputPanelAutomationID = inputPanel.UIAAutomationId
+		self._modernKeyboardInterfaceActive = True
 		# Emoji panel for build 16299 and 17134.
 		# This event is properly raised in build 17134.
 		if (
@@ -118,9 +121,8 @@ class AppModule(appModuleHandler.AppModule):
 			except AttributeError:
 				# Because this is dictation window.
 				pass
-		# Emoji panel in build 17666 and later (unless this changes).
+		# Emoji panel in Version 1809 (specifically, build 17666) and later.
 		elif inputPanelAutomationID == "TEMPLATE_PART_ExpressionGroupedFullView":
-			self._modernKeyboardInterfaceActive = True
 			# #10377: on some systems, there is something else besides grouping controls,
 			# so another child control must be used.
 			emojisList = inputPanel.children[-2]
