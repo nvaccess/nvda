@@ -1404,23 +1404,39 @@ class UIA(Window):
 			return None
 		return self.correctAPIForRelation(UIA(UIAElement=lastChildElement))
 
-	def _get_children(self):
-		childrenCacheRequest=UIAHandler.handler.baseCacheRequest.clone()
-		childrenCacheRequest.TreeScope=UIAHandler.TreeScope_Children
+	def _get_UIAChildren(self):
+		childrenCacheRequest = UIAHandler.handler.baseCacheRequest.clone()
+		childrenCacheRequest.TreeScope = UIAHandler.TreeScope_Children
 		try:
-			cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
+			return self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
 		except COMError as e:
 			log.debugWarning("Could not fetch cached children from UIA element: %s"%e)
-			return super(UIA,self).children
-		children=[]
-		if not cachedChildren:
-			# GetCachedChildren returns null if there are no children.
+			raise e
+
+	def _get_children(self):
+		try:
+			cachedChildren = self.UIAChildren
+			children = []
+			if not cachedChildren:
+				# GetCachedChildren returns null if there are no children.
+				return children
+			for index in range(cachedChildren.length):
+				e = cachedChildren.getElement(index)
+				windowHandle = self.windowHandle
+				children.append(self.correctAPIForRelation(UIA(windowHandle=windowHandle, UIAElement=e)))
 			return children
-		for index in range(cachedChildren.length):
-			e=cachedChildren.getElement(index)
-			windowHandle=self.windowHandle
-			children.append(self.correctAPIForRelation(UIA(windowHandle=windowHandle,UIAElement=e)))
-		return children
+		except COMError:
+			return super().children
+
+	def _get_childCount(self):
+		try:
+			cachedChildren = self.UIAChildren
+			if not cachedChildren:
+				# GetCachedChildren returns null if there are no children.
+				return 0
+			return cachedChildren.length
+		except COMError:
+			return len(super().children)
 
 	def _get_rowNumber(self):
 		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridItemRowPropertyId,True)
