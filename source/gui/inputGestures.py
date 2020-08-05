@@ -659,7 +659,7 @@ class InputGesturesDialog(SettingsDialog):
 			self.tree.doRefresh(focus=(catVM, pending, None))
 			self._refreshButtonState()
 
-			def addKbEmuGestureCaptor(gesture):
+			def addKbEmuGestureCaptor(gesture: inputCore.InputGesture):
 				if not isinstance(gesture, keyboardHandler.KeyboardInputGesture) or gesture.isModifier:
 					return False
 				inputCore.manager._captureFunc = None
@@ -673,7 +673,7 @@ class InputGesturesDialog(SettingsDialog):
 			self.tree.doRefresh(focus=(catVM, scriptVM, pendingGesture))
 			self._refreshButtonState()
 
-			def addGestureCaptor(gesture):
+			def addGestureCaptor(gesture: inputCore.InputGesture):
 				if gesture.isModifier:
 					return False
 				if isinstance(catVM, _EmuCategoryVM):
@@ -722,12 +722,15 @@ class InputGesturesDialog(SettingsDialog):
 		self.tree.doRefresh(focus=(catVM, scriptVM, newItem))
 		self._refreshButtonState()
 
-	def _addCapturedKbEmu(self, gesture, catVM: _EmulatedGestureVM):
+	def _addCapturedKbEmu(self, gesture: inputCore.InputGesture, catVM: _EmulatedGestureVM):
 		assert isinstance(catVM, _EmuCategoryVM)
-		# Use the last normalized identifier, which is the most generic one
-		gestureToEmulate = gesture.normalizedIdentifiers[-1]
+		# Use the last identifier, which is the most generic one
+		gestureToEmulate = gesture.identifiers[-1]
 		from globalCommands import GlobalCommands
-		scriptInfo = inputCore._AllGestureMappingsRetriever.makeKbEmuScriptInfo(GlobalCommands, gestureToEmulate)
+		scriptInfo = inputCore._AllGestureMappingsRetriever.makeKbEmuScriptInfo(
+			GlobalCommands,
+			kbGestureIdentifier=gestureToEmulate
+		)
 
 		catVM = self.gesturesVM.isExpectingNewEmuGesture
 		newScript = catVM.finalisePending(scriptInfo)

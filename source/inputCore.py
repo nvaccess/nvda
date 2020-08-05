@@ -15,7 +15,7 @@ import os
 import itertools
 import weakref
 import time
-from typing import Dict, Any, Tuple, List
+from typing import Dict, Any, Tuple, List, Union
 
 import configobj
 import sayAllHandler
@@ -74,6 +74,9 @@ class InputGesture(baseObject.AutoPropertyObject):
 	#: In contrast, the system is aware of C{KeyboardInputGesture} execution itself.
 	shouldPreventSystemIdle: bool = False
 
+	# typing information for auto property _get_identifiers
+	identifiers: Union[List[str], Tuple[str, ...]]
+
 	_abstract_identifiers = True
 	def _get_identifiers(self):
 		"""The identifier(s) which will be used in input gesture maps to represent this gesture.
@@ -97,6 +100,9 @@ class InputGesture(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
+	# type information for auto property _get_normalizedIdentifiers
+	normalizedIdentifiers: List[str]
+
 	def _get_normalizedIdentifiers(self):
 		"""The normalized identifier(s) for this gesture.
 		This just normalizes the identifiers returned in L{identifiers}
@@ -107,6 +113,9 @@ class InputGesture(baseObject.AutoPropertyObject):
 		@rtype: list of str
 		"""
 		return [normalizeGestureIdentifier(identifier) for identifier in self.identifiers]
+
+	# type information for auto property _get_displayName
+	displayName: str
 
 	def _get_displayName(self):
 		"""The name of this gesture as presented to the user.
@@ -659,7 +668,7 @@ class _AllGestureMappingsRetriever(object):
 				scriptInfo = self.scriptInfo[cls, scriptName]
 			except KeyError:
 				if scriptName.startswith("kb:"):
-					scriptInfo = self.makeKbEmuScriptInfo(cls, scriptName)
+					scriptInfo = self.makeKbEmuScriptInfo(cls, kbGestureIdentifier=scriptName)
 				else:
 					try:
 						script = getattr(cls, "script_%s" % scriptName)
@@ -672,14 +681,14 @@ class _AllGestureMappingsRetriever(object):
 			scriptInfo.gestures.append(gesture)
 
 	@classmethod
-	def makeKbEmuScriptInfo(cls, scriptCls, scriptName):
+	def makeKbEmuScriptInfo(cls, scriptCls, kbGestureIdentifier):
 		"""
 		@rtype AllGesturesScriptInfo
 		"""
-		info = KbEmuScriptInfo(scriptCls, scriptName)
+		info = KbEmuScriptInfo(scriptCls, kbGestureIdentifier)
 		info.category = SCRCAT_KBEMU
 		info.displayName = getDisplayTextForGestureIdentifier(
-			normalizeGestureIdentifier(scriptName)
+			normalizeGestureIdentifier(kbGestureIdentifier)
 		)[1]
 		return info
 
