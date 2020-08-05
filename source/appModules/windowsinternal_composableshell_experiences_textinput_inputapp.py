@@ -28,6 +28,10 @@ class AppModule(appModuleHandler.AppModule):
 	_recentlySelected = None
 
 	def event_UIA_elementSelected(self, obj, nextHandler):
+		# Wait until modern keyboard is fully displayed on screen.
+		# Not seen in Version 1709 as window open event is not fired.
+		if winVersion.isWin10(version=1803) and not self._modernKeyboardInterfaceActive:
+			return
 		# #7273: in Version 1709 and 1803, first emoji from the newly selected category is not announced.
 		# Therefore, move the navigator object to that item if possible.
 		# In Version 1809 and later, name change event is also fired.
