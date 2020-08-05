@@ -4,6 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import os
+import tempfile
 import typing
 
 import gui
@@ -12,13 +13,13 @@ import wx
 from logHandler import log
 
 
-def writeRedirect(helpId: str, filePath: str):
+def writeRedirect(helpId: str, helpFilePath: str, contextHelpPath: str):
 	redirect = rf"""
 <html><head>
-<meta http-equiv="refresh" content="0;url=userGuide.html#{helpId}" />
+<meta http-equiv="refresh" content="0;url=file:///{helpFilePath}#{helpId}" />
 </head></html>
 	"""
-	with open(filePath, 'w') as f:
+	with open(contextHelpPath, 'w') as f:
 		f.write(redirect)
 
 
@@ -32,11 +33,21 @@ def showHelp(helpId: str):
 		noHelpMessage = _("No context sensitive help is available here at this time.")
 		ui.message(noHelpMessage)
 	helpFile = gui.getDocFilePath("userGuide.html")
+	if not os.path.exists(helpFile):
+		# Translators: Message shown when trying to display context sensitive help,
+		# indicating that	the user guide could not be found.
+		noHelpMessage = _("No user guide found.")
+		log.debugWarning("No user guide found: possible cause - running from source without building user docs")
+		ui.message(noHelpMessage)
 	log.debug(f"Opening help: helpId = {helpId}, userGuidePath: {helpFile}")
 
-	contextHelpRedirect = os.path.join(os.path.dirname(helpFile), "contextHelp.html")
+	nvdaTempDir = os.path.join(tempfile.gettempdir(), "nvda")
+	if not os.path.exists(nvdaTempDir):
+		os.mkdir(nvdaTempDir)
+
+	contextHelpRedirect = os.path.join(nvdaTempDir, "contextHelp.html")
 	try:
-		writeRedirect(helpId, contextHelpRedirect)
+		writeRedirect(helpId, helpFile, contextHelpRedirect)
 	except Exception:
 		log.error("Unable to write context help redirect file.", exc_info=True)
 		return
@@ -53,17 +64,17 @@ def bindHelpEvent(helpId: str, window: wx.Window):
 		wx.EVT_HELP,
 		lambda evt: _onEvtHelp(helpId, evt),
 	)
-	log.debug(f"did binding for {window.__class__.__qualname__}")
+	log.debug(f"Did context help binding for {window.__class__.__qualname__}")
 
 
 def _onEvtHelp(helpId: str, evt: wx.HelpEvent):
-	# Don't call evt.skip. Whe want more specific bindings to override less specific.
+	# Don't call evt.skip. Events bubble upwards through parent controls.
+	# Context help for more specific controls should override the less specific parent controls.
 	showHelp(helpId)
 
 
 class ContextHelpMixin:
 	def __init__(self, *args, **kwargs):
-		log.debug("reef")
 		super().__init__(*args, **kwargs)
 		helpId = getattr(self, "helpId", None)
 		if not helpId or not isinstance(helpId, str):
