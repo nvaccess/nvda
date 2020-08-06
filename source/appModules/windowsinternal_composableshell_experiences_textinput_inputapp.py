@@ -125,6 +125,7 @@ class AppModule(appModuleHandler.AppModule):
 		# #9104: different aspects of modern input panel are represented by automation iD's.
 		inputPanelAutomationID = inputPanel.UIAAutomationId
 		self._modernKeyboardInterfaceActive = True
+		self._symbolsGroupSelected = False
 		# Emoji panel for build 16299 and 17134.
 		# This event is properly raised in build 17134.
 		if (
@@ -205,6 +206,8 @@ class AppModule(appModuleHandler.AppModule):
 			"TEMPLATE_PART_ExpressionFullViewItemsGrid", "TEMPLATE_PART_ClipboardItemIndex", "CandidateWindowControl"
 		):
 			ui.message(obj.name)
+		# Thankfully name change event is the last thing done when selecting items.
+		self._symbolsGroupSelected = False
 		# In Version 1809, name change event is fired just as emoji panel is being closed (entries are 0).
 		if not any(obj.location):
 			self._modernKeyboardInterfaceActive = False
