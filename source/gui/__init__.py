@@ -27,6 +27,7 @@ import core
 from . import guiHelper
 from .contextHelp import ContextHelpMixin
 from .settingsDialogs import *
+from .inputGestures import InputGesturesDialog
 import speechDictHandler
 import languageHandler
 import keyboardHandler

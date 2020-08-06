@@ -3,6 +3,56 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.2 =
+Glavne karakteristike ove verzije uključuju podršku za novi brajev red kompanije Nattiq, bolju podršku za ESET antivirus interfejs i Windows Terminal, poboljšanja u brzini korišćenja aplikacije 1Password, kao i uz Windows OneCore sintetizator. Uz puno dodatnih ispravljenih grešaka i poboljšanja.
+
+== Nove karakteristike ==
+- Podrška za nove brajeve redove:
+  - Nattiq nBraille (#10778)
+- Dodata skripta za otvaranje NVDA foldera sa podešavanjima (bez podrazumevane komande). (#2214)
+- Bolja podrška za interfejs programa ESET antivirus. (#10894)
+- Dodata podrška za Windows Terminal. (#10305)
+- Dodata skripta za prijavljivanje aktivnog profila podešavanja (bez podrazumevane komande). (#9325)
+- Dodata skripta za menjanje statusa prijavljivanja indeksa i eksponenata (bez podrazumevane komande). (#10985)
+- Web aplikacije (na primer Gmail) više ne izgovaraju nevažeće informacije kada se fokus menja brzo. (#10885)
+  - Ovo eksperimentalno podešavanje se mora ručno omogućiti korišćenjem opcije "Pokušavanje otkazivanja govora za kontrole koje više nisu fokusirane " u panelu sa naprednim podešavanjima.
+- Puno novih simbola je dodato u rečnik sa simbolima. (#11105)
+
+
+== Promene ==
+- Ažuriran liblouis brajev prevodilac sa 3.12 na [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0]. (#10832, #11221)
+- Prijavljivanje indeksa i eksponenata se sada može podesiti posebno od ostalih atributa fonta. (#10919)
+- Zbog promena u aplikaciji VS Code, NVDA više neće onemogućiti režim pretraživanja u Code po podrazumevanim podešavanjima. (#10888)
+- NVDA više ne izgovara "Vrh" i "Dno" kada se pregledni kursor direktno pomera na početak ili kraj  reda navigacionog objekta. (#9551)
+- NVDA više ne izgovara "Levo" i "Desno" kada se pregledni kursor direktno pomera na prvi ili poslednji znak reda navigacionog objekta. (#9551)
+
+
+== Ispravljene greške ==
+- NVDA se sada ispravno pokreće kada datoteka sa dnevnikom ne može da se kreira. (#6330)
+- U novijim verzijama aplikacije Microsoft Word 365, NVDA više neće izgovarati "obrisana reč u nazad" kada se pritisne ctrl plus backspace u toku uređivanja dokumenta. (#10851)
+- U programu Winamp, NVDA će ponovo izgovarati menjanje statusa funkcija nasumične reprodukcije i ponavljanja. (#10945)
+- NVDA više nije veoma spor kada se pomerate u listi stavki programa 1Password. (#10508)
+- Windows OneCore sintetizator govora više nema duže pauze između izgovorenih rečenica. (#10721)
+- NVDA više neće prestati sa radom kada otvorite kontekstni meni  za 1Password u sistemskoj traci za obaveštenja. (#11017)
+- U  Office paketu 2013 i starijim verzijama:
+  - Trake menija se izgovaraju kada se prvi put fokusirate na njih. (#4207)
+  - Stavke kontekstnog menija se ponovo ispravno prijavljuju. (#9252)
+  - Sekcije traka menija se ispravno prijavljuju kada se krećete kroz njih korišćenjem kombinacije ctrl plus strelice. (#7067)
+- U režimu pretraživanja aplikacija Mozilla Firefox i Google Chrome, sadržaj se neće neispravno prikazivati na posebnim redovima kada web autori koriste CSS display: inline-flex. (#11075)
+- U režimu pretraživanja sa onemogućenom opcijom  automatsko postavljanje fokusa na elemente koji se mogu fokusirati, moguće je aktivirati elemente koji se ne mogu fokusirati.
+- U režimu pretraživanja sa onemogućenom opcijom  automatsko postavljanje fokusa na elemente koji se mogu fokusirati, moguće je aktivirati elemente do kojih se dolazi tasterom tab. (#8528)
+- U režimu pretraživanja sa onemogućenom opcijom  automatsko postavljanje fokusa na elemente koji se mogu fokusirati, aktiviranje određenih elemenata više neće izazivati klik na neispravnoj lokaciji. (#9886)
+- NVDA neće više reprodukovati zvukove za grešku kada se pristupa tekstualnim DevExpress kontrolama. (#10918)
+- Opisi alata za ikonice na sistemskoj traci se više ne izgovaraju u toku navigacije ako je njihovo ime jednako imenu ikonice, kako bi se izbeglo dvostruko izgovaranje. (#6656)
+- U režimu pretraživanja sa onemogućenom opcijom "Automatsko postavljanje fokusa na elemente koji se mogu fokusirati", prebacivanje u režim fokusiranja komandom NVDA plus razmak fokusira element na poziciji kursora. (#11206)
+- Ponovo je moguće da proverite nova NVDA ažuriranja na nekim sistemima gde ovo nije ispravno radilo; na primer nove Windows instalacije. (#11253)
+- Fokus u Java aplikacijama se neće menjati kada se izbor promeni u tabelama, listama ili prikazima stabla koji nisu fokusirani. (#5989)
+
+
+== Promene za programere ==
+Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
+
+
 = 2020.1 =
 Glavne karakteristike ove verzije uključuju podršku za nove brajeve redove proizvođača HumanWare i APH, kao i puno drugih važnih ispravljenih grešaka kao što su mogućnost čitanja matematičkih izraza u programu Microsoft Word korišćenjem programa MathPlayer / MathType.
 
@@ -30,7 +80,7 @@ Glavne karakteristike ove verzije uključuju podršku za nove brajeve redove pro
 - NVDA se više neće zatvarati ako je došlo do greške u inicijalizaciji sintetizatora eSpeak. (#10607)
 - Greške u prečicama koje su izazvane unikodnim prevodima više ne zaustavljaju instalaciju, ovo se rešava tako što se tekst prečica vraća na Engleski. (#5166, #6326)
 - Izlazak ili pomeranje iz liste i tabele u režimu pretraživanja  uz opciju izgovori sve i površno čitanje više neće neprekidno izgovarati izlazak iz tabele i liste. (#10706)
-- Ispravljeno praćenje miša za neke MSHTML elemente u programu Internet Explorer. (#10736)
+- Ispravljeno praćenje miša za neke MSHTML elemente u  programu Internet Explorer. (#10736)
 
 
 == Promene za programere ==
@@ -201,6 +251,7 @@ Ova manja verzija ispravlja sledeće greške:
 - Google Chrome se više ne ruši prilikom interakcije sa određenim listama. (#9364)
 - Greška je ispravljena koja je sprečavala kopiranje korisničkih podešavanja u profil sistemskih podešavanja. (#9448)
 - U programu Microsoft Excel, NVDA ponovo koristi prevedenu poruku kada prijavljuje lokacije spojenih ćelija. (#9471)
+
 
 = 2019.1 =
 Glavne karakteristike ove verzije uključuju poboljšanja u brzini kada koristite programe Microsoft word i Excel, poboljšanja u stabilnosti i sigurnosti kao što su podrška za dodatke koji mogu označiti informacije o kompatibilnosti sa različitim verzijama programa NVDA, i brojne druge ispravljene greške.

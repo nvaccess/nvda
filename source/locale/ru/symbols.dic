@@ -3,6 +3,21 @@
 #Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<![^\d -])\.(?=\d)
+decimal comma	(?<![^\d -]),(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
+
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
@@ -13,13 +28,15 @@ symbols:
 ; phrase ending	точка с запятой	most	always	# ; в конце фразы
 : phrase ending	двоеточие	most	always	# : в конце фразы
 decimal point		none	always	# десятичная точка
+decimal comma		none	always	# десятичная запятая
 in-word '	апостроф	all	norep	# ' в слове
-negative number	минус	none	norep	# отрицательное число
+negative number	минус	none	norep	# знак отрицательного числа
 
 # Whitespace
 \0	чисто	char	# null
 \t	таб
 \n	перевод строки	char
+\v	вертикальная табуляция	char
 \f	разделитель страниц	none
 \r	возврат каретки	char
  	пробел	char	# обычный пробел
@@ -85,6 +102,7 @@ _	подчёркивание	most
 –	короткое тире	most	always
 —	длинное тире	most	always
 ‐	дефис	most
+‑	неразрывный дефис	most
 ●	кружок	most
 ¨	дириезис	most
 ‎	метка слева на право	char
@@ -104,9 +122,8 @@ _	подчёркивание	most
 ‹	левая угловая одиночная кавычка	most
 ›	правая угловая одиночная кавычка	most
 µ	микро	some
-¹	надстрочный знак 1	some
-²	надстрочный знак 2	some
-³	надстрочный знак 3	some
+º	мужской порядковый индикатор	some
+ª	женский порядковый индикатор	some
 ®	зарегистрированный товарный знак	some
 ™	товарный знак	some
 ©	авторское право	some
@@ -143,6 +160,20 @@ _	подчёркивание	most
 ∗	оператор звёздочка	most
 ◊	ромб	most
 ⌀	диаметр	some
+ƒ	флорин	all	norep
+‚	нижняя одиночная кавычка	most
+⁃	дефис маркер	none
+○	полый круг	most
+¯	макрон	most
+´	акут	most
+¸	седиль	most
+□	полый квадрат	some
+➔	широкая стрелка вправо	some
+◆	чёрный ромб	some
+‣	треугольный маркер	none
+✗	x маркер	none
+⌘	Mac Command key	none
+▾	маленький чёрный треугольник вниз	most
 
 # Playing card suit
 ♣	закрашенные трефы	most
@@ -311,3 +342,50 @@ _	подчёркивание	most
 ⇒	двойная стрелка вправо	some
 ⇓	двойная стрелка вниз	some
 ⇔	двойная стрелка влево и вправо	some
+
+# Superscript and subscript characters
+⁰	надстрочный знак 0	some
+ⁱ	надстрочный знак i	some
+¹	надстрочный знак 1	some
+²	надстрочный знак 2	some
+³	надстрочный знак 3	some
+⁴	надстрочный знак 4	some
+⁵	надстрочный знак 5	some
+⁶	надстрочный знак 6	some
+⁷	надстрочный знак 7	some
+⁸	надстрочный знак 8	some
+⁹	надстрочный знак 9	some
+⁺	надстрочный знак плюс	some
+⁻	надстрочный знак минус	some
+⁼	надстрочный знак равно	some
+⁽	надстрочный знак левая круглая	some
+⁾	надстрочный знак правая круглая	some
+ⁿ	надстрочный знак n	some
+₀	подстрочный знак 0	some
+₁	подстрочный знак 1	some
+₂	подстрочный знак 2	some
+₃	подстрочный знак 3	some
+₄	подстрочный знак 4	some
+₅	подстрочный знак 5	some
+₆	подстрочный знак 6	some
+₇	подстрочный знак 7	some
+₈	подстрочный знак 8	some
+₉	подстрочный знак 9	some
+₊	подстрочный знак плюс	some
+₋	подстрочный знак минус	some
+₌	подстрочный знак равно	some
+₍	подстрочный знак левая круглая	some
+₎	подстрочный знак правая круглая	some
+ₐ	подстрочный знак a	some
+ₑ	подстрочный знак e	some
+ₒ	подстрочный знак o	some
+ₓ	подстрочный знак x	some
+ₔ	подстрочный знак schwa	some
+ₕ	подстрочный знак h	some
+ₖ	подстрочный знак k	some
+ₗ	подстрочный знак l	some
+ₘ	подстрочный знак m	some
+ₙ	подстрочный знак n	some
+ₚ	подстрочный знак p	some
+ₛ	подстрочный знак s	some
+ₜ	подстрочный знак t	some

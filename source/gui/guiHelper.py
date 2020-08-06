@@ -42,6 +42,8 @@ class myDialog(class wx.Dialog):
 		self.SetSizer(mainSizer)
 	...
 """
+from contextlib import contextmanager
+
 import wx
 from wx.lib import scrolledpanel
 from abc import ABCMeta
@@ -63,6 +65,13 @@ SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL = 10
 
 #: put this much space between two vertically associated elements (such as a wx.StaticText and a wx.Choice or wx.TextCtrl)
 SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL = 3
+
+
+@contextmanager
+def autoThaw(control: wx.Window):
+	control.Freeze()
+	yield
+	control.Thaw()
 
 class ButtonHelper(object):
 	""" Class used to ensure that the appropriate space is added between each button, whether in horizontal or vertical
