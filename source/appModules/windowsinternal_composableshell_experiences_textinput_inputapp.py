@@ -56,7 +56,16 @@ class AppModule(appModuleHandler.AppModule):
 		# For consistent experience, report the new category first by traversing through controls.
 		# #8189: do not announce candidates list itself (not items),
 		# as this is repeated each time candidate items are selected.
-		if obj.UIAAutomationId == "CandidateList":
+		if (
+			obj.UIAAutomationId == "CandidateList"
+			# Also, when changing categories (emoji, kaomoji, symbols) in Version 1903 or later,
+			# category items are selected when in fact they have no useful label.
+			or obj.parent.UIAAutomationId == "TEMPLATE_PART_Sets_ListView"
+			# Suppress skin tone modifiers from being announced after an emoji group was selected.
+			or self._symbolsGroupSelected
+			# In Version 1709 and 1803, both categories and items raise element selected event when category changes.
+			or obj.name == self._recentlySelected and not winVersion.isWin10(version=1809)
+		):
 			return
 		speech.cancelSpeech()
 		# Sometimes, due to bad tree traversal or wrong item getting selected,
