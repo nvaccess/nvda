@@ -209,7 +209,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			if canModifiersPerformAction(gesture.generalizedModifiers):
 				# #3472: These modifiers can perform an action if pressed alone
 				# and we've just consumed the main key.
-				# Send key down and key up for the special reserved vkcode (0xff). 
+				# Send key down and key up for the special reserved vkcode (0xff).
 				# this is to at least notify the app's key state that something happened.
 				# This allows alt and windows to be bound to scripts and
 				# stops control+shift from switching keyboard layouts in cursorManager selection scripts.
