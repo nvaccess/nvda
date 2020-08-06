@@ -59,7 +59,10 @@ $	dólar	all	norep
 ¢	Centavos	all	norep
 ¥	Yen	all	norep
 ₹	Rupia	some	norep
+ƒ	florín	all	norep
+¤	símbolo de moneda	all	norep
 %	por cient	some
+‰	por mil	some
 &	ampersán	some
 '	falqueta	all
 (	ubrir parentesi	most	always
@@ -81,73 +84,102 @@ $	dólar	all	norep
 ≠	No igual que	most
 ?	zarrar interrogación	all
 @	arroba	some
-´	accento agudo	some
 [	ubrir gafet	most
 ]	zarrar gafet	most
 \\	barra inversa	most
 ^	circumfleixo	most
 _	guión baixo	most
-·	punto meyo	most
 `	accento grau	most
 {	ubrir clau	most
 }	zarrar clau	most
 |	barra vertical	most
+¦	barra vertical tallada	most
 ~	virgulilla	most
-¤	Simbolo de moneda	most
-¬	No lochico	most
-¿	ubrir interrogación	all
-¡	ubrir exclamación	all
+¡	ubrir exclamación	some
+¿	ubrir interrogación	some
+·	punto meyo	most
+‚	Cometa inferior	most
+„	Dople cometa inferior	most
+′	prima	some
+″	Prima dople	some
+‴	prima triple	some
 
 # Other characters
 •	vinyeta	some
-‣	Vinyeta triangular	some
-′	prima	some
-″	Prima dople	some
 …	PUNTOS SUSPENSIVOS	all	always
 ...	PUNTOS SUSPENSIVOS	all	always
 “	ubrir cometas	most
 ”	zarrar cometas	most
 ‘	ubrir apostrofo	most
 ’	zarrar apostrofo	most
-⁃	guión de vinyeta	most
 –	guión curto	most	always
 —	guión largo	most
+­	guión suau	most
+⁃	guión de vinyeta	none
 ●	cerclo	most
+○	cerclo blanco	most
 ¨	dieresi	most
+¯	macrón	most
+´	accento agudo	most
+¸	zetiella	most
 ‎	marca de cucha ta dreita	char
 ‏	marca de dreita ta cucha	char
-■	Barra vertical tallada	some
+¶	marcador de paragrafo	most
+■	quadrau negro	some
 ▪	vinyeta negra	some
-◾	quadro negro	some
+◾	quadrau negro	some
+□	quadrau blanco	some
 ◦	vinyeta blanca	some
 ⇒	flecha dople t'a dreita	some
 ⇨	flecha blanca t'a dreita	some
+➔	flecha t'a dreita	some
 ➢	flecha con cabeza t'a dreita	some
 ⮚	flecha con cabeza t'a dreita	some
 ❖	diamant negro menos X blanca	some
 ♣	club negro	some
 ♦	diamant negro	some
+◆	diamant negro	some
 §	Sección	most
 °	graus	some
 «	ubrir cometas angulars
 »	zarrar cometas angulars
 µ	micro	some
+⁰	0 sobrescrito	some
 ¹	1 sobreescrito	some
 ²	t'o quadrau	some
 ³	t'o cubo	some
+⁴	4 sobrescrito	some
+⁵	5 sobrescrito	some
+⁶	6 sobrescrito	some
+⁷	7 sobrescrito	some
+⁸	8 sobrescrito	some
+⁹	9 sobrescrito	some
+⁺	más sobrescrito	some
+⁻	menos sobrescrito	some
+⁼	igual sobrescrito	some
+⁽	ubrir parentesi sobrescrito	some
+⁾	zarrar parentesi sobrescrito	some
+ⁿ	n sobrescrita	some
+₀	0 subescrito	some
+₁	1 subescrito	some
+₂	2 subescrito	some
+₃	3 subescrito	some
+₄	4 subescrito	some
+₅	5 subescrito	some
+₆	6 subescrito	some
+₇	7 subescrito	some
+₈	8 subescrito	some
+₉	9 subescrito	some
+₊	más subescrito	some
+₋	menos subescrito	some
+₌	igual subescrito	some
+₍	ubrir parentesi subescrito	some
+₎	zarrar parentesi subescrito	some
 ®	rechistrau	some
 ™	Marca rechistrada	some
 ©	copyright	some	norep
 ±	más menos	some
-†	Cruz	most
-‡	Dople cruz	most
-ƒ	Florín	most
-‚	Cometa inferior simple	most
-„	Dople cometa inferior	most
 ß	Beta	most
-¼	Quart	most
-½	Meyo	most
-¾	Tres quartz	most
 ×	multiplicau por	some
 ÷	dividiu por	some
 ←	flecha enta la cucha	some
@@ -157,10 +189,14 @@ _	guión baixo	most
 ✓	marcau	some
 ✔	marcau	some
 🡺	flecha dreita	some
+†	Cruz	some
+‡	Dople cruz	some
+‣	Vinyeta triangular	none
+✗	vinyeta x	none
 
 #Mathematical Operators U+2200 to U+220F
 
-∀	ta tot	none
+∀	pa tot	none
 ∁	complemento	none
 ∂	derivativa parcial	none
 ∃	existe	none
@@ -191,6 +227,7 @@ _	guión baixo	most
 ∦	no paralelo a	none
 ∧	y lochico	none
 ∨	u lochico	none
+¬	No lochico	none
 ∩	intersección	none
 ∪	chunión	none
 ∫	integral	none
@@ -205,6 +242,9 @@ _	guión baixo	most
 ⊆	subconchunto de u igual que	none
 ⊇	sobreconchunto de u igual que	none
 # Vulgur Fractions U+2150 to U+215E
+¼	Quart	none
+½	Meyo	none
+¾	Tres quartz	none
 ⅐	un seteno	none
 ⅑	un nueno	none
 ⅒	un deceno	none

@@ -1987,6 +1987,16 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
+		highlightText = _("Marked (highlighted text)")
+		self.highlightCheckBox = fontGroup.addItem(
+			wx.CheckBox(self, label=highlightText)
+		)
+		self.highlightCheckBox.SetValue(
+			config.conf["documentFormatting"]["reportHighlight"]
+		)
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings panel.
 		styleText =_("St&yle")
 		self.styleCheckBox=fontGroup.addItem(wx.CheckBox(self,label=styleText))
 		self.styleCheckBox.SetValue(config.conf["documentFormatting"]["reportStyle"])
@@ -2199,6 +2209,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportComments"]=self.commentsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportRevisions"]=self.revisionsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportEmphasis"]=self.emphasisCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportHighlight"] = self.highlightCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportAlignment"]=self.alignmentCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportStyle"]=self.styleCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportSpellingErrors"]=self.spellingErrorsCheckBox.IsChecked()
@@ -2495,7 +2506,7 @@ class AdvancedPanelControls(wx.Panel):
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
 		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue == 'UIA')
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
-		self.cancelExpiredFocusSpeechCombo.SetValue(self.cancelExpiredFocusSpeechCombo.defaultValue)
+		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
@@ -3700,7 +3711,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.filterEdit = sHelper.addLabeledControl(
 			labelText = filterText,
 			wxCtrlClass=wx.TextCtrl,
-			size=self.scaleSize((310, -1)),
+			size=(self.scaleSize(310), -1),
 		)
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
 
@@ -3752,7 +3763,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.replacementEdit = changeSymbolHelper.addLabeledControl(
 			labelText=replacementText,
 			wxCtrlClass=wx.TextCtrl,
-			size=self.scaleSize((300, -1)),
+			size=(self.scaleSize(300), -1),
 		)
 		self.replacementEdit.Bind(wx.EVT_TEXT, skipEventAndCall(self.onSymbolEdited))
 

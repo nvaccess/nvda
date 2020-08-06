@@ -31,6 +31,7 @@ ariaRolesToNVDARoles: Dict[str, int] = {
 	"list":controlTypes.ROLE_LIST,
 	"listbox":controlTypes.ROLE_LIST,
 	"listitem":controlTypes.ROLE_LISTITEM,
+	"mark": controlTypes.ROLE_MARKED_CONTENT,
 	"menu":controlTypes.ROLE_POPUPMENU,
 	"menubar":controlTypes.ROLE_MENUBAR,
 	"menuitem":controlTypes.ROLE_MENUITEM,
@@ -100,4 +101,5 @@ htmlNodeNameToAriaRoles: Dict[str, str] = {
 	"aside": "complementary",
 	"dialog": "dialog",
 	"figure": "figure",
+	"mark": "mark",
 }

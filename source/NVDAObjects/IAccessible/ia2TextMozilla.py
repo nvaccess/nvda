@@ -170,8 +170,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		return _getRawTextInfo(obj)(obj, position)
 
 	def _getEmbedding(self, obj):
+		parent = obj.parent
+		if not parent:
+			# obj is probably dead.
+			return None
 		# optimisation: Passing an Offsets position checks nCharacters, which is an extra call we don't need.
-		info = self._makeRawTextInfo(obj.parent, textInfos.POSITION_FIRST)
+		info = self._makeRawTextInfo(parent, textInfos.POSITION_FIRST)
 		if isinstance(info, FakeEmbeddingTextInfo):
 			info._startOffset = obj.indexInParent
 			info._endOffset = info._startOffset + 1
@@ -294,6 +298,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 					fields.insert(0, textInfos.FieldCommand("controlStart", field))
 				controlStack.insert(0, field)
 				ti = self._getEmbedding(obj)
+				if not ti:
+					log.debugWarning(
+						"_getEmbedding returned None while getting initial fields. "
+						"Object probably dead."
+					)
+					return []
 				obj = ti.obj
 		else:
 			controlStack = None
@@ -323,6 +333,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 					field["_endOfNode"] = True
 					fields.append(textInfos.FieldCommand("controlEnd", None))
 			ti = self._getEmbedding(obj)
+			if not ti:
+				log.debugWarning(
+					"_getEmbedding returned None while ascending to get more text. "
+					"Object probably dead."
+				)
+				return []
 			obj = ti.obj
 			if ti.move(textInfos.UNIT_OFFSET, 1) == 0:
 				# There's no more text in this object.

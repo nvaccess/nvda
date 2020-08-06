@@ -96,17 +96,6 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 		elif not isWindow:
 			return
 
-		if childID < 0:
-			tempWindow = window
-			while (
-				tempWindow
-				and not winUser.getWindowStyle(tempWindow) & winUser.WS_POPUP
-				and winUser.getClassName(tempWindow) == "MozillaWindowClass"
-			):
-				tempWindow = winUser.getAncestor(tempWindow, winUser.GA_PARENT)
-			if tempWindow and winUser.getClassName(tempWindow).startswith('Mozilla'):
-				window = tempWindow
-
 		windowClassName = winUser.getClassName(window)
 		if windowClassName == "ConsoleWindowClass":
 			# #10113: we need to use winEvents to track the real thread for console windows.
@@ -116,20 +105,6 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 		# and can't be used properly in conjunction with input composition support.
 		if windowClassName == "Microsoft.IME.UIManager.CandidateWindow.Host" and eventID in MENU_EVENTIDS:
 			return
-		# At the moment we can't handle show or hide events on Mozilla Firefox Location bar,
-		# as there are just too many of them. Ignore show and hide on MozillaDropShadowWindowClass
-		# windows.
-		if (
-			windowClassName.startswith('Mozilla')
-			and eventID in (
-				winUser.EVENT_OBJECT_SHOW,
-				winUser.EVENT_OBJECT_HIDE
-			) and childID < 0
-		):
-			# Mozilla Gecko can sometimes fire win events on a catch-all window which isn't really the real window
-			# Move up the ancestry to find the real mozilla Window and use that
-			if winUser.getClassName(window) == 'MozillaDropShadowWindowClass':
-				return
 		if eventID == winUser.EVENT_SYSTEM_FOREGROUND:
 			# We never want to see foreground events for the Program Manager or Shell (task bar)
 			if windowClassName in ("Progman", "Shell_TrayWnd"):
