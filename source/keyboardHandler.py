@@ -127,7 +127,14 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	try:
 		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers, keyCounter, stickyNVDAModifier, stickyNVDAModifierLocked
 		# Injected keys should be ignored in some cases.
-		if injected and (ignoreInjected or not config.conf['keyboard']['handleInjectedKeys']):
+		if injected and (
+			# This key press has no valid vk code so we can't do anything with it.
+			vkCode == winUser.VK_NONE
+			# This key press was sent by NVDA itself and should be ignored.
+			or ignoreInjected
+			# or NVDA is configured to ignore all injected keys
+			or not config.conf['keyboard']['handleInjectedKeys']
+		):
 			return True
 
 		keyCode = (vkCode, extended)
@@ -246,7 +253,14 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	try:
 		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers
 		# Injected keys should be ignored in some cases.
-		if injected and (ignoreInjected or not config.conf['keyboard']['handleInjectedKeys']):
+		if injected and (
+			# This key press has no valid vk code so we can't do anything with it.
+			vkCode == winUser.VK_NONE
+			# This key press was sent by NVDA itself and should be ignored.
+			or ignoreInjected
+			# or NVDA is configured to ignore all injected keys
+			or not config.conf['keyboard']['handleInjectedKeys']
+		):
 			return True
 
 		keyCode = (vkCode, extended)
