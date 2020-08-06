@@ -1331,7 +1331,7 @@ class UIA(Window):
 				document = self.UIATextPattern.documentRange
 				isReadOnly = document.GetAttributeValue(UIAHandler.UIA_IsReadOnlyAttributeId)
 			except COMError:
-				isReadOnly = \UIAHandler.handler.reservedNotSupportedValue
+				isReadOnly = UIAHandler.handler.reservedNotSupportedValue
 		if isReadOnly == UIAHandler.handler.reservedNotSupportedValue:
 			return False
 		return isReadOnly
