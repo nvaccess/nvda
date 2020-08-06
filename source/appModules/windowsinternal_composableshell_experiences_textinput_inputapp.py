@@ -26,11 +26,20 @@ class AppModule(appModuleHandler.AppModule):
 	_modernKeyboardInterfaceActive = False
 	# Cache the most recently selected item.
 	_recentlySelected = None
+	# Set when emoji/kaomoji/symbol search is in progress, used to prevent unpredictable state announcements.
+	_searchInProgress = False
 
 	def event_UIA_elementSelected(self, obj, nextHandler):
 		# Wait until modern keyboard is fully displayed on screen.
 		# Not seen in Version 1709 as window open event is not fired.
+		# Force this flag on if emoji search is in progress.
+		if self._searchInProgress:
+			self._modernKeyboardInterfaceActive = True
 		if winVersion.isWin10(version=1803) and not self._modernKeyboardInterfaceActive:
+			return
+		if obj.parent.UIAAutomationId == "TEMPLATE_PART_Groups_ListView":
+			if obj.positionInfo["indexInGroup"] == 1:
+				self._searchInProgress = True
 			return
 		# #7273: in Version 1709 and 1803, first emoji from the newly selected category is not announced.
 		# Therefore, move the navigator object to that item if possible.
@@ -191,6 +200,7 @@ class AppModule(appModuleHandler.AppModule):
 		if not any(obj.location):
 			self._modernKeyboardInterfaceActive = False
 			self._recentlySelected = None
+			self._searchInProgress = False
 		nextHandler()
 
 	def event_stateChange(self, obj, nextHandler):
