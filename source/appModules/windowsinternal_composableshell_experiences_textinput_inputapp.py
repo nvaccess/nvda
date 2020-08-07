@@ -14,6 +14,7 @@ import api
 import speech
 import braille
 import ui
+import controlTypes
 import config
 import winVersion
 import eventHandler
@@ -225,9 +226,13 @@ class AppModule(appModuleHandler.AppModule):
 		nextHandler()
 
 	def event_stateChange(self, obj, nextHandler):
-		# Attempting to retrieve object location fails when emoji panel closes without selecting anything,
+		# Try detecting if modern keyboard elements are off-screen
+		# or the window itself is gone (parent's first child is nothing).
+		# But attempting to retrieve object location fails when emoji panel closes without selecting anything,
 		# especially in Version 1903 and later.
-		if obj.location is None and winVersion.isWin10(version=1903):
+		# Because of exceptions, check location first.
+		if ((obj.location is None and obj.parent.firstChild is None and winVersion.isWin10(version=1903))
+		or controlTypes.STATE_OFFSCREEN in obj.states):
 			self._modernKeyboardInterfaceActive = False
 			self._recentlySelected = None
 		nextHandler()
