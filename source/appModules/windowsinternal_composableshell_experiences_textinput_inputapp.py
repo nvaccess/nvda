@@ -29,26 +29,19 @@ class AppModule(appModuleHandler.AppModule):
 	_recentlySelected = None
 	# Set when an emoji/kaomoji/symbol group item is selected.
 	_symbolsGroupSelected = False
-	# Set when emoji/kaomoji/symbol search is in progress, used to prevent unpredictable state announcements.
-	_searchInProgress = False
 
 	def event_UIA_elementSelected(self, obj, nextHandler):
 		# Wait until modern keyboard is fully displayed on screen.
 		# Not seen in Version 1709 as window open event is not fired.
-		# Force this flag on if emoji search is in progress.
-		if self._searchInProgress:
-			self._modernKeyboardInterfaceActive = True
 		if winVersion.isWin10(version=1803) and not self._modernKeyboardInterfaceActive:
 			return
 		# If emoji/kaomoji/symbols group item gets selected,
 		# just tell NVDA to treat it as the new navigator object (for presentational purposes) and move on.
 		if obj.parent.UIAAutomationId == "TEMPLATE_PART_Groups_ListView":
-			if obj.positionInfo["indexInGroup"] == 1:
-				self._searchInProgress = True
-			else:
+			api.setNavigatorObject(obj)
+			if obj.positionInfo["indexInGroup"] != 1:
 				# Symbols group flag must be set if and only if emoji panel is active,
 				# because element selected event is fired when opening the panel after a while.
-				api.setNavigatorObject(obj)
 				self._symbolsGroupSelected = True
 			return
 		# #7273: in Version 1709 and 1803, first emoji from the newly selected category is not announced.
@@ -222,7 +215,6 @@ class AppModule(appModuleHandler.AppModule):
 		if not any(obj.location):
 			self._modernKeyboardInterfaceActive = False
 			self._recentlySelected = None
-			self._searchInProgress = False
 		nextHandler()
 
 	def event_stateChange(self, obj, nextHandler):
