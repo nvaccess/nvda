@@ -121,20 +121,20 @@ class AppModule(appModuleHandler.AppModule):
 			self._recentlySelected = None
 			return
 		# #9104: different aspects of modern input panel are represented by automation iD's.
-		inputPanelAutomationID = inputPanel.UIAAutomationId
+		inputPanelAutomationId = inputPanel.UIAAutomationId
 		self._modernKeyboardInterfaceActive = True
 		self._symbolsGroupSelected = False
 		# Emoji panel for build 16299 and 17134.
 		# This event is properly raised in build 17134.
 		if (
 			not winVersion.isWin10(version=1809)
-			and inputPanelAutomationID in self._classicEmojiPanelAutomationIds
+			and inputPanelAutomationId in self._classicEmojiPanelAutomationIds
 		):
 			eventHandler.executeEvent("UIA_elementSelected", obj.lastChild.firstChild)
 		# Handle hardware keyboard suggestions.
 		# Treat it the same as CJK composition list - don't announce this if candidate announcement setting is off.
 		elif (
-			inputPanelAutomationID == "CandidateWindowControl"
+			inputPanelAutomationId == "CandidateWindowControl"
 			and config.conf["inputComposition"]["autoReportAllCandidates"]
 		):
 			try:
@@ -143,7 +143,7 @@ class AppModule(appModuleHandler.AppModule):
 				# Because this is dictation window.
 				pass
 		# Emoji panel in Version 1809 (specifically, build 17666) and later.
-		elif inputPanelAutomationID == "TEMPLATE_PART_ExpressionGroupedFullView":
+		elif inputPanelAutomationId == "TEMPLATE_PART_ExpressionGroupedFullView":
 			# #10377: on some systems, there is something else besides grouping controls,
 			# so another child control must be used.
 			emojisList = inputPanel.children[-2]
@@ -162,11 +162,11 @@ class AppModule(appModuleHandler.AppModule):
 		# Move to clipboard list so element selected event can pick it up.
 		# #9103: if clipboard is empty, a status message is displayed instead,
 		# and luckily it is located where clipboard data items can be found.
-		elif inputPanelAutomationID == "TEMPLATE_PART_ClipboardTitleBar":
+		elif inputPanelAutomationId == "TEMPLATE_PART_ClipboardTitleBar":
 			# Under some cases, clipboard tip text isn't shown on screen,
 			# causing clipboard history title to be announced instead of most recently copied item.
 			clipboardHistory = obj.children[-2]
-			if clipboardHistory.UIAAutomationId == inputPanelAutomationID:
+			if clipboardHistory.UIAAutomationId == inputPanelAutomationId:
 				clipboardHistory = clipboardHistory.next
 			# Make sure to move to actual clipboard history item if available.
 			if clipboardHistory.firstChild is not None:
