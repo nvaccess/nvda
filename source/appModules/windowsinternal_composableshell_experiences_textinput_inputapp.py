@@ -103,7 +103,7 @@ class AppModule(appModuleHandler.AppModule):
 		nextHandler()
 
 	# Emoji panel for build 16299 and 17134.
-	_classicEmojiPanelAutomationID = (
+	_classicEmojiPanelAutomationIds = (
 		"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarItemControl",
 		"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton"
 	)
@@ -128,7 +128,7 @@ class AppModule(appModuleHandler.AppModule):
 		# This event is properly raised in build 17134.
 		if (
 			not winVersion.isWin10(version=1809)
-			and inputPanelAutomationID in self._classicEmojiPanelAutomationID
+			and inputPanelAutomationID in self._classicEmojiPanelAutomationIds
 		):
 			eventHandler.executeEvent("UIA_elementSelected", obj.lastChild.firstChild)
 		# Handle hardware keyboard suggestions.
