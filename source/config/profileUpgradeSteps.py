@@ -60,3 +60,14 @@ def upgradeConfigFrom_2_to_3(profile):
 		if "terminals" not in profile:
 			profile["terminals"] = {}
 		profile["terminals"]["speakPasswords"] = speakPasswords
+
+
+def upgradeConfigFrom_3_to_4(profile):
+	"Reporting of superscripts and subscripts can now be configured separately to font attributes."
+	try:
+		profile['documentFormatting']['reportSuperscriptsAndSubscripts'] = (
+			profile['documentFormatting']['reportFontAttributes']
+		)
+	except KeyError:
+		# Setting does not exist, no need for upgrade of this setting
+		log.debug("reportFontAttributes not present, no action taken.")

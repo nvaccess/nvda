@@ -15,6 +15,8 @@ import os
 import itertools
 import weakref
 import time
+from typing import Dict, Any, Tuple, List, Union
+
 import configobj
 import sayAllHandler
 import baseObject
@@ -72,6 +74,9 @@ class InputGesture(baseObject.AutoPropertyObject):
 	#: In contrast, the system is aware of C{KeyboardInputGesture} execution itself.
 	shouldPreventSystemIdle: bool = False
 
+	# typing information for auto property _get_identifiers
+	identifiers: Union[List[str], Tuple[str, ...]]
+
 	_abstract_identifiers = True
 	def _get_identifiers(self):
 		"""The identifier(s) which will be used in input gesture maps to represent this gesture.
@@ -95,6 +100,9 @@ class InputGesture(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
+	# type information for auto property _get_normalizedIdentifiers
+	normalizedIdentifiers: List[str]
+
 	def _get_normalizedIdentifiers(self):
 		"""The normalized identifier(s) for this gesture.
 		This just normalizes the identifiers returned in L{identifiers}
@@ -105,6 +113,9 @@ class InputGesture(baseObject.AutoPropertyObject):
 		@rtype: list of str
 		"""
 		return [normalizeGestureIdentifier(identifier) for identifier in self.identifiers]
+
+	# type information for auto property _get_displayName
+	displayName: str
 
 	def _get_displayName(self):
 		"""The name of this gesture as presented to the user.
@@ -168,7 +179,7 @@ class InputGesture(baseObject.AutoPropertyObject):
 		This should only be called with normalized gesture identifiers returned by the
 		L{normalizedIdentifiers} property in the same subclass.
 		For example, C{KeyboardInputGesture.getDisplayTextForIdentifier} should only be called
-		for "kb:*" identifiers returned by C{KeyboardInputGesture.identifiers}.
+		for "kb:*" identifiers returned by C{KeyboardInputGesture.normalizedIdentifiers}.
 		Most callers will want L{inputCore.getDisplayTextForIdentifier} instead.
 		The display text consists of two strings:
 		the gesture's source (e.g. "laptop keyboard")
@@ -193,7 +204,14 @@ class GlobalGestureMap(object):
 		@param entries: Initial entries to add; see L{update} for the format.
 		@type entries: mapping of str to mapping
 		"""
-		self._map = {}
+		self._map: Dict[
+			str,  # Normalized gesture
+			List[
+				Tuple[
+					str,  # module
+					str,  # class name
+					str,  # script
+		]]] = {}
 		#: Indicates that the last load or update contained an error.
 		#: @type: bool
 		self.lastUpdateContainedError = False
@@ -444,7 +462,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.pauseSpeech, speechEffect == gesture.SPEECHEFFECT_PAUSE)
 
 		if gesture.shouldPreventSystemIdle:
-			winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED | winKernel.ES_DISPLAY_REQUIRED)
+			winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
 
 		if log.isEnabledFor(log.IO) and not gesture.isModifier:
 			self._lastInputTime = time.time()
@@ -569,6 +587,14 @@ class InputManager(baseObject.AutoPropertyObject):
 
 class _AllGestureMappingsRetriever(object):
 
+	results: Dict[
+		str,  # category name
+		Dict[
+			str,  # command display name
+			Any,  # AllGesturesScriptInfo
+		]
+	]
+
 	def __init__(self, obj, ancestors):
 		self.results = {}
 		self.scriptInfo = {}
@@ -619,6 +645,9 @@ class _AllGestureMappingsRetriever(object):
 		self.addObj(globalCommands.commands)
 
 	def addResult(self, scriptInfo):
+		"""
+		@type scriptInfo: AllGesturesScriptInfo
+		"""
 		self.scriptInfo[scriptInfo.cls, scriptInfo.scriptName] = scriptInfo
 		try:
 			cat = self.results[scriptInfo.category]
@@ -639,7 +668,7 @@ class _AllGestureMappingsRetriever(object):
 				scriptInfo = self.scriptInfo[cls, scriptName]
 			except KeyError:
 				if scriptName.startswith("kb:"):
-					scriptInfo = self.makeKbEmuScriptInfo(cls, scriptName)
+					scriptInfo = self.makeKbEmuScriptInfo(cls, kbGestureIdentifier=scriptName)
 				else:
 					try:
 						script = getattr(cls, "script_%s" % scriptName)
@@ -651,27 +680,35 @@ class _AllGestureMappingsRetriever(object):
 				self.addResult(scriptInfo)
 			scriptInfo.gestures.append(gesture)
 
-	def makeKbEmuScriptInfo(self, cls, scriptName):
-		info = AllGesturesScriptInfo(cls, scriptName)
+	@classmethod
+	def makeKbEmuScriptInfo(cls, scriptCls, kbGestureIdentifier):
+		"""
+		@rtype AllGesturesScriptInfo
+		"""
+		info = KbEmuScriptInfo(scriptCls, kbGestureIdentifier)
 		info.category = SCRCAT_KBEMU
-		info.displayName = keyLabels.getKeyCombinationLabel(scriptName[3:])
+		info.displayName = getDisplayTextForGestureIdentifier(
+			normalizeGestureIdentifier(kbGestureIdentifier)
+		)[1]
 		return info
 
-	def makeNormalScriptInfo(self, cls, scriptName, script):
-		info = AllGesturesScriptInfo(cls, scriptName)
-		info.category = self.getScriptCategory(cls, script)
+	@classmethod
+	def makeNormalScriptInfo(cls, scriptCls, scriptName, script):
+		info = AllGesturesScriptInfo(scriptCls, scriptName)
+		info.category = cls.getScriptCategory(scriptCls, script)
 		info.displayName = script.__doc__
 		if not info.displayName:
 			return None
 		return info
 
-	def getScriptCategory(self, cls, script):
+	@classmethod
+	def getScriptCategory(cls, scriptCls, script):
 		try:
 			return script.category
 		except AttributeError:
 			pass
 		try:
-			return cls.scriptCategory
+			return scriptCls.scriptCategory
 		except AttributeError:
 			pass
 		return SCRCAT_MISC
@@ -719,6 +756,11 @@ class AllGesturesScriptInfo(object):
 	@property
 	def className(self):
 		return self.cls.__name__
+
+
+class KbEmuScriptInfo(AllGesturesScriptInfo):
+	pass
+
 
 def normalizeGestureIdentifier(identifier):
 	"""Normalize a gesture identifier so that it matches other identifiers for the same gesture.
