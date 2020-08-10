@@ -1332,6 +1332,8 @@ class UIA(Window):
 				isReadOnly = document.GetAttributeValue(UIAHandler.UIA_IsReadOnlyAttributeId)
 			except COMError:
 				isReadOnly = UIAHandler.handler.reservedNotSupportedValue
+		if isReadOnly == UIAHandler.handler.reservedNotSupportedValue:
+			return False
 		return isReadOnly
 
 	def _get_presentationType(self):
