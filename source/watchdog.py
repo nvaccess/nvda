@@ -109,8 +109,8 @@ def _watcher():
 		if _isAlive():
 			continue
 		if log.isEnabledFor(log.DEBUGWARNING):
-			log.debugWarning("Trying to recover from freeze, core stack:\n%s"%
-				"".join(traceback.format_stack(sys._current_frames()[core.mainThreadId])))
+			stacks = getFormattedStacksForAllThreads()
+			log.debugWarning(f"Trying to recover from freeze. Listing stacks for Python threads:\n{stacks}")
 		lastTime=time.time()
 		isAttemptingRecovery = True
 		# Cancel calls until the core is alive.

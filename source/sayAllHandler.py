@@ -76,7 +76,11 @@ class _ObjectsReader(object):
 def readText(cursor):
 	global lastSayAllMode, _activeSayAll
 	lastSayAllMode=cursor
-	reader = _TextReader(cursor)
+	try:
+		reader = _TextReader(cursor)
+	except NotImplementedError:
+		log.debugWarning("Unable to make reader", exc_info=True)
+		return
 	_activeSayAll = weakref.ref(reader)
 	reader.nextLine()
 
@@ -105,15 +109,17 @@ class _TextReader(object):
 	def __init__(self, cursor):
 		self.cursor = cursor
 		self.trigger = SayAllProfileTrigger()
-		self.trigger.enter()
+		self.reader = None
 		# Start at the cursor.
 		if cursor == CURSOR_CARET:
 			try:
 				self.reader = api.getCaretObject().makeTextInfo(textInfos.POSITION_CARET)
-			except (NotImplementedError, RuntimeError):
-				return
+			except (NotImplementedError, RuntimeError) as e:
+				raise NotImplementedError("Unable to make TextInfo: " + str(e))
 		else:
 			self.reader = api.getReviewPosition()
+		# #10899: SayAll profile can't be activated earlier because they may not be anything to read
+		self.trigger.enter()
 		self.speakTextInfoState = speech.SpeakTextInfoState(self.reader.obj)
 		self.numBufferedLines = 0
 

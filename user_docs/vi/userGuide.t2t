@@ -27,7 +27,7 @@ Một số tính năng nổi bật bao gồm:
 - Dễ dàng cài đặt với gói cài đặt có hỗ trợ giọng nói
 - Được dịch sang 54 ngôn ngữ
 - Hỗ trợ các hệ điều hành Windows mới, bao gồm cả  32bit và 64 bit
-- Có khả năng chạy trong cửa sổ đăng nhập của Windows và trong các màn hình bảo vệ khác
+- Có khả năng chạy trong cửa sổ đăng nhập của Windows và  các màn hình bảo vệ khác
 - Thông báo các điều khiển và văn bản khi dùng thao tác trên màn hình cảm ứng
 - Hỗ trợ các giao diện tiếp cận phổ biến như Microsoft Active Accessibility, Java Access Bridge, IAccessible2 và UI Automation
 - Hỗ trợ đọc trong các cửa sổ console như dòng lệnh Windows (Windows Command Prompt) và những ứng dụng console khác
@@ -56,10 +56,14 @@ NVDA hỗ trợ các bảng mã chữ nổi cho nhiều ngôn ngữ khác nhau, 
 ++ Giấy phép và bản quyền ++[LicenseAndCopyright]
 Bản quyền NVDA NVDA_COPYRIGHT_YEARS cộng đồng NVDA.
 
-NVDA được bảo vệ bởi giấy phép GNU General Public License (Phiên bản 2).
+NVDA sử dụng giấy phép GNU General Public License Phiên bản 2, với hai ngoại lệ đặc biệt.
+Các ngoại lệ được nêu trong tài liệu giấy phép trong phần "Non-GPL Components in Plugins and Drivers" và "Microsoft Distributable Code".
+NVDA cũng bao gồm và sử dụng các thành phần được phép dùng ở các giấy phép miễn phí và mã nguồn mở khác.
 Bạn có thể chia sẻ hoặc thay đổi phần mềm này theo ý mình, miễn là bạn phải kèm theo giấy phép này, cũng như đảm bảo phải cung cấp mã nguồn cho bất cứ ai cần nó.
 Điều này được áp dụng cho cả bản gốc, bản chỉnh sửa hay bất kỳ phần phát sinh nào khác.
+
 Để biết thêm thông tin chi tiết, xin [xem đầy đủ nội dung giấy phép. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+Để biết chi tiết các trường hợp ngoại lệ, hãy truy cập tài liệu giấy phép từ trình đơn NVDA trong phần "trợ giúp".
 
 + Yêu Cầu Hệ Thống +[SystemRequirements]
 - Hệ điều hành: tất cả các phiên bản 32bit và 64bit của Windows 7, Windows 8, Windows 8.1,  Windows 10 và các bản máy chủ từ bản Windows Server 2008 R2.
@@ -79,7 +83,7 @@ Chạy tập tin vừa tải về sẽ khởi động chương trình NVDA tạm
 Sau đó, bạn sẽ được hỏi là bạn muốn cài đặt NVDA vào máy, tạo bản chạy trực tiếp hay tiếp tục sử dụng phiên bản tạm thời đó.
 
 Nếu bạn muốn thường xuyên dùng NVDA trên máy này, bạn nên chọn cài đặt vào máy.
-Việc cài đặt NVDA vào máy sẽ cho phép bạn sử dụng một số tính năng như khởi động cùng Windows, chạy NVDA ở màn hình đăng nhập và các màn hình bảo vệ khác (những tính năng đó không được hỗ trợ cho bản chạy tạm thời cũng như bản chạy trực tiếp). Nó cũng không hỗ trợ tự động tạo biểu tượng chương trình trên start menu và desktop.
+Việc cài đặt NVDA vào máy sẽ cho phép bạn sử dụng một số tính năng như khởi động sau khi đăng nhập, khả năng đọc ở màn hình đăng nhập Windows và các màn hình bảo vệ (không được hỗ trợ cho bản chạy tạm thời và  bản chạy trực tiếp) cũng như tạo biểu tượng trên Start Menu và desktop.
 Bạn có thể tạo bản chạy trực tiếp sau khi cài đặt NVDA vào máy.
 
 Nếu muốn dùng NVDA từ ổ USB hay các phương tiện lưu trữ khác, bạn có thể chọn chức năng tạo bản chạy trực tiếp.
@@ -114,7 +118,7 @@ Trước khi bấm nút tiếp tục, bạn cần phải chọn vào hộp kiể
 Cũng có một nút bấm để bạn xem qua các add-on sẽ bị vô hiệu.
 Xem phần [hộp thoại các add-on không tương thích #incompatibleAddonsManager] để biết thêm thông tin về nút này.
 
-+++ Sử dụng NVDA ở màn hình đăng nhập Windows +++[StartAtWindowsLogon]
++++ Dùng NVDA trong khi đăng nhập +++[StartAtWindowsLogon]
 Tùy chọn này cho phép NVDA chạy  hoặc không chạy tự động tại màn hình đăng nhập của Windows, trước khi bạn nhập mật khẩu.
 Tùy chọn này cũng áp dụng cho màn hình User Account và các màn hình bảo vệ khác.
 Tùy chọn này mặc định được bật cho các bản cài đặt mới.
@@ -125,7 +129,7 @@ Nếu  được tạo, biểu tượng này cũng được gán phím tắt Ctrl
 
 +++ Chép thư mục cấu hình bản chạy trực tiếp vào thu mục người dùng hiện tại +++[CopyPortableConfigurationToCurrentUserAccount]
 Tùy chọn này sẽ chép thư mục cấu hình của bản NVDA chạy trực tiếp sang thư mục cấu hình của người dùng hiện tại (cho bản cài đặt).
-Nó sẽ không chép tới thư mục cấu hình của các tài khoản người dùng khác trên máy hay tới phần cấu hình hệ thống liên quan đến việc cho phép chạy ở màn hình đăng nhập của Windows cũng như các màn hình bảo vệ.
+Nó sẽ không chép tới thư mục cấu hình của các tài khoản người dùng khác trên máy hay tới phần cấu hình hệ thống liên quan đến việc cho phép chạy ở màn hình đăng nhập của Windows cũng như các màn hình bảo vệ khác.
 Tùy chọn này chỉ có trong quá trình cài đặt NVDA từ bản chạy trực tiếp, không có trong gói cài đặt được tải về.
 
 ++ Tạo bản NVDA chạy trực tiếp ++[CreatingAPortableCopy]
@@ -359,10 +363,7 @@ Khi duyệt đến một đối tượng, bạn có thể xem nội dung của n
 Khi bật chức năng [Làm Nổi Focus #VisionFocusHighlight], vị trí hiện tại của focus hệ thống cũng sẽ được thể hiện một cách trực quan.
 Mặc định thì đối tượng điều hướng sẽ đi cùng với focus hệ thống; tuy nhiên, bạn có thể bật/tắt chế độ này.
 
-Lưu ý, con trỏ nổi mặc định sẽ đi theo [focus hệ thống #SystemFocus], [dấu nháy hệ thống #SystemCaret], cũng như khi duyệt đối tượng và duyệt nội dung.
-Nếu bạn chỉ muốn con trỏ nổi đi theo focus hệ thống và dấu nháy hệ thống, bạn cần phải [cấu hình con trỏ nổi đi theo #BrailleTether] focus hệ thống.
-Trường hợp này, con trỏ braille sẽ không đi theo khi duyệt đối tượng và duyệt nội dung.
-Nếu muốn con trỏ braille đi theo khi duyệt  đối tượng và nội dung, cần phải [cấu hình con trỏ nổi đi theo #BrailleTether] con trỏ duyệt.
+Lưu ý: việc con trỏ nổi đi theo đối tượng điều hướng có thể thiết lập thông qua [Con trỏ nổi đi theo #BrailleTether].
 
 Sử dụng các phím tắt sau để duyệt qua các đối tượng:
 
@@ -390,8 +391,7 @@ Khi duyệt nội dung,  vị trí của con trỏ nháy không bị thay đổi
 Tuy nhiên, mặc định, khi bạn thay đổi vị trí con trỏ nháy thì con trỏ duyệt nội dung cũng sẽ thay đổi và đi theo nó.
 Bạn có thể bật hoặc tắt chế độ này.
 
-Chú ý là mặc định thì màn hình nổi sẽ hiển thị nội dung   ở tại [focus hệ thống #SystemFocus] và  [con trỏ nháy #SystemCaret] chứ không hiển thị nội dung tại vị trí con trỏ duyệt   hoặc trong khi duyệt các đối tượng.
-Vì vậy, nếu bạn muốn màn hình nổi hiển thị nội dung khi duyệt đối tượng và tại vị trí con trỏ duyệt, bạn cần phải [cấu hình đưa con trỏ nổi đi theo #BrailleTether] con trỏ duyệt.
+Lưu ý: việc con trỏ nổi đi theo con trỏ duyệt có thể thiết lập thông qua [Con trỏ nổi đi theo #BrailleTether].
 
 Dưới đây là một số phím tắt dùng để duyệt nội dung:
 %kc:beginInclude
@@ -409,9 +409,9 @@ Dưới đây là một số phím tắt dùng để duyệt nội dung:
 | Đọc ký tự hiện tại | 2 bàn phím số | NVDA+. | không có | Đọc ký tự nơi có con trỏ duyệt. Bấm hai lần để nghe đánh vần mô tả hay ví dụ về ký tự đó. Bấm ba lần để nghe mã cơ số 10 và 16 của ký tự đó |
 | chuyển qua ký tự bên phải | 3 bàn phím số | NVDA+mũi tên phải | Vuốt phải (chế độ văn bản) | chuyển con trỏ duyệt sang ký tự bên phải |
 | chuyển đến  cuối dòng | shift+3 bàn phím số | NVDA+end | không có | chuyển con trỏ duyệt đến cuối dòng hiện tại |
-| Đọc cả vùng văn bản | dấu cộng bàn phím số | NVDA+shift+a | Vuốt xuống 3-ngón (chế độ văn bản) | Đọc cả vùng văn bản từ vị trí con trỏ duyệt hiện tại trở đi |
-| Chọn điểm bắt đầu để sao chép | NVDA+f9 | NVDA+f9 | không có | Đánh dấu điểm bắt đầu của vùng chọn để sao chép. Hành động sao chép vẫn chưa được thực hiện cho đến khi bạn chọn điểm kết. |
-| Chọn điểm kết của vùng chọn và chép | NVDA+f10 | NVDA+f10 | không có | Bấm lần đầu để đánh dấu điểm kết thúc và chọn vùng nội dung từ điểm bắt đầu đến điểm kết.  Bấm lần hai để thực hiện lệnh sao chép nội dung lên bộ nhớ tạm. |
+| Đọc tất cả với con trỏ duyệt | dấu cộng bàn phím số | NVDA+shift+a | Vuốt xuống 3-ngón (chế độ văn bản) | Đọc cả vùng văn bản từ vị trí con trỏ duyệt hiện tại trở đi |
+| Bắt đầu chọn rồi sao chép với con trỏ duyệt | NVDA+f9 | NVDA+f9 | không có | Đánh dấu điểm bắt đầu của vùng chọn để sao chép. Hành động sao chép vẫn chưa được thực hiện cho đến khi bạn chọn điểm kết. |
+| Kết thúc chọn rồi sao chép với con trỏ duyệt | NVDA+f10 | NVDA+f10 | không có | Bấm lần đầu để đánh dấu điểm kết thúc và chọn vùng nội dung từ điểm bắt đầu đến điểm kết thúc.  Nếu dấu nháy hệ thống có thể tiếp cận với nội dung thì nó sẽ được đưa đến nội dung đã chọn. Bấm lần hai để thực hiện lệnh sao chép nội dung lên bộ nhớ tạm. |
 | Chuyển đến điểm bắt đầu để sao chép trong chế độ duyệt | NVDA+shift+f9 | NVDA+shift+f9 | không có | di chuyển con trỏ duyệt đến vị trí đã được chọn là điểm bắt đầu để sao chép |
 | Thông báo định dạng nội dung | NVDA+f | NVDA+f | không có | Thông báo định dạng của nội dung  tại vị trí con trỏ duyệt |
 | Thông báo kí tự thay thế hiện tại | Không có | Không có | Không có | Nói kí tự tại vị trí con trỏ duyệt. Bấm hai lần để hiển thị kí hiệu và văn bản dùng để thay thế ở chế độ duyệt. |
@@ -644,6 +644,10 @@ Ví dụ, bạn dùng mũi tên trái và phải để di chuyển trong biểu 
 Vui lòng đọc [tài liệu hướng dẫn của MathPlayer phần các lệnh di chuyển https://www.dessci.com/en/products/mathplayer/navigation_commands.htm] để biết thêm thông tin.
 
 Bấm escape nếu bạn muốn trở về tài liệu.
+
+Đôi khi, nội dung toán có thể hiển thị như một nút bấm hay một kiểu thành phần khác. Khi được kích hoạt, có thể hiển thị một hộp thoại hay nhiều thông tin liên quan đến công thức.
+Để kích hoạt nút bấm hay thành phần chứa công thức, bấm ctrl+enter.
+
 
 + Chữ Nổi +[Braille]
 Nếu bạn sử dụng màn hình nổi, NVDA có thể hiển thị thông tin dạng chữ nổi.
@@ -890,7 +894,18 @@ Chọn biểu mẫu, bấm enter hoặc nút Chuyển đến để đi đến bi
 %kc:beginInclude
 Bấm NVDA+alt+c để đọc thông báo phần chú thích của ô hiện tại.
 %kc:endInclude
-Có thể liệt kê toàn bộ các chú thích trong bảng tính hiện tại với phần danh sách thành phần.
+Có thể liệt kê toàn bộ các chú thích của bảng tính hiện tại trong phần danh sách thành phần sau khi bấm NVDA+f7.
+
+NVDA cũng có thể hiển thị một hộp thoại để thêm hay chỉnh sửa một chú thích nhất định.
+NVDA thay thế tính năng chỉnh sửa chú thích có sẵn của MS Excel vì các hạn chế về tính tiếp cận, nhưng phím tắt hiển thị hộp thoại được thừa kế từ  MS Excel nên nó cũng hoạt động khi NVDA không chạy.
+%kc:beginInclude
+Để thêm hay chỉnh sửa một chú thích nhất định, tại ô đang có focus, bấm shift+f2.
+%kc:endInclude
+
+Phím tắt này không hiển thị và không thể thay đổi trong hộp thoại quản lý các thao tác của NVDA.
+
+Lưu ý: cũng có thể mở tùy chọn chỉnh sửa chú thích trong MS Excel từ trình đơn ngữ cảnh của bất cứ ô nào trong bảng tính.
+Tuy nhiên, cách này sẽ mở  hộp thoại chỉnh sửa chú thích không tiếp cận và nó không phải là hộp thoại chỉnh sửa chú thích của NVDA.
 
 +++ Đọc Ô Được Bảo Vệ +++[ExcelReadingProtectedCells]
 Bạn có thể không chuyển focus đến các ô trong một tập bảng tính được bảo vệ vì nó bị khóa, không cho phép chỉnh sửa.
@@ -1054,19 +1069,18 @@ Các mức độ log bao gồm:
  - Nếu quan ngại về sự riêng tư thì đừng chọn cấp độ log này.
 - Gỡ lỗi: ngoài các thông tin, cảnh báo và thông điệp  đầu vào / đầu ra, các thông điệp gỡ lỗi bổ sung cũng sẽ được ghi lại.
  - Cũng giống như đầu vào / đầu ra, Nếu quan ngại về sự riêng tư thì đừng nên chọn cấp độ log này.
- -
--
 
-==== Tự khởi động NVDA sau khi đăng nhập vào Windows ====[GeneralSettingsStartAfterLogOn]
-Nếu chọn mục này thì NVDA sẽ tự khởi động sau khi bạn đăng nhập vào Windows.
+
+==== Khởi động NVDA sau khi tôi đăng nhập ====[GeneralSettingsStartAfterLogOn]
+Nếu chọn mục này thì NVDA sẽ tự khởi động khi bạn đăng nhập vào Windows.
 Tùy chọn này chỉ có trên bản cài đặt của NVDA.
 
-==== Sử dụng NVDA ở màn hình đăng nhập Windows ( yêu cầu quyền quản trị) ====[GeneralSettingsStartOnLogOnScreen]
-Nếu đăng nhập vào Windows bằng cách cung cấp tên truy cập và mật khẩu, bật tùy chọn này để NVDA khởi động trong màn hình đăng nhập của windows.
+==== Dùng NVDA trong khi đăng nhập ( yêu cầu quyền quản trị) ====[GeneralSettingsStartOnLogOnScreen]
+Nếu đăng nhập vào Windows bằng cách cung cấp tên truy cập và mật khẩu, bật tùy chọn này để NVDA tự khởi động trong màn hình đăng nhập khi khởi động Windows.
 Tùy chọn này chỉ có trong phiên bản cài đặt của NVDA.
 
-==== Sử dụng cấu hình hiện tại ở màn hình đăng nhập và các màn hình bảo vệ khác (yêu cầu quyền quản trị) ====[GeneralSettingsCopySettings]
-Bấm nút này để sao chép cấu hình hiện tại tới thư mục cấu hình hệ thống của NVDA, khi đó NVDA sẽ sử dụng các cấu hình đó trong màn hình đăng nhập của windows, trong màn hình UAC hay các màn hình bảo vệ khác.
+==== Sử dụng cấu hình hiện tại trong khi đăng nhập và các màn hình bảo vệ (yêu cầu quyền quản trị) ====[GeneralSettingsCopySettings]
+Bấm nút này để sao chép cấu hình hiện tại tới thư mục cấu hình hệ thống của NVDA. Lúc này, NVDA sẽ sử dụng các cấu hình đó trong khi  đăng nhập và khi chạy trong màn hình UAC hay các màn hình bảo vệ khác.
 Để chắc chắn việc sao chép tất cả các thiết lập hiện tại, trước hết, hãy lưu chúng bằng control+NVDA+c hoặc chọn lưu cấu hình từ trình đơn của NVDA.
 Tùy chọn này chỉ có trong phiên bản cài đặt của NVDA.
 
@@ -1285,9 +1299,13 @@ Tùy chọn này cho phép hiển thị các thông điệp của NVDA trên mà
 ==== Đưa Braille Theo ====[BrailleTether]
 Phím tắt: NVDA+control+t
 
-Tùy chọn này cho phép bạn chọn con trỏ nổi sẽ đi theo con trỏ hệ thống, theo con trỏ duyệt hay cả hai.
-Khi chọn "tự động", NVDA sẽ đi theo focus hệ thống và dấu nháy hệ thống.
+Tùy chọn này cho phép bạn chọn con trỏ nổi sẽ đi theo con trỏ / dấu nháy hệ thống, theo con trỏ duyệt / đối tượng điều hướng hay cả hai.
+Khi chọn "tự động", NVDA mặc định sẽ đi theo focus hệ thống và dấu nháy hệ thống.
 Trường hợp này, khi vị trí con trỏ điều hướng đối tượng hay con trỏ duyệt bị thay đổi bởi thao tác cụ thể của người dùng, NVDA sẽ tạm thời đi theo con trỏ duyệt cho đến khi có sự thay đổi của focus hệ thống và dấu nháy hệ thống.
+Nếu muốn nó chỉ đi theo  focus và dấu nháy, bạn cần cấu hình cho con trỏ nổi đi theo focus.
+Trường hợp này, con trỏ nổi sẽ không đi theo con trỏ NVDA trong khi duyệt đối tượng hay con trỏ duyệt trong khi duyệt.
+Nếu muốn con trỏ nổi đi theo khi duyệt đối tượng  và nội dung, bạn cần cấu hình con trỏ nổi đi theo con trỏ duyệt.
+Trường hợp này, con trỏ nổi sẽ không đi theo focus và dấu nháy hệ thống.
 
 ==== Đọc Theo Đoạn ====[BrailleSettingsReadByParagraph]
 Khi bật, nội dung sẽ được hiển thị trên màn hình nổi theo đoạn thay vì dòng.
@@ -1326,7 +1344,7 @@ Nếu chọn là Luôn luôn điền trên màn hình, NVDA sẽ hiển thị đ
 Lựa chọn này có một điểm lợi là NVDA sẽ hiển thị mọi thông tin trên toàn bộ màn hình nếu có thể.
 Tuy nhiên, vị trí bắt đầu có focus trên màn hình luôn luôn khác nhau.
 Nó có thể bất tiện cho bạn khi duyệt một danh sách có nhiều mục trong đó, ví dụ như cần phải di chuyển ngón tay để tìm phần bắt đầu của một mục.
-Đây là lựa chọn mặc định cho phiên bản 2017.2 trở về trước.
+Đây là lựa chọn mặc định cho NVDA 2017.2 trở về trước.
 
 Nếu chọn chỉ hiển thị thông tin ngữ cảnh khi cuộn lại thì mặc định NVDA sẽ không hiển thị thông tin ngữ cảnh trên màn hình nổi.
 Vì vậy, nó chỉ hiển thị bạn đang đứng tại mục có focus.
@@ -1684,6 +1702,7 @@ Bạn có thể chọn các mục sau:
  - Tên phông chữ
  - Cỡ Chữ
  - Thuộc tính phông chữ
+  - Chỉ số trên và chỉ số dưới
  - Nhấn mạnh
  - Kiểu dáng
  - Màu chữ
@@ -1701,7 +1720,7 @@ Bạn có thể chọn các mục sau:
 - Thông tin Bảng
  - Bảng
  - Tiêu đề cho hàng và cột
- - Vị trí của ô trong bảng
+ - Tọa độ ô
  - Đường viền ô [(Tắt, Kiểu dáng, Cả Màu và Kiểu Dáng)
 - Thành phần
  - Tiêu đề
@@ -1782,9 +1801,14 @@ Thiết lập này điều khiển việc các kí tự sẽ được đọc b�
 ==== Dùng hỗ trợ nhập văn bản mới trong  Windows console khi có thể ====[AdvancedSettingsKeyboardSupportInLegacy]
 Tùy chọn này  gọi một phương thức thay thế để nhận các kí tự đã nhập trong Windows command console.
 Trong khi nó cải thiện hiệu suất và ngăn chặn việc đánh vần thông tin đầu ra của console, nó cũng có thể không tương thích với vài ứng dụng terminal .
-Tính năng này tồn tại và mặc định được bật trên Windows 10 phiên bản 1607, 1703, 1709 và 1803, cũng như các phiên bản Windows 10 mới hơn, phát hành khi  UI Automation không có hoặc bị vô hiệu.
+Tính năng này tồn tại và mặc định được bật trên Windows 10 phiên bản 1607trở lên khi  UI Automation không có hoặc bị vô hiệu.
 Cảnh báo: khi bật tùy chọn này, các kí tự được nhập mà không hiển thị trên màn hình như mật khẩu chẳng hạn sẽ không bị bỏ qua.
 Trong những môi trường không an toàn, bạn có thể tạm thời vô hiệu [đọc kí tự khi gõ #KeyboardSettingsSpeakTypedCharacters] và [đọc từ khi gõ #KeyboardSettingsSpeakTypedWords] khi nhập mật khẩu.
+
+==== Cố gắng không đọc các sự kiện lỗi thời của focus ====[CancelExpiredFocusSpeech]
+Bật tùy chọn này để không đọc các sự kiện đã lỗi thời của focus.
+Đặc biệt là khi di chuyển nhanh qua các thư trong Gmail với Chrome có thể làm cho NVDA đọc các thông tin đã lỗi thời.
+Đây là tính năng thử nghiệm của NVDA 2020.2.
 
 ==== Tự đưa con trỏ hệ thống đến các thành phần có thể có focus trong chế độ duyệt ====[BrowseModeSettingsAutoFocusFocusableElements]
 Phím tắt: NVDA+8
@@ -1836,7 +1860,8 @@ Mà trong cửa sổ định nghĩa từ, bạn còn có thể lựa chọn ch�
 Mặc định, NVDA không phân biệt chữ hoa và chữ thường.
 
 Cuối cùng, có một nhóm nút radio cho phép bạn thiết lập để NVDA kiểm tra nơi từ mẫu bị trùng, như trùng cả từ hay xem như một biểu thức phổ thông.
-Thiết lập từ mẫu trùng với cả từ, nghĩa là từ thay thế sẽ được thực thi khi toàn bộ từ đó xuất hiện.
+Thiết lập từ mẫu trùng với cả từ, nghĩa là từ thay thế sẽ được thực thi khi từ đó xuất hiện mà không phải là một phần của một từ khác.
+Sẽ gặp trường hợp này nếu kí tự ngay trước và sau từ đó là bất cứ cái gì khác với một kí tự, một số hay một dấu gạch dưới, hoặc không có kí tự nào cả.
 Ví dụ, khi từ thay thế cho từ mẫu "frogbird" là từ "bird" và chọn thiết lập trùng cả từ, khi gặp từ "birds" hoặc từ "bluebird", từ thay thế sẽ không được xem là trùng cả từ.
 
 Biểu thức phổ thông là kiểu mẫu gồm các ký hiệu đặc biệt, cho phép bạn chỉ định trùng với nhiều ký tự cùng lúc.
@@ -1995,11 +2020,12 @@ Việc xóa một hồ sơ sẽ tự xóa luôn thao tác đã gán cho nó.
 
 Còn với bản NVDA cài đặt thì tất cả các thông tin đó được lưu trong một thư mục đặc biệt của NVDA, trong thư mục hồ sơ người dùng của Windows.
 Điều đó có nghĩa là mỗi người dùng sẽ có một thư mục cấu hình riêng.
-Để truy cập đến thư mục này, bạn vào trình đơn Start của Windows, chọn programs -> NVDA -> explore user configuration directory.
+Để mở thư mục cấu hình từ bất cứ đâu, bạn có thể dùng [Hộp thoại quản lý các thao tác #InputGestures] để gán thao tác / phím tắt.
+Với bản cài đặt của NVDA, tại trình đơn Start của Windows, chọn programs -> NVDA -> explore user configuration directory để mở thư mục này.
 
-Các cấu hình cho màn hình đăng nhập vào Windows, UAC thì được lưu trong thư mục cấu hình hệ thống của NVDA ở thư mục cài đặt.
+Các cấu hình cho NVDA khi chạy ở màn hình đăng nhập hay màn hình UAC được lưu trong thư mục cấu hình hệ thống của NVDA ở thư mục cài đặt.
 Thông thường, bạn không nên can thiệp vào thư mục này.
-Để thay đổi cấu hình cho màn hình đăng nhập vào Windows, bạn thiết lập cấu hình mình muốn, lưu lại, và sau đó chọn mục "Sử dụng cấu hình hiện tại cho màn hình đăng nhập Windows và các màn hình bảo vệ khác" trong phân loại chung của [hộp thoại cấu hình NVDA #NVDASettings].
+Để thay đổi cấu hình cho NVDA trong khi đăng nhập  hay màn hình UAC, hãy thiết lập cấu hình mình muốn khi đã đăng nhập vào Windows, lưu lại, và sau đó chọn mục "Sử dụng cấu hình hiện tại trong khi đăng nhập và các màn hình bảo vệ" trong phân loại chung của [hộp thoại cấu hình NVDA #NVDASettings].
 
 + Các Công Cụ +[ExtraTools]
 
@@ -2016,7 +2042,7 @@ Các mục này có trong trình đơn trình bày của trình hiển thị log
 Để bật, bạn chọn mục "Trình hiển thị nội dung đọc" trong trình đơn "Công cụ" của NVDA.
 Bỏ chọn để tắt chức năng đó.
 
-Bạn cũng có thể bật chức năng này tự động khi khởi động NVDA ở cửa sổ của trình hiển thị nội dung đọc sau khi bật nó lên
+Cửa sổ trình hiển thị nội dung đọc có một hộp kiểm tên "Hiển thị trình hiển thị nội dung đọc khi khởi động".
 Nếu được chọn, chức năng này sẽ tự động bật khi chạy NVDA.
 Cửa sổ trình hiển thị nội dung đọc sẽ được mở lại cùng kích cỡ và vị trí khi nó đóng.
 
@@ -2194,6 +2220,7 @@ Các màn hình nổi sau đây có hỗ trợ chức năng tự nhận biết.
 - Optelec ALVA dòng 6
 - HIMS Braille các dòng Sense/Braille EDGE/Smart Beetle/Sync Braille
 - Các màn hình nổi Eurobraille Esys/Esytime/Iris
+- Các màn hình nổi của Nattiq nBraille
 -
 
 ++ Freedom Scientific dòng Focus / PAC Mate ++[FreedomScientificFocus]
@@ -2499,7 +2526,7 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 ++ Các dòng HIMS Braille Sense/Braille EDGE/Smart Beetle ++[Hims]
 NVDA hỗ trợ các màn hình Braille Sense, Braille EDGE, Smart Beetle và Sync của [Hims https://www.hims-inc.com/] khi kết nối qua cổng USB hay bluetooth.
 Bạn cần phải cài trình điều khiển nếu kết nối qua cổng USB.
-Bạn có thể tải về tại đây: https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+Bạn có thể tải về tại đây: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
 Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
@@ -2767,7 +2794,7 @@ Sau đây là các dòng sản phẩm được hỗ trợ:
 - BrailleNote Apex (kết nối qua bluetoothe và USB)
 -
 
-Với BrailleNote Touch, vui lòng xem phần [các dòng màn hình nổi Brailliant BI / BrailleNote Touch HumanWareBrailliant].
+Với BrailleNote Touch, vui lòng xem phần [các dòng màn hình nổi Brailliant BI / BrailleNote Touch #HumanWareBrailliant].
 
 Trừ BrailleNote PK, cả  bàn phím chữ nổi  (BT) và  QWERTY (QT) đều được hỗ trợ.
 Với BrailleNote QT,  PC keyboard emulation không được hỗ trợ.
@@ -2845,7 +2872,7 @@ Sau đây là các lệnh được gán cho bánh xe cuộn:
 | Phím mũi tên xuống | downArrow |
 | Phím mũi tên trái | leftArrow |
 | Phím mũi tên phải | rightArrow |
-| Phím Enter | center button |
+| Phím Enter | centre button |
 | Phím Tab | scroll wheel clockwise |
 | Phím Shift+tab | scroll wheel counterclockwise |
 %kc:endInclude
@@ -2931,7 +2958,7 @@ Vui lòng xem Tài Liệu của màn hình cho phần mô tả vị trí các ph
 | Phím mũi tên phải | dot5+space, joystick2Right, rightArrow |
 | Phím mũi tên lên | dot1+space, joystick2Up, upArrow |
 | Phím mũi tên xuống | dot6+space, joystick2Down, downArrow |
-| Phím enter | joystick2Center |
+| Phím enter | joystick2centre |
 | Phím trang trước | dot1+dot3+space |
 | Phím trang sau | dot4+dot6+space |
 | Phím numpad1 | dot1+dot6+backspace |
@@ -2980,6 +3007,22 @@ Vui lòng xem Tài Liệu của màn hình cho phần mô tả vị trí các ph
 | ToggleHID keyboard input simulation | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
 %kc:endInclude
 
+++ Các màn hình của Nattiq nBraille ++[NattiqTechnologies]
+NVDA Hỗ trợ các màn hình của [Nattiq Technologies https://www.nattiq.com/] khi kết nối qua USB.
+Windows 10 tự nhận màn hình khi được kết nối, có thể bạn cần phải cài trình điều khiển USB nếu dùng các phiên bản windows cũ (thấp hơn Win10).
+Bạn có thể tải chúng từ trang web của nhà sản xuất.
+
+Sau đây là các phím tắt gán cho các màn hình của Nattiq Technologies với NVDA.
+Vui lòng xem Tài Liệu của màn hình cho phần mô tả vị trí các phím.
+%kc:beginInclude
+|| Tên | Phím |
+| Cuộn màn hình về trước | up |
+| Cuộn màn hình về sau | down |
+| Chuyển về dòng trước | left |
+| Chuyển đến dòng kế | right |
+| Đưa đến ô chữ nổi | routing |
+%kc:endInclude
+
 ++ BRLTTY ++[BRLTTY]
 [BRLTTY https://www.brltty.com/] là một chương trình đọc lập, có thể sử dụng để hỗ trợ nhiều dòng màn hình nổi hơn.
 Để sử dụng, bạn phải cài đặt [BRLTTY for Windows https://www.brltty.com/download.html].
@@ -2992,7 +3035,7 @@ Vì vậy, sẽ không cần bảng mã chữ nổi đầu vào của NVDA.
 BRLTTY không liên quan đến việc hỗ trợ tính năng  ngầm tự nhận biết của NVDA.
 
 Sau đây là các lệnh của BRLTTY được gán cho NVDA.
-Vui lòng xem [Danh sách phím tắt BRLTTY https://mielke.cc/brltty/doc/KeyBindings/] để biết thêm thông tin về cách thức các lệnh của BRLTTY kết hợp với các điều khiển trên màn hình nổi.
+Vui lòng xem [Danh sách phím kết hợp của BRLTTY http://mielke.cc/brltty/doc/KeyBindings/] để biết thêm thông tin về cách thức các lệnh của BRLTTY kết hợp với các điều khiển trên màn hình nổi.
 %kc:beginInclude
 || Tên | Lệnh BRLTTY |
 | Cuộn về trước | fwinlt (về trái một cửa sổ) |
@@ -3036,14 +3079,14 @@ Sau đây là các tùy chọn dòng lệnh cho NVDA:
 | -l LOGLEVEL | --log-level=LOGLEVEL | Cấp độ thấp nhất của thông điệp log (dò lỗi 10, đầu vào / đầu ra 12, cảnh báo gỡ lỗi 15, thông tin 20, cảnh báo 30, lỗi 40, nghiêm trọng 50, tắt 100), mặc định là cảnh báo |
 | -c CONFIGPATH | --config-path=CONFIGPATH | Đường dẫn để lưu tất cả cấu hình của NVDA |
 | -m | --minimal | Không âm thanh, không giao diện, không thông báo bắt đầu, v...v... |
-| -s | --secure | Chế độ an toàn: tắt Python console, các tính năng của hồ sơ như tạo, xóa, đổi tên hồ sơ, v...v..., kiểm tra cập nhật vài hộp kiểm trong hộp thoại chào mừng và phân loại thiết lập chung (ví dụ: khởi động NVDA sau khi đăng nhập, lưu cấu hình sau khi thoát, v...v...),  cũng như trình xem log và tính năng ghi log (thường dùng ở màn hình bảo vệ). Lưu ý rằng lệnh này cũng sẽ vô hiệu hóa việc lưu thiết lập trong cấu hình hệ thống và gesture map sẽ không được lưu xuống đĩa. |
+| -s | --secure | Chế độ an toàn: tắt Python console, các tính năng của hồ sơ như tạo, xóa, đổi tên hồ sơ, v...v..., kiểm tra cập nhật, vài hộp kiểm trong hộp thoại chào mừng và phân loại thiết lập chung (ví dụ: dùng NVDA trong khi đăng nhập, lưu cấu hình sau khi thoát, v...v...),  cũng như trình xem log và tính năng ghi log (thường dùng ở màn hình bảo vệ). Lưu ý rằng lệnh này cũng sẽ vô hiệu hóa việc lưu thiết lập trong cấu hình hệ thống và hệ thống thao tác sẽ không được lưu xuống đĩa. |
 | Không có | --disable-addons | Các add-on không có hiệu lực |
 | Không có | --debug-logging | Bật cấp độ bản ghi dò lỗi cho lần chạy này. Thiết lập này được ghi đè lên các cấp độ bản ghi khác ( ""--loglevel"", -l) tham số được cung cấp, bao gồm tùy chọn tắt log. |
 | Không có | --no-logging | Tắt log hoàn toàn khi dùng NVDA. Thiết lập này có thể bị ghi đè nếu một cấp độ log ( ""--loglevel"", -l) được chỉ định từ dòng lệnh hoặc bản ghi dò lỗi đã được bật. |
 | Không có | --no-sr-flag  | Không thay đổi flag trình đọc màn hình hệ thống toàn cục |
 | Không có | --install | Cài NVDA (cài một bản mới của NVDA) |
 | Không có | --install-silent | Cài đặt NVDA ở chế độ im lặng (không chạy lên sau khi cài đặt) |
-| Không có | --enable-start-on-logon=True|False | trong khi cài đặt, bật NVDA [chạy ở màn hình đăng nhập của Windows #StartAtWindowsLogon] |
+| Không có | --enable-start-on-logon=True|False | trong khi cài đặt, cho NVDA [chạy trong khi đăng nhập Windows #StartAtWindowsLogon] |
 | Không có | --create-portable | Tạo bản NVDA chạy trực tiếp (chạy lên sau khi tạo). yêu cầu khai báo đường dẫn cho bản chạy trực tiếp |
 | Không có | --create-portable-silent | Tạo bản NVDA chạy trực tiếp ở chế độ im lặng (không chạy lên sau khi cài). yêu cầu khai báo đường dẫn cho bản chạy trực tiếp |
 | Không có | --portable-path=PORTABLEPATH | đường dẫn để tạo bản chạy trực tiếp |
