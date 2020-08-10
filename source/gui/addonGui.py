@@ -149,7 +149,7 @@ class AddonsDialog(
 		"""
 		return None
 
-	helpIds = "AddonsManager"
+	helpId = "AddonsManager"
 
 	def __new__(cls, *args, **kwargs):
 		instance = AddonsDialog._instance()
