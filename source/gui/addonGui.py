@@ -6,6 +6,7 @@
 
 import os
 import weakref
+from locale import strxfrm
 
 import addonAPIVersion
 import wx
@@ -257,7 +258,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		mainSizer.Add(
 			wx.StaticLine(self),
 			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.TOP | wx.BOTTOM | wx.EXPAND
+			flag=wx.ALL | wx.EXPAND
 		)
 
 		# Translators: The label of a button to close the Addons dialog.
@@ -297,13 +298,22 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			self.refreshAddonsList()
 
 	def onRemoveClick(self,evt):
-		index=self.addonsList.GetFirstSelected()
-		if index<0: return
-		# Translators: Presented when attempting to remove the selected add-on.
-		if gui.messageBox(_("Are you sure you wish to remove the selected add-on from NVDA?"),
+		index = self.addonsList.GetFirstSelected()
+		if index < 0:
+			return
+		addon = self.curAddons[index]
+		if gui.messageBox(
+			(_(
+				# Translators: Presented when attempting to remove the selected add-on.
+				# {addon} is replaced with the add-on name.
+				"Are you sure you wish to remove the {addon} add-on from NVDA? "
+				"This cannot be undone."
+			)).format(addon=addon.name),
 			# Translators: Title for message asking if the user really wishes to remove the selected Addon.
-			_("Remove Add-on"), wx.YES_NO|wx.ICON_WARNING) != wx.YES: return
-		addon=self.curAddons[index]
+			_("Remove Add-on"),
+			wx.YES_NO | wx.NO_DEFAULT | wx.ICON_WARNING
+		) != wx.YES:
+			return
 		addon.requestRemove()
 		self.refreshAddonsList(activeIndex=index)
 		self.addonsList.SetFocus()
@@ -355,7 +365,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.addonsList.DeleteAllItems()
 		self.curAddons=[]
 		anyAddonIncompatible = False
-		for addon in addonHandler.getAvailableAddons():
+		for addon in sorted(addonHandler.getAvailableAddons(), key=lambda a: strxfrm(a.manifest['summary'])):
 			self.addonsList.Append((
 				addon.manifest['summary'],
 				self.getAddonStatus(addon),
@@ -730,8 +740,13 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		# Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
 		button = buttonSizer.addButton(self, label=_("&Close"), id=wx.ID_CLOSE)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
-		sHelper.addDialogDismissButtons(buttonSizer)
-		mainSizer.Add(settingsSizer, border=20, flag=wx.ALL | wx.EXPAND, proportion=1)
+		sHelper.addDialogDismissButtons(buttonSizer, separated=True)
+		mainSizer.Add(
+			settingsSizer,
+			border=guiHelper.BORDER_FOR_DIALOGS,
+			flag=wx.ALL | wx.EXPAND,
+			proportion=1
+		)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 

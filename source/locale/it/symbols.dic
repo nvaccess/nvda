@@ -47,10 +47,13 @@ negative number	meno	none	norep
 $	dollari	all	norep
 £	lire sterline	all	norep
 €	euro	all	norep
-¢	Cents	all	norep
+¢	Centesimi	all	norep
 ¥	Yen	all	norep
-₹	Rupia	some	norep
+₹	Rupie	some	norep
+ƒ	fiorini	all	norep
+¤	segno di valuta	all	norep
 %	percento	some	norep
+‰	per mille	some
 &	and	some	norep
 '	apostrofo	all
 (	aperta parentesi	most
@@ -78,7 +81,16 @@ _	sottolineato	most
 {	aperta graffa	most
 }	chiusa graffa	most
 |	barra verticale	most
+¦	barra interrotta	most
 ~	tilde	most
+¡	punto esclamativo invertito	some
+¿	punto interrogativo invertito	some
+·	punto medio	most
+‚	singola virgoletta bassa	most
+„	doppia virgoletta bassa
+′	primo	some
+″	doppio primo	some
+‴	triplo primo	some
 
 # Other characters
 •	puntato	some
@@ -90,30 +102,69 @@ _	sottolineato	most
 ’	chiuso apostrofo	most
 –	trattino	most
 —	trattino lungo	most
+­	trattino	most
+⁃	puntato	none
 ●	puntato	most
 ¨	dieresi	most
+¯	macron	most
+´	acuto	most
+¸	cedilla	most
 ‎	marcatore da sinistra a destra	char
 ‏	marcatore da destra a sinistra	char
+¶	indicatore di paragrafo	most
 	puntato	some
 ■	puntato	some
 ▪	puntato	some
 ◾	puntato	some
+□	puntato	some
 ◦	puntato	some
 §	paragrafo	all
 ⇒	doppia freccia a destra	some
 ⇨	freccia a destra bianca	some
+➔	freccia a destra	some
 ➢	punta di freccia a destra	some
 ❖	puntato	some
 ♣	puntato	some
 ♦	puntato	some
-§	section	all
+◆	puntato	some
+§	sezione	all
 °	gradi	all	always	#per Loquendo
 «	aperte doppie virgolette
 »	chiuse doppie virgolette
 µ	micro	some
-¹	1 apice	some
-²	2 apice	some
-³	3 apice	some
+º	gradi cardinali ordinari	some
+ª	apice a	some
+⁰	apice 0	some
+¹	apice 1	some
+²	apice 2	some
+³	apice 3	some
+⁴	apice 4	some
+⁵	apice 5	some
+⁶	apice 6	some
+⁷	apice 7	some
+⁸	apice 8	some
+⁹	apice 9	some
+⁺	apice più	some
+⁻	apice meno	some
+⁼	apice uguale	some
+⁽	apice genitore sinistro	some
+⁾	apice genitore destro	some
+ⁿ	apice n	some
+₀	pedice 0	some
+₁	pedice 1	some
+₂	pedice 2	some
+₃	pedice 3	some
+₄	pedice 4	some
+₅	pedice 5	some
+₆	pedice 6	some
+₇	pedice 7	some
+₈	pedice 8	some
+₉	pedice 9	some
+₊	pedice piu	some
+₋	pedice meno	some
+₌	pedice uguale	some
+₍	pedice genitore sinistro	some
+₎	pedice genitoredestro 	some
 ®	registered	some
 ™	Trademark	some
 ©	Copyright	some
@@ -127,6 +178,11 @@ _	sottolineato	most
 ✓	segno di spunta	some
 ✔	segno di spunta	some
 🡺	freccia destra	some
+†	pugnale	some
+‡	doppio pugnale	some
+‣	proiettile triangolare	none
+✗	proiettile a forma di X.	none
+￼	carattere di sostituzione dell'oggetto	none
 
 #Mathematical Operators U+2200 to U+220F
 ∀	per ogni 	none
@@ -159,6 +215,7 @@ _	sottolineato	most
 ∦	NON PARALLELO A	none
 ∧	AND LOGICO	none
 ∨	OR LOGICO	none
+¬	not logico	none
 ∩	INTERSEZIONE	none
 ∪	UNIONE	none
 ∫	INTEGRALE	none
@@ -176,6 +233,9 @@ _	sottolineato	most
 ⟺	se e solo se	some
 
 # Vulgur Fractions U+2150 to U+215E
+¼	un quarto	none
+½	mezzo	none
+¾	tre quarti	none
 ⅐	un settimo	none
 ⅑	un nono	none
 ⅒	un decimo	none

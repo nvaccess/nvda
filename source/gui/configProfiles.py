@@ -85,11 +85,9 @@ class ProfilesDialog(wx.Dialog):
 		self.disableTriggersToggle.Value = not config.conf.profileTriggersEnabled
 		sHelper.addItem(guiHelper.associateElements(triggersButton,self.disableTriggersToggle))
 
-		# Translators: The label of a button to close a dialog.
-		closeButton = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
-		closeButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
-		sHelper.addDialogDismissButtons(closeButton)
-		self.Bind(wx.EVT_CLOSE, self.onClose)
+		sHelper.addDialogDismissButtons(wx.CLOSE, separated=True)
+		# Not binding wx.EVT_CLOSE here because of https://github.com/wxWidgets/Phoenix/issues/672
+		self.Bind(wx.EVT_BUTTON, self.onClose, id=wx.ID_CLOSE)
 		self.EscapeId = wx.ID_CLOSE
 
 		if globalVars.appArgs.secure:
@@ -340,14 +338,14 @@ class TriggersDialog(wx.Dialog):
 		self.profileList = sHelper.addLabeledControl(profileText, wx.Choice, choices=profileChoices)
 		self.profileList.Bind(wx.EVT_CHOICE, self.onProfileListChoice)
 
-		closeButton = sHelper.addDialogDismissButtons(wx.Button(self, wx.ID_CLOSE, label=_("&Close")))
-		closeButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
-		self.Bind(wx.EVT_CLOSE, self.onClose)
+		sHelper.addDialogDismissButtons(wx.CLOSE, separated=True)
+		# Not binding wx.EVT_CLOSE here because of https://github.com/wxWidgets/Phoenix/issues/672
+		self.Bind(wx.EVT_BUTTON, self.onClose, id=wx.ID_CLOSE)
 		self.AffirmativeId = wx.ID_CLOSE
-		closeButton.SetDefault()
 		self.EscapeId = wx.ID_CLOSE
 
 		self.onTriggerListChoice(None)
+
 		mainSizer.Add(sHelper.sizer, border = guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
@@ -405,9 +403,11 @@ class NewProfileDialog(wx.Dialog):
 		self.autoProfileName = ""
 		self.onTriggerChoice(None)
 
-		sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK | wx.CANCEL))
+		sHelper.addDialogDismissButtons(wx.OK | wx.CANCEL, separated=True)
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
+		self.AffirmativeId = wx.ID_OK
+		self.EscapeId = wx.ID_CANCEL
 
 		mainSizer.Add(sHelper.sizer, border = guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)

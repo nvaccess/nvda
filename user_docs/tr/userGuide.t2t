@@ -27,7 +27,7 @@ NVDA, kör ve az görenlerin Windows işletim sistemi ve sistemde kurulu birçok
 - Kullanımı kolay konuşan kurulum uygulaması
 - 54 dile çevrilmiş oluşu
 - 32 ve 64 bit dahil modern Windows işletim sistemlerinin desteklenmesi
-- Windows Logon ve diğer güvenlik ekranlarında çalışabilme özelliği
+- Windows Logon ve diğer güvenli ekranlarda çalışabilme özelliği
 - Dokunmatik hareketlerle metin ve kontrollerin bildirimi
 - Microsoft Active Accessibility, Java Access Bridge, IAccessible2 ve UI Automation gibi yaygın erişilebilirlik arayüzlerinin desteklenmesi
 - Windows Komut İstemi ve Console uygulamalarının desteklenmesi
@@ -56,10 +56,14 @@ NVDA birçok dilde kısaltmalı, kısaltmasız ve bilgisayar braille kodlarını
 ++ Lisans ve Kopya Hakkı ++[LicenseAndCopyright]
 NVDA kopya hakkı NVDA_COPYRIGHT_YEARS NVDA katkı sağlayanlarına aittir.
 
-NVDA GNU General Public License (Version 2) (Yeni Genel Kamu Lisansı Sürüm2) tarafından korunmaktadır.
+NVDA GNU General Public License (Version 2) (Yeni Genel Kamu Lisansı Sürüm2) ile iki özel istisna dışında kullanılabilir.
+İstisnalar, lisans belgesinde "Eklentiler ve Sürücülerdeki GPL Olmayan Bileşenler" ve "Microsoft Dağıtılabilir Kodu" bölümlerinde özetlenmiştir.
+NVDA ayrıca farklı ücretsiz ve açık kaynak lisansları altında kullanıma sunulan bileşenleri içerir ve kullanır.
 Programı, lisans şartlarına uyduğunuz ve kodlarını isteyen kişilerle de paylaştığınız müddetçe, kullanmakta, dağatmakta ve istediğiniz biçimde değiştirmekte özgürsünüz.
 Bu, Özgün ve değiştirilmiş yazılım kopyaları ile, bu kodları kullanan diğer yazılımlar için geçerlidir. 
+
 Daha fazla detay için [Tam lisansı görüntüleyebilirsiniz. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+İstisnalarla ilgili ayrıntılar için "yardım" bölümünün altındaki NVDA menüsünden lisans belgesine erişin.
 
 + Sistem Gereksinimleri +[SystemRequirements]
 - İşletim Sistemleri: Windows 7, windows 8, Windows 8.1, Windows 10 ve Windows Server 2008 R2'den itibaren Server işletim sistemleri dahil, işletim sistemlerinin tüm 32 ve 64 bit sürümleri.
@@ -359,10 +363,7 @@ Nesne dolaşım komutlarıyla bir nesne üzerine geldikten sonra, nesneyi [metin
 [Odak vurgulaması #VisionFocusHighlight] etkinse, geçerli nesne sunucusunun konumu  görsel olarak da gösterilir.
 Varsayılan olarak, nesne sunucusu sistem odağıyla birlikte hareket eder; ancak bu özellik kapatılıp açılabilir.
 
-Braille'in varsayılan olarak nesne sunucusu ve inceleme imlecinin yanında [odağı #SystemFocus] ve [düzenleme imlecini #SystemCaret] takip ettiğini not edin.
-Yalnızca odağı ve düzenleme imlecini takip etsin istiyorsanız, [braille'i taşıyacak imleç olarak #BrailleTether] odağı seçmelisiniz.
-Bu durumda, braille nesne sunucusunu ve inceleme imlecini takip etmez.
-Yalnızca nesne sunucusunu ve metin inceleme imlecini takip etmesini istiyorsanız, [braillein takip edeceği imleç #BrailleTether] olarak inceleme imlecini ayarlamalısınız.
+Not: Braille'in nesne sunucusunu takibi  [Braille taşınsın #BrailleTether] altından ayarlanabilir.
 
 Nesneler arasında dolaşmak için aşağıdaki komutları kullanın:
 
@@ -390,8 +391,7 @@ Bu, windows komut konsolu ve sistem imlecinin çok kısıtlı olduğu veya hiç 
 Ancak, varsayılan olarak, sistem odağı hareket ettikçe, inceleme imleci de onu takip etmektedir.
 Bu özellik açılıp kapatılabilir.
 
-Braille'in varsayılan olarak nesne sunucusunu ve inceleme imlecini değil; [odağı #SystemFocus] ve [düzenleme imlecini #SystemCaret] takip ettiğini not edin.
-Nesne sunucusunu ve metin inceleme imlecini takip etmesini istiyorsanız, [braillein takip edeceği imleç #BrailleTether] olarak inceleme imlecini ayarlamalısınız.
+Not: Braille'in inceleme imlecini  takibini [Braille taşınsın #BrailleTether] altından ayarlayabilirsiniz.
 
 Metni incelerken, aşağıdaki komutlar kullanılabilir:
 %kc:beginInclude
@@ -645,6 +645,10 @@ Lütfen dolaşma komutlarıyla ilgili daha fazla bilgi için MathPlayer belgeler
 
 Matematiksel içeriğe sahip olan belgeye geri dönmek istediğinizde, basitçe escape tuşuna basmanız yeterli.
 
+Bazen matematiksel içerik, etkinleştirildiğinde formülle ilgili bir iletişim kutusu veya daha fazla bilgi gösterebilen bir düğme veya başka bir öğe türü olarak görüntülenebilir.
+Düğmeyi veya formülü içeren öğeyi etkinleştirmek için ctrl + enter tuşlarına basın.
+
+
 + Braille +[Braille]
 Eğer braille ekrana sahipseniz, NVDA bilgileri braille olarak gösterebilir.
 Braille ekranınızın perkins tarzı bir klavyesi varsa, kısaltmalı ya da kısaltmasız braille girişi de yapabilirsiniz.
@@ -847,7 +851,7 @@ Microsoft Word'de tarama kipi etkinken, öğe listesine NVDA+F7 tuşlarına basa
 %kc:beginInclude
 İmleç konumundaki yorumu okumak için, NVDA+alt+c tuşlarına basın.
 %kc:endInclude
- Belgedeki tüm değişiklik ve yorumlar, tür bölümünden "Yorum" seçeneği tercih edilerek NVDA Öğe Listesi iletişim kutusunda da listelenebilir.
+ Belgedeki tüm değişiklik ve yorumlar, tür bölümünden "Yorum" seçeneği tercih edilerek NVDA+F7 ile açılan Öğe Listesi iletişim kutusunda da listelenebilir.
  
 ++ Microsoft Excel ++[MicrosoftExcel]
 
@@ -890,7 +894,18 @@ Bir form alanını seçip entır tuşuna ya da git düğmesine basarak tarama ki
 %kc:beginInclude
 Üzerinde bulunduğunuz hücreyle ilgili yorumu okumak için NVDA+alt+c tuşlarını kullanın.
 %kc:endInclude
-Çalışma sayfasındaki tüm yorumlar NVDA öğe listesinde de gösterilebilir.
+Çalışma sayfasındaki tüm yorumlar NVDA+F7 ile açılan öğe listesinde de gösterilebilir.
+
+NVDA ayrıca  bir yorum eklenmesi  veya düzenlenmesi için bir iletişim kutusu açabilir.
+NVDA, erişilebilirlik kısıtlamaları nedeniyle yerel MS Excel bölge düzenleme özelliğini geçersiz kılar, ancak iletişim kutusunu görüntülemek için kullanılan kısayol tuşu  MS Excel'den devralınır ve bu nedenle NVDA aktif değilken de çalışır.
+%kc:beginInclude
+Bir yorum eklemek veya düzenlemek için, odaklanmış bir hücrede, shift + f2 tuşlarına basın.
+%kc:endInclude
+
+Bu kısayol tuşu NVDA girdi hareketleri altında gösterilmez ve dolayısıyla değiştirilemez.
+
+Not: MS Excel'de yorum düzenleme bölgesini, çalışma sayfasının herhangi bir hücresinin bağlam menüsünden de açmak mümkündür.
+Ancak bu, NVDA'ya özgü yorum düzenleme iletişim kutusunu değil, erişilebilir olmayan yorum düzenleme bölgesini açar.
 
 +++ Korunan Hücreleri Okuma +++[ExcelReadingProtectedCells]
 Bir çalışma kitabı korunuyorsa, düzenleme için kilitlenmiş hücrelere ulaşmak mümkün olmayabilir.
@@ -1054,8 +1069,7 @@ Mevcut günlük tutma seviyeleri:
  - Gizlilik konusunda endişeleriniz varsa, günlük düzeyini bu seçeneğe ayarlamayın.
 - Hata ayıklama: Bilgi, uyarı ve girdi/çıktı mesajlarına ek olarak, ek hata ayıklama mesajları kaydedilecektir.
  - Girdi/çıktı ayarında  olduğu gibi, gizlilikten endişe duyuyorsanız, günlük kaydı seviyesini bu seçeneğe ayarlamamalısınız.
- -
--
+
 
 ==== NVDA'yı Windowsu açınca Otomatik Olarak Başlat ====[GeneralSettingsStartAfterLogOn]
 Bu seçenek etkinleştirilirse, Windowsta oturum açar açmaz NVDA otomatik olarak başlayacaktır.
@@ -1288,6 +1302,10 @@ Kısayol tuşu: NVDA+kontrol+t
 Bu seçenek Braille ekranın sistem imlecini mi, nesne sunucusu/inceleme imlecini mi yoksa her ikisini de mi izleyeceğini belirlemenizi sağlar.
 "Otomatik olarak" seçildiğinde, NVDA varsayılan olarak odağı ve düzenleme imlecini takip eder.
 Bu durumda, kullanıcı nesne sunucusunun ya da inceleme imlecinin konumunu değiştirirse, NVDA geçici olarak inceleme imlecini takip eder, odak ya da düzenleme imlecinin konumu değişene kadar.
+Sadece odağı ve sistem düzenleme imlecini takip etmesini istiyorsanız, braille'in odak tarafından taşınmasını ayarlayabilirsiniz.
+Bu durumda, braille nesne navigasyonu sırasında NVDA nesne sunucusunu veya inceleme sırasında inceleme imlecini takip etmez.
+Braille'in nesne sunucusu ve metin inceleme imlecini takip etmesini  istiyorsanız, braille'in inceleme imleci tarafından taşınmasını ayarlayabilirsiniz.
+Bu durumda braille sistem odağını ve düzenleme imlecini takip etmez.
 
 ==== Paragraf Paragraf Oku ====[BrailleSettingsReadByParagraph]
 Etkinleştirilirse, braille yazı satır yerine paragraf bazında görüntülenir.
@@ -1456,7 +1474,7 @@ Bu seçenek, yalnızca NVDA'nın [Belge format ayarları #DocumentFormattingSett
 
 ==== Diğer uygulamaların kullandığı tuşları işle ====[KeyboardSettingsHandleKeys]
 Bu seçenek kullanıcının ekran klavyeleri ve konuşma tanıma uygulamaları gibi yazılımların tuşlarının NVDA tarafından işlenip işlenmeyeceğini kontrol etmesini sağlar. 
-Bu seçenek varsayılan olarak etkindir, bazı kullanıcılar bunu kapatmak isteyebilir, örneğin Vietnamca yazmak için Unikey yazma programı kullananlar.
+Seçenek varsayılan olarak etkindir, bazı kullanıcılar bunu kapatmak isteyebilir, örneğin Vietnamca yazmak için Unikey yazma programı kullananlar.
 
 +++ Fare (NVDA+kontrol+m) +++[MouseSettings]
 NVDA Ayarları iletişim kutusundaki Fare kategorisi, NVDA'nın fare hareketlerini takip etmesini, fare koordinatlarına dayanarak kullanıcıyı sesli olarak bilgilendirmesini ve diğer fare seçenekleriyle ilgili değişiklikler yapılmasını sağlar.
@@ -1684,6 +1702,7 @@ Belge biçimlendirme seçenekleri gruplar halinde düzenlenmiştir.
 - Yazı tipi adı
 - Yazı tipi boyutu
 - Yazı tipi özellikleri
+ - Üst ve alt simgeler
 - Vurgu
 - Stil
 - Renkler
@@ -1782,9 +1801,14 @@ Bu ayar ekranın güncellenmediği durumlarda (şifre girişi gibi) UI otomasyon
 ==== Mevcutsa Windows Konsolu'nda yeni yazılan karakter desteğini kullan ====[AdvancedSettingsKeyboardSupportInLegacy]
 Bu seçenek, Windows komut konsollarında yazılan karakterleri algılamak için alternatif bir yöntem sunar.
 Performansı artırıp bazı konsol çıktılarının hecelenmesini engellerken, bazı terminal programlarıyla uyumlu olmayabilir.
-Bu özellik, varsayılan olarak Windows 10 sürüm 1607, 1703, 1709 ve 1803'te ve UI Automation kullanılamadığında veya devre dışı bırakıldığında daha yeni Windows 10 sürümlerinde kullanılabilir.
+Bu özellik varsayılan olarak etkindir, Windows 10 1607 ve sonraki sürümlerde ve UI Automation kullanılamadığında veya devre dışı bırakıldığında kullanılabilir.
 Dikkat: bu seçenek etkin durumdayken, şifreler gibi ekranda görünmeyen yazılan karakterler gizlenmez.
 Güvensiz ortamlarda, parola girerken [karakterleri seslendir #KeyboardSettingsSpeakTypedCharacters] ve [sözcükleri seslendir #KeyboardSettingsSpeakTypedWords] özelliklerini geçici olarak kapatabilirsiniz.
+
+==== Süresi dolmuş odak etkinlikleri için konuşmayı iptal etmeyi dene ====[CancelExpiredFocusSpeech]
+Bu seçenek, süresi dolmuş odak olayları için konuşmanın iptal edilmesi  davranışını etkinleştirir.
+Özellikle Chrome ile Gmail'deki mesajlarda hızlı bir şekilde hareket etmek NVDA'nın artık geçerli olmayan bilgileri konuşmasına neden olabilir.
+Bu işlev NVDA 2020.2'den itibaren deneysel olarak eklenmiştir.
 
 ==== Sistem Odağı Tarama kipi imlecini takip etsin ====[BrowseModeSettingsAutoFocusFocusableElements]
 Kısayol: NVDA+8
@@ -1836,7 +1860,8 @@ Kural ekle diyaloğunda ayrıca, kuralın büyük küçük harf duyarlı olup ol
 Yani NVDA sözcüğün büyük ya da küçük yazılışına bakabilir. Varsayılan olarak NVDA büyük küçük harfleri yoksaymaktadır.
 
 Son olarak, bir dizi seçim düğmesi, NVDA'ya girdiğiniz ifadenin her yerde mi, ifadenin tamamı tek başına bir sözcük oluşturduğu taktirde mi tanımladığınız gibi seslendirileceğini ya da ifadeye düzenli ifade olarak "Regular expression" muamele edileceğini belirlemenizi sağlar.
-İfade türünün sözcüğün tamamı olarak ayarlanması, yerine koyma işleminin ancak ifade daha geniş bir sözcüğün parçası değilse yapılacağı anlamına gelir; Örn, girilen sözcüğün önünde ya da sonunda herhangi bir harf ya da sayı yoksa ifadenin yerine olarak değiştir alanına girilen ifade konur.
+İfade türünün sözcüğün tamamı olarak ayarlanması, yerine koyma işleminin ancak ifade daha geniş bir sözcüğün parçası değilse yapılacağı anlamına gelir.
+Örn, girilen sözcüğün önünde ya da sonunda herhangi bir harf ya da sayı ya da alt çizgi  yoksa ifadenin yerine olarak değiştir alanına girilen ifade konur.
 Öyleyse, yukarıdaki "kuş" ifadesini "kurbağa" ile değiştirme örneğini kullanırsak, ifadenin tamamı seçeneği tercih edildiyse, "kuşlar" ifadesi "kurbağalar" olarak seslendirilmez.
 
 Bir düzenli ifade, içinde bir seferde birden fazla karakterle eşleştirme yapmanızı sağlayan özel karakterler barındıran bir öbektir.
@@ -1995,11 +2020,12 @@ NVDA taşınabilir sürümü, tüm ayarları, kişisel uygulama modüllerini ve 
 
 Kurulabilir NVDA sürümü ise, tüm ayarları, kişisel uygulama modülleri ve kişisel sürücüleri Windows kullanıcı profilinizde bulunan özel bir NVDA dizininde saklar.
 Yani, sistemdeki her kullanıcının kendi NVDA ayarları olabilir.
-Kurulu bir NVDA sürümünde kendi ayarlarınızın olduğu dizine gitmek için, başlat menüsünden sırasıyla programlar -> NVDA -> Kullanıcı Konfigürasyon Dizinine Gözat bölümüne girebilirsiniz.
+Konfigürasyon dizinini herhangi bir yerden açmak için [girdi hareketleri iletişim kutusunu  #InputGestures] kullanarak bir kısayol tuşu atayabilirsiniz.
+Kurulu bir NVDA sürümünde kullanıcı konfigürasyon  dizinine gitmek için, başlat menüsünden sırasıyla programlar -> NVDA -> Kullanıcı Konfigürasyon Dizinine Gözat bölümüne girebilirsiniz.
 
 Logon ve Kullanıcı hesapları (UAC) gibi NVDA çalışırken kullanılan noktalardaki ayarlar, NVDA'nın kurulum dizinindeki systemConfig dizininde saklanmaktadır.
 Genellikle bu ayarlara dokunulmamalıdır.
-NVDA'nın logon ve kullanıcı hesapları ekranlarındaki ayarlarını değiştirmek için, önce NVDA ile Windows'da oturum açarken kullanılacak ayarları yapın, AYARLARI KAYDEDİP daha sonra [NVDA ayarları #NVDASettings] iletişim kutusunda genel kategorisi  altında bulunan düğmeyi kullanarak NVDA'ya bu mevcut konfigürasyonu logon ekranına kopyalamasını söyleyin.
+NVDA'nın logon ve kullanıcı hesapları ekranlarındaki ayarlarını değiştirmek için, önce NVDA ile Windows'da oturum açarken kullanılacak ayarları yapın, AYARLARI KAYDEDİP daha sonra [NVDA ayarları #NVDASettings] iletişim kutusunda genel kategorisi  altında bulunan düğmeyi kullanarak NVDA'ya bu mevcut konfigürasyonu sistem konfigürasyonuna kopyalamasını söyleyin.
 
 + Ekstra Araçlar +[ExtraTools]
 
@@ -2499,7 +2525,7 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serileri ++[Hims]
 USB ya da bluetooth üzerinden bağlandıklarında, NVDA [Hims https://www.hims-inc.com/] tarafından üretilen Braille Sense, Braille EDGE, Smart Beetle ve Sync Braille kabartma ekranları destekler. 
 USB üzerinden bağlıyorsanız, sisteminize HIMS tarafından dağıtılan USB sürücülerini kurmanız gerekir.
-Bu sayfadan indirebilirsiniz: https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+Buradan indirebilirsiniz: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
  
 Aşağıda braille ekranı NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
 Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
@@ -2767,7 +2793,7 @@ The following models are supported:
 - BrailleNote Apex (USB and Bluetooth connections)
 -
 
-For BrailleNote Touch, please refer to  the [Brailliant BI Series / BrailleNote Touch HumanWareBrailliant] section.
+For BrailleNote Touch, please refer to  the [Brailliant BI Series / BrailleNote Touch #HumanWareBrailliant] section.
 
 Except for BrailleNote PK, both braille (BT) and QWERTY (QT) keyboards are supported.
 For BrailleNote QT, PC keyboard emulation isn't supported.
@@ -2992,7 +3018,7 @@ Dolayısıyla, NVDA'nın braille girdi tablosu ayarı bu ekranları etkilemez.
 BRLTTY henüz NVDA'nın otomatik arka plan braille ekran algılama işlevini desteklememektedir.
 
 Aşağıda NVDA için BRLTTY tuş komutları bulunmaktadır.
-Lütfen [BRLTTY tuş komutları listesine https://mielke.cc/brltty/doc/KeyBindings/] BRLTTY komutlarının braille ekran kontrollerinde nasıl konumlandığı hakkında daha fazla bilgi almak için bakın.
+Lütfen [BRLTTY tuş komutları listesine http://mielke.cc/brltty/doc/KeyBindings/] BRLTTY komutlarının braille ekran kontrollerinde nasıl konumlandığı hakkında daha fazla bilgi almak için bakın.
 %kc:beginInclude
 || Ad | BRLTTY komutu |
 | Braille ekranı geri kaydırma | fwinlt (bir pencere sola git) |
@@ -3036,7 +3062,7 @@ Aşağıdakiler NVDA komut satırı seçenekleridir:
 | -l LOGLEVEL | --log-level=LOGLEVEL | Günlüğü tutulacak en düşük seviye (debug 10, giriş çıkış 12, hata ayıklama uyarısı 15, bilgi 20, uyarı 30, hata 40, kritik 50, devre dışı 100), varsayılan, uyarı'dır |
 | -c CONFIGPATH | --config-path=CONFIGPATH | NVDA ile ilgili tüm ayarların kaydedileceği adres |
 | -m | --minimal | Ses, arayüz, başlangıç mesajı vb olmaz |
-| -s | --secure | Güvenli kip (Python konsolu ve genellikle güvenli ekranlarda kullanılan kayıt özelliklerini devre dışı bırakır) |
+| -s | --secure | Güvenli mod: Python konsolunu, oluşturma, silme, profilleri yeniden adlandırma vb. gibi profil özelliklerini, güncelleme kontrolünü, hoş geldiniz iletişim kutusundaki ve genel ayarlar kategorisindeki bazı onay kutularını (örneğin oturum açtıktan sonra NVDA'yı başlat, çıkıştan sonra yapılandırmayı kaydet vb.) devre dışı bırakır. logviewer ve log özellikleri olarak (sıklıkla güvenli ekranlarda kullanılır). Ayrıca, bu komutun sistem yapılandırmasında ayarları kaydetme olasılığını devre dışı bırakacağını ve hareket haritasının diske kaydedilmeyeceğini unutmayın. |
 | None | --disable-addons | Eklentiler etkisizdir |
 | None | --debug-logging | Yalnızca bu çalıştırma için hata ayıklama seviyesi günlüğünü etkinleştirin. Bu ayar, herhangi bir kayıt seçeneği de dahil olmak üzere verilen herhangi bir günlük seviyesi ("" --loglevel "", -l) argümanını geçersiz kılar. |
 | None | --no-logging | NVDA'yı kullanırken günlüğü tamamen devre dışı bırakın. Komut satırından bir günlük seviyesi ("" --loglevel "", -l) belirtilirse veya hata ayıklama günlüğü açıksa bu ayarın üzerine yazılabilir. |
