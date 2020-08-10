@@ -2417,6 +2417,27 @@ class AdvancedPanelControls(wx.Panel):
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
+		label = _("Audio")
+		audioGroup = guiHelper.BoxSizerHelper(
+			parent=self,
+			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+		)
+		sHelper.addItem(audioGroup)
+
+		# Translators: This is the label for a numeric control in the
+		#  Advanced settings panel.
+		label = _("Idle close delay (in ms)")
+		self.idleCloseDelaySpinControl = audioGroup.addLabeledControl(
+			label,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=0,
+			max=86400000,
+			initial=config.conf["audio"]["idleCloseDelay"]
+		)
+		self.idleCloseDelaySpinControl.defaultValue = self._getDefaultValue(["audio", "idleCloseDelay"])
+
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
 		label = _("Editable Text")
 		editableTextGroup = guiHelper.BoxSizerHelper(
 			self,
@@ -2495,6 +2516,7 @@ class AdvancedPanelControls(wx.Panel):
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
 			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
+			and self.idleCloseDelaySpinControl.GetValue() == self.idleCloseDelaySpinControl.defaultValue
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and True  # reduce noise in diff when the list is extended.
@@ -2508,6 +2530,7 @@ class AdvancedPanelControls(wx.Panel):
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
+		self.idleCloseDelaySpinControl.SetValue(self.idleCloseDelaySpinControl.defaultValue)
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self._defaultsRestored = True
@@ -2524,6 +2547,7 @@ class AdvancedPanelControls(wx.Panel):
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = self.cancelExpiredFocusSpeechCombo.GetSelection()
 		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
+		config.conf["audio"]["idleCloseDelay"] = self.idleCloseDelaySpinControl.GetValue()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)

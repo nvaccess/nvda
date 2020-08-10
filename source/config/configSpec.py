@@ -47,6 +47,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 # Audio settings
 [audio]
 	audioDuckingMode = integer(default=0)
+	idleCloseDelay = integer(default=10000,min=0,max=86400000)
 
 # Braille settings
 [braille]

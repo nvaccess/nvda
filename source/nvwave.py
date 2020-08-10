@@ -1,8 +1,8 @@
-#nvwave.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited, Aleksey Sadovoy
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# nvwave.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2020 NV Access Limited, Aleksey Sadovoy, Bill Dengler
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Provides a simple Python interface to playing audio using the Windows multimedia waveOut functions, as well as other useful utilities.
 """
@@ -101,9 +101,6 @@ class WavePlayer(object):
 	"""
 	#: Minimum length of buffer (in ms) before audio is played.
 	MIN_BUFFER_MS = 300
-	#: The time (in ms) to wait after L{idle} is called before closing the audio
-	#: device. This is only applicable if L{closeWhenIdle} is C{True}.
-	IDLE_CLOSE_DELAY_MS = 10000
 	#: Flag used to signal that L{stop} has been called.
 	STOPPING = "stopping"
 	#: A lock to prevent WaveOut* functions from being called simultaneously, as this can cause problems even if they are for different HWAVEOUTs.
@@ -283,7 +280,7 @@ class WavePlayer(object):
 		"""Indicate that this player is now idle; i.e. the current continuous segment  of audio is complete.
 		This will first call L{sync} to synchronise with playback.
 		If L{closeWhenIdle} is C{True}, the output device will be closed if there
-		is no further audio within L{IDLE_CLOSE_DELAY_MS}.
+		is no further audio within L{idleCloseDelay}.
 		A subsequent call to L{feed} will reopen it.
 		"""
 		if not self._minBufferSize:
@@ -300,13 +297,16 @@ class WavePlayer(object):
 				if not self._waveout:
 					return
 				if self.closeWhenIdle:
-					if not self._closeTimer:
-						# We need a cancellable timer, so we can't use core.callLater.
-						self._closeTimer = wx.PyTimer(self._close)
-					self._callOnMainThread(
-						self._closeTimer.Start, self.IDLE_CLOSE_DELAY_MS,
-						wx.TIMER_ONE_SHOT
-					)
+					if config.conf["audio"]["idleCloseDelay"]:
+						if not self._closeTimer:
+							# We need a cancellable timer, so we can't use core.callLater.
+							self._closeTimer = wx.PyTimer(self._close)
+						self._callOnMainThread(
+							self._closeTimer.Start, config.conf["audio"]["idleCloseDelay"],
+							wx.TIMER_ONE_SHOT
+						)
+					else:
+						self._close()
 			if self._audioDucker: self._audioDucker.disable()
 
 	def stop(self):

@@ -1848,7 +1848,14 @@ This option enables behaviour which attempts to cancel speech for expired focus 
 In particular moving quickly through messages in Gmail with Chrome can cause NVDA to speak outdated information.
 This functionality is experimental as of NVDA 2020.2.
 
-==== Caret move timeout (in MS) ====[AdvancedSettingsCaretMoveTimeout]
+==== Idle close delay (in MS) ====[AdvancedSettingsIdleCloseDelay]
+Some audio drivers, notably for newer Realtek sound cards, take a long time to open the audio device causing the start or end of speech to be truncated.
+By default, NVDA keeps the device open for 10,000 ms (10 seconds) after a speech utterence to improve performance on these systems.
+However, it may be desirable to increase this timeout, to possibly further improve performance at the cost of battery power.
+It might also be desirable in some cases to decrease this timeout for power savings on systems without this issue.
+Setting the delay to 0 causes NVDA to close the device immediately after each utterence, matching the behaviour of version 2020.2 and earlier.
+
+==== Caret movement timeout (in MS) ====[AdvancedSettingsCaretMoveTimeout]
 This option allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.
 If you find that NVDA seems to be incorrectly tracking the caret E.g. it seems to be always one character behind or is repeating lines, then you may wish to try increasing this value.
 
