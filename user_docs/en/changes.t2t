@@ -12,6 +12,8 @@ What's New in NVDA
 - NVDA now detects read-only text UIA controls. (#10494)
 - The existence of marked (highlighted) content is reported in both speech and braille in all web browsers. (#11436)
  - This can be toggled on and off by a new NVDA Document Formatting option for Highlighting.
+- New emulated system keyboard keys can be added from NVDA's Input gestures dialog. (#6060)
+  - To do this, press the add button after you selected the Emulated system keyboard keys category.
 
 
 == Changes ==
@@ -24,6 +26,7 @@ What's New in NVDA
 - In Microsoft Excel, the Elements List dialog now presents formulas in their localized form. (#9144)
 - NVDA now reports the correct terminology for notes in MS Excel. (#11311)
 - When using the "move review cursor to focus" command in browse mode, the review cursor is now set at the position of the virtual caret. (#9622)
+- Information reported in browse mode, such as the formatting info with NVDA+F, are now displayed in a slightly bigger window centered on screen. (#9910)
 
 
 == Bug Fixes ==
@@ -44,12 +47,16 @@ What's New in NVDA
 - NVDA should no longer sometimes freeze in Microsoft Word when rapidly arrowing up and down or typing characters with Braille enabled. (#11431, #11425, #11414)
 - NVDA no longer appends nonexistent trailing space when copying the current navigator object to the clipboard. (#11438)
 - NVDA no longer activates the Say All profile if there is nothing to read. (#10899, #9947)
+- NVDA is no longer unable to read the features list in Internet Information Services (IIS) Manager. (#11468)
+- The start or end of speech / sound is no longer truncated. (#5172, #10721)
+  - NVDA now holds the audio device open for a short time after speech utterances, improving performance on some sound cards.
 
 
 == Changes For Developers ==
 - The GUI Helper's BoxSizerHelper.addDialogDismissButtons supports a new "separated" keyword argument, for adding a standard horizontal separator to dialogs (other than messages and single input dialogs). (#6468)
 - Additional properties were added to app modules, including path for the executable (appPath), is a Windows Store app (isWindowsStoreApp), and machine architecture for the app (appArchitecture). (#7894)
 - It is now possible to create app modules for apps hosted inside wwahost.exe on Windows 8 and later. (#4569)
+- A fragment of the log can now be delimited and then copied to clipboard using NVDA+control+shift+F1. (#9280)
 
 
 = 2020.2 =
