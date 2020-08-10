@@ -24,7 +24,7 @@ class AppModule(appModuleHandler.AppModule):
 			# As part of this, suggestion count is part of a live region.
 			# Although it is geared for Narrator, it is applicable to other screen readers as well.
 			# The live region itself is a child of the one shown here.
-			if obj.UIAElement.cachedAutomationID == "suggestionCountForNarrator" and obj.firstChild is not None:
+			if obj.UIAAutomationId == "suggestionCountForNarrator" and obj.firstChild is not None:
 				obj.name = obj.firstChild.name
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
@@ -36,7 +36,7 @@ class AppModule(appModuleHandler.AppModule):
 			except ValueError:
 				pass
 		elif isinstance(obj, UIA):
-			if obj.UIAElement.cachedAutomationID == "SearchTextBox":
+			if obj.UIAAutomationId == "SearchTextBox":
 				clsList.insert(0, StartMenuSearchField)
 			# #10329: Since 2019, some suggestion items are grouped inside another suggestions list item.
 			# Because of this, result details will not be announced like in the past.
