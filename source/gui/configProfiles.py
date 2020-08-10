@@ -397,7 +397,7 @@ class NewProfileDialog(
 		gui.ContextHelpMixin,
 		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
 ):
-	helpIds = "ConfigurationProfiles"
+	helpId = "ConfigurationProfiles"
 
 	def __init__(self, parent):
 		# Translators: The title of the dialog to create a new configuration profile.
