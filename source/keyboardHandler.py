@@ -221,8 +221,9 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 				# this is to at least notify the app's key state that something happened.
 				# This allows alt and windows to be bound to scripts and
 				# stops control+shift from switching keyboard layouts in cursorManager selection scripts.
-				winUser.keybd_event(winUser.VK_NONE, 0, 0, 0)
-				winUser.keybd_event(winUser.VK_NONE, 0, winUser.KEYEVENTF_KEYUP, 0)
+				with ignoreInjection():
+					winUser.keybd_event(winUser.VK_NONE, 0, 0, 0)
+					winUser.keybd_event(winUser.VK_NONE, 0, winUser.KEYEVENTF_KEYUP, 0)
 			return False
 		except inputCore.NoInputGestureAction:
 			if gesture.isNVDAModifierKey:
