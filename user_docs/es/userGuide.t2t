@@ -2110,6 +2110,7 @@ Si has instalado, eliminado o cambiado el estado de los complementos, NVDA prime
 Algunos complementos antiguos pueden ya no ser compatibles con la versión de NVDA que tienes.
 Cuando utilices una versión más antigua de NVDA, algunos complementos nuevos pueden no ser compatibles.
 Intentar instalar un complemento incompatible resultará en un error explicando por qué el complemento se considera incompatible.
+Para examinar estos complementos inaccesibles, puedes utilizar el botón "ver complementos incompatibles" para lanzar el administrador de complementos inaccesibles.
 
 Para acceder al Administrador de Complementos desde cualquier lugar, por favor asigna un gesto personalizado utilizando el [diálogho Gestos de Entrada #InputGestures].
 
@@ -3004,6 +3005,22 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 | Tecla alt | punto8+espacio, l6 |
 | Conmutar tecla alt | punto1+punto8+espacio, punto4+punto8+espacio |
 | Conmutar simulación de entrada de teclado HID | esytime):l1+joystick1Abajo, esytime):l8+joystick1Abajo |
+%kc:endInclude
+
+++ Pantallas Nattiq nBraille ++[NattiqTechnologies]
+NVDA admite pantallas de [Nattiq Technologies https://www.nattiq.com/] cuando se conecten a través de USB.
+Windows 10 detecta las pantallas Braille una vez conectadas, puedes necesitar instalar controladores USB si utilizas versiones antiguas de Windows (anteriores a Win10).
+Puedes obtenerlos del sitio web del fabricante.
+
+Seguidamente van las asignaciones de teclas para pantallas Nattiq Technologies con NVDA.
+Por favor consulta la documentación de la pantalla para descripciones de dónde pueden encontrarse esas teclas.
+%kc:beginInclude
+|| Nombre | Tecla |
+| Desplazar pantalla braille hacia atrás | arriba |
+| Desplazar pantalla braille hacia adelante | abajo |
+| Mover pantalla braille a línea anterior | izquierda |
+| Mover pantalla braille a línea siguiente | derecha |
+| Ir a celda braille | sensores |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]

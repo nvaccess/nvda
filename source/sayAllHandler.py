@@ -109,7 +109,7 @@ class _TextReader(object):
 	def __init__(self, cursor):
 		self.cursor = cursor
 		self.trigger = SayAllProfileTrigger()
-		self.trigger.enter()
+		self.reader = None
 		# Start at the cursor.
 		if cursor == CURSOR_CARET:
 			try:
@@ -118,6 +118,8 @@ class _TextReader(object):
 				raise NotImplementedError("Unable to make TextInfo: " + str(e))
 		else:
 			self.reader = api.getReviewPosition()
+		# #10899: SayAll profile can't be activated earlier because they may not be anything to read
+		self.trigger.enter()
 		self.speakTextInfoState = speech.SpeakTextInfoState(self.reader.obj)
 		self.numBufferedLines = 0
 
