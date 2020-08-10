@@ -220,6 +220,9 @@ class AppModule(appModuleHandler.AppModule):
 		nextHandler()
 
 	def event_stateChange(self, obj, nextHandler):
+		# Without clearing this, NVDA will not announce symbols after selecting a symbol group and
+		# tabbing through the modern keyboard interface.
+		self._symbolsGroupSelected = False
 		# Try detecting if modern keyboard elements are off-screen
 		# or the window itself is gone (parent's first child is nothing).
 		# But attempting to retrieve object location fails when emoji panel closes without selecting anything,
