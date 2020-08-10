@@ -74,6 +74,10 @@ def _onEvtHelp(helpId: str, evt: wx.HelpEvent):
 
 
 class ContextHelpMixin:
+	#: The name of the appropriate anchor in NVDA help that provides help for the wx.Window this mixin is
+	# used with.
+	helpId = ""
+
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		helpId = getattr(self, "helpId", None)
@@ -85,4 +89,7 @@ class ContextHelpMixin:
 		log.debug(f"ContextHelpMixin for {self.__class__.__qualname__}")
 
 	def bindHelpEvent(self, helpId: str, window: wx.Window):
+		"""A helper method, to bind helpId strings to sub-controls of this Window.
+		Useful for adding context help to wx controls directly.
+		"""
 		bindHelpEvent(helpId, window)

@@ -274,7 +274,6 @@ class SettingsPanel(
 
 	title=""
 	panelDescription=u""
-	helpId = ""
 
 	def __init__(self, parent: wx.Window):
 		"""
