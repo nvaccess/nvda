@@ -10,6 +10,10 @@ What's New in NVDA
 - You can now toggle NVDA's touchscreen support. An option has been added to the Touch Interaction panel of NVDA's settings. The default gesture is NVDA+control+alt+t. (#9682)
 - Added new German braille tables. (#11268)
 - NVDA now detects read-only text UIA controls. (#10494)
+- The existence of marked (highlighted) content is reported in both speech and braille in all web browsers. (#11436)
+ - This can be toggled on and off by a new NVDA Document Formatting option for Highlighting.
+- New emulated system keyboard keys can be added from NVDA's Input gestures dialog. (#6060)
+  - To do this, press the add button after you selected the Emulated system keyboard keys category.
 
 
 == Changes ==
@@ -39,6 +43,10 @@ What's New in NVDA
 - In Internet Explorer, numbers are now announced correctly for ordered lists if the list does not start with 1. (#8438)
 - In Google chrome, NVDA will now report not checked for all checkable controls (not just check boxes) that are currently not checked. (#11377)
 - It is once again possible to navigate in various controls when NVDA's language is set to Aragonese. (#11384)
+- NVDA should no longer sometimes freeze in Microsoft Word when rapidly arrowing up and down or typing characters with Braille enabled. (#11431, #11425, #11414)
+- NVDA no longer appends nonexistent trailing space when copying the current navigator object to the clipboard. (#11438)
+- NVDA no longer activates the Say All profile if there is nothing to read. (#10899, #9947)
+- NVDA is no longer unable to read the features list in Internet Information Services (IIS) Manager. (#11468)
 
 
 == Changes For Developers ==
@@ -67,8 +75,8 @@ Highlights of this release include support for a new braille display from Nattiq
 - Updated liblouis braille translator from 3.12 to [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0]. (#10832, #11221)
 - The reporting of superscripts and subscripts is now controlled separately to the reporting of font attributes. (#10919)
 - Due to changes made in VS Code, NVDA no longer disables browse mode in Code by default. (#10888)
-- Removed "top" and "bottom" messages when moving the review cursor to the first or last line of the current navigator object. (#9551)
-- Removed "left" and "right" messages when moving the review cursor to the first or last character of the line for the current navigator object. (#9551)
+- NVDA no longer reports "top" and "bottom" messages when moving the review cursor directly to the first or last line of the current navigator object with the move to top and move to bottom review cursor scripts respectively. (#9551)
+- NVDA no longer reports  "left" and "right" messages when directly moving the review cursor to the first or last character of the line for the current navigator object with the move to beginning of line and move to end of line review cursor scripts respectively. (#9551)
 
 
 == Bug Fixes ==
