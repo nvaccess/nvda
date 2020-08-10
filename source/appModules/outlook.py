@@ -579,11 +579,7 @@ class OutlookUIAWordDocument(UIAWordDocument):
 	""" Forces browse mode to be used on the UI Automation Outlook message viewer if the message is being read)."""
 
 	def _get_isReadonlyViewer(self):
-		# #2975: The only way we know an email is read-only is if the underlying email has been sent.
-		try:
-			return self.appModule.nativeOm.activeInspector().currentItem.sent
-		except (COMError,NameError,AttributeError):
-			return False
+		return controlTypes.STATE_READONLY in self.states
 
 	def _get_shouldCreateTreeInterceptor(self):
 		return self.isReadonlyViewer

@@ -82,13 +82,13 @@ For reference, the following run time dependencies are included in Git submodule
 
 * [comtypes](https://github.com/enthought/comtypes), version 1.1.7
 * [wxPython](https://www.wxpython.org/), version 4.0.3
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit ca65812a
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit 1fb68ffffea4 
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
-* [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit 21bbb176
+* [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit cbc1f29631780
 * [ConfigObj](https://github.com/DiffSK/configobj), commit f9a265c
 * [Six](https://pypi.python.org/pypi/six), version 1.12.0, required by wxPython and ConfigObj
 * [liblouis](http://www.liblouis.org/), version 3.14.0
-* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/) Emoji Annotations, version 36.1
+* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/) Emoji Annotations, version 37.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * Adobe FlashAccessibility interface typelib
@@ -104,7 +104,7 @@ Additionally, the following build time dependencies are included in Git submodul
 * [Py2Exe](https://github.com/albertosottile/py2exe/), version 0.9.3.2 commit b372a8e
 * [Python Windows Extensions](https://sourceforge.net/projects/pywin32/ ), build 224, required by py2exe
 * [txt2tags](https://txt2tags.org/), version 2.5
-* [SCons](https://www.scons.org/), version 3.1.2
+* [SCons](https://www.scons.org/), version 4.0.1
 * [Nulsoft Install System](https://nsis.sourceforge.io/Main_Page/), version 2.51
 * [NSIS UAC plug-in](https://nsis.sourceforge.io/UAC_plug-in), version 0.2.4, ansi
 * xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)

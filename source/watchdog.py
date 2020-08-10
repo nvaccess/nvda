@@ -47,6 +47,24 @@ _suspended = False
 _watcherThread=None
 _cancelCallEvent = None
 
+
+def getFormattedStacksForAllThreads():
+	"""
+	Generates a string containing a call stack for every Python thread in this process, suitable for logging.
+	"""
+	# First collect the names of all threads that have actually been started by Python itself.
+	threadNamesByID = {x.ident: x.name for x in threading.enumerate()}
+	stacks = []
+	# If a Python function is entered by a thread that was not started by Python itself,
+	# It will have a frame, but won't be tracked by Python's threading module and therefore will have no name.
+	for ident, frame in sys._current_frames().items():
+		# The strings in the formatted stack all end with \n, so no join separator is necessary.
+		stack = "".join(traceback.format_stack(frame))
+		name = threadNamesByID.get(ident, "Unknown")
+		stacks.append(f"Python stack for thread {ident} ({name}):\n{stack}")
+	return "\n".join(stacks)
+
+
 def alive():
 	"""Inform the watchdog that the core is alive.
 	"""
@@ -91,8 +109,8 @@ def _watcher():
 		if _isAlive():
 			continue
 		if log.isEnabledFor(log.DEBUGWARNING):
-			log.debugWarning("Trying to recover from freeze, core stack:\n%s"%
-				"".join(traceback.format_stack(sys._current_frames()[core.mainThreadId])))
+			stacks = getFormattedStacksForAllThreads()
+			log.debugWarning(f"Trying to recover from freeze. Listing stacks for Python threads:\n{stacks}")
 		lastTime=time.time()
 		isAttemptingRecovery = True
 		# Cancel calls until the core is alive.
@@ -103,8 +121,11 @@ def _watcher():
 			curTime=time.time()
 			if curTime-lastTime>FROZEN_WARNING_TIMEOUT:
 				lastTime=curTime
-				log.warning("Core frozen in stack:\n%s"%
-					"".join(traceback.format_stack(sys._current_frames()[core.mainThreadId])))
+				# Core is completely frozen.
+				# Collect formatted stacks for all Python threads.
+				log.error("Core frozen in stack!")
+				stacks = getFormattedStacksForAllThreads()
+				log.info(f"Listing stacks for Python threads:\n{stacks}")
 			_recoverAttempt()
 			time.sleep(RECOVER_ATTEMPT_INTERVAL)
 			if _isAlive():
@@ -174,9 +195,8 @@ def _crashHandler(exceptionInfo):
 		log.critical("NVDA crashed! Minidump written to %s" % dumpPath)
 
 	# Log Python stacks for every thread.
-	for logThread, logFrame in sys._current_frames().items():
-		log.info("Python stack for thread %d" % logThread,
-			stack_info=traceback.extract_stack(logFrame))
+	stacks = getFormattedStacksForAllThreads()
+	log.info(f"Listing stacks for Python threads:\n{stacks}")
 
 	log.info("Restarting due to crash")
 	core.restart()
