@@ -61,6 +61,12 @@ class AppModule(appModuleHandler.AppModule):
 			ui.message(_("No emoji"))
 		nextHandler()
 
+	# Emoji panel for build 16299 and 17134.
+	_classicEmojiPanelAutomationIds = (
+		"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarItemControl",
+		"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton"
+	)
+
 	def event_UIA_window_windowOpen(self, obj, nextHandler):
 		# Make sure to announce most recently used emoji first in post-1709 builds.
 		# Fake the announcement by locating 'most recently used" category and calling selected event on this.
@@ -74,7 +80,7 @@ class AppModule(appModuleHandler.AppModule):
 		inputPanelAutomationId = inputPanel.UIAAutomationId
 		# Emoji panel for build 16299 and 17134.
 		# This event is properly raised in build 17134.
-		if winVersion.winVersion.build <= 17134 and inputPanelAutomationId in ("TEMPLATE_PART_ExpressiveInputFullViewFuntionBarItemControl", "TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton"):
+		if not winVersion.isWin10(version=1809) and inputPanelAutomationId in self._classicEmojiPanelAutomationIds:
 			eventHandler.executeEvent("UIA_elementSelected", obj.lastChild.firstChild)
 		# Handle hardware keyboard suggestions.
 		# Treat it the same as CJK composition list - don't announce this if candidate announcement setting is off.
