@@ -58,17 +58,12 @@ $	dollar	all	norep
 (	left paren	most	always
 )	right paren	most	always
 *	star	some
-+	plus	some
-−	minus	some
 ,	comma	all	always
 -	dash	most
 .	dot	some
 /	slash	some
 :	colon	most	norep
 ;	semi	most
-<	less	some
->	greater	some
-=	equals	some
 ?	question	all
 @	at	some
 [	left bracket	most
@@ -167,9 +162,6 @@ _	line	most
 ®	registered	some
 ™	Trademark	some
 ©	Copyright	some
-±	Plus or Minus	some
-×	times	some
-÷	divide by	some
 ←	left arrow	some
 ↑	up arrow	some
 →	right arrow	some
@@ -182,15 +174,103 @@ _	line	most
 ‣	triangular bullet	none
 ✗	x-shaped bullet	none
 
-#Mathematical Operators
-∀	for all	none
-∁	complement	none
+#Arithmetic operators
++	plus	some
+−	minus	some
+×	times	some
+⋅	times	some
+⨯	times	some
+∕	divided by	some
+⁄	divided by	some
+÷	divide by	some
+∓	minus or plus	some
+±	Plus or Minus	some
+
+#Set operations
+∖	set minus	none
+⨯	set times	none
+⊍	set union	none
+𝒫	power set of the set	none
+𝔓	power set of the set	none
+℘	power set of the set	none
+∁	complement	of the set	none
+
+#Set relations and set constructions
+∅	empty set	none
+⊂	subset of	none
+⊄	Not a subset of	none
+⊃	superset of	none
+⊅	Not a superset of	none
+⊆	subset of or equal to	none
+⊇	superset of or equal to	none
+⊌	Multiset	none
+
+#Equality signs
+=	equals	some
+≃	Asymptotically equal to	none
+≄	Not asymptotically equal to	none
+≅	Approximately equal to	none
+≆	Approximately but not actually equal to	none
+≈	Almost Equal to	none
+≌	all equal to	none
+≍	Equivalent to	none
+≭	Not equivalent to	none
+≎	Geometrically equivalent to	none
+≑	Geometrically equal to	none
+≚	Equiangular to	none
+≬	Between	none
+≠	Not equal to	none
+≡	Identical to	none
+≢	Not identical to	none
+∼	is similar to	none
+≙	coresponds to	none
+≟	questioned equal to	none
+
+#comparison signs
+<	less	some
+>	greater	some
+≤	less- than or equal to	none
+≦	less- than or equal to	none
+≪	much smaller than	none
+≥	greater-than or equal to	none
+≧	greater-than or equal to	none
+≫	much bigger than	none
+≶	Less than or greater than	none
+≷	Greater than or less than	none
+≮	Not less than	none
+≯	Not greater than	none
+
+#Mathematical constants
+π	Pi	some
+φ	Golden ratio	some
+
+#Functions
+⁻	inverse	some
+∘	of	some
 ∂	partial derivative	none
+∇	gradient of	none
+∆	Delta	none
+
+#Geometry and linear Algebra
+⃗	vector between	none
+△	triangle	none
+∟	right angle	none
+∠	angle	none
+∥	parallel to	none
+∦	not parallel to	none
+⟂	ortogonal to	none
+‖	norm of vector	none
+̂	normalizes	none
+∿	Sine wave	none
+∡	Measured Angle	none
+∢	Spherical Angle	none
+
+#Logical operators
+∀	for all	none
 ∃	there exists	none
 ∄	there does not exist	none
-∅	empty set	none
-∆	increment	none
-∇	nabla	none
+
+#Other mathematical Operators
 ∈	element of	none
 ∉	not an element of	none
 ∊	small element of	none
@@ -206,15 +286,9 @@ _	line	most
 ∜	fourth root	none
 ∝	proportional to	none
 ∞	infinity	none
-∟	right angle	none
-∠	angle	none
-∥	parallel to	none
-∦	not parallel to	none
-≡	Identical to	none
-≢	Not identical to	none
-∧	logical and	none
-∨	logical or	none
-¬	logical not	none
+∧	and	none
+∨	or	none
+¬	not	none
 ∩	intersection	none
 ∪	union	none
 ∫	integral	none
@@ -232,40 +306,11 @@ _	line	most
 ∷	proportion	none
 ∹	Excess	none
 ∺	Geometric proportion	none
-∿	Sine wave	none
 ≀	Wreath product	none
-≃	Asymptotically equal to	none
-≄	Not asymptotically equal to	none
-≅	Approximately equal to	none
-≆	Approximately but not actually equal to	none
-≈	Almost Equal to	none
-≌	ALL equal to	none
-≍	Equivalent to	none
-≭	Not equivalent to	none
-≎	Geometrically equivalent to	none
-≑	Geometrically equal to	none
-≚	Equiangular to	none
-≤	less- than or equal to	none
-≥	greater-than or equal to	none
-≬	Between	none
-≠	Not equal to	none
-≮	Not less than	none
-≯	Not greater than	none
-≶	Less than or greater than	none
-≷	Greater than or less than	none
 ≏	Difference between	none
 ≐	Approaches the limit	none
-⊂	subset of	none
-⊄	Not a subset of	none
-⊃	superset of	none
-⊅	Not a superset of	none
-⊆	subset of or equal to	none
-⊇	superset of or equal to	none
-⊌	Multiset	none
 ∘	Ring Operator	none
 ∙	Bullet Operator	none
-∡	Measured Angle	none
-∢	Spherical Angle	none
 ∣	Devides	none
 ∤	Does not devide	none
 ≔	Colon equals	none
@@ -295,6 +340,20 @@ _	line	most
 ⅜	three eights	none
 ⅝	five eighths	none
 ⅞	seven eighths	none
+
+#Number sets
+𝔸	Algebraic numbers	none
+ℂ	Complex numbers	none
+ℑ	Imaginary part of complex number	none
+ℍ	Quaternions	none
+ℕ	Natural numbers	none
+𝕁	Nonnegative (whole) numbers	none
+ℚ	Rational numbers	none
+ℝ	Real numbers	none
+ℜ	Real part of complex number	none
+ℤ	Integers	none
+ℵ	Aleph number	none
+ℶ	beth number	none
 
 # Miscellaneous Technical
 ⌘	Mac Command key	none
