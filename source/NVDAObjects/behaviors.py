@@ -29,6 +29,7 @@ import api
 import ui
 import braille
 import nvwave
+from collections import deque
 
 class ProgressBar(NVDAObject):
 
@@ -406,7 +407,7 @@ class EnhancedTermTypedCharSupport(Terminal):
 	_supportsTextChange = True
 	#: A queue of typed characters, to be dispatched on C{textChange}.
 	#: This queue allows NVDA to suppress typed passwords when needed.
-	_queuedChars = []
+	_queuedChars = deque()
 	#: Whether the last typed character is a tab.
 	#: If so, we should temporarily disable filtering as completions may
 	#: be short.
@@ -422,7 +423,7 @@ class EnhancedTermTypedCharSupport(Terminal):
 			return
 		# Clear the typed word buffer for new text lines.
 		speech.clearTypedWordBuffer()
-		self._queuedChars = []
+		self._queuedChars.clear()
 		super()._reportNewLines(lines)
 
 	def event_typedCharacter(self, ch):
@@ -462,7 +463,7 @@ class EnhancedTermTypedCharSupport(Terminal):
 		Since these gestures clear the current word/line, we should flush the
 		queue to avoid erroneously reporting these chars.
 		"""
-		self._queuedChars = []
+		self._queuedChars.clear()
 		speech.clearTypedWordBuffer()
 		gesture.send()
 
@@ -470,7 +471,7 @@ class EnhancedTermTypedCharSupport(Terminal):
 	def _dispatchQueue(self):
 		"""Sends queued typedCharacter events through to NVDA."""
 		while self._queuedChars:
-			ch = self._queuedChars.pop(0)
+			ch = self._queuedChars.popleft()
 			super().event_typedCharacter(ch)
 
 
