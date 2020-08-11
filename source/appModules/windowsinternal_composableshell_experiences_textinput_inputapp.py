@@ -15,6 +15,7 @@ import braille
 import ui
 import config
 import winVersion
+import eventHandler
 from NVDAObjects.UIA import UIA
 
 class AppModule(appModuleHandler.AppModule):
@@ -74,12 +75,12 @@ class AppModule(appModuleHandler.AppModule):
 		# Emoji panel for build 16299 and 17134.
 		# This event is properly raised in build 17134.
 		if winVersion.winVersion.build <= 17134 and inputPanelAutomationId in ("TEMPLATE_PART_ExpressiveInputFullViewFuntionBarItemControl", "TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton"):
-			self.event_UIA_elementSelected(obj.lastChild.firstChild, nextHandler)
+			eventHandler.executeEvent("UIA_elementSelected", obj.lastChild.firstChild)
 		# Handle hardware keyboard suggestions.
 		# Treat it the same as CJK composition list - don't announce this if candidate announcement setting is off.
 		elif inputPanelAutomationId == "CandidateWindowControl" and config.conf["inputComposition"]["autoReportAllCandidates"]:
 			try:
-				self.event_UIA_elementSelected(inputPanel.firstChild.firstChild, nextHandler)
+				eventHandler.executeEvent("UIA_elementSelected", inputPanel.firstChild.firstChild)
 			except AttributeError:
 				# Because this is dictation window.
 				pass
@@ -95,7 +96,7 @@ class AppModule(appModuleHandler.AppModule):
 				emojiItem = emojisList.firstChild.firstChild
 				if emojiItem.UIAAutomationId == "SkinTonePanelModifier_ListView":
 					emojiItem = emojiItem.next
-				self.event_UIA_elementSelected(emojiItem, nextHandler)
+				eventHandler.executeEvent("UIA_elementSelected", emojiItem)
 			except AttributeError:
 				# In build 18272's emoji panel, emoji list becomes empty in some situations.
 				pass
@@ -110,7 +111,7 @@ class AppModule(appModuleHandler.AppModule):
 			# Make sure to move to actual clipboard history item if available.
 			if clipboardHistoryItem.firstChild is not None:
 				clipboardHistoryItem = clipboardHistoryItem.firstChild
-			self.event_UIA_elementSelected(clipboardHistoryItem, nextHandler)
+			eventHandler.executeEvent("UIA_elementSelected", clipboardHistoryItem)
 		nextHandler()
 
 	# Argh, name change event is fired right after emoji panel opens in build 17666 and later.
