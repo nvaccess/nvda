@@ -49,7 +49,10 @@ $	dollar	all	norep
 ¢	Cents	all	norep
 ¥	Yen	all	norep
 ₹	Rupee	some	norep
+ƒ	f	all	norep
+¤	valutategn	all	norep
 %	procent	some
+‰	promille	some
 &	og	some
 '	apostrof	all
 (	venstre parentes	most	always
@@ -76,8 +79,17 @@ _	understregning	most
 `	accent grave	most
 {	venstre tuborg	most
 }	højre tuborg	most
-|	lodret linje	most
+|	lodret streg	most
+¦	brudt lodret streg	most
 ~	tilde	most
+¡	omvendt udråbstegn point	some
+¿	omvendt spørgsmålstegn	some
+·	ophøjet punktum	most
+‚	enkelt anførselstegn	most
+„	dobbelt sænket anførselstegn	most
+′	prime	some
+″	dobbel prime	some
+‴	tre prime	some
 
 # Other characters
 •	punkttegn	some
@@ -89,29 +101,69 @@ _	understregning	most
 ’	højre apostrof	most
 –	tankestreg	most	always
 —	tankestreg	most
+­	blød bindestreg	most
+⁃	listepunkt	none
 ●	cirkel	most
+○	hvid cirkel	most
 ¨	tremmer	most
+¯	macron	most
+´	accent aigu	most
+¸	cedille	most
 ‎	venstre mod højre tegn	char
 ‏	højre mod venstre tegn	char
+¶	afsnitstegn	most
 ■	sort firkant	some
 ▪	sort firkant	some
 ◾	sort firkant	some
++□	hvid firkant	some
 ◦	hvidt punkttegn	some
 ➔	dobbelte højre pil	some
 ⇨	hvid højre pil	some
+➔	pil til højre	some
 ➢	pilespids til højre	some
 ⮚	pilespids til højre	some
 ❖	black diamond minus white X	some
 ♣	black club	some
 ♦	black diamond	some
+◆	black diamond	some
 §	paragraf	all
 °	grader	some
-«	double left pointing angle bracket
-»	double right pointing angle bracket
+«	dobbel venstre vinkelparentes
+»	dobbel højre vinkelparentes
 µ	my	some
+º	ophøjet o	some
+ª	hævet a	some
+⁰	hævet 0	some
 ¹	i første	some
 ²	i anden	some
 ³	i tredje	some
+⁴	i fjerde	some
+⁵	i femte	some
+⁶	i sjette	some
+⁷	i syvende	some
+⁸	i ottende	some
+⁹	i niende	some
+⁺	hævet plus	some
+⁻	hævet minus	some
+⁼	hævet lig med	some
+⁽	hævet venstre parentes	some
+⁾	hævet højre parentes	some
+ⁿ	hævet n	some
+₀	sænket 0	some
+₁	sænket i første	some
+₂	sænket i anden	some
+₃	sænket i tredje	some
+₄	sænket i fjerde	some
+₅	sænket i femte	some
+₆	sænket i sjette	some
+₇	sænket i syvende	some
+₈	sænket i ottende	some
+₉	sænket i niende	some
+₊	sænket plus	some
+₋	sænket minus	some
+₌	sænket lig med	some
+₍	sænket venstre parentes	some
+₎	sænket højre parentes	some
 ®	registreret	some
 ™	varemærke	some
 ©	Copyright	some
@@ -125,6 +177,10 @@ _	understregning	most
 ✓	check	some
 ✔	check	some
 🡺	højre pil	some
+†	dagger	some
+‡	dobbel dagger	some
+‣	trekantet listepunkt	none
+✗	x-formet listepunkt	none
 
 #Mathematical Operators U+2200 to U+220F
 ∀	For Alle 	none
@@ -157,6 +213,7 @@ _	understregning	most
 ∦	Ikke parallel med	none
 ∧	Logisk og	none
 ∨	Logisk eller	none
+¬	logisk negation	none
 ∩	Fællesmængde	none
 ∪	foreningsmængde	none
 ∫	INTEGRAL	none
@@ -172,6 +229,9 @@ _	understregning	most
 ⊇	Indeholder eller er lig med	none
 
 # Vulgur Fractions U+2150 to U+215E
+¼	en kvart	none
+½	en halv	none
+¾	trekvart	none
 ⅐	en syvendedel	none
 ⅑	en niendedel	none
 ⅒	en tiendedel	none
