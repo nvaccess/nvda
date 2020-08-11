@@ -50,6 +50,7 @@ What's New in NVDA
 - NVDA is no longer unable to read the features list in Internet Information Services (IIS) Manager. (#11468)
 - The start or end of speech / sound is no longer truncated. (#5172, #10721)
   - NVDA now holds the audio device open for a short time after speech utterances, improving performance on some sound cards.
+- NVDA will no longer freeze or exit when holding down control+shift+downArrow in Microsoft Word. (#9463)
 
 
 == Changes For Developers ==
