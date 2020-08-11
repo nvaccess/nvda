@@ -31,13 +31,8 @@ class AppModule(appModuleHandler.AppModule):
 		if obj.UIAElement.cachedAutomationID == "CandidateList": return
 		speech.cancelSpeech()
 		# Sometimes, due to bad tree traversal or wrong item getting selected, something other than the selected item sees this event.
-		# Sometimes clipboard candidates list gets selected, so ask NvDA to descend one more level.
-		if obj.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemsList":
-			obj = obj.firstChild
-		# In build 18262, emoji panel may open to People group and skin tone modifier or the list housing them gets selected.
-		elif obj.UIAElement.cachedAutomationID == "SkinTonePanelModifier_ListView":
-			obj = obj.next
-		elif obj.parent.UIAElement.cachedAutomationID == "SkinTonePanelModifier_ListView":
+		# In build 18262, emoji panel may open to People group and skin tone modifier gets selected.
+		if obj.parent.UIAAutomationId == "SkinTonePanelModifier_ListView":
 			# But this will point to nothing if emoji search results are not people.
 			if obj.parent.next is not None: obj = obj.parent.next
 			else: obj = obj.parent.parent.firstChild
@@ -96,7 +91,11 @@ class AppModule(appModuleHandler.AppModule):
 			if emojisList.UIAAutomationId != "TEMPLATE_PART_Items_GridView":
 				emojisList = emojisList.previous
 			try:
-				self.event_UIA_elementSelected(emojisList.firstChild.firstChild, nextHandler)
+				# Avoid announcing skin tone modifiers if possible.
+				emojiItem = emojisList.firstChild.firstChild
+				if emojiItem.UIAAutomationId == "SkinTonePanelModifier_ListView":
+					emojiItem = emojiItem.next
+				self.event_UIA_elementSelected(emojiItem, nextHandler)
 			except AttributeError:
 				# In build 18272's emoji panel, emoji list becomes empty in some situations.
 				pass
@@ -105,10 +104,13 @@ class AppModule(appModuleHandler.AppModule):
 		# #9103: if clipboard is empty, a status message is displayed instead, and luckily it is located where clipboard data items can be found.
 		elif inputPanelAutomationId == "TEMPLATE_PART_ClipboardTitleBar":
 			# Under some cases, clipboard tip text isn't shown on screen, causing clipboard history title to be announced instead of most recently copied item.
-			clipboardHistory = obj.children[-2]
-			if clipboardHistory.UIAAutomationId == inputPanelAutomationId:
-				clipboardHistory = clipboardHistory.next
-			self.event_UIA_elementSelected(clipboardHistory, nextHandler)
+			clipboardHistoryItem = obj.children[-2]
+			if clipboardHistoryItem.UIAAutomationId == inputPanelAutomationId:
+				clipboardHistoryItem = clipboardHistoryItem.next
+			# Make sure to move to actual clipboard history item if available.
+			if clipboardHistoryItem.firstChild is not None:
+				clipboardHistoryItem = clipboardHistoryItem.firstChild
+			self.event_UIA_elementSelected(clipboardHistoryItem, nextHandler)
 		nextHandler()
 
 	# Argh, name change event is fired right after emoji panel opens in build 17666 and later.
