@@ -88,11 +88,15 @@ class AppModule(appModuleHandler.AppModule):
 			except AttributeError:
 				# Because this is dictation window.
 				pass
-		# Emoji panel in build 17666 and later (unless this changes).
+		# Emoji panel in Version 1809 (specifically, build 17666) and later.
 		elif inputPanelAutomationId == "TEMPLATE_PART_ExpressionGroupedFullView":
 			self._emojiPanelJustOpened = True
+			# #10377: on some systems, there is something else besides grouping controls, so another child control must be used.
+			emojisList = inputPanel.children[-2]
+			if emojisList.UIAAutomationId != "TEMPLATE_PART_Items_GridView":
+				emojisList = emojisList.previous
 			try:
-				self.event_UIA_elementSelected(inputPanel.children[-2].firstChild.firstChild, nextHandler)
+				self.event_UIA_elementSelected(emojisList.firstChild.firstChild, nextHandler)
 			except AttributeError:
 				# In build 18272's emoji panel, emoji list becomes empty in some situations.
 				pass
@@ -100,7 +104,11 @@ class AppModule(appModuleHandler.AppModule):
 		# Move to clipboard list so element selected event can pick it up.
 		# #9103: if clipboard is empty, a status message is displayed instead, and luckily it is located where clipboard data items can be found.
 		elif inputPanelAutomationId == "TEMPLATE_PART_ClipboardTitleBar":
-			self.event_UIA_elementSelected(obj.children[-2], nextHandler)
+			# Under some cases, clipboard tip text isn't shown on screen, causing clipboard history title to be announced instead of most recently copied item.
+			clipboardHistory = obj.children[-2]
+			if clipboardHistory.UIAAutomationId == inputPanelAutomationId:
+				clipboardHistory = clipboardHistory.next
+			self.event_UIA_elementSelected(clipboardHistory, nextHandler)
 		nextHandler()
 
 	# Argh, name change event is fired right after emoji panel opens in build 17666 and later.
