@@ -6,6 +6,7 @@
 
 import itertools
 import re
+import time
 from typing import Tuple, Union, Dict
 
 import wx
@@ -624,13 +625,29 @@ class InputGesturesDialog(SettingsDialog):
 		filterText = evt.GetEventObject().GetValue()
 		self.filter(filterText)
 
+	_pendingDoRefreshAfterFilterCalls = 0
+
 	def filter(self, filterText: str):
 		try:
 			self.gesturesVM.filter(filterText)
 		except Exception:
 			log.exception()
 			return
-		self.tree.doRefresh(postFilter=True)
+
+		# Workaround for #11326: "Selection removed" is not announced properly
+		self._pendingDoRefreshAfterFilterCalls += 1
+		wx.CallLater(100, self._refreshAfterFilter)
+
+	def _refreshAfterFilter(self):
+		if self._pendingDoRefreshAfterFilterCalls == 1:
+			self.tree.doRefresh(postFilter=True)
+		if self._pendingDoRefreshAfterFilterCalls is not None:
+			# reduce the count of pending calls, clamping at zero.
+			# this should never be necessary, but do so defensively anyway.
+			self._pendingDoRefreshAfterFilterCalls = max(
+				self._pendingDoRefreshAfterFilterCalls - 1,
+				0
+			)
 
 	def onTreeSelect(self, evt):
 		if evt:
@@ -800,3 +817,4 @@ class InputGesturesDialog(SettingsDialog):
 		# #7077: Remove the binding when the tree is destroyed so that it can not be called during destruction
 		# of the dialog.
 		self.tree.Unbind(wx.EVT_TREE_SEL_CHANGED)
+		self._pendingDoRefreshAfterFilterCalls = None  # disable any pending refresh calls.
