@@ -1,7 +1,7 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2017-2020 NV Access Limited, Joseph Lee
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2017-2020 NV Access Limited, Joseph Lee
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """App module for Windows 10 Modern Keyboard aka new touch keyboard panel.
 The chief feature is allowing NVDA to announce selected emoji when using the keyboard to search for and select one.
@@ -84,7 +84,10 @@ class AppModule(appModuleHandler.AppModule):
 			eventHandler.executeEvent("UIA_elementSelected", obj.lastChild.firstChild)
 		# Handle hardware keyboard suggestions.
 		# Treat it the same as CJK composition list - don't announce this if candidate announcement setting is off.
-		elif inputPanelAutomationId == "CandidateWindowControl" and config.conf["inputComposition"]["autoReportAllCandidates"]:
+		elif (
+			inputPanelAutomationId == "CandidateWindowControl"
+			and config.conf["inputComposition"]["autoReportAllCandidates"]
+		):
 			try:
 				eventHandler.executeEvent("UIA_elementSelected", inputPanel.firstChild.firstChild)
 			except AttributeError:
@@ -93,7 +96,8 @@ class AppModule(appModuleHandler.AppModule):
 		# Emoji panel in Version 1809 (specifically, build 17666) and later.
 		elif inputPanelAutomationId == "TEMPLATE_PART_ExpressionGroupedFullView":
 			self._emojiPanelJustOpened = True
-			# #10377: on some systems, there is something else besides grouping controls, so another child control must be used.
+			# #10377: on some systems, there is something else besides grouping controls,
+			# so another child control must be used.
 			emojisList = inputPanel.children[-2]
 			if emojisList.UIAAutomationId != "TEMPLATE_PART_Items_GridView":
 				emojisList = emojisList.previous
@@ -110,7 +114,8 @@ class AppModule(appModuleHandler.AppModule):
 		# Move to clipboard list so element selected event can pick it up.
 		# #9103: if clipboard is empty, a status message is displayed instead, and luckily it is located where clipboard data items can be found.
 		elif inputPanelAutomationId == "TEMPLATE_PART_ClipboardTitleBar":
-			# Under some cases, clipboard tip text isn't shown on screen, causing clipboard history title to be announced instead of most recently copied item.
+			# Under some cases, clipboard tip text isn't shown on screen,
+			# causing clipboard history title to be announced instead of most recently copied item.
 			clipboardHistoryItem = obj.children[-2]
 			if clipboardHistoryItem.UIAAutomationId == inputPanelAutomationId:
 				clipboardHistoryItem = clipboardHistoryItem.next
