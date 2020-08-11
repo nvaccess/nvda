@@ -192,6 +192,14 @@ class InputGesture(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
+	def executeScript(self, script):
+		"""
+		Executes the given script with this gesture, using scriptHandler.executeScript.
+		This is only implemented so as to allow Gesture subclasses
+		to perform an action directly before / after the script executes.
+		"""
+		return scriptHandler.executeScript(script, self)
+
 class GlobalGestureMap(object):
 	"""Maps gestures to scripts anywhere in NVDA.
 	This is used to allow users and locales to bind gestures in addition to those bound by individual scriptable objects.
