@@ -6,7 +6,6 @@
 
 import itertools
 import re
-import time
 from typing import Tuple, Union, Dict
 
 import wx
