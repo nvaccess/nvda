@@ -81,12 +81,11 @@ class ContextHelpMixin:
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		helpId = getattr(self, "helpId", None)
-		if not helpId or not isinstance(helpId, str):
-			log.warning(f"No helpId (or incorrect type) for: {self.__class__.__qualname__}")
-			return
+		if helpId is None or not isinstance(helpId, str):
+			log.warning(f"No helpId (or incorrect type) for: {self.__class__.__qualname__} helpId: {helpId!r}")
+			helpId = ""
 		window = typing.cast(wx.Window, self)
 		bindHelpEvent(helpId, window)
-		log.debug(f"ContextHelpMixin for {self.__class__.__qualname__}")
 
 	def bindHelpEvent(self, helpId: str, window: wx.Window):
 		"""A helper method, to bind helpId strings to sub-controls of this Window.
