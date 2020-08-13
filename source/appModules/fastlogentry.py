@@ -4,9 +4,13 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 import appModuleHandler
-import controlTypes
 from NVDAObjects.window import DisplayModelEditableText
 from NVDAObjects.window.edit import UnidentifiedEdit
+
+
+class TSynMemo(DisplayModelEditableText):
+
+	name = None  # Name is complete garbage as well.
 
 
 class AppModule(appModuleHandler.AppModule):
@@ -20,8 +24,4 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.remove(UnidentifiedEdit)
 			except ValueError:
 				pass
-			clsList.insert(0, DisplayModelEditableText)
-
-	def event_NVDAObject_init(self, obj):
-		if obj.windowClassName == "TSynMemo" and obj.role == controlTypes.ROLE_EDITABLETEXT:
-			obj.name = None  # Name is complete garbage as well.
+			clsList.insert(0, TSynMemo)
