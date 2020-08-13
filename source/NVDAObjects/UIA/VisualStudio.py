@@ -19,6 +19,10 @@ class IntelliSenseItem(UIA):
 		return self.UIAElement.cachedAutomationID
 
 	def event_UIA_elementSelected(self):
+		# Cancel speech to have speech announce the selection as soon as possible.
+		# This is needed because L{reportFocus} does not cancel speech.
+		# Therefore, if speech wouldn't be cancelled,
+		# selection announcements would queue up when changing selection rapidly.
 		speech.cancelSpeech()
 		api.setNavigatorObject(self, isFocus=True)
 		self.reportFocus()
