@@ -5,18 +5,14 @@
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-
 import logging
-from abc import abstractmethod, ABCMeta
+from abc import ABCMeta
 import copy
-import re
-import threading
-from typing import Sequence, Tuple, Union
+
 import wx
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib import scrolledpanel
 from wx.lib.expando import ExpandoTextCtrl
-from wx.lib.mixins.treemixin import VirtualTree
 import wx.lib.newevent
 import winUser
 import logHandler
@@ -48,7 +44,6 @@ try:
 	import updateCheck
 except RuntimeError:
 	updateCheck = None
-import inputCore
 from . import nvdaControls
 from autoSettingsUtils.utils import UnsupportedConfigParameterError
 from autoSettingsUtils.autoSettings import AutoSettings
@@ -59,7 +54,6 @@ import weakref
 import time
 import keyLabels
 from .dpiScalingHelper import DpiScalingHelperMixin
-from locale import strxfrm
 
 class SettingsDialog(wx.Dialog, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCMeta):
 	"""A settings dialog.
@@ -1993,6 +1987,16 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
+		highlightText = _("Marked (highlighted text)")
+		self.highlightCheckBox = fontGroup.addItem(
+			wx.CheckBox(self, label=highlightText)
+		)
+		self.highlightCheckBox.SetValue(
+			config.conf["documentFormatting"]["reportHighlight"]
+		)
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings panel.
 		styleText =_("St&yle")
 		self.styleCheckBox=fontGroup.addItem(wx.CheckBox(self,label=styleText))
 		self.styleCheckBox.SetValue(config.conf["documentFormatting"]["reportStyle"])
@@ -2205,6 +2209,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportComments"]=self.commentsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportRevisions"]=self.revisionsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportEmphasis"]=self.emphasisCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportHighlight"] = self.highlightCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportAlignment"]=self.alignmentCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportStyle"]=self.styleCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportSpellingErrors"]=self.spellingErrorsCheckBox.IsChecked()
@@ -2501,7 +2506,7 @@ class AdvancedPanelControls(wx.Panel):
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
 		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue == 'UIA')
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
-		self.cancelExpiredFocusSpeechCombo.SetValue(self.cancelExpiredFocusSpeechCombo.defaultValue)
+		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
@@ -3959,373 +3964,3 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.filter(self.filterEdit.Value)
 		self._refreshVisibleItems()
 		evt.Skip()
-
-
-#: A type hint used throughout the InputGesturesDialog
-FlattenedGestureMappings = Sequence[Tuple[str, Sequence[Tuple[str, inputCore.AllGesturesScriptInfo]]]]
-
-
-class InputGesturesDialog(SettingsDialog):
-	# Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
-	title = _("Input Gestures")
-
-	class GesturesTree(VirtualTree, wx.TreeCtrl):
-		def __init__(self, parent):
-			super().__init__(
-				parent,
-				size=wx.Size(600, 400),
-				style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE
-			)
-		
-		def OnGetChildrenCount(self, index: Tuple[int, ...]) -> int:
-			if not index:  # Root node
-				return len(self.Parent.filteredGestures)
-			commands = self.Parent.filteredGestures[index[0]][1]
-			if len(index) == 1:  # Category
-				return len(commands)
-			scriptInfo = commands[index[1]][1]
-			if len(index) == 2:  # Command
-				count = len(scriptInfo.gestures)
-				if (
-					self.Parent.newGesturePromptIndex
-					and self.Parent.newGesturePromptIndex[:2] == index
-				):
-					count += 1
-				return count
-			assert len(index) == 3
-			return 0  # Gesture
-
-		def OnGetItemText(self, index: Tuple[int, ...], column: int = 0) -> str:
-			if index == self.Parent.newGesturePromptIndex:
-				# Translators: The prompt to enter a gesture in the Input Gestures dialog.
-				return _("Enter input gesture:")
-			category, commands = self.Parent.filteredGestures[index[0]]
-			if len(index) == 1:
-				if self.Parent.filteredGestures is self.Parent.flattenedGestures:
-					return category
-				nbResults = len(commands)
-				if nbResults == 1:
-					# Translators: The label for a filtered category in the Input Gestures dialog.
-					return _("{category} (1 result)").format(category=category)
-				# Translators: The label for a filtered category in the Input Gestures dialog.
-				return _("{category} ({nbResults} results)").format(
-					category=category, nbResults=len(commands)
-				)
-			command, scriptInfo = commands[index[1]]
-			if len(index) == 2:
-				return command
-			assert len(index) == 3
-			return self.Parent._formatGesture(scriptInfo.gestures[index[2]])
-
-		def getData(self, index: Tuple[int, ...]) -> Union[inputCore.AllGesturesScriptInfo, str]:
-			assert 2 <= len(index) <= 3
-			category, commands = self.Parent.filteredGestures[index[0]]
-			command, scriptInfo = commands[index[1]]
-			if len(index) == 2:
-				return scriptInfo
-			return scriptInfo.gestures[index[2]]
-
-	def __init__(self, parent: "InputGesturesDialog"):
-		#: Token used to cancel async filtering
-		self.filterToken: object = False
-		#: The index in the GesturesTree of the prompt for entering a new gesture
-		self.newGesturePromptIndex: Tuple[int, int, int] = None
-		gestures = inputCore.manager.getAllGestureMappings(
-			obj=gui.mainFrame.prevFocus,
-			ancestors=gui.mainFrame.prevFocusAncestors
-		)
-		# Flatten the gestures mappings for faster access by the VirtualTree
-		self.flattenedGestures: FlattenedGestureMappings = []
-		for category in sorted(gestures, key=strxfrm):
-			commands = gestures[category]
-			self.flattenedGestures.append((
-				category,
-				[(command, commands[command]) for command in sorted(commands, key=strxfrm)]
-			))
-		#: The L{GesturesTree} actually reads from this attribute
-		self.filteredGestures: FlattenedGestureMappings = self.flattenedGestures
-		super().__init__(parent, resizeable=True)
-
-	def makeSettings(self, settingsSizer):
-		filterSizer = wx.BoxSizer(wx.HORIZONTAL)
-		# Translators: The label of a text field to search for gestures in the Input Gestures dialog.
-		filterLabel = wx.StaticText(self, label=pgettext("inputGestures", "&Filter by:"))
-		filter = wx.TextCtrl(self)
-		filterSizer.Add(filterLabel, flag=wx.ALIGN_CENTER_VERTICAL)
-		filterSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
-		filterSizer.Add(filter, proportion=1)
-		settingsSizer.Add(filterSizer, flag=wx.EXPAND)
-		settingsSizer.AddSpacer(5)
-		filter.Bind(wx.EVT_TEXT, self.onFilterChange, filter)
-
-		tree = self.tree = self.GesturesTree(self)
-		tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.onTreeSelect)
-		settingsSizer.Add(tree, proportion=1, flag=wx.EXPAND)
-
-		settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
-
-		bHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
-
-		# Translators: The label of a button to add a gesture in the Input Gestures dialog.
-		self.addButton = bHelper.addButton(self, label=_("&Add"))
-		self.addButton.Bind(wx.EVT_BUTTON, self.onAdd)
-		self.addButton.Disable()
-
-		# Translators: The label of a button to remove a gesture in the Input Gestures dialog.
-		self.removeButton = bHelper.addButton(self, label=_("&Remove"))
-		self.removeButton.Bind(wx.EVT_BUTTON, self.onRemove)
-		self.removeButton.Disable()
-
-		bHelper.sizer.AddStretchSpacer()
-		# Translators: The label of a button to reset all gestures in the Input Gestures dialog.
-		resetButton = wx.Button(self, label=_("Reset to factory &defaults"))
-		bHelper.sizer.Add(resetButton, flag=wx.ALIGN_RIGHT)
-		resetButton.Bind(wx.EVT_BUTTON, self.onReset)
-
-		self.pendingAdds = set()
-		self.pendingRemoves = set()
-
-		settingsSizer.Add(bHelper.sizer, flag=wx.EXPAND)
-
-	def postInit(self):
-		self.tree.RefreshItems()
-		self.tree.SetFocus()
-
-	def _onWindowDestroy(self, evt):
-		super()._onWindowDestroy(evt)
-		self.filterToken = None
-
-	def onFilterChange(self, evt):
-		filter = evt.GetEventObject().GetValue()
-		token = self.filterToken = object()
-		log.debug(f"new filter token {token}")
-		self.filter(token, filter)
-
-	def filter(self, token: object, filter: str):
-		
-		def run():
-			try:
-				self._filter(token, filter)
-			except Exception:
-				log.exception()
-		
-		threading.Thread(
-			target=run,
-			name=f"{self.__class__.__module__}.{self.filter.__func__.__qualname__}",
-		).start()
-
-	def _filter(self, token: object, filter: str):
-		if not filter:
-			wx.CallAfter(self.refreshTree, token, self.flattenedGestures)
-			return
-		filteredGestures = []
-		# This regexp uses a positive lookahead (?=...) for every word in the filter, which just makes sure
-		# the word is present in the string to be tested without matching position or order.
-		# #5060: Escape the filter text to prevent unexpected matches and regexp errors.
-		# Because we're escaping, words must then be split on r"\ ".
-		filter = re.escape(filter)
-		pattern = re.compile(r"(?=.*?" + r")(?=.*?".join(filter.split(r"\ ")) + r")", re.U | re.IGNORECASE)
-		nbCommands = 0
-		for category, commands in self.flattenedGestures:
-			if token is not self.filterToken:
-				log.debug(f"filter token {token} superseded by {self.filterToken}")
-				return
-			filteredCommands = [
-				(command, scriptInfo)
-				for command, scriptInfo in commands
-				if pattern.match(command)
-			]
-			if filteredCommands:
-				filteredGestures.append((category, filteredCommands))
-				nbCommands += len(filteredCommands)
-		if token is not self.filterToken:
-			log.debug(f"filter token {token} superseded by {self.filterToken}")
-			return
-		# Expanding categories can be expensive: Only do it if there are few results.
-		wx.CallAfter(self.refreshTree, token, filteredGestures, expandCategories=nbCommands <= 10)
-	
-	def refreshTree(
-			self,
-			token: object,
-			filteredGestures: FlattenedGestureMappings,
-			expandCategories: bool = False,
-	):
-		if token is not self.filterToken:
-			log.debug(f"filter token {token} superseded by {self.filterToken}")
-			return
-		self.tree.CollapseAll()
-		self.filteredGestures = filteredGestures
-		self.tree.RefreshItems()
-		if not expandCategories:
-			return
-		for index in range(len(self.filteredGestures)):
-			if token is not self.filterToken:
-				log.debug(f"filter token {token} superseded by {self.filterToken}")
-				return
-			# Expand categories
-			self.tree.Expand(self.tree.GetItemByIndex((index,)))
-
-	def _formatGesture(self, identifier):
-		try:
-			source, main = inputCore.getDisplayTextForGestureIdentifier(identifier)
-			# Translators: Describes a gesture in the Input Gestures dialog.
-			# {main} is replaced with the main part of the gesture; e.g. alt+tab.
-			# {source} is replaced with the gesture's source; e.g. laptop keyboard.
-			return _("{main} ({source})").format(main=main, source=source)
-		except LookupError:
-			return identifier
-
-	def onTreeSelect(self, evt):
-		if evt:
-			evt.Skip()
-		# #7077: Check if the treeview is still alive.
-		try:
-			index = self.tree.GetIndexOfItem(self.tree.Selection)
-		except RuntimeError:
-			return
-		isCommand = len(index) == 2
-		isGesture = len(index) == 3
-		self.addButton.Enabled = isCommand or isGesture
-		self.removeButton.Enabled = isGesture
-
-	def onAdd(self, evt):
-		if inputCore.manager._captureFunc:
-			return
-
-		selIdx = self.tree.GetIndexOfItem(self.tree.Selection)
-		comIdx = selIdx[:2]
-		scriptInfo = self.tree.getData(comIdx)
-		gesIdx = self.newGesturePromptIndex = comIdx + (self.tree.OnGetChildrenCount(comIdx),)
-		catIdx = comIdx[:1]
-		catItem = self.tree.GetItemByIndex(catIdx)
-		self.tree.RefreshChildrenRecursively(catItem)
-		comItem = self.tree.GetItemByIndex(comIdx)
-		self.tree.Expand(comItem)
-		gesItem = self.tree.GetItemByIndex(gesIdx)
-		self.tree.SelectItem(gesItem)
-		self.tree.SetFocus()
-
-		def addGestureCaptor(gesture):
-			if gesture.isModifier:
-				return False
-			inputCore.manager._captureFunc = None
-			wx.CallAfter(self._addCaptured, scriptInfo, gesture)
-			return False
-		inputCore.manager._captureFunc = addGestureCaptor
-
-	def _addCaptured(self, scriptInfo, gesture):
-		gids = gesture.normalizedIdentifiers
-		if len(gids) > 1:
-			# Multiple choices. Present them in a pop-up menu.
-			menu = wx.Menu()
-			for gid in gids:
-				disp = self._formatGesture(gid)
-				item = menu.Append(wx.ID_ANY, disp)
-				self.Bind(
-					wx.EVT_MENU,
-					lambda evt, gid=gid, disp=disp: self._addChoice(scriptInfo, gid, disp),
-					item
-				)
-			self.PopupMenu(menu)
-			if self.newGesturePromptIndex:
-				# No item was selected, so use the first.
-				self._addChoice(scriptInfo, gids[0], self._formatGesture(gids[0]))
-			menu.Destroy()
-		else:
-			self._addChoice(scriptInfo, gids[0], self._formatGesture(gids[0]))
-
-	def _addChoice(self, scriptInfo, gid, disp):
-		entry = (gid, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName)
-		try:
-			# If this was just removed, just undo it.
-			self.pendingRemoves.remove(entry)
-		except KeyError:
-			self.pendingAdds.add(entry)
-		scriptInfo.gestures.append(gid)
-		catIdx = self.newGesturePromptIndex[:1]
-		catItem = self.tree.GetItemByIndex(catIdx)
-		self.newGesturePromptIndex = None
-		self.tree.RefreshChildrenRecursively(catItem)
-		self.onTreeSelect(None)
-
-	def onRemove(self, evt):
-		gesIdx = self.tree.GetIndexOfItem(self.tree.Selection)
-		gesture = self.tree.getData(gesIdx)
-		comIdx = gesIdx[:2]
-		scriptInfo = self.tree.getData(comIdx)
-		entry = (gesture, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName)
-		try:
-			# If this was just added, just undo it.
-			self.pendingAdds.remove(entry)
-		except KeyError:
-			self.pendingRemoves.add(entry)
-		scriptInfo.gestures.remove(gesture)
-		catIdx = comIdx[:1]
-		catItem = self.tree.GetItemByIndex(catIdx)
-		self.tree.RefreshChildrenRecursively(catItem)
-		self.tree.SetFocus()
-
-	def onReset(self, evt):
-		if gui.messageBox(
-			# Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
-			_("""Are you sure you want to reset all gestures to their factory defaults?
-			
-			All of your user defined gestures, whether previously set or defined during this session, will be lost.
-			This cannot be undone."""),
-			# Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
-			_("Reset gestures"),
-			style=wx.YES | wx.NO | wx.NO_DEFAULT
-		) != wx.YES:
-			return
-		self.pendingAdds.clear()
-		self.pendingRemoves.clear()
-		inputCore.manager.userGestureMap.clear()
-		try:
-			inputCore.manager.userGestureMap.save()
-		except Exception:
-			log.debugWarning("", exc_info=True)
-			# Translators: An error displayed when saving user defined input gestures fails.
-			gui.messageBox(
-				_("Error saving user defined gestures - probably read only file system."),
-				caption=_("Error"),
-				style=wx.OK | wx.ICON_ERROR
-			)
-			self.onCancel(None)
-			return
-		inputCore.manager.userGestureMap.save()
-		self.gestures = inputCore.manager.getAllGestureMappings(
-			obj=gui.mainFrame.prevFocus,
-			ancestors=gui.mainFrame.prevFocusAncestors
-		)
-		self.tree.DeleteChildren(self.treeRoot)
-		self.populateTree(filter=self.filter.GetValue())
-		self.tree.SetFocus()
-
-	def onOk(self, evt):
-		for gesture, module, className, scriptName in self.pendingRemoves:
-			try:
-				inputCore.manager.userGestureMap.remove(gesture, module, className, scriptName)
-			except ValueError:
-				# The user wants to unbind a gesture they didn't define.
-				inputCore.manager.userGestureMap.add(gesture, module, className, None)
-
-		for gesture, module, className, scriptName in self.pendingAdds:
-			try:
-				# The user might have unbound this gesture,
-				# so remove this override first.
-				inputCore.manager.userGestureMap.remove(gesture, module, className, None)
-			except ValueError:
-				pass
-			inputCore.manager.userGestureMap.add(gesture, module, className, scriptName)
-
-		if self.pendingAdds or self.pendingRemoves:
-			# Only save if there is something to save.
-			try:
-				inputCore.manager.userGestureMap.save()
-			except:
-				log.debugWarning("", exc_info=True)
-				# Translators: An error displayed when saving user defined input gestures fails.
-				gui.messageBox(_("Error saving user defined gestures - probably read only file system."),
-					_("Error"), wx.OK | wx.ICON_ERROR)
-
-		super(InputGesturesDialog, self).onOk(evt)

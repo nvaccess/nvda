@@ -603,12 +603,6 @@ the NVDAObject for IAccessible
 		# Try every trick in the book to get the window handle if we don't have it.
 		if not windowHandle and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
 			windowHandle=self.IA2WindowHandle
-			#Mozilla Gecko: we can never use a MozillaWindowClass window for Gecko 1.9
-			tempWindow=windowHandle
-			while tempWindow and winUser.getClassName(tempWindow)=="MozillaWindowClass":
-				tempWindow=winUser.getAncestor(tempWindow,winUser.GA_PARENT)
-			if tempWindow and winUser.getClassName(tempWindow).startswith('Mozilla'):
-				windowHandle=tempWindow
 		try:
 			Identity=IAccessibleHandler.getIAccIdentity(IAccessibleObject,IAccessibleChildID)
 		except COMError:

@@ -1,5 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2020 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.
+# Copyright (C) 2007-2020 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
+# Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -113,6 +114,11 @@ class Logger(logging.Logger):
 	DEBUGWARNING = 15
 	OFF = 100
 
+	#: The start position of a fragment of the log file as marked with
+	#: L{markFragmentStart} for later retrieval using L{getFragment}.
+	#: @type: C{long}
+	fragmentStart = None
+
 	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False, stack_info=None):
 		if not extra:
 			extra={}
@@ -188,6 +194,48 @@ class Logger(logging.Logger):
 		if not self.isEnabledFor(level):
 			return
 		self._log(level, msg, (), exc_info=exc_info, **kwargs)
+
+	def markFragmentStart(self):
+		"""Mark the current end of the log file as the start position of a
+		fragment to be later retrieved by L{getFragment}.
+		@returns: Whether a log file is in use and a position could be marked
+		@rtype: bool
+		"""
+		if (
+			not globalVars.appArgs
+			or globalVars.appArgs.secure
+			or not globalVars.appArgs.logFileName
+			or not isinstance(logHandler, FileHandler)
+		):
+			return False
+		with open(globalVars.appArgs.logFileName, "r", encoding="UTF-8") as f:
+			# _io.TextIOWrapper.seek: whence=2 -- end of stream
+			f.seek(0, 2)
+			self.fragmentStart = f.tell()
+			return True
+
+	def getFragment(self):
+		"""Retrieve a fragment of the log starting from the position marked using
+		L{markFragmentStart}.
+		If L{fragmentStart} does not point to the current end of the log file, it
+		is reset to C{None} after reading the fragment.
+		@returns: The text of the fragment, or C{None} if L{fragmentStart} is None.
+		@rtype: str
+		"""
+		if (
+			self.fragmentStart is None
+			or not globalVars.appArgs
+			or globalVars.appArgs.secure
+			or not globalVars.appArgs.logFileName
+			or not isinstance(logHandler, FileHandler)
+		):
+			return None
+		with open(globalVars.appArgs.logFileName, "r", encoding="UTF-8") as f:
+			f.seek(self.fragmentStart)
+			fragment = f.read()
+			if fragment:
+				self.fragmentStart = None
+			return fragment
 
 class RemoteHandler(logging.Handler):
 

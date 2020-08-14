@@ -718,6 +718,7 @@ In order to fit as much information as possible on a braille display, the follow
 | lv N | a tree view item has a hierarchical level N|
 | wnd | window |
 | ⠤⠤⠤⠤⠤ | separator |
+| mrkd | marked content |
 
 The following state indicators are also defined:
 || Abbreviation | Control state |
@@ -1732,6 +1733,7 @@ You can configure reporting of:
  - Font attributes
  - Superscripts and subscripts
  - Emphasis
+ - Marked (Highlighted text)
  - Style
  - Colours
 - Document information
@@ -1942,6 +1944,19 @@ For example, if you pressed a key on the keyboard, you may wish it to be specifi
 In this case, a menu will appear allowing you to select the desired option.
 
 To remove a gesture from a command, select the gesture and press the Remove button.
+
+The Emulated system keyboard keys category contains NVDA commands that emulate keys on the system keyboard.
+These emulated system keyboard keys can be used to control a system keyboard right from your braille display.
+To add an emulated input gesture, select the Emulated system keyboard keys category and press the Add button.
+Then, press the key on the keyboard you wish to emulate.
+After that, the key will be available from the Emulated system keyboard keys category and you will be able to assign an input gesture to it as described above.
+
+Note:
+ - Emulated keys must have gestures assigned in order to persist when saving / closing the dialog.
+ - An input gesture with modifier keys may not be able to be mapped to an emulated gesture without modifier
+ keys. For instance, setting the emulated input 'a' and configuring an input gesture of 'ctrl+m', may result
+ in the application receiving 'ctrl+a'.
+ -
 
 When you are finished making changes, press the OK button to save them or the Cancel button to discard them.
 
