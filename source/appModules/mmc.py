@@ -1,7 +1,5 @@
-# -*- coding: UTF-8 -*-
-# appModules/mmc.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2015-2019 NV Access Limited, David Parduhn, Bill Dengler, Leonard de Ruijter, Łukasz Golonka
+# Copyright (C) 2015-2020 NV Access Limited, David Parduhn, Bill Dengler, Leonard de Ruijter, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
