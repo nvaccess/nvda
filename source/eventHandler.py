@@ -96,7 +96,8 @@ class _EventExecuter(garbageHandler.TrackedObject):
 			self.next()
 		except StopIteration:
 			pass
-		del self._gen
+		finally:
+			del self._gen
 
 	def next(self):
 		func, args = next(self._gen)
