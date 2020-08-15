@@ -13,6 +13,7 @@ from ctypes.wintypes import *
 import time
 import atexit
 import wx
+import garbageHandler
 import winKernel
 import wave
 import config
@@ -95,7 +96,8 @@ for func in (
 ):
 	func.errcheck = _winmm_errcheck
 
-class WavePlayer(object):
+
+class WavePlayer(garbageHandler.TrackedObject):
 	"""Synchronously play a stream of audio.
 	To use, construct an instance and feed it waveform audio using L{feed}.
 	"""

@@ -1,0 +1,64 @@
+import gc
+import threading
+from logHandler import log
+
+""" Watches Python's cyclic garbage collector and reports questionable collections. """
+
+
+class TrackedObject:
+	"""
+	An object that notifies garbageHandler when it is destructed,
+	so that NVDA can log when important unreachable objects are being deleted
+	by Python's cyclic garbage collector.
+	"""
+
+	def __del__(self):
+		notifyObjectDeletion(self)
+
+
+_collectionThreadID = 0
+_reportCountDuringCollection = 0
+
+
+def initialize():
+	""" Initializes NVDA's garbage handler. """
+	# Instruct Python to keep all unreachable objects for later inspection
+	# gc.set_debug(gc.DEBUG_SAVEALL)
+	# Register a callback with Python's garbage collector
+	# That will notify us of the start and end of each collection run.
+	gc.callbacks.append(_collectionCallback)
+
+
+def _collectionCallback(action, info):
+	global _collectionThreadID, _reportCountDuringCollection
+	if action == "start":
+		_collectionThreadID = threading.currentThread().ident
+		_reportCountDuringCollection = 0
+	elif action == "stop":
+		if _reportCountDuringCollection > 0:
+			log.error(f"Found at least {_reportCountDuringCollection} unreachable objects in run")
+		_collectionThreadID = 0
+	else:
+		log.error(f"Unknown action: {action}")
+
+
+def notifyObjectDeletion(obj):
+	"""
+	Logs a message about the given object being deleted,
+	if it is due to Python's cyclic garbage collector.
+	"""
+	global _reportCountDuringCollection
+	if _collectionThreadID != threading.currentThread().ident:
+		return
+	if _reportCountDuringCollection == 0:
+		log.error(
+			"Garbage collector has found one or more unreachable objects. See further warnings for specific objects.",
+			stack_info=True
+		)
+	log.warning(f"Deleting unreachable object {obj}")
+	_reportCountDuringCollection += 1
+
+
+def terminate():
+	""" Terminates NVDA's garbage handler. """
+	gc.callbacks.remove(_collectionCallback)
