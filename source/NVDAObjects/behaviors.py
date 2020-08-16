@@ -345,7 +345,7 @@ class LiveText(NVDAObject):
 				prevChange, prevLine = change, text
 				continue
 
-			if prevLine and prevChange == self._dmp.DIFF_DELETE and len(prevLine) > 2:
+			if prevLine and prevChange == self._dmp.DIFF_DELETE and not prevLine.isspace():
 				# It's possible that only a few characters have changed in this line.
 				# If so, we want to speak just the changed section, rather than the entire line.
 				textLen = len(text)
