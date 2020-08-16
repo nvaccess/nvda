@@ -1,8 +1,8 @@
-#NVDAObjects/WinConsole.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2007-2019 NV Access Limited, Bill Dengler
+# NVDAObjects/WinConsole.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2007-2020 NV Access Limited, Bill Dengler
 
 import winConsoleHandler
 from . import Window
@@ -69,8 +69,8 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 	def event_nameChange(self):
 		pass
 
-	def _getTextLines(self):
-		return winConsoleHandler.getConsoleVisibleLines()
+	def _getText(self):
+		return winConsoleHandler.getConsoleVisibleText()
 
 	def script_caret_backspaceCharacter(self, gesture):
 		super(WinConsole, self).script_caret_backspaceCharacter(gesture)

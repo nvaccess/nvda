@@ -12,7 +12,7 @@ Behaviors described in this mix-in include providing table navigation commands f
 import os
 import time
 import threading
-import difflib
+from diff_match_patch import diff_match_patch
 import tones
 import queueHandler
 import eventHandler
@@ -219,6 +219,10 @@ class LiveText(NVDAObject):
 	"""
 	#: The time to wait before fetching text after a change event.
 	STABILIZE_DELAY = 0
+	#: The maximum amount of time (in seconds) to wait for a diff to complete,
+	#: 0 for infinity.
+	#: Longer timeouts increase diff quality at the cost of performance.
+	DIFF_DEADLINE = 3
 	# If the text is live, this is definitely content.
 	presentationType = NVDAObject.presType_content
 
@@ -228,6 +232,7 @@ class LiveText(NVDAObject):
 		self._event = threading.Event()
 		self._monitorThread = None
 		self._keepMonitoring = False
+		self._dmp = diff_match_patch()
 
 	def startMonitoring(self):
 		"""Start monitoring for new text.
@@ -263,15 +268,18 @@ class LiveText(NVDAObject):
 		"""
 		self._event.set()
 
-	def _getTextLines(self):
-		"""Retrieve the text of this object in lines.
+	def _getText(self):
+		"""Retrieve the text of this object.
 		This will be used to determine the new text to speak.
 		The base implementation uses the L{TextInfo}.
 		However, subclasses should override this if there is a better way to retrieve the text.
-		@return: The current lines of text.
-		@rtype: list of str
+		@return: The current text ob the object.
+		@rtype: str
 		"""
-		return list(self.makeTextInfo(textInfos.POSITION_ALL).getTextInChunks(textInfos.UNIT_LINE))
+		if hasattr(self, "_getTextLines"):
+			log.warning("LiveText._getTextLines is deprecated, please override _getText instead.")
+			return '\n'.join(self._getTextLines())
+		return self.makeTextInfo(textInfos.POSITION_ALL).text
 
 	def _reportNewLines(self, lines):
 		"""
@@ -289,10 +297,10 @@ class LiveText(NVDAObject):
 
 	def _monitor(self):
 		try:
-			oldLines = self._getTextLines()
+			oldText = self._getText()
 		except:
-			log.exception("Error getting initial lines")
-			oldLines = []
+			log.exception("Error getting initial text")
+			oldText = ""
 
 		while self._keepMonitoring:
 			self._event.wait()
@@ -307,9 +315,9 @@ class LiveText(NVDAObject):
 			self._event.clear()
 
 			try:
-				newLines = self._getTextLines()
+				newText = self._getText()
 				if config.conf["presentation"]["reportDynamicContentChanges"]:
-					outLines = self._calculateNewText(newLines, oldLines)
+					outLines = self._calculateNewText(newText, oldText)
 					if len(outLines) == 1 and len(outLines[0].strip()) == 1:
 						# This is only a single character,
 						# which probably means it is just a typed character,
@@ -317,61 +325,20 @@ class LiveText(NVDAObject):
 						del outLines[0]
 					if outLines:
 						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewLines, outLines)
-				oldLines = newLines
+				oldText = newText
 			except:
-				log.exception("Error getting lines or calculating new text")
+				log.exception("Error getting or calculating new text")
 
-	def _calculateNewText(self, newLines, oldLines):
-		outLines = []
+	def _calculateNewText(self, newText, oldText):
+		return [
+			line
+			for change, line in self._dmp.diff_lineMode(
+				oldText, newText, self.DIFF_DEADLINE
+			)
+			if change == self._dmp.DIFF_INSERT
+			and not line.isspace()
+		]
 
-		prevLine = None
-		for line in difflib.ndiff(oldLines, newLines):
-			if line[0] == "?":
-				# We're never interested in these.
-				continue
-			if line[0] != "+":
-				# We're only interested in new lines.
-				prevLine = line
-				continue
-			text = line[2:]
-			if not text or text.isspace():
-				prevLine = line
-				continue
-
-			if prevLine and prevLine[0] == "-" and len(prevLine) > 2:
-				# It's possible that only a few characters have changed in this line.
-				# If so, we want to speak just the changed section, rather than the entire line.
-				prevText = prevLine[2:]
-				textLen = len(text)
-				prevTextLen = len(prevText)
-				# Find the first character that differs between the two lines.
-				for pos in range(min(textLen, prevTextLen)):
-					if text[pos] != prevText[pos]:
-						start = pos
-						break
-				else:
-					# We haven't found a differing character so far and we've hit the end of one of the lines.
-					# This means that the differing text starts here.
-					start = pos + 1
-				# Find the end of the differing text.
-				if textLen != prevTextLen:
-					# The lines are different lengths, so assume the rest of the line changed.
-					end = textLen
-				else:
-					for pos in range(textLen - 1, start - 1, -1):
-						if text[pos] != prevText[pos]:
-							end = pos + 1
-							break
-
-				if end - start < 15:
-					# Less than 15 characters have changed, so only speak the changed chunk.
-					text = text[start:end]
-
-			if text and not text.isspace():
-				outLines.append(text)
-			prevLine = line
-
-		return outLines
 
 class Terminal(LiveText, EditableText):
 	"""An object which both accepts text input and outputs text which should be reported automatically.
