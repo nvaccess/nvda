@@ -98,6 +98,7 @@ For reference, the following run time dependencies are included in Git submodule
 * [pySerial](https://pypi.python.org/pypi/pyserial), version 3.4
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
 * Java Access Bridge 32 bit, from Zulu Community OpenJDK build 13.0.1+10Zulu (13.28.11)
+* [Diff-match-patch](https://github.com/diff-match-patch-python/diff-match-patch), latest master.
 
 Additionally, the following build time dependencies are included in Git submodules:
 

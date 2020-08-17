@@ -28,6 +28,7 @@ import api
 import ui
 import braille
 import nvwave
+from typing import List
 
 class ProgressBar(NVDAObject):
 
@@ -266,13 +267,11 @@ class LiveText(NVDAObject):
 		"""
 		self._event.set()
 
-	def _getText(self):
+	def _getText(self) -> str:
 		"""Retrieve the text of this object.
 		This will be used to determine the new text to speak.
 		The base implementation uses the L{TextInfo}.
 		However, subclasses should override this if there is a better way to retrieve the text.
-		@return: The current text ob the object.
-		@rtype: str
 		"""
 		if hasattr(self, "_getTextLines"):
 			log.warning("LiveText._getTextLines is deprecated, please override _getText instead.")
@@ -327,7 +326,7 @@ class LiveText(NVDAObject):
 			except:
 				log.exception("Error getting or calculating new text")
 
-	def _calculateNewText_dmp(self, newText, oldText):
+	def _calculateNewText_dmp(self, newText: str, oldText: str) -> List[str]:
 		diffs = self._dmp.diff_main(oldText, newText)
 		res = ""
 		self._dmp.diff_cleanupSemantic(diffs)
@@ -338,7 +337,7 @@ class LiveText(NVDAObject):
 				res += content
 		return [line for line in res.splitlines() if line and not line.isspace()]
 
-	def _calculateNewText_difflib(self, newLines, oldLines):
+	def _calculateNewText_difflib(self, newLines: List[str], oldLines: List[str]) -> List[str]:
 		outLines = []
 
 		prevLine = None
@@ -392,7 +391,7 @@ class LiveText(NVDAObject):
 
 		return outLines
 
-	def _calculateNewText(self, newText, oldText):
+	def _calculateNewText(self, newText: str, oldText: str) -> List[str]:
 		return (
 			self._calculateNewText_dmp(newText, oldText)
 			if self._supportsDmp and config.conf["terminals"]["useDMPWhenAvailable"]
