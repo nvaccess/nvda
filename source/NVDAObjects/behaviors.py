@@ -218,6 +218,9 @@ class LiveText(NVDAObject):
 	"""
 	#: The time to wait before fetching text after a change event.
 	STABILIZE_DELAY = 0
+	#: Whether this object supports Diff-Match-Patch character diffing.
+	#: Set to False to use line diffing.
+	_supportsDmp = True
 	# If the text is live, this is definitely content.
 	presentationType = NVDAObject.presType_content
 
@@ -324,7 +327,7 @@ class LiveText(NVDAObject):
 			except:
 				log.exception("Error getting or calculating new text")
 
-	def _calculateNewText(self, newText, oldText):
+	def _calculateNewText_dmp(self, newText, oldText):
 		diffs = self._dmp.diff_main(oldText, newText)
 		res = ""
 		self._dmp.diff_cleanupSemantic(diffs)
@@ -334,6 +337,69 @@ class LiveText(NVDAObject):
 			):
 				res += content
 		return [line for line in res.splitlines() if line and not line.isspace()]
+
+	def _calculateNewText_difflib(self, newLines, oldLines):
+		outLines = []
+
+		prevLine = None
+		from difflib import ndiff
+
+		for line in ndiff(oldLines, newLines):
+			if line[0] == "?":
+				# We're never interested in these.
+				continue
+			if line[0] != "+":
+				# We're only interested in new lines.
+				prevLine = line
+				continue
+			text = line[2:]
+			if not text or text.isspace():
+				prevLine = line
+				continue
+
+			if prevLine and prevLine[0] == "-" and len(prevLine) > 2:
+				# It's possible that only a few characters have changed in this line.
+				# If so, we want to speak just the changed section, rather than the entire line.
+				prevText = prevLine[2:]
+				textLen = len(text)
+				prevTextLen = len(prevText)
+				# Find the first character that differs between the two lines.
+				for pos in range(min(textLen, prevTextLen)):
+					if text[pos] != prevText[pos]:
+						start = pos
+						break
+				else:
+					# We haven't found a differing character so far and we've hit the end of one of the lines.
+					# This means that the differing text starts here.
+					start = pos + 1
+				# Find the end of the differing text.
+				if textLen != prevTextLen:
+					# The lines are different lengths, so assume the rest of the line changed.
+					end = textLen
+				else:
+					for pos in range(textLen - 1, start - 1, -1):
+						if text[pos] != prevText[pos]:
+							end = pos + 1
+							break
+
+				if end - start < 15:
+					# Less than 15 characters have changed, so only speak the changed chunk.
+					text = text[start:end]
+
+			if text and not text.isspace():
+				outLines.append(text)
+			prevLine = line
+
+		return outLines
+
+	def _calculateNewText(self, newText, oldText):
+		return (
+			self._calculateNewText_dmp(newText, oldText)
+			if self._supportsDmp
+			else self._calculateNewText_difflib(
+				newText.splitlines(), oldText.splitlines()
+			)
+		)
 
 
 class Terminal(LiveText, EditableText):
