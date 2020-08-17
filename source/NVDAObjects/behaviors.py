@@ -221,7 +221,7 @@ class LiveText(NVDAObject):
 	STABILIZE_DELAY = 0
 	#: Whether this object supports Diff-Match-Patch character diffing.
 	#: Set to False to use line diffing.
-	_supportsDmp = True
+	_supportsDMP = True
 	# If the text is live, this is definitely content.
 	presentationType = NVDAObject.presType_content
 
@@ -394,7 +394,7 @@ class LiveText(NVDAObject):
 	def _calculateNewText(self, newText: str, oldText: str) -> List[str]:
 		return (
 			self._calculateNewText_dmp(newText, oldText)
-			if self._supportsDmp and config.conf["terminals"]["useDMPWhenAvailable"]
+			if self._supportsDMP and config.conf["terminals"]["useDMPWhenAvailable"]
 			else self._calculateNewText_difflib(
 				newText.splitlines(), oldText.splitlines()
 			)
