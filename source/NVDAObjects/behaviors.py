@@ -325,58 +325,15 @@ class LiveText(NVDAObject):
 				log.exception("Error getting or calculating new text")
 
 	def _calculateNewText(self, newText, oldText):
-		(oldText, newText, linearray) = self._dmp.diff_linesToChars(oldText, newText)
-		diffs = self._dmp.diff_main(oldText, newText, checklines=False)
-		# Convert the diff back to original text.
-		self._dmp.diff_charsToLines(diffs, linearray)
-		# Eliminate freak matches (e.g. blank lines)
+		diffs = self._dmp.diff_main(oldText, newText)
+		res = ""
 		self._dmp.diff_cleanupSemantic(diffs)
-
-		outLines = []
-		prevLine = None
-		prevChange = None
-		for change, text in diffs:
-			if change != self._dmp.DIFF_INSERT:
-				# We're only interested in new lines.
-				prevChange, prevLine = change, text
-				continue
-			if not text or text.isspace():
-				prevChange, prevLine = change, text
-				continue
-
-			if prevLine and prevChange == self._dmp.DIFF_DELETE and not prevLine.isspace():
-				# It's possible that only a few characters have changed in this line.
-				# If so, we want to speak just the changed section, rather than the entire line.
-				textLen = len(text)
-				prevLineLen = len(prevLine)
-				# Find the first character that differs between the two lines.
-				for pos in range(min(textLen, prevLineLen)):
-					if text[pos] != prevLine[pos]:
-						start = pos
-						break
-				else:
-					# We haven't found a differing character so far and we've hit the end of one of the lines.
-					# This means that the differing text starts here.
-					start = pos + 1
-				# Find the end of the differing text.
-				if textLen != prevLineLen:
-					# The lines are different lengths, so assume the rest of the line changed.
-					end = textLen
-				else:
-					for pos in range(textLen - 1, start - 1, -1):
-						if text[pos] != prevLine[pos]:
-							end = pos + 1
-							break
-
-				if end - start < 15:
-					# Less than 15 characters have changed, so only speak the changed chunk.
-					text = text[start:end]
-
-			if text and not text.isspace():
-				outLines.append(text)
-			prevChange, prevLine = change, text
-
-		return [line for outLine in outLines for line in outLine.splitlines() if line and not line.isspace()]
+		for change, content in diffs:
+			if change == self._dmp.DIFF_INSERT or (
+				change == self._dmp.DIFF_EQUAL and content.isspace()
+			):
+				res += content
+		return [line for line in res.splitlines() if line and not line.isspace()]
 
 
 class Terminal(LiveText, EditableText):

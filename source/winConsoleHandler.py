@@ -1,7 +1,8 @@
-# A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2009-2020 NV Access Limited, Babbage B.V., Bill Dengler
+#winConsoleHandler.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2009-2018 NV Access Limited, Babbage B.V.
 
 import gui
 import winUser
@@ -122,14 +123,14 @@ def _checkDead():
 	except:
 		log.exception()
 
-
-def getConsoleVisibleText():
+def getConsoleVisibleLines():
 	consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 	topLine=consoleScreenBufferInfo.srWindow.Top
 	lineCount=(consoleScreenBufferInfo.srWindow.Bottom-topLine)+1
 	lineLength=consoleScreenBufferInfo.dwSize.x
 	text=wincon.ReadConsoleOutputCharacter(consoleOutputHandle,lineCount*lineLength,0,topLine)
-	return text
+	newLines=[text[x:x+lineLength] for x in range(0,len(text),lineLength)]
+	return newLines
 
 @winUser.WINEVENTPROC
 def consoleWinEventHook(handle,eventID,window,objectID,childID,threadID,timestamp):

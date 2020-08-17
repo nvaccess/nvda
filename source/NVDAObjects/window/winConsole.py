@@ -69,7 +69,7 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 		pass
 
 	def _getText(self):
-		return winConsoleHandler.getConsoleVisibleText()
+		return '\n'.join(winConsoleHandler.getConsoleVisibleLines())
 
 	def script_caret_backspaceCharacter(self, gesture):
 		super(WinConsole, self).script_caret_backspaceCharacter(gesture)
