@@ -293,6 +293,13 @@ class WavePlayer(object):
 			self._buffer = b""
 		return self._idleUnbuffered()
 
+	def _startCloseTimer(self):
+		if not self._waveout:
+			# close() might have been called while this method was waiting to run on
+			# the main thread. In that case, there's nothing to do here.
+			return
+		self._closeTimer.Start(self.IDLE_CLOSE_DELAY_MS, wx.TIMER_ONE_SHOT)
+
 	def _idleUnbuffered(self):
 		with self._lock:
 			self.sync()
@@ -303,10 +310,7 @@ class WavePlayer(object):
 					if not self._closeTimer:
 						# We need a cancellable timer, so we can't use core.callLater.
 						self._closeTimer = wx.PyTimer(self._close)
-					self._callOnMainThread(
-						self._closeTimer.Start, self.IDLE_CLOSE_DELAY_MS,
-						wx.TIMER_ONE_SHOT
-					)
+					self._callOnMainThread(self._startCloseTimer)
 			if self._audioDucker: self._audioDucker.disable()
 
 	def stop(self):
