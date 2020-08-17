@@ -112,22 +112,18 @@ _	line	most
 ◾	black square	some
 □	white square	some
 ◦	white bullet	some
-⇒	right double arrow	some
 ⇨	right white arrow	some
 ➔	right-pointing arrow	some
 ➢	right arrowhead	some
-⮚	right arrowhead	some
 ❖	black diamond minus white X	some
 ♣	black club	some
 ♦	black diamond	some
-◆	black diamond	some
+◆	black diamond	some	
 §	section	all
 °	degrees	some
-«	double left pointing angle bracket
-»	double right pointing angle bracket
+«	double left pointing angle bracket	none
+»	double right pointing angle bracket	none
 µ	micro	some
-º	ordinal	some
-ª	superscript a	some
 ⁰	superscript 0	some
 ¹	superscript 1	some
 ²	superscript 2	some
@@ -139,7 +135,6 @@ _	line	most
 ⁸	superscript 8	some
 ⁹	superscript 9	some
 ⁺	superscript plus	some
-⁻	superscript minus	some
 ⁼	superscript equals	some
 ⁽	superscript left paren	some
 ⁾	superscript right paren	some
@@ -173,6 +168,9 @@ _	line	most
 ‡	double dagger	some
 ‣	triangular bullet	none
 ✗	x-shaped bullet	none
+⊕	circled plus	none
+⊖	circled minus	none
+⇄	right arrow over left arrow	none
 
 #Arithmetic operators
 +	plus	some
@@ -202,7 +200,9 @@ _	line	most
 ⊃	superset of	none
 ⊅	Not a superset of	none
 ⊆	subset of or equal to	none
+⊈	neither a subset of nor equal to	none
 ⊇	superset of or equal to	none
+⊉	neither a superset of nor equal to	none
 ⊌	Multiset	none
 
 #Equality signs
@@ -221,8 +221,9 @@ _	line	most
 ≬	Between	none
 ≠	Not equal to	none
 ≡	Identical to	none
+≣	strictly identical to	none
 ≢	Not identical to	none
-∼	is similar to	none
+∼	similar to	none
 ≙	coresponds to	none
 ≟	questioned equal to	none
 
@@ -254,10 +255,12 @@ _	line	most
 #Geometry and linear Algebra
 ⃗	vector between	none
 △	triangle	none
+▭	rectangle	none
 ∟	right angle	none
 ∠	angle	none
 ∥	parallel to	none
 ∦	not parallel to	none
+⊥	perpendicular to	none
 ⟂	ortogonal to	none
 ‖	norm of vector	none
 ̂	normalizes	none
@@ -269,6 +272,9 @@ _	line	most
 ∀	for all	none
 ∃	there exists	none
 ∄	there does not exist	none
+⇏	does not imply	none
+⇒	implies	none
+⇐	is implied by	none
 
 #Other mathematical Operators
 ∈	element of	none
@@ -354,6 +360,8 @@ _	line	most
 ℤ	Integers	none
 ℵ	Aleph number	none
 ℶ	beth number	none
+º	ordinal	some
+ª	ordinal	some
 
 # Miscellaneous Technical
 ⌘	Mac Command key	none
