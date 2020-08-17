@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2013-2020 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2013-2020 NV Access Limited, Leonard de Ruijter, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -18,6 +18,7 @@ PYTHON_DIRS = (
 	os.path.join(TOP_DIR, "include", "configobj", "src"),
 	os.path.join(TOP_DIR, "include", "wxPython"),
 	os.path.join(TOP_DIR, "include", "py2exe"),
+	os.path.join(TOP_DIR, "include", "dmp", "diff_match_patch"),
 	os.path.join(TOP_DIR, "miscDeps", "python"),
 )
 
