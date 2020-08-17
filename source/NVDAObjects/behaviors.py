@@ -395,7 +395,7 @@ class LiveText(NVDAObject):
 	def _calculateNewText(self, newText, oldText):
 		return (
 			self._calculateNewText_dmp(newText, oldText)
-			if self._supportsDmp
+			if self._supportsDmp and config.conf["terminals"]["useDMPWhenAvailable"]
 			else self._calculateNewText_difflib(
 				newText.splitlines(), oldText.splitlines()
 			)

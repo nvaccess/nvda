@@ -219,6 +219,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [terminals]
 	speakPasswords = boolean(default=false)
 	keyboardSupportInLegacy = boolean(default=True)
+	useDMPWhenAvailable = boolean(default=True)
 
 [update]
 	autoCheck = boolean(default=true)
