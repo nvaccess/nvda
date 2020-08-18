@@ -8,6 +8,7 @@
 This is now used by other applications as well.
 """
 
+import weakref
 from comtypes import COMError
 import winUser
 import textInfos
@@ -56,6 +57,10 @@ def _getEmbedded(obj, offset):
 	return None
 
 class MozillaCompoundTextInfo(CompoundTextInfo):
+
+	#: Caches the last descendant caret object for NVDAObjects that use MozillaCompoundTextInfo
+	# A WeakKeyDictionary means the cache value only lasts while the ancestor NVDAObject is alive.
+	_lastCaretObjs = weakref.WeakKeyDictionary()
 
 	def __init__(self, obj, position):
 		super(MozillaCompoundTextInfo, self).__init__(obj, position)
@@ -213,7 +218,8 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			# but we want the exclusive end as the final result.
 			descendantOffset.value += 1
 		# optimisation: If we already have the target obj, don't make a new instance.
-		for cached in obj, getattr(self.obj, "_lastCaretObj", None):
+		lastCaretObj = self._lastCaretObjs.get(self.obj)
+		for cached in (obj, lastCaretObj):
 			if cached and descendantID.value == cached.IA2UniqueID:
 				obj = cached
 				break
@@ -221,7 +227,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(obj.windowHandle,winUser.OBJID_CLIENT,descendantID.value)
 		if position == textInfos.POSITION_CARET:
 			# Cache for later use.
-			self.obj._lastCaretObj = obj
+			self._lastCaretObjs[self.obj] = obj
 		# optimisation: Passing an Offsets position checks nCharacters, which is an extra call we don't need.
 		ti=self._makeRawTextInfo(obj,textInfos.POSITION_FIRST)
 		ti._startOffset=ti._endOffset=descendantOffset.value
