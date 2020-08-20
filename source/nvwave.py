@@ -213,14 +213,16 @@ class WavePlayer(garbageHandler.TrackedObject):
 		with self._lock:
 			with self._waveout_lock:
 				self.open()
-				with self._global_waveout_lock:
-					winmm.waveOutPrepareHeader(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
 				try:
 					with self._global_waveout_lock:
+						winmm.waveOutPrepareHeader(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
+					with self._global_waveout_lock:
 						winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
-				except WindowsError as e:
+				except WindowsError:
 					self.close()
-					raise e
+					self.open()
+					self.feed(data, onDone)
+					return
 			self.sync()
 			self._prev_whdr = whdr
 			# Don't call onDone if stop was called,
