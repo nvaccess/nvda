@@ -53,6 +53,8 @@ class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Wind
 		else:
 			ti = self.result.makeTextInfo(self, position)
 		if not isinstance(ti, BaseContentRecogTextInfo):
+			# Support of TextInfos that do not inherit from BaseContentRecogTextInfo is deprecated
+			# and will be removed in NVDA 2020.1.
 			log.warning(
 				f"Deprecation: {type(ti)} must inherit from {BaseContentRecogTextInfo} to avoid reference cycles."
 			)
