@@ -133,9 +133,9 @@ class WavePlayer(garbageHandler.TrackedObject):
 		self.channels=channels
 		self.samplesPerSec=samplesPerSec
 		self.bitsPerSample=bitsPerSample
-		if isinstance(outputDevice, str):
-			outputDevice = outputDeviceNameToID(outputDevice, True)
-		self.outputDeviceID = outputDevice
+		self.outputDeviceID = self.outputDevice = outputDevice
+		if isinstance(self.outputDevice, str):
+			self.outputDeviceID = outputDeviceNameToID(self.outputDevice, True)
 		if wantDucking:
 			import audioDucking
 			if audioDucking.isAudioDuckingSupported():
@@ -168,8 +168,14 @@ class WavePlayer(garbageHandler.TrackedObject):
 		with self._waveout_lock:
 			if self._waveout:
 				return
+			if self.outputDeviceID is None:
+				self.outputDeviceID = self.outputDevice
+			if isinstance(self.outputDevice, str):
+				self.outputDeviceID = outputDeviceNameToID(self.outputDevice, True)
 			log.debug(
 				f"Calling winmm.waveOutOpen."
+				f" outputDevice: {self.outputDevice}"
+				f" outputDeviceID: {self.outputDeviceID}"
 			)
 			wfx = WAVEFORMATEX()
 			wfx.wFormatTag = WAVE_FORMAT_PCM
@@ -179,8 +185,24 @@ class WavePlayer(garbageHandler.TrackedObject):
 			wfx.nBlockAlign: int = self.bitsPerSample // 8 * self.channels
 			wfx.nAvgBytesPerSec = self.samplesPerSec * wfx.nBlockAlign
 			waveout = HWAVEOUT(0)
-			with self._global_waveout_lock:
-				winmm.waveOutOpen(byref(waveout), self.outputDeviceID, LPWAVEFORMATEX(wfx), self._waveout_event, 0, CALLBACK_EVENT)
+			try:
+				with self._global_waveout_lock:
+					winmm.waveOutOpen(
+						byref(waveout),
+						self.outputDeviceID,
+						LPWAVEFORMATEX(wfx),
+						self._waveout_event,
+						0,
+						CALLBACK_EVENT
+					)
+			except WindowsError:
+				log.debug(
+					f"Error opening outputDevice: {self.outputDeviceID}"
+					f" Falling back to WAVE_MAPPER ID: {WAVE_MAPPER}"
+				)
+				self.outputDeviceID = WAVE_MAPPER
+				self.open()
+				return
 			self._waveout = waveout.value
 			self._prev_whdr = None
 
@@ -292,6 +314,8 @@ class WavePlayer(garbageHandler.TrackedObject):
 			with self._waveout_lock:
 				if not self._waveout:
 					return
+				self._close()  # testing still required to confirm this does not affect performance.
+				self.open()
 				if self.closeWhenIdle:
 					self._close()
 			if self._audioDucker: self._audioDucker.disable()
@@ -336,6 +360,10 @@ class WavePlayer(garbageHandler.TrackedObject):
 			except WindowsError:
 				log.debug("Error closing the device, it may have been removed.", exc_info=True)
 		self._waveout = None
+		# Ensure that the device ID is queried again
+		# Reset outputDeviceID to signal a check for the preferred device so it gets used
+		# when (if) the device becomes available.
+		self.outputDeviceID = None
 
 	def __del__(self):
 		self.close()
