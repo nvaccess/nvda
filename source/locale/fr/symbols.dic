@@ -21,7 +21,8 @@ in-word '	(?<=[^\W_])['’]
 in-word -	(?<=[^\W_])[-]
 between-words -	(?<=\s)[-](?=\s)
 negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
-dates .	\b(\d\d)[/.](\d\d)[/.](\d{2}|\d{4})\b
+dates .	((?<=\b\d\d)\.(?=\d\d.(\d{2}|\d{4})\b))|((?<=\b\d\d.\d\d)\.(?=(\d{2}|\d{4})\b))
+dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
 after-number %	(?<=\d)(\s?\%)(?=\W|$)
 n°	\b[nN]°
@@ -40,7 +41,8 @@ symbols:
 
 decimal point		# virgule décimale
 thousands separator		# point des mille
-dates .	\1 \2 \3 	all	always	# point de date
+dates .	 	all	always	# point de date
+dates /	 	all	always	# barre oblique de date
 negative number	moins	none	norep	# - devant un nombre
 after-number %	pour cent	none	norep	# % après un nombre
 in-word '	apostrophe	# ' dans un mot
