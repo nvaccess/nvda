@@ -19,7 +19,6 @@ import wave
 import config
 from logHandler import log
 import os.path
-import core
 
 __all__ = (
 	"WavePlayer", "getOutputDeviceNames", "outputDeviceIDToName", "outputDeviceNameToID",
@@ -103,9 +102,6 @@ class WavePlayer(garbageHandler.TrackedObject):
 	"""
 	#: Minimum length of buffer (in ms) before audio is played.
 	MIN_BUFFER_MS = 300
-	#: The time (in ms) to wait after L{idle} is called before closing the audio
-	#: device. This is only applicable if L{closeWhenIdle} is C{True}.
-	IDLE_CLOSE_DELAY_MS = 10000
 	#: Flag used to signal that L{stop} has been called.
 	STOPPING = "stopping"
 	#: A lock to prevent WaveOut* functions from being called simultaneously, as this can cause problems even if they are for different HWAVEOUTs.
@@ -147,7 +143,6 @@ class WavePlayer(garbageHandler.TrackedObject):
 		#: If C{True}, close the output device when no audio is being played.
 		#: @type: bool
 		self.closeWhenIdle = closeWhenIdle
-		self._closeTimer = None
 		if buffered:
 			#: Minimum size of the buffer before audio is played.
 			#: However, this is ignored if an C{onDone} callback is provided to L{feed}.
@@ -165,12 +160,6 @@ class WavePlayer(garbageHandler.TrackedObject):
 		self._lock = threading.RLock()
 		self.open()
 
-	def _callOnMainThread(self, func, *args):
-		if threading.get_ident() == core.mainThreadId:
-			func(*args)
-		else:
-			wx.CallAfter(func, *args)
-
 	def open(self):
 		"""Open the output device.
 		This will be called automatically when required.
@@ -178,8 +167,6 @@ class WavePlayer(garbageHandler.TrackedObject):
 		"""
 		with self._waveout_lock:
 			if self._waveout:
-				if self._closeTimer and self._closeTimer.IsRunning():
-					self._callOnMainThread(self._closeTimer.Stop)
 				return
 			wfx = WAVEFORMATEX()
 			wfx.wFormatTag = WAVE_FORMAT_PCM
@@ -284,8 +271,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 	def idle(self):
 		"""Indicate that this player is now idle; i.e. the current continuous segment  of audio is complete.
 		This will first call L{sync} to synchronise with playback.
-		If L{closeWhenIdle} is C{True}, the output device will be closed if there
-		is no further audio within L{IDLE_CLOSE_DELAY_MS}.
+		If L{closeWhenIdle} is C{True}, the output device will be closed.
 		A subsequent call to L{feed} will reopen it.
 		"""
 		if not self._minBufferSize:
@@ -302,13 +288,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 				if not self._waveout:
 					return
 				if self.closeWhenIdle:
-					if not self._closeTimer:
-						# We need a cancellable timer, so we can't use core.callLater.
-						self._closeTimer = wx.PyTimer(self._close)
-					self._callOnMainThread(
-						self._closeTimer.Start, self.IDLE_CLOSE_DELAY_MS,
-						wx.TIMER_ONE_SHOT
-					)
+					self._close()
 			if self._audioDucker: self._audioDucker.disable()
 
 	def stop(self):
@@ -341,9 +321,6 @@ class WavePlayer(garbageHandler.TrackedObject):
 			with self._waveout_lock:
 				if not self._waveout:
 					return
-				# We're explicitly closing, so kill the close timer.
-				if self._closeTimer and self._closeTimer.IsRunning():
-					self._callOnMainThread(self._closeTimer.Stop)
 				self._close()
 
 	def _close(self):
