@@ -8,6 +8,7 @@
 """
 
 import threading
+import typing
 from ctypes import *
 from ctypes.wintypes import *
 import time
@@ -108,25 +109,24 @@ class WavePlayer(garbageHandler.TrackedObject):
 	_global_waveout_lock = threading.RLock()
 	_audioDucker=None
 
-	def __init__(self, channels, samplesPerSec, bitsPerSample,
-			outputDevice=WAVE_MAPPER, closeWhenIdle=True, wantDucking=True,
-			buffered=False
+	def __init__(
+			self,
+			channels: int,
+			samplesPerSec: int,
+			bitsPerSample: int,
+			outputDevice: typing.Union[int, str] = WAVE_MAPPER,
+			closeWhenIdle: bool = False,
+			wantDucking: bool = True,
+			buffered: bool = False
 		):
 		"""Constructor.
 		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
-		@type channels: int
 		@param samplesPerSec: Samples per second (hz).
-		@type samplesPerSec: int
 		@param bitsPerSample: The number of bits per sample.
-		@type bitsPerSample: int
 		@param outputDevice: The device ID or name of the audio output device to use.
-		@type outputDevice: int or str
 		@param closeWhenIdle: If C{True}, close the output device when no audio is being played.
-		@type closeWhenIdle: bool
 		@param wantDucking: if true then background audio will be ducked on Windows 8 and higher
-		@type wantDucking: bool
 		@param buffered: Whether to buffer small chunks of audio to prevent audio glitches.
-		@type buffered: bool
 		@note: If C{outputDevice} is a name and no such device exists, the default device will be used.
 		@raise WindowsError: If there was an error opening the audio output device.
 		"""
@@ -396,7 +396,13 @@ def playWaveFile(fileName, asynchronous=True):
 	if f is None: raise RuntimeError("can not open file %s"%fileName)
 	if fileWavePlayer is not None:
 		fileWavePlayer.stop()
-	fileWavePlayer = WavePlayer(channels=f.getnchannels(), samplesPerSec=f.getframerate(),bitsPerSample=f.getsampwidth()*8, outputDevice=config.conf["speech"]["outputDevice"],wantDucking=False)
+	fileWavePlayer = WavePlayer(
+		channels=f.getnchannels(),
+		samplesPerSec=f.getframerate(),
+		bitsPerSample=f.getsampwidth()*8,
+		outputDevice=config.conf["speech"]["outputDevice"],
+		wantDucking=False
+	)
 	fileWavePlayer.feed(f.readframes(f.getnframes()))
 	if asynchronous:
 		if fileWavePlayerThread is not None:
