@@ -168,6 +168,9 @@ class WavePlayer(garbageHandler.TrackedObject):
 		with self._waveout_lock:
 			if self._waveout:
 				return
+			log.debug(
+				f"Calling winmm.waveOutOpen."
+			)
 			wfx = WAVEFORMATEX()
 			wfx.wFormatTag = WAVE_FORMAT_PCM
 			wfx.nChannels = self.channels
@@ -324,8 +327,12 @@ class WavePlayer(garbageHandler.TrackedObject):
 				self._close()
 
 	def _close(self):
+		log.debug("Calling winmm.waveOutClose")
 		with self._global_waveout_lock:
-			winmm.waveOutClose(self._waveout)
+			try:
+				winmm.waveOutClose(self._waveout)
+			except WindowsError:
+				log.debug("Error closing the device, it may have been removed.", exc_info=True)
 		self._waveout = None
 
 	def __del__(self):
