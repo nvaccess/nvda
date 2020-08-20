@@ -69,9 +69,7 @@ Saat lisätietoja poikkeuksista lisenssidokumentista, jonka voit avata NVDA-vali
 - Käyttöjärjestelmät: kaikki 32- ja 64-bittiset Windows 7:n, Windows 8:n, Windows 8.1:n ja Windows 10:n versiot sekä palvelinversiot Windows Server 2008 R2:sta alkaen.
  - Windows 7:ssä on oltava asennettuna Service Pack 1 tai uudempi.
  - Windows Server 2008 R2:ssa on oltava asennettuna Service Pack 1 tai uudempi.
-- Muistia (RAM): 256 Mt tai enemmän
-- Suoritin: 1 GHz tai nopeampi
-- Levytilaa n. 90 Mt.
+- Vähintään 150 Mt tallennustilaa.
 -
 
 + NVDA:n hankkiminen ja asentaminen +[GettingAndSettingUpNVDA]
@@ -103,18 +101,18 @@ Sen lisäksi, ettei automaattinen käynnistys toimi kirjautumisen aikana ja/tai 
 -
 
 ++ Asentaminen ++[InstallingNVDA]
-Mikäli asennetaan suoraan ladatusta paketista, painetaan Asenna NVDA -painiketta.
-Jos tämä valintaikkuna on jo suljettu tai halutaan asentaa massamuistiversiosta, valitaan Asenna NVDA -vaihtoehto, joka löytyy NVDA-valikon Työkalut-alivalikosta.
+Mikäli asennat suoraan ladatusta paketista, paina Asenna-painiketta.
+Jos olet jo sulkenut tämän valintaikkunan tai haluat asentaa massamuistiversiosta, valitse Asenna NVDA -vaihtoehto, joka löytyy NVDA-valikon Työkalut-alivalikosta.
 
 Näkyviin tulevassa valintaikkunassa pyydetään vahvistus NVDA:n asentamiselle ja kerrotaan myös, päivitetäänkö aiempi versio.
 Asennus käynnistyy painamalla Jatka-painiketta.
 Tässä valintaikkunassa on myös muutama vaihtoehto, jotka on selitetty alla.
 Kun asennus on suoritettu, näkyviin tulee ilmoitus onnistumisesta.
-Asennettu versio käynnistetään painamalla OK.
+Käynnistä asennettu versio painamalla OK.
 
 +++ Varoitus yhteensopimattomista lisäosista +++[InstallWithIncompatibleAddons]
 Jos lisäosia on jo asennettuna, asennusohjelmassa saatetaan myös näyttää varoitus, että yhteensopimattomat lisäosat poistetaan käytöstä.
-Ennen kuin Jatka-painiketta voidaan painaa, on vahvistettava, että näiden lisäosien käytöstä poistaminen on ymmärretty valitsemalla kyseinen valintaruutu.
+Ennen kuin voit painaa Jatka-painiketta, sinun on vahvistettava, että olet ymmärtänyt lisäosien käytöstä poistamisen valitsemalla kyseisen valintaruudun.
 Käytettävissä on myös painike, joka näyttää luettelon käytöstä poistettavista lisäosista.
 Lisätietoja tästä painikkeesta on [Yhteensopimattomien lisäosien valintaikkuna -kappaleessa. #incompatibleAddonsManager]
 
@@ -133,38 +131,38 @@ Asetuksia ei kopioida tietokoneen muille käyttäjille eikä Windowsin sisäänk
 Tämä vaihtoehto on käytettävissä vain massamuistiversiosta asennettaessa.
  
 ++ Massamuistiversion luominen ++[CreatingAPortableCopy]
-Mikäli massamuistiversio luodaan suoraan ladatusta paketista, painetaan vain Luo massamuistiversio -painiketta.
-Jos tämä valintaikkuna on jo suljettu tai käytetään NVDA:n asennettua versiota, valitaan Luo massamuistiversio -vaihtoehto, joka löytyy NVDA-valikosta Työkalut-valikon alta.
+Mikäli luot massamuistiversion suoraan ladatusta paketista, paina Luo massamuistiversio -painiketta.
+Jos olet jo sulkenut tämän valintaikkunan tai käytät NVDA:n asennettua versiota, valitse Luo massamuistiversio -vaihtoehto, joka löytyy NVDA-valikosta Työkalut-valikon alta.
 
-Näkyviin tulevassa valintaikkunassa valitaan sijainti, jonne massamuistiversio luodaan.
+Valitse näkyviin tulevassa valintaikkunassa sijainti, jonne massamuistiversio luodaan.
 Sijainti voi olla kiintolevyllä, USB-muistitikulla tai muulla siirrettävällä tietovälineellä oleva hakemisto.
-Tässä valintaikkunassa on myös asetus, jolla voidaan valita, kopioidaanko kirjautuneen käyttäjän asetukset massamuistiversiossa käytettäviksi.
+Tässä valintaikkunassa on myös asetus, jolla voit valita, kopioidaanko kirjautuneen käyttäjän asetukset massamuistiversiossa käytettäviksi.
 Asetus on käytettävissä vain luotaessa massamuistiversiota asennetusta kopiosta.
-Massamuistiversion luonti aloitetaan painamalla Jatka.
+Aloita massamuistiversion luonti painamalla Jatka.
 Kun luonti on valmis, näkyviin tulee ilmoitus onnistumisesta.
-Valintaikkuna suljetaan Painamalla OK.
+Sulje valintaikkuna painamalla OK.
 
 + Käytön aloittaminen +[GettingStartedWithNVDA]
 
 ++ NVDA:n käynnistäminen ++[LaunchingNVDA]
-Jos NVDA on asennettu omalla asennusohjelmallaan, se voidaan käynnistää joko painamalla Ctrl+Alt+N tai valitsemalla Käynnistä-valikosta Ohjelmat -> NVDA -> NVDA.
-Se on mahdollista käynnistää myös kirjoittamalla Suorita-valintaikkunaan NVDA ja painamalla Enter.
+Jos olet asentanut NVDA:n omalla asennusohjelmallaan, voit käynnistää sen joko painamalla Ctrl+Alt+N tai valitsemalla Käynnistä-valikosta Ohjelmat -> NVDA -> NVDA.
+Käynnistäminen on mahdollista myös kirjoittamalla Suorita-valintaikkunaan NVDA ja painamalla Enter.
 Mikäli NVDA on jo käynnissä, se käynnistetään uudelleen.
-Lisäksi on mahdollista syöttää joitakin [komentorivivalitsimia #CommandLineOptions], joilla NVDA voidaan sulkea (-q), poistaa lisäosat käytöstä (--disable-addons) jne.
+Lisäksi voit syöttää joitakin [komentorivivalitsimia #CommandLineOptions], joilla NVDA voidaan sulkea (-q), poistaa lisäosat käytöstä (--disable-addons) jne.
 
 NVDA:n asennettu versio tallentaa asetuksensa oletusarvoisesti nykyisen käyttäjän sovellustietojen Roaming-kansioon (esim. "C:\Users\<Käyttäjä>\AppData\Roaming").
 Tämä on mahdollista muuttaa myös niin, että asetukset ladataan em. sijainnin asemesta paikallisten sovellustietojen kansiosta.
 Lisätietoja on [Järjestelmänlaajuiset parametrit #SystemWideParameters] -kappaleessa.
 
-Massamuistiversio käynnistetään menemällä hakemistoon, johon se on purettu, ja painamalla Enteriä nvda.exe-tiedoston kohdalla tai kaksoisnapsauttamalla sitä hiiren vasemmalla painikkeella.
+Käynnistä massamuistiversio menemällä hakemistoon, johon se on purettu, ja painamalla Enteriä nvda.exe-tiedoston kohdalla tai kaksoisnapsauttamalla sitä hiiren vasemmalla painikkeella.
 Mikäli NVDA oli jo käynnissä, se suljetaan automaattisesti ennen massamuistiversion käynnistämistä.
 
 NVDA:n käynnistyessä kuuluu joukko nousevia ääniä.
-Käynnistyminen saattaa kestää jonkin aikaa riippuen tietokoneen nopeudesta, tai jos NVDA:ta käytetään USB-muistitikulta tai muulta hitaammalta tallennusvälineeltä.
-Jos käynnistyminen kestää erityisen kauan, NVDA:n pitäisi ilmoittaa "NVDA käynnistetään, odota..."
+Käynnistyminen saattaa kestää jonkin aikaa riippuen tietokoneesi nopeudesta tai jos käytät NVDA:ta USB-muistitikulta tai muulta hitaammalta tallennusvälineeltä.
+Jos käynnistyminen kestää erityisen kauan, NVDA:n pitäisi sanoa "NVDA käynnistetään, odota..."
 
-Jos mitään tällaista ei kuulu, tai mikäli kuuluu Windowsin virheääni tai joukko laskevia ääniä, tämä tarkoittaa, että NVDA:ssa on mahdollisesti ohjelmavirhe ja että siitä on ilmoitettava kehittäjille.
-Ohjeet ohjelmavirheiden ilmoittamiseen voi tarkistaa NVDA:n verkkosivustolta.
+Mikäli et kuule mitään tällaista, tai jos kuulet Windowsin virheäänen tai joukon laskevia ääniä, tämä tarkoittaa, että NVDA:ssa on mahdollisesti bugi ja että siitä on ilmoitettava kehittäjille.
+Ohjeet bugien ilmoittamiseen voit tarkistaa NVDA:n verkkosivustolta.
 
 +++ Tervetuloa-valintaikkuna +++[WelcomeDialog]
 Kun NVDA käynnistyy ensimmäistä kertaa, näkyviin tulee valintaikkuna, jossa on joitakin perustietoja NVDA-näppäimestä ja -valikosta.
@@ -203,8 +201,12 @@ Mikäli tämä ei ole mahdollista käytössä olevassa kannettavassa tai jos Num
 
 ++ NVDA:n kosketuseleet ++[NVDATouchGestures]
 NVDA:ta on mahdollista ohjata myös kosketuskomentojen avulla, mikäli käytettävässä laitteessa on kosketusnäyttö ja Windows 8 tai uudempi käyttöjärjestelmä.
-Kaikki kosketussyötteet välitetään suoraan NVDA:lle sen ollessa käynnissä.
+Kaikki kosketussyötteet välitetään suoraan NVDA:lle sen ollessa käynnissä, ellei kosketuksen vuorovaikutuksen tukea ole poistettu käytöstä.
 Tämän vuoksi sellaisia toimintoja ei voi suorittaa, jotka toimivat normaalisti ilman NVDA:ta.
+%kc:beginInclude
+Ota kosketuksen vuorovaikutus käyttöön tai poista se käytöstä painamalla NVDA+Ctrl+Alt+T.
+%kc:endInclude
+Voit ottaa käyttöön [kosketuksen vuorovaikutuksen tuen #TouchSupportEnable] tai poistaa sen käytöstä myös NVDA:n asetusten Kosketuksen vuorovaikutus -kategoriasta.
 
 +++ Ruudun tutkiminen +++[ExploringTheScreen]
 Kaikkein alkeellisin toiminto, joka voidaan suorittaa kosketusnäytöllä, on säätimen tai tekstin lukeminen mistä tahansa kohdasta.
@@ -214,6 +216,8 @@ Muita säätimiä ja tekstiä voidaan lukea myös pitämällä ja siirtämällä
 +++ Kosketuseleet +++[TouchGestures]
 Kun NVDA-komentoja kuvaillaan edempänä tässä käyttöoppaassa, niissä saatetaan mainita kosketusele, jota voidaan käyttää kosketusnäytöllä kyseisen komennon suorittamiseen.
 Seuraavassa on tietoja NVDA-komentojen suorittamisesta kosketusnäytöllä eri kosketuseleiden avulla.
+
+
 
 ==== Napautukset ====
 Napauta näyttöä nopeasti yhdellä tai useammalla sormella.
@@ -273,6 +277,7 @@ Kun valikko tulee näkyviin, siinä voidaan liikkua nuolinäppäimillä ja valit
 ++ Peruskomennot ++[BasicNVDACommands]
 %kc:beginInclude
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kosketusele | Kuvaus |
+| Käynnistää tai käynnistää uudelleen NVDA:n | Ctrl+Alt+N | Ctrl+Alt+N | Ei mitään | Käynnistää tai käynnistää uudelleen NVDA:n työpöydältä, mikäli tämä pikanäppäin on otettu käyttöön NVDA:n asennuksen aikana. Tämä on Windowsin pikanäppäin, eikä sitä siksi voida uudelleenmäärittää Syötekomennot-valintaikkunassa. |
 | Keskeytä puhe | Ctrl | Ctrl | Napautus kahdella sormella | Keskeyttää puheen välittömästi. |
 | Tauota puhe | Vaihto | Vaihto | Ei mitään | Tauottaa puheen välittömästi. Uudelleen painaminen jatkaa puhetta kohdasta, johon jäätiin (mikäli käytössä oleva puhesyntetisaattori tukee puheen tauottamista). |
 | NVDA-valikko | NVDA+N | NVDA+N | Kaksoisnapautus kahdella sormella | Avaa NVDA-valikon, josta voidaan säätää asetuksia, käyttää työkaluja ja lukea ohjetta jne. |
@@ -328,6 +333,7 @@ NVDA:ssa on seuraavat järjestelmäkohdistimeen liittyvät näppäinkomennot:
 | Jatkuva luku | NVDA+Nuoli alas | NVDA+A | Alkaa lukea järjestelmäkohdistimen nykyisestä sijainnista lähtien siirtäen samalla sitä. |
 | Lue nykyinen rivi | NVDA+Nuoli ylös | NVDA+L | Lukee järjestelmäkohdistimen kohdalla olevan rivin. Kahdesti painettaessa se tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. |
 | Lue valittu teksti | NVDA+Vaihto+Nuoli ylös | NVDA+Vaihto+S | Lukee kaiken valittuna olevan tekstin. |
+| Lue tekstin muotoilutiedot | NVDA+F | NVDA+F | Lukee kohdistimen kohdalla olevan tekstin muotoilutiedot. Kahdesti painettaessa tiedot näytetään selaustilassa. |
 | Seuraava virke | Alt+Nuoli alas | Alt+Nuoli alas | Siirtää kohdistimen seuraavaan virkkeeseen ja lukee sen. (tuetaan vain Microsoft Wordissa ja Outlookissa) |
 | Edellinen virke | Alt+Nuoli ylös | Alt+Nuoli ylös | Siirtää kohdistimen edelliseen virkkeeseen ja lukee sen. (tuetaan vain Microsoft Wordissa ja Outlookissa) |
 
@@ -413,7 +419,7 @@ Seuraavat tekstintarkastelukomennot ovat käytettävissä:
 | Valitse ja kopioi tarkastelukohdistimesta | NVDA+F9 | NVDA+F9 | Ei mitään | Aloittaa tekstin valitsemisen ja  kopioinnin tarkastelukohdistimen nykyisestä kohdasta. Varsinaista kopiointia ei suoriteta, ennen kuin NVDA:lle kerrotaan, missä tekstilohkon loppu on. |
 | Valitse ja kopioi tarkastelukohdistimeen | NVDA+F10 | NVDA+F10 | Ei mitään | Valitsee ensimmäisellä painalluksella aiemmin asetetusta tekstilohkon alkukohdasta lähtien tarkastelukohdistimen nykyiseen sijaintiin saakka. Järjestelmäkohdistin siirretään valittuun tekstiin, mikäli se on mahdollista. Toisen kerran painettaessa teksti kopioidaan leikepöydälle. |
 | Siirrä tarkastelukohdistin kopioitavaksi merkityn tekstin alkukohtaan | NVDA+Vaihto+F9 | NVDA+Vaihto+F9 | Ei mitään | Siirtää tarkastelukohdistimen aiemmin kopioitavaksi merkityn tekstin alkukohtaan. |
-| Puhu tekstin muotoilutiedot | NVDA+F | NVDA+F | Ei mitään | Lukee tarkastelukohdistimen nykyisessä sijainnissa olevan tekstin muotoilutiedot. Kahdesti painettaessa näyttää tiedot selaustilassa. |
+| Puhu tekstin muotoilutiedot | NVDA+Vaihto+F | NVDA+Vaihto+F | Ei mitään | Puhuu tarkastelukohdistimen nykyisessä sijainnissa olevan tekstin muotoilutiedot. Kahdesti painettaessa tiedot näytetään selaustilassa. |
 | Puhu nykyisen symbolin korvaava teksti | Ei mitään | Ei mitään | Ei mitään | Puhuu tarkastelukohdistimen kohdalla olevan symbolin ja näyttää kahdesti painettaessa selaustilassa sekä symbolin että sen korvaavan tekstin. |
 %kc:endInclude
 
@@ -712,6 +718,7 @@ Jotta pistenäytölle mahtuisi mahdollisimman paljon tietoa, seuraavat lyhenteet
 | ts N | puunäkymän kohteella on hierarkkinen taso N |
 | ikk | ikkuna |
 | ⠤⠤⠤⠤⠤ | erotin |
+| merk | merkitty sisältö |
 
 Seuraavat tilanilmaisimet on myös määritetty:
 || Lyhenne | Säätimen tila |
@@ -890,22 +897,28 @@ Kustakin lomakekentästä näytetään sen vaihtoehtoisen tekstin ohella peitoss
 Lomakekentän valitseminen ja Enterin tai  Siirry-painikkeen painaminen siirtää kyseiseen kenttään selaustilassa.
 -
 
-+++ Kommenttien lukeminen +++[ExcelReportingComments]
++++ Muistiinpanojen lukeminen +++[ExcelReportingComments]
 %kc:beginInclude
-Lue mikä tahansa kommentti aktiivisesta solusta painamalla NVDA+Alt+C.
+Lue mikä tahansa muistiinpano aktiivisesta solusta painamalla NVDA+Alt+C.
+Excelin perinteiset kommentit on nimetty uudelleen "muistiinpanoiksi" Microsoft 2016:ssa, 365:ssä ja uudemmissa.
 %kc:endInclude
-Kaikki laskentataulukossa olevat kommentit voidaan näyttää myös elementtilistassa painamalla NVDA+F7.
+Kaikki laskentataulukossa olevat muistiinpanot voidaan näyttää myös elementtilistassa painamalla NVDA+F7.
 
-NVDA voi myös näyttää erityisen kommenttien lisäämiseen tai muokkaamiseen tarkoitetun valintaikkunan.
-NVDA korvaa natiivin MS Excelin kommenttien muokkausalueen esteettömyysrajoitteiden takia, mutta valintaikkunan näyttämisen näppäinkomento periytyy MS Exceliltä, joten se toimii myös ilman NVDA:ta.
+NVDA voi myös näyttää erityisen muistiinpanojen lisäämiseen tai muokkaamiseen tarkoitetun valintaikkunan.
+NVDA korvaa natiivin MS Excelin muistiinpanojen muokkausalueen esteettömyysrajoitteiden takia, mutta valintaikkunan näyttämisen näppäinkomento periytyy Exceliltä, joten se toimii myös ilman NVDA:ta.
 %kc:beginInclude
-Voit lisätä tai muokata kommenttia kohdistetussa solussa painamalla Vaihto+F2.
+Voit lisätä tai muokata muistiinpanoa kohdistetussa solussa painamalla Vaihto+F2.
 %kc:endInclude
 
 Tämä komento ei näy eikä sitä voi muuttaa NVDA:n syötekomentojen valintaikkunassa.
 
-Huom: Kommenttien muokkausalue on mahdollista avata Excelissä myös laskentataulukon solun pikavalikosta.
+Huom: Muistiinpanojen muokkausalue on mahdollista avata Excelissä myös laskentataulukon solun pikavalikosta.
 Tämä avaa kuitenkin esteellisen muokkausalueen eikä NVDA-kohtaista muokkausvalintaikkunaa.
+
+Microsoft Office 2016:een, 365:een ja uudempiin on lisätty uudentyylinen kommenttivalintaikkuna.
+Se on esteetön ja tarjoaa enemmän ominaisuuksia, kuten kommentteihin vastaamisen jne.
+Se voidaan avata myös solun pikavalikosta.
+Uuden kommenttivalintaikkunan avulla soluihin lisätyt kommentit eivät liity muistiinpanoihin.
 
 +++ Suojattujen solujen lukeminen +++[ExcelReadingProtectedCells]
 Mikäli työkirja on suojattu, kohdistuksen siirtäminen ei ehkä ole mahdollista sellaisiin soluihin, joiden muokkaaminen on estetty.
@@ -1291,6 +1304,7 @@ Asetus ei vaikuta valinnanilmaisimeen, sillä se koostuu aina pisteistä 7 ja 8,
 ==== Ilmoitusten aikakatkaisu (sek) ====[BrailleSettingsMessageTimeout]
 Tämä asetus määrittää, kuinka kauan NVDA:n ilmoitukset näkyvät pistenäytöllä.
 Jos arvoksi määritetään 0, ilmoitusten näyttäminen poistetaan kokonaan käytöstä.
+Ilmoitus hylätään välittömästi painettaessa pistenäytön kosketuskohdistinnäppäintä, mutta tulee uudestaan näkyviin painettaessa sellaista näppäintä, joka aiheuttaa ilmoituksen näyttämisen.
 
 ==== Näytä ilmoitukset pysyvästi ====[BrailleSettingsNoMessageTimeout]
 Tällä asetuksella NVDA:n ilmoitukset näytetään pistenäytöllä pysyvästi.
@@ -1426,7 +1440,7 @@ Tämä asetuskategoria sisältää seuraavat asetukset:
 Tästä yhdistelmäruudusta valitaan, mitä näppäimistöasettelua NVDA käyttää. Tällä hetkellä käytettävissä olevat kaksi vaihtoehtoaovat Pöytäkone ja Kannettava.
 
 ==== Valitse NVDA-toiminto-näppäimet ====[KeyboardSettingsModifiers]
-Tämän luettelon valintaruuduilla on mahdollista määrittää, mitä näppäimiä käytetään [NVDA-toimintonäppäiminä. #TheNVDAModifierKey] Valittavissa ovat seuraavat näppäimet:
+Tämän luettelon valintaruuduilla on mahdollista määrittää, mitä näppäimiä käytetään [NVDA-muokkausnäppäiminä. #TheNVDAModifierKey] Valittavissa ovat seuraavat näppäimet:
 - Caps Lock
 - numeronäppäimistön Insert
 - laajennettu Insert (löytyy tavallisesti nuolinäppäinten yläpuolelta, Home- ja End-näppäinten läheltä)
@@ -1516,6 +1530,12 @@ Jos tämä vaihtoehto on valittuna ja "Käytä hiiren seurantaa" -asetus on käy
 +++ Kosketuksen vuorovaikutus +++[TouchInteraction]
 Tästä asetuskategoriasta, joka on käytettävissä vain tietokoneissa, joissa on Windows 8 tai uudempi käyttöjärjestelmä sekä kosketusominaisuuksia, voidaan määrittää, miten NVDA on vuorovaikutuksessa kosketusnäyttöjen kanssa.
 Kategoriassa on seuraavat asetukset:
+
+==== Ota käyttöön kosketusvuorovaikutuksen tuki ====[TouchSupportEnable]
+Tämä valintaruutu ottaa käyttöön NVDA:n kosketusvuorovaikutuksen tuen.
+Jos se on valittuna, voit käyttää sormiasi kosketusnäyttölaitteen näytöllä olevissa kohteissa liikkumiseen sekä vuorovaikutukseen niiden kanssa.
+Jos valintaruutu ei ole valittuna, kosketusnäytön tuki on poissa käytöstä ikään kuin NVDA ei olisi käynnissä.
+Tätä asetusta voidaan vaihtaa myös painamalla NVDA+Ctrl+Alt+T.
 
 ==== Kosketuskirjoitustila ====[TouchTypingMode]
 Tällä valintaruudulla määritetään menetelmä, jota halutaan käyttää kirjoitettaessa tekstiä kosketusnäppäimistöllä.
@@ -1692,6 +1712,15 @@ Tällä oletusarvoisesti käytössä olevalla asetuksella voidaan valita, estet�
 Esim. jos asetuksen ollessa käytössä painetaan J-kirjainta, sen tulostuminen asiakirjaan estetään, sillä se ei ole pikaselausnäppäin, tai koska on epätodennäköistä, että se olisi sovelluksen käytössä oleva näppäinkomento.
 NVDA käskee Windowsia toistamaan oletusäänen, kun estettyä näppäintä painetaan.
 
+==== Siirrä kohdistus automaattisesti kohdistettaviin elementteihin ====[BrowseModeSettingsAutoFocusFocusableElements]
+Näppäin: NVDA+8
+
+Tällä asetuksella, joka on oletusarvoisesti poissa käytöstä, voit valita, siirretäänkö kohdistus automaattisesti sellaisiin elementteihin, joihin kohdistuksen on mahdollista siirtyä (linkit, lomakekentät jne.) liikuttaessa sisällössä selaustilakohdistimella.
+Asetuksen ollessa poissa käytöstä kohdistusta ei siirretä automaattisesti kohdistettaviin elementteihin, kun ne valitaan selaustilakohdistimella.
+Tästä voi olla seurauksena nopeampi selauskokemus sekä parempi reagointi selaustilassa.
+Kohdistus päivitetään kuitenkin elementin kohdalle, kun sen kanssa ollaan vuorovaikutuksessa (esim. painetaan painiketta tai valitaan valintaruutu).
+Tämän asetuksen käyttöön ottaminen voi parantaa joidenkin verkkosivustojen tukea suorituskyvyn ja vakauden kustannuksella.
+
 +++ Asiakirjojen muotoilu (NVDA+Ctrl+D) +++[DocumentFormattingSettings]
 Useimmilla tämän kategorian valintaruuduilla voidaan määrittää, minkä tyyppisiä muotoilutietoja halutaan automaattisesti kuulla siirrettäessä kohdistinta asiakirjoissa.
 Jos esim. valitaan Lue fontti -valintaruutu, NVDA kertoo fontin nimen aina kun siirrytään nuolinäppäimillä sellaisen tekstin kohdalle, jonka fontti eroaa aikaisemmasta.
@@ -1704,6 +1733,7 @@ Seuraavien tietojen lukeminen voidaan määrittää:
  - Fontin määreet
  - Ylä- ja alaindeksit
  - Korostus
+ - Merkitty (korostettu teksti)
  - Tyyli
  - Värit
 - Asiakirjan tiedot
@@ -1725,6 +1755,7 @@ Seuraavien tietojen lukeminen voidaan määrittää:
 - Elementit
  - Otsikot
  - Linkit
+ - Grafiikat
  - Luettelot
  - Sisennetyt lainaukset
  - Ryhmät
@@ -1785,6 +1816,13 @@ Jos kehittäjä haluaa jakaa koodinsa muille käyttäjille, se tulee paketoida N
 Tämä painike avaa hakemiston, johon kehittäjä voi sijoittaa koodiaan.
 Se on käytettävissä vain, jos NVDA on määritetty lataamaan mukautettua koodia kehittäjien scratchpad-hakemistosta.
 
+==== Ota käyttöön UI Automation -tapahtumien ja ominaisuusmuutosten valikoiva rekisteröinti ====[AdvancedSettingsSelectiveUIAEventRegistration]
+Tämä asetus muuttaa tapaa, jolla NVDA rekisteröi Microsoft UI Automation -esteettömyysrajapinnan käynnistämiä tapahtumia.
+Kun asetus on poistettu käytöstä, NVDA rekisteröi useita UIA-tapahtumia, jotka hylätään käsittelyn jälkeen.
+Tällä on suuri kielteinen vaikutus suorituskykyyn, etenkin sellaisissa sovelluksissa kuin Microsoft Visual Studio.
+Tämän takia NVDA rajoittaa tapahtumien rekisteröinnin useimmissa tapauksissa järjestelmän kohdistukseen tämän asetuksen ollessa käytössä.
+Mikäli sinulla on suorituskykyongelmia yhdessä tai useammassa sovelluksessa, suosittelemme, että kokeilet tätä toimintoa nähdäksesi, paraneeko suorituskyky.
+
 ==== Käytä UI automation -rajapintaa Microsoft Wordin asiakirjasäätimille, kun käytettävissä ====[AdvancedSettingsUseUiaForWord]
 Kun tämä asetus on käytössä, NVDA yrittää käyttää UI Automation -saavutettavuusrajapintaa tietojen saamiseksi Microsoft Wordin asiakirjasäätimistä.
 Tällaisia ovat muun muassa itse Microsoft Word sekä lisäksi Microsoft Outlookin viestinluku- ja kirjoitusikkuna.
@@ -1809,16 +1847,6 @@ Epäluotettavissa ympäristöissä voit salasanoja kirjoittaessasi poistaa väli
 Tämä asetus ottaa käyttöön toiminnallisuuden, joka yrittää perua vanhentuneiden kohdistustapahtumien puheen.
 Erityisesti nopea siirtyminen viestien välillä Gmailissa voi Chromea käytettäessä aiheuttaa NVDA:ssa vanhentuneen tiedon puhumista.
 Tämä toiminnallisuus on kokeellinen NVDA 2020.2:ssa.
-
-==== Siirrä kohdistus automaattisesti kohdistettaviin elementteihin ====[BrowseModeSettingsAutoFocusFocusableElements]
-Pikanäppäin: NVDA+8
-
-Tällä asetuksella, joka on oletusarvoisesti käytössä, voidaan valita, siirretäänkö järjestelmän kohdistus automaattisesti kohdistettaviin elementteihin (linkit, lomakekentät, jne.) selattaessa sisältöä selaustilakohdistimella.
-Jos tämä on käytössä, NVDA toimii kuten versio 2019.1 ja sitä aiemmat.
-Kun asetus poistetaan käytöstä, kohdistusta ei siirretä automaattisesti kohdistettaviin elementteihin selaustilakohdistimella valittaessa.
-Tämä saattaa tarjota nopeamman selauskokemuksen sekä komentoihin vastaamisen.
-Kohdistus päivitetään kuitenkin elementtiin, kun sen kanssa ollaan vuorovaikutuksessa (esim. painiketta painettaessa tai valintaruutua valittaessa).
-Tämä toiminnallisuus on kokeellinen NVDA 2019.2:ssa.
 
 ==== Kohdistimen siirtymisen aikakatkaisu (ms) ====[AdvancedSettingsCaretMoveTimeout]
 Tällä asetuksella voidaan määrittää, montako millisekuntia NVDA odottaa kohdistimen (lisäyskohdan) siirtymistä muokattavissa tekstisäätimissä.
@@ -1865,7 +1893,9 @@ Tämä ehto täyttyy, jos heti ennen sanaa ja sen jälkeen olevat merkit ovat jo
 Eli käyttääksemme aiempaa esimerkkiä lintu-sanan korvaamisesta sanalla sammakko, jos siitä tehtäisiin koko sanan korvaus, se ei täsmäisi "lintuja"- tai "sinilintu"-sanoihin.
 
 Sääntölauseke on erikoismerkkejä sisältävä merkkiyhdistelmä, jonka avulla voidaan täsmätä useampaan kuin yhteen merkkiin kerrallaan, pelkkiin numeroihin tai pelkkiin kirjaimiin.
-Sääntölausekkeita ei käsitellä tässä käyttöoppaassa, mutta internetistä löytyy useita asiaa käsitteleviä oppaita.
+Sääntölausekkeita ei käsitellä tässä käyttöoppaassa.
+Tutustumisopas löytyy osoitteesta [https://docs.python.org/3.7/howto/regex.html].
+
 
 +++ Välimerkkien ja symboleiden puhuminen +++[SymbolPronunciation]
 Tässä valintaikkunassa voidaan muuttaa välimerkkien ja muiden symboleiden lukutapaa sekä tasoa, jolla ne puhutaan.
@@ -1898,22 +1928,33 @@ Aiemmin lisätty symboli poistetaan painamalla Poista-painiketta.
 Muutokset tallennetaan painamalla OK-painiketta tai kumotaan painamalla Peruuta.
 
 +++ Syötekomennot +++[InputGestures]
-Tässä valintaikkunassa voidaan mukauttaa NVDA-komennoissa käytettäviä syötekomentoja (näppäimistön näppäimiä, pistenäytön painikkeita jne).
+Tässä valintaikkunassa voit mukauttaa NVDA-komennoissa käytettäviä syötekomentoja (näppäimistön näppäimiä, pistenäytön painikkeita jne.).
 
 Vain sellaiset komennot näytetään, jotka ovat käytettävissä valintaikkunaa avattaessa.
-Jos esim. halutaan mukauttaa selaustilan komentoja, Syötekomennot-valintaikkuna on avattava selaustilassa oltaessa.
+Jos esim. haluat mukauttaa selaustilan komentoja, sinun on avattava Syötekomennot-valintaikkuna selaustilassa ollessasi.
 
 Tämän valintaikkunan puunäkymässä näytetään kaikki käytettävissä olevat NVDA-komennot omiin kategorioihinsa ryhmiteltyinä.
-Komentoja voidaan suodattaa kirjoittamalla Suodata-muokkauskenttään komennon nimestä yksi tai useampi sana missä tahansa järjestyksessä.
+Voit suodattaa komentoja kirjoittamalla Suodata-muokkauskenttään komennon nimestä yhden tai useamman sanan missä tahansa järjestyksessä.
 Kaikki komentoon liitetyt syötekomennot näytetään kyseisen komennon alapuolella.
 
-Komentoon lisätään syötekomento valitsemalla se luettelosta ja painamalla Lisää-painiketta.
-Tämän jälkeen suoritetaan valittu syötekomento (ts. painetaan näppäimistön näppäimiä tai pistenäytön painikkeita).
+Lisää komentoon syötekomento valitsemalla se luettelosta ja painamalla Lisää-painiketta.
+Suorita tämän jälkeen haluamasi syötekomento (ts. paina näppäimistön näppäimiä tai pistenäytön painikkeita).
 Syötekomento voidaan usein tulkita useammalla kuin yhdellä tavalla.
-Jos esim. painetaan näppäimistön näppäimiä, niiden saatetaan haluta toimivan jossain tietyssä näppäimistöasettelussa (esim. pöytäkone tai kannettava) tai kaikissa asetteluissa.
-Tällöin näkyviin tulee valikko, josta voidaan valita haluttu vaihtoehto.
+Jos esim. painoit näppäimistön näppäimiä, saatat haluta niiden toimivan jossain tietyssä näppäimistöasettelussa (esim. pöytäkone tai kannettava) tai kaikissa asetteluissa.
+Tällöin näkyviin tulee valikko, josta voit valita haluamasi vaihtoehdon.
 
-Syötekomento poistetaan komennosta valitsemalla se ja painamalla Poista-painiketta.
+Poista syötekomento komennosta valitsemalla se ja painamalla Poista-painiketta.
+
+Emuloidut järjestelmänäppäimistön näppäimet -kategoria sisältää NVDA-komentoja, jotka emuloivat järjestelmänäppäimistön näppäimiä.
+Näitä näppäimiä voidaan käyttää järjestelmänäppäimistön ohjaamiseen suoraan pistenäytöltä.
+Lisää emuloitu syötekomento valitsemalla Emuloidut järjestelmänäppäimistön näppäimet -kategoria ja paina Lisää-painiketta.
+Paina sitten näppäimistöltä sitä näppäintä, jota haluat emuloida.
+Tämän jälkeen näppäin näkyy Emuloidut järjestelmänäppäimistön näppäimet -kategoriassa, ja voit määrittää sille syötekomennon yllä kuvatulla tavalla.
+
+Huom:
+ - Emuloiduilla näppäimillä täytyy olla syötekomennot määritettyinä, jotta ne säilyvät tallennettaessa/valintaikkunaa suljettaessa.
+ - Syötekomentoa, jolla on muokkausnäppäimiä, ei välttämättä voi liittää emuloituun syötekomentoon, jolla ei muokkausnäppäimiä ole. Kun esim. emuloiduksi syötteeksi määritetään "a" ja syötekomennoksi Ctrl+M, voi tuloksena olla, että sovellus vastaanottaa näppäinyhdistelmän Ctrl+A.
+ -
 
 Tehdyt muutokset tallennetaan painamalla OK-painiketta tai hylätään painamalla Peruuta.
 
@@ -1972,7 +2013,7 @@ Lisätietoja käynnistimistä on [alla. #ConfigProfileTriggers]
 Profiili luodaan ja valintaikkuna suljetaan painamalla OK, jonka jälkeen kyseisen profiilin muokkaaminen on mahdollista.
 
 +++ Manuaalinen käyttöönotto +++[ConfigProfileManual]
-Profiili voidaan ottaa käyttöön manuaalisesti valitsemalla se ja painamalla Käytä manuaalisesti -painiketta.
+Profiili voidaan ottaa käyttöön manuaalisesti valitsemalla se ja painamalla Ota käyttöön manuaalisesti -painiketta.
 Muita profiileja voidaan edelleen ottaa käyttöön käynnistimien avulla, mutta manuaalisesti käyttöönotetun profiilin asetukset ovat etusijalla.
 Jos esim. linkkien lukeminen on käytössä nykyiselle sovellukselle käynnistimellä käyttöönotettavassa profiilissa mutta poissa käytöstä manuaalisesti käyttöönotettavassa, linkkejä ei tällöin lueta.
 Jos kuitenkin puheääntä on vaihdettu käynnistimellä käyttöönotettavassa profiilissa mutta ei manuaalisesti käyttöönotetussa, tällöin käytetään käynnistimellä käyttöönotettavan profiilin puheääntä.

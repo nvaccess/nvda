@@ -3,6 +3,56 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+== Novas Características ==
+- Agora podes conbmutar o anunciado de gráficos dende as opcións de Formateado de Documentos do NVDA.  Ten en conta que deshabilitando esta opción aínda lerá o texto alternativo dos gráficos. (#4837)
+- Agora podes conmutar o soporte de pantallas táctiles do NVDA. Engadiuse unha opción ao panel de interacción táctil das opcións do NVDA. O xesto predeterminado é NVDA+control+alt+t. (#9682)
+- Engadidas novas táboas braille para o Alemán. (#11268)
+- O NVDA agora detecta controis de texto de só lectura de UIA. (#10494)
+- A existentcia de contido marcado (resaltado) infórmase tanto en voz coma en braille en todos os navegadores web. (#11436)
+ - Esto pode activarse e desactivarse cunha nova opción de Formateado de Documento do NVDA para Resaltado.
+- Poden engadirse novas teclas ao sistema de teclado emulado dende o diálogo Xextos de Entrada do NVDA. (#6060)
+  - Para facelo, pulsa o botón Engadir despois de que seleciones a categoría Teclas de sistema de teclado emulado.
+
+
+== Cambios ==
+- O script anunciar formato (NVDA+f) agora cambiouse para anunciar o formato no cursor do sistema en lugar de na posición do cursor de revisión.  Para anunciar o formato na posición do Cursor de Revisión agora usa NVDA+shift+f. (#9505)
+- NVDA xa non pon automáticamente o foco do sistema nos elementos enfocables por defecto en modo Exploración, mellorando o rendemento e a estabilidade. (#11190)
+- Actualizado CLDR dende a versión 36.1 á versión 37. (#11303)
+- Actualizado o eSpeak-NG a 1.51-dev, commit 1fb68ffffea4
+- Agora podes usar a navegación de táboas en caixas de listaxe con elementos de listaxe marcables cando unha listaxe en particular teña varias columnas. (#8857)
+- No Administrador de complementos, cando se che pregunte para confirmar o borrado dun complemento, agora  "Non", é a predeterminada. (#10015)
+- En Microsoft Excel, o diálogo de listaxe de elementos agora presenta fórmulas na súa forma localizada. (#9144)
+- O NVDA agora anuncia a terminoloxía correcta para notas en MS Excel. (#11311)
+- Ao se usar a orde "mover cursor de revisión ao foco" en modo Exploración, o cursor de revisión agora ponse na posición do cursor virtual. (#9622)
+
+
+== Arranxo de Erros ==
+- O NVDA agora fala sempre ao navegar por palabras e aterriza en calquera símbolo seguido por un espazo en branco, calquera que sexan as opcións de verbosidade. (#5133)
+- En aplicacións que usen QT 5.11 ou máis novas, as descripcións dos obxectos anúncianse de novo. (#8604)
+- Ao borrar unha palabra con control+suprimir, o NVDA xa non permanece en silenzo. (#3298, #11029)
+  - Agora anúnciase a palabra á dereita da eliminada.
+- No panel Opcións Xerais, a listaxe de linguas agora ordéase correctamente. (#10348)
+- No diálogo Xestos de Entrada, mellorouse significativamente o rendemento mentres se filtra. (#10307)(
+- Agora podes enviar caracteres Unicode máis aló de U+FFFF dende unha pantalla braille. (#10796)
+- O NVDA anunciará diálogo Aberto Con contido en Windows 10 May 2020 Update. (#11335)
+- Unha opción nova experimental en Opcións Avanzadas (Habilitar o rexistro selectivo para eventos e cambios de propiedade de UI Automation) pode proporcionar maiores melloras de rendemento en Microsoft Visual Studio e outras aplicacións baseadas en UIAutomation se se habilita. (#11077, #11209)
+- Para elementos de listaxe marcables, o estado selecionado xa non se anuncia redundantemente, e se é aplicable, anúnciase o estado deseleccionado no seu lugar. (#8554)
+- En Windows 10 May 2020 Update, O NVDA agora amosa o Mapeador de Son de Microsoft ao revisar os dispositivos de saída dende o diálogo Sintetizador. (#11349)
+- En Internet Explorer, os números agora anúncianse correctamente para listaxes ordeadas se a listaxe non comeza con 1. (#8438)
+- En Google chrome, o NVDA agora anunciará non marcado para todos os controis marcables (non só caixas de verificación) que actualmente non estean marcados. (#11377)
+- Unha vez máis é posible de novo navegar por varios controis cando a lingua de NVDA estea posta en Aragonés. (#11384)
+- O NVDA xa non debería conxelarse ás veces en Microsoft Word ao mover rápidamente as frechas arriba e abaixo ou ao escreber caracteres co Braille habilitado. (#11431, #11425, #11414)
+- O NVDA xa non engade un espazo non existente no arrastre ao copiar o navegador de obxectos actual ao portapapeis. (#11438)
+- O NVDA xa non activa o perfil Ler todo se non hai nada que ler. (#10899, #9947)
+- O NVDA xa non é incapaz de ler a listaxe de características en el administrador Internet Information Services (IIS). (#11468)
+
+
+== Cambios para Desenvolvedores ==
+- O GUI Helper's BoxSizerHelper.addDialogDismissButtons soporta unha nova palabra cchave de argumento "separated", para engadir un separador horizontal estándar aos diálogos (que non sexan mensaxes e diálogos de entrada sinxelos). (#6468)
+- Engadíronse propiedades adicionais aos app modules, incluindo a ruta para o executable (appPath), é unha app de almacenamento de Windows (isWindowsStoreApp), e arquitectura de máquina para a app (appArchitecture). (#7894)
+- Agora é posible crear app modules para apps hospedadas dentro de wwahost.exe en Windows 8 e posteriores. (#4569)
+
+
 = 2020.2 =
 O subliñable desta versión inclúe o soporte dunha nova pantalla braille de Nattiq, un soporte mellor para a interfaz gráfica de usuario do antivirus ESET e a Terminal de Windows, melloras de rendemento de 1Password e co sintetizador Windows OneCore. Ademáiss de moitas outras importantes melloras e correccións de fallos.
 

@@ -3,6 +3,56 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.3 =
+
+== Uudet ominaisuudet ==
+- Grafiikoiden lukeminen on nyt mahdollista ottaa käyttöön tai poistaa käytöstä NVDA:n asiakirjojen muotoiluasetuksista. Huom: Grafiikoiden vaihtoehtoiset tekstit luetaan, vaikka tämä asetus on poistettu käytöstä. (#4837)
+- NVDA:n kosketusnäyttötuki voidaan nyt ottaa käyttöön tai poistaa käytöstä asetusvalintaikkunan Kosketuksen vuorovaikutus -paneeliin lisätyllä asetuksella. Oletusarvoinen syötekomento on NVDA+Ctrl+Alt+T. (#9682)
+- Lisätty uusia saksalaisia pistetaulukoita. (#11268)
+- NVDA tunnistaa nyt vain luku -tyyppiset UIA-tekstisäätimet. (#10494)
+- Merkitty (korostettu) sisältö ilmoitetaan sekä puheena että pistekirjoituksella kaikissa verkkoselaimissa. (#11436)
+ - Tämä voidaan ottaa käyttöön tai poistaa käytöstä uudella asiakirjojen muotoiluasetuksiin lisätyllä asetuksella.
+- Uusia emuloituja järjestelmän näppäimiä voidaan lisätä NVDA:n Syötekomennot-valintaikkunasta. (#6060)
+ - Tämä tehdään valitsemalla ensin Emuloidut näppäimet -kategoria ja painamalla sitten Lisää-painiketta.
+
+
+== Muutokset ==
+- Lue muotoilutiedot -skripti (NVDA+F) on nyt muutettu ilmoittamaan muotoilutiedot järjestelmäkohdistimen kohdalta tarkastelukohdistimen sijainnin asemesta. Käytä muotoilutietojen lukemiseen tarkastelukohdistimen sijainnista näppäinkomentoa NVDA+Vaihto+F. (#9505)
+- NVDA ei oletusarvoisesti enää siirrä kohdistusta automaattisesti selaustilassa kohdistettaviin elementteihin, mikä parantaa suorituskykyä ja vakautta. (#11190)
+- CLDR päivitetty versiosta 36.1 versioksi 37. (#11303)
+- Päivitetty eSpeak-NG versioksi 1.51-dev, muutos 1fb68ffffea4.
+- Taulukkonavigointia voidaan nyt hyödyntää listaruuduissa, joissa on valittavia kohteita, kun kyseinen lista sisältää useita sarakkeita. (#8857)
+- Ei-vaihtoehto on nyt oletusarvoisesti valittuna, kun lisäosien hallinnassa pyydetään vahvistusta lisäosan poistolle. (#10015)
+- Elementtilista-valintaikkuna näyttää nyt kaavat Microsoft Excelissä lokalisoiduissa muodoissaan. (#9144)
+- NVDA käyttää nyt oikeaa terminologiaa muistiinpanoille MS Excelissä. (#11311)
+- Kun "Siirrä tarkastelukohdistin kohdistukseen" -komentoa käytetään selaustilassa, tarkastelukohdistin siirretään nyt virtuaalikohdistimen kohdalle. (#9622)
+
+
+== Bugikorjaukset ==
+- NVDA puhuu nyt aina välimerkkitasosta riippumatta sanoittain liikuttaessa ja tultaessa minkä tahansa yksittäisen merkin kohdalle, jota seuraa tyhjätila. (#5133)
+- Objektien kuvaukset puhutaan taas QT 5.11:tä tai uudempaa käyttävissä sovelluksissa. (#8604)
+- NVDA ei ole enää hiljaa poistettaessa sanaa Ctrl+Del -näppäimillä #11029)
+ - Poistetun sanan oikealla puolella olevaa sanaa ei myöskään enää puhuta.
+- Kieliluettelo lajitellaan nyt oikein Yleiset asetukset -paneelissa. (#10348)
+- Suorituskykyä parannettu merkittävästi Syötekomennot-valintaikkunassa suodattamisen aikana. (#10307)
+- U+FFFF:n yli meneviä Unicode-merkkejä voidaan nyt lähettää pistenäytöltä. (#10796)
+- NVDA puhuu Avaa sovelluksessa -valintaikkunan sisällön Windows 10:n toukokuun 2020 päivityksessä. (#11335)
+- Lisäasetukset-paneelin uusi kokeellinen asetus (Ota käyttöön UI Automation -tapahtumien ja ominaisuusmuutosten valikoiva rekisteröinti) voi käytössä ollessaan tarjota huomattavia suorituskyvyn parannuksia Microsoft Visual Studiossa sekä muissa UIAutomation-pohjaisissa sovelluksissa. (#11077, #11209)
+- Valittavien listakohteiden valittu-tilaa ei enää sanota tarpeettomasti, ja tarvittaessa sen sijaan sanotaan ei valittu. (#8554)
+- NVDA näyttää nyt Windows 10:n toukokuun 2020 päivityksessä Microsoft Sound Mapper -vaihtoehdon Syntetisaattori-valintaikkunan Äänen ulostulolaite -yhdistelmäruudussa. (#11349)
+- Numeroitujen listojen numerot sanotaan nyt oikein Internet Explorerissa, mikäli lista ei ala 1:llä. (#8438)
+- NVDA sanoo nyt Google Chromessa "ei valittu" kaikista valittavista säätimistä, jotka eivät ole valittuina (ei pelkästään valintaruuduista). (#11377)
+- Useissa säätimissä liikkuminen on taas mahdollista, kun NVDA:n kieleksi on määritetty aragonia. (#11384)
+- NVDA:n ei pitäisi enää ajoittain jäätyä Microsoft Wordissa siirryttäessä nopeasti nuolinäppäimillä ylös ja alas tai merkkejä kirjoitettaessa pistenäytön ollessa käytössä. (#11431, #11425, #11414)
+- NVDA ei enää lisää olematonta välilyöntiä tekstin loppuun kopioitaessa nykyisen navigointiobjektin sisältöä leikepöydälle. (#11438)
+- NVDA ei ota enää käyttöön Jatkuva luku -profiilia, jos ei ole mitään luettavaa. (#10899, #9947)
+- NVDA voi taas lukea Internet Information Services (IIS) Managerin ominaisuuslistaa. (#11468)
+
+
+== Muutokset kehittäjille ==
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
+
+
 = 2020.2 =
 Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. tuki uudelle Nattiqin pistenäytölle, parempi tuki ESET Antivirus -ohjelmiston graafiselle käyttöliittymälle ja Windows Terminalille, suorituskyvyn parannuksia 1Passwordille ja Windows OneCore -syntetisaattorille sekä monia muita tärkeitä bugikorjauksia ja parannuksia.
 
