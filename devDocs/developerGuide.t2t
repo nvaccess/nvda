@@ -72,7 +72,7 @@ Subsequent lines contain a textual identifier used to identify the symbol, a tab
 For example:
 ```
 . sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
-dates .	\b(\d\d)\.(\d\d)\.(\d{2}|\d{4})\b
+dates with .	\b(\d\d)\.(\d\d)\.(\d{2}|\d{4})\b
 ```
 
 Again, the English symbols are inherited by all other locales, so you need not include any complex symbols already defined for English.
@@ -137,7 +137,7 @@ Level and preserve are not specified, so they will be taken from English.
 A display name is provided so that French users will know what the symbol represents.
 
 ```
-dates .	\1 point \2 point \3	all	norep	# point de date
+dates with .	\1 point \2 point \3	all	norep	# date avec points
 ```
 This line appears in the French symbols.dic file.
 It means that the first, second, and third groups of the match will be included, separated by spaces.
