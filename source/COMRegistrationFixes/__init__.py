@@ -1,8 +1,7 @@
-# -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2018 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2018-2020 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Utilities to re-register  particular system COM interfaces needed by NVDA."""
 
@@ -40,9 +39,11 @@ def applyRegistryPatch(fileName,wow64=False):
 	"""
 	Applies the registry patch with the given file name
 	using regedit.
-	@param fileName: the path to the dll
+	@param fileName: the path to the .reg file
 	@type fileName: str
 	"""
+	if not os.path.isfile(fileName):
+		raise FileNotFoundError(f"Cannot apply registry patch, {fileName} not found.")
 	regedit=os.path.join(sysWow64 if wow64 else systemRoot,'regedit.exe')
 	try:
 		subprocess.check_call([regedit,'/s',fileName])
@@ -51,6 +52,8 @@ def applyRegistryPatch(fileName,wow64=False):
 	else:
 		log.debug("Applied registry patch: %s with %s"%(fileName,regedit))
 
+
+OLEACC_REG_FILE_PATH = os.path.abspath(os.path.join("COMRegistrationFixes", "oleaccProxy.reg"))
 def fixCOMRegistrations():
 	"""
 	Registers most common COM proxies, in case they had accidentally been unregistered or overwritten by 3rd party software installs/uninstalls.
@@ -60,9 +63,9 @@ def fixCOMRegistrations():
 	log.debug("Fixing COM registration for Windows %s.%s, %s"%(OSMajorMinor[0],OSMajorMinor[1],"64 bit" if is64bit else "32 bit"))  
 	# Commands taken from NVDA issue #2807 comment https://github.com/nvaccess/nvda/issues/2807#issuecomment-320149243
 	# OLEACC (MSAA) proxies
-	applyRegistryPatch(os.path.join('COMRegistryFixes','oleaccProxy.reg'))
+	applyRegistryPatch(OLEACC_REG_FILE_PATH)
 	if is64bit:
-		applyRegistryPatch(os.path.join('COMRegistryFixes','oleaccProxy.reg'),wow64=True)
+		applyRegistryPatch(OLEACC_REG_FILE_PATH, wow64=True)
 	# IDispatch and other common OLE interfaces
 	registerServer(os.path.join(system32,'oleaut32.dll'))
 	registerServer(os.path.join(system32,'actxprxy.dll'))

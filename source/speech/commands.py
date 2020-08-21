@@ -31,20 +31,31 @@ class _CancellableSpeechCommand(SpeechCommand):
 	Support currently experimental and may be subject to change.
 	"""
 
-	def __init__(self, checkIfValid: Optional[Callable[[], bool]] = None):
+	def __init__(
+			self,
+			checkIfValid: Optional[Callable[[], bool]] = None,
+			getDevInfo: Optional[Callable[[], str]] = None,
+	):
+		"""
+		@param checkIfValid: Callable that returns True if the utterance is still valid.
+		@param getDevInfo: An optional used to supply more information when __repr__ is called.
+		"""
 		self._isCancelled = False
 		if checkIfValid:
 			self._checkIfValid = checkIfValid
+		self._getCheckIfValidDevInfo = getDevInfo
 		self._utteranceIndex = None
 
-	@property
-	def isCancelled(self):
-		log.debug(f"Check if valid {self}, isCanceled: {self._isCancelled}, isValid: {self._checkIfValid()}")
+	def _checkIfCancelled(self):
 		if self._isCancelled:
 			return True
 		elif not self._checkIfValid():
 			self._isCancelled = True
 		return self._isCancelled
+
+	@property
+	def isCancelled(self):
+		return self._checkIfCancelled()
 
 	def cancelUtterance(self):
 		self._isCancelled = True
@@ -54,8 +65,22 @@ class _CancellableSpeechCommand(SpeechCommand):
 		"""Overridable behavior."""
 		return True
 
+	def _getDevInfo(self):
+		isValidCallbackDevInfo = "" if not self._getCheckIfValidDevInfo else self._getCheckIfValidDevInfo()
+		return (
+			f"devInfo("
+			f" isCanceledCache: {self._isCancelled}"
+			f", isValidCallback: {self._checkIfValid()}"
+			f", isValidCallbackDevInfo: {isValidCallbackDevInfo}"
+		)
+
 	def __repr__(self):
-		return f"CancellableSpeech ({ 'cancelled' if self._isCancelled else 'still valid' })"
+		return (
+			f"CancellableSpeech ("
+			f"{ 'cancelled' if self._checkIfCancelled() else 'still valid' }"
+			f" {self._getDevInfo()}"
+			f" )"
+		)
 
 
 class SynthCommand(SpeechCommand):

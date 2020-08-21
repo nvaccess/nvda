@@ -5,11 +5,10 @@
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-
 import logging
-from abc import abstractmethod, ABCMeta
+from abc import ABCMeta
 import copy
-import re
+
 import wx
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib import scrolledpanel
@@ -45,7 +44,6 @@ try:
 	import updateCheck
 except RuntimeError:
 	updateCheck = None
-import inputCore
 from . import nvdaControls
 from autoSettingsUtils.utils import UnsupportedConfigParameterError
 from autoSettingsUtils.autoSettings import AutoSettings
@@ -154,21 +152,13 @@ class SettingsDialog(wx.Dialog, DpiScalingHelperMixin, metaclass=guiHelper.SIPAB
 		self.makeSettings(self.settingsSizer)
 
 		self.mainSizer.Add(self.settingsSizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL | wx.EXPAND, proportion=1)
-		self.mainSizer.Add(wx.StaticLine(self), flag=wx.EXPAND)
-
-		buttonSizer = guiHelper.ButtonHelper(wx.HORIZONTAL)
-		# Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
-		buttonSizer.addButton(self, label=_("OK"), id=wx.ID_OK)
-		# Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
-		buttonSizer.addButton(self, label=_("Cancel"), id=wx.ID_CANCEL)
+		buttons = wx.OK | wx.CANCEL
 		if hasApplyButton:
-			# Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
-			buttonSizer.addButton(self, label=_("Apply"), id=wx.ID_APPLY)
-
+			buttons |= wx.APPLY
 		self.mainSizer.Add(
-			buttonSizer.sizer,
+			self.CreateSeparatedButtonSizer(buttons),
 			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.ALL | wx.ALIGN_RIGHT
+			flag=wx.EXPAND | wx.BOTTOM | wx.LEFT | wx.RIGHT
 		)
 
 		self.mainSizer.Fit(self)
@@ -724,7 +714,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			# allow NVDA to come up in Windows login screen (useful if user
 			# needs to enter passwords or if multiple user accounts are present
 			# to allow user to choose the correct account).
-			label=_("Start NVDA during sign-in (requires administrator privileges)")
+			label=_("Use NVDA during sign-in (requires administrator privileges)")
 		)
 		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
 		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
@@ -969,6 +959,10 @@ class SynthesizerSelectionDialog(SettingsDialog):
 		# headphones, etc.
 		deviceListLabelText = _("Audio output  &device:")
 		deviceNames=nvwave.getOutputDeviceNames()
+		# #11349: On Windows 10 20H1 and 20H2, Microsoft Sound Mapper returns an empty string.
+		if not deviceNames[0]:
+			# Translators: name for default (Microsoft Sound Mapper) audio output device.
+			deviceNames[0] = _("Microsoft Sound Mapper")
 		self.deviceList = settingsSizerHelper.addLabeledControl(deviceListLabelText, wx.Choice, choices=deviceNames)
 
 		try:
@@ -1913,6 +1907,16 @@ class BrowseModePanel(SettingsPanel):
 		self.trapNonCommandGesturesCheckBox = sHelper.addItem(wx.CheckBox(self, label=trapNonCommandGesturesText))
 		self.trapNonCommandGesturesCheckBox.SetValue(config.conf["virtualBuffers"]["trapNonCommandGestures"])
 
+		# Translators: This is the label for a checkbox in the
+		# browse mode settings panel.
+		autoFocusFocusableElementsText = _("Automatically set system &focus to focusable elements")
+		self.autoFocusFocusableElementsCheckBox = sHelper.addItem(
+			wx.CheckBox(self, label=autoFocusFocusableElementsText)
+		)
+		self.autoFocusFocusableElementsCheckBox.SetValue(
+			config.conf["virtualBuffers"]["autoFocusFocusableElements"]
+		)
+
 	def onSave(self):
 		config.conf["virtualBuffers"]["maxLineLength"]=self.maxLengthEdit.GetValue()
 		config.conf["virtualBuffers"]["linesPerPage"]=self.pageLinesEdit.GetValue()
@@ -1924,6 +1928,10 @@ class BrowseModePanel(SettingsPanel):
 		config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]=self.autoPassThroughOnCaretMoveCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["passThroughAudioIndication"]=self.passThroughAudioIndicationCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["trapNonCommandGestures"]=self.trapNonCommandGesturesCheckBox.IsChecked()
+		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = (
+			self.autoFocusFocusableElementsCheckBox.IsChecked()
+		)
+
 
 class DocumentFormattingPanel(SettingsPanel):
 	# Translators: This is the label for the document formatting panel.
@@ -1979,6 +1987,16 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
+		highlightText = _("Marked (highlighted text)")
+		self.highlightCheckBox = fontGroup.addItem(
+			wx.CheckBox(self, label=highlightText)
+		)
+		self.highlightCheckBox.SetValue(
+			config.conf["documentFormatting"]["reportHighlight"]
+		)
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings panel.
 		styleText =_("St&yle")
 		self.styleCheckBox=fontGroup.addItem(wx.CheckBox(self,label=styleText))
 		self.styleCheckBox.SetValue(config.conf["documentFormatting"]["reportStyle"])
@@ -1997,7 +2015,7 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
-		commentsText = _("Co&mments")
+		commentsText = _("No&tes and comments")
 		self.commentsCheckBox=docInfoGroup.addItem(wx.CheckBox(self,label=commentsText))
 		self.commentsCheckBox.SetValue(config.conf["documentFormatting"]["reportComments"])
 
@@ -2132,6 +2150,11 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
+		self.graphicsCheckBox = elementsGroup.addItem(wx.CheckBox(self, label=_("&Graphics")))
+		self.graphicsCheckBox.SetValue(config.conf["documentFormatting"]["reportGraphics"])
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings panel.
 		self.listsCheckBox=elementsGroup.addItem(wx.CheckBox(self,label=_("&Lists")))
 		self.listsCheckBox.SetValue(config.conf["documentFormatting"]["reportLists"])
 
@@ -2186,6 +2209,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportComments"]=self.commentsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportRevisions"]=self.revisionsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportEmphasis"]=self.emphasisCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportHighlight"] = self.highlightCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportAlignment"]=self.alignmentCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportStyle"]=self.styleCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportSpellingErrors"]=self.spellingErrorsCheckBox.IsChecked()
@@ -2203,6 +2227,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportBorderStyle"] = choice in (1,2)
 		config.conf["documentFormatting"]["reportBorderColor"] = (choice == 2)
 		config.conf["documentFormatting"]["reportLinks"]=self.linksCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportGraphics"] = self.graphicsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportHeadings"]=self.headingsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLists"]=self.listsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportBlockQuotes"]=self.blockQuotesCheckBox.IsChecked()
@@ -2217,14 +2242,21 @@ class TouchInteractionPanel(SettingsPanel):
 	title = _("Touch Interaction")
 
 	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is the label for a checkbox in the
 		# touch interaction settings panel.
-		self.touchTypingCheckBox=wx.CheckBox(self,label=_("&Touch typing mode"))
+		touchSupportEnableLabel = _("Enable touch interaction support")
+		self.enableTouchSupportCheckBox = sHelper.addItem(wx.CheckBox(self, label=touchSupportEnableLabel))
+		self.enableTouchSupportCheckBox.SetValue(config.conf["touch"]["enabled"])
+		# Translators: This is the label for a checkbox in the
+		# touch interaction settings panel.
+		self.touchTypingCheckBox = sHelper.addItem(wx.CheckBox(self, label=_("&Touch typing mode")))
 		self.touchTypingCheckBox.SetValue(config.conf["touch"]["touchTyping"])
-		settingsSizer.Add(self.touchTypingCheckBox,border=10,flag=wx.BOTTOM)
 
 	def onSave(self):
-		config.conf["touch"]["touchTyping"]=self.touchTypingCheckBox.IsChecked()
+		config.conf["touch"]["enabled"] = self.enableTouchSupportCheckBox.IsChecked()
+		config.conf["touch"]["touchTyping"] = self.touchTypingCheckBox.IsChecked()
+		touchHandler.setTouchSupport(config.conf["touch"]["enabled"])
 
 class UwpOcrPanel(SettingsPanel):
 	# Translators: The title of the Windows 10 OCR panel.
@@ -2303,6 +2335,15 @@ class AdvancedPanelControls(wx.Panel):
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
+		label = _("Enable &selective registration for UI Automation events and property changes")
+		self.selectiveUIAEventRegistrationCheckBox = UIAGroup.addItem(wx.CheckBox(self, label=label))
+		self.selectiveUIAEventRegistrationCheckBox.SetValue(config.conf["UIA"]["selectiveEventRegistration"])
+		self.selectiveUIAEventRegistrationCheckBox.defaultValue = (
+			self._getDefaultValue(["UIA", "selectiveEventRegistration"])
+		)
+
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
 		label = _("Use UI Automation to access Microsoft &Word document controls when available")
 		self.UIAInMSWordCheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
 		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
@@ -2376,22 +2417,6 @@ class AdvancedPanelControls(wx.Panel):
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
-		label = _("Browse mode")
-		browseModeGroup = guiHelper.BoxSizerHelper(
-			parent=self,
-			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
-		)
-		sHelper.addItem(browseModeGroup)
-
-		# Translators: This is the label for a checkbox in the
-		# Advanced settings panel.
-		autoFocusFocusableElementsText = _("Automatically set system &focus to focusable elements")
-		self.autoFocusFocusableElementsCheckBox=browseModeGroup.addItem(wx.CheckBox(self,wx.ID_ANY,label=autoFocusFocusableElementsText))
-		self.autoFocusFocusableElementsCheckBox.SetValue(config.conf["virtualBuffers"]["autoFocusFocusableElements"])
-		self.autoFocusFocusableElementsCheckBox.defaultValue=self._getDefaultValue(["virtualBuffers","autoFocusFocusableElements"])
-
-		# Translators: This is the label for a group of advanced options in the
-		#  Advanced settings panel
 		label = _("Editable Text")
 		editableTextGroup = guiHelper.BoxSizerHelper(
 			self,
@@ -2461,15 +2486,15 @@ class AdvancedPanelControls(wx.Panel):
 		return (
 			self._defaultsRestored
 			and self.scratchpadCheckBox.IsChecked() == self.scratchpadCheckBox.defaultValue
+			and (
+				self.selectiveUIAEventRegistrationCheckBox.IsChecked()
+				== self.selectiveUIAEventRegistrationCheckBox.defaultValue
+			)
 			and self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue
 			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
 			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
-			and (
-				self.autoFocusFocusableElementsCheckBox.IsChecked()
-				== self.autoFocusFocusableElementsCheckBox.defaultValue
-			)
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and True  # reduce noise in diff when the list is extended.
@@ -2477,12 +2502,12 @@ class AdvancedPanelControls(wx.Panel):
 
 	def restoreToDefaults(self):
 		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
+		self.selectiveUIAEventRegistrationCheckBox.SetValue(self.selectiveUIAEventRegistrationCheckBox.defaultValue)
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
 		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue == 'UIA')
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
-		self.cancelExpiredFocusSpeechCombo.SetValue(self.cancelExpiredFocusSpeechCombo.defaultValue)
+		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
-		self.autoFocusFocusableElementsCheckBox.SetValue(self.autoFocusFocusableElementsCheckBox.defaultValue)
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self._defaultsRestored = True
@@ -2490,6 +2515,7 @@ class AdvancedPanelControls(wx.Panel):
 	def onSave(self):
 		log.debug("Saving advanced config")
 		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
+		config.conf["UIA"]["selectiveEventRegistration"] = self.selectiveUIAEventRegistrationCheckBox.IsChecked()
 		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
 		if self.ConsoleUIACheckBox.IsChecked():
 			config.conf['UIA']['winConsoleImplementation'] = "UIA"
@@ -2498,7 +2524,6 @@ class AdvancedPanelControls(wx.Panel):
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = self.cancelExpiredFocusSpeechCombo.GetSelection()
 		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
-		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = self.autoFocusFocusableElementsCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
@@ -2622,9 +2647,9 @@ class DictionaryEntryDialog(wx.Dialog):
 		typeChoices = [DictionaryEntryDialog.TYPE_LABELS[i] for i in DictionaryEntryDialog.TYPE_LABELS_ORDERING]
 		self.typeRadioBox=sHelper.addItem(wx.RadioBox(self,label=typeText, choices=typeChoices))
 
-		sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK|wx.CANCEL))
+		sHelper.addDialogDismissButtons(wx.OK | wx.CANCEL, separated=True)
 
-		mainSizer.Add(sHelper.sizer,border=20,flag=wx.ALL)
+		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		self.setType(speechDictHandler.ENTRY_TYPE_ANYWHERE)
@@ -3686,7 +3711,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.filterEdit = sHelper.addLabeledControl(
 			labelText = filterText,
 			wxCtrlClass=wx.TextCtrl,
-			size=self.scaleSize((310, -1)),
+			size=(self.scaleSize(310), -1),
 		)
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
 
@@ -3738,7 +3763,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.replacementEdit = changeSymbolHelper.addLabeledControl(
 			labelText=replacementText,
 			wxCtrlClass=wx.TextCtrl,
-			size=self.scaleSize((300, -1)),
+			size=(self.scaleSize(300), -1),
 		)
 		self.replacementEdit.Bind(wx.EVT_TEXT, skipEventAndCall(self.onSymbolEdited))
 
@@ -3939,245 +3964,3 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.filter(self.filterEdit.Value)
 		self._refreshVisibleItems()
 		evt.Skip()
-
-class InputGesturesDialog(SettingsDialog):
-	# Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
-	title = _("Input Gestures")
-
-	def __init__(self, parent):
-		super().__init__(parent, resizeable=True)
-
-	def makeSettings(self, settingsSizer):
-		filterSizer = wx.BoxSizer(wx.HORIZONTAL)
-		# Translators: The label of a text field to search for gestures in the Input Gestures dialog.
-		filterLabel = wx.StaticText(self, label=pgettext("inputGestures", "&Filter by:"))
-		filter = self.filter = wx.TextCtrl(self)
-		filterSizer.Add(filterLabel, flag=wx.ALIGN_CENTER_VERTICAL)
-		filterSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
-		filterSizer.Add(filter, proportion=1)
-		settingsSizer.Add(filterSizer, flag=wx.EXPAND)
-		settingsSizer.AddSpacer(5)
-		filter.Bind(wx.EVT_TEXT, self.onFilterChange, filter)
-
-		tree = self.tree = wx.TreeCtrl(self, size=wx.Size(600, 400), style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE )
-
-		self.treeRoot = tree.AddRoot("root")
-		tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.onTreeSelect)
-		settingsSizer.Add(tree, proportion=1, flag=wx.EXPAND)
-
-		self.gestures = inputCore.manager.getAllGestureMappings(obj=gui.mainFrame.prevFocus, ancestors=gui.mainFrame.prevFocusAncestors)
-		self.populateTree()
-
-		settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
-
-		bHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
-
-		# Translators: The label of a button to add a gesture in the Input Gestures dialog.
-		self.addButton = bHelper.addButton(self, label=_("&Add"))
-		self.addButton.Bind(wx.EVT_BUTTON, self.onAdd)
-		self.addButton.Disable()
-
-		# Translators: The label of a button to remove a gesture in the Input Gestures dialog.
-		self.removeButton = bHelper.addButton(self, label=_("&Remove"))
-		self.removeButton.Bind(wx.EVT_BUTTON, self.onRemove)
-		self.removeButton.Disable()
-
-		bHelper.sizer.AddStretchSpacer()
-		# Translators: The label of a button to reset all gestures in the Input Gestures dialog.
-		resetButton = wx.Button(self, label=_("Reset to factory &defaults"))
-		bHelper.sizer.Add(resetButton, flag=wx.ALIGN_RIGHT)
-		resetButton.Bind(wx.EVT_BUTTON, self.onReset)
-
-		self.pendingAdds = set()
-		self.pendingRemoves = set()
-
-		settingsSizer.Add(bHelper.sizer, flag=wx.EXPAND)
-
-	def postInit(self):
-		self.tree.SetFocus()
-
-	def populateTree(self, filter=''):
-		if filter:
-			#This regexp uses a positive lookahead (?=...) for every word in the filter, which just makes sure the word is present in the string to be tested without matching position or order.
-			# #5060: Escape the filter text to prevent unexpected matches and regexp errors.
-			# Because we're escaping, words must then be split on "\ ".
-			filter = re.escape(filter)
-			filterReg = re.compile(r'(?=.*?' + r')(?=.*?'.join(filter.split('\ ')) + r')', re.U|re.IGNORECASE)
-		for category in sorted(self.gestures):
-			treeCat = self.tree.AppendItem(self.treeRoot, category)
-			commands = self.gestures[category]
-			for command in sorted(commands):
-				if filter and not filterReg.match(command):
-					continue
-				treeCom = self.tree.AppendItem(treeCat, command)
-				commandInfo = commands[command]
-				self.tree.SetItemData(treeCom, commandInfo)
-				for gesture in commandInfo.gestures:
-					treeGes = self.tree.AppendItem(treeCom, self._formatGesture(gesture))
-					self.tree.SetItemData(treeGes, gesture)
-			if not self.tree.ItemHasChildren(treeCat):
-				self.tree.Delete(treeCat)
-			elif filter:
-				self.tree.Expand(treeCat)
-
-	def onFilterChange(self, evt):
-		filter=evt.GetEventObject().GetValue()
-		self.tree.DeleteChildren(self.treeRoot)
-		self.populateTree(filter)
-
-	def _formatGesture(self, identifier):
-		try:
-			source, main = inputCore.getDisplayTextForGestureIdentifier(identifier)
-			# Translators: Describes a gesture in the Input Gestures dialog.
-			# {main} is replaced with the main part of the gesture; e.g. alt+tab.
-			# {source} is replaced with the gesture's source; e.g. laptop keyboard.
-			return _("{main} ({source})").format(main=main, source=source)
-		except LookupError:
-			return identifier
-
-	def onTreeSelect(self, evt):
-		# #7077: Check if the treeview is still alive.
-		try:
-			item = self.tree.Selection
-		except RuntimeError:
-			return
-		data = self.tree.GetItemData(item)
-		isCommand = isinstance(data, inputCore.AllGesturesScriptInfo)
-		isGesture = isinstance(data, str)
-		self.addButton.Enabled = isCommand or isGesture
-		self.removeButton.Enabled = isGesture
-
-	def onAdd(self, evt):
-		if inputCore.manager._captureFunc:
-			return
-
-		treeCom = self.tree.Selection
-		scriptInfo = self.tree.GetItemData(treeCom)
-		if not isinstance(scriptInfo, inputCore.AllGesturesScriptInfo):
-			treeCom = self.tree.GetItemParent(treeCom)
-			scriptInfo = self.tree.GetItemData(treeCom)
-		# Translators: The prompt to enter a gesture in the Input Gestures dialog.
-		treeGes = self.tree.AppendItem(treeCom, _("Enter input gesture:"))
-		self.tree.SelectItem(treeGes)
-		self.tree.SetFocus()
-
-		def addGestureCaptor(gesture):
-			if gesture.isModifier:
-				return False
-			inputCore.manager._captureFunc = None
-			wx.CallAfter(self._addCaptured, treeGes, scriptInfo, gesture)
-			return False
-		inputCore.manager._captureFunc = addGestureCaptor
-
-	def _addCaptured(self, treeGes, scriptInfo, gesture):
-		gids = gesture.normalizedIdentifiers
-		if len(gids) > 1:
-			# Multiple choices. Present them in a pop-up menu.
-			menu = wx.Menu()
-			for gid in gids:
-				disp = self._formatGesture(gid)
-				item = menu.Append(wx.ID_ANY, disp)
-				self.Bind(wx.EVT_MENU,
-					lambda evt, gid=gid, disp=disp: self._addChoice(treeGes, scriptInfo, gid, disp),
-					item)
-			self.PopupMenu(menu)
-			if not self.tree.GetItemData(treeGes):
-				# No item was selected, so use the first.
-				self._addChoice(treeGes, scriptInfo, gids[0],
-					self._formatGesture(gids[0]))
-			menu.Destroy()
-		else:
-			self._addChoice(treeGes, scriptInfo, gids[0],
-				self._formatGesture(gids[0]))
-
-	def _addChoice(self, treeGes, scriptInfo, gid, disp):
-		entry = (gid, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName)
-		try:
-			# If this was just removed, just undo it.
-			self.pendingRemoves.remove(entry)
-		except KeyError:
-			self.pendingAdds.add(entry)
-		self.tree.SetItemText(treeGes, disp)
-		self.tree.SetItemData(treeGes, gid)
-		scriptInfo.gestures.append(gid)
-		self.onTreeSelect(None)
-
-	def onRemove(self, evt):
-		treeGes = self.tree.Selection
-		gesture = self.tree.GetItemData(treeGes)
-		treeCom = self.tree.GetItemParent(treeGes)
-		scriptInfo = self.tree.GetItemData(treeCom)
-		entry = (gesture, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName)
-		try:
-			# If this was just added, just undo it.
-			self.pendingAdds.remove(entry)
-		except KeyError:
-			self.pendingRemoves.add(entry)
-		self.tree.Delete(treeGes)
-		scriptInfo.gestures.remove(gesture)
-		self.tree.SetFocus()
-
-	def onReset(self, evt):
-		if gui.messageBox(
-			# Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
-			_("""Are you sure you want to reset all gestures to their factory defaults?
-			
-			All of your user defined gestures, whether previously set or defined during this session, will be lost.
-			This cannot be undone."""),
-			# Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
-			_("Reset gestures"),
-			style=wx.YES | wx.NO | wx.NO_DEFAULT
-		) != wx.YES:
-			return
-		self.pendingAdds.clear()
-		self.pendingRemoves.clear()
-		inputCore.manager.userGestureMap.clear()
-		try:
-			inputCore.manager.userGestureMap.save()
-		except:  # noqa: E722
-			log.debugWarning("", exc_info=True)
-			# Translators: An error displayed when saving user defined input gestures fails.
-			gui.messageBox(
-				_("Error saving user defined gestures - probably read only file system."),
-				caption=_("Error"),
-				style=wx.OK | wx.ICON_ERROR
-			)
-			self.onCancel(None)
-			return
-		inputCore.manager.userGestureMap.save()
-		self.gestures = inputCore.manager.getAllGestureMappings(
-			obj=gui.mainFrame.prevFocus,
-			ancestors=gui.mainFrame.prevFocusAncestors
-		)
-		self.tree.DeleteChildren(self.treeRoot)
-		self.populateTree(filter=self.filter.GetValue())
-		self.tree.SetFocus()
-
-	def onOk(self, evt):
-		for gesture, module, className, scriptName in self.pendingRemoves:
-			try:
-				inputCore.manager.userGestureMap.remove(gesture, module, className, scriptName)
-			except ValueError:
-				# The user wants to unbind a gesture they didn't define.
-				inputCore.manager.userGestureMap.add(gesture, module, className, None)
-
-		for gesture, module, className, scriptName in self.pendingAdds:
-			try:
-				# The user might have unbound this gesture,
-				# so remove this override first.
-				inputCore.manager.userGestureMap.remove(gesture, module, className, None)
-			except ValueError:
-				pass
-			inputCore.manager.userGestureMap.add(gesture, module, className, scriptName)
-
-		if self.pendingAdds or self.pendingRemoves:
-			# Only save if there is something to save.
-			try:
-				inputCore.manager.userGestureMap.save()
-			except:
-				log.debugWarning("", exc_info=True)
-				# Translators: An error displayed when saving user defined input gestures fails.
-				gui.messageBox(_("Error saving user defined gestures - probably read only file system."),
-					_("Error"), wx.OK | wx.ICON_ERROR)
-
-		super(InputGesturesDialog, self).onOk(evt)
