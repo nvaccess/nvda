@@ -140,8 +140,8 @@ A display name is provided so that French users will know what the symbol repres
 dates with .	\1 point \2 point \3	all	norep	# date avec points
 ```
 This line appears in the French symbols.dic file.
-It means that the first, second, and third groups of the match will be included, separated by spaces.
-The effect is thus to remove the dots from the date.
+It means that the first, second, and third groups of the match will be included, separated by the word 'point'.
+The effect is thus to replace the dots from the date with the word 'point'.
 
 Please see the file locale\en\symbols.dic for the English definitions which are inherited for all locales.
 This is also a good full example.
