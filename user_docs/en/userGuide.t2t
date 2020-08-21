@@ -1895,8 +1895,6 @@ Thus, using the earlier example of replacing the word "bird" with "frog", if you
 A regular expression is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples.
 Regular expressions are not covered in this user guide.
 For an introductory tutorial, please refer to [https://docs.python.org/3.7/howto/regex.html].
-Group matching is supported, which means that in the Pattern field, parentheses can be used to specify that pieces of the matched text are to be recorded, and in the Replacement field, \1, \2, etc. will be replaced by the corresponding records.
-Normal backslashes in the Replacement field should thus be doubled, e.g. "a\\b" should be typed in order to get the "a\b" replacement.
 
 
 +++ Punctuation/symbol pronunciation +++[SymbolPronunciation]
