@@ -120,11 +120,3 @@ class TestComplex(unittest.TestCase):
 			name="foo"
 		)
 		self.assertEqual(replaced, "BAT>bar")
-
-	def test_engine(self):
-		"""Test inclusion of group replacement in engine
-		"""
-		replaced = process("fr_FR", "Le 03.04.05.", SYMLVL_ALL)
-		self.assertEqual(replaced, "Le  03 04 05   point.")
-		replaced = process("fr_FR", "Le 03/04/05.", SYMLVL_ALL)
-		self.assertEqual(replaced, "Le  03 04 05   point.")

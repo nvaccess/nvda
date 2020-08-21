@@ -40,7 +40,7 @@ symbols:
 
 decimal point		# virgule décimale
 thousands separator		# point des mille
-dates .	\1 \2 \3 	all	norep	# point de date
+dates .	\1 \2 \3 	all	always	# point de date
 negative number	moins	none	norep	# - devant un nombre
 after-number %	pour cent	none	norep	# % après un nombre
 in-word '	apostrophe	# ' dans un mot
