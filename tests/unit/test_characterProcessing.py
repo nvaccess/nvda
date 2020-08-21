@@ -8,9 +8,7 @@
 
 import unittest
 import re
-from characterProcessing import SYMLVL_ALL
 from characterProcessing import SpeechSymbolProcessor
-from characterProcessing import processSpeechSymbols as process
 
 
 class TestComplex(unittest.TestCase):
