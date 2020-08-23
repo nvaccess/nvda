@@ -330,11 +330,11 @@ class LiveText(NVDAObject):
 		diffs = self._dmp.diff_main(oldText, newText)
 		res = ""
 		self._dmp.diff_cleanupSemantic(diffs)
-		for change, content in diffs:
-			if change == self._dmp.DIFF_INSERT or (
-				change == self._dmp.DIFF_EQUAL and content.isspace()
+		for op, change in diffs:
+			if op == self._dmp.DIFF_INSERT or (
+				change == self._dmp.DIFF_EQUAL and change.isspace()
 			):
-				res += content
+				res += change
 		return [line for line in res.splitlines() if line and not line.isspace()]
 
 	def _calculateNewText_difflib(self, newLines: List[str], oldLines: List[str]) -> List[str]:
