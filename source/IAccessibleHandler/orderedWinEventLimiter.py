@@ -75,10 +75,12 @@ class OrderedWinEventLimiter(object):
 		self._genericEventCache[(eventID, window, objectID, childID, threadID)] = next(self._eventCounter)
 		return True
 
-	def flushEvents(self):
+	def flushEvents(self, alwaysAllowedObjects):
 		"""Returns a list of winEvents that have been added.
 		Due to limiting, it will not necessarily be all the winEvents that were originally added.
 		They are definitely guaranteed to be in the correct order though.
+		winEvents for objects listed in alwaysAllowedObjects will always be emitted,
+		Even if the winEvent limit for that thread has been exceeded.
 		@return Tuple[eventID,window,objectID,childID]
 		"""
 		if self._lastMenuEvent is not None:
@@ -88,11 +90,12 @@ class OrderedWinEventLimiter(object):
 		self._genericEventCache = {}
 		threadCounters = {}
 		for k, v in sorted(g.items(), key=lambda item: item[1], reverse=True):
-			threadCount = threadCounters.get(k[-1], 0)
-			if threadCount > MAX_WINEVENTS_PER_THREAD:
-				continue
+			if k[1:-1] not in alwaysAllowedObjects:
+				threadCount = threadCounters.get(k[-1], 0)
+				threadCounters[k[-1]] = threadCount + 1
+				if threadCount > MAX_WINEVENTS_PER_THREAD:
+					continue
 			heapq.heappush(self._eventHeap, (v,) + k)
-			threadCounters[k[-1]] = threadCount + 1
 		f = self._focusEventCache
 		self._focusEventCache = {}
 		for k, v in sorted(f.items(), key=lambda item: item[1])[0 - self.maxFocusItems:]:
