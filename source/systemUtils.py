@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020 NV Access Limited, Łukasz Golonka
+# Copyright (C) 2020 NV Access Limited, Łukasz Golonka, Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,3 +72,9 @@ def execElevated(path, params=None, wait=False, handleAlreadyElevated=False):
 			return winKernel.GetExitCodeProcess(sei.hProcess)
 		finally:
 			winKernel.closeHandle(sei.hProcess)
+
+
+def preventSystemIdle() -> int:
+	""" Helper function that prevents the system from going idle.
+	"""
+	return winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED | winKernel.ES_DISPLAY_REQUIRED)
