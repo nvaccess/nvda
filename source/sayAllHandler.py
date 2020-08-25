@@ -63,7 +63,7 @@ class _ObjectsReader(garbageHandler.TrackedObject):
 		if self.prevObj:
 			# We just started speaking this object, so move the navigator to it.
 			api.setNavigatorObject(self.prevObj, isFocus=lastSayAllMode==CURSOR_CARET)
-			winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
+			winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED | winKernel.ES_DISPLAY_REQUIRED)
 		# Move onto the next object.
 		self.prevObj = obj = next(self.walker, None)
 		if not obj:
@@ -215,7 +215,7 @@ class _TextReader(garbageHandler.TrackedObject):
 			updater.updateCaret()
 		if self.cursor != CURSOR_CARET or config.conf["reviewCursor"]["followCaret"]:
 			api.setReviewPosition(updater, isCaret=self.cursor==CURSOR_CARET)
-		winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
+		winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED | winKernel.ES_DISPLAY_REQUIRED)
 		if self.numBufferedLines == 0:
 			# This was the last line spoken, so move on.
 			self.nextLine()
