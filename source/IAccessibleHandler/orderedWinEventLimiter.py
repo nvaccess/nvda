@@ -90,9 +90,9 @@ class OrderedWinEventLimiter(object):
 		self._genericEventCache = {}
 		threadCounters = {}
 		for k, v in sorted(g.items(), key=lambda item: item[1], reverse=True):
+			threadCount = threadCounters.get(k[-1], 0)
+			threadCounters[k[-1]] = threadCount + 1
 			if not alwaysAllowedObjects or k[1:-1] not in alwaysAllowedObjects:
-				threadCount = threadCounters.get(k[-1], 0)
-				threadCounters[k[-1]] = threadCount + 1
 				if threadCount > MAX_WINEVENTS_PER_THREAD:
 					continue
 			heapq.heappush(self._eventHeap, (v,) + k)
