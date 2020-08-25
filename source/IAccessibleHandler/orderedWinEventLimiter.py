@@ -2,6 +2,9 @@ import heapq
 import itertools
 
 import winUser
+from logHandler import log
+from . import isMSAADebugLoggingEnabled, getWinEventLogInfo
+
 
 MAX_WINEVENTS_PER_THREAD = 10
 
@@ -89,10 +92,13 @@ class OrderedWinEventLimiter(object):
 		threadCounters = {}
 		for k, v in sorted(g.items(), key=lambda item: item[1], reverse=True):
 			threadCount = threadCounters.get(k[-1], 0)
+			threadCounters[k[-1]] = threadCount + 1
 			if threadCount > MAX_WINEVENTS_PER_THREAD:
+				if isMSAADebugLoggingEnabled():
+					if threadCount == (MAX_WINEVENTS_PER_THREAD + 1):
+						log.debug(f"winEvent limit for thread {k[-1]} hit for this core cycle")
 				continue
 			heapq.heappush(self._eventHeap, (v,) + k)
-			threadCounters[k[-1]] = threadCount + 1
 		f = self._focusEventCache
 		self._focusEventCache = {}
 		for k, v in sorted(f.items(), key=lambda item: item[1])[0 - self.maxFocusItems:]:
@@ -102,5 +108,10 @@ class OrderedWinEventLimiter(object):
 		r = []
 		for count in range(len(e)):
 			event = heapq.heappop(e)[1:-1]
+			if isMSAADebugLoggingEnabled():
+				eventID, window, objectID, childID = event
+				log.debug(
+					f"Emitting winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}"
+				)
 			r.append(event)
 		return r

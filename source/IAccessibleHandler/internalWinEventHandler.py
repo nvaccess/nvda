@@ -13,6 +13,9 @@ from typing import Dict, Callable
 
 import core
 import winUser
+from . import getWinEventLogInfo
+from . import isMSAADebugLoggingEnabled
+
 
 from comInterfaces.IAccessible2Lib import (
 	IA2_EVENT_TEXT_CARET_MOVED,
@@ -69,6 +72,10 @@ _processDestroyWinEvent = None
 
 # C901: winEventCallback is too complex
 def winEventCallback(handle, eventID, window, objectID, childID, threadID, timestamp):  # noqa: C901
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Hook received winEvent: {getWinEventLogInfo(window, objectID, childID, eventID)}"
+		)
 	try:
 		# Ignore all object IDs from alert onwards (sound, nativeom etc) as we don't support them
 		if objectID <= winUser.OBJID_ALERT:
@@ -82,6 +89,8 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 		# Change window objIDs to client objIDs for better reporting of objects
 		if (objectID == 0) and (childID == 0):
 			objectID = winUser.OBJID_CLIENT
+			if isMSAADebugLoggingEnabled():
+				log.debug("Changing OBJID_WINDOW to OBJID_CLIENT")
 		# Ignore events with invalid window handles
 		isWindow = winUser.isWindow(window) if window else 0
 		if window == 0 or (
@@ -92,8 +101,12 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 				winUser.EVENT_SYSTEM_MENUPOPUPEND,
 			)
 		):
+			if isMSAADebugLoggingEnabled():
+				log.debug("Redirecting winEvent to desktop window")
 			window = winUser.getDesktopWindow()
 		elif not isWindow:
+			if isMSAADebugLoggingEnabled():
+				log.debug("Dropping winEvent for invalid window")
 			return
 
 		windowClassName = winUser.getClassName(window)
@@ -114,14 +127,20 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 			global _deferUntilForegroundWindow, _foregroundDefers
 			_deferUntilForegroundWindow = window
 			_foregroundDefers = 0
+			if isMSAADebugLoggingEnabled():
+				log.debug("Recording foreground winEvent defer")
 		if windowClassName == "MSNHiddenWindowClass":
 			# HACK: Events get fired by this window in Windows Live Messenger 2009 when it starts. If we send a
 			# WM_NULL to this window at this point (which happens in accessibleObjectFromEvent), Messenger will
 			# silently exit (#677). Therefore, completely ignore these events, which is useless to us anyway.
 			return
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Adding winEvent to limitor: {getWinEventLogInfo(window, objectID, childID, eventID)}"
+			)
 		if winEventLimiter.addEvent(eventID, window, objectID, childID, threadID):
 			core.requestPump()
-	except:  # noqa: E722 Bare except
+	except Exception:
 		log.error("winEventCallback", exc_info=True)
 
 
@@ -162,18 +181,33 @@ def _shouldGetEvents():
 	if _deferUntilForegroundWindow:
 		# #3831: Sometimes, a foreground event is fired,
 		# but GetForegroundWindow() takes a short while to return this new foreground.
+		curForegroundWindow = winUser.getForegroundWindow()
+		curForegroundClassName = winUser.getClassName(curForegroundWindow)
+		futureForegroundClassName = winUser.getClassName(_deferUntilForegroundWindow)
 		if (
 			_foregroundDefers < MAX_FOREGROUND_DEFERS
-			and winUser.getForegroundWindow() != _deferUntilForegroundWindow
+			and curForegroundWindow != _deferUntilForegroundWindow
 		):
 			# Wait a core cycle before handling events to give the foreground window time to update.
 			core.requestPump()
 			_foregroundDefers += 1
+			if isMSAADebugLoggingEnabled():
+				log.debugWarning(
+					f"Foreground still {curForegroundWindow} ({curForegroundClassName}). "
+					f"Deferring until foreground is {_deferUntilForegroundWindow} ({futureForegroundClassName}), "
+					f"defer count {_foregroundDefers}"
+				)
 			return False
 		else:
 			# Either the foreground window is now correct
 			# or we've already had the maximum number of defers.
 			# (Sometimes, foreground events are fired even when the foreground hasn't actually changed.)
+			if curForegroundWindow != _deferUntilForegroundWindow:
+				log.debugWarning(
+					"Foreground took too long to change. "
+					f"Foreground still {curForegroundWindow} ({curForegroundClassName}). "
+					f"Should be {_deferUntilForegroundWindow} ({futureForegroundClassName})"
+				)
 			_deferUntilForegroundWindow = None
 	return True
 
