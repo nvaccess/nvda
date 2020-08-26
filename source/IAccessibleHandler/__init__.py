@@ -611,7 +611,7 @@ def winEventToNVDAEvent(eventID, window, objectID, childID, useCache=True):
 	# At this point if we don't have an object then we can't do any more
 	if not obj:
 		if isMSAADebugLoggingEnabled():
-			log.debug("Could not instantiate an NVDAObject for winEvent")
+			log.debug(f"Could not instantiate an NVDAObject for winEvent: {getWinEventLogInfo(window, objectID, childID, eventID)}")
 		return None
 	# SDM MSAA objects sometimes don't contain enough information to be useful Sometimes there is a real
 	# window that does, so try to get the SDMChild property on the NVDAObject, and if successull use that as
