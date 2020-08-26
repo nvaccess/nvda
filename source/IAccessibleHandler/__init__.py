@@ -604,14 +604,20 @@ def winEventToNVDAEvent(eventID, window, objectID, childID, useCache=True):
 		# See if we already know an object by this win event info
 		obj = liveNVDAObjectTable.get((window, objectID, childID), None)
 		if isMSAADebugLoggingEnabled() and obj:
-			log.debug(f"Fetched existing NVDAObject for winEvent from liveNVDAObjectTable: {getWinEventLogInfo(window, objectID, childID)}")
+			log.debug(
+				"Fetched existing NVDAObject for winEvent from liveNVDAObjectTable: "
+				f"{getWinEventLogInfo(window, objectID, childID)}"
+			)
 	# If we don't yet have the object, then actually instanciate it.
 	if not obj:
 		obj = NVDAObjects.IAccessible.getNVDAObjectFromEvent(window, objectID, childID)
 	# At this point if we don't have an object then we can't do any more
 	if not obj:
 		if isMSAADebugLoggingEnabled():
-			log.debug(f"Could not instantiate an NVDAObject for winEvent: {getWinEventLogInfo(window, objectID, childID, eventID)}")
+			log.debug(
+				"Could not instantiate an NVDAObject for winEvent: "
+				f"{getWinEventLogInfo(window, objectID, childID, eventID)}"
+			)
 		return None
 	# SDM MSAA objects sometimes don't contain enough information to be useful Sometimes there is a real
 	# window that does, so try to get the SDMChild property on the NVDAObject, and if successull use that as
