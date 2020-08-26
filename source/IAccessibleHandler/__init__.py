@@ -134,7 +134,7 @@ def getObjectIDName(objectID):
 def getWinEventLogInfo(window, objectID, childID, eventID=None):
 	"""
 	Formats the given winEvent parameters into a printable string.
-	window, objectID and childID are mandetory,
+	window, objectID and childID are mandatory,
 	but eventID is optional.
 	"""
 	windowClassName = winUser.getClassName(window)
