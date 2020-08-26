@@ -604,7 +604,7 @@ def winEventToNVDAEvent(eventID, window, objectID, childID, useCache=True):
 		# See if we already know an object by this win event info
 		obj = liveNVDAObjectTable.get((window, objectID, childID), None)
 		if isMSAADebugLoggingEnabled() and obj:
-			log.debug("Fetched existing NVDAObject for winEvent from liveNVDAObjectTable")
+			log.debug(f"Fetched existing NVDAObject for winEvent from liveNVDAObjectTable: {getWinEventLogInfo(window, objectID, childID)}")
 	# If we don't yet have the object, then actually instanciate it.
 	if not obj:
 		obj = NVDAObjects.IAccessible.getNVDAObjectFromEvent(window, objectID, childID)
