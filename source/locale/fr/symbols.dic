@@ -41,8 +41,8 @@ symbols:
 
 decimal point		# virgule décimale
 thousands separator		# point des mille
-dates .	 	all	always	# point de date
-dates /	 	all	always	# barre oblique de date
+dates .	 point 	all	norep	# point de date
+dates /	 barre oblique 	all	norep	# barre oblique de date
 negative number	moins	none	norep	# - devant un nombre
 after-number %	pour cent	none	norep	# % après un nombre
 in-word '	apostrophe	# ' dans un mot
