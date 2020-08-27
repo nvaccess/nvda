@@ -21,7 +21,7 @@ symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	punto	most	always
+. sentence ending	punto	all	always
 ! sentence ending	punto esclamativo	all	always
 ? sentence ending	punto di domanda	all	always
 ; phrase ending	punto e virgola	most	always
@@ -38,7 +38,6 @@ negative number	meno	none	norep
 \r	ritorno a capo	char
  	spazio	char
  	spazio	char	# no-break space
-#\\_	\_	some	always	#Per tags Loquendo
 
 # Standard punctuation/symbols
 !	punto esclamativo	all
@@ -52,28 +51,28 @@ $	dollari	all	norep
 ₹	Rupie	some	norep
 ƒ	fiorini	all	norep
 ¤	segno di valuta	all	norep
-%	percento	some	norep
+%	percento	some
 ‰	per mille	some
-&	and	some	norep
+&	and	some
 '	apostrofo	all
-(	aperta parentesi	most
-)	chiusa parentesi	most
-*	asterisco	some	norep
-+	più	some	norep	always
+(	aperta parentesi	most	always
+)	chiusa parentesi	most	always
+*	asterisco	some
++	più	some
+−	meno	some
 ,	virgola	all	always
 -	trattino	most
 .	punto	some
 /	barra	some
 :	due punti	most	norep
 ;	punto e virgola	most
-<	minore di	most
->	maggiore di	most
-=	uguale	some	norep
+<	minore di	some
+>	maggiore di	some
+=	uguale	some
 ?	punto di domanda	all
 @	chiocciola	some
 [	aperta quadra	most
 ]	chiusa quadra	most
-#\\_	\_	some	always	#Per tags Loquendo
 \\	controbarra	most
 ^	accento circonflesso	most
 _	sottolineato	most
@@ -86,8 +85,8 @@ _	sottolineato	most
 ¡	punto esclamativo invertito	some
 ¿	punto interrogativo invertito	some
 ·	punto medio	most
-‚	singola virgoletta bassa	most
-„	doppia virgoletta bassa
+‚	virgoletta bassa singola	most
+„	virgoletta bassa doppia	some
 ′	primo	some
 ″	doppio primo	some
 ‴	triplo primo	some
