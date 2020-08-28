@@ -108,13 +108,21 @@ class WavePlayer(garbageHandler.TrackedObject):
 	#: A lock to prevent WaveOut* functions from being called simultaneously, as this can cause problems even if they are for different HWAVEOUTs.
 	_global_waveout_lock = threading.RLock()
 	_audioDucker=None
+	#: Used to allow the device to temporarily be changed and return
+	# to the preferred device when it becomes available
+	_preferredDeviceName: str
+	#: The currently set device name.
+	_outputDeviceName: str
+	#: The id of the device when it was opened.
+	# It is set to None when the device is closed again.
+	_outputDeviceID: int
 
 	def __init__(
 			self,
 			channels: int,
 			samplesPerSec: int,
 			bitsPerSample: int,
-			outputDevice: typing.Union[int, str] = WAVE_MAPPER,
+			outputDevice: typing.Union[str, int] = WAVE_MAPPER,
 			closeWhenIdle: bool = False,
 			wantDucking: bool = True,
 			buffered: bool = False
@@ -133,9 +141,10 @@ class WavePlayer(garbageHandler.TrackedObject):
 		self.channels=channels
 		self.samplesPerSec=samplesPerSec
 		self.bitsPerSample=bitsPerSample
-		self.outputDeviceID = self.outputDevice = outputDevice
-		if isinstance(self.outputDevice, str):
-			self.outputDeviceID = outputDeviceNameToID(self.outputDevice, True)
+
+		self._setCurrentDevice(preferredDevice=outputDevice)
+		self._preferredDeviceName = self._outputDeviceName
+
 		if wantDucking:
 			import audioDucking
 			if audioDucking.isAudioDuckingSupported():
@@ -160,6 +169,32 @@ class WavePlayer(garbageHandler.TrackedObject):
 		self._lock = threading.RLock()
 		self.open()
 
+	def _setCurrentDevice(self, preferredDevice: typing.Union[str, int]) -> None:
+		""" Sets the _outputDeviceID and _outputDeviceName to the preferredDevice if
+		it is available, otherwise falls back to WAVE_MAPPER.
+		@param preferredDevice: The preferred device to use.
+		"""
+		try:
+			if isinstance(preferredDevice, str):
+				self._outputDeviceID = outputDeviceNameToID(
+					preferredDevice,
+					useDefaultIfInvalid=True  # fallback to WAVE_MAPPER
+				)
+				# If default is used, get the appropriate name.
+				self._outputDeviceName = outputDeviceIDToName(self._outputDeviceID)
+			elif isinstance(preferredDevice, int):
+				self._outputDeviceID = preferredDevice
+				self._outputDeviceName = outputDeviceIDToName(preferredDevice)
+			else:
+				raise TypeError("outputDevice")
+		except (LookupError, TypeError):
+			log.error(
+				f"Unsupported WavePlayer device argument: {preferredDevice}"
+				f" Falling back to WAVE_MAPPER"
+			)
+			self._outputDeviceID = WAVE_MAPPER
+			self._outputDeviceName = outputDeviceIDToName(WAVE_MAPPER)
+
 	def open(self):
 		"""Open the output device.
 		This will be called automatically when required.
@@ -168,14 +203,10 @@ class WavePlayer(garbageHandler.TrackedObject):
 		with self._waveout_lock:
 			if self._waveout:
 				return
-			if self.outputDeviceID is None:
-				self.outputDeviceID = self.outputDevice
-			if isinstance(self.outputDevice, str):
-				self.outputDeviceID = outputDeviceNameToID(self.outputDevice, True)
 			log.debug(
 				f"Calling winmm.waveOutOpen."
-				f" outputDevice: {self.outputDevice}"
-				f" outputDeviceID: {self.outputDeviceID}"
+				f" outputDeviceName: {self._outputDeviceName}"
+				f" outputDeviceID: {self._outputDeviceID}"
 			)
 			wfx = WAVEFORMATEX()
 			wfx.wFormatTag = WAVE_FORMAT_PCM
@@ -189,7 +220,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 				with self._global_waveout_lock:
 					winmm.waveOutOpen(
 						byref(waveout),
-						self.outputDeviceID,
+						self._outputDeviceID,
 						LPWAVEFORMATEX(wfx),
 						self._waveout_event,
 						0,
@@ -197,11 +228,16 @@ class WavePlayer(garbageHandler.TrackedObject):
 					)
 			except WindowsError:
 				log.debug(
-					f"Error opening outputDevice: {self.outputDeviceID}"
-					f" Falling back to WAVE_MAPPER ID: {WAVE_MAPPER}"
+					f"Error opening"
+					f" outputDeviceName: {self._outputDeviceName}"
+					f" with id: {self._outputDeviceID}"
 				)
-				self.outputDeviceID = WAVE_MAPPER
-				self.open()
+				if self._outputDeviceID != WAVE_MAPPER:
+					log.debug(f"Falling back to WAVE_MAPPER ID: {WAVE_MAPPER}")
+					self._setCurrentDevice(WAVE_MAPPER)
+					self.open()
+				else:
+					raise  # can't open the default device.
 				return
 			self._waveout = waveout.value
 			self._prev_whdr = None
@@ -360,10 +396,6 @@ class WavePlayer(garbageHandler.TrackedObject):
 			except WindowsError:
 				log.debug("Error closing the device, it may have been removed.", exc_info=True)
 		self._waveout = None
-		# Ensure that the device ID is queried again
-		# Reset outputDeviceID to signal a check for the preferred device so it gets used
-		# when (if) the device becomes available.
-		self.outputDeviceID = None
 
 	def __del__(self):
 		self.close()
