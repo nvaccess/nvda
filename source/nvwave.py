@@ -122,6 +122,10 @@ for func in (
 class WavePlayer(garbageHandler.TrackedObject):
 	"""Synchronously play a stream of audio.
 	To use, construct an instance and feed it waveform audio using L{feed}.
+	Keeps device open until it is either not available, or WavePlayer is explicitly closed / deleted.
+	Will attempt to use the preferred device, if not will fallback to the WAVE_MAPPER device.
+	When not using the preferred device, when idle devices will be checked to see if the preferred
+	device has become available again. If so, it will be re-instated.
 	"""
 	#: Minimum length of buffer (in ms) before audio is played.
 	MIN_BUFFER_MS = 300
