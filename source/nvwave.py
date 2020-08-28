@@ -243,15 +243,20 @@ class WavePlayer(garbageHandler.TrackedObject):
 			self._waveout = waveout.value
 			self._prev_whdr = None
 
-	def feed(self, data, onDone=None):
+	def feed(
+			self,
+			data: bytes,
+			onDone: typing.Optional[typing.Callable] = None
+	) -> None:
 		"""Feed a chunk of audio data to be played.
 		This is normally synchronous.
-		However, synchronisation occurs on the previous chunk, rather than the current chunk; i.e. calling this while no audio is playing will begin playing the chunk but return immediately.
-		This allows for uninterrupted playback as long as a new chunk is fed before the previous chunk has finished playing.
+		However, synchronisation occurs on the previous chunk, rather than the current chunk;
+		i.e. calling this while no audio is playing will begin playing the chunk
+		but return immediately.
+		This allows for uninterrupted playback as long as a new chunk is fed before
+		the previous chunk has finished playing.
 		@param data: Waveform audio in the format specified when this instance was constructed.
-		@type data: str
 		@param onDone: Function to call when this chunk has finished playing.
-		@type onDone: callable
 		@raise WindowsError: If there was an error playing the audio.
 		"""
 		if not self._minBufferSize:
