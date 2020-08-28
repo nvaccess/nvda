@@ -9,6 +9,24 @@
 
 import threading
 import typing
+from ctypes import (
+	windll,
+	POINTER,
+	Structure,
+	c_uint,
+	create_unicode_buffer,
+	sizeof,
+	byref,
+)
+from ctypes.wintypes import (
+	HANDLE,
+	WORD,
+	DWORD,
+	LPSTR,
+	WCHAR,
+	UINT,
+	LPUINT
+)
 from ctypes import *
 from ctypes.wintypes import *
 import time
@@ -447,6 +465,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 		winKernel.kernel32.CloseHandle(self._waveout_event)
 		self._waveout_event = None
 
+
 def _getOutputDevices():
 	"""Generator, returning device ID and device Name in device ID order.
 		@note: Depending on number of devices being fetched, this may take some time (~3ms)
@@ -459,6 +478,7 @@ def _getOutputDevices():
 		except WindowsError:
 			# It seems that in certain cases, Windows includes devices which cannot be accessed.
 			pass
+
 
 def getOutputDeviceNames():
 	"""Obtain the names of all audio output devices on the system.
@@ -518,7 +538,7 @@ def playWaveFile(fileName, asynchronous=True):
 	fileWavePlayer = WavePlayer(
 		channels=f.getnchannels(),
 		samplesPerSec=f.getframerate(),
-		bitsPerSample=f.getsampwidth()*8,
+		bitsPerSample=f.getsampwidth() * 8,
 		outputDevice=config.conf["speech"]["outputDevice"],
 		wantDucking=False
 	)
