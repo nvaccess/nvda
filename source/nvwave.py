@@ -388,11 +388,17 @@ class WavePlayer(garbageHandler.TrackedObject):
 					self._close()  # Idle so no need to call stop.
 				else:
 					with self._global_waveout_lock:
+						start = time.perf_counter()
 						if not self._isPreferredDeviceOpen() and self._isPreferredDeviceAvailable():
+							end = time.perf_counter()
+							log.debug(f"preferred device check: {end-start} seconds")
 							log.debug("Attempt re-open of preferred device.")
 							self._close()  # Idle so no need to call stop.
 							self._setCurrentDevice(self._preferredDeviceName)
 							self.open()
+						else:
+							end = time.perf_counter()
+							log.debug(f"preferred device check: {end-start} seconds")
 			if self._audioDucker: self._audioDucker.disable()
 
 	def stop(self):
@@ -442,6 +448,9 @@ class WavePlayer(garbageHandler.TrackedObject):
 		self._waveout_event = None
 
 def _getOutputDevices():
+	"""Generator, returning device ID and device Name in device ID order.
+		@note: Depending on number of devices being fetched, this may take some time (~3ms)
+	"""
 	caps = WAVEOUTCAPS()
 	for devID in range(-1, winmm.waveOutGetNumDevs()):
 		try:
@@ -455,6 +464,7 @@ def getOutputDeviceNames():
 	"""Obtain the names of all audio output devices on the system.
 	@return: The names of all output devices on the system.
 	@rtype: [str, ...]
+	@note: Depending on number of devices being fetched, this may take some time (~3ms)
 	"""
 	return [name for ID, name in _getOutputDevices()]
 
@@ -472,15 +482,16 @@ def outputDeviceIDToName(ID):
 		raise LookupError("No such device ID")
 	return caps.szPname
 
-def outputDeviceNameToID(name, useDefaultIfInvalid=False):
+
+def outputDeviceNameToID(name: str, useDefaultIfInvalid=False) -> int:
 	"""Obtain the device ID of an output device given its name.
 	@param name: The device name.
-	@type name: str
 	@param useDefaultIfInvalid: C{True} to use the default device (wave mapper) if there is no such device,
 		C{False} to raise an exception.
 	@return: The device ID.
-	@rtype: int
 	@raise LookupError: If there is no such device and C{useDefaultIfInvalid} is C{False}.
+	@note: Depending on number of devices, and the position of the device in the list,
+	this may take some time (~3ms)
 	"""
 	for curID, curName in _getOutputDevices():
 		if curName == name:
