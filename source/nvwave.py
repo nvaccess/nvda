@@ -282,7 +282,9 @@ class WavePlayer(garbageHandler.TrackedObject):
 						winmm.waveOutPrepareHeader(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
 						winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
 				except WindowsError:
-					self.close()
+					log.info("Error during feed. Resetting the device.")
+					self._close()  # don't try to call stop on a "broken" device.
+					self._setCurrentDevice(self._preferredDeviceName)
 					self.open()
 					self.feed(data, onDone)
 					return
