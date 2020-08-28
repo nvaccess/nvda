@@ -9,6 +9,8 @@
 
 import threading
 import typing
+import ctypes
+from ctypes import wintypes
 from ctypes import *
 from ctypes.wintypes import *
 import time
@@ -80,8 +82,11 @@ class WAVEOUTCAPS(Structure):
 		('dwSupport', DWORD),
 	]
 
-	# Set argument types.
+
+# Set argument types.
 winmm.waveOutOpen.argtypes = (LPHWAVEOUT, UINT, LPWAVEFORMATEX, DWORD, DWORD, DWORD)
+winmm.waveOutGetID.argtypes = (HWAVEOUT, LPUINT)
+
 
 # Initialize error checking.
 def _winmm_errcheck(res, func, args):
@@ -92,7 +97,8 @@ def _winmm_errcheck(res, func, args):
 for func in (
 	winmm.waveOutOpen, winmm.waveOutPrepareHeader, winmm.waveOutWrite, winmm.waveOutUnprepareHeader,
 	winmm.waveOutPause, winmm.waveOutRestart, winmm.waveOutReset, winmm.waveOutClose,
-	winmm.waveOutGetDevCapsW
+	winmm.waveOutGetDevCapsW,
+	winmm.waveOutGetID,
 ):
 	func.errcheck = _winmm_errcheck
 
@@ -203,6 +209,18 @@ class WavePlayer(garbageHandler.TrackedObject):
 			f"preferred device: {self._preferredDeviceName}"
 			f" current device name: {self._outputDeviceName} (id: {self._outputDeviceID})"
 		)
+		fetchedID = UINT(self._outputDeviceID)
+		winmm.waveOutGetID(self._waveout, byref(fetchedID))
+		fetchedID = ctypes.cast(byref(fetchedID), ctypes.POINTER(wintypes.INT)).contents.value
+		if fetchedID != self._outputDeviceID:
+			outdeviceName = outputDeviceIDToName(fetchedID)
+			log.debugWarning(
+				f"Fetched ID does not match current device."
+				f" fetched id: {fetchedID} name: {outdeviceName}"
+			)
+			self._outputDeviceID = fetchedID
+			self._outputDeviceName = outdeviceName
+			return False
 		return self._outputDeviceName == self._preferredDeviceName
 
 	def _isPreferredDeviceAvailable(self) -> bool:
