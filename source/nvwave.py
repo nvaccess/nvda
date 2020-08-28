@@ -196,6 +196,28 @@ class WavePlayer(garbageHandler.TrackedObject):
 			self._outputDeviceID = WAVE_MAPPER
 			self._outputDeviceName = outputDeviceIDToName(WAVE_MAPPER)
 
+	def _isPreferredDeviceOpen(self) -> bool:
+		if self._waveout is None:
+			return False
+		log.debug(
+			f"preferred device: {self._preferredDeviceName}"
+			f" current device name: {self._outputDeviceName} (id: {self._outputDeviceID})"
+		)
+		return self._outputDeviceName == self._preferredDeviceName
+
+	def _isPreferredDeviceAvailable(self) -> bool:
+		"""
+		@note: Depending on number of devices being fetched, this may take some time (~3ms)
+		@return: True if the preferred device is available
+		"""
+		for ID, name in _getOutputDevices():
+			if name == self._preferredDeviceName:
+				log.debug("preferred Device is Available")
+				return True
+
+		log.debug("preferred Device is not available")
+		return False
+
 	def open(self):
 		"""Open the output device.
 		This will be called automatically when required.
@@ -357,10 +379,16 @@ class WavePlayer(garbageHandler.TrackedObject):
 			with self._waveout_lock:
 				if not self._waveout:
 					return
-				self._close()  # testing still required to confirm this does not affect performance.
-				self.open()
 				if self.closeWhenIdle:
-					self._close()
+					log.debug("Closing due to idle.")
+					self._close()  # Idle so no need to call stop.
+				else:
+					with self._global_waveout_lock:
+						if not self._isPreferredDeviceOpen() and self._isPreferredDeviceAvailable():
+							log.debug("Attempt re-open of preferred device.")
+							self._close()  # Idle so no need to call stop.
+							self._setCurrentDevice(self._preferredDeviceName)
+							self.open()
 			if self._audioDucker: self._audioDucker.disable()
 
 	def stop(self):
