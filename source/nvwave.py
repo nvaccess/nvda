@@ -275,7 +275,6 @@ class WavePlayer(garbageHandler.TrackedObject):
 				try:
 					with self._global_waveout_lock:
 						winmm.waveOutPrepareHeader(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
-					with self._global_waveout_lock:
 						winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
 				except WindowsError:
 					self.close()
