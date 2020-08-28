@@ -105,7 +105,8 @@ class WavePlayer(garbageHandler.TrackedObject):
 	MIN_BUFFER_MS = 300
 	#: Flag used to signal that L{stop} has been called.
 	STOPPING = "stopping"
-	#: A lock to prevent WaveOut* functions from being called simultaneously, as this can cause problems even if they are for different HWAVEOUTs.
+	#: A lock to prevent WaveOut* functions from being called simultaneously,
+	# as this can cause problems even if they are for different HWAVEOUTs.
 	_global_waveout_lock = threading.RLock()
 	_audioDucker=None
 	#: Used to allow the device to temporarily be changed and return
