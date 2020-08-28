@@ -410,17 +410,11 @@ class WavePlayer(garbageHandler.TrackedObject):
 					self._close()  # Idle so no need to call stop.
 				else:
 					with self._global_waveout_lock:
-						start = time.perf_counter()
 						if not self._isPreferredDeviceOpen() and self._isPreferredDeviceAvailable():
-							end = time.perf_counter()
-							log.debug(f"preferred device check: {end-start} seconds")
 							log.debug("Attempt re-open of preferred device.")
 							self._close()  # Idle so no need to call stop.
 							self._setCurrentDevice(self._preferredDeviceName)
 							self.open()
-						else:
-							end = time.perf_counter()
-							log.debug(f"preferred device check: {end-start} seconds")
 			if self._audioDucker: self._audioDucker.disable()
 
 	def stop(self):
