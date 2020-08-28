@@ -143,6 +143,8 @@ class WavePlayer(garbageHandler.TrackedObject):
 	#: The id of the device when it was opened.
 	# It is set to None when the device is closed again.
 	_outputDeviceID: int
+	#: Use the default device, this is the configSpec default value.
+	DEFAULT_DEVICE_KEY = "default"
 
 	def __init__(
 			self,
@@ -201,6 +203,10 @@ class WavePlayer(garbageHandler.TrackedObject):
 		it is available, otherwise falls back to WAVE_MAPPER.
 		@param preferredDevice: The preferred device to use.
 		"""
+		if preferredDevice == WAVE_MAPPER or preferredDevice == self.DEFAULT_DEVICE_KEY:
+			self._outputDeviceID = WAVE_MAPPER
+			self._outputDeviceName = "WAVE_MAPPER"
+			return
 		try:
 			if isinstance(preferredDevice, str):
 				self._outputDeviceID = outputDeviceNameToID(
@@ -215,12 +221,11 @@ class WavePlayer(garbageHandler.TrackedObject):
 			else:
 				raise TypeError("outputDevice")
 		except (LookupError, TypeError):
-			log.error(
+			log.warning(
 				f"Unsupported WavePlayer device argument: {preferredDevice}"
 				f" Falling back to WAVE_MAPPER"
 			)
-			self._outputDeviceID = WAVE_MAPPER
-			self._outputDeviceName = outputDeviceIDToName(WAVE_MAPPER)
+			self._setCurrentDevice(WAVE_MAPPER)
 
 	def _isPreferredDeviceOpen(self) -> bool:
 		if self._waveout is None:
@@ -282,10 +287,11 @@ class WavePlayer(garbageHandler.TrackedObject):
 					f" with id: {self._outputDeviceID}"
 				)
 				if self._outputDeviceID != WAVE_MAPPER:
-					log.debug(f"Falling back to WAVE_MAPPER ID: {WAVE_MAPPER}")
+					log.debug(f"Falling back to WAVE_MAPPER")
 					self._setCurrentDevice(WAVE_MAPPER)
 					self.open()
 				else:
+					log.warning(f"Unable to open WAVE_MAPPER device, there may be no audio devices.")
 					raise  # can't open the default device.
 				return
 			self._waveout = waveout.value
@@ -452,6 +458,8 @@ class WavePlayer(garbageHandler.TrackedObject):
 	def _close(self):
 		log.debug("Calling winmm.waveOutClose")
 		with self._global_waveout_lock:
+			if not self._waveout:
+				return
 			try:
 				winmm.waveOutClose(self._waveout)
 			except WindowsError:
