@@ -9,8 +9,6 @@
 
 import threading
 import typing
-import ctypes
-from ctypes import wintypes
 from ctypes import *
 from ctypes.wintypes import *
 import time
@@ -209,18 +207,6 @@ class WavePlayer(garbageHandler.TrackedObject):
 			f"preferred device: {self._preferredDeviceName}"
 			f" current device name: {self._outputDeviceName} (id: {self._outputDeviceID})"
 		)
-		fetchedID = UINT(self._outputDeviceID)
-		winmm.waveOutGetID(self._waveout, byref(fetchedID))
-		fetchedID = ctypes.cast(byref(fetchedID), ctypes.POINTER(wintypes.INT)).contents.value
-		if fetchedID != self._outputDeviceID:
-			outdeviceName = outputDeviceIDToName(fetchedID)
-			log.debugWarning(
-				f"Fetched ID does not match current device."
-				f" fetched id: {fetchedID} name: {outdeviceName}"
-			)
-			self._outputDeviceID = fetchedID
-			self._outputDeviceName = outdeviceName
-			return False
 		return self._outputDeviceName == self._preferredDeviceName
 
 	def _isPreferredDeviceAvailable(self) -> bool:
