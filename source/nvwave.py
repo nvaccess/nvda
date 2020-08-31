@@ -314,15 +314,38 @@ class WavePlayer(garbageHandler.TrackedObject):
 		@raise WindowsError: If there was an error playing the audio.
 		"""
 		if not self._minBufferSize:
-			return self._feedUnbuffered(data, onDone=onDone)
+			self._feedUnbuffered_handleErrors(data, onDone=onDone)
+			return
 		self._buffer += data
 		# If onDone was specified, we must play audio regardless of the minimum buffer size
 		# so we can accurately call onDone at the end of this chunk.
 		if onDone or len(self._buffer) > self._minBufferSize:
-			self._feedUnbuffered(self._buffer, onDone=onDone)
+			data = self._buffer
 			self._buffer = b""
+			self._feedUnbuffered_handleErrors(data, onDone=onDone)
+
+	def _feedUnbuffered_handleErrors(self, data, onDone=None) -> bool:
+		"""Tries to feed the device, on error resets the device and tries again.
+		@return: False if second attempt fails
+		"""
+		try:
+			self._feedUnbuffered(data, onDone=onDone)
+			return True
+		except WindowsError:
+			log.info("Error during feed. Resetting the device.")
+			try:
+				self._close()  # don't try to call stop on a "broken" device.
+				self._setCurrentDevice(self._preferredDeviceName)
+				self.open()
+				self._feedUnbuffered(data, onDone=onDone)
+			except Exception:
+				log.debugWarning("Unable to recover.")
+				return False
 
 	def _feedUnbuffered(self, data, onDone=None):
+		"""
+		@note: Raises WindowsError on invalid device (see winmm functions
+		"""
 		if self._audioDucker and not self._audioDucker.enable():
 			return
 		whdr = WAVEHDR()
@@ -330,18 +353,10 @@ class WavePlayer(garbageHandler.TrackedObject):
 		whdr.dwBufferLength = len(data)
 		with self._lock:
 			with self._waveout_lock:
-				self.open()
-				try:
-					with self._global_waveout_lock:
-						winmm.waveOutPrepareHeader(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
-						winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
-				except WindowsError:
-					log.info("Error during feed. Resetting the device.")
-					self._close()  # don't try to call stop on a "broken" device.
-					self._setCurrentDevice(self._preferredDeviceName)
-					self.open()
-					self.feed(data, onDone)
-					return
+				self.open()  # required of close on idle see _idleUnbuffered
+				with self._global_waveout_lock:
+					winmm.waveOutPrepareHeader(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
+					winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
 			self.sync()
 			self._prev_whdr = whdr
 			# Don't call onDone if stop was called,
@@ -401,8 +416,10 @@ class WavePlayer(garbageHandler.TrackedObject):
 		if not self._minBufferSize:
 			return self._idleUnbuffered()
 		if self._buffer:
-			self._feedUnbuffered(self._buffer)
+			buffer = self._buffer
 			self._buffer = b""
+			self._feedUnbuffered_handleErrors(buffer)
+
 		return self._idleUnbuffered()
 
 	def _idleUnbuffered(self):
