@@ -4,6 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from typing import Tuple
 import struct
 import weakref
 # Kept for backwards compatibility
@@ -99,6 +100,12 @@ from comInterfaces.IAccessible2Lib import (
 	IA2_ROLE_FOOTER,
 	IA2_ROLE_MARK,
 )
+
+IAccessibleObjectIdentifierType = Tuple[
+	int,  # windowHandle
+	int,  # objectID
+	int,  # childID
+]
 
 from . import internalWinEventHandler
 # Imported for backwards compat
