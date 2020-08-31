@@ -332,7 +332,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 			self._feedUnbuffered(data, onDone=onDone)
 			return True
 		except WindowsError:
-			log.info("Error during feed. Resetting the device.")
+			log.warning("Error during feed. Resetting the device.")
 			try:
 				self._close()  # don't try to call stop on a "broken" device.
 				self._setCurrentDevice(self._preferredDeviceName)
