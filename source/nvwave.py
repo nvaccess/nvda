@@ -470,6 +470,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 		self.close()
 		winKernel.kernel32.CloseHandle(self._waveout_event)
 		self._waveout_event = None
+		super().__del__()
 
 
 def _getOutputDevices():
