@@ -339,7 +339,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 				self.open()
 				self._feedUnbuffered(data, onDone=onDone)
 			except Exception:
-				log.debugWarning("Unable to recover.")
+				log.debugWarning("Unable to send data to audio device on second attempt.", exc_info=True)
 				return False
 
 	def _feedUnbuffered(self, data, onDone=None):
