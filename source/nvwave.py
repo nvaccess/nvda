@@ -8,11 +8,31 @@
 """
 
 import threading
+import typing
+from ctypes import (
+	windll,
+	POINTER,
+	Structure,
+	c_uint,
+	create_unicode_buffer,
+	sizeof,
+	byref,
+)
+from ctypes.wintypes import (
+	HANDLE,
+	WORD,
+	DWORD,
+	LPSTR,
+	WCHAR,
+	UINT,
+	LPUINT
+)
 from ctypes import *
 from ctypes.wintypes import *
 import time
 import atexit
 import wx
+import garbageHandler
 import winKernel
 import wave
 import config
@@ -78,8 +98,11 @@ class WAVEOUTCAPS(Structure):
 		('dwSupport', DWORD),
 	]
 
-	# Set argument types.
+
+# Set argument types.
 winmm.waveOutOpen.argtypes = (LPHWAVEOUT, UINT, LPWAVEFORMATEX, DWORD, DWORD, DWORD)
+winmm.waveOutGetID.argtypes = (HWAVEOUT, LPUINT)
+
 
 # Initialize error checking.
 def _winmm_errcheck(res, func, args):
@@ -90,50 +113,67 @@ def _winmm_errcheck(res, func, args):
 for func in (
 	winmm.waveOutOpen, winmm.waveOutPrepareHeader, winmm.waveOutWrite, winmm.waveOutUnprepareHeader,
 	winmm.waveOutPause, winmm.waveOutRestart, winmm.waveOutReset, winmm.waveOutClose,
-	winmm.waveOutGetDevCapsW
+	winmm.waveOutGetDevCapsW,
+	winmm.waveOutGetID,
 ):
 	func.errcheck = _winmm_errcheck
 
-class WavePlayer(object):
+
+class WavePlayer(garbageHandler.TrackedObject):
 	"""Synchronously play a stream of audio.
 	To use, construct an instance and feed it waveform audio using L{feed}.
+	Keeps device open until it is either not available, or WavePlayer is explicitly closed / deleted.
+	Will attempt to use the preferred device, if not will fallback to the WAVE_MAPPER device.
+	When not using the preferred device, when idle devices will be checked to see if the preferred
+	device has become available again. If so, it will be re-instated.
 	"""
 	#: Minimum length of buffer (in ms) before audio is played.
 	MIN_BUFFER_MS = 300
 	#: Flag used to signal that L{stop} has been called.
 	STOPPING = "stopping"
-	#: A lock to prevent WaveOut* functions from being called simultaneously, as this can cause problems even if they are for different HWAVEOUTs.
+	#: A lock to prevent WaveOut* functions from being called simultaneously,
+	# as this can cause problems even if they are for different HWAVEOUTs.
 	_global_waveout_lock = threading.RLock()
 	_audioDucker=None
+	#: Used to allow the device to temporarily be changed and return
+	# to the preferred device when it becomes available
+	_preferredDeviceName: str
+	#: The currently set device name.
+	_outputDeviceName: str
+	#: The id of the device when it was opened.
+	# It is set to None when the device is closed again.
+	_outputDeviceID: int
+	#: Use the default device, this is the configSpec default value.
+	DEFAULT_DEVICE_KEY = "default"
 
-	def __init__(self, channels, samplesPerSec, bitsPerSample,
-			outputDevice=WAVE_MAPPER, closeWhenIdle=True, wantDucking=True,
-			buffered=False
+	def __init__(
+			self,
+			channels: int,
+			samplesPerSec: int,
+			bitsPerSample: int,
+			outputDevice: typing.Union[str, int] = WAVE_MAPPER,
+			closeWhenIdle: bool = False,
+			wantDucking: bool = True,
+			buffered: bool = False
 		):
 		"""Constructor.
 		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
-		@type channels: int
 		@param samplesPerSec: Samples per second (hz).
-		@type samplesPerSec: int
 		@param bitsPerSample: The number of bits per sample.
-		@type bitsPerSample: int
 		@param outputDevice: The device ID or name of the audio output device to use.
-		@type outputDevice: int or str
 		@param closeWhenIdle: If C{True}, close the output device when no audio is being played.
-		@type closeWhenIdle: bool
 		@param wantDucking: if true then background audio will be ducked on Windows 8 and higher
-		@type wantDucking: bool
 		@param buffered: Whether to buffer small chunks of audio to prevent audio glitches.
-		@type buffered: bool
 		@note: If C{outputDevice} is a name and no such device exists, the default device will be used.
 		@raise WindowsError: If there was an error opening the audio output device.
 		"""
 		self.channels=channels
 		self.samplesPerSec=samplesPerSec
 		self.bitsPerSample=bitsPerSample
-		if isinstance(outputDevice, str):
-			outputDevice = outputDeviceNameToID(outputDevice, True)
-		self.outputDeviceID = outputDevice
+
+		self._setCurrentDevice(preferredDevice=outputDevice)
+		self._preferredDeviceName = self._outputDeviceName
+
 		if wantDucking:
 			import audioDucking
 			if audioDucking.isAudioDuckingSupported():
@@ -158,6 +198,57 @@ class WavePlayer(object):
 		self._lock = threading.RLock()
 		self.open()
 
+	def _setCurrentDevice(self, preferredDevice: typing.Union[str, int]) -> None:
+		""" Sets the _outputDeviceID and _outputDeviceName to the preferredDevice if
+		it is available, otherwise falls back to WAVE_MAPPER.
+		@param preferredDevice: The preferred device to use.
+		"""
+		if preferredDevice == WAVE_MAPPER or preferredDevice == self.DEFAULT_DEVICE_KEY:
+			self._outputDeviceID = WAVE_MAPPER
+			self._outputDeviceName = "WAVE_MAPPER"
+			return
+		try:
+			if isinstance(preferredDevice, str):
+				self._outputDeviceID = outputDeviceNameToID(
+					preferredDevice,
+					useDefaultIfInvalid=True  # fallback to WAVE_MAPPER
+				)
+				# If default is used, get the appropriate name.
+				self._outputDeviceName = outputDeviceIDToName(self._outputDeviceID)
+			elif isinstance(preferredDevice, int):
+				self._outputDeviceID = preferredDevice
+				self._outputDeviceName = outputDeviceIDToName(preferredDevice)
+			else:
+				raise TypeError("outputDevice")
+		except (LookupError, TypeError):
+			log.warning(
+				f"Unsupported WavePlayer device argument: {preferredDevice}"
+				f" Falling back to WAVE_MAPPER"
+			)
+			self._setCurrentDevice(WAVE_MAPPER)
+
+	def _isPreferredDeviceOpen(self) -> bool:
+		if self._waveout is None:
+			return False
+		log.debug(
+			f"preferred device: {self._preferredDeviceName}"
+			f" current device name: {self._outputDeviceName} (id: {self._outputDeviceID})"
+		)
+		return self._outputDeviceName == self._preferredDeviceName
+
+	def _isPreferredDeviceAvailable(self) -> bool:
+		"""
+		@note: Depending on number of devices being fetched, this may take some time (~3ms)
+		@return: True if the preferred device is available
+		"""
+		for ID, name in _getOutputDevices():
+			if name == self._preferredDeviceName:
+				log.debug("preferred Device is Available")
+				return True
+
+		log.debug("preferred Device is not available")
+		return False
+
 	def open(self):
 		"""Open the output device.
 		This will be called automatically when required.
@@ -166,6 +257,11 @@ class WavePlayer(object):
 		with self._waveout_lock:
 			if self._waveout:
 				return
+			log.debug(
+				f"Calling winmm.waveOutOpen."
+				f" outputDeviceName: {self._outputDeviceName}"
+				f" outputDeviceID: {self._outputDeviceID}"
+			)
 			wfx = WAVEFORMATEX()
 			wfx.wFormatTag = WAVE_FORMAT_PCM
 			wfx.nChannels = self.channels
@@ -174,32 +270,82 @@ class WavePlayer(object):
 			wfx.nBlockAlign: int = self.bitsPerSample // 8 * self.channels
 			wfx.nAvgBytesPerSec = self.samplesPerSec * wfx.nBlockAlign
 			waveout = HWAVEOUT(0)
-			with self._global_waveout_lock:
-				winmm.waveOutOpen(byref(waveout), self.outputDeviceID, LPWAVEFORMATEX(wfx), self._waveout_event, 0, CALLBACK_EVENT)
+			try:
+				with self._global_waveout_lock:
+					winmm.waveOutOpen(
+						byref(waveout),
+						self._outputDeviceID,
+						LPWAVEFORMATEX(wfx),
+						self._waveout_event,
+						0,
+						CALLBACK_EVENT
+					)
+			except WindowsError:
+				log.debug(
+					f"Error opening"
+					f" outputDeviceName: {self._outputDeviceName}"
+					f" with id: {self._outputDeviceID}"
+				)
+				if self._outputDeviceID != WAVE_MAPPER:
+					log.debug(f"Falling back to WAVE_MAPPER")
+					self._setCurrentDevice(WAVE_MAPPER)
+					self.open()
+				else:
+					log.warning(f"Unable to open WAVE_MAPPER device, there may be no audio devices.")
+					raise  # can't open the default device.
+				return
 			self._waveout = waveout.value
 			self._prev_whdr = None
 
-	def feed(self, data, onDone=None):
+	def feed(
+			self,
+			data: bytes,
+			onDone: typing.Optional[typing.Callable] = None
+	) -> None:
 		"""Feed a chunk of audio data to be played.
 		This is normally synchronous.
-		However, synchronisation occurs on the previous chunk, rather than the current chunk; i.e. calling this while no audio is playing will begin playing the chunk but return immediately.
-		This allows for uninterrupted playback as long as a new chunk is fed before the previous chunk has finished playing.
+		However, synchronisation occurs on the previous chunk, rather than the current chunk;
+		i.e. calling this while no audio is playing will begin playing the chunk
+		but return immediately.
+		This allows for uninterrupted playback as long as a new chunk is fed before
+		the previous chunk has finished playing.
 		@param data: Waveform audio in the format specified when this instance was constructed.
-		@type data: str
 		@param onDone: Function to call when this chunk has finished playing.
-		@type onDone: callable
 		@raise WindowsError: If there was an error playing the audio.
 		"""
 		if not self._minBufferSize:
-			return self._feedUnbuffered(data, onDone=onDone)
+			self._feedUnbuffered_handleErrors(data, onDone=onDone)
+			return
 		self._buffer += data
 		# If onDone was specified, we must play audio regardless of the minimum buffer size
 		# so we can accurately call onDone at the end of this chunk.
 		if onDone or len(self._buffer) > self._minBufferSize:
-			self._feedUnbuffered(self._buffer, onDone=onDone)
+			data = self._buffer
 			self._buffer = b""
+			self._feedUnbuffered_handleErrors(data, onDone=onDone)
+
+	def _feedUnbuffered_handleErrors(self, data, onDone=None) -> bool:
+		"""Tries to feed the device, on error resets the device and tries again.
+		@return: False if second attempt fails
+		"""
+		try:
+			self._feedUnbuffered(data, onDone=onDone)
+			return True
+		except WindowsError:
+			log.warning("Error during feed. Resetting the device.")
+			try:
+				self._close()  # don't try to call stop on a "broken" device.
+				self._setCurrentDevice(self._preferredDeviceName)
+				self.open()
+				self._feedUnbuffered(data, onDone=onDone)
+			except Exception:
+				log.debugWarning("Unable to send data to audio device on second attempt.", exc_info=True)
+				return False
 
 	def _feedUnbuffered(self, data, onDone=None):
+		"""
+		@note: Raises WindowsError on invalid device (see winmm functions
+		"""
 		if self._audioDucker and not self._audioDucker.enable():
 			return
 		whdr = WAVEHDR()
@@ -207,15 +353,10 @@ class WavePlayer(object):
 		whdr.dwBufferLength = len(data)
 		with self._lock:
 			with self._waveout_lock:
-				self.open()
+				self.open()  # required of close on idle see _idleUnbuffered
 				with self._global_waveout_lock:
 					winmm.waveOutPrepareHeader(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
-				try:
-					with self._global_waveout_lock:
-						winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
-				except WindowsError as e:
-					self.close()
-					raise e
+					winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
 			self.sync()
 			self._prev_whdr = whdr
 			# Don't call onDone if stop was called,
@@ -275,8 +416,10 @@ class WavePlayer(object):
 		if not self._minBufferSize:
 			return self._idleUnbuffered()
 		if self._buffer:
-			self._feedUnbuffered(self._buffer)
+			buffer = self._buffer
 			self._buffer = b""
+			self._feedUnbuffered_handleErrors(buffer)
+
 		return self._idleUnbuffered()
 
 	def _idleUnbuffered(self):
@@ -286,7 +429,15 @@ class WavePlayer(object):
 				if not self._waveout:
 					return
 				if self.closeWhenIdle:
-					self._close()
+					log.debug("Closing due to idle.")
+					self._close()  # Idle so no need to call stop.
+				else:
+					with self._global_waveout_lock:
+						if not self._isPreferredDeviceOpen() and self._isPreferredDeviceAvailable():
+							log.debug("Attempt re-open of preferred device.")
+							self._close()  # Idle so no need to call stop.
+							self._setCurrentDevice(self._preferredDeviceName)
+							self.open()
 			if self._audioDucker: self._audioDucker.disable()
 
 	def stop(self):
@@ -322,16 +473,27 @@ class WavePlayer(object):
 				self._close()
 
 	def _close(self):
+		log.debug("Calling winmm.waveOutClose")
 		with self._global_waveout_lock:
-			winmm.waveOutClose(self._waveout)
+			if not self._waveout:
+				return
+			try:
+				winmm.waveOutClose(self._waveout)
+			except WindowsError:
+				log.debug("Error closing the device, it may have been removed.", exc_info=True)
 		self._waveout = None
 
 	def __del__(self):
 		self.close()
 		winKernel.kernel32.CloseHandle(self._waveout_event)
 		self._waveout_event = None
+		super().__del__()
+
 
 def _getOutputDevices():
+	"""Generator, returning device ID and device Name in device ID order.
+		@note: Depending on number of devices being fetched, this may take some time (~3ms)
+	"""
 	caps = WAVEOUTCAPS()
 	for devID in range(-1, winmm.waveOutGetNumDevs()):
 		try:
@@ -341,10 +503,12 @@ def _getOutputDevices():
 			# It seems that in certain cases, Windows includes devices which cannot be accessed.
 			pass
 
+
 def getOutputDeviceNames():
 	"""Obtain the names of all audio output devices on the system.
 	@return: The names of all output devices on the system.
 	@rtype: [str, ...]
+	@note: Depending on number of devices being fetched, this may take some time (~3ms)
 	"""
 	return [name for ID, name in _getOutputDevices()]
 
@@ -362,15 +526,16 @@ def outputDeviceIDToName(ID):
 		raise LookupError("No such device ID")
 	return caps.szPname
 
-def outputDeviceNameToID(name, useDefaultIfInvalid=False):
+
+def outputDeviceNameToID(name: str, useDefaultIfInvalid=False) -> int:
 	"""Obtain the device ID of an output device given its name.
 	@param name: The device name.
-	@type name: str
 	@param useDefaultIfInvalid: C{True} to use the default device (wave mapper) if there is no such device,
 		C{False} to raise an exception.
 	@return: The device ID.
-	@rtype: int
 	@raise LookupError: If there is no such device and C{useDefaultIfInvalid} is C{False}.
+	@note: Depending on number of devices, and the position of the device in the list,
+	this may take some time (~3ms)
 	"""
 	for curID, curName in _getOutputDevices():
 		if curName == name:
@@ -394,7 +559,13 @@ def playWaveFile(fileName, asynchronous=True):
 	if f is None: raise RuntimeError("can not open file %s"%fileName)
 	if fileWavePlayer is not None:
 		fileWavePlayer.stop()
-	fileWavePlayer = WavePlayer(channels=f.getnchannels(), samplesPerSec=f.getframerate(),bitsPerSample=f.getsampwidth()*8, outputDevice=config.conf["speech"]["outputDevice"],wantDucking=False)
+	fileWavePlayer = WavePlayer(
+		channels=f.getnchannels(),
+		samplesPerSec=f.getframerate(),
+		bitsPerSample=f.getsampwidth() * 8,
+		outputDevice=config.conf["speech"]["outputDevice"],
+		wantDucking=False
+	)
 	fileWavePlayer.feed(f.readframes(f.getnframes()))
 	if asynchronous:
 		if fileWavePlayerThread is not None:

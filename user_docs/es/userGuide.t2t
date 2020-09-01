@@ -27,7 +27,7 @@ Lo más reseñable incluye:
 - Instalador parlante fácil de utilizar
 - Traducido a 54 idiomas
 - Soporte para Sistemas Operativos Windows modernos incluyendo variantes de 32 y 64 bit
-- Capacidad para ejecutarse en el inicio de sesión de Windows  y otras pantallas seguras 
+- Capacidad para ejecutarse durante el inicio de sesión de Windows  y en pantallas seguras 
 - Anunciado de controles y texto mientras se utilizan gestos táctiles
 - Soporte para interfaces comunes de accesibilidad tales como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 y UI Automation
 - Soporte para el símbolo del sistema de Windows y aplicaciones de consola
@@ -56,10 +56,14 @@ NVDA soporta códigos braille para muchos idiomas, incluyendo códigos braille c
 ++ Licencia y Copyright ++[LicenseAndCopyright]
 NVDA es propiedad intelectual de NVDA_COPYRIGHT_YEARS por los colaboradores de NVDA.
 
-NVDA está cubierto por la GNU General Public License (Versión 2). 
+NVDA está disponible bajo la GNU General Public License (Versión 2) con dos excepciones especiales. 
+Las excepciones están disponibles en línea en el documento de licencia en las secciones "Non-GPL Components in Plugins and Drivers" y "Microsoft Distributable Code".
+NVDA también incluye y utiliza componentes que están disponibles bajo diferentes licencias libres y de código abierto.
 Eres libre para compartir o modificar este programa de cualquier modo que quieras aunque debes distribuir la licencia junto con el programa, y hacer todo el código fuente disponible a quien lo desee. 
 Esto se aplica tanto al original como a las copias modificadas del programa, más cualquier software que utilice código derivado de éste. 
+
 Para más detalles, puedes [ver la licencia completa.  https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+Para obtener detalles sobre las escepciones, accede al documento de licencia desde el menú NVDA en la sección "ayuda".
 
 + Requerimientos del Sistema +[SystemRequirements]
 - Sistemas operativos: todas las ediciones de 32 y 64 bits de Windows 7, Windows 8, Windows 8.1, Windows 10 y todos los sistemas operativos servidor comenzando desde Windows Server 2008 R2..
@@ -73,13 +77,13 @@ Para más detalles, puedes [ver la licencia completa.  https://www.gnu.org/licen
 + Obteniendo e Instalando NVDA +[GettingAndSettingUpNVDA]
 Si todavía no tienes una copia de NVDA, puedes descargarla de [NV Access website NVDA_URL].
 
-Vé a la sección download y encontrarás un enlace para descargar la última versión de NVDA.
+Ve a la sección download y encontrarás un enlace para descargar la última versión de NVDA.
 
 Al ejecutar el fichero que has descargado comenzará una copia temporal de NVDA.
 Entonces se te preguntará si quieres instalar NVDA, crear una copia portable, o sólo continuar utilizando la copia temporal.
 
 Si planeas utilizar siempre NVDA en este ordenador, elegirás instalarlo.
-Al instalar NVDA permitirás funcionalidad adicional tal como tenerlo arrancado automáticamente después del inicio de sesión, que sea capaz de leer las pantallas de inicio de sesión de Windows y las pantallas seguras (cosa que las copias portable y temporal no pueden hacer), y la creación de los atajos del menú Inicio y del Escritorio.
+Al instalar NVDA permitirás funcionalidad adicional tal como tenerlo arrancado automáticamente después del inicio de sesión, capacidad de leer las pantallas de inicio de sesión de Windows y las pantallas seguras (cosa que las copias portable y temporal no pueden hacer), y la creación de los atajos del menú Inicio y del Escritorio.
 La copia instalada también es capaz de crear una copia portable por si misma en cualquier momento.
 
 Si quieres tener a NVDA contigo en un lápiz USB u otro medio portátil, entonces deberías elegir crear una copia portable.
@@ -114,18 +118,18 @@ Antes de poder pulsar el botón Continuar tendrás que utilizar la casilla de ve
 También habrá presente un botón para revisar los complementos que se deshabilitarán.
 Consulta la [sección diálogo complementos incompatibles #incompatibleAddonsManager] para más ayuda sobre este botón.
 
-+++ Arrancar en el inicio de sesión de Windows +++[StartAtWindowsLogon]
-Esta opción te permite elegir si NVDA debería arrancar automáticamente o no mientras está en la ventana de inicio de sesión de Windows, antes de haber introducido una clave.
++++ Utilizar NVDA durante el inicio de sesión +++[StartAtWindowsLogon]
+Esta opción te permite elegir si NVDA debería arrancar automáticamente o no mientras está en la pantalla de inicio de sesión de Windows antes de haber introducido una clave.
 Esto también incluye el control de la cuenta de usuario y otras pantallas seguras.
 Esta opción está habilitada por defecto para instalaciones nuevas.
 
 +++ Crear Atajos del Escritorio (ctrl+alt+n) +++[CreateDesktopShortcut]
 Esta opción te permite elegir si NVDA debería crear o no un atajo en el escritorio para iniciar NVDA. 
-Si se creó, a este atajo  también se le asignará una tecla de atajo control+alt+n permitiéndote iniciar a NVDA en cualquier ocasión con esta combinación de teclas.
+Si se creó, a este atajo  también se le asignará una tecla rápida control+alt+n permitiéndote iniciar NVDA en cualquier ocasión con esta combinación de teclas.
 
 +++ Copiar Configuración Portable de la Actual Cuenta de Usuario +++[CopyPortableConfigurationToCurrentUserAccount]
 Esta opción te permite elegir si NVDA debería copiar o no la configuración del usuario del actual NVDA en ejecución en la configuración para el usuario actualmente autentificado, para la copia instalada de NVDA. 
-Esto no copiará la configuración para cualquier otro usuario de este sistema ni para la configuración del sistema para utilizar en el inicio de sesión de Windows y otras pantallas seguras.
+Esto no copiará la configuración para cualquier otro usuario de este sistema ni para la configuración del sistema para utilizar durante el inicio de sesión de Windows y en pantallas seguras.
 Esta opción sólo está disponible cuando se instala desde una copia portable, no cuando se instala directamente desde el paquete Lanzador descargado.
 
 ++ Creando una Copia Portable ++[CreatingAPortableCopy]
@@ -359,10 +363,7 @@ Una vez que navegues a un objeto, puedes revisar su contenido utilizando las [ó
 Cuando [Resaltar Foco #VisionFocusHighlight] esté habilitado, la localización del foco del sistema actual también se expone visualmente.
 De forma predeterminada, el navegador de objetos se mueve junto con el foco  del Sistema aunque este comportamiento puede activarse y desactivarse.
 
-Ten en cuenta que el braille sigue al [foco #SystemFocus] y al [cursor #SystemCaret] así como por omisión a la navegación de objetos y a la revisión de texto.
-Si quieres que siga sólo al foco y al cursor, necesitas [configurar que el braille siga al  #BrailleTether] foco.
-En este caso, el braille no seguirá a la navegación de objetos ni a la revisión de texto.
-Si quieres que el braille siga a la navegación de objetos y a la revisión de texto en su lugar, necesitas [configurar que el braille siga a la #BrailleTether] revisión.
+Nota: el seguimiento del braille al Navegador de Objetos puede configurarse a través de [Braille Sigue #BrailleTether].
 
 Para navegar por objetos, utiliza las siguientes órdenes:
 
@@ -390,8 +391,7 @@ Al mover el cursor de revisión, el cursor del Sistema no lo sigue, por lo que p
 No obstante, de forma predeterminada, cuando el cursor del Sistema se mueve, el cursor de revisión lo sigue.
 Esto puede activarse y desactivarse.
 
-Ten en cuenta que el braille sigue al [foco #SystemFocus] y al [cursor del sistema #SystemCaret] de forma predeterminada, en lugar de al navegador de objetos y a la revisión de texto.
-Si en su lugar quieres seguir al navegador de objetos y a la revisión de texto, necesitas [configurar que el braille siga #BrailleTether] a la revisión.
+Nota: el seguimiento del braille al Navegador de Objetos puede configurarse a través de [Braille Sigue #BrailleTether].
 
 Las siguientes órdenes están disponibles para revisión de texto: 
 %kc:beginInclude
@@ -473,15 +473,15 @@ Cuanto más a la izquierda o a la derecha esté el ratón en la pantalla, más a
 Estas características extra del ratón no están activadas de forma predeterminada en NVDA. 
 Si deseas sacar partido de ellas, puedes configurarlas desde la categoría [Opciones del Ratón #MouseSettings], del diálogo [Opciones de NVDA #NVDASettings] que se encuentra en el menú Preferencias de NVDA.
 
-Si bien un ratón físico o un trackpad se podrían utilizar para navegar con el ratón, NVDA tiene unas pocas teclas de órdenes relacionadas con el ratón:
+Si bien un ratón físico o un trackpad se podrían utilizar para navegar con el ratón, NVDA proporciona algunas órdenes relacionadas con él:
 %kc:beginInclude
-|| Nombre | Tecla Escritorio | Tecla Portátil | Descripción |
-| Clic botón izquierdo del ratón | Dividir teclado numérico | NVDA+` (acento grave) | Hace clic en el botón izquierdo del ratón una vez. El común doble clic puede llevarse a cabo pulsando esta tecla dos veces en rápida sucesión |
-| Bloquear botón izquierdo del ratón | shift+Dividir teclado numérico | NVDA+control+` (acento grave) | Mantiene pulsado el botón izquierdo del ratón. Púlsalo de nuevo para liberarlo. Para arrastrar el ratón,  pulsa esta tecla para bloquear el botón izquierdo y entonces mueve el ratón físicamente o utiliza una de las otras órdenes de enrutamiento del ratón |
-| Clic botón derecho del ratón | Multiplicar teclado numérico | NVDA++ (signo más) | Hace Clic en el botón derecho del ratón una vez. |
-| Bloquear botón derecho del ratón | shift+Multiplicar teclado numérico | NVDA+control++ (signo más) | Mantiene pulsado el botón derecho del ratón. Pulsa otra vez para liberarlo. Para arrastrar el ratón,  pulsa esta tecla  para bloquear el botón derecho y entonces mueve el ratón físicamente o utiliza una de las otras órdenes de enrutamiento del ratón |
-| Mover ratón a navegador de objetos actual | NVDA+Dividir teclado numérico | NVDA+shift+m | Mueve el ratón a la posición del navegador de objetos actual y cursor de revisión |
-| navegar al objeto bajo el ratón | NVDA+Multiplicar teclado numérico | NVDA+shift+n | Pone el navegador de objetos en el objeto localizado en la posición del ratón |
+|| Nombre | Tecla Escritorio | Tecla Portátil | Táctil | Descripción |
+| Clic botón izquierdo del ratón | Dividir teclado numérico | NVDA+` (acento grave) | no | Hace clic en el botón izquierdo del ratón una vez. El típipo doble clic puede realizarse pulsando esta tecla dos veces en sucesión rápida |
+| Bloquear botón izquierdo del ratón | shift+Dividir teclado numérico | NVDA+control+` (acento grave) | no | Mantiene pulsado el botón izquierdo del ratón. Púlsalo de nuevo para liberarlo. Para arrastrar el ratón,  pulsa esta tecla para bloquear el botón izquierdo y entonces mueve el ratón físicamente o utiliza una de las otras órdenes de movimiento del ratón |
+| Clic botón derecho del ratón | Multiplicar teclado numérico | NVDA++ (signo más) | Tap y mantener | Hace Clic en el botón derecho del ratón una vez, principalmente útil para abrir un menú de contexto en la posición del ratón. |
+| Bloquear botón derecho del ratón | shift+Multiplicar teclado numérico | NVDA+control++ (signo más) | No | Mantiene pulsado el botón derecho del ratón. Pulsa otra vez para liberarlo. Para arrastrar el ratón,  pulsa esta tecla  para bloquear el botón derecho y entonces mueve el ratón físicamente o utiliza una de las otras órdenes de movimiento del ratón |
+| Mover ratón a navegador de objetos actual | NVDA+Dividir teclado numérico | NVDA+shift+m | No | Mueve el ratón a la posición del navegador de objetos actual y cursor de revisión |
+| navegar al objeto bajo el ratón | NVDA+Multiplicar teclado numérico | NVDA+shift+n | No | Pone el navegador de objetos en el objeto localizado en la posición del ratón |
 %kc:endInclude
 
 + Modo Exploración +[BrowseMode]
@@ -644,6 +644,10 @@ Por ejemplo, puedes moverte a través de la expresión con las teclas de flecha 
 Por favor consulta la [documentación de MathPlayer acerca de órdenes de navegación https://www.dessci.com/en/products/mathplayer/navigation_commands.htm] para información adicional.
 
 Cuando desees volver al documento, simplemente pulsa la tecla escape.
+
+A veces el contenido matemático podría  mostrarse como un botón u otro tipo de elemento que, al activarse, puede mostrar un diálogo o más información relacionada con la fórmula.
+Para activar el botón o el elemento que contiene la fórmula, pulsa ctrl+intro.
+
 
 + Braille +[Braille]
 Si tienes una pantalla braille, NVDA puede mostrar información en braille.
@@ -890,7 +894,18 @@ Al seleccionar un campo de formulario y al pulsar intro o el botón Mover te mue
 %kc:beginInclude
 Para anunciar cualquier comentario para la celda actualmente enfocada, pulsa NVDA+alt+c.
 %kc:endInclude
-Todos los comentarios para la hoja de cálculo también pueden listarse en la Lista de Elementos de NVDA.
+Todos los comentarios para la hoja de cálculo también pueden listarse en la Lista de Elementos de NVDA después de pulsar F7.
+
+NVDA también puede mostrar un diálogo específico para añadir o editar un comentario.
+NVDA sobreescribe el comentario nativo de MS Excel editando la región debido a limitaciones de accesibilidad, pero el atajo de teclado para mostrar el diálogo se hereda de MS Excel y por lo tanto también funciona fuera de la ejecución de NVDA.
+%kc:beginInclude
+Para añadir o editar un comentario dado, en una celda enfocada, pulsa shift+f2.
+%kc:endInclude
+
+Este atajo de teclado no aparece y no se puede cambiar en el diálogo Gestos de Entrada de NVDA.
+
+Nota: también es posible abrir la región de edición de comentarios en MS Excel desde el menú de contexto de cualquier celda de la hoja de cálculo.
+Por lo tanto, esto abrirá la región inaccesible de comentarios y no un diálogo específico de edición de comentarios de NVDA.
 
 +++ Leyendo Celdas Protegidas +++[ExcelReadingProtectedCells]
 Si un libro de trabajo ha sido protegido, podría no ser posible mover el foco a celdas en particular que hayan sido bloqueadas para edición.
@@ -931,13 +946,6 @@ Nota: los atajos de teclado de arriba sólo funcionan con la cadena de formato p
 || Nombre | Tecla | Descripción |
 | Anunciar ventana de Comentarios | control+shift+c | Anuncia cualquier comentario en la ventana de comentarios.  |
 | Anunciar notas para traductores | control+shift+a | Anuncia cualquier nota para los traductores.  |
-%kc:endInclude
-
-++ Skype ++[Skype]
-%kc:beginInclude
-Cuando se está en una conversación:
-|| Nombre | Tecla | Descripción |
-| Revisar mensaje | NVDA+control+1-0 | Anuncia y mueve el cursor de revisión a un mensaje reciente, dependiendo del número pulsado; por por ejemplo: NVDA+control+2 lee el segundo mensaje más reciente. |
 %kc:endInclude
 
 ++ Kindle para PC ++[Kindle]
@@ -1061,18 +1069,18 @@ Los niveles disponibles del registro son:
  - Si te preocupa la privacidad, no configures esta opción de nivel de registro.
 - Depuración: además de los mensajes de información, advertencia y entrada/salida, se registrarán mensajes de depuración adicionales.
  - Al igual que con la Entrada/salida, si te preocupa la privacidad, no deberías configurar el nivel de registro en esta opción.
--
 
-==== Arrancar automáticamente NVDA después de Iniciar sesión en Windows ====[GeneralSettingsStartAfterLogOn]
-Si esta opción está activada, NVDA arrancará automáticamente tan pronto como inicies sesión en Windows. 
+
+==== Utilizar NVDA después de que inicie sesión ====[GeneralSettingsStartAfterLogOn]
+Si esta opción está activada, NVDA arrancará automáticamente tan pronto como inicie sesión en Windows. 
 Esta opción sólo está disponible para copias instaladas de NVDA.
 
-==== Utilizar NVDA en la pantalla de inicio de sesión de Windows (requiere privilegios de administrador) ====[GeneralSettingsStartOnLogOnScreen]
+==== Utilizar NVDA durante el inicio de sesión (requiere privilegios de administrador) ====[GeneralSettingsStartOnLogOnScreen]
 Si inicias sesión en Windows proporcionando un nombre de usuario y una contraseña, entonces activando esta opción hará que NVDA se inicie automáticamente en la pantalla de inicio de sesión cuando Windows arranque. 
 Esta opción sólo está disponible para copias instaladas de NVDA.
 
-==== Utilizar Opciones guardadas actualmente en el inicio de sesión y otras pantallas seguras ====[GeneralSettingsCopySettings]
-Pulsando este botón copias tu configuración de usuario de NVDA actualmente guardada al directorio de sistema de configuración de NVDA, tal que NVDA lo utilizará cuando se ejecute en el inicio de sesión, Control de Cuentas de Usuario (UAC) y otras pantallas seguras de Windows.
+==== Utilizar Opciones guardadas actualmente durante el inicio de sesión y en pantallas seguras ====[GeneralSettingsCopySettings]
+Pulsando este botón copias tu configuración de usuario de NVDA actualmente guardada al directorio de sistema de configuración de NVDA, tal que NVDA lo utilizará cuando se ejecute durante el inicio de sesión, Control de Cuentas de Usuario (UAC) y otras pantallas seguras de Windows.
 Para estar seguro de que todas tus opciones se transfieren, asegúrate de guardar primeramente tu configuración con control+NVDA+c o guarda la configuración en el menú NVDA.
 Esta opción sólo está disponible para copias instaladas de NVDA.
 
@@ -1292,9 +1300,13 @@ Esta opción permite a los mensajes de NVDA mostrarse en la pantalla braille ind
 ==== Seguimiento Braille ====[BrailleTether]
 Tecla: NVDA+control+t
 
-Esta opción te permite elegir si la pantalla braille seguirá al foco del sistema, o si seguirá al navegador de objetos / cursor de revisión, o a ambos.
+Esta opción te permite elegir si la pantalla braille seguirá al foco del sistema o al cursor, o si seguirá al navegador de objetos / cursor de revisión, o a ambos.
 Cuando se seleccione "automáticamente", NVDA seguirá al foco y al cursor del sistema por omisión.
 En este caso, cuando se cambie la posición del navegador de objetos o del cursor de revisión mediante una interacción explícita del usuario, NVDA seguirá a la revisión temporalmente, hasta que el foco o el cursor cambie.
+Si lo quieres siguiendo al foco y cursor sólo, necesitas configurar el braille para que siga al foco.
+En este caso, el braille no seguirá al navegador de objetos de NVDA durante la navegación de objetos o al cursor de revisión durante la revisión.
+Si quieres que el braille siga a la navegación de objetos y a la revisión de texto en su lugar, necesitas configurar  el braille para que siga a la revisión.
+En este caso, el Braille no seguirá al foco del sistema y al cursor.
 
 ==== Leer por Párrafo ====[BrailleSettingsReadByParagraph]
 Si está activado, el braille se mostrará por párrafos en lugar de por líneas.
@@ -1463,7 +1475,7 @@ Esta opción sólo está disponible si el anunciado de errores de ortografía es
 
 ==== Manejar teclas desde otras aplicaciones ====[KeyboardSettingsHandleKeys]
 Esta opción permite al usuario controlar si la pulsación de las teclas generada por aplicaciones tales como teclados en pantalla y por el software de reconocimiento de voz debería procesarse por NVDA. 
-Esta opción está activada por defecto, aunque algunos usuarios pueden necesitar deshabilitarla, como aquellos que escriban en vietnamita con el programa de escritura Unikey ya que hará que la entrada de caracteres sea incorrecta.
+Esta opción está activada por defecto aunque algunos usuarios pueden necesitar deshabilitarla, como aquellos que escriban en vietnamita con el programa de escritura Unikey ya que hará que la entrada de caracteres sea incorrecta.
 
 +++ Ratón (NVDA+control+m) +++[MouseSettings]
 La categoría Ratón del cuadro de diálogo Opciones de NVDA permite a NVDA realizar un seguimiento del ratón, reproducir pitidos de sus coordenadas  y configurar otras opciones de uso del ratón.
@@ -1689,6 +1701,7 @@ Puedes configurar el anunciado de:
  - Nombre de fuente
  - Tamaño de fuente
  - Atributos de fuente
+ - Superíndices y subíndices
  - Énfasis
  - Estilo
  - Colores
@@ -1788,9 +1801,14 @@ Esta opción controla si los caracteres se verbalizan por [verbalizar caracteres
 ==== Utilizar el nuevo soporte de Caracteres al Escribir en la Consola de Windows cuando esté Disponible ====[AdvancedSettingsKeyboardSupportInLegacy]
 Esta opción habilita un método alternativo para detectar caracteres escritos en Consolas de órdenes de Windows.
 Aunque mejora el rendimiento y evita que se especifique la salida de la consola, puede ser incompatible con algunos programas de terminal.
-Esta característica está disponible y activada por omisión en versiones de Windows 10 1607, 1703, 1709 y 1803 así como en versiones de Windows 10 más modernas cuando UI Automation no esté disponible o desactivado.
+Esta característica está disponible y activada por omisión en versiones de Windows 10 1607 y posteriores cuando UI Automation no esté disponible o desactivado.
 Advertencia: con esta opción activada, los caracteres escritos que no aparezcan en pantalla, tales como contraseñas, no se suprimirán.
 En entornos no confiables, podrás desactivar temporalmente [Verbalizar caracteres al escribir #KeyboardSettingsSpeakTypedCharacters] y [verbalizar palabras al escribir #KeyboardSettingsSpeakTypedWords] al introducir contraseñas.
+
+==== Intentar cancelar voz para eventos de foco caducados ====[CancelExpiredFocusSpeech]
+Esta opción habilita el comportamiento que intenta cancelar la voz para eventos de foco caducados.
+En particular moverse rápidamente por los mensajes  en Gmail con Chrome puede hacer que NVDA verbalice información obsoleta.
+Esta funcionalidad es experimental a partir de NVDA 2020.2.
 
 ==== Poner Automáticamente el Foco del Sistema en los Elementos enfocables en Modo Exploración ====[BrowseModeSettingsAutoFocusFocusableElements]
 Tecla: NVDA+8
@@ -1842,7 +1860,8 @@ El diálogo de Añadir reglas también contiene Una Casilla de verificación que
 NVDA ignora los casos de forma predeterminada). 
 
 Finalmente, un conjunto de botones de opción te permiten decir a NVDA si tu patrón debería compararse con cualquier cosa, o sólo debería compararse si es una palabra completa o si debería tratarse como una "Expresión Regular".
-Ajustar el patrón para comparar como una palabra completa significa que el reemplazo sólo se hará si el patrón no ocurre como parte de una palabra más larga; es decir, un carácter distinto a un carácter alfanumérico o un subrayado (o sin carácter) que venga inmediatamente antes y después del patrón.
+Ajustar el patrón para comparar como una palabra completa significa que el reemplazo sólo se hará si el patrón no ocurre como parte de una palabra más larga.
+Esta condición se cumple si los caracteres inmediatamente anteriores o posteriores a la palabra son cualquier otra cosa que una letra, un número, o un guión bajo, o si no hay ningún carácter.
 Por lo tanto, utilizando el ejemplo anterior de la sustitución de la palabra "pájaro" con "rana", si fueras  a hacer de esto un reemplazo de palabra completa, no se compararía "pájaros" o "pájaroAzul".
 
 Una expresión regular es un patrón que contiene símbolos especiales que te permiten emparejar más de un carácter al mismo tiempo, o emparejar solo números, o solo letras, según unos pocos ejemplos. 
@@ -2001,17 +2020,19 @@ Las versiones portables de NVDA almacenan todas sus opciones y complementos en u
 
 Las versiones instaladas de NVDA almacenan todas sus opciones y complementos en un directorio especial de NVDA localizado en tu perfil de usuario de Windows. 
 Esto significa que cada usuario en el sistema puede tener sus propias opciones de NVDA. 
-Para optener tu directorio de opciones para una versión instalada de NVDA, en el menú de Inicio puedes ir a programas -> NVDA -> explorar directorio de configuración de usuario.
+Para abrir tu directorio de configuraciones desde cualquier lugar puedes utilizar [el diálogo Gestos de Entrada #InputGestures] para añadir un gesto personalizado.
+Además en una versión instalada de NVDA, en el menú Inicio puedes ir a programas -> NVDA -> explorar directorio de configuración del usuario.
    
-Las opciones para NVDA cuando se ejecuta en las pantallas de inicio de sesión o de UAC se almacenan en el directorio SystemConfig en el directorio de instalación de NVDA.
+Las opciones para NVDA cuando se ejecuta durante el inicio de sesión o en el UAC se almacenan en el directorio SystemConfig en el directorio de instalación de NVDA.
 Normalmente esta configuración no debería ser tocada.
-Para cambiar cómo se configura NVDA en las pantallas de inicio de sesión/UAC, configura a NVDA como desees mientras estás autentificado en Windows, guarda la configuración y luego pulsa el botón "Utilizar ajustes guardados actualmente en el inicio de sesión y otras pantallas seguras en la categoría General del diálogo [Opciones de NVDA #NVDASettings] .
+Para cambiar cómo se configura NVDA durante el inicio de sesión o en las pantallas UAC, configura a NVDA como desees mientras iniciaste sesión en Windows, guarda la configuración y luego pulsa el botón "Utilizar ajustes guardados actualmente durante el inicio de sesión y en pantallas seguras en la categoría General del diálogo [Opciones de NVDA #NVDASettings] .
 
 + Herramientas Extra +[ExtraTools]
 
 ++ Visualizador del Registro ++[LogViewer]
 El visualizador del Registro, encontrado en Herramientas en el menú NVDA, te permite ver toda la salida que haya ocurrido hasta ahora desde cuando iniciaste NVDA por última vez.
 Utilizando NVDA+F1 se abrirá el visualizador del registro y se mostrará la información del desarrollador sobre el navegador de objetos actual.
+
 Además de leer el contenido, también puedes guardar una copia del fichero de registro, o refrescar el visualizador tal que se muestre la salida más reciente desde que el visualizador de registro fue abierto.
 Estas acciones están disponibles en el menú de visualizador de Registro.
 
@@ -2043,6 +2064,10 @@ Las pantallas braille físicas suelen tener botones para desplazarse hacia adela
 La ventana del Visualizador Braille contiene una casilla de verificación etiquetada "Mostrar Visualizador de Braille al arrancar".
 Si esta opción está marcada, el Visualizador Braille se abrirá cuando se inicie NVDA.
 La ventana del Visualizador Braille siempre intentará volver a abrirse con las mismas dimensiones y ubicación que cuando se cerró.
+
+++ Consola de Python ++[PythonConsole]
+La consola de Python de NVDA, encontrada en Herramientas en el menú NVDA, es una herramienta de desarrollo que es útil para depuración, inspección general del interior  de NVDA o inspeción de la jerarquía de accesibilidad  de una aplicación.
+Para más información, por favor consulta la Guía del desarrollador disponible en [la sección de Desarrollo de la página web de NVDA https://community.nvda-project.org/wiki/Development].
 
 ++ Administrador de Complementos ++[AddonsManager]
 El Administrador de Complementos, al que se accede seleccionando Gestionar Complementos en Herramientas en el menú NVDA, te permite instalar, desinstalar, habilitar y deshabilitar paquetes de complementos para NVDA.
@@ -2085,10 +2110,11 @@ Si has instalado, eliminado o cambiado el estado de los complementos, NVDA prime
 Algunos complementos antiguos pueden ya no ser compatibles con la versión de NVDA que tienes.
 Cuando utilices una versión más antigua de NVDA, algunos complementos nuevos pueden no ser compatibles.
 Intentar instalar un complemento incompatible resultará en un error explicando por qué el complemento se considera incompatible.
+Para examinar estos complementos inaccesibles, puedes utilizar el botón "ver complementos incompatibles" para lanzar el administrador de complementos inaccesibles.
 
 Para acceder al Administrador de Complementos desde cualquier lugar, por favor asigna un gesto personalizado utilizando el [diálogho Gestos de Entrada #InputGestures].
 
-++ Administrador de Complementos Incompatibles ++[incompatibleAddonsManager]
++++ Administrador de Complementos Incompatibles +++[incompatibleAddonsManager]
 El Administrador de Complementos Incompatibles, al que se puede acceder a través de los botones "ver complementos incompatibles" en el Administrador de Complementos, te permite inspeccionar cualquier complemento incompatible y la razón por la que se consideran incompatibles.
 Los complementos se consideran incompatibles cuando no han sido actualizados para funcionar con cambios significativos de NVDA, o cuando se basan en una característica no disponible en la versión de NVDA que estás utilizando.
 El Administrador de Complementos Incompatibles tiene un mensaje breve para explicar su propósito así como la versión de NVDA.
@@ -2102,9 +2128,31 @@ El Administrador de Complementos Incompatibles también tiene un botón "Acerca 
 Esto abre lo que te permitirá conocer todos los detalles del complemento, lo cual es de ayuda cuando contactes con el autor del complemento.
 
 
-++ Consola de Python ++[PythonConsole]
-La consola de Python de NVDA, encontrada en Herramientas en el menú NVDA, es una herramienta de desarrollo que es útil para depuración, inspección general del interior  de NVDA o inspeción de la jerarquía de accesibilidad  de una aplicación.
-Para más información, por favor consulta la Guía del desarrollador disponible en [la sección de Desarrollo de la página web de NVDA https://community.nvda-project.org/wiki/Development].
+++ Crear copia portable ++[CreatePortableCopy]
+Esto abrirá un diálogo que te permite crear una copia portable de NVDA a partir de la versión instalada.
+De cualquier modo, al ejecutar una copia portable de NVDA, en el submenú Herramientas extra el elemento de menú se llamará "instalar NVDA en este PC" en lugar de "crear copia portable).
+
+El diálogo para crear una copia portable de NVDA o para instalar NVDA en este PC te indicará para seleccionar una ruta de la carpeta en la cual debería crear la copia portable o en la que NVDA debería instalarse.
+
+En este diálogo puedes habilitar o deshabilitar lo siguiente:
+- Copiar la configuración actual del usuario (esto incluye los ficheros en %appdata%\roaming\NVDA o en la configuración de usuario de tu copia portable y también incluye los complementos y otros módulos)
+- Arrancar la nueva copia portable después de la creación o arrancar NVDA después de la instalación (inicia NVDA automáticamente después de la creación de la copia portable o de la instalación)
+-
+
+++ Ejecutar la herramienta COM registration fixing... ++[RunCOMRegistrationFixingTool]
+La instalación o desinstalación de programas en un ordenador puede, en ciertos casos, provocar que los ficheros COM DLL no se registren.
+Dado que las COM Interfaces tales como IAccessible dependen de los registros correctos de COM DLL, pueden aparecer problemas en caso de que falte el registro correcto.
+
+Esto puede suceder, por ejemplo, después de instalar y desinstalar Adobe Reader, Math Player y otros programas.
+
+El registro faltante puede causar problemas en los navegadores, aplicaciones de escritorio, barra de tareas y otras interfaces.
+
+Específicamente, los siguientes problemas pueden resolverse ejecutando esta herramienta:
+- NVDA anuncia "desconocido" al navegar con navegadores tales como Firefox, Thunderbird etc.
+- NVDA falla al cambiar entre modo foco y modo exploración
+- NVDA es muy lento al navegar con los navegadores mientras se utiliza el modo exploración
+- Y posiblemente otros fallos.
+-
 
 ++ Recargar plugins ++[ReloadPlugins]
 Este elemento, una vez activado, recarga app modules y plugins globales sin reiniciar a NVDA, lo cual es útil para desarrolladores.
@@ -2423,7 +2471,12 @@ Las pantallas braille Brailliant series BI y B de [HumanWare https://www.humanwa
 Si la conectas a través de USB con el protocolo configurado a HumanWare, primero debes instalar los controladores USB proporcionados por el fabricante.
 Los controladores USB no se requieren si el protocolo se configura a OpenBraille.
 
-También se admite la BrailleNote Touch, y no requiere instalar ningún controlador.
+También se admiten los siguientes dispositivos extra (y no requieren ningún controlador en especial para ser instalados):
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
+-
 
 Seguidamente van las asignaciones de teclas para las pantallas Brailliant BI/B y BrailleNote touch con NVDA.
 Por favor conhsulta la documentación de la pantalla para descripciones de dónde pueden encontrarse estas teclas.
@@ -2473,7 +2526,7 @@ Por favor conhsulta la documentación de la pantalla para descripciones de dónd
 ++ Series de las HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++[Hims]
 NVDA es compatible con las pantallas Braille Sense, Braille EDGE, Smart Beetle y Sync Braille de [Hims https://www.hims-inc.com/] cuando se conectan a través de USB o bluetooth. 
 Si se conectan a través de USB, necesitarás instalar los controladores USB de HIMS en el sistema.
-Puedes descargarlos de aquí: https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+Puedes descargarlos de aquí: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Seguidamente van las asignaciones de teclas para estas pantallas con NVDA.
 Por favor consulta la documentación de las pantallas para descripciones de dónde pueden encontrarse estas teclas.
@@ -2954,6 +3007,22 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 | Conmutar simulación de entrada de teclado HID | esytime):l1+joystick1Abajo, esytime):l8+joystick1Abajo |
 %kc:endInclude
 
+++ Pantallas Nattiq nBraille ++[NattiqTechnologies]
+NVDA admite pantallas de [Nattiq Technologies https://www.nattiq.com/] cuando se conecten a través de USB.
+Windows 10 detecta las pantallas Braille una vez conectadas, puedes necesitar instalar controladores USB si utilizas versiones antiguas de Windows (anteriores a Win10).
+Puedes obtenerlos del sitio web del fabricante.
+
+Seguidamente van las asignaciones de teclas para pantallas Nattiq Technologies con NVDA.
+Por favor consulta la documentación de la pantalla para descripciones de dónde pueden encontrarse esas teclas.
+%kc:beginInclude
+|| Nombre | Tecla |
+| Desplazar pantalla braille hacia atrás | arriba |
+| Desplazar pantalla braille hacia adelante | abajo |
+| Mover pantalla braille a línea anterior | izquierda |
+| Mover pantalla braille a línea siguiente | derecha |
+| Ir a celda braille | sensores |
+%kc:endInclude
+
 ++ BRLTTY ++[BRLTTY]
 [BRLTTY https://www.brltty.com/] es un programa por separado que puede utilizarse para soportar muchas pantallas braille.
 Para utilizar esto, necesitas instalar [BRLTTY for Windows https://www.brltty.com/download.html].
@@ -2966,7 +3035,7 @@ Por lo tanto, la opción tabla braille de entrada de NVDA es irrelevante.
 BRLTTY no está involucrado en la funcionalidad de detección automática de pantallas braille de NVDA.
 
 Seguidamente van las asignaciones a órdenes de BRLTTY para NVDA.
-Por favor consulta las [listas de claves de vínculos de BRLTTY https://mielke.cc/brltty/doc/KeyBindings/] para información acerca de cómo se mapean las órdenes de BRLTTY para controlar las pantallas braille.
+Por favor consulta las [listas de claves de vínculos de BRLTTY http://mielke.cc/brltty/doc/KeyBindings/] para información acerca de cómo se mapean las órdenes de BRLTTY para controlar las pantallas braille.
 %kc:beginInclude
 || Nombre | orden de BRLTTY |
 | Desplazar pantalla braille hacia atrás | fwinlt (va a la izquierda una ventana) |
