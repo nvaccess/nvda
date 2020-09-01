@@ -646,7 +646,7 @@ def winEventToNVDAEvent(eventID, window, objectID, childID, useCache=True):
 			obj = SDMChild
 	if isMSAADebugLoggingEnabled():
 		log.debug(
-			f"Successfully created NvDA event {NVDAEventName} for {obj} "
+			f"Successfully created NVDA event {NVDAEventName} for {obj} "
 			f"from winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}"
 		)
 	return (NVDAEventName, obj)
