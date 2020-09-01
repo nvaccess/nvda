@@ -131,20 +131,30 @@ def getObjectIDName(objectID):
 	return name
 
 
-def getWinEventLogInfo(window, objectID, childID, eventID=None):
+def getWinEventLogInfo(window, objectID, childID, eventID=None, threadID=None):
 	"""
 	Formats the given winEvent parameters into a printable string.
 	window, objectID and childID are mandatory,
-	but eventID is optional.
+	but eventID and threadID are optional.
 	"""
-	windowClassName = winUser.getClassName(window)
+	windowClassName = winUser.getClassName(window) or "unknown"
 	objectIDName = getObjectIDName(objectID)
+	processID = winUser.getWindowThreadProcessID(window)[0]
+	if processID:
+		processName = appModuleHandler.getAppModuleFromProcessID(processID).appName
+	else:
+		processName = "unknown application"
+	messageList = []
 	if eventID is not None:
 		eventName = getWinEventName(eventID)
-		return f"{eventName} for window {window} ({windowClassName}), objectID {objectIDName} and childID {childID}"
-	else:
-		return f"window {window} ({windowClassName}), objectID {objectIDName} and childID {childID}"
-
+		messageList.append(f"{eventName}")
+	messageList.append(
+		f"window {window} ({windowClassName}), objectID {objectIDName}, childID {childID}, "
+		f"from process {processID} ({processName})"
+	)
+	if threadID is not None:
+		messageList.append(f"thread {threadID}")
+	return ", ".join(messageList)
 
 def isMSAADebugLoggingEnabled():
 	""" Whether the user has configured NVDA to log extra information about MSAA events. """
@@ -395,10 +405,11 @@ def accessibleObjectFromEvent(window, objectID, childID):
 	try:
 		pacc, childID = oleacc.AccessibleObjectFromEvent(window, objectID, childID)
 	except Exception as e:
-		log.debug(
-			f"oleacc.AccessibleObjectFromEvent with"
-			f" window {window}, objectID {objectID} and childID {childID}: {e}"
-		)
+		if isMSAADebugLoggingEnabled():
+			log.debugWarning(
+				f"oleacc.AccessibleObjectFromEvent failed with {e}."
+				f" WinEvent: {getWinEventLogInfo(window, objectID, childID)}"
+			)
 		return None
 	return normalizeIAccessible(pacc, childID), childID
 

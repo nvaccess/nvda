@@ -107,11 +107,11 @@ class OrderedWinEventLimiter(object):
 		self._eventHeap = []
 		r = []
 		for count in range(len(e)):
-			event = heapq.heappop(e)[1:-1]
+			event = heapq.heappop(e)[1:]
 			if isMSAADebugLoggingEnabled():
-				eventID, window, objectID, childID = event
+				eventID, window, objectID, childID, threadID = event
 				log.debug(
-					f"Emitting winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}"
+					f"Emitting winEvent {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
 				)
-			r.append(event)
+			r.append(event[:-1])
 		return r

@@ -74,7 +74,7 @@ _processDestroyWinEvent = None
 def winEventCallback(handle, eventID, window, objectID, childID, threadID, timestamp):  # noqa: C901
 	if isMSAADebugLoggingEnabled():
 		log.debug(
-			f"Hook received winEvent: {getWinEventLogInfo(window, objectID, childID, eventID)}"
+			f"Hook received winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
 		)
 	try:
 		# Ignore all object IDs from alert onwards (sound, nativeom etc) as we don't support them
@@ -90,7 +90,7 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 		if (objectID == 0) and (childID == 0):
 			objectID = winUser.OBJID_CLIENT
 			if isMSAADebugLoggingEnabled():
-				log.debug("Changing OBJID_WINDOW to OBJID_CLIENT")
+				log.debug(f"Changing OBJID_WINDOW to OBJID_CLIENT for winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}")
 		# Ignore events with invalid window handles
 		isWindow = winUser.isWindow(window) if window else 0
 		if window == 0 or (
@@ -102,11 +102,11 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 			)
 		):
 			if isMSAADebugLoggingEnabled():
-				log.debug("Redirecting winEvent to desktop window")
+				log.debug(f"Changing NULL or invalid window to desktop window for winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}")
 			window = winUser.getDesktopWindow()
 		elif not isWindow:
 			if isMSAADebugLoggingEnabled():
-				log.debug("Dropping winEvent for invalid window")
+				log.debug(f"Invalid window. Dropping winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}")
 			return
 
 		windowClassName = winUser.getClassName(window)
@@ -117,10 +117,14 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 		# Modern IME candidate list windows fire menu events which confuse us
 		# and can't be used properly in conjunction with input composition support.
 		if windowClassName == "Microsoft.IME.UIManager.CandidateWindow.Host" and eventID in MENU_EVENTIDS:
+			if isMSAADebugLoggingEnabled():
+				log.debug(f"Dropping menu event for IME window. WinEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}")
 			return
 		if eventID == winUser.EVENT_SYSTEM_FOREGROUND:
 			# We never want to see foreground events for the Program Manager or Shell (task bar)
 			if windowClassName in ("Progman", "Shell_TrayWnd"):
+				if isMSAADebugLoggingEnabled():
+					log.debug(f"Progman or shell_trayWnd window. Dropping winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}")
 				return
 			# #3831: Event handling can be deferred if Windows takes a while to change the foreground window.
 			# See pumpAll for details.
@@ -128,7 +132,7 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 			_deferUntilForegroundWindow = window
 			_foregroundDefers = 0
 			if isMSAADebugLoggingEnabled():
-				log.debug("Recording foreground winEvent defer")
+				log.debug(f"Recording foreground defer for WinEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}")
 		if windowClassName == "MSNHiddenWindowClass":
 			# HACK: Events get fired by this window in Windows Live Messenger 2009 when it starts. If we send a
 			# WM_NULL to this window at this point (which happens in accessibleObjectFromEvent), Messenger will
@@ -136,7 +140,7 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 			return
 		if isMSAADebugLoggingEnabled():
 			log.debug(
-				f"Adding winEvent to limitor: {getWinEventLogInfo(window, objectID, childID, eventID)}"
+				f"Adding winEvent to limiter: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
 			)
 		if winEventLimiter.addEvent(eventID, window, objectID, childID, threadID):
 			core.requestPump()
