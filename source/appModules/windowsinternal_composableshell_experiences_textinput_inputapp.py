@@ -11,7 +11,6 @@ This is applicable on Windows 10 Fall Creators Update and later."""
 
 import appModuleHandler
 import api
-import core
 import eventHandler
 import speech
 import braille
@@ -32,15 +31,15 @@ class ImeCandidateUI(UIA):
 	def event_show(self):
 		# The IME candidate UI is shown.
 		# Report the current candidates page and the currently selected item.
+		# Sometimes UIA does not fire an elementSelected event when it is first opened,
+		# Therefore we must fake it here.
 		if (
 			self.firstChild
 			and self.firstChild.role == controlTypes.ROLE_LIST
 			and isinstance(self.firstChild.firstChild, ImeCandidateItem)
 		):
 			candidateItem = self.firstChild.firstChild
-			# Clear the last cached candidates page as the UI is becoming visible.
-			self.appModule._lastImeCandidateVisibleText = ""
-			eventHandler.executeEvent("UIA_elementSelected", candidateItem)
+			eventHandler.queueEvent("UIA_elementSelected", candidateItem)
 
 
 class ImeCandidateItem(CandidateItemBehavior, UIA):
@@ -85,23 +84,24 @@ class ImeCandidateItem(CandidateItemBehavior, UIA):
 		return super(ImeCandidateItem, self).name
 
 	def event_UIA_elementSelected(self):
+		oldNav = api.getNavigatorObject()
+		if isinstance(oldNav, ImeCandidateItem) and self.name == oldNav.name:
+			# Duplicate selection event fired on the candidate item. Ignore it.
+			return
+		api.setNavigatorObject(self)
 		speech.cancelSpeech()
 		# Report the entire current page of candidate items if it is newly shown  or it has changed.
 		if config.conf["inputComposition"]["autoReportAllCandidates"]:
 			oldText = getattr(self.appModule, '_lastImeCandidateVisibleText', '')
 			newText = self.visibleCandidateItemsText
-			if newText != oldText:
-				# cancel speech and speak the new page
-				# But delayed a little
-				# to ensure that it is not interupted by duplicate elementSelected events.
-				def delayed():
-					speech.cancelSpeech()
-					ui.message(newText)
-				core.callLater(100, delayed)
+			if not isinstance(oldNav, ImeCandidateItem) or newText != oldText:
+				print(f"oldText: {oldText}")
+				print(f"newText: {newText}")
 				self.appModule._lastImeCandidateVisibleText = newText
+				# speak the new page
+				ui.message(newText)
 		# Now just report the currently selected candidate item.
 		self.reportFocus()
-		api.setNavigatorObject(self)
 
 
 class AppModule(appModuleHandler.AppModule):
@@ -160,7 +160,7 @@ class AppModule(appModuleHandler.AppModule):
 		firstChild = obj.firstChild
 		# Handle Ime Candidate UI being shown
 		if isinstance(firstChild, ImeCandidateUI):
-			firstChild.event_show()
+			eventHandler.queueEvent("show", firstChild)
 			return
 
 		# Make sure to announce most recently used emoji first in post-1709 builds.
@@ -238,11 +238,14 @@ class AppModule(appModuleHandler.AppModule):
 		if isinstance(obj, UIA):
 			if obj.role == controlTypes.ROLE_LISTITEM and (
 				(
-					obj.parent.UIAElement.cachedAutomationID == "ExpandedCandidateList"
-					and obj.parent.parent.UIAElement.cachedAutomationID == "IME_Candidate_Window"
+					obj.parent.UIAAutomationId in (
+						"ExpandedCandidateList",
+						"TEMPLATE_PART_AdaptiveSuggestionList",
+					)
+					and obj.parent.parent.UIAAutomationId == "IME_Candidate_Window"
 				)
-				or obj.parent.UIAElement.cachedAutomationID == "IME_Candidate_Window"
+				or obj.parent.UIAAutomationId == "IME_Candidate_Window"
 			):
 				clsList.insert(0, ImeCandidateItem)
-			elif obj.role == controlTypes.ROLE_PANE and obj.UIAElement.cachedAutomationID == "IME_Candidate_Window":
+			elif obj.role == controlTypes.ROLE_PANE and obj.UIAAutomationId == "IME_Candidate_Window":
 				clsList.insert(0, ImeCandidateUI)
