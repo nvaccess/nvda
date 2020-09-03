@@ -47,6 +47,7 @@ def showHelp(helpId: str):
 
 	contextHelpRedirect = os.path.join(nvdaTempDir, "contextHelp.html")
 	try:
+		# a redirect is necessary because not all browsers support opening a fragment URL from the command line.
 		writeRedirect(helpId, helpFile, contextHelpRedirect)
 	except Exception:
 		log.error("Unable to write context help redirect file.", exc_info=True)
