@@ -85,8 +85,8 @@ _	sottolineato	most
 ¡	punto esclamativo invertito	some
 ¿	punto interrogativo invertito	some
 ·	punto medio	most
-‚	virgoletta bassa singola	most
-„	virgoletta bassa doppia	some
+‚	virgoletta in basso	most
+„	doppie virgolette in basso	some
 ′	primo	some
 ″	doppio primo	some
 ‴	triplo primo	some
@@ -99,40 +99,40 @@ _	sottolineato	most
 ”	chiuse virgolette	most
 ‘	aperto apostrofo	most
 ’	chiuso apostrofo	most
-–	trattino	most
+–	Trattino corto	most	always
 —	trattino lungo	most
-­	trattino	most
-⁃	puntato	none
-●	puntato	most
+­	trattino d'unione	most
+⁃	Trattino	none
+●	Cerchio	most
+○	Cerchio bianco	most
 ¨	dieresi	most
 ¯	macron	most
 ´	acuto	most
-¸	cedilla	most
+¸	cediglia	most
 ‎	marcatore da sinistra a destra	char
 ‏	marcatore da destra a sinistra	char
 ¶	indicatore di paragrafo	most
-	puntato	some
-■	puntato	some
-▪	puntato	some
-◾	puntato	some
-□	puntato	some
-◦	puntato	some
-§	paragrafo	all
+■	quadrato nero	some
+▪	quadrattino nero	some
+◾	Quadrato nero	some
+□	Quadrato bianco	some
+◦	Punto elenco bianco	some
 ⇒	doppia freccia a destra	some
 ⇨	freccia a destra bianca	some
 ➔	freccia a destra	some
-➢	punta di freccia a destra	some
-❖	puntato	some
-♣	puntato	some
-♦	puntato	some
-◆	puntato	some
+➢	Punta di freccia a destra	some
+⮚	Punta di freccia a destra	some
+❖	Segno di quadri con X	some
+♣	Segno di fiori	some
+♦	segno di quadri	some
+◆	Segno di quadri	some
 §	sezione	all
-°	gradi	all	always	#per Loquendo
+°	gradi	some
 «	aperte doppie virgolette
 »	chiuse doppie virgolette
 µ	micro	some
-º	gradi cardinali ordinari	some
-ª	apice a	some
+º	ordinale maschile	char	always
+ª	ordinale femminile	char	always
 ⁰	apice 0	some
 ¹	apice 1	some
 ²	apice 2	some
@@ -146,8 +146,8 @@ _	sottolineato	most
 ⁺	apice più	some
 ⁻	apice meno	some
 ⁼	apice uguale	some
-⁽	apice genitore sinistro	some
-⁾	apice genitore destro	some
+⁽	apice aperta tonda	some
+⁾	apice chiusa Tonda	some
 ⁿ	apice n	some
 ₀	pedice 0	some
 ₁	pedice 1	some
@@ -162,8 +162,8 @@ _	sottolineato	most
 ₊	pedice piu	some
 ₋	pedice meno	some
 ₌	pedice uguale	some
-₍	pedice genitore sinistro	some
-₎	pedice genitoredestro 	some
+₍	pedice Aperta tonda	some
+₎	pedice Chiusa Tonda	some
 ®	registered	some
 ™	Trademark	some
 ©	Copyright	some
@@ -179,9 +179,8 @@ _	sottolineato	most
 🡺	freccia destra	some
 †	pugnale	some
 ‡	doppio pugnale	some
-‣	proiettile triangolare	none
-✗	proiettile a forma di X.	none
-￼	carattere di sostituzione dell'oggetto	none
+‣	Puntato triangolare	none
+✗	Puntato a X	none
 
 #Mathematical Operators U+2200 to U+220F
 ∀	per ogni 	none
@@ -228,12 +227,10 @@ _	sottolineato	most
 ⊃	sovrainsieme di	none
 ⊆	Contenuto o uguale a	none
 ⊇	sovrainsieme di o uguale a	none
-¬	not	none
-⟺	se e solo se	some
 
 # Vulgur Fractions U+2150 to U+215E
 ¼	un quarto	none
-½	mezzo	none
+½	un mezzo	none
 ¾	tre quarti	none
 ⅐	un settimo	none
 ⅑	un nono	none
