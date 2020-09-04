@@ -7,6 +7,7 @@
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
 """
+import garbageHandler
 import globalVars
 import config
 if globalVars.appArgs.secure:
@@ -215,7 +216,8 @@ def _executeUpdate(destPath):
 		executeParams,
 		None, winUser.SW_SHOWNORMAL)
 
-class UpdateChecker(object):
+
+class UpdateChecker(garbageHandler.TrackedObject):
 	"""Check for an updated version of NVDA, presenting appropriate user interface.
 	The check is performed in the background.
 	This class is for manual update checks.
@@ -550,7 +552,8 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 		saveState()
 		self.EndModal(wx.ID_CLOSE)
 
-class UpdateDownloader(object):
+
+class UpdateDownloader(garbageHandler.TrackedObject):
 	"""Download and start installation of an updated version of NVDA, presenting appropriate user interface.
 	To use, call L{start} on an instance.
 	"""

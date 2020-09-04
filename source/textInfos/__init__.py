@@ -80,6 +80,7 @@ class ControlField(Field):
 			or (role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"])
 			or (role in (controlTypes.ROLE_LIST, controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
 			or (role == controlTypes.ROLE_ARTICLE and not formatConfig["reportArticles"])
+			or (role == controlTypes.ROLE_MARKED_CONTENT and not formatConfig["reportHighlight"])
 			or (role in (controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME) and not formatConfig["reportFrames"])
 			or (role in (controlTypes.ROLE_DELETED_CONTENT,controlTypes.ROLE_INSERTED_CONTENT) and not formatConfig["reportRevisions"])
 			or (
@@ -145,6 +146,7 @@ class ControlField(Field):
 				controlTypes.ROLE_POPUPMENU,
 				controlTypes.ROLE_TABLE,
 				controlTypes.ROLE_ARTICLE,
+				controlTypes.ROLE_MARKED_CONTENT,
 			)
 			or (role == controlTypes.ROLE_EDITABLETEXT and (
 				controlTypes.STATE_READONLY not in states

@@ -157,6 +157,7 @@ ROLE_LANDMARK = 149
 ROLE_ARTICLE = 150
 ROLE_REGION = 151
 ROLE_FIGURE = 152
+ROLE_MARKED_CONTENT = 153
 
 STATE_UNAVAILABLE=0X1
 STATE_FOCUSED=0X2
@@ -503,6 +504,8 @@ roleLabels: Dict[int, str] = {
 	ROLE_REGION: _("region"),
 	# Translators: Identifies a figure (commonly seen on some websites).
 	ROLE_FIGURE: _("figure"),
+	# Translators: Identifies marked (highlighted) content
+	ROLE_MARKED_CONTENT: _("marked content"),
 }
 
 stateLabels: Dict[int, str] = {
@@ -720,7 +723,13 @@ def processPositiveStates(role, states, reason: OutputReason, positiveStates=Non
 	positiveStates.discard(STATE_INVISIBLE)
 	if reason != REASON_CHANGE:
 		positiveStates.discard(STATE_LINKED)
-		if role in (ROLE_LISTITEM, ROLE_TREEVIEWITEM, ROLE_MENUITEM, ROLE_TABLEROW) and STATE_SELECTABLE in states:
+		if role in (
+			ROLE_LISTITEM,
+			ROLE_TREEVIEWITEM,
+			ROLE_MENUITEM,
+			ROLE_TABLEROW,
+			ROLE_CHECKBOX,
+		) and STATE_SELECTABLE in states:
 			positiveStates.discard(STATE_SELECTED)
 	if role not in (ROLE_EDITABLETEXT, ROLE_CHECKBOX):
 		positiveStates.discard(STATE_READONLY)
@@ -769,7 +778,8 @@ def processNegativeStates(role, states, reason: OutputReason, negativeStates=Non
 			ROLE_TABLEROW,
 			ROLE_TABLECELL,
 			ROLE_TABLECOLUMNHEADER,
-			ROLE_TABLEROWHEADER
+			ROLE_TABLEROWHEADER,
+			ROLE_CHECKBOX,
 		)
 	):
 		speakNegatives.add(STATE_SELECTED)

@@ -107,17 +107,9 @@ class ChromeLib:
 		for i in range(10):  # set a limit on the number of tries.
 			# Small changes in Chrome mean the number of tab presses to get into the document can vary.
 			builtIn.sleep("0.5 seconds")  # ensure application has time to receive input
-			actualSpeech = self.getSpeechAfterTab()
+			actualSpeech = self.getSpeechAfterKey('F6')
 			if ChromeLib._beforeMarker in actualSpeech:
 				break
-			if ChromeLib._afterMarker in actualSpeech:
-				# somehow missed the start marker!
-				spy.dump_speech_to_log()
-				builtIn.fail(
-					"Unable to tab to 'before sample' marker, reached 'after sample' marker first."
-					f" Looking for '{ChromeLib._beforeMarker}'"
-					" See NVDA log for full speech."
-				)
 		else:  # Exceeded the number of tries
 			spy.dump_speech_to_log()
 			builtIn.fail(
@@ -127,14 +119,21 @@ class ChromeLib:
 			)
 
 	@staticmethod
-	def getSpeechAfterTab() -> str:
-		"""Press tab, and get speech until it stops.
-		@return: The speech after tab.
+	def getSpeechAfterKey(key) -> str:
+		"""Ensure speech has stopped, press key, and get speech until it stops.
+		@return: The speech after key press.
 		"""
 		spy = _NvdaLib.getSpyLib()
 		spy.wait_for_speech_to_finish()
 		nextSpeechIndex = spy.get_next_speech_index()
-		keyInputLib.send('\t')
+		keyInputLib.send(key)
 		spy.wait_for_speech_to_finish()
 		speech = spy.get_speech_at_index_until_now(nextSpeechIndex)
 		return speech
+
+	@staticmethod
+	def getSpeechAfterTab() -> str:
+		"""Ensure speech has stopped, press tab, and get speech until it stops.
+		@return: The speech after tab.
+		"""
+		return ChromeLib.getSpeechAfterKey('\t')

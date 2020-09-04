@@ -26,6 +26,7 @@ import queueHandler
 import core
 from . import guiHelper
 from .settingsDialogs import *
+from .inputGestures import InputGesturesDialog
 import speechDictHandler
 import languageHandler
 import keyboardHandler
