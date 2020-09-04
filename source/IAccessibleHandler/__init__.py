@@ -4,6 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from typing import Tuple
 import struct
 import weakref
 # Kept for backwards compatibility
@@ -162,6 +163,12 @@ def isMSAADebugLoggingEnabled():
 	return config.conf["debugLog"]["MSAA"]
 
 
+IAccessibleObjectIdentifierType = Tuple[
+	int,  # windowHandle
+	int,  # objectID
+	int,  # childID
+]
+
 from . import internalWinEventHandler
 # Imported for backwards compat
 from .internalWinEventHandler import (  # noqa: F401
@@ -187,8 +194,6 @@ import core
 import re
 
 from .orderedWinEventLimiter import MENU_EVENTIDS
-
-MAX_WINEVENTS = 500
 
 # Special Mozilla gecko MSAA constant additions
 NAVRELATION_LABEL_FOR = 0x1002
@@ -1039,9 +1044,14 @@ def pumpAll():  # noqa: C901
 	fakeFocusEvent = None
 	focus = eventHandler.lastQueuedFocusObject
 
+	alwaysAllowedObjects = []
+	# winEvents for the currently focused object are special,
+	# and should be never filtered out.
+	if isinstance(focus, NVDAObjects.IAccessible.IAccessible) and focus.event_objectID is not None:
+		alwaysAllowedObjects.append((focus.event_windowHandle, focus.event_objectID, focus.event_childID))
+
 	# Receive all the winEvents from the limiter for this cycle
-	winEvents = winEventLimiter.flushEvents()
-	winEvents = winEvents[0 - MAX_WINEVENTS:]
+	winEvents = winEventLimiter.flushEvents(alwaysAllowedObjects)
 
 	for winEvent in winEvents:
 		isEventOnCaret = winEvent[2] == winUser.OBJID_CARET
