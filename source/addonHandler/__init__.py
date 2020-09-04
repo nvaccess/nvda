@@ -449,7 +449,7 @@ class Addon(AddonBase):
 
 	def getTranslationsInstance(self, domain='nvda'):
 		""" Gets the gettext translation instance for this add-on.
-		<addon-path><\locale will be used to find .mo files, if exists.
+		<addon-path>\\locale will be used to find .mo files, if exists.
 		If a translation file is not found the default fallback null translation is returned.
 		@param domain: the translation domain to retrieve. The 'nvda' default should be used in most cases.
 		@returns: the gettext translation class.
