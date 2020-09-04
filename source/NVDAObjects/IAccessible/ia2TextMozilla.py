@@ -57,6 +57,18 @@ def _getEmbedded(obj, offset):
 
 class MozillaCompoundTextInfo(CompoundTextInfo):
 
+	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
+		controlField = super()._getControlFieldForObject(obj, ignoreEditableText=ignoreEditableText)
+		if controlField is None:
+			return None
+		# Set the uniqueID of the controlField if we can get one
+		# which ensures that two controlFields with the same role and states etc are still treated differently if they are actually for different objects.
+		# E.g. two list items in a list.
+		uniqueID = obj.IA2UniqueID
+		if uniqueID is not None:
+			controlField["uniqueID"] = uniqueID
+		return controlField
+
 	def __init__(self, obj, position):
 		super(MozillaCompoundTextInfo, self).__init__(obj, position)
 		if isinstance(position, NVDAObject):

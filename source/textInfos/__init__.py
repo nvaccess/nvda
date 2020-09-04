@@ -47,7 +47,7 @@ class ControlField(Field):
 	#: This field is just for layout.
 	PRESCAT_LAYOUT = None
 
-	def getPresentationCategory(self, ancestors, formatConfig, reason=controlTypes.REASON_CARET):
+	def getPresentationCategory(self, ancestors, formatConfig, reason=controlTypes.REASON_CARET, extraDetail=False):
 		role = self.get("role", controlTypes.ROLE_UNKNOWN)
 		states = self.get("states", set())
 
@@ -120,12 +120,16 @@ class ControlField(Field):
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
 		):
 			return self.PRESCAT_SINGLELINE
-		elif role in (
-			controlTypes.ROLE_SEPARATOR,
-			controlTypes.ROLE_FOOTNOTE,
-			controlTypes.ROLE_ENDNOTE,
-			controlTypes.ROLE_EMBEDDEDOBJECT,
-			controlTypes.ROLE_MATH
+		elif (
+			role in (
+				controlTypes.ROLE_SEPARATOR,
+				controlTypes.ROLE_FOOTNOTE,
+				controlTypes.ROLE_ENDNOTE,
+				controlTypes.ROLE_EMBEDDEDOBJECT,
+				controlTypes.ROLE_MATH
+			) or (
+				extraDetail and role == controlTypes.ROLE_LISTITEM
+			)
 		):
 			return self.PRESCAT_MARKER
 		elif role in (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG):
