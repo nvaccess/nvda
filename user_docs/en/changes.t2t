@@ -50,6 +50,7 @@ What's New in NVDA
 - NVDA is no longer unable to read the features list in Internet Information Services (IIS) Manager. (#11468)
 - NVDA now keeps the audio device open improving performance on some sound cards (#5172, #10721)
 - NVDA will no longer freeze or exit when holding down control+shift+downArrow in Microsoft Word. (#9463)
+- The expanded / collapsed state of directories in the navigation treeview on drive.google.com is now always reported by NVDA. (#11520)
 
 
 == Changes For Developers ==
@@ -61,6 +62,7 @@ What's New in NVDA
  - The majority of NVDA's classes are tracked including NVDAObjects, appModules, GlobalPlugins, SynthDrivers, and TreeInterceptors.
  - A class that needs to be tracked should inherit from garbageHandler.TrackedObject.
 - Significant debug logging for MSAA events can be now enabled in NVDA's Advanced settings. (#11521)
+- MSAA winEvents for the currently focused object are no longer filtered out along with other events if the event count for a given thread is exceeded. (#11520)
 
 
 = 2020.2 =
