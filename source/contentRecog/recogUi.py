@@ -166,8 +166,8 @@ def recognizeNavigatorObject(recognizer):
 
 def _recogOnResult(result):
 	global _activeRecog
-	# Store a copy of the active recognition so the result can be presented and set original to None, allowing new
-	# recognition processes to start
+	# Store a copy of the active recognition so the result can be presented and set original to None,
+	# allowing new recognition processes to start.
 	recognizer = _activeRecog
 	_activeRecog = None
 	# This might get called from a background thread, so any UI calls must be queued to the main thread.

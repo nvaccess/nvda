@@ -87,7 +87,7 @@ class ContentRecognizer(garbageHandler.TrackedObject, metaclass=ABCMeta):
 		"""
 		return True
 
-	def getResultHandler(self, result:Any):
+	def getResultHandler(self, result: Any):
 		"""Returns an instance of the resultHandlerClass initialized with recognition result.
 		Since the ResultHandlerClass's __init__ method generally contains code that presents the result,
 		the result will be presented only upon calling this method."""
