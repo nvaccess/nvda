@@ -4,6 +4,8 @@ import itertools
 
 import winUser
 from . import IAccessibleObjectIdentifierType
+from logHandler import log
+from . import isMSAADebugLoggingEnabled, getWinEventLogInfo
 
 
 MAX_WINEVENTS_PER_THREAD = 10
@@ -99,6 +101,9 @@ class OrderedWinEventLimiter(object):
 			# Increase the event count for this thread by 1.
 			threadCount = threadCounters.get(k[-1], 0)
 			threadCounters[k[-1]] = threadCount + 1
+			if isMSAADebugLoggingEnabled():
+				if threadCount == (MAX_WINEVENTS_PER_THREAD + 1):
+					log.debug(f"winEvent limit for thread {k[-1]} hit for this core cycle")
 			# Find out if this event is for an object whos events are always allowed.
 			eventsForObjectAlwaysAllowed = alwaysAllowedObjects and k[1:-1] in alwaysAllowedObjects
 			if threadCount > MAX_WINEVENTS_PER_THREAD and not eventsForObjectAlwaysAllowed:
@@ -114,6 +119,11 @@ class OrderedWinEventLimiter(object):
 		self._eventHeap = []
 		r = []
 		for count in range(len(e)):
-			event = heapq.heappop(e)[1:-1]
-			r.append(event)
+			event = heapq.heappop(e)[1:]
+			if isMSAADebugLoggingEnabled():
+				eventID, window, objectID, childID, threadID = event
+				log.debug(
+					f"Emitting winEvent {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+				)
+			r.append(event[:-1])
 		return r
