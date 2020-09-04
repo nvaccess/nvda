@@ -19,6 +19,7 @@ import cursorManager
 import textInfos.offsets
 from abc import ABCMeta, abstractmethod
 from locationHelper import RectLTWH
+from typing import Any
 
 
 class BaseContentRecogTextInfo(cursorManager._ReviewCursorManagerTextInfo):
@@ -30,6 +31,9 @@ class BaseContentRecogTextInfo(cursorManager._ReviewCursorManagerTextInfo):
 class ContentRecognizer(garbageHandler.TrackedObject, metaclass=ABCMeta):
 	"""Implementation of a content recognizer.
 	"""
+
+	def __init__(self, resultHandlerClass):
+		self.resultHandlerClass = resultHandlerClass
 
 	def getResizeFactor(self, width, height):
 		"""Return the factor by which an image must be resized
@@ -82,6 +86,13 @@ class ContentRecognizer(garbageHandler.TrackedObject, metaclass=ABCMeta):
 		@rtype: bool
 		"""
 		return True
+
+	def getResultHandler(self, result:Any):
+		"""Returns an instance of the resultHandlerClass initialized with recognition result.
+		Since the ResultHandlerClass's __init__ method generally contains code that presents the result,
+		the result will be presented only upon calling this method."""
+		handler = self.resultHandlerClass(result=result)
+		return handler
 
 class RecogImageInfo(object):
 	"""Encapsulates information about a recognized image and

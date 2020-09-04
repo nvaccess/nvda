@@ -41,6 +41,9 @@ class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Wind
 		self.parent = parent = api.getFocusObject()
 		self.result = result
 		self._selection = self.makeTextInfo(textInfos.POSITION_FIRST)
+		# Since the __init__ method of a ResultHandlerClass is responsible for presenting the result,
+		# a call to setFocus is made here and not from an instance object of this class.
+		self.setFocus()
 		super(RecogResultNVDAObject, self).__init__(windowHandle=parent.windowHandle)
 
 	def makeTextInfo(self, position):
@@ -163,6 +166,9 @@ def recognizeNavigatorObject(recognizer):
 
 def _recogOnResult(result):
 	global _activeRecog
+	# Store a copy of the active recognition so the result can be presented and set original to None, allowing new
+	# recognition processes to start
+	recognizer = _activeRecog
 	_activeRecog = None
 	# This might get called from a background thread, so any UI calls must be queued to the main thread.
 	if isinstance(result, Exception):
@@ -171,6 +177,7 @@ def _recogOnResult(result):
 		queueHandler.queueFunction(queueHandler.eventQueue,
 			ui.message, _("Recognition failed"))
 		return
-	resObj = RecogResultNVDAObject(result=result)
-	# This method queues an event to the main thread.
-	resObj.setFocus()
+	# Ensure a copy of the recognizer exists and call it's getResultHandler method to present the result
+	# the returned handler returned can be used for any further processing.
+	if recognizer:
+		recognizer.getResultHandler(result)
