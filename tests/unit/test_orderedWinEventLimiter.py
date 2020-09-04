@@ -214,8 +214,6 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		# only the most recent event of each object is kept, all previous duplicates are discarded
 		self.assertEqual(2, len(events))
 
-	# todo: Fix assertion failures
-	@unittest.expectedFailure
 	def test_threadLimit_singleObject(self):
 		"""Test that only the latest events are kept when the thread limit is exceeded
 		"""
@@ -233,11 +231,8 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		events = limiter.flushEvents()
 		errors = []
 		expectedEventCount = orderedWinEventLimiter.MAX_WINEVENTS_PER_THREAD
-		softAssert(errors, self.assertEqual, expectedEventCount, len(events))  # Fails with actual=11
-		self.assertListEqual([], errors)
+		self.assertEqual(expectedEventCount, len(events))
 
-	# todo: Fix assertion failures
-	@unittest.expectedFailure
 	def test_threadLimit_noCanary(self):
 		"""Test that only the latest events are kept when the thread limit is exceeded
 		"""
@@ -257,8 +252,6 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		softAssert(errors, self.assertEqual, expectedEventCount, len(events))  # Fails with 11 actual events
 		self.assertListEqual([], errors)
 
-	# todo: Fix assertion failures
-	@unittest.expectedFailure
 	def test_threadLimit_withCanaryAtStart(self):
 		"""Test that only the latest events are kept when the thread limit is exceeded
 		"""
@@ -284,8 +277,6 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		softAssert(errors, self.assertNotIn, eventStartCanary, events)
 		self.assertListEqual([], errors)
 
-	# todo: Fix assertion failures
-	@unittest.expectedFailure
 	def test_threadLimit_canaryStartAndEnd(self):
 		"""Test that only the latest events are kept when the thread limit is exceeded
 		"""
@@ -337,7 +328,7 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 
 		events = limiter.flushEvents(alwaysAllowedObjects=[canaryObject, ])
 		# only the most recent event of each object is kept, all previous duplicates are discarded
-		self.assertEqual(12, len(events))
+		self.assertEqual(11, len(events))
 		self.assertIn(eventStartCanary, events)
 		self.assertEqual(eventStartCanary, events[0])
 		self.assertIn(eventEndCanary, events)
@@ -356,10 +347,10 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 			for e in events
 		]
 		# TODO: Note: repeated Id's (0 and 8) are EVENT_SYSTEM_FOREGROUND see test_maxFocusEvents
-		expectedIds = [26, 24, 19, 18, 16, 11, 10, 9, 8, 8, 4, 3, 2, 1, 0, 0]
+		expectedIds = [24, 19, 18, 16, 11, 10, 9, 8, 8, 4, 3, 2, 1, 0, 0]
 		self.assertEqual(expectedIds, windowIds)
-		# TODO:
-		#  Why isn't this equal to MAX_WINEVENTS_PER_THREAD=10
-		#  There are also 4 focus events.
-		#  But the total is 16 not 10+4=14?
-		self.assertEqual(len(windowIds), 16)
+		#  equal to MAX_WINEVENTS_PER_THREAD=10
+		# Plus 4 focus events,
+		# Plus the last menu event.
+		#  All totalling 15.
+		self.assertEqual(len(windowIds), 15)
