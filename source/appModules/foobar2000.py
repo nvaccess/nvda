@@ -59,10 +59,10 @@ class AppModule(appModuleHandler.AppModule):
 			return empty
 		elapsed = playingTimes[0]
 		if len(playingTimes) > 1:
-			remaining = playingTimes[1]
+			total = playingTimes[1]
 		else:
-			remaining = None
-		return statusBarTimes(elapsed, remaining)
+			total = None
+		return statusBarTimes(elapsed, total)
 
 	def getElapsedAndTotalIfPlaying(self):
 		elapsedAndTotalTime = self.getElapsedAndTotal()
