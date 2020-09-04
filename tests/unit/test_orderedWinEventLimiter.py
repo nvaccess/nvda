@@ -229,7 +229,6 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 			limiter.addEvent(eventId, *source, threadID=0)
 
 		events = limiter.flushEvents()
-		errors = []
 		expectedEventCount = orderedWinEventLimiter.MAX_WINEVENTS_PER_THREAD
 		self.assertEqual(expectedEventCount, len(events))
 
