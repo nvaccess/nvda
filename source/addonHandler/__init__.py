@@ -459,7 +459,8 @@ class Addon(AddonBase):
 
 	def runInstallTask(self,taskName,*args,**kwargs):
 		"""
-		Executes the function having the given taskName with the given args and kwargs in the add-on's installTasks module if it exists.
+		Executes the function having the given taskName with the given args and kwargs,
+		in the add-on's installTasks module if it exists.
 		"""
 		if not hasattr(self,'_installTasksModule'):
 			self._installTasksModule=self.loadModule('installTasks')
