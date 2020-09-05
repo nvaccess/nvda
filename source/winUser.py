@@ -611,13 +611,19 @@ def VkKeyScanEx(ch, hkl):
 def ScreenToClient(hwnd, x, y):
 	point = POINT(x, y)
 	if not user32.ScreenToClient(hwnd, byref(point)):
-		raise WinError()
+		log.error(
+			f"Couldn't convert screen coordinates x={x}, y={y} to client coordinates for hwnd={hwnd}:"
+			f" {ctypes.WinError()}"
+		)
 	return point.x, point.y
 
 def ClientToScreen(hwnd, x, y):
 	point = POINT(x, y)
 	if not user32.ClientToScreen(hwnd, byref(point)):
-		raise WinError()
+		log.error(
+			f"Couldn't convert client coordinates x={x}, y={y} to screen coordinates for hwnd={hwnd}:"
+			f" {ctypes.WinError()}"
+		)
 	return point.x, point.y
 
 def NotifyWinEvent(event, hwnd, idObject, idChild):

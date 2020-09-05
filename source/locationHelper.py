@@ -254,24 +254,18 @@ class _RectMixin:
 		return RECT(self.left,self.top,self.right,self.bottom)
 
 	def toLogical(self, hwnd):
-		try:
-			left, top = self.topLeft.toLogical(hwnd)
-			right, bottom = self.bottomRight.toLogical(hwnd)
-		except RuntimeError:
-			raise RuntimeError(f"Couldn't convert {self} to logical coordinates")
+		left,top=self.topLeft.toLogical(hwnd)
+		right,bottom=self.bottomRight.toLogical(hwnd)
 		if isinstance(self, RectLTWH):
-			return RectLTWH(left, top, right - left, bottom - top)
-		return RectLTRB(left, top, right, bottom)
+			return RectLTWH(left,top,right-left,bottom-top)
+		return RectLTRB(left,top,right,bottom)
 
 	def toPhysical(self, hwnd):
-		try:
-			left, top = self.topLeft.toPhysical(hwnd)
-			right, bottom = self.bottomRight.toPhysical(hwnd)
-		except RuntimeError:
-			raise RuntimeError(f"Couldn't convert {self} to physical coordinates")
+		left,top=self.topLeft.toPhysical(hwnd)
+		right,bottom=self.bottomRight.toPhysical(hwnd)
 		if isinstance(self, RectLTWH):
-			return RectLTWH(left, top, right - left, bottom - top)
-		return RectLTRB(left, top, right, bottom)
+			return RectLTWH(left,top,right-left,bottom-top)
+		return RectLTRB(left,top,right,bottom)
 
 	def toClient(self, hwnd):
 		left, top =self.topLeft.toClient(hwnd)
@@ -280,7 +274,7 @@ class _RectMixin:
 		return RectLTRB(left, top, left+self.width, top+self.height)
 
 	def toScreen(self, hwnd):
-		left, top = self.topLeft.toScreen(hwnd)
+		left,top=self.topLeft.toScreen(hwnd)
 		if isinstance(self, RectLTWH):
 			return RectLTWH(left, top, self.width, self.height)
 		return RectLTRB(left, top, left+self.width, top+self.height)
