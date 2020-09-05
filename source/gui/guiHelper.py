@@ -42,6 +42,8 @@ class myDialog(class wx.Dialog):
 		self.SetSizer(mainSizer)
 	...
 """
+from contextlib import contextmanager
+
 import wx
 from wx.lib import scrolledpanel
 from abc import ABCMeta
@@ -63,6 +65,13 @@ SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL = 10
 
 #: put this much space between two vertically associated elements (such as a wx.StaticText and a wx.Choice or wx.TextCtrl)
 SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL = 3
+
+
+@contextmanager
+def autoThaw(control: wx.Window):
+	control.Freeze()
+	yield
+	control.Thaw()
 
 class ButtonHelper(object):
 	""" Class used to ensure that the appropriate space is added between each button, whether in horizontal or vertical
@@ -290,19 +299,34 @@ class BoxSizerHelper(object):
 			self.addItem(labeledControl.sizer)
 		return labeledControl.control
 
-	def addDialogDismissButtons(self, buttons):
+	def addDialogDismissButtons(self, buttons, separated=False):
 		""" Adds and aligns the buttons for dismissing the dialog; e.g. "ok | cancel". These buttons are expected
 		to be the last items added to the dialog. Buttons that launch an action, do not dismiss the dialog, or are not
 		the last item should be added via L{addItem}
-		@param buttons: the buttons to add
-		@type buttons: wx.Sizer or guiHelper.ButtonHelper or single wx.Button
+		@param buttons: The buttons to add
+		@type buttons:
+		  wx.Sizer or guiHelper.ButtonHelper or single wx.Button
+		  or a bit list of the following flags: wx.OK, wx.CANCEL, wx.YES, wx.NO, wx.APPLY, wx.CLOSE,
+		  wx.HELP, wx.NO_DEFAULT
+		@param separated:
+		  Whether a separator should be added between the dialog content and its footer.
+		  Should be set to L{False} for message or single input dialogs, L{True} otherwise.
+		@type separated: L{bool}
 		"""
+		if self.sizer.GetOrientation() != wx.VERTICAL:
+			raise NotImplementedError(
+				"Adding dialog dismiss buttons to a horizontal BoxSizerHelper is not implemented."
+			)
 		if isinstance(buttons, ButtonHelper):
 			toAdd = buttons.sizer
 		elif isinstance(buttons, (wx.Sizer, wx.Button)):
 			toAdd = buttons
+		elif isinstance(buttons, int):
+			toAdd = self._parent.CreateButtonSizer(buttons)
 		else:
 			raise NotImplementedError("Unknown type: {}".format(buttons))
+		if separated:
+			self.addItem(wx.StaticLine(self._parent), flag=wx.EXPAND)
 		self.addItem(toAdd, flag=wx.ALIGN_RIGHT)
 		self.dialogDismissButtonsAdded = True
 		return buttons

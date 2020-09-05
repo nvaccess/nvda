@@ -1,6 +1,6 @@
 /*
 This file is a part of the NVDA project.
-Copyright 2019 NV Access Limited.
+Copyright 2019-2020 NV Access Limited, Accessolutions, Julien Cochuyt
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -21,6 +21,7 @@ const long XLDISPID_WINDOW_APPLICATION=148;
 const long XLDISPID_APPLICATION_RANGE=197;
 const long XLDISPID_RANGE__NEWENUM=-4;
 const long XLDISPID_RANGE_FORMULA=261;
+const long XLDISPID_RANGE_FORMULA_LOCAL=263;
 const long XLDISPID_RANGE_ITEM=170;
 const long XLDISPID_RANGE_ROW=257;
 const long XLDISPID_RANGE_COLUMN=240;

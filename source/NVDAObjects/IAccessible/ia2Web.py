@@ -15,7 +15,7 @@ import controlTypes
 from logHandler import log
 from documentBase import DocumentWithTableNavigation
 from NVDAObjects.behaviors import Dialog, WebDialog 
-from . import IAccessible
+from . import IAccessible, Groupbox
 from .ia2TextMozilla import MozillaCompoundTextInfo
 import aria
 import api
@@ -148,6 +148,14 @@ class Editor(Ia2Web, DocumentWithTableNavigation):
 			# Treet this as the cell not existing.
 			raise LookupError
 
+	def event_loseFocus(self):
+		# MozillaCompoundTextInfo caches the deepest object with the caret.
+		# But this can create a reference cycle if not removed.
+		# As we no longer need it once this object loses focus, we can delete it here.
+		self._lastCaretObj = None
+		super().event_loseFocus()
+
+
 class EditorChunk(Ia2Web):
 	beTransparentToMouse = True
 
@@ -179,6 +187,19 @@ class Math(Ia2Web):
 				"Not supported in this browser or ISimpleDOM COM proxy not registered.", exc_info=True)
 			raise LookupError
 
+
+class Switch(Ia2Web):
+	# role="switch" gets mapped to IA2_ROLE_TOGGLE_BUTTON, but it uses the
+	# checked state instead of pressed. The simplest way to deal with this
+	# identity crisis is to map it to a check box.
+	role = controlTypes.ROLE_CHECKBOX
+
+	def _get_states(self):
+		states = super().states
+		states.discard(controlTypes.STATE_PRESSED)
+		return states
+
+
 def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	"""Determine the most appropriate class if this is an IA2 web object.
 	This should be called after finding any classes for the specific web implementation.
@@ -204,6 +225,15 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 		clsList.append(Dialog)
 	elif iaRole == oleacc.ROLE_SYSTEM_EQUATION:
 		clsList.append(Math)
+	elif xmlRoles[0] == "switch":
+		clsList.append(Switch)
+	elif iaRole == oleacc.ROLE_SYSTEM_GROUPING:
+		try:
+			# The Groupbox class uses sibling text as the description. This is
+			# inappropriate for IA2 web browsers.
+			clsList.remove(Groupbox)
+		except ValueError:
+			pass
 
 	if iaRole==oleacc.ROLE_SYSTEM_APPLICATION:
 		clsList.append(Application)

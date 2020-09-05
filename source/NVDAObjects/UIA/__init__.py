@@ -1,8 +1,8 @@
-#NVDAObjects/UIA/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2009-2019 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V., Leonard de Ruijter
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2009-2020 NV Access Limited, Joseph Lee, Mohammad Suliman,
+# Babbage B.V., Leonard de Ruijter, Bill Dengler
 
 """Support for UI Automation (UIA) controls."""
 
@@ -26,7 +26,6 @@ import api
 import textInfos
 from logHandler import log
 from UIAUtils import *
-from UIAUtils import shouldUseUIAConsole
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import (
@@ -60,6 +59,7 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.UIA_NamePropertyId,
 		UIAHandler.UIA_ToggleToggleStatePropertyId,
 		UIAHandler.UIA_HelpTextPropertyId,
+		UIAHandler.UIA.UIA_FullDescriptionPropertyId,
 		UIAHandler.UIA_AccessKeyPropertyId,
 		UIAHandler.UIA_AcceleratorKeyPropertyId,
 		UIAHandler.UIA_HasKeyboardFocusPropertyId,
@@ -90,7 +90,7 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.UIA_AriaPropertiesPropertyId,
 		UIAHandler.UIA_LevelPropertyId,
 		UIAHandler.UIA_IsEnabledPropertyId,
-	} if UIAHandler.isUIAAvailable else set()
+	}
 
 	def _get__controlFieldUIACacheRequest(self):
 		""" The UIA cacheRequest object that will be used when fetching all UIA elements needed when generating control fields for this TextInfo's content."""
@@ -108,7 +108,7 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.TextUnit_Format,
 		UIAHandler.TextUnit_Word,
 		UIAHandler.TextUnit_Character
-	] if UIAHandler.isUIAAvailable else []
+	]
 
 	def find(self,text,caseSensitive=False,reverse=False):
 		tempRange=self._rangeObj.clone()
@@ -132,10 +132,11 @@ class UIATextInfo(textInfos.TextInfo):
 	def _getFormatFieldAtRange(self,textRange,formatConfig,ignoreMixedValues=False):
 		"""
 		Fetches formatting for the given UI Automation Text range.
-		@ param textRange: the text range whos formatting should be fetched.
+		@param textRange: the text range whos formatting should be fetched.
 		@type textRange: L{UIAutomation.IUIAutomationTextRange}
 		@param formatConfig: the types of formatting requested.
-		@ type formatConfig: a dictionary of NVDA document formatting configuration keys with values set to true for those types that should be fetched.
+		@type formatConfig: a dictionary of NVDA document formatting configuration keys
+			with values set to true for those types that should be fetched.
 		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included. If False, L{UIAUtils.MixedAttributeError} will be raised if UI Automation gives back a mixed attribute value signifying that the caller may want to try again with a smaller range. 
 		@type: bool
 		@return: The formatting for the given text range.
@@ -157,7 +158,17 @@ class UIATextInfo(textInfos.TextInfo):
 			if formatConfig["reportFontSize"]:
 				IDs.add(UIAHandler.UIA_FontSizeAttributeId)
 			if formatConfig["reportFontAttributes"]:
-				IDs.update({UIAHandler.UIA_FontWeightAttributeId,UIAHandler.UIA_IsItalicAttributeId,UIAHandler.UIA_UnderlineStyleAttributeId,UIAHandler.UIA_StrikethroughStyleAttributeId,UIAHandler.UIA_IsSuperscriptAttributeId,UIAHandler.UIA_IsSubscriptAttributeId,})
+				IDs.update({
+					UIAHandler.UIA_FontWeightAttributeId,
+					UIAHandler.UIA_IsItalicAttributeId,
+					UIAHandler.UIA_UnderlineStyleAttributeId,
+					UIAHandler.UIA_StrikethroughStyleAttributeId
+				})
+			if formatConfig["reportSuperscriptsAndSubscripts"]:
+				IDs.update({
+					UIAHandler.UIA_IsSuperscriptAttributeId,
+					UIAHandler.UIA_IsSubscriptAttributeId
+				})
 			if formatConfig["reportAlignment"]:
 				IDs.add(UIAHandler.UIA_HorizontalTextAlignmentAttributeId)
 			if formatConfig["reportColor"]:
@@ -196,6 +207,7 @@ class UIATextInfo(textInfos.TextInfo):
 			val=fetcher.getValue(UIAHandler.UIA_StrikethroughStyleAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				formatField['strikethrough']=bool(val)
+		if formatConfig["reportSuperscriptsAndSubscripts"]:
 			textPosition=None
 			val=fetcher.getValue(UIAHandler.UIA_IsSuperscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue and val:
@@ -379,16 +391,16 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.UIA_TabItemControlTypeId,
 		UIAHandler.UIA_TextControlTypeId,
 		UIAHandler.UIA_SplitButtonControlTypeId
-	} if UIAHandler.isUIAAvailable else None
+	}
 
 
 	def _getControlFieldForObject(self, obj,isEmbedded=False,startOfNode=False,endOfNode=False):
 		"""
 		Fetch control field information for the given UIA NVDAObject.
-		@ param obj: the NVDAObject the control field is for.
+		@param obj: the NVDAObject the control field is for.
 		@type obj: L{UIA}
 		@param isEmbedded: True if this NVDAObject is for a leaf node (has no useful children).
-		@ type isEmbedded: bool
+		@type isEmbedded: bool
 		@param startOfNode: True if the control field represents the very start of this object.
 		@type startOfNode: bool
 		@param endOfNode: True if the control field represents the very end of this object.
@@ -448,7 +460,8 @@ class UIATextInfo(textInfos.TextInfo):
 		@param textRange: the UI Automation text range to walk.
 		@type textRange: L{UIAHandler.IUIAutomationTextRange}
 		@param formatConfig: the types of formatting requested.
-		@ type formatConfig: a dictionary of NVDA document formatting configuration keys with values set to true for those types that should be fetched.
+		@type formatConfig: a dictionary of NVDA document formatting configuration keys
+			with values set to true for those types that should be fetched.
 		@param UIAFormatUnits: the UI Automation text units (in order of resolution) that should be used to split the text so as to avoid mixed attribute values. This is None by default.
 			If the parameter is a list of 1 or more units, The range will be split by the first unit in the list, and this method will be recursively run on each subrange, with the remaining units in this list given as the value of this parameter. 
 			If this parameter is an empty list, then formatting and text is fetched for the entire range, but any mixed attribute values are ignored and no splitting occures.
@@ -502,14 +515,16 @@ class UIATextInfo(textInfos.TextInfo):
 		@param textRange: the UI Automation text range whos content should be fetched.
 		@type textRange: L{UIAHandler.IUIAutomation}
 		@param formatConfig: the types of formatting requested.
-		@ type formatConfig: a dictionary of NVDA document formatting configuration keys with values set to true for those types that should be fetched.
+		@type formatConfig: a dictionary of NVDA document formatting configuration keys
+			with values set to true for those types that should be fetched.
 		@param includeRoot: If true, then a control start and end will be yielded for the root element.
-		@ type includeRoot: bool
+		@type includeRoot: bool
 		@param alwaysWalkAncestors: If true then control fields will be yielded for any element enclosing the given text range, that is a descendant of the root element. If false then the root element may be  assumed to be the only ancestor.
 		@type alwaysWalkAncestors: bool
 		@param recurseChildren: If true, this function will be recursively called for each child of the given text range, clipped to the bounds of this text range. Formatted text between the children will also be yielded. If false, only formatted text will be yielded.
 		@type recurseChildren: bool
-		@param _rootElementClipped: Indicates if textRange represents all of the given rootElement, or is clipped at the start or end.
+		@param _rootElementClipped: Indicates if textRange represents all of the given rootElement,
+			or is clipped at the start or end.
 		@type _rootElementClipped: 2-tuple
 		@rtype: A generator that yields L{textInfo.FieldCommand} objects and text strings.
 		"""
@@ -827,6 +842,8 @@ class UIA(Window):
 	def findOverlayClasses(self,clsList):
 		UIAControlType=self.UIAElement.cachedControlType
 		UIAClassName=self.UIAElement.cachedClassName
+		# #11445: to avoid COM errors, do not fetch cached UIA Automation Id from the underlying element.
+		UIAAutomationId = self.UIAAutomationId
 		if UIAClassName=="NetUITWMenuItem" and UIAControlType==UIAHandler.UIA_MenuItemControlTypeId and not self.name and not self.previous:
 			# Bounces focus from a netUI dead placeholder menu item when no item is selected up to the menu itself.
 			clsList.append(PlaceholderNetUITWMenuItem)
@@ -834,7 +851,11 @@ class UIA(Window):
 			clsList.append(WpfTextView)
 		elif UIAClassName=="NetUIDropdownAnchor":
 			clsList.append(NetUIDropdownAnchor)
-		elif self.TextInfo==UIATextInfo and (UIAClassName=='_WwG' or self.windowClassName=='_WwG' or self.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content')):
+		elif self.TextInfo == UIATextInfo and (
+			UIAClassName == '_WwG'
+			or self.windowClassName == '_WwG'
+			or UIAAutomationId.startswith('UIA_AutomationId_Word_Content')
+		):
 			from .wordDocument import WordDocument, WordDocumentNode
 			if self.role==controlTypes.ROLE_DOCUMENT:
 				clsList.append(WordDocument)
@@ -843,13 +864,21 @@ class UIA(Window):
 		# #5136: Windows 8.x and Windows 10 uses different window class and other attributes for toast notifications.
 		elif UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId: #Windows 8.x
 			clsList.append(Toast_win8)
-		elif self.windowClassName=="Windows.UI.Core.CoreWindow" and UIAControlType==UIAHandler.UIA_WindowControlTypeId and "ToastView" in self.UIAElement.cachedAutomationId: # Windows 10
+		elif (
+			self.windowClassName == "Windows.UI.Core.CoreWindow"
+			and UIAControlType == UIAHandler.UIA_WindowControlTypeId
+			and "ToastView" in UIAAutomationId
+		):  # Windows 10
 			clsList.append(Toast_win10)
 		# #8118: treat UIA tool tips (including those found in UWP apps) as proper tool tips, especially those found in Microsoft Edge and other apps.
 		# Windows 8.x toast, although a form of tool tip, is covered separately.
 		elif UIAControlType==UIAHandler.UIA_ToolTipControlTypeId:
 			clsList.append(ToolTip)
-		elif self.UIAElement.cachedFrameworkID in ("InternetExplorer","MicrosoftEdge"):
+		elif(
+			self.UIAElement.cachedFrameworkID in ("InternetExplorer", "MicrosoftEdge")
+			# But not for Internet Explorer
+			and not self.appModule.appName == 'iexplore'
+		):
 			from . import edge
 			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
 				clsList.append(edge.EdgeHTMLRootContainer)
@@ -863,11 +892,16 @@ class UIA(Window):
 				clsList.append(edge.EdgeList)
 			else:
 				clsList.append(edge.EdgeNode)
-		elif self.role==controlTypes.ROLE_DOCUMENT and self.UIAElement.cachedAutomationId=="Microsoft.Windows.PDF.DocumentView":
-				# PDFs
-				from . import edge
-				clsList.append(edge.EdgeHTMLRoot)
-		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
+		elif self.role == controlTypes.ROLE_DOCUMENT and UIAAutomationId == "Microsoft.Windows.PDF.DocumentView":
+			# PDFs
+			from . import edge
+			clsList.append(edge.EdgeHTMLRoot)
+		elif (
+			UIAAutomationId == "RichEditControl"
+			and "DevExpress.XtraRichEdit" in self.UIAElement.cachedProviderDescription
+		):
+			clsList.insert(0, DevExpressXtraRichEdit)
+		if UIAControlType == UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.append(ProgressBar)
 		if UIAClassName=="ControlPanelLink":
 			clsList.append(ControlPanelLink)
@@ -904,7 +938,7 @@ class UIA(Window):
 			clsList.append(Dialog)
 		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
 		try:
-			if self.UIAElement.cachedAutomationID in ("SearchTextBox", "TextBox"):
+			if UIAAutomationId in ("SearchTextBox", "TextBox"):
 				clsList.append(SearchField)
 		except COMError:
 			log.debug("Failed to locate UIA search field", exc_info=True)
@@ -926,10 +960,14 @@ class UIA(Window):
 		# Support Windows Console's UIA interface
 		if (
 			self.windowClassName == "ConsoleWindowClass"
-			and shouldUseUIAConsole()
+			and config.conf['UIA']['winConsoleImplementation'] == "UIA"
 		):
 			from . import winConsoleUIA
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
+		elif UIAClassName == "TermControl":
+			from . import winConsoleUIA
+			clsList.append(winConsoleUIA.WinTerminalUIA)
+
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:
 			if UIAHandler.autoSelectDetectionAvailable:
@@ -954,6 +992,15 @@ class UIA(Window):
 		windowHandle=kwargs.get('windowHandle')
 		if isinstance(relation,tuple):
 			UIAElement=UIAHandler.handler.clientObject.ElementFromPointBuildCache(POINT(relation[0],relation[1]),UIAHandler.handler.baseCacheRequest)
+			# Ignore this object if it is non native.
+			if not UIAHandler.handler.isNativeUIAElement(UIAElement):
+				if UIAHandler._isDebug():
+					log.debug(
+						f"kwargsFromSuper: ignoring non native element at coordinates {relation}"
+					)
+				return False
+			# This object may be in a different window, so we need to recalculate the window handle.
+			kwargs['windowHandle'] = None
 		elif relation=="focus":
 			try:
 				UIAElement=UIAHandler.handler.clientObject.getFocusedElementBuildCache(UIAHandler.handler.baseCacheRequest)
@@ -1010,6 +1057,14 @@ class UIA(Window):
 			return UIAHandler.handler.clientObject.CompareElements(self.UIAElement,other.UIAElement)
 		except:
 			return False
+
+	def event_gainFocus(self):
+		UIAHandler.handler.addLocalEventHandlerGroupToElement(self.UIAElement, isFocus=True)
+		super().event_gainFocus()
+
+	def event_loseFocus(self):
+		super().event_loseFocus()
+		UIAHandler.handler.removeLocalEventHandlerGroupFromElement(self.UIAElement)
 
 	def _get_shouldAllowUIAFocusEvent(self):
 		try:
@@ -1080,6 +1135,7 @@ class UIA(Window):
 	def _get_devInfo(self):
 		info=super(UIA,self).devInfo
 		info.append("UIAElement: %r"%self.UIAElement)
+		# #11445: allow exceptions to be recorded when presenting Automation Id.
 		try:
 			ret=self.UIAElement.currentAutomationID
 		except Exception as e:
@@ -1122,6 +1178,13 @@ class UIA(Window):
 		info.append("UIA patterns available: %s"%", ".join(patternsAvailable))
 		return info
 
+	def _get_UIAAutomationId(self):
+		try:
+			return self._getUIACacheablePropertyValue(UIAHandler.UIA_AutomationIdPropertyId)
+		except COMError:
+			# #11445: due to timing errors, elements will be instantiated with no automation Id present.
+			return ""
+
 	def _get_name(self):
 		try:
 			return self._getUIACacheablePropertyValue(UIAHandler.UIA_NamePropertyId)
@@ -1143,11 +1206,20 @@ class UIA(Window):
 				role=superRole
 		return role
 
-	def _get_description(self):
+	def _get_UIAFullDescription(self):
+		try:
+			return self._getUIACacheablePropertyValue(UIAHandler.UIA_FullDescriptionPropertyId) or ""
+		except COMError:
+			return ""
+
+	def _get_UIAHelpText(self):
 		try:
 			return self._getUIACacheablePropertyValue(UIAHandler.UIA_HelpTextPropertyId) or ""
 		except COMError:
 			return ""
+
+	def _get_description(self):
+		return self.UIAFullDescription or self.UIAHelpText
 
 	def _get_keyboardShortcut(self):
 		# Build the keyboard shortcuts list early for readability.
@@ -1177,7 +1249,7 @@ class UIA(Window):
 		UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId,
 		UIAHandler.UIA_IsEnabledPropertyId,
 		UIAHandler.UIA_IsOffscreenPropertyId,
-	}  if UIAHandler.isUIAAvailable else set()
+	}
 
 	def _get_states(self):
 		states=set()
@@ -1215,12 +1287,10 @@ class UIA(Window):
 			states.add(controlTypes.STATE_INVALID_ENTRY)
 		if self._getUIACacheablePropertyValue(UIAHandler.UIA_IsRequiredForFormPropertyId):
 			states.add(controlTypes.STATE_REQUIRED)
-		try:
-			isReadOnly=self._getUIACacheablePropertyValue(UIAHandler.UIA_ValueIsReadOnlyPropertyId,True)
-		except COMError:
-			isReadOnly=UIAHandler.handler.reservedNotSupportedValue
-		if isReadOnly and isReadOnly!=UIAHandler.handler.reservedNotSupportedValue:
+
+		if self._getReadOnlyState():
 			states.add(controlTypes.STATE_READONLY)
+
 		try:
 			s=self._getUIACacheablePropertyValue(UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,True)
 		except COMError:
@@ -1245,6 +1315,26 @@ class UIA(Window):
 				if s==UIAHandler.ToggleState_On:
 					states.add(controlTypes.STATE_CHECKED)
 		return states
+
+	def _getReadOnlyState(self) -> bool:
+		try:
+			isReadOnly = self._getUIACacheablePropertyValue(UIAHandler.UIA_ValueIsReadOnlyPropertyId, True)
+		except COMError:
+			isReadOnly = UIAHandler.handler.reservedNotSupportedValue
+		if (
+			isReadOnly == UIAHandler.handler.reservedNotSupportedValue
+			and self.UIATextPattern
+		):
+			# Most UIA text controls don't support the "ValueIsReadOnly" property,
+			# so we need to look at the root document "IsReadOnly" attribute.
+			try:
+				document = self.UIATextPattern.documentRange
+				isReadOnly = document.GetAttributeValue(UIAHandler.UIA_IsReadOnlyAttributeId)
+			except COMError:
+				isReadOnly = UIAHandler.handler.reservedNotSupportedValue
+		if isReadOnly == UIAHandler.handler.reservedNotSupportedValue:
+			return False
+		return isReadOnly
 
 	def _get_presentationType(self):
 		presentationType=super(UIA,self).presentationType
@@ -1316,23 +1406,39 @@ class UIA(Window):
 			return None
 		return self.correctAPIForRelation(UIA(UIAElement=lastChildElement))
 
-	def _get_children(self):
-		childrenCacheRequest=UIAHandler.handler.baseCacheRequest.clone()
-		childrenCacheRequest.TreeScope=UIAHandler.TreeScope_Children
+	def _get_UIAChildren(self):
+		childrenCacheRequest = UIAHandler.handler.baseCacheRequest.clone()
+		childrenCacheRequest.TreeScope = UIAHandler.TreeScope_Children
 		try:
-			cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
+			return self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
 		except COMError as e:
 			log.debugWarning("Could not fetch cached children from UIA element: %s"%e)
-			return super(UIA,self).children
-		children=[]
-		if not cachedChildren:
-			# GetCachedChildren returns null if there are no children.
+			raise e
+
+	def _get_children(self):
+		try:
+			cachedChildren = self.UIAChildren
+			children = []
+			if not cachedChildren:
+				# GetCachedChildren returns null if there are no children.
+				return children
+			for index in range(cachedChildren.length):
+				e = cachedChildren.getElement(index)
+				windowHandle = self.windowHandle
+				children.append(self.correctAPIForRelation(UIA(windowHandle=windowHandle, UIAElement=e)))
 			return children
-		for index in range(cachedChildren.length):
-			e=cachedChildren.getElement(index)
-			windowHandle=self.windowHandle
-			children.append(self.correctAPIForRelation(UIA(windowHandle=windowHandle,UIAElement=e)))
-		return children
+		except COMError:
+			return super().children
+
+	def _get_childCount(self):
+		try:
+			cachedChildren = self.UIAChildren
+			if not cachedChildren:
+				# GetCachedChildren returns null if there are no children.
+				return 0
+			return cachedChildren.length
+		except COMError:
+			return len(super().children)
 
 	def _get_rowNumber(self):
 		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridItemRowPropertyId,True)
@@ -1410,6 +1516,15 @@ class UIA(Window):
 		raise NotImplementedError
 
 	def _get_processID(self):
+		if self.windowClassName == 'ConsoleWindowClass':
+			# #10115: The UIA implementation for Windows console windows exposes the process ID of conhost,
+			# not the actual app it is hosting.
+			# Therefore, to work around this, for console windows, we fallback to getting processID from the window
+			# rather than from UIA.
+			# Note that we can't do this hack in the WinConsoleUIA NVDAObject
+			# Because the appModule is already created and cached
+			# before the UIA NVDAObject is morphed into the specific WinConsoleUIA class.
+			return super().processID
 		return self.UIAElement.cachedProcessId
 
 	def _get_location(self):
@@ -1584,7 +1699,7 @@ class MenuItem(UIA):
 class UIColumnHeader(UIA):
 
 	def _get_description(self):
-		description=super(UIColumnHeader,self).description
+		description = self.UIAHelpText
 		try:
 			itemStatus=self._getUIACacheablePropertyValue(UIAHandler.UIA_ItemStatusPropertyId)
 		except COMError:
@@ -1636,7 +1751,7 @@ class SensitiveSlider(UIA):
 class ControlPanelLink(UIA):
 
 	def _get_description(self):
-		desc=super(ControlPanelLink,self).description
+		desc = self.UIAHelpText
 		try:
 			i=desc.find('\n')
 		except:
@@ -1780,3 +1895,15 @@ class PlaceholderNetUITWMenuItem(UIA):
 			if parent.role==controlTypes.ROLE_POPUPMENU:
 				return parent
 			parent=parent.parent
+
+
+class DevExpressXtraRichEdit(UIA):
+	""""At least some versions of the DevExpress Xtra Rich Edit control
+	have a broken implementation of the UIA Text Pattern.
+	Work around this by checking whether the document range is valid.
+	"""
+
+	def _get_TextInfo(self):
+		if self.UIATextPattern and self.UIATextPattern.DocumentRange:
+			return super().TextInfo
+		return super(UIA, self).TextInfo

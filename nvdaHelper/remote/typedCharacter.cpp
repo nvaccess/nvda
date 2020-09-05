@@ -21,6 +21,10 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 HWND typedCharacter_window=NULL;
 
+void __stdcall typedCharacter_apcFunc(ULONG_PTR data) {
+	nvdaControllerInternal_typedCharacterNotify(static_cast<wchar_t>(data));
+}
+
 LRESULT CALLBACK typedCharacter_getMessageHook(int code, WPARAM wParam, LPARAM lParam) {
 	static WPARAM lastCharacter=0;
 	MSG* pmsg=(MSG*)lParam;
@@ -28,7 +32,11 @@ LRESULT CALLBACK typedCharacter_getMessageHook(int code, WPARAM wParam, LPARAM l
 		typedCharacter_window=pmsg->hwnd;
 		lastCharacter=0;
 	} else if((typedCharacter_window!=0)&&(pmsg->message==WM_CHAR)&&(pmsg->hwnd==typedCharacter_window)&&(pmsg->wParam!=lastCharacter)) { 
-		nvdaControllerInternal_typedCharacterNotify(GetCurrentThreadId(),static_cast<wchar_t>(pmsg->wParam));
+		// Instruct NVDA's inproc manager thread to report the typed character to NVDA via rpc.
+
+		// If we were to call the rpc function directly, it might cause a deadlock
+		// if NvDA were to interact with this app's main thread while the rpc function was in progress.
+		QueueUserAPC(typedCharacter_apcFunc, inprocMgrThreadHandle, static_cast<ULONG_PTR>(pmsg->wParam));
 		lastCharacter=pmsg->wParam;
 	}
 	return 0;
