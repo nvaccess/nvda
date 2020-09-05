@@ -86,16 +86,28 @@ class BrailleViewerFrame(wx.Frame):
 		self.ShowWithoutActivating()
 		self.Fit()
 
-	def _createControls(self, sizer, parent):
-		# Hack: use Static text to calculate the width of the dialog required for the number of cells.
-		self._brailleSizeTest = wx.StaticText(parent, label=(self._numCells + 5) * " ")
+	def _createBrailleTextSizeTestCtrl(self, sizer, parent) -> wx.Size:
+		self._brailleSizeTest = wx.StaticText(parent)
 		# Use the same font so the size is accurate.
 		self._brailleSizeTest.Font = self._setBrailleFont(self._brailleSizeTest.GetFont())
 		# Keep the label hidden since it provides no information.
+		# Don't destroy it, it will be used later if
+		# the number of cells changes (if another braille display is connected with a different cell count)
 		self._brailleSizeTest.Hide()
-		labelSize = self._brailleSizeTest.GetSize()
 		sizer.Add(self._brailleSizeTest, flag=wx.EXPAND | wx.LEFT | wx.RIGHT, border=10, proportion=1)
 
+	def _calculateBrailleOutputSize(self, numCells: int):
+		self._brailleSizeTest.Label = (numCells + 5) * " "
+		return self._brailleSizeTest.GetSize()
+
+	def _createControls(self, sizer, parent):
+		# There seems to be no way to make a TextCtrl (used for braille and raw text output) match its
+		# text content: https://forums.wxwidgets.org/viewtopic.php?t=44472
+		# Hacky fix:
+		# Use a Static text to calculate the width of the dialog required for the number of cells.
+		self._createBrailleTextSizeTestCtrl(sizer, parent)
+		labelSize = self._calculateBrailleOutputSize(self._numCells)
+		log.debug(f"Initial braille label size {labelSize}")
 		self._brailleOutput = wx.TextCtrl(
 			parent,
 			value=self._brailleOutputLastSet,
@@ -208,14 +220,14 @@ class BrailleViewerFrame(wx.Frame):
 		if self._newCellCount is not None:
 			# do resize
 			self._numCells = self._newCellCount
+			oldSize = self._brailleOutput.GetSize()
+			labelSize = self._calculateBrailleOutputSize(self._numCells)
+			self._brailleOutput.SetMinSize(size=wx.Size(labelSize.x, -1))
+			newSize = self._brailleOutput.GetSize()
 			log.debug(
 				f"Updating brailleViewer cell count to: {self._newCellCount}"
-				f", old braille label size: {self._brailleSizeTest.GetSize()}"
+				f", braille label size {oldSize} -> {newSize}"
 			)
-			self._brailleSizeTest.Label = (self._numCells + 5) * " "
-			labelSize = self._brailleSizeTest.GetSize()
-			log.debug(f"New braille label size {labelSize}")
-			self._brailleOutput.SetMinSize(size=wx.Size(labelSize.x, -1))
 			# Ensure that any variation in the number of characters displayed is still shown by calling `Fit`.
 			# This should really only happen when an external display with a different cell count is connected.
 			# If there is some other reason, it is better for the window size to adjust, than to miss content.
