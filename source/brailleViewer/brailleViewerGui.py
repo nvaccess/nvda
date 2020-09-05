@@ -133,7 +133,7 @@ class BrailleViewerFrame(wx.Frame):
 
 		# Translators: The label for a setting in the braille viewer that controls
 		# whether hovering mouse routes to the cell.
-		hoverRoutesCellText = _("&Hover to route to cell")
+		hoverRoutesCellText = _("&Hover for cell routing")
 		self._shouldHoverRouteToCellCheckBox = wx.CheckBox(
 			parent=parent,
 			label=hoverRoutesCellText
