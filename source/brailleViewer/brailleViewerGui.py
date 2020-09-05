@@ -62,7 +62,7 @@ class BrailleViewerFrame(wx.Frame):
 		self._notifyOfDestroyed = onDestroyed
 		self._numCells = numCells
 		self._brailleOutputLastSet = BRAILLE_INIT_CHARACTER * numCells
-		self._rawTextOutputLastSet = "".join(f"{x%10}" for x in range(numCells+5))
+		self._rawTextOutputLastSet = ""
 
 		self.frameContentsSizer = wx.BoxSizer(wx.HORIZONTAL)
 		self.SetSizer(self.frameContentsSizer)
