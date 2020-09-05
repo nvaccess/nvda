@@ -148,7 +148,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			speech.speakSelectionChange(oldInfo, selection)
 		self.selection = selection
 
-	def doFindText(self,text,reverse=False,caseSensitive=False, willSayAllResume=False):
+	def doFindText(self, text, reverse=False, caseSensitive=False, willSayAllResume=False):
 		if not text:
 			return
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
@@ -158,7 +158,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			speech.cancelSpeech()
 			info.move(textInfos.UNIT_LINE,1,endPoint="end")
 			if not willSayAllResume:
-				speech.speakTextInfo(info,reason=controlTypes.REASON_CARET)
+				speech.speakTextInfo(info, reason=controlTypes.REASON_CARET)
 		else:
 			wx.CallAfter(gui.messageBox,_('text "%s" not found')%text,_("Find Error"),wx.OK|wx.ICON_ERROR)
 		CursorManager._lastFindText=text
@@ -181,7 +181,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			"find the next occurrence of the previously entered text string from the current cursor's position"
 		),
 		gesture="kb:NVDA+f3",
-		resumeSayAllMode=sayAllHandler.CURSOR_CARET,
+		resumeSayAllMode = sayAllHandler.CURSOR_CARET,
 	)
 	def script_findNext(self,gesture):
 		if not self._lastFindText:
@@ -199,7 +199,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			"find the previous occurrence of the previously entered text string from the current cursor's position"
 		),
 		gesture="kb:NVDA+shift+f3",
-		resumeSayAllMode = sayAllHandler.CURSOR_CARET,
+		resumeSayAllMode=sayAllHandler.CURSOR_CARET,
 	)
 	def script_findPrevious(self,gesture):
 		if not self._lastFindText:
