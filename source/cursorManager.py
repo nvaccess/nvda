@@ -195,6 +195,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 
 	@script(
 		description=_(
+			# Translators: Input help message for find previous command.
 			"find the previous occurrence of the previously entered text string from the current cursor's position"
 		),
 		gesture="kb:NVDA+shift+f3",
