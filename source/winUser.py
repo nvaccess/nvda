@@ -13,6 +13,7 @@ from ctypes.wintypes import *
 from ctypes.wintypes import HWND, RECT, DWORD
 import winKernel
 from textUtils import WCHAR_ENCODING
+from logHandler import log
 
 #dll handles
 user32=windll.user32
@@ -613,7 +614,7 @@ def ScreenToClient(hwnd, x, y):
 	if not user32.ScreenToClient(hwnd, byref(point)):
 		log.error(
 			f"Couldn't convert screen coordinates x={x}, y={y} to client coordinates for hwnd={hwnd}:"
-			f" {ctypes.WinError()}"
+			f" {WinError()}"
 		)
 	return point.x, point.y
 
@@ -622,7 +623,7 @@ def ClientToScreen(hwnd, x, y):
 	if not user32.ClientToScreen(hwnd, byref(point)):
 		log.error(
 			f"Couldn't convert client coordinates x={x}, y={y} to screen coordinates for hwnd={hwnd}:"
-			f" {ctypes.WinError()}"
+			f" {WinError()}"
 		)
 	return point.x, point.y
 
