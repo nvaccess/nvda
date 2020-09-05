@@ -48,7 +48,7 @@ class BrailleViewerFrame(wx.Frame):
 		self._doneRouteCall = False
 		self._newBraille: Optional[str] = None
 		self._newRawText: Optional[str] = None
-		self._newSize: Optional[int] = None
+		self._newCellCount: Optional[int] = None
 
 		super(BrailleViewerFrame, self).__init__(
 			gui.mainFrame,
@@ -205,13 +205,13 @@ class BrailleViewerFrame(wx.Frame):
 		if self._newRawText is not None:
 			self._rawTextOutput.SetValue(self._newRawText)
 			self._newRawText = None
-		if self._newSize is not None:
+		if self._newCellCount is not None:
 			# do resize
+			self._numCells = self._newCellCount
 			log.debug(
-				f"Updating brailleViewer cell count to: {self._newSize}"
+				f"Updating brailleViewer cell count to: {self._newCellCount}"
 				f", old braille label size: {self._brailleSizeTest.GetSize()}"
 			)
-			self._numCells = self._newSize
 			self._brailleSizeTest.Label = (self._numCells + 5) * " "
 			labelSize = self._brailleSizeTest.GetSize()
 			log.debug(f"New braille label size {labelSize}")
@@ -220,7 +220,7 @@ class BrailleViewerFrame(wx.Frame):
 			# This should really only happen when an external display with a different cell count is connected.
 			# If there is some other reason, it is better for the window size to adjust, than to miss content.
 			self.Fit()
-			self._newSize = None
+			self._newCellCount = None
 
 		if self._debugGuiUpdate:
 			self._doDebugGuiUpdate()
@@ -389,7 +389,7 @@ class BrailleViewerFrame(wx.Frame):
 			paddedRawText = rawText.ljust(padToLen, " ")
 			self._newRawText = paddedRawText
 		if self._numCells != currentCellCount:
-			self._newSize = currentCellCount
+			self._newCellCount = currentCellCount
 		if not self._timer.IsRunning():
 			self._timer.StartOnce()
 
