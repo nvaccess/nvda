@@ -10,7 +10,6 @@ import gui
 import config
 from logHandler import log
 import fonts
-import braille
 import inputCore
 
 BRAILLE_UNICODE_PATTERNS_START = 0x2800
@@ -198,9 +197,6 @@ class BrailleViewerFrame(wx.Frame):
 		self._hoverCellStyle = wx.TextAttr()
 		self._hoverCellStyle.SetBackgroundColour(newColor)
 
-	driverName = "brailleViewer"
-	keyRouting = "route"
-
 	def _updateGui(self):
 		self.Freeze()
 		if self._newBraille is not None:
@@ -317,9 +313,9 @@ class BrailleViewerFrame(wx.Frame):
 		self._updateHoverStage()
 
 	def _activateRouteToCell(self):
-		import globalCommands
+		from .brailleViewerInputGesture import BrailleViewerGesture_RouteTo
 		inputCore.manager.executeGesture(
-			BrailleViewerInputGesture(self.keyRouting, self._lastMouseOverChar)
+			BrailleViewerGesture_RouteTo(self._lastMouseOverChar)
 		)
 
 	def _updateHoverStage(self):
@@ -456,15 +452,3 @@ class BrailleViewerFrame(wx.Frame):
 		self._notifyOfDestroyed()
 		evt.Skip()
 
-
-class BrailleViewerInputGesture(braille.BrailleDisplayGesture):
-
-	source = BrailleViewerFrame.driverName
-
-	def __init__(self, command, argument):
-		super().__init__()
-		self.id = command
-		if command == BrailleViewerFrame.keyRouting:
-			self.routingIndex = argument
-			import globalCommands
-			self.script = globalCommands.commands.script_braille_routeTo
