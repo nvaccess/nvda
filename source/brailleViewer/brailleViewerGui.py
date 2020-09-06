@@ -184,8 +184,8 @@ class BrailleViewerFrame(wx.Frame):
 			timeElapsed: float,
 			totalTime: float,
 			startValue: float,
-			startColor: wx.Colour,
-			finalColor: wx.Colour
+			originColor: wx.Colour,
+			destColor: wx.Colour
 	):
 		""" Transition from one colour to another over time.
 		:param timeElapsed: total accumulated time elapsed since the start
@@ -193,15 +193,15 @@ class BrailleViewerFrame(wx.Frame):
 		:param totalTime: total time that the transition should take (units must match timeElapsed)
 		:param startValue: a percentage (0->1). At elapsed == 0 the colour transition will already be this far
 		through. Allows for a beginning bump in the colour transition.
-		:param startColor: The origin colour.
-		:param finalColor: The destination colour. Reached at elapsed == totalTime.
+		:param originColor: The origin colour.
+		:param destColor: The destination colour. Reached at elapsed == totalTime.
 		:return: The transition colour.
 		"""
-		finalColorT = finalColor.Get(includeAlpha=False)
+		finalColorT = destColor.Get(includeAlpha=False)
 		value = min(1.0, max(0.0, (0.001 + timeElapsed) / totalTime))
-		initialColor: Tuple[int, int, int] = startColor.Get(includeAlpha=False)
-		startColor = _linearInterpolate(startValue, initialColor, finalColorT)
-		currentColor = _linearInterpolate(value, startColor, finalColorT)
+		initialColor: Tuple[int, int, int] = originColor.Get(includeAlpha=False)
+		originColor = _linearInterpolate(startValue, initialColor, finalColorT)
+		currentColor = _linearInterpolate(value, originColor, finalColorT)
 		return wx.Colour(*currentColor)
 
 	def _updateHoverCell(self):
@@ -281,8 +281,8 @@ class BrailleViewerFrame(wx.Frame):
 				secondsSinceHoverStart,
 				self._secondsOfHoverToActivate,
 				startValue=0.2,
-				startColor=self._normalBGColor,
-				finalColor=wx.Colour(255, 205, 60)  # orange-yellow
+				originColor=self._normalBGColor,
+				destColor=wx.Colour(255, 205, 60)  # orange-yellow
 			))
 
 	def _setPostActivateStyle(self, secondsSinceHoverStart):
@@ -290,8 +290,8 @@ class BrailleViewerFrame(wx.Frame):
 			secondsSinceHoverStart - self._secondsOfHoverToActivate,
 			totalTime=self._secondsBeforeReturnToNormal - self._secondsOfHoverToActivate,
 			startValue=0.0,
-			startColor=wx.Colour(81, 215, 81),  # green
-			finalColor=self._normalBGColor
+			originColor=wx.Colour(81, 215, 81),  # green
+			destColor=self._normalBGColor
 		))
 
 	def _cancelPendingHover(self):
