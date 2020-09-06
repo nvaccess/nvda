@@ -52,6 +52,24 @@ def _calculateHoverColour(
 	return wx.Colour(*currentColor)
 
 
+def _getCharIndexUnderMouse(ctrl: wx.TextCtrl) -> Optional[int]:
+	""" Get the index of the character under the mouse.
+	@note: Assumes all characters are on one line
+	"""
+	mousePos = wx.GetMousePosition()
+	toClient = ctrl.ScreenToClient(mousePos)
+	# This hit test is inaccurate, there seems to be a bug in wx.
+	# When the mouse is above or before the window it is counted as a hit.
+	# Above: mouseY is less than windowY I.E. when 'toClient.y' < 0
+	# Before: mouseX is less than windowX I.E. when 'toClient.x' < 0
+	result, index = ctrl.HitTestPos(
+		toClient
+	)
+	if result == wx.TE_HT_ON_TEXT and toClient.y > 0 and toClient.x > 0:
+		return index
+	return None
+
+
 # Inherit from wx.Frame because these windows show in the alt+tab menu (where miniFrame does not)
 # wx.Dialog causes a crash on destruction when multiple were created at the same time (speechViewer
 # may start at the same time)
@@ -308,24 +326,10 @@ class BrailleViewerFrame(wx.Frame):
 		self._cancelPendingHover()
 		self._lastMouseOverChar = index
 
-	def _getBrailleIndexUnderMouse(self) -> Optional[int]:
-		mousePos = wx.GetMousePosition()
-		toClient = self._brailleOutput.ScreenToClient(mousePos)
-		# This hit test is inaccurate, there seems to be a bug in wx.
-		# When the mouse is above or before the window it is counted as a hit.
-		# Above: mouseY is less than windowY I.E. when 'toClient.y' < 0
-		# Before: mouseX is less than windowX I.E. when 'toClient.x' < 0
-		result, index = self._brailleOutput.HitTestPos(
-			toClient
-		)
-		if result == wx.TE_HT_ON_TEXT and toClient.y > 0 and toClient.x > 0:
-			return index
-		return None
-
 	def _updateHover(self):
 		if not self._shouldDoHover():
 			return
-		index = self._getBrailleIndexUnderMouse()
+		index = _getCharIndexUnderMouse(self._brailleOutput)
 		if index is None:
 			# Mouse no longer over braille cells
 			self._cancelPendingHover()
