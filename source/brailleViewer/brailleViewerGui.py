@@ -112,6 +112,7 @@ class BrailleViewerFrame(wx.Frame):
 		self._createBrailleTextSizeTestCtrl(sizer, parent)
 		labelSize = self._calculateBrailleOutputSize(self._numCells)
 		log.debug(f"Initial braille label size {labelSize}")
+
 		self._brailleOutput = wx.TextCtrl(
 			parent,
 			value=self._brailleOutputLastSet,
