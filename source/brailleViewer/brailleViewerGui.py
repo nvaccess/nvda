@@ -210,14 +210,6 @@ class BrailleViewerFrame(wx.Frame):
 	def _shouldDoHover(self):
 		return config.conf["brailleViewer"]["shouldHoverRouteToCell"]
 
-	hitResMap = {
-		wx.TE_HT_UNKNOWN: "TE_HT_UNKNOWN",  # this means HitTest() is simply not implemented
-		wx.TE_HT_BEFORE: "TE_HT_BEFORE",  # either to the left or upper
-		wx.TE_HT_ON_TEXT: "TE_HT_ON_TEXT",  # directly on
-		wx.TE_HT_BELOW: "TE_HT_BELOW",  # below [the last line]
-		wx.TE_HT_BEYOND: "TE_HT_BEYOND",
-	}
-
 	def _mouseOver(self, evt: wx.MouseEvent):
 		if (
 			self._shouldDoHover()
