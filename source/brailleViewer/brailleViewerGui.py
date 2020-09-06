@@ -70,6 +70,10 @@ def _getCharIndexUnderMouse(ctrl: wx.TextCtrl) -> Optional[int]:
 	return None
 
 
+def _shouldDoHover():
+	return config.conf["brailleViewer"]["shouldHoverRouteToCell"]
+
+
 # Inherit from wx.Frame because these windows show in the alt+tab menu (where miniFrame does not)
 # wx.Dialog causes a crash on destruction when multiple were created at the same time (speechViewer
 # may start at the same time)
@@ -169,7 +173,7 @@ class BrailleViewerFrame(wx.Frame):
 		self._brailleOutput.Font = self._setBrailleFont(self._brailleOutput.GetFont())
 		log.debug(f"Font for braille: {self._brailleOutput.Font.GetNativeFontInfoUserDesc()}")
 		sizer.Add(self._brailleOutput, flag=wx.EXPAND, proportion=1)
-		if self._shouldDoHover():
+		if _shouldDoHover():
 			self._brailleOutput.Bind(wx.EVT_MOTION, self._mouseOver)
 
 		self._normalBGColor = self._brailleOutput.GetBackgroundColour()
@@ -202,17 +206,14 @@ class BrailleViewerFrame(wx.Frame):
 			parent=parent,
 			label=hoverRoutesCellText
 		)
-		self._shouldHoverRouteToCellCheckBox.SetValue(self._shouldDoHover())
+		self._shouldHoverRouteToCellCheckBox.SetValue(_shouldDoHover())
 		self._shouldHoverRouteToCellCheckBox.Bind(wx.EVT_CHECKBOX, self._onShouldHoverRouteToCellCheckBoxChanged)
 		optionsSizer.Add(self._shouldHoverRouteToCellCheckBox)
 		sizer.Add(optionsSizer, flag=wx.EXPAND|wx.TOP, border=5)
 
-	def _shouldDoHover(self):
-		return config.conf["brailleViewer"]["shouldHoverRouteToCell"]
-
 	def _mouseOver(self, evt: wx.MouseEvent):
 		if (
-			self._shouldDoHover()
+			_shouldDoHover()
 			# If the timer is already running, updateHover is already being called.
 			and not self._timer.IsRunning()
 		):
@@ -319,7 +320,7 @@ class BrailleViewerFrame(wx.Frame):
 		self._lastMouseOverChar = index
 
 	def _updateHover(self):
-		if not self._shouldDoHover():
+		if not _shouldDoHover():
 			return
 		index = _getCharIndexUnderMouse(self._brailleOutput)
 		if index is None:
