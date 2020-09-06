@@ -181,7 +181,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			"find the next occurrence of the previously entered text string from the current cursor's position"
 		),
 		gesture="kb:NVDA+f3",
-		resumeSayAllMode = sayAllHandler.CURSOR_CARET,
+		resumeSayAllMode=sayAllHandler.CURSOR_CARET,
 	)
 	def script_findNext(self,gesture):
 		if not self._lastFindText:
