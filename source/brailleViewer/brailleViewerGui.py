@@ -19,6 +19,10 @@ SPACE_CHARACTER = u" "
 TIMER_INTERVAL = 32
 
 
+def _linearInterpolate(value, start, end):
+	difference = tuple(map(lambda i, j: i - j, end, start))
+	return tuple(map(lambda i, j: i + value * j, start, difference))
+
 # Inherit from wx.Frame because these windows show in the alt+tab menu (where miniFrame does not)
 # wx.Dialog causes a crash on destruction when multiple were created at the same time (speechViewer
 # may start at the same time)
@@ -174,10 +178,6 @@ class BrailleViewerFrame(wx.Frame):
 		):
 			self._updateHover()
 
-	def _linearInterpolate(self, value, start, end):
-		difference = tuple(map(lambda i, j: i - j, end, start))
-		return tuple(map(lambda i, j: i + value * j, start, difference))
-
 	def _calculateHoverColour(
 			self,
 			timeElapsed: float,
@@ -189,8 +189,8 @@ class BrailleViewerFrame(wx.Frame):
 		finalColorT = finalColor.Get(includeAlpha=False)
 		value = min(1.0, max(0.0, (0.001 + timeElapsed) / totalTime))
 		initialColor: Tuple[int, int, int] = startColor.Get(includeAlpha=False)
-		startColor = self._linearInterpolate(startValue, initialColor, finalColorT)
-		currentColor = self._linearInterpolate(value, startColor, finalColorT)
+		startColor = _linearInterpolate(startValue, initialColor, finalColorT)
+		currentColor = _linearInterpolate(value, startColor, finalColorT)
 		return wx.Colour(*currentColor)
 
 	def _updateHoverCell(self):
