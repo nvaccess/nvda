@@ -186,6 +186,16 @@ class BrailleViewerFrame(wx.Frame):
 			startColor: wx.Colour,
 			finalColor: wx.Colour
 	):
+		""" Transition from one colour to another over time.
+		:param timeElapsed: total accumulated time elapsed since the start
+		of colour transition (units must match totalTime)
+		:param totalTime: total time that the transition should take (units must match timeElapsed)
+		:param startValue: a percentage (0->1). At elapsed == 0 the colour transition will already be this far
+		through. Allows for a beginning bump in the colour transition.
+		:param startColor: The origin colour.
+		:param finalColor: The destination colour. Reached at elapsed == totalTime.
+		:return: The transition colour.
+		"""
 		finalColorT = finalColor.Get(includeAlpha=False)
 		value = min(1.0, max(0.0, (0.001 + timeElapsed) / totalTime))
 		initialColor: Tuple[int, int, int] = startColor.Get(includeAlpha=False)
