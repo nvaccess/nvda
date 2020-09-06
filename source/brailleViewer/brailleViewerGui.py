@@ -23,6 +23,35 @@ def _linearInterpolate(value, start, end):
 	difference = tuple(map(lambda i, j: i - j, end, start))
 	return tuple(map(lambda i, j: i + value * j, start, difference))
 
+
+def _calculateHoverColour(
+			accumulatedElapsedTime: float,
+			totalTime: float,
+			startValue: float,
+			originColor: wx.Colour,
+			destColor: wx.Colour
+	):
+	""" Transition from one colour to another over time.
+	:param accumulatedElapsedTime: total accumulated time elapsed since the start
+	of colour transition (units must match totalTime)
+	:param totalTime: total time that the transition should take (units must match timeElapsed)
+	:param startValue: a percentage (0->1). At elapsed == 0 the colour transition will already be this far
+	through. Allows for a beginning bump in the colour transition.
+	:param originColor: The origin colour.
+	:param destColor: The destination colour. Reached at elapsed == totalTime.
+	:return: The transition colour.
+	"""
+	# [0..1] proportion accumulatedElapsedTime is through totalTime
+	normalisedElapsed = min(1.0, max(0.0, (0.001 + accumulatedElapsedTime) / totalTime))
+	colourTransitionValue = startValue + normalisedElapsed * (1 - startValue)
+	currentColor = _linearInterpolate(
+		colourTransitionValue,
+		originColor.Get(includeAlpha=False),
+		destColor.Get(includeAlpha=False)
+	)
+	return wx.Colour(*currentColor)
+
+
 # Inherit from wx.Frame because these windows show in the alt+tab menu (where miniFrame does not)
 # wx.Dialog causes a crash on destruction when multiple were created at the same time (speechViewer
 # may start at the same time)
@@ -179,34 +208,6 @@ class BrailleViewerFrame(wx.Frame):
 		):
 			self._updateHover()
 
-	def _calculateHoverColour(
-			self,
-			accumulatedElapsedTime: float,
-			totalTime: float,
-			startValue: float,
-			originColor: wx.Colour,
-			destColor: wx.Colour
-	):
-		""" Transition from one colour to another over time.
-		:param accumulatedElapsedTime: total accumulated time elapsed since the start
-		of colour transition (units must match totalTime)
-		:param totalTime: total time that the transition should take (units must match timeElapsed)
-		:param startValue: a percentage (0->1). At elapsed == 0 the colour transition will already be this far
-		through. Allows for a beginning bump in the colour transition.
-		:param originColor: The origin colour.
-		:param destColor: The destination colour. Reached at elapsed == totalTime.
-		:return: The transition colour.
-		"""
-		# [0..1] proportion accumulatedElapsedTime is through totalTime
-		normalisedElapsed = min(1.0, max(0.0, (0.001 + accumulatedElapsedTime) / totalTime))
-		colourTransitionValue = startValue + normalisedElapsed * (1 - startValue)
-		currentColor = _linearInterpolate(
-			colourTransitionValue,
-			originColor.Get(includeAlpha=False),
-			destColor.Get(includeAlpha=False)
-		)
-		return wx.Colour(*currentColor)
-
 	def _updateHoverCell(self):
 		normalStyle = wx.TextAttr()
 		normalStyle.SetBackgroundColour(self._normalBGColor)
@@ -280,7 +281,7 @@ class BrailleViewerFrame(wx.Frame):
 
 	def _setPreActivateStyle(self, secondsSinceHoverStart):
 		self._updateHoverStyleColor(
-			self._calculateHoverColour(
+			_calculateHoverColour(
 				secondsSinceHoverStart,
 				self._secondsOfHoverToActivate,
 				startValue=0.2,
@@ -289,7 +290,7 @@ class BrailleViewerFrame(wx.Frame):
 			))
 
 	def _setPostActivateStyle(self, secondsSinceHoverStart):
-		self._updateHoverStyleColor(self._calculateHoverColour(
+		self._updateHoverStyleColor(_calculateHoverColour(
 			secondsSinceHoverStart - self._secondsOfHoverToActivate,
 			totalTime=self._secondsBeforeReturnToNormal - self._secondsOfHoverToActivate,
 			startValue=0.0,
