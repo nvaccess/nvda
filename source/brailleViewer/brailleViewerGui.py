@@ -135,8 +135,14 @@ class BrailleViewerFrame(wx.Frame):
 			flag=wx.EXPAND | wx.ALL,
 			border=5,
 		)
+
+		# The timer ensures that updates and animations happen smoothly.
+		# When hover to route is enabled (and the mouse is over the window) the timer is running to regularly
+		# call _updateGui. When the mouse leaves the window, or if hover to route is disabled, the timer is
+		# used as a "one-shot" timer only when there are update to what should be displayed.
 		self._timer = wx.Timer(self)
 		self.Bind(wx.EVT_TIMER, lambda evt: self._updateGui())
+
 		self._createControls(borderSizer, self.panel)
 		self.ShowWithoutActivating()
 		self.Fit()
@@ -236,6 +242,9 @@ class BrailleViewerFrame(wx.Frame):
 		self._hoverCellStyle.SetBackgroundColour(newColor)
 
 	def _updateGui(self):
+		"""Ensure all GUI updates happen in one place to create a smooth update, all changes should happen
+		between freeze and thaw.
+		"""
 		self.Freeze()
 		if self._newBraille is not None:
 			self._brailleOutput.SetValue(self._newBraille)
