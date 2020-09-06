@@ -314,7 +314,7 @@ class BrailleViewerFrame(wx.Frame):
 		# This hit test is inaccurate, there seems to be a bug in wx.
 		# When the mouse is above or before the window it is counted as a hit.
 		# Above: mouseY is less than windowY I.E. when 'toClient.y' < 0
-		# Before: mouseX is less than winsowX I.E. when 'toClient.x' < 0
+		# Before: mouseX is less than windowX I.E. when 'toClient.x' < 0
 		result, index = self._brailleOutput.HitTestPos(
 			toClient
 		)
