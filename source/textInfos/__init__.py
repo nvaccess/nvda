@@ -47,7 +47,13 @@ class ControlField(Field):
 	#: This field is just for layout.
 	PRESCAT_LAYOUT = None
 
-	def getPresentationCategory(self, ancestors, formatConfig, reason=controlTypes.REASON_CARET, extraDetail=False):
+	def getPresentationCategory(
+			self,
+			ancestors,
+			formatConfig,
+			reason=controlTypes.REASON_CARET,
+			extraDetail=False
+	):
 		role = self.get("role", controlTypes.ROLE_UNKNOWN)
 		states = self.get("states", set())
 
@@ -127,7 +133,8 @@ class ControlField(Field):
 				controlTypes.ROLE_ENDNOTE,
 				controlTypes.ROLE_EMBEDDEDOBJECT,
 				controlTypes.ROLE_MATH
-			) or (
+			)
+			or (
 				extraDetail and role == controlTypes.ROLE_LISTITEM
 			)
 		):

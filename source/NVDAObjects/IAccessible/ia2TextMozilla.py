@@ -62,7 +62,8 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		if controlField is None:
 			return None
 		# Set the uniqueID of the controlField if we can get one
-		# which ensures that two controlFields with the same role and states etc are still treated differently if they are actually for different objects.
+		# which ensures that two controlFields with the same role and states etc are still treated differently
+		# if they are actually for different objects.
 		# E.g. two list items in a list.
 		uniqueID = obj.IA2UniqueID
 		if uniqueID is not None:
