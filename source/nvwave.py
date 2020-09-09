@@ -596,4 +596,3 @@ def _cleanup():
 	global fileWavePlayer, fileWavePlayerThread
 	fileWavePlayer = None
 	fileWavePlayerThread = None
-
