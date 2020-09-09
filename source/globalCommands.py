@@ -3,7 +3,8 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
-# Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka
+# Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
+# Julien Cochuyt
 
 import time
 import itertools
@@ -1715,6 +1716,42 @@ class GlobalCommands(ScriptableObject):
 	script_navigatorObject_devInfo.category=SCRCAT_TOOLS
 
 	@script(
+		description=_(
+			# Translators: Input help mode message for a command to delimit then
+			# copy a fragment of the log to clipboard
+			"Mark the current end of the log as the start of the fragment to be"
+			" copied to clipboard by pressing again."
+		),
+		category=SCRCAT_TOOLS,
+		gesture="kb:NVDA+control+shift+f1"
+	)
+	def script_log_markStartThenCopy(self, gesture):
+		if globalVars.appArgs.secure:
+			return
+		if log.fragmentStart is None:
+			if log.markFragmentStart():
+				# Translators: Message when marking the start of a fragment of the log file for later copy
+				# to clipboard
+				ui.message(_("Log fragment start position marked, press again to copy to clipboard"))
+			else:
+				# Translators: Message when failed to mark the start of a
+				# fragment of the log file for later copy to clipboard
+				ui.message(_("Unable to mark log position"))
+			return
+		text = log.getFragment()
+		if not text:
+			# Translators: Message when attempting to copy an empty fragment of the log file
+			ui.message(_("No new log entry to copy"))
+			return
+		if api.copyToClip(text):
+			# Translators: Message when a fragment of the log file has been
+			# copied to clipboard
+			ui.message(_("Log fragment copied to clipboard"))
+		else:
+			# Translators: Presented when unable to copy to the clipboard because of an error.
+			ui.message(_("Unable to copy"))
+
+	@script(
 		# Translators: Input help mode message for Open user configuration directory command.
 		description=_("Opens NVDA configuration directory for the current user."),
 		category=SCRCAT_TOOLS
@@ -2975,7 +3012,7 @@ class ConfigProfileActivationCommands(ScriptableObject):
 		@param oldScriptName: The current name of the profile activation script.
 		@type oldScriptName: str
 		@param newScriptName: The new name for the profile activation script, if any.
-			if C{None}, the gestures are only removed for the current profile sript.
+			if C{None}, the gestures are only removed for the current profile script.
 		@type newScriptName: str
 		"""
 		gestureMap = inputCore.manager.userGestureMap

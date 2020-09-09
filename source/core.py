@@ -37,6 +37,8 @@ import globalVars
 from logHandler import log
 import addonHandler
 import extensionPoints
+import garbageHandler  # noqa: E402
+
 
 # inform those who want to know that NVDA has finished starting up.
 postNvdaStartup = extensionPoints.Action()
@@ -424,6 +426,9 @@ def main():
 	else:
 		log.debugWarning("wx does not support language %s" % lang)
 
+	log.debug("Initializing garbageHandler")
+	garbageHandler.initialize()
+
 	import api
 	import winUser
 	import NVDAObjects.window
@@ -582,6 +587,7 @@ def main():
 	_terminate(braille)
 	_terminate(speech)
 	_terminate(addonHandler)
+	_terminate(garbageHandler)
 
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
