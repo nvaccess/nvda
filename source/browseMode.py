@@ -1,8 +1,7 @@
-#browseMode.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2018 NV Access Limited, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2020 NV Access Limited, Babbage B.V. Thomas Stivers
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import itertools
 import collections
@@ -38,6 +37,7 @@ import api
 import gui.guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from NVDAObjects import NVDAObject
+import gui.contextHelp
 from abc import ABCMeta, abstractmethod
 from typing import Optional
 
@@ -883,7 +883,12 @@ qn(
 del qn
 
 
-class ElementsListDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog):
+class ElementsListDialog(
+		DpiScalingHelperMixinWithoutInit,
+		gui.contextHelp.ContextHelpMixin,
+		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+):
+	helpId = "ElementsList"
 	ELEMENT_TYPES = (
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.

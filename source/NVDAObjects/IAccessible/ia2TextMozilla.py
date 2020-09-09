@@ -220,8 +220,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		else:
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(obj.windowHandle,winUser.OBJID_CLIENT,descendantID.value)
 		if position == textInfos.POSITION_CARET:
-			# Cache for later use.
-			self.obj._lastCaretObj = obj
+			# If the compound TextInfo is for the current focus,
+			# We should cache the caret object as we know it will probably be needed again.
+			# Note that event_loseFocus on NVDAObjects.IAccessible.ia2Web.Editor will clear the cache,
+			# To ensure we don't end up with a reference cycle.
+			if self.obj is api.getFocusObject():
+				self.obj._lastCaretObj = obj
 		# optimisation: Passing an Offsets position checks nCharacters, which is an extra call we don't need.
 		ti=self._makeRawTextInfo(obj,textInfos.POSITION_FIRST)
 		ti._startOffset=ti._endOffset=descendantOffset.value
