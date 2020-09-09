@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-31 00:10+1000\n"
-"PO-Revision-Date: 2020-07-12 09:10+0100\n"
+"POT-Creation-Date: 2020-08-07 00:10+1000\n"
+"PO-Revision-Date: 2020-08-22 00:00-0700\n"
 "Last-Translator: Stanley Chung <stanley@mail.com>\n"
 "Language-Team: NVDA Korean users and translations forum <advck1123@gmail."
 "com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 1.8.9\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -3922,13 +3922,13 @@ msgid ""
 "Reports the symbol where the review cursor is positioned. Pressed twice, "
 "shows the symbol and the text used to speak it in browse mode"
 msgstr ""
-"현재 리뷰 커서 위치의 기호 정보를 알려 줍니다. 두 번 누르면 기호와 브라우저 "
-"모드에서 읽는 문자 정보를 보여줍니다"
+"현재 리뷰 커서가 위치한 기호 정보를 알려줍니다. 두번 누르면 기호와 기호 정보"
+"를 브라우즈 모드로 보여줍니다"
 
 # Not sure what it means by replacing a symbol here. Can you provide wider context? Is this used in some sort of text editor? What’s the purpose of the function for replacing symbols?
 #. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
 msgid "No symbol replacement"
-msgstr "기호를 대체할 문자를 찾을 수 없습니다"
+msgstr "기호 정보 없음"
 
 #. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
 msgid ""
@@ -3936,7 +3936,7 @@ msgid ""
 "Replacement: {}"
 msgstr ""
 "기호: {}\n"
-"대체문자: {}"
+"기호 정보: {}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 msgid "Expanded symbol ({})"
@@ -6277,12 +6277,12 @@ msgstr "음성 속도"
 #. Translators: This is the name of the rate boost voice toggle
 #. which further increases the speaking rate when enabled.
 msgid "Rate boos&t"
-msgstr "음성 속도 향상 (&T)"
+msgstr "음성 속도 부스트 (&T)"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
 msgid "Rate boost"
-msgstr "음성 속도 부스트 (&R)"
+msgstr "음성 속도 부스트"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
@@ -8562,7 +8562,7 @@ msgstr ""
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
-msgstr "NVDA에서 업데이트를 자동으로 확인"
+msgstr "NVDA에서 업데이트를 자동으로 확인 (&U)"
 
 #. Translators: The label of a checkbox in general settings to toggle startup notifications
 #. for a pending NVDA update.
@@ -8907,7 +8907,7 @@ msgstr "도구 설명 알림 (&T)"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "Report &notifications"
-msgstr "도움말 풍선 알림 (&N)"
+msgstr "도움말 표시란 알림 (&N)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -9003,7 +9003,7 @@ msgstr "포커스와 브라우즈 모드 전환 시 경고음 재생"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "&Trap all non-command gestures from reaching the document"
-msgstr "정의되지 않은 제스처를 무시함 (&T)"
+msgstr "브라우즈 모드외 명령을 문서가 처리하지 않도록 함 (&T)"
 
 #. Translators: This is the label for the document formatting panel.
 msgid "Document Formatting"
@@ -9207,7 +9207,7 @@ msgstr "클릭 가능 요소 (&C)"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Report formatting chan&ges after the cursor (can cause a lag)"
-msgstr "커서 뒤에 서식 변경시 알림 (속도 저하 가능성 있음) (&G)"
+msgstr "커서 이동시 서식 변경 알림 (속도 저하 가능성 있음) (&G)"
 
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
@@ -10164,26 +10164,26 @@ msgstr "문서 내용을 표시할 때 화면 레이아웃으로 보여줄 것�
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the system focus.
 msgid "Highlight system fo&cus"
-msgstr "시스템 초점 강조하기 (&c)"
+msgstr "시스템 포커스 표시 (&c)"
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the browse mode cursor.
 msgid "Highlight browse &mode cursor"
-msgstr "브라우즈 모드 커서 강조하기 (&m)"
+msgstr "브라우즈 모드 커서 표시 (&m)"
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the navigator object.
 msgid "Highlight navigator &object"
-msgstr "탐색 객체 강조하기 (&o)"
+msgstr "탐색 객체 표시 (&o)"
 
 #. Translators: Description for NVDA's built-in screen highlighter.
 msgid "Focus Highlight"
-msgstr "초점 강조"
+msgstr "포커스 표시"
 
 #. Translators: The label for a checkbox that enables / disables focus highlighting
 #. in the NVDA Highlighter vision settings panel.
 msgid "&Enable Highlighting"
-msgstr "하이라이트 사용하기 (&E)"
+msgstr "커서 표시 사용 (&E)"
 
 #. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
@@ -10215,7 +10215,7 @@ msgstr ""
 
 #. Translators: option to enable screen curtain in the vision settings panel
 msgid "Make screen black (immediate effect)"
-msgstr "화면 어둡게"
+msgstr "화면 어둡게 하기"
 
 msgid "Taskbar"
 msgstr "작업 표시줄"

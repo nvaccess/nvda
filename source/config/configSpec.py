@@ -235,6 +235,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [debugLog]
 	hwIo = boolean(default=false)
+	MSAA = boolean(default=false)
 	UIA = boolean(default=false)
 	audioDucking = boolean(default=false)
 	gui = boolean(default=false)
