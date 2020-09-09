@@ -233,7 +233,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 	def _isPreferredDeviceOpen(self) -> bool:
 		if self._waveout is None:
 			return False
-		if _isDebug():
+		if _isDebugForNvWave():
 			log.debug(
 				f"preferred device: {self._preferredDeviceName}"
 				f" current device name: {self._outputDeviceName} (id: {self._outputDeviceID})"
@@ -247,11 +247,11 @@ class WavePlayer(garbageHandler.TrackedObject):
 		"""
 		for ID, name in _getOutputDevices():
 			if name == self._preferredDeviceName:
-				if _isDebug():
+				if _isDebugForNvWave():
 					log.debug("preferred Device is Available")
 				return True
 
-		if _isDebug():
+		if _isDebugForNvWave():
 			log.debug("preferred Device is not available")
 		return False
 
@@ -263,7 +263,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 		with self._waveout_lock:
 			if self._waveout:
 				return
-			if _isDebug():
+			if _isDebugForNvWave():
 				log.debug(
 					f"Calling winmm.waveOutOpen."
 					f" outputDeviceName: {self._outputDeviceName}"
@@ -288,14 +288,14 @@ class WavePlayer(garbageHandler.TrackedObject):
 						CALLBACK_EVENT
 					)
 			except WindowsError:
-				if _isDebug():
+				if _isDebugForNvWave():
 					log.debug(
 						f"Error opening"
 						f" outputDeviceName: {self._outputDeviceName}"
 						f" with id: {self._outputDeviceID}"
 					)
 				if self._outputDeviceID != WAVE_MAPPER:
-					if _isDebug():
+					if _isDebugForNvWave():
 						log.debug(f"Falling back to WAVE_MAPPER")
 					self._setCurrentDevice(WAVE_MAPPER)
 					self.open()
@@ -438,13 +438,13 @@ class WavePlayer(garbageHandler.TrackedObject):
 				if not self._waveout:
 					return
 				if self.closeWhenIdle:
-					if _isDebug():
+					if _isDebugForNvWave():
 						log.debug("Closing due to idle.")
 					self._close()  # Idle so no need to call stop.
 				else:
 					with self._global_waveout_lock:
 						if not self._isPreferredDeviceOpen() and self._isPreferredDeviceAvailable():
-							if _isDebug():
+							if _isDebugForNvWave():
 								log.debug("Attempt re-open of preferred device.")
 							self._close()  # Idle so no need to call stop.
 							self._setCurrentDevice(self._preferredDeviceName)
