@@ -45,8 +45,12 @@ state={}
 _blockedAddons=set()
 
 def loadState():
+	"""Reads the add-on state file (usually %appdata%\\nvda\\addonsState.pickle for an installed copy).
+	Populates the global state object with data from the file.
+	If there is no state file: creates an empty global state object.
+	"""
 	global state
-	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
+	statePath=os.path.join(globalVars.appArgs.configPath, stateFilename)
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
 		with open(statePath, "rb") as f:
@@ -60,15 +64,19 @@ def loadState():
 	except:
 		# Defaults.
 		state = {
-			"pendingRemovesSet":set(),
-			"pendingInstallsSet":set(),
-			"disabledAddons":set(),
-			"pendingEnableSet":set(),
-			"pendingDisableSet":set(),
+			"pendingRemovesSet": set(),
+			"pendingInstallsSet": set(),
+			"disabledAddons": set(),
+			"pendingEnableSet": set(),
+			"pendingDisableSet": set(),
 		}
 
 def saveState():
-	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
+	"""Pickles the global state object, saving it to the add-on state file
+	(usually %appdata%\\nvda\\addonsState.pickle for an installed copy).
+	Logs a warning on failure.
+	"""
+	statePath=os.path.join(globalVars.appArgs.configPath, stateFilename)
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
 		with open(statePath, "wb") as f:
@@ -528,6 +536,10 @@ def getCodeAddon(obj=None, frameDist=1):
 	raise AddonError("Code does not belong to an addon")
 
 def initTranslation():
+	"""Initializes internationalization support for an add-on.
+	Must be called at the top of each Python module that is part of an add-on, to allow plugins in the
+add-on to access gettext message information via calls to _().
+	"""
 	addon = getCodeAddon(frameDist=2)
 	translations = addon.getTranslationsInstance()
 	# Point _ to the translation object in the globals namespace of the caller frame
