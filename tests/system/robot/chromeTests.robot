@@ -26,3 +26,6 @@ default teardown
 checkbox labelled by inner element
 	[Documentation]	A checkbox labelled by an inner element should not read the label element twice.
 	checkbox_labelled_by_inner_element
+Announce list item when moving by word or character
+	[Documentation]	Entering a list item when moving by word or character should be announced, but not by line.
+	announce_list_item_when_moving_by_word_or_character
