@@ -119,7 +119,7 @@ for func in (
 	func.errcheck = _winmm_errcheck
 
 
-def _isDebug():
+def _isDebugForNvWave():
 	return config.conf["debugLog"]["nvwave"]
 
 class WavePlayer(garbageHandler.TrackedObject):
