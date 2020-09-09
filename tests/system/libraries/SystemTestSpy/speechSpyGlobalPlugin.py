@@ -221,7 +221,7 @@ class NVDASpyLib:
 			errorMessage="Speech did not finish before timeout"
 		)
 
-	def emulateKeyPress(self,kbIdentifier, blockUntilProcessed=True):
+	def emulateKeyPress(self, kbIdentifier, blockUntilProcessed=True):
 		"""
 		Emulates a key press using NVDA's input gesture framework.
 		The key press will either result in a script being executed, or the key being sent on to the OS.
@@ -234,12 +234,14 @@ class NVDASpyLib:
 			# Emulating may have queued a script or events.
 			# Insert our own function into the queue after, and wait for that to be also executed.
 			queueProcessed = set()
+
 			def _setQueueProcessed():
 				nonlocal queueProcessed
 				queueProcessed = True
+
 			queueHandler.queueFunction(queueHandler.eventQueue, _setQueueProcessed)
 			_blockUntilConditionMet(
-				getValue=lambda: queueProcessed,	
+				getValue=lambda: queueProcessed,
 				giveUpAfterSeconds=self._minTimeout(5),
 				errorMessage="Timed out waiting for key to be processed",
 			)

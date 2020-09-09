@@ -90,6 +90,7 @@ def asleep():
 	windll.kernel32.CancelWaitableTimer(_coreDeadTimer)
 	_coreIsAsleep = True
 
+
 def isCoreAsleep():
 	"""
 	Finds out if the core is currently asleep (I.e. not in a core cycle).
@@ -97,6 +98,7 @@ def isCoreAsleep():
 	as it is frozen in a core cycle while awake.
 	"""
 	return _coreIsAsleep
+
 
 def _isAlive():
 	# #5189: If the watchdog has been terminated, treat the core as being alive.
