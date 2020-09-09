@@ -104,7 +104,7 @@ def getIncompatibleAddons(
 	))
 
 def completePendingAddonRemoves():
-	"""Removes any add-ons that could not be removed on the last run of NVDA"""
+	"""Removes any add-ons that could not be removed during the last run of NVDA"""
 	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
 	pendingRemovesSet=state['pendingRemovesSet']
 	for addonName in list(pendingRemovesSet):
