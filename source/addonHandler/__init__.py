@@ -119,15 +119,18 @@ def completePendingAddonRemoves():
 		pendingRemovesSet.discard(addonName)
 
 def completePendingAddonInstalls():
+	"""Finish installing any partially installed installable add-ons that didn't finish before
+	the last NVDA shutdown. Intended to be called on NVDA (re)start.
+	"""
 	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
 	pendingInstallsSet=state['pendingInstallsSet']
 	for addonName in pendingInstallsSet:
-		newPath=os.path.join(user_addons,addonName)
+		newPath=os.path.join(user_addons, addonName)
 		oldPath=newPath+ADDON_PENDINGINSTALL_SUFFIX
 		try:
-			os.rename(oldPath,newPath)
+			os.rename(oldPath, newPath)
 		except:
-			log.error("Failed to complete addon installation for %s"%addonName,exc_info=True)
+			log.error("Failed to complete add-on installation for %s" % addonName, exc_info=True)
 	pendingInstallsSet.clear()
 
 def removeFailedDeletions():
