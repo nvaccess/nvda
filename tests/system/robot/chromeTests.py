@@ -40,6 +40,7 @@ def checkbox_labelled_by_inner_element():
 		"Simulate evil cat  check box  not checked"
 	)
 
+
 def announce_list_item_when_moving_by_word_or_character():
 	_chrome.prepareChrome(
 		r"""
