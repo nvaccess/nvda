@@ -227,6 +227,10 @@ class NVDASpyLib:
 		The key press will either result in a script being executed, or the key being sent on to the OS.
 		By default this method will block until any script resulting from this key has been executed,
 		and the NVDA core has again gone back to sleep.
+		@param kbIdentifier: an NVDA keyboard gesture identifier.
+		0 or more modifier keys followed by a main key, all separated by a plus (+) symbol.
+		E.g. control+shift+downArrow.
+		See vkCodes.py in the NVDA source directory for valid key names.
 		"""
 		gesture = KeyboardInputGesture.fromName(kbIdentifier)
 		inputCore.manager.emulateGesture(gesture)
