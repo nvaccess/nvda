@@ -119,6 +119,9 @@ for func in (
 	func.errcheck = _winmm_errcheck
 
 
+def _isDebugForNvWave():
+	return config.conf["debugLog"]["nvwave"]
+
 class WavePlayer(garbageHandler.TrackedObject):
 	"""Synchronously play a stream of audio.
 	To use, construct an instance and feed it waveform audio using L{feed}.
@@ -230,10 +233,11 @@ class WavePlayer(garbageHandler.TrackedObject):
 	def _isPreferredDeviceOpen(self) -> bool:
 		if self._waveout is None:
 			return False
-		log.debug(
-			f"preferred device: {self._preferredDeviceName}"
-			f" current device name: {self._outputDeviceName} (id: {self._outputDeviceID})"
-		)
+		if _isDebugForNvWave():
+			log.debug(
+				f"preferred device: {self._preferredDeviceName}"
+				f" current device name: {self._outputDeviceName} (id: {self._outputDeviceID})"
+			)
 		return self._outputDeviceName == self._preferredDeviceName
 
 	def _isPreferredDeviceAvailable(self) -> bool:
@@ -243,10 +247,12 @@ class WavePlayer(garbageHandler.TrackedObject):
 		"""
 		for ID, name in _getOutputDevices():
 			if name == self._preferredDeviceName:
-				log.debug("preferred Device is Available")
+				if _isDebugForNvWave():
+					log.debug("preferred Device is Available")
 				return True
 
-		log.debug("preferred Device is not available")
+		if _isDebugForNvWave():
+			log.debug("preferred Device is not available")
 		return False
 
 	def open(self):
@@ -257,11 +263,12 @@ class WavePlayer(garbageHandler.TrackedObject):
 		with self._waveout_lock:
 			if self._waveout:
 				return
-			log.debug(
-				f"Calling winmm.waveOutOpen."
-				f" outputDeviceName: {self._outputDeviceName}"
-				f" outputDeviceID: {self._outputDeviceID}"
-			)
+			if _isDebugForNvWave():
+				log.debug(
+					f"Calling winmm.waveOutOpen."
+					f" outputDeviceName: {self._outputDeviceName}"
+					f" outputDeviceID: {self._outputDeviceID}"
+				)
 			wfx = WAVEFORMATEX()
 			wfx.wFormatTag = WAVE_FORMAT_PCM
 			wfx.nChannels = self.channels
@@ -281,13 +288,15 @@ class WavePlayer(garbageHandler.TrackedObject):
 						CALLBACK_EVENT
 					)
 			except WindowsError:
-				log.debug(
-					f"Error opening"
-					f" outputDeviceName: {self._outputDeviceName}"
-					f" with id: {self._outputDeviceID}"
-				)
+				if _isDebugForNvWave():
+					log.debug(
+						f"Error opening"
+						f" outputDeviceName: {self._outputDeviceName}"
+						f" with id: {self._outputDeviceID}"
+					)
 				if self._outputDeviceID != WAVE_MAPPER:
-					log.debug(f"Falling back to WAVE_MAPPER")
+					if _isDebugForNvWave():
+						log.debug(f"Falling back to WAVE_MAPPER")
 					self._setCurrentDevice(WAVE_MAPPER)
 					self.open()
 				else:
@@ -429,12 +438,14 @@ class WavePlayer(garbageHandler.TrackedObject):
 				if not self._waveout:
 					return
 				if self.closeWhenIdle:
-					log.debug("Closing due to idle.")
+					if _isDebugForNvWave():
+						log.debug("Closing due to idle.")
 					self._close()  # Idle so no need to call stop.
 				else:
 					with self._global_waveout_lock:
 						if not self._isPreferredDeviceOpen() and self._isPreferredDeviceAvailable():
-							log.debug("Attempt re-open of preferred device.")
+							if _isDebugForNvWave():
+								log.debug("Attempt re-open of preferred device.")
 							self._close()  # Idle so no need to call stop.
 							self._setCurrentDevice(self._preferredDeviceName)
 							self.open()
