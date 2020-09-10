@@ -1,7 +1,8 @@
 # -*- coding: UTF-8 -*-
 #addonHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2019 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee, Babbage B.V., Arnold Loubriat
+#Copyright (C) 2012-2019 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee,
+# Babbage B.V., Arnold Loubriat
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -270,7 +271,8 @@ class AddonError(Exception):
 	""" Represents an exception coming from the addon subsystem. """
 
 class AddonBase(object):
-	"""The base class for functionality that is available both for add-on bundles and add-ons on the file system.
+	"""The base class for functionality that is available both for add-on bundles, and
+	for add-ons on the file system.
 	Subclasses should at least implement L{manifest}.
 	"""
 
@@ -423,7 +425,12 @@ class Addon(AddonBase):
 
 	@property
 	def isRunning(self):
-		return not (globalVars.appArgs.disableAddons or self.isPendingInstall or self.isDisabled or self.isBlocked)
+		return not (
+			globalVars.appArgs.disableAddons
+			or self.isPendingInstall
+			or self.isDisabled
+			or self.isBlocked
+		)
 
 	@property
 	def isDisabled(self):
@@ -473,7 +480,11 @@ class Addon(AddonBase):
 		@returns: the gettext translation class.
 		"""
 		localedir = os.path.join(self.path, "locale")
-		return gettext.translation(domain, localedir=localedir, languages=[languageHandler.getLanguage()], fallback=True)
+		return gettext.translation(
+			domain, localedir=localedir,
+			languages=[languageHandler.getLanguage()],
+			fallback=True
+		)
 
 	def runInstallTask(self, taskName, *args, **kwargs):
 		"""Executes the function having the given taskName with the given args and kwargs,
@@ -711,7 +722,12 @@ docFileName = string(default=None)
 		@param translatedInput: translated manifest input
 		@type translatedInput: file-like object
 		"""
-		super(AddonManifest, self).__init__(input, configspec=self.configspec, encoding='utf-8', default_encoding='utf-8')
+		super(
+			AddonManifest, self
+		).__init__(
+			input, configspec=self.configspec,
+			encoding='utf-8', default_encoding='utf-8'
+		)
 		self._errors = None
 		val = Validator({"apiVersion":validate_apiVersionString})
 		result = self.validate(val, copy=True, preserve_errors=True)
