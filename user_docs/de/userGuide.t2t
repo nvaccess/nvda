@@ -69,9 +69,7 @@ Für weitere Informationen lesen Sie [die vollständige Lizenz https://www.gnu.o
 - Betriebssystem: Microsoft Windows 7, Windows 8, Windows 8.1 und Windows 10 (32- und 64-Bit, inkl. Server-Betriebssysteme).
  - Für Windows 7 wird mindestens Service Pack 1 benötigt.
  - Für Windows Server 2008 R2 wird mindestens Service Pack 1 benötigt.
-- Speicher: Mindestens 256 MB Arbeitsspeicher oder mehr.
-- Prozessorgeschwindigkeit: 1,0 GHz oder schneller.
-- Mindestens 90 MB auf dem Datenträger.
+- Mindestens 150 MB Speicherplatz.
 -
 
 + NVDA beziehen und einrichten +[GettingAndSettingUpNVDA]
@@ -202,9 +200,13 @@ Obwohl die meisten Laptop-Tastaturen keinen physikalischen Nummernblock haben, k
 Wenn Ihr Laptop dies oder die Deaktivierung des Nummernblocks nicht unterstützt, können Sie an Stelle das Tastaturschema auf Laptop umstellen.
 
 ++ Die NVDA-Berührungsgesten ++[NVDATouchGestures]
-Wenn Sie Windows 8 oder neuer nebst NVDA auf einem Gerät mit Touchscreen installiert haben, können Sie NVDA direkt mit dem Touchscreen steuern.
-Alle Berührungsgesten werden direkt an NVDA weitergeleitet.
+Wenn Sie NVDA auf einem Gerät mit Touchscreen und Windows 8 oder neuer benutzen, können Sie NVDA auch direkt über Touch-Befehle steuern.
+Während NVDA läuft, gehen alle Berührungseingaben direkt an NVDA, es sei denn, die Unterstützung der Berührungsinteraktion ist deaktiviert. 
 Dies bedeutet, dass alle Gesten, die ohne NVDA funktioniert hätten, außer Kraft sind, sobald NVDA ausgeführt wird.
+%kc:beginInclude
+Drücken Sie NVDA+Strg+Alt+T, um die Unterstützung der Berührungsinteraktion umzuschalten.
+%kc:endInclude
+Sie können auch die [Unterstützung der Berührungsinteraktion #TouchSupportEnable] in der Kategorie "Berührungsinteraktion" in den NVDA-Einstellungen aktivieren oder deaktivieren.
 
 +++ Den Bildschirminhalt erkunden +++[ExploringTheScreen]
 Zu den grundlegenden Aktionen beim Umgang mit Tastschirmen gehört das Ansagen von Objekten oder Text direkt unter Ihrem Finger.
@@ -214,6 +216,8 @@ Sie können den Finger dann auch über den Bildschirm bewegen, um Text und Steue
 +++ Berührungsgesten +++[TouchGestures]
 Weiter unten im Handbuch finden Sie bei den Beschreibungen zu den NVDA-Befehlen auch Gesten, mit denen die betreffenden Befehle ausgeführt werden können, wenn Sie einen Touchscreen verwenden.
 In den folgenden Abschnitten finden Sie Anweisungen, wie bestimmte Gesten mit dem Touchscreen verwendet werden.
+
+
 
 ==== Tippen ====
 Tippen Sie schnell mit einem oder mehreren Fingern
@@ -273,8 +277,9 @@ In den Menüs bewegen Sie sich einfach mit den Pfeiltasten. Mit der Eingabetaste
 ++ Allgemeine NVDA-Befehle ++[BasicNVDACommands]
 %kc:beginInclude
 || Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Geste | Beschreibung |
-| Sprechen stoppen | Strg | Strg | zwei-Finger-tippen | unterbricht augenblicklich den laufenden Sprechvorgang. |
-| Sprechen anhalten | Umschalt | Umschalt | Keine | Hält sofort den Lesevorgang an oder setzt bei erneutem Drücken den Lesevorgang fort (sofern das von der Sprachausgabe unterstützt wird). |
+| NVDA starten oder neustarten | Strg+Alt+N | Strg+Alt+N | Keine | Startet NVDA vom Desktop (neu), sofern diese Tastenkombination während der NVDA-Installation aktiviert wurde. Dies ist eine Windows-spezifische Verknüpfung und kann daher im Dialogfeld für die Tastenbefehle nicht neu zugewiesen werden. |
+| Sprachausgabe unterbrechen | Strg | Strg | zwei-Finger-tippen | unterbricht augenblicklich den laufenden Sprechvorgang. |
+| Sprachausgabe anhalten/fortsetzen | Umschalt | Umschalt | Keine | Hält sofort den Lesevorgang an oder setzt bei erneutem Drücken den Lesevorgang fort (sofern das von der Sprachausgabe unterstützt wird). |
 | NVDA-Menü | NVDA+N | NVDA+N | Zwei-Finger-Doppel-Tippen | Öffnet das NVDA-Menü. Von hier aus können Sie auf die Einstellungen, Werkzeuge, Hilfe, etc. zugreifen. |
 | Sprachmodus umschalten | NVDA+S | NVDA+S | Keine | Schaltet den Sprachmodus zwischen Sprache, Signaltöne und aus um. |
 | Modus der Eingabehilfe umschalten | NVDA+1 | NVDA+1 | Keine | In diesem Modus wird beim Drücken einer Taste die in NVDA assoziierte Taste und die dazugehörige Beschreibung angesagt und in Braille angezeigt. |
@@ -328,6 +333,7 @@ Folgende Tastenkombinationen stehen im Zusammenhang mit dem System-Cursor zur Ve
 | Alles Lesen | NVDA+Pfeil nach unten | NVDA+A | Liest von der aktuellen Position des System-Cursors bis zum Textende und bewegt dabei den System-Cursor mit. |
 | Aktuelle Zeile lesen | NVDA+Pfeil nach oben | NVDA+L | Liest die Zeile, auf der sich der System-Cursor befindet. Wird diese Tastenkombination zweimal gedrückt, wird die Zeile buchstabiert, wird die Tastenkombination 3-mal gedrückt, wird die Zeile phonetisch buchstabiert. |
 | Markierten Text lesen | NVDA+Umschalt+Pfeil nach oben | NVDA+Umschalt+S | Liest den markierten Text, sofern vorhanden. |
+| Text-Formatierungen ausgeben | NVDA+F | NVDA+F | Gibt die Text-Formatierungen unter dem System-Cursor aus. Bei zweimal Drücken werden diese Informationen im Lesemodus angezeigt. |
 | Nächsten Satz lesen | Alt+Pfeiltaste nach unten | Alt+Pfeiltaste nach unten | Zieht die Schreibmarke zum nächsten Satz und gibt ihn aus (nur in Microsoft Word und Microsoft Outlook unterstützt). |
 | Vorherigen Satz lesen | Alt+Pfeiltaste nach oben | Alt+Pfeiltaste nach oben | Zieht die Schreibmarke zum vorherigen Satz und gibt ihn aus (nur in Microsoft Word und Microsoft Outlook unterstützt). |
 
@@ -413,7 +419,7 @@ Die folgenden Tastenkombinationen zum Text betrachten sind verfügbar:
 | Vom NVDA-Cursor markieren und kopieren | NVDA+F9 | NVDA+F9 | Keine | Setzt eine Startmarke an der aktuellen Position des NVDA-Cursors ab, der markiert oder kopiert werden soll. Die Aktion (Markieren/Kopieren) wird nicht ausgeführt, bis Sie NVDA den Textende mitgeteilt haben. |
 | Bis zum NVDA-Cursor markieren und kopieren | NVDA+F10 | NVDA+F10 | Keine | Wird die Tastenkombination einmal gedrückt, markiert NVDA den Text zwischen der zuvor gesetzten Startmarke und der aktuellen Position des NVDA-Cursors. Ist die Startmarke mit dem System-Cursor erreichbar, wird der Fokus dorthin verschoben. Wird die Tastenkombination zweimal gedrückt, wird der markierte Text in die Zwischenablage kopiert. |
 | Springt zum markierten Start für die Kopie in der Ansicht | NVDA+Umschalt+F9 | NVDA+Umschalt+F9 | Keine | Zieht den NVDA-Cursor an die zuvor eingestellte Startmarkierung für das Kopieren. |
-| Textformatierung ausgeben | NVDA+F | NVDA+F | Keine | Gibt die Formatierungen unter dem NVDA-Cursor aus. Bei zweimaligen Drücken der Tastenkombination wird die Ausgabe in einem virtuellen Fenster dargestellt. |
+| Text-Formatting ausgeben | NVDA+Umschalt+F | NVDA+Umschalt+F | Keine | Gibt die Text-Formatierungen unter dem System-Cursor aus. Bei zweimal Drücken werden diese Informationen im Lesemodus angezeigt. |
 | Ansage des aktuellen Symbol-Ersatzes | Keine | Keine | Keine | Spricht das Symbol, an dem sich der NVDA-Cursor befindet. Zweimaliges Drücken zeigt das Symbol und den ausgesprochenen Text in einem virtuellen Fenster an. |
 %kc:endInclude
 
@@ -711,7 +717,8 @@ Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende 
 | bae | Eintrag einer Baumstruktur |
 | en | Ein Eintrag in einer Baumansicht in der Ebene N |
 | fst | Fenster |
-| ``⠤⠤⠤⠤⠤`` | Trennlinie |
+| ⠤⠤⠤⠤⠤ | Trennlinie |
+| mrki | Markierten Inhalt |
 
 Für die folgenden Status-Anzeigen wurden ebenfalls Abkürzungen festgelegt:
 || Abkürzung | Status |
@@ -890,22 +897,28 @@ NVDA zeigt zu jedem Formularfeld dessen Alternativtext sowie die Adresse der Zel
 Wählen Sie ein Formularfeld in der Liste aus und verwenden Sie den Schalter wechseln zu, um im Lesemodus auf das Formularfeld zu springen.
 -
 
-+++ Ausgeben von Kommentaren +++[ExcelReportingComments]
++++ Anmerkungen anzeigen +++[ExcelReportingComments]
 %kc:beginInclude
-Verwenden Sie die Tastenkombination NVDA+Alt+C, um sich einen Kommentar der aktuellen Zelle anzeigen zu lassen, sofern vorhanden.
+Verwenden Sie die Tastenkombination NVDA+Alt+C, um sich die Anmerkungen der aktuellen Zelle anzeigen zu lassen, sofern vorhanden.
+In Microsoft 2016 / 365 und neuer wurden die klassischen Kommentare in Microsoft Excel in "Anmerkungen" umbenannt.
 %kc:endInclude
-Alle Kommentare für das Arbeitsblatt können nach Drücken von NVDA+F7 auch in der NVDA-Elementliste aufgelistet werden.
+Alle Anmerkungen im Arbeitsblatt können nach Drücken von NVDA+F7 auch in der NVDA-Elementliste aufgelistet werden.
 
-NVDA kann auch ein spezielles Dialogfeld zum Hinzufügen oder Bearbeiten eines bestimmten Kommentars anzeigen.
-NVDA überschreibt aufgrund von Einschränkungen der Zugänglichkeit den nativen Kommentarbearbeitungsbereich von MS Excel, aber der Tastenanschlag für die Anzeige des Dialogs wird von MS Excel geerbt und funktioniert daher auch ohne NVDA.
+NVDA kann auch ein spezielles Dialogfeld zum Hinzufügen oder Bearbeiten bestimmter Anmerkung anzeigen.
+NVDA überschreibt auf Grund von Einschränkungen der Zugänglichkeit den nativen Bearbeitungsbereich für die Anmerkungen in Microsoft Excel, aber die Tastenkombination für das Dialogfeld wird von Microsoft Excel übernommen und funktioniert daher auch ohne NVDA.
 %kc:beginInclude
-Um einen bestimmten Kommentar hinzuzufügen oder zu bearbeiten, können Sie in einer fokussierten Zelle Umschalt+F2 drücken.
+Sie können in der aktuellen Zelle Umschalt+F2 drücken, um bestimmte Anmerkungen hinzuzufügen oder zu bearbeiten.
 %kc:endInclude
 
 Diese Tastenkombination kann nicht im Dialogfeld für die Tastenbefehle geändert werden.
 
-Hinweis: Es ist möglich, den Bereich zur Bearbeitung von Kommentaren in MS Excel auch über das Kontextmenü einer beliebigen Zelle des Arbeitsblatts zu öffnen.
-Dadurch wird jedoch der unzugängliche Bereich zur Bearbeitung von Kommentaren geöffnet und nicht der NVDA-spezifische Dialog zur Bearbeitung von Kommentaren.
+Hinweis: Es ist möglich, den Bereich zur Bearbeitung von Anmerkungen in Microsoft Excel auch über das Kontextmenü einer beliebigen Zelle des Arbeitsblatts zu öffnen.
+Dadurch wird jedoch der unzugängliche Bereich zur Bearbeitung von Anmerkungen geöffnet und nicht das NVDA-spezifische Dialogfeld zur Bearbeitung der Anmerkungen.
+
+In Microsoft Office 2016 / 365 und neuer wurde ein Kommentar-Dialogfeld im neuen Stil hinzugefügt.
+Dieses Dialogfeld ist besser zugänglich und bietet mehr Funktionen wie die Beantwortung von Kommentaren, etc.
+Über das Kontextmenü einer bestimmten Zelle kann dies erreicht werden.
+Die Kommentare, die in den Zellen über das Kommentar-Dialogfeld des neuen Stils hinzugefügt werden, haben nichts mit den "Anmerkungen" zu tun.
 
 +++ Ausgeben geschützter Zellen +++[ExcelReadingProtectedCells]
 Wenn ein Excel-Arbeitsblatt geschützt wurde, können manche Zellen für eine Bearbeitung gesperrt sein. Solche Zellen sind dann normalerweise nicht zugänglich.
@@ -1291,6 +1304,7 @@ Die Anzeige für Markierungen wird dadurch nicht beeinflusst, Markierungen werde
 ==== Anzeigedauer für Meldungen ====[BrailleSettingsMessageTimeout]
 Dieses numerische Eingabefeld legt fest, wie viele Sekunden die NVDA-Meldungen auf der Braillezeile angezeigt werden sollen. Wenn eine Meldung erscheint, kann diese durch Drücken einer Routing-Taste geschlossen werden. Durch Drücken einer Navigationstaste kann die Anzeigedauer einer Meldung verlängert werden.
 Um die Anzeige der Meldungen abzuschalten, geben Sie hier 0 an.
+Die NVDA-Nachricht wird beim Drücken einer Routing-Taste auf der Braillezeile sofort verworfen, erscheint aber wieder, wenn eine entsprechende Taste gedrückt wird, die die Nachricht auslöst.
 
 ==== Meldungen dauerhaft anzeigen ====[BrailleSettingsNoMessageTimeout]
 Wird diese Option aktiviert, zeigt NVDA alle Meldungen dauerhaft auf der Braillezeile an.
@@ -1517,6 +1531,12 @@ Wenn Sie diese Option aktivieren und die Option "Mausverfolgung aktivieren" akti
 Diese Kategorie ist nur auf Computern mit Windows 8 oder neuer verfügbar, sofern dieser ein berührungsempfindlicher Bildschirm (Touchscreen) besitzt. Hier können Sie einstellen, wie NVDA mit Touchscreens interagiert.
 Folgende Optionen sind enthalten:
 
+==== Unterstützung für die Berührungsinteraktion aktivieren ====[TouchSupportEnable]
+Dieses Kontrollkästchen aktiviert die NVDA-Unterstützung für die Berührungsinteraktion.
+Wenn diese Funktion aktiviert ist, können Sie mit Ihren Fingern auf einem Touchscreen-Gerät navigieren und mit den Elementen auf dem Bildschirm interagieren.
+Anderenfalls wird die Touchscreen-Unterstützung deaktiviert.
+Diese Einstellung kann auch mit NVDA+Strg+Alt+T umgeschaltet werden. 
+
 ==== Touch-Tippmodus ====[TouchTypingMode]
 Dieses Kontrollkästchen legt die Methode fest, die Sie zum Schreiben mit der Bildschirmtastatur verwenden.
 Bei aktiviertem Kontrollkästchen können Sie mit Ihrem Finger eine Taste auf dem Bildschirm suchen und diese loslassen, um diese zu betätigen (10-Finger-System).
@@ -1692,6 +1712,15 @@ Wenn diese Option aktiviert ist, werden Tastenkombinationen, die nicht mit Schne
 Wenn beispielsweise der Buchstabe "J" gedrückt wurde und aktiviert ist, würde er vom Erreichen des Dokuments abgefangen, obwohl es sich weder um einen Schnellnavigationsbefehl handelt noch wahrscheinlich um einen Befehl in der Anwendung selbst.
 In diesem Fall weist NVDA Windows an, einen Standardsound abzuspielen, wenn eine Taste gedrückt wird, die festgestellt wird.
 
+==== Automatisches Bewegen des System-Fokus auf fokussierbare Elemente im Lesemodus ====[BrowseModeSettingsAutoFocusFocusableElements]
+Tastenkombination: NVDA+8
+
+Wenn diese Option deaktiviert ist, können Sie wählen, ob der Systemfokus automatisch auf Elemente gesetzt werden soll, die den System-Fokus übernehmen können (Links, Formularfelder, etc.), wenn Sie mit dem Cursor im Browse-Modus durch den Inhalt navigieren.
+Wenn diese Option deaktiviert bleibt, werden fokussierbare Elemente nicht automatisch fokussiert, wenn sie mit dem Cursor im Browse-Modus ausgewählt werden.
+Dies kann zu einem schnelleren Verhalten im Browser und einer verbesserten Reaktionsgeschwindigkeit im Lesemodus führen.
+Der Fokus wird noch auf das jeweilige Element aktualisiert, wenn man mit ihm interagiert (z. B. einen Schalter drückt, ein Kontrollkästchen markiert).
+Die Aktivierung dieser Option kann die Unterstützung für einige Websites auf Kosten der Leistung und Stabilität verbessern.
+
 +++ Dokumentformatierungen (NVDA+Strg+D) +++[DocumentFormattingSettings]
 Mit den meisten Kontrollfeldern in diesem Dialogfenster steuern Sie die Ansage der Formatierungen, die Sie während des Navigierens in einem Dokument angesagt bekommen möchten.
 Wenn Sie z. B. das Kontrollkästchen ""Schriftartennamen ansagen"" aktivieren und anschließend in einem Text navigieren, wird NVDA jedes Mal den Namen der Schriftart ansagen, sobald sich die Schriftart ändert.
@@ -1704,6 +1733,7 @@ Konfigurieren können Sie die Meldungen von:
  - Schrift-Attribute
  - Hoch- und tiefgestellte Zeichen
  - Betonter Text
+ - Markierter (hervorgehobener Text)
  - Layout
  - Farben
 - Informationen über das Dokument
@@ -1725,6 +1755,7 @@ Konfigurieren können Sie die Meldungen von:
 - Elemente
  - Überschriften
  - Links
+ - Grafiken
  - Listen
  - Zitatblöcke
  - Gruppierungen
@@ -1784,7 +1815,14 @@ Wenn Sie benutzerdefinierten Code an andere weitergeben möchten, sollten Sie ih
 ==== Developer Scratchpad-Verzeichnis öffnen ====[AdvancedSettingsOpenScratchpadDir]
 Diese Schaltfläche öffnet das Verzeichnis, in dem Sie während der Entwicklung benutzerdefinierten Code platzieren können.
 Diese Schaltfläche ist nur aktiviert, wenn NVDA so konfiguriert ist, dass benutzerdefinierter Code aus dem Developer Scratchpad-Verzeichnis geladen werden kann.
- 
+
+==== Aktivieren der selektiven Registrierung für UI-Automatisierungsereignisse und Eigenschaftsänderungen ====[AdvancedSettingsSelectiveUIAEventRegistration]
+Diese Option ändert die Art und Weise, wie NVDA sich für Ereignisse registriert, die von der Microsoft UI Automation Accessibility API ausgelöst werden.
+Wenn diese Option deaktiviert ist, registriert NVDA für viele UIA-Ereignisse, die innerhalb von NVDA selbst verarbeitet und verworfen werden.
+Dies hat erhebliche negative Auswirkungen auf die Leistung, insbesondere bei Anwendungen wie Microsoft Visual Studio.
+Wenn diese Option aktiviert ist, beschränkt NVDA daher die Ereignisregistrierung bei den meisten Ereignissen auf den System-Fokus.
+Wenn Sie in einer oder mehreren Anwendungen damit probleme haben sollten, empfehlen wir Ihnen, diese Funktionalität auszuprobieren, um zu sehen, ob sich die leistung dadurch verbessert.
+
 ==== UIA für Steuerelemente in Microsoft Word verwenden (falls verfügbar) ====[AdvancedSettingsUseUiaForWord]
 Wenn diese Option aktiviert ist, versucht NVDA, die Microsoft-API für die Zugänglichkeit der UIA zu verwenden, um Informationen von Steuerelementen in Microsoft Word-Dokumenten abzurufen.
 Dazu gehört Microsoft Word selbst, aber auch die Nachrichtenansicht und das Verfassen von Nachrichten in Microsoft Outlook.
@@ -1810,17 +1848,7 @@ Diese Option aktiviert ein Verhalten, welches bei abgelaufenen Ereignissen des F
 Insbesondere das schnelle Durchlaufen von Nachrichten in Gmail mit Google Chrome kann dazu führen, dass NVDA alte Informationen noch vorliest.
 Diese Funktionalität ist ab NVDA 2020.2 experimentell.
 
-==== Automatisches Bewegen des System-Fokus auf Fokussierbare Elemente im Lesemodus ====[BrowseModeSettingsAutoFocusFocusableElements]
-Tastenkombination: NVDA+8
-
-Sie können mit dieser standardmäßig aktivierten Option auswählen, ob der System-Fokus automatisch auf Elemente gesetzt werden soll, die den System-Fokus übernehmen können (Links, Formularfelder, etc.), wenn Sie mit den Pfeiltasten im Lesemodus durch Inhalte navigieren.
-Wenn aktiviert, stellt dies das Standardverhalten von NVDA ab Version 2019.1 und früher dar.
-Wenn Sie diese Option deaktivieren, werden fokusierbare Elemente nicht automatisch fokusiert, wenn sie mit dem Pfeiltasten im Lesemodus ausgewählt werden.
-Dies kann zu einer schnelleren und besseren Reaktionsfähigkeit beim Lesen führen.
-Der Fokus wird aber trotzdem auf das jeweilige Element gezogen, wenn Sie mit ihm interagieren (z. B. durch Drücken einer Taste, aktivieren eines Kontrollkästchens etc.).
-Diese Funktionalität ist ab NVDA 2019.2 experimentell.
-
-==== Zeitüberschreitung beim Bewegen des System-Cursors ====[AdvancedSettingsCaretMoveTimeout]
+=== Zeitüberschreitung beim Bewegen des System-Cursors ====[AdvancedSettingsCaretMoveTimeout]
 Mit dieser Option können Sie die Anzahl der Millisekunden konfigurieren, die NVDA wartet, bis sich der Cursor (Einfügepunkt) in den editierbaren Textsteuerelementen bewegt.
 Wenn Sie feststellen, dass NVDA die Einfügemarke falsch zu verfolgen scheint, z. B., wenn NVDA immer ein Zeichen hinterher liegt oder beim Navigieren manche Zeilen wiederholt, dann sollten Sie versuchen, diesen Wert zu erhöhen.
 
@@ -1865,7 +1893,9 @@ Diese Bedingung ist erfüllt, wenn die Zeichen unmittelbar vor und nach dem Wort
 Wenn man also das frühere Beispiel der Ersetzung des Wortes "Vogel" durch "Frosch" verwenden würde, würde das Wort "Vogel" oder "Blauer Vogel" nicht mit "Vögel" oder "Blauer Vogel" übereinstimmen.
 
 Ein sogenannter Regulärer Ausdruck ist ein Muster, welches spezielle Symbole enthält. Dies ermöglicht, dass das Muster auf Zahlen oder Buchstaben generell oder auf mehrere Zeichen gleichzeitig zutrifft
-Reguläre Ausdrücke werden hier nicht behandelt. Weiterführende Beispiele und Erklärungen finden Sie im [Kapitel über Reguläre Ausdrücke in der englischen Dokumentation zu Python https://docs.python.org/library/re.html]
+Reguläre Ausdrücke werden in diesem Benutzerhandbuch nicht behandelt.
+Ein Tutorial zur Einführung finden Sie unter [https://docs.python.org/3.7/howto/regex.html].
+
 
 +++ Interpunktion und Symbol-Aussprache +++[SymbolPronunciation]
 In diesem Dialogfeld können Sie die Interpunktion und Symbol-Aussprache verändern und festlegen, ab welcher Symbolebene dieses angesagt werden soll.
@@ -1895,7 +1925,7 @@ Geben Sie im erscheinenden Dialogfeld das Symbol ein und klicken Sie auf den Sch
 
 Über den Schalter "Entfernen" können Sie ein Symbol wieder löschen.
 
-Wenn Sie fertig sind, bestätigen Sie die Änderungen mit "OK" oder verwerfen Sie diese mittels "Abbrechen".
+Wenn Sie die gewünschten Änderungen vorgenommen haben, bestätigen Sie die Änderungen mit "OK" oder verwerfen Sie diese mittels "Abbrechen".
 
 +++ Tastenbefehle +++[InputGestures]
 In diesem Dialogfeld können Sie Tastenbefehle (Tastenkombinationen, Tasten an einer Braillezeile, Aktionen auf einem Touchscreen) an NVDA-Funktionen zuweisen.
@@ -1914,8 +1944,18 @@ Bei Tastenkombinationen kann es beispielsweise sinnvoll sein, das Tastaturschema
 
 Um eine Tastenkombination von einer Funktion zu entfernen, wählen Sie diese aus und klicken Sie anschließend auf den Schalter "Entfernen".
 
-Um die Änderungen zu übernehmen, klicken Sie auf den Schalter "OK" oder auf "Abbrechen", um die Änderungen zu verwerfen.
+Die Kategorie "Tasten der emulierten Systemtastatur" enthält NVDA-Befehle, die Tasten auf der Systemtastatur emulieren.
+Diese Tasten der emulierten Systemtastatur können zur Steuerung einer Systemtastatur direkt von Ihrer Braillezeile aus verwendet werden.
+Um einen emulierten Tastenbefehl hinzuzufügen, wählen Sie in der Kategorie "Tasten der emulierten Systemtastatur" und klicken Sie auf die Schaltfläche "Hinzufügen".
+Anschließend drücken Sie die gewünschte, zu emulierende Taste auf der Tastatur.
+Danach ist die Taste in der Kategorie "Tasten der emulierten Systemtastatur" verfügbar und Sie können ihr einen Tastenbefehl wie oben beschrieben zuweisen.
 
+Hinweis:
+ - Emulierte Tasten müssen Tastenbefehlen zugewiesen sein, damit sie beim Speichern und Schließen des Dialogfeldes bestehen bleiben.
+ - Ein Tastenbefehl mit NVDA-Tasten kann möglicherweise nicht auf eine emulierten Tastenbefehl ohne NVDA-Tasten abgebildet werden. Zum Beispiel kann das definieren der emulierten Eingabe "a" und das Konfigurieren des Tastenbefehls von "Strg+M" dazu führen, dass die Anwendung "Strg+A" interpretiert werden könnte.
+ -
+
+Um die Änderungen zu übernehmen, klicken Sie auf den Schalter "OK" oder auf "Abbrechen", um die Änderungen zu verwerfen.
 
 ++ Konfiguration laden und speichern ++[SavingAndReloading]
 Standardmäßig speichert NVDA die Einstellungen automatisch beim Beenden.

@@ -3,6 +3,20 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.4 =
+
+== New Features ==
+- Pressing F1 inside NVDA dialogs will now open the help file to most relevant section. (#7757)
+
+
+== Changes ==
+- Updated liblouis braille translator to version 3.15.0
+
+
+== Bug Fixes ==
+- NVDA once again works correctly with edit fields when using the Fast Log Entry application. (#8996)
+
+
 = 2020.3 =
 
 == New Features ==
@@ -51,6 +65,7 @@ What's New in NVDA
 - NVDA now keeps the audio device open improving performance on some sound cards (#5172, #10721)
 - NVDA will no longer freeze or exit when holding down control+shift+downArrow in Microsoft Word. (#9463)
 - The expanded / collapsed state of directories in the navigation treeview on drive.google.com is now always reported by NVDA. (#11520)
+- NVDA will auto detect the NLS eReader Humanware braille display via Bluetooth as its Bluethooth name is now "NLS eReader Humanware". (#11561)
 
 
 == Changes For Developers ==

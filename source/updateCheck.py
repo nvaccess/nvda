@@ -10,6 +10,7 @@
 import garbageHandler
 import globalVars
 import config
+
 if globalVars.appArgs.secure:
 	raise RuntimeError("updates disabled in secure mode")
 elif config.isAppX:
@@ -18,7 +19,9 @@ import versionInfo
 if not versionInfo.updateVersionType:
 	raise RuntimeError("No update version type, update checking not supported")
 import addonAPIVersion
-
+# Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
+from gui.contextHelp import ContextHelpMixin  # noqa: E402
+from gui.dpiScalingHelper import DpiScalingHelperMixin, DpiScalingHelperMixinWithoutInit  # noqa: E402
 import winVersion
 import os
 import inspect
@@ -46,7 +49,6 @@ import shellapi
 import winUser
 import winKernel
 import fileUtils
-from gui.dpiScalingHelper import DpiScalingHelperMixin
 
 #: The URL to use for update checks.
 CHECK_URL = "https://www.nvaccess.org/nvdaUpdateCheck"
@@ -315,12 +317,17 @@ class AutoUpdateChecker(UpdateChecker):
 			return
 		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, True)
 
-class UpdateResultDialog(wx.Dialog, DpiScalingHelperMixin):
+
+class UpdateResultDialog(
+		DpiScalingHelperMixinWithoutInit,
+		ContextHelpMixin,
+		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+):
+	helpId = "GeneralSettingsCheckForUpdates"
 
 	def __init__(self, parent, updateInfo, auto):
 		# Translators: The title of the dialog informing the user about an NVDA update.
-		wx.Dialog.__init__(self, parent, title=_("NVDA Update"))
-		DpiScalingHelperMixin.__init__(self, self.GetHandle())
+		super().__init__(parent, title=_("NVDA Update"))
 
 		self.updateInfo = updateInfo
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
