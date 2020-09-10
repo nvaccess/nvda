@@ -18,6 +18,10 @@ What's New in NVDA
 - Report elapsed time in Foobar2000 if no total time is available (e.g. when playing a live stream). (#11337)
 
 
+== Changes for Developers ==
+- System tests can now send keys using spy.emulateKeyPress, which takes a key identifier that conforms to NVDA's own key names, and by default also blocks until the action is executed. (#11581)
+
+
 = 2020.3 =
 
 == New Features ==
