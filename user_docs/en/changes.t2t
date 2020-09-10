@@ -17,6 +17,10 @@ What's New in NVDA
 - NVDA once again works correctly with edit fields when using the Fast Log Entry application. (#8996)
 
 
+== Changes for Developers ==
+- System tests can now send keys using spy.emulateKeyPress, which takes a key identifier that conforms to NVDA's own key names, and by default also blocks until the action is executed. (#11581)
+
+
 = 2020.3 =
 
 == New Features ==
