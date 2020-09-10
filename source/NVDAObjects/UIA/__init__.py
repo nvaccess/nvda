@@ -1651,12 +1651,16 @@ class UIA(Window):
 	def event_UIA_notification(self, notificationKind=None, notificationProcessing=UIAHandler.NotificationProcessing_CurrentThenMostRecent, displayString=None, activityId=None):
 		"""
 		Introduced in Windows 10 Fall Creators Update (build 16299).
-		This base implementation announces all notifications from the UIA element.
+		This base implementation announces all notifications from the UIA element if enabled from NVDA.
 		Unlike other events, the text to be announced is not the name of the object, and parameters control how the incoming notification should be processed.
 		Subclasses can override this event and can react to notification processing instructions.
 		"""
 		# Do not announce notifications from background apps.
-		if self.appModule != api.getFocusObject().appModule:
+		# #10956: ignore this altogether if NVDA should not handle this event.
+		if (
+			self.appModule != api.getFocusObject().appModule
+			or not config.conf['presentation']['reportUIANotifications']
+		):
 			return
 		if displayString:
 			if notificationProcessing in (UIAHandler.NotificationProcessing_ImportantMostRecent, UIAHandler.NotificationProcessing_MostRecent):
