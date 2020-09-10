@@ -199,7 +199,7 @@ def _getAvailableAddonsFromPath(path):
 		addon_path = os.path.join(path, p)
 		if os.path.isdir(addon_path) and addon_path not in ('.', '..'):
 			if not len(os.listdir(addon_path)):
-				log.error("Error loading Addon from path: %s", addon_path)
+				log.error("Error loading add-on from path: %s", addon_path)
 			else:
 				log.debug("Loading add-on from %s", addon_path)
 				try:
@@ -219,7 +219,7 @@ def _getAvailableAddonsFromPath(path):
 						_blockedAddons.add(a.name)
 					yield a
 				except:
-					log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
+					log.error("Error loading add-on from path: %s", addon_path, exc_info=True)
 				
 _availableAddons = collections.OrderedDict()
 def getAvailableAddons(refresh=False, filterFunc=None):
@@ -384,7 +384,7 @@ class Addon(AddonBase):
 		converted_path = self._getPathForInclusionInPackage(package)
 		package.__path__.insert(0, converted_path)
 		self._extendedPackages.add(package)
-		log.debug("Addon %s added to %s package path", self.manifest['name'], package.__name__)
+		log.debug("Add-on %s added to %s package path", self.manifest['name'], package.__name__)
 
 	def enable(self, shouldEnable):
 		"""Sets this add-on to be disabled or enabled when NVDA restarts."""
