@@ -125,7 +125,7 @@ def completePendingAddonInstalls():
 	pendingInstallsSet = state['pendingInstallsSet']
 	for addonName in pendingInstallsSet:
 		newPath = os.path.join(user_addons, addonName)
-		oldPath = newPath+ADDON_PENDINGINSTALL_SUFFIX
+		oldPath = newPath + ADDON_PENDINGINSTALL_SUFFIX
 		try:
 			os.rename(oldPath, newPath)
 		except:
@@ -245,7 +245,11 @@ def installAddonBundle(bundle):
 	"""Extracts an Add-on bundle in to a unique subdirectory of the user addons directory,
 	marking the addon as needing install completion on NVDA restart.
 	"""
-	addonPath = os.path.join(globalVars.appArgs.configPath, "addons", bundle.manifest['name']+ADDON_PENDINGINSTALL_SUFFIX)
+	addonPath = os.path.join(
+		globalVars.appArgs.configPath,
+		"addons",
+		bundle.manifest['name'] + ADDON_PENDINGINSTALL_SUFFIX
+	)
 	bundle.extract(addonPath)
 	addon = Addon(addonPath)
 	# #2715: The add-on must be added to _availableAddons here so that
@@ -471,7 +475,7 @@ class Addon(AddonBase):
 		localedir = os.path.join(self.path, "locale")
 		return gettext.translation(domain, localedir=localedir, languages=[languageHandler.getLanguage()], fallback=True)
 
-	def runInstallTask(self, taskName,*args,**kwargs):
+	def runInstallTask(self, taskName, *args, **kwargs):
 		"""Executes the function having the given taskName with the given args and kwargs,
 		in the add-on's installTasks module if it exists.
 		"""
@@ -480,7 +484,7 @@ class Addon(AddonBase):
 		if self._installTasksModule:
 			func = getattr(self._installTasksModule, taskName, None)
 			if func:
-				func(*args,**kwargs)
+				func(*args, **kwargs)
 
 	def getDocFilePath(self, fileName=None):
 		"""Get the path to a documentation file for this add-on.

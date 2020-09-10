@@ -7,7 +7,9 @@
 import addonAPIVersion
 
 def hasAddonGotRequiredSupport(addon, currentAPIVersion=addonAPIVersion.CURRENT):
-	"""True if NVDA provides the add-on with an API version high enough to meet the add-on's minimum requirements."""
+	"""True if NVDA provides the add-on with an API version high enough
+	to meet the add-on's minimum requirements.
+	"""
 	minVersion = addon.minimumNVDAVersion
 	return minVersion <= currentAPIVersion
 
