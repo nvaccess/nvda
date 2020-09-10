@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #addonHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2019 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee,
+# Copyright (C) 2012-2019 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee,
 # Babbage B.V., Arnold Loubriat
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -724,7 +724,7 @@ docFileName = string(default=None)
 		"""
 		super(
 			AddonManifest, self
-		).__init__(
+			).__init__(
 			input, configspec=self.configspec,
 			encoding='utf-8', default_encoding='utf-8'
 		)
