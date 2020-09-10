@@ -85,8 +85,7 @@ def saveState():
 		log.debugWarning("Error saving state", exc_info=True)
 
 def getRunningAddons():
-	""" Returns currently loaded add-ons.
-	"""
+	""" Returns currently loaded add-ons."""
 	return getAvailableAddons(filterFunc=lambda addon: addon.isRunning)
 
 def getIncompatibleAddons(
@@ -134,13 +133,16 @@ def completePendingAddonInstalls():
 	pendingInstallsSet.clear()
 
 def removeFailedDeletions():
+	"""For any removed add-on which has failed to be deleted for some reason:
+	try another method or log an error on failure.
+	"""
 	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
 	for p in os.listdir(user_addons):
 		if p.endswith(DELETEDIR_SUFFIX):
 			path = os.path.join(user_addons, p)
 			shutil.rmtree(path, ignore_errors=True)
 			if os.path.exists(path):
-				log.error("Failed to delete path {0}, try removing manually".format(path))
+				log.error("Failed to delete path {}, try removing manually".format(path))
 
 _disabledAddons = set()
 def disableAddonsIfAny():
