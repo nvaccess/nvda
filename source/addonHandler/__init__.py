@@ -32,17 +32,17 @@ from . import addonVersionCheck
 from .addonVersionCheck import isAddonCompatible
 
 MANIFEST_FILENAME = "manifest.ini"
-stateFilename="addonsState.pickle"
+stateFilename = "addonsState.pickle"
 BUNDLE_EXTENSION = "nvda-addon"
 BUNDLE_MIMETYPE = "application/x-nvda-addon"
 NVDA_ADDON_PROG_ID = "NVDA.Addon.1"
-ADDON_PENDINGINSTALL_SUFFIX=".pendingInstall"
-DELETEDIR_SUFFIX=".delete"
+ADDON_PENDINGINSTALL_SUFFIX = ".pendingInstall"
+DELETEDIR_SUFFIX = ".delete"
 
-state={}
+state = {}
 
 # Add-ons that are blocked from running because they are incompatible
-_blockedAddons=set()
+_blockedAddons = set()
 
 def loadState():
 	"""Reads the add-on state file (usually %appdata%\\nvda\\addonsState.pickle for an installed copy).
@@ -50,7 +50,7 @@ def loadState():
 	If there is no state file: creates an empty global state object.
 	"""
 	global state
-	statePath=os.path.join(globalVars.appArgs.configPath, stateFilename)
+	statePath = os.path.join(globalVars.appArgs.configPath, stateFilename)
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
 		with open(statePath, "rb") as f:
@@ -76,7 +76,7 @@ def saveState():
 	(usually %appdata%\\nvda\\addonsState.pickle for an installed copy).
 	Logs a warning on failure.
 	"""
-	statePath=os.path.join(globalVars.appArgs.configPath, stateFilename)
+	statePath = os.path.join(globalVars.appArgs.configPath, stateFilename)
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
 		with open(statePath, "wb") as f:
@@ -91,9 +91,9 @@ def getRunningAddons():
 
 def getIncompatibleAddons(
 		currentAPIVersion=addonAPIVersion.CURRENT,
-		backCompatToAPIVersion=addonAPIVersion.BACK_COMPAT_TO):
-	""" Returns a generator of the add-ons that are not compatible.
-	"""
+		backCompatToAPIVersion=addonAPIVersion.BACK_COMPAT_TO
+):
+	""" Returns a generator of the add-ons that are not compatible."""
 	return getAvailableAddons(
 		filterFunc=lambda addon: (
 			not addonVersionCheck.isAddonCompatible(
@@ -106,15 +106,15 @@ def getIncompatibleAddons(
 def completePendingAddonRemoves():
 	"""Removes any add-ons that could not be removed during the last run of NVDA"""
 	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
-	pendingRemovesSet=state['pendingRemovesSet']
+	pendingRemovesSet = state['pendingRemovesSet']
 	for addonName in list(pendingRemovesSet):
-		addonPath=os.path.join(user_addons,addonName)
+		addonPath = os.path.join(user_addons, addonName)
 		if os.path.isdir(addonPath):
-			addon=Addon(addonPath)
+			addon = Addon(addonPath)
 			try:
 				addon.completeRemove()
 			except RuntimeError:
-				log.exception("Failed to remove %s add-on"%addonName)
+				log.exception("Failed to remove {0} add-on".format(addonName))
 				continue
 		pendingRemovesSet.discard(addonName)
 
@@ -123,24 +123,24 @@ def completePendingAddonInstalls():
 	the last NVDA shutdown. Intended to be called on NVDA (re)start.
 	"""
 	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
-	pendingInstallsSet=state['pendingInstallsSet']
+	pendingInstallsSet = state['pendingInstallsSet']
 	for addonName in pendingInstallsSet:
-		newPath=os.path.join(user_addons, addonName)
-		oldPath=newPath+ADDON_PENDINGINSTALL_SUFFIX
+		newPath = os.path.join(user_addons, addonName)
+		oldPath = newPath+ADDON_PENDINGINSTALL_SUFFIX
 		try:
 			os.rename(oldPath, newPath)
 		except:
-			log.error("Failed to complete add-on installation for %s" % addonName, exc_info=True)
+			log.error("Failed to complete add-on installation for {0}".format(addonName), exc_info=True)
 	pendingInstallsSet.clear()
 
 def removeFailedDeletions():
 	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
 	for p in os.listdir(user_addons):
 		if p.endswith(DELETEDIR_SUFFIX):
-			path=os.path.join(user_addons,p)
-			shutil.rmtree(path,ignore_errors=True)
+			path = os.path.join(user_addons, p)
+			shutil.rmtree(path, ignore_errors=True)
 			if os.path.exists(path):
-				log.error("Failed to delete path %s, try removing manually"%path)
+				log.error("Failed to delete path {0}, try removing manually".format(path))
 
 _disabledAddons = set()
 def disableAddonsIfAny():
@@ -242,17 +242,19 @@ def getAvailableAddons(refresh=False, filterFunc=None):
 	return (addon for addon in _availableAddons.values() if not filterFunc or filterFunc(addon))
 
 def installAddonBundle(bundle):
-	"""Extracts an Addon bundle in to a unique subdirectory of the user addons directory, marking the addon as needing install completion on NVDA restart."""
-	addonPath = os.path.join(globalVars.appArgs.configPath, "addons",bundle.manifest['name']+ADDON_PENDINGINSTALL_SUFFIX)
+	"""Extracts an Addon bundle in to a unique subdirectory of the user addons directory,
+	marking the addon as needing install completion on NVDA restart.
+	"""
+	addonPath = os.path.join(globalVars.appArgs.configPath, "addons", bundle.manifest['name']+ADDON_PENDINGINSTALL_SUFFIX)
 	bundle.extract(addonPath)
-	addon=Addon(addonPath)
+	addon = Addon(addonPath)
 	# #2715: The add-on must be added to _availableAddons here so that
 	# translations can be used in installTasks module.
-	_availableAddons[addon.path]=addon
+	_availableAddons[addon.path] = addon
 	try:
 		addon.runInstallTask("onInstall")
 	except:
-		log.error("task 'onInstall' on addon '%s' failed"%addon.name,exc_info=True)
+		log.error("task 'onInstall' on add-on '{0}' failed".format(addon.name), exc_info=True)
 		del _availableAddons[addon.path]
 		addon.completeRemove(runUninstallTask=False)
 		raise AddonError("Installation failed")
@@ -332,7 +334,7 @@ class Addon(AddonBase):
 			state['pendingDisableSet'].discard(self.name)
 		saveState()
 
-	def completeRemove(self,runUninstallTask=True):
+	def completeRemove(self, runUninstallTask=True):
 		if runUninstallTask:
 			try:
 				# #2715: The add-on must be added to _availableAddons here so that
@@ -340,17 +342,17 @@ class Addon(AddonBase):
 				_availableAddons[self.path] = self
 				self.runInstallTask("onUninstall")
 			except:
-				log.error("task 'onUninstall' on addon '%s' failed"%self.name,exc_info=True)
+				log.error("task 'onUninstall' on addon '{0}' failed".format(self.name), exc_info=True)
 			finally:
 				del _availableAddons[self.path]
-		tempPath=tempfile.mktemp(suffix=DELETEDIR_SUFFIX,dir=os.path.dirname(self.path))
+		tempPath = tempfile.mktemp(suffix=DELETEDIR_SUFFIX, dir=os.path.dirname(self.path))
 		try:
-			os.rename(self.path,tempPath)
-		except (WindowsError,IOError):
+			os.rename(self.path, tempPath)
+		except (WindowsError, IOError):
 			raise RuntimeError("Cannot rename add-on path for deletion")
-		shutil.rmtree(tempPath,ignore_errors=True)
+		shutil.rmtree(tempPath, ignore_errors=True)
 		if os.path.exists(tempPath):
-			log.error("Error removing addon directory %s, deferring until next NVDA restart"%self.path)
+			log.error("Error removing addon directory {}, deferring until next NVDA restart".format(self.path))
 		# clean up the addons state. If an addon with the same name is installed, it should not be automatically
 		# disabled / blocked.
 		log.debug("removing addon {} from _disabledAddons/_blockedAddons".format(self.name))
@@ -451,7 +453,7 @@ class Addon(AddonBase):
 		if not loader:
 			return None
 		# Create a qualified full name to avoid modules with the same name on sys.modules.
-		fullname = "addons.%s.%s" % (self.name, name)
+		fullname = "addons.{0}.{1}".format(self.name, name)
 		try:
 			return loader.load_module(fullname)
 		except ImportError:
@@ -468,15 +470,15 @@ class Addon(AddonBase):
 		localedir = os.path.join(self.path, "locale")
 		return gettext.translation(domain, localedir=localedir, languages=[languageHandler.getLanguage()], fallback=True)
 
-	def runInstallTask(self,taskName,*args,**kwargs):
+	def runInstallTask(self, taskName,*args,**kwargs):
 		"""
 		Executes the function having the given taskName with the given args and kwargs,
 		in the add-on's installTasks module if it exists.
 		"""
 		if not hasattr(self,'_installTasksModule'):
-			self._installTasksModule=self.loadModule('installTasks')
+			self._installTasksModule = self.loadModule('installTasks')
 		if self._installTasksModule:
-			func=getattr(self._installTasksModule,taskName,None)
+			func = getattr(self._installTasksModule, taskName, None)
 			if func:
 				func(*args,**kwargs)
 
@@ -577,7 +579,7 @@ class AddonBundle(AddonBase):
 		"""
 		self._path = bundlePath
 		# Read manifest:
-		translatedInput=None
+		translatedInput = None
 		with zipfile.ZipFile(self._path, 'r') as z:
 			for translationPath in _translatedManifestPaths(forBundle=True):
 				try:
@@ -620,7 +622,7 @@ class AddonBundle(AddonBase):
 		return self._manifest
 
 	def __repr__(self):
-		return "<AddonBundle at %s>" % self._path
+		return "<AddonBundle at {}>".format(self._path)
 
 def createAddonBundleFromPath(path, destDir=None):
 	""" Creates a bundle from a directory that contains a a addon manifest file."""
@@ -632,13 +634,13 @@ def createAddonBundleFromPath(path, destDir=None):
 		destDir = os.path.dirname(basedir)
 	manifest_path = os.path.join(basedir, MANIFEST_FILENAME)
 	if not os.path.isfile(manifest_path):
-		raise AddonError("Can't find %s manifest file." % manifest_path)
+		raise AddonError("Can't find {} manifest file.".format(manifest_path))
 	with open(manifest_path, 'rb') as f:
 		manifest = AddonManifest(f)
 	if manifest.errors is not None:
 		_report_manifest_errors(manifest)
 		raise AddonError("Manifest file has errors.")
-	bundleFilename = "%s-%s.%s" % (manifest['name'], manifest['version'], BUNDLE_EXTENSION)
+	bundleFilename = "{0}-{1}.{2}".format(manifest['name'], manifest['version'], BUNDLE_EXTENSION)
 	bundleDestination = os.path.join(destDir, bundleFilename)
 	with zipfile.ZipFile(bundleDestination, 'w') as z:
 		# FIXME: the include/exclude feature may or may not be useful. Also python files can be pre-compiled.
@@ -666,7 +668,7 @@ name = string()
 summary = string()
 
 # Long description with further information and instructions
-description = string(default=None)
+description = string(default = None)
 
 # Name of the author or entity that created the add-on
 author = string()
@@ -718,9 +720,9 @@ docFileName = string(default=None)
 		if translatedInput is not None:
 			self._translatedConfig = ConfigObj(translatedInput, encoding='utf-8', default_encoding='utf-8')
 			for k in ('summary','description'):
-				val=self._translatedConfig.get(k)
+				val = self._translatedConfig.get(k)
 				if val:
-					self[k]=val
+					self[k] = val
 
 	@property
 	def errors(self):
