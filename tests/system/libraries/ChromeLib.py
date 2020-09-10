@@ -19,14 +19,12 @@ from robot.libraries.BuiltIn import BuiltIn
 # Imported for type information
 from robot.libraries.OperatingSystem import OperatingSystem as _OpSysLib
 from robot.libraries.Process import Process as _ProcessLib
-from KeyInputLib import KeyInputLib as _KeyInputLib
 from AssertsLib import AssertsLib as _AssertsLib
 import NvdaLib as _NvdaLib
 
 builtIn: BuiltIn = BuiltIn()
 opSys: _OpSysLib = _getLib('OperatingSystem')
 process: _ProcessLib = _getLib('Process')
-keyInputLib: _KeyInputLib = _getLib('KeyInputLib')
 assertsLib: _AssertsLib = _getLib('AssertsLib')
 
 
