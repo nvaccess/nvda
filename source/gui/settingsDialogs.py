@@ -2456,6 +2456,7 @@ class AdvancedPanelControls(wx.Panel):
 			"vision",
 			"speech",
 			"speechManager",
+			"nvwave",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
