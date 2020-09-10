@@ -1869,6 +1869,13 @@ class ObjectPresentationPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings panel.
+		uiaNotificationText = _("Report &accessible event notifications")
+		self.uiaNotificationCheckBox = sHelper.addItem(wx.CheckBox(self, label=uiaNotificationText))
+		self.bindHelpEvent("ObjectPresentationAccessibleEventNotifications", self.uiaNotificationCheckBox)
+		self.uiaNotificationCheckBox.SetValue(config.conf["presentation"]["reportUIANotifications"])
+
+		# Translators: This is the label for a checkbox in the
+		# object presentation settings panel.
 		shortcutText = _("Report object shortcut &keys")
 		self.shortcutCheckBox=sHelper.addItem(wx.CheckBox(self,label=shortcutText))
 		self.bindHelpEvent("ObjectPresentationShortcutKeys", self.shortcutCheckBox)
@@ -1941,6 +1948,7 @@ class ObjectPresentationPanel(SettingsPanel):
 	def onSave(self):
 		config.conf["presentation"]["reportTooltips"]=self.tooltipCheckBox.IsChecked()
 		config.conf["presentation"]["reportHelpBalloons"]=self.balloonCheckBox.IsChecked()
+		config.conf["presentation"]["reportUIANotifications"] = self.uiaNotificationCheckBox.IsChecked()
 		config.conf["presentation"]["reportKeyboardShortcuts"]=self.shortcutCheckBox.IsChecked()
 		config.conf["presentation"]["reportObjectPositionInformation"]=self.positionInfoCheckBox.IsChecked()
 		config.conf["presentation"]["guessObjectPositionInformationWhenUnavailable"]=self.guessPositionInfoCheckBox.IsChecked()
