@@ -33,7 +33,10 @@ class ImeCandidateUI(UIA):
 		# Report the current candidates page and the currently selected item.
 		# Sometimes UIA does not fire an elementSelected event when it is first opened,
 		# Therefore we must fake it here.
-		if (
+		if (self.UIAAutomationId == "IME_Prediction_Window"):
+			candidateItem = self.firstChild
+			eventHandler.queueEvent("UIA_elementSelected", candidateItem)
+		elif (
 			self.firstChild
 			and self.firstChild.role == controlTypes.ROLE_LIST
 			and isinstance(self.firstChild.firstChild, ImeCandidateItem)
@@ -244,8 +247,11 @@ class AppModule(appModuleHandler.AppModule):
 					)
 					and obj.parent.parent.UIAAutomationId == "IME_Candidate_Window"
 				)
-				or obj.parent.UIAAutomationId == "IME_Candidate_Window"
+				or obj.parent.UIAAutomationId in ("IME_Candidate_Window", "IME_Prediction_Window")
 			):
 				clsList.insert(0, ImeCandidateItem)
-			elif obj.role == controlTypes.ROLE_PANE and obj.UIAAutomationId == "IME_Candidate_Window":
+			elif obj.role == controlTypes.ROLE_PANE and obj.UIAAutomationId in (
+				"IME_Candidate_Window",
+				"IME_Prediction_Window"
+			):
 				clsList.insert(0, ImeCandidateUI)
