@@ -3,6 +3,58 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.3 =
+
+== New Features ==
+- You can now toggle reporting of graphics from NVDA's document formatting settings. Note that disabling this option will still read the alternative texts of graphics. (#4837)
+- You can now toggle NVDA's touchscreen support. An option has been added to the Touch Interaction panel of NVDA's settings. The default gesture is NVDA+control+alt+t. (#9682)
+- Added new German braille tables. (#11268)
+- NVDA now detects read-only text UIA controls. (#10494)
+- The existence of marked (highlighted) content is reported in both speech and braille in all web browsers. (#11436)
+ - This can be toggled on and off by a new NVDA Document Formatting option for Highlighting.
+- New emulated system keyboard keys can be added from NVDA's Input gestures dialog. (#6060)
+  - To do this, press the add button after you selected the Emulated system keyboard keys category.
+
+
+== Changes ==
+- The Report formatting script (NVDA+f) has now been changed to report the formatting at the system caret rather than at the review cursor position. To report formatting at the review cursor position now use NVDA+shift+f. (#9505)
+- NVDA no longer automatically sets the system focus to focusable elements by default in browse mode, improving performance and stability. (#11190)
+- CLDR updated from version 36.1 to version 37. (#11303)
+- Updated eSpeak-NG to 1.51-dev, commit 1fb68ffffea4
+- You can now utilize table navigation in list boxes with checkable list items when the particular list has multiple columns. (#8857)
+- In the Add-ons manager, when prompted to confirm removal of an add-on, "No" is now the default. (#10015)
+- In Microsoft Excel, the Elements List dialog now presents formulas in their localized form. (#9144)
+- NVDA now reports the correct terminology for notes in MS Excel. (#11311)
+- When using the "move review cursor to focus" command in browse mode, the review cursor is now set at the position of the virtual caret. (#9622)
+
+
+== Bug Fixes ==
+- NVDA now always speaks when navigating by word and landing on any single symbol followed by white space, whatever the verbosity settings. (#5133)
+- In applications using QT 5.11 or newer, object descriptions are again reported. (#8604)
+- When deleting a word with control+delete, NVDA no longer remains silent. (#3298, #11029)
+  - Now the word to the right of the deleted word is announced.
+- In general settings panel, the language list is now sorted correctly. (#10348)
+- In the Input Gestures dialog, significantly improved performance while filtering. (#10307)(
+- You can now send Unicode characters beyond U+FFFF from a braille display. (#10796)
+- NVDA will announce Open With dialog content in Windows 10 May 2020 Update. (#11335)
+- A new experimental option in Advanced settings (Enable selective registration for UI Automation events and property changes) can provide major performance improvements in Microsoft Visual Studio and other UIAutomation based applications if enabled. (#11077, #11209)
+- For checkable list items, the selected state is no longer announced redundantly, and if applicable, the unselected state is announced instead. (#8554)
+- On Windows 10 May 2020 Update, NVDA now shows the Microsoft Sound Mapper when viewing output devices from synthesizer dialog. (#11349)
+- In Internet Explorer, numbers are now announced correctly for ordered lists if the list does not start with 1. (#8438)
+- In Google chrome, NVDA will now report not checked for all checkable controls (not just check boxes) that are currently not checked. (#11377)
+- It is once again possible to navigate in various controls when NVDA's language is set to Aragonese. (#11384)
+- NVDA should no longer sometimes freeze in Microsoft Word when rapidly arrowing up and down or typing characters with Braille enabled. (#11431, #11425, #11414)
+- NVDA no longer appends nonexistent trailing space when copying the current navigator object to the clipboard. (#11438)
+- NVDA no longer activates the Say All profile if there is nothing to read. (#10899, #9947)
+- NVDA is no longer unable to read the features list in Internet Information Services (IIS) Manager. (#11468)
+
+
+== Changes For Developers ==
+- The GUI Helper's BoxSizerHelper.addDialogDismissButtons supports a new "separated" keyword argument, for adding a standard horizontal separator to dialogs (other than messages and single input dialogs). (#6468)
+- Additional properties were added to app modules, including path for the executable (appPath), is a Windows Store app (isWindowsStoreApp), and machine architecture for the app (appArchitecture). (#7894)
+- It is now possible to create app modules for apps hosted inside wwahost.exe on Windows 8 and later. (#4569)
+
+
 = 2020.2 =
 Highlights of this release include support for a new braille display from Nattiq, better support for ESET antivirus GUI and Windows Terminal, performance improvements in 1Password, and with Windows OneCore synthesizer. Plus many other important bug fixes and improvements.
 
@@ -169,12 +221,12 @@ Although these changes do break compatibility with older NVDA add-ons, the upgra
 - ARIA 1.1 combo boxes are now supported in Mozilla Firefox and Google Chrome. (#9616)
 - NVDA will no longer report content of visually hidden columns for list items in SysListView32 controls. (#8268)
 - The settings dialog no longer shows "info" as the current log level when in secure mode. (#10209)
-- In Start menu for Windows 10 Anniversary Update and later, NVDA will announce details of search results. (#10232)
+- In Start menu for Windows 10 Anniversary Update and later, NVDA will announce details of search results. (#10340)
 - In browse mode, if moving the cursor or using quick navigation causes the document to change, NVDA no longer speaks incorrect content in some cases. (#8831, #10343)
 - Some bullet names in Microsoft Word have been corrected. (#10399)
 - In Windows 10 May 2019 Update and later, NVDA will once again announce first selected emoji or clipboard item when emoji panel and clipboard history opens, respectively. (#9204)
 - In Poedit, it is once again possible to view some translations for right to left languages. (#9931)
-- In the Settings app in Windows 10 April 2018 Update and later, NVDA will no longer announce progress bar information for volume meters found in the System/Sound page. (#10284)
+- In the Settings app in Windows 10 April 2018 Update and later, NVDA will no longer announce progress bar information for volume meters found in the System/Sound page. (#10412)
 - Invalid regular expressions in speech dictionaries no longer completely break speech in NVDA. (#10334)
 - When reading bulleted items in Microsoft Word with UIA enabled, the bullet from the next list item is no longer inappropriately announced. (#9613)
 - Some rare braille translation issues and errors with liblouis have been resolved. (#9982)

@@ -8,20 +8,21 @@
 # 漫辰 <manchen0528@gmail.com>, 2018
 # 星空 <dingpengyu06@gmail.com>, 2018
 # Mike Zhao <singer.mike.zhao@gmail.com>, 2019
+# 完美很难 <1872265132@qq.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-31 00:10+1000\n"
-"PO-Revision-Date: 2020-06-26 22:44+0800\n"
-"Last-Translator: dingpengyu <dingpengyu06@gmail.com>\n"
+"POT-Creation-Date: 2020-08-07 00:10+1000\n"
+"PO-Revision-Date: 2020-08-27 14:04+0800\n"
+"Last-Translator: Larry Wang <larry.wang.801@gmail.com>\n"
 "Language-Team: NVDASimplified Chinese team All volunteers <Copyright (C) "
 "2010-2020>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
@@ -4204,7 +4205,7 @@ msgstr "打开 NVDA “语音合成器”对话框"
 
 #. Translators: Input help mode message for go to speech settings command.
 msgid "Shows NVDA's speech settings"
-msgstr "打开 NVDA “鼠标设置”对话框"
+msgstr "打开 NVDA “语音设置”对话框"
 
 #. Translators: Input help mode message for go to select braille display command.
 msgid "Shows the NVDA braille display selection dialog"
@@ -4299,7 +4300,7 @@ msgstr "激活 NVDA 插件管理器以安装或卸载 NVDA 的插件"
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
-msgstr "朗读查看器已停用"
+msgstr "朗读查看器已禁用"
 
 #. Translators: The message announced when enabling speech viewer.
 msgid "speech viewer enabled"
@@ -4641,7 +4642,7 @@ msgstr "打开NVDA对话框时无法更改活动配置文件"
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
 msgid "{profile} profile deactivated"
-msgstr "手动停用配置文件{profile}"
+msgstr "手动禁用配置文件{profile}"
 
 #. Translators: a message when a configuration profile is manually activated.
 #. {profile} is replaced with the profile's name.
@@ -4654,7 +4655,7 @@ msgstr "手动激活配置文件 {profile}"
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
 msgid "Activates or deactivates the {profile} configuration profile"
-msgstr "激活或停用{profile} 已经手动停用"
+msgstr "激活或禁用{profile} 已经手动禁用"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -7160,7 +7161,7 @@ msgstr "启用人体学输入设备键盘触控仿真"
 
 #. Translators: Message when HID keyboard simulation is disabled.
 msgid "HID keyboard simulation disabled"
-msgstr "停用人体学输入设备键盘触控仿真"
+msgstr "禁用人体学输入设备键盘触控仿真"
 
 #. Translators: Description of the script that toggles HID keyboard simulation.
 msgid "Toggles HID keyboard simulation"
@@ -7217,7 +7218,7 @@ msgstr "点字输入已启用"
 
 #. Translators: message when braille input is disabled
 msgid "Braille input disabled"
-msgstr "停用点字输入"
+msgstr "禁用点字输入"
 
 #. Translators: description of the script to toggle braille input
 msgid "Toggle braille input"
@@ -7627,7 +7628,7 @@ msgstr "继续运行(&C)"
 msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
 "unless you choose to disable them again."
-msgstr "所有插件已经被停用，他们将在下次重启时重新启用，除非您选择再次禁用。"
+msgstr "所有插件已经被禁用，他们将在下次重启时重新启用，除非您选择再次禁用。"
 
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
@@ -7643,7 +7644,7 @@ msgstr "重新启动"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with add-ons disabled"
-msgstr "重启并停用插件"
+msgstr "重启并禁用插件"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with debug logging enabled"
@@ -7746,7 +7747,7 @@ msgstr "NVDA版本最低要求: {}"
 
 #. Translators: the last NVDA version tested part of the About Add-on information
 msgid "Last NVDA version tested: {}"
-msgstr "最近测试的 NVDA 版本"
+msgstr "最近测试的 NVDA 版本： {}"
 
 #. Translators: title for the Addon Information dialog
 msgid "Add-on Information"
@@ -7796,7 +7797,7 @@ msgstr "插件帮助(&H)"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Disable add-on"
-msgstr "停用插件(&D)"
+msgstr "禁用插件(&D)"
 
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
@@ -7849,7 +7850,7 @@ msgstr "安装"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "Disabled"
-msgstr "停用"
+msgstr "禁用"
 
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "Removed after restart"
@@ -8017,7 +8018,7 @@ msgstr "关联(&T)"
 
 #. Translators: The label of a checkbox in the Configuration Profiles dialog.
 msgid "Temporarily d&isable all triggers"
-msgstr "临时停用所有关联(&D)"
+msgstr "临时禁用所有关联(&D)"
 
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
@@ -8058,7 +8059,7 @@ msgstr "删除配置时出错。"
 #. Translators: The label of the button to manually deactivate the selected profile
 #. in the Configuration Profiles dialog.
 msgid "Manual deactivate"
-msgstr "手动停用"
+msgstr "手动禁用"
 
 #. Translators: The label of the button to manually activate the selected profile
 #. in the Configuration Profiles dialog.
@@ -8163,7 +8164,7 @@ msgid ""
 "usage.\n"
 "Do you wish to manually activate it now?"
 msgstr ""
-"要想编辑此配置，您必须先将其激活。一旦您完成编辑，您必须手动停用它已使配置恢"
+"要想编辑此配置，您必须先将其激活。一旦您完成编辑，您必须手动禁用它已使配置恢"
 "复到原来的状态。\n"
 "您希望现在就手动激活它吗？"
 
@@ -8398,7 +8399,7 @@ msgstr "常规"
 
 #. Translators: One of the log levels of NVDA (the disabled mode turns off logging completely).
 msgid "disabled"
-msgstr "停用"
+msgstr "已禁用"
 
 #. Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 msgid "info"
@@ -8459,7 +8460,7 @@ msgstr "应用以保存的配置到欢迎界面和其他安全界面（需要管
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
-msgstr "&自动检查更新NVDA"
+msgstr "自动检查更新(&U)"
 
 #. Translators: The label of a checkbox in general settings to toggle startup notifications
 #. for a pending NVDA update.

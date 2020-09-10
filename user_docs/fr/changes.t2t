@@ -3,6 +3,58 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.3 =
+
+== Nouvelles Fonctionnalités ==
+- Vous pouvez maintenant basculer l'annonce des graphiques dans les paramètres de mise en forme des documents de NVDA. Notez que désactiver cette option annoncera toujours les textes alternatifs des graphiques. (#4837)
+- Vous pouvez maintenant basculer le support des écrans tactiles de NVDA. Une option a été ajoutée aux paramètres d'écrans tactiles, le raccourci par défaut est NVDA+CTRL+Alt+T. (#9682)
+- Ajout de nouvelles tables braille allemandes. (#11268)
+- NVDA détecte maintenant les contrôles de texte UIA en lecture seule. (#10494)
+- Le texte marqué (surligné) est maintenant signalé en Braille et vocalement dans tous les navigateurs Web. (#11436)
+ - Ceci peut être basculé via une nouvelle option dans les paramètres de mise en forme des documents pour le surlignage.
+- De nouvelles touches d'émulation du clavier du système peuvent être ajoutées via le dialogue Gestes de Commandes. (#6060)
+  - Pour faire cela, appuyez sur le bouton "Ajouter" après avoir sélectionné la catégorie "Touches émulées du clavier du système".
+
+
+== Changements ==
+- Le script d'annonce de la mise en forme (NVDA+F) a été modifié pour reporter la mise en forme à la position du curseur système et non plus du curseur de revue. Pour connaître la mise en forme à la position du curseur de revue utilisez maintenant NVDA+Shift+F. (#9505)
+- NVDA ne place plus automatiquement le focus système sur les éléments pouvant être mis en focus en mode navigation, cela améliore les performances et la stabilité. (#11190)
+- Base CLDR mise à jour de la version 36.1 à la version 37. (#11303)
+- Mise à jour de eSpeak-NG à la version 1.51-dev, niveau 1fb68ffffea4
+- Vous pouvez maintenant utiliser les commandes de navigation de tableau dans les listes avec des éléments cochables comportant plusieurs colonnes. (#8857)
+- Dans le dialogue de confirmation de suppression d'une extension du gestionaire d'extensions, le bouton "Non" est maintenant celui par défaut. (#10015)
+- Dans la liste d'éléments de Microsoft Excel, les formules sont maintenant présentées sous leur forme traduite. (#9144)
+- NVDA indique maintenant correctement la terminologie des notes dans Excel. (#11311)
+- Lors de l'utilisation de la commande de déplacement du curseur de revue vers le focus en mode navigation, le curseur de revue est maintenant déplacé à la position du curseur virtuel. (#9622)
+
+
+== Corrections de Bogues ==
+- NVDA annonce maintenant toujours l'arrivée sur un symbole suivi d'un espace lors de la navigation par mot, peu importe le niveau de ponctuations. (#5133)
+- Dans les applications utilisant QT 5.11 et supérieur, les descriptions d'objets sont à nouveau annoncées. (#8604)
+- Lors de la suppression d'un mot par CTRL+Suppr, NVDA n'est plus silencieux. (#3298, #11029)
+  - Le mot à droite du mot supprimé est maintenant annoncé.
+- Dans les paramètres généraux, la liste des langues est maintenant triée correctement. (#10348)
+- Améliorations notables de performances lors du filtrage dans le dialogue des gestes de commandes. (#10307)(
+- Vous pouvez maintenant envoyer un symbole Unicode au-delà de u+FFFF depuis un afficheur Braille. (#10796)
+- NVDA annoncera le contenu du dialogue "Ouvrir avec" sous Windows 10 May 2020 Update. (#11335)
+- Une nouvelle option expérimentale dans les paramètres avancés (Activer l'enregistrement sélectif des évènements UI Automation et les changements de propriétés) peut apporter des améliorations majeures de performances dans Visual Studio et les autres applications basées sur UIA si activée. (#11077, #11209)
+- Dans les listes avec éléments cochables, l'état "sélectionné" n'est plus annoncé systématiquement, et, le cas échéant, l'état "non sélectionné" est annoncé à la place. (#8554)
+- Sous Windows 10 May 2020 Update, NVDA affiche maintenant le mapeur de sons Microsoft lors de l'affichage des périphériques de sortie audio du dialogue Synthétiseurs. (#11349)
+- Sous Internet Explorer, les nombres sont maintenant annoncés correctement pour les listes ordonnées si la liste ne commence pas par 1. (#8438)
+- Sous Google Chrome, NVDA reporte maintenant l'état "non coché" pour tous les contrôles, pas seulement les cases à cocher, qui ne sont actuellement pas cochés. (#11377)
+- Il est à nouveau possible de naviguer dans différents contrôles si la langue de NVDA est définie sur l'aragonais. (#11384)
+- NVDA ne se figera plus par moment dans Microsoft Word lors du défilement rapide avec flèche haut/bas ou lors de la saisie de caractères avec le Braille activé. (#11431, #11425, #11414)
+- NVDA n'ajoute plus d'espace final inexistant lors de la copie de l'objet navigateur actuel vers le presse-papiers. (#11438)
+- NVDA n'active plus le profil dire tout s'il n'y a rien à lire. (#10899, #9947)
+- NVDA n'est plus incapable de lire la liste des fonctionnalités Internet dans IIS (Internet informations service). (#11468)
+
+
+== Changements pourr les Développeurs ==
+- Dans les fonctions auxiliaires de création d'interface (GUI Helper), BoxSizerHelper.addDialogDismissButtons supporte un nouveau mot clé "separated", pour ajouter un séparateur horizontal standard aux dialogues (autre que les messages et simple dialogues d'entrée). (#6468)
+- Ajouts de propriétés aux modules applicatifs incluant le chemin de l'exécutable (appPath), est une application du Store (isWindowsStoreApp), et l'architecture de la machine pour l'application (appArchitecture). (#7894)
+- Il est maintenant possible de créer des modules pour les applications appartenant à wwahost.exe sous Windows 8 et suppérieur. (#4569)
+
+
 = 2020.2 =
 Les points forts de cette version incluent le support d'un nouvel afficheur Braille de Natiq nBraille, un meilleur support de l'antivirus Eset et de Windows Terminal, une amélioration des performances pour 1Password et le synthétiseur Windows OneCore, ainsi que beaucoup d'autres correctifs.
 
@@ -169,12 +221,12 @@ Bien que ces changements rendent incompatibles certaines extensions anciennes, l
 - Les listes déroulantes ARIA 1.1 sont maintenant supportées sous Firefox et Chrome. (#9616)
 - NVDA n'annoncera plus le contenu des colonnes masquées visuellement pour les éléments de liste des contrôles SysListView32. (#8268)
 - Le dialogue de paramètres n'affiche plus le niveau de journalisation sur les écrans sécurisés. (#10209)
-- Dans le menu Démarrer de Windows 10 version anniversaire et supérieur, NVDA annonce maintenant le détail des résultats de recherche. (#10232)
+- Dans le menu Démarrer de Windows 10 version anniversaire et supérieur, NVDA annonce maintenant le détail des résultats de recherche. (#10340)
 - En mode navigation, si le déplacement du curseur ou l'utilisation de la navigation rapide entraîne la modification du document, NVDA n'indiquera plus un contenu incorrect dans certains cas. (#8831, #10343)
 - Certains noms de puces dans Microsoft Word ont été corrigés. (#10399)
 - Dans la mise à jour de Mai de Windows 10 et supérieur, NVDA annonce maintenant correctement le premier emoji ou le premier élément dans l'historique du presse-papiers lorsque le paneau d'emoji et le dialogue d'historique du presse-papiers sont ouverts, respectivement. (#9204)
 - Dans Poedit, il est à nouveau possible de voir les traductions pour les langues se lisant de droite à gauche. (#9931)
-- Dans l'application Paramètres de la mise à jour de Windows 10 avril 2018 et ultérieure, NVDA n'annoncera plus les informations de la barre de progression de volume qui se trouve dans ll'onglet Système / Son. (#10284)
+- Dans l'application Paramètres de la mise à jour de Windows 10 avril 2018 et ultérieure, NVDA n'annoncera plus les informations de la barre de progression de volume qui se trouve dans ll'onglet Système / Son. (#10412)
 - Des expressions régulières invalides dans les dictionaires de parole n'entraînent plus l'arrêt complet de la parole. (#10334)
 - Quand on parcourt des éléments à puces dans Microsoft Word avec UIA activé, la puce de l'élément de liste suivant n'est plus indûment annoncée. (#9613)
 - Quelques rares erreurs de traduction Braille et erreurs avec Liblouis ont été résolues. (#9982)
