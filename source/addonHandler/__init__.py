@@ -335,6 +335,7 @@ class Addon(AddonBase):
 		saveState()
 
 	def completeRemove(self, runUninstallTask=True):
+		"""Removes an add-on that has been fully installed, or that is pending install."""
 		if runUninstallTask:
 			try:
 				# #2715: The add-on must be added to _availableAddons here so that
