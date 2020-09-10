@@ -26,6 +26,7 @@ What's New in NVDA
 - In Microsoft Excel, the Elements List dialog now presents formulas in their localized form. (#9144)
 - NVDA now reports the correct terminology for notes in MS Excel. (#11311)
 - When using the "move review cursor to focus" command in browse mode, the review cursor is now set at the position of the virtual caret. (#9622)
+- Information reported in browse mode, such as the formatting info with NVDA+F, are now displayed in a slightly bigger window centered on screen. (#9910)
 
 
 == Bug Fixes ==
@@ -34,7 +35,7 @@ What's New in NVDA
 - When deleting a word with control+delete, NVDA no longer remains silent. (#3298, #11029)
   - Now the word to the right of the deleted word is announced.
 - In general settings panel, the language list is now sorted correctly. (#10348)
-- In the Input Gestures dialog, significantly improved performance while filtering. (#10307)(
+- In the Input Gestures dialog, significantly improved performance while filtering. (#10307)
 - You can now send Unicode characters beyond U+FFFF from a braille display. (#10796)
 - NVDA will announce Open With dialog content in Windows 10 May 2020 Update. (#11335)
 - A new experimental option in Advanced settings (Enable selective registration for UI Automation events and property changes) can provide major performance improvements in Microsoft Visual Studio and other UIAutomation based applications if enabled. (#11077, #11209)
@@ -47,12 +48,22 @@ What's New in NVDA
 - NVDA no longer appends nonexistent trailing space when copying the current navigator object to the clipboard. (#11438)
 - NVDA no longer activates the Say All profile if there is nothing to read. (#10899, #9947)
 - NVDA is no longer unable to read the features list in Internet Information Services (IIS) Manager. (#11468)
+- NVDA now keeps the audio device open improving performance on some sound cards (#5172, #10721)
+- NVDA will no longer freeze or exit when holding down control+shift+downArrow in Microsoft Word. (#9463)
+- The expanded / collapsed state of directories in the navigation treeview on drive.google.com is now always reported by NVDA. (#11520)
+- NVDA will auto detect the NLS eReader Humanware braille display via Bluetooth as its Bluethooth name is now "NLS eReader Humanware". (#11561)
 
 
 == Changes For Developers ==
 - The GUI Helper's BoxSizerHelper.addDialogDismissButtons supports a new "separated" keyword argument, for adding a standard horizontal separator to dialogs (other than messages and single input dialogs). (#6468)
 - Additional properties were added to app modules, including path for the executable (appPath), is a Windows Store app (isWindowsStoreApp), and machine architecture for the app (appArchitecture). (#7894)
 - It is now possible to create app modules for apps hosted inside wwahost.exe on Windows 8 and later. (#4569)
+- A fragment of the log can now be delimited and then copied to clipboard using NVDA+control+shift+F1. (#9280)
+- NVDA-specific objects that are found by Python's cyclic garbage collector are now logged when being deleted by the collector to aide in removing reference cycles from NVDA. (#11499)
+ - The majority of NVDA's classes are tracked including NVDAObjects, appModules, GlobalPlugins, SynthDrivers, and TreeInterceptors.
+ - A class that needs to be tracked should inherit from garbageHandler.TrackedObject.
+- Significant debug logging for MSAA events can be now enabled in NVDA's Advanced settings. (#11521)
+- MSAA winEvents for the currently focused object are no longer filtered out along with other events if the event count for a given thread is exceeded. (#11520)
 
 
 = 2020.2 =
