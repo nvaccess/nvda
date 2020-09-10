@@ -217,8 +217,6 @@ You can also keep your finger on the screen and move it around to read other con
 When NVDA commands are described later in this user guide, they may list a touch gesture which can be used to activate that command with the touchscreen.
 Following are some instructions on how to perform the various touch gestures.
 
-
-
 ==== Taps ====
 Tap the screen quickly with one or more fingers.
 
@@ -336,7 +334,6 @@ NVDA provides the following key commands in relation to the system caret:
 | Report text formatting | NVDA+f | NVDA+f | Reports the formatting of the text where the caret is currently situated. Pressing twice shows the information in browse mode |
 | Next sentence | alt+downArrow | alt+downArrow | Moves the caret to the next sentence and announces it. (only supported in Microsoft Word and Outlook) |
 | Previous sentence | alt+upArrow | alt+upArrow | Moves the caret to the previous sentence and announces it. (only supported in Microsoft Word and Outlook) |
-
 
 When within a table, the following key commands are also available:
 || Name | Key | Description |
@@ -653,7 +650,6 @@ When you wish to return to the document, simply press the escape key.
 
 Sometimes mathematical content might be displayed as a button or other type of element which, when activated, can display a dialog or more information related to the formula.
 To activate the button or the element containing the formula, press ctrl+enter.
-
 
 + Braille +[Braille]
 If you own a braille display, NVDA can display information in braille.
@@ -1082,7 +1078,8 @@ The available logging levels are:
  - If you are concerned about privacy, do not set the logging level to this option.
 - Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
  - Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
-
+ -
+-
 
 ==== Start NVDA after I sign in ====[GeneralSettingsStartAfterLogOn]
 If this option is enabled, NVDA will start automatically as soon as you sign in to Windows.
@@ -1304,7 +1301,7 @@ The selection indicator is not affected by this option, it is always dots 7 and 
 ==== Message Timeout (sec) ====[BrailleSettingsMessageTimeout]
 This option is a numerical field that controls how long NVDA messages are displayed on the braille display.
 Specifying 0 disables displaying of these messages completely.
-The NVDA message is imediately dismissed when pressing a routing key on the braille display, but appears again when pressing a coresponding key which triggers the message.
+The NVDA message is imediately dismissed when pressing a routing key on the braille display, but appears again when pressing a corresponding key which triggers the message.
 
 ==== Show Messages Indefinitely ====[BrailleSettingsNoMessageTimeout]
 This option allows NVDA messages to be displayed on the braille display indefinitely.
@@ -1579,7 +1576,6 @@ This checkbox, when checked, tells NVDA to report help balloons and toast notifi
 - Help Balloons are like tooltips, but are usually larger in size, and are associated with system events such as a network cable being unplugged, or perhaps to alert you about Windows security issues.
 - Toast notifications have been introduced in Windows 10 and appear in the notification centre in the system tray, informing about several events (i.e. if an update has been downloaded, a new e-mail arrived in your inbox, etc.).
 
-
 ==== Report Object Shortcut Keys ====[ObjectPresentationShortcutKeys]
 When this checkbox is checked, NVDA will include the shortcut key that is associated with a certain object or control when it is reported.
 For example the File menu on a menu bar may have a shortcut key of alt+f.
@@ -1839,7 +1835,7 @@ This setting controls whether characters are spoken by [speak typed characters #
 ==== Use the new typed character support in Windows Console when available ====[AdvancedSettingsKeyboardSupportInLegacy]
 This option enables an alternative method for detecting typed characters in Windows command consoles.
 While it improves performance and prevents some console output from being spelled out, it may be incompatible with some terminal programs.
-This feature is available and enabled by default on Windows 10 versions 1607and later when UI Automation is unavailable or disabled.
+This feature is available and enabled by default on Windows 10 versions 1607 and later when UI Automation is unavailable or disabled.
 Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
 In untrusted environments, you may temporarily disable [speak typed characters #KeyboardSettingsSpeakTypedCharacters] and [speak typed words #KeyboardSettingsSpeakTypedWords] when entering passwords.
 
@@ -1895,7 +1891,6 @@ Thus, using the earlier example of replacing the word "bird" with "frog", if you
 A regular expression is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples.
 Regular expressions are not covered in this user guide.
 For an introductory tutorial, please refer to [https://docs.python.org/3.7/howto/regex.html].
-
 
 +++ Punctuation/symbol pronunciation +++[SymbolPronunciation]
 This dialog allows you to change the way punctuation and other symbols are pronounced, as well as the symbol level at which they are spoken.
@@ -2245,7 +2240,6 @@ On Windows 10, NVDA uses Windows OneCore voices by default ([eSpeak NG #eSpeakNG
 
 Please see this Microsoft article for a list of available voices and instructions to install them: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
-
 + Supported Braille Displays +[SupportedBrailleDisplays]
 This section contains information about the Braille displays supported by NVDA.
 
@@ -2519,7 +2513,7 @@ The following extra devices are also supported (and do not require any special d
 - APH Chameleon 20
 - Humanware BrailleOne
 - NLS eReader
-
+-
 
 Following are the key assignments for  the Brailliant BI/B and BrailleNote touch displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
