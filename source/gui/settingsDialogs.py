@@ -1873,6 +1873,8 @@ class ObjectPresentationPanel(SettingsPanel):
 		self.uiaNotificationCheckBox = sHelper.addItem(wx.CheckBox(self, label=uiaNotificationText))
 		self.bindHelpEvent("ObjectPresentationAccessibleEventNotifications", self.uiaNotificationCheckBox)
 		self.uiaNotificationCheckBox.SetValue(config.conf["presentation"]["reportUIANotifications"])
+		# #10956: UIA (accessible app event) notification event was introduced in Fall Creators Update.
+		self.uiaNotificationCheckBox.Enable(winVersion.isWin10(1709))
 
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings panel.
