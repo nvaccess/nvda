@@ -146,8 +146,7 @@ def removeFailedDeletions():
 
 _disabledAddons = set()
 def disableAddonsIfAny():
-	"""
-	Disables add-ons if told to do so by the user from add-ons manager.
+	"""Disables add-ons if told to do so by the user from add-ons manager.
 	This is usually executed before refreshing the list of available add-ons.
 	"""
 	global _disabledAddons
@@ -172,7 +171,6 @@ def initialize():
 	getAvailableAddons(refresh=True)
 	saveState()
 
-
 def terminate():
 	""" Terminates the add-ons subsystem. """
 	pass
@@ -190,7 +188,7 @@ def _getDefaultAddonPaths():
 
 def _getAvailableAddonsFromPath(path):
 	""" Gets available add-ons from path.
-	An addon is only considered available if the manifest file is loaded with no errors.
+	An add-on is only considered available if the manifest file is loaded with no errors.
 	@param path: path from where to find addon directories.
 	@type path: string
 	@rtype generator of Addon instances
@@ -225,7 +223,7 @@ def _getAvailableAddonsFromPath(path):
 				
 _availableAddons = collections.OrderedDict()
 def getAvailableAddons(refresh=False, filterFunc=None):
-	""" Gets all available addons on the system.
+	""" Gets all available add-ons on the system.
 	@param refresh: Whether or not to query the file system for available add-ons.
 	@type refresh: bool
 	@param filterFunc: A function that allows filtering of add-ons.
@@ -244,7 +242,7 @@ def getAvailableAddons(refresh=False, filterFunc=None):
 	return (addon for addon in _availableAddons.values() if not filterFunc or filterFunc(addon))
 
 def installAddonBundle(bundle):
-	"""Extracts an Addon bundle in to a unique subdirectory of the user addons directory,
+	"""Extracts an Add-on bundle in to a unique subdirectory of the user addons directory,
 	marking the addon as needing install completion on NVDA restart.
 	"""
 	addonPath = os.path.join(globalVars.appArgs.configPath, "addons", bundle.manifest['name']+ADDON_PENDINGINSTALL_SUFFIX)
@@ -292,7 +290,7 @@ class Addon(AddonBase):
 	""" Represents an Add-on available on the file system."""
 	def __init__(self, path):
 		""" Constructs an L{Addon} from.
-		@param path: the base directory for the addon data.
+		@param path: the base directory for the add-on data.
 		@type path: string
 		"""
 		self.path = os.path.abspath(path)
@@ -313,16 +311,16 @@ class Addon(AddonBase):
 
 	@property
 	def isPendingInstall(self):
-		"""True if this addon has not yet been fully installed."""
+		"""True if this add-on has not yet been fully installed."""
 		return self.path.endswith(ADDON_PENDINGINSTALL_SUFFIX)
 
 	@property
 	def isPendingRemove(self):
-		"""True if this addon is marked for removal."""
+		"""True if this add-on is marked for removal."""
 		return not self.isPendingInstall and self.name in state['pendingRemovesSet']
 
 	def requestRemove(self):
-		"""Markes this addon for removal on NVDA restart."""
+		"""Markes this add-on for removal on NVDA restart."""
 		if self.isPendingInstall:
 			self.completeRemove()
 			state['pendingInstallsSet'].discard(self.name)
@@ -473,8 +471,7 @@ class Addon(AddonBase):
 		return gettext.translation(domain, localedir=localedir, languages=[languageHandler.getLanguage()], fallback=True)
 
 	def runInstallTask(self, taskName,*args,**kwargs):
-		"""
-		Executes the function having the given taskName with the given args and kwargs,
+		"""Executes the function having the given taskName with the given args and kwargs,
 		in the add-on's installTasks module if it exists.
 		"""
 		if not hasattr(self,'_installTasksModule'):
@@ -516,10 +513,11 @@ class Addon(AddonBase):
 		return None
 
 def getCodeAddon(obj=None, frameDist=1):
-	""" Returns the L{Addon} where C{obj} is defined. If obj is None the caller code frame is assumed to allow simple retrieval of "current calling addon".
+	""" Returns the L{Addon} where C{obj} is defined.
+	If obj is None the caller code frame is assumed to allow simple retrieval of "current calling addon".
 	@param obj: python object or None for default behaviour.
 	@param frameDist: how many frames is the caller code. Only change this for functions in this module.
-	@return: L{Addon} instance or None if no code does not belong to a add-on package.
+	@return: L{Addon} instance or None if no code does not belong to an add-on package.
 	@rtype: C{Addon}
 	"""
 	global _availableAddons
@@ -574,7 +572,8 @@ def _translatedManifestPaths(lang=None, forBundle=False):
 class AddonBundle(AddonBase):
 	""" Represents the contents of an NVDA addon suitable for distribution.
 	The bundle is compressed using the zip file format. Manifest information
-	is available without the need for extraction."""
+	is available without the need for extraction.
+	"""
 	def __init__(self, bundlePath):
 		""" Constructs an L{AddonBundle} from a filename.
 		@param bundlePath: The path for the bundle file.
@@ -627,7 +626,7 @@ class AddonBundle(AddonBase):
 		return "<AddonBundle at {}>".format(self._path)
 
 def createAddonBundleFromPath(path, destDir=None):
-	""" Creates a bundle from a directory that contains a a addon manifest file."""
+	""" Creates a bundle from a directory that contains an add-on manifest file."""
 	basedir = os.path.abspath(path)
 	# If  caller did not provide a destination directory name
 	# Put the bundle at the same level as the add-on's top-level directory,
