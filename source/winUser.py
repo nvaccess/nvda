@@ -614,7 +614,8 @@ def ScreenToClient(hwnd, x, y):
 	if not user32.ScreenToClient(hwnd, byref(point)):
 		log.error(
 			f"Couldn't convert screen coordinates x={x}, y={y} to client coordinates for hwnd={hwnd}:"
-			f" {WinError()}"
+			f" {WinError()}",
+			stack_info=True
 		)
 	return point.x, point.y
 
@@ -623,7 +624,8 @@ def ClientToScreen(hwnd, x, y):
 	if not user32.ClientToScreen(hwnd, byref(point)):
 		log.error(
 			f"Couldn't convert client coordinates x={x}, y={y} to screen coordinates for hwnd={hwnd}:"
-			f" {WinError()}"
+			f" {WinError()}",
+			stack_info=True
 		)
 	return point.x, point.y
 
