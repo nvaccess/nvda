@@ -63,28 +63,7 @@ CComPtr<IAccessible2> GeckoVBufBackend_t::getLabelElement(IAccessible2_2* elemen
 	return CComQIPtr<IAccessible2>(ppUnk_smart[0]);
 }
 
-#define NAVRELATION_LABELLED_BY 0x1003
 const wchar_t EMBEDDED_OBJ_CHAR = 0xFFFC;
-
-HWND findRealMozillaWindow(HWND hwnd) {
-	if(hwnd==0||!IsWindow(hwnd))
-		return (HWND)0;
-
-	wchar_t className[256];
-	bool foundWindow=false;
-	HWND tempWindow=hwnd;
-	do {
-		if(GetClassName(tempWindow,className,256)==0)
-			return hwnd;
-		if(wcscmp(L"MozillaWindowClass",className)!=0)
-			foundWindow=true;
-		else
-			tempWindow=GetAncestor(tempWindow,GA_PARENT);
-	} while(tempWindow&&!foundWindow);
-	if(GetClassName(tempWindow,className,256)!=0&&wcsstr(className,L"Mozilla")==className)
-		hwnd=tempWindow;
-	return hwnd;
-}
 
 static IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	IAccessible* pacc=NULL;
@@ -187,7 +166,7 @@ inline void fillTableHeaders(VBufStorage_controlFieldNode_t* node, IAccessibleTa
 				headerCellPacc->Release();
 				continue;
 			}
-			const int headerCellDocHandle = HandleToUlong(findRealMozillaWindow(hwnd));
+			const int headerCellDocHandle = HandleToUlong(hwnd);
 			int headerCellID;
 			if (headerCellPacc->get_uniqueID((long*)&headerCellID) != S_OK) {
 				headerCellPacc->Release();
@@ -226,18 +205,11 @@ inline void GeckoVBufBackend_t::fillTableCellInfo_IATable2(VBufStorage_controlFi
 		}
 	}
 
-	if (this->shouldDisableTableHeaders)
-		return;
-
 	fillTableHeaders(node, paccTableCell, &IAccessibleTableCell::get_columnHeaderCells, L"table-columnheadercells");
 	fillTableHeaders(node, paccTableCell, &IAccessibleTableCell::get_rowHeaderCells, L"table-rowheadercells");
 }
 
 void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
-	// Defaults.
-	this->shouldDisableTableHeaders = false;
-	this->hasEncodedAccDescription = false;
-
 	IServiceProvider* serv = NULL;
 	if (pacc->QueryInterface(IID_IServiceProvider, (void**)&serv) != S_OK)
 		return;
@@ -256,35 +228,8 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	if(toolkitName) {
 		this->toolkitName = std::wstring(toolkitName, SysStringLen(toolkitName));
 	}
-	BSTR toolkitVersion = NULL;
-	if (iaApp->get_toolkitVersion(&toolkitVersion) != S_OK) {
-		iaApp->Release();
-		SysFreeString(toolkitName);
-		return;
-	}
 	iaApp->Release();
-	iaApp = NULL;
-
-	if (wcscmp(toolkitName, L"Gecko") == 0) {
-		if (wcsncmp(toolkitVersion, L"1.", 2) == 0) {
-			if (wcsncmp(toolkitVersion, L"1.9.2.", 6) == 0) {
-				// Gecko 1.9.2.x.
-				// Retrieve the digits for the final part of the main version number.
-				wstring verPart;
-				for (wchar_t* c = &toolkitVersion[6]; iswdigit(*c); c++)
-					verPart += *c;
-				if (_wtoi(verPart.c_str()) <= 10) {
-					// Gecko <= 1.9.2.10 will crash if we try to retrieve headers on some table cells, so disable them.
-					this->shouldDisableTableHeaders = true;
-				}
-			}
-			// Gecko 1.x uses accDescription to encode position info as well as the description.
-			this->hasEncodedAccDescription = true;
-		}
-	}
-
 	SysFreeString(toolkitName);
-	SysFreeString(toolkitVersion);
 }
 
 optional<int>
@@ -442,7 +387,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		LOG_DEBUG(L"pacc->get_windowHandle failed");
 		return NULL;
 	}
-	const int docHandle=HandleToUlong(findRealMozillaWindow(docHwnd));
+	const int docHandle=HandleToUlong(docHwnd);
 	if(!docHandle) {
 		LOG_DEBUG(L"bad docHandle");
 		return NULL;
@@ -596,11 +541,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	wstring description;
 	BSTR rawDesc=NULL;
 	if(pacc->get_accDescription(varChild,&rawDesc)==S_OK) {
-		if(this->hasEncodedAccDescription) {
-			if(wcsncmp(rawDesc,L"Description: ",13)==0)
-				description=&rawDesc[13];
-		} else
-			description=rawDesc;
+		description=rawDesc;
 		parentNode->addAttribute(L"description",description);
 		SysFreeString(rawDesc);
 	}
@@ -1208,7 +1149,6 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 	if(childID>=0||objectID!=OBJID_CLIENT)
 		return;
 	LOG_DEBUG(L"winEvent for window "<<hwnd);
-	hwnd=findRealMozillaWindow(hwnd);
 	if(!hwnd) {
 		LOG_DEBUG(L"Invalid window");
 		return;

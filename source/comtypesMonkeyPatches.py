@@ -51,6 +51,8 @@ finally:
 # It is safe to import any comtypes modules from here on down.
 
 from logHandler import log
+import garbageHandler  # noqa: E402
+
 
 from comtypes import COMError
 from comtypes.hresult import *
@@ -92,12 +94,14 @@ comtypes.client.dynamic._Dispatch.__call__=new__call__
 # Work around an issue with comtypes where __del__ seems to be called twice on COM pointers.
 # This causes Release() to be called more than it should, which is very nasty and will eventually cause us to access pointers which have been freed.
 from comtypes import _compointer_base
+
 _cpbDel = _compointer_base.__del__
 def newCpbDel(self):
 	if hasattr(self, "_deleted"):
 		# Don't allow this to be called more than once.
 		log.debugWarning("COM pointer %r already deleted" % self)
 		return
+	garbageHandler.notifyObjectDeletion(self)
 	_cpbDel(self)
 	self._deleted = True
 newCpbDel.__name__ = "__del__"

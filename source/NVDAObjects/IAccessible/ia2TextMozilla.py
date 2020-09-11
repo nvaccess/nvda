@@ -170,8 +170,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		return _getRawTextInfo(obj)(obj, position)
 
 	def _getEmbedding(self, obj):
+		parent = obj.parent
+		if not parent:
+			# obj is probably dead.
+			return None
 		# optimisation: Passing an Offsets position checks nCharacters, which is an extra call we don't need.
-		info = self._makeRawTextInfo(obj.parent, textInfos.POSITION_FIRST)
+		info = self._makeRawTextInfo(parent, textInfos.POSITION_FIRST)
 		if isinstance(info, FakeEmbeddingTextInfo):
 			info._startOffset = obj.indexInParent
 			info._endOffset = info._startOffset + 1
@@ -216,8 +220,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		else:
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(obj.windowHandle,winUser.OBJID_CLIENT,descendantID.value)
 		if position == textInfos.POSITION_CARET:
-			# Cache for later use.
-			self.obj._lastCaretObj = obj
+			# If the compound TextInfo is for the current focus,
+			# We should cache the caret object as we know it will probably be needed again.
+			# Note that event_loseFocus on NVDAObjects.IAccessible.ia2Web.Editor will clear the cache,
+			# To ensure we don't end up with a reference cycle.
+			if self.obj is api.getFocusObject():
+				self.obj._lastCaretObj = obj
 		# optimisation: Passing an Offsets position checks nCharacters, which is an extra call we don't need.
 		ti=self._makeRawTextInfo(obj,textInfos.POSITION_FIRST)
 		ti._startOffset=ti._endOffset=descendantOffset.value
@@ -294,6 +302,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 					fields.insert(0, textInfos.FieldCommand("controlStart", field))
 				controlStack.insert(0, field)
 				ti = self._getEmbedding(obj)
+				if not ti:
+					log.debugWarning(
+						"_getEmbedding returned None while getting initial fields. "
+						"Object probably dead."
+					)
+					return []
 				obj = ti.obj
 		else:
 			controlStack = None
@@ -323,6 +337,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 					field["_endOfNode"] = True
 					fields.append(textInfos.FieldCommand("controlEnd", None))
 			ti = self._getEmbedding(obj)
+			if not ti:
+				log.debugWarning(
+					"_getEmbedding returned None while ascending to get more text. "
+					"Object probably dead."
+				)
+				return []
 			obj = ti.obj
 			if ti.move(textInfos.UNIT_OFFSET, 1) == 0:
 				# There's no more text in this object.
