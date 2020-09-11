@@ -1037,6 +1037,14 @@ class MSHTML(IAccessible):
 		except LookupError:
 			return None
 
+	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
+		politeness = self.HTMLAttributes["aria-live"]
+		if politeness == 'polite':
+			return aria.AriaLivePoliteness.POLITE
+		elif politeness == 'assertive':
+			return aria.AriaLivePoliteness.ASSERTIVE
+		return aria.AriaLivePoliteness.OFF
+
 	def event_liveRegionChange(self):
 		# MSHTML live regions are currently handled with custom code in-process
 		pass
