@@ -286,7 +286,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			limitRect=position
 			position=textInfos.POSITION_ALL
 		if limitRect is not None:
-			self._location = limitRect.left, limitRect.top, limitRect.right, limitRect.bottom
+			self._location = limitRect
 		else:
 			self._location = None
 		super(DisplayModelTextInfo, self).__init__(obj, position)
