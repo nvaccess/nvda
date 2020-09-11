@@ -1032,13 +1032,31 @@ Tries to force this object to take the focus.
 		import nvwave
 		nvwave.playWaveFile(r"waves\textError.wav")
 
+	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
+		""" Retrieves the priority with which  updates to live regions should be treated.
+		The base implementation returns C{aria.AriaLivePoliteness.OFF},
+		indicating that the object isn't a live region.
+		Subclasses supporting live region events must implement this.
+		"""
+		return aria.AriaLivePoliteness.OFF
+
 	def event_liveRegionChange(self):
 		"""
 		A base implementation for live region change events.
 		"""
-		name=self.name
+		name = self.name
 		if name:
-			ui.message(name)
+			politeness = self.liveRegionPoliteness
+			if politeness == aria.AriaLivePoliteness.OFF:
+				log.debugWarning("Processing live region event for object with live politeness set to 'OFF'")
+			ui.message(
+				name,
+				speechPriority=(
+					speech.priorities.Spri.NOW
+					if politeness == aria.AriaLivePoliteness.ASSERTIVE
+					else speech.priorities.Spri.NEXT
+				)
+			)
 
 	def event_typedCharacter(self,ch):
 		if config.conf["documentFormatting"]["reportSpellingErrors"] and config.conf["keyboard"]["alertForSpellingErrors"] and (
