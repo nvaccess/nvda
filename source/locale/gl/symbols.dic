@@ -18,6 +18,9 @@ decimal point	(?<![^\d -])\.(?=\d)
 in-word -	(?<=[^\W_])[-]
 negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
+# Language-custom for GL
+dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
+
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
@@ -250,3 +253,6 @@ _	subliñado	most
 
 # Miscellaneous Technical
 ⌘	Tecla Command do Mac	none
+
+# Language-custom for GL
+dates /	/	-	always

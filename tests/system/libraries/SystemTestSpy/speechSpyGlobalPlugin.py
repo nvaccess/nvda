@@ -16,6 +16,10 @@ import threading
 from .blockUntilConditionMet import _blockUntilConditionMet
 from logHandler import log
 from time import perf_counter as _timer
+from keyboardHandler import KeyboardInputGesture
+import inputCore
+import queueHandler
+import watchdog
 
 import sys
 import os
@@ -216,6 +220,43 @@ class NVDASpyLib:
 			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
 			errorMessage="Speech did not finish before timeout"
 		)
+
+	def emulateKeyPress(self, kbIdentifier: str, blockUntilProcessed=True):
+		"""
+		Emulates a key press using NVDA's input gesture framework.
+		The key press will either result in a script being executed, or the key being sent on to the OS.
+		By default this method will block until any script resulting from this key has been executed,
+		and the NVDA core has again gone back to sleep.
+		@param kbIdentifier: an NVDA keyboard gesture identifier.
+		0 or more modifier keys followed by a main key, all separated by a plus (+) symbol.
+		E.g. control+shift+downArrow.
+		See vkCodes.py in the NVDA source directory for valid key names.
+		"""
+		gesture = KeyboardInputGesture.fromName(kbIdentifier)
+		inputCore.manager.emulateGesture(gesture)
+		if blockUntilProcessed:
+			# Emulating may have queued a script or events.
+			# Insert our own function into the queue after, and wait for that to be also executed.
+			queueProcessed = set()
+
+			def _setQueueProcessed():
+				nonlocal queueProcessed
+				queueProcessed = True
+
+			queueHandler.queueFunction(queueHandler.eventQueue, _setQueueProcessed)
+			_blockUntilConditionMet(
+				getValue=lambda: queueProcessed,
+				giveUpAfterSeconds=self._minTimeout(5),
+				errorMessage="Timed out waiting for key to be processed",
+			)
+			# We know that by now the core will have woken up and processed the scripts, events and our own function.
+			# Wait for the core to go to sleep,
+			# Which means there is no more things the core is currently processing.
+			_blockUntilConditionMet(
+				getValue=lambda: watchdog.isCoreAsleep(),
+				giveUpAfterSeconds=self._minTimeout(5),
+				errorMessage="Timed out waiting for core to sleep again",
+			)
 
 
 class SystemTestSpyServer(globalPluginHandler.GlobalPlugin):
