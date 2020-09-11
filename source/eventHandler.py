@@ -7,6 +7,7 @@
 import threading
 from typing import Optional
 
+import garbageHandler
 import queueHandler
 import api
 import speech
@@ -81,7 +82,8 @@ def isPendingEvents(eventName=None,obj=None):
 	elif eventName and obj:
 		return (eventName,obj) in _pendingEventCountsByNameAndObj
 
-class _EventExecuter(object):
+
+class _EventExecuter(garbageHandler.TrackedObject):
 	"""Facilitates execution of a chain of event functions.
 	L{gen} generates the event functions and positional arguments.
 	L{next} calls the next function in the chain.
@@ -94,7 +96,8 @@ class _EventExecuter(object):
 			self.next()
 		except StopIteration:
 			pass
-		del self._gen
+		finally:
+			del self._gen
 
 	def next(self):
 		func, args = next(self._gen)

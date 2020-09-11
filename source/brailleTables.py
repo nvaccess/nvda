@@ -7,6 +7,7 @@
 """
 
 import collections
+from locale import strxfrm
 
 #: The directory in which liblouis braille tables are located.
 TABLES_DIR = r"louis\tables"
@@ -55,7 +56,7 @@ def listTables():
 	@return: A list of braille tables.
 	@rtype: list of L{BrailleTable}
 	"""
-	return sorted(_tables.values(), key=lambda table: table.displayName)
+	return sorted(_tables.values(), key=lambda table: strxfrm(table.displayName))
 
 #: Maps old table names to new table names for tables renamed in newer versions of liblouis.
 RENAMED_TABLES = {
@@ -139,13 +140,22 @@ addTable("da-dk-g28.ctb", _("Danish 8 dot grade 2"), contracted=True)
 addTable("de-de-comp8.ctb", _("German 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("de-g0.utb", _("German grade 0"))
+addTable("de-g0.utb", _("German grade 0"), input=False)
+
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("de-g1.ctb", _("German grade 1"))
+addTable("de-g0-bidi.utb", _("German grade 0 (detailed)"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("de-g2.ctb", _("German grade 2"), contracted=True)
+addTable("de-g1.ctb", _("German grade 1"), input=False)
+
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("de-g1-bidi.ctb", _("German grade 1 (detailed)"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("de-g2.ctb", _("German grade 2"), contracted=True, input=False)
+
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("el.ctb", _("Greek (Greece)"))

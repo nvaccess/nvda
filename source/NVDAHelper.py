@@ -17,6 +17,7 @@ from ctypes import (
 	WINFUNCTYPE,
 	c_long,
 	c_wchar_p,
+	c_wchar,
 )
 from ctypes.wintypes import *
 from comtypes import BSTR
@@ -412,11 +413,12 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	queueHandler.queueFunction(queueHandler.eventQueue,ui.message,msg)
 	return 0
 
-@WINFUNCTYPE(c_long,c_long,c_wchar)
-def nvdaControllerInternal_typedCharacterNotify(threadID,ch):
+
+@WINFUNCTYPE(c_long, c_wchar)
+def nvdaControllerInternal_typedCharacterNotify(ch):
 	focus=api.getFocusObject()
 	if focus.windowClassName!="ConsoleWindowClass":
-		eventHandler.queueEvent("typedCharacter",focus,ch=ch)
+		eventHandler.queueEvent("typedCharacter", focus, ch=ch)
 	return 0
 
 @WINFUNCTYPE(c_long, c_int, c_int)

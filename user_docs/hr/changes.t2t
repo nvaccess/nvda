@@ -7,6 +7,106 @@
 - Kako biste bili obaviješteni o svim događanjima vezanim uz NVDA, pridružite se našem kanalu i grupi nvda_yu. Na kanalu ćete moći raspravljati o svemu vezanom uz NVDA, koristeći vaš mobilni telefon ili računalo.
 
 
+= 2020.3 =
+
+== New Features ==
+- You can now toggle reporting of graphics from NVDA's document formatting settings. Note that disabling this option will still read the alternative texts of graphics. (#4837)
+- You can now toggle NVDA's touchscreen support. An option has been added to the Touch Interaction panel of NVDA's settings. The default gesture is NVDA+control+alt+t. (#9682)
+- Added new German braille tables. (#11268)
+- NVDA now detects read-only text UIA controls. (#10494)
+- The existence of marked (highlighted) content is reported in both speech and braille in all web browsers. (#11436)
+ - This can be toggled on and off by a new NVDA Document Formatting option for Highlighting.
+- New emulated system keyboard keys can be added from NVDA's Input gestures dialog. (#6060)
+  - To do this, press the add button after you selected the Emulated system keyboard keys category.
+
+
+== Changes ==
+- The Report formatting script (NVDA+f) has now been changed to report the formatting at the system caret rather than at the review cursor position. To report formatting at the review cursor position now use NVDA+shift+f. (#9505)
+- NVDA no longer automatically sets the system focus to focusable elements by default in browse mode, improving performance and stability. (#11190)
+- CLDR updated from version 36.1 to version 37. (#11303)
+- Updated eSpeak-NG to 1.51-dev, commit 1fb68ffffea4
+- You can now utilize table navigation in list boxes with checkable list items when the particular list has multiple columns. (#8857)
+- In the Add-ons manager, when prompted to confirm removal of an add-on, "No" is now the default. (#10015)
+- In Microsoft Excel, the Elements List dialog now presents formulas in their localized form. (#9144)
+- NVDA now reports the correct terminology for notes in MS Excel. (#11311)
+- When using the "move review cursor to focus" command in browse mode, the review cursor is now set at the position of the virtual caret. (#9622)
+
+
+== Bug Fixes ==
+- NVDA now always speaks when navigating by word and landing on any single symbol followed by white space, whatever the verbosity settings. (#5133)
+- In applications using QT 5.11 or newer, object descriptions are again reported. (#8604)
+- When deleting a word with control+delete, NVDA no longer remains silent. (#3298, #11029)
+  - Now the word to the right of the deleted word is announced.
+- In general settings panel, the language list is now sorted correctly. (#10348)
+- In the Input Gestures dialog, significantly improved performance while filtering. (#10307)(
+- You can now send Unicode characters beyond U+FFFF from a braille display. (#10796)
+- NVDA will announce Open With dialog content in Windows 10 May 2020 Update. (#11335)
+- A new experimental option in Advanced settings (Enable selective registration for UI Automation events and property changes) can provide major performance improvements in Microsoft Visual Studio and other UIAutomation based applications if enabled. (#11077, #11209)
+- For checkable list items, the selected state is no longer announced redundantly, and if applicable, the unselected state is announced instead. (#8554)
+- On Windows 10 May 2020 Update, NVDA now shows the Microsoft Sound Mapper when viewing output devices from synthesizer dialog. (#11349)
+- In Internet Explorer, numbers are now announced correctly for ordered lists if the list does not start with 1. (#8438)
+- In Google chrome, NVDA will now report not checked for all checkable controls (not just check boxes) that are currently not checked. (#11377)
+- It is once again possible to navigate in various controls when NVDA's language is set to Aragonese. (#11384)
+- NVDA should no longer sometimes freeze in Microsoft Word when rapidly arrowing up and down or typing characters with Braille enabled. (#11431, #11425, #11414)
+- NVDA no longer appends nonexistent trailing space when copying the current navigator object to the clipboard. (#11438)
+- NVDA no longer activates the Say All profile if there is nothing to read. (#10899, #9947)
+- NVDA is no longer unable to read the features list in Internet Information Services (IIS) Manager. (#11468)
+
+
+== Izmjene za razvojne programere ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
+
+= 2020.2 =
+Novosti u ovoj inačici uključuju podršku za novi brajični redak tvrtke Nattiq, poboljšanu podršku za antivirus eset nod32 te winodws naredbeni redak, unapređenje performanis u programu 1Password, poboljšanja sa sintetizatorom govora One core. Također, u ovu inačicu uvršteni su i puno drugih popravaka grešaka.
+
+== Nove značajke ==
+- Podrška za nove brajične retke:
+  - Nattiq nBraille (#10778)
+- Dodana mogučnost pridjeljivanja prečaca naredbi otvaranja konfiguracijske mape NVDA (Nema dodjeljene podrazumjevane geste). (#2214)
+- Poboljšana podrška za dijaloške okvire ESET antivirusa. (#10894)
+- Dodana podrška za Windows terminal. (#10305)
+- Dodan prečac za izgovaranje trenutnog konfiguracijskog profila (nije dodjeljen podrazumjevano). (#9325)
+- Dodan prečac za uključivanje i isključivanje izgovora eksponenata i indekasa (nema podrazumjevane geste). (#10985)
+- Web aplikacije (npr. Gmail) više ne izgovaraju zastarjele informacije prilikom brzog kretanja. (#10885)
+  - Ova eksperimentalna ispravka grešaka mora biti ručno uključena uz pomoć opcije 'pokušaj zaustavljanja govora za zastarjele događeje fokusa' na naprednom panelu postavki.
+- Puno simbola je dodano u podrazumjevani rječnik simbola. (#11105)
+
+
+== Izmjene ==
+- Nadograđen liblouis brajični prevoditelj s inačice 3.12 Na inačicu [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0]. (#10832, #11221)
+- Izgovaranje indekasa i eksponenata sada se regulira odvojeno od izgovaranja atributa fonta. (#10919)
+- Zbog promjena nastalih u VS Code, NVDA više podrazumjevano je isključuje modus pregleda. (#10888)
+- NVDA više ne izgovara "početak" i "kraj" prilikom izravnog kretanja preglednim kursorom na prvi ili zadnji redak objekta navigatora uz pomoć prečaca premjesti se na početak i premjesti se na kraj. (#9551)
+- NVDA više ne izgovara  "lijevo" i "desno" prilikom izravnog kretanja kursora pregleda na prvi ili zadnji znak u retku za trenutni objekt navigatora uz pomoć prečaca pomakni se na početak retka i pomoakni se na kraj retka. (#9551)
+
+
+== Ispravke grešaka ==
+- NVDA se sada ispravno pokreće kada nije moguće stvoriti datoteku zapisnika. (#6330)
+- U posljednjim inačicama Microsoft Word 365, NVDA više neće izgovarati "brisanje posljednie riječi" kada je pritisnut prečac ctrl+bacpspace prilikom uređivanja dokumenta. (#10851)
+- NVDA će opet izgovarati status uključenosti izmješanosti ili ponavljanja popisa za reprodukciju. (#10945)
+- NVDA više nije ekstremno usporen prilikom kretanja po stavkama popisa u 1Passwordu. (#10508)
+- Windows OneCore govorna jedinica više ne zastajkuje između izričaja. (#10721)
+- NVDA više se ne smrzava prilimom otvaranja kontekstnog izbornika za 1Password u području obavijesti. (#11017)
+- U Officeu 2013 i starijim:
+  - Riboni se izgovaraju kada se fokus na njima nađe prvi put. (#4207)
+  - Stavke kontekstnog izbornika sada se ponovno točno izgovaraju. (#9252)
+  - Sekcije ribona sada su točno najavljivane prilikom kretanja po njima uz pomoć prečaca ctrl+strelica lijevo ili desno. (#7067)
+- U načinu pregleda u Mozilla firefoxu I Google chromeu, tekst se više ne pojavljuje u jednom retku kada web sadržaj koristi CSS display: inline-flex. (#11075)
+- U načinu pregleda sa opcijom Automatsko postavljanje fokusa na fokusirane elemente onemogućenom, sada je moguće aktivirati elemente koje nije moguće fokusirati.
+- U načinu pregleda sa isključenom opcijom automatski postavi fokus na fokusirene elemente, sada je moguće aktivirati elemente koji se nalaze pod tabulatorom. (#8528)
+- U načinu pregleda sa isključenom opcijom automatski postavi fokus na fokusirane elemente, više se ne događa klikanje na pogrešnu lokaciju. (#9886)
+- NVDA zvuci pogreške više se ne reproduciraju prilikom pristupa kontrolama DevExpress. (#10918)
+- Alatni savjetnici ikona u polju obavijesti više se ne izgovaraju prilikom kretanja tipkovnicom ako je njihov tekst jednak nazivu ikone, kako bi se izbjeglo duplo izgovaranje. (#6656)
+- U načinu pregleda sa isključenom opcijom automatski postavi fokus na fokusirane elemente, prebacivanje modusa fokusa uz pomoć prečaca insert+razmak, sada fokusira element pod kursorom. (#11206)
+- Sada je pomovno moguće provjeravati nadogradnje NVDA na nekim sustavima; NPR. čise instalacije Windowsa. (#11253)
+- Fokus se ne premješta u Java aplikacijama kada se fokus mijenja u stablu prikaza, tablici ili popisu. (#5989)
+
+
+== Izmjene za razvojne programere ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
+
 = 2020.1 =
 Novosti u ovoj inačici uključuju podrška novih brajičnih redaka firmi HumanWare i APH, te puno važnih ispravaka grešaka poput ponovnog omogućavanja čitanja matematičkog sadržaja u Microsoft Wordu koristeći MathPlayer / MathType.
 

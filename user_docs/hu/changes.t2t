@@ -2,6 +2,55 @@
 
 
 %!includeconf: ../changes.t2tconf
+
+= 2020.2 =
+
+Ebben a kiadásban: Egy új braille-kijelző támogatása a Nattiqtől; jobb támogatás az Eset Antivirushoz és a windows terminalhoz; sebességi optimalizálás az 1Password jelszókezelő programhoz és a Windows OneCore beszédszintetizátorhoz, és még sok javítás, és optimalizálás.
+
+== Újdonságok ==
+- Bővült a támogatott braille kijelzők köre:
+  - Nattiq nBraille (#10778)
+- Egy beviteli paranccsal megnyitható az NVDA felhasználói beállítások mappája. Alapértelmezés szerint nincs billentyűparancs hozzáadva. (#2214)
+- Javított támogatás az ESET antivirus grafikus felületéhez. (#10894)
+- Windows Terminal támogatása. (#10305)
+- Egy beviteli paranccsal már lekérdezhető az aktív profil neve. Alapértelmezés szerint nincs hozzárendelve billlentyűparancs. (#9325)
+- Felső és alsó index jelzése, beviteli parancs is beállítható az új opcióhoz. (#10985)
+- Webes alkalmazások (pl. Gmail) használatakor az NVDA már nem mond elavult információkat, amikor a fókusz gyorsan változik. (#10885)
+  - Ez a viselkedés egy új, kísérleti opció bekapcsolásával lehetséges. Az NVDA haladó beállításai között található, a neve: "Beszéd megszakítása az időközben lejárt fókuszeseményeknél".
+- Sokkal több írásjelet adtak az alapértelmezett írásjelkiejtés szótárhoz. Ez azt jelenti, hogy a korábbinál több írásjelet tud kezelni az NVDA. (#11105)
+
+
+== Változások ==
+- Frissült a liblouis braille fordító [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0] (erről 3.12.0). (#10832, #11221)
+- A felső és alsó indexet már a betűtípus paraméterektől külön kezeli a program. (#10919)
+- VS Code: az NVDA már nem tiltja le alapértelmezés szerint a böngészőmódot kódolás nézetben. (#10888)
+- Eltávolították a "Teteje" és "Alja" állapotjelzést olyankor,amikor az áttekintő kurzor eléri a navigátor objektum legfelső vagy a legalsó sorát. (#9551)
+- Eltávolították a "Bal" és "Jobb" állapotjelzést olyankor,amikor az áttekintő kurzor eléri a navigátor objektum aktuális sorának elejét vagy végét. (#9551)
+
+
+== Hibajavítások ==
+- Az NVDA megfelelően indul akkor is, ha a naplófájlt nem sikerült létrehozni. (#6330)
+- Microsoft Word 365: az NVDA már nem jelenti be a "szó visszatörlése" üzenetet, amikor a dokumentum szerkesztése közben a ctrl+Backspace parancsot használjuk. (#10851)
+- Winamp: az NVDA ismét bejelenti az ismétlés és a véletlen lejátszás be- és kikapcsolását. (#10945)
+- 1Password: az NVDA már nem reagál feltűnően lassan az elemek listáján történő navigáció során. (#10508)
+- A Windows OneCore beszédszintetizátor már nem tart hosszú szüneteket érzelemkifejezések között. (#10721)
+- 1Password: Az NVDA már nem fagy le, amikor megnyitjuk a helyi menüt a rendszer értesítési területen. (#11017)
+- Office 2013 és régebbi verziók:
+  - A szalagmenüt bejelenti az NVDA amikor a fókusz először kerül rá. (#4207)
+  - A helyi menük elemeit ismét helyesen jelenti be az NVDA. (#9252)
+  - A szalagmenü csoportjait következetesen jelenti be az NVDA, amikor Ctrl+nyílbillentyűk paranccsal navigálunk rajtuk. (#7067)
+- Firefox és Chrome: böngészőmódban a szöveg nem jelenik meg kéretlenül külön sorban, ha a weboldal CSS megjelenítést használ inline-flex paraméterrel. (#11075)
+- Böngészőmódban az Automatikus rendszerfókusz az aktiválható elemekre opció kikapcsolt állapotában... 
+  - már aktiválhatók olyan elemek, amik normál esetben nem kerülhetnének fókuszba.
+  - már aktiválhatók azok az elemek, amelyekre a tab billentyűvel navigáltunk. (#8528)
+  - bizonyos elemek aktiválása már az elvárt helyen történik, nem mozdul el a fókusz egy egészen másik helyre. (#9886)
+  - ha az  NVDA+szóköz paranccsal váltunk fókuszmódra, akkor a rendszerkurzornál lévő elem kerül fókuszba. (#11206)
+- Már nem hallható hangjelzés, ha DevExpress szövegvezérlők kerülnek fókuszba. (#10918)
+- Az elemleírások már nem hallhatók a rendszertálcán mozgáskor, amennyiben megegyeznek az ikonjuk nevével. Ezzel kerülhető el a többszörös bemondás. (#6656)
+- Újra lehetséges NVDA-frissítéseket keresni olyany rendszereken, ahol ez korábban problémát okozott, pl. friss Windows telepítéseknél. (#11253)
+- Java alkalmazásokban már nem mozdul el a fókusz , ha a kijelölés megváltozik fókuszban nem lévő fanézetben, táblázatban vagy listában. (#5989)
+
+
 = 2020.1 =
 Ebben a kiadásban: bővült a támogatott braille kijelzők köre a HumanWare és az APH néhány termékével; az NVDA újra kezeli a matematikai kifejezéseket a Microsoft Wordben  MathPlayer vagy MathType használatakor; és még néhány további fontos hibajavítás.
 
