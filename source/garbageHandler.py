@@ -42,9 +42,9 @@ def _collectionCallback(action, info):
 		_collectionThreadID = threading.currentThread().ident
 		_reportCountDuringCollection = 0
 	elif action == "stop":
+		_collectionThreadID = 0
 		if _reportCountDuringCollection > 0:
 			log.error(f"Found at least {_reportCountDuringCollection} unreachable objects in run")
-		_collectionThreadID = 0
 	else:
 		log.error(f"Unknown action: {action}")
 
@@ -57,13 +57,14 @@ def notifyObjectDeletion(obj):
 	global _reportCountDuringCollection
 	if _collectionThreadID != threading.currentThread().ident:
 		return
-	if _reportCountDuringCollection == 0:
-		log.error(
+	_reportCountDuringCollection += 1
+	if _reportCountDuringCollection == 1:
+		log.warning(
 			"Garbage collector has found one or more unreachable objects. See further warnings for specific objects.",
 			stack_info=True
 		)
 	log.warning(f"Deleting unreachable object {obj}")
-	_reportCountDuringCollection += 1
+
 
 
 def terminate():

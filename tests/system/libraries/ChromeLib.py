@@ -19,14 +19,12 @@ from robot.libraries.BuiltIn import BuiltIn
 # Imported for type information
 from robot.libraries.OperatingSystem import OperatingSystem as _OpSysLib
 from robot.libraries.Process import Process as _ProcessLib
-from KeyInputLib import KeyInputLib as _KeyInputLib
 from AssertsLib import AssertsLib as _AssertsLib
 import NvdaLib as _NvdaLib
 
 builtIn: BuiltIn = BuiltIn()
 opSys: _OpSysLib = _getLib('OperatingSystem')
 process: _ProcessLib = _getLib('Process')
-keyInputLib: _KeyInputLib = _getLib('KeyInputLib')
 assertsLib: _AssertsLib = _getLib('AssertsLib')
 
 
@@ -107,7 +105,7 @@ class ChromeLib:
 		for i in range(10):  # set a limit on the number of tries.
 			# Small changes in Chrome mean the number of tab presses to get into the document can vary.
 			builtIn.sleep("0.5 seconds")  # ensure application has time to receive input
-			actualSpeech = self.getSpeechAfterKey('F6')
+			actualSpeech = self.getSpeechAfterKey('f6')
 			if ChromeLib._beforeMarker in actualSpeech:
 				break
 		else:  # Exceeded the number of tries
@@ -126,8 +124,7 @@ class ChromeLib:
 		spy = _NvdaLib.getSpyLib()
 		spy.wait_for_speech_to_finish()
 		nextSpeechIndex = spy.get_next_speech_index()
-		keyInputLib.send(key)
-		spy.wait_for_speech_to_finish()
+		spy.emulateKeyPress(key)
 		speech = spy.get_speech_at_index_until_now(nextSpeechIndex)
 		return speech
 
@@ -136,4 +133,4 @@ class ChromeLib:
 		"""Ensure speech has stopped, press tab, and get speech until it stops.
 		@return: The speech after tab.
 		"""
-		return ChromeLib.getSpeechAfterKey('\t')
+		return ChromeLib.getSpeechAfterKey('tab')
