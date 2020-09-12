@@ -57,7 +57,7 @@ def announce_list_item_when_moving_by_word_or_character():
 	)
 	# Move focus into the content editable.
 	# This will turn on focus mode.
-	# And the caret will be on the paragraph before the list. 
+	# And the caret will be on the paragraph before the list.
 	spy.emulateKeyPress("tab")
 	# Ensure that moving into a list by line, "list item" is not reported.
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
