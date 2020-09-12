@@ -92,12 +92,11 @@ class Ia2Web(IAccessible):
 		# update braille here.
 
 	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
-		politeness = self.IA2Attributes.get('live', None)
-		if politeness == 'polite':
-			return aria.AriaLivePoliteness.POLITE
-		elif politeness == 'assertive':
-			return aria.AriaLivePoliteness.ASSERTIVE
-		return aria.AriaLivePoliteness.OFF
+		politeness = self.IA2Attributes.get('live', "off")
+		return next(
+			(v for v in aria.AriaLivePoliteness if v._name_.lower() == politeness.lower()),
+			aria.AriaLivePoliteness.OFF
+		)
 
 
 class Document(Ia2Web):
