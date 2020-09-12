@@ -11,6 +11,7 @@ from robot.libraries.BuiltIn import BuiltIn
 from SystemTestSpy import (
 	_getLib,
 )
+import NvdaLib as _nvdaLib
 
 # Imported for type information
 from ChromeLib import ChromeLib as _ChromeLib
@@ -42,38 +43,71 @@ def checkbox_labelled_by_inner_element():
 
 
 def announce_list_item_when_moving_by_word_or_character():
+	spy = _nvdaLib.getSpyLib()
 	_chrome.prepareChrome(
 		r"""
-			<ul style="list-style-type:none">
-				<li>xy</li>
-				<li>z</li>
-			</ul>
+			<div contenteditable="true">
+				<p>Before list</p>
+				<ul style="list-style-type:none">
+					<li>small cat</li>
+					<li>big dog</li>
+				</ul>
+			</div>
 		"""
 	)
+	# Move focus into the content editable.
+	# This will turn on focus mode.
+	# And the caret will be on the paragraph before the list. 
+	spy.emulateKeyPress("tab")
 	# Ensure that moving into a list by line, "list item" is not reported.
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"list  with 2 items  xy"
+		"list  small cat"
+	)
+	# Ensure that when moving by word (control+rightArrow)
+	# within the list item, "list item" is not announced.
+	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"cat"
 	)
 	# Ensure that when moving by character (rightArrow)
 	# within the list item, "list item" is not announced.
 	actualSpeech = _chrome.getSpeechAfterKey("rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"y"
+		"a"
 	)
+	# move to the end of the line (and therefore the list item)
+	spy.emulateKeyPress("end")
 	# Ensure that when moving by character (rightArrow)
 	# onto the next list item, "list item" is reported.
 	actualSpeech = _chrome.getSpeechAfterKey("rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"list item  level 1  \nz"
+		"list item  level 1  \nb"
 	)
 	# Ensure that when moving by character (leftArrow)
 	# onto the previous list item, "list item" is reported.
+	# Note this places us on the end-of-line insertion point of the previous list item.
 	actualSpeech = _chrome.getSpeechAfterKey("leftArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"list item  level 1  \ny"
+		"list item  level 1"
+	)
+	# Ensure that when moving by word (control+rightArrow)
+	# onto the next list item, "list item" is reported.
+	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"list item  level 1  big"
+	)
+	# Ensure that when moving by word (control+leftArrow)
+	# onto the previous list item, "list item" is reported.
+	# Note this places us on the end-of-line insertion point of the previous list item.
+	actualSpeech = _chrome.getSpeechAfterKey("control+leftArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"list item  level 1"
 	)
