@@ -1,8 +1,8 @@
-#appModules/outlook.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Yogesh Kumar, Manish Agrawal, Joseph Lee, Davy Kager, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Yogesh Kumar, Manish Agrawal, Joseph Lee, Davy Kager,
+# Babbage B.V., Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from comtypes import COMError
 from comtypes.hresult import S_OK
@@ -332,6 +332,24 @@ class CalendarView(IAccessible):
 		# Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 		return _("{startTime} to {endTime}").format(startTime=startText,endTime=endText)
 
+	@staticmethod
+	def _generateCategoriesText(appointment):
+		categories = appointment.Categories
+		if not categories:
+			return None
+		if len(categories.split("; ")) > 1:
+			# Translators: Part of a message reported when on a calendar appointment with multiple categories
+			# in Microsoft Outlook.
+			# {categories} is replaced by the semicolon separated list of categories.
+			return _("categories {categories}").format(
+				categories=categories
+			)
+		else:
+			# Translators: Part of a message reported when on a calendar appointment with a single category
+			# in Microsoft Outlook.
+			# {category} is replaced by the category.
+			return _("category {category}").format(category=categories)
+
 	def isDuplicateIAccessibleEvent(self,obj):
 		return False
 
@@ -353,8 +371,15 @@ class CalendarView(IAccessible):
 				except COMError:
 					return super(CalendarView,self).reportFocus()
 				t=self._generateTimeRangeText(start,end)
-				# Translators: A message reported when on a calendar appointment in Microsoft Outlook
-				ui.message(_("Appointment {subject}, {time}").format(subject=p.subject,time=t))
+				# Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
+				message = _("Appointment {subject}, {time}").format(subject=p.subject, time=t)
+				try:
+					categoriesText = self._generateCategoriesText(p)
+				except COMError:
+					categoriesText = None
+				if categoriesText is not None:
+					message = f"{message}, {categoriesText}"
+				ui.message(message)
 			else:
 				v=e.currentView
 				try:
