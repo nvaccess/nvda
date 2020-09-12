@@ -1,12 +1,12 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2019 NV Access Limited, Google LLC
+Copyright 2006-2020 NV Access Limited, Google LLC, Leonard de Ruijter
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
     This program is distributed in the hope that it will be useful,
-class    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -356,10 +356,14 @@ void MshtmlVBufStorage_controlFieldNode_t::preProcessLiveRegion(const MshtmlVBuf
 	auto i=attribsMap.find(L"HTMLAttrib::aria-live");
 	if(i!=attribsMap.end()&&!i->second.empty()) {
 		this->ariaLiveNode=((i->second.compare(L"polite")==0)||(i->second.compare(L"assertive")==0))?this:NULL;
-		this->ariaLiveLevel = i->second.c_str();
+		this->ariaLiveLevel = i->second;
 	} else {
 		this->ariaLiveNode=parent?parent->ariaLiveNode:NULL;
-		this->ariaLiveLevel=this->ariaLiveNode ? ((MshtmlVBufStorage_controlFieldNode_t*)this->ariaLiveNode)->ariaLiveLevel : NULL;
+		if (this->ariaLiveNode) {
+			this->ariaLiveLevel = static_cast<MshtmlVBufStorage_controlFieldNode_t*>(this->ariaLiveNode)->ariaLiveLevel;
+		} else {
+			this->ariaLiveLevel = nullptr;
+		}
 	}
 	i=attribsMap.find(L"HTMLAttrib::aria-relevant");
 	if(i!=attribsMap.end()&&!i->second.empty()) {
@@ -389,10 +393,10 @@ void MshtmlVBufStorage_controlFieldNode_t::preProcessLiveRegion(const MshtmlVBuf
 	//LOG_INFO(L"preProcessLiveRegion: ariaLiveNode "<<ariaLiveNode<<L", ariaLiveIsTextRelevant "<<ariaLiveIsTextRelevant<<L", ariaLiveIsAdditionsRelevant "<<ariaLiveIsAdditionsRelevant<<L", ariaLiveIsBusy "<<ariaLiveIsBusy<<L", ariaLiveAtomicNode "<<ariaLiveAtomicNode);
 }
 
-void MshtmlVBufStorage_controlFieldNode_t::reportLiveText(wstring& text, const wchar_t* level) {
+void MshtmlVBufStorage_controlFieldNode_t::reportLiveText(wstring& text, wstring& level) {
 	for(auto c: text) {
 		if(!iswspace(c)) {
-			nvdaControllerInternal_reportLiveRegion(text.c_str(), level);
+			nvdaControllerInternal_reportLiveRegion(text.c_str(), level.c_str());
 			break;
 		}
 	}
@@ -471,7 +475,7 @@ void MshtmlVBufStorage_controlFieldNode_t::postProcessLiveRegion(VBufStorage_con
 	} else if(reportNode) {
 		this->reportLiveAddition();
 	} else if(!newChildrenText.empty()) {
-		this->reportLiveText(newChildrenText, this-> ariaLiveLevel);
+		this->reportLiveText(newChildrenText, this->ariaLiveLevel);
 	}
 }
 

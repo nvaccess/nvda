@@ -1,8 +1,8 @@
-#NVDAHelper.py
-#A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2019 NV Access Limited, Peter Vagner, Davy Kager, Mozilla Corporation, Google LLC
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2008-2020 NV Access Limited, Peter Vagner, Davy Kager, Mozilla Corporation, Google LLC,
+# Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import os
 import sys
@@ -123,14 +123,20 @@ def nvdaControllerInternal_requestRegistration(uuidString):
 
 @WINFUNCTYPE(c_long, c_wchar_p, c_wchar_p)
 def nvdaControllerInternal_reportLiveRegion(text, level):
+	if not config.conf["presentation"]["reportDynamicContentChanges"]:
+		return -1
 	focus = api.getFocusObject()
 	if focus.sleepMode == focus.SLEEP_FULL:
 		return -1
-	if not config.conf["presentation"]["reportDynamicContentChanges"]:
-		return -1
 	import queueHandler
 	import speech
-	queueHandler.queueFunction(queueHandler.eventQueue, speech.speakText, text)
+	from speech.priorities import Spri
+	queueHandler.queueFunction(
+		queueHandler.eventQueue,
+		speech.speakText,
+		text,
+		Spri.NOW if level.lower() == "assertive" else Spri.NEXT
+	)
 	return 0
 
 @WINFUNCTYPE(c_long,c_long,c_long,c_long,c_long,c_long)

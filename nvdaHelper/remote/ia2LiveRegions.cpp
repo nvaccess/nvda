@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2019 NV Access Limited, Google LLC
+Copyright 2006-2020 NV Access Limited, Google LLC, Leonard de Ruijter
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -411,7 +411,9 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 		gotText=getTextFromIAccessible(textBuf,pacc2,true,allowAdditions,allowText);
 	}
 	pacc2->Release();
-	if(gotText&&!textBuf.empty()) nvdaControllerInternal_reportLiveRegion(textBuf.c_str(),level.c_str());
+	if (gotText && !textBuf.empty()) {
+		nvdaControllerInternal_reportLiveRegion(textBuf.c_str(), level.c_str());
+	}
 }
 
 void ia2LiveRegions_inProcess_initialize() {
