@@ -64,7 +64,8 @@ class InputGesture(baseObject.AutoPropertyObject):
 	#: @type: bool
 	bypassInputHelp=False
 
-	#: Indicates that this gesture should be reported in Input help mode. This would only be false for floodding Gestures like touch screen hovers.
+	#: Indicates that this gesture should be reported in Input help mode. This would only be false
+	#: for flooding Gestures like touch screen hovers.
 	#: @type: bool
 	reportInInputHelp=True
 
@@ -796,7 +797,7 @@ def registerGestureSource(source, gestureCls):
 	The specified gesture class will be used for queries regarding all gesture identifiers with the given source prefix.
 	For example, if "kb" is registered with the C{KeyboardInputGesture} class,
 	any queries for "kb:tab" or "kb(desktop):tab" will be directed to the C{KeyboardInputGesture} class.
-	If there is no exact match for the source, any parenthesised portion is stripped.
+	If there is no exact match for the source, any parenthesized portion is stripped.
 	For example, for "br(baum):d1", if "br(baum)" isn't registered,
 	"br" will be used if it is registered.
 	This registration is used, for example, to get the display text for a gesture identifier.

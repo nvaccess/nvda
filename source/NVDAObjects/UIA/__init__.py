@@ -959,6 +959,10 @@ class UIA(Window):
 		except ValueError:
 			pass
 
+		if self.UIAElement.cachedFrameworkID == "WPF" and self.appModule.appName in ("devenv", "ssms"):
+			from . import VisualStudio
+			VisualStudio.findExtraOverlayClasses(self, clsList)
+
 		# Support Windows Console's UIA interface
 		if (
 			self.windowClassName == "ConsoleWindowClass"

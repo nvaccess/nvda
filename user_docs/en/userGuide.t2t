@@ -1922,6 +1922,9 @@ You can remove a symbol you previously added by pressing the Remove button.
 
 When you are finished, press the OK button to save your changes or the Cancel button to discard them.
 
+In the case of complex symbols, the Replacement field may have to include some group references of the matched text. For instance, for a pattern matching a whole date, \1, \2, and \3 would need to appear in the field, to be replaced by the corresponding parts of the date.
+Normal backslashes in the Replacement field should thus be doubled, e.g. "a\\b" should be typed in order to get the "a\b" replacement.
+
 +++ Input Gestures +++[InputGestures]
 In this dialog, you can customize the input gestures (keys on the keyboard, buttons on a braille display, etc.) for NVDA commands.
 

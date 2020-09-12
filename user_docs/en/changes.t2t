@@ -3,6 +3,28 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.4 =
+
+== New Features ==
+- Pressing F1 inside NVDA dialogs will now open the help file to most relevant section. (#7757)
+- Support for auto complete suggestions (IntelliSense) Microsoft SQL Server Management Studio and Visual Studio 2017. (#7504)
+- Symbol pronunciation: Support for grouping in a complex symbol definition and support group references in a replacement rule making them simpler and more powerful. (#11107)
+
+
+== Changes ==
+- Updated liblouis braille translator to version 3.15.0
+- When reading with say all in browse mode, the find next and find previous commands do not stop reading anymore if Allow skim reading option is enabled; say all rather resumes from after the next or previous found term. (#11563)
+
+
+== Bug Fixes ==
+- NVDA once again works correctly with edit fields when using the Fast Log Entry application. (#8996)
+- Report elapsed time in Foobar2000 if no total time is available (e.g. when playing a live stream). (#11337)
+
+
+== Changes for Developers ==
+- System tests can now send keys using spy.emulateKeyPress, which takes a key identifier that conforms to NVDA's own key names, and by default also blocks until the action is executed. (#11581)
+
+
 = 2020.3 =
 
 == New Features ==
@@ -50,6 +72,8 @@ What's New in NVDA
 - NVDA is no longer unable to read the features list in Internet Information Services (IIS) Manager. (#11468)
 - NVDA now keeps the audio device open improving performance on some sound cards (#5172, #10721)
 - NVDA will no longer freeze or exit when holding down control+shift+downArrow in Microsoft Word. (#9463)
+- The expanded / collapsed state of directories in the navigation treeview on drive.google.com is now always reported by NVDA. (#11520)
+- NVDA will auto detect the NLS eReader Humanware braille display via Bluetooth as its Bluethooth name is now "NLS eReader Humanware". (#11561)
 
 
 == Changes For Developers ==
@@ -61,6 +85,7 @@ What's New in NVDA
  - The majority of NVDA's classes are tracked including NVDAObjects, appModules, GlobalPlugins, SynthDrivers, and TreeInterceptors.
  - A class that needs to be tracked should inherit from garbageHandler.TrackedObject.
 - Significant debug logging for MSAA events can be now enabled in NVDA's Advanced settings. (#11521)
+- MSAA winEvents for the currently focused object are no longer filtered out along with other events if the event count for a given thread is exceeded. (#11520)
 
 
 = 2020.2 =
