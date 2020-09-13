@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #synthDrivers/sapi5.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+#Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -364,6 +364,10 @@ class SynthDriver(SynthDriver):
 		tagsChanged[0] = True
 		outputTags()
 
+		# Some SAPI5 synthesizers complete speech sequence just after the last text
+		# and ignore any indexes passed after it
+		# Therefore we add the pause of 1ms at the end
+		textList.append('<silence msec="1" />')
 		text = "".join(textList)
 		flags = constants.SVSFIsXML | constants.SVSFlagsAsync
 		self.tts.Speak(text, flags)
