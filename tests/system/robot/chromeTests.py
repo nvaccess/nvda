@@ -41,6 +41,7 @@ def checkbox_labelled_by_inner_element():
 		"Simulate evil cat  check box  not checked"
 	)
 
+
 def test_i7562():
 	""" List should not be announced on every line of a ul in a contenteditable """
 	spy = _nvdaLib.getSpyLib()
