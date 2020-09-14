@@ -74,6 +74,15 @@ class ToggleButton(ia2Web.Ia2Web):
 		return states
 
 
+class PresentationalList(ia2Web.Ia2Web):
+	""" Ensures that lists like UL, DL and OL always have the readonly state."""
+
+	def _get_states(self):
+		states = super().states
+		states.add(controlTypes.STATE_READONLY)
+		return states
+
+
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class(es) for Chromium objects.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
@@ -82,5 +91,7 @@ def findExtraOverlayClasses(obj, clsList):
 		clsList.append(ComboboxListItem)
 	elif obj.role == controlTypes.ROLE_TOGGLEBUTTON:
 		clsList.append(ToggleButton)
+	elif obj.role == controlTypes.ROLE_LIST and obj.IA2Attributes.get('tag') in ('ul', 'dl', 'ol'):
+		clsList.append(PresentationalList)
 	ia2Web.findExtraOverlayClasses(obj, clsList,
 		documentClass=Document)
