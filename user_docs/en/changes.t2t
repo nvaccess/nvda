@@ -3,6 +3,28 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.4 =
+
+== New Features ==
+- Pressing F1 inside NVDA dialogs will now open the help file to most relevant section. (#7757)
+- Support for auto complete suggestions (IntelliSense) Microsoft SQL Server Management Studio and Visual Studio 2017. (#7504)
+- Symbol pronunciation: Support for grouping in a complex symbol definition and support group references in a replacement rule making them simpler and more powerful. (#11107)
+
+
+== Changes ==
+- Updated liblouis braille translator to version 3.15.0
+- When reading with say all in browse mode, the find next and find previous commands do not stop reading anymore if Allow skim reading option is enabled; say all rather resumes from after the next or previous found term. (#11563)
+
+
+== Bug Fixes ==
+- NVDA once again works correctly with edit fields when using the Fast Log Entry application. (#8996)
+- Report elapsed time in Foobar2000 if no total time is available (e.g. when playing a live stream). (#11337)
+
+
+== Changes for Developers ==
+- System tests can now send keys using spy.emulateKeyPress, which takes a key identifier that conforms to NVDA's own key names, and by default also blocks until the action is executed. (#11581)
+
+
 = 2020.3 =
 
 == New Features ==
