@@ -337,18 +337,12 @@ class CalendarView(IAccessible):
 		categories = appointment.Categories
 		if not categories:
 			return None
-		if len(categories.split("; ")) > 1:
-			# Translators: Part of a message reported when on a calendar appointment with multiple categories
-			# in Microsoft Outlook.
-			# {categories} is replaced by the semicolon separated list of categories.
-			return _("categories {categories}").format(
-				categories=categories
-			)
-		else:
-			# Translators: Part of a message reported when on a calendar appointment with a single category
-			# in Microsoft Outlook.
-			# {category} is replaced by the category.
-			return _("category {category}").format(category=categories)
+		# Translators: Part of a message reported when on a calendar appointment with categories
+		# in Microsoft Outlook.
+		# {categories} is replaced by the list of one or more categories.
+		return _("categories {categories}").format(
+			categories=categories
+		)
 
 	def isDuplicateIAccessibleEvent(self,obj):
 		return False
