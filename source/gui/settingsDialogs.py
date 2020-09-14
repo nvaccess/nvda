@@ -3274,6 +3274,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			initial=config.conf["braille"]["messageTimeout"]
 		)
 		self.bindHelpEvent("BrailleSettingsMessageTimeout", self.messageTimeoutEdit)
+		self.messageTimeoutEdit.Bind(wx.EVT_TEXT, self.onMessageTimeoutTextChange)
 
 		# Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
 		noMessageTimeoutLabelText = _("Show &messages indefinitely")
@@ -3283,6 +3284,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.noMessageTimeoutCheckBox.SetValue(config.conf["braille"]["noMessageTimeout"])
 		if self.noMessageTimeoutCheckBox.GetValue():
 			self.messageTimeoutEdit.Disable()
+		if self.messageTimeoutEdit.Value == 0:
+			self.noMessageTimeoutCheckBox.Disable()
 
 		if gui._isDebug():
 			log.debug("Loading timeout settings completed, now at %.2f seconds from start"%(time.time() - startTime))
@@ -3358,6 +3361,9 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 	def onBlinkCursorChange(self, evt):
 		self.cursorBlinkRateEdit.Enable(evt.IsChecked())
+
+	def onMessageTimeoutTextChange(self, evt):
+		self.noMessageTimeoutCheckBox.Enable(self.messageTimeoutEdit.Value != 0)
 
 	def onNoMessageTimeoutChange(self, evt):
 		self.messageTimeoutEdit.Enable(not evt.IsChecked())
