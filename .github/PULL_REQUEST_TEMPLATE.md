@@ -1,5 +1,4 @@
-<!--
-Please fill in the following template, for an explanation of the sections see:
+<!-- Please read and fill in the following template, for an explanation of the sections see:
 https://github.com/nvaccess/nvda/wiki/Github-pull-request-template-explanation-and-examples
 -->
 
