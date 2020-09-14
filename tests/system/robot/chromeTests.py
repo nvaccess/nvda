@@ -15,6 +15,7 @@ from SystemTestSpy import (
 # Imported for type information
 from ChromeLib import ChromeLib as _ChromeLib
 from AssertsLib import AssertsLib as _AssertsLib
+import NvdaLib as _nvdaLib
 
 _builtIn: BuiltIn = BuiltIn()
 _chrome: _ChromeLib = _getLib("ChromeLib")
@@ -38,4 +39,40 @@ def checkbox_labelled_by_inner_element():
 		# "Simulate evil cat  Simulate evil cat  check box  not checked"
 		# Instead this should be spoken as:
 		"Simulate evil cat  check box  not checked"
+	)
+
+def test_i7562():
+	""" List should not be announced on every line of a ul in a contenteditable """
+	spy = _nvdaLib.getSpyLib()
+	_chrome.prepareChrome(
+		r"""
+			<div contenteditable="true">
+				<p>before</p>
+				<ul>
+					<li>frogs</li>
+					<li>birds</li>
+				</ul>
+				<p>after</p>
+			</div>
+		"""
+	)
+	# Tab into the contenteditable - focus mode will be enabled.
+	spy.emulateKeyPress("tab")
+	# DownArow into the list. 'list' should be announced when entering.
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"list  bullet  frogs"
+	)
+	# DownArrow to the second list item. 'list' should not be announced.
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"bullet  birds"
+	)
+	# DownArrow out of the list. 'out of list' should be announced.
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"out of list  after",
 	)
