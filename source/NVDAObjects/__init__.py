@@ -1052,9 +1052,9 @@ Tries to force this object to take the focus.
 			ui.message(
 				name,
 				speechPriority=(
-					speech.priorities.Spri.NOW
+					speech.priorities.Spri.NEXT
 					if politeness == aria.AriaLivePoliteness.ASSERTIVE
-					else speech.priorities.Spri.NEXT
+					else speech.priorities.Spri.NORMAL
 				)
 			)
 
