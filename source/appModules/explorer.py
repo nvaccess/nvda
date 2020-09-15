@@ -251,6 +251,8 @@ class MetadataEditField(RichEdit50):
 
 class WorkerW(IAccessible):
 	def event_gainFocus(self):
+		if ((winVersion.winVersion.major, winVersion.winVersion.minor) != (6, 1)):
+			return
 		# #6671: Normally we do not allow WorkerW thread to send gain focus event,
 		# as it causes 'pane" to be announced when minimizing windows or moving to desktop.
 		# However when closing Windows 7 Start Menu in some  cases
@@ -258,8 +260,8 @@ class WorkerW(IAccessible):
 		# Therefore redirect it to the child which is a desktop in this case.
 		if eventHandler.isPendingEvents("gainFocus"):
 			return
-		if self.firstChild:
-			self.firstChild.setFocus()
+		if self.simpleFirstChild:
+			self.simpleFirstChild.setFocus()
 			return
 		super().event_gainFocus()
 
