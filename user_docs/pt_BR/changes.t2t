@@ -4,6 +4,63 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 %!includeconf: ../changes.t2tconf
 %!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
 
+= 2020.2 =
+Os destaques desta versão incluem suporte para uma nova linha braille da Nattiq, melhor suporte à GUI ""[Interface Gráfica do Usuário]"" do antivírus ESET e ao Windows Terminal, aprimoramentos de desempenho no 1Password e com o sintetizador Windows OneCore. Além de muitas outras importantes correções de falhas e melhorias.
+
+== Novas Características ==
+- Suporte para novas linhas braille:
+  - Nattiq nBraille (#10778)
+- Adicionado script para abrir o diretório de configuração do NVDA (sem comando ""[gesto]"" padrão). (#2214)
+- Melhor suporte para a GUI ""[Interface Gráfica do Usuário]"" do antivírus ESET. (#10894)
+- Adicionado suporte para o Windows Terminal. (#10305)
+- Adicionado um comando para informar o perfil de configuração ativo (sem combinação de teclas ""[gesto]"" padrão). (#9325)
+- Adicionado um comando para alternar a informação de subscritos e sobrescritos (sem combinação de teclas ""[gesto]"" padrão). (#10985)
+- Os aplicativos Web (por exemplo, Gmail) não falam mais informações desatualizadas ao mover o foco rapidamente. (#10885)
+  - Essa correção experimental deve ser habilitada manualmente através da opção 'Tentar cancelar a fala para eventos de foco expirados' no painel de configurações avançadas.
+- Muitíssimos símbolos foram adicionados ao dicionário de símbolos padrão. (#11105)
+
+
+== Alterações ==
+- Atualizado o transcritor braille liblouis de 3.12 para [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0]. (#10832, #11221)
+- O anúncio de sobrescritos e subscritos agora é controlado separadamente do anúncio de atributos de fonte. (#10919)
+- Devido às alterações feitas no VS Code, o NVDA não desabilita mais o modo de navegação no Code por padrão. (#10888)
+- O NVDA não informa mais as mensagens "superior" e "inferior" ao mover o cursor de exploração diretamente para a primeira ou a última linha do objeto de navegação atual, movendo para o topo e movendo para base com os scripts do cursor de exploração, respectivamente. (#9551)
+- O NVDA não informa mais mensagens "esquerda" e "direita" ao mover diretamente o cursor de revisão para o primeiro ou o último caractere da linha para o objeto de navegação atual, movendo para o início da linha e movendo para o final da linha com script de cursor de exploração, respectivamente . (#9551)
+
+
+== Correção de Falhas ==
+- O NVDA agora inicia corretamente quando o arquivo de log não pode ser criado. (#6330)
+- Nas versões recentes do Microsoft Word 365, o NVDA não anuncia mais "excluir palavra anterior" ao pressionar Control+Backspace quando editando um documento. (#10851)
+- No Winamp, o NVDA anunciará novamente o status de alternância de reprodução aleatória e repetição. (#10945)
+- O NVDA não é mais extremamente lento ao se mover na lista de itens do 1Password. (#10508)
+- O sintetizador de fala Windows OneCore não fica mais atrasado entre expressões. (#10721)
+- O NVDA não congela mais quando você abre o menu de contexto do 1Password na área de notificação do sistema. (#11017)
+- No Office 2013 e versões anteriores:
+  - As faixas de opções ""[ribbons]"" são anunciadas quando o foco se move para elas pela primeira vez. (#4207)
+  - Os itens do menu de contexto são novamente informados corretamente. (#9252)
+  - As seções da faixa de opções são anunciadas constantemente ao navegar com Control+setas. (#7067)
+- No modo de navegação no Mozilla Firefox e no Google Chrome, o texto não aparece mais incorretamente em uma linha separada quando o conteúdo da Web usa a exibição CSS: inline-flex. (#11075)
+- No modo de navegação com Definir automaticamente o foco do sistema para elementos focalizáveis desabilitado, agora é possível ativar elementos que não podem ser focalizados.
+- No modo de navegação com Definir automaticamente o foco do sistema para elementos focalizáveis desabilitado, agora é possível ativar os elementos alcançados pressionando a tecla Tab. (#8528)
+- No modo de navegação com Definir automaticamente o foco do sistema para elementos focalizáveis desabilitado, a ativação de certos elementos não clica mais em um local incorreto. (#9886)
+- Os sons de erro do NVDA não são mais ouvidos ao acessar os controles de texto do DevExpress. (#10918)
+- As dicas de ferramentas dos ícones na bandeja do sistema não são mais informadas na navegação pelo teclado se o texto for igual ao nome dos ícones, para evitar o anúncio duplo. (#6656)
+- No modo de navegação com 'Definir automaticamente o foco do sistema para elementos focalizáveis' desabilitado, a mudança para o modo de foco com NVDA+espaço agora focaliza o elemento sob o cursor. (#11206)
+- É mais uma vez possível verificar atualizações do NVDA em certos sistemas; exemplo, instalações limpas do Windows. (#11253)
+- O foco não é movido em aplicativo Java quando a seleção é alterada numa árvore, tabela ou lista fora de foco. (#5989)
+
+
+== Alterações para Desenvolvedores ==
+- execElevated e hasUiAccess foram movidos do módulo config ""[configuração]"" para o módulo systemUtils. O uso via módulo config está obsoleto. (#10493)
+- Atualizado o configobj para 5.1.0dev submissão ""[commit]"" f9a265c4. (#10939)
+- Teste automatizado do NVDA com Chrome e uma amostra de HTML agora é possível. (#10553)
+- IAccessibleHandler foi convertido em um pacote, OrderedWinEventLimiter foi extraído para um módulo e testes de unidade adicionados (#10934)
+- BrlApi atualizado para a versão 0.8 (BRLTTY 6.1). (#11065)
+- A recuperação da barra de status agora pode ser personalizada por um AppModule ""[Módulo de Aplicativo]"". (#2125, #4640)
+- O NVDA não escuta mais o IAccessible EVENT_OBJECT_REORDER. (#11076)
+- Um ScriptableObject quebrado (como um GlobalPlugin sem uma chamada para o método ""__init__"" da classe base) não interrompe mais a manipulação de scripts do NVDA. (#5446)
+
+
 = 2020.1 =
 Os destaques desta versão incluem suporte para várias novas linhas braille da HumanWare e APH, além de muitas outras importantes correções de falhas como a capacidade de ler novamente matemática no Microsoft Word usando o MathPlayer / MathType.
 
@@ -600,7 +657,7 @@ Os destaques desta versão incluem suporte para gráficos em Microsoft word e Po
 - Ao digitar com o teclado virtual através da interação por toque, por padrão, agora você precisa tocar duas vezes cada tecla da mesma forma que você ativaria qualquer outro controle. (#7309)
  - Para usar o modo "digitação tátil" existente, onde simplesmente levantar o dedo da tecla é suficiente para ativá-la, ative esta opção na nova caixa de diálogo de Configurações de Interação por Toque encontrada no menu Preferências.
 - Não é mais necessário vincular explicitamente Braille ao foco ou a exploração, pois isso acontecerá automaticamente por padrão. (#2385)
- - Observe que a ligação automática a exploração só ocorrerá quando usar um cursor de revisão ou um comando de navegação por objeto. Rolagem não ativará esse novo comportamento.
+ - Observe que a ligação automática a exploração só ocorrerá quando usar um cursor de exploração ou um comando de navegação por objeto. Rolagem não ativará esse novo comportamento.
 
 
 == Correção de Falhas ==

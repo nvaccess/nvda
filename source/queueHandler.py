@@ -54,7 +54,7 @@ def flushQueue(queue):
 			try:
 				func(*args,**kwargs)
 			except:
-				log.exception("Error in func %s from %s"%(func.__name__,queue.__name__))
+				log.exception(f"Error in func {func.__qualname__}")
 
 def isPendingItems(queue):
 	if not queue.empty():

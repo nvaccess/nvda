@@ -15,7 +15,7 @@ import controlTypes
 from logHandler import log
 from documentBase import DocumentWithTableNavigation
 from NVDAObjects.behaviors import Dialog, WebDialog 
-from . import IAccessible
+from . import IAccessible, Groupbox
 from .ia2TextMozilla import MozillaCompoundTextInfo
 import aria
 import api
@@ -148,6 +148,14 @@ class Editor(Ia2Web, DocumentWithTableNavigation):
 			# Treet this as the cell not existing.
 			raise LookupError
 
+	def event_loseFocus(self):
+		# MozillaCompoundTextInfo caches the deepest object with the caret.
+		# But this can create a reference cycle if not removed.
+		# As we no longer need it once this object loses focus, we can delete it here.
+		self._lastCaretObj = None
+		super().event_loseFocus()
+
+
 class EditorChunk(Ia2Web):
 	beTransparentToMouse = True
 
@@ -219,6 +227,13 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 		clsList.append(Math)
 	elif xmlRoles[0] == "switch":
 		clsList.append(Switch)
+	elif iaRole == oleacc.ROLE_SYSTEM_GROUPING:
+		try:
+			# The Groupbox class uses sibling text as the description. This is
+			# inappropriate for IA2 web browsers.
+			clsList.remove(Groupbox)
+		except ValueError:
+			pass
 
 	if iaRole==oleacc.ROLE_SYSTEM_APPLICATION:
 		clsList.append(Application)

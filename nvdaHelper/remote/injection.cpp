@@ -162,6 +162,8 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 		return 0;
 	}
 	nhAssert(dllHandle==tempHandle);
+	// Flush any log messages from other threads queued before the manager thread was started. 
+	log_flushQueue();
 	//Register for all winEvents in this process.
 	inprocWinEventHookID=SetWinEventHook(EVENT_MIN,EVENT_MAX,dllHandle,inproc_winEventCallback,GetCurrentProcessId(),0,WINEVENT_INCONTEXT);
 	if(inprocWinEventHookID==0) {
@@ -193,14 +195,32 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	// Even though we only registered for in-context winEvents, we may still receive some out-of-context events; e.g. console events.
 	// Therefore, we must have a message loop.
 	// Otherwise, any out-of-context events will cause major lag which increases over time.
-	do {
-		// Consume and handle all pending messages.
-		MSG msg;
-		while(PeekMessage(&msg,NULL,0,0,PM_REMOVE)) {
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
+	// We must also wait in an alertable state so that any APC functions queued to this thread by other NVDAHelper code will be executed.
+	while(true) {
+		const long handleCount = 1;
+		const long WAIT_PENDING_MESSAGES = WAIT_OBJECT_0 + handleCount;
+		DWORD res = MsgWaitForMultipleObjectsEx(
+			handleCount,
+			&nvdaUnregisteredEvent,
+			INFINITE,
+			QS_ALLINPUT,
+			MWMO_ALERTABLE // wait in an alert state so queued APC functions are executed.
+		);
+		if(res == WAIT_PENDING_MESSAGES) {
+			// Consume and handle all pending messages.
+			MSG msg;
+			while(PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+			continue;
+		} else if(res == WAIT_IO_COMPLETION) {
+			// Woke for a queued APC function. Keep going.
+			continue;
 		}
-	} while(MsgWaitForMultipleObjects(1,&nvdaUnregisteredEvent,FALSE,INFINITE,QS_ALLINPUT)==WAIT_OBJECT_0+1);
+		// anything else (the registrationEvent was set, there was an error) means we need to stop.
+		break;
+	}
 	nhAssert(inprocMgrThreadHandle);
 	inprocThreadsLock.acquire();
 	CloseHandle(inprocMgrThreadHandle);
@@ -222,6 +242,8 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	// Unregister inproc winEvent callback
 	UnhookWinEvent(inprocWinEventHookID);
 	inprocWinEventHookID=0;
+	// Flush any remaining log messages to NVDA
+	log_flushQueue();
 	//Release and close the thread mutex
 	ReleaseMutex(threadMutex);
 	CloseHandle(threadMutex);

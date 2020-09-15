@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-12 00:10+1000\n"
-"PO-Revision-Date: 2020-05-02 14:41-0700\n"
+"POT-Creation-Date: 2020-08-07 00:10+1000\n"
+"PO-Revision-Date: 2020-07-04 13:58+0100\n"
 "Last-Translator: Ondrej Rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <https://nvda.venik.org>\n"
 "Language: sk\n"
@@ -12,11 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8.9\n"
-
-#. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
-msgid "Secure Desktop"
-msgstr "Zabezpečená pracovná plocha"
+"X-Generator: Poedit 1.6.11\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -925,6 +921,16 @@ msgstr "Hebrejský počítačový 8 bodový brail"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Israeli grade 1"
+msgstr "Izraelčina plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Israeli 8 dot computer braille"
+msgstr "Izraelský počítačový 8 bodový brail"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Hindi grade 1"
 msgstr "Hinduidčina plnopis"
 
@@ -1022,6 +1028,11 @@ msgstr "Malajálamčina plnopis"
 #. braille settings dialog.
 msgid "Manipuri grade 1"
 msgstr "Manipúrčina plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Malay grade 2"
+msgstr "Malajčina skratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1125,8 +1136,8 @@ msgstr "Rumúnčina"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Russian braille for computer code"
-msgstr "Ruský počítačový kód"
+msgid "Russian computer braille"
+msgstr "Ruský počítačový 8 bodový brail"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1185,8 +1196,18 @@ msgstr "Turečtina plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Ukrainian"
-msgstr "Ukrajínčina"
+msgid "Ukrainian grade 1"
+msgstr "Ukrajinčina plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Ukrainian computer braille"
+msgstr "Ukrajinský počítačový 8 bodový brail"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Uzbek grade 1"
+msgstr "uzbečtina plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2533,11 +2554,6 @@ msgstr "IP adresa"
 msgid "desktop icon"
 msgstr "ikona pracovnej plochy"
 
-#. Translators: Identifies an alert message such as file download alert in Internet explorer 9 and above.
-#. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
-msgid "alert"
-msgstr "upozornenie"
-
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
 msgstr "panel pracovnej plochy"
@@ -2624,6 +2640,10 @@ msgstr "odsadenie"
 #. Translators: Describes text formatting.
 msgid "alignment"
 msgstr "zarovnanie"
+
+#. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
+msgid "alert"
+msgstr "upozornenie"
 
 #. Translators: Identifies a data grid control (a grid which displays data).
 msgid "data grid"
@@ -3043,6 +3063,8 @@ msgstr "Myš"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the speech panel
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Speech"
 msgstr "Reč"
 
@@ -3289,6 +3311,20 @@ msgstr "oznamovať vlastnosti písma"
 #. Translators: Input help mode message for toggle report font attributes command.
 msgid "Toggles on and off the reporting of font attributes"
 msgstr "Zapína alebo vypína oznamovanie vlastností písma"
+
+#. Translators: Input help mode message for toggle superscripts and subscripts command.
+msgid "Toggles on and off the reporting of superscripts and subscripts"
+msgstr "Zapína alebo vypína oznamovanie horného a dolného indexu"
+
+#. Translators: The message announced when toggling the report superscripts and subscripts
+#. document formatting setting.
+msgid "report superscripts and subscripts on"
+msgstr "Oznamovať indexy"
+
+#. Translators: The message announced when toggling the report superscripts and subscripts
+#. document formatting setting.
+msgid "report superscripts and subscripts off"
+msgstr "neoznamovať indexy"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
@@ -3776,10 +3812,6 @@ msgstr ""
 "Vykoná predvolenú akciu aktuálneho objektu (napríklad: dvojklik ak aktuálny "
 "objekt je tlačidlo)."
 
-#. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "Top"
-msgstr "Vrch"
-
 #. Translators: Input help mode message for move review cursor to top line command.
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
@@ -3787,6 +3819,10 @@ msgid ""
 msgstr ""
 "Premiestni prezerací kurzor na vrchný riadok aktuálneho navigačného objektu "
 "a prečíta ho."
+
+#. Translators: a message reported when review cursor is at the top line of the current navigator object.
+msgid "Top"
+msgstr "Vrch"
 
 #. Translators: Input help mode message for move review cursor to previous line command.
 msgid ""
@@ -3850,10 +3886,6 @@ msgstr ""
 "Premiestni prezerací kurzor na nasledujúce slovo aktuálneho navigačného "
 "objektu a prečíta ho."
 
-#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
-msgid "Left"
-msgstr "Ľavý okraj"
-
 #. Translators: Input help mode message for move review cursor to start of current line command.
 msgid ""
 "Moves the review cursor to the first character of the line where it is "
@@ -3861,6 +3893,10 @@ msgid ""
 msgstr ""
 "Premiestni prezerací kurzor na začiatok aktuálneho riadku v rámci aktuálneho "
 "navigačného objektu a prečíta aktuálny znak."
+
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
+msgstr "Ľavý okraj"
 
 #. Translators: Input help mode message for move review cursor to previous character command.
 msgid ""
@@ -3978,6 +4014,7 @@ msgstr "Reštartuje NVDA"
 msgid "Shows the NVDA menu"
 msgstr "Zobrazí ponuku NVDA"
 
+#. Translators: Input help mode message for say all in review cursor command.
 msgid ""
 "Reads from the review cursor up to the end of the current text, moving the "
 "review cursor as it goes"
@@ -4075,8 +4112,8 @@ msgstr ""
 "schránky windows."
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-msgid "Speaks the current foreground object"
-msgstr "Prečíta obsah aktuálneho okna v popredí"
+msgid "Reads all controls in the active window"
+msgstr "Prečíta obsah aktuálneho okna"
 
 #. Translators: GUI development tool, to get information about the components used in the NVDA GUI
 msgid ""
@@ -4092,6 +4129,10 @@ msgid ""
 msgstr ""
 "Zaznamená informácie o objekte zameranom objektovou navigáciou a otvorí "
 "zobrazovač logu na mieste, kde sú tieto informácie zobrazené."
+
+#. Translators: Input help mode message for Open user configuration directory command.
+msgid "Opens NVDA configuration directory for the current user."
+msgstr "Otvorí adresár s používateľskými nastaveniami. "
 
 #. Translators: A mode where no progress bar updates are given.
 msgid "No progress bar updates"
@@ -4302,6 +4343,21 @@ msgstr "Zobrazí dialóg výslovnosť interpunkčných a špeciálnych symbolov"
 msgid "Shows the NVDA input gestures dialog"
 msgstr "Zobrazí dialóg klávesové skratky"
 
+#. Translators: Input help mode message for the report current configuration profile command.
+msgid "Reports the name of the current NVDA configuration profile"
+msgstr "Oznámi meno aktívneho profilu"
+
+#. Translators: Message announced when the command to report the current configuration profile and
+#. the default configuration profile is active.
+msgid "normal configuration profile active"
+msgstr "Základný profil"
+
+#. Translators: Message announced when the command to report the current configuration profile
+#. is active. The placeholder '{profilename}' is replaced with the name of the current active profile.
+#, python-brace-format
+msgid "{profileName} configuration profile active"
+msgstr "{profileName} aktívny"
+
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
 msgstr "Uloží aktuálnu konfiguráciu NVDA."
@@ -4309,10 +4365,10 @@ msgstr "Uloží aktuálnu konfiguráciu NVDA."
 #. Translators: Input help mode message for apply last saved or default settings command.
 msgid ""
 "Pressing once reverts the current configuration to the most recently saved "
-"state. Pressing three times reverts to factory defaults."
+"state. Pressing three times resets to factory defaults."
 msgstr ""
-"Načíta konfiguráciu a zahodí aktuálne nastavenia. Stlačené rýchlo trikrát "
-"obnoví predvolené nastavenia."
+"Zahodí zmeny a vráti sa k uloženým nastaveniam. Stlačené trikrát rýchlo za "
+"sebou obnoví predvolené nastavenia."
 
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
@@ -4418,6 +4474,8 @@ msgstr ""
 "Označí aktuálnu pozíciu prezeracieho kurzora ako začiatok textu, ktorý bude "
 "označený alebo skopírovaný do schránky"
 
+#. Translators: Input help mode message for move review cursor to marked start position for a
+#. select or copy command
 msgid ""
 "Move the review cursor to the position marked as the start of text to be "
 "selected or copied"
@@ -4643,6 +4701,7 @@ msgstr "Neoznamovať symboly z databázy Unicode konzorcia"
 msgid "report CLDR characters on"
 msgstr "Oznamovať symboly z databázy unicode konzorcia"
 
+#. Translators: Describes a command.
 msgid ""
 "Toggles the state of the screen curtain, enable to make the screen black or "
 "disable to show the contents of the screen. Pressed once, screen curtain is "
@@ -4741,6 +4800,10 @@ msgstr "Zoznam Príkazov"
 #. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
 msgstr "Používateľská Príručka"
+
+#. Translators: A label for a shortcut in start menu to open NVDA what's new.
+msgid "What's new"
+msgstr "Novinky"
 
 #. Translators: A file extension label for NVDA add-on package.
 msgid "NVDA add-on package"
@@ -6258,7 +6321,7 @@ msgstr "Tempo"
 #. Translators: This is the name of the rate boost voice toggle
 #. which further increases the speaking rate when enabled.
 msgid "Rate boos&t"
-msgstr "Znásobiť &tempo"
+msgstr "Znáso&biť tempo"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -6392,6 +6455,9 @@ msgstr "Nastala chyba pri kontrole aktualizácií"
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
+#. Translators: The title of an error message dialog.
+#. Translators: The title of a dialog presented when an error occurs.
+#. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
 #. for a vision enhancement provider
@@ -6413,6 +6479,10 @@ msgstr "Nie sú k dispozícii žiadne aktualizácie."
 msgid "NVDA version {version} has been downloaded and is pending installation."
 msgstr "Verzia {version} je stiahnutá a pripravená na inštaláciu."
 
+#. Translators: A message indicating that some add-ons will be disabled
+#. unless reviewed before installation.
+#. Translators: A message in the installer to let the user know that
+#. some addons are not compatible.
 msgid ""
 "\n"
 "\n"
@@ -6476,6 +6546,8 @@ msgstr "&Zatvoriť"
 msgid "NVDA version {version} is ready to be installed.\n"
 msgstr "NVDA {version} je pripravená na inštaláciu.\n"
 
+#. Translators: A message indicating that some add-ons will be disabled
+#. unless reviewed before installation.
 msgid ""
 "\n"
 "However, your NVDA configuration contains add-ons that are incompatible with "
@@ -6517,6 +6589,7 @@ msgstr "Prebieha sťahovanie"
 msgid "Error downloading update."
 msgstr "Chyba pri sťahovaní aktualizácie"
 
+#. Translators: The message requesting donations from users.
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
 "This project relies primarily on donations and grants. By donating, you are "
@@ -6568,6 +6641,7 @@ msgstr "Voľne šíriteľný open-source čítač obrazovky pre Microsoft Window
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C) {years} Tím NVDA"
 
+#. Translators: "About NVDA" dialog box message
 #, python-brace-format
 msgid ""
 "{longName} ({name})\n"
@@ -6620,6 +6694,10 @@ msgid ""
 msgstr ""
 "Nie je možné nainštalovať doplnok z {path}.\n"
 "pred inštaláciou doplnku spustite NVDA."
+
+#. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
+msgid "Secure Desktop"
+msgstr "Zabezpečená pracovná plocha"
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
 #, python-brace-format
@@ -7274,6 +7352,10 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille"
 msgid "MDV Lilli"
 msgstr "MDV Lilli"
 
+#. Translators: Names of braille displays
+msgid "Nattiq nBraille"
+msgstr "Nattiq nBraille"
+
 #. Translators: Is used to indicate that braille support will be disabled.
 msgid "No braille"
 msgstr "Žiadny zobrazovač"
@@ -7426,6 +7508,7 @@ msgstr "Nastavenia"
 msgid "&Default dictionary..."
 msgstr "Pre&dvolený slovník..."
 
+#. Translators: The help text for the menu item to open Default speech dictionary dialog.
 msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
 "to the list"
@@ -7437,6 +7520,8 @@ msgstr ""
 msgid "&Voice dictionary..."
 msgstr "Slo&vník pre aktuálny hlas..."
 
+#. Translators: The help text for the menu item
+#. to open Voice specific speech dictionary dialog.
 msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
@@ -7448,6 +7533,7 @@ msgstr ""
 msgid "&Temporary dictionary..."
 msgstr "D&očasný slovník..."
 
+#. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
 msgid ""
 "A dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
@@ -7595,6 +7681,7 @@ msgstr "U&končiť"
 msgid "Exit NVDA"
 msgstr "Ukončiť nvda"
 
+#. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
 msgid ""
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
@@ -7640,9 +7727,11 @@ msgid "&Use CapsLock as an NVDA modifier key"
 msgstr "Používať &Capslock ako kláves NVDA"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
-#. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
-msgid "&Automatically start NVDA after I log on to Windows"
-msgstr "&Automaticky spustiť NVDA po prihlásení do Windows"
+#. Translators: The label for a setting in general settings to allow NVDA to start after logging onto
+#. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
+#. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
+msgid "St&art NVDA after I sign in"
+msgstr "&Spustiť NVDA po prihlásení"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Show this dialog when NVDA starts"
@@ -7749,6 +7838,8 @@ msgstr "Án&o"
 msgid "&No"
 msgstr "&Nie"
 
+#. Translators: A message asking the user if they wish to restart NVDA
+#. as addons have been added, enabled/disabled or removed.
 msgid ""
 "Changes were made to add-ons. You must restart NVDA for these changes to "
 "take effect. Would you like to restart now?"
@@ -7772,6 +7863,7 @@ msgstr "O &doplnku..."
 msgid "OK"
 msgstr "OK"
 
+#. Translators: message shown in the Addon Information dialog.
 #, python-brace-format
 msgid ""
 "{summary} ({name})\n"
@@ -7809,6 +7901,7 @@ msgstr "Správca Doplnkov"
 msgid "Add-ons Manager (add-ons disabled)"
 msgstr "Správca doplnkov (doplnky sú zakázané)"
 
+#. Translators: A message in the add-ons manager shown when add-ons are globally disabled.
 msgid ""
 "NVDA was started with all add-ons disabled. You may modify the enabled / "
 "disabled state, and install or uninstall add-ons. Changes will not take "
@@ -7940,6 +8033,8 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "Inštalácia doplnku"
 
+#. Translators: A message asking if the user wishes to update an add-on with the same version
+#. currently installed according to the version number.
 #, python-brace-format
 msgid ""
 "You are about to install version {newVersion} of {summary}, which appears to "
@@ -7948,6 +8043,8 @@ msgstr ""
 "Chystáte sa nainštalovať verziu {newVersion} doplnku {summary}, ktorá je už "
 "nainštalovaná. Chcete pokračovať?"
 
+#. Translators: A message asking if the user wishes to update a previously installed
+#. add-on with this one.
 #, python-brace-format
 msgid ""
 "A version of this add-on is already installed. Would you like to update "
@@ -7973,6 +8070,8 @@ msgstr "Inštalácia doplnku %s zlyhala."
 msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
 msgstr "Vo verzii NVDA z windows obchodu nie je možné inštalovať doplnky"
 
+#. Translators: The message displayed when installing an add-on package is prohibited,
+#. because it requires a later version of NVDA than is currently installed.
 #, python-brace-format
 msgid ""
 "Installation of {summary} {version} has been blocked. The minimum NVDA "
@@ -7986,6 +8085,8 @@ msgstr ""
 msgid "Add-on not compatible"
 msgstr "Nekompatibilný doplnok"
 
+#. Translators: A message informing the user that this addon can not be installed
+#. because it is not compatible.
 #, python-brace-format
 msgid ""
 "Installation of {summary} {version} has been blocked. An updated version of "
@@ -7996,6 +8097,7 @@ msgstr ""
 "tohto doplnku. Tento doplnok je navrhnutý pre staršiu verziu API "
 "{backCompatToAPIVersion}"
 
+#. Translators: A message asking the user if they really wish to install an addon.
 #, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on?\n"
@@ -8010,6 +8112,7 @@ msgstr ""
 msgid "Incompatible Add-ons"
 msgstr "Nekompatibilné doplnky"
 
+#. Translators: The title of the Incompatible Addons Dialog
 msgid ""
 "The following add-ons are incompatible with NVDA version {}. These add-ons "
 "can not be enabled. Please contact the add-on author for further assistance."
@@ -8068,7 +8171,7 @@ msgstr "Dočasne zakázať všetky &udalosti"
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
 msgid "(normal configuration)"
-msgstr "(Normálna konfigurácia)"
+msgstr "(Základný profil)"
 
 #. Translators: Reported for a profile which is being edited
 #. in the Configuration Profiles dialog.
@@ -8118,6 +8221,11 @@ msgstr "Nový názov:"
 #. Translators: The title of the dialog to rename a configuration profile.
 msgid "Rename Profile"
 msgstr "premenovať profil"
+
+#. Translators: An error displayed when the user attempts to rename a configuration profile
+#. with an empty name.
+msgid "A profile cannot have an empty name."
+msgstr "Profil musí mať názov."
 
 #. Translators: An error displayed when renaming a configuration profile
 #. and a profile with the new name already exists.
@@ -8189,6 +8297,11 @@ msgstr ""
 "Táto udalosť je už zviazaná s iným profilom. Udalosť sa presunie z pôvodného "
 "profilu do tohto profilu.\n"
 "Naozaj chcete pokračovať?"
+
+#. Translators: An error displayed when the user attempts to create a configuration profile
+#. with an empty name.
+msgid "You must choose a name for this profile."
+msgstr "Pomenujte profil."
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
@@ -8295,8 +8408,8 @@ msgstr ""
 "{path}"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-msgid "Use NVDA on the Windows &logon screen"
-msgstr "Spúšťať NVDA pri zobrazení prihlasovacej obrazovky Windows"
+msgid "Use NVDA during sign-in"
+msgstr "Spúšťať NVDA na prihlasovacej obrazovke"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "&Keep existing desktop shortcut"
@@ -8318,6 +8431,8 @@ msgstr ""
 msgid "&Continue"
 msgstr "&Pokračovať"
 
+#. Translators: A warning presented when the user attempts to downgrade NVDA
+#. to an older version.
 msgid ""
 "You are attempting to install an earlier version of NVDA than the version "
 "currently installed. If you really wish to revert to an earlier version, you "
@@ -8427,6 +8542,10 @@ msgstr "Uložiť Ako"
 msgid "Error saving log: %s"
 msgstr "Chyba pri ukladaní logu: \"%s\"."
 
+#. Translators: A message indicating that log cannot be loaded to LogViewer.
+msgid "Log is unavailable"
+msgstr "Záznam nie je dostupný"
+
 #. Translators: A cancel button on a message dialog.
 #. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
 msgid "Cancel"
@@ -8464,13 +8583,16 @@ msgstr "Vstup a výstup"
 msgid "debug"
 msgstr "Debug"
 
-#. Translators: The label for a setting in general settings to select NVDA's interface language (once selected, NVDA must be restarted; the option user default means the user's Windows language will be used).
-msgid "&Language (requires restart to fully take effect):"
-msgstr "&Jazyk (vyžaduje reštart):"
+#. Translators: The label for a setting in general settings to select NVDA's interface language
+#. (once selected, NVDA must be restarted; the option user default means the user's Windows language
+#. will be used).
+msgid "NVDA &Language (requires restart):"
+msgstr "&Jazyk NVDA (vyžaduje reštart):"
 
-#. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
-msgid "&Save configuration on exit"
-msgstr "&Uložiť nastavenia pri ukončení"
+#. Translators: The label for a setting in general settings to save current configuration when NVDA
+#. exits (if it is not checked, user needs to save configuration before quitting NVDA).
+msgid "&Save configuration when exiting NVDA"
+msgstr "&Uložiť nastavenia pri ukončení NVDA"
 
 #. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
 msgid "Sho&w exit options when exiting NVDA"
@@ -8480,23 +8602,30 @@ msgstr "&Pri ukončení NVDA zobraziť dialóg s možnosťami"
 msgid "&Play sounds when starting or exiting NVDA"
 msgstr "Prehrať &zvuk pri spustení a ukončení NVDA"
 
-#. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
+#. Translators: The label for a setting in general settings to select logging level of NVDA as it runs
+#. (available options and what they are logging are found under comments for the logging level messages
+#. themselves).
 msgid "L&ogging level:"
 msgstr "Úr&oveň záznamu:"
 
-#. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
-msgid ""
-"Use NVDA on the Windows logon screen (requires administrator privileges)"
+#. Translators: The label for a setting in general settings to
+#. allow NVDA to come up in Windows login screen (useful if user
+#. needs to enter passwords or if multiple user accounts are present
+#. to allow user to choose the correct account).
+msgid "Use NVDA during sign-in (requires administrator privileges)"
 msgstr ""
-"Spúšťať NVDA pri zobrazení prihlasovacej obrazovky Windows (vyžaduje "
+"Spúšťať NVDA pri zobrazení prihlasovacej obrazovky (vyžaduje "
 "administrátorské práva)"
 
-#. Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
+#. Translators: The label for a button in general settings to copy
+#. current user settings to system settings (to allow current
+#. settings to be used in secure screens such as User Account
+#. Control (UAC) dialog).
 msgid ""
-"Use currently saved settings on the logon and other secure screens (requires "
+"Use currently saved settings during sign-in and on secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"použiť aktuálne nastavenia NVDA na prihlasovacej a zabezpečených obrazovkách "
+"použiť aktuálne nastavenia na prihlasovacej a zabezpečených obrazovkách "
 "(vyžaduje administrátorské práva)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
@@ -8512,6 +8641,8 @@ msgstr "Upozorniť na čakajúcu ak&tualizáciu po štarte"
 msgid "Allow the NVDA project to gather NVDA usage statistics"
 msgstr "Povoliť zasielanie údajov"
 
+#. Translators: A message to warn the user when attempting to copy current
+#. settings to system settings.
 msgid ""
 "Add-ons were detected in your user settings directory. Copying these to the "
 "system profile could be a security risk. Do you still wish to copy your "
@@ -8574,7 +8705,7 @@ msgstr "Reštartovať &Neskôr"
 
 #. Translators: A label for the synthesizer on the speech panel.
 msgid "&Synthesizer"
-msgstr "&Hlasový výstup"
+msgstr "Hlasový v&ýstup"
 
 #. Translators: This is the label for the button used to change synthesizer,
 #. it appears in the context of a synthesizer group on the speech settings panel.
@@ -8596,11 +8727,11 @@ msgstr "&Hlasový výstup:"
 #. device combo in the synthesizer dialog. Examples of
 #. of an output device are default soundcard, usb
 #. headphones, etc.
-msgid "Output &device:"
+msgid "Audio output  &device:"
 msgstr "Výstupné zaria&denie:"
 
 #. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
-msgid "Audio &ducking mode:"
+msgid "Audio d&ucking mode:"
 msgstr "Režim automatického s&tíšenia zvuku:"
 
 #. Translators: This message is presented when
@@ -8638,6 +8769,9 @@ msgstr "Úroveň interpunkcie"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "pri spracovaní textu sa riadiť jazykom hlasového výstupu"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
 msgid ""
 "Include Unicode Consortium data (including emoji) when processing characters "
 "and symbols"
@@ -8662,7 +8796,7 @@ msgstr "&Pípať pred hláskovaním veľkých písmen"
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
 msgid "Use &spelling functionality if supported"
-msgstr "&Hláskovanie riadi hlasový výstup (ak je podporované)"
+msgstr "Hláskovanie &riadi hlasový výstup (ak je podporované)"
 
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
@@ -8685,27 +8819,27 @@ msgstr "Čítať po &slovách"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-msgid "Speech interrupt for typed characters"
-msgstr "prerušiť reč pri písaní"
+msgid "Speech &interrupt for typed characters"
+msgstr "prerušiť &reč pri písaní"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-msgid "Speech interrupt for Enter key"
-msgstr "Prerušiť reč klávesom Enter"
+msgid "Speech i&nterrupt for Enter key"
+msgstr "Prerušiť reč klávesom &Enter"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
 msgid "Allow skim &reading in Say All"
-msgstr "Povoliť &rýchlu navigáciu počas plynulého čítania"
+msgstr "Povoliť rýchlu &navigáciu počas plynulého čítania"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-msgid "Beep if typing lowercase letters when caps lock is on"
-msgstr "Pípať pri písaní malých písmen ak je zapnutý caps lock"
+msgid "&Beep if typing lowercase letters when caps lock is on"
+msgstr "Pípať pri písaní malých písmen ak je zapnutý &caps lock"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-msgid "Speak command &keys"
+msgid "Speak c&ommand keys"
 msgstr "Čítať príkazové s&kratky"
 
 #. Translators: This is the label for a checkbox in the
@@ -8778,8 +8912,8 @@ msgstr "Sledovať kurzor &myši"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
-msgid "Simple review mode"
-msgstr "Jednoduchý režim objektovej navigácie"
+msgid "&Simple review mode"
+msgstr "&Jednoduchý režim objektovej navigácie"
 
 #. Translators: This is the label for the Input Composition settings panel.
 msgid "Input Composition"
@@ -8854,13 +8988,13 @@ msgstr "Oznamovať &pozíciu objektu"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Guess object &position information when unavailable"
-msgstr "Odhadnúť pozíciu objektu ak nie je dostupná"
+msgid "&Guess object position information when unavailable"
+msgstr "Od&hadnúť pozíciu objektu ak nie je dostupná"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "Report object &descriptions"
-msgstr "Oznamovať pop&isky objektov"
+msgstr "Oznamovať popis&ky objektov"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings panel.
@@ -8869,15 +9003,15 @@ msgstr "Oznamovanie aktualizácie p&riebehu:"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report background progress bars"
-msgstr "Oznamovať aktualizáciu indikátorov priebehu na pozadí"
+msgid "Report backg&round progress bars"
+msgstr "Oznamovať aktualizáciu &indikátorov priebehu na pozadí"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "Report dynamic &content changes"
 msgstr "Oznamovať dynamicky menený obsah"
 
-#. Translators: This is the label for a combobox in the
+#. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "Play a sound when &auto-suggestions appear"
 msgstr "Upozorňovať zvukom na &automatické návrhy"
@@ -8963,8 +9097,13 @@ msgstr "ve&ľkosť písma"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Font attri&butes"
+msgid "Font attrib&utes"
 msgstr "Vlastnosti &písma"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+msgid "Su&perscripts and subscripts"
+msgstr "Inde&xy"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9043,7 +9182,7 @@ msgstr "Oznamovať a pípať"
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
-msgstr "&Odsadenie odsekov"
+msgstr "Odsadenie odseko&v"
 
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report line spacing if available.
@@ -9087,8 +9226,8 @@ msgstr "Farby a štýly"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-msgid "Cell borders:"
-msgstr "Orámovanie:"
+msgid "Cell &borders:"
+msgstr "&Orámovanie:"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
@@ -9132,7 +9271,7 @@ msgstr "P&ri kliknutí"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Report formatting changes after the cursor (can cause a lag)"
+msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr "Oznamovať zmeny formátovania pri pohybe k&urzorom (môže zaostávať)"
 
 #. Translators: This is the label for the touch interaction settings panel.
@@ -9198,6 +9337,25 @@ msgid "Use the new t&yped character support in Windows Console when available"
 msgstr ""
 "Použiť novú podporu oznamovania na&písaných znakov vo Windows konzolách"
 
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Default (No)"
+msgstr "Nie (predvolené)"
+
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Yes"
+msgstr "Áno"
+
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "No"
+msgstr "Nie"
+
+#. Translators: This is the label for combobox in the Advanced settings panel.
+msgid "Attempt to cancel speech for expired focus events:"
+msgstr "Prerušiť reč po vypršaní zameranej udalosti:"
+
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Automatically set system &focus to focusable elements"
@@ -9232,6 +9390,7 @@ msgstr "Pokročilé"
 msgid "Warning!"
 msgstr "Upozornenie!"
 
+#. Translators: This is a label appearing on the Advanced settings panel.
 msgid ""
 "The following settings are for advanced users. Changing them may cause NVDA "
 "to function incorrectly. Please only change these if you know what you are "
@@ -9242,6 +9401,7 @@ msgstr ""
 "nastavenia len v prípade, že viete, čo máte robiť, alebo ste dostali "
 "inštrukcie od vývojárov."
 
+#. Translators: This is the label for a checkbox in the Advanced settings panel.
 msgid ""
 "I understand that changing these settings may cause NVDA to function "
 "incorrectly."
@@ -9297,7 +9457,7 @@ msgstr "chyba"
 msgid "Regular Expression error: \"%s\"."
 msgstr "nesprávny regulárny výraz: \"%s\"."
 
-#. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
+#. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
 msgstr "Položky slovníka"
 
@@ -9311,6 +9471,7 @@ msgid "Pattern"
 msgstr "Vzor"
 
 #. Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
+#. Translators: The label for a column in symbols list used to identify a replacement.
 msgid "Replacement"
 msgstr "Nahradiť s"
 
@@ -9405,7 +9566,7 @@ msgstr "Zobraz&iť správy bez obmedzenia"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
-msgstr "B&railovský kurzor zviazaný s:"
+msgstr "B&railovský kurzor zviazaný:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -9413,7 +9574,7 @@ msgstr "Čítať po odsekoch"
 
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
-msgstr "Zabrániť deleniu &slov keď  je to možné"
+msgstr "Zabrániť deleniu sl&ov keď  je to možné"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
@@ -9446,6 +9607,8 @@ msgid ""
 "Could not gracefully terminate the {providerName} vision enhancement provider"
 msgstr "Nepodarilo sa korektne ukončiť vizuálne rozšírenie {providerName}"
 
+#. Translators: This message is presented when
+#. NVDA is unable to terminate multiple vision enhancement providers.
 #, python-brace-format
 msgid ""
 "Could not gracefully terminate the following vision enhancement providers:\n"
@@ -9481,15 +9644,15 @@ msgstr "Nastavenia"
 
 #. Translators: The profile name for normal configuration
 msgid "normal configuration"
-msgstr "Normálna konfigurácia"
+msgstr "Základný profil"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
 msgstr "pridať symbol"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-msgid "Symbol:"
-msgstr "Symbol:"
+msgid "&Symbol:"
+msgstr "&Symbol:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
@@ -10085,7 +10248,7 @@ msgstr "Zvýraznenie fokusu"
 #. Translators: The label for a checkbox that enables / disables focus highlighting
 #. in the NVDA Highlighter vision settings panel.
 msgid "&Enable Highlighting"
-msgstr "&Povoliť zvýraznenie"
+msgstr "Povoliť &zvýraznenie"
 
 #. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
@@ -11611,3 +11774,18 @@ msgstr "dvojité riadkovanie"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 riadka"
+
+#~ msgid "Ukrainian"
+#~ msgstr "Ukrajínčina"
+
+#~ msgid "Russian braille for computer code"
+#~ msgstr "Ruský počítačový kód"
+
+#~ msgid "Speaks the current foreground object"
+#~ msgstr "Prečíta obsah aktuálneho okna v popredí"
+
+#~ msgid "&Automatically start NVDA after I log on to Windows"
+#~ msgstr "&Automaticky spustiť NVDA po prihlásení do Windows"
+
+#~ msgid "Use NVDA on the Windows &logon screen"
+#~ msgstr "Spúšťať NVDA pri zobrazení prihlasovacej obrazovky Windows"
