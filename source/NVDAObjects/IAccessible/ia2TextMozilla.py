@@ -531,7 +531,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				raise LookupError
 			if limitToInline:
 				if obj.IA2Attributes.get('display') != 'inline':
-					# The caller requested to limit to inline objects. 
+					# The caller requested to limit to inline objects.
 					# As this container is not inline,
 					# We cannot go above this container.
 					raise LookupError
