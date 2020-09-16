@@ -7,7 +7,7 @@ What's New in NVDA
 
 == New Features ==
 - Pressing F1 inside NVDA dialogs will now open the help file to most relevant section. (#7757)
-- Support for auto complete suggestions (IntelliSense) Microsoft SQL Server Management Studio and Visual Studio 2017. (#7504)
+- Support for auto complete suggestions (IntelliSense) in Microsoft SQL Server Management Studio plus Visual Studio 2017 and higher. (#7504)
 - Symbol pronunciation: Support for grouping in a complex symbol definition and support group references in a replacement rule making them simpler and more powerful. (#11107)
 
 
@@ -19,6 +19,8 @@ What's New in NVDA
 == Bug Fixes ==
 - NVDA once again works correctly with edit fields when using the Fast Log Entry application. (#8996)
 - Report elapsed time in Foobar2000 if no total time is available (e.g. when playing a live stream). (#11337)
+- NVDA now honors the aria-roledescription attribute on elements in editable content in web pages. (#11607)
+- 'list' is no longer announced on every line of a list in Google Docs or other editable content in Google Chrome. (#7562)
 
 
 == Changes for Developers ==
@@ -26,6 +28,8 @@ What's New in NVDA
 
 
 = 2020.3 =
+This release includes several large improvements to stability and performance particularly in Microsoft Office applications. There are new settings to toggle touchscreen support and graphics reporting.
+The existence of marked (highlighted) content can be reported in browsers, and there are new German braille tables.
 
 == New Features ==
 - You can now toggle reporting of graphics from NVDA's document formatting settings. Note that disabling this option will still read the alternative texts of graphics. (#4837)

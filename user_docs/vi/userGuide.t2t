@@ -217,8 +217,6 @@ Bạn cũng có thể giữ và di chuyển ngón tay trên màn hình để đ�
 Khi các lệnh của NVDA được mô tả ở những phần sau của tài liệu này, chúng có thể sẽ được liệt kê kèm theo một thao tác để kích hoạt lệnh đó với các màn hình cảm ứng.
 Dưới đây là hướng dẫn cho một số thao tác cảm ứng.
 
-
-
 ==== Hành động chạm ====
 Chạm nhẹ và nhanh một hoặc nhiều ngón tay vào màn hình.
 
@@ -336,7 +334,6 @@ Dưới đây là các phím tắt mà NVDA cung cấp cho việc thao tác vớ
 | Thông báo định dạng văn bản | NVDA+f | NVDA+f | Thông báo định dạng của văn bản tại vị trí con trỏ nháy. Bấm hai lần để hiển thị thông tin trong chế độ duyệt |
 | Đọc câu tiếp theo | alt+mũi tên xuống | alt+mũi tên xuống | Di chuyển con trỏ nháy đến câu kế tiếp và đọc nó (Chỉ hỗ trợ trong Microsoft Word và Outlook). |
 | Đọc câu trước | alt+mũi tên lên | alt+mũi tên lên | Di chuyển con trỏ nháy đến câu trước đó và đọc nó (Chỉ hỗ trợ trong Microsoft Word và Outlook). |
-
 
 Khi ở trong bảng thì dùng các phím tắt sau để thao tác:
 || Chức năng | Phím tắt | Mô tả |
@@ -653,7 +650,6 @@ Bấm escape nếu bạn muốn trở về tài liệu.
 
 Đôi khi, nội dung toán có thể hiển thị như một nút bấm hay một kiểu thành phần khác. Khi được kích hoạt, có thể hiển thị một hộp thoại hay nhiều thông tin liên quan đến công thức.
 Để kích hoạt nút bấm hay thành phần chứa công thức, bấm ctrl+enter.
-
 
 + Chữ Nổi +[Braille]
 Nếu bạn sử dụng màn hình nổi, NVDA có thể hiển thị thông tin dạng chữ nổi.
@@ -1082,7 +1078,8 @@ Các mức độ log bao gồm:
  - Nếu quan ngại về sự riêng tư thì đừng chọn cấp độ log này.
 - Gỡ lỗi: ngoài các thông tin, cảnh báo và thông điệp  đầu vào / đầu ra, các thông điệp gỡ lỗi bổ sung cũng sẽ được ghi lại.
  - Cũng giống như đầu vào / đầu ra, Nếu quan ngại về sự riêng tư thì đừng nên chọn cấp độ log này.
-
+ -
+-
 
 ==== Khởi động NVDA sau khi tôi đăng nhập ====[GeneralSettingsStartAfterLogOn]
 Nếu chọn mục này thì NVDA sẽ tự khởi động khi bạn đăng nhập vào Windows.
@@ -1579,7 +1576,6 @@ Khi chọn hộp kiểm này, NVDA sẽ đọc các thông báo trợ giúp (hel
 - Thông báo trợ giúp thường là các thông báo xuất hiện trên các biểu tượng dưới khay hệ thống như tình trạng kết nối mạng hoặc là các cảnh báo về vấn đề an toàn của Windows.
 - Thông báo toast được giới thiệu trong Windows 10 và xuất hiện ở trung tâm thông báo (notification center) trên khay hệ thống, cung cấp thông báo cho vài sự kiện (ví dụ: một bản cập nhật đã được tải, có thư mới trong hộp thư đến, v...v...).
 
-
 ==== Thông báo phím tắt của đối tượng ====[ObjectPresentationShortcutKeys]
 Nếu được chọn, NVDA sẽ thông báo phím tắt của đối tượng (nếu có).
 Ví dụ trình đơn File có phím tắt là Alt + F.
@@ -1839,7 +1835,7 @@ Thiết lập này điều khiển việc các kí tự sẽ được đọc b�
 ==== Dùng hỗ trợ nhập văn bản mới trong  Windows console khi có thể ====[AdvancedSettingsKeyboardSupportInLegacy]
 Tùy chọn này  gọi một phương thức thay thế để nhận các kí tự đã nhập trong Windows command console.
 Trong khi nó cải thiện hiệu suất và ngăn chặn việc đánh vần thông tin đầu ra của console, nó cũng có thể không tương thích với vài ứng dụng terminal .
-Tính năng này tồn tại và mặc định được bật trên Windows 10 phiên bản 1607trở lên khi  UI Automation không có hoặc bị vô hiệu.
+Tính năng này tồn tại và mặc định được bật trên Windows 10 phiên bản 1607 trở lên khi  UI Automation không có hoặc bị vô hiệu.
 Cảnh báo: khi bật tùy chọn này, các kí tự được nhập mà không hiển thị trên màn hình như mật khẩu chẳng hạn sẽ không bị bỏ qua.
 Trong những môi trường không an toàn, bạn có thể tạm thời vô hiệu [đọc kí tự khi gõ #KeyboardSettingsSpeakTypedCharacters] và [đọc từ khi gõ #KeyboardSettingsSpeakTypedWords] khi nhập mật khẩu.
 
@@ -1895,7 +1891,6 @@ Ví dụ, khi từ thay thế cho từ mẫu "frogbird" là từ "bird" và ch�
 Biểu thức phổ thông là kiểu mẫu gồm các ký hiệu đặc biệt, cho phép bạn chỉ định trùng với nhiều ký tự cùng lúc.
 Trong tài liệu hướng dẫn này không đề cập nhiều về biểu thức phổ thông.
 Để xem hướng dẫn về nội dung này, vui lòng truy cập [https://docs.python.org/3.7/howto/regex.html].
-
 
 +++ Phát Âm Ký Hiệu / Dấu Câu +++[SymbolPronunciation]
 Hộp thoại này cho phép bạn thay đổi cách phát âm cho các dấu câu và các ký hiệu, đồng thời quyết định khi nào thì đọc chúng.
@@ -2243,8 +2238,7 @@ Windows 10 đi kèm với những giọng đọc mới, được gọi là OneCo
 Những giọng đọc mới hỗ trợ cho khá nhiều ngôn ngữ khác nhau và  phản hồi nhanh hơn so với những giọng theo chuân SAPI-5.
 Trên Windows 10, NVDA mặc định dùng các giọng Windows OneCore ([eSpeak NG #eSpeakNG] thì dùng cho các bản phát hành khác).
 
-Vui lòng xem bài viết sau của Microsoft để biết danh sách các giọng và cách cài đặt: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
-
+Vui lòng xem bài viết sau của Microsoft để biết danh sách các giọng đọc hiện hành và cách cài đặt: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
 + Các màn hình nổi (Braille Displays) được hỗ trợ +[SupportedBrailleDisplays]
 Phần này gồm thông tin về các dòng màn hình nổi được hỗ trợ bởi NVDA.
@@ -2519,7 +2513,7 @@ Các thiết bị thêm vào sau đây cũng được hỗ trợ, và không yê
 - APH Chameleon 20
 - Humanware BrailleOne
 - NLS eReader
-
+-
 
 Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
 Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
