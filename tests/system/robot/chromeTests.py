@@ -41,6 +41,91 @@ def checkbox_labelled_by_inner_element():
 	)
 
 
+def announce_list_item_when_moving_by_word_or_character():
+	_chrome.prepareChrome(
+		r"""
+			<div contenteditable="true">
+				<p>Before list</p>
+				<ul style="list-style-type:none">
+					<li>small cat</li>
+					<li>big dog</li>
+				</ul>
+			</div>
+		"""
+	)
+	# Force focus mode
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Focus mode"
+	)
+	# Tab into the contenteditable
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		"section  multi line  editable  Before list"
+	)
+	# Ensure that moving into a list by line, "list item" is not reported.
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"list  small cat"
+	)
+	# Ensure that when moving by word (control+rightArrow)
+	# within the list item, "list item" is not announced.
+	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"cat"
+	)
+	# Ensure that when moving by character (rightArrow)
+	# within the list item, "list item" is not announced.
+	actualSpeech = _chrome.getSpeechAfterKey("rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"a"
+	)
+	# move to the end of the line (and therefore the list item)
+	actualSpeech = _chrome.getSpeechAfterKey("end")
+	_asserts.strings_match(
+		actualSpeech,
+		"blank"
+	)
+	# Ensure that when moving by character (rightArrow)
+	# onto the next list item, "list item" is reported.
+	actualSpeech = _chrome.getSpeechAfterKey("rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"list item  level 1  ",
+			"b"
+		])
+	)
+	# Ensure that when moving by character (leftArrow)
+	# onto the previous list item, "list item" is reported.
+	# Note this places us on the end-of-line insertion point of the previous list item.
+	actualSpeech = _chrome.getSpeechAfterKey("leftArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"list item  level 1"
+	)
+	# Ensure that when moving by word (control+rightArrow)
+	# onto the next list item, "list item" is reported.
+	actualSpeech = _chrome.getSpeechAfterKey("control+rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"list item  level 1  big"
+	)
+	# Ensure that when moving by word (control+leftArrow)
+	# onto the previous list item, "list item" is reported.
+	# Note this places us on the end-of-line insertion point of the previous list item.
+	actualSpeech = _chrome.getSpeechAfterKey("control+leftArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"list item  level 1"
+	)
+
+
 def test_i7562():
 	""" List should not be announced on every line of a ul in a contenteditable """
 	_chrome.prepareChrome(
@@ -55,6 +140,7 @@ def test_i7562():
 			</div>
 		"""
 	)
+	# Force focus mode
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
 	_asserts.strings_match(
 		actualSpeech,
