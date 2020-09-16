@@ -111,3 +111,48 @@ def announce_list_item_when_moving_by_word_or_character():
 		actualSpeech,
 		"list item  level 1"
 	)
+
+
+def test_i7562():
+	""" List should not be announced on every line of a ul in a contenteditable """
+	_chrome.prepareChrome(
+		r"""
+			<div contenteditable="true">
+				<p>before</p>
+				<ul>
+					<li>frogs</li>
+					<li>birds</li>
+				</ul>
+				<p>after</p>
+			</div>
+		"""
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Focus mode"
+	)
+	# Tab into the contenteditable
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		"section  multi line  editable  before"
+	)
+	# DownArow into the list. 'list' should be announced when entering.
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"list  bullet  frogs"
+	)
+	# DownArrow to the second list item. 'list' should not be announced.
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"bullet  birds"
+	)
+	# DownArrow out of the list. 'out of list' should be announced.
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"out of list  after",
+	)
