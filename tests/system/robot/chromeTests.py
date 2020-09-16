@@ -15,7 +15,6 @@ from SystemTestSpy import (
 # Imported for type information
 from ChromeLib import ChromeLib as _ChromeLib
 from AssertsLib import AssertsLib as _AssertsLib
-import NvdaLib as _nvdaLib
 
 _builtIn: BuiltIn = BuiltIn()
 _chrome: _ChromeLib = _getLib("ChromeLib")
@@ -44,7 +43,6 @@ def checkbox_labelled_by_inner_element():
 
 def test_i7562():
 	""" List should not be announced on every line of a ul in a contenteditable """
-	spy = _nvdaLib.getSpyLib()
 	_chrome.prepareChrome(
 		r"""
 			<div contenteditable="true">
