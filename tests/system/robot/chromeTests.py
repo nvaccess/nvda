@@ -57,8 +57,17 @@ def test_i7562():
 			</div>
 		"""
 	)
-	# Tab into the contenteditable - focus mode will be enabled.
-	spy.emulateKeyPress("tab")
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Focus mode"
+	)
+	# Tab into the contenteditable
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		"section  multi line  editable  before"
+	)
 	# DownArow into the list. 'list' should be announced when entering.
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
