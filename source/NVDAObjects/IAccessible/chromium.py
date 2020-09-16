@@ -75,7 +75,14 @@ class ToggleButton(ia2Web.Ia2Web):
 
 
 class PresentationalList(ia2Web.Ia2Web):
-	""" Ensures that lists like UL, DL and OL always have the readonly state."""
+	"""
+	Ensures that lists like UL, DL and OL always have the readonly state.
+	A work-around for issue #7562
+	allowing us to differentiate presentational lists from interactive lists
+	(such as of size greater 1 and ARIA list boxes).
+	In firefox, this is possible by the presence of a read-only state,
+	even in a content editable.
+	"""
 
 	def _get_states(self):
 		states = super().states
