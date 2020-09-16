@@ -26,3 +26,6 @@ default teardown
 checkbox labelled by inner element
 	[Documentation]	A checkbox labelled by an inner element should not read the label element twice.
 	checkbox_labelled_by_inner_element
+i7562
+	[Documentation]	List should not be announced on every line of a ul in a contenteditable
+	test_i7562
