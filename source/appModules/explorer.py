@@ -263,7 +263,7 @@ class WorkerW(IAccessible):
 		if self.simpleFirstChild:
 			# If focus is not going to be moved autotically
 			# we need to forcefully move it to the focused desktop item.
-			#@ As we are interested in the first focusable object below the pane use simpleFirstChild.
+			# As we are interested in the first focusable object below the pane use simpleFirstChild.
 			self.simpleFirstChild.setFocus()
 			return
 		super().event_gainFocus()
