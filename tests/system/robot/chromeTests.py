@@ -216,7 +216,7 @@ def test_pr11606():
 		"link"
 	)
 	# Read the current line.
-	# Before pr #11606 the next line would have been read.
+	# Before pr #11606 the next line ("C D")  would have been read.
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+upArrow")
 	_asserts.strings_match(
 		actualSpeech,
