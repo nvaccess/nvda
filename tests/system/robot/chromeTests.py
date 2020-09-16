@@ -171,6 +171,7 @@ def test_i7562():
 		"out of list  after",
 	)
 
+
 def test_pr11606():
 	"""
 	Announce the correct line when placed at the end of a link at the end of a list item in a contenteditable
