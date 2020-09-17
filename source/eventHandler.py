@@ -162,6 +162,7 @@ def _getFocusLossCancellableSpeechCommand(
 ) -> Optional[_CancellableSpeechCommand]:
 	if reason != controlTypes.REASON_FOCUS or not speech.manager._shouldCancelExpiredFocusEvents():
 		return None
+	from NVDAObjects.window import Window
 	from NVDAObjects import NVDAObject
 	if not isinstance(obj, NVDAObject):
 		log.warning("Unhandled object type. Expected all objects to be descendant from NVDAObject")
@@ -181,6 +182,7 @@ def _getFocusLossCancellableSpeechCommand(
 			isLastFocusObj()
 			or not previouslyHadFocus()
 			or isAncestorOfCurrentFocus()
+			or isinstance(obj, Window)  # ensure new windows are reported
 		)
 		return stillValid
 
