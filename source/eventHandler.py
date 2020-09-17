@@ -153,6 +153,8 @@ def _trackFocusObject(eventName, obj) -> None:
 	if eventName == "gainFocus":
 		lastQueuedFocusObject = obj
 		setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, True)
+		if speech.manager._shouldDoSpeechManagerLogging():
+			log.debug(f"Changing last queued focus object: {obj!r}")
 	elif not hasattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME):
 		setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
 
