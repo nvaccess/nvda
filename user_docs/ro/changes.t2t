@@ -4,6 +4,8 @@ Ce este nou în NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2020.3 =
+Această versiune include câteva îmbunătățiri substanțiale la stabilitate și performanță, punându-se accent pe aplicațiile Microsoft Office. Există noi setări pentru activarea sau dezactivarea suportului pentru ecranele tactile și pentru activarea sau dezactivarea raportării graficelor.
+Existența conținutului marcat (evidențiat) poate fi raportată în navigatoarele web. De asemenea, sunt disponibile noi tabele braille germane.
 
 == Noi Funcționalități ==
 - Acum, puteți activa sau dezactiva raportarea graficelor din setările NVDA de formatare a documentului. De reținut faptul că dezactivarea acestei opțiuni nu va exclude citirea textelor alternative din grafice. (#4837)
@@ -40,7 +42,7 @@ Ce este nou în NVDA
 - NVDA va anunța conținutul ferestrei de dialog „Deschidere Cu” în actualizarea Windows 10 din mai 2020. (#11335)
 - O nouă opțiune experimentală în panoul setărilor avansate (Activează înregistrarea selectivă pentru evenimentele UI Automation și pentru schimbările de proprietate) poate oferi îmbunătățiri substanțiale de performanță în Microsoft Visual Studio și în alte aplicații bazate pe UI Automation dacă este activată. (#11077, #11209)
 - Pentru elementele de listă ce pot fi bifate, starea selectată nu mai este anunțată inutil, iar dacă se poate, este anunțată în schimb starea neselectată. (#8554)
-- În actualizarea Windows 10 din mai 2020, NVDA afișează dispozitivul Microsoft Sound Mapper la vizualizarea dispozitivelor de ieșire din fereastra de dialog a sintetizatorului. (#11349)
+- În actualizarea Windows 10 din mai 2020, NVDA afișează Cartograful de Sunete Microsoft la vizualizarea dispozitivelor de ieșire din fereastra de dialog a sintetizatorului. (#11349)
 - În Internet Explorer, nummerele sunt anunțate corect pentru listele ordonate dacă lista nu începe cu 1. (#8438)
 - În Google Chrome, NVDA va raporta ca nebifate toate controalele ce pot fi bifate (nu doar casetele de bifat) care sunt nebifate în acel moment. (#11377)
 - Este din nou posibilă navigarea prin diverse controale atunci când limba interfeței NVDA este setată în aragoneză. (#11384)
@@ -106,7 +108,7 @@ Caracteristicile principale ale acestei versiuni includ suportul pentru un afiș
 - În modul de navigare cu setarea automată a sistemului la elementele focalizabile dezactivată, nu mai puteți activa elemente la care se ajunge prin apăsarea tastei tab. (#8528)
 - În modul de navigare cu setarea automată a sistemului la elementele focalizabile dezactivată, activarea anumitor elemente nu mai duce la o locație incorectă. (#9886)
 - Nu se vor mai auzi sunetele de eroare ale NVDA la accesarea controalelor de text DevExpress. (#10918)
-- Indiciile iconițelor din din zona notificărilor de sistem nu mai sunt raportate la navigarea cu tastatura dacă textul lor și numele lor sunt identice, pentru a se evita anunțarea de două ori. (#6656)
+- Indiciile iconițelor din zona notificărilor de sistem nu mai sunt raportate la navigarea cu tastatura dacă textul lor și numele lor sunt identice, pentru a se evita anunțarea de două ori. (#6656)
 - În modul de navigare cu setarea automată a sistemului la elementele focalizabile dezactivată, comutarea la modul de focalizare cu NVDA+Spațiu focalizează elementul de sub cursorul de scriere al sistemului. (#11206)
 - Puteți din nou să căutați actualizări pentru NVDA pe anumite sisteme; e.x. curățări ale instalărilor de Windows. (#11253)
 - Nu mai este deplasată focalizarea în aplicațiile Java atunci când selecția este schimbată într-o vedere de listă extinsă nefocalizată, tabel sau listă. (#5989)
@@ -148,7 +150,7 @@ Caracteristicile principale ale acestei versiuni includ suportul pentru câteva 
 - NVDA poate din nou să citească ecuațiile matematice din Microsoft Word și să interacționeze cu ele. (#10803)
 - NVDA va anunța din nou textul neselectat din modul de navigare la apăsarea unei taste săgeată cât timp textul este selectat. (#10731)
 - NVDA nu se mai închide dacă există o eroare la pornirea eSpeak. (#10607)
-- Erorile cauzate de Unicode în traduceri ăpentru scurtături nu mai opresc instalatorul, atenuate de revenirea la textul în engleză. (#5166, #6326)
+- Erorile cauzate de Unicode în traduceri pentru scurtături nu mai opresc instalatorul, atenuate de revenirea la textul în engleză. (#5166, #6326)
 - Ieșirea listelor și a tabelelor dinn sayAll, cu citirea de suprafață activată, nu mai anunță în continuu ieșirea din listă sau tabel.
 
 
