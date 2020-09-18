@@ -340,9 +340,13 @@ def initialize(indexCallback=None):
 	)
 	if sampleRate <= 0:
 		raise OSError(f"espeak_Initialize failed with code {sampleRate}. Given Espeak data path of {eSpeakPath}")
-	player = nvwave.WavePlayer(channels=1, samplesPerSec=sampleRate, bitsPerSample=16,
+	player = nvwave.WavePlayer(
+		channels=1,
+		samplesPerSec=sampleRate,
+		bitsPerSample=16,
 		outputDevice=config.conf["speech"]["outputDevice"],
-		buffered=True)
+		buffered=True
+	)
 	onIndexReached = indexCallback
 	espeakDLL.espeak_SetSynthCallback(callback)
 	bgQueue = queue.Queue()

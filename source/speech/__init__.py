@@ -1660,7 +1660,12 @@ def getControlFieldSpeech(  # noqa: C901
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 
-	presCat=attrs.getPresentationCategory(ancestorAttrs,formatConfig, reason=reason)
+	presCat = attrs.getPresentationCategory(
+		ancestorAttrs,
+		formatConfig,
+		reason=reason,
+		extraDetail=extraDetail
+	)
 	childControlCount=int(attrs.get('_childcontrolcount',"0"))
 	role = attrs.get('role', controlTypes.ROLE_UNKNOWN)
 	if (
@@ -2112,7 +2117,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				# Translators: Reported when text is not revised.
 				text = _("no revised %s") % oldRevision
 			textList.append(text)
-	if  formatConfig["reportEmphasis"]:
+	if formatConfig["reportHighlight"]:
 		# marked text 
 		marked=attrs.get("marked")
 		oldMarked=attrsCache.get("marked") if attrsCache is not None else None

@@ -20,7 +20,7 @@ NVDA omogućava interakciju sa Windows operativnim sistemom i puno drugih aplika
 Glavne karakteristike su:
 - Podrška za popularne aplikacije uključujući web preglednike, email klijente, programe za internet ćaskanje i Office pakete
 - Ugrađen sintetizator govora koji podržava preko 80 jezika
-- Prijavljivanje informacija o formatiranju teksta gde je to moguće uključujući ime fonta i veličina, still i greške u pravopisu
+- Prijavljivanje informacija o formatiranju teksta gde je to moguće uključujući ime fonta i veličina, stil i greške u pravopisu
 - Automatski izgovor teksta ispod miša i korišćenje zvučnih informacija o poziciji miša
 - Podrška za puno brajevih redova, uključujući sposobnost automatskog prepoznavanja puno redova kao i unos teksta za brajeve redove koji imaju tastaturu
 - Sposobnost da se u potpunosti pokrene sa USB memorije bez potrebe za instalacijom
@@ -41,7 +41,7 @@ Pored Engleskog, NVDA je preveden na 54 jezika uključujući: Afrikanski, Albans
 ++ Podrška za sintetizatore govora ++[SpeechSynthesizerSupport]
 Pored pružanja svojih poruka i interfejsa na jednom od podržanih jezika, NVDA takođe dozvoljava korisniku da čita tekst na bilo kom jeziku, dokle god imaju sintetizator koji podržava taj jezik.
 
-NVDA dolazi sa sintetizatorom[eSpeak NG https://github.com/espeak-ng/espeak-ng], besplatnom, otvorenog koda, višejezičnom sintezom.
+NVDA dolazi uz [eSpeak NG https://github.com/espeak-ng/espeak-ng], besplatnom, otvorenog koda, višejezičnom sintezom.
 
 Informacije o sintezama koje NVDA podržava možete pronaći u delu[Podržani sintetizatori govora #SupportedSpeechSynths].
 
@@ -56,19 +56,21 @@ NVDA podržava brajeve kodove za puno jezika, uključujući skraćene, standardn
 ++ Licenca i autorska prava ++[LicenseAndCopyright]
 NVDA je pod autorskim pravima NVDA_COPYRIGHT_YEARS NVDA saradnici.
 
-NVDA je zaštićen GNU General Public licencom(verzija 2).
+NVDA je dostupan pod  GNU opštom javnom licencom verzija 2, uz dva posebna izuzetka.
+Izuzeci su označeni u dokumentu sa licencom u sekcijama "Non-GPL Components in Plugins and Drivers" i "Microsoft Distributable Code".
+NVDA takođe koristi komponente koje su dostupne pod različitim slobodnim licencama otvorenog koda.
 Možete menjati ovaj program dok god date izvorni kod onima koji to žele i dok je pod zaštitom ove licence.
 Ovo važi za originalne i različite verzije ovog programa, plus bilo koji drugi rad.
+
 Za više detalja, možete[videti celu licencu. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+Za detalje o izuzecima, pristupite dokumentu licence u NVDA meniju u sekciji "pomoć".
 
 + Sistemski zahtevi +[SystemRequirements]
  - Operativni sistemi: sve 32-bitne i 64-bitne verzije operativnih  sistema Windows 7, Windows 8, Windows 8.1, Windows 10, i sve server verzije Windows operativnog sistema počevši od  Windows Server 2008 R2.
  - za Windows 7, NVDA zahteva Service Pack 1 ili noviji.
  - za Windows Server 2008 R2, NVDA zahteva Service Pack 1 ili noviji.
-Oba trebaju biti instalirani ako su primenjena sva ažuriranja koristeći Windows Update.
-- Memorija: 256 mb ili više RAM memorije
-- Brzina procesora: 1.0 ghz ili više
-- Oko 90 MB prostora.
+Oba bi trebalo da budu instalirana ako su primenjena sva ažuriranja koristeći Windows Update.
+- Barem 150 MB memorijskog prostora.
 -
 + Dobijanje i podešavanje programa NVDA +[GettingAndSettingUpNVDA]
 Ako još uvek niste preuzeli NVDA, možete ga preuzeti sa  [NV Access websajta NVDA_URL].
@@ -104,7 +106,7 @@ Ako ste zatvorili ovaj dijalog ili želite da instalirate NVDA iz prenosive kopi
 
 Dijalog za instalaciju će zatražiti potvrdu i takođe reći da li ova instalacija ažurira neku postojeću instalaciju.
 Aktiviranjem dugmeta nastavi počinje instalacija NVDA.
-Tu takođe imate nekoliko opcija koje su objašnjene u nastavku.
+Ovde takođe imate nekoliko opcija koje su objašnjene u nastavku.
 Kada se instalacija završi, pojaviće se poruka koja će vam reći da li je instalacija uspela.
 Aktiviranje dugmeta  OK će pokrenuti novu kopiju NVDA.
 
@@ -116,7 +118,7 @@ Pogledajte deo [dijalog sa nekompatibilnim dodacima #incompatibleAddonsManager] 
 
 +++ Pokreni na Windows ekranu za prijavu +++[StartAtWindowsLogon]
 Ova opcija odlučuje da li NVDA treba biti pokrenut na Windows ekranu za prijavljivanje, pre nego što unesete vašu lozinku.
-Ovo takođe uključuje kontrolu korisničkog ekrana i druge bezbednosne ekrane.
+Ovo takođe uključuje kontrolu korisničkog naloga i druge bezbednosne ekrane.
 Ova opcija je podrazumevano omogućena za nove instalacije.
 
 +++ Napravi prečicu na radnoj površini (ctrl+alt+n) +++[CreateDesktopShortcut]
@@ -148,11 +150,11 @@ Takođe možete upisati NVDA u dialog za otvaranje i pritisnuti enter.
 Ako je NVDA već pokrenut, biće zaustavljen a zatim ponovo pokrenut.
 Takođe možete dodati[opcije komandne linije #CommandLineOptions] koje vam dozvoljavaju da izađete(-q), onemogućite dodatke(--disable-addons), i tako dalje.
 
-Za instalirane kopije, NVDA NVDA čuva podešavanja u roaming app data folderu trenutnog korisnika po podrazumevanim podešavanjima(Na primer "C:\Users\<korisnik>\AppData\Roaming").
+Za instalirane kopije, NVDA čuva podešavanja u roaming app data folderu trenutnog korisnika po podrazumevanim podešavanjima(Na primer "C:\Users\<korisnik>\AppData\Roaming").
 Moguće je promeniti ovo tako da NVDA učitava svoja podešavanja iz foldera local u folderu app data.
-Pogledajte deo o [sistemskim parametrima#SystemWideParameters] za više detalja.
+Pogledajte deo o [sistemskim parametrima #SystemWideParameters] za više detalja.
 
-Da pokrenete prenosivu kopiju, potrebno je ući u folder u kojem ste napravili prenosivu kopiju, i pritisnite enter ili kliknite dva puta na datoteku nvda.exe.
+Da pokrenete prenosivu kopiju, potrebno je ući u folder u kojem ste napravili prenosivu kopiju, i pritisnuti enter ili kliknuti dva puta na datoteku nvda.exe.
 Ako je NVDA već pokrenut, automatski će biti zaustavljen pre pokretanja prenosive verzije.
 
 Dok se NVDA pokreće, čućete niz tonova(koji vam govore da se NVDA učitava).
@@ -168,8 +170,8 @@ Kada se NVDA pokrene po prvi put, dobićete dijalog sa osnovnim informacijama o 
 Dijalog takođe sadrži izborni okvir i tri izborna polja.
 Izborni okvir vam omogućava da izaberete raspored tastature.
 Prvo izborno polje vam dozvoljava da izaberete da li NVDA treba da koristi Capslock kao njegov taster.
-Drugi vam omogućava da podesite da li NVDA treba automatski da se pokrene nakon prijave u Windows i dostupan je samo za instalirane kopije.
-Treći vam dozvoljava da podesite da li ovaj dijalog dobrodošlice treba da se prikaže svaki put kada se NVDA pokrene.
+Drugo vam omogućava da podesite da li NVDA treba automatski da se pokrene nakon prijave u Windows i dostupno je samo za instalirane kopije.
+Treće vam dozvoljava da podesite da li ovaj dijalog dobrodošlice treba da se prikaže svaki put kada se NVDA pokrene.
 
 +++ Dijalog o prikupljanju statistika  o korišćenju +++[UsageStatsDialog]
 Od NVDA verzije 2018.3, korisnik će biti upitan da li želi da dozvoli slanje podataka o korišćenju kompaniji NV Access kako bi pomogli u poboljšanju programa NVDA u budućnosti. 
@@ -199,8 +201,12 @@ Ako vaš laptop ne može da uradi ovo ili vam ne dozvoljava da isključite numlo
 
 ++ NVDA prečice za ekrane osetljive na dodir ++[NVDATouchGestures]
 Ako koristite NVDA sa ekranom osetljivim na dodir i imate Windows 8 ili noviji, možete da koristite NVDA putem prečica na ekranu.
-Dok je NVDA pokrenut, sve akcije sa ekrana preuzima NVDA. 
+Dok je NVDA pokrenut, osim ako je podrška za interakciju sa ekranom onemogućena, sve akcije sa ekrana preuzima NVDA. 
 Tako da, radnje koje normalno funkcionišu bez NVDA-a neće raditi.
+%kc:beginInclude
+Da omogućite ili onemogućite podršku interakcije sa ekranom osetljivim na dodir, pritisnite NVDA+control+alt+t.
+%kc:endInclude
+Takođe možete da omogućite ili onemogućite [podršku interakcije sa ekranom #TouchSupportEnable] iz kategorije interakcija sa ekranom osetljivim na dodir u NVDA podešavanjima.
 
 +++ Istraživanje ekrana +++[ExploringTheScreen]
 Naj osnovnija radnja sa ekrana osetljivog na dodir je izgovor teksta bilo gde na ekranu.
@@ -210,6 +216,8 @@ Takođe možete držati prst na ekranu i kretati se po njemu kako bi NVDA izgova
 +++ Pokreti +++[TouchGestures]
 Kada NVDA komande budu kasnije opisane u ovom vodiču, mogu da sadrže pokret koji možete da koristite sa ekrana osetljivog na dodir kako biste aktivirali tu komandu.
 U nastavku su uputstva kako uspešno izvesti neke pokrete na ekranu.
+
+
 
 ==== Dodiri ====
 Dodirnite ekran brzo sa jednim ili više prsta.
@@ -225,7 +233,7 @@ Naravno, ovi dvostruki dodiri takođe prepoznaju koliko prsta je na ekranu, tako
 ==== Prevlačenja ====
 Brzo prevucite prst preko ekrana.
 
-Postoji četiri ovakva pokreta u zavisnosti od pravca prevlačenja: Prevlačenje ulevo, Prevlačenje udesno, Prevlačenje nagore I prevlačenje nadole.
+Postoje četiri ovakva pokreta u zavisnosti od pravca prevlačenja: Prevlačenje levo, Prevlačenje desno, Prevlačenje gore I prevlačenje dole.
 
 Kao i dodiri, više od jednog prsta se može koristiti za pokrete.
 Tako da, pokreti kao što su prevlačenje sa četiri prsta nagore ili dva prsta nadole su mogući.
@@ -234,7 +242,7 @@ Tako da, pokreti kao što su prevlačenje sa četiri prsta nagore ili dva prsta 
 Budući da postoji mnogo više NVDA prečica nego pokreta sa ekrana, NVDA ima više režima koji omogućavaju više različitih komandi.
 Dva režima su režim teksta i režim objekata. 
 Određene komande u ovom dokumentu će možda imati režim dodira u zagradama nakon pokreta.
-Na primer, prevlačenje nagore(režim teksta) znači da će komanda biti izvršena ako prevučete nagore, ali samo kada ste u režimu teksta.
+Na primer, prevlačenje ngore(režim teksta) znači da će komanda biti izvršena ako prevučete ngore, ali samo kada ste u režimu teksta.
 Ako komanda nema režim, radiće u bilo kom režimu.
 
 %kc:beginInclude
@@ -269,6 +277,7 @@ Kada se meni pojavi, možete koristiti strelice da se krećete kroz meni, i tast
 ++ Osnovne NVDA komande ++[BasicNVDACommands]
 %kc:beginInclude
 || Ime | Desktop komanda | Laptop komanda | Ekran osetljiv na dodir| Opis |
+| Pokreće ili restartuje NVDA | Control+alt+n | Control+alt+n | Nema | Pokreće ili restartuje NVDA sa radne površine, ako je ova Windows prečica omogućena u procesu instalacije programa NVDA. Ovo je Windows prečica i zato se ne može promeniti u dijalogu ulazne komande. |
 | Zaustavi govor | Kontrol | Kontrol | dodir sa dva prsta| govor prestaje|
 | Pauziraj govor | Šift| Šift| Nema komande| pauzira govor. Ako se pritisne ponovo govor se nastavlja gde je stao(ako trenutni sintetizator podržava pauziranje) |
 | NVDA meni | NVDA+n | NVDA+n | dvostruki dodir sa dva prsta| otvara NVDA meni kako biste pristupili podešavanjima, alatima, dobili pomoć, i tako dalje. |
@@ -283,7 +292,7 @@ Kada se meni pojavi, možete koristiti strelice da se krećete kroz meni, i tast
 %kc:beginInclude
 || Ime | Komanda | Opis |
 | Prijavi datum/vreme| NVDA+f12 | Ako se pritisne jednom prijavljuje trenutni datum, ako se pritisne dva puta prijavljuje trenutno vreme|
-| Prijavi stanje baterije| NVDA+šift+b | prijavljuje stanje baterije da li je punjač uključen i trenutan procenat. |
+| Prijavi stanje baterije| NVDA+šift+b | prijavljuje stanje baterije da li je punjač uključen i trenutni procenat. |
 | Prijavi tekst privremene memorije| NVDA+c | prijavljuje tekst privremene memorije ako ima teksta. |
 %kc:endInclude
 
@@ -324,6 +333,7 @@ NVDA Pruža sledeće komande za sistemski kursor:
 | Izgovori sve | NVDA+Strelica dole | NVDA+a | Počinje čitanje od trenutne pozicije sistemskog kursora, pomerajući ga dok čita|
 | Pročitaj trenutni red| NVDA+Strelica gore| NVDA+l | Čita red na kom se sistemski kursor nalazi. Ako se pritisne dva puta red se sriče. Ako se pritisne tri puta sriče red koristeći opise znakova. |
 | Pročitaj trenutni izbor teksta| NVDA+šift+strelica gore | NVDA+šift+s | Čita trenutno odabran tekst|
+| Prijavi formatiranje teksta | NVDA+f | NVDA+f | Prijavljuje formatiranje teksta na trenutnoj poziciji kursora. Ako se pritisne dva puta prikazuje informaciju u režimu pretraživanja |
 | Sledeća rečenica | alt+strelica dole | alt+strelica dole | Pomera kursor na sledeću rečenicu i izgovara je. (Podržano samo u Microsoft Word i Outlook) |
 | Prethodna rečenica | alt+strelica gore | alt+Strelica gore | Pomera kursor na prethodnu rečenicu i izgovara je. (Podržano samo u Microsoft Word i Outlook)  |
 
@@ -359,10 +369,7 @@ Kada stignete do nekog objekta, možete pregledati njegov sadržaj koristeći[ko
 Kada je [označavanje fokusa #VisionFocusHighlight] omogućeno, lokacija trenutnog navigacionog objekta je takođe vizuelno označena.
 Po podrazumevanim podešavanjima, navigacioni objekat se pomera zajedno sa sistemskim fokusom, ali ovo se može promeniti.
 
-Napomena da brajev red prati [fokus#SystemFocus] i [kursor#SystemCaret] kao i objektnu navigaciju i pregled teksta po podrazumevanim podešavanjima.
-Ako želite da prati samo fokus i sistemski kursor, Morate da [podesite  brajev red vezan za #BrailleTether] fokus.
-U ovom slučaju, brajev red neće pratiti objektnu navigaciju i pregled teksta.
-Ako želite da umesto toga brajev red prati objektnu navigaciju i pregled teksta, Morate da [podesite da brajev red bude vezan za #BrailleTether] pregled.
+Napomena: Praćenje objektne navigacije brajevim redom može se podesiti korišćenjem [vezivanja brajevog reda #BrailleTether].
 
 Za navigaciju između objekata, koristite sledeće komande:
 
@@ -390,8 +397,7 @@ Kada pomerate pregledni kursor, sistemski kursor se ne pomera, pa možete da pre
 Ali, po podrazumevanim podešavanjima, kada se sistemski kursor pomera, pregledni kursor ga prati.
 Ovo se može uključiti i isključiti.
 
-Napomena da brajev red prati[fokus#SystemFocus] i[kursor #SystemCaret] po podrazumevanim podešavanjima, a ne navigaciju objekata i pregled teksta.
-Ako želite da prati navigaciju objekata i pregled teksta, morate[da podesite brajev red da prati navigaciju objekata #BrailleTether].
+Napomena: Praćenje objektne navigacije brajevim redom može se podesiti korišćenjem [vezivanja brajevog reda #BrailleTether].
 
 Sledeće komande su dostupne za pregled teksta:
 %kc:beginInclude
@@ -411,9 +417,9 @@ Sledeće komande su dostupne za pregled teksta:
 | Premesti se na kraj reda pregleda| Šift+numeričko3 | NVDA+end | Nema komande | Premešta pregledni kursor na kraj trenutnog reda u tekstu|
 | Izgovori sve uz pregled| Numerički plus | NVDA+šift+a | Prevlačenje nadole sa 3 prsta(režim teksta) | Čita od trenutne pozicije preglednog kursora, pomerajući ga u toku čitanja|
 | Izaberi a zatim kopiraj iz preglednog kursora| NVDA+f9 | NVDA+f9 | Nema komande | Počinje izbor teksta koji treba da se kopira iz preglednog kursora. Kopiranje nije odrađeno dok ne kažete programu NVDA gde se nalazi kraj vašeg odabira|
-| Izaberi a zatim kopiraj pregledni kursor| NVDA+f10 | NVDA+f10 | Nema komande | Ako se pritisne jednom, tekst od početnog markera pa sve do kraja uključujući i trenutnu poziciju preglednog kursora je odabran. Nakon što se ova komanda pritisne drugi put, tekst se kopira u Windows privremenu memoriju|
+| Izaberi a zatim kopiraj pregledni kursor| NVDA+f10 | NVDA+f10 | Nema komande | Ako se pritisne jednom, tekst od početnog markera pa sve do kraja uključujući i trenutnu poziciju preglednog kursora je odabran. Ako je moguće, sistemski kursor će se pomeriti na odabran tekst. Nakon što se ova komanda pritisne drugi put, tekst se kopira u Windows privremenu memoriju|
 | Pomeri se na označen početak za kopiranje u pregledu| NVDA+šift+f9 | NVDA+šift+f9 | nema | Pomera pregledni kursor na poziciju koja je prethodno označena kao početak za kopiranje|
-| Prijavi formatiranje teksta| NVDA+f | NVDA+f | Nema komande | Prijavljuje informacije o formatiranju teksta na poziciji preglednog kursora. Ako se pritisne dva puta informacije se prikazuju u režimu pretraživanja|
+| Prijavi formatiranje teksta | NVDA+šift+f | NVDA+šift+f | Nema | Prijavljuje formatiranje teksta na poziciji preglednog kursora. Ako se pritisne dva puta prikazuje informacije u režimu pretraživanja |
 | Prijavi zamenu za trenutni simbol| nema | Nema | Nema | Izgovara simbol na poziciji preglednog kursora. Ako se pritisne 2 puta, prikazuje simbol i tekst koji se izgovara u režimu pretraživanja. |
 %kc:endInclude
 
@@ -645,6 +651,10 @@ Molimo pročitajte [ MathPlayer dokumentaciju o komandama za navigaciju za dodat
 
 Kada želite da se vratite u dokument, jednostavno pritisnite taster escape.
 
+Ponekad matematički sadržaj može biti prikazan kao dugme koje, kada se aktivira, može da prikaže više informacija ili dijalog vezan za formulu.
+Da aktivirate dugme ili element koji sadrži formulu, pritisnite ctrl+enter.
+
+
 + Brajevo pismo +[Braille]
 Ako koristite brajev red, NVDA može prikazati informacije na brajevom pismu.
 Ako vaš brajev red ima tastaturu, takođe možete pisati u skraćenom i standardnom  brajevom pismu.
@@ -708,6 +718,7 @@ Kako bi što je više informacija moguće stalo na brajev red, sledeće skraćen
 | lv N | Stavka prikaza stabla na nivou N|
 | wnd | Prozor |
 | ⠤⠤⠤⠤⠤ | separator |
+| mrkd | Obeležen sadržaj |
 
 Sledeći pokazivači stanja su takođe definisani:
 || Skraćenica | Stanje kontrole |
@@ -886,11 +897,28 @@ Za svako polje, lista elemenata prikazuje alternativan tekst polja zajedno sa ad
 Pritiskanje entera ili dugmeta za pomeranje na element vas prebacuje na to polje u režimu pretraživanja.
 -
 
-+++ Prijavljivanje komentara +++[ExcelReportingComments]
++++ Prijavljivanje napomena +++[ExcelReportingComments]
 %kc:beginInclude
-Da čujete sve komentare za trenutno fokusiranu ćeliju, pritisnite NVDA+alt+c.
+Da čujete sve napomene za trenutno fokusiranu ćeliju, pritisnite NVDA+alt+c.
+U Microsoft 2016, 365 i novijim office verzijama, komentari u programu Microsoft Excel su preimenovani u "napomene".
 %kc:endInclude
-Svi komentari za radni list se takođe mogu prikazati u listi elemenata.
+Sve napomene za radni list se takođe mogu prikazati u NVDA listi elemenata nakon što pritisnete NVDA plus f7.
+
+NVDA može takođe da prikaže poseban dijalog za dodavanje ili uređivanje određene napomene.
+NVDA menja podrazumevani Excel dijalog zbog problema u pristupačnosti, ali je prečica za prikazivanje dijaloga preuzeta iz Excela što znači da takođe radi bez programa NVDA.
+%kc:beginInclude
+Da biste dodali ili uredili određenu napomenu, u fokusiranoj ćeliji, pritisnite šift+f2.
+%kc:endInclude
+
+Ova prečica se ne pojavljuje i ne može se promeniti u NVDA dijalogu za ulazne komande.
+
+Napomena: Moguće je takođe otvoriti region za uređivanje napomena iz kontekstnog menija Excela u bilo kojoj ćeliji.
+Ali, ovo će otvoriti nepristupačan region za uređivanje a ne dijalog programa NVDA.
+
+U Microsoft Office 2016, 365 i novijim verzijama, novi stil dijaloga za komentare je dodat.
+Ovaj dijalog je pristupačan i nudi dodatne opcije kao što su odgovaranje na komentare, i slično.
+Takođe se može otvoriti iz kontekstnog menija određene ćelije.
+Komentari koji se dodaju iz novog dijaloga nisu vezani za "napomene".
 
 +++ Čitanje zaštićenih ćelija+++[ExcelReadingProtectedCells]
 Ako je radna sveska zaštićena, neće biti moguće pomeranje fokusa na ćelije koje su zaključane za uređivanje.
@@ -1054,8 +1082,7 @@ Dostupni nivoi evidentiranja su:
  - Ako ste zabrinuti za vašu privatnost, ne podešavajte nivo evidentiranja na ovu opciju.
 - Ispravljanje greške: Uz informacije, upozorenja, ulazne i izlazne poruke, dodatne poruke o otklanjanju grešaka će biti evidentirane.
  - Kao i ulaz/izlaz, ako vas brine privatnost, nebi trebalo da podešavate evidentiranje na ovu opciju.
- -
--
+
 
 ==== Automatski pokreni NVDA nakon što se prijavim u Windows ====[GeneralSettingsStartAfterLogOn]
 Ako je ova opcija omogućena, NVDA će se pokrenuti odmah nakon što se prijavite u Windows.
@@ -1277,6 +1304,7 @@ Ova opcija ne utiče na pokazivač izbora, uvek izbor pokazuju tačke 7 i 8 bez 
 ==== Vreme isteka poruke (u sekundama) ====[BrailleSettingsMessageTimeout]
 Ova opcija je brojčano polje koje bira koliko dugo se poruke zadržavaju na brajevom redu.
 Upisivanje broja 0 isključuje ovakve poruke.
+NVDA poruka se odbacuje kada se pritisne dugme na brajevom redu koje prebacuje kursor, ali se ponovo pojavljuje kada se pritisne odgovarajući taster koji prikazuje poruku ponovo.
 
 ==== Beskonačno prikaži poruke====[BrailleSettingsNoMessageTimeout]
 Ova opcija dozvoljava da NVDA poruke budu beskonačno prikazane na brajevom redu.
@@ -1288,6 +1316,10 @@ Komanda: NVDA+control+t
 Ova opcija vam dozvoljava da izaberete da li brajev red treba da prati sistemski fokus, navigacioni objekat/ pregledni kursor, ili oba.
 Kada je opcija "Automatski" izabrana, NVDA će podrazumevano pratiti sistemski kursor.
 U ovom slučaju, kada se pozicija preglednog kursora ili objektne navigacije promeni od strane korisnika, NVDA će privremeno vezati brajev red za pregled, dok fokus ili sistemski kursor ne promene poziciju.
+Ako želite da samo prati fokus i sistemski kursor, morate da podesite brajev red da bude vezan za fokus.
+U tom slučaju, brajev red neće pratiti NVDA pregledni kursor u toku objektne navigacije ili pregleda teksta.
+Ako želite da umesto toga brajev red prati objektnu navigaciju i pregled teksta, morate da podesite brajev red da bude vezan za pregled.
+U ovom slučaju, brajev red neće pratiti sistemski fokus i kursor.
 
 ==== Čitaj po pasusima====[BrailleSettingsReadByParagraph]
 Ako je omogućeno, brajevo pismo će se prikazivati po pasusima umesto po redovima.
@@ -1499,6 +1531,12 @@ Ako omogućite ovu opciju i opciju "Omogući praćenje miša", NVDA neće izgova
 Ova kategorija podešavanja, dostupna samo na računarima koji koriste Windows 8 i noviji sa ekranima osetljivim na dodir, vam dozvoljava da podesite kako se NVDA ponaša pri radu na ekranu.
 Ova kategorija sadrži sledeće opcije:
 
+==== Omogući podršku interakcije sa ekranom ====[TouchSupportEnable]
+Ovo izborno polje će omogućiti podršku interakcije programa NVDA sa ekranom.
+Ako je omogućeno, možete da koristite vaš prst da se krećete i aktivirate stavke na ekranu osetljivom na dodir.
+Ako je onemogućeno, podrška za ekran osetljiv na dodir biće potpuno onemogućena kao da NVDA nije pokrenut.
+Ovo podešavavnje se takođe može menjati korišćenjem prečice NVDA+control+alt+t. 
+
 ==== Režim pisanja na ekranu====[TouchTypingMode]
 Ovo izborno polje vam dozvoljava da izaberete način unosa na tastaturi na ekranu.
 Ako je ovo izborno polje označeno, kada pronađete taster na tastaturi na ekranu, možete podići vaš prst i izabrani taster će biti pritisnut.
@@ -1674,6 +1712,15 @@ Omogućena po podrazumevanim podešavanjima, ova opcija vam dozvoljava da izaber
 Kao primer, ako je omogućena, ako se pritisne slovo j, neće doći do dokumenta, čak iako nije komanda brze navigacije i verovatno da nije komanda aplikacije.
 U ovom slučaju NVDA će reći Windowsu da reprodukuje zvuk kada se pritisne taster koji nije deo brze navigacije.
 
+==== Automatski postavi sistemski fokus na elemente koji se mogu fokusirati u režimu pretraživanja ====[BrowseModeSettingsAutoFocusFocusableElements]
+Komanda: NVDA+8
+
+Onemogućena po podrazumevanim podešavanjima, ova opcija vam omogućava da izaberete da li će sistemski fokus automatski biti postavljen na elemente koji se mogu fokusirati (linkovi, polja za unos, i tako dalje.) u toku navigacije kroz sadržaj kursorom režima pretraživanja.
+Ako ostavite ovu opciju onemogućenu elementi izabrani kursorom režima pretraživanja se neće automatski fokusirati.
+Ovo može omogućiti brže pretraživanje i bolji odziv u režimu pretraživanja.
+Fokus će ipak biti ažuriran kada vršite interakciju sa elementom (na primer pritiskanje dugmeta, označavanje izbornog polja).
+Ako se ova opcija omogući može poboljšati podršku za neke sajtove uz sporiji odziv i manju stabilnost.
+
 +++ Formatiranje dokumenta (NVDA+kontrol+d) +++[DocumentFormattingSettings]
 Većina izbornih polja u ovoj kategoriji  vam dozvoljava da izaberete informacije koje trebaju biti prijavljivane u toku kretanja kroz dokument.
 Na primer, ako označite polje prijavi ime fonta, kada dođete do teksta sa različitim fontom, ime fonta će biti izgovoreno.
@@ -1684,7 +1731,9 @@ Možete podesiti prijavljivanje sledećih elemenata:
  - Ime fonta
  - Veličina fonta
  - Karakteristike fonta
- - Naglašenost teksta
+  - Indeksi i eksponenti
+- Naglašenost teksta
+ - Markiran (obeležen tekst)
  - Stil
  - Boje
 - Informacije o dokumentu
@@ -1706,7 +1755,8 @@ Možete podesiti prijavljivanje sledećih elemenata:
 - Elementi
  - Naslovi
  - Linkovi
- - Liste
+  - Slike
+- Liste
  - Citati
   - Grupisanja
 - Regioni
@@ -1766,6 +1816,13 @@ Ako želite da delite prilagođen kod sa drugima, morate ga upakovati kao NVDA d
 Ovo dugme otvara folder u koji možete da kopirate prilagođen kod dok ga razvijate.
 Ovo dugme je omogućeno samo ako je NVDA podešen da učitava kod iz Scratchpad foldera.
 
+==== Omogući selektivnu registraciju za UI Automation događaje i promene svojstava ====[AdvancedSettingsSelectiveUIAEventRegistration]
+Ova opcija menja kako će NVDA registrovati događaje  Microsoft UI Automation accessibility API-a.
+Kada je ova opcija onemogućena, NVDA registruje puno događaja koje odbacuje.
+Ovo ima ogroman negativan uticaj na brzinu, posebno u aplikacijama kao što je Microsoft Visual Studio.
+Zato, kada je ova opcija omogućena, NVDA će ograničiti registraciju događaja na sistemski fokus za većinu događaja.
+Ako imate probleme u brzini jedne ili više aplikacija, preporučujemo da probate ovu opciju i proverite da li se brzina poboljšala.
+
 ==== Koristi UI automation za pristup Microsoft Word kontrolama kada je dostupan====[AdvancedSettingsUseUiaForWord]
 Kada je ova opcija omogućena, NVDA će pokušati da koristi Microsoft UI Automation API za pristupačnost kako bi preuzeo informacije iz Microsoft Word kontrola.
 Ovo uključuje sam Microsoft Word, kao i pregledač poruka i pisanje poruka u programu Microsoft Outlook.
@@ -1782,19 +1839,14 @@ Ovo podešavanje kontroliše da li se izgovaraju znakovi prema podešavanjima [i
 ==== Koristi novu podršku za unos znakova u Windows konzoli kada je dostupna ====[AdvancedSettingsKeyboardSupportInLegacy]
 Ova opcija omogućava alternativan metod za prepoznavanje unosa ukucanih znakova u konzolama.
 Iako poboljšava brzinu i sprečava sricanje određenih unosa u terminalu, može biti nekompatibilna sa nekim terminal aplikacijama.
-Ova opcija je dostupna i podrazumevano omogućena na Windowsu 10 verzijama 1607, 1703, 1709 i 1803 kao i novijim Windows 10 verzijama kada UI automation nije dostupan ili je onemogućen.
+Ova opcija je dostupna i podrazumevano omogućena na Windowsu 10 verzijama 1607 i novijim kada UI Automation nije dostupan ili je onemogućen.
 Upozorenje: Kada je ova opcija omogućena, ukucani znakovi koji se ne pojavljuju na ekranu, kao što su lozinke, neće biti skriveni.
 U nesigurnim okruženjima, možete privremeno onemogućiti [izgovor ukucanih znakova #KeyboardSettingsSpeakTypedCharacters] i [izgovor ukucanih reči #KeyboardSettingsSpeakTypedWords] kada kucate lozinke.
 
-==== Automatski postavi sistemski fokus na elemente koji se mogu fokusirati u režimu pretraživanja ====[BrowseModeSettingsAutoFocusFocusableElements]
-Komanda: NVDA+8
-
-Omogućena po podrazumevanim podešavanjima, ova opcija vam omogućava da izaberete da li će sistemski fokus automatski biti postavljen na elemente koji se mogu fokusirati (linkovi, polja za unos, i tako dalje.) u toku navigacije kroz sadržaj kursorom režima pretraživanja.
-Ako je omogućena, predstavlja podrazumevano ponašanje  programa NVDA od verzije 2019.1 i starijim.
-Onemogućavanje ove opcije neće automatski fokusirati ove elemente kada su izabrani kursorom režima pretraživanja.
-Ovo može izazvati brže pretraživanje i bolje iskustvo korišćenja režima pretraživanja.
-Fokus će ipak biti ažuriran kada se vrši interakcija sa elementom  (na primer aktiviranje dugmeta, označavanje izbornog polja).
-Ova funkcija je eksperimentalna od  NVDA 2019.2.
+==== Pokušavanje otkazivanja govora za kontrole koje više nisu fokusirane ====[CancelExpiredFocusSpeech]
+Ova opcija će  omogućiti ponašanje koje pokušava da otkaže govor za događaje koji više nisu fokusirani.
+Na primer brzo pomeranje kroz poruke na lokaciji Gmail može izgovarati informacije koje više nisu tačne.
+Ova funkcija je eksperimentalna od NVDA verzije 2020.2.
 
 ==== Vreme pomeranja kursora (u milisekundama) ====[AdvancedSettingsCaretMoveTimeout]
 Ova opcija vam dozvoljava da podesite vreme za koje će NVDA čekati na kursor  da se pomeri u kontrolama za uređivanje teksta.
@@ -1836,11 +1888,14 @@ Dijalog za dodavanje pravila takođe sadrži izborno polje koje određuje da li 
 NVDA ignoriše veličinu po podrazumevanim podešavanjima).
 
 Takođe, različiti radio dugmići određuju da li će se vaš oblik primenjivati bilo gde, samo ako je cela reč ili kao"standardan izraz".
-Ako podesite oblik da se primenjuje kao cela reč oblik se primenjuje samo ako nije deo druge reči; to jest znak koji nije alfanumerički znak ili donja crta(ili kada nema znaka uopšte) se nalazi pre i posle oblika.
+Ako podesite oblik zamene kao cela reč, ovo znači da će se oblik zameniti samo ako nije deo neke druge veće reči.
+Ovaj uslov je ispunjen ako znakovi pre i posle reči nisu  slova, brojevi, ili donja crta, ili ako uopšte nema znakova.
 Zbog toga, ako koristimo prethodni primer menjanja reči"Ptica" sa"Žaba", ako učinite ovo zamenom celih reči, neće zameniti reči"Ptice" ili "Ptici".
 
 Standardan izraz je poseban znak koji vam dozvoljava da promenite više znakova odjednom, ili promena svih brojeva, ili svih slova, kao nekoliko primera.
-Standardni izrazi nisu uključeni u ovo uputstvo, ali postoji puno uputstva na Webu koja vam mogu pružiti više informacija.
+Standardni izrazi nisu uključeni u ovo uputstvo.
+Za uvodni tutorijal na Engleskom jeziku, molimo pročitajte [https://docs.python.org/3.7/howto/regex.html].
+
 
 +++ Izgovor znakova interpunkcije/simbola+++[SymbolPronunciation]
 Ovaj dijalog vam dozvoljava da promenite način na koji se znakovi interpunkcije izgovaraju, kao i nivo simbola u kojem se izgovaraju.
@@ -1889,6 +1944,19 @@ U ovom dijalogu, možete prilagoditi ulazne komande(tastere na tastaturi, taster
 У овом случају, мени ће се појавити за избор желјене опције.
 
 Да уклоните команду са функције, изаберите функцију и притисните дугме уклони.
+
+Kategorija emulirani tasteri sistemske tastature sadrži komande za emulaciju sistemskih tastera na tastaturi.
+Ovi  emulirani tasteri se mogu koristiti kako biste kontrolisali vašu tastaturu sa brajevog reda.
+Da biste dodali emuliranu komandu, izaberite kategoriju emulirani tasteri sistemske tastature a zatim pritisnite dugme dodaj.
+Zatim, pritisnite taster na tastaturi koji želite da emulirate.
+Nakon toga, taster će biti dostupan u kategoriji emulirani sistemski tasteri i moćićete da podesite komandu za taj taster kao što je i opisano iznad.
+
+Napomena:
+ - Emulirani tasteri moraju da sadrže komandu kako bi ostali sačuvani kada se dijalog zatvori.
+ - Ulazna komanda sa modifikatorskim tasterima možda neće moći da se podesi kao emulirana komanda bez modifikatorskih
+ tastera. Na primer, podešavanje emuliranog unosa 'a' i podešavanje komande 'ctrl+m', će možda izazvati
+ da aplikacija primi komandu 'ctrl+a'.
+ -
 
 Када завршите са променама, притисните дугме уреду да их сачувате или откажи да их одбаците.
 
@@ -1995,7 +2063,8 @@ Prenosive kopije čuvaju sva podešavanja, sve prilagođene dodatke za aplikacij
 
 Instalirane verzije čuvaju sva podešavanja, prilagođene drajvere i dodatke za aplikacije u folderu vašeg Windows korisničkog profila.
 Ovo znači da svaki korisnik sistema može imati svoja podešavanja.
-Da dođete do podešavanja instalirane verzije programa NVDA, u start meniju možete ući u programe-> NVDA -> istraži folder sa korisničkim podešavanjima.
+Da otvorite vaša podešavanja bilo gde da se nalazite možete da koristite [dijalog za ulazne komande #InputGestures] da biste dodali prilagođenu komandu.
+Takođe, ako ste instalirali NVDA, u start meniju možete ući u programe-> NVDA -> istraži folder sa korisničkim podešavanjima.
 
 Podešavanja za pokretanje programa NVDA na Windows ekranu za prijavljivanje i drugim bezbednosnim ekranima se nalaze u folderu systemConfig u folderu gde je NVDA instaliran.
 Obično, ova podešavanja ne treba menjati.
@@ -2194,6 +2263,7 @@ Sledeći redovi podržavaju ovu funkciju automatskog prepoznavanja.
 - Optelec ALVA 6 serije
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille serije
 - Eurobraille Esys/Esytime/Iris redovi
+- Nattiq nBraille redovi
 -
 
 ++ Brajevi redovi Freedom Scientific Focus/PAC Mate ++[FreedomScientificFocus]
@@ -2499,7 +2569,7 @@ Molimo pogledajte uputstvo za upotrebu ovih brajevih redova kako biste saznali o
 ++ HIMS Braille Sense/Braille EDGE  / smart beetle /Sync BrailleSerije ++[Hims]
 NVDA podržava Braille Sense,  Braille EDGE, SMART BEETLE i Sync Braille brajeve redove firme [Hims https://www.hims-inc.com/] kada su povezani preko USB ili Bluetooth veze. 
 Ako brajev red povezujete putem USB, morate instalirati USB Hims drajvere na vaš sistem.
-Možete ih preuzeti ovde: https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+Možete ih preuzeti ovde: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Slede dodeljene prečice za ove brajeve redove za NVDA.
 Molimo pogledajte uputstva za upotrebu brajevih redova kako biste saznali raspored i opis tastera na brajevom redu.
@@ -2767,7 +2837,7 @@ Sledeći modeli su podržani:
 - BrailleNote Apex (USB i bluetooth veza)
 -
 
-Za  BrailleNote Touch, molimo pogledajte sekciju [Brailliant BI serije / BrailleNote Touch HumanWareBrailliant].
+Za  BrailleNote Touch, molimo pogledajte sekciju [Brailliant BI serije / BrailleNote Touch #HumanWareBrailliant].
 
 Osim za BrailleNote PK, i brajeva (BT) i  QWERTY (QT) tastature su podržane.
 Za BrailleNote QT, emulacija PC tastature nije podržana.
@@ -2980,6 +3050,22 @@ Molimo pogledajte dokumentaciju brajevog reda za opis i raspored ovih tastera.
 | Uključuje i isključuje HID simulaciju unosa tastature| esytime):l1+joystick1Down, esytime):l8+joystick1Down |
 %kc:endInclude
 
+++ Nattiq nBraille redovi ++[NattiqTechnologies]
+NVDA podržava redove kompanije [Nattiq Technologies https://www.nattiq.com/] kada se povežu putem USB-a.
+Windows 10 prepoznaje redove kada se povežu, možda ćete morati da instalirate drajvere ako koristite starije verzije Windowsa (starije od Win10).
+Možete ih preuzeti sa sajta proizvođača.
+
+Slede komande za Nattiq Technologies redove uz NVDA.
+Molimo pogledajte dokumentaciju brajevog reda da biste pročitali opise tastera kao i gde se oni nalaze.
+%kc:beginInclude
+|| Ime | Taster |
+| Pomeri brajev red nazad | Gore |
+| Pomeri brajev red napred | Dole |
+| Pomeri brajev red na prethodni red | Levo |
+| Pomeri brajev red na sledeći red | Desno |
+| Prebaci se na brajevu ćeliju | routing |
+%kc:endInclude
+
 ++ BRLTTY ++[BRLTTY]
 [BRLTTY https://www.brltty.com/] je program koji se može koristiti za podršku puno više brajevih redova.
 Da biste ga mogli koristiti, morate instalirati [BRLTTY za Windows https://www.brltty.com/download.html].
@@ -2992,7 +3078,7 @@ Zbog toga, podešavanje za ulaznu brajevu tabelu u dijalogu Brajeva podešavanja
 BRLTTY ne učestvuje u funkciji automatskog prepoznavanja programa NVDA.
 
 Ovo su BRLTTY prečice za NVDA.
-Molimo pogledajte [BRLTTY tabele tasterskih prečica https://mielke.cc/brltty/doc/KeyBindings/] za više informacija o tome kako su dodeljene prečice za kontrole na brajevim redovima.
+Molimo pogledajte [BRLTTY tabele tasterskih prečica http://mielke.cc/brltty/doc/KeyBindings/] za više informacija o tome kako su dodeljene prečice za kontrole na brajevim redovima.
 %kc:beginInclude
 || Ime | BRLTTY komanda |
 | Prebaci brajev red nazad | fwinlt (idi jedan prozor u levo) |

@@ -185,6 +185,10 @@ class EditableTextWithAutoSelectDetection(EditableText):
 		super().event_gainFocus()
 		self.initAutoSelectDetection()
 
+	def event_loseFocus(self):
+		self.terminateAutoSelectDetection()
+		super().event_loseFocus()
+
 	def event_caret(self):
 		super(EditableText, self).event_caret()
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents('gainFocus'):

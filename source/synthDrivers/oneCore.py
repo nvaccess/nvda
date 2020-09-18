@@ -180,9 +180,12 @@ class SynthDriver(SynthDriver):
 			self._player.idle()
 		bytesPerSample = wav.getsampwidth()
 		self._bytesPerSec = samplesPerSec * bytesPerSample
-		self._player = nvwave.WavePlayer(channels=wav.getnchannels(),
-			samplesPerSec=samplesPerSec, bitsPerSample=bytesPerSample * 8,
-			outputDevice=config.conf["speech"]["outputDevice"])
+		self._player = nvwave.WavePlayer(
+			channels=wav.getnchannels(),
+			samplesPerSec=samplesPerSec,
+			bitsPerSample=bytesPerSample * 8,
+			outputDevice=config.conf["speech"]["outputDevice"]
+		)
 
 	def terminate(self):
 		super(SynthDriver, self).terminate()
