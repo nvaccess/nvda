@@ -195,6 +195,7 @@ def _getFocusLossCancellableSpeechCommand(
 			f"isLast: {isLastFocusObj()}"
 			f", previouslyHad: {previouslyHadFocus()}"
 			f", isAncestorOfCurrentFocus: {isAncestorOfCurrentFocus()}"
+			f", is a Dialog: {isinstance(obj, Dialog)}"
 		)
 	return _CancellableSpeechCommand(isSpeechStillValid, getDevInfo)
 
