@@ -1,8 +1,7 @@
-#NVDAObjects/WinConsole.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2007-2019 NV Access Limited, Bill Dengler
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2007-2020 NV Access Limited, Bill Dengler
 
 import winConsoleHandler
 from . import Window
@@ -21,10 +20,14 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 	STABILIZE_DELAY = 0.03
 
 	def initOverlayClass(self):
-		# Legacy consoles take quite a while to send textChange events.
-		# This significantly impacts typing performance, so don't queue chars.
 		if isinstance(self, KeyboardHandlerBasedTypedCharSupport):
+			# Legacy consoles take quite a while to send textChange events.
+			# This significantly impacts typing performance, so don't queue chars.
 			self._supportsTextChange = False
+		else:
+			# Use line diffing to report changes in the middle of lines
+			# in non-enhanced legacy consoles.
+			self._supportsDMP = False
 
 	def _get_windowThreadID(self):
 		# #10113: Windows forces the thread of console windows to match the thread of the first attached process.
@@ -69,8 +72,8 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 	def event_nameChange(self):
 		pass
 
-	def _getTextLines(self):
-		return winConsoleHandler.getConsoleVisibleLines()
+	def _getText(self):
+		return '\n'.join(winConsoleHandler.getConsoleVisibleLines())
 
 	def script_caret_backspaceCharacter(self, gesture):
 		super(WinConsole, self).script_caret_backspaceCharacter(gesture)

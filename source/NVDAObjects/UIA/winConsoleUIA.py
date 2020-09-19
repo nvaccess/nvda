@@ -1,4 +1,3 @@
-# NVDAObjects/UIA/winConsoleUIA.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -366,13 +365,6 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		movement."""
 		return consoleUIATextInfo if self.is21H1Plus else consoleUIATextInfoPre21H1
 
-	def _getTextLines(self):
-		# This override of _getTextLines takes advantage of the fact that
-		# the console text contains linefeeds for every line
-		# Thus a simple string splitlines is much faster than splitting by unit line.
-		ti = self.makeTextInfo(textInfos.POSITION_ALL)
-		text = ti.text or ""
-		return text.splitlines()
 
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAElement.cachedAutomationId == "Text Area":

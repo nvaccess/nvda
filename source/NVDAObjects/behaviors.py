@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-# NVDAObjects/behaviors.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -9,10 +8,13 @@
 Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.
 """
 
+import _winapi
+import ctypes
 import os
 import time
 import threading
-import difflib
+import struct
+import subprocess
 import tones
 import queueHandler
 import eventHandler
@@ -29,6 +31,7 @@ import api
 import ui
 import braille
 import nvwave
+from typing import List
 
 class ProgressBar(NVDAObject):
 
@@ -219,6 +222,9 @@ class LiveText(NVDAObject):
 	"""
 	#: The time to wait before fetching text after a change event.
 	STABILIZE_DELAY = 0
+	#: Whether this object supports Diff-Match-Patch character diffing.
+	#: Set to False to use line diffing.
+	_supportsDMP = True
 	# If the text is live, this is definitely content.
 	presentationType = NVDAObject.presType_content
 
@@ -228,6 +234,7 @@ class LiveText(NVDAObject):
 		self._event = threading.Event()
 		self._monitorThread = None
 		self._keepMonitoring = False
+		self._pipe = None
 
 	def startMonitoring(self):
 		"""Start monitoring for new text.
@@ -263,15 +270,19 @@ class LiveText(NVDAObject):
 		"""
 		self._event.set()
 
-	def _getTextLines(self):
-		"""Retrieve the text of this object in lines.
+	def _get_shouldUseDMP(self):
+		return self._supportsDMP and config.conf["terminals"]["useDMPWhenAvailable"]
+
+	def _getText(self) -> str:
+		"""Retrieve the text of this object.
 		This will be used to determine the new text to speak.
 		The base implementation uses the L{TextInfo}.
 		However, subclasses should override this if there is a better way to retrieve the text.
-		@return: The current lines of text.
-		@rtype: list of str
 		"""
-		return list(self.makeTextInfo(textInfos.POSITION_ALL).getTextInChunks(textInfos.UNIT_LINE))
+		if hasattr(self, "_getTextLines"):
+			log.warning("LiveText._getTextLines is deprecated, please override _getText instead.")
+			return '\n'.join(self._getTextLines())
+		return self.makeTextInfo(textInfos.POSITION_ALL).text
 
 	def _reportNewLines(self, lines):
 		"""
@@ -287,12 +298,43 @@ class LiveText(NVDAObject):
 		"""
 		speech.speakText(line)
 
+	def _initializeDMP(self):
+		subprocess.Popen("./nvda_dmp.exe", creationflags=subprocess.CREATE_NO_WINDOW)
+		time.sleep(0.1)  # is there a better way to wait/check for the pipe?
+		# (try/except in a loop breaks the pipe on the CPP side)
+		self._pipe = _winapi.CreateFile(
+			"\\\\.\\pipe\\nvda_dmp",
+			_winapi.GENERIC_READ | _winapi.GENERIC_WRITE,
+			0,
+			_winapi.NULL,
+			_winapi.OPEN_EXISTING,
+			0,
+			_winapi.NULL,
+		)
+
+	def _terminateDMP(self):
+		_winapi.WriteFile(self._pipe, b"\x00\x00\x00\x00\x00\x00\x00\x00")
+		ctypes.windll.kernel32.DisconnectNamedPipe(self._pipe)
+
+	def _writeToPipe(self, data):
+		bytes_acc = 0
+		err = None
+		while bytes_acc < len(data) and not err:
+			bytes_written, err = _winapi.WriteFile(self._pipe, data[bytes_acc:])
+			bytes_acc += bytes_written
+
 	def _monitor(self):
+		if self.shouldUseDMP:
+			try:
+				self._initializeDMP()
+			except Exception:
+				log.exception("Error initializing DMP, falling back to difflib")
+				self._supportsDmp = False
 		try:
-			oldLines = self._getTextLines()
+			oldText = self._getText()
 		except:
-			log.exception("Error getting initial lines")
-			oldLines = []
+			log.exception("Error getting initial text")
+			oldText = ""
 
 		while self._keepMonitoring:
 			self._event.wait()
@@ -307,9 +349,9 @@ class LiveText(NVDAObject):
 			self._event.clear()
 
 			try:
-				newLines = self._getTextLines()
+				newText = self._getText()
 				if config.conf["presentation"]["reportDynamicContentChanges"]:
-					outLines = self._calculateNewText(newLines, oldLines)
+					outLines = self._calculateNewText(newText, oldText)
 					if len(outLines) == 1 and len(outLines[0].strip()) == 1:
 						# This is only a single character,
 						# which probably means it is just a typed character,
@@ -317,15 +359,55 @@ class LiveText(NVDAObject):
 						del outLines[0]
 					if outLines:
 						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewLines, outLines)
-				oldLines = newLines
+				oldText = newText
 			except:
-				log.exception("Error getting lines or calculating new text")
+				log.exception("Error getting or calculating new text")
 
-	def _calculateNewText(self, newLines, oldLines):
+		if self.shouldUseDMP:
+			try:
+				self._terminateDMP()
+			except Exception:
+				log.exception("Error stopping DMP")
+
+	def _calculateNewText_dmp(self, newText: str, oldText: str) -> List[str]:
+		try:
+			if not newText and not oldText:
+				# Return an empty list here to avoid exiting
+				# nvda_dmp uses two zero-length texts as a sentinal value
+				return []
+			old = oldText.encode("utf-8")
+			new = newText.encode("utf-8")
+			tl = struct.pack("=II", len(old), len(new))
+			self._writeToPipe(tl)
+			self._writeToPipe(old)
+			self._writeToPipe(new)
+			buf = b""
+			sizeb = b""
+			SIZELEN = 4
+			while len(sizeb) < SIZELEN:
+				sizeb = _winapi.ReadFile(self._pipe, SIZELEN - len(sizeb))[0]
+				if sizeb is None:
+					sizeb = b""
+			(size,) = struct.unpack("=I", sizeb)
+			while len(buf) < size:
+				buf += _winapi.ReadFile(self._pipe, size - len(buf))[0]
+			return [
+				line
+				for line in buf.decode("utf-8").splitlines()
+				if line and not line.isspace()
+			]
+		except Exception:
+			log.exception("Exception in DMP, falling back to difflib")
+			self._supportsDMP = False
+			return self._calculateNewText_difflib(newText, oldText)
+
+	def _calculateNewText_difflib(self, newLines: List[str], oldLines: List[str]) -> List[str]:
 		outLines = []
 
 		prevLine = None
-		for line in difflib.ndiff(oldLines, newLines):
+		from difflib import ndiff
+
+		for line in ndiff(oldLines, newLines):
 			if line[0] == "?":
 				# We're never interested in these.
 				continue
@@ -372,6 +454,16 @@ class LiveText(NVDAObject):
 			prevLine = line
 
 		return outLines
+
+	def _calculateNewText(self, newText: str, oldText: str) -> List[str]:
+		return (
+			self._calculateNewText_dmp(newText, oldText)
+			if self.shouldUseDMP
+			else self._calculateNewText_difflib(
+				newText.splitlines(), oldText.splitlines()
+			)
+		)
+
 
 class Terminal(LiveText, EditableText):
 	"""An object which both accepts text input and outputs text which should be reported automatically.
