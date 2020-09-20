@@ -826,10 +826,16 @@ class InitialDevelopmentTests(unittest.TestCase):
 			"Testing testing ",
 			speech.PitchCommand(offset=100),
 			"1 2 3 4",
-			smi.create_ConfigProfileTriggerCommand(t1, True, expectedToBecomeIndex=1),
-			smi.create_ConfigProfileTriggerCommand(t2, True, expectedToBecomeIndex=2),
+			ExpectedIndex(1),
+			# The preceeding index is expected,
+			# as the following profile trigger commands will cause the utterance to be split here.
+			ConfigProfileTriggerCommand(t1, True),
+			ConfigProfileTriggerCommand(t2, True),
 			"5 6 7 8",
-			smi.create_ConfigProfileTriggerCommand(t1, False, expectedToBecomeIndex=3),
+			ExpectedIndex(2),
+			# The preceeding index is expected,
+			# as the following profile trigger commands will cause the utterance to be split here.
+			ConfigProfileTriggerCommand(t1, False),
 			"9 10 11 12"
 		]
 		with smi.expectation():
@@ -842,11 +848,14 @@ class InitialDevelopmentTests(unittest.TestCase):
 			smi.doneSpeaking()
 			smi.pumpAll()
 			smi.expect_synthCancel()
+			smi.expect_mockCall(t1.enter)
+			smi.expect_synthCancel()
+			smi.expect_mockCall(t2.enter)
 			smi.expect_synthSpeak(sequence=[
 				seq[1],  # PitchCommand
-				seq[4],  # IndexCommand index=2 (derived from ConfigProfileTriggerCommand)
+				'5 6 7 8',
+				seq[7],  # IndexCommand index=2 (due to a  ConfigProfileTriggerCommand following it)
 			])
-			smi.expect_mockCall(t1.enter)
 
 		with smi.expectation():
 			smi.indexReached(2)
@@ -857,27 +866,13 @@ class InitialDevelopmentTests(unittest.TestCase):
 			smi.expect_synthCancel()
 			smi.expect_synthSpeak(sequence=[
 				seq[1],  # PitchCommand
-				'5 6 7 8',
-				seq[6],  # IndexCommand index=3 (derived from ConfigProfileTriggerCommand)
-			])
-			smi.expect_mockCall(t2.enter)
-
-		with smi.expectation():
-			smi.indexReached(3)
-			smi.pumpAll()
-		with smi.expectation():
-			smi.doneSpeaking()
-			smi.pumpAll()
-			smi.expect_synthCancel()
-			smi.expect_synthSpeak(sequence=[
-				seq[1],  # PitchCommand
 				'9 10 11 12',
-				smi.create_ExpectedIndex(expectedToBecomeIndex=4)
+				ExpectedIndex(expectedIndexCommandIndex=3)
 			])
 			smi.expect_mockCall(t1.exit)
 
 		with smi.expectation():
-			smi.indexReached(4)
+			smi.indexReached(3)
 			smi.pumpAll()
 		with smi.expectation():
 			smi.doneSpeaking()
