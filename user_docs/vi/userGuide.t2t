@@ -69,9 +69,7 @@ Bạn có thể chia sẻ hoặc thay đổi phần mềm này theo ý mình, mi
 - Hệ điều hành: tất cả các phiên bản 32bit và 64bit của Windows 7, Windows 8, Windows 8.1,  Windows 10 và các bản máy chủ từ bản Windows Server 2008 R2.
  - Đối với Windows 7, NVDA yêu cầu bản Service Pack 1 hoặc cao hơn.
  - Đối với Windows Server 2008 R2, NVDA yêu cầu bản Service Pack 1 hoặc cao hơn.
- - Bộ nhớ RAM: 256 mb hoặc cao hơn
-- Tốc độ bộ vi xử lý: 1.0 ghz hoặc cao hơn
-- Khoảng 90 MB không gian lưu trữ
+- Không gian lưu trữ tối thiểu là 150 MB
 -
 
 + Tải và cài đặt NVDA +[GettingAndSettingUpNVDA]
@@ -203,8 +201,12 @@ Nếu kiểu bàn phím của bạn không cho phép làm điều đó thì bạ
 
 ++ Thao tác cảm ứng trong NVDA ++[NVDATouchGestures]
 Nếu bạn đang sử dụng các thiết bị cảm ứng chạy trên hệ điều hành từ Windows 8 trở lên thì bạn có thể điều khiển trực tiếp NVDA thông qua các thao tác cảm ứng.
-Nếu như NVDA đang chạy thì tất cả các hành động trên màn hình cảm ứng sẽ được gửi trực tiếp đến NVDA. 
+Nếu như NVDA đang chạy, trừ khi thao tác cảm ứng bị tắt, tất cả các hành động trên màn hình cảm ứng sẽ được gửi trực tiếp đến NVDA. 
 Vì vậy, các hành động có thể thực hiện khi NVDA không chạy sẽ không hoạt động nếu NVDA đang chạy.
+%kc:beginInclude
+Để bật / tắt hỗ trợ tương tác cảm ứng, bấm NVDA+control+alt+t.
+%kc:endInclude
+Bạn cũng có thể bật / tắt [hỗ trợ tương tác cảm ứng #TouchSupportEnable] từ phân loại Tương tác cảm ứng trong cài đặt NVDA.
 
 +++ Khám phá màn hình +++[ExploringTheScreen]
 Hành động phổ biến nhất trên màn hình là thông báo các đối tượng hay văn bản ở vị trí bất kỳ trên màn hình.
@@ -273,6 +275,7 @@ Khi trình đơn hiện ra, bạn có thể dùng các phím mũi tên để kh�
 ++ Các lệnh cơ bản của NVDA ++[BasicNVDACommands]
 %kc:beginInclude
 || Chức năng | Phím máy bàn | Phím xách tay | Cảm ứng | Mô tả |
+| Bật hoặc khởi động lại NVDA | Control+alt+n | Control+alt+n | không có | Bật hoặc khởi động lại NVDA từ Desktop, nếu tùy chọn tạo biểu tượng được bật trong quá trình cài đặt NVDA. Đây là một biểu tượng trên Windows nên không thể gán lại phím tắt trong hộp thoại quản lý các thao tác. |
 | Dừng đọc | Control | control | Chạm hai-ngón | Dừng đọc |
 | Tạm dừng đọc | shift | shift | Không có | Tạm dừng đọc (hoặc tiếp tục đọc nếu đã tạm dừng trước đó) |
 | Mở trình đơn của NVDA | NVDA+n | NVDA+n | hai-chạm hai-ngón | Mở trình đơn của NVDA |
@@ -328,9 +331,9 @@ Dưới đây là các phím tắt mà NVDA cung cấp cho việc thao tác vớ
 | Đọc tất cả | NVDA+mũi tên xuống | NVDA+a | Đọc tất cả văn bản từ vị trí hiện tại trở đi |
 | Đọc dòng hiện tại | NVDA+mũi tên lên | NVDA+l | Đọc dòng hiện tại, bấm nhanh hai lần để đánh vần và bấm nhanh ba lần để đánh vần dòng đó với phần mô tả ký tự |
 | Đọc vùng văn bản đang chọn | NVDA+Shift+mũi tên lên | NVDA+shift+s | Đọc vùng văn bản đang được chọn |
+| Thông báo định dạng văn bản | NVDA+f | NVDA+f | Thông báo định dạng của văn bản tại vị trí con trỏ nháy. Bấm hai lần để hiển thị thông tin trong chế độ duyệt |
 | Đọc câu tiếp theo | alt+mũi tên xuống | alt+mũi tên xuống | Di chuyển con trỏ nháy đến câu kế tiếp và đọc nó (Chỉ hỗ trợ trong Microsoft Word và Outlook). |
 | Đọc câu trước | alt+mũi tên lên | alt+mũi tên lên | Di chuyển con trỏ nháy đến câu trước đó và đọc nó (Chỉ hỗ trợ trong Microsoft Word và Outlook). |
-
 
 Khi ở trong bảng thì dùng các phím tắt sau để thao tác:
 || Chức năng | Phím tắt | Mô tả |
@@ -413,7 +416,7 @@ Dưới đây là một số phím tắt dùng để duyệt nội dung:
 | Bắt đầu chọn rồi sao chép với con trỏ duyệt | NVDA+f9 | NVDA+f9 | không có | Đánh dấu điểm bắt đầu của vùng chọn để sao chép. Hành động sao chép vẫn chưa được thực hiện cho đến khi bạn chọn điểm kết. |
 | Kết thúc chọn rồi sao chép với con trỏ duyệt | NVDA+f10 | NVDA+f10 | không có | Bấm lần đầu để đánh dấu điểm kết thúc và chọn vùng nội dung từ điểm bắt đầu đến điểm kết thúc.  Nếu dấu nháy hệ thống có thể tiếp cận với nội dung thì nó sẽ được đưa đến nội dung đã chọn. Bấm lần hai để thực hiện lệnh sao chép nội dung lên bộ nhớ tạm. |
 | Chuyển đến điểm bắt đầu để sao chép trong chế độ duyệt | NVDA+shift+f9 | NVDA+shift+f9 | không có | di chuyển con trỏ duyệt đến vị trí đã được chọn là điểm bắt đầu để sao chép |
-| Thông báo định dạng nội dung | NVDA+f | NVDA+f | không có | Thông báo định dạng của nội dung  tại vị trí con trỏ duyệt |
+| Thông báo định dạng văn bản | NVDA+shift+f | NVDA+shift+f | không có | Thông báo định dạng của văn bản  tại vị trí con trỏ duyệt. Bấm hai lần để hiển thị thông tin trong chế độ duyệt |
 | Thông báo kí tự thay thế hiện tại | Không có | Không có | Không có | Nói kí tự tại vị trí con trỏ duyệt. Bấm hai lần để hiển thị kí hiệu và văn bản dùng để thay thế ở chế độ duyệt. |
 %kc:endInclude
 
@@ -648,7 +651,6 @@ Bấm escape nếu bạn muốn trở về tài liệu.
 Đôi khi, nội dung toán có thể hiển thị như một nút bấm hay một kiểu thành phần khác. Khi được kích hoạt, có thể hiển thị một hộp thoại hay nhiều thông tin liên quan đến công thức.
 Để kích hoạt nút bấm hay thành phần chứa công thức, bấm ctrl+enter.
 
-
 + Chữ Nổi +[Braille]
 Nếu bạn sử dụng màn hình nổi, NVDA có thể hiển thị thông tin dạng chữ nổi.
 Nếu màn hình nổi của bạn có bàn phím kiểu Perkins, bạn có thể nhập liệu chữ nổi dưới dạng đầy đủ và viết tắt.
@@ -712,6 +714,7 @@ Bạn có thể cấu hình màn hình nổi với phân loại [Chữ nổi #Br
 | lv N | thành phần trong cây thư mục có cấp độ N|
 | wnd | window (cửa sổ) |
 | ⠤⠤⠤⠤⠤ | separator (phân cách) |
+| mrkd | marked content (nội dung được đánh dấu) |
 
 Sau đây là quy ước cho trạng thái của điều khiển:
 || Viết tắt | Trạng thái |
@@ -890,9 +893,10 @@ Trong danh sách thành phần, mỗi biểu mẫu sẽ được hiển thị v�
 Chọn biểu mẫu, bấm enter hoặc nút Chuyển đến để đi đến biểu mẫu đó ở chế độ duyệt.
 -
 
-+++ Thông Báo Chú Thích +++[ExcelReportingComments]
++++ Thông Báo Chú Thích (notes) +++[ExcelReportingComments]
 %kc:beginInclude
 Bấm NVDA+alt+c để đọc thông báo phần chú thích của ô hiện tại.
+Trong Microsoft 2016, 365 và mới hơn, thuật ngữ comments trong Microsoft Excel đã được đổi tên thành "notes". Trong tiếng Việt, chúng đều có thể hiểu là ghi chú hay chú thích.
 %kc:endInclude
 Có thể liệt kê toàn bộ các chú thích của bảng tính hiện tại trong phần danh sách thành phần sau khi bấm NVDA+f7.
 
@@ -906,6 +910,11 @@ Phím tắt này không hiển thị và không thể thay đổi trong hộp th
 
 Lưu ý: cũng có thể mở tùy chọn chỉnh sửa chú thích trong MS Excel từ trình đơn ngữ cảnh của bất cứ ô nào trong bảng tính.
 Tuy nhiên, cách này sẽ mở  hộp thoại chỉnh sửa chú thích không tiếp cận và nó không phải là hộp thoại chỉnh sửa chú thích của NVDA.
+
+Trong Microsoft Office 2016, 365 và mới hơn, một hộp thoại chú thích với kiểu thiết kế mới đã được tích hợp.
+Hộp thoại này tiếp cận được và cung cấp nhiều tính năng như trả lời cho chú thích, v...v...
+Có thể mở nó từ trình đơn ngữ cảnh của một ô cụ thể.
+Các chú thích được thêm vào ô thông qua hộp thoại chú thích mới không liên quan gì đến chú thích dạng "notes".
 
 +++ Đọc Ô Được Bảo Vệ +++[ExcelReadingProtectedCells]
 Bạn có thể không chuyển focus đến các ô trong một tập bảng tính được bảo vệ vì nó bị khóa, không cho phép chỉnh sửa.
@@ -1069,7 +1078,8 @@ Các mức độ log bao gồm:
  - Nếu quan ngại về sự riêng tư thì đừng chọn cấp độ log này.
 - Gỡ lỗi: ngoài các thông tin, cảnh báo và thông điệp  đầu vào / đầu ra, các thông điệp gỡ lỗi bổ sung cũng sẽ được ghi lại.
  - Cũng giống như đầu vào / đầu ra, Nếu quan ngại về sự riêng tư thì đừng nên chọn cấp độ log này.
-
+ -
+-
 
 ==== Khởi động NVDA sau khi tôi đăng nhập ====[GeneralSettingsStartAfterLogOn]
 Nếu chọn mục này thì NVDA sẽ tự khởi động khi bạn đăng nhập vào Windows.
@@ -1291,6 +1301,7 @@ Dấu báo vùng chọn vẫn sử dụng chấm 7 và 8 và không nháy. Nó k
 ==== Thời Gian Kết Thúc Thông Điệp (giây) ====[BrailleSettingsMessageTimeout]
 Tùy chọn này kiểm soát thời gian kết thúc hiển thị các thông điệp trên màn hình nổi.
 Nhập vào số 0 sẽ hoàn toàn không hiển thị thông điệp.
+Thông điệp của NVDA sẽ bị loại bỏ ngay lập tức khi bấm một phím routing trên màn hình chữ nổi, nhưng sẽ xuất hiện lại khi bấm một phím tương ứng để kích hoạt thông điệp.
 
 ==== Hiển Thị Thông Điệp Không Xác Định ====[BrailleSettingsNoMessageTimeout]
 Tùy chọn này cho phép hiển thị các thông điệp của NVDA trên màn hình chữ nổi.
@@ -1517,6 +1528,12 @@ Nếu bật tùy chọn này và bật luôn tùy chọn "Thông báo khi di chu
 Phân loại này  chỉ xuất hiện trên các máy tính có màn hình cảm ứng, chạy Windows 8 trở lên, cho phép bạn thiết lập cách NVDA tương tác với màn hình cảm ứng.
 Phân loại này gồm các mục sau:
 
+==== Bật hỗ trợ tương tác cảm ứng ====[TouchSupportEnable]
+Hộp kiểm này bật hỗ trợ tương tác cảm ứng của NVDA.
+Nếu bật, bạn có thể dùng các ngón tay để duyệt và tương tác với các thành phần trên màn hình của thiết bị cảm ứng.
+Nếu tắt, hỗ trợ màn hình cảm ứng sẽ bị vô hiệu hóa, trừ khi không chạy NVDA.
+Có thể bật / tắt tùy chọn này bằng phím tắt NVDA+control+alt+t. 
+
 ==== Chế độ gõ cảm ứng ====[TouchTypingMode]
 Hộp kiểm này cho phép bạn thiết lập cách thức muốn sử dụng khi nhập văn bản bằng bàn phím cảm ứng.
 Nếu chọn hộp kiểm này, khi đi đến một phím trên bàn phím cảm ứng, bạn có thể buông ngón tay và phím đó sẽ được bấm.
@@ -1558,7 +1575,6 @@ Rất nhiều đối tượng và các cửa sổ sẽ hiển thị một thông
 Khi chọn hộp kiểm này, NVDA sẽ đọc các thông báo trợ giúp (help balloons) và các thông báo dạng toast (toast notifications) khi chúng xuất hiện.
 - Thông báo trợ giúp thường là các thông báo xuất hiện trên các biểu tượng dưới khay hệ thống như tình trạng kết nối mạng hoặc là các cảnh báo về vấn đề an toàn của Windows.
 - Thông báo toast được giới thiệu trong Windows 10 và xuất hiện ở trung tâm thông báo (notification center) trên khay hệ thống, cung cấp thông báo cho vài sự kiện (ví dụ: một bản cập nhật đã được tải, có thư mới trong hộp thư đến, v...v...).
-
 
 ==== Thông báo phím tắt của đối tượng ====[ObjectPresentationShortcutKeys]
 Nếu được chọn, NVDA sẽ thông báo phím tắt của đối tượng (nếu có).
@@ -1692,6 +1708,15 @@ Mặc định được bật, tùy chọn này cho phép bạn chặn các thao 
 Ví dụ khi tùy chọn này được bật và ta bấm chữ j, nó sẽ bị chặn lại, không được gửi đến tài liệu. Mặc dù nó không phải là phím lệnh di chuyển nhanh và cũng không phải là phím lệnh của ứng dụng đang có focus.
 Trường hợp này, NVDA sẽ yêu cầu Windows phát một âm thanh mặc định bất cứ khi nào bấm một phím bị chặn.
 
+==== Tự đưa focus hệ thống đến thành phần có thể có focus ====[BrowseModeSettingsAutoFocusFocusableElements]
+Phím tắt: NVDA+8
+
+Mặc định không được bật. Tùy chọn này cho phép bạn chọn việc  focus hệ thống sẽ tự được đưa đến thành phần nào có thể nhận con trỏ này(liên kết, biểu mẫu, v...v...) khi duyệt nội dung với dấu nháy chế độ duyệt.
+Để nguyên trạng thái mặc định của tùy chọn này sẽ không tự đưa focus đến các thành phần có thể có focus khi chúng được chọn với dấu nháy chế độ duyệt.
+Kết quả của việc này có thể là trải nghiệm duyệt nhanh và phản hồi tốt  hơn trong chế độ duyệt.
+Focus sẽ được cập nhật cho một thành phần cụ thể khi tương tác với nó (bấm một nút, đánh dấu vào một hộp kiểm chẳng hạn).
+Bật tùy chọn này có thể cải thiện hỗ trợ cho vài trang web vì lí do liên quan đến hiệu suất vận hành và tính ổn định.
+
 +++ Định Dạng Tài Liệu (NVDA+control+d) +++[DocumentFormattingSettings]
 Hầu hết các mục trong phân loại này là các  thông tin định dạng sẽ được thông báo khi bạn duyệt tài liệu.
 Ví dụ nếu bạn chọn mục thông báo tên phông chữ, mỗi khi  duyệt tài liệu bằng mũi tên qua các nội dung bằng các phông khác nhau thì tên phông sẽ được thông báo.
@@ -1704,6 +1729,7 @@ Bạn có thể chọn các mục sau:
  - Thuộc tính phông chữ
   - Chỉ số trên và chỉ số dưới
  - Nhấn mạnh
+ - Điểm đã đánh dấu (văn bản được làm nổi)
  - Kiểu dáng
  - Màu chữ
 - Thông tin tài liệu
@@ -1725,6 +1751,7 @@ Bạn có thể chọn các mục sau:
 - Thành phần
  - Tiêu đề
  - Liên kết
+ - Hình ảnh
  - Danh sách
  - Đoạn trích dẫn
   - Grouping
@@ -1785,6 +1812,13 @@ Nếu muốn chia sẻ mã nguồn cho người khác, bạn nên đóng gói n�
 Nút này mở thư mục mà bạn có thể lưu mã nguồn trong khi đang phát triển nó.
 Nút này chỉ xuất hiện nếu NVDA được cấu hình để gọi mã nguồn tùy chỉnh từ thư mục Scratchpad.
 
+==== Bật các chọn lọc đăng kí cho các thay đổi sự kiện và thuộc tính của UI Automation ====[AdvancedSettingsSelectiveUIAEventRegistration]
+Tùy chọn này thay đổi việc NVDA đăng kí các sự kiện nổ ra bởi Microsoft UI Automation accessibility API.
+Khi tắt tùy chọn này, NVDA đăng kí cho nhiều sự kiện UIA được xử lý và loại bỏ trong chính NVDA.
+Điều này có một tác dụng tiêu cực không nhỏ đến sự vận hành, đặc biệt là trong các ứng dụng như Microsoft Visual Studio.
+Vậy nên, khi bật tùy chọn này, NVDA sẽ giới hạn các sự kiện đăng kí cho focus hệ thống cho hầu hết các sự kiện.
+Nếu bạn thấy mệt mỏi với việc vận hành của một hay vài ứng dụng, chúng tôi khuyên bạn thử dùng tính năng này để cải thiện khả năng vận hành.
+
 ==== Sử dụng UI Automation để truy cập các điều khiển của tài liệu Microsoft Word khi có thể ====[AdvancedSettingsUseUiaForWord]
 Khi bật tùy chọn này, NVDA sẽ nỗ lực dùng  Microsoft UI Automation accessibility API để lấy các thông tin từ các điều khiển của tài liệu Microsoft Word.
 Nó được tích hợp trong chính Microsoft Word cũng như trình xem và soạn thư của Microsoft Outlook.
@@ -1801,7 +1835,7 @@ Thiết lập này điều khiển việc các kí tự sẽ được đọc b�
 ==== Dùng hỗ trợ nhập văn bản mới trong  Windows console khi có thể ====[AdvancedSettingsKeyboardSupportInLegacy]
 Tùy chọn này  gọi một phương thức thay thế để nhận các kí tự đã nhập trong Windows command console.
 Trong khi nó cải thiện hiệu suất và ngăn chặn việc đánh vần thông tin đầu ra của console, nó cũng có thể không tương thích với vài ứng dụng terminal .
-Tính năng này tồn tại và mặc định được bật trên Windows 10 phiên bản 1607trở lên khi  UI Automation không có hoặc bị vô hiệu.
+Tính năng này tồn tại và mặc định được bật trên Windows 10 phiên bản 1607 trở lên khi  UI Automation không có hoặc bị vô hiệu.
 Cảnh báo: khi bật tùy chọn này, các kí tự được nhập mà không hiển thị trên màn hình như mật khẩu chẳng hạn sẽ không bị bỏ qua.
 Trong những môi trường không an toàn, bạn có thể tạm thời vô hiệu [đọc kí tự khi gõ #KeyboardSettingsSpeakTypedCharacters] và [đọc từ khi gõ #KeyboardSettingsSpeakTypedWords] khi nhập mật khẩu.
 
@@ -1809,16 +1843,6 @@ Trong những môi trường không an toàn, bạn có thể tạm thời vô h
 Bật tùy chọn này để không đọc các sự kiện đã lỗi thời của focus.
 Đặc biệt là khi di chuyển nhanh qua các thư trong Gmail với Chrome có thể làm cho NVDA đọc các thông tin đã lỗi thời.
 Đây là tính năng thử nghiệm của NVDA 2020.2.
-
-==== Tự đưa con trỏ hệ thống đến các thành phần có thể có focus trong chế độ duyệt ====[BrowseModeSettingsAutoFocusFocusableElements]
-Phím tắt: NVDA+8
-
-Mặc định được bật, tùy chọn này cho phép con trỏ hệ thống tự đưa đến các thành phần có thể có focus hệ thống (liên kết, biểu mẫu, v...v...) khi duyệt nội dugn với con trỏ chế độ duyệt.
-Nếu được bật, tùy chọn này sẽ hoạt động như với các phiên bản NVDA 2019.1 trở về trước.
-Tắt tùy chọn này sẽ không tự đưa focus đến các thành phần có thể có focus khi chúng được chọn với con trỏ chế độ duyệt.
-Kết quả của tùy chọn này có thể là trải nghiệm duyệt web nhanh và phản hồi tốt hơn trong chế độ duyệt.
-Focus sẽ vẫn được cập nhật cho các thành phần cụ thể khi tương tác với nó (ví dụ như bấm vào một nút, chọn vào một hộp kiểm).
-Tính năng này đang được thử nghiệm trong NVDA 2019.2.
  
  ==== Thời gian chờ di chuyển dấu nháy (ms) ====[AdvancedSettingsCaretMoveTimeout]
  Tùy chọn này cho phép bạn cấu hình thời gian tính bằng mili giây mà NVDA sẽ chờ dấu náy (điểm chèn) di chuyển trong các điều khiển có thể nhập.
@@ -1865,7 +1889,8 @@ Sẽ gặp trường hợp này nếu kí tự ngay trước và sau từ đó l
 Ví dụ, khi từ thay thế cho từ mẫu "frogbird" là từ "bird" và chọn thiết lập trùng cả từ, khi gặp từ "birds" hoặc từ "bluebird", từ thay thế sẽ không được xem là trùng cả từ.
 
 Biểu thức phổ thông là kiểu mẫu gồm các ký hiệu đặc biệt, cho phép bạn chỉ định trùng với nhiều ký tự cùng lúc.
-Trong tài liệu hướng dẫn này không đề cập nhiều về biểu thức phổ thông, nhưng bạn có thể tìm đọc thông tin về nó trên web.
+Trong tài liệu hướng dẫn này không đề cập nhiều về biểu thức phổ thông.
+Để xem hướng dẫn về nội dung này, vui lòng truy cập [https://docs.python.org/3.7/howto/regex.html].
 
 +++ Phát Âm Ký Hiệu / Dấu Câu +++[SymbolPronunciation]
 Hộp thoại này cho phép bạn thay đổi cách phát âm cho các dấu câu và các ký hiệu, đồng thời quyết định khi nào thì đọc chúng.
@@ -1914,6 +1939,19 @@ Ví dụ như khi bạn bấm một phím trên bàn phím, bạn có thể thi�
 Một trình đơn sẽ xuất hiện cho phép bạn chọn các kiểu bàn phím đó.
 
 Để xóa thao tác cho một lệnh, chọn thao tác đó rồi bấm nút Xóa.
+
+Phân loại Phím giả lập bàn phím hệ thống có các lệnh của NVDA  mô phỏng các phím trên bàn phím hệ thống.
+Các phím mô phỏng bàn phím hệ thống này có thể dùng để điều khiển bàn phím hệ thống từ màn hình chữ nổi của bạn.
+Để thêm một thao tác /phím tắt giả lập, chọn phân loại phím giả lập bàn phím hệ thống và bấm nút thêm.
+Tiếp theo, bấm một phím trên bàn phím mà bạn muốn giả lập.
+Sau đó, phím này sẽ có trong  phân loại các phím giả lập bàn phím hệ thống và bạn sẽ gán được thao tác / phím tắt cho nó như đã nói ở trên.
+
+Lưu ý:
+ - Các phím giả lập phải được gán  thao tác để duy trì khi lưu / đóng hộp thoại.
+ - Một thao tác với các phím bổ trợ có thể không gán được vào thao tác giả lập mà không có phím bổ trợ
+ ví dụ: thiết lập đầu vào giả lập 'a' và chọn thao tác là 'ctrl+m', có thể cho kết quả
+ trong ứng dụng nhận lệnh 'ctrl+a'.
+ -
 
 Khi bạn hoàn tất, chọn nút Đồng ý để lưu lại các thay đổi hoặc chọn nút Hủy bỏ để bỏ qua các thay đổi đó.
 
@@ -2200,8 +2238,7 @@ Windows 10 đi kèm với những giọng đọc mới, được gọi là OneCo
 Những giọng đọc mới hỗ trợ cho khá nhiều ngôn ngữ khác nhau và  phản hồi nhanh hơn so với những giọng theo chuân SAPI-5.
 Trên Windows 10, NVDA mặc định dùng các giọng Windows OneCore ([eSpeak NG #eSpeakNG] thì dùng cho các bản phát hành khác).
 
-Vui lòng xem bài viết sau của Microsoft để biết danh sách các giọng và cách cài đặt: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
-
+Vui lòng xem bài viết sau của Microsoft để biết danh sách các giọng đọc hiện hành và cách cài đặt: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
 + Các màn hình nổi (Braille Displays) được hỗ trợ +[SupportedBrailleDisplays]
 Phần này gồm thông tin về các dòng màn hình nổi được hỗ trợ bởi NVDA.
@@ -2476,7 +2513,7 @@ Các thiết bị thêm vào sau đây cũng được hỗ trợ, và không yê
 - APH Chameleon 20
 - Humanware BrailleOne
 - NLS eReader
-
+-
 
 Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
 Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.

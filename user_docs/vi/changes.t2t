@@ -3,6 +3,61 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.3 =
+
+== Tính năng mới ==
+- Giờ bạn có thể bật / tắt việc đọc hình ảnh từ cài đặt định dạng tài liệu của NVDA. Lưu ý là việc tắt tùy chọn này vẫn sẽ đọc văn bản thay thế của ảnh. (#4837)
+- Giờ bạn có thể bật / tắt hỗ trợ màn hình cảm ứng của NVDA. Một tùy chọn đã được thêm vào bảng tương tác cảm ứng trong cài đặt NVDA. Phím tắt mặc định là NVDA+control+alt+t. (#9682)
+- Đã thêm bảng chữ nổi tiếng Đức mới. (#11268)
+- NVDA giờ đã nhận được văn bản có thuộc tính chỉ đọc với các điều khiển UIA. (#10494)
+- Nội dung có tồn tại các điểm đánh dấu (được làm nổi) đã được thể hiện ở cả tiếng nói và chữ nổi trên tất cả các trình duyệt. (#11436)
+ - Có thể bật / tắt tính năng này bởi một tùy chọn định dạng mới về làm nổi của NVDA.
+- Có thể thêm các phím giả lập bàn phím hệ thống từ hộp thoại Quản lý các thao tác của NVDA. (#6060)
+  - Để làm điều này, hãy bấm nút thêm sau khi chọn phân loại phím giả lập bàn phím hệ thống.
+   
+   
+== Các thay đổi ==
+- Kịch bản đọc định dạng (NVDA+f) giờ đã thay đổi để đọc định dạng tại dấu nháy hệ thống thay vì đọc tại vị trí của con trỏ duyệt. Để đọc định dạng tại vị trí con trỏ duyệt, bấm NVDA+shift+f. (#9505)
+- NVDA không còn mặc định tự đặt focus hệ thống vào các thành phần có thể có focus trong chế độ duyệt, nhằm cải thiện hiệu năng và tính ổn định. (#11190)
+- Đã cập nhật CLDR từ phiên bản 36.1 lên phiên bản 37. (#11303)
+- Đã cập nhật eSpeak-NG lên 1.51-dev, commit 1fb68ffffea4
+- Giờ bạn có thể dùng lệnh điều hướng của bảng trong các hộp danh sách với các thành phần có thể đánh dấu chọn khi một danh sách cụ thể có nhiều cột. (#8857)
+- Trong trình quản lý các Add-on, khi được yêu cầu xác nhận gỡ bỏ một add-on, "No (không)" sẽ là lựa chọn mặc định. (#10015)
+- Trong Microsoft Excel, hộp thoại danh sách các thành phần giờ đây trình bày các công thức đã được bản địa hóa. (#9144)
+- NVDA giờ đây đã đọc chính xác thuật ngữ cho các chú thích trong  MS Excel. (#11311)
+- Khi dùng lệnh  "di chuyển con trỏ duyệt đến focus" trong chế độ duyệt, con trỏ duyệt giờ đây được đặt tại vị trí của dấu nháy ảo. (#9622)
+- Các thông tin được đọc trong chế độ duyệt như thông tin định dạng với NVDA+F, giờ đây được hiển thị trong một cửa sổ lớn hơn ở giữa màn hình. (#9910)
+
+
+== Sửa lỗi ==
+- Giờ đây, NVDA luôn đọc khi điều hướng qua từng từ và đứng tại mọi kí hiệu đơn có dấu khoảng trắng phía sau, ở bất cứ cài đặt cấp độ đọc dấu câu nào. (#5133)
+- Trong các ứng dụng dùng QT 5.11 trở lên, các mô tả đối tượng lại được đọc. (#8604)
+- Khi xóa một từ với control+delete, NVDA không còn im lặng. (#3298, #11029)
+  - Giờ đây, từ bên phải của từ bị xóa đã được đọc.
+- Trong bảng cài đặt chung, danh sách ngôn ngữ giờ đã được sắp xếp một cách chính xác. (#10348)
+- Trong hộp thoại Quản lý các thao tác, cải thiện đáng kể hiệu suất vận hành khi lọc. (#10307)(
+- Giờ bạn có thể gửi các kí tự Unicode  ra U+FFFF từ một màn hình chữ nổi. (#10796)
+- NVDA sẽ đọc nội dung của hộp thoại Open With  trong Windows 10 May 2020 Update. (#11335)
+- Một tùy chọn thử nghiệm mới trong  cài đặt nâng cao (Bật các chọn lọc đăng kí cho các thay đổi sự kiện và thuộc tính của UI Automation) có thể cung cấp các cải thiện hiệu suất vận hành lớn trong Microsoft Visual Studio và các ứng dụng khác trên nền tản UIAutomation nếu được bật. (#11077, #11209)
+- Với danh sách các thành phần có thể đánh dấu chọn, thành phần đã chọn không còn bị đọc một cách dư thừa, và nếu có thể, thành phần không được chọn sẽ được đọc thay. (#8554)
+- Trên Windows 10 May 2020 Update, NVDA giờ đã hiển thị Microsoft Sound Mapper khi xem các thiết bị đầu ra từ hộp thoại chọn bộ đọc. (#11349)
+- Trong Internet Explorer, các số giờ đây đã được đọc một cách chính xác với danh sách có thứ tự nếu nó không bắt đầu với 1. (#8438)
+- Trong Google chrome, NVDA giờ đây sẽ đọc chưa chọn cho tất cả các điều khiển có thể chọn (không chỉ với các hộp kiểm) hiện chưa được chọn. (#11377)
+- Lại một lần nữa có thể điều hướng trong nhiều điều khiển khi ngôn ngữ của NVDA được thiết lập là Aragonese. (#11384)
+- NVDA không còn thỉnh thoảng bị treo trong Microsoft Word khi bấm nhanh  mũi tên lên xuống hay gõ các kí tự khi đã bật chữ nổi. (#11431, #11425, #11414)
+- NVDA không còn thêm dấu cách không tồn tại khi sao chép đối tượng điều hướng hiện tại vào bộ nhớ tạm. (#11438)
+- NVDA không còn kích hoạt hồ sơ đọc tất cả khi không có gì để đọc. (#10899, #9947)
+- NVDA không còn tình trạng không đọc được phần features list trong  Internet Information Services (IIS) Manager. (#11468)
+- NVDA giờ đây giữ thiết bị audio  ở trạng thái mở, nhằm cải thiện hiệu năng trên vài thiết bị âm thanh (#5172, #10721)
+- NVDA sẽ không còn bị treo hay bị tắt khi nhấn giữ control+shift+mũi tên xuống trong Microsoft Word. (#9463)
+- Trạng thái đã mở rộng đã thu gọn của thư mục trong cây thư mục trên drive.google.com giờ đây luôn được đọc bởi NVDA. (#11520)
+- NVDA sẽ tự nhận màn hình nổi NLS eReader Humanware qua Bluetooth với tên Bluethooth của nó giờ đây là "NLS eReader Humanware". (#11561)
+
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
+
 = 2020.2 =
 Các cải tiến của bản phát hành này bao gồm hỗ trợ một màn hình chữ nổi mới từ Nattiq, hỗ trợ tốt hơn cho ESET antivirus giao diện đồ họa và Windows Terminal, cải thiện hiệu năng vận hành với 1Password và bộ đọc Windows OneCore. Nhiều lỗi quan trọng khác cũng được sửa.
 

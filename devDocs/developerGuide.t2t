@@ -72,6 +72,7 @@ Subsequent lines contain a textual identifier used to identify the symbol, a tab
 For example:
 ```
 . sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
+dates with .	\b(\d\d)\.(\d\d)\.(\d{2}|\d{4})\b
 ```
 
 Again, the English symbols are inherited by all other locales, so you need not include any complex symbols already defined for English.
@@ -98,6 +99,8 @@ Certain characters cannot be typed into the file, so the following special seque
  - \f: form feed
  - \#: # character (needed because # at the start of a line denotes a comment)
 - replacement: The text which should be spoken for the symbol.
+If the symbol is a complex symbol, \1, \2, etc. can be used to refer to the groups matches, which will be inlined in the replacement, allowing for simpler rules.
+This also means that to get a \ character in the replacement, one has to type \\.
 - level: The symbol level at which the symbol should be spoken.
 The symbol level is configured by the user and specifies the amount of symbols that should be spoken.
 This field should contain one of the levels "none", "some", "most", "all" or "char", or "-" to use the default.
@@ -132,6 +135,13 @@ This line appears in the French symbols.dic file.
 It means that the ". sentence ending" complex symbol should be spoken as "point".
 Level and preserve are not specified, so they will be taken from English.
 A display name is provided so that French users will know what the symbol represents.
+
+```
+dates with .	\1 point \2 point \3	all	norep	# date avec points
+```
+This line appears in the French symbols.dic file.
+It means that the first, second, and third groups of the match will be included, separated by the word 'point'.
+The effect is thus to replace the dots from the date with the word 'point'.
 
 Please see the file locale\en\symbols.dic for the English definitions which are inherited for all locales.
 This is also a good full example.
@@ -468,6 +478,9 @@ The following keyword arguments can be used when applying the script decorator:
   This option defaults to False.
 - bypassInputHelp: A boolean indicating whether this script should run when input help is active.
   This option defaults to False.
+- resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
+  The constants for say all mode are prefixed with CURSOR_ and specified in the sayAllHandler modules.
+  If resumeSayAllMode is not specified, say all does not resume after this script.
 -
 
 Though the script decorator makes the script definition process a lot easier, there are more ways of binding gestures and setting script properties.

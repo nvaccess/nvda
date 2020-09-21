@@ -57,6 +57,19 @@ def _getEmbedded(obj, offset):
 
 class MozillaCompoundTextInfo(CompoundTextInfo):
 
+	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
+		controlField = super()._getControlFieldForObject(obj, ignoreEditableText=ignoreEditableText)
+		if controlField is None:
+			return None
+		# Set the uniqueID of the controlField if we can get one
+		# which ensures that two controlFields with the same role and states etc are still treated differently
+		# if they are actually for different objects.
+		# E.g. two list items in a list.
+		uniqueID = obj.IA2UniqueID
+		if uniqueID is not None:
+			controlField["uniqueID"] = uniqueID
+		return controlField
+
 	def __init__(self, obj, position):
 		super(MozillaCompoundTextInfo, self).__init__(obj, position)
 		if isinstance(position, NVDAObject):
@@ -99,7 +112,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				# The caret is at the end of an inline object.
 				# This will report "blank", but we want to report the character just after the caret.
 				try:
-					caretTi, caretObj = self._findNextContent(caretTi)
+					caretTi, caretObj = self._findNextContent(caretTi, limitToInline=True)
 				except LookupError:
 					pass
 			self._start = self._end = caretTi
@@ -220,8 +233,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		else:
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(obj.windowHandle,winUser.OBJID_CLIENT,descendantID.value)
 		if position == textInfos.POSITION_CARET:
-			# Cache for later use.
-			self.obj._lastCaretObj = obj
+			# If the compound TextInfo is for the current focus,
+			# We should cache the caret object as we know it will probably be needed again.
+			# Note that event_loseFocus on NVDAObjects.IAccessible.ia2Web.Editor will clear the cache,
+			# To ensure we don't end up with a reference cycle.
+			if self.obj is api.getFocusObject():
+				self.obj._lastCaretObj = obj
 		# optimisation: Passing an Offsets position checks nCharacters, which is an extra call we don't need.
 		ti=self._makeRawTextInfo(obj,textInfos.POSITION_FIRST)
 		ti._startOffset=ti._endOffset=descendantOffset.value
@@ -509,7 +526,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		self._end = end
 		self._endObj = endObj
 
-	def _findNextContent(self, origin, moveBack=False):
+	def _findNextContent(self, origin, moveBack=False, limitToInline=False):
 		if isinstance(origin, textInfos.TextInfo):
 			ti = origin
 			obj = ti.obj
@@ -525,6 +542,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			if obj == self.obj:
 				# We're at the root. Don't go any further.
 				raise LookupError
+			if limitToInline:
+				if obj.IA2Attributes.get('display') != 'inline':
+					# The caller requested to limit to inline objects.
+					# As this container is not inline,
+					# We cannot go above this container.
+					raise LookupError
 			ti = self._getEmbedding(obj)
 			if not ti:
 				raise LookupError

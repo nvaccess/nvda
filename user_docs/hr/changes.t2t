@@ -7,6 +7,60 @@
 - Kako biste bili obaviješteni o svim događanjima vezanim uz NVDA, pridružite se našem kanalu i grupi nvda_yu. Na kanalu ćete moći raspravljati o svemu vezanom uz NVDA, koristeći vaš mobilni telefon ili računalo.
 
 
+= 2020.3 =
+
+== Nove značajke ==
+- Sada možete uključivati ili isključivati izgovor grafičkih elemenata u postavkama oblikovanja dokumenta. Imajte na umu da isključivanjem ove opcije alternativni tekst će se i dalje čitati. (#4837)
+- Sada možete uključivati ili isključivati podršku ekrana osjetljivih na dodir. Dodana je opcija na panel interakcije s ekranima osjetljivim na dodir. Podrazumjevani prečac za ovu opciju je NVDA+control+alt+t. (#9682)
+- Dodane nove brajične tablice za njemački jezik. (#11268)
+- NVDA sada izvještava o UIA kontrolama UIA koje su samo za čitanje. (#10494)
+- Postojanje obilježenog teksta ili sadržaja sada se izgovara i pokazuje na brajičnom retku u web preglednicima. (#11436)
+ - Ovo se može uključiti ili isključiti u postavkama oblikovanja dokumenta pomoću nove opcije za obilježavanje.
+- Novi emulirani tipkovnički prečaci sada se mogu dadavati koristeći dijaloški okvir ulaznih gesti. (#6060)
+  - Kako biste dodali takav prečac, pritisnite gumb dodaj poslje označavanja kategorije emulirani tipkovnički prečaci.
+
+
+== Izmjene ==
+- Prečac za izvještavanje o oblikovanju dokumenta (NVDA+f) je izmijenjen tako da izgovara izmjene pod kursorom sustava umjesto preglednog kursora. Kako biste čuli izmjene oblikovanja dokumenta pod preglednim kursorom Sada trebate koristiti prečac NVDA+shift+f. (#9505)
+- NVDA više ne postavlja fokus na elemente koji se mogu fokusirati u web preglednicima, što unapređuje stabilnost i brzinu. (#11190)
+- CLDR je nadograđen s inačice 36.1 na inačicu 37. (#11303)
+- Nadograđen eSpeak-NG na inačicu 1.51-dev, commit 1fb68ffffea4
+- Sada možete koristiti tabličnu navigaciju za popise sa označivim stavkama kada taj određen popis ima više stupaca. (#8857)
+- U upravitelju dodataka, kada se pojavi pitanje o uklanjanju dodatka, gumb "ne" sada je podrazumjevana opcija. (#10015)
+- U Microsoft Excelu, popis elemenata sada pokazuje formule u njihovom prevedenom obliku. (#9144)
+- NVDA sada izgovara ispravnu terminologiju za bilješke u MS Excelu. (#11311)
+- Kada se koristi prečac "premjesti pregledni kursor na fokus" u načinu pregleda, pregledni se kursor premješta na poziciju virtualnog kursora. (#9622)
+- Informacije prikazane u modusu pregleda poput informacija o oblikovanju dokumenata koje se dobiju pritiskom NVDA+F, sada se prikazuju u malo većem prozoru koji se nalazi na sredini zaslona. (#9910)
+
+
+== Ispravke grešaka ==
+- NVDA sada izgovara simbol prilikom stajanja na riječi i kada znak slijedi poslije bijelog razmaka neovisno od postavke izgovora. (#5133)
+- In U aplikacijama koje koriste QT 5.11 ili noviji, opisi objekta sada ponovno izgovaraju. (#8604)
+- Prilikom brisanja riječi kraticom control+delete, NVDA više ne ostaje tih. (#3298, #11029)
+  - sada se izgovara rijeć koja slijedi poslije izbrisane riječi.
+- U panelu općih postavki, popis jezika se sada ispravno sortira. (#10348)
+- Značajno unapređene performanse u dijaloškom okviru ulaznih gesti prilikom filtriranja. (#10307)(
+- Sada možete sa brajičnog retka upisivati Unicode znakove iznad vrijednosti  U+FFFF. (#10796)
+- NVDA će sada ispravno čitati sadržaj dijaloškog okvira otvori sa u nadogradnji Windows 10 za svibanj 2020. (#11335)
+- Dodana je nova eksperimentalna opcija u  naprednim postavkama (Uključi selektivnu registraciju UIA događaja i izmjena svojstava) koja može unaprijediti performance u Visual studio i drugim UIA automation aplikacijama ako je uključena. (#11077, #11209)
+- Za stavke popisa koje se mogu odabrati, stanje označenosti se ne izgovara izlišno, te ako je moguće, umjesto njega se izgovara status neoznačenosti. (#8554)
+- U Windowsima 10 nadogradnij za svibanj 2020, NVDA saa prikazuje Microsoft zvučni enumerator u dijaloškom okviru govorna jedinica. (#11349)
+- U Internet Exploreru, brojevi se sada točno izgovaraju za parne popise ako popis ne počinje brojem 1. (#8438)
+- U Google chromeu, NVDA će sada izgovarati "nije odabrano"  za sve kontrole koje su označive (ne samo za potvrdne okvire) koji su trenutno neoznačeni. (#11377)
+- Sada je ponovno moguće kretati se po raznim kontrolama ako je jezik NVDA postavljen na Aragonski. (#11384)
+- NVDA više se neće zaglavljivati u Microsoft Wordu prilikom brzog kretanja strelicama ili upisivanja znakova. (#11431, #11425, #11414)
+- NVDA više ne dodaje nepostojeći dupli razmak prilikom kopiranja trenutnog objekta navigatora u međuspremnik. (#11438)
+- NVDA više ne aktivira profil za čitanje cijelog sadržaja ako ne postoji ništa za čitanje. (#10899, #9947)
+- NVDA sada čita popis funkcija u upravitelju internetskih servisa informacija (IIS). (#11468)
+- NVDA sada ostavlja otvorenu zvučnu karticu takvim načinom poboljšavajući performanse (#5172, #10721)
+- NVDA više se neće smrznuti ili srušiti prilikom pritiska i držanja ctrl+shift+strelica dolje u Microsoft Wordu. (#9463)
+- Stanje skupljenosti ili raširenosti mapa na stranici drive.google.com sada je pravilno izgovarano. (#11520)
+
+
+== Izmjene za razvojne programere ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
+
 = 2020.2 =
 Novosti u ovoj inačici uključuju podršku za novi brajični redak tvrtke Nattiq, poboljšanu podršku za antivirus eset nod32 te winodws naredbeni redak, unapređenje performanis u programu 1Password, poboljšanja sa sintetizatorom govora One core. Također, u ovu inačicu uvršteni su i puno drugih popravaka grešaka.
 
