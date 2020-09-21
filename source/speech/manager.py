@@ -336,7 +336,6 @@ class SpeechManager(object):
 				lastOutSeq.append(IndexCommand(reachedIndex))
 			outSeqs.append([EndUtteranceCommand()])
 
-
 		paramsToReplay = []
 		outSeq = []
 		for command in inSeq:
