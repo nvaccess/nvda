@@ -9,6 +9,8 @@ What's New in NVDA
 - Pressing F1 inside NVDA dialogs will now open the help file to most relevant section. (#7757)
 - Support for auto complete suggestions (IntelliSense) in Microsoft SQL Server Management Studio plus Visual Studio 2017 and higher. (#7504)
 - Symbol pronunciation: Support for grouping in a complex symbol definition and support group references in a replacement rule making them simpler and more powerful. (#11107)
+- Users are now notified when attempting to create Speech Dictionary entries with invalid regular expression substitutions. (#11407)
+  - Specifically grouping errors are now detected.
 
 
 == Changes ==
@@ -22,6 +24,8 @@ What's New in NVDA
 - NVDA now honors the aria-roledescription attribute on elements in editable content in web pages. (#11607)
 - 'list' is no longer announced on every line of a list in Google Docs or other editable content in Google Chrome. (#7562)
 - When arrowing by character or word from one list item to another in editable content on the web, entering the new list item is now announced. (#11569)
+- NVDA now reads the correct line when the caret is placed at the end of a link on the end of a list item in Google Docs or other editable content on the web. (#11606)
+- On Windows 7, opening and closing the start menu from the desktop now sets focus correctly. (#10567)
 - When "attempt to cancel expired focus events" is enabled, the title of the tab is now announced again when switching tabs in Firefox. (#11397)
 
 
