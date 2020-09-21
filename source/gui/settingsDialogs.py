@@ -960,7 +960,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 		deviceListLabelText = _("Audio output  &device:")
 		deviceNames=nvwave.getOutputDeviceNames()
 		# #11349: On Windows 10 20H1 and 20H2, Microsoft Sound Mapper returns an empty string.
-		if not deviceNames[0]:
+		if deviceNames[0] in ("", "Microsoft Sound Mapper"):
 			# Translators: name for default (Microsoft Sound Mapper) audio output device.
 			deviceNames[0] = _("Microsoft Sound Mapper")
 		self.deviceList = settingsSizerHelper.addLabeledControl(deviceListLabelText, wx.Choice, choices=deviceNames)
