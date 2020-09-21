@@ -29,11 +29,11 @@ from logHandler import log
 import time
 import globalVars
 
-versionedLibPath='lib'
+versionedLibPath = os.path.join(globalVars.appDir, 'lib')
 if os.environ.get('PROCESSOR_ARCHITEW6432') == 'ARM64':
-	versionedLib64Path = 'libArm64'
+	versionedLib64Path = os.path.join(globalVars.appDir, 'libArm64')
 else:
-	versionedLib64Path = 'lib64'
+	versionedLib64Path = os.path.join(globalVars.appDir, 'lib64')
 if getattr(sys,'frozen',None):
 	# Not running from source. Libraries are in a version-specific directory
 	versionedLibPath=os.path.join(versionedLibPath,versionInfo.version)

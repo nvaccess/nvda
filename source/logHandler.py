@@ -249,7 +249,7 @@ class RemoteHandler(logging.Handler):
 
 	def __init__(self):
 		#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-		path=os.path.abspath(os.path.join(u"lib",buildVersion.version,u"nvdaHelperRemote.dll"))
+		path = os.path.join(globalVars.appDir, "lib", buildVersion.version, "nvdaHelperRemote.dll")
 		h=ctypes.windll.kernel32.LoadLibraryExW(path,0,LOAD_WITH_ALTERED_SEARCH_PATH)
 		if not h:
 			raise OSError("Could not load %s"%path) 

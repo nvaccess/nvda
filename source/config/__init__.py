@@ -125,7 +125,7 @@ def getUserDefaultConfigPath(useInstalledPathIfExists=False):
 			# Therefore add a suffix to the directory to make it specific to Windows Store application versions.
 			installedUserConfigPath+='_appx'
 		return installedUserConfigPath
-	return u'.\\userConfig\\'
+	return os.path.join(globalVars.appDir, 'userConfig')
 
 def getSystemConfigPath():
 	if isInstalledCopy():
