@@ -128,7 +128,7 @@ class _EventExecuter(garbageHandler.TrackedObject):
 				yield func, (obj, self.next)
 
 		# Tree interceptor level.
-		treeInterceptor = obj.treeInterceptor
+		treeInterceptor = obj.runningTreeInterceptor
 		if treeInterceptor:
 			func = getattr(treeInterceptor, funcName, None)
 			if func and (getattr(func,'ignoreIsReady',False) or treeInterceptor.isReady):

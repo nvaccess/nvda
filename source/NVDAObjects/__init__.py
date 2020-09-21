@@ -31,6 +31,8 @@ import globalPluginHandler
 import brailleInput
 import locationHelper
 import aria
+from typing import Optional
+
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
@@ -365,26 +367,31 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	#: @type: bool
 	shouldCreateTreeInterceptor = True
 
-	def _get_treeInterceptor(self):
-		"""Retrieves the treeInterceptor associated with this object.
-		If a treeInterceptor has not been specifically set, the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
-		@return: the treeInterceptor
-		@rtype: L{treeInterceptorHandler.TreeInterceptor}
+	def _get_runningTreeInterceptor(self) -> Optional[treeInterceptorHandler.TreeInterceptor]:
+		"""Retrieves a running treeInterceptor associated with this object.
+		@return: the treeInterceptor or C{None} if a treeInterceptor has not been specifically set.
 		""" 
-		if hasattr(self,'_treeInterceptor'):
-			ti=self._treeInterceptor
-			if isinstance(ti,weakref.ref):
-				ti=ti()
+		if hasattr(self, '_treeInterceptor'):
+			ti = self._treeInterceptor
+			if isinstance(ti, weakref.ref):
+				ti = ti()
 			if ti and ti in treeInterceptorHandler.runningTable:
 				return ti
 			else:
 				self._treeInterceptor=None
 				return None
-		else:
-			ti=treeInterceptorHandler.getTreeInterceptor(self)
+
+	def _get_treeInterceptor(self) -> Optional[treeInterceptorHandler.TreeInterceptor]:
+		"""Retrieves the treeInterceptor associated with this object.
+		If a treeInterceptor has not been specifically set, the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
+		@return: the treeInterceptor
+		""" 
+		ti = self.runningTreeInterceptor
+		if not ti:
+			ti = treeInterceptorHandler.getTreeInterceptor(self)
 			if ti:
-				self._treeInterceptor=weakref.ref(ti)
-			return ti
+				self._treeInterceptor = weakref.ref(ti)
+		return ti
 
 	def _set_treeInterceptor(self,obj):
 		"""Specifically sets a treeInterceptor to be associated with this object.
