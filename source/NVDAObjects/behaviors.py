@@ -305,18 +305,18 @@ class LiveText(NVDAObject):
 		self._pipe = _winapi.CreateFile(
 			"\\\\.\\pipe\\nvda_dmp",
 			_winapi.GENERIC_READ | _winapi.GENERIC_WRITE,
-			0,
-			_winapi.NULL,
+			0,  # don't share
+			_winapi.NULL,  # default security attributes
 			_winapi.OPEN_EXISTING,
-			0,
-			_winapi.NULL,
+			0x80,  # normal attributes
+			_winapi.NULL  # no template
 		)
 
 	def _terminateDMP(self):
-		_winapi.WriteFile(self._pipe, b"\x00\x00\x00\x00\x00\x00\x00\x00")
+		_winapi.WriteFile(self._pipe, struct.pack("=II", 0, 0))
 		ctypes.windll.kernel32.DisconnectNamedPipe(self._pipe)
 
-	def _writeToPipe(self, data):
+	def _writeToPipe(self, data: str):
 		bytes_acc = 0
 		err = None
 		while bytes_acc < len(data) and not err:
