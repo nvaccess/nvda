@@ -306,6 +306,7 @@ class SpeechManager(object):
 		paramTracker = ParamChangeTracker()
 		enteredTriggers = []
 		outSeqs = []
+		paramsToReplay = []
 
 		def ensureEndUtterance(seq: SpeechSequence):
 			# We split at EndUtteranceCommands so the ends of utterances are easily found.
@@ -336,7 +337,6 @@ class SpeechManager(object):
 				lastOutSeq.append(IndexCommand(reachedIndex))
 			outSeqs.append([EndUtteranceCommand()])
 
-		paramsToReplay = []
 		outSeq = []
 		for command in inSeq:
 			if isinstance(command, BaseCallbackCommand):
