@@ -1113,6 +1113,7 @@ class InitialDevelopmentTests_withCancellableSpeechEnabled(InitialDevelopmentTes
 		super().setUp()
 		config.conf['featureFlag']['cancelExpiredFocusSpeech'] = 1  # yes
 
+
 class Test_pr11651(unittest.TestCase):
 
 	def test_redundantSequenceAfterEndUtterance(self):
