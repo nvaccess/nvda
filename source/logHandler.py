@@ -333,7 +333,7 @@ def _getDefaultLogFilePath():
 		import tempfile
 		return os.path.join(tempfile.gettempdir(), "nvda.log")
 	else:
-		return ".\\nvda.log"
+		return os.path.join(globalVars.appDir, "nvda.log")
 
 def _excepthook(*exc_info):
 	log.exception(exc_info=exc_info, codepath="unhandled exception")
