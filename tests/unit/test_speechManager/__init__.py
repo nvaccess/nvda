@@ -826,13 +826,13 @@ class InitialDevelopmentTests(unittest.TestCase):
 			"Testing testing ",
 			speech.PitchCommand(offset=100),
 			"1 2 3 4",
-			ExpectedIndex(1),
+			smi.create_ExpectedIndex(1),
 			# The preceeding index is expected,
 			# as the following profile trigger commands will cause the utterance to be split here.
 			ConfigProfileTriggerCommand(t1, True),
 			ConfigProfileTriggerCommand(t2, True),
 			"5 6 7 8",
-			ExpectedIndex(2),
+			smi.create_ExpectedIndex(2),
 			# The preceeding index is expected,
 			# as the following profile trigger commands will cause the utterance to be split here.
 			ConfigProfileTriggerCommand(t1, False),
