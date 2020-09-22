@@ -30,7 +30,11 @@ import locale
 import gettext
 
 try:
-	gettext.translation('nvda',localedir='locale',languages=[locale.getdefaultlocale()[0]]).install(True)
+	gettext.translation(
+		'nvda',
+		localedir=os.path.join(globalVars.appDir, 'locale'),
+		languages=[locale.getdefaultlocale()[0]]
+	).install(True)
 except:
 	gettext.install('nvda')
 
