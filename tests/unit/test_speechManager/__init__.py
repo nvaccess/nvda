@@ -17,6 +17,8 @@ from speech.commands import (
 	PitchCommand,
 	ConfigProfileTriggerCommand,
 	_CancellableSpeechCommand,
+	CharacterModeCommand,
+	EndUtteranceCommand,
 )
 from .speechManagerTestHarness import (
 	_IndexT,
@@ -1110,3 +1112,27 @@ class InitialDevelopmentTests_withCancellableSpeechEnabled(InitialDevelopmentTes
 	def setUp(self):
 		super().setUp()
 		config.conf['featureFlag']['cancelExpiredFocusSpeech'] = 1  # yes
+
+class Test_pr11651(unittest.TestCase):
+
+	def test_redundantSequenceAfterEndUtterance(self):
+		"""
+		Tests that redundant param change and index commands are not emitted as an extra utterance
+		when the preceeding utterance contained param change commands and an EndUtterance command.
+		E.g. speaking a character.
+		"""
+		smi = SpeechManagerInteractions(self)
+		seq = [
+			CharacterModeCommand(True),
+			"a",
+			smi.create_ExpectedIndex(1),
+			EndUtteranceCommand(),
+		]
+		with smi.expectation():
+			smi.speak(seq)
+			# synth should receive the characterMode, the letter 'a' and an index command.
+			smi.expect_synthSpeak(sequence=seq[:-1])
+		with smi.expectation():
+			smi.indexReached(1)
+			smi.doneSpeaking()
+			smi.pumpAll()
