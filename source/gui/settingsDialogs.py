@@ -3285,11 +3285,9 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		else:
 			self.showMessagesList.SetSelection(2)
 
-		minTimeout = int(config.conf.getConfigValidation(
-			("braille", "messageTimeout")
-		).kwargs["min"])
-		if minTimeout == 0:
-			minTimeout = 1
+		# Minimal timeout value possible here is 1, because 0 disables showing of braille messages
+		# and is set using showMessagesList
+		minTimeout = 1
 		maxTimeOut = int(config.conf.getConfigValidation(
 			("braille", "messageTimeout")
 		).kwargs["max"])
