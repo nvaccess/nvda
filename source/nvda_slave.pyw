@@ -8,6 +8,11 @@
 Performs miscellaneous tasks which need to be performed in a separate process.
 """
 
+import sys
+import os
+import globalVars
+
+
 # Initialise comtypes.client.gen_dir and the comtypes.gen search path 
 # and Append our comInterfaces directory to the comtypes.gen search path.
 import comtypes
@@ -16,9 +21,6 @@ import comtypes.gen
 import comInterfaces
 comtypes.gen.__path__.append(comInterfaces.__path__[0])
 
-import sys
-import os
-import globalVars
 
 if hasattr(sys, "frozen"):
 	# Error messages (which are only for debugging) should not cause the py2exe log message box to appear.
