@@ -484,7 +484,8 @@ class WavePlayer(garbageHandler.TrackedObject):
 				self._close()
 
 	def _close(self):
-		log.debug("Calling winmm.waveOutClose")
+		if _isDebugForNvWave():
+			log.debug("Calling winmm.waveOutClose")
 		with self._global_waveout_lock:
 			if not self._waveout:
 				return
