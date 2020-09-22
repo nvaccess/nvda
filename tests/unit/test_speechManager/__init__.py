@@ -869,7 +869,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 			smi.expect_synthSpeak(sequence=[
 				seq[1],  # PitchCommand
 				'9 10 11 12',
-				ExpectedIndex(expectedIndexCommandIndex=3)
+				smi.create_ExpectedIndex(expectedToBecomeIndex=3)
 			])
 			smi.expect_mockCall(t1.exit)
 
@@ -1134,6 +1134,12 @@ class Test_pr11651(unittest.TestCase):
 			# synth should receive the characterMode, the letter 'a' and an index command.
 			smi.expect_synthSpeak(sequence=seq[:-1])
 		with smi.expectation():
+			# Previously, this would result in synth.speak receiving
+			# a call with sequence:
+			# [CharacterModeCommand(True), IndexCommand(2)]
+			# This is a problem because it includes an index command but no speech.
+			# This is inefficient, and also some SAPI5 synths such as Ivona will not
+			# notify of this bookmark.
 			smi.indexReached(1)
 			smi.doneSpeaking()
 			smi.pumpAll()
