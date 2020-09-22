@@ -80,7 +80,13 @@ def _speechManagerUnitTest(msg, *args, **kwargs) -> None:
 		When
 	"""
 	if not IS_UNIT_TEST_LOG_ENABLED:
-		return _speechManagerDebug(msg, *args, **kwargs)
+		# Don't reuse _speechManagerDebug, it leads to incorrect function names in the log (all
+		# SpeechManager debug logging appears to come from _speechManagerUnitTest instead of the frame
+		# one stack higher. The codepath argument for _log could also be used to resolve this, but duplication
+		# simpler.
+		if log.isEnabledFor(log.DEBUG) and _shouldDoSpeechManagerLogging():
+			log._log(log.DEBUG, f"SpeechManager- " + msg, args, **kwargs)
+		return
 	log._log(log.INFO, f"SpeechManUnitTest- " + msg, args, **kwargs)
 
 # Install the custom log handlers.
@@ -429,7 +435,7 @@ class SpeechManager(object):
 				if isinstance(item, IndexCommand):
 					self._indexesSpeaking.append(item.index)
 			self._cancelledLastSpeechWithSynth = False
-			log._speechManagerUnitTest(f"Assert Synth Gets: {seq}")
+			log._speechManagerUnitTest(f"Synth Gets: {seq}")
 			getSynth().speak(seq)
 
 	def _getNextPriority(self):
