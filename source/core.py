@@ -232,7 +232,7 @@ def main():
 		log.info("Developer Scratchpad mode enabled")
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
-			nvwave.playWaveFile("waves\\start.wav")
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "start.wav"))
 		except:
 			pass
 	logHandler.setLogLevelFromConfig()
@@ -298,7 +298,10 @@ def main():
 		speech.cancelSpeech()
 		if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 			try:
-				nvwave.playWaveFile("waves\\exit.wav",asynchronous=False)
+				nvwave.playWaveFile(
+					os.path.join(globalVars.appDir, "waves", "exit.wav"),
+					asynchronous=False
+				)
 			except:
 				pass
 		log.info("Windows session ending")
@@ -591,7 +594,10 @@ def main():
 
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
-			nvwave.playWaveFile("waves\\exit.wav",asynchronous=False)
+			nvwave.playWaveFile(
+				os.path.join(globalVars.appDir, "waves", "exit.wav"),
+				asynchronous=False
+			)
 		except:
 			pass
 	# #5189: Destroy the message window as late as possible

@@ -276,7 +276,7 @@ class FileHandler(logging.FileHandler):
 		elif record.levelno>=logging.ERROR and shouldPlayErrorSound:
 			import nvwave
 			try:
-				nvwave.playWaveFile("waves\\error.wav")
+				nvwave.playWaveFile("os.path.join(globalVars.appDir, "waves", "error.wav"))
 			except:
 				pass
 		return super().handle(record)
