@@ -46,7 +46,7 @@ def browseableMessage(message,title=None,isHtml=False):
 	@param isHtml: Whether the message is html
 	@type isHtml: boolean
 	"""
-	htmlFileName  = os.path.join(globalVars.appDir, 'message.html')
+	htmlFileName = os.path.join(globalVars.appDir, 'message.html')
 	if not os.path.isfile(htmlFileName ): 
 		raise LookupError(htmlFileName )
 	moniker = POINTER(IUnknown)()
