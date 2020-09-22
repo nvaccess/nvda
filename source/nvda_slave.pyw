@@ -16,23 +16,37 @@ import comtypes.gen
 import comInterfaces
 comtypes.gen.__path__.append(comInterfaces.__path__[0])
 
+import sys
+import os
+import globalVars
+
+if hasattr(sys, "frozen"):
+	# Error messages (which are only for debugging) should not cause the py2exe log message box to appear.
+	sys.stderr = sys.stdout
+	globalVars.appDir = sys.prefix
+else:
+	globalVars.appDir = os.path.abspath(os.path.dirname(__file__))
+
+# #2391: some functions may still require the current directory to be set to NVDA's app dir
+os.chdir(globalVars.appDir)
+
+
 import gettext
 import locale
 #Localization settings
 try:
-	gettext.translation('nvda',localedir='locale',languages=[locale.getdefaultlocale()[0]]).install()
+	gettext.translation(
+		'nvda',
+		localedir=os.path.join(globalVars.appDir, 'locale'),
+		languages=[locale.getdefaultlocale()[0]]
+	).install()
 except:
 	gettext.install('nvda')
 
-import sys
-import os
+
 import versionInfo
 import logHandler
-if hasattr(sys, "frozen"):
-	# Error messages (which are only for debugging) should not cause the py2exe log message box to appear.
-	sys.stderr = sys.stdout
-	#Many functions expect  the current directory to be where slave is located (#2391) 
-	os.chdir(sys.prefix)
+
 
 def main():
 	import installer
