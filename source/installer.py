@@ -121,7 +121,7 @@ def getDocFilePath(fileName,installDir):
 				return tryPath
 
 def copyProgramFiles(destPath):
-	sourcePath=os.getcwd()
+	sourcePath = globalVars.appDir
 	detectUserConfig=True
 	detectNVDAExe=True
 	for curSourceDir,subDirs,files in os.walk(sourcePath):

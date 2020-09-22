@@ -83,7 +83,7 @@ def isInstalledCopy():
 		return False
 	winreg.CloseKey(k)
 	try:
-		return os.stat(instDir)==os.stat(os.getcwd()) 
+		return os.stat(instDir) == os.stat(globalVars.appDir) 
 	except WindowsError:
 		return False
 
