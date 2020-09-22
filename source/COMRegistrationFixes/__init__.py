@@ -8,6 +8,7 @@
 import os
 import subprocess
 import winVersion
+import globalVars
 from logHandler import log
 
 # Particular  64 bit / 32 bit system paths
@@ -53,7 +54,7 @@ def applyRegistryPatch(fileName,wow64=False):
 		log.debug("Applied registry patch: %s with %s"%(fileName,regedit))
 
 
-OLEACC_REG_FILE_PATH = os.path.abspath(os.path.join("COMRegistrationFixes", "oleaccProxy.reg"))
+OLEACC_REG_FILE_PATH = os.path.join(globalVars.appDir, "COMRegistrationFixes", "oleaccProxy.reg")
 def fixCOMRegistrations():
 	"""
 	Registers most common COM proxies, in case they had accidentally been unregistered or overwritten by 3rd party software installs/uninstalls.
