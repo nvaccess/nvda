@@ -227,7 +227,7 @@ def canStartOnSecureScreens():
 	# This function will be transformed into a flag in a future release.
 	return isInstalledCopy()
 
-SLAVE_FILENAME = u"nvda_slave.exe"
+SLAVE_FILENAME = os.path.join(globalVars.appDir, "nvda_slave.exe")
 
 #: The name of the registry key stored under  HKEY_LOCAL_MACHINE where system wide NVDA settings are stored.
 #: Note that NVDA is a 32-bit application, so on X64 systems, this will evaluate to "SOFTWARE\WOW6432Node\nvda"
