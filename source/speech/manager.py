@@ -80,7 +80,13 @@ def _speechManagerUnitTest(msg, *args, **kwargs) -> None:
 		When
 	"""
 	if not IS_UNIT_TEST_LOG_ENABLED:
-		return _speechManagerDebug(msg, *args, **kwargs)
+		# Don't reuse _speechManagerDebug, it leads to incorrect function names in the log (all
+		# SpeechManager debug logging appears to come from _speechManagerUnitTest instead of the frame
+		# one stack higher. The codepath argument for _log could also be used to resolve this, but duplication
+		# simpler.
+		if log.isEnabledFor(log.DEBUG) and _shouldDoSpeechManagerLogging():
+			log._log(log.DEBUG, f"SpeechManager- " + msg, args, **kwargs)
+		return
 	log._log(log.INFO, f"SpeechManUnitTest- " + msg, args, **kwargs)
 
 # Install the custom log handlers.
@@ -306,28 +312,36 @@ class SpeechManager(object):
 		paramTracker = ParamChangeTracker()
 		enteredTriggers = []
 		outSeqs = []
+		paramsToReplay = []
 
 		def ensureEndUtterance(seq: SpeechSequence):
 			# We split at EndUtteranceCommands so the ends of utterances are easily found.
+			# This function ensures the given sequence ends with an EndUtterance command,
+			# Ensures that the sequence also includes an index command at the end,
+			# It places the complete sequence in outSeqs,
+			# It clears the given sequence list ready to build a new one,
+			# And clears the paramsToReplay list
+			# and refills it with any params that need to be repeated if a new sequence is going to be built.
 			if seq:
 				# There have been commands since the last split.
-				outSeqs.append(seq)
-				lastOutSeq = seq
+				lastOutSeq = paramsToReplay + seq
+				outSeqs.append(lastOutSeq)
+				paramsToReplay.clear()
+				seq.clear()
 				# Re-apply parameters that have been changed from their defaults.
-				seq = paramTracker.getChanged()
+				paramsToReplay.extend(paramTracker.getChanged())
 			else:
 				lastOutSeq = outSeqs[-1] if outSeqs else None
 			lastCommand = lastOutSeq[-1] if lastOutSeq else None
 			if not lastCommand or isinstance(lastCommand, (EndUtteranceCommand, ConfigProfileTriggerCommand)):
 				# It doesn't make sense to start with or repeat EndUtteranceCommands.
 				# We also don't want an EndUtteranceCommand immediately after a ConfigProfileTriggerCommand.
-				return seq
+				return
 			if not isinstance(lastCommand, IndexCommand):
 				# Add an index so we know when we've reached the end of this utterance.
 				reachedIndex = next(self._indexCounter)
 				lastOutSeq.append(IndexCommand(reachedIndex))
 			outSeqs.append([EndUtteranceCommand()])
-			return seq
 
 		outSeq = []
 		for command in inSeq:
@@ -337,8 +351,9 @@ class SpeechManager(object):
 				outSeq.append(IndexCommand(speechIndex))
 				self._indexesToCallbacks[speechIndex] = command
 				# We split at indexes so we easily know what has completed speaking.
-				outSeqs.append(outSeq)
-				outSeq = []
+				outSeqs.append(paramsToReplay + outSeq)
+				paramsToReplay.clear()
+				outSeq.clear()
 				continue
 			if isinstance(command, ConfigProfileTriggerCommand):
 				if not command.trigger.hasProfile:
@@ -350,7 +365,7 @@ class SpeechManager(object):
 				if not command.enter and command.trigger not in enteredTriggers:
 					log.debugWarning("Request to exit trigger which wasn't entered: %r" % command.trigger.spec)
 					continue
-				outSeq = ensureEndUtterance(outSeq)
+				ensureEndUtterance(outSeq)
 				outSeqs.append([command])
 				if command.enter:
 					enteredTriggers.append(command.trigger)
@@ -358,7 +373,7 @@ class SpeechManager(object):
 					enteredTriggers.remove(command.trigger)
 				continue
 			if isinstance(command, EndUtteranceCommand):
-				outSeq = ensureEndUtterance(outSeq)
+				ensureEndUtterance(outSeq)
 				continue
 			if isinstance(command, SynthParamCommand):
 				paramTracker.update(command)
@@ -420,7 +435,7 @@ class SpeechManager(object):
 				if isinstance(item, IndexCommand):
 					self._indexesSpeaking.append(item.index)
 			self._cancelledLastSpeechWithSynth = False
-			log._speechManagerUnitTest(f"Assert Synth Gets: {seq}")
+			log._speechManagerUnitTest(f"Synth Gets: {seq}")
 			getSynth().speak(seq)
 
 	def _getNextPriority(self):
