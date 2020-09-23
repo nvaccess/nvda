@@ -1,0 +1,5 @@
+# robotframework-screencaplibrary requires pillow>=5.2.0
+# pillow requires opencv-python>=4.0.0.21
+# opencv-python-4.4.0.44 does not come with wheels and fails to build.
+# use last known good version
+opencv-python==4.4.0.42
