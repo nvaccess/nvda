@@ -8,13 +8,14 @@ from typing import Optional, List
 import os
 import globalVars
 from logHandler import log
+from ctypes import windll
 from ctypes import *
 import inputCore
 import wx
 import braille
 
 try:
-	lilliDll=windll.LoadLibrary(os.path.join(globalVars.appDir, "brailleDisplayDrivers", "lilli.dll"))
+	lilliDll = windll.LoadLibrary(os.path.join(globalVars.appDir, "brailleDisplayDrivers", "lilli.dll"))
 except:
 	lilliDll=None
 
