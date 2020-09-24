@@ -253,7 +253,7 @@ def _setStartOnLogonScreen(enable):
 		winreg.SetValueEx(k, u"startOnLogonScreen", None, winreg.REG_DWORD, int(enable))
 
 def setSystemConfigToCurrentConfig():
-	fromPath=os.path.abspath(globalVars.appArgs.configPath)
+	fromPath = globalVars.appArgs.configPath
 	if ctypes.windll.shell32.IsUserAnAdmin():
 		_setSystemConfig(fromPath)
 	else:

@@ -208,7 +208,7 @@ def _executeUpdate(destPath):
 		if os.access(portablePath, os.W_OK):
 			executeParams = u'--create-portable --portable-path "{portablePath}" --config-path "{configPath}" -m'.format(
 				portablePath=portablePath,
-				configPath=os.path.abspath(globalVars.appArgs.configPath)
+				configPath=globalVars.appArgs.configPath
 			)
 		else:
 			executeParams = u"--launcher"

@@ -224,7 +224,7 @@ def main():
 		globalVars.appArgs.configPath=config.getUserDefaultConfigPath(useInstalledPathIfExists=globalVars.appArgs.launcher)
 	#Initialize the config path (make sure it exists)
 	config.initConfigPath()
-	log.info("Config dir: %s"%os.path.abspath(globalVars.appArgs.configPath))
+	log.info(f"Config dir: {globalVars.appArgs.configPath}")
 	log.debug("loading config")
 	import config
 	config.initialize()
