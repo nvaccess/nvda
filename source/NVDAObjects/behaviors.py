@@ -8,9 +8,8 @@
 Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.
 """
 
-import _winapi
-import ctypes
 import os
+import sys
 import time
 import threading
 import struct
@@ -234,7 +233,7 @@ class LiveText(NVDAObject):
 		self._event = threading.Event()
 		self._monitorThread = None
 		self._keepMonitoring = False
-		self._pipe = None
+		self._dmp = None
 
 	def startMonitoring(self):
 		"""Start monitoring for new text.
@@ -299,29 +298,16 @@ class LiveText(NVDAObject):
 		speech.speakText(line)
 
 	def _initializeDMP(self):
-		subprocess.Popen("./nvda_dmp.exe", creationflags=subprocess.CREATE_NO_WINDOW)
-		time.sleep(0.1)  # is there a better way to wait/check for the pipe?
-		# (try/except in a loop breaks the pipe on the CPP side)
-		self._pipe = _winapi.CreateFile(
-			"\\\\.\\pipe\\nvda_dmp",
-			_winapi.GENERIC_READ | _winapi.GENERIC_WRITE,
-			0,  # don't share
-			_winapi.NULL,  # default security attributes
-			_winapi.OPEN_EXISTING,
-			0x80,  # normal attributes
-			_winapi.NULL  # no template
+		self._dmp = subprocess.Popen(
+			(sys.executable, "nvda_dmp.py"),
+			bufsize=0,
+			stdin=subprocess.PIPE,
+			stdout=subprocess.PIPE
 		)
 
 	def _terminateDMP(self):
-		_winapi.WriteFile(self._pipe, struct.pack("=II", 0, 0))
-		ctypes.windll.kernel32.DisconnectNamedPipe(self._pipe)
-
-	def _writeToPipe(self, data: str):
-		bytes_acc = 0
-		err = None
-		while bytes_acc < len(data) and not err:
-			bytes_written, err = _winapi.WriteFile(self._pipe, data[bytes_acc:])
-			bytes_acc += bytes_written
+		self._dmp.stdin.write(struct.pack("=II", 0, 0))
+		self._dmp = None
 
 	def _monitor(self):
 		if self.shouldUseDMP:
@@ -378,19 +364,19 @@ class LiveText(NVDAObject):
 			old = oldText.encode("utf-8")
 			new = newText.encode("utf-8")
 			tl = struct.pack("=II", len(old), len(new))
-			self._writeToPipe(tl)
-			self._writeToPipe(old)
-			self._writeToPipe(new)
+			self._dmp.stdin.write(tl)
+			self._dmp.stdin.write(old)
+			self._dmp.stdin.write(new)
 			buf = b""
 			sizeb = b""
 			SIZELEN = 4
 			while len(sizeb) < SIZELEN:
-				sizeb = _winapi.ReadFile(self._pipe, SIZELEN - len(sizeb))[0]
+				sizeb = self._dmp.stdout.read(SIZELEN - len(sizeb))
 				if sizeb is None:
 					sizeb = b""
 			(size,) = struct.unpack("=I", sizeb)
 			while len(buf) < size:
-				buf += _winapi.ReadFile(self._pipe, size - len(buf))[0]
+				buf += self._dmp.stdout.read(size - len(buf))
 			return [
 				line
 				for line in buf.decode("utf-8").splitlines()
