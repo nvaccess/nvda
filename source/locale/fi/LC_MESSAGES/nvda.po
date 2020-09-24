@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-07 00:10+1000\n"
-"PO-Revision-Date: 2020-08-17 22:17+0200\n"
+"POT-Creation-Date: 2020-09-11 00:10+1000\n"
+"PO-Revision-Date: 2020-09-17 06:44+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -388,6 +388,10 @@ msgstr "alu"
 msgid "fig"
 msgstr "kuv"
 
+#. Translators: Displayed in braille for an object which represents marked (highlighted) content
+msgid "mrkd"
+msgstr "mrk"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "val"
@@ -767,8 +771,18 @@ msgstr "saksa, taso 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "German grade 0 (detailed)"
+msgstr "saksa, taso 0 (yksityiskohtainen)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "German grade 1"
 msgstr "saksa, taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German grade 1 (detailed)"
+msgstr "saksa, taso 1 (yksityiskohtainen)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1247,8 +1261,6 @@ msgstr "Vuorovaikutustila"
 #. Translators: The mode that presents text in a flat representation
 #. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
 msgid "Browse mode"
 msgstr "Selaustila"
 
@@ -2697,6 +2709,10 @@ msgstr "alue"
 msgid "figure"
 msgstr "kuva"
 
+#. Translators: Identifies marked (highlighted) content
+msgid "marked content"
+msgstr "Merkitty sisältö"
+
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
 msgstr "ei käytettävissä"
@@ -3533,6 +3549,18 @@ msgstr "Linkkien ilmaiseminen käytössä"
 msgid "Toggles on and off the reporting of links"
 msgstr "Ottaa käyttöön linkkien ilmaisemisen tai poistaa sen käytöstä."
 
+#. Translators: Input help mode message for toggle report graphics command.
+msgid "Toggles on and off the reporting of graphics"
+msgstr "Ottaa käyttöön grafiikoiden ilmaisemisen tai poistaa sen käytöstä."
+
+#. Translators: The message announced when toggling the report graphics document formatting setting.
+msgid "report graphics off"
+msgstr "Grafiikoiden ilmaiseminen pois"
+
+#. Translators: The message announced when toggling the report graphics document formatting setting.
+msgid "report graphics on"
+msgstr "Grafiikoiden ilmaiseminen käytössä"
+
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
 msgstr "Kommenttien ilmaiseminen pois"
@@ -3743,17 +3771,17 @@ msgstr ""
 "Lukee tarkastelukohdistimen kohdalla olevan tekstin tai objektin "
 "sijaintitiedot. Kahdesti painaminen antaa lisätietoja."
 
+#. Translators: Input help mode message for move navigator object to current focus command.
+msgid ""
+"Sets the navigator object to the current focus,and the review cursor to the "
+"position of the caret inside it, if possible."
+msgstr ""
+"Siirtää navigointiobjektin nykyiseen kohdistukseen ja tarkastelukohdistimen "
+"sen sisällä olevan kohdistimen kohdalle, mikäli mahdollista."
+
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
 msgstr "Siirrä kohdistukseen"
-
-#. Translators: Input help mode message for move navigator object to current focus command.
-msgid ""
-"Sets the navigator object to the current focus, and the review cursor to the "
-"position of the caret inside it, if possible."
-msgstr ""
-"Siirtää navigointiobjektin nykyiseen kohdistukseen ja "
-"tarkastelukohdistimensiinä olevan kohdistimen kohdalle, jos mahdollista."
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3766,6 +3794,7 @@ msgid "Move focus"
 msgstr "Siirrä kohdistus"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
+#. Translators: Reported when there is no caret.
 msgid "No caret"
 msgstr "Ei kohdistinta"
 
@@ -4053,12 +4082,40 @@ msgid "Formatting"
 msgstr "Muotoilu"
 
 #. Translators: Input help mode message for report formatting command.
+msgid "Reports formatting info for the current review cursor position."
+msgstr "Ilmoittaa muotoilutiedot nykyisestä tarkastelukohdistimen sijainnista."
+
+#. Translators: Input help mode message for show formatting at review cursor command.
 msgid ""
-"Reports formatting info for the current review cursor position within a "
-"document. If pressed twice, presents the information in browse mode"
+"Presents, in browse mode, formatting info for the current review cursor "
+"position."
+msgstr ""
+"Näyttää muotoilutiedot selaustilassa nykyisestä tarkastelukohdistimen "
+"sijainnista."
+
+#. Translators: Input help mode message for report formatting command.
+msgid ""
+"Reports formatting info for the current review cursor position. If pressed "
+"twice, presents the information in browse mode"
 msgstr ""
 "Lukee asiakirjan muotoilutiedot tarkastelukohdistimen nykyisestä "
 "sijainnista. Kahdesti painettaessa tiedot näytetään selaustilassa."
+
+#. Translators: Input help mode message for report formatting at caret command.
+msgid "Reports formatting info for the text under the caret."
+msgstr "Ilmoittaa kohdistimen alla olevan tekstin muotoilutiedot."
+
+#. Translators: Input help mode message for show formatting at caret position command.
+msgid "Presents, in browse mode, formatting info for the text under the caret."
+msgstr "Näyttää selaustilassa kohdistimen alla olevan tekstin muotoilutiedot."
+
+#. Translators: Input help mode message for report formatting at caret command.
+msgid ""
+"Reports formatting info for the text under the caret. If pressed twice, "
+"presents the information in browse mode"
+msgstr ""
+"Lukee kohdistimen alla olevan tekstin muotoilutiedot. Kahdesti painettaessa "
+"tiedot näytetään selaustilassa."
 
 #. Translators: Input help mode message for report current focus command.
 msgid "Reports the object with focus. If pressed twice, spells the information"
@@ -4144,6 +4201,39 @@ msgstr ""
 "Tallentaa lokiin kehittäjille hyödyllistä tietoa nykyisestä "
 "navigointiobjektista ja avaa Lokin tarkastelun, jossa näitä tietoja voidaan "
 "tutkia."
+
+#. Translators: Input help mode message for a command to delimit then
+#. copy a fragment of the log to clipboard
+msgid ""
+"Mark the current end of the log as the start of the fragment to be copied to "
+"clipboard by pressing again."
+msgstr ""
+"Merkitse lokin tämänhetkinen loppu leikepöydälle kopioitavan osan "
+"alkukohdaksi painamalla uudelleen."
+
+#. Translators: Message when marking the start of a fragment of the log file for later copy
+#. to clipboard
+msgid "Log fragment start position marked, press again to copy to clipboard"
+msgstr ""
+"Lokilohkon alkukohta merkitty. Kopioi leikepöydälle painamalla uudelleen."
+
+#. Translators: Message when failed to mark the start of a
+#. fragment of the log file for later copy to clipboard
+msgid "Unable to mark log position"
+msgstr "Lokin kopioitavan osan alkukohtaa ei voi merkitä"
+
+#. Translators: Message when attempting to copy an empty fragment of the log file
+msgid "No new log entry to copy"
+msgstr "Ei uutta kopioitavaa lokimerkintää"
+
+#. Translators: Message when a fragment of the log file has been
+#. copied to clipboard
+msgid "Log fragment copied to clipboard"
+msgstr "Lokin osa kopioitu leikepöydälle"
+
+#. Translators: Presented when unable to copy to the clipboard because of an error.
+msgid "Unable to copy"
+msgstr "Ei voi kopioida"
 
 #. Translators: Input help mode message for Open user configuration directory command.
 msgid "Opens NVDA configuration directory for the current user."
@@ -4519,10 +4609,6 @@ msgstr "Tekstiä ei voi valita, kopioi painamalla kahdesti"
 msgid "Review selection copied to clipboard"
 msgstr "Valittu teksti kopioitu leikepöydälle"
 
-#. Translators: Presented when unable to copy to the clipboard because of an error.
-msgid "Unable to copy"
-msgstr "Ei voi kopioida"
-
 #. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
 msgid ""
 "If pressed once, the text from the previously set start marker up to and "
@@ -4585,15 +4671,15 @@ msgid ""
 "Virtually toggles the shift key to emulate a keyboard shortcut with braille "
 "input"
 msgstr ""
-"Vaihtaa virtuaalisesti Vaihto-näppäimen tilaa pikanäppäimen emuloimiseksi "
-"pistekirjoitusta syötettäessä."
+"Vaihtaa virtuaalisesti Vaihto-näppäimen tilaa pikanäppäimen "
+"jäljittelemiseksi pistekirjoitusta syötettäessä."
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the control key to emulate a keyboard shortcut with "
 "braille input"
 msgstr ""
-"Vaihtaa virtuaalisesti Ctrl-näppäimen tilaa pikanäppäimen emuloimiseksi "
+"Vaihtaa virtuaalisesti Ctrl-näppäimen tilaa pikanäppäimen jäljittelemiseksi "
 "pistekirjoitusta syötettäessä."
 
 #. Translators: Input help mode message for a braille command.
@@ -4601,7 +4687,7 @@ msgid ""
 "Virtually toggles the alt key to emulate a keyboard shortcut with braille "
 "input"
 msgstr ""
-"Vaihtaa virtuaalisesti Alt-näppäimen tilaa pikanäppäimen emuloimiseksi "
+"Vaihtaa virtuaalisesti Alt-näppäimen tilaa pikanäppäimen jäljittelemiseksi "
 "pistekirjoitusta syötettäessä."
 
 #. Translators: Input help mode message for a braille command.
@@ -4610,14 +4696,14 @@ msgid ""
 "braille input"
 msgstr ""
 "Vaihtaa virtuaalisesti vasemman Windows-näppäimen tilaa pikanäppäimen "
-"emuloimiseksi pistekirjoitusta syötettäessä"
+"jäljittelemiseksi pistekirjoitusta syötettäessä"
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
 "input"
 msgstr ""
-"Vaihtaa virtuaalisesti NVDA-näppäimen tilaa pikanäppäimen emuloimiseksi "
+"Vaihtaa virtuaalisesti NVDA-näppäimen tilaa pikanäppäimen jäljittelemiseksi "
 "pistekirjoitusta syötettäessä"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
@@ -4645,6 +4731,22 @@ msgid ""
 "hierarchy"
 msgstr ""
 "Siirtää edelliseen objektiin objektinavigointihierarkian kokonaisnäkymässä."
+
+#. Translators: Describes a command.
+msgid "Toggles the support of touch interaction"
+msgstr "Ottaa käyttöön kosketusvuorovaikutuksen tuen tai poistaa sen käytöstä."
+
+#. Translators: Presented when attempting to toggle touch interaction support
+msgid "Touch interaction not supported"
+msgstr "Kosketuksen vuorovaikutusta ei tueta"
+
+#. Translators: Presented when support of touch interaction has been enabled
+msgid "Touch interaction enabled"
+msgstr "Kosketuksen vuorovaikutus käytössä"
+
+#. Translators: Presented when support of touch interaction has been disabled
+msgid "Touch interaction disabled"
+msgstr "Kosketuksen vuorovaikutus pois käytöstä"
 
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
@@ -4795,7 +4897,7 @@ msgstr "Ottaa käyttöön tai poistaa käytöstä {profile}-asetusprofiilin."
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
-msgstr "Emuloidut järjestelmänäppäimistön näppäimet"
+msgstr "Jäljiteltävät järjestelmänäppäimistön näppäimet"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
@@ -5208,6 +5310,13 @@ msgstr "burma"
 msgctxt "languageName"
 msgid "Somali"
 msgstr "somali"
+
+#. Translators: The pattern defining how languages are displayed and sorted in in the general
+#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
+#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
+#, python-brace-format
+msgid "{desc}, {lc}"
+msgstr "{desc}, {lc}"
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -6304,7 +6413,7 @@ msgstr "Ruudun tarkastelu"
 
 #, python-format
 msgid "Emulates pressing %s on the system keyboard"
-msgstr "Jäljittelee näppäimistön %s-näppäimen painamista."
+msgstr "Jäljittelee näppäimen %s painamista näppäimistöltä."
 
 msgid "NVDA Speech Viewer"
 msgstr "Puheen tarkastelu"
@@ -6488,6 +6597,7 @@ msgstr "Virhe tarkistettaessa päivitystä."
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of an error message dialog.
+#. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
@@ -6568,7 +6678,6 @@ msgstr "Muistuta &myöhemmin"
 #. Translators: The label of a button to close a dialog.
 #. Translators: The label of a button to close the Addons dialog.
 #. Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
-#. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "&Sulje"
 
@@ -7891,7 +8000,6 @@ msgstr "T&ietoja lisäosasta..."
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
-#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
 msgid "OK"
 msgstr "OK"
 
@@ -7975,8 +8083,8 @@ msgstr "&Poista käytöstä"
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
-#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 msgid "&Remove"
 msgstr "&Poista"
 
@@ -8002,8 +8110,13 @@ msgid "NVDA Add-on Package (*.{ext})"
 msgstr "NVDA:n lisäosapaketti (*.{ext})"
 
 #. Translators: Presented when attempting to remove the selected add-on.
-msgid "Are you sure you wish to remove the selected add-on from NVDA?"
-msgstr "Haluatko varmasti poistaa valitun lisäosan NVDA:sta?"
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgid ""
+"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
+"undone."
+msgstr ""
+"Haluatko varmasti poistaa lisäosan {addon} NVDA:sta? Poistoa ei voi perua."
 
 #. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
@@ -8360,6 +8473,81 @@ msgstr ""
 msgid "Manual Activation"
 msgstr "Manuaalinen käyttöönotto"
 
+#. Translators: Describes a gesture in the Input Gestures dialog.
+#. {main} is replaced with the main part of the gesture; e.g. alt+tab.
+#. {source} is replaced with the gesture's source; e.g. laptop keyboard.
+#, python-brace-format
+msgid "{main} ({source})"
+msgstr "{main} ({source})"
+
+#. Translators: The prompt to enter a gesture in the Input Gestures dialog.
+msgid "Enter input gesture:"
+msgstr "Anna syötekomento:"
+
+#. Translators: An gesture that will be emulated by some other new gesture. The token {emulateGesture}
+#. will be replaced by the gesture that can be triggered by a mapped gesture.
+#. E.G. Emulate key press: NVDA+b
+#, python-brace-format
+msgid "Emulate key press: {emulateGesture}"
+msgstr "Jäljittele näppäinpainallusta: {emulateGesture}"
+
+#. Translators: The prompt to enter an emulated gesture in the Input Gestures dialog.
+msgid "Enter gesture to emulate:"
+msgstr "Anna jäljiteltävä syötekomento:"
+
+#. Translators: The label for a filtered category in the Input Gestures dialog.
+#, python-brace-format
+msgid "{category} (1 result)"
+msgstr "{category} (1 hakutulos)"
+
+#. Translators: The label for a filtered category in the Input Gestures dialog.
+#, python-brace-format
+msgid "{category} ({nbResults} results)"
+msgstr "{category} ({nbResults} hakutulosta)"
+
+#. Translators: The title of the Input Gestures dialog where the user can remap input gestures for scripts.
+msgid "Input Gestures"
+msgstr "Syötekomennot"
+
+#. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
+msgctxt "inputGestures"
+msgid "&Filter by:"
+msgstr "&Suodata:"
+
+#. Translators: The label of a button to add a gesture in the Input Gestures dialog.
+#. Translators: The label for a button in speech dictionaries dialog to add new entries.
+#. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
+msgid "&Add"
+msgstr "&Lisää"
+
+#. Translators: The label of a button to reset all gestures in the Input Gestures dialog.
+msgid "Reset to factory &defaults"
+msgstr "Palauta o&letukset"
+
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid ""
+"Are you sure you want to reset all gestures to their factory defaults?\n"
+"\n"
+"\t\t\tAll of your user defined gestures, whether previously set or defined "
+"during this session, will be lost.\n"
+"\t\t\tThis cannot be undone."
+msgstr ""
+"Haluatko varmasti palauttaa kaikkien syötekomentojen oletusarvot?\n"
+"\n"
+"\t\t\tKaikki aiemmin tai tämän istunnon aikana itse määrittämäsi "
+"syötekomennot menetetään.\n"
+"\t\t\tPalautusta ei voi perua."
+
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "Nollaa syötekomennot"
+
+#. Translators: An error displayed when saving user defined input gestures fails.
+msgid "Error saving user defined gestures - probably read only file system."
+msgstr ""
+"Virhe tallennettaessa käyttäjän määrittämiä syötekomentoja - "
+"tiedostojärjestelmä on luultavasti vain luku -tyyppiä."
+
 #. Translators: The title of the dialog presented while NVDA is being updated.
 msgid "Updating NVDA"
 msgstr "Päivitetään NVDA:ta"
@@ -8574,13 +8762,8 @@ msgid "Log is unavailable"
 msgstr "Loki ei ole käytettävissä"
 
 #. Translators: A cancel button on a message dialog.
-#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
 msgid "Cancel"
 msgstr "Peruuta"
-
-#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
-msgid "Apply"
-msgstr "Käytä"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
@@ -8756,6 +8939,10 @@ msgstr "&Syntetisaattori:"
 #. headphones, etc.
 msgid "Audio output  &device:"
 msgstr "Äänen ulostulo&laite:"
+
+#. Translators: name for default (Microsoft Sound Mapper) audio output device.
+msgid "Microsoft Sound Mapper"
+msgstr "Microsoft Sound Mapper"
 
 #. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 msgid "Audio d&ucking mode:"
@@ -9100,6 +9287,12 @@ msgstr "Ilmaise vuorovaikutus- ja selaustilat äänimerkillä"
 msgid "&Trap all non-command gestures from reaching the document"
 msgstr "Estä mui&den kuin syötekomentojen pääsy asiakirjaan"
 
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings panel.
+msgid "Automatically set system &focus to focusable elements"
+msgstr ""
+"Siirrä järjestelmä&kohdistus automaattisesti kohdistettaviin elementteihin"
+
 #. Translators: This is the label for the document formatting panel.
 msgid "Document Formatting"
 msgstr "Asiakirjojen muotoilu"
@@ -9144,6 +9337,11 @@ msgstr "K&orostus"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+msgid "Marked (highlighted text)"
+msgstr "Merkitty (korostettu teksti)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "St&yle"
 msgstr "T&yyli"
 
@@ -9159,8 +9357,8 @@ msgstr "Asiakirjan tiedot"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Co&mments"
-msgstr "Ko&mmentit"
+msgid "No&tes and comments"
+msgstr "Mu&istiinpanot ja kommentit"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9268,6 +9466,11 @@ msgstr "Elementit"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+msgid "&Graphics"
+msgstr "&Grafiikat"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "&Lists"
 msgstr "&Luettelot"
 
@@ -9313,6 +9516,11 @@ msgstr "Kosketuksen vuorovaikutus"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
+msgid "Enable touch interaction support"
+msgstr "Ota käyttöön kosketusvuorovaikutuksen tuki"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings panel.
 msgid "&Touch typing mode"
 msgstr "&Kosketuskirjoitustila"
 
@@ -9342,6 +9550,14 @@ msgstr "Avaa kehittäjien scratchpad-hakemisto"
 #. Advanced settings panel
 msgid "Microsoft UI Automation"
 msgstr "Microsoft UI Automation"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid ""
+"Enable &selective registration for UI Automation events and property changes"
+msgstr ""
+"Ota käyttöön UI Automation -tapahtumien ja ominaisuusmuutosten &valikoiva "
+"rekisteröinti"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9391,12 +9607,6 @@ msgstr "Ei"
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "Yritä perua vanhentuneiden kohdistustapahtumien puhe:"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid "Automatically set system &focus to focusable elements"
-msgstr ""
-"Siirrä järjestelmä&kohdistus automaattisesti kohdistettaviin elementteihin"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9499,7 +9709,6 @@ msgid "&Dictionary entries"
 msgstr "&Sanastomääritykset"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
-#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
 msgstr "Kommentti"
 
@@ -9519,12 +9728,6 @@ msgstr "Kirjainkoko"
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
 msgid "Type"
 msgstr "Tyyppi"
-
-#. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
-#. Translators: The label of a button to add a gesture in the Input Gestures dialog.
-msgid "&Add"
-msgstr "&Lisää"
 
 #. Translators: The label for a button in speech dictionaries dialog to edit existing entries.
 msgid "&Edit"
@@ -9739,54 +9942,6 @@ msgstr "Po&ista"
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "Symboli \"%s\" on jo olemassa."
-
-#. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
-msgid "Input Gestures"
-msgstr "Syötekomennot"
-
-#. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
-msgctxt "inputGestures"
-msgid "&Filter by:"
-msgstr "&Suodata:"
-
-#. Translators: The label of a button to reset all gestures in the Input Gestures dialog.
-msgid "Reset to factory &defaults"
-msgstr "Palauta o&letukset"
-
-#. Translators: Describes a gesture in the Input Gestures dialog.
-#. {main} is replaced with the main part of the gesture; e.g. alt+tab.
-#. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
-msgid "{main} ({source})"
-msgstr "{main} ({source})"
-
-#. Translators: The prompt to enter a gesture in the Input Gestures dialog.
-msgid "Enter input gesture:"
-msgstr "Anna syötekomento:"
-
-#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
-msgid ""
-"Are you sure you want to reset all gestures to their factory defaults?\n"
-"\t\t\t\n"
-"\t\t\tAll of your user defined gestures, whether previously set or defined "
-"during this session, will be lost.\n"
-"\t\t\tThis cannot be undone."
-msgstr ""
-"Haluatko varmasti palauttaa kaikkien syötekomentojen oletusarvot?\n"
-"\t\t\t\n"
-"\t\t\tKaikki aiemmin tai tämän istunnon aikana itse määrittämäsi "
-"syötekomennot menetetään.\n"
-"\t\t\tTätä ei voi perua."
-
-#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
-msgid "Reset gestures"
-msgstr "Nollaa syötekomennot"
-
-#. Translators: An error displayed when saving user defined input gestures fails.
-msgid "Error saving user defined gestures - probably read only file system."
-msgstr ""
-"Virhe tallennettaessa käyttäjän määrittämiä syötekomentoja - "
-"tiedostojärjestelmä on luultavasti vain luku -tyyppiä."
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -11281,8 +11436,8 @@ msgstr "&Kaaviot"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omments"
-msgstr "K&ommentit"
+msgid "N&otes"
+msgstr "M&uistiinpanot"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -11298,6 +11453,14 @@ msgstr "&Laskentataulukot"
 #, python-brace-format
 msgid "{start} through {end}"
 msgstr "väliltä {start} ja {end}"
+
+#. Translators: the description  for a script for Excel
+msgid "opens a dropdown item at the current cell"
+msgstr "Avaa pudotusvalikon nykyisessä solussa."
+
+#. Translators: the description  for a script for Excel
+msgid "Sets the current cell as start of column header"
+msgstr "Määrittää nykyisen solun sarakeotsikoiden alkukohdaksi."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
@@ -11327,6 +11490,10 @@ msgstr ""
 "Kerran painaminen määrittää tämän solun ensimmäiseksi sarakeotsikoksi sen "
 "ala- ja oikealla puolella oleville soluille nykyisellä alueella. Kahdesti "
 "painaminen nollaa solun nykyisen sarakeotsikon."
+
+#. Translators: the description  for a script for Excel
+msgid "sets the current cell as start of row header"
+msgstr "Määrittää nykyisen solun riviotsikoiden alkukohdaksi."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
@@ -11370,23 +11537,33 @@ msgstr "Syöttöilmoitus on {title}: {message}"
 msgid "Input Message is {message}"
 msgstr "Syöttöilmoitus on {message}"
 
-#. Translators: A message in Excel when there is no comment
-msgid "Not on a comment"
-msgstr "Ei kommentissa"
+#. Translators: the description  for a script for Excel
+msgid "Reports the note on the current cell"
+msgstr "Lukee nykyisessä solussa olevan muistiinpanon."
+
+#. Translators: A message in Excel when there is no note
+msgid "Not on a note"
+msgstr "Ei muistiinpanossa"
 
 #. Translators: the description  for a script for Excel
-msgid "Reports the comment on the current cell"
-msgstr "Lukee nykyisessä solussa olevan kommentin"
+msgid "Opens the note editing dialog"
+msgstr "Avaa muistiinpanon muokkausvalintaikkunan."
 
-#. Translators: Dialog text for
+#. Translators: Dialog text for the note editing dialog
 #, python-brace-format
-msgid "Editing comment for cell {address}"
-msgstr "Muokataan solun {address} kommenttia"
+msgid "Editing note for cell {address}"
+msgstr "Muokataan solun {address} muistiinpanoa"
+
+#. Translators: Title for the note editing  dialog
+msgid "Note"
+msgstr "Muistiinpano"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
+#. Beware to keep two spaces between the address and the content. Otherwise some synthesizer
+#. may mix the address and the content when the cell contains a 3-digit number.
 #, python-brace-format
-msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
-msgstr "väliltä {firstAddress} {firstContent} ja {lastAddress} {lastContent}"
+msgid "{firstAddress}  {firstContent} through {lastAddress}  {lastContent}"
+msgstr "väliltä {firstAddress}  {firstContent} ja {lastAddress}  {lastContent}"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "top edge"
@@ -11808,6 +11985,15 @@ msgstr "Kaksinkertainen riviväli"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Riviväli 1,5"
+
+#~ msgid "Apply"
+#~ msgstr "Käytä"
+
+#~ msgid "Co&mments"
+#~ msgstr "Ko&mmentit"
+
+#~ msgid "C&omments"
+#~ msgstr "K&ommentit"
 
 #~ msgid "Ukrainian"
 #~ msgstr "ukraina"

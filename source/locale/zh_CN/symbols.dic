@@ -8,6 +8,9 @@ $	美元
 ;	分号
 \\	反斜杠
 |	竖线
+¦	间断条	most
+¡	倒置感叹号	some
+¿	倒置问号	some
 .	点
 :	冒号
 \0	空白	char
@@ -23,7 +26,7 @@ $	美元
 "	双引号
 \#	井号
 %	百分号
-&	与号
+&	和
 '	单引号
 (	左括号
 )	右括号
@@ -39,24 +42,22 @@ _	下划线
 　	全角空格	all
 ₹	印度卢比	some	norep
 negative number	负
-✔	选择
-✓	选择
+✔	粗对钩
+✓	对钩
 # Other characters
 ©	版权所有
 ™	商标
-®	已注册
-³	注3
-²	注2
-¹	注1
+®	注册
 µ	百万分之一
 »	右双尖括号	most
 «	左双尖括号	most
 ➔	右箭头	most
 ‏	右至左符号	most
 ‎	左至右符号	most
-¨	分音符	most
 –	短破折号	most	always
 ·	间隔号	most	always
+⁃	连字符	none
+­	软连字符	most
 •	着重号	most
 `	反撇号	most
 ^	脱字符	most
@@ -127,7 +128,12 @@ no-break space	空格	most
 ＆	全角与号	most
 ＊	全角星号	most
 ※	重点 符号	most
-§	章节号	most
+§	章节符	most
+¶	段落符	most
+¸	变音符	most
+´	重音符	most
+¯	长音符	most
+¨	分音符	most
 〃	同上符号	most
 ○	空心圆	most
 ●	实心圆	most
@@ -207,6 +213,7 @@ no-break space	空格	most
 ＼	全角反斜杠	most
 
 # 常用单位符号
+¤	货币符	all	norep
 ￥	人民币	none
 ￠	全形分币标记	none
 ￡	英鎊	none
@@ -461,6 +468,7 @@ no-break space	空格	most
 ∦	不平型	none
 ∧	逻辑「与」	none
 ∨	逻辑「或」	none
+¬	逻辑「非」	none
 ∩	交集	none
 ∪	并集	none
 ∫	积分	none
@@ -488,8 +496,6 @@ no-break space	空格	most
 ≹	不大於或小於	most
 ∓	減或加	most
 −	減號	most
-⁺	正數	most
-⁻	負數	most
 ℇ	歐拉常數	most
 ℒ	拉普拉斯变换	most
 ℱ	傅立叶变换	most
@@ -512,6 +518,9 @@ no-break space	空格	most
 ⅒	十分之一	none
 ⅓	三分之一	none
 ⅔	三分之二	none
+¾	四分之三	none
+½	二分之一	none
+¼	四分之一	none
 ⅕	五分之一	none
 ⅖	五分之二	none
 ⅗	五分之三	none
@@ -589,10 +598,48 @@ no-break space	空格	most
 ⠾	二三四五六点	all
 ⠿	一二三四五六点	all
 
+# 上下标
+º	阳性顺序指示符	some
+ª	阴性顺序指示符	some
+⁰	上标0	some
+¹	上标1	some
+²	上标2	some
+³	上标3	some
+⁴	上标4	some
+⁵	上标五	some
+⁶	上标6	some
+⁷	上标7	some
+⁸	上标8	some
+⁹	上标9	some
+⁺	上标加号	most
+⁻	上标减号	most
+⁼	上标等号	some
+⁽	上标左圆括号	some
+⁾	上标右圆括号	some
+ⁿ	上标n	some
+₀	下标 0	some
+₁	下标 1	some
+₂	下标 2	some
+₃	下标 3	some
+₄	下标 4	some
+₅	下标 5	some
+₆	下标 6	some
+₇	下标 7	some
+₈	下标 8	some
+₉	下标 9	some
+₊	下标加号	some
+₋	下标减号	some
+₌	下标等号	some
+₍	下标左圆括号	some
+₎	下标右圆括号	some
+
 # 杂项符号
 ⌘	Mac Command键	none
 ‡	双剑标	some
 †	箭标	some
-‣	triangular bullet	none
+◦	空心加重号	some
+‣	三角加重号	none
+✗	投票 X	none
+￼	对象替换符	none
 ƒ	弗罗林	all	norep
 ‰	千分之	some

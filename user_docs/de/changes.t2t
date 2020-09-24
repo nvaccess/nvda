@@ -4,6 +4,8 @@ Was ist neu in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2020.3 =
+Diese Version enthält mehrere große Verbesserungen der Stabilität und Leistung, insbesondere bei Microsoft Office-Anwendungen. Es gibt neue Einstellungen zum Umschalten zwischen Touchscreen-Unterstützung und Ansage von Grafiken.
+Markierte (hervorgehobenene) Inhalte kann man in Browsern sich ansagen lassen. Außerdem gibt es neue deutsche Braille-Tabellen.
 
 == Neue Features ==
 - Sie können nun die Ansage von Grafiken aus den Dokumentformatierungseinstellungen von NVDA ausschalten. Beachten Sie, dass die Deaktivierung dieser Option weiterhin die alternativen Texte von Grafiken vorliest. (#4837)
@@ -26,6 +28,7 @@ Was ist neu in NVDA
 - In Microsoft Excel zeigt das Dialogfeld für die Elementliste jetzt Formeln in der entsprechenden Sprache der Anwendung an. (#9144)
 - NVDA teilt nun die korrekte Terminologie für Anmerkungen in Microsoft Excel mit. (#11311)
 - Wenn Sie den Befehl "NVDA-Cursor zum Fokus ziehen" im Lesemodus verwenden, wird der NVDA-Cursor jetzt auf die Position des virtuellen Cursors gesetzt. (#9622)
+- Im Lesemodus angezeigte Informationen, wie z. B. die Informationen zur Textformatierung mit NVDA+F, werden nun in einem etwas größeren Fenster zentriert auf dem Bildschirm angezeigt. (#9910)
 
 
 == Fehlerkorrekturen ==
@@ -34,8 +37,8 @@ Was ist neu in NVDA
 - Wenn ein Wort mit Strg+Entf gelöscht wird, schweigt NVDA nicht mehr. (#3298, #11029)
   - Es wird nun das nächste Wort davon angesagt.
 - In den allgemeinen Einstellungen ist die Sprachliste jetzt korrekt sortiert. (#10348)
-- Im Dialogfeld für die Tastenbefehle wurde die Leistung beim Filtern erheblich verbessert. (#10307)(
-- Sie können jetzt Unicode-Zeichen, die über U+FFFF hinausgehen, von einer Braillezeile aus senden. (#10796)
+- Im Dialogfeld für die Tastenbefehle wurde die Leistung beim Filtern erheblich verbessert. (#10307)
+- Sie können nun Unicode-Zeichen, die über U+FFFF hinausgehen, von einer Braillezeile aus senden. (#10796)
 - NVDA sagt das Dialogfeld "Öffnen mit" in Windows 10 Mai 2020 Update an. (#11335)
 - Eine neue experimentelle Option in den erweiterten Einstellungen (Selektive Registrierung für UI-Automatisierungsereignisse und Eigenschaftsänderungen aktivieren) kann bei Aktivierung erhebliche Leistungsverbesserungen in Microsoft Visual Studio und anderen UIAutomation-basierten Anwendungen bieten. (#11077, #11209)
 - Bei überprüfbaren Listeneinträgen wird der ausgewählte Zustand nicht mehr redundant angesagt und gegebenenfalls wird stattdessen der nicht ausgewählte Zustand mitgeteilt. (#8554)
@@ -47,12 +50,23 @@ Was ist neu in NVDA
 - NVDA hängt keine Leerzeichen beim Kopieren des aktuellen Navigator-Objekts in die Zwischenablage mehr am Ende an. (#11438)
 - Wenn kein Text vorhanden ist, führt NVDA auch die "Alles Lesen"-Funktion nicht mehr aus. (#10899, #9947)
 - NVDA liest nun die Features-Liste im Internet-Informations-Service (IIS) vor. (#11468)
+- NVDA hält das Audiogerät nun offen und verbessert die Leistung einiger Soundkarten (#5172, #10721)
+- NVDA friert nicht mehr ein oder wird nicht mehr beendet, wenn in Microsoft Word die Tastenkombination Strg+Umschalttaste+Pfeil nach unten gedrückt wird. (#9463)
+- In der Navigationsbaumansicht auf drive.google.com wird der Zustand, ob ein Verzeichnis eingeklappt oder ausgeklappt ist, immer von NVDA angesagt. (#11520)
+- NVDA erkennt nun die Braillezeile NLS eReader von Humanware über Bluetooth automatisch, da der Bluethooth-Name nun "NLS eReader Humanware" lautet. (#11561)
 
 
 == Änderungen für Entwickler ==
 - BoxSizerHelper.addDialogDismissButtons der GUI-Hilfe unterstützt ein neues "getrenntes" Schlüsselwort-Argument zum Hinzufügen eines horizontalen Standard-Trennzeichens zu Dialogen (mit Ausnahme von Meldungen und einzelnen Eingabefeldern). (#6468)
 - Den Anwendungsmodulen wurden zusätzliche Eigenschaften hinzugefügt, darunter der Pfad für die ausführbare Datei (appPath), eine Windows-Store-Anwendung (isWindowsStoreApp) und die Anwendungs-Architektur (appArchitecture). (#7894)
 - Es ist jetzt möglich, Anwendungsmodule für in wwahost.exe gehostete Anwendungen unter Windows 8 und neuer zu erstellen. (#4569)
+- Ein Protokoll-Abschnitt kann nun markiert werden und dann mit NVDA+Strg+Umschalt+F1 in die Zwischenablage kopiert werden. (#9280)
+- Spezifische Objekte in NVDA, die vom zyklischen Garbage-Collector von Python gefunden werden, werden jetzt beim Löschen durch den Collector protokolliert, um das Entfernen von Referenzzyklen aus NVDA zu unterstützen. (#11499)
+ - Die Mehrzahl der NVDA-Klassen wird verfolgt, darunter NVDAObjects, appModules, GlobalPlugins, SynthDrivers und TreeInterceptors.
+ - Eine Klasse, die verfolgt werden muss, sollte von "garbageHandler.TrackedObject" erben.
+- Signifikante Debug-Protokollierung für MSAA-Ereignisse kann nun in den erweiterten Einstellungen von NVDA aktiviert werden. (#11521)
+- MSAA-Ereignisse von Windows für das aktuell fokussierte Objekt werden nicht mehr zusammen mit anderen Ereignissen herausgefiltert, wenn die Ereignisanzahl für einen bestimmten Thread überschritten wird. (#11520)
+
 
 
 = 2020.2 =
