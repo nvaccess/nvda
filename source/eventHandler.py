@@ -177,13 +177,17 @@ def _getFocusLossCancellableSpeechCommand(
 	def isAncestorOfCurrentFocus():
 		return obj in api.getFocusAncestors()
 
+	def isForegroundObject():
+		foreground = api.getForegroundObject()
+		return obj is foreground or obj == foreground
+
 	def isSpeechStillValid():
 		stillValid = (
 			isLastFocusObj()
 			or not previouslyHadFocus()
 			or isAncestorOfCurrentFocus()
 			# Ensure dialogs gaining focus are reported, EG NVDA Find dialog in a browser
-			or isinstance(obj, Dialog)
+			or isForegroundObject()
 		)
 		return stillValid
 
@@ -195,7 +199,7 @@ def _getFocusLossCancellableSpeechCommand(
 			f"isLast: {isLastFocusObj()}"
 			f", previouslyHad: {previouslyHadFocus()}"
 			f", isAncestorOfCurrentFocus: {isAncestorOfCurrentFocus()}"
-			f", is a Dialog: {isinstance(obj, Dialog)}"
+			f", is foreground obj {isForegroundObject()}"
 		)
 	return _CancellableSpeechCommand(isSpeechStillValid, getDevInfo)
 

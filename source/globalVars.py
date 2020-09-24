@@ -4,7 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 """global variables module
-@var foregroundObject: holds the current foreground object
+@var foregroundObject: holds the current foreground object. The object for the last foreground event received.
 @type foregroundObject: L{NVDAObjects.NVDAObject}
   @var focusObject: holds the current focus object
 @type focusObject: L{NVDAObjects.NVDAObject}

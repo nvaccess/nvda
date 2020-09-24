@@ -45,7 +45,10 @@ def getForegroundObject():
 	return globalVars.foregroundObject
 
 def setForegroundObject(obj):
-	"""Stores the given object as the current foreground object. (Note: it does not physically change the operating system foreground window, but only allows NVDA to keep track of what it is).
+	"""Stores the given object as the current foreground object.
+	Note: does not cause the operating system to change the foreground window,
+		but simply allows NVDA to keep track of what the foreground window is.
+		The function may have been called 'setLastForegroundWindow' or 'setLastForegroundEventObject'
 @param obj: the object that will be stored as the current foreground object
 @type obj: NVDAObjects.NVDAObject
 """
