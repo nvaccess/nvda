@@ -344,10 +344,13 @@ class PortableCreaterDialog(wx.Dialog):
 				wx.OK | wx.ICON_ERROR)
 			return
 		if not os.path.isabs(self.portableDirectoryEdit.Value):
-			# Translators: The message displayed when the user has not specified an absolute destination directory
-			# in the Create Portable NVDA dialog.
 			gui.messageBox(
+				# Translators: The message displayed when the user has not specified an absolute destination directory
+				# in the Create Portable NVDA dialog.
 				_("Please specify an absolute path (including drive letter)  in which to create the portable copy."),
+				# Translators: The message title displayed
+				# when the user has not specified an absolute destination directory
+				# in the Create Portable NVDA dialog.
 				_("Error"),
 				wx.OK | wx.ICON_ERROR
 			)
