@@ -195,11 +195,19 @@ def _getFocusLossCancellableSpeechCommand(
 		return _CancellableSpeechCommand(isSpeechStillValid)
 
 	def getDevInfo():
+		dialogNotAncestor = isinstance(obj, Dialog) and not isAncestorOfCurrentFocus()
+		ancestorInfo = ""
+		if dialogNotAncestor:
+			ancestors = api.getFocusAncestors()
+			ancestorStrings = [repr(a) for a in ancestors]
+			ancestorInfo = f", ancestors: {', '.join(ancestorStrings)}"
 		return (
 			f"isLast: {isLastFocusObj()}"
 			f", previouslyHad: {previouslyHadFocus()}"
 			f", isAncestorOfCurrentFocus: {isAncestorOfCurrentFocus()}"
+			f", is a dialog: {isinstance(obj, Dialog)}"
 			f", is foreground obj {isForegroundObject()}"
+			f"{ancestorInfo}"
 		)
 	return _CancellableSpeechCommand(isSpeechStillValid, getDevInfo)
 
