@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-07 00:10+1000\n"
+"POT-Creation-Date: 2020-09-11 00:10+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Adriani <adriani.botez@gmail.com>\n"
+"Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4\n"
+"X-Generator: Poedit 2.4.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
@@ -386,6 +386,10 @@ msgstr "Rgn"
 #. Translators: Displayed in braille for an object which is a figure.
 msgid "fig"
 msgstr "ill"
+
+#. Translators: Displayed in braille for an object which represents marked (highlighted) content
+msgid "mrkd"
+msgstr "mrkd"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -766,8 +770,18 @@ msgstr "Deutsche Basisschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "German grade 0 (detailed)"
+msgstr "Deutsche Basisschrift (ausführlich)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "German grade 1"
 msgstr "Deutsche Vollschrift"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German grade 1 (detailed)"
+msgstr "Deutsche Vollschrift (ausführlich)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1246,8 +1260,6 @@ msgstr "Fokusmodus"
 #. Translators: The mode that presents text in a flat representation
 #. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
 msgid "Browse mode"
 msgstr "Lesemodus"
 
@@ -2699,6 +2711,10 @@ msgstr "Region"
 msgid "figure"
 msgstr "Illustration"
 
+#. Translators: Identifies marked (highlighted) content
+msgid "marked content"
+msgstr "Markierter Inhalt"
+
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
 msgstr "nicht verfügbar"
@@ -3528,6 +3544,18 @@ msgstr "Links ansagen eingeschaltet"
 msgid "Toggles on and off the reporting of links"
 msgstr "Schaltet die Ansage von Links ein oder aus"
 
+#. Translators: Input help mode message for toggle report graphics command.
+msgid "Toggles on and off the reporting of graphics"
+msgstr "Schaltet die Ansage der Grafiken ein oder aus"
+
+#. Translators: The message announced when toggling the report graphics document formatting setting.
+msgid "report graphics off"
+msgstr "Grafiken ansagen ausgeschaltet"
+
+#. Translators: The message announced when toggling the report graphics document formatting setting.
+msgid "report graphics on"
+msgstr "Grafiken ansagen eingeschaltet"
+
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
 msgstr "Kommentare ansagen ausgeschaltet"
@@ -3738,17 +3766,17 @@ msgstr ""
 "NVDA-Cursor an. Wenn die Tastenkombination zweimal gedrückt wird, erhalten "
 "Sie darüber weitere Informationen."
 
+#. Translators: Input help mode message for move navigator object to current focus command.
+msgid ""
+"Sets the navigator object to the current focus,and the review cursor to the "
+"position of the caret inside it, if possible."
+msgstr ""
+"Setzt das Navigator-Objekt auf den aktuellen Fokus und den NVDA-Cursor auf "
+"die Position des System-Cursors innerhalb des Objekts, falls möglich."
+
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
 msgstr "Zum Fokus bewegen"
-
-#. Translators: Input help mode message for move navigator object to current focus command.
-msgid ""
-"Sets the navigator object to the current focus, and the review cursor to the "
-"position of the caret inside it, if possible."
-msgstr ""
-"Setzt das Navigator-Objekt zum aktuellen Fokus und dem NVDA-Cursor zum "
-"System-Cursor, sofern möglich."
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3761,6 +3789,7 @@ msgid "Move focus"
 msgstr "Fokus bewegen"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
+#. Translators: Reported when there is no caret.
 msgid "No caret"
 msgstr "Kein System-Cursor"
 
@@ -4046,13 +4075,42 @@ msgid "Formatting"
 msgstr "Formatierung"
 
 #. Translators: Input help mode message for report formatting command.
+msgid "Reports formatting info for the current review cursor position."
+msgstr "Sagt die Formatierungen unter dem Cursor an."
+
+#. Translators: Input help mode message for show formatting at review cursor command.
 msgid ""
-"Reports formatting info for the current review cursor position within a "
-"document. If pressed twice, presents the information in browse mode"
+"Presents, in browse mode, formatting info for the current review cursor "
+"position."
+msgstr "Sagt die Formatierung unter dem NVDA-Cursor im Lesemodus an."
+
+#. Translators: Input help mode message for report formatting command.
+msgid ""
+"Reports formatting info for the current review cursor position. If pressed "
+"twice, presents the information in browse mode"
 msgstr ""
-"Sagt Informationen zur Formatierung an der aktuellen Position des NVDA-"
-"Cursors im Dokument an, zweimal Drücken zeigt die Informationen in einer "
-"virtuellen Ansicht"
+"Sagt die Informationen zur Textformatierung für die aktuelle Position des "
+"NVDA-Cursors an. Bei zweimaligem Drücken werden die Informationen im "
+"Lesemodus angezeigt."
+
+#. Translators: Input help mode message for report formatting at caret command.
+msgid "Reports formatting info for the text under the caret."
+msgstr ""
+"Sagt die Informationen zur Textformatierung unter dem System-Cursor an."
+
+#. Translators: Input help mode message for show formatting at caret position command.
+msgid "Presents, in browse mode, formatting info for the text under the caret."
+msgstr ""
+"Zeigt im Lesemodus die Informationen zur Textformatierung unter dem Cursor "
+"an."
+
+#. Translators: Input help mode message for report formatting at caret command.
+msgid ""
+"Reports formatting info for the text under the caret. If pressed twice, "
+"presents the information in browse mode"
+msgstr ""
+"Sagt die Informationen zur Textformatierung unter dem System-Cursor an. Bei "
+"zweimaligem Drücken werden die Informationen im Lesemodus angezeigt."
 
 #. Translators: Input help mode message for report current focus command.
 msgid "Reports the object with focus. If pressed twice, spells the information"
@@ -4138,6 +4196,41 @@ msgstr ""
 "Protokolliert Informationen über das aktuelle Navigator-Objekt und aktiviert "
 "die Protokollansicht, damit die Informationen untersucht werden können. "
 "Diese Informationen sind für Entwickler sehr nützlich."
+
+#. Translators: Input help mode message for a command to delimit then
+#. copy a fragment of the log to clipboard
+msgid ""
+"Mark the current end of the log as the start of the fragment to be copied to "
+"clipboard by pressing again."
+msgstr ""
+"Markieren Sie das aktuelle Ende des Protokolls als Anfang des Abschnitts, "
+"das in die Zwischenablage kopiert werden soll, indem Sie die "
+"Tastenkombination zweimal drücken."
+
+#. Translators: Message when marking the start of a fragment of the log file for later copy
+#. to clipboard
+msgid "Log fragment start position marked, press again to copy to clipboard"
+msgstr ""
+"Startposition des Protokoll-Abschnitts markiert, zum Kopieren in die "
+"Zwischenablage erneut drücken"
+
+#. Translators: Message when failed to mark the start of a
+#. fragment of the log file for later copy to clipboard
+msgid "Unable to mark log position"
+msgstr "Die Position im Protokoll konnte nicht markiert werden"
+
+#. Translators: Message when attempting to copy an empty fragment of the log file
+msgid "No new log entry to copy"
+msgstr "Kein Protokoll-Eintrag zum Kopieren vorhanden"
+
+#. Translators: Message when a fragment of the log file has been
+#. copied to clipboard
+msgid "Log fragment copied to clipboard"
+msgstr "Protokoll-Abschnitt in die Zwischenablage kopiert"
+
+#. Translators: Presented when unable to copy to the clipboard because of an error.
+msgid "Unable to copy"
+msgstr "Fehler beim Kopieren"
 
 #. Translators: Input help mode message for Open user configuration directory command.
 msgid "Opens NVDA configuration directory for the current user."
@@ -4524,10 +4617,6 @@ msgstr "Der Text konnte nicht ausgewählt werden, zweimal Drücken zum Kopieren"
 msgid "Review selection copied to clipboard"
 msgstr "Auswahl in die Zwischenablage kopiert"
 
-#. Translators: Presented when unable to copy to the clipboard because of an error.
-msgid "Unable to copy"
-msgstr "Fehler beim Kopieren"
-
 #. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
 msgid ""
 "If pressed once, the text from the previously set start marker up to and "
@@ -4653,6 +4742,22 @@ msgid ""
 msgstr ""
 "Zieht den Navigator unter Verwendung der Objekt-Navigation zum vorherigen "
 "Objekt in der gleichen Hierarchie-Ebene"
+
+#. Translators: Describes a command.
+msgid "Toggles the support of touch interaction"
+msgstr "Schaltet die Unterstützung für die Touch-Interaktion ein oder aus"
+
+#. Translators: Presented when attempting to toggle touch interaction support
+msgid "Touch interaction not supported"
+msgstr "Touch-Interaktion wird nicht unterstützt"
+
+#. Translators: Presented when support of touch interaction has been enabled
+msgid "Touch interaction enabled"
+msgstr "Touch-Interaktion eingeschaltet"
+
+#. Translators: Presented when support of touch interaction has been disabled
+msgid "Touch interaction disabled"
+msgstr "Touch-Interaktion ausgeschaltet"
 
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
@@ -5229,6 +5334,13 @@ msgstr "Burmesisch"
 msgctxt "languageName"
 msgid "Somali"
 msgstr "Somali"
+
+#. Translators: The pattern defining how languages are displayed and sorted in in the general
+#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
+#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
+#, python-brace-format
+msgid "{desc}, {lc}"
+msgstr "{desc}, {lc}"
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -6513,6 +6625,7 @@ msgstr "Fehler bei der Suche nach Updates."
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of an error message dialog.
+#. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
@@ -6597,7 +6710,6 @@ msgstr "Später &benachrichtigen"
 #. Translators: The label of a button to close a dialog.
 #. Translators: The label of a button to close the Addons dialog.
 #. Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
-#. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "&Schließen"
 
@@ -7945,7 +8057,6 @@ msgstr "In&fo..."
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
-#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
 msgid "OK"
 msgstr "OK"
 
@@ -8029,8 +8140,8 @@ msgstr "&Deaktivieren"
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
-#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 msgid "&Remove"
 msgstr "&Entfernen"
 
@@ -8056,8 +8167,14 @@ msgid "NVDA Add-on Package (*.{ext})"
 msgstr "NVDA-Erweiterungspaket (*.{ext})"
 
 #. Translators: Presented when attempting to remove the selected add-on.
-msgid "Are you sure you wish to remove the selected add-on from NVDA?"
-msgstr "Die Erweiterung wirklich entfernen?"
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgid ""
+"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
+"undone."
+msgstr ""
+"Möchten Sie die Erweiterung \"{addon}\" aus dem NVDA wirklich entfernen? "
+"Dies kann nicht rückgängig gemacht werden."
 
 #. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
@@ -8422,6 +8539,82 @@ msgstr ""
 msgid "Manual Activation"
 msgstr "Manuelle Aktivierung"
 
+#. Translators: Describes a gesture in the Input Gestures dialog.
+#. {main} is replaced with the main part of the gesture; e.g. alt+tab.
+#. {source} is replaced with the gesture's source; e.g. laptop keyboard.
+#, python-brace-format
+msgid "{main} ({source})"
+msgstr "{main} ({source})"
+
+#. Translators: The prompt to enter a gesture in the Input Gestures dialog.
+msgid "Enter input gesture:"
+msgstr "Drücken Sie den gewünschten Tastenbefehl:"
+
+#. Translators: An gesture that will be emulated by some other new gesture. The token {emulateGesture}
+#. will be replaced by the gesture that can be triggered by a mapped gesture.
+#. E.G. Emulate key press: NVDA+b
+#, python-brace-format
+msgid "Emulate key press: {emulateGesture}"
+msgstr "Tastendruck emulieren: {emulateGesture}"
+
+#. Translators: The prompt to enter an emulated gesture in the Input Gestures dialog.
+msgid "Enter gesture to emulate:"
+msgstr "Geben Sie einen Tastenbefehl zur Emulation ein:"
+
+#. Translators: The label for a filtered category in the Input Gestures dialog.
+#, python-brace-format
+msgid "{category} (1 result)"
+msgstr "{category} (ein Ergebnis)"
+
+#. Translators: The label for a filtered category in the Input Gestures dialog.
+#, python-brace-format
+msgid "{category} ({nbResults} results)"
+msgstr "{category} ({nbResults} Ergebnis)"
+
+#. Translators: The title of the Input Gestures dialog where the user can remap input gestures for scripts.
+msgid "Input Gestures"
+msgstr "Tastenbefehle"
+
+#. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
+msgctxt "inputGestures"
+msgid "&Filter by:"
+msgstr "&Filtern nach:"
+
+#. Translators: The label of a button to add a gesture in the Input Gestures dialog.
+#. Translators: The label for a button in speech dictionaries dialog to add new entries.
+#. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
+msgid "&Add"
+msgstr "&Hinzufügen"
+
+#. Translators: The label of a button to reset all gestures in the Input Gestures dialog.
+msgid "Reset to factory &defaults"
+msgstr "Auf Standard-Einstellungen zu&rücksetzen"
+
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid ""
+"Are you sure you want to reset all gestures to their factory defaults?\n"
+"\n"
+"\t\t\tAll of your user defined gestures, whether previously set or defined "
+"during this session, will be lost.\n"
+"\t\t\tThis cannot be undone."
+msgstr ""
+"Möchten Sie wirklich alle Tastenbefehle auf die Standard-Einstellungen "
+"zurücksetzen?\n"
+"\n"
+"\t\t\tAlle Ihre benutzerdefinierten Gesten, ob zuvor festgelegt oder während "
+"dieser Sitzung definiert, gehen verloren.\n"
+"\t\t\tDies kann nicht rückgängig gemacht werden."
+
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "Tastenbefehle zurücksetzen"
+
+#. Translators: An error displayed when saving user defined input gestures fails.
+msgid "Error saving user defined gestures - probably read only file system."
+msgstr ""
+"Fehler beim Speichern der benutzerdefinierten Tastenbefehle, möglicherweise "
+"verwenden Sie ein schreibgeschütztes Dateisystem."
+
 #. Translators: The title of the dialog presented while NVDA is being updated.
 msgid "Updating NVDA"
 msgstr "NVDA aktualisieren"
@@ -8651,13 +8844,8 @@ msgid "Log is unavailable"
 msgstr "Protokoll ist nicht verfügbar"
 
 #. Translators: A cancel button on a message dialog.
-#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
 msgid "Cancel"
 msgstr "Abbrechen"
-
-#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
-msgid "Apply"
-msgstr "Übernehmen"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
@@ -8837,6 +9025,10 @@ msgstr "&Sprachausgabe:"
 #. headphones, etc.
 msgid "Audio output  &device:"
 msgstr "Au&dio-Ausgabegerät:"
+
+#. Translators: name for default (Microsoft Sound Mapper) audio output device.
+msgid "Microsoft Sound Mapper"
+msgstr "Microsoft Sound-Mapper"
 
 #. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 msgid "Audio d&ucking mode:"
@@ -9186,6 +9378,11 @@ msgstr "Akustische Ausgabe von Fokus- und Lesemodus"
 msgid "&Trap all non-command gestures from reaching the document"
 msgstr "Nur Tasten im virtuellen Dokument &verarbeiten"
 
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings panel.
+msgid "Automatically set system &focus to focusable elements"
+msgstr "System-&Fokus automatisch auf hervorhebbare Elemente positionieren"
+
 #. Translators: This is the label for the document formatting panel.
 msgid "Document Formatting"
 msgstr "Dokument-Formatierungen"
@@ -9230,6 +9427,11 @@ msgstr "&Hervorhebung"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+msgid "Marked (highlighted text)"
+msgstr "Markiert (hervorgehobenen Text)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "St&yle"
 msgstr "F&ormatvorlage"
 
@@ -9245,8 +9447,8 @@ msgstr "Dokument-Informationen"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Co&mments"
-msgstr "&Kommentare"
+msgid "No&tes and comments"
+msgstr "Anmerkungen und Kommen&tare"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9354,6 +9556,11 @@ msgstr "Elemente"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+msgid "&Graphics"
+msgstr "&Grafiken"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "&Lists"
 msgstr "&Listen"
 
@@ -9400,6 +9607,11 @@ msgstr "Touch-Interaktion"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
+msgid "Enable touch interaction support"
+msgstr "Unterstützung der Touch-Interaktion aktivieren"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings panel.
 msgid "&Touch typing mode"
 msgstr "&Touch-Eingabemodus"
 
@@ -9430,6 +9642,14 @@ msgstr "Developer Scratchpad-Verzeichnis öffnen"
 #. Advanced settings panel
 msgid "Microsoft UI Automation"
 msgstr "Microsoft UI-Automation"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid ""
+"Enable &selective registration for UI Automation events and property changes"
+msgstr ""
+"&Selektive Registrierung für UI-Automatisierungs-Ereignisse und "
+"Eigenschaftsänderungen aktivieren"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9479,11 +9699,6 @@ msgstr "Nein"
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr ""
 "Sprachausgabe unterbrechen, wenn das Ereignis für den Fokus abgelaufen ist:"
-
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid "Automatically set system &focus to focusable elements"
-msgstr "System-&Fokus automatisch auf hervorhebbare Elemente positionieren"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9587,7 +9802,6 @@ msgid "&Dictionary entries"
 msgstr "&Wörterbuch-Einträge"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
-#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -9607,12 +9821,6 @@ msgstr "Groß- / Kleinschreibung beachten"
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
 msgid "Type"
 msgstr "Typ"
-
-#. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
-#. Translators: The label of a button to add a gesture in the Input Gestures dialog.
-msgid "&Add"
-msgstr "&Hinzufügen"
 
 #. Translators: The label for a button in speech dictionaries dialog to edit existing entries.
 msgid "&Edit"
@@ -9834,54 +10042,6 @@ msgstr "&Entfernen"
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "Das Symbol \"%s\" ist bereits vorhanden."
-
-#. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
-msgid "Input Gestures"
-msgstr "Tastenbefehle"
-
-#. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
-msgctxt "inputGestures"
-msgid "&Filter by:"
-msgstr "&Filtern nach:"
-
-#. Translators: The label of a button to reset all gestures in the Input Gestures dialog.
-msgid "Reset to factory &defaults"
-msgstr "Auf Standard-Einstellungen zu&rücksetzen"
-
-#. Translators: Describes a gesture in the Input Gestures dialog.
-#. {main} is replaced with the main part of the gesture; e.g. alt+tab.
-#. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
-msgid "{main} ({source})"
-msgstr "{main} ({source})"
-
-#. Translators: The prompt to enter a gesture in the Input Gestures dialog.
-msgid "Enter input gesture:"
-msgstr "Drücken Sie den gewünschten Tastenbefehl:"
-
-#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
-msgid ""
-"Are you sure you want to reset all gestures to their factory defaults?\n"
-"\t\t\t\n"
-"\t\t\tAll of your user defined gestures, whether previously set or defined "
-"during this session, will be lost.\n"
-"\t\t\tThis cannot be undone."
-msgstr ""
-"Möchten Sie alle Gesten auf die Standard-Einstellungen zurücksetzen?\n"
-"\t\t\t\n"
-"\t\t\tAlle Ihre benutzerdefinierten Gesten, ob zuvor festgelegt oder während "
-"dieser Sitzung definiert, gehen verloren.\n"
-"\t\t\tDies kann nicht rückgängig gemacht werden."
-
-#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
-msgid "Reset gestures"
-msgstr "Tastenbefehle zurücksetzen"
-
-#. Translators: An error displayed when saving user defined input gestures fails.
-msgid "Error saving user defined gestures - probably read only file system."
-msgstr ""
-"Fehler beim Speichern der benutzerdefinierten Tastenbefehle, möglicherweise "
-"verwenden Sie ein schreibgeschütztes Dateisystem."
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -11393,8 +11553,8 @@ msgstr "&Diagramme"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omments"
-msgstr "&Kommentare"
+msgid "N&otes"
+msgstr "Anmer&kungen"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -11410,6 +11570,14 @@ msgstr "&Arbeitsblätter"
 #, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} bis {end}"
+
+#. Translators: the description  for a script for Excel
+msgid "opens a dropdown item at the current cell"
+msgstr "Öffnet ein Dropdown-Element der aktuellen Zelle"
+
+#. Translators: the description  for a script for Excel
+msgid "Sets the current cell as start of column header"
+msgstr "Setzt die aktuelle Zelle als Anfang der Spaltenüberschrift"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
@@ -11443,6 +11611,10 @@ msgstr ""
 "Beginn der Spaltenüberschrift für alle Zellen unterhalb und rechts von "
 "dieser Zelle innerhalb dieser Region festgelegt. Drücken Sie die "
 "Tastenkombination zweimal, um die Zuweisung wieder zu entfernen."
+
+#. Translators: the description  for a script for Excel
+msgid "sets the current cell as start of row header"
+msgstr "Setzt die aktuelle Zelle als Anfang des Zeilenüberschrift"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
@@ -11491,22 +11663,32 @@ msgstr "Die Eingabemeldung lautet {title}: {message}"
 msgid "Input Message is {message}"
 msgstr "Die Eingabemeldung lautet {message}"
 
-#. Translators: A message in Excel when there is no comment
-msgid "Not on a comment"
-msgstr "Nicht in einem Kommentar"
+#. Translators: the description  for a script for Excel
+msgid "Reports the note on the current cell"
+msgstr "Liest die Anmerkung zur aktuellen Zelle vor"
+
+#. Translators: A message in Excel when there is no note
+msgid "Not on a note"
+msgstr "Keine Anmerkung vorhanden"
 
 #. Translators: the description  for a script for Excel
-msgid "Reports the comment on the current cell"
-msgstr "Sagt den Kommentar in der aktuellen Zelle an"
+msgid "Opens the note editing dialog"
+msgstr "Öffnet ein Dialogfeld zum Bearbeiten einer Anmerkung"
 
-#. Translators: Dialog text for
+#. Translators: Dialog text for the note editing dialog
 #, python-brace-format
-msgid "Editing comment for cell {address}"
-msgstr "Kommentar für die Zelle {address} bearbeiten"
+msgid "Editing note for cell {address}"
+msgstr "Anmerkung für die Zelle {address} bearbeiten"
+
+#. Translators: Title for the note editing  dialog
+msgid "Note"
+msgstr "Anmerkung"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
+#. Beware to keep two spaces between the address and the content. Otherwise some synthesizer
+#. may mix the address and the content when the cell contains a 3-digit number.
 #, python-brace-format
-msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
+msgid "{firstAddress}  {firstContent} through {lastAddress}  {lastContent}"
 msgstr "{firstAddress} {firstContent} bis {lastAddress} {lastContent}"
 
 #. Translators: border positions in Microsoft Excel.
@@ -11930,3 +12112,12 @@ msgstr "Doppelter Zeilenabstand"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 Zeilenabstand"
+
+#~ msgid "Apply"
+#~ msgstr "Übernehmen"
+
+#~ msgid "Co&mments"
+#~ msgstr "&Kommentare"
+
+#~ msgid "C&omments"
+#~ msgstr "&Kommentare"

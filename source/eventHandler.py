@@ -153,6 +153,8 @@ def _trackFocusObject(eventName, obj) -> None:
 	if eventName == "gainFocus":
 		lastQueuedFocusObject = obj
 		setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, True)
+		if speech.manager._shouldDoSpeechManagerLogging():
+			log.debug(f"Changing last queued focus object: {obj!r}")
 	elif not hasattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME):
 		setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
 
@@ -171,7 +173,8 @@ def _getFocusLossCancellableSpeechCommand(
 		return getattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
 
 	def isLastFocusObj():
-		return obj is lastQueuedFocusObject
+		# Obj may have been created multiple times pointing to the same underlying object.
+		return obj is lastQueuedFocusObject or obj == lastQueuedFocusObject
 
 	def isAncestorOfCurrentFocus():
 		return obj in api.getFocusAncestors()
