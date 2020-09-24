@@ -92,7 +92,11 @@ def main():
 				raise ValueError("Addon path was not provided.")
 			#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
 			import ctypes
-			h=ctypes.windll.kernel32.LoadLibraryExW(os.path.abspath(os.path.join(u"lib",versionInfo.version,u"nvdaHelperRemote.dll")),0,0x8)
+			h = ctypes.windll.kernel32.LoadLibraryExW(
+				os.path.join(globalVars.appDir, "lib", versionInfo.version, "nvdaHelperRemote.dll"),
+				0,
+				0x8
+			)
 			remoteLib=ctypes.WinDLL("nvdaHelperRemote",handle=h)
 			ret = remoteLib.nvdaControllerInternal_installAddonPackageFromPath(addonPath)
 			if ret != 0:
