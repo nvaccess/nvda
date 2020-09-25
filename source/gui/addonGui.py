@@ -1,11 +1,12 @@
-#gui/addonGui.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2012-2019 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V., Ethan Holliger, Arnold Loubriat
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2012-2019 NV Access Limited, Beqa Gozalishvili, Joseph Lee,
+# Babbage B.V., Ethan Holliger, Arnold Loubriat, Thomas Stivers
 
 import os
 import weakref
+from locale import strxfrm
 
 import addonAPIVersion
 import wx
@@ -19,11 +20,12 @@ import globalVars
 import buildVersion
 from . import guiHelper
 from . import nvdaControls
-from .dpiScalingHelper import DpiScalingHelperMixin
-
+from .dpiScalingHelper import DpiScalingHelperMixin, DpiScalingHelperMixinWithoutInit
+import gui.contextHelp
 def promptUserForRestart():
-	# Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 	restartMessage = _(
+		# Translators: A message asking the user if they wish to restart NVDA
+		# as addons have been added, enabled/disabled or removed.
 		"Changes were made to add-ons. "
 		"You must restart NVDA for these changes to take effect. "
 		"Would you like to restart now?"
@@ -108,8 +110,8 @@ class ErrorAddonInstallDialog(nvdaControls.MessageDialog):
 
 def _showAddonInfo(addon):
 	manifest = addon.manifest
-	# Translators: message shown in the Addon Information dialog.
 	message=[_(
+		# Translators: message shown in the Addon Information dialog.
 		"{summary} ({name})\n"
 		"Version: {version}\n"
 		"Author: {author}\n"
@@ -134,7 +136,11 @@ def _showAddonInfo(addon):
 	gui.messageBox("\n".join(message), title, wx.OK)
 
 
-class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
+class AddonsDialog(
+		DpiScalingHelperMixinWithoutInit,
+		gui.ContextHelpMixin,
+		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+):
 	@classmethod
 	def _instance(cls):
 		""" type: () -> AddonsDialog
@@ -142,6 +148,8 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		with by treating that object as a callable.
 		"""
 		return None
+
+	helpId = "AddonsManager"
 
 	def __new__(cls, *args, **kwargs):
 		instance = AddonsDialog._instance()
@@ -159,19 +167,17 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		title = _("Add-ons Manager")
 		# Translators: The title of the Addons Dialog when add-ons are disabled
 		titleWhenAddonsAreDisabled = _("Add-ons Manager (add-ons disabled)")
-		wx.Dialog.__init__(
-			self,
+		super().__init__(
 			parent,
-			title=title if not globalVars.appArgs.disableAddons else titleWhenAddonsAreDisabled
+			title=title if not globalVars.appArgs.disableAddons else titleWhenAddonsAreDisabled,
+			style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX,
 		)
-		DpiScalingHelperMixin.__init__(self, self.GetHandle())
-
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		firstTextSizer = wx.BoxSizer(wx.VERTICAL)
 		listAndButtonsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=wx.BoxSizer(wx.HORIZONTAL))
 		if globalVars.appArgs.disableAddons:
-			# Translators: A message in the add-ons manager shown when add-ons are globally disabled.
 			label = _(
+				# Translators: A message in the add-ons manager shown when add-ons are globally disabled.
 				"NVDA was started with all add-ons disabled. "
 				"You may modify the enabled / disabled state, and install or uninstall add-ons. "
 				"Changes will not take effect until after NVDA is restarted."
@@ -191,8 +197,9 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			nvdaControls.AutoWidthColumnListCtrl(
 				parent=self,
 				style=wx.LC_REPORT | wx.LC_SINGLE_SEL,
-				size=self.scaleSize((550, 350))
-			)
+			),
+			flag=wx.EXPAND,
+			proportion=1,
 		)
 		# Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
 		self.addonsList.InsertColumn(0, _("Package"), width=self.scaleSize(150))
@@ -229,7 +236,8 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		mainSizer.Add(
 			listAndButtonsSizerHelper.sizer,
 			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.ALL
+			flag=wx.ALL | wx.EXPAND,
+			proportion=1,
 		)
 
 		# the following buttons are more general and apply regardless of the current selection.
@@ -253,7 +261,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		mainSizer.Add(
 			wx.StaticLine(self),
 			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.TOP | wx.BOTTOM | wx.EXPAND
+			flag=wx.ALL | wx.EXPAND
 		)
 
 		# Translators: The label of a button to close the Addons dialog.
@@ -270,8 +278,13 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		self.refreshAddonsList()
-		self.addonsList.SetFocus()
+		self.SetMinSize(mainSizer.GetMinSize())
+		# Historical initial size, result of L{self.addonsList} being (550, 350) as of commit 1364839447.
+		# Setting an initial size on L{self.addonsList} by passing a L{size} argument when
+		# creating the control would also set its minimum size and thus block the dialog from being shrunk.
+		self.SetSize(self.scaleSize((763, 509)))
 		self.CentreOnScreen()
+		self.addonsList.SetFocus()
 
 	def onAddClick(self, evt):
 		# Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
@@ -288,13 +301,22 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			self.refreshAddonsList()
 
 	def onRemoveClick(self,evt):
-		index=self.addonsList.GetFirstSelected()
-		if index<0: return
-		# Translators: Presented when attempting to remove the selected add-on.
-		if gui.messageBox(_("Are you sure you wish to remove the selected add-on from NVDA?"),
+		index = self.addonsList.GetFirstSelected()
+		if index < 0:
+			return
+		addon = self.curAddons[index]
+		if gui.messageBox(
+			(_(
+				# Translators: Presented when attempting to remove the selected add-on.
+				# {addon} is replaced with the add-on name.
+				"Are you sure you wish to remove the {addon} add-on from NVDA? "
+				"This cannot be undone."
+			)).format(addon=addon.name),
 			# Translators: Title for message asking if the user really wishes to remove the selected Addon.
-			_("Remove Add-on"), wx.YES_NO|wx.ICON_WARNING) != wx.YES: return
-		addon=self.curAddons[index]
+			_("Remove Add-on"),
+			wx.YES_NO | wx.NO_DEFAULT | wx.ICON_WARNING
+		) != wx.YES:
+			return
 		addon.requestRemove()
 		self.refreshAddonsList(activeIndex=index)
 		self.addonsList.SetFocus()
@@ -346,7 +368,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.addonsList.DeleteAllItems()
 		self.curAddons=[]
 		anyAddonIncompatible = False
-		for addon in addonHandler.getAvailableAddons():
+		for addon in sorted(addonHandler.getAvailableAddons(), key=lambda a: strxfrm(a.manifest['summary'])):
 			self.addonsList.Append((
 				addon.manifest['summary'],
 				self.getAddonStatus(addon),
@@ -503,15 +525,17 @@ def installAddon(parentWindow, addonPath):
 		# add-on with this one.
 		messageBoxTitle = _("Add-on Installation")
 
-		# Translators: A message asking if the user wishes to update an add-on with the same version
-		# currently installed according to the version number.
 		overwriteExistingAddonInstallationMessage = _(
-			"You are about to install version {newVersion} of {summary}, which appears to be already installed. "
+			# Translators: A message asking if the user wishes to update an add-on with the same version
+			# currently installed according to the version number.
+			"You are about to install version {newVersion} of {summary},"
+			" which appears to be already installed. "
 			"Would you still like to update?"
 		).format(summary=summary, newVersion=newVersion)
 
-		# Translators: A message asking if the user wishes to update a previously installed add-on with this one.
 		updateAddonInstallationMessage = _(
+			# Translators: A message asking if the user wishes to update a previously installed
+			# add-on with this one.
 			"A version of this add-on is already installed. "
 			"Would you like to update {summary} version {curVersion} to version {newVersion}?"
 		).format(summary=summary, curVersion=curVersion, newVersion=newVersion)
@@ -582,9 +606,9 @@ def handleRemoteAddonInstall(addonPath):
 
 
 def _showAddonRequiresNVDAUpdateDialog(parent, bundle):
-	# Translators: The message displayed when installing an add-on package is prohibited, because it requires
-	# a later version of NVDA than is currently installed.
 	incompatibleMessage = _(
+		# Translators: The message displayed when installing an add-on package is prohibited,
+		# because it requires a later version of NVDA than is currently installed.
 		"Installation of {summary} {version} has been blocked. The minimum NVDA version required for "
 		"this add-on is {minimumNVDAVersion}, your current NVDA version is {NVDAVersion}"
 	).format(
@@ -603,8 +627,9 @@ def _showAddonRequiresNVDAUpdateDialog(parent, bundle):
 
 
 def _showAddonTooOldDialog(parent, bundle):
-	# Translators: A message informing the user that this addon can not be installed because it is not compatible.
 	confirmInstallMessage = _(
+		# Translators: A message informing the user that this addon can not be installed
+		# because it is not compatible.
 		"Installation of {summary} {version} has been blocked."
 		" An updated version of this add-on is required,"
 		" the minimum add-on API supported by this version of NVDA is {backCompatToAPIVersion}"
@@ -621,8 +646,8 @@ def _showAddonTooOldDialog(parent, bundle):
 	).ShowModal()
 
 def _showConfirmAddonInstallDialog(parent, bundle):
-	# Translators: A message asking the user if they really wish to install an addon.
 	confirmInstallMessage = _(
+		# Translators: A message asking the user if they really wish to install an addon.
 		"Are you sure you want to install this add-on?\n"
 		"Only install add-ons from trusted sources.\n"
 		"Addon: {summary} {version}"
@@ -673,16 +698,21 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			# this dialog is not designed to show an empty list.
 			raise RuntimeError("No incompatible addons.")
 
-		# Translators: The title of the Incompatible Addons Dialog
-		wx.Dialog.__init__(self, parent, title=_("Incompatible Add-ons"))
+		wx.Dialog.__init__(
+			self,
+			parent,
+			# Translators: The title of the Incompatible Addons Dialog
+			title=_("Incompatible Add-ons"),
+			style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX,
+		)
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		maxControlWidth = 550
-		# Translators: The title of the Incompatible Addons Dialog
 		introText = _(
+			# Translators: The title of the Incompatible Addons Dialog
 			"The following add-ons are incompatible with NVDA version {}."
 			" These add-ons can not be enabled."
 			" Please contact the add-on author for further assistance."
@@ -696,7 +726,6 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			entriesLabel,
 			nvdaControls.AutoWidthColumnListCtrl,
 			style=wx.LC_REPORT|wx.LC_SINGLE_SEL,
-			size=self.scaleSize((maxControlWidth, 350))
 		)
 
 		# Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
@@ -714,8 +743,13 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		# Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
 		button = buttonSizer.addButton(self, label=_("&Close"), id=wx.ID_CLOSE)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
-		sHelper.addDialogDismissButtons(buttonSizer)
-		mainSizer.Add(settingsSizer, border=20, flag=wx.ALL)
+		sHelper.addDialogDismissButtons(buttonSizer, separated=True)
+		mainSizer.Add(
+			settingsSizer,
+			border=guiHelper.BORDER_FOR_DIALOGS,
+			flag=wx.ALL | wx.EXPAND,
+			proportion=1
+		)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 
@@ -724,8 +758,13 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		button.Bind(wx.EVT_BUTTON, self.onClose)
 
 		self.refreshAddonsList()
-		self.addonsList.SetFocus()
+		self.SetMinSize(mainSizer.GetMinSize())
+		# Historical initial size, result of L{self.addonsList} being (550, 350) as of PR #8006.
+		# Setting an initial size on L{self.addonsList} by passing a L{size} argument when
+		# creating the control would also set its minimum size and thus block the dialog from being shrunk.
+		self.SetSize(self.scaleSize((606, 525)))
 		self.CentreOnScreen()
+		self.addonsList.SetFocus()
 
 	def _getIncompatReason(self, addon):
 		if not addonVersionCheck.hasAddonGotRequiredSupport(

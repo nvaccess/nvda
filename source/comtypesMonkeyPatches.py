@@ -1,10 +1,14 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2009-2016 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2009-2019 NV Access Limited, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
+# Warning: no comtypes modules can be imported until ctypes.WINFUNCTYPE has been replaced further down.
 
 import ctypes
 import _ctypes
+import importlib
+
 
 # A version of ctypes.WINFUNCTYPE 
 # that produces a WinFunctionType class whose instance will convert COMError into a CallCancelled exception when called as a function.
@@ -44,7 +48,11 @@ try:
 finally:
 	ctypes.WINFUNCTYPE=old_WINFUNCTYPE
 
+# It is safe to import any comtypes modules from here on down.
+
 from logHandler import log
+import garbageHandler  # noqa: E402
+
 
 from comtypes import COMError
 from comtypes.hresult import *
@@ -86,12 +94,14 @@ comtypes.client.dynamic._Dispatch.__call__=new__call__
 # Work around an issue with comtypes where __del__ seems to be called twice on COM pointers.
 # This causes Release() to be called more than it should, which is very nasty and will eventually cause us to access pointers which have been freed.
 from comtypes import _compointer_base
+
 _cpbDel = _compointer_base.__del__
 def newCpbDel(self):
 	if hasattr(self, "_deleted"):
 		# Don't allow this to be called more than once.
 		log.debugWarning("COM pointer %r already deleted" % self)
 		return
+	garbageHandler.notifyObjectDeletion(self)
 	_cpbDel(self)
 	self._deleted = True
 newCpbDel.__name__ = "__del__"
@@ -125,3 +135,19 @@ def _check_version(actual):
 	if actual != required:
 		raise ImportError("Wrong version")
 comtypes._check_version = _check_version
+
+
+# Monkeypatch comtypes to clear the importlib cache when importing a new module
+
+# We must import comtypes.client._generate here as it must be done after other monkeypatching
+import comtypes.client._generate  # noqa: E402
+
+old_my_import = comtypes.client._generate._my_import
+
+
+def new_my_import(fullname):
+	importlib.invalidate_caches()
+	return old_my_import(fullname)
+
+
+comtypes.client._generate._my_import = new_my_import

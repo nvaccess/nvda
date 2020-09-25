@@ -16,8 +16,7 @@ from treeInterceptorHandler import TreeInterceptor
 import api
 import textUtils
 from dataclasses import dataclass
-from typing import Optional
-import locale
+from typing import Optional, Tuple
 from logHandler import log
 
 @dataclass
@@ -282,7 +281,11 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		if self.encoding == textUtils.WCHAR_ENCODING:
 			offsetConverter = textUtils.WideStringOffsetConverter(text)
 			start, end = offsetConverter.wideToStrOffsets(start, end)
-		elif self.encoding not in (None, "utf_32_le", locale.getlocale()[1]):
+		elif not (
+			self.encoding is None
+			or self.encoding == "utf_32_le"
+			or self.encoding == textUtils.USER_ANSI_CODE_PAGE
+		):
 			raise NotImplementedError
 		return text[start:end]
 
@@ -301,21 +304,79 @@ class OffsetsTextInfo(textInfos.TextInfo):
 				formatField["line-number"]=lineNum+1
 		return formatField,(startOffset,endOffset)
 
-	def _getCharacterOffsets(self,offset):
+	def _calculateUniscribeOffsets(self, lineText: str, unit: str, relOffset: int) -> Optional[Tuple[int, int]]:
+		"""
+		Calculates the bounds of a unit at an offset within a given string of text
+		using the Windows uniscribe  library, also used in Notepad, for example.
+		Units supported are character and word.
+		@param lineText: the text string to analyze
+		@param unit: the TextInfo unit (character or word)
+		@param relOffset: the character offset within the text string at which to calculate the bounds.
+		"""
+		if unit is textInfos.UNIT_WORD:
+			helperFunc = NVDAHelper.localLib.calculateWordOffsets
+		elif unit is textInfos.UNIT_CHARACTER:
+			helperFunc = NVDAHelper.localLib.calculateCharacterOffsets
+		else:
+			raise NotImplementedError(f"Unit: {unit}")
+		relStart = ctypes.c_int()
+		relEnd = ctypes.c_int()
+		# uniscribe does some strange things
+		# when you give it a string  with not more than two alphanumeric chars in a row.
+		# Inject two alphanumeric characters at the end to fix this
+		uniscribeLineText = lineText + "xx"
+		# We can't rely on len(lineText) to calculate the length of the line.
+		offsetConverter = textUtils.WideStringOffsetConverter(lineText)
+		lineLength = offsetConverter.wideStringLength
+		if self.encoding != textUtils.WCHAR_ENCODING:
+			# We need to convert the str based line offsets to wide string offsets.
+			relOffset = offsetConverter.strToWideOffsets(relOffset, relOffset)[0]
+		uniscribeLineLength = lineLength + 2
+		if helperFunc(
+			uniscribeLineText,
+			uniscribeLineLength,
+			relOffset,
+			ctypes.byref(relStart),
+			ctypes.byref(relEnd)
+		):
+			relStart = relStart.value
+			relEnd = min(lineLength, relEnd.value)
+			if self.encoding != textUtils.WCHAR_ENCODING:
+				# We need to convert the uniscribe based offsets to str offsets.
+				relStart, relEnd = offsetConverter.wideToStrOffsets(relStart, relEnd)
+			return (relStart, relEnd)
+		log.debugWarning(f"Uniscribe failed to calculate {unit} offsets for text {lineText!r}")
+		return None
+
+	def _getCharacterOffsets(self, offset):
+		if not (
+			self.encoding == textUtils.WCHAR_ENCODING
+			or self.encoding is None
+			or self.encoding == "utf_32_le"
+			or self.encoding == textUtils.USER_ANSI_CODE_PAGE
+		):
+			raise NotImplementedError
+		lineStart, lineEnd = self._getLineOffsets(offset)
+		lineText = self._getTextRange(lineStart, lineEnd)
+		relOffset = offset - lineStart
+		if self.useUniscribe:
+			offsets = self._calculateUniscribeOffsets(lineText, textInfos.UNIT_CHARACTER, relOffset)
+			if offsets is not None:
+				return (offsets[0] + lineStart, offsets[1] + lineStart)
 		if self.encoding == textUtils.WCHAR_ENCODING:
-			lineStart,lineEnd=self._getLineOffsets(offset)
-			lineText=self._getTextRange(lineStart,lineEnd)
 			offsetConverter = textUtils.WideStringOffsetConverter(lineText)
-			relOffset = offset - lineStart
 			relStrStart, relStrEnd = offsetConverter.wideToStrOffsets(relOffset, relOffset + 1)
 			relWideStringStart, relWideStringEnd = offsetConverter.strToWideOffsets(relStrStart, relStrEnd)
 			return (relWideStringStart + lineStart, relWideStringEnd + lineStart)
-		elif self.encoding not in (None, "utf_32_le", locale.getlocale()[1]):
-			raise NotImplementedError
-		return offset, offset + 1
+		return (offset, offset + 1)
 
 	def _getWordOffsets(self,offset):
-		if self.encoding not in (textUtils.WCHAR_ENCODING, None, "utf_32_le", locale.getlocale()[1]):
+		if not (
+			self.encoding == textUtils.WCHAR_ENCODING
+			or self.encoding is None
+			or self.encoding == "utf_32_le"
+			or self.encoding == textUtils.USER_ANSI_CODE_PAGE
+		):
 			raise NotImplementedError
 		lineStart, lineEnd = self._getLineOffsets(offset)
 		lineText = self._getTextRange(lineStart,lineEnd)
@@ -323,33 +384,9 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		lineText = lineText.translate({0:u' ',0xa0:u' '})
 		relOffset = offset - lineStart
 		if self.useUniscribe:
-			relStart=ctypes.c_int()
-			relEnd=ctypes.c_int()
-			# uniscribe does some strange things when you give it a string  with not more than two alphanumeric chars in a row.
-			# Inject two alphanumeric characters at the end to fix this 
-			uniscribeLineText = lineText + "xx"
-			# We can't rely on len(lineText) to calculate the length of the line.
-			if self.encoding != textUtils.WCHAR_ENCODING:
-				# We need to convert the str based line offsets to wide string offsets.
-				offsetConverter = textUtils.WideStringOffsetConverter(lineText)
-				lineLength = offsetConverter.wideStringLength
-				relOffset = offsetConverter.strToWideOffsets(relOffset, relOffset)[0]
-			else:
-				lineLength = (lineEnd - lineStart)
-			uniscribeLineLength = lineLength + 2
-			if NVDAHelper.localLib.calculateWordOffsets(
-				uniscribeLineText,
-				uniscribeLineLength,
-				relOffset,
-				ctypes.byref(relStart),
-				ctypes.byref(relEnd)
-			):
-				relStart = relStart.value
-				relEnd = min(lineLength, relEnd.value)
-				if self.encoding != textUtils.WCHAR_ENCODING:
-					# We need to convert the uniscribe based offsets to str offsets.
-					relStart, relEnd = offsetConverter.wideToStrOffsets(relStart, relEnd)
-				return (relStart + lineStart , relEnd + lineStart)
+			offsets = self._calculateUniscribeOffsets(lineText, textInfos.UNIT_WORD, relOffset)
+			if offsets is not None:
+				return (offsets[0] + lineStart, offsets[1] + lineStart)
 		#Fall back to the older word offsets detection that only breaks on non alphanumeric
 		if self.encoding == textUtils.WCHAR_ENCODING:
 			offsetConverter = textUtils.WideStringOffsetConverter(lineText)
@@ -373,7 +410,11 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			strStart=findStartOfLine(text, strOffset)
 			strEnd=findEndOfLine(text, strOffset)
 			return offsetConverter.strToWideOffsets(strStart, strEnd)
-		elif self.encoding not in (None, "utf_32_le", locale.getlocale()[1]):
+		elif not (
+			self.encoding is None
+			or self.encoding == "utf_32_le"
+			or self.encoding == textUtils.USER_ANSI_CODE_PAGE
+		):
 			raise NotImplementedError
 		start=findStartOfLine(text,offset)
 		end=findEndOfLine(text,offset)

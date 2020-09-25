@@ -1,8 +1,8 @@
-#logHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2019 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2020 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
+# Accessolutions, Julien Cochuyt
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Utilities and classes to manage logging in NVDA"""
 
@@ -18,6 +18,7 @@ import traceback
 from types import MethodType, FunctionType
 import globalVars
 import buildVersion
+from typing import Optional
 
 ERROR_INVALID_WINDOW_HANDLE = 1400
 ERROR_TIMEOUT = 1460
@@ -63,7 +64,15 @@ def getCodePath(f):
 	className=""
 	#Code borrowed from http://mail.python.org/pipermail/python-list/2000-January/020141.html
 	if f.f_code.co_argcount:
-		arg0=f.f_locals[f.f_code.co_varnames[0]]
+		f_locals = f.f_locals
+		arg0 = f_locals[f.f_code.co_varnames[0]]
+		if f.f_code.co_flags & inspect.CO_NEWLOCALS:
+			# Fetching of Frame.f_locals causes a function frames's locals to be cached on the frame for ever.
+			# If an Exception is currently stored as a local variable on that frame,
+			# A reference cycle will be created, holding the frame and all its variables.
+			# Therefore clear f_locals manually.
+			f_locals.clear()
+		del f_locals
 		# #6122: Check if this function is a member of its first argument's class (and specifically which base class if any) 
 		# Rather than an instance member of its first argument.
 		# This stops infinite recursions if fetching data descriptors,
@@ -112,6 +121,11 @@ class Logger(logging.Logger):
 	IO = 12
 	DEBUGWARNING = 15
 	OFF = 100
+
+	#: The start position of a fragment of the log file as marked with
+	#: L{markFragmentStart} for later retrieval using L{getFragment}.
+	#: @type: C{long}
+	fragmentStart = None
 
 	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False, stack_info=None):
 		if not extra:
@@ -189,6 +203,48 @@ class Logger(logging.Logger):
 			return
 		self._log(level, msg, (), exc_info=exc_info, **kwargs)
 
+	def markFragmentStart(self):
+		"""Mark the current end of the log file as the start position of a
+		fragment to be later retrieved by L{getFragment}.
+		@returns: Whether a log file is in use and a position could be marked
+		@rtype: bool
+		"""
+		if (
+			not globalVars.appArgs
+			or globalVars.appArgs.secure
+			or not globalVars.appArgs.logFileName
+			or not isinstance(logHandler, FileHandler)
+		):
+			return False
+		with open(globalVars.appArgs.logFileName, "r", encoding="UTF-8") as f:
+			# _io.TextIOWrapper.seek: whence=2 -- end of stream
+			f.seek(0, 2)
+			self.fragmentStart = f.tell()
+			return True
+
+	def getFragment(self):
+		"""Retrieve a fragment of the log starting from the position marked using
+		L{markFragmentStart}.
+		If L{fragmentStart} does not point to the current end of the log file, it
+		is reset to C{None} after reading the fragment.
+		@returns: The text of the fragment, or C{None} if L{fragmentStart} is None.
+		@rtype: str
+		"""
+		if (
+			self.fragmentStart is None
+			or not globalVars.appArgs
+			or globalVars.appArgs.secure
+			or not globalVars.appArgs.logFileName
+			or not isinstance(logHandler, FileHandler)
+		):
+			return None
+		with open(globalVars.appArgs.logFileName, "r", encoding="UTF-8") as f:
+			f.seek(self.fragmentStart)
+			fragment = f.read()
+			if fragment:
+				self.fragmentStart = None
+			return fragment
+
 class RemoteHandler(logging.Handler):
 
 	def __init__(self):
@@ -226,6 +282,8 @@ class FileHandler(logging.FileHandler):
 		return super().handle(record)
 
 class Formatter(logging.Formatter):
+	default_time_format = "%H:%M:%S"
+	default_msec_format = "%s.%03d"
 
 	def formatException(self, ex):
 		return stripBasePathFromTracebackText(super(Formatter, self).formatException(ex))
@@ -266,8 +324,9 @@ def redirectStdout(logger):
 # Register our logging class as the class for all loggers.
 logging.setLoggerClass(Logger)
 #: The singleton logger instance.
-#: @type: L{Logger}
-log = logging.getLogger("nvda")
+log: Logger = logging.getLogger("nvda")
+#: The singleton log handler instance.
+logHandler: Optional[logging.Handler] = None
 
 def _getDefaultLogFilePath():
 	if getattr(sys, "frozen", None):
@@ -289,21 +348,24 @@ def initialize(shouldDoRemoteLogging=False):
 	@var shouldDoRemoteLogging: True if all logging should go to the real NVDA via rpc (for slave)
 	@type shouldDoRemoteLogging: bool
 	"""
-	global log
+	global log, logHandler
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
 	logging.addLevelName(Logger.IO, "IO")
 	logging.addLevelName(Logger.OFF, "OFF")
 	if not shouldDoRemoteLogging:
 		# This produces log entries such as the following:
-		# IO - inputCore.InputManager.executeGesture (09:17:40.724):
+		# IO - inputCore.InputManager.executeGesture (09:17:40.724) - Thread-5 (13576):
 		# Input: kb(desktop):v
-		logFormatter=Formatter("%(levelname)s - %(codepath)s (%(asctime)s.%(msecs)03d):\n%(message)s", "%H:%M:%S")
+		logFormatter = Formatter(
+			fmt="{levelname!s} - {codepath!s} ({asctime}) - {threadName} ({thread}):\n{message}",
+			style="{"
+		)
 		if (globalVars.appArgs.secure or globalVars.appArgs.noLogging) and (not globalVars.appArgs.debugLogging and globalVars.appArgs.logLevel == 0):
 			# Don't log in secure mode.
 			# #8516: also if logging is completely turned off.
 			logHandler = logging.NullHandler()
 			# There's no point in logging anything at all, since it'll go nowhere.
-			log.setLevel(Logger.OFF)
+			log.root.setLevel(Logger.OFF)
 		else:
 			if not globalVars.appArgs.logFileName:
 				globalVars.appArgs.logFileName = _getDefaultLogFilePath()
@@ -316,23 +378,50 @@ def initialize(shouldDoRemoteLogging=False):
 				os.rename(globalVars.appArgs.logFileName, oldLogFileName)
 			except (IOError, WindowsError):
 				pass # Probably log does not exist, don't care.
-			logHandler = FileHandler(globalVars.appArgs.logFileName, mode="w",encoding="utf-8")
+			try:
+				logHandler = FileHandler(globalVars.appArgs.logFileName, mode="w", encoding="utf-8")
+			except IOError:
+				# if log cannot be opened, we use NullHandler to avoid logging preserving logger behaviour
+				# and set log filename to None to inform logViewer about it
+				globalVars.appArgs.logFileName = None
+				logHandler = logging.NullHandler()
+				log.error("Faile to open log file, redirecting to standard output")
+			logLevel = globalVars.appArgs.logLevel
+			if globalVars.appArgs.debugLogging:
+				logLevel = Logger.DEBUG
+			elif logLevel <= 0:
+				logLevel = Logger.INFO
+			log.setLevel(logLevel)
+			log.root.setLevel(max(logLevel, logging.WARN))
 	else:
 		logHandler = RemoteHandler()
-		logFormatter = Formatter("%(codepath)s:\n%(message)s")
+		logFormatter = Formatter(
+			fmt="{codepath!s}:\n{message}",
+			style="{"
+		)
 	logHandler.setFormatter(logFormatter)
-	log.addHandler(logHandler)
+	log.root.addHandler(logHandler)
 	redirectStdout(log)
 	sys.excepthook = _excepthook
 	warnings.showwarning = _showwarning
 	warnings.simplefilter("default", DeprecationWarning)
 
+
+def isLogLevelForced() -> bool:
+	"""Check if the log level was overridden either from the command line or because of secure mode.
+	"""
+	return (
+		globalVars.appArgs.secure
+		or globalVars.appArgs.debugLogging
+		or globalVars.appArgs.logLevel != 0
+		or globalVars.appArgs.noLogging
+	)
+
+
 def setLogLevelFromConfig():
 	"""Set the log level based on the current configuration.
 	"""
-	if globalVars.appArgs.debugLogging or globalVars.appArgs.logLevel != 0 or globalVars.appArgs.secure or globalVars.appArgs.noLogging:
-		# Log level was overridden on the command line or we're running in secure mode,
-		# so don't set it.
+	if isLogLevelForced():
 		return
 	import config
 	levelName=config.conf["general"]["loggingLevel"]
@@ -345,3 +434,4 @@ def setLogLevelFromConfig():
 		level = log.INFO
 		config.conf["general"]["loggingLevel"] = logging.getLevelName(log.INFO)
 	log.setLevel(level)
+	log.root.setLevel(max(level, logging.WARN))

@@ -18,12 +18,14 @@ from logHandler import log
 import gui
 import speech
 import braille
+from typing import Optional
+
 
 # From urlmon.h
 URL_MK_UNIFORM = 1
 
 # Dialog box properties
-DIALOG_OPTIONS = "dialogWidth:350px;dialogHeight:140px;resizable:yes;center:yes;help:no"
+DIALOG_OPTIONS = "resizable:yes;help:no"
 
 #dwDialogFlags for ShowHTMLDialogEx from mshtmhst.h
 HTMLDLG_NOUI = 0x0010 
@@ -31,6 +33,7 @@ HTMLDLG_MODAL = 0x0020
 HTMLDLG_MODELESS = 0x0040 
 HTMLDLG_PRINT_TEMPLATE = 0x0080 
 HTMLDLG_VERIFY = 0x0100 
+
 
 def browseableMessage(message,title=None,isHtml=False):
 	"""Present a message to the user that can be read in browse mode.
@@ -64,21 +67,23 @@ def browseableMessage(message,title=None,isHtml=False):
 	)
 	gui.mainFrame.postPopup() 
 
-def message(text):
+
+def message(text: str, speechPriority: Optional[speech.Spri] = None):
 	"""Present a message to the user.
 	The message will be presented in both speech and braille.
 	@param text: The text of the message.
-	@type text: str
+	@param speechPriority: The speech priority.
 	"""
-	speech.speakMessage(text)
+	speech.speakMessage(text, priority=speechPriority)
 	braille.handler.message(text)
 
-def reviewMessage(text):
+
+def reviewMessage(text: str, speechPriority: Optional[speech.Spri] = None):
 	"""Present a message from review or object navigation to the user.
 	The message will always be presented in speech, and also in braille if it is tethered to review or when auto tethering is on.
 	@param text: The text of the message.
-	@type text: str
+	@param speechPriority: The speech priority.
 	"""
-	speech.speakMessage(text)
+	speech.speakMessage(text, priority=speechPriority)
 	if braille.handler.shouldAutoTether or braille.handler.getTether() == braille.handler.TETHER_REVIEW:
 		braille.handler.message(text)

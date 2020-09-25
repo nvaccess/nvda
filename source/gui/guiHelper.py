@@ -42,6 +42,8 @@ class myDialog(class wx.Dialog):
 		self.SetSizer(mainSizer)
 	...
 """
+from contextlib import contextmanager
+
 import wx
 from wx.lib import scrolledpanel
 from abc import ABCMeta
@@ -63,6 +65,13 @@ SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL = 10
 
 #: put this much space between two vertically associated elements (such as a wx.StaticText and a wx.Choice or wx.TextCtrl)
 SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL = 3
+
+
+@contextmanager
+def autoThaw(control: wx.Window):
+	control.Freeze()
+	yield
+	control.Thaw()
 
 class ButtonHelper(object):
 	""" Class used to ensure that the appropriate space is added between each button, whether in horizontal or vertical
@@ -127,7 +136,7 @@ def associateElements( firstElement, secondElement):
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		sizer.Add(firstElement)
 		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
-		sizer.Add(secondElement, flag=wx.EXPAND)
+		sizer.Add(secondElement, flag=wx.EXPAND, proportion=1)
 	# button and checkBox
 	elif isinstance(firstElement, wx.Button) and isinstance(secondElement, wx.CheckBox):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -235,7 +244,7 @@ class BoxSizerHelper(object):
 
 	def addItem(self, item, **keywordArgs):
 		""" Adds an item with space between it and the previous item.
-			Does not handle adding LabledControlHelper; use L{addlabelledControl} instead.
+			Does not handle adding LabledControlHelper; use L{addLabeledControl} instead.
 			@param item: the item to add to the sizer
 			@param **keywordArgs: the extra args to pass when adding the item to the wx.Sizer. This parameter is 
 				normally not necessary.
@@ -248,14 +257,15 @@ class BoxSizerHelper(object):
 		if isinstance(item, ButtonHelper):
 			toAdd = item.sizer
 			buttonBorderAmount = 5
-			keywordArgs.update({'border':buttonBorderAmount, 'flag':wx.ALL})
+			keywordArgs["border"] = buttonBorderAmount
+			keywordArgs["flag"] = keywordArgs.get("flag", 0) | wx.ALL
 			shouldAddSpacer = False # no need to add a spacer, since the button border has been added.
 		elif isinstance(item, BoxSizerHelper):
 			toAdd = item.sizer
 		elif isinstance(item, PathSelectionHelper):
 			toAdd = item.sizer
 			if self.sizer.GetOrientation() == wx.VERTICAL:
-				keywordArgs['flag'] = wx.EXPAND
+				keywordArgs["flag"] = keywordArgs.get("flag", 0) | wx.EXPAND
 			else:
 				raise NotImplementedError("Adding PathSelectionHelper to a horizontal BoxSizerHelper is not implemented")
 		elif isinstance(item, LabeledControlHelper):
@@ -263,7 +273,7 @@ class BoxSizerHelper(object):
 
 		# a boxSizerHelper could contain a wx.StaticBoxSizer
 		if isinstance(toAdd, (wx.StaticBoxSizer, scrolledpanel.ScrolledPanel)):
-			keywordArgs['flag'] = wx.EXPAND
+			keywordArgs["flag"] = keywordArgs.get("flag", 0) | wx.EXPAND
 
 		if shouldAddSpacer:
 			self.sizer.AddSpacer(SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
@@ -284,24 +294,39 @@ class BoxSizerHelper(object):
 		"""
 		labeledControl = LabeledControlHelper(self._parent, labelText, wxCtrlClass, **kwargs)
 		if(isinstance(labeledControl.control, (wx.ListCtrl,wx.ListBox,wx.TreeCtrl))):
-			self.addItem(labeledControl.sizer, flag=wx.EXPAND)
+			self.addItem(labeledControl.sizer, flag=wx.EXPAND, proportion=1)
 		else:
 			self.addItem(labeledControl.sizer)
 		return labeledControl.control
 
-	def addDialogDismissButtons(self, buttons):
+	def addDialogDismissButtons(self, buttons, separated=False):
 		""" Adds and aligns the buttons for dismissing the dialog; e.g. "ok | cancel". These buttons are expected
 		to be the last items added to the dialog. Buttons that launch an action, do not dismiss the dialog, or are not
 		the last item should be added via L{addItem}
-		@param buttons: the buttons to add
-		@type buttons: wx.Sizer or guiHelper.ButtonHelper or single wx.Button
+		@param buttons: The buttons to add
+		@type buttons:
+		  wx.Sizer or guiHelper.ButtonHelper or single wx.Button
+		  or a bit list of the following flags: wx.OK, wx.CANCEL, wx.YES, wx.NO, wx.APPLY, wx.CLOSE,
+		  wx.HELP, wx.NO_DEFAULT
+		@param separated:
+		  Whether a separator should be added between the dialog content and its footer.
+		  Should be set to L{False} for message or single input dialogs, L{True} otherwise.
+		@type separated: L{bool}
 		"""
+		if self.sizer.GetOrientation() != wx.VERTICAL:
+			raise NotImplementedError(
+				"Adding dialog dismiss buttons to a horizontal BoxSizerHelper is not implemented."
+			)
 		if isinstance(buttons, ButtonHelper):
 			toAdd = buttons.sizer
 		elif isinstance(buttons, (wx.Sizer, wx.Button)):
 			toAdd = buttons
+		elif isinstance(buttons, int):
+			toAdd = self._parent.CreateButtonSizer(buttons)
 		else:
 			raise NotImplementedError("Unknown type: {}".format(buttons))
+		if separated:
+			self.addItem(wx.StaticLine(self._parent), flag=wx.EXPAND)
 		self.addItem(toAdd, flag=wx.ALIGN_RIGHT)
 		self.dialogDismissButtonsAdded = True
 		return buttons

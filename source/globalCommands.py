@@ -1,12 +1,15 @@
 # -*- coding: UTF-8 -*-
-#globalCommands.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
+# Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
+# Julien Cochuyt
 
 import time
 import itertools
+from typing import Optional
+
 import tones
 import audioDucking
 import touchHandler
@@ -43,6 +46,7 @@ from baseObject import ScriptableObject
 import core
 import winVersion
 from base64 import b16encode
+import vision
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -68,6 +72,9 @@ SCRCAT_CONFIG_PROFILES = _("Configuration profiles")
 #: Script category for Braille commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_BRAILLE = _("Braille")
+#: Script category for Vision commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_VISION = _("Vision")
 #: Script category for tools commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_TOOLS = pgettext('script category', 'Tools')
@@ -354,6 +361,24 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportFontAttributes.__doc__=_("Toggles on and off the reporting of font attributes")
 	script_toggleReportFontAttributes.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle superscripts and subscripts command.
+		description=_("Toggles on and off the reporting of superscripts and subscripts"),
+		category=SCRCAT_DOCUMENTFORMATTING,
+	)
+	def script_toggleReportSuperscriptsAndSubscripts(self, gesture):
+		shouldReport: bool = not config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"]
+		config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"] = shouldReport
+		if shouldReport:
+			# Translators: The message announced when toggling the report superscripts and subscripts
+			# document formatting setting.
+			state = _("report superscripts and subscripts on")
+		else:
+			# Translators: The message announced when toggling the report superscripts and subscripts
+			# document formatting setting.
+			state = _("report superscripts and subscripts off")
+		ui.message(state)
+	
 	def script_toggleReportRevisions(self,gesture):
 		if config.conf["documentFormatting"]["reportRevisions"]:
 			# Translators: The message announced when toggling the report revisions document formatting setting.
@@ -577,6 +602,22 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportLinks.__doc__=_("Toggles on and off the reporting of links")
 	script_toggleReportLinks.category=SCRCAT_DOCUMENTFORMATTING
 
+	@scriptHandler.script(
+		# Translators: Input help mode message for toggle report graphics command.
+		description=_("Toggles on and off the reporting of graphics"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
+	def script_toggleReportGraphics(self, gesture):
+		if config.conf["documentFormatting"]["reportGraphics"]:
+			# Translators: The message announced when toggling the report graphics document formatting setting.
+			state = _("report graphics off")
+			config.conf["documentFormatting"]["reportGraphics"] = False
+		else:
+			# Translators: The message announced when toggling the report graphics document formatting setting.
+			state = _("report graphics on")
+			config.conf["documentFormatting"]["reportGraphics"] = True
+		ui.message(state)
+
 	def script_toggleReportComments(self,gesture):
 		if config.conf["documentFormatting"]["reportComments"]:
 			# Translators: The message announced when toggling the report comments document formatting setting.
@@ -619,6 +660,22 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportHeadings.__doc__=_("Toggles on and off the reporting of headings")
 	script_toggleReportHeadings.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report groupings command.
+		description=_("Toggles on and off the reporting of groupings"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
+	def script_toggleReportGroupings(self, gesture):
+		if config.conf["documentFormatting"]["reportGroupings"]:
+			# Translators: The message announced when toggling the report block quotes document formatting setting.
+			state = _("report groupings off")
+			config.conf["documentFormatting"]["reportGroupings"] = False
+		else:
+			# Translators: The message announced when toggling the report block quotes document formatting setting.
+			state = _("report groupings on")
+			config.conf["documentFormatting"]["reportGroupings"] = True
+		ui.message(state)
+
 	def script_toggleReportBlockQuotes(self,gesture):
 		if config.conf["documentFormatting"]["reportBlockQuotes"]:
 			# Translators: The message announced when toggling the report block quotes document formatting setting.
@@ -636,16 +693,32 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportLandmarks(self,gesture):
 		if config.conf["documentFormatting"]["reportLandmarks"]:
 			# Translators: The message announced when toggling the report landmarks document formatting setting.
-			state = _("report landmarks off")
+			state = _("report landmarks and regions off")
 			config.conf["documentFormatting"]["reportLandmarks"]=False
 		else:
 			# Translators: The message announced when toggling the report landmarks document formatting setting.
-			state = _("report landmarks on")
+			state = _("report landmarks and regions on")
 			config.conf["documentFormatting"]["reportLandmarks"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle report landmarks command.
 	script_toggleReportLandmarks.__doc__=_("Toggles on and off the reporting of landmarks")
 	script_toggleReportLandmarks.category=SCRCAT_DOCUMENTFORMATTING
+
+	@script(
+		# Translators: Input help mode message for toggle report articles command.
+		description=_("Toggles on and off the reporting of articles"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
+	def script_toggleReportArticles(self, gesture):
+		if config.conf["documentFormatting"]["reportArticles"]:
+			# Translators: The message announced when toggling the report articles document formatting setting.
+			state = _("report articles off")
+			config.conf["documentFormatting"]["reportArticles"] = False
+		else:
+			# Translators: The message announced when toggling the report articles document formatting setting.
+			state = _("report articles on")
+			config.conf["documentFormatting"]["reportArticles"] = True
+		ui.message(state)
 
 	def script_toggleReportFrames(self,gesture):
 		if config.conf["documentFormatting"]["reportFrames"]:
@@ -780,7 +853,7 @@ class GlobalCommands(ScriptableObject):
 			if curObject.TextInfo!=NVDAObjectTextInfo:
 				textList=[]
 				name = curObject.name
-				if isinstance(name, str) and not name.isspace():
+				if name and isinstance(name, str) and not name.isspace():
 					textList.append(name)
 				try:
 					info=curObject.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -796,7 +869,7 @@ class GlobalCommands(ScriptableObject):
 			else:
 				textList=[]
 				for prop in (curObject.name, curObject.value):
-					if isinstance(prop,str) and not prop.isspace():
+					if prop and isinstance(prop, str) and not prop.isspace():
 						textList.append(prop)
 			text=" ".join(textList)
 			if len(text)>0 and not text.isspace():
@@ -826,19 +899,23 @@ class GlobalCommands(ScriptableObject):
 	script_navigatorObject_currentDimensions.__doc__=_("Reports information about the location of the text or object at the review cursor. Pressing twice may provide further detail.") 
 	script_navigatorObject_currentDimensions.category=SCRCAT_OBJECTNAVIGATION
 
+	@script(
+		description=_(
+			# Translators: Input help mode message for move navigator object to current focus command.
+			"Sets the navigator object to the current focus, "
+			"and the review cursor to the position of the caret inside it, if possible."
+		),
+		category=SCRCAT_OBJECTNAVIGATION,
+		gestures=("kb:NVDA+numpadMinus", "kb(laptop):NVDA+backspace"),
+	)
 	def script_navigatorObject_toFocus(self,gesture):
-		obj=api.getFocusObject()
-		try:
-			pos=obj.makeTextInfo(textInfos.POSITION_CARET)
-		except (NotImplementedError,RuntimeError):
-			pos=obj.makeTextInfo(textInfos.POSITION_FIRST)
-		api.setReviewPosition(pos)
+		tIAtCaret = self._getTIAtCaret(True)
+		focusedObj = api.getFocusObject()
+		api.setNavigatorObject(focusedObj)
+		api.setReviewPosition(tIAtCaret)
 		# Translators: Reported when attempting to move the navigator object to focus.
 		speech.speakMessage(_("Move to focus"))
-		speech.speakObject(obj,reason=controlTypes.REASON_FOCUS)
-	# Translators: Input help mode message for move navigator object to current focus command.
-	script_navigatorObject_toFocus.__doc__=_("Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible.")
-	script_navigatorObject_toFocus.category=SCRCAT_OBJECTNAVIGATION
+		speech.speakObject(api.getNavigatorObject(), reason=controlTypes.OutputReason.FOCUS)
 
 	def script_navigatorObject_moveFocus(self,gesture):
 		obj=api.getNavigatorObject()
@@ -980,7 +1057,6 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_FIRST)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
-		ui.reviewMessage(_("Top"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to top line command.
 	script_review_top.__doc__=_("Moves the review cursor to the top line of the current navigator object and speaks it")
@@ -988,9 +1064,8 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_previousLine(self,gesture):
 		info=api.getReviewPosition().copy()
-		if info._expandCollapseBeforeReview:
-			info.expand(textInfos.UNIT_LINE)
-			info.collapse()
+		info.expand(textInfos.UNIT_LINE)
+		info.collapse()
 		res=info.move(textInfos.UNIT_LINE,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
@@ -1020,9 +1095,8 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_nextLine(self,gesture):
 		info=api.getReviewPosition().copy()
-		if info._expandCollapseBeforeReview:
-			info.expand(textInfos.UNIT_LINE)
-			info.collapse()
+		info.expand(textInfos.UNIT_LINE)
+		info.collapse()
 		res=info.move(textInfos.UNIT_LINE,1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
@@ -1040,7 +1114,6 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_LAST)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
-		ui.reviewMessage(_("Bottom"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to bottom line command.
 	script_review_bottom.__doc__=_("Moves the review cursor to the bottom line of the current navigator object and speaks it")
@@ -1048,9 +1121,8 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_previousWord(self,gesture):
 		info=api.getReviewPosition().copy()
-		if info._expandCollapseBeforeReview:
-			info.expand(textInfos.UNIT_WORD)
-			info.collapse()
+		info.expand(textInfos.UNIT_WORD)
+		info.collapse()
 		res=info.move(textInfos.UNIT_WORD,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
@@ -1079,9 +1151,8 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_nextWord(self,gesture):
 		info=api.getReviewPosition().copy()
-		if info._expandCollapseBeforeReview:
-			info.expand(textInfos.UNIT_WORD)
-			info.collapse()
+		info.expand(textInfos.UNIT_WORD)
+		info.collapse()
 		res=info.move(textInfos.UNIT_WORD,1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
@@ -1100,7 +1171,6 @@ class GlobalCommands(ScriptableObject):
 		info.collapse()
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
-		ui.reviewMessage(_("Left"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to start of current line command.
 	script_review_startOfLine.__doc__=_("Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it")
@@ -1110,9 +1180,8 @@ class GlobalCommands(ScriptableObject):
 		lineInfo=api.getReviewPosition().copy()
 		lineInfo.expand(textInfos.UNIT_LINE)
 		charInfo=api.getReviewPosition().copy()
-		if charInfo._expandCollapseBeforeReview:
-			charInfo.expand(textInfos.UNIT_CHARACTER)
-			charInfo.collapse()
+		charInfo.expand(textInfos.UNIT_CHARACTER)
+		charInfo.collapse()
 		res=charInfo.move(textInfos.UNIT_CHARACTER,-1)
 		if res==0 or charInfo.compareEndPoints(lineInfo,"startToStart")<0:
 			# Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
@@ -1157,9 +1226,8 @@ class GlobalCommands(ScriptableObject):
 		lineInfo=api.getReviewPosition().copy()
 		lineInfo.expand(textInfos.UNIT_LINE)
 		charInfo=api.getReviewPosition().copy()
-		if charInfo._expandCollapseBeforeReview:
-			charInfo.expand(textInfos.UNIT_CHARACTER)
-			charInfo.collapse()
+		charInfo.expand(textInfos.UNIT_CHARACTER)
+		charInfo.collapse()
 		res=charInfo.move(textInfos.UNIT_CHARACTER,1)
 		if res==0 or charInfo.compareEndPoints(lineInfo,"endToEnd")>=0:
 			# Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
@@ -1182,7 +1250,6 @@ class GlobalCommands(ScriptableObject):
 		info.move(textInfos.UNIT_CHARACTER,-1)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
-		ui.reviewMessage(_("Right"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to end of current line command.
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
@@ -1325,8 +1392,11 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_sayAll(self,gesture):
 		sayAllHandler.readText(sayAllHandler.CURSOR_REVIEW)
-	# Translators: Input help mode message for say all in review cursor command.
-	script_review_sayAll.__doc__ = _("Reads from the review cursor up to end of current text, moving the review cursor as it goes")
+	script_review_sayAll.__doc__ = _(
+		# Translators: Input help mode message for say all in review cursor command.
+		"Reads from the review cursor up to the end of the current text,"
+		" moving the review cursor as it goes"
+	)
 	script_review_sayAll.category=SCRCAT_TEXTREVIEW
 
 	def script_sayAll(self,gesture):
@@ -1336,23 +1406,42 @@ class GlobalCommands(ScriptableObject):
 	script_sayAll.category=SCRCAT_SYSTEMCARET
 
 	def _reportFormattingHelper(self, info, browseable=False):
-		formatConfig={
-			"detectFormatAfterCursor":False,
-			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,"reportEmphasis":False,
-			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
-			"reportPage":False,"reportLineNumber":False,"reportLineIndentation":True,"reportLineIndentationWithTones":False,"reportParagraphIndentation":True,"reportLineSpacing":True,"reportTables":False,
-			"reportLinks":False,"reportHeadings":False,"reportLists":False,
-			"reportBlockQuotes":False,"reportComments":False,
-			"reportBorderStyle":True,"reportBorderColor":True,
-		}
-		textList=[]
+		# Report all formatting-related changes regardless of user settings
+		# when explicitly requested.
+		if info is None:
+			return
+		# These are the options we want reported when reporting formatting manually.
+		# for full list of options that may be reported see the "documentFormatting" section of L{config.configSpec}
+		reportFormattingOptions = (
+			"reportFontName",
+			"reportFontSize",
+			"reportFontAttributes",
+			"reportSuperscriptsAndSubscripts",
+			"reportColor",
+			"reportStyle",
+			"reportAlignment",
+			"reportSpellingErrors",
+			"reportLineIndentation",
+			"reportParagraphIndentation",
+			"reportLineSpacing",
+			"reportBorderStyle",
+			"reportBorderColor",
+		)
 
+		# Create a dictionary to replace the config section that would normally be
+		# passed to getFormatFieldsSpeech / getFormatFieldsBraille
+		formatConfig = dict()
+		from config import conf
+		for i in conf["documentFormatting"]:
+			formatConfig[i] = i in reportFormattingOptions
+
+		textList = []
 		# First, fetch indentation.
 		line=info.copy()
 		line.expand(textInfos.UNIT_LINE)
 		indentation,content=speech.splitTextIndentation(line.text)
 		if indentation:
-			textList.append(speech.getIndentationSpeech(indentation, formatConfig))
+			textList.extend(speech.getIndentationSpeech(indentation, formatConfig))
 		
 		info=info.copy()
 		info.expand(textInfos.UNIT_CHARACTER)
@@ -1362,9 +1451,9 @@ class GlobalCommands(ScriptableObject):
 				formatField.update(field.field)
 
 		if not browseable:
-			text=info.getFormatFieldSpeech(formatField,formatConfig=formatConfig) if formatField else None
-			if text:
-				textList.append(text)
+			if formatField:
+				sequence = info.getFormatFieldSpeech(formatField, formatConfig=formatConfig)
+				textList.extend(sequence)
 
 			if not textList:
 			# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
@@ -1373,28 +1462,109 @@ class GlobalCommands(ScriptableObject):
 				
 			ui.message(" ".join(textList))
 		else:
-			text=info.getFormatFieldSpeech(formatField,formatConfig=formatConfig , separator="\n") if formatField else None
-			if text:
-				textList.append(text)
+			if formatField:
+				sequence = info.getFormatFieldSpeech(formatField, formatConfig=formatConfig)
+				textList.extend(sequence)
 
 			if not textList:
 				# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 				ui.message(_("No formatting information"))
 				return
 
-			# Translators: title for formatting information dialog.
-			ui.browseableMessage("\n".join(textList), _("Formatting"))
+			# browseable message only supports a string, remove commands:
+			message = "\n".join(
+				stringItem for stringItem in textList if isinstance(stringItem, str)
+			)
 
-	def script_reportFormatting(self,gesture):
-		info=api.getReviewPosition()
-		repeats=scriptHandler.getLastScriptRepeatCount()
-		if repeats==0:
-			self._reportFormattingHelper(info,False)
-		elif repeats==1:
-			self._reportFormattingHelper(info,True)
-	# Translators: Input help mode message for report formatting command.
-	script_reportFormatting.__doc__ = _("Reports formatting info for the current review cursor position within a document. If pressed twice, presents the information in browse mode")
-	script_reportFormatting.category=SCRCAT_TEXTREVIEW
+			ui.browseableMessage(
+				message,
+				# Translators: title for formatting information dialog.
+				_("Formatting")
+			)
+
+	@staticmethod
+	def _getTIAtCaret(fallbackToPOSITION_FIRST=False):
+		# Returns text info at the caret position if there is a caret in the current control, None otherwise.
+		# Note that if there is  no caret this fact is announced  in speech and braille.
+		obj = api.getFocusObject()
+		treeInterceptor = obj.treeInterceptor
+		if(
+			isinstance(treeInterceptor, treeInterceptorHandler.DocumentTreeInterceptor)
+			and not treeInterceptor.passThrough
+		):
+			obj = treeInterceptor
+		try:
+			return obj.makeTextInfo(textInfos.POSITION_CARET)
+		except (NotImplementedError, RuntimeError):
+			if fallbackToPOSITION_FIRST:
+				return obj.makeTextInfo(textInfos.POSITION_FIRST)
+			else:
+				# Translators: Reported when there is no caret.
+				ui.message(_("No caret"))
+
+	@script(
+		# Translators: Input help mode message for report formatting command.
+		description=_("Reports formatting info for the current review cursor position."),
+		category=SCRCAT_TEXTREVIEW,
+	)
+	def script_reportFormattingAtReview(self, gesture):
+		self._reportFormattingHelper(api.getReviewPosition(), False)
+
+	@script(
+		# Translators: Input help mode message for show formatting at review cursor command.
+		description=_("Presents, in browse mode, formatting info for the current review cursor position."),
+		category=SCRCAT_TEXTREVIEW,
+	)
+	def script_showFormattingAtReview(self, gesture):
+		self._reportFormattingHelper(api.getReviewPosition(), True)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for report formatting command.
+			"Reports formatting info for the current review cursor position."
+			" If pressed twice, presents the information in browse mode"
+		),
+		category=SCRCAT_TEXTREVIEW,
+		gesture="kb:NVDA+shift+f",
+	)
+	def script_reportFormatting(self, gesture):
+		repeats = scriptHandler.getLastScriptRepeatCount()
+		if repeats == 0:
+			self.script_reportFormattingAtReview(gesture)
+		elif repeats == 1:
+			self.script_showFormattingAtReview(gesture)
+
+	@script(
+		# Translators: Input help mode message for report formatting at caret command.
+		description=_("Reports formatting info for the text under the caret."),
+		category=SCRCAT_SYSTEMCARET,
+	)
+	def script_reportFormattingAtCaret(self, gesture):
+		self._reportFormattingHelper(self._getTIAtCaret(), False)
+
+	@script(
+		# Translators: Input help mode message for show formatting at caret position command.
+		description=_("Presents, in browse mode, formatting info for the text under the caret."),
+		category=SCRCAT_SYSTEMCARET,
+	)
+	def script_showFormattingAtCaret(self, gesture):
+		self._reportFormattingHelper(self._getTIAtCaret(), True)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for report formatting at caret command.
+			"Reports formatting info for the text under the caret."
+			" If pressed twice, presents the information in browse mode"
+		),
+		category=SCRCAT_SYSTEMCARET,
+		gesture="kb:NVDA+f",
+	)
+	def script_reportOrShowFormattingAtCaret(self, gesture):
+		repeats = scriptHandler.getLastScriptRepeatCount()
+		if repeats == 0:
+			self.script_reportFormattingAtCaret(gesture)
+		elif repeats == 1:
+			self.script_showFormattingAtCaret(gesture)
 
 	def script_reportCurrentFocus(self,gesture):
 		focusObject=api.getFocusObject()
@@ -1415,17 +1585,22 @@ class GlobalCommands(ScriptableObject):
 		if obj:
 			text = api.getStatusBarText(obj)
 			api.setNavigatorObject(obj)
-			found=True
+			found = True
 		else:
-			info=api.getForegroundObject().flatReviewPosition
+			foreground = api.getForegroundObject()
+			try:
+				info = foreground.appModule.statusBarTextInfo
+			except NotImplementedError:
+				info = foreground.flatReviewPosition
+				if info:
+					info.expand(textInfos.UNIT_STORY)
+					info.collapse(True)
+					info.expand(textInfos.UNIT_LINE)
 			if info:
-				info.expand(textInfos.UNIT_STORY)
-				info.collapse(True)
-				info.expand(textInfos.UNIT_LINE)
-				text=info.text
+				text = info.text
 				info.collapse()
 				api.setReviewPosition(info)
-				found=True
+				found = True
 		if not found:
 			# Translators: Reported when there is no status line for the current program or window.
 			ui.message(_("No status line found"))
@@ -1512,7 +1687,7 @@ class GlobalCommands(ScriptableObject):
 		if obj:
 			sayAllHandler.readObjects(obj)
 	# Translators: Input help mode message for read foreground object command (usually the foreground window).
-	script_speakForeground.__doc__ = _("Speaks the current foreground object")
+	script_speakForeground.__doc__ = _("Reads all controls in the active window")
 	script_speakForeground.category=SCRCAT_FOCUS
 
 	def script_test_navigatorDisplayModelText(self,gesture):
@@ -1539,6 +1714,53 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 	script_navigatorObject_devInfo.__doc__ = _("Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined.")
 	script_navigatorObject_devInfo.category=SCRCAT_TOOLS
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for a command to delimit then
+			# copy a fragment of the log to clipboard
+			"Mark the current end of the log as the start of the fragment to be"
+			" copied to clipboard by pressing again."
+		),
+		category=SCRCAT_TOOLS,
+		gesture="kb:NVDA+control+shift+f1"
+	)
+	def script_log_markStartThenCopy(self, gesture):
+		if globalVars.appArgs.secure:
+			return
+		if log.fragmentStart is None:
+			if log.markFragmentStart():
+				# Translators: Message when marking the start of a fragment of the log file for later copy
+				# to clipboard
+				ui.message(_("Log fragment start position marked, press again to copy to clipboard"))
+			else:
+				# Translators: Message when failed to mark the start of a
+				# fragment of the log file for later copy to clipboard
+				ui.message(_("Unable to mark log position"))
+			return
+		text = log.getFragment()
+		if not text:
+			# Translators: Message when attempting to copy an empty fragment of the log file
+			ui.message(_("No new log entry to copy"))
+			return
+		if api.copyToClip(text):
+			# Translators: Message when a fragment of the log file has been
+			# copied to clipboard
+			ui.message(_("Log fragment copied to clipboard"))
+		else:
+			# Translators: Presented when unable to copy to the clipboard because of an error.
+			ui.message(_("Unable to copy"))
+
+	@script(
+		# Translators: Input help mode message for Open user configuration directory command.
+		description=_("Opens NVDA configuration directory for the current user."),
+		category=SCRCAT_TOOLS
+	)
+	def script_openUserConfigurationDirectory(self, gesture):
+		if globalVars.appArgs.secure:
+			return
+		import systemUtils
+		systemUtils.openUserConfigurationDirectory()
 
 	def script_toggleProgressBarOutput(self,gesture):
 		outputMode=config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]
@@ -1772,6 +1994,26 @@ class GlobalCommands(ScriptableObject):
 	script_activateInputGesturesDialog.__doc__ = _("Shows the NVDA input gestures dialog")
 	script_activateInputGesturesDialog.category=SCRCAT_CONFIG
 
+	@script(
+		# Translators: Input help mode message for the report current configuration profile command.
+		description=_("Reports the name of the current NVDA configuration profile"),
+		category=SCRCAT_CONFIG,
+	)
+	def script_reportActiveConfigurationProfile(self, gesture):
+		activeProfileName = config.conf.profiles[-1].name
+
+		if not activeProfileName:
+			# Translators: Message announced when the command to report the current configuration profile and
+			# the default configuration profile is active.
+			activeProfileMessage = _("normal configuration profile active")
+		else:
+			# Translators: Message announced when the command to report the current configuration profile
+			# is active. The placeholder '{profilename}' is replaced with the name of the current active profile.
+			activeProfileMessage = _("{profileName} configuration profile active").format(
+				profileName=activeProfileName
+			)
+		ui.message(activeProfileMessage)
+
 	def script_saveConfiguration(self,gesture):
 		wx.CallAfter(gui.mainFrame.onSaveConfigurationCommand, None)
 	# Translators: Input help mode message for save current configuration command.
@@ -1784,8 +2026,11 @@ class GlobalCommands(ScriptableObject):
 			gui.mainFrame.onRevertToSavedConfigurationCommand(None)
 		elif scriptCount==2:
 			gui.mainFrame.onRevertToDefaultConfigurationCommand(None)
-	# Translators: Input help mode message for apply last saved or default settings command.
-	script_revertConfiguration.__doc__ = _("Pressing once reverts the current configuration to the most recently saved state. Pressing three times reverts to factory defaults.")
+	script_revertConfiguration.__doc__ = _(
+		# Translators: Input help mode message for apply last saved or default settings command.
+		"Pressing once reverts the current configuration to the most recently saved state."
+		" Pressing three times resets to factory defaults."
+	)
 	script_revertConfiguration.category=SCRCAT_CONFIG
 
 	def script_activatePythonConsole(self,gesture):
@@ -1936,6 +2181,27 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
 	script_review_markStartForCopy.__doc__ = _("Marks the current position of the review cursor as the start of text to be selected or copied")
 	script_review_markStartForCopy.category=SCRCAT_TEXTREVIEW
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for move review cursor to marked start position for a
+			# select or copy command
+			"Move the review cursor to the position marked as the start of text to be selected or copied"
+		),
+		category=SCRCAT_TEXTREVIEW,
+		gesture="kb:NVDA+shift+F9",
+	)
+	def script_review_moveToStartMarkedForCopy(self, gesture):
+		pos = api.getReviewPosition()
+		if not getattr(pos.obj, "_copyStartMarker", None):
+			# Translators: Presented when attempting to move to the start marker for copy but none has been set.
+			ui.reviewMessage(_("No start marker set"))
+			return
+		startMarker = pos.obj._copyStartMarker.copy()
+		api.setReviewPosition(startMarker)
+		startMarker.collapse()
+		startMarker.expand(textInfos.UNIT_CHARACTER)
+		speech.speakTextInfo(startMarker, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.REASON_CARET)
 
 	def script_review_copy(self, gesture):
 		pos = api.getReviewPosition().copy()
@@ -2185,6 +2451,29 @@ class GlobalCommands(ScriptableObject):
 	script_navigatorObject_previousInFlow.__doc__=_("Moves to the previous object in a flattened view of the object navigation hierarchy")
 	script_navigatorObject_previousInFlow.category=SCRCAT_OBJECTNAVIGATION
 
+	@script(
+		# Translators: Describes a command.
+		description=_("Toggles the support of touch interaction"),
+		category=SCRCAT_TOUCH,
+		gesture="kb:NVDA+control+alt+t",
+	)
+	def script_toggleTouchSupport(self, gesture):
+		enabled = not bool(config.conf["touch"]["enabled"])
+		try:
+			touchHandler.setTouchSupport(enabled)
+		except NotImplementedError:
+			# Translators: Presented when attempting to toggle touch interaction support
+			ui.message(_("Touch interaction not supported"))
+			return
+		# Set configuration upon success
+		config.conf["touch"]["enabled"] = enabled
+		if enabled:
+			# Translators: Presented when support of touch interaction has been enabled
+			ui.message(_("Touch interaction enabled"))
+		else:
+			# Translators: Presented when support of touch interaction has been disabled
+			ui.message(_("Touch interaction disabled"))
+
 	def script_touch_changeMode(self,gesture):
 		mode=touchHandler.handler._curTouchMode
 		index=touchHandler.availableTouchModes.index(mode)
@@ -2223,6 +2512,37 @@ class GlobalCommands(ScriptableObject):
 			if isinstance(obj,NVDAObjects.UIA.UIA) and obj.UIAElement.cachedClassName=="CRootKey":
 				obj.doAction()
 	script_touch_hoverUp.category=SCRCAT_TOUCH
+
+	def script_touch_rightClick(self, gesture):
+		obj = api.getNavigatorObject()
+		# Ignore invisible or offscreen objects as they cannot even be navigated with touch gestures.
+		if controlTypes.STATE_INVISIBLE in obj.states or controlTypes.STATE_OFFSCREEN in obj.states:
+			return
+		try:
+			p = api.getReviewPosition().pointAtStart
+		except (NotImplementedError, LookupError):
+			p = None
+		if p:
+			x = p.x
+			y = p.y
+		else:
+			try:
+				(left, top, width, height) = obj.location
+			# Flake8/E722: stems from object location script.
+			except: # noqa
+				# Translators: Reported when the object has no location for the mouse to move to it.
+				ui.message(_("object has no location"))
+				return
+			# Don't bother clicking when parts or the entire object is offscreen.
+			if min(left, top, width, height) < 0:
+				return
+			x = left + (width // 2)
+			y = top + (height // 2)
+		winUser.setCursorPos(x, y)
+		self.script_rightMouseClick(gesture)
+	# Translators: Input help mode message for touch right click command.
+	script_touch_rightClick.__doc__ = _("Clicks the right mouse button at the current touch position. This is generally used to activate a context menu.") # noqa Flake8/E501
+	script_touch_rightClick.category = SCRCAT_TOUCH
 
 	def script_activateConfigProfilesDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onConfigProfilesCommand, None)
@@ -2278,6 +2598,159 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Describes a command.
 	script_recognizeWithUwpOcr.__doc__ = _("Recognizes the content of the current navigator object with Windows 10 OCR")
 
+	_tempEnableScreenCurtain = True
+	_waitingOnScreenCurtainWarningDialog: Optional[wx.Dialog] = None
+	_toggleScreenCurtainMessage: Optional[str] = None
+	@script(
+		# Translators: Input help mode message for toggle report CLDR command.
+		description=_("Toggles on and off the reporting of CLDR characters, such as emojis"),
+		category=SCRCAT_SPEECH,
+	)
+	def script_toggleReportCLDR(self, gesture):
+		if config.conf["speech"]["includeCLDR"]:
+			# Translators: presented when the report CLDR is toggled.
+			state = _("report CLDR characters off")
+			config.conf["speech"]["includeCLDR"] = False
+		else:
+			# Translators: presented when the report CLDR is toggled.
+			state = _("report CLDR characters on")
+			config.conf["speech"]["includeCLDR"] = True
+		characterProcessing.clearSpeechSymbols()
+		ui.message(state)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggles the state of the screen curtain, "
+			"enable to make the screen black or disable to show the contents of the screen. "
+			"Pressed once, screen curtain is enabled until you restart NVDA. "
+			"Pressed twice, screen curtain is enabled until you disable it"
+		),
+		category=SCRCAT_VISION
+	)
+	def script_toggleScreenCurtain(self, gesture):
+		scriptCount = scriptHandler.getLastScriptRepeatCount()
+		if scriptCount == 0:  # first call should reset last message
+			self._toggleScreenCurtainMessage = None
+
+		from visionEnhancementProviders.screenCurtain import ScreenCurtainProvider
+		screenCurtainId = ScreenCurtainProvider.getSettings().getId()
+		screenCurtainProviderInfo = vision.handler.getProviderInfo(screenCurtainId)
+		alreadyRunning = bool(vision.handler.getProviderInstance(screenCurtainProviderInfo))
+
+		GlobalCommands._tempEnableScreenCurtain = scriptCount == 0
+
+		if self._waitingOnScreenCurtainWarningDialog:
+			# Already in the process of enabling the screen curtain, exit early.
+			# Ensure that the dialog is in the foreground, and read it again.
+			self._waitingOnScreenCurtainWarningDialog.Raise()
+
+			# Key presses interrupt speech, so it maybe that the dialog wasn't
+			# announced properly (if the user triggered the gesture more
+			# than once). So we speak the objects to imitate the dialog getting
+			# focus again. It might be useful to have something like this in a
+			# script: see https://github.com/nvaccess/nvda/issues/9147#issuecomment-454278313
+			speech.cancelSpeech()
+			speech.speakObject(
+				api.getForegroundObject(),
+				reason=controlTypes.REASON_FOCUS
+			)
+			speech.speakObject(
+				api.getFocusObject(),
+				reason=controlTypes.REASON_FOCUS
+			)
+			return
+
+		if scriptCount >= 2 and self._toggleScreenCurtainMessage:
+			# Only the first two presses have actions, all subsequent presses should just repeat the last outcome.
+			# This is important when not showing warning dialog, otherwise the script completion message can be
+			# suppressed.
+			# Must happen after the code to raise / read the warning dialog, since if there is a warning dialog
+			# it takes preference, and there shouldn't be a valid completion message in this case anyway.
+			ui.message(
+				self._toggleScreenCurtainMessage,
+				speechPriority=speech.priorities.Spri.NOW
+			)
+			return
+
+		# Disable if running
+		if (
+			alreadyRunning
+			and scriptCount == 0  # a second press might be trying to achieve non temp enable
+		):
+			# Translators: Reported when the screen curtain is disabled.
+			message = _("Screen curtain disabled")
+			try:
+				vision.handler.terminateProvider(screenCurtainProviderInfo)
+			except Exception:
+				# If the screen curtain was enabled, we do not expect exceptions.
+				log.error("Screen curtain termination error", exc_info=True)
+				# Translators: Reported when the screen curtain could not be enabled.
+				message = _("Could not disable screen curtain")
+			finally:
+				self._toggleScreenCurtainMessage = message
+				ui.message(message, speechPriority=speech.priorities.Spri.NOW)
+				return
+		elif (  # enable it
+			scriptCount in (0, 1)  # 1 press (temp enable) or 2 presses (enable)
+		):
+			# Check if screen curtain is available, exit early if not.
+			if not screenCurtainProviderInfo.providerClass.canStart():
+				# Translators: Reported when the screen curtain is not available.
+				message = _("Screen curtain not available")
+				self._toggleScreenCurtainMessage = message
+				ui.message(message, speechPriority=speech.priorities.Spri.NOW)
+				return
+
+			def _enableScreenCurtain(doEnable: bool = True):
+				self._waitingOnScreenCurtainWarningDialog = None
+				if not doEnable:
+					return  # exit early with no ui.message because the user has decided to abort.
+
+				tempEnable = GlobalCommands._tempEnableScreenCurtain
+				# Translators: Reported when the screen curtain is enabled.
+				enableMessage = _("Screen curtain enabled")
+				if tempEnable:
+					# Translators: Reported when the screen curtain is temporarily enabled.
+					enableMessage = _("Temporary Screen curtain, enabled until next restart")
+
+				try:
+					if alreadyRunning:
+						screenCurtainProviderInfo.providerClass.enableInConfig(True)
+					else:
+						vision.handler.initializeProvider(
+							screenCurtainProviderInfo,
+							temporary=tempEnable,
+						)
+				except Exception:
+					log.error("Screen curtain initialization error", exc_info=True)
+					# Translators: Reported when the screen curtain could not be enabled.
+					enableMessage = _("Could not enable screen curtain")
+				finally:
+					self._toggleScreenCurtainMessage = enableMessage
+					ui.message(enableMessage, speechPriority=speech.priorities.Spri.NOW)
+
+			#  Show warning if necessary and do enable.
+			settingsStorage = ScreenCurtainProvider.getSettings()
+			if settingsStorage.warnOnLoad:
+				from visionEnhancementProviders.screenCurtain import WarnOnLoadDialog
+				parent = gui.mainFrame
+				dlg = WarnOnLoadDialog(
+					screenCurtainSettingsStorage=settingsStorage,
+					parent=parent
+				)
+				self._waitingOnScreenCurtainWarningDialog = dlg
+				gui.runScriptModalDialog(
+					dlg,
+					lambda res: wx.CallLater(
+						millis=100,
+						callableObj=_enableScreenCurtain,
+						doEnable=res == wx.YES
+					)
+				)
+			else:
+				_enableScreenCurtain()
+
 	__gestures = {
 		# Basic
 		"kb:NVDA+n": "showGui",
@@ -2306,8 +2779,6 @@ class GlobalCommands(ScriptableObject):
 		"kb(laptop):NVDA+l": "reportCurrentLine",
 		"kb(desktop):NVDA+shift+upArrow": "reportCurrentSelection",
 		"kb(laptop):NVDA+shift+s": "reportCurrentSelection",
-		"kb:NVDA+f": "reportFormatting",
-
 		# Object navigation
 		"kb:NVDA+numpad5": "navigatorObject_current",
 		"kb(laptop):NVDA+shift+o": "navigatorObject_current",
@@ -2325,8 +2796,6 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+numpad2": "navigatorObject_firstChild",
 		"kb(laptop):NVDA+shift+downArrow": "navigatorObject_firstChild",
 		"ts(object):flickdown":"navigatorObject_firstChild",
-		"kb:NVDA+numpadMinus": "navigatorObject_toFocus",
-		"kb(laptop):NVDA+backspace": "navigatorObject_toFocus",
 		"kb:NVDA+numpadEnter": "review_activate",
 		"kb(laptop):NVDA+enter": "review_activate",
 		"ts:double_tap": "review_activate",
@@ -2342,6 +2811,8 @@ class GlobalCommands(ScriptableObject):
 		"ts:3finger_tap":"touch_changeMode",
 		"ts:2finger_double_tap":"showGui",
 		"ts:hoverUp":"touch_hoverUp",
+		"ts:tapAndHold": "touch_rightClick", # noqa (Flake8/ET121)
+
 		# Review cursor
 		"kb:shift+numpad7": "review_top",
 		"kb(laptop):NVDA+control+home": "review_top",
@@ -2541,7 +3012,7 @@ class ConfigProfileActivationCommands(ScriptableObject):
 		@param oldScriptName: The current name of the profile activation script.
 		@type oldScriptName: str
 		@param newScriptName: The new name for the profile activation script, if any.
-			if C{None}, the gestures are only removed for the current profile sript.
+			if C{None}, the gestures are only removed for the current profile script.
 		@type newScriptName: str
 		"""
 		gestureMap = inputCore.manager.userGestureMap
@@ -2577,4 +3048,3 @@ class ConfigProfileActivationCommands(ScriptableObject):
 #: The single instance for the configuration profile activation commands.
 #: @type: L{ConfigProfileActivationCommands}
 configProfileActivationCommands = ConfigProfileActivationCommands()
-

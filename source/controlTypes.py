@@ -3,6 +3,8 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 #Copyright (C) 2007-2016 NV Access Limited, Babbage B.V.
+from typing import Dict, Union, Set, Any, Optional, List
+from enum import Enum, auto
 
 ROLE_UNKNOWN=0
 ROLE_WINDOW=1
@@ -117,7 +119,6 @@ ROLE_WHITESPACE=110
 ROLE_TREEVIEWBUTTON=111
 ROLE_IPADDRESS=112
 ROLE_DESKTOPICON=113
-ROLE_ALERT=114
 ROLE_INTERNALFRAME=115
 ROLE_DESKTOPPANE=116
 ROLE_OPTIONPANE=117
@@ -152,6 +153,11 @@ ROLE_AUDIO=145
 ROLE_CHARTELEMENT=146
 ROLE_DELETED_CONTENT=147
 ROLE_INSERTED_CONTENT=148
+ROLE_LANDMARK = 149
+ROLE_ARTICLE = 150
+ROLE_REGION = 151
+ROLE_FIGURE = 152
+ROLE_MARKED_CONTENT = 153
 
 STATE_UNAVAILABLE=0X1
 STATE_FOCUSED=0X2
@@ -197,7 +203,7 @@ STATE_CROPPED=0x8000000000
 STATE_OVERFLOWING=0x10000000000
 STATE_UNLOCKED=0x20000000000
 
-roleLabels={
+roleLabels: Dict[int, str] = {
 	# Translators: The word for an unknown control type.
 	ROLE_UNKNOWN:_("unknown"),
 	# Translators: The word for window of a program such as document window.
@@ -429,8 +435,6 @@ roleLabels={
 	ROLE_IPADDRESS:_("IP address"),
 	# Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts for programs).
 	ROLE_DESKTOPICON:_("desktop icon"),
-	# Translators: Identifies an alert message such as file download alert in Internet explorer 9 and above.
-	ROLE_ALERT:_("alert"),
 	# Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 	ROLE_INTERNALFRAME:_("frame"),
 	# Translators: Identifies desktop pane (the desktop window).
@@ -492,9 +496,19 @@ roleLabels={
 	ROLE_DELETED_CONTENT:_("deleted"),
 	# Translators: Identifies inserted content. 
 	ROLE_INSERTED_CONTENT:_("inserted"),
+	# Translators: Identifies a landmark.
+	ROLE_LANDMARK: _("landmark"),
+	# Translators: Identifies an article.
+	ROLE_ARTICLE: _("article"),
+	# Translators: Identifies a region.
+	ROLE_REGION: _("region"),
+	# Translators: Identifies a figure (commonly seen on some websites).
+	ROLE_FIGURE: _("figure"),
+	# Translators: Identifies marked (highlighted) content
+	ROLE_MARKED_CONTENT: _("marked content"),
 }
 
-stateLabels={
+stateLabels: Dict[int, str] = {
 	# Translators: This is presented when a control or document is unavailable.
 	STATE_UNAVAILABLE:_("unavailable"),
 	# Translators: This is presented when a control has focus.
@@ -609,31 +623,48 @@ silentValuesForRoles={
 	ROLE_APPLICATION,
 }
 
-#{ Output reasons
-# These constants are used to specify the reason that a given piece of output was generated.
-#: An object to be reported due to a focus change or similar.
-REASON_FOCUS="focus"
-#: An ancestor of the focus object to be reported due to a focus change or similar.
-REASON_FOCUSENTERED="focusEntered"
-#: An item under the mouse.
-REASON_MOUSE="mouse"
-#: A response to a user query.
-REASON_QUERY="query"
-#: Reporting a change to an object.
-REASON_CHANGE="change"
-#: A generic, screen reader specific message.
-REASON_MESSAGE="message"
-#: Text reported as part of a say all.
-REASON_SAYALL="sayAll"
-#: Content reported due to caret movement or similar.
-REASON_CARET="caret"
-#: No output, but any state should be cached as if output had occurred.
-REASON_ONLYCACHE="onlyCache"
-#}
+
+class OutputReason(Enum):
+	"""Specify the reason that a given piece of output was generated.
+	"""
+	#: An object to be reported due to a focus change or similar.
+	FOCUS = auto()
+	#: An ancestor of the focus object to be reported due to a focus change or similar.
+	FOCUSENTERED = auto()
+	#: An item under the mouse.
+	MOUSE = auto()
+	#: A response to a user query.
+	QUERY = auto()
+	#: Reporting a change to an object.
+	CHANGE = auto()
+	#: A generic, screen reader specific message.
+	MESSAGE = auto()
+	#: Text reported as part of a say all.
+	SAYALL = auto()
+	#: Content reported due to caret movement or similar.
+	CARET = auto()
+	#: No output, but any state should be cached as if output had occurred.
+	ONLYCACHE = auto()
+
+	QUICKNAV = auto()
+
+# The following constants are kept for backwards compatibility.
+# In future, OutputReason should be used directly
+
+
+REASON_FOCUS = OutputReason.FOCUS
+REASON_FOCUSENTERED = OutputReason.FOCUSENTERED
+REASON_MOUSE = OutputReason.MOUSE
+REASON_QUERY = OutputReason.QUERY
+REASON_CHANGE = OutputReason.CHANGE
+REASON_MESSAGE = OutputReason.MESSAGE
+REASON_SAYALL = OutputReason.SAYALL
+REASON_CARET = OutputReason.CARET
+REASON_ONLYCACHE = OutputReason.ONLYCACHE
 
 #: Text to use for 'current' values. These describe if an item is the current item 
 #: within a particular kind of selection.
-isCurrentLabels = {
+isCurrentLabels: Dict[Union[bool, str], str] = {
 	# Translators: Presented when an item is marked as current in a collection of items
 	True:_("current"),
 	# Translators: Presented when a page item is marked as current in a collection of page items
@@ -648,7 +679,8 @@ isCurrentLabels = {
 	"time":_("current time"),
 }
 
-def processPositiveStates(role, states, reason, positiveStates=None):
+
+def processPositiveStates(role, states, reason: OutputReason, positiveStates=None):
 	"""Processes the states for an object and returns the positive states to output for a specified reason.
 	For example, if C{STATE_CHECKED} is in the returned states, it means that the processed object is checked.
 	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
@@ -656,7 +688,6 @@ def processPositiveStates(role, states, reason, positiveStates=None):
 	@param states: The raw states for an object to process.
 	@type states: set
 	@param reason: The reason to process the states (e.g. C{REASON_FOCUS}.
-	@type reason: str
 	@param positiveStates: Used for C{REASON_CHANGE}, specifies states changed from negative to positive;
 	@type positiveStates: set
 	@return: The processed positive states.
@@ -692,7 +723,13 @@ def processPositiveStates(role, states, reason, positiveStates=None):
 	positiveStates.discard(STATE_INVISIBLE)
 	if reason != REASON_CHANGE:
 		positiveStates.discard(STATE_LINKED)
-		if role in (ROLE_LISTITEM, ROLE_TREEVIEWITEM, ROLE_MENUITEM, ROLE_TABLEROW) and STATE_SELECTABLE in states:
+		if role in (
+			ROLE_LISTITEM,
+			ROLE_TREEVIEWITEM,
+			ROLE_MENUITEM,
+			ROLE_TABLEROW,
+			ROLE_CHECKBOX,
+		) and STATE_SELECTABLE in states:
 			positiveStates.discard(STATE_SELECTED)
 	if role not in (ROLE_EDITABLETEXT, ROLE_CHECKBOX):
 		positiveStates.discard(STATE_READONLY)
@@ -706,7 +743,8 @@ def processPositiveStates(role, states, reason, positiveStates=None):
 		positiveStates.discard(STATE_EDITABLE)
 	return positiveStates
 
-def processNegativeStates(role, states, reason, negativeStates=None):
+
+def processNegativeStates(role, states, reason: OutputReason, negativeStates=None):
 	"""Processes the states for an object and returns the negative states to output for a specified reason.
 	For example, if C{STATE_CHECKED} is in the returned states, it means that the processed object is not checked.
 	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
@@ -714,7 +752,6 @@ def processNegativeStates(role, states, reason, negativeStates=None):
 	@param states: The raw states for an object to process.
 	@type states: set
 	@param reason: The reason to process the states (e.g. C{REASON_FOCUS}.
-	@type reason: str
 	@param negativeStates: Used for C{REASON_CHANGE}, specifies states changed from positive to negative;
 	@type negativeStates: set
 	@return: The processed negative states.
@@ -741,7 +778,8 @@ def processNegativeStates(role, states, reason, negativeStates=None):
 			ROLE_TABLEROW,
 			ROLE_TABLECELL,
 			ROLE_TABLECOLUMNHEADER,
-			ROLE_TABLEROWHEADER
+			ROLE_TABLEROWHEADER,
+			ROLE_CHECKBOX,
 		)
 	):
 		speakNegatives.add(STATE_SELECTED)
@@ -770,24 +808,25 @@ def processNegativeStates(role, states, reason, negativeStates=None):
 		# Return all negative states which should be spoken, excluding the positive states.
 		return speakNegatives - states
 
-def processAndLabelStates(role, states, reason, positiveStates=None, negativeStates=None, positiveStateLabelDict={}, negativeStateLabelDict={}):
+
+def processAndLabelStates(
+		role: int,
+		states: Set[Any],
+		reason: OutputReason,
+		positiveStates: Optional[Set[Any]] = None,
+		negativeStates: Optional[Set[Any]] = None,
+		positiveStateLabelDict: Dict[int, str] = {},
+		negativeStateLabelDict: Dict[int, str] = {},
+) -> List[str]:
 	"""Processes the states for an object and returns the appropriate state labels for both positive and negative states.
 	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
-	@type role: int
 	@param states: The raw states for an object to process.
-	@type states: set
 	@param reason: The reason to process the states (e.g. C{REASON_FOCUS}.
-	@type reason: str
 	@param positiveStates: Used for C{REASON_CHANGE}, specifies states changed from negative to positive;
-	@type positiveStates: set
 	@param negativeStates: Used for C{REASON_CHANGE}, specifies states changed from positive to negative;
-	@type negativeStates: setpositiveStateLabelDict={}, negativeStateLabelDict
 	@param positiveStateLabelDict: Dictionary containing state identifiers as keys and associated positive labels as their values.
-	@type positiveStateLabelDict: dict
 	@param negativeStateLabelDict: Dictionary containing state identifiers as keys and associated negative labels as their values.
-	@type negativeStateLabelDict: dict
 	@return: The labels of the relevant positive and negative states.
-	@rtype: [str, ...]
 	"""
 	mergedStateLabels=[]
 	positiveStates = processPositiveStates(role, states, reason, positiveStates)

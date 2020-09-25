@@ -18,6 +18,14 @@ Import(
 
 import importlib.util
 
+# Monkeypatch comtypes to clear the importlib cache when importing a new module
+import comtypes.client._generate
+old_my_import = comtypes.client._generate._my_import
+def new_my_import(fullname):
+	importlib.invalidate_caches()
+	return old_my_import(fullname)
+comtypes.client._generate._my_import = new_my_import
+
 def interfaceAction(target,source,env):
 	clsid=env.get('clsid')
 	if clsid:
@@ -31,11 +39,9 @@ interfaceBuilder=env.Builder(
 )
 env['BUILDERS']['comtypesInterface']=interfaceBuilder
 
-	#Bit of a dance to force comtypes generated interfaces in to our directory
+# Force comtypes generated interfaces in to our directory
 import comtypes.client
 comtypes.client.gen_dir=Dir('comInterfaces').abspath
-import sys
-sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),locals(),[])
 
 COM_INTERFACES = {
 	"IAccessible2Lib.py": "typelibs/ia2.tlb",

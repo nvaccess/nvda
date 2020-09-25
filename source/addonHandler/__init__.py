@@ -41,7 +41,7 @@ DELETEDIR_SUFFIX=".delete"
 
 state={}
 
-# addons that are blocked from running because they are incompatible
+# Add-ons that are blocked from running because they are incompatible
 _blockedAddons=set()
 
 def loadState():
@@ -72,12 +72,12 @@ def saveState():
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
 		with open(statePath, "wb") as f:
-			pickle.dump(state, f)
+			pickle.dump(state, f, protocol=0)
 	except:
 		log.debugWarning("Error saving state", exc_info=True)
 
 def getRunningAddons():
-	""" Returns currently loaded addons.
+	""" Returns currently loaded add-ons.
 	"""
 	return getAvailableAddons(filterFunc=lambda addon: addon.isRunning)
 
@@ -96,7 +96,7 @@ def getIncompatibleAddons(
 	))
 
 def completePendingAddonRemoves():
-	"""Removes any addons that could not be removed on the last run of NVDA"""
+	"""Removes any add-ons that could not be removed on the last run of NVDA"""
 	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
 	pendingRemovesSet=state['pendingRemovesSet']
 	for addonName in list(pendingRemovesSet):
@@ -166,7 +166,7 @@ def terminate():
 
 def _getDefaultAddonPaths():
 	""" Returns paths where addons can be found.
-	For now, only <userConfig\addons is supported.
+	For now, only <userConfig>\addons is supported.
 	@rtype: list(string)
 	"""
 	addon_paths = []
@@ -276,7 +276,7 @@ class AddonBase(object):
 class Addon(AddonBase):
 	""" Represents an Add-on available on the file system."""
 	def __init__(self, path):
-		""" Constructs an L[Addon} from.
+		""" Constructs an L{Addon} from.
 		@param path: the base directory for the addon data.
 		@type path: string
 		"""
@@ -292,6 +292,9 @@ class Addon(AddonBase):
 					translatedInput = open(p, 'rb')
 					break
 			self.manifest = AddonManifest(f, translatedInput)
+			if self.manifest.errors is not None:
+				_report_manifest_errors(self.manifest)
+				raise AddonError("Manifest file has errors.")
 
 	@property
 	def isPendingInstall(self):
@@ -428,7 +431,7 @@ class Addon(AddonBase):
 		""" loads a python module from the addon directory
 		@param name: the module name
 		@type name: string
-		@returns the python module with C[name}
+		@returns the python module with C{name}
 		@rtype python module
 		"""
 		log.debug("Importing module %s from plugin %s", name, self.name)
@@ -445,10 +448,10 @@ class Addon(AddonBase):
 			return None
 
 	def getTranslationsInstance(self, domain='nvda'):
-		""" Gets the gettext translation instance for this addon.
-		<addon-path<\locale will be used to find .mo files, if exists.
+		""" Gets the gettext translation instance for this add-on.
+		<addon-path>\\locale will be used to find .mo files, if exists.
 		If a translation file is not found the default fallback null translation is returned.
-		@param domain: the tranlation domain to retrieve. The 'nvda' default should be used in most cases.
+		@param domain: the translation domain to retrieve. The 'nvda' default should be used in most cases.
 		@returns: the gettext translation class.
 		"""
 		localedir = os.path.join(self.path, "locale")
@@ -456,7 +459,8 @@ class Addon(AddonBase):
 
 	def runInstallTask(self,taskName,*args,**kwargs):
 		"""
-		Executes the function having the given taskName with the given args and kwargs in the addon's installTasks module if it exists.
+		Executes the function having the given taskName with the given args and kwargs,
+		in the add-on's installTasks module if it exists.
 		"""
 		if not hasattr(self,'_installTasksModule'):
 			self._installTasksModule=self.loadModule('installTasks')
@@ -499,7 +503,7 @@ class Addon(AddonBase):
 def getCodeAddon(obj=None, frameDist=1):
 	""" Returns the L{Addon} where C{obj} is defined. If obj is None the caller code frame is assumed to allow simple retrieval of "current calling addon".
 	@param obj: python object or None for default behaviour.
-	@param frameDist: howmany frames is the caller code. Only change this for functions in this module.
+	@param frameDist: how many frames is the caller code. Only change this for functions in this module.
 	@return: L{Addon} instance or None if no code does not belong to a add-on package.
 	@rtype: C{Addon}
 	"""
@@ -527,7 +531,7 @@ def initTranslation():
 	addon = getCodeAddon(frameDist=2)
 	translations = addon.getTranslationsInstance()
 	# Point _ to the translation object in the globals namespace of the caller frame
-	# FIXME: shall we retrieve the caller module object explicitly?
+	# FIXME: should we retrieve the caller module object explicitly?
 	try:
 		callerFrame = inspect.currentframe().f_back
 		callerFrame.f_globals['_'] = translations.gettext
@@ -607,7 +611,7 @@ def createAddonBundleFromPath(path, destDir=None):
 	""" Creates a bundle from a directory that contains a a addon manifest file."""
 	basedir = os.path.abspath(path)
 	# If  caller did not provide a destination directory name
-	# Put the bundle at the same level of the addon's top directory,
+	# Put the bundle at the same level as the add-on's top-level directory,
 	# That is, basedir/..
 	if destDir is None:
 		destDir = os.path.dirname(basedir)
@@ -669,7 +673,7 @@ url= string(default=None)
 docFileName = string(default=None)
 
 # NOTE: apiVersion:
-# Eg: 2019.1.0 or 0.0.0
+# EG: 2019.1.0 or 0.0.0
 # Must have 3 integers separated by dots.
 # The first integer must be a Year (4 characters)
 # "0.0.0" is also valid.
@@ -679,7 +683,7 @@ docFileName = string(default=None)
 
 	def __init__(self, input, translatedInput=None):
 		""" Constructs an L{AddonManifest} instance from manifest string data
-		@param input: data to read the manifest informatinon
+		@param input: data to read the manifest information
 		@type input: a fie-like object.
 		@param translatedInput: translated manifest input
 		@type translatedInput: file-like object
@@ -714,6 +718,8 @@ docFileName = string(default=None)
 
 def validate_apiVersionString(value):
 	from configobj.validate import ValidateError
+	if not value or value == "None":
+		return (0, 0, 0)
 	if not isinstance(value, string_types):
 		raise ValidateError('Expected an apiVersion in the form of a string. EG "2019.1.0"')
 	try:

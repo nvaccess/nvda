@@ -1,13 +1,13 @@
-#brailleTables.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2008-2019 NV Access Limited, Joseph Lee
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2008-2019 NV Access Limited, Joseph Lee, Babbage B.V.
 
 """Manages information about available braille translation tables.
 """
 
 import collections
+from locale import strxfrm
 
 #: The directory in which liblouis braille tables are located.
 TABLES_DIR = r"louis\tables"
@@ -56,7 +56,7 @@ def listTables():
 	@return: A list of braille tables.
 	@rtype: list of L{BrailleTable}
 	"""
-	return sorted(_tables.values(), key=lambda table: table.displayName)
+	return sorted(_tables.values(), key=lambda table: strxfrm(table.displayName))
 
 #: Maps old table names to new table names for tables renamed in newer versions of liblouis.
 RENAMED_TABLES = {
@@ -69,6 +69,7 @@ RENAMED_TABLES = {
 	"en-us-comp8.ctb" : "en-us-comp8-ext.utb",
 	"fr-ca-g1.utb":"fr-bfu-comp6.utb",
 	"Fr-Ca-g2.ctb":"fr-bfu-g2.ctb",
+	"gr-bb.ctb": "grc-international-en.utb",
 	"gr-gr-g1.utb":"el.ctb",
 	"hr.ctb":"hr-comp8.utb",
 	"mn-MN.utb":"mn-MN-g1.utb",
@@ -139,13 +140,22 @@ addTable("da-dk-g28.ctb", _("Danish 8 dot grade 2"), contracted=True)
 addTable("de-de-comp8.ctb", _("German 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("de-g0.utb", _("German grade 0"))
+addTable("de-g0.utb", _("German grade 0"), input=False)
+
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("de-g1.ctb", _("German grade 1"))
+addTable("de-g0-bidi.utb", _("German grade 0 (detailed)"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("de-g2.ctb", _("German grade 2"), contracted=True)
+addTable("de-g1.ctb", _("German grade 1"), input=False)
+
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("de-g1-bidi.ctb", _("German grade 1 (detailed)"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("de-g2.ctb", _("German grade 2"), contracted=True, input=False)
+
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("el.ctb", _("Greek (Greece)"))
@@ -158,6 +168,9 @@ addTable("en-gb-g1.utb", _("English (U.K.) grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("en-GB-g2.ctb", _("English (U.K.) grade 2"), contracted=True)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("en-nabcc.utb", _("English North American Braille Computer Code"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("en-ueb-g1.ctb", _("Unified English Braille Code grade 1"))
@@ -226,10 +239,16 @@ addTable("ga-g2.ctb", _("Irish grade 2"), contracted=True)
 addTable("gu-in-g1.utb", _("Gujarati grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("gr-bb.ctb", _("Koine Greek"))
+addTable("grc-international-en.utb", _("Greek international braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("he.ctb", _("Hebrew 8 dot computer braille"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("he-IL.utb", _("Israeli grade 1"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("he-IL-comp8.utb", _("Israeli 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("hi-in-g1.utb", _("Hindi grade 1"))
@@ -292,6 +311,9 @@ addTable("ml-in-g1.utb", _("Malayalam grade 1"))
 addTable("mn-in-g1.utb", _("Manipuri grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("ms-my-g2.ctb", _("Malay grade 2"), contracted=True)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("mn-MN-g1.utb", _("Mongolian grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
@@ -301,10 +323,13 @@ addTable("mn-MN-g2.ctb", _("Mongolian grade 2"), contracted=True)
 addTable("mr-in-g1.utb", _("Marathi grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("nl-BE-g0.utb", _("Dutch (Belgium)"))
+addTable("nl-BE-g0.utb", _("Dutch (Belgium) 6 dot"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("nl-NL-g0.utb", _("Dutch (Netherlands)"))
+addTable("nl-NL-g0.utb", _("Dutch (Netherlands) 6 dot"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("nl-comp8.utb", _("Dutch 8 dot"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("no-no-8dot.utb", _("Norwegian 8 dot computer braille"))
@@ -349,7 +374,7 @@ addTable("pu-in-g1.utb", _("Punjabi grade 1"))
 addTable("ro.ctb", _("Romanian"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("ru.ctb", _("Russian braille for computer code"))
+addTable("ru.ctb", _("Russian computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ru-ru-g1.utb", _("Russian grade 1"))
@@ -385,7 +410,13 @@ addTable("te-in-g1.utb", _("Telugu grade 1"))
 addTable("tr.ctb", _("Turkish grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("uk.utb", _("Ukrainian"))
+addTable("uk.utb", _("Ukrainian grade 1"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("uk-comp.utb", _("Ukrainian computer braille"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("uz-g1.utb", _("Uzbek grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("unicode-braille.utb", _("Unicode braille"), output=False)
