@@ -422,6 +422,22 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	nhAssert(parentNode); //new node must have been created
 	previousNode=NULL;
 
+	//get IA2Attributes -- IAccessible2 attributes;
+	BSTR IA2Attributes;
+	map<wstring,wstring> IA2AttribsMap;
+	if(pacc->get_attributes(&IA2Attributes)==S_OK) {
+		IA2AttribsToMap(IA2Attributes,IA2AttribsMap);
+		SysFreeString(IA2Attributes);
+		// Add each IA2 attribute as an attrib.
+		for(map<wstring,wstring>::const_iterator it=IA2AttribsMap.begin();it!=IA2AttribsMap.end();++it) {
+			s<<L"IAccessible2::attribute_"<<it->first;
+			parentNode->addAttribute(s.str(),it->second);
+			s.str(L"");
+		}
+	} else
+		LOG_DEBUG(L"pacc->get_attributes failed");
+	map<wstring,wstring>::const_iterator IA2AttribsMapIt;
+
 	//Get role -- IAccessible2 role
 	long role=0;
 	BSTR roleString=NULL;
@@ -438,6 +454,15 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		else if(varRole.vt==VT_BSTR)
 			roleString=varRole.bstrVal;
 	}
+
+	// Specifically force the role of ARIA treegrids from outline to table
+	if(role == ROLE_SYSTEM_OUTLINE) {
+		const auto IA2AttribsMapIt = IA2AttribsMap.find(L"xml-roles");
+		if(IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second.find(L"treegrid") != wstring::npos) {
+			role = ROLE_SYSTEM_TABLE;
+		}
+	}
+
 	//Add role as an attrib
 	if(roleString)
 		s<<roleString;
@@ -494,22 +519,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		SysFreeString(keyboardShortcut);
 	} else
 		parentNode->addAttribute(L"keyboardShortcut",L"");
-
-	//get IA2Attributes -- IAccessible2 attributes;
-	BSTR IA2Attributes;
-	map<wstring,wstring> IA2AttribsMap;
-	if(pacc->get_attributes(&IA2Attributes)==S_OK) {
-		IA2AttribsToMap(IA2Attributes,IA2AttribsMap);
-		SysFreeString(IA2Attributes);
-		// Add each IA2 attribute as an attrib.
-		for(map<wstring,wstring>::const_iterator it=IA2AttribsMap.begin();it!=IA2AttribsMap.end();++it) {
-			s<<L"IAccessible2::attribute_"<<it->first;
-			parentNode->addAttribute(s.str(),it->second);
-			s.str(L"");
-		}
-	} else
-		LOG_DEBUG(L"pacc->get_attributes failed");
-	map<wstring,wstring>::const_iterator IA2AttribsMapIt;
 
 	//Check IA2Attributes, and or the role etc to work out if this object is a block element
 	bool isBlockElement=TRUE;
@@ -677,11 +686,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		if (role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY)) {
 			renderSelectedItemOnly = true;
 		} else if(role == ROLE_SYSTEM_OUTLINE) {
-			// Only render the selected item for treeviews (excluding ARIA treegrids).
-			const auto IA2AttribsMapIt = IA2AttribsMap.find(L"xml-roles");
-			if(IA2AttribsMapIt==IA2AttribsMap.end()||IA2AttribsMapIt->second.find(L"treegrid")==wstring::npos) {
-				renderSelectedItemOnly = true;
-			}
+			renderSelectedItemOnly = true;
 		}
 		if (IA2TextIsUnneededSpace
 			|| role == ROLE_SYSTEM_COMBOBOX
