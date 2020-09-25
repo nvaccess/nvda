@@ -48,6 +48,9 @@ WAIT_TIMEOUT = 0x00000102
 WAIT_FAILED = 0xffffffff
 # Image file machine constants
 IMAGE_FILE_MACHINE_UNKNOWN = 0
+# LoadLibraryEx constants
+LOAD_WITH_ALTERED_SEARCH_PATH = 0x8
+
 
 def GetStdHandle(handleID):
 	h=kernel32.GetStdHandle(handleID)

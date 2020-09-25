@@ -511,11 +511,14 @@ def initialize():
 	if config.isAppX:
 		log.info("Remote injection disabled due to running as a Windows Store Application")
 		return
-	#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
+	# Load nvdaHelperRemote.dll
 	h = windll.kernel32.LoadLibraryExW(
 		os.path.join(versionedLibPath, "nvdaHelperRemote.dll"),
 		0,
-		0x8
+		# Using an altered search path is necessary here
+		# As NVDAHelperRemote needs to locate dependent dlls in the same directory
+		# such as minhook.dll.
+		winKernel.LOAD_WITH_ALTERED_SEARCH_PATH
 	)
 	if not h:
 		log.critical("Error loading nvdaHelperRemote.dll: %s" % WinError())

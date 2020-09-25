@@ -11,6 +11,7 @@ Performs miscellaneous tasks which need to be performed in a separate process.
 import sys
 import os
 import globalVars
+import winKernel
 
 
 # Initialise comtypes.client.gen_dir and the comtypes.gen search path 
@@ -95,7 +96,10 @@ def main():
 			h = ctypes.windll.kernel32.LoadLibraryExW(
 				os.path.join(globalVars.appDir, "lib", versionInfo.version, "nvdaHelperRemote.dll"),
 				0,
-				0x8
+				# Using an altered search path is necessary here
+				# As NVDAHelperRemote needs to locate dependent dlls in the same directory
+				# such as minhook.dll.
+				winKernel.LOAD_WITH_ALTERED_SEARCH_PATH
 			)
 			remoteLib=ctypes.WinDLL("nvdaHelperRemote",handle=h)
 			ret = remoteLib.nvdaControllerInternal_installAddonPackageFromPath(addonPath)
