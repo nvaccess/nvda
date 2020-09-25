@@ -106,7 +106,7 @@ class BlockQuote(Ia2Web):
 
 
 class Treegrid(Ia2Web):
-	role=controlTypes.ROLE_TABLE
+	role = controlTypes.ROLE_TABLE
 
 
 class Article(Ia2Web):
