@@ -9,7 +9,6 @@ import os
 import globalVars
 from logHandler import log
 from ctypes import windll
-from ctypes import *
 import inputCore
 import wx
 import braille
