@@ -1333,6 +1333,12 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			if self.programmaticScrollMayFireEvent:
 				self._lastProgrammaticScrollTime = time.time()
 		self.passThrough=self.shouldPassThrough(focusObj,reason=reason)
+		if self.passThrough and not config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+			# #11654, #11663: If we are going to switch to focus mode and focus is not following browse mode cursor
+			# We need to synchronize it to the last focusable control,
+			# Otherwise it is impossible to, for example, write in the edit field
+			#  on which browse mode caret is located.
+			self._focusLastFocusableObject()
 		# Queue the reporting of pass through mode so that it will be spoken after the actual content.
 		queueHandler.queueFunction(queueHandler.eventQueue, reportPassThrough, self)
 
