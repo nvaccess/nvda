@@ -270,7 +270,7 @@ class LiveText(NVDAObject):
 		self._event.set()
 
 	def _get_shouldUseDMP(self):
-		return self._supportsDMP and config.conf["terminals"]["useDMPWhenAvailable"]
+		return self._supportsDMP and config.conf["terminals"]["useDMPWhenSupported"]
 
 	def _getText(self) -> str:
 		"""Retrieve the text of this object.
