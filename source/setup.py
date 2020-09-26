@@ -5,7 +5,6 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-from versionInfo import formatBuildVersionString, name, version, publisher
 import os
 import copy
 import gettext
@@ -14,6 +13,8 @@ from setuptools import setup
 import py2exe as py2exeModule
 from glob import glob
 import fnmatch
+# versionInfo names must be imported after Gettext
+from versionInfo import formatBuildVersionString, name, version, publisher  # noqa: E402
 from versionInfo import *
 from py2exe import distutils_buildexe
 from py2exe.dllfinder import DllFinder
