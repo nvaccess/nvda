@@ -298,8 +298,13 @@ class LiveText(NVDAObject):
 		speech.speakText(line)
 
 	def _initializeDMP(self):
+		if hasattr(sys, "frozen"):
+			dmp_path = ("nvda_dmp.exe",)
+		else:
+			dmp_path = (sys.executable, "nvda_dmp.py")
 		self._dmp = subprocess.Popen(
-			(sys.executable, "nvda_dmp.py"),
+			dmp_path,
+			creationflags=subprocess.CREATE_NO_WINDOW,
 			bufsize=0,
 			stdin=subprocess.PIPE,
 			stdout=subprocess.PIPE

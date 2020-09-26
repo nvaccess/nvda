@@ -5,6 +5,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from versionInfo import formatBuildVersionString, name, version, publisher
 import os
 import copy
 import gettext
@@ -182,6 +183,20 @@ setup(
 			"version":formatBuildVersionString(),
 			"description": "NVDA Ease of Access proxy",
 			"product_name":name,
+			"product_version": version,
+			"copyright": copyright,
+			"company_name": publisher,
+		},
+	],
+	console=[
+		{
+			"script": "nvda_dmp.py",
+			"uiAccess": False,
+			"icon_resources": [(1, "images/nvda.ico")],
+			"other_resources": [],  # Populated at runtime
+			"version":formatBuildVersionString(),
+			"description": "NVDA Diff-match-patch proxy",
+			"product_name": name,
 			"product_version": version,
 			"copyright": copyright,
 			"company_name": publisher,
