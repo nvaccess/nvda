@@ -12,7 +12,7 @@ if __name__ == "__main__":
 	while True:
 		oldLen, newLen = struct.unpack("=II", sys.stdin.buffer.read(8))
 		if not oldLen and not newLen:
-			break
+			break  # sentinal value
 		oldText = sys.stdin.buffer.read(oldLen).decode("utf-8")
 		newText = sys.stdin.buffer.read(newLen).decode("utf-8")
 		res = ""
