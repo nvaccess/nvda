@@ -272,6 +272,14 @@ class LiveText(NVDAObject):
 	def _get_shouldUseDMP(self):
 		return self._supportsDMP and config.conf["terminals"]["useDMPWhenSupported"]
 
+	def _get_devInfo(self):
+		info = super().devInfo
+		if self.shouldUseDMP:
+			info.append("diffing algorithm: character-based (Diff Match Patch)")
+		else:
+			info.append("diffing algorithm: line-based (difflib)")
+		return info
+
 	def _getText(self) -> str:
 		"""Retrieve the text of this object.
 		This will be used to determine the new text to speak.
