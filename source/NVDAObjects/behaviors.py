@@ -309,7 +309,9 @@ class LiveText(NVDAObject):
 		if hasattr(sys, "frozen"):
 			dmp_path = ("nvda_dmp.exe",)
 		else:
-			dmp_path = (sys.executable, "nvda_dmp.py")
+			dmp_path = (sys.executable, os.path.join(
+				"..", "include", "nvda_dmp", "nvda_dmp.py"
+			))
 		self._dmp = subprocess.Popen(
 			dmp_path,
 			creationflags=subprocess.CREATE_NO_WINDOW,
