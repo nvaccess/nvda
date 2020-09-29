@@ -1,9 +1,8 @@
 # -*- coding: UTF-8 -*-
-#synthDrivers/sapi5.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import locale
 from collections import OrderedDict
