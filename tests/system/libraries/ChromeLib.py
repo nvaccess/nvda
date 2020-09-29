@@ -71,9 +71,9 @@ class ChromeLib:
 				<title>{ChromeLib._testCaseTitle}</title>
 			</head>
 			<body>
-				<button>{ChromeLib._beforeMarker}</button>
+				<p>{ChromeLib._beforeMarker}</p>
 				{testCase}
-				<button>{ChromeLib._afterMarker}</button>
+				<p>{ChromeLib._afterMarker}</p>
 			</body>
 		""")
 		with open(file=filePath, mode='w', encoding='UTF-8') as f:
