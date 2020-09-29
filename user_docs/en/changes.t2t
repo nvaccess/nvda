@@ -29,10 +29,12 @@ What's New in NVDA
 - When "attempt to cancel expired focus events" is enabled, the title of the tab is now announced again when switching tabs in Firefox. (#11397)
 - NVDA no longer fails to announce a list item after typing a character in a list when speaking with the SAPI5 Ivona voices. (#11651)
 - It is again possible to use browse mode when reading emails in Windows 10 Mail 16005.13110 and later. (#11439)
+- When using the SAPI5 Ivona voices from harposoftware.com, NvDA is now able to save configuration, switch synthesizers, and no longer will stay silent after restarting. (#11650)
 
 
 == Changes for Developers ==
 - System tests can now send keys using spy.emulateKeyPress, which takes a key identifier that conforms to NVDA's own key names, and by default also blocks until the action is executed. (#11581)
+- NVDA no longer requires the current directory to be the NVDA application directory in order to function. (#6491)
 
 
 = 2020.3 =
