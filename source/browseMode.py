@@ -1,8 +1,7 @@
-#browseMode.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2018 NV Access Limited, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2020 NV Access Limited, Babbage B.V., James Teh, Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import itertools
 import collections
@@ -1323,18 +1322,24 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			if not obj:
 				log.debugWarning("Invalid NVDAObjectAtStart")
 				return
-			followBrowseModeFocus= config.conf["virtualBuffers"]["autoFocusFocusableElements"]
 			if obj==self.rootNVDAObject:
 				return
-			if followBrowseModeFocus:
-				if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
-					focusObj.setFocus()
 			obj.scrollIntoView()
 			if self.programmaticScrollMayFireEvent:
 				self._lastProgrammaticScrollTime = time.time()
-		self.passThrough=self.shouldPassThrough(focusObj,reason=reason)
-		# Queue the reporting of pass through mode so that it will be spoken after the actual content.
-		queueHandler.queueFunction(queueHandler.eventQueue, reportPassThrough, self)
+		if focusObj:
+			self.passThrough = self.shouldPassThrough(focusObj, reason=reason)
+			if (
+				not eventHandler.isPendingEvents("gainFocus")
+				and focusObj != self.rootNVDAObject
+				and focusObj != api.getFocusObject()
+				and self._shouldSetFocusToObj(focusObj)
+			):
+				followBrowseModeFocus = config.conf["virtualBuffers"]["autoFocusFocusableElements"]
+				if followBrowseModeFocus or self.passThrough:
+					focusObj.setFocus()
+			# Queue the reporting of pass through mode so that it will be spoken after the actual content.
+			queueHandler.queueFunction(queueHandler.eventQueue, reportPassThrough, self)
 
 	def _shouldSetFocusToObj(self, obj):
 		"""Determine whether an object should receive focus.
