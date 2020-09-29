@@ -30,6 +30,7 @@ import api
 import ui
 import braille
 import nvwave
+import globalVars
 from typing import List
 
 class ProgressBar(NVDAObject):
@@ -307,10 +308,10 @@ class LiveText(NVDAObject):
 
 	def _initializeDMP(self):
 		if hasattr(sys, "frozen"):
-			dmp_path = ("nvda_dmp.exe",)
+			dmp_path = (os.path.join(globalVars.appDir, "nvda_dmp.exe"),)
 		else:
 			dmp_path = (sys.executable, os.path.join(
-				"..", "include", "nvda_dmp", "nvda_dmp.py"
+				globalVars.appDir, "..", "include", "nvda_dmp", "nvda_dmp.py"
 			))
 		self._dmp = subprocess.Popen(
 			dmp_path,
