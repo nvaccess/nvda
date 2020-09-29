@@ -568,6 +568,7 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 class InputGesturesDialog(SettingsDialog):
 	# Translators: The title of the Input Gestures dialog where the user can remap input gestures for scripts.
 	title = _("Input Gestures")
+	helpId = "InputGestures"
 
 	def __init__(self, parent: "InputGesturesDialog"):
 		#: The index in the _GesturesTree of the prompt for entering a new gesture
