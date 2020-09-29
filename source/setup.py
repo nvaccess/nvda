@@ -191,7 +191,7 @@ setup(
 	],
 	console=[
 		{
-			"script": "nvda_dmp.py",
+			"script": os.path.join("..", "include", "nvda_dmp", "nvda_dmp.py"),
 			"uiAccess": False,
 			"icon_resources": [(1, "images/nvda.ico")],
 			"other_resources": [],  # Populated at runtime
