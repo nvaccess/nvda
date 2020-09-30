@@ -512,19 +512,22 @@ def getCodeAddon(obj=None, frameDist=1):
 		obj = sys._getframe(frameDist)
 	fileName  = inspect.getfile(obj)
 	assert os.path.isabs(fileName), f"Module file name {fileName} is not absolute"
-	dir = os.path.dirname(fileName)
+	dir = os.path.normpath(os.path.dirname(fileName))
 	# if fileName is not a subdir of one of the addon paths
 	# It does not belong to an addon.
-	for p in _getDefaultAddonPaths():
-		if dir.startswith(p):
+	addonsPath = None
+	for addonsPath in _getDefaultAddonPaths():
+		addonsPath = os.path.normpath(addonsPath)
+		if dir.startswith(addonsPath):
 			break
 	else:
 		raise AddonError("Code does not belong to an addon package.")
+	assert addonsPath is not None
 	curdir = dir
-	while curdir not in _getDefaultAddonPaths():
+	while curdir.startswith(addonsPath) and len(curdir) > len(addonsPath):
 		if curdir in _availableAddons:
 			return _availableAddons[curdir]
-		curdir = os.path.join(curdir, "..")
+		curdir = os.path.normpath(os.path.join(curdir, ".."))
 	# Not found!
 	raise AddonError("Code does not belong to an addon")
 
