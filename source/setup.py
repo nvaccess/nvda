@@ -6,6 +6,7 @@
 #See the file COPYING for more details.
 
 import os
+import sys
 import copy
 import gettext
 gettext.install("nvda")
@@ -20,7 +21,7 @@ from py2exe import distutils_buildexe
 from py2exe.dllfinder import DllFinder
 import wx
 import importlib.machinery
-import sys
+# Explicitly put the nvda_dmp dir on the build path so the DMP library is included
 sys.path.append(os.path.join("..", "include", "nvda_dmp"))
 RT_MANIFEST = 24
 manifest_template = """\
