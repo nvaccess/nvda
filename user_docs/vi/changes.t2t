@@ -4,11 +4,13 @@
 %!includeconf: ../changes.t2tconf
 
 = 2020.3 =
+Bản phát hành này bao gồm vài cải tiến lớn cho tính ổn định và hiệu suất vận hành, cụ thể là trong các ứng dụng Microsoft Office. Các thiết lập mới để bật / tắt hỗ trợ tương tác cảm ứng và thông báo hình ảnh.
+Có thể đọc được nội dung có tồn tại các điểm đánh dấu (được làm nổi) trong các trình duyệt, và thêm các bản chữ nổi tiếng Đức mới.
 
 == Tính năng mới ==
 - Giờ bạn có thể bật / tắt việc đọc hình ảnh từ cài đặt định dạng tài liệu của NVDA. Lưu ý là việc tắt tùy chọn này vẫn sẽ đọc văn bản thay thế của ảnh. (#4837)
 - Giờ bạn có thể bật / tắt hỗ trợ màn hình cảm ứng của NVDA. Một tùy chọn đã được thêm vào bảng tương tác cảm ứng trong cài đặt NVDA. Phím tắt mặc định là NVDA+control+alt+t. (#9682)
-- Đã thêm bảng chữ nổi tiếng Đức mới. (#11268)
+- Đã thêm các bảng chữ nổi tiếng Đức mới. (#11268)
 - NVDA giờ đã nhận được văn bản có thuộc tính chỉ đọc với các điều khiển UIA. (#10494)
 - Nội dung có tồn tại các điểm đánh dấu (được làm nổi) đã được thể hiện ở cả tiếng nói và chữ nổi trên tất cả các trình duyệt. (#11436)
  - Có thể bật / tắt tính năng này bởi một tùy chọn định dạng mới về làm nổi của NVDA.
@@ -22,20 +24,20 @@
 - Đã cập nhật CLDR từ phiên bản 36.1 lên phiên bản 37. (#11303)
 - Đã cập nhật eSpeak-NG lên 1.51-dev, commit 1fb68ffffea4
 - Giờ bạn có thể dùng lệnh điều hướng của bảng trong các hộp danh sách với các thành phần có thể đánh dấu chọn khi một danh sách cụ thể có nhiều cột. (#8857)
-- Trong trình quản lý các Add-on, khi được yêu cầu xác nhận gỡ bỏ một add-on, "No (không)" sẽ là lựa chọn mặc định. (#10015)
-- Trong Microsoft Excel, hộp thoại danh sách các thành phần giờ đây trình bày các công thức đã được bản địa hóa. (#9144)
+- Trong trình quản lý các Add-on, khi được yêu cầu xác nhận gỡ bỏ một add-on, "No" (không) sẽ là lựa chọn mặc định. (#10015)
+- Trong Microsoft Excel, hộp thoại danh sách các thành phần giờ đây trình bày các công thức như nó đã được bản địa hóa. (#9144)
 - NVDA giờ đây đã đọc chính xác thuật ngữ cho các chú thích trong  MS Excel. (#11311)
 - Khi dùng lệnh  "di chuyển con trỏ duyệt đến focus" trong chế độ duyệt, con trỏ duyệt giờ đây được đặt tại vị trí của dấu nháy ảo. (#9622)
 - Các thông tin được đọc trong chế độ duyệt như thông tin định dạng với NVDA+F, giờ đây được hiển thị trong một cửa sổ lớn hơn ở giữa màn hình. (#9910)
 
 
 == Sửa lỗi ==
-- Giờ đây, NVDA luôn đọc khi điều hướng qua từng từ và đứng tại mọi kí hiệu đơn có dấu khoảng trắng phía sau, ở bất cứ cài đặt cấp độ đọc dấu câu nào. (#5133)
+- Giờ đây, NVDA luôn đọc khi di chuyển qua từng từ và đứng tại mọi kí hiệu đơn có dấu khoảng trắng phía sau, ở bất cứ cài đặt cấp độ đọc dấu câu nào. (#5133)
 - Trong các ứng dụng dùng QT 5.11 trở lên, các mô tả đối tượng lại được đọc. (#8604)
 - Khi xóa một từ với control+delete, NVDA không còn im lặng. (#3298, #11029)
   - Giờ đây, từ bên phải của từ bị xóa đã được đọc.
 - Trong bảng cài đặt chung, danh sách ngôn ngữ giờ đã được sắp xếp một cách chính xác. (#10348)
-- Trong hộp thoại Quản lý các thao tác, cải thiện đáng kể hiệu suất vận hành khi lọc. (#10307)(
+- Trong hộp thoại Quản lý các thao tác, cải thiện đáng kể hiệu suất vận hành khi lọc thao tác / phím tắt. (#10307)(
 - Giờ bạn có thể gửi các kí tự Unicode  ra U+FFFF từ một màn hình chữ nổi. (#10796)
 - NVDA sẽ đọc nội dung của hộp thoại Open With  trong Windows 10 May 2020 Update. (#11335)
 - Một tùy chọn thử nghiệm mới trong  cài đặt nâng cao (Bật các chọn lọc đăng kí cho các thay đổi sự kiện và thuộc tính của UI Automation) có thể cung cấp các cải thiện hiệu suất vận hành lớn trong Microsoft Visual Studio và các ứng dụng khác trên nền tản UIAutomation nếu được bật. (#11077, #11209)

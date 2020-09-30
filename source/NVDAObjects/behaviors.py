@@ -33,6 +33,7 @@ import nvwave
 import globalVars
 from typing import List
 
+
 class ProgressBar(NVDAObject):
 
 	progressValueCache={} #key is made of "speech" or "beep" and an x,y coordinate, value is the last percentage
@@ -890,7 +891,7 @@ class EditableTextWithSuggestions(NVDAObject):
 		# Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
 		braille.handler.message(_("Suggestions"))
 		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
-			nvwave.playWaveFile(r"waves\suggestionsOpened.wav")
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsOpened.wav"))
 
 	def event_suggestionsClosed(self):
 		"""Called when suggestions list or container is closed.
@@ -898,7 +899,7 @@ class EditableTextWithSuggestions(NVDAObject):
 		By default NVDA will announce this via speech, braille or via a sound.
 		"""
 		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
-			nvwave.playWaveFile(r"waves\suggestionsClosed.wav")
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsClosed.wav"))
 
 class WebDialog(NVDAObject):
 	"""

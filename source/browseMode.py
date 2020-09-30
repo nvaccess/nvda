@@ -3,6 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+import os
 import itertools
 import collections
 import winsound
@@ -39,7 +40,9 @@ from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from NVDAObjects import NVDAObject
 import gui.contextHelp
 from abc import ABCMeta, abstractmethod
+import globalVars
 from typing import Optional
+
 
 REASON_QUICKNAV = OutputReason.QUICKNAV
 
@@ -52,8 +55,8 @@ def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 	"""
 	if not onlyIfChanged or treeInterceptor.passThrough != reportPassThrough.last:
 		if config.conf["virtualBuffers"]["passThroughAudioIndication"]:
-			sound = r"waves\focusMode.wav" if treeInterceptor.passThrough else r"waves\browseMode.wav"
-			nvwave.playWaveFile(sound)
+			sound = "focusMode.wav" if treeInterceptor.passThrough else "browseMode.wav"
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", sound))
 		else:
 			if treeInterceptor.passThrough:
 				# Translators: The mode to interact with controls in documents

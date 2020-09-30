@@ -26,10 +26,15 @@ What's New in NVDA
 - When arrowing by character or word from one list item to another in editable content on the web, entering the new list item is now announced. (#11569)
 - NVDA now reads the correct line when the caret is placed at the end of a link on the end of a list item in Google Docs or other editable content on the web. (#11606)
 - On Windows 7, opening and closing the start menu from the desktop now sets focus correctly. (#10567)
+- When "attempt to cancel expired focus events" is enabled, the title of the tab is now announced again when switching tabs in Firefox. (#11397)
+- NVDA no longer fails to announce a list item after typing a character in a list when speaking with the SAPI5 Ivona voices. (#11651)
+- It is again possible to use browse mode when reading emails in Windows 10 Mail 16005.13110 and later. (#11439)
+- When using the SAPI5 Ivona voices from harposoftware.com, NvDA is now able to save configuration, switch synthesizers, and no longer will stay silent after restarting. (#11650)
 
 
 == Changes for Developers ==
 - System tests can now send keys using spy.emulateKeyPress, which takes a key identifier that conforms to NVDA's own key names, and by default also blocks until the action is executed. (#11581)
+- NVDA no longer requires the current directory to be the NVDA application directory in order to function. (#6491)
 
 
 = 2020.3 =
@@ -45,6 +50,7 @@ The existence of marked (highlighted) content can be reported in browsers, and t
  - This can be toggled on and off by a new NVDA Document Formatting option for Highlighting.
 - New emulated system keyboard keys can be added from NVDA's Input gestures dialog. (#6060)
   - To do this, press the add button after you selected the Emulated system keyboard keys category.
+- Handy Tech Active Braille with joystick is now supported. (#11655)
 
 
 == Changes ==
@@ -82,7 +88,9 @@ The existence of marked (highlighted) content can be reported in browsers, and t
 - NVDA now keeps the audio device open improving performance on some sound cards (#5172, #10721)
 - NVDA will no longer freeze or exit when holding down control+shift+downArrow in Microsoft Word. (#9463)
 - The expanded / collapsed state of directories in the navigation treeview on drive.google.com is now always reported by NVDA. (#11520)
-- NVDA will auto detect the NLS eReader Humanware braille display via Bluetooth as its Bluethooth name is now "NLS eReader Humanware". (#11561)
+- NVDA will auto detect the NLS eReader Humanware braille display via Bluetooth as its Bluetooth name is now "NLS eReader Humanware". (#11561)
+- Certain SAPI5 voices (such as Ivona) no longer skip speech. (#10901)
+- Major performance improvements in Visual Studio Code. (#11533)
 
 
 == Changes For Developers ==

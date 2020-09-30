@@ -6,11 +6,14 @@
 """Manages information about available braille translation tables.
 """
 
+import os
 import collections
 from locale import strxfrm
+import globalVars
+
 
 #: The directory in which liblouis braille tables are located.
-TABLES_DIR = r"louis\tables"
+TABLES_DIR = os.path.join(globalVars.appDir, "louis", "tables")
 
 #: Information about a braille table.
 #: This has the following attributes:
