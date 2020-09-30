@@ -20,7 +20,8 @@ from py2exe import distutils_buildexe
 from py2exe.dllfinder import DllFinder
 import wx
 import importlib.machinery
-
+import sys
+sys.path.append(os.path.join("..", "include", "nvda_dmp"))
 RT_MANIFEST = 24
 manifest_template = """\
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
