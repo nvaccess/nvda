@@ -18,6 +18,7 @@ from logHandler import log
 import gui
 import speech
 import braille
+import globalVars
 from typing import Optional
 
 
@@ -45,7 +46,7 @@ def browseableMessage(message,title=None,isHtml=False):
 	@param isHtml: Whether the message is html
 	@type isHtml: boolean
 	"""
-	htmlFileName  = os.path.realpath( u'message.html' )
+	htmlFileName = os.path.join(globalVars.appDir, 'message.html')
 	if not os.path.isfile(htmlFileName ): 
 		raise LookupError(htmlFileName )
 	moniker = POINTER(IUnknown)()
