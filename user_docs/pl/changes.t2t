@@ -18,41 +18,41 @@ Dodano również możliwość odczytywania podkreślonego tekstu w przeglądarka
   - Aby to zrobić, wciśnij przyciisk "dodaj" po wybraniu opcji "emulowane klawisze systemowe".
 
 
-== Changes ==
-- The Report formatting script (NVDA+f) has now been changed to report the formatting at the system caret rather than at the review cursor position. To report formatting at the review cursor position now use NVDA+shift+f. (#9505)
-- NVDA no longer automatically sets the system focus to focusable elements by default in browse mode, improving performance and stability. (#11190)
-- CLDR updated from version 36.1 to version 37. (#11303)
-- Updated eSpeak-NG to 1.51-dev, commit 1fb68ffffea4
-- You can now utilize table navigation in list boxes with checkable list items when the particular list has multiple columns. (#8857)
-- In the Add-ons manager, when prompted to confirm removal of an add-on, "No" is now the default. (#10015)
-- In Microsoft Excel, the Elements List dialog now presents formulas in their localized form. (#9144)
-- NVDA now reports the correct terminology for notes in MS Excel. (#11311)
-- When using the "move review cursor to focus" command in browse mode, the review cursor is now set at the position of the virtual caret. (#9622)
-- Information reported in browse mode, such as the formatting info with NVDA+F, are now displayed in a slightly bigger window centered on screen. (#9910)
+== Zmiany ==
+- Skrypt służący do ogłaszania formatowania (NVDA+F) został zmodyfikowany tak, że od teraz ogłasza on formatowanie dla kursora systemowego, a nie kursora 	przeglądu. Aby uzyskać informacje o formatowaniu w pozycji kursora przeglądu, należy użyć skrótu NVDA+Shift+F. (#9505)
+- Od teraz NVDA nie ustawia pozycji kursora systemowego na pierwszy klikalny element po wejściu w tryb przeglądania, poprawiając wydajność i stabilność. (#11190)
+- Zaktualizowano CLDR z wersji 36.1 do 37. (#11303)
+- Zaktualizowano Espeak-NG do wersji 1.51-dev, commit 1fb68ffffea4
+- Od teraz możliwe jest używanie komend nawigacyjnych dla tabel w wielokolumnowych listach. (#8857)
+- W menedżerze dodatków, "nie" jest od teraz domyślną opcją, gdy użytkownik pytany jest o usunięcie dodatku. (#10015)
+- W programie Microsoft Excel, lista elementów wyświetla formóły w ich zlokalizowanej formie. (#9144)
+- NVDA korzysta teraz z poprawnej terminologii dla uwag w programie Microsoft Excel. (#11311)
+- W przypadku przesunięcia kursora przeglądu do fokusa w trybie przeglądania, kursor ustawia się w pozycji wirtualnego kursora. (#9622)
+- Informacje ogłaszane w trybie przeglądania (takie jak informacje o formatowaniu), są teraz wyświetlane w lekko większym okienku na środku ekranu (#9910)
 
 
-== Bug Fixes ==
-- NVDA now always speaks when navigating by word and landing on any single symbol followed by white space, whatever the verbosity settings. (#5133)
-- In applications using QT 5.11 or newer, object descriptions are again reported. (#8604)
-- When deleting a word with control+delete, NVDA no longer remains silent. (#3298, #11029)
-  - Now the word to the right of the deleted word is announced.
-- In general settings panel, the language list is now sorted correctly. (#10348)
-- In the Input Gestures dialog, significantly improved performance while filtering. (#10307)
-- You can now send Unicode characters beyond U+FFFF from a braille display. (#10796)
-- NVDA will announce Open With dialog content in Windows 10 May 2020 Update. (#11335)
-- A new experimental option in Advanced settings (Enable selective registration for UI Automation events and property changes) can provide major performance improvements in Microsoft Visual Studio and other UIAutomation based applications if enabled. (#11077, #11209)
-- For checkable list items, the selected state is no longer announced redundantly, and if applicable, the unselected state is announced instead. (#8554)
-- On Windows 10 May 2020 Update, NVDA now shows the Microsoft Sound Mapper when viewing output devices from synthesizer dialog. (#11349)
-- In Internet Explorer, numbers are now announced correctly for ordered lists if the list does not start with 1. (#8438)
-- In Google chrome, NVDA will now report not checked for all checkable controls (not just check boxes) that are currently not checked. (#11377)
-- It is once again possible to navigate in various controls when NVDA's language is set to Aragonese. (#11384)
-- NVDA should no longer sometimes freeze in Microsoft Word when rapidly arrowing up and down or typing characters with Braille enabled. (#11431, #11425, #11414)
-- NVDA no longer appends nonexistent trailing space when copying the current navigator object to the clipboard. (#11438)
-- NVDA no longer activates the Say All profile if there is nothing to read. (#10899, #9947)
-- NVDA is no longer unable to read the features list in Internet Information Services (IIS) Manager. (#11468)
-- NVDA now keeps the audio device open improving performance on some sound cards (#5172, #10721)
-- NVDA will no longer freeze or exit when holding down control+shift+downArrow in Microsoft Word. (#9463)
-- The expanded / collapsed state of directories in the navigation treeview on drive.google.com is now always reported by NVDA. (#11520)
+== Poprawki błędów ==
+- NVDA od teraz mówi w sytuacji, gdy podczas nawigacji po wyrazach natrafi na symbol, po którym znajduje się spacja. (#5133)
+- W aplikacjach korzystających z wersji QT 5.11 lub nowszych, opisy obiektów są ponownie ogłaszane. (#8604)
+- Od teraz NVDA mówi, gdy usunięto słowo przy pomocy skrótu CTRL+Delete (#3298, #11029)
+  - Wypowiadane jest słowo na prawo od usuniętego słowa.
+- W ustawieniach ogólnych lista języków jest poprawnie sortowana. (#10348)
+- W oknie "zdarzenia wejścia" znacznie poprawiono responsywność podczas filtrowania. (#10307)
+- Od teraz możliwe jest wysyłanie znaków Unicode powyżej u+fff przy pomocy monitora brajlowskiego. (#10796)
+- NVDA ponownie odczytuje okno dialogowe "otwórz za pomocą" w majowej aktualizacji systemu Windows 10. (#11335)
+- Nowe eksperymentalne ustawienie (Włącz selektywną rejestrację zdarzeń UIA) może znacznie poprawić wydajność w programie Microsoft Visual Studio i innych aplikacjach korzystających z technologii UIA. (#11077, #11209)
+- Stan "oznaczony" nie jest ogłaszany dla zaznaczalnych elementów listy. Od teraz odczytywany jest tylko stan "niezaznaczony". (#8554)
+- W majowej aktualizacji systemu Windows, urządzenie "Mapowanie dźwięku Microsoft" jest ponownie pokazywana w oknie wyboru wyjścia mowy. (#11349)
+- W przeglądarce Internet Explorer, indeksy listy są poprawnie odczytywane w przypadku, gdy pierwszym indeksem listy nie jest 1. (#8438)
+- W przeglądarce Google Chrome, NVDA ogłasza stan zaznaczenie dla wszystkich zaznaczalnych kontrolek, nie tylko pól wyboru. (#11377)
+- Ponownie możliwa jest nawigacja po pewnych kontrolkach gdy język NVDA ustawiony jest na aragoński. (#11384)
+- Program NVDA nie powinien już się zawieszać kiedy dokonywana jest błyskawiczna nawigacja, lub wpisywane są znaki z włączoną obslugą brajla w programie Microsoft Word. (#11431, #11425, #11414)
+- NVDA nie dodaje już nieistniejącej spacji gdy aktualny objekt nawigatora kopiowany jest do schowka. (#11438)
+- NVDA nie aktywuje już profilu "czytaj wszystko", gdy nie ma nic do odczytania. (#10899, #9947)
+- NVDA ponownie odczytuje listę funkcji dla Menedżera Usług Internetowych (IIS). (#11468)
+- NVDA nie pozwala już na zamykanie kanału karty dźwiękowej, Znacznie poprawiając  wydajność na niektórych urządzeniach. (#5172, #10721)
+- NVDA nie zamyka się, gdy przytrzymany jest skrót CTRL+Shift+Strzałka w dół. (#9463)
+- Od teraz NVDA ponownie ogłasza stan drzewa w aplikacji Google Drive. (#11520)
 - NVDA will auto detect the NLS eReader Humanware braille display via Bluetooth as its Bluethooth name is now "NLS eReader Humanware". (#11561)
 
 
