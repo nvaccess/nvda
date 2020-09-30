@@ -323,7 +323,7 @@ class LiveText(NVDAObject):
 		)
 
 	def _terminateDMP(self):
-		self._dmp.stdin.write(struct.pack("=II", 0, 0))
+		self._dmp.stdin.write(struct.pack("=II", 0, 0))  # Sentinal value
 		self._dmp = None
 
 	def _monitor(self):
