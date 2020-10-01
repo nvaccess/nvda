@@ -16,6 +16,7 @@ What's New in NVDA
 == Changes ==
 - Updated liblouis braille translator to version 3.15.0
 - When reading with say all in browse mode, the find next and find previous commands do not stop reading anymore if Allow skim reading option is enabled; say all rather resumes from after the next or previous found term. (#11563)
+- For HIMS braille displays F3 has been remapped to Space + dots 148. (#11710)
 
 
 == Bug Fixes ==
@@ -30,6 +31,7 @@ What's New in NVDA
 - NVDA no longer fails to announce a list item after typing a character in a list when speaking with the SAPI5 Ivona voices. (#11651)
 - It is again possible to use browse mode when reading emails in Windows 10 Mail 16005.13110 and later. (#11439)
 - When using the SAPI5 Ivona voices from harposoftware.com, NvDA is now able to save configuration, switch synthesizers, and no longer will stay silent after restarting. (#11650)
+- It is now possible to enter number 6 in computer braille from a braille keyboard on HIMS displays. (#11710)
 
 
 == Changes for Developers ==
