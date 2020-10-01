@@ -462,7 +462,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 			roleString=varRole.bstrVal;
 	}
 
-	// Specifically force the role of ARIA treegrids from outline to table
+	// Specifically force the role of ARIA treegrids from outline to table.
+	// We do this very early on in the rendering so that all our table logic applies.
 	if(role == ROLE_SYSTEM_OUTLINE) {
 		const auto IA2AttribsMapIt = IA2AttribsMap.find(L"xml-roles");
 		if(IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second.find(L"treegrid") != wstring::npos) {
