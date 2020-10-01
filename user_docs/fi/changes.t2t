@@ -16,6 +16,7 @@ Merkitty (korostettu) sisältö voidaan ilmoittaa selaimissa, ja on myös uusia 
  - Tämä voidaan ottaa käyttöön tai poistaa käytöstä uudella asiakirjojen muotoiluasetuksiin lisätyllä asetuksella.
 - Uusia jäljiteltäviä järjestelmän näppäimiä voidaan lisätä NVDA:n Syötekomennot-valintaikkunasta. (#6060)
  - Tämä tehdään valitsemalla ensin Jäljiteltävät järjestelmänäppäimistön näppäimet -kategoria ja painamalla sitten Lisää-painiketta.
+- Ohjaussauvallista Handy Tech Active Braille -pistenäyttöä tuetaan. (#11655)
 
 
 == Muutokset ==
@@ -54,6 +55,8 @@ Merkitty (korostettu) sisältö voidaan ilmoittaa selaimissa, ja on myös uusia 
 - NVDA ei enää jäädy tai sulkeudu pidettäessä alhaalla Ctrl+Vaihto+Alanuolta Microsoft Wordissa. (#9463)
 - NVDA ilmoittaa nyt aina siirtymispuunäkymän hakemistojen laajennettu/kutistettu-tilan drive.google.comissa. (#11520)
 - NVDA tunnistaa automaattisesti Humanwaren NLS eReader -pistenäytön Bluetoothin kautta, koska sen Bluetooth-nimi on nyt "NLS eReader Humanware". (#11561)
+- Tietyt SAPI5-äänet (kuten Ivona) eivät enää ohita puhetta. (#10901)
+- Suuria suorituskyvyn parannuksia  Visual Studio Codessa. (#11533)
 
 
 == Muutokset kehittäjille ==
