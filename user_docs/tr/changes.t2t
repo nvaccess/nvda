@@ -16,6 +16,7 @@ The existence of marked (highlighted) content can be reported in browsers, and t
  - This can be toggled on and off by a new NVDA Document Formatting option for Highlighting.
 - New emulated system keyboard keys can be added from NVDA's Input gestures dialog. (#6060)
   - To do this, press the add button after you selected the Emulated system keyboard keys category.
+- Handy Tech Active Braille with joystick is now supported. (#11655)
 
 
 == Changes ==
@@ -53,7 +54,9 @@ The existence of marked (highlighted) content can be reported in browsers, and t
 - NVDA now keeps the audio device open improving performance on some sound cards (#5172, #10721)
 - NVDA will no longer freeze or exit when holding down control+shift+downArrow in Microsoft Word. (#9463)
 - The expanded / collapsed state of directories in the navigation treeview on drive.google.com is now always reported by NVDA. (#11520)
-- NVDA will auto detect the NLS eReader Humanware braille display via Bluetooth as its Bluethooth name is now "NLS eReader Humanware". (#11561)
+- NVDA will auto detect the NLS eReader Humanware braille display via Bluetooth as its Bluetooth name is now "NLS eReader Humanware". (#11561)
+- Certain SAPI5 voices (such as Ivona) no longer skip speech. (#10901)
+- Major performance improvements in Visual Studio Code. (#11533)
 
 
 == Changes For Developers ==
