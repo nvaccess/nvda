@@ -153,68 +153,83 @@ def _trackFocusObject(eventName, obj) -> None:
 	if eventName == "gainFocus":
 		lastQueuedFocusObject = obj
 
-def _getFocusLossCancellableSpeechCommand(
-		obj,
-		reason: controlTypes.OutputReason
-) -> Optional[_CancellableSpeechCommand]:
-	if reason != controlTypes.REASON_FOCUS or not speech.manager._shouldCancelExpiredFocusEvents():
-		return None
-	from NVDAObjects.behaviors import Dialog
-	from NVDAObjects import NVDAObject
-	if not isinstance(obj, NVDAObject):
-		log.warning("Unhandled object type. Expected all objects to be descendant from NVDAObject")
-		return None
 
-	def isLastFocusObj():
-		return obj == api.getFocusObject()
+class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
+	def __init__(self, obj, reportDevInfo: bool):
+		from NVDAObjects import NVDAObject
+		if not isinstance(obj, NVDAObject):
+			log.warning("Unhandled object type. Expected all objects to be descendant from NVDAObject")
+			raise TypeError(f"Unhandled object type: {obj!r}")
+		self._obj = obj
+		super(FocusLossCancellableSpeechCommand, self).__init__(reportDevInfo=reportDevInfo)
 
-	if isLastFocusObj():
-		# objects may be re-used?
-		# WAS_GAIN_FOCUS_OBJ_ATTR_NAME state should be cleared at some point
-		# perhaps instead keep a weak ref list of obj that had focus, clear on keypress?
-		setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, True)
-	elif not hasattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME):
-		setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
+		if self.isLastFocusObj():
+			# Objects may be re-used.
+			# WAS_GAIN_FOCUS_OBJ_ATTR_NAME state should be cleared at some point?
+			# perhaps instead keep a weak ref list of obj that had focus, clear on keypress?
 
-	def previouslyHadFocus():
-		return getattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
+			# Assumption: we only process one focus event at a time, so even if several focus events are queued,
+			# all focused objects will still gain this tracking attribute. Otherwise, this may need to be set via
+			# api.setFocusObject when globalVars.focusObject is set.
+			setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, True)
+		elif not hasattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME):
+			setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
 
-	def isAncestorOfCurrentFocus():
-		return obj in api.getFocusAncestors()
-
-	def isForegroundObject():
-		foreground = api.getForegroundObject()
-		return obj is foreground or obj == foreground
-
-	def isSpeechStillValid():
+	def _checkIfValid(self):
 		stillValid = (
-			isLastFocusObj()
-			or not previouslyHadFocus()
-			or isAncestorOfCurrentFocus()
-			# Ensure dialogs gaining focus are reported, EG NVDA Find dialog in a browser
-			or isForegroundObject()
+				self.isLastFocusObj()
+				or not self.previouslyHadFocus()
+				or self.isAncestorOfCurrentFocus()
+				# Ensure titles for dialogs gaining focus are reported, EG NVDA Find dialog
+				or self.isForegroundObject()
 		)
 		return stillValid
 
-	if not speech.manager._shouldDoSpeechManagerLogging():
-		return _CancellableSpeechCommand(isSpeechStillValid)
-
-	def getDevInfo():
-		dialogNotAncestor = isinstance(obj, Dialog) and not isAncestorOfCurrentFocus()
+	def _getDevInfo(self):
+		from NVDAObjects.behaviors import Dialog
+		dialogNotAncestor = isinstance(self._obj, Dialog) and not self.isAncestorOfCurrentFocus()
 		ancestorInfo = ""
 		if dialogNotAncestor:
 			ancestors = api.getFocusAncestors()
 			ancestorStrings = [repr(a) for a in ancestors]
 			ancestorInfo = f", ancestors: {', '.join(ancestorStrings)}"
 		return (
-			f"isLast: {isLastFocusObj()}"
-			f", previouslyHad: {previouslyHadFocus()}"
-			f", isAncestorOfCurrentFocus: {isAncestorOfCurrentFocus()}"
-			f", is a dialog: {isinstance(obj, Dialog)}"
-			f", is foreground obj {isForegroundObject()}"
+			f"isLast: {self.isLastFocusObj()}"
+			f", previouslyHad: {self.previouslyHadFocus()}"
+			f", isAncestorOfCurrentFocus: {self.isAncestorOfCurrentFocus()}"
+			f", is a dialog: {isinstance(self._obj, Dialog)}"
+			f", is foreground obj {self.isForegroundObject()}"
 			f"{ancestorInfo}"
 		)
-	return _CancellableSpeechCommand(isSpeechStillValid, getDevInfo)
+
+	def isLastFocusObj(self):
+		return self._obj == api.getFocusObject()
+
+	def previouslyHadFocus(self):
+		return getattr(self._obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
+
+	def isAncestorOfCurrentFocus(self):
+		return self._obj in api.getFocusAncestors()
+
+	def isForegroundObject(self):
+		foreground = api.getForegroundObject()
+		return self._obj is foreground or self._obj == foreground
+
+
+def _getFocusLossCancellableSpeechCommand(
+		obj,
+		reason: controlTypes.OutputReason
+) -> Optional[_CancellableSpeechCommand]:
+	if reason != controlTypes.REASON_FOCUS or not speech.manager._shouldCancelExpiredFocusEvents():
+		return None
+	from NVDAObjects import NVDAObject
+	if not isinstance(obj, NVDAObject):
+		log.warning("Unhandled object type. Expected all objects to be descendant from NVDAObject")
+		return None
+
+	shouldReportDevInfo = speech.manager._shouldDoSpeechManagerLogging()
+	return FocusLossCancellableSpeechCommand(obj, reportDevInfo=shouldReportDevInfo)
+
 
 def executeEvent(eventName, obj, **kwargs):
 	"""Executes an NVDA event.
