@@ -639,7 +639,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				"br(hims):dot1+dot2+dot5+space",
 			),
 			"kb:f3": (
-				"br(hims):dot1+dot2+dot4+dot8",
+				"br(hims):dot1+dot4+dot8+space",
 			),
 			"kb:f4": (
 				"br(hims):dot7+f3",
