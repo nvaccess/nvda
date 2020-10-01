@@ -45,6 +45,11 @@ bool populateMapWithIA2AttributesFromPacc(IAccessible2* pacc, map<wstring,wstrin
 	return true;
 }
 
+bool hasXmlRoleAttribContainingValue(const map<wstring,wstring>& attribsMap, const wstring roleName) {
+	const auto attribsMapIt = attribsMap.find(L"xml-roles");
+	return attribsMapIt != attribsMap.end() && attribsMapIt->second.find(roleName) != wstring::npos;
+}
+
 CComPtr<IAccessible2> GeckoVBufBackend_t::getLabelElement(IAccessible2_2* element) {
 	IUnknown** ppUnk=nullptr;
 	long nTargets=0;
@@ -465,8 +470,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	// Specifically force the role of ARIA treegrids from outline to table.
 	// We do this very early on in the rendering so that all our table logic applies.
 	if(role == ROLE_SYSTEM_OUTLINE) {
-		const auto IA2AttribsMapIt = IA2AttribsMap.find(L"xml-roles");
-		if(IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second.find(L"treegrid") != wstring::npos) {
+		if(hasXmlRoleAttribContainingValue(IA2AttribsMap, L"treegrid")) {
 			role = ROLE_SYSTEM_TABLE;
 		}
 	}
