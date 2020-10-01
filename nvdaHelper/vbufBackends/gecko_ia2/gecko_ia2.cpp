@@ -33,6 +33,18 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
+bool populateMapWithIA2AttributesFromPacc(IAccessible2* pacc, map<wstring,wstring>& IA2AttribsMap) {
+	{
+		CComBSTR IA2Attributes;
+		if(pacc->get_attributes(&IA2Attributes) != S_OK) {
+			LOG_DEBUG(L"pacc->get_attributes failed");
+			return false;
+		}
+		IA2AttribsToMap(IA2Attributes.m_str,IA2AttribsMap);
+	}
+	return true;
+}
+
 CComPtr<IAccessible2> GeckoVBufBackend_t::getLabelElement(IAccessible2_2* element) {
 	IUnknown** ppUnk=nullptr;
 	long nTargets=0;
@@ -423,20 +435,15 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	previousNode=NULL;
 
 	//get IA2Attributes -- IAccessible2 attributes;
-	BSTR IA2Attributes;
 	map<wstring,wstring> IA2AttribsMap;
-	if(pacc->get_attributes(&IA2Attributes)==S_OK) {
-		IA2AttribsToMap(IA2Attributes,IA2AttribsMap);
-		SysFreeString(IA2Attributes);
-		// Add each IA2 attribute as an attrib.
-		for(map<wstring,wstring>::const_iterator it=IA2AttribsMap.begin();it!=IA2AttribsMap.end();++it) {
-			s<<L"IAccessible2::attribute_"<<it->first;
-			parentNode->addAttribute(s.str(),it->second);
-			s.str(L"");
-		}
-	} else
-		LOG_DEBUG(L"pacc->get_attributes failed");
 	map<wstring,wstring>::const_iterator IA2AttribsMapIt;
+	populateMapWithIA2AttributesFromPacc(pacc, IA2AttribsMap);
+	// Add all IA2 attributes on the node
+	for(const auto& [key, val]: IA2AttribsMap) {
+		wstring attribName = L"IAccessible2::attribute_";
+		attribName += key;
+		parentNode->addAttribute(attribName, val);
+	}
 
 	//Get role -- IAccessible2 role
 	long role=0;
