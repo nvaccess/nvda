@@ -217,8 +217,6 @@ Przesuwaj palec po ekranie, by usłyszeć inne kontrolki lub tekst pod nim.
 Ilekroć w tym podręczniku zostanie wymieniona komenda klawiaturowa NVDA, zostanie podany gest dotykowy, który jest jej odpowiednikiem. 
 Poniżej wyjaśnienie, jak wykonywać te gesty.
 
-
-
 ==== Stuknięcia ====
 Stuknij szybko w ekran jednym lub wieloma palcami.
 
@@ -336,7 +334,6 @@ NVDA wykorzystuje następujące klawisze poleceń do nawigacji kursorem klawiatu
 | Odczytaj formatowanie | NVDA+f | NVDA+f | Odczytuje formatowanie tekstu pod kursorem. Dwukrotne wciśnięcie skrótu pokazuje informacje w trybie przeglądania. |
 | Następne zdanie | Alt+Strzałka w dół | Alt+Strzałka w dół | Przenosi kursor do następnego zdania i odczytuje je (obsługiwane tylko w Microsoft Word i Outlook). |
 | Poprzednie zdanie | Alt+Strzałka w górę | Alt+Strzałka w górę | Przenosi kursor do poprzedniego zdania i odczytuje je (obsługiwane tylko w Microsoft Word i Outlook). |
-
 
 Do poruszania się w strukturze tabel służą następujące klawisze poleceń:
 || Działanie | Skrót | Opis |
@@ -651,9 +648,8 @@ Więcej informacji o klawiszach nawigacji, zawiera [dokumentacja MathPlayer http
 
 Aby powrócić do dokumentu, naciśnij klawisz Esc.
 
-Czasem treśc matematyczna może być wyświetlana jako przycisk lub inny typ elementu który po aktywacji może być wyświetlany w dialogu w którym wyświetlone zostają informacje związane z formułą.
+Czasem treść matematyczna może być wyświetlana jako przycisk lub inny typ elementu który po aktywacji może być wyświetlany w dialogu w którym wyświetlone zostają informacje związane z formułą.
 Aby aktywować przycisk lub element zawierający formułe, naciśnij ctrl+enter.
-
 
 + Brajl +[Braille]
 Jeśli posiadasz monitor brajlowski, NVDA może wyświetlać informacje w brajlu.
@@ -1082,7 +1078,8 @@ Dostępne poziomy logowania, to:
  - Jeżeli boisz się o swoją prywatność, nie włączaj tej opcji.
 - Debugowanie: Poza wiadomościami debugowania, wejściem klawiatury i mowy dodatkowe informacje będą zapisywane.
  - Tak samo jak w poprzednim, jeżeli boisz się o swoją prywatność, nie włączaj tej opcji.
-
+ -
+-
 
 ==== Automatycznie uruchom NVDA po zalogowaniu się do systemu Windows ====[GeneralSettingsStartAfterLogOn]
 Jeśli ta opcja jest włączona, NVDA uruchomi się automatycznie zaraz po zalogowaniu się do systemu.
@@ -1579,7 +1576,6 @@ Pole to kontroluje zachowanie NVDA w przypadku napotkania powiadomienia.
 - Dymki pomocy są nieco większe od dymków podpowiedzi, i są powiązane ze zdarzeniami systemowymi takimi jak na przykład odłączenie zasilania, kabla sieciowego ITD.
 - Powiadomienia toast zostały wprowadzone w systemie Windows 10. Pojawiają się one w centrum akcji i informują o zdarzeniach takich jak nadejście poczty, nowej aktualizacji systemu ITD.
 
-
 ==== Odczytuj klawisze skrótów ====[ObjectPresentationShortcutKeys]
 Jeśli zaznaczysz to pole, NVDA informując o obiektach, pozycjach menu lub kontrolkach okien dialogowych będzie wypowiadać również związany z nimi klawisz skrótu. 
 Dla przykładu, menu plik może mieć przypisany skrót Alt+P.
@@ -1895,7 +1891,6 @@ Wracając do wcześniejszego przykładu zamiany "ptak" na "żaba", jeśli reguł
 Wyrażenie regularne jest to wzorzec zawierający specjalne symbole, które pozwalają na dopasowanie więcej niż jednego znaku jednocześnie, mogą to być np. cyfry lub litery.
 Wyrażenia regularne nie będą omawiane w tym podręczniku.
 Po więcej informacji zapraszamy na stronę [https://docs.python.org/3.7/howto/regex.html].
-
 
 +++ Wymowa znaków i symboli +++[SymbolPronunciation]
 To okno dialogowe pozwala określić w jaki sposób NVDA wypowiada konkretne znaki czy inne symbole. Pozwala także ustawić poziom interpunkcji, przy którym są one wypowiadane.
@@ -2245,7 +2240,6 @@ W systemie Windows 10, NVDA domyślnie używa głosów Windows One Core ([[eSpea
 
 Artykuł Microsoft zawierający listę dostępnych głosów i instrukcję ich instalacji znajduje się pod poniższym adresem: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
-
 + Obsługiwane monitory brajlowskie +[SupportedBrailleDisplays]
 Ten rozdział zawiera informacje na temat monitorów brajlowskich wspieranych przez NVDA.
 
@@ -2519,7 +2513,7 @@ Następujące urządzenia również nie wymagają instalacji dodatkowych sterown
 - APH Chameleon 20
 - Humanware BrailleOne
 - NLS eReader
-
+-
 
 Poniżej skróty klawiszowe dla Brailliant BI/B i BrailleNote touch, które działają w NVDA.
 Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia.
