@@ -33,16 +33,13 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
-bool populateMapWithIA2AttributesFromPacc(IAccessible2* pacc, map<wstring,wstring>& IA2AttribsMap) {
-	{
-		CComBSTR IA2Attributes;
-		if(pacc->get_attributes(&IA2Attributes) != S_OK) {
-			LOG_DEBUG(L"pacc->get_attributes failed");
-			return false;
-		}
+map<wstring,wstring> createMapOfIA2AttributesFromPacc(IAccessible2* pacc) {
+	map<wstring,wstring> IA2AttribsMap;
+	CComBSTR IA2Attributes;
+	if(pacc->get_attributes(&IA2Attributes) == S_OK) {
 		IA2AttribsToMap(IA2Attributes.m_str,IA2AttribsMap);
 	}
-	return true;
+	return IA2AttribsMap;
 }
 
 bool hasXmlRoleAttribContainingValue(const map<wstring,wstring>& attribsMap, const wstring roleName) {
@@ -440,9 +437,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	previousNode=NULL;
 
 	//get IA2Attributes -- IAccessible2 attributes;
-	map<wstring,wstring> IA2AttribsMap;
 	map<wstring,wstring>::const_iterator IA2AttribsMapIt;
-	populateMapWithIA2AttributesFromPacc(pacc, IA2AttribsMap);
+	auto IA2AttribsMap = createMapOfIA2AttributesFromPacc(pacc);
 	// Add all IA2 attributes on the node
 	for(const auto& [key, val]: IA2AttribsMap) {
 		wstring attribName = L"IAccessible2::attribute_";
