@@ -15,7 +15,8 @@ Dodano również możliwość odczytywania podkreślonego tekstu w przeglądarka
 - Występowanie podkreślonego tekstu jest od teraz ogłaszane zarówno w mowie, jak i w brajlu we wszystkich przeglądarkach internetowych. (#11436)
  - Opcja ta znajduje się w ustawieniach formatowania dokumentów.
 - Dodano możliwość mapowania klawiszy systemowych na zdarzenia wejścia NVDA. Odpowiednia kategoria znajduje się w ustawieniach zdarzeniń wejścia. (#6060)
-  - Aby to zrobić, wciśnij przyciisk "dodaj" po wybraniu opcji "emulowane klawisze systemowe".
+  - Aby to zrobić, wciśnij przycisk "dodaj" po wybraniu opcji "emulowane klawisze systemowe".
+- Od teraz wspierany jest model monitora brajlowskiego Handy Tech Active Braille z joystickiem. (#11655)
 
 
 == Zmiany ==
@@ -53,7 +54,9 @@ Dodano również możliwość odczytywania podkreślonego tekstu w przeglądarka
 - NVDA nie pozwala już na zamykanie kanału karty dźwiękowej, Znacznie poprawiając  wydajność na niektórych urządzeniach. (#5172, #10721)
 - NVDA nie zamyka się, gdy przytrzymany jest skrót CTRL+Shift+Strzałka w dół. (#9463)
 - Od teraz NVDA ponownie ogłasza stan drzewa w aplikacji Google Drive. (#11520)
-- NVDA will auto detect the NLS eReader Humanware braille display via Bluetooth as its Bluethooth name is now "NLS eReader Humanware". (#11561)
+- NVDA będzie automatycznie wykrywał NLS eReader Humanware monitor brajlowski połączony przez bluetooth ponieważ nazwa Bluetooth tego minitora brajlowskiego  od teraz jest zmieniona i brzmi "NLS eReader Humanware". (#11561)
+- Niektóre głosy SAPI5 takie jak Ivona już nie omijają zdania. (#10901)
+- Duże ulepszenia performansów w Visual Studio Code. (#11533)
 
 
 == Zmiany dla programistów ==
