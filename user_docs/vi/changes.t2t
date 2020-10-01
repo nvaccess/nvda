@@ -16,6 +16,7 @@ Có thể đọc được nội dung có tồn tại các điểm đánh dấu (
  - Có thể bật / tắt tính năng này bởi một tùy chọn định dạng mới về làm nổi của NVDA.
 - Có thể thêm các phím giả lập bàn phím hệ thống từ hộp thoại Quản lý các thao tác của NVDA. (#6060)
   - Để làm điều này, hãy bấm nút thêm sau khi chọn phân loại phím giả lập bàn phím hệ thống.
+- Đã hỗ trợ cho màn hình nổi Handy Tech Active Braille với cần điều khiển. (#11655)
    
    
 == Các thay đổi ==
@@ -53,7 +54,9 @@ Có thể đọc được nội dung có tồn tại các điểm đánh dấu (
 - NVDA giờ đây giữ thiết bị audio  ở trạng thái mở, nhằm cải thiện hiệu năng trên vài thiết bị âm thanh (#5172, #10721)
 - NVDA sẽ không còn bị treo hay bị tắt khi nhấn giữ control+shift+mũi tên xuống trong Microsoft Word. (#9463)
 - Trạng thái đã mở rộng đã thu gọn của thư mục trong cây thư mục trên drive.google.com giờ đây luôn được đọc bởi NVDA. (#11520)
-- NVDA sẽ tự nhận màn hình nổi NLS eReader Humanware qua Bluetooth với tên Bluethooth của nó giờ đây là "NLS eReader Humanware". (#11561)
+- NVDA sẽ tự nhận màn hình nổi NLS eReader Humanware qua Bluetooth như tên Bluethooth của nó giờ đây là "NLS eReader Humanware". (#11561)
+- Một số giọng SAPI5 nhất định (Ivona chẳng hạn) không còn bị tình trạng không đọc hết. (#10901)
+- Cải thiện hiệu suất vận hành trong Visual Studio Code. (#11533)
 
 
 == Các thay đổi cho nhà phát triển ==
