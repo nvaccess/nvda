@@ -16,7 +16,7 @@ La existencia de contenido marcado (resaltado) puede anunciarse en los navegador
  - Esto puede activarse y desactivarse con una nueva opción de Formateado de Documento de NVDA para Resaltado.
 - Pueden añadirse nuevas teclas al sistema de teclado emulado desde el diálogo Gextos de Entrada de NVDA. (#6060)
   - Para hacerlo, pulsa el botón Añadir después de que selecciones la categoría Teclas de sistema de teclado emulado.
-
+- Ahora se admite Handy Tech Active Braille con joystick. (#11655)
 
 == Cambios ==
 - El script anunciar formato (NVDA+f) ahora se ha cambiado para anunciar el formato en el cursor del sistema en lugar de en la posición del cursor de revisión.  Para anunciar el formato en la posición del Cursor de Revisión ahora utiliza NVDA+shift+f. (#9505)
@@ -54,6 +54,8 @@ La existencia de contenido marcado (resaltado) puede anunciarse en los navegador
 - NVDA ya no se congelará ni se apagará cuando mantengas pulsado control+shift+flecha abajo en Microsoft Word. (#9463)
 - El estado expandido/colapsado de los directorios en el árbol de navegación de drive.google.com ahora siempre se anuncia por NVDA. (#11520)
 - NVDA detectará automáticamente la pantalla braille NLS eReader Humanware a través de Bluetooth, ya que su nombre Bluethooth es ahora "NLS eReader Humanware". (#11561)
+- Ciertas voces SAPI5 (tales como Ivona) ya no dan saltos en el habla. (#10901)
+- Grandes mejoras en el rendimiento de Visual Studio Code. (#11533)
  
 
 == Cambios para Desarrolladores ==
