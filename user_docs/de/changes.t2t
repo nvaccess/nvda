@@ -16,6 +16,7 @@ Markierte (hervorgehobenene) Inhalte kann man in Browsern sich ansagen lassen. A
  - Dies kann durch die Option in den Dokument-Formatierung von NVDA für die Hervorhebung ein- und ausgeschaltet werden.
 - Tasten für die emulierte Systemtastatur können über das Dialogfeld für die Tastenbefehle von NVDA hinzugefügt werden. (#6060)
   - Klicken Sie dazu die Schaltfläche "Hinzufügen", nachdem Sie die Kategorie "Tasten der emulierten Systemtastatur" ausgewählt haben.
+- Active Braille mit Joystick von HandyTech wird nun unterstützt. (#11655)
 
 
 == Änderungen ==
@@ -54,6 +55,8 @@ Markierte (hervorgehobenene) Inhalte kann man in Browsern sich ansagen lassen. A
 - NVDA friert nicht mehr ein oder wird nicht mehr beendet, wenn in Microsoft Word die Tastenkombination Strg+Umschalttaste+Pfeil nach unten gedrückt wird. (#9463)
 - In der Navigationsbaumansicht auf drive.google.com wird der Zustand, ob ein Verzeichnis eingeklappt oder ausgeklappt ist, immer von NVDA angesagt. (#11520)
 - NVDA erkennt nun die Braillezeile NLS eReader von Humanware über Bluetooth automatisch, da der Bluethooth-Name nun "NLS eReader Humanware" lautet. (#11561)
+- Bestimmte SAPI5-Stimmen (wie z. B. Ivona) werden nun korrekt erkannt. (#10901)
+- Wesentliche Leistungsverbesserungen in Visual Studio Code. (#11533)
 
 
 == Änderungen für Entwickler ==
