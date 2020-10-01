@@ -152,9 +152,6 @@ def _trackFocusObject(eventName, obj) -> None:
 
 	if eventName == "gainFocus":
 		lastQueuedFocusObject = obj
-		setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, True)
-	elif not hasattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME):
-		setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
 
 def _getFocusLossCancellableSpeechCommand(
 		obj,
@@ -168,11 +165,19 @@ def _getFocusLossCancellableSpeechCommand(
 		log.warning("Unhandled object type. Expected all objects to be descendant from NVDAObject")
 		return None
 
+	def isLastFocusObj():
+		return obj == api.getFocusObject()
+
+	if isLastFocusObj():
+		# objects may be re-used?
+		# WAS_GAIN_FOCUS_OBJ_ATTR_NAME state should be cleared at some point
+		# perhaps instead keep a weak ref list of obj that had focus, clear on keypress?
+		setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, True)
+	elif not hasattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME):
+		setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
+
 	def previouslyHadFocus():
 		return getattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
-
-	def isLastFocusObj():
-		return obj is lastQueuedFocusObject
 
 	def isAncestorOfCurrentFocus():
 		return obj in api.getFocusAncestors()
@@ -245,13 +250,12 @@ def doPreGainFocus(obj,sleepMode=False):
 		# ask speechManager to check if any of it's queued utterances should be cancelled
 		# Note: Removing cancelled speech commands should happen after all dependencies for the isValid check
 		# have been updated:
-		# - lastQueuedFocusObject
 		# - obj.WAS_GAIN_FOCUS_OBJ_ATTR_NAME
+		# - api.setFocusObject()
 		# - api.getFocusAncestors()
-		# These are updated:
-		# - lastQueuedFocusObject & obj.WAS_GAIN_FOCUS_OBJ_ATTR_NAME
-		#   - Set in stack: _trackFocusObject, eventHandler.queueEvent
-		#   - Which results in executeEvent being called, then doPreGainFocus
+		# When these are updated:
+		# - obj.WAS_GAIN_FOCUS_OBJ_ATTR_NAME
+		#   - Set during creation of the _CancellableSpeechCommand.
 		# - api.getFocusAncestors() via api.setFocusObject() called in doPreGainFocus
 		speech._manager.removeCancelledSpeechCommands()
 
