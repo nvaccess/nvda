@@ -39,6 +39,11 @@ Gets the current object with focus.
 
 def getForegroundObject():
 	"""Gets the current foreground object.
+	This (cached) object is the (effective) top-level "window" (hwnd).
+	EG a Dialog rather than the focused control within the dialog.
+	The cache is updated as queued events are processed, as such there will be a delay between the winEvent
+	and this function matching. However, within NVDA this should be used in order to be in sync with other
+	functions such as "getFocusAncestors".
 @returns: the current foreground object
 @rtype: L{NVDAObjects.NVDAObject}
 """
@@ -48,7 +53,9 @@ def setForegroundObject(obj):
 	"""Stores the given object as the current foreground object.
 	Note: does not cause the operating system to change the foreground window,
 		but simply allows NVDA to keep track of what the foreground window is.
-		The function may have been called 'setLastForegroundWindow' or 'setLastForegroundEventObject'
+		Alternative names for this function may have been:
+		- setLastForegroundWindow
+		- setLastForegroundEventObject
 @param obj: the object that will be stored as the current foreground object
 @type obj: NVDAObjects.NVDAObject
 """
