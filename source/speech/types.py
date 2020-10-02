@@ -22,6 +22,7 @@ SequenceItemT = Union[SpeechCommand, str]
 SpeechSequence = List[SequenceItemT]
 SpeechIterable = Iterable[SequenceItemT]
 
+_IndexT = int  # Type for indexes.
 
 def _isDebugForSpeech() -> bool:
 	"""Check if debug logging for speech is enabled."""

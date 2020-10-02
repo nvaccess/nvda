@@ -37,6 +37,8 @@ import globalVars
 from logHandler import log
 import addonHandler
 import extensionPoints
+import garbageHandler  # noqa: E402
+
 
 # inform those who want to know that NVDA has finished starting up.
 postNvdaStartup = extensionPoints.Action()
@@ -222,7 +224,7 @@ def main():
 		globalVars.appArgs.configPath=config.getUserDefaultConfigPath(useInstalledPathIfExists=globalVars.appArgs.launcher)
 	#Initialize the config path (make sure it exists)
 	config.initConfigPath()
-	log.info("Config dir: %s"%os.path.abspath(globalVars.appArgs.configPath))
+	log.info(f"Config dir: {globalVars.appArgs.configPath}")
 	log.debug("loading config")
 	import config
 	config.initialize()
@@ -230,7 +232,7 @@ def main():
 		log.info("Developer Scratchpad mode enabled")
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
-			nvwave.playWaveFile("waves\\start.wav")
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "start.wav"))
 		except:
 			pass
 	logHandler.setLogLevelFromConfig()
@@ -296,7 +298,10 @@ def main():
 		speech.cancelSpeech()
 		if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 			try:
-				nvwave.playWaveFile("waves\\exit.wav",asynchronous=False)
+				nvwave.playWaveFile(
+					os.path.join(globalVars.appDir, "waves", "exit.wav"),
+					asynchronous=False
+				)
 			except:
 				pass
 		log.info("Windows session ending")
@@ -408,7 +413,7 @@ def main():
 	if not wxLang and '_' in lang:
 		wxLang=locale.FindLanguageInfo(lang.split('_')[0])
 	if hasattr(sys,'frozen'):
-		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwd(),"locale"))
+		locale.AddCatalogLookupPathPrefix(os.path.join(globalVars.appDir, "locale"))
 	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
 	# If we try to initialize this language, wx will show a warning dialog.
 	# #9089: some languages (such as Aragonese) do not have language info, causing language getter to fail.
@@ -423,6 +428,9 @@ def main():
 			log.error("Failed to initialize wx locale",exc_info=True)
 	else:
 		log.debugWarning("wx does not support language %s" % lang)
+
+	log.debug("Initializing garbageHandler")
+	garbageHandler.initialize()
 
 	import api
 	import winUser
@@ -582,10 +590,14 @@ def main():
 	_terminate(braille)
 	_terminate(speech)
 	_terminate(addonHandler)
+	_terminate(garbageHandler)
 
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
-			nvwave.playWaveFile("waves\\exit.wav",asynchronous=False)
+			nvwave.playWaveFile(
+				os.path.join(globalVars.appDir, "waves", "exit.wav"),
+				asynchronous=False
+			)
 		except:
 			pass
 	# #5189: Destroy the message window as late as possible

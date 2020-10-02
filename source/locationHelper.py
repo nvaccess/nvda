@@ -395,9 +395,9 @@ class RectLTRB(_RectMixin, namedtuple("RectLTRB",("left","top","right","bottom")
 
 	def __new__(cls, left, top, right, bottom):
 		if left>right:
-			raise ValueError("left=%d is greather than right=%d, which is not allowed"%(left,right))
+			raise ValueError("left=%d is greater than right=%d, which is not allowed" % (left, right))
 		if top>bottom:
-			raise ValueError("top=%d is greather than bottom=%d, which is not allowed"%(top,bottom))
+			raise ValueError("top=%d is greater than bottom=%d, which is not allowed" % (top, bottom))
 		return super(RectLTRB, cls).__new__(cls, left, top, right, bottom)
 
 	@property

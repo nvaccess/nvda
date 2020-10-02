@@ -308,28 +308,29 @@ NVDAUnitsToWordUnits={
 	textInfos.UNIT_READINGCHUNK:wdSentence,
 }
 
-formatConfigFlagsMap={
-	"reportFontName":0x1,
-	"reportFontSize":0x2,
-	"reportFontAttributes":0x4,
-	"reportColor":0x8,
-	"reportAlignment":0x10,
-	"reportStyle":0x20,
-	"reportSpellingErrors":0x40,
-	"reportPage":0x80,
-	"reportLineNumber":0x100,
-	"reportTables":0x200,
-	"reportLists":0x400,
-	"reportLinks":0x800,
-	"reportComments":0x1000,
-	"reportHeadings":0x2000,
-	"autoLanguageSwitching":0x4000,
-	"reportRevisions":0x8000,
-	"reportParagraphIndentation":0x10000,
-	"reportLineSpacing":0x40000,
+formatConfigFlagsMap = {
+	"reportFontName": 0x1,
+	"reportFontSize": 0x2,
+	"reportFontAttributes": 0x4,
+	"reportColor": 0x8,
+	"reportAlignment": 0x10,
+	"reportStyle": 0x20,
+	"reportSpellingErrors": 0x40,
+	"reportPage": 0x80,
+	"reportLineNumber": 0x100,
+	"reportTables": 0x200,
+	"reportLists": 0x400,
+	"reportLinks": 0x800,
+	"reportComments": 0x1000,
+	"reportHeadings": 0x2000,
+	"autoLanguageSwitching": 0x4000,
+	"reportRevisions": 0x8000,
+	"reportParagraphIndentation": 0x10000,
+	"reportLineSpacing": 0x40000,
 	"reportSuperscriptsAndSubscripts": 0x80000,
+	"reportGraphics": 0x100000,
 }
-formatConfigFlag_includeLayoutTables=0x20000
+formatConfigFlag_includeLayoutTables = 0x20000
 
 # Map some characters from 0 to Unicode. Meant to be used with bullets only.
 # Doesn't care about the actual font, so can give incorrect Unicode in rare cases.
@@ -556,6 +557,31 @@ class ChartWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 
 	def filter(self,item):
 		return item.type==wdInlineShapeChart
+
+
+class LazyControlField_RowAndColumnHeaderText(textInfos.ControlField):
+
+	def __init__(self, ti):
+		self._ti = ti
+		super().__init__()
+
+	def get(self, name, default=None):
+		if name == "table-rowheadertext":
+			try:
+				cell = self._ti._rangeObj.cells[1]
+			except IndexError:
+				log.debugWarning("no cells for table row, possibly on end of cell mark")
+				return super().get(name, default)
+			return self._ti.obj.fetchAssociatedHeaderCellText(cell, False)
+		elif name == "table-columnheadertext":
+			try:
+				cell = self._ti._rangeObj.cells[1]
+			except IndexError:
+				log.debugWarning("no cells for table row, possibly on end of cell mark")
+				return super().get(name, default)
+			return self._ti.obj.fetchAssociatedHeaderCellText(cell, True)
+		else:
+			return super().get(name, default)
 
 class WordDocumentTextInfo(textInfos.TextInfo):
 
@@ -796,26 +822,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				field['name']=name
 				field['alwaysReportName']=True
 				field['role']=controlTypes.ROLE_FRAME
-		# Hack support for lazy fetching of row and column header text values
-		class ControlField(textInfos.ControlField): 
-			def get(d,name,default=None):
-				if name=="table-rowheadertext":
-					try:
-						cell=self._rangeObj.cells[1]
-					except IndexError:
-						log.debugWarning("no cells for table row, possibly on end of cell mark")
-						return super(ControlField,d).get(name,default)
-					return self.obj.fetchAssociatedHeaderCellText(cell,False)
-				elif name=="table-columnheadertext":
-					try:
-						cell=self._rangeObj.cells[1]
-					except IndexError:
-						log.debugWarning("no cells for table row, possibly on end of cell mark")
-						return super(ControlField,d).get(name,default)
-					return self.obj.fetchAssociatedHeaderCellText(cell,True)
-				else:
-					return super(ControlField,d).get(name,default)
-		newField=ControlField()
+		newField = LazyControlField_RowAndColumnHeaderText(self)
 		newField.update(field)
 		return newField
 

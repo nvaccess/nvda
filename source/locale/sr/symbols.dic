@@ -44,7 +44,10 @@ $	dolar	all	norep
 ¢	Centi	all	norep
 ¥	Jen	all	norep
 ₹	Rupi	some	norep
+ƒ	florin	all	norep
+¤	Znak za valutu	all	norep
 %	Procenat	some
+‰	Promil	some
 &	Ampersand	some
 '	Apostrof	all
 (	Otvorena zagrada	most	always
@@ -71,8 +74,17 @@ _	Donja crta	most
 `	Akcenat	most
 {	Leva vitičasta	most
 }	Desna vitičasta	most
+¦	Isprekidana linija	most
 |	Uspravna crta	most
 ~	tilda	most
+¡	Obrnuti uzvičnik	some
+¿	Obrnuti upitnik	some
+·	Centralna tačka	most
+‚	Samostalni donji navodnik	most
+„	Dvostruki donji navodnik	most
+′	Primus	some
+″	Sekundum	some
+‴	Trostruki	some
 
 # Other characters
 •	Znak za nabrajanje	some
@@ -80,33 +92,73 @@ _	Donja crta	most
 ...	Tri tačke	all	always
 “	Levi navodnik	most
 ”	Desni navodnik	most
-‘	Apostrof	most
-’	Apostrof	most
+‘	Otvoreni polunavodnik	most
+’	Zatvoreni polunavodnik	most
 –	en Crtica	most	always
 —	em Crtica	most
+­	Kratkosilazni naglasak	most
+⁃	Crtica za nabrajanje	none
 ●	Kružić	most
+○	Beli kružić	most
 ¨	Preglas	most
+¯	makron	most
+´	Dugouzlazno	most
+¸	Sedilja	most
 ‎	Oznaka s leva na desno	char
 ‏	Oznaka s desna na levo	char
+¶	Obeleživač pasusa	most
 ■	Crni kvadrat	some
 ▪	Crni kvadrat	some
 ◾	Crni kvadrat	some
+□	Beli kvadrat	some
 ◦	Bela tačka	some
 ⇒	Dvostruka strelica desno	some
 ⇨	Bela strelica desno	some
+➔	Strelica koja pokazuje desno	some
 ➢	Desna strelica prema gore	some
 ⮚	Strelica desno	some
 ❖	Crni romboid minus beli X	some
 ♣	Crni tref	some
 ♦	Crni karo	some
+◆	Crni romb	some
 §	Paragraf	all
 °	Stepeni	some
 «	Leva dupla izlomljena zagrada
 »	Desna dupla izlomljena zagrada
 µ	Mikro	some
-¹	Gornji indeks1	some
-²	Gornji indeks2	some
-³	Gornji indeks3	some
+º	Redni broj	some
+ª	eksponent a	some
+⁰	eksponent 0	some
+¹	eksponent 1	some
+²	eksponent 2	some
+³	eksponent 3	some
+⁴	eksponent 4	some
+⁵	eksponent 5	some
+⁶	eksponent 6	some
+⁷	eksponent 7	some
+⁸	eksponent 8	some
+⁹	eksponent 9	some
+⁺	eksponent plus	some
+⁻	eksponent minus	some
+⁼	eksponent jednakosti	some
+⁽	eksponent otvorena zagrada	some
+⁾	eksponent zatvorena zagrada	some
+ⁿ	eksponent n	some
+₀	indeks 0	some
+₁	indeks 1	some
+₂	indeks 2	some
+₃	indeks 3	some
+₄	indeks 4	some
+₅	indeks 5	some
+₆	indeks 6	some
+₇	indeks 7	some
+₈	indeks 8	some
+₉	indeks 9	some
+₊	indeks plus	some
+₋	indeks minus	some
+₌	indeks jednakosti	some
+₍	indeks otvorena zagrada	some
+₎	indeks zatvorena zagrada	some
 ®	Registrovano	some
 ™	Zaštićeni znak	some
 ©	Autorsko pravo	some
@@ -120,6 +172,10 @@ _	Donja crta	most
 ✓	Označeno	some
 ✔	Podebljano označeno	some
 🡺	Strelica desno	some
+†	Bodež	some
+‡	Dvostruki bodež	some
+‣	Trouglasto nabrajanje	none
+✗	Nabrajanje u X obliku	none
 
 #Mathematical Operators U+2200 to U+220F
 ∀	Za svaki	none
@@ -151,7 +207,8 @@ _	Donja crta	most
 ∥	Paralelno	none
 ∦	Nije paralelno	none
 ∧	Logičko i	none
-∨	Logično ili	none
+∨	Logičko ili	none
+¬	Logično ne	none
 ∩	Presek	none
 ∪	Unija	none
 ∫	integral	none
@@ -167,6 +224,9 @@ _	Donja crta	most
 ⊇	Nadskup ili jednak	none
 
 # Vulgur Fractions U+2150 to U+215E
+¼	Jedna četvrtina	none
+½	Jedna polovina	none
+¾	Tri četvrtine	none
 ⅐	Sedmina	none
 ⅑	Devetina	none
 ⅒	Desetina	none

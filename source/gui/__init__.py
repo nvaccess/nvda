@@ -25,7 +25,9 @@ import speech
 import queueHandler
 import core
 from . import guiHelper
+from .contextHelp import ContextHelpMixin
 from .settingsDialogs import *
+from .inputGestures import InputGesturesDialog
 import speechDictHandler
 import languageHandler
 import keyboardHandler
@@ -42,7 +44,7 @@ except RuntimeError:
 	updateCheck = None
 
 ### Constants
-NVDA_PATH = os.getcwd()
+NVDA_PATH = globalVars.appDir
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
 DONATE_URL = "http://www.nvaccess.org/donate/"
 
@@ -55,7 +57,7 @@ def getDocFilePath(fileName, localized=True):
 		if hasattr(sys, "frozen"):
 			getDocFilePath.rootPath = os.path.join(NVDA_PATH, "documentation")
 		else:
-			getDocFilePath.rootPath = os.path.abspath(os.path.join("..", "user_docs"))
+			getDocFilePath.rootPath = os.path.join(NVDA_PATH, "..", "user_docs")
 
 	if localized:
 		lang = languageHandler.getLanguage()
@@ -417,14 +419,33 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onNVDASettingsCommand, item)
 		subMenu_speechDicts = wx.Menu()
 		if not globalVars.appArgs.secure:
-			# Translators: The label for the menu item to open Default speech dictionary dialog.
-			item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Default dictionary..."),_("A dialog where you can set default dictionary by adding dictionary entries to the list"))
+			item = subMenu_speechDicts.Append(
+				wx.ID_ANY,
+				# Translators: The label for the menu item to open Default speech dictionary dialog.
+				_("&Default dictionary..."),
+				# Translators: The help text for the menu item to open Default speech dictionary dialog.
+				_("A dialog where you can set default dictionary by adding dictionary entries to the list")
+			)
 			self.Bind(wx.EVT_MENU, frame.onDefaultDictionaryCommand, item)
-			# Translators: The label for the menu item to open Voice specific speech dictionary dialog.
-			item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Voice dictionary..."),_("A dialog where you can set voice-specific dictionary by adding dictionary entries to the list"))
+			item = subMenu_speechDicts.Append(
+				wx.ID_ANY,
+				# Translators: The label for the menu item to open Voice specific speech dictionary dialog.
+				_("&Voice dictionary..."),
+				_(
+					# Translators: The help text for the menu item
+					# to open Voice specific speech dictionary dialog.
+					"A dialog where you can set voice-specific dictionary by adding"
+					" dictionary entries to the list"
+				)
+			)
 			self.Bind(wx.EVT_MENU, frame.onVoiceDictionaryCommand, item)
-		# Translators: The label for the menu item to open Temporary speech dictionary dialog.
-		item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Temporary dictionary..."),_("A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
+		item = subMenu_speechDicts.Append(
+			wx.ID_ANY,
+			# Translators: The label for the menu item to open Temporary speech dictionary dialog.
+			_("&Temporary dictionary..."),
+			# Translators: The help text for the menu item to open Temporary speech dictionary dialog.
+			_("A dialog where you can set temporary dictionary by adding dictionary entries to the edit box")
+		)
 		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
 		# Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 		menu_preferences.AppendSubMenu(subMenu_speechDicts,_("Speech &dictionaries"))
@@ -648,16 +669,21 @@ def runScriptModalDialog(dialog, callback=None):
 		dialog.Destroy()
 	wx.CallAfter(run)
 
-class WelcomeDialog(wx.Dialog):
+
+class WelcomeDialog(
+		ContextHelpMixin,
+		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+):
 	"""The NVDA welcome dialog.
 	This provides essential information for new users, such as a description of the NVDA key and instructions on how to activate the NVDA menu.
 	It also provides quick access to some important configuration options.
 	This dialog is displayed the first time NVDA is started with a new configuration.
 	"""
-
-	# Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
+	helpId = "WelcomeDialog"
 	WELCOME_MESSAGE_DETAIL = _(
-		"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
+		# Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
+		"Most commands for controlling NVDA require you to hold down"
+		" the NVDA key while pressing other keys.\n"
 		"By default, the numpad Insert and main Insert keys may both be used as the NVDA key.\n"
 		"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 		"Press NVDA+n at any time to activate the NVDA menu.\n"
@@ -667,6 +693,7 @@ class WelcomeDialog(wx.Dialog):
 	def __init__(self, parent):
 		# Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 		super(WelcomeDialog, self).__init__(parent, wx.ID_ANY, _("Welcome to NVDA"))
+
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		# Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
 		# bold lettering 
@@ -745,13 +772,19 @@ class WelcomeDialog(wx.Dialog):
 		d.Destroy()
 		mainFrame.postPopup()
 
-class LauncherDialog(wx.Dialog):
+
+class LauncherDialog(
+		ContextHelpMixin,
+		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+):
 	"""The dialog that is displayed when NVDA is started from the launcher.
 	This displays the license and allows the user to install or create a portable copy of NVDA.
 	"""
+	helpId = "InstallingNVDA"
 
 	def __init__(self, parent):
 		super(LauncherDialog, self).__init__(parent, title=versionInfo.name)
+
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -870,10 +903,7 @@ class ExitDialog(wx.Dialog):
 		self.actionsList = contentSizerHelper.addLabeledControl(labelText, wx.Choice, choices=self.actions)
 		self.actionsList.SetSelection(0)
 
-		contentSizerHelper.addItem(
-			self.CreateButtonSizer(wx.OK | wx.CANCEL),
-			flag=wx.ALIGN_RIGHT
-		)
+		contentSizerHelper.addDialogDismissButtons(wx.OK | wx.CANCEL)
 
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
