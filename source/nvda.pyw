@@ -122,7 +122,8 @@ parser.add_argument(
 	help=(
 		"When installing, copy the portable configuration "
 		"from the provided path (--config-path, -c) to the current user account"
-	))
+	)
+)
 # This option is passed by Ease of Access so that if someone downgrades without uninstalling
 # (despite our discouragement), the downgraded copy won't be started in non-secure mode on secure desktops.
 # (Older versions always required the --secure option to start in secure mode.)
