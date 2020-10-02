@@ -49,10 +49,8 @@ class consoleUIATextInfo(UIATextInfo):
 		if position == textInfos.POSITION_FIRST:
 			collapseToEnd = False
 		elif position == textInfos.POSITION_LAST:
-			# We must pull back the end by one character otherwise when we collapse to end,
-			# a console bug results in a textRange covering the entire console buffer!
-			# Strangely the *very* last character is a special blank point
-			# so we never seem to miss a real character.
+			# The exclusive end hangs off the end of the visible ranges.
+			# Move back one character to remain within bounds.
 			_rangeObj.MoveEndpointByUnit(
 				UIAHandler.TextPatternRangeEndpoint_End,
 				UIAHandler.NVDAUnitsToUIAUnits['character'],
@@ -366,13 +364,6 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		movement."""
 		return consoleUIATextInfo if self.is21H1Plus else consoleUIATextInfoPre21H1
 
-	def _getTextLines(self):
-		# This override of _getTextLines takes advantage of the fact that
-		# the console text contains linefeeds for every line
-		# Thus a simple string splitlines is much faster than splitting by unit line.
-		ti = self.makeTextInfo(textInfos.POSITION_ALL)
-		text = ti.text or ""
-		return text.splitlines()
 
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAElement.cachedAutomationId == "Text Area":
