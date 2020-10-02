@@ -2533,7 +2533,6 @@ class AdvancedPanelControls(wx.Panel):
 		self.useDMPWhenSupportedCheckBox = terminalsGroup.addItem(wx.CheckBox(self, label=label))
 		self.useDMPWhenSupportedCheckBox.SetValue(config.conf["terminals"]["useDMPWhenSupported"])
 		self.useDMPWhenSupportedCheckBox.defaultValue = self._getDefaultValue(["terminals", "useDMPWhenSupported"])
-		self.useDMPWhenSupportedCheckBox.Enable(winVersion.isWin10(1607))
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
