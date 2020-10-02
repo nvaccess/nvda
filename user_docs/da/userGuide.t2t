@@ -217,8 +217,6 @@ Du kan også beholde din finger på skærmen, og derefter bevæge den rundt på 
 Når NVDA-kommandoer er beskrevet senere i denne brugermanual, kan de indeholde information om hvordan man benytter touchskærmen til at udføre den tilsvarende kommando.
 Følgende information beskriver hvordan du kan udføre diverse berøringsbevægelser.
 
-
-
 ==== Tryk ====
 Tryk på skærmen hurtigt med en eller flere fingre.
 
@@ -336,7 +334,6 @@ Følgende NVDA-kommandoer kan bruges i forbindelse med systemmarkøren:
 | Rapportér tekstformatering | NVDA+f | NVDA+f | Oplyser formateringsinformation for systemmarkørens aktuelle position i et dokument. Ved et dobbelttryk vil denne information blive vist i gennemsynstilstand |
 | Næste sætning | Alt+Pil-ned | Alt+Pil-ned | Flytter markøren til den næste sætning og læser den (kun understøttet i Microsoft Word og Outlook). |
 | Forrige sætning | Alt+Pil-op | Alt+Pil-op | Flytter markøren til den forrige sætning og læser den (kun understøttet i Microsoft Word og Outlook). |
-
 
 Når du er i en tabel, kan følgende kommandoer også bruges:
 || Navn | Tast | Beskrivelse |
@@ -653,7 +650,6 @@ Når du vil tilbage til dokumentet, skal du blot trykke på Escape-tasten.
 
 Nogle gange kan matematisk indhold blive præsenteret som en knap eller en anden type element, hvilket evt. viser en dialog eller yderligere informationer om formeln, når denne aktiveres.
 For at aktivere knappen eller elementet, der indeholder formlen, tryk Ctrl+enter.
-
 
 + Punktskrift +
 Hvis du ejer et punktdisplay, kan NVDA vise information på punkt.
@@ -1082,7 +1078,8 @@ De tilgængelige logningsmuligheder er:
  - Hvis du bekymre dig om dit privatliv, benyt ikke denne valgmulighed.
 - Fejlfinding: Udover diverse informationer, input/output, og beskeder om advarsler, vil yderligere fejlbeskeder logges ved brug af denne indstilling.
  - Hvis du ligeledes bekymre dig om dit privatliv, skal du ikke aktivere denne indstilling, da alt vil blive logget.
- 
+ -
+-
 
 ==== Start NVDA automatisk, når jeg har logget på Windows ====[GeneralSettingsStartAfterLogOn]
 Hvis denne funktion er slået til, vil NVDA starte, så snart du er logget på Windows.
@@ -1364,7 +1361,7 @@ Når du indstiller fokuskontekstpræsentationsfunktionen til kun at vise konteks
 Således vil NVDA i eksemplet ovenfor vise, at du har fokus på et listeemne.
 For at du skal kunne læse konteksten (dvs. at du er på en liste, og at listen er en del af en dialog), skal du rulle dit punktdisplay tilbage.
 
-Hvis du vil skifte fokuskontekstpræsentation fra hvor som helst, skal du tildele en brugerdefineret bevægelse eller tastetryk ved hjælp af [dialogboksen Kommandoer #InputGestures].
+Hvis du vil skifte fokuskontekstpræsentation fra hvor som helst, skal du tildele en brugerdefineret bevægelse eller et tastetryk ved hjælp af [dialogboksen Håndter Kommandoer #InputGestures].
 
 +++ Vælg punktdisplay (NVDA+control+a) +++[SelectBrailleDisplay]
 Denne dialog, der tilgås vha. knappen "Skift..." i NVDAs indstillingsdialog under kategorien "Punkt", lader dig vælge hvilket punktdisplay NVDA skal benytte.
@@ -1422,7 +1419,7 @@ Hvis du er sikker, kan du aktivere funktionen ved at vælge "Ja"..
 Hvis du ikke vil se denne advarsel, hver gang du aktivererer funktionen, kan du ændre dette i dialogen.
 Du kan altid få advarslen til at komme frem igen, hvis du markerer "Vis altid en advarsel, når Skærmtæppe indlæses".
 
-Hvis du vil slå funktionen til og fra ved hjælp af en tastaturkommando, kan du tildele et tastetryk ved at bruge [dialogen til kommandoer #InputGestures].
+Hvis du vil slå funktionen til og fra ved hjælp af en tastaturkommando eller bevægelse, kan du tildele et tastetryk eller en bevægelse ved at bruge [dialogen "Håndter Kommandoer" #InputGestures].
 
 Som standard vil en lyd blive afspillet, når NVDA starter og NVDA aktiverer skærmtæppet automatisk.
 Du kan ændre denne adfærd ved at fjerne markeringen fra den pågældende boks i indstillingerne.
@@ -1508,7 +1505,7 @@ Når denne funktion er slået til, oplæser NVDA den tekst, der i øjeblikket be
 Hvis NVDA er indstillet til at oplæse teksten under musen, når du flytter med den, giver denne indstilling mulighed for at bestemme præcist, hvor meget tekst der skal læses op.
 Indstillingsmulighederne er tegn, ord, linje og afsnit.
 
-For at ændre opløsning for tekstenhed fra hvor som helst, kan du tildele en kommando via [dialogen Kommandoer #InputGestures].
+For at ændre opløsning for tekstenhed fra hvor som helst, kan du tildele en kommando via [dialogen Håndter Kommandoer #InputGestures].
 
 ==== Oplæs rolle når musen flyttes ind over et objekt ====[MouseSettingsRole]
 Hvis denne check box er markeret, oplæser NVDA rollen (typen) på objektet, når musen bevæger sig ind i det pågældende objekt.
@@ -1564,7 +1561,7 @@ Når dette punkt er markeret, følger læsemarkøren musen, når musen flytter s
 ==== Simpel læsetilstand ====[ReviewCursorSimple]
 Når denne funktion er slået til, vil NVDA filtrere de objekter, du kan navigere til. NVDA vil udelukke de objekter, som i almindelighed ikke er af interesse, fx. usynlige objekter eller objekter, som kun bruges til layoutformål.
 
-For at kunne slå simpel læsetilstand til og fra hvor som helst, tildel en bevælgelse til kommandoen ved brug af [dialogen Kommandoer #InputGestures].
+For at kunne slå simpel læsetilstand til og fra hvor som helst, tildel en bevælgelse til kommandoen ved brug af [dialogen Håndter Kommandoer #InputGestures].
 
 +++ Objektpræsentation (NVDA+control+o) +++[ObjectPresentationSettings]
 Denne indstillingskategori benyttes til at bestemme hvor meget information NVDA skal rapportere om kontrolelementer, såsom beskrivelse og positionsinformation osv.
@@ -1578,7 +1575,6 @@ En del vinduer og kontroller viser en lille meddelelse (eller et værktøjstip),
 Når denne check box er markeret, oplyser NVDA meddelelser og hjælpeballonerne, når de fremkommer.
 - Hjælpeballoner ligner værktøjstips med den forskel, at de som regel er større og er tilknyttet systemhændelser såsom at et netværkskabel er fjernet eller muligvis for at henlede opmærksomheden på Windows sikkerhedsproblemer.
 - Toast-meddelelser og bliver vist i handlingscenteret i systembakken, og informerer dig om diverse hændelser (f.eks. hvis en opdatering til Windows er blevet downloadet, en ny e-mail ankommet, osv).
-
 
 ==== Oplys objektets genvejstaster ====[ObjectPresentationShortcutKeys]
 Når denne check box er markeret, medtager NVDA den genvejstast, der hører til et objekt eller en kontrol, under rapporteringen af det givne element.
@@ -1690,7 +1686,7 @@ Når indstillingern er slået fra, vil layouttabeller ikke blive indikeret og ik
 Tabellernes indhold vil imidlertid stadig blive læst op som normal tekst.
 Denne indstilling er slået fra som standard.
 
-For at skifte denne indstilling fra hvor som helst, kan du tildele en tastaturkommando ved brug af [dialogen Kommandoer #InputGestures]
+For at skifte denne indstilling fra hvor som helst, kan du tildele en tastaturkommando ved brug af [dialogen Håndter Kommandoer #InputGestures]
 
 ==== Konfigurer annoncering af felter som links og overskrifter ====[BrowseModeLinksAndHeadings]
 Se venligst  [indstillingskategorien Dokumentformatering #DocumentFormattingSettings] i [NVDAs indstillingsdialog #NVDASettings] for at konfigurere rapportéring for felter så som links, overskrifter og tabeller.
@@ -1766,7 +1762,7 @@ Du kan tilpasse annoncering af:
  -
 -
 
-For at slå disse indstillinger til eller fra, uanset hvor du befinder dig, kan du knytte en inputbevægelse til indstillingen med [dialogen kommandoer #InputGestures].
+For at slå disse indstillinger til eller fra, uanset hvor du befinder dig, kan du knytte en inputbevægelse til indstillingen med [dialogen Håndter kommandoer #InputGestures].
 
 ==== Rapportér ændringer i formatering efter markøren ====[DocumentFormattingDetectFormatAfterCursor]
 Hvis denne indstilling er slået til, betyder det at NVDA forsøger at spore alle ændringer i formateringen på en linje, når den rapportérers, selvom dette måtte sænke NVDAs hastighed.   
@@ -1869,7 +1865,7 @@ Disse er:
 - Midlertidig: Regler i denne ordbog gælder for al tale i NVDA, dog kun for den aktuelle session. Disse regler er midlertidige og forsvinder, næste gang NVDA genstartes.
 -
 
-Du kan tilknytte kommandoer med [dialogen kommandoer #InputGestures], hvis du gerne vil have let adgang til at kunne åbne disse ordbøger fra hvor som helst.
+Du kan tilknytte kommandoer med [dialogen Håndter Kommandoer #InputGestures], hvis du gerne vil have let adgang til at kunne åbne disse ordbøger fra hvor som helst.
 
 Alle ordbogsdialogerne indeholder en liste med regler, som bruges under behandling af talen.
 Dialogboksen indeholder også knapperne Tilføj, Redigér og Fjern.
@@ -1895,7 +1891,6 @@ Hvis du med eksemplet fra før vil erstatte ordet "fugl" med "frø", og det kun 
 Et regulært udtryk er en række af specielle symboler, som sætter dig i stand til at søge på mere end et tegn ad gangen, at søge udelukkende på tal eller udelukkende på bogstaver for blot at nævne nogle få eksempler.
 Regulære udtryk bliver ikke beskrevet nærmere i denne brugervejledning.
 For en introduktion til regulære udtryk, læs [https://docs.python.org/3.7/howto/regex.html].
-
 
 +++ Udtale af sætningstegn og symboler +++[SymbolPronunciation]
 Denne dialog giver dig mulighed for at bestemme, hvordan sætningstegn og andre symboler skal udtales, samt på hvilket niveau de skal udtales.
@@ -1927,7 +1922,7 @@ Du kan fjerne et symbol, som du tidligere har tilføjet, ved at trykke på Fjern
 
 Når du er færdig, skal du trykke på OK-knappen for at gemme dine ændringer, eller Annuller-knappen for at kassere dem.
 
-+++ Kommandoer +++[InputGestures]
++++ Håndter Kommandoer +++[InputGestures]
 I denne dialog kan du tilpasse kommandoer for de forskellige NVDA-funktioner (taster på tastaturet, knapper på et punktdisplay osv.)
 
 Du får kun vist de kommandoer, som er tilgængelige på det tidspunkt, hvor du åbner dialogen.
@@ -2243,7 +2238,6 @@ NVDA vil benytte Windows OneCore som standardtalesyntese i windows 10 ([eSpeak N
 
 For at installere stemmer til brug på yderligere sprog, samt hvordan disse installeres, se artiklen fra Microsoft: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
-
 + Understøttede punktdisplays +[SupportedBrailleDisplays]
 Dette afsnit indeholder oplysninger om de punktdisplays, som NVDA understøtter.
 
@@ -2516,7 +2510,7 @@ Følgende yderligere enheder understøttes også, men kræver ingen driver for a
 - APH Chameleon 20
 - Humanware BrailleOne
 - NLS eReader
-
+-
 
 Dette er tastekombinationerne til Brailliant BI/B og BrailleNote Touch displays til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.

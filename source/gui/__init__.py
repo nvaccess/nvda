@@ -44,7 +44,7 @@ except RuntimeError:
 	updateCheck = None
 
 ### Constants
-NVDA_PATH = os.getcwd()
+NVDA_PATH = globalVars.appDir
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
 DONATE_URL = "http://www.nvaccess.org/donate/"
 
@@ -57,7 +57,7 @@ def getDocFilePath(fileName, localized=True):
 		if hasattr(sys, "frozen"):
 			getDocFilePath.rootPath = os.path.join(NVDA_PATH, "documentation")
 		else:
-			getDocFilePath.rootPath = os.path.abspath(os.path.join("..", "user_docs"))
+			getDocFilePath.rootPath = os.path.join(NVDA_PATH, "..", "user_docs")
 
 	if localized:
 		lang = languageHandler.getLanguage()

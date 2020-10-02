@@ -170,3 +170,55 @@ def test_i7562():
 		actualSpeech,
 		"out of list  after",
 	)
+
+
+def test_pr11606():
+	"""
+	Announce the correct line when placed at the end of a link at the end of a list item in a contenteditable
+	"""
+	_chrome.prepareChrome(
+		r"""
+			<div contenteditable="true">
+				<ul>
+					<li><a href="#">A</a> <a href="#">B</a></li>
+					<li>C D</li>
+				</ul>
+			</div>
+		"""
+	)
+	# Force focus mode
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Focus mode"
+	)
+	# Tab into the contenteditable
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		"section  multi line  editable  list  bullet  link  A    link  B"
+	)
+	# move past the end of the first link.
+	# This should not be affected due to pr #11606.
+	actualSpeech = _chrome.getSpeechAfterKey("rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"out of link  ",
+			"space"
+		])
+	)
+	# Move to the end of the line (which is also the end of the second link)
+	# Before pr #11606 this would have announced the bullet on the next line.
+	actualSpeech = _chrome.getSpeechAfterKey("end")
+	_asserts.strings_match(
+		actualSpeech,
+		"link"
+	)
+	# Read the current line.
+	# Before pr #11606 the next line ("C D")  would have been read.
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+upArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"bullet  link  A    link  B"
+	)

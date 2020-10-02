@@ -217,8 +217,6 @@ También puedes mantener tu dedo sobre la pantalla y moverlo para leer otros con
 Cuando se describan las órdenes de NVDA de ahora en adelante en esta guía del usuario, podrán listar un gesto táctil que se puede utilizar para activar esa orden con la pantalla táctil.
 Seguidamente van algunas instrucciones sobre cómo llevar a cabo varios gestos táctiles.
 
-
-
 ==== Toques ====
 Tocar la pantalla brevemente con uno o más dedos.
 
@@ -336,7 +334,6 @@ NVDA proporciona las siguientes teclas de órdenes en relación al cursor del si
 | Anunciar formato de texto | NVDA+f | NVDA+f | Anuncia el formato del texto donde esté situado actualmente el cursor. Pulsando dos veces muestra la información en el modo Exploración |
 | frase siguiente | alt+flecha abajo | alt+flecha abajo | Mueve el cursor a la frase siguiente y la anuncia. (sólo se soporta en Microsoft Word y Outlook) |
 | frase anterior | alt+flecha arriba | alt+flecha arriba | Mueve el cursor a la frase anterior y la anuncia. (sólo se soporta en Microsoft Word y Outlook) |
-
 
 Cuando estés en una tabla, las siguientes teclas de órdenes también están disponibles:
 || Nombre | Tecla | Descripción |
@@ -653,7 +650,6 @@ Cuando desees volver al documento, simplemente pulsa la tecla escape.
 
 A veces el contenido matemático podría  mostrarse como un botón u otro tipo de elemento que, al activarse, puede mostrar un diálogo o más información relacionada con la fórmula.
 Para activar el botón o el elemento que contiene la fórmula, pulsa ctrl+intro.
-
 
 + Braille +[Braille]
 Si tienes una pantalla braille, NVDA puede mostrar información en braille.
@@ -1082,9 +1078,10 @@ Los niveles disponibles del registro son:
  - Si te preocupa la privacidad, no configures esta opción de nivel de registro.
 - Depuración: además de los mensajes de información, advertencia y entrada/salida, se registrarán mensajes de depuración adicionales.
  - Al igual que con la Entrada/salida, si te preocupa la privacidad, no deberías configurar el nivel de registro en esta opción.
+ -
+-
 
-
-==== Utilizar NVDA después de que inicie sesión ====[GeneralSettingsStartAfterLogOn]
+==== Arrancar NVDA después de que inicie sesión ====[GeneralSettingsStartAfterLogOn]
 Si esta opción está activada, NVDA arrancará automáticamente tan pronto como inicie sesión en Windows. 
 Esta opción sólo está disponible para copias instaladas de NVDA.
 
@@ -1202,7 +1199,6 @@ En caso de que no se admita el cambio de tono para las mayúsculas, considera ut
 
 ==== Decir" Mayus" antes de Mayúsculas ====[SpeechSettingsSayCapBefore]
 Esta opción es una casilla de verificación, que cuando está marcada dice a NVDA que diga la palabra "mayus" antes de cualquier letra en mayúscula, cuando se navega sobre ella o verbalizándolo cuando está siendo escrita. 
-Normalmente, NVDA eleva el tono ligeramente para cualquier letra mayúscula, pero algunos sintetizadores podrán no soportar esto bien, así quizás esta opción podrá ser de utilidad.
 
 ==== Pitar para Mayúsculas ====[SpeechSettingsBeepForCaps]
 Si esta casilla de verificación está marcada, NVDA emitirá un pequeño pitido cada vez que esté verbalizando un carácter en mayúscula. 
@@ -1896,7 +1892,6 @@ Una expresión regular es un patrón que contiene símbolos especiales que te pe
 Las expresiones regulares no están cubiertas en esta Guía del Usuario.
 Para un tutorial introductorio, Por favor consulta [https://docs.python.org/3.7/howto/regex.html].
 
-
 +++ Pronunciación de Puntuación/símbolos +++[SymbolPronunciation]
 Este diálogo te permite cambiar el modo en que son pronunciados la puntuación y otros símbolos, así como el nivel de los símbolos en el cual se verbalizan. 
 
@@ -2245,7 +2240,6 @@ Se proporcionan voces para muchos idiomas y son más ágiles que las voces Micro
 En Windows 10, NVDA utiliza voces Windows OneCore por defecto ([[eSpeak NG #eSpeakNG] se utiliza en otras versiones).
 
 Porfavor consulta este artículo de Microsoft para una lista de voces disponibles e instrucciones para instalarlas: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
-
 
 + Pantallas Braille Admitidas +[SupportedBrailleDisplays]
 Esta sección contiene información acerca de las pantallas braille compatibles con NVDA.

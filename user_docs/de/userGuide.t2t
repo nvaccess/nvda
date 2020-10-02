@@ -217,8 +217,6 @@ Sie können den Finger dann auch über den Bildschirm bewegen, um Text und Steue
 Weiter unten im Handbuch finden Sie bei den Beschreibungen zu den NVDA-Befehlen auch Gesten, mit denen die betreffenden Befehle ausgeführt werden können, wenn Sie einen Touchscreen verwenden.
 In den folgenden Abschnitten finden Sie Anweisungen, wie bestimmte Gesten mit dem Touchscreen verwendet werden.
 
-
-
 ==== Tippen ====
 Tippen Sie schnell mit einem oder mehreren Fingern
 
@@ -336,7 +334,6 @@ Folgende Tastenkombinationen stehen im Zusammenhang mit dem System-Cursor zur Ve
 | Text-Formatierungen ausgeben | NVDA+F | NVDA+F | Gibt die Text-Formatierungen unter dem System-Cursor aus. Bei zweimal Drücken werden diese Informationen im Lesemodus angezeigt. |
 | Nächsten Satz lesen | Alt+Pfeiltaste nach unten | Alt+Pfeiltaste nach unten | Zieht die Schreibmarke zum nächsten Satz und gibt ihn aus (nur in Microsoft Word und Microsoft Outlook unterstützt). |
 | Vorherigen Satz lesen | Alt+Pfeiltaste nach oben | Alt+Pfeiltaste nach oben | Zieht die Schreibmarke zum vorherigen Satz und gibt ihn aus (nur in Microsoft Word und Microsoft Outlook unterstützt). |
-
 
 Für die Navigation in Tabellen stehen folgende Tastenkombinationen zur Verfügung:
 || Name | Tastenkombination | Beschreibung |
@@ -653,7 +650,6 @@ Um die Navigation im Ausdruck zu beenden, drücken Sie die Escape-Taste.
 
 Manchmal kann mathematischer Inhalt als Schaltfläche oder eine andere Art von Element angezeigt werden, das, wenn es aktiviert ist, ein Dialogfeld oder weitere Informationen zur Formel anzeigen kann.
 Drücken Sie Strg+Eingabe, um die Schaltfläche oder das Element, welches die Formel enthält, zu aktivieren.
-
 
 + Braille +[Braille]
 Wenn Sie eine Braillezeile besitzen, kann NVDA diese verwenden, um Informationen in Blindenschrift darzustellen.
@@ -1082,7 +1078,8 @@ Die verfügbaren Protokollierungsstufen sind:
  - Wenn Sie sich Sorgen um den Datenschutz machen, verwenden Sie diese Option nicht.
 - Nur Debug-Meldungen: Zusätzlich zu den Informationen, Warn- und Ein-/Ausgabemeldungen werden weitere Debug-Meldungen protokolliert.
  - Genau wie bei der Ein-/Ausgabe, wenn Sie sich um den Datenschutz sorgen, sollten Sie diese Option nicht benutzen.
-
+ -
+-
 
 ==== NVDA automatisch nach der Windows-Anmeldung starten ====[GeneralSettingsStartAfterLogOn]
 Wenn diese Option aktiviert ist, wird NVDA automatisch gestartet, sobald Sie sich bei Windows anmelden.
@@ -1304,7 +1301,7 @@ Die Anzeige für Markierungen wird dadurch nicht beeinflusst, Markierungen werde
 ==== Anzeigedauer für Meldungen ====[BrailleSettingsMessageTimeout]
 Dieses numerische Eingabefeld legt fest, wie viele Sekunden die NVDA-Meldungen auf der Braillezeile angezeigt werden sollen. Wenn eine Meldung erscheint, kann diese durch Drücken einer Routing-Taste geschlossen werden. Durch Drücken einer Navigationstaste kann die Anzeigedauer einer Meldung verlängert werden.
 Um die Anzeige der Meldungen abzuschalten, geben Sie hier 0 an.
-Die NVDA-Nachricht wird beim Drücken einer Routing-Taste auf der Braillezeile sofort verworfen, erscheint aber wieder, wenn eine entsprechende Taste gedrückt wird, die die Nachricht auslöst.
+Die NVDA-Meldung wird beim Drücken einer Routing-Taste auf der Braillezeile sofort verworfen, erscheint aber wieder, wenn eine entsprechende Taste gedrückt wird, die die Nachricht auslöst.
 
 ==== Meldungen dauerhaft anzeigen ====[BrailleSettingsNoMessageTimeout]
 Wird diese Option aktiviert, zeigt NVDA alle Meldungen dauerhaft auf der Braillezeile an.
@@ -1578,7 +1575,6 @@ Viele Windows- und Steuerelemente zeigen eine kleine Meldung an, wenn Sie den Ma
 Wenn dieses Kontrollfeld aktiviert ist, teilt NVDA die Hilfesprechblasen und Toast-Benachrichtigungen mit, sobald diese erscheinen.
 - Hilfesprechblasen sind wie QuickInfos, sind aber in der Regel größer und werden mit System-Ereignissen in Verbindung gebracht, wie z. B. dem Trennen eines Netzwerkkabels oder um über Windows-Sicherheitsprobleme zu informieren.
 - Toast-Benachrichtigungen wurden in Windows 10 eingeführt und erscheinen im Benachrichtigungs-Center in der Taskleiste, um über mehrere Ereignisse zu informieren (wenn z. B. ein Update heruntergeladen wurde, eine neue E-Mail in Ihrem Posteingang eintrifft, etc.)
-
 
 ==== Kurztasten der Objekte ausgeben ====[ObjectPresentationShortcutKeys]
 NVDA nennt zu den Einträgen eines Menüs oder Steuerelements zusätzlich die Kurztaste, sofern die Ansage dieser Option auch aktiviert ist.
@@ -1895,7 +1891,6 @@ Wenn man also das frühere Beispiel der Ersetzung des Wortes "Vogel" durch "Fros
 Ein sogenannter Regulärer Ausdruck ist ein Muster, welches spezielle Symbole enthält. Dies ermöglicht, dass das Muster auf Zahlen oder Buchstaben generell oder auf mehrere Zeichen gleichzeitig zutrifft
 Reguläre Ausdrücke werden in diesem Benutzerhandbuch nicht behandelt.
 Ein Tutorial zur Einführung finden Sie unter [https://docs.python.org/3.7/howto/regex.html].
-
 
 +++ Interpunktion und Symbol-Aussprache +++[SymbolPronunciation]
 In diesem Dialogfeld können Sie die Interpunktion und Symbol-Aussprache verändern und festlegen, ab welcher Symbolebene dieses angesagt werden soll.
@@ -2242,7 +2237,6 @@ Unter Windows 10 verwendet NVDA standardmäßig Windows OneCore-Stimmen ([eSpeak
 
 Im [Artikel vom Microsoft Support-Center https://support.microsoft.com/de-de/help/22797/windows-10-narrator-tts-voices] finden Sie eine Beschreibung, wie Sie zusätzliche Stimmen und Sprachen installieren können.
 
-
 + Unterstützte Braillezeilen +[SupportedBrailleDisplays]
 Dieser Bereich beinhaltet Informationen über Braillezeilen, die mit NVDA betrieben werden können.
 
@@ -2516,7 +2510,7 @@ Die folgenden zusätzlichen Geräte werden ebenfalls unterstützt (und erfordern
 - APH Chameleon 20
 - Humanware BrailleOne
 - NLS eReader
-
+-
 
 Folgende Tastenkombinationen sind bei diesen Braillezeilen verfügbar
 Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.

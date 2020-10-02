@@ -194,6 +194,8 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 		)
 
 	def isLastFocusObj(self):
+		# Use '==' rather than 'is' because obj may have been created multiple times
+		# pointing to the same underlying object.
 		return self._obj == api.getFocusObject()
 
 	def previouslyHadFocus(self):

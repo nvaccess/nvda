@@ -217,8 +217,6 @@ Vous pouvez également garder votre doigt sur l'écran et le déplacer pour lire
 Lorsque les commandes NVDA sont décrites dans ce guide utilisateur, elles peuvent comporter un geste tactile qui peut être utilisé pour activer cette commande avec l'écran tactile.
 Voici quelques instructions sur la manière d'effectuer les différents gestes tactiles.
 
-
-
 ==== Tapes ====
 Tapoter rapidement sur l'écran avec un ou plusieurs doigts.
 
@@ -333,10 +331,9 @@ NVDA fournit les commandes clavier suivantes relatives au curseur système :
 | Dire tout | NVDA+flèche bas | NVDA+a | Démarre la lecture depuis la position du curseur système en lui faisant suivre la lecture |
 | Lire ligne courante | NVDA+flèche haut | NVDA+l | Lit la ligne où se trouve le curseur système. Un double appui épelle la ligne. Un triple appui l'épelle en code international. |
 | Lire texte sélectionné | NVDA+Maj+flèche haut | NVDA+Maj+s | Lit tout le texte actuellement sélectionné |
-| Annoncer le formatage du texte | NVDA+f | NVDA+f | annonce le formatage du texte à la position actuelle du curseur. Un double appui présente l'information en mode navigation |
+| Annoncer la mise en forme du texte | NVDA+f | NVDA+f | annonce la mise en forme du texte à la position actuelle du curseur. Un double appui présente l'information en mode navigation |
 | Phrase suivante | alt+flècheBas | alt+flècheBas | Amène le curseur à la phrase suivante et la lit. (Supporté seulement sous Microsoft Word et Outlook) |
 | Phrase précédente | alt+flècheHaut | alt+flècheHaut | Amène le curseur à la phrase précédente et la lit. (Supporté seulement sous Microsoft Word et Outlook) |
-
 
 Dans un tableau, vous disposez également des touches de commandes suivantes :
 || Nom | Touche | Description |
@@ -419,7 +416,7 @@ Vous disposez des commandes suivantes pour explorer du texte :
 | Sélectionner puis copier à partir du curseur de revue | NVDA+f9 | NVDA+f9 | Aucun | Commence à sélectionner puis copier le texte depuis la position du curseur de revue. La copie ne s'effectue pas tant qu'on n'a pas indiqué la fin du texte à copier |
 | Sélectionner puis copier jusqu'au curseur de revue | NVDA+f10 | NVDA+f10 | Aucun | Au premier appui, le texte est sélectionné depuis la position préalablement définie par "copier à partir du curseur de revue" jusqu'à la position actuelle du curseur de revue. Si le curseur système peut atteindre le texte, il sera amené au texte sélectionné. Au second appui, le texte est copié dans le presse-papiers de Windows. |
 | aller au marqueur de début de copie en mode revue | NVDA+maj+f9 | NVDA+maj+f9 | aucun | Amène le curseur de revue à la position préalablement définiee comme marqueur de début de copie |
-| Annoncer le formatage du texte | NVDA+maj+f | NVDA+maj+f | Aucun | Annonce le formatage du texte à la position du curseur de revue. Un double appui affiche l'information en mode navigation |
+| Annoncer la mise en forme du texte | NVDA+maj+f | NVDA+maj+f | Aucun | Annonce la mise en forme du texte à la position du curseur de revue. Un double appui affiche l'information en mode navigation |
 | Annonce le remplacement du symbole courant | Aucun | Aucun | aucun | Dit le symbole à la position du curseur de revue. Un double appui montre le symbole et le texte utilisé pour le remplacer en mode navigation. |
 %kc:endInclude
 
@@ -508,7 +505,7 @@ Cela inclut les documents dans les applications suivantes :
 Le mode navigation est aussi disponible en option pour les documents Microsoft Word.
 
 Le mode navigation offre une représentation platement textuelle du document dans laquelle on peut se déplacer avec les flèches de navigation. 
-Dans ce mode, toutes les touches de commandes du [mode curseur #SystemCaret] fonctionneront (ex : dire tout, annonce du formatage, touches de navigation dans les tableaux etc.).
+Dans ce mode, toutes les touches de commandes du [mode curseur #SystemCaret] fonctionneront (ex : dire tout, annonce de la mise en forme, touches de navigation dans les tableaux etc.).
 Quand le [Surlignage du Focus #VisionFocusHighlight] est activé, la position du curseur virtuel de mode navigation est également présentée visuellement.
 Des informations indiquant si le texte est un lien, un titre etc., sont annoncées avec le texte pendant que vous vous déplacez.
 
@@ -653,7 +650,6 @@ Quand vous voulez retourner au document, pressez simplement la touche échap.
 
 Parfois le contenu mathématique peut être affiché comme un bouton ou autre type d'élément qui, quand activé, peut afficher un dialogue ou plus d'informations relatives à la formule.
 Pour activer le bouton ou l'élément contenant la formule, pressez ctrl+entrer.
-
 
 + Braille +[Braille]
 Si vous possédez un afficheur braille, NVDA peut afficher des informations en braille.
@@ -1082,7 +1078,8 @@ Les niveaux de journalisation disponibles sont :
  - Si la confidentialité vous préoccupe, ne définissez pas le niveau de journalisation sur cette option.
 - Débogage : En plus des messages d'info, avertissements et entrées/sorties, des messages additionnels de débogage seront journalisés.
  - Tout comme pour entrées/sorties, si la confidentialité vous préoccupe, vous ne devez pas définir le niveau de journalisation sur cette option.
-
+ -
+-
 
 ==== Démarrer NVDA automatiquement après ma connexion à Windows ====[GeneralSettingsStartAfterLogOn]
 Si cette option est activée, NVDA démarrera automatiquement dès que vous vous connecterez à Windows.
@@ -1579,7 +1576,6 @@ Quand cette case est cochée, NVDA annonce les bulles d'aide et les notification
 - Les bulles d'aide sont semblables aux suggestions mais généralement de plus grande taille, et sont associées à des évènements système tels que le débranchement d'un câble réseau, ou bien des alertes relatives à la sécurité.
 - Les notifications d'invitation ont été introduites dans Windows 10 et apparaissent dans le centre de notification  dans la barre d'état système, informant sur divers événements (ex : une mise à jour a été téléchargée, un ouveau courriel est arrivé dans votre boîte de réception, etc.).
 
-
 ==== Annoncer les raccourcis clavier des objets ====[ObjectPresentationShortcutKeys]
 Quand cette case est cochée, NVDA inclut, à l'annonce d'un objet ou d'une commande, le raccourci clavier qui lui est associé. 
 Par exemple, le menu "Fichier" d'une barre de menu peut avoir pour raccourci clavier Alt+f.
@@ -1733,7 +1729,7 @@ On peut configurer les annonces suivantes :
  - Attributs de la police,
  - Exposants et indices
  - Emphase
- - Marqué (Texte en surbrillance)
+ - Marqué (texte surligné)
  - Style
  - Couleurs
 - Informations sur le document
@@ -1895,7 +1891,6 @@ Ainsi, en utilisant l'exemple précédent de remplacement du mot "oiseau" par le
 Une expression régulière est un modèle contenant des symboles particuliers vous permettant de trouver une correspondance sur plus d'un caractère à la fois, ou seulement sur les lettres ou les chiffres etc. 
 Les expressions régulières ne sont pas expliquées dans ce manuel.
 Pour un tutoriel d'introduction, veuillez consulter [https://docs.python.org/3.7/howto/regex.html].
-
 
 +++ Prononciation des Ponctuations et symboles +++[SymbolPronunciation]
 Ce dialogue vous permet de modifier la façon dont les ponctuations et autres symboles sont prononcés ainsi que le niveau de symbole auquel ils sont annoncés.
@@ -2245,7 +2240,6 @@ Sous Windows 10, NVDA utilise les voix Windows OneCore par défaut ([eSpeak NG #
 
 Pour installer des voix pour des langues supplémentaires, veuillez consulter cet article de Microsoft : https://support.office.com/fr-fr/article/T%C3%A9l%C3%A9charger-les-langues-de-synth%C3%A8se-vocale-pour-Windows-10-d5a6b612-b3ae-423f-afa5-4f6caf1ec5d3
 
-
 + Terminaux Braille Pris en Charge +[SupportedbrailleDisplays]
 Cette section contient des informations sur les terminaux braille pris en charge par NVDA.
 
@@ -2519,7 +2513,7 @@ Les terminaux suivants sont également supportés (et ne nécessitent aucun pilo
 - APH Chameleon 20
 - Humanware BrailleOne
 - NLS eReader
-
+-
 
 Voici les assignations de touches pour Brailliant BI/B et BrailleNote touch sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.

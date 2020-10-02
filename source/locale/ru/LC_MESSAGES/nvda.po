@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-09 08:55+1000\n"
-"PO-Revision-Date: 2020-09-09 16:10+0800\n"
+"POT-Creation-Date: 2020-09-11 00:10+1000\n"
+"PO-Revision-Date: 2020-09-11 09:30+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -2715,7 +2715,7 @@ msgstr "иллюстрация"
 
 #. Translators: Identifies marked (highlighted) content
 msgid "marked content"
-msgstr ""
+msgstr "выделенное содержимое"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -2751,11 +2751,11 @@ msgstr "только для чтения"
 
 #. Translators: This is presented when a tree view or submenu item is expanded.
 msgid "expanded"
-msgstr "открыто"
+msgstr "развёрнуто"
 
 #. Translators: This is presented when a tree view or submenu is collapsed.
 msgid "collapsed"
-msgstr "закрыто"
+msgstr "свёрнуто"
 
 #. Translators: This is presented when a control or a document becomes invisible.
 msgid "invisible"
@@ -4196,20 +4196,20 @@ msgid ""
 "Mark the current end of the log as the start of the fragment to be copied to "
 "clipboard by pressing again."
 msgstr ""
-"Отмечает текущий конец журнала NVDA как начало фрагмента, который будет "
+"Устанавливает текущий конец журнала NVDA как начало фрагмента, который будет "
 "скопирован в буфер обмена при повторном нажатии."
 
 #. Translators: Message when marking the start of a fragment of the log file for later copy
 #. to clipboard
 msgid "Log fragment start position marked, press again to copy to clipboard"
 msgstr ""
-"Начальная позиция фрагмента журнала отмечена, нажмите ещё раз, чтобы "
+"Начальная позиция фрагмента журнала установлена. Нажмите ещё раз, чтобы "
 "скопировать его в буфер обмена"
 
 #. Translators: Message when failed to mark the start of a
 #. fragment of the log file for later copy to clipboard
 msgid "Unable to mark log position"
-msgstr "Не удалось отметить позицию журнала"
+msgstr "Не удалось установить позицию журнала"
 
 #. Translators: Message when attempting to copy an empty fragment of the log file
 msgid "No new log entry to copy"
@@ -4559,15 +4559,15 @@ msgstr "Читает текст в буфере обмена"
 
 #. Translators: Indicates start of review cursor text to be copied to clipboard.
 msgid "Start marked"
-msgstr "Начало фрагмента"
+msgstr "Начало фрагмента установлено"
 
 #. Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "selected or copied"
 msgstr ""
-"Отмечает текущую позицию просмотрового курсора как начало выделяемого или "
-"копируемого фрагмента текста"
+"Устанавливает текущую позицию просмотрового курсора как начало выделяемого "
+"или копируемого фрагмента текста"
 
 #. Translators: Input help mode message for move review cursor to marked start position for a
 #. select or copy command
@@ -4575,8 +4575,8 @@ msgid ""
 "Move the review cursor to the position marked as the start of text to be "
 "selected or copied"
 msgstr ""
-"Перемещает просмотровый курсор к позиции, отмеченной как начало выделяемого "
-"или копируемого фрагмента текста"
+"Перемещает просмотровый курсор к позиции, установленной как начало "
+"выделяемого или копируемого фрагмента текста"
 
 #. Translators: Presented when attempting to move to the start marker for copy but none has been set.
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
@@ -4589,11 +4589,11 @@ msgstr "Нажмите дважды для копирования или сбр�
 
 #. Translators: Presented when there is no text selection to copy from review cursor.
 msgid "No text to copy"
-msgstr "Нет фрагмента для копирования"
+msgstr "Нет текста для копирования"
 
 #. Translators: Presented when unable to select the marked text.
 msgid "Can't select text, press twice to copy"
-msgstr "Невозможно выделить текст, нажмите дважды для копирования"
+msgstr "Невозможно выделить текст. Нажмите дважды для копирования"
 
 #. Translators: Presented when some review text has been copied to clipboard.
 msgid "Review selection copied to clipboard"
@@ -4606,8 +4606,8 @@ msgid ""
 "twice, the text is copied to the clipboard"
 msgstr ""
 "Если нажато один раз, выделяет текст от начала фрагмента, вплоть до текущей "
-"позиции просмотрового курсора. Если нажато дважды, копирует его в буфер "
-"обмена"
+"позиции просмотрового курсора включительно. Если нажато дважды, копирует его "
+"в буфер обмена"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
@@ -9382,7 +9382,7 @@ msgstr "Акц&ентирование"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Marked (highlighted text)"
-msgstr ""
+msgstr "Выделение (подсвеченный текст)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -10047,12 +10047,12 @@ msgstr "%s выделено взамен"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
-msgstr "Выделение удалено"
+msgstr "выделение удалено"
 
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
-msgstr "Строка %s"
+msgstr "строка %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
 #. Translators: Speaks the column span added to the current column number (example output: through 5).

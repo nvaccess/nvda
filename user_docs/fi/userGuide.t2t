@@ -217,8 +217,6 @@ Muita säätimiä ja tekstiä voidaan lukea myös pitämällä ja siirtämällä
 Kun NVDA-komentoja kuvaillaan edempänä tässä käyttöoppaassa, niissä saatetaan mainita kosketusele, jota voidaan käyttää kosketusnäytöllä kyseisen komennon suorittamiseen.
 Seuraavassa on tietoja NVDA-komentojen suorittamisesta kosketusnäytöllä eri kosketuseleiden avulla.
 
-
-
 ==== Napautukset ====
 Napauta näyttöä nopeasti yhdellä tai useammalla sormella.
 
@@ -336,7 +334,6 @@ NVDA:ssa on seuraavat järjestelmäkohdistimeen liittyvät näppäinkomennot:
 | Lue tekstin muotoilutiedot | NVDA+F | NVDA+F | Lukee kohdistimen kohdalla olevan tekstin muotoilutiedot. Kahdesti painettaessa tiedot näytetään selaustilassa. |
 | Seuraava virke | Alt+Nuoli alas | Alt+Nuoli alas | Siirtää kohdistimen seuraavaan virkkeeseen ja lukee sen. (tuetaan vain Microsoft Wordissa ja Outlookissa) |
 | Edellinen virke | Alt+Nuoli ylös | Alt+Nuoli ylös | Siirtää kohdistimen edelliseen virkkeeseen ja lukee sen. (tuetaan vain Microsoft Wordissa ja Outlookissa) |
-
 
 Taulukoissa ovat käytettävissä lisäksi seuraavat näppäinkomennot:
 || Nimi | Näppäinkomento | Kuvaus |
@@ -653,7 +650,6 @@ Palaa takaisin asiakirjaan painamalla Esc-näppäintä.
 
 Toisinaan matemaattinen sisältö saatetaan näyttää painikkeena tai muuntyyppisenä elementtinä, joka voi näyttää aktivoitaessa valintaikkunan tai lisätietoja kaavasta.
 Aktivoi kaavan sisältävä painike tai elementti painamalla Ctrl+Enter.
-
 
 + Pistekirjoitus +[Braille]
 NVDA voi antaa palautteen pistekirjoituksella, mikäli käytössä on pistenäyttö.
@@ -1082,7 +1078,8 @@ Käytettävissä ovat seuraavat lokitasot:
  - Jos olet huolissasi yksityisyydestäsi, älä määritä lokitasoksi tätä vaihtoehtoa.
 - Virheenkorjaus: Lokiin tallennetaan tiedot-, varoitukset- ja syöttö/tulostus-ilmoitusten lisäksi virheenkorjauksen lisäilmoituksia.
  - Kuten syöttö/tulostus-tasolla, älä määritä lokitasoksi tätä vaihtoehtoa, mikäli olet huolissasi yksityisyydestäsi.
-
+ -
+-
 
 ==== Käynnistä automaattisesti sisäänkirjautumisen jälkeen ====[GeneralSettingsStartAfterLogOn]
 Jos tämä asetus on käytössä, NVDA käynnistyy automaattisesti heti kirjautuessasi sisään Windowsiin.
@@ -1577,8 +1574,7 @@ Monet ikkunat ja säätimet näyttävät pienen ilmoituksen (tai työkaluvihjeen
 ==== Lue ilmoitukset ====[ObjectPresentationReportNotifications]
 Kun tämä valintaruutu on valittuna, NVDA lukee ohjeselitteet ja ilmoitusruudut niiden tullessa näkyviin.
 - Ohjeselitteet ovat työkaluvihjeiden kaltaisia, mutta ovat yleensä suurempia ja liittyvät järjestelmätapahtumiin, kuten verkkokaapelin irrottamiseen tai ilmoituksiin Windowsin suojausongelmista.
-- Ilmoitusruudut on otettu käyttöön Windows 10:ssä, ja ilmestyvät toimintokeskukseen ilmaisinalueella ilmoittaen useista eri tapahtumista (esim. ladatusta päivityksestä, Saapuneet-kansioosi tulleesta uudesta sähköpostiviestistä jne.).
-
+- Ilmoitusruudut on otettu käyttöön Windows 10:ssä, ja ne ilmestyvät toimintokeskukseen ilmaisinalueella ilmoittaen useista eri tapahtumista (esim. ladatusta päivityksestä, Saapuneet-kansioosi tulleesta uudesta sähköpostiviestistä jne.).
 
 ==== Lue objektien pikanäppäimet ====[ObjectPresentationShortcutKeys]
 Kun tämä valintaruutu on valittuna, NVDA kertoo objektiin tai säätimeen liitetyn pikanäppäimen.
@@ -1896,7 +1892,6 @@ Sääntölauseke on erikoismerkkejä sisältävä merkkiyhdistelmä, jonka avull
 Sääntölausekkeita ei käsitellä tässä käyttöoppaassa.
 Tutustumisopas löytyy osoitteesta [https://docs.python.org/3.7/howto/regex.html].
 
-
 +++ Välimerkkien ja symboleiden puhuminen +++[SymbolPronunciation]
 Tässä valintaikkunassa voidaan muuttaa välimerkkien ja muiden symboleiden lukutapaa sekä tasoa, jolla ne puhutaan.
 
@@ -1945,15 +1940,17 @@ Tällöin näkyviin tulee valikko, josta voit valita haluamasi vaihtoehdon.
 
 Poista syötekomento komennosta valitsemalla se ja painamalla Poista-painiketta.
 
-Emuloidut järjestelmänäppäimistön näppäimet -kategoria sisältää NVDA-komentoja, jotka emuloivat järjestelmänäppäimistön näppäimiä.
+Jäljiteltävät järjestelmänäppäimistön näppäimet -kategoria sisältää NVDA-komentoja, jotka jäljittelevät järjestelmänäppäimistön näppäimiä.
 Näitä näppäimiä voidaan käyttää järjestelmänäppäimistön ohjaamiseen suoraan pistenäytöltä.
-Lisää emuloitu syötekomento valitsemalla Emuloidut järjestelmänäppäimistön näppäimet -kategoria ja paina Lisää-painiketta.
-Paina sitten näppäimistöltä sitä näppäintä, jota haluat emuloida.
-Tämän jälkeen näppäin näkyy Emuloidut järjestelmänäppäimistön näppäimet -kategoriassa, ja voit määrittää sille syötekomennon yllä kuvatulla tavalla.
+Lisää jäljiteltävä syötekomento valitsemalla Jäljiteltävät järjestelmänäppäimistön näppäimet -kategoria ja painamalla Lisää-painiketta.
+Paina sitten näppäimistöltä sitä näppäintä, jota haluat jäljitellä.
+Tämän jälkeen näppäin näkyy Jäljiteltävät järjestelmänäppäimistön näppäimet -kategoriassa, ja voit määrittää sille syötekomennon yllä kuvatulla tavalla.
 
 Huom:
- - Emuloiduilla näppäimillä täytyy olla syötekomennot määritettyinä, jotta ne säilyvät tallennettaessa/valintaikkunaa suljettaessa.
- - Syötekomentoa, jolla on muuntonäppäimiä, ei välttämättä voi liittää emuloituun syötekomentoon, jolla ei muuntonäppäimiä ole. Kun esim. emuloiduksi syötteeksi määritetään "a" ja syötekomennoksi Ctrl+M, voi tuloksena olla, että sovellus vastaanottaa näppäinyhdistelmän Ctrl+A.
+ - Jäljiteltävillä näppäimillä täytyy olla syötekomennot määritettyinä, jotta ne säilyvät tallennettaessa/valintaikkunaa suljettaessa.
+ - Syötekomentoa, jolla on muuntonäppäimiä, ei välttämättä voi liittää jäljiteltävään syötekomentoon, jolla ei muunto
+ näppäimiä ole. Kun esim. jäljiteltäväksi syötteeksi määritetään "a" ja syötekomennoksi Ctrl+M, voi siitä seurata,
+ että sovellus vastaanottaa näppäinyhdistelmän Ctrl+A.
  -
 
 Tehdyt muutokset tallennetaan painamalla OK-painiketta tai hylätään painamalla Peruuta.
@@ -2243,7 +2240,6 @@ Windows 10:ssä NVDA käyttää oletusarvoisesti Windows OneCore -ääniä ( mui
 
 Katso luettelo saatavilla olevista äänistä ja ohjeet niiden asentamiseen [tästä https://support.microsoft.com/fi-fi/help/22797/windows-10-narrator-tts-voices/] Microsoftin artikkelista.
 
-
 + Tuetut pistenäytöt +[SupportedBrailleDisplays]
 Tässä kappaleessa on tietoja NVDA:n tukemista pistenäytöistä.
 
@@ -2517,7 +2513,7 @@ Myös seuraavia laitteita tuetaan, eikä niitä varten tarvitse asentaa ajureita
 - APH Chameleon 20
 - Humanware BrailleOne
 - NLS eReader
-
+-
 
 Seuraavassa on Brailliant BI/B- ja BrailleNote Touch -näyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso laitteiden käyttöohjeista kuvaukset näppäinten paikoista.

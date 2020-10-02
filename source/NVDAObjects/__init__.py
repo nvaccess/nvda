@@ -8,6 +8,7 @@
 """Module that contains the base NVDA object type with dynamic class creation support,
 as well as the associated TextInfo class."""
 
+import os
 import time
 import re
 import weakref
@@ -31,6 +32,8 @@ import globalPluginHandler
 import brailleInput
 import locationHelper
 import aria
+import globalVars
+
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
@@ -1031,7 +1034,7 @@ Tries to force this object to take the focus.
 			# No error.
 			return
 		import nvwave
-		nvwave.playWaveFile(r"waves\textError.wav")
+		nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "textError.wav"))
 
 	def event_liveRegionChange(self):
 		"""
