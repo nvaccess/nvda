@@ -24,9 +24,9 @@ error_status_t __stdcall nvdaControllerInternal_inputLangChangeNotify(const long
 	return _nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString);
 }
 
-error_status_t(__stdcall *_nvdaControllerInternal_typedCharacterNotify)(const long, const wchar_t); 
-error_status_t __stdcall nvdaControllerInternal_typedCharacterNotify(const long threadID, const wchar_t ch) {
-	return _nvdaControllerInternal_typedCharacterNotify(threadID,ch);
+error_status_t(__stdcall *_nvdaControllerInternal_typedCharacterNotify)(const wchar_t); 
+error_status_t __stdcall nvdaControllerInternal_typedCharacterNotify(const wchar_t ch) {
+	return _nvdaControllerInternal_typedCharacterNotify(ch);
 }
 
 

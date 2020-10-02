@@ -1,8 +1,7 @@
-#touchHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2012-2018 NV Access Limited, Joseph Lee, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2012-2020 NV Access Limited, Joseph Lee, Babbage B.V.
 
 """handles touchscreen interaction (Windows 8 and later).
 Used to provide input gestures for touchscreens, touch modes and other support facilities.
@@ -294,30 +293,57 @@ class TouchHandler(threading.Thread):
 
 handler=None
 
-def touchSupported():
+
+def touchSupported(debugLog: bool = False):
 	"""Returns if the system and current NVDA session supports touchscreen interaction.
+	@param debugLog: Whether to log additional details about touch support to the NVDA log.
 	"""
 	if not config.isInstalledCopy() and not config.isAppX:
-		log.debugWarning("Touch only supported on installed copies")
+		if debugLog:
+			log.debugWarning("Touch only supported on installed copies")
 		return False
-	if (winVersion.winVersion.major*10+winVersion.winVersion.minor)<62:
-		log.debugWarning("Touch only supported on Windows 8 and higher")
+	if winVersion.winVersion.platform_version < (6, 2, 9200):
+		if debugLog:
+			log.debugWarning("Touch only supported on Windows 8 and higher")
 		return False
 	maxTouches=windll.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES)
 	if maxTouches<=0:
-		log.debugWarning("No touch devices found")
+		if debugLog:
+			log.debugWarning("No touch devices found")
 		return False
 	return True
 
-def initialize():
+
+def setTouchSupport(enable: bool):
 	global handler
 	if not touchSupported():
 		raise NotImplementedError
-	handler=TouchHandler()
-	log.debug("Touch support initialized. maximum touch inputs: %d"%windll.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES))
+	if not handler and enable:
+		handler = TouchHandler()
+		log.debug("Touch support enabled.")
+	elif handler and not enable:
+		handler.terminate()
+		handler = None
+		log.debug("Touch support disabled.")
+
+
+def handlePostConfigProfileSwitch():
+	setTouchSupport(config.conf["touch"]["enabled"])
+
+
+def initialize():
+	global handler
+	if not touchSupported(debugLog=True):
+		raise NotImplementedError
+	log.debug(
+		"Touchscreen detected, maximum touch inputs: %d" % winUser.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES)
+	)
+	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
+	setTouchSupport(config.conf["touch"]["enabled"])
 
 def terminate():
 	global handler
+	config.post_configProfileSwitch.unregister(handlePostConfigProfileSwitch)
 	if handler:
 		handler.terminate()
 		handler=None

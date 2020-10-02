@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2013-2018 NV Access Limited, Joseph Lee, Julien Cochuyt
+# Copyright (C) 2013-2018 NV Access Limited, Joseph Lee, Julien Cochuyt, Thomas Stivers
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -11,11 +11,18 @@ from logHandler import log
 import appModuleHandler
 import globalVars
 from . import guiHelper
+import gui.contextHelp
 
-class ProfilesDialog(wx.Dialog):
+
+class ProfilesDialog(
+		gui.ContextHelpMixin,
+		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+):
 	shouldSuspendConfigProfileTriggers = True
+	helpId = "ConfigurationProfiles"
 
 	_instance = None
+
 	def __new__(cls, *args, **kwargs):
 		# Make this a singleton.
 		if ProfilesDialog._instance is None:
@@ -27,7 +34,7 @@ class ProfilesDialog(wx.Dialog):
 			return
 		ProfilesDialog._instance = self
 		# Translators: The title of the Configuration Profiles dialog.
-		super(ProfilesDialog, self).__init__(parent, title=_("Configuration Profiles"))
+		super().__init__(parent, title=_("Configuration Profiles"))
 
 		self.currentAppName = (gui.mainFrame.prevFocus or api.getFocusObject()).appModule.appName
 		self.profileNames = [None]
@@ -85,11 +92,9 @@ class ProfilesDialog(wx.Dialog):
 		self.disableTriggersToggle.Value = not config.conf.profileTriggersEnabled
 		sHelper.addItem(guiHelper.associateElements(triggersButton,self.disableTriggersToggle))
 
-		# Translators: The label of a button to close a dialog.
-		closeButton = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
-		closeButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
-		sHelper.addDialogDismissButtons(closeButton)
-		self.Bind(wx.EVT_CLOSE, self.onClose)
+		sHelper.addDialogDismissButtons(wx.CLOSE, separated=True)
+		# Not binding wx.EVT_CLOSE here because of https://github.com/wxWidgets/Phoenix/issues/672
+		self.Bind(wx.EVT_BUTTON, self.onClose, id=wx.ID_CLOSE)
 		self.EscapeId = wx.ID_CLOSE
 
 		if globalVars.appArgs.secure:
@@ -296,11 +301,16 @@ class TriggerInfo(object):
 		self.display = display
 		self.profile = profile
 
-class TriggersDialog(wx.Dialog):
+
+class TriggersDialog(
+		gui.ContextHelpMixin,
+		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+):
+	helpId = "ConfigProfileTriggers"
 
 	def __init__(self, parent):
 		# Translators: The title of the configuration profile triggers dialog.
-		super(TriggersDialog, self).__init__(parent, title=_("Profile Triggers"))
+		super().__init__(parent, title=_("Profile Triggers"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -340,14 +350,14 @@ class TriggersDialog(wx.Dialog):
 		self.profileList = sHelper.addLabeledControl(profileText, wx.Choice, choices=profileChoices)
 		self.profileList.Bind(wx.EVT_CHOICE, self.onProfileListChoice)
 
-		closeButton = sHelper.addDialogDismissButtons(wx.Button(self, wx.ID_CLOSE, label=_("&Close")))
-		closeButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
-		self.Bind(wx.EVT_CLOSE, self.onClose)
+		sHelper.addDialogDismissButtons(wx.CLOSE, separated=True)
+		# Not binding wx.EVT_CLOSE here because of https://github.com/wxWidgets/Phoenix/issues/672
+		self.Bind(wx.EVT_BUTTON, self.onClose, id=wx.ID_CLOSE)
 		self.AffirmativeId = wx.ID_CLOSE
-		closeButton.SetDefault()
 		self.EscapeId = wx.ID_CLOSE
 
 		self.onTriggerListChoice(None)
+
 		mainSizer.Add(sHelper.sizer, border = guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
@@ -382,11 +392,16 @@ class TriggersDialog(wx.Dialog):
 		self.Parent.Enable()
 		self.Destroy()
 
-class NewProfileDialog(wx.Dialog):
+
+class NewProfileDialog(
+		gui.ContextHelpMixin,
+		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+):
+	helpId = "ConfigurationProfiles"
 
 	def __init__(self, parent):
 		# Translators: The title of the dialog to create a new configuration profile.
-		super(NewProfileDialog, self).__init__(parent, title=_("New Profile"))
+		super().__init__(parent, title=_("New Profile"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -405,9 +420,11 @@ class NewProfileDialog(wx.Dialog):
 		self.autoProfileName = ""
 		self.onTriggerChoice(None)
 
-		sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK | wx.CANCEL))
+		sHelper.addDialogDismissButtons(wx.OK | wx.CANCEL, separated=True)
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
+		self.AffirmativeId = wx.ID_OK
+		self.EscapeId = wx.ID_CANCEL
 
 		mainSizer.Add(sHelper.sizer, border = guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)

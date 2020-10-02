@@ -101,21 +101,23 @@ def getAvailableLanguages(presentational=False):
 	if 'en' not in locales:
 		locales.append('en')
 		locales.sort()
-	#For each locale, ask Windows for its human readable display name
-	displayNames = []
-	for entry in locales:
-		desc=getLanguageDescription(entry)
-		displayNames.append("%s, %s"%(desc,entry) if desc else entry)
-	#Prepare a zipped view of language codes and descriptions.
-	# #7284: especially for sorting by description.
-	# Python 3: zip function changed from returning a list to an iterator, thus wrap this inside a list call.
-	langs = list(zip(locales,displayNames))
-	if presentational:
-		langs.sort(key=lambda lang: lang[1])
+	# Prepare a 2-tuple list of language code and human readable language description.
+	langs = [(lc, getLanguageDescription(lc)) for lc in locales]
+	# Translators: The pattern defining how languages are displayed and sorted in in the general
+	# setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
+
+	# name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
+	fullDescPattern = _("{desc}, {lc}")
+	isDescFirst = fullDescPattern.find("{desc}") < fullDescPattern.find("{lc}")
+	if presentational and isDescFirst:
+		langs.sort(key=lambda lang: locale.strxfrm(lang[1] if lang[1] else lang[0]))
+	langs = [(lc, (fullDescPattern.format(desc=desc, lc=lc) if desc else lc)) for lc, desc in langs]
 	#include a 'user default, windows' language, which just represents the default language for this user account
-	langs.append(("Windows",
+	langs.insert(
+		0,
 		# Translators: the label for the Windows default NVDA interface language.
-		_("User default")))
+		("Windows", _("User default"))
+	)
 	return langs
 
 def makePgettext(translations):
@@ -335,4 +337,3 @@ windowsPrimaryLCIDsToLocaleNames={
 	136:'wo',
 	140:'gbz'
 }
-

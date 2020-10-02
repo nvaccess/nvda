@@ -433,7 +433,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		textList = []
 		for col in range(1, self.childCount + 1):
 			location = self._getColumnLocation(col)
-			if location.width == 0:
+			if location and location.width == 0:
 				continue
 			content = self._getColumnContent(col)
 			if not content:
