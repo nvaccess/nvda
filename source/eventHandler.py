@@ -177,11 +177,11 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 
 	def _checkIfValid(self):
 		stillValid = (
-				self.isLastFocusObj()
-				or not self.previouslyHadFocus()
-				or self.isAncestorOfCurrentFocus()
-				# Ensure titles for dialogs gaining focus are reported, EG NVDA Find dialog
-				or self.isForegroundObject()
+			self.isLastFocusObj()
+			or not self.previouslyHadFocus()
+			or self.isAncestorOfCurrentFocus()
+			# Ensure titles for dialogs gaining focus are reported, EG NVDA Find dialog
+			or self.isForegroundObject()
 		)
 		return stillValid
 
