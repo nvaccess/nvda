@@ -12,10 +12,22 @@ import oleacc
 import controlTypes
 import IAccessibleHandler
 from NVDAObjects.IAccessible import IAccessible
-from virtualBuffers.gecko_ia2 import Gecko_ia2 as GeckoVBuf
+from virtualBuffers.gecko_ia2 import Gecko_ia2 as GeckoVBuf, Gecko_ia2_TextInfo as GeckoVBufTextInfo
 from . import ia2Web
 
+
+class ChromeVBufTextInfo(GeckoVBufTextInfo):
+
+	def _normalizeControlField(self, attrs):
+		attrs = super()._normalizeControlField(attrs)
+		if attrs['role'] == controlTypes.ROLE_TOGGLEBUTTON and controlTypes.STATE_CHECKABLE in attrs['states']:
+			# In Chromium, the checkable state is exposed erroneously on toggle buttons.
+			attrs['states'].discard(controlTypes.STATE_CHECKABLE)
+		return attrs
+
+
 class ChromeVBuf(GeckoVBuf):
+	TextInfo = ChromeVBufTextInfo
 
 	def __contains__(self, obj):
 		if obj.windowHandle != self.rootNVDAObject.windowHandle:
@@ -31,6 +43,7 @@ class ChromeVBuf(GeckoVBuf):
 		except COMError:
 			return False
 		return not self._isNVDAObjectInApplication(obj)
+
 
 class Document(ia2Web.Document):
 
@@ -51,11 +64,41 @@ class ComboboxListItem(IAccessible):
 		if self.parent and controlTypes.STATE_INVISIBLE in self.parent.states:
 			return self.parent.parent
 
+
+class ToggleButton(ia2Web.Ia2Web):
+
+	def _get_states(self):
+		# In Chromium, the checkable state is exposed erroneously on toggle buttons.
+		states = super().states
+		states.discard(controlTypes.STATE_CHECKABLE)
+		return states
+
+
+class PresentationalList(ia2Web.Ia2Web):
+	"""
+	Ensures that lists like UL, DL and OL always have the readonly state.
+	A work-around for issue #7562
+	allowing us to differentiate presentational lists from interactive lists
+	(such as of size greater 1 and ARIA list boxes).
+	In firefox, this is possible by the presence of a read-only state,
+	even in a content editable.
+	"""
+
+	def _get_states(self):
+		states = super().states
+		states.add(controlTypes.STATE_READONLY)
+		return states
+
+
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class(es) for Chromium objects.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
 	"""
 	if obj.role==controlTypes.ROLE_LISTITEM and obj.parent and obj.parent.parent and obj.parent.parent.role==controlTypes.ROLE_COMBOBOX:
 		clsList.append(ComboboxListItem)
+	elif obj.role == controlTypes.ROLE_TOGGLEBUTTON:
+		clsList.append(ToggleButton)
+	elif obj.role == controlTypes.ROLE_LIST and obj.IA2Attributes.get('tag') in ('ul', 'dl', 'ol'):
+		clsList.append(PresentationalList)
 	ia2Web.findExtraOverlayClasses(obj, clsList,
 		documentClass=Document)

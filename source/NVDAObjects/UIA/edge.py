@@ -222,15 +222,6 @@ class EdgeNode(web.UIAWeb):
 			charInfo.collapse(True)
 		return textRange
 
-	def _get_description(self):
-		ariaProperties=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
-		if 'describedby=' in ariaProperties:
-			try:
-				return self._getUIACacheablePropertyValue(UIAHandler.UIA_FullDescriptionPropertyId) or ""
-			except COMError:
-				pass
-		return super(EdgeNode,self).description
-
 	def _get__isTextEmpty(self):
 		# NOTE: we can not check the result of the EdgeTextInfo move implementation to determine if we added
 		# any characters to the range, since it seems to return 1 even when the text property has not changed.

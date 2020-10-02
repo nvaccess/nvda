@@ -929,7 +929,7 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 			formatField['bold']=bool(font.bold)
 			formatField['italic']=bool(font.italic)
 			formatField['underline']=bool(font.underline)
-		if formatConfig['reportSuperscriptAndSubscript']:
+		if formatConfig['reportSuperscriptsAndSubscripts']:
 			if font.subscript:
 				formatField['text-position']='sub'
 			elif font.superscript:

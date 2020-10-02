@@ -630,11 +630,25 @@ def event_gainFocus(vmID,accContext,hwnd):
 	eventHandler.queueEvent("gainFocus",obj)
 
 @AccessBridge_PropertyActiveDescendentChangeFP
-def internal_event_activeDescendantChange(vmID, event,source,oldDescendant,newDescendant):
-	hwnd=getWindowHandleFromAccContext(vmID,source)
-	internalQueueFunction(event_gainFocus,vmID,newDescendant,hwnd)
-	for accContext in [event,oldDescendant]:
-		bridgeDll.releaseJavaObject(vmID,accContext)
+def internal_event_activeDescendantChange(vmID, event, source, oldDescendant, newDescendant):
+	hwnd = getWindowHandleFromAccContext(vmID, source)
+	sourceContext = JABContext(hwnd=hwnd, vmID=vmID, accContext=source)
+	if internal_hasFocus(sourceContext):
+		internalQueueFunction(event_gainFocus, vmID, newDescendant, hwnd)
+	for accContext in [event, oldDescendant]:
+		bridgeDll.releaseJavaObject(vmID, accContext)
+
+
+def internal_hasFocus(sourceContext):
+	focus = api.getFocusObject()
+	if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == sourceContext:
+		return True
+	ancestors = api.getFocusAncestors()
+	for ancestor in reversed(ancestors):
+		if isinstance(ancestor, NVDAObjects.JAB.JAB) and ancestor.jabContext == sourceContext:
+			return True
+	return False
+
 
 @AccessBridge_PropertyNameChangeFP
 def event_nameChange(vmID,event,source,oldVal,newVal):

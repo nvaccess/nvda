@@ -140,7 +140,7 @@ before_test:
       $installerProcess | wait-process -Timeout 180
       $errorCode=$installerProcess.ExitCode
      } catch {
-      echo NVDA installer process timed out
+      echo "NVDA installer process timed out"
       $errorCode=1
       Add-AppveyorMessage "Unable to install NVDA prior to tests."
      }
@@ -173,7 +173,7 @@ test_script:
       git diff -U0 FETCH_HEAD...HEAD > $prDiff
       $flake8Config = "$lintSource\flake8.ini"
       $flake8Output = "$lintOutput\PR-Flake8.txt"
-      type "$prDiff" | py -m flake8 --diff --output-file="$flake8Output" --tee --config="$flake8Config"
+      type "$prDiff" | py -Xutf8 -m flake8 --diff --output-file="$flake8Output" --tee --config="$flake8Config"
       if($LastExitCode -ne 0) {
        $errorCode=$LastExitCode
        Add-AppveyorMessage "PR introduces Flake8 errors"
@@ -253,9 +253,15 @@ deploy_script:
        artifacts=$artifacts
       }
       ConvertTo-Json -InputObject $data -Compress | ssh nvaccess@exbi.nvaccess.org nvdaAppveyorHook
+
       # Upload symbols to Mozilla.
       py -m pip install --no-warn-script-location requests
-       py appveyor\mozillaSyms.py
+      py appveyor\mozillaSyms.py
+      if($LastExitCode -ne 0) {
+        $errorCode=$LastExitCode
+        echo "Unable to upload symbols to Mozilla"
+        Add-AppveyorMessage "Unable to upload symbols to Mozilla"
+      }
      }
 
 on_finish:

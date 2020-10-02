@@ -10,6 +10,7 @@ import os
 import pkgutil
 import importlib
 from typing import Optional
+from locale import strxfrm
 
 import config
 import baseObject
@@ -404,7 +405,7 @@ def getSynthList():
 				log.debugWarning("Synthesizer '%s' doesn't pass the check, excluding from list" % name)
 		except:  # noqa: E722 # Legacy bare except
 			log.error("", exc_info=True)
-	synthList.sort(key=lambda s: s[1].lower())
+	synthList.sort(key=lambda s: strxfrm(s[1]))
 	if lastSynth:
 		synthList.append(lastSynth)
 	return synthList
