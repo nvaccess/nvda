@@ -186,20 +186,11 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 		return stillValid
 
 	def _getDevInfo(self):
-		from NVDAObjects.behaviors import Dialog
-		dialogNotAncestor = isinstance(self._obj, Dialog) and not self.isAncestorOfCurrentFocus()
-		ancestorInfo = ""
-		if dialogNotAncestor:
-			ancestors = api.getFocusAncestors()
-			ancestorStrings = [repr(a) for a in ancestors]
-			ancestorInfo = f", ancestors: {', '.join(ancestorStrings)}"
 		return (
 			f"isLast: {self.isLastFocusObj()}"
 			f", previouslyHad: {self.previouslyHadFocus()}"
 			f", isAncestorOfCurrentFocus: {self.isAncestorOfCurrentFocus()}"
-			f", is a dialog: {isinstance(self._obj, Dialog)}"
 			f", is foreground obj {self.isForegroundObject()}"
-			f"{ancestorInfo}"
 		)
 
 	def isLastFocusObj(self):
