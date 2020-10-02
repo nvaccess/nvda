@@ -214,7 +214,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enabled = boolean(default=true)
 	useInMSWordWhenAvailable = boolean(default=false)
 	winConsoleImplementation= option("auto", "legacy", "UIA", default="auto")
-	allowInChromium = option("auto", "yes", "no", default="auto")
+	# 0:default, 1:Only when necessary, 2:yes, 3:no
+	allowInChromium = integer(0, 3, default=0)
 	selectiveEventRegistration = boolean(default=false)
 
 [terminals]

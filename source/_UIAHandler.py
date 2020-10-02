@@ -645,10 +645,6 @@ class UIAHandler(COMObject):
 		# events.
 		if windowClass == "ConsoleWindowClass" and config.conf['UIA']['winConsoleImplementation'] != "UIA":
 			return True
-		# Unless explicitly allowed, all Chromium implementations (including Edge) should not be UIA,
-		# As their IA2 implementation is still better at the moment.
-		elif windowClass == "Chrome_RenderWidgetHostHWND" and config.conf['UIA']['allowInChromium'] != "yes":
-			return True
 		return windowClass in badUIAWindowClassNames
 
 	def _isUIAWindowHelper(self,hwnd):
@@ -705,6 +701,20 @@ class UIAHandler(COMObject):
 				and appModule.helperLocalBindingHandle 
 				# Allow the user to explisitly force UIA support for MS Word documents no matter the Office version 
 				and not config.conf['UIA']['useInMSWordWhenAvailable']
+			):
+				return False
+			# Unless explicitly allowed, all Chromium implementations (including Edge) should not be UIA,
+			# As their IA2 implementation is still better at the moment.
+			elif (
+				windowClass == "Chrome_RenderWidgetHostHWND"
+				and (
+					config.conf['UIA']['allowInChromium'] == 3  # No
+					# Disabling is only useful if we can inject in-process (and use our older code)
+					or (
+						appModule.helperLocalBindingHandle
+						and config.conf['UIA']['allowInChromium'] in (0, 1)  # Only when necessary
+					)
+				)
 			):
 				return False
 		return bool(res)

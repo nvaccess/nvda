@@ -2513,21 +2513,22 @@ class AdvancedPanelControls(wx.Panel):
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
-		label = _("Allow &Chromium based browsers to use UI Automation when available")
-		chromiumChoicesAndLabels = {
+		label = _("Allow Microsoft Edge and other &Chromium based browsers to use UI Automation when available:")
+		# Translators: Label for the Allow Chromium to use uIA combobox in the Advanced settings panel.
+		onlyWhenNecessaryLabel = _("Only when necessary")
+		chromiumChoices = (
+			# Translators: Label for the Allow Chromium to use uIA combobox in the Advanced settings panel.
+			# {} is replaced by the default option
+			_("Default ({})").format(onlyWhenNecessaryLabel),
+			onlyWhenNecessaryLabel,
 			# Translators: The label of a combobox option in the advanced settings panel.
-			"auto": _("Default (no)"),
+			_("Yes"),
 			# Translators: The label of a combobox option in the advanced settings panel.
-			"yes": _("Yes"),
-			# Translators: The label of a combobox option in the advanced settings panel.
-			"no": _("no")
-		}
-		self.chromiumChoices = list(chromiumChoicesAndLabels.keys())
-		self.UIAInChromiumCombo = UIAGroup.addLabeledControl(label, wx.Choice, choices=self.chromiumChoices)
-		self.UIAInChromiumCombo.SetSelection(self.chromiumChoices.index(config.conf["UIA"]["allowInChromium"]))
-		self.UIAInChromiumCombo.defaultValue = self.chromiumChoices.index(
-			self._getDefaultValue(["UIA", "allowInChromium"])
+			_("no"),
 		)
+		self.UIAInChromiumCombo = UIAGroup.addLabeledControl(label, wx.Choice, choices=chromiumChoices)
+		self.UIAInChromiumCombo.SetSelection(config.conf["UIA"]["allowInChromium"])
+		self.UIAInChromiumCombo.defaultValue = self._getDefaultValue(["UIA", "allowInChromium"])
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -2691,7 +2692,7 @@ class AdvancedPanelControls(wx.Panel):
 		else:
 			config.conf['UIA']['winConsoleImplementation'] = "auto"
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
-		config.conf["UIA"]["allowInChromium"] = self.chromiumChoices[self.UIAInChromiumCombo.GetSelection()]
+		config.conf["UIA"]["allowInChromium"] = self.UIAInChromiumCombo.GetSelection()
 		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = self.cancelExpiredFocusSpeechCombo.GetSelection()
 		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
