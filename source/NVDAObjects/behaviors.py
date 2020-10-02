@@ -9,11 +9,8 @@ Behaviors described in this mix-in include providing table navigation commands f
 """
 
 import os
-import sys
 import time
 import threading
-import struct
-import subprocess
 import tones
 import queueHandler
 import eventHandler
@@ -32,6 +29,7 @@ import braille
 import nvwave
 import globalVars
 from typing import List
+import diffHandler
 
 
 class ProgressBar(NVDAObject):
@@ -235,7 +233,6 @@ class LiveText(NVDAObject):
 		self._event = threading.Event()
 		self._monitorThread = None
 		self._keepMonitoring = False
-		self._dmp = None
 
 	def startMonitoring(self):
 		"""Start monitoring for new text.
@@ -271,15 +268,12 @@ class LiveText(NVDAObject):
 		"""
 		self._event.set()
 
-	def _get_shouldUseDMP(self):
-		return self._supportsDMP and config.conf["terminals"]["useDMPWhenSupported"]
-
 	def _get_devInfo(self):
 		info = super().devInfo
-		if self.shouldUseDMP:
-			info.append("diffing algorithm: character-based (Diff Match Patch)")
+		if diffHandler._should_use_DMP(self._supportsDMP):
+			info.append("preferred diffing algorithm: character-based (Diff Match Patch)")
 		else:
-			info.append("diffing algorithm: line-based (difflib)")
+			info.append("preferred diffing algorithm: line-based (difflib)")
 		return info
 
 	def _getText(self) -> str:
@@ -307,32 +301,7 @@ class LiveText(NVDAObject):
 		"""
 		speech.speakText(line)
 
-	def _initializeDMP(self):
-		if hasattr(sys, "frozen"):
-			dmp_path = (os.path.join(globalVars.appDir, "nvda_dmp.exe"),)
-		else:
-			dmp_path = (sys.executable, os.path.join(
-				globalVars.appDir, "..", "include", "nvda_dmp", "nvda_dmp.py"
-			))
-		self._dmp = subprocess.Popen(
-			dmp_path,
-			creationflags=subprocess.CREATE_NO_WINDOW,
-			bufsize=0,
-			stdin=subprocess.PIPE,
-			stdout=subprocess.PIPE
-		)
-
-	def _terminateDMP(self):
-		self._dmp.stdin.write(struct.pack("=II", 0, 0))  # Sentinal value
-		self._dmp = None
-
 	def _monitor(self):
-		if self.shouldUseDMP:
-			try:
-				self._initializeDMP()
-			except Exception:
-				log.exception("Error initializing DMP, falling back to difflib")
-				self._supportsDmp = False
 		try:
 			oldText = self._getText()
 		except:
@@ -366,106 +335,8 @@ class LiveText(NVDAObject):
 			except:
 				log.exception("Error getting or calculating new text")
 
-		if self.shouldUseDMP:
-			try:
-				self._terminateDMP()
-			except Exception:
-				log.exception("Error stopping DMP")
-
-	def _calculateNewText_dmp(self, newText: str, oldText: str) -> List[str]:
-		try:
-			if not newText and not oldText:
-				# Return an empty list here to avoid exiting
-				# nvda_dmp uses two zero-length texts as a sentinal value
-				return []
-			old = oldText.encode("utf-8")
-			new = newText.encode("utf-8")
-			tl = struct.pack("=II", len(old), len(new))
-			self._dmp.stdin.write(tl)
-			self._dmp.stdin.write(old)
-			self._dmp.stdin.write(new)
-			buf = b""
-			sizeb = b""
-			SIZELEN = 4
-			while len(sizeb) < SIZELEN:
-				sizeb = self._dmp.stdout.read(SIZELEN - len(sizeb))
-				if sizeb is None:
-					sizeb = b""
-			(size,) = struct.unpack("=I", sizeb)
-			while len(buf) < size:
-				buf += self._dmp.stdout.read(size - len(buf))
-			return [
-				line
-				for line in buf.decode("utf-8").splitlines()
-				if line and not line.isspace()
-			]
-		except Exception:
-			log.exception("Exception in DMP, falling back to difflib")
-			self._supportsDMP = False
-			return self._calculateNewText_difflib(newText, oldText)
-
-	def _calculateNewText_difflib(self, newLines: List[str], oldLines: List[str]) -> List[str]:
-		outLines = []
-
-		prevLine = None
-		from difflib import ndiff
-
-		for line in ndiff(oldLines, newLines):
-			if line[0] == "?":
-				# We're never interested in these.
-				continue
-			if line[0] != "+":
-				# We're only interested in new lines.
-				prevLine = line
-				continue
-			text = line[2:]
-			if not text or text.isspace():
-				prevLine = line
-				continue
-
-			if prevLine and prevLine[0] == "-" and len(prevLine) > 2:
-				# It's possible that only a few characters have changed in this line.
-				# If so, we want to speak just the changed section, rather than the entire line.
-				prevText = prevLine[2:]
-				textLen = len(text)
-				prevTextLen = len(prevText)
-				# Find the first character that differs between the two lines.
-				for pos in range(min(textLen, prevTextLen)):
-					if text[pos] != prevText[pos]:
-						start = pos
-						break
-				else:
-					# We haven't found a differing character so far and we've hit the end of one of the lines.
-					# This means that the differing text starts here.
-					start = pos + 1
-				# Find the end of the differing text.
-				if textLen != prevTextLen:
-					# The lines are different lengths, so assume the rest of the line changed.
-					end = textLen
-				else:
-					for pos in range(textLen - 1, start - 1, -1):
-						if text[pos] != prevText[pos]:
-							end = pos + 1
-							break
-
-				if end - start < 15:
-					# Less than 15 characters have changed, so only speak the changed chunk.
-					text = text[start:end]
-
-			if text and not text.isspace():
-				outLines.append(text)
-			prevLine = line
-
-		return outLines
-
 	def _calculateNewText(self, newText: str, oldText: str) -> List[str]:
-		return (
-			self._calculateNewText_dmp(newText, oldText)
-			if self.shouldUseDMP
-			else self._calculateNewText_difflib(
-				newText.splitlines(), oldText.splitlines()
-			)
-		)
+		return diffHandler.diff(newText, oldText, supports_dmp=self._supportsDMP)
 
 
 class Terminal(LiveText, EditableText):

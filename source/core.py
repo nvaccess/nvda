@@ -591,6 +591,8 @@ def main():
 	_terminate(speech)
 	_terminate(addonHandler)
 	_terminate(garbageHandler)
+	import diffHandler
+	diffHandler.terminate()
 
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
