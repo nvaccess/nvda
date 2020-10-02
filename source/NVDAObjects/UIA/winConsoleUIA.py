@@ -49,15 +49,6 @@ class consoleUIATextInfo(UIATextInfo):
 		if position == textInfos.POSITION_FIRST:
 			collapseToEnd = False
 		elif position == textInfos.POSITION_LAST:
-			# We must pull back the end by one character otherwise when we collapse to end,
-			# a console bug results in a textRange covering the entire console buffer!
-			# Strangely the *very* last character is a special blank point
-			# so we never seem to miss a real character.
-			_rangeObj.MoveEndpointByUnit(
-				UIAHandler.TextPatternRangeEndpoint_End,
-				UIAHandler.NVDAUnitsToUIAUnits['character'],
-				-1
-			)
 			collapseToEnd = True
 		return (_rangeObj, collapseToEnd)
 
