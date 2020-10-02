@@ -535,7 +535,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			self.id=brl_join_keys(brl_decode_key_names_repeat(driver))
 			return
 
-		if driver._baud != 1 and keys[0] == 'L':
+		if driver._baud != 1 and keys[0] == (b'L'):
 			assert isinstance(keys, bytes)
 			if (keys[3] - 48) >> 3:
 				scancode = keys[5] - 48 << 4 | keys[6] - 48
