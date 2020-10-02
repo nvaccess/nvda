@@ -30,8 +30,8 @@ def showHelp(helpId: str):
 	recognized control.
 	"""
 	if not helpId:
-		# Translators: Message indicating no context sensitive help is available.
-		noHelpMessage = _("No context sensitive help is available here at this time.")
+		# Translators: Message indicating no context sensitive help is available for the control or dialog.
+		noHelpMessage = _("No help available here.")
 		queueHandler.queueFunction(queueHandler.eventQueue, ui.message, noHelpMessage)
 		return
 	helpFile = gui.getDocFilePath("userGuide.html")
