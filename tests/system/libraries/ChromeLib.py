@@ -19,14 +19,12 @@ from robot.libraries.BuiltIn import BuiltIn
 # Imported for type information
 from robot.libraries.OperatingSystem import OperatingSystem as _OpSysLib
 from robot.libraries.Process import Process as _ProcessLib
-from KeyInputLib import KeyInputLib as _KeyInputLib
 from AssertsLib import AssertsLib as _AssertsLib
 import NvdaLib as _NvdaLib
 
 builtIn: BuiltIn = BuiltIn()
 opSys: _OpSysLib = _getLib('OperatingSystem')
 process: _ProcessLib = _getLib('Process')
-keyInputLib: _KeyInputLib = _getLib('KeyInputLib')
 assertsLib: _AssertsLib = _getLib('AssertsLib')
 
 
@@ -73,9 +71,9 @@ class ChromeLib:
 				<title>{ChromeLib._testCaseTitle}</title>
 			</head>
 			<body>
-				<button>{ChromeLib._beforeMarker}</button>
+				<p>{ChromeLib._beforeMarker}</p>
 				{testCase}
-				<button>{ChromeLib._afterMarker}</button>
+				<p>{ChromeLib._afterMarker}</p>
 			</body>
 		""")
 		with open(file=filePath, mode='w', encoding='UTF-8') as f:
@@ -107,17 +105,9 @@ class ChromeLib:
 		for i in range(10):  # set a limit on the number of tries.
 			# Small changes in Chrome mean the number of tab presses to get into the document can vary.
 			builtIn.sleep("0.5 seconds")  # ensure application has time to receive input
-			actualSpeech = self.getSpeechAfterTab()
+			actualSpeech = self.getSpeechAfterKey('f6')
 			if ChromeLib._beforeMarker in actualSpeech:
 				break
-			if ChromeLib._afterMarker in actualSpeech:
-				# somehow missed the start marker!
-				spy.dump_speech_to_log()
-				builtIn.fail(
-					"Unable to tab to 'before sample' marker, reached 'after sample' marker first."
-					f" Looking for '{ChromeLib._beforeMarker}'"
-					" See NVDA log for full speech."
-				)
 		else:  # Exceeded the number of tries
 			spy.dump_speech_to_log()
 			builtIn.fail(
@@ -127,14 +117,20 @@ class ChromeLib:
 			)
 
 	@staticmethod
-	def getSpeechAfterTab() -> str:
-		"""Press tab, and get speech until it stops.
-		@return: The speech after tab.
+	def getSpeechAfterKey(key) -> str:
+		"""Ensure speech has stopped, press key, and get speech until it stops.
+		@return: The speech after key press.
 		"""
 		spy = _NvdaLib.getSpyLib()
 		spy.wait_for_speech_to_finish()
 		nextSpeechIndex = spy.get_next_speech_index()
-		keyInputLib.send('\t')
-		spy.wait_for_speech_to_finish()
+		spy.emulateKeyPress(key)
 		speech = spy.get_speech_at_index_until_now(nextSpeechIndex)
 		return speech
+
+	@staticmethod
+	def getSpeechAfterTab() -> str:
+		"""Ensure speech has stopped, press tab, and get speech until it stops.
+		@return: The speech after tab.
+		"""
+		return ChromeLib.getSpeechAfterKey('tab')

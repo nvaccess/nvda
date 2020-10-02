@@ -148,6 +148,7 @@ nodeNamesToNVDARoles: Dict[str, int] = {
 	"ARTICLE": controlTypes.ROLE_ARTICLE,
 	"FIGURE": controlTypes.ROLE_FIGURE,
 	"FIGCAPTION": controlTypes.ROLE_CAPTION,
+	"MARK": controlTypes.ROLE_MARKED_CONTENT,
 }
 
 

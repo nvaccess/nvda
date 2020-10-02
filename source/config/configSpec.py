@@ -174,6 +174,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportFontAttributes = boolean(default=false)
 	reportRevisions = boolean(default=true)
 	reportEmphasis = boolean(default=false)
+	reportHighlight = boolean(default=true)
 	reportSuperscriptsAndSubscripts = boolean(default=false)
 	reportColor = boolean(default=False)
 	reportAlignment = boolean(default=false)
@@ -234,6 +235,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [debugLog]
 	hwIo = boolean(default=false)
+	MSAA = boolean(default=false)
 	UIA = boolean(default=false)
 	audioDucking = boolean(default=false)
 	gui = boolean(default=false)
@@ -242,6 +244,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	vision = boolean(default=false)
 	speech = boolean(default=false)
 	speechManager = boolean(default=false)
+	nvwave = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")

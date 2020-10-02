@@ -7,6 +7,7 @@
 import threading
 from typing import Optional
 
+import garbageHandler
 import queueHandler
 import api
 import speech
@@ -81,7 +82,8 @@ def isPendingEvents(eventName=None,obj=None):
 	elif eventName and obj:
 		return (eventName,obj) in _pendingEventCountsByNameAndObj
 
-class _EventExecuter(object):
+
+class _EventExecuter(garbageHandler.TrackedObject):
 	"""Facilitates execution of a chain of event functions.
 	L{gen} generates the event functions and positional arguments.
 	L{next} calls the next function in the chain.
@@ -94,7 +96,8 @@ class _EventExecuter(object):
 			self.next()
 		except StopIteration:
 			pass
-		del self._gen
+		finally:
+			del self._gen
 
 	def next(self):
 		func, args = next(self._gen)
@@ -150,6 +153,8 @@ def _trackFocusObject(eventName, obj) -> None:
 	if eventName == "gainFocus":
 		lastQueuedFocusObject = obj
 		setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, True)
+		if speech.manager._shouldDoSpeechManagerLogging():
+			log.debug(f"Changing last queued focus object: {obj!r}")
 	elif not hasattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME):
 		setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
 
@@ -168,7 +173,8 @@ def _getFocusLossCancellableSpeechCommand(
 		return getattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
 
 	def isLastFocusObj():
-		return obj is lastQueuedFocusObject
+		# Obj may have been created multiple times pointing to the same underlying object.
+		return obj is lastQueuedFocusObject or obj == lastQueuedFocusObject
 
 	def isAncestorOfCurrentFocus():
 		return obj in api.getFocusAncestors()

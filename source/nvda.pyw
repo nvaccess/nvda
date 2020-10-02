@@ -9,23 +9,32 @@
 
 import sys
 import os
+import globalVars
+
 
 if getattr(sys, "frozen", None):
 	# We are running as an executable.
 	# Append the path of the executable to sys so we can import modules from the dist dir.
 	sys.path.append(sys.prefix)
-	os.chdir(sys.prefix)
+	appDir = sys.prefix
 else:
 	import sourceEnv
 	#We should always change directory to the location of this module (nvda.pyw), don't rely on sys.path[0]
-	os.chdir(os.path.normpath(os.path.dirname(__file__)))
+	appDir = os.path.normpath(os.path.dirname(__file__))
+appDir = os.path.abspath(appDir)
+os.chdir(appDir)
+globalVars.appDir = appDir
 
 import ctypes
 import locale
 import gettext
 
 try:
-	gettext.translation('nvda',localedir='locale',languages=[locale.getdefaultlocale()[0]]).install(True)
+	gettext.translation(
+		'nvda',
+		localedir=os.path.join(globalVars.appDir, 'locale'),
+		languages=[locale.getdefaultlocale()[0]]
+	).install(True)
 except:
 	gettext.install('nvda')
 
@@ -122,6 +131,18 @@ parser.add_argument(
 # If this option is provided, NVDA will not replace an already running instance (#10179) 
 parser.add_argument('--ease-of-access',action="store_true",dest='easeOfAccess',default=False,help="Started by Windows Ease of Access")
 (globalVars.appArgs,globalVars.appArgsExtra)=parser.parse_known_args()
+# Make any app args path values absolute
+# So as to not be affected by the current directory changing during process lifetime.
+pathAppArgs = [
+	"configPath",
+	"logFileName",
+	"portablePath",
+]
+for name in pathAppArgs:
+	origVal = getattr(globalVars.appArgs, name)
+	if isinstance(origVal, str):
+		newVal = os.path.abspath(origVal)
+		setattr(globalVars.appArgs, name, newVal)
 
 def terminateRunningNVDA(window):
 	processID,threadID=winUser.getWindowThreadProcessID(window)
