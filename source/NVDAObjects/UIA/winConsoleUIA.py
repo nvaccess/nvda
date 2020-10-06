@@ -356,6 +356,14 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		# IUIAutomationTextRange::getVisibleRanges returns one visible range.
 		return self.UIATextPattern.GetVisibleRanges().length == 1
 
+	def _get_TextInfo(self):
+		"""Overriding _get_TextInfo and thus the TextInfo property
+		on NVDAObjects.UIA.UIA
+		consoleUIATextInfo bounds review to the visible text.
+		ConsoleUIATextInfoPre21H1 fixes expand/collapse and implements word
+		movement."""
+		return consoleUIATextInfo if self.is21H1Plus else consoleUIATextInfoPre21H1
+
 	def _getTextLines(self):
 		if self.is21H1Plus:
 			return super()._getTextLines()
@@ -365,14 +373,6 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		ti = self.makeTextInfo(textInfos.POSITION_ALL)
 		text = ti.text or ""
 		return text.splitlines()
-
-	def _get_TextInfo(self):
-		"""Overriding _get_TextInfo and thus the TextInfo property
-		on NVDAObjects.UIA.UIA
-		consoleUIATextInfo bounds review to the visible text.
-		ConsoleUIATextInfoPre21H1 fixes expand/collapse and implements word
-		movement."""
-		return consoleUIATextInfo if self.is21H1Plus else consoleUIATextInfoPre21H1
 
 
 def findExtraOverlayClasses(obj, clsList):
