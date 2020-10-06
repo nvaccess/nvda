@@ -356,6 +356,16 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		# IUIAutomationTextRange::getVisibleRanges returns one visible range.
 		return self.UIATextPattern.GetVisibleRanges().length == 1
 
+	def _getTextLines(self):
+		if self.is21H1Plus:
+			return super()._getTextLines()
+		# This override of _getTextLines takes advantage of the fact that
+		# the console text contains linefeeds for every line
+		# Thus a simple string splitlines is much faster than splitting by unit line.
+		ti = self.makeTextInfo(textInfos.POSITION_ALL)
+		text = ti.text or ""
+		return text.splitlines()
+
 	def _get_TextInfo(self):
 		"""Overriding _get_TextInfo and thus the TextInfo property
 		on NVDAObjects.UIA.UIA
