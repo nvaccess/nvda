@@ -21,6 +21,7 @@ U preglednicima sada se može izgovarati postojanje označenog (obilježenog sad
 - Novi emulirani tipkovnički prečaci sada se mogu dadavati koristeći dijaloški okvir ulaznih gesti. (#6060)
   - Kako biste dodali takav prečac, pritisnite gumb dodaj poslje označavanja kategorije emulirani tipkovnički prečaci.
 - Sada je podržan Handy Tech Active Braille sa joistickom. (#11655)
+- Opcija "automatski način fokusa pri kretanju kursora" sada je kompatibilna sa onemogućavanjem o opcijom "automatski postavi fokus na elemente koji se mogu fokusirati". (#11663)
 
 
 == Izmjene ==
@@ -38,7 +39,7 @@ U preglednicima sada se može izgovarati postojanje označenog (obilježenog sad
 
 == Ispravke grešaka ==
 - NVDA sada izgovara simbol prilikom stajanja na riječi i kada znak slijedi poslije bijelog razmaka neovisno od postavke izgovora. (#5133)
-- In U aplikacijama koje koriste QT 5.11 ili noviji, opisi objekta sada ponovno izgovaraju. (#8604)
+- U aplikacijama koje koriste QT 5.11 ili noviji, opisi objekta sada ponovno izgovaraju. (#8604)
 - Prilikom brisanja riječi kraticom control+delete, NVDA više ne ostaje tih. (#3298, #11029)
   - sada se izgovara rijeć koja slijedi poslije izbrisane riječi.
 - U panelu općih postavki, popis jezika se sada ispravno sortira. (#10348)
@@ -47,7 +48,7 @@ U preglednicima sada se može izgovarati postojanje označenog (obilježenog sad
 - NVDA će sada ispravno čitati sadržaj dijaloškog okvira otvori sa u nadogradnji Windows 10 za svibanj 2020. (#11335)
 - Dodana je nova eksperimentalna opcija u  naprednim postavkama (Uključi selektivnu registraciju UIA događaja i izmjena svojstava) koja može unaprijediti performance u Visual studio i drugim UIA automation aplikacijama ako je uključena. (#11077, #11209)
 - Za stavke popisa koje se mogu odabrati, stanje označenosti se ne izgovara izlišno, te ako je moguće, umjesto njega se izgovara status neoznačenosti. (#8554)
-- U Windowsima 10 nadogradnij za svibanj 2020, NVDA saa prikazuje Microsoft zvučni enumerator u dijaloškom okviru govorna jedinica. (#11349)
+- U Windowsima 10 nadogradnji za svibanj 2020, NVDA saa prikazuje Microsoft zvučni enumerator u dijaloškom okviru govorna jedinica. (#11349)
 - U Internet Exploreru, brojevi se sada točno izgovaraju za parne popise ako popis ne počinje brojem 1. (#8438)
 - U Google chromeu, NVDA će sada izgovarati "nije odabrano"  za sve kontrole koje su označive (ne samo za potvrdne okvire) koji su trenutno neoznačeni. (#11377)
 - Sada je ponovno moguće kretati se po raznim kontrolama ako je jezik NVDA postavljen na Aragonski. (#11384)
@@ -58,7 +59,6 @@ U preglednicima sada se može izgovarati postojanje označenog (obilježenog sad
 - NVDA sada ostavlja otvorenu zvučnu karticu takvim načinom poboljšavajući performanse (#5172, #10721)
 - NVDA više se neće smrznuti ili srušiti prilikom pritiska i držanja ctrl+shift+strelica dolje u Microsoft Wordu. (#9463)
 - Stanje skupljenosti ili raširenosti mapa na stranici drive.google.com sada je pravilno izgovarano. (#11520)
-- Neki SAPI5 glasovi (poput Ivona) više ne preskaću fragmente govora. (#10901)
 - Veliko unaprjeđenje performansi u Visual Studio Code. (#11533)
 
 
