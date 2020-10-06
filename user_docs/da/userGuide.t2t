@@ -1575,6 +1575,7 @@ En del vinduer og kontroller viser en lille meddelelse (eller et værktøjstip),
 Når denne check box er markeret, oplyser NVDA meddelelser og hjælpeballonerne, når de fremkommer.
 - Hjælpeballoner ligner værktøjstips med den forskel, at de som regel er større og er tilknyttet systemhændelser såsom at et netværkskabel er fjernet eller muligvis for at henlede opmærksomheden på Windows sikkerhedsproblemer.
 - Toast-meddelelser og bliver vist i handlingscenteret i systembakken, og informerer dig om diverse hændelser (f.eks. hvis en opdatering til Windows er blevet downloadet, en ny e-mail ankommet, osv).
+-
 
 ==== Oplys objektets genvejstaster ====[ObjectPresentationShortcutKeys]
 Når denne check box er markeret, medtager NVDA den genvejstast, der hører til et objekt eller en kontrol, under rapporteringen af det givne element.
@@ -1708,7 +1709,7 @@ med denne indstilling, som er slået til som udgangspunkt, kan du vælge om komm
 Hvis denne indstilling er slået til, og du f.eks. trykker på bogstavet j, vil tastetrykket blive forhindret i at komme videre til dokumentet, selv om det ikke er en kommando til hurtignavigation, og det heller ikke er sandsynligt, at det er en kommando i selve programmet.
 I dette tilfæld vil NVDA få Windows til at afspille en standardlyde, hver gang en kommando forhindres i at nå dokumentet.
 
-==== Placer automatisk systemfokus på fokuserbare elementer i gennemsynstilstand ====[BrowseModeSettingsAutoFocusFocusableElements]
+==== Placer automatisk systemfokus på fokuserbare elementer ====[BrowseModeSettingsAutoFocusFocusableElements]
 Tast: NVDA+8
 
 Denne indstilling bestemmer om systemfokus automatisk skal flyttes til fokuserbare elementer der kan overtage systemfokus (formfelter, links, osv), når du navigerer indhold med gennemsynstilstand. Denne indstilling er deaktiveret som standard.
