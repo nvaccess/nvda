@@ -366,6 +366,9 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 
 	def _getTextLines(self):
 		if self.is21H1Plus:
+			# #11722: the 21H1 UIA console wraps across lines.
+			# When text wraps, NVDA starts reading from the beginning of the visible text for every new line of output.
+			# Use the superclass _getTextLines instead.
 			return super()._getTextLines()
 		# This override of _getTextLines takes advantage of the fact that
 		# the console text contains linefeeds for every line
