@@ -1,4 +1,4 @@
-f 변경 이력
+NVDA 변경 이력
 
 
 %!includeconf: ../changes.t2tconf
@@ -16,7 +16,8 @@ f 변경 이력
   - 이 기능은 새로 추가된 NVDA의 문서 서식 항목을 통해서 켜고 끌 수 있습니다.
 - 입력 제스처 창에서 모방할 시스템 키보드 입력을 추가할 수 있습니다. (#6060)
   - 이 기능을 사용하려면 시스템 키보드 입력 모방 그룹을 선택한 후에 추가 버튼을 누르세요.
-- Handy Tech Active Braille with joystick is now supported. (#11655)
+- Handy Tech Active Braille을 이제 조이스틱과 함께 사용할 수 있습니다. (#11655)
+- "자동으로 포커스 가능한 요소에 시스템 포커스 이동" 항목이 비활성화되어 있을때에도 "캐럿 이동 시 자동 포커스 모드 전환" 설정을 사용할 수 있습니다. (#11663)
 
 
 == 변경된 기능 ==
@@ -24,41 +25,37 @@ f 변경 이력
 - 성능 및 안정성 향상을 위해 NVDA의 브라우즈 모드에서 더 이상 기본적으로 초점을 받을 수 있는 요소에 자동으로 초점을 보내지 않습니다. (#11190)
 - CLDR의 버전이 36.1 에서 37 버전으로 업데이트되었습니다. (#11303)
 - eSpeak-NG 음성엔진 버전이 1.51-dev 버전으로 업데이트 되었습니다, commit 1fb68ffffea4
-- You can now utilize table navigation in list boxes with checkable list items when the particular list has multiple columns. (#8857)
+- 선택할 수 있는 목록 항목을 가진 목록상자가 여러 개의 열을 갖고 있을 경우, 이제는 표 내비게이션을 사용할 수 있습니다. (#8857)
 - 이제 추가 기능 관리에서 추가 기능 제거 확인을 위한 대화상자 창이 표시될 때, "아니오" 버튼에 기본 초점이 제공됩니다. (#10015)
-- In Microsoft Excel, the Elements List dialog now presents formulas in their localized form. (#9144)
-- NVDA now reports the correct terminology for notes in MS Excel. (#11311)
-- NVDA는 이제 MS Excel의 메모에 대한 올바른 용어를 알립니다. (#11311)
-- When using the "move review cursor to focus" command in browse mode, the review cursor is now set at the position of the virtual caret. (#9622)
-- 브라우즈 모드에서 "포커스된 객체로 이동"명령을 사용하면 이제 리뷰 커서가 가상 캐럿 위치에 설정됩니다. (#9622)
-- 이제 브라우즈 모드에서 NVDA+F 두 번 눌러 서식 정보를 볼 때 화면 중앙에 조금 더 큰 창으로 표시됩니다. (#9910)
+- 마이크로소프트 엑셀에서 요소목록 대화상자의 수식을 선택된 지역의 형식에 맞춰 출력합니다. (#9144)
+- NVDA는 이제 MS Excel의 메모에서 올바른 용어를 사용해서 알려줍니다. (#11311)
+- 브라우즈 모드에서 "포커스된 객체로 이동"명령을 사용하면, 이제 리뷰 커서가 가상 캐럿 위치에 설정됩니다. (#9622)
+- 이제 브라우즈 모드에서 NVDA+F를 두 번 눌러 서식 정보를 볼 때 화면 중앙에 조금 더 큰 창으로 표시됩니다. (#9910)
 
 
 == 버그 수정 ==
-- NVDA now always speaks when navigating by word and landing on any single symbol followed by white space, whatever the verbosity settings. (#5133)
+- NVDA가 단어별로 읽기로 설정되어 있고 뒤에 공백이 있는 심볼에 다다르면, 읽기수준 설정에 상관없이 항상 알려줍니다. (#5133)
 - QT 5.11 이상의 버전을 사용하는 응용 프로그램에서 객체 설명을 다시 알립니다. (#8604)
-- When deleting a word with control+delete, NVDA no longer remains silent. (#3298, #11029)
 - 이제 ctrl + delete 키로 단어 단위로 글자를 지웠을 때 침묵하지 않습니다. (#3298, #11029)
   - 이제 지워진 단어의 오른쪽에 있는 단어를 알립니다.
 - 일반 설정 패널에서 언어 목록의 순서가 올바르게 재정렬되었습니다. (#10348)
 - 제스처 설정 대화상자에서 명령 검색 중 성능이 향상되었습니다. (#10307)
 - 이제 점자 디스플레이에서 U+FFFF 이상의 유니코드 문자를 보낼 수 있습니다.. (#10796)
-- NVDA will announce Open With dialog content in Windows 10 May 2020 Update. (#11335)
-- A new experimental option in Advanced settings (Enable selective registration for UI Automation events and property changes) can provide major performance improvements in Microsoft Visual Studio and other UIAutomation based applications if enabled. (#11077, #11209)
+- 윈도우즈 10 2020년 5월 업데이트에서 "다른 프로그램으로 열기" 대화상자의 내용을 읽습니다. (#11335)
+- 고급 설정에 새로 소개된 실험적인 선택항목 "UIA 이벤트와 속성 변화를 일부 적용"을 활성화하면, 마이크로소프트 Visual Studio 및 UIAutomation을 사용하는 다른 어플리케이션에 주요한 성능향상이 있을 수 있습니다. (#11077, #11209)
 - 체크 가능한 목록 항목의 경우 선택한 상태가 더 이상 중복으로 알리지 않으며, 선택되지 않은 상태를 알립니다. (#8554)
 - 2020년 5월 업데이트가 적용된 Windows 10에서 NVDA의 음성엔진 선택 대화상자의 음성 출력 장치 콤보상자 목록으로 Microsoft Sound Mapper가 표시됩니다. (#11349)
 - Internet Explorer에서 순서 있는 목록 중, 목록이 1로 시작되지 않는 목록에 대한 숫자 블릿을 올바르게 읽습니다. (#8438)
 - Google Chrome에서 선택되지 않은 상태의 체크 가능한 컨트롤에 "해제됨" 상태를 제공합니다(체크상자와 유사한 모든 요소). (#11377)
-- It is once again possible to navigate in various controls when NVDA's language is set to Aragonese. (#11384)
+- NVDA의 언어가 아라곤어로 설정됐을 때 다양한 UI를 사용하는 것이 다시 가능해졌습니다. (#11384)
 - Microsoft Word에서 화살표 키를 위 아래로 빠르게 반복 입력하거나, 점자 입력이 활성화된 상태로 문자를 입력할 때 NVDA가 더 이상 멈추지 않습니다. (#11431, #11425, #11414)
-- NVDA no longer appends nonexistent trailing space when copying the current navigator object to the clipboard. (#11438)
+- 선택한 탐색 객체를 클립보드로 복사할 때, 더이상 존재하지도 않는 공백문자를 끝에 추가하지 않습니다. (#11438)
 - 읽을 내용이 없으면 NVDA는 더 이상 'Say All' 프로필을 활성화하지 않습니다. (#10899, #9947)
-- NVDA is no longer unable to read the features list in Internet Information Services (IIS) Manager. (#11468)
-- NVDA now keeps the audio device open improving performance on some sound cards (#5172, #10721)
+- NVDA가 Internet Information Services (IIS) 관리자에서 기능 목록을 읽지 못했던 버그가 수정됐습니다. (#11468)
+- NVDA가 이제 사운드 장치를 열어둔 채로 두어 일부 사운드카드에서의 성능을 향상시킵니다. (#5172, #10721)
 - Microsoft Word에서  'ctrl+shift+아래 화살표 키'를 길게 눌러도 더 이상 NVDA가 멈추거나 종료되지 않습니다. (#9463)
 - Google Drive(drive.google.com)의 탐색 트리뷰에 있는 경로의 확장/축소 상태를 NVDA가 항상 알립니다. (#11520)
-- NVDA will auto detect the NLS eReader Humanware braille display via Bluetooth as its Bluetooth name is now "NLS eReader Humanware". (#11561)
-- 특정 음성(예: Ivona)에서 더 이상 발화를 생략하지 않습니다. (#10901)
+- eReader Humanware 점자 디스플레이가 블루투스를 통해서 NVDA에 연결하면 이제 "NLS eReader Humanware"라는 이름으로 자동 인식합니다. (#11561)
 - Visual Studio Code에서의 주요 성능이 개선되었습니다. (#11533)
 
 
