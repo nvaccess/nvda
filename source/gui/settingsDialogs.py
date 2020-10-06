@@ -985,7 +985,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 		deviceListLabelText = _("Audio output  &device:")
 		deviceNames=nvwave.getOutputDeviceNames()
 		# #11349: On Windows 10 20H1 and 20H2, Microsoft Sound Mapper returns an empty string.
-		if not deviceNames[0]:
+		if deviceNames[0] in ("", "Microsoft Sound Mapper"):
 			# Translators: name for default (Microsoft Sound Mapper) audio output device.
 			deviceNames[0] = _("Microsoft Sound Mapper")
 		self.deviceList = settingsSizerHelper.addLabeledControl(deviceListLabelText, wx.Choice, choices=deviceNames)
@@ -2603,6 +2603,7 @@ class AdvancedPanelControls(wx.Panel):
 			"vision",
 			"speech",
 			"speechManager",
+			"nvwave",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
@@ -2817,7 +2818,14 @@ class DictionaryEntryDialog(wx.Dialog):
 			self.patternTextCtrl.SetFocus()
 			return
 		try:
-			self.dictEntry=speechDictHandler.SpeechDictEntry(self.patternTextCtrl.GetValue(),self.replacementTextCtrl.GetValue(),self.commentTextCtrl.GetValue(),bool(self.caseSensitiveCheckBox.GetValue()),self.getType())
+			dictEntry = self.dictEntry = speechDictHandler.SpeechDictEntry(
+				self.patternTextCtrl.GetValue(),
+				self.replacementTextCtrl.GetValue(),
+				self.commentTextCtrl.GetValue(),
+				bool(self.caseSensitiveCheckBox.GetValue()),
+				self.getType()
+			)
+			dictEntry.sub("test")  # Ensure there are no grouping error (#11407)
 		except Exception as e:
 			log.debugWarning("Could not add dictionary entry due to (regex error) : %s" % e)
 			# Translators: This is an error message to let the user know that the dictionary entry is not valid.

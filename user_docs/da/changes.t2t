@@ -4,50 +4,56 @@ Nyheder i NVDA
 
 %!includeconf: ../changes.t2tconf
 
-= 2020.2 =
-Af væsentlige ændringer i denne udgave af NVDA kan nævnes understøttelse af et nyt punktdisplay fra Nattiq, bedre understøttelse af ESET antivirus og Windows Terminal, forbedret ydeevne ved brug af 1Password og forbedringer til til talesyntesen Windows OneCore. Desuden er der mange flere fejlrettelser og forbedringer.
+= 2020.3 =
+Af væsentlige ændringer i denne udgave af NVDA kan nævnes flere markante forbedringer især til Microsoft Office. Der er nu indstillinger, der lader dig slå understøttelse for berøringsinteraktion til og fra og grafikelementer. Markeret (fremhævet) indhold kan nu oplyses i browsere, og der er nye tyske punkttabeller.
 
 == Nye funktioner ==
-- Understøttelse for nye punktdisplays:
-  - Nattiq nBraille (#10778)
-- Tilføjet et script, der åbner NVDAs konfigurationsmappe (ikke tildelt en kommando som standard). (#2214)
-- Bedre understøttelse for brugergrænsefladen, der benyttes af ESET antivirus. (#10894)
-- Understøttelse for Windows Terminal. (#10305)
-- Tilføjet kommando, der oplyser den aktive konfigurationsprofil (ikke tildelt kommando som standard). (#9325)
-- Tilføjet et script, der slår rapportering om sænket og hævet skrift til og fra (ikke tildelt kommando som standard). (#10985)
-- Webapplikationer (f.eks. Gmail) udtaler ikke længere forældede informationer, når du hurtigt bevæger dig rundt. (#10885)
-  - Denne eksperimentelle rettelse skal aktiveres under NVDA-menuen/Opsætning/Indstillinger og under kategorien "Avanceret". Vælg "Forsøg at annullere udløbne fokushændelser"
-- Mange flere symboler er blevet tilføjet til den symbolordbog, der benyttes som standard. (#11105)
+- Du kan nu slå rapportering af grafik til og fra i NVDAs dokumentformateringsindstillinger. Bemærk, at NVDA fortsat vil oplyse grafikelementer med alternativ tekst. (#4837)
+- Du kan nu slå understøttelse for berøringsinteraktion til og fra. Dette gøres under "Berøringsinteraktion" i NVDAs indstillingspanel. Tastaturkommandoen er NVDA+control+alt+t. (#9682)
+- Tilføjet nye tyske punkttabeller. (#11268)
+- NVDA opfanger nu skrivebeskyttede UIA-kontrolelementer. (#10494)
+- Markeret (fremhævet) tekst rapporteres nu både med tale og punktskrift i alle browsere. (#11436)
+ - Dette kan slås fra under "Dokumentformatering" med den nye indstilling for markeret tekst.
+- Nye emulerede systemtaster kan tildeles under NVDAs dialog til håndtering af kommandoer. (#6060)
+  - For at gøre dette, skal du vælge "Tilføj" efter du har valgt kategorien "Emulerede tastaturtryk".
 
 
 == Ændringer ==
-- Opdaterede LibLouis punktoversættelse fra 3.12 til [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0]. (#10832, #11221)
-- Informationer om hævet og sænket skrift kontrolleres nu særsklit fra skrifttypeattributter. (#10919)
-- På grund af ændringer foretaget i VS Code, vil NVDA ikke længere deaktivere gennemsynstilstand som standard i Code. (#10888)
-- NVDA oplyser ikke længere "top" eller "bund", når du flytter til den første eller sidste linje i et navigatorobjekt. (#9551)
-- NVDA oplyser ikke længere "højre" eller "venstre", når du flytter til det første eller sidste tegn for den aktuelle linje i et navigatorobjekt. (#9551)
+- Scriptet til rapportering af tekstformatering (NVDA+f) vil nu rapportere tekstformateringen for systemmarkørens aktuelle position i stedet for ved læsemarkøren. For at få oplyst tekstformatering ved læsemarkørens aktuelle position, skal du trykke NVDA+shift+F. (#9505)
+- NVDA flytter ikke længere systemfokus til fokuserbare elementer som standard i gennemsynstilstand, hvilket vil forbedre ydeevne og stabilitet. (#11190)
+- CLDR opdateret fra version 36.1 til version 37. (#11303)
+- Opdaterede eSpeak-NG til 1.51-dev, commit 1fb68ffffea4
+- Du kan nu benytte kommandoer til navigering i tabeller, hvis du er i en listboks med flere listelementer der kan markeres, såfremt den pågældende liste har flere kolonner. (#8857)
+- Når du skal bekræfte om du vil slette en tilføjelse, vil "Nej" nu være standardknappen. (#10015)
+- NVDAs Elementlist i Microsoft Excel vil nu vise formularer i deres lokaliserede format. (#9144)
+- NVDA benytter nu den korrekte terminologi i Microsoft Excel. (#11311)
+- Når du bruger kommandoen til at flytte læsemarkøren til fokus, vil læsemarkøren nu befinde sig ved den virtuelle markørs aktuelle position. (#9622)
+- Informationer oplyst i gennemsynstilstand, eksempelvis tekstformateringsoplysningerne med NVDA+F, vises nu i et større vindue centreret på skærmen. (#9910)
 
 
 == Fejlrettelser ==
-- NVDA starter nu korrekt, når logfilen ikke kan oprettes. (#6330)
-- I nylige udgaver af Microsoft Word 365 vil NVDA ikke længere oplyse "slet ord bagud", når Ctrl+Backspace benyttes under redigering af et dokument. (#10851)
-- NVDA vil nu korrekt oplyse status for funktionerne "Bland" og "Gentag" i Winamp. (#10945)
-- NVDA er ikke længere ekstremt langsom, når der flyttes mellem emner i en liste i 1Password. (#10508)
-- Talesyntesen Windows OneCore er ikke længere forsinket mellem udtalelser. (#10721)
-- NVDA fryser ikke længere, når du åbner kontekstmenuen for 1Password i meddelelsesområdet. (#11017)
-- I Office 2013 og ældre:
-  - Bånd annonceres nu korrekt, når fokus flyttes til dem for første gang. (#4207)
-  - Emner i kontekstmenuer rapporteres nu igen korrekt. (#9252)
-  - Diverse sektioner i båndmenuer oplyses nu korrekt, når du bevæger dig mellem dem med Ctrl+piletaster. (#7067)
-- Tekst vil ikke længere vises på en ny linje i Google Chrome og Mozilla Firefox i gennemsynstilstand, når webindhold benytter CSS display: inline-flex. (#11075)
-- Hvis indstillingen "Placer automatisk systemfokus på fokuserbare elementer i gennemsynstilstand" er deaktiveret, vil det nu være muligt at aktivere elementer der ikke er fokuserbare.
-- Hvis indstillingen "Placer automatisk systemfokus på fokuserbare elementer i gennemsynstilstand" er deaktiveret, vil det nu være muligt at aktivere elementer, der kun kan nåes ved at trykke på tab-tasten. (#8528)
-- Hvis indstillingen "Placer automatisk systemfokus på fokuserbare elementer i gennemsynstilstand" er deaktiveret, vil NVDA ikke længere klikke på en ukorrekt placering i forhold til bestemte elementer. (#9886)
-- NVDA afspiller ikke længere fejltoner, når DevExpress tekstkontrolelementer håndteres. (#10918)
-- Værktøjstips oplyses ikke i meddelelsesområdet, hvis teksten er den samme som ikonet. (#6656)
-- Hvis indstillingen "Placer automatisk systemfokus på fokuserbare elementer i gennemsynstilstand" er deaktiveret, vil NVDA+mellemrum for at skifte til fokustilstand fokusere elementet under markøren. (#11206)
-- Det er nu igen muligt at søge efter opdateringer på bestemte systemer (f.eks. en ren Windows-installation). (#11253)
-- Fokus flyttes ikke i Java-applikationer, når et valg ændres i en trævisning, tabel eller liste, der ikke har fokus. (#5989)
+- NVDA vil nu altid tale, når der navigeres efter ord og man lander på et symbol efterfulgt af et blanktegn uanset tegnsætningsniveau. (#5133)
+- Objektbeskrivelser rapporteres nu igen i applikationer, der bruger QT 5.11 eller nyere. (#8604)
+- Når et ord slettes med control+delete, vil NVDA ikke længere forblive stille. (#3298, #11029)
+  - Ordet til højre for det slettede ord vil blive oplyst.
+- Listen over sprog i NVDAs generelle indstillinger er nu sorteret korrekt. (#10348)
+-Markant forbedret ydeevne i dialogen til håndtering af kommandoer, når der filtreres. (#10307)
+- Du kan nu sende andre Unicode-tegn end U+FFFF fra et punktdisplay. (#10796)
+- NVDA vil nu korrekt rapportere indholdet af dialoger, når du skal åbne en fil uden tilknyttet program i Windows 10 Maj 2020 opdateringen. (#11335)
+- En ny eksperimentel avanceret indstilling (Aktivér selektiv registrering af hændelser fra UI Automation samt egenskabsændringer) kan forbedre ydeevnen i Microsoft Visual Studio og andre UI Automation-baserede programmer meget markant. (#11077, #11209)
+- For markérbare listemner vil status for emnet ikke længere blive annonceret, når det forekommer overflødigt. Hvis gældende, vil "ikke markeret" blive annonceret i stedet. (#8554)
+- NVDA vil nu vise Microsoft Sound Mapper, når du vælger lydenhed i dialogen til valg af talesyntese i Windows 10 May Update 2020. (#11349)
+- NVDA vil nu korrekt oplyse numre for en nummereret liste i Internet Explorer, hvis listen ikke starter med 1. (#8438)
+- NVDA vil nu rapportere "ikke markeret" for alle markérbare kontrolelementer (ikke bare check bokse) der ikke er markerede i Google Chrome. (#11377)
+- Det er nu igen muligt at bevæge sig rundt i diverse kontrolelementer, hvis NVDAs sprog er indstillet til aragonsk. (#11384)
+- NVDA skulle ikke længere fryse, når man hurtigt piler sig op eller ned i dokumenter, eller indtaster tegn med punktskrift aktiveret. (#11431, #11425, #11414)
+- NVDA vil ikke længere tilføje et ikke-eksisterende mellemrum til teksten, når navigatorobjektet kopieres til udklipsholderen. (#11438)
+- NVDA aktiverer ikke længere profilen til sig alt, hvis der ikke er noget at læse. (#10899, #9947)
+- NVDA er nu i stand til at læse funktionslisten i Internet Information Services (IIS) Manager. (#11468)
+- NVDA beholder nu lydenheden åben til bedre modtagelse af lyd på nogle lydkort. (#5172, #10721)
+- NVDA vil ikke længere fryse eller afslutte, når man holder Ctrl+Shift+Pil ned nede i Microsoft Word. (#9463)
+- Status for mapperne (sammenfoldet eller udvidet) på drive.google.com er nu altid oplyst af NVDA. (#11520)
+- NVDA vil automatisk tilkoble punktdisplayet NLS eReader Humanware via Bluetooth da Bluetooth-navnet nu er omdøbt til "NLS eReader Humanware". (#11561)
 
 
 == Ændringer for udviklere ==

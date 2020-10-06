@@ -3,6 +3,10 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.3 =
+Esta versión inclúe varias grandes melloras para a estabilidade e o rendemento, especialmente nas aplicacións de Microsoft Office. Hai novas opcións para conmutar o soporte das pantallas táctiles e do anunciado de gráficos.
+A existencia de contido marcado (resaltado) pode anunciarse nos navegadores, e hai novas táboas braille alemanas.
+
 == Novas Características ==
 - Agora podes conbmutar o anunciado de gráficos dende as opcións de Formateado de Documentos do NVDA.  Ten en conta que deshabilitando esta opción aínda lerá o texto alternativo dos gráficos. (#4837)
 - Agora podes conmutar o soporte de pantallas táctiles do NVDA. Engadiuse unha opción ao panel de interacción táctil das opcións do NVDA. O xesto predeterminado é NVDA+control+alt+t. (#9682)
@@ -24,6 +28,7 @@ Que hai de Novo no NVDA
 - En Microsoft Excel, o diálogo de listaxe de elementos agora presenta fórmulas na súa forma localizada. (#9144)
 - O NVDA agora anuncia a terminoloxía correcta para notas en MS Excel. (#11311)
 - Ao se usar a orde "mover cursor de revisión ao foco" en modo Exploración, o cursor de revisión agora ponse na posición do cursor virtual. (#9622)
+- A información anunciada no modo exploración, como a información de formato con NVDA+F, amósase agora nunha ventá lixeiramente máis grande centrada na pantalla. (#9910)
 
 
 == Arranxo de Erros ==
@@ -45,6 +50,10 @@ Que hai de Novo no NVDA
 - O NVDA xa non engade un espazo non existente no arrastre ao copiar o navegador de obxectos actual ao portapapeis. (#11438)
 - O NVDA xa non activa o perfil Ler todo se non hai nada que ler. (#10899, #9947)
 - O NVDA xa non é incapaz de ler a listaxe de características en el administrador Internet Information Services (IIS). (#11468)
+- O NVDA agora mantén o dispositivo de audio aberto mellorando o rendemento nalgunhas tarxetas de son (#5172, #10721)
+- O NVDA xa non se conxelará nin se apagará cando manteñas premido control+shift+flecha abaixo en Microsoft Word. (#9463)
+- O estado expandido/colapsado dos directorios na árbore de navegación de drive.google.com agora sempre se anuncia polo NVDA. (#11520)
+- O NVDA detectará automáticamente a pantalla braille NLS eReader Humanware a través do Bluetooth, xa que o seu nome Bluethooth é agora "NLS eReader Humanware". (#11561)
 
 
 == Cambios para Desenvolvedores ==

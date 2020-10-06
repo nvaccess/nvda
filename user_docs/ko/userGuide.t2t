@@ -217,8 +217,6 @@ NVDA가 동작하는 동안 터치 지원이 꺼져있지 않는한 모든 터�
 본 설명서를 읽으면서 가끔식 NVDA가 사용하는 터치 명령을 접하실 수 있습니다.
 NVDA에서 사용하는 터치 제스추어 및 그 제스추어의 사용 요령은 다음과 같습니다.
 
-
-
 ==== 태핑 ====
 터치스크린 어디에든지 한개 이상의 손가락으로 태핑하십시요.
 
@@ -336,7 +334,6 @@ NVDA는 시스템 케럿과 관련하여 다음과 같은 단축키를 제공합
 | 글자 서식 알림 | NVDA+f | NVDA+f | 시스템 케럿이 현재 위치한 글자의 서식을 알려 줍니다. 두번 누르면 서식 정보를 브라우즈 모드로 보여줍니다. |
 | 다음 문장으로 이동 | alt+downArrow | alt+downArrow | 시스템 케럿을 다음 문장으로 이동합니다(마이크로소프트 워드와 아우틀룩에서만 사용 가능). |
 | 이전 문장으로 이동 | alt+upArrow | alt+upArrow | 시스템 케럿을 다음 문장으로 이동합니다(마이크로소프트 워드와 아우틀룩에서만 사용 가능). |
-
 
 시스템 케럿이 표 안에 있는 경우, 아래 단축키들도 사용 가능합니다.
 || 이름 | 키 | 설명 |
@@ -653,7 +650,6 @@ https://www.dessci.com/en/products/mathtype/에서 다운로드하여 설치하�
 
 가끔 수학 공식 내용이 대화상자안에 위치하는데 이것을 접근하기 위해 버튼이나 다른 료소가 표시될 수 있습니다.
 이때 ctrl+enter를 눌러 공식 정보 버튼이나 요소를 선택합니다.
-
 
 + 점자 지원 +[Braille]
 점자 사용자라면 점자 디스플레이를 통해 NVDA가 제공하는 정보를 읽을 수 있습니다.
@@ -1082,7 +1078,8 @@ NVDA 설정에 나열된 설정 페널들을 알아보겠습니다.
  - 만약 개인 정보 보호에 민감하다면 이 옵션을 피하십시오.
 - 디버그: 위에 나열한 기록(정보, 주의, 입출력) 이상의 디버그 내용이 기록됩니다.
  - 입출력 기록과 마찬가지로 개인 정보 보호에 민감하다면 이 옵션을 피하십시오.
-
+ -
+-
 
 ==== 로그인 후에 NVDA 시작 ====[GeneralSettingsStartAfterLogOn]
 이 옵션을 선택하면 NVDA는 윈도우즈에 로그온 후 자동으로 실행됩니다.
@@ -1578,7 +1575,6 @@ This setting can also be toggled using NVDA+control+alt+t.
 이 체크박스가 체크되면 NVDA는 도움말 표시란(풍선 도움말 또는 토스트)이 나타날 때마다 그것을 읽습니다.
 - 풍선 도움말은 툴팁과 비슷합니다. 그러나 툴팁보다 크기가 더 크고 같은 시스템 이벤트들과 연결되어 있습니다. 예를 들면, 네트워크가 끊어졌다거나 윈도우즈 보안 이슈에 관하여 경고하기 등입니다.
 - 토스트는 윈도우 8 이상에서 나타나는 알림창으로 여러 이벤트 관련 알림을 보여줍니다(예: 업데이트 다운로드, 이메일 도착 등).
-
 
 ====  객체 핫키 알림 ====[ObjectPresentationShortcutKeys]
 이 체크박스가 체크되면, 특정한 객체나 컨트롤이 핫키를 지원하는 경우 NVDA는 그 객체나 컨트롤과 연결된 핫키를 함께 알려줍니다.
@@ -2198,7 +2194,6 @@ Specifically, following issues can be solved by running this tool:
 
 
 
-
 + 지원하는 음성 엔진 +[SupportedSpeechSynths]
 이 섹션은 NVDA가 지원하는 음성 엔진에 관한 정보를 포함하고 있습니다.
 NVDA에서 사용할 수 있고 무료/유료로 구매하거나 다운로드 받을 수 있는 음성 엔진의 더욱 더 많은 정보를 찾으신다면,  [Extra voices https://github.com/nvaccess/nvda/wiki/ExtraVoices] 페이지를 보세요.
@@ -2244,7 +2239,6 @@ Windows 10 사용 시 OneCore(또는 Mobile)라는 음성 엔진을 사용할 �
 윈도우 10 사용시 Windows OneCore 엔진이 기본값으로 되어 있습니다(이전 윈도우 버전에서는 [eSpeak NG #eSpeakNG] 사용).
 
 각 언어별 보이스 목록과 설치 방법에 대해서는 다음 마이크로소프트 웹사이트를 참조하세요: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
-
 
 + 지원하는 점자 디스플레이들 +[SupportedBrailleDisplays]
 이 섹션에서는 NVDA와 점자 디스플레이 기능키에 대한 정보를 수록합니다.
@@ -2518,7 +2512,7 @@ NVDA에서는  [hedo Reha-Technik https://www.hedo.de/] 에서 출시한 hedo Mo
 - APH Chameleon 20
 - Humanware BrailleOne
 - NLS eReader
-
+-
 
 다음은 이 디스플레이에 할당된 NVDA 기능키 목록입니다.
 각 키의 위치에 대해서는 디스플레이의 사용설명서를 참고하십시요.

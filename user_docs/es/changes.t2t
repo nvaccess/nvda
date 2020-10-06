@@ -4,6 +4,8 @@ Qué hay de Nuevo en NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2020.3 =
+Esta versión incluye varias grandes mejoras para la estabilidad y el rendimiento, especialmente en las aplicaciones de Microsoft Office. Hay nuevas opciones para conmutar el soporte de las pantallas táctiles y del anunciado de gráficos.
+La existencia de contenido marcado (resaltado) puede anunciarse en los navegadores, y hay nuevas tablas braille alemanas.
 
 == Nuevas Características ==
 - Ahora puedes conbmutar el anunciado de gráficos desde las opciones de Formateado de Documentos de NVDA.  Ten en cuenta que deshabilitando esta opción todavía leerá el texto alternativo de los gráficos. (#4837)
@@ -26,6 +28,7 @@ Qué hay de Nuevo en NVDA
 - En Microsoft Excel, el diálogo de lista de elementos ahora presenta fórmulas en su forma localizada. (#9144)
 - NVDA ahora anuncia la terminología correcta para notas en MS Excel. (#11311)
 - Al utilizar la orden "mover cursor de revisión al foco" en modo Exploración, el cursor de revisión ahora se pone en la posición del cursor virtual. (#9622)
+- La información anunciada en el modo exploración, como la información de formato con NVDA+F, se muestra ahora en una ventana ligeramente más grande centrada en la pantalla. (#9910)
 
 
 == Corrección de Errores ==
@@ -47,13 +50,23 @@ Qué hay de Nuevo en NVDA
 - NVDA ya no añade un espacio no existente en el arrastre al copiar el navegador de objetos actual al portapapeles. (#11438)
 - NVDA ya no activa el perfil Leer todo si no hay nada que leer. (#10899, #9947)
 - NVDA ya no es incapaz de leer la lista de características en el administrador Internet Information Services (IIS). (#11468)
-
+- NVDA ahora mantiene el dispositivo de audio abierto mejorando el rendimiento en algunas tarjetas de sonido (#5172, #10721)
+- NVDA ya no se congelará ni se apagará cuando mantengas pulsado control+shift+flecha abajo en Microsoft Word. (#9463)
+- El estado expandido/colapsado de los directorios en el árbol de navegación de drive.google.com ahora siempre se anuncia por NVDA. (#11520)
+- NVDA detectará automáticamente la pantalla braille NLS eReader Humanware a través de Bluetooth, ya que su nombre Bluethooth es ahora "NLS eReader Humanware". (#11561)
+ 
 
 == Cambios para Desarrolladores ==
 - El GUI Helper's BoxSizerHelper.addDialogDismissButtons soporta una nueva palabra clave de argumento "separated", para añadir un separador horizontal estándar a los diálogos (que no sean mensajes y diálogos de entrada simples). (#6468)
 - Se añadieron propiedades adicionales a los app modules, incluyendo la ruta para el ejecutable (appPath), es una app de almacenamiento de Windows (isWindowsStoreApp), y arquitectura de máquina para la app (appArchitecture). (#7894)
 - Ahora es posible crear app modules para apps hospedadas dentro de wwahost.exe en Windows 8 y posteriores. (#4569)
-
+- Ahora se puede delimitar un fragmento del registro y luego copiarlo al portapapeles usando NVDA+control+shift+F1. (#9280)
+- Los objetos específicos de NVDA que se encuentran por el recolector de basura cíclica de Python ahora se registran cuando se borran por el recolector para ayudar en la eliminación de los ciclos de referencia de NVDA. (#11499)
+ - La mayoría de las clases de NVDA se rastrean incluyendo NVDAObjects, appModules, GlobalPlugins, SynthDrivers, y TreeInterceptors.
+ - Una clase que se necesita rastrear debe heredar de garbageHandler.TrackedObject.
+- El registro de depuración significativo para los eventos de MSAA ahora puede habilitarse en la configuración avanzada de NVDA. (#11521)
+- Los eventos de MSAA para el objeto enfocado actualmente ya no se filtran junto con otros eventos si se excede la cuenta de eventos para un hilo determinado. (#11520)
+ 
 
 = 2020.2 =
 Lo reseñable de esta versión incluye el soporte de una nueva pantalla braille de Nattiq, un soporte mejor para la interfaz gráfica de usuario del antivirus ESET y la Terminal de Windows, mejoras de rendimiento de 1Password y con el sintetizador Windows OneCore. Además de muchas otras importantes mejoras y correcciones de fallos.

@@ -587,7 +587,7 @@ When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the vir
 使用以下快捷键执行搜索：
 %kc:beginInclude
 || 名称 | 按键 | 描述 |
-| 查找 | NVDA+control+f | 弹出搜索对话框。|
+| 查找 | NVDA+control+f | 弹出搜索对话框。 |
 | 查找下一个 | NVDA+f3 | 在当前文档查找下一个您先前键入的文本的结果。 |
 | 查找上一个 | NVDA+shift+f3 | 在当前文档查找上一个您先前键入的文本的结果。 |
 %kc:endInclude
@@ -722,8 +722,8 @@ NVDA 支持下列类型的数学内容：
 | *** | 遇到受保护的控件或文档时显示 |
 | clk | 对象可单击时显示 |
 | cmnt | 当文档中的电子表格单元格或文本片段有注释时显示 |
-| frml |在电子表格单元格中有公式时显示 |
-| invalid |在输入无效条目时显示 |
+| frml | 在电子表格单元格中有公式时显示 |
+| invalid | 在输入无效条目时显示 |
 | ldesc | 当对象（通常是图形）具有长描述时显示 |
 | mln | 当编辑字段允许键入多行文本（例如网站上的注释字段）时显示 |
 | req | 遇到所需的表单字段时显示 |
@@ -2800,7 +2800,7 @@ Following are commands assigned to BrailleNote QT when it is not in braille inpu
 | NvDA menu | read+n |
 | Up arrow key | upArrow |
 | Down arrow key | downArrow |
-| Left Arrow key | leftArrow|
+| Left Arrow key | leftArrow |
 | Right arrow key | rightArrow |
 | Page up key | function+upArrow |
 | Page down key | function+downArrow |
@@ -3017,12 +3017,12 @@ nvda -q
 | -s | --secure | 安全模式 禁用 Python 控制台并且停用以下功能 创建删除重命名配置、检查更新、欢迎对话框、开机启动NVDA、退出时保存设置、日志查看器、日志记录功能。在安全模式下，无法保存当前配置到系统配置、快捷键和手势同样无法保存。 |
 | None | --disable-addons | 使插件无效。 |
 | None | --debug-logging | 开启调试日志 覆盖之前的日志等级设置( ""--loglevel"", -l) 注意：这个参数会覆盖其他停用日志的参数 |
-| None | --no-logging | 关闭NVDA日志功能 注意 --debug-logging 和 --loglevel 会覆盖这个参数|
+| None | --no-logging | 关闭NVDA日志功能 注意 --debug-logging 和 --loglevel 会覆盖这个参数 |
 | None | --no-sr-flag  | 不修改Windows系统全局屏幕阅读器的标志。 |
 | None | --install | 安装 NVDA(启动最新安装的副本)。 |
 | None | --install-silent | 静默安装 NVDA(不启动最新安装的副本)。 |
 | None | --enable-start-on-logon=True|False | 为安装的副本开启[在 Windows 启动时运行 #StartAtWindowsLogon]这个选项 |
-| None | --create-portable |创建一个便携版 (并且启动这个便携版). 必须和 --portable-path 一起用 |
+| None | --create-portable | 创建一个便携版 (并且启动这个便携版). 必须和 --portable-path 一起用 |
 | None | --create-portable-silent | 创建一个便携版 (不启动这个便携版). 必须和 --portable-path 一起用 |
 | None | --portable-path=PORTABLEPATH | 创建便携版的目录 |
 

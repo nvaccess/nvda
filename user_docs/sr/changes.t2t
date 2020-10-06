@@ -4,6 +4,8 @@
 %!includeconf: ../changes.t2tconf
 
 = 2020.3 =
+Ova verzija uključuje značajna poboljšanja u stabilnosti i brzini posebno u Microsoft Office aplikacijama. Takođe su dodata nova podešavanja za podršku ekrana osetljivog na dodir i prijavljivanje slika.
+Postojanje obeleženog (markiranog) sadržaja se može prijaviti u pretraživačima, i takođe su dodate nove Nemačke brajeve tabele.
 
 == Nove karakteristike ==
 - Sada možete da omogućite ili onemogućite prijavljivanje  slika u panelu podešavanja formatiranja dokumenta. Napomena da čak i kada je ova opcija onemogućena, alternativni tekstovi za slike će se čitati. (#4837)
@@ -26,6 +28,7 @@
 - U programu Microsoft Excel, lista elemenata sada prikazuje ispravno lokalizovane formule. (#9144)
 - NVDA sada prijavljuje ispravne termine za napomene u programu Excel. (#11311)
 - Kada koristite komandu "Prebaci pregledni kursor na fokus " u režimu pretraživanja, pregledni kursor se sada postavlja na poziciju virtuelnog kursora. (#9622)
+- Informacije koje se prijavljuju u režimu pretraživanja, kao što su informacije o formatiranju komandom NVDA+F, sada su prikazane u malo većem prozoru i centrirane su na ekranu. (#9910)
 
 
 == Ispravljene greške ==
@@ -47,6 +50,10 @@
 - NVDA više ne dodaje nepostojeće razmake kada se navigacioni objekat kopira. (#11438)
 - NVDA više ne aktivira profil izgovori sve ako nema šta da se pročita. (#10899, #9947)
 - NVDA sada može da čita listu opcija u Internet Information Services (IIS) menadžeru. (#11468)
+- NVDA sada ne zatvara izlazni zvučni uređaj što će poboljšati brzinu na određenim zvučnim kartama (#5172, #10721)
+- NVDA više neće izlaziti ili prestajati sa radom kada držite control+šift+strelicu dole u programu Microsoft Word. (#9463)
+- Prošireno ili skupljeno stanje foldera u prikazu stabla navigacije na sajtu drive.google.com se sada uvek prijavljuje od strane NVDA. (#11520)
+- NVDA će automatski prepoznati NLS eReader Humanware brajev red putem Bluetooth veze budući da je njegovo Bluetooth ime sada "NLS eReader Humanware". (#11561)
 
 
 == Promene za programere ==
