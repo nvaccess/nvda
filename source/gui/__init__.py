@@ -1066,12 +1066,17 @@ class NonReEntrantTimer(wx.Timer):
 def _isDebug():
 	return config.conf["debugLog"]["gui"]
 
-class AskAllowUsageStatsDialog(wx.Dialog):
+class AskAllowUsageStatsDialog(
+		ContextHelpMixin,
+		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+):
 	"""A dialog asking if the user wishes to allow NVDA usage stats to be collected by NV Access."""
+	
+	helpId = "UsageStatsDialog"
 
 	def __init__(self, parent):
 		# Translators: The title of the dialog asking if usage data can be collected 
-		super(AskAllowUsageStatsDialog, self).__init__(parent, title=_("NVDA  Usage Data Collection"))
+		super().__init__(parent, title=_("NVDA  Usage Data Collection"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 

@@ -449,7 +449,13 @@ class UpdateResultDialog(
 		)
 		incompatibleAddons.ShowModal()
 
-class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
+class UpdateAskInstallDialog(
+		DpiScalingHelperMixinWithoutInit,
+		gui.ContextHelpMixin,
+		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
+):
+
+	helpId = "GeneralSettingsCheckForUpdates"
 
 	def __init__(self, parent, destPath, version, apiVersion, backCompatTo):
 		self.destPath = destPath
@@ -458,8 +464,7 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.backCompatTo = backCompatTo
 		self.storeUpdatesDirWritable = os.path.isdir(storeUpdatesDir) and os.access(storeUpdatesDir, os.W_OK)
 		# Translators: The title of the dialog asking the user to Install an NVDA update.
-		wx.Dialog.__init__(self, parent, title=_("NVDA Update"))
-		DpiScalingHelperMixin.__init__(self, self.GetHandle())
+		super().__init__(parent, title=_("NVDA Update"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		# Translators: A message indicating that an updated version of NVDA is ready to be installed.

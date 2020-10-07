@@ -2462,12 +2462,15 @@ class UwpOcrPanel(SettingsPanel):
 		config.conf["uwpOcr"]["language"] = lang
 
 
-class AdvancedPanelControls(wx.Panel):
+class AdvancedPanelControls(
+		gui.ContextHelpMixin,
+		wx.Panel,  # wxPython does not seem to call base class initializer, put last in MRO
+):
 	"""Holds the actual controls for the Advanced Settings panel, this allows the state of the controls to
 	be more easily managed.
 	"""
 	def __init__(self, parent):
-		super(AdvancedPanelControls, self).__init__(parent)
+		super().__init__(parent)
 		self._defaultsRestored = False
 
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
@@ -2485,6 +2488,7 @@ class AdvancedPanelControls(wx.Panel):
 		#  Advanced settings panel.
 		label = _("Enable loading custom code from Developer Scratchpad directory")
 		self.scratchpadCheckBox=devGroup.addItem(wx.CheckBox(self, label=label))
+		self.bindHelpEvent("AdvancedSettingsEnableScratchpad", self.scratchpadCheckBox)
 		self.scratchpadCheckBox.SetValue(config.conf["development"]["enableScratchpadDir"])
 		self.scratchpadCheckBox.defaultValue = self._getDefaultValue(["development", "enableScratchpadDir"])
 		self.scratchpadCheckBox.Bind(
@@ -2497,6 +2501,7 @@ class AdvancedPanelControls(wx.Panel):
 		# Translators: the label for a button in the Advanced settings category
 		label=_("Open developer scratchpad directory")
 		self.openScratchpadButton=devGroup.addItem(wx.Button(self, label=label))
+		self.bindHelpEvent("AdvancedSettingsOpenScratchpadDir", self.openScratchpadButton)
 		self.openScratchpadButton.Enable(config.conf["development"]["enableScratchpadDir"])
 		self.openScratchpadButton.Bind(wx.EVT_BUTTON,self.onOpenScratchpadDir)
 		if config.isAppX:
@@ -2515,6 +2520,7 @@ class AdvancedPanelControls(wx.Panel):
 		#  Advanced settings panel.
 		label = _("Enable &selective registration for UI Automation events and property changes")
 		self.selectiveUIAEventRegistrationCheckBox = UIAGroup.addItem(wx.CheckBox(self, label=label))
+		self.bindHelpEvent("AdvancedSettingsSelectiveUIAEventRegistration", self.selectiveUIAEventRegistrationCheckBox)
 		self.selectiveUIAEventRegistrationCheckBox.SetValue(config.conf["UIA"]["selectiveEventRegistration"])
 		self.selectiveUIAEventRegistrationCheckBox.defaultValue = (
 			self._getDefaultValue(["UIA", "selectiveEventRegistration"])
@@ -2524,6 +2530,7 @@ class AdvancedPanelControls(wx.Panel):
 		#  Advanced settings panel.
 		label = _("Use UI Automation to access Microsoft &Word document controls when available")
 		self.UIAInMSWordCheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
+		self.bindHelpEvent("AdvancedSettingsUseUiaForWord", self.UIAInMSWordCheckBox)
 		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
 		self.UIAInMSWordCheckBox.defaultValue = self._getDefaultValue(["UIA", "useInMSWordWhenAvailable"])
 
@@ -2532,6 +2539,7 @@ class AdvancedPanelControls(wx.Panel):
 		label = _("Use UI Automation to access the Windows C&onsole when available")
 		consoleUIADevMap = True if config.conf['UIA']['winConsoleImplementation'] == 'UIA' else False
 		self.ConsoleUIACheckBox = UIAGroup.addItem(wx.CheckBox(self, label=label))
+		self.bindHelpEvent("AdvancedSettingsConsoleUIA", self.ConsoleUIACheckBox)
 		self.ConsoleUIACheckBox.SetValue(consoleUIADevMap)
 		self.ConsoleUIACheckBox.defaultValue = self._getDefaultValue(["UIA", "winConsoleImplementation"])
 
@@ -2539,6 +2547,7 @@ class AdvancedPanelControls(wx.Panel):
 		#  Advanced settings panel.
 		label = _("Speak &passwords in UIA consoles (may improve performance)")
 		self.winConsoleSpeakPasswordsCheckBox = UIAGroup.addItem(wx.CheckBox(self, label=label))
+		self.bindHelpEvent("AdvancedSettingsWinConsoleSpeakPasswords", self.winConsoleSpeakPasswordsCheckBox)
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(config.conf["terminals"]["speakPasswords"])
 		self.winConsoleSpeakPasswordsCheckBox.defaultValue = self._getDefaultValue(["terminals", "speakPasswords"])
 
@@ -2554,6 +2563,7 @@ class AdvancedPanelControls(wx.Panel):
 		#  Advanced settings panel.
 		label = _("Use the new t&yped character support in Windows Console when available")
 		self.keyboardSupportInLegacyCheckBox=terminalsGroup.addItem(wx.CheckBox(self, label=label))
+		self.bindHelpEvent("AdvancedSettingsKeyboardSupportInLegacy", self.keyboardSupportInLegacyCheckBox)
 		self.keyboardSupportInLegacyCheckBox.SetValue(config.conf["terminals"]["keyboardSupportInLegacy"])
 		self.keyboardSupportInLegacyCheckBox.defaultValue = self._getDefaultValue(["terminals", "keyboardSupportInLegacy"])
 		self.keyboardSupportInLegacyCheckBox.Enable(winVersion.isWin10(1607))
@@ -2586,6 +2596,7 @@ class AdvancedPanelControls(wx.Panel):
 			wx.Choice,
 			choices=expiredFocusSpeechChoices
 		)
+		self.bindHelpEvent("CancelExpiredFocusSpeech", self.cancelExpiredFocusSpeechCombo)
 		self.cancelExpiredFocusSpeechCombo.SetSelection(
 			config.conf["featureFlag"]["cancelExpiredFocusSpeech"]
 		)
@@ -2612,6 +2623,7 @@ class AdvancedPanelControls(wx.Panel):
 			max=2000,
 			initial=config.conf["editableText"]["caretMoveTimeoutMs"]
 		)
+		self.bindHelpEvent("AdvancedSettingsCaretMoveTimeout", self.caretMoveTimeoutSpinControl)
 		self.caretMoveTimeoutSpinControl.defaultValue = self._getDefaultValue(["editableText", "caretMoveTimeoutMs"])
 
 		# Translators: This is the label for a group of advanced options in the
@@ -2644,6 +2656,7 @@ class AdvancedPanelControls(wx.Panel):
 			nvdaControls.CustomCheckListBox,
 			choices=self.logCategories
 		)
+		self.bindHelpEvent("AdvancedSettingsDebugLoggingCategories", self.logCategoriesList)
 		self.logCategoriesList.CheckedItems = [
 			index for index, x in enumerate(self.logCategories) if config.conf['debugLog'][x]
 		]
@@ -2792,7 +2805,12 @@ class AdvancedPanel(SettingsPanel):
 		processPendingEvents()
 		self.advancedControls.Enable(evt.IsChecked())
 
-class DictionaryEntryDialog(wx.Dialog):
+class DictionaryEntryDialog(
+		gui.ContextHelpMixin,
+		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
+):
+	helpId = "SpeechDictionaries"
+	
 	TYPE_LABELS = {
 		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 		speechDictHandler.ENTRY_TYPE_ANYWHERE: _("&Anywhere"),
