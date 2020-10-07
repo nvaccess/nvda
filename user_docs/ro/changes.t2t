@@ -16,6 +16,8 @@ Existența conținutului marcat (evidențiat) poate fi raportată în navigatoar
  - Aceasta poate fi activată sau dezactivată grație unei noi opțiuni de evidențiere care a fost adăugată în categoria de setări a Formatării Documentelor. 
 - Pot fi adăugate noi taste simulatoare de sistem din dialogul Gesturilor de Intrare al NVDA. (#6060)
  - Pentru a face asta, apăsați butonul „Adaugă” după ce ați selectat categoria tastelor simulate ale tastaturii de sistem.
+- Acum, este suportat Handy Tech Active Braille cu joystick. (#11655)
+- Acum, setarea „Mod focalizare automată pentru mișcarea cursorului de scriere” este compatibilă cu „setează automat focalizarea la elementele focalizabile”. (#11663)
 
 
 == Modificări ==
@@ -54,6 +56,7 @@ Existența conținutului marcat (evidențiat) poate fi raportată în navigatoar
 - NVDA nu se va mai bloca sau închide atunci când țineți apăsate în același timp tastele control+shift+săgeată jos în Microsoft Word. (#9463)
 - Starea de extins/redus a folderelor din treeview-ul de navigare pe drive.google.com este mereu raportată de NVDA. (#11520)
 - NVDA va autodetecta afișajul braille NLS eReader de la Humanware prin Bluetooth, întrucât numele său de Bluetooth este „NLS eReader Humanware”. (#11561)
+- Îmbunătățiri semnificative de performanță în codul Visual Studio. (#11533)
 
 
 == Modificări pentru Dezvoltatori ==
@@ -65,7 +68,7 @@ Existența conținutului marcat (evidențiat) poate fi raportată în navigatoar
  - Majoritatea claselor NVDA sunt urmărite, incluzând NVDAObjects, appModule-uri, GlobalPlugin-uri, SynthDrivere și TreeInterceptoare.
  - O clasă care trebuie să fie urmărită ar trebui să moștenească de la garbageHandler.TrackedObject.
 - Diagnosticarea semnificativă pentru evenimentele MSAA poate fi activată din panoul setărilor avansate NVDA. (#11521)
-- WinEvent-urile MSAA pentru obiectul navigator curent nu mai sunt filtrate împreună cu alte evenimente dacă numărătoarea de evenimente pentru un anumit thread este depășit. (#11520)
+- WinEvent-urile MSAA pentru obiectul navigator curent nu mai sunt filtrate împreună cu alte evenimente dacă numărătoarea de evenimente pentru un anumit thread este depășită. (#11520)
 
 
 = 2020.2 =
