@@ -2536,15 +2536,15 @@ class AdvancedPanelControls(wx.Panel):
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA determine the method of detecting changed
 			# content in terminals automatically
-			_("automatic"),
+			pgettext("change detection preference", "automatic (line)"),
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA detect changes in terminals
 			# by character when supported.
-			_("character"),
+			pgettext("change detection preference", "character"),
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA detect changes in terminals
 			# by line.
-			_("line")
+			pgettext("change detection preference", "line")
 		]
 		#: The possible diffAlgo config values, in the order they appear
 		#: in the combo box.
