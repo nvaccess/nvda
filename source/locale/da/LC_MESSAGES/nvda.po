@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-11 00:10+1000\n"
+"POT-Creation-Date: 2020-10-03 01:31+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nicolai Svendsen <chojiro1990@gmail.com>\n"
 "Language-Team: Dansk NVDA <dansk@nvda.dk>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.3.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
@@ -3764,11 +3764,11 @@ msgstr ""
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
-"Sets the navigator object to the current focus,and the review cursor to the "
+"Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
 msgstr ""
 "Flytter navigatorobjektet til det aktuelle fokus og flytter læsemarkøren til "
-"placeringen"
+"positionen for systemmarkøren i det aktuelt fokuserede emne, hvis muligt."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
@@ -4436,7 +4436,7 @@ msgstr "Viser dialogen for NVDAs udtale af symboler"
 
 #. Translators: Input help mode message for go to input gestures dialog command.
 msgid "Shows the NVDA input gestures dialog"
-msgstr "Viser dialogen for NVDAs inputbevægelser"
+msgstr "Viser dialogen til håndtering af NVDA-kommandoer"
 
 #. Translators: Input help mode message for the report current configuration profile command.
 msgid "Reports the name of the current NVDA configuration profile"
@@ -7685,7 +7685,7 @@ msgstr "Udtale af &sætningstegn og symboler..."
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
 msgid "I&nput gestures..."
-msgstr "Input&bevægelser..."
+msgstr "Håndter &kommandoer..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
@@ -8481,7 +8481,7 @@ msgstr "{main} ({source})"
 
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 msgid "Enter input gesture:"
-msgstr "Indtast inputbevægelse:"
+msgstr "Udfør kommando:"
 
 #. Translators: An gesture that will be emulated by some other new gesture. The token {emulateGesture}
 #. will be replaced by the gesture that can be triggered by a mapped gesture.
@@ -8506,7 +8506,7 @@ msgstr "{category} ({nbResults} Resultater)"
 
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for scripts.
 msgid "Input Gestures"
-msgstr "Inputbevægelser"
+msgstr "Håndter Kommandoer"
 
 #. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 msgctxt "inputGestures"
@@ -8534,18 +8534,18 @@ msgstr ""
 "Er du sikker på, at du vil nulstille alle kommandoer til "
 "fabriksindstillingerne?\n"
 "\n"
-"\t\t\tAlle dine brugerdefinerede bevægelser, uanset om de tidligere er "
+"\t\t\tAlle dine brugerdefinerede kommandoer, uanset om de tidligere er "
 "angivet eller defineret i løbet af denne session, vil gå tabt.\n"
 "\t\t\tDette kan ikke fortrydes."
 
 #. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
 msgid "Reset gestures"
-msgstr "Nulstil bevægelser"
+msgstr "Nulstil kommandoer"
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
-"Kunne ikke gemme brugerdefinerede bevægelser - skyldes formodentligt, at "
+"Kunne ikke gemme brugerdefinerede kommandoer - skyldes formodentligt, at "
 "filsystemet er skrivebeskyttet."
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
@@ -9294,8 +9294,7 @@ msgstr "&Forhindre alle ikke-NVDA-kommandoer i at nå til dokumentet"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatically set system &focus to focusable elements"
-msgstr ""
-"Placer automatisk &systemfokus på fokuserbare elementer i gennemsynstilstand"
+msgstr "Placer automatisk &systemfokus på fokuserbare elementer"
 
 #. Translators: This is the label for the document formatting panel.
 msgid "Document Formatting"

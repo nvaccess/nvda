@@ -6,6 +6,8 @@
 """Unit tests for speech/manager module
 """
 import unittest
+from typing import Optional, Callable
+
 import config
 import speech
 from unittest import mock
@@ -152,6 +154,29 @@ class TestExpectedClasses(unittest.TestCase):
 		self.assertNotEqual(p, e)
 
 
+class _CancellableSpeechCommand_withLamda(_CancellableSpeechCommand):
+	"""
+	A test helper to control when speech gets cancelled.
+	"""
+
+	def _getDevInfo(self):
+		return ""
+
+	def _checkIfValid(self):
+		return True
+
+	def __init__(
+			self,
+			checkIfValid: Optional[Callable[[], bool]] = None,
+			getDevInfo: Optional[Callable[[], str]] = None,
+	):
+		if checkIfValid is not None:
+			self._checkIfValid = checkIfValid
+		if getDevInfo is not None:
+			self._getDevInfo = getDevInfo
+		super().__init__(reportDevInfo=True)
+
+
 class CancellableSpeechTests(unittest.TestCase):
 	"""Tests behaviour related to CancellableSpeech"""
 
@@ -166,7 +191,7 @@ class CancellableSpeechTests(unittest.TestCase):
 
 		with smi.expectation():
 			text = "This stays valid"
-			smi.speak([text, _CancellableSpeechCommand(lambda: True)])
+			smi.speak([text, _CancellableSpeechCommand_withLamda(lambda: True)])
 			smi.expect_synthSpeak(sequence=[text, smi.create_ExpectedIndex(expectedToBecomeIndex=1)])
 
 	def test_invalidSpeechNotSpoken(self):
@@ -175,7 +200,7 @@ class CancellableSpeechTests(unittest.TestCase):
 
 		with smi.expectation():
 			text = "This stays invalid"
-			smi.speak([text, _CancellableSpeechCommand(lambda: False)])
+			smi.speak([text, _CancellableSpeechCommand_withLamda(lambda: False)])
 
 	def test_invalidated_indexHit(self):
 		"""Hitting an index should cause a cancellation of speech that has become
@@ -195,7 +220,7 @@ class CancellableSpeechTests(unittest.TestCase):
 				smi.create_CallBackCommand(expectedToBecomeIndex=1),
 				"text 2",
 				smi.create_ExpectedIndex(expectedToBecomeIndex=2),
-				_CancellableSpeechCommand(lambda: _checkIfValid(1)),
+				_CancellableSpeechCommand_withLamda(lambda: _checkIfValid(1)),
 			]
 			isSpeechNumberValid[1] = True  # initially valid
 			smi.speak(initiallyValidSequence)
@@ -226,7 +251,7 @@ class CancellableSpeechTests(unittest.TestCase):
 				smi.create_CallBackCommand(expectedToBecomeIndex=1),
 				"text 2",
 				smi.create_ExpectedIndex(expectedToBecomeIndex=2),
-				_CancellableSpeechCommand(lambda: _checkIfValid(1)),
+				_CancellableSpeechCommand_withLamda(lambda: _checkIfValid(1)),
 			]
 			isSpeechNumberValid[1] = True  # initially valid
 			smi.speak(initiallyValidSequence)
@@ -263,7 +288,7 @@ class CancellableSpeechTests(unittest.TestCase):
 				smi.create_CallBackCommand(expectedToBecomeIndex=1),
 				"text 2",
 				smi.create_ExpectedIndex(expectedToBecomeIndex=2),
-				_CancellableSpeechCommand(lambda: _checkIfValid(1)),
+				_CancellableSpeechCommand_withLamda(lambda: _checkIfValid(1)),
 			]
 			isSpeechNumberValid[1] = True  # initially valid
 			smi.speak(initiallyValidSequence)
@@ -277,7 +302,7 @@ class CancellableSpeechTests(unittest.TestCase):
 				smi.create_CallBackCommand(expectedToBecomeIndex=3),
 				"text 4",
 				smi.create_ExpectedIndex(expectedToBecomeIndex=4),
-				_CancellableSpeechCommand(lambda: _checkIfValid(2)),
+				_CancellableSpeechCommand_withLamda(lambda: _checkIfValid(2)),
 			]
 			smi.speak(newValidSequence)
 			smi.expect_synthCancel()
@@ -292,12 +317,12 @@ class CancellableSpeechTests(unittest.TestCase):
 		with smi.expectation():
 			smi.speak([
 				"Stays invalid",
-				_CancellableSpeechCommand(lambda: False),
+				_CancellableSpeechCommand_withLamda(lambda: False),
 				smi.create_ExpectedIndex(expectedToBecomeIndex=1)
 			])
 
 		with smi.expectation():
-			smi.speak(["Stays valid", _CancellableSpeechCommand(lambda: True)])
+			smi.speak(["Stays valid", _CancellableSpeechCommand_withLamda(lambda: True)])
 			smi.expect_synthSpeak(sequence=[
 				"Stays valid", smi.create_ExpectedIndex(expectedToBecomeIndex=2)
 			])

@@ -27,7 +27,7 @@ NVDA可供盲人和低视力人群使用 Windows 操作系统，以及与众多�
 - 便于使用的语音安装程序。
 - 已翻译为54种语言。
 - 支持现代的 Windows 操作系统，包括32位和64位和其他衍生版本。
-- 能够在 Windows 登录和其他安全界面运行
+- 能够在 Windows 登录界面和其他安全界面运行
 - 支持使用触摸手势浏览屏幕时朗读控件和文本信息
 - 支持常见的辅助功能接口，如Microsoft Active Accessibility(MSAA)、Java Access Bridge、IAccessible2和UI automation
 - 能够视觉上突出显示各种焦点
@@ -56,10 +56,14 @@ NVDA 支持显示多种语言的简写或非简写点字以及电脑点字。
 ++ 许可证与著作权 ++[LicenseAndCopyright]
  NVDA版权归 NVDA贡献者所有 @ NVDA_COPYRIGHT_YEARS 。
 
-NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。 
+NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护，不过有两个例外。
+具体例外情况在NVDA许可协议 "Non-GPL Components in Plugins and Drivers" 和 "Microsoft Distributable Code"这两部分里。
+NVDA还使用了其他协议的开源免费软件。
 只要将此公开许可协议随附于软件内，您可以自由地以任何形式分享或改变此软件，并将所有的源代码提供给需要的人
 此槼则适用于原始发布的软件或任何以此软件修改之后发布的作品，以及所有采用此软件内的程序码所生成的作品。 
-更详细的信息，请查看[完整的授权协议 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+
+想要了解更详细的信息，请查看[完整的授权协议 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+如果想要了解例外情况，请在NVDA菜单帮助部分里查看完整的授权协议。
 
 + 系统需求 +[SystemRequirements]
 - 操作系统： 所有32位或者64位的Windows 7 Sp1、Windows 8 、Windows 8.1 、Windows 10(包括服务器系统)。
@@ -79,7 +83,7 @@ NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。
 您将被询问，是否要安装 NVDA、创建便携版本或者仅仅是运行临时的版本。
 
 如果您只打算在这个电脑上使用 NVDA，您将希望选择“安装NVDA”。
-只有安装 NVDA 之后，您才能使用以下功能  在 Windows 登陆时自动启动 NVDA ，朗读 Windows 的登陆界面或者其他安全界面 在开始菜单或桌面创建快捷方式。(这些功能无法在便携版和临时的 NVDA 副本中启用)
+只有安装 NVDA 之后，您才能使用以下功能  在 Windows 登录时自动启动 NVDA ，朗读 Windows 的登录界面或者其他安全界面 在开始菜单或桌面创建快捷方式。(这些功能无法在便携版和临时的 NVDA 副本中启用)
 安装版本的 NVDA 允许您在任何时候创建便携版本。
 
 如果您希望让 NVDA 运行在U盘或其他可擦写的存储设备上，您应该选择“创建便携版本”。
@@ -124,7 +128,7 @@ NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。
 如果创建，此快捷方式将富有control加ALT加N的快捷键属性，您可以在任何时候使用此快捷键启动 NVDA。
 
 +++ 复制便携版配置到当前用户账户 +++[CopyPortableConfigurationToCurrentUserAccount]
-此选项将允许您选择，是否允许为 NVDA 的安装版从正在运行的 NVDA 的用户配置中拷贝配置到当前登陆用户的用户配置。
+此选项将允许您选择，是否允许为 NVDA 的安装版从正在运行的 NVDA 的用户配置中拷贝配置到当前登录用户的用户配置。
 此选项将不会为在此系统上的其他用户拷贝配置，也不会应用于 Windows 欢迎屏幕和其他安全界面。
  此选项仅在从便携版本的 NVDA 安装时才可用，不会在从下载的安装程序包中安装时出现。
 
@@ -171,12 +175,12 @@ NVDA安装版的配置在“漫游”应用程序配置文件夹 (比如 "C:\Use
 第二个选择是否允许在 Windows 启动时启动 NVDA。
 第三个允许您选择是否希望在每次启动 NVDA 时显示此对话框。
 
-+++ Data usage statistics dialog +++[UsageStatsDialog]
-Starting from NVDA 2018.3, the user is asked if they want to allow usage data to be sent to NV Access in order to help improve NVDA in the future. 
-When starting NVDA for the first time, a dialog will appear which will ask you if you want to accept sending data to NV Access while using NVDA.
-You can read more info about the data gathered by NV Access in the general settings section, [Allow the NVDA project to gather NVDA usage statistics #GeneralSettingsGatherUsageStats].
-Note: pressing on "yes" or "no" will save this setting and the dialog will never appear again unless you reinstall NVDA.
-However, you can enable or disable the data gathering process manually in NVDA's general settings panel. For changing this setting manually, you can check or uncheck the checkbox called [Allow the NVDA project to gather NVDA usage statistics #GeneralSettingsGatherUsageStats].
++++ 使用情况统计数据对话框 +++[UsageStatsDialog]
+从 NVDA 2018.3 开始，系统会询问用户是否希望将使用情况数据发送到 NV Access，以帮助在将来改进 NVDA。
+首次启动 NVDA 时，将出现一个对话框，询问您是否要在使用 NVDA时 向 NV Access 发送使用数据。
+您可以在“常规设置”部分的[允许NVDA获取用户统计信息 #GeneralSettingsGatherUsageStats]中阅读有关 NV Access 收集数据的更多信息。
+注意：按“是”或“否”将保存此设置，除非重新安装 NVDA，否则该对话框将不再出现。
+但是，后续您可以在NVDA的常规设置面板中手动启用或禁用数据收集过程。要手动更改此设置，可以选中或取消选中[允许NVDA获取用户统计信息 #GeneralSettingsGatherUsageStats]复选框。
 
 ++ 关于 NVDA 的键盘命令 ++[AboutNVDAKeyboardCommands]
 
@@ -300,7 +304,7 @@ NVDA 允许您使用多种方式对系统进行浏览和导航，包括传统交
 
 使用 NVDA 在 Windows 系统中导航的最常用方法是使用标准的系统键盘命令简单的移动系统焦点，如使用 Tab 或者 Shift加Tab 在控件之间前后移动、按下 Alt 转到菜单栏后使用方向键在菜单中导航和使用 Alt加Tab 在正在运行的程序之间切换。
 当您这样操作时，NVDA 通常会读出焦点所在对象的相关信息，包括：名称、格式、数值、状态、描述、快捷键及位置信息等等。 
-When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the current system focus is also exposed visually.
+当 [高亮显示系统焦点 #VisionFocusHighlight] 启用时，当前系统焦点的位置也将以可视方式显示。
 
 下面是一些在移动系统焦点时很有用的键盘命令：
 %kc:beginInclude
@@ -356,13 +360,10 @@ NVDA 提供下列与系统输入焦点相关的快捷命令：
 
 当前查看的对象被称为浏览对象。
 一旦您浏览到了一个对象，您可以使用[对象浏览模式 #ObjectReview]的[文本查看命令 #ReviewingText]进行查看。
-When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the current navigator object is also exposed visually.
+当 [高亮显示导航对象 #VisionFocusHighlight] 启用时，当前浏览对象的位置也将以可视方式显示。
 默认情况下，浏览对象会随着系统焦点而移动，此行为可以在设置里开关。
 
-请注意，点字光标默认情况下是随着[焦点 #SystemFocus]、[系统输入焦点 #SystemCaret]、对象导航和文本查看移动。
-如果你想让点字光标只随着[焦点 #SystemFocus]和[系统输入焦点 #SystemCaret]而移动，您必须在[点字光标跟随 #BrailleTether]修改设置。
-修改之后点字光标就不在随着对象导航命令显示对象树的内容了。
-如果您希望它随着对象导航和文本查看而移动，您必须在[点字光标跟随 #BrailleTether]把设置改回去。
+请注意，想要点字光标跟随浏览对象可以在[点字光标跟随 #BrailleTether]设置里修改。
 
 若想使用对象导航，可使用下列命令：
 
@@ -390,8 +391,7 @@ NVDA 允许您按照字、词、行的方式朗读[屏幕 #ScreenReview]、当�
 但在默认情况下，当系统输入焦点移动时，浏览光标将跟随移动。
 此动作可以在开启或者关闭之间切换。
 
-请注意，点字光标默认情况下是随着[焦点 #SystemFocus]和[系统输入焦点 #SystemCaret]而移动，而非对象导航和文本查看。
-如果您希望它随着对象导航和文本查看而移动，您必须在[点字光标跟随 #BrailleTether]修改。
+请注意，想要点字光标跟随文本查看移动可以在[点字光标跟随 #BrailleTether]设置里修改。
 
 下列命令可用来查看文本：
 %kc:beginInclude
@@ -411,7 +411,7 @@ NVDA 允许您按照字、词、行的方式朗读[屏幕 #ScreenReview]、当�
 | 移动到查看对象的行尾 | shift+小键盘数字3 | NVDA+行尾 | 无 | 移动浏览光标到文本的当前行的行尾。 |
 | 导航对象全文朗读 | 小键盘加号 | NVDA+shift+a | 三个手指向下滑动(文本模式) | 从浏览光标所在位置开始朗读并随之移动。 |
 | 拷贝浏览光标从 | NVDA+f9 | NVDA+f9 | 无 | 设定当前浏览光标所在位置为开始点，实际的复制并不会执行，除非您告诉 NVDA 范围的结束点在哪里。 |
-| 拷贝浏览光标到 | NVDA+f10 | NVDA+f10 | 无 | 按一次，选择开始点和结束点之间的文本；连按两次，把“拷贝浏览光标从”和“拷贝浏览光标到”之间的文本拷贝到剪贴板。当您按下此键时，文本将被真正的拷贝到 Windows 剪贴板。 |
+| 拷贝浏览光标到 | NVDA+f10 | NVDA+f10 | 无 | 按一次，选择开始点和结束点之间的文本；连按两次，把“拷贝浏览光标从”和“拷贝浏览光标到”之间的文本拷贝到剪贴板。如果系统输入焦点可以移动到结束点，当您按下此键时，文本将被真正的拷贝到 Windows 剪贴板。 |
 | 移动到开始点 | NVDA+shift+f9 | NVDA+shift+f9 | 无 | 将浏览光标移动到先前设置的开始复制标记的位置。 |
 | 朗读文本格式 | NVDA+f | NVDA+f | 无 | 朗读浏览光标当前所在位置的文本的格式信息，连按两次可使用浏览模式在格式信息之间导航。 |
 | 朗读字符信息 | 无 | 无 | 无 | 朗读浏览光标当前所在位置的字符，连按两次弹出一个显示字符的详细信息的窗口。 |
@@ -475,13 +475,13 @@ NVDA 的这个额外的鼠标特性默认情况下是关闭的。
 
 虽然一个物理鼠标或者触摸板就可以用来进行鼠标导航，但 NVDA 依然有一些与此相关的键盘命令：
 %kc:beginInclude
-|| 名称 | 台式机键盘 | 笔记本键盘 | 描述 |
-| 鼠标左键单击 | 小键盘斜杠 | NVDA+[ | 点击鼠标左键一次，平常的双击可以通过快速连按两次此键执行。 |
-| 鼠标左键锁定 | shift+小键盘斜杠 | NVDA+control+[ | 按下并锁定鼠标左键，再按一次则松开。要想拖拽鼠标，按下此键并使用物理鼠标或其他鼠标导航命令进行移动。 |
-| 鼠标右键单击 | 小键盘星号 | NVDA+] | 点击鼠标右键一次。 |
-| 鼠标右键锁定 | shift+小键盘星号 | NVDA+control+] | 按下并锁定鼠标右键，再按一次则松开。要想拖拽鼠标，按下此键并使用物理鼠标或其他鼠标导航命令进行移动。 |
-| 移动鼠标到当前浏览对象 | NVDA+小键盘斜杠 | NVDA+shift+m | 移动鼠标到浏览光标和当前浏览对象所在的位置。 |
-| 移动到鼠标下方的对象 | NVDA+小键盘星号 | NVDA+shift+n | 设置导航对象到鼠标所在位置。 |
+|| 名称 | 台式机键盘 | 笔记本键盘 | 触摸 | 描述 |
+| 鼠标左键单击 | 小键盘斜杠 | NVDA+[ | 无 | 点击鼠标左键一次，平常的双击可以通过快速连按两次此键执行。 |
+| 鼠标左键锁定 | shift+小键盘斜杠 | NVDA+control+[ | 点击并按住 | 按下并锁定鼠标左键，再按一次则松开。要想拖拽鼠标，按下此键并使用物理鼠标或其他鼠标导航命令进行移动。 |
+| 鼠标右键单击 | 小键盘星号 | NVDA+] | 无 | 点击鼠标右键一次。 |
+| 鼠标右键锁定 | shift+小键盘星号 | NVDA+control+] | 无 | 按下并锁定鼠标右键，再按一次则松开。要想拖拽鼠标，按下此键并使用物理鼠标或其他鼠标导航命令进行移动。 |
+| 移动鼠标到当前浏览对象 | NVDA+小键盘斜杠 | NVDA+shift+m | 无 | 移动鼠标到浏览光标和当前浏览对象所在的位置。 |
+| 移动到鼠标下方的对象 | NVDA+小键盘星号 | NVDA+shift+n | 无 | 设置导航对象到鼠标所在位置。 |
 %kc:endInclude
 
 + 浏览模式 +[BrowseMode]
@@ -503,7 +503,7 @@ NVDA支持以下应用的文档
 
 在浏览模式中，文档的内容将可以以平面的形式用浏览光标快捷键进行浏览，前提是它是传统的文本文档。
 所有 NVDA 的[系统输入焦点 #SystemCaret]快捷键都可以正常的在此模式下工作，例如全文朗读、朗读格式、表格导航快捷键等等。
-When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the virtual browse mode caret is also exposed visually.
+当 [高亮显示浏览模式光标 #VisionFocusHighlight] 启用时，浏览模式虚拟光标的位置也会以可视方式显示。
 关于这些文本是否属于诸如链接、标题等的信息，会随着移动而被读出。
 
 有些时候，您可能必须与文档上的这些控件进行直接交互。
@@ -890,7 +890,18 @@ NVDA 可在您浏览 Excel 工作表时自动读出恰当的行列标题。
 %kc:beginInclude
 要想朗读当前聚焦单元的所有注释，请按下“NVDA+alt+C”。
 %kc:endInclude
-所有工作簿的注释也可以在元素列表中访问
+按NVDA+F7在元素列表中访问所有工作簿的注释。
+
+NVDA还可以显示用于添加或编辑特定注释的特定对话框。
+由于无障碍API的限制，NVDA覆盖了Excel注释编辑区域，但是用于显示对话框的按键是Excel自带的，即使未运行NVDA也可以使用。
+%kc:beginInclude
+按shift+f2在焦点单元格添加或编辑注释。
+%kc:endInclude
+
+这个快捷键不在NVDA的输入手势对话框里显示，因此不能修改
+
+注意：也可以从工作表任何单元格的上下文菜单中，打开Excel自带的注释编辑区域。
+但是，这将打开NVDA无法朗读的注释编辑区域，而不是NVDA添加的注释编辑对话框。
 
 +++ 朗读受保护的单元格 +++[ExcelReadingProtectedCells]
 如果工作簿已经被保护了起来，移动焦点到特定单元也许将变得不可能。
@@ -931,13 +942,6 @@ Excel 工作簿可包含表单。
 || 名称 | 按键 | 描述 |
 | 朗读注释窗口 | control+shift+c | 朗读注释窗口的所有注释。 |
 | 朗读翻译者注释 | control+shift+a | 为翻译者朗读注释。 |
-%kc:endInclude
-
-++ Skype ++[Skype]
-%kc:beginInclude
-当在一个会话框里：
-|| 名称 | 按键 | 描述 |
-| 查看消息 | NVDA+control+1-0 | 根据您按下的数字，朗读并切换浏览光标到最近的消息。如“NVDA+control+2”朗读第二条最近的消息。 |
 %kc:endInclude
 
 ++ Kindle for PC ++[Kindle]
@@ -1061,14 +1065,14 @@ NVDA的文本审阅命令无法访问未在窗口中显示的文本。
  - 如果您关心个人隐私安全，请不要把日志级别调整到输入/输出。
 - 调试 包括上面几个级别的日志以及对调试有用的信息，这些日志同样可能包含您的个人隐私，如果您希望保护隐私请不要把日志级别设为调试。
  - 如果您关心个人隐私安全，请不要把日志级别调整到调试。
--
+
 
 ==== 系统启动后自动运行 NVDA ====[GeneralSettingsStartAfterLogOn]
-如果此选项被选中，NVDA 将在 Windows 登陆后尽快启动。
+如果此选项被选中，NVDA 将在 Windows 登录后尽快启动。
 此选项仅可用于 NVDA 的安装版。
 
 ==== 在欢迎界面启用 NVDA (需要管理员权限) ====[GeneralSettingsStartOnLogOnScreen]
-如果您通过使用密码和用户登陆 Windows，此选项将使 NVDA 在Windows 启动时自动运行。
+如果您通过使用密码和用户登录 Windows，此选项将使 NVDA 在Windows 启动时自动运行。
 此选项仅可用于 NVDA 的安装版。
 
 ==== 应用当前配置到欢迎界面和其他安全界面 ====[GeneralSettingsCopySettings]
@@ -1462,7 +1466,7 @@ NVDA设置对话框中的“键盘设置”部分包含一些选项，用于设�
 
 ==== 从其他程序获取键盘控制权 ====[KeyboardSettingsHandleKeys]
 此选项允许您选择，是否希望 NVDA 接管其他程序(如屏幕键盘或语音识别程序)的键盘动作。
-默认情况下，此选项启用，某些特定的用户可能希望将其关闭，如使用 unikey 进行越南语输入会造成错误的字符输入。
+默认情况下，此选项启用，某些特定的用户可能希望将其关闭，如使用 UniKey 进行越南语输入会造成错误的字符输入。
 
 +++鼠标设置 (NVDA+control+m) +++[MouseSettings]
 NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟嘟声表示鼠标坐标并设置其他鼠标使用选项。
@@ -1690,6 +1694,7 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
  - 字体名称
  - 字体大小
  - 字体属性
+ - 上角标和下角标
  - 强调
  - 缩进
  - 颜色
@@ -1772,8 +1777,8 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 此按钮可打开开发者实验目录。
 仅当用户允许从开发者实验目录加载代码时，才会启用此按钮。
  
-==== 在Word里使用Microsoft UI Automation Microsoft UI Automation是微软的最新无障碍接口 简称UIA  ====[AdvancedSettingsUseUiaForWord]
-启用此选项后，NVDA将尝试使用Microsoft UI Automation这个无障碍接口从Word文档控件中获取信息。
+==== 在Word里使用Microsoft UI Automation ====[AdvancedSettingsUseUiaForWord]
+Microsoft UI Automation是微软的最新无障碍接口 简称UIA，启用此选项后，NVDA将尝试使用Microsoft UI Automation这个无障碍接口从Word文档控件中获取信息。
 这包括Microsoft Word本身，以及Microsoft Outlook消息查看器和编写器。
   对于在Windows 10上运行的最新版本的Office 2016或者Office 365，Microsoft UI Automation能够获取的信息和原来的方式差不多，而且响应速度更快。
 但是，在某些版本的Office中可能存在某些未公开或未正确显示的信息，这意味着UIA支持不好用。
@@ -1788,14 +1793,9 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 ==== 在UI Automation不可用或被禁用时 读出输入的字符 ====[AdvancedSettingsKeyboardSupportInLegacy]
 启用此选项，可以使用另一种方法在Windows命令控制台中检测键入的字符。
 虽然它可以提高性能并防止某些控制台输出被逐字符拼读，但它可能与某些终端程序不兼容。
-默认情况下，Windows 10版本1607、1703、1709和1803以及较新的Windows 10版本中当UI Automation不可用或被禁用时，NVDA就会启用此功能。
+默认情况下，Windows 10版本1607之后，当UI Automation不可用或被禁用时，NVDA就会启用此功能。
 注意：启用此选项后，在屏幕上不显示的字符，例如密码也会被读出来。
 在不受信任的环境中，您可以在输入密码时暂时禁用[朗读输入字符 #KeyboardSettingsSpeakTypedCharacters]和[朗读输入单词 #KeyboardSettingsSpeakTypedWords]的功能。
-
-==== 取消无效焦点事件的朗读（实验性） ====[CancelExpiredFocusSpeech]
-启用此选项则会取消对无效焦点事件的朗读。
-尤其在chrome下，快速浏览Gmail中的信息时会导致nvda读出无效的内容。
-此功能从NVDA 2020.2开始为实验性功能。
 
 ==== 浏览模式中自动把焦点放到可聚焦的元素上 ====[BrowseModeSettingsAutoFocusFocusableElements]
 快捷键: NVDA+8
@@ -2004,13 +2004,13 @@ NVDA 的语音字典比之单词替换更为强大。
 ++ 配置文件保存的位置 ++[LocationOfConfigurationFiles]
 便携版本的 NVDA 设置(包括自定义程序模块、自定义驱动)都被直接存放在 NVDA 的 userConfig 目录下。
 
-安装版本的 NVDA 的所有配置(自定义程序模块和自定义驱动)都被放在您的 Windows 用户配置的特殊 NVDA 目录之下。
-这样做，系统内的所有用户都可以拥有自己的配置。
-要想访问您安装版本的 NVDA 配置目录，从开始菜单访问 NVDA 程序组后找到“浏览 NVDA 配置目录”。
+安装版本的 NVDA 的所有插件和配置文件都被放在您的 Windows 用户配置的文件的NVDA目录之下。
+系统内的每个用户都可以拥有自己的配置。
+要想访问您安装版本的 NVDA 配置目录，从开始菜单访问 NVDA 程序组后找到“浏览 NVDA 配置目录”，你也可以在[输入手势对话框 #InputGestures] 里添加一个快捷键或者手势实现。
 
 运行在欢迎屏幕或 UAC 屏幕时的 NVDA 设置都被存放在 NVDA 安装目录下的 SystemConfig 目录。
 通常情况下，不要接触这些配置文件。
-要想更改 NVDA 在欢迎屏幕和 UAC 屏幕时的配置，在登陆 Windows 之后修改您的 NVDA 配置，保存您的配置，然后按下“常规设置”对话框的“应用以保存的配置到欢迎界面和其他安全界面”按钮。
+要想更改 NVDA 在欢迎屏幕和 UAC 屏幕时的配置，在登录 Windows 之后修改您的 NVDA 配置，保存您的配置，然后按下“常规设置”对话框的“应用以保存的配置到欢迎界面和其他安全界面”按钮。
 
 + 附加工具 +[ExtraTools]
 
@@ -2040,12 +2040,19 @@ NVDA 的语音字典比之单词替换更为强大。
 在视障者向明眼人演示 NVDA 时，显示一个悬浮窗口，其中显示盲文信息，以及每个盲文单元的对应文本。
 盲文查看器可以與实体点显器同時使用，并显示与实体设备相同数量的盲文单元。
 打开盲文查看器后，其会实时同步点显器上的信息。
-要想使用盲文查看器，可以再 NVDA 的“工具”菜单选中“盲文查看器”。 取消选中菜单即可关闭。
-实体点显器通常有“向前（或向后）滚动”的按钮，要想使用该功能可在[输入手势对话框 #InputGestures]指定“模拟点显器向后滚动”和“模拟点显器向前滚动”的快捷键。
-向后滚动点字显示器 "和 "向前滚动点字显示器"。
+
+要想使用盲文查看器，可以再 NVDA 的“工具”菜单选中“盲文查看器”。
+取消选中菜单即可关闭。
+
+实体点显器通常有“向前（或向后）滚动”的按钮，要想使用该功能可在[输入手势对话框 #InputGestures]指定“模拟点显器向后滚动”和“模拟点显器向前滚动”的快捷键。向后滚动点字显示器 "和 "向前滚动点字显示器"。
+
 盲文查看器窗口包含一个 “启动时显示盲文查看器"的复选框。
 如果选中此复选框，当 NVDA 启动时，盲文查看器将自动启用。
 盲文查看器会记忆上次打开时的尺寸和位置。
+
+++ Python 控制台 ++[PythonConsole]
+NVDA工具菜单下面的 NVDA Python 控制台是调试NVDA、了解NVDA内部原理、以及查看其他软件无障碍支持情况的工具
+想详细了解请查看下面链接里的英文文档 [NVDA开发文档 https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
 ++ 插件管理器 ++[AddonsManager]
 您可以通过 NVDA 的“工具”菜单的“插件管理器”访问插件管理器，插件管理器允许您安装、移除、启用或停用 NVDA 的插件。
@@ -2105,10 +2112,31 @@ NVDA 会询问您是否真的要这样做。
 不兼容插件管理器里面也有关于插件按钮
 点击这个按钮会打开一个对话框，里面有这个插件的详细信息，可以帮你找到开发者的联系方式。
 
+++ Create portable copy ++[CreatePortableCopy]
+This will open a dialog which allows you to create a portable copy of NVDA out of the installed version.
+Either way, when running a portable copy of NVDA, in the extra tool sub menu the menu item will be called "install NVDA on this PC" instead of "create portable copy).
 
-++ Python 控制台 ++[PythonConsole]
-NVDA Python 控制台可以再 NVDA 的“工具”菜单找到，他是一个开发工具，他可用来进行调试，一般的内部检查和程序可访问程度的检查。
-更多信息，可从[NVDA 网站的开发部分 https://community.nvda-project.org/wiki/Development]查看可用的开发文档。
+The dialog to create a portable copy of NVDA or to install NVDA on this PC will promt you to choose a folder path in which NVDA should create the portable copy or in which NVDA should be installed.
+
+In this dialog you can enable or disable the following:
+- Copy current user configuration (this includes the files in %appdata%\roaming\NVDA or in the user configuration of your portable copy and includes also addons and other modules)
+- Start the new portable copy after creation or start NVDA after installation (starts NVDA automatically after the portable copy creation or the installation)
+-
+
+++ Run COM registration fixing tool... ++[RunCOMRegistrationFixingTool]
+Installing and uninstalling programs on a computer can, in certain cases, cause COM DLL files to get unregistered.
+As COM Interfaces such as IAccessible depend on correct COM DLL registrations, issues can appear in case the correct registration is missing.
+
+This can happen i.e. after installing and uninstalling Adobe Reader, Math Player and other programs.
+
+The missing registration can cause issues in browsers, desktop apps, task bar and other interfaces.
+
+Specifically, following issues can be solved by running this tool:
+- NVDA reports "unknown" when navigating in browsers such as Firefox, Thunderbird etc.
+- NVDA fails to switch between focus mode and browse mode
+- NVDA is very slow when navigating in browsers while using browse mode
+- And possibly other issues.
+-
 
 ++ 重新加载插件 ++[ReloadPlugins]
 一旦此项目被激活，即可在不重新启动 NVDA 的情况下重新加载程序模块和全局插件，此功能对于开发者非常有用。
@@ -2177,6 +2205,7 @@ NVDA能够通过USB或蓝牙自动检测后台的许多点显器。
 - Optelec ALVA 6 series
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
 - Eurobraille Esys/Esytime/Iris displays
+- Nattiq nBraille displays
 -
 
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
@@ -2427,7 +2456,12 @@ The Brailliant BI and B series of displays  from [HumanWare https://www.humanwar
 If connecting via USB with the protocol set to HumanWare, you must first install the USB drivers provided by the manufacturer.
 USB drivers are not required if the protocol is set to OpenBraille.
 
-The BrailleNote Touch is also supported, and does not require any drivers to be installed.
+The following extra devices are also supported (and do not require any special drivers to be installed):
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
+
 
 Following are the key assignments for  the Brailliant BI/B and BrailleNote touch displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -2956,6 +2990,22 @@ Please see the display's documentation for descriptions of where these keys can 
 | alt key | dot8+space, l6 |
 | Toggle alt key | dot1+dot8+space, dot4+dot8+space |
 | ToggleHID keyboard input simulation | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
+%kc:endInclude
+
+++ Nattiq nBraille Displays ++[NattiqTechnologies]
+NVDA supports displays from [Nattiq Technologies https://www.nattiq.com/] when connected via USB.
+Windows 10 detects the Braille Displays once connected, you may need to install USB drivers if using older versions of Windows (below Win10).
+You can get them from the manufacturer's website.
+
+Following are the key assignments for Nattiq Technologies displays with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | up |
+| Scroll braille display forward | down |
+| Move braille display to previous line | left |
+| Move braille display to next line | right |
+| Route to braille cell | routing |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
