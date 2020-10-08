@@ -1046,7 +1046,6 @@ class UIA(Window):
 		Cached values of these properties will be available for the remainder of the current core cycle. After that, new values will be fetched.
 		@type initialUIACachedPropertyIDs: L{UIAHandler.IUIAutomationCacheRequest}
 		"""
-		self._initialStack = "\n".join(traceback.format_stack()[:-1])
 		if not UIAElement:
 			raise ValueError("needs a UIA element")
 
