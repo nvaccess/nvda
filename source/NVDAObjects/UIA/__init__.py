@@ -6,7 +6,6 @@
 
 """Support for UI Automation (UIA) controls."""
 
-import traceback
 from ctypes import byref
 from ctypes.wintypes import POINT, RECT
 from comtypes import COMError
