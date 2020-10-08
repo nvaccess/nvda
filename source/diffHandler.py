@@ -28,6 +28,10 @@ class DiffAlgo(AutoPropertyObject):
 
 
 class DiffMatchPatch(DiffAlgo):
+	(
+		"A character-based diffing approach, using the Google Diff Match Patch "
+		"library in a proxy process (to work around a licence conflict)."
+	)
 	_proc = None
 	_lock = Lock()
 
@@ -95,6 +99,11 @@ class DiffMatchPatch(DiffAlgo):
 
 
 class Difflib(DiffAlgo):
+	(
+		"A line-based diffing approach in pure Python, using the Python "
+		"standard library."
+	)
+
 	def diff(self, newText: str, oldText: str) -> List[str]:
 		newLines = newText.splitlines()
 		oldLines = oldText.splitlines()
