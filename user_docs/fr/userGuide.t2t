@@ -31,7 +31,7 @@ Ses points forts sont :
 - L'annonce des contrôles et du texte durant l'utilisation de gestes tactiles
 - Le support des interfaces d'accessibilité communes telles que Microsoft Active Accessibility, Java Access Bridge, IAccessible2 et UI Automation
 - Le support de l'invite de commandes Windows et des applications en mode console
-- La possibilité de surligner le focus système
+- La possibilité de mettre en évidence le focus système
 -
 
 ++ Internationalisation ++[Internationalization]
@@ -307,7 +307,7 @@ Par exemple, si vous tapez du texte dans une zone d'édition, cette zone d'édit
 
 La manière la plus commune de naviguer dans Windows avec NVDA, est de simplement se déplacer avec des commandes clavier normales, comme "Tabulation" et "Majuscule+Tabulation" pour se déplacer entre les contrôles, "Alt" pour aller au menu puis "Flèches" pour naviguer dans les menus, utiliser "Alt+Tabulation" pour passer d'une application à l'autre. Cela déplace le focus système, c'est-à-dire l'objet qui reçoit les touches que vous tapez au clavier.
 Quand vous faites cela, NVDA donne des informations sur l'objet ayant le focus, telles que son nom, son type, son état, sa valeur, sa description, son raccourci clavier et sa position.
-Quand le [Surlignage du Focus #VisionFocusHighlight] est activé, la position du focus système courant est également présentée visuellement.
+Quand la [Mise en évidence du Focus #VisionFocusHighlight] est activée, la position du focus système courant est également présentée visuellement.
 
 Quelques touches de commandes utiles pour naviguer avec le focus :
 %kc:beginInclude
@@ -363,7 +363,7 @@ De la même manière, une barre d'outils contient des contrôles, vous devrez do
 
 L'objet en cours de revue s'appelle l'objet navigateur.
 Quand vous atteignez un objet, vous pouvez examiner son contenu en utilisant les [commandes de revue de texte #ReviewingText] en étant en [mode Revue d'objet #ObjectReview].
-Quand le [Surlignage du Focus #VisionFocusHighlight] est activé, la position du focus système courant est également présentée visuellement.
+Quand la [Mise en évidence du Focus #VisionFocusHighlight] est activée, la position du focus système courant est également présentée visuellement.
 Par défaut, l'objet navigateur suit le focus système, mais ce comportement peut être désactivé.
 
 Note : Le suivi de la Navigation par Objet par le Braille peut être configuré via [Braille Suit #BrailleTether].
@@ -506,7 +506,7 @@ Le mode navigation est aussi disponible en option pour les documents Microsoft W
 
 Le mode navigation offre une représentation platement textuelle du document dans laquelle on peut se déplacer avec les flèches de navigation. 
 Dans ce mode, toutes les touches de commandes du [mode curseur #SystemCaret] fonctionneront (ex : dire tout, annonce de la mise en forme, touches de navigation dans les tableaux etc.).
-Quand le [Surlignage du Focus #VisionFocusHighlight] est activé, la position du curseur virtuel de mode navigation est également présentée visuellement.
+Quand la [Mise en évidence du Focus #VisionFocusHighlight] est activée, la position du curseur virtuel de mode navigation est également présentée visuellement.
 Des informations indiquant si le texte est un lien, un titre etc., sont annoncées avec le texte pendant que vous vous déplacez.
 
 Parfois, vous devrez interagir directement avec les contrôles contenus dans ces documents.
@@ -776,16 +776,16 @@ Des services d'amélioration visuelle additionnels peuvent être apportés dans 
 
 Les paramètres de vision de NVDA peuvent être modifiés dans la [catégorie vision #VisionSettings] du dialogue [Paramètres NVDA #NVDASettings].
 
-++ Surlignage du Focus ++[VisionFocusHighlight]
-Le Surlignage du Focus peut aider à identifier la position du [focus système #SystemFocus], de [l'objet navigateur #ObjectNavigation] et du [mode navigation #BrowseMode].
-Ces positions sont surlignées avec un contour rectangulaire coloré.
-- Le bleu continu surligne la position d'un objet navigateur combiné au focus système (ex : lorsque [l'objet navigateur suit le curseur système #ReviewCursorFollowFocus]).
-- Le bleu pointillé surligne juste l'objet ayant le focus système.
-- Le rose continu surligne juste l'objet navigateur.
-- Le jaune continu surligne le curseur virtuel utilisé en mode navigation (quand il n'y a pas de curseur physique comme dans les navigateurs web).
+++ Mise en évidence du Focus ++[VisionFocusHighlight]
+La mise en évidence du Focus peut aider à identifier la position du [focus système #SystemFocus], de [l'objet navigateur #ObjectNavigation] et du [mode navigation #BrowseMode].
+Ces positions sont mises en évidence avec un contour rectangulaire coloré.
+- Le bleu continu indique la position d'un objet navigateur combiné au focus système (ex : lorsque [l'objet navigateur suit le curseur système #ReviewCursorFollowFocus]).
+- Le bleu pointillé indique juste l'objet ayant le focus système.
+- Le rose continu indique juste l'objet navigateur.
+- Le jaune continu indique le curseur virtuel utilisé en mode navigation (quand il n'y a pas de curseur physique comme dans les navigateurs web).
 -
 
-Quand le surlignage du focus est activé dans la [catégorie vision #VisionSettings] du dialogue [Paramètres de NVDA #NVDASettings], vous pouvez [choisir de surligner ou non le focus, l'objet navigateur ou le curseur du mode navigation #VisionSettingsFocusHighlight].
+Quand la mise en évidence du focus est activée dans la [catégorie vision #VisionSettings] du dialogue [Paramètres de NVDA #NVDASettings], vous pouvez [choisir de mettre en évidence ou non le focus, l'objet navigateur ou le curseur du mode navigation #VisionSettingsFocusHighlight].
 
 ++ Le Rideau d'Écran ++[VisionScreenCurtain]
 En tant qu'utilisateur aveugle ou malvoyant, il est parfois impossible ou inutile de voir le contenu de l'écran.
@@ -1275,7 +1275,7 @@ Vous pouvez vous déplacer de table en table en utilisant les flèches.
 Notez que cette option n'est utile que si votre afficheur braille dispose d'un clavier Perkins et que le pilote de celui-ci supporte cette fonctionnalité.
 Si la saisie n'est pas supportée par un afficheur qui dispose d'un clavier Perkins, cela sera noté dans la section [Afficheurs braille Supportés #SupportedbrailleDisplays].
 
-==== Afficher le mot sous le curseur en braille informatique ==== [BrailleSettingsExpandToComputerBraille]
+==== Afficher le mot sous le curseur en braille informatique ====[BrailleSettingsExpandToComputerBraille]
 Cette option permet d'afficher le mot sous le curseur en intégral.
 
 ==== Montrer le Curseur ====[BrailleSettingsShowCursor]
@@ -1397,18 +1397,18 @@ La catégorie Vision du dialogue des paramètres NVDA vous permet d'activer, dé
 Notez que les options disponibles dans cette catégorie pourraient être étendues par des [extensions NVDA #AddonsManager].
 Par défaut, cette catégorie de paramètres contient les options suivantes :
 
-==== Surlignage du Focus ====[VisionSettingsFocusHighlight]
-Les cases à cocher du groupe Surlignage du Focus contrôlent le comportement de la fonctionnalité interne de [Surlignage du Focus #VisionFocusHighlight]de NVDA.
+==== Mise en évidence du Focus ====[VisionSettingsFocusHighlight]
+Les cases à cocher du groupe Mettre en évidence le Focus contrôlent le comportement de la fonctionnalité interne de [Mise en évidence du Focus #VisionFocusHighlight]de NVDA.
 
-- Activer le surlignage : Active/désactive le surlignage du focus.
-- Surligner le focus système : définit si le [focus système #SystemFocus] sera surligné.
-- Surligner l'objet navigateur : définit si [l'objet navigateur #ObjectNavigation] sera surligné.
-- Surligner le curseur du mode navigation : Définit si le [Curseur virtuel du mode navigation #BrowseMode] sera surligné.
+- Activer la mise en évidence: Active/désactive la mise en évidence du focus.
+- Mettre en évidence le focus système : définit si le [focus système #SystemFocus] sera mis en évidence.
+- Mettre en évidence l'objet navigateur : définit si [l'objet navigateur #ObjectNavigation] sera mis en évidence.
+- Mettre en évidence le curseur du mode navigation : Définit si le [Curseur virtuel du mode navigation #BrowseMode] sera mis en évidence.
 -
 
-Notez que cocher ou décocher la case "Activer le Surlignage" changera également l'état des trois autres cases à cocher  en conséquence.
-Ainsi, si "Activer le Surlignage" n'est pas cochée et que vous la cochez, les trois autres cases seront cochées automatiquement.
-Si vous voulez surligner seulement le focus et laisser les cases objet navigateur et mode navigation non cochées, l'état de la case "Activer le Surlignage" sera semicoché.
+Notez que cocher ou décocher la case "Activer la Mise en évidence" changera également l'état des trois autres cases à cocher  en conséquence.
+Ainsi, si "Activer la Mise en évidence" n'est pas cochée et que vous la cochez, les trois autres cases seront cochées automatiquement.
+Si vous voulez mettre en évidence seulement le focus et laisser les cases objet navigateur et mode navigation non cochées, l'état de la case "Activer la mise en évidence" sera semicoché.
 
 ==== Le Rideau d'Écran ====[VisionSettingsScreenCurtain]
 Vous pouvez activer le [Rideau d'Écran #VisionScreenCurtain] en cochant la case "Rendre l'écran noir (effet immédiat)".
@@ -1575,6 +1575,7 @@ De nombreuses fenêtres et commandes font apparaître un court message (ou sugge
 Quand cette case est cochée, NVDA annonce les bulles d'aide et les notifications d'invitation à leur apparition. 
 - Les bulles d'aide sont semblables aux suggestions mais généralement de plus grande taille, et sont associées à des évènements système tels que le débranchement d'un câble réseau, ou bien des alertes relatives à la sécurité.
 - Les notifications d'invitation ont été introduites dans Windows 10 et apparaissent dans le centre de notification  dans la barre d'état système, informant sur divers événements (ex : une mise à jour a été téléchargée, un ouveau courriel est arrivé dans votre boîte de réception, etc.).
+-
 
 ==== Annoncer les raccourcis clavier des objets ====[ObjectPresentationShortcutKeys]
 Quand cette case est cochée, NVDA inclut, à l'annonce d'un objet ou d'une commande, le raccourci clavier qui lui est associé. 
@@ -2176,19 +2177,19 @@ Dans ce dialogue vous pourrez activer ou désactiver ce qui suit :
 - Démarrer la nouvelle copie portable après création ou démarrer NVDA après installation (démarre automatiquement NVDA après création de la copie portable ou après installation)
 -
 
-++ Run COM registration fixing tool... ++[RunCOMRegistrationFixingTool]
-Installing and uninstalling programs on a computer can, in certain cases, cause COM DLL files to get unregistered.
-As COM Interfaces such as IAccessible depend on correct COM DLL registrations, issues can appear in case the correct registration is missing.
+++ Exécuter l'outil de correction d'enregistrements COM... ++[RunCOMRegistrationFixingTool]
+Installer et désinstaller des programmes sur un ordinateur peut, dans certains cas, causer le désenregistrement des fichiers DLL COM.
+Comme les interfaces COM tels que IAccessible dépendent de l'enregistrement correct des DLL COM, des problèmes peuvent apparaître en cas d'absence d'enregistrement de celles-ci.
 
-This can happen i.e. after installing and uninstalling Adobe Reader, Math Player and other programs.
+Cela peut survenir par exemple après installation et désinstallation d'Adobe Reader, Math Player et autres programmes.
 
-The missing registration can cause issues in browsers, desktop apps, task bar and other interfaces.
+Les enregistrements manquants peuvent causer des problèmes dans les navigateurs, les applications de bureau, barre des tâches et autres interfaces.
 
-Specifically, following issues can be solved by running this tool:
-- NVDA reports "unknown" when navigating in browsers such as Firefox, Thunderbird etc.
-- NVDA fails to switch between focus mode and browse mode
-- NVDA is very slow when navigating in browsers while using browse mode
-- And possibly other issues.
+Spécifiquement, Les problèmes suivants peuvent être réglés par l'exécution de cet outil :
+- NVDA annonce "inconnu" en navigation avec des navigateurs tels que Firefox, Thunderbird etc.
+- NVDA échoue à basculer entre mode formulaire et mode navigation.
+- NVDA est très lent dans les navigateurs en mode navigation.
+- Et possiblement d'autres problèmes.
 -
 
 ++ Rechargement des Extensions ++[ReloadPlugins]
