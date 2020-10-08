@@ -221,9 +221,6 @@ class LiveText(NVDAObject):
 	"""
 	#: The time to wait before fetching text after a change event.
 	STABILIZE_DELAY = 0
-	#: Whether this object supports Diff-Match-Patch character diffing.
-	#: Set to False to use line diffing.
-	_supportsDMP = True
 	# If the text is live, this is definitely content.
 	presentationType = NVDAObject.presType_content
 
@@ -268,12 +265,12 @@ class LiveText(NVDAObject):
 		"""
 		self._event.set()
 
+	def _get_diffAlgo(self):
+		return diffHandler.dmp if config.conf["terminals"]["useDMPWhenSupported"] else diffHandler.difflib
+
 	def _get_devInfo(self):
 		info = super().devInfo
-		if diffHandler._should_use_DMP(self._supportsDMP):
-			info.append("preferred diffing algorithm: character-based (Diff Match Patch)")
-		else:
-			info.append("preferred diffing algorithm: line-based (difflib)")
+		info.append(f"diffing algorithm: {self.diffAlgo}")
 		return info
 
 	def _getText(self) -> str:
@@ -285,7 +282,13 @@ class LiveText(NVDAObject):
 		if hasattr(self, "_getTextLines"):
 			log.warning("LiveText._getTextLines is deprecated, please override _getText instead.")
 			return '\n'.join(self._getTextLines())
-		return self.makeTextInfo(textInfos.POSITION_ALL).text
+		ti = self.makeTextInfo(textInfos.POSITION_ALL)
+		if self.diffAlgo.unit == textInfos.UNIT_CHARACTER:
+			return ti.text
+		elif self.diffAlgo.unit == textInfos.UNIT_LINE:
+			return "\n".join(ti.getTextInChunks(textInfos.UNIT_LINE))
+		else:
+			raise NotImplementedError(f"Unknown unit {self.diffAlgo.unit}")
 
 	def _reportNewLines(self, lines):
 		"""
@@ -336,7 +339,7 @@ class LiveText(NVDAObject):
 				log.exception("Error getting or calculating new text")
 
 	def _calculateNewText(self, newText: str, oldText: str) -> List[str]:
-		return diffHandler.diff(newText, oldText, supports_dmp=self._supportsDMP)
+		return self.diffAlgo.diff(newText, oldText)
 
 
 class Terminal(LiveText, EditableText):

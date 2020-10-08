@@ -20,14 +20,22 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 	STABILIZE_DELAY = 0.03
 
 	def initOverlayClass(self):
+		# Legacy consoles take quite a while to send textChange events.
+		# This significantly impacts typing performance, so don't queue chars.
 		if isinstance(self, KeyboardHandlerBasedTypedCharSupport):
-			# Legacy consoles take quite a while to send textChange events.
-			# This significantly impacts typing performance, so don't queue chars.
 			self._supportsTextChange = False
+
+	def _get_diffAlgo(self):
+		# Non-enhanced legacy consoles use caret proximity to detect
+		# typed/deleted text.
+		# Single-character changes are not reported as
+		# they are confused for typed characters.
+		# Force difflib to keep meaningful edit reporting in these consoles.
+		if not isinstance(self, KeyboardHandlerBasedTypedCharSupport):
+			from diffHandler import difflib
+			return difflib
 		else:
-			# Use line diffing to report changes in the middle of lines
-			# in non-enhanced legacy consoles.
-			self._supportsDMP = False
+			return super().diffAlgo
 
 	def _get_windowThreadID(self):
 		# #10113: Windows forces the thread of console windows to match the thread of the first attached process.
