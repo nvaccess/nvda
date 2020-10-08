@@ -266,7 +266,11 @@ class LiveText(NVDAObject):
 		self._event.set()
 
 	def _get_diffAlgo(self):
-		return diffHandler.dmp if config.conf["terminals"]["useDMPWhenSupported"] else diffHandler.difflib
+		return (
+			diffHandler.dmp
+			if config.conf["terminals"]["diffAlgo"] == "dmp"
+			else diffHandler.difflib
+		)
 
 	def _get_devInfo(self):
 		info = super().devInfo
