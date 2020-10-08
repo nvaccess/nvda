@@ -287,12 +287,7 @@ class LiveText(NVDAObject):
 			log.warning("LiveText._getTextLines is deprecated, please override _getText instead.")
 			return '\n'.join(self._getTextLines())
 		ti = self.makeTextInfo(textInfos.POSITION_ALL)
-		if self.diffAlgo.unit == textInfos.UNIT_CHARACTER:
-			return ti.text
-		elif self.diffAlgo.unit == textInfos.UNIT_LINE:
-			return "\n".join(ti.getTextInChunks(textInfos.UNIT_LINE))
-		else:
-			raise NotImplementedError(f"Unknown unit {self.diffAlgo.unit}")
+		return self.diffAlgo._getText(ti)
 
 	def _reportNewLines(self, lines):
 		"""

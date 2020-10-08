@@ -12,7 +12,8 @@ from abc import abstractmethod
 from baseObject import AutoPropertyObject
 from difflib import ndiff
 from logHandler import log
-from textInfos import UNIT_CHARACTER, UNIT_LINE
+from textInfos import TextInfo, UNIT_LINE
+from threading import Lock
 from typing import List
 
 
@@ -21,25 +22,14 @@ class DiffAlgo(AutoPropertyObject):
 	def diff(self, newText: str, oldText: str) -> List[str]:
 		raise NotImplementedError
 
-	_abstract_unit = True
-
-	def _get_unit(self):
+	@abstractmethod
+	def _getText(self, ti: TextInfo) -> str:
 		raise NotImplementedError
-
-	def _get_name(self):
-		return "diffing algorithm"
-
-	def __repr__(self):
-		return f"{self.unit}-based ({self.name})"
 
 
 class DiffMatchPatch(DiffAlgo):
-	name = "diff match patch"
-	unit = UNIT_CHARACTER
-
-	def __init__(self, *args, **kwargs):
-		self._proc = None
-		return super().__init__(*args, **kwargs)
+	_proc = None
+	_lock = Lock()
 
 	def _initialize(self):
 		if not self._proc:
@@ -58,41 +48,45 @@ class DiffMatchPatch(DiffAlgo):
 				stdout=subprocess.PIPE
 			)
 
+	def _getText(self, ti: TextInfo) -> str:
+		return ti.text
+
 	def diff(self, newText: str, oldText: str) -> List[str]:
-		try:
-			self._initialize()
-			if not newText and not oldText:
-				# Return an empty list here to avoid exiting
-				# nvda_dmp uses two zero-length texts as a sentinal value
-				return []
-			old = oldText.encode("utf-8")
-			new = newText.encode("utf-8")
-			# Sizes are packed as 32-bit ints in native byte order.
-			# Since nvda and nvda_dmp are running on the same Python
-			# platform/version, this is okay.
-			tl = struct.pack("=II", len(old), len(new))
-			self._proc.stdin.write(tl)
-			self._proc.stdin.write(old)
-			self._proc.stdin.write(new)
-			buf = b""
-			sizeb = b""
-			SIZELEN = 4
-			while len(sizeb) < SIZELEN:
-				try:
-					sizeb += self._proc.stdout.read(SIZELEN - len(sizeb))
-				except TypeError:
-					pass
-			(size,) = struct.unpack("=I", sizeb)
-			while len(buf) < size:
-				buf += self._proc.stdout.read(size - len(buf))
-			return [
-				line
-				for line in buf.decode("utf-8").splitlines()
-				if line and not line.isspace()
-			]
-		except Exception:
-			log.exception("Exception in DMP, falling back to difflib")
-			return Difflib().diff(newText, oldText)
+		with self._lock:
+			try:
+				self._initialize()
+				if not newText and not oldText:
+					# Return an empty list here to avoid exiting
+					# nvda_dmp uses two zero-length texts as a sentinal value
+					return []
+				old = oldText.encode("utf-8")
+				new = newText.encode("utf-8")
+				# Sizes are packed as 32-bit ints in native byte order.
+				# Since nvda and nvda_dmp are running on the same Python
+				# platform/version, this is okay.
+				tl = struct.pack("=II", len(old), len(new))
+				self._proc.stdin.write(tl)
+				self._proc.stdin.write(old)
+				self._proc.stdin.write(new)
+				buf = b""
+				sizeb = b""
+				SIZELEN = 4
+				while len(sizeb) < SIZELEN:
+					try:
+						sizeb += self._proc.stdout.read(SIZELEN - len(sizeb))
+					except TypeError:
+						pass
+				(size,) = struct.unpack("=I", sizeb)
+				while len(buf) < size:
+					buf += self._proc.stdout.read(size - len(buf))
+				return [
+					line
+					for line in buf.decode("utf-8").splitlines()
+					if line and not line.isspace()
+				]
+			except Exception:
+				log.exception("Exception in DMP, falling back to difflib")
+				return Difflib().diff(newText, oldText)
 
 	def _terminate(self):
 		if self._proc:
@@ -101,9 +95,6 @@ class DiffMatchPatch(DiffAlgo):
 
 
 class Difflib(DiffAlgo):
-	name = "difflib"
-	unit = UNIT_LINE
-
 	def diff(self, newText: str, oldText: str) -> List[str]:
 		newLines = newText.splitlines()
 		oldLines = oldText.splitlines()
@@ -158,6 +149,9 @@ class Difflib(DiffAlgo):
 			prevLine = line
 
 		return outLines
+
+	def _getText(self, ti: TextInfo) -> str:
+		return "\n".join(ti.getTextInChunks(UNIT_LINE))
 
 
 difflib = Difflib()
