@@ -6,6 +6,7 @@
 
 """Support for UI Automation (UIA) controls."""
 
+import traceback
 from ctypes import byref
 from ctypes.wintypes import POINT, RECT
 from comtypes import COMError
@@ -1007,11 +1008,21 @@ class UIA(Window):
 			kwargs['windowHandle'] = None
 		elif relation=="focus":
 			try:
-				UIAElement=UIAHandler.handler.clientObject.getFocusedElementBuildCache(UIAHandler.handler.baseCacheRequest)
-				# This object may be in a different window, so we need to recalculate the window handle.
-				kwargs['windowHandle']=None
+				UIAElement = UIAHandler.handler.clientObject.getFocusedElementBuildCache(
+					UIAHandler.handler.baseCacheRequest
+				)
 			except COMError:
 				log.debugWarning("getFocusedElement failed", exc_info=True)
+				return False
+			# Ignore this object if it is non native.
+			if not UIAHandler.handler.isNativeUIAElement(UIAElement):
+				if UIAHandler._isDebug():
+					log.debug(
+						"kwargsFromSuper: ignoring non native element with focus"
+					)
+				return False
+			# This object may be in a different window, so we need to recalculate the window handle.
+			kwargs['windowHandle'] = None
 		else:
 			UIAElement=UIAHandler.handler.clientObject.ElementFromHandleBuildCache(windowHandle,UIAHandler.handler.baseCacheRequest)
 		if not UIAElement:
@@ -1035,6 +1046,7 @@ class UIA(Window):
 		Cached values of these properties will be available for the remainder of the current core cycle. After that, new values will be fetched.
 		@type initialUIACachedPropertyIDs: L{UIAHandler.IUIAutomationCacheRequest}
 		"""
+		self._initialStack = "\n".join(traceback.format_stack()[:-1])
 		if not UIAElement:
 			raise ValueError("needs a UIA element")
 
