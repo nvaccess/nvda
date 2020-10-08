@@ -308,7 +308,8 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	@staticmethod
 	def objectInForeground():
-		"""Retrieves the object representing the current foreground control according to the Operating System. This differes from NVDA's foreground object as this object is the real foreground object according to the Operating System, not according to NVDA.
+		"""Retrieves the object representing the current foreground control according to the
+		Operating System. This may differ from NVDA's cached foreground object.
 		@return: the foreground object
 		@rtype: L{NVDAObject}
 		"""
