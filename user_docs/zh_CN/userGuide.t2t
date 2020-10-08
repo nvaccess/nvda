@@ -69,9 +69,7 @@ NVDA还使用了其他协议的开源免费软件。
 - 操作系统： 所有32位或者64位的Windows 7 Sp1、Windows 8 、Windows 8.1 、Windows 10(包括服务器系统)。
 - 对于 Windows 7 版本，NVDA 要求 SP1 以上。
 - 对于 Windows Server 2008 R2 服务器操作系统 ， NVDA 要求 SP1 或者更高。
-- 内存：需要 256MB 或以上 
-- 处理器速率：1.0Ghz或以上 
-- 约需要90 MB 的磁盘空间。
+- 约需要150 MB 的磁盘空间。
 -
 
 + 获取和配置 NVDA +[GettingAndSettingUpNVDA]
@@ -203,8 +201,12 @@ NVDA 目前共有两套被称为键盘布局的快捷键配置：一套台式机
 
 ++ NVDA 触摸手势 ++[NVDATouchGestures]
 如果您正在使用的设备带有触摸屏并且运行在 Windows8 或者更高版本的操作系统，您也可以通过触摸屏来控制 NVDA。
-当 NVDA 正在运行时，所有触摸动作都将直接被其接管。
-因而，所有在没有 NVDA 时通常能执行的动作都将失效。
+当 NVDA 正在运行时，所有触摸动作都将直接被NVDA接管。
+因而，所有在运行 NVDA 之前通常能使用的动作/首饰都将暂时不可用。
+%kc:beginInclude
+要切换触摸屏支持，请按 NVDA + control + alt + t。
+%kc:endInclude
+您还可以从 NVDA 设置的“触摸交互”类别中启用或禁用[触摸交互支持 #TouchSupportEnable]。
 
 +++ 浏览屏幕 +++[ExploringTheScreen]
 您能使用触摸屏执行的最普通的动作就是，朗读在屏幕任意一个点上的文本和控件。
@@ -221,10 +223,10 @@ NVDA 目前共有两套被称为键盘布局的快捷键配置：一套台式机
 用一个手指轻击屏幕一次仅被简单的识别为一次点击。
 双指同时轻击会被识别为两个手指点击，如此类推。
 
- 如果相同的点击动作再次被执行一或者更多的次数，NVDA将把这个动作视为多重手势。
+如果相同的点击动作再次被执行一或者更多的次数，NVDA将把这个动作视为多重手势。
 快速点击两次将被识别为一个双击动作。
 点击三次将被识别为一个三击动作。
-当然，多次点击的手势也会判断手指的数目。所以，像两指双击、四指单机这样的动作也是可以识别的。
+当然，多次点击的手势也会判断手指的数目。所以，像两指双击、四指单击这样的动作也是可以识别的。
 
 ==== 滑动 ====
 用您的手指，快速滑动屏幕。
@@ -232,7 +234,7 @@ NVDA 目前共有两套被称为键盘布局的快捷键配置：一套台式机
  根据方向的不同，有四种可能的滑动手势：向左滑动、向右滑动、向上滑动和向下滑动。
 
 就像点击一样，超过一个的手指可以用来执行手势。
-因而，如双指尚华和四指左滑这样的动作都是可行的。
+因而，如双指上滑和四指左滑这样的动作都是可行的。
 
 +++ 触摸模式 +++[TouchGestures]
 因为 NVDA 拥有的命令比可能的触摸手势还要多，NVDA 拥有可切换的专用模式，每个模式各自拥有自己的一小套命令。
@@ -273,6 +275,7 @@ NVDA 菜单允许您控制 NVDA 设置、访问帮助、保存或者恢复您的
 ++ 基本的 NVDA 命令 ++[BasicNVDACommands]
 %kc:beginInclude
 || 名称 | 台式机键盘 | 笔记本键盘 | 触摸 | 描述 |
+| 启动或重启NVDA | Control+alt+n | Control+alt+n | 无 | 如果安装NVDA时启用了桌面快捷方式，可以按这个快捷键启动或重启NVDA。这个快捷键来源于Windows的快捷方式，因此无法在输入手势对话框中重新分配它。 |
 | 停止朗读 | Control | control | 双指点击 | 立即停止朗读 |
 | 暂停朗读 | shift | shift | 无 | 立即暂停朗读，再次按下便会从刚刚停止的地方继续朗读(如果当前合成器可以支持暂停的话)。 |
 | NVDA 菜单 | NVDA+n | NVDA+n | 双指双击 | 弹出的 NVDA 菜单允许您访问“选项”、“工具”、“帮助”等。 |
@@ -326,11 +329,11 @@ NVDA 提供下列与系统输入焦点相关的快捷命令：
 %kc:beginInclude
 || 名称 | 台式机键盘 | 笔记本键盘 | 描述 |
 | 全文朗读 | NVDA+下光标 | NVDA+a | 从系统输入焦点的当前位置开始朗读，焦点会随着朗读的内容移动。 |
-| 朗读当前航 | NVDA+上光标 | NVDA+l | 朗读系统输入焦点所在的行，连按两次拼读该行。 |
+| 朗读当前行 | NVDA+上光标 | NVDA+l | 朗读系统输入焦点所在的行，连按两次拼读该行。 |
+| 朗读文本格式 | NVDA+f | NVDA+f | 无 | 朗读系统输入焦点当前位置的文本的格式信息，连按两次可使用浏览模式显示格式信息。 |
 | 朗读当前选择的文本 | NVDA+Shift+上光标 | NVDA+shift+s | 朗读当前选择的所有文本 |
 | 下一个句子 | alt+下光标 | alt+下光标 | 移动系统焦点到下一个句子仅在 word 和 Outlook 中受到支持。 |
 | 上一个句子 | alt+上光标 | alt+上光标 | 移动系统焦点到上一个句子仅在 word 和 Outlook 中受到支持。 |
-
 
 当处于一个列表之内时，下面的键盘命令也是可用的：
 || 名称 | 按键 | 描述 |
@@ -413,7 +416,7 @@ NVDA 允许您按照字、词、行的方式朗读[屏幕 #ScreenReview]、当�
 | 拷贝浏览光标从 | NVDA+f9 | NVDA+f9 | 无 | 设定当前浏览光标所在位置为开始点，实际的复制并不会执行，除非您告诉 NVDA 范围的结束点在哪里。 |
 | 拷贝浏览光标到 | NVDA+f10 | NVDA+f10 | 无 | 按一次，选择开始点和结束点之间的文本；连按两次，把“拷贝浏览光标从”和“拷贝浏览光标到”之间的文本拷贝到剪贴板。如果系统输入焦点可以移动到结束点，当您按下此键时，文本将被真正的拷贝到 Windows 剪贴板。 |
 | 移动到开始点 | NVDA+shift+f9 | NVDA+shift+f9 | 无 | 将浏览光标移动到先前设置的开始复制标记的位置。 |
-| 朗读文本格式 | NVDA+f | NVDA+f | 无 | 朗读浏览光标当前所在位置的文本的格式信息，连按两次可使用浏览模式在格式信息之间导航。 |
+| 朗读文本格式 | NVDA+shift+f | NVDA+shift+f | 无 | 朗读浏览光标当前所在位置的文本的格式信息，连按两次可使用浏览模式显示格式信息。 |
 | 朗读字符信息 | 无 | 无 | 无 | 朗读浏览光标当前所在位置的字符，连按两次弹出一个显示字符的详细信息的窗口。 |
 %kc:endInclude
 
@@ -645,10 +648,13 @@ NVDA 支持下列类型的数学内容：
 
 当您希望返回到文档时，简单的按下“esc”键即可。"
 
+有时，数学内容可能显示为按钮或其他类型的元素，这些元素被激活时可以显示对话框或与公式有关的更多信息。
+要激活按钮或包含公式的元素，请按ctrl + enter。
+
 + 盲文 +[Braille]
 如果你有一个点显器，NVDA可以以盲文的形式显示屏幕上的信息
 如果你的点显器有 Perkins 键盘，你还可以键入简写或非简写点字。
-您也可以使用[盲文查看器 #BrailleViewer]在屏幕上显示图形化的盲文，或者，如果您愿意也可以同时使用实体的盲文点显器来显示盲文。
+您也可以使用[盲文查看器 #BrailleViewer]在屏幕上显示图形化的盲文，如果您愿意也可以同时使用实体的盲文点显器来显示盲文。
 
 有关支持的点显器的信息，请参阅[支持的点显器 #SupportedBrailleDisplays]部分。
 本节还包含有关支持NVDA自动检测功能的点显器的信息。
@@ -708,6 +714,7 @@ NVDA 支持下列类型的数学内容：
 | lv N | 树视图第N个级项目 |
 | wnd | 窗口 |
 | ⠤⠤⠤⠤⠤ | 分隔线 |
+| mrkd | 标注内容 |
 
 下面是NVDA定义的控件状态的缩写:
 || 缩写 | 控件状态 |
@@ -889,8 +896,9 @@ NVDA 可在您浏览 Excel 工作表时自动读出恰当的行列标题。
 +++ 朗读注释 +++[ExcelReportingComments]
 %kc:beginInclude
 要想朗读当前聚焦单元的所有注释，请按下“NVDA+alt+C”。
+在英文版Microsoft 2016、365和更高版本中，Microsoft Excel中的注释“Comment”已重命名为“Notes”，与新的批注区分，中文版不变。
 %kc:endInclude
-按NVDA+F7在元素列表中访问所有工作簿的注释。
+按NVDA+F7在元素列表中访问当前工作簿的所有注释。
 
 NVDA还可以显示用于添加或编辑特定注释的特定对话框。
 由于无障碍API的限制，NVDA覆盖了Excel注释编辑区域，但是用于显示对话框的按键是Excel自带的，即使未运行NVDA也可以使用。
@@ -902,6 +910,11 @@ NVDA还可以显示用于添加或编辑特定注释的特定对话框。
 
 注意：也可以从工作表任何单元格的上下文菜单中，打开Excel自带的注释编辑区域。
 但是，这将打开NVDA无法朗读的注释编辑区域，而不是NVDA添加的注释编辑对话框。
+
+在Microsoft Office 2016、365和更高版本中，添加了批注对话框。
+该对话框支持无障碍，并提供更多功能，例如回复他人批注等。
+可以从某个单元格的上下文菜单中打开它。
+通过批注对话框添加到单元格中的批注与“注释”无关。
 
 +++ 朗读受保护的单元格 +++[ExcelReadingProtectedCells]
 如果工作簿已经被保护了起来，移动焦点到特定单元也许将变得不可能。
@@ -1065,7 +1078,8 @@ NVDA的文本审阅命令无法访问未在窗口中显示的文本。
  - 如果您关心个人隐私安全，请不要把日志级别调整到输入/输出。
 - 调试 包括上面几个级别的日志以及对调试有用的信息，这些日志同样可能包含您的个人隐私，如果您希望保护隐私请不要把日志级别设为调试。
  - 如果您关心个人隐私安全，请不要把日志级别调整到调试。
-
+ -
+-
 
 ==== 系统启动后自动运行 NVDA ====[GeneralSettingsStartAfterLogOn]
 如果此选项被选中，NVDA 将在 Windows 登录后尽快启动。
@@ -1287,6 +1301,7 @@ NVDA 正在运行的时候，如果您想在不进入“语音设置”对话框
 ==== 消息显示时间(以秒为单位) ====[BrailleSettingsMessageTimeout]
 这是一个数字区域，允许您控制 NVDA 的消息在点显器上显示的时间长度。
 特别的，设置为0将完全停用这些消息。
+当按下盲文显示器上的光标定位键时，NVDA消息立即被消除，但是当按下触发消息的键时，NVDA消息再次出现。
 
 ==== 无限期地显示消息 ====[BrailleSettingsNoMessageTimeout]
 此选项允许NVDA消息无限期地显示在点显器上，也就是消息不会自动消失。
@@ -1297,7 +1312,11 @@ NVDA 正在运行的时候，如果您想在不进入“语音设置”对话框
 
 此选项允许您选择是否希望点显器跟随系统焦点或浏览对象(即浏览光标)。
 如果选中了“自动”点字光标会跟随系统焦点或浏览对象(即浏览光标)
-此时，如果用户操作改变了浏览对象，NVDA会让点字光标暂时跟随浏览对象，知道系统焦点或者输入焦点改变为止。
+此时，如果用户操作改变了浏览对象，NVDA会让点字光标暂时跟随浏览对象，直到系统焦点或者输入焦点改变为止。
+如果你想让点字光标只跟随系统焦点或系统输入焦点，需要把这个设置改成焦点
+此时，点字光标不会跟随文本浏览或导航对象。
+如果你想让点字光标只跟随文本浏览或对象浏览，需要把这个设置改成浏览光标。
+此时点字光标不再跟随系统焦点或导航对象。
 
 ==== 按段落阅读 ====[BrailleSettingsReadByParagraph]
 如果启用，盲文将用段落显示方式来代替逐行显示方式。
@@ -1509,6 +1528,12 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 这个部分只有在设备有触摸屏并且系统是Windows 8或者更高的版本才可用。
 这个分类包含以下选项这个分类包含以下选项
 
+==== 启用触摸支持 ====[TouchSupportEnable]
+此复选框启用了NVDA的触摸支持。
+如果启用，则可以使用触摸屏设备用NVDA的手势浏览屏幕上的项目。
+如果禁用，则触摸屏支持将被禁用，就像NVDA未运行一样，恢复触摸手势原有功能。
+可以使用NVDA + control + alt + t切换此设置。
+
 ==== 触摸输入模式 ====[TouchTypingMode]
 使用此复选框可以指定使用触摸键盘输入文本时要使用的方法。
 如果选中此复选框，则当您在触摸键盘上找到某个键时，可以抬起手指并按下所选键。
@@ -1550,7 +1575,7 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 当此复选框被选中时，告诉 NVDA 在通知或气球提示出现时朗读内容。
 - 气球提示就像工具提示，但尺寸通常比较大，提示的一般是系统事件。比如网络电缆没有插好、或Windows 系统可能存在安全问题等。
 - 通知是Windows 10的新功能，在系统托盘的通知中心里可以找到，通知用户发生了某种事件比如更新下载完成、收到了新邮件。
-
+-
 
 ==== 读出对象的快捷键 ====[ObjectPresentationShortcutKeys]
 如果此复选框被选中，NVDA 会在朗读某些对象或控件时包含与其有关联的快捷键。
@@ -1684,6 +1709,15 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 举一个例子，如果启用，当您按下字母“j”后，它会被阻拦在所聚焦的文档，也就是这一按键既不会作为 NVDA 的跳转热键，也不会作为程序自身的命令(译者注：就上面的例子来说，假设我们现在聚焦在word文档里，当按j的时候，他不会跳转文档，也不会当成字母j输入到文档，就是j就无效了)。
 此时NVDA会发出提示音，表示
 
+==== 浏览模式中自动把焦点放到可聚焦的元素上 ====[BrowseModeSettingsAutoFocusFocusableElements]
+快捷键: NVDA+8
+
+默认情况下处于禁用状态，此选项使您可以选择在使用浏览模式时，是否应将系统焦点自动设置为可以获取系统焦点的元素（链接，表单域等）。
+禁用此选项将不会自动聚焦这些元素。
+这可能会提高浏览模式响应速度，改善体验。
+与特定元素互动时，焦点仍会更新（例如，按下按钮，选中复选框）。
+启用此选项可能会以性能和稳定性为代价改善对某些网站的支持。
+
 +++ 文档格式设置 (NVDA+control+d) +++[DocumentFormattingSettings]
 “文档格式...”这个分类下面的大多数复选框都是用来配置，在您用光标浏览整个文档时朗读什么类型的格式信息。
 例如，如果您选择了“朗读字体名称”复选框，每次您用光标进入拥有不同字体的文本时，字体名称就会被读出。
@@ -1696,6 +1730,7 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
  - 字体属性
  - 上角标和下角标
  - 强调
+ - 高亮标注
  - 缩进
  - 颜色
 - 文档信息
@@ -1717,6 +1752,7 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 - 元素
  - 标题
  - 链接
+ - 图像
  - 列表
  - 引用区域
  - 组
@@ -1776,7 +1812,14 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 ==== 打开开发者实验目录 ====[AdvancedSettingsOpenScratchpadDir]
 此按钮可打开开发者实验目录。
 仅当用户允许从开发者实验目录加载代码时，才会启用此按钮。
- 
+
+==== 选择性接收UI Automation事件和属性更改==== [AdvancedSettingsSelectiveUIAEventRegistration]
+此选项更改NVDA接收的Microsoft UI Automation无障碍API触发的事件。
+禁用此选项后，NVDA将注册更多的UIA事件，这些事件将在NVDA本身内处理并丢弃。
+这会对性能产生重大负面影响，尤其是在像Microsoft Visual Studio这样的应用程序中。
+因此，启用此选项后，对于大多数事件，NVDA会将事件注册限制到系统焦点。
+如果您在一个或多个应用程序中遇到性能问题，我们建议您尝试使用此功能以查看性能是否有所提高。
+
 ==== 在Word里使用Microsoft UI Automation ====[AdvancedSettingsUseUiaForWord]
 Microsoft UI Automation是微软的最新无障碍接口 简称UIA，启用此选项后，NVDA将尝试使用Microsoft UI Automation这个无障碍接口从Word文档控件中获取信息。
 这包括Microsoft Word本身，以及Microsoft Outlook消息查看器和编写器。
@@ -1797,15 +1840,10 @@ Microsoft UI Automation是微软的最新无障碍接口 简称UIA，启用此�
 注意：启用此选项后，在屏幕上不显示的字符，例如密码也会被读出来。
 在不受信任的环境中，您可以在输入密码时暂时禁用[朗读输入字符 #KeyboardSettingsSpeakTypedCharacters]和[朗读输入单词 #KeyboardSettingsSpeakTypedWords]的功能。
 
-==== 浏览模式中自动把焦点放到可聚焦的元素上 ====[BrowseModeSettingsAutoFocusFocusableElements]
-快捷键: NVDA+8
-
-默认情况下启用。此选项允许您选择在使用浏览模式插入符导航内容时是否应自动将系统焦点设置为可以获取系统焦点的元素（链接，表单域等）。
-如果启用，则表示自版本2019.1及之前的NVDA的默认行为。
-禁用此选项不会自动聚焦可聚焦元素。
-这可能会在浏览模式下提供更快的浏览体验和更好的响应能力。
-当与其交互时，焦点将更新为特定元素（例如，按下按钮，选中复选框）。
-此功能在NVDA 2019.2中是实验性质的。
+==== 取消无效焦点事件的朗读（实验性） ====[CancelExpiredFocusSpeech]
+启用此选项则会取消对无效焦点事件的朗读。
+尤其在chrome下，快速浏览Gmail中的信息时会导致nvda读出无效的内容。
+此功能从NVDA 2020.2开始为实验性功能。
 
 ==== 光标移动超时（单位是千分之一秒） ====[AdvancedSettingsCaretMoveTimeout]
 此选项允许您配置NVDA等多长时间之后才从编辑框获取光标位置。
@@ -1847,11 +1885,13 @@ NVDA 的语音字典比之单词替换更为强大。
 默认情况下，NVDA 忽略大小写)。
 
 最后的一套单选按钮告诉 NVDA 您的来源文本到底应该匹配任何地方、匹配整个单词或视为“正则表达式”。
- 设置来源匹配整个单词意味着仅当其没有出现在大单词的部分时才进行替换，极在来源文本的前面或后面没有字母数字的字符或下划线(或者根本没有来源文本的字符)。
- 这样，使用早先的把“bird”替换为“frog”的例子，如果您把它设置为全词匹配，那么它就无法匹配“birds”或者“bluebird”。
+设置模式以匹配整个单词意味着仅当模式不作为较大单词的一部分出现时才进行替换。
+如果单词前后的字符不是字母，数字或下划线，或者根本没有字符，则满足此条件。
+因此，使用前面的示例将“ bird”替换为“ frog”的示例，如果您将其替换为整个单词，则它将与“ birds”或“ bluebird”不匹配。
 
 “正则表达式”是一个包含特殊符号的匹配模板，允许您在一次匹配超过一个字符串，仅匹配数字或仅匹配字母等等，这些仅仅是一些例子罢了。
-正则表达式不在本指南的覆盖范围之内，但是，您可以从 web 页面上找到很多能让您了解更多信息的提示。
+本指南不会教你如何使用正则表达式。
+您可以参考[Python正则表达式文档 https://docs.python.org/3.7/howto/regex.html]来学习。
 
 +++ 标点符号发音 +++[SymbolPronunciation]
 此对话框允许您修改标点符号的发音，并指定语音输出标点符号的级别。
@@ -1900,6 +1940,19 @@ NVDA 的语音字典比之单词替换更为强大。
 在此种情况下，出现的菜单允许您选择期望的选项。
 
 要想从一个命令删除手势，选择该手势并点击“移除”按钮。
+
+“模拟系统按键”类别包含NVDA命令，用于模拟系统键盘上的按键。
+这些模拟的系统键盘键可用于直接从盲文显示器控制系统键盘。
+要添加模拟输入手势，请选择“模拟系统按键”类别，然后按“添加”按钮。
+然后，按要模拟的键盘上的键。
+之后，该键将从“模拟系统按键”类别中可用，并且您将能够如上所述为其分配输入手势。
+
+注意:
+ - 要模拟的键需要有快捷键或手势，要不然无法保存。
+ - 有辅助键的手势模拟没有辅助键的手势会出问题，
+ 比如用ctrl+m模拟a键，最后效果是和ctrl+a一样
+ 因为模拟a键的时候，ctrl键还按着，程序收到的是Ctrl+a
+ -
 
 当您完成修改之后，点击“确认”保存设置或点击“取消”按钮放弃。
 
@@ -2006,7 +2059,8 @@ NVDA 的语音字典比之单词替换更为强大。
 
 安装版本的 NVDA 的所有插件和配置文件都被放在您的 Windows 用户配置的文件的NVDA目录之下。
 系统内的每个用户都可以拥有自己的配置。
-要想访问您安装版本的 NVDA 配置目录，从开始菜单访问 NVDA 程序组后找到“浏览 NVDA 配置目录”，你也可以在[输入手势对话框 #InputGestures] 里添加一个快捷键或者手势实现。
+要想访问您安装版本的 NVDA 配置目录，从开始菜单访问 NVDA 程序组后找到“浏览 NVDA 配置目录”，
+你也可以在[输入手势对话框 #InputGestures] 里添加一个快捷键或者手势实现。
 
 运行在欢迎屏幕或 UAC 屏幕时的 NVDA 设置都被存放在 NVDA 安装目录下的 SystemConfig 目录。
 通常情况下，不要接触这些配置文件。
@@ -2511,7 +2565,7 @@ Please see the display's documentation for descriptions of where these keys can 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series ++[Hims]
 NVDA supports Braille Sense, Braille EDGE, Smart Beetle and Sync Braille displays from [Hims https://www.hims-inc.com/] when connected via USB or bluetooth. 
 If connecting via USB, you will need to install the USB drivers from HIMS on your system.
-You can download these from here: https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+You can download these from here: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Following are the key assignments for these displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -2779,7 +2833,7 @@ The following models are supported:
 - BrailleNote Apex (USB and Bluetooth connections)
 -
 
-For BrailleNote Touch, please refer to  the [Brailliant BI Series / BrailleNote Touch HumanWareBrailliant] section.
+For BrailleNote Touch, please refer to  the [Brailliant BI Series / BrailleNote Touch #HumanWareBrailliant] section.
 
 Except for BrailleNote PK, both braille (BT) and QWERTY (QT) keyboards are supported.
 For BrailleNote QT, PC keyboard emulation isn't supported.
@@ -2807,7 +2861,7 @@ Please check your BrailleNote's documentation to find where these keys are locat
 | Move braille display to previous line | previous |
 | Move braille display to next line | next |
 | Route to braille cell | routing |
-| NvDA menu | space+dot1+dot3+dot4+dot5 (space+n) |
+| NVDA menu | space+dot1+dot3+dot4+dot5 (space+n) |
 | Toggle braille tethered to | previous+next |
 | Up arrow key | space+dot1 |
 | Down arrow key | space+dot4 |
@@ -2831,7 +2885,7 @@ Please check your BrailleNote's documentation to find where these keys are locat
 Following are commands assigned to BrailleNote QT when it is not in braille input mode.
 
 || Name | Key |
-| NvDA menu | read+n |
+| NVDA menu | read+n |
 | Up arrow key | upArrow |
 | Down arrow key | downArrow |
 | Left Arrow key | leftArrow |
@@ -2943,7 +2997,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | rightArrow key | dot5+space, joystick2Right, rightArrow |
 | upArrow key | dot1+space, joystick2Up, upArrow |
 | downArrow key | dot6+space, joystick2Down, downArrow |
-| enter key | joystick2Center |
+| enter key | joystick2centre |
 | pageUp key | dot1+dot3+space |
 | pageDown key | dot4+dot6+space |
 | numpad1 key | dot1+dot6+backspace |

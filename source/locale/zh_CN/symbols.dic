@@ -40,7 +40,7 @@ _	下划线
 {	左花括号
 }	右花括号
 　	全角空格	all
-₹	印度卢比	some	norep
+₹	卢比	some	norep
 negative number	负
 ✔	粗对钩
 ✓	对钩
@@ -511,7 +511,6 @@ no-break space	空格	most
 ⇒	双线右箭头	some
 ⇨	空心右箭头	some
 ♣	黑桃	some
-➢	三维上光向右箭头尖	some
 ❖	四个菱形	some
 ♦	实心方块	some
 ⅐	七分之一	none
@@ -534,70 +533,70 @@ no-break space	空格	most
 ⅞	八分之七	none
 
 # 盲文点位 (Add 64braille symbols) 
-⠀	盲文空格	all
-⠁	一点	all
-⠂	二点	all
-⠃	一二点	all
-⠄	三点	all
-⠅	一三点	all
-⠆	二三点	all
-⠇	一二三点	all
-⠈	四点	all
-⠉	一四点	all
-⠊	二四点	all
-⠋	一二四点	all
-⠌	三四点	all
-⠍	一三四点	all
-⠎	二三四点	all
-⠏	一二三四点	all
-⠐	五点	all
-⠑	一五点	all
-⠒	二五点	all
-⠓	一二五点	all
-⠔	三五点	all
-⠕	一三五点	all
-⠖	二三五点	all
-⠗	一二三五点	all
-⠘	四五点	all
-⠙	一四五点	all
-⠚	二四五点	all
-⠛	一二四五点	all
-⠜	三四五点	all
-⠝	一三四五点	all
-⠞	二三四五点	all
-⠟	一二三四五点	all
-⠠	六点	all
-⠡	一六点	all
-⠢	二六点	all
-⠣	一二六点	all
-⠤	三六点	all
-⠥	一三六点	all
-⠦	二三六点	all
-⠧	一二三六点	all
-⠨	四六点	all
-⠩	一四六点	all
-⠪	二四六点	all
-⠫	一二四六点	all
-⠬	三四六点	all
-⠭	一三四六点	all
-⠮	二三四六点	all
-⠯	一二三四六点	all
-⠰	五六点	all
-⠱	一五六点	all
-⠲	二五六点	all
-⠳	一二五六点	all
-⠴	三五六点	all
-⠵	一三五六点	all
-⠶	二三五六点	all
-⠷	一二三五六点	all
-⠸	四五六点	all
-⠹	一四五六点	all
-⠺	二四五六点	all
-⠻	一二四五六点	all
-⠼	三四五六点	all
-⠽	一三四五六点	all
-⠾	二三四五六点	all
-⠿	一二三四五六点	all
+⠀	盲文空格	some
+⠁	一点	some
+⠂	二点	some
+⠃	一二点	some
+⠄	三点	some
+⠅	一三点	some
+⠆	二三点	some
+⠇	一二三点	some
+⠈	四点	some
+⠉	一四点	some
+⠊	二四点	some
+⠋	一二四点	some
+⠌	三四点	some
+⠍	一三四点	some
+⠎	二三四点	some
+⠏	一二三四点	some
+⠐	五点	some
+⠑	一五点	some
+⠒	二五点	some
+⠓	一二五点	some
+⠔	三五点	some
+⠕	一三五点	some
+⠖	二三五点	some
+⠗	一二三五点	some
+⠘	四五点	some
+⠙	一四五点	some
+⠚	二四五点	some
+⠛	一二四五点	some
+⠜	三四五点	some
+⠝	一三四五点	some
+⠞	二三四五点	some
+⠟	一二三四五点	some
+⠠	六点	some
+⠡	一六点	some
+⠢	二六点	some
+⠣	一二六点	some
+⠤	三六点	some
+⠥	一三六点	some
+⠦	二三六点	some
+⠧	一二三六点	some
+⠨	四六点	some
+⠩	一四六点	some
+⠪	二四六点	some
+⠫	一二四六点	some
+⠬	三四六点	some
+⠭	一三四六点	some
+⠮	二三四六点	some
+⠯	一二三四六点	some
+⠰	五六点	some
+⠱	一五六点	some
+⠲	二五六点	some
+⠳	一二五六点	some
+⠴	三五六点	some
+⠵	一三五六点	some
+⠶	二三五六点	some
+⠷	一二三五六点	some
+⠸	四五六点	some
+⠹	一四五六点	some
+⠺	二四五六点	some
+⠻	一二四五六点	some
+⠼	三四五六点	some
+⠽	一三四五六点	some
+⠾	二三四五六点	some
+⠿	一二三四五六点	some
 
 # 上下标
 º	阳性顺序指示符	some
@@ -636,11 +635,18 @@ no-break space	空格	most
 
 # 杂项符号
 ⌘	Mac Command键	none
+′	撇号	some
+″	双撇号	some
+‴	三撇号	some
+⮚	三維向右上方發光的等邊箭頭	some
+➢	三维上光向右箭头尖	some
+‚	单引用符	most
+„	双引用符	most
 ‡	双剑标	some
 †	箭标	some
-◦	空心加重号	some
-‣	三角加重号	none
-✗	X-形 加重号	none
+◦	空心着重号	some
+‣	三角着重号	none
+✗	X-形 着重号	none
 ￼	对象替换符	none
 ƒ	弗罗林	all	norep
 ‰	千分之	some
