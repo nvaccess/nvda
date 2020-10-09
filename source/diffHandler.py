@@ -32,11 +32,15 @@ class DiffMatchPatch(DiffAlgo):
 		"A character-based diffing approach, using the Google Diff Match Patch "
 		"library in a proxy process (to work around a licence conflict)."
 	)
+	#: A subprocess.Popen object for the nvda_dmp process.
 	_proc = None
+	#: A lock to control access to the nvda_dmp process.
+	#: Control access to avoid synchronization problems if multiple threads
+	#: attempt to use nvda_dmp at the same time.
 	_lock = Lock()
 
 	def _initialize(self):
-		if not self._proc:
+		if not DiffMatchPatch._proc:
 			log.debug("Starting diff-match-patch proxy")
 			if hasattr(sys, "frozen"):
 				dmp_path = (os.path.join(globalVars.appDir, "nvda_dmp.exe"),)
@@ -44,7 +48,7 @@ class DiffMatchPatch(DiffAlgo):
 				dmp_path = (sys.executable, os.path.join(
 					globalVars.appDir, "..", "include", "nvda_dmp", "nvda_dmp.py"
 				))
-			self._proc = subprocess.Popen(
+			DiffMatchPatch._proc = subprocess.Popen(
 				dmp_path,
 				creationflags=subprocess.CREATE_NO_WINDOW,
 				bufsize=0,
@@ -56,7 +60,7 @@ class DiffMatchPatch(DiffAlgo):
 		return ti.text
 
 	def diff(self, newText: str, oldText: str) -> List[str]:
-		with self._lock:
+		with DiffMatchPatch._lock:
 			try:
 				self._initialize()
 				if not newText and not oldText:
@@ -69,20 +73,20 @@ class DiffMatchPatch(DiffAlgo):
 				# Since nvda and nvda_dmp are running on the same Python
 				# platform/version, this is okay.
 				tl = struct.pack("=II", len(old), len(new))
-				self._proc.stdin.write(tl)
-				self._proc.stdin.write(old)
-				self._proc.stdin.write(new)
+				DiffMatchPatch._proc.stdin.write(tl)
+				DiffMatchPatch._proc.stdin.write(old)
+				DiffMatchPatch._proc.stdin.write(new)
 				buf = b""
 				sizeb = b""
 				SIZELEN = 4
 				while len(sizeb) < SIZELEN:
 					try:
-						sizeb += self._proc.stdout.read(SIZELEN - len(sizeb))
+						sizeb += DiffMatchPatch._proc.stdout.read(SIZELEN - len(sizeb))
 					except TypeError:
 						pass
 				(size,) = struct.unpack("=I", sizeb)
 				while len(buf) < size:
-					buf += self._proc.stdout.read(size - len(buf))
+					buf += DiffMatchPatch._proc.stdout.read(size - len(buf))
 				return [
 					line
 					for line in buf.decode("utf-8").splitlines()
@@ -93,9 +97,9 @@ class DiffMatchPatch(DiffAlgo):
 				return Difflib().diff(newText, oldText)
 
 	def _terminate(self):
-		if self._proc:
+		if DiffMatchPatch._proc:
 			log.debug("Terminating diff-match-patch proxy")
-			self._proc.stdin.write(struct.pack("=II", 0, 0))  # Sentinal value
+			DiffMatchPatch._proc.stdin.write(struct.pack("=II", 0, 0))  # Sentinal value
 
 
 class Difflib(DiffAlgo):
