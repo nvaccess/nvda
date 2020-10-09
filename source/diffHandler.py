@@ -28,10 +28,9 @@ class DiffAlgo(AutoPropertyObject):
 
 
 class DiffMatchPatch(DiffAlgo):
-	(
-		"A character-based diffing approach, using the Google Diff Match Patch "
-		"library in a proxy process (to work around a licence conflict)."
-	)
+	"""A character-based diffing approach, using the Google Diff Match Patch
+	library in a proxy process (to work around a licence conflict).
+	"""
 	#: A subprocess.Popen object for the nvda_dmp process.
 	_proc = None
 	#: A lock to control access to the nvda_dmp process.
