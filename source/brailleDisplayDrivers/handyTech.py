@@ -394,7 +394,7 @@ class EasyBraille(OldProtocolMixin, Model):
 	genericName = name = "Easy Braille"
 
 
-class ActiveBraille(TimeSyncFirmnessMixin, AtcMixin, TripleActionKeysMixin, Model):
+class ActiveBraille(TimeSyncFirmnessMixin, AtcMixin, JoystickMixin, TripleActionKeysMixin, Model):
 	deviceId = MODEL_ACTIVE_BRAILLE
 	numCells = 40
 	genericName = name = 'Active Braille'

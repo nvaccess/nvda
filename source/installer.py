@@ -121,7 +121,7 @@ def getDocFilePath(fileName,installDir):
 				return tryPath
 
 def copyProgramFiles(destPath):
-	sourcePath=os.getcwd()
+	sourcePath = globalVars.appDir
 	detectUserConfig=True
 	detectNVDAExe=True
 	for curSourceDir,subDirs,files in os.walk(sourcePath):
@@ -140,7 +140,7 @@ def copyProgramFiles(destPath):
 			tryCopyFile(sourceFilePath,destFilePath)
 
 def copyUserConfig(destPath):
-	sourcePath=os.path.abspath(globalVars.appArgs.configPath)
+	sourcePath = globalVars.appArgs.configPath
 	for curSourceDir,subDirs,files in os.walk(sourcePath):
 		curDestDir=os.path.join(destPath,os.path.relpath(curSourceDir,sourcePath))
 		if not os.path.isdir(curDestDir):
@@ -391,6 +391,15 @@ def _updateShortcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe,
 		prependSpecialFolder="AllUsersPrograms"
 	)
 
+	# Translators: A label for a shortcut in start menu to open NVDA what's new.
+	changesTranslated = _("What's new")
+	_createShortcutWithFallback(
+		path=os.path.join(docFolder, changesTranslated + ".lnk"),
+		fallbackPath=os.path.join(docFolder, "What's new.lnk"),
+		targetPath=getDocFilePath("changes.html", installDir),
+		prependSpecialFolder="AllUsersPrograms"
+	)
+
 
 def isDesktopShortcutInstalled():
 	wsh=_getWSH()
@@ -589,7 +598,7 @@ def removeOldLoggedFiles(installPath):
 			tryRemoveFile(filePath,rebootOK=True)
 
 def createPortableCopy(destPath,shouldCopyUserConfig=True):
-	destPath=os.path.abspath(destPath)
+	assert os.path.isabs(destPath), f"Destination path {destPath} is not absolute"
 	#Remove all the main executables always
 	for f in ("nvda.exe","nvda_noUIAccess.exe","nvda_UIAccess.exe"):
 		f=os.path.join(destPath,f)

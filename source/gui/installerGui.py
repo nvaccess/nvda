@@ -128,8 +128,9 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 				# Translators: a message in the installer telling the user NVDA is now located in a different place.
 				msg+=" "+_("The installation path for NVDA has changed. it will now  be installed in {path}").format(path=installer.defaultInstallPath)
 		if shouldAskAboutAddons:
-			# Translators: A message in the installer to let the user know that some addons are not compatible.
 			msg+=_(
+				# Translators: A message in the installer to let the user know that
+				# some addons are not compatible.
 				"\n\n"
 				"However, your NVDA configuration contains add-ons that are incompatible with this version of NVDA. "
 				"These add-ons will be disabled after installation. If you rely on these add-ons, "
@@ -157,7 +158,7 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 		)))
 
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
-		startOnLogonText = _("Use NVDA on the Windows &logon screen")
+		startOnLogonText = _("Use NVDA during sign-in")
 		self.startOnLogonCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=startOnLogonText))
 		if globalVars.appArgs.enableStartOnLogon is not None:
 			self.startOnLogonCheckbox.Value = globalVars.appArgs.enableStartOnLogon
@@ -236,11 +237,13 @@ class InstallingOverNewerVersionDialog(wx.Dialog, DpiScalingHelperMixin):
 		contentSizer = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		text = wx.StaticText(
 			self,
-			# Translators: A warning presented when the user attempts to downgrade NVDA
-			# to an older version.
 			label=_(
-				"You are attempting to install an earlier version of NVDA than the version currently installed. "
-				"If you really wish to revert to an earlier version, you should first cancel this installation "
+				# Translators: A warning presented when the user attempts to downgrade NVDA
+				# to an older version.
+				"You are attempting to install an earlier version of NVDA "
+				"than the version currently installed. "
+				"If you really wish to revert to an earlier version, "
+				"you should first cancel this installation "
 				"and completely uninstall NVDA before installing the earlier version."
 			))
 		text.Wrap(self.scaleSize(600))
@@ -304,7 +307,7 @@ class PortableCreaterDialog(wx.Dialog):
 		directoryEntryControl = groupHelper.addItem(gui.guiHelper.PathSelectionHelper(self, browseText, dirDialogTitle))
 		self.portableDirectoryEdit = directoryEntryControl.pathControl
 		if globalVars.appArgs.portablePath:
-			self.portableDirectoryEdit.Value = os.path.abspath(globalVars.appArgs.portablePath)
+			self.portableDirectoryEdit.Value = globalVars.appArgs.portablePath
 
 		# Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 		copyConfText = _("Copy current &user configuration")
@@ -317,7 +320,7 @@ class PortableCreaterDialog(wx.Dialog):
 		self.startAfterCreateCheckbox = sHelper.addItem(wx.CheckBox(self, label=startAfterCreateText))
 		self.startAfterCreateCheckbox.Value = False
 
-		bHelper = sHelper.addDialogDismissButtons(gui.guiHelper.ButtonHelper(wx.HORIZONTAL))
+		bHelper = sHelper.addDialogDismissButtons(gui.guiHelper.ButtonHelper(wx.HORIZONTAL), separated=True)
 		
 		continueButton = bHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
 		continueButton.SetDefault()
@@ -339,6 +342,18 @@ class PortableCreaterDialog(wx.Dialog):
 			gui.messageBox(_("Please specify a directory in which to create the portable copy."),
 				_("Error"),
 				wx.OK | wx.ICON_ERROR)
+			return
+		if not os.path.isabs(self.portableDirectoryEdit.Value):
+			gui.messageBox(
+				# Translators: The message displayed when the user has not specified an absolute destination directory
+				# in the Create Portable NVDA dialog.
+				_("Please specify an absolute path (including drive letter)  in which to create the portable copy."),
+				# Translators: The message title displayed
+				# when the user has not specified an absolute destination directory
+				# in the Create Portable NVDA dialog.
+				_("Error"),
+				wx.OK | wx.ICON_ERROR
+			)
 			return
 		drv=os.path.splitdrive(self.portableDirectoryEdit.Value)[0]
 		if drv and not os.path.isdir(drv):
@@ -392,7 +407,7 @@ def doCreatePortable(portableDirectory,copyUserConfig=False,silent=False,startAf
 			shellapi.ShellExecute(
 				None,
 				None,
-				os.path.join(os.path.abspath(portableDirectory),'nvda.exe'),
+				os.path.join(portableDirectory, 'nvda.exe'),
 				None,
 				None,
 				winUser.SW_SHOWNORMAL

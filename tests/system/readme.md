@@ -8,35 +8,69 @@ To install all required packages move to the root directory of this repo and exe
 
 ### Running the tests
 
+You can run the tests with `scons` or manually
+
+#### Scons (easier)
+`scons systemTests`
+
+To run only specific system tests,
+ specify them using the `filter` variable on the command line.
+This filter accepts wildcard characters.
+
+```
+scons systemTests filter="Read welcome dialog"
+```
+
+#### Manually (faster)
+
+SCons takes quite a long time to initialize and actually start running the tests,
+if you are running the tests repeatedly consider running them manually.
 These tests should be run from the windows command prompt (cmd.exe) from the root directory
  of your NVDA repository.
 
-
 ```
-python -m robot --loglevel DEBUG -d testOutput/system -x systemTests.xml -v whichNVDA:source -P ./tests/system/libraries ./tests/system/
+python -m robot --argumentfile ./tests/system/robotArgs.robot ./tests/system/robot
 ```
+Note that the path to the tests directory is required and must be the final argument.
 
-The `whichNVDA` argument allows the tests to be run against an installed copy
-of NVDA (first ensure it is compatible with the tests). Note valid values are:
-* "installed" - when running against the installed version of NVDA, you are likely to get errors in the log unless
-the tests are run from an administrator command prompt.
-* "source"
-
-To run a single test or filter tests, use the `--test` argument (wildcards accepted).
-Refer to the robot framework documentation for further details.
+To run a single test, add the `--test` argument (wildcards accepted).
 
 ```
 python -m robot --test "starts" ...
 ```
 
-There are several other options for choosing which tests to run (e.g. by suite, tag, etc).
-Consult `python -m robot --help` for more options.
+Other options exit for specifying tests to run (e.g. by suite, tag, etc).
+Consult `python -m robot --help`
 
 ### Getting the results
 
 The process is displayed in the command prompt, for more information consider the [Robot report and NVDA logs](#logs)
 `report.html`, `log.html`, and `output.xml` files.
 The logs from NVDA are saved to the `nvdaTestRunLogs` folder
+
+### Excluding tests
+
+Tests can be excluded by adding the tag `excluded_from_build` EG:
+
+```robot
+checkbox labelled by inner element
+	[Documentation]	A checkbox labelled by an inner element should not read the label element twice.
+	# Excluded due to intermittent failure.
+	[Tags]	excluded_from_build
+	checkbox_labelled_by_inner_element
+```
+
+When the tests are run, the option `--exclude excluded_from_build` is given to Robot.
+See [description of test args](#test-args)
+
+### Test args
+Common arguments (for both `scons` and AppVeyor) are kept in the `tests\system\robotArgs.robot` file.
+
+The `whichNVDA` argument allows the tests to be run against an installed copy
+of NVDA (first ensure it is compatible with the tests). Note valid values are:
+* "installed" - when running against the installed version of NVDA, you are likely to get errors in the log unless
+the tests are run from an administrator command prompt.
+* "source"
 
 ### Overview
 

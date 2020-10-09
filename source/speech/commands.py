@@ -1,22 +1,87 @@
-# -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2019 NV Access Limited
+#  -*- coding: UTF-8 -*-
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2020 NV Access Limited
 
-"""Commands that can be embedded in a speech sequence for changing synth parameters, playing sounds or running other callbacks."""
+"""
+Commands that can be embedded in a speech sequence for changing synth parameters, playing sounds or running
+ other callbacks.
+"""
  
 from abc import ABCMeta, abstractmethod
-from typing import Optional
+from typing import Optional, Callable
 
 import config
 from synthDriverHandler import getSynth
+from logHandler import log
 
 class SpeechCommand(object):
-	"""The base class for objects that can be inserted between strings of text to perform actions, change voice parameters, etc.
-	Note that some of these commands are processed by NVDA and are not directly passed to synth drivers.
+	"""The base class for objects that can be inserted between strings of text to perform actions,
+	change voice parameters, etc.
+
+	Note: Some of these commands are processed by NVDA and are not directly passed to synth drivers.
 	synth drivers will only receive commands derived from L{SynthCommand}.
 	"""
+
+
+class _CancellableSpeechCommand(SpeechCommand):
+	"""
+	A command that allows cancelling the utterance that contains it.
+	Support currently experimental and may be subject to change.
+	"""
+
+	def __init__(
+			self,
+			checkIfValid: Optional[Callable[[], bool]] = None,
+			getDevInfo: Optional[Callable[[], str]] = None,
+	):
+		"""
+		@param checkIfValid: Callable that returns True if the utterance is still valid.
+		@param getDevInfo: An optional used to supply more information when __repr__ is called.
+		"""
+		self._isCancelled = False
+		if checkIfValid:
+			self._checkIfValid = checkIfValid
+		self._getCheckIfValidDevInfo = getDevInfo
+		self._utteranceIndex = None
+
+	def _checkIfCancelled(self):
+		if self._isCancelled:
+			return True
+		elif not self._checkIfValid():
+			self._isCancelled = True
+		return self._isCancelled
+
+	@property
+	def isCancelled(self):
+		return self._checkIfCancelled()
+
+	def cancelUtterance(self):
+		self._isCancelled = True
+
+	@staticmethod
+	def _checkIfValid() -> bool:
+		"""Overridable behavior."""
+		return True
+
+	def _getDevInfo(self):
+		isValidCallbackDevInfo = "" if not self._getCheckIfValidDevInfo else self._getCheckIfValidDevInfo()
+		return (
+			f"devInfo("
+			f" isCanceledCache: {self._isCancelled}"
+			f", isValidCallback: {self._checkIfValid()}"
+			f", isValidCallbackDevInfo: {isValidCallbackDevInfo}"
+		)
+
+	def __repr__(self):
+		return (
+			f"CancellableSpeech ("
+			f"{ 'cancelled' if self._checkIfCancelled() else 'still valid' }"
+			f" {self._getDevInfo()}"
+			f" )"
+		)
+
 
 class SynthCommand(SpeechCommand):
 	"""Commands that can be passed to synth drivers.

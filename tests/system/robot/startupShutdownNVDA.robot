@@ -4,15 +4,21 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 *** Settings ***
 Documentation	Basic start and exit tests
-Default Tags	NVDA	smoke test
+Force Tags	NVDA	smoke test
 
 # for start & quit in Test Setup and Test Test Teardown
 Library	NvdaLib.py
 Library	startupShutdownNVDA.py
+Library	ScreenCapLibrary
 
 Test Setup	start NVDA	standard-dontShowWelcomeDialog.ini
-Test Teardown	quit NVDA
+Test Teardown	default teardown
 
+*** Keywords ***
+default teardown
+	${screenshotName}=	create_preserved_test_output_filename	failedTest.png
+	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
+	quit NVDA
 
 *** Test Cases ***
 Starts

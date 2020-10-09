@@ -322,9 +322,13 @@ def getStatusBar():
 	@return: The status bar object or C{None} if no status bar was found.
 	@rtype: L{NVDAObjects.NVDAObject}
 	"""
+	foreground = getForegroundObject()
+	try:
+		return foreground.appModule.statusBar
+	except NotImplementedError:
+		pass
 	# The status bar is usually at the bottom of the screen.
 	# Therefore, get the object at the bottom left of the foreground object using screen coordinates.
-	foreground = getForegroundObject()
 	location=foreground.location
 	if not location:
 		return None

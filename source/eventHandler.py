@@ -5,9 +5,13 @@
 #Copyright (C) 2007-2017 NV Access Limited, Babbage B.V.
 
 import threading
+from typing import Optional
+
+import garbageHandler
 import queueHandler
 import api
 import speech
+from speech.commands import _CancellableSpeechCommand
 import appModuleHandler
 import treeInterceptorHandler
 import globalVars
@@ -33,14 +37,13 @@ def queueEvent(eventName,obj,**kwargs):
 	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
 	@type eventName: string
 	"""
-	global lastQueuedFocusObject
-	if eventName=="gainFocus":
-		lastQueuedFocusObject=obj
+	_trackFocusObject(eventName, obj)
 	with _pendingEventCountsLock:
 		_pendingEventCountsByName[eventName]=_pendingEventCountsByName.get(eventName,0)+1
 		_pendingEventCountsByObj[obj]=_pendingEventCountsByObj.get(obj,0)+1
 		_pendingEventCountsByNameAndObj[(eventName,obj)]=_pendingEventCountsByNameAndObj.get((eventName,obj),0)+1
 	queueHandler.queueFunction(queueHandler.eventQueue,_queueEventCallback,eventName,obj,kwargs)
+
 
 def _queueEventCallback(eventName,obj,kwargs):
 	with _pendingEventCountsLock:
@@ -79,7 +82,8 @@ def isPendingEvents(eventName=None,obj=None):
 	elif eventName and obj:
 		return (eventName,obj) in _pendingEventCountsByNameAndObj
 
-class _EventExecuter(object):
+
+class _EventExecuter(garbageHandler.TrackedObject):
 	"""Facilitates execution of a chain of event functions.
 	L{gen} generates the event functions and positional arguments.
 	L{next} calls the next function in the chain.
@@ -92,7 +96,8 @@ class _EventExecuter(object):
 			self.next()
 		except StopIteration:
 			pass
-		del self._gen
+		finally:
+			del self._gen
 
 	def next(self):
 		func, args = next(self._gen)
@@ -134,7 +139,66 @@ class _EventExecuter(object):
 		if func:
 			yield func, ()
 
-def executeEvent(eventName,obj,**kwargs):
+
+WAS_GAIN_FOCUS_OBJ_ATTR_NAME = "wasGainFocusObj"
+
+
+def _trackFocusObject(eventName, obj) -> None:
+	""" Keeps track of lastQueuedFocusObject and sets wasGainFocusObj attr on objects.
+	:param eventName: the event type, eg "gainFocus"
+	:param obj: the object to track if focused
+	"""
+	global lastQueuedFocusObject
+
+	if eventName == "gainFocus":
+		lastQueuedFocusObject = obj
+		setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, True)
+		if speech.manager._shouldDoSpeechManagerLogging():
+			log.debug(f"Changing last queued focus object: {obj!r}")
+	elif not hasattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME):
+		setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
+
+def _getFocusLossCancellableSpeechCommand(
+		obj,
+		reason: controlTypes.OutputReason
+) -> Optional[_CancellableSpeechCommand]:
+	if reason != controlTypes.REASON_FOCUS or not speech.manager._shouldCancelExpiredFocusEvents():
+		return None
+	from NVDAObjects import NVDAObject
+	if not isinstance(obj, NVDAObject):
+		log.warning("Unhandled object type. Expected all objects to be descendant from NVDAObject")
+		return None
+
+	def previouslyHadFocus():
+		return getattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
+
+	def isLastFocusObj():
+		# Obj may have been created multiple times pointing to the same underlying object.
+		return obj is lastQueuedFocusObject or obj == lastQueuedFocusObject
+
+	def isAncestorOfCurrentFocus():
+		return obj in api.getFocusAncestors()
+
+	def isSpeechStillValid():
+		stillValid = (
+			isLastFocusObj()
+			or not previouslyHadFocus()
+			or isAncestorOfCurrentFocus()
+		)
+		return stillValid
+
+	if not speech.manager._shouldDoSpeechManagerLogging():
+		return _CancellableSpeechCommand(isSpeechStillValid)
+
+	def getDevInfo():
+		return (
+			f"isLast: {isLastFocusObj()}"
+			f", previouslyHad: {previouslyHadFocus()}"
+			f", isAncestorOfCurrentFocus: {isAncestorOfCurrentFocus()}"
+		)
+	return _CancellableSpeechCommand(isSpeechStillValid, getDevInfo)
+
+def executeEvent(eventName, obj, **kwargs):
 	"""Executes an NVDA event.
 	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
 	@type eventName: string
@@ -143,11 +207,12 @@ def executeEvent(eventName,obj,**kwargs):
 	@param kwargs: Additional event parameters as keyword arguments.
 	"""
 	try:
+		isGainFocus = eventName == "gainFocus"
 		# Allow NVDAObjects to redirect focus events to another object of their choosing.
-		if eventName=="gainFocus" and obj.focusRedirect:
+		if isGainFocus and obj.focusRedirect:
 			obj=obj.focusRedirect
 		sleepMode=obj.sleepMode
-		if eventName=="gainFocus" and not doPreGainFocus(obj,sleepMode=sleepMode):
+		if isGainFocus and not doPreGainFocus(obj, sleepMode=sleepMode):
 			return
 		elif not sleepMode and eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):
 			return
@@ -161,6 +226,22 @@ def doPreGainFocus(obj,sleepMode=False):
 	oldFocus=api.getFocusObject()
 	oldTreeInterceptor=oldFocus.treeInterceptor if oldFocus else None
 	api.setFocusObject(obj)
+
+	if speech.manager._shouldCancelExpiredFocusEvents():
+		log._speechManagerDebug("executeEvent: Removing cancelled speech commands.")
+		# ask speechManager to check if any of it's queued utterances should be cancelled
+		# Note: Removing cancelled speech commands should happen after all dependencies for the isValid check
+		# have been updated:
+		# - lastQueuedFocusObject
+		# - obj.WAS_GAIN_FOCUS_OBJ_ATTR_NAME
+		# - api.getFocusAncestors()
+		# These are updated:
+		# - lastQueuedFocusObject & obj.WAS_GAIN_FOCUS_OBJ_ATTR_NAME
+		#   - Set in stack: _trackFocusObject, eventHandler.queueEvent
+		#   - Which results in executeEvent being called, then doPreGainFocus
+		# - api.getFocusAncestors() via api.setFocusObject() called in doPreGainFocus
+		speech._manager.removeCancelledSpeechCommands()
+
 	if globalVars.focusDifferenceLevel<=1:
 		newForeground=api.getDesktopObject().objectInForeground()
 		if not newForeground:
@@ -244,6 +325,8 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		return True
 	if eventName == "valueChange" and config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]:
 		return True
+	if eventName == "hide":
+		return False
 	if eventName == "show":
 		# Only accept 'show' events for specific cases, as otherwise we get flooded.
 		return wClass in (
@@ -252,9 +335,6 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 			"mscandui21.candidate", "mscandui40.candidate", "MSCandUIWindow_Candidate", # IMM candidates
 			"TTrayAlert", # 5405: Skype
 		)
-	if eventName == "reorder":
-		# Prevent another flood risk.
-		return wClass == "TTrayAlert" # #4841: Skype
 	if eventName == "alert" and winUser.getClassName(winUser.getAncestor(windowHandle, winUser.GA_PARENT)) == "ToastChildWindowClass":
 		# Toast notifications.
 		return True

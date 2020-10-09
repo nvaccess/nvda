@@ -114,7 +114,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			states.discard(controlTypes.STATE_PRESSED)
 		attrs['role']=role
 		attrs['states']=states
-		if level is not "" and level is not None:
+		if level != "" and level is not None:
 			attrs['level']=level
 		if landmark:
 			attrs["landmark"]=landmark
@@ -141,14 +141,6 @@ class Gecko_ia2(VirtualBuffer):
 	def __init__(self,rootNVDAObject):
 		super(Gecko_ia2,self).__init__(rootNVDAObject,backendName="gecko_ia2")
 		self._initialScrollObj = None
-
-	def _get_shouldPrepare(self):
-		if not super(Gecko_ia2, self).shouldPrepare:
-			return False
-		if isinstance(self.rootNVDAObject, NVDAObjects.IAccessible.mozilla.Gecko1_9) and controlTypes.STATE_BUSY in self.rootNVDAObject.states:
-			# If the document is busy in Gecko 1.9, it isn't safe to create a buffer yet.
-			return False
-		return True
 
 	@staticmethod
 	def _getEmbedderFrame(acc):
@@ -451,9 +443,3 @@ class Gecko_ia2(VirtualBuffer):
 		if initialPos:
 			return initialPos
 		return self._initialScrollObj
-
-class Gecko_ia2Pre14(Gecko_ia2):
-
-	def _searchableTagValues(self, values):
-		# #2287: In Gecko < 14, tag values are upper case.
-		return [val.upper() for val in values]

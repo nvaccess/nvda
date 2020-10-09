@@ -17,7 +17,7 @@ import gui
 from gui import guiHelper
 import sayAllHandler
 import review
-from scriptHandler import willSayAllResume
+from scriptHandler import willSayAllResume, script
 import textInfos
 import api
 import speech
@@ -148,7 +148,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			speech.speakSelectionChange(oldInfo, selection)
 		self.selection = selection
 
-	def doFindText(self,text,reverse=False,caseSensitive=False):
+	def doFindText(self, text, reverse=False, caseSensitive=False, willSayAllResume=False):
 		if not text:
 			return
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
@@ -157,7 +157,8 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			self.selection=info
 			speech.cancelSpeech()
 			info.move(textInfos.UNIT_LINE,1,endPoint="end")
-			speech.speakTextInfo(info,reason=controlTypes.REASON_CARET)
+			if not willSayAllResume:
+				speech.speakTextInfo(info, reason=controlTypes.REASON_CARET)
 		else:
 			wx.CallAfter(gui.messageBox,_('text "%s" not found')%text,_("Find Error"),wx.OK|wx.ICON_ERROR)
 		CursorManager._lastFindText=text
@@ -174,21 +175,42 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	# Translators: Input help message for NVDA's find command.
 	script_find.__doc__ = _("find a text string from the current cursor position")
 
+	@script(
+		description=_(
+			# Translators: Input help message for find next command.
+			"find the next occurrence of the previously entered text string from the current cursor's position"
+		),
+		gesture="kb:NVDA+f3",
+		resumeSayAllMode=sayAllHandler.CURSOR_CARET,
+	)
 	def script_findNext(self,gesture):
 		if not self._lastFindText:
 			self.script_find(gesture)
 			return
-		self.doFindText(self._lastFindText, caseSensitive = self._lastCaseSensitivity)
-	# Translators: Input help message for find next command.
-	script_findNext.__doc__ = _("find the next occurrence of the previously entered text string from the current cursor's position")
+		self.doFindText(
+			self._lastFindText,
+			caseSensitive=self._lastCaseSensitivity,
+			willSayAllResume=willSayAllResume(gesture),
+		)
 
+	@script(
+		description=_(
+			# Translators: Input help message for find previous command.
+			"find the previous occurrence of the previously entered text string from the current cursor's position"
+		),
+		gesture="kb:NVDA+shift+f3",
+		resumeSayAllMode=sayAllHandler.CURSOR_CARET,
+	)
 	def script_findPrevious(self,gesture):
 		if not self._lastFindText:
 			self.script_find(gesture)
 			return
-		self.doFindText(self._lastFindText,reverse=True, caseSensitive = self._lastCaseSensitivity)
-	# Translators: Input help message for find previous command.
-	script_findPrevious.__doc__ = _("find the previous occurrence of the previously entered text string from the current cursor's position")
+		self.doFindText(
+			self._lastFindText,
+			reverse=True,
+			caseSensitive=self._lastCaseSensitivity,
+			willSayAllResume=willSayAllResume(gesture),
+		)
 
 	def script_moveByPage_back(self,gesture):
 		self._caretMovementScriptHelper(gesture,textInfos.UNIT_LINE,-config.conf["virtualBuffers"]["linesPerPage"],extraDetail=False)
@@ -411,8 +433,6 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		"kb:control+a": "selectAll",
 		"kb:control+c": "copyToClipboard",
 		"kb:NVDA+Control+f": "find",
-		"kb:NVDA+f3": "findNext",
-		"kb:NVDA+shift+f3": "findPrevious",
 		"kb:alt+upArrow":"moveBySentence_back",
 		"kb:alt+downArrow":"moveBySentence_forward",
 	}
