@@ -1066,6 +1066,7 @@ class NonReEntrantTimer(wx.Timer):
 def _isDebug():
 	return config.conf["debugLog"]["gui"]
 
+
 class AskAllowUsageStatsDialog(
 		ContextHelpMixin,
 		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO

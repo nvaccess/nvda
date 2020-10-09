@@ -1160,7 +1160,7 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 		"""Define the helpId associated to this control.
 		"""
 		return self.helpId
-		
+
 	def _makeSliderSettingControl(
 			self,
 			setting: NumericDriverSetting,
@@ -2520,7 +2520,10 @@ class AdvancedPanelControls(
 		#  Advanced settings panel.
 		label = _("Enable &selective registration for UI Automation events and property changes")
 		self.selectiveUIAEventRegistrationCheckBox = UIAGroup.addItem(wx.CheckBox(self, label=label))
-		self.bindHelpEvent("AdvancedSettingsSelectiveUIAEventRegistration", self.selectiveUIAEventRegistrationCheckBox)
+		self.bindHelpEvent(
+			"AdvancedSettingsSelectiveUIAEventRegistration",
+			self.selectiveUIAEventRegistrationCheckBox
+		)
 		self.selectiveUIAEventRegistrationCheckBox.SetValue(config.conf["UIA"]["selectiveEventRegistration"])
 		self.selectiveUIAEventRegistrationCheckBox.defaultValue = (
 			self._getDefaultValue(["UIA", "selectiveEventRegistration"])
@@ -2804,6 +2807,7 @@ class AdvancedPanel(SettingsPanel):
 		from api import processPendingEvents
 		processPendingEvents()
 		self.advancedControls.Enable(evt.IsChecked())
+
 
 class DictionaryEntryDialog(
 		gui.ContextHelpMixin,

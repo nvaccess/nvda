@@ -15,6 +15,7 @@ import gui.contextHelp
 #: The singleton instance of the log viewer UI.
 logViewer = None
 
+
 class LogViewer(
 		gui.contextHelp.ContextHelpMixin,
 		wx.Frame  # wxPython does not seem to call base class initializer, put last in MRO

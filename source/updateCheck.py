@@ -449,6 +449,7 @@ class UpdateResultDialog(
 		)
 		incompatibleAddons.ShowModal()
 
+
 class UpdateAskInstallDialog(
 		DpiScalingHelperMixinWithoutInit,
 		gui.ContextHelpMixin,

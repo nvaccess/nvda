@@ -661,6 +661,7 @@ def _showConfirmAddonInstallDialog(parent, bundle):
 		showAddonInfoFunction=lambda: _showAddonInfo(bundle)
 	).ShowModal()
 
+
 class IncompatibleAddonsDialog(
 		DpiScalingHelperMixinWithoutInit,
 		gui.ContextHelpMixin,

@@ -103,6 +103,7 @@ def doSilentInstall(startAfterInstall=True):
 		startAfterInstall=startAfterInstall
 	)
 
+
 class InstallerDialog(
 		DpiScalingHelperMixinWithoutInit,
 		gui.ContextHelpMixin,
@@ -293,6 +294,7 @@ def showInstallGui():
 				return
 	InstallerDialog(gui.mainFrame, previous is not None).Show()
 	gui.mainFrame.postPopup()
+
 
 class PortableCreaterDialog(
 		ContextHelpMixin,

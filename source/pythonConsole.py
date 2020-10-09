@@ -217,6 +217,7 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 				pass
 		self._namespaceSnapshotVars = None
 
+
 class ConsoleUI(
 		gui.contextHelp.ContextHelpMixin,
 		wx.Frame  # wxPython does not seem to call base class initializer, put last in MRO
