@@ -382,7 +382,7 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 			# Downgrade this to a debugWarning.
 			log.debugWarning((
 				"Exception raised when comparing selections, "
-				"probably due to a switch to alt mode."
+				"probably due to a switch to/from the alt buffer."
 			), exc_info=True)
 
 
