@@ -1402,10 +1402,13 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		return self.driver
 
 	def _getSettingControlHelpId(self, controlId):
-		capitalizedId = controlId[0].upper() + controlId[1:]
-		return f"{self.helpId}{capitalizedId}"
-	
-	
+		standardSettings = ['voice', 'variant', 'rate', 'rateBoost', 'pitch', 'inflection', 'volume']
+		if controlId in standardSettings:
+			capitalizedId = controlId[0].upper() + controlId[1:]
+			return f"{self.helpId}{capitalizedId}"
+		else:
+			return self.helpId
+
 	def makeSettings(self, settingsSizer):
 		# Construct synthesizer settings
 		self.updateDriverSettings()
