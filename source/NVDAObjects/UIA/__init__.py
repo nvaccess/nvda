@@ -1660,10 +1660,12 @@ class UIA(Window):
 		Subclasses can override this event and can react to notification processing instructions.
 		"""
 		# Do not announce notifications from background apps.
-		# #10956: ignore this altogether if NVDA should not handle this event.
+		# #10956: ignore this altogether if NVDA should not handle this event
+		# either always or from background apps.
+		reportUIANotifications = config.conf['presentation']['reportUIANotifications']
 		if (
-			self.appModule != api.getFocusObject().appModule
-			or not config.conf['presentation']['reportUIANotifications']
+			reportUIANotifications == "off"
+			or self.appModule != api.getFocusObject().appModule and reportUIANotifications == "focusedApp"
 		):
 			return
 		if displayString:
