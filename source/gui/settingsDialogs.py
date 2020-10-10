@@ -1850,6 +1850,17 @@ class ObjectPresentationPanel(SettingsPanel):
 		# See Progress bar output in the Object Presentation Settings section of the User Guide.
 		("both", _("Speak and beep")),
 	)
+	notificationLabels = (
+		# Translators: one of the accessible event notification choices
+		# to always announce notifications.
+		("always", _("always")),
+		# Translators: one of the accessible event notification choices
+		# to announce notifications from focused app.
+		("focusedApp", _("focused app")),
+		# Translators: one of the accessible event notification choices
+		# to turn off notification announcement.
+		("off", pgettext("accessible event notification", "off"))
+	)
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -1867,14 +1878,22 @@ class ObjectPresentationPanel(SettingsPanel):
 		self.bindHelpEvent("ObjectPresentationReportBalloons", self.balloonCheckBox)
 		self.balloonCheckBox.SetValue(config.conf["presentation"]["reportHelpBalloons"])
 
-		# Translators: This is the label for a checkbox in the
+		# Translators: This is the label for a combo box in the
 		# object presentation settings panel.
-		uiaNotificationText = _("Report &accessible event notifications")
-		self.uiaNotificationCheckBox = sHelper.addItem(wx.CheckBox(self, label=uiaNotificationText))
-		self.bindHelpEvent("ObjectPresentationAccessibleEventNotifications", self.uiaNotificationCheckBox)
-		self.uiaNotificationCheckBox.SetValue(config.conf["presentation"]["reportUIANotifications"])
+		uiaNotificationText = _("Report &accessible event notifications:")
+		notificationChoices = [label for setting, label in self.notificationLabels]
+		self.uiaNotificationList = sHelper.addLabeledControl(
+			uiaNotificationText, wx.Choice, choices=notificationChoices
+		)
+		self.bindHelpEvent("ObjectPresentationAccessibleEventNotifications", self.uiaNotificationList)
+		notificationSettings = [setting for setting, label in self.notificationLabels]
+		try:
+			selection = notificationSettings.index(config.conf["presentation"]["reportUIANotifications"])
+		except ValueError:
+			selection = 0
+		self.uiaNotificationList.SetSelection(selection)
 		# #10956: UIA (accessible app event) notification event was introduced in Fall Creators Update.
-		self.uiaNotificationCheckBox.Enable(winVersion.isWin10(1709))
+		self.uiaNotificationList.Enable(winVersion.isWin10(1709))
 
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings panel.
@@ -1950,7 +1969,9 @@ class ObjectPresentationPanel(SettingsPanel):
 	def onSave(self):
 		config.conf["presentation"]["reportTooltips"]=self.tooltipCheckBox.IsChecked()
 		config.conf["presentation"]["reportHelpBalloons"]=self.balloonCheckBox.IsChecked()
-		config.conf["presentation"]["reportUIANotifications"] = self.uiaNotificationCheckBox.IsChecked()
+		config.conf["presentation"]["reportUIANotifications"] = (
+			self.notificationLabels[self.uiaNotificationList.GetSelection()][0]
+		)
 		config.conf["presentation"]["reportKeyboardShortcuts"]=self.shortcutCheckBox.IsChecked()
 		config.conf["presentation"]["reportObjectPositionInformation"]=self.positionInfoCheckBox.IsChecked()
 		config.conf["presentation"]["guessObjectPositionInformationWhenUnavailable"]=self.guessPositionInfoCheckBox.IsChecked()
