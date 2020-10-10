@@ -357,7 +357,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return self._getColumnLocationRaw(self.parent._columnOrderArray[column - 1])
 
 	def _getColumnContentRaw(self, index):
-		item = self.IAccessibleChildID -1 
+		item = self.IAccessibleChildID - 1
 		subItem = index
 		text = AutoFreeBSTR()
 		if watchdog.cancellableExecute(
@@ -366,7 +366,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			self.windowHandle,
 			item,
 			subItem,
-			byref(text)
+			ctypes.byref(text)
 		) != 0:
 			return None
 		return text.value
