@@ -902,7 +902,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for move navigator object to current focus command.
-			"Sets the navigator object to the current focus,"
+			"Sets the navigator object to the current focus, "
 			"and the review cursor to the position of the caret inside it, if possible."
 		),
 		category=SCRCAT_OBJECTNAVIGATION,

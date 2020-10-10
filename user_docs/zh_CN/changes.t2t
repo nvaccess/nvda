@@ -3,6 +3,71 @@ NVDA更新日志
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.3 =
+
+本版在稳定性和性能方面进行了多项重大改进，尤其是在 Microsoft Office 应用程序中。此外还增加了切换触摸屏支持和图形朗读的设置。
+在浏览器中支持朗读标记（高亮文本）等内容，还增加了新的德语盲文表。
+
+== 新特性 ==
+- 您可以从 NVDA 的“文档格式设置”中切换图形朗读选项。请注意，关闭此选项仍会朗读图形的替代文本。 (#4837)
+- 您可以切换 NVDA 的触摸屏支持。在 NVDA 的“热键首饰”的“触摸屏”分类下添加了一个选项。默认热键为 NVDA + control + alt + t。 (#9682)
+- 添加了新版德语盲文表。 (#11268)
+- NVDA 能够检测到 UIA 文本控件中的止读状态。 (#10494)
+- 在所有浏览器中，语音或盲文都可以报告存在的标记（高亮文本）等内容。 (#11436)
+- 可在 NVDA 的“文档格式”设置中打开或关闭该选项。
+ - 可以从 NVDA 的“热键首饰”对话框中添加新的模拟系统按键。 (#6060)
+- 使用方法是定位到“模拟系统按键”类别，然后按下“添加”按钮。
+- 支持了带有操纵杆的 Handy Tech Active 盲文点显器。 (#11655)
+- “输入焦点移动时的自动焦点模式支持”和“将焦点自动跳转到可聚焦元素”互相兼容。 (#11663)
+
+
+== 改进 ==
+- 将朗读文本格式信息的热键（NVDA + F）进行了改进，目前该热键是朗读系统输入焦点（而不是浏览光标）下的文本格式信息。如果要听取浏览光标下的文本格式信息，请使用 NVDA + Shift + F。 (#9505)
+- NVDA 在浏览模式下默认不再自动将系统焦点设置到可聚焦元素，从而提高了性能和稳定性。 (#11190)
+- 将 CLDR 从 36.1 版更新到 37 版。 (#11303)
+- 将 eSpeak-NG更新到 1.51-dev， commit 1fb68ffffea4
+- 您可以使用 NVDA 的表格导航，在具有多列的可选择列表框中移动。 (#8857)
+- 在“插件管理器”中，当系统询问您确认删除插件时，默认聚焦在“否”按钮上。 (#10015)
+- 在 Microsoft Excel 中，“元素列表”对话框以本地化语言显示公式。 (#9144)
+- NVDA现在可读出MS Excel中notes的正确术语。 (#11311)
+- 在浏览模式下使用“将浏览光标移动到系统焦点”时，浏览光标现在会被设置在虚拟输入光标的位置。 (#9622)
+- 在浏览模式下显示的信息窗口，例如连按两次 NVDA + F 的格式化信息，现在将其显示在屏幕中心的位置，且将窗口调整的更大一些。 (#9910)
+
+== 错误修复 ==
+- 通过单词导航，移动到任何单个符号且后面紧跟一个空格的情况，无论符号级别设置如何，始终会读出该符号。 (#5133)
+- 在使用 QT 5.11或更高版本的应用程序中，重新支持了朗读对象描述。 (#8604)
+- 使用 Control + Delete 删除单词时，NVDA不再完全无声，而是读出已被删除单词右边的单词。 (#3298, #11029)
+- 在NVDA 设置“常规”分类下语言列表中的项目现在按英文缩写进行正确排列。 (#10348)
+- 在“热键首饰”对话框中，显著提高了查找的性能。 (#10307)
+- 可以通过盲文点显器输入超过 U+FFFF 的 Unicode字符。 (#10796)
+- 在 Windows 10的 2020年5月版更新中能读出打开方式对话框中的内容。 (#11335)
+- 高级设置中的实验性选项（为UI Automation接口属性更改启用选择性注册），若启用该选项，可大幅改善Microsoft Visual Studio和其他基于UIAutomation应用程序的性能。 (#11077, #11209)
+- 对于可选择列表框中的列表项，不再读出冗余选择状态，在适当的情况下，会朗读未选择的状态。 (#8554)
+- 在 Windows 10的 2020年5月版更新中，从合成器对话框查看输出设备时，显示为 Microsoft声音映射器。 (#11349)
+- 在 Internet Explorer 中，如果有序列表的列表编号不是从 1 开始，则可正确声明有序列表编号。 (#8438)
+- 在 Google chrome 中，对于当前未选中的所有可选择性控件（不仅仅是复选框），NVDA会读出其未选中状态。 (#11377)
+- 当 NVDA 的语言设置为阿拉贡语时，重新支持了在各种控件中导航。 (#11384)
+- 在Microsoft Word中快速按上下方向键或在使用盲文点显器键入文字时，NVDA不再停止响应。 (#11431, #11425, #11414)
+- 将当前导航对象的名称和值复制到剪贴板时，不会在末尾追加多余的空格。 (#11438)
+- 如果没有可朗读的内容，使用NVDA + A（朗读全部）时则不会激活所有配置文件。 (#10899, #9947)
+- 通过将音频设备设置为打开状态，从而改善了某些声卡的性能。 (#5172, #10721)
+- 在Microsoft Word中按住control + shift + 下方向键时，NVDA不再退出或无响应。 (#9463)
+- NVDA 能够读出 drive.google.com 上导航树视图中目录的展开/折叠状态。 (#11520)
+- NVDA可通过蓝牙自动检测 NLS eReader Humanware 盲文点显器。 (#11561)
+- 在 Visual Studio Code 中的重大性能改进。 (#11533)
+
+== 插件以及NVDA核心开发者需要了解的变动 ==
+- The GUI Helper's BoxSizerHelper.addDialogDismissButtons supports a new "separated" keyword argument, for adding a standard horizontal separator to dialogs (other than messages and single input dialogs). (#6468)
+- Additional properties were added to app modules, including path for the executable (appPath), is a Windows Store app (isWindowsStoreApp), and machine architecture for the app (appArchitecture). (#7894)
+- It is now possible to create app modules for apps hosted inside wwahost.exe on Windows 8 and later. (#4569)
+- A fragment of the log can now be delimited and then copied to clipboard using NVDA+control+shift+F1. (#9280)
+- NVDA-specific objects that are found by Python's cyclic garbage collector are now logged when being deleted by the collector to aide in removing reference cycles from NVDA. (#11499)
+ - The majority of NVDA's classes are tracked including NVDAObjects, appModules, GlobalPlugins, SynthDrivers, and TreeInterceptors.
+ - A class that needs to be tracked should inherit from garbageHandler.TrackedObject.
+- Significant debug logging for MSAA events can be now enabled in NVDA's Advanced settings. (#11521)
+- MSAA winEvents for the currently focused object are no longer filtered out along with other events if the event count for a given thread is exceeded. (#11520)
+
+
 = 2020.2 =
 此版本的新特性包括
 对Nattiq盲文点显器的支持；对ESET杀毒软件GUI的支持；对Windows Terminal的支持；改进了1Password和Windows OneCore合成器的性能问题，以及其他诸多重要的错误修复。
