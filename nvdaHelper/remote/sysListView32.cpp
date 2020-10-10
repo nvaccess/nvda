@@ -19,6 +19,12 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <common/log.h>
 #include "nvdaInProcUtils.h"
 
+// #7828: Windows headers define this as 260 characters.
+// However this is not long enough for modern Twitter clients that need at least 280 characters.
+// Therefore, round it up to the nearest power of 2.
+#undef CBEMAXSTRLEN
+#define CBEMAXSTRLEN 512
+
 error_status_t nvdaInProcUtils_sysListView32_getGroupInfo(handle_t bindingHandle, const unsigned long windowHandle, int groupIndex, BSTR* header, BSTR* footer, int* state) {
 	LVGROUP group={0};
 	group.cbSize=sizeof(group);
@@ -39,8 +45,8 @@ error_status_t nvdaInProcUtils_sysListView32_getColumnContent(handle_t bindingHa
 	lvItem.mask = LVIF_TEXT | LVIF_COLUMNS;
 	lvItem.iItem = item;
 	lvItem.iSubItem = subItem;
-	lvItem.cchTextMax = 512;
-	wchar_t textBuf[512];
+	lvItem.cchTextMax = CBEMAXSTRLEN;
+	wchar_t textBuf[CBEMAXSTRLEN];
 	lvItem.pszText= textBuf;
 	if (!SendMessage((HWND)UlongToHandle(windowHandle), LVM_GETITEM, (WPARAM)0, (LPARAM)&lvItem)) {
 		LOG_DEBUGWARNING(L"LVM_GETITEM failed");
