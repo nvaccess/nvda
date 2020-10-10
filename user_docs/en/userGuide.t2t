@@ -1578,10 +1578,16 @@ This checkbox, when checked, tells NVDA to report help balloons and toast notifi
 -
 
 ==== Report accessible event notifications ====[ObjectPresentationAccessibleEventNotifications]
-When this checkbox is checked, NVDA will announce accessible event notifications from apps such as Microsoft Store, Microsoft Edge, and audio volume changes.
-Accessible app event notifications are used by apps to let assistive technologies such as NVDA announce important information.
+This combo box sets accessible event notification announcements from apps such as Microsoft Store, Microsoft Edge, and audio volume changes.
+Accessible event notifications are used by apps to let assistive technologies such as NVDA announce important information.
 These announcements include update check results from Microsoft Store, page load status in Microsoft Edge, and audio volume changes while focused on File Explorer.
-This option  is only available if using Windows 10 Fall Creators Update (Version 1709) or later.
+This setting is only available if using Windows 10 Fall Creators Update (Version 1709) or later.
+
+The available options are:
+- Always: announce accessible event notifications from all apps, including background notifications.
+- Focused app: announce notifications from the app you are using.
+- Off: do not announce accessible event notifications.
+-
 
 ==== Report Object Shortcut Keys ====[ObjectPresentationShortcutKeys]
 When this checkbox is checked, NVDA will include the shortcut key that is associated with a certain object or control when it is reported.
