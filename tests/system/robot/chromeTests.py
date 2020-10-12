@@ -227,6 +227,7 @@ def test_pr11606():
 		"bullet  link  A    link  B"
 	)
 
+
 def test_ariaTreeGrid_browseMode():
 	"""
 	Ensure that ARIA treegrids are accessible as a standard table in browse mode.
@@ -244,7 +245,7 @@ def test_ariaTreeGrid_browseMode():
 		"frame  ARIA treegrid Example  heading  level 1"
 	)
 	# Jump to the ARIA treegrid with the next table quicknav command.
-	# The browse mode caret will be inside the table on the caption before the first row. 
+	# The browse mode caret will be inside the table on the caption before the first row.
 	actualSpeech = _chrome.getSpeechAfterKey("t")
 	_asserts.strings_match(
 		actualSpeech,
