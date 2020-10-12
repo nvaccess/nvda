@@ -902,7 +902,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for move navigator object to current focus command.
-			"Sets the navigator object to the current focus,"
+			"Sets the navigator object to the current focus, "
 			"and the review cursor to the position of the caret inside it, if possible."
 		),
 		category=SCRCAT_OBJECTNAVIGATION,
@@ -3012,7 +3012,7 @@ class ConfigProfileActivationCommands(ScriptableObject):
 		@param oldScriptName: The current name of the profile activation script.
 		@type oldScriptName: str
 		@param newScriptName: The new name for the profile activation script, if any.
-			if C{None}, the gestures are only removed for the current profile sript.
+			if C{None}, the gestures are only removed for the current profile script.
 		@type newScriptName: str
 		"""
 		gestureMap = inputCore.manager.userGestureMap

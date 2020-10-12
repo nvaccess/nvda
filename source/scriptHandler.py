@@ -163,7 +163,7 @@ def _isInterceptedCommandScript(script):
 def _queueScriptCallback(script,gesture):
 	global _numScriptsQueued, _numIncompleteInterceptedCommandScripts
 	_numScriptsQueued-=1
-	executeScript(script,gesture)
+	gesture.executeScript(script)
 	if _isInterceptedCommandScript(script):
 		_numIncompleteInterceptedCommandScripts-=1
 

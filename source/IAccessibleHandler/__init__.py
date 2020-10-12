@@ -4,6 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from typing import Tuple
 import struct
 import weakref
 # Kept for backwards compatibility
@@ -99,6 +100,74 @@ from comInterfaces.IAccessible2Lib import (
 	IA2_ROLE_FOOTER,
 	IA2_ROLE_MARK,
 )
+import config
+
+
+_winEventNameCache = {}
+
+
+def getWinEventName(eventID):
+	""" Looks up the name of an EVENT_* winEvent constant. """
+	global _winEventNameCache
+	if not _winEventNameCache:
+		_winEventNameCache = {y: x for x, y in vars(winUser).items() if x.startswith('EVENT_')}
+		_winEventNameCache.update({y: x for x, y in vars(IA2).items() if x.startswith('IA2_EVENT_')})
+	name = _winEventNameCache.get(eventID)
+	if not name:
+		name = "unknown event ({eventID})"
+	return name
+
+
+_objectIDNameCache = {}
+
+
+def getObjectIDName(objectID):
+	""" Looks up the name of an OBJID_* winEvent constant. """
+	global _objectIDNameCache
+	if not _objectIDNameCache:
+		_objectIDNameCache = {y: x for x, y in vars(winUser).items() if x.startswith('OBJID_')}
+	name = _objectIDNameCache.get(objectID)
+	if not name:
+		name = str(objectID)
+	return name
+
+
+def getWinEventLogInfo(window, objectID, childID, eventID=None, threadID=None):
+	"""
+	Formats the given winEvent parameters into a printable string.
+	window, objectID and childID are mandatory,
+	but eventID and threadID are optional.
+	"""
+	windowClassName = winUser.getClassName(window) or "unknown"
+	objectIDName = getObjectIDName(objectID)
+	processID = winUser.getWindowThreadProcessID(window)[0]
+	if processID:
+		processName = appModuleHandler.getAppModuleFromProcessID(processID).appName
+	else:
+		processName = "unknown application"
+	messageList = []
+	if eventID is not None:
+		eventName = getWinEventName(eventID)
+		messageList.append(f"{eventName}")
+	messageList.append(
+		f"window {window} ({windowClassName}), objectID {objectIDName}, childID {childID}, "
+		f"process {processID} ({processName})"
+	)
+	if threadID is not None:
+		messageList.append(f"thread {threadID}")
+	return ", ".join(messageList)
+
+
+def isMSAADebugLoggingEnabled():
+	""" Whether the user has configured NVDA to log extra information about MSAA events. """
+	return config.conf["debugLog"]["MSAA"]
+
+
+IAccessibleObjectIdentifierType = Tuple[
+	int,  # windowHandle
+	int,  # objectID
+	int,  # childID
+]
 
 from . import internalWinEventHandler
 # Imported for backwards compat
@@ -125,8 +194,6 @@ import core
 import re
 
 from .orderedWinEventLimiter import MENU_EVENTIDS
-
-MAX_WINEVENTS = 500
 
 # Special Mozilla gecko MSAA constant additions
 NAVRELATION_LABEL_FOR = 0x1002
@@ -344,10 +411,11 @@ def accessibleObjectFromEvent(window, objectID, childID):
 	try:
 		pacc, childID = oleacc.AccessibleObjectFromEvent(window, objectID, childID)
 	except Exception as e:
-		log.debug(
-			f"oleacc.AccessibleObjectFromEvent with"
-			f" window {window}, objectID {objectID} and childID {childID}: {e}"
-		)
+		if isMSAADebugLoggingEnabled():
+			log.debugWarning(
+				f"oleacc.AccessibleObjectFromEvent failed with {e}."
+				f" WinEvent: {getWinEventLogInfo(window, objectID, childID)}"
+			)
 		return None
 	return normalizeIAccessible(pacc, childID), childID
 
@@ -522,27 +590,57 @@ def winEventToNVDAEvent(eventID, window, objectID, childID, useCache=True):
 	@returns: the NVDA event name and the NVDAObject the event is for
 	@rtype: tuple of string and L{NVDAObjects.IAccessible.IAccessible}
 	"""
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Creating NVDA event from winEvent: {getWinEventLogInfo(window, objectID, childID, eventID)}, "
+			f"use cache {useCache}"
+		)
 	NVDAEventName = winEventIDsToNVDAEventNames.get(eventID, None)
 	if not NVDAEventName:
+		log.debugWarning(f"No NVDA event name for {getWinEventName(eventID)}")
 		return None
+	if isMSAADebugLoggingEnabled():
+		log.debug(f"winEvent mapped to NVDA event: {NVDAEventName}")
 	# Ignore any events with invalid window handles
 	if not window or not winUser.isWindow(window):
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Invalid window. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}"
+			)
 		return None
 	# Make sure this window does not have a ghost window if possible
 	if NVDAObjects.window.GhostWindowFromHungWindow and NVDAObjects.window.GhostWindowFromHungWindow(window):
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Ghosted hung window. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}"
+			)
 		return None
 	# We do not support MSAA object proxied from native UIA
 	if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window):
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Native UIA window. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}"
+			)
 		return None
 	obj = None
 	if useCache:
 		# See if we already know an object by this win event info
 		obj = liveNVDAObjectTable.get((window, objectID, childID), None)
+		if isMSAADebugLoggingEnabled() and obj:
+			log.debug(
+				f"Fetched existing NVDAObject {obj} from liveNVDAObjectTable"
+				f" for winEvent {getWinEventLogInfo(window, objectID, childID)}"
+			)
 	# If we don't yet have the object, then actually instanciate it.
 	if not obj:
 		obj = NVDAObjects.IAccessible.getNVDAObjectFromEvent(window, objectID, childID)
 	# At this point if we don't have an object then we can't do any more
 	if not obj:
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				"Could not instantiate an NVDAObject for winEvent: "
+				f"{getWinEventLogInfo(window, objectID, childID, eventID)}"
+			)
 		return None
 	# SDM MSAA objects sometimes don't contain enough information to be useful Sometimes there is a real
 	# window that does, so try to get the SDMChild property on the NVDAObject, and if successull use that as
@@ -551,6 +649,11 @@ def winEventToNVDAEvent(eventID, window, objectID, childID, useCache=True):
 		SDMChild = getattr(obj, 'SDMChild', None)
 		if SDMChild:
 			obj = SDMChild
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Successfully created NVDA event {NVDAEventName} for {obj} "
+			f"from winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}"
+		)
 	return (NVDAEventName, obj)
 
 
@@ -569,6 +672,10 @@ def processGenericWinEvent(eventID, window, objectID, childID):
 	@returns: True if the event was processed, False otherwise.
 	@rtype: boolean
 	"""
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Processing generic winEvent: {getWinEventLogInfo(window, objectID, childID, eventID)}"
+		)
 	# Notify appModuleHandler of this new window
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	# Handle particular events for the special MSAA caret object just as if they were for the focus object
@@ -577,15 +684,23 @@ def processGenericWinEvent(eventID, window, objectID, childID):
 		winUser.EVENT_OBJECT_LOCATIONCHANGE,
 		winUser.EVENT_OBJECT_SHOW
 	):
+		if isMSAADebugLoggingEnabled():
+			log.debug("handling winEvent as caret event on focus")
 		NVDAEvent = ("caret", focus)
 	else:
 		NVDAEvent = winEventToNVDAEvent(eventID, window, objectID, childID)
 		if not NVDAEvent:
 			return False
 	if NVDAEvent[0] == "nameChange" and objectID == winUser.OBJID_CURSOR:
+		if isMSAADebugLoggingEnabled():
+			log.debug("Handling winEvent as mouse shape change")
 		mouseHandler.updateMouseShape(NVDAEvent[1].name)
 		return
 	if NVDAEvent[1] == focus:
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Directing winEvent to focus object {focus}. WinEvent {getWinEventLogInfo(window, objectID, childID)}"
+			)
 		NVDAEvent = (NVDAEvent[0], focus)
 	eventHandler.queueEvent(*NVDAEvent)
 	return True
@@ -605,6 +720,11 @@ def processFocusWinEvent(window, objectID, childID, force=False):
 	@returns: True if the focus is valid and was handled, False otherwise.
 	@rtype: boolean
 	"""
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Processing focus winEvent: {getWinEventLogInfo(window, objectID, childID)}, "
+			f"force {force}"
+		)
 	windowClassName = winUser.getClassName(window)
 	# Generally, we must ignore focus on child windows of SDM windows as we only want the SDM MSAA events.
 	# However, we don't want to ignore focus if the child ID isn't 0,
@@ -614,6 +734,11 @@ def processFocusWinEvent(window, objectID, childID, force=False):
 		and not windowClassName.startswith('bosa_sdm')
 		and winUser.getClassName(winUser.getAncestor(window, winUser.GA_PARENT)).startswith('bosa_sdm')
 	):
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Focus event for child window of MS Office SDM window. "
+				f"Dropping winEvent {getWinEventLogInfo(window, objectID, childID)}, "
+			)
 		return False
 	# Notify appModuleHandler of this new foreground window
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
@@ -624,6 +749,10 @@ def processFocusWinEvent(window, objectID, childID, force=False):
 		and JABHandler.isRunning
 		and JABHandler.isJavaWindow(window)
 	):
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Redirecting focus to Java window. WinEvent {getWinEventLogInfo(window, objectID, childID)}"
+			)
 		JABHandler.event_enterJavaWindow(window)
 		return True
 	# Convert the win event to an NVDA event
@@ -666,8 +795,12 @@ def processFocusNVDAEvent(obj, force=False):
 	if not force and isinstance(obj, NVDAObjects.IAccessible.IAccessible):
 		focus = eventHandler.lastQueuedFocusObject
 		if isinstance(focus, NVDAObjects.IAccessible.IAccessible) and focus.isDuplicateIAccessibleEvent(obj):
+			if isMSAADebugLoggingEnabled():
+				log.debug(f"Dropping duplicate IAccessible focus event for {obj}")
 			return True
 		if not obj.shouldAllowIAccessibleFocusEvent:
+			if isMSAADebugLoggingEnabled():
+				log.debug(f"IAccessible focus event not allowed by {obj}")
 			return False
 	eventHandler.queueEvent('gainFocus', obj)
 	return True
@@ -693,6 +826,10 @@ class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
 
 
 def processDesktopSwitchWinEvent(window, objectID, childID):
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Processing desktopSwitch winEvent: {getWinEventLogInfo(window, objectID, childID)}"
+		)
 	hDesk = windll.user32.OpenInputDesktop(0, False, 0)
 	if hDesk != 0:
 		windll.user32.CloseDesktop(hDesk)
@@ -724,8 +861,17 @@ def processForegroundWinEvent(window, objectID, childID):
 	@returns: True if the foreground was processed, False otherwise.
 	@rtype: boolean
 	"""
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Processing foreground winEvent: {getWinEventLogInfo(window, objectID, childID)}"
+		)
 	# Ignore foreground events on windows that aren't the current foreground window
 	if window != winUser.getForegroundWindow():
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Dropping foreground winEvent as it does not match GetForegroundWindow. "
+				f"WinEvent {getWinEventLogInfo(window, objectID, childID)}"
+			)
 		return False
 	# If there is a pending gainFocus, it will handle the foreground object.
 	oldFocus = eventHandler.lastQueuedFocusObject
@@ -734,6 +880,11 @@ def processForegroundWinEvent(window, objectID, childID):
 		isinstance(oldFocus, NVDAObjects.window.Window)
 		and winUser.isDescendantWindow(window, oldFocus.windowHandle)
 	):
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Dropping foreground winEvent as focus is already on a descendant. "
+				f"WinEvent {getWinEventLogInfo(window, objectID, childID)}"
+			)
 		return False
 	# If the existing focus has the same win event params as these, then ignore this event
 	if (
@@ -742,22 +893,41 @@ def processForegroundWinEvent(window, objectID, childID):
 		and objectID == oldFocus.event_objectID
 		and childID == oldFocus.event_childID
 	):
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Dropping foreground winEvent as it is duplicate to existing focus. "
+				f"WinEvent {getWinEventLogInfo(window, objectID, childID)}"
+			)
 		return False
 	# Notify appModuleHandler of this new foreground window
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	# If Java access bridge is running, and this is a java window, then pass it to java and forget about it
 	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		JABHandler.event_enterJavaWindow(window)
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Redirecting foreground winEvent to Java window. "
+				f"WinEvent {getWinEventLogInfo(window, objectID, childID)}"
+			)
 		return True
 	# Convert the win event to an NVDA event
 	NVDAEvent = winEventToNVDAEvent(winUser.EVENT_SYSTEM_FOREGROUND, window, objectID, childID, useCache=False)
 	if not NVDAEvent:
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Could not convert foreground winEvent to an NVDA event. "
+				f"WinEvent {getWinEventLogInfo(window, objectID, childID)}"
+			)
 		return False
 	eventHandler.queueEvent(*NVDAEvent)
 	return True
 
 
 def processShowWinEvent(window, objectID, childID):
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Processing show winEvent: {getWinEventLogInfo(window, objectID, childID)}"
+		)
 	# eventHandler.shouldAcceptEvent only accepts show events for a few specific cases.
 	# Narrow this further to only accept events for clients or custom objects.
 	if objectID == winUser.OBJID_CLIENT or objectID > 0:
@@ -771,6 +941,10 @@ def processDestroyWinEvent(window, objectID, childID):
 	This removes the object associated with the event parameters from L{liveNVDAObjectTable} if
 	such an object exists.
 	"""
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Processing destroy winEvent: {getWinEventLogInfo(window, objectID, childID)}"
+		)
 	try:
 		del liveNVDAObjectTable[(window, objectID, childID)]
 	except KeyError:
@@ -796,6 +970,11 @@ def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
 	"""Process a menuStart win event.
 	@postcondition: Focus will be directed to the menu if appropriate.
 	"""
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Processing menuStart winEvent: {getWinEventLogInfo(window, objectID, childID)}, "
+			f"validFocus {validFocus}"
+		)
 	if validFocus:
 		lastFocus = eventHandler.lastQueuedFocusObject
 		if (
@@ -822,6 +1001,10 @@ def processFakeFocusWinEvent(eventID, window, objectID, childID):
 	# find the focus and fake it.
 	# However, it is possible that the focus event has simply been delayed, so wait a bit and only do it if
 	# the focus hasn't changed yet.
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Processing fake focus winEvent {getWinEventLogInfo(window, objectID, childID)}"
+		)
 	core.callLater(50, _fakeFocus, api.getFocusObject())
 
 
@@ -832,6 +1015,10 @@ def _fakeFocus(oldFocus):
 	focus = api.getDesktopObject().objectWithFocus()
 	if not focus:
 		return
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Faking focus on {focus}"
+		)
 	processFocusNVDAEvent(focus)
 
 
@@ -857,9 +1044,14 @@ def pumpAll():  # noqa: C901
 	fakeFocusEvent = None
 	focus = eventHandler.lastQueuedFocusObject
 
+	alwaysAllowedObjects = []
+	# winEvents for the currently focused object are special,
+	# and should be never filtered out.
+	if isinstance(focus, NVDAObjects.IAccessible.IAccessible) and focus.event_objectID is not None:
+		alwaysAllowedObjects.append((focus.event_windowHandle, focus.event_objectID, focus.event_childID))
+
 	# Receive all the winEvents from the limiter for this cycle
-	winEvents = winEventLimiter.flushEvents()
-	winEvents = winEvents[0 - MAX_WINEVENTS:]
+	winEvents = winEventLimiter.flushEvents(alwaysAllowedObjects)
 
 	for winEvent in winEvents:
 		isEventOnCaret = winEvent[2] == winUser.OBJID_CARET

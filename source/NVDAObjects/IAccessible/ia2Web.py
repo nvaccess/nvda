@@ -148,6 +148,14 @@ class Editor(Ia2Web, DocumentWithTableNavigation):
 			# Treet this as the cell not existing.
 			raise LookupError
 
+	def event_loseFocus(self):
+		# MozillaCompoundTextInfo caches the deepest object with the caret.
+		# But this can create a reference cycle if not removed.
+		# As we no longer need it once this object loses focus, we can delete it here.
+		self._lastCaretObj = None
+		super().event_loseFocus()
+
+
 class EditorChunk(Ia2Web):
 	beTransparentToMouse = True
 

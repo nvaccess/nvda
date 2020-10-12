@@ -64,7 +64,8 @@ class InputGesture(baseObject.AutoPropertyObject):
 	#: @type: bool
 	bypassInputHelp=False
 
-	#: Indicates that this gesture should be reported in Input help mode. This would only be false for floodding Gestures like touch screen hovers.
+	#: Indicates that this gesture should be reported in Input help mode. This would only be false
+	#: for flooding Gestures like touch screen hovers.
 	#: @type: bool
 	reportInInputHelp=True
 
@@ -191,6 +192,14 @@ class InputGesture(baseObject.AutoPropertyObject):
 		@raise Exception: If no display text can be determined.
 		"""
 		raise NotImplementedError
+
+	def executeScript(self, script):
+		"""
+		Executes the given script with this gesture, using scriptHandler.executeScript.
+		This is only implemented so as to allow Gesture subclasses
+		to perform an action directly before / after the script executes.
+		"""
+		return scriptHandler.executeScript(script, self)
 
 class GlobalGestureMap(object):
 	"""Maps gestures to scripts anywhere in NVDA.
@@ -556,10 +565,10 @@ class InputManager(baseObject.AutoPropertyObject):
 		self.localeGestureMap.clear()
 		lang = languageHandler.getLanguage()
 		try:
-			self.localeGestureMap.load(os.path.join("locale", lang, "gestures.ini"))
+			self.localeGestureMap.load(os.path.join(globalVars.appDir, "locale", lang, "gestures.ini"))
 		except IOError:
 			try:
-				self.localeGestureMap.load(os.path.join("locale", lang.split('_')[0], "gestures.ini"))
+				self.localeGestureMap.load(os.path.join(globalVars.appDir, "locale", lang.split('_')[0], "gestures.ini"))
 			except IOError:
 				log.debugWarning("No locale gesture map for language %s" % lang)
 
@@ -788,7 +797,7 @@ def registerGestureSource(source, gestureCls):
 	The specified gesture class will be used for queries regarding all gesture identifiers with the given source prefix.
 	For example, if "kb" is registered with the C{KeyboardInputGesture} class,
 	any queries for "kb:tab" or "kb(desktop):tab" will be directed to the C{KeyboardInputGesture} class.
-	If there is no exact match for the source, any parenthesised portion is stripped.
+	If there is no exact match for the source, any parenthesized portion is stripped.
 	For example, for "br(baum):d1", if "br(baum)" isn't registered,
 	"br" will be used if it is registered.
 	This registration is used, for example, to get the display text for a gesture identifier.

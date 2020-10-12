@@ -10,13 +10,100 @@ This is applicable on Windows 10 Fall Creators Update and later."""
 
 import appModuleHandler
 import api
+import eventHandler
 import speech
 import braille
 import ui
 import config
 import winVersion
 import eventHandler
+import controlTypes
 from NVDAObjects.UIA import UIA
+from NVDAObjects.behaviors import CandidateItem as CandidateItemBehavior
+
+
+class ImeCandidateUI(UIA):
+	"""
+	The UIAutomation-based IME candidate UI (such as for  the modern Chinese Microsoft Quick input).
+	This class ensures NVDA is notified of the first selected item when the UI is shown.
+	"""
+
+	def event_show(self):
+		# The IME candidate UI is shown.
+		# Report the current candidates page and the currently selected item.
+		# Sometimes UIA does not fire an elementSelected event when it is first opened,
+		# Therefore we must fake it here.
+		if (self.UIAAutomationId == "IME_Prediction_Window"):
+			candidateItem = self.firstChild
+			eventHandler.queueEvent("UIA_elementSelected", candidateItem)
+		elif (
+			self.firstChild
+			and self.firstChild.role == controlTypes.ROLE_LIST
+			and isinstance(self.firstChild.firstChild, ImeCandidateItem)
+		):
+			candidateItem = self.firstChild.firstChild
+			eventHandler.queueEvent("UIA_elementSelected", candidateItem)
+
+
+class ImeCandidateItem(CandidateItemBehavior, UIA):
+	"""
+	A UIAutomation-based IME candidate Item (such as for  the modern Chinese Microsoft Quick input).
+	This class  presents Ime candidate items in the standard way NVDA does for all other IMEs.
+	E.g. reports entire candidate page content if it is new or has changed pages,
+	And reports the currently selected item, including symbol descriptions.
+	"""
+
+	keyboardShortcut = ""
+
+	def _get_candidateNumber(self):
+		number = super(ImeCandidateItem, self).keyboardShortcut
+		try:
+			number = int(number)
+		except (ValueError, TypeError):
+			pass
+		return number
+
+	def _get_parent(self):
+		parent = super(ImeCandidateItem, self).parent
+		# Translators: A label for a 'candidate' list
+		# which contains symbols the user can choose from  when typing east-asian characters into a document.
+		parent.name = _("Candidate")
+		parent.description = None
+		return parent
+
+	def _get_name(self):
+		try:
+			number = int(self.candidateNumber)
+		except (TypeError, ValueError):
+			return super(ImeCandidateItem, self).name
+		candidate = super(ImeCandidateItem, self).name
+		return self.getFormattedCandidateName(number, candidate)
+
+	def _get_description(self):
+		candidate = super(ImeCandidateItem, self).name
+		return self.getFormattedCandidateDescription(candidate)
+
+	def _get_basicText(self):
+		return super(ImeCandidateItem, self).name
+
+	def event_UIA_elementSelected(self):
+		oldNav = api.getNavigatorObject()
+		if isinstance(oldNav, ImeCandidateItem) and self.name == oldNav.name:
+			# Duplicate selection event fired on the candidate item. Ignore it.
+			return
+		api.setNavigatorObject(self)
+		speech.cancelSpeech()
+		# Report the entire current page of candidate items if it is newly shown  or it has changed.
+		if config.conf["inputComposition"]["autoReportAllCandidates"]:
+			oldText = getattr(self.appModule, '_lastImeCandidateVisibleText', '')
+			newText = self.visibleCandidateItemsText
+			if not isinstance(oldNav, ImeCandidateItem) or newText != oldText:
+				self.appModule._lastImeCandidateVisibleText = newText
+				# speak the new page
+				ui.message(newText)
+		# Now just report the currently selected candidate item.
+		self.reportFocus()
+
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -24,6 +111,10 @@ class AppModule(appModuleHandler.AppModule):
 	_recentlySelected = None
 
 	def event_UIA_elementSelected(self, obj, nextHandler):
+		# Logic for IME candidate items is handled all within its own object
+		# Therefore pass these events straight on.
+		if isinstance(obj, ImeCandidateItem):
+			return nextHandler()
 		# #7273: When this is fired on categories, the first emoji from the new category is selected but not announced.
 		# Therefore, move the navigator object to that item if possible.
 		# However, in recent builds, name change event is also fired.
@@ -68,6 +159,12 @@ class AppModule(appModuleHandler.AppModule):
 	)
 
 	def event_UIA_window_windowOpen(self, obj, nextHandler):
+		firstChild = obj.firstChild
+		# Handle Ime Candidate UI being shown
+		if isinstance(firstChild, ImeCandidateUI):
+			eventHandler.queueEvent("show", firstChild)
+			return
+
 		# Make sure to announce most recently used emoji first in post-1709 builds.
 		# Fake the announcement by locating 'most recently used" category and calling selected event on this.
 		# However, in build 17666 and later, child count is the same for both emoji panel and hardware keyboard candidates list.
@@ -129,6 +226,13 @@ class AppModule(appModuleHandler.AppModule):
 	_emojiPanelJustOpened = False
 
 	def event_nameChange(self, obj, nextHandler):
+		# Logic for IME candidate items is handled all within its own object
+		# Therefore pass these events straight on.
+		if isinstance(obj, ImeCandidateItem):
+			return nextHandler()
+		elif isinstance(obj, ImeCandidateUI):
+			return nextHandler()
+
 		# On some systems, touch keyboard keys keeps firing name change event.
 		# In build 17704, whenever skin tones are selected, name change is fired by emoji entries (GridViewItem).
 		if ((obj.UIAElement.cachedClassName in ("CRootKey", "GridViewItem"))
@@ -152,3 +256,22 @@ class AppModule(appModuleHandler.AppModule):
 		if obj.UIAElement.cachedAutomationID not in ("TEMPLATE_PART_ExpressionFullViewItemsGrid", "TEMPLATE_PART_ClipboardItemIndex", "CandidateWindowControl"):
 			ui.message(obj.name)
 		nextHandler()
+
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if isinstance(obj, UIA):
+			if obj.role == controlTypes.ROLE_LISTITEM and (
+				(
+					obj.parent.UIAAutomationId in (
+						"ExpandedCandidateList",
+						"TEMPLATE_PART_AdaptiveSuggestionList",
+					)
+					and obj.parent.parent.UIAAutomationId == "IME_Candidate_Window"
+				)
+				or obj.parent.UIAAutomationId in ("IME_Candidate_Window", "IME_Prediction_Window")
+			):
+				clsList.insert(0, ImeCandidateItem)
+			elif obj.role == controlTypes.ROLE_PANE and obj.UIAAutomationId in (
+				"IME_Candidate_Window",
+				"IME_Prediction_Window"
+			):
+				clsList.insert(0, ImeCandidateUI)
