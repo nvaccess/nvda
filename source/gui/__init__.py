@@ -80,7 +80,7 @@ def getDocFilePath(fileName, localized=True):
 				tryPath = os.path.join(tryDir, "%s.%s" % (fileName, tryExt))
 				if os.path.isfile(tryPath):
 					return tryPath
-
+		return None
 	else:
 		# Not localized.
 		if not hasattr(sys, "frozen") and fileName in ("copying.txt", "contributors.txt"):

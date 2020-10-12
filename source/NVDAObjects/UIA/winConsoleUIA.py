@@ -10,7 +10,7 @@ import textUtils
 import UIAHandler
 
 from comtypes import COMError
-from UIAUtils import isTextRangeOffscreen
+from logHandler import log
 from . import UIATextInfo
 from ..behaviors import EnhancedTermTypedCharSupport, KeyboardHandlerBasedTypedCharSupport
 from ..window import Window
@@ -30,7 +30,6 @@ class consoleUIATextInfo(UIATextInfo):
 				_rangeObj, collapseToEnd = self._getBoundingRange(obj, position)
 			except (COMError, RuntimeError):
 				# We couldn't bound the console.
-				from logHandler import log
 				log.warning("Couldn't get bounding range for console", exc_info=True)
 				# Fall back to presenting the entire buffer.
 				_rangeObj, collapseToEnd = None, None
@@ -362,6 +361,19 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		ConsoleUIATextInfoPre21H1 fixes expand/collapse and implements word
 		movement."""
 		return consoleUIATextInfo if self.is21H1Plus else consoleUIATextInfoPre21H1
+
+
+	def detectPossibleSelectionChange(self):
+		try:
+			return super().detectPossibleSelectionChange()
+		except COMError:
+			# microsoft/terminal#5399: when attempting to compare text ranges
+			# from the standard and alt mode buffers, E_FAIL is returned.
+			# Downgrade this to a debugWarning.
+			log.debugWarning((
+				"Exception raised when comparing selections, "
+				"probably due to a switch to/from the alt buffer."
+			), exc_info=True)
 
 
 def findExtraOverlayClasses(obj, clsList):

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-11 00:10+1000\n"
-"PO-Revision-Date: 2020-09-15 17:40+0900\n"
+"POT-Creation-Date: 2020-09-18 00:10+1000\n"
+"PO-Revision-Date: 2020-09-23 13:41+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -3741,11 +3741,11 @@ msgstr ""
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
-"Sets the navigator object to the current focus,and the review cursor to the "
+"Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
 msgstr ""
 "ナビゲーターオブジェクトを現在のフォーカスに設定。可能ならレビューカーソルを"
-"テキストカーソルの位置に設定"
+"フォーカス内のテキストカーソルの位置に設定。"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
@@ -3893,7 +3893,8 @@ msgid ""
 "Moves the review cursor to the first character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr ""
-"レビューカーソルを現在のナビゲーターオブジェクト上の行頭に移動して読み上げ"
+"レビューカーソルを現在のナビゲーターオブジェクト上の行頭の文字に移動して読み"
+"上げ"
 
 #. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
 msgid "Left"
@@ -3931,7 +3932,9 @@ msgstr ""
 msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
-msgstr "レビューカーソルを現在のナビゲーターオブジェクト上の行の最後に移動"
+msgstr ""
+"レビューカーソルを現在のナビゲーターオブジェクト上の行末の文字に移動して読み"
+"上げ"
 
 #. Translators: Input help mode message for Review Current Symbol command.
 msgid ""
@@ -9397,7 +9400,7 @@ msgstr "タッチ操作"
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
 msgid "Enable touch interaction support"
-msgstr "タッチ操作はサポートされていません"
+msgstr "タッチ操作サポートの有効化"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
