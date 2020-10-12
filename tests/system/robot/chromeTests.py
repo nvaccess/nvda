@@ -16,13 +16,16 @@ from SystemTestSpy import (
 # Imported for type information
 from ChromeLib import ChromeLib as _ChromeLib
 from AssertsLib import AssertsLib as _AssertsLib
+import NvdaLib as _NvdaLib
 
 _builtIn: BuiltIn = BuiltIn()
 _chrome: _ChromeLib = _getLib("ChromeLib")
 _asserts: _AssertsLib = _getLib("AssertsLib")
 
 
-testDir = os.path.dirname(__file__)
+ARIAExamplesDir = os.path.join(
+	_NvdaLib._locations.repoRoot, "include", "w3c-aria-practices", "examples"
+)
 
 
 def checkbox_labelled_by_inner_element():
@@ -232,7 +235,7 @@ def test_ariaTreeGrid_browseMode():
 	"""
 	Ensure that ARIA treegrids are accessible as a standard table in browse mode.
 	"""
-	testFile = os.path.join(testDir, "testData", "ariaTreegrid", "treegrid-1.html")
+	testFile = os.path.join(ARIAExamplesDir, "treegrid", "treegrid-1.html")
 	_chrome.prepareChrome(
 		f"""
 			<iframe src="{testFile}" />
@@ -242,7 +245,7 @@ def test_ariaTreeGrid_browseMode():
 	actualSpeech = _chrome.getSpeechAfterKey("h")
 	_asserts.strings_match(
 		actualSpeech,
-		"frame  ARIA treegrid Example  heading  level 1"
+		"frame  main landmark  Treegrid Email Inbox Example  heading  level 1"
 	)
 	# Jump to the ARIA treegrid with the next table quicknav command.
 	# The browse mode caret will be inside the table on the caption before the first row.
@@ -271,7 +274,9 @@ def test_ariaTreeGrid_browseMode():
 			# focus mode turns on
 			"Focus mode  ",
 			# focus enters the document inside the iframe
-			"document  ",
+			"Treegrid Email Inbox Example   WAI ARIA Authoring Practices 1.2  document  ",
+			# Focus enters the main landmark
+			"main landmark  ",
 			# Focus enters the ARIA treegrid (table)
 			"Inbox  table  ",
 			# Focus lands on row 2
