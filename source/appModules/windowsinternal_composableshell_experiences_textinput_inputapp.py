@@ -16,7 +16,6 @@ import braille
 import ui
 import config
 import winVersion
-import eventHandler
 import controlTypes
 from NVDAObjects.UIA import UIA
 from NVDAObjects.behaviors import CandidateItem as CandidateItemBehavior
