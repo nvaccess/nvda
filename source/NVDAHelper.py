@@ -123,7 +123,7 @@ def nvdaControllerInternal_requestRegistration(uuidString):
 
 
 @WINFUNCTYPE(c_long, c_wchar_p, c_wchar_p)
-def nvdaControllerInternal_reportLiveRegion(text, level):
+def nvdaControllerInternal_reportLiveRegion(text, politeness):
 	if not config.conf["presentation"]["reportDynamicContentChanges"]:
 		return -1
 	focus = api.getFocusObject()
@@ -131,12 +131,23 @@ def nvdaControllerInternal_reportLiveRegion(text, level):
 		return -1
 	import queueHandler
 	import speech
+	from aria import AriaLivePoliteness
 	from speech.priorities import Spri
+	politenessValue = next(
+		(v for v in AriaLivePoliteness if v._name_.lower() == politeness.lower()),
+		AriaLivePoliteness.OFF
+	)
+	if politenessValue == AriaLivePoliteness.OFF:
+		log.debugWarning(f"Processing live region event from vbuf with unexpected politeness level of {politeness}")
 	queueHandler.queueFunction(
 		queueHandler.eventQueue,
 		speech.speakText,
 		text,
-		Spri.NOW if level.lower() == "assertive" else Spri.NEXT
+		priority=(
+			Spri.NEXT
+			if politenessValue == AriaLivePoliteness.ASSERTIVE
+			else Spri.NORMAL
+		)
 	)
 	return 0
 

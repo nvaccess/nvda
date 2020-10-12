@@ -308,7 +308,7 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 		pacc2->Release();
 		return;
 	}
-	wstring level=i->second;
+	wstring politeness = i->second;
 	i=attribsMap.find(L"container-busy");
 	bool busy=(i!=attribsMap.end()&&i->second.compare(L"true")==0);
 	if(busy) {
@@ -412,7 +412,7 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	}
 	pacc2->Release();
 	if (gotText && !textBuf.empty()) {
-		nvdaControllerInternal_reportLiveRegion(textBuf.c_str(), level.c_str());
+		nvdaControllerInternal_reportLiveRegion(textBuf.c_str(), politeness.c_str());
 	}
 }
 

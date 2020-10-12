@@ -20,8 +20,8 @@ error_status_t __stdcall nvdaControllerInternal_requestRegistration(const wchar_
 }
 
 error_status_t(__stdcall *_nvdaControllerInternal_reportLiveRegion)(const wchar_t*, const wchar_t*);
-error_status_t __stdcall nvdaControllerInternal_reportLiveRegion(const wchar_t* text, const wchar_t* level) {
-	return _nvdaControllerInternal_reportLiveRegion(text, level);
+error_status_t __stdcall nvdaControllerInternal_reportLiveRegion(const wchar_t* text, const wchar_t* politeness) {
+	return _nvdaControllerInternal_reportLiveRegion(text, politeness);
 }
 
 error_status_t(__stdcall *_nvdaControllerInternal_inputLangChangeNotify)(const long, const unsigned long, const wchar_t*);

@@ -356,13 +356,13 @@ void MshtmlVBufStorage_controlFieldNode_t::preProcessLiveRegion(const MshtmlVBuf
 	auto i=attribsMap.find(L"HTMLAttrib::aria-live");
 	if(i!=attribsMap.end()&&!i->second.empty()) {
 		this->ariaLiveNode=((i->second.compare(L"polite")==0)||(i->second.compare(L"assertive")==0))?this:NULL;
-		this->ariaLiveLevel = i->second;
+		this->ariaLivePoliteness = i->second;
 	} else {
 		this->ariaLiveNode=parent?parent->ariaLiveNode:NULL;
 		if (this->ariaLiveNode) {
-			this->ariaLiveLevel = static_cast<MshtmlVBufStorage_controlFieldNode_t*>(this->ariaLiveNode)->ariaLiveLevel;
+			this->ariaLivePoliteness = static_cast<MshtmlVBufStorage_controlFieldNode_t*>(this->ariaLiveNode)->ariaLivePoliteness;
 		} else {
-			this->ariaLiveLevel = nullptr;
+			this->ariaLivePoliteness = nullptr;
 		}
 	}
 	i=attribsMap.find(L"HTMLAttrib::aria-relevant");
@@ -393,10 +393,10 @@ void MshtmlVBufStorage_controlFieldNode_t::preProcessLiveRegion(const MshtmlVBuf
 	//LOG_INFO(L"preProcessLiveRegion: ariaLiveNode "<<ariaLiveNode<<L", ariaLiveIsTextRelevant "<<ariaLiveIsTextRelevant<<L", ariaLiveIsAdditionsRelevant "<<ariaLiveIsAdditionsRelevant<<L", ariaLiveIsBusy "<<ariaLiveIsBusy<<L", ariaLiveAtomicNode "<<ariaLiveAtomicNode);
 }
 
-void MshtmlVBufStorage_controlFieldNode_t::reportLiveText(wstring& text, wstring& level) {
+void MshtmlVBufStorage_controlFieldNode_t::reportLiveText(wstring& text, wstring& politeness) {
 	for(auto c: text) {
 		if(!iswspace(c)) {
-			nvdaControllerInternal_reportLiveRegion(text.c_str(), level.c_str());
+			nvdaControllerInternal_reportLiveRegion(text.c_str(), politeness.c_str());
 			break;
 		}
 	}
@@ -413,7 +413,7 @@ bool isNodeInLiveRegion(VBufStorage_fieldNode_t* node) {
 void MshtmlVBufStorage_controlFieldNode_t::reportLiveAddition() {
 	wstring text; //=(this->ariaLiveAtomicNode==this)?L"atomic: ":L"additions: ";
 	this->getTextInRange(0,this->getLength(),text,false,isNodeInLiveRegion);
-	this->reportLiveText(text, this->ariaLiveLevel);
+	this->reportLiveText(text, this->ariaLivePoliteness);
 }
 
 void MshtmlVBufStorage_controlFieldNode_t::postProcessLiveRegion(VBufStorage_controlFieldNode_t* oldNode, set<VBufStorage_controlFieldNode_t*>& atomicNodes) {
@@ -475,7 +475,7 @@ void MshtmlVBufStorage_controlFieldNode_t::postProcessLiveRegion(VBufStorage_con
 	} else if(reportNode) {
 		this->reportLiveAddition();
 	} else if(!newChildrenText.empty()) {
-		this->reportLiveText(newChildrenText, this->ariaLiveLevel);
+		this->reportLiveText(newChildrenText, this->ariaLivePoliteness);
 	}
 }
 
