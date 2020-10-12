@@ -35,3 +35,6 @@ i7562
 pr11606
 	[Documentation]	Announce the correct line when placed at the end of a link at the end of a list item in a contenteditable
 	test_pr11606
+ARIA treegrid
+	[Documentation]	Ensure that ARIA treegrids are accessible as a standard table in browse mode.
+	test_ariaTreeGrid_browseMode
