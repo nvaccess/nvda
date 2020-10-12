@@ -1009,11 +1009,21 @@ class UIA(Window):
 			kwargs['windowHandle'] = None
 		elif relation=="focus":
 			try:
-				UIAElement=UIAHandler.handler.clientObject.getFocusedElementBuildCache(UIAHandler.handler.baseCacheRequest)
-				# This object may be in a different window, so we need to recalculate the window handle.
-				kwargs['windowHandle']=None
+				UIAElement = UIAHandler.handler.clientObject.getFocusedElementBuildCache(
+					UIAHandler.handler.baseCacheRequest
+				)
 			except COMError:
 				log.debugWarning("getFocusedElement failed", exc_info=True)
+				return False
+			# Ignore this object if it is non native.
+			if not UIAHandler.handler.isNativeUIAElement(UIAElement):
+				if UIAHandler._isDebug():
+					log.debug(
+						"kwargsFromSuper: ignoring non native element with focus"
+					)
+				return False
+			# This object may be in a different window, so we need to recalculate the window handle.
+			kwargs['windowHandle'] = None
 		else:
 			UIAElement=UIAHandler.handler.clientObject.ElementFromHandleBuildCache(windowHandle,UIAHandler.handler.baseCacheRequest)
 		if not UIAElement:

@@ -3,6 +3,74 @@ Qué bi ha de Nuevo en o NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.3 =
+Ista versión incluye quantas grans milloras pa la estabilidat y lo rendimiento, especialment en as aplicacions d'o Microsoft Office. Bi ha nuevas opcions pa commutar lo suporte d'as pantallas tactils y de l'anunciau d'os graficos.
+La existencia de conteniu marcau (resaltau) puede anunciar-se en os navegadors, y bi ha nuevas tablas braille alemanas.
+
+== Nuevas Caracteristicas ==
+- Agora puetz conmutar l'anunciau d'os graficos dende las opcions de Formatiau de Documentos d'o NVDA.  Tiene en cuenta que desenchegando ista opción encara leyerá lo texto alternativo d'os graficos. (#4837)
+- Agora puetz commutar lo suporte de pantallas tactils d'o NVDA. S'ha anyadiu una opción a lo panel d'interacción tactil d'as opcions d'o NVDA. Lo cenyo predeterminau ye NVDA+control+alt+t. (#9682)
+- S'ha anyadiu nuevas tablas braille pa l'alemán. (#11268)
+- Lo NVDA agora detecta controls de texto de nomás lectura de UIA. (#10494)
+- La existentcia de conteniu marcau (resaltau) s'informa tanto en voz como en braille en totz los navegadors web. (#11436)
+ - Ixo puede enchegar-se y desenchegar-se con una nueva opción de formatiau de documento d'o NVDA pa resaltau.
+- Se puede anyadir nuevas teclas a lo sistema de teclau emulau dende lo dialogo de cenyos de dentrada d'o NVDA. (#6060)
+  - Pa fer-lo, preta lo botón d'anyadir dimpués que haigas seleccionau la categoría de teclas de sistema de teclau emulau.
+- Agora se suporta la Handy Tech Active Braille con ceprén. (#11655)
+- Agora la opción "modo de foco Automatico pa lo movimiento d'o cursor" ye compatible con lo desenchegau de "meter lo foco Automaticament a los elementos enfocables". (#11663)
+
+
+== Cambios ==
+- Lo programa d'anunciar lo formato (NVDA+f) agora s'ha cambiau pa anunciar lo formato en o cursor d'o sistema en cuenta d'en a posición d'o cursor de revisión.  Pa anunciar lo formato en a posición d'o Cursor de Revisión agora emplega NVDA+mayus+f. (#9505)
+- Lo NVDA ya no mete automaticament lo foco d'o sistema en os elementos enfocables por defecto en o modo de navegación, amillorando lo rendimiento y la estabilidat. (#11190)
+- S'ha esviellau lo CLDR dende la versión 36.1 t'a versión 37. (#11303)
+- S'ha esviellau lo eSpeak-NG ta 1.51-dev, commit 1fb68ffffea4
+- Agora puetz fer servir la navegación de tablas en os quadros de lista con elementos de lista marcables quan una lista en particular tienga quantas columnas. (#8857)
+- En l'administrador de complementos, en que se te pregunte por confirmar la eliminación de bell complemento, agora  "No", ye lo predeterminau. (#10015)
+- En o Microsoft Excel, lo dialogo de lista d'elementos agora presienta formulas en a suya forma localizada. (#9144)
+- Lo NVDA agora anuncia la terminolochía correcta pa las notas en o MS Excel. (#11311)
+- En fer servir la orden "mover lo cursor de revisión t'o foco" en o modo de navegación, lo cursor de revisión agora se mete en a posición d'o cursor virtual. (#9622)
+- La información anunciada en o modo de navegación, como la información de formato con NVDA+F, s'amuestra agora en una finestra licherament mas gran centrada en a pantalla. (#9910)
+
+
+== Corrección d'Errors ==
+- Lo NVDA agora charra siempre en navegar por parolas y aterriza en qualsiquier simbolo seguiu por un espacio en blanco, qualsiquiera que sigan las opcions de verbosidad. (#5133)
+- En las aplicacions que fagan servir lo QT 5.11 u mas modernas, las descripcions d'os obchectos s'anuncian unatra vez. (#8604)
+- En eliminar una parola con control+suprimir, lo NVDA ya no remaneix en silencio. (#3298, #11029)
+  - Agora s'anuncia la parola a la dreita d'a eliminada.
+- En o panel d'opcions chenerals, la lista d'idiomas agora s'ordena correctament. (#10348)
+- En o dialogo de cenyos de Dentrada, s'ha amillorau significativament lo rendimiento mientras se filtra. (#10307)(
+- Agora puetz ninviar caracters Unicode dillá d'U+FFFF dende una linia braille. (#10796)
+- Lo NVDA anunciará dialogo ubierto Con conteniu en l'actualización de mayo de 2020 d'o Windows 10. (#11335)
+- Una opción nueva experimental en as opcions abanzadas (enchegar lo rechistro selectivo pa eventos y cambios de propiedat de l'UI Automation) puede furnir mayors milloras de rendimiento en o Microsoft Visual Studio y atras aplicacions basadas en l'UIAutomation d'enchegar-se. (#11077, #11209)
+- Pa los elementos marcables de listas, lo estau trigau ya no s'anuncia redundantment, y si ye aplicable, s'anuncia lo estau desmarcau en cuenta. (#8554)
+- En l'actualización de mayo d'o 2020 d'o Windows 10, lo NVDA agora amuestra lo Mapiador de Son de Microsoft en revisar los dispositivos de salida dende lo dialogo de sintetizador. (#11349)
+- En l'Internet Explorer, los numers agora s'anuncian correctament pa las listas ordenadas si la lista no prencipia con 1. (#8438)
+- En o Google chrome, lo NVDA agora anunciará no marcau pa totz los controls marcables (no nomás caixetas de verificación) que actualment no sigan marcaus. (#11377)
+- Unatra vez ye posible navegar por quantos controls quan l'idioma de NVDA siga meso en aragonés. (#11384)
+- Lo NVDA ya no habría de chelar-se a veces en o Microsoft Word en mover rapidament las flechas alto y abaixo u en escribir caracters con o Braille enchegau. (#11431, #11425, #11414)
+- Lo NVDA ya no anyade un espacio no existent en l'arrociegue en copiar lo navegador d'obchectos actual en o portafuellas. (#11438)
+- Lo NVDA ya no enchega lo perfil de leyer-lo tot si no bi ha cosa que leyer. (#10899, #9947)
+- Lo NVDA ya no ye incapaz de leyer la lista de caracteristicas en l'administrador Internet Information Services (IIS). (#11468)
+- Lo NVDA agora mantiene lo dispositivo d'audio ubierto amillorando lo rendimiento en qualques tarchetas de son (#5172, #10721)
+- Lo NVDA ya no se chelará ni s'amortará en que mantiengas preto control+mayus+flecha abaixo en o Microsoft Word. (#9463)
+- Agora lo NVDA siempre anuncia Lo estau desplegau/plegau d'os directorios en l'arbol de navegación de drive.google.com. (#11520)
+- Lo NVDA detectará automaticament la linia braille NLS eReader Humanware a traviés de Bluetooth, ya que lo suyo nombre Bluethooth ye agora "NLS eReader Humanware". (#11561)
+- Grans milloras en o rendimiento de Visual Studio Code. (#11533)
+
+
+== Cambios pa los Desembolicadors ==
+- Lo GUI Helper'#s BoxSizerHelper.addDialogDismissButtons suporta una nueva parola clau d'argumento "separated", pa anyadir un separador horizontal estandard a los dialogos (que no sigan mensaches y dialogos de dentrada simples). (#6468)
+- S'ha anyadiu propiedatz adicionals a los app modules, incluyindo la rota pa l'executable (appPath), ye una app d'almagazenamiento d'o Windows (isWindowsStoreApp), y arquitectura de maquina pa la app (appArchitecture). (#7894)
+- Agora ye posible creyar app modules pa apps hospedadas adintro de wwahost.exe en o Windows 8 y posteriors. (#4569)
+- Agora se puede delimitar un fragmento d'o rechistro y dimpués copiar-lo en o portafuellas fendo servir NVDA+control+mayus+F1. (#9280)
+- Los obchectos especificos d'o NVDA que lo replegador de vasuera ciclica d'o Python troba por agora se rechistran en que lo replegador los borra pa aduyar en a eliminación d'os ciclos de referencia d'o NVDA. (#11499)
+ - La mayoría d'as clases de NVDA se rastreyan incluyindo NVDAObjects, appModules, GlobalPlugins, SynthDrivers, y TreeInterceptors.
+ - Una clase que cal rastriar ha d'heredar de garbageHandler.TrackedObject.
+- Lo rechistro de depuración significativo pa los eventos de MSAA agora puede enchegar-se en a configuración abanzada d'o NVDA. (#11521)
+- Los eventos de MSAA pa l'obchecto enfocau actualment ya no se filtran de conchunta con atros eventos si se sobreix la cuenta d'eventos pa un filo determinau. (#11520)
+
+
 = 2020.2 =
 Lo resinyable d'ista versión inclui lo suporte d'una nueva linia braille de Nattiq, un suporte millor pa la interficie grafica d'usuario d'o antivirus ESET y la Terminal de Windows, milloras de rendimiento de 1Password y con o sintetizador Windows OneCore. Amás de muitas atras importants milloras y correccions d'errors.
 
