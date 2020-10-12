@@ -3,6 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2020 Bill Dengler
 
+import config
 import globalVars
 import os
 import struct
@@ -168,3 +169,12 @@ class Difflib(DiffAlgo):
 
 difflib = Difflib()
 dmp = DiffMatchPatch()
+
+
+def prefer_dmp():
+	"Checks the config, returning dmp if preferred by the user, difflib otherwise."
+	return (
+		dmp
+		if config.conf["terminals"]["diffAlgo"] == "dmp"
+		else difflib
+	)

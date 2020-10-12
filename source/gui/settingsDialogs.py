@@ -2530,7 +2530,7 @@ class AdvancedPanelControls(wx.Panel):
 		# Translators: This is the label for a combo box for selecting a
 		# method of detecting changed content in terminals in the advanced
 		# settings panel.
-		# Choices are automatic, Diff Match Patch, and Difflib.
+		# Choices are automatic, prefer Diff Match Patch, and force Difflib.
 		diffAlgoComboText = _("&Diff algorithm:")
 		diffAlgoChoices = [
 			# Translators: A choice in a combo box in the advanced settings
@@ -2540,11 +2540,11 @@ class AdvancedPanelControls(wx.Panel):
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA detect changes in terminals
 			# by character when supported, using the diff match patch algorithm.
-			_("Diff Match Patch"),
+			_("prefer Diff Match Patch"),
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA detect changes in terminals
 			# by line, using the difflib algorithm.
-			_("Difflib")
+			_("force Difflib")
 		]
 		#: The possible diffAlgo config values, in the order they appear
 		#: in the combo box.
