@@ -1856,7 +1856,7 @@ class ObjectPresentationPanel(SettingsPanel):
 		("always", _("always")),
 		# Translators: one of the accessible event notification choices
 		# to announce notifications from focused app.
-		("focusedApp", _("focused app")),
+		("focusedApp", _("when application in foreground")),
 		# Translators: one of the accessible event notification choices
 		# to turn off notification announcement.
 		("off", pgettext("accessible event notification", "off"))
