@@ -169,32 +169,31 @@ class AppModule(appModuleHandler.AppModule):
 		# However, in build 17666 and later, child count is the same for both emoji panel and hardware keyboard candidates list.
 		# Thankfully first child automation ID's are different for each modern input technology.
 		# However this event is raised when the input panel closes.
-		inputPanel = obj.firstChild
-		if inputPanel is None:
+		if firstChild is None:
 			return
 		# #9104: different aspects of modern input panel are represented by automation iD's.
-		inputPanelAutomationId = inputPanel.UIAAutomationId
+		childAutomationId = firstChild.UIAAutomationId
 		# Emoji panel for build 16299 and 17134.
 		# This event is properly raised in build 17134.
-		if not winVersion.isWin10(version=1809) and inputPanelAutomationId in self._classicEmojiPanelAutomationIds:
+		if not winVersion.isWin10(version=1809) and childAutomationId in self._classicEmojiPanelAutomationIds:
 			eventHandler.executeEvent("UIA_elementSelected", obj.lastChild.firstChild)
 		# Handle hardware keyboard suggestions.
 		# Treat it the same as CJK composition list - don't announce this if candidate announcement setting is off.
 		elif (
-			inputPanelAutomationId == "CandidateWindowControl"
+			childAutomationId == "CandidateWindowControl"
 			and config.conf["inputComposition"]["autoReportAllCandidates"]
 		):
 			try:
-				eventHandler.executeEvent("UIA_elementSelected", inputPanel.firstChild.firstChild)
+				eventHandler.executeEvent("UIA_elementSelected", firstChild.firstChild.firstChild)
 			except AttributeError:
 				# Because this is dictation window.
 				pass
 		# Emoji panel in Version 1809 (specifically, build 17666) and later.
-		elif inputPanelAutomationId == "TEMPLATE_PART_ExpressionGroupedFullView":
+		elif childAutomationId == "TEMPLATE_PART_ExpressionGroupedFullView":
 			self._emojiPanelJustOpened = True
 			# #10377: on some systems, there is something else besides grouping controls,
 			# so another child control must be used.
-			emojisList = inputPanel.children[-2]
+			emojisList = firstChild.children[-2]
 			if emojisList.UIAAutomationId != "TEMPLATE_PART_Items_GridView":
 				emojisList = emojisList.previous
 			try:
@@ -209,11 +208,11 @@ class AppModule(appModuleHandler.AppModule):
 		# Clipboard history.
 		# Move to clipboard list so element selected event can pick it up.
 		# #9103: if clipboard is empty, a status message is displayed instead, and luckily it is located where clipboard data items can be found.
-		elif inputPanelAutomationId == "TEMPLATE_PART_ClipboardTitleBar":
+		elif childAutomationId == "TEMPLATE_PART_ClipboardTitleBar":
 			# Under some cases, clipboard tip text isn't shown on screen,
 			# causing clipboard history title to be announced instead of most recently copied item.
 			clipboardHistoryItem = obj.children[-2]
-			if clipboardHistoryItem.UIAAutomationId == inputPanelAutomationId:
+			if clipboardHistoryItem.UIAAutomationId == childAutomationId:
 				clipboardHistoryItem = clipboardHistoryItem.next
 			# Make sure to move to actual clipboard history item if available.
 			if clipboardHistoryItem.firstChild is not None:
