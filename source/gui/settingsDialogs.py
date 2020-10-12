@@ -2531,7 +2531,7 @@ class AdvancedPanelControls(wx.Panel):
 		# method of detecting changed content in terminals in the advanced
 		# settings panel.
 		# Choices are automatic, Diff Match Patch, and Difflib.
-		diffAlgoComboText = _("D&iff algorithm:")
+		diffAlgoComboText = _("&Diff algorithm:")
 		diffAlgoChoices = [
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA determine the method of detecting changed
