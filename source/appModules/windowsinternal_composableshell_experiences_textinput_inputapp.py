@@ -98,8 +98,6 @@ class ImeCandidateItem(CandidateItemBehavior, UIA):
 			oldText = getattr(self.appModule, '_lastImeCandidateVisibleText', '')
 			newText = self.visibleCandidateItemsText
 			if not isinstance(oldNav, ImeCandidateItem) or newText != oldText:
-				print(f"oldText: {oldText}")
-				print(f"newText: {newText}")
 				self.appModule._lastImeCandidateVisibleText = newText
 				# speak the new page
 				ui.message(newText)
