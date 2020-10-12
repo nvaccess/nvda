@@ -15,7 +15,7 @@ from SystemTestSpy import (
 
 # Imported for type information
 from robot.libraries.Process import Process as _ProcessLib
-from KeyInputLib import KeyInputLib as _KeyInputLib
+
 from AssertsLib import AssertsLib as _AssertsLib
 
 import NvdaLib as _nvdaLib
@@ -24,7 +24,6 @@ _nvdaProcessAlias = _nvdaRobotLib.nvdaProcessAlias
 
 _builtIn: BuiltIn = BuiltIn()
 _process: _ProcessLib = _getLib("Process")
-_keyInputs: _KeyInputLib = _getLib("KeyInputLib")
 _asserts: _AssertsLib = _getLib("AssertsLib")
 
 
@@ -39,9 +38,9 @@ def quits_from_keyboard():
 	spy.wait_for_specific_speech("Welcome to NVDA")  # ensure the dialog is present.
 	spy.wait_for_speech_to_finish()
 	_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little longer for it
-	_keyInputs.send("enter")
+	spy.emulateKeyPress("enter")
 
-	_keyInputs.send("insert", "q")
+	spy.emulateKeyPress("insert+q")
 	exitTitleIndex = spy.wait_for_specific_speech("Exit NVDA")
 
 	spy.wait_for_speech_to_finish()
@@ -53,7 +52,7 @@ def quits_from_keyboard():
 		"What would you like to do?  combo box  Exit  collapsed  Alt plus d"
 	)
 	_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little longer for it
-	_keyInputs.send("enter")
+	spy.emulateKeyPress("enter", blockUntilProcessed=False)
 	_process.wait_for_process(_nvdaProcessAlias, timeout="10 sec")
 	_process.process_should_be_stopped(_nvdaProcessAlias)
 
@@ -75,4 +74,4 @@ def read_welcome_dialog():
 		"Keyboard layout:  combo box  desktop  collapsed  Alt plus k"
 	)
 	_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little longer for it
-	_keyInputs.send("enter")
+	spy.emulateKeyPress("enter")

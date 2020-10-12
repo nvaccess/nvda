@@ -6,6 +6,7 @@
 import os
 import tempfile
 import typing
+import queueHandler
 
 import gui
 import ui
@@ -29,16 +30,18 @@ def showHelp(helpId: str):
 	recognized control.
 	"""
 	if not helpId:
-		# Translators: Message indicating no context sensitive help is available.
-		noHelpMessage = _("No context sensitive help is available here at this time.")
-		ui.message(noHelpMessage)
+		# Translators: Message indicating no context sensitive help is available for the control or dialog.
+		noHelpMessage = _("No help available here.")
+		queueHandler.queueFunction(queueHandler.eventQueue, ui.message, noHelpMessage)
+		return
 	helpFile = gui.getDocFilePath("userGuide.html")
-	if not os.path.exists(helpFile):
+	if helpFile is None:
 		# Translators: Message shown when trying to display context sensitive help,
 		# indicating that	the user guide could not be found.
 		noHelpMessage = _("No user guide found.")
 		log.debugWarning("No user guide found: possible cause - running from source without building user docs")
-		ui.message(noHelpMessage)
+		queueHandler.queueFunction(queueHandler.eventQueue, ui.message, noHelpMessage)
+		return
 	log.debug(f"Opening help: helpId = {helpId}, userGuidePath: {helpFile}")
 
 	nvdaTempDir = os.path.join(tempfile.gettempdir(), "nvda")

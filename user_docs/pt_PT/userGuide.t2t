@@ -1,4 +1,4 @@
-﻿Manual do Utilizador do NVDA NVDA_VERSION
+Manual do Utilizador do NVDA NVDA_VERSION
 
 Traduzido pela equipa portuguesa do NVDA.
 %!includeconf: ../userGuide.t2tconf
@@ -69,9 +69,7 @@ Para detalhes sobre as exceções, aceda o documento da licença no menu Ajuda d
 - Sistemas Operativos: Todas as versões 32-bit e 64-bit do Windows 7, Windows 8 e Windows 10, e todas as versões Server a partir do Windows Server 2008 R2.
 - Para Windows 7, o NVDA requer o Service Pack 1 ou superior.
 - Para Windows Server 2008 R2, o NVDA requer o Service Pack 1 ou superior.
-- Memória: 256 MB ou mais de RAM
-- Velocidade do processador: 1.0 GHz ou superior
-- Aproximadamente 90 MB de espaço livre.
+- Pelo menos 150 MB de espaço livre.
 -
 
 + Obter e Instalar O NVDA +[GettingAndSettingUpNVDA]
@@ -203,8 +201,12 @@ Se o seu computador portátil não pode fazer isto, ou não lhe permite alternar
 
 ++ Gestos de Toque do NVDA ++[NVDATouchGestures]
 Se está a executar o NVDA num dispositivo com ecrã táctil (touch screen), que esteja a correr o Windows 8 ou superior, pode também controlar o NVDA, directamente por comandos no ecrã.
-Enquanto o NVDA estiver a correr, toda a entrada por toques será interceptada por ele. 
+Enquanto o NVDA estiver em execução, e se a Interacção táctil estiver activada, toda a entrada por toques será interceptada por ele. 
 Portanto, as acções que podem ser realizadas normalmente sem o NVDA não irão funcionar.
++%kc:beginInclude
+Para alternar o suporte à Interacção táctil pressione NVDA+control+alt+t.
+%kc:endInclude
+Também pode activar ou desactivar o [Suporte à Interacção táctil #TouchSupportEnable] a partir da secção Interacção táctil nas configurações do NVDA.
 
 +++ Explorar o Ecrã +++[ExploringTheScreen]
 A acção mais básica que pode realizar, com o ecrã táctil, é anunciar o controlo ou texto em qualquer ponto do ecrã.
@@ -273,6 +275,7 @@ Quando o menu surgir, pode usar as setas direccionais para navegar pelo mesmo e 
 ++ Comandos Básicos do NVDA ++[BasicNVDACommands]
 %kc:beginInclude
 || Nome | Comando de Teclado de Desktop | Comando de Teclado de Laptop | Toque | Descrição |
+| Iniciar ou reiniciar o NVDA | Control+alt+n | Control+alt+n | none | Inicia ou reinicia o NVDA pelo ícone na Ambiente de trabalho, se este atalho do Windows for activado na instalação do NVDA. Este é um atalho do Windows, por isso não pode ser alterado no diálogo "Definir comandos" do NVDA. |
 | Parar a voz | Control | Control | Toque com dois dedos | Pára instantaneamente a voz |
 | Pausar a voz | shift | shift | nenhum | Pausa instantaneamente a voz. Se pressionar novamente, recomeçará a falar, desde onde parou (se a pausa for suportada pelo sintetizador actual) |
 | Menu do NVDA | NVDA+n | NVDA+n | Toque duplo com dois dedos | Mostra o Menu do NVDA, que lhe permite aceder às preferências, ferramentas, ajuda, etc. |
@@ -328,9 +331,9 @@ O NVDA fornece os seguintes comandos, relativamente ao cursor do sistema:
 | Leitura Contínua | NVDA+Seta Abaixo | NVDA+a | Inicia a leitura, a partir da posição actual do cursor do sistema, movendo-o ao longo do texto, enquanto Lê |
 | Ler a linha actual | NVDA+Seta Acima | NVDA+l | Lê a linha onde o cursor do sistema está posicionado actualmente. Ao pressionar duas vezes, soletra a linha. Ao pressionar três vezes, é soletrado com o alfabeto rádio internacional. |
 | Ler o texto actualmente seleccionado | NVDA+Shift+Seta Acima | NVDA+shift+s | Lê qualquer texto seleccionado actualmente |
+| Anuncia as informações de formatação do texto | NVDA+f | NVDA+f | Anuncia as informações de formatação do texto onde o cursor de inserção está localizado. Se pressionar duas vezes mostra a informação numa janela em modo de navegação |
 | Frase seguinte | alt+Seta Abaixo | alt+Seta Abaixo | Move o cursor para a frase seguinte e anuncia-a. (Suportado apenas no Microsoft Word) |
 | Frase anterior | alt+Seta Acima | alt+Seta Acima | Move o cursor para a frase anterior e anuncia-a. (Suportado apenas no Microsoft Word) |
-
 
 Quando estiver numa tabela, os seguintes comandos de teclado também estarão disponíveis:
 || Nome | Comando de Teclado | Descrição |
@@ -413,7 +416,7 @@ Os comandos seguintes estão disponíveis para a revisão de texto:
 | Seleccionar e copiar a partir do cursor de revisão | NVDA+F9 | NVDA+F9 | Nenhum | Inicia o Seleccionar e copiar o texto a partir da posição actual do cursor de revisão. A função não será efectuada até que informe o NVDA até onde é que pretende copiar |
 | Seleccionar e copiar até ao cursor de revisão | NVDA+F10 | NVDA+F10 | Nenhum | Ao pressionar a primeira vez o texto, se possível, é seleccionado até à posição do cursor. Se o cursor de inserção puder, será movido para esse local. Ao pressionar segunda vez copia o texto para a área de transferência do Windows |
 | Mover o cursor de revisão para a posição marcada como início do bloco: | NVDA+shift+f9 | NVDA+shift+f9 | none | Move o cursor de revisão para a marca de início de texto a ser copiado ou seleccionado |
-| Anunciar formatação de texto | NVDA+f | NVDA+f | Nenhum | Anuncia a formatação do texto onde o cursor de revisão está posicionado actualmente. Pressionando duas vezes, as informações serão mostradas numa janela. |
+| Anunciar informações de formatação do texto | NVDA+Shift+f | NVDA+Shift+f | Nenhum | Anuncia a formatação do texto onde o cursor de revisão está localizado actualmente. Pressionando duas vezes, as informações serão mostradas numa janela em modo de navegação. |
 | Anunciar substituto do símbolo actual | Nenhum | Nenhum | Nenhum | Anuncia o símbolo sob o cursor de revisão. Pressionado duas vezes, anuncia o símbolo e o texto com que é anunciado em modo de navegação. |
 %kc:endInclude
 
@@ -648,7 +651,6 @@ Quando quiser voltar à leitura do documento, simplesmente pressione Escape.
 Por vezes, o conteúdo matemático pode ser mostrado como um botão ou outro tipo de elemento que, quando activado, mostrará uma caixa de diálogo ou mais informações relacionadas à fórmula.
 Para activar o botão ou o elemento que contém a fórmula, pressione control + enter.
 
-
 + Braille +[Braille]
 Se dispõe de uma linha Braille, o NVDA pode usá-la para mostrar as informações em Braille.
 Se a linha Braille possuir um teclado estilo Perkins, pode escrever no PC usando o código Braille normal ou abreviado.
@@ -712,6 +714,7 @@ Para que caiba o máximo de informaçãon possível na linha Braille, as seguint
 | vá N | Item de vista em árvore de nível N |
 | jan | Janela |
 | ----- | separador |
+| mrcd | conteúdo marcado |
 
 Os seguintes indicadores de estado também estão definidos:
 || Abreviatura | Estado do controlo |
@@ -890,22 +893,28 @@ Para cada campo de formulário, é mostrado o texto alternativo do campo, juntam
 Seleccionando um campo de formulário e pressionando Enter ou o botão "Mover para", move directamente para esse campo em Modo de navegação.
 -
 
-+++ Anunciar Comentários +++[ExcelReportingComments]
++++ Anunciar Notas +++[ExcelReportingComments]
 %kc:beginInclude
-Para anunciar qualquer comentário numa célula, pressionar NVDA+alt+c
+Para anunciar qualquer nota numa célula, pressionar NVDA+alt+c
+No Microsoft Excel 2016, 365 ou mais recente, os comentários foram renomeados para notas.
 %kc:endInclude
-Todos os comentários, para a folha actual, podem ser listados na Lista de Elementos do NVDA, pressionando NVDA+F7.
+Todas as notas para a folha actual, podem ser listadas na Lista de Elementos do NVDA, pressionando NVDA+F7.
 
-O NVDA pode providenciar um diálogo específico para introduzir ou editar o comentário numa célula.
+O NVDA pode providenciar um diálogo específico para introduzir ou editar a nota numa célula.
 O NVDA sobrepôe este diálogo ao nativo do MS Excel devido à falta de acessibilidade deste último, mas usa o mesmo comando do MS Excel.
 %kc:beginInclude
-Para adicionar ou editar um  comentário numa célula, pressione shift+f2.
+Para adicionar ou editar uma  nota numa célula, pressione shift+f2.
 %kc:endInclude
 
 Este comando não aparece no diálogo "Definir comandos" e, portanto, não pode ser alterado.
 
-Nota: Também  possível abrir a região de edição de comentários do MS Excel a partir do menu de contexto em qualquer célula.
-Isto abrirá a inacessível a região de edição de comentários e não o diálogo do NVDA.
+Nota: Também  é possível abrir a região de edição de notas do MS Excel a partir do menu de contexto em qualquer célula.
+Isto abrirá a inacessível região de edição de notas e não o diálogo do NVDA.
+
+No Microsoft Office 2016, 365 ou mais recente, foi adicionado um novo estilo de diálogo de comentários
+Este diálogo é acessível e proporciona mais funcionalidades, como responder a comentários, etc.
+Também pode ser aberto a partir do menu de contexto duma célula.
+Os comentários adicionados às células via este novo diálogo não estão relacionados com as "notas" referidas anteriormente.
  
 +++ Leitura de Células Protegidas +++[ExcelReadingProtectedCells]
 Se um livro, ou folha, foi protegido, pode não ser possível mover o foco para algumas células que foram bloqueadas para edição.
@@ -1087,7 +1096,8 @@ Esta opção só está disponível nas cópias instaladas do NVDA.
 
 ==== Verificar automaticamente actualizações para o NVDA ====[GeneralSettingsCheckForUpdates]
 Se esta opção estiver activa, o NVDA irá verificar automaticamente se existem versões mais actuais do programa, e informá-lo-á, quando uma actualização estiver disponível.
-Ao verificar, por actualizações,, quer manualmente,  quer automaticamente, o NVDA necessita de enviar ao servidor de actualizações algumas informações para poder que receba a versão correcta.
+Também pode verificar  manualmente por actualizações seleccionando "Verificar actualização..." no menu "Ajuda" do NVDA.
+Ao verificar por actualizações,, quer manualmente,  quer automaticamente, o NVDA necessita de enviar ao servidor de actualizações algumas informações para poder certificar-se que recebe a versão correcta.
 As seguintes informações são sempre enviadas:
 - Versão actual do NVDA;
 - Versão do sistema operativo;
@@ -1291,6 +1301,7 @@ A indicação de selecção não é afectada por esta opção, é sempre feita c
 ==== Tempo de Permanência de Mensagens (seg) ====[BrailleSettingsMessageTimeout]
 Esta definição é um campo numérico que controla durante quantos segundos são apresentadas as mensagens do sistema, na linha Braille.
 Especifique 0, para que estas mensagens não sejam mostradas de todo.
+A mensagem do NVDA é imediatamente descartada ao pressionar um cursor de toque da linha Braille, mas reaparece ao pressionar um comando que accione a mensagem.
 
 ==== Mostrar Mensagens Indefinidamente ====[BrailleSettingsNoMessageTimeout]
 Esta opção indica ao NVDA para mostrar, na linha Braille, as mensagens até o utilizador as descartar.
@@ -1515,7 +1526,13 @@ Se marcar esta opção, e tiver activada a opção "Activar seguimento do rato, 
 
 +++ Interacção táctil +++[TouchInteraction]
 Esta secção, apenas disponível em computadores com Windows 8 ou superior  e com ecrã táctil, permite configurar como o NVDA interage com os ecrãs tácteis.
-Actualmente, esta secção apenas contém uma opção:
+Actualmente, esta secção contém as seguintes opções:
+
+==== Activar suporte para Interacção táctil ====[TouchSupportEnable]
+Esta caixa de verificação activa o Suporte à Interacção táctil do NVDA.
+Se activado, pode usar os seus dedos para navegar e interagir com os itens no ecrã de um dispositivo com ecrã táctil.
+se desactivado, o suporte à Interacção táctil não funcionará como se o NVDA não estivesse em execução.
+Esta configuração também pode ser alternada usando NVDA+control+alt+t. 
 
 ==== Modo de Digitação Virtual ====[TouchTypingMode]
 Esta caixa de verificação especifica qual o método que prefere usar, ao escrever com o teclado táctil.
@@ -1558,7 +1575,7 @@ Muitas janelas e controlos mostram uma pequena mensagem (ou sugestão), quando m
 Esta caixa de verificação, quando marcada, indica ao NVDA que anuncie os balões de ajuda, e notificações "toasts" quando aparecerem.
 - Os Balões de Ajuda são como sugestões, mas, por norma, são maiores e estão associados com eventos do sistema, tal como o cabo de rede ser desligado, ou, porventura, para o alertar de problemas de segurança do Windows.
 - As notificações "toasts" foram introduzidas no Windows 10 e aparecem na Área de notificações informando sobre vários eventos, tais como a descarga de um update, a chegada de novo e-mail, etc.
-
+-
 
 ==== Anunciar Teclas de Atalho dos Objectos ====[ObjectPresentationShortcutKeys]
 Quando esta caixa de verificação está marcada, o NVDA incluirá a tecla de atalho que é associada com um determinado objecto ou controlo, quando o mesmo é anunciado.
@@ -1692,6 +1709,15 @@ Activada por padrão, esta opção permite que escolha se os comandos, (como o p
 Por exemplo, se a opção estiver activada, se a letra j for pressionada, seria impedida de atingir o documento, pois não é um comando rápido de navegação nem é provável que seja um comando da própria aplicação.
 Nestes casos, o NVDA irá reproduzir um som padrão sempre que uma tecla pressionada é impedida de atingir o documento.
 
+==== Definir automaticamente o foco do sistema para os elementos focáveis ====[BrowseModeSettingsAutoFocusFocusableElements]
+Comando: NVDA+8
+
+Desactivada por padrão, esta opção permite escolher se o foco do sistema deve ser definido, automaticamente, para elementos que possam receber o foco do sistema (links, campos de formulário, etc.) ao navegar com o cursor do modo de navegação.
+Deixar esta opção desactivada fará com que elementos focáveis não recebam o foco quando são seleccionados pelo cursor do modo de navegação.
+Isto pode resultar numa navegação mais rápida e resposta mais imediata em modo de navegação.
+O foco será na mesma definido para o elemento ao interagir com ele (e.g. pressionar um butão, marcar uma caixa de verificação, etc).
+Activar esta opção pode melhorar o suporte em algumas páginas, com o contra de prejudicar a performance e a estabilidade.
+
 +++ Formatação de Documentos (NVDA+Ctrl+D) +++[DocumentFormattingSettings]
 A maioria das caixas de verificação desta secção permitem configurar qual é o tipo de formatação que pretende ouvir automaticamente, conforme se move com o cursor pelos documentos.
 Por exemplo, se seleccionar a caixa de verificação para anunciar o nome do tipo de letra, de cada vez que anda pelo texto e chega a um tipo de letra diferente, o nome do novo tipo de letra será anunciado. 
@@ -1703,7 +1729,8 @@ Pode configurar o anúncio de:
  - Tamanho do tipo de letra
  - Atributos do tipo de letra
  - Subscrito e sobreescrito
- - Ênfas
+ - Ênfase
+ - Marcado (Texto realçado)
  - Estilo
  - Cores
 - Informação do documento:
@@ -1725,6 +1752,7 @@ Pode configurar o anúncio de:
 - Elementos:
  - Títulos
  - Links
+ - Gráficos
  - Listas
  - Blocos de citação
  - Agrupamentos
@@ -1785,6 +1813,13 @@ Se deseja distribuir código personalizado para outras pessoas, você deve empac
  Este botão abre o diretório onde você pode colocar um código personalizado enquanto o desenvolve.
  Este botão só é ativado se o NVDA estiver configurado para ativar o carregamento de código personalizado a partir do Diretório do Scratchpad do Desenvolvedor.
  
+==== Activa o registo selectivo para eventos UI Automation e alterações de propriedades ====[AdvancedSettingsSelectiveUIAEventRegistration]
+Esta opção altera como o NVDA regista os eventos disparados pela API de acessibilidade da Microsoft UI Automation.
+Quando esta opção está desactivada, o NVDA regista muitos eventos UIA que são processados e descartados no próprio NVDA.
+Isto tem um grande impacto negativo na performance, especialmente em aplicações como Microsoft Visual Studio.
+Portanto, com esta opção activada, o NVDA limitará o registo de eventos para o foco do sistema.
+Se notar problemas de performance numa ou várias aplicações, recomendamos que experimente esta funcionalidade para verificar se a performance melhora.
+
 ==== Usar UI Automation para aceder a controlos de documentos do Microsoft Word, se disponível ====[AdvancedSettingsUseUiaForWord]
 Ao activar esta opção, o NVDA irá utilizar a API de acessibilidade da Microsoft, UI Automation, para obter informações dos controlos de documentos do Microsoft Word.
 Isto inclui o próprio Microsoft Word e também o visualizador e o compositor de mensagens do Microsoft Outlook.
@@ -1809,16 +1844,6 @@ Em ambientes não confiáveis, pode desactivar temporariamente [o anúncio de ca
 Esta opção activa a funcionalidade que tenta cancelar a fala para eventos de foco expoirados.
 Em especial, mover-se rapidamente pelas  mensagens no GMail usando o Chrome, pode fazer com que o NVDA anuncie informação desactualizada.
 Esta funcionalidade é experimental a partir do NVDA 2020.2.
-
-==== Definir automaticamente o foco do sistema para os elementos focáveis em modo de navegação ====[BrowseModeSettingsAutoFocusFocusableElements]
-Comando: NVDA+8
-
-Activada por padrão, esta opção permite escolher se o foco do sistema deve ser definido para elementos que o podem receber (links, campos de formulário, etc.) ao navegar com o cursor do modo de navegação.
-Se activada , representa o comportamento normal do NVDA até à versão 2019.1.
-Se desactivar esta opção, os elementos focáveis não receberão o foco do sistema quando seleccionados pelo cursor do modo de navegação.
-Isto pode resultar numa navegação mais rápida e melhor resposta no modo de navegação.
-O foco ainda será actualizado para um elemento específico ao interagir com ele (por exemplo, pressionar um botão, marcar uma caixa de verificação).
-Esta funcionalidade é experimental a partir da versão 2019.2 do NVDA.
 
 ==== Tempo limite dos movimentos do cursor (em ms) ====[AdvancedSettingsCaretMoveTimeout]
 Esta opção permite configurar quantos milissegundos o NVDA irá aguardar até que o cursor (ponto de inserção) se mova nos controlos de texto editáveis.
@@ -1865,7 +1890,8 @@ Esta condição é cumprida se, antes e depois do padrão, não estiver um carac
 Assim, usando o exemplo anterior de substituir a palavra "pássaro" por "sapo", se definir como uma substituição de palavra inteira, não substituirá nada na palavra "pássaros".
 
 Uma expressão regular é um padrão que contém símbolos especiais que permitem introduzir mais de um caracter ao mesmo tempo, ou introduzir apenas números, ou só letras, referindo alguns exemplos.
-As expressões regulares não são explicadas neste Manual do Utilizador, mas existem muitos tutoriais na Internet que lhe podem proporcionar mais informações.
+As expressões regulares não são explicadas neste Manual do Utilizador.
+Para um tutorial introdutório, pode consultar [https://docs.python.org/3.7/howto/regex.html].
 
 +++ Pronúncia de pontuação e símbolos +++[SymbolPronunciation]
 Este diálogo permite-lhe mudar o modo como a pontuação e outros símbolos são pronunciados, bem como o nível de pontuação em que eles são anunciados.
@@ -1910,10 +1936,23 @@ Qualquer tecla ou gesto associado a um comando é listado dentro do ramo desse c
 Para adicionar uma tecla ou um gesto a um comando, seleccione o comando e pressione o botão "Adicionar".
 Depois pressione a tecla, conjunto de teclas, ou execute o gesto que quer associar, por exemplo, pressione uma tecla no teclado ou um controlo na linha Braille.
 Muitas vezes, um comando pode ser interpretado de mais de uma maneira.
-Por exemplo, se pressionar uma tecla no teclado, pode querer que seja específico do actual esquema de teclado (por exemplo, desktop ou laptop) ou pode querer que seja aplicável a todos os esquemas.
+Por exemplo, se pressionar uma tecla no teclado, pode querer que seja específico do actual esquema de teclado, desktop ou laptop) ou pode querer que seja aplicável a todos os esquemas.
 Neste caso, aparecerá um menu que permite seleccionar a opção desejada.
 
 Para remover uma tecla ou gesto de um comando, seleccione-a e pressione o botão "Remover".
+
+A categoria Simulação de teclas do sistema contém comandos do NVDA que simulam o pressionar de teclas do teclado do sistema.
+Essas teclas simuladas do sistema podem ser usadas para controlar o computador a partir da linha Braille.
+Para adicionar um comando simulado, seleccione a categoria "Simulação de teclas do sistema" e pressione o botão"Adicionar".
+Seguidamente pressione o comando que pretende simular.
+Após isso, o comando fica disponível para associar um comando do NVDA, como descrito acima.
+
+Nota:
+ - As teclas emuladas, se não tiverem um comando associado, não serão mantidas ao guardar ou fechar o diálogo "Definir comandos";
+ - Um comando para simulação de teclas, que inclua uma tecla modificadora, não deve ser associado a teclas simuladas que não incluam uma tecla modificadora.
+ Por exemplo, definir a letra "a" como tecla para simular, e associar-lhe o comando "ctrl+m", pode resultar
+ em enviar para a aplicação "ctrl+a".
+ -
 
 Quando tiver terminado, pressione o botão "OK", para guardar as suas modificações, ou o botão "Cancelar", para as descartar.
 
@@ -2202,7 +2241,6 @@ No Windows 10, o NVDA usa o Windows OneCore voices por padrão, enquanto o [[eSp
 
 Por favor, para ver a lista de vozes disponíveis e como as instalar, leia este artigo da Microsoft: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
 
-
 + Linhas Braille Suportadas +[SupportedBrailleDisplays]
 Esta secção contém informação sobre as linhas Braille suportadas pelo NVDA.
 
@@ -2476,7 +2514,7 @@ Os seguintes dispositivos são também suportados, não necessitando de drivers 
 - APH Chameleon 20
 - Humanware BrailleOne
 - NLS eReader
-
+-
 
 Seguem-se as associações de teclas para estas linhas braille com o NVDA.
 Por favor, consulte a documentação da sua linha braille para obter a descrição de onde estas teclas podem ser encontradas.
