@@ -7,25 +7,48 @@ What's New in NVDA
 
 == New Features ==
 - Pressing F1 inside NVDA dialogs will now open the help file to most relevant section. (#7757)
-- Support for auto complete suggestions (IntelliSense) Microsoft SQL Server Management Studio and Visual Studio 2017. (#7504)
+- Support for auto complete suggestions (IntelliSense) in Microsoft SQL Server Management Studio plus Visual Studio 2017 and higher. (#7504)
 - Symbol pronunciation: Support for grouping in a complex symbol definition and support group references in a replacement rule making them simpler and more powerful. (#11107)
+- Users are now notified when attempting to create Speech Dictionary entries with invalid regular expression substitutions. (#11407)
+  - Specifically grouping errors are now detected.
+- Added support for the new chinese Traditional Quick and Pinyin Input methods in Windows 10. (#11562)
 
 
 == Changes ==
 - Updated liblouis braille translator to version 3.15.0
 - When reading with say all in browse mode, the find next and find previous commands do not stop reading anymore if Allow skim reading option is enabled; say all rather resumes from after the next or previous found term. (#11563)
+- For HIMS braille displays F3 has been remapped to Space + dots 148. (#11710)
+- Improvements to the UX of the "braille message timeout" and "Show messages indefinitely" options. (#11602)
 
 
 == Bug Fixes ==
 - NVDA once again works correctly with edit fields when using the Fast Log Entry application. (#8996)
 - Report elapsed time in Foobar2000 if no total time is available (e.g. when playing a live stream). (#11337)
+- NVDA now honors the aria-roledescription attribute on elements in editable content in web pages. (#11607)
+- 'list' is no longer announced on every line of a list in Google Docs or other editable content in Google Chrome. (#7562)
+- When arrowing by character or word from one list item to another in editable content on the web, entering the new list item is now announced. (#11569)
+- NVDA now reads the correct line when the caret is placed at the end of a link on the end of a list item in Google Docs or other editable content on the web. (#11606)
+- On Windows 7, opening and closing the start menu from the desktop now sets focus correctly. (#10567)
+- When "attempt to cancel expired focus events" is enabled, the title of the tab is now announced again when switching tabs in Firefox. (#11397)
+- NVDA no longer fails to announce a list item after typing a character in a list when speaking with the SAPI5 Ivona voices. (#11651)
+- It is again possible to use browse mode when reading emails in Windows 10 Mail 16005.13110 and later. (#11439)
+- When using the SAPI5 Ivona voices from harposoftware.com, NvDA is now able to save configuration, switch synthesizers, and no longer will stay silent after restarting. (#11650)
+- It is now possible to enter number 6 in computer braille from a braille keyboard on HIMS displays. (#11710)
+- Major performance improvements in Azure Data Studio. (#11533, #11715)
+- With "Attempt to Cancel speech for expired focus events" enabled the title of the NVDA Find dialog is announced again. (#11632)
+- NVDA should no longer freeze when waking the computer and focus lands in a Microsoft Edge document. (#11576)
+- It is no longer necessary to press tab or move focus after closing a context menu in MS Edge for browse mode to be functional again. (#11202)
 
 
 == Changes for Developers ==
 - System tests can now send keys using spy.emulateKeyPress, which takes a key identifier that conforms to NVDA's own key names, and by default also blocks until the action is executed. (#11581)
+- NVDA no longer requires the current directory to be the NVDA application directory in order to function. (#6491)
+- The aria live politeness setting for live regions can now be found on NVDA Objects using the liveRegionPoliteness property. (#11596)
 
 
 = 2020.3 =
+This release includes several large improvements to stability and performance particularly in Microsoft Office applications. There are new settings to toggle touchscreen support and graphics reporting.
+The existence of marked (highlighted) content can be reported in browsers, and there are new German braille tables.
 
 == New Features ==
 - You can now toggle reporting of graphics from NVDA's document formatting settings. Note that disabling this option will still read the alternative texts of graphics. (#4837)
@@ -36,6 +59,8 @@ What's New in NVDA
  - This can be toggled on and off by a new NVDA Document Formatting option for Highlighting.
 - New emulated system keyboard keys can be added from NVDA's Input gestures dialog. (#6060)
   - To do this, press the add button after you selected the Emulated system keyboard keys category.
+- Handy Tech Active Braille with joystick is now supported. (#11655)
+- "Automatic focus mode for caret movement" setting is now compatible with disabling "Automatically set focus to focusable elements". (#11663)
 
 
 == Changes ==
@@ -73,7 +98,8 @@ What's New in NVDA
 - NVDA now keeps the audio device open improving performance on some sound cards (#5172, #10721)
 - NVDA will no longer freeze or exit when holding down control+shift+downArrow in Microsoft Word. (#9463)
 - The expanded / collapsed state of directories in the navigation treeview on drive.google.com is now always reported by NVDA. (#11520)
-- NVDA will auto detect the NLS eReader Humanware braille display via Bluetooth as its Bluethooth name is now "NLS eReader Humanware". (#11561)
+- NVDA will auto detect the NLS eReader Humanware braille display via Bluetooth as its Bluetooth name is now "NLS eReader Humanware". (#11561)
+- Major performance improvements in Visual Studio Code. (#11533)
 
 
 == Changes For Developers ==

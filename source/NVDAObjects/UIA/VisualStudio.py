@@ -36,8 +36,31 @@ class IntelliSenseList(UIA):
 	...
 
 
+class IntelliSenseLiveRegion(UIA):
+	"""
+	Visual Studio uses both Intellisense menu item objects and a live region
+	to communicate Intellisense selections.
+	NVDA uses the menu item approach and therefore the live region provides doubled information
+	and is disabled.
+	"""
+
+	_shouldAllowUIALiveRegionChangeEvent = False
+
+
+_INTELLISENSE_LIST_AUTOMATION_IDS = {
+	"listBoxCompletions",
+	"CompletionList"
+}
+
+
 def findExtraOverlayClasses(obj, clsList):
-	if obj.UIAElement.cachedAutomationId == "listBoxCompletions":
+	if obj.UIAAutomationId in _INTELLISENSE_LIST_AUTOMATION_IDS:
 		clsList.insert(0, IntelliSenseList)
 	elif isinstance(obj.parent, IntelliSenseList) and obj.UIAElement.cachedClassName == "IntellisenseMenuItem":
 		clsList.insert(0, IntelliSenseItem)
+	elif (
+		obj.UIAElement.cachedClassName == "LiveTextBlock"
+		and obj.previous
+		and isinstance(obj.previous.previous, IntelliSenseList)
+	):
+		clsList.insert(0, IntelliSenseLiveRegion)

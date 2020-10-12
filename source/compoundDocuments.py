@@ -139,6 +139,7 @@ class CompoundTextInfo(textInfos.TextInfo):
 			return None
 		field = textInfos.ControlField()
 		field["role"] = role
+		field['roleText'] = obj.roleText
 		# The user doesn't care about certain states, as they are obvious.
 		states.discard(controlTypes.STATE_EDITABLE)
 		states.discard(controlTypes.STATE_MULTILINE)

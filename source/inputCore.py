@@ -565,10 +565,10 @@ class InputManager(baseObject.AutoPropertyObject):
 		self.localeGestureMap.clear()
 		lang = languageHandler.getLanguage()
 		try:
-			self.localeGestureMap.load(os.path.join("locale", lang, "gestures.ini"))
+			self.localeGestureMap.load(os.path.join(globalVars.appDir, "locale", lang, "gestures.ini"))
 		except IOError:
 			try:
-				self.localeGestureMap.load(os.path.join("locale", lang.split('_')[0], "gestures.ini"))
+				self.localeGestureMap.load(os.path.join(globalVars.appDir, "locale", lang.split('_')[0], "gestures.ini"))
 			except IOError:
 				log.debugWarning("No locale gesture map for language %s" % lang)
 
