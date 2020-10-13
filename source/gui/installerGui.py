@@ -18,7 +18,7 @@ import installer
 from logHandler import log
 import gui
 from gui import guiHelper
-from gui.dpiScalingHelper import DpiScalingHelperMixin, DpiScalingHelperMixinWithoutInit
+from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from .contextHelp import ContextHelpMixin
 import tones
 import systemUtils
@@ -238,6 +238,7 @@ class InstallerDialog(
 			# the defaults from the installer are fine. We are testing against the running version.
 		)
 		incompatibleAddons.ShowModal()
+
 
 class InstallingOverNewerVersionDialog(
 		DpiScalingHelperMixinWithoutInit,

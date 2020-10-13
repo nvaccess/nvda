@@ -862,6 +862,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		if self.oldLanguage != config.conf["general"]["language"]:
 			LanguageRestartDialog(self).ShowModal()
 
+
 class LanguageRestartDialog(
 		gui.ContextHelpMixin,
 		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO

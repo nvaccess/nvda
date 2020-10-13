@@ -535,6 +535,7 @@ class NewProfileDialog(
 			self.profileName.SelectAll()
 		self.autoProfileName = name
 
+
 class RenameProfileDialog(
 		gui.ContextHelpMixin,
 		wx.TextEntryDialog,  # wxPython does not seem to call base class initializer, put last in MRO
