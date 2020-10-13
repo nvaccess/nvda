@@ -201,8 +201,8 @@ setup(
 			"description": "NVDA Diff-match-patch proxy",
 			"product_name": name,
 			"product_version": version,
-			"copyright": copyright,
-			"company_name": publisher,
+			"copyright": f"{copyright}, Bill Dengler",
+			"company_name": f"Bill Dengler, {publisher}",
 		},
 	],
 	options = {"py2exe": {

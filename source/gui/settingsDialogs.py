@@ -2535,7 +2535,7 @@ class AdvancedPanelControls(wx.Panel):
 		diffAlgoChoices = [
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA determine the method of detecting changed
-			# content in terminals automatically
+			# content in terminals automatically.
 			_("Automatic (Difflib)"),
 			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA detect changes in terminals
