@@ -92,7 +92,9 @@ class NVDASpyLib:
 		@return: The speech joined together, see L{_getJoinedBaseStringsFromCommands}
 		"""
 		with threading.Lock():
-			speechCommands = [self._getJoinedBaseStringsFromCommands(x) for x in self._nvdaSpeech_requiresLock[speechIndex:]]
+			speechCommands = [
+				self._getJoinedBaseStringsFromCommands(x) for x in self._nvdaSpeech_requiresLock[speechIndex:]
+			]
 			return "\n".join(x for x in speechCommands if x and not x.isspace())
 
 	def get_last_speech_index(self) -> int:
