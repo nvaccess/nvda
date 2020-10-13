@@ -41,6 +41,8 @@ import braille
 import locationHelper
 import ui
 import winVersion
+import aria
+
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -1204,6 +1206,15 @@ class UIA(Window):
 			return self._getUIACacheablePropertyValue(UIAHandler.UIA_NamePropertyId)
 		except COMError:
 			return ""
+
+	def _get_liveRegionPoliteness(self):
+		# Live setting enumeration values allign with aria.AriaLivePoliteness.
+		try:
+			return aria.AriaLivePoliteness(
+				self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_LiveSettingPropertyId)
+			)
+		except COMError:
+			return super().liveRegionPoliteness
 
 	def _get_role(self):
 		role=UIAHandler.UIAControlTypesToNVDARoles.get(self.UIAElement.cachedControlType,controlTypes.ROLE_UNKNOWN)
