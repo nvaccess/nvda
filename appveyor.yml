@@ -197,7 +197,7 @@ test_script:
      # useInstalledNVDA must come after args file to override the whichNVDA value
      $useInstalledNVDA = '--variable', 'whichNVDA:installed'
 
-     py -m robot $robotArgs $useInstalledNVDA $testSource
+     py -m robot $robotArgs $useInstalledNVDA $testSource $testSource $testSource $testSource $testSource $testSource $testSource $testSource
      Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
      Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
      if($LastExitCode -ne 0) {
