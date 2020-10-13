@@ -104,7 +104,7 @@ def announce_list_item_when_moving_by_word_or_character():
 	_asserts.strings_match(
 		actualSpeech,
 		"\n".join([
-			"list item  level 1  ",
+			"list item  level 1",
 			"b"
 		])
 	)
@@ -211,7 +211,7 @@ def test_pr11606():
 	_asserts.strings_match(
 		actualSpeech,
 		"\n".join([
-			"out of link  ",
+			"out of link",
 			"space"
 		])
 	)
@@ -272,13 +272,13 @@ def test_ariaTreeGrid_browseMode():
 		actualSpeech,
 		"\n".join([
 			# focus mode turns on
-			"Focus mode  ",
+			"Focus mode",
 			# focus enters the document inside the iframe
-			"Treegrid Email Inbox Example   WAI ARIA Authoring Practices 1.2  document  ",
+			"Treegrid Email Inbox Example   WAI ARIA Authoring Practices 1.2  document",
 			# Focus enters the main landmark
-			"main landmark  ",
+			"main landmark",
 			# Focus enters the ARIA treegrid (table)
-			"Inbox  table  ",
+			"Inbox  table",
 			# Focus lands on row 2
 			"level 1  Treegrids are awesome Want to learn how to use them? aaron at thegoogle dot rocks  expanded",
 		])
