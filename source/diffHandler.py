@@ -3,6 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2020 Bill Dengler
 
+import config
 import globalVars
 import os
 import struct
@@ -163,6 +164,25 @@ class Difflib(DiffAlgo):
 
 	def _getText(self, ti: TextInfo) -> str:
 		return "\n".join(ti.getTextInChunks(UNIT_LINE))
+
+
+def get_dmp_algo():
+	"""
+		This property controls which diff algorithm is used. The default
+		implementation returns either diffHandler.dmp or diffHandler.difflib
+		based on user preference. Subclasses can override this property to
+		choose a diffAlgo object (overriding user preference)
+		if one is incompatible with a particular application.
+		As of NVDA 2020.4, diffHandler.dmp is experimental. Therefore,
+		subclasses should either use the base implementation to check the
+		user config, or return diffHandler.difflib
+		to forcibly use Difflib.
+	"""
+	return (
+		dmp
+		if config.conf["terminals"]["diffAlgo"] == "dmp"
+		else difflib
+	)
 
 
 difflib = Difflib()

@@ -266,22 +266,7 @@ class LiveText(NVDAObject):
 		self._event.set()
 
 	def _get_diffAlgo(self):
-		"""
-			This property controls which diff algorithm is used. The default
-			implementation returns either diffHandler.dmp or diffHandler.difflib
-			based on user preference. Subclasses can override this property to
-			choose a diffAlgo object (overriding user preference)
-			if one is incompatible with a particular application.
-			As of NVDA 2020.4, diffHandler.dmp is experimental. Therefore,
-			subclasses should either use the base implementation to check the
-			user config, or return diffHandler.difflib
-			to forcibly use Difflib.
-		"""
-		return (
-			diffHandler.dmp
-			if config.conf["terminals"]["diffAlgo"] == "dmp"
-			else diffHandler.difflib
-		)
+		return diffHandler.get_dmp_algo()
 
 	def _get_devInfo(self):
 		info = super().devInfo
