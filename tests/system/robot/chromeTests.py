@@ -241,11 +241,20 @@ def test_ariaTreeGrid_browseMode():
 			<iframe src="{testFile}" />
 		"""
 	)
-	# Jump to the heading in the aria treegrid iframe
+	# Jump to the first heading in the iframe.
 	actualSpeech = _chrome.getSpeechAfterKey("h")
 	_asserts.strings_match(
 		actualSpeech,
 		"frame  main landmark  Treegrid Email Inbox Example  heading  level 1"
+	)
+	# Tab to the first link.
+	# This ensures that focus is totally within the iframe
+	# so as to not cause focus to hit the iframe's document
+	# when entering focus mode on the treegrid later.
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		"issue 790.  link"
 	)
 	# Jump to the ARIA treegrid with the next table quicknav command.
 	# The browse mode caret will be inside the table on the caption before the first row.
@@ -273,10 +282,6 @@ def test_ariaTreeGrid_browseMode():
 		"\n".join([
 			# focus mode turns on
 			"Focus mode",
-			# focus enters the document inside the iframe
-			"Treegrid Email Inbox Example   WAI ARIA Authoring Practices 1.2  document",
-			# Focus enters the main landmark
-			"main landmark",
 			# Focus enters the ARIA treegrid (table)
 			"Inbox  table",
 			# Focus lands on row 2
