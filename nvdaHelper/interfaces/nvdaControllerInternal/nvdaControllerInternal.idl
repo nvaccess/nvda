@@ -47,10 +47,9 @@ interface NvdaControllerInternal {
 
 /**
  * Notifies NVDA that a character has been typed in this thread.
- * @param threadID the thread the layout change occured in
  * @param ch the character typed.
  */
-	error_status_t __stdcall typedCharacterNotify([in] const long threadID, [in] const wchar_t ch);
+	error_status_t __stdcall typedCharacterNotify([in] const wchar_t ch);
 
 /**
  * Notifies NVDA that text in the given rectangle (in screen coordinates), in the given window, has changed.

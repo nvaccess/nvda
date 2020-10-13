@@ -13,6 +13,12 @@ import winKernel
 import config
 
 from ctypes import *
+from ctypes import (
+	WINFUNCTYPE,
+	c_long,
+	c_wchar,
+	windll,
+)
 from ctypes.wintypes import *
 from comtypes import BSTR
 import winUser
@@ -24,11 +30,11 @@ from logHandler import log
 import time
 import globalVars
 
-versionedLibPath='lib'
+versionedLibPath = os.path.join(globalVars.appDir, 'lib')
 if os.environ.get('PROCESSOR_ARCHITEW6432') == 'ARM64':
-	versionedLib64Path = 'libArm64'
+	versionedLib64Path = os.path.join(globalVars.appDir, 'libArm64')
 else:
-	versionedLib64Path = 'lib64'
+	versionedLib64Path = os.path.join(globalVars.appDir, 'lib64')
 if getattr(sys,'frozen',None):
 	# Not running from source. Libraries are in a version-specific directory
 	versionedLibPath=os.path.join(versionedLibPath,versionInfo.version)
@@ -394,8 +400,9 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	queueHandler.queueFunction(queueHandler.eventQueue,ui.message,msg)
 	return 0
 
-@WINFUNCTYPE(c_long,c_long,c_wchar)
-def nvdaControllerInternal_typedCharacterNotify(threadID,ch):
+
+@WINFUNCTYPE(c_long, c_wchar)
+def nvdaControllerInternal_typedCharacterNotify(ch):
 	focus=api.getFocusObject()
 	if focus.windowClassName!="ConsoleWindowClass":
 		eventHandler.queueEvent("typedCharacter", focus, ch=ch)
@@ -504,8 +511,15 @@ def initialize():
 	if config.isAppX:
 		log.info("Remote injection disabled due to running as a Windows Store Application")
 		return
-	#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-	h=windll.kernel32.LoadLibraryExW(os.path.abspath(os.path.join(versionedLibPath,u"nvdaHelperRemote.dll")),0,0x8)
+	# Load nvdaHelperRemote.dll
+	h = windll.kernel32.LoadLibraryExW(
+		os.path.join(versionedLibPath, "nvdaHelperRemote.dll"),
+		0,
+		# Using an altered search path is necessary here
+		# As NVDAHelperRemote needs to locate dependent dlls in the same directory
+		# such as minhook.dll.
+		winKernel.LOAD_WITH_ALTERED_SEARCH_PATH
+	)
 	if not h:
 		log.critical("Error loading nvdaHelperRemote.dll: %s" % WinError())
 		return

@@ -1,9 +1,10 @@
-#browseMode.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2018 NV Access Limited, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2020 NV Access Limited, Babbage B.V., James Teh, Leonard de Ruijter,
+# Thomas Stivers
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
+import os
 import itertools
 import collections
 import winsound
@@ -38,8 +39,11 @@ import api
 import gui.guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from NVDAObjects import NVDAObject
+import gui.contextHelp
 from abc import ABCMeta, abstractmethod
+import globalVars
 from typing import Optional
+
 
 REASON_QUICKNAV = OutputReason.QUICKNAV
 
@@ -52,8 +56,8 @@ def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 	"""
 	if not onlyIfChanged or treeInterceptor.passThrough != reportPassThrough.last:
 		if config.conf["virtualBuffers"]["passThroughAudioIndication"]:
-			sound = r"waves\focusMode.wav" if treeInterceptor.passThrough else r"waves\browseMode.wav"
-			nvwave.playWaveFile(sound)
+			sound = "focusMode.wav" if treeInterceptor.passThrough else "browseMode.wav"
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", sound))
 		else:
 			if treeInterceptor.passThrough:
 				# Translators: The mode to interact with controls in documents
@@ -883,7 +887,12 @@ qn(
 del qn
 
 
-class ElementsListDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog):
+class ElementsListDialog(
+		DpiScalingHelperMixinWithoutInit,
+		gui.contextHelp.ContextHelpMixin,
+		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+):
+	helpId = "ElementsList"
 	ELEMENT_TYPES = (
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
@@ -1323,18 +1332,24 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			if not obj:
 				log.debugWarning("Invalid NVDAObjectAtStart")
 				return
-			followBrowseModeFocus= config.conf["virtualBuffers"]["autoFocusFocusableElements"]
 			if obj==self.rootNVDAObject:
 				return
-			if followBrowseModeFocus:
-				if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
-					focusObj.setFocus()
 			obj.scrollIntoView()
 			if self.programmaticScrollMayFireEvent:
 				self._lastProgrammaticScrollTime = time.time()
-		self.passThrough=self.shouldPassThrough(focusObj,reason=reason)
-		# Queue the reporting of pass through mode so that it will be spoken after the actual content.
-		queueHandler.queueFunction(queueHandler.eventQueue, reportPassThrough, self)
+		if focusObj:
+			self.passThrough = self.shouldPassThrough(focusObj, reason=reason)
+			if (
+				not eventHandler.isPendingEvents("gainFocus")
+				and focusObj != self.rootNVDAObject
+				and focusObj != api.getFocusObject()
+				and self._shouldSetFocusToObj(focusObj)
+			):
+				followBrowseModeFocus = config.conf["virtualBuffers"]["autoFocusFocusableElements"]
+				if followBrowseModeFocus or self.passThrough:
+					focusObj.setFocus()
+			# Queue the reporting of pass through mode so that it will be spoken after the actual content.
+			queueHandler.queueFunction(queueHandler.eventQueue, reportPassThrough, self)
 
 	def _shouldSetFocusToObj(self, obj):
 		"""Determine whether an object should receive focus.

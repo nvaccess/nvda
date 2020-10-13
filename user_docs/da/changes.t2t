@@ -4,33 +4,58 @@ Nyheder i NVDA
 
 %!includeconf: ../changes.t2tconf
 
-= 2020.1 =
-Af væsentlige ændringer i denne udgave af NVDA kan nævnes understøttelse af nogle punktdisplays fra HumanWare og APH, samt mange andre vigtige fejlrettelser som den tilbagevendende evne til at læse matematisk indhold i Microsoft Word ved brug af MathPlayer/MathType.
+= 2020.3 =
+Af væsentlige ændringer i denne udgave af NVDA kan nævnes flere markante forbedringer især til Microsoft Office. Der er nu indstillinger, der lader dig slå understøttelse for berøringsinteraktion til og fra og grafikelementer. Markeret (fremhævet) indhold kan nu oplyses i browsere, og der er nye tyske punkttabeller.
 
 == Nye funktioner ==
-- Det aktuelt valgte emne i listbokse vises nu i gennemsynstilstand i Google Chrome, lignende fremgangsmåden i NVDA 2019.1. (#10713)
-- Du kan nu udføre et højre klik på touch-enheder ved at trykke med en finger og holde nede. (#3886)
-- Understøttelse for nye punktdisplays: APH Chameleon 20, APH Mantis Q40, HumanWare BrailleOne, BrailleNote Touch v2, og NLS eReader. (#10830)
-
+- Du kan nu slå rapportering af grafik til og fra i NVDAs dokumentformateringsindstillinger. Bemærk, at NVDA fortsat vil oplyse grafikelementer med alternativ tekst. (#4837)
+- Du kan nu slå understøttelse for berøringsinteraktion til og fra. Dette gøres under "Berøringsinteraktion" i NVDAs indstillingspanel. Tastaturkommandoen er NVDA+control+alt+t. (#9682)
+- Tilføjet nye tyske punkttabeller. (#11268)
+- NVDA opfanger nu skrivebeskyttede UIA-kontrolelementer. (#10494)
+- Markeret (fremhævet) tekst rapporteres nu både med tale og punktskrift i alle browsere. (#11436)
+ - Dette kan slås fra under "Dokumentformatering" med den nye indstilling for markeret tekst.
+- Nye emulerede systemtaster kan tildeles under NVDAs dialog til håndtering af kommandoer. (#6060)
+  - For at gøre dette, skal du vælge "Tilføj" efter du har valgt kategorien "Emulerede tastaturtryk".
+- Handy Tech Active Braille med joystick er nu understøttet. (#11655)
+- Indstillingerne "Automatisk fokustilstand ved flytning af systemmarkør" og "Placer automatisk systemfokus på fokuserbare elementer i gennemsynstilstand" er nu kompatible med hinanden. (#11655)
 
 == Ændringer ==
-- NVDA vil forhindre systemet i at låse eller slumre, når funktionen "sig alt" er aktiv. (#10643)
-- Understøttelse for iframes in Mozilla Firefox, der ikke håndteres af den oprindelig proces der gengiver indholdet. (#10707)
-- Opdaterede LibLouis punktoversættelse til version 3.12. (#10161)
+- Scriptet til rapportering af tekstformatering (NVDA+f) vil nu rapportere tekstformateringen for systemmarkørens aktuelle position i stedet for ved læsemarkøren. For at få oplyst tekstformatering ved læsemarkørens aktuelle position, skal du trykke NVDA+shift+F. (#9505)
+- NVDA flytter ikke længere systemfokus til fokuserbare elementer som standard i gennemsynstilstand, hvilket vil forbedre ydeevne og stabilitet. (#11190)
+- CLDR opdateret fra version 36.1 til version 37. (#11303)
+- Opdaterede eSpeak-NG til 1.51-dev, commit 1fb68ffffea4
+- Du kan nu benytte kommandoer til navigering i tabeller, hvis du er i en listboks med flere listelementer der kan markeres, såfremt den pågældende liste har flere kolonner. (#8857)
+- Når du skal bekræfte om du vil slette en tilføjelse, vil "Nej" nu være standardknappen. (#10015)
+- NVDAs Elementlist i Microsoft Excel vil nu vise formularer i deres lokaliserede format. (#9144)
+- NVDA benytter nu den korrekte terminologi i Microsoft Excel. (#11311)
+- Når du bruger kommandoen til at flytte læsemarkøren til fokus, vil læsemarkøren nu befinde sig ved den virtuelle markørs aktuelle position. (#9622)
+- Informationer oplyst i gennemsynstilstand, eksempelvis tekstformateringsoplysningerne med NVDA+F, vises nu i et større vindue centreret på skærmen. (#9910)
 
 
 == Fejlrettelser ==
-- NVDA annoncérer nu korrekt Unicode minus symbol (U+2212). (#10633)
-- Når du installerer tilføjelser ved hjælp af dialogen til styring af tilføjelser, vil navne og filmapper ikke længere annoncéres to gange, når du leder efter filen ved brug af knappen "Installér". (#10620, #2395)
-- Når du indlæser Mastodon med det avancerede webinterface, vil alle tidslinjer nu gengives korrekt, når du bruger Mozilla Firefox. (#10776)
-- NVDA vil nu korrekt rapportere "ikke markeret" for nogle check boxe, hvor dette ikke før var tilfældet i gennemsynstilstand. (#10781)
-- ARIA-skifteknapper rapporterer ikke længere forvirrende information, såsom "ikke trykket markeret" eller "trykket markeret". (#9187)
-- SAPI4-stemmer skulle nu udtale al tekst. (#10792)
-- NVDA kan nu igen læse og interagere med matematiske udtryk i Microsoft Word. (#10803)
-- NVDA vil nu igen annoncére, hvis tekst ikke længere er valgt, når du har valgt tekst og derefter bruger piletasterne i gennemsynstilstand. (#10731).
-- NVDA vil ikke længere afslutte, hvis der er en fejl under initialisering af eSpeak. (#10607)
-- Fejl forårsaget af Unicode-tegn i tastaturgenveje, der er en del af installationsprocessen, vil ikke længere forhindre installationen. Løst ved at benytte den engelske tekst i disse tilfælde. (#5166, #6326)
-- Konstante meddelelser om at du har navigeret ind i eller forladt en liste eller tabel vil ikke længere opstå under skimlæsning, når du bruger kommandoen "Sig alt". (#10706)
+- NVDA vil nu altid tale, når der navigeres efter ord og man lander på et symbol efterfulgt af et blanktegn uanset tegnsætningsniveau. (#5133)
+- Objektbeskrivelser rapporteres nu igen i applikationer, der bruger QT 5.11 eller nyere. (#8604)
+- Når et ord slettes med control+delete, vil NVDA ikke længere forblive stille. (#3298, #11029)
+  - Ordet til højre for det slettede ord vil blive oplyst.
+- Listen over sprog i NVDAs generelle indstillinger er nu sorteret korrekt. (#10348)
+-Markant forbedret ydeevne i dialogen til håndtering af kommandoer, når der filtreres. (#10307)
+- Du kan nu sende andre Unicode-tegn end U+FFFF fra et punktdisplay. (#10796)
+- NVDA vil nu korrekt rapportere indholdet af dialoger, når du skal åbne en fil uden tilknyttet program i Windows 10 Maj 2020 opdateringen. (#11335)
+- En ny eksperimentel avanceret indstilling (Aktivér selektiv registrering af hændelser fra UI Automation samt egenskabsændringer) kan forbedre ydeevnen i Microsoft Visual Studio og andre UI Automation-baserede programmer meget markant. (#11077, #11209)
+- For markérbare listemner vil status for emnet ikke længere blive annonceret, når det forekommer overflødigt. Hvis gældende, vil "ikke markeret" blive annonceret i stedet. (#8554)
+- NVDA vil nu vise Microsoft Sound Mapper, når du vælger lydenhed i dialogen til valg af talesyntese i Windows 10 May Update 2020. (#11349)
+- NVDA vil nu korrekt oplyse numre for en nummereret liste i Internet Explorer, hvis listen ikke starter med 1. (#8438)
+- NVDA vil nu rapportere "ikke markeret" for alle markérbare kontrolelementer (ikke bare check bokse) der ikke er markerede i Google Chrome. (#11377)
+- Det er nu igen muligt at bevæge sig rundt i diverse kontrolelementer, hvis NVDAs sprog er indstillet til aragonsk. (#11384)
+- NVDA skulle ikke længere fryse, når man hurtigt piler sig op eller ned i dokumenter, eller indtaster tegn med punktskrift aktiveret. (#11431, #11425, #11414)
+- NVDA vil ikke længere tilføje et ikke-eksisterende mellemrum til teksten, når navigatorobjektet kopieres til udklipsholderen. (#11438)
+- NVDA aktiverer ikke længere profilen til sig alt, hvis der ikke er noget at læse. (#10899, #9947)
+- NVDA er nu i stand til at læse funktionslisten i Internet Information Services (IIS) Manager. (#11468)
+- NVDA beholder nu lydenheden åben til bedre modtagelse af lyd på nogle lydkort. (#5172, #10721)
+- NVDA vil ikke længere fryse eller afslutte, når man holder Ctrl+Shift+Pil ned nede i Microsoft Word. (#9463)
+- Status for mapperne (sammenfoldet eller udvidet) på drive.google.com er nu altid oplyst af NVDA. (#11520)
+- NVDA vil automatisk tilkoble punktdisplayet NLS eReader Humanware via Bluetooth da Bluetooth-navnet nu er omdøbt til "NLS eReader Humanware". (#11561)
+- Markante forbedringer til ydeevnen, når du bruger Visual Studio Code. (#11533)
 
 
 == Ændringer for udviklere ==

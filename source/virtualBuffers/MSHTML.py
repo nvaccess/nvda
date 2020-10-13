@@ -37,8 +37,6 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			attrs['revision-insertion']=True
 		if formatState&FORMATSTATE_DELETED:
 			attrs['revision-deletion']=True
-		if formatState&FORMATSTATE_MARKED:
-			attrs['marked']=True
 		if formatState&FORMATSTATE_STRONG:
 			attrs['strong']=True
 		if formatState&FORMATSTATE_EMPH:
