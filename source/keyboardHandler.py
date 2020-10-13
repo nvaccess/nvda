@@ -322,10 +322,6 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	"""A key pressed on the traditional system keyboard.
 	"""
 
-	#: the number of times this gesture instance has been sent as input
-	# I.e. Gesture.send was called.
-	sendCount = 0
-
 #: All normal modifier keys, where modifier vk codes are mapped to a more general modifier vk code
 # or C{None} if not applicable.
 	#: @type: dict
@@ -503,17 +499,21 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			state=_("on") if toggleState else _("off")))
 
 	def executeScript(self, script):
-		super().executeScript(script)
-		if self.sendCount == 0 and canModifiersPerformAction(self.generalizedModifiers):
+		if canModifiersPerformAction(self.generalizedModifiers):
 			# #3472: These modifiers can perform an action if pressed alone
 			# and we've just totally consumed the main key.
 			# Send special reserved vkcode VK_NONE (0xff)
 			# to at least notify the app's key state that something happened.
 			# This allows alt and windows to be bound to scripts and
 			# stops control+shift from switching keyboard layouts in cursorManager selection scripts.
+			# This must be done before executing the script,
+			# As if the script takes a long time and the user releases these modifier keys before the script finishes,
+			# it is already too late.
 			with ignoreInjection():
 				winUser.keybd_event(winUser.VK_NONE, 0, 0, 0)
 				winUser.keybd_event(winUser.VK_NONE, 0, winUser.KEYEVENTF_KEYUP, 0)
+		# Now actually execute the script.
+		super().executeScript(script)
 
 	def send(self):
 		keys = []
@@ -547,7 +547,6 @@ class KeyboardInputGesture(inputCore.InputGesture):
 				# has been injected and NVDA has received and processed it.
 				time.sleep(0.01)
 				wx.Yield()
-		self.sendCount += 1
 
 	@classmethod
 	def fromName(cls, name):

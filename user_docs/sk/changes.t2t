@@ -3,6 +3,62 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.3 =
+Prednosti tejto verzie zahŕňajú zrýchlenie odozvy v aplikáciách Microsoft Office. Tiež boli pridané možnosti zapnúť a vypnúť oznamovanie grafiky a zapnúť a vypnúť dotykové gestá.
+Pridali sme tiež nové nemecké braillovské tabuľky a oznamovanie označeného textu vo webových prehliadačoch.
+
+== nové vlastnosti ==
+- V nastaveniach čítania textu je odteraz možné zapnúť a vypnúť oznamovanie grafiky. NVDA bude naďalej v oboch prípadoch oznamovať alternatívny text. (#4837)
+- V nastaveniach dotykovej obrazovky je možné zapnúť a vypnúť podporu pre dotykové gestá. Nastavenie je možné meniť aj skratkou nvda+ctrl+alt+t. (#9682)
+- Pridané nové braillovské tabuľky pre Nemčinu. (#11268)
+- NVDA odteraz správne rozpoznáva UIA prvky, ktoré majú atribút len na čítanie. (#10494)
+- NVDA odteraz dokáže upozorniť na text, ktorý tvorcovia stránky vyznačili. Funguje to vo všetkých webových prehliadačoch. (#11436)
+ - Oznamovanie je možné zapnúť a vypnúť v nastaveniach čítania textu.
+- V dialógu klávesové skratky je možné pridávať emulované klávesové skratky. (#6060)
+ - Ak chcete pridať skratku, vyberte vetvu emulované klávesy a aktivujte tlačidlo pridať.
+- Pridaná podpora pre joystick v braillovských riadkoch Handy Tech. (#11655)
+- Nastavenie "Automaticky  aktivovať režim fokusu pri pohybe kurzorom" funguje správne v kombinácii s vypnutým nastavením "automaticky presúvať fokus na zamerané prvky". (#11663)
+
+
+== Zmeny ==
+- Skratka nvda+F odteraz oznamuje vždy formátovanie na pozícii systémového kurzora. Ak potrebujete zistiť formátovanie textu pod prezeracím kurzorom, použite novú skratku nvda+shift+f. (#9505)
+- NVDA odteraz automaticky nezameriava prvky, ktoré je možné zamerať. Toto zrýchľuje odozvu a nastavenie je možné v prípade potreby zmeniť. (#11190)
+- Tabuľka CLDR aktualizovaná z verzie 36.1 na verziu  37. (#11303)
+- Hlasový výstup eSpeak-NG aktualizovaný na verziu  1.51-dev, commit 1fb68ffffea4
+- V zoznamoch so začiarkávacími poliami odteraz správne fungujú príkazy na navigáciu po tabuľkách. (#8857)
+- V dialógu pri odstraňovaní doplnku je teraz predvolená možnosť nie. (#10015)
+- V aplikácii MS Excel sú v zozname prvkov oznamované vzorce v správnom jazyku. (#9144)
+- NVDA odteraz pri oznamovaní poznámok v MS Excely používa správnu terminológiu. (#11311)
+- Pri presunutí prezeracieho kurzora na fokus sa kurzor presunie na správne miesto kde je virtuálny systémový kurzor. (#9622)
+- Informácie, ktoré sa zobrazujú v režime prehliadania, ako napríklad informácia o formátovaní, sú zobrazené vo väčšom a vycentrovanom okne. (#9910)
+
+
+== opravy ==
+- Ak pri navigácii po slovách narazíte na symbol nasledovaný bielym znakom, NVDA tento symbol oznámy bez ohľadu na úroveň interpunkcie. (#5133)
+- NVDA opäť oznamuje popisky objektov v aplikáciách využívajúcich QT od verzie 5.11. (#8604)
+- Pri odstránení slova skratkou ctrl+delete NVDA nie je viac ticho. (#3298, #11029)
+ - Odteraz oznamuje nasledujúce slovo od práve zmazaného slova.
+- Vo všeobecných nastaveniach je odteraz správne zoradený zoznam jazykov. (#10348)
+- Zrýchlená odozva pri filtrovaní v dialógu klávesové skratky. (#10307)
+- Z braillovských riadkov je odteraz možné odosielať aj znaky pod hranicou unicode U+FFFF. (#10796)
+- NVDA oznamuje prvky v dialógu Otvoriť v programe v májovej aktualizácii Windows 10. (#11335)
+- V časti pokročilé nastavenia pribudla možnosť Sledovať zmeny a udalosti UI Automation len pre zamerané prvky. Jej zapnutie môže zrýchlyť prácu v Microsoft Visual Studio a iných UIAutomation aplikáciách. (#11077, #11209)
+- Pri položkách, ktoré je možné začiarknuť a odčiarknuť, viac NVDA neoznamuje opakovane vybraté alebo nevybraté. Ak je to potrebné, oznamuje stav nevybraté. (#8554)
+- Od Májovej aktualizácie Windows 10 NVDA opäť medzi zvukovými zariadeniami v nastaveniach hlasového výstupu zobrazuje Microsoft soundmapper. (#11349)
+- NVDA správne oznamuje čísla v číslovaných zoznamoch v aplikácii Internet Explorer aj v prípadoch, že prvé číslo zoznamu nie je 1. (#8438)
+- V aplikácii Google Chrome oznamuje NVDA nezačiarknutý stav nie len pre zoznamy, ale pre všetky prvky, ktoré nie sú začiarknuté. (#11377)
+- Opravená navigácia, ktorá nefungovala, ak bol jazyk NVDA nastavený na Aragónčinu. (#11384)
+- NVDA viac nezamrzne pri rýchlom posúvaní alebo písaní v dokumentoch MS Word, ak je aktívne zobrazenie na braillovskom riadku. (#11384)
+- NVDA viac nevkladá medzeru na koniec textu  pri kopírovaní obsahu navigačného objektu do schránky. (#11438)
+- NVDA viac neaktivuje profil plynulé čítanie, ak neexistuje žiadny text na prečítanie. (#10899, #9947)
+- NVDA opäť dokáže čítať zoznam vlastností v aplikácii Internet Information Services (IIS). (#11468)
+- NVDA odteraz necháva na dlhší čas otvorené audio zariadenie, čo zrýchľuje odozvu pri niektorých zvukových kartách. (#5172, #10721)
+- NVDA viac nezamrzne a nespadne pri dlhšom podržaní skratky ctrl+shift+šípka dole v aplikácii MS Word. (#9463)
+- Odteraz je vždy oznamované Rozbalenie a zbalenie priečinkov v Google Drive. (#11520)
+- NVDA odteraz dokáže automaticky nájsť braillovský riadok NLS eReader Humanware  cez Bluetooth, keďže názov zariadenia je teraz  "NLS eReader Humanware". (#11561)
+- Drobné úpravy pre Visual Studio. (#11533)
+
+
 = 2020.2 =
 Prednosti tejto verzie zahŕňajú podporu braillovských riadkov od spoločnosti Nattiq, vylepšenú podporu pre produkty spoločnosti Eset, vylepšenia pri práci s terminálmi v systéme Windows, vylepšenia stability pri práci s aplikáciou 1Password, vylepšenia pre používateľov hlasov Windows Onecore.
 
