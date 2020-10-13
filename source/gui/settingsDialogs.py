@@ -862,7 +862,12 @@ class GeneralSettingsPanel(SettingsPanel):
 		if self.oldLanguage != config.conf["general"]["language"]:
 			LanguageRestartDialog(self).ShowModal()
 
-class LanguageRestartDialog(wx.Dialog):
+class LanguageRestartDialog(
+		gui.ContextHelpMixin,
+		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
+):
+
+	helpId = "GeneralSettingsLanguage"
 
 	def __init__(self, parent):
 		# Translators: The title of the dialog which appears when the user changed NVDA's interface language.

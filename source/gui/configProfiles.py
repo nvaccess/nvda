@@ -227,7 +227,7 @@ class ProfilesDialog(
 		index = self.profileList.Selection
 		oldName = self.profileNames[index]
 		while True:
-			with wx.TextEntryDialog(
+			with RenameProfileDialog(
 				self,
 				# Translators: The label of a field to enter a new name for a configuration profile.
 				_("New name:"),
@@ -534,3 +534,9 @@ class NewProfileDialog(
 			self.profileName.Value = name
 			self.profileName.SelectAll()
 		self.autoProfileName = name
+
+class RenameProfileDialog(
+		gui.ContextHelpMixin,
+		wx.TextEntryDialog,  # wxPython does not seem to call base class initializer, put last in MRO
+):
+	helpId = "ProfilesBasicManagement"

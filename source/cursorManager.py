@@ -29,13 +29,18 @@ from inputCore import SCRCAT_BROWSEMODE
 import ui
 from textInfos import DocumentWithPageTurns
 
-class FindDialog(wx.Dialog):
+class FindDialog(
+		gui.ContextHelpMixin,
+		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
+):
 	"""A dialog used to specify text to find in a cursor manager.
 	"""
+	
+	helpId = "SearchingForText"
 
 	def __init__(self, parent, cursorManager, text, caseSensitivity):
 		# Translators: Title of a dialog to find text.
-		super(FindDialog, self).__init__(parent, wx.ID_ANY, _("Find"))
+		super().__init__(parent, wx.ID_ANY, _("Find"))
 		# Have a copy of the active cursor manager, as this is needed later for finding text.
 		self.activeCursorManager = cursorManager
 		mainSizer = wx.BoxSizer(wx.VERTICAL)

@@ -239,11 +239,17 @@ class InstallerDialog(
 		)
 		incompatibleAddons.ShowModal()
 
-class InstallingOverNewerVersionDialog(wx.Dialog, DpiScalingHelperMixin):
+class InstallingOverNewerVersionDialog(
+		DpiScalingHelperMixinWithoutInit,
+		gui.ContextHelpMixin,
+		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
+):
+	
+	helpId = "InstallingNVDA"
+
 	def __init__(self):
 		# Translators: The title of a warning dialog.
-		wx.Dialog.__init__(self, gui.mainFrame, title=_("Warning"))
-		DpiScalingHelperMixin.__init__(self, self.GetHandle())
+		super().__init__(gui.mainFrame, title=_("Warning"))
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentSizer = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
