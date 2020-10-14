@@ -1846,8 +1846,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	}
 
 	@script(
-		# Translators: the description for the toggleScreenLayout script.
 		description=_(
+			# Translators: the description for the toggleScreenLayout script.
 			"Toggles on and off if the screen layout is preserved while rendering the document content"
 		),
 		gesture="kb:NVDA+v",

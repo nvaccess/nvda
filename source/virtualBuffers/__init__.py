@@ -15,8 +15,8 @@ import wx
 import review
 import NVDAHelper
 import XMLFormatting
-import scriptHandler
 from scriptHandler import script, isScriptWaiting, willSayAllResume
+import scriptHandler
 import speech
 import NVDAObjects
 import api
@@ -540,8 +540,8 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 	script_refreshBuffer.__doc__ = _("Refreshes the document content")
 
 	@script(
-		# Translators: the description for the toggleScreenLayout script on virtualBuffers.
 		description=_(
+			# Translators: the description for the toggleScreenLayout script on virtualBuffers.
 			"Toggles on and off if the screen layout is preserved while rendering the document content"
 		),
 		gesture="kb:NVDA+v",
