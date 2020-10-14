@@ -78,17 +78,6 @@ class NVDASpyLib:
 			self._nvdaSpeech_requiresLock.append(speechSequence)
 
 	@staticmethod
-	def _flattenCommandsSeparatingWithNewline(commandArray):
-		"""
-		Flatten many collections of speech sequences into a single speech sequence. Each original speech sequence
-		is separated by a newline string.
-		@param commandArray: is a collection of speechSequences
-		@return: speechSequence
-		"""
-		f = [c for commands in commandArray for newlineJoined in [commands, [u"\n"]] for c in newlineJoined]
-		return f
-
-	@staticmethod
 	def _getJoinedBaseStringsFromCommands(speechCommandArray) -> str:
 		baseStrings = [c for c in speechCommandArray if isinstance(c, str)]
 		return ''.join(baseStrings).strip()
@@ -103,11 +92,10 @@ class NVDASpyLib:
 		@return: The speech joined together, see L{_getJoinedBaseStringsFromCommands}
 		"""
 		with threading.Lock():
-			speechCommands = self._flattenCommandsSeparatingWithNewline(
-				self._nvdaSpeech_requiresLock[speechIndex:]
-			)
-			joined = self._getJoinedBaseStringsFromCommands(speechCommands)
-			return joined
+			speechCommands = [
+				self._getJoinedBaseStringsFromCommands(x) for x in self._nvdaSpeech_requiresLock[speechIndex:]
+			]
+			return "\n".join(x for x in speechCommands if x and not x.isspace())
 
 	def get_last_speech_index(self) -> int:
 		with threading.Lock():

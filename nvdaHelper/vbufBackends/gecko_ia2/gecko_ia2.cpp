@@ -33,6 +33,20 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
+map<wstring,wstring> createMapOfIA2AttributesFromPacc(IAccessible2* pacc) {
+	map<wstring,wstring> IA2AttribsMap;
+	CComBSTR IA2Attributes;
+	if(pacc->get_attributes(&IA2Attributes) == S_OK) {
+		IA2AttribsToMap(IA2Attributes.m_str,IA2AttribsMap);
+	}
+	return IA2AttribsMap;
+}
+
+bool hasXmlRoleAttribContainingValue(const map<wstring,wstring>& attribsMap, const wstring roleName) {
+	const auto attribsMapIt = attribsMap.find(L"xml-roles");
+	return attribsMapIt != attribsMap.end() && attribsMapIt->second.find(roleName) != wstring::npos;
+}
+
 CComPtr<IAccessible2> GeckoVBufBackend_t::getLabelElement(IAccessible2_2* element) {
 	IUnknown** ppUnk=nullptr;
 	long nTargets=0;
@@ -422,6 +436,16 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	nhAssert(parentNode); //new node must have been created
 	previousNode=NULL;
 
+	//get IA2Attributes -- IAccessible2 attributes;
+	map<wstring,wstring>::const_iterator IA2AttribsMapIt;
+	auto IA2AttribsMap = createMapOfIA2AttributesFromPacc(pacc);
+	// Add all IA2 attributes on the node
+	for(const auto& [key, val]: IA2AttribsMap) {
+		wstring attribName = L"IAccessible2::attribute_";
+		attribName += key;
+		parentNode->addAttribute(attribName, val);
+	}
+
 	//Get role -- IAccessible2 role
 	long role=0;
 	BSTR roleString=NULL;
@@ -438,6 +462,15 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		else if(varRole.vt==VT_BSTR)
 			roleString=varRole.bstrVal;
 	}
+
+	// Specifically force the role of ARIA treegrids from outline to table.
+	// We do this very early on in the rendering so that all our table logic applies.
+	if(role == ROLE_SYSTEM_OUTLINE) {
+		if(hasXmlRoleAttribContainingValue(IA2AttribsMap, L"treegrid")) {
+			role = ROLE_SYSTEM_TABLE;
+		}
+	}
+
 	//Add role as an attrib
 	if(roleString)
 		s<<roleString;
@@ -494,22 +527,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		SysFreeString(keyboardShortcut);
 	} else
 		parentNode->addAttribute(L"keyboardShortcut",L"");
-
-	//get IA2Attributes -- IAccessible2 attributes;
-	BSTR IA2Attributes;
-	map<wstring,wstring> IA2AttribsMap;
-	if(pacc->get_attributes(&IA2Attributes)==S_OK) {
-		IA2AttribsToMap(IA2Attributes,IA2AttribsMap);
-		SysFreeString(IA2Attributes);
-		// Add each IA2 attribute as an attrib.
-		for(map<wstring,wstring>::const_iterator it=IA2AttribsMap.begin();it!=IA2AttribsMap.end();++it) {
-			s<<L"IAccessible2::attribute_"<<it->first;
-			parentNode->addAttribute(s.str(),it->second);
-			s.str(L"");
-		}
-	} else
-		LOG_DEBUG(L"pacc->get_attributes failed");
-	map<wstring,wstring>::const_iterator IA2AttribsMapIt;
 
 	//Check IA2Attributes, and or the role etc to work out if this object is a block element
 	bool isBlockElement=TRUE;
@@ -673,9 +690,10 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	} else {
 		// If a node has children, it's visible.
 		isVisible = width > 0 && height > 0 || childCount > 0;
-		if ((role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY))
-			|| role == ROLE_SYSTEM_OUTLINE
-		) {
+		// Only render the selected item for interactive lists.
+		if (role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY)) {
+			renderSelectedItemOnly = true;
+		} else if(role == ROLE_SYSTEM_OUTLINE) {
 			renderSelectedItemOnly = true;
 		}
 		if (IA2TextIsUnneededSpace
