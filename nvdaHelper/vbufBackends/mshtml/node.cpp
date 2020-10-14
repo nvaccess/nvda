@@ -124,7 +124,15 @@ class CDispatchChangeSink : public IDispatch {
 		if(dispIdMember==DISPID_EVMETH_ONPROPERTYCHANGE||dispIdMember==DISPID_EVMETH_ONLOAD) {
 			this->storageNode->backend->invalidateSubtree(this->storageNode);
 			// Force the update to happen with no delay if we happen to be in a live region
-			if(this->storageNode->ariaLiveNode&&this->storageNode->ariaLiveNode!=this->storageNode&&!this->storageNode->ariaLiveIsBusy&&(this->storageNode->ariaLiveIsTextRelevant||this->storageNode->ariaLiveIsAdditionsRelevant)) {
+			if (
+				this->storageNode->ariaLiveNode
+				&& this->storageNode->ariaLiveNode != this->storageNode
+				&& !this->storageNode->ariaLiveIsBusy
+				&& (
+					this->storageNode->ariaLiveIsTextRelevant
+					|| this->storageNode->ariaLiveIsAdditionsRelevant
+				)
+			) {
 				this->storageNode->backend->forceUpdate();
 			}
 			return S_OK;
@@ -266,7 +274,15 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 			this->storageNode->backend->invalidateSubtree(invalidNode);
 			MshtmlVBufStorage_controlFieldNode_t* invalidMshtmlNode=(MshtmlVBufStorage_controlFieldNode_t*)invalidNode;
 			// Force the update to happen with no delay if we happen to be in a live region
-			if(invalidMshtmlNode->ariaLiveNode&&invalidMshtmlNode->ariaLiveNode!=invalidMshtmlNode&&!invalidMshtmlNode->ariaLiveIsBusy&&(invalidMshtmlNode->ariaLiveIsTextRelevant||invalidMshtmlNode->ariaLiveIsAdditionsRelevant)) {
+			if (
+				invalidMshtmlNode->ariaLiveNode
+				&& invalidMshtmlNode->ariaLiveNode != invalidMshtmlNode
+				&& !invalidMshtmlNode->ariaLiveIsBusy
+				&& (
+					invalidMshtmlNode->ariaLiveIsTextRelevant
+					|| invalidMshtmlNode->ariaLiveIsAdditionsRelevant
+				)
+			) {
 				this->storageNode->backend->forceUpdate();
 			}
 		}
@@ -355,12 +371,12 @@ MshtmlVBufStorage_controlFieldNode_t::~MshtmlVBufStorage_controlFieldNode_t() {
 void MshtmlVBufStorage_controlFieldNode_t::preProcessLiveRegion(const MshtmlVBufStorage_controlFieldNode_t* parent, const std::map<std::wstring,std::wstring>& attribsMap) {
 	auto i=attribsMap.find(L"HTMLAttrib::aria-live");
 	if(i!=attribsMap.end()&&!i->second.empty()) {
-		this->ariaLiveNode=((i->second.compare(L"polite")==0)||(i->second.compare(L"assertive")==0))?this:NULL;
+		this->ariaLiveNode = ((i->second.compare(L"polite") == 0) || (i->second.compare(L"assertive") == 0)) ? this : nullptr;
 		this->ariaLivePoliteness = i->second;
 	} else {
-		this->ariaLiveNode=parent?parent->ariaLiveNode:NULL;
+		this->ariaLiveNode = parent? parent->ariaLiveNode : nullptr;
 		if (this->ariaLiveNode) {
-			this->ariaLivePoliteness = static_cast<MshtmlVBufStorage_controlFieldNode_t*>(this->ariaLiveNode)->ariaLivePoliteness;
+			this->ariaLivePoliteness = this->ariaLiveNode->ariaLivePoliteness;
 		} else {
 			this->ariaLivePoliteness = nullptr;
 		}
@@ -390,7 +406,7 @@ void MshtmlVBufStorage_controlFieldNode_t::preProcessLiveRegion(const MshtmlVBuf
 	} else {
 		this->ariaLiveAtomicNode=parent?parent->ariaLiveAtomicNode:NULL;
 	}
-	//LOG_INFO(L"preProcessLiveRegion: ariaLiveNode "<<ariaLiveNode<<L", ariaLiveIsTextRelevant "<<ariaLiveIsTextRelevant<<L", ariaLiveIsAdditionsRelevant "<<ariaLiveIsAdditionsRelevant<<L", ariaLiveIsBusy "<<ariaLiveIsBusy<<L", ariaLiveAtomicNode "<<ariaLiveAtomicNode);
+	LOG_DEBUG(L"preProcessLiveRegion: ariaLiveNode "<<ariaLiveNode<<L", ariaLiveIsTextRelevant "<<ariaLiveIsTextRelevant<<L", ariaLiveIsAdditionsRelevant "<<ariaLiveIsAdditionsRelevant<<L", ariaLiveIsBusy "<<ariaLiveIsBusy<<L", ariaLiveAtomicNode "<<ariaLiveAtomicNode);
 }
 
 void MshtmlVBufStorage_controlFieldNode_t::reportLiveText(wstring& text, wstring& politeness) {
@@ -405,7 +421,7 @@ void MshtmlVBufStorage_controlFieldNode_t::reportLiveText(wstring& text, wstring
 bool isNodeInLiveRegion(VBufStorage_fieldNode_t* node) {
 	if(!node) return false;
 	if(node->getFirstChild()) {
-		return ((MshtmlVBufStorage_controlFieldNode_t*)node)->ariaLiveNode!=NULL;
+		return ((MshtmlVBufStorage_controlFieldNode_t*)node)->ariaLiveNode != nullptr;
 	}
 	return true;
 }
@@ -417,9 +433,11 @@ void MshtmlVBufStorage_controlFieldNode_t::reportLiveAddition() {
 }
 
 void MshtmlVBufStorage_controlFieldNode_t::postProcessLiveRegion(VBufStorage_controlFieldNode_t* oldNode, set<VBufStorage_controlFieldNode_t*>& atomicNodes) {
-	//LOG_INFO(L"preProcessLiveRegion: ariaLiveNode "<<ariaLiveNode<<L", ariaLiveIsTextRelevant "<<ariaLiveIsTextRelevant<<L", ariaLiveIsAdditionsRelevant "<<ariaLiveIsAdditionsRelevant<<L", ariaLiveIsBusy "<<ariaLiveIsBusy<<L", ariaLiveAtomicNode "<<ariaLiveAtomicNode);
-	if(!this->ariaLiveNode||this->ariaLiveIsBusy) return;
-	bool reportNode=!oldNode&&this->ariaLiveIsAdditionsRelevant&&this->ariaLiveNode!=this;
+	LOG_DEBUG(L"postProcessLiveRegion: ariaLiveNode "<<ariaLiveNode<<L", ariaLiveIsTextRelevant "<<ariaLiveIsTextRelevant<<L", ariaLiveIsAdditionsRelevant "<<ariaLiveIsAdditionsRelevant<<L", ariaLiveIsBusy "<<ariaLiveIsBusy<<L", ariaLiveAtomicNode "<<ariaLiveAtomicNode);
+	if (!this->ariaLiveNode || this->ariaLiveIsBusy) {
+		return;
+	}
+	bool reportNode=!oldNode && this->ariaLiveIsAdditionsRelevant && this->ariaLiveNode != this;
 	wstring newChildrenText;
 	if(!reportNode&&oldNode&&ariaLiveIsTextRelevant) {
 		// Find the first new text child
