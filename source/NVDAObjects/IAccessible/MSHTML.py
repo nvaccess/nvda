@@ -1039,7 +1039,11 @@ class MSHTML(IAccessible):
 
 	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
 		politeness = self.HTMLAttributes["aria-live"] or "off"
-		return aria.AriaLivePoliteness.parseFromString(politeness)
+		try:
+			return aria.AriaLivePoliteness(politeness.lower())
+		except ValueError:
+			log.error(f"Unknown live politeness of {politeness}", exc_info=True)
+			super().liveRegionPoliteness
 
 	def event_liveRegionChange(self):
 		# MSHTML live regions are currently handled with custom code in-process

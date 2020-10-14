@@ -134,7 +134,7 @@ def nvdaControllerInternal_reportLiveRegion(text, politeness):
 	from aria import AriaLivePoliteness
 	from speech.priorities import Spri
 	try:
-		politenessValue = AriaLivePoliteness.parseFromString(politeness)
+		politenessValue = AriaLivePoliteness(politeness.lower())
 	except ValueError:
 		log.error(f"nvdaControllerInternal_reportLiveRegion got unknown politeness of {politeness}", exc_info=True)
 		return -1
