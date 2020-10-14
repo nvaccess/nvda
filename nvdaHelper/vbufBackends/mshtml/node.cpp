@@ -371,7 +371,8 @@ MshtmlVBufStorage_controlFieldNode_t::~MshtmlVBufStorage_controlFieldNode_t() {
 void MshtmlVBufStorage_controlFieldNode_t::preProcessLiveRegion(const MshtmlVBufStorage_controlFieldNode_t* parent, const std::map<std::wstring,std::wstring>& attribsMap) {
 	auto i=attribsMap.find(L"HTMLAttrib::aria-live");
 	if(i!=attribsMap.end()&&!i->second.empty()) {
-		this->ariaLiveNode = ((i->second.compare(L"polite") == 0) || (i->second.compare(L"assertive") == 0)) ? this : nullptr;
+		bool isAriaLiveEnabled = i->second == L"polite" || i->second == L"assertive";
+		this->ariaLiveNode = isAriaLiveEnabled ? this : nullptr;
 		this->ariaLivePoliteness = i->second;
 	} else {
 		this->ariaLiveNode = parent? parent->ariaLiveNode : nullptr;
