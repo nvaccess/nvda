@@ -16,7 +16,7 @@ import review
 import NVDAHelper
 import XMLFormatting
 import scriptHandler
-from scriptHandler import isScriptWaiting, willSayAllResume
+from scriptHandler import script, isScriptWaiting, willSayAllResume
 import speech
 import NVDAObjects
 import api
@@ -539,6 +539,13 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 	# Translators: the description for the refreshBuffer script on virtualBuffers.
 	script_refreshBuffer.__doc__ = _("Refreshes the document content")
 
+	@script(
+		# Translators: the description for the toggleScreenLayout script on virtualBuffers.
+		description=_(
+			"Toggles on and off if the screen layout is preserved while rendering the document content"
+		),
+		gesture="kb:NVDA+v",
+	)
 	def script_toggleScreenLayout(self,gesture):
 		config.conf["virtualBuffers"]["useScreenLayout"]=not config.conf["virtualBuffers"]["useScreenLayout"]
 		if config.conf["virtualBuffers"]["useScreenLayout"]:
@@ -547,8 +554,6 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		else:
 			# Translators: Presented when use screen layout option is toggled.
 			ui.message(_("Use screen layout off"))
-	# Translators: the description for the toggleScreenLayout script on virtualBuffers.
-	script_toggleScreenLayout.__doc__ = _("Toggles on and off if the screen layout is preserved while rendering the document content")
 
 	def _searchableAttributesForNodeType(self,nodeType):
 		pass
