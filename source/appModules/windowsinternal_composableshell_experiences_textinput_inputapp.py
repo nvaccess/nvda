@@ -119,14 +119,17 @@ class AppModule(appModuleHandler.AppModule):
 		# However, in recent builds, name change event is also fired.
 		# For consistent experience, report the new category first by traversing through controls.
 		# #8189: do not announce candidates list itself (not items), as this is repeated each time candidate items are selected.
-		if obj.UIAElement.cachedAutomationID == "CandidateList": return
+		if obj.UIAElement.cachedAutomationID == "CandidateList":
+			return
 		speech.cancelSpeech()
 		# Sometimes, due to bad tree traversal or wrong item getting selected, something other than the selected item sees this event.
 		# In build 18262, emoji panel may open to People group and skin tone modifier gets selected.
 		if obj.parent.UIAAutomationId == "SkinTonePanelModifier_ListView":
 			# But this will point to nothing if emoji search results are not people.
-			if obj.parent.next is not None: obj = obj.parent.next
-			else: obj = obj.parent.parent.firstChild
+			if obj.parent.next is not None:
+				obj = obj.parent.next
+			else:
+				obj = obj.parent.parent.firstChild
 		candidate = obj
 		if obj and obj.UIAElement.cachedClassName == "ListViewItem" and obj.parent and isinstance(obj.parent, UIA) and obj.parent.UIAElement.cachedAutomationID != "TEMPLATE_PART_ClipboardItemsList":
 			# The difference between emoji panel and suggestions list is absence of categories/emoji separation.
@@ -191,8 +194,8 @@ class AppModule(appModuleHandler.AppModule):
 		# Emoji panel in Version 1809 (specifically, build 17666) and later.
 		elif childAutomationId == "TEMPLATE_PART_ExpressionGroupedFullView":
 			self._emojiPanelJustOpened = True
-			# #10377: on some systems, there is something else besides grouping controls,
-			# so another child control must be used.
+			# #10377: on some systems (particularly non-English builds of Version 1903 and later),
+			# there is something else besides grouping controls, so another child control must be used.
 			emojisList = firstChild.children[-2]
 			if emojisList.UIAAutomationId != "TEMPLATE_PART_Items_GridView":
 				emojisList = emojisList.previous
