@@ -32,8 +32,8 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 		# they are confused for typed characters.
 		# Force difflib to keep meaningful edit reporting in these consoles.
 		if not isinstance(self, KeyboardHandlerBasedTypedCharSupport):
-			from diffHandler import difflib
-			return difflib
+			from diffHandler import get_difflib_algo
+			return get_difflib_algo()
 		else:
 			return super().diffAlgo
 

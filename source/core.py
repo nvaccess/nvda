@@ -596,7 +596,7 @@ def main():
 	# as core._terminate always writes an entry.
 	try:
 		import diffHandler
-		diffHandler.dmp._terminate()
+		diffHandler._dmp._terminate()
 	except Exception:
 		log.debug("Exception while terminating DMP", exc_info=True)
 

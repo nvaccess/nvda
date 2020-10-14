@@ -168,22 +168,26 @@ class Difflib(DiffAlgo):
 
 def get_dmp_algo():
 	"""
-		This property controls which diff algorithm is used. The default
-		implementation returns either diffHandler.dmp or diffHandler.difflib
-		based on user preference. Subclasses can override this property to
+		This function returns a Diff Match Patch object if allowed by the user.
+		LiveText objects can override the diffAlgo property to
 		choose a diffAlgo object (overriding user preference)
 		if one is incompatible with a particular application.
-		As of NVDA 2020.4, diffHandler.dmp is experimental. Therefore,
+		As of NVDA 2020.4, DMP is experimental. Therefore,
 		subclasses should either use the base implementation to check the
-		user config, or return diffHandler.difflib
+		user config, or return diffHandler.get_difflib_algo()
 		to forcibly use Difflib.
 	"""
 	return (
-		dmp
+		_dmp
 		if config.conf["terminals"]["diffAlgo"] == "dmp"
-		else difflib
+		else _difflib
 	)
 
 
-difflib = Difflib()
-dmp = DiffMatchPatch()
+def get_difflib_algo():
+	"Returns an instance of the difflib diffAlgo."
+	return _difflib
+
+
+_difflib = Difflib()
+_dmp = DiffMatchPatch()
