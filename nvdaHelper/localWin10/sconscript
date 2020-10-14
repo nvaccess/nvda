@@ -1,7 +1,7 @@
 ###
 #This file is a part of the NVDA project.
 #URL: http://www.nvaccess.org/
-#Copyright 2016-2017 NV Access Limited
+#Copyright 2016-2020 NV Access Limited, Leonard de Ruijter
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
 #the Free Software Foundation.
@@ -18,22 +18,21 @@ import glob
 from SCons.Tool.MSCommon.vc import find_vc_pdir
 
 Import(
-	'win10env',
+	'env',
 	'sourceDir',
 	'localLib',
 )
 
-env=win10env.Clone()
+env = env.Clone()
 
 localWin10Lib = env.SharedLibrary(
 	target="nvdaHelperLocalWin10",
 	source=[
 		env['projectResFile'],
-		'utils.cpp',
 		'oneCoreSpeech.cpp',
 		'uwpOcr.cpp',
 	],
-	LIBS=["oleaut32", localLib[2]],
+	LIBS=["WindowsApp", localLib[2]],
 )
 
 # UWP dlls can only be dynamically linked with the CRT,

@@ -13,34 +13,34 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#include <collection.h>
-#include <ppltasks.h>
-#include <wrl.h>
-#include <robuffer.h>
+#include <winrt/Windows.Storage.Streams.h>
+#include <winrt/Windows.Media.Ocr.h>
+#include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/Windows.Globalization.h>
+#include <winrt/Windows.Graphics.Imaging.h>
+#include <winrt/Windows.Data.Json.h>
 #include <windows.h>
 #include <cstring>
 #include <common/log.h>
-#include "utils.h"
 #include "uwpOcr.h"
 
 using namespace std;
-using namespace Platform;
-using namespace concurrency;
-using namespace Windows::Storage::Streams;
-using namespace Microsoft::WRL;
-using namespace Windows::Media::Ocr;
-using namespace Windows::Foundation::Collections;
-using namespace Windows::Globalization;
-using namespace Windows::Graphics::Imaging;
-using namespace Windows::Data::Json;
+using namespace winrt;
+using namespace winrt::Windows::Storage::Streams;
+using namespace winrt::Windows::Media::Ocr;
+using namespace winrt::Windows::Foundation::Collections;
+using namespace winrt::Windows::Globalization;
+using namespace winrt::Windows::Graphics::Imaging;
+using namespace winrt::Windows::Data::Json;
 
-UwpOcr* __stdcall uwpOcr_initialize(const char16* language, uwpOcr_Callback callback) {
-	auto engine = OcrEngine::TryCreateFromLanguage(ref new Language(ref new String(language)));
-	if (!engine)
+UwpOcr::UwpOcr(OcrEngine const& engine, uwpOcr_Callback callback) : engine(engine), callback(callback) { }
+
+UwpOcr* __stdcall uwpOcr_initialize(const wchar_t* language, uwpOcr_Callback callback) {
+	auto engine = OcrEngine::TryCreateFromLanguage(Language{ language });
+	if (!engine) {
 		return nullptr;
-	auto instance = new UwpOcr;
-	instance->engine = engine;
-	instance->callback = callback;
+	}
+	auto instance = new UwpOcr{ engine, callback };
 	return instance;
 }
 
@@ -48,43 +48,43 @@ void __stdcall uwpOcr_terminate(UwpOcr* instance) {
 	delete instance;
 }
 
+fire_and_forget UwpOcr::recognize(SoftwareBitmap bitmap) {
+	// Ensure that work is performed on a background thread.
+	co_await resume_background();
+	try {
+		auto result = co_await engine.RecognizeAsync(bitmap);
+		auto lines = result.Lines();
+		auto jLines = JsonArray{};
+		for (auto const& line : lines) {
+			auto words = line.Words();
+			auto jWords = JsonArray{};
+			for (auto const& word : words) {
+				auto jWord = JsonObject{};
+				auto rect = word.BoundingRect();
+				jWord.Insert(L"x", JsonValue::CreateNumberValue(rect.X));
+				jWord.Insert(L"y", JsonValue::CreateNumberValue(rect.Y));
+				jWord.Insert(L"width", JsonValue::CreateNumberValue(rect.Width));
+				jWord.Insert(L"height", JsonValue::CreateNumberValue(rect.Height));
+				jWord.Insert(L"text", JsonValue::CreateStringValue(word.Text()));
+				jWords.Append(jWord);
+			}
+			jLines.Append(jWords);
+		}
+		callback(jLines.Stringify().c_str());
+	} catch (hresult_error const& e) {
+		LOG_ERROR(L"Error " << e.code() << L": " << e.message().c_str());
+		callback(NULL);
+	}
+}
+
 void __stdcall uwpOcr_recognize(UwpOcr* instance, const RGBQUAD* image, unsigned int width, unsigned int height) {
 	unsigned int numBytes = sizeof(RGBQUAD) * width * height;
-	auto buf = ref new Buffer(numBytes);
-	buf->Length = numBytes;
-	BYTE* bytes = getBytes(buf);
+	auto buf = Buffer{ numBytes };
+	buf.Length(numBytes);
+	BYTE* bytes = buf.data();
 	memcpy(bytes, image, numBytes);
 	auto sbmp = SoftwareBitmap::CreateCopyFromBuffer(buf, BitmapPixelFormat::Bgra8, width, height, BitmapAlphaMode::Ignore);
-	task<OcrResult^> ocrTask = create_task(instance->engine->RecognizeAsync(sbmp));
-	ocrTask.then([instance, sbmp] (OcrResult^ result) {
-		auto lines = result->Lines;
-		auto jLines = ref new JsonArray();
-		for (unsigned short l = 0; l < lines->Size; ++l) {
-			auto words = lines->GetAt(l)->Words;
-			auto jWords = ref new JsonArray();
-			for (unsigned short w = 0; w < words->Size; ++w) {
-				auto word = words->GetAt(w);
-				auto jWord = ref new JsonObject();
-				auto rect = word->BoundingRect;
-				jWord->Insert("x", JsonValue::CreateNumberValue(rect.X));
-				jWord->Insert("y", JsonValue::CreateNumberValue(rect.Y));
-				jWord->Insert("width", JsonValue::CreateNumberValue(rect.Width));
-				jWord->Insert("height", JsonValue::CreateNumberValue(rect.Height));
-				jWord->Insert("text", JsonValue::CreateStringValue(word->Text));
-				jWords->Append(jWord);
-			}
-			jLines->Append(jWords);
-		}
-		instance->callback(jLines->Stringify()->Data());
-	}).then([instance] (task<void> previous) {
-		// Catch any unhandled exceptions that occurred during these tasks.
-		try {
-			previous.get();
-		} catch (Platform::Exception^ e) {
-			LOG_ERROR(L"Error " << e->HResult << L": " << e->Message->Data());
-			instance->callback(NULL);
-		}
-	});
+	instance->recognize(sbmp);
 }
 
 // We use BSTR because we need the string to stay around until the caller is done with it
@@ -93,9 +93,9 @@ void __stdcall uwpOcr_recognize(UwpOcr* instance, const RGBQUAD* image, unsigned
 // and calling malloc and free from different CRTs isn't safe.
 BSTR __stdcall uwpOcr_getLanguages() {
 	wstring langsStr;
-	auto langs = OcrEngine::AvailableRecognizerLanguages ;
-	for (unsigned int i = 0; i < langs->Size; ++i) {
-		langsStr += langs->GetAt(i)->LanguageTag->Data();
+	auto langs = OcrEngine::AvailableRecognizerLanguages();
+	for (auto const& lang : langs) {
+		langsStr += lang.LanguageTag();
 		langsStr += L";";
 	}
 	return SysAllocString(langsStr.c_str());
