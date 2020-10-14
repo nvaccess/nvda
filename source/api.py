@@ -39,13 +39,23 @@ Gets the current object with focus.
 
 def getForegroundObject():
 	"""Gets the current foreground object.
+	This (cached) object is the (effective) top-level "window" (hwnd).
+	EG a Dialog rather than the focused control within the dialog.
+	The cache is updated as queued events are processed, as such there will be a delay between the winEvent
+	and this function matching. However, within NVDA this should be used in order to be in sync with other
+	functions such as "getFocusAncestors".
 @returns: the current foreground object
 @rtype: L{NVDAObjects.NVDAObject}
 """
 	return globalVars.foregroundObject
 
 def setForegroundObject(obj):
-	"""Stores the given object as the current foreground object. (Note: it does not physically change the operating system foreground window, but only allows NVDA to keep track of what it is).
+	"""Stores the given object as the current foreground object.
+	Note: does not cause the operating system to change the foreground window,
+		but simply allows NVDA to keep track of what the foreground window is.
+		Alternative names for this function may have been:
+		- setLastForegroundWindow
+		- setLastForegroundEventObject
 @param obj: the object that will be stored as the current foreground object
 @type obj: NVDAObjects.NVDAObject
 """
@@ -322,9 +332,13 @@ def getStatusBar():
 	@return: The status bar object or C{None} if no status bar was found.
 	@rtype: L{NVDAObjects.NVDAObject}
 	"""
+	foreground = getForegroundObject()
+	try:
+		return foreground.appModule.statusBar
+	except NotImplementedError:
+		pass
 	# The status bar is usually at the bottom of the screen.
 	# Therefore, get the object at the bottom left of the foreground object using screen coordinates.
-	foreground = getForegroundObject()
 	location=foreground.location
 	if not location:
 		return None

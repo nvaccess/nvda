@@ -1442,7 +1442,7 @@ Această opțiune este disponibilă doar dacă raportarea erorilor de ortografie
 
 ==== Tratează taste din alte aplicații ====[KeyboardSettingsHandleKeys]
 Această opțiune permite utilizatorului să controleze dacă apăsările de tastă generate de aplicații, cum ar fi tastaturi pe ecran și aplicații de recunoaștere a vorbirii, ar trebui să fie procesate de NVDA. 
-Opțiunea este activată implcit, deși anumiți utilizatori vor dori să o dezactiveze, cum ar fi cei care tastează în Vietnameză cu software-ul de tastare Unikey, pentru care se vor produce intrări de caractere incorecte.
+Opțiunea este activată implcit, deși anumiți utilizatori vor dori să o dezactiveze, cum ar fi cei care tastează în Vietnameză cu software-ul de tastare UniKey, pentru care se vor produce intrări de caractere incorecte.
 
 +++ Maus (NVDA+control+m) +++[OptiuniMaus]
 Categoria „Maus„ din dialogul setărilor NVDA conține următoarele opțiuni:
@@ -2060,7 +2060,7 @@ Pentru a vedea care sunt suplimentele incompatibile, puteți folosi butonul „V
 
 Pentru a accesa Managerul de suplimente de oriunde, trebuie să-i atribuiți un gest personalizat folosind [fereastra de dialog pentru Gesturi de intrare #GesturiIntrare].
 
-++ Administratorul suplimentelor incompatibile ++[incompatibleAddonsManager]
++++ Administratorul suplimentelor incompatibile +++[incompatibleAddonsManager]
 Administratorul suplimentelor, care poate fi accesat prin apăsarea butonului „Vizualizare suplimente incompatibile” din administratorul de suplimente, vă permite să vedeți orice supliment incompatibil și motivul pentru care este considerat incompatibil.
 Suplimentele sunt considerate incompatibile atunci când nu au fost actualizate ca să lucreze cu modificări semnificative aduse NVDA-ului, sau atunci când se bazează pe o caracteristică inexistentă în versiunea de NVDA pe care o utilizați.
 Acest manager are un mesaj scurt în care își explică obiectivul, la fel ca și versiunea de NVDA.
@@ -2407,6 +2407,13 @@ Afișajele Brailliant din gamele BI și B de la [HumanWare https://www.humanware
 Dacă sunt conectate prin USB cu protocolul setat pe HumanWare, va trebui mai întâi să instalați driverele USB puse la dispoziție de producător.
 Nu sunt necesare drivere USB, dacă protocolul este setat pe OpenBraille.
 Pentru Braillenote Touch nu mai este necesară instalarea unui driver.
+
+Sunt suportate și dispozitivele adiționale menționate mai jos. Ele nu necesită instalarea vreunui driver special. Acestea sunt:
+- APH Mantis Q40
+- APH Chameleon 20
+- Humanware BrailleOne
+- NLS eReader
+
 
 Urmează asocierile de taste în NVDA pentru display-urile Brailliant BI/B și BrailleNote touch.
 Vă rugăm să consultați Documentația afișajului pentru informații despre localizarea tastelor pe dispozitiv.

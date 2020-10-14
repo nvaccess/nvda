@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2018 NV Access Limited
+# Copyright (C) 2008-2020 NV Access Limited
 
 """Provides functionality to view the NVDA log.
 """
@@ -51,6 +51,9 @@ class LogViewer(wx.Frame):
 		self.outputCtrl.SetFocus()
 
 	def refresh(self, evt=None):
+		# Ignore if log is not initialized
+		if(globalVars.appArgs.logFileName is None):
+			return
 		pos = self.outputCtrl.GetInsertionPoint()
 		# Append new text to the output control which has been written to the log file since the last refresh.
 		try:
@@ -103,6 +106,17 @@ def activate():
 		return
 	if not logViewer:
 		logViewer = LogViewer(gui.mainFrame)
+	# Check if log was properly initialized
+	if globalVars.appArgs.logFileName is None:
+		wx.CallAfter(
+			gui.messageBox,
+			# Translators: A message indicating that log cannot be loaded to LogViewer.
+			_("Log is unavailable"),
+			# Translators: The title of an error message dialog.
+			_("Error"),
+			wx.OK | wx.ICON_ERROR
+		)
+		return
 	logViewer.Raise()
 	# There is a MAXIMIZE style which can be used on the frame at construction, but it doesn't seem to work the first time it is shown,
 	# probably because it was in the background.

@@ -27,7 +27,7 @@ from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
 from .. import InvalidNVDAObject
 from ..window import Window
 from NVDAObjects.UIA import UIA, UIATextInfo
-from locationHelper import RectLTRB, Point
+from locationHelper import RectLTRB
 from typing import Dict
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
@@ -148,6 +148,7 @@ nodeNamesToNVDARoles: Dict[str, int] = {
 	"ARTICLE": controlTypes.ROLE_ARTICLE,
 	"FIGURE": controlTypes.ROLE_FIGURE,
 	"FIGCAPTION": controlTypes.ROLE_CAPTION,
+	"MARK": controlTypes.ROLE_MARKED_CONTENT,
 }
 
 
@@ -330,7 +331,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			else:
 				raise TypeError("Bookmark was for %s type, not for %s type"%(position.infoClass.__name__,self.__class__.__name__))
 		else:
-			raise NotImplementedError("position: %s"%position)
+			raise NotImplementedError("position: %s" % (position,))
 
 	def expand(self,unit):
 		if unit==textInfos.UNIT_PARAGRAPH:
@@ -487,20 +488,14 @@ class MSHTML(IAccessible):
 			
 		elif isinstance(relation,tuple):
 			windowHandle=kwargs.get('windowHandle')
-			if not windowHandle:
-				log.debugWarning("Error converting point to client coordinates, no window handle")
-				return False
-			try:
-				point = Point(*relation).toClient(windowHandle)
-			except WindowsError:
-				log.debugWarning("Error converting point to client coordinates", exc_info=True)
-				return False
+			p=ctypes.wintypes.POINT(x=relation[0],y=relation[1])
+			ctypes.windll.user32.ScreenToClient(windowHandle,ctypes.byref(p))
 			# #3494: MSHTML's internal coordinates are always at a hardcoded DPI (usually 96) no matter the system DPI or zoom level.
 			xFactor,yFactor=getZoomFactorsFromHTMLDocument(HTMLNode.document)
 			try:
-				HTMLNode = HTMLNode.document.elementFromPoint(point.x // xFactor, point.y // yFactor)
+				HTMLNode=HTMLNode.document.elementFromPoint(p.x // xFactor, p.y // yFactor)
 			except:
-				HTMLNode = None
+				HTMLNode=None
 			if not HTMLNode:
 				log.debugWarning("Error getting HTMLNode with elementFromPoint")
 				return False
@@ -1041,6 +1036,13 @@ class MSHTML(IAccessible):
 			return ti.getControlFieldForNVDAObject(self)["language"]
 		except LookupError:
 			return None
+
+	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
+		politeness = self.HTMLAttributes["aria-live"] or "off"
+		return next(
+			(v for v in aria.AriaLivePoliteness if v._name_.lower() == politeness.lower()),
+			aria.AriaLivePoliteness.OFF
+		)
 
 	def event_liveRegionChange(self):
 		# MSHTML live regions are currently handled with custom code in-process

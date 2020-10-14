@@ -180,18 +180,11 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if point.x <0 or point.y <0:
 			raise LookupError("Point with client coordinates x=%d, y=%d not within client area of object" %
 				(point.x, point.y))
-		try:
-			return point.toScreen(self.obj.windowHandle)
-		except WindowsError as e:
-			raise LookupError(
-				f"Couldn't convert point at offset {offset} to screen coordinates: {e.strerror}"
-			)
+		return point.toScreen(self.obj.windowHandle)
+
 
 	def _getOffsetFromPoint(self,x,y):
-		try:
-			x, y = winUser.ScreenToClient(self.obj.windowHandle, x, y)
-		except WindowsError as e:
-			raise LookupError(f"Couldn't convert point ({x},{y}) to client coordinates: {e.strerror}")
+		x, y = winUser.ScreenToClient(self.obj.windowHandle, x, y)
 		if self.obj.editAPIVersion>=1:
 			processHandle=self.obj.processHandle
 			internalP=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(PointLStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
@@ -215,8 +208,8 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				# Get the last 16 bits of the line number
 				lineStart16=lineStart&0xFFFF
 				if lineStart16 > offset:
-					# There are cases where the last 16 bits of the line start are greather than the 16 bits offset.
-					# For example, this happens when the line start offset is 65534 (0xFFFE)
+					# There are cases where the last 16 bits of the line start are greater than the
+					# 16 bits offset. For example, this happens when the line start offset is 65534 (0xFFFE)
 					# and the offset we need ought to be 65537 (0x10001), which is a 17 bits number
 					# In that case, add 0x10000 to the offset, which will make the eventual formula return the correct offset,
 					# unless a line has more than 65535 characters, in which case we can't get a reliable offset.
@@ -271,6 +264,9 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			formatField["italic"]=bool(charFormat.dwEffects&CFE_ITALIC)
 			formatField["underline"]=bool(charFormat.dwEffects&CFE_UNDERLINE)
 			formatField["strikethrough"]=bool(charFormat.dwEffects&CFE_STRIKEOUT)
+		if formatConfig["reportSuperscriptsAndSubscripts"]:
+			if charFormat is None:
+				charFormat = self._getCharFormat(offset)
 			if charFormat.dwEffects&CFE_SUBSCRIPT:
 				formatField["text-position"]="sub"
 			elif charFormat.dwEffects&CFE_SUPERSCRIPT:

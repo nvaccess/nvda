@@ -16,7 +16,7 @@ import config
 import displayModel
 import eventHandler
 from NVDAObjects import NVDAObject
-from NVDAObjects.behaviors import EditableText, LiveText
+from NVDAObjects.behaviors import EditableText, EditableTextWithoutAutoSelectDetection, LiveText
 import watchdog
 from locationHelper import RectLTWH
 
@@ -202,18 +202,12 @@ An NVDAObject for a window
 
 	def redraw(self):
 		"""Redraw the display for this object.
-		@raise WindowsError: If redrawing fails.
 		"""
-		# Conversion to client coordinates may fail if the window handle of this object is incorrect.
-		# This will most likely be caused by a died window.
-		location = self.location.toClient(self.windowHandle)
-		if not winUser.RedrawWindow(
-			self.windowHandle,
-			location.toRECT(),
-			None,
-			winUser.RDW_INVALIDATE | winUser.RDW_UPDATENOW
-		):
-			raise ctypes.WinError()
+		left, top, width, height = self.location
+		left, top = winUser.ScreenToClient(self.windowHandle, left, top)
+		winUser.RedrawWindow(self.windowHandle,
+			winUser.RECT(left, top, left + width, top + height), None,
+			winUser.RDW_INVALIDATE | winUser.RDW_UPDATENOW)
 
 	def _get_windowText(self):
 		textLength=watchdog.cancellableSendMessage(self.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)
@@ -396,7 +390,8 @@ class Desktop(Window):
 	def _get_name(self):
 		return _("Desktop")
 
-class DisplayModelEditableText(EditableText, Window):
+
+class DisplayModelEditableText(EditableTextWithoutAutoSelectDetection, Window):
 
 	role=controlTypes.ROLE_EDITABLETEXT
 	TextInfo = displayModel.EditableTextDisplayModelTextInfo
@@ -410,8 +405,6 @@ class DisplayModelLiveText(LiveText, Window):
 
 	def startMonitoring(self):
 		# Force the window to be redrawn, as our display model might be out of date.
-		# Do not catch exceptions caused by redraw, as when redrawing fails,
-		# it is most likely that the window died, and we don't want to monitor in that case.
 		self.redraw()
 		displayModel.requestTextChangeNotifications(self, True)
 		super(DisplayModelLiveText, self).startMonitoring()

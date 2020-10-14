@@ -180,6 +180,11 @@ class KeyCommandsMaker(object):
 			# Each of the remaining columns provides keystrokes for one layout.
 			# There's one less delimiter than there are columns, hence subtracting 1 instead of 2.
 			self._settingsNumLayouts = arg.strip("|").count("|") - 1
+			if self._settingsNumLayouts < 1:
+				raise KeyCommandsError(
+					f"{self._lineNum}, settingsSection command must specify the header row for a table"
+					" summarising the settings"
+				)
 		elif cmd == "setting":
 			self._handleSetting()
 

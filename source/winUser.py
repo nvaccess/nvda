@@ -264,6 +264,7 @@ VK_RMENU=0xA5
 VK_VOLUME_MUTE=0xAD
 VK_VOLUME_DOWN=0xAE
 VK_VOLUME_UP=0xAF
+VK_NONE = 0xFF
 
 #Windows hooks
 WH_KEYBOARD=2
@@ -609,14 +610,12 @@ def VkKeyScanEx(ch, hkl):
 
 def ScreenToClient(hwnd, x, y):
 	point = POINT(x, y)
-	if not user32.ScreenToClient(hwnd, byref(point)):
-		raise WinError()
+	user32.ScreenToClient(hwnd, byref(point))
 	return point.x, point.y
 
 def ClientToScreen(hwnd, x, y):
 	point = POINT(x, y)
-	if not user32.ClientToScreen(hwnd, byref(point)):
-		raise WinError()
+	user32.ClientToScreen(hwnd, byref(point))
 	return point.x, point.y
 
 def NotifyWinEvent(event, hwnd, idObject, idChild):

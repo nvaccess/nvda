@@ -16,7 +16,6 @@ import config
 from . import Window
 from .. import NVDAObjectTextInfo
 from ..behaviors import EditableTextWithAutoSelectDetection
-import locale
 import watchdog
 import eventHandler
 import locationHelper
@@ -82,7 +81,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if cp==SC_CP_UTF8:
 			return "utf-8"
 		else:
-			return locale.getlocale()[1]
+			return textUtils.USER_ANSI_CODE_PAGE
 
 	def _getOffsetFromPoint(self,x,y):
 		x, y = winUser.ScreenToClient(self.obj.windowHandle, x, y)

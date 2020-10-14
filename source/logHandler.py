@@ -1,5 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2019 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.
+# Copyright (C) 2007-2020 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
+# Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -63,7 +64,15 @@ def getCodePath(f):
 	className=""
 	#Code borrowed from http://mail.python.org/pipermail/python-list/2000-January/020141.html
 	if f.f_code.co_argcount:
-		arg0=f.f_locals[f.f_code.co_varnames[0]]
+		f_locals = f.f_locals
+		arg0 = f_locals[f.f_code.co_varnames[0]]
+		if f.f_code.co_flags & inspect.CO_NEWLOCALS:
+			# Fetching of Frame.f_locals causes a function frames's locals to be cached on the frame for ever.
+			# If an Exception is currently stored as a local variable on that frame,
+			# A reference cycle will be created, holding the frame and all its variables.
+			# Therefore clear f_locals manually.
+			f_locals.clear()
+		del f_locals
 		# #6122: Check if this function is a member of its first argument's class (and specifically which base class if any) 
 		# Rather than an instance member of its first argument.
 		# This stops infinite recursions if fetching data descriptors,
@@ -112,6 +121,11 @@ class Logger(logging.Logger):
 	IO = 12
 	DEBUGWARNING = 15
 	OFF = 100
+
+	#: The start position of a fragment of the log file as marked with
+	#: L{markFragmentStart} for later retrieval using L{getFragment}.
+	#: @type: C{long}
+	fragmentStart = None
 
 	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False, stack_info=None):
 		if not extra:
@@ -189,11 +203,53 @@ class Logger(logging.Logger):
 			return
 		self._log(level, msg, (), exc_info=exc_info, **kwargs)
 
+	def markFragmentStart(self):
+		"""Mark the current end of the log file as the start position of a
+		fragment to be later retrieved by L{getFragment}.
+		@returns: Whether a log file is in use and a position could be marked
+		@rtype: bool
+		"""
+		if (
+			not globalVars.appArgs
+			or globalVars.appArgs.secure
+			or not globalVars.appArgs.logFileName
+			or not isinstance(logHandler, FileHandler)
+		):
+			return False
+		with open(globalVars.appArgs.logFileName, "r", encoding="UTF-8") as f:
+			# _io.TextIOWrapper.seek: whence=2 -- end of stream
+			f.seek(0, 2)
+			self.fragmentStart = f.tell()
+			return True
+
+	def getFragment(self):
+		"""Retrieve a fragment of the log starting from the position marked using
+		L{markFragmentStart}.
+		If L{fragmentStart} does not point to the current end of the log file, it
+		is reset to C{None} after reading the fragment.
+		@returns: The text of the fragment, or C{None} if L{fragmentStart} is None.
+		@rtype: str
+		"""
+		if (
+			self.fragmentStart is None
+			or not globalVars.appArgs
+			or globalVars.appArgs.secure
+			or not globalVars.appArgs.logFileName
+			or not isinstance(logHandler, FileHandler)
+		):
+			return None
+		with open(globalVars.appArgs.logFileName, "r", encoding="UTF-8") as f:
+			f.seek(self.fragmentStart)
+			fragment = f.read()
+			if fragment:
+				self.fragmentStart = None
+			return fragment
+
 class RemoteHandler(logging.Handler):
 
 	def __init__(self):
 		#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-		path=os.path.abspath(os.path.join(u"lib",buildVersion.version,u"nvdaHelperRemote.dll"))
+		path = os.path.join(globalVars.appDir, "lib", buildVersion.version, "nvdaHelperRemote.dll")
 		h=ctypes.windll.kernel32.LoadLibraryExW(path,0,LOAD_WITH_ALTERED_SEARCH_PATH)
 		if not h:
 			raise OSError("Could not load %s"%path) 
@@ -220,7 +276,7 @@ class FileHandler(logging.FileHandler):
 		elif record.levelno>=logging.ERROR and shouldPlayErrorSound:
 			import nvwave
 			try:
-				nvwave.playWaveFile("waves\\error.wav")
+				nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "error.wav"))
 			except:
 				pass
 		return super().handle(record)
@@ -277,7 +333,7 @@ def _getDefaultLogFilePath():
 		import tempfile
 		return os.path.join(tempfile.gettempdir(), "nvda.log")
 	else:
-		return ".\\nvda.log"
+		return os.path.join(globalVars.appDir, "nvda.log")
 
 def _excepthook(*exc_info):
 	log.exception(exc_info=exc_info, codepath="unhandled exception")
@@ -322,7 +378,14 @@ def initialize(shouldDoRemoteLogging=False):
 				os.rename(globalVars.appArgs.logFileName, oldLogFileName)
 			except (IOError, WindowsError):
 				pass # Probably log does not exist, don't care.
-			logHandler = FileHandler(globalVars.appArgs.logFileName, mode="w",encoding="utf-8")
+			try:
+				logHandler = FileHandler(globalVars.appArgs.logFileName, mode="w", encoding="utf-8")
+			except IOError:
+				# if log cannot be opened, we use NullHandler to avoid logging preserving logger behaviour
+				# and set log filename to None to inform logViewer about it
+				globalVars.appArgs.logFileName = None
+				logHandler = logging.NullHandler()
+				log.error("Faile to open log file, redirecting to standard output")
 			logLevel = globalVars.appArgs.logLevel
 			if globalVars.appArgs.debugLogging:
 				logLevel = Logger.DEBUG

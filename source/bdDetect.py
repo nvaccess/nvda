@@ -459,23 +459,41 @@ addBluetoothDevices("brailleNote", lambda m:
 
 # brailliantB
 addUsbDevices("brailliantB", KEY_HID, {
+	"VID_1C71&PID_C111",  # Mantis Q 40
+	"VID_1C71&PID_C101",  # Chameleon 20
+	"VID_1C71&PID_C121",  # Humanware BrailleOne 20 HID
+	"VID_1C71&PID_CE01",  # NLS eReader 20 HID
 	"VID_1C71&PID_C006", # Brailliant BI 32, 40 and 80
 	"VID_1C71&PID_C022", # Brailliant BI 14
 	"VID_1C71&PID_C00A", # BrailleNote Touch
+	"VID_1C71&PID_C00E",  # BrailleNote Touch v2
 })
 addUsbDevices("brailliantB", KEY_SERIAL, {
 	"VID_1C71&PID_C005", # Brailliant BI 32, 40 and 80
 	"VID_1C71&PID_C021", # Brailliant BI 14
 })
-addBluetoothDevices("brailliantB", lambda m: (
-	m.type==KEY_SERIAL
-		and (m.id.startswith("Brailliant B")
-		or m.id == "Brailliant 80"
-		or "BrailleNote Touch" in m.id
-	)) or (m.type==KEY_HID
+addBluetoothDevices(
+	"brailliantB", lambda m: (
+		m.type == KEY_SERIAL
+		and (
+			m.id.startswith("Brailliant B")
+			or m.id == "Brailliant 80"
+			or "BrailleNote Touch" in m.id
+		)
+	)
+	or (
+		m.type == KEY_HID
 		and m.deviceInfo.get("manufacturer") == "Humanware"
-		and m.deviceInfo.get("product") == "Brailliant HID"
-))
+		and m.deviceInfo.get("product") in (
+			"Brailliant HID",
+			"APH Chameleon 20",
+			"APH Mantis Q40",
+			"Humanware BrailleOne",
+			"NLS eReader",
+			"NLS eReader Humanware",
+		)
+	)
+)
 
 # eurobraille
 addUsbDevices("eurobraille", KEY_HID, {
@@ -576,8 +594,12 @@ addBluetoothDevices("hims", lambda m: any(m.id.startswith(prefix) for prefix in 
 	"SmartBeetle",
 )))
 
+# NattiqBraille
+addUsbDevices("nattiqbraille", KEY_SERIAL, {
+	"VID_2341&PID_8036",  # Atmel-based USB Serial for Nattiq nBraille
+})
+
 # superBrl
 addUsbDevices("superBrl", KEY_SERIAL, {
 	"VID_10C4&PID_EA60", # SuperBraille 3.2
 })
-
