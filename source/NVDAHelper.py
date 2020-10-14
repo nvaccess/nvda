@@ -133,12 +133,13 @@ def nvdaControllerInternal_reportLiveRegion(text, politeness):
 	import speech
 	from aria import AriaLivePoliteness
 	from speech.priorities import Spri
-	politenessValue = next(
-		(v for v in AriaLivePoliteness if v._name_.lower() == politeness.lower()),
-		AriaLivePoliteness.OFF
-	)
+	try:
+		politenessValue = AriaLivePoliteness.parseFromString(politeness)
+	except ValueError:
+		log.error(f"nvdaControllerInternal_reportLiveRegion got unknown politeness of {politeness}", exc_info=True)
+		return -1
 	if politenessValue == AriaLivePoliteness.OFF:
-		log.debugWarning(f"Processing live region event from vbuf with unexpected politeness level of {politeness}")
+		log.error(f"nvdaControllerInternal_reportLiveRegion got unexpected politeness of {politeness}")
 	queueHandler.queueFunction(
 		queueHandler.eventQueue,
 		speech.speakText,

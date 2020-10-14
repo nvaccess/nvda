@@ -93,10 +93,7 @@ class Ia2Web(IAccessible):
 
 	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
 		politeness = self.IA2Attributes.get('live', "off")
-		return next(
-			(v for v in aria.AriaLivePoliteness if v._name_.lower() == politeness.lower()),
-			aria.AriaLivePoliteness.OFF
-		)
+		return aria.AriaLivePoliteness.parseFromString(politeness)
 
 
 class Document(Ia2Web):

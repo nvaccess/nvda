@@ -110,3 +110,10 @@ class AriaLivePoliteness(IntEnum):
 	OFF = 0
 	POLITE = 1
 	ASSERTIVE = 2
+
+	@classmethod
+	def parseFromString(cls, value: str):
+		try:
+			return next(v for v in cls if v._name_.lower() == value.lower())
+		except StopIteration:
+			raise ValueError(f"Unknown {cls.__qualname__}: {value}")
