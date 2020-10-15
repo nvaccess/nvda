@@ -179,7 +179,7 @@ class AppModule(appModuleHandler.AppModule):
 		# Emoji panel for build 16299 and 17134.
 		# This event is properly raised in build 17134.
 		if not winVersion.isWin10(version=1809) and childAutomationId in self._classicEmojiPanelAutomationIds:
-			eventHandler.executeEvent("UIA_elementSelected", obj.lastChild.firstChild)
+			eventHandler.queueEvent("UIA_elementSelected", obj.lastChild.firstChild)
 		# Handle hardware keyboard suggestions.
 		# Treat it the same as CJK composition list - don't announce this if candidate announcement setting is off.
 		elif (
@@ -187,7 +187,7 @@ class AppModule(appModuleHandler.AppModule):
 			and config.conf["inputComposition"]["autoReportAllCandidates"]
 		):
 			try:
-				eventHandler.executeEvent("UIA_elementSelected", firstChild.firstChild.firstChild)
+				eventHandler.queueEvent("UIA_elementSelected", firstChild.firstChild.firstChild)
 			except AttributeError:
 				# Because this is dictation window.
 				pass
@@ -205,7 +205,7 @@ class AppModule(appModuleHandler.AppModule):
 			# For people emoji, the first emoji is actually next to skin tone modifiers list.
 			if emojiItem.UIAAutomationId == "SkinTonePanelModifier_ListView" and emojiItem.next:
 				emojiItem = emojiItem.next
-			eventHandler.executeEvent("UIA_elementSelected", emojiItem)
+			eventHandler.queueEvent("UIA_elementSelected", emojiItem)
 		# Clipboard history.
 		# Move to clipboard list so element selected event can pick it up.
 		# #9103: if clipboard is empty, a status message is displayed instead, and luckily it is located where clipboard data items can be found.
@@ -218,7 +218,7 @@ class AppModule(appModuleHandler.AppModule):
 			# Make sure to move to actual clipboard history item if available.
 			if clipboardHistoryItem.firstChild is not None:
 				clipboardHistoryItem = clipboardHistoryItem.firstChild
-			eventHandler.executeEvent("UIA_elementSelected", clipboardHistoryItem)
+			eventHandler.queueEvent("UIA_elementSelected", clipboardHistoryItem)
 		nextHandler()
 
 	# Argh, name change event is fired right after emoji panel opens in build 17666 and later.
