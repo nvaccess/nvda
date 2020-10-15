@@ -224,6 +224,11 @@ def getLastScriptRepeatCount():
 	else:
 		return _lastScriptCount
 
+def clearLastScript():
+	global _lastScriptRef, _lastScriptCount
+	_lastScriptRef = None
+	_lastScriptCount = 0
+
 def isScriptWaiting():
 	return bool(_numScriptsQueued)
 
