@@ -148,6 +148,7 @@ nodeNamesToNVDARoles: Dict[str, int] = {
 	"ARTICLE": controlTypes.ROLE_ARTICLE,
 	"FIGURE": controlTypes.ROLE_FIGURE,
 	"FIGCAPTION": controlTypes.ROLE_CAPTION,
+	"MARK": controlTypes.ROLE_MARKED_CONTENT,
 }
 
 
@@ -1035,6 +1036,13 @@ class MSHTML(IAccessible):
 			return ti.getControlFieldForNVDAObject(self)["language"]
 		except LookupError:
 			return None
+
+	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
+		politeness = self.HTMLAttributes["aria-live"] or "off"
+		return next(
+			(v for v in aria.AriaLivePoliteness if v._name_.lower() == politeness.lower()),
+			aria.AriaLivePoliteness.OFF
+		)
 
 	def event_liveRegionChange(self):
 		# MSHTML live regions are currently handled with custom code in-process

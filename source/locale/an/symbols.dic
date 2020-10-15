@@ -2,8 +2,6 @@
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
-# Traduciu por Jorgtum
-# Softaragonés
 
 complexSymbols:
 # identifier	regexp
@@ -11,17 +9,13 @@ complexSymbols:
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
 ? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
-... sentence ending	(?<=[^\s.])(\s\.|\.)\.\.(?=[\"'”’)\s]|$)
-… sentence ending	(?<=[^\s.])\…(?=[\"'”’)\s]|$)
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
-
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word -	(?<=[^\W_])[-]
 negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
-dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -30,15 +24,11 @@ symbols:
 . sentence ending	punto	all	always
 ! sentence ending	zarrar exclamación	all	always
 ? sentence ending	zarrar interrogación	all	always
-... sentence ending	PUNTOS SUSPENSIVOS	all	always
-… sentence ending	PUNTOS SUSPENSIVOS	all	always
 ; phrase ending	punto y coma	most	always
 : phrase ending	dos puntos	most	always
 decimal point		none	always
 in-word '	falqueta	all	norep
-in-word -	guión	all	norep
 negative number	menos	none	norep
-dates /	 	all	always
 
 # Whitespace
 \0	en blanco	char
@@ -72,7 +62,6 @@ $	dólar	all	norep
 −	menos	some
 ,	coma	all	always
 -	guión	most
-­	guión	most
 .	punto	some
 /	barra 	some
 :	dos puntos	most	norep
@@ -80,8 +69,6 @@ $	dólar	all	norep
 <	menor que	some
 >	mayor que	some
 =	igual	most
-≈	Quasi igual que	most
-≠	No igual que	most
 ?	zarrar interrogación	all
 @	arroba	some
 [	ubrir gafet	most
@@ -144,6 +131,8 @@ _	guión baixo	most
 «	ubrir cometas angulars
 »	zarrar cometas angulars
 µ	micro	some
+º	ordinal masculín	some
+ª	ordinal femenín	some
 ⁰	0 sobrescrito	some
 ¹	1 sobreescrito	some
 ²	t'o quadrau	some
@@ -177,9 +166,8 @@ _	guión baixo	most
 ₎	zarrar parentesi subescrito	some
 ®	rechistrau	some
 ™	Marca rechistrada	some
-©	copyright	some	norep
-±	más menos	some
-ß	Beta	most
+©	dreitos d'autor	some	norep
+±	mas menos	some
 ×	multiplicau por	some
 ÷	dividiu por	some
 ←	flecha enta la cucha	some
@@ -195,7 +183,6 @@ _	guión baixo	most
 ✗	vinyeta x	none
 
 #Mathematical Operators U+2200 to U+220F
-
 ∀	pa tot	none
 ∁	complemento	none
 ∂	derivativa parcial	none
@@ -214,7 +201,6 @@ _	guión baixo	most
 ∏	producto aritmetico	none
 
 # Miscellaneous Mathematical Operators
-
 ∑	suma aritmetica	none
 √	radiz quadrada	none
 ∛	radiz cubica	none
@@ -241,10 +227,11 @@ _	guión baixo	most
 ⊃	Sobreconchunto de	none
 ⊆	subconchunto de u igual que	none
 ⊇	sobreconchunto de u igual que	none
+
 # Vulgur Fractions U+2150 to U+215E
-¼	Quart	none
+¼	Quarto	none
 ½	Meyo	none
-¾	Tres quartz	none
+¾	Tres quartos	none
 ⅐	un seteno	none
 ⅑	un nueno	none
 ⅒	un deceno	none
@@ -263,3 +250,10 @@ _	guión baixo	most
 
 # Miscellaneous Technical
 ⌘	Tecla de comando Mac	none
+
+# Aragonese specifics
+in-word -	guión	all	norep
+≈	Quasi igual que	most
+≠	diferent a	most
+α	alfa	most
+β	beta	most

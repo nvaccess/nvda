@@ -16,7 +16,7 @@ import config
 import displayModel
 import eventHandler
 from NVDAObjects import NVDAObject
-from NVDAObjects.behaviors import EditableText, LiveText
+from NVDAObjects.behaviors import EditableText, EditableTextWithoutAutoSelectDetection, LiveText
 import watchdog
 from locationHelper import RectLTWH
 
@@ -390,7 +390,8 @@ class Desktop(Window):
 	def _get_name(self):
 		return _("Desktop")
 
-class DisplayModelEditableText(EditableText, Window):
+
+class DisplayModelEditableText(EditableTextWithoutAutoSelectDetection, Window):
 
 	role=controlTypes.ROLE_EDITABLETEXT
 	TextInfo = displayModel.EditableTextDisplayModelTextInfo

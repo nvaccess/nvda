@@ -1,8 +1,8 @@
-#virtualBuffers/gecko_ia2.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-# Copyright (C) 2008-2020 NV Access Limited, Babbage B.V., Mozilla Corporation
+# virtualBuffers/gecko_ia2.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2008-2020 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions, Julien Cochuyt
 
 import weakref
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
@@ -141,14 +141,6 @@ class Gecko_ia2(VirtualBuffer):
 	def __init__(self,rootNVDAObject):
 		super(Gecko_ia2,self).__init__(rootNVDAObject,backendName="gecko_ia2")
 		self._initialScrollObj = None
-
-	def _get_shouldPrepare(self):
-		if not super(Gecko_ia2, self).shouldPrepare:
-			return False
-		if isinstance(self.rootNVDAObject, NVDAObjects.IAccessible.mozilla.Gecko1_9) and controlTypes.STATE_BUSY in self.rootNVDAObject.states:
-			# If the document is busy in Gecko 1.9, it isn't safe to create a buffer yet.
-			return False
-		return True
 
 	@staticmethod
 	def _getEmbedderFrame(acc):
@@ -333,9 +325,31 @@ class Gecko_ia2(VirtualBuffer):
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_LINKED:[1],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_TRAVERSED:[None]}
 		elif nodeType=="formField":
 			attrs=[
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_BUTTONMENU,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_OUTLINE,IAccessibleHandler.IA2_ROLE_TOGGLE_BUTTON],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]},
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_TEXT],"IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[1]},
-				{"IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[1],"parent::IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[None]},
+				{
+					"IAccessible::role": [
+						oleacc.ROLE_SYSTEM_BUTTONMENU,
+						oleacc.ROLE_SYSTEM_CHECKBUTTON,
+						oleacc.ROLE_SYSTEM_COMBOBOX,
+						oleacc.ROLE_SYSTEM_LIST,
+						oleacc.ROLE_SYSTEM_OUTLINE,
+						oleacc.ROLE_SYSTEM_PUSHBUTTON,
+						oleacc.ROLE_SYSTEM_RADIOBUTTON,
+						oleacc.ROLE_SYSTEM_PAGETAB,
+						IAccessibleHandler.IA2_ROLE_TOGGLE_BUTTON,
+					],
+					f"IAccessible::state_{oleacc.STATE_SYSTEM_READONLY}": [None],
+				},
+				{
+					"IAccessible::role": [
+						oleacc.ROLE_SYSTEM_COMBOBOX,
+						oleacc.ROLE_SYSTEM_TEXT
+					],
+					f"IAccessible2::state_{IAccessibleHandler.IA2_STATE_EDITABLE}": [1],
+				},
+				{
+					f"IAccessible2::state_{IAccessibleHandler.IA2_STATE_EDITABLE}": [1],
+					f"parent::IAccessible2::state_{IAccessibleHandler.IA2_STATE_EDITABLE}": [None],
+				},
 			]
 		elif nodeType=="list":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LIST]}
@@ -451,9 +465,3 @@ class Gecko_ia2(VirtualBuffer):
 		if initialPos:
 			return initialPos
 		return self._initialScrollObj
-
-class Gecko_ia2Pre14(Gecko_ia2):
-
-	def _searchableTagValues(self, values):
-		# #2287: In Gecko < 14, tag values are upper case.
-		return [val.upper() for val in values]
