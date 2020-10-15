@@ -493,8 +493,8 @@ class InputManager(baseObject.AutoPropertyObject):
 
 		gesture.reportExtra()
 		
-		# Clear memorized last script to avoid getLastScriptRepeatCount return multiple press
-		# when an unbound gesture is executed between 2 bound gestures.
+		# Clear memorized last script to avoid getLastScriptRepeatCount detect a repeat
+		# in case an unbound gesture is executed between two identical bound gestures.
 		if not script:
 			scriptHandler.clearLastScript()
 		
