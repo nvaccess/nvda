@@ -2153,7 +2153,7 @@ NVDA 会询问您是否真的要这样做。
 
 要想在任何地方访问插件管理器，请在[输入手势对话框 #InputGestures]定义一个自定义手势。
 
-++ 管理不兼容的插件 ++[incompatibleAddonsManager]
++++ 管理不兼容的插件 +++[incompatibleAddonsManager]
 可以通过插件管理器中的“查看不兼容的插件”按钮访问不兼容的加插件管理器，允许您检查任何不兼容的插件以及不兼容的原因。
 如果NVDA进行重大更改之后插件尚未更新，或者它们依赖于您正在使用的NVDA版本中未提供的功能，NVDA则会认为插件不兼容。
 不兼容的附加组件管理器有一条简短的消息来解释它的用途以及NVDA的版本。
@@ -2166,11 +2166,11 @@ NVDA 会询问您是否真的要这样做。
 不兼容插件管理器里面也有关于插件按钮
 点击这个按钮会打开一个对话框，里面有这个插件的详细信息，可以帮你找到开发者的联系方式。
 
-++ Create portable copy ++[CreatePortableCopy]
-This will open a dialog which allows you to create a portable copy of NVDA out of the installed version.
-Either way, when running a portable copy of NVDA, in the extra tool sub menu the menu item will be called "install NVDA on this PC" instead of "create portable copy).
+++ 创建便携版 ++[CreatePortableCopy]
+打开一个对话框，在里面可以从安装的NVDA创建便携版。
+如果运行的是是便携版，这个选项会变成安装NVDA。
 
-The dialog to create a portable copy of NVDA or to install NVDA on this PC will promt you to choose a folder path in which NVDA should create the portable copy or in which NVDA should be installed.
+在该PC上创建NVDA便携版或安装NVDA的对话框将提示您选择一个文件夹路径，NVDA应在其中创建便携版或在其中安装NVDA。
 
 In this dialog you can enable or disable the following:
 - Copy current user configuration (this includes the files in %appdata%\roaming\NVDA or in the user configuration of your portable copy and includes also addons and other modules)
@@ -2240,7 +2240,6 @@ Windows 10包括称为“OneCore”或“移动”语音的新语音。
 在Windows 10上，NVDA默认使用Windows OneCore 语音(其他版本的Windows上NVDA默认使用[eSpeak NG #eSpeakNG])。
 
 请参考微软发布的[这篇文章 https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices]，获取可用语音列表和安装说明：
-
 
 + 支持的点显器 +[SupportedBrailleDisplays]
 本节包含有关NVDA支持的点显器的信息。
