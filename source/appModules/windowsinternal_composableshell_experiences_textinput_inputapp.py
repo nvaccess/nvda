@@ -199,15 +199,13 @@ class AppModule(appModuleHandler.AppModule):
 			emojisList = firstChild.children[-2]
 			if emojisList.UIAAutomationId != "TEMPLATE_PART_Items_GridView":
 				emojisList = emojisList.previous
-			try:
-				# Avoid announcing skin tone modifiers if possible.
+			if emojisList.firstChild and emojisList.firstChild.firstChild:
 				emojiItem = emojisList.firstChild.firstChild
-				if emojiItem.UIAAutomationId == "SkinTonePanelModifier_ListView":
-					emojiItem = emojiItem.next
-				eventHandler.executeEvent("UIA_elementSelected", emojiItem)
-			except AttributeError:
-				# In build 18272's emoji panel, emoji list becomes empty in some situations.
-				pass
+			# Avoid announcing skin tone modifiers if possible.
+			# For people emoji, the first emoji is actually next to skin tone modifiers list.
+			if emojiItem.UIAAutomationId == "SkinTonePanelModifier_ListView" and emojiItem.next:
+				emojiItem = emojiItem.next
+			eventHandler.executeEvent("UIA_elementSelected", emojiItem)
 		# Clipboard history.
 		# Move to clipboard list so element selected event can pick it up.
 		# #9103: if clipboard is empty, a status message is displayed instead, and luckily it is located where clipboard data items can be found.
