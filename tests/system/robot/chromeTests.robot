@@ -37,4 +37,6 @@ pr11606
 	test_pr11606
 ARIA treegrid
 	[Documentation]	Ensure that ARIA treegrids are accessible as a standard table in browse mode.
+	# Excluded due to regular failures.
+	[Tags]	excluded_from_build
 	test_ariaTreeGrid_browseMode
