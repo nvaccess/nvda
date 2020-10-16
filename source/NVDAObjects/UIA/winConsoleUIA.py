@@ -362,7 +362,6 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		movement."""
 		return consoleUIATextInfo if self.is21H1Plus else consoleUIATextInfoPre21H1
 
-
 	def detectPossibleSelectionChange(self):
 		try:
 			return super().detectPossibleSelectionChange()
