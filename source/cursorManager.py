@@ -62,7 +62,13 @@ class FindDialog(wx.Dialog):
 		caseSensitive = self.caseSensitiveCheckBox.GetValue()
 		# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
 		# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
-		core.callLater(100, self.activeCursorManager.doFindText, text, caseSensitive=caseSensitive, reverse=self.reverse)
+		core.callLater(
+			100,
+			self.activeCursorManager.doFindText,
+			text,
+			caseSensitive=caseSensitive,
+			reverse=self.reverse
+		)
 		self.Destroy()
 
 	def onCancel(self, evt):
@@ -165,7 +171,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		CursorManager._lastFindText=text
 		CursorManager._lastCaseSensitivity=caseSensitive
 
-	def script_find(self,gesture, reverse=False):
+	def script_find(self, gesture, reverse=False):
 		# #8566: We need this to be a modal dialog, but it mustn't block this script.
 		def run():
 			gui.mainFrame.prePopup()
