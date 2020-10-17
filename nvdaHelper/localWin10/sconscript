@@ -1,15 +1,15 @@
 ###
-#This file is a part of the NVDA project.
-#URL: http://www.nvaccess.org/
-#Copyright 2016-2020 NV Access Limited, Leonard de Ruijter
-#This program is free software: you can redistribute it and/or modify
-#it under the terms of the GNU General Public License version 2.0, as published by
-#the Free Software Foundation.
-#This program is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-#This license can be found at:
-#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# This file is a part of the NVDA project.
+# URL: http://www.nvaccess.org/
+# Copyright 2016-2020 NV Access Limited, Leonard de Ruijter
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2.0, as published by
+# the Free Software Foundation.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# This license can be found at:
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
 import os
@@ -23,7 +23,9 @@ Import(
 	'localLib',
 )
 
-env = env.Clone()
+
+# Ignoring Flake8 F821: 'undefined name' due to nonstandard SCons import
+env = env.Clone()  # noqa: F821
 
 localWin10Lib = env.SharedLibrary(
 	target="nvdaHelperLocalWin10",
@@ -32,7 +34,10 @@ localWin10Lib = env.SharedLibrary(
 		'oneCoreSpeech.cpp',
 		'uwpOcr.cpp',
 	],
-	LIBS=["WindowsApp", localLib[2]],
+	LIBS=[
+		"WindowsApp",
+		# Ignoring Flake8 F821: 'undefined name' due to nonstandard SCons import
+		localLib[2]],  # noqa: F821
 )
 
 # UWP dlls can only be dynamically linked with the CRT,
