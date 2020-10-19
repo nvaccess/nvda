@@ -1,8 +1,7 @@
-#editableText.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Davy Kager
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2020 NV Access Limited, Davy Kager, Julien Cochuyt
 
 """Common support for editable text.
 @note: If you want editable text functionality for an NVDAObject,
@@ -267,7 +266,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 	def script_caret_backspaceWord(self,gesture):
 		self._backspaceScriptHelper(textInfos.UNIT_WORD,gesture)
 
-	def script_caret_delete(self,gesture):
+	def _deleteScriptHelper(self, unit, gesture):
 		try:
 			info=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
@@ -279,8 +278,14 @@ class EditableText(TextContainerObject,ScriptableObject):
 		gesture.send()
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
 		caretMoved,newInfo=self._hasCaretMoved(bookmark,origWord=word)
-		self._caretScriptPostMovedHelper(textInfos.UNIT_CHARACTER,gesture,newInfo)
+		self._caretScriptPostMovedHelper(unit, gesture, newInfo)
 		braille.handler.handleCaretMove(self)
+
+	def script_caret_deleteCharacter(self, gesture):
+		self._deleteScriptHelper(textInfos.UNIT_CHARACTER, gesture)
+
+	def script_caret_deleteWord(self, gesture):
+		self._deleteScriptHelper(textInfos.UNIT_WORD, gesture)
 
 	__gestures = {
 		"kb:upArrow": "caret_moveByLine",
@@ -299,11 +304,18 @@ class EditableText(TextContainerObject,ScriptableObject):
 		"kb:end": "caret_moveByCharacter",
 		"kb:control+home": "caret_moveByLine",
 		"kb:control+end": "caret_moveByLine",
-		"kb:delete": "caret_delete",
-		"kb:numpadDelete": "caret_delete",
+		"kb:delete": "caret_deleteCharacter",
+		"kb:shift+delete": "caret_deleteCharacter",
+		"kb:numpadDelete": "caret_deleteCharacter",
+		"kb:shift+numpadDelete": "caret_deleteCharacter",
+		"kb:control+delete": "caret_deleteWord",
+		"kb:control+numpadDelete": "caret_deleteWord",
 		"kb:backspace": "caret_backspaceCharacter",
+		"kb:shift+backspace": "caret_backspaceCharacter",
 		"kb:control+backspace": "caret_backspaceWord",
 	}
+
+	_autoSelectDetectionEnabled = False
 
 	def initAutoSelectDetection(self):
 		"""Initialise automatic detection of selection changes.
@@ -315,10 +327,13 @@ class EditableText(TextContainerObject,ScriptableObject):
 			self._lastSelectionPos=None
 		self.isTextSelectionAnchoredAtStart=True
 		self.hasContentChangedSinceLastSelection=False
+		self._autoSelectDetectionEnabled = True
 
 	def detectPossibleSelectionChange(self):
 		"""Detects if the selection has been changed, and if so it speaks the change.
 		"""
+		if not self._autoSelectDetectionEnabled:
+			return
 		try:
 			newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		except:
@@ -341,6 +356,13 @@ class EditableText(TextContainerObject,ScriptableObject):
 			self.isTextSelectionAnchoredAtStart=False
 		elif newInfo.compareEndPoints(oldInfo,"endToEnd")!=0:
 			self.isTextSelectionAnchoredAtStart=True
+
+	def terminateAutoSelectDetection(self):
+		""" Terminate automatic detection of selection changes.
+		This should be called when the object loses focus.
+		"""
+		self._lastSelectionPos = None
+		self._autoSelectDetectionEnabled = False
 
 class EditableTextWithoutAutoSelectDetection(EditableText):
 	"""In addition to L{EditableText}, provides scripts to report appropriately when the selection changes.

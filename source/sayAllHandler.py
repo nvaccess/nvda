@@ -4,6 +4,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 import weakref
+import garbageHandler
 import speech
 import synthDriverHandler
 from logHandler import log
@@ -40,7 +41,8 @@ def readObjects(obj):
 	_activeSayAll = weakref.ref(reader)
 	reader.next()
 
-class _ObjectsReader(object):
+
+class _ObjectsReader(garbageHandler.TrackedObject):
 
 	def __init__(self, root):
 		self.walker = self.walk(root)
@@ -61,7 +63,7 @@ class _ObjectsReader(object):
 		if self.prevObj:
 			# We just started speaking this object, so move the navigator to it.
 			api.setNavigatorObject(self.prevObj, isFocus=lastSayAllMode==CURSOR_CARET)
-			winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED | winKernel.ES_DISPLAY_REQUIRED)
+			winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
 		# Move onto the next object.
 		self.prevObj = obj = next(self.walker, None)
 		if not obj:
@@ -76,11 +78,16 @@ class _ObjectsReader(object):
 def readText(cursor):
 	global lastSayAllMode, _activeSayAll
 	lastSayAllMode=cursor
-	reader = _TextReader(cursor)
+	try:
+		reader = _TextReader(cursor)
+	except NotImplementedError:
+		log.debugWarning("Unable to make reader", exc_info=True)
+		return
 	_activeSayAll = weakref.ref(reader)
 	reader.nextLine()
 
-class _TextReader(object):
+
+class _TextReader(garbageHandler.TrackedObject):
 	"""Manages continuous reading of text.
 	This is intended for internal use only.
 
@@ -105,15 +112,17 @@ class _TextReader(object):
 	def __init__(self, cursor):
 		self.cursor = cursor
 		self.trigger = SayAllProfileTrigger()
-		self.trigger.enter()
+		self.reader = None
 		# Start at the cursor.
 		if cursor == CURSOR_CARET:
 			try:
 				self.reader = api.getCaretObject().makeTextInfo(textInfos.POSITION_CARET)
-			except (NotImplementedError, RuntimeError):
-				return
+			except (NotImplementedError, RuntimeError) as e:
+				raise NotImplementedError("Unable to make TextInfo: " + str(e))
 		else:
 			self.reader = api.getReviewPosition()
+		# #10899: SayAll profile can't be activated earlier because they may not be anything to read
+		self.trigger.enter()
 		self.speakTextInfoState = speech.SpeakTextInfoState(self.reader.obj)
 		self.numBufferedLines = 0
 
@@ -169,8 +178,7 @@ class _TextReader(object):
 			reason=controlTypes.REASON_SAYALL,
 			useCache=state
 		)
-		speechGen = speech.GeneratorWithReturn(speechGen)
-		seq = speech._flattenNestedSequences(speechGen)
+		seq = list(speech._flattenNestedSequences(speechGen))
 		seq.insert(0, cb)
 		# Speak the speech sequence.
 		spoke = speech.speakWithoutPauses(seq)
@@ -207,7 +215,7 @@ class _TextReader(object):
 			updater.updateCaret()
 		if self.cursor != CURSOR_CARET or config.conf["reviewCursor"]["followCaret"]:
 			api.setReviewPosition(updater, isCaret=self.cursor==CURSOR_CARET)
-		winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED | winKernel.ES_DISPLAY_REQUIRED)
+		winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
 		if self.numBufferedLines == 0:
 			# This was the last line spoken, so move on.
 			self.nextLine()

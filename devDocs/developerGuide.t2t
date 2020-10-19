@@ -72,6 +72,7 @@ Subsequent lines contain a textual identifier used to identify the symbol, a tab
 For example:
 ```
 . sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
+dates with .	\b(\d\d)\.(\d\d)\.(\d{2}|\d{4})\b
 ```
 
 Again, the English symbols are inherited by all other locales, so you need not include any complex symbols already defined for English.
@@ -98,6 +99,8 @@ Certain characters cannot be typed into the file, so the following special seque
  - \f: form feed
  - \#: # character (needed because # at the start of a line denotes a comment)
 - replacement: The text which should be spoken for the symbol.
+If the symbol is a complex symbol, \1, \2, etc. can be used to refer to the groups matches, which will be inlined in the replacement, allowing for simpler rules.
+This also means that to get a \ character in the replacement, one has to type \\.
 - level: The symbol level at which the symbol should be spoken.
 The symbol level is configured by the user and specifies the amount of symbols that should be spoken.
 This field should contain one of the levels "none", "some", "most", "all" or "char", or "-" to use the default.
@@ -132,6 +135,13 @@ This line appears in the French symbols.dic file.
 It means that the ". sentence ending" complex symbol should be spoken as "point".
 Level and preserve are not specified, so they will be taken from English.
 A display name is provided so that French users will know what the symbol represents.
+
+```
+dates with .	\1 point \2 point \3	all	norep	# date avec points
+```
+This line appears in the French symbols.dic file.
+It means that the first, second, and third groups of the match will be included, separated by the word 'point'.
+The effect is thus to replace the dots from the date with the word 'point'.
 
 Please see the file locale\en\symbols.dic for the English definitions which are inherited for all locales.
 This is also a good full example.
@@ -179,8 +189,9 @@ The following few sections will talk separately about App Modules and Global Plu
 After this point, discussion is again more general.
 
 ++ Basics of an App Module ++
-App Module files have a .py extension, and are named the same as the main executable of the application for which you wish them to be used.
+App Module files have a .py extension, and are named the same as either the main executable of the application for which you wish them to be used or the package inside a host executable.
 For example, an App Module for notepad would be called notepad.py, as notepad's main executable is called notepad.exe.
+For apps hosted inside host executables, see the section on app modules for hosted apps.
 
 App Module files must be placed in the appModules subdirectory of an add-on, or of the scratchpad directory of the NVDA user configuration directory.
   
@@ -235,6 +246,40 @@ Events will be covered in greater detail later.
 
 As with other examples in this guide, remember to delete the created app module when you are finished testing and then restart NVDA or reload plugins, so that original functionality is restored.
 
+++ App modules for hosted apps ++
+Some executables host various apps inside.
+These include javaw.exe for running various java programs and wwahost.exe for some apps in Windows 8 and later.
+
+If an app runs inside a host executable, the name of the app module must be the name as defined by the host executable, which can be found through AppModule.appName property.
+For example, an app module for a java app named "test" hosted inside javaw.exe must be named test.py.
+For apps hosted inside wwahost, not only must the app module name be the name of the loaded app, but the app module must subclass the app module class found in wwahost.
+
+++ Example 2: an app module for an app hosted by wwahost.exe ++
+The following example is same as Notepad app module above except this is for an app hosted by wwahost.exe.
+
+```
+--- start ---
+# wwahost/test App Module for NVDA
+# Developer guide example 2
+
+from nvdaBuiltin.appModules.wwahost import *
+
+class AppModule(AppModule):
+
+	def event_gainFocus(self, obj, nextHandler):
+		import tones
+		tones.beep(550, 50)
+		nextHandler()
+
+--- end ---
+```
+
+The biggest difference from Notepad app module is where wwahost app module comes from.
+As a built-in app module, wwahost can be imported from nvdaBuiltin.appModules.
+
+Another difference is how the app module class is defined.
+As wwahost app module provides necessary infrastructure for apps hosted inside, you just need to subclass the wwahost AppModule class.
+
 ++ Basics of a Global Plugin ++
 Global Plugin files have a .py extension, and should have a short unique name which identifies what they do.
 
@@ -246,7 +291,7 @@ This will all be covered in depth later.
 
 NVDA loads all global plugins as soon as it starts, and unloads them on exit.
 
-++ Example 2: a Global Plugin Providing a Script to Announce the NVDA Version ++
+++ Example 3: a Global Plugin Providing a Script to Announce the NVDA Version ++
 The following example Global Plugin Allows you to press NVDA+shift+v while anywhere in the Operating System to find out NVDA's version.
 This example is only to show you the basic layout of a Global Plugin.
 
@@ -260,7 +305,7 @@ From anywhere, you can now press NVDA+shift+v to have NVDA's version spoken and 
 ```
 --- start ---
 # Version announcement plugin for NVDA
-# Developer guide example 2
+# Developer guide example 3
 
 import globalPluginHandler
 from scriptHandler import script
@@ -433,6 +478,9 @@ The following keyword arguments can be used when applying the script decorator:
   This option defaults to False.
 - bypassInputHelp: A boolean indicating whether this script should run when input help is active.
   This option defaults to False.
+- resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
+  The constants for say all mode are prefixed with CURSOR_ and specified in the sayAllHandler modules.
+  If resumeSayAllMode is not specified, say all does not resume after this script.
 -
 
 Though the script decorator makes the script definition process a lot easier, there are more ways of binding gestures and setting script properties.
@@ -441,7 +489,7 @@ This dictionary should contain gesture identifier strings pointing to the name o
 You can also specify a description of the script in the function's docstring.
 Furthermore, an alternative way of specifying the script's category is by means of setting a "category" attribute on the script function to a string containing the name of the category.
 
-++ Example 3: A Global Plugin to Find out Window Class and Control ID ++
+++ Example 4: A Global Plugin to Find out Window Class and Control ID ++
 The following Global Plugin allows you to press NVDA+leftArrow to have the window class of the current focus announced, and NVDA+rightArrow to have the window control ID of the current focus announced.
 This example shows you how to define one or more scripts and gesture bindings on a class such as an App Module, Global Plugin or NVDA Object.
 
@@ -453,7 +501,7 @@ Once saved in the right place, either restart NVDA or choose Reload Plugins foun
 ```
 --- start ---
 #Window utility scripts for NVDA
-#Developer guide example 3
+#Developer guide example 4
 
 import globalPluginHandler
 from scriptHandler import script
@@ -535,7 +583,7 @@ Sleep Mode is very useful for self voicing applications that have their own scre
 Although sleep mode can be toggled on and off by the user with the key command NVDA+shift+s, a developer can choose to have sleep mode enabled by default for an application.
 This is done by providing an App Module for that application which simply sets sleepMode to True in the AppModule class.
 
-++ Example 4: A Sleep Mode App Module ++
+++ Example 5: A Sleep Mode App Module ++
 
 The following code can be copied and pasted in to a text file, then saved in the appModules directory with the name of the application you wish to enable sleep mode for.
 As always, the file must have a .py extension.
@@ -579,7 +627,7 @@ Inside this method, you should decide which custom NVDA Object class(es) (if any
 If a custom class should be used, it must be inserted into the class list, usually at the beginning.
 You can also remove classes chosen by NVDA from the class list, although this is rarely required.
 
-++ Example 5: Command to Retrieve the Length of Text in an Edit Field Using a Custom NVDA Object ++
+++ Example 6: Command to Retrieve the Length of Text in an Edit Field Using a Custom NVDA Object ++
 This app module for notepad provides a command to report the number of characters in edit fields.
 You can activate it using NVDA+l.
 Notice that the command is specific to edit fields; i.e. it only works while you are focused in an edit field, rather than anywhere in the application.
@@ -621,7 +669,7 @@ The event_NVDAObject_init method takes two arguments:
 
 Inside this method, you can check whether this object is relevant and then override properties accordingly.
 
-++ Example 6: Labelling the Notepad Edit Field Using event_NVDAObject_init ++
+++ Example 7: Labelling the Notepad Edit Field Using event_NVDAObject_init ++
 This app module for notepad makes NVDA report Notepad's main edit field as having a name of "content".
 That is, when it receives focus, NVDA will say "Content edit".
 
@@ -740,7 +788,7 @@ Each language directory can also contain gettext information, which is the syste
 As with the rest of NVDA, an nvda.mo compiled gettext database file should be placed in the LC_MESSAGES directory within this directory.
 to allow plugins in your add-on to access gettext message information via calls to _(), you must initialize  translations at the top of each Python module by calling addonHandler.initTranslation().
 For more information about gettext and NVDA translation in general, please read
-http://www.nvda-project.org/wiki/TranslatingNVDA
+https://github.com/nvaccess/nvda/wiki/Translating
 
 ++ Add-on Documentation ++[AddonDoc]
 Documentation for an add-on should be placed in a doc directory in the archive.
@@ -782,7 +830,9 @@ This allows the user to return to the session as it was left when it was closed,
 
 +++ Automatic Imports +++
 For convenience, the following modules and variables are automatically imported in the console:
-sys, os, wx, log (from logHandler), api, queueHandler, speech, braille
+sys, os, wx, log (from logHandler), api, queueHandler, config, controlTypes, textInfos, braille, speech, vision, appModules, globalPlugins
+
+See: pythonConsole.PythonConsole.initNamespace
 
 +++ Snapshot Variables +++[PythonConsoleSnapshotVariables]
 Whenever NVDA+control+z is pressed, certain variables available in the console will be assigned according to the current state of NVDA.
