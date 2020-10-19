@@ -95,8 +95,7 @@ env.Append(
 env.Append(CCFLAGS=[
 	'/W3',
 	'/WX',
-	'/std:c++17',
-	'/await'
+	'/std:c++17'
 ])
 if 'analyze' in debug:
 	env.Append(CCFLAGS=['/analyze'])
@@ -146,6 +145,11 @@ if 'RTC' in debug:
 #We always want debug symbols
 env.Append(PDB='${TARGET}.pdb')
 env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we have no need for unused symbols
+
+win10env = env.Clone()
+# Add C++ co-routine support
+win10env.Append(CXXFLAGS='/await')
+Export('win10env')
 
 if 'debugCRT' in debug:
 	env.Append(CCFLAGS=['/MTd'])
