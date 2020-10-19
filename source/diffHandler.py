@@ -169,13 +169,9 @@ class Difflib(DiffAlgo):
 def get_dmp_algo():
 	"""
 		This function returns a Diff Match Patch object if allowed by the user.
-		LiveText objects can override the diffAlgo property to
-		choose a diffAlgo object (overriding user preference)
-		if one is incompatible with a particular application.
-		As of NVDA 2020.4, DMP is experimental. Therefore,
-		subclasses should either use the base implementation to check the
-		user config, or return diffHandler.get_difflib_algo()
-		to forcibly use Difflib.
+		As of NVDA 2020.4, DMP is experimental and must be enabled by a user
+		setting. If not explicitly enabled by the user, this function returns
+		a Difflib instance instead.
 	"""
 	return (
 		_dmp
