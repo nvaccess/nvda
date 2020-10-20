@@ -81,7 +81,7 @@ class ChromeLib:
 		return filePath
 
 	def _wasStartMarkerSpoken(self, speech: str):
-		if not "document" in speech:
+		if "document" not in speech:
 			return False
 		documentIndex = speech.index("document")
 		marker = ChromeLib._beforeMarker
