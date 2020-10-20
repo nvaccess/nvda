@@ -125,7 +125,7 @@ class ChromeLib:
 		spy.wait_for_speech_to_finish()
 		nextSpeechIndex = spy.get_next_speech_index()
 		spy.emulateKeyPress(key)
-		spy.wait_for_speech_to_finish()
+		spy.wait_for_speech_to_finish(speechStartedIndex=nextSpeechIndex)
 		speech = spy.get_speech_at_index_until_now(nextSpeechIndex)
 		return speech
 

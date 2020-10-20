@@ -114,9 +114,11 @@ class NVDASpyLib:
 					return index
 			return -1
 
-	def _hasSpeechFinished(self):
+	def _hasSpeechFinished(self, speechStartedIndex: Optional[int] = None):
 		with self._speechLock:
-			return self.SPEECH_HAS_FINISHED_SECONDS < _timer() - self._lastSpeechTime_requiresLock
+			started = speechStartedIndex is None or speechStartedIndex < self.get_next_speech_index()
+			finished = self.SPEECH_HAS_FINISHED_SECONDS < _timer() - self._lastSpeechTime_requiresLock
+			return started and finished
 
 	def _devInfoToLog(self):
 		import api
@@ -202,9 +204,13 @@ class NVDASpyLib:
 			)
 		return speechIndex
 
-	def wait_for_speech_to_finish(self, maxWaitSeconds=5.0):
+	def wait_for_speech_to_finish(
+			self,
+			maxWaitSeconds=5.0,
+			speechStartedIndex: Optional[int] = None
+	):
 		_blockUntilConditionMet(
-			getValue=self._hasSpeechFinished,
+			getValue=lambda: self._hasSpeechFinished(speechStartedIndex=speechStartedIndex),
 			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
 			errorMessage="Speech did not finish before timeout"
 		)
