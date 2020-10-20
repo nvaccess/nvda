@@ -42,6 +42,7 @@ What's New in NVDA
 - NVDA no longer fails to read items in list views within a 64-bit application such as Tortoise SVN. (#8175)
 - ARIA treegrids are now exposed as normal tables in browse mode in both Firefox and Chrome. (#9715)
 - A reverse search can now be initiated with 'find previous' via NVDA+shift+F3 (#11770)
+- An NVDA script is no longer treated as being repeated if an unrelated key press happens in between the two executions of the script. (#11388) 
 
 
 == Changes for Developers ==
