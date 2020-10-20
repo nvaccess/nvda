@@ -226,7 +226,13 @@ def getLastScriptRepeatCount():
 
 
 def clearLastScript():
-	global _lastScriptRef, _lastScriptCount
+	"""Clears the variables that keeps track of the execution of duplicate scripts with in a certain amount of
+	time, so that next script execution will always be detected as a first execution of this script.
+	This function should only be called from the main thread.
+	"""
+
+	global _lastScriptTime, _lastScriptRef, _lastScriptCount
+	_lastScriptTime = 0
 	_lastScriptRef = None
 	_lastScriptCount = 0
 
