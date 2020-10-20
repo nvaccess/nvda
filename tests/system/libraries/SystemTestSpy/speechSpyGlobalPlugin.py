@@ -48,8 +48,9 @@ class NVDASpyLib:
 		self._nvdaSpeech_requiresLock = [  # requires thread locking before read/write
 			[""],  # initialise with an empty string, this allows for access via [-1]. This is equiv to no speech.
 		]
-		self._speechOccurred_requiresLock = False  # requires thread locking before read/write
 		self._lastSpeechTime_requiresLock = _timer()
+		#: Lock to protect members written in _onNvdaSpeech.
+		self._speechLock = threading.RLock()
 		self._isNvdaStartupComplete = False
 		self._allSpeechStartIndex = self.get_last_speech_index()
 		self._maxKeywordDuration = 30
@@ -72,8 +73,7 @@ class NVDASpyLib:
 	def _onNvdaSpeech(self, speechSequence=None):
 		if not speechSequence:
 			return
-		with threading.Lock():
-			self._speechOccurred_requiresLock = True
+		with self._speechLock:
 			self._lastSpeechTime_requiresLock = _timer()
 			self._nvdaSpeech_requiresLock.append(speechSequence)
 
@@ -83,7 +83,7 @@ class NVDASpyLib:
 		return ''.join(baseStrings).strip()
 
 	def _getSpeechAtIndex(self, speechIndex):
-		with threading.Lock():
+		with self._speechLock:
 			return self._getJoinedBaseStringsFromCommands(self._nvdaSpeech_requiresLock[speechIndex])
 
 	def get_speech_at_index_until_now(self, speechIndex: int) -> str:
@@ -91,14 +91,14 @@ class NVDASpyLib:
 		@param speechIndex:
 		@return: The speech joined together, see L{_getJoinedBaseStringsFromCommands}
 		"""
-		with threading.Lock():
+		with self._speechLock:
 			speechCommands = [
 				self._getJoinedBaseStringsFromCommands(x) for x in self._nvdaSpeech_requiresLock[speechIndex:]
 			]
 			return "\n".join(x for x in speechCommands if x and not x.isspace())
 
 	def get_last_speech_index(self) -> int:
-		with threading.Lock():
+		with self._speechLock:
 			return len(self._nvdaSpeech_requiresLock) - 1
 
 	def _getIndexOfSpeech(self, speech, searchAfterIndex: Optional[int] = None):
@@ -106,7 +106,7 @@ class NVDASpyLib:
 			firstIndexToCheck = 0
 		else:
 			firstIndexToCheck = 1 + searchAfterIndex
-		with threading.Lock():
+		with self._speechLock:
 			for index, commands in enumerate(self._nvdaSpeech_requiresLock[firstIndexToCheck:]):
 				index = index + firstIndexToCheck
 				baseStrings = [c.strip() for c in commands if isinstance(c, str)]
@@ -115,7 +115,7 @@ class NVDASpyLib:
 			return -1
 
 	def _hasSpeechFinished(self):
-		with threading.Lock():
+		with self._speechLock:
 			return self.SPEECH_HAS_FINISHED_SECONDS < _timer() - self._lastSpeechTime_requiresLock
 
 	def _devInfoToLog(self):
@@ -128,7 +128,7 @@ class NVDASpyLib:
 
 	def dump_speech_to_log(self):
 		log.debug("dump_speech_to_log.")
-		with threading.Lock():
+		with self._speechLock:
 			try:
 				self._devInfoToLog()
 			except Exception:
