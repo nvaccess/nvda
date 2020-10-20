@@ -492,7 +492,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.speakMessage, gesture.displayName)
 
 		gesture.reportExtra()
-
+		
 		# #2953: if an intercepted command Script (script that sends a gesture) is queued
 		# then queue all following gestures (that don't have a script) with a fake script so that they remain in order.
 		if not script and scriptHandler._numIncompleteInterceptedCommandScripts:
@@ -502,8 +502,11 @@ class InputManager(baseObject.AutoPropertyObject):
 		if script:
 			scriptHandler.queueScript(script, gesture)
 			return
-
-		raise NoInputGestureAction
+		else:
+			# Clear memorized last script to avoid getLastScriptRepeatCount detect a repeat
+			# in case an unbound gesture is executed between two identical bound gestures.
+			queueHandler.queueFunction(queueHandler.eventQueue, scriptHandler.clearLastScript)
+			raise NoInputGestureAction
 
 	def _get_isInputHelpActive(self):
 		"""Whether input help is enabled, wherein the function of each key pressed by the user is reported but not executed.
