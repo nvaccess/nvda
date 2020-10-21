@@ -267,14 +267,13 @@ class LiveText(NVDAObject):
 
 	def _get_diffAlgo(self):
 		"""
-			This property controls which diffing algorithms are supported by
+			This property controls which diffing algorithm should be used by
 			this object. Most subclasses should simply use the base
-			implementation, which returns either DMP (character-based diffing)
-			or Difflib (line-based diffing) depending on user preference.
-			However, if DMP causes problems in particular cases, this property
-			should be overridden to return diffHandler.get_difflib_algo() for
-			those cases to forcibly use Difflib, overriding a user's preference
-			for DMP.
+			implementation, which returns DMP (character-based diffing).
+			
+			@Note: DMP is experimental, and can be disallowed via user
+			preference. In this case, the prior stable implementation, Difflib
+			(line-based diffing), will be used.
 		"""
 		return diffHandler.get_dmp_algo()
 

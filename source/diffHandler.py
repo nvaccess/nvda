@@ -169,9 +169,9 @@ class Difflib(DiffAlgo):
 def get_dmp_algo():
 	"""
 		This function returns a Diff Match Patch object if allowed by the user.
-		As of NVDA 2020.4, DMP is experimental and must be enabled by a user
-		setting. If not explicitly enabled by the user, this function returns
-		a Difflib instance instead.
+		DMP is experimental and can be explicitly enabled/disabled by a user
+		setting to opt in or out of the experiment. If config does not allow
+		DMP, this function returns a Difflib instance instead.
 	"""
 	return (
 		_dmp
