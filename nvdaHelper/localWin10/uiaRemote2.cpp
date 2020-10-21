@@ -86,19 +86,6 @@ UiaArray<UiaTextRange> _remoteable_splitTextRangeByUnit(UiaOperationScope& scope
 	return ranges;
 }
 
-template<typename ItemType> void _remoteable_visitUiaArrayElements(UiaOperationScope& scope, UiaArray<ItemType>& array, std::function<void(UiaOperationScope& scope, typename UiaArray<ItemType>::_ItemWrapperType&)> visitorFunc) {
-	UiaUint arrayCount=array.Size();
-	UiaUint index=0;
-	scope.For([&](){},[&]() {
-		return index<arrayCount;
-	},[&](){
-		index+=1;
-	},[&]() {
-		auto element=array.GetAt(index);
-		visitorFunc(scope,element);
-	});
-}
-
 UiaBool _remoteable_appendAttributesAndTextForRange(UiaOperationScope& scope,UiaTextRange& textRange,const std::vector<int>& attribIDs,UiaArray<UiaVariant>& outArray, UiaBool ignoreMixedAttributes) {
 	UiaBool foundMixed=false;
 	UiaArray<UiaVariant> attribValues;
@@ -119,7 +106,7 @@ UiaBool _remoteable_appendAttributesAndTextForRange(UiaOperationScope& scope,Uia
 	}
 	scope.If(!foundMixed,[&]() {
 		outArray.Append(UiaVariant(textContentCommand_text));
-		_remoteable_visitUiaArrayElements(scope,attribValues,[&](UiaOperationScope& scope, auto& attribValue) {
+		scope.ForEach(attribValues,[&](auto& attribValue) {
 			outArray.Append(attribValue);
 		});
 		auto text=textRange.GetText(-1);
@@ -220,7 +207,7 @@ void _remoteable_visitChildRangesAndGaps(UiaOperationScope& scope, UiaTextPatter
 	auto tempRange=textRange.Clone();
 	tempRange.MoveEndpointByRange(TextPatternRangeEndpoint_End,tempRange,TextPatternRangeEndpoint_Start);
 	// for all children:
-	_remoteable_visitUiaArrayElements(scope,children,[&](UiaOperationScope& scope, auto& child) {
+	scope.ForEach(children,[&](auto& child) {
 		scope.If(child.IsNull(),[&]() {
 			localLog(INFO,L"Child is null. Skipping");
 			scope.Continue();
@@ -298,7 +285,7 @@ UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaEle
 	auto formatRanges=_remoteable_splitTextRangeByUnit(scope,textRange,TextUnit_Format);
 	UiaArray<UiaElement> oldAncestors;
 	// For each of the subranges:
-	_remoteable_visitUiaArrayElements(scope,formatRanges,[&](UiaOperationScope& scope, auto& formatRange) {
+	scope.ForEach(formatRanges,[&](auto& formatRange) {
 		localLog(INFO,L"Handling format range");
 		// Collect the ancestor UIAElements enclosing this range, up to the root element.
 		auto newAncestors=_remoteable_getAncestorsForTextRange(scope,formatRange,rootElement);
@@ -311,13 +298,13 @@ UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaEle
 		_remoteable_calculateAncestorsExitedAndEntered(scope,oldAncestors,newAncestors,elementsExited,elementsEntered);
 		// For each of the old ancestors exited,
 		// Record this in the generated textContent.
-		_remoteable_visitUiaArrayElements(scope,elementsExited,[&](UiaOperationScope& scope,auto& element) {
+		scope.ForEach(elementsExited,[&](auto& element) {
 			localLog(INFO,L"Exited element: "<<(element.GetName(false).get())<<L" "<<(element.GetLocalizedControlType(false).get()));
 			_remoteable_appendElementEndInfo(scope,element,content);
 		});
 		// for each of the ancestors now entered,
 		// Record all of their properties in the generated textContent.
-		_remoteable_visitUiaArrayElements(scope,elementsEntered,[&](UiaOperationScope& scope, auto& element) {
+		scope.ForEach(elementsEntered,[&](auto& element) {
 			localLog(INFO,L"Entered element: "<<(element.GetName(false).get())<<L" "<<(element.GetLocalizedControlType(false).get()));
 			_remoteable_appendElementStartInfo(scope,element,propIDs,content);
 		});
@@ -342,7 +329,7 @@ UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaEle
 				// Therefore, split this subrange into characters.
 				auto charRanges=_remoteable_splitTextRangeByUnit(scope,subrange,TextUnit_Character);
 				// for each of the character ranges:
-				_remoteable_visitUiaArrayElements(scope,charRanges,[&](UiaOperationScope& scope, auto& charRange) {
+				scope.ForEach(charRanges,[&](auto& charRange) {
 					// Record the text attributes and text for this subrange.
 					// this time, Mixed attribute values will simply be ignored,
 					// Though we don't expect that there would be any at the smallest resolution.
@@ -358,13 +345,13 @@ UiaArray<UiaVariant> _remoteable_getTextContent(UiaOperationScope& scope, UiaEle
 		});
 		// Clear the oldAncestors and copy the newAncestors to the old ready for the next loop iteration.
 		_remoteable_clearUiaArray(scope,oldAncestors);
-		_remoteable_visitUiaArrayElements(scope,newAncestors,[&](UiaOperationScope& scope, auto& element) {
+		scope.ForEach(newAncestors,[&](auto& element) {
 			oldAncestors.Append(element);
 		});
 	});
 	// Now having processed all the format ranges,
 	// Finally record element exits for all remaining oldAncestors.
-	_remoteable_visitUiaArrayElements(scope,oldAncestors,[&](UiaOperationScope& scope, auto& element) {
+	scope.ForEach(oldAncestors,[&](auto& element) {
 		localLog(INFO,L"Exit element: "<<(element.GetName(false).get())<<L" "<<(element.GetLocalizedControlType(false).get()));
 		_remoteable_appendElementEndInfo(scope,element,content);
 	});
