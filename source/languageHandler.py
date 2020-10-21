@@ -98,10 +98,7 @@ def getAvailableLanguages(presentational=False):
 	#Make a list of all the locales found in NVDA's locale dir
 	localesDir = os.path.join(globalVars.appDir, 'locale')
 	locales = [
-		x for x in os.listdir(localesDir) if (
-			not x.startswith('.')
-			and os.path.isfile(os.path.join(localesDir, x, 'lc_messages', 'nvda.mo'))
-		)
+		x for x in os.listdir(localesDir) if os.path.isfile(os.path.join(localesDir, x, 'LC_MESSAGES', 'nvda.mo'))
 	]
 	#Make sure that en (english) is in the list as it may not have any locale files, but is default
 	if 'en' not in locales:
