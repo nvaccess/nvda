@@ -13,29 +13,11 @@ import speech
 
 class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 	"""
-		NVDA's legacy Windows Console support.
+		Base class for NVDA's legacy Windows Console support.
 		This is used in situations where UIA isn't available.
 		Please consider using NVDAObjects.UIA.winConsoleUIA instead.
 	"""
 	STABILIZE_DELAY = 0.03
-
-	def initOverlayClass(self):
-		# Legacy consoles take quite a while to send textChange events.
-		# This significantly impacts typing performance, so don't queue chars.
-		if isinstance(self, KeyboardHandlerBasedTypedCharSupport):
-			self._supportsTextChange = False
-
-	def _get_diffAlgo(self):
-		# Non-enhanced legacy consoles use caret proximity to detect
-		# typed/deleted text.
-		# Single-character changes are not reported as
-		# they are confused for typed characters.
-		# Force difflib to keep meaningful edit reporting in these consoles.
-		if not isinstance(self, KeyboardHandlerBasedTypedCharSupport):
-			from diffHandler import get_difflib_algo
-			return get_difflib_algo()
-		else:
-			return super().diffAlgo
 
 	def _get_windowThreadID(self):
 		# #10113: Windows forces the thread of console windows to match the thread of the first attached process.
