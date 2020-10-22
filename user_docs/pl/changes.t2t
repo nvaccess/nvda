@@ -5,7 +5,7 @@
 
 = 2020.3 =
 To wydanie zawiera sporo poprawek dotyczących stabilności i szybkości działania szczególnie w pakiecie Microsoft Office. Dodano także ustawienia dotyczące ogłaszania grafik, jak i możliwość wyłączenia obsługi ekranu dotykowego.
-Dodano również możliwość odczytywania podkreślonego tekstu w przeglądarkach, ja i nowe niemieckie tablice brajlowskie.
+Dodano również możliwość odczytywania podkreślonego tekstu w przeglądarkach, jak i nowe niemieckie tablice brajlowskie.
 
 == Nowości ==
 - Dodano możliwość wyłączenia odczytywania grafik. Można to uczynić z poziomu ustawień formatowania dokumentów. Alternatywny tekst dla grafik będzie wciąż odczytywany. (#4837)
@@ -14,10 +14,10 @@ Dodano również możliwość odczytywania podkreślonego tekstu w przeglądarka
 - NVDA od teraz odczytuje kontrolki tylko do odczytu w technologii UIA. (#10494)
 - Występowanie podkreślonego tekstu jest od teraz ogłaszane zarówno w mowie, jak i w brajlu we wszystkich przeglądarkach internetowych. (#11436)
  - Opcja ta znajduje się w ustawieniach formatowania dokumentów.
-- Dodano możliwość mapowania klawiszy systemowych na zdarzenia wejścia NVDA. Odpowiednia kategoria znajduje się w ustawieniach zdarzeniń wejścia. (#6060)
+- Dodano możliwość mapowania klawiszy systemowych na zdarzenia wejścia NVDA. Odpowiednia kategoria znajduje się w ustawieniach zdarzeń wejścia. (#6060)
   - Aby to zrobić, wciśnij przycisk "dodaj" po wybraniu opcji "emulowane klawisze systemowe".
 - Od teraz wspierany jest model monitora brajlowskiego Handy Tech Active Braille z joystickiem. (#11655)
-- Opcja "Automatzczny tryb czytaniach przy ruchach kursora" jest od teraz zgodna z wyłączeniem opcji "automatycznie ustaw fokus do elementów fokusujących". (#11663)
+- Opcja "Automatyczny tryb czytania przy ruchach kursora" jest od teraz zgodna z wyłączeniem opcji "automatycznie ustaw fokus do elementów fokusujących". (#11663)
 
 
 == Zmiany ==
@@ -27,7 +27,7 @@ Dodano również możliwość odczytywania podkreślonego tekstu w przeglądarka
 - Zaktualizowano Espeak-NG do wersji 1.51-dev, commit 1fb68ffffea4
 - Od teraz możliwe jest używanie komend nawigacyjnych dla tabel w wielokolumnowych listach. (#8857)
 - W menedżerze dodatków, "nie" jest od teraz domyślną opcją, gdy użytkownik pytany jest o usunięcie dodatku. (#10015)
-- W programie Microsoft Excel, lista elementów wyświetla formóły w ich zlokalizowanej formie. (#9144)
+- W programie Microsoft Excel, lista elementów wyświetla formuły w ich zlokalizowanej formie. (#9144)
 - NVDA korzysta teraz z poprawnej terminologii dla uwag w programie Microsoft Excel. (#11311)
 - W przypadku przesunięcia kursora przeglądu do fokusa w trybie przeglądania, kursor ustawia się w pozycji wirtualnego kursora. (#9622)
 - Informacje ogłaszane w trybie przeglądania (takie jak informacje o formatowaniu), są teraz wyświetlane w lekko większym okienku na środku ekranu (#9910)
@@ -48,16 +48,16 @@ Dodano również możliwość odczytywania podkreślonego tekstu w przeglądarka
 - W przeglądarce Internet Explorer, indeksy listy są poprawnie odczytywane w przypadku, gdy pierwszym indeksem listy nie jest 1. (#8438)
 - W przeglądarce Google Chrome, NVDA ogłasza stan zaznaczenie dla wszystkich zaznaczalnych kontrolek, nie tylko pól wyboru. (#11377)
 - Ponownie możliwa jest nawigacja po pewnych kontrolkach gdy język NVDA ustawiony jest na aragoński. (#11384)
-- Program NVDA nie powinien już się zawieszać kiedy dokonywana jest błyskawiczna nawigacja, lub wpisywane są znaki z włączoną obslugą brajla w programie Microsoft Word. (#11431, #11425, #11414)
+- Program NVDA nie powinien już się zawieszać kiedy dokonywana jest błyskawiczna nawigacja, lub wpisywane są znaki z włączoną obsługą brajla w programie Microsoft Word. (#11431, #11425, #11414)
 - NVDA nie dodaje już nieistniejącej spacji gdy aktualny objekt nawigatora kopiowany jest do schowka. (#11438)
 - NVDA nie aktywuje już profilu "czytaj wszystko", gdy nie ma nic do odczytania. (#10899, #9947)
 - NVDA ponownie odczytuje listę funkcji dla Menedżera Usług Internetowych (IIS). (#11468)
 - NVDA nie pozwala już na zamykanie kanału karty dźwiękowej, Znacznie poprawiając  wydajność na niektórych urządzeniach. (#5172, #10721)
 - NVDA nie zamyka się, gdy przytrzymany jest skrót CTRL+Shift+Strzałka w dół. (#9463)
 - Od teraz NVDA ponownie ogłasza stan drzewa w aplikacji Google Drive. (#11520)
-- NVDA będzie automatycznie wykrywał NLS eReader Humanware monitor brajlowski połączony przez bluetooth ponieważ nazwa Bluetooth tego minitora brajlowskiego  od teraz jest zmieniona i brzmi "NLS eReader Humanware". (#11561)
+- NVDA będzie automatycznie wykrywał NLS eReader Humanware monitor brajlowski połączony przez bluetooth ponieważ nazwa Bluetooth tego monitora brajlowskiego  od teraz jest zmieniona i brzmi "NLS eReader Humanware". (#11561)
 - Niektóre głosy SAPI5 takie jak Ivona już nie omijają zdania. (#10901)
-- Duże ulepszenia performansów w Visual Studio Code. (#11533)
+- Duże ulepszenia wydajności w Visual Studio Code. (#11533)
 
 
 == Zmiany dla programistów ==
