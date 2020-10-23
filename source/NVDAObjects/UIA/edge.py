@@ -156,7 +156,7 @@ class EdgeTextInfo(UIATextInfo):
 		if obj.role==controlTypes.ROLE_COMBOBOX and obj.UIATextPattern:
 			field['states'].add(controlTypes.STATE_EDITABLE)
 		# report if the field is 'current'
-		field['current']=obj.isCurrent
+		field['current'] = obj.isCurrent
 		if obj.placeholder and obj._isTextEmpty:
 			field['placeholder']=obj.placeholder
 		# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
@@ -470,15 +470,18 @@ class EdgeNode(UIA):
 	# "false" is ignored by the regEx and will not produce a match
 	RE_ARIA_CURRENT_PROP_VALUE = re.compile("current=(?!false)(\w+);")
 
-	def _get_isCurrent(self):
+	def _get_isCurrent(self) -> controlTypes.IS_CURRENT:
 		ariaProperties=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
 		match = self.RE_ARIA_CURRENT_PROP_VALUE.search(ariaProperties)
-		log.debug("aria props = %s" % ariaProperties)
 		if match:
 			valueOfAriaCurrent = match.group(1)
-			log.debug("aria current value = %s" % valueOfAriaCurrent)
-			return valueOfAriaCurrent
-		return None
+			try:
+				return controlTypes.IS_CURRENT(valueOfAriaCurrent)
+			except ValueError:
+				log.debugWarning(
+					f"Unknown aria-current value: {valueOfAriaCurrent}, ariaProperties: {ariaProperties}"
+				)
+		return controlTypes.IS_CURRENT.NO
 
 	def _get_roleText(self):
 		roleText = self.ariaProperties.get('roledescription', None)
