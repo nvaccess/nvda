@@ -975,6 +975,8 @@ Tries to force this object to take the focus.
 		"""
 		return None
 
+	isCurrent: controlTypes.IS_CURRENT  #: type info for auto property _get_isCurrent
+
 	def _get_isCurrent(self) -> controlTypes.IS_CURRENT:
 		"""Gets the value that indicates whether this object is the current element in a set of related 
 		elements. This maps to aria-current.
