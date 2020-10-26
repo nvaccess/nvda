@@ -124,7 +124,7 @@ def nvdaControllerInternal_requestRegistration(uuidString):
 
 @WINFUNCTYPE(c_long, c_wchar_p, c_wchar_p)
 def nvdaControllerInternal_reportLiveRegion(text: str, politeness: str):
-	assert(isinstance(text, str), "Text isn't a string")
+	assert isinstance(text, str), "Text isn't a string"
 	assert isinstance(politeness, str), "Politeness isn't a string"
 	if not config.conf["presentation"]["reportDynamicContentChanges"]:
 		return -1
