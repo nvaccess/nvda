@@ -3287,13 +3287,40 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		if gui._isDebug():
 			log.debug("Loading cursor settings completed, now at %.2f seconds from start"%(time.time() - startTime))
 
-		minTimeout = int(config.conf.getConfigValidation(
-			("braille", "messageTimeout")
-		).kwargs["min"])
+		SHOW_MESSAGES_LABELS = [
+			# Translators: One of the show states of braille messages
+			# (the disabled mode turns off showing of braille messages completely).
+			_("Disabled"),
+			# Translators: One of the show states of braille messages
+			# (the timeout mode shows messages for the specific time).
+			_("Use timeout"),
+			# Translators: One of the show states of braille messages
+			# (the indefinitely mode prevents braille messages from disappearing automatically).
+			_("Show indefinitely"),
+		]
+		# Translators: The label for a setting in braille settings to combobox enabling user
+		# to decide if braille messages should be shown and automatically disappear from braille display.
+		showMessagesText = _("Show messages")
+		self.showMessagesList = sHelper.addLabeledControl(
+			showMessagesText,
+			wx.Choice,
+			choices=SHOW_MESSAGES_LABELS
+		)
+		self.bindHelpEvent("BrailleSettingsShowMessages", self.showMessagesList)
+		self.showMessagesList.Bind(wx.EVT_CHOICE, self.onShowMessagesChange)
+		if config.conf["braille"]["messageTimeout"] == 0:
+			self.showMessagesList.SetSelection(0)
+		elif config.conf["braille"]["noMessageTimeout"] == 0:
+			self.showMessagesList.SetSelection(1)
+		else:
+			self.showMessagesList.SetSelection(2)
+
+		# Minimal timeout value possible here is 1, because 0 disables showing of braille messages
+		# and is set using showMessagesList
+		minTimeout = 1
 		maxTimeOut = int(config.conf.getConfigValidation(
 			("braille", "messageTimeout")
 		).kwargs["max"])
-
 		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 		messageTimeoutText = _("Message &timeout (sec)")
 		self.messageTimeoutEdit = sHelper.addLabeledControl(
@@ -3304,14 +3331,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			initial=config.conf["braille"]["messageTimeout"]
 		)
 		self.bindHelpEvent("BrailleSettingsMessageTimeout", self.messageTimeoutEdit)
-
-		# Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
-		noMessageTimeoutLabelText = _("Show &messages indefinitely")
-		self.noMessageTimeoutCheckBox = sHelper.addItem(wx.CheckBox(self, label=noMessageTimeoutLabelText))
-		self.bindHelpEvent("BrailleSettingsNoMessageTimeout", self.noMessageTimeoutCheckBox)
-		self.noMessageTimeoutCheckBox.Bind(wx.EVT_CHECKBOX, self.onNoMessageTimeoutChange)
-		self.noMessageTimeoutCheckBox.SetValue(config.conf["braille"]["noMessageTimeout"])
-		if self.noMessageTimeoutCheckBox.GetValue():
+		if self.showMessagesList.GetSelection() != 1:
 			self.messageTimeoutEdit.Disable()
 
 		if gui._isDebug():
@@ -3367,8 +3387,11 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["braille"]["cursorBlinkRate"] = self.cursorBlinkRateEdit.GetValue()
 		config.conf["braille"]["cursorShapeFocus"] = self.cursorShapes[self.cursorShapeFocusList.GetSelection()]
 		config.conf["braille"]["cursorShapeReview"] = self.cursorShapes[self.cursorShapeReviewList.GetSelection()]
-		config.conf["braille"]["noMessageTimeout"] = self.noMessageTimeoutCheckBox.GetValue()
-		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
+		config.conf["braille"]["noMessageTimeout"] = self.showMessagesList.GetSelection() == 2
+		if self.showMessagesList.GetSelection() == 0:
+			config.conf["braille"]["messageTimeout"] = 0
+		else:
+			config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
 		tetherChoice = braille.handler.tetherValues[self.tetherList.GetSelection()][0]
 		if tetherChoice==braille.handler.TETHER_AUTO:
 			config.conf["braille"]["autoTether"] = True
@@ -3389,9 +3412,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 	def onBlinkCursorChange(self, evt):
 		self.cursorBlinkRateEdit.Enable(evt.IsChecked())
 
-	def onNoMessageTimeoutChange(self, evt):
-		self.messageTimeoutEdit.Enable(not evt.IsChecked())
-
+	def onShowMessagesChange(self, evt):
+		self.messageTimeoutEdit.Enable(evt.GetSelection() == 1)
 
 def showStartErrorForProviders(
 		parent: wx.Window,

@@ -1665,14 +1665,15 @@ This setting can also be toggled using NVDA+control+alt+t.
 ==== 화면 레이아웃 사용 ====[BrowseModeSettingsScreenLayout]
 단축키: NVDA+v
 
-이 옵션에서는 브라우즈 모드에서 내용이 표시될 때 링크와 기타 필드들과 같은 내용을 별도의 줄로 표시할 것인지 아니면 눈에 보이는 그대로 텍스트의 흐름 속에 그것들을 유지할 것인지를 지정할 수 있습니다. 이 옵션이 유효하면 그것들은 눈에 보이는 그대로 유지될 것입니다. 반대로 이 옵션이 해제되었다면, 그 필드들은 별도의 줄로 표시될 것입니다.
+이 옵션에서는 브라우즈 모드에서 내용이 표시될 때 링크와 기타 필드들과 같은 내용을 별도의 줄로 표시할 것인지 아니면 눈에 보이는 그대로 텍스트의 흐름 속에 그것들을 유지할 것인지를 지정할 수 있습니다.
+이 옵션이 유효하면 그것들은 눈에 보이는 그대로 유지될 것입니다. 반대로 이 옵션이 해제되었다면, 그 필드들은 별도의 줄로 표시될 것입니다.
 
-==== Enable browse mode on page load ====[BrowseModeSettingsEnableOnPageLoad]
-This checkbox toggles whether browse mode should be automatically enabled when loading a page.
-When this option is disabled, browse mode can still be manually activated on pages or in documents where browse mode is supported.
-See the [Browse Mode section #BrowseMode] for a list of applications supported by browse mode.
-Note that this option does not apply to situations where browse mode is always optional, e.g. in Microsoft Word.
-This option is enabled by default.
+==== 페이지가 로드되면 브라우즈 모드 활성화 ====[BrowseModeSettingsEnableOnPageLoad]
+이 체크박스는 페이지가 로드된 후 자동으로 브라우즈 모드를 활성화할지 토글합니다.
+이 옵션을 사용하지 않을 경우 브라우즈 모드를 지원하는 앱 또는 문서에서 브라우즈 모드를 수동으로 토글할 수 있습니다.
+브라우즈 모드를 지원하는 앱 목록은 [브라우즈 모드 섹션 #BrowseMode]에서 확인할 수 있습니다.
+본 설정은 마이크로소프트 워드와 같이 브라우즈 모드를 선택적으로 사용할 때에는 적용되지 않습니다.
+이 옵션은 초기값으로 유효하게 설정됩니다.
 
 ==== 페이지 로딩 시 자동으로 읽기 ====[BrowseModeSettingsAutoSayAll]
 이 체크박스는 브라우즈 모드에서 페이지가 로드된 후 그 페이지를 자동으로 읽을 것인지를 토글합니다.
@@ -1696,7 +1697,8 @@ This option is enabled by default.
 
 ==== 캐럿 이동 시 자동 포커스 모드 전환 ====[BrowseModeSettingsAutoPassThroughOnCaretMove]
 이 옵션이 체크되면 NVDA는 방향키를 사용할 때 포커스 모드로 진입하거나 나갈 수 있습니다.
-예를 들면 웹페이지에서 방향키로 편집창에 들어 갈 경우 NVDA는 자동으로 포커스 모드로 진입할 것입니다. 방향키로 편집창을 빠져 나올 경우 NVDA는 브라우즈 모드로 되돌아 올 것입니다.
+예를 들면 웹페이지에서 방향키로 편집창에 들어 갈 경우 NVDA는 자동으로 포커스 모드로 진입할 것입니다.
+방향키로 편집창을 빠져 나올 경우 NVDA는 브라우즈 모드로 되돌아 올 것입니다.
 
 ==== 포커스와 브라우즈 모드 전환시 경고음 재생 ====[BrowseModeSettingsPassThroughAudioIndication]
 만약 이 옵션을 선택하면 NVDA는 브라우즈 모드와 포커스 모드가 서로 전환될 때 특수한 소리를 출력하여 알려줍니다. 그러나 모드의 전환을 말해주지는 않습니다.
@@ -1704,6 +1706,16 @@ This option is enabled by default.
 ==== 브라우즈 모드외 명령을 문서가 처리하지 않도록 함 ====[BrowseModeSettingsTrapNonCommandGestures]
 본 설정은 현재 포커스된 문서에서 브라우즈 모드외 명령(즉 NvDA 명령이 아닌 키들)을 문서가 처리할지(문서에 보낼지)를 묻습니다(기본으로 선택되어 있음).
 예를 들어 본 옵션을 선택한 후 문서에서 J 키를 눌렀을때 브라우즈 모드 명령이 아니거나 또는 문서가 본 키를 사용한다 할찌라도 J 키는 문서에 보내지지 않습니다.
+브라우즈 모드 명령이 문서에 보내지지 않을때 윈도우에서 기본음이 재생됩니다.
+
+==== 자동으로 포커스 가능한 요소에 시스템 포커스 이동 ====[BrowseModeSettingsAutoFocusFocusableElements]
+단축키: NVDA+8
+
+본 옵션을 통해 브라우즈 모드로 탐색시 포커스 가능한 요소(링크, 폼 필드 등)에 시스템 포커스를 옮길지를 토글합니다(기본으로 선택되지 않음).
+본 옵션을 사용하지 않는 경우 포커스가 가능한 요소를 브라우즈 모드로 접근시 시스템 포커스는 움직이지 않습니다.
+이때 브라우즈 모드 탐색중 NVDA의 반응 속도가 빨라질 수 있습니다.
+시스템 포커스는 특정 요소를 활성화할때(버튼 누르기, 체크박스 선택 등) 옮겨지게 됩니다.
+본 옵션을 사용할시 특정 웹사이트 지원은 향상될 수 있으나 반응 속도 저하 등의 문제가 있을 수 있습니다.
 
 +++ 문서 서식 (NVDA+control+d) +++[DocumentFormattingSettings]
 본 페널에 나열된 대부분의 체크박스는 문서를 커서로 탐색할 때 어떠한 서식 정보를 알려줄 것인지를 설정합니다.
@@ -1715,7 +1727,9 @@ This option is enabled by default.
  - 글꼴 이름
  - 글꼴 크기
  - 글꼴 속성
+ - 위 첨자와 아래 첨자
  - 텍스트 강조
+ - 표시됨 (강조된 텍스트)
  - 텍스트 스타일
  - 색상
 - 문서 정보
@@ -1737,9 +1751,12 @@ This option is enabled by default.
 - 요소
  - 헤딩
  - 링크
+ - 그래픽
  - 목록(리스트)
  - 인용문
+ - 그룹
  - 랜드마크
+ - 아티클
  - 프레임
  - 클릭 가능 요소
  -
@@ -2084,23 +2101,6 @@ Specifically, following issues can be solved by running this tool:
 
 ++ 플러그인 재등록 ++[ReloadPlugins]
 이 옵션을 선택하면 NVDA 재시작 없이도 애플리케이션 모듈과 전역 플러그인을 다시 불러옵니다. 이 옵션은 개발자에게 유용합니다.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

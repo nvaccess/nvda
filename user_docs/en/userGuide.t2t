@@ -1298,13 +1298,13 @@ The selection indicator is not affected by this option, it is always dots 7 and 
 This option allows you to choose the shape (dot pattern) of the braille cursor when braille is tethered to review.
 The selection indicator is not affected by this option, it is always dots 7 and 8 without blinking.
 
+==== Show Messages ====[BrailleSettingsShowMessages]
+This is a combobox that allows you to select if NVDA should display braille messages and when they should disappear automatically.
+
 ==== Message Timeout (sec) ====[BrailleSettingsMessageTimeout]
 This option is a numerical field that controls how long NVDA messages are displayed on the braille display.
-Specifying 0 disables displaying of these messages completely.
 The NVDA message is imediately dismissed when pressing a routing key on the braille display, but appears again when pressing a corresponding key which triggers the message.
-
-==== Show Messages Indefinitely ====[BrailleSettingsNoMessageTimeout]
-This option allows NVDA messages to be displayed on the braille display indefinitely.
+This option is shown only if "Show Messages" is set to "Use timeout".
 
 %kc:setting
 ==== Tether Braille ====[BrailleTether]
@@ -1575,6 +1575,7 @@ Many Windows and controls show a small message (or tooltip) when you move the mo
 This checkbox, when checked, tells NVDA to report help balloons and toast notifications as they appear.
 - Help Balloons are like tooltips, but are usually larger in size, and are associated with system events such as a network cable being unplugged, or perhaps to alert you about Windows security issues.
 - Toast notifications have been introduced in Windows 10 and appear in the notification centre in the system tray, informing about several events (i.e. if an update has been downloaded, a new e-mail arrived in your inbox, etc.).
+-
 
 ==== Report Object Shortcut Keys ====[ObjectPresentationShortcutKeys]
 When this checkbox is checked, NVDA will include the shortcut key that is associated with a certain object or control when it is reported.
@@ -1850,7 +1851,7 @@ If you find that NVDA seems to be incorrectly tracking the caret E.g. it seems t
 
 ==== Debug logging categories ====[AdvancedSettingsDebugLoggingCategories]
 The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
-Logging these messages can resort in decreased performance and large log files.
+Logging these messages can result in decreased performance and large log files.
 Only turn one of these on if specifically instructed to by an NVDA developer e.g. when debugging why a braille display driver is not functioning correctly.
 
 ++ miscellaneous Settings ++[MiscSettings]

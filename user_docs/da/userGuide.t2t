@@ -263,8 +263,8 @@ For At slå tastaturhjælp til, skal du trykke på NVDA+1.
 For at slå tastaturhjælp fra igen, tryk på NVDA+1.
 Når tastaturhjælp er slået til, vil enhver udført kommando, såsom et tastetryk eller en udført berøringsbevægelse annoncere, hvilken handling den er knyttet til.
 Selve kommandoerne vil ikke blive udført, mens tastaturhjælp er slåët til.
-
 ++ NVDA-menuen ++[TheNVDAMenu]
+
 I NVDA-menuen kan du styre NVDA indstillingerne, få adgang til hjælp, gemme/gendanne din konfiguration, Ændre taleordbøger, få adgang til yderligere værktøjer og afslutte NVDA.
 
 For at komme til NVDA-menuen fra et hvilket som helst sted i Windows, mens NVDA kører, skal du Trykke NVDA+n på tastaturet eller udføre et dobbelttryk med to fingre.
@@ -919,7 +919,7 @@ Kommentarerne tilføjet via denne dialog har intet at gøre med "Noter".
 +++ Læsning af beskyttede celler +++[ExcelReadingProtectedCells]
 Hvis en projektmappe er blevet skrivebeskyttet, kan det være, det ikke er muligt at flytte fokus til de celler, der er låst for redigering.
 %kc:beginInclude
-For at kunne navigere til låste celler skal du skifte til gennemsynstilstand ved at trykke NVDA+Mellemrum og så bruge de almindelige bevægelseskommandoer i Excel, f.eks. piletasterne, til at bevæge dig rundt i alle cellerne i regnearket.
+For at kunne navigere til låste celler skal du skifte til gennemsynstilstand ved at trykke NVDA+Mellemrum og så bruge de almindelige kommandoer i Excel, f.eks. piletasterne, til at bevæge dig rundt i alle cellerne i regnearket.
 %kc:endInclude
 
 +++ Formularfelter +++[ExcelFormFields]
@@ -1038,7 +1038,7 @@ Hvis du vil gemme dine indstillinger og lukke dialogen, skal du bruge knappen "O
 Nogle indstillingskategorier har en tildelt tastaturkommando.
 Hvis kommandoen udføres, vil indstillingsdialogen åbnes og vise den pågældende indstillingskategori.
 Det er ikke alle kategorier, der kan tilgås vha. tastaturkommandoer.
-Hvis du gerne vil have let adgang til indstillingskategorier, som ikke har tilknyttet en genvejstast, kan du bruge [dialogen til kommandoer #InputGestures] til at tilføje en speciel inputbevægelse til dialogen, som en tastaturkommando eller berøringskommando.
+Hvis du gerne vil have let adgang til indstillingskategorier, som ikke har tilknyttet en genvejstast, kan du bruge [dialogen til håndtering af kommandoer #InputGestures] til at tilføje en bestemt bevægelse eller et tastetryk til dialogen.
 
 De tilgængelige indstillingskategorier i NVDAs indstillingsdialog vil blive beskrevet nedenfor.
 
@@ -1575,6 +1575,7 @@ En del vinduer og kontroller viser en lille meddelelse (eller et værktøjstip),
 Når denne check box er markeret, oplyser NVDA meddelelser og hjælpeballonerne, når de fremkommer.
 - Hjælpeballoner ligner værktøjstips med den forskel, at de som regel er større og er tilknyttet systemhændelser såsom at et netværkskabel er fjernet eller muligvis for at henlede opmærksomheden på Windows sikkerhedsproblemer.
 - Toast-meddelelser og bliver vist i handlingscenteret i systembakken, og informerer dig om diverse hændelser (f.eks. hvis en opdatering til Windows er blevet downloadet, en ny e-mail ankommet, osv).
+-
 
 ==== Oplys objektets genvejstaster ====[ObjectPresentationShortcutKeys]
 Når denne check box er markeret, medtager NVDA den genvejstast, der hører til et objekt eller en kontrol, under rapporteringen af det givne element.
@@ -1708,7 +1709,7 @@ med denne indstilling, som er slået til som udgangspunkt, kan du vælge om komm
 Hvis denne indstilling er slået til, og du f.eks. trykker på bogstavet j, vil tastetrykket blive forhindret i at komme videre til dokumentet, selv om det ikke er en kommando til hurtignavigation, og det heller ikke er sandsynligt, at det er en kommando i selve programmet.
 I dette tilfæld vil NVDA få Windows til at afspille en standardlyde, hver gang en kommando forhindres i at nå dokumentet.
 
-==== Placer automatisk systemfokus på fokuserbare elementer i gennemsynstilstand ====[BrowseModeSettingsAutoFocusFocusableElements]
+==== Placer automatisk systemfokus på fokuserbare elementer ====[BrowseModeSettingsAutoFocusFocusableElements]
 Tast: NVDA+8
 
 Denne indstilling bestemmer om systemfokus automatisk skal flyttes til fokuserbare elementer der kan overtage systemfokus (formfelter, links, osv), når du navigerer indhold med gennemsynstilstand. Denne indstilling er deaktiveret som standard.
@@ -1762,7 +1763,7 @@ Du kan tilpasse annoncering af:
  -
 -
 
-For at slå disse indstillinger til eller fra, uanset hvor du befinder dig, kan du knytte en inputbevægelse til indstillingen med [dialogen Håndter kommandoer #InputGestures].
+For at slå disse indstillinger til eller fra, uanset hvor du befinder dig, kan du knytte en bevægelse eller et tastetryk til indstillingen med [dialogen Håndter kommandoer #InputGestures].
 
 ==== Rapportér ændringer i formatering efter markøren ====[DocumentFormattingDetectFormatAfterCursor]
 Hvis denne indstilling er slået til, betyder det at NVDA forsøger at spore alle ændringer i formateringen på en linje, når den rapportérers, selvom dette måtte sænke NVDAs hastighed.   
@@ -1935,8 +1936,8 @@ Hvis en kommando er tilknyttet en bevægelse eller tastaturkommando, bliver den 
 For at tilføje en bevægelse eller et tastetryk til en kommando skal du vælge kommandoen og så trykke på Tilføj-knappen.
 Derefter skal du udføre den tilsvarende handling, du vil knytte til kommandoen, fx. trykke på en tast på tastaturet eller en knap på punktdisplayet.
 Ofte kan en bevægelse eller et tastetryk fortolkes på mere end én måde.
-Hvis du fx. trykker på en tast på tastaturet, kan det være, at tastetrykket skal være specifikt for enten Desktop-layout eller laptop-layout eller gælde for alle tastatur-layouts.
 I det tilfælde kommer der en menu til syne, hvor du kan vælge den mulighed, du vil have.
+Hvis du fx. trykker på en tast på tastaturet, kan det være, at tastetrykket skal være specifikt for enten Desktop-layout eller laptop-layout eller gælde for alle tastatur-layouts.
 
 Hvis du vil fjerne et tastetryk eller bevægelse fra en kommando, så vælg den pågældende kommando og tryk på Fjern-knappen.
 
@@ -1948,7 +1949,9 @@ Den emulerede tast vil herefter vises i kategorien "Emulerede tastaturtryk" og d
 
 Bemærk:
  - Emulerede tastaturtryk skal have en kommando tildelt, før du kan gemme dine indstillinger.
- - En kommando der benytter en funktionstast kan ikke tildeles et emuleret tastaturtryk uden funktionstast. F.eks. ved at indstille emuleret tastaturtryk "A" til kommandoen "Control+M" kan forårsage, at programmet eksempelvis kun modtager Control+A.
+ - En kommando der benytter en funktionstast kan ikke tildeles et emuleret tastaturtryk uden
+ funktionstast. F.eks. hvis man indstiller det emulerede tastaturtryk "A" til kommandoen "Control+M", ville dette forårsage at
+ programmet kun modtager Control+A.
  -
 
 Når du er færdig med dine ændringer, så tryk OK for at gemme dem eller Annuller for at kassere dem.
@@ -2085,7 +2088,7 @@ Dette vindue vil altid forsøge at åbne med samme dimensioner og samme placerin
 Så længe talevisning er slået til, opdateres den konstant med den tekst, der netop nu læses op.
 Hvis du klikker i viseren, eller hvis den får fokus, stoppes opdateringen dog midlertidigt, så det er muligt at markere eller kopiere det aktuelle indhold.
 
-Hvis du gerne vil kunne slå talevisning til og fra, uanset hvor du befinder dig på computeren, kan du tilknytte en speciel inputbevægelse med [dialogen kommandoer #InputGestures].
+Hvis du gerne vil kunne slå talevisning til og fra, uanset hvor du befinder dig på computeren, kan du tilknytte en bestemt bevægelse eller et tastetryk med [dialogen "Håndter kommandoer" #InputGestures].
 
 ++ Punktskriftsviser ++[BrailleViewer]
 Af hensyn til seende software-udviklere og personer, der ønsker at demonstrere NVDA for seende indeholder NVDA et flydende vindue, der giver mulighed for at se al den tekst, som NVDA i øjeblikket læser op gengivet som punktskrift visuelt på skærmen.
@@ -2148,7 +2151,7 @@ Hvis du benytter en ældre version af NVDA, kan det også være, at nyere tilfø
 Hvis du forsøger at installere en inkompatibel tilføjelsespakke, vil der fremkomme en fejl samt en beskrivelse af hvorfor pakken ikke kunne installeres.
 For at gennemgå disse inkompatible tilføjelser, kan du bruge knappen "Vis inkompatible tilføjelser...".
 
-Hvis du gerne vil kunne nå dialogen til styring af tilføjelsesprogrammer fra hvor som helst på computeren, kan du tilknytte en inputbevægelse med [dialogen kommandoer [InputGestures].
+Hvis du gerne vil kunne nå dialogen til styring af tilføjelsesprogrammer fra hvor som helst på computeren, kan du tilknytte en bevægelse eller et tastetryk med [dialogen Håndter kommandoer" [InputGestures].
 
 +++ Styring af inkompatible tilføjelser +++[incompatibleAddonsManager]
 Knappen "Vis inkompatible tilføjelser...", der kan tilgåes fra dialogen til styring af tilføjelsesprogrammer, vil åbne en dialog, hvorfra du kan administrere og gennemse inkompatible tilføjelser, samt hvorfor disse anses for at være inkompatible med din version af NVDA.
@@ -2255,6 +2258,7 @@ Følgende displays understøtter denne funktionalitet:
 - Optelec ALVA 6 series
 - HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
 - Eurobraille Esys/Esytime/Iris displays
+- Nattiq nBraille displays
 -
 
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
@@ -3039,6 +3043,22 @@ Læs venligst dokumentationen for det pågældende display der beskriver, hvor d
 | alt-tast | punkt8+mellemrum, l6 |
 | Tryk Alt-tasten | punkt1+punkt8+mellemrum, punkt4+punkt8+mellemrum |
 | Slå HID-tastatursimulation til og fra | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
+%kc:endInclude
+
+++ Nattiq nBraille Displays ++[NattiqTechnologies]
+NVDA understøtter punktdisplays fra [Nattiq Technologies https://www.nattiq.com/] når de forbindes via USB.
+Windows 10 vil automatisk forbinde til punktdisplayet. Hvis du bruger ældre versioner af Windows (f.eks. Windows 7) skal du installere driveren.
+Disse kan hentes fra producentens hjemmeside.
+
+Følgende er tastekombinationerne til  Nattiq Technologies displays ved brug af NVDA.
+Læs venligst dokumentationen for det pågældende display der beskriver, hvor disse taster findes.
+%kc:beginInclude
+|| Navn | Tast |
+| Rul punktdisplay tilbage | op |
+| Rul punktdisplay fremad | ned |
+| Flyt punktdisplay til forrige linje | venstre |
+| Flyt punktdisplay til næste linje | højre |
+| Flyt til punktcelle | Markørknapper |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
