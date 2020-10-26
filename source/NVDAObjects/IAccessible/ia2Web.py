@@ -35,7 +35,7 @@ class Ia2Web(IAccessible):
 		return info
 
 	def _get_isCurrent(self) -> controlTypes.IS_CURRENT:
-		ia2attrCurrent:str = self.IA2Attributes.get("current", "false")
+		ia2attrCurrent: str = self.IA2Attributes.get("current", "false")
 		try:
 			return controlTypes.IS_CURRENT(ia2attrCurrent)
 		except ValueError:
