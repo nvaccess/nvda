@@ -289,6 +289,7 @@ def test_ariaTreeGrid_browseMode():
 		])
 	)
 
+
 def ARIAInvalid_spellingAndGrammar():
 	"""
 	Tests ARIA invalid values of "spelling", "grammar" and "spelling, grammar".
