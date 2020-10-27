@@ -20,6 +20,7 @@ What's New in NVDA
 - When reading with say all in browse mode, the find next and find previous commands do not stop reading anymore if Allow skim reading option is enabled; say all rather resumes from after the next or previous found term. (#11563)
 - For HIMS braille displays F3 has been remapped to Space + dots 148. (#11710)
 - Improvements to the UX of the "braille message timeout" and "Show messages indefinitely" options. (#11602)
+- In web browsers and other applications that support browse mode, the Elements List dialog (NVDA+F7) can now be invoked when in focus mode. (#10453)
 
 
 == Bug Fixes ==
@@ -40,6 +41,9 @@ What's New in NVDA
 - NVDA should no longer freeze when waking the computer and focus lands in a Microsoft Edge document. (#11576)
 - It is no longer necessary to press tab or move focus after closing a context menu in MS Edge for browse mode to be functional again. (#11202)
 - NVDA no longer fails to read items in list views within a 64-bit application such as Tortoise SVN. (#8175)
+- ARIA treegrids are now exposed as normal tables in browse mode in both Firefox and Chrome. (#9715)
+- A reverse search can now be initiated with 'find previous' via NVDA+shift+F3 (#11770)
+- An NVDA script is no longer treated as being repeated if an unrelated key press happens in between the two executions of the script. (#11388) 
 
 
 == Changes for Developers ==
