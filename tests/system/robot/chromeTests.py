@@ -288,3 +288,30 @@ def test_ariaTreeGrid_browseMode():
 			"level 1  Treegrids are awesome Want to learn how to use them? aaron at thegoogle dot rocks  expanded",
 		])
 	)
+
+def ARIAInvalid_spellingAndGrammar():
+	"""
+	Tests ARIA invalid values of "spelling", "grammar" and "spelling, grammar".
+	"""
+	_chrome.prepareChrome(
+		r"""
+			<p>Big <span aria-invalid="spelling">caat</span> meos</p>
+			<p>Small <span aria-invalid="grammar">a dog</span> woofs</p>
+			<p>Fat <span aria-invalid="grammar, spelling">a ffrog</span> crokes</p>
+		"""
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"Big  spelling error  caat  meos"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"Small  grammar error  a dog  woofs"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"Fat  spelling error  grammar error  a ffrog  crokes"
+	)
