@@ -156,10 +156,16 @@ void _remoteable_calculateAncestorsExitedAndEntered(UiaOperationScope& scope, Ui
 	},[&]() {
 		index+=1;
 	},[&]() {
-		auto newElementIndex=(newCount-index)-UiaUint(1);
+		UiaUint newElementIndex=0;
+		newElementIndex = newCount;
+		newElementIndex -= index;
+		newElementIndex -= 1;
 		auto newElement=newAncestors.GetAt(newElementIndex);
 		scope.If(index<oldCount,[&]() {
-			auto oldElementIndex=(oldCount-index)-UiaUint(1);
+			UiaUint oldElementIndex=0;
+			oldElementIndex = oldCount;
+			oldElementIndex -= index;
+			oldElementIndex -= 1;
 			auto oldElement=oldAncestors.GetAt(oldElementIndex);
 			scope.If(_remoteable_compareUiaElements(scope,newElement,oldElement),[&]() {
 				exitCount=oldElementIndex;
