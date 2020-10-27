@@ -39,6 +39,11 @@ class ChromeLib:
 	def _getTestCasePath(filename):
 		return _pJoin(ChromeLib._testFileStagingPath, filename)
 
+	def exit_chrome(self):
+		spy = _NvdaLib.getSpyLib()
+		spy.emulateKeyPress('control+w')
+		process.wait_for_process(self.chromeHandle, timeout="1 minute", on_timeout="continue")
+
 	def start_chrome(self, filePath):
 		builtIn.log(f"starting chrome: {filePath}")
 		self.chromeHandle = process.start_process(
