@@ -27,6 +27,28 @@ class ExcelCell(UIA):
 			return
 		return self.UIAElement.currentItemStatus
 
+	def _get__isContentTooLargeForCell(self):
+		if not self.UIATextPattern:
+			return False
+		r = self.UIATextPattern.documentRange
+		vr = self.UIATextPattern.getvisibleRanges().getElement(0)
+		return len(vr.getText(-1)) < len(r.getText(-1))
+
+	def _get__nextCellHasContent(self):
+		nextCell = self.next
+		if nextCell and nextCell.UIATextPattern:
+			return bool(nextCell.UIATextPattern.documentRange.getText(-1))
+		return False
+
+	def _get_states(self):
+		states = super().states
+		if self._isContentTooLargeForCell:
+			if not self._nextCellHasContent:
+				states.add(controlTypes.STATE_OVERFLOWING)
+			else:
+				states.add(controlTypes.STATE_CROPPED)
+		return states
+
 	def _get_cellCoordsText(self):
 		if self.selectionContainer and self.selectionContainer.getSelectedItemsCount() > 1:
 			sc = self._getUIACacheablePropertyValue(UIAHandler.UIA_SelectionItemSelectionContainerPropertyId)
