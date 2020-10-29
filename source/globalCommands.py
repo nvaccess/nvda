@@ -2593,7 +2593,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("Windows 10 OCR not available"))
 			return
 		from contentRecog import uwpOcr, recogUi
-		recog = uwpOcr.UwpOcr(resultHandlerClass=recogUi.RecogResultNVDAObject)
+		recog = uwpOcr.UwpOcr()
 		recogUi.recognizeNavigatorObject(recog)
 	# Translators: Describes a command.
 	script_recognizeWithUwpOcr.__doc__ = _("Recognizes the content of the current navigator object with Windows 10 OCR")

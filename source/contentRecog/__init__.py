@@ -32,9 +32,6 @@ class ContentRecognizer(garbageHandler.TrackedObject, metaclass=ABCMeta):
 	"""Implementation of a content recognizer.
 	"""
 
-	def __init__(self, resultHandlerClass):
-		self.resultHandlerClass = resultHandlerClass
-
 	def getResizeFactor(self, width, height):
 		"""Return the factor by which an image must be resized
 		before it is passed to this recognizer.
@@ -88,10 +85,11 @@ class ContentRecognizer(garbageHandler.TrackedObject, metaclass=ABCMeta):
 		return True
 
 	def getResultHandler(self, result: Any):
-		"""Returns an instance of the resultHandlerClass initialized with recognition result.
-		Since the ResultHandlerClass's __init__ method generally contains code that presents the result,
-		the result will be presented only upon calling this method."""
-		handler = self.resultHandlerClass(result=result)
+		"""Returns an instance of the RecogResultNVDAObject initialized with recognition result.
+		This method can be overridden to customize result handling."""
+		from .recogUi import RecogResultNVDAObject
+		handler = RecogResultNVDAObject(result=result)
+		handler.setFocus()
 		return handler
 
 class RecogImageInfo(object):

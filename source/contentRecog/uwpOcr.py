@@ -75,13 +75,11 @@ class UwpOcr(ContentRecognizer):
 			return 4
 		return 1
 
-	def __init__(self, resultHandlerClass, language=None):
+	def __init__(self, language=None):
 		"""
 		@param language: The language code of the desired recognition language,
 			C{None} to use the user's configured language.
 		"""
-		super().__init__(resultHandlerClass)
-		self.resultHandlerClass = resultHandlerClass
 		if language:
 			self.language = language
 		else:

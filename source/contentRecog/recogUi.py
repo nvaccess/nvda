@@ -41,9 +41,6 @@ class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Wind
 		self.parent = parent = api.getFocusObject()
 		self.result = result
 		self._selection = self.makeTextInfo(textInfos.POSITION_FIRST)
-		# Since the __init__ method of a ResultHandlerClass is responsible for presenting the result,
-		# a call to setFocus is made here and not from an instance object of this class.
-		self.setFocus()
 		super(RecogResultNVDAObject, self).__init__(windowHandle=parent.windowHandle)
 
 	def makeTextInfo(self, position):
