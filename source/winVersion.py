@@ -61,7 +61,7 @@ def isWin10(version: Union[int, string] = 1507, atLeast: bool = True):
 			return winVersion.build == WIN10_VERSIONS_TO_BUILDS[version]
 	except KeyError:
 		from logHandler import log
-		log.error("Unknown Windows 10 version {}".format(version))
+		log.error(f"Unknown Windows 10 version {version}")
 		return False
 
 
