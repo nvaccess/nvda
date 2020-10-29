@@ -15,7 +15,13 @@ import py2exe as py2exeModule
 from glob import glob
 import fnmatch
 # versionInfo names must be imported after Gettext
-from versionInfo import formatBuildVersionString, name, version, publisher  # noqa: E402
+# Suppress E402 (module level import not at top of file)
+from versionInfo import (
+	formatBuildVersionString,
+	name,
+	version,
+	publisher
+)  # noqa: E402
 from versionInfo import *
 from py2exe import distutils_buildexe
 from py2exe.dllfinder import DllFinder

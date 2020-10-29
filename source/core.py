@@ -598,7 +598,7 @@ def main():
 		import diffHandler
 		diffHandler._dmp._terminate()
 	except Exception:
-		log.debug("Exception while terminating DMP", exc_info=True)
+		log.exception("Exception while terminating DMP")
 
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
