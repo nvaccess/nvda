@@ -42,7 +42,7 @@ WIN10_VERSIONS_TO_BUILDS = {
 }
 
 
-def isWin10(version: int = 1507, atLeast: bool = True):
+def isWin10(version: Union[int, string] = 1507, atLeast: bool = True):
 	"""
 	Returns True if NVDA is running on the supplied release version of Windows 10. If no argument is supplied, returns True for all public Windows 10 releases.
 	@param version: a release version of Windows 10 (such as 1903).
@@ -50,6 +50,10 @@ def isWin10(version: int = 1507, atLeast: bool = True):
 	"""
 	if winVersion.major != 10:
 		return False
+	# #11795: October 2020 Update is actually 20H2, not 2009.
+	if isinstance(version, int):
+		version = str(version)
+	assert isinstance(version, str)
 	try:
 		if atLeast:
 			return winVersion.build >= WIN10_VERSIONS_TO_BUILDS[version]
