@@ -5,6 +5,7 @@
 
 import sys
 import os
+from typing import Union
 import winUser
 
 winVersion=sys.getwindowsversion()
@@ -42,7 +43,7 @@ WIN10_VERSIONS_TO_BUILDS = {
 }
 
 
-def isWin10(version: Union[int, string] = 1507, atLeast: bool = True):
+def isWin10(version: Union[int, str] = 1507, atLeast: bool = True):
 	"""
 	Returns True if NVDA is running on the supplied release version of Windows 10. If no argument is supplied, returns True for all public Windows 10 releases.
 	@param version: a release version of Windows 10 (such as 1903).
