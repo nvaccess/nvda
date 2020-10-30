@@ -42,32 +42,33 @@ class DiffMatchPatch(DiffAlgo):
 	def _initialize(self):
 		"Start the nvda_dmp process if it is not already running."
 		if not DiffMatchPatch._proc:
-			log.debug("Starting diff-match-patch proxy")
-			if hasattr(sys, "frozen"):
-				dmp_path = (os.path.join(globalVars.appDir, "nvda_dmp.exe"),)
-			else:
-				dmp_path = (sys.executable, os.path.join(
-					globalVars.appDir, "..", "include", "nvda_dmp", "nvda_dmp.py"
-				))
-			DiffMatchPatch._proc = subprocess.Popen(
-				dmp_path,
-				creationflags=subprocess.CREATE_NO_WINDOW,
-				bufsize=0,
-				stdin=subprocess.PIPE,
-				stdout=subprocess.PIPE
-			)
+			with DiffMatchPatch._lock:
+				log.debug("Starting diff-match-patch proxy")
+				if hasattr(sys, "frozen"):
+					dmp_path = (os.path.join(globalVars.appDir, "nvda_dmp.exe"),)
+				else:
+					dmp_path = (sys.executable, os.path.join(
+						globalVars.appDir, "..", "include", "nvda_dmp", "nvda_dmp.py"
+					))
+				DiffMatchPatch._proc = subprocess.Popen(
+					dmp_path,
+					creationflags=subprocess.CREATE_NO_WINDOW,
+					bufsize=0,
+					stdin=subprocess.PIPE,
+					stdout=subprocess.PIPE
+				)
 
 	def _getText(self, ti: TextInfo) -> str:
 		return ti.text
 
 	def diff(self, newText: str, oldText: str) -> List[str]:
-		with DiffMatchPatch._lock:
-			try:
-				self._initialize()
-				if not newText and not oldText:
-					# Return an empty list here to avoid exiting
-					# nvda_dmp uses two zero-length texts as a sentinal value
-					return []
+		try:
+			if not newText and not oldText:
+				# Return an empty list here to avoid exiting
+				# nvda_dmp uses two zero-length texts as a sentinal value
+				return []
+			self._initialize()
+			with DiffMatchPatch._lock:
 				old = oldText.encode("utf-8")
 				new = newText.encode("utf-8")
 				# Sizes are packed as 32-bit ints in native byte order.
@@ -93,9 +94,9 @@ class DiffMatchPatch(DiffAlgo):
 					for line in buf.decode("utf-8").splitlines()
 					if line and not line.isspace()
 				]
-			except Exception:
-				log.exception("Exception in DMP, falling back to difflib")
-				return Difflib().diff(newText, oldText)
+		except Exception:
+			log.exception("Exception in DMP, falling back to difflib")
+			return Difflib().diff(newText, oldText)
 
 	def _terminate(self):
 		if DiffMatchPatch._proc:
