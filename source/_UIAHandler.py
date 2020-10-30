@@ -12,6 +12,7 @@ import comtypes.client
 from comtypes.automation import VT_EMPTY
 from comtypes import COMError
 from comtypes import *
+import enum
 import weakref
 import threading
 import time
@@ -43,6 +44,28 @@ HorizontalTextAlignment_Left=0
 HorizontalTextAlignment_Centered=1
 HorizontalTextAlignment_Right=2
 HorizontalTextAlignment_Justified=3
+
+# FillType enum
+class FillType(enum.IntEnum):
+	none = 0
+	color = 1
+	gradient = 2
+	picture = 3
+	pattern = 4
+
+FillTypeLabels = {
+	# Translators: a style of fill type (to color the inside of a control or text) 
+	FillType.none: pgettext("UIAHandler.FillType", "none"),
+	# Translators: a style of fill type (to color the inside of a control or text) 
+	FillType.color: pgettext("UIAHandler.FillType", "color"),
+	# Translators: a style of fill type (to color the inside of a control or text) 
+	FillType.gradient: pgettext("UIAHandler.FillType", "gradient"),
+	# Translators: a style of fill type (to color the inside of a control or text) 
+	FillType.picture: pgettext("UIAHandler.FillType", "picture"),
+	# Translators: a style of fill type (to color the inside of a control or text) 
+	FillType.pattern: pgettext("UIAHandler.FillType", "pattern"),
+}
+
 
 # The name of the WDAG (Windows Defender Application Guard) process
 WDAG_PROCESS_NAME=u'hvsirdpclient'
