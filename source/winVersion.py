@@ -30,6 +30,10 @@ def isUwpOcrAvailable():
 
 
 WIN10_VERSIONS_TO_BUILDS = {
+	1507: 10240,
+	1511: 10586,
+	# The 2015 builds were actually released in the same half of the year.
+	# Duplicate keys to handle this gracefully.
 	"15H1": 10240,
 	"15H2": 10586,
 	"16H2": 14393,
@@ -52,7 +56,8 @@ def isWin10(version: Union[int, str] = "15H1", atLeast: bool = True):
 	"""
 	if winVersion.major != 10:
 		return False
-	if isinstance(version, str):
+	ver = None
+	if version in WIN10_VERSIONS_TO_BUILDS:
 		ver = version
 	elif isinstance(version, int):
 		year = version // 100
