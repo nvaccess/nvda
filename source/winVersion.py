@@ -1,11 +1,13 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited
+# Copyright (C) 2006-2020 NV Access Limited, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import sys
 import os
 import winUser
+
+from typing import Union
 
 winVersion=sys.getwindowsversion()
 winVersionText="{v.major}.{v.minor}.{v.build}".format(v=winVersion)
@@ -28,36 +30,43 @@ def isUwpOcrAvailable():
 
 
 WIN10_VERSIONS_TO_BUILDS = {
-	1507: 10240,
-	1511: 10586,
-	1607: 14393,
-	1703: 15063,
-	1709: 16299,
-	1803: 17134,
-	1809: 17763,
-	1903: 18362,
-	1909: 18363,
-	2004: 19041,
-	2009: 19042,
+	"15H1": 10240,
+	"15H2": 10586,
+	"16H2": 14393,
+	"17H1": 15063,
+	"17H2": 16299,
+	"18H1": 17134,
+	"18H2": 17763,
+	"19H1": 18362,
+	"19H2": 18363,
+	"20H1": 19041,
+	"20H2": 19042,
 }
 
 
-def isWin10(version: int = 1507, atLeast: bool = True):
+def isWin10(version: Union[int, str] = "15H1", atLeast: bool = True):
 	"""
 	Returns True if NVDA is running on the supplied release version of Windows 10. If no argument is supplied, returns True for all public Windows 10 releases.
-	@param version: a release version of Windows 10 (such as 1903).
+	@param version: a release version of Windows 10 (such as 1903 or 19H1).
 	@param atLeast: return True if NVDA is running on at least this Windows 10 build (i.e. this version or higher).
 	"""
 	if winVersion.major != 10:
 		return False
+	if isinstance(version, str):
+		ver = version
+	elif isinstance(version, int):
+		year = version // 100
+		month = version % 100
+		half = 1 if month < 7 else 2
+		ver = f"{year}H{half}"
 	try:
 		if atLeast:
-			return winVersion.build >= WIN10_VERSIONS_TO_BUILDS[version]
+			return winVersion.build >= WIN10_VERSIONS_TO_BUILDS[ver]
 		else:
-			return winVersion.build == WIN10_VERSIONS_TO_BUILDS[version]
+			return winVersion.build == WIN10_VERSIONS_TO_BUILDS[ver]
 	except KeyError:
 		from logHandler import log
-		log.error("Unknown Windows 10 version {}".format(version))
+		log.error(f"Unknown Windows 10 version {version}")
 		return False
 
 
