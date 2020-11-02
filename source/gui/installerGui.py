@@ -158,7 +158,7 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 		)))
 
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
-		startOnLogonText = _("Start NVDA during sign-in")
+		startOnLogonText = _("Use NVDA during sign-in")
 		self.startOnLogonCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=startOnLogonText))
 		if globalVars.appArgs.enableStartOnLogon is not None:
 			self.startOnLogonCheckbox.Value = globalVars.appArgs.enableStartOnLogon
@@ -307,7 +307,7 @@ class PortableCreaterDialog(wx.Dialog):
 		directoryEntryControl = groupHelper.addItem(gui.guiHelper.PathSelectionHelper(self, browseText, dirDialogTitle))
 		self.portableDirectoryEdit = directoryEntryControl.pathControl
 		if globalVars.appArgs.portablePath:
-			self.portableDirectoryEdit.Value = os.path.abspath(globalVars.appArgs.portablePath)
+			self.portableDirectoryEdit.Value = globalVars.appArgs.portablePath
 
 		# Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 		copyConfText = _("Copy current &user configuration")
@@ -320,7 +320,7 @@ class PortableCreaterDialog(wx.Dialog):
 		self.startAfterCreateCheckbox = sHelper.addItem(wx.CheckBox(self, label=startAfterCreateText))
 		self.startAfterCreateCheckbox.Value = False
 
-		bHelper = sHelper.addDialogDismissButtons(gui.guiHelper.ButtonHelper(wx.HORIZONTAL))
+		bHelper = sHelper.addDialogDismissButtons(gui.guiHelper.ButtonHelper(wx.HORIZONTAL), separated=True)
 		
 		continueButton = bHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
 		continueButton.SetDefault()
@@ -342,6 +342,18 @@ class PortableCreaterDialog(wx.Dialog):
 			gui.messageBox(_("Please specify a directory in which to create the portable copy."),
 				_("Error"),
 				wx.OK | wx.ICON_ERROR)
+			return
+		if not os.path.isabs(self.portableDirectoryEdit.Value):
+			gui.messageBox(
+				# Translators: The message displayed when the user has not specified an absolute destination directory
+				# in the Create Portable NVDA dialog.
+				_("Please specify an absolute path (including drive letter)  in which to create the portable copy."),
+				# Translators: The message title displayed
+				# when the user has not specified an absolute destination directory
+				# in the Create Portable NVDA dialog.
+				_("Error"),
+				wx.OK | wx.ICON_ERROR
+			)
 			return
 		drv=os.path.splitdrive(self.portableDirectoryEdit.Value)[0]
 		if drv and not os.path.isdir(drv):
@@ -395,7 +407,7 @@ def doCreatePortable(portableDirectory,copyUserConfig=False,silent=False,startAf
 			shellapi.ShellExecute(
 				None,
 				None,
-				os.path.join(os.path.abspath(portableDirectory),'nvda.exe'),
+				os.path.join(portableDirectory, 'nvda.exe'),
 				None,
 				None,
 				winUser.SW_SHOWNORMAL

@@ -15,7 +15,7 @@ import controlTypes
 from logHandler import log
 from documentBase import DocumentWithTableNavigation
 from NVDAObjects.behaviors import Dialog, WebDialog 
-from . import IAccessible
+from . import IAccessible, Groupbox
 from .ia2TextMozilla import MozillaCompoundTextInfo
 import aria
 import api
@@ -91,6 +91,13 @@ class Ia2Web(IAccessible):
 		# super calls event_stateChange which updates braille, so no need to
 		# update braille here.
 
+	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
+		politeness = self.IA2Attributes.get('live', "off")
+		return next(
+			(v for v in aria.AriaLivePoliteness if v._name_.lower() == politeness.lower()),
+			aria.AriaLivePoliteness.OFF
+		)
+
 
 class Document(Ia2Web):
 	value = None
@@ -103,6 +110,10 @@ class Application(Document):
 
 class BlockQuote(Ia2Web):
 	role = controlTypes.ROLE_BLOCKQUOTE
+
+
+class Treegrid(Ia2Web):
+	role = controlTypes.ROLE_TABLE
 
 
 class Article(Ia2Web):
@@ -147,6 +158,14 @@ class Editor(Ia2Web, DocumentWithTableNavigation):
 			# Any of the above calls could throw a COMError, and sometimes a RuntimeError.
 			# Treet this as the cell not existing.
 			raise LookupError
+
+	def event_loseFocus(self):
+		# MozillaCompoundTextInfo caches the deepest object with the caret.
+		# But this can create a reference cycle if not removed.
+		# As we no longer need it once this object loses focus, we can delete it here.
+		self._lastCaretObj = None
+		super().event_loseFocus()
+
 
 class EditorChunk(Ia2Web):
 	beTransparentToMouse = True
@@ -207,6 +226,8 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	xmlRoles = obj.IA2Attributes.get("xml-roles", "").split(" ")
 	if iaRole == IAccessibleHandler.IA2_ROLE_SECTION and obj.IA2Attributes.get("tag", None) == "blockquote":
 		clsList.append(BlockQuote)
+	elif iaRole == oleacc.ROLE_SYSTEM_OUTLINE and "treegrid" in xmlRoles:
+		clsList.append(Treegrid)
 	elif iaRole == oleacc.ROLE_SYSTEM_DOCUMENT and xmlRoles[0] == "article":
 		clsList.append(Article)
 	elif xmlRoles[0] == "region" and obj.name:
@@ -219,6 +240,13 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 		clsList.append(Math)
 	elif xmlRoles[0] == "switch":
 		clsList.append(Switch)
+	elif iaRole == oleacc.ROLE_SYSTEM_GROUPING:
+		try:
+			# The Groupbox class uses sibling text as the description. This is
+			# inappropriate for IA2 web browsers.
+			clsList.remove(Groupbox)
+		except ValueError:
+			pass
 
 	if iaRole==oleacc.ROLE_SYSTEM_APPLICATION:
 		clsList.append(Application)

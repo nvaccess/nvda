@@ -29,6 +29,8 @@ import api
 import ui
 import braille
 import nvwave
+import globalVars
+
 
 class ProgressBar(NVDAObject):
 
@@ -182,8 +184,12 @@ class EditableTextWithAutoSelectDetection(EditableText):
 	"""
 
 	def event_gainFocus(self):
-		super(EditableText, self).event_gainFocus()
+		super().event_gainFocus()
 		self.initAutoSelectDetection()
+
+	def event_loseFocus(self):
+		self.terminateAutoSelectDetection()
+		super().event_loseFocus()
 
 	def event_caret(self):
 		super(EditableText, self).event_caret()
@@ -733,7 +739,9 @@ class _FakeTableCell(NVDAObject):
 		states = self.parent.states.copy()
 		if self.location and self.location.width == 0:
 			states.add(controlTypes.STATE_INVISIBLE)
+		states.discard(controlTypes.STATE_CHECKED)
 		return states
+
 
 class FocusableUnfocusableContainer(NVDAObject):
 	"""Makes an unfocusable container focusable using its first focusable descendant.
@@ -790,7 +798,7 @@ class EditableTextWithSuggestions(NVDAObject):
 		# Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
 		braille.handler.message(_("Suggestions"))
 		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
-			nvwave.playWaveFile(r"waves\suggestionsOpened.wav")
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsOpened.wav"))
 
 	def event_suggestionsClosed(self):
 		"""Called when suggestions list or container is closed.
@@ -798,7 +806,7 @@ class EditableTextWithSuggestions(NVDAObject):
 		By default NVDA will announce this via speech, braille or via a sound.
 		"""
 		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
-			nvwave.playWaveFile(r"waves\suggestionsClosed.wav")
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsClosed.wav"))
 
 class WebDialog(NVDAObject):
 	"""
