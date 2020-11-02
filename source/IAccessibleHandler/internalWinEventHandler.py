@@ -129,6 +129,11 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 			return
 
 		windowClassName = winUser.getClassName(window)
+		if windowClassName == "EXCEL7" and objectID > 0:
+			log.debug(
+				f"Dropping UIA proxied event for Excel7 window. "
+				f"WinEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+			)
 		if windowClassName == "ConsoleWindowClass":
 			# #10113: we need to use winEvents to track the real thread for console windows.
 			consoleWindowsToThreadIDs[window] = threadID
