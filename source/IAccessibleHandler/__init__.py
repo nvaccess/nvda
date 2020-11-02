@@ -325,6 +325,8 @@ IAccessibleRolesToNVDARoles = {
 	IA2_ROLE_BLOCK_QUOTE: controlTypes.ROLE_BLOCKQUOTE,
 	IA2.IA2_ROLE_LANDMARK: controlTypes.ROLE_LANDMARK,
 	IA2_ROLE_MARK: controlTypes.ROLE_MARKED_CONTENT,
+	IA2_ROLE_SUGGESTION: controlTypes.ROLE_SUGGESTION,
+	IA2_ROLE_COMMENT: controlTypes.ROLE_COMMENT,
 	# some common string roles
 	"frame": controlTypes.ROLE_FRAME,
 	"iframe": controlTypes.ROLE_INTERNALFRAME,

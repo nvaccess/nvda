@@ -158,6 +158,8 @@ ROLE_ARTICLE = 150
 ROLE_REGION = 151
 ROLE_FIGURE = 152
 ROLE_MARKED_CONTENT = 153
+ROLE_SUGGESTION = 154
+ROLE_COMMENT = 155
 
 STATE_UNAVAILABLE=0X1
 STATE_FOCUSED=0X2
@@ -506,6 +508,10 @@ roleLabels: Dict[int, str] = {
 	ROLE_FIGURE: _("figure"),
 	# Translators: Identifies marked (highlighted) content
 	ROLE_MARKED_CONTENT: _("marked content"),
+	# Translators: Identifies an edit suggestion in a document
+	ROLE_SUGGESTION: _("suggestion"),
+	# Translators: Identifies a comment in a document 
+	ROLE_COMMENT: _("comment"),
 }
 
 stateLabels: Dict[int, str] = {

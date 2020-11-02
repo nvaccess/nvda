@@ -88,7 +88,7 @@ class ControlField(Field):
 			or (role == controlTypes.ROLE_ARTICLE and not formatConfig["reportArticles"])
 			or (role == controlTypes.ROLE_MARKED_CONTENT and not formatConfig["reportHighlight"])
 			or (role in (controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME) and not formatConfig["reportFrames"])
-			or (role in (controlTypes.ROLE_DELETED_CONTENT,controlTypes.ROLE_INSERTED_CONTENT) and not formatConfig["reportRevisions"])
+			or (role in (controlTypes.ROLE_DELETED_CONTENT,controlTypes.ROLE_INSERTED_CONTENT, controlTypes.ROLE_SUGGESTION) and not formatConfig["reportRevisions"])
 			or (
 				(role == controlTypes.ROLE_LANDMARK or landmark)
 				and not formatConfig["reportLandmarks"]
@@ -158,6 +158,8 @@ class ControlField(Field):
 				controlTypes.ROLE_TABLE,
 				controlTypes.ROLE_ARTICLE,
 				controlTypes.ROLE_MARKED_CONTENT,
+				controlTypes.ROLE_SUGGESTION,
+				controlTypes.ROLE_COMMENT,
 			)
 			or (role == controlTypes.ROLE_EDITABLETEXT and (
 				controlTypes.STATE_READONLY not in states
