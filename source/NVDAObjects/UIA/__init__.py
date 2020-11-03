@@ -647,21 +647,33 @@ class UIATextInfo(textInfos.TextInfo):
 					if debug:
 						log.debug("NULL childRange. Skipping")
 					continue
-				clippedStart=clippedEnd=False
-				if index==lastChildIndex and childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,textRange,UIAHandler.TextPatternRangeEndpoint_End)>=0:
+				clippedStart = False
+				clippedEnd = False
+				if childRange.CompareEndpoints(
+					UIAHandler.TextPatternRangeEndpoint_Start,
+					textRange,
+					UIAHandler.TextPatternRangeEndpoint_End
+				) >= 0:
 					if debug:
 						log.debug("Child at or past end of textRange. Breaking")
 					break
-				if index==lastChildIndex:
-					lastChildEndDelta=childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
-					if lastChildEndDelta>0:
-						if debug:
-							log.debug(
-								"textRange ended part way through the child. "
-								"Crop end of childRange to fit"
-							)
-						childRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,textRange,UIAHandler.TextPatternRangeEndpoint_End)
-						clippedEnd=True
+				lastChildEndDelta = childRange.CompareEndpoints(
+					UIAHandler.TextPatternRangeEndpoint_End,
+					textRange,
+					UIAHandler.TextPatternRangeEndpoint_End
+				)
+				if lastChildEndDelta > 0:
+					if debug:
+						log.debug(
+							"textRange ended part way through the child. "
+							"Crop end of childRange to fit"
+						)
+					childRange.MoveEndpointByRange(
+						UIAHandler.TextPatternRangeEndpoint_End,
+						textRange,
+						UIAHandler.TextPatternRangeEndpoint_End
+					)
+					clippedEnd = True
 				childStartDelta=childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
 				if childStartDelta>0:
 					# plain text before this child
@@ -914,7 +926,10 @@ class UIA(Window):
 				clsList.append(chromium.ChromiumUIADocument)
 			else:
 				clsList.append(chromium.ChromiumUIA)
-		elif self.role == controlTypes.ROLE_DOCUMENT and UIAAutomationId == "Microsoft.Windows.PDF.DocumentView":
+		elif (
+			self.role == controlTypes.ROLE_DOCUMENT
+			and self.UIAElement.cachedAutomationId == "Microsoft.Windows.PDF.DocumentView"
+		):
 			# PDFs
 			from . import spartanEdge
 			clsList.append(spartanEdge.EdgeHTMLRoot)
