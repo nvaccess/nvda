@@ -406,6 +406,24 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for toggle report emphasis command.
 	script_toggleReportEmphasis.__doc__=_("Toggles on and off the reporting of emphasis")
 	script_toggleReportEmphasis.category=SCRCAT_DOCUMENTFORMATTING
+	
+	@script(
+		# Translators: Input help mode message for toggle report marked (highlighted) content command.
+		description=_("Toggles on and off the reporting of marked (highlighted) text"),
+		category=SCRCAT_DOCUMENTFORMATTING,
+	)
+	def script_toggleReportHighlightedText(self, gesture):
+		shouldReport: bool = not config.conf["documentFormatting"]["reportHighlight"]
+		config.conf["documentFormatting"]["reportHighlight"] = shouldReport
+		if shouldReport:
+			# Translators: The message announced when toggling the report marked (highlighted text)
+			# document formatting setting.
+			state = _("report marked (highlighted) text on")
+		else:
+			# Translators: The message announced when toggling the report marked (highlighted text)
+			# document formatting setting.
+			state = _("report marked (highlighted) text off")
+		ui.message(state)	
 
 	def script_toggleReportColor(self,gesture):
 		if config.conf["documentFormatting"]["reportColor"]:
