@@ -521,31 +521,23 @@ def getObjectSpeech(  # noqa: C901
 	if shouldReportTextContent:
 		try:
 			info = obj.makeTextInfo(textInfos.POSITION_SELECTION)
-			if not info.isCollapsed:
-				# if there is selected text, then there is a value and we do not report placeholder
-				sequence.extend(getPreselectedTextSpeech(info.text))
-			else:
-				info.expand(textInfos.UNIT_LINE)
-				textEmpty, placeholderSeq = _getPlaceholderSpeechIfTextEmpty(obj, reason)
-				sequence.extend(placeholderSeq)
-				speechGen = getTextInfoSpeech(
-					info,
-					unit=textInfos.UNIT_LINE,
-					reason=controlTypes.REASON_CARET
-				)
-				sequence.extend(_flattenNestedSequences(speechGen))
-		except:  # noqa E722 legacy bare except. Unknown what exceptions may be raised.
-			newInfo = obj.makeTextInfo(textInfos.POSITION_ALL)
+		except NotImplementedError:
+			info = None
+		if info and not info.isCollapsed:
+			# if there is selected text, then there is a value and we do not report placeholder
+			sequence.extend(getPreselectedTextSpeech(info.text))
+		else:
+			if not info:
+				info = obj.makeTextInfo(textInfos.POSITION_FIRST)
+			info.expand(textInfos.UNIT_LINE)
 			textEmpty, placeholderSeq = _getPlaceholderSpeechIfTextEmpty(obj, reason)
-			if textEmpty:
-				sequence.extend(placeholderSeq)
-			else:
-				speechGen = getTextInfoSpeech(
-					newInfo,
-					unit=textInfos.UNIT_PARAGRAPH,
-					reason=controlTypes.REASON_CARET,
-				)
-				sequence.extend(_flattenNestedSequences(speechGen))
+			sequence.extend(placeholderSeq)
+			speechGen = getTextInfoSpeech(
+				info,
+				unit=textInfos.UNIT_LINE,
+				reason=controlTypes.REASON_CARET
+			)
+			sequence.extend(_flattenNestedSequences(speechGen))
 	elif role == controlTypes.ROLE_MATH:
 		import mathPres
 		mathPres.ensureInit()
