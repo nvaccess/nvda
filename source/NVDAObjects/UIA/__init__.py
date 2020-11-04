@@ -651,6 +651,14 @@ class UIATextInfo(textInfos.TextInfo):
 				clippedStart = False
 				clippedEnd = False
 				if childRange.CompareEndpoints(
+					UIAHandler.TextPatternRangeEndpoint_End,
+					textRange,
+					UIAHandler.TextPatternRangeEndpoint_Start
+				) <= 0:
+					if debug:
+						log.debug("Child completely before textRange. Skipping")
+					continue
+				if childRange.CompareEndpoints(
 					UIAHandler.TextPatternRangeEndpoint_Start,
 					textRange,
 					UIAHandler.TextPatternRangeEndpoint_End
