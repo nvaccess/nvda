@@ -409,20 +409,18 @@ class GlobalCommands(ScriptableObject):
 	
 	@script(
 		# Translators: Input help mode message for toggle report marked (highlighted) content command.
-		description=_("Toggles on and off the reporting of marked (highlighted) text"),
+		description=_("Toggles on and off the reporting of marked text"),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportHighlightedText(self, gesture):
 		shouldReport: bool = not config.conf["documentFormatting"]["reportHighlight"]
 		config.conf["documentFormatting"]["reportHighlight"] = shouldReport
 		if shouldReport:
-			# Translators: The message announced when toggling the report marked (highlighted text)
-			# document formatting setting.
-			state = _("report marked (highlighted) text on")
+			# Translators: The message announced when toggling the report marked document formatting setting.
+			state = _("report marked on")
 		else:
-			# Translators: The message announced when toggling the report marked (highlighted text)
-			# document formatting setting.
-			state = _("report marked (highlighted) text off")
+			# Translators: The message announced when toggling the report marked document formatting setting.
+			state = _("report marked off")
 		ui.message(state)
 
 	def script_toggleReportColor(self,gesture):
