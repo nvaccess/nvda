@@ -423,7 +423,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: The message announced when toggling the report marked (highlighted text)
 			# document formatting setting.
 			state = _("report marked (highlighted) text off")
-		ui.message(state)	
+		ui.message(state)
 
 	def script_toggleReportColor(self,gesture):
 		if config.conf["documentFormatting"]["reportColor"]:
