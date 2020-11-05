@@ -63,9 +63,15 @@ class UIAWebTextInfo(UIATextInfo):
 		whose name has been overridden by the author (such as aria-label).
 		"""
 		element = self.UIAElementAtStart
-		condition = createUIAMultiPropertyCondition({
-			UIAHandler.UIA_ControlTypePropertyId: self.UIAControlTypesWhereNameIsContent
-		})
+		condition = createUIAMultiPropertyCondition(
+			{
+				UIAHandler.UIA_ControlTypePropertyId: self.UIAControlTypesWhereNameIsContent
+			},
+			{
+				UIAHandler.UIA_ControlTypePropertyId: UIAHandler.UIA_ListControlTypeId,
+				UIAHandler.UIA_IsKeyboardFocusablePropertyId: True,
+			}
+		)
 		# A part from the condition given, we must always match on the root of the document
 		# so we know when to stop walking
 		runtimeID = VARIANT()
@@ -81,10 +87,19 @@ class UIAWebTextInfo(UIATextInfo):
 		)
 		walker = UIAHandler.handler.clientObject.createTreeWalker(condition)
 		cacheRequest = UIAHandler.handler.clientObject.createCacheRequest()
+		cacheRequest.addProperty(UIAHandler.UIA_ControlTypePropertyId)
+		cacheRequest.addProperty(UIAHandler.UIA_IsKeyboardFocusablePropertyId)
 		cacheRequest.addProperty(UIAHandler.UIA_NamePropertyId)
 		cacheRequest.addProperty(UIAHandler.UIA_AriaPropertiesPropertyId)
 		element = walker.normalizeElementBuildCache(element, cacheRequest)
 		while element and not UIAHandler.handler.clientObject.compareElements(element, self.obj.UIAElement):
+			# Interactive lists
+			controlType = element.getCachedPropertyValue(UIAHandler.UIA_ControlTypePropertyId)
+			if controlType == UIAHandler.UIA_ListControlTypeId:
+				isFocusable = element.getCachedPropertyValue(UIAHandler.UIA_IsKeyboardFocusablePropertyId)
+				if isFocusable:
+					return element
+			# Nodes with an aria label or labelledby attribute
 			name = element.getCachedPropertyValue(UIAHandler.UIA_NamePropertyId)
 			if name:
 				ariaProperties = element.getCachedPropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
@@ -201,6 +216,10 @@ class UIAWebTextInfo(UIATextInfo):
 				content = obj.name
 			if not content:
 				text = self.obj.makeTextInfo(obj).text
+				# embedded object characters (which can appear in Edgium)
+				# should also be treated as whitespace
+				# allowing to be replaced by an overridden label
+				text = text.replace('\ufffc','')
 				if not text or text.isspace():
 					content = obj.name or field.pop('description', None)
 			if content:
