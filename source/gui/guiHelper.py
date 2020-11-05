@@ -182,7 +182,9 @@ class BaseLabeledControl:
 		"""
 		self.label = wx.StaticText(parent, label=labelText)
 		if self.__class__ == BaseLabeledControl:
-			raise TypeError(f"BaseLabeledControl should be subclassed and should also inherit from {wxCtrlClass.__name__}.")
+			raise TypeError(
+				f"BaseLabeledControl should be subclassed and should also inherit from {wxCtrlClass.__name__}."
+			)
 		# Check that the final class also inherits from wxCtrlClass
 		if not isinstance(self, wxCtrlClass):
 			raise TypeError(f"{self.__class__.__name__} should be a subclass of {wxCtrlClass.__name__}.")
@@ -192,7 +194,7 @@ class BaseLabeledControl:
 	def Enable(self, state):
 		self.controlClass.Enable(self, state)
 		self.label.Enable(state)
-		
+
 	def Disable(self):
 		self.controlClass.Disable(self)
 		self.label.Disable()
