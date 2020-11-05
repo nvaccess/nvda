@@ -916,6 +916,7 @@ class UIA(Window):
 				clsList.append(edge.EdgeNode)
 		elif self.windowClassName == "Chrome_RenderWidgetHostHWND":
 			from . import chromium
+			from . import web
 			if (
 				self.UIATextPattern
 				and self.role == controlTypes.ROLE_DOCUMENT
@@ -924,6 +925,8 @@ class UIA(Window):
 			):
 				clsList.append(chromium.ChromiumUIADocument)
 			else:
+				if self.role == controlTypes.ROLE_LIST:
+					clsList.append(web.List)
 				clsList.append(chromium.ChromiumUIA)
 		elif (
 			self.role == controlTypes.ROLE_DOCUMENT
