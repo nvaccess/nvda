@@ -219,7 +219,7 @@ class UIAWebTextInfo(UIATextInfo):
 				# embedded object characters (which can appear in Edgium)
 				# should also be treated as whitespace
 				# allowing to be replaced by an overridden label
-				text = text.replace('\ufffc','')
+				text = text.replace('\ufffc', '')
 				if not text or text.isspace():
 					content = obj.name or field.pop('description', None)
 			if content:
