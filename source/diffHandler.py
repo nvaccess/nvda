@@ -41,8 +41,8 @@ class DiffMatchPatch(DiffAlgo):
 
 	def _initialize(self):
 		"Start the nvda_dmp process if it is not already running."
-		if not DiffMatchPatch._proc:
-			with DiffMatchPatch._lock:
+		with DiffMatchPatch._lock:
+			if not DiffMatchPatch._proc:
 				log.debug("Starting diff-match-patch proxy")
 				if hasattr(sys, "frozen"):
 					dmp_path = (os.path.join(globalVars.appDir, "nvda_dmp.exe"),)
@@ -99,11 +99,12 @@ class DiffMatchPatch(DiffAlgo):
 			return Difflib().diff(newText, oldText)
 
 	def _terminate(self):
-		if DiffMatchPatch._proc:
-			log.debug("Terminating diff-match-patch proxy")
-			# nvda_dmp exits when it receives two zero-length texts.
-			with DiffMatchPatch._lock:
+		with DiffMatchPatch._lock:
+			if DiffMatchPatch._proc:
+				log.debug("Terminating diff-match-patch proxy")
+				# nvda_dmp exits when it receives two zero-length texts.
 				DiffMatchPatch._proc.stdin.write(struct.pack("=II", 0, 0))
+				DiffMatchPatch._proc = None
 
 
 class Difflib(DiffAlgo):
