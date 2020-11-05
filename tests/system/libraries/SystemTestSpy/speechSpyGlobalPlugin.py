@@ -269,7 +269,7 @@ class SystemTestSpyServer(globalPluginHandler.GlobalPlugin):
 			serve=False  # we want to start this serving on another thread so as not to block.
 		)
 		log.debug("Server address: {}".format(server.server_address))
-		server_thread = threading.Thread(target=server.serve, name="RF Test Spy Thread")
+		server_thread = threading.Thread(target=server.serve)
 		server_thread.start()
 
 	def terminate(self):

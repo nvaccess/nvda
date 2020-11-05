@@ -39,11 +39,6 @@ class ChromeLib:
 	def _getTestCasePath(filename):
 		return _pJoin(ChromeLib._testFileStagingPath, filename)
 
-	def exit_chrome(self):
-		spy = _NvdaLib.getSpyLib()
-		spy.emulateKeyPress('control+w')
-		process.wait_for_process(self.chromeHandle, timeout="1 minute", on_timeout="continue")
-
 	def start_chrome(self, filePath):
 		builtIn.log(f"starting chrome: {filePath}")
 		self.chromeHandle = process.start_process(
@@ -119,9 +114,6 @@ class ChromeLib:
 		"""
 		spy = _NvdaLib.getSpyLib()
 		path = self._writeTestFile(testCase)
-
-		spy.wait_for_speech_to_finish()
-		nextSpeechIndex = spy.get_next_speech_index()
 		self.start_chrome(path)
 		# Ensure chrome started
 		# Different versions of chrome have variations in how the title is presented
@@ -132,7 +124,8 @@ class ChromeLib:
 		# If this continues to be unreliable we could use solenium or similar to start chrome and inform us when
 		# it is ready.
 		applicationTitle = f"{self._testCaseTitle}"
-		appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=nextSpeechIndex)
+		appTitleIndex = spy.wait_for_specific_speech(applicationTitle)
+		# Read all is configured, but just test interacting with the sample.
 		spy.wait_for_speech_to_finish()
 
 		afterTitleSpeech = spy.get_speech_at_index_until_now(appTitleIndex)
