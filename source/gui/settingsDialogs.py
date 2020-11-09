@@ -2603,6 +2603,7 @@ class AdvancedPanelControls(wx.Panel):
 			"vision",
 			"speech",
 			"speechManager",
+			"synthDriver",
 			"nvwave",
 		]
 		# Translators: This is the label for a list in the
