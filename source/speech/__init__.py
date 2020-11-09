@@ -2131,6 +2131,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				# Translators: Reported when text is no longer marked
 				else _("not marked"))
 			textList.append(text)
+	if formatConfig["reportEmphasis"]:
 		# strong text
 		strong=attrs.get("strong")
 		oldStrong=attrsCache.get("strong") if attrsCache is not None else None
