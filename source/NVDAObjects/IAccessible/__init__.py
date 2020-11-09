@@ -694,7 +694,7 @@ the NVDAObject for IAccessible
 			return False
 		return True
 
-	def _get_shouldAllowIAccessibleMenuStartEvent(self):
+	def _get_shouldAllowIAccessibleMenuStartEvent(self) -> bool:
 		"""Determine whether an IAccessible menu start or menu popup start event should be allowed
 		for this object.
 		@return: C{True} if the event should be allowed.
