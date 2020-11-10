@@ -4,6 +4,8 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from dataclasses import dataclass
+import enum
 from ctypes import *
 from ctypes.wintypes import *
 from enum import Enum
@@ -37,8 +39,39 @@ from queue import Queue
 import aria
 
 #Some newer UIA constants that could be missing
-ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
-ItemCount_Property_GUID=GUID("{ABBF5C45-5CCC-47b7-BB4E-87CB87BBD162}")
+
+class UIAutomationType(enum.IntEnum):
+	Int = 1
+	Bool = 2
+	String = 3
+	Double = 4
+	Point = 5
+	Rect = 6
+	Element = 7
+	Array = 8
+	Out = 9
+	IntArray = 10
+	BoolArray = 11
+	StringArray = 12
+	DoubleArray = 13
+	PointArray = 14
+	RectArray = 15
+	ElementArray = 16
+	OutInt = 17
+	OutBool = 18
+	OutString = 19
+	OutDouble = 20
+	OutPoint = 21
+	OutRect = 22
+	OutElement = 23
+	OutIntArray = 24
+	OutBoolArray = 25
+	OutStringArray = 26
+	OutDoubleArray = 27
+	OutPointArray = 28
+	OutRectArray = 29
+	OutElementArray = 30
+
 
 HorizontalTextAlignment_Left=0
 HorizontalTextAlignment_Centered=1
@@ -65,6 +98,63 @@ FillTypeLabels = {
 	# Translators: a style of fill type (to color the inside of a control or text) 
 	FillType.pattern: pgettext("UIAHandler.FillType", "pattern"),
 }
+
+
+@dataclass
+class CustomPropertyInfo:
+	guid: GUID
+	programmaticName: str
+	uiaType: UIAutomationType
+
+
+customPropertyDefines = [
+	CustomPropertyInfo(
+		GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}"),
+		"ItemIndex",
+		UIAutomationType.Int,
+	),
+	CustomPropertyInfo(
+		GUID("{ABBF5C45-5CCC-47b7-BB4E-87CB87BBD162}"),
+		"ItemCount",
+		UIAutomationType.Int,
+	),
+	# Microsoft Excel
+	CustomPropertyInfo(
+		GUID("{E244641A-2785-41E9-A4A7-5BE5FE531507}"),
+		"CellFormula",
+		UIAutomationType.String,
+	),
+	CustomPropertyInfo(
+		GUID("{626CF4A0-A5AE-448B-A157-5EA4D1D057D7}"),
+		"CellNumberFormat",
+		UIAutomationType.String,
+	),
+	CustomPropertyInfo(
+		GUID("{29F2E049-5DE9-4444-8338-6784C5D18ADF}"),
+		"HasDataValidation",
+		UIAutomationType.Bool,
+	),
+	CustomPropertyInfo(
+		GUID("{1B93A5CD-0956-46ED-9BBF-016C1B9FD75F}"),
+		"HasDataValidationDropdown",
+		UIAutomationType.Bool,
+	),
+	CustomPropertyInfo(
+		GUID("{7AAEE221-E14D-4DA4-83FE-842AAF06A9B7}"),
+		"DataValidationPrompt",
+		UIAutomationType.String,
+	),
+	CustomPropertyInfo(
+		GUID("{DFEF6BBD-7A50-41BD-971F-B5D741569A2B}"),
+		"HasConditionalFormatting",
+		UIAutomationType.Bool,
+	),
+	CustomPropertyInfo(
+		GUID("{4BB56516-F354-44CF-A5AA-96B52E968CFD}"),
+		"AreGridlinesVisible",
+		UIAutomationType.Bool,
+	),
+]
 
 
 # The name of the WDAG (Windows Defender Application Guard) process
@@ -333,8 +423,9 @@ class UIAHandler(COMObject):
 			self.baseTreeWalker=self.clientObject.RawViewWalker
 			self.baseCacheRequest=self.windowCacheRequest.Clone()
 			import UIAHandler
-			self.ItemIndex_PropertyId=NVDAHelper.localLib.registerUIAProperty(byref(ItemIndex_Property_GUID),u"ItemIndex",1)
-			self.ItemCount_PropertyId=NVDAHelper.localLib.registerUIAProperty(byref(ItemCount_Property_GUID),u"ItemCount",1)
+			for info in customPropertyDefines:
+				ID = NVDAHelper.localLib.registerUIAProperty(byref(info.guid), info.programmaticName, info.uiaType)
+				setattr(self, f"{info.programmaticName}_PropertyId", ID)
 			for propertyId in (UIA_FrameworkIdPropertyId,UIA_AutomationIdPropertyId,UIA_ClassNamePropertyId,UIA_ControlTypePropertyId,UIA_ProviderDescriptionPropertyId,UIA_ProcessIdPropertyId,UIA_IsTextPatternAvailablePropertyId,UIA_IsContentElementPropertyId,UIA_IsControlElementPropertyId):
 				self.baseCacheRequest.addProperty(propertyId)
 			self.baseCacheRequest.addPattern(UIA_TextPatternId)
