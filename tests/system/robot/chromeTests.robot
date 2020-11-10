@@ -40,3 +40,6 @@ ARIA treegrid
 	[Documentation]	Ensure that ARIA treegrids are accessible as a standard table in browse mode.
 	# Excluded due to regular failures.
 	test_ariaTreeGrid_browseMode
+ARIA checkbox
+	[Documentation]	Navigate to an unchecked checkbox in reading mode.
+	test_ariaCheckbox_browseMode
