@@ -1,8 +1,7 @@
-# appModules/winword.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2020 NV Access Limited.
+# Copyright (C) 2019-2020 NV Access Limited, Cyrille Bougot
 
 """ App module for Microsoft Word.
 Word and Outlook share a lot of code and components. This app module gathers the code that is relevant for
