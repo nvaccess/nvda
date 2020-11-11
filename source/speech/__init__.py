@@ -1525,10 +1525,6 @@ def getPropertiesSpeech(  # noqa: C901
 			states = set()
 		labelStates = controlTypes.processAndLabelStates(role, realStates, reason, states, negativeStates)
 		textList.extend(labelStates)
-	# sometimes description key is present but value is None
-	description: Optional[str] = propertyValues.get('description')
-	if description:
-		textList.append(description)
 	# sometimes keyboardShortcut key is present but value is None
 	keyboardShortcut: Optional[str] = propertyValues.get('keyboardShortcut')
 	if keyboardShortcut:
@@ -1634,6 +1630,11 @@ def getPropertiesSpeech(  # noqa: C901
 				oldTreeLevel=level
 			else:
 				textList.append(levelTranslation)
+	# sometimes description key is present but value is None
+	description: Optional[str] = propertyValues.get('description')
+	if description:
+		textList.append(EndUtteranceCommand())
+		textList.append(description)
 	types.logBadSequenceTypes(textList)
 	return textList
 
