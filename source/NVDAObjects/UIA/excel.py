@@ -106,7 +106,7 @@ class ExcelCell(UIA):
 			return
 		return super().value
 
-	def _get_description(self):
+	def old_get_description(self):
 		if self.selectionContainer and self.selectionContainer.getSelectedItemsCount() > 1:
 			return
 		return self.UIAElement.currentItemStatus
@@ -131,6 +131,10 @@ class ExcelCell(UIA):
 				states.add(controlTypes.STATE_OVERFLOWING)
 			else:
 				states.add(controlTypes.STATE_CROPPED)
+		if self._getUIACacheablePropertyValue(UIAHandler.handler.CellFormula_PropertyId):
+			states.add(controlTypes.STATE_HASFORMULA)
+		if self._getUIACacheablePropertyValue(UIAHandler.handler.HasDataValidationDropdown_PropertyId):
+			states.add(controlTypes.STATE_HASPOPUP)
 		return states
 
 	def _get_cellCoordsText(self):
