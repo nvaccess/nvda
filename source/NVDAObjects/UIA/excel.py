@@ -98,6 +98,21 @@ class ExcelCell(UIA):
 			# Translators: The fill type (pattern, gradient etc) of an Excel Cell
 			tmpl = _("Fill type: {0}")
 			infoList.append(tmpl.format(UIAHandler.FillTypeLabels[self.fillType]))
+		numberFormat = self._getUIACacheablePropertyValue(UIAHandler.handler.CellNumberFormat_PropertyId)
+		if numberFormat:
+			# Translators: the number format of an Excel cell 
+			tmpl = _("Number format: {0}")
+			infoList.append(tmpl.format(numberFormat))
+		hasDataValidation = self._getUIACacheablePropertyValue(UIAHandler.handler.HasDataValidation_PropertyId)
+		if hasDataValidation:
+			# Translators: If an excel cell has data validation set
+			tmpl = _("Has data validation")
+			infoList.append(tmpl)
+		hasConditionalFormatting = self._getUIACacheablePropertyValue(UIAHandler.handler.HasConditionalFormatting_PropertyId)
+		if hasConditionalFormatting:
+			# Translators: If an excel cell has conditional formatting 
+			tmpl = _("Has conditional formatting")
+			infoList.append(tmpl)
 		infoString = "\n".join(infoList)
 		ui.browseableMessage(infoString, _("Cell Appearance"))
 
