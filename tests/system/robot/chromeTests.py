@@ -289,6 +289,7 @@ def test_ariaTreeGrid_browseMode():
 		])
 	)
 
+
 def test_ariaCheckbox_browseMode():
 	"""
 	Navigate to an unchecked checkbox in reading mode.
