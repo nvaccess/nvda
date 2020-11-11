@@ -1016,7 +1016,7 @@ class UIA(Window):
 				log.debugWarning("getFocusedElement failed", exc_info=True)
 				return False
 			# Ignore this object if it is non native.
-			if not UIAHandler.handler.isNativeUIAElement(UIAElement) and ignoreNonNativeElementsWithFocus:
+			if ignoreNonNativeElementsWithFocus and not UIAHandler.handler.isNativeUIAElement(UIAElement):
 				if UIAHandler._isDebug():
 					log.debug(
 						"kwargsFromSuper: ignoring non native element with focus"
