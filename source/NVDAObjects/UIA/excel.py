@@ -23,6 +23,14 @@ class ExcelCell(UIA):
 	rowHeaderText = None
 	columnHeaderText = None
 
+	def _get_areGridlinesVisible(self):
+		parent = self.parent
+		# There will be at least one grid element between the cell and the sheet.
+		# There could be multiple as there might be a data table defined on the sheet.
+		while parent.role == controlTypes.ROLE_TABLE:
+			parent = parent.parent
+		return parent._getUIACacheablePropertyValue(UIAHandler.handler.AreGridlinesVisible_PropertyId)
+
 	def _get_outlineColor(self) -> Optional[Tuple[colors.RGB]]:
 		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_OutlineColorPropertyId, True)
 		if isinstance(val, tuple):
@@ -112,6 +120,10 @@ class ExcelCell(UIA):
 		if hasConditionalFormatting:
 			# Translators: If an excel cell has conditional formatting 
 			tmpl = _("Has conditional formatting")
+			infoList.append(tmpl)
+		if self.areGridlinesVisible:
+			# Translators: If an excel cell has visible gridlines 
+			tmpl = _("Gridlines are visible")
 			infoList.append(tmpl)
 		infoString = "\n".join(infoList)
 		ui.browseableMessage(infoString, _("Cell Appearance"))
