@@ -182,12 +182,19 @@ class ExcelCell(UIA):
 class ExcelWorksheet(UIA):
 	role = controlTypes.ROLE_TABLE
 
-	def _get_name(self):
-		return super().parent.name
+	# The grid UIAElement dies each time the sheet is scrolled.
+	# therefore this grid would be announced in the focus ancestory each time which is bad.
+	# Suppress this.
+	isPresentableFocusAncestor = False
 
 	def _get_parent(self):
-		return super().parent.parent
-
+		parent = super().parent
+		# We want to present the parent (sheet) in the focus ancestry
+		# As that is what has the sheet name.
+		parent.isPresentableFocusAncestor = True
+		# However, the selection state on the sheet is not useful, so remove it.
+		parent.states.discard(controlTypes.STATE_SELECTED)
+		return parent
 
 class CellEdit(UIA):
 	name = u""
