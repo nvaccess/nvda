@@ -1298,13 +1298,13 @@ The selection indicator is not affected by this option, it is always dots 7 and 
 This option allows you to choose the shape (dot pattern) of the braille cursor when braille is tethered to review.
 The selection indicator is not affected by this option, it is always dots 7 and 8 without blinking.
 
+==== Show Messages ====[BrailleSettingsShowMessages]
+This is a combobox that allows you to select if NVDA should display braille messages and when they should disappear automatically.
+
 ==== Message Timeout (sec) ====[BrailleSettingsMessageTimeout]
 This option is a numerical field that controls how long NVDA messages are displayed on the braille display.
-Specifying 0 disables displaying of these messages completely.
 The NVDA message is imediately dismissed when pressing a routing key on the braille display, but appears again when pressing a corresponding key which triggers the message.
-
-==== Show Messages Indefinitely ====[BrailleSettingsNoMessageTimeout]
-This option allows NVDA messages to be displayed on the braille display indefinitely.
+This option is shown only if "Show Messages" is set to "Use timeout".
 
 %kc:setting
 ==== Tether Braille ====[BrailleTether]
@@ -1851,7 +1851,7 @@ If you find that NVDA seems to be incorrectly tracking the caret E.g. it seems t
 
 ==== Debug logging categories ====[AdvancedSettingsDebugLoggingCategories]
 The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
-Logging these messages can resort in decreased performance and large log files.
+Logging these messages can result in decreased performance and large log files.
 Only turn one of these on if specifically instructed to by an NVDA developer e.g. when debugging why a braille display driver is not functioning correctly.
 
 ++ miscellaneous Settings ++[MiscSettings]
@@ -1922,6 +1922,9 @@ Then, change the fields for the new symbol as you would for other symbols.
 You can remove a symbol you previously added by pressing the Remove button.
 
 When you are finished, press the OK button to save your changes or the Cancel button to discard them.
+
+In the case of complex symbols, the Replacement field may have to include some group references of the matched text. For instance, for a pattern matching a whole date, \1, \2, and \3 would need to appear in the field, to be replaced by the corresponding parts of the date.
+Normal backslashes in the Replacement field should thus be doubled, e.g. "a\\b" should be typed in order to get the "a\b" replacement.
 
 +++ Input Gestures +++[InputGestures]
 In this dialog, you can customize the input gestures (keys on the keyboard, buttons on a braille display, etc.) for NVDA commands.
@@ -2625,7 +2628,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | escape key | dot1+dot5+space, f4, brailleedge:f1 |
 | delete key | dot1+dot3+dot5+space, dot1+dot4+dot5+space |
 | f1 key | dot1+dot2+dot5+space |
-| f3 key | dot1+dot2+dot4+dot8 |
+| f3 key | dot1+dot4+dot8+space |
 | f4 key | dot7+f3 |
 | windows+b key | dot1+dot2+f1 |
 | windows+d key | dot1+dot4+dot5+f1 |

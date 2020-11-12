@@ -64,7 +64,8 @@ class InputGesture(baseObject.AutoPropertyObject):
 	#: @type: bool
 	bypassInputHelp=False
 
-	#: Indicates that this gesture should be reported in Input help mode. This would only be false for floodding Gestures like touch screen hovers.
+	#: Indicates that this gesture should be reported in Input help mode. This would only be false
+	#: for flooding Gestures like touch screen hovers.
 	#: @type: bool
 	reportInInputHelp=True
 
@@ -491,7 +492,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.speakMessage, gesture.displayName)
 
 		gesture.reportExtra()
-
+		
 		# #2953: if an intercepted command Script (script that sends a gesture) is queued
 		# then queue all following gestures (that don't have a script) with a fake script so that they remain in order.
 		if not script and scriptHandler._numIncompleteInterceptedCommandScripts:
@@ -501,8 +502,11 @@ class InputManager(baseObject.AutoPropertyObject):
 		if script:
 			scriptHandler.queueScript(script, gesture)
 			return
-
-		raise NoInputGestureAction
+		else:
+			# Clear memorized last script to avoid getLastScriptRepeatCount detect a repeat
+			# in case an unbound gesture is executed between two identical bound gestures.
+			queueHandler.queueFunction(queueHandler.eventQueue, scriptHandler.clearLastScript)
+			raise NoInputGestureAction
 
 	def _get_isInputHelpActive(self):
 		"""Whether input help is enabled, wherein the function of each key pressed by the user is reported but not executed.
@@ -564,10 +568,10 @@ class InputManager(baseObject.AutoPropertyObject):
 		self.localeGestureMap.clear()
 		lang = languageHandler.getLanguage()
 		try:
-			self.localeGestureMap.load(os.path.join("locale", lang, "gestures.ini"))
+			self.localeGestureMap.load(os.path.join(globalVars.appDir, "locale", lang, "gestures.ini"))
 		except IOError:
 			try:
-				self.localeGestureMap.load(os.path.join("locale", lang.split('_')[0], "gestures.ini"))
+				self.localeGestureMap.load(os.path.join(globalVars.appDir, "locale", lang.split('_')[0], "gestures.ini"))
 			except IOError:
 				log.debugWarning("No locale gesture map for language %s" % lang)
 
@@ -796,7 +800,7 @@ def registerGestureSource(source, gestureCls):
 	The specified gesture class will be used for queries regarding all gesture identifiers with the given source prefix.
 	For example, if "kb" is registered with the C{KeyboardInputGesture} class,
 	any queries for "kb:tab" or "kb(desktop):tab" will be directed to the C{KeyboardInputGesture} class.
-	If there is no exact match for the source, any parenthesised portion is stripped.
+	If there is no exact match for the source, any parenthesized portion is stripped.
 	For example, for "br(baum):d1", if "br(baum)" isn't registered,
 	"br" will be used if it is registered.
 	This registration is used, for example, to get the display text for a gesture identifier.

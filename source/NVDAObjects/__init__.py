@@ -8,6 +8,7 @@
 """Module that contains the base NVDA object type with dynamic class creation support,
 as well as the associated TextInfo class."""
 
+import os
 import time
 import re
 import weakref
@@ -31,6 +32,8 @@ import globalPluginHandler
 import brailleInput
 import locationHelper
 import aria
+import globalVars
+
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
@@ -305,7 +308,8 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	@staticmethod
 	def objectInForeground():
-		"""Retrieves the object representing the current foreground control according to the Operating System. This differes from NVDA's foreground object as this object is the real foreground object according to the Operating System, not according to NVDA.
+		"""Retrieves the object representing the current foreground control according to the
+		Operating System. This may differ from NVDA's cached foreground object.
 		@return: the foreground object
 		@rtype: L{NVDAObject}
 		"""
@@ -1030,15 +1034,33 @@ Tries to force this object to take the focus.
 			# No error.
 			return
 		import nvwave
-		nvwave.playWaveFile(r"waves\textError.wav")
+		nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "textError.wav"))
+
+	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
+		""" Retrieves the priority with which  updates to live regions should be treated.
+		The base implementation returns C{aria.AriaLivePoliteness.OFF},
+		indicating that the object isn't a live region.
+		Subclasses supporting live region events must implement this.
+		"""
+		return aria.AriaLivePoliteness.OFF
 
 	def event_liveRegionChange(self):
 		"""
 		A base implementation for live region change events.
 		"""
-		name=self.name
+		name = self.name
 		if name:
-			ui.message(name)
+			politeness = self.liveRegionPoliteness
+			if politeness == aria.AriaLivePoliteness.OFF:
+				log.debugWarning("Processing live region event for object with live politeness set to 'OFF'")
+			ui.message(
+				name,
+				speechPriority=(
+					speech.priorities.Spri.NEXT
+					if politeness == aria.AriaLivePoliteness.ASSERTIVE
+					else speech.priorities.Spri.NORMAL
+				)
+			)
 
 	def event_typedCharacter(self,ch):
 		if config.conf["documentFormatting"]["reportSpellingErrors"] and config.conf["keyboard"]["alertForSpellingErrors"] and (

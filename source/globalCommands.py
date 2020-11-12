@@ -406,6 +406,22 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for toggle report emphasis command.
 	script_toggleReportEmphasis.__doc__=_("Toggles on and off the reporting of emphasis")
 	script_toggleReportEmphasis.category=SCRCAT_DOCUMENTFORMATTING
+	
+	@script(
+		# Translators: Input help mode message for toggle report marked (highlighted) content command.
+		description=_("Toggles on and off the reporting of marked text"),
+		category=SCRCAT_DOCUMENTFORMATTING,
+	)
+	def script_toggleReportHighlightedText(self, gesture):
+		shouldReport: bool = not config.conf["documentFormatting"]["reportHighlight"]
+		config.conf["documentFormatting"]["reportHighlight"] = shouldReport
+		if shouldReport:
+			# Translators: The message announced when toggling the report marked document formatting setting.
+			state = _("report marked on")
+		else:
+			# Translators: The message announced when toggling the report marked document formatting setting.
+			state = _("report marked off")
+		ui.message(state)
 
 	def script_toggleReportColor(self,gesture):
 		if config.conf["documentFormatting"]["reportColor"]:
@@ -3012,7 +3028,7 @@ class ConfigProfileActivationCommands(ScriptableObject):
 		@param oldScriptName: The current name of the profile activation script.
 		@type oldScriptName: str
 		@param newScriptName: The new name for the profile activation script, if any.
-			if C{None}, the gestures are only removed for the current profile sript.
+			if C{None}, the gestures are only removed for the current profile script.
 		@type newScriptName: str
 		"""
 		gestureMap = inputCore.manager.userGestureMap

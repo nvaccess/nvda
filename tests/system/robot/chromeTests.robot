@@ -19,6 +19,7 @@ Test Teardown	default teardown
 default teardown
 	${screenshotName}=	create_preserved_test_output_filename	failedTest.png
 	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
+	exit chrome
 	quit NVDA
 
 *** Test Cases ***
@@ -26,3 +27,16 @@ default teardown
 checkbox labelled by inner element
 	[Documentation]	A checkbox labelled by an inner element should not read the label element twice.
 	checkbox_labelled_by_inner_element
+Announce list item when moving by word or character
+	[Documentation]	Entering a list item when moving by word or character should be announced, but not by line.
+	announce_list_item_when_moving_by_word_or_character
+i7562
+	[Documentation]	List should not be announced on every line of a ul in a contenteditable
+	test_i7562
+pr11606
+	[Documentation]	Announce the correct line when placed at the end of a link at the end of a list item in a contenteditable
+	test_pr11606
+ARIA treegrid
+	[Documentation]	Ensure that ARIA treegrids are accessible as a standard table in browse mode.
+	# Excluded due to regular failures.
+	test_ariaTreeGrid_browseMode
