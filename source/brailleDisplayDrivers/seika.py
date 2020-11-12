@@ -1,27 +1,25 @@
 # -*- coding: UTF-8 -*-
 # brailleDisplayDrivers/seika.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2020 NV Access Limited, Ulf Beckmann <beckmann@flusoft.de>
-# This file may be used under the terms of the GNU General Public License, version 2 or later.
-# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2012/20 Ulf Beckmann <beckmann@flusoft.de>
 
-# Parts of this code are inherited from the baum braille driver
-# written by James Teh <jamie@jantrid.net>
-
+# A redesign was made for Python V3.7 in 2020
+#
 # This file represents the braille display driver for
-# Seika3 V2.00, Seika80, a product from Nippon Telesoft
+# Seika3/5 V1.x/2.0, Seika80, a product from Nippon Telesoft
 # see www.seika-braille.com for more details
-# 2020-02-15 11:46
+# 24.07.2020 17:03
 
 from typing import List
-
 import wx
 import serial
 import braille
 import inputCore
 import hwPortUtils
-from logHandler import log
 from hwIo import intToByte
+from logHandler import log
 
 TIMEOUT = 0.2
 BAUDRATE = 9600
@@ -30,7 +28,7 @@ READ_INTERVAL = 50
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "seika"
 	# Translators: Names of braille displays.
-	description = _("Seika Braille V3/5/80")
+	description = _("Seika Braille Displays")
 	numCells = 0
 
 	@classmethod
@@ -51,6 +49,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			except serial.SerialException:
 				continue
 			log.debug("serial port open {port}".format(port=port))
+			# get the version infos			
 			self._ser.write(b"\xFF\xFF\x1C")
 			self._ser.flush()
 			# Read out the input buffer
@@ -85,7 +84,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				break
 			self._ser.close()
 		else:
-			raise RuntimeError("No SEIKA3/5/80 display found")
+			raise RuntimeError("No SEIKA40/80 display found")
 		self._readTimer = wx.PyTimer(self.handleResponses)
 		self._readTimer.Start(READ_INTERVAL)
 
@@ -98,7 +97,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._ser.close()
 
 	def display(self, cells: List[int]):
-
 		# add padding so total length is 1 + numberOfStatusCells + numberOfRegularCells
 		cellPadding: bytes = bytes(self.numCells - len(cells))
 		writeBytes: List[bytes] = [self.s40, ]
@@ -109,7 +107,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			for cell in cells:
 				writeBytes.append(b"\x00")
 				writeBytes.append(intToByte(cell))
-			lineBytes = b"".join(writeBytes)
+		lineBytes = b"".join(writeBytes) + cellPadding	
+		# log.info("senden....{p}".format(p=len(lineBytes)))	
 		self._ser.write(lineBytes)
 
 	def handleResponses(self):
