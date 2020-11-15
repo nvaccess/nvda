@@ -19,14 +19,12 @@ from robot.libraries.BuiltIn import BuiltIn
 # Imported for type information
 from robot.libraries.OperatingSystem import OperatingSystem as _OpSysLib
 from robot.libraries.Process import Process as _ProcessLib
-from KeyInputLib import KeyInputLib as _KeyInputLib
 from AssertsLib import AssertsLib as _AssertsLib
 import NvdaLib as _NvdaLib
 
 builtIn: BuiltIn = BuiltIn()
 opSys: _OpSysLib = _getLib('OperatingSystem')
 process: _ProcessLib = _getLib('Process')
-keyInputLib: _KeyInputLib = _getLib('KeyInputLib')
 assertsLib: _AssertsLib = _getLib('AssertsLib')
 
 
@@ -40,6 +38,11 @@ class ChromeLib:
 	@staticmethod
 	def _getTestCasePath(filename):
 		return _pJoin(ChromeLib._testFileStagingPath, filename)
+
+	def exit_chrome(self):
+		spy = _NvdaLib.getSpyLib()
+		spy.emulateKeyPress('control+w')
+		process.wait_for_process(self.chromeHandle, timeout="1 minute", on_timeout="continue")
 
 	def start_chrome(self, filePath):
 		builtIn.log(f"starting chrome: {filePath}")
@@ -73,14 +76,41 @@ class ChromeLib:
 				<title>{ChromeLib._testCaseTitle}</title>
 			</head>
 			<body>
-				<button>{ChromeLib._beforeMarker}</button>
+				<p>{ChromeLib._beforeMarker}</p>
 				{testCase}
-				<button>{ChromeLib._afterMarker}</button>
+				<p>{ChromeLib._afterMarker}</p>
 			</body>
 		""")
 		with open(file=filePath, mode='w', encoding='UTF-8') as f:
 			f.write(fileContents)
 		return filePath
+
+	def _wasStartMarkerSpoken(self, speech: str):
+		if "document" not in speech:
+			return False
+		documentIndex = speech.index("document")
+		marker = ChromeLib._beforeMarker
+		return marker in speech and documentIndex < speech.index(marker)
+
+	def _moveToStartMarker(self, spy):
+		""" Press F6 until the start marker is spoken
+		@param spy:
+		@type spy: SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib
+		@return: None
+		"""
+		for i in range(10):  # set a limit on the number of tries.
+			# Small changes in Chrome mean the number of tab presses to get into the document can vary.
+			builtIn.sleep("0.5 seconds")  # ensure application has time to receive input
+			actualSpeech = self.getSpeechAfterKey('f6')
+			if self._wasStartMarkerSpoken(actualSpeech):
+				break
+		else:  # Exceeded the number of tries
+			spy.dump_speech_to_log()
+			builtIn.fail(
+				"Unable to tab to 'before sample' marker."
+				f" Too many attempts looking for '{ChromeLib._beforeMarker}'"
+				" See NVDA log for full speech."
+			)
 
 	def prepareChrome(self, testCase: str) -> None:
 		"""
@@ -89,6 +119,9 @@ class ChromeLib:
 		"""
 		spy = _NvdaLib.getSpyLib()
 		path = self._writeTestFile(testCase)
+
+		spy.wait_for_speech_to_finish()
+		lastSpeechIndex = spy.get_last_speech_index()
 		self.start_chrome(path)
 		# Ensure chrome started
 		# Different versions of chrome have variations in how the title is presented
@@ -99,24 +132,13 @@ class ChromeLib:
 		# If this continues to be unreliable we could use solenium or similar to start chrome and inform us when
 		# it is ready.
 		applicationTitle = f"{self._testCaseTitle}"
-		spy.wait_for_specific_speech(applicationTitle)
-		# Read all is configured, but just test interacting with the sample.
+		appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=lastSpeechIndex)
 		spy.wait_for_speech_to_finish()
 
-		# move to start marker
-		for i in range(10):  # set a limit on the number of tries.
-			# Small changes in Chrome mean the number of tab presses to get into the document can vary.
-			builtIn.sleep("0.5 seconds")  # ensure application has time to receive input
-			actualSpeech = self.getSpeechAfterKey('F6')
-			if ChromeLib._beforeMarker in actualSpeech:
-				break
-		else:  # Exceeded the number of tries
-			spy.dump_speech_to_log()
-			builtIn.fail(
-				"Unable to tab to 'before sample' marker."
-				f" Too many attempts looking for '{ChromeLib._beforeMarker}'"
-				" See NVDA log for full speech."
-			)
+		afterTitleSpeech = spy.get_speech_at_index_until_now(appTitleIndex)
+		if not self._wasStartMarkerSpoken(afterTitleSpeech):
+			self._moveToStartMarker(spy)
+
 
 	@staticmethod
 	def getSpeechAfterKey(key) -> str:
@@ -126,8 +148,8 @@ class ChromeLib:
 		spy = _NvdaLib.getSpyLib()
 		spy.wait_for_speech_to_finish()
 		nextSpeechIndex = spy.get_next_speech_index()
-		keyInputLib.send(key)
-		spy.wait_for_speech_to_finish()
+		spy.emulateKeyPress(key)
+		spy.wait_for_speech_to_finish(speechStartedIndex=nextSpeechIndex)
 		speech = spy.get_speech_at_index_until_now(nextSpeechIndex)
 		return speech
 
@@ -136,4 +158,4 @@ class ChromeLib:
 		"""Ensure speech has stopped, press tab, and get speech until it stops.
 		@return: The speech after tab.
 		"""
-		return ChromeLib.getSpeechAfterKey('\t')
+		return ChromeLib.getSpeechAfterKey('tab')

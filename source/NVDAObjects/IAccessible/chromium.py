@@ -74,6 +74,22 @@ class ToggleButton(ia2Web.Ia2Web):
 		return states
 
 
+class PresentationalList(ia2Web.Ia2Web):
+	"""
+	Ensures that lists like UL, DL and OL always have the readonly state.
+	A work-around for issue #7562
+	allowing us to differentiate presentational lists from interactive lists
+	(such as of size greater 1 and ARIA list boxes).
+	In firefox, this is possible by the presence of a read-only state,
+	even in a content editable.
+	"""
+
+	def _get_states(self):
+		states = super().states
+		states.add(controlTypes.STATE_READONLY)
+		return states
+
+
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class(es) for Chromium objects.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
@@ -82,5 +98,7 @@ def findExtraOverlayClasses(obj, clsList):
 		clsList.append(ComboboxListItem)
 	elif obj.role == controlTypes.ROLE_TOGGLEBUTTON:
 		clsList.append(ToggleButton)
+	elif obj.role == controlTypes.ROLE_LIST and obj.IA2Attributes.get('tag') in ('ul', 'dl', 'ol'):
+		clsList.append(PresentationalList)
 	ia2Web.findExtraOverlayClasses(obj, clsList,
 		documentClass=Document)

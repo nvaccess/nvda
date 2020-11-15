@@ -7,6 +7,7 @@
 This implementation only works on Windows 8 and above.
 """
 
+import os
 import vision
 from vision import providerBase
 import winVersion
@@ -19,6 +20,7 @@ import gui
 from logHandler import log
 from typing import Optional, Type
 import nvwave
+import globalVars
 
 
 class MAGCOLOREFFECT(Structure):
@@ -325,7 +327,7 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 			raise e
 		if self.getSettings().playToggleSounds:
 			try:
-				nvwave.playWaveFile(r"waves\screenCurtainOn.wav")
+				nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "screenCurtainOn.wav"))
 			except Exception:
 				log.exception()
 
@@ -338,7 +340,7 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 			Magnification.MagUninitialize()
 			if self.getSettings().playToggleSounds:
 				try:
-					nvwave.playWaveFile(r"waves\screenCurtainOff.wav")
+					nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "screenCurtainOff.wav"))
 				except Exception:
 					log.exception()
 

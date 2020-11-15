@@ -1660,7 +1660,12 @@ def getControlFieldSpeech(  # noqa: C901
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 
-	presCat=attrs.getPresentationCategory(ancestorAttrs,formatConfig, reason=reason)
+	presCat = attrs.getPresentationCategory(
+		ancestorAttrs,
+		formatConfig,
+		reason=reason,
+		extraDetail=extraDetail
+	)
 	childControlCount=int(attrs.get('_childcontrolcount',"0"))
 	role = attrs.get('role', controlTypes.ROLE_UNKNOWN)
 	if (
@@ -1905,6 +1910,18 @@ def getControlFieldSpeech(  # noqa: C901
 		out = []
 		if ariaCurrent:
 			out.extend(ariaCurrentSequence)
+		# Speak expanded / collapsed / level for treeview items (in ARIA treegrids)
+		if role == controlTypes.ROLE_TREEVIEWITEM:
+			if controlTypes.STATE_EXPANDED in states:
+				out.extend(
+					getPropertiesSpeech(reason=reason, states={controlTypes.STATE_EXPANDED}, _role=role)
+				)
+			elif controlTypes.STATE_COLLAPSED in states:
+				out.extend(
+					getPropertiesSpeech(reason=reason, states={controlTypes.STATE_COLLAPSED}, _role=role)
+				)
+			if levelSequence:
+				out.extend(levelSequence)
 		if role == controlTypes.ROLE_GRAPHIC and content:
 			out.append(content)
 		types.logBadSequenceTypes(out)
@@ -2122,6 +2139,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				# Translators: Reported when text is no longer marked
 				else _("not marked"))
 			textList.append(text)
+	if formatConfig["reportEmphasis"]:
 		# strong text
 		strong=attrs.get("strong")
 		oldStrong=attrsCache.get("strong") if attrsCache is not None else None

@@ -6,6 +6,8 @@
 """Unit tests for speech/manager module
 """
 import unittest
+from typing import Optional, Callable
+
 import config
 import speech
 from unittest import mock
@@ -17,6 +19,8 @@ from speech.commands import (
 	PitchCommand,
 	ConfigProfileTriggerCommand,
 	_CancellableSpeechCommand,
+	CharacterModeCommand,
+	EndUtteranceCommand,
 )
 from .speechManagerTestHarness import (
 	_IndexT,
@@ -150,6 +154,29 @@ class TestExpectedClasses(unittest.TestCase):
 		self.assertNotEqual(p, e)
 
 
+class _CancellableSpeechCommand_withLamda(_CancellableSpeechCommand):
+	"""
+	A test helper to control when speech gets cancelled.
+	"""
+
+	def _getDevInfo(self):
+		return ""
+
+	def _checkIfValid(self):
+		return True
+
+	def __init__(
+			self,
+			checkIfValid: Optional[Callable[[], bool]] = None,
+			getDevInfo: Optional[Callable[[], str]] = None,
+	):
+		if checkIfValid is not None:
+			self._checkIfValid = checkIfValid
+		if getDevInfo is not None:
+			self._getDevInfo = getDevInfo
+		super().__init__(reportDevInfo=True)
+
+
 class CancellableSpeechTests(unittest.TestCase):
 	"""Tests behaviour related to CancellableSpeech"""
 
@@ -164,7 +191,7 @@ class CancellableSpeechTests(unittest.TestCase):
 
 		with smi.expectation():
 			text = "This stays valid"
-			smi.speak([text, _CancellableSpeechCommand(lambda: True)])
+			smi.speak([text, _CancellableSpeechCommand_withLamda(lambda: True)])
 			smi.expect_synthSpeak(sequence=[text, smi.create_ExpectedIndex(expectedToBecomeIndex=1)])
 
 	def test_invalidSpeechNotSpoken(self):
@@ -173,7 +200,7 @@ class CancellableSpeechTests(unittest.TestCase):
 
 		with smi.expectation():
 			text = "This stays invalid"
-			smi.speak([text, _CancellableSpeechCommand(lambda: False)])
+			smi.speak([text, _CancellableSpeechCommand_withLamda(lambda: False)])
 
 	def test_invalidated_indexHit(self):
 		"""Hitting an index should cause a cancellation of speech that has become
@@ -193,7 +220,7 @@ class CancellableSpeechTests(unittest.TestCase):
 				smi.create_CallBackCommand(expectedToBecomeIndex=1),
 				"text 2",
 				smi.create_ExpectedIndex(expectedToBecomeIndex=2),
-				_CancellableSpeechCommand(lambda: _checkIfValid(1)),
+				_CancellableSpeechCommand_withLamda(lambda: _checkIfValid(1)),
 			]
 			isSpeechNumberValid[1] = True  # initially valid
 			smi.speak(initiallyValidSequence)
@@ -224,7 +251,7 @@ class CancellableSpeechTests(unittest.TestCase):
 				smi.create_CallBackCommand(expectedToBecomeIndex=1),
 				"text 2",
 				smi.create_ExpectedIndex(expectedToBecomeIndex=2),
-				_CancellableSpeechCommand(lambda: _checkIfValid(1)),
+				_CancellableSpeechCommand_withLamda(lambda: _checkIfValid(1)),
 			]
 			isSpeechNumberValid[1] = True  # initially valid
 			smi.speak(initiallyValidSequence)
@@ -261,7 +288,7 @@ class CancellableSpeechTests(unittest.TestCase):
 				smi.create_CallBackCommand(expectedToBecomeIndex=1),
 				"text 2",
 				smi.create_ExpectedIndex(expectedToBecomeIndex=2),
-				_CancellableSpeechCommand(lambda: _checkIfValid(1)),
+				_CancellableSpeechCommand_withLamda(lambda: _checkIfValid(1)),
 			]
 			isSpeechNumberValid[1] = True  # initially valid
 			smi.speak(initiallyValidSequence)
@@ -275,7 +302,7 @@ class CancellableSpeechTests(unittest.TestCase):
 				smi.create_CallBackCommand(expectedToBecomeIndex=3),
 				"text 4",
 				smi.create_ExpectedIndex(expectedToBecomeIndex=4),
-				_CancellableSpeechCommand(lambda: _checkIfValid(2)),
+				_CancellableSpeechCommand_withLamda(lambda: _checkIfValid(2)),
 			]
 			smi.speak(newValidSequence)
 			smi.expect_synthCancel()
@@ -290,12 +317,12 @@ class CancellableSpeechTests(unittest.TestCase):
 		with smi.expectation():
 			smi.speak([
 				"Stays invalid",
-				_CancellableSpeechCommand(lambda: False),
+				_CancellableSpeechCommand_withLamda(lambda: False),
 				smi.create_ExpectedIndex(expectedToBecomeIndex=1)
 			])
 
 		with smi.expectation():
-			smi.speak(["Stays valid", _CancellableSpeechCommand(lambda: True)])
+			smi.speak(["Stays valid", _CancellableSpeechCommand_withLamda(lambda: True)])
 			smi.expect_synthSpeak(sequence=[
 				"Stays valid", smi.create_ExpectedIndex(expectedToBecomeIndex=2)
 			])
@@ -826,10 +853,16 @@ class InitialDevelopmentTests(unittest.TestCase):
 			"Testing testing ",
 			speech.PitchCommand(offset=100),
 			"1 2 3 4",
-			smi.create_ConfigProfileTriggerCommand(t1, True, expectedToBecomeIndex=1),
-			smi.create_ConfigProfileTriggerCommand(t2, True, expectedToBecomeIndex=2),
+			smi.create_ExpectedIndex(1),
+			# The preceeding index is expected,
+			# as the following profile trigger commands will cause the utterance to be split here.
+			ConfigProfileTriggerCommand(t1, True),
+			ConfigProfileTriggerCommand(t2, True),
 			"5 6 7 8",
-			smi.create_ConfigProfileTriggerCommand(t1, False, expectedToBecomeIndex=3),
+			smi.create_ExpectedIndex(2),
+			# The preceeding index is expected,
+			# as the following profile trigger commands will cause the utterance to be split here.
+			ConfigProfileTriggerCommand(t1, False),
 			"9 10 11 12"
 		]
 		with smi.expectation():
@@ -842,11 +875,14 @@ class InitialDevelopmentTests(unittest.TestCase):
 			smi.doneSpeaking()
 			smi.pumpAll()
 			smi.expect_synthCancel()
+			smi.expect_mockCall(t1.enter)
+			smi.expect_synthCancel()
+			smi.expect_mockCall(t2.enter)
 			smi.expect_synthSpeak(sequence=[
 				seq[1],  # PitchCommand
-				seq[4],  # IndexCommand index=2 (derived from ConfigProfileTriggerCommand)
+				'5 6 7 8',
+				seq[7],  # IndexCommand index=2 (due to a  ConfigProfileTriggerCommand following it)
 			])
-			smi.expect_mockCall(t1.enter)
 
 		with smi.expectation():
 			smi.indexReached(2)
@@ -857,27 +893,13 @@ class InitialDevelopmentTests(unittest.TestCase):
 			smi.expect_synthCancel()
 			smi.expect_synthSpeak(sequence=[
 				seq[1],  # PitchCommand
-				'5 6 7 8',
-				seq[6],  # IndexCommand index=3 (derived from ConfigProfileTriggerCommand)
-			])
-			smi.expect_mockCall(t2.enter)
-
-		with smi.expectation():
-			smi.indexReached(3)
-			smi.pumpAll()
-		with smi.expectation():
-			smi.doneSpeaking()
-			smi.pumpAll()
-			smi.expect_synthCancel()
-			smi.expect_synthSpeak(sequence=[
-				seq[1],  # PitchCommand
 				'9 10 11 12',
-				smi.create_ExpectedIndex(expectedToBecomeIndex=4)
+				smi.create_ExpectedIndex(expectedToBecomeIndex=3)
 			])
 			smi.expect_mockCall(t1.exit)
 
 		with smi.expectation():
-			smi.indexReached(4)
+			smi.indexReached(3)
 			smi.pumpAll()
 		with smi.expectation():
 			smi.doneSpeaking()
@@ -1115,3 +1137,34 @@ class InitialDevelopmentTests_withCancellableSpeechEnabled(InitialDevelopmentTes
 	def setUp(self):
 		super().setUp()
 		config.conf['featureFlag']['cancelExpiredFocusSpeech'] = 1  # yes
+
+
+class Test_pr11651(unittest.TestCase):
+
+	def test_redundantSequenceAfterEndUtterance(self):
+		"""
+		Tests that redundant param change and index commands are not emitted as an extra utterance
+		when the preceeding utterance contained param change commands and an EndUtterance command.
+		E.g. speaking a character.
+		"""
+		smi = SpeechManagerInteractions(self)
+		seq = [
+			CharacterModeCommand(True),
+			"a",
+			smi.create_ExpectedIndex(1),
+			EndUtteranceCommand(),
+		]
+		with smi.expectation():
+			smi.speak(seq)
+			# synth should receive the characterMode, the letter 'a' and an index command.
+			smi.expect_synthSpeak(sequence=seq[:-1])
+		with smi.expectation():
+			# Previously, this would result in synth.speak receiving
+			# a call with sequence:
+			# [CharacterModeCommand(True), IndexCommand(2)]
+			# This is a problem because it includes an index command but no speech.
+			# This is inefficient, and also some SAPI5 synths such as Ivona will not
+			# notify of this bookmark.
+			smi.indexReached(1)
+			smi.doneSpeaking()
+			smi.pumpAll()

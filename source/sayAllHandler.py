@@ -4,6 +4,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 import weakref
+import garbageHandler
 import speech
 import synthDriverHandler
 from logHandler import log
@@ -40,7 +41,8 @@ def readObjects(obj):
 	_activeSayAll = weakref.ref(reader)
 	reader.next()
 
-class _ObjectsReader(object):
+
+class _ObjectsReader(garbageHandler.TrackedObject):
 
 	def __init__(self, root):
 		self.walker = self.walk(root)
@@ -84,7 +86,8 @@ def readText(cursor):
 	_activeSayAll = weakref.ref(reader)
 	reader.nextLine()
 
-class _TextReader(object):
+
+class _TextReader(garbageHandler.TrackedObject):
 	"""Manages continuous reading of text.
 	This is intended for internal use only.
 
