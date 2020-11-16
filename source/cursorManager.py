@@ -41,7 +41,8 @@ class FindDialog(
 
 	def __init__(self, parent, cursorManager, text, caseSensitivity, reverse=False):
 		# Translators: Title of a dialog to find text.
-		super().__init__(parent, wx.ID_ANY, _("Find"))
+		super().__init__(parent, title=_("Find"))
+
 		# Have a copy of the active cursor manager, as this is needed later for finding text.
 		self.activeCursorManager = cursorManager
 		self.reverse = reverse
