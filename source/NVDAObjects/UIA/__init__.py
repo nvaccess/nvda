@@ -41,7 +41,6 @@ import braille
 import locationHelper
 import ui
 import winVersion
-import aria
 
 
 class UIATextInfo(textInfos.TextInfo):
@@ -1208,10 +1207,10 @@ class UIA(Window):
 			return ""
 
 	def _get_liveRegionPoliteness(self):
-		# Live setting enumeration values allign with aria.AriaLivePoliteness.
 		try:
-			return aria.AriaLivePoliteness(
-				self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_LiveSettingPropertyId)
+			return UIAHandler.UIALiveSettingtoNVDAAriaLivePoliteness.get(
+				self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_LiveSettingPropertyId),
+				super().liveRegionPoliteness
 			)
 		except COMError:
 			return super().liveRegionPoliteness
