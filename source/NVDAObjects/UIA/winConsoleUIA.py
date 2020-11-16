@@ -11,7 +11,7 @@ import textUtils
 import UIAHandler
 
 from comtypes import COMError
-from UIAUtils import isTextRangeOffscreen
+from logHandler import log
 from . import UIATextInfo
 from ..behaviors import EnhancedTermTypedCharSupport, KeyboardHandlerBasedTypedCharSupport
 from ..window import Window
@@ -31,7 +31,6 @@ class consoleUIATextInfo(UIATextInfo):
 				_rangeObj, collapseToEnd = self._getBoundingRange(obj, position)
 			except (COMError, RuntimeError):
 				# We couldn't bound the console.
-				from logHandler import log
 				log.warning("Couldn't get bounding range for console", exc_info=True)
 				# Fall back to presenting the entire buffer.
 				_rangeObj, collapseToEnd = None, None
@@ -49,10 +48,8 @@ class consoleUIATextInfo(UIATextInfo):
 		if position == textInfos.POSITION_FIRST:
 			collapseToEnd = False
 		elif position == textInfos.POSITION_LAST:
-			# We must pull back the end by one character otherwise when we collapse to end,
-			# a console bug results in a textRange covering the entire console buffer!
-			# Strangely the *very* last character is a special blank point
-			# so we never seem to miss a real character.
+			# The exclusive end hangs off the end of the visible ranges.
+			# Move back one character to remain within bounds.
 			_rangeObj.MoveEndpointByUnit(
 				UIAHandler.TextPatternRangeEndpoint_End,
 				UIAHandler.NVDAUnitsToUIAUnits['character'],
@@ -367,12 +364,31 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		return consoleUIATextInfo if self.is21H1Plus else consoleUIATextInfoPre21H1
 
 	def _getTextLines(self):
+		if self.is21H1Plus:
+			# #11760: the 21H1 UIA console wraps across lines.
+			# When text wraps, NVDA starts reading from the beginning of the visible text for every new line of output.
+			# Use the superclass _getTextLines instead.
+			return super()._getTextLines()
 		# This override of _getTextLines takes advantage of the fact that
 		# the console text contains linefeeds for every line
 		# Thus a simple string splitlines is much faster than splitting by unit line.
 		ti = self.makeTextInfo(textInfos.POSITION_ALL)
 		text = ti.text or ""
 		return text.splitlines()
+
+
+	def detectPossibleSelectionChange(self):
+		try:
+			return super().detectPossibleSelectionChange()
+		except COMError:
+			# microsoft/terminal#5399: when attempting to compare text ranges
+			# from the standard and alt mode buffers, E_FAIL is returned.
+			# Downgrade this to a debugWarning.
+			log.debugWarning((
+				"Exception raised when comparing selections, "
+				"probably due to a switch to/from the alt buffer."
+			), exc_info=True)
+
 
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAElement.cachedAutomationId == "Text Area":

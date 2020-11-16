@@ -1,8 +1,8 @@
-#virtualBuffers/gecko_ia2.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-# Copyright (C) 2008-2020 NV Access Limited, Babbage B.V., Mozilla Corporation
+# virtualBuffers/gecko_ia2.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2008-2020 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions, Julien Cochuyt
 
 import weakref
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
@@ -94,8 +94,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
 			role=controlTypes.ROLE_TEXTFRAME
 		level=attrs.get('IAccessible2::attribute_level',"")
-
-		xmlRoles=attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")
+		xmlRoles = attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")
 		landmark = next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
 		if landmark and role != controlTypes.ROLE_LANDMARK and landmark != xmlRoles[0]:
 			# Ignore the landmark role
@@ -325,9 +324,31 @@ class Gecko_ia2(VirtualBuffer):
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_LINKED:[1],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_TRAVERSED:[None]}
 		elif nodeType=="formField":
 			attrs=[
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_BUTTONMENU,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_OUTLINE,IAccessibleHandler.IA2_ROLE_TOGGLE_BUTTON],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]},
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_TEXT],"IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[1]},
-				{"IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[1],"parent::IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[None]},
+				{
+					"IAccessible::role": [
+						oleacc.ROLE_SYSTEM_BUTTONMENU,
+						oleacc.ROLE_SYSTEM_CHECKBUTTON,
+						oleacc.ROLE_SYSTEM_COMBOBOX,
+						oleacc.ROLE_SYSTEM_LIST,
+						oleacc.ROLE_SYSTEM_OUTLINE,
+						oleacc.ROLE_SYSTEM_PUSHBUTTON,
+						oleacc.ROLE_SYSTEM_RADIOBUTTON,
+						oleacc.ROLE_SYSTEM_PAGETAB,
+						IAccessibleHandler.IA2_ROLE_TOGGLE_BUTTON,
+					],
+					f"IAccessible::state_{oleacc.STATE_SYSTEM_READONLY}": [None],
+				},
+				{
+					"IAccessible::role": [
+						oleacc.ROLE_SYSTEM_COMBOBOX,
+						oleacc.ROLE_SYSTEM_TEXT
+					],
+					f"IAccessible2::state_{IAccessibleHandler.IA2_STATE_EDITABLE}": [1],
+				},
+				{
+					f"IAccessible2::state_{IAccessibleHandler.IA2_STATE_EDITABLE}": [1],
+					f"parent::IAccessible2::state_{IAccessibleHandler.IA2_STATE_EDITABLE}": [None],
+				},
 			]
 		elif nodeType=="list":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LIST]}

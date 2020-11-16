@@ -23,7 +23,15 @@ from .contextHelp import ContextHelpMixin
 import tones
 import systemUtils
 
-def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,silent=False,startAfterInstall=True):
+
+def doInstall(
+		createDesktopShortcut=True,
+		startOnLogon=True,
+		isUpdate=False,
+		copyPortableConfig=False,
+		silent=False,
+		startAfterInstall=True
+):
 	progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
 		# Translators: The title of the dialog presented while NVDA is being updated.
 		_("Updating NVDA") if isUpdate
@@ -56,7 +64,14 @@ def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,sil
 		# Translators: the title of a retry cancel dialog when NVDA installation fails
 		title=_("File in Use")
 		if winUser.MessageBox(None,message,title,winUser.MB_RETRYCANCEL)==winUser.IDRETRY:
-			return doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,silent,startAfterInstall)
+			return doInstall(
+				createDesktopShortcut=createDesktopShortcut,
+				startOnLogon=startOnLogon,
+				copyPortableConfig=copyPortableConfig,
+				isUpdate=isUpdate,
+				silent=silent,
+				startAfterInstall=startAfterInstall
+			)
 	if res!=0:
 		log.error("Installation failed: %s"%res)
 		# Translators: The message displayed when an error occurs during installation of NVDA.
@@ -89,16 +104,20 @@ def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,sil
 	else:
 		wx.GetApp().ExitMainLoop()
 
-def doSilentInstall(startAfterInstall=True):
+
+def doSilentInstall(
+		copyPortableConfig=False,
+		startAfterInstall=True
+):
 	prevInstall=installer.comparePreviousInstall() is not None
 	startOnLogon=globalVars.appArgs.enableStartOnLogon
 	if startOnLogon is None:
 		startOnLogon=config.getStartOnLogonScreen() if prevInstall else True
 	doInstall(
-		installer.isDesktopShortcutInstalled() if prevInstall else True,
-		startOnLogon,
-		False,
-		prevInstall,
+		createDesktopShortcut=installer.isDesktopShortcutInstalled() if prevInstall else True,
+		startOnLogon=startOnLogon,
+		isUpdate=prevInstall,
+		copyPortableConfig=copyPortableConfig,
 		silent=True,
 		startAfterInstall=startAfterInstall
 	)
@@ -192,8 +211,10 @@ class InstallerDialog(
 		createPortableText = _("Copy &portable configuration to current user account")
 		self.copyPortableConfigCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=createPortableText))
 		self.bindHelpEvent("CopyPortableConfigurationToCurrentUserAccount", self.copyPortableConfigCheckbox)
-		self.copyPortableConfigCheckbox.Value = False
-		if globalVars.appArgs.launcher:
+		self.copyPortableConfigCheckbox.Value = bool(globalVars.appArgs.copyPortableConfig)
+		if globalVars.appArgs.copyPortableConfig is None:
+			# copyPortableConfig is set to C{None} in the main loop,
+			# when copying the portable configuration should be disabled at all costs.
 			self.copyPortableConfigCheckbox.Disable()
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
@@ -225,7 +246,12 @@ class InstallerDialog(
 
 	def onInstall(self, evt):
 		self.Hide()
-		doInstall(self.createDesktopShortcutCheckbox.Value,self.startOnLogonCheckbox.Value,self.copyPortableConfigCheckbox.Value,self.isUpdate)
+		doInstall(
+			createDesktopShortcut=self.createDesktopShortcutCheckbox.Value,
+			startOnLogon=self.startOnLogonCheckbox.Value,
+			copyPortableConfig=self.copyPortableConfigCheckbox.Value,
+			silent=self.isUpdate
+		)
 		self.Destroy()
 
 	def onCancel(self, evt):

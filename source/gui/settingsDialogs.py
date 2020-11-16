@@ -2160,7 +2160,7 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
-		highlightText = _("Marked (highlighted text)")
+		highlightText = _("Mar&ked (highlighted text)")
 		self.highlightCheckBox = fontGroup.addItem(
 			wx.CheckBox(self, label=highlightText)
 		)
@@ -2658,6 +2658,7 @@ class AdvancedPanelControls(
 			"vision",
 			"speech",
 			"speechManager",
+			"synthDriver",
 			"nvwave",
 		]
 		# Translators: This is the label for a list in the

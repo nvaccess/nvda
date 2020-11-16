@@ -6,6 +6,7 @@
 """Logic for NVDA + Google Chrome tests
 """
 
+import os
 from robot.libraries.BuiltIn import BuiltIn
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
 from SystemTestSpy import (
@@ -15,10 +16,16 @@ from SystemTestSpy import (
 # Imported for type information
 from ChromeLib import ChromeLib as _ChromeLib
 from AssertsLib import AssertsLib as _AssertsLib
+import NvdaLib as _NvdaLib
 
 _builtIn: BuiltIn = BuiltIn()
 _chrome: _ChromeLib = _getLib("ChromeLib")
 _asserts: _AssertsLib = _getLib("AssertsLib")
+
+
+ARIAExamplesDir = os.path.join(
+	_NvdaLib._locations.repoRoot, "include", "w3c-aria-practices", "examples"
+)
 
 
 def checkbox_labelled_by_inner_element():
@@ -97,7 +104,7 @@ def announce_list_item_when_moving_by_word_or_character():
 	_asserts.strings_match(
 		actualSpeech,
 		"\n".join([
-			"list item  level 1  ",
+			"list item  level 1",
 			"b"
 		])
 	)
@@ -204,7 +211,7 @@ def test_pr11606():
 	_asserts.strings_match(
 		actualSpeech,
 		"\n".join([
-			"out of link  ",
+			"out of link",
 			"space"
 		])
 	)
@@ -221,4 +228,63 @@ def test_pr11606():
 	_asserts.strings_match(
 		actualSpeech,
 		"bullet  link  A    link  B"
+	)
+
+
+def test_ariaTreeGrid_browseMode():
+	"""
+	Ensure that ARIA treegrids are accessible as a standard table in browse mode.
+	"""
+	testFile = os.path.join(ARIAExamplesDir, "treegrid", "treegrid-1.html")
+	_chrome.prepareChrome(
+		f"""
+			<iframe src="{testFile}" />
+		"""
+	)
+	# Jump to the first heading in the iframe.
+	actualSpeech = _chrome.getSpeechAfterKey("h")
+	_asserts.strings_match(
+		actualSpeech,
+		"frame  main landmark  Treegrid Email Inbox Example  heading  level 1"
+	)
+	# Tab to the first link.
+	# This ensures that focus is totally within the iframe
+	# so as to not cause focus to hit the iframe's document
+	# when entering focus mode on the treegrid later.
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		"issue 790.  link"
+	)
+	# Jump to the ARIA treegrid with the next table quicknav command.
+	# The browse mode caret will be inside the table on the caption before the first row.
+	actualSpeech = _chrome.getSpeechAfterKey("t")
+	_asserts.strings_match(
+		actualSpeech,
+		"Inbox  table  clickable  with 5 rows and 3 columns  Inbox"
+	)
+	# Move past the caption onto row 1 with downArrow
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"row 1  Subject  column 1  Subject"
+	)
+	# Navigate to row 2 column 1 with NVDA table navigation command
+	actualSpeech = _chrome.getSpeechAfterKey("control+alt+downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"expanded  level 1  row 2  Treegrids are awesome"
+	)
+	# Press enter to activate NVDA focus mode and focus the current row
+	actualSpeech = _chrome.getSpeechAfterKey("enter")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			# focus mode turns on
+			"Focus mode",
+			# Focus enters the ARIA treegrid (table)
+			"Inbox  table",
+			# Focus lands on row 2
+			"level 1  Treegrids are awesome Want to learn how to use them? aaron at thegoogle dot rocks  expanded",
+		])
 	)
