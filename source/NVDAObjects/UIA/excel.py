@@ -116,6 +116,11 @@ class ExcelCell(UIA):
 			# Translators: If an excel cell has data validation set
 			tmpl = _("Has data validation")
 			infoList.append(tmpl)
+		dataValidationPrompt = self._getUIACacheablePropertyValue(UIAHandler.handler.DataValidationPrompt_PropertyId)
+		if dataValidationPrompt:
+			# Translators: the data validation prompt (input message) for an Excel cell 
+			tmpl = _("Data validation prompt: {0}")
+			infoList.append(tmpl.format(dataValidationPrompt))
 		hasConditionalFormatting = self._getUIACacheablePropertyValue(UIAHandler.handler.HasConditionalFormatting_PropertyId)
 		if hasConditionalFormatting:
 			# Translators: If an excel cell has conditional formatting 
