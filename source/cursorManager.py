@@ -406,9 +406,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			# Translators: Reported when there is no text selected (for copying).
 			ui.message(_("No selection"))
 			return
-		if info.copyToClipboard():
-			# Translators: Message presented when text has been copied to clipboard.
-			ui.message(_("Copied to clipboard"))
+		info.copyToClipboard(notify=True)
 
 	def reportSelectionChange(self, oldTextInfo):
 		newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
