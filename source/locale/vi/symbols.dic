@@ -49,7 +49,10 @@ $	đô la	all	norep
 ¢	Xen	all	norep
 ¥	Yên	all	norep
 ₹	Ru pi	some	norep
+ƒ	đồng vàng Anh	all	norep
+¤	tiền tệ sign	all	norep
 %	phần trăm	some
+‰	phần ngàn	some
 &	và	some
 '	nháy đơn	all
 (	mở ngoặc tròn	most	always
@@ -77,7 +80,16 @@ _	gạch dưới	most
 {	mở ngoặc nhọn	most
 }	đóng ngoặc nhọn	most
 |	gạch đứng	most
+¦	xấp xỉ	most
 ~	ngã	most
+¡	chấm than ngược	some
+¿	dấu chấm hỏi ngược	some
+·	chấm giữa	most
+‚	nháy đơn thấp	most
+„	nháy kép thấp	most
+′	nguyên tố	some
+″	nguyên tố kép	some
+‴	ba nguyên tố	some
 
 # Other characters
 •	bu lét	some
@@ -89,29 +101,69 @@ _	gạch dưới	most
 ’	đóng ngoặc đơn	most
 –	gạch ngang	most	always
 —	gạch nối	most
+­	gạch nối mềm	most
+⁃	bu lét gạch nối	none
 ●	bu lét tròn	most
+○	vòng tròn trắng	most
 ¨	tách đôi	most
+¯	macron	most
+´	sắc	most
+¸	cedilla	most
 ‎	dấu trái qua phải	char
 ‏	dấu phải qua trái	char
+¶	đánh dấu đoạn	most
 ■	vuông đen	some
 ▪	vuông đen	some
 ◾	vuông đen	some
+□	vuông trắng	some
 ◦	bu lét trắng	some
 ⇒	mũi tên phải	some
 ⇨	mũi tên phải	some
+➔	mũi tên phải	some
 ➢	mũi tên phải	some
 ⮚	mũi tên phải	some
 ❖	black diamond minus white X	some
-♣	black club	some
-♦	black diamond	some
+♣	chuồn	some
+♦	rôd	some
+◆	rô	some
 §	phần	all
 °	độ	some
 «	mở ngoặc vuông kép
 đóng ngoặc vuông kép	double right pointing angle bracket
 µ	micro	some
-¹	superscript 1	some
-²	superscript 2	some
-³	superscript 3	some
+º	độ	some
+ª	chỉ số trên a	some
+⁰	chỉ số trên 0	some
+¹	chỉ số trên 1	some
+²	chỉ số trên 2	some
+³	chỉ số trên 3	some
+⁴	chỉ số trên 4	some
+⁵	chỉ số trên 5	some
+⁶	chỉ số trên 6	some
+⁷	chỉ số trên 7	some
+⁸	chỉ số trên 8	some
+⁹	chỉ số trên 9	some
+⁺	chỉ số trên cộng	some
+⁻	chỉ số trên trừ	some
+⁼	chỉ số trên	some
+⁽	chỉ số trên mở ngoặc tròn	some
+⁾	chỉ số trên đóng ngoặc tròn	some
+ⁿ	chỉ số trên n	some
+₀	chỉ số dưới 0	some
+₁	chỉ số dưới 1	some
+₂	chỉ số dưới 2	some
+₃	chỉ số dưới 3	some
+₄	chỉ số dưới 4	some
+₅	chỉ số dưới 5	some
+₆	chỉ số dưới 6	some
+₇	chỉ số dưới 7	some
+₈	chỉ số dưới 8	some
+₉	chỉ số dưới 9	some
+₊	chỉ số dưới cộng	some
+₋	chỉ số dưới trừ	some
+₌	chỉ số dưới bằng	some
+₍	chỉ số dưới mở ngoặc tròn	some
+₎	chỉ số dưới đóng ngoặc tròn	some
 ®	đã đăng kí	some
 ™	Thương hiệu	some
 ©	CopyrightBản quyền	some
@@ -125,6 +177,10 @@ _	gạch dưới	most
 ✓	dấu kiểm	some
 ✔	dấu kiểm	some
 🡺	mũi tên phải	some
+†	dagger	some
+‡	double dagger	some
+‣	bu lét tam giác	none
+✗	x-shaped bullet	none
 
 #Mathematical Operators U+2200 to U+220F
 ∀	cho tất cả	none
@@ -157,6 +213,7 @@ _	gạch dưới	most
 ∦	không song song với	none
 ∧	log và	none
 ∨	log hoặc	none
+¬	log không	none
 ∩	giao	none
 ∪	hợp	none
 ∫	tích phân	none
@@ -172,6 +229,9 @@ _	gạch dưới	most
 ⊇	Tập cha bằng của	none
 
 # Vulgur Fractions U+2150 to U+215E
+¼	một phần tư	none
+½	một phần hai	none
+¾	ba phần tư	none
 ⅐	Một phần bảy	none
 ⅑	Một phần chín	none
 ⅒	Một phần mười	none

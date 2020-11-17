@@ -9,6 +9,7 @@ import gui
 import config
 from logHandler import log
 import fonts
+import gui.contextHelp
 
 BRAILLE_UNICODE_PATTERNS_START = 0x2800
 BRAILLE_SPACE_CHARACTER = chr(BRAILLE_UNICODE_PATTERNS_START)
@@ -19,7 +20,12 @@ SPACE_CHARACTER = u" "
 # Inherit from wx.Frame because these windows show in the alt+tab menu (where miniFrame does not)
 # wx.Dialog causes a crash on destruction when multiple were created at the same time (speechViewer
 # may start at the same time)
-class BrailleViewerFrame(wx.Frame):
+class BrailleViewerFrame(
+		gui.contextHelp.ContextHelpMixin,
+		wx.Frame  # wxPython does not seem to call base class initializer, put last in MRO
+):
+
+	helpId = "BrailleViewer"
 
 	# Translators: The title of the NVDA Braille Viewer tool window.
 	_title = _("NVDA Braille Viewer")
@@ -39,7 +45,7 @@ class BrailleViewerFrame(wx.Frame):
 			brailleViewSection = config.conf["brailleViewer"]
 			dialogPos = wx.Point(x=brailleViewSection["x"], y=brailleViewSection["y"])
 
-		super(BrailleViewerFrame, self).__init__(
+		super().__init__(
 			gui.mainFrame,
 			title=self._title,
 			pos=dialogPos,

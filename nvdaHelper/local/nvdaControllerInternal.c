@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2018 NV Access Limited, rui Batista, Google LLC.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -19,14 +19,19 @@ error_status_t __stdcall nvdaControllerInternal_requestRegistration(const wchar_
 	return _nvdaControllerInternal_requestRegistration(uuidString);
 }
 
+error_status_t(__stdcall *_nvdaControllerInternal_reportLiveRegion)(const wchar_t*, const wchar_t*);
+error_status_t __stdcall nvdaControllerInternal_reportLiveRegion(const wchar_t* text, const wchar_t* politeness) {
+	return _nvdaControllerInternal_reportLiveRegion(text, politeness);
+}
+
 error_status_t(__stdcall *_nvdaControllerInternal_inputLangChangeNotify)(const long, const unsigned long, const wchar_t*);
 error_status_t __stdcall nvdaControllerInternal_inputLangChangeNotify(const long threadID, const unsigned long hkl, const wchar_t* layoutString) {
 	return _nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString);
 }
 
-error_status_t(__stdcall *_nvdaControllerInternal_typedCharacterNotify)(const long, const wchar_t); 
-error_status_t __stdcall nvdaControllerInternal_typedCharacterNotify(const long threadID, const wchar_t ch) {
-	return _nvdaControllerInternal_typedCharacterNotify(threadID,ch);
+error_status_t(__stdcall *_nvdaControllerInternal_typedCharacterNotify)(const wchar_t); 
+error_status_t __stdcall nvdaControllerInternal_typedCharacterNotify(const wchar_t ch) {
+	return _nvdaControllerInternal_typedCharacterNotify(ch);
 }
 
 

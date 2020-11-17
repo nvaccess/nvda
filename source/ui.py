@@ -19,6 +19,7 @@ from logHandler import log
 import gui
 import speech
 import braille
+import globalVars
 from typing import Optional
 
 
@@ -26,7 +27,7 @@ from typing import Optional
 URL_MK_UNIFORM = 1
 
 # Dialog box properties
-DIALOG_OPTIONS = "dialogWidth:350px;dialogHeight:140px;resizable:yes;center:yes;help:no"
+DIALOG_OPTIONS = "resizable:yes;help:no"
 
 #dwDialogFlags for ShowHTMLDialogEx from mshtmhst.h
 HTMLDLG_NOUI = 0x0010 
@@ -46,7 +47,7 @@ def browseableMessage(message,title=None,isHtml=False):
 	@param isHtml: Whether the message is html
 	@type isHtml: boolean
 	"""
-	htmlFileName  = os.path.realpath( u'message.html' )
+	htmlFileName = os.path.join(globalVars.appDir, 'message.html')
 	if not os.path.isfile(htmlFileName ): 
 		raise LookupError(htmlFileName )
 	moniker = POINTER(IUnknown)()

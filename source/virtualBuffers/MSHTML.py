@@ -1,8 +1,8 @@
-#virtualBuffers/MSHTML.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2009-2017 NV Access Limited, Babbage B.V.
+# virtualBuffers/MSHTML.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2009-2020 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
 
 from comtypes import COMError
 import eventHandler
@@ -37,8 +37,6 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			attrs['revision-insertion']=True
 		if formatState&FORMATSTATE_DELETED:
 			attrs['revision-deletion']=True
-		if formatState&FORMATSTATE_MARKED:
-			attrs['marked']=True
 		if formatState&FORMATSTATE_STRONG:
 			attrs['strong']=True
 		if formatState&FORMATSTATE_EMPH:
@@ -246,14 +244,29 @@ class MSHTML(VirtualBuffer):
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_LINKED:[1],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_TRAVERSED:[None]}
 		elif nodeType=="formField":
 			attrs=[
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_OUTLINE],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]},
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX]},
+				{
+					"IAccessible::role": [
+						oleacc.ROLE_SYSTEM_CHECKBUTTON,
+						oleacc.ROLE_SYSTEM_OUTLINE,
+						oleacc.ROLE_SYSTEM_PUSHBUTTON,
+						oleacc.ROLE_SYSTEM_PAGETAB,
+						oleacc.ROLE_SYSTEM_RADIOBUTTON,
+					],
+					f"IAccessible::state_{oleacc.STATE_SYSTEM_READONLY}": [None],
+				},
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_COMBOBOX]},
 				# Focusable edit fields (input type=text, including readonly ones)
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]},
+				{
+					"IAccessible::role": [oleacc.ROLE_SYSTEM_TEXT],
+					f"IAccessible::state_{oleacc.STATE_SYSTEM_FOCUSABLE}": [1],
+				},
 				# Any top-most content editable element (E.g. an editable div for rhich text editing) 
-				{"IHTMLElement::isContentEditable":[1],"parent::IHTMLElement::isContentEditable":[0,None]},
-				{"IHTMLDOMNode::nodeName":["SELECT"]},
-				{"HTMLAttrib::role":["listbox"]},
+				{
+					"IHTMLElement::isContentEditable": [1],
+					"parent::IHTMLElement::isContentEditable": [0, None],
+				},
+				{"IHTMLDOMNode::nodeName": ["SELECT"]},
+				{"HTMLAttrib::role": ["listbox"]},
 			]
 		elif nodeType=="button":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON]}

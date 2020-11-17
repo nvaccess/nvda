@@ -30,24 +30,74 @@ class TestProcessStates(unittest.TestCase):
 	def setUp(self):
 		self.obj = PlaceholderNVDAObject()
 		self.obj.role = controlTypes.ROLE_CHECKBOX
-		self.obj.states = set((controlTypes.STATE_FOCUSABLE, controlTypes.STATE_INVALID_ENTRY, controlTypes.STATE_FOCUSED, controlTypes.STATE_REQUIRED))
+		self.obj.states = {
+			controlTypes.STATE_FOCUSABLE,
+			controlTypes.STATE_INVALID_ENTRY,
+			controlTypes.STATE_FOCUSED,
+			controlTypes.STATE_REQUIRED
+		}
 
 	def test_positiveStates(self):
-		self.assertSetEqual(controlTypes.processPositiveStates(self.obj.role, self.obj.states, controlTypes.REASON_FOCUS, self.obj.states), set([controlTypes.STATE_INVALID_ENTRY, controlTypes.STATE_REQUIRED]))
+		self.assertSetEqual(
+			controlTypes.processPositiveStates(
+				self.obj.role,
+				self.obj.states,
+				controlTypes.REASON_FOCUS,
+				self.obj.states
+			),
+			{controlTypes.STATE_INVALID_ENTRY, controlTypes.STATE_REQUIRED}
+		)
 
 	def test_negativeStates(self):
-		self.assertSetEqual(controlTypes.processNegativeStates(self.obj.role, self.obj.states, controlTypes.REASON_FOCUS, None), set([controlTypes.STATE_CHECKED]))
+		self.assertSetEqual(
+			controlTypes.processNegativeStates(
+				self.obj.role,
+				self.obj.states,
+				controlTypes.REASON_FOCUS,
+				None
+			),
+			{controlTypes.STATE_CHECKED}
+		)
 
 class TestStateOrder(unittest.TestCase):
 
 	def test_positiveMergedStatesOutput(self):
 		obj = PlaceholderNVDAObject()
 		obj.role = controlTypes.ROLE_CHECKBOX
-		obj.states = set((controlTypes.STATE_CHECKED, controlTypes.STATE_FOCUSABLE, controlTypes.STATE_FOCUSED, controlTypes.STATE_SELECTED, controlTypes.STATE_SELECTABLE))
-		self.assertEqual(controlTypes.processAndLabelStates(obj.role, obj.states, controlTypes.REASON_FOCUS, obj.states, None), [controlTypes.stateLabels[controlTypes.STATE_SELECTED],controlTypes.stateLabels[controlTypes.STATE_CHECKED]])
+		obj.states = {
+			controlTypes.STATE_CHECKED,
+			controlTypes.STATE_FOCUSABLE,
+			controlTypes.STATE_FOCUSED,
+			controlTypes.STATE_SELECTED,
+			controlTypes.STATE_SELECTABLE
+		}
+		self.assertEqual(
+			controlTypes.processAndLabelStates(
+				obj.role,
+				obj.states,
+				controlTypes.REASON_FOCUS,
+				obj.states,
+				None
+			),
+			[controlTypes.stateLabels[controlTypes.STATE_CHECKED]]
+		)
 
 	def test_negativeMergedStatesOutput(self):
 		obj = PlaceholderNVDAObject()
 		obj.role = controlTypes.ROLE_CHECKBOX
-		obj.states = set((controlTypes.STATE_FOCUSABLE, controlTypes.STATE_FOCUSED, controlTypes.STATE_SELECTED, controlTypes.STATE_SELECTABLE))
-		self.assertEqual(controlTypes.processAndLabelStates(obj.role, obj.states, controlTypes.REASON_FOCUS, obj.states, None), [controlTypes.stateLabels[controlTypes.STATE_SELECTED],controlTypes.negativeStateLabels[controlTypes.STATE_CHECKED]])
+		obj.states = {
+			controlTypes.STATE_FOCUSABLE,
+			controlTypes.STATE_FOCUSED,
+			controlTypes.STATE_SELECTED,
+			controlTypes.STATE_SELECTABLE
+		}
+		self.assertEqual(
+			controlTypes.processAndLabelStates(
+				obj.role,
+				obj.states,
+				controlTypes.REASON_FOCUS,
+				obj.states,
+				None
+			),
+			[controlTypes.negativeStateLabels[controlTypes.STATE_CHECKED]]
+		)

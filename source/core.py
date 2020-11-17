@@ -37,6 +37,8 @@ import globalVars
 from logHandler import log
 import addonHandler
 import extensionPoints
+import garbageHandler  # noqa: E402
+
 
 # inform those who want to know that NVDA has finished starting up.
 postNvdaStartup = extensionPoints.Action()
@@ -222,15 +224,26 @@ def main():
 		globalVars.appArgs.configPath=config.getUserDefaultConfigPath(useInstalledPathIfExists=globalVars.appArgs.launcher)
 	#Initialize the config path (make sure it exists)
 	config.initConfigPath()
-	log.info("Config dir: %s"%os.path.abspath(globalVars.appArgs.configPath))
+	log.info(f"Config dir: {globalVars.appArgs.configPath}")
 	log.debug("loading config")
 	import config
 	config.initialize()
+	if globalVars.appArgs.configPath == config.getUserDefaultConfigPath(useInstalledPathIfExists=True):
+		# Make sure not to offer the ability to copy the current configuration to the user account.
+		# This case always applies to the launcher when configPath is not overridden by the user,
+		# which is the default.
+		# However, if a user wants to run the launcher with a custom configPath,
+		# it is likely that he wants to copy that configuration when installing.
+		# This check also applies to cases where a portable copy is run using the installed configuration,
+		# in which case we want to avoid copying a configuration to itself.
+		# We set the value to C{None} in order for the gui to determine
+		# when to disable the checkbox for this feature.
+		globalVars.appArgs.copyPortableConfig = None
 	if config.conf['development']['enableScratchpadDir']:
 		log.info("Developer Scratchpad mode enabled")
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
-			nvwave.playWaveFile("waves\\start.wav")
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "start.wav"))
 		except:
 			pass
 	logHandler.setLogLevelFromConfig()
@@ -296,7 +309,10 @@ def main():
 		speech.cancelSpeech()
 		if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 			try:
-				nvwave.playWaveFile("waves\\exit.wav",asynchronous=False)
+				nvwave.playWaveFile(
+					os.path.join(globalVars.appDir, "waves", "exit.wav"),
+					asynchronous=False
+				)
 			except:
 				pass
 		log.info("Windows session ending")
@@ -408,7 +424,7 @@ def main():
 	if not wxLang and '_' in lang:
 		wxLang=locale.FindLanguageInfo(lang.split('_')[0])
 	if hasattr(sys,'frozen'):
-		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwd(),"locale"))
+		locale.AddCatalogLookupPathPrefix(os.path.join(globalVars.appDir, "locale"))
 	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
 	# If we try to initialize this language, wx will show a warning dialog.
 	# #9089: some languages (such as Aragonese) do not have language info, causing language getter to fail.
@@ -423,6 +439,9 @@ def main():
 			log.error("Failed to initialize wx locale",exc_info=True)
 	else:
 		log.debugWarning("wx does not support language %s" % lang)
+
+	log.debug("Initializing garbageHandler")
+	garbageHandler.initialize()
 
 	import api
 	import winUser
@@ -475,7 +494,11 @@ def main():
 	globalPluginHandler.initialize()
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import gui.installerGui
-		wx.CallAfter(gui.installerGui.doSilentInstall,startAfterInstall=not globalVars.appArgs.installSilent)
+		wx.CallAfter(
+			gui.installerGui.doSilentInstall,
+			copyPortableConfig=globalVars.appArgs.copyPortableConfig,
+			startAfterInstall=not globalVars.appArgs.installSilent
+		)
 	elif globalVars.appArgs.portablePath and (globalVars.appArgs.createPortable or globalVars.appArgs.createPortableSilent):
 		import gui.installerGui
 		wx.CallAfter(gui.installerGui.doCreatePortable,portableDirectory=globalVars.appArgs.portablePath,
@@ -582,10 +605,14 @@ def main():
 	_terminate(braille)
 	_terminate(speech)
 	_terminate(addonHandler)
+	_terminate(garbageHandler)
 
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
-			nvwave.playWaveFile("waves\\exit.wav",asynchronous=False)
+			nvwave.playWaveFile(
+				os.path.join(globalVars.appDir, "waves", "exit.wav"),
+				asynchronous=False
+			)
 		except:
 			pass
 	# #5189: Destroy the message window as late as possible

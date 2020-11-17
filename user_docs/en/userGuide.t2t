@@ -69,9 +69,7 @@ For details regarding exceptions, access the license document from the NVDA menu
 - Operating Systems: all 32-bit and 64-bit editions of Windows 7, Windows 8, Windows 8.1, Windows 10, and all Server Operating Systems starting from Windows Server 2008 R2.
  - For Windows 7, NVDA requires Service Pack 1 or higher.
  - For Windows Server 2008 R2, NVDA requires Service Pack 1 or higher.
-- Memory: 256 mb or more of RAM
-- Processor speed: 1.0 ghz or above
-- About 90 MB of storage space.
+- at least 150 MB of storage space.
 -
 
 + Getting and Setting Up NVDA +[GettingAndSettingUpNVDA]
@@ -219,8 +217,6 @@ You can also keep your finger on the screen and move it around to read other con
 When NVDA commands are described later in this user guide, they may list a touch gesture which can be used to activate that command with the touchscreen.
 Following are some instructions on how to perform the various touch gestures.
 
-
-
 ==== Taps ====
 Tap the screen quickly with one or more fingers.
 
@@ -338,7 +334,6 @@ NVDA provides the following key commands in relation to the system caret:
 | Report text formatting | NVDA+f | NVDA+f | Reports the formatting of the text where the caret is currently situated. Pressing twice shows the information in browse mode |
 | Next sentence | alt+downArrow | alt+downArrow | Moves the caret to the next sentence and announces it. (only supported in Microsoft Word and Outlook) |
 | Previous sentence | alt+upArrow | alt+upArrow | Moves the caret to the previous sentence and announces it. (only supported in Microsoft Word and Outlook) |
-
 
 When within a table, the following key commands are also available:
 || Name | Key | Description |
@@ -656,7 +651,6 @@ When you wish to return to the document, simply press the escape key.
 Sometimes mathematical content might be displayed as a button or other type of element which, when activated, can display a dialog or more information related to the formula.
 To activate the button or the element containing the formula, press ctrl+enter.
 
-
 + Braille +[Braille]
 If you own a braille display, NVDA can display information in braille.
 If your braille display has a Perkins-style keyboard, you can also enter contracted or uncontracted braille.
@@ -720,6 +714,7 @@ In order to fit as much information as possible on a braille display, the follow
 | lv N | a tree view item has a hierarchical level N|
 | wnd | window |
 | ⠤⠤⠤⠤⠤ | separator |
+| mrkd | marked content |
 
 The following state indicators are also defined:
 || Abbreviation | Control state |
@@ -898,22 +893,28 @@ For each form field, the Elements List shows the alternative text of the field a
 Selecting a form field and pressing enter or the Move to button moves to that field in browse mode.
 -
 
-+++ Reporting Comments +++[ExcelReportingComments]
++++ Reporting Notes +++[ExcelReportingComments]
 %kc:beginInclude
-To report any comments for the currently focused cell, press NVDA+alt+c.
+To report any notes for the currently focused cell, press NVDA+alt+c.
+In Microsoft 2016, 365 and newer, the classic comments in Microsoft Excel have been renamed to "notes".
 %kc:endInclude
-All comments for the worksheet can also be listed in the NVDA Elements List after pressing NVDA+f7.
+All notes for the worksheet can also be listed in the NVDA Elements List after pressing NVDA+f7.
 
-NVDA can also display a specific dialog for adding or editing a certain comment.
-NVDA overrides the native MS Excel comment editing region due to accessibility constraints, but the key stroke for displaying the dialog is inherited from MS Excel and therefore works also without NVDA running.
+NVDA can also display a specific dialog for adding or editing a certain note.
+NVDA overrides the native MS Excel notes editing region due to accessibility constraints, but the key stroke for displaying the dialog is inherited from MS Excel and therefore works also without NVDA running.
 %kc:beginInclude
-To add or edit a certain comment, in a focused cell, press shift+f2.
+To add or edit a certain note, in a focused cell, press shift+f2.
 %kc:endInclude
 
 This key stroke does not appear and cannot be changed in NVDA's input gesture dialog.
 
-Note: it is possible to open the comment editing region in MS Excel also from the context menu of any cell of the work sheet.
-However, this will open the inaccessible comment editing region and not the NVDA specific comment editing dialog.
+Note: it is possible to open the note editing region in MS Excel also from the context menu of any cell of the work sheet.
+However, this will open the inaccessible note editing region and not the NVDA specific note editing dialog.
+
+In Microsoft Office 2016, 365 and newer, a new style comment dialog has been added.
+This dialog is accessible and provides more features such as replying to comments, etc.
+It can also be opened from the context menu of a certain cell.
+The comments added to the cells via the new style comment dialog are not related to "notes".
 
 +++ Reading Protected Cells +++[ExcelReadingProtectedCells]
 If a workbook has been protected, it may not be possible to move focus to particular cells that have been locked for editing.
@@ -1077,7 +1078,8 @@ The available logging levels are:
  - If you are concerned about privacy, do not set the logging level to this option.
 - Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
  - Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
-
+ -
+-
 
 ==== Start NVDA after I sign in ====[GeneralSettingsStartAfterLogOn]
 If this option is enabled, NVDA will start automatically as soon as you sign in to Windows.
@@ -1144,6 +1146,9 @@ If using a third-party synthesizer, you may also be able to change this value if
 ==== Rate ====[SpeechSettingsRate]
 This option allows you to change the rate of your voice.
 This is a slider that goes from 0 to 100 - 0 being the slowest, 100 being the fastest.
+
+==== Rate boost ====[SpeechSettingsRateBoost]
+Enabling this option will significantly increase the speech rate, if supported by the current synthesizer.
 
 ==== Pitch ====[SpeechSettingsPitch]
 This option allows you to change the pitch of the current voice.
@@ -1296,12 +1301,13 @@ The selection indicator is not affected by this option, it is always dots 7 and 
 This option allows you to choose the shape (dot pattern) of the braille cursor when braille is tethered to review.
 The selection indicator is not affected by this option, it is always dots 7 and 8 without blinking.
 
+==== Show Messages ====[BrailleSettingsShowMessages]
+This is a combobox that allows you to select if NVDA should display braille messages and when they should disappear automatically.
+
 ==== Message Timeout (sec) ====[BrailleSettingsMessageTimeout]
 This option is a numerical field that controls how long NVDA messages are displayed on the braille display.
-Specifying 0 disables displaying of these messages completely.
-
-==== Show Messages Indefinitely ====[BrailleSettingsNoMessageTimeout]
-This option allows NVDA messages to be displayed on the braille display indefinitely.
+The NVDA message is imediately dismissed when pressing a routing key on the braille display, but appears again when pressing a corresponding key which triggers the message.
+This option is shown only if "Show Messages" is set to "Use timeout".
 
 %kc:setting
 ==== Tether Braille ====[BrailleTether]
@@ -1572,7 +1578,7 @@ Many Windows and controls show a small message (or tooltip) when you move the mo
 This checkbox, when checked, tells NVDA to report help balloons and toast notifications as they appear.
 - Help Balloons are like tooltips, but are usually larger in size, and are associated with system events such as a network cable being unplugged, or perhaps to alert you about Windows security issues.
 - Toast notifications have been introduced in Windows 10 and appear in the notification centre in the system tray, informing about several events (i.e. if an update has been downloaded, a new e-mail arrived in your inbox, etc.).
-
+-
 
 ==== Report Object Shortcut Keys ====[ObjectPresentationShortcutKeys]
 When this checkbox is checked, NVDA will include the shortcut key that is associated with a certain object or control when it is reported.
@@ -1727,6 +1733,7 @@ You can configure reporting of:
  - Font attributes
  - Superscripts and subscripts
  - Emphasis
+ - Marked (Highlighted text)
  - Style
  - Colours
 - Document information
@@ -1809,6 +1816,13 @@ If you wish to distribute custom code to others, you should package it as an NVD
 This button opens the directory where you can place custom code while developing it.
 This button is only enabled if NVDA is configured to enable loading custom code from the Developer Scratchpad Directory.
 
+==== Enable selective registration for UI Automation events and property changes ====[AdvancedSettingsSelectiveUIAEventRegistration]
+This option changes how NVDA registers for events fired by the Microsoft UI Automation accessibility API.
+When this option is disabled, NVDA registers for many UIA events that are processed and discarded within NVDA itself.
+This has a major negative impact on performance, especially in applications like Microsoft Visual Studio.
+Therefore, when this option is enabled, NVDA will limit event registration to the system focus for most events.
+If you suffer from performance issues in one or more applications, We recommend you to try this functionality to see whether performance improves.
+
 ==== Use UI automation to access Microsoft Word document controls when available ====[AdvancedSettingsUseUiaForWord]
 When this option is enabled, NVDA will try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Word document controls.
 This includes Microsoft Word itself, and also the Microsoft Outlook message viewer and composer.
@@ -1825,7 +1839,7 @@ This setting controls whether characters are spoken by [speak typed characters #
 ==== Use the new typed character support in Windows Console when available ====[AdvancedSettingsKeyboardSupportInLegacy]
 This option enables an alternative method for detecting typed characters in Windows command consoles.
 While it improves performance and prevents some console output from being spelled out, it may be incompatible with some terminal programs.
-This feature is available and enabled by default on Windows 10 versions 1607and later when UI Automation is unavailable or disabled.
+This feature is available and enabled by default on Windows 10 versions 1607 and later when UI Automation is unavailable or disabled.
 Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
 In untrusted environments, you may temporarily disable [speak typed characters #KeyboardSettingsSpeakTypedCharacters] and [speak typed words #KeyboardSettingsSpeakTypedWords] when entering passwords.
 
@@ -1840,7 +1854,7 @@ If you find that NVDA seems to be incorrectly tracking the caret E.g. it seems t
 
 ==== Debug logging categories ====[AdvancedSettingsDebugLoggingCategories]
 The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
-Logging these messages can resort in decreased performance and large log files.
+Logging these messages can result in decreased performance and large log files.
 Only turn one of these on if specifically instructed to by an NVDA developer e.g. when debugging why a braille display driver is not functioning correctly.
 
 ++ miscellaneous Settings ++[MiscSettings]
@@ -1882,7 +1896,6 @@ A regular expression is a pattern containing special symbols that allow you to m
 Regular expressions are not covered in this user guide.
 For an introductory tutorial, please refer to [https://docs.python.org/3.7/howto/regex.html].
 
-
 +++ Punctuation/symbol pronunciation +++[SymbolPronunciation]
 This dialog allows you to change the way punctuation and other symbols are pronounced, as well as the symbol level at which they are spoken.
 
@@ -1913,6 +1926,9 @@ You can remove a symbol you previously added by pressing the Remove button.
 
 When you are finished, press the OK button to save your changes or the Cancel button to discard them.
 
+In the case of complex symbols, the Replacement field may have to include some group references of the matched text. For instance, for a pattern matching a whole date, \1, \2, and \3 would need to appear in the field, to be replaced by the corresponding parts of the date.
+Normal backslashes in the Replacement field should thus be doubled, e.g. "a\\b" should be typed in order to get the "a\b" replacement.
+
 +++ Input Gestures +++[InputGestures]
 In this dialog, you can customize the input gestures (keys on the keyboard, buttons on a braille display, etc.) for NVDA commands.
 
@@ -1930,6 +1946,19 @@ For example, if you pressed a key on the keyboard, you may wish it to be specifi
 In this case, a menu will appear allowing you to select the desired option.
 
 To remove a gesture from a command, select the gesture and press the Remove button.
+
+The Emulated system keyboard keys category contains NVDA commands that emulate keys on the system keyboard.
+These emulated system keyboard keys can be used to control a system keyboard right from your braille display.
+To add an emulated input gesture, select the Emulated system keyboard keys category and press the Add button.
+Then, press the key on the keyboard you wish to emulate.
+After that, the key will be available from the Emulated system keyboard keys category and you will be able to assign an input gesture to it as described above.
+
+Note:
+ - Emulated keys must have gestures assigned in order to persist when saving / closing the dialog.
+ - An input gesture with modifier keys may not be able to be mapped to an emulated gesture without modifier
+ keys. For instance, setting the emulated input 'a' and configuring an input gesture of 'ctrl+m', may result
+ in the application receiving 'ctrl+a'.
+ -
 
 When you are finished making changes, press the OK button to save them or the Cancel button to discard them.
 
@@ -2218,7 +2247,6 @@ On Windows 10, NVDA uses Windows OneCore voices by default ([eSpeak NG #eSpeakNG
 
 Please see this Microsoft article for a list of available voices and instructions to install them: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
-
 + Supported Braille Displays +[SupportedBrailleDisplays]
 This section contains information about the Braille displays supported by NVDA.
 
@@ -2492,7 +2520,7 @@ The following extra devices are also supported (and do not require any special d
 - APH Chameleon 20
 - Humanware BrailleOne
 - NLS eReader
-
+-
 
 Following are the key assignments for  the Brailliant BI/B and BrailleNote touch displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -2603,7 +2631,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | escape key | dot1+dot5+space, f4, brailleedge:f1 |
 | delete key | dot1+dot3+dot5+space, dot1+dot4+dot5+space |
 | f1 key | dot1+dot2+dot5+space |
-| f3 key | dot1+dot2+dot4+dot8 |
+| f3 key | dot1+dot4+dot8+space |
 | f4 key | dot7+f3 |
 | windows+b key | dot1+dot2+f1 |
 | windows+d key | dot1+dot4+dot5+f1 |
@@ -3103,6 +3131,7 @@ Following are the command line options for NVDA:
 | None | --install | Installs NVDA (starting the newly installed copy) |
 | None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
 | None | --enable-start-on-logon=True|False | When installing, enable NVDA's [Use NVDA during Windows sign-in #StartAtWindowsLogon] |
+| None | --copy-portable-config | When installing, copy the portable configuration from the provided path (--config-path, -c) to the current user account |
 | None | --create-portable | Creates a portable copy of NVDA (starting the newly created copy). Requires --portable-path to be specified |
 | None | --create-portable-silent | Creates a portable copy of NVDA (does not start the newly installed copy). Requires --portable-path to be specified |
 | None | --portable-path=PORTABLEPATH | The path where a portable copy will be created |

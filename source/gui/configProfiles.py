@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2013-2018 NV Access Limited, Joseph Lee, Julien Cochuyt
+# Copyright (C) 2013-2018 NV Access Limited, Joseph Lee, Julien Cochuyt, Thomas Stivers
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -11,11 +11,18 @@ from logHandler import log
 import appModuleHandler
 import globalVars
 from . import guiHelper
+import gui.contextHelp
 
-class ProfilesDialog(wx.Dialog):
+
+class ProfilesDialog(
+		gui.ContextHelpMixin,
+		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+):
 	shouldSuspendConfigProfileTriggers = True
+	helpId = "ConfigurationProfiles"
 
 	_instance = None
+
 	def __new__(cls, *args, **kwargs):
 		# Make this a singleton.
 		if ProfilesDialog._instance is None:
@@ -27,7 +34,7 @@ class ProfilesDialog(wx.Dialog):
 			return
 		ProfilesDialog._instance = self
 		# Translators: The title of the Configuration Profiles dialog.
-		super(ProfilesDialog, self).__init__(parent, title=_("Configuration Profiles"))
+		super().__init__(parent, title=_("Configuration Profiles"))
 
 		self.currentAppName = (gui.mainFrame.prevFocus or api.getFocusObject()).appModule.appName
 		self.profileNames = [None]
@@ -42,6 +49,7 @@ class ProfilesDialog(wx.Dialog):
 		changeProfilesSizer = wx.BoxSizer(wx.VERTICAL)
 		item = self.profileList = wx.ListBox(self,
 			choices=[self.getProfileDisplay(name, includeStates=True) for name in self.profileNames])
+		self.bindHelpEvent("ProfilesBasicManagement", self.profileList)
 		item.Bind(wx.EVT_LISTBOX, self.onProfileListChoice)
 		item.Selection = self.profileNames.index(config.conf.profiles[-1].name)
 		changeProfilesSizer.Add(item, proportion=1.0)
@@ -49,6 +57,7 @@ class ProfilesDialog(wx.Dialog):
 		changeProfilesSizer.AddSpacer(guiHelper.SPACE_BETWEEN_BUTTONS_VERTICAL)
 
 		self.changeStateButton = wx.Button(self)
+		self.bindHelpEvent("ConfigProfileManual", self.changeStateButton)
 		self.changeStateButton.Bind(wx.EVT_BUTTON, self.onChangeState)
 		self.AffirmativeId = self.changeStateButton.Id
 		self.changeStateButton.SetDefault()
@@ -60,14 +69,17 @@ class ProfilesDialog(wx.Dialog):
 		buttonHelper = guiHelper.ButtonHelper(wx.VERTICAL)
 		# Translators: The label of a button to create a new configuration profile.
 		newButton = buttonHelper.addButton(self, label=_("&New"))
+		self.bindHelpEvent("ProfilesCreating", newButton)
 		newButton.Bind(wx.EVT_BUTTON, self.onNew)
 
 		# Translators: The label of a button to rename a configuration profile.
 		self.renameButton = buttonHelper.addButton(self, label=_("&Rename"))
+		self.bindHelpEvent("ProfilesBasicManagement", self.renameButton)
 		self.renameButton.Bind(wx.EVT_BUTTON, self.onRename)
 
 		# Translators: The label of a button to delete a configuration profile.
 		self.deleteButton = buttonHelper.addButton(self, label=_("&Delete"))
+		self.bindHelpEvent("ProfilesBasicManagement", self.deleteButton)
 		self.deleteButton.Bind(wx.EVT_BUTTON, self.onDelete)
 
 		profilesListGroupContents.Add(buttonHelper.sizer)
@@ -78,10 +90,12 @@ class ProfilesDialog(wx.Dialog):
 		# in the Configuration Profiles dialog.
 		# See the Configuration Profiles section of the User Guide for details.
 		triggersButton = wx.Button(self, label=_("&Triggers..."))
+		self.bindHelpEvent("ConfigProfileTriggers", triggersButton)
 		triggersButton.Bind(wx.EVT_BUTTON, self.onTriggers)
 
 		# Translators: The label of a checkbox in the Configuration Profiles dialog.
 		self.disableTriggersToggle = wx.CheckBox(self, label=_("Temporarily d&isable all triggers"))
+		self.bindHelpEvent("ConfigProfileDisablingTriggers", self.disableTriggersToggle)
 		self.disableTriggersToggle.Value = not config.conf.profileTriggersEnabled
 		sHelper.addItem(guiHelper.associateElements(triggersButton,self.disableTriggersToggle))
 
@@ -213,7 +227,7 @@ class ProfilesDialog(wx.Dialog):
 		index = self.profileList.Selection
 		oldName = self.profileNames[index]
 		while True:
-			with wx.TextEntryDialog(
+			with RenameProfileDialog(
 				self,
 				# Translators: The label of a field to enter a new name for a configuration profile.
 				_("New name:"),
@@ -294,11 +308,16 @@ class TriggerInfo(object):
 		self.display = display
 		self.profile = profile
 
-class TriggersDialog(wx.Dialog):
+
+class TriggersDialog(
+		gui.ContextHelpMixin,
+		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+):
+	helpId = "ConfigProfileTriggers"
 
 	def __init__(self, parent):
 		# Translators: The title of the configuration profile triggers dialog.
-		super(TriggersDialog, self).__init__(parent, title=_("Profile Triggers"))
+		super().__init__(parent, title=_("Profile Triggers"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -380,11 +399,16 @@ class TriggersDialog(wx.Dialog):
 		self.Parent.Enable()
 		self.Destroy()
 
-class NewProfileDialog(wx.Dialog):
+
+class NewProfileDialog(
+		gui.ContextHelpMixin,
+		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+):
+	helpId = "ProfilesCreating"
 
 	def __init__(self, parent):
 		# Translators: The title of the dialog to create a new configuration profile.
-		super(NewProfileDialog, self).__init__(parent, title=_("New Profile"))
+		super().__init__(parent, title=_("New Profile"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -510,3 +534,10 @@ class NewProfileDialog(wx.Dialog):
 			self.profileName.Value = name
 			self.profileName.SelectAll()
 		self.autoProfileName = name
+
+
+class RenameProfileDialog(
+		gui.ContextHelpMixin,
+		wx.TextEntryDialog,  # wxPython does not seem to call base class initializer, put last in MRO
+):
+	helpId = "ProfilesBasicManagement"

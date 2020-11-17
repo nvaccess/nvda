@@ -406,6 +406,22 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for toggle report emphasis command.
 	script_toggleReportEmphasis.__doc__=_("Toggles on and off the reporting of emphasis")
 	script_toggleReportEmphasis.category=SCRCAT_DOCUMENTFORMATTING
+	
+	@script(
+		# Translators: Input help mode message for toggle report marked (highlighted) content command.
+		description=_("Toggles on and off the reporting of marked text"),
+		category=SCRCAT_DOCUMENTFORMATTING,
+	)
+	def script_toggleReportHighlightedText(self, gesture):
+		shouldReport: bool = not config.conf["documentFormatting"]["reportHighlight"]
+		config.conf["documentFormatting"]["reportHighlight"] = shouldReport
+		if shouldReport:
+			# Translators: The message announced when toggling the report marked document formatting setting.
+			state = _("report marked on")
+		else:
+			# Translators: The message announced when toggling the report marked document formatting setting.
+			state = _("report marked off")
+		ui.message(state)
 
 	def script_toggleReportColor(self,gesture):
 		if config.conf["documentFormatting"]["reportColor"]:
@@ -853,7 +869,7 @@ class GlobalCommands(ScriptableObject):
 			if curObject.TextInfo!=NVDAObjectTextInfo:
 				textList=[]
 				name = curObject.name
-				if isinstance(name, str) and not name.isspace():
+				if name and isinstance(name, str) and not name.isspace():
 					textList.append(name)
 				try:
 					info=curObject.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -869,7 +885,7 @@ class GlobalCommands(ScriptableObject):
 			else:
 				textList=[]
 				for prop in (curObject.name, curObject.value):
-					if isinstance(prop,str) and not prop.isspace():
+					if prop and isinstance(prop, str) and not prop.isspace():
 						textList.append(prop)
 			text=" ".join(textList)
 			if len(text)>0 and not text.isspace():
@@ -897,19 +913,23 @@ class GlobalCommands(ScriptableObject):
 	script_navigatorObject_currentDimensions.__doc__=_("Reports information about the location of the text or object at the review cursor. Pressing twice may provide further detail.") 
 	script_navigatorObject_currentDimensions.category=SCRCAT_OBJECTNAVIGATION
 
+	@script(
+		description=_(
+			# Translators: Input help mode message for move navigator object to current focus command.
+			"Sets the navigator object to the current focus, "
+			"and the review cursor to the position of the caret inside it, if possible."
+		),
+		category=SCRCAT_OBJECTNAVIGATION,
+		gestures=("kb:NVDA+numpadMinus", "kb(laptop):NVDA+backspace"),
+	)
 	def script_navigatorObject_toFocus(self,gesture):
-		obj=api.getFocusObject()
-		try:
-			pos=obj.makeTextInfo(textInfos.POSITION_CARET)
-		except (NotImplementedError,RuntimeError):
-			pos=obj.makeTextInfo(textInfos.POSITION_FIRST)
-		api.setReviewPosition(pos)
+		tIAtCaret = self._getTIAtCaret(True)
+		focusedObj = api.getFocusObject()
+		api.setNavigatorObject(focusedObj)
+		api.setReviewPosition(tIAtCaret)
 		# Translators: Reported when attempting to move the navigator object to focus.
 		speech.speakMessage(_("Move to focus"))
-		speech.speakObject(obj,reason=controlTypes.REASON_FOCUS)
-	# Translators: Input help mode message for move navigator object to current focus command.
-	script_navigatorObject_toFocus.__doc__=_("Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible.")
-	script_navigatorObject_toFocus.category=SCRCAT_OBJECTNAVIGATION
+		speech.speakObject(api.getNavigatorObject(), reason=controlTypes.OutputReason.FOCUS)
 
 	def script_navigatorObject_moveFocus(self,gesture):
 		obj=api.getNavigatorObject()
@@ -1476,7 +1496,8 @@ class GlobalCommands(ScriptableObject):
 				_("Formatting")
 			)
 
-	def _getTIAtCaret(self):
+	@staticmethod
+	def _getTIAtCaret(fallbackToPOSITION_FIRST=False):
 		# Returns text info at the caret position if there is a caret in the current control, None otherwise.
 		# Note that if there is  no caret this fact is announced  in speech and braille.
 		obj = api.getFocusObject()
@@ -1487,12 +1508,13 @@ class GlobalCommands(ScriptableObject):
 		):
 			obj = treeInterceptor
 		try:
-			info = obj.makeTextInfo(textInfos.POSITION_CARET)
-			return info
+			return obj.makeTextInfo(textInfos.POSITION_CARET)
 		except (NotImplementedError, RuntimeError):
-			# Translators: Reported when there is no caret.
-			ui.message(_("No caret"))
-			return
+			if fallbackToPOSITION_FIRST:
+				return obj.makeTextInfo(textInfos.POSITION_FIRST)
+			else:
+				# Translators: Reported when there is no caret.
+				ui.message(_("No caret"))
 
 	@script(
 		# Translators: Input help mode message for report formatting command.
@@ -1703,6 +1725,42 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 	script_navigatorObject_devInfo.__doc__ = _("Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined.")
 	script_navigatorObject_devInfo.category=SCRCAT_TOOLS
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for a command to delimit then
+			# copy a fragment of the log to clipboard
+			"Mark the current end of the log as the start of the fragment to be"
+			" copied to clipboard by pressing again."
+		),
+		category=SCRCAT_TOOLS,
+		gesture="kb:NVDA+control+shift+f1"
+	)
+	def script_log_markStartThenCopy(self, gesture):
+		if globalVars.appArgs.secure:
+			return
+		if log.fragmentStart is None:
+			if log.markFragmentStart():
+				# Translators: Message when marking the start of a fragment of the log file for later copy
+				# to clipboard
+				ui.message(_("Log fragment start position marked, press again to copy to clipboard"))
+			else:
+				# Translators: Message when failed to mark the start of a
+				# fragment of the log file for later copy to clipboard
+				ui.message(_("Unable to mark log position"))
+			return
+		text = log.getFragment()
+		if not text:
+			# Translators: Message when attempting to copy an empty fragment of the log file
+			ui.message(_("No new log entry to copy"))
+			return
+		if api.copyToClip(text):
+			# Translators: Message when a fragment of the log file has been
+			# copied to clipboard
+			ui.message(_("Log fragment copied to clipboard"))
+		else:
+			# Translators: Presented when unable to copy to the clipboard because of an error.
+			ui.message(_("Unable to copy"))
 
 	@script(
 		# Translators: Input help mode message for Open user configuration directory command.
@@ -2744,8 +2802,6 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+numpad2": "navigatorObject_firstChild",
 		"kb(laptop):NVDA+shift+downArrow": "navigatorObject_firstChild",
 		"ts(object):flickdown":"navigatorObject_firstChild",
-		"kb:NVDA+numpadMinus": "navigatorObject_toFocus",
-		"kb(laptop):NVDA+backspace": "navigatorObject_toFocus",
 		"kb:NVDA+numpadEnter": "review_activate",
 		"kb(laptop):NVDA+enter": "review_activate",
 		"ts:double_tap": "review_activate",
@@ -2962,7 +3018,7 @@ class ConfigProfileActivationCommands(ScriptableObject):
 		@param oldScriptName: The current name of the profile activation script.
 		@type oldScriptName: str
 		@param newScriptName: The new name for the profile activation script, if any.
-			if C{None}, the gestures are only removed for the current profile sript.
+			if C{None}, the gestures are only removed for the current profile script.
 		@type newScriptName: str
 		"""
 		gestureMap = inputCore.manager.userGestureMap

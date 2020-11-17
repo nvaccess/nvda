@@ -48,8 +48,11 @@ $	錢號	all	norep
 ¢	分	all	norep
 ¥	日圓	all	norep
 ₹	盧比	some	norep
+ƒ	弗羅林	all	norep
+¤	貨幣符號	all	norep
 %	percent	some
 &	and	some
+‰	per mille	some
 '	tick	all
 (	半形左括號	most	always
 )	半形右括號	most	always
@@ -76,29 +79,44 @@ _	半形底線	most
 {	半形左大括號	most	always
 }	半形右大括號	most	always
 |	bar	most
-~	半形波浪號	most
+¦	broken bar	most
+~	tilda	most
+¡	倒驚嘆號	some
+¿	倒問號	some
+‚	single low quote	most
+„	double low quote	most
+′	prime	some
+″	double prime	some
+‴	triple prime	some
 
 # Other characters
-•	bullet	most
-…	dot dot dot	all	always
-...	dot dot dot	all	always
-	bullet	most
+•	項目符號	most
+…	點點點	all	always
+...	點點點	all	always
+	項目符號	most
 “	左雙引號	most
 ”	右雙引號	most
-‘	left tick	most
-’	right tick	most
+‘	左單引號	most
+’	右單引號	most
 –	en dash	most	always
 —	破折號	most
+­	soft hyphen	most
+⁃	橫線項目符號	none
 ●	實心圓	most
 ¨	分音符號	most	# 多用於德語、西班牙語、葡萄牙語
+¯	macron	most
+´	尖音符	most
+¸	cedilla	most
 ‎	左至右符號	char
 ‏	右至左符號	char
+¶	段落符號	most
 ■	實心方形	some
 ▪	實心小方形	most
 ◾	空心小方形	most
-◦	空心小圓	most
+◦	白色項目符號	most
 ⇒	右向雙箭頭	some
 ⇨	右向粗箭頭	some
+➔	向右鍵頭	some
 ➢	right arrowhead	some
 ❖	black diamond minus white X	some
 ♣	黑桃	some
@@ -108,9 +126,39 @@ _	半形底線	most
 «	double left pointing angle bracket
 »	double right pointing angle bracket
 µ	micro	some
+º	ordinal	some
+ª	superscript a	some
+⁰	上標0	some
 ¹	上標1	some
 ²	上標2	some
 ³	上標3	some
+⁴	上標4	some
+⁵	上標5	some
+⁶	上標6	some
+⁷	上標7	some
+⁸	上標8	some
+⁹	上標9	some
+⁺	上標加號	some
+⁻	上標減號	some
+⁼	上標等號	some
+⁽	上標左小括號	some
+⁾	上標右小括號	some
+ⁿ	上標n	some
+₀	下標0	some
+₁	下標1	some
+₂	下標2	some
+₃	下標3	some
+₄	下標4	some
+₅	下標5	some
+₆	下標6	some
+₇	下標7	some
+₈	下標8	some
+₉	下標9	some
+₊	下標加號	some
+₋	下標減號	some
+₌	下標等號	some
+₍	下標左小括號	some
+₎	下標右小括號	some
 ®	註冊商標	some
 ™	商標	some
 ©	Copyright	some
@@ -122,6 +170,11 @@ _	半形底線	most
 ✓	勾選	some
 ✔	勾選	some
 🡺	右箭頭	some
+†	dagger	some
+‡	double dagger	some
+‣	三角形項目符號	none
+✗	x形項目符號	none
+￼	object replacement character	none
 
 #Mathematical Operators U+2200 to U+220F
 ∀	For All 	none
@@ -155,6 +208,7 @@ _	半形底線	most
 ∦	不平型	none
 ∧	邏輯「與」	none
 ∨	邏輯「或」	none
+¬	邏輯非	none
 ∩	交集	none
 ∪	聯集	none
 ∫	積分	none
@@ -436,12 +490,11 @@ negative number	負
 ¼	四分之一	none
 ½	二分之一	none
 ¾	四分之三	none
-⅝	八分之五	none
-⅞	八分之七	none
 
 
 # Miscellaneous Technical
 ⌘	Mac Command 鍵	none
+
 # 以下的「中日韓相容表意文字」，每個字的外觀與該字的詞解字相同，或近似，但內碼不同。
 # 了解這些字僅是因為目前微軟的TTS無法讀出，目前暫時加入，未來（2020/12/31問題解決後，將會移除
 豈	豈	none
