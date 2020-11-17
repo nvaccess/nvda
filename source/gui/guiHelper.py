@@ -45,7 +45,7 @@ class myDialog(class wx.Dialog):
 from contextlib import contextmanager
 
 import wx
-from wx.lib import scrolledpanel
+from wx.lib import scrolledpanel, newevent
 from abc import ABCMeta
 
 #: border space to be used around all controls in dialogs
@@ -154,76 +154,56 @@ def associateElements( firstElement, secondElement):
 
 	return sizer
 
-
-class BaseLabeledControl:
-	"""Base class used to create a labeled control subclass
-	A labeled control subclass allows to create a control with an associated label.
-	The associated label is enabled and disabled when the main control is enabled or disabled (respectively).
-	
-	Example usage:
-	
-	class LabeledChoice(BaseLabeledControl, wx.Choice):
-		pass
-	myChoice = LabeledChoice(
-		parent,
-		labelText='Choose an option',
-		wxCtrlClass=wx.Choice,
-		choices=['Option 1', 'Option 2', 'Option 3'],
-	)
-	"""
-
-	def __init__(self, parent, labelText, wxCtrlClass, **kwargs):
-		""" @param parent: An instance of the parent wx window. EG wx.Dialog
-			@param labelText: The text to associate with a wx control.
-			@type labelText: string
-			@param wxCtrlClass: The class to associate with the label, eg: wx.TextCtrl
-			@type wxCtrlClass: class
-			@param kwargs: The keyword arguments used to instantiate the wxCtrlClass
-		"""
-		self.label = wx.StaticText(parent, label=labelText)
-		if self.__class__ == BaseLabeledControl:
-			raise TypeError(
-				f"BaseLabeledControl should be subclassed and should also inherit from {wxCtrlClass.__name__}."
-			)
-		# Check that the final class also inherits from wxCtrlClass
-		if not isinstance(self, wxCtrlClass):
-			raise TypeError(f"{self.__class__.__name__} should be a subclass of {wxCtrlClass.__name__}.")
-		self.controlClass = wxCtrlClass
-		self.controlClass.__init__(self, parent, **kwargs)
-
-	def Enable(self, state):
-		self.controlClass.Enable(self, state)
-		self.label.Enable(state)
-
-	def Disable(self):
-		self.controlClass.Disable(self)
-		self.label.Disable()
-
-
 class LabeledControlHelper(object):
 	""" Represents a Labeled Control. Provides a class to create and hold on to the objects and automatically associate
 	the two controls together.
 	Relies on guiHelper.associateElements(), any limitations in guiHelper.associateElements() also apply here.
 	"""
-	def __init__(self, parent, labelText, wxCtrlClass, **kwargs):
+	
+	# When the control is enabled / disabled this event is raised.
+	# A handler is automatically added to the control to ensure the label is also enabled/disabled.
+	EnableChanged, EVT_ENABLE_CHANGED = newevent.NewEvent()
+
+	def __init__(self, parent: wx.Window, labelText: str, wxCtrlClass: wx.Control, **kwargs):
 		""" @param parent: An instance of the parent wx window. EG wx.Dialog
 			@param labelText: The text to associate with a wx control.
-			@type labelText: string
 			@param wxCtrlClass: The class to associate with the label, eg: wx.TextCtrl
-			@type wxCtrlClass: class
 			@param kwargs: The keyword arguments used to instantiate the wxCtrlClass
 		"""
 		object.__init__(self)
-		# Dynamically create a class inheriting from BaseLabeledControl and wxCtrlClass.
-		# This class acts as wxCtrlClass but overloads the Enable and Disable methods
-		# in order to also enable or disable self._label at the same time as the control.
-		LabeledControl = type(
-			f'Labeled{wxCtrlClass.__name__}',
-			(BaseLabeledControl, wxCtrlClass),
-			{},
+		self._label = _label = wx.StaticText(parent, label=labelText)
+
+		class WxCtrlWithEnableEvnt(wxCtrlClass):
+			def Enable(self, enable=True):
+				evt = LabeledControlHelper.EnableChanged(isEnabled=enable)
+				wx.PostEvent(self, evt)
+				super().Enable(enable)
+
+			def Disable(self):
+				evt = LabeledControlHelper.EnableChanged(isEnabled=False)
+				wx.PostEvent(self, evt)
+				super().Disable()
+
+		def _onEnableChanged(evt: wx.Event):
+			_label.Enable(evt.isEnabled)
+
+		self._ctrl = _ctrl = WxCtrlWithEnableEvnt(parent, **kwargs)
+		_ctrl.Bind(LabeledControlHelper.EVT_ENABLE_CHANGED, _onEnableChanged)
+		
+		# prevent _ctrl trying to call events on destroyed objects
+		def _onDestroy(evt: wx.Event):
+			try:
+				_ctrl.Unbind(
+					LabeledControlHelper.EVT_ENABLE_CHANGED,
+					handler=_onEnableChanged
+				)
+			except RuntimeError:
+				pass
+		self._label.Bind(
+			wx.EVT_WINDOW_DESTROY,
+			_onDestroy
 		)
-		self._ctrl = LabeledControl(parent, labelText=labelText, wxCtrlClass=wxCtrlClass, **kwargs)
-		self._sizer = associateElements(self._ctrl.label, self._ctrl)
+		self._sizer = associateElements(_label, _ctrl)
 
 	@property
 	def control(self):
