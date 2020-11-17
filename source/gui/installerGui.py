@@ -18,7 +18,8 @@ import installer
 from logHandler import log
 import gui
 from gui import guiHelper
-from gui.dpiScalingHelper import DpiScalingHelperMixin
+from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+from .contextHelp import ContextHelpMixin
 import tones
 import systemUtils
 
@@ -121,14 +122,20 @@ def doSilentInstall(
 		startAfterInstall=startAfterInstall
 	)
 
-class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
+
+class InstallerDialog(
+		DpiScalingHelperMixinWithoutInit,
+		gui.ContextHelpMixin,
+		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
+):
+
+	helpId = "InstallingNVDA"
 
 	def __init__(self, parent, isUpdate):
 		self.isUpdate=isUpdate
 		self.textWrapWidth = 600
 		# Translators: The title of the Install NVDA dialog.
-		wx.Dialog.__init__(self, parent, title=_("Install NVDA"))
-		DpiScalingHelperMixin.__init__(self, self.GetHandle())
+		super().__init__(parent, title=_("Install NVDA"))
 
 		import addonHandler
 		shouldAskAboutAddons = any(addonHandler.getIncompatibleAddons(
@@ -165,6 +172,7 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 					# available, will be disabled after installation.
 					label=_("I understand that these incompatible add-ons will be disabled")
 				))
+			self.bindHelpEvent("InstallWithIncompatibleAddons", self.confirmationCheckbox)
 			self.confirmationCheckbox.SetFocus()
 
 		optionsSizer = guiHelper.BoxSizerHelper(self, sizer=sHelper.addItem(wx.StaticBoxSizer(
@@ -179,6 +187,7 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		startOnLogonText = _("Use NVDA during sign-in")
 		self.startOnLogonCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=startOnLogonText))
+		self.bindHelpEvent("StartAtWindowsLogon", self.startOnLogonCheckbox)
 		if globalVars.appArgs.enableStartOnLogon is not None:
 			self.startOnLogonCheckbox.Value = globalVars.appArgs.enableStartOnLogon
 		else:
@@ -195,11 +204,13 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 			# this change must also be reflected here.
 			createShortcutText = _("Create &desktop icon and shortcut key (control+alt+n)")
 			self.createDesktopShortcutCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=createShortcutText))
+		self.bindHelpEvent("CreateDesktopShortcut", self.createDesktopShortcutCheckbox)
 		self.createDesktopShortcutCheckbox.Value = shortcutIsPrevInstalled if self.isUpdate else True 
 		
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		createPortableText = _("Copy &portable configuration to current user account")
 		self.copyPortableConfigCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=createPortableText))
+		self.bindHelpEvent("CopyPortableConfigurationToCurrentUserAccount", self.copyPortableConfigCheckbox)
 		self.copyPortableConfigCheckbox.Value = bool(globalVars.appArgs.copyPortableConfig)
 		if globalVars.appArgs.copyPortableConfig is None:
 			# copyPortableConfig is set to C{None} in the main loop,
@@ -210,6 +221,7 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 		if shouldAskAboutAddons:
 			# Translators: The label of a button to launch the add-on compatibility review dialog.
 			reviewAddonButton = bHelper.addButton(self, label=_("&Review add-ons..."))
+			self.bindHelpEvent("InstallWithIncompatibleAddons", reviewAddonButton)
 			reviewAddonButton.Bind(wx.EVT_BUTTON, self.onReviewAddons)
 
 		# Translators: The label of a button to continue with the operation.
@@ -254,12 +266,17 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 		incompatibleAddons.ShowModal()
 
 
-class InstallingOverNewerVersionDialog(wx.Dialog, DpiScalingHelperMixin):
+class InstallingOverNewerVersionDialog(
+		DpiScalingHelperMixinWithoutInit,
+		gui.ContextHelpMixin,
+		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
+):
+	
+	helpId = "InstallingNVDA"
 
 	def __init__(self):
 		# Translators: The title of a warning dialog.
-		wx.Dialog.__init__(self, gui.mainFrame, title=_("Warning"))
-		DpiScalingHelperMixin.__init__(self, self.GetHandle())
+		super().__init__(gui.mainFrame, title=_("Warning"))
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentSizer = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
@@ -311,11 +328,17 @@ def showInstallGui():
 	InstallerDialog(gui.mainFrame, previous is not None).Show()
 	gui.mainFrame.postPopup()
 
-class PortableCreaterDialog(wx.Dialog):
+
+class PortableCreaterDialog(
+		ContextHelpMixin,
+		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
+):
+
+	helpId = "CreatePortableCopy"
 
 	def __init__(self, parent):
 		# Translators: The title of the Create Portable NVDA dialog.
-		super(PortableCreaterDialog, self).__init__(parent, title=_("Create Portable NVDA"))
+		super().__init__(parent, title=_("Create Portable NVDA"))
 		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
