@@ -1337,8 +1337,6 @@ class GlobalCommands(ScriptableObject):
 			parent=parent.parent
 		if parent:
 			parent.treeInterceptor.rootNVDAObject.setFocus()
-			import eventHandler
-			import wx
 			# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
 			# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
 			core.callLater(50,eventHandler.executeEvent,"gainFocus",parent.treeInterceptor.rootNVDAObject)
