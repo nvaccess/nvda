@@ -104,6 +104,7 @@ class DiffMatchPatch(DiffAlgo):
 				log.debug("Terminating diff-match-patch proxy")
 				# nvda_dmp exits when it receives two zero-length texts.
 				DiffMatchPatch._proc.stdin.write(struct.pack("=II", 0, 0))
+				DiffMatchPatch._proc.wait(timeout=5)
 				DiffMatchPatch._proc = None
 
 
