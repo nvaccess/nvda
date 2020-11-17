@@ -1,8 +1,8 @@
-#api.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, James Teh, Michael Curran, Peter Vagner, Derek Riemer,
+# Davy Kager, Babbage B.V., Leonard de Ruijter, Joseph Lee, Accessolutions, Julien Cochuyt
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 """General functions for NVDA"""
 
@@ -25,7 +25,8 @@ import vision
 import watchdog
 import appModuleHandler
 import cursorManager
-from typing import Any
+from typing import Any, Optional
+
 
 #User functions
 
@@ -302,21 +303,33 @@ def processPendingEvents(processEventQueue=True):
 	if processEventQueue:
 		queueHandler.flushQueue(queueHandler.eventQueue)
 
-def copyToClip(text):
+
+def copyToClip(text: str, notify: Optional[bool] = False) -> bool:
 	"""Copies the given text to the windows clipboard.
-@returns: True if it succeeds, False otherwise.
-@rtype: boolean
-@param text: the text which will be copied to the clipboard
-@type text: string
-"""
-	if not isinstance(text,str) or len(text)==0:
+	@returns: True if it succeeds, False otherwise.
+	@param text: the text which will be copied to the clipboard
+	@param notify: whether to emit a confirmation message
+	"""
+	if not isinstance(text, str) or len(text) == 0:
 		return False
 	import gui
-	with winUser.openClipboard(gui.mainFrame.Handle):
-		winUser.emptyClipboard()
-		winUser.setClipboardData(winUser.CF_UNICODETEXT,text)
-	got=getClipData()
-	return got == text
+	try:
+		with winUser.openClipboard(gui.mainFrame.Handle):
+			winUser.emptyClipboard()
+			winUser.setClipboardData(winUser.CF_UNICODETEXT, text)
+		got = getClipData()
+	except ctypes.WinError:
+		if notify:
+			ui.reportTextCopiedToClipboard()  # No argument reports a failure.
+		return False
+	if got == text:
+		if notify:
+			ui.reportTextCopiedToClipboard(text)
+		return True
+	if notify:
+		ui.reportTextCopiedToClipboard()  # No argument reports a failure.
+	return False
+
 
 def getClipData():
 	"""Receives text from the windows clipboard.

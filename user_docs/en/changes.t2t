@@ -13,6 +13,8 @@ What's New in NVDA
   - Specifically grouping errors are now detected.
 - Added support for the new chinese Traditional Quick and Pinyin Input methods in Windows 10. (#11562)
 - Tab headers are now considered form fields with quick navigation f key. (#10432)
+- Added a command to toggle reporting of marked (highlighted) text; There is no default associated gesture. (#11807)
+- Added the --copy-portable-config command line parameter that allows you to automatically copy the provided configuration to the user account when silently installing NVDA. (#9676)
 
 
 == Changes ==
@@ -21,6 +23,8 @@ What's New in NVDA
 - For HIMS braille displays F3 has been remapped to Space + dots 148. (#11710)
 - Improvements to the UX of the "braille message timeout" and "Show messages indefinitely" options. (#11602)
 - In web browsers and other applications that support browse mode, the Elements List dialog (NVDA+F7) can now be invoked when in focus mode. (#10453)
+- Updates to ARIA live regions are now suppressed when reporting of dynamic content changes is disabled. (#9077)
+- NVDA will now report "Copied to clipboard" before the copied text. (#6757)
 
 
 == Bug Fixes ==
@@ -44,6 +48,9 @@ What's New in NVDA
 - ARIA treegrids are now exposed as normal tables in browse mode in both Firefox and Chrome. (#9715)
 - A reverse search can now be initiated with 'find previous' via NVDA+shift+F3 (#11770)
 - An NVDA script is no longer treated as being repeated if an unrelated key press happens in between the two executions of the script. (#11388) 
+- Strong and emphasis tags in Internet Explorer can again be suppressed from being reported by returning off Report Emphasis in NVDA's Document Formatting settings. (#11808)
+- A freeze of several seconds experienced by a small amount of users when arrowing between cells in Excel should no longer occur. (#11818)
+- In Microsoft Teams builds with version numbers like 1.3.00.28xxx, NVDA no longer fails reading messages in chats or Teams channels due to an incorrectly focused menu. (#11821)
 
 
 == Changes for Developers ==

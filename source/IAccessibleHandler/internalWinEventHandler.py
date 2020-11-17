@@ -129,6 +129,18 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 			return
 
 		windowClassName = winUser.getClassName(window)
+		# Excel produces UI automation events
+		# Which are proxied by Windows into MSAA winEvents.
+		# However in certain builds of Excel 2016
+		# calling UIAHasServerSideProvider on the EXCEL7 window in responce to these events
+		# causes a freeze of several seconds.
+		# As we don't need these MSAA events for our Excel support, just ignore them early.
+		if windowClassName == "EXCEL7" and objectID > 0:
+			log.debug(
+				f"Dropping UIA proxied event for Excel7 window. "
+				f"WinEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+			)
+			return
 		if windowClassName == "ConsoleWindowClass":
 			# #10113: we need to use winEvents to track the real thread for console windows.
 			consoleWindowsToThreadIDs[window] = threadID

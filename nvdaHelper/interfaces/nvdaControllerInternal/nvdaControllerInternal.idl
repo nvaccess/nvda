@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2018 NV Access Limited, rui Batista, Google LLC.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -15,7 +15,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 cpp_quote("/*")
 cpp_quote("This file is a part of the NVDA project.")
 cpp_quote("URL: http://www.nvda-project.org/")
-cpp_quote("Copyright 2006-2010 NVDA contributers.")
+cpp_quote("Copyright 2006-2018 NV Access Limited, rui Batista, Google LLC.")
 cpp_quote("This program is free software: you can redistribute it and/or modify")
 cpp_quote("it under the terms of the GNU General Public License version 2.0, as published by")
 cpp_quote("the Free Software Foundation.")
@@ -36,6 +36,13 @@ cpp_quote("*/")
 interface NvdaControllerInternal {
 
 	error_status_t __stdcall requestRegistration([in,string] const wchar_t* uuidString);
+
+/**
+ * Notifies NVDA that a live region was updated.
+ * @param text the text to report for the live region.
+ * @param level The level of live region, I.E. "polite"
+ */
+	error_status_t __stdcall reportLiveRegion([in,string] const wchar_t* text, [in,string] const wchar_t* level);
 
 /**
  * Notifies NVDA that the keyboard layout has changed for this thread. 
