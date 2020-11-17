@@ -5,8 +5,8 @@
 # See the file COPYING for more details.
 
 from dataclasses import dataclass
-import enum
 from ctypes import *
+from ctypes import byref
 from ctypes.wintypes import *
 from enum import Enum
 
@@ -14,6 +14,7 @@ import comtypes.client
 from comtypes.automation import VT_EMPTY
 from comtypes import COMError
 from comtypes import *
+from comtypes import GUID
 import enum
 import weakref
 import threading
@@ -78,6 +79,7 @@ HorizontalTextAlignment_Centered=1
 HorizontalTextAlignment_Right=2
 HorizontalTextAlignment_Justified=3
 
+
 # FillType enum
 class FillType(enum.IntEnum):
 	none = 0
@@ -86,16 +88,17 @@ class FillType(enum.IntEnum):
 	picture = 3
 	pattern = 4
 
+
 FillTypeLabels = {
-	# Translators: a style of fill type (to color the inside of a control or text) 
+	# Translators: a style of fill type (to color the inside of a control or text)
 	FillType.none: pgettext("UIAHandler.FillType", "none"),
-	# Translators: a style of fill type (to color the inside of a control or text) 
+	# Translators: a style of fill type (to color the inside of a control or text)
 	FillType.color: pgettext("UIAHandler.FillType", "color"),
-	# Translators: a style of fill type (to color the inside of a control or text) 
+	# Translators: a style of fill type (to color the inside of a control or text)
 	FillType.gradient: pgettext("UIAHandler.FillType", "gradient"),
-	# Translators: a style of fill type (to color the inside of a control or text) 
+	# Translators: a style of fill type (to color the inside of a control or text)
 	FillType.picture: pgettext("UIAHandler.FillType", "picture"),
-	# Translators: a style of fill type (to color the inside of a control or text) 
+	# Translators: a style of fill type (to color the inside of a control or text)
 	FillType.pattern: pgettext("UIAHandler.FillType", "pattern"),
 }
 

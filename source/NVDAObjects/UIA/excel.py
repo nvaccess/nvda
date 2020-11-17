@@ -7,11 +7,10 @@ from typing import Optional, Tuple
 import UIAHandler
 import colors
 import locationHelper
-import textInfos
 import controlTypes
 from scriptHandler import script
 import ui
-from . import UIA, UIATextInfo
+from . import UIA
 
 
 class ExcelCell(UIA):
@@ -66,36 +65,39 @@ class ExcelCell(UIA):
 
 	def _get_cellSize(self) -> locationHelper.Point:
 		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_SizePropertyId, True)
-		# width (x) seems to be in characters multiplied by roughly 5.5? 
+		# width (x) seems to be in characters multiplied by roughly 5.5?
 		# 10 characters set in column width dialog results in 58
 		# 100 characters set in column width dialog results in 544
 		x = val[0] / 5.5
-		y=val[1]
+		y = val[1]
 		return locationHelper.Point(x, y)
 
 	@script(
 		# Translators: the description of a script
-		description=_("Shows a browseable message Listing information about a cell's appearence such as outline and fill colors, rotation and size"),
+		description=_(
+			"Shows a browseable message Listing information about a cell's appearence such as outline and fill colors,"
+			" rotation and size"
+		),
 		gestures=["kb:NVDA+o"],
 	)
 	def script_showCellAppearanceInfo(self, gesture):
 		infoList = []
-		# Translators: The width of the cell in points 
+		# Translators: The width of the cell in points
 		tmpl = _("Cell width: roughly {0.x:.0f} characters")
 		infoList.append(tmpl.format(self.cellSize))
-		# Translators: The height of the cell in points 
+		# Translators: The height of the cell in points
 		tmpl = _("Cell height: {0.y:.1f} pt")
 		infoList.append(tmpl.format(self.cellSize))
 		if self.rotation is not None:
-			# Translators: The rotation in degrees of an Excel cell 
+			# Translators: The rotation in degrees of an Excel cell
 			tmpl = _("Rotation: {0} degrees")
 			infoList.append(tmpl.format(self.rotation))
 		if self.outlineColor is not None:
-			# Translators: The outline (border) colors of an Excel cell. 
+			# Translators: The outline (border) colors of an Excel cell.
 			tmpl = _("Outline color: top={0.name}, bottom={1.name}, left={2.name}, right={3.name}")
 			infoList.append(tmpl.format(*self.outlineColor))
 		if self.outlineThickness is not None:
-			# Translators: The outline (border) thickness values of an Excel cell. 
+			# Translators: The outline (border) thickness values of an Excel cell.
 			tmpl = _("Outline thickness: top={0}, bottom={1}, left={2}, right={3}")
 			infoList.append(tmpl.format(*self.outlineThickness))
 		if self.fillColor is not None:
@@ -108,7 +110,7 @@ class ExcelCell(UIA):
 			infoList.append(tmpl.format(UIAHandler.FillTypeLabels[self.fillType]))
 		numberFormat = self._getUIACacheablePropertyValue(UIAHandler.handler.CellNumberFormat_PropertyId)
 		if numberFormat:
-			# Translators: the number format of an Excel cell 
+			# Translators: the number format of an Excel cell
 			tmpl = _("Number format: {0}")
 			infoList.append(tmpl.format(numberFormat))
 		hasDataValidation = self._getUIACacheablePropertyValue(UIAHandler.handler.HasDataValidation_PropertyId)
@@ -116,18 +118,22 @@ class ExcelCell(UIA):
 			# Translators: If an excel cell has data validation set
 			tmpl = _("Has data validation")
 			infoList.append(tmpl)
-		dataValidationPrompt = self._getUIACacheablePropertyValue(UIAHandler.handler.DataValidationPrompt_PropertyId)
+		dataValidationPrompt = self._getUIACacheablePropertyValue(
+			UIAHandler.handler.DataValidationPrompt_PropertyId
+		)
 		if dataValidationPrompt:
-			# Translators: the data validation prompt (input message) for an Excel cell 
+			# Translators: the data validation prompt (input message) for an Excel cell
 			tmpl = _("Data validation prompt: {0}")
 			infoList.append(tmpl.format(dataValidationPrompt))
-		hasConditionalFormatting = self._getUIACacheablePropertyValue(UIAHandler.handler.HasConditionalFormatting_PropertyId)
+		hasConditionalFormatting = self._getUIACacheablePropertyValue(
+			UIAHandler.handler.HasConditionalFormatting_PropertyId
+		)
 		if hasConditionalFormatting:
-			# Translators: If an excel cell has conditional formatting 
+			# Translators: If an excel cell has conditional formatting
 			tmpl = _("Has conditional formatting")
 			infoList.append(tmpl)
 		if self.areGridlinesVisible:
-			# Translators: If an excel cell has visible gridlines 
+			# Translators: If an excel cell has visible gridlines
 			tmpl = _("Gridlines are visible")
 			infoList.append(tmpl)
 		infoString = "\n".join(infoList)
@@ -212,6 +218,7 @@ class ExcelWorksheet(UIA):
 		# However, the selection state on the sheet is not useful, so remove it.
 		parent.states.discard(controlTypes.STATE_SELECTED)
 		return parent
+
 
 class CellEdit(UIA):
 	name = u""
