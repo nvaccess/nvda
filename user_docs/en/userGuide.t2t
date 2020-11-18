@@ -2110,6 +2110,14 @@ The braille viewer window contains a check box labelled "Show braille viewer on 
 If this is checked, the braille viewer will open when NVDA is started.
 The braille viewer window will always attempt to re-open with the same dimensions and location as when it was closed.
 
+The braille viewer window contains a check box labeled "Hover for cell routing", the default is unchecked.
+If checked, hovering the mouse over a braille cell will enable trigger the "route to braille cell" command for that cell.
+This is often used to move the caret or trigger the action for a control.
+This can be useful for testing NVDA is able to correctly reverse map a from braille cell.
+To prevent unintentionally routing to cells, the command is delayed.
+The mouse must hover until the cell turns green.
+The cell will start as a light yellow colour, transition to orange, then suddenly become green.
+
 ++ Python Console ++[PythonConsole]
 The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
 For more information, please see the [NVDA Developer Guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
