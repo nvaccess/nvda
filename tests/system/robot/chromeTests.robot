@@ -42,4 +42,5 @@ ARIA treegrid
 	test_ariaTreeGrid_browseMode
 ARIA checkbox
 	[Documentation]	Navigate to an unchecked checkbox in reading mode.
+	[Tags]	aria-at
 	test_ariaCheckbox_browseMode
