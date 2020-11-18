@@ -7,10 +7,11 @@ Object overlay classes for Visual Studio components
 available in Visual Studio and SQL Server Management Studio.
 """
 
-from . import UIA
+from . import UIA, ToolTip
 import speech
 import braille
 import api
+import time
 
 
 class IntelliSenseItem(UIA):
@@ -53,6 +54,22 @@ _INTELLISENSE_LIST_AUTOMATION_IDS = {
 }
 
 
+class CompletionToolTip(ToolTip):
+	""" A tool tip for which duplicate open events can be fired.
+	"""
+
+	_lastToolTipOpenedInfo=(None,None) #: Keeps track of the last ToolTipOpened event (text, time)
+
+	def event_UIA_toolTipOpened(self):
+		oldText, oldTime = self._lastToolTipOpenedInfo
+		newText = self.name
+		newTime = time.time()
+		self.__class__._lastToolTipOpenedInfo = (newText, newTime)
+		if newText == oldText and oldTime is not None and (newTime - oldTime) < 0.2:
+			return
+		super().event_UIA_toolTipOpened()
+
+
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAAutomationId in _INTELLISENSE_LIST_AUTOMATION_IDS:
 		clsList.insert(0, IntelliSenseList)
@@ -64,3 +81,5 @@ def findExtraOverlayClasses(obj, clsList):
 		and isinstance(obj.previous.previous, IntelliSenseList)
 	):
 		clsList.insert(0, IntelliSenseLiveRegion)
+	elif obj.UIAAutomationId == "completion tooltip":
+		clsList.insert(0, CompletionToolTip)
