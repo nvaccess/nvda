@@ -1,9 +1,9 @@
-# -*- coding: UTF-8 -*-
 # brailleDisplayDrivers/seika.py
+#
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2012/20 Ulf Beckmann <beckmann@flusoft.de>
+# Copyright (C) 2012-2020 NV Access Limited, Ulf Beckmann <beckmann@flusoft.de>
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 # A redesign was made for Python V3.7 in 2020
 #
@@ -49,7 +49,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			except serial.SerialException:
 				continue
 			log.debug("serial port open {port}".format(port=port))
-			# get the version infos			
+			# get the version infos
 			self._ser.write(b"\xFF\xFF\x1C")
 			self._ser.flush()
 			# Read out the input buffer
@@ -58,14 +58,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			if versionS.startswith(b"seika80"):
 				log.info("Found Seika80 connected via {port} Version {versionS}".format(port=port, versionS=versionS))
 				self.numCells = 80
-				# Handshake data for seika 80
-				self.s40 = b"\xff\xff\x73\x38\x30\x00\x00\x00"
+				# data header for seika 80
+				self.sendHeader = b"\xff\xff\x73\x38\x30\x00\x00\x00"
 				break
 			if versionS.startswith(b"seika3"):
 				log.info("Found Seika3/5 connected via {port} Version {versionS}".format(port=port, versionS=versionS))
 				self.numCells = 40
-				# Handshake data for v3, v5
-				self.s40 = b"\xFF\xFF\x73\x65\x69\x6B\x61\x00"
+				# data header for v3, v5
+				self.sendHeader = b"\xFF\xFF\x73\x65\x69\x6B\x61\x00"
 				break
 			# is it a old Seika3?
 			log.debug("test if it is a old Seika3")
@@ -80,7 +80,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			)):
 				log.info("Found Seika3 old Version connected via {port} Version {versionS}".format(port=port, versionS=versionS))
 				self.numCells = 40
-				self.s40 = b"\xFF\xFF\x04\x00\x63\x00\x50\x00"
+				self.sendHeader = b"\xFF\xFF\x04\x00\x63\x00\x50\x00"
 				break
 			self._ser.close()
 		else:
@@ -99,16 +99,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def display(self, cells: List[int]):
 		# add padding so total length is 1 + numberOfStatusCells + numberOfRegularCells
 		cellPadding: bytes = bytes(self.numCells - len(cells))
-		writeBytes: List[bytes] = [self.s40, ]
+		writeBytes: List[bytes] = [self.sendHeader, ]
 		# every transmitted line consists of the preamble SEIKA_SENDHEADER and the Cells
 		if self.numCells==80:
-			lineBytes: bytes = self.s40 + bytes(cells) + cellPadding
+			lineBytes: bytes = self.sendHeader + bytes(cells) + cellPadding
 		else:
 			for cell in cells:
 				writeBytes.append(b"\x00")
 				writeBytes.append(intToByte(cell))
-		lineBytes = b"".join(writeBytes) + cellPadding	
-		# log.info("senden....{p}".format(p=len(lineBytes)))	
+			lineBytes = b"".join(writeBytes) + cellPadding
+		# log.info("senden....{p}".format(p=len(lineBytes)))
 		self._ser.write(lineBytes)
 
 	def handleResponses(self):
