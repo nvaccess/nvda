@@ -1,8 +1,8 @@
-#gui/addonGui.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2012-2019 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V., Ethan Holliger, Arnold Loubriat
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2012-2019 NV Access Limited, Beqa Gozalishvili, Joseph Lee,
+# Babbage B.V., Ethan Holliger, Arnold Loubriat, Thomas Stivers
 
 import os
 import weakref
@@ -20,8 +20,8 @@ import globalVars
 import buildVersion
 from . import guiHelper
 from . import nvdaControls
-from .dpiScalingHelper import DpiScalingHelperMixin
-
+from .dpiScalingHelper import DpiScalingHelperMixin, DpiScalingHelperMixinWithoutInit
+import gui.contextHelp
 def promptUserForRestart():
 	restartMessage = _(
 		# Translators: A message asking the user if they wish to restart NVDA
@@ -136,7 +136,11 @@ def _showAddonInfo(addon):
 	gui.messageBox("\n".join(message), title, wx.OK)
 
 
-class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
+class AddonsDialog(
+		DpiScalingHelperMixinWithoutInit,
+		gui.ContextHelpMixin,
+		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+):
 	@classmethod
 	def _instance(cls):
 		""" type: () -> AddonsDialog
@@ -144,6 +148,8 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		with by treating that object as a callable.
 		"""
 		return None
+
+	helpId = "AddonsManager"
 
 	def __new__(cls, *args, **kwargs):
 		instance = AddonsDialog._instance()
@@ -161,14 +167,11 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		title = _("Add-ons Manager")
 		# Translators: The title of the Addons Dialog when add-ons are disabled
 		titleWhenAddonsAreDisabled = _("Add-ons Manager (add-ons disabled)")
-		wx.Dialog.__init__(
-			self,
+		super().__init__(
 			parent,
 			title=title if not globalVars.appArgs.disableAddons else titleWhenAddonsAreDisabled,
 			style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX,
 		)
-		DpiScalingHelperMixin.__init__(self, self.GetHandle())
-
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		firstTextSizer = wx.BoxSizer(wx.VERTICAL)
 		listAndButtonsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=wx.BoxSizer(wx.HORIZONTAL))
@@ -658,7 +661,12 @@ def _showConfirmAddonInstallDialog(parent, bundle):
 		showAddonInfoFunction=lambda: _showAddonInfo(bundle)
 	).ShowModal()
 
-class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
+
+class IncompatibleAddonsDialog(
+		DpiScalingHelperMixinWithoutInit,
+		gui.ContextHelpMixin,
+		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+):
 	"""A dialog that lists incompatible addons, and why they are not compatible"""
 	@classmethod
 	def _instance(cls):
@@ -668,6 +676,8 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		"""
 		return None
 
+	helpId = "IncompatibleAddonsManager"
+	
 	def __new__(cls, *args, **kwargs):
 		instance = IncompatibleAddonsDialog._instance()
 		if instance is None:
@@ -695,14 +705,12 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			# this dialog is not designed to show an empty list.
 			raise RuntimeError("No incompatible addons.")
 
-		wx.Dialog.__init__(
-			self,
+		super().__init__(
 			parent,
 			# Translators: The title of the Incompatible Addons Dialog
 			title=_("Incompatible Add-ons"),
 			style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX,
 		)
-		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)

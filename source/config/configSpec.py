@@ -60,6 +60,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	cursorShapeFocus = integer(default=192,min=1,max=255)
 	cursorShapeReview = integer(default=128,min=1,max=255)
 	noMessageTimeout = boolean(default=false)
+	# Timeout after the message will disappear from braille display
+	# 0 means that no message will be shown
 	messageTimeout = integer(default=4,min=0,max=20)
 	tetherTo = string(default="focus")
 	autoTether = boolean(default=true)
@@ -124,6 +126,10 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [brailleViewer]
 	showBrailleViewerAtStartup = boolean(default=false)
+	shouldHoverRouteToCell = boolean(default=false)
+	secondsOfHoverToActivate = float(min=0.0, default=1.0)
+	# Devices with 40 cells are quite common.
+	defaultCellCount = integer(min=20, max=160, default=40)
 	autoPositionWindow = boolean(default=True)
 	# Values for positioning the window.
 	# Defaults are not used.
@@ -244,6 +250,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	vision = boolean(default=false)
 	speech = boolean(default=false)
 	speechManager = boolean(default=false)
+	synthDriver = boolean(default=false)
 	nvwave = boolean(default=false)
 
 [uwpOcr]

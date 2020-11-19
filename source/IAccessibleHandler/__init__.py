@@ -990,6 +990,13 @@ def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
 	if obj.IAccessibleRole != oleacc.ROLE_SYSTEM_MENUPOPUP:
 		# menuStart on anything other than a menu is silly.
 		return
+	elif not obj.shouldAllowIAccessibleMenuStartEvent:
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Ignoring menuStart winEvent: {getWinEventLogInfo(window, objectID, childID)}, "
+				f"shouldAllowIAccessibleMenuStartEvent {obj.shouldAllowIAccessibleMenuStartEvent}"
+			)
+		return
 	processFocusNVDAEvent(obj, force=True)
 
 

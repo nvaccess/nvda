@@ -4,6 +4,8 @@ NVDA (NonVisual Desktop Access) is a free, open source screen reader for Microso
 It is developed by NV Access in collaboration with a global community of contributors.
 To learn more about NVDA or download a copy, visit the main [NV Access](http://www.nvaccess.org/) website.
 
+Please note: the NVDA project has a [Citizen and Contributor Code of Conduct](CODE_OF_CONDUCT.md). NV Access expects that all contributors and other community members read and abide by the rules set out in this document while participating or contributing to this project.
+
 ## Get support
 Either if you are a beginner, an advanced user, a new or a long time developer, or if you are an organization willing to know more or to contribute to NVDA, you can get support through the documentation in place as well as several communication channels dedicated for the NVDA screen reader. Here is an overview of the most important support sources.
 
@@ -87,7 +89,7 @@ For reference, the following run time dependencies are included in Git submodule
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit cbc1f29631780
 * [ConfigObj](https://github.com/DiffSK/configobj), commit f9a265c
 * [Six](https://pypi.python.org/pypi/six), version 1.12.0, required by wxPython and ConfigObj
-* [liblouis](http://www.liblouis.org/), version 3.14.0
+* [liblouis](http://www.liblouis.org/), version 3.15.0
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/) Emoji Annotations, version 37.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
