@@ -69,7 +69,7 @@ _dotNames = {}
 for i in range(1, 9):
 	key = globals()["DOT_%d" % i]
 	_dotNames[key] = "d%d" % i
-bdDetect.addUsbDevices(SEIKA_NAME, bdDetect.KEY_HID, { vidpid, })
+bdDetect.addUsbDevices(SEIKA_NAME, bdDetect.KEY_HID, {vidpid, })
 
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
@@ -89,7 +89,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls):
-		return path
+		return cls.path
 
 	def __init__(self, port="hid"):
 		super(BrailleDisplayDriver, self).__init__()
@@ -221,15 +221,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"kb:downArrow": ("br(seikantk):RJ_DOWN",),
 			"kb:leftArrow": ("br(seikantk):RJ_LEFT",),
 			"kb:rightArrow": ("br(seikantk):RJ_RIGHT",),
-			"kb:shift+upArrow": ("br(seikantk):SPACE+RJ_UP",),
-			"kb:shift+downArrow": ("br(seikantk):SPACE+RJ_DOWN",),
-			"kb:shift+leftArrow": ("br(seikantk):SPACE+RJ_LEFT",),
-			"kb:shift+rightArrow": ("br(seikantk):SPACE+RJ_RIGHT",),
+			"kb:shift+upArrow": ("br(seikantk):SPACE+RJ_UP", "br(seikantk):BACKSPACE+RJ_UP"),
+			"kb:shift+downArrow": ("br(seikantk):SPACE+RJ_DOWN", "br(seikantk):BACKSPACE+RJ_DOWN"),
+			"kb:shift+leftArrow": ("br(seikantk):SPACE+RJ_LEFT", "br(seikantk):BACKSPACE+RJ_LEFT"),
+			"kb:shift+rightArrow": ("br(seikantk):SPACE+RJ_RIGHT", "br(seikantk):BACKSPACE+RJ_RIGHT"),
 			"kb:escape": ("br(seikantk):SPACE+RJ_CENTER",),
-			"kb:shift+upArrow": ("br(seikantk):BACKSPACE+RJ_UP",),
-			"kb:shift+downArrow": ("br(seikantk):BACKSPACE+RJ_DOWN",),
-			"kb:shift+leftArrow": ("br(seikantk):BACKSPACE+RJ_LEFT",),
-			"kb:shift+rightArrow": ("br(seikantk):BACKSPACE+RJ_RIGHT",),
+			# "kb:shift+upArrow": ("br(seikantk):BACKSPACE+RJ_UP",),
+			# "kb:shift+downArrow": ("br(seikantk):BACKSPACE+RJ_DOWN",),
+			# "kb:shift+leftArrow": ("br(seikantk):BACKSPACE+RJ_LEFT",),
+			# "kb:shift+rightArrow": ("br(seikantk):BACKSPACE+RJ_RIGHT",),
 			"kb:windows": ("br(seikantk):BACKSPACE+RJ_CENTER",),
 			"kb:space": ("br(seikantk):BACKSPACE", "br(seikantk):SPACE",),
 			"kb:backspace": ("br(seikantk):d7",),
