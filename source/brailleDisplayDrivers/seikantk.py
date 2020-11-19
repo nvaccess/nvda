@@ -39,15 +39,15 @@ _keyNames = {
 	0x000002: "SPACE",
 	0x000004: "LB",
 	0x000008: "RB",
-	0x000010: "LJ_CENTER", 
-	0x000020: "LJ_LEFT", 
-	0x000040: "LJ_RIGHT", 
+	0x000010: "LJ_CENTER",
+	0x000020: "LJ_LEFT",
+	0x000040: "LJ_RIGHT",
 	0x000080: "LJ_UP",
 	0x000100: "LJ_DOWN",
-	0x000200: "RJ_CENTER", 
-	0x000400: "RJ_LEFT", 
-	0x000800: "RJ_RIGHT", 
-	0x001000: "RJ_UP", 
+	0x000200: "RJ_CENTER",
+	0x000400: "RJ_LEFT",
+	0x000800: "RJ_RIGHT",
+	0x001000: "RJ_UP",
 	0x002000: "RJ_DOWN"
 }
 
@@ -69,9 +69,7 @@ _dotNames = {}
 for i in range(1, 9):
 	key = globals()["DOT_%d" % i]
 	_dotNames[key] = "d%d" % i
-bdDetect.addUsbDevices(SEIKA_NAME, bdDetect.KEY_HID, {
-	vidpid,  # USB-HID adapter
-	})
+bdDetect.addUsbDevices(SEIKA_NAME, bdDetect.KEY_HID, { vidpid, })
 
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
@@ -91,7 +89,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls):
-		return self.path
+		return path
 
 	def __init__(self, port="hid"):
 		super(BrailleDisplayDriver, self).__init__()
