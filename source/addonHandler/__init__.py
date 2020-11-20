@@ -97,7 +97,7 @@ def getIncompatibleAddons(
 
 def completePendingAddonRemoves():
 	"""Removes any add-ons that could not be removed on the last run of NVDA"""
-	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
+	user_addons = os.path.join(globalVars.appArgs.configPath, "addons")
 	pendingRemovesSet=state['pendingRemovesSet']
 	for addonName in list(pendingRemovesSet):
 		addonPath=os.path.join(user_addons,addonName)
@@ -111,7 +111,7 @@ def completePendingAddonRemoves():
 		pendingRemovesSet.discard(addonName)
 
 def completePendingAddonInstalls():
-	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
+	user_addons = os.path.join(globalVars.appArgs.configPath, "addons")
 	pendingInstallsSet=state['pendingInstallsSet']
 	for addonName in pendingInstallsSet:
 		newPath=os.path.join(user_addons,addonName)
@@ -123,7 +123,7 @@ def completePendingAddonInstalls():
 	pendingInstallsSet.clear()
 
 def removeFailedDeletions():
-	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
+	user_addons = os.path.join(globalVars.appArgs.configPath, "addons")
 	for p in os.listdir(user_addons):
 		if p.endswith(DELETEDIR_SUFFIX):
 			path=os.path.join(user_addons,p)
@@ -170,7 +170,7 @@ def _getDefaultAddonPaths():
 	@rtype: list(string)
 	"""
 	addon_paths = []
-	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
+	user_addons = os.path.join(globalVars.appArgs.configPath, "addons")
 	if os.path.isdir(user_addons):
 		addon_paths.append(user_addons)
 	return addon_paths
@@ -280,7 +280,7 @@ class Addon(AddonBase):
 		@param path: the base directory for the addon data.
 		@type path: string
 		"""
-		self.path = os.path.abspath(path)
+		self.path = path
 		self._extendedPackages = set()
 		manifest_path = os.path.join(path, MANIFEST_FILENAME)
 		with open(manifest_path, 'rb') as f:
@@ -511,19 +511,23 @@ def getCodeAddon(obj=None, frameDist=1):
 	if obj is None:
 		obj = sys._getframe(frameDist)
 	fileName  = inspect.getfile(obj)
-	dir= os.path.abspath(os.path.dirname(fileName))
+	assert os.path.isabs(fileName), f"Module file name {fileName} is not absolute"
+	dir = os.path.normpath(os.path.dirname(fileName))
 	# if fileName is not a subdir of one of the addon paths
 	# It does not belong to an addon.
-	for p in _getDefaultAddonPaths():
-		if dir.startswith(p):
+	addonsPath = None
+	for addonsPath in _getDefaultAddonPaths():
+		addonsPath = os.path.normpath(addonsPath)
+		if dir.startswith(addonsPath):
 			break
 	else:
 		raise AddonError("Code does not belong to an addon package.")
+	assert addonsPath is not None
 	curdir = dir
-	while curdir not in _getDefaultAddonPaths():
+	while curdir.startswith(addonsPath) and len(curdir) > len(addonsPath):
 		if curdir in _availableAddons:
 			return _availableAddons[curdir]
-		curdir = os.path.abspath(os.path.join(curdir, ".."))
+		curdir = os.path.normpath(os.path.join(curdir, ".."))
 	# Not found!
 	raise AddonError("Code does not belong to an addon")
 
@@ -609,7 +613,7 @@ class AddonBundle(AddonBase):
 
 def createAddonBundleFromPath(path, destDir=None):
 	""" Creates a bundle from a directory that contains a a addon manifest file."""
-	basedir = os.path.abspath(path)
+	basedir = path
 	# If  caller did not provide a destination directory name
 	# Put the bundle at the same level as the add-on's top-level directory,
 	# That is, basedir/..

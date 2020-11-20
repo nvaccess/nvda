@@ -123,7 +123,7 @@ def initialize():
 	for type in dictTypes:
 		dictionaries[type]=SpeechDict()
 	dictionaries["default"].load(os.path.join(speechDictsPath, "default.dic"))
-	dictionaries["builtin"].load("builtin.dic")
+	dictionaries["builtin"].load(os.path.join(globalVars.appDir, "builtin.dic"))
 
 def loadVoiceDict(synth):
 	"""Loads appropriate dictionary for the given synthesizer.

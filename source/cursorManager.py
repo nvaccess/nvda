@@ -29,15 +29,23 @@ from inputCore import SCRCAT_BROWSEMODE
 import ui
 from textInfos import DocumentWithPageTurns
 
-class FindDialog(wx.Dialog):
+
+class FindDialog(
+		gui.ContextHelpMixin,
+		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
+):
 	"""A dialog used to specify text to find in a cursor manager.
 	"""
+	
+	helpId = "SearchingForText"
 
-	def __init__(self, parent, cursorManager, text, caseSensitivity):
+	def __init__(self, parent, cursorManager, text, caseSensitivity, reverse=False):
 		# Translators: Title of a dialog to find text.
-		super(FindDialog, self).__init__(parent, wx.ID_ANY, _("Find"))
+		super().__init__(parent, title=_("Find"))
+
 		# Have a copy of the active cursor manager, as this is needed later for finding text.
 		self.activeCursorManager = cursorManager
+		self.reverse = reverse
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		# Translators: Dialog text for NvDA's find command.
@@ -61,7 +69,13 @@ class FindDialog(wx.Dialog):
 		caseSensitive = self.caseSensitiveCheckBox.GetValue()
 		# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
 		# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
-		core.callLater(100, self.activeCursorManager.doFindText, text, caseSensitive=caseSensitive)
+		core.callLater(
+			100,
+			self.activeCursorManager.doFindText,
+			text,
+			caseSensitive=caseSensitive,
+			reverse=self.reverse
+		)
 		self.Destroy()
 
 	def onCancel(self, evt):
@@ -164,11 +178,11 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		CursorManager._lastFindText=text
 		CursorManager._lastCaseSensitivity=caseSensitive
 
-	def script_find(self,gesture):
+	def script_find(self, gesture, reverse=False):
 		# #8566: We need this to be a modal dialog, but it mustn't block this script.
 		def run():
 			gui.mainFrame.prePopup()
-			d = FindDialog(gui.mainFrame, self, self._lastFindText, self._lastCaseSensitivity)
+			d = FindDialog(gui.mainFrame, self, self._lastFindText, self._lastCaseSensitivity, reverse)
 			d.ShowModal()
 			gui.mainFrame.postPopup()
 		wx.CallAfter(run)
@@ -203,7 +217,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	)
 	def script_findPrevious(self,gesture):
 		if not self._lastFindText:
-			self.script_find(gesture)
+			self.script_find(gesture, reverse=True)
 			return
 		self.doFindText(
 			self._lastFindText,
@@ -392,9 +406,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			# Translators: Reported when there is no text selected (for copying).
 			ui.message(_("No selection"))
 			return
-		if info.copyToClipboard():
-			# Translators: Message presented when text has been copied to clipboard.
-			ui.message(_("Copied to clipboard"))
+		info.copyToClipboard(notify=True)
 
 	def reportSelectionChange(self, oldTextInfo):
 		newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)

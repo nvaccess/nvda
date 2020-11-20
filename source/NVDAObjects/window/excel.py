@@ -575,6 +575,8 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 
 class ElementsListDialog(browseMode.ElementsListDialog):
 
+	helpId = "ExcelElementsList"
+
 	ELEMENT_TYPES=(
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
@@ -592,6 +594,14 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		# in the browse mode Elements List dialog.
 		("sheet", _("&Sheets")),
 	)
+
+
+class EditCommentDialog(
+		gui.ContextHelpMixin,
+		wx.TextEntryDialog,  # wxPython does not seem to call base class initializer, put last in MRO
+):
+	helpId = "ExcelReportingComments"
+
 
 class ExcelBase(Window):
 	"""A base that all Excel NVDAObjects inherit from, which contains some useful methods."""
@@ -1433,7 +1443,7 @@ class ExcelCell(ExcelBase):
 		gesture="kb:shift+f2")
 	def script_editComment(self,gesture):
 		commentObj=self.excelCellObject.comment
-		d = wx.TextEntryDialog(
+		d = EditCommentDialog(
 			gui.mainFrame,
 			# Translators: Dialog text for the note editing dialog
 			_("Editing note for cell {address}").format(address=self.cellCoordsText),

@@ -44,7 +44,7 @@ except RuntimeError:
 	updateCheck = None
 
 ### Constants
-NVDA_PATH = os.getcwd()
+NVDA_PATH = globalVars.appDir
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
 DONATE_URL = "http://www.nvaccess.org/donate/"
 
@@ -57,7 +57,7 @@ def getDocFilePath(fileName, localized=True):
 		if hasattr(sys, "frozen"):
 			getDocFilePath.rootPath = os.path.join(NVDA_PATH, "documentation")
 		else:
-			getDocFilePath.rootPath = os.path.abspath(os.path.join("..", "user_docs"))
+			getDocFilePath.rootPath = os.path.join(NVDA_PATH, "..", "user_docs")
 
 	if localized:
 		lang = languageHandler.getLanguage()
@@ -80,7 +80,7 @@ def getDocFilePath(fileName, localized=True):
 				tryPath = os.path.join(tryDir, "%s.%s" % (fileName, tryExt))
 				if os.path.isfile(tryPath):
 					return tryPath
-
+		return None
 	else:
 		# Not localized.
 		if not hasattr(sys, "frozen") and fileName in ("copying.txt", "contributors.txt"):
@@ -1066,12 +1066,18 @@ class NonReEntrantTimer(wx.Timer):
 def _isDebug():
 	return config.conf["debugLog"]["gui"]
 
-class AskAllowUsageStatsDialog(wx.Dialog):
+
+class AskAllowUsageStatsDialog(
+		ContextHelpMixin,
+		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+):
 	"""A dialog asking if the user wishes to allow NVDA usage stats to be collected by NV Access."""
+	
+	helpId = "UsageStatsDialog"
 
 	def __init__(self, parent):
 		# Translators: The title of the dialog asking if usage data can be collected 
-		super(AskAllowUsageStatsDialog, self).__init__(parent, title=_("NVDA  Usage Data Collection"))
+		super().__init__(parent, title=_("NVDA  Usage Data Collection"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 

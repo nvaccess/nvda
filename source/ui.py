@@ -1,8 +1,9 @@
-#ui.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2017 NV Access Limited, Dinesh Kaushal, Davy Kager, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# -*- coding: utf-8 -*-
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2008-2020 NV Access Limited, James Teh, Dinesh Kaushal, Davy Kager, André-Abush Clause,
+# Babbage B.V., Leonard de Ruijter, Michael Curran, Accessolutions, Julien Cochuyt
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 """User interface functionality.
 This refers to the user interface presented by the screen reader alone, not the graphical user interface.
@@ -18,6 +19,7 @@ from logHandler import log
 import gui
 import speech
 import braille
+import globalVars
 from typing import Optional
 
 
@@ -45,7 +47,7 @@ def browseableMessage(message,title=None,isHtml=False):
 	@param isHtml: Whether the message is html
 	@type isHtml: boolean
 	"""
-	htmlFileName  = os.path.realpath( u'message.html' )
+	htmlFileName = os.path.join(globalVars.appDir, 'message.html')
 	if not os.path.isfile(htmlFileName ): 
 		raise LookupError(htmlFileName )
 	moniker = POINTER(IUnknown)()
@@ -68,14 +70,19 @@ def browseableMessage(message,title=None,isHtml=False):
 	gui.mainFrame.postPopup() 
 
 
-def message(text: str, speechPriority: Optional[speech.Spri] = None):
+def message(
+		text: str,
+		speechPriority: Optional[speech.Spri] = None,
+		brailleText: Optional[str] = None,
+):
 	"""Present a message to the user.
 	The message will be presented in both speech and braille.
 	@param text: The text of the message.
 	@param speechPriority: The speech priority.
+	@param brailleText: If specified, present this alternative text on the braille display.
 	"""
 	speech.speakMessage(text, priority=speechPriority)
-	braille.handler.message(text)
+	braille.handler.message(brailleText if brailleText is not None else text)
 
 
 def reviewMessage(text: str, speechPriority: Optional[speech.Spri] = None):
@@ -87,3 +94,23 @@ def reviewMessage(text: str, speechPriority: Optional[speech.Spri] = None):
 	speech.speakMessage(text, priority=speechPriority)
 	if braille.handler.shouldAutoTether or braille.handler.getTether() == braille.handler.TETHER_REVIEW:
 		braille.handler.message(text)
+
+
+def reportTextCopiedToClipboard(text: Optional[str] = None):
+	"""Notify about the result of a "Copy to clipboard" operation.
+	@param text: The text that has been copied. Set to `None` to notify of a failed operation.
+	See: `api.copyToClip`
+	"""
+	if not text:
+		# Translators: Presented when unable to copy to the clipboard because of an error
+		# or the clipboard content did not match what was just copied.
+		message(_("Unable to copy"))
+		return
+	message(
+		# Translators: Announced when a text has been copied to clipboard.
+		# {text} is replaced by the copied text.
+		text=_("Copied to clipboard: {text}").format(text=text),
+		# Translators: Displayed in braille when a text has been copied to clipboard.
+		# {text} is replaced by the copied text.
+		brailleText=_("Copied: {text}").format(text=text)
+	)
