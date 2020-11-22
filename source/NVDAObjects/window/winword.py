@@ -1,7 +1,8 @@
 # -*- coding: UTF-8 -*-
 # NVDAObjects/window/winword.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
+# Copyright (C) 2006-2020 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V., Accessolutions,
+# Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -613,8 +614,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		textList.append(_("{distance} from top edge of page").format(distance=distance))
 		return ", ".join(textList)
 
-	def copyToClipboard(self):
+	def copyToClipboard(self, notify=True):
 		self._rangeObj.copy()
+		if notify:
+			ui.reportTextCopiedToClipboard(self._rangeObj.text)
 		return True
 
 	def find(self,text,caseSensitive=False,reverse=False):
