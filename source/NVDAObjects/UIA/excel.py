@@ -65,11 +65,8 @@ class ExcelCell(UIA):
 
 	def _get_cellSize(self) -> locationHelper.Point:
 		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_SizePropertyId, True)
-		# width (x) seems to be in characters multiplied by roughly 5.5?
-		# 10 characters set in column width dialog results in 58
-		# 100 characters set in column width dialog results in 544
-		x = val[0] / 5.5
-		y = val[1]
+		x = val[0]
+		y=val[1]
 		return locationHelper.Point(x, y)
 
 	@script(
@@ -83,7 +80,7 @@ class ExcelCell(UIA):
 	def script_showCellAppearanceInfo(self, gesture):
 		infoList = []
 		# Translators: The width of the cell in points
-		tmpl = _("Cell width: roughly {0.x:.0f} characters")
+		tmpl = _("Cell width: {0.x:.1f} pt")
 		infoList.append(tmpl.format(self.cellSize))
 		# Translators: The height of the cell in points
 		tmpl = _("Cell height: {0.y:.1f} pt")
