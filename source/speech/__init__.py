@@ -1084,8 +1084,13 @@ def speakTextInfo(
 		return _speakWithoutPauses.speakWithoutPauses(flatSpeechGen)
 
 	speechGen = GeneratorWithReturn(speechGen)
+	# Force symbol level to all when moving by characters or words (#11779)
+	if unit in (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD):
+		symbolLevel = characterProcessing.SYMLVL_ALL
+	else:
+		symbolLevel = None
 	for seq in speechGen:
-		speak(seq, priority=priority)
+		speak(seq, symbolLevel=symbolLevel, priority=priority)
 	return speechGen.returnValue
 
 
@@ -1281,7 +1286,7 @@ def getTextInfoSpeech(  # noqa: C901
 	if onlyInitialFields or (
 		isWordOrCharUnit
 		and len(textWithFields) > 0
-		and len(textWithFields[0].strip() if not textWithFields[0].isspace() else textWithFields[0]) == 1
+		and len(textWithFields[0]) == 1
 		and all(isControlEndFieldCommand(x) for x in itertools.islice(textWithFields, 1, None))
 	):
 		if not onlyCache:
