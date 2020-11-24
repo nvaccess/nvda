@@ -680,31 +680,32 @@ class IS_CURRENT(Enum):
 
 	def getTranslationForUI(self):
 		try:
-			return isCurrentLabels[self]
+			return self._isCurrentLabels[self]
 		except KeyError:
 			log.debugWarning(f"No translation mapping for: {self}")
 			# there is a value for 'current' but NVDA hasn't learned about it yet,
 			# at least describe in the general sense that this item is 'current'
-			return isCurrentLabels[IS_CURRENT.Yes]
+			return self._isCurrentLabels[IS_CURRENT.Yes]
 
-
-#: Text to use for 'current' values. These describe if an item is the current item 
-#: within a particular kind of selection. EG aria-current
-isCurrentLabels: Dict[IS_CURRENT, str] = {
-	IS_CURRENT.NO: "",  # There is nothing extra to say for items that are not current.
-	# Translators: Presented when an item is marked as current in a collection of items
-	IS_CURRENT.Yes: _("current"),
-	# Translators: Presented when a page item is marked as current in a collection of page items
-	IS_CURRENT.PAGE: _("current page"),
-	# Translators: Presented when a step item is marked as current in a collection of step items
-	IS_CURRENT.STEP: _("current step"),
-	# Translators: Presented when a location item is marked as current in a collection of location items
-	IS_CURRENT.LOCATION: _("current location"),
-	# Translators: Presented when a date item is marked as current in a collection of date items
-	IS_CURRENT.DATE: _("current date"),
-	# Translators: Presented when a time item is marked as current in a collection of time items
-	IS_CURRENT.TIME: _("current time"),
-}
+	#: Text to use for 'current' values. These describe if an item is the current item
+	#: within a particular kind of selection. EG aria-current
+	_isCurrentLabels: Dict[Enum, str] = {
+		NO: "",  # There is nothing extra to say for items that are not current.
+		# Translators: Presented when an item is marked as current in a collection of items
+		Yes: _("current"),
+		# Translators: Presented when a page item is marked as current in a collection of page items
+		PAGE: _("current page"),
+		# Translators: Presented when a step item is marked as current in a collection of
+		# step items
+		STEP: _("current step"),
+		# Translators: Presented when a location item is marked as current in a collection of
+		# location items
+		LOCATION: _("current location"),
+		# Translators: Presented when a date item is marked as current in a collection of date items
+		DATE: _("current date"),
+		# Translators: Presented when a time item is marked as current in a collection of time items
+		TIME: _("current time"),
+	}
 
 
 def processPositiveStates(role, states, reason: OutputReason, positiveStates=None):
