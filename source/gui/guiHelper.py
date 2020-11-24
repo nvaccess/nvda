@@ -171,7 +171,22 @@ class LabeledControlHelper(object):
 			@param kwargs: The keyword arguments used to instantiate the wxCtrlClass
 		"""
 		object.__init__(self)
-		self._label = _label = wx.StaticText(parent, label=labelText)
+
+		class LabelEnableChangedListener(wx.StaticText):
+			isDestroyed = False
+			isListening = False
+
+			def _onDestroy(self, evt: wx.WindowDestroyEvent):
+				self.isDestroyed = True
+
+			def listenForEnableChanged(self, _ctrl: wx.Window):
+				self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy)
+				_ctrl.Bind(LabeledControlHelper.EVT_ENABLE_CHANGED, self._onEnableChanged)
+				self.isListening = True
+
+			def _onEnableChanged(self, evt: wx.Event):
+				if self.isListening and not self.isDestroyed:
+					self.Enable(evt.isEnabled)
 
 		class WxCtrlWithEnableEvnt(wxCtrlClass):
 			def Enable(self, enable=True):
@@ -184,26 +199,10 @@ class LabeledControlHelper(object):
 				wx.PostEvent(self, evt)
 				super().Disable()
 
-		def _onEnableChanged(evt: wx.Event):
-			_label.Enable(evt.isEnabled)
-
-		self._ctrl = _ctrl = WxCtrlWithEnableEvnt(parent, **kwargs)
-		_ctrl.Bind(LabeledControlHelper.EVT_ENABLE_CHANGED, _onEnableChanged)
-		
-		# prevent _ctrl trying to call events on destroyed objects
-		def _onDestroy(evt: wx.Event):
-			try:
-				_ctrl.Unbind(
-					LabeledControlHelper.EVT_ENABLE_CHANGED,
-					handler=_onEnableChanged
-				)
-			except RuntimeError:
-				pass
-		self._label.Bind(
-			wx.EVT_WINDOW_DESTROY,
-			_onDestroy
-		)
-		self._sizer = associateElements(_label, _ctrl)
+		self._label = LabelEnableChangedListener(parent, label=labelText)
+		self._ctrl = WxCtrlWithEnableEvnt(parent, **kwargs)
+		self._label.listenForEnableChanged(self._ctrl)
+		self._sizer = associateElements(self._label, self._ctrl)
 
 	@property
 	def control(self):
