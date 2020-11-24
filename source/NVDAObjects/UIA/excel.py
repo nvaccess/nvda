@@ -66,7 +66,7 @@ class ExcelCell(UIA):
 	def _get_cellSize(self) -> locationHelper.Point:
 		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_SizePropertyId, True)
 		x = val[0]
-		y=val[1]
+		y = val[1]
 		return locationHelper.Point(x, y)
 
 	@script(
