@@ -95,10 +95,11 @@ class Ia2Web(IAccessible):
 
 	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
 		politeness = self.IA2Attributes.get('live', "off")
-		return next(
-			(v for v in aria.AriaLivePoliteness if v._name_.lower() == politeness.lower()),
-			aria.AriaLivePoliteness.OFF
-		)
+		try:
+			return aria.AriaLivePoliteness(politeness.lower())
+		except ValueError:
+			log.error(f"Unknown live politeness of {politeness}", exc_info=True)
+			super().liveRegionPoliteness
 
 
 class Document(Ia2Web):

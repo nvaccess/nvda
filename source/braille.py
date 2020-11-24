@@ -37,8 +37,8 @@ import collections
 import extensionPoints
 import hwPortUtils
 import bdDetect
-import brailleViewer
 import queueHandler
+import brailleViewer
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is a
@@ -1625,6 +1625,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._detectionEnabled = False
 		self._detector = None
 		self._rawText = u""
+
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
 
 	def terminate(self):

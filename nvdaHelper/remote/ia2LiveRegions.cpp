@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2020 NV Access Limited, Google LLC, Leonard de Ruijter
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -18,7 +18,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <atlcomcli.h>
 #include <ia2.h>
-#include "nvdaController.h"
+#include "nvdaControllerInternal.h"
 #include <common/ia2utils.h>
 #include "nvdaHelperRemote.h"
 
@@ -308,6 +308,7 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 		pacc2->Release();
 		return;
 	}
+	wstring politeness = i->second;
 	i=attribsMap.find(L"container-busy");
 	bool busy=(i!=attribsMap.end()&&i->second.compare(L"true")==0);
 	if(busy) {
@@ -410,7 +411,9 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 		gotText=getTextFromIAccessible(textBuf,pacc2,true,allowAdditions,allowText);
 	}
 	pacc2->Release();
-	if(gotText&&!textBuf.empty()) nvdaController_speakText(textBuf.c_str());
+	if (gotText && !textBuf.empty()) {
+		nvdaControllerInternal_reportLiveRegion(textBuf.c_str(), politeness.c_str());
+	}
 }
 
 void ia2LiveRegions_inProcess_initialize() {
