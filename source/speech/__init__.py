@@ -1610,7 +1610,7 @@ def getPropertiesSpeech(  # noqa: C901
 	# speak isCurrent property EG aria-current
 	isCurrent = propertyValues.get('current', controlTypes.IS_CURRENT.NO)
 	if isCurrent != controlTypes.IS_CURRENT.NO:
-		textList.append(controlTypes.IS_CURRENT.getTranslationForUI(isCurrent))
+		textList.append(isCurrent.getTranslationForUI())
 
 	placeholder: Optional[str] = propertyValues.get('placeholder', None)
 	if placeholder:
