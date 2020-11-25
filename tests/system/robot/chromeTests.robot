@@ -19,6 +19,7 @@ Test Teardown	default teardown
 default teardown
 	${screenshotName}=	create_preserved_test_output_filename	failedTest.png
 	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
+	exit chrome
 	quit NVDA
 
 *** Test Cases ***
@@ -42,3 +43,7 @@ ARIA treegrid
 ARIA invalid spelling and grammar
 	[Documentation]	Tests ARIA invalid values of "spelling", "grammar" and "spelling, grammar".
 	ARIAInvalid_spellingAndGrammar
+ARIA checkbox
+	[Documentation]	Navigate to an unchecked checkbox in reading mode.
+	[Tags]	aria-at
+	test_ariaCheckbox_browseMode

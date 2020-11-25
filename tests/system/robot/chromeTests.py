@@ -238,7 +238,7 @@ def test_ariaTreeGrid_browseMode():
 	testFile = os.path.join(ARIAExamplesDir, "treegrid", "treegrid-1.html")
 	_chrome.prepareChrome(
 		f"""
-			<iframe src="{testFile}" />
+			<iframe src="{testFile}"></iframe>
 		"""
 	)
 	# Jump to the first heading in the iframe.
@@ -315,4 +315,28 @@ def ARIAInvalid_spellingAndGrammar():
 	_asserts.strings_match(
 		actualSpeech,
 		"Fat  spelling error  grammar error  a ffrog  crokes"
+	)
+
+
+def test_ariaCheckbox_browseMode():
+	"""
+	Navigate to an unchecked checkbox in reading mode.
+	"""
+	testFile = os.path.join(ARIAExamplesDir, "checkbox", "checkbox-1", "checkbox-1.html")
+	_chrome.prepareChrome(
+		f"""
+			<iframe src="{testFile}"></iframe>
+		"""
+	)
+	# Jump to the first heading in the iframe.
+	actualSpeech = _chrome.getSpeechAfterKey("h")
+	_asserts.strings_match(
+		actualSpeech,
+		"frame  main landmark  Checkbox Example (Two State)  heading  level 1"
+	)
+	# Navigate to the checkbox.
+	actualSpeech = _chrome.getSpeechAfterKey("x")
+	_asserts.strings_match(
+		actualSpeech,
+		"Sandwich Condiments  grouping  list  with 4 items  Lettuce  check box  not checked"
 	)
