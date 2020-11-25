@@ -547,7 +547,7 @@ class SpeechManager(object):
 		)
 		for index in cancelledIndexes:
 			if (
-				not latestCancelledUtteranceIndex
+				latestCancelledUtteranceIndex is None
 				or self._isIndexABeforeIndexB(latestCancelledUtteranceIndex, index)
 			):
 				latestCancelledUtteranceIndex = index
