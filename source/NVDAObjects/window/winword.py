@@ -1402,6 +1402,9 @@ class WordDocument(Window):
 		* If not in a table, announces the distance of the caret from the left edge of the document, and any remaining text on that line.
 		"""
 		gesture.send()
+		self.reportTab()
+		
+	def reportTab(self):
 		selectionObj=self.WinwordSelectionObject
 		inTable=selectionObj.tables.count>0 if selectionObj else False
 		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
