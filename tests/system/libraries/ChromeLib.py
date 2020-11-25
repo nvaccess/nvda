@@ -121,7 +121,7 @@ class ChromeLib:
 		path = self._writeTestFile(testCase)
 
 		spy.wait_for_speech_to_finish()
-		nextSpeechIndex = spy.get_next_speech_index()
+		lastSpeechIndex = spy.get_last_speech_index()
 		self.start_chrome(path)
 		# Ensure chrome started
 		# Different versions of chrome have variations in how the title is presented
@@ -132,7 +132,7 @@ class ChromeLib:
 		# If this continues to be unreliable we could use solenium or similar to start chrome and inform us when
 		# it is ready.
 		applicationTitle = f"{self._testCaseTitle}"
-		appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=nextSpeechIndex)
+		appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=lastSpeechIndex)
 		spy.wait_for_speech_to_finish()
 
 		afterTitleSpeech = spy.get_speech_at_index_until_now(appTitleIndex)

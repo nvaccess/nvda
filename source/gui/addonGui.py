@@ -661,7 +661,12 @@ def _showConfirmAddonInstallDialog(parent, bundle):
 		showAddonInfoFunction=lambda: _showAddonInfo(bundle)
 	).ShowModal()
 
-class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
+
+class IncompatibleAddonsDialog(
+		DpiScalingHelperMixinWithoutInit,
+		gui.ContextHelpMixin,
+		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+):
 	"""A dialog that lists incompatible addons, and why they are not compatible"""
 	@classmethod
 	def _instance(cls):
@@ -671,6 +676,8 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		"""
 		return None
 
+	helpId = "IncompatibleAddonsManager"
+	
 	def __new__(cls, *args, **kwargs):
 		instance = IncompatibleAddonsDialog._instance()
 		if instance is None:
@@ -698,14 +705,12 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			# this dialog is not designed to show an empty list.
 			raise RuntimeError("No incompatible addons.")
 
-		wx.Dialog.__init__(
-			self,
+		super().__init__(
 			parent,
 			# Translators: The title of the Incompatible Addons Dialog
 			title=_("Incompatible Add-ons"),
 			style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX,
 		)
-		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)

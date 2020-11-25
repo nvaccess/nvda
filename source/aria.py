@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 
 from typing import Dict
-from enum import IntEnum
+from enum import Enum
 import controlTypes
 
 ariaRolesToNVDARoles: Dict[str, int] = {
@@ -106,7 +106,7 @@ htmlNodeNameToAriaRoles: Dict[str, str] = {
 }
 
 
-class AriaLivePoliteness(IntEnum):
-	OFF = 0
-	POLITE = 1
-	ASSERTIVE = 2
+class AriaLivePoliteness(str, Enum):
+	OFF = "off"
+	POLITE = "polite"
+	ASSERTIVE = "assertive"

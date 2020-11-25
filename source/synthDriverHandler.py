@@ -490,6 +490,10 @@ def handlePostConfigProfileSwitch(resetSpeechIfNeeded=True):
 	_curSynth.loadSettings(onlyChanged=True)
 
 
+def isDebugForSynthDriver():
+	return config.conf["debugLog"]["synthDriver"]
+
+
 #: Notifies when a synthesizer reaches an index during speech.
 #: Handlers are called with these keyword arguments:
 #: synth: The L{SynthDriver} which reached the index.
