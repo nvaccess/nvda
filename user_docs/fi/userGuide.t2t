@@ -1144,8 +1144,11 @@ Jotkin muunnelmat kuulostavat mieheltä, jotkin naiselta, ja jotkin jopa kuin sa
 Mikäli käytät kolmannen osapuolen syntetisaattoria, saatat  myös pystyä ehkä muuttamaan tätä arvoa, jos valitsemasi ääni tukee sitä.
 
 ==== Nopeus ====[SpeechSettingsRate]
-Tällä liukusäätimellä muutetaan puheen nopeutta.
+Tällä liukusäätimellä voit muuttaa puheen nopeutta.
 Arvot 0 - 100 ovat mahdollisia (0=hitain ja 100=nopein).
+
+==== Nopeuden lisäys ====[SpeechSettingsRateBoost]
+Tämän asetuksen käyttöön ottaminen lisää huomattavasti puhenopeutta, jos nykyinen syntetisaattori tukee sitä.
 
 ==== Korkeus ====[SpeechSettingsPitch]
 Tällä liukusäätimellä muutetaan puheen korkeutta.
@@ -1291,20 +1294,20 @@ Tämä asetus ei vaikuta valinnanilmaisimeen, sillä se koostuu pisteistä 7 ja 
 Tällä asetuksella muutetaan kohdistimen vilkkumisnopeutta millisekunteina.
 
 ==== Kohdistimen muoto kohdistukselle ====[BrailleSettingsCursorShapeForFocus]
-Tällä asetuksella voidaan valita pistekohdistimen muoto (käytettävät pisteet), kun pistenäyttö on määritetty seuraamaan kohdistusta.
+Tällä asetuksella voit valita pistekohdistimen muodon (käytettävät pisteet), kun pistenäyttö on määritetty seuraamaan kohdistusta.
 Asetus ei vaikuta valinnanilmaisimeen, sillä se koostuu aina pisteistä 7 ja 8, ja on vilkkumaton.
 
 ==== Kohdistimen muoto tarkastelukohdistimelle ====[BrailleSettingsCursorShapeForReview]
-Tällä asetuksella valitaan pistekohdistimen muoto (käytettävät pisteet), kun pistenäyttö on määritetty seuraamaan tarkastelukohdistinta.
+Tällä asetuksella voit valita pistekohdistimen muodon (käytettävät pisteet), kun pistenäyttö on määritetty seuraamaan tarkastelukohdistinta.
 Asetus ei vaikuta valinnanilmaisimeen, sillä se koostuu aina pisteistä 7 ja 8, ja on vilkkumaton.
+
+==== Näytä ilmoitukset ====[BrailleSettingsShowMessages]
+This is a combobox that allows you to select if NVDA should display braille messages and when they should disappear automatically.
 
 ==== Ilmoitusten aikakatkaisu (sek) ====[BrailleSettingsMessageTimeout]
 Tämä asetus määrittää, kuinka kauan NVDA:n ilmoitukset näkyvät pistenäytöllä.
-Jos arvoksi määritetään 0, ilmoitusten näyttäminen poistetaan kokonaan käytöstä.
 Ilmoitus hylätään välittömästi painettaessa pistenäytön kosketuskohdistinnäppäintä, mutta tulee uudestaan näkyviin painettaessa sellaista näppäintä, joka aiheuttaa ilmoituksen näyttämisen.
-
-==== Näytä ilmoitukset pysyvästi ====[BrailleSettingsNoMessageTimeout]
-Tällä asetuksella NVDA:n ilmoitukset näytetään pistenäytöllä pysyvästi.
+Tämä asetus näytetään vain, jos "Näytä ilmoitukset" -asetukseksi on määritetty "Käytä aikakatkaisua".
 
 %kc:setting
 ==== Pistenäyttö seuraa ====[BrailleTether]
@@ -1465,8 +1468,8 @@ Jos tämä valintaruutu on valittuna, puhe keskeytetään aina, kun näppäimist
 ==== Keskeytä puhe Enter-näppäintä painettaessa ====[KeyboardSettingsSpeechInteruptForEnter]
 Jos tämä valintaruutu on valittuna, puhe keskeytetään aina Enter-näppäintä painettaessa. Asetus on oletusarvoisesti käytössä.
 
-==== Käytä pikalukua jatkuvassa luvussa ====[KeyboardSettingsSkimReading]
-Jos tämä asetus on käytössä, tietyt navigointikomennot (kuten selaustilan pikaselaus tai riveittäin/kappaleittain liikkuminen) eivät keskeytä Jatkuva luku -toimintoa, vaan siirtävät uuteen sijaintiin, jonka jälkeen lukemista jatketaan.
+==== Salli pikaluku jatkuvassa luvussa ====[KeyboardSettingsSkimReading]
+Jos tämä asetus on käytössä, tietyt navigointikomennot (kuten selaustilan pikaselaus tai riveittäin/kappaleittain liikkuminen) eivät keskeytä jatkuvaa lukua, vaan siirtävät uuteen sijaintiin, jonka jälkeen lukemista jatketaan.
 
 ==== Anna äänimerkki kirjoitettaessa pieniä kirjaimia Caps Lockin ollessa käytössä ====[KeyboardSettingsBeepLowercase]
 Kun tämä asetus on käytössä, kirjoitettaessa kirjaimia Vaihto-näppäin pohjassa kuuluu varoitusäänimerkki, Jos Caps Lock on päällä.
@@ -1894,7 +1897,7 @@ Sääntölausekkeita ei käsitellä tässä käyttöoppaassa.
 Tutustumisopas löytyy osoitteesta [https://docs.python.org/3.7/howto/regex.html].
 
 +++ Välimerkkien ja symboleiden puhuminen +++[SymbolPronunciation]
-Tässä valintaikkunassa voidaan muuttaa välimerkkien ja muiden symboleiden lukutapaa sekä tasoa, jolla ne puhutaan.
+Tässä valintaikkunassa voit muuttaa välimerkkien ja muiden symboleiden lukutapaa sekä tasoa, jolla ne puhutaan.
 
 Kieli, jonka symboleiden puhumista muokataan, näytetään valintaikkunan otsikossa.
 Huom: Tässä noudatetaan [Asetukset #NVDASettings]-valintaikkunan [Puhe-kategorian #SpeechSettings] "Käytä puheäänen kieltä merkkejä ja symboleita käsiteltäessä" -asetusta, ts. kun asetus on käytössä, puheäänen kieltä käytetään NVDA:n käyttämän kielen asemesta.
@@ -1904,7 +1907,7 @@ Symboleita voidaan suodattaa kirjoittamalla Suodata-muokkauskenttään haluttu s
 
 - Korvaava teksti -muokkauskentässä voidaan muuttaa tekstiä, joka puhutaan kyseisen symbolin asemesta.
 - Taso-yhdistelmäruudusta valitaan alin taso, jolla symboli puhutaan.
-- Lähetä todellinen merkki syntetisaattorille -yhdistelmäruudusta voidaan määrittää, milloin itse symboli (vastakohtana sen korvaavalle tekstille) lähetetään syntetisaattorille.
+- Lähetä todellinen merkki syntetisaattorille -yhdistelmäruudusta voit määrittää, milloin itse symboli (vastakohtana sen korvaavalle tekstille) lähetetään syntetisaattorille.
 Tästä on hyötyä, jos symboli saa syntetisaattorin pitämään tauon tai muuttamaan äänensävyä.
 Esimerkiksi pilkku saa syntetisaattorin pitämään tauon.
 Vaihtoehtoja on kolme:
@@ -1915,13 +1918,16 @@ Tätä voidaan käyttää esim. siten, että symbolin korvaava teksti puhutaan k
  -
 -
 
-Uusia symboleita lisätään painamalla Lisää-painiketta.
-Symboli kirjoitetaan avautuvaan valintaikkunaan ja painetaan OK.
-Tämän jälkeen korvaava teksti ja taso muutetaan halutuiksi kuten muillekin symboleille.
+Lisää uusia symboleita painamalla Lisää-painiketta.
+Kirjoita symboli avautuvaan valintaikkunaan ja paina OK.
+Muuta tämän jälkeen korvaava teksti ja taso haluamiksesi kuten muillekin symboleille.
 
-Aiemmin lisätty symboli poistetaan painamalla Poista-painiketta.
+Poista aiemmin lisätty symboli painamalla Poista-painiketta.
 
-Muutokset tallennetaan painamalla OK-painiketta tai kumotaan painamalla Peruuta.
+Kun olet valmis, tallenna muutokset painamalla OK-painiketta tai kumoa ne painamalla Peruuta.
+
+Monimutkaisten symbolien tapauksessa Korvaava-kentässä on ehkä oltava joitakin ryhmäviittauksia täsmättävään tekstiin. Esim. koko päivämäärää vastaavan korvattavan tekstin \1, \2 ja \3 tulisi näkyä kentässä, jotta ne korvataan päivämäärän vastaavilla osilla.
+Korvaava teksti -kentässä olevat normaalit kenoviivat tulisi siis kahdentaa (esim. kirjoita "a\\b" saadaksesi aikaan korvauksen "a\b".
 
 +++ Syötekomennot +++[InputGestures]
 Tässä valintaikkunassa voit mukauttaa NVDA-komennoissa käytettäviä syötekomentoja (näppäimistön näppäimiä, pistenäytön painikkeita jne.).
@@ -2103,6 +2109,14 @@ Fyysisissä pistenäytöissä on tyypillisesti painikkeita, jotka vierittävät 
 Pistekirjoituksen tarkastelu -ikkunassa on "Näytä pistekirjoituksen tarkastelu käynnistettäessä" -valintaruutu.
 Mikäli se on valittuna, pistekirjoituksen tarkastelu -ikkuna avautuu, kun NVDA käynnistetään.
 Ikkuna yrittää avautua uudelleen aina samoilla mitoilla ja sijainnilla, jotka sillä oli suljettaessa.
+
+Pistekirjoituksen tarkastelu -ikkunassa on "Vie hiiri merkin päälle siirtääksesi kyseiseen soluun"-valintaruutu, joka ei ole oletusarvoisesti valittuna.
+Jos se on valittuna, hiiren vieminen pistesolun päälle suorittaa Siirrä pistesoluun -komennon kyseiselle solulle.
+Tätä käytetään usein kohdistimen siirtämiseen tai toiminnon suorittamiseen säätimelle.
+Tästä voi olla hyötyä testattaessa, että NVDA pystyy asianmukaisesti kääntämään merkin pistesolusta.
+Komentoa viivästetään, jotta tahaton soluihin siirtäminen estetään.
+Hiiren on oltava solun päällä kunnes se muuttuu vihreäksi.
+Solu on aluksi vaaleankeltainen, muuttuu sitten oranssiksi ja äkkiä vihreäksi.
 
 ++ Python-konsoli ++[PythonConsole]
 NVDA:n Python-konsoli, joka löytyy NVDA-valikon Työkalut-alivalikosta, on kehitystyökalu, joka on hyödyllinen virheiden etsinnässä, yleisessä NVDA:n sisäisen toiminnan tai sovelluksen esteettömyyshierarkian tutkimisessa.
@@ -2625,7 +2639,7 @@ Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 | Esc-näppäin | pisteet 1 ja 5+väli, f4, Braille EDGE: f1 |
 | Delete-näppäin | pisteet 1, 3 ja 5+väli, pisteet 1, 4 ja 5+väli |
 | F1-näppäin | pisteet 1, 2 ja 5+väli |
-| F3-näppäin | pisteet 1, 2, 4 ja 8 |
+| F3-näppäin | pisteet 1, 4 ja 8+väli |
 | F4-näppäin | piste 7+f3 |
 | Windows+B-näppäinyhdistelmä | pisteet 1 ja 2+f1 |
 | Windows+D-näppäinyhdistelmä | pisteet 1, 4 ja 5+f1 |
@@ -3125,6 +3139,7 @@ Seuraavassa on luettelo NVDA:n komentorivivalitsimista:
 | Ei mitään | --install | Asentaa NVDA:n ja käynnistää asennetun kopion. |
 | Ei mitään | --install-silent | Asentaa NVDA:n ilman kehotteita ja asennetun kopion käynnistämistä. |
 | Ei mitään | --enable-start-on-logon=True|False | Ottaa asennettaessa käyttöön NVDA:n [Käytä sisäänkirjautumisen aikana -asetuksen. #StartAtWindowsLogon] |
+| Ei mitään | --copy-portable-config | Kopioi asennettaessa massamuistiversion asetukset annetusta hakemistopolusta (--config-path, -c) nykyiseen käyttäjätiliin. |
 | Ei mitään | --create-portable | Luo ja käynnistää NVDA:n massamuistiversion. Parametri --portable-path on myös määritettävä. |
 | Ei mitään | --create-portable-silent | Luo NVDA:n massamuistiversion, eikä käynnistä sitä luonnin jälkeen. Parametri --portable-path on myös määritettävä. |
 | Ei mitään | --portable-path=POLKU | Hakemistopolku, jonne massamuistiversio luodaan. |
