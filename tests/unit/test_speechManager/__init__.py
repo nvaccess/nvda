@@ -1139,12 +1139,15 @@ class InitialDevelopmentTests_withCancellableSpeechEnabled(InitialDevelopmentTes
 		config.conf['featureFlag']['cancelExpiredFocusSpeech'] = 1  # yes
 
 
-class Test_pr11651(unittest.TestCase):
+class RegressionTests(unittest.TestCase):
+	"""Tests to prevent regressions after issues are fixed.
+	"""
 
 	def test_redundantSequenceAfterEndUtterance(self):
 		"""
 		Tests that redundant param change and index commands are not emitted as an extra utterance
 		when the preceeding utterance contained param change commands and an EndUtterance command.
+		See PR #11651
 		E.g. speaking a character.
 		"""
 		smi = SpeechManagerInteractions(self)
@@ -1168,3 +1171,28 @@ class Test_pr11651(unittest.TestCase):
 			smi.indexReached(1)
 			smi.doneSpeaking()
 			smi.pumpAll()
+
+	def test_nonSpokenCharacter(self):
+		"""Test for fix to GH#11752 - NVDA Freeze with unicode value U+000B
+		Actually, the speech manager receives an empty string for the character U+000B. NVDA
+		does not have a mapping for this character.
+		It is questionable whether we should send anything to the synth when there is no content, however
+		what constitutes 'content' is currently not easy to define.
+		"""
+		smi = SpeechManagerInteractions(self)
+
+		speechSequence = [
+			CharacterModeCommand(True),
+			'',
+			smi.create_EndUtteranceCommand(expectedToBecomeIndex=1)
+		]
+		with smi.expectation():
+			seqIndexes = smi.speak(speechSequence)
+			smi.expect_synthSpeak(seqIndexes)
+
+
+class RegressionTests_withCancellableSpeechEnabled(RegressionTests):
+	"""Note, while cancellable speech is configurable test with and without it enabled."""
+	def setUp(self):
+		super().setUp()
+		config.conf['featureFlag']['cancelExpiredFocusSpeech'] = 1  # yes
