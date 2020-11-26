@@ -333,7 +333,7 @@ class SpeechManager(object):
 			else:
 				lastOutSeq = outSeqs[-1] if outSeqs else None
 			lastCommand = lastOutSeq[-1] if lastOutSeq else None
-			if not lastCommand or isinstance(lastCommand, (EndUtteranceCommand, ConfigProfileTriggerCommand)):
+			if lastCommand is None or isinstance(lastCommand, (EndUtteranceCommand, ConfigProfileTriggerCommand)):
 				# It doesn't make sense to start with or repeat EndUtteranceCommands.
 				# We also don't want an EndUtteranceCommand immediately after a ConfigProfileTriggerCommand.
 				return
@@ -458,13 +458,18 @@ class SpeechManager(object):
 		# apply any parameters changed before the preemption.
 		params = self._curPriQueue.paramTracker.getChanged()
 		utterance.extend(params)
-		for seq in self._curPriQueue.pendingSequences:
+		lastSequenceIndexAddedToUtterance = None
+		for seqIndex, seq in enumerate(self._curPriQueue.pendingSequences):
 			if isinstance(seq[0], EndUtteranceCommand):
 				# The utterance ends here.
 				break
 			utterance.extend(seq)
+			lastSequenceIndexAddedToUtterance = seqIndex
 		# if any items are cancelled, cancel the whole utterance.
 		if utterance and not self._checkForCancellations(utterance):
+			log.error(f"Checking for cancellations failed, cancelling sequence: {utterance}")
+			# Avoid infinite recursion by removing the problematic sequences:
+			del self._curPriQueue.pendingSequences[:lastSequenceIndexAddedToUtterance + 1]
 			return self._buildNextUtterance()
 		return utterance
 
@@ -542,7 +547,7 @@ class SpeechManager(object):
 		)
 		for index in cancelledIndexes:
 			if (
-				not latestCancelledUtteranceIndex
+				latestCancelledUtteranceIndex is None
 				or self._isIndexABeforeIndexB(latestCancelledUtteranceIndex, index)
 			):
 				latestCancelledUtteranceIndex = index
