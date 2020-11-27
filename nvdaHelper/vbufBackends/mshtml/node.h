@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2020 NV Access Limited, Google LLC, Leonard de Ruijter
+Copyright 2006-2015 NVDA contributers.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -31,14 +31,13 @@ class MshtmlVBufStorage_controlFieldNode_t : public VBufStorage_controlFieldNode
 	IHTMLChangeSink* pHTMLChangeSink;
 	DWORD HTMLChangeSinkCookey;
 	std::wstring language;
-	MshtmlVBufStorage_controlFieldNode_t* ariaLiveNode;
-	std::wstring ariaLivePoliteness;
+	VBufStorage_controlFieldNode_t*  ariaLiveNode;
 	unsigned int formatState;
 	bool ariaLiveIsTextRelevant;
 	bool ariaLiveIsAdditionsRelevant;
 	bool ariaLiveIsBusy;
 	VBufStorage_controlFieldNode_t*  ariaLiveAtomicNode;
-	void reportLiveText(std::wstring& text, std::wstring& politeness);
+	void reportLiveText(std::wstring& text);
 	void reportLiveAddition();
 	void preProcessLiveRegion(const MshtmlVBufStorage_controlFieldNode_t* parent, const std::map<std::wstring,std::wstring>& attribsMap);
 	void postProcessLiveRegion(VBufStorage_controlFieldNode_t* oldNode, std::set<VBufStorage_controlFieldNode_t*>& atomicNodes);
