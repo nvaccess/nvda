@@ -378,8 +378,6 @@ void MshtmlVBufStorage_controlFieldNode_t::preProcessLiveRegion(const MshtmlVBuf
 		this->ariaLiveNode = parent? parent->ariaLiveNode : nullptr;
 		if (this->ariaLiveNode) {
 			this->ariaLivePoliteness = this->ariaLiveNode->ariaLivePoliteness;
-		} else {
-			this->ariaLivePoliteness = nullptr;
 		}
 	}
 	i=attribsMap.find(L"HTMLAttrib::aria-relevant");
@@ -411,11 +409,8 @@ void MshtmlVBufStorage_controlFieldNode_t::preProcessLiveRegion(const MshtmlVBuf
 }
 
 void MshtmlVBufStorage_controlFieldNode_t::reportLiveText(wstring& text, wstring& politeness) {
-	for(auto c: text) {
-		if(!iswspace(c)) {
-			nvdaControllerInternal_reportLiveRegion(text.c_str(), politeness.c_str());
-			break;
-		}
+	if(!all_of(text.cbegin(), text.cend(), iswspace)) {
+		nvdaControllerInternal_reportLiveRegion(text.c_str(), politeness.c_str());
 	}
 }
 
