@@ -118,8 +118,8 @@ NVDAToCLDRLocales = {
 	"zh_tw":("zh","zh_Hant"),
 }
 
-annotationsDir = env.Dir("include/cldr-emoji-annotation/annotations")
-annotationsDerivedDir = env.Dir("include/cldr-emoji-annotation/annotationsDerived")
+annotationsDir = env.Dir("include/cldr/common/annotations")
+annotationsDerivedDir = env.Dir("include/cldr/common/annotationsDerived")
 for destLocale, sourceLocales in NVDAToCLDRLocales.items():
 	cldrSources = []
 	# First add all annotations, then the derived ones.
