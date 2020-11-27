@@ -58,8 +58,10 @@ class CompletionToolTip(ToolTip):
 	""" A tool tip for which duplicate open events can be fired.
 	"""
 
-	_lastToolTipOpenedInfo = (None, None)  #: Keeps track of the last ToolTipOpened event (text, time)
-	_preventDuplicateToolTipSeconds = 0.2  #: The duplicate tooltip events will be dropped within this time window
+	#: Keeps track of the last ToolTipOpened event (text, time)
+	_lastToolTipOpenedInfo = (None, None)
+	#: The duplicate tooltip events will be dropped within this time window
+	_preventDuplicateToolTipSeconds = 0.2
 
 	def event_UIA_toolTipOpened(self):
 		oldText, oldTime = self._lastToolTipOpenedInfo
