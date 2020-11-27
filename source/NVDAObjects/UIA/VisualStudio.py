@@ -59,13 +59,23 @@ class CompletionToolTip(ToolTip):
 	"""
 
 	_lastToolTipOpenedInfo = (None, None)  #: Keeps track of the last ToolTipOpened event (text, time)
+	_preventDuplicateToolTipSeconds = 0.2 #: The duplicate tooltip events will be dropped within this time window
 
 	def event_UIA_toolTipOpened(self):
 		oldText, oldTime = self._lastToolTipOpenedInfo
 		newText = self.name
 		newTime = time.time()
 		self.__class__._lastToolTipOpenedInfo = (newText, newTime)
-		if newText == oldText and oldTime is not None and (newTime - oldTime) < 0.2:
+		withinPossibleDupToolTipTimeWindow = (
+			oldTime is not None
+			and (newTime - oldTime) < self._preventDuplicateToolTipSeconds
+		)
+		if newText == oldText and withinPossibleDupToolTipTimeWindow:
+			# Tool-tip event suspected to be a duplicate, drop the event.
+			# - Users attempting to rapidly re-announce tool-tips may
+			#   have the announcement erroneously  suppressed
+			# - Users on slower systems (or systems under load) may still
+			#   receive duplicate announcements
 			return
 		super().event_UIA_toolTipOpened()
 
