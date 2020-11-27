@@ -27,6 +27,7 @@ import api
 import gui
 from logHandler import log
 import braille
+import gui.contextHelp
 
 class HelpCommand(object):
 	"""
@@ -216,12 +217,18 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 				pass
 		self._namespaceSnapshotVars = None
 
-class ConsoleUI(wx.Frame):
+
+class ConsoleUI(
+		gui.contextHelp.ContextHelpMixin,
+		wx.Frame  # wxPython does not seem to call base class initializer, put last in MRO
+):
 	"""The NVDA Python console GUI.
 	"""
+	
+	helpId = "PythonConsole"
 
 	def __init__(self, parent):
-		super(ConsoleUI, self).__init__(parent, wx.ID_ANY, _("NVDA Python Console"))
+		super().__init__(parent, wx.ID_ANY, _("NVDA Python Console"))
 		self.Bind(wx.EVT_ACTIVATE, self.onActivate)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)

@@ -10,13 +10,20 @@
 import wx
 import globalVars
 import gui
+import gui.contextHelp
 
 #: The singleton instance of the log viewer UI.
 logViewer = None
 
-class LogViewer(wx.Frame):
+
+class LogViewer(
+		gui.contextHelp.ContextHelpMixin,
+		wx.Frame  # wxPython does not seem to call base class initializer, put last in MRO
+):
 	"""The NVDA log viewer GUI.
 	"""
+	
+	helpId = "LogViewer"
 
 	def __init__(self, parent):
 		# Translators: The title of the NVDA log viewer window.
