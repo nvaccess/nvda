@@ -56,12 +56,14 @@ What's New in NVDA
 - A freeze of several seconds experienced by a small amount of users when arrowing between cells in Excel should no longer occur. (#11818)
 - In Microsoft Teams builds with version numbers like 1.3.00.28xxx, NVDA no longer fails reading messages in chats or Teams channels due to an incorrectly focused menu. (#11821)
 - Text marked both as being a spelling and grammar error at the same time in Google Chrome will be appropriately announced as both a spelling and grammar error by NVDA. (#11787)
+- When using Outlook (French locale), the shortcut for 'Reply all' (control+shift+R) works again. (#11196)
 
 
 == Changes for Developers ==
 - System tests can now send keys using spy.emulateKeyPress, which takes a key identifier that conforms to NVDA's own key names, and by default also blocks until the action is executed. (#11581)
 - NVDA no longer requires the current directory to be the NVDA application directory in order to function. (#6491)
 - The aria live politeness setting for live regions can now be found on NVDA Objects using the liveRegionPoliteness property. (#11596)
+- It is now possible to define separate gestures for Outlook and Word document. (#11196)
 
 
 = 2020.3 =
