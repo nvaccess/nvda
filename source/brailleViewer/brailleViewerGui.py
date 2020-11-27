@@ -261,6 +261,8 @@ class BrailleViewerFrame(
 	_brailleOutputLastSet: str
 	_brailleOutput: wx.TextCtrl
 	_shouldShowOnStartupCheckBox: wx.CheckBox
+	#: True if _mouseOver has been bound to mouse moved events.
+	_mouseMotionBound: bool = False
 
 	def __init__(self, numCells, onDestroyed):
 		log.debug(f"Starting braille viewer with {numCells} cells")
@@ -402,11 +404,13 @@ class BrailleViewerFrame(
 		self._updateMouseOverBinding(evt.IsChecked())
 
 	def _updateMouseOverBinding(self, shouldReceiveMouseMotion: bool):
-		if not shouldReceiveMouseMotion:
+		if not shouldReceiveMouseMotion and self._mouseMotionBound:
 			self._brailleOutput.Unbind(wx.EVT_MOTION, source=None, handler=self._mouseOver)
+			self._mouseMotionBound = False
 			self._hoverTracker.cancelPendingHover()
 		else:
 			self._brailleOutput.Bind(wx.EVT_MOTION, handler=self._mouseOver)
+			self._mouseMotionBound = True
 
 	def _mouseOver(self, unused: wx.MouseEvent):
 		if _shouldDoHover():
