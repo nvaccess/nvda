@@ -378,6 +378,8 @@ void MshtmlVBufStorage_controlFieldNode_t::preProcessLiveRegion(const MshtmlVBuf
 		this->ariaLiveNode = parent? parent->ariaLiveNode : nullptr;
 		if (this->ariaLiveNode) {
 			this->ariaLivePoliteness = this->ariaLiveNode->ariaLivePoliteness;
+		} else {
+			this->ariaLivePoliteness = L"";
 		}
 	}
 	i=attribsMap.find(L"HTMLAttrib::aria-relevant");
