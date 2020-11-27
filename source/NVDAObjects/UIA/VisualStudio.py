@@ -59,7 +59,7 @@ class CompletionToolTip(ToolTip):
 	"""
 
 	_lastToolTipOpenedInfo = (None, None)  #: Keeps track of the last ToolTipOpened event (text, time)
-	_preventDuplicateToolTipSeconds = 0.2 #: The duplicate tooltip events will be dropped within this time window
+	_preventDuplicateToolTipSeconds = 0.2  #: The duplicate tooltip events will be dropped within this time window
 
 	def event_UIA_toolTipOpened(self):
 		oldText, oldTime = self._lastToolTipOpenedInfo
