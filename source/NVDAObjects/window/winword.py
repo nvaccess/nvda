@@ -544,8 +544,10 @@ class GraphicWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator
 class TableWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	def collectionFromRange(self,rangeObj):
 		return rangeObj.tables
+
 	def filter(self,item):
-		return item.borders.enable
+		return config.conf["documentFormatting"]["includeLayoutTables"] or item.borders.enable
+
 
 class ChartWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	quickNavItemClass=WordDocumentChartQuickNavItem
