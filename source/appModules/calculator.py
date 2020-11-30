@@ -55,7 +55,7 @@ class AppModule(appModuleHandler.AppModule):
 		):
 			# For unit conversion, UIA notification event presents much better messages.
 			# For date calculation, live region change event is also fired for difference between dates.
-			if obj.UIAAutomationId not in ("Value1", "Value2", "DateDiffAllUnitsResultLabel"):
+			if obj.UIAAutomationId != "DateDiffAllUnitsResultLabel":
 				ui.message(obj.name)
 			self._resultsCache = obj.name
 		if not self._shouldAnnounceResult:
