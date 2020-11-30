@@ -126,6 +126,10 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [brailleViewer]
 	showBrailleViewerAtStartup = boolean(default=false)
+	shouldHoverRouteToCell = boolean(default=false)
+	secondsOfHoverToActivate = float(min=0.0, default=1.0)
+	# Devices with 40 cells are quite common.
+	defaultCellCount = integer(min=20, max=160, default=40)
 	autoPositionWindow = boolean(default=True)
 	# Values for positioning the window.
 	# Defaults are not used.

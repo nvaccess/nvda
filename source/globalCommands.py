@@ -892,9 +892,7 @@ class GlobalCommands(ScriptableObject):
 				if scriptHandler.getLastScriptRepeatCount()==1:
 					speech.speakSpelling(text)
 				else:
-					if api.copyToClip(text):
-						# Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
-						speech.speakMessage(_("%s copied to clipboard")%text)
+					api.copyToClip(text, notify=True)
 		else:
 			speech.speakObject(curObject,reason=controlTypes.REASON_QUERY)
 	# Translators: Input help mode message for report current navigator object command.
@@ -1339,8 +1337,6 @@ class GlobalCommands(ScriptableObject):
 			parent=parent.parent
 		if parent:
 			parent.treeInterceptor.rootNVDAObject.setFocus()
-			import eventHandler
-			import wx
 			# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
 			# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
 			core.callLater(50,eventHandler.executeEvent,"gainFocus",parent.treeInterceptor.rootNVDAObject)
@@ -1638,9 +1634,7 @@ class GlobalCommands(ScriptableObject):
 				# Translators: Reported when user attempts to copy content of the empty status line.
 				ui.message(_("unable to copy status bar content to clipboard"))
 			else:
-				if api.copyToClip(text):
-					# Translators: The message presented when the status bar is copied to the clipboard.
-					ui.message(_("%s copied to clipboard")%text)
+				api.copyToClip(text, notify=True)
 	# Translators: Input help mode message for report status line text command.
 	script_reportStatusLine.__doc__ = _("Reads the current application status bar and moves the navigator to it. If pressed twice, spells the information. If pressed three times, copies the status bar to the clipboard")
 	script_reportStatusLine.category=SCRCAT_FOCUS
@@ -1692,8 +1686,7 @@ class GlobalCommands(ScriptableObject):
 		elif repeatCount==1:
 			speech.speakSpelling(title)
 		else:
-			if api.copyToClip(title):
-				ui.message(_("%s copied to clipboard")%title)
+			api.copyToClip(title, notify=True)
 	# Translators: Input help mode message for report title bar command.
 	script_title.__doc__=_("Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard")
 	script_title.category=SCRCAT_FOCUS
@@ -2277,12 +2270,7 @@ class GlobalCommands(ScriptableObject):
 				return
 		elif scriptHandler.getLastScriptRepeatCount()==1: # the second call, try to copy the text
 			copyMarker = pos.obj._selectThenCopyRange
-			if copyMarker.copyToClipboard():
-				# Translators: Presented when some review text has been copied to clipboard.
-				ui.message(_("Review selection copied to clipboard"))
-			else:
-				# Translators: Presented when unable to copy to the clipboard because of an error.
-				ui.message(_("Unable to copy"))
+			copyMarker.copyToClipboard(notify=True)
 			# on the second call always clean up the start marker
 			api.getReviewPosition().obj._selectThenCopyRange = None
 			api.getReviewPosition().obj._copyStartMarker = None
