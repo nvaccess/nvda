@@ -98,7 +98,7 @@ class AppModule(appModuleHandler.AppModule):
 		# Hack: only announce display text when an actual calculator button (usually equals button) is pressed.
 		# In redstone, pressing enter does not move focus to equals button.
 		if isinstance(focus, UIA):
-			if focus.UIAAutomationId == "CalculatorResults":
+			if focus.UIAAutomationId in ("CalculatorResults", "CalculatorAlwaysOnTopResults"):
 				queueHandler.queueFunction(queueHandler.eventQueue, focus.reportFocus)
 			else:
 				resultsScreen = api.getForegroundObject().children[1].lastChild
