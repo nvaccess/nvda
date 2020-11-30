@@ -26,6 +26,10 @@ noCalculatorEntryAnnouncements = [
 	"ContentPresenter",
 	# Briefly shown when closing date calculation calendar.
 	"Light Dismiss",
+	# Unit conversion/convert from.
+	"Value1",
+	# Unit conversion/converts into.
+	"Value2",
 ]
 
 
