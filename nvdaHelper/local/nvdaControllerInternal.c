@@ -19,11 +19,6 @@ error_status_t __stdcall nvdaControllerInternal_requestRegistration(const wchar_
 	return _nvdaControllerInternal_requestRegistration(uuidString);
 }
 
-error_status_t(__stdcall *_nvdaControllerInternal_reportLiveRegion)(const wchar_t*, const wchar_t*);
-error_status_t __stdcall nvdaControllerInternal_reportLiveRegion(const wchar_t* text, const wchar_t* politeness) {
-	return _nvdaControllerInternal_reportLiveRegion(text, politeness);
-}
-
 error_status_t(__stdcall *_nvdaControllerInternal_inputLangChangeNotify)(const long, const unsigned long, const wchar_t*);
 error_status_t __stdcall nvdaControllerInternal_inputLangChangeNotify(const long threadID, const unsigned long hkl, const wchar_t* layoutString) {
 	return _nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString);
@@ -78,4 +73,9 @@ error_status_t __stdcall nvdaControllerInternal_installAddonPackageFromPath(cons
 error_status_t(__stdcall *_nvdaControllerInternal_drawFocusRectNotify)(const long, const long, const long, const long, const long);
 error_status_t __stdcall nvdaControllerInternal_drawFocusRectNotify(const long hwnd, const long left, const long top, const long right, const long bottom) { 
 	return _nvdaControllerInternal_drawFocusRectNotify(hwnd,left,top,right,bottom);
+}
+
+error_status_t(__stdcall *_nvdaControllerInternal_reportLiveRegion)(const wchar_t*, const wchar_t*);
+error_status_t __stdcall nvdaControllerInternal_reportLiveRegion(const wchar_t* text, const wchar_t* politeness) {
+	return _nvdaControllerInternal_reportLiveRegion(text, politeness);
 }
