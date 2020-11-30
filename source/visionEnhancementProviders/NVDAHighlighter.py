@@ -225,7 +225,7 @@ class NVDAHighlighterSettings(providerBase.VisionEnhancementProviderSettings):
 	@classmethod
 	def getDisplayName(cls) -> str:
 		# Translators: Description for NVDA's built-in screen highlighter.
-		return _("Focus Highlight")
+		return _("Visual Highlight")
 
 	def _get_supportedSettings(self) -> SupportedSettingType:
 		return [
@@ -246,7 +246,7 @@ class NVDAHighlighterGuiPanel(
 	_enableCheckSizer: wx.BoxSizer
 	_enabledCheckbox: wx.CheckBox
 	
-	helpId = "VisionSettingsFocusHighlight"
+	helpId = "VisionSettingsVisualHighlight"
 
 	from gui.settingsDialogs import VisionProviderStateControl
 
