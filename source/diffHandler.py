@@ -40,23 +40,23 @@ class DiffMatchPatch(DiffAlgo):
 	_lock = Lock()
 
 	def _initialize(self):
-		"Start the nvda_dmp process if it is not already running."
-		with DiffMatchPatch._lock:
-			if not DiffMatchPatch._proc:
-				log.debug("Starting diff-match-patch proxy")
-				if hasattr(sys, "frozen"):
-					dmp_path = (os.path.join(globalVars.appDir, "nvda_dmp.exe"),)
-				else:
-					dmp_path = (sys.executable, os.path.join(
-						globalVars.appDir, "..", "include", "nvda_dmp", "nvda_dmp.py"
-					))
-				DiffMatchPatch._proc = subprocess.Popen(
-					dmp_path,
-					creationflags=subprocess.CREATE_NO_WINDOW,
-					bufsize=0,
-					stdin=subprocess.PIPE,
-					stdout=subprocess.PIPE
-				)
+		"""Start the nvda_dmp process if it is not already running.
+		@note: This should be run from within the context of an acquired lock."""
+		if not DiffMatchPatch._proc:
+			log.debug("Starting diff-match-patch proxy")
+			if hasattr(sys, "frozen"):
+				dmp_path = (os.path.join(globalVars.appDir, "nvda_dmp.exe"),)
+			else:
+				dmp_path = (sys.executable, os.path.join(
+					globalVars.appDir, "..", "include", "nvda_dmp", "nvda_dmp.py"
+				))
+			DiffMatchPatch._proc = subprocess.Popen(
+				dmp_path,
+				creationflags=subprocess.CREATE_NO_WINDOW,
+				bufsize=0,
+				stdin=subprocess.PIPE,
+				stdout=subprocess.PIPE
+			)
 
 	def _getText(self, ti: TextInfo) -> str:
 		return ti.text
@@ -67,8 +67,8 @@ class DiffMatchPatch(DiffAlgo):
 				# Return an empty list here to avoid exiting
 				# nvda_dmp uses two zero-length texts as a sentinal value
 				return []
-			self._initialize()
 			with DiffMatchPatch._lock:
+				self._initialize()
 				old = oldText.encode("utf-8")
 				new = newText.encode("utf-8")
 				# Sizes are packed as 32-bit ints in native byte order.
