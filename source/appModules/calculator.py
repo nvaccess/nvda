@@ -53,7 +53,8 @@ class AppModule(appModuleHandler.AppModule):
 			obj.UIAAutomationId not in noCalculatorEntryAnnouncements
 			and obj.name != self._resultsCache
 		):
-			# For unit conversion, UIA notification event presents much better messages.
+			# For unit conversion, both name change and notification events are fired,
+			# although UIA notification event presents much better messages.
 			# For date calculation, live region change event is also fired for difference between dates.
 			if obj.UIAAutomationId != "DateDiffAllUnitsResultLabel":
 				ui.message(obj.name)
