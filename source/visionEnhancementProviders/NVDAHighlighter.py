@@ -246,7 +246,7 @@ class NVDAHighlighterGuiPanel(
 	_enableCheckSizer: wx.BoxSizer
 	_enabledCheckbox: wx.CheckBox
 	
-	helpId = "VisionSettingsVisualHighlight"
+	helpId = "VisionSettingsFocusHighlight"
 
 	from gui.settingsDialogs import VisionProviderStateControl
 
