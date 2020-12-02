@@ -5,6 +5,7 @@
 
 import sys
 import os
+import functools
 import winUser
 
 winVersion=sys.getwindowsversion()
@@ -14,6 +15,63 @@ if winVersion.service_pack_major!=0:
 	if winVersion.service_pack_minor!=0:
 		winVersionText+=".%d"%winVersion.service_pack_minor
 winVersionText+=" %s" % ("workstation","domain controller","server")[winVersion.product_type-1]
+
+@functools.total_ordering
+class WinVersion(object):
+	"""
+	Represents a Windows release.
+	Includes version major, minor, build, service pack information,
+	as well as tools such as checking for specific Windows 10 releases.
+	"""
+
+	def __init__(
+			self,
+			release: str = None,
+			major: int = 0,
+			minor: int = 0,
+			build: int = 0,
+			servicePack: str = ""
+	):
+		if release in (None, ""):
+			self.major = major
+			self.minor = minor
+			self.build = build
+		elif release == "7":
+			self.major = 6
+			self.minor = 1
+			self.build = 7601
+		elif release == "8":
+			self.major = 6
+			self.minor = 2
+			self.build = 9200
+		elif release == "8.1":
+			self.major = 6
+			self.minor = 3
+			self.build = 9600
+		elif release in ("10", "1507"):
+			self.major = 10
+			self.minor = 0
+			self.build = 10240
+		elif release in WIN10_VERSIONS_TO_BUILDS:
+			self.major = 10
+			self.minor = 0
+			self.build = WIN10_VERSIONS_TO_BUILDS[release]
+		else:
+			raise ValueError("Cannot create Windows version information for the specified release")
+		self.servicePack = "1" if release == "7" else ""
+
+	def __eq__(self, other):
+		return (
+			(self.major, self.minor, self.build)
+			== (other.major, other.minor, other.build)
+		)
+
+	def __ge__(self, other):
+		return (
+			(self.major, self.minor, self.build)
+			>= (other.major, other.minor, other.build)
+		)
+
 
 def isSupportedOS():
 	# NVDA can only run on Windows 7 Service pack 1 and above
