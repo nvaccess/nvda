@@ -81,6 +81,14 @@ def getWinVer():
 		servicePack=winVersion.service_pack
 	)
 
+def getWinVerFromVersionText(versionText: str):
+	major, minor, build = versionText.split(".")
+	return WinVersion(
+		major=int(major),
+		minor=int(minor),
+		build=int(build)
+	)
+
 def isSupportedOS():
 	# NVDA can only run on Windows 7 Service pack 1 and above
 	return (winVersion.major,winVersion.minor,winVersion.service_pack_major) >= (6,1,1)
