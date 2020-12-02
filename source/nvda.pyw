@@ -9,23 +9,32 @@
 
 import sys
 import os
+import globalVars
+
 
 if getattr(sys, "frozen", None):
 	# We are running as an executable.
 	# Append the path of the executable to sys so we can import modules from the dist dir.
 	sys.path.append(sys.prefix)
-	os.chdir(sys.prefix)
+	appDir = sys.prefix
 else:
 	import sourceEnv
 	#We should always change directory to the location of this module (nvda.pyw), don't rely on sys.path[0]
-	os.chdir(os.path.normpath(os.path.dirname(__file__)))
+	appDir = os.path.normpath(os.path.dirname(__file__))
+appDir = os.path.abspath(appDir)
+os.chdir(appDir)
+globalVars.appDir = appDir
 
 import ctypes
 import locale
 import gettext
 
 try:
-	gettext.translation('nvda',localedir='locale',languages=[locale.getdefaultlocale()[0]]).install(True)
+	gettext.translation(
+		'nvda',
+		localedir=os.path.join(globalVars.appDir, 'locale'),
+		languages=[locale.getdefaultlocale()[0]]
+	).install(True)
 except:
 	gettext.install('nvda')
 
@@ -81,6 +90,7 @@ def stringToBool(string):
 	except ValidateError as e:
 		raise argparse.ArgumentTypeError(e.message)
 
+
 #Process option arguments
 parser=NoConsoleOptionParser()
 quitGroup = parser.add_mutually_exclusive_group()
@@ -104,6 +114,16 @@ parser.add_argument('--portable-path',dest='portablePath',default=None,type=str,
 parser.add_argument('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
 parser.add_argument('--enable-start-on-logon',metavar="True|False",type=stringToBool,dest='enableStartOnLogon',default=None,
 	help="When installing, enable NVDA's start on the logon screen")
+parser.add_argument(
+	'--copy-portable-config',
+	action="store_true",
+	dest='copyPortableConfig',
+	default=False,
+	help=(
+		"When installing, copy the portable configuration "
+		"from the provided path (--config-path, -c) to the current user account"
+	)
+)
 # This option is passed by Ease of Access so that if someone downgrades without uninstalling
 # (despite our discouragement), the downgraded copy won't be started in non-secure mode on secure desktops.
 # (Older versions always required the --secure option to start in secure mode.)
@@ -112,6 +132,18 @@ parser.add_argument('--enable-start-on-logon',metavar="True|False",type=stringTo
 # If this option is provided, NVDA will not replace an already running instance (#10179) 
 parser.add_argument('--ease-of-access',action="store_true",dest='easeOfAccess',default=False,help="Started by Windows Ease of Access")
 (globalVars.appArgs,globalVars.appArgsExtra)=parser.parse_known_args()
+# Make any app args path values absolute
+# So as to not be affected by the current directory changing during process lifetime.
+pathAppArgs = [
+	"configPath",
+	"logFileName",
+	"portablePath",
+]
+for name in pathAppArgs:
+	origVal = getattr(globalVars.appArgs, name)
+	if isinstance(origVal, str):
+		newVal = os.path.abspath(origVal)
+		setattr(globalVars.appArgs, name, newVal)
 
 def terminateRunningNVDA(window):
 	processID,threadID=winUser.getWindowThreadProcessID(window)

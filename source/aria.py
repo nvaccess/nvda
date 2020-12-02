@@ -2,8 +2,9 @@
 # Copyright (C) 2009-2019 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-from typing import Dict
 
+from typing import Dict
+from enum import Enum
 import controlTypes
 
 ariaRolesToNVDARoles: Dict[str, int] = {
@@ -103,3 +104,9 @@ htmlNodeNameToAriaRoles: Dict[str, str] = {
 	"figure": "figure",
 	"mark": "mark",
 }
+
+
+class AriaLivePoliteness(str, Enum):
+	OFF = "off"
+	POLITE = "polite"
+	ASSERTIVE = "assertive"

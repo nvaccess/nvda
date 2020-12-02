@@ -14,6 +14,7 @@ import sys
 import ctypes
 import locale
 import gettext
+import globalVars
 
 #a few Windows locale constants
 LOCALE_SLANGUAGE=0x2
@@ -95,8 +96,10 @@ def getAvailableLanguages(presentational=False):
 	@rtype: list of tuples
 	"""
 	#Make a list of all the locales found in NVDA's locale dir
-	locales = [x for x in os.listdir('locale') if not x.startswith('.')]
-	locales = [x for x in locales if os.path.isfile('locale/%s/LC_MESSAGES/nvda.mo'%x)]
+	localesDir = os.path.join(globalVars.appDir, 'locale')
+	locales = [
+		x for x in os.listdir(localesDir) if os.path.isfile(os.path.join(localesDir, x, 'LC_MESSAGES', 'nvda.mo'))
+	]
 	#Make sure that en (english) is in the list as it may not have any locale files, but is default
 	if 'en' not in locales:
 		locales.append('en')

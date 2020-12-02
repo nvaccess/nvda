@@ -39,6 +39,11 @@ To run a single test, add the `--test` argument (wildcards accepted).
 python -m robot --test "starts" ...
 ```
 
+To run all tests with a particular tag use `-i`:
+```
+python -m robot -i "chrome" ...
+```
+
 Other options exit for specifying tests to run (e.g. by suite, tag, etc).
 Consult `python -m robot --help`
 

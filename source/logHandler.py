@@ -64,7 +64,15 @@ def getCodePath(f):
 	className=""
 	#Code borrowed from http://mail.python.org/pipermail/python-list/2000-January/020141.html
 	if f.f_code.co_argcount:
-		arg0=f.f_locals[f.f_code.co_varnames[0]]
+		f_locals = f.f_locals
+		arg0 = f_locals[f.f_code.co_varnames[0]]
+		if f.f_code.co_flags & inspect.CO_NEWLOCALS:
+			# Fetching of Frame.f_locals causes a function frames's locals to be cached on the frame for ever.
+			# If an Exception is currently stored as a local variable on that frame,
+			# A reference cycle will be created, holding the frame and all its variables.
+			# Therefore clear f_locals manually.
+			f_locals.clear()
+		del f_locals
 		# #6122: Check if this function is a member of its first argument's class (and specifically which base class if any) 
 		# Rather than an instance member of its first argument.
 		# This stops infinite recursions if fetching data descriptors,
@@ -241,7 +249,7 @@ class RemoteHandler(logging.Handler):
 
 	def __init__(self):
 		#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-		path=os.path.abspath(os.path.join(u"lib",buildVersion.version,u"nvdaHelperRemote.dll"))
+		path = os.path.join(globalVars.appDir, "lib", buildVersion.version, "nvdaHelperRemote.dll")
 		h=ctypes.windll.kernel32.LoadLibraryExW(path,0,LOAD_WITH_ALTERED_SEARCH_PATH)
 		if not h:
 			raise OSError("Could not load %s"%path) 
@@ -268,7 +276,7 @@ class FileHandler(logging.FileHandler):
 		elif record.levelno>=logging.ERROR and shouldPlayErrorSound:
 			import nvwave
 			try:
-				nvwave.playWaveFile("waves\\error.wav")
+				nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "error.wav"))
 			except:
 				pass
 		return super().handle(record)
@@ -325,7 +333,7 @@ def _getDefaultLogFilePath():
 		import tempfile
 		return os.path.join(tempfile.gettempdir(), "nvda.log")
 	else:
-		return ".\\nvda.log"
+		return os.path.join(globalVars.appDir, "nvda.log")
 
 def _excepthook(*exc_info):
 	log.exception(exc_info=exc_info, codepath="unhandled exception")
