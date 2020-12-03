@@ -1,5 +1,3 @@
-# -*- coding: UTF-8 -*-
-# NVDAObjects/window/winword.py
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2020 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
 # This file is covered by the GNU General Public License.
@@ -613,8 +611,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		textList.append(_("{distance} from top edge of page").format(distance=distance))
 		return ", ".join(textList)
 
-	def copyToClipboard(self):
+	def copyToClipboard(self, notify):
 		self._rangeObj.copy()
+		if notify:
+			ui.reportTextCopiedToClipboard(self.text)
 		return True
 
 	def find(self,text,caseSensitive=False,reverse=False):
@@ -1372,24 +1372,6 @@ class WordDocument(Window):
 		# Translators: a message when increasing or decreasing font size in Microsoft Word
 		ui.message(_("{size:g} point font").format(size=val))
 
-	def script_toggleChangeTracking(self, gesture):
-		if not self.WinwordDocumentObject:
-			# We cannot fetch the Word object model, so we therefore cannot report the status change.
-			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
-			# or it's within Windows Defender Application Guard.
-			# In this case, just let the gesture through and don't report anything.
-			return gesture.send()
-		val = self._WaitForValueChangeForAction(
-			lambda: gesture.send(),
-			lambda: self.WinwordDocumentObject.TrackRevisions
-		)
-		if val:
-			# Translators: a message when toggling change tracking in Microsoft word
-			ui.message(_("Change tracking on"))
-		else:
-			# Translators: a message when toggling change tracking in Microsoft word
-			ui.message(_("Change tracking off"))
-
 	@script(gesture="kb:control+shift+8")
 	def script_toggleDisplayNonprintingCharacters(self, gesture):
 		if not self.WinwordWindowObject:
@@ -1514,7 +1496,6 @@ class WordDocument(Window):
 		"kb:control+1":"changeLineSpacing",
 		"kb:control+2":"changeLineSpacing",
 		"kb:control+5":"changeLineSpacing",
-		"kb:control+shift+e": "toggleChangeTracking",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 	}

@@ -93,10 +93,11 @@ class Ia2Web(IAccessible):
 
 	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
 		politeness = self.IA2Attributes.get('live', "off")
-		return next(
-			(v for v in aria.AriaLivePoliteness if v._name_.lower() == politeness.lower()),
-			aria.AriaLivePoliteness.OFF
-		)
+		try:
+			return aria.AriaLivePoliteness(politeness.lower())
+		except ValueError:
+			log.error(f"Unknown live politeness of {politeness}", exc_info=True)
+			super().liveRegionPoliteness
 
 
 class Document(Ia2Web):
@@ -110,6 +111,10 @@ class Application(Document):
 
 class BlockQuote(Ia2Web):
 	role = controlTypes.ROLE_BLOCKQUOTE
+
+
+class Treegrid(Ia2Web):
+	role = controlTypes.ROLE_TABLE
 
 
 class Article(Ia2Web):
@@ -222,6 +227,8 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	xmlRoles = obj.IA2Attributes.get("xml-roles", "").split(" ")
 	if iaRole == IAccessibleHandler.IA2_ROLE_SECTION and obj.IA2Attributes.get("tag", None) == "blockquote":
 		clsList.append(BlockQuote)
+	elif iaRole == oleacc.ROLE_SYSTEM_OUTLINE and "treegrid" in xmlRoles:
+		clsList.append(Treegrid)
 	elif iaRole == oleacc.ROLE_SYSTEM_DOCUMENT and xmlRoles[0] == "article":
 		clsList.append(Article)
 	elif xmlRoles[0] == "region" and obj.name:

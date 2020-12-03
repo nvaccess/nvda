@@ -1,8 +1,8 @@
-#NVDAHelper.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2019 NV Access Limited, Peter Vagner, Davy Kager, Mozilla Corporation
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2008-2020 NV Access Limited, Peter Vagner, Davy Kager, Mozilla Corporation, Google LLC,
+# Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import os
 import sys
@@ -16,6 +16,7 @@ from ctypes import *
 from ctypes import (
 	WINFUNCTYPE,
 	c_long,
+	c_wchar_p,
 	c_wchar,
 	windll,
 )
@@ -118,6 +119,39 @@ def nvdaControllerInternal_requestRegistration(uuidString):
 		return -1
 	import appModuleHandler
 	queueHandler.queueFunction(queueHandler.eventQueue,appModuleHandler.update,pid,helperLocalBindingHandle=bindingHandle,inprocRegistrationHandle=registrationHandle)
+	return 0
+
+
+@WINFUNCTYPE(c_long, c_wchar_p, c_wchar_p)
+def nvdaControllerInternal_reportLiveRegion(text: str, politeness: str):
+	assert isinstance(text, str), "Text isn't a string"
+	assert isinstance(politeness, str), "Politeness isn't a string"
+	if not config.conf["presentation"]["reportDynamicContentChanges"]:
+		return -1
+	focus = api.getFocusObject()
+	if focus.sleepMode == focus.SLEEP_FULL:
+		return -1
+	import queueHandler
+	import speech
+	from aria import AriaLivePoliteness
+	from speech.priorities import Spri
+	try:
+		politenessValue = AriaLivePoliteness(politeness.lower())
+	except ValueError:
+		log.error(f"nvdaControllerInternal_reportLiveRegion got unknown politeness of {politeness}", exc_info=True)
+		return -1
+	if politenessValue == AriaLivePoliteness.OFF:
+		log.error(f"nvdaControllerInternal_reportLiveRegion got unexpected politeness of {politeness}")
+	queueHandler.queueFunction(
+		queueHandler.eventQueue,
+		speech.speakText,
+		text,
+		priority=(
+			Spri.NEXT
+			if politenessValue == AriaLivePoliteness.ASSERTIVE
+			else Spri.NORMAL
+		)
+	)
 	return 0
 
 @WINFUNCTYPE(c_long,c_long,c_long,c_long,c_long,c_long)
@@ -482,6 +516,7 @@ def initialize():
 		("nvdaController_cancelSpeech",nvdaController_cancelSpeech),
 		("nvdaController_brailleMessage",nvdaController_brailleMessage),
 		("nvdaControllerInternal_requestRegistration",nvdaControllerInternal_requestRegistration),
+		("nvdaControllerInternal_reportLiveRegion", nvdaControllerInternal_reportLiveRegion),
 		("nvdaControllerInternal_inputLangChangeNotify",nvdaControllerInternal_inputLangChangeNotify),
 		("nvdaControllerInternal_typedCharacterNotify",nvdaControllerInternal_typedCharacterNotify),
 		("nvdaControllerInternal_displayModelTextChangeNotify",nvdaControllerInternal_displayModelTextChangeNotify),

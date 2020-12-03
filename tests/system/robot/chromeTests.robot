@@ -19,6 +19,7 @@ Test Teardown	default teardown
 default teardown
 	${screenshotName}=	create_preserved_test_output_filename	failedTest.png
 	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
+	exit chrome
 	quit NVDA
 
 *** Test Cases ***
@@ -35,3 +36,14 @@ i7562
 pr11606
 	[Documentation]	Announce the correct line when placed at the end of a link at the end of a list item in a contenteditable
 	test_pr11606
+ARIA treegrid
+	[Documentation]	Ensure that ARIA treegrids are accessible as a standard table in browse mode.
+	# Excluded due to regular failures.
+	test_ariaTreeGrid_browseMode
+ARIA invalid spelling and grammar
+	[Documentation]	Tests ARIA invalid values of "spelling", "grammar" and "spelling, grammar".
+	ARIAInvalid_spellingAndGrammar
+ARIA checkbox
+	[Documentation]	Navigate to an unchecked checkbox in reading mode.
+	[Tags]	aria-at
+	test_ariaCheckbox_browseMode
