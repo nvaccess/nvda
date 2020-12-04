@@ -117,6 +117,9 @@ addTable("bg.ctb", _("Bulgarian 8 dot computer braille"))
 addTable("ckb-g1.ctb", _("Central Kurdish grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("cop-eg-comp8.utb", _("Coptic 8 dot computer braille"), input=False)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("cy-cy-g1.utb", _("Welsh grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
