@@ -272,9 +272,6 @@ class WordDocumentTextInfo(UIATextInfo):
 
 class WordBrowseModeDocument(UIABrowseModeDocument):
 
-	def _get_isAlive(self):
-		return True
-
 	def shouldSetFocusToObj(self,obj):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		if obj.role==controlTypes.ROLE_EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
