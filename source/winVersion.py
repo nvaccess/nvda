@@ -16,6 +16,7 @@ if winVersion.service_pack_major!=0:
 		winVersionText+=".%d"%winVersion.service_pack_minor
 winVersionText+=" %s" % ("workstation","domain controller","server")[winVersion.product_type-1]
 
+
 @functools.total_ordering
 class WinVersion(object):
 	"""
@@ -80,6 +81,7 @@ def getWinVer():
 		build=winVersion.build,
 		servicePack=winVersion.service_pack
 	)
+
 
 def getWinVerFromVersionText(versionText: str):
 	major, minor, build = versionText.split(".")
