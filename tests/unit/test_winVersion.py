@@ -1,13 +1,14 @@
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2020 NV Access Limited, Joseph Lee
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2020 NV Access Limited, Joseph Lee
 
 """Unit tests for the Windows version module."""
 
 import unittest
 import sys
 import winVersion
+
 
 class TestWinVersion(unittest.TestCase):
 
@@ -34,4 +35,15 @@ class TestWinVersion(unittest.TestCase):
 		self.assertTupleEqual(
 			(winTenInitial.major, winTenInitial.minor, winTenInitial.build),
 			(10, 0, 10240)
+		)
+
+	def test_moreRecentWinVer(self):
+		# Specificlaly to test operators.
+		minimumWinVer = winVersion.WinVersion(
+			major=6,
+			minor=1,
+			build=7601
+		)
+		self.assertGreaterEqual(
+			winVersion.getWinVer(), minimumWinVer
 		)
