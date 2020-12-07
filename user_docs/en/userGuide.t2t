@@ -794,6 +794,8 @@ For this situation, NVDA contains a feature called "screen curtain" which can be
 
 You can enable the Screen Curtain in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog.
 
+When the screen curtain is active some tasks directly based on what appears on the screen such as performing [OCR #Win10Ocr] or taking a screenshot cannot be achieved.
+
 + Content Recognition +[ContentRecognition]
 When authors don't provide sufficient information for a screen reader user to determine the content of something, various tools can be used to attempt to recognize the content from an image.
 NVDA supports the optical character recognition (OCR) functionality built into Windows 10 to recognize text from images.
@@ -814,6 +816,8 @@ NVDA can use this to recognize text from images or inaccessible applications.
 
 You can set the language to use for text recognition in the [Windows 10 OCR category #Win10OcrSettings] of the [NVDA Settings #NVDASettings] dialog.
 Additional languages can be installed by opening the Start menu, choosing Settings, selecting Time & Language -> Region & Language and then choosing Add a language.
+
+Windows 10 OCR may be partially or fully incompatible with [NVDA vision enhancements #Vision] or other external visual aids. You will need to disable these aids before proceeding to a recognition.
 
 %kc:beginInclude
 To recognize the text in the current navigator object using Windows 10 OCR, press NVDA+r.

@@ -2596,6 +2596,14 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Reported when Windows 10 OCR is not available.
 			ui.message(_("Windows 10 OCR not available"))
 			return
+		from visionEnhancementProviders.screenCurtain import ScreenCurtainProvider
+		screenCurtainId = ScreenCurtainProvider.getSettings().getId()
+		screenCurtainProviderInfo = vision.handler.getProviderInfo(screenCurtainId)
+		isScreenCurtainRunning = bool(vision.handler.getProviderInstance(screenCurtainProviderInfo))
+		if isScreenCurtainRunning:
+			# Translators: Reported when screen curtain is enabled.
+			ui.message(_("Please disable screen curtain before using Windows 10 OCR."))
+			return
 		from contentRecog import uwpOcr, recogUi
 		recog = uwpOcr.UwpOcr()
 		recogUi.recognizeNavigatorObject(recog)
