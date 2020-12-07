@@ -73,6 +73,28 @@ class WinVersion(object):
 			>= (other.major, other.minor, other.build)
 		)
 
+	def isWin10(self, release: str = "1507", atLeast: bool = True):
+		"""
+		Returns True if NVDA is running on the supplied release version of Windows 10.
+		If no argument is supplied, returns True for all public Windows 10 releases.
+		@param release: a release version of Windows 10 (such as 1903).
+		@param atLeast: return True if NVDA is running on at least this Windows 10 build
+		(i.e. this version or higher).
+		"""
+		if self.major != 10:
+			return False
+		# #11795: special cases.
+		# Remove this workaround in a future API compatibility (year.1) release.
+		# October 2020 Update is 20H2, not 2009.
+		if release == "2009":
+			release = "20H2"
+		if release not in WIN10_VERSIONS_TO_BUILDS:
+			raise ValueError(f"Unknown Windows 10 release {release}")
+		if atLeast:
+			return self.build >= WIN10_VERSIONS_TO_BUILDS[release]
+		else:
+			return self.build > WIN10_VERSIONS_TO_BUILDS[release]
+
 
 def getWinVer():
 	return WinVersion(
