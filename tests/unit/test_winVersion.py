@@ -57,8 +57,8 @@ class TestWinVersion(unittest.TestCase):
 			self.assertFalse(currentWinVer.isWin10())
 
 	@unittest.skipIf(
-			sys.getwindowsversion().major != 10,
-			"requires Windows 10"
+		sys.getwindowsversion().major != 10,
+		"requires Windows 10"
 	)
 	def test_isWin10NonexistentRelease(self):
 		# Test the fact that there is no Version 2003 (Version 2004 exists, however).
