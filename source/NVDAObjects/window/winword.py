@@ -843,8 +843,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				# Translators:  line spacing of 1.5 lines
 				field['line-spacing']=pgettext('line spacing value',"1.5 lines")
 			elif lineSpacingRule==wdLineSpaceExactly:
-				# Translators: exact (minimum) line spacing
-				field['line-spacing']=pgettext('line spacing value',"exact")
+				field['line-spacing'] = pgettext(
+					'line spacing value',
+					# Translators: line spacing of exactly x point
+					"exactly {space:.1f} pt"
+				).format(space=float(lineSpacingVal))
 			elif lineSpacingRule==wdLineSpaceAtLeast:
 				# Translators: line spacing of at least x point
 				field['line-spacing']=pgettext('line spacing value',"at least %.1f pt")%float(lineSpacingVal)
