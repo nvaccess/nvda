@@ -38,7 +38,7 @@ class TestWinVersion(unittest.TestCase):
 		)
 
 	def test_moreRecentWinVer(self):
-		# Specificlaly to test operators.
+		# Specifically to test operators.
 		minimumWinVer = winVersion.WinVersion(
 			major=6,
 			minor=1,
