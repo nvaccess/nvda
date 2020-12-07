@@ -47,3 +47,23 @@ class TestWinVersion(unittest.TestCase):
 		self.assertGreaterEqual(
 			winVersion.getWinVer(), minimumWinVer
 		)
+
+	def test_isWin10(self):
+		# Say "False" if tested on anything other than Windows 10.
+		currentWinVer = winVersion.getWinVer()
+		if currentWinVer.major == 10:
+			self.assertTrue(currentWinVer.isWin10())
+		else:
+			self.assertFalse(currentWinVer.isWin10())
+
+	@unittest.skipIf(
+			sys.getwindowsversion().major != 10,
+			"requires Windows 10"
+	)
+	def test_isWin10NonexistentRelease(self):
+		# Test the fact that there is no Version 2003 (Version 2004 exists, however).
+		self.assertRaises(
+			ValueError,
+			winVersion.getWinVer().isWin10,
+			release="2003"
+		)
