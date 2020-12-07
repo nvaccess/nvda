@@ -142,22 +142,12 @@ WIN10_VERSIONS_TO_BUILDS = {
 
 def isWin10(version: int = 1507, atLeast: bool = True):
 	"""
+	@deprecated: use getWinVer().isWin10 instead.
 	Returns True if NVDA is running on the supplied release version of Windows 10. If no argument is supplied, returns True for all public Windows 10 releases.
 	@param version: a release version of Windows 10 (such as 1903).
 	@param atLeast: return True if NVDA is running on at least this Windows 10 build (i.e. this version or higher).
 	"""
-	if winVersion.major != 10:
-		return False
-	try:
-		if atLeast:
-			return winVersion.build >= WIN10_VERSIONS_TO_BUILDS[version]
-		else:
-			return winVersion.build == WIN10_VERSIONS_TO_BUILDS[version]
-	except KeyError:
-		from logHandler import log
-		log.error("Unknown Windows 10 version {}".format(version))
-		return False
-
+	return getWinVer().isWin10(release=str(version), atLeast=atLeast)
 
 def isFullScreenMagnificationAvailable():
 	return (winVersion.major, winVersion.minor) >= (6, 2)
