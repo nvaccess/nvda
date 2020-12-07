@@ -26,6 +26,10 @@ noCalculatorEntryAnnouncements = [
 	"ContentPresenter",
 	# Briefly shown when closing date calculation calendar.
 	"Light Dismiss",
+	# Unit conversion/convert from.
+	"Value1",
+	# Unit conversion/converts into.
+	"Value2",
 ]
 
 
@@ -49,9 +53,10 @@ class AppModule(appModuleHandler.AppModule):
 			obj.UIAAutomationId not in noCalculatorEntryAnnouncements
 			and obj.name != self._resultsCache
 		):
-			# For unit conversion, UIA notification event presents much better messages.
+			# For unit conversion, both name change and notification events are fired,
+			# although UIA notification event presents much better messages.
 			# For date calculation, live region change event is also fired for difference between dates.
-			if obj.UIAAutomationId not in ("Value1", "Value2", "DateDiffAllUnitsResultLabel"):
+			if obj.UIAAutomationId != "DateDiffAllUnitsResultLabel":
 				ui.message(obj.name)
 			self._resultsCache = obj.name
 		if not self._shouldAnnounceResult:
@@ -94,7 +99,7 @@ class AppModule(appModuleHandler.AppModule):
 		# Hack: only announce display text when an actual calculator button (usually equals button) is pressed.
 		# In redstone, pressing enter does not move focus to equals button.
 		if isinstance(focus, UIA):
-			if focus.UIAAutomationId == "CalculatorResults":
+			if focus.UIAAutomationId in ("CalculatorResults", "CalculatorAlwaysOnTopResults"):
 				queueHandler.queueFunction(queueHandler.eventQueue, focus.reportFocus)
 			else:
 				resultsScreen = api.getForegroundObject().children[1].lastChild
