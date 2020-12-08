@@ -3,6 +3,61 @@ Wat is Nieuw in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.4 =
+
+== Nieuwe Functies ==
+- Als u in de dialoogvensters van NVDA op F1 drukt, wordt nu het helpbestand geopend op de meest relevante sectie. (#7757)
+- Ondersteuning voor suggesties voor automatisch aanvullen (IntelliSense) in Microsoft SQL Server Management Studio plus Visual Studio 2017 en hoger. (#7504)
+- Uitspraak van symbolen: ondersteuning voor groepering in een complexe symbooldefinitie en ondersteuning van groepsreferenties in een vervangende regel, waardoor ze eenvoudiger en krachtiger worden. (#11107)
+- Gebruikers worden nu op de hoogte gesteld wanneer ze proberen om spraakwoordenboekvermeldingen te maken met ongeldige vervangingen voor reguliere expressies. (#11407)
+  - Specifiek worden groeperingsfouten nu gedetecteerd.
+- Ondersteuning toegevoegd voor de nieuwe Chinese traditionele snelle en Pinyin-invoermethoden in Windows 10. (#11562)
+- Tabkopteksten worden nu beschouwd als formuliervelden met de f-toets voor snelle navigatie. (#10432)
+- Een commando toegevoegd om het melden van gemarkeerde tekst in of uit te schakelen; Er is geen standaard sneltoets toegewezen. (#11807)
+- De opdrachtregelparameter --copy-portable-config toegevoegd waarmee u de opgegeven configuratie automatisch naar het gebruikersaccount kunt kopiëren wanneer u NVDA stil installeert. (#9676)
+- Braille-routing wordt nu ondersteund met het Brailleweergavevenster voor muisgebruikers, beweeg de muis om naar een braillecel te springen. (#11804)
+
+
+== Veranderingen ==
+- Liblouis braillevertaler bijgewerkt naar versie 3.15.0
+- Bij 'alles lezen' in de bladermodus, stoppen de volgende en vorige zoeken opdrachten het lezen niet meer als de optie Doorbladeren bij alles lezen toestaan is ingeschakeld; het lezen wordt in plaats daar van hervat na het volgende of vorige zoekresultaat. (#11563)
+- Voor HIMS-brailleleesregels is F3 opnieuw toegewezen aan spatie + punten 148. (#11710)
+- Verbeteringen aan de UX van de opties "braille time-out" voor meldingen en "Toon meldingen voor onbepaalde tijd". (#11602)
+- In webbrowsers en andere toepassingen die de bladermodus ondersteunen, kan het dialoogvenster Elementenlijst (NVDA + F7) nu worden opgeroepen in de focusmodus. (#10453)
+- Updates voor live ARIA-regio's worden nu onderdrukt wanneer het melden van wijzigingen van dynamische inhoud is uitgeschakeld. (#9077)
+- NVDA meldt nu "Gekopieerd naar klembord" vóór de gekopieerde tekst. (#6757)
+
+
+== Opgeloste Problemen ==
+- NVDA werkt weer correct met invoervelden bij gebruik van de applicatie Fast Log Entry. (#8996)
+- Meld verstreken tijd in Foobar2000 als er geen totale tijd beschikbaar is (bijvoorbeeld bij het afspelen van een livestream). (#11337)
+- NVDA respecteert nu het aria-roledescription-attribuut voor elementen in bewerkbare inhoud op webpagina's. (#11607)
+- 'lijst' wordt niet langer aangekondigd op elke regel van een lijst in Google Documenten of andere bewerkbare inhoud in Google Chrome. (#7562)
+- Wanneer u per teken of woord van het ene lijstitem naar het andere gaat in bewerkbare inhoud op internet, wordt het binnengaan van het nieuwe lijstitem nu aangekondigd. (#11569)
+- NVDA leest nu de juiste regel wanneer de cursor aan het einde van een link aan het einde van een lijstitem in Google Documenten of andere bewerkbare inhoud op internet wordt geplaatst. (#11606)
+- In Windows 7, het openen en sluiten van het startmenu vanaf het bureaublad plaatst de focus nu correct. (#10567)
+- Wanneer "Probeer spraak te annuleren voor verlopen focuswijzigingen" is ingeschakeld, wordt de titel van het tabblad nu opnieuw aangekondigd bij het wisselen van tabbladen in Firefox. (#11397)
+- NVDA verzuimt niet langer om een ​​lijstitem te melden na het typen van een teken in een lijst bij het gebruik van de SAPI5 Ivona-stemmen. (#11651)
+- Het is weer mogelijk om de bladermodus te gebruiken bij het lezen van e-mails in Windows 10 Mail 16005.13110 en hoger. (#11439)
+- Bij gebruik van de SAPI5 Ivona-stemmen van harposoftware.com, kan NvDA nu de configuratie opslaan, van synthesizer wisselen en blijft NVDA niet langer stil na het herstarten. (#11650)
+- Het is nu mogelijk om nummer 6 in computerbraille in te voeren vanaf een brailletoetsenbord op HIMS-leesregels. (#11710)
+- Grote prestatieverbeteringen in Azure Data Studio. (#11533, #11715)
+- Met "Poging om spraak te annuleren voor verlopen focusgebeurtenissen" ingeschakeld, wordt de titel van het NVDA-zoeken dialoogvenster opnieuw aangekondigd. (#11632)
+- NVDA zou niet langer moeten bevriezen bij het ontwaken van de computer als de focus terecht komt in een Microsoft Edge-document. (#11576)
+- Het is niet langer nodig om op tab te drukken of de focus te verplaatsen na het sluiten van een contextmenu in MS Edge om de bladermodus weer te laten werken. (#11202)
+- NVDA verzuimt niet langer om items in lijstweergaven te lezen binnen een 64-bits applicatie zoals Tortoise SVN. (#8175)
+- ARIA-treegrids worden nu weergegeven als normale tabellen in bladermodus in zowel Firefox als Chrome. (#9715)
+- Een omgekeerde zoekopdracht kan nu worden gestart met 'vorige zoeken' via NVDA + shift + F3 (#11770)
+- Een NVDA-script wordt niet langer als herhaald beschouwd als een niet-gerelateerde toetsaanslag plaatsvindt tussen de twee uitvoeringen van het script. (#11388)
+- Sterke tags en nadruk tags in Internet Explorer kunnen weer niet gemeld worden door Nadruk melden uit te schakelen in de NVDA-instellingen voor documentopmaak. (#11808)
+- Een bevriezing van enkele seconden die door een klein aantal gebruikers wordt ervaren bij het verplaatsen tussen cellen met de pijltjes in Excel zou niet langer moeten voorkomen. (#11818)
+- In Microsoft Teams-builds met versienummers zoals 1.3.00.28xxx, faalt NVDA niet langer bij het lezen van berichten in chats of Teams-kanalen vanwege een verkeerd gefocust menu. (#11821)
+
+
+== Veranderingen voor ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
+
+
 = 2020.3 =
 Deze release bevat verschillende grote verbeteringen op het gebied van stabiliteit en prestaties, met name in Microsoft Office-toepassingen. Er zijn nieuwe instellingen om touchscreenondersteuning en grafische rapportage in of uit te schakelen.
 Het bestaan ​​van gemarkeerde inhoud kan in browsers worden gemeld en er zijn nieuwe Duitse brailletabellen.

@@ -8,269 +8,269 @@ NVDA NVDA_VERSION User Guide
 %%toc
 
 + Introduction +[Introduction]
-Welcome to NVDA!
-
-NonVisual Desktop Access (NVDA) is a free and open source screen reader for the Microsoft Windows operating system.
-Providing feedback via synthetic speech and Braille, it enables blind or vision impaired people to access computers running Windows for no more cost than a sighted person.
-NVDA is developed by [NV Access https://www.nvaccess.org/], with contributions from the community.
+Добредојдовте во NVDA!
+Известување за Тимот за Преведување: текстови после кои следи назнака (преведи го претходното) треба да се допреведат (оваа линија текст треба целосно да се избрише при целосно преведување на Упатството)
+NonVisual Desktop Access (NVDA) е бесплатен читач за екран со отворен изворен код, за оперативниот систем Microsoft Windows.
+Испраќајќи повратни информации до корисниците преку синтетизиран говор и Брајово, им овозможува на лицата со потешкотии во видот да можат да ги користат компјутерите на кои има Windows оперативен систем, за не поголем трошок од оној што ги чини другите лица без потешкотии во видот.
+NVDA се развива од невладината организација [NV Access https://www.nvaccess.org/], заедно со придонесите на заедницата.
 
 ++ General Features ++[GeneralFeatures]
-NVDA allows blind and vision impaired people to access and interact with the Windows operating system and many third party applications.
+NVDA им овозможува на лицата со потешкотии во видот да пристапат и да имаат интеракција со оперативниот систем Windows, како и многу други апликации создадени од трети лица.
 
-Major highlights include:
-- Support for popular applications including web browsers, email clients, internet chat programs and office suites
-- Built-in speech synthesizer supporting over 80 languages
-- Reporting of textual formatting where available such as font name and size, style and spelling errors
-- Automatic announcement of text under the mouse and optional audible indication of the mouse position
-- Support for many refreshable braille displays, including the ability to detect many of them automatically as well as braille input on braille displays with a braille keyboard
-- Ability to run entirely from a USB flash drive or other portable media without the need for installation
-- Easy to use talking installer
-- Translated into 54 languages
-- Support for modern Windows Operating Systems including both 32 and 64 bit variants
-- Ability to run during Windows sign-in and at secure screens
-- Announcing controls and text while using touch gestures
-- Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation
-- Support for Windows Command Prompt and console applications
-- The ability to highlight the system focus
+Позабележителни можности кои се вклучуваат се:
+- Поддршка за популарни апликации вклучувајќи интернет пребарувачи, клиенти за е-пошта, апликации за разговор преку интернет и канцелариски пакети за работа.
+- Вграден говорен синтетизатор со поддршка за над 80 јазици
+- Известувања за текстуално форматирање каде што тоа е овозможено, како што се име и големина на фонт, стил на текст, како и правописни грешки
+- Автоматско соопштување на текстот под курсорот од глувчето, како и опционално звучнo известување за позицијата на курсорот од глувчето
+- Поддршка за голем број на Брајови дисплеи кои синхронизирано се менуваат, вклучувајќи ја можноста за нивното пронаоѓање автоматски, како и Брајов внес на Брајов екран со Брајова тастатура
+- Можност за целосно работење вчитувајќи го од Универзален Сериски Контролер, УСБ палец, или некоја друга преносна медиа, без потреба за негова инсталација
+- Едноставна за користење говорна инсталација
+- Преведен во 54 јазици
+- Со поддршка за современите Windows оперативни системи, вклучувајќи ги двете 32 и 64-битни варијанти
+- Со можност за работење на Windows екранот за најава, како и при сигурносни екрани
+- Најавувачки контроли како и текст додека се користат допирни гестикулации
+- Поддршка за најчестите интерфејси за пристапност како Microsoft Active Accessibility, Java Access Bridge, IAccessible2 и UI Automation 
+- Поддршка за пишување на Windows командни линии код и останати конзолни апликации
+- Можност за означување на системски фокус
 -
 
 ++ Internationalization ++[Internationalization]
-It is important that people anywhere in the world, no matter what language they speak, get equal access to technology.
-Besides English, NVDA has been translated into 54 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Bulgarian, Burmese, Catalan, Chinese (simplified and traditional), Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Georgian, German (Germany and Switzerland), Greek, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Kannada, Korean, Kyrgyz, Lithuanian, Macedonian, Mongolian, Nepali, Norwegian, Polish, Portuguese (Brazil and Portugal), Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish (Colombia and Spain), Swedish, Tamil, Thai, Turkish, Ukrainian and Vietnamese.
+Важно е луѓето во светот, без разлика на тоа кој јазик го говорат, да добијат еднаков пристап до технологијата.
+Покрај Англиски Јазик, NVDA е преведена во 54 јазици вклучувајќи ги: Африкански, Албански, Амхарски, Арапски, Арагонезиски, Бугарски, Бурмански, Каталонски, Кинески (поедноставен и традиционален), Хрватски, Чешки, Дански, Холандски, Фарси, Фински, Француски, Галициски, Грузиски, Германски (Геманија и Швајцарија), Грчки, Еврејски, Хинду, Унгарски, Исландски, Ирски, Италијански, Јапонски, Канадски, Корејски, Киргистански, Литвански, Македонски, Монголски, Непалски, Норвешки, Полски, Португалски (Бразил и Португалија), Панџаби, Романски, Руски, Српски, Словачки, Словенски, Шпански (Колумбија и Шпанија), Шведски, Тамил, Тајландски, Турски, Украински и Виетнамски.
 
 ++ Speech Synthesizer Support ++[SpeechSynthesizerSupport]
-Apart from providing its messages and interface in several languages, NVDA can also enable the user to read content in any language, as long as they have a speech synthesizer that can speak that language.
+Покрај обезбедувањето на пораки како и интерфејс на неколку јазици, NVDA може исто така да му овозможи на корисникот да чита содржина на било кој јазик, сѐ додека имаат говорен синтетизатор кој може да го говори тој јазик.
 
-NVDA is bundled with [eSpeak NG https://github.com/espeak-ng/espeak-ng], a free, open-source, multi-lingual speech synthesizer.
+NVDA е со вграден [eSpeak NG https://github.com/espeak-ng/espeak-ng], слободен, со отворен изворен код, повеќе-јазичен говорен синтетизатор.
 
-Information about other speech synthesizers that NVDA supports can be found in the [Supported Speech Synthesizers #SupportedSpeechSynths] section.
+Информации окулу други говорни синтетизатори кои се поддржани од NVDA може да се пронајде во [Supported Speech Synthesizers #SupportedSpeechSynths] секцијата.
 
 ++ Braille support ++[BrailleSupport]
-For users that own a refreshable braille display, NVDA can output its information in braille.
-Both uncontracted and contracted braille input via a braille keyboard is also supported.
-Furthermore, NVDA will detect many braille displays automatically by default.
-Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for information about the supported braille displays.
+За корисниците кои поседуваат Брајов екран со освежување на податоци, NVDA може да ги прикажува неговите информации во Брајово.
+Двете варијанти на скратено и вообичаено Брајово пишување со помош на Брајова тастатура е исто подржано.
+Исто така дополнително, NVDA ќе детектира многу Брајови екрани автоматски како негова вклучена основна опција.
+Дознајте повеќе во [Supported Braille Displays #SupportedBrailleDisplays] секцијата за информации окулу поддржаните Брајови екрани.
 
-NVDA supports braille codes for many languages, including contracted, uncontracted and computer braille codes.
+NVDA поддржува Брајов код за многу јазици, вклучувајќи ги скратените форми, нескратените форми и компјутерски Брајов код.
 
 ++ License and Copyright ++[LicenseAndCopyright]
-NVDA is copyright NVDA_COPYRIGHT_YEARS NVDA contributors.
+NVDA е заштитен ентитет законски од NVDA_COPYRIGHT_YEARS NVDA соработниците.(преведи го претходното)
 
-NVDA is available under the GNU General Public License version 2, with two special exceptions.
-The exceptions are outlined in the license document under the sections "Non-GPL Components in Plugins and Drivers" and "Microsoft Distributable Code".
-NVDA also includes and uses components which are made available under different free and open source licenses.
-You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it.
-This applies to both original and modified copies of this software, plus any derivative works.
+NVDA е пристапно како дел од GNU General Public License верзија 2, вклучувајќи два специјални исклучоци.(преведи го претходното)
+Исклучоците се подетално објаснети во документот за лиценцата под секциите "Non-GPL Components in Plugins and Drivers" и "Microsoft Distributable Code". (преведи го претходното)
+NVDA исто вклучува и употребува компоненти кои се пристапни како дел од други различни слободни и лиценци за отворен изворен код.
+Вие сте слободни да го споделувате или изменувате овој софтвер на било кој начин сѐ додека е придружено со лиценцата и доколку ги правите сите измени во отворениот изворен код достапни на секој кој ги побарува.
+Ова се однесува истовремено на оригиналот како и модифицираните копии на овој софтвер, како и секоја дополнителна работа произлезена од претходното.
 
-For further details, you can [view the full license. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
-For details regarding exceptions, access the license document from the NVDA menu under the "help" section.
+За дополнителни детали можете да се информирате [view the full license. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+За детали кои се однесуваат на исклучоци, побарајте во документот со лиценцата од NVDA менито под "help" секцијата.(преведи го претходното)
 
 + System Requirements +[SystemRequirements]
-- Operating Systems: all 32-bit and 64-bit editions of Windows 7, Windows 8, Windows 8.1, Windows 10, and all Server Operating Systems starting from Windows Server 2008 R2.
- - For Windows 7, NVDA requires Service Pack 1 or higher.
- - For Windows Server 2008 R2, NVDA requires Service Pack 1 or higher.
-- at least 150 MB of storage space.
+- Оперативни Системи: сите 32-битни и 64-битни едиции на Windows 7, Windows 8, Windows 8.1, Windows 10, и сите Серверски Оперативни Системи почнувајќи од Windows Server 2008 R2.(преведи го претходното)
+ - За Windows 7, NVDA побарува Service Pack 1 или повисоко.
+ - За Windows Server 2008 R2, NVDA побарува Service Pack 1 или повисоко.
+- најмалку 150 MB на простор за складирање.
 -
 
 + Getting and Setting Up NVDA +[GettingAndSettingUpNVDA]
-If you have not yet got a copy of NVDA, you can download it from the [NV Access website NVDA_URL].
+Доколку сѐ уште немате копија од NVDA, може да ја превземете од [NV Access website NVDA_URL].
 
-Go to the download section and you will find a link to download the latest version of NVDA.
+Одете во download секцијата и ќе најдете link за да ја превземете најновата верзија на NVDA.(преведи го претходното)
 
-Running the file you have just downloaded will start a temporary copy of NVDA.
-You will then be asked if you want to install NVDA, create a portable copy or just continue using the temporary copy.
+Покренувањето на документот кој штотуку сте го превземале ќе започне привремена копија од NVDA.
+Потоа ќе Ви биде поставено прашање дали би сакале да се инсталира NVDA, да се креира преносна копија или само сакате да продолжите да користите привремена копија.
 
-If you plan to  always use NVDA on this computer, you will want to choose to install NVDA.
-Installing NVDA will allow for additional functionality such as automatic starting after sign-in, the ability to read the Windows sign-in and security screens (which cannot be done with portable and temporary copies) and creation of Start Menu and desktop shortcuts.
-The installed copy is also able to create a portable copy itself at any time.
+Доколку планирате секогаш да користите NVDA на компјутерот на кој работите, тогаш најверојатно би сакале да изберете да инсталирате NVDA.
+Инсталирањето на NVDA ќе овозможи за додатни функционалности како автомастко стартирање после логирање, можност да се чита Windows екранот за логирање како и сигурносни екрани (нешто кое не може да биде направено со преносната како и привремената копија) и креација на Start Menu и Десктоп кратенки.(преведи го претходното)
+Инсталираната копија исто така нема тешкотија да креира преносна копија во било кое време.
 
-If you want to take NVDA with you on a USB thumb drive or other writable  media, then you  should choose to create a portable copy.
-The portable copy also has the ability to install itself on any computer at a later time.
-However, if you wish to copy NVDA onto read-only media such as a CD, you should just copy the download package.
-Running the portable version directly from read-only media is not supported at this time.
+Доколку сакате да ја понесете NVDA со Вас на USB палец или некоја друга преносна медија на која може да се запишува, тогаш треба да одберете да креирате преносна копија.
+Преносната копија исто има можност за инсталација на самата себе на било кој компјутер во идно време.
+Во било кој случај, доколку сакате да копирате NVDA на медија само за читање на пример како CD, потребно е само да го копирате пакетот кој сте го превземале.
+Работењето со преносната верзија директно од медија само за читање не е поддржана во тековниот момент.
 
-Using the temporary copy of NVDA is also an option (e.g. for demonstration purposes), though  starting NVDA in this way each time can become very time consuming.
+Користење на привремена копија од NVDA и исто така опција (на пример за демонстрациони цели), иако стартувањето на NVDA на овој начин секогаш може да биде повеќе временски долготрајно.
 
 ++ Portable and Temporary Copy Restrictions ++[PortableAndTemporaryCopyRestrictions]
-Apart from the  inability to automatically start during and/or after log-on, the portable and temporary copies of NVDA also have the following restrictions:
-- The inability to interact with applications running with administrative privileges, unless of course NVDA itself has been run also with these privileges (not recommended).
-- The inability to read User Account Control (UAC) screens when trying to start an application with administrative privileges.
-- Windows 8 and later: the inability to support input from a touchscreen.
-- Windows 8 and later: the inability to provide features such as browse mode and speaking of typed characters in Windows Store apps.
-- Windows 8 and later: audio ducking is not supported.
+Покрај не можноста да се стартува автоматски за време на екраните за најава, или/и после логирање, преносната и привремената копија од NVDA исто така ги немаат следниве опции:
+- Неможноста да се комуницира со апликации кои работат административни привилегии, доколку се разбира NVDA самата не се покрене со овие привилегии (не е препорачано).
+- Неможноста да се читаат User Account Control (UAC) екрани истовремено додека се обидува да се стартува апликација со административни привилегии.(преведи го претходното)
+- Windows 8 и понови верзии: неможност да се поддржи внес од екран на допир.
+- Windows 8 и понови верзии: неможност да се овозможат опции како browse mode како и изговарање на внесени карактери во Windows Store апликации.(преведи го претходното)
+- Windows 8 и понови верзии: аудио ducking не е поддржано.(преведи го претходното)
 -
 
 ++ Installing NVDA ++[InstallingNVDA]
-If installing NVDA directly from the NVDA download package, press the Install NVDA button.
-If you have already closed this dialog or are wanting to install from a portable copy, please choose the Install NVDA menu item found under Tools in the NVDA menu.
+Доколку инсталирате NVDA директно од NVDA превземен пакет, притиснете го Install NVDA копчето.
+Доколку го имате веќе затворено овој дијалог или сакате да инсталирате од преносна копија, Ве молам изберете ја Install NVDA menu item кој се наоѓа под Tools во NVDA menu.(преведи го претходното)
 
-The installation dialog that appears will confirm whether you wish to install NVDA and will also tell you whether  this installation will be updating a previous install.
-Pressing the Continue button will start installing NVDA.
-There are also a few options in this dialog which are explained below.
-Once the installation has completed, a message will appear telling you that it was successful.
-Pressing OK at this point will restart the newly installed copy of NVDA.
+Инсталациониот дијалог кој ќе се појави ќе потврди дали сакате да инсталирате NVDA и исто така ќе ве извести дали оваа инсталација ќе се надградува над претходна инсталација.
+Притискајќи го копчето Continue ќе почне инсталација на NVDA.(преведи го претходното)
+Постојат исто така неколку опции во овој дијалог кои се објаснети подолу.
+Штом инсталацијата ќе комплетира, ќе се појави порака која ќе извести дека за успехот на инсталацијата.
+Притискајќи OK во овој чекор ќе ја рестартира ново инсталираната копија на NVDA.
 
 +++ Incompatible add-ons warning +++[InstallWithIncompatibleAddons]
-If you have add-ons already installed there may also be a warning that incompatible add-ons will be disabled.
-Before you're able to press the Continue button you will have to use the checkbox to confirm that you understand that these add-ons will be disabled.
-There will also be a button present to review the add-ons that will be disabled.
-Refer to the [incompatible add-ons dialog section #incompatibleAddonsManager] for more help on this button.
+Доколку имате add-ons веќе инсталирано има можност да се појави известување дека некомпатибилните add-ons ќе бидат оневозможени.(преведи го претходното)
+Пред да имате моќност да го притиснете копчето Continue Вие треба да го означите checkbox за да потврдите дека разбирате дека овие add-ons ќе бидат оневозможени.(преведи го претходното)
+Исто така ќе има копче кое ќе овозможи да се согледа кои add-ons ќе бидат оневозможени.(преведи го претходното)
+Реферирајте на [incompatible add-ons dialog section #incompatibleAddonsManager] за повеќе помош окулу ова копче.(преведи го претходното)
 
 +++ Use NVDA during sign-in +++[StartAtWindowsLogon]
-This option allows you to choose whether or not NVDA should automatically start while at the Windows sign-in screen, before you have entered a password.
-This also includes User Account Control and other secure screens.
-This option is enabled by default for fresh installations.
+Оваа опција Ви дозволува да одберете дали треба или не е потребно NVDA автоматски да стартува додека е екранот за Windows sign-in, пред моментот кога се внесува лозинка.(преведи го претходното)
+Ова исто вклучува User Account Control како и други сигурносни екрани.(преведи го претходното)
+Оваа опција е овозможена како вклучена опција за нови свежи инсталации.
 
 +++ Create Desktop Shortcut (ctrl+alt+n) +++[CreateDesktopShortcut]
-This option allows you to choose whether or not NVDA should create a shortcut on the desktop to start NVDA. 
-If created, this shortcut will also be assigned a  shortcut key of control+alt+n, allowing you to start NVDA at any time with this keystroke.
+Оваа опција дозволува да се одбере дали треба или не е потребно NVDA да креира кратенка на десктоп за стартување на NVDA. 
+Доколку се креира, оваа кратенка исто така ќе ѝ биде доделена кратка комбинација од копчиња control+alt+n, дозволувајќи да се стартува NVDA во секое време со оваа комбинација на копчиња.
 
 +++ Copy Portable Configuration to Current User Account +++[CopyPortableConfigurationToCurrentUserAccount]
-This option allows you to choose whether or not NVDA should copy the user configuration from the currently running NVDA into the configuration for the currently logged on  user, for the installed copy of NVDA. 
-This will not copy the configuration for any other users of this system nor to the system configuration for use during Windows sign-in and other secure screens.
-This option is only available when installing from a portable copy, not when installing directly from the downloaded Launcher package.
+Оваа опција дозволува да се одбере дали треба или не е потребно NVDA да ги копира конфигурациските поставки од веќе постоечко работната верзија на NVDA во конфигурациските поставки на моментално најавениот корисник, за инсталираната копија на NVDA. 
+Наведената опција нема да ги копира конфигурациските поставки за други корисници на системот ниту пак на системските конфигурирања за употреба при Windows sign-in екранот како и останати сигурносни екрани.(преведи го претходното)
+Оваа опција е единствено достапна кога се врши инсталација од преносна копија, не кога се инсталира директно од превземениот Launcher пакет.(преведи го претходното)
 
 ++ Creating a Portable Copy ++[CreatingAPortableCopy]
-If creating a portable copy directly from the NVDA download  package, simply press the Create Portable Copy button.
-If you have already closed this dialog or you are running an installed copy of NVDA, choose the Create Portable copy menu item found under Tools in the NVDA menu.
+Доколку креирате преносна копија дирeктно од NVDA превземан пакет, едноставно притиснете го Create Portable Copy копчето.(преведи го претходното)
+Доколку веќе сте го изминале овој дијалог или работите со инсталирана копија од NVDA, изберете Create Portable copy menu item кој се наоѓа под Tools во NVDA менито.(преведи го претходното)
 
-The Dialog that appears allows you to choose where the portable copy should be created.
-This can be a directory on your hard drive or a location on a USB thumb drive or other portable media.
-There is also an option to choose whether NVDA should copy the logged on user's current NVDA configuration for use  with the newly created portable copy.
-This option is only available when creating a portable copy from an installed copy, not when creating from the download package.
-Pressing Continue will create the portable copy.
-Once creation is complete, a message will appear telling you it was successful.
-Press OK to dismiss this dialog.
+Дијалогот кој се појавува Ви овозможува да одберете на која локација преносната копија ќе се креира.
+Ова може да биде папка на Вашиaтa хард диск меморија или локација на USB палец или друга преносна медија.
+Исто така постои опција да се одбере дали NVDA би требало да ги копира конфигурациските поставки на моментално најавениот корисник на NVDA за употреба со новокреираната преносна копија.
+Оваа опција е единствено достапна кога се креира преносна копија од инсталираната копија, не кога се креира од превземениот инсталационен пакет.
+Притискање на Continue ќе ја креира преносната копија.(преведи го претходното)
+Штом креацијата е комплетна, ќе се појави порака која ќе соопшти дека креирањето е успешно.
+Притиснете OK за да го ослободите овој дијалог.(преведи го претходното)
 
 + Getting started with NVDA +[GettingStartedWithNVDA]
 
 ++ Launching NVDA ++[LaunchingNVDA]
-If you have installed NVDA with the installer, then starting NVDA is as simple as either pressing control+alt+n, or choosing NVDA from the NVDA menu under Programs on the Start Menu.
-Additionally you can type NVDA into the Run dialog and press Enter.
-If NVDA is already running, it will be restarted.
-You can also pass some [command line options #CommandLineOptions] which allows you to quit (-q), disable add-ons (--disable-addons), etc.
+Доколку имате инсталирано NVDA со помош на installer, тогаш стартувањето на NVDA е едноставно како притискање на control+alt+n, или одбирање NVDA од NVDA menu под Programs во Start Menu.(преведи го претходното)
+Додатно може да испишете NVDA во Run дијалог и да притиснете Enter.(преведи го претходното)
+Доколку NVDA веќе е во работа, ќе биде рестартирана.
+Можете исто така да праќате и некои [command line options #CommandLineOptions] кои Ви овозможуваат да се quit (-q), оневозможат add-ons (--disable-addons), итн. 
+(преведи го претходното)
+За инсталирани копии, NVDA ја зачувува конфигурацијата во the roaming апликациска папка на програмиски информации од моменталниот корисник кој е стандарден (на пример "C:\Users\<user>\AppData\Roaming").(преведи го претходното)
+Постои можност да се смени ова на начин на кој NVDA ги вчитува своите конфигурациски поставки од локалната апликациска папка со информации отколку на претходниот начин.
+Консултирајте се со секцијата окулу [system wide parameters #SystemWideParameters] за повеќе детали.
 
-For installed copies, NVDA stores the configuration in the roaming application data folder of the current user by default (e.g. "C:\Users\<user>\AppData\Roaming").
-It is possible to change this in a way that NVDA loads its configuration from the local application data folder instead.
-Consult the section about [system wide parameters #SystemWideParameters] for more details.
+За да се стартува преносната верзија, потребно е да се отвори директориумот во кој го отпакувавте NVDA, и да се притисне enter или двоен клик на nvda.exe документот.(преведи го претходното)
+Доколку NVDA веќе е во функција и работи, автоматски ќе стопира пред да се стартува преносната верзија.
 
-To start the portable version, go to the directory you unpacked NVDA to, and press enter or double click on nvda.exe.
-If NVDA was already running, it will automatically stop before starting the portable version.
+Како што NVDA стартува, Вие првично ќе слушнете искачувачки сет на тонови (кои ќе ве известуваат дека NVDA се вчитува).
+Во согласност со брзината на вашиот компјутер, или дали е стартувана NVDA од USB палец или некоја бавна медија, можеби ќе треба да измине извесно време за да се стартува.
+Доколку е потребно многу долго време за да се стартува, NVDA треба да извести "Loading NVDA. Please wait..."(преведи го претходното)
 
-As NVDA starts, you will first hear an ascending set of tones (telling you that NVDA is loading).
-Depending on how fast your computer is, or if you are running NVDA off a USB key or other slow media, it may take a little while to start.
-If it is taking an extra-long time to start, NVDA should say "Loading NVDA. Please wait..."
-
-If you don't hear any of this, or you hear the Windows error sound, or a descending set of tones, then this means that NVDA has an error, and you will need to possibly report a bug to the developers.
-Please check out the NVDA website for how to do this.
+Доклку не слушнете ништо од наведеното, или слушнете Windows звук за известување за грешка, или опаѓачки сет на тонови, тогаш ова значи дека NVDA има грешка, и Вие ќе треба најверојатно да пријавите bug на развивачите na софтверот.(преведи го претходното)
+Ве замолуваме да се консултирате со NVDA веб страната на кој начин се прави пријавувањето.
 
 +++ Welcome Dialog +++[WelcomeDialog]
-When NVDA starts for the first time, you will be greeted by a dialog box which provides you with some basic information about the NVDA modifier key and the NVDA menu.
-(Please see further sections about these topics.)
-The dialog box also contains a combo box and three checkboxes.
-The combo box lets you select the keyboard layout.
-The first checkbox lets you control if NVDA should use the Caps Lock as an NVDA modifier key.
-The second specifies whether NVDA should start automatically after you log on to Windows and is only available for installed copies of NVDA.
-The third lets you control if this Welcome dialog should appear each time NVDA starts.
+За времето кога NVDA стартува за прв пат, Вие ќе бидете поздравени со дијалог кутија која ќе ве запознае со некои основни информации окулу NVDA modifier key како и NVDA менито.(преведи го претходното)
+(Ве замолуваме да ги погледнете останатите секции окулу овие теми.)
+Дијалог кутијата исто така содржи и combo кутија како и три checkboxes.(преведи го претходното)
+Combo кутијата Ви овозможува да го одберете распоредот на тастатурата.(преведи го претходното)
+Првиот checkbox Ви овозможува да контролирате дали NVDA ќе го користи Caps Lock во форма на NVDA modifier копче.(преведи го претходното)
+Вториот означува дали NVDA треба да се стартува автоматски откако ќе се логирате на Windows и е единствено достапна за инсталирани копии на NVDA.
+Третиот Ви дозволува контрола дали овој Добредојдовте дијлаог треба да се појавува при секое стартување на NVDA.
 
 +++ Data usage statistics dialog +++[UsageStatsDialog]
-Starting from NVDA 2018.3, the user is asked if they want to allow usage data to be sent to NV Access in order to help improve NVDA in the future. 
-When starting NVDA for the first time, a dialog will appear which will ask you if you want to accept sending data to NV Access while using NVDA.
-You can read more info about the data gathered by NV Access in the general settings section, [Allow the NVDA project to gather NVDA usage statistics #GeneralSettingsGatherUsageStats].
-Note: pressing on "yes" or "no" will save this setting and the dialog will never appear again unless you reinstall NVDA.
-However, you can enable or disable the data gathering process manually in NVDA's general settings panel. For changing this setting manually, you can check or uncheck the checkbox called [Allow the NVDA project to gather NVDA usage statistics #GeneralSettingsGatherUsageStats].
+Почнувајќи од NVDA 2018.3, на корисникот му се поставува прашање дали сака да дозволи да се праќаат податоци од користење до NV Access сѐ со цел да се помогне напредокот на NVDA во иднина. (преведи го претходното)
+Кога ја стартувате NVDA за прв пат, дијалог ќе се појави кој ќе Ви постави прашање дали дозволувате праќање на податоци од користење на програмата до NV Access додека работите со NVDA.(преведи го претходното)
+Можете да прочитате повеќе информации окулу податоците кои се праќаат кон/собираат од NV Access во секцијата за генералните поставки , [Allow the NVDA project to gather NVDA usage statistics #GeneralSettingsGatherUsageStats].(преведи го претходното)
+Забелешка: притискајќи на "Да" или "Не" ќе ја зачува оваа поставка и дијалогот нема повторно да се појави сѐ доколку не ја реинсталирате NVDA.
+Сепак, Вие можете да го овозможите или оневозможите собирањето на податоци од користење рачно во NVDA секцијата за генералните поставки. За измена на оваа поставка рачно,  оможете да го означите или избришетезначеното во checkbox наречен [Allow the NVDA project to gather NVDA usage statistics #GeneralSettingsGatherUsageStats].(преведи го претходното)
 
 ++ About NVDA keyboard commands ++[AboutNVDAKeyboardCommands]
 
 +++ The NVDA Modifier Key +++[TheNVDAModifierKey]
-Most NVDA-specific keyboard commands consist of pressing a particular key called the NVDA modifier key in conjunction with one or more other keys.
-Notable exceptions to this are the text review commands for the desktop keyboard layout which just use the numpad keys by themselves, but there are some other exceptions as well.
+Повеќето NVDA-специфични команди од тастатура се состојат од притискање на одредено копче наречено NVDA модифицирачко копче во заедничка врска со едно или повеќе други копчиња.
+Исклучоци кои би можеле да се позаприметни во ова се текст review командите за desktop распоред на тастатура која користи само numpad копчиња како сами засебно, меѓутоа постојат и некои други исклучоци исто така.(преведи го претходното)
 
-NVDA can be configured so that the numpad Insert, Extended Insert and/or Caps Lock key can be used as the NVDA modifier key.
-By default, both the numpad Insert and Extended Insert keys are set as NVDA modifier keys.
+NVDA може да биде конфигурирана на тој начин да numpad Insert, Extended Insert како и/или Caps Lock копчето може да биде користено како NVDA копче за модификација.(преведи го претходното)
+Стандардна опција, и двете numpad Insert како и Extended Insert копчиња се сетирани како NVDA копчиња за модификација.(преведи го претходното)
 
-If you wish to cause one of the NVDA modifier keys to behave as it usually would if NVDA were not running (e.g. you wish to turn Caps Lock on when you have set Caps Lock to be an NVDA modifier key), you can press the key twice in quick succession.
+Доколку сакате да пренамените едно од NVDA копчињата за модификација да се однесува како што би се однесувало во вообичаен случај доколку NVDA не би работела (на пример би сакале да го вклучите Caps Lock кога го имате поставено Caps Lock да биде NVDA модифицирачко копче), можете да го притиснете копчето двапати во брзо повторување.(преведи го претходното)
 
 +++ Keyboard Layouts +++[KeyboardLayouts]
-NVDA currently comes with two sets of key commands (known as keyboard layouts): the desktop layout and the laptop layout.
-By default, NVDA  is set to use the Desktop layout, though you can switch to the Laptop layout in the Keyboard category of the [NVDA Settings #NVDASettings] dialog, found under Preferences in the NVDA menu.
+NVDA моментално доаѓа со два сета на командни копчиња (познати како распоред на тастатура): desktop распоред на тастатура и laptop распоред на тастатура.(преведи го претходното)
+Како стандардна опција, NVDA е поставена да го користи Desktop распоредот на тастатура, иако можете да го замените во Laptop распоредот на тастатура во Keyboard категоријата од [NVDA Settings #NVDASettings] дијалогот, кој се наоѓа под Preferences во NVDA менито.(преведи го претходното)
 
-The Desktop layout makes heavy use of the numpad (with Num Lock off).
-Although most laptops do not have a physical numpad, some laptops can emulate one by holding down the FN key and pressing letters and numbers on the right-hand side of the keyboard (7, 8, 9, u, i, o, j, k, l, etc.).
-If your laptop cannot do this or does not allow you to turn Num Lock off, you may want to switch to the Laptop layout instead.
+Desktop распоредот на тастатура во голема количина го користи numpad (со Num Lock исклучено).(преведи го претходното)
+Иако некои преносни компјутери немаат реален физички numpad, некои преносни компјутери можат да емулираат таков со притискање на FN копчето и притискање на буквите и бројките на десната страна од тастатурата (7, 8, 9, u, i, o, j, k, l, и.т.натаму).(преведи го претходното)
+Доколку Вашиот преносен компјутер не може да го овозможи ова или не дозволува да го исклучите Num Lock, можеби би сакале да промените кон Laptop распоред на тастатурата.(преведи го претходното)
 
 ++ NVDA Touch Gestures ++[NVDATouchGestures]
-If you are running NVDA on a device with a touchscreen and running Windows 8 or higher, you can also control NVDA directly via touch commands.
-While NVDA is running, unless touch interaction support is disabled, all touch input will go directly to NVDA. 
-Therefore, actions that can be performed normally without NVDA will not work.
+Доколку работите со NVDA на уред со допир на екран и работите со Windows 8 оперативен систем или понова верзија, Вие можете исто да ја контролирате NVDA директно со допирни команди.
+Истовемено додека NVDA работи, доколку допирната интеракциска подршка не е оневозможена, сите допирни внесови ќе бидат испраќани до NVDA. 
+На тој начин, акциите кои можат да бидат одигрувани нормално без NVDA нема да бидат достапни за работа.
 %kc:beginInclude
-To toggle touch interaction support, press NVDA+control+alt+t.
+Да менувате наизменично вклучување/исклучување interaction подршка, притиснете NVDA+control+alt+t.(преведи го претходното)
 %kc:endInclude
-You can also enable or disable [touch interaction support #TouchSupportEnable] from the Touch Interaction category of the NVDA settings.
+Можете исто да вклучувате или исклучувате [touch interaction support #TouchSupportEnable] од Touch Interaction категоријата од NVDA поставките.(преведи го претходното)
 
 +++ Exploring the Screen +++[ExploringTheScreen]
-The most basic action you can perform with the touch screen is to announce the control or text at any point on the screen.
-To do this, place one finger anywhere on the screen.
-You can also keep your finger on the screen and move it around to read other controls and text that your finger moves over.
+Најосновната акција која можете да ја извршувате со екран на допир е да ја изјавите контролата или текстот во секој момент на екранот.
+За да го направите ова, поставете еден прст било каде на екранот.
+Можете исто така да го задржите прстот на екранот и да го репозиционирате наокулу екранот за да читате останати контроли и текстот што вашиот прст би ги покажувал, врз кои би бил позициониран.
 
 +++ Touch Gestures +++[TouchGestures]
-When NVDA commands are described later in this user guide, they may list a touch gesture which can be used to activate that command with the touchscreen.
-Following are some instructions on how to perform the various touch gestures.
+Кога NVDA командите се опишани понатаму во овој кориснички водич, тие можат да листаат допирни гестикулации кои может да бидат користени да се активираат тие команди со екран на допир.
+Во следново се некои инструкции за како да се одигруваат разни допирни гестикулации.
 
 ==== Taps ====
-Tap the screen quickly with one or more fingers.
+Брзо допирање на екранот со еден или повеќе прсти.
 
-Tapping once with one  finger is simply known as a tap.
-Tapping with 2 fingers at the same time is a 2-finger tap and so on.
+Едно брзо допирање со еден прст е именувано едноставно како брзо допирање.
+Брзо допирање со 2 прсти во исто време е брзо допирање со 2 прсти и.т.натаму.
 
-If the same tap is performed one or more times again in quick succession, NVDA will instead treat this as a multi-tap gesture.
-Tapping twice will result in a double-tap.
-Tapping 3 times will result in a triple-tap and so on.
-Of course, these multi-tap gestures also recognize how many fingers were used, so it's possible to have gestures like a 2-finger triple-tap, a 4-finger tap, etc. 
+Доколку истото допирање е изведено еднаш или на повеќе наврати последователно, NVDA ќе го интерпретира ова како повеќе-допирна гестикулација.
+Допирање двапати ќе резултира во двоен допир.
+Допирање 3 пати ќе резултира во троен допир и.т.натаму.
+Подразбирливо овие повеќе-допирни гестикулации исто распознаваат колку прсти се користени, па на тој начин е можно да се има гестикулации како тројно брзо допирање со 2 прсти, или брзо допирање со 4 прсти, и.т.натаму. 
 
 ==== Flicks ====
-Quickly swipe your finger across the screen.
+Брзо лизгање на Ваш прст по должината на екранот.
 
-There are 4 possible flick gestures depending on the direction: flick left, flick right, flick up and flick down.
+Постојат 4 возможни гестикулации со движења во зависност од правецот: движење налево, движење надесно, движење нагоре и движење надолу.
 
-Just like taps, more than one finger can be used to perform the gesture.
-Therefore, gestures such as 2-finger flick up and 4-finger flick left are all possible.
+На ист начин како и допирањата, повеќе од еден прст може да биде користен за да се одиграат овие гестикулации.
+На тој начин, гестикулации како движење нагоре со два прсти како и движење налево со 4 прсти се возможни.
 
 +++ Touch Modes +++[TouchModes]
-As there are many more NVDA commands than possible touch gestures, NVDA has several touch modes you can switch between which make certain subsets of commands available.
-The two modes are text mode and object mode. 
-Certain NVDA commands listed in this document may have a touch mode listed in brackets after the touch gesture.
-For example, flick up (text mode) means that the command will be performed if you flick up, but only while in text mode.
-If the command does not have a mode listed, it will work in any mode.
+Како што постојат многу повеќе NVDA команди отколку што се можни допирни гестикулации, NVDA има неколку модели на допир меѓу кои Вие можете да ги одбирате и менувате и кои овозможуваат одреден подсет од команди возможни.
+Двата мода се текст модел и објектен модел. 
+Одредени NVDA команди кои се опишани и набројани во овој документ можат да имаат допирен модел набројан во загради после допирната гестикулација.
+На пример, движење нагоре (текст модел) значи дека командата ќе биде одиграна доколку се движите нагоре, но единствено само додека сте во текст моделот.
+Доколку командата нема набројан модел, ќе работи во било кој модел.
 
 %kc:beginInclude
-To toggle touch modes, perform a 3-finger tap.
+За менување и избирање на допирни модели, одиграјте допир со три прсти.
 %kc:endInclude
 
 +++ Touch keyboard +++[TouchKeyboard]
-The touch keyboard is used to enter text and commands from a touchscreen.
-When focused on an edit field, you can bring up the touch keyboard by double-tapping the touch keyboard icon on the bottom of the screen.
-For tablets such as Microsoft Surface Pro, the touch keyboard is always available when the keyboard is undocked.
-To dismiss the touch keyboard, double-tap the touch keyboard icon or move away from the edit field.
+Допирна тастатура се користи за да се внесе текст и команди од екран на допир.
+Кога во фокус е поле за менување, едитирање и запишување, можете да ја израснете во фокус допирната тастатура со двоен-допир на иконата односно визуелната кратенка на допирната тастатура на дното од екранот.
+За таблети како Microsoft Surface Pro, допирната тастатура е секогаш достапна кога физичката недигитална тастатура не е вклучена.(преведи го претходното)
+За да се ослободи допирната тастатура од функција, двојно-допрете на иконата односно визуелната кратенка на допирната тастатура или напуштете го полето за менување, едитирање и запишување.
 
-While the touch keyboard is active, to locate keys on the touch keyboard, move your finger to where the touch keyboard is located (typically at the bottom of the screen), then move around the keyboard with one finger.
-When you find the key you wish to press, double-tap the key or lift your finger, depending on options chosen from the [Touch Interaction Settings category #TouchInteraction] of the NVDA Settings.
+Додека допирната тастатура е активна, за да лоцирате копчиња на допирната тастатура, придвижете прст до местото каде допирната тастатура е поставена (вообичаено на дното од екранот), тогаш движете окулу тастатурата со еден прст.
+Кога ќе го најдете копчето што сакате да го притиснете, двојно-допрете го копчето или поткренете го прстот, во сооднос со опцијата која е одбрана од [Touch Interaction Settings category #TouchInteraction] од NVDA Поставките.
 
 ++ Input Help Mode ++[InputHelpMode]
-Many NVDA commands are mentioned throughout the rest of this user guide, but an easy way to explore all the different commands is to turn on input help.
+Многу NVDA команди се спомнати низ остатокот од овој кориснички водич, меѓутоа лесен начин да се истражат сите различни команди е да се вклучи input help.(преведи го претходното)
 
-To turn on input help, press NVDA+1.
-To turn it off, press NVDA+1 again.
-While in input help, performing any input gesture (such as pressing a key or performing a touch gesture) will report the action and describe what it does (if anything).
-The actual  commands will not execute while in input help mode.
+За да го вклучите input help, притиснете NVDA+1.(преведи го претходното)
+За да го оневозможите, повторно притиснете NVDA+1.
+Додека е овозможен input help, одигрување на било какви гестикулации на внес (како притискање на копче или одигрување на допирна гестикулација) ќе ја известува акцијата како и ќе објаснува што таа акција извршува (доколку воопшто извршува).(преведи го претходното)
+Вистинските команди нема да се извршуваат додека е активен input help моделот.(преведи го претходното)
 
 ++ The NVDA menu ++[TheNVDAMenu]
-The NVDA menu allows you to control NVDA's settings, access help, save/revert your configuration, Modify speech dictionaries, access additional tools and exit NVDA.
+NVDA менито Ви дозволува да ги контролирате NVDA поставките, да пристапувате до помош, зачувувате/навраќате на вашите конфигурирани поставки, Модифицирате говорни речници, пристапувате до додатни алатки како и да ја исклучите NVDA.
 
-To get to the NVDA menu from anywhere in Windows while NVDA is running, press NVDA+n on the keyboard or perform a 2-finger double-tap on the touch screen.
-You can also get to the NVDA menu via the Windows system tray.
-Either right-click on the NVDA icon located in the system tray, or access the system tray by pressing the Windows logo key+B, DownArrow to the NVDA icon and press the applications key located next to the right control key on most keyboards.
-When the menu comes up, You can use the arrow keys to navigate the menu, and the enter key to activate an item.
+Со цел да дојдете до NVDA менито од било каде во Windows истовремено додека NVDA работи, притиснете NVDA+n на тастатурата на или одиграјте дво-прстен двоен-допир на екранот за допир.
+Можете исто така да пристапите до NVDA менито преку Windows system tray.(преведи го претходното)
+Или притиснете на секундарното копче од глувчето на NVDA иконката односно визуелната кратенка која се наоѓа во system tray, или пристапете во system tray притискајќи го копчето со Windows лого+B, DownArrow до NVDA иконката односно визуелната кратенка и притиснете го апликациското копче кое се наоѓа веднаш до десното control копче на повеќето тастатури.(преведи го претходното)
+Кога менито ќе се појави и биде во фокусот, Вие можете да ги користите копчињата со стрелки да се движите низ менито, и да притиснете на enter копчето за да активирате некој предмет од менито.(преведи го претходното)
 
 ++ Basic NVDA commands ++[BasicNVDACommands]
 %kc:beginInclude
@@ -295,21 +295,21 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 %kc:endInclude
 
 + Navigating with NVDA +[NavigatingWithNVDA]
-NVDA allows you to explore and navigate the system in several ways, including both normal interaction and review.
+NVDA Ви дозволва да го истражувате и да навигирате низ системот на неколку начини, вклучувајќи ги и нормална интеракција и review.
 
 ++ Objects ++[Objects]
-Each Application and the operating system itself consist of many objects.
-An object is a single item such as a piece of text, button, checkbox, slider, list or editable text field.
+Секоја апликација како и самиот оперативниот се состојат од многу објекти.
+Објект е единечен предмет како парче текст, копче, checkbox, slider, листа или едитирачко поле за внесување на текст.(преведи го претходното)
 
 ++ Navigating with the System Focus ++[SystemFocus]
-The system focus, also known simply as the focus, is the [object #Objects] which receives keys typed on the keyboard.
-For example, if you are typing into an editable text field, the editable text field has the focus.
+Системскиот фокус, исто познат еднставно како фокус, е [object #Objects] кој ги прима притиснатите копчиња на тастатурата.
+На пример, доколку Вие пишувате во едитирачно поле за внесување на текст, едитирачкото поле за внесување на текст го има фокусот.
 
-The most common way of navigating around Windows with NVDA is to simply move the system focus using standard Windows keyboard commands, such as pressing tab and shift+tab to move forward and back between controls, pressing alt to get to the menu bar and then using the arrows to navigate menus, and using alt+tab to move between running applications.
-As you do this, NVDA will report information about the object with focus, such as its name, type, value, state, description, keyboard shortcut and positional information.
-When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the current system focus is also exposed visually.
+Најчестиот начин за навигација окулу Windows со NVDA е едноставно да се движи системскиот фокус користејќи стандардни Windows команди преку тастатура, како на пример притискање на tab and shift+tab да за придвижување напред и назад помеѓу контролите, притискајќи alt за да се дојде до menu bar и понатаму користејќи ги стралките за навигаација низ менијата, и користење на alt+tab за придвижување помеѓу апликациите.(преведи го претходното)
+Истовремено додека го работите ова, NVDA ќе кажува информации за објектот кој го има фокусот, како на пример неговото име, тип, вредност, состојба, опис, кратенка на тастатура и позициона информација.
+Кога [Focus Highlight #VisionFocusHighlight] е вклучен, локацијата на моменталниот системски фокус исто така е откриена визуелно.
 
-There are some key commands that are useful when moving with the System focus:
+Постојат некои командни копчиња кои се корисни при движење со Системскиот фокус:
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Description |
 | Report current focus | NVDA+tab | NVDA+tab | announces the current object or control that has the System focus. Pressing twice will spell the information |
@@ -319,13 +319,13 @@ There are some key commands that are useful when moving with the System focus:
 %kc:endInclude
 
 ++ Navigating with the System Caret ++[SystemCaret]
-When an [object #Objects] that allows navigation and/or editing of text is [focused #SystemFocus], you can move through the text using the system caret, also known as the edit cursor.
+Кога [object #Objects] што дозволува навигација и/или едитирање на текст е [focused #SystemFocus], Вие може да се движите низ текстот користејќи го system caret, исто така познат како edit курсор.(преведи го претходното)
 
-When the focus is on an object that has the system caret, you can use the arrow keys, page up, page down, home, end, etc. to move through the text.
-You can also change the text if the control supports editing.
-NVDA will announce as you move by character, word and line, and will also announce as you select and unselect text.
+Кога фокусот е на објект кој го има system caret, може да ги користите копчињаа со стрелки, page up, page down, home, end, и.т.натаму за да се движите низ текстот.(преведи го претходното)
+Вие исто така можете да го менувате текстот доколку контролата поддржува едитирање односно измена.
+NVDA ќе најавува како што се движите карактер по карактер, по зборови и линија, и исто ќе најавува како што ќе го означувате или деселектирате текстот.(преведи го претходното)
 
-NVDA provides the following key commands in relation to the system caret:
+NVDA ги овозможува достапно следниве командни копчиња во релација со system caret:(преведи го претходното)
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Description |
 | Say all | NVDA+downArrow | NVDA+a | Starts reading from the current position of the system caret, moving it along as it goes |
@@ -335,7 +335,7 @@ NVDA provides the following key commands in relation to the system caret:
 | Next sentence | alt+downArrow | alt+downArrow | Moves the caret to the next sentence and announces it. (only supported in Microsoft Word and Outlook) |
 | Previous sentence | alt+upArrow | alt+upArrow | Moves the caret to the previous sentence and announces it. (only supported in Microsoft Word and Outlook) |
 
-When within a table, the following key commands are also available:
+Кога во табела, следниве командни копчиња се исто достапни:
 || Name | Key | Description |
 | Move to previous column | control+alt+leftArrow | Moves the system caret to the previous column (staying in the same row) |
 | Move to next column | control+alt+rightArrow | Moves the system caret to the next column (staying in the same row) |
@@ -344,31 +344,31 @@ When within a table, the following key commands are also available:
 %kc:endInclude
 
 ++ Object Navigation ++[ObjectNavigation]
-Most of the time, you will work with applications using commands which move the [focus #SystemFocus] and the [caret #SystemCaret].
-However, sometimes, you may wish to explore the current application or the Operating System without moving the focus or caret.
-You may also wish to work with [objects #Objects] that cannot be accessed normally using the keyboard.
-In these cases, you can use object navigation.
+Повеќето од времето, Вие ќе работите со апликации користејќи команди кои се движат [focus #SystemFocus] како и [caret #SystemCaret].
+Меѓутоа, некогаш, можеби би сакале да ги истражувате моменталните апликации или Оперативниот Систем без движење на фокусот или caret.(преведи го претходното)
+Вие исто така можеби сакате да работите со [objects #Objects] кои не можат да бидат достапни нормално користејќи ја тастатурата.
+Во овие случаеви, Вие можете да ја користите објектната навигација.
 
-Object navigation allows you to move between and obtain information about individual [objects #Objects].
-When you move to an object, NVDA will report it similarly to the way it reports the system focus.
-For a way to review all text as it appears on the screen, you can instead use [screen review #ScreenReview].
+Објектната навигација Ви дозволува да се движите помеѓу како и да добивате информации окулу индивидуални [objects #Objects].
+Кога Вие се придвижувате до објект, NVDA ќе го извести тоа слично на начинот на кој го известува системскиот фокус.
+За начин да го прелистате целиот текст како што се појавува на екранот, Вие можете да го користите наместо тоа [screen review #ScreenReview].
 
-Rather than having to move back and forth between every single object on the system, the objects are organized hierarchically.
-This means that some objects contain other objects and you must move inside them to access the objects they contain.
-For example, a list contains list items, so you must move inside the list in order to access its items.
-If you have moved to a list item, moving next and previous will take you to other list items in the same list.
-Moving to a list item's containing object will take you back to the list.
-You can then move past the list if you wish to access other objects.
-Similarly, a toolbar contains controls, so you must move inside the toolbar to access the controls in the toolbar.
+Наместо тоа да треба да се движи назад и напред помеќу секој единечен објект од системот, објектите се организирани хиерархиски.
+Ова има значење дека некои објекти содржат во себе други објекти и Вие морате да се придвижите во нов за да имате пристап до објектите кои тие ги содржат.
+На пример, листа содржи елементи на листа, па Вие морате да се придвижите внатре во листата со цел да пристапите до нејзините елементи.
+Доколку Вие сте се придвижиле до елемент на листата, движење до нареден и претходен ќе ве однесе до други елементи на листата во таа листа.
+Moving to a list item's containing object will take you back to the list.(преведи го претходното)
+Тогаш Вие можете да се движите после листата доколку сакате да добиете пристап до други објекти.
+Слично, toolbar содржи контроли, па Вие морате да се движите внатре во toolbar за да пристапите до контролите на toolbar.(преведи го претходното)
 
-The object currently being reviewed is called the navigator object.
-Once you navigate to an object, you can review its content using the [text review commands #ReviewingText] while in [Object review mode #ObjectReview].
-When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the current navigator object is also exposed visually.
-By default, the navigator object moves along with the System focus, though this behaviour can be toggled on and off.
+Објектот кој моментално се прелистува е наречен navigator објект.(преведи го претходното)
+Штом Вие ќе навигирате до објект, Вие можете да ја разлистате неговата содржина користејќи го [text review commands #ReviewingText] додека сте во [Object review mode #ObjectReview].(преведи го претходното)
+Кога [Focus Highlight #VisionFocusHighlight] е вклучен, позицијата на моменталниот navigator објект визуелно е изложена.(преведи го претходното)
+Како основна селектирана опција, navigator објектот се движи заедно со Системскиот фокус, иако ова однесување може да биде вклучувано и исклучувано наизменично.(преведи го претходното)
 
-Note: Braille following Object Navigation can be configured via [Braille Tether #BrailleTether].
+Забелешка: Braille following Object Navigation може да биде конфигурирано преку [Braille Tether #BrailleTether].(преведи го претходното)
 
-To navigate by object, use the following commands:
+За навигација до објект, користете ги следниве команди:
 
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Touch | Description |
@@ -383,20 +383,20 @@ To navigate by object, use the following commands:
 | Report review cursor location | NVDA+numpadDelete | NVDA+delete | none | Reports information about the location of the text or object at the review cursor. For example, this might include the percentage through the document, the distance from the edge of the page or the exact screen position. Pressing twice may provide further detail. |
 %kc:endInclude
 
-Note: numpad keys require the Num Lock to be turned off to work properly.
+Забелешка: numpad копчињата побаруваат Num Lock да биде исклучено за да работат правилно.(преведи го претходното)
 
 ++ Reviewing Text ++[ReviewingText]
-NVDA allows you to read the contents of the [screen #ScreenReview], current [document #DocumentReview] or current [object #ObjectReview] by character, word or line.
-This is mostly useful in places (including Windows command consoles) where there is no [system caret #SystemCaret].
-For example, you might use it to review the text of a long information message in a dialog.
+NVDA Ви дозволува да читате содржина од [screen #ScreenReview], тековниот [document #DocumentReview] или тековниот [object #ObjectReview] карактер по карактер, по збор или линија.
+Ова е највеќе корисно на места (вклучувајќи ги и Windows командни конзоли) кадешто не постои [system caret #SystemCaret].
+На пример, Вие можете да го користите за да го прелистувате текстот во долга информациона порака во дијалог.
 
-When moving the review cursor, the System caret does not follow along, so you can review text without losing your editing position.
-However, by default, when the System caret moves, the review cursor follows along.
-This can be toggled on and off.
+Кога го придвижувате курсорот за прелистување, System caret не ги следи промените, па така Вие пожете да го прелистувате текстот без губење на едитирачката позиција.(преведи го претходното)
+Меѓутоа, како основна селектирана опција, кога System caret се движи, куросрот за разлистување следи по него.(преведи го претходното)
+Ова може да биде вклучено и исклучено наизменично.
 
-Note: Braille following the review cursor can be configured via [Braille Tether #BrailleTether].
+Забелешка: Брајово следење на курсoрот за прелистување може да биде конфигурирано преку Braille following the review cursor can be configured via [Braille Tether #BrailleTether].(преведи го претходното)
 
-The following commands are available for reviewing text:
+Следниве команди се достапни за ревизија на текст:(преведи го претходното)
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Touch | Description |
 | Move to top line in review | shift+numpad7 | NVDA+control+home | none | Moves the review cursor to the top line of the text |
@@ -420,19 +420,19 @@ The following commands are available for reviewing text:
 | Report current symbol replacement | None | None | none | Speaks the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode. |
 %kc:endInclude
 
-Note: numpad keys require the Num Lock to be turned off to work properly.
+Забелешка: numpad копчињата бараат Num Lock да биде исклучен за да работат правилно.(преведи го претходното)
 
-A good way to remember the basic text review commands  when using the Desktop layout  is to think of them as being in a grid of three by three, with top to bottom being line, word and character and left to right being previous, current and next.
-The layout is illustrated as follows:
+Добар начин да се запаметат основните команди за ревизија на текст кога се користи Desktop распоредот е да се мисли на нив како да се поставени во мрежа од три на три, со од врв до дно да бидат линија, збор, карактер, и лево до десно да бидат претходен, постоечки и следен.(преведи го претходното)
+Распоредот е преставен како што следи:
 | Previous line | Current line | Next line |
 | Previous word | Current word | Next word |
 | Previous character | Current character | Next character |
 
 ++ Review Modes ++[ReviewModes]
-NVDA's [text review commands #ReviewingText] can review content within the current navigator object, current document or screen, depending on the review mode selected.
-Review modes are a replacement for the older Flat Review concept found in NVDA.
+NVDA's [text review commands #ReviewingText] може да can ревидира содржина во рамките на постојниот navigator објект, постојниот документ или екран, во зависност од селектираниот модел на ревизија.(преведи го претходното)
+Моделите на ревизија се замена за постарите Flat Review концепти кои се наоѓаат во NVDA.(преведи го претходното)
 
-The following commands switch between review modes:
+Следниве команди прават промена помеѓу моделите на ревизија:
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Touch | Description |
 | Switch to next review mode | NVDA+numpad7 | NVDA+pageUp | 2-finger flick up | switches to the next available review mode |
@@ -440,8 +440,8 @@ The following commands switch between review modes:
 %kc:endInclude
 
 +++ Object Review +++[ObjectReview]
-While in object review mode, you are able to only review the content of the current [navigator object #ObjectNavigation].
-For objects such as editable text fields or other basic text controls, this will generally be the text content.
+Додека се наоѓа во објектен ревизиски модел, Вие сте во можност само да ја ревидирате содржината на постојниот [navigator object #ObjectNavigation].
+За објекти како едитирачки текстуални полиња или други основни текстуални контроли, ова генерално ќе биде текстуалната содржина.(преведи го претходното)
 For other objects, this may be the name and/or value.
 
 +++ Document Review +++[DocumentReview]
