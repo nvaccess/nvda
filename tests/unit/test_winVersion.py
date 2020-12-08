@@ -44,8 +44,13 @@ class TestWinVersion(unittest.TestCase):
 			minor=1,
 			build=7601
 		)
+		audioDuckingAvailable = winVersion.WinVersion(
+			major=6,
+			minor=2,
+			build=9200
+		)
 		self.assertGreaterEqual(
-			winVersion.getWinVer(), minimumWinVer
+			audioDuckingAvailable, minimumWinVer
 		)
 
 	def test_isWin10(self):
