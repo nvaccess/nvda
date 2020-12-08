@@ -288,9 +288,6 @@ class LiveText(NVDAObject):
 		The base implementation uses the L{TextInfo}.
 		However, subclasses should override this if there is a better way to retrieve the text.
 		"""
-		if hasattr(self, "_getTextLines"):
-			log.warning("LiveText._getTextLines is deprecated, please override _getText instead.")
-			return '\n'.join(self._getTextLines())
 		ti = self.makeTextInfo(textInfos.POSITION_ALL)
 		return self.diffAlgo._getText(ti)
 
