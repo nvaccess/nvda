@@ -238,7 +238,7 @@ def test_ariaTreeGrid_browseMode():
 	testFile = os.path.join(ARIAExamplesDir, "treegrid", "treegrid-1.html")
 	_chrome.prepareChrome(
 		f"""
-			<iframe src="{testFile}" />
+			<iframe src="{testFile}"></iframe>
 		"""
 	)
 	# Jump to the first heading in the iframe.
@@ -287,4 +287,61 @@ def test_ariaTreeGrid_browseMode():
 			# Focus lands on row 2
 			"level 1  Treegrids are awesome Want to learn how to use them? aaron at thegoogle dot rocks  expanded",
 		])
+	)
+
+
+def ARIAInvalid_spellingAndGrammar():
+	"""
+	Tests ARIA invalid values of "spelling", "grammar" and "spelling, grammar".
+	Please note that although IAccessible2 allows multiple values for invalid,
+	multiple values to aria-invalid is not yet standard.
+	And even if it were, they would be separated by space, not comma
+thus the html for this test would need to change,
+	but the expected output shouldn't need to.
+	"""
+	_chrome.prepareChrome(
+		r"""
+			<p>Big <span aria-invalid="spelling">caat</span> meos</p>
+			<p>Small <span aria-invalid="grammar">a dog</span> woofs</p>
+			<p>Fat <span aria-invalid="grammar, spelling">a ffrog</span> crokes</p>
+		"""
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"Big  spelling error  caat  meos"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"Small  grammar error  a dog  woofs"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"Fat  spelling error  grammar error  a ffrog  crokes"
+	)
+
+
+def test_ariaCheckbox_browseMode():
+	"""
+	Navigate to an unchecked checkbox in reading mode.
+	"""
+	testFile = os.path.join(ARIAExamplesDir, "checkbox", "checkbox-1", "checkbox-1.html")
+	_chrome.prepareChrome(
+		f"""
+			<iframe src="{testFile}"></iframe>
+		"""
+	)
+	# Jump to the first heading in the iframe.
+	actualSpeech = _chrome.getSpeechAfterKey("h")
+	_asserts.strings_match(
+		actualSpeech,
+		"frame  main landmark  Checkbox Example (Two State)  heading  level 1"
+	)
+	# Navigate to the checkbox.
+	actualSpeech = _chrome.getSpeechAfterKey("x")
+	_asserts.strings_match(
+		actualSpeech,
+		"Sandwich Condiments  grouping  list  with 4 items  Lettuce  check box  not checked"
 	)

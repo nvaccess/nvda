@@ -307,7 +307,7 @@ For example, if you are typing into an editable text field, the editable text fi
 
 The most common way of navigating around Windows with NVDA is to simply move the system focus using standard Windows keyboard commands, such as pressing tab and shift+tab to move forward and back between controls, pressing alt to get to the menu bar and then using the arrows to navigate menus, and using alt+tab to move between running applications.
 As you do this, NVDA will report information about the object with focus, such as its name, type, value, state, description, keyboard shortcut and positional information.
-When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the current system focus is also exposed visually.
+When [Visual Highlight #VisionFocusHighlight] is enabled, the location of the current system focus is also exposed visually.
 
 There are some key commands that are useful when moving with the System focus:
 %kc:beginInclude
@@ -363,7 +363,7 @@ Similarly, a toolbar contains controls, so you must move inside the toolbar to a
 
 The object currently being reviewed is called the navigator object.
 Once you navigate to an object, you can review its content using the [text review commands #ReviewingText] while in [Object review mode #ObjectReview].
-When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the current navigator object is also exposed visually.
+When [Visual Highlight #VisionFocusHighlight] is enabled, the location of the current navigator object is also exposed visually.
 By default, the navigator object moves along with the System focus, though this behaviour can be toggled on and off.
 
 Note: Braille following Object Navigation can be configured via [Braille Tether #BrailleTether].
@@ -506,7 +506,7 @@ Browse mode is also optionally available for Microsoft Word documents.
 
 In browse mode, the content of the document is made available in a flat representation that can be navigated with the cursor keys as if it were a normal text document.
 All of NVDA's [system caret #SystemCaret] key commands will work in this mode; e.g. say all, report formatting, table navigation commands, etc.
-When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the virtual browse mode caret is also exposed visually.
+When [Visual Highlight #VisionFocusHighlight] is enabled, the location of the virtual browse mode caret is also exposed visually.
 Information such as whether text is a link, heading, etc. is reported along with the text as you move.
 
 Sometimes, you will need to interact directly with controls in these documents.
@@ -776,8 +776,8 @@ Additional vision enhancement providers can be provided in [NVDA add-ons #Addons
 
 NVDA's vision settings can be changed in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog.
 
-++ Focus Highlight ++[VisionFocusHighlight]
-Focus Highlight can help to identify the [system focus #SystemFocus], [navigator object #ObjectNavigation] and [browse mode #BrowseMode] positions.
+++ Visual Highlight ++[VisionFocusHighlight]
+Visual Highlight can help to identify the [system focus #SystemFocus], [navigator object #ObjectNavigation] and [browse mode #BrowseMode] positions.
 These positions are highlighted with a coloured rectangle outline.
 - Solid blue highlights a combined navigator object and system focus location (e.g. because [the navigator object follows the system focus #ReviewCursorFollowFocus]).
 - Dashed blue highlights just the system focus object.
@@ -785,7 +785,7 @@ These positions are highlighted with a coloured rectangle outline.
 - Solid yellow highlights the virtual caret used in browse mode (where there is no physical caret such as in web browsers).
 -
 
-When Focus Highlight is enabled in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog, you can [change whether or not to highlight the focus, navigator object or browse mode caret #VisionSettingsFocusHighlight].
+When Visual Highlight is enabled in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog, you can [change whether or not to highlight the focus, navigator object or browse mode caret #VisionSettingsFocusHighlight].
 
 ++ Screen Curtain ++[VisionScreenCurtain]
 As a blind or vision impaired user, it is often not possible or necessary to see the contents of the screen.
@@ -1147,6 +1147,9 @@ If using a third-party synthesizer, you may also be able to change this value if
 This option allows you to change the rate of your voice.
 This is a slider that goes from 0 to 100 - 0 being the slowest, 100 being the fastest.
 
+==== Rate boost ====[SpeechSettingsRateBoost]
+Enabling this option will significantly increase the speech rate, if supported by the current synthesizer.
+
 ==== Pitch ====[SpeechSettingsPitch]
 This option allows you to change the pitch of the current voice.
 It is a slider which goes from 0 to 100 - 0 being the lowest pitch and 100 being the highest.
@@ -1397,10 +1400,10 @@ The Vision category in the NVDA Settings dialog allows you to enable, disable an
 Note that the available options in this category could be extended by [NVDA add-ons #AddonsManager].
 By default, this settings category contains the following options:
 
-==== Focus Highlight ====[VisionSettingsFocusHighlight]
-The check boxes in the Focus Highlight grouping control the behaviour of NVDA's built-in [Focus Highlight #VisionFocusHighlight] facility.
+==== Visual Highlight ====[VisionSettingsFocusHighlight]
+The check boxes in the Visual Highlight grouping control the behaviour of NVDA's built-in [Visual Highlight #VisionFocusHighlight] facility.
 
-- Enable Highlighting: Toggles Focus Highlight on and off.
+- Enable Highlighting: Toggles Visual Highlight on and off.
 - Highlight system focus: toggles whether the [system focus #SystemFocus] will be highlighted.
 - Highlight navigator object: toggles whether the [navigator object #ObjectNavigation] will be highlighted.
 - Highlight browse mode cursor: Toggles whether the [virtual browse mode cursor #BrowseMode] will be highlighted.
@@ -2106,6 +2109,14 @@ Physical braille displays typically have buttons to scroll forwards or backwards
 The braille viewer window contains a check box labelled "Show braille viewer on startup".
 If this is checked, the braille viewer will open when NVDA is started.
 The braille viewer window will always attempt to re-open with the same dimensions and location as when it was closed.
+
+The braille viewer window contains a check box labeled "Hover for cell routing", the default is unchecked.
+If checked, hovering the mouse over a braille cell will enable trigger the "route to braille cell" command for that cell.
+This is often used to move the caret or trigger the action for a control.
+This can be useful for testing NVDA is able to correctly reverse map a from braille cell.
+To prevent unintentionally routing to cells, the command is delayed.
+The mouse must hover until the cell turns green.
+The cell will start as a light yellow colour, transition to orange, then suddenly become green.
 
 ++ Python Console ++[PythonConsole]
 The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
@@ -3128,6 +3139,7 @@ Following are the command line options for NVDA:
 | None | --install | Installs NVDA (starting the newly installed copy) |
 | None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
 | None | --enable-start-on-logon=True|False | When installing, enable NVDA's [Use NVDA during Windows sign-in #StartAtWindowsLogon] |
+| None | --copy-portable-config | When installing, copy the portable configuration from the provided path (--config-path, -c) to the current user account |
 | None | --create-portable | Creates a portable copy of NVDA (starting the newly created copy). Requires --portable-path to be specified |
 | None | --create-portable-silent | Creates a portable copy of NVDA (does not start the newly installed copy). Requires --portable-path to be specified |
 | None | --portable-path=PORTABLEPATH | The path where a portable copy will be created |
