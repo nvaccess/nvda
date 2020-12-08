@@ -17,7 +17,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ]
 interface NvdaControllerInternal {
 	[fault_status,comm_status] requestRegistration();
-	[fault_status,comm_status] reportLiveRegion();
 	[fault_status,comm_status] inputLangChangeNotify();
 	[fault_status,comm_status] typedCharacterNotify();
 	[fault_status,comm_status] displayModelTextChangeNotify();
@@ -25,4 +24,5 @@ interface NvdaControllerInternal {
 	[fault_status,comm_status] vbufChangeNotify();
 	[fault_status,comm_status] installAddonPackageFromPath();
 	[fault_status,comm_status] drawFocusRectNotify();
+	[fault_status,comm_status] reportLiveRegion();
 }
