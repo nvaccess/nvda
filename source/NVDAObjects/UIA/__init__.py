@@ -42,6 +42,7 @@ import locationHelper
 import ui
 import winVersion
 
+
 class UIATextInfo(textInfos.TextInfo):
 
 	_cache_controlFieldNVDAObjectClass=True
@@ -991,7 +992,7 @@ class UIA(Window):
 						clsList.remove(x)
 
 	@classmethod
-	def kwargsFromSuper(cls,kwargs,relation=None):
+	def kwargsFromSuper(cls, kwargs, relation=None, ignoreNonNativeElementsWithFocus=True):
 		UIAElement=None
 		windowHandle=kwargs.get('windowHandle')
 		if isinstance(relation,tuple):
@@ -1014,7 +1015,7 @@ class UIA(Window):
 				log.debugWarning("getFocusedElement failed", exc_info=True)
 				return False
 			# Ignore this object if it is non native.
-			if not UIAHandler.handler.isNativeUIAElement(UIAElement):
+			if ignoreNonNativeElementsWithFocus and not UIAHandler.handler.isNativeUIAElement(UIAElement):
 				if UIAHandler._isDebug():
 					log.debug(
 						"kwargsFromSuper: ignoring non native element with focus"
@@ -1204,6 +1205,15 @@ class UIA(Window):
 			return self._getUIACacheablePropertyValue(UIAHandler.UIA_NamePropertyId)
 		except COMError:
 			return ""
+
+	def _get_liveRegionPoliteness(self):
+		try:
+			return UIAHandler.UIALiveSettingtoNVDAAriaLivePoliteness.get(
+				self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_LiveSettingPropertyId),
+				super().liveRegionPoliteness
+			)
+		except COMError:
+			return super().liveRegionPoliteness
 
 	def _get_role(self):
 		role=UIAHandler.UIAControlTypesToNVDARoles.get(self.UIAElement.cachedControlType,controlTypes.ROLE_UNKNOWN)
