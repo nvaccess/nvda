@@ -31,10 +31,7 @@ using namespace winrt::Windows::Foundation::Collections;
 using winrt::Windows::Foundation::Metadata::ApiInformation;
 
 bool __stdcall ocSpeech_supportsProsodyOptions() {
-	if (ApiInformation::IsApiContractPresent(L"Windows.Foundation.UniversalApiContract", 5, 0)) {
-		return true;
-	}
-	return false;
+	return ApiInformation::IsApiContractPresent(L"Windows.Foundation.UniversalApiContract", 5, 0);
 }
 
 OcSpeech::OcSpeech() : synth(SpeechSynthesizer{}) {
