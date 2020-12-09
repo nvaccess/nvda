@@ -140,6 +140,10 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 				destCol+=1 if movement=="next" else -1
 		raise LookupError
 
+	lastTableSelection = None
+	lastTableAxis = None
+	lastTableCoordinate = None
+	lastTableCoordinateSpan = None
 	def _tableMovementScriptHelper(self, movement="next", axis=None):
 		if isScriptWaiting():
 			return
@@ -153,6 +157,17 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			ui.message(_("Not in a table cell"))
 			return
 
+		# The follwoing lines check whether user has been issuing table navigation commands repeatedly.
+		# In this case, instead of using current column/row index, we used cached value to allow users being able to skip merged cells without affecting the initial column/row index.
+		# For more info see issue #11919 and #7278.
+		if (self.selection == self.lastTableSelection) and (self.lastTableAxis == axis):
+			if axis == "row":
+				origCol = self.lastTableCoordinate
+				origColSpan = self.lastTableCoordinateSpan
+			else:
+				origRow = self.lastTableCoordinate
+				origRowSpan = self.lastTableCoordinateSpan
+
 		try:
 			info = self._getNearestTableCell(tableID, self.selection, origRow, origCol, origRowSpan, origColSpan, movement, axis)
 		except LookupError:
@@ -165,6 +180,15 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		speech.speakTextInfo(info,formatConfig=formatConfig,reason=controlTypes.REASON_CARET)
 		info.collapse()
 		self.selection = info
+		self.lastTableSelection = self.selection
+		self.lastTableAxis = axis
+		if axis == "row":
+			self.lastTableCoordinate = origCol
+			self.lastTableCoordinateSpan = origColSpan
+		else:
+			self.lastTableCoordinate = origRow
+			self.lastTableCoordinateSpan = origRowSpan
+
 
 	def script_nextRow(self, gesture):
 		self._tableMovementScriptHelper(axis="row", movement="next")
