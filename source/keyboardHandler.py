@@ -548,6 +548,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 				time.sleep(0.01)
 				wx.Yield()
 
+	en_us_input_Hkl = 1033 + (1033 << 16)
 	@classmethod
 	def fromName(cls, name):
 		"""Create an instance given a key name.
@@ -569,7 +570,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 				vk, ext = getNVDAModifierKeys()[0]
 			elif len(keyName) == 1:
 				ext = False
-				requiredMods, vk = winUser.VkKeyScanEx(keyName, getInputHkl())
+				requiredMods, vk = winUser.VkKeyScanEx(keyName, en_us_input_Hkl)
 				if requiredMods & 1:
 					keys.append((winUser.VK_SHIFT, False))
 				if requiredMods & 2:
