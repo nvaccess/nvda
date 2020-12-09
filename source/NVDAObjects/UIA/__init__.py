@@ -1685,7 +1685,11 @@ class UIA(Window):
 		reportUIANotifications = config.conf['presentation']['reportUIANotifications']
 		if (
 			reportUIANotifications == "off"
-			or reportUIANotifications == "focusedApp" and self.appModule != api.getFocusObject().appModule
+			or (
+				reportUIANotifications == "focusedApp"
+				and self.appModule != api.getFocusObject().appModule
+			)
+
 		):
 			return
 		if displayString:
