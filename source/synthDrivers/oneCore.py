@@ -14,6 +14,7 @@ import ctypes
 import winreg
 import wave
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
+from synthDriverHandler import isDebugForSynthDriver
 import io
 from logHandler import log
 import config
@@ -197,7 +198,8 @@ class SynthDriver(SynthDriver):
 	def cancel(self):
 		# Set a flag to tell the callback not to push more audio.
 		self._wasCancelled = True
-		log.debug("Cancelling")
+		if isDebugForSynthDriver():
+			log.debug("Cancelling")
 		# There might be more text pending. Throw it away.
 		if self.supportsProsodyOptions:
 			# In this case however, we must keep any parameter changes.
@@ -300,11 +302,13 @@ class SynthDriver(SynthDriver):
 			# push the next chunk of audio. We *really* don't want this because calling
 			# WaveOutOpen blocks for ~100 ms if called from the callback when the SSML
 			# includes marks, resulting in lag between utterances.
-			log.debug("Calling sync on audio player")
+			if isDebugForSynthDriver():
+				log.debug("Calling sync on audio player")
 			self._player.sync()
 		if not self._queuedSpeech:
 			# There's still nothing in the queue, so it's okay to call idle now.
-			log.debug("Calling idle on audio player")
+			if isDebugForSynthDriver():
+				log.debug("Calling idle on audio player")
 			self._player.idle()
 			synthDoneSpeaking.notify(synth=self)
 		while self._queuedSpeech:
@@ -317,14 +321,16 @@ class SynthDriver(SynthDriver):
 				func(self._handle, value)
 				continue
 			self._wasCancelled = False
-			log.debug("Begin processing speech")
+			if isDebugForSynthDriver():
+				log.debug("Begin processing speech")
 			self._isProcessing = True
 			# ocSpeech_speak is async.
 			# It will call _callback in a background thread once done,
 			# which will eventually process the queue again.
 			self._dll.ocSpeech_speak(self._handle, item)
 			return
-		log.debug("Queue empty, done processing")
+		if isDebugForSynthDriver():
+			log.debug("Queue empty, done processing")
 		self._isProcessing = False
 
 	def _callback(self, bytes, len, markers):
@@ -360,10 +366,12 @@ class SynthDriver(SynthDriver):
 				onDone=lambda index=index: synthIndexReached.notify(synth=self, index=index))
 			prevPos = pos
 		if self._wasCancelled:
-			log.debug("Cancelled, stopped pushing audio")
+			if isDebugForSynthDriver():
+				log.debug("Cancelled, stopped pushing audio")
 		else:
 			self._player.feed(data[prevPos:])
-			log.debug("Done pushing audio")
+			if isDebugForSynthDriver():
+				log.debug("Done pushing audio")
 		self._processQueue()
 
 	def _getVoiceInfoFromOnecoreVoiceString(self, voiceStr):

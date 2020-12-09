@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
+# Copyright (C) 2006-2020 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -503,13 +503,15 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""Text suitably formatted for copying to the clipboard. E.g. crlf characters inserted between lines."""
 		return convertToCrlf(self.text)
 
-	def copyToClipboard(self):
+	def copyToClipboard(self, notify=False):
 		"""Copy the content of this instance to the clipboard.
 		@return: C{True} if successful, C{False} otherwise.
 		@rtype: bool
+		@param notify: whether to emit a confirmation message
+		@type notify: boolean
 		"""
 		import api
-		return api.copyToClip(self.clipboardText)
+		return api.copyToClip(self.clipboardText, notify)
 
 	def getTextInChunks(self, unit):
 		"""Retrieve the text of this instance in chunks of a given unit.
