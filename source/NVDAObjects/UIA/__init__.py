@@ -1689,7 +1689,6 @@ class UIA(Window):
 				reportUIANotifications == "focusedApp"
 				and self.appModule != api.getFocusObject().appModule
 			)
-
 		):
 			return
 		if displayString:
