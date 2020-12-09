@@ -31,13 +31,13 @@ using namespace winrt::Windows::Foundation::Collections;
 using winrt::Windows::Foundation::Metadata::ApiInformation;
 
 bool __stdcall ocSpeech_supportsProsodyOptions() {
-	return ApiInformation::IsApiContractPresent(L"Windows.Foundation.UniversalApiContract", 5, 0);
+	return ApiInformation::IsApiContractPresent(hstring{L"Windows.Foundation.UniversalApiContract"}, 5, 0);
 }
 
 OcSpeech::OcSpeech() : synth(SpeechSynthesizer{}) {
 	// By default, OneCore speech appends a  large annoying chunk of silence at the end of every utterance.
 	// Newer versions of OneCore speech allow disabling this feature, so turn it off where possible.
-	if (ApiInformation::IsApiContractPresent(L"Windows.Foundation.UniversalApiContract", 6, 0)) {
+	if (ApiInformation::IsApiContractPresent(hstring{L"Windows.Foundation.UniversalApiContract"}, 6, 0)) {
 		synth.Options().AppendedSilence(SpeechAppendedSilence::Min);
 	} else {
 		LOG_DEBUGWARNING(L"AppendedSilence not supported");
