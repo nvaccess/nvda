@@ -140,10 +140,12 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 				destCol+=1 if movement=="next" else -1
 		raise LookupError
 
-	lastTableSelection = None
-	lastTableAxis = None
-	lastTableCoordinate = None
-	lastTableCoordinateSpan = None
+	_lastTableSelection = None
+	_lastTableAxis = None
+	_lastTableRow = None
+	_lastTableRowSpan = None
+	_lastTableCol = None
+	_lastTableColSpan = None
 	def _tableMovementScriptHelper(self, movement="next", axis=None):
 		if isScriptWaiting():
 			return
@@ -157,17 +159,17 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			ui.message(_("Not in a table cell"))
 			return
 
-		# The follwoing lines check whether user has been issuing table navigation commands repeatedly.
+		# The following lines check whether user has been issuing table navigation commands repeatedly.
 		# In this case, instead of using current column/row index, we used cached value
 		# to allow users being able to skip merged cells without affecting the initial column/row index.
 		# For more info see issue #11919 and #7278.
-		if (self.selection == self.lastTableSelection) and (self.lastTableAxis == axis):
+		if (self.selection == self._lastTableSelection) and (self._lastTableAxis == axis):
 			if axis == "row":
-				origCol = self.lastTableCoordinate
-				origColSpan = self.lastTableCoordinateSpan
+				origCol = self._lastTableCol
+				origColSpan = self._lastTableColSpan
 			else:
-				origRow = self.lastTableCoordinate
-				origRowSpan = self.lastTableCoordinateSpan
+				origRow = self._lastTableRow
+				origRowSpan = self._lastTableRowSpan
 
 		try:
 			info = self._getNearestTableCell(tableID, self.selection, origRow, origCol, origRowSpan, origColSpan, movement, axis)
@@ -181,14 +183,14 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		speech.speakTextInfo(info,formatConfig=formatConfig,reason=controlTypes.REASON_CARET)
 		info.collapse()
 		self.selection = info
-		self.lastTableSelection = self.selection
-		self.lastTableAxis = axis
+		self._lastTableSelection = self.selection
+		self._lastTableAxis = axis
 		if axis == "row":
-			self.lastTableCoordinate = origCol
-			self.lastTableCoordinateSpan = origColSpan
+			self._lastTableCol = origCol
+			self._lastTableColSpan = origColSpan
 		else:
-			self.lastTableCoordinate = origRow
-			self.lastTableCoordinateSpan = origRowSpan
+			self._lastTableRow = origRow
+			self._lastTableRowSpan = origRowSpan
 
 
 	def script_nextRow(self, gesture):
