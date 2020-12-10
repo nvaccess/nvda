@@ -420,7 +420,7 @@ connection could not be established"""
 			"reportStatusLine": ("br(papenmeier):l2,dn",),
 			"kb:alt": ("br(papenmeier):lt+d3",),
 			"kb:control": ("br(papenmeier):lt+d2",),
-			"kb:escape": ("br(papenmeier):space+d7",),	
+			"kb:escape": ("br(papenmeier):space+d7",),
 			"kb:tab": ("br(papenmeier):space+d3+d7",),
 			"kb:upArrow": ("br(papenmeier):space+d2",),
 			"kb:downArrow": ("br(papenmeier):space+d5",),
@@ -429,10 +429,10 @@ connection could not be established"""
 			
 			"kb:control+escape": ("br(papenmeier):space+d1+d2+d3+d4+d5+d6",),
 			"kb:control+alt+delete": ("br(papenmeier):space+d1+d2+d3+d4+d5+d6+d7+d8",),
-			"kb:enter": ("br(papenmeier):space+d8","br(papenmeier):d8",),
+			"kb:enter": ("br(papenmeier):space+d8", "br(papenmeier):d8",),
 			"kb:pageup": ("br(papenmeier):space+d3",),
 			"kb:pagedown": ("br(papenmeier):space+d6",),
-			"kb:backspace": ("br(papenmeier):space+d6+d8","br(papenmeier):d7",),
+			"kb:backspace": ("br(papenmeier):space+d6+d8", "br(papenmeier):d7",),
 			"kb:home": ("br(papenmeier):space+d1+d2",),
 			"kb:end": ("br(papenmeier):space+d4+d5",),
 			"kb:delete": ("br(papenmeier):space+d5+d6",),
@@ -448,12 +448,10 @@ connection could not be established"""
 			"kb:f9": ("br(papenmeier):rt+d2+d4",),
 			"kb:f10": ("br(papenmeier):rt+d2+d4+d5",),
 			"kb:f11": ("br(papenmeier):rt+d1+d3",),
-			"kb:f12": ("br(papenmeier):rt+d1+d2+d3",),	
-			
+			"kb:f12": ("br(papenmeier):rt+d1+d2+d3",),
 			"kb:control+a": ("br(papenmeier):d1+d7+d8",),
 			"kb:control+p": ("br(papenmeier):d1+d2+d3+d4+d7+d8",),
 			"kb:control+s": ("br(papenmeier):d2+d3+d4+d7+d8",),
-			
 			"kb:control+b": ("br(papenmeier):d1+d2+d7+d8",),
 			"kb:control+c": ("br(papenmeier):d1+d4+d7+d8",),
 			"kb:control+d": ("br(papenmeier):d1+d4+d5+d7+d8",),
@@ -467,9 +465,9 @@ connection could not be established"""
 			"kb:control+l": ("br(papenmeier):d1+d2+d3+d7+d8",),
 			"kb:control+m": ("br(papenmeier):d1+d3+d4+d7+d8",),
 			"kb:control+n": ("br(papenmeier):d1+d3+d4+d5+d7+d8",),
-			"kb:control+o": ("br(papenmeier):d1+d3+d5+d7+d8",),			
+			"kb:control+o": ("br(papenmeier):d1+d3+d5+d7+d8",),
 			"kb:control+q": ("br(papenmeier):d1+d2+d3+d4+d5+d7+d8",),
-			"kb:control+r": ("br(papenmeier):d1+d2+d3+d5+d7+d8",),			
+			"kb:control+r": ("br(papenmeier):d1+d2+d3+d5+d7+d8",),
 			"kb:control+t": ("br(papenmeier):d2+d3+d4+d5+d7+d8",),
 			"kb:control+u": ("br(papenmeier):d1+d3+d6+d7+d8",),
 			"kb:control+v": ("br(papenmeier):d1+d2+d3+d6+d7+d8",),
@@ -477,7 +475,6 @@ connection could not be established"""
 			"kb:control+x": ("br(papenmeier):d1+d3+d4+d6+d7+d8",),
 			"kb:control+y": ("br(papenmeier):d1+d3+d4+d5+d6+d7+d8",),
 			"kb:control+z": ("br(papenmeier):d1+d3+d5+d6+d7+d8",),
-			
 		}
 	})
 
