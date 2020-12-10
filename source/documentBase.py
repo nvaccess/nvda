@@ -158,8 +158,8 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			return
 
 		# The follwoing lines check whether user has been issuing table navigation commands repeatedly.
-		# In this case, instead of using current column/row index, we used cached value 
-		# # to allow users being able to skip merged cells without affecting the initial column/row index.
+		# In this case, instead of using current column/row index, we used cached value
+		# to allow users being able to skip merged cells without affecting the initial column/row index.
 		# For more info see issue #11919 and #7278.
 		if (self.selection == self.lastTableSelection) and (self.lastTableAxis == axis):
 			if axis == "row":
