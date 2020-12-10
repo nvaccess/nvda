@@ -590,6 +590,7 @@ class OutlookWordDocument(WordDocument, BaseOutlookWordDocument):
 	ignoreEditorRevisions=True
 	ignorePageNumbers=True # This includes page sections, and page columns. None of which are appropriate for outlook.
 
+
 class OutlookUIAWordDocument(UIAWordDocument, BaseOutlookWordDocument):
 	""" Forces browse mode to be used on the UI Automation Outlook message viewer if the message is being read)."""
 

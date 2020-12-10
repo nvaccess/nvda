@@ -1403,7 +1403,7 @@ class WordDocument(Window):
 		"""
 		gesture.send()
 		self.reportTab()
-		
+
 	def reportTab(self):
 		selectionObj=self.WinwordSelectionObject
 		inTable=selectionObj.tables.count>0 if selectionObj else False
