@@ -570,7 +570,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 				vk, ext = getNVDAModifierKeys()[0]
 			elif len(keyName) == 1:
 				ext = False
-				requiredMods, vk = winUser.VkKeyScanEx(keyName, en_us_input_Hkl)
+				requiredMods, vk = winUser.VkKeyScanEx(keyName, cls.en_us_input_Hkl)
 				if requiredMods & 1:
 					keys.append((winUser.VK_SHIFT, False))
 				if requiredMods & 2:
