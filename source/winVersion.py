@@ -139,7 +139,7 @@ def getWinVerFromVersionText(versionText: str):
 
 def isSupportedOS():
 	# NVDA can only run on Windows 7 Service pack 1 and above
-	return (winVersion.major,winVersion.minor,winVersion.service_pack_major) >= (6,1,1)
+	return getWinVer() >= WIN7_SP1
 
 def canRunVc2010Builds():
 	return isSupportedOS()
@@ -174,4 +174,4 @@ def isWin10(version: int = 1507, atLeast: bool = True):
 	return getWinVer().isWin10(release=str(version), atLeast=atLeast)
 
 def isFullScreenMagnificationAvailable():
-	return (winVersion.major, winVersion.minor) >= (6, 2)
+	return getWinVer() >= WIN8
