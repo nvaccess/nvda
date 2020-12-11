@@ -31,44 +31,16 @@ class TestWinVersion(unittest.TestCase):
 		)
 
 	def test_getWinVerFromVersionText(self):
+		# Windows 10 1507 is in fact Windows 10 initial release.
 		winTenInitial = winVersion.getWinVerFromVersionText("10.0.10240")
-		self.assertTupleEqual(
-			(winTenInitial.major, winTenInitial.minor, winTenInitial.build),
-			(10, 0, 10240)
+		self.assertEqual(
+			winTenInitial, winVersion.WIN10_1507
 		)
 
 	def test_moreRecentWinVer(self):
 		# Specifically to test operators.
-		minimumWinVer = winVersion.WinVersion(
-			major=6,
-			minor=1,
-			build=7601
-		)
-		audioDuckingAvailable = winVersion.WinVersion(
-			major=6,
-			minor=2,
-			build=9200
-		)
+		minimumWinVer = winVersion.WIN7_SP1
+		audioDuckingAvailable = winVersion.WIN8
 		self.assertGreaterEqual(
 			audioDuckingAvailable, minimumWinVer
-		)
-
-	def test_isWin10(self):
-		# Say "False" if tested on anything other than Windows 10.
-		currentWinVer = winVersion.getWinVer()
-		if currentWinVer.major == 10:
-			self.assertTrue(currentWinVer.isWin10())
-		else:
-			self.assertFalse(currentWinVer.isWin10())
-
-	@unittest.skipIf(
-		sys.getwindowsversion().major != 10,
-		"requires Windows 10"
-	)
-	def test_isWin10NonexistentRelease(self):
-		# Test the fact that there is no Version 2003 (Version 2004 exists, however).
-		self.assertRaises(
-			ValueError,
-			winVersion.getWinVer().isWin10,
-			release="2003"
 		)
