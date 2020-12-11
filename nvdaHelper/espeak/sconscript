@@ -1,7 +1,7 @@
 from include.scons.SCons.Util import CLVar
 
 Import([
-	'env',
+	'thirdPartyEnv',
 	'sourceDir',
 ])
 
@@ -32,26 +32,15 @@ class espeak_VOICE(ctypes.Structure):
 		('spare',ctypes.c_void_p),
 	]
 
-env=env.Clone()
-#Whole-program optimization causes eSpeak to distort and worble with its Klatt4 voice
-#Therefore specifically force it off
-env.Append(CCFLAGS='/GL-')
-
-# Don't analyze the code as not our project
-if 'analyze' in env['nvdaHelperDebugFlags']:
-	env.Append(CCFLAGS='/analyze-')
-
-# Ignore all warnings as the code is not ours.
-env.Append(CCFLAGS='/W0')
-# Remove unused flags
-flags: CLVar = env['CCFLAGS']
-flagsToRemove = [
-	'/W3',  # Warning level 3 conflicts with Warning level 0
-	'/WX'  # treat warnings as errors not used for 3rd party code.
-]
-for toRemove in flagsToRemove:
-	flags.remove(toRemove)
-env['CCFLAGS'] = flags
+env = thirdPartyEnv.Clone()
+env.Append(
+	CCFLAGS=[
+		# Whole-program optimization causes eSpeak to distort and warble with its Klatt4 voice
+		# Therefore specifically force it off
+		'/GL-',
+		# Ignore all warnings as the code is not ours.
+		'/W0',
+	])
 
 env.Append(
 	CPPPATH=[
