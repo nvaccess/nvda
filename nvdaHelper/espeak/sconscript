@@ -1,3 +1,5 @@
+from include.scons.SCons.Util import CLVar
+
 Import([
 	'env',
 	'sourceDir',
@@ -39,10 +41,27 @@ env.Append(CCFLAGS='/GL-')
 if 'analyze' in env['nvdaHelperDebugFlags']:
 	env.Append(CCFLAGS='/analyze-')
 
-# Ignore all warnings as the code is not ours
-env.Replace(CCFLAGS='/W0')
+# Ignore all warnings as the code is not ours.
+env.Append(CCFLAGS='/W0')
+# Remove unused flags
+flags: CLVar = env['CCFLAGS']
+flagsToRemove = [
+	'/W3',  # Warning level 3 conflicts with Warning level 0
+	'/WX'  # treat warnings as errors not used for 3rd party code.
+]
+for toRemove in flagsToRemove:
+	flags.remove(toRemove)
+env['CCFLAGS'] = flags
 
-env.Append(CPPPATH=['#nvdaHelper/espeak',espeakIncludeDir,espeakIncludeDir.Dir('compat'),sonicSrcDir,espeakSrcDir.Dir('ucd-tools/src/include')])
+env.Append(
+	CPPPATH=[
+		'#nvdaHelper/espeak',
+		espeakIncludeDir,
+		espeakIncludeDir.Dir('compat'),
+		espeakSrcDir.Dir('speechPlayer/include'),
+		sonicSrcDir,
+		espeakSrcDir.Dir('ucd-tools/src/include')
+	])
 
 def espeak_compilePhonemeData_buildEmitter(target,source,env):
 	phSourceIgnores=['error_log','error_intonation','compile_prog_log','compile_report','envelopes.png']
@@ -92,6 +111,14 @@ sonicLib=env.StaticLibrary(
 	source='sonic.c',
 )
 
+env.Append(CCFLAGS=[
+	'/DINCLUDE_SPEECHPLAYER',
+	'/DINCLUDE_KLATT',
+	'/DLIBESPEAK_NG_EXPORT',
+	# Define WIN32_LEAN_AND_MEAN for preprocessor to prevent windows.h including winsock causing redefinition
+	# errors when winsock2 is included by espeak\src\include\compat\endian.h
+	'/DWIN32_LEAN_AND_MEAN',
+	])
 espeakLib=env.SharedLibrary(
 	target='espeak',
 	srcdir=espeakSrcDir.Dir('libespeak-ng').abspath,
@@ -131,6 +158,14 @@ espeakLib=env.SharedLibrary(
 		"voices.c",
 		"wavegen.c",
 		sonicLib,
+		# espeak OPT_SPEECHPLAYER block
+		"sPlayer.c",
+		"../speechPlayer/src/frame.cpp",
+		"../speechPlayer/src/speechPlayer.cpp",
+		"../speechPlayer/src/speechWaveGenerator.cpp",
+		#"../speak-ng.cpp",
+		# if not OPT_SPEECHPLAYER
+		# "../speak-ng.c",
 		# espeak does not need to handle its own audio output so dont include:
 		# pcaudiolib\src\audio.c
 		# pcaudiolib\src\windows.c
