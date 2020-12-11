@@ -416,7 +416,10 @@ class AppModule(appModuleHandler.AppModule):
 
 	def isGoodUIAWindow(self, hwnd):
 		# #9204: shell raises window open event for emoji panel in build 18305 and later.
-		if winVersion.isWin10(version=1903) and winUser.getClassName(hwnd) == "ApplicationFrameWindow":
+		if (
+			winVersion.getWinVer() >= winVersion.WIN10_1903
+			and winUser.getClassName(hwnd) == "ApplicationFrameWindow"
+		):
 			return True
 		return False
 
