@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-11 00:10+1000\n"
-"PO-Revision-Date: 2020-09-16 18:25+0800\n"
+"POT-Creation-Date: 2020-10-09 00:10+1000\n"
+"PO-Revision-Date: 2020-10-08 10:30+0800\n"
 "Last-Translator: Larry Wang <larry.wang.801@gmail.com>\n"
 "Language-Team: NVDASimplified Chinese team All volunteers <Copyright (C) "
 "2010-2020>\n"
@@ -3649,7 +3649,7 @@ msgstr "切换可点击朗读的开关"
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
 #, python-format
 msgid "Symbol level %s"
-msgstr "符号级别为%s"
+msgstr "%s符号"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
@@ -3742,9 +3742,10 @@ msgstr "朗读浏览光标下文本或对象的位置信息，连按两次获取
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
-"Sets the navigator object to the current focus,and the review cursor to the "
+"Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
-msgstr "将对象导航设置为当前焦点，如果可能，将浏览光标设置到输入焦点所在位置。"
+msgstr ""
+"如果可能，将导航对象设置到当前焦点，将浏览光标设置到编辑光标所在的位置。"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
@@ -4241,7 +4242,7 @@ msgstr "交流电源已接通"
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
-msgstr "剩余{hours:d}小时和{minutes:d}分钟"
+msgstr "剩余{hours:d}小时{minutes:d}分钟"
 
 #. Translators: Input help mode message for report battery status command.
 msgid "Reports battery status and time remaining if AC is not plugged in"

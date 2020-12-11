@@ -356,12 +356,12 @@ Se invece si desidera esplorare il testo così come appare sullo schermo, è pos
 Onde evitare di doversi muovere indietro ed avanti tra ogni singolo oggetto del sistema, gli oggetti sono raggruppati in maniera gerarchica.
 Questo significa che alcuni oggetti contengono altri oggetti e che bisogna spostarvisi all'interno  per ottenerne le informazioni.
 Per esempio, come sappiamo un elenco contiene vari elementi, per cui bisognerà spostarsi all'interno dell'elenco per ottenere accesso ai suoi elementi.
-Se ci si è portati ad un elemento di un elenco, i comandi per andare all'oggetto successivo o precedente  faranno in modo che ci si sposti all'elemento successivo o precedente dell'elenco.
-Lo spostarsi su  un oggetto che contiene un elemento di un elenco riporterà all'elenco stesso.
-Sarà quindi necessario spostarsi tra l'elenco per raggiungere altri oggetti.
-Allo stesso modo, se si incontra una barra degli strumenti, bisogna entrare all'interno di essa per accedere ai controlli della stessa.
+Se ci si è portati su un elemento di un elenco, i comandi per andare all'oggetto successivo o precedente faranno in modo che ci si sposti all'elemento successivo o precedente dell'elenco.
+Se invece ci si sposta all’oggetto che contiene l’elemento di un elenco, si torna nell’elenco stesso.
+Ci si potrà poi spostare prima o dopo l’elenco per raggiungere altri oggetti.
+Allo stesso modo, se si incontra una barra degli strumenti, bisogna entrare all'interno di essa per accedere ai controlli che la compongono.
 
-L'oggetto che attualmente viene esplorato è chiamato navigatore ad oggetti.
+L'oggetto che attualmente viene esplorato è quello su cui si trova il navigatore ad oggetti.
 Una volta che viene raggiunto un oggetto, è possibile esplorarlo utilizzando i [comandi di esplorazione testo #ReviewingText] in [modalità navigazione ad oggetti #ObjectReview].
 Quando [l'evidenziatore del focus #VisionFocusHighlight] è attivato, viene evidenziata sullo schermo la posizione corrente del navigatore ad oggetti.
 Da impostazioni predefinite, il navigatore ad oggetti si sposta in concomitanza con il focus di sistema, tuttavia questo comportamento può essere modificato, attivando o disattivando la relativa opzione.
@@ -375,11 +375,11 @@ Per navigare ad oggetti, utilizzare i tasti seguenti:
 | Legge l'oggetto corrente | NVDA+5 del tastierino numerico | NVDA+shift+o | Nessuno | Annuncia l'oggetto corrente. Premendolo due volte ne fa lo spelling, mentre premendolo tre volte copia il nome dell'oggetto ed il suo valore negli appunti |
 | Spostarsi all'oggetto contenitore  | NVDA+8 del tastierino numerico | NVDA+Shift+freccia su | Scorrimento in alto (modo oggetti) | ci si sposta all'oggetto che contiene l'oggetto corrente |
 | Spostarsi all'oggetto precedente | NVDA+4 del tastierino numerico | NVDA+shift+freccia sinistra | Scorrimento a sinistra (modo oggetti) | ci si Sposta all'oggetto precedente rispetto a quello attuale, sullo stesso livello |
-| Spostarsi all'oggetto successivo | NVDA+numpad6 | NVDA+shift+freccia destra | Scorrimento a destra (modo oggetti) | ci si Sposta all'oggetto successivo rispetto a quello attuale, sullo stesso livello) |
+| Spostarsi all'oggetto successivo | NVDA+6 del tastierino numerico | NVDA+shift+freccia destra | Scorrimento a destra (modo oggetti) | ci si Sposta all'oggetto successivo rispetto a quello attuale, sullo stesso livello) |
 | Spostarsi al primo oggetto contenuto | NVDA+2 del tastierino numerico | NVDA+shift+freccia giù | Scorrimento in basso (modo oggetti) | Ci si sposta al primo oggetto contenuto nell'oggetto attuale |
 | Spostarsi all'oggetto focalizzato | NVDA+Meno del tastierino numerico | NVDA+Backspace | Nessuno | Sposta il navigatore ad oggetti sull'oggetto che attualmente ha il focus di sistema, e porta anche il cursore di controllo in quella posizione, se il cursore di sistema è visualizzato |
 | Attivare l'oggetto corrente | NVDA+Invio del tastierino numerico | NVDA+Invio | Doppio tap | Attiva l'oggetto corrente (l'equivalente di cliccare col mouse o premere la barra spazio in presenza del focus) |
-| Spostare il focus di sistema sull'oggetto corrente | NVDA+Shift+meno del tastierino numerico | NVDA+Shift+Backspace | Nessuno | Sposta il focus di sistema alla posizione del navigatore ad oggetti se possibile, mentre se premuto due volte sposta il cursore di sistema alla posizione del cursore di controllo |
+| Spostare il focus o il cursore di sistema sull'oggetto corrente | NVDA+Shift+meno del tastierino numerico | NVDA+Shift+Backspace | Nessuno | Sposta il focus di sistema alla posizione del navigatore ad oggetti se possibile, mentre se premuto due volte sposta il cursore di sistema alla posizione del cursore di controllo |
 | Annuncia posizione del cursore di controllo | NVDA+Canc del tastierino numerico | NVDA+Canc | Nessuno | Legge la posizione del testo o dell'oggetto sul cursore di controllo. Ad esempio, può significare la percentuale in un documento, la distanza dal bordo della pagina o l'esatta posizione sullo schermo. Una doppia pressione fornirà se possibile ulteriori dettagli. |
 %kc:endInclude
 
