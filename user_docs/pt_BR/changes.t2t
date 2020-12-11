@@ -4,6 +4,74 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 %!includeconf: ../changes.t2tconf
 %!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
 
+= 2020.3 =
+Esta versão inclui vários grandes aprimoramentos de estabilidade e desempenho, especialmente em aplicativos do Microsoft Office. Existem novas configurações para alternar o suporte a tela de toque e anunciar gráficos.
+A existência de conteúdo marcado (realçado) pode ser informada em navegadores, e há novas tabelas braille alemãs.
+
+== Novas Características ==
+- Agora você pode alternar os anúncios de gráficos das configurações de formatação de documentos do NVDA. Observe que desabilitar esta opção ainda lerá os textos alternativos dos gráficos. (#4837)
+- Agora você pode alternar o suporte a tela de toque do NVDA. Uma opção foi adicionada ao painel Interação por Toque das configurações do NVDA. O comando ""[gesto]"" padrão é NVDA+control+alt+t. (#9682)
+- Adicionadas novas tabelas braille em alemão. (#11268)
+- O NVDA agora detecta controles UIA de texto somente leitura. (#10494)
+- A existência de conteúdo marcado (realçado) é informada em voz e braille em todos os navegadores web. (#11436)
+ - Isso pode ser ativado e desativado por uma nova opção de formatação de documento do NVDA para realce.
+- Novas teclas emuladas do teclado do sistema podem ser adicionadas a partir do diálogo Definir comandos ""[Gestos de entrada]"" do NVDA. (#6060)
+  - Para fazer isso, pressione o botão adicionar depois de selecionar a categoria Teclas de teclado do sistema emulado.
+- Handy Tech Active Braille com joystick agora é compatível. (#11655)
+- A configuração "Modo de foco automático quando o cursor do aplicativo muda" agora é compatível com a desativação de "Posicionar automaticamente foco do sistema em elementos focáveis". (#11663)
+
+
+== Alterações ==
+- O script de anúncio de formatação (NVDA+f) agora foi alterado para informar a formatação no cursor do sistema em vez de na posição do cursor de exploração. Para informar a formatação na posição do cursor de exploração, use NVDA+shift+f. (#9505)
+- O NVDA não define mais automaticamente o foco do sistema para elementos focalizáveis por padrão no modo de navegação, melhorando o desempenho e a estabilidade. (#11190)
+- CLDR atualizado da versão 36.1 para a versão 37. (#11303)
+- Atualizado eSpeak-NG para 1.51-dev, commit 1fb68ffffea4
+- Agora você pode utilizar a navegação de tabela em caixas de lista com itens de lista marcáveis quando a lista particular tiver várias colunas. (#8857)
+- No gerenciador de complementos, quando solicitado a confirmar a remoção de um complemento, "Não" agora é o padrão. (#10015)
+- No Microsoft Excel, o diálogo Lista de elementos agora apresenta fórmulas em sua forma localizada. (#9144)
+- NVDA agora informa a terminologia correta para notas no Ms Excel. (#11311)
+- Ao usar o comando "mover o cursor de exploração para o foco" no modo de navegação, o cursor de exploração agora é definido na posição do cursor virtual. (#9622)
+- As informações relatadas no modo de navegação, como as informações de formatação com NVDA+F, agora são exibidas em uma janela um pouco maior centralizada na tela. (#9910)
+
+
+== Correção de Falhas ==
+- O NVDA agora sempre fala ao navegar por palavra e ao chegar em qualquer símbolo individual seguido de espaço em branco, quaisquer que sejam as configurações de verbosidade. (#5133)
+- Em aplicativos que usam QT 5.11 ou mais recente, as descrições dos objetos são informadas novamente. (#8604)
+- Ao excluir uma palavra com control+delete, o NVDA não fica mais em silêncio. (#3298, #11029)
+  - Agora, a palavra à direita da palavra excluída é anunciada.
+- No painel de configurações gerais, a lista de idiomas agora está ordenada corretamente. (#10348)
+- No diálogo Definir comandos ""[Gestos de entrada]"", desempenho significativamente melhorado durante a filtragem. (#10307)
+- Agora você pode enviar caracteres Unicode além do U+FFFF duma linha braille. (#10796)
+- O NVDA anunciará o conteúdo do diálogo Abrir com no Windows 10 Atualização de Maio de 2020. (#11335)
+- Uma nova opção experimental nas configurações avançadas (Habilitar registro seletivo de eventos de UI Automation e mudanças de propriedades) pode fornecer grandes melhorias de desempenho no Microsoft Visual Studio e outros aplicativos baseados em UIAutomation, se habilitada. (#11077, #11209)
+- Para itens de lista marcáveis, o estado selecionado não é mais anunciado de forma redundante e, se aplicável, o estado não selecionado é anunciado. (#8554)
+- No Windows 10 Atualização de Maio de 2020, o NVDA agora mostra o Mapeador de Som da Microsoft ao visualizar os dispositivos de saída no diálogo do sintetizador. (#11349)
+- No Internet Explorer, os números agora são anunciados corretamente para as listas ordenadas se a lista não começar com 1. (#8438)
+- No Google Chrome, o NVDA agora informará não marcado para todos os controles marcáveis (não apenas caixas de seleção) que não estão marcados no momento. (#11377)
+- É mais uma vez possível navegar em vários controles quando o idioma do NVDA está definido para o aragonês. (#11384)
+- O NVDA não deve mais travar às vezes no Microsoft Word ao mover rapidamente para cima e para baixo ou digitar caracteres com Braille habilitado. (#11431, #11425, #11414)
+- O NVDA não acrescenta mais espaço à direita inexistente ao copiar o objeto d navegação atual para a área de transferência. (#11438)
+- O NVDA não ativa mais o perfil Leitura Contínua se não houver nada para ler. (#10899, #9947)
+- O NVDA não é mais incapaz de ler a lista de recursos no Gerenciador dos Serviços de Informações da Internet (IIS). (#11468)
+- O NVDA agora mantém o dispositivo de áudio aberto, melhorando o desempenho em algumas placas de som (#5172, #10721)
+- O NVDA não congela ou fecha mais ao manter pressionado control+shift+seta para baixo no Microsoft Word. (#9463)
+- O estado expandido/recolhido dos diretórios na navegação da visualização em árvore em drive.google.com agora é sempre informado pelo NVDA. (#11520)
+- O NVDA detectará automaticamente a linha braille NLS eReader Humanware via Bluetooth, pois seu nome Bluetooth agora é "NLS eReader Humanware". (#11561)
+- Maiores aperfeiçoamentos de desempenho no Visual Studio Code. (#11533)
+
+
+== Alterações para Desenvolvedores ==
+- O BoxSizerHelper.addDialogDismissButtons do Helper da GUI suporta um novo argumento de palavra-chave "separated" ""[separado]"", para adicionar um separador horizontal padrão aos diálogos (diferente de mensagens e diálogos de entrada única). (#6468)
+- Propriedades adicionais foram adicionadas aos app modules ""[módulos de aplicativo]"", incluindo caminho para o executável (appPath), é um aplicativo da Windows Store (isWindowsStoreApp) e arquitetura de máquina para o aplicativo (appArchitecture). (#7894)
+- Agora é possível criar app modules ""[módulos de aplicativos]"" para aplicativos hospedados em wwahost.exe no Windows 8 e posteriores. (#4569)
+- Um fragmento do log agora pode ser delimitado e então copiado para a área de transferência usando NVDA+control+shift+F1. (#9280)
+- Objetos específicos do NVDA que são encontrados pelo coletor de lixo cíclico do Python agora são registrados ao serem excluídos pelo coletor para auxiliar na remoção dos ciclos de referência do NVDA. (#11499)
+ - A maioria das classes do NVDA são monitoradas, incluindo NVDAObjects, appModules, GlobalPlugins, SynthDrivers e TreeInterceptors.
+ - Uma classe que precisa ser rastreada deve ser herdada de garbageHandler.TrackedObject.
+- O registro de depuração significativo para eventos MSAA agora pode ser ativado nas configurações avançadas do NVDA. (#11521)
+- WinEvents MSAA para o objeto atualmente em foco não são mais filtrados junto com outros eventos se a contagem de eventos para um determinado segmento for excedida. (#11520)
+
+
 = 2020.2 =
 Os destaques desta versão incluem suporte para uma nova linha braille da Nattiq, melhor suporte à GUI ""[Interface Gráfica do Usuário]"" do antivírus ESET e ao Windows Terminal, aprimoramentos de desempenho no 1Password e com o sintetizador Windows OneCore. Além de muitas outras importantes correções de falhas e melhorias.
 
@@ -170,12 +238,12 @@ Embora essas alterações quebrem a compatibilidade com os complementos NVDA mai
 - As caixas de combinação ARIA 1.1 agora são suportadas no Mozilla Firefox e Google Chrome. (#9616)
 - O NVDA não informará mais o conteúdo de colunas visualmente ocultas para itens de lista nos controles do SysListView32. (#8268)
 - O diálogo de configurações não mostra mais "informações" como o nível de log atual no modo seguro. (#10209)
-- No menu Iniciar do Windows 10 Atualização de Aniversário e posteriores, o NVDA anunciará detalhes dos resultados da pesquisa. (#10232)
+- No menu Iniciar do Windows 10 Atualização de Aniversário e posteriores, o NVDA anunciará detalhes dos resultados da pesquisa. (#10340)
 - No modo de navegação, se mover o cursor ou usar a navegação rápida faz com que o documento mude, o NVDA não mais fala conteúdo incorreto em alguns casos. (#8831, #10343)
 - Alguns nomes de marcadores no Microsoft Word foram corrigidos. (#10399)
 - Na atualização do Windows 10 de maio de 2019 e posteriores, o NVDA anunciará novamente o primeiro item de emoji ou área de transferência selecionado quando o histórico do painel de emoji e da área de transferência for aberto, respectivamente. (#9204)
 - No Poedit, é novamente possível ver algumas traduções para os idiomas da direita para a esquerda. (#9931)
-- No aplicativo Configurações da atualização do Windows 10 de abril de 2018 e posteriores, o NVDA não anunciará mais as informações da barra de progresso dos medidores de volume encontrados na página Sistema/Som. (#10284)
+- No aplicativo Configurações do Windows 10 Atualização de Abril de 2018 e posteriores, o NVDA não anunciará mais as informações da barra de progresso dos medidores de volume encontrados na página Sistema/Som. (#10412)
 - Expressões regulares inválidas nos dicionários de fala não quebram mais completamente a fala no NVDA. (#10334)
 - Ao ler itens com marcadores no Microsoft Word com UIA ativado, o marcador do próximo item da lista não é mais anunciado inadequadamente. (#9613)
 - Alguns problemas raros de transcrição braille e erros com o liblouis foram resolvidos. (#9982)
