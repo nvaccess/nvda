@@ -120,11 +120,12 @@ WIN10_20H2 = WinVersion(major=10, minor=0, build=19042)
 
 
 def getWinVer():
+	winVer = sys.getwindowsversion()
 	return WinVersion(
-		major=winVersion.major,
-		minor=winVersion.minor,
-		build=winVersion.build,
-		servicePack=winVersion.service_pack
+		major=winVer.major,
+		minor=winVer.minor,
+		build=winVer.build,
+		servicePack=winVer.service_pack
 	)
 
 
