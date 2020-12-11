@@ -153,6 +153,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	allowSkimReadingInSayAll = boolean(default=False)
 	alertForSpellingErrors = boolean(default=True)
 	handleInjectedKeys= boolean(default=true)
+	maxRepeatedKeyPressDelay = float(default=0.5, min=0.1, max=30.0)
 
 [virtualBuffers]
 	maxLineLength = integer(default=100)

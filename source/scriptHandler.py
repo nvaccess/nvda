@@ -199,7 +199,7 @@ def executeScript(script,gesture):
 	try:
 		scriptTime=time.time()
 		scriptRef=weakref.ref(scriptFunc)
-		if (scriptTime-_lastScriptTime)<=0.5 and scriptFunc==lastScriptRef:
+		if (scriptTime - _lastScriptTime) <= config.conf["keyboard"]["maxRepeatedKeyPressDelay"] and scriptFunc==lastScriptRef:
 			_lastScriptCount+=1
 		else:
 			_lastScriptCount=0
@@ -219,7 +219,7 @@ def getLastScriptRepeatCount():
 	@returns: a value greater or equal to 0. If the script has not been repeated it is 0, if it has been repeated once its 1, and so forth.
 	@rtype: integer
 	"""
-	if (time.time()-_lastScriptTime)>0.5:
+	if (time.time() - _lastScriptTime) > config.conf["keyboard"]["maxRepeatedKeyPressDelay"]:
 		return 0
 	else:
 		return _lastScriptCount

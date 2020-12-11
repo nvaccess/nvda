@@ -70,21 +70,31 @@ class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 		evt.Index = index
 		self.ProcessEvent(evt)
 
-class SelectOnFocusSpinCtrl(wx.SpinCtrl):
+
+class _SelectOnFocusControl(object):
 	"""
-	A spin control that automatically selects the value when the control gains focus.
+	A control that automatically selects the value when the control gains focus.
 	This makes editing the values quicker.
 	"""
-	def __init__(self, parent, id=wx.ID_ANY, value=wx.EmptyString, pos=wx.DefaultPosition, size=wx.DefaultSize, style=wx.SP_ARROW_KEYS|wx.ALIGN_RIGHT, min=0, max=100, initial=0, name="labelStr"):
+	def __init__(self, parent, **kwargs):
 		""" initialiser - Takes the same parameters as a wx.SpinCtrl.
 		"""
-		wx.SpinCtrl.__init__(self, parent, id, value, pos, size, style, min, max, initial, name)
+		super().__init__(parent, **kwargs)
 		self.Bind(wx.EVT_SET_FOCUS, self.OnSetFocus)
 
 	def OnSetFocus(self, evt):
 		numChars = len(str(self.GetValue()))
 		self.SetSelection(0, numChars)
 		evt.Skip()
+
+
+class SelectOnFocusSpinCtrl(_SelectOnFocusControl, wx.SpinCtrl):
+	pass
+
+
+class SelectOnFocusSpinCtrlDouble(_SelectOnFocusControl, wx.SpinCtrlDouble):
+	pass
+
 
 class AccPropertyOverride(accPropServer.IAccPropServer_Impl):
 

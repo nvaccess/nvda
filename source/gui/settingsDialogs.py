@@ -1667,6 +1667,26 @@ class KeyboardSettingsPanel(SettingsPanel):
 		self.handleInjectedKeysCheckBox=sHelper.addItem(wx.CheckBox(self,label=handleInjectedKeysText))
 		self.bindHelpEvent("KeyboardSettingsHandleKeys", self.handleInjectedKeysCheckBox)
 		self.handleInjectedKeysCheckBox.SetValue(config.conf["keyboard"]["handleInjectedKeys"])
+		
+		minDelay = float(config.conf.getConfigValidation(
+			("keyboard", "maxRepeatedKeyPressDelay")
+		).kwargs["min"])
+		maxDelay = float(config.conf.getConfigValidation(
+			("keyboard", "maxRepeatedKeyPressDelay")
+		).kwargs["max"])
+		# Translators: The label for a setting in keyboard settings to change maximum delay between two key press
+		# to be considered a double key press.
+		maxRepeatedDelayText = _("Maximum &delay between two key presses to be considered a repeated key press:")
+		self.maxRepeatedDelayEdit = sHelper.addLabeledControl(
+			maxRepeatedDelayText,
+			nvdaControls.SelectOnFocusSpinCtrlDouble,
+			min=minDelay,
+			max=maxDelay,
+			initial=config.conf["keyboard"]["maxRepeatedKeyPressDelay"],
+			inc=0.5,
+		)
+		self.maxRepeatedDelayEdit.SetDigits(1)
+		self.bindHelpEvent("MaxRepeatedKeyDelay", self.maxRepeatedDelayEdit)
 
 	def isValid(self):
 		# #2871: check whether at least one key is the nvda key.
@@ -1695,6 +1715,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		config.conf["keyboard"]["speakCommandKeys"]=self.commandKeysCheckBox.IsChecked()
 		config.conf["keyboard"]["alertForSpellingErrors"]=self.alertForSpellingErrorsCheckBox.IsChecked()
 		config.conf["keyboard"]["handleInjectedKeys"]=self.handleInjectedKeysCheckBox.IsChecked()
+		config.conf["keyboard"]["maxRepeatedKeyPressDelay"] = self.maxRepeatedDelayEdit.GetValue()
 
 class MouseSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the mouse settings panel.
