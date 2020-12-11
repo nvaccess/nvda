@@ -465,6 +465,8 @@ addUsbDevices("brailliantB", KEY_HID, {
 	"VID_1C71&PID_CE01",  # NLS eReader 20 HID
 	"VID_1C71&PID_C006", # Brailliant BI 32, 40 and 80
 	"VID_1C71&PID_C022", # Brailliant BI 14
+	"VID_1C71&PID_C131",  # Brailliant BI 40X
+	"VID_1C71&PID_C141",  # Brailliant BI 20X
 	"VID_1C71&PID_C00A", # BrailleNote Touch
 	"VID_1C71&PID_C00E",  # BrailleNote Touch v2
 })
@@ -491,6 +493,8 @@ addBluetoothDevices(
 			"Humanware BrailleOne",
 			"NLS eReader",
 			"NLS eReader Humanware",
+			"Brailliant BI 40X",
+			"Brailliant BI 20X",
 		)
 	)
 )

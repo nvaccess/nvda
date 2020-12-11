@@ -81,6 +81,7 @@ RENAMED_TABLES = {
 	"no-no.ctb":"no-no-8dot.utb",
 	"no-no-comp8.ctb":"no-no-8dot.utb",
 	"ru-compbrl.ctb":"ru.ctb",
+	"ru-ru-g1.utb": "ru-litbrl-detailed.utb",
 	"sk-sk-g1.utb":"sk-g1.ctb",
 	"UEBC-g1.ctb":"en-ueb-g1.ctb",
 	"UEBC-g2.ctb":"en-ueb-g2.ctb",
@@ -104,6 +105,9 @@ addTable("ar-ar-g2.ctb", _("Arabic grade 2"))
 addTable("as-in-g1.utb", _("Assamese grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("ba.utb", _("Bashkir grade 1"), input=False)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("be-in-g1.utb", _("Bengali grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
@@ -111,6 +115,9 @@ addTable("bg.ctb", _("Bulgarian 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ckb-g1.ctb", _("Central Kurdish grade 1"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("cop-eg-comp8.utb", _("Coptic 8 dot computer braille"), input=False)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("cy-cy-g1.utb", _("Welsh grade 1"))
@@ -380,7 +387,10 @@ addTable("ro.ctb", _("Romanian"))
 addTable("ru.ctb", _("Russian computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("ru-ru-g1.utb", _("Russian grade 1"))
+addTable("ru-litbrl.ctb", _("Russian literary braille"), input=False)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("ru-litbrl-detailed.utb", _("Russian literary braille (detailed)"), input=False)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("sa-in-g1.utb", _("Sanskrit grade 1"))
