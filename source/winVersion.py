@@ -64,7 +64,8 @@ class WinVersion(object):
 		winVersionText.append(f"({self.major}.{self.minor}.{self.build})")
 		if self.servicePack != "":
 			winVersionText.append(f"service pack {self.servicePack}")
-		winVersionText.append(self.productType)
+		if self.productType != "":
+			winVersionText.append(self.productType)
 		return " ".join(winVersionText)
 
 	def __eq__(self, other):
