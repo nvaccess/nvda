@@ -419,7 +419,7 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 
 class EdgeNode(UIA):
 
-	_edgeIsPreGapRemoval=winVersion.winVersion.build<15048
+	_edgeIsPreGapRemoval = winVersion.getWinVer().build < 15048
 
 	_TextInfo=EdgeTextInfo_preGapRemoval if _edgeIsPreGapRemoval else EdgeTextInfo
 

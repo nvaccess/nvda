@@ -424,7 +424,7 @@ def getSynthInstance(name):
 # The synthDrivers that should be used by default.
 # The first that successfully initializes will be used when config is set to auto (I.e. new installs of NVDA).
 defaultSynthPriorityList = ['espeak', 'silence']
-if winVersion.winVersion.major >= 10:
+if winVersion.getWinVer() >= winVersion.WIN10:
 	# Default to OneCore on Windows 10 and above
 	defaultSynthPriorityList.insert(0, 'oneCore')
 

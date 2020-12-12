@@ -242,7 +242,7 @@ class MetadataEditField(RichEdit50):
 	but to avoid Windows Explorer crashes we need to use EditTextInfo here. """
 	@classmethod
 	def _get_TextInfo(cls):
-		if ((winVersion.winVersion.major, winVersion.winVersion.minor) == (6, 1)):
+		if winVersion.getWinVer() <= winVersion.WIN7_SP1:
 			cls.TextInfo = EditTextInfo
 		else:
 			cls.TextInfo = super().TextInfo
@@ -255,8 +255,8 @@ class WorkerW(IAccessible):
 		# as it causes 'pane" to be announced when minimizing windows or moving to desktop.
 		# However when closing Windows 7 Start Menu in some  cases
 		# focus lands  on it instead of the focused desktop item.
-		# Simply ignore the event if running on anything never than Win 7.
-		if ((winVersion.winVersion.major, winVersion.winVersion.minor) != (6, 1)):
+		# Simply ignore the event if running on anything other than Win 7.
+		if winVersion.getWinVer() > winVersion.WIN7_SP1:
 			return
 		if eventHandler.isPendingEvents("gainFocus"):
 			return

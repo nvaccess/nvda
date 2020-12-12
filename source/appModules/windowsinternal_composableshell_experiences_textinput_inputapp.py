@@ -175,7 +175,13 @@ class AppModule(appModuleHandler.AppModule):
 		childAutomationID = obj.firstChild.UIAElement.cachedAutomationID
 		# Emoji panel for build 16299 and 17134.
 		# This event is properly raised in build 17134.
-		if winVersion.winVersion.build <= 17134 and childAutomationID in ("TEMPLATE_PART_ExpressiveInputFullViewFuntionBarItemControl", "TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton"):
+		if (
+			winVersion.getWinVer().build <= 17134
+			and childAutomationID in (
+				"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarItemControl",
+				"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton"
+			)
+		):
 			self.event_UIA_elementSelected(obj.lastChild.firstChild, nextHandler)
 		# Handle hardware keyboard suggestions.
 		# Treat it the same as CJK composition list - don't announce this if candidate announcement setting is off.
@@ -221,7 +227,7 @@ class AppModule(appModuleHandler.AppModule):
 		or (self._recentlySelected is not None and self._recentlySelected in obj.name)):
 			return
 		# The word "blank" is kept announced, so suppress this on build 17666 and later.
-		if winVersion.winVersion.build > 17134:
+		if winVersion.getWinVer().build > 17134:
 			# In build 17672 and later, return immediatley when element selected event on clipboard item was fired just prior to this.
 			# In some cases, parent will be None, as seen when emoji panel is closed in build 18267.
 			try:
