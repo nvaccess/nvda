@@ -65,7 +65,7 @@ class WinVersion(object):
 
 	def __repr__(self):
 		winVersionText = [self._windowsVersionToReleaseName()]
-		winVersionText.append(f"{self.major}.{self.minor}.{self.build}")
+		winVersionText.append(f"({self.major}.{self.minor}.{self.build})")
 		if self.servicePack != "":
 			winVersionText.append(f"service pack {self.servicePack}")
 		winVersionText.append(self.productType)
