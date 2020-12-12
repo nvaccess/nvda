@@ -253,7 +253,7 @@ def main():
 		languageHandler.setLanguage(lang)
 	except:
 		log.warning("Could not set language to %s"%lang)
-	log.info("Using Windows version %s" % winVersion.winVersionText)
+	log.info(f"Windows version: {winVersion.getWinVer()}")
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
 	import configobj
