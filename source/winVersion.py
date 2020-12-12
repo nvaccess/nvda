@@ -51,7 +51,11 @@ class WinVersion(object):
 			return "Windows 8.1"
 		elif self.major == 10:
 			buildsToReleases = {build: release for release, build in WIN10_RELEASE_NAME_TO_BUILDS.items()}
-			return f"Windows 10 {buildsToReleases[self.build]}"
+			if self.build in buildsToReleases:
+				return f"Windows 10 {buildsToReleases[self.build]}"
+			else:
+				# Windows Insider build.
+				return "Windows 10 prerelease"
 		else:
 			raise RuntimeError("Unknown Windows release")
 
