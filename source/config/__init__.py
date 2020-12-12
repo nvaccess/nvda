@@ -33,7 +33,7 @@ from fileUtils import FaultTolerantFile
 import extensionPoints
 from . import profileUpgrader
 from .configSpec import confspec
-from typing import Optional, List
+from typing import Any, Dict, List, Optional, Set
 
 #: True if NVDA is running as a Windows Store Desktop Bridge application
 isAppX=False
