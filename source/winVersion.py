@@ -44,6 +44,33 @@ class WinVersion(object):
 		self.servicePack = servicePack
 		self.productType = productType
 
+	def _windowsVersionToReleaseName(self):
+		"""Returns release names for a given Windows version.
+		For example, 6.1 will return 'Windows 7'.
+		For Windows 10, feature update release name will be included.
+		On server systems, client release names will be returned.
+		For example, 'Windows 10 1809' will be returned on Server 2019 systems.
+		"""
+		if (self.major, self.minor) == (6, 1):
+			return "Windows 7"
+		elif (self.major, self.minor) == (6, 2):
+			return "Windows 8"
+		elif (self.major, self.minor) == (6, 3):
+			return "Windows 8.1"
+		elif self.major == 10:
+			buildsToReleases = {build: release for release, build in WIN10_RELEASE_NAME_TO_BUILDS.items()}
+			return f"Windows 10 {buildsToReleases[self.build]}"
+		else:
+			raise RuntimeError("Unknown Windows release")
+
+	def __repr__(self):
+		winVersionText = [self._windowsVersionToReleaseName()]
+		winVersionText.append(f"{self.major}.{self.minor}.{self.build}")
+		if self.servicePack != "":
+			winVersionText.append(f"service pack {self.servicePack}")
+		winVersionText.append(self.productType)
+		return " ".join(winVersionText)
+
 	def __eq__(self, other):
 		return (
 			(self.major, self.minor, self.build)
