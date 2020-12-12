@@ -32,39 +32,17 @@ class WinVersion(object):
 
 	def __init__(
 			self,
-			release: str = None,
 			major: int = 0,
 			minor: int = 0,
 			build: int = 0,
-			servicePack: str = ""
+			servicePack: str = "",
+			productType: str = ""
 	):
-		if release in (None, ""):
-			self.major = major
-			self.minor = minor
-			self.build = build
-		elif release == "7":
-			self.major = 6
-			self.minor = 1
-			self.build = 7601
-		elif release == "8":
-			self.major = 6
-			self.minor = 2
-			self.build = 9200
-		elif release == "8.1":
-			self.major = 6
-			self.minor = 3
-			self.build = 9600
-		elif release in ("10", "1507"):
-			self.major = 10
-			self.minor = 0
-			self.build = 10240
-		elif release in WIN10_VERSIONS_TO_BUILDS:
-			self.major = 10
-			self.minor = 0
-			self.build = WIN10_VERSIONS_TO_BUILDS[release]
-		else:
-			raise ValueError("Cannot create Windows version information for the specified release")
-		self.servicePack = "1" if release == "7" else ""
+		self.major = major
+		self.minor = minor
+		self.build = build
+		self.servicePack = servicePack
+		self.productType = productType
 
 	def __eq__(self, other):
 		return (
