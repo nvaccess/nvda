@@ -24,7 +24,7 @@ class TestWinVersion(unittest.TestCase):
 
 	def test_specificWinVer(self):
 		# Try detecting Windows 8.1 or later.
-		win81 = winVersion.WinVersion(release="8.1")
+		win81 = winVersion.WinVersion.fromReleaseName("8.1")
 		self.assertTupleEqual(
 			(win81.major, win81.minor, win81.build),
 			(6, 3, 9600)
@@ -32,10 +32,15 @@ class TestWinVersion(unittest.TestCase):
 
 	def test_getWinVerFromVersionText(self):
 		# Windows 10 1507 is in fact Windows 10 initial release.
-		winTenInitial = winVersion.getWinVerFromVersionText("10.0.10240")
+		winTenInitial = winVersion.WinVersion.fromVersionText("10.0.10240")
 		self.assertEqual(
 			winTenInitial, winVersion.WIN10_1507
 		)
+
+	def test_getWinVerFromNonexistentRelease(self):
+		# Test the fact that there is no Windows 10 2003 (2004 exists, however).
+		with self.assertRaises(ValueError):
+			winVersion.WinVersion.fromReleaseName("2003")
 
 	def test_moreRecentWinVer(self):
 		# Specifically to test operators.
