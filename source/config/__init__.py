@@ -1179,16 +1179,3 @@ class ProfileTrigger(object):
 	def __exit__(self, excType, excVal, traceback):
 		self.exit()
 
-# The below functions are moved to systemUtils module.
-# They are kept here for backwards compatibility.
-# They would be removed from the config module in NVDA 2021.1.
-
-
-def execElevated(*args, **kwargs):
-	import systemUtils
-	systemUtils.execElevated(*args, **kwargs)
-
-
-def hasUiAccess(*args, **kwargs):
-	import systemUtils
-	systemUtils.hasUiAccess(*args, **kwargs)
