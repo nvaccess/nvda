@@ -105,7 +105,7 @@ def isUwpOcrAvailable():
 	return os.path.isdir(UWP_OCR_DATA_PATH)
 
 
-WIN10_VERSIONS_TO_BUILDS = {
+WIN10_RELEASE_NAME_TO_BUILDS = {
 	"1507": 10240,
 	"1511": 10586,
 	"1607": 14393,
