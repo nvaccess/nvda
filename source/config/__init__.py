@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2020 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
 # Joseph Lee, Babbage B.V., Łukasz Golonka, Julien Cochuyt
@@ -310,18 +309,6 @@ def setStartOnLogonScreen(enable):
 		) != 0:
 			raise RuntimeError("Slave failed to set startOnLogonScreen")
 
-def getConfigDirs(subpath=None):
-	"""Retrieve all directories that should be used when searching for configuration.
-	IF C{subpath} is provided, it will be added to each directory returned.
-	@param subpath: The path to be added to each directory, C{None} for none.
-	@type subpath: str
-	@return: The configuration directories in the order in which they should be searched.
-	@rtype: list of str
-	"""
-	log.warning("getConfigDirs is deprecated. Use globalVars.appArgs.configPath instead")
-	return [os.path.join(dir, subpath) if subpath else dir
-		for dir in (globalVars.appArgs.configPath,)
-	]
 
 def addConfigDirsToPythonPackagePath(module, subdir=None):
 	"""Add the configuration directories to the module search path (__path__) of a Python package.
