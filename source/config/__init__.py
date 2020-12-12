@@ -221,10 +221,6 @@ def setStartAfterLogon(enable):
 		except WindowsError:
 			pass
 
-def canStartOnSecureScreens():
-	# No more need to check for the NVDA service nor presence of Ease of Access, as only Windows 7 SP1 and higher is supported.
-	# This function will be transformed into a flag in a future release.
-	return isInstalledCopy()
 
 
 SLAVE_FILENAME = os.path.join(globalVars.appDir, "nvda_slave.exe")

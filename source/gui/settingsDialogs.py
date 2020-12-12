@@ -737,7 +737,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("GeneralSettingsStartOnLogOnScreen", self.startOnLogonScreenCheckBox)
 		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
-		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
+		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.startOnLogonScreenCheckBox.Disable()
 		settingsSizerHelper.addItem(self.startOnLogonScreenCheckBox)
 
@@ -754,7 +754,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("GeneralSettingsCopySettings", self.copySettingsButton)
 		self.copySettingsButton.Bind(wx.EVT_BUTTON,self.onCopySettings)
-		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
+		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.copySettingsButton.Disable()
 		settingsSizerHelper.addItem(self.copySettingsButton)
 		if updateCheck:
