@@ -56,6 +56,46 @@ class WinVersion(object):
 			>= (other.major, other.minor, other.build)
 		)
 
+	@staticmethod
+	def fromReleaseName(release: str, servicePack: str = ""):
+		"""Returns Windows version information based on release name.
+		For example, 6.2.9200 for '8'.
+		Versions other than 7 do not come with service packs.
+		On Windows 10, pass in either '10' or the string representing a specific Windows 10 release.
+		For example, '20H2' will return Windows version 10.0.19042.
+		"""
+		if release == "7":
+			return WIN7 if servicePack == "" else WIN7_SP1
+		elif release == "8":
+			return WIN8
+		elif release == "8.1":
+			return WIN81
+		elif release in ("10", "1507"):
+			return WIN10
+		elif release in WIN10_RELEASE_NAME_TO_BUILDS:
+			return WinVersion(
+				major=10,
+				minor=0,
+				build=WIN10_RELEASE_NAME_TO_BUILDS[release]
+			)
+		else:
+			raise ValueError(f"Cannot create Windows version information for the specified release: {release}")
+
+	@staticmethod
+	def fromVersionText(versionText: str):
+		"""Returns a Windows version information based on version string
+		of the form major.minor.build.
+		"""
+		major, minor, build = versionText.split(".")
+		# Specifically for Windows 7 service pack 1.
+		servicePack = "1" if versionText == "6.1.7601" else ""
+		return WinVersion(
+			major=int(major),
+			minor=int(minor),
+			build=int(build),
+			servicePack=servicePack
+		)
+
 
 # Windows releases to WinVersion instances for easing comparisons.
 WIN7 = WinVersion(major=6, minor=1, build=7600)
@@ -76,22 +116,17 @@ WIN10_20H2 = WinVersion(major=10, minor=0, build=19042)
 
 
 def getWinVer():
+	"""Returns a record of current Windows version NVDA is running on.
+	"""
 	winVer = sys.getwindowsversion()
 	return WinVersion(
 		major=winVer.major,
 		minor=winVer.minor,
 		build=winVer.build,
-		servicePack=winVer.service_pack
+		servicePack=winVer.service_pack,
+		productType=("workstation", "domain controller", "server")[winVer.product_type - 1]
 	)
 
-
-def getWinVerFromVersionText(versionText: str):
-	major, minor, build = versionText.split(".")
-	return WinVersion(
-		major=int(major),
-		minor=int(minor),
-		build=int(build)
-	)
 
 def isSupportedOS():
 	# NVDA can only run on Windows 7 Service pack 1 and above
