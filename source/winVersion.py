@@ -13,14 +13,6 @@ import os
 import functools
 import winUser
 
-winVersion=sys.getwindowsversion()
-winVersionText="{v.major}.{v.minor}.{v.build}".format(v=winVersion)
-if winVersion.service_pack_major!=0:
-	winVersionText+=" service pack %d"%winVersion.service_pack_major
-	if winVersion.service_pack_minor!=0:
-		winVersionText+=".%d"%winVersion.service_pack_minor
-winVersionText+=" %s" % ("workstation","domain controller","server")[winVersion.product_type-1]
-
 
 @functools.total_ordering
 class WinVersion(object):
