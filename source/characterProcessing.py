@@ -1,8 +1,8 @@
-#characterProcessing.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2010-2018 NV Access Limited, World Light Information Limited, Hong Kong Blind Union, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2010-2020 NV Access Limited, World Light Information Limited,
+# Hong Kong Blind Union, Babbage B.V., Julien Cochuyt
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import time
 import os
@@ -130,6 +130,7 @@ SYMLVL_SOME = 100
 SYMLVL_MOST = 200
 SYMLVL_ALL = 300
 SYMLVL_CHAR = 1000
+SYMLVL_UNCHANGED = -1
 SPEECH_SYMBOL_LEVEL_LABELS = {
 	# Translators: The level at which the given symbol will be spoken.
 	SYMLVL_NONE: pgettext("symbolLevel", "none"),

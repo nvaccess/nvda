@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler
+# Copyright (C) 2006-2020 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -31,6 +31,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# The synthesizer to use
 	synth = string(default=auto)
 	symbolLevel = integer(default=100)
+	# Symbol Level when reviewing by word (unchanged if -1)
+	symbolLevelWord = integer(default=300)
 	trustVoiceLanguage = boolean(default=true)
 	includeCLDR = boolean(default=True)
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)

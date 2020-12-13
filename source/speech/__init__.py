@@ -1084,9 +1084,13 @@ def speakTextInfo(
 		return _speakWithoutPauses.speakWithoutPauses(flatSpeechGen)
 
 	speechGen = GeneratorWithReturn(speechGen)
-	# Force symbol level to all when moving by characters or words (#11779)
-	if unit in (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD):
+	symbolLevel = None
+	if unit == textInfos.UNIT_CHARACTER:
 		symbolLevel = characterProcessing.SYMLVL_ALL
+	elif unit == textInfos.UNIT_WORD:
+		symbolLevelWord = config.conf["speech"]["symbolLevelWord"]
+		if symbolLevelWord != characterProcessing.SYMLVL_UNCHANGED:
+			symbolLevel = symbolLevelWord
 	else:
 		symbolLevel = None
 	for seq in speechGen:
