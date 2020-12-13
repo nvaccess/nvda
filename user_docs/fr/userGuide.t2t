@@ -478,7 +478,7 @@ Si vous voulez en tirer profit, vous pouvez les configurer dans la catégorie [S
 
 Bien qu'une souris physique ou un pavé tactile devrait être utilisée pour naviguer à la souris, NVDA possède quelques commandes clavier liées à la souris :
 %kc:beginInclude
-|| Nom | Ordinateur de bureau | Ordinateur portable | Geste | Description |
+|| Nom | Ordinateur de bureau | Ordinateur portable | Tactile | Description |
 | Clic gauche | pavnumDiviser | NVDA+uAccentGrave | Aucun | Simple clic gauche. Le double clic s'obtient par deux appuis rapides |
 | Verrouillage du bouton gauche de la souris | maj+pavnumDiviser | NVDA+maj+uAccentGrave | Aucun | Verrouille le bouton gauche de la souris en position enfoncée. Un second appui déverrouille le bouton. Pour glisser-déposer avec la souris, verrouillez le bouton puis déplacez la souris soit physiquement ou par l'une des commandes NVDA prévues à cet effet |
 | Clic droit | pavnumMultiplier | NVDA+astérisque | Taper et maintenir | Simple clic droit |
@@ -1028,7 +1028,7 @@ Pour certains dialogues, vous pouvez activer le bouton Appliquer pour que les pa
 Certains paramètres peuvent aussi être modifiés en utilisant des raccourcis clavier que vous trouverez dans les sections ci-dessous.
 
 ++ Paramètres de NVDA ++[NVDASettings]
-%kc:settingsSection: || Name | Desktop key | Laptop key | Description |
+%kc:settingsSection: || Nom | Ordinateur de bureau | Ordinateur portable | Description |
 Le dialogue Paramètres de NVDA contient beaucoup de paramètres de configuration qui peuvent être modifiés.
 Ce dialogue contient une liste de catégories de paramètres dans laquelle on peut choisir.
 Quand vous sélectionnez une catégorie, plusieurs paramètres relatifs à cette catégorie seront affichés dans ce dialogue.
@@ -1048,7 +1048,7 @@ Elle contient les options suivantes :
 
 ==== Langue ====[GeneralSettingsLanguage]
 C'est une liste déroulante qui permet de choisir la langue de l'interface utilisateur et des messages de NVDA.
-La liste comporte de nombreuses langues et le dernier élément est dénommé "Windows".
+La liste comporte de nombreuses langues et le choix par défaut est dénommé "Utilisateur par défaut".
 Ce choix indique à NVDA d'utiliser la langue de Windows.
 
 Noter qu'il faut relancer NVDA quand on change la langue. 
@@ -1146,6 +1146,9 @@ Si vous utilisez un synthétiseur tiers, vous pourrez peut-être changer cette v
 ==== Débit ====[SpeechSettingsRate]
 Cette option vous permet de modifier le débit de la parole.
 C'est un potentiomètre qui va de 0 à 100, (0 étant la vitesse la plus lente et 100 la plus rapide).
+
+==== Débit augmenté ====[SpeechSettingsRateBoost]
+Activer cette option augmentera significativement le débit de la parole, si le synthétiseur courant le permet.
 
 ==== Hauteur ====[SpeechSettingsPitch]
 Cette option vous permet de modifier la hauteur de la voix.
@@ -1298,13 +1301,13 @@ L'indicateur de sélection n'est pas affecté par cette option, c'est toujours l
 Cette option vous permet de choisir la forme (combinaison de points) du curseur braille quand le braille suit la revue.
 L'indicateur de sélection n'est pas affecté par cette option, c'est toujours les points 7 et 8 sans clignotement.
 
+==== Affichage des messages ====[BrailleSettingsShowMessages]
+C'est une liste déroulante qui vous permet de choisir si NVDA doit afficher les messages en braille et quand ils doivent disparaître automatiquement.
+
 ==== Durée d'affichage des messages (sec) ====[BrailleSettingsMessageTimeout]
 Cette option est un champ numérique qui contrôle la durée en secondes d'affichage des messages système sur le terminal braille.
-Indiquer 0 désactive l'affichage de ces messages.
 Le message de NVDA est immédiatement supprimé à l'appui d'une touche de routage curseur sur l'afficheur braille, mais réapparaît à l'appui d'une touche correspondante qui déclenche le message.
-
-==== Afficher les Messages Indéfiniment ====[BrailleSettingsNoMessageTimeout]
-Cette option permet aux messages de NVDA de rester affichés sur l'afficheur braille indéfiniment.
+Cette option n'apparaît que si "Affichage des message" est réglé sur "Utiliser une durée limite".
 
 %kc:setting
 ==== braille suit ====[BrailleTether]
@@ -1923,6 +1926,9 @@ Vous pouvez supprimer un symbole précédemment ajouté en pressant le bouton Su
 
 Quand vous avez fini, cliquez sur le bouton "OK" pour sauvegarder vos modifications, ou le bouton "Annuler" pour les supprimer.
 
+Dans le cas de symboles complexes, le champ Remplacement peut inclure quelques références aux groupes du texte source. Par exemple, pour un modèle correspondant à une date complète, \1, \2 et \3 devraient apparaître dans le champ, pour être remplacés par les parties correspondantes de la date.
+Ainsi, dans le champ Remplacement, les barres obliques normales doivent être doublées, ex : "a\\b" doit être tapé pour obtenir le remplacement de "a\b".
+
 +++ Gestes de Commandes +++[InputGestures]
 Dans ce dialogue, vous pouvez configurer les gestes de commandes (raccourcis clavier, boutons d'un afficheur braille etc.) pour les commandes NVDA.
 
@@ -1966,7 +1972,7 @@ Vous pouvez également réinitialiser votre configuration aux valeurs d'usine en
 
 Les touches de commandes suivantes sont également utiles :
 %kc:beginInclude
-|| Nom | Touche Desktop | Touche Laptop | Description |
+|| Nom | Ordinateur de bureau | Ordinateur portable | Description |
 | Sauvegarder la configuration | NVDA+contrôle+c | NVDA+contrôle+c | Sauvegarde votre configuration pour qu'elle ne soit pas perdue en quittant NVDA |
 | Réinitialiser la configuration | NVDA+contrôle+r | NVDA+contrôle+r | Appuyez une fois pour réinitialiser à la configuration qui existait lors de votre dernière sauvegarde. Appuyez trois fois pour revenir à la configuration par défaut de NVDA. |
 %kc:endInclude
@@ -2103,6 +2109,14 @@ Les afficheurs braille physiques ont généralement des boutons pour faire défi
 La fenêtre de la visionneuse Braille contient une case à cocher étiquetée "Montrer la visionneuse Braille au démarrage".
 Si elle est cochée, la visionneuse Braille s'affichera au démarrage de NVDA.
 La visionneuse Braille essaiera toujours de se rouvrir avec les mêmes dimensions et à la même position que lors de sa fermeture.
+
+La fenêtre de la visionneuse braille contient une case à cocher étiquetée "Survol pour le routage vers une cellule", non cochée par défaut.
+Si elle est cochée, le survol d'une cellule braille par la souris permettra d'activer la commande "aller à la cellule braille" pour cette cellule.
+Ceci est parfois utilisé pour déplacer le curseur ou activer l'action pour un contrôle.
+Ceci peut être utile pour tester si NVDA est capable de retrouver correctement une position à l'écran depuis une cellule braille.
+Pour empêcher des routages cellules non intentionnels, la commande s'exécute après un délai.
+La souris doit survoler jusqu'à ce que la cellule devienne verte.
+La cellule commencera avec une couleur jaune clair, virera à l'orange, puis deviendra brusquement verte.
 
 ++ Console Python ++[PythonConsole]
 La console Python de NVDA, disponible sous Outils dans le menu NVDA, est un outil de développement utile pour le débogage, l'inspection générale des internes de NVDA ou l'inspection de la hiérarchie d'accessibilité d'une application.
@@ -2625,7 +2639,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Touche échap | point1+point5+espace, f4, brailleedge:f1 |
 | touche effacement | point1+point3+point5+espace, point1+point4+point5+espace |
 | touche f1 | point1+point2+point5+espace |
-| touche f3 | point1+point2+point4+point8 |
+| touche f3 | point1+point4+point8+espace |
 | touche f4 | point7+f3 |
 | windows+b | point1+point2+f1 |
 | windows+d | point1+point4+point5+f1 |
@@ -3125,6 +3139,7 @@ Voici les options de ligne de commande de NVDA :
 | Aucune | --install | Installe NVDA (en démarrant la copie nouvellement installée) |
 | Aucune | --install-silent | Installe NVDA silencieusement (sans démarrer la copie nouvellement installée) |
 | Aucune | --enable-start-on-logon=True|False | Durant l'installation, active le [démarrage sur l'écran de connexion #StartAtWindowsLogon] de NVDA |
+| Aucune | --copy-portable-config | À l'installation, copie la configuration portable depuis le chemin indiqué (--config-path, -c) vers le compte utilisateur courant |
 | Aucune | --create-portable | Crée une copie portable de NVDA (puis démarre la copie nouvellement créée). --portable-path doit être spécifié |
 | Aucune | --create-portable-silent | Crée une copie portable de NVDA (sans démarrer la copie nouvellement créée). --portable-path doit être spécifié |
 | Aucune | --portable-path=PORTABLEPATH | L'emplacement où la copie portable sera créée |

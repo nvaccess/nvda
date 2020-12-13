@@ -290,6 +290,39 @@ def test_ariaTreeGrid_browseMode():
 	)
 
 
+def ARIAInvalid_spellingAndGrammar():
+	"""
+	Tests ARIA invalid values of "spelling", "grammar" and "spelling, grammar".
+	Please note that although IAccessible2 allows multiple values for invalid,
+	multiple values to aria-invalid is not yet standard.
+	And even if it were, they would be separated by space, not comma
+thus the html for this test would need to change,
+	but the expected output shouldn't need to.
+	"""
+	_chrome.prepareChrome(
+		r"""
+			<p>Big <span aria-invalid="spelling">caat</span> meos</p>
+			<p>Small <span aria-invalid="grammar">a dog</span> woofs</p>
+			<p>Fat <span aria-invalid="grammar, spelling">a ffrog</span> crokes</p>
+		"""
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"Big  spelling error  caat  meos"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"Small  grammar error  a dog  woofs"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"Fat  spelling error  grammar error  a ffrog  crokes"
+	)
+
+
 def test_ariaCheckbox_browseMode():
 	"""
 	Navigate to an unchecked checkbox in reading mode.

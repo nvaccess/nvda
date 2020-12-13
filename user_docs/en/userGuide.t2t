@@ -307,7 +307,7 @@ For example, if you are typing into an editable text field, the editable text fi
 
 The most common way of navigating around Windows with NVDA is to simply move the system focus using standard Windows keyboard commands, such as pressing tab and shift+tab to move forward and back between controls, pressing alt to get to the menu bar and then using the arrows to navigate menus, and using alt+tab to move between running applications.
 As you do this, NVDA will report information about the object with focus, such as its name, type, value, state, description, keyboard shortcut and positional information.
-When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the current system focus is also exposed visually.
+When [Visual Highlight #VisionFocusHighlight] is enabled, the location of the current system focus is also exposed visually.
 
 There are some key commands that are useful when moving with the System focus:
 %kc:beginInclude
@@ -363,7 +363,7 @@ Similarly, a toolbar contains controls, so you must move inside the toolbar to a
 
 The object currently being reviewed is called the navigator object.
 Once you navigate to an object, you can review its content using the [text review commands #ReviewingText] while in [Object review mode #ObjectReview].
-When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the current navigator object is also exposed visually.
+When [Visual Highlight #VisionFocusHighlight] is enabled, the location of the current navigator object is also exposed visually.
 By default, the navigator object moves along with the System focus, though this behaviour can be toggled on and off.
 
 Note: Braille following Object Navigation can be configured via [Braille Tether #BrailleTether].
@@ -506,7 +506,7 @@ Browse mode is also optionally available for Microsoft Word documents.
 
 In browse mode, the content of the document is made available in a flat representation that can be navigated with the cursor keys as if it were a normal text document.
 All of NVDA's [system caret #SystemCaret] key commands will work in this mode; e.g. say all, report formatting, table navigation commands, etc.
-When [Focus Highlight #VisionFocusHighlight] is enabled, the location of the virtual browse mode caret is also exposed visually.
+When [Visual Highlight #VisionFocusHighlight] is enabled, the location of the virtual browse mode caret is also exposed visually.
 Information such as whether text is a link, heading, etc. is reported along with the text as you move.
 
 Sometimes, you will need to interact directly with controls in these documents.
@@ -776,8 +776,8 @@ Additional vision enhancement providers can be provided in [NVDA add-ons #Addons
 
 NVDA's vision settings can be changed in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog.
 
-++ Focus Highlight ++[VisionFocusHighlight]
-Focus Highlight can help to identify the [system focus #SystemFocus], [navigator object #ObjectNavigation] and [browse mode #BrowseMode] positions.
+++ Visual Highlight ++[VisionFocusHighlight]
+Visual Highlight can help to identify the [system focus #SystemFocus], [navigator object #ObjectNavigation] and [browse mode #BrowseMode] positions.
 These positions are highlighted with a coloured rectangle outline.
 - Solid blue highlights a combined navigator object and system focus location (e.g. because [the navigator object follows the system focus #ReviewCursorFollowFocus]).
 - Dashed blue highlights just the system focus object.
@@ -785,7 +785,7 @@ These positions are highlighted with a coloured rectangle outline.
 - Solid yellow highlights the virtual caret used in browse mode (where there is no physical caret such as in web browsers).
 -
 
-When Focus Highlight is enabled in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog, you can [change whether or not to highlight the focus, navigator object or browse mode caret #VisionSettingsFocusHighlight].
+When Visual Highlight is enabled in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog, you can [change whether or not to highlight the focus, navigator object or browse mode caret #VisionSettingsFocusHighlight].
 
 ++ Screen Curtain ++[VisionScreenCurtain]
 As a blind or vision impaired user, it is often not possible or necessary to see the contents of the screen.
@@ -1400,10 +1400,10 @@ The Vision category in the NVDA Settings dialog allows you to enable, disable an
 Note that the available options in this category could be extended by [NVDA add-ons #AddonsManager].
 By default, this settings category contains the following options:
 
-==== Focus Highlight ====[VisionSettingsFocusHighlight]
-The check boxes in the Focus Highlight grouping control the behaviour of NVDA's built-in [Focus Highlight #VisionFocusHighlight] facility.
+==== Visual Highlight ====[VisionSettingsFocusHighlight]
+The check boxes in the Visual Highlight grouping control the behaviour of NVDA's built-in [Visual Highlight #VisionFocusHighlight] facility.
 
-- Enable Highlighting: Toggles Focus Highlight on and off.
+- Enable Highlighting: Toggles Visual Highlight on and off.
 - Highlight system focus: toggles whether the [system focus #SystemFocus] will be highlighted.
 - Highlight navigator object: toggles whether the [navigator object #ObjectNavigation] will be highlighted.
 - Highlight browse mode cursor: Toggles whether the [virtual browse mode cursor #BrowseMode] will be highlighted.
@@ -2519,7 +2519,7 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B Series / BrailleNote Touch  ++[HumanWareBrailliant]
-The Brailliant BI and B series of displays  from [HumanWare https://www.humanware.com/], including the BI 14, BI 32, BI 40 and B 80, are supported when connected via USB or bluetooth.
+The Brailliant BI and B series of displays  from [HumanWare https://www.humanware.com/], including the BI 14, BI 32, BI 20X, BI 40, BI 40X and B 80, are supported when connected via USB or bluetooth.
 If connecting via USB with the protocol set to HumanWare, you must first install the USB drivers provided by the manufacturer.
 USB drivers are not required if the protocol is set to OpenBraille.
 
