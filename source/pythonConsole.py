@@ -308,7 +308,7 @@ class ConsoleUI(
 	RE_COMPLETE_UNIT = re.compile(r"[\w.]*$")
 
 	def complete(self):
-		textBeforeCursor = self.inputCtrl.GetRange(0, self.inputCtrl.GetInsertionPoint())
+		textBeforeCursor = self.inputCtrl.GetRange(0, self.inputCtrl.GetSelection()[0])
 		try:
 			original = self.RE_COMPLETE_UNIT.search(textBeforeCursor).group(0)
 		except AttributeError:
@@ -376,18 +376,18 @@ class ConsoleUI(
 		if not insert:
 			return
 		inputCtrl = self.inputCtrl
-		curPos = inputCtrl.GetInsertionPoint()
-		prefix = inputCtrl.GetRange(0, curPos)
-		suffix = inputCtrl.GetRange(curPos, inputCtrl.GetLastPosition())
+		selStartPos, selEndPos = inputCtrl.GetSelection()
+		prefix = inputCtrl.GetRange(0, selStartPos)
+		suffix = inputCtrl.GetRange(selEndPos, inputCtrl.GetLastPosition())
 		inputCtrl.SetValue(prefix + insert + suffix)
 		queueHandler.queueFunction(queueHandler.eventQueue, speech.speakText, insert)
-		inputCtrl.SetInsertionPoint(curPos + len(insert))
+		inputCtrl.SetInsertionPoint(selStartPos + len(insert))
 
 	def onInputChar(self, evt):
 		key = evt.GetKeyCode()
 
 		if key == wx.WXK_TAB:
-			textBeforeCursor = self.inputCtrl.GetRange(0, self.inputCtrl.GetInsertionPoint())
+			textBeforeCursor = self.inputCtrl.GetRange(0, self.inputCtrl.GetSelection()[0])
 			if textBeforeCursor and not textBeforeCursor.isspace():
 				if not self.complete():
 					wx.Bell()
