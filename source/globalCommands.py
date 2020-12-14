@@ -1552,7 +1552,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_SYSTEMCARET,
 	)
 	def script_reportFormattingAtCaret(self, gesture):
-		self._reportFormattingHelper(self._getTIAtCaret(), False)
+		self._reportFormattingHelper(self._getTIAtCaret(True), False)
 
 	@script(
 		# Translators: Input help mode message for show formatting at caret position command.
@@ -1560,7 +1560,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_SYSTEMCARET,
 	)
 	def script_showFormattingAtCaret(self, gesture):
-		self._reportFormattingHelper(self._getTIAtCaret(), True)
+		self._reportFormattingHelper(self._getTIAtCaret(True), True)
 
 	@script(
 		description=_(
