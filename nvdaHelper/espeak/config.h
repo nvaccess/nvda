@@ -1,10 +1,5 @@
-// general headers and types
-#define HAVE_STDINT_H 1
-#define __WIN32__ 1
-#define LIBESPEAK_NG_EXPORT
+// Supplies the "config.h" include for espeak files
+// Replaces the include/espeak/src/windows/config.h file
 
-// Espeak features
-#define INCLUDE_KLATT 1
-#define HAVE_SONIC_H 1
-
-#define PACKAGE_VERSION "1.51 dev"
+// Preprocessor definitions have been moved to the build system
+// See: nvdaHelper/espeak/sconscript
