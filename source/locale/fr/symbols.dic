@@ -17,15 +17,14 @@ complexSymbols:
 # Others
 decimal point	(?<![^\d -])\,(?=\d)
 thousands separator	(?<![^\d -])\.(?=\d{3}(\D|$))
+between-words -	(?<=\s)[-](?=\s)
 in-word '	(?<=[^\W_])['’]
 in-word -	(?<=[^\W_])[-]
-between-words -	(?<=\s)[-](?=\s)
+dates .	\b(\d\d)\.(\d\d)\.(\d{2}|\d{4})\b
+dates /	\b(\d\d)\/(\d\d)\/(\d{2}|\d{4})\b
 negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
-dates .	((?<=\b\d\d)\.(?=\d\d.(\d{2}|\d{4})\b))|((?<=\b\d\d.\d\d)\.(?=(\d{2}|\d{4})\b))
-dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
-
 after-number %	(?<=\d)(\s?\%)(?=\W|$)
-n°	\b[nN]°
+n°	\b([nN])(°)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -41,14 +40,14 @@ symbols:
 
 decimal point		# virgule décimale
 thousands separator		# point des mille
-dates .	 point 	all	norep	# point de date
-dates /	 barre oblique 	all	norep	# barre oblique de date
-negative number	moins	none	norep	# - devant un nombre
-after-number %	pour cent	none	norep	# % après un nombre
+between-words -	tiret	all	norep	# - entre deux mots
 in-word '	apostrophe	# ' dans un mot
 in-word -	tiret	all	norep	# - dans un mot
-between-words -	tiret	all	norep	# - entre deux mots
-n°	numéro	none	norep	# numéro
+dates .	\1 point \2 point \3	all	norep	# point de date
+dates /	\1 barre oblique \2 barre oblique \3	all	norep	# barre oblique de date
+negative number	moins	none	norep	# - devant un nombre
+after-number %	pour cent	none	norep	# % après un nombre
+n°	\1 \2 	most	norep	# numéro
 
 # Whitespace
 \0	nul

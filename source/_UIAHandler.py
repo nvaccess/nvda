@@ -31,7 +31,7 @@ from comtypes.gen.UIAutomationClient import *
 import textInfos
 from typing import Dict
 from queue import Queue
-
+import aria
 
 #Some newer UIA constants that could be missing
 ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
@@ -134,6 +134,11 @@ UIAControlTypesToNVDARoles={
 	UIA_SeparatorControlTypeId:controlTypes.ROLE_SEPARATOR,
 }
 
+UIALiveSettingtoNVDAAriaLivePoliteness: Dict[str, aria.AriaLivePoliteness] = {
+	UIA.Off: aria.AriaLivePoliteness.OFF,
+	UIA.Polite: aria.AriaLivePoliteness.POLITE,
+	UIA.Assertive: aria.AriaLivePoliteness.ASSERTIVE,
+}
 
 UIAPropertyIdsToNVDAEventNames={
 	UIA_NamePropertyId:"nameChange",
