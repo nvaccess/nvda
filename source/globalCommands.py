@@ -781,6 +781,26 @@ class GlobalCommands(ScriptableObject):
 	script_cycleSpeechSymbolLevel.__doc__=_("Cycles through speech symbol levels which determine what symbols are spoken")
 	script_cycleSpeechSymbolLevel.category=SCRCAT_SPEECH
 
+	@script(
+		# Translators: Input help mode message for a command.
+		description=_("Toggle the announce of all punctuations and symbols when reviewing by word"),
+		category=SCRCAT_SPEECH
+	)
+	def script_toggleSpeechSymbolLevelWordAll(self, gesture):
+		curLevel = config.conf["speech"]["symbolLevelWord"]
+		if curLevel == characterProcessing.SYMLVL_ALL:
+			level = characterProcessing.SYMLVL_UNCHANGED
+			reportedState = _("off")
+		else:
+			level = characterProcessing.SYMLVL_ALL
+			reportedState = _("on")
+		config.conf["speech"]["symbolLevelWord"] = level
+		ui.message(
+			_("Speak all punctuations and symbols when reviewing by word: {state}").format(
+				state=reportedState
+			)
+		)
+
 	def script_moveMouseToNavigatorObject(self,gesture):
 		try:
 			p=api.getReviewPosition().pointAtStart
