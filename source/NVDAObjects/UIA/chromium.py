@@ -21,6 +21,19 @@ class ChromiumUIATextInfo(web.UIAWebTextInfo):
 			pass
 		return formatField
 
+	def _getControlFieldForObject(self, obj, isEmbedded=False, startOfNode=False, endOfNode=False):
+		field = super()._getControlFieldForObject(
+			obj,
+			isEmbedded=isEmbedded,
+			startOfNode=startOfNode,
+			endOfNode=endOfNode
+		)
+		# Layout tables do not have the UIA table pattern
+		if field['role'] == controlTypes.ROLE_TABLE:
+			if not obj._getUIACacheablePropertyValue(UIAHandler.UIA_IsTablePatternAvailablePropertyId):
+				field['table-layout'] = True
+		return field
+
 
 class ChromiumUIA(web.UIAWeb):
 	_TextInfo = ChromiumUIATextInfo
