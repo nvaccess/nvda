@@ -1147,6 +1147,9 @@ Bir üçüncü taraf sentezleyici kullanıyorsanız, seçtiğiniz ses destekliyo
 Bu seçenek konuşma hızını değiştirmenizi sağlar.
 Burası 0'dan 100'e giden bir göstergedir, ve 0 en yavaşı gösterirken, 100 en hızlıyı gösterir.
 
+==== Hızlandırıcı ====[SpeechSettingsRateBoost]
+Bu seçeneğin etkinleştirilmesi, mevcut sentezleyici tarafından destekleniyorsa konuşma hızını önemli ölçüde artıracaktır.
+
 ==== Ses Perdesi ====[SpeechSettingsPitch]
 Bu seçenek konuşmacının  ses perdesini değiştirmenizi sağlar.
 Burası 0'dan 100'e giden bir göstergedir, ve 0 en düşük perdeyi yani kalını gösterirken, 100 en yüksek perdeyi yani en inceyi gösterir.
@@ -1298,13 +1301,14 @@ Seçim belirteci bu tercihten etkilenmez, her zaman 7 ve 8 nokta yukarıdadır.
 Bu seçenek, inceleme imleci tarafından taşındığı durumda braille imlecin şeklini belirlemenizi sağlar.
 Seçim belirteci bu tercihten etkilenmez, her zaman 7 ve 8 nokta yukarıdadır.
 
+==== Mesajları Göster ====[BrailleSettingsShowMessages]
+Bu, NVDA'nın braille mesajlarını görüntüleyip görüntülemeyeceğini ve bunların ne zaman otomatik olarak kaybolacağını seçmenize olanak tanıyan bir seçim kutusudur.
+
 ==== Mesaj Zaman Aşımı Saniyesi ====[BrailleSettingsMessageTimeout]
 Bu seçenek, sistem mesajlarının braille ekranda ne kadar uzun süre gösterileceğini kontrol eden bir rakamsal alandır.
 0 yazılırsa mesajların gösterimi tamamen kapatılır.
 Braille ekranında bir yönlendirme tuşuna basıldığında NVDA mesajı hemen kapatılır, ancak mesajı tetikleyen ilgili tuşa basıldığında tekrar gösterilir.
-
-==== Mesajları süresiz olarak göster ====[BrailleSettingsNoMessageTimeout]
-Bu seçenek NVDA mesajlarının braille ekranda süresiz olarak görüntülenmesini sağlar.
+Bu seçenek yalnızca "Mesajları Göster", "Zaman aşımını kullan" olarak ayarlanmışsa gösterilir.
 
 %kc:setting
 ==== Braille'in İzleyeceği İmleç ====[BrailleTether]
@@ -1923,7 +1927,10 @@ Kaldır düğmesine basarak daha önce eklediğiniz işareti silebilirsiniz.
 
 Bu ayarlamaları yaptıktan sonra tamam düğmesine basarak değişiklikleri kaydedebilir; iptal düğmesiyle de değişiklik öncesi ayarlara geri dönebilirsiniz.
 
-+++ Girdi Hareketleri +++
+Karmaşık semboller söz konusu olduğunda, Değiştirme alanı eşleşen metnin bazı grup referanslarını içermelidir. Örneğin, tam bir tarihle eşleşen bir desen için, \ 1, \ 2 ve \ 3'ün tarihin karşılık gelen bölümleriyle değiştirilmesi için alanda görünmesi gerekir.
+Bu nedenle, değiştirme alanındaki Normal ters bölüler iki katına çıkarılmalıdır, örneğin "a\b" yerine geçmesi için "a\\b" yazılmalıdır.
+
++++ Girdi Hareketleri +++[InputGestures]
 Bu iletişim kutusunda, NVDA komutları için kullanılan hareketleri (klavyedeki tuşlar, braille ekrandaki düğmeler , vs.) özelleştirebilirsiniz.
 
 Sadece, iletişim kutusu açılmadan önce kullanılabilen komutlar gösterilir.
@@ -2103,6 +2110,14 @@ Fiziksel braille ekranlarında genellikle ileri veya geri kaydırma düğmeleri 
 Braille görüntüleyici penceresinde "Başlangıçta braille görüntüleyicisini göster" adlı  bir onay kutusu bulunur.
 Bu işaretliyse, NVDA başlatıldığında braille görüntüleyici açılacaktır.
 Braille görüntüleme penceresi her zaman kapatıldığı zamanki boyut ve konumlarla yeniden açılmaya çalışır.
+
+Braille görüntüleyici penceresi,  "Hücre yönlendirmesi için üzerine gelin"etiketli bir onay kutusu içerir, varsayılanı işaretli değildir.
+İşaretlenirse, fareyi bir braille hücresinin üzerine getirmek, o hücre için "Braille hücresine yönlendir" komutunu tetikleyecektir.
+Bu genellikle imleci hareket ettirmek veya bir kontrol için eylemi tetiklemek için kullanılır.
+Bu, NVDA'NIN Braille hücresinden a haritasını doğru bir şekilde tersine çevirebileceğini test etmek için yararlı olabilir.
+İstemeden hücrelere yönlendirmeyi önlemek için komut gecikir.
+Hücre yeşile dönene kadar fare üzerinde olmalıdır.
+Hücre açık sarı renkte başlar, turuncuya geçer, sonra aniden yeşile döner.
 
 ++ Python Konsolu ++[PythonConsole]
 NVDA menüsündeki Araçlar altında bulunan NVDA Python konsolu, hata ayıklama, NVDA dahili bileşenlerinin genel denetimi veya bir uygulamanın erişilebilirlik hiyerarşisinin denetimi için yararlı olan bir geliştirme aracıdır.
@@ -2625,7 +2640,7 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | escape key | dot1+dot5+space, f4, brailleedge:f1 |
 | delete key | dot1+dot3+dot5+space, dot1+dot4+dot5+space |
 | f1 key | dot1+dot2+dot5+space |
-| f3 key | dot1+dot2+dot4+dot8 |
+| f3 key | dot1+dot4+dot8+space |
 | f4 key | dot7+f3 |
 | windows+b key | dot1+dot2+f1 |
 | windows+d key | dot1+dot4+dot5+f1 |
@@ -3125,6 +3140,7 @@ Aşağıdakiler NVDA komut satırı seçenekleridir:
 | None | --install | NVDA'yı kurar (yeni kurulmuş kopyayı çalıştırarak) |
 | None | --install-silent | NVDA'yı sessizce kurar (yeni kurulmuş kopyayı başlatmaz) |
 | None | --enable-start-on-logon=True|False | Yüklerken, NVDA'nın [oturum açma ekranında başlamasını #StartAtWindowsLogon] etkinleştirir |
+| None | --copy-portable-config | Yüklerken, taşınabilir yapılandırmayı sağlanan yoldan (--config-path,- c) geçerli kullanıcı hesabına kopyalar |
 | None | --create-portable | NVDA'nın taşınabilir bir kopyasını oluşturur (işlem sonunda yeni kopya çalıştırılır). --portable-path belirtilmesi gerekir |
 | None | --create-portable-silent | NVDA'nın taşınabilir bir kopyasını oluşturur (işlem sonunda yeni kopya çalıştırılmaz). --portable-path belirtilmesi gerekir |
 | None | --portable-path=PORTABLEPATH | taşınabilir kopyanın oluşturulacağı adres |
