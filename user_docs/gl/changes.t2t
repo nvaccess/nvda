@@ -3,6 +3,63 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.4 =
+
+== Novas Características ==
+- Ao se premer F1 dentro dos diálogos do NVDA agora abrirase o ficheiro de axuda para a seción máis relevante. (#7757)
+- Soporte para autocompletado de suxerencias (IntelliSense) en Microsoft SQL Server Management Studio máis Visual Studio 2017 e superior. (#7504)
+- Pronunciación de símbolos: soporte para agrupacións nunha definición de símbolos comprexa e soporte de referencias de grupo nunha regra de substitución que fainos máis sinxelos e máis poderosos. (#11107)
+- Agora notifícase aos usuarios cando tenten crear entradas de dicionarios da fala con sustitucións inválidas de expresións regulares. (#11407)
+  - Específicamente agora detéctanse erros de agrupación.
+- Engaiduse o soporte para os novos métodos de entrada para chinés tradicional rápido e para Pinyin en Windows 10. (#11562)
+- As cabeceiras de pestana agora considéranse campos de formulario coa tecla de navegación rápida f. (#10432)
+- Engadida unha orde para conmutar o anunciado de texto marcado (resaltado); Non hai ningún xesto asociado por omisión. (#11807)
+- Engadido o parámetro de liña de comandos --copy-portable-config que che permite copiar automáticamente a configuración proporcionada á conta de usuario cando se instala o NVDA en silencio. (#9676)
+- Agora admítese o enrutamento Braille co Visualizador Braille para usuarios de rato, desprazándose para enrutar a unha celda braille. (#11804)
+
+
+== Cambios ==
+- Actualizado o transcriptor braille liblouis á versión 3.15.0
+- Cando se le con ler todo no modo exploración, as ordes buscar seguinte e anterior non deteñen a lectura se a opción permitir lectura superficial está activada; ler todo reanuda a partir de despois do término seguinte ou anterior atopado. (#11563)
+- Para as pantallas braille HIMS remapeouse F3 a Espazo + puntos 148. (#11710)
+- Melloras para o UX das opcións "Tempo de espera da mensaxe braille" e "Amosar mensaxes indefinidamente". (#11602)
+- En navegadores web e outras aplicacións que soporten o modo exploración, o diálogo Listaxe de Elementos (NVDA+F7) agora pode chamarse ao estar en modo foco. (#10453)
+- As actualizacións de rexións ARIA live agora suprímense cando se desactive o anunciado de cambios de contido dinámico. (#9077)
+- O NVDA agora anunciará "Copiado ao portapapeis" antes do texto copiado. (#6757)
+
+
+== Corrección de Erros ==
+- o NVDA volta a funcionar correctamente cos campos de edición ao se usar a aplicación Fast Log Entry. (#8996)
+- Anúnciase o tempo transcorrido en Foobar2000 se non se dispón dun tempo total (por exemplo, cando se reproduce unha transmisión en directo). (#11337)
+- O NVDA agora respeta o atributo aria-roledescription en elementos en contido editable en páxinas web. (#11607)
+- Xa non se anuncia 'listaxe' en cada línea de unha listaxe en Google Docs ou outro contido editable en Google Chrome. (#7562)
+- Cando se navega coas frechas por caracteres ou palabras dende un elemento de listaxe a outro en contido editable na web, agora anúnciase a entrada no novo elemento de listaxe. (#11569)
+- O NVDA agora le a liña correcta cando o cursor se coloca no remate dunha liga no fin dun elemento de listaxe en Google Docs ou outro contido editable na web. (#11606)
+- En Windows 7, ao abrir ou pechar o menú Inicio dende o escritorio agora ponse o foco correctamente. (#10567)
+- Cando se activa "Tentar cancelar eventos do foco esperados", o título da pestaña agora anúnciase de novo ao cambiar pestañas en Firefox. (#11397)
+- O NVDA xa non falla ao anunciar un elemento de listaxe despois de escrebir un carácter nunha listaxe cando se fala coas voces Ivona SAPI5 . (#11651)
+- É posible de novo usar o modo exploración ao ler correos electrónicos en Windows 10 Mail 16005.13110 e posteriores. (#11439)
+- Cando se usen as voces Ivona SAPI5 dende harposoftware.com, o NVDA agora é capaz de gardar a configuración, cambiar de sintetizador e xa non se quedará en silenzo despois de reiniciar. (#11650)
+- Agora é posible introducir o número 6 en braille computerizado dende un teclado braille en pantallas HIMS. (#11710)
+- Melloras importantes no rendemento en Azure Data Studio. (#11533, #11715)
+- Con "Tentar Cancelar a voz para eventos de foco expirados" activado o título do diálogo buscar do NVDA anúnciase de novo. (#11632)
+- O NVDA xa non debería conxelarse cando se desperta o computador e o foco aterriza nun documento de Microsoft Edge. (#11576)
+- Xa non é necesario premer tab ou mover o foco despois de pechar un menú de contexto en MS Edge para que o modo Exploración volte a ser funcional de novo. (#11202)
+- O NVDA xa non falla ao ler elementos en vistas de listaxe dentro dunha aplicación de 64 bits tal como Tortoise SVN. (#8175)
+- Os ARIA treegrids agora expóñense como táboas normais en modo Exploración tanto en Firefox coma en Chrome. (#9715)
+- Agora pódese iniciar unha procura inversa con 'buscar anterior' a través de NVDA+shift+F3 (#11770)
+- Un script de NVDA xa non se considera repetido se ocorre unha pulsación de tecla non relacionada entre as dúas execucións do script. (#11388) 
+- Pode suprimirse de novo o anunciado das etiquetas strong e emphasis en Internet Explorer desactivando Anunciar Énfasis nas opcións de Formato de Documentos do NVDA. (#11808)
+- Xa non debería producirse un conxelado de varios segundos experimentado por unha pequena cantidade de usuarios ao pasar entre as celdas de Excel. (#11818)
+- Nas compilacións de Microsoft Teams con números de versión como 1.3.00.28xxx, o NVDA xa non falla ao ler mensaxes en chats ou en canles de Teams debido a un menú incorrectamente enfocado. (#11821)
+
+
+== Cambios para Desenvolvedores ==
+- As probas de sistema agora poden enviar teclas usando spy.emulateKeyPress, que toma un identificador de tecla que se axusta aos proprios nomes de tecla do NVDA e por defecto tamén a bloquea hasta que se execute a acción. (#11581)
+- O NVDA xa non require que o directorio actual sexa o directorio da aplicación NVDA para funcionar. (#6491)
+- A opción aria live politeness para live regions agora pode atoparse en obxectos do NVDA que usen a propiedade liveRegionPoliteness. (#11596)
+
+
 = 2020.3 =
 Esta versión inclúe varias grandes melloras para a estabilidade e o rendemento, especialmente nas aplicacións de Microsoft Office. Hai novas opcións para conmutar o soporte das pantallas táctiles e do anunciado de gráficos.
 A existencia de contido marcado (resaltado) pode anunciarse nos navegadores, e hai novas táboas braille alemanas.
