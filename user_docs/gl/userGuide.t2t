@@ -1147,6 +1147,9 @@ Se usas un sintetizador de terceiros, tamén poderás cambiar este valor se a vo
 Esta opción permíteche cambiar a velocidade da voz. 
 Esta é unha barra de desprazamento que vai dende 0 ata 100, (sendo 0 a velocidade máis lenta e sendo 100 a máis rápida).
 
+==== Aumento da Velocidade ====[SpeechSettingsRateBoost]
+Habilitar esta opción aumentará significativamente a velocidade da voz se está admitida polo sintetizador actual.
+
 ==== Ton ====[SpeechSettingsPitch]
 Esta opción permíteche cambiar o ton da voz. 
 Esta é unha barra de desprazamento que vai dende 0 ata 100, (sendo 0 o ton máis baixo e sendo 100 o máis alto). 
@@ -1298,13 +1301,13 @@ O indicador de seleción non está afectado por esta opción, sempre son os punt
 Esta opción permíteche escoller a forma (patrón de puntos) do cursor braille cando o braille sega á revisión.
 O indicador de seleción non está afectado por esta opción, sempre son os puntos 7 e 8 sen palpebrar.
 
+==== Amosar Mensaxes ====[BrailleSettingsShowMessages]
+Este é unha caixa combinada que che permite selecionar se o NVDA debería amosar as mensaxes braille e cando deberían desaparecer automáticamente.
+
 ==== Duración da Mensaxe (en seg) ====[BrailleSettingsMessageTimeout]
 Esta opción é un campo numérico que controla durante canto tempo se amosan as mensaxes do sistema na pantalla braille.
-Especifycando 0 deshabilítase o amosado destas mesaxes completamente.
 A mensaxe do NVDA péchase inmediatamente ao se premer un sensor na pantalla braille, pero aparece de novo ao se premer a correspondente tecla que o disparou.
-
-==== amosar Mensaxes Indefinidamente ====[BrailleSettingsNoMessageTimeout]
-Esta opción permite ás mensaxes do NVDA amosarse na pantalla braille indefinidamente.
+Esta opción só se amosa se se pon "Amosar Mensaxes" en "Usar Tempo de Espera".
 
 %kc:setting
 ==== Braille Segue ====[BrailleTether]
@@ -1923,6 +1926,9 @@ Podes eliminar un símbolo que engadiches anteriormente premendo o botón Elimin
 
 Cando remates, preme o botón Aceptar para gardar os teus cambios ou o botón Cancelar para descartalos.
 
+No caso de símbolos comprexos, o campo Reemprazar pode ter que incluir algunhas referencias de grupo do texto coincidente. Por exemplo, para un patrón que coincida cunha data compreta, \1, \2, e \3 tería que aparecer no campo, para seren reemprazado polas partes correspondentes da data.
+Polo tanto, as barras inversas normais no campo Reemprazar deberían duplicarse, por exemplo, "a\\b" debería escribirse para obter o reemprazo "a\b".
+
 +++ Xestos de Entrada +++[InputGestures]
 En este diálogo, podes persoalizar os xestos de entrada (teclas no teclado, botóns na pantalla braille, etc.) para ordes de NVDA.
 
@@ -2103,6 +2109,14 @@ As pantallas braille físicas soen ter botóns para desprazarse cara adiante ou 
 A ventá do Visualizador Braille contén unha caixa de verificación etiquetada "Amosar Visualizador de Braille ao comezar".
 Se esta opción está marcada, o Visualizador Braille abrirase cando se inicie o NVDA.
 A ventá do Visualizador Braille sempre tentará voltar a abrirse coas mesmas dimensións e colocación que cando se pechou.
+
+A ventá do Visualizador Braille contén unha caixa de verificación etiquetada coma "Desprazar para enrutamento de celda", por omisión está desmarcada.
+Se se marca, pasar o rato sobre unha celda braille activará unha orde "enrutar a celda braille" para esa celda.
+De cotío úsase esto para mover o cursor ou activar a acción dun control.
+Esto pode ser útil para comprobar que o NVDA sexa capaz de revertir correctamente o mapa dunha celda braille.
+Para evitar o enrutamento involuntario ás celdas, a orde ten un retraso.
+O rato debe sobrevoar ata que a celda se volte verde.
+A celda comezará cunha cor marela crara, pasará a ser laranxa, e de repente convertirase en verde.
 
 ++ Consola de Python ++[PythonConsole]
 A consola de Python do NVDA, atopada baixo Ferramentas no menú NVDA, é unha ferramenta de desenvolvemento que é útil para depuración, inspección xeral do interior  do NVDA ou inspeción da xerarquía de accesibilidade de unha aplicación.
@@ -2625,7 +2639,7 @@ Por favor consulta a documentación das pantallas para descripcións de onde pod
 | tecla escape | punto1+punto5+espazo, f4, brailleedge:f1 |
 | tecla borrar | punto1+punto3+punto5+espazo, punto1+punto4+punto5+espazo |
 | tecla f1 | punto1+punto2+punto5+espazo |
-| tecla f3 | punto1+punto2+punto4+punto8 |
+| tecla f3 | punto1+punto2+punto4+punto8+espazo |
 | tecla f4 | punto7+f3 |
 | teclas windows+b | punto1+punto2+f1 |
 | teclas windows+d | punto1+punto4+punto5+f1 |
@@ -3125,6 +3139,7 @@ Seguidamente van as opcións de liña de ordes para o NVDA:
 | None | --install | Instálase o NVDA comezando a nova copia instalada |
 | None | --install-silent | Instala en silenzo NVDA (Non comeza a nova copia instalada) |
 | None | --enable-start-on-logon=True|False | Ao instalar, habilita [arrancar na pantalla de inicio #StartAtWindowsLogon] do NVDA |
+| None | --copy-portable-config | Ao instalar, copia a configuración portable dende a ruta proporcionada (--config-path, -c) á actual conta de usuario |
 | None | --create-portable | Crea unha copia portable do NVDA (comezando a copia recentemente creada). Require especificarse --portable-path |
 | None | --create-portable-silent | Crea unha copia portable do NVDA (non comeza a copia recentemente instalada). Require expecificarse --portable-path |
 | None | --portable-path=PORTABLEPATH | A ruta onde se creará unha copia portable |

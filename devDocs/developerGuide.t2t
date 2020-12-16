@@ -433,9 +433,9 @@ The order for gesture binding lookup is:
 
 +++ Defining script properties +++[DefiningScriptProperties]
 For NVDA 2018.3 and above, the recommended way to set script properties is by means of the so called script decorator.
-In short, a decorator is a function that modifies the behavior of a particular function.
+In short, a decorator is a function that modifies the behavior of a particular function or method.
 The script decorator modifies the script in such a way that it will be properly bound to the desired gestures.
-Furthermore, it ensures that the script is listed  with the description you specify, and that it is categorised under the desired category in the input gestures dialog.
+Furthermore, it ensures that the script is listed with the description you specify, and that it is categorised under the desired category in the input gestures dialog.
 
 In order for you to use the script decorator, you will have to import it from the scriptHandler module.
 ```
@@ -486,8 +486,10 @@ The following keyword arguments can be used when applying the script decorator:
 Though the script decorator makes the script definition process a lot easier, there are more ways of binding gestures and setting script properties.
 For example, a special "__gestures" Python dictionary can be defined as a class variable on an App Module, Global Plugin or NVDA Object.
 This dictionary should contain gesture identifier strings pointing to the name of the requested script, without the "script_" prefix.
-You can also specify a description of the script in the function's docstring.
-Furthermore, an alternative way of specifying the script's category is by means of setting a "category" attribute on the script function to a string containing the name of the category.
+You can also specify a description of the script in the method's "__doc__" attribute.
+However, beware not to include an inline docstring at the start of the method if you do not set the "__doc__" attribute, as it would render the description not translatable.
+The script decorator does not suffer from this limitation, so you are encouraged to provide inline docstrings as needed when using it.
+Furthermore, an alternative way of specifying the script's category is by means of setting a "category" attribute on the script method to a string containing the name of the category.
 
 ++ Example 4: A Global Plugin to Find out Window Class and Control ID ++
 The following Global Plugin allows you to press NVDA+leftArrow to have the window class of the current focus announced, and NVDA+rightArrow to have the window control ID of the current focus announced.

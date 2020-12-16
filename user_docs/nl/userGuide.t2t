@@ -1155,7 +1155,10 @@ Bij gebruik van een synthesizer van derden, kunt u deze waarde wellicht ook aanp
 
 ==== Snelheid ====[SpeechSettingsRate]
 Hiermee kunt u de spraaksnelheid instellen.
-De schuifregelaar gaat van 0 tot 100 (0 is de laagste en 100 de hoogste snelheid).
+tDe schuifregelaar gaat van 0 tot 100 (0 is de laagste en 100 de hoogste snelheid).
+
+==== Snelheid opvoeren ====[SpeechSettingsRateBoost]
+Met het activeren van deze optie verhoogt u de spreeksnelheid flink, op voorwaarde dat de gebruikte synthesizer hiervoor ondersteuning biedt.
 
 ==== Toonhoogte ====[SpeechSettingsPitch]
 Hiermee stelt u de hoogte van de gebruikte stem in.
@@ -1222,7 +1225,7 @@ De meeste synthesizers ondersteunen deze functionaliteit.
 In het algemeen is het aan te bevelen dit selectievakje aan te vinken. Er zijn evenwel synthesizers die van de Microsoft API gebruik maken die met de uitspraak van individuele lettertekens niet goed omgaan. Als u problemen hiermee ondervindt, kunt u het selectievakje beter niet aanvinken.
 
 +++ Synthesizer Selecteren (NVDA+control+s) +++[SelectSynthesizer]
-Via het dialoogvenster Synthesizer dat u kunt openen door de knop Verander te activeren in de categorie spraak van de dialoog Instellingen van NVDA kunt u selecteren welke Synthesizer NVDA moet gebruiken voor spraakuitvoer.
+Via het dialoogvenster Synthesizer dat u kunt openen door de knop Wijzigen te activeren in de categorie spraak van de dialoog Instellingen van NVDA kunt u selecteren welke Synthesizer NVDA moet gebruiken voor spraakuitvoer.
 Als u de synthesizer van uw keuze hebt geselecteerd, kunt u op Ok drukken en NVDA zal de geselecteerde Synthesizer laden.
 Als er een fout optreedt bij het laden van de synthesizer, zal NVDA dit melden en de vorige synthesizer blijven gebruiken.
 
@@ -1306,13 +1309,14 @@ Deze optie heeft geen invloedt op de selectie-indicator. Hierop is altijd punt 7
 Met deze optie kunt u de vorm (puntenpatroon) van de braillecursor kiezen wanneerbraille de leescursor (review) moet volgen.
 Deze optie heeft geen invloedt op de selectie-indicator. Hierop is altijd punt 7 en punt 8 van toepassing en de indicator knippert niet.
 
+==== Meldingen tonen ====[BrailleSettingsShowMessages]
+Dit is een keuzelijst waarmee u kunt kiezen of NVDA braillemeldingen wel of niet moet tonen  en wanneer eventuele meldingen automatisch moeten verdwijnen.
+
 ==== Time-out voor meldingen (sec.) ====[BrailleSettingsMessageTimeout]
 In het invoerveld kunt u een getal invoeren waarmee u bepaalt hoe lang NVDA-meldingen op de brailleleesregel worden weergegeven.
-Als u "0" als waarde invult, worden geen meldingen getoond.
-De melding van NVDA  verdwijnt onmiddellijk wanneer er een routing-toets op de brailleleesregel  wordt ingedrukt, maar verschijnt bij het indrukken van een corresponderende toets waarmee de melding wordt opgeroepen.
 
-==== Meldingen voor onbepaalde tijd tonen ====[BrailleSettingsNoMessageTimeout]
-Met deze optie kunnen NVDA-meldingen voor onbepaalde tijd op de brailleleesregel worden getoond.
+De melding van NVDA  verdwijnt onmiddellijk wanneer er een routing-toets op de brailleleesregel  wordt ingedrukt, maar verschijnt bij het indrukken van een corresponderende toets waarmee de melding wordt opgeroepen.
+Deze optie is alleen beschikbaar als Meldingen tonen" ingesteld is op 'timeout" gebruiken.
 
 %kc:setting
 ==== Braille koppelen ====[BrailleTether]
@@ -1940,6 +1944,9 @@ U kunt een eerder ingevoerd symbool verwijderen door op de knop Verwijderen te d
 
 Als u klaar bent, drukt u op Ok om de wijzigingen op te slaan of op Annuleren om deze niet door te voeren.
 
+In geval van complexe symbolen kan het nodig zijn in het veld 'Vervangen door' bepaalde samengestelde verwijzingen van de gematchte tekst op te nemen. Voor een patroon dat overeenkomt met een complete datum, bij voorbeeld, zou \1, \2, en \3 in het veld moeten komen te staan,  om er voor te zorgen dat een juiste vervanging door de corresponderende delen van de datum plaats vindt.
+In het veld 'Vervangen door' moeten normale (enkelvoudige) backslashes derhalve worden verdubbeld,u moet bijv.  "a\\b" typen om "a\b" als vervanging te krijgen.
+
 +++ Invoerhandelingen +++[InputGestures]
 In dit dialoogvenster kunt u toetsen voor invoerhandelingen op het toetsenbord, knoppen op de brailleleesregel, etc. instellen voor het uitvoeren van NVDA commando's.
 
@@ -2119,6 +2126,14 @@ Fysieke brailleleesregels zijn uiteraard der zaak voorzien van knoppen om voorui
 In het braille weergavevenster treft u een selectievakje aan met het bijschrift 'braille viewer tonen bij start".
 Als dit vakje is aangevinkt, opent de braille viewer wanneer  NVDA wordt gestart.
 Het brailleweergavevenster zal in principe elke keer dat het wordt geopend dezelfde plaats en grootte hebben als toen het de laatste keer gesloten werd.
+
+Het brailleweergavevenster  heeft een selectievakje met als label cel-routing via muisbeweging". Als standaardinstelling geldt dat dit vakje niet is aangevinkt.
+Als het vakje is aangevinkt, zal het bewegen van de muis boven een braillecel ertoe leiden dat het commando "routeer naar braillecel" voor die cel wordt geactiveerd.
+Hier wordt vaak mee gewerkt om de muisaanwijzer te verplaatsen of om een besturingselement te activeren.
+Dit kan nuttig zijn om te testen of NVDA in staat is map a correct van braillecel terug te halen.
+Om te voorkomen dat onbedoeld naar cellen wordt gerouteerd wordt het commando met een vertraging uitgevoerd.
+Er moet met de muis bewogen worden tot dat deze groen kleurt.
+De cell begint lichgeel gekleurd, gaat over in oranje en wordt dan plotseling groen.
 
 ++ Python-console ++[PythonConsole]
 Het NVDA Python-console, dat u aantreft in het NVDA-menu onder Extra, is een ontwikkelinstrument dat goed van pas komt bij het oplossen van bugs, algemene inspectie van het inwendige van NVDA  of het inspecteren van  de toegankelijkheidsopbouw van een toepassing.
@@ -2644,7 +2659,7 @@ Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van t
 | escape-toets | punt1+punt5+spatie, f4, brailleedge:f1 |
 | del-toets | punt1+punt3+punt5+spatie, punt1+punt4+punt5+spatie |
 | f1-toets | punt1+punt2+punt5+spatie |
-| f3-toets | punt1+plus2+punt4+punt8 |
+| f3-toets | punt1+punt4+punt8+spatie |
 | f4toets | punt7+f3 |
 | windows+b-toetscombinatie | punt1+punt2+f1 |
 | windows+d-toetscombinatie | punt1+punt4+punt5+f1 |
@@ -3144,6 +3159,7 @@ Hieronder volgen de commandoregelopties voor NVDA:
 | Geen | --install | Installeert NVDA (de zojuist geïnstalleerde kopie wordt gestart) |
 | Geen | --install-silent | Silently stille installatie van NVDA (de zojuist geïnstalleerde kopie wordt niet gestart) |
 | Geen | --enable-start-on-logon=True|False | Bij het installeren NVDA [ gebruiken  voor aanmelding bij Windows #StartAtWindowsLogon] |
+| Geen | --copy-portable-config | Bij het installeren de portable configuratie vanaf het aangeboden pad (--config-path, -c) naar huidige gebruikersaccount kopiëren |
 | Geen | --Create-portable | Draagbare kopie van NVDA wordt aangemaakt (waarbij de aangemaakte kopie vervolgens opstart). Het pad voor de draagbare kopie dient te worden opgegeven. |
 | Geen | --Create-portable-silent | Draagbare kopie van NVDA wordt aangemaakt (waarbij aangemaakte kopie vervolgens niet opstart). Het pad voor de draagbare kopie dient te worden opgegeven. |
 | Geen | --portable-path=PORTABLEPATH | Het pad waar een draagbare kopie wordt aangemaakt. |

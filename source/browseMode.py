@@ -209,9 +209,15 @@ class TextInfoQuickNavItem(QuickNavItem):
 		self.textInfo.obj._activatePosition(info=self.textInfo)
 
 	def moveTo(self):
-		info=self.textInfo.copy()
+		if self.document.passThrough and getattr(self, "obj", False):
+			if controlTypes.STATE_FOCUSABLE in self.obj.states:
+				self.obj.setFocus()
+				return
+			self.document.passThrough = False
+			reportPassThrough(self.document)
+		info = self.textInfo.copy()
 		info.collapse()
-		self.document._set_selection(info,reason=REASON_QUICKNAV)
+		self.document._set_selection(info, reason=REASON_QUICKNAV)
 
 	@property
 	def isAfterSelection(self):
@@ -470,7 +476,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		if key is not None:
 			cls.__gestures["kb:shift+%s" % key] = scriptName
 
-	def script_elementsList(self,gesture):
+	def script_elementsList(self, gesture):
 		# We need this to be a modal dialog, but it mustn't block this script.
 		def run():
 			gui.mainFrame.prePopup()
@@ -479,8 +485,10 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			d.Destroy()
 			gui.mainFrame.postPopup()
 		wx.CallAfter(run)
+
 	# Translators: the description for the Elements List command in browse mode.
 	script_elementsList.__doc__ = _("Lists various types of elements in this document")
+	script_elementsList.ignoreTreeInterceptorPassThrough = True
 
 	def _activateNVDAObject(self, obj):
 		"""Activate an object in response to a user request.
@@ -1180,6 +1188,7 @@ class ElementsListDialog(
 		evt.Skip()
 
 	def onAction(self, activate):
+		prevFocus = gui.mainFrame.prevFocus
 		self.Close()
 		# Save off the last selected element type on to the class so its used in initialization next time.
 		self.__class__.lastSelectedElementType=self.lastSelectedElementType
@@ -1190,10 +1199,17 @@ class ElementsListDialog(
 		else:
 			def move():
 				speech.cancelSpeech()
-				# #8831: Report before moving because moving might change the focus, which
-				# might mutate the document, potentially invalidating info if it is
-				# offset-based.
-				item.report()
+				# Avoid double announce if item.obj is about to gain focus.
+				if not (
+					self.document.passThrough
+					and getattr(item, "obj", False)
+					and item.obj != prevFocus
+					and controlTypes.STATE_FOCUSABLE in item.obj.states
+				):
+					# #8831: Report before moving because moving might change the focus, which
+					# might mutate the document, potentially invalidating info if it is
+					# offset-based.
+					item.report()
 				item.moveTo()
 			# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
 			# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
