@@ -1,5 +1,7 @@
+from include.scons.SCons.Util import CLVar
+
 Import([
-	'env',
+	'thirdPartyEnv',
 	'sourceDir',
 ])
 
@@ -30,19 +32,37 @@ class espeak_VOICE(ctypes.Structure):
 		('spare',ctypes.c_void_p),
 	]
 
-env=env.Clone()
-#Whole-program optimization causes eSpeak to distort and worble with its Klatt4 voice
-#Therefore specifically force it off
-env.Append(CCFLAGS='/GL-')
+env = thirdPartyEnv.Clone()
+env.Append(
+	CCFLAGS=[
+		# Whole-program optimization causes eSpeak to distort and warble with its Klatt4 voice
+		# Therefore specifically force it off
+		'/GL-',
+		# Ignore all warnings as the code is not ours.
+		'/W0',
+		# Preprocessor definitions. Migrated from 'nvdaHelper/espeak/config.h'
+		'/DPACKAGE_VERSION=\\"1.51-dev\\"',  # See 'include/espeak/src/windows/config.h'
+		'/DHAVE_STDINT_H=1',
+		'/D__WIN32__#1',
+		'/DLIBESPEAK_NG_EXPORT',
+		# Define WIN32_LEAN_AND_MEAN for preprocessor to prevent windows.h including winsock causing redefinition
+		# errors when winsock2 is included by espeak\src\include\compat\endian.h
+		'/DWIN32_LEAN_AND_MEAN',
+		# Preprocessor definitions. Espeak Features
+		'/DINCLUDE_SPEECHPLAYER=1',
+		'/DINCLUDE_KLATT=1',
+		'/DHAVE_SONIC_H=1',
+	])
 
-# Don't analyze the code as not our project
-if 'analyze' in env['nvdaHelperDebugFlags']:
-	env.Append(CCFLAGS='/analyze-')
-
-# Ignore all warnings as the code is not ours
-env.Replace(CCFLAGS='/W0')
-
-env.Append(CPPPATH=['#nvdaHelper/espeak',espeakIncludeDir,espeakIncludeDir.Dir('compat'),sonicSrcDir,espeakSrcDir.Dir('ucd-tools/src/include')])
+env.Append(
+	CPPPATH=[
+		'#nvdaHelper/espeak',  # ensure that nvdaHelper/espeak/config.h is found first.
+		espeakIncludeDir,
+		espeakIncludeDir.Dir('compat'),
+		espeakSrcDir.Dir('speechPlayer/include'),
+		sonicSrcDir,
+		espeakSrcDir.Dir('ucd-tools/src/include')
+	])
 
 def espeak_compilePhonemeData_buildEmitter(target,source,env):
 	phSourceIgnores=['error_log','error_intonation','compile_prog_log','compile_report','envelopes.png']
@@ -131,6 +151,14 @@ espeakLib=env.SharedLibrary(
 		"voices.c",
 		"wavegen.c",
 		sonicLib,
+		# espeak OPT_SPEECHPLAYER block
+		"sPlayer.c",
+		"../speechPlayer/src/frame.cpp",
+		"../speechPlayer/src/speechPlayer.cpp",
+		"../speechPlayer/src/speechWaveGenerator.cpp",
+		#"../speak-ng.cpp",
+		# if not OPT_SPEECHPLAYER
+		# "../speak-ng.c",
 		# espeak does not need to handle its own audio output so dont include:
 		# pcaudiolib\src\audio.c
 		# pcaudiolib\src\windows.c
