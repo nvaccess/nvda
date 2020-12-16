@@ -1470,6 +1470,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 				style=wx.CHK_3STATE
 			)
 		)
+		self.bindHelpEvent("SpeechSettingsSymbolLevelWord", self.symbolLevelWord)
 		if config.conf["speech"]["symbolLevelWord"] == characterProcessing.SYMLVL_ALL:
 			self.symbolLevelWord.Set3StateValue(wx.CHK_CHECKED)
 		elif config.conf["speech"]["symbolLevelWord"] == characterProcessing.SYMLVL_UNCHANGED:
