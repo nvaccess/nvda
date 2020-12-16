@@ -15,8 +15,8 @@ import wx
 import review
 import NVDAHelper
 import XMLFormatting
-from scriptHandler import script, isScriptWaiting, willSayAllResume
 import scriptHandler
+from scriptHandler import script
 import speech
 import NVDAObjects
 import api
@@ -729,5 +729,4 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	__gestures = {
 		"kb:NVDA+f5": "refreshBuffer",
-		"kb:NVDA+v": "toggleScreenLayout",
 	}
