@@ -307,7 +307,7 @@ Por exemplo, se estás a escrebir nun campo de texto editable, o campo de texto 
 
 O modo máis común de navegar por Windows co NVDA, é só moverse cas ordes de teclado normais, como tab. e shift tab. Para moverse adiante e atrás entre controis, premendo Alt. Para despregar a barra de menú e logo utilizando as teclas de cursor para navegar polos menús, utilizando Alt.-tab. Para moverse entre aplicacións en execución. 
 Cando fagas esto, NVDA anunciará información sobre o que ten o foco, como o seu nome, tipo, valor, estado, descripción, atallo de teclado e información posicional.
-Cando [Resaltar Foco #VisionFocusHighlight] estea activado, a localización do foco do sistema actual tamén se expón visualmente.
+Cando [Resaltado Visual #VisionFocusHighlight] estea activado, a localización do foco do sistema actual tamén se expón visualmente.
 
 Hai algunhas ordes de teclado útis cando nos movamos co foco:
 %kc:beginInclude
@@ -363,7 +363,7 @@ De igual xeito, nunha barra de ferramentas que conteñña controis, debes movert
  
 O obxecto actualmente en revisión chámase navegador de obxectos.
 Unha vez que navegues a un obxecto, podes revisar o seu contido utilizando as [ordes de revisión de texto #ReviewingText] mentres se estea en [modo revisión de obxectos #ObjectReview].
-Cando [Resaltar Foco #VisionFocusHighlight] estea activado, a localización do foco do sistema actual tamén se expón visualmente.
+Cando [Resaltado Visual #VisionFocusHighlight] estea activado, a localización do foco do sistema actual tamén se expón visualmente.
 De xeito predeterminado, o navegador de obxectos móvese xunto co foco  do Sistema, aíndaque este comportamento pode activarse e desactivarse.
 
 Nota: O seguemento do braille ao Navegador de Obxectos pode configurarse a través de [Braille Segue #BrailleTether].
@@ -506,7 +506,7 @@ O modo Exploración tamén está dispoñible opcionalmente para documentos de Mi
 
 No Modo Navegación, o contido do documento faise dispoñible mediante unha representación chan de contido como unha páxina Web, polo que te podes mover cas teclas de cursor. 
 Todas as teclas de ordes do [cursor do sistema #SystemCaret] do NVDA funcionarán neste modo; ex.: ler todo, anunciar formato, ordes de navegación de táboa, etc.
-Cando [Resaltar Foco #VisionFocusHighlight] estea activado, a localización do foco do sistema actual tamén se expón visualmente.
+Cando [Resaltado Visual #VisionFocusHighlight] estea activado, a localización do foco do sistema actual tamén se expón visualmente.
 A información tal como se un texto é unha liga, cabeceira etc anúnciase xunto co texto segundo te movas.
 
 Ás veces, necesitarás interactuar directamente con controis nestos documentos.
@@ -776,8 +776,8 @@ Pódense proporcionar provedores adicionais de mellora de visión en [complement
 
 As opcións de visión do NVDA poden cambiarse na [categoría visión #VisionSettings] do diálogo [Opcións do NVDA #NVDASettings].
 
-++ Foco Resaltado ++[VisionFocusHighlight]
-O Foco resaltado pode axudar a identificar as posicións do [foco do sistema #SystemFocus], [do navegador de obxectos #ObjectNavigation] e [do modo Exploración #BrowseMode].
+++ Resaltado Visual ++[VisionFocusHighlight]
+O resaltado visual pode axudar a identificar as posicións do [foco do sistema #SystemFocus], [do navegador de obxectos #ObjectNavigation] e [do modo Exploración #BrowseMode].
 Estas posicións resáltanse cun rectángulo de cor.
 - O azul sólido resalta unha combinación da localización do navegador de obxectos e do foco do sistema (ex.: porque [o navegador de obxectos sega ao foco do sistema #ReviewCursorFollowFocus]).
 - O azul discontínuo resalta só o obxecto do foco do sistema.
@@ -785,7 +785,7 @@ Estas posicións resáltanse cun rectángulo de cor.
 - O amarelo sólido resalta o cursor virtual usado en modo Exploración (onde non hai cursor físico coma nos navegadores web).
 -
 
-Cando Resaltar Foco está activado na [categoría visión #VisionSettings] do diálogo [Opcións de NVDA #NVDASettings], [podes cambiar se desexas ou non resaltar o cursor do foco, do navegador de obxectos ou do modo Exploración #VisionSettingsFocusHighlight]
+Cando Resaltado Visual estea activado na [categoría visión #VisionSettings] do diálogo [Opcións de NVDA #NVDASettings], [podes cambiar se desexas ou non resaltar o cursor do foco, do navegador de obxectos ou do modo Exploración #VisionSettingsFocusHighlight]
 
 ++ Cortina de Pantalla ++[VisionScreenCurtain]
 Como usuario cego ou con problemas de visión, a menudo non é posible ou necesario ver o contido da pantalla.
@@ -1400,10 +1400,10 @@ A categoría Visión no diálogo opcións do NVDA permíteche activar, desactiva
 Ten en conta que as opcións dispoñibles nesta categoría poderían ampliarse con [complementos do NVDA #AddonsManager].
 Por defecto, esta categoría de axustes contén as seguintes opcións:
 
-==== Resaltar Foco ====[VisionSettingsFocusHighlight]
-As caixas de verificación no grupo de Resaltar Foco controlan o comportamento da función integrada [Resaltar Foco #VisionFocusHighlight] do NVDA.
+==== Resaltado Visual ====[VisionSettingsFocusHighlight]
+As caixas de verificación no grupo Resaltado Visual controlan o comportamento da función integrada [Resaltar Foco #VisionFocusHighlight] do NVDA.
 
-- Activar Resaltado: activa e desactiva o resaltado do foco.
+- Activar Resaltado: activa e desactiva o resaltado visual.
 - Resaltar foco do sistema: conmutará se se resalta ou non o [foco do sistema #SystemFocus].
 - Resaltar navegador de obxectos: conmuta se se resaltará ou non o [navegador de obxectos #ObjectNavigation].
 - Resaltar cursor de modo Exploración: conmuta se se resaltará ou non o [cursor virtual do modo Exploración #BrowseMode].
@@ -2519,7 +2519,7 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 %kc:endInclude
 
 ++ HumanWare Brailliant Series BI/B / BrailleNote Touch  ++[HumanWareBrailliant]
-As pantallas braille Brailliant series BI e B de [HumanWare https://www.humanware.com/], incluíndo BI 14, BI 32, BI 40 e B 80, están soportadas cando se conectan a través do USB ou bluetooth.
+As pantallas braille Brailliant series BI e B de [HumanWare https://www.humanware.com/], incluíndo BI 14, BI 32, BI 20X, BI 40, BI 40X e B 80, están soportadas cando se conectan a través do USB ou bluetooth.
 Se a conectas a través de USB co protocolo configurado a HumanWare, primeiro debes instalar os controladores USB proporcionados polo fabricante.
 Non se requiren os controladores USB se o protocolo se configura a OpenBraille.
 
