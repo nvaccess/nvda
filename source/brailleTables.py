@@ -93,6 +93,9 @@ RENAMED_TABLES = {
 addTable("afr-za-g1.ctb", _("Afrikaans grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("afr-za-g2.ctb", _("Afrikaans grade 2"), contracted=True)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("ar-ar-comp8.utb", _("Arabic 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
