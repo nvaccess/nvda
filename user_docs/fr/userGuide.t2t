@@ -307,7 +307,7 @@ Par exemple, si vous tapez du texte dans une zone d'édition, cette zone d'édit
 
 La manière la plus commune de naviguer dans Windows avec NVDA, est de simplement se déplacer avec des commandes clavier normales, comme "Tabulation" et "Majuscule+Tabulation" pour se déplacer entre les contrôles, "Alt" pour aller au menu puis "Flèches" pour naviguer dans les menus, utiliser "Alt+Tabulation" pour passer d'une application à l'autre. Cela déplace le focus système, c'est-à-dire l'objet qui reçoit les touches que vous tapez au clavier.
 Quand vous faites cela, NVDA donne des informations sur l'objet ayant le focus, telles que son nom, son type, son état, sa valeur, sa description, son raccourci clavier et sa position.
-Quand la [Mise en évidence du Focus #VisionFocusHighlight] est activée, la position du focus système courant est également présentée visuellement.
+Quand la [Mise en Évidence Visuelle #VisionFocusHighlight] est activée, la position du focus système courant est également présentée visuellement.
 
 Quelques touches de commandes utiles pour naviguer avec le focus :
 %kc:beginInclude
@@ -363,7 +363,7 @@ De la même manière, une barre d'outils contient des contrôles, vous devrez do
 
 L'objet en cours de revue s'appelle l'objet navigateur.
 Quand vous atteignez un objet, vous pouvez examiner son contenu en utilisant les [commandes de revue de texte #ReviewingText] en étant en [mode Revue d'objet #ObjectReview].
-Quand la [Mise en évidence du Focus #VisionFocusHighlight] est activée, la position du focus système courant est également présentée visuellement.
+Quand la [Mise en Évidence Visuelle #VisionFocusHighlight] est activée, la position de l'objet navigateur courant est également présentée visuellement.
 Par défaut, l'objet navigateur suit le focus système, mais ce comportement peut être désactivé.
 
 Note : Le suivi de la Navigation par Objet par le Braille peut être configuré via [Braille Suit #BrailleTether].
@@ -506,7 +506,7 @@ Le mode navigation est aussi disponible en option pour les documents Microsoft W
 
 Le mode navigation offre une représentation platement textuelle du document dans laquelle on peut se déplacer avec les flèches de navigation. 
 Dans ce mode, toutes les touches de commandes du [mode curseur #SystemCaret] fonctionneront (ex : dire tout, annonce de la mise en forme, touches de navigation dans les tableaux etc.).
-Quand la [Mise en évidence du Focus #VisionFocusHighlight] est activée, la position du curseur virtuel de mode navigation est également présentée visuellement.
+Quand la [Mise en Évidence Visuelle #VisionFocusHighlight] est activée, la position du curseur virtuel de mode navigation est également présentée visuellement.
 Des informations indiquant si le texte est un lien, un titre etc., sont annoncées avec le texte pendant que vous vous déplacez.
 
 Parfois, vous devrez interagir directement avec les contrôles contenus dans ces documents.
@@ -776,8 +776,8 @@ Des services d'amélioration visuelle additionnels peuvent être apportés dans 
 
 Les paramètres de vision de NVDA peuvent être modifiés dans la [catégorie vision #VisionSettings] du dialogue [Paramètres NVDA #NVDASettings].
 
-++ Mise en évidence du Focus ++[VisionFocusHighlight]
-La mise en évidence du Focus peut aider à identifier la position du [focus système #SystemFocus], de [l'objet navigateur #ObjectNavigation] et du [mode navigation #BrowseMode].
+++ Mise en Évidence Visuelle ++[VisionFocusHighlight]
+La mise en évidence Visuelle peut aider à identifier la position du [focus système #SystemFocus], de [l'objet navigateur #ObjectNavigation] et du [mode navigation #BrowseMode].
 Ces positions sont mises en évidence avec un contour rectangulaire coloré.
 - Le bleu continu indique la position d'un objet navigateur combiné au focus système (ex : lorsque [l'objet navigateur suit le curseur système #ReviewCursorFollowFocus]).
 - Le bleu pointillé indique juste l'objet ayant le focus système.
@@ -785,7 +785,7 @@ Ces positions sont mises en évidence avec un contour rectangulaire coloré.
 - Le jaune continu indique le curseur virtuel utilisé en mode navigation (quand il n'y a pas de curseur physique comme dans les navigateurs web).
 -
 
-Quand la mise en évidence du focus est activée dans la [catégorie vision #VisionSettings] du dialogue [Paramètres de NVDA #NVDASettings], vous pouvez [choisir de mettre en évidence ou non le focus, l'objet navigateur ou le curseur du mode navigation #VisionSettingsFocusHighlight].
+Quand la Mise en Évidence Visuelle est activée dans la [catégorie vision #VisionSettings] du dialogue [Paramètres de NVDA #NVDASettings], vous pouvez [choisir de mettre en évidence ou non le focus, l'objet navigateur ou le curseur du mode navigation #VisionSettingsFocusHighlight].
 
 ++ Le Rideau d'Écran ++[VisionScreenCurtain]
 En tant qu'utilisateur aveugle ou malvoyant, il est parfois impossible ou inutile de voir le contenu de l'écran.
@@ -1400,10 +1400,10 @@ La catégorie Vision du dialogue des paramètres NVDA vous permet d'activer, dé
 Notez que les options disponibles dans cette catégorie pourraient être étendues par des [extensions NVDA #AddonsManager].
 Par défaut, cette catégorie de paramètres contient les options suivantes :
 
-==== Mise en évidence du Focus ====[VisionSettingsFocusHighlight]
-Les cases à cocher du groupe Mettre en évidence le Focus contrôlent le comportement de la fonctionnalité interne de [Mise en évidence du Focus #VisionFocusHighlight]de NVDA.
+==== Mise en Évidence Visuelle ====[VisionSettingsFocusHighlight]
+Les cases à cocher du groupe Mise en Évidence Visuelle contrôlent le comportement de la fonctionnalité interne de [Mise en Évidence Visuelle #VisionFocusHighlight]de NVDA.
 
-- Activer la mise en évidence: Active/désactive la mise en évidence du focus.
+- Activer la mise en évidence: Active/désactive la mise en évidence visuelle.
 - Mettre en évidence le focus système : définit si le [focus système #SystemFocus] sera mis en évidence.
 - Mettre en évidence l'objet navigateur : définit si [l'objet navigateur #ObjectNavigation] sera mis en évidence.
 - Mettre en évidence le curseur du mode navigation : Définit si le [Curseur virtuel du mode navigation #BrowseMode] sera mis en évidence.
@@ -2519,7 +2519,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 %kc:endInclude
 
 ++ HumanWare Séries Brailliant BI/B / BrailleNote Touch ++[HumanWareBrailliant]
-Les terminaux des séries Brailliant BI & B de [HumanWare https://www.humanware.com/], incluant le BI 14, BI 32, BI 40 et B 80 sont supportés quand ils sont connectés via USB ou Bluetooth.
+Les terminaux des séries Brailliant BI & B de [HumanWare https://www.humanware.com/], incluant le BI 14, BI 32, BI 20X, BI 40, BI 40X et B 80 sont supportés quand ils sont connectés via USB ou Bluetooth.
 S'ils sont connectés en USB avec le protocole réglé sur HumanWare, vous devez d'abord installer le pilote USB fourni par le constructeur.
 Les pilotes USB ne sont pas nécessaires si le protocole est réglé sur OpenBraille.
 

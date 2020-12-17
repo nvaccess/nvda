@@ -307,7 +307,7 @@ Ad esempio, se si sta scrivendo in un campo editazione, quel campo editazione ha
 
 Il modo più comune di esplorare le finestre con NVDA è proprio quello di utilizzare i normali comandi da tastiera come tab e shift tab per muoversi avanti ed indietro attraverso i vari controlli, alt per accedere alla barra dei menu quindi le frecce per esplorare i menu stessi ed alt-tab per spostarsi tra le applicazioni in esecuzione.
 Così facendo, NVDA fornirà informazioni sull'oggetto sul quale è posizionato il focus, come il suo nome, tipo, valore, stato, descrizione, tasto caldo e informazioni sulla posizione.
-Quando [l'evidenziatore del focus #VisionFocusHighlight] è attivato, viene evidenziata sullo schermo la posizione corrente del focus di sistema.
+Quando [l'evidenziatore focus #VisionFocusHighlight] è attivato, viene evidenziata sullo schermo la posizione corrente del focus di sistema.
 
 Esistono alcuni comandi da tastiera utili per seguire il focus:
 %kc:beginInclude
@@ -1147,6 +1147,9 @@ Nel caso si utilizzi una sintesi vocale di terze parti, la funzione è disponibi
 Questa opzione permette di modificare la velocità della voce. 
 Si tratta di un controllo che va da 0 a 100, (dove 0 indica il limite più lento e 100 il massimo della velocità).
 
+==== Aumento velocità ====[SpeechSettingsRateBoost]
+Abilitando questa opzione si aumenterà in modo significativo la velocità del parlato, se supportato dal sintetizzatore corrente.
+
 ==== Tono ====[VoiceSettingsPitch]
 Questa opzione permette di modificare l'altezza della voce corrente. 
 Si tratta di un  controllo che va da 0 a 100, (0 rappresenta l'altezza minima, 100 la massima).
@@ -1294,17 +1297,17 @@ Si tratta di un campo numerico che permette di modificare la velocità di lampeg
 Questa opzione permette di selezionare la forma, in punti braille, del cursore braille quando il braille segue il focus.
 L'indicatore della selezione non è affetto da questa funzione.
 
-==== Forma del cursore di controllo ====[BrailleSettingsCursorShapeForReview]
-Questa opzione permette di selezionare la forma, in punti braille, del cursore braille quando il braille segue il cursore di controllo.
-L'indicatore della selezione non è affetto da questa funzione.
+==== Mostra Messaggi ====[BrailleSettingsShowMessages]
+Si tratta di una casella combinata che stabilisce se NVDA debba visualizzare o meno messaggi in braille e la loro durata in secondi sul display, prima che essi scompaiano automaticamente.
 
 ==== Timeout dei messaggi(sec) ====[BrailleSettingsMessageTimeout]
 Si tratta di un campo numerico che controlla per quanto tempo i messaggi di NVDA saranno mostrati sul Display Braille.
-Il valore 0 farà in modo che non verrà visualizzato più alcun messaggio.
 Il messaggio sparirà immediatamente non appena si preme un cursor routing sulla barra braille, ma lo si potrà rileggere se si preme una combinazione di tasti che attivano il messaggio.
+L'opzione è visibile soltanto se "mostra messaggi" è impostato su "usa timeout".
 
-==== Mostra messaggi a tempo indeterminato ====[BrailleSettingsNoMessageTimeout]
-Questa funzione fa in modo che NVDA mostri i messaggi sul display braille a tempo indeterminato.
+==== Forma del cursore di controllo ====[BrailleSettingsCursorShapeForReview]
+Questa opzione permette di selezionare la forma, in punti braille, del cursore braille quando il braille segue il cursore di controllo.
+L'indicatore della selezione non è affetto da questa funzione.
 
 %kc:setting
 ==== Inseguimento Braille ====[BrailleTether]
@@ -1844,7 +1847,7 @@ In ambienti non sicuri, è preferibile disattivare temporaneamente [Leggi i cara
 
 ==== Tenta di non leggere informazioni obsolete concernenti il focus ====
 Questa funzione cerca di inibire la lettura di informazioni obsolete che riguardano il focus di sistema.
-In particolare, lo spostamento rapido tra i messaggi in Gmail mentre si utilizza Chrome rischia di far leggere a NVDa informazioni non più accurate. Questa opzione cerca di risolvere il problema.
+In particolare, lo spostamento rapido tra i messaggi in Gmail mentre si utilizza Chrome rischia di far leggere a NVDA informazioni non più accurate. Questa opzione cerca di risolvere il problema.
 Questa funzionalità è sperimentale a partire da NVDA 2020.2.
 
 ==== Timeout Movimento cursore (in MS) ====[AdvancedSettingsCaretMoveTimeout]
@@ -1924,6 +1927,9 @@ Poi, modificare i campi rimanenti secondo le proprie esigenze.
 Sarà sempre possibile eliminare un simbolo aggiunto in precedenza tramite il pulsante "Rimuovi".
 
 Una volta terminate le modifiche, premere il pulsante OK per salvare i cambiamenti oppure il bottone Annulla per annullare l'operazione.
+
+Nel caso di simboli complessi, il campo voce in sostituzione potrebbe dover includere alcuni riferimenti al testo corrspondente. Per esempio, per uno schema che comprende una data intera, \1, \2, e \3 dovrebbero apparire nel campo, per essere sostituiti dalle parti corrispondenti della data.
+I normali simboli di backslash nel campo voce in sostituzione devono quindi essere raddoppiati, ad esempio bisogna digitare "a\\b" in modo da ottenere "a\b".
 
 +++ Tasti e gesti di immissione +++[InputGestures]
 In questa finestra di dialogo, è possibile personalizzare i gesti di immissione quali tasti della tastiera, pulsanti di un display braille, etc, per i comandi di NVDA.
@@ -2096,13 +2102,21 @@ Il visualizzatore Braille può essere utilizzato contemporaneamente a un display
 Quando questa caratteristica è attiva, il contenuto della finestra si aggiornerà in tempo reale per mostrare di continuo le informazioni che NVDA invia al display braille.
 
 Per abilitare il visualizzatore braille, attivare la voce apposita che si trova nel menu strumenti di NVDA.
-Disabilitare la voce di menu per disattivare il visualizzatore braille.
+Deselezionare la voce di menu per disattivare il visualizzatore braille.
 
 I display Braille fisici in genere sono provvisti di pulsanti per scorrere avanti o indietro; per abilitare lo scorrimento con il visualizzatore Braille, utilizzare la finestra di dialogo [Gesti e tasti di immissione #InputGestures] per assegnare le scorciatoie da tastiera appropriate alle funzioni "Scorre display braille indietro" e "Scorre display braille avanti".
 
 La finestra visualizzatore braille contiene una casella di controllo chiamata "Mostra visualizzatore braille all'avvio".
 Se tale casella è selezionata,  il visualizzatore braille si caricherà all'avvio di NVDA.
 La finestra cercherà sempre di riaprirsi con le stesse dimensioni e posizione di quando è stata chiusa in precedenza.
+
+Un'altra casella di controllo presente all'interno della finestra è chiamata "il passaggio del mouse attiva i cursor routing"
+Se selezionata, basterà posizionare il mouse su di una cella per simulare la pressione del cursor routing di quella cella sulla barra braille.
+Ciò viene spesso usato per spostare il cursore o attivare l'azione per un controllo.
+Questo può essere utile per testare che NVDA sia in grado di invertire correttamente la mappatura a da una cella braille.
+Per impedire che il comando venga eseguito involontariamente, esso viene ritardato.
+Il mouse deve rimanere fermo finché la cella non diventa verde.
+La cella avrà dapprima un colore tendente al  giallo chiaro, effettuerà una transizione all'arancio, per poi  diventare improvvisamente verde.
 
 ++ Console Python ++[PythonConsole]
 La Console Python di NVDA, situata nel menu strumenti, è uno strumento per sviluppatori che risulta utile in fase di debug, di diagnosi delle funzioni interne di NVDA o di analisi della gerarchia degli oggetti accessibili presenti in un'applicazione.
@@ -2479,7 +2493,7 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 %kc:endInclude
  
 ++ HumanWare Brailliant BI/B Series / BrailleNote Touch ++[HumanWareBrailliant]
-Le Barre Braille Brailliant Serie BI e B prodotte dalla [HumanWare https://www.humanware.com/], comprese BI 14, BI 32, BI 40 e B 80, sono supportate quando connesse tramite USB o Bluetooth.
+Le Barre Braille Brailliant Serie BI e B prodotte dalla [HumanWare https://www.humanware.com/], comprese BI 14, Bi 20, Bi 20x, BI 40, Bi40x e B 80, sono supportate quando connesse tramite USB o Bluetooth.
 In caso di connessione tramite USB con protocollo impostato su Humanware, è necessario prima installare i driver sviluppati dal produttore.
 Non è richiesto alcun driver USB invece nel caso in cui il protocollo sia impostato su OpenBraille.
 
@@ -2599,7 +2613,7 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 | tasto escape | punto1+punto5+spazio, f4, brailleedge:f1 |
 | tasto canc  | punto1+punto3+punto5+spazio, punto1+punto4+punto5+spazio |
 | tasto f1 | punto1+punto2+punto5+spazio |
-| tasto f3 | punto1+punto2+punto4+punto8 |
+| tasto f3 | punto1+punto4+punto8+spazio |
 | tasto f4 | punto7+f3 |
 | tasto windows+b | punto1+punto2+f1 |
 | tasto windows+d | punto1+punto4+punto5+f1 |
@@ -3098,6 +3112,7 @@ Ecco l'elenco dei parametri a riga di comando di NVDA:
 | None | --install | Installa NVDA (avviando la copia appena installata) |
 | None | --install | Silent Installa NVDA (non avviando la copia appena installata) |
 | None | --enable-start-on-logon=True|False | Durante l'installazione, abilita [l'avvio di NVDA alla schermata di logon #StartAtWindowsLogon] |
+| None | --copy-portable-config | Durante l'installazione, copia la configurazione portable dal percorso specificato (--config-path, -c) all'account utente corrente |
 | None | --create-portable | Crea una copia portable di NVDA (avviando la copia appena creata). Richiede --portable-path da specificare |
 | None | --create-portable-silent | Crea una copia portable di NVDA (non avvia la nuova copia appena creata). Richiede --portable-path da specificare |
 | None | --portable-path=PORTABLEPATH | Il percorso in cui verrà creata la copia portable di NVDA |
