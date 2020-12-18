@@ -34,6 +34,9 @@ class ChromiumUIATextInfo(web.UIAWebTextInfo):
 			startOfNode=startOfNode,
 			endOfNode=endOfNode
 		)
+		# use the value of comboboxes as content.
+		if obj.role == controlTypes.ROLE_COMBOBOX:
+			field['content'] = obj.value
 		# Layout tables do not have the UIA table pattern
 		if field['role'] == controlTypes.ROLE_TABLE:
 			if not obj._getUIACacheablePropertyValue(UIAHandler.UIA_IsTablePatternAvailablePropertyId):
