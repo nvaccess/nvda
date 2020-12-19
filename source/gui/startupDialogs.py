@@ -41,7 +41,7 @@ class WelcomeDialog(
 
 	def __init__(self, parent):
 		# Translators: The title of the Welcome dialog when user starts NVDA for the first time.
-		super(WelcomeDialog, self).__init__(parent, wx.ID_ANY, _("Welcome to NVDA"))
+		super().__init__(parent, wx.ID_ANY, _("Welcome to NVDA"))
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		# Translators: The header for the Welcome dialog when user starts NVDA for the first time.
@@ -138,7 +138,7 @@ class LauncherDialog(
 	helpId = "InstallingNVDA"
 
 	def __init__(self, parent):
-		super(LauncherDialog, self).__init__(parent, title=versionInfo.name)
+		super().__init__(parent, title=versionInfo.name)
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
