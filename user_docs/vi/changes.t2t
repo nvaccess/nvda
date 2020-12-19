@@ -3,6 +3,61 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.4 =
+
+== Tính năng mới ==
+- Bấm F1 trong các  hộp thoại của NVDA giờ đây sẽ mở các phần có liên quan nhất trong tập tin trợ giúp. (#7757)
+- Hỗ trợ cho tính năng tự gợi ý (IntelliSense) trong Microsoft SQL Server Management Studio và Visual Studio 2017 trở lên. (#7504)
+- Phát âm kí hiệu: hỗ trợ nhóm trong một kí hiệu phức tạp được định nghĩa và hỗ trợ các tham khảo nhóm trong định nghĩa thay thế để chúng trở nên đơn giản và hoạt động hiệu quả hơn. (#11107)
+- Giờ đây, người dùng được thông báo khi nỗ lực tạo các từ điển phát âm với các biểu thức phổ thông thay thế không đúng. (#11407)
+  - Nhóm các lỗi cụ thể giờ đã được phát hiện.
+- Đã thêm hỗ trợ cho các kiểu nhập tiếng Trung Quốc truyền thống Quick và Pinyin trong Windows 10. (#11562)
+- Các tiêu đề Tab  giờ đây đã được xem là biểu mẫu với phím di chuyển  nhanh là f. (#10432)
+- Thêm lệnh để bật / tắt việc đọc các văn bản đã đánh dấu (được làm nổi); không có thao tác mặc định cho lệnh này. (#11807)
+- Đã thêm tham số dòng lệnh --copy-portable-config cho phép tự động sao chép cấu hình được cung cấp vào tài khoản người dùng khi cài đặt NVDA ở chế độ im lặng. (#9676)
+- Việc đưa đến ô trong chữ nổi giờ đây đã hỗ trợ cho trình xem chữ nổi với người dùng chuột, di chuyển chuột để đưa đến một ô chữ nổi. (#11804)
+
+
+== Các thay đổi ==
+- Đã cập nhật thư viện phiên dịch chữ nổi liblouis lên phiên bản 3.15.0
+- Khi đọc với tính năng đọc tất cả trong chế độ duyệt, các lệnh tìm tiếp và tìm trước không dừng đọc nếu tùy chọn Cho phép thay đổi vị trí đọc khi đọc tất cả được bật; việc đọc tất cả sẽ tiếp tục từ sau cụm từ được tìm thấy. (#11563)
+- Với màn hình chữ nổi của HIMS, F3 đã được đổi thành khoảng trắng + chấm 148. (#11710)
+- Cải tiến cho tùy chọn "thời gian kết thúc thông điệp chữ nổi" và "Hiển thị vô thời hạn". (#11602)
+- Trong các trình duyệt web và các ứng dụng khác có hỗ trợ chế độ duyệt, hộp thoại danh sách các thành phần (NVDA+F7) giờ đây có thể gọi chạy khi ở trong chế độ focus. (#10453)
+- Các cập nhật đến ARIA live regions giờ đây bị ngăn lại khi  tùy chọn thông báo các thay đổi nội dung động bị tắt. (#9077)
+- NVDA giờ đây sẽ đọc "Đã chép lên bộ nhớ tạm" trước văn bản được sao chép. (#6757)
+
+
+== Sửa lỗi ==
+- NVDA lại một lần nữa hoạt động chính xác với các trường nhập liệu khi dùng ứng dụng Fast Log Entry. (#8996)
+- Thông báo thời gian đã trôi qua trong Foobar2000 nếu không có tổng thời gian (ví dụ, khi nghe một chương trình phát trực tiếp). (#11337)
+- NVDA giờ đây tôn trọng thuộc tính aria-roledescription trên các danh sách trong nội dung có thể chỉnh sửa trong các trang web. (#11607)
+- 'danh sách' không còn bị đọc trên mọi dòng của danh sách trong Google Docs hay các nội dung có thể chỉnh sửa khác trong Google Chrome. (#7562)
+- Khi di chuyển mũi tên theo từ hay kí tự từ một thành phần trong danh sách sang thành phần khác trong nội dung có thể chỉnh sửa trên web, việc vào một thành phần mới của danh sách giờ đây đã được thông báo. (#11569)
+- NVDA giờ đây đọc chính xác các dòng khi  dấu nháy được đặt ở cuối một liên kết ở cuối một thành phần danh sách  trong Google Docs hoặc các nội dung có thể chỉnh sửa khác trên  web. (#11606)
+- Trên Windows 7, việc mở và đóng trình đơn Start từ desktop giờ đây đã đặt focus chính xác. (#10567)
+- Khi "Cố gắng không đọc các sự kiện lỗi thời của focus:" được bật, tên của tab lại được đọc khi chuyển giữa các  tab trong Firefox. (#11397)
+- NVDA không còn bị lỗi không đọc được thành phần trong danh sách sau khi nhập một kí tự trong một danh sách khi đọc với các giọng SAPI5 Ivona. (#11651)
+- Lại có thể dùng được chế độ duyệt khi đọc thư điện tử trong Windows 10 Mail 16005.13110 trở lên. (#11439)
+- Khi dùng các giọng SAPI5 Ivona từ harposoftware.com, NvDA giờ đây đã lưu được cấu hình, chuyển đổi bộ đọc, và không còn bị ở trạng thái im lặng sau khi khởi động lại. (#11650)
+- Giờ đây, đã có thể nhập số 6 trong  chữ nổi máy tính từ bàn phím chữ nổi trên các màn hình của HIMS. (#11710)
+- Các cải tiến phụ cho hiệu suất vận hành trong Azure Data Studio. (#11533, #11715)
+- Với "Cố gắng không đọc các sự kiện lỗi thời của focus:" được bật, tên của hộp thoại tìm kiếm của NVDA lại được đọc. (#11632)
+- NVDA sẽ không còn bị đóng băng khi mở lại máy tính và focus lại ở một tài liệu mở bằng Microsoft Edge. (#11576)
+- Không cần phải bấm tab hoặc chuyển focus sau khi đóng một trình đơn ngữ cảnh trong MS Edge để chế độ duyệt hoạt động trở lại. (#11202)
+- NVDA không còn bị lỗi khi đọc thành phần trong danh sách với một ứng dụng 64-bit như  Tortoise SVN. (#8175)
+- ARIA treegrids giờ đây được thể hiện như một bản biểu bình thường ở chế độ duyệt trong cả Firefox và Chrome. (#9715)
+- việc tìm lại nội dung trước, giờ đây có thể thực hiện với lệnh 'tìm trước' thông qua NVDA+shift+F3 (#11770)
+- Một kịch bản NVDA không còn bị xem là đang lặp lại nếu một phím không liên quan được bấm giữa hai lần gọi kịch bản. (#11388) 
+- Các thẻ nhấn mạnh (strong và emphasis) trong Internet Explorer giờ đây lại có thể được tắt không cho đọc bằng cách tắt tùy chọn báo nhận mạnh trong cài đặt định dạng tài liệu của NVDA. (#11808)
+- Việc bị treo vài giây được báo về bởi một số ít người dùng khi di chuyển bằng mũi tên giữa các ô trong Excel không còn xảy ra nữa. (#11818)
+- Trong Microsoft Teams với các số bản dựng như 1.3.00.28xxx, NVDA không còn bị lỗi không đọc được các tin nhắn trong phần trò chuyện hay Teams channels vì  trình đơn focused không chính xác. (#11821)
+
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
+
 = 2020.3 =
 Bản phát hành này bao gồm vài cải tiến lớn cho tính ổn định và hiệu suất vận hành, cụ thể là trong các ứng dụng Microsoft Office. Các thiết lập mới để bật / tắt hỗ trợ tương tác cảm ứng và thông báo hình ảnh.
 Có thể đọc được nội dung có tồn tại các điểm đánh dấu (được làm nổi) trong các trình duyệt, và thêm các bản chữ nổi tiếng Đức mới.

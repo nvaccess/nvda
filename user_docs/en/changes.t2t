@@ -15,7 +15,7 @@ What's New in NVDA
 
 
 == Changes for Developers ==
-- Note: this is a Add-on API compatibility breaking realease. Add-ons will need to be re-tested and have their manifest updated.
+- Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
 
 
 = 2020.4 =
@@ -31,10 +31,16 @@ What's New in NVDA
 - Added a command to toggle reporting of marked (highlighted) text; There is no default associated gesture. (#11807)
 - Added the --copy-portable-config command line parameter that allows you to automatically copy the provided configuration to the user account when silently installing NVDA. (#9676)
 - Braille routing is now supported with the Braille Viewer for mouse users, hover to route to a braille cell. (#11804)
+- NVDA will now automatically detect the Humanware Brailliant BI 40X and 20X devices via both USB and Bluetooth. (#11819)
 
 
 == Changes ==
-- Updated liblouis braille translator to version 3.15.0
+- Updated liblouis braille translator to version 3.16.1:
+ - Addresses multiple crashes
+ - Adds Bashkir grade 1 Braille table
+ - adds Coptic 8 dot computer braille table
+ - Adds Russian literary braille and Russian literary braille (detailed) tables.
+ - Removes the Russian grade 1 Braille table
 - When reading with say all in browse mode, the find next and find previous commands do not stop reading anymore if Allow skim reading option is enabled; say all rather resumes from after the next or previous found term. (#11563)
 - For HIMS braille displays F3 has been remapped to Space + dots 148. (#11710)
 - Improvements to the UX of the "braille message timeout" and "Show messages indefinitely" options. (#11602)
@@ -58,7 +64,7 @@ What's New in NVDA
 - When "attempt to cancel expired focus events" is enabled, the title of the tab is now announced again when switching tabs in Firefox. (#11397)
 - NVDA no longer fails to announce a list item after typing a character in a list when speaking with the SAPI5 Ivona voices. (#11651)
 - It is again possible to use browse mode when reading emails in Windows 10 Mail 16005.13110 and later. (#11439)
-- When using the SAPI5 Ivona voices from harposoftware.com, NvDA is now able to save configuration, switch synthesizers, and no longer will stay silent after restarting. (#11650)
+- When using the SAPI5 Ivona voices from harposoftware.com, NVDA is now able to save configuration, switch synthesizers, and no longer will stay silent after restarting. (#11650)
 - It is now possible to enter number 6 in computer braille from a braille keyboard on HIMS displays. (#11710)
 - Major performance improvements in Azure Data Studio. (#11533, #11715)
 - With "Attempt to Cancel speech for expired focus events" enabled the title of the NVDA Find dialog is announced again. (#11632)
@@ -75,6 +81,7 @@ What's New in NVDA
 - When using Outlook (French locale), the shortcut for 'Reply all' (control+shift+R) works again. (#11196)
 - In Visual Studio, IntelliSense tool tips that provide additional details about the currently selected IntelliSense item are now only reported once. (#11611)
 - In Windows 10 Calculator, NVDA will not announce progress of calculations if speak typed characters is disabled. (#9428)
+- NVDA no longer crashes when using English US grade 2 and expand to computer Braille at the cursor is on, when displaying certain content such as a URL in Braille. (#11754)
 - It is again possible to report formatting information for the focused Excel cell using NVDA+F. (#11914)
 
 
