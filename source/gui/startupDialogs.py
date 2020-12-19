@@ -4,8 +4,6 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-import codecs
-
 import wx
 
 import config
@@ -147,7 +145,7 @@ class LauncherDialog(
 		groupLabel = _("License Agreement")
 		sizer = sHelper.addItem(wx.StaticBoxSizer(wx.StaticBox(self, label=groupLabel), wx.VERTICAL))
 		licenseTextCtrl = wx.TextCtrl(self, size=(500, 400), style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH)
-		licenseTextCtrl.Value = codecs.open(getDocFilePath("copying.txt", False), "r", encoding="UTF-8").read()
+		licenseTextCtrl.Value = open(getDocFilePath("copying.txt", False), "r", encoding="UTF-8").read()
 		sizer.Add(licenseTextCtrl)
 
 		# Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
