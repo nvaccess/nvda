@@ -1846,7 +1846,7 @@ In untrusted environments, you may temporarily disable [speak typed characters #
 ==== Diff algorithm ====[AdvancedSettingsDiffAlgo]
 This setting controls how NVDA determines the new text to speak in terminals.
 The diff algorithm combo box has three options:
-- Automatic: as of NVDA 2020.4, this option is equivalent to Difflib.
+- Automatic: as of NVDA 2021.1, this option is equivalent to Difflib.
 In a future release, it may be changed to Diff Match Patch pending positive user testing.
 - allow Diff Match Patch: This option causes NVDA to calculate changes to terminal text by character.
 It may improve performance when large volumes of text are written to the console and allow more accurate reporting of changes made in the middle of lines.
