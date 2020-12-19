@@ -138,7 +138,7 @@ def _showAddonInfo(addon):
 
 class AddonsDialog(
 		DpiScalingHelperMixinWithoutInit,
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	@classmethod
@@ -664,7 +664,7 @@ def _showConfirmAddonInstallDialog(parent, bundle):
 
 class IncompatibleAddonsDialog(
 		DpiScalingHelperMixinWithoutInit,
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""A dialog that lists incompatible addons, and why they are not compatible"""

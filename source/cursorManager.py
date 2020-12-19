@@ -31,7 +31,7 @@ from textInfos import DocumentWithPageTurns
 
 
 class FindDialog(
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""A dialog used to specify text to find in a cursor manager.

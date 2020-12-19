@@ -8,7 +8,6 @@ import tempfile
 import typing
 import queueHandler
 
-import gui
 import ui
 import wx
 from logHandler import log
@@ -34,7 +33,8 @@ def showHelp(helpId: str):
 		noHelpMessage = _("No help available here.")
 		queueHandler.queueFunction(queueHandler.eventQueue, ui.message, noHelpMessage)
 		return
-	helpFile = gui.getDocFilePath("userGuide.html")
+	import documentationUtils
+	helpFile = documentationUtils.getDocFilePath("userGuide.html")
 	if helpFile is None:
 		# Translators: Message shown when trying to display context sensitive help,
 		# indicating that	the user guide could not be found.
