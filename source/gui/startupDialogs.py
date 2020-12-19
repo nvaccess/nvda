@@ -228,12 +228,12 @@ class AskAllowUsageStatsDialog(
 
 		message = _(
 			# Translators: A message asking the user if they want to allow usage stats gathering
-			"In order to improve NVDA in the future,"
+			"In order to improve NVDA in the future, "
 			"NV Access wishes to collect usage data from running copies of NVDA.\n\n"
 			"Data includes Operating System version, NVDA version, language, country of origin, plus "
-			" certain NVDA configuration such as current synthesizer, braille display and braille table. "
-			"No spoken or braille content will be ever sent to NV Access."
-			" Please refer to the User Guide for a current list of all data collected.\n\n"
+			"certain NVDA configuration such as current synthesizer, braille display and braille table. "
+			"No spoken or braille content will be ever sent to NV Access. "
+			"Please refer to the User Guide for a current list of all data collected.\n\n"
 			"Do you wish to allow NV Access to periodically collect this data in order to improve NVDA?"
 		)
 		sText = sHelper.addItem(wx.StaticText(self, label=message))
