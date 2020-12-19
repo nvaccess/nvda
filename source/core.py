@@ -78,7 +78,8 @@ def doStartupDialogs():
 			_("Configuration File Error"),
 			wx.OK | wx.ICON_EXCLAMATION)
 	if config.conf["general"]["showWelcomeDialogAtStartup"]:
-		gui.WelcomeDialog.run()
+		from gui.startupDialogs import WelcomeDialog
+		WelcomeDialog.run()
 	if config.conf["brailleViewer"]["showBrailleViewerAtStartup"]:
 		gui.mainFrame.onToggleBrailleViewerCommand(evt=None)
 	if config.conf["speechViewer"]["showSpeechViewerAtStartup"]:
@@ -104,7 +105,7 @@ def doStartupDialogs():
 					except:
 						pass
 			# Ask the user if usage stats can be collected.
-			gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None),onResult)
+			gui.runScriptModalDialog(gui.startupDialogs.AskAllowUsageStatsDialog(None), onResult)
 
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy."""
@@ -509,7 +510,8 @@ def main():
 		except:
 			log.error("", exc_info=True)
 		if globalVars.appArgs.launcher:
-			gui.LauncherDialog.run()
+			from gui.startupDialogs import LauncherDialog
+			LauncherDialog.run()
 			# LauncherDialog will call doStartupDialogs() afterwards if required.
 		else:
 			wx.CallAfter(doStartupDialogs)

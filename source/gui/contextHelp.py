@@ -34,9 +34,8 @@ def showHelp(helpId: str):
 		noHelpMessage = _("No help available here.")
 		queueHandler.queueFunction(queueHandler.eventQueue, ui.message, noHelpMessage)
 		return
-
-	import gui
-	helpFile = gui.getDocFilePath("userGuide.html")
+	import documentationUtils
+	helpFile = documentationUtils.getDocFilePath("userGuide.html")
 	if helpFile is None:
 		# Translators: Message shown when trying to display context sensitive help,
 		# indicating that	the user guide could not be found.
