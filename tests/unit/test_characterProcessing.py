@@ -125,6 +125,6 @@ class TestComplex(unittest.TestCase):
 		"""Test inclusion of group replacement in engine
 		"""
 		replaced = process("fr_FR", "Le 03.04.05.", SYMLVL_ALL)
-		self.assertEqual(replaced, "Le  03 point 04 point 05   point.")
+		self.assertEqual(replaced, "Le  03 point 04 point 05  point.")
 		replaced = process("fr_FR", "Le 03/04/05.", SYMLVL_ALL)
-		self.assertEqual(replaced, "Le  03 barre oblique 04 barre oblique 05   point.")
+		self.assertEqual(replaced, "Le  03 barre oblique 04 barre oblique 05  point.")
