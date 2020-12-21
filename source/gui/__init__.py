@@ -1,9 +1,15 @@
 # -*- coding: UTF-8 -*-
-#gui/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee, Thomas Stivers, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# gui/__init__.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Thomas Stivers, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
+from .contextHelp import (
+	# must be first, several later imports depend on this.
+	ContextHelpMixin as _ContextHelpMixin,
+)
 
 import time
 import os
@@ -25,7 +31,6 @@ import speech
 import queueHandler
 import core
 from . import guiHelper
-from .contextHelp import ContextHelpMixin
 from .settingsDialogs import *
 from .inputGestures import InputGesturesDialog
 import speechDictHandler
@@ -671,7 +676,7 @@ def runScriptModalDialog(dialog, callback=None):
 
 
 class WelcomeDialog(
-		ContextHelpMixin,
+		_ContextHelpMixin,
 		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""The NVDA welcome dialog.
@@ -774,7 +779,7 @@ class WelcomeDialog(
 
 
 class LauncherDialog(
-		ContextHelpMixin,
+		_ContextHelpMixin,
 		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""The dialog that is displayed when NVDA is started from the launcher.
@@ -1068,7 +1073,7 @@ def _isDebug():
 
 
 class AskAllowUsageStatsDialog(
-		ContextHelpMixin,
+		_ContextHelpMixin,
 		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""A dialog asking if the user wishes to allow NVDA usage stats to be collected by NV Access."""
