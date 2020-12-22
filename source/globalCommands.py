@@ -859,6 +859,11 @@ class GlobalCommands(ScriptableObject):
 	script_reviewMode_previous.__doc__=_("Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object") 
 	script_reviewMode_previous.category=SCRCAT_TEXTREVIEW
 
+	@script(
+		# Translators: Input help mode message for toggle simple review mode command.
+		description=_("Toggles simple review mode on and off"),
+		category=SCRCAT_OBJECTNAVIGATION
+	)
 	def script_toggleSimpleReviewMode(self,gesture):
 		if config.conf["reviewCursor"]["simpleReviewMode"]:
 			# Translators: The message announced when toggling simple review mode.
@@ -869,10 +874,13 @@ class GlobalCommands(ScriptableObject):
 			state = _("Simple review mode on")
 			config.conf["reviewCursor"]["simpleReviewMode"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle simple review mode command.
-	script_toggleSimpleReviewMode.__doc__=_("Toggles simple review mode on and off")
-	script_toggleSimpleReviewMode.category=SCRCAT_OBJECTNAVIGATION
 
+	@script(
+		# Translators: Input help mode message for report current navigator object command.
+		description=_("Reports the current navigator object. Pressing twice spells this information, and pressing three times Copies name and value of this object to the clipboard"),
+		category=SCRCAT_OBJECTNAVIGATION,
+		gestures=("kb:NVDA+numpad5", "kb(laptop):NVDA+shift+o")
+	)
 	def script_navigatorObject_current(self,gesture):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
@@ -910,10 +918,13 @@ class GlobalCommands(ScriptableObject):
 					api.copyToClip(text, notify=True)
 		else:
 			speech.speakObject(curObject,reason=controlTypes.REASON_QUERY)
-	# Translators: Input help mode message for report current navigator object command.
-	script_navigatorObject_current.__doc__=_("Reports the current navigator object. Pressing twice spells this information, and pressing three times Copies name and value of this object to the clipboard")
-	script_navigatorObject_current.category=SCRCAT_OBJECTNAVIGATION
 
+	@script(
+		# Translators: Description for report review cursor location command.
+		description=_("Reports information about the location of the text or object at the review cursor. Pressing twice may provide further detail."),
+		category=SCRCAT_OBJECTNAVIGATION,
+		gestures=("kb:NVDA+numpadDelete", "kb(laptop):NVDA+delete")
+	)
 	def script_navigatorObject_currentDimensions(self,gesture):
 		count=scriptHandler.getLastScriptRepeatCount()
 		locationText=api.getReviewPosition().locationText if count==0 else None
@@ -924,9 +935,6 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("No location information"))
 			return
 		ui.message(locationText)
-	# Translators: Description for report review cursor location command.
-	script_navigatorObject_currentDimensions.__doc__=_("Reports information about the location of the text or object at the review cursor. Pressing twice may provide further detail.") 
-	script_navigatorObject_currentDimensions.category=SCRCAT_OBJECTNAVIGATION
 
 	@script(
 		description=_(
@@ -935,7 +943,7 @@ class GlobalCommands(ScriptableObject):
 			"and the review cursor to the position of the caret inside it, if possible."
 		),
 		category=SCRCAT_OBJECTNAVIGATION,
-		gestures=("kb:NVDA+numpadMinus", "kb(laptop):NVDA+backspace"),
+		gestures=("kb:NVDA+numpadMinus", "kb(laptop):NVDA+backspace")
 	)
 	def script_navigatorObject_toFocus(self,gesture):
 		tIAtCaret = self._getTIAtCaret(True)
@@ -946,6 +954,12 @@ class GlobalCommands(ScriptableObject):
 		speech.speakMessage(_("Move to focus"))
 		speech.speakObject(api.getNavigatorObject(), reason=controlTypes.OutputReason.FOCUS)
 
+	@script(
+		# Translators: Input help mode message for move focus to current navigator object command.
+		description=_("Pressed once sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor"),
+		category=SCRCAT_OBJECTNAVIGATION,
+		gestures=("kb:NVDA+shift+numpadMinus", "kb(laptop):NVDA+shift+backspace")
+	)
 	def script_navigatorObject_moveFocus(self,gesture):
 		obj=api.getNavigatorObject()
 		if not isinstance(obj,NVDAObject):
@@ -968,10 +982,13 @@ class GlobalCommands(ScriptableObject):
 			info=review.copy()
 			info.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(info,reason=controlTypes.REASON_CARET)
-	# Translators: Input help mode message for move focus to current navigator object command.
-	script_navigatorObject_moveFocus.__doc__=_("Pressed once sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor")
-	script_navigatorObject_moveFocus.category=SCRCAT_OBJECTNAVIGATION
 
+	@script(
+		# Translators: Input help mode message for move to parent object command.
+		description=_("Moves the navigator object to the object containing it"),
+		category=SCRCAT_OBJECTNAVIGATION,
+		gestures=("kb:NVDA+numpad8", "kb(laptop):NVDA+shift+upArrow", "ts(object):flickup")
+	)
 	def script_navigatorObject_parent(self,gesture):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
@@ -987,10 +1004,13 @@ class GlobalCommands(ScriptableObject):
 		else:
 			# Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 			ui.reviewMessage(_("No containing object"))
-	# Translators: Input help mode message for move to parent object command.
-	script_navigatorObject_parent.__doc__=_("Moves the navigator object to the object containing it")
-	script_navigatorObject_parent.category=SCRCAT_OBJECTNAVIGATION
 
+	@script(
+		# Translators: Input help mode message for move to next object command.
+		description=_("Moves the navigator object to the next object"),
+		category=SCRCAT_OBJECTNAVIGATION,
+		gestures=("kb:NVDA+numpad6", "kb(laptop):NVDA+shift+rightArrow", "ts(object):2finger_flickright")
+	)
 	def script_navigatorObject_next(self,gesture):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
@@ -1006,10 +1026,13 @@ class GlobalCommands(ScriptableObject):
 		else:
 			# Translators: Reported when there is no next object (current object is the last object).
 			ui.reviewMessage(_("No next"))
-	# Translators: Input help mode message for move to next object command.
-	script_navigatorObject_next.__doc__=_("Moves the navigator object to the next object")
-	script_navigatorObject_next.category=SCRCAT_OBJECTNAVIGATION
 
+	@script(
+		# Translators: Input help mode message for move to previous object command.
+		description=_("Moves the navigator object to the previous object"),
+		category=SCRCAT_OBJECTNAVIGATION,
+		gestures=("kb:NVDA+numpad4", "kb(laptop):NVDA+shift+leftArrow", "ts(object):2finger_flickleft")
+	)
 	def script_navigatorObject_previous(self,gesture):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
@@ -1025,10 +1048,13 @@ class GlobalCommands(ScriptableObject):
 		else:
 			# Translators: Reported when there is no previous object (current object is the first object).
 			ui.reviewMessage(_("No previous"))
-	# Translators: Input help mode message for move to previous object command.
-	script_navigatorObject_previous.__doc__=_("Moves the navigator object to the previous object")
-	script_navigatorObject_previous.category=SCRCAT_OBJECTNAVIGATION
 
+	@script(
+		# Translators: Input help mode message for move to first child object command.
+		description=_("Moves the navigator object to the first object inside it"),
+		category=SCRCAT_OBJECTNAVIGATION,
+		gestures=("kb:NVDA+numpad2", "kb(laptop):NVDA+shift+downArrow", "ts(object):flickdown")
+	)
 	def script_navigatorObject_firstChild(self,gesture):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
@@ -1044,10 +1070,13 @@ class GlobalCommands(ScriptableObject):
 		else:
 			# Translators: Reported when there is no contained (first child) object such as inside a document.
 			ui.reviewMessage(_("No objects inside"))
-	# Translators: Input help mode message for move to first child object command.
-	script_navigatorObject_firstChild.__doc__=_("Moves the navigator object to the first object inside it")
-	script_navigatorObject_firstChild.category=SCRCAT_OBJECTNAVIGATION
 
+	@script(
+		# Translators: Input help mode message for activate current object command.
+		description=_("Performs the default action on the current navigator object (example: presses it if it is a button)."),
+		category=SCRCAT_OBJECTNAVIGATION,
+		gestures=("kb:NVDA+numpadEnter", "kb(laptop):NVDA+enter", "ts:double_tap")
+	)
 	def script_review_activate(self,gesture):
 		# Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
 		actionName=_("Activate")
@@ -1078,9 +1107,6 @@ class GlobalCommands(ScriptableObject):
 			obj=obj.parent
 		# Translators: the message reported when there is no action to perform on the review position or navigator object.
 		ui.message(_("No action"))
-	# Translators: Input help mode message for activate current object command.
-	script_review_activate.__doc__=_("Performs the default action on the current navigator object (example: presses it if it is a button).")
-	script_review_activate.category=SCRCAT_OBJECTNAVIGATION
 
 	def script_review_top(self,gesture):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_FIRST)
@@ -2461,6 +2487,12 @@ class GlobalCommands(ScriptableObject):
 	script_reloadPlugins.__doc__=_("Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers")
 	script_reloadPlugins.category=SCRCAT_TOOLS
 
+	@script(
+		# Translators: Input help mode message for a touchscreen gesture.
+		description=_("Moves to the next object in a flattened view of the object navigation hierarchy"),
+		category=SCRCAT_OBJECTNAVIGATION,
+		gesture="ts(object):flickright"
+	)
 	def script_navigatorObject_nextInFlow(self,gesture):
 		curObject=api.getNavigatorObject()
 		newObject=None
@@ -2480,10 +2512,13 @@ class GlobalCommands(ScriptableObject):
 		else:
 			# Translators: a message when there is no next object when navigating
 			ui.reviewMessage(_("No next"))
-	# Translators: Input help mode message for a touchscreen gesture.
-	script_navigatorObject_nextInFlow.__doc__=_("Moves to the next object in a flattened view of the object navigation hierarchy")
-	script_navigatorObject_nextInFlow.category=SCRCAT_OBJECTNAVIGATION
 
+	@script(
+		# Translators: Input help mode message for a touchscreen gesture.
+		description=_("Moves to the previous object in a flattened view of the object navigation hierarchy"),
+		category=SCRCAT_OBJECTNAVIGATION,
+		gesture="ts(object):flickleft"
+	)
 	def script_navigatorObject_previousInFlow(self,gesture):
 		curObject=api.getNavigatorObject()
 		newObject=curObject.simplePrevious
@@ -2498,9 +2533,6 @@ class GlobalCommands(ScriptableObject):
 		else:
 			# Translators: a message when there is no previous object when navigating
 			ui.reviewMessage(_("No previous"))
-	# Translators: Input help mode message for a touchscreen gesture.
-	script_navigatorObject_previousInFlow.__doc__=_("Moves to the previous object in a flattened view of the object navigation hierarchy")
-	script_navigatorObject_previousInFlow.category=SCRCAT_OBJECTNAVIGATION
 
 	@script(
 		# Translators: Describes a command.
