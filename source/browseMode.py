@@ -45,8 +45,6 @@ import globalVars
 from typing import Optional
 
 
-REASON_QUICKNAV = OutputReason.QUICKNAV
-
 def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 	"""Reports the pass through mode if it has changed.
 	@param treeInterceptor: The current Browse Mode treeInterceptor.

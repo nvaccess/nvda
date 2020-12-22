@@ -648,19 +648,6 @@ class OutputReason(Enum):
 
 	QUICKNAV = auto()
 
-# The following constants are kept for backwards compatibility.
-# In future, OutputReason should be used directly
-
-
-REASON_FOCUS = OutputReason.FOCUS
-REASON_FOCUSENTERED = OutputReason.FOCUSENTERED
-REASON_MOUSE = OutputReason.MOUSE
-REASON_QUERY = OutputReason.QUERY
-REASON_CHANGE = OutputReason.CHANGE
-REASON_MESSAGE = OutputReason.MESSAGE
-REASON_SAYALL = OutputReason.SAYALL
-REASON_CARET = OutputReason.CARET
-REASON_ONLYCACHE = OutputReason.ONLYCACHE
 
 #: Text to use for 'current' values. These describe if an item is the current item 
 #: within a particular kind of selection.
