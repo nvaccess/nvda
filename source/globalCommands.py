@@ -148,6 +148,12 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("Sleep mode on"))
 	script_toggleCurrentAppSleepMode.allowInSleepMode=True
 
+	@script(
+		# Translators: Input help mode message for report current line command.
+		description=_("Reports the current line under the application cursor. Pressing this key twice will spell the current line. Pressing three times will spell the line using character descriptions."),
+		category=SCRCAT_SYSTEMCARET,
+		gestures=("kb(desktop):NVDA+upArrow", "kb(laptop):NVDA+l")
+	)
 	def script_reportCurrentLine(self,gesture):
 		obj=api.getFocusObject()
 		treeInterceptor=obj.treeInterceptor
@@ -163,9 +169,6 @@ class GlobalCommands(ScriptableObject):
 			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 		else:
 			speech.spellTextInfo(info,useCharacterDescriptions=scriptCount>1)
-	# Translators: Input help mode message for report current line command.
-	script_reportCurrentLine.__doc__=_("Reports the current line under the application cursor. Pressing this key twice will spell the current line. Pressing three times will spell the line using character descriptions.")
-	script_reportCurrentLine.category=SCRCAT_SYSTEMCARET
 
 	def script_leftMouseClick(self,gesture):
 		# Translators: Reported when left mouse button is clicked.
@@ -211,6 +214,12 @@ class GlobalCommands(ScriptableObject):
 	script_toggleRightMouseButton.__doc__=_("Locks or unlocks the right mouse button")
 	script_toggleRightMouseButton.category=SCRCAT_MOUSE
 
+	@script(
+		# Translators: Input help mode message for report current selection command.
+		description=_("Announces the current selection in edit controls and documents. If there is no selection it says so."),
+		category=SCRCAT_SYSTEMCARET,
+		gestures=("kb(desktop):NVDA+shift+upArrow", "kb(laptop):NVDA+shift+s")
+	)
 	def script_reportCurrentSelection(self,gesture):
 		obj=api.getFocusObject()
 		treeInterceptor=obj.treeInterceptor
@@ -224,9 +233,6 @@ class GlobalCommands(ScriptableObject):
 			speech.speakMessage(_("No selection"))
 		else:
 			speech.speakTextSelected(info.text)
-	# Translators: Input help mode message for report current selection command.
-	script_reportCurrentSelection.__doc__=_("Announces the current selection in edit controls and documents. If there is no selection it says so.")
-	script_reportCurrentSelection.category=SCRCAT_SYSTEMCARET
 
 	@script(
 		# Translators: Input help mode message for report date and time command.
@@ -1428,11 +1434,14 @@ class GlobalCommands(ScriptableObject):
 	)
 	script_review_sayAll.category=SCRCAT_TEXTREVIEW
 
+	@script(
+		# Translators: Input help mode message for say all with system caret command.
+		description=_("Reads from the system caret up to the end of the text, moving the caret as it goes"),
+		category=SCRCAT_SYSTEMCARET,
+		gestures=("kb(desktop):NVDA+downArrow", "kb(laptop):NVDA+a")
+	)
 	def script_sayAll(self,gesture):
 		sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
-	# Translators: Input help mode message for say all with system caret command.
-	script_sayAll.__doc__ = _("Reads from the system caret up to the end of the text, moving the caret as it goes")
-	script_sayAll.category=SCRCAT_SYSTEMCARET
 
 	def _reportFormattingHelper(self, info, browseable=False):
 		# Report all formatting-related changes regardless of user settings
@@ -1595,6 +1604,12 @@ class GlobalCommands(ScriptableObject):
 		elif repeats == 1:
 			self.script_showFormattingAtCaret(gesture)
 
+	@script(
+		# Translators: Input help mode message for report current focus command.
+		description=_("Reports the object with focus. If pressed twice, spells the information"),
+		category=SCRCAT_FOCUS,
+		gesture="kb:NVDA+tab"
+	)
 	def script_reportCurrentFocus(self,gesture):
 		focusObject=api.getFocusObject()
 		if isinstance(focusObject,NVDAObject):
@@ -1604,10 +1619,13 @@ class GlobalCommands(ScriptableObject):
 				speech.speakSpelling(focusObject.name)
 		else:
 			ui.message(_("No focus"))
-	# Translators: Input help mode message for report current focus command.
-	script_reportCurrentFocus.__doc__ = _("Reports the object with focus. If pressed twice, spells the information")
-	script_reportCurrentFocus.category=SCRCAT_FOCUS
 
+	@script(
+		# Translators: Input help mode message for report status line text command.
+		description=_("Reads the current application status bar and moves the navigator to it. If pressed twice, spells the information. If pressed three times, copies the status bar to the clipboard"),
+		category=SCRCAT_FOCUS,
+		gestures=("kb(desktop):NVDA+end", "kb(laptop):NVDA+shift+end")
+	)
 	def script_reportStatusLine(self,gesture):
 		obj = api.getStatusBar()
 		found=False
@@ -1652,9 +1670,6 @@ class GlobalCommands(ScriptableObject):
 				ui.message(_("unable to copy status bar content to clipboard"))
 			else:
 				api.copyToClip(text, notify=True)
-	# Translators: Input help mode message for report status line text command.
-	script_reportStatusLine.__doc__ = _("Reads the current application status bar and moves the navigator to it. If pressed twice, spells the information. If pressed three times, copies the status bar to the clipboard")
-	script_reportStatusLine.category=SCRCAT_FOCUS
 
 	def script_toggleMouseTracking(self,gesture):
 		if config.conf["mouse"]["enableMouseTracking"]:
@@ -1689,6 +1704,12 @@ class GlobalCommands(ScriptableObject):
 	script_toggleMouseTextResolution.__doc__=_("Toggles how much text will be spoken when the mouse moves")
 	script_toggleMouseTextResolution.category=SCRCAT_MOUSE
 
+	@script(
+		# Translators: Input help mode message for report title bar command.
+		description=_("Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard"),
+		category=SCRCAT_FOCUS,
+		gesture="kb:NVDA+t"
+	)
 	def script_title(self,gesture):
 		obj=api.getForegroundObject()
 		title=obj.name
@@ -1704,17 +1725,17 @@ class GlobalCommands(ScriptableObject):
 			speech.speakSpelling(title)
 		else:
 			api.copyToClip(title, notify=True)
-	# Translators: Input help mode message for report title bar command.
-	script_title.__doc__=_("Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard")
-	script_title.category=SCRCAT_FOCUS
 
+	@script(
+		# Translators: Input help mode message for read foreground object command (usually the foreground window).
+		description=_("Reads all controls in the active window"),
+		category=SCRCAT_FOCUS,
+		gesture="kb:NVDA+b"
+	)
 	def script_speakForeground(self,gesture):
 		obj=api.getForegroundObject()
 		if obj:
 			sayAllHandler.readObjects(obj)
-	# Translators: Input help mode message for read foreground object command (usually the foreground window).
-	script_speakForeground.__doc__ = _("Reads all controls in the active window")
-	script_speakForeground.category=SCRCAT_FOCUS
 
 	def script_test_navigatorDisplayModelText(self,gesture):
 		obj=api.getNavigatorObject()
