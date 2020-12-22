@@ -228,15 +228,18 @@ class GlobalCommands(ScriptableObject):
 	script_reportCurrentSelection.__doc__=_("Announces the current selection in edit controls and documents. If there is no selection it says so.")
 	script_reportCurrentSelection.category=SCRCAT_SYSTEMCARET
 
+	@script(
+		# Translators: Input help mode message for report date and time command.
+		description=_("If pressed once, reports the current time. If pressed twice, reports the current date"),
+		category=SCRCAT_SYSTEM,
+		gesture="kb:NVDA+f12"
+	)
 	def script_dateTime(self,gesture):
 		if scriptHandler.getLastScriptRepeatCount()==0:
 			text=winKernel.GetTimeFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.TIME_NOSECONDS, None, None)
 		else:
 			text=winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, None, None)
 		ui.message(text)
-	# Translators: Input help mode message for report date and time command.
-	script_dateTime.__doc__=_("If pressed once, reports the current time. If pressed twice, reports the current date")
-	script_dateTime.category=SCRCAT_SYSTEM
 
 	def script_increaseSynthSetting(self,gesture):
 		settingName=globalVars.settingsRing.currentSettingName
@@ -1864,7 +1867,13 @@ class GlobalCommands(ScriptableObject):
 	script_toggleAutoFocusFocusableElements.__doc__=_("Toggles on and off automatic movement of the system focus due to browse mode commands") 
 	script_toggleAutoFocusFocusableElements.category=inputCore.SCRCAT_BROWSEMODE
 
-	#added by Rui Batista<ruiandrebatista@gmail.com> to implement a battery status script
+	# added by Rui Batista<ruiandrebatista@gmail.com> to implement a battery status script
+	@script(
+		# Translators: Input help mode message for report battery status command.
+		description=_("Reports battery status and time remaining if AC is not plugged in"),
+		category=SCRCAT_SYSTEM,
+		gesture="kb:NVDA+shift+b"
+	)
 	def script_say_battery_status(self,gesture):
 		UNKNOWN_BATTERY_STATUS = 0xFF
 		AC_ONLINE = 0X1
@@ -1885,9 +1894,6 @@ class GlobalCommands(ScriptableObject):
 			# Translators: This is the estimated remaining runtime of the laptop battery.
 			text += _("{hours:d} hours and {minutes:d} minutes remaining") .format(hours=sps.BatteryLifeTime // 3600, minutes=(sps.BatteryLifeTime % 3600) // 60)
 		ui.message(text)
-	# Translators: Input help mode message for report battery status command.
-	script_say_battery_status.__doc__ = _("Reports battery status and time remaining if AC is not plugged in")
-	script_say_battery_status.category=SCRCAT_SYSTEM
 
 	@script(
 		# Translators: Input help mode message for pass next key through command.
@@ -2178,6 +2184,12 @@ class GlobalCommands(ScriptableObject):
 	script_braille_cycleCursorShape.__doc__ = _("Cycle through the braille cursor shapes")
 	script_braille_cycleCursorShape.category=SCRCAT_BRAILLE
 
+	@script(
+		# Translators: Input help mode message for report clipboard text command.
+		description=_("Reports the text on the Windows clipboard"),
+		category=SCRCAT_SYSTEM,
+		gesture="kb:NVDA+c"
+	)
 	def script_reportClipboardText(self,gesture):
 		try:
 			text = api.getClipData()
@@ -2193,9 +2205,6 @@ class GlobalCommands(ScriptableObject):
 			# Translators: If the number of characters on the clipboard is greater than about 1000, it reports this message and gives number of characters on the clipboard.
 			# Example output: The clipboard contains a large portion of text. It is 2300 characters long.
 			ui.message(_("The clipboard contains a large portion of text. It is %s characters long") % len(text))
-	# Translators: Input help mode message for report clipboard text command.
-	script_reportClipboardText.__doc__ = _("Reports the text on the Windows clipboard")
-	script_reportClipboardText.category=SCRCAT_SYSTEM
 
 	def script_review_markStartForCopy(self, gesture):
 		reviewPos = api.getReviewPosition()
