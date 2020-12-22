@@ -269,7 +269,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		isCollapsed=info.isCollapsed
 		if inTable:
 			info.expand(textInfos.UNIT_CELL)
-			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
 			braille.handler.handleCaretMove(self)
 
 	def script_reportCurrentComment(self,gesture):
@@ -339,7 +339,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 			ui.message(_("Edge of table"))
 			return False
 		newInfo=WordDocumentTextInfo(self,textInfos.POSITION_CARET,_rangeObj=foundCell)
-		speech.speakTextInfo(newInfo,reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_CELL)
+		speech.speakTextInfo(newInfo, reason=controlTypes.OutputReason.CARET, unit=textInfos.UNIT_CELL)
 		newInfo.collapse()
 		newInfo.updateCaret()
 		return True

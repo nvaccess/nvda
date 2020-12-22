@@ -154,7 +154,7 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_LINE)
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
-			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+			speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 		else:
 			speech.spellTextInfo(info,useCharacterDescriptions=scriptCount>1)
 	# Translators: Input help mode message for report current line command.
@@ -894,7 +894,7 @@ class GlobalCommands(ScriptableObject):
 				else:
 					api.copyToClip(text, notify=True)
 		else:
-			speech.speakObject(curObject,reason=controlTypes.REASON_QUERY)
+			speech.speakObject(curObject, reason=controlTypes.OutputReason.QUERY)
 	# Translators: Input help mode message for report current navigator object command.
 	script_navigatorObject_current.__doc__=_("Reports the current navigator object. Pressing twice spells this information, and pressing three times Copies name and value of this object to the clipboard")
 	script_navigatorObject_current.category=SCRCAT_OBJECTNAVIGATION
@@ -952,7 +952,7 @@ class GlobalCommands(ScriptableObject):
 				return
 			info=review.copy()
 			info.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(info,reason=controlTypes.REASON_CARET)
+			speech.speakTextInfo(info, reason=controlTypes.OutputReason.CARET)
 	# Translators: Input help mode message for move focus to current navigator object command.
 	script_navigatorObject_moveFocus.__doc__=_("Pressed once sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor")
 	script_navigatorObject_moveFocus.category=SCRCAT_OBJECTNAVIGATION
@@ -968,7 +968,7 @@ class GlobalCommands(ScriptableObject):
 		curObject=curObject.simpleParent if simpleReviewMode else curObject.parent
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
-			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
+			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 			ui.reviewMessage(_("No containing object"))
@@ -987,7 +987,7 @@ class GlobalCommands(ScriptableObject):
 		curObject=curObject.simpleNext if simpleReviewMode else curObject.next
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
-			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
+			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: Reported when there is no next object (current object is the last object).
 			ui.reviewMessage(_("No next"))
@@ -1006,7 +1006,7 @@ class GlobalCommands(ScriptableObject):
 		curObject=curObject.simplePrevious if simpleReviewMode else curObject.previous
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
-			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
+			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: Reported when there is no previous object (current object is the first object).
 			ui.reviewMessage(_("No previous"))
@@ -1025,7 +1025,7 @@ class GlobalCommands(ScriptableObject):
 		curObject=curObject.simpleFirstChild if simpleReviewMode else curObject.firstChild
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
-			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
+			speech.speakObject(curObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: Reported when there is no contained (first child) object such as inside a document.
 			ui.reviewMessage(_("No objects inside"))
@@ -1071,7 +1071,7 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_FIRST)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
-		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+		speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 	# Translators: Input help mode message for move review cursor to top line command.
 	script_review_top.__doc__=_("Moves the review cursor to the top line of the current navigator object and speaks it")
 	script_review_top.category=SCRCAT_TEXTREVIEW
@@ -1087,7 +1087,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
-		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+		speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 	# Translators: Input help mode message for move review cursor to previous line command.
 	script_review_previousLine.__doc__=_("Moves the review cursor to the previous line of the current navigator object and speaks it")
 	script_review_previousLine.resumeSayAllMode=sayAllHandler.CURSOR_REVIEW
@@ -1100,7 +1100,7 @@ class GlobalCommands(ScriptableObject):
 		braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
-			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+			speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 		else:
 			speech.spellTextInfo(info,useCharacterDescriptions=scriptCount>1)
 	# Translators: Input help mode message for read current line under review cursor command.
@@ -1118,7 +1118,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
-		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+		speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 	# Translators: Input help mode message for move review cursor to next line command.
 	script_review_nextLine.__doc__=_("Moves the review cursor to the next line of the current navigator object and speaks it")
 	script_review_nextLine.resumeSayAllMode=sayAllHandler.CURSOR_REVIEW
@@ -1128,7 +1128,7 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_LAST)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
-		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+		speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 	# Translators: Input help mode message for move review cursor to bottom line command.
 	script_review_bottom.__doc__=_("Moves the review cursor to the bottom line of the current navigator object and speaks it")
 	script_review_bottom.category=SCRCAT_TEXTREVIEW
@@ -1144,7 +1144,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_WORD)
-		speech.speakTextInfo(info,reason=controlTypes.REASON_CARET,unit=textInfos.UNIT_WORD)
+		speech.speakTextInfo(info, reason=controlTypes.OutputReason.CARET, unit=textInfos.UNIT_WORD)
 	# Translators: Input help mode message for move review cursor to previous word command.
 	script_review_previousWord.__doc__=_("Moves the review cursor to the previous word of the current navigator object and speaks it")
 	script_review_previousWord.category=SCRCAT_TEXTREVIEW
@@ -1156,7 +1156,7 @@ class GlobalCommands(ScriptableObject):
 		braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
-			speech.speakTextInfo(info,reason=controlTypes.REASON_CARET,unit=textInfos.UNIT_WORD)
+			speech.speakTextInfo(info, reason=controlTypes.OutputReason.CARET, unit=textInfos.UNIT_WORD)
 		else:
 			speech.spellTextInfo(info,useCharacterDescriptions=scriptCount>1)
 	# Translators: Input help mode message for report current word under review cursor command.
@@ -1174,7 +1174,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_WORD)
-		speech.speakTextInfo(info,reason=controlTypes.REASON_CARET,unit=textInfos.UNIT_WORD)
+		speech.speakTextInfo(info, reason=controlTypes.OutputReason.CARET, unit=textInfos.UNIT_WORD)
 	# Translators: Input help mode message for move review cursor to next word command.
 	script_review_nextWord.__doc__=_("Moves the review cursor to the next word of the current navigator object and speaks it")
 	script_review_nextWord.category=SCRCAT_TEXTREVIEW
@@ -1185,7 +1185,7 @@ class GlobalCommands(ScriptableObject):
 		info.collapse()
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
-		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
+		speech.speakTextInfo(info, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.OutputReason.CARET)
 	# Translators: Input help mode message for move review cursor to start of current line command.
 	script_review_startOfLine.__doc__=_("Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it")
 	script_review_startOfLine.category=SCRCAT_TEXTREVIEW
@@ -1202,11 +1202,11 @@ class GlobalCommands(ScriptableObject):
 			ui.reviewMessage(_("Left"))
 			reviewInfo=api.getReviewPosition().copy()
 			reviewInfo.expand(textInfos.UNIT_CHARACTER)
-			speech.speakTextInfo(reviewInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
+			speech.speakTextInfo(reviewInfo, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.OutputReason.CARET)
 		else:
 			api.setReviewPosition(charInfo)
 			charInfo.expand(textInfos.UNIT_CHARACTER)
-			speech.speakTextInfo(charInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
+			speech.speakTextInfo(charInfo, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.OutputReason.CARET)
 	# Translators: Input help mode message for move review cursor to previous character command.
 	script_review_previousCharacter.__doc__=_("Moves the review cursor to the previous character of the current navigator object and speaks it")
 	script_review_previousCharacter.category=SCRCAT_TEXTREVIEW
@@ -1218,7 +1218,7 @@ class GlobalCommands(ScriptableObject):
 		braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
-			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
+			speech.speakTextInfo(info, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.OutputReason.CARET)
 		elif scriptCount==1:
 			speech.spellTextInfo(info,useCharacterDescriptions=True)
 		else:
@@ -1231,7 +1231,7 @@ class GlobalCommands(ScriptableObject):
 				speech.speakSpelling(hex(c))
 			else:
 				log.debugWarning("Couldn't calculate ordinal for character %r" % info.text)
-				speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
+				speech.speakTextInfo(info, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.OutputReason.CARET)
 	# Translators: Input help mode message for report current character under review cursor command.
 	script_review_currentCharacter.__doc__=_("Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal")
 	script_review_currentCharacter.category=SCRCAT_TEXTREVIEW
@@ -1248,11 +1248,11 @@ class GlobalCommands(ScriptableObject):
 			ui.reviewMessage(_("Right"))
 			reviewInfo=api.getReviewPosition().copy()
 			reviewInfo.expand(textInfos.UNIT_CHARACTER)
-			speech.speakTextInfo(reviewInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
+			speech.speakTextInfo(reviewInfo, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.OutputReason.CARET)
 		else:
 			api.setReviewPosition(charInfo)
 			charInfo.expand(textInfos.UNIT_CHARACTER)
-			speech.speakTextInfo(charInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
+			speech.speakTextInfo(charInfo, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.OutputReason.CARET)
 	# Translators: Input help mode message for move review cursor to next character command.
 	script_review_nextCharacter.__doc__=_("Moves the review cursor to the next character of the current navigator object and speaks it")
 	script_review_nextCharacter.category=SCRCAT_TEXTREVIEW
@@ -1264,7 +1264,7 @@ class GlobalCommands(ScriptableObject):
 		info.move(textInfos.UNIT_CHARACTER,-1)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
-		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
+		speech.speakTextInfo(info, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.OutputReason.CARET)
 	# Translators: Input help mode message for move review cursor to end of current line command.
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
 	script_review_endOfLine.category=SCRCAT_TEXTREVIEW
@@ -1582,7 +1582,7 @@ class GlobalCommands(ScriptableObject):
 		focusObject=api.getFocusObject()
 		if isinstance(focusObject,NVDAObject):
 			if scriptHandler.getLastScriptRepeatCount()==0:
-				speech.speakObject(focusObject, reason=controlTypes.REASON_QUERY)
+				speech.speakObject(focusObject, reason=controlTypes.OutputReason.QUERY)
 			else:
 				speech.speakSpelling(focusObject.name)
 		else:
@@ -2210,7 +2210,7 @@ class GlobalCommands(ScriptableObject):
 		api.setReviewPosition(startMarker)
 		startMarker.collapse()
 		startMarker.expand(textInfos.UNIT_CHARACTER)
-		speech.speakTextInfo(startMarker, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.REASON_CARET)
+		speech.speakTextInfo(startMarker, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.OutputReason.CARET)
 
 	def script_review_copy(self, gesture):
 		pos = api.getReviewPosition().copy()
@@ -2429,7 +2429,7 @@ class GlobalCommands(ScriptableObject):
 				newObject=parent.simpleNext
 		if newObject:
 			api.setNavigatorObject(newObject)
-			speech.speakObject(newObject,reason=controlTypes.REASON_FOCUS)
+			speech.speakObject(newObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: a message when there is no next object when navigating
 			ui.reviewMessage(_("No next"))
@@ -2447,7 +2447,7 @@ class GlobalCommands(ScriptableObject):
 			newObject=curObject.simpleParent
 		if newObject:
 			api.setNavigatorObject(newObject)
-			speech.speakObject(newObject,reason=controlTypes.REASON_FOCUS)
+			speech.speakObject(newObject, reason=controlTypes.OutputReason.FOCUS)
 		else:
 			# Translators: a message when there is no previous object when navigating
 			ui.reviewMessage(_("No previous"))
@@ -2657,11 +2657,11 @@ class GlobalCommands(ScriptableObject):
 			speech.cancelSpeech()
 			speech.speakObject(
 				api.getForegroundObject(),
-				reason=controlTypes.REASON_FOCUS
+				reason=controlTypes.OutputReason.FOCUS
 			)
 			speech.speakObject(
 				api.getFocusObject(),
-				reason=controlTypes.REASON_FOCUS
+				reason=controlTypes.OutputReason.FOCUS
 			)
 			return
 

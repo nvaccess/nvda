@@ -544,7 +544,7 @@ class MailViewerTreeInterceptor(WordDocumentTreeInterceptor):
 			info.expand(textInfos.UNIT_CELL)
 			isCollapsed=False
 		if not isCollapsed:
-			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
 		braille.handler.handleCaretMove(self)
 
 	__gestures={

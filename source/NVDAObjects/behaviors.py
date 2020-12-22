@@ -566,7 +566,7 @@ class RowWithFakeNavigation(NVDAObject):
 			# Use the focused copy of the row as the parent for all cells to make comparison faster.
 			obj.parent = self
 		api.setNavigatorObject(obj)
-		speech.speakObject(obj, reason=controlTypes.REASON_FOCUS)
+		speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
 
 	def _moveToColumnNumber(self, column):
 		child = column - 1
@@ -764,7 +764,7 @@ class ToolTip(NVDAObject):
 	def event_show(self):
 		if not config.conf["presentation"]["reportTooltips"]:
 			return
-		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
+		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 		# Ideally, we wouldn't use getPropertiesBraille directly.
 		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
@@ -777,7 +777,7 @@ class Notification(NVDAObject):
 	def event_alert(self):
 		if not config.conf["presentation"]["reportHelpBalloons"]:
 			return
-		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
+		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 		# Ideally, we wouldn't use getPropertiesBraille directly.
 		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
