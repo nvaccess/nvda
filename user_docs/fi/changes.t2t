@@ -16,16 +16,26 @@
 - Lisätty komento merkityn (korostetun) tekstin ilmaisemisen käyttöön ottamiselle ja käytöstä poistamiselle. Oletusarvoista syötekomentoa ei ole määritetty. (#11807)
 - Lisätty --copy-portable-config-komentoriviparametri, jonka avulla voit kopioida antamasi asetukset automaattisesti nykyiseen käyttäjätiliin suorittaessasi NVDA:n hiljaista asennusta. (#9676)
 - Pistesoluun siirtämistä tuetaan nyt hiiren käyttäjille Pistekirjoituksen tarkastelu -toiminnossa. Vie hiiri merkin päälle siirtyäksesi kyseiseen soluun. (#11804)
+- NVDA tunnistaa nyt automaattisesti Humanware Brailliant BI 40X- ja 20X-pistenäytöt sekä USB:llä että Bluetoothilla. (#11819)
 
 
 == Muutokset ==
-- Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.15.0.
+- Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.16.1:
+ - Korjaa useita kaatumisia
+ - Lisää baškiirinkielisen tason 1 pistetaulukon.
+ - Lisää taulukon koptinkieliselle 8 pisteen tietokonemerkistölle.
+ - Lisää taulukot venäläiselle kaunokirjallisuuden pistekirjoitukselle sekä venäläiselle yksityiskohtaiselle kaunokirjallisuuden pistekirjoitukselle.
+ - Poistaa venäläisen tason 1 pistetaulukon
 - Etsi seuraava- ja Etsi edellinen -komennot eivät keskeytä lukemista selaustilassa jatkuvaa lukua käytettäessä, jos Salli pikaluku jatkuvassa luvussa -asetus on käytössä. Jatkuva luku jatkaa sen sijaan seuraavan tai edellisen löytyneen hakusanan jälkeen. (#11563)
 - F3 on uudelleenmääritelty HIMS-pistenäytöissä komennoksi Väli+pisteet 1, 4 ja 8. (#11710)
 - Parannuksia pistekirjoituksen "Ilmoitusten aikakatkaisu"- ja "Näytä ilmoitukset pysyvästi" -asetusten käyttöliittymään. (#11602)
 - Elementtilista-valintaikkuna (NVDA+F7) voidaan nyt avata vuorovaikutustilassa verkkoselaimissa ja muissa selaustilaa tukevissa sovelluksissa. (#10453)
 - Aktiivisten ARIA-alueiden päivitykset estetään, kun dynaamisen sisällön muutosten ilmaiseminen on poistettu käytöstä. (#9077)
 - NVDA sanoo nyt "Kopioitu leikepöydälle" ennen kopioitua tekstiä. (#6757)
+- Levynhallinnan graafisen näkymän taulukon näyttämistä on paranneltu. (#10048)
+- Säätimien selitteet poistetaan nyt käytöstä (näytetään harmaana), kun säädin ei ole käytössä. (#11809)
+- CLDR-emojiselitteet päivitetty versioksi 38. (#11817)
+- Sisäänrakennettu "Kohdistuksen korostus"-ominaisuus on uudelleennimetty "Visuaaliseksi korostukseksi". (#11700)
 
 
 == Bugikorjaukset ==
@@ -52,6 +62,11 @@
 - Strong- ja emphasis-tagien ilmaiseminen voidaan jälleen estää Internet Explorerissa poistamalla uudelleen käytöstä korostuksen ilmaiseminen NVDA:n asiakirjojen muotoiluasetuksista. (#11808)
 - Useiden sekuntien jumiutumista, jota pieni määrä käyttäjiä kokee Excelissä liikuttaessa nuolinäppäimillä solujen välillä, ei pitäisi enää tapahtua. (#11818)
 - Keskusteluviestien tai Teams-kanavien lukeminen ei enää epäonnistu väärin kohdistetun valikon takia Microsoft Teamsin koontiversioissa, joiden versionumero on 1.3.00.28xxx. (#11821)
+- Teksti, joka on merkitty sekä kirjoitus- että kielioppivirheeksi Google Chromessa, ilmaistaan nyt NVDA:n toimesta asianmukaisesti sellaisiksi. (#11787)
+- Vastaa kaikille -toiminnon pikanäppäin (Ctrl+Vaihto+R) toimii taas Outlookin ranskankielistä versiota käytettäessä. (#11196)
+- Visual Studion IntelliSense-työkaluvihjeet, jotka tarjoavat lisätietoja valittuna olevasta IntelliSense-kohteesta, Ilmoitetaan nyt vain kerran. (#11611)
+- NVDA ei puhu laskutoimitusten edistymistä Windows 10:n Laskimessa, jos kirjoitettujen merkkien puhuminen ei ole käytössä. (#9428)
+- NVDA ei enää kaadu käytettäessä englanti (Yhdysvallat), taso 2 -pistetaulukkoa Laajenna kohdistimen kohdalla oleva sana -asetuksen ollessa käytössä näytettäessä tiettyä sisältöä, kuten URL:ää pistekirjoituksella. (#11754)
 
 
 == Muutokset kehittäjille ==

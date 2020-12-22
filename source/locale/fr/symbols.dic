@@ -7,13 +7,13 @@ complexSymbols:
 # identifier	regexp
 # Sentence endings.
 . sentence ending	(?<=[^\s.])\s?\.(?=[\"'”’);\s]|$)
-! sentence ending	(?<=[^\s!])\s?\!(?=[\"'”’);\s]|$)
-? sentence ending	(?<=[^\s?])\s?\?(?=[\"'”’);\s]|$)
+! sentence ending	(?<=[^\s!])\s?\!(?=[\"'”’);!\s]|$)
+? sentence ending	(?<=[^\s?])\s?\?(?=[\"'”’);?\s]|$)
 ... sentence ending	(?<=[^\s.])\s?\.\.\.(?=[\"'”’);\s]|$)
 … sentence ending	(?<=[^\s…])\s?\…(?=[\"'”’);\s]|$)
 # Phrase endings.
-; phrase ending	(?<=[^\s;])\s?;(?=\s|$)
-: phrase ending	(?<=[^\s:])\s?:(?=\s|$)
+; phrase ending	(?<=[^\s;])\s?;(?=[\"'”’);\s]|$)
+: phrase ending	(?<=[^\s:])\s?:(?=[\"'”’);\s]|$)
 # Others
 decimal point	(?<![^\d -])\,(?=\d)
 thousands separator	(?<![^\d -])\.(?=\d{3}(\D|$))
@@ -308,7 +308,6 @@ _	souligné
 Ω	oméga	none	never
 ¤	symbole monétaire	none	never
 ¸	cédille	none	never
-	guillemet vers le bas	none	never
 ↦	a pour image	none	never
 ′	prime	none	never
 ″	double prime	some

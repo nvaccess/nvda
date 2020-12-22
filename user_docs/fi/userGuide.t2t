@@ -307,7 +307,7 @@ Jos esimerkiksi kirjoitetaan muokattavaan tekstikenttään, kohdistus on kyseise
 
 Yleisin tapa liikkua NVDA:lla Windowsissa on käyttää tavallisia näppäinkomentoja, kuten Sarkain ja Vaihto+Sarkain eteen- ja taaksepäin säädinten välillä liikkumiseen, painamalla Alt valikkoriville siirtymiseen, käyttämällä nuolinäppäimiä valikoissa liikkumiseen ja Alt+Sarkain avointen sovellusten välillä siirtymiseen.
 Näin tehtäessä NVDA kertoo tietoja objektista, jossa kohdistus on, kuten nimen, tyypin, tilan, arvon, kuvauksen, pikanäppäimen ja sijainnin.
-Kun [kohdistuksen korostus #VisionFocusHighlight] on käytössä, järjestelmäkohdistuksen nykyinen sijainti näytetään visuaalisesti.
+Kun [visuaalinen korostus #VisionFocusHighlight] on käytössä, järjestelmäkohdistuksen nykyinen sijainti näytetään visuaalisesti.
 
 Joitakin hyödyllisiä näppäinkomentoja kohdistuksella navigoitaessa:
 %kc:beginInclude
@@ -363,7 +363,7 @@ Myös työkalurivi sisältää säätimiä, joten niihin pääsemiseksi on siirr
 
 Nykyistä tarkasteltavaa objektia kutsutaan navigointiobjektiksi.
 Kun objektiin siirrytään, sitä voidaan tarkastella [tekstintarkastelukomennoilla #ReviewingText] [objektintarkastelutilassa #ObjectReview] oltaessa.
-Kun [kohdistuksen korostus #VisionFocusHighlight] on käytössä, nykyisen navigointiobjektin sijainti näytetään visuaalisesti.
+Kun [visuaalinen korostus #VisionFocusHighlight] on käytössä, nykyisen navigointiobjektin sijainti näytetään myös visuaalisesti.
 Navigointiobjekti liikkuu oletusarvoisesti järjestelmäkohdistuksen mukana, mutta tämä asetus voidaan poistaa myös käytöstä.
 
 Huom: Pistenäyttö voidaan määrittää seuraamaan objektinavigointia [Pistenäyttö seuraa -asetuksella. #BrailleTether]
@@ -506,7 +506,7 @@ Selaustila on käytettävissä valinnaisesti myös Microsoft Wordissa.
 
 Selaustilassa asiakirjan sisältö on käytettävissä kokonaisesityksenä, jossa voidaan liikkua nuolinäppäimillä, aivan kuin se olisi tavallinen tekstiasiakirja.
 Kaikki NVDA:n [järjestelmäkohdistimen #SystemCaret] näppäinkomennot, kuten esim. jatkuva luku ja lue muotoilut, taulukoissa liikkumiseen käytettävät komennot jne, toimivat tässä tilassa.
-Kun [kohdistuksen korostus #VisionFocusHighlight] on käytössä, myös virtuaalisen selaustilakohdistimen sijainti näytetään visuaalisesti.
+Kun [visuaalinen korostus #VisionFocusHighlight] on käytössä, virtuaalisen selaustilakohdistimen sijainti näytetään myös visuaalisesti.
 Asiakirjassa liikuttaessa luetaan siinä olevan tekstin lisäksi myös muita tietoja, kuten onko kohdalla oleva teksti linkki, otsikko tms.
 
 Toisinaan on tarpeen olla suorassa vuorovaikutuksessa tällaisissa asiakirjoissa olevien säädinten kanssa.
@@ -1400,10 +1400,10 @@ NVDA:n asetusvalintaikkunan Näkö-kategoriassa voit ottaa käyttöön ja poista
 Huom: Käytettävissä olevia vaihtoehtoja voidaan laajentaa [lisäosien #AddonsManager] avulla.
 Tämä asetuskategoria sisältää oletusarvoisesti seuraavat vaihtoehdot:
 
-==== Kohdistuksen korostus ====[VisionSettingsFocusHighlight]
-Kohdistuksen korostus -ryhmäsäätimessä olevat valintaruudut säätävät NVDA:n sisäänrakennetun [kohdistuksen korostus #VisionFocusHighlight] -ominaisuuden toimintaa.
+==== Visuaalinen korostus ====[VisionSettingsFocusHighlight]
+Visuaalinen korostus -ryhmäsäätimessä olevat valintaruudut säätävät NVDA:n sisäänrakennetun [visuaalinen korostus #VisionFocusHighlight] -ominaisuuden toimintaa.
 
-- Ota korostus käyttöön: Ottaa kohdistuksen korostuksen käyttöön tai poistaa sen käytöstä.
+- Ota korostus käyttöön: Ottaa visuaalisen korostuksen käyttöön tai poistaa sen käytöstä.
 - Korosta kohdistus: Määrittää, korostetaanko [kohdistus. #SystemFocus]
 - Korosta navigointiobjekti: Määrittää, korostetaanko [navigointiobjekti. #ObjectNavigation]
 - Korosta selaustilakohdistin: Määrittää, korostetaanko [selaustilan virtuaalikohdistin. #BrowseMode]
@@ -2519,7 +2519,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B / BrailleNote Touch ++[HumanWareBrailliant]
-[HumanWaren https://www.humanware.com/] Brailliant BI- ja B -sarjan pistenäyttöjä tuetaan, BI 14, BI 32, BI 40 ja B 80 mukaan lukien, kun ne liitetään tietokoneeseen USB:llä tai Bluetoothilla.
+[HumanWaren https://www.humanware.com/] Brailliant BI- ja B -sarjan pistenäyttöjä tuetaan, BI 14, BI 32, BI 20X, BI 40, BI 40X ja B 80 mukaan lukien, kun ne liitetään tietokoneeseen USB:llä tai Bluetoothilla.
 Mikäli käytetään USB-liitäntää ja protokollaksi on määritetty HumanWare, valmistajan toimittamat ajurit on asennettava ensin.
 OpenBraille-protokollaa käytettäessä ajureita ei tarvita.
 
