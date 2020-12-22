@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-# gui/__init__.py
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
 # Thomas Stivers, Babbage B.V.
@@ -7,8 +6,9 @@
 # See the file COPYING for more details.
 
 from .contextHelp import (
-	# must be first, several later imports depend on this.
-	ContextHelpMixin as _ContextHelpMixin,
+	# several other submodules depend on ContextHelpMixin
+	# ensure early that it can be imported successfully.
+	ContextHelpMixin as _ContextHelpMixin,  # don't expose from gui, import submodule directly.
 )
 
 import time
