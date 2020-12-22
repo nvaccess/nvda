@@ -22,6 +22,8 @@ from . import guiHelper
 from . import nvdaControls
 from .dpiScalingHelper import DpiScalingHelperMixin, DpiScalingHelperMixinWithoutInit
 import gui.contextHelp
+
+
 def promptUserForRestart():
 	restartMessage = _(
 		# Translators: A message asking the user if they wish to restart NVDA
@@ -138,7 +140,7 @@ def _showAddonInfo(addon):
 
 class AddonsDialog(
 		DpiScalingHelperMixinWithoutInit,
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	@classmethod
@@ -664,7 +666,7 @@ def _showConfirmAddonInstallDialog(parent, bundle):
 
 class IncompatibleAddonsDialog(
 		DpiScalingHelperMixinWithoutInit,
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""A dialog that lists incompatible addons, and why they are not compatible"""
