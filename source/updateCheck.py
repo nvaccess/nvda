@@ -20,7 +20,7 @@ if not versionInfo.updateVersionType:
 	raise RuntimeError("No update version type, update checking not supported")
 import addonAPIVersion
 # Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
-from gui.contextHelp import ContextHelpMixin  # noqa: E402
+import gui.contextHelp  # noqa: E402
 from gui.dpiScalingHelper import DpiScalingHelperMixin, DpiScalingHelperMixinWithoutInit  # noqa: E402
 import winVersion
 import os
@@ -320,7 +320,7 @@ class AutoUpdateChecker(UpdateChecker):
 
 class UpdateResultDialog(
 		DpiScalingHelperMixinWithoutInit,
-		ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	helpId = "GeneralSettingsCheckForUpdates"
@@ -452,7 +452,7 @@ class UpdateResultDialog(
 
 class UpdateAskInstallDialog(
 		DpiScalingHelperMixinWithoutInit,
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 
