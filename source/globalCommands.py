@@ -113,6 +113,12 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Describes the Cycle audio ducking mode command.
 	script_cycleAudioDuckingMode.__doc__=_("Cycles through audio ducking modes which determine when NVDA lowers the volume of other sounds")
 
+	@script(
+		# Translators: Input help mode message for toggle input help command.
+		description=_("Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."),
+		category=SCRCAT_INPUT,
+		gesture="kb:NVDA+1"
+	)
 	def script_toggleInputHelp(self,gesture):
 		inputCore.manager.isInputHelpActive = not inputCore.manager.isInputHelpActive
 		# Translators: This will be presented when the input help is toggled.
@@ -121,10 +127,12 @@ class GlobalCommands(ScriptableObject):
 		stateOff = _("input help off")
 		state = stateOn if inputCore.manager.isInputHelpActive else stateOff
 		ui.message(state)
-	# Translators: Input help mode message for toggle input help command.
-	script_toggleInputHelp.__doc__=_("Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any.")
-	script_toggleInputHelp.category=SCRCAT_INPUT
 
+	@script(
+		# Translators: Input help mode message for toggle sleep mode command.
+		description=_("Toggles sleep mode on and off for the active application."),
+		gestures=("kb(desktop):NVDA+shift+s", "kb(laptop):NVDA+shift+z")
+	)
 	def script_toggleCurrentAppSleepMode(self,gesture):
 		curFocus=api.getFocusObject()
 		curApp=curFocus.appModule
@@ -138,8 +146,6 @@ class GlobalCommands(ScriptableObject):
 			curApp.sleepMode=True
 			# Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
 			ui.message(_("Sleep mode on"))
-	# Translators: Input help mode message for toggle sleep mode command.
-	script_toggleCurrentAppSleepMode.__doc__=_("Toggles sleep mode on and off for the active application.")
 	script_toggleCurrentAppSleepMode.allowInSleepMode=True
 
 	def script_reportCurrentLine(self,gesture):
@@ -1387,20 +1393,28 @@ class GlobalCommands(ScriptableObject):
 	script_toggleVirtualBufferPassThrough.__doc__=_("Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc.")
 	script_toggleVirtualBufferPassThrough.category=inputCore.SCRCAT_BROWSEMODE
 
+	@script(
+		# Translators: Input help mode message for quit NVDA command.
+		description=_("Quits NVDA!"),
+		gesture="kb:NVDA+q"
+	)
 	def script_quit(self,gesture):
 		gui.quit()
-	# Translators: Input help mode message for quit NVDA command.
-	script_quit.__doc__=_("Quits NVDA!")
 
+	@script(
+		# Translators: Input help mode message for restart NVDA command.
+		description=_("Restarts NVDA!")
+	)
 	def script_restart(self,gesture):
 		core.restart()
-	# Translators: Input help mode message for restart NVDA command.
-	script_restart.__doc__=_("Restarts NVDA!")
 
+	@script(
+		# Translators: Input help mode message for show NVDA menu command.
+		description=_("Shows the NVDA menu"),
+		gestures=("kb:NVDA+n", "ts:2finger_double_tap")
+	)
 	def script_showGui(self,gesture):
 		gui.showGui()
-	# Translators: Input help mode message for show NVDA menu command.
-	script_showGui.__doc__=_("Shows the NVDA menu")
 
 	def script_review_sayAll(self,gesture):
 		sayAllHandler.readText(sayAllHandler.CURSOR_REVIEW)
@@ -1875,13 +1889,16 @@ class GlobalCommands(ScriptableObject):
 	script_say_battery_status.__doc__ = _("Reports battery status and time remaining if AC is not plugged in")
 	script_say_battery_status.category=SCRCAT_SYSTEM
 
+	@script(
+		# Translators: Input help mode message for pass next key through command.
+		description=_("The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."),
+		category=SCRCAT_INPUT,
+		gesture="kb:NVDA+f2"
+	)
 	def script_passNextKeyThrough(self,gesture):
 		keyboardHandler.passNextKeyThrough()
 		# Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
 		ui.message(_("Pass next key through"))
-	# Translators: Input help mode message for pass next key through command.
-	script_passNextKeyThrough.__doc__=_("The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows.")
-	script_passNextKeyThrough.category=SCRCAT_INPUT
 
 	def script_reportAppModuleInfo(self,gesture):
 		focus=api.getFocusObject()
