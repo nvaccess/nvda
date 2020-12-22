@@ -18,8 +18,8 @@ import installer
 from logHandler import log
 import gui
 from gui import guiHelper
+import gui.contextHelp
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
-import contextHelp
 import tones
 import systemUtils
 

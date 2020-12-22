@@ -23,6 +23,7 @@ import config
 import languageHandler
 import speech
 import gui
+import gui.contextHelp
 import globalVars
 from logHandler import log
 import nvwave
