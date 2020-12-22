@@ -16,16 +16,26 @@ Was ist neu in NVDA
 - Es wurde ein Befehl zum Umschalten der Berichterstellung für markierten (hervorgehobenen) Text hinzugefügt. Es gibt keinen standardmäßig zugeordneten Tastenbefehl. (#11807)
 - Der Befehlszeilenparameter "--copy-portable-config" wurde hinzugefügt, mit dem Sie die bereitgestellte Konfiguration automatisch in das Benutzerkonto kopieren können, wenn Sie NVDA unbeaufsichtigt installieren. (#9676)
 - Das Braille-Routing wird jetzt mit dem Braille-Betrachter für Maus-Anwender unterstützt. Bewegen Sie den Mauszeiger, um zu einer Braille-Zelle zu springen. (#11804)
+- NVDA erkennt die braillezeilen Humanware Brailliant BI 40X und 20X nun automatisch über USB und Bluetooth. (#11819)
 
 
 == Änderungen ==
-- Der Liblouis-Braille-Übersetzer wurde auf Version 3.15.0 aktualisiert.
+- Der liblouis Braille-Übersetzer wurde auf Version 3.16.1 aktualisiert:
+ - Mehrere Abstürze behoben.
+ - Braille-Tabelle für Baschkirische Vollschrift hinzugefügt.
+ - Koptische Tabelle für 8-Punkt-Computer-Braille hinzugefügt.
+ - Russische literarische Braille- und russische literarische Braille-Tabellen (detailliert) hinzugefügt.
+ - Die russische Braille-Tabelle für Vollschrift wurde entfernt.
 - Wenn Sie im Suchmodus mit "Alles Lesen" sich vorlesen lassen, werden die Befehle "Weiter suchen" und "Vorherige suchen" nicht mehr beendet, wenn die Option "Überfliegen des Lesens zulassen" aktiviert ist. Sagen wir, alle werden eher nach dem nächsten oder vorherigen gefundenen Begriff fortgesetzt. (#11563)
 - Für HIMS-Braillezeilen wurde für F3 Leerzeichen+Punkte 148 neu zugeordnet. (#11710)
 - Verbesserungen an der Benutzeroberfläche der Optionen "Zeitlimit für Braille-Meldungen" und "Nachrichten auf unbestimmte Zeit anzeigen". (#11602)
 - In Web-Browsern und anderen Anwendungen, die den Suchmodus unterstützen, kann das Dialogfeld "Elementliste" (NVDA+F7) jetzt im Fokusmodus aufgerufen werden. (#10453)
 - Aktualisierungen von ARIA-Live-Regionen werden jetzt unterdrückt, wenn die Berichterstellung für dynamische Inhaltsänderungen deaktiviert ist. (#9077)
 - NVDA meldet jetzt "In die Zwischenablage kopiert" vor dem kopierten Text. (#6757)
+- Die Darstellung der grafischen Ansichtstabelle in der Datenträgerverwaltung wurde verbessert. (#10048)
+- Beschriftungen für Steuerelemente sind jetzt deaktiviert (ausgegraut), wenn das Steuerelement deaktiviert ist. (#11809)
+- Die CLDR-Emoji-Annotation wurde auf Version 38 aktualisiert. (#11817)
+- Die integrierte Funktion "Fokus-Highlight" wurde in "Visuell hervorheben" umbenannt. (#11700)
 
 
 == Fehlerbehebungen ==
@@ -39,7 +49,7 @@ Was ist neu in NVDA
 - Wenn "Versuch, abgelaufene Fokus-Ereignisse abzubrechen" aktiviert ist, wird der Titel der Registerkarte jetzt beim Wechseln der Registerkarten in Firefox erneut angekündigt. (#11397)
 - NVDA meldet kein Listenelement mehr zurück, nachdem ein Zeichen in eine Liste eingegeben wurde, wenn die Ivona-Stimmen (SAPI5) verwendet werden. (#11651)
 - Es ist wieder möglich, den Suchmodus beim Lesen von E-Mails in Windows 10 Mail 16005.13110 und neuer zu verwenden. (#11439)
-- Wenn Sie die Ivona-Stimmen (SAPI5) von harposoftware.com verwenden, kann NVDA jetzt die Konfiguration speichern, die Sprachausgabe wechseln und nach dem Neustart nicht mehr verstummen. (#11650)
+- Bei Verwendung der Ivona-Stimmen (SAPI5) von harposoftware.com kann NVDA jetzt die Konfiguration speichern, die Sprachausgabe wechseln und nach dem Neustart nicht mehr stumm bleiben. (#11650)
 - Es ist jetzt möglich, Nummer 6 in Computer-Braille über eine Braille-Tastatur auf HIMS-Braillezeilen einzugeben. (#11710)
 - Wesentliche Leistungsverbesserungen in Azure Data Studio. (#11533, #11715)
 - Wenn "Versuch, die Sprachausgabe für abgelaufene Fokus-Ereignisse abzubrechen" aktiviert ist, wird der Titel des NVDA-Suchdialogs erneut mitgeteilt. (#11632)
@@ -52,12 +62,18 @@ Was ist neu in NVDA
 - Betonte und hervorgehobene Tags in Internet Explorer können erneut daran gehindert werden, gemeldet zu werden, indem die Berichtsbetonung in den einstellungen unter Dokument-Formatierungen von NVDA deaktiviert werden. (#11808)
 - Ein Einfrieren von mehreren Sekunden, das bei einer kleinen Anzahl von Benutzern beim Navigieren mit den Pfeiltasten zwischen Zellen in Microsoft Excel auftritt, sollte nicht mehr auftreten. (#11818)
 - In Microsoft Teams-Builds mit Versionsnummern wie 1.3.00.28xxx schlägt NVDA das Lesen von Nachrichten in Chats oder Team-Channels auf Grund eines falsch fokussierten Menüs nicht mehr fehl. (#11821)
+- Text, der in Google Chrome gleichzeitig als Rechtschreib- und Grammatikfehler markiert ist, wird von NVDA entsprechend als Rechtschreib- und Grammatikfehler mitgeteilt. (#11787)
+- Bei Verwendung von Microsoft Outlook (französisches Gebietsschema) funktioniert die Verknüpfung für "Allen antworten" (Strg+Umschalt+R) wieder. (#11196)
+- In Visual Studio werden IntelliSense-Tooltipps, die zusätzliche Details zum aktuell ausgewählten IntelliSense-Element enthalten, nur noch einmal mitgeteilt. (#11611)
+- In Windows 10-Rechner gibt NVDA den Fortschritt der Berechnungen nicht aus, wenn die Ansage der Zeichen während der Eingabe deaktiviert sind. (#9428)
+- NVDA stürzt nicht mehr bei der Verwendung der amerikanische Kurzschrift ab und Sie mit aktiviertem Cursor auf Computer-Braille umschalten, wenn bestimmte Inhalte wie eine URL in Braille angezeigt werden. (#11754)
 
 
 == Änderungen für Entwickler ==
 - Systemtests können jetzt Schlüssel mit "spy.emulateKeyPress" senden, das einen Schlüsselbezeichner verwendet, der mit den NVDA-eigenen Schlüsselnamen übereinstimmt und standardmäßig auch blockiert, bis die Aktion ausgeführt wird. (#11581)
 - NVDA benötigt nicht mehr das aktuelle NVDA-Anwendungsverzeichnis, um zu funktionieren. (#6491)
 - Die Einstellung "Aria Live Politeness" für Live-Regionen kann jetzt auf NVDA-Objekten mit der Eigenschaft "liveRegionPoliteness" gefunden werden. (#11596)
+- Es ist nun möglich, separate Gesten für Outlook- und Word-Dokumente zu definieren. (#11196)
 
 
 = 2020.3 =
