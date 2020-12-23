@@ -98,6 +98,11 @@ class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
 	"""
 
+	@script(
+		# Translators: Describes the Cycle audio ducking mode command.
+		description=_("Cycles through audio ducking modes which determine when NVDA lowers the volume of other sounds"),
+		gesture="kb:NVDA+shift+d"
+	)
 	def script_cycleAudioDuckingMode(self,gesture):
 		if not audioDucking.isAudioDuckingSupported():
 			# Translators: a message when audio ducking is not supported on this machine
@@ -110,8 +115,6 @@ class GlobalCommands(ScriptableObject):
 		config.conf['audio']['audioDuckingMode']=nextMode
 		nextLabel=audioDucking.audioDuckingModes[nextMode]
 		ui.message(nextLabel)
-	# Translators: Describes the Cycle audio ducking mode command.
-	script_cycleAudioDuckingMode.__doc__=_("Cycles through audio ducking modes which determine when NVDA lowers the volume of other sounds")
 
 	@script(
 		# Translators: Input help mode message for toggle input help command.
@@ -304,6 +307,12 @@ class GlobalCommands(ScriptableObject):
 	script_previousSynthSetting.__doc__=_("Moves to the previous available setting in the synth settings ring")
 	script_previousSynthSetting.category=SCRCAT_SPEECH
 
+	@script(
+		# Translators: Input help mode message for toggle speaked typed characters command.
+		description=_("Toggles on and off the speaking of typed characters"),
+		category=SCRCAT_SPEECH,
+		gesture="kb:NVDA+2"
+	)
 	def script_toggleSpeakTypedCharacters(self,gesture):
 		if config.conf["keyboard"]["speakTypedCharacters"]:
 			# Translators: The message announced when toggling the speak typed characters keyboard setting.
@@ -314,10 +323,13 @@ class GlobalCommands(ScriptableObject):
 			state = _("speak typed characters on")
 			config.conf["keyboard"]["speakTypedCharacters"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle speaked typed characters command.
-	script_toggleSpeakTypedCharacters.__doc__=_("Toggles on and off the speaking of typed characters")
-	script_toggleSpeakTypedCharacters.category=SCRCAT_SPEECH
 
+	@script(
+		# Translators: Input help mode message for toggle speak typed words command.
+		description=_("Toggles on and off the speaking of typed words"),
+		category=SCRCAT_SPEECH,
+		gesture="kb:NVDA+3"
+	)
 	def script_toggleSpeakTypedWords(self,gesture):
 		if config.conf["keyboard"]["speakTypedWords"]:
 			# Translators: The message announced when toggling the speak typed words keyboard setting.
@@ -328,10 +340,13 @@ class GlobalCommands(ScriptableObject):
 			state = _("speak typed words on")
 			config.conf["keyboard"]["speakTypedWords"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle speak typed words command.
-	script_toggleSpeakTypedWords.__doc__=_("Toggles on and off the speaking of typed words")
-	script_toggleSpeakTypedWords.category=SCRCAT_SPEECH
 
+	@script(
+		# Translators: Input help mode message for toggle speak command keys command.
+		description=_("Toggles on and off the speaking of typed keys, that are not specifically characters"),
+		category=SCRCAT_SPEECH,
+		gesture="kb:NVDA+4"
+	)
 	def script_toggleSpeakCommandKeys(self,gesture):
 		if config.conf["keyboard"]["speakCommandKeys"]:
 			# Translators: The message announced when toggling the speak typed command keyboard setting.
@@ -342,9 +357,6 @@ class GlobalCommands(ScriptableObject):
 			state = _("speak command keys on")
 			config.conf["keyboard"]["speakCommandKeys"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle speak command keys command.
-	script_toggleSpeakCommandKeys.__doc__=_("Toggles on and off the speaking of typed keys, that are not specifically characters")
-	script_toggleSpeakCommandKeys.category=SCRCAT_SPEECH
 
 	def script_toggleReportFontName(self,gesture):
 		if config.conf["documentFormatting"]["reportFontName"]:
@@ -791,6 +803,12 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportClickable.__doc__=_("Toggles on and off reporting if clickable")
 	script_toggleReportClickable.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for cycle speech symbol level command.
+		description=_("Cycles through speech symbol levels which determine what symbols are spoken"),
+		category=SCRCAT_SPEECH,
+		gesture="kb:NVDA+p"
+	)
 	def script_cycleSpeechSymbolLevel(self,gesture):
 		curLevel = config.conf["speech"]["symbolLevel"]
 		for level in characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS:
@@ -804,9 +822,6 @@ class GlobalCommands(ScriptableObject):
 		# which determine what symbols are spoken.
 		# %s will be replaced with the symbol level; e.g. none, some, most and all.
 		ui.message(_("Symbol level %s") % name)
-	# Translators: Input help mode message for cycle speech symbol level command.
-	script_cycleSpeechSymbolLevel.__doc__=_("Cycles through speech symbol levels which determine what symbols are spoken")
-	script_cycleSpeechSymbolLevel.category=SCRCAT_SPEECH
 
 	@script(
 		# Translators: Input help mode message for move mouse to navigator object command.
@@ -1409,6 +1424,12 @@ class GlobalCommands(ScriptableObject):
 			title = _("Expanded symbol ({})").format(languageDescription)
 			ui.browseableMessage(message, title)
 
+	@script(
+		# Translators: Input help mode message for toggle speech mode command.
+		description=_("Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."),
+		category=SCRCAT_SPEECH,
+		gesture="kb:NVDA+s"
+	)
 	def script_speechMode(self,gesture):
 		curMode=speech.speechMode
 		speech.speechMode=speech.speechMode_talk
@@ -1425,9 +1446,6 @@ class GlobalCommands(ScriptableObject):
 		speech.cancelSpeech()
 		ui.message(name)
 		speech.speechMode=newMode
-	# Translators: Input help mode message for toggle speech mode command.
-	script_speechMode.__doc__=_("Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally.")
-	script_speechMode.category=SCRCAT_SPEECH
 
 	@script(
 		# Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
@@ -1769,6 +1787,12 @@ class GlobalCommands(ScriptableObject):
 			else:
 				api.copyToClip(text, notify=True)
 
+	@script(
+		# Translators: Input help mode message for toggle mouse tracking command.
+		description=_("Toggles the reporting of information as the mouse moves"),
+		category=SCRCAT_MOUSE,
+		gesture="kb:NVDA+m"
+	)
 	def script_toggleMouseTracking(self,gesture):
 		if config.conf["mouse"]["enableMouseTracking"]:
 			# Translators: presented when the mouse tracking is toggled.
@@ -1779,9 +1803,6 @@ class GlobalCommands(ScriptableObject):
 			state = _("Mouse tracking on")
 			config.conf["mouse"]["enableMouseTracking"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle mouse tracking command.
-	script_toggleMouseTracking.__doc__=_("Toggles the reporting of information as the mouse moves")
-	script_toggleMouseTracking.category=SCRCAT_MOUSE
 
 	def script_toggleMouseTextResolution(self,gesture):
 		values = textInfos.MOUSE_TEXT_RESOLUTION_UNITS
@@ -1907,6 +1928,12 @@ class GlobalCommands(ScriptableObject):
 		import systemUtils
 		systemUtils.openUserConfigurationDirectory()
 
+	@script(
+		# Translators: Input help mode message for toggle progress bar output command.
+		description=_("Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"),
+		category=SCRCAT_SPEECH,
+		gesture="kb:NVDA+u"
+	)
 	def script_toggleProgressBarOutput(self,gesture):
 		outputMode=config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]
 		if outputMode=="both":
@@ -1926,10 +1953,13 @@ class GlobalCommands(ScriptableObject):
 			# Translators: A mode where both speech and beeps will indicate progress bar updates.
 			ui.message(_("Beep and speak progress bar updates"))
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]=outputMode
-	# Translators: Input help mode message for toggle progress bar output command.
-	script_toggleProgressBarOutput.__doc__=_("Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates")
-	script_toggleProgressBarOutput.category=SCRCAT_SPEECH
 
+	@script(
+		# Translators: Input help mode message for toggle dynamic content changes command.
+		description=_("Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"),
+		category=SCRCAT_SPEECH,
+		gesture="kb:NVDA+5"
+	)
 	def script_toggleReportDynamicContentChanges(self,gesture):
 		if config.conf["presentation"]["reportDynamicContentChanges"]:
 			# Translators: presented when the present dynamic changes is toggled.
@@ -1940,10 +1970,13 @@ class GlobalCommands(ScriptableObject):
 			state = _("report dynamic content changes on")
 			config.conf["presentation"]["reportDynamicContentChanges"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle dynamic content changes command.
-	script_toggleReportDynamicContentChanges.__doc__=_("Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows")
-	script_toggleReportDynamicContentChanges.category=SCRCAT_SPEECH
 
+	@script(
+		# Translators: Input help mode message for toggle caret moves review cursor command.
+		description=_("Toggles on and off the movement of the review cursor due to the caret moving."),
+		category=SCRCAT_TEXTREVIEW,
+		gesture="kb:NVDA+6"
+	)
 	def script_toggleCaretMovesReviewCursor(self,gesture):
 		if config.conf["reviewCursor"]["followCaret"]:
 			# Translators: presented when toggled.
@@ -1954,10 +1987,13 @@ class GlobalCommands(ScriptableObject):
 			state = _("caret moves review cursor on")
 			config.conf["reviewCursor"]["followCaret"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle caret moves review cursor command.
-	script_toggleCaretMovesReviewCursor.__doc__=_("Toggles on and off the movement of the review cursor due to the caret moving.")
-	script_toggleCaretMovesReviewCursor.category=SCRCAT_TEXTREVIEW
 
+	@script(
+		# Translators: Input help mode message for toggle focus moves navigator object command.
+		description=_("Toggles on and off the movement of the navigator object due to focus changes"),
+		category=SCRCAT_OBJECTNAVIGATION,
+		gesture="kb:NVDA+7"
+	)
 	def script_toggleFocusMovesNavigatorObject(self,gesture):
 		if config.conf["reviewCursor"]["followFocus"]:
 			# Translators: presented when toggled.
@@ -1968,10 +2004,13 @@ class GlobalCommands(ScriptableObject):
 			state = _("focus moves navigator object on")
 			config.conf["reviewCursor"]["followFocus"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle focus moves navigator object command.
-	script_toggleFocusMovesNavigatorObject.__doc__=_("Toggles on and off the movement of the navigator object due to focus changes") 
-	script_toggleFocusMovesNavigatorObject.category=SCRCAT_OBJECTNAVIGATION
 
+	@script(
+		# Translators: Input help mode message for toggle auto focus focusable elements command.
+		description=_("Toggles on and off automatic movement of the system focus due to browse mode commands") ,
+		category=inputCore.SCRCAT_BROWSEMODE,
+		gesture="kb:NVDA+8"
+	)
 	def script_toggleAutoFocusFocusableElements(self,gesture):
 		if config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
 			# Translators: presented when toggled.
@@ -1982,9 +2021,6 @@ class GlobalCommands(ScriptableObject):
 			state = _("Automatically set system focus to focusable elements on")
 			config.conf["virtualBuffers"]["autoFocusFocusableElements"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle auto focus focusable elements command.
-	script_toggleAutoFocusFocusableElements.__doc__=_("Toggles on and off automatic movement of the system focus due to browse mode commands") 
-	script_toggleAutoFocusFocusableElements.category=inputCore.SCRCAT_BROWSEMODE
 
 	# added by Rui Batista<ruiandrebatista@gmail.com> to implement a battery status script
 	@script(
@@ -2267,6 +2303,12 @@ class GlobalCommands(ScriptableObject):
 	script_toggleSpeechViewer.__doc__ = _("Toggles the NVDA Speech viewer, a floating window that allows you to view all the text that NVDA is currently speaking")
 	script_toggleSpeechViewer.category=SCRCAT_TOOLS
 
+	@script(
+		# Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
+		description=_("Toggle tethering of braille between the focus and the review position"),
+		category=SCRCAT_BRAILLE,
+		gesture="kb:NVDA+control+t"
+	)
 	def script_braille_toggleTether(self, gesture):
 		values = [x[0] for x in braille.handler.tetherValues]
 		labels = [x[1] for x in braille.handler.tetherValues]
@@ -2291,9 +2333,6 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Reports which position braille is tethered to
 		# (braille can be tethered automatically or to either focus or review position).
 		ui.message(_("Braille tethered %s") % labels[newIndex])
-	# Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
-	script_braille_toggleTether.__doc__ = _("Toggle tethering of braille between the focus and the review position")
-	script_braille_toggleTether.category=SCRCAT_BRAILLE
 
 	def script_braille_toggleFocusContextPresentation(self, gesture):
 		values = [x[0] for x in braille.focusContextPresentations]
