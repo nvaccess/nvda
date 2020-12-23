@@ -265,8 +265,13 @@ for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
 # Build unicode CLDR dictionaries
 env.SConscript('cldrDict_sconscript',exports=['env', 'sourceDir'])
 
+
+REQUIRED_PY2EXE_VER = "py2exe==0.10.1.0"
+
 # A builder to generate an NVDA distribution.
 def NVDADistGenerator(target, source, env, for_signature):
+	import buildFunctions
+	buildFunctions.requestPackage(REQUIRED_PY2EXE_VER)
 	buildVersionFn = os.path.join(str(source[0]), "_buildVersion.py")
 	# Make the NVDA build use the specified version.
 	# We don't do this using normal scons mechanisms because we want it to be cleaned up immediately after this builder
