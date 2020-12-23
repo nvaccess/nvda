@@ -370,6 +370,11 @@ class GlobalCommands(ScriptableObject):
 			config.conf["keyboard"]["speakCommandKeys"]=True
 		ui.message(state)
 
+	@script(
+		# Translators: Input help mode message for toggle report font name command.
+		description=_("Toggles on and off the reporting of font changes"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportFontName(self,gesture):
 		if config.conf["documentFormatting"]["reportFontName"]:
 			# Translators: The message announced when toggling the report font name document formatting setting.
@@ -380,10 +385,12 @@ class GlobalCommands(ScriptableObject):
 			state = _("report font name on")
 			config.conf["documentFormatting"]["reportFontName"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report font name command.
-	script_toggleReportFontName.__doc__=_("Toggles on and off the reporting of font changes")
-	script_toggleReportFontName.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report font size command.
+		description=_("Toggles on and off the reporting of font size changes"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportFontSize(self,gesture):
 		if config.conf["documentFormatting"]["reportFontSize"]:
 			# Translators: The message announced when toggling the report font size document formatting setting.
@@ -394,10 +401,12 @@ class GlobalCommands(ScriptableObject):
 			state = _("report font size on")
 			config.conf["documentFormatting"]["reportFontSize"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report font size command.
-	script_toggleReportFontSize.__doc__=_("Toggles on and off the reporting of font size changes")
-	script_toggleReportFontSize.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report font attributes command.
+		description=_("Toggles on and off the reporting of font attributes"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportFontAttributes(self,gesture):
 		if config.conf["documentFormatting"]["reportFontAttributes"]:
 			# Translators: The message announced when toggling the report font attributes document formatting setting.
@@ -408,14 +417,11 @@ class GlobalCommands(ScriptableObject):
 			state = _("report font attributes on")
 			config.conf["documentFormatting"]["reportFontAttributes"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report font attributes command.
-	script_toggleReportFontAttributes.__doc__=_("Toggles on and off the reporting of font attributes")
-	script_toggleReportFontAttributes.category=SCRCAT_DOCUMENTFORMATTING
 
 	@script(
 		# Translators: Input help mode message for toggle superscripts and subscripts command.
 		description=_("Toggles on and off the reporting of superscripts and subscripts"),
-		category=SCRCAT_DOCUMENTFORMATTING,
+		category=SCRCAT_DOCUMENTFORMATTING
 	)
 	def script_toggleReportSuperscriptsAndSubscripts(self, gesture):
 		shouldReport: bool = not config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"]
@@ -429,7 +435,12 @@ class GlobalCommands(ScriptableObject):
 			# document formatting setting.
 			state = _("report superscripts and subscripts off")
 		ui.message(state)
-	
+
+	@script(
+		# Translators: Input help mode message for toggle report revisions command.
+		description=_("Toggles on and off the reporting of revisions"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportRevisions(self,gesture):
 		if config.conf["documentFormatting"]["reportRevisions"]:
 			# Translators: The message announced when toggling the report revisions document formatting setting.
@@ -440,10 +451,12 @@ class GlobalCommands(ScriptableObject):
 			state = _("report revisions on")
 			config.conf["documentFormatting"]["reportRevisions"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report revisions command.
-	script_toggleReportRevisions.__doc__=_("Toggles on and off the reporting of revisions")
-	script_toggleReportRevisions.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report emphasis command.
+		description=_("Toggles on and off the reporting of emphasis"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportEmphasis(self,gesture):
 		if config.conf["documentFormatting"]["reportEmphasis"]:
 			# Translators: The message announced when toggling the report emphasis document formatting setting.
@@ -454,14 +467,11 @@ class GlobalCommands(ScriptableObject):
 			state = _("report emphasis on")
 			config.conf["documentFormatting"]["reportEmphasis"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report emphasis command.
-	script_toggleReportEmphasis.__doc__=_("Toggles on and off the reporting of emphasis")
-	script_toggleReportEmphasis.category=SCRCAT_DOCUMENTFORMATTING
-	
+
 	@script(
 		# Translators: Input help mode message for toggle report marked (highlighted) content command.
 		description=_("Toggles on and off the reporting of marked text"),
-		category=SCRCAT_DOCUMENTFORMATTING,
+		category=SCRCAT_DOCUMENTFORMATTING
 	)
 	def script_toggleReportHighlightedText(self, gesture):
 		shouldReport: bool = not config.conf["documentFormatting"]["reportHighlight"]
@@ -474,6 +484,11 @@ class GlobalCommands(ScriptableObject):
 			state = _("report marked off")
 		ui.message(state)
 
+	@script(
+		# Translators: Input help mode message for toggle report colors command.
+		description=_("Toggles on and off the reporting of colors"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportColor(self,gesture):
 		if config.conf["documentFormatting"]["reportColor"]:
 			# Translators: The message announced when toggling the report colors document formatting setting.
@@ -484,10 +499,12 @@ class GlobalCommands(ScriptableObject):
 			state = _("report colors on")
 			config.conf["documentFormatting"]["reportColor"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report colors command.
-	script_toggleReportColor.__doc__=_("Toggles on and off the reporting of colors")
-	script_toggleReportColor.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report alignment command.
+		description=_("Toggles on and off the reporting of text alignment"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportAlignment(self,gesture):
 		if config.conf["documentFormatting"]["reportAlignment"]:
 			# Translators: The message announced when toggling the report alignment document formatting setting.
@@ -498,10 +515,12 @@ class GlobalCommands(ScriptableObject):
 			state = _("report alignment on")
 			config.conf["documentFormatting"]["reportAlignment"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report alignment command.
-	script_toggleReportAlignment.__doc__=_("Toggles on and off the reporting of text alignment")
-	script_toggleReportAlignment.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report style command.
+		description=_("Toggles on and off the reporting of style changes"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportStyle(self,gesture):
 		if config.conf["documentFormatting"]["reportStyle"]:
 			# Translators: The message announced when toggling the report style document formatting setting.
@@ -512,10 +531,12 @@ class GlobalCommands(ScriptableObject):
 			state = _("report style on")
 			config.conf["documentFormatting"]["reportStyle"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report style command.
-	script_toggleReportStyle.__doc__=_("Toggles on and off the reporting of style changes")
-	script_toggleReportStyle.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report spelling errors command.
+		description=_("Toggles on and off the reporting of spelling errors"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportSpellingErrors(self,gesture):
 		if config.conf["documentFormatting"]["reportSpellingErrors"]:
 			# Translators: The message announced when toggling the report spelling errors document formatting setting.
@@ -526,10 +547,12 @@ class GlobalCommands(ScriptableObject):
 			state = _("report spelling errors on")
 			config.conf["documentFormatting"]["reportSpellingErrors"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report spelling errors command.
-	script_toggleReportSpellingErrors.__doc__=_("Toggles on and off the reporting of spelling errors")
-	script_toggleReportSpellingErrors.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report pages command.
+		description=_("Toggles on and off the reporting of pages"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportPage(self,gesture):
 		if config.conf["documentFormatting"]["reportPage"]:
 			# Translators: The message announced when toggling the report pages document formatting setting.
@@ -540,10 +563,12 @@ class GlobalCommands(ScriptableObject):
 			state = _("report pages on")
 			config.conf["documentFormatting"]["reportPage"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report pages command.
-	script_toggleReportPage.__doc__=_("Toggles on and off the reporting of pages")
-	script_toggleReportPage.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report line numbers command.
+		description=_("Toggles on and off the reporting of line numbers"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportLineNumber(self,gesture):
 		if config.conf["documentFormatting"]["reportLineNumber"]:
 			# Translators: The message announced when toggling the report line numbers document formatting setting.
@@ -554,10 +579,12 @@ class GlobalCommands(ScriptableObject):
 			state = _("report line numbers on")
 			config.conf["documentFormatting"]["reportLineNumber"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report line numbers command.
-	script_toggleReportLineNumber.__doc__=_("Toggles on and off the reporting of line numbers")
-	script_toggleReportLineNumber.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report line indentation command.
+		description=_("Cycles through line indentation settings"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportLineIndentation(self,gesture):
 		lineIndentationSpeech = config.conf["documentFormatting"]["reportLineIndentation"]
 		lineIndentationTones = config.conf["documentFormatting"]["reportLineIndentationWithTones"]
@@ -581,10 +608,12 @@ class GlobalCommands(ScriptableObject):
 			lineIndentationTones = False
 		config.conf["documentFormatting"]["reportLineIndentation"] = lineIndentationSpeech
 		config.conf["documentFormatting"]["reportLineIndentationWithTones"] = lineIndentationTones
-	# Translators: Input help mode message for toggle report line indentation command.
-	script_toggleReportLineIndentation.__doc__=_("Cycles through line indentation settings")
-	script_toggleReportLineIndentation.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report paragraph indentation command.
+		description=_("Toggles on and off the reporting of paragraph indentation"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportParagraphIndentation(self,gesture):
 		if config.conf["documentFormatting"]["reportParagraphIndentation"]:
 			# Translators: The message announced when toggling the report paragraph indentation document formatting setting.
@@ -595,10 +624,12 @@ class GlobalCommands(ScriptableObject):
 			state = _("report paragraph indentation on")
 			config.conf["documentFormatting"]["reportParagraphIndentation"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report paragraph indentation command.
-	script_toggleReportParagraphIndentation.__doc__=_("Toggles on and off the reporting of paragraph indentation")
-	script_toggleReportParagraphIndentation.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report line spacing command.
+		description=_("Toggles on and off the reporting of line spacing"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportLineSpacing(self,gesture):
 		if config.conf["documentFormatting"]["reportLineSpacing"]:
 			# Translators: The message announced when toggling the report line spacing document formatting setting.
@@ -609,10 +640,12 @@ class GlobalCommands(ScriptableObject):
 			state = _("report line spacing on")
 			config.conf["documentFormatting"]["reportLineSpacing"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report line spacing command.
-	script_toggleReportLineSpacing.__doc__=_("Toggles on and off the reporting of line spacing")
-	script_toggleReportLineSpacing.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report tables command.
+		description=_("Toggles on and off the reporting of tables"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportTables(self,gesture):
 		if config.conf["documentFormatting"]["reportTables"]:
 			# Translators: The message announced when toggling the report tables document formatting setting.
@@ -623,10 +656,12 @@ class GlobalCommands(ScriptableObject):
 			state = _("report tables on")
 			config.conf["documentFormatting"]["reportTables"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report tables command.
-	script_toggleReportTables.__doc__=_("Toggles on and off the reporting of tables")
-	script_toggleReportTables.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report table row/column headers command.
+		description=_("Toggles on and off the reporting of table row and column headers"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportTableHeaders(self,gesture):
 		if config.conf["documentFormatting"]["reportTableHeaders"]:
 			# Translators: The message announced when toggling the report table row/column headers document formatting setting.
@@ -637,10 +672,12 @@ class GlobalCommands(ScriptableObject):
 			state = _("report table row and column headers on")
 			config.conf["documentFormatting"]["reportTableHeaders"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report table row/column headers command.
-	script_toggleReportTableHeaders.__doc__=_("Toggles on and off the reporting of table row and column headers")
-	script_toggleReportTableHeaders.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report table cell coordinates command.
+		description=_("Toggles on and off the reporting of table cell coordinates"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportTableCellCoords(self,gesture):
 		if config.conf["documentFormatting"]["reportTableCellCoords"]:
 			# Translators: The message announced when toggling the report table cell coordinates document formatting setting.
@@ -651,10 +688,12 @@ class GlobalCommands(ScriptableObject):
 			state = _("report table cell coordinates on")
 			config.conf["documentFormatting"]["reportTableCellCoords"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report table cell coordinates command.
-	script_toggleReportTableCellCoords.__doc__=_("Toggles on and off the reporting of table cell coordinates")
-	script_toggleReportTableCellCoords.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report links command.
+		description=_("Toggles on and off the reporting of links"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportLinks(self,gesture):
 		if config.conf["documentFormatting"]["reportLinks"]:
 			# Translators: The message announced when toggling the report links document formatting setting.
@@ -665,9 +704,6 @@ class GlobalCommands(ScriptableObject):
 			state = _("report links on")
 			config.conf["documentFormatting"]["reportLinks"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report links command.
-	script_toggleReportLinks.__doc__=_("Toggles on and off the reporting of links")
-	script_toggleReportLinks.category=SCRCAT_DOCUMENTFORMATTING
 
 	@scriptHandler.script(
 		# Translators: Input help mode message for toggle report graphics command.
@@ -685,6 +721,11 @@ class GlobalCommands(ScriptableObject):
 			config.conf["documentFormatting"]["reportGraphics"] = True
 		ui.message(state)
 
+	@script(
+		# Translators: Input help mode message for toggle report comments command.
+		description=_("Toggles on and off the reporting of comments"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportComments(self,gesture):
 		if config.conf["documentFormatting"]["reportComments"]:
 			# Translators: The message announced when toggling the report comments document formatting setting.
@@ -695,10 +736,12 @@ class GlobalCommands(ScriptableObject):
 			state = _("report comments on")
 			config.conf["documentFormatting"]["reportComments"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report comments command.
-	script_toggleReportComments.__doc__=_("Toggles on and off the reporting of comments")
-	script_toggleReportComments.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report lists command.
+		description=_("Toggles on and off the reporting of lists"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportLists(self,gesture):
 		if config.conf["documentFormatting"]["reportLists"]:
 			# Translators: The message announced when toggling the report lists document formatting setting.
@@ -709,10 +752,12 @@ class GlobalCommands(ScriptableObject):
 			state = _("report lists on")
 			config.conf["documentFormatting"]["reportLists"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report lists command.
-	script_toggleReportLists.__doc__=_("Toggles on and off the reporting of lists")
-	script_toggleReportLists.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report headings command.
+		description=_("Toggles on and off the reporting of headings"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportHeadings(self,gesture):
 		if config.conf["documentFormatting"]["reportHeadings"]:
 			# Translators: The message announced when toggling the report headings document formatting setting.
@@ -723,9 +768,6 @@ class GlobalCommands(ScriptableObject):
 			state = _("report headings on")
 			config.conf["documentFormatting"]["reportHeadings"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report headings command.
-	script_toggleReportHeadings.__doc__=_("Toggles on and off the reporting of headings")
-	script_toggleReportHeadings.category=SCRCAT_DOCUMENTFORMATTING
 
 	@script(
 		# Translators: Input help mode message for toggle report groupings command.
@@ -743,6 +785,11 @@ class GlobalCommands(ScriptableObject):
 			config.conf["documentFormatting"]["reportGroupings"] = True
 		ui.message(state)
 
+	@script(
+		# Translators: Input help mode message for toggle report block quotes command.
+		description=_("Toggles on and off the reporting of block quotes"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportBlockQuotes(self,gesture):
 		if config.conf["documentFormatting"]["reportBlockQuotes"]:
 			# Translators: The message announced when toggling the report block quotes document formatting setting.
@@ -753,10 +800,12 @@ class GlobalCommands(ScriptableObject):
 			state = _("report block quotes on")
 			config.conf["documentFormatting"]["reportBlockQuotes"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report block quotes command.
-	script_toggleReportBlockQuotes.__doc__=_("Toggles on and off the reporting of block quotes")
-	script_toggleReportBlockQuotes.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report landmarks command.
+		description=_("Toggles on and off the reporting of landmarks"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportLandmarks(self,gesture):
 		if config.conf["documentFormatting"]["reportLandmarks"]:
 			# Translators: The message announced when toggling the report landmarks document formatting setting.
@@ -767,9 +816,6 @@ class GlobalCommands(ScriptableObject):
 			state = _("report landmarks and regions on")
 			config.conf["documentFormatting"]["reportLandmarks"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report landmarks command.
-	script_toggleReportLandmarks.__doc__=_("Toggles on and off the reporting of landmarks")
-	script_toggleReportLandmarks.category=SCRCAT_DOCUMENTFORMATTING
 
 	@script(
 		# Translators: Input help mode message for toggle report articles command.
@@ -787,6 +833,11 @@ class GlobalCommands(ScriptableObject):
 			config.conf["documentFormatting"]["reportArticles"] = True
 		ui.message(state)
 
+	@script(
+		# Translators: Input help mode message for toggle report frames command.
+		description=_("Toggles on and off the reporting of frames"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportFrames(self,gesture):
 		if config.conf["documentFormatting"]["reportFrames"]:
 			# Translators: The message announced when toggling the report frames document formatting setting.
@@ -797,10 +848,12 @@ class GlobalCommands(ScriptableObject):
 			state = _("report frames on")
 			config.conf["documentFormatting"]["reportFrames"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report frames command.
-	script_toggleReportFrames.__doc__=_("Toggles on and off the reporting of frames")
-	script_toggleReportFrames.category=SCRCAT_DOCUMENTFORMATTING
 
+	@script(
+		# Translators: Input help mode message for toggle report if clickable command.
+		description=_("Toggles on and off reporting if clickable"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
 	def script_toggleReportClickable(self,gesture):
 		if config.conf["documentFormatting"]["reportClickable"]:
 			# Translators: The message announced when toggling the report if clickable document formatting setting.
@@ -811,9 +864,6 @@ class GlobalCommands(ScriptableObject):
 			state = _("report if clickable on")
 			config.conf["documentFormatting"]["reportClickable"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle report if clickable command.
-	script_toggleReportClickable.__doc__=_("Toggles on and off reporting if clickable")
-	script_toggleReportClickable.category=SCRCAT_DOCUMENTFORMATTING
 
 	@script(
 		# Translators: Input help mode message for cycle speech symbol level command.
