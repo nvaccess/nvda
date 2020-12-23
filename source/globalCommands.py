@@ -829,6 +829,12 @@ class GlobalCommands(ScriptableObject):
 	script_moveNavigatorObjectToMouse.__doc__=_("Sets the navigator object to the current object under the mouse pointer and speaks it")
 	script_moveNavigatorObjectToMouse.category=SCRCAT_MOUSE
 
+	@script(
+		# Translators: Script help message for next review mode command.
+		description=_("Switches to the next review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object"),
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:NVDA+numpad7", "kb(laptop):NVDA+pageUp", "ts(object):2finger_flickUp")
+	)
 	def script_reviewMode_next(self,gesture):
 		label=review.nextMode()
 		if label:
@@ -840,10 +846,13 @@ class GlobalCommands(ScriptableObject):
 		else:
 			# Translators: reported when there are no other available review modes for this object 
 			ui.reviewMessage(_("No next review mode"))
-	# Translators: Script help message for next review mode command.
-	script_reviewMode_next.__doc__=_("Switches to the next review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object")
-	script_reviewMode_next.category=SCRCAT_TEXTREVIEW
 
+	@script(
+		# Translators: Script help message for previous review mode command.
+		description=_("Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object"),
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:NVDA+numpad1", "kb(laptop):NVDA+pageDown", "ts(object):2finger_flickDown")
+	)
 	def script_reviewMode_previous(self,gesture):
 		label=review.nextMode(prev=True)
 		if label:
@@ -855,9 +864,6 @@ class GlobalCommands(ScriptableObject):
 		else:
 			# Translators: reported when there are no other available review modes for this object 
 			ui.reviewMessage(_("No previous review mode"))
-	# Translators: Script help message for previous review mode command.
-	script_reviewMode_previous.__doc__=_("Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object") 
-	script_reviewMode_previous.category=SCRCAT_TEXTREVIEW
 
 	@script(
 		# Translators: Input help mode message for toggle simple review mode command.
@@ -1108,15 +1114,25 @@ class GlobalCommands(ScriptableObject):
 		# Translators: the message reported when there is no action to perform on the review position or navigator object.
 		ui.message(_("No action"))
 
+	@script(
+		# Translators: Input help mode message for move review cursor to top line command.
+		description=_("Moves the review cursor to the top line of the current navigator object and speaks it"),
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:shift+numpad7", "kb(laptop):NVDA+control+home")
+	)
 	def script_review_top(self,gesture):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_FIRST)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
-	# Translators: Input help mode message for move review cursor to top line command.
-	script_review_top.__doc__=_("Moves the review cursor to the top line of the current navigator object and speaks it")
-	script_review_top.category=SCRCAT_TEXTREVIEW
 
+	@script(
+		# Translators: Input help mode message for move review cursor to previous line command.
+		description=_("Moves the review cursor to the previous line of the current navigator object and speaks it"),
+		resumeSayAllMode=sayAllHandler.CURSOR_REVIEW,
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:numpad7", "kb(laptop):NVDA+upArrow", "ts(text):flickUp")
+	)
 	def script_review_previousLine(self,gesture):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_LINE)
@@ -1129,11 +1145,13 @@ class GlobalCommands(ScriptableObject):
 			api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
-	# Translators: Input help mode message for move review cursor to previous line command.
-	script_review_previousLine.__doc__=_("Moves the review cursor to the previous line of the current navigator object and speaks it")
-	script_review_previousLine.resumeSayAllMode=sayAllHandler.CURSOR_REVIEW
-	script_review_previousLine.category=SCRCAT_TEXTREVIEW
 
+	@script(
+		# Translators: Input help mode message for read current line under review cursor command.
+		description=_("Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions."),
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:numpad8", "kb(laptop):NVDA+shift+.")
+	)
 	def script_review_currentLine(self,gesture):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_LINE)
@@ -1144,10 +1162,14 @@ class GlobalCommands(ScriptableObject):
 			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 		else:
 			speech.spellTextInfo(info,useCharacterDescriptions=scriptCount>1)
-	# Translators: Input help mode message for read current line under review cursor command.
-	script_review_currentLine.__doc__=_("Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions.")
-	script_review_currentLine.category=SCRCAT_TEXTREVIEW
 
+	@script(
+		# Translators: Input help mode message for move review cursor to next line command.
+		description=_("Moves the review cursor to the next line of the current navigator object and speaks it"),
+		resumeSayAllMode=sayAllHandler.CURSOR_REVIEW,
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:numpad9", "kb(laptop):NVDA+downArrow", "ts(text):flickDown")
+	)
 	def script_review_nextLine(self,gesture):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_LINE)
@@ -1160,20 +1182,25 @@ class GlobalCommands(ScriptableObject):
 			api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
-	# Translators: Input help mode message for move review cursor to next line command.
-	script_review_nextLine.__doc__=_("Moves the review cursor to the next line of the current navigator object and speaks it")
-	script_review_nextLine.resumeSayAllMode=sayAllHandler.CURSOR_REVIEW
-	script_review_nextLine.category=SCRCAT_TEXTREVIEW
 
+	@script(
+		# Translators: Input help mode message for move review cursor to bottom line command.
+		description=_("Moves the review cursor to the bottom line of the current navigator object and speaks it"),
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:shift+numpad9", "kb(laptop):NVDA+control+end"),
+	)
 	def script_review_bottom(self,gesture):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_LAST)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
-	# Translators: Input help mode message for move review cursor to bottom line command.
-	script_review_bottom.__doc__=_("Moves the review cursor to the bottom line of the current navigator object and speaks it")
-	script_review_bottom.category=SCRCAT_TEXTREVIEW
 
+	@script(
+		# Translators: Input help mode message for move review cursor to previous word command.
+		description=_("Moves the review cursor to the previous word of the current navigator object and speaks it"),
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:numpad4", "kb(laptop):NVDA+control+leftArrow", "ts(text):2finger_flickLeft")
+	)
 	def script_review_previousWord(self,gesture):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_WORD)
@@ -1186,10 +1213,13 @@ class GlobalCommands(ScriptableObject):
 			api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_WORD)
 		speech.speakTextInfo(info,reason=controlTypes.REASON_CARET,unit=textInfos.UNIT_WORD)
-	# Translators: Input help mode message for move review cursor to previous word command.
-	script_review_previousWord.__doc__=_("Moves the review cursor to the previous word of the current navigator object and speaks it")
-	script_review_previousWord.category=SCRCAT_TEXTREVIEW
 
+	@script(
+		# Translators: Input help mode message for report current word under review cursor command.
+		description=_("Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"),
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:numpad5", "kb(laptop):NVDA+control+.", "ts(text):hoverUp")
+	)
 	def script_review_currentWord(self,gesture):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_WORD)
@@ -1200,10 +1230,13 @@ class GlobalCommands(ScriptableObject):
 			speech.speakTextInfo(info,reason=controlTypes.REASON_CARET,unit=textInfos.UNIT_WORD)
 		else:
 			speech.spellTextInfo(info,useCharacterDescriptions=scriptCount>1)
-	# Translators: Input help mode message for report current word under review cursor command.
-	script_review_currentWord.__doc__=_("Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions")
-	script_review_currentWord.category=SCRCAT_TEXTREVIEW
 
+	@script(
+		# Translators: Input help mode message for move review cursor to next word command.
+		description=_("Moves the review cursor to the next word of the current navigator object and speaks it"),
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:numpad6", "kb(laptop):NVDA+control+rightArrow", "ts(text):2finger_flickRight")
+	)
 	def script_review_nextWord(self,gesture):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_WORD)
@@ -1216,10 +1249,13 @@ class GlobalCommands(ScriptableObject):
 			api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_WORD)
 		speech.speakTextInfo(info,reason=controlTypes.REASON_CARET,unit=textInfos.UNIT_WORD)
-	# Translators: Input help mode message for move review cursor to next word command.
-	script_review_nextWord.__doc__=_("Moves the review cursor to the next word of the current navigator object and speaks it")
-	script_review_nextWord.category=SCRCAT_TEXTREVIEW
 
+	@script(
+		# Translators: Input help mode message for move review cursor to start of current line command.
+		description=_("Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"),
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:shift+numpad1", "kb(laptop):NVDA+home")
+	)
 	def script_review_startOfLine(self,gesture):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_LINE)
@@ -1227,10 +1263,13 @@ class GlobalCommands(ScriptableObject):
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
-	# Translators: Input help mode message for move review cursor to start of current line command.
-	script_review_startOfLine.__doc__=_("Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it")
-	script_review_startOfLine.category=SCRCAT_TEXTREVIEW
 
+	@script(
+		# Translators: Input help mode message for move review cursor to previous character command.
+		description=_("Moves the review cursor to the previous character of the current navigator object and speaks it"),
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:numpad1", "kb(laptop):NVDA+leftArrow", "ts(text):flickLeft")
+	)
 	def script_review_previousCharacter(self,gesture):
 		lineInfo=api.getReviewPosition().copy()
 		lineInfo.expand(textInfos.UNIT_LINE)
@@ -1248,10 +1287,13 @@ class GlobalCommands(ScriptableObject):
 			api.setReviewPosition(charInfo)
 			charInfo.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(charInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
-	# Translators: Input help mode message for move review cursor to previous character command.
-	script_review_previousCharacter.__doc__=_("Moves the review cursor to the previous character of the current navigator object and speaks it")
-	script_review_previousCharacter.category=SCRCAT_TEXTREVIEW
 
+	@script(
+		# Translators: Input help mode message for report current character under review cursor command.
+		description=_("Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"),
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:numpad2", "kb(laptop):NVDA+.")
+	)
 	def script_review_currentCharacter(self,gesture):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_CHARACTER)
@@ -1273,10 +1315,13 @@ class GlobalCommands(ScriptableObject):
 			else:
 				log.debugWarning("Couldn't calculate ordinal for character %r" % info.text)
 				speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
-	# Translators: Input help mode message for report current character under review cursor command.
-	script_review_currentCharacter.__doc__=_("Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal")
-	script_review_currentCharacter.category=SCRCAT_TEXTREVIEW
 
+	@script(
+		# Translators: Input help mode message for move review cursor to next character command.
+		description=_("Moves the review cursor to the next character of the current navigator object and speaks it"),
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:numpad3", "kb(laptop):NVDA+rightArrow", "ts(text):flickRight")
+	)
 	def script_review_nextCharacter(self,gesture):
 		lineInfo=api.getReviewPosition().copy()
 		lineInfo.expand(textInfos.UNIT_LINE)
@@ -1294,10 +1339,13 @@ class GlobalCommands(ScriptableObject):
 			api.setReviewPosition(charInfo)
 			charInfo.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(charInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
-	# Translators: Input help mode message for move review cursor to next character command.
-	script_review_nextCharacter.__doc__=_("Moves the review cursor to the next character of the current navigator object and speaks it")
-	script_review_nextCharacter.category=SCRCAT_TEXTREVIEW
 
+	@script(
+		# Translators: Input help mode message for move review cursor to end of current line command.
+		description=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"),
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:shift+numpad3", "kb(laptop):NVDA+end")
+	)
 	def script_review_endOfLine(self,gesture):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_LINE)
@@ -1306,9 +1354,6 @@ class GlobalCommands(ScriptableObject):
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
-	# Translators: Input help mode message for move review cursor to end of current line command.
-	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
-	script_review_endOfLine.category=SCRCAT_TEXTREVIEW
 
 	def _getCurrentLanguageForTextInfo(self, info):
 		curLanguage = None
@@ -1323,7 +1368,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for Review Current Symbol command.
 		description=_("Reports the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode"),
-		category=SCRCAT_TEXTREVIEW,
+		category=SCRCAT_TEXTREVIEW
 	)
 	def script_review_currentSymbol(self,gesture):
 		info=api.getReviewPosition().copy()
@@ -1451,14 +1496,17 @@ class GlobalCommands(ScriptableObject):
 	def script_showGui(self,gesture):
 		gui.showGui()
 
+	@script(
+		description=_(
+			# Translators: Input help mode message for say all in review cursor command.
+			"Reads from the review cursor up to the end of the current text,"
+			" moving the review cursor as it goes"
+		),
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:numpadPlus", "kb(laptop):NVDA+shift+a", "ts(text):3finger_flickDown")
+	)
 	def script_review_sayAll(self,gesture):
 		sayAllHandler.readText(sayAllHandler.CURSOR_REVIEW)
-	script_review_sayAll.__doc__ = _(
-		# Translators: Input help mode message for say all in review cursor command.
-		"Reads from the review cursor up to the end of the current text,"
-		" moving the review cursor as it goes"
-	)
-	script_review_sayAll.category=SCRCAT_TEXTREVIEW
 
 	@script(
 		# Translators: Input help mode message for say all with system caret command.
@@ -1569,7 +1617,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for report formatting command.
 		description=_("Reports formatting info for the current review cursor position."),
-		category=SCRCAT_TEXTREVIEW,
+		category=SCRCAT_TEXTREVIEW
 	)
 	def script_reportFormattingAtReview(self, gesture):
 		self._reportFormattingHelper(api.getReviewPosition(), False)
@@ -1577,7 +1625,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for show formatting at review cursor command.
 		description=_("Presents, in browse mode, formatting info for the current review cursor position."),
-		category=SCRCAT_TEXTREVIEW,
+		category=SCRCAT_TEXTREVIEW
 	)
 	def script_showFormattingAtReview(self, gesture):
 		self._reportFormattingHelper(api.getReviewPosition(), True)
@@ -1589,7 +1637,7 @@ class GlobalCommands(ScriptableObject):
 			" If pressed twice, presents the information in browse mode"
 		),
 		category=SCRCAT_TEXTREVIEW,
-		gesture="kb:NVDA+shift+f",
+		gesture="kb:NVDA+shift+f"
 	)
 	def script_reportFormatting(self, gesture):
 		repeats = scriptHandler.getLastScriptRepeatCount()
@@ -2253,6 +2301,12 @@ class GlobalCommands(ScriptableObject):
 			# Example output: The clipboard contains a large portion of text. It is 2300 characters long.
 			ui.message(_("The clipboard contains a large portion of text. It is %s characters long") % len(text))
 
+	@script(
+		# Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
+		description=_("Marks the current position of the review cursor as the start of text to be selected or copied"),
+		category=SCRCAT_TEXTREVIEW,
+		gesture="kb:NVDA+f9"
+	)
 	def script_review_markStartForCopy(self, gesture):
 		reviewPos = api.getReviewPosition()
 		# attach the marker to obj so that the marker is cleaned up when obj is cleaned up.
@@ -2260,9 +2314,6 @@ class GlobalCommands(ScriptableObject):
 		reviewPos.obj._selectThenCopyRange = None # we may be part way through a select, reset the copy range.
 		# Translators: Indicates start of review cursor text to be copied to clipboard.
 		ui.message(_("Start marked"))
-	# Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
-	script_review_markStartForCopy.__doc__ = _("Marks the current position of the review cursor as the start of text to be selected or copied")
-	script_review_markStartForCopy.category=SCRCAT_TEXTREVIEW
 
 	@script(
 		description=_(
@@ -2271,7 +2322,7 @@ class GlobalCommands(ScriptableObject):
 			"Move the review cursor to the position marked as the start of text to be selected or copied"
 		),
 		category=SCRCAT_TEXTREVIEW,
-		gesture="kb:NVDA+shift+F9",
+		gesture="kb:NVDA+shift+F9"
 	)
 	def script_review_moveToStartMarkedForCopy(self, gesture):
 		pos = api.getReviewPosition()
@@ -2285,6 +2336,12 @@ class GlobalCommands(ScriptableObject):
 		startMarker.expand(textInfos.UNIT_CHARACTER)
 		speech.speakTextInfo(startMarker, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.REASON_CARET)
 
+	@script(
+		# Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
+		description=_("If pressed once, the text from the previously set start marker up to and including the current position of the review cursor is selected. If pressed twice, the text is copied to the clipboard"),
+		category=SCRCAT_TEXTREVIEW,
+		gesture="kb:NVDA+f10"
+	)
 	def script_review_copy(self, gesture):
 		pos = api.getReviewPosition().copy()
 		if not getattr(pos.obj, "_copyStartMarker", None):
@@ -2348,9 +2405,6 @@ class GlobalCommands(ScriptableObject):
 			api.getReviewPosition().obj._selectThenCopyRange = None
 			api.getReviewPosition().obj._copyStartMarker = None
 		return
-	# Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
-	script_review_copy.__doc__ = _("If pressed once, the text from the previously set start marker up to and including the current position of the review cursor is selected. If pressed twice, the text is copied to the clipboard")
-	script_review_copy.category=SCRCAT_TEXTREVIEW
 
 	def script_braille_scrollBack(self, gesture):
 		braille.handler.scrollBack()
