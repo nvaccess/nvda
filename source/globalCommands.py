@@ -262,6 +262,12 @@ class GlobalCommands(ScriptableObject):
 			text=winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, None, None)
 		ui.message(text)
 
+	@script(
+		# Translators: Input help mode message for increase synth setting value command.
+		description=_("Increases the currently active setting in the synth settings ring"),
+		category=SCRCAT_SPEECH,
+		gestures=("kb(desktop):NVDA+control+upArrow", "kb(laptop):NVDA+shift+control+upArrow")
+	)
 	def script_increaseSynthSetting(self,gesture):
 		settingName=globalVars.settingsRing.currentSettingName
 		if not settingName:
@@ -270,10 +276,13 @@ class GlobalCommands(ScriptableObject):
 			return
 		settingValue=globalVars.settingsRing.increase()
 		ui.message("%s %s" % (settingName,settingValue))
-	# Translators: Input help mode message for increase synth setting value command.
-	script_increaseSynthSetting.__doc__=_("Increases the currently active setting in the synth settings ring")
-	script_increaseSynthSetting.category=SCRCAT_SPEECH
 
+	@script(
+		# Translators: Input help mode message for decrease synth setting value command.
+		description=_("Decreases the currently active setting in the synth settings ring"),
+		category=SCRCAT_SPEECH,
+		gestures=("kb(desktop):NVDA+control+downArrow", "kb(laptop):NVDA+control+shift+downArrow")
+	)
 	def script_decreaseSynthSetting(self,gesture):
 		settingName=globalVars.settingsRing.currentSettingName
 		if not settingName:
@@ -281,10 +290,13 @@ class GlobalCommands(ScriptableObject):
 			return
 		settingValue=globalVars.settingsRing.decrease()
 		ui.message("%s %s" % (settingName,settingValue))
-	# Translators: Input help mode message for decrease synth setting value command.
-	script_decreaseSynthSetting.__doc__=_("Decreases the currently active setting in the synth settings ring")
-	script_decreaseSynthSetting.category=SCRCAT_SPEECH
 
+	@script(
+		# Translators: Input help mode message for next synth setting command.
+		description=_("Moves to the next available setting in the synth settings ring"),
+		category=SCRCAT_SPEECH,
+		gestures=("kb(desktop):NVDA+control+rightArrow", "kb(laptop):NVDA+shift+control+rightArrow")
+	)
 	def script_nextSynthSetting(self,gesture):
 		nextSettingName=globalVars.settingsRing.next()
 		if not nextSettingName:
@@ -292,10 +304,13 @@ class GlobalCommands(ScriptableObject):
 			return
 		nextSettingValue=globalVars.settingsRing.currentSettingValue
 		ui.message("%s %s"%(nextSettingName,nextSettingValue))
-	# Translators: Input help mode message for next synth setting command.
-	script_nextSynthSetting.__doc__=_("Moves to the next available setting in the synth settings ring")
-	script_nextSynthSetting.category=SCRCAT_SPEECH
 
+	@script(
+		# Translators: Input help mode message for previous synth setting command.
+		description=_("Moves to the previous available setting in the synth settings ring"),
+		category=SCRCAT_SPEECH,
+		gestures=("kb(desktop):NVDA+control+leftArrow", "kb(laptop):NVDA+shift+control+leftArrow")
+	)
 	def script_previousSynthSetting(self,gesture):
 		previousSettingName=globalVars.settingsRing.previous()
 		if not previousSettingName:
@@ -303,9 +318,6 @@ class GlobalCommands(ScriptableObject):
 			return
 		previousSettingValue=globalVars.settingsRing.currentSettingValue
 		ui.message("%s %s"%(previousSettingName,previousSettingValue))
-	# Translators: Input help mode message for previous synth setting command.
-	script_previousSynthSetting.__doc__=_("Moves to the previous available setting in the synth settings ring")
-	script_previousSynthSetting.category=SCRCAT_SPEECH
 
 	@script(
 		# Translators: Input help mode message for toggle speaked typed characters command.
