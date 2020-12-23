@@ -170,24 +170,36 @@ class GlobalCommands(ScriptableObject):
 		else:
 			speech.spellTextInfo(info,useCharacterDescriptions=scriptCount>1)
 
+	@script(
+		# Translators: Input help mode message for left mouse click command.
+		description=_("Clicks the left mouse button once at the current mouse position"),
+		category=SCRCAT_MOUSE,
+		gestures=("kb:numpadDivide", "kb(laptop):NVDA+[")
+	)
 	def script_leftMouseClick(self,gesture):
 		# Translators: Reported when left mouse button is clicked.
 		ui.message(_("Left click"))
 		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
 		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
-	# Translators: Input help mode message for left mouse click command.
-	script_leftMouseClick.__doc__=_("Clicks the left mouse button once at the current mouse position")
-	script_leftMouseClick.category=SCRCAT_MOUSE
 
+	@script(
+		# Translators: Input help mode message for right mouse click command.
+		description=_("Clicks the right mouse button once at the current mouse position"),
+		category=SCRCAT_MOUSE,
+		gestures=("kb:numpadMultiply", "kb(laptop):NVDA+]")
+	)
 	def script_rightMouseClick(self,gesture):
 		# Translators: Reported when right mouse button is clicked.
 		ui.message(_("Right click"))
 		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTDOWN,0,0)
 		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTUP,0,0)
-	# Translators: Input help mode message for right mouse click command.
-	script_rightMouseClick.__doc__=_("Clicks the right mouse button once at the current mouse position")
-	script_rightMouseClick.category=SCRCAT_MOUSE
 
+	@script(
+		# Translators: Input help mode message for left mouse lock/unlock toggle command.
+		description=_("Locks or unlocks the left mouse button"),
+		category=SCRCAT_MOUSE,
+		gestures=("kb:shift+numpadDivide", "kb(laptop):NVDA+control+[")
+	)
 	def script_toggleLeftMouseButton(self,gesture):
 		if winUser.getKeyState(winUser.VK_LBUTTON)&32768:
 			# Translators: This is presented when the left mouse button lock is released (used for drag and drop).
@@ -197,10 +209,13 @@ class GlobalCommands(ScriptableObject):
 			# Translators: This is presented when the left mouse button is locked down (used for drag and drop).
 			ui.message(_("Left mouse button lock"))
 			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
-	# Translators: Input help mode message for left mouse lock/unlock toggle command.
-	script_toggleLeftMouseButton.__doc__=_("Locks or unlocks the left mouse button")
-	script_toggleLeftMouseButton.category=SCRCAT_MOUSE
 
+	@script(
+		# Translators: Input help mode message for right mouse lock/unlock command.
+		description=_("Locks or unlocks the right mouse button"),
+		category=SCRCAT_MOUSE,
+		gestures=("kb:shift+numpadMultiply", "kb(laptop):NVDA+control+]")
+	)
 	def script_toggleRightMouseButton(self,gesture):
 		if winUser.getKeyState(winUser.VK_RBUTTON)&32768:
 			# Translators: This is presented when the right mouse button lock is released (used for drag and drop).
@@ -210,9 +225,6 @@ class GlobalCommands(ScriptableObject):
 			# Translators: This is presented when the right mouse button is locked down (used for drag and drop).
 			ui.message(_("Right mouse button lock"))
 			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTDOWN,0,0)
-	# Translators: Input help mode message for right mouse lock/unlock command.
-	script_toggleRightMouseButton.__doc__=_("Locks or unlocks the right mouse button")
-	script_toggleRightMouseButton.category=SCRCAT_MOUSE
 
 	@script(
 		# Translators: Input help mode message for report current selection command.
@@ -796,6 +808,12 @@ class GlobalCommands(ScriptableObject):
 	script_cycleSpeechSymbolLevel.__doc__=_("Cycles through speech symbol levels which determine what symbols are spoken")
 	script_cycleSpeechSymbolLevel.category=SCRCAT_SPEECH
 
+	@script(
+		# Translators: Input help mode message for move mouse to navigator object command.
+		description=_("Moves the mouse pointer to the current navigator object"),
+		category=SCRCAT_MOUSE,
+		gestures=("kb:NVDA+numpadDivide", "kb(laptop):NVDA+shift+m")
+	)
 	def script_moveMouseToNavigatorObject(self,gesture):
 		try:
 			p=api.getReviewPosition().pointAtStart
@@ -815,19 +833,19 @@ class GlobalCommands(ScriptableObject):
 			y=top+(height//2)
 		winUser.setCursorPos(x,y)
 		mouseHandler.executeMouseMoveEvent(x,y)
-	# Translators: Input help mode message for move mouse to navigator object command.
-	script_moveMouseToNavigatorObject.__doc__=_("Moves the mouse pointer to the current navigator object")
-	script_moveMouseToNavigatorObject.category=SCRCAT_MOUSE
 
+	@script(
+		# Translators: Input help mode message for move navigator object to mouse command.
+		description=_("Sets the navigator object to the current object under the mouse pointer and speaks it"),
+		category=SCRCAT_MOUSE,
+		gestures=("kb:NVDA+numpadMultiply", "kb(laptop):NVDA+shift+n")
+	)
 	def script_moveNavigatorObjectToMouse(self,gesture):
 		# Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
 		ui.message(_("Move navigator object to mouse"))
 		obj=api.getMouseObject()
 		api.setNavigatorObject(obj)
 		speech.speakObject(obj)
-	# Translators: Input help mode message for move navigator object to mouse command.
-	script_moveNavigatorObjectToMouse.__doc__=_("Sets the navigator object to the current object under the mouse pointer and speaks it")
-	script_moveNavigatorObjectToMouse.category=SCRCAT_MOUSE
 
 	@script(
 		# Translators: Script help message for next review mode command.
@@ -1411,6 +1429,12 @@ class GlobalCommands(ScriptableObject):
 	script_speechMode.__doc__=_("Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally.")
 	script_speechMode.category=SCRCAT_SPEECH
 
+	@script(
+		# Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
+		description=_("Moves the focus to the next closest document that contains the focus"),
+		category=SCRCAT_FOCUS,
+		gesture="kb:NVDA+control+space"
+	)
 	def script_moveToParentTreeInterceptor(self,gesture):
 		obj=api.getFocusObject()
 		parent=obj.parent
@@ -1426,10 +1450,13 @@ class GlobalCommands(ScriptableObject):
 			# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
 			# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
 			core.callLater(50,eventHandler.executeEvent,"gainFocus",parent.treeInterceptor.rootNVDAObject)
-	# Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
-	script_moveToParentTreeInterceptor.__doc__=_("Moves the focus to the next closest document that contains the focus")
-	script_moveToParentTreeInterceptor.category=SCRCAT_FOCUS
 
+	@script(
+		# Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
+		description=_("Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."),
+		category=inputCore.SCRCAT_BROWSEMODE,
+		gesture="kb:NVDA+space"
+	)
 	def script_toggleVirtualBufferPassThrough(self,gesture):
 		focus = api.getFocusObject()
 		vbuf = focus.treeInterceptor
@@ -1469,9 +1496,6 @@ class GlobalCommands(ScriptableObject):
 			# If we're disabling pass-through, re-enable auto-pass-through.
 			vbuf.disableAutoPassThrough = vbuf.passThrough
 		browseMode.reportPassThrough(vbuf)
-	# Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
-	script_toggleVirtualBufferPassThrough.__doc__=_("Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc.")
-	script_toggleVirtualBufferPassThrough.category=inputCore.SCRCAT_BROWSEMODE
 
 	@script(
 		# Translators: Input help mode message for quit NVDA command.
