@@ -1,5 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2020 NV Access Limited, James Teh, Michael Curran, Peter Vágner, Joseph Lee, Reef Turner, Babbage B.V., Leonard de Ruijter, Łukasz Golonka, Accessolutions, Julien Cochuyt  # noqa: E501
+# Copyright (C) 2010-2021 NV Access Limited, James Teh, Michael Curran, Peter Vágner, Joseph Lee,
+# Reef Turner, Babbage B.V., Leonard de Ruijter, Łukasz Golonka, Accessolutions, Julien Cochuyt
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,7 +45,6 @@ import sourceEnv
 sys.path.remove(sourceEnvPath)
 import time
 from glob import glob
-from py2exe.dllfinder import pydll
 import importlib.util
 import winreg
 
@@ -298,11 +298,6 @@ def NVDADistGenerator(target, source, env, for_signature):
 		buildCmd.append("--enable-uiAccess")
 
 	action.append(buildCmd)
-
-	# Python3 has started signing its main python dll.
-	# However, Py2exe currently tries to add a string resource to it, invalidating the signature and possibly currupting the certificate.
-	# Therefore, copy a fresh version  of the dll one more time once py2exe has completed.
-	action.append(Copy(target[0],pydll))
 
 	# #10031: Apps written in Python 3 require Universal CRT to be installed. We cannot assume users have it on their systems.
 	# Therefore , copy required libraries from Windows 10 SDK.
