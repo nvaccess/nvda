@@ -103,7 +103,6 @@ For reference, the following run time dependencies are included in Git submodule
 
 Additionally, the following build time dependencies are included in Git submodules:
 
-* [Py2Exe](https://github.com/albertosottile/py2exe/), version 0.9.3.2 commit b372a8e
 * [Python Windows Extensions](https://sourceforge.net/projects/pywin32/ ), build 224, required by py2exe
 * [txt2tags](https://txt2tags.org/), version 2.5
 * [SCons](https://www.scons.org/), version 4.0.1
@@ -114,8 +113,12 @@ Additionally, the following build time dependencies are included in Git submodul
 * [Boost Optional (stand-alone header)](https://github.com/akrzemi1/Optional), from commit [3922965](https://github.com/akrzemi1/Optional/commit/3922965396fc455c6b1770374b9b4111799588a9)
 
 ### Other Dependencies
+Some dependencies are installed automatically via pip as needed.
+Developers may wish to first configure a Python Virtual Environment to ensure their general install is not affected.
+
+To build binary version of NVDA py2exe version 0.10.1.0 is installed automatically when executing `scons dist`
 To lint using Flake 8 locally using our SCons integration, some dependencies are installed (automatically) via pip.
-Although this [must be run manually](#linting-your-changes), developers may wish to first configure a Python Virtual Environment to ensure their general install is not affected.
+This [must be run manually](#linting-your-changes).
 * Flake8
 * Flake8-tabs
 
