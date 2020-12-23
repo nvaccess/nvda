@@ -2208,24 +2208,30 @@ class GlobalCommands(ScriptableObject):
 			)
 		ui.message(activeProfileMessage)
 
+	@script(
+		# Translators: Input help mode message for save current configuration command.
+		description=_("Saves the current NVDA configuration"),
+		category=SCRCAT_CONFIG,
+		gesture="kb:NVDA+control+c"
+	)
 	def script_saveConfiguration(self,gesture):
 		wx.CallAfter(gui.mainFrame.onSaveConfigurationCommand, None)
-	# Translators: Input help mode message for save current configuration command.
-	script_saveConfiguration.__doc__ = _("Saves the current NVDA configuration")
-	script_saveConfiguration.category=SCRCAT_CONFIG
 
+	@script(
+		description=_(
+			# Translators: Input help mode message for apply last saved or default settings command.
+			"Pressing once reverts the current configuration to the most recently saved state."
+			" Pressing three times resets to factory defaults."
+		),
+		category=SCRCAT_CONFIG,
+		gesture="kb:NVDA+control+r"
+	)
 	def script_revertConfiguration(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
 			gui.mainFrame.onRevertToSavedConfigurationCommand(None)
 		elif scriptCount==2:
 			gui.mainFrame.onRevertToDefaultConfigurationCommand(None)
-	script_revertConfiguration.__doc__ = _(
-		# Translators: Input help mode message for apply last saved or default settings command.
-		"Pressing once reverts the current configuration to the most recently saved state."
-		" Pressing three times resets to factory defaults."
-	)
-	script_revertConfiguration.category=SCRCAT_CONFIG
 
 	def script_activatePythonConsole(self,gesture):
 		if globalVars.appArgs.secure or config.isAppX:
@@ -2748,12 +2754,20 @@ class GlobalCommands(ScriptableObject):
 	script_touch_rightClick.__doc__ = _("Clicks the right mouse button at the current touch position. This is generally used to activate a context menu.") # noqa Flake8/E501
 	script_touch_rightClick.category = SCRCAT_TOUCH
 
+	@script(
+		# Translators: Describes the command to open the Configuration Profiles dialog.
+		description=_("Shows the NVDA Configuration Profiles dialog"),
+		category=SCRCAT_CONFIG_PROFILES,
+		gesture="kb:NVDA+control+p"
+	)
 	def script_activateConfigProfilesDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onConfigProfilesCommand, None)
-	# Translators: Describes the command to open the Configuration Profiles dialog.
-	script_activateConfigProfilesDialog.__doc__ = _("Shows the NVDA Configuration Profiles dialog")
-	script_activateConfigProfilesDialog.category=SCRCAT_CONFIG_PROFILES
 
+	@script(
+		# Translators: Input help mode message for toggle configuration profile triggers command.
+		description=_("Toggles disabling of all configuration profile triggers. Disabling remains in effect until NVDA is restarted"),
+		category=SCRCAT_CONFIG
+	)
 	def script_toggleConfigProfileTriggers(self,gesture):
 		if config.conf.profileTriggersEnabled:
 			config.conf.disableProfileTriggers()
@@ -2768,9 +2782,6 @@ class GlobalCommands(ScriptableObject):
 			# Translators: The message announced when re-enabling all configuration profile triggers.
 			state = _("Configuration profile triggers enabled")
 		ui.message(state)
-	# Translators: Input help mode message for toggle configuration profile triggers command.
-	script_toggleConfigProfileTriggers.__doc__=_("Toggles disabling of all configuration profile triggers. Disabling remains in effect until NVDA is restarted")
-	script_toggleConfigProfileTriggers.category=SCRCAT_CONFIG
 
 	def script_interactWithMath(self, gesture):
 		import mathPres
