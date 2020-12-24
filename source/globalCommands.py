@@ -99,8 +99,10 @@ class GlobalCommands(ScriptableObject):
 	"""
 
 	@script(
-		# Translators: Describes the Cycle audio ducking mode command.
-		description=_("Cycles through audio ducking modes which determine when NVDA lowers the volume of other sounds"),
+		description=_(
+			# Translators: Describes the Cycle audio ducking mode command.
+			"Cycles through audio ducking modes which determine when NVDA lowers the volume of other sounds"
+		),
 		gesture="kb:NVDA+shift+d"
 	)
 	def script_cycleAudioDuckingMode(self,gesture):
@@ -117,8 +119,12 @@ class GlobalCommands(ScriptableObject):
 		ui.message(nextLabel)
 
 	@script(
-		# Translators: Input help mode message for toggle input help command.
-		description=_("Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."),
+		description=_(
+			# Translators: Input help mode message for toggle input help command.
+			"Turns input help on or off. "
+			"When on, any input such as pressing a key on the keyboard "
+			"will tell you what script is associated with that input, if any."
+		),
 		category=SCRCAT_INPUT,
 		gesture="kb:NVDA+1"
 	)
@@ -152,8 +158,12 @@ class GlobalCommands(ScriptableObject):
 	script_toggleCurrentAppSleepMode.allowInSleepMode=True
 
 	@script(
-		# Translators: Input help mode message for report current line command.
-		description=_("Reports the current line under the application cursor. Pressing this key twice will spell the current line. Pressing three times will spell the line using character descriptions."),
+		description=_(
+			# Translators: Input help mode message for report current line command.
+			"Reports the current line under the application cursor. "
+			"Pressing this key twice will spell the current line. "
+			"Pressing three times will spell the line using character descriptions."
+		),
 		category=SCRCAT_SYSTEMCARET,
 		gestures=("kb(desktop):NVDA+upArrow", "kb(laptop):NVDA+l")
 	)
@@ -230,8 +240,11 @@ class GlobalCommands(ScriptableObject):
 			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTDOWN,0,0)
 
 	@script(
-		# Translators: Input help mode message for report current selection command.
-		description=_("Announces the current selection in edit controls and documents. If there is no selection it says so."),
+		description=_(
+			# Translators: Input help mode message for report current selection command.
+			"Announces the current selection in edit controls and documents. "
+			"If there is no selection it says so."
+		),
 		category=SCRCAT_SYSTEMCARET,
 		gestures=("kb(desktop):NVDA+shift+upArrow", "kb(laptop):NVDA+shift+s")
 	)
@@ -925,8 +938,11 @@ class GlobalCommands(ScriptableObject):
 		speech.speakObject(obj)
 
 	@script(
-		# Translators: Script help message for next review mode command.
-		description=_("Switches to the next review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object"),
+		description=_(
+			# Translators: Script help message for next review mode command.
+			"Switches to the next review mode (e.g. object, document or screen) "
+			"and positions the review position at the point of the navigator object"
+		),
 		category=SCRCAT_TEXTREVIEW,
 		gestures=("kb:NVDA+numpad7", "kb(laptop):NVDA+pageUp", "ts(object):2finger_flickUp")
 	)
@@ -943,8 +959,11 @@ class GlobalCommands(ScriptableObject):
 			ui.reviewMessage(_("No next review mode"))
 
 	@script(
-		# Translators: Script help message for previous review mode command.
-		description=_("Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object"),
+		description=_(
+			# Translators: Script help message for previous review mode command.
+			"Switches to the previous review mode (e.g. object, document or screen) "
+			"and positions the review position at the point of the navigator object"
+		),
 		category=SCRCAT_TEXTREVIEW,
 		gestures=("kb:NVDA+numpad1", "kb(laptop):NVDA+pageDown", "ts(object):2finger_flickDown")
 	)
@@ -977,8 +996,12 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
-		# Translators: Input help mode message for report current navigator object command.
-		description=_("Reports the current navigator object. Pressing twice spells this information, and pressing three times Copies name and value of this object to the clipboard"),
+		description=_(
+			# Translators: Input help mode message for report current navigator object command.
+			"Reports the current navigator object. "
+			"Pressing twice spells this information, "
+			"and pressing three times Copies name and value of this object to the clipboard"
+		),
 		category=SCRCAT_OBJECTNAVIGATION,
 		gestures=("kb:NVDA+numpad5", "kb(laptop):NVDA+shift+o")
 	)
@@ -1021,8 +1044,11 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject,reason=controlTypes.REASON_QUERY)
 
 	@script(
-		# Translators: Description for report review cursor location command.
-		description=_("Reports information about the location of the text or object at the review cursor. Pressing twice may provide further detail."),
+		description=_(
+			# Translators: Description for report review cursor location command.
+			"Reports information about the location of the text or object at the review cursor. "
+			"Pressing twice may provide further detail."
+		),
 		category=SCRCAT_OBJECTNAVIGATION,
 		gestures=("kb:NVDA+numpadDelete", "kb(laptop):NVDA+delete")
 	)
@@ -1056,8 +1082,11 @@ class GlobalCommands(ScriptableObject):
 		speech.speakObject(api.getNavigatorObject(), reason=controlTypes.OutputReason.FOCUS)
 
 	@script(
-		# Translators: Input help mode message for move focus to current navigator object command.
-		description=_("Pressed once sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor"),
+		description=_(
+			# Translators: Input help mode message for move focus to current navigator object command.
+			"Pressed once sets the keyboard focus to the navigator object, "
+			"pressed twice sets the system caret to the position of the review cursor"
+		),
 		category=SCRCAT_OBJECTNAVIGATION,
 		gestures=("kb:NVDA+shift+numpadMinus", "kb(laptop):NVDA+shift+backspace")
 	)
@@ -1173,8 +1202,11 @@ class GlobalCommands(ScriptableObject):
 			ui.reviewMessage(_("No objects inside"))
 
 	@script(
-		# Translators: Input help mode message for activate current object command.
-		description=_("Performs the default action on the current navigator object (example: presses it if it is a button)."),
+		description=_(
+			# Translators: Input help mode message for activate current object command.
+			"Performs the default action on the current navigator object "
+			"(example: presses it if it is a button)."
+		),
 		category=SCRCAT_OBJECTNAVIGATION,
 		gestures=("kb:NVDA+numpadEnter", "kb(laptop):NVDA+enter", "ts:double_tap")
 	)
@@ -1242,8 +1274,12 @@ class GlobalCommands(ScriptableObject):
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 
 	@script(
-		# Translators: Input help mode message for read current line under review cursor command.
-		description=_("Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions."),
+		description=_(
+			# Translators: Input help mode message for read current line under review cursor command.
+			"Reports the line of the current navigator object where the review cursor is situated. "
+			"If this key is pressed twice, the current line will be spelled. "
+			"Pressing three times will spell the line using character descriptions."
+		),
 		category=SCRCAT_TEXTREVIEW,
 		gestures=("kb:numpad8", "kb(laptop):NVDA+shift+.")
 	)
@@ -1310,8 +1346,12 @@ class GlobalCommands(ScriptableObject):
 		speech.speakTextInfo(info,reason=controlTypes.REASON_CARET,unit=textInfos.UNIT_WORD)
 
 	@script(
-		# Translators: Input help mode message for report current word under review cursor command.
-		description=_("Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"),
+		description=_(
+			# Translators: Input help mode message for report current word under review cursor command.
+			"Speaks the word of the current navigator object where the review cursor is situated. "
+			"Pressing twice spells the word. "
+			"Pressing three times spells the word using character descriptions"
+		),
 		category=SCRCAT_TEXTREVIEW,
 		gestures=("kb:numpad5", "kb(laptop):NVDA+control+.", "ts(text):hoverUp")
 	)
@@ -1346,8 +1386,11 @@ class GlobalCommands(ScriptableObject):
 		speech.speakTextInfo(info,reason=controlTypes.REASON_CARET,unit=textInfos.UNIT_WORD)
 
 	@script(
-		# Translators: Input help mode message for move review cursor to start of current line command.
-		description=_("Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"),
+		description=_(
+			# Translators: Input help mode message for move review cursor to start of current line command.
+			"Moves the review cursor to the first character of the line "
+			"where it is situated in the current navigator object and speaks it"
+		),
 		category=SCRCAT_TEXTREVIEW,
 		gestures=("kb:shift+numpad1", "kb(laptop):NVDA+home")
 	)
@@ -1360,8 +1403,10 @@ class GlobalCommands(ScriptableObject):
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 
 	@script(
-		# Translators: Input help mode message for move review cursor to previous character command.
-		description=_("Moves the review cursor to the previous character of the current navigator object and speaks it"),
+		description=_(
+			# Translators: Input help mode message for move review cursor to previous character command.
+			"Moves the review cursor to the previous character of the current navigator object and speaks it"
+		),
 		category=SCRCAT_TEXTREVIEW,
 		gestures=("kb:numpad1", "kb(laptop):NVDA+leftArrow", "ts(text):flickLeft")
 	)
@@ -1384,8 +1429,12 @@ class GlobalCommands(ScriptableObject):
 			speech.speakTextInfo(charInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 
 	@script(
-		# Translators: Input help mode message for report current character under review cursor command.
-		description=_("Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"),
+		description=_(
+			# Translators: Input help mode message for report current character under review cursor command.
+			"Reports the character of the current navigator object where the review cursor is situated. "
+			"Pressing twice reports a description or example of that character. "
+			"Pressing three times reports the numeric value of the character in decimal and hexadecimal"
+		),
 		category=SCRCAT_TEXTREVIEW,
 		gestures=("kb:numpad2", "kb(laptop):NVDA+.")
 	)
@@ -1412,8 +1461,10 @@ class GlobalCommands(ScriptableObject):
 				speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 
 	@script(
-		# Translators: Input help mode message for move review cursor to next character command.
-		description=_("Moves the review cursor to the next character of the current navigator object and speaks it"),
+		description=_(
+			# Translators: Input help mode message for move review cursor to next character command.
+			"Moves the review cursor to the next character of the current navigator object and speaks it"
+		),
 		category=SCRCAT_TEXTREVIEW,
 		gestures=("kb:numpad3", "kb(laptop):NVDA+rightArrow", "ts(text):flickRight")
 	)
@@ -1436,8 +1487,11 @@ class GlobalCommands(ScriptableObject):
 			speech.speakTextInfo(charInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 
 	@script(
-		# Translators: Input help mode message for move review cursor to end of current line command.
-		description=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"),
+		description=_(
+			# Translators: Input help mode message for move review cursor to end of current line command.
+			"Moves the review cursor to the last character of the line "
+			"where it is situated in the current navigator object and speaks it"
+		),
 		category=SCRCAT_TEXTREVIEW,
 		gestures=("kb:shift+numpad3", "kb(laptop):NVDA+end")
 	)
@@ -1487,8 +1541,13 @@ class GlobalCommands(ScriptableObject):
 			ui.browseableMessage(message, title)
 
 	@script(
-		# Translators: Input help mode message for toggle speech mode command.
-		description=_("Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."),
+		description=_(
+			# Translators: Input help mode message for toggle speech mode command.
+			"Toggles between the speech modes of off, beep and talk. "
+			"When set to off NVDA will not speak anything. "
+			"If beeps then NVDA will simply beep each time it its supposed to speak something. "
+			"If talk then NVDA wil just speak normally."
+		),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+s"
 	)
@@ -1510,8 +1569,11 @@ class GlobalCommands(ScriptableObject):
 		speech.speechMode=newMode
 
 	@script(
-		# Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
-		description=_("Moves the focus to the next closest document that contains the focus"),
+		description=_(
+			# Translators: Input help mode message for move to next document with focus command,
+			# mostly used in web browsing to move from embedded object to the webpage document.
+			"Moves the focus to the next closest document that contains the focus"
+		),
 		category=SCRCAT_FOCUS,
 		gesture="kb:NVDA+control+space"
 	)
@@ -1532,8 +1594,14 @@ class GlobalCommands(ScriptableObject):
 			core.callLater(50,eventHandler.executeEvent,"gainFocus",parent.treeInterceptor.rootNVDAObject)
 
 	@script(
-		# Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
-		description=_("Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."),
+		description=_(
+			# Translators: Input help mode message for toggle focus and browse mode command
+			# in web browsing and other situations.
+			"Toggles between browse mode and focus mode. "
+			"When in focus mode, keys will pass straight through to the application, "
+			"allowing you to interact directly with a control. "
+			"When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
+		),
 		category=inputCore.SCRCAT_BROWSEMODE,
 		gesture="kb:NVDA+space"
 	)
@@ -1799,8 +1867,12 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("No focus"))
 
 	@script(
-		# Translators: Input help mode message for report status line text command.
-		description=_("Reads the current application status bar and moves the navigator to it. If pressed twice, spells the information. If pressed three times, copies the status bar to the clipboard"),
+		description=_(
+			# Translators: Input help mode message for report status line text command.
+			"Reads the current application status bar and moves the navigator to it. "
+			"If pressed twice, spells the information. "
+			"If pressed three times, copies the status bar to the clipboard"
+		),
 		category=SCRCAT_FOCUS,
 		gestures=("kb(desktop):NVDA+end", "kb(laptop):NVDA+shift+end")
 	)
@@ -1888,8 +1960,12 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Mouse text unit resolution %s")%labels[newIndex])
 
 	@script(
-		# Translators: Input help mode message for report title bar command.
-		description=_("Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard"),
+		description=_(
+			# Translators: Input help mode message for report title bar command.
+			"Reports the title of the current application or foreground window. "
+			"If pressed twice, spells the title. "
+			"If pressed three times, copies the title to the clipboard"
+		),
 		category=SCRCAT_FOCUS,
 		gesture="kb:NVDA+t"
 	)
@@ -1941,8 +2017,13 @@ class GlobalCommands(ScriptableObject):
 		wx.lib.inspection.InspectionTool().Show()
 
 	@script(
-		# Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
-		description=_("Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."),
+		description=_(
+			# Translators: Input help mode message for developer info for current navigator object command,
+			# used by developers to examine technical info on navigator object.
+			# This command also serves as a shortcut to open NVDA log viewer.
+			"Logs information about the current navigator object which is useful to developers "
+			"and activates the log viewer so the information can be examined."
+		),
 		category=SCRCAT_TOOLS,
 		gesture="kb:NVDA+f1"
 	)
@@ -2001,8 +2082,10 @@ class GlobalCommands(ScriptableObject):
 		systemUtils.openUserConfigurationDirectory()
 
 	@script(
-		# Translators: Input help mode message for toggle progress bar output command.
-		description=_("Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"),
+		description=_(
+			# Translators: Input help mode message for toggle progress bar output command.
+			"Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
+		),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+u"
 	)
@@ -2027,8 +2110,11 @@ class GlobalCommands(ScriptableObject):
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]=outputMode
 
 	@script(
-		# Translators: Input help mode message for toggle dynamic content changes command.
-		description=_("Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"),
+		description=_(
+			# Translators: Input help mode message for toggle dynamic content changes command.
+			"Toggles on and off the reporting of dynamic content changes, "
+			"such as new text in dos console windows"
+		),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+5"
 	)
@@ -2123,8 +2209,11 @@ class GlobalCommands(ScriptableObject):
 		ui.message(text)
 
 	@script(
-		# Translators: Input help mode message for pass next key through command.
-		description=_("The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."),
+		description=_(
+			# Translators: Input help mode message for pass next key through command.
+			"The next key that is pressed will not be handled at all by NVDA, "
+			"it will be passed directly through to Windows."
+		),
 		category=SCRCAT_INPUT,
 		gesture="kb:NVDA+f2"
 	)
@@ -2134,8 +2223,10 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Pass next key through"))
 
 	@script(
-		# Translators: Input help mode message for report current program name and app module name command.
-		description=_("Speaks the filename of the active application along with the name of the currently loaded appModule"),
+		description=_(
+			# Translators: Input help mode message for report current program name and app module name command.
+			"Speaks the filename of the active application along with the name of the currently loaded appModule"
+		),
 		category=SCRCAT_TOOLS,
 		gesture="kb:NVDA+control+f1"
 	)
@@ -2368,8 +2459,11 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onAddonsManagerCommand, None)
 
 	@script(
-		# Translators: Input help mode message for toggle speech viewer command.
-		description=_("Toggles the NVDA Speech viewer, a floating window that allows you to view all the text that NVDA is currently speaking"),
+		description=_(
+			# Translators: Input help mode message for toggle speech viewer command.
+			"Toggles the NVDA Speech viewer, "
+			"a floating window that allows you to view all the text that NVDA is currently speaking"
+		),
 		category=SCRCAT_TOOLS
 	)
 	def script_toggleSpeechViewer(self,gesture):
@@ -2386,7 +2480,8 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
-		# Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
+		# Translators: Input help mode message for toggle braille tether to command
+		# (tethered means connected to or follows).
 		description=_("Toggle tethering of braille between the focus and the review position"),
 		category=SCRCAT_BRAILLE,
 		gesture="kb:NVDA+control+t"
@@ -2502,8 +2597,11 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("The clipboard contains a large portion of text. It is %s characters long") % len(text))
 
 	@script(
-		# Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
-		description=_("Marks the current position of the review cursor as the start of text to be selected or copied"),
+		description=_(
+			# Translators: Input help mode message for mark review cursor position for a select or copy command
+			# (that is, marks the current review cursor position as the starting point for text to be selected).
+			"Marks the current position of the review cursor as the start of text to be selected or copied"
+		),
 		category=SCRCAT_TEXTREVIEW,
 		gesture="kb:NVDA+f9"
 	)
@@ -2537,8 +2635,12 @@ class GlobalCommands(ScriptableObject):
 		speech.speakTextInfo(startMarker, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.REASON_CARET)
 
 	@script(
-		# Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
-		description=_("If pressed once, the text from the previously set start marker up to and including the current position of the review cursor is selected. If pressed twice, the text is copied to the clipboard"),
+		description=_(
+			# Translators: Input help mode message for the select then copy command.
+			# The select then copy command first selects the review cursor text, then copies it to the clipboard.
+			"If pressed once, the text from the previously set start marker up to and including the current "
+			"position of the review cursor is selected. If pressed twice, the text is copied to the clipboard"
+		),
 		category=SCRCAT_TEXTREVIEW,
 		gesture="kb:NVDA+f10"
 	)
@@ -2767,8 +2869,10 @@ class GlobalCommands(ScriptableObject):
 		brailleInput.handler.toggleModifier("NVDA")
 
 	@script(
-		# Translators: Input help mode message for reload plugins command.
-		description=_("Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"),
+		description=_(
+			# Translators: Input help mode message for reload plugins command.
+			"Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
+		),
 		category=SCRCAT_TOOLS,
 		gesture="kb:NVDA+control+f3"
 	)
@@ -2879,8 +2983,11 @@ class GlobalCommands(ScriptableObject):
 		touchHandler.handler.screenExplorer.moveTo(gesture.x,gesture.y,new=True)
 
 	@script(
-		# Translators: Input help mode message for a touchscreen gesture.
-		description=_("Reports the new object or content under your finger if different to where your finger was last"),
+		description=_(
+			# Translators: Input help mode message for a touchscreen gesture.
+			"Reports the new object or content under your finger "
+			"if different to where your finger was last"
+		),
 		category=SCRCAT_TOUCH,
 		gesture="ts:hover"
 	)
@@ -2902,8 +3009,11 @@ class GlobalCommands(ScriptableObject):
 				obj.doAction()
 
 	@script(
-		# Translators: Input help mode message for touch right click command.
-		description=_("Clicks the right mouse button at the current touch position. This is generally used to activate a context menu."),
+		description=_(
+			# Translators: Input help mode message for touch right click command.
+			"Clicks the right mouse button at the current touch position. "
+			"This is generally used to activate a context menu."
+		),
 		category=SCRCAT_TOUCH,
 		gesture="ts:tapAndHold"
 	)
@@ -2945,8 +3055,11 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onConfigProfilesCommand, None)
 
 	@script(
-		# Translators: Input help mode message for toggle configuration profile triggers command.
-		description=_("Toggles disabling of all configuration profile triggers. Disabling remains in effect until NVDA is restarted"),
+		description=_(
+			# Translators: Input help mode message for toggle configuration profile triggers command.
+			"Toggles disabling of all configuration profile triggers. "
+			"Disabling remains in effect until NVDA is restarted"
+		),
 		category=SCRCAT_CONFIG
 	)
 	def script_toggleConfigProfileTriggers(self,gesture):
