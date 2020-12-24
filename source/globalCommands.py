@@ -2606,26 +2606,37 @@ class GlobalCommands(ScriptableObject):
 			api.getReviewPosition().obj._copyStartMarker = None
 		return
 
+	@script(
+		# Translators: Input help mode message for a braille command.
+		description=_("Scrolls the braille display back"),
+		bypassInputHelp=True,
+		category=SCRCAT_BRAILLE
+	)
 	def script_braille_scrollBack(self, gesture):
 		braille.handler.scrollBack()
-	# Translators: Input help mode message for a braille command.
-	script_braille_scrollBack.__doc__ = _("Scrolls the braille display back")
-	script_braille_scrollBack.bypassInputHelp = True
-	script_braille_scrollBack.category=SCRCAT_BRAILLE
 
+	@script(
+		# Translators: Input help mode message for a braille command.
+		description=_("Scrolls the braille display forward"),
+		bypassInputHelp=True,
+		category=SCRCAT_BRAILLE
+	)
 	def script_braille_scrollForward(self, gesture):
 		braille.handler.scrollForward()
-	# Translators: Input help mode message for a braille command.
-	script_braille_scrollForward.__doc__ = _("Scrolls the braille display forward")
-	script_braille_scrollForward.bypassInputHelp = True
-	script_braille_scrollForward.category=SCRCAT_BRAILLE
 
+	@script(
+		# Translators: Input help mode message for a braille command.
+		description=_("Routes the cursor to or activates the object under this braille cell"),
+		category=SCRCAT_BRAILLE
+	)
 	def script_braille_routeTo(self, gesture):
 		braille.handler.routeTo(gesture.routingIndex)
-	# Translators: Input help mode message for a braille command.
-	script_braille_routeTo.__doc__ = _("Routes the cursor to or activates the object under this braille cell")
-	script_braille_routeTo.category=SCRCAT_BRAILLE
 
+	@script(
+		# Translators: Input help mode message for Braille report formatting command.
+		description=_("Reports formatting info for the text under this braille cell"),
+		category=SCRCAT_BRAILLE
+	)
 	def script_braille_reportFormatting(self, gesture):
 		info = braille.handler.getTextInfoForWindowPos(gesture.routingIndex)
 		if info is None:
@@ -2633,30 +2644,39 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("No formatting information"))
 			return
 		self._reportFormattingHelper(info, False)
-	# Translators: Input help mode message for Braille report formatting command.
-	script_braille_reportFormatting.__doc__ = _("Reports formatting info for the text under this braille cell")
-	script_braille_reportFormatting.category=SCRCAT_BRAILLE
 
+	@script(
+		# Translators: Input help mode message for a braille command.
+		description=_("Moves the braille display to the previous line"),
+		category=SCRCAT_BRAILLE
+	)
 	def script_braille_previousLine(self, gesture):
 		if braille.handler.buffer.regions: 
 			braille.handler.buffer.regions[-1].previousLine(start=True)
-	# Translators: Input help mode message for a braille command.
-	script_braille_previousLine.__doc__ = _("Moves the braille display to the previous line")
-	script_braille_previousLine.category=SCRCAT_BRAILLE
 
+	@script(
+		# Translators: Input help mode message for a braille command.
+		description=_("Moves the braille display to the next line"),
+		category=SCRCAT_BRAILLE
+	)
 	def script_braille_nextLine(self, gesture):
 		if braille.handler.buffer.regions: 
 			braille.handler.buffer.regions[-1].nextLine()
-	# Translators: Input help mode message for a braille command.
-	script_braille_nextLine.__doc__ = _("Moves the braille display to the next line")
-	script_braille_nextLine.category=SCRCAT_BRAILLE
 
+	@script(
+		# Translators: Input help mode message for a braille command.
+		description=_("Inputs braille dots via the braille keyboard"),
+		category=SCRCAT_BRAILLE,
+		gesture="bk:dots"
+	)
 	def script_braille_dots(self, gesture):
 		brailleInput.handler.input(gesture.dots)
-	# Translators: Input help mode message for a braille command.
-	script_braille_dots.__doc__= _("Inputs braille dots via the braille keyboard")
-	script_braille_dots.category=SCRCAT_BRAILLE
 
+	@script(
+		# Translators: Input help mode message for a braille command.
+		description=_("Moves the braille display to the current focus"),
+		category=SCRCAT_BRAILLE
+	)
 	def script_braille_toFocus(self, gesture):
 		braille.handler.setTether(braille.handler.TETHER_FOCUS, auto=True)
 		if braille.handler.getTether() == braille.handler.TETHER_REVIEW:
@@ -2673,27 +2693,33 @@ class GlobalCommands(ScriptableObject):
 				braille.handler.mainBuffer.updateDisplay()
 			else:
 				braille.handler.handleGainFocus(obj,shouldAutoTether=False)
-	# Translators: Input help mode message for a braille command.
-	script_braille_toFocus.__doc__= _("Moves the braille display to the current focus")
-	script_braille_toFocus.category=SCRCAT_BRAILLE
 
+	@script(
+		# Translators: Input help mode message for a braille command.
+		description=_("Erases the last entered braille cell or character"),
+		category=SCRCAT_BRAILLE,
+		gesture="bk:dot7"
+	)
 	def script_braille_eraseLastCell(self, gesture):
 		brailleInput.handler.eraseLastCell()
-	# Translators: Input help mode message for a braille command.
-	script_braille_eraseLastCell.__doc__= _("Erases the last entered braille cell or character")
-	script_braille_eraseLastCell.category=SCRCAT_BRAILLE
 
+	@script(
+		# Translators: Input help mode message for a braille command.
+		description=_("Translates any braille input and presses the enter key"),
+		category=SCRCAT_BRAILLE,
+		gesture="bk:dot8"
+	)
 	def script_braille_enter(self, gesture):
 		brailleInput.handler.enter()
-	# Translators: Input help mode message for a braille command.
-	script_braille_enter.__doc__= _("Translates any braille input and presses the enter key")
-	script_braille_enter.category=SCRCAT_BRAILLE
 
+	@script(
+		# Translators: Input help mode message for a braille command.
+		description=_("Translates any braille input"),
+		category=SCRCAT_BRAILLE,
+		gesture="bk:dot7+dot8"
+	)
 	def script_braille_translate(self, gesture):
 		brailleInput.handler.translate()
-	# Translators: Input help mode message for a braille command.
-	script_braille_translate.__doc__= _("Translates any braille input")
-	script_braille_translate.category=SCRCAT_BRAILLE
 
 	def script_braille_toggleShift(self, gesture):
 		brailleInput.handler.toggleModifier("shift")
