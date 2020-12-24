@@ -1920,30 +1920,38 @@ class GlobalCommands(ScriptableObject):
 		if obj:
 			sayAllHandler.readObjects(obj)
 
+	@script(
+		gesture="kb(desktop):NVDA+control+f2"
+	)
 	def script_test_navigatorDisplayModelText(self,gesture):
 		obj=api.getNavigatorObject()
 		text=obj.displayText
 		speech.speakMessage(text)
 		log.info(text)
 
+	@script(
+		description=_(
+			# Translators: GUI development tool, to get information about the components used in the NVDA GUI
+			"Opens the WX GUI inspection tool. Used to get more information about the state of GUI components."
+		),
+		category=SCRCAT_TOOLS
+	)
 	def script_startWxInspectionTool(self, gesture):
 		import wx.lib.inspection
 		wx.lib.inspection.InspectionTool().Show()
-	script_startWxInspectionTool.__doc__ = _(
-		# Translators: GUI development tool, to get information about the components used in the NVDA GUI
-		"Opens the WX GUI inspection tool. Used to get more information about the state of GUI components."
-	)
-	script_startWxInspectionTool.category = SCRCAT_TOOLS
 
+	@script(
+		# Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
+		description=_("Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."),
+		category=SCRCAT_TOOLS,
+		gesture="kb:NVDA+f1"
+	)
 	def script_navigatorObject_devInfo(self,gesture):
 		obj=api.getNavigatorObject()
 		if hasattr(obj, "devInfo"):
 			log.info("Developer info for navigator object:\n%s" % "\n".join(obj.devInfo), activateLogViewer=True)
 		else:
 			log.info("No developer info for navigator object", activateLogViewer=True)
-	# Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
-	script_navigatorObject_devInfo.__doc__ = _("Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined.")
-	script_navigatorObject_devInfo.category=SCRCAT_TOOLS
 
 	@script(
 		description=_(
@@ -2125,6 +2133,12 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
 		ui.message(_("Pass next key through"))
 
+	@script(
+		# Translators: Input help mode message for report current program name and app module name command.
+		description=_("Speaks the filename of the active application along with the name of the currently loaded appModule"),
+		category=SCRCAT_TOOLS,
+		gesture="kb:NVDA+control+f1"
+	)
 	def script_reportAppModuleInfo(self,gesture):
 		focus=api.getFocusObject()
 		message = ''
@@ -2139,9 +2153,6 @@ class GlobalCommands(ScriptableObject):
 		# For example, the complete message for Windows explorer is: "explorer module is loaded. Explorer.exe is currenty running."
 		message +=_(" %s is currently running.") % appName
 		ui.message(message)
-	# Translators: Input help mode message for report current program name and app module name command.
-	script_reportAppModuleInfo.__doc__ = _("Speaks the filename of the active application along with the name of the currently loaded appModule")
-	script_reportAppModuleInfo.category=SCRCAT_TOOLS
 
 	@script(
 		# Translators: Input help mode message for go to general settings command.
@@ -2333,6 +2344,12 @@ class GlobalCommands(ScriptableObject):
 		elif scriptCount==2:
 			gui.mainFrame.onRevertToDefaultConfigurationCommand(None)
 
+	@script(
+		# Translators: Input help mode message for activate python console command.
+		description=_("Activates the NVDA Python Console, primarily useful for development"),
+		category=SCRCAT_TOOLS,
+		gesture="kb:NVDA+control+z"
+	)
 	def script_activatePythonConsole(self,gesture):
 		if globalVars.appArgs.secure or config.isAppX:
 			return
@@ -2341,16 +2358,20 @@ class GlobalCommands(ScriptableObject):
 			pythonConsole.initialize()
 		pythonConsole.consoleUI.console.updateNamespaceSnapshotVars()
 		pythonConsole.activate()
-	# Translators: Input help mode message for activate python console command.
-	script_activatePythonConsole.__doc__ = _("Activates the NVDA Python Console, primarily useful for development")
-	script_activatePythonConsole.category=SCRCAT_TOOLS
 
+	@script(
+		# Translators: Input help mode message for activate manage add-ons command.
+		description=_("Activates the NVDA Add-ons Manager to install and uninstall add-on packages for NVDA"),
+		category=SCRCAT_TOOLS
+	)
 	def script_activateAddonsManager(self,gesture):
 		wx.CallAfter(gui.mainFrame.onAddonsManagerCommand, None)
-		# Translators: Input help mode message for activate manage add-ons command.
-	script_activateAddonsManager.__doc__ = _("Activates the NVDA Add-ons Manager to install and uninstall add-on packages for NVDA")
-	script_activateAddonsManager.category=SCRCAT_TOOLS
 
+	@script(
+		# Translators: Input help mode message for toggle speech viewer command.
+		description=_("Toggles the NVDA Speech viewer, a floating window that allows you to view all the text that NVDA is currently speaking"),
+		category=SCRCAT_TOOLS
+	)
 	def script_toggleSpeechViewer(self,gesture):
 		if gui.speechViewer.isActive:
 			# Translators: The message announced when disabling speech viewer.
@@ -2363,9 +2384,6 @@ class GlobalCommands(ScriptableObject):
 			gui.speechViewer.activate()
 			gui.mainFrame.sysTrayIcon.menu_tools_toggleSpeechViewer.Check(True)
 		ui.message(state)
-		# Translators: Input help mode message for toggle speech viewer command.
-	script_toggleSpeechViewer.__doc__ = _("Toggles the NVDA Speech viewer, a floating window that allows you to view all the text that NVDA is currently speaking")
-	script_toggleSpeechViewer.category=SCRCAT_TOOLS
 
 	@script(
 		# Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
@@ -2712,6 +2730,12 @@ class GlobalCommands(ScriptableObject):
 	script_braille_toggleNVDAKey.category=inputCore.SCRCAT_KBEMU
 	script_braille_toggleNVDAKey.bypassInputHelp = True
 
+	@script(
+		# Translators: Input help mode message for reload plugins command.
+		description=_("Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"),
+		category=SCRCAT_TOOLS,
+		gesture="kb:NVDA+control+f3"
+	)
 	def script_reloadPlugins(self, gesture):
 		import globalPluginHandler
 		appModuleHandler.reloadAppModules()
@@ -2719,9 +2743,6 @@ class GlobalCommands(ScriptableObject):
 		NVDAObject.clearDynamicClassCache()
 		# Translators: Presented when plugins (app modules and global plugins) are reloaded.
 		ui.message(_("Plugins reloaded"))
-	# Translators: Input help mode message for reload plugins command.
-	script_reloadPlugins.__doc__=_("Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers")
-	script_reloadPlugins.category=SCRCAT_TOOLS
 
 	@script(
 		# Translators: Input help mode message for a touchscreen gesture.
@@ -2892,6 +2913,11 @@ class GlobalCommands(ScriptableObject):
 			state = _("Configuration profile triggers enabled")
 		ui.message(state)
 
+	@script(
+		# Translators: Describes a command.
+		description=_("Begins interaction with math content"),
+		gesture="kb:NVDA+alt+m"
+	)
 	def script_interactWithMath(self, gesture):
 		import mathPres
 		mathMl = mathPres.getMathMlFromTextInfo(api.getReviewPosition())
@@ -2908,9 +2934,12 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("Not math"))
 			return
 		mathPres.interactWithMathMl(mathMl)
-	# Translators: Describes a command.
-	script_interactWithMath.__doc__ = _("Begins interaction with math content")
 
+	@script(
+		# Translators: Describes a command.
+		description=_("Recognizes the content of the current navigator object with Windows 10 OCR"),
+		gesture="kb:NVDA+r"
+	)
 	def script_recognizeWithUwpOcr(self, gesture):
 		if not winVersion.isUwpOcrAvailable():
 			# Translators: Reported when Windows 10 OCR is not available.
@@ -2919,8 +2948,6 @@ class GlobalCommands(ScriptableObject):
 		from contentRecog import uwpOcr, recogUi
 		recog = uwpOcr.UwpOcr()
 		recogUi.recognizeNavigatorObject(recog)
-	# Translators: Describes a command.
-	script_recognizeWithUwpOcr.__doc__ = _("Recognizes the content of the current navigator object with Windows 10 OCR")
 
 	_tempEnableScreenCurtain = True
 	_waitingOnScreenCurtainWarningDialog: Optional[wx.Dialog] = None
