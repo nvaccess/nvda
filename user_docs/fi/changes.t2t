@@ -4,6 +4,12 @@
 %!includeconf: ../changes.t2tconf
 
 = 2020.4 =
+Tämä versio sisältää uusia kiinalaisia syöttömenetelmiä ja päivitetyn Liblouis-pistekirjoituskääntäjän sekä elementtilistan.
+Tilannekohtainen ohje on nyt käytettävissä painettaessa F1 NVDA:n valintaikkunoissa.
+Parannuksia symboleiden lausumissääntöihin, puhesanastoihin, pistekirjoitusilmoituksiin ja pikalukuun.
+Bugikorjauksia ja parannuksia Sähköposti-sovellukseen, Outlookiin, Teamsiin, Visual Studioon, Azure Data Studioon sekä Foobar2000:een.
+Verkkosivujen käyttöön liittyen on parannuksia Google Docsiin sekä parempi tuki ARIAlle.
+Lisäksi monia muita tärkeitä bugikorjauksia ja parannuksia.
 
 == Uudet ominaisuudet ==
 - F1:n painaminen NVDA:n valintaikkunoissa avaa nyt käyttöoppaan asianmukaisimman osion kohdalta. (#7757)
@@ -67,6 +73,7 @@
 - Visual Studion IntelliSense-työkaluvihjeet, jotka tarjoavat lisätietoja valittuna olevasta IntelliSense-kohteesta, Ilmoitetaan nyt vain kerran. (#11611)
 - NVDA ei puhu laskutoimitusten edistymistä Windows 10:n Laskimessa, jos kirjoitettujen merkkien puhuminen ei ole käytössä. (#9428)
 - NVDA ei enää kaadu käytettäessä englanti (Yhdysvallat), taso 2 -pistetaulukkoa Laajenna kohdistimen kohdalla oleva sana -asetuksen ollessa käytössä näytettäessä tiettyä sisältöä, kuten URL:ää pistekirjoituksella. (#11754)
+- Kohdistetun Excel-solun muotoilutietojen ilmoittaminen on taas mahdollista NVDA+F-näppäinkomentoa käyttäen. (#11914)
 
 
 == Muutokset kehittäjille ==
