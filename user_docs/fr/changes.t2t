@@ -4,6 +4,12 @@ Quoi de Neuf dans NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2020.4 =
+Cette version inclut le support de nouvelles méthodes d'entrée chinoises, une mise à jour de Liblouis, et la liste d'éléments (NVDA+F7) fonctionne maintenant en mode formulaire.
+Une aide contextuelle est maintenant disponible lors de l'appui sur F1 dans les boîtes de dialogue NVDA.
+Améliorations pour les règles de prononciation, les dictionaires de parole, les messages Braille et la lecture continue.
+Correctifs et améliorations pour Courrier, Outlook, Teams, Visual Studio, Azure Data Studio et Foobar2000.
+Sur le Web, améliorations pour Google Docs, et meilleur support d'ARIA.
+Plus beaucoup d'autres correctifs et améliorations.
 
 == Nouvelles fonctionnalités ==
 - Appuyer sur F1 à l'intérieur d'un dialogue NVDA ouvrira maintenant le guide utilisateur à la section la plus appropriée. (#7757)
@@ -67,6 +73,7 @@ Quoi de Neuf dans NVDA
 - Dans Visual Studio, les infos bulles IntelliSense, donnant des informations sur l'élément IntelliSense actuellement sélectionné sont maintenant à nouveau correctement annoncées. (#11611)
 - Dans la calculatrice de Windows 10, NVDA n'annoncera plus la progression du calcul si l'annonce des caractères saisis est désactivée. (#9428)
 - NVDA ne plante plus lors de l'utilisation de la table Anglais (États-Unis) abrégé, option "Afficher le mot sous le curseur en braille informatique" activée, lorsqu'un contenu telle qu'une URL est affiché. (#11754)
+- Il est à nouveau possible d'annoncer le formatage pour la cellule sélectionnée dans Excel en utilisant NVDA+F. (#11914)
 
 
 == Changements pour les développeurs ==
