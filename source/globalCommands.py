@@ -2821,7 +2821,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Describes a command.
 		description=_("Toggles the support of touch interaction"),
 		category=SCRCAT_TOUCH,
-		gesture="kb:NVDA+control+alt+t",
+		gesture="kb:NVDA+control+alt+t"
 	)
 	def script_toggleTouchSupport(self, gesture):
 		enabled = not bool(config.conf["touch"]["enabled"])
@@ -2840,6 +2840,12 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Presented when support of touch interaction has been disabled
 			ui.message(_("Touch interaction disabled"))
 
+	@script(
+		# Translators: Input help mode message for a touchscreen gesture.
+		description=_("Cycles between available touch modes"),
+		category=SCRCAT_TOUCH,
+		gesture="ts:3finger_tap"
+	)
 	def script_touch_changeMode(self,gesture):
 		mode=touchHandler.handler._curTouchMode
 		index=touchHandler.availableTouchModes.index(mode)
@@ -2852,33 +2858,45 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 			newModeLabel=_("%s mode")%newMode
 		ui.message(newModeLabel)
-	# Translators: Input help mode message for a touchscreen gesture.
-	script_touch_changeMode.__doc__=_("Cycles between available touch modes")
-	script_touch_changeMode.category=SCRCAT_TOUCH
 
-
+	@script(
+		# Translators: Input help mode message for a touchscreen gesture.
+		description=_("Reports the object and content directly under your finger"),
+		category=SCRCAT_TOUCH,
+		gestures=("ts:tap", "ts:hoverDown")
+	)
 	def script_touch_newExplore(self,gesture):
 		touchHandler.handler.screenExplorer.moveTo(gesture.x,gesture.y,new=True)
-	# Translators: Input help mode message for a touchscreen gesture.
-	script_touch_newExplore.__doc__=_("Reports the object and content directly under your finger")
-	script_touch_newExplore.category=SCRCAT_TOUCH
 
+	@script(
+		# Translators: Input help mode message for a touchscreen gesture.
+		description=_("Reports the new object or content under your finger if different to where your finger was last"),
+		category=SCRCAT_TOUCH,
+		gesture="ts:hover"
+	)
 	def script_touch_explore(self,gesture):
 		touchHandler.handler.screenExplorer.moveTo(gesture.x,gesture.y)
-	# Translators: Input help mode message for a touchscreen gesture.
-	script_touch_explore.__doc__=_("Reports the new object or content under your finger if different to where your finger was last")
-	script_touch_explore.category=SCRCAT_TOUCH
 
+	@script(
+		category=SCRCAT_TOUCH,
+		gesture="ts:hoverUp"
+	)
 	def script_touch_hoverUp(self,gesture):
 		#Specifically for touch typing with onscreen keyboard keys
-		# #7309: by default, one mustdouble tap the touch key. To restore old behavior, go to Touch Interaction dialog and change touch typing option.
+		# #7309: by default, one must double-tap the touch key.
+		# To restore old behavior, go to Touch Interaction dialog and change touch typing option.
 		if config.conf["touch"]["touchTyping"]:
 			obj=api.getNavigatorObject()
 			import NVDAObjects.UIA
 			if isinstance(obj,NVDAObjects.UIA.UIA) and obj.UIAElement.cachedClassName=="CRootKey":
 				obj.doAction()
-	script_touch_hoverUp.category=SCRCAT_TOUCH
 
+	@script(
+		# Translators: Input help mode message for touch right click command.
+		description=_("Clicks the right mouse button at the current touch position. This is generally used to activate a context menu."),
+		category=SCRCAT_TOUCH,
+		gesture="ts:tapAndHold"
+	)
 	def script_touch_rightClick(self, gesture):
 		obj = api.getNavigatorObject()
 		# Ignore invisible or offscreen objects as they cannot even be navigated with touch gestures.
@@ -2906,9 +2924,6 @@ class GlobalCommands(ScriptableObject):
 			y = top + (height // 2)
 		winUser.setCursorPos(x, y)
 		self.script_rightMouseClick(gesture)
-	# Translators: Input help mode message for touch right click command.
-	script_touch_rightClick.__doc__ = _("Clicks the right mouse button at the current touch position. This is generally used to activate a context menu.") # noqa Flake8/E501
-	script_touch_rightClick.category = SCRCAT_TOUCH
 
 	@script(
 		# Translators: Describes the command to open the Configuration Profiles dialog.
