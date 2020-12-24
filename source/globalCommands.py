@@ -2079,7 +2079,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for toggle auto focus focusable elements command.
-		description=_("Toggles on and off automatic movement of the system focus due to browse mode commands") ,
+		description=_("Toggles on and off automatic movement of the system focus due to browse mode commands"),
 		category=inputCore.SCRCAT_BROWSEMODE,
 		gesture="kb:NVDA+8"
 	)
@@ -2725,7 +2725,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for a braille command.
 		description=_("Virtually toggles the shift key to emulate a keyboard shortcut with braille input"),
 		category=inputCore.SCRCAT_KBEMU,
-		bypassInputHelp = True
+		bypassInputHelp=True
 	)
 	def script_braille_toggleShift(self, gesture):
 		brailleInput.handler.toggleModifier("shift")
@@ -2734,7 +2734,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for a braille command.
 		description=_("Virtually toggles the control key to emulate a keyboard shortcut with braille input"),
 		category=inputCore.SCRCAT_KBEMU,
-		bypassInputHelp = True
+		bypassInputHelp=True
 	)
 	def script_braille_toggleControl(self, gesture):
 		brailleInput.handler.toggleModifier("control")
@@ -2743,7 +2743,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for a braille command.
 		description=_("Virtually toggles the alt key to emulate a keyboard shortcut with braille input"),
 		category=inputCore.SCRCAT_KBEMU,
-		bypassInputHelp = True
+		bypassInputHelp=True
 	)
 	def script_braille_toggleAlt(self, gesture):
 		brailleInput.handler.toggleModifier("alt")
@@ -2752,7 +2752,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for a braille command.
 		description=_("Virtually toggles the left windows key to emulate a keyboard shortcut with braille input"),
 		category=inputCore.SCRCAT_KBEMU,
-		bypassInputHelp = True
+		bypassInputHelp=True
 	)
 	def script_braille_toggleWindows(self, gesture):
 		brailleInput.handler.toggleModifier("leftWindows")
@@ -2761,7 +2761,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for a braille command.
 		description=_("Virtually toggles the NVDA key to emulate a keyboard shortcut with braille input"),
 		category=inputCore.SCRCAT_KBEMU,
-		bypassInputHelp = True
+		bypassInputHelp=True
 	)
 	def script_braille_toggleNVDAKey(self, gesture):
 		brailleInput.handler.toggleModifier("NVDA")
