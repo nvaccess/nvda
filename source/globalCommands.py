@@ -718,7 +718,7 @@ class GlobalCommands(ScriptableObject):
 			config.conf["documentFormatting"]["reportLinks"]=True
 		ui.message(state)
 
-	@scriptHandler.script(
+	@script(
 		# Translators: Input help mode message for toggle report graphics command.
 		description=_("Toggles on and off the reporting of graphics"),
 		category=SCRCAT_DOCUMENTFORMATTING
