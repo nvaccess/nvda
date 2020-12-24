@@ -1546,7 +1546,7 @@ class GlobalCommands(ScriptableObject):
 			"Toggles between the speech modes of off, beep and talk. "
 			"When set to off NVDA will not speak anything. "
 			"If beeps then NVDA will simply beep each time it its supposed to speak something. "
-			"If talk then NVDA wil just speak normally."
+			"If talk then NVDA will just speak normally."
 		),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+s"
