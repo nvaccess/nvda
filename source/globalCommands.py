@@ -1866,6 +1866,11 @@ class GlobalCommands(ScriptableObject):
 			config.conf["mouse"]["enableMouseTracking"]=True
 		ui.message(state)
 
+	@script(
+		# Translators: Input help mode message for toggle mouse text unit resolution command.
+		description=_("Toggles how much text will be spoken when the mouse moves"),
+		category=SCRCAT_MOUSE
+	)
 	def script_toggleMouseTextResolution(self,gesture):
 		values = textInfos.MOUSE_TEXT_RESOLUTION_UNITS
 		labels = [textInfos.unitLabels[x] for x in values]
@@ -1881,9 +1886,6 @@ class GlobalCommands(ScriptableObject):
 		# %s will be replaced with the new label.
 		# For example, the full message might be "Mouse text unit resolution character"
 		ui.message(_("Mouse text unit resolution %s")%labels[newIndex])
-	# Translators: Input help mode message for toggle mouse text unit resolution command.
-	script_toggleMouseTextResolution.__doc__=_("Toggles how much text will be spoken when the mouse moves")
-	script_toggleMouseTextResolution.category=SCRCAT_MOUSE
 
 	@script(
 		# Translators: Input help mode message for report title bar command.
@@ -2396,6 +2398,11 @@ class GlobalCommands(ScriptableObject):
 		# (braille can be tethered automatically or to either focus or review position).
 		ui.message(_("Braille tethered %s") % labels[newIndex])
 
+	@script(
+		# Translators: Input help mode message for toggle braille focus context presentation command.
+		description=_("Toggle the way context information is presented in braille"),
+		category=SCRCAT_BRAILLE
+	)
 	def script_braille_toggleFocusContextPresentation(self, gesture):
 		values = [x[0] for x in braille.focusContextPresentations]
 		labels = [x[1] for x in braille.focusContextPresentations]
@@ -2411,10 +2418,12 @@ class GlobalCommands(ScriptableObject):
 		# %s will be replaced with the context presentation setting.
 		# For example, the full message might be "Braille focus context presentation: fill display for context changes"
 		ui.message(_("Braille focus context presentation: %s")%labels[newIndex].lower())
-	# Translators: Input help mode message for toggle braille focus context presentation command.
-	script_braille_toggleFocusContextPresentation.__doc__ = _("Toggle the way context information is presented in braille")
-	script_braille_toggleFocusContextPresentation.category=SCRCAT_BRAILLE
 
+	@script(
+		# Translators: Input help mode message for toggle braille cursor command.
+		description=_("Toggle the braille cursor on and off"),
+		category=SCRCAT_BRAILLE
+	)
 	def script_braille_toggleShowCursor(self, gesture):
 		if config.conf["braille"]["showCursor"]:
 			# Translators: The message announced when toggling the braille cursor.
@@ -2425,10 +2434,12 @@ class GlobalCommands(ScriptableObject):
 			state = _("Braille cursor on")
 			config.conf["braille"]["showCursor"]=True
 		ui.message(state)
-	# Translators: Input help mode message for toggle braille cursor command.
-	script_braille_toggleShowCursor.__doc__ = _("Toggle the braille cursor on and off")
-	script_braille_toggleShowCursor.category=SCRCAT_BRAILLE
 
+	@script(
+		# Translators: Input help mode message for cycle braille cursor shape command.
+		description=_("Cycle through the braille cursor shapes"),
+		category=SCRCAT_BRAILLE
+	)
 	def script_braille_cycleCursorShape(self, gesture):
 		if not config.conf["braille"]["showCursor"]:
 			# Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
@@ -2449,9 +2460,6 @@ class GlobalCommands(ScriptableObject):
 		shapeMsg = braille.CURSOR_SHAPES[index][1]
 		# Translators: Reports which braille cursor shape is activated.
 		ui.message(_("Braille cursor %s") % shapeMsg)
-	# Translators: Input help mode message for cycle braille cursor shape command.
-	script_braille_cycleCursorShape.__doc__ = _("Cycle through the braille cursor shapes")
-	script_braille_cycleCursorShape.category=SCRCAT_BRAILLE
 
 	@script(
 		# Translators: Input help mode message for report clipboard text command.
