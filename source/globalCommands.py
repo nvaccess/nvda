@@ -1282,7 +1282,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for move review cursor to bottom line command.
 		description=_("Moves the review cursor to the bottom line of the current navigator object and speaks it"),
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:shift+numpad9", "kb(laptop):NVDA+control+end"),
+		gestures=("kb:shift+numpad9", "kb(laptop):NVDA+control+end")
 	)
 	def script_review_bottom(self,gesture):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_LAST)
@@ -1753,7 +1753,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for report formatting at caret command.
 		description=_("Reports formatting info for the text under the caret."),
-		category=SCRCAT_SYSTEMCARET,
+		category=SCRCAT_SYSTEMCARET
 	)
 	def script_reportFormattingAtCaret(self, gesture):
 		self._reportFormattingHelper(self._getTIAtCaret(True), False)
@@ -1761,7 +1761,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for show formatting at caret position command.
 		description=_("Presents, in browse mode, formatting info for the text under the caret."),
-		category=SCRCAT_SYSTEMCARET,
+		category=SCRCAT_SYSTEMCARET
 	)
 	def script_showFormattingAtCaret(self, gesture):
 		self._reportFormattingHelper(self._getTIAtCaret(True), True)
@@ -1773,7 +1773,7 @@ class GlobalCommands(ScriptableObject):
 			" If pressed twice, presents the information in browse mode"
 		),
 		category=SCRCAT_SYSTEMCARET,
-		gesture="kb:NVDA+f",
+		gesture="kb:NVDA+f"
 	)
 	def script_reportOrShowFormattingAtCaret(self, gesture):
 		repeats = scriptHandler.getLastScriptRepeatCount()
@@ -2302,7 +2302,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for the report current configuration profile command.
 		description=_("Reports the name of the current NVDA configuration profile"),
-		category=SCRCAT_CONFIG,
+		category=SCRCAT_CONFIG
 	)
 	def script_reportActiveConfigurationProfile(self, gesture):
 		activeProfileName = config.conf.profiles[-1].name
@@ -2609,8 +2609,8 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for a braille command.
 		description=_("Scrolls the braille display back"),
-		bypassInputHelp=True,
-		category=SCRCAT_BRAILLE
+		category=SCRCAT_BRAILLE,
+		bypassInputHelp=True
 	)
 	def script_braille_scrollBack(self, gesture):
 		braille.handler.scrollBack()
@@ -2618,8 +2618,8 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for a braille command.
 		description=_("Scrolls the braille display forward"),
-		bypassInputHelp=True,
-		category=SCRCAT_BRAILLE
+		category=SCRCAT_BRAILLE,
+		bypassInputHelp=True
 	)
 	def script_braille_scrollForward(self, gesture):
 		braille.handler.scrollForward()
@@ -3006,7 +3006,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for toggle report CLDR command.
 		description=_("Toggles on and off the reporting of CLDR characters, such as emojis"),
-		category=SCRCAT_SPEECH,
+		category=SCRCAT_SPEECH
 	)
 	def script_toggleReportCLDR(self, gesture):
 		if config.conf["speech"]["includeCLDR"]:
