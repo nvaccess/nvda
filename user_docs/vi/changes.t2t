@@ -4,6 +4,12 @@
 %!includeconf: ../changes.t2tconf
 
 = 2020.4 =
+Những cải tiến của phiên bản này bao gồm các phương thức nhập mới cho tiếng Trung Quốc, cập nhật thư viện phiên dịch chữ nổi Liblouis và danh sách các thành phần (NVDA+f7) giờ đây đã hoạt động trong chế độ Focus.
+Đã có thông tin trợ giúp theo ngữ cảnh khi bấm F1 trong các hộp thoại của NVDA.
+Cải tiến các luật quy định trong phát âm kí hiệu, từ điển phát âm, thông điệp bằng chữ nổi và đọc tất cả.
+Sửa lỗi và cải tiến cho Mail, Outlook, Teams, Visual Studio, Azure Data Studio, Foobar2000.
+Trên web, cải tiến cho Google Docs, hỗ trợ tốt hơn cho ARIA.
+Sửa nhiều lỗi và nhiều cải tiến quan trọng khác.
 
 == Tính năng mới ==
 - Bấm F1 trong các  hộp thoại của NVDA giờ đây sẽ mở các phần có liên quan nhất trong tập tin trợ giúp. (#7757)
@@ -62,6 +68,7 @@
 - Trong Visual Studio, các thông báo trợ giúp cho công cụ ụIntelliSense, cung cấp các chi tiết ban đầu về thành phần hiện được chọn trong IntelliSense giờ đây chỉ đọc một lần. (#11611)
 - Trong ứng dụng Calculator của Windows 10, NVDA sẽ không đọc tiến độ của việc tính toán nếu chế độ đọc kí tự trong khi nhập bị vô hiệu hóa. (#9428)
 - NVDA không còn bị lỗi khi dùng tiếng Anh cấp 2 và mở rộng ra chữ nổi máy tính tại vị trí con trỏ khi hiển thị một số nội dung nhất định như URL trong chữ nổi. (#11754)
+- Lại có thể xem được thông tin định dạng cho ô có focus trong Excel bằng NVDA+F. (#11914)
 - Trong Microsoft Teams với các số bản dựng như 1.3.00.28xxx, NVDA không còn bị lỗi không đọc được các tin nhắn trong phần trò chuyện hay Teams channels vì  trình đơn focused không chính xác. (#11821)
 
 
