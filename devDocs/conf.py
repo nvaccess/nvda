@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2019 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2019-2020 NV Access Limited, Leonard de Ruijter, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
