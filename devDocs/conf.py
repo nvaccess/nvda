@@ -100,6 +100,11 @@ autodoc_mock_imports = [
 # autodoc can only mock modules, not objects.
 from sphinx.ext.autodoc.mock import _make_subclass  # noqa: E402
 
+# #11971: NVDA is not running, therefore app dir is undefined.
+# Therefore tell NVDA that apt source directory is app dir.
+import globalVars  # noqa: E402
+appDir = os.path.join("..", "source")
+globalVars.appDir = os.path.abspath(appDir)
 import config  # noqa: E402
 # Mock an instance of the configuration manager.
 config.conf = _make_subclass("conf", "config")()
