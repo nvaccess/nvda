@@ -216,7 +216,14 @@ scons developerGuide
 ```
 
 The developer guide will be placed in the `devDocs` folder in the output directory.
-Note that the Python 3 sources of NVDA currently do not support building NVDA developer documentation using the `scons devDocs` command.
+
+To generate the HTML-based source code documentation, type:
+
+```
+scons devDocs
+```
+
+The documentation will be placed in the `devDocs` folder in the output directory.
 
 To generate developer documentation for nvdaHelper (not included in the devDocs target):
 
