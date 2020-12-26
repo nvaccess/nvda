@@ -223,7 +223,7 @@ To generate the HTML-based source code documentation, type:
 scons devDocs
 ```
 
-The documentation will be placed in the `devDocs` folder in the output directory.
+The documentation will be placed in the `NVDA` folder in the output directory.
 
 To generate developer documentation for nvdaHelper (not included in the devDocs target):
 
