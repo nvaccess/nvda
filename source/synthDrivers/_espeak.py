@@ -369,7 +369,8 @@ def terminate():
 	onIndexReached = None
 
 def info():
-	return espeakDLL.espeak_Info()
+	# Python 3.8: a path string must be specified, a NULL is fine when what we need is version string.
+	return espeakDLL.espeak_Info(None)
 
 def getVariantDict():
 	dir = os.path.join(globalVars.appDir, "synthDrivers", "espeak-ng-data", "voices", "!v")
