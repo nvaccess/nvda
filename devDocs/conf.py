@@ -16,7 +16,7 @@ import sourceEnv  # noqa: F401, E402
 import languageHandler  # noqa: E402
 languageHandler.setLanguage("en")
 
-# Initialize globalvars.appArgs to something sensible.
+# Initialize globalVars.appArgs to something sensible.
 import globalVars  # noqa: E402
 
 
@@ -30,6 +30,11 @@ class AppArgs:
 
 
 globalVars.appArgs = AppArgs()
+# #11971: NVDA is not running, therefore app dir is undefined.
+# Therefore tell NVDA that apt source directory is app dir.
+appDir = os.path.join("..", "source")
+globalVars.appDir = os.path.abspath(appDir)
+
 
 # Import NVDA's versionInfo module.
 import versionInfo  # noqa: E402
@@ -100,11 +105,6 @@ autodoc_mock_imports = [
 # autodoc can only mock modules, not objects.
 from sphinx.ext.autodoc.mock import _make_subclass  # noqa: E402
 
-# #11971: NVDA is not running, therefore app dir is undefined.
-# Therefore tell NVDA that apt source directory is app dir.
-import globalVars  # noqa: E402
-appDir = os.path.join("..", "source")
-globalVars.appDir = os.path.abspath(appDir)
 import config  # noqa: E402
 # Mock an instance of the configuration manager.
 config.conf = _make_subclass("conf", "config")()
