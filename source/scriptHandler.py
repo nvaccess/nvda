@@ -241,14 +241,14 @@ def isScriptWaiting():
 	return bool(_numScriptsQueued)
 
 def script(
-	description: str = "",
-	category: Optional[str] = None,
-	gesture: Optional[str] = None,
-	gestures: Optional[List[str]] = None,
-	canPropagate: bool = False,
-	bypassInputHelp: bool = False,
-	allowInSleepMode: bool = False,
-	resumeSayAllMode: Optional[int] = None
+		description: str = "",
+		category: Optional[str] = None,
+		gesture: Optional[str] = None,
+		gestures: Optional[List[str]] = None,
+		canPropagate: bool = False,
+		bypassInputHelp: bool = False,
+		allowInSleepMode: bool = False,
+		resumeSayAllMode: Optional[int] = None
 ):
 	"""Define metadata for a script.
 	This function is to be used as a decorator to set metadata used by the scripting system and gesture editor.
