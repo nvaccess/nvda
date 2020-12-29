@@ -536,9 +536,9 @@ class WavePlayer(garbageHandler.TrackedObject):
 		self._close()
 
 	def _safe_winmm_call(
-		self,
-		winmmCall: Callable[[Optional[int]], None],
-		messageOnFailure: str
+			self,
+			winmmCall: Callable[[Optional[int]], None],
+			messageOnFailure: str
 	) -> bool:
 		try:
 			winmmCall(self._waveout)
