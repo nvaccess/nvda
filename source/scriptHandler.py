@@ -259,6 +259,7 @@ def script(
 	@param gestures: A list of gestures associated with this script
 	@param canPropagate: Whether this script should also apply when it belongs to a  focus ancestor object.
 	@param bypassInputHelp: Whether this script should run when input help is active.
+	@param allowInSleepMode: Whether this script should run when NVDA is in sleep mode.
 	@param resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
 	One of the C{sayAllHandler.CURSOR_*} constants.
 	"""
