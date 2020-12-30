@@ -103,7 +103,7 @@ class WinVersion(object):
 				build=WIN10_RELEASE_NAME_TO_BUILDS[release]
 			)
 		else:
-			raise ValueError(f"Cannot create Windows version information for the specified release: {release}")
+			raise ValueError(f"Unknown Windows release: {release}")
 
 	@staticmethod
 	def fromVersionText(versionText: str):
