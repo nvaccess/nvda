@@ -651,16 +651,9 @@ def injectRawKeyboardInput(isPress, code, isExtended):
 		# Change what we pass to MapVirtualKeyEx, but don't change what NVDA gets.
 		mapScan |= 0xE000
 	vkCode = winUser.user32.MapVirtualKeyExW(mapScan, winUser.MAPVK_VSC_TO_VK_EX, getInputHkl())
-	if isPress:
-		shouldSend = internal_keyDownEvent(vkCode, code, isExtended, False)
-	else:
-		shouldSend = internal_keyUpEvent(vkCode, code, isExtended, False)
-	if shouldSend:
-		flags = 0
-		if not isPress:
-			flags |= 2
-		if isExtended:
-			flags |= 1
-		with ignoreInjection():
-			winUser.keybd_event(vkCode, code, flags, None)
-			wx.Yield()
+	flags = 0
+	if not isPress:
+		flags |= 2
+	if isExtended:
+		flags |= 1
+	winUser.keybd_event(vkCode, code, flags, None)

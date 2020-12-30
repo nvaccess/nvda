@@ -307,7 +307,7 @@ Ein Beispiel: Wenn Sie einen Text in einem Eingabefeld eingeben, wird dieses her
 
 Die gebräuchlichste Art, sich in einer Windows-Anwendung zu bewegen sind Windows-Standard-Tastenkombinationen, mit denen der System-Fokus bewegt wird. Beispiele für solche Standard-Tastenkombinationen sind Tab und Umschalt+Tab zum Wechseln zwischen Elementen in einem Dialogfeld, Alt-Taste oder F10 zum Aufrufen der Menüleiste und die Pfeiltasten zur Navigation innerhalb eines Menüs sowie alt+Tab zum Wechseln zwischen laufenden Anwendungen
 Wenn Sie auf diese Weise navigieren, wird NVDA verschiedene Informationen über das Objekt ausgeben, welches den Fokus erhält. Hierzu zählen: Name, Beschreibung (erscheint meist als Sprechblase, wenn der Anwender die Maus über das betreffende Objekt zieht), Typ (Schalter, Kontrollkästchen, Eingabefeld, etc.), Wert (z. B., der aktuelle Inhalt eines Eingabefeldes), Positionsangabe (z. B. "1 von 5" in einer Liste oder "1 von 1 Ebene 0" in einer Baumansicht), den Status des Objektes (z. B. aktiviert, hervorgehoben, ausgewählt, etc.).
-Wenn [Fokus hervorheben #VisionFocusHighlight] aktiviert ist, wird die Position des aktuellen System-Fokus auch visuell dargestellt.
+Wenn [Visuell hervorheben #VisionFocusHighlight] aktiviert ist, wird die Position des aktuellen System-Fokus auch visuell dargestellt.
 
 Einige nützliche Tastenkombinationen zum Navigieren mit dem System-Fokus sind:
 %kc:beginInclude
@@ -363,7 +363,7 @@ so ähnlich enthält eine Symbolleiste ebenfalls Steuerelemente und Sie müssen 
 
 Das momentan angezeigte Objekt, wird als Navigator-Objekt bezeichnet.
 Wenn Sie sich zu einem Objekt bewegen und der Modus [Objekt-Betrachter #ObjectReview] ist aktiv, können Sie sich das Objekt mit den [Befehlen zum Text betrachten #ReviewingText] anschauen.
-Wenn [Fokus hervorheben #VisionFocusHighlight] aktiviert ist, wird die Position des aktuellen Navigator-Objekts auch visuell dargestellt.
+Wenn [Visuell hervorheben #VisionFocusHighlight] aktiviert ist, wird die Position des aktuellen Navigator-Objekts auch visuell dargestellt.
 Standardmäßig folgt der Navigator dem System-Fokus, diese Kopplung kann jedoch umgeschaltet werden.
 
 Hinweis: Braille nach Objekt-Navigation kann über [Braille-Tether #BrailleTether] konfiguriert werden.
@@ -506,7 +506,7 @@ Der Lesemodus ist optional auch in Microsoft Word- und Microsoft Excel-Dokumente
 
 Im Lesemodus wird der Inhalt von Dokumenten in einer flächenähnlichen Struktur dargestellt, sodass Sie sich mit den Pfeiltasten durch den Text navigieren können. Dabei wird ein virtueller, nicht sichtbarer Cursor verwendet.
 Alle [Befehle zum Navigieren mit dem System-Cursor #SystemCaret] sind im Lesemodus verfügbar. So z. B. Alles Lesen, Formatierung ansagen, Befehle zur Tabellen-Navigation, etc.
-Wenn [Fokus hervorheben #VisionFocusHighlight] aktiviert ist, wird die Position des virtuellen Cursors im Lesemodus visuell dargestellt.
+Wenn [Visuell hervorheben #VisionFocusHighlight] aktiviert ist, wird die Position des virtuellen Cursors im Lesemodus visuell dargestellt.
 Informationen darüber, ob der Text beispielsweise ein Link, eine Überschrift, o. ä. ist, wird Ihnen beim Navigieren unmittelbar mitgeteilt.
 
 Manchmal müssen Sie in diesen Dokumenten mit Steuerelementen interagieren.
@@ -776,8 +776,8 @@ Zusätzliche Quellen für die Bildverbesserung können über [NVDA-Erweiterungen
 
 Diese Einstellungen können Sie in den [NVDA-Einstellungen #NVDASettings], in der Kategorie [Visuelle Darstellungen #VisionSettings] vornehmen.
 
-++ Fokus hervorheben ++[VisionFocusHighlight]
-Fokus hervorheben kann dabei helfen, die Positionen des [System-Fokus #SystemFokus], des [Navigator-Objekts #ObjektNavigation] und den [Lesemodus #BrowseMode] zu identifizieren.
+++ Visuell hervorheben ++[VisionFocusHighlight]
+Die Funktion "Visuell hervorheben" kann dabei helfen, die Positionen des [System-Fokus #SystemFokus], des [Navigator-Objekts #ObjektNavigation] und den [Lesemodus #BrowseMode] zu identifizieren.
 Diese Positionen werden mit einem farbigen Rechteck hervorgehoben.
 - Kräftiges Blau markiert die Fokus-Position, wenn sich das Navigator-Objekt an gleicher Stelle befindet (z. B. weil das [Navigator-Objekt dem System-Fokus #ReviewCursorFollowFocus] folgt).
 - Blau gestrichelt markiert nur das Objekt unter dem System-Fokus.
@@ -785,7 +785,7 @@ Diese Positionen werden mit einem farbigen Rechteck hervorgehoben.
 - Kräftiges Gelb hebt den virtuellen System-Cursor hervor, welcher im Lesemodus verwendet wird. (In diesen Dokumenten gibt es keinen physischen Cursor, wie z. B. in Internet-Browsern).
 -
 
-Wenn die Fokus-Hervorhebung in der Kategorie "[Visuelle Darstellungen #VisionSettings]" der [NVDA-Einstellungen #NVDASettings] aktiviert ist, können Sie [ändern, ob Sie den Fokus, das Navigator-Objekt oder den Cursor im Lesemodus #VisionSettingsFocusHighlight] hervorheben möchten.
+Wenn Sie Visuell hervorheben in der Kategorie "[Visuelle Darstellungen #VisionSettings]" der [NVDA-Einstellungen #NVDASettings] aktiviert haben, können Sie [ändern, ob Sie den Fokus, das Navigator-Objekt oder den Cursor im Lesemodus #VisionSettingsFocusHighlight] hervorgehoben werden sollen.
 
 ++ Der Bildschirmvorhang ++[VisionScreenCurtain]
 Für blinde oder sehbehinderte Benutzer ist es oft nicht möglich oder notwendig, den Inhalt des Bildschirms zu sehen.
@@ -1400,10 +1400,10 @@ Mit der Kategorie Visuelle Darstellungen im Dialogfeld NVDA-Einstellungen könne
 Beachten Sie, dass die verfügbaren Optionen in dieser Kategorie durch [NVDA-Erweiterungen #AddonsManager] erweitert werden können.
 Standardmäßig enthält diese Einstellungskathegorie die folgenden Optionen:
 
-==== Fokus hervorheben ====[VisionSettingsFocusHighlight]
-Die Kontrollkästchen in der Gruppierung Fokus hervorheben steuern das Verhalten der integrierten NVDA-Funktion[Fokus Hervorheben #VisionFocusHighlight].
+==== Visuell hervorheben ====[VisionSettingsFocusHighlight]
+Die Kontrollkästchen in der Gruppierung "Visuell hervorheben" steuern das Verhalten der in NVDA integrierten Funktion [Visuell hervorheben #VisionFocusHighlight].
 
-- Hervorhebung aktivieren: Schaltet die Fokus-Hervorhebung ein und aus.
+- Hervorhebung aktivieren: Schaltet die visuelle Hervorhebung ein und aus.
 - System-Fokus hervorheben: Schaltet um, ob der [System-Fokus #Systemfokus] hervorgehoben wird.
 - Hervorheben des Navigator-Objekts: Schaltet um, ob das [Navigator-Objekt #ObjectNavigation] hervorgehoben wird.
 - Cursor im Lesemodus hervorheben: Schaltet um, ob der [virtuelle Cursor im Lesemodus #BrowseMode] hervorgehoben wird.
@@ -2516,7 +2516,7 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 %kc:endInclude
 
 ++ Humanware Brailliant BI/B-Serie / BrailleNote Touch ++[HumanWareBrailliant]
-Die Braillezeilen der Serien BI und B von [Humanware https://www.humanware.de/], so auch die BI 14, BI 32, BI 40 und BI 80, werden unterstützt, sofern sie via USB oder Bluetooth verbunden sind.
+Die Braillezeilen Brailliant BI und B von [Humanware https://www.humanware.com/], einschließlich BI 14, BI 32, BI 20X, BI 40, BI 40X und B 80, werden unterstützt, wenn sie über USB oder Bluetooth angeschlossen werden.
 Wenn Sie die Zeile über USB anschließen wollen während das Übertragungsprotokoll Humanware verwendet wird, müssen Sie zunächst den USB-Treiber des Herstellers installieren.
 Verwenden Sie hingegen das Protokoll OpenBraille, wird kein USB-Treiber benötigt.
 

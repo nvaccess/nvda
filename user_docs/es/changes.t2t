@@ -16,16 +16,26 @@ Qué hay de Nuevo en NVDA
 - Añadida una orden para conmutar el anunciado de texto marcado (resaltado); No hay ningún gesto asociado por omisión. (#11807)
 - Añadido el parámetro de línea de comandos --copy-portable-config que te permite copiar automáticamente la configuración proporcionada a la cuenta de usuario cuando se instala NVDA en silencio. (#9676)
 - Ahora se admite el enrutamiento Braille con el Visualizador Braille para usuarios de ratón, desplazándose para enrutar a una celda braille. (#11804)
+- NVDA ahora detectará automáticamente los dispositivos Humanware Brailliant BI 40X y 20X a través de USB y Bluetooth. (#11819)
 
 
 == Cambios ==
-- Actualizado el transcriptor braille liblouis a la versión 3.15.0
+- Actualizado el transcriptor braille liblouis a la versión 3.16.1
+- Se abordan múltiples cuelgues
+- Se añade la tabla Braille grado 1 de Baskir
+- Se añade una tabla braille de ordenador copto de 8 puntos
+- Se añaden tablas de braille literario ruso y braille literario ruso (detallado).
+- Se elimina la tabla braille rusa de grado 1.
 - Cuando se lee con leer todo en el modo exploración, las órdenes buscar siguiente y anterior no detienen la lectura si la opción permitir lectura superficial está activada; leer todo reanuda a partir de después del término siguiente o anterior encontrado. (#11563)
 - Para las pantallas braille HIMS se ha remapeado F3 a Espacio + puntos 148. (#11710)
 - Mejoras para el UX de las opciones "Tiempo de espera del mensaje braille" y "mostrar mensajes indefinidamente". (#11602)
 - En navegadores web y otras aplicaciones que soporten modo exploración, el diálogo Lista de Elementos (NVDA+F7) ahora puede llamarse al estar en modo foco. (#10453)
 - Las actualizaciones de regiones ARIA live ahora se suprimen cuando se desactive el anunciado de cambios de contenido dinámico. (#9077)
 - NVDA ahora anunciará "Copiado al portapapeles" antes del texto copiado. (#6757)
+- Se ha mejorado la presentación de la tabla de vistas gráficas en el gestor de discos. (#10048)
+- Las etiquetas de los controles ahora están desactivadas (en gris) cuando el control está desactivado. (#11809)
+- Actualizada la anotación emoji de CLDR a la versión 38. (#11817)
+- La funcionalidad incorporada "Resaltado del Foco" se ha renombrado a "Resaltado Visual". (#11700)
 
 
 == Corrección de Fallos ==
@@ -52,6 +62,11 @@ Qué hay de Nuevo en NVDA
 - Puede suprimirse de nuevo el anunciado de las etiquetas strong y emphasis en Internet Explorer desactivando Anunciar Énfasis en las opciones de Formato de Documentos de NVDA. (#11808)
 - Ya no debería producirse un congelado de varios segundos experimentado por una pequeña cantidad de usuarios al pasar entre las celdas de Excel. (#11818)
 - En las compilaciones de Microsoft Teams con números de versión como 1.3.00.28xxx, NVDA ya no falla al leer mensajes en chats o en canales de Teams debido a un menú incorrectamente enfocado. (#11821)
+- El texto marcado como error ortográfico y gramatical al mismo tiempo en Google Chrome se anunciará apropiadamente como error ortográfico y gramatical por NVDA. (#11787)
+- Al utilizar Outlook (localización al francés), el atajo para "Responder a todos" (control+shift+R) funciona de nuevo. (#11196)
+- En Visual Studio, los consejos de la herramienta IntelliSense que proporcionan detalles adicionales sobre el elemento IntelliSense seleccionado actualmente sólo se anuncian una vez. (#11611)
+- En la calculadora de Windows 10, NVDA no anunciará el progreso de los cálculos si se desactiva verbalizar caracteres al escribir. (#9428)
+- NVDA ya no se bloquea cuando se utilice el inglés grado 2 de Estados unidos y se expande a braille computerizado cuando esté sobre el cursor al mostrar cierto contenido como una URL en braille. (#11754)
 
 
 == Cambios para Desarrolladores ==
