@@ -307,7 +307,7 @@ Sistem odağı, sadece "odak" olarak da anılır, klavyede basılacak tuşlardan
 
 NVDA ile windows içinde dolaşmanın en yaygın ve kolay yolu, Tab ve şift tab ile kontroller arasında ileri geri gidiş, Alt ile bir uygulamanın menü çubuğuna ulaşım ve yön tuşları kullanılarak menü ögeleri arasında dolaşım, veya alt+tab ile pencereler arasında dolaşım gibi temel windows komutlarını kullanmaktır. Bu, sistem odağını hareket ettirir; Örneğin, Bazı nesneler klavyede basılan tuşlara göre hareket eder.
 Siz yukarıda bahsedilen tuşlara bastıkça, NVDA Üzerine gelinen nesnenin adı, Türü, değeri, durumu, tanımı, klavye kısayolu ve pozisyonuyla ilgili bilgileri seslendirecektir.
-[Odak vurgulaması #VisionFocusHighlight] etkinleştirildiğinde, geçerli sistem odağının konumu  görsel olarak da gösterilir.
+[görsel vurgu #VisionFocusHighlight] etkinleştirildiğinde, geçerli sistem odağının konumu  görsel olarak da gösterilir.
 
 Sistem odağıyla dolaşırken, bazı yararlı tuş kombinasyonları bulunmaktadır:
 %kc:beginInclude
@@ -363,7 +363,7 @@ Benzer biçimde, bir araç çubuğu da çeşitli kontrolleri kapsar ve bu kontro
 
 İncelenmekte olan nesneye dolaşım nesnesi denir. 
 Nesne dolaşım komutlarıyla bir nesne üzerine geldikten sonra, nesneyi [metin inceleme komutlarını #ReviewingText] kullanarak [Nesne inceleme kipinde #ObjectReview] inceleyebilirsiniz.
-[Odak vurgulaması #VisionFocusHighlight] etkinse, geçerli nesne sunucusunun konumu  görsel olarak da gösterilir.
+[görsel vurgu #VisionFocusHighlight] etkinse, geçerli nesne sunucusunun konumu  görsel olarak da gösterilir.
 Varsayılan olarak, nesne sunucusu sistem odağıyla birlikte hareket eder; ancak bu özellik kapatılıp açılabilir.
 
 Not: Braille'in nesne sunucusunu takibi  [Braille taşınsın #BrailleTether] altından ayarlanabilir.
@@ -506,7 +506,7 @@ Tarama kipi aynı zamanda Microsoft Word için karmaşık belgelerde dolaşılı
 
 Tarama kipi, web sayfası gibi bir içeriğin bir metin dosyası gibi sunulduğu bir inceleme alanıdır ve içerik içinde yön tuşlarıyla dolaşılabilir.
 NVDA'nın [sistem düzenleme imleci #SystemCaret] için geçerli olan hepsini okuma, tablo inceleme, yazı biçimini raporlama gibi komutları bu kip için de geçerlidir.
-[Odak vurgulaması #VisionFocusHighlight] etkinleştirildiğinde, tarama kipi imlecinin konumu  görsel olarak da gösterilir.
+[Görsel vurgu #VisionFocusHighlight] etkinleştirildiğinde, tarama kipi imlecinin konumu  görsel olarak da gösterilir.
 Metin içinde hareket ettikçe, okunan metnin bir bağlantı veya başlık olup olmadığı gibi bilgiler de belirtilir.
 
 Bazen, belge içindeki kontrollerle doğrudan etkileşim içinde olmanız gerekebilir.
@@ -776,8 +776,8 @@ NVDA, aşağıda açıklanan çeşitli yerleşik görsel geliştirme sağlayıc�
 
 NVDA'nın görsellikle ilgili  ayarları [NVDA Ayarları #NVDASettings] iletişim kutusu  altında [görsellik kategorisinden #VisionSettings] değiştirilebilir.
 
-++ Odak vurgulaması ++[VisionFocusHighlight]
-Odak vurgulaması [sistem odağı #SystemFocus], [nesne sunucusu #ObjectNavigation] ve [tarama kipi #BrowseMode] konumlarının anlaşılmasına görsel olarak yardımcı olur.
+++ Görsel Vurgu ++[VisionFocusHighlight]
+Görsel vurgu [sistem odağı #SystemFocus], [nesne sunucusu #ObjectNavigation] ve [tarama kipi #BrowseMode] konumlarının anlaşılmasına görsel olarak yardımcı olur.
 Bu konumlar renkli bir dikdörtgen çizgiyle vurgulanır.
 - Düz mavi, sistem odağı ve nesne sunucusu aynı konumdaysa vurgulama için kullanılır. (e.g. Çünkü [nesne sunucusu sistem odağını takip ediyordur #ReviewCursorFollowFocus]).
 - Kesik mavi sistem imleci konumunu vurgular.
@@ -785,7 +785,7 @@ Bu konumlar renkli bir dikdörtgen çizgiyle vurgulanır.
 - Düz sarı (web tarayıcılarındaki gibi fiziksel bir imlecin bulunmadığı yerlerde ) tarama kipinde kullanılan sanal imleci vurgular.
 -
 
-[NVDA Ayarları #NVDASettings] iletişim kutusunda [görsellik kategorisi #VisionSettings] altındaki Odak Vurgulaması etkinse, [odağın, nesne sunucusunun ya da tarama kipi imleci konumunun  vurgulanıp vurgulanmayacağını değiştirebilirsiniz #VisionSettingsFocusHighlight]
+[NVDA Ayarları #NVDASettings] iletişim kutusunda [görsellik kategorisi #VisionSettings] altındaki Görsel vurgu etkinse, [odağın, nesne sunucusunun ya da tarama kipi imleci konumunun  vurgulanıp vurgulanmayacağını değiştirebilirsiniz #VisionSettingsFocusHighlight]
 
 ++ Ekran perdesi ++[VisionScreenCurtain]
 Kör ya da az gören bir kullanıcı iseniz, ekranda ne olduğunu algılamanız yüksek olasılıkla mümkün ya da gerekli değildir.
@@ -1401,18 +1401,18 @@ NVDA Ayarları iletişim kutusundaki görsellik kategorisi [görsel yardımları
 Bu kategori altında mevcut olan seçeneklerin [NVDA eklentileri #AddonsManager] ile genişletilebileceğini unutmayın.
 Varsayılan olarak, bu ayar kategorisi aşağıdaki seçenekleri içerir:
 
-==== Odak vurgulaması ====[VisionSettingsFocusHighlight]
-Odak Vurgulama grubundaki onay kutuları NVDA'nın [Odak vurgulaması #VisionFocusHighlight] özelliği ile ilgili yerleşik davranışını kontrol eter.
+==== Görsel Vurgu ====[VisionSettingsFocusHighlight]
+Görsel vurgu grubundaki onay kutuları NVDA'nın [Görsel vurgu #VisionFocusHighlight] özelliği ile ilgili yerleşik davranışını kontrol eter.
 
-- Vurgulamayı Etkinleştir: Odak Vurgusunu açıp kapatır.
-- Sistem odağını vurgula: [sistem odağının #SystemFocus] vurgulanıp vurgulanmayacağını değiştirir.
-- Nesne sunucusunu vurgula: [nesne sunucusunun #ObjectNavigation]vurgulanıp vurgulanmayacağını değiştirir.
-- Tarama kipi imlecini vurgula: [tarama kipi sanal imlecinin #BrowseMode]vurgulanıp vurgulanmayacağını değiştirir.
+- Vurgulamayı Etkinleştir: Görsel Vurguyu açıp kapatır.
+- Sistem odağını görselleştir: [sistem odağının #SystemFocus] vurgulanıp vurgulanmayacağını değiştirir.
+- Nesne sunucusunu görselleştir: [nesne sunucusunun #ObjectNavigation]vurgulanıp vurgulanmayacağını değiştirir.
+- Tarama kipi imlecini görselleştir: [tarama kipi sanal imlecinin #BrowseMode]vurgulanıp vurgulanmayacağını değiştirir.
 -
 
 "Vurgulamayı Etkinleştir" onay kutusunun işaretlenip işaretlenmemesinin, ağaçtaki diğer onay kutularının durumunu da değiştireceğini unutmayın.
 Bu nedenle, "Vurgulamayı Etkinleştir" kapalıysa ve bu onay kutusunu işaretlerseniz, diğer ağaç onay kutuları da otomatik olarak işaretlenir.
-Yalnızca odağı vurgulamak ve nesne sunucusu ve tarama kipi onay kutularını işaretlemeden bırakmak istiyorsanız, "Vurgulamayı Etkinleştir" onay kutusunun durumu yarı işaretli olur.
+Yalnızca odağı görselleştirmek ve nesne sunucusu ve tarama kipi onay kutularını işaretlemeden bırakmak istiyorsanız, "Vurgulamayı Etkinleştir" onay kutusunun durumu yarı işaretli olur.
 
 ==== Ekran perdesi ====[VisionSettingsScreenCurtain]
 [Ekran perdesini #VisionScreenCurtain] "Ekranı karart (anında devreye girer)" onay kutusunu işaretleyerek etkinleştirebilirsiniz.
@@ -2520,7 +2520,7 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B Serisi / BrailleNote Touch  ++[HumanWareBrailliant]
- Brailliant BI ve B serisi braille ekranlar, [HumanWare https://www.humanware.com/], BI 14, BI 32, BI 40 ve B 80 dahil, USB ya da bluetooth ile bağlandığında desteklenmektedir.
+ Brailliant BI ve B serisi braille ekranlar, [HumanWare https://www.humanware.com/], BI 14, BI 32, BI 20X, BI 40, BI 40X ve B 80 dahil, USB ya da bluetooth ile bağlandığında desteklenmektedir.
 USB bağlantısını ve HumanWare protokolünü kullanıyorsanız, öncelikle üretici tarafından sağlanan USB sürücülerini kurmalısınız.
 OpenBraille protokolü için USB sürücüleri gerekmez.
 

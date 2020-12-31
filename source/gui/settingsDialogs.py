@@ -23,6 +23,7 @@ import config
 import languageHandler
 import speech
 import gui
+import gui.contextHelp
 import globalVars
 from logHandler import log
 import nvwave
@@ -55,10 +56,9 @@ import time
 import keyLabels
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 
-
 class SettingsDialog(
 		DpiScalingHelperMixinWithoutInit,
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 		metaclass=guiHelper.SIPABCMeta
 ):
@@ -252,7 +252,7 @@ _RWLayoutNeededEvent, EVT_RW_LAYOUT_NEEDED = wx.lib.newevent.NewCommandEvent()
 
 class SettingsPanel(
 		DpiScalingHelperMixinWithoutInit,
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Panel,  # wxPython does not seem to call base class initializer, put last in MRO
 		metaclass=guiHelper.SIPABCMeta
 ):
@@ -864,7 +864,7 @@ class GeneralSettingsPanel(SettingsPanel):
 
 
 class LanguageRestartDialog(
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 
@@ -2472,7 +2472,7 @@ class UwpOcrPanel(SettingsPanel):
 
 
 class AdvancedPanelControls(
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Panel,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""Holds the actual controls for the Advanced Settings panel, this allows the state of the controls to
@@ -2861,7 +2861,7 @@ class AdvancedPanel(SettingsPanel):
 
 
 class DictionaryEntryDialog(
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	helpId = "SpeechDictionaries"
@@ -3984,7 +3984,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 
 
 class AddSymbolDialog(
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 

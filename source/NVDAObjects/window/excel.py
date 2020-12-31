@@ -25,6 +25,7 @@ import eventHandler
 import api
 from logHandler import log
 import gui
+import gui.contextHelp
 import winUser
 import mouseHandler
 from displayModel import DisplayModelTextInfo
@@ -597,7 +598,7 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 
 
 class EditCommentDialog(
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.TextEntryDialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	helpId = "ExcelReportingComments"
