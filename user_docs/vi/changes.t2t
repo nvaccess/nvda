@@ -27,10 +27,11 @@ Sửa nhiều lỗi và nhiều cải tiến quan trọng khác.
 
 == Các thay đổi ==
 - Đã cập nhật thư viện phiên dịch chữ nổi liblouis lên phiên bản 3.16.1:
- - Khắc phục được nhiều lỗi
+ - Tìm và khắc phục được nhiều lỗi
  - Thêm bảng chữ nổi tiếng Bashkir cấp 1
  - Thêm bảng chữ nổi máy tính tiếng Coptic 8 chấm
  - Thêm các bảng chữ nổi văn học tiếng Nga và chữ nổi văn học tiếng Nga (chi tiết).
+ - Đã thêm chữ nổi tiếng Nam Phi cấp 2
  - Gỡ bỏ bảng chữ nổi tiếng Nga cấp 1
 - Khi đọc với tính năng đọc tất cả trong chế độ duyệt, các lệnh tìm tiếp và tìm trước không dừng đọc nếu tùy chọn Cho phép thay đổi vị trí đọc khi đọc tất cả được bật; việc đọc tất cả sẽ tiếp tục từ sau cụm từ được tìm thấy. (#11563)
 - Với màn hình chữ nổi của HIMS, F3 đã được đổi thành khoảng trắng + chấm 148. (#11710)
@@ -38,6 +39,10 @@ Sửa nhiều lỗi và nhiều cải tiến quan trọng khác.
 - Trong các trình duyệt web và các ứng dụng khác có hỗ trợ chế độ duyệt, hộp thoại danh sách các thành phần (NVDA+F7) giờ đây có thể gọi chạy khi ở trong chế độ focus. (#10453)
 - Các cập nhật đến ARIA live regions giờ đây bị ngăn lại khi  tùy chọn thông báo các thay đổi nội dung động bị tắt. (#9077)
 - NVDA giờ đây sẽ đọc "Đã chép lên bộ nhớ tạm" trước văn bản được sao chép. (#6757)
+- Đã cải thiện cách thể hiện bảng xem dạng ảnh trong disk management. (#10048)
+- Nhãn cho các điều khiển giờ đây sẽ bị vô hiệu (mờ đi) khi điều khiển đó không hoạt động. (#11809)
+- Cập nhật CLDR emoji annotation lên phiên bản 38. (#11817)
+- Tính năng "Làm nổi Focus" đã đổi tên thành "Làm Nổi Trực Quan". (#11700)
 
 
 == Sửa lỗi ==
@@ -63,13 +68,14 @@ Sửa nhiều lỗi và nhiều cải tiến quan trọng khác.
 - Một kịch bản NVDA không còn bị xem là đang lặp lại nếu một phím không liên quan được bấm giữa hai lần gọi kịch bản. (#11388) 
 - Các thẻ nhấn mạnh (strong và emphasis) trong Internet Explorer giờ đây lại có thể được tắt không cho đọc bằng cách tắt tùy chọn báo nhận mạnh trong cài đặt định dạng tài liệu của NVDA. (#11808)
 - Việc bị treo vài giây được báo về bởi một số ít người dùng khi di chuyển bằng mũi tên giữa các ô trong Excel không còn xảy ra nữa. (#11818)
+- Trong Microsoft Teams với các số bản dựng như 1.3.00.28xxx, NVDA không còn bị lỗi không đọc được các tin nhắn trong phần trò chuyện hay Teams channels vì  trình đơn focused không chính xác. (#11821)
 - Văn bản được đánh dấu là có cả lỗi chính tả và ngữ pháp trong Google Chrome sẽ được NVDA thông báo chính xác là có cả lỗi chính tả và ngữ pháp. (#11787)
 - Khi sử dụng Outlook (bản tiếng Pháp), phím tắt trả lời tất cả (control+shift+R) đã hoạt động lại bình thường. (#11196)
 - Trong Visual Studio, các thông báo trợ giúp cho công cụ ụIntelliSense, cung cấp các chi tiết ban đầu về thành phần hiện được chọn trong IntelliSense giờ đây chỉ đọc một lần. (#11611)
 - Trong ứng dụng Calculator của Windows 10, NVDA sẽ không đọc tiến độ của việc tính toán nếu chế độ đọc kí tự trong khi nhập bị vô hiệu hóa. (#9428)
 - NVDA không còn bị lỗi khi dùng tiếng Anh cấp 2 và mở rộng ra chữ nổi máy tính tại vị trí con trỏ khi hiển thị một số nội dung nhất định như URL trong chữ nổi. (#11754)
 - Lại có thể xem được thông tin định dạng cho ô có focus trong Excel bằng NVDA+F. (#11914)
-- Trong Microsoft Teams với các số bản dựng như 1.3.00.28xxx, NVDA không còn bị lỗi không đọc được các tin nhắn trong phần trò chuyện hay Teams channels vì  trình đơn focused không chính xác. (#11821)
+- Kiểu nhập QWERTY trên các màn hình chữ nổi Papenmeier được hỗ trợ đã hoạt động trở lại và không còn làm cho NVDA bị đóng băng. (#11944)
 
 
 == Các thay đổi cho nhà phát triển ==
