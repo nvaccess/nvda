@@ -307,7 +307,7 @@ Na primjer, ako upisujete tekst u polje za uređivanje teksta, polje za uređiva
 
 Najuobičajeni način kretanja po Windowsu pomoću NVDA čitača je jednostavno premještanje fokusa sustava koristeći osnovne Windowsove tipkovničke prečace. Tipke tabulator i šift+tabulator služe za premještanje prema naprijed i natrag između kontrola. Tipka alt služi za premještanje na traku izbornika. Tipke strelica gore, dolje, lijevo i desno služe za kretanje po izbornicima. Tipke alt+tabulator služe za premještanje između pokrenutih programa.
 Tijekom premještanja NVDA javlja informacije o fokusiranom objektu, kao što su ime objekta, vrsta, vrijednost, stanje, opis, tipkovnički prečac i informacije o položaju.
-Kad je [Isticanje fokusa #VisionFocusHighlight] uključeno, prikazuje se i pozicija fokusa na ekranu.
+Kad je [Vizualno praćenje #VisionFocusHighlight] uključeno, prikazuje se i pozicija fokusa na ekranu.
 
 Postoji nekoliko tipkovničkih prečaca koji su korisni za kretanje po objektima:
 %kc:beginInclude
@@ -363,7 +363,7 @@ Slično tome, alatna traka sadrži kontrole, dakle, morate ući u alatnu traku, 
 
 Objekt koji se trenutačno pregledava se zove navigacijski objekt.
 Kad se pomaknete na određeni objekt, možete pregledati njegov sadržaj pomoću prečaca za [Pregledavanje teksta #ReviewingText], dok ste u modusu [Pregled objekta #ObjectReview].
-Kad je [Isticanje fokusa #VisionFocusHighlight] aktivirano, pozicija navigacijskog objekta se prikazuje na ekranu.
+Kad je [Vizualno praćenje #VisionFocusHighlight] aktivirano, pozicija navigacijskog objekta se prikazuje na ekranu.
 Navigacijski objekt se standardno pokreće zajedno s fokusom sustava, ali se to ponašanje može uključiti ili isključiti.
 
 Upozorenje: brajica koja prati objekt navigatora može se podesiti preko [povezanosti brajice #BrailleTether].
@@ -506,7 +506,7 @@ Modus čitanja je opcionalno dostupan i za Microsoft Word dokumente.
 
 U modusu čitanja, html dokument je dostupan u virtualnom pregledu koji omogućuje kretanje pomoću kursorskih tipaka kao da se radi o običnom tekstualnim dokumentu.
 Svi NVDA prečaci [kursora sustava #SystemCaret] rade u ovom modusu; npr. Izgovori sve, Izvijesti o promjenama oblikovanja, prečaci za kretanje po tablicama itd.
-Kad je [isticanje fokusa #VisionFocusHighlight] uključeno, na ekranu se pokazuje pozicija objekta.
+Kad je [Vizualno praćenje #VisionFocusHighlight] uključeno, na ekranu se pokazuje pozicija objekta.
 Informacije o tome je li tekst poveznica, naslov itd. se izgovaraju tijekom kretanja po tekstu.
 
 Ponekad ćete se trebati služiti kontrolama u tom dokumentu.
@@ -776,8 +776,8 @@ Dodatna poboljšanja vidljivosti se mogu ponuditi kao [NVDA dodaci #AddonsManage
 
 NVDA postavke vida se mogu promijeniti u kategoriji [Vid #VisionSettings], u dijaloškom okviru [NVDA Postavke #NVDASettings].
 
-++ Isticanje fokusa ++[VisionFocusHighlight]
-Isticanje fokusa pomaže prepoznati [fokus sustava #SystemFocus], [navigacijski objekt #ObjectNavigation] i [modus čitanja #BrowseMode].
+++ Vizualno praćenje ++[VisionFocusHighlight]
+Vizualno praćenje pomaže prepoznati [fokus sustava #SystemFocus], [navigacijski objekt #ObjectNavigation] i [modus čitanja #BrowseMode].
 Pozicije se ističu obojanim pravokutnikom.
 - Plava ističe kombiniranu poziciju navigacijskog objekta i fokusa sustava (npr. jer [navigacijski objekt prati fokus sustava #ReviewCursorFollowFocus]).
 - Iscrtkana plava ističe samo objekt fokusa sustava.
@@ -785,7 +785,7 @@ Pozicije se ističu obojanim pravokutnikom.
 - Žuta ističe virtualni kursor koji se koristi u modusu čitanja (gdje ne postoji fizički kursor, npr. u internetskim preglednicima).
 -
 
-Kad je Isticanje fokusa uključeno u kategoriji [Vid #VisionSettings], u dijaloškom okviru [NVDA Postavke #NVDASettings], možete [promjeniti isticanje fokusa, navigacijskog objekta ili kursora u modusu čitanja #VisionSettingsFocusHighlight]
+Kad je vizualno praćenje uključeno u kategoriji [Vid #VisionSettings], u dijaloškom okviru [NVDA Postavke #NVDASettings], možete [promjeniti isticanje fokusa, navigacijskog objekta ili kursora u modusu čitanja #VisionSettingsFocusHighlight]
 
 ++ Ekranska zavjesa ++[VisionScreenCurtain]
 Kao slijep ili slabovidan korisnik, često nije moguće ili potrebno vidjeti sadržaj ekrana.
@@ -1400,10 +1400,10 @@ Kategorija "Vid" u dijaloškom okviru NVDA Postavke omogućuje aktiviranje, deak
 Imajte na umu da se opcije u ovoj kategoriji mogu proširiti pomoću [NVDA dodataka #AddonsManager].
 Ova kategorija standardno sadrži sljedeće opcije:
 
-==== Isticanje fokusa ====[VisionSettingsFocusHighlight]
-Potvrdni okviri u grupi kontrola za Isticanje fokusa reguliraju ponašanje ugrađene mogućnosti [Isticanje fokusa #VisionFocusHighlight].
+==== Vizualno praćenje ====[VisionSettingsFocusHighlight]
+Potvrdni okviri u grupi kontrola za vizualno praćenje reguliraju ponašanje ugrađene mogućnosti [Vizualno praćenje #VisionFocusHighlight].
 
-- Aktiviraj isticanje: uključuje i isključuje isticanje fokusa.
+- Aktiviraj isticanje: uključuje i isključuje vizualno praćenje.
 - Istakni fokus sustava: uključuje i isključuje isticanje [fokusa sustava #SystemFocus].
 - Istakni navigacijski objekt: uključuje i isključuje isticanje [navigacijskog objekta #ObjectNavigation].
 - Istakni kursor modusa čitanja: uključuje i isključuje isticanje [virtualnog kursora modusa čitanja #BrowseMode].
@@ -2519,7 +2519,7 @@ Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B Serije / BrailleNote Touch  ++[HumanWareBrailliant]
-Brailliant BI i B serije brajični redci tvrtke [HumanWare https://www.humanware.com/], uključujući the BI 14, BI 32, BI 40 i B 80, su podržani kad su spojeni putem USB ili bluetooth veze.
+Brailliant BI i B serije brajični redci tvrtke [HumanWare https://www.humanware.com/], uključujući BI 14, BI 32, BI 20X, BI 40, BI 40X B 80 i B 80 su podržani kad su spojeni putem USB ili bluetooth veze.
 Ako brajični redak spajate putem USB veze, i protokolom postavljenim na Human Ware prvo morate instalirati USB upravljačke programe koje je napravio proizvođač.
 USB upravljački programi nisu potrebni ako  je protokol postavljen na OpenBraille.
 
