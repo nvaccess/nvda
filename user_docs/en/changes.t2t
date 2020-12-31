@@ -12,10 +12,16 @@ What's New in NVDA
 
 
 == Bug Fixes ==
+- In terminal programs on Windows 10 version 1607 and later, when inserting or deleting characters in the middle of a line, the characters to the right of the caret are no longer read out. (#3200)
+  - This experimental fix must be manually enabled in NVDA's advanced settings panel by changing the diff algorithm to Diff Match Patch.
 
 
 == Changes for Developers ==
 - Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
+- `LiveText._getTextLines` has been removed. (#11639)
+  - Instead, override `_getText` which returns a string of all text in the object.
+- `LiveText` objects can now calculate diffs by character. (#11639)
+  - To alter the diff behaviour for some object, override the `diffAlgo` property (see the docstring for details).
 
 
 = 2020.4 =
