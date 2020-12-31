@@ -573,7 +573,7 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 			textList.append(columnStr)
 	isCurrent = propertyValues.get('current', controlTypes.IS_CURRENT.NO)
 	if isCurrent != controlTypes.IS_CURRENT.NO:
-		textList.append(isCurrent.getTranslationForUI())
+		textList.append(isCurrent.displayString)
 	placeholder = propertyValues.get('placeholder', None)
 	if placeholder:
 		textList.append(placeholder)

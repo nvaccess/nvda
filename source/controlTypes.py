@@ -678,7 +678,11 @@ class IS_CURRENT(Enum):
 	DATE = "date"
 	TIME = "time"
 
-	def getTranslationForUI(self):
+	@property
+	def displayString(self):
+		"""
+		@return: The translated UI display string that should be used for this value of the IS_CURRENT enum
+		"""
 		try:
 			return _isCurrentLabels[self]
 		except KeyError:
