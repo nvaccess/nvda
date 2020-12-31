@@ -470,18 +470,18 @@ class EdgeNode(UIA):
 	# "false" is ignored by the regEx and will not produce a match
 	RE_ARIA_CURRENT_PROP_VALUE = re.compile("current=(?!false)(\w+);")
 
-	def _get_isCurrent(self) -> controlTypes.IS_CURRENT:
+	def _get_isCurrent(self) -> controlTypes.IsCurrent:
 		ariaProperties=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
 		match = self.RE_ARIA_CURRENT_PROP_VALUE.search(ariaProperties)
 		if match:
 			valueOfAriaCurrent = match.group(1)
 			try:
-				return controlTypes.IS_CURRENT(valueOfAriaCurrent)
+				return controlTypes.IsCurrent(valueOfAriaCurrent)
 			except ValueError:
 				log.debugWarning(
 					f"Unknown aria-current value: {valueOfAriaCurrent}, ariaProperties: {ariaProperties}"
 				)
-		return controlTypes.IS_CURRENT.NO
+		return controlTypes.IsCurrent.NO
 
 	def _get_roleText(self):
 		roleText = self.ariaProperties.get('roledescription', None)

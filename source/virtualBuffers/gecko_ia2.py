@@ -54,11 +54,11 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 		valForCurrent = attrs.get("IAccessible2::attribute_current", "false")
 		try:
-			isCurrent = controlTypes.IS_CURRENT(valForCurrent)
+			isCurrent = controlTypes.IsCurrent(valForCurrent)
 		except ValueError:
 			log.debugWarning(f"Unknown isCurrent value: {valForCurrent}")
-			isCurrent = controlTypes.IS_CURRENT.NO
-		if isCurrent != controlTypes.IS_CURRENT.NO:
+			isCurrent = controlTypes.IsCurrent.NO
+		if isCurrent != controlTypes.IsCurrent.NO:
 			attrs['current'] = isCurrent
 		placeholder = self._getPlaceholderAttribute(attrs, "IAccessible2::attribute_placeholder")
 		if placeholder is not None:

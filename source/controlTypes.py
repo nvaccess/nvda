@@ -665,7 +665,7 @@ REASON_CARET = OutputReason.CARET
 REASON_ONLYCACHE = OutputReason.ONLYCACHE
 
 
-class IS_CURRENT(Enum):
+class IsCurrent(Enum):
 	"""Values to use within NVDA to denote 'current' values.
 	These describe if an item is the current item within a particular kind of selection.
 	EG aria-current
@@ -681,7 +681,7 @@ class IS_CURRENT(Enum):
 	@property
 	def displayString(self):
 		"""
-		@return: The translated UI display string that should be used for this value of the IS_CURRENT enum
+		@return: The translated UI display string that should be used for this value of the IsCurrent enum
 		"""
 		try:
 			return _isCurrentLabels[self]
@@ -689,25 +689,25 @@ class IS_CURRENT(Enum):
 			log.debugWarning(f"No translation mapping for: {self}")
 			# there is a value for 'current' but NVDA hasn't learned about it yet,
 			# at least describe in the general sense that this item is 'current'
-			return _isCurrentLabels[IS_CURRENT.Yes]
+			return _isCurrentLabels[IsCurrent.Yes]
 
 
 #: Text to use for 'current' values. These describe if an item is the current item
 #: within a particular kind of selection. EG aria-current
 _isCurrentLabels: Dict[Enum, str] = {
-	IS_CURRENT.NO: "",  # There is nothing extra to say for items that are not current.
+	IsCurrent.NO: "",  # There is nothing extra to say for items that are not current.
 	# Translators: Presented when an item is marked as current in a collection of items
-	IS_CURRENT.Yes: _("current"),
+	IsCurrent.Yes: _("current"),
 	# Translators: Presented when a page item is marked as current in a collection of page items
-	IS_CURRENT.PAGE: _("current page"),
+	IsCurrent.PAGE: _("current page"),
 	# Translators: Presented when a step item is marked as current in a collection of step items
-	IS_CURRENT.STEP: _("current step"),
+	IsCurrent.STEP: _("current step"),
 	# Translators: Presented when a location item is marked as current in a collection of location items
-	IS_CURRENT.LOCATION: _("current location"),
+	IsCurrent.LOCATION: _("current location"),
 	# Translators: Presented when a date item is marked as current in a collection of date items
-	IS_CURRENT.DATE: _("current date"),
+	IsCurrent.DATE: _("current date"),
 	# Translators: Presented when a time item is marked as current in a collection of time items
-	IS_CURRENT.TIME: _("current time"),
+	IsCurrent.TIME: _("current time"),
 }
 
 

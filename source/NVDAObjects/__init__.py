@@ -975,13 +975,13 @@ Tries to force this object to take the focus.
 		"""
 		return None
 
-	isCurrent: controlTypes.IS_CURRENT  #: type info for auto property _get_isCurrent
+	isCurrent: controlTypes.IsCurrent  #: type info for auto property _get_isCurrent
 
-	def _get_isCurrent(self) -> controlTypes.IS_CURRENT:
+	def _get_isCurrent(self) -> controlTypes.IsCurrent:
 		"""Gets the value that indicates whether this object is the current element in a set of related 
 		elements. This maps to aria-current.
 		"""
-		return controlTypes.IS_CURRENT.NO
+		return controlTypes.IsCurrent.NO
 
 	def _get_shouldAcceptShowHideCaretEvent(self):
 		"""Some objects/applications send show/hide caret events when we don't expect it, such as when the cursor is blinking.

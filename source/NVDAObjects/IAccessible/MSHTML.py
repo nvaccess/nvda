@@ -546,10 +546,10 @@ class MSHTML(IAccessible):
 	def _get_isCurrent(self):
 		isCurrent = self.HTMLAttributes["aria-current"]
 		try:
-			return controlTypes.IS_CURRENT(isCurrent)
+			return controlTypes.IsCurrent(isCurrent)
 		except ValueError:
 			log.debugWarning(f"Unknown aria-current value: {isCurrent}")
-			return controlTypes.IS_CURRENT.NO
+			return controlTypes.IsCurrent.NO
 
 	def _get_HTMLAttributes(self):
 		return HTMLAttribCache(self.HTMLNode)
