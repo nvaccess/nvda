@@ -307,7 +307,7 @@ NVDA 可讓使用者以不同的方式在系統間導航並與之互動，包括
 
 利用 NVDA 在視窗作業系統上進行導航，最常用到的操作方式是使用標準的視窗鍵盤指令來移動系統焦點，例如按 Tab 或 Shift+Tab 在各控制項間向前或向後移動；利用按 Alt 跳到功能表列及以方向鍵在功能表內的項目間移動、或是使用 Alt+Tab 在已開啟的不同視窗間切換。
 當您這樣操作時，NVDA 通常會讀出焦點所在物件的相關資訊，如：名稱、類型、數值、狀態、說明、便捷鍵及位置等。
-當有啟用[焦點醒目提示 #VisionFocusHighlight]時，當前系統焦點所在的位置會在螢幕上呈現出來。
+當有啟用[視覺醒目提示 #VisionFocusHighlight]時，當前系統焦點所在的位置會在螢幕上呈現出來。
 
 以下是幾個用來移動系統焦點很有用的指令：
 %kc:beginInclude
@@ -364,7 +364,7 @@ NVDA 可讓使用者以不同的方式在系統間導航並與之互動，包括
 
 處於目前檢閱的物件稱為「導航器物件」。
 當在 [物件檢閱 #ObjectReview] 時，進到一個物件後，您可以使用 [文字檢閱指令 #ReviewingText] 來檢閱此物件。
-當有啟用[焦點醒目提示 #VisionFocusHighlight]時，當前導航器物件所在的位置會在螢幕上呈現出來。
+當有啟用[視覺醒目提示 #VisionFocusHighlight]時，當前導航器物件所在的位置會在螢幕上呈現出來。
 預設狀況下，「導航器物件」會跟隨系統焦點移動，這個功能可以來回切換成開或關的狀態。
 
 附註：點字游標跟隨物件導航的設定可至[點字游標跟隨 #BrailleTether]中進行調整。
@@ -506,7 +506,7 @@ NVDA 也提供一個利用音調的高低來提示鼠標所指位置在螢幕上
 
 在「瀏覽模式」狀態下，文件的內容是以平面形式呈現，利用按鍵來移動游標的操作，就如同在讀一般文字文件那樣，可檢閱其內容。
 所有 NVDA 的[系統游標 #SystemCaret] 按鍵指令皆可用於此模式，例如全文報讀、讀出格式資訊及在表格上的導航等指令。
-當啟用[焦點醒目提示 #VisionFocusHighlight]時，在瀏覽模式下，當前的檢閱游標所在的位置會以視覺強調的方式在螢幕上呈現。
+當啟用[視覺醒目提示 #VisionFocusHighlight]時，在瀏覽模式下，當前的檢閱游標所在的位置會以視覺強調的方式在螢幕上呈現。
 而不管是連結或標題等的資訊，均會如同在朗讀一般文字那樣，隨游標的移動而讀出。
 
 在讀取這些文件時，有時需要與頁面上的某些控制元件作直接的互動，
@@ -776,8 +776,8 @@ NVDA 提供了一些內建的視覺加強器，說明如下：
 
 NVDA 的視覺相關設定可以從[NVDA 設定 #NVDASettings]對話框中的[視覺類別 #VisionSettings]中進行調整。
 
-++ 焦點醒目提示 ++[VisionFocusHighlight]
-「焦點醒目提示」可以用來提示畫面上的[系統焦點 #SystemFocus]、[導航器物件 #ObjectNavigation]及[瀏覽模式 #BrowseMode]中的所在位置。
+++ 視覺醒目提示 ++[VisionFocusHighlight]
+「視覺醒目提示」可以用來提示畫面上的[系統焦點 #SystemFocus]、[導航器物件 #ObjectNavigation]及[瀏覽模式 #BrowseMode]中的所在位置。
 它是使用一個帶有顏色的長方形外框來標示焦點的所在位置。
 - 藍色實線代表系統焦點結合導航器物件同在的位置，（這是因為[導航器物件是跟隨系統焦點。 #ReviewCursorFollowFocus]）
 - 藍色虛線僅代表系統焦點的位置。
@@ -785,7 +785,7 @@ NVDA 的視覺相關設定可以從[NVDA 設定 #NVDASettings]對話框中的[�
 - 黃色實線用來標示在瀏覽模式中的虛擬游標，例如在瀏覽器中。
 -
 
-當您在[NVDA 設定 #NVDASettings]對話框中的[視覺類別 #VisionSettings]內啟用了焦點醒目提示後，您便可以[更改是否醒目提示系統焦點、瀏覽器物件或瀏覽模式游標 #VisionSettingsFocusHighlight]。
+當您在[NVDA 設定 #NVDASettings]對話框中的[視覺類別 #VisionSettings]內啟用了視覺醒目提示後，您便可以[更改是否醒目提示系統焦點、瀏覽器物件或瀏覽模式游標 #VisionSettingsFocusHighlight]。
 
 ++ 螢幕簾幕 ++[VisionScreenCurtain]
 對於全盲或低視力的使用者，時常不需要看畫面上的內容。
@@ -1147,6 +1147,9 @@ ESpeak NG 的變聲聽起來像似原來的語音，僅是發音方式有些微�
 這是一個以滑桿呈現的控制選項，其範圍介於 0% 至 100%，
 數值愈小速度愈慢，反之愈大則報讀的速度愈快。
 
+==== 加快語速 ====[SpeechSettingsRateBoost]
+若目前使用的語音合成器有支援此功能，啟用此選項可大幅加快語速。
+
 ==== 音調 ====[SpeechSettingsPitch]
 這是一個以滑桿呈現的控制選項，其範圍介於 0% 至 100%，
 數值愈小音調愈低，反之則愈大則報讀的音調愈高。
@@ -1298,14 +1301,14 @@ NVDA 會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸
 當點字游標跟隨檢閱游標時，此選項允許使用者選擇以不同的凸點形狀來呈現。
 這種選用的方式並不會影響點字內容的呈現，它總是以不跳動的第7及第8點來代表。
 
-==== 訊息顯示的時間(以秒計 ====[BrailleSettingsMessageTimeout]
+==== 顯示訊息 ====[BrailleSettingsShowMessages]
+這是一個下拉式方塊，可用來讓您設定是否顯示點字訊息，以及訊息顯示的時間長度。
+
+==== 訊息顯示時間(以秒計 ====[BrailleSettingsMessageTimeout]
 此為一個可編輯的數字方塊，可設定 NVDA 訊息在點顯器上顯示的時間長短，以秒為單位。
-當輸入 0 可以完全關閉這些訊息的顯示。
 當按下點顯器上的游標定位鍵時，NVDA 的訊息會立即消失，直到按下其他會觸發訊息的按鍵才會再次顯示。
-
-==== 持續顯示訊息 ====[BrailleSettingsNoMessageTimeout]
-此選項允許點顯器可持續顯示 NVDA 訊息。
-
++This option is shown only if "Show Messages" is set to "Use timeout".
+此選項唯有在「顯示訊息」選擇「設定逾時」的情況下才會出現。
 %kc:setting
 ==== 點字游標跟隨 ====[BrailleTether]
 快速鍵: NVDA+Ctrl+t
@@ -1397,10 +1400,10 @@ NVDA 會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸
 這部分的設定可由某些 [NVDA 附加元件 #AddonsManager]提供更多延伸的功能選項。
 預設情況下，此設定類別包含以下選項：
 
-==== 焦點醒目提示 ====[VisionSettingsFocusHighlight]
-在「焦點醒目提示」群組中的核取方塊，用來設定 NVDA 內建的[醒目提示 #VisionFocusHighlight]功能。
+==== 視覺醒目提示 ====[VisionSettingsFocusHighlight]
+在「視覺醒目提示」群組中的核取方塊，用來設定 NVDA 內建的[醒目提示 #VisionFocusHighlight]功能。
 
-- 啟用醒目提示器：切換焦點醒目提示的開關
+- 啟用醒目提示器：切換視覺醒目提示的開關
 - 醒目提示系統焦點：切換是否讓[系統焦點 #SystemFocus]的位置被標示出來。
 - 醒目提示導航器物件：切換是否讓[導航器物件 #ObjectNavigation]的位置被標示出來。
 - 醒目提示瀏覽模式游標：切換是否讓[瀏覽模式中的虛擬游標 #BrowseMode]的位置被標示出來。
@@ -1923,6 +1926,9 @@ NVDA 提供的功能遠超過僅將該字串的讀音改變而已。
 
 當完成前述的編輯時，您可按「確認」按鈕，以確認此次的變更，或按「取消」，而不做任何變更。
 
++In the case of complex symbols, the Replacement field may have to include some group references of the matched text. For instance, for a pattern matching a whole date, \1, \2, and \3 would need to appear in the field, to be replaced by the corresponding parts of the date.
++Normal backslashes in the Replacement field should thus be doubled, e.g. "a\\b" should be typed in order to get the "a\b" replacement.
++
 +++ 輸入手勢 +++[InputGestures]
 此對話框允許您變更那些對應到某些像點顯器等設備之 NVDA 指令的手勢。
 
@@ -2103,6 +2109,14 @@ NVDA 允許您使用修改「組態設定檔」來達成前述的功能。
 在點字檢視器中有個名為「在啟動時顯示點字檢視器」的核取方塊。
 若勾選，當 NVDA 啟動時，也會啟用點字檢視器。
 點字檢視器視窗在每次啟動時，其大小與位置會與前一次關閉時相同。
+
+在點字檢視器中有個名為「停留鼠標以定位點字方」的核取方塊，預設是未啟用。
+若勾選，當鼠標停留於某個點字方上時，會觸發該點字方的游標定位功能。
+通常這是用來移動游標到該點字方上，或在該處觸發執行某動作。
+此功能適用於測試 NVDA 是否可正確地從點字方對應到所顯示的點字上。
+為了預防不小心觸發游標定位功能，此功能設計會稍微延遲些。
+鼠標必須停留在點字方上直到它變為綠色。
+點字方將從原先的淺黃色，轉換到橘色，最後再變為綠色才表示觸發。
 
 ++ Python 主控台 ++[PythonConsole]
 在 NVDA 功能表內「工具」子功能表內的「Python 主控台」是一個很有用的開發工具，它可以供做為除錯、NVDA 內部的一般檢視，或是供某些應用程式的可及性階層架構的檢視。
@@ -2505,7 +2519,7 @@ NVDA可以支援由 [hedo Reha-Technik https://www.hedo.de/] 出品的點顯器 
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B 系列 / BrailleNote Touch  ++[HumanWareBrailliant]
-當透過 USB 或藍牙連接時，NVDA 可以支援 [HumanWare https://www.humanware.com/] 公司的 The Brailliant BI 及 B 系列點顯器，包括 BI 14, BI 32, BI 40及 B 80等。
+當透過 USB 或藍牙連接時，NVDA 可以支援 [HumanWare https://www.humanware.com/] 公司的 The Brailliant BI 及 B 系列點顯器，包括 BI 14, BI 32, BI 20X, BI 40, BI 40X 及 B 80 等。
 如果以協定透過 USB 連接到 HumanWare 點顯器，您應先使用廠商所提供的驅動程式。
 如果連接協定的設定是對點顯器開啟，則 USB 驅動程式並非必要。
 
@@ -2625,7 +2639,7 @@ NVDA 透過 USB 或藍芽連結時，支援 Braille Sense、Braille EDGE、Smart
 | escape key | dot1+dot5+space, f4, brailleedge:f1 |
 | delete key | dot1+dot3+dot5+space, dot1+dot4+dot5+space |
 | f1 key | dot1+dot2+dot5+space |
-| f3 key | dot1+dot2+dot4+dot8 |
+| f3 key | dot1+dot4+dot8 |
 | f4 key | dot7+f3 |
 | windows+b key | dot1+dot2+f1 |
 | windows+d key | dot1+dot4+dot5+f1 |
@@ -3125,6 +3139,7 @@ nvda -q
 | None | --install | 安裝 NVDA（啟動新安裝的版本） |
 | None | --install-silent | 靜默安裝 NVDA（不啟動新安裝的版本） |
 | None | --enable-start-on-logon=True|False | 當安裝時，啟用 [在登入畫面使用 NVDA #StartAtWindowsLogon] |
+| None | --copy-portable-config | 安裝時，將所指定路徑下的可攜式版組態 (--config-path, -c) 複製到目前的使用者帳戶中 |
 | None | --create-portable | 建立可攜式版 NVDA（啟動新建立的版本）。 需求 --可攜式路徑需要指定 |
 | None | --create-portable-silent | 建立可攜式版 NVDA（啟動新安裝的版本）。 需求 --可攜式路徑需要指定 |
 | None | --portable-path=PORTABLEPATH | 可攜式版的路徑將被建立 |

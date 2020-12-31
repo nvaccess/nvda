@@ -31,6 +31,7 @@ Plus beaucoup d'autres correctifs et améliorations.
  - Ajout de la table Braille Bachkir grade 1
  - Ajout de la table Braille Copte informatique 8 points
  - Ajout des tables Braille Russe braille littéraire et Russe braille littéraire (détaillé).
+ - Ajout de la table Afrikaans abrégé
  - Suppression de la table Braille Russe grade 1
 - Lors de la lecture en mode "Dire tout" en mode navigation, les commandes "Rechercher suivant" et "Rechercher précédent" n'arrêtent plus la lecture si l'option "Autoriser le survol en mode dire tout" est activée. À la place, la lecture reprend après le résultat précédent ou suivant trouvé. (#11563)
 - Pour les afficheurs Braille HIMS, F3 a été réassigné à espace + points 148. (#11710)
@@ -74,6 +75,7 @@ Plus beaucoup d'autres correctifs et améliorations.
 - Dans la calculatrice de Windows 10, NVDA n'annoncera plus la progression du calcul si l'annonce des caractères saisis est désactivée. (#9428)
 - NVDA ne plante plus lors de l'utilisation de la table Anglais (États-Unis) abrégé, option "Afficher le mot sous le curseur en braille informatique" activée, lorsqu'un contenu telle qu'une URL est affiché. (#11754)
 - Il est à nouveau possible d'annoncer le formatage pour la cellule sélectionnée dans Excel en utilisant NVDA+F. (#11914)
+- La saisie Qwerty sur les afficheurs Braille Papenmeier est à nouveau supportée et ne cause plus le plantage aléatoire de NVDA. (#11944)
 
 
 == Changements pour les développeurs ==

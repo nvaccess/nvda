@@ -5,6 +5,13 @@ NVDA更新日志
 
 = 2020.4 =
 
+此版本包括对新版中文输入法的改进，对 Liblouis 的更新，以及支持在焦点模式下使用 NVDA + F7 的元素列表对话框。
+当您在 NVDA 设置对话框中按 F1 时，可以调用相关的上下文帮助。
+改进了标点符号读音规则，语音词典，盲文消息和略读功能。
+针对 Windows Mail, Outlook, Teams, Visual Studio, Azure Data Studio以及 Foobar2000 等应用程序的增强支持和错误修复.
+在网页上，对 Google Docs进行了改进，并提供了更多 ARIA 支持。
+以及其他许多重要的 Bug 修复和改进。
+
 == 新特性 ==
 - 在 NVDA 对话框中按 F1 键会打开帮助文档并跳转到相应章节。 (#7757)
 - 在 Microsoft SQL Server Management Studio 和 Visual Studio 2017及更高版本中支持自动完成建议（IntelliSense）。 (#7504)
@@ -26,7 +33,7 @@ NVDA更新日志
  - 增加了科普特8点计算机盲文表
  - 增加了俄罗斯盲文和俄罗斯盲文（详细）表。
  - 删除了俄罗斯1级盲文表
-    - When reading with say all in browse mode, the find next and find previous commands do not stop reading anymore if Allow skim reading option is enabled; say all rather resumes from after the next or previous found term. (#11563)
+- When reading with say all in browse mode, the find next and find previous commands do not stop reading anymore if Allow skim reading option is enabled; say all rather resumes from after the next or previous found term. (#11563)
 - For HIMS braille displays F3 has been remapped to Space + dots 148. (#11710)
 - Improvements to the UX of the "braille message timeout" and "Show messages indefinitely" options. (#11602)
 - In web browsers and other applications that support browse mode, the Elements List dialog (NVDA+F7) can now be invoked when in focus mode. (#10453)
@@ -67,9 +74,10 @@ NVDA更新日志
 - In Visual Studio, IntelliSense tool tips that provide additional details about the currently selected IntelliSense item are now only reported once. (#11611)
 - In Windows 10 Calculator, NVDA will not announce progress of calculations if speak typed characters is disabled. (#9428)
 - NVDA no longer crashes when using English US grade 2 and expand to computer Braille at the cursor is on, when displaying certain content such as a URL in Braille. (#11754)
+- It is again possible to report formatting information for the focused Excel cell using NVDA+F. (#11914)
+- QWERTY input on Papenmeier braille displays that support it again works and no longer causes NVDA to randomly freeze. (#11944)
 
-
-== Changes for Developers ==
+== 插件以及NVDA核心开发者需要了解的变动 ==
 - System tests can now send keys using spy.emulateKeyPress, which takes a key identifier that conforms to NVDA's own key names, and by default also blocks until the action is executed. (#11581)
 - NVDA no longer requires the current directory to be the NVDA application directory in order to function. (#6491)
 - The aria live politeness setting for live regions can now be found on NVDA Objects using the liveRegionPoliteness property. (#11596)

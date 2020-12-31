@@ -30,6 +30,7 @@ Diverse weitere Fehlerbehebungen und Verbesserungen.
  - Mehrere Abstürze behoben.
  - Braille-Tabelle für Baschkirische Vollschrift hinzugefügt.
  - Koptische Tabelle für 8-Punkt-Computer-Braille hinzugefügt.
+ - Braille-Tabelle für Kurzschrift (Afrikaans) hinzugefügt
  - Russische literarische Braille- und russische literarische Braille-Tabellen (detailliert) hinzugefügt.
  - Die russische Braille-Tabelle für Vollschrift wurde entfernt.
 - Wenn Sie im Suchmodus mit "Alles Lesen" sich vorlesen lassen, werden die Befehle "Weiter suchen" und "Vorherige suchen" nicht mehr beendet, wenn die Option "Überfliegen des Lesens zulassen" aktiviert ist. Sagen wir, alle werden eher nach dem nächsten oder vorherigen gefundenen Begriff fortgesetzt. (#11563)
@@ -74,6 +75,7 @@ Diverse weitere Fehlerbehebungen und Verbesserungen.
 - In Windows 10-Rechner gibt NVDA den Fortschritt der Berechnungen nicht aus, wenn die Ansage der Zeichen während der Eingabe deaktiviert sind. (#9428)
 - NVDA stürzt nicht mehr bei der Verwendung der amerikanische Kurzschrift ab und Sie mit aktiviertem Cursor auf Computer-Braille umschalten, wenn bestimmte Inhalte wie eine URL in Braille angezeigt werden. (#11754)
 - In Microsoft Excel ist es wieder möglich, Formatierungsinformationen für die aktuelle Zelle mit NVDA+F abzufragen. (#11914)
+- Die QWERTZ-Eingabe auf Papenmeier-Braillezeilen, die dies unterstützen, funktioniert wieder und bewirkt nicht mehr, dass NVDA zufällig einfriert. (#11944)
 
 
 == Änderungen für Entwickler ==
