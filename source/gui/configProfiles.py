@@ -15,7 +15,7 @@ import gui.contextHelp
 
 
 class ProfilesDialog(
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	shouldSuspendConfigProfileTriggers = True
@@ -310,7 +310,7 @@ class TriggerInfo(object):
 
 
 class TriggersDialog(
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	helpId = "ConfigProfileTriggers"
@@ -401,7 +401,7 @@ class TriggersDialog(
 
 
 class NewProfileDialog(
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	helpId = "ProfilesCreating"
@@ -537,7 +537,7 @@ class NewProfileDialog(
 
 
 class RenameProfileDialog(
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.TextEntryDialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	helpId = "ProfilesBasicManagement"

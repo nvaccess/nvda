@@ -307,7 +307,7 @@ Sistem odağı, sadece "odak" olarak da anılır, klavyede basılacak tuşlardan
 
 NVDA ile windows içinde dolaşmanın en yaygın ve kolay yolu, Tab ve şift tab ile kontroller arasında ileri geri gidiş, Alt ile bir uygulamanın menü çubuğuna ulaşım ve yön tuşları kullanılarak menü ögeleri arasında dolaşım, veya alt+tab ile pencereler arasında dolaşım gibi temel windows komutlarını kullanmaktır. Bu, sistem odağını hareket ettirir; Örneğin, Bazı nesneler klavyede basılan tuşlara göre hareket eder.
 Siz yukarıda bahsedilen tuşlara bastıkça, NVDA Üzerine gelinen nesnenin adı, Türü, değeri, durumu, tanımı, klavye kısayolu ve pozisyonuyla ilgili bilgileri seslendirecektir.
-[Odak vurgulaması #VisionFocusHighlight] etkinleştirildiğinde, geçerli sistem odağının konumu  görsel olarak da gösterilir.
+[görsel vurgu #VisionFocusHighlight] etkinleştirildiğinde, geçerli sistem odağının konumu  görsel olarak da gösterilir.
 
 Sistem odağıyla dolaşırken, bazı yararlı tuş kombinasyonları bulunmaktadır:
 %kc:beginInclude
@@ -363,7 +363,7 @@ Benzer biçimde, bir araç çubuğu da çeşitli kontrolleri kapsar ve bu kontro
 
 İncelenmekte olan nesneye dolaşım nesnesi denir. 
 Nesne dolaşım komutlarıyla bir nesne üzerine geldikten sonra, nesneyi [metin inceleme komutlarını #ReviewingText] kullanarak [Nesne inceleme kipinde #ObjectReview] inceleyebilirsiniz.
-[Odak vurgulaması #VisionFocusHighlight] etkinse, geçerli nesne sunucusunun konumu  görsel olarak da gösterilir.
+[görsel vurgu #VisionFocusHighlight] etkinse, geçerli nesne sunucusunun konumu  görsel olarak da gösterilir.
 Varsayılan olarak, nesne sunucusu sistem odağıyla birlikte hareket eder; ancak bu özellik kapatılıp açılabilir.
 
 Not: Braille'in nesne sunucusunu takibi  [Braille taşınsın #BrailleTether] altından ayarlanabilir.
@@ -506,7 +506,7 @@ Tarama kipi aynı zamanda Microsoft Word için karmaşık belgelerde dolaşılı
 
 Tarama kipi, web sayfası gibi bir içeriğin bir metin dosyası gibi sunulduğu bir inceleme alanıdır ve içerik içinde yön tuşlarıyla dolaşılabilir.
 NVDA'nın [sistem düzenleme imleci #SystemCaret] için geçerli olan hepsini okuma, tablo inceleme, yazı biçimini raporlama gibi komutları bu kip için de geçerlidir.
-[Odak vurgulaması #VisionFocusHighlight] etkinleştirildiğinde, tarama kipi imlecinin konumu  görsel olarak da gösterilir.
+[Görsel vurgu #VisionFocusHighlight] etkinleştirildiğinde, tarama kipi imlecinin konumu  görsel olarak da gösterilir.
 Metin içinde hareket ettikçe, okunan metnin bir bağlantı veya başlık olup olmadığı gibi bilgiler de belirtilir.
 
 Bazen, belge içindeki kontrollerle doğrudan etkileşim içinde olmanız gerekebilir.
@@ -776,8 +776,8 @@ NVDA, aşağıda açıklanan çeşitli yerleşik görsel geliştirme sağlayıc�
 
 NVDA'nın görsellikle ilgili  ayarları [NVDA Ayarları #NVDASettings] iletişim kutusu  altında [görsellik kategorisinden #VisionSettings] değiştirilebilir.
 
-++ Odak vurgulaması ++[VisionFocusHighlight]
-Odak vurgulaması [sistem odağı #SystemFocus], [nesne sunucusu #ObjectNavigation] ve [tarama kipi #BrowseMode] konumlarının anlaşılmasına görsel olarak yardımcı olur.
+++ Görsel Vurgu ++[VisionFocusHighlight]
+Görsel vurgu [sistem odağı #SystemFocus], [nesne sunucusu #ObjectNavigation] ve [tarama kipi #BrowseMode] konumlarının anlaşılmasına görsel olarak yardımcı olur.
 Bu konumlar renkli bir dikdörtgen çizgiyle vurgulanır.
 - Düz mavi, sistem odağı ve nesne sunucusu aynı konumdaysa vurgulama için kullanılır. (e.g. Çünkü [nesne sunucusu sistem odağını takip ediyordur #ReviewCursorFollowFocus]).
 - Kesik mavi sistem imleci konumunu vurgular.
@@ -785,7 +785,7 @@ Bu konumlar renkli bir dikdörtgen çizgiyle vurgulanır.
 - Düz sarı (web tarayıcılarındaki gibi fiziksel bir imlecin bulunmadığı yerlerde ) tarama kipinde kullanılan sanal imleci vurgular.
 -
 
-[NVDA Ayarları #NVDASettings] iletişim kutusunda [görsellik kategorisi #VisionSettings] altındaki Odak Vurgulaması etkinse, [odağın, nesne sunucusunun ya da tarama kipi imleci konumunun  vurgulanıp vurgulanmayacağını değiştirebilirsiniz #VisionSettingsFocusHighlight]
+[NVDA Ayarları #NVDASettings] iletişim kutusunda [görsellik kategorisi #VisionSettings] altındaki Görsel vurgu etkinse, [odağın, nesne sunucusunun ya da tarama kipi imleci konumunun  vurgulanıp vurgulanmayacağını değiştirebilirsiniz #VisionSettingsFocusHighlight]
 
 ++ Ekran perdesi ++[VisionScreenCurtain]
 Kör ya da az gören bir kullanıcı iseniz, ekranda ne olduğunu algılamanız yüksek olasılıkla mümkün ya da gerekli değildir.
@@ -1147,6 +1147,9 @@ Bir üçüncü taraf sentezleyici kullanıyorsanız, seçtiğiniz ses destekliyo
 Bu seçenek konuşma hızını değiştirmenizi sağlar.
 Burası 0'dan 100'e giden bir göstergedir, ve 0 en yavaşı gösterirken, 100 en hızlıyı gösterir.
 
+==== Hızlandırıcı ====[SpeechSettingsRateBoost]
+Bu seçeneğin etkinleştirilmesi, mevcut sentezleyici tarafından destekleniyorsa konuşma hızını önemli ölçüde artıracaktır.
+
 ==== Ses Perdesi ====[SpeechSettingsPitch]
 Bu seçenek konuşmacının  ses perdesini değiştirmenizi sağlar.
 Burası 0'dan 100'e giden bir göstergedir, ve 0 en düşük perdeyi yani kalını gösterirken, 100 en yüksek perdeyi yani en inceyi gösterir.
@@ -1298,13 +1301,14 @@ Seçim belirteci bu tercihten etkilenmez, her zaman 7 ve 8 nokta yukarıdadır.
 Bu seçenek, inceleme imleci tarafından taşındığı durumda braille imlecin şeklini belirlemenizi sağlar.
 Seçim belirteci bu tercihten etkilenmez, her zaman 7 ve 8 nokta yukarıdadır.
 
+==== Mesajları Göster ====[BrailleSettingsShowMessages]
+Bu, NVDA'nın braille mesajlarını görüntüleyip görüntülemeyeceğini ve bunların ne zaman otomatik olarak kaybolacağını seçmenize olanak tanıyan bir seçim kutusudur.
+
 ==== Mesaj Zaman Aşımı Saniyesi ====[BrailleSettingsMessageTimeout]
 Bu seçenek, sistem mesajlarının braille ekranda ne kadar uzun süre gösterileceğini kontrol eden bir rakamsal alandır.
 0 yazılırsa mesajların gösterimi tamamen kapatılır.
 Braille ekranında bir yönlendirme tuşuna basıldığında NVDA mesajı hemen kapatılır, ancak mesajı tetikleyen ilgili tuşa basıldığında tekrar gösterilir.
-
-==== Mesajları süresiz olarak göster ====[BrailleSettingsNoMessageTimeout]
-Bu seçenek NVDA mesajlarının braille ekranda süresiz olarak görüntülenmesini sağlar.
+Bu seçenek yalnızca "Mesajları Göster", "Zaman aşımını kullan" olarak ayarlanmışsa gösterilir.
 
 %kc:setting
 ==== Braille'in İzleyeceği İmleç ====[BrailleTether]
@@ -1397,18 +1401,18 @@ NVDA Ayarları iletişim kutusundaki görsellik kategorisi [görsel yardımları
 Bu kategori altında mevcut olan seçeneklerin [NVDA eklentileri #AddonsManager] ile genişletilebileceğini unutmayın.
 Varsayılan olarak, bu ayar kategorisi aşağıdaki seçenekleri içerir:
 
-==== Odak vurgulaması ====[VisionSettingsFocusHighlight]
-Odak Vurgulama grubundaki onay kutuları NVDA'nın [Odak vurgulaması #VisionFocusHighlight] özelliği ile ilgili yerleşik davranışını kontrol eter.
+==== Görsel Vurgu ====[VisionSettingsFocusHighlight]
+Görsel vurgu grubundaki onay kutuları NVDA'nın [Görsel vurgu #VisionFocusHighlight] özelliği ile ilgili yerleşik davranışını kontrol eter.
 
-- Vurgulamayı Etkinleştir: Odak Vurgusunu açıp kapatır.
-- Sistem odağını vurgula: [sistem odağının #SystemFocus] vurgulanıp vurgulanmayacağını değiştirir.
-- Nesne sunucusunu vurgula: [nesne sunucusunun #ObjectNavigation]vurgulanıp vurgulanmayacağını değiştirir.
-- Tarama kipi imlecini vurgula: [tarama kipi sanal imlecinin #BrowseMode]vurgulanıp vurgulanmayacağını değiştirir.
+- Vurgulamayı Etkinleştir: Görsel Vurguyu açıp kapatır.
+- Sistem odağını görselleştir: [sistem odağının #SystemFocus] vurgulanıp vurgulanmayacağını değiştirir.
+- Nesne sunucusunu görselleştir: [nesne sunucusunun #ObjectNavigation]vurgulanıp vurgulanmayacağını değiştirir.
+- Tarama kipi imlecini görselleştir: [tarama kipi sanal imlecinin #BrowseMode]vurgulanıp vurgulanmayacağını değiştirir.
 -
 
 "Vurgulamayı Etkinleştir" onay kutusunun işaretlenip işaretlenmemesinin, ağaçtaki diğer onay kutularının durumunu da değiştireceğini unutmayın.
 Bu nedenle, "Vurgulamayı Etkinleştir" kapalıysa ve bu onay kutusunu işaretlerseniz, diğer ağaç onay kutuları da otomatik olarak işaretlenir.
-Yalnızca odağı vurgulamak ve nesne sunucusu ve tarama kipi onay kutularını işaretlemeden bırakmak istiyorsanız, "Vurgulamayı Etkinleştir" onay kutusunun durumu yarı işaretli olur.
+Yalnızca odağı görselleştirmek ve nesne sunucusu ve tarama kipi onay kutularını işaretlemeden bırakmak istiyorsanız, "Vurgulamayı Etkinleştir" onay kutusunun durumu yarı işaretli olur.
 
 ==== Ekran perdesi ====[VisionSettingsScreenCurtain]
 [Ekran perdesini #VisionScreenCurtain] "Ekranı karart (anında devreye girer)" onay kutusunu işaretleyerek etkinleştirebilirsiniz.
@@ -1923,7 +1927,10 @@ Kaldır düğmesine basarak daha önce eklediğiniz işareti silebilirsiniz.
 
 Bu ayarlamaları yaptıktan sonra tamam düğmesine basarak değişiklikleri kaydedebilir; iptal düğmesiyle de değişiklik öncesi ayarlara geri dönebilirsiniz.
 
-+++ Girdi Hareketleri +++
+Karmaşık semboller söz konusu olduğunda, Değiştirme alanı eşleşen metnin bazı grup referanslarını içermelidir. Örneğin, tam bir tarihle eşleşen bir desen için, \ 1, \ 2 ve \ 3'ün tarihin karşılık gelen bölümleriyle değiştirilmesi için alanda görünmesi gerekir.
+Bu nedenle, değiştirme alanındaki Normal ters bölüler iki katına çıkarılmalıdır, örneğin "a\b" yerine geçmesi için "a\\b" yazılmalıdır.
+
++++ Girdi Hareketleri +++[InputGestures]
 Bu iletişim kutusunda, NVDA komutları için kullanılan hareketleri (klavyedeki tuşlar, braille ekrandaki düğmeler , vs.) özelleştirebilirsiniz.
 
 Sadece, iletişim kutusu açılmadan önce kullanılabilen komutlar gösterilir.
@@ -2103,6 +2110,14 @@ Fiziksel braille ekranlarında genellikle ileri veya geri kaydırma düğmeleri 
 Braille görüntüleyici penceresinde "Başlangıçta braille görüntüleyicisini göster" adlı  bir onay kutusu bulunur.
 Bu işaretliyse, NVDA başlatıldığında braille görüntüleyici açılacaktır.
 Braille görüntüleme penceresi her zaman kapatıldığı zamanki boyut ve konumlarla yeniden açılmaya çalışır.
+
+Braille görüntüleyici penceresi,  "Hücre yönlendirmesi için üzerine gelin"etiketli bir onay kutusu içerir, varsayılanı işaretli değildir.
+İşaretlenirse, fareyi bir braille hücresinin üzerine getirmek, o hücre için "Braille hücresine yönlendir" komutunu tetikleyecektir.
+Bu genellikle imleci hareket ettirmek veya bir kontrol için eylemi tetiklemek için kullanılır.
+Bu, NVDA'NIN Braille hücresinden a haritasını doğru bir şekilde tersine çevirebileceğini test etmek için yararlı olabilir.
+İstemeden hücrelere yönlendirmeyi önlemek için komut gecikir.
+Hücre yeşile dönene kadar fare üzerinde olmalıdır.
+Hücre açık sarı renkte başlar, turuncuya geçer, sonra aniden yeşile döner.
 
 ++ Python Konsolu ++[PythonConsole]
 NVDA menüsündeki Araçlar altında bulunan NVDA Python konsolu, hata ayıklama, NVDA dahili bileşenlerinin genel denetimi veya bir uygulamanın erişilebilirlik hiyerarşisinin denetimi için yararlı olan bir geliştirme aracıdır.
@@ -2505,7 +2520,7 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B Serisi / BrailleNote Touch  ++[HumanWareBrailliant]
- Brailliant BI ve B serisi braille ekranlar, [HumanWare https://www.humanware.com/], BI 14, BI 32, BI 40 ve B 80 dahil, USB ya da bluetooth ile bağlandığında desteklenmektedir.
+ Brailliant BI ve B serisi braille ekranlar, [HumanWare https://www.humanware.com/], BI 14, BI 32, BI 20X, BI 40, BI 40X ve B 80 dahil, USB ya da bluetooth ile bağlandığında desteklenmektedir.
 USB bağlantısını ve HumanWare protokolünü kullanıyorsanız, öncelikle üretici tarafından sağlanan USB sürücülerini kurmalısınız.
 OpenBraille protokolü için USB sürücüleri gerekmez.
 
@@ -2625,7 +2640,7 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | escape key | dot1+dot5+space, f4, brailleedge:f1 |
 | delete key | dot1+dot3+dot5+space, dot1+dot4+dot5+space |
 | f1 key | dot1+dot2+dot5+space |
-| f3 key | dot1+dot2+dot4+dot8 |
+| f3 key | dot1+dot4+dot8+space |
 | f4 key | dot7+f3 |
 | windows+b key | dot1+dot2+f1 |
 | windows+d key | dot1+dot4+dot5+f1 |
@@ -3125,6 +3140,7 @@ Aşağıdakiler NVDA komut satırı seçenekleridir:
 | None | --install | NVDA'yı kurar (yeni kurulmuş kopyayı çalıştırarak) |
 | None | --install-silent | NVDA'yı sessizce kurar (yeni kurulmuş kopyayı başlatmaz) |
 | None | --enable-start-on-logon=True|False | Yüklerken, NVDA'nın [oturum açma ekranında başlamasını #StartAtWindowsLogon] etkinleştirir |
+| None | --copy-portable-config | Yüklerken, taşınabilir yapılandırmayı sağlanan yoldan (--config-path,- c) geçerli kullanıcı hesabına kopyalar |
 | None | --create-portable | NVDA'nın taşınabilir bir kopyasını oluşturur (işlem sonunda yeni kopya çalıştırılır). --portable-path belirtilmesi gerekir |
 | None | --create-portable-silent | NVDA'nın taşınabilir bir kopyasını oluşturur (işlem sonunda yeni kopya çalıştırılmaz). --portable-path belirtilmesi gerekir |
 | None | --portable-path=PORTABLEPATH | taşınabilir kopyanın oluşturulacağı adres |
