@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2009-2020 NV Access Limited, Joseph Lee, Mohammad Suliman,
+# Copyright (C) 2009-2021 NV Access Limited, Joseph Lee, Mohammad Suliman,
 # Babbage B.V., Leonard de Ruijter, Bill Dengler
 
 """Support for UI Automation (UIA) controls."""
