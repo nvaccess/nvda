@@ -16,10 +16,16 @@
 - Thêm lệnh để bật / tắt việc đọc các văn bản đã đánh dấu (được làm nổi); không có thao tác mặc định cho lệnh này. (#11807)
 - Đã thêm tham số dòng lệnh --copy-portable-config cho phép tự động sao chép cấu hình được cung cấp vào tài khoản người dùng khi cài đặt NVDA ở chế độ im lặng. (#9676)
 - Việc đưa đến ô trong chữ nổi giờ đây đã hỗ trợ cho trình xem chữ nổi với người dùng chuột, di chuyển chuột để đưa đến một ô chữ nổi. (#11804)
+- NVDA giờ đây sẽ tự nhận  các thiết bị Humanware Brailliant BI 40X và 20X qua cả USB và Bluetooth. (#11819)
 
 
 == Các thay đổi ==
-- Đã cập nhật thư viện phiên dịch chữ nổi liblouis lên phiên bản 3.15.0
+- Đã cập nhật thư viện phiên dịch chữ nổi liblouis lên phiên bản 3.16.1:
+ - Khắc phục được nhiều lỗi
+ - Thêm bảng chữ nổi tiếng Bashkir cấp 1
+ - Thêm bảng chữ nổi máy tính tiếng Coptic 8 chấm
+ - Thêm các bảng chữ nổi văn học tiếng Nga và chữ nổi văn học tiếng Nga (chi tiết).
+ - Gỡ bỏ bảng chữ nổi tiếng Nga cấp 1
 - Khi đọc với tính năng đọc tất cả trong chế độ duyệt, các lệnh tìm tiếp và tìm trước không dừng đọc nếu tùy chọn Cho phép thay đổi vị trí đọc khi đọc tất cả được bật; việc đọc tất cả sẽ tiếp tục từ sau cụm từ được tìm thấy. (#11563)
 - Với màn hình chữ nổi của HIMS, F3 đã được đổi thành khoảng trắng + chấm 148. (#11710)
 - Cải tiến cho tùy chọn "thời gian kết thúc thông điệp chữ nổi" và "Hiển thị vô thời hạn". (#11602)
@@ -51,6 +57,11 @@
 - Một kịch bản NVDA không còn bị xem là đang lặp lại nếu một phím không liên quan được bấm giữa hai lần gọi kịch bản. (#11388) 
 - Các thẻ nhấn mạnh (strong và emphasis) trong Internet Explorer giờ đây lại có thể được tắt không cho đọc bằng cách tắt tùy chọn báo nhận mạnh trong cài đặt định dạng tài liệu của NVDA. (#11808)
 - Việc bị treo vài giây được báo về bởi một số ít người dùng khi di chuyển bằng mũi tên giữa các ô trong Excel không còn xảy ra nữa. (#11818)
+- Văn bản được đánh dấu là có cả lỗi chính tả và ngữ pháp trong Google Chrome sẽ được NVDA thông báo chính xác là có cả lỗi chính tả và ngữ pháp. (#11787)
+- Khi sử dụng Outlook (bản tiếng Pháp), phím tắt trả lời tất cả (control+shift+R) đã hoạt động lại bình thường. (#11196)
+- Trong Visual Studio, các thông báo trợ giúp cho công cụ ụIntelliSense, cung cấp các chi tiết ban đầu về thành phần hiện được chọn trong IntelliSense giờ đây chỉ đọc một lần. (#11611)
+- Trong ứng dụng Calculator của Windows 10, NVDA sẽ không đọc tiến độ của việc tính toán nếu chế độ đọc kí tự trong khi nhập bị vô hiệu hóa. (#9428)
+- NVDA không còn bị lỗi khi dùng tiếng Anh cấp 2 và mở rộng ra chữ nổi máy tính tại vị trí con trỏ khi hiển thị một số nội dung nhất định như URL trong chữ nổi. (#11754)
 - Trong Microsoft Teams với các số bản dựng như 1.3.00.28xxx, NVDA không còn bị lỗi không đọc được các tin nhắn trong phần trò chuyện hay Teams channels vì  trình đơn focused không chính xác. (#11821)
 
 

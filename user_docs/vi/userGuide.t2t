@@ -307,7 +307,7 @@ Ví dụ khi bạn gõ văn bản trên một ô nhập liệu thì ô nhập li
 
 Cách phổ biến nhất để di chuyển  trên cửa sổ với NVDA là sử dụng phím tắt chuẩn của Windows, đó là các phím tab hoặc shift + tab để chuyển qua lại giữa các đối tượng, bấm phím alt để truy cập đến trình đơn và dùng các phím mũi tên để khám phá trong trình đơn, dùng phím alt + tab để chuyển qua lại giữa các cửa sổ ứng dụng.
 Khi bạn di chuyển theo cách đó thì NVDA sẽ thông báo về các đối tượng đang có focus như tên đối tượng , kiểu, giá trị, trạng thái, mô tả, phím tắt và thông tin vị trí.
-Khi bật chức năng [Làm Nổi Focus #VisionFocusHighlight], vị trí hiện tại của focus hệ thống cũng sẽ được thể hiện một cách trực quan.
+Khi bật chức năng [Làm Nổi Trực quan #VisionFocusHighlight], vị trí hiện tại của focus hệ thống cũng sẽ được thể hiện một cách trực quan.
 
 Có một số phím tắt quan trọng khi di chuyển với focus hệ thống là:
 %kc:beginInclude
@@ -363,7 +363,7 @@ Tương tự như vậy, một thanh công cụ chứa các mục con và bạn 
 
 Đối tượng đang duyệt được gọi là đối tượng điều hướng.
 Khi duyệt đến một đối tượng, bạn có thể xem nội dung của nó bằng  [các lệnh duyệt nội dung #ReviewingText] trong [chế độ duyệt đối tượng #ObjectReview].
-Khi bật chức năng [Làm Nổi Focus #VisionFocusHighlight], vị trí hiện tại của focus hệ thống cũng sẽ được thể hiện một cách trực quan.
+Khi bật chức năng [Làm Nổi Trực Quan #VisionFocusHighlight], vị trí hiện tại của focus hệ thống cũng sẽ được thể hiện một cách trực quan.
 Mặc định thì đối tượng điều hướng sẽ đi cùng với focus hệ thống; tuy nhiên, bạn có thể bật/tắt chế độ này.
 
 Lưu ý: việc con trỏ nổi đi theo đối tượng điều hướng có thể thiết lập thông qua [Con trỏ nổi đi theo #BrailleTether].
@@ -506,7 +506,7 @@ Chế độ duyệt tài liệu cũng được hỗ trợ cho Microsoft Word dư
 
 Trong chế độ duyệt tài liệu, nội dung có thể được duyệt như một văn bản thông thường.
 Tất cả các phím tắt sử dụng cho [con trỏ nháy #SystemCaret] cũng đều hoạt động tốt như đọc cả tài liệu, thông báo thuộc tính văn bản, di chuyển qua các hàng, các cột trong bảng, v...v...
-Khi bật chức năng [Làm Nổi Focus #VisionFocusHighlight], vị trí hiện tại của con trỏ chế độ duyệt cũng sẽ được thể hiện một cách trực quan.
+Khi bật chức năng [Làm Nổi Trực Quan #VisionFocusHighlight], vị trí hiện tại của con trỏ chế độ duyệt cũng sẽ được thể hiện một cách trực quan.
 Các thông tin khác như liên kết, tiêu đề, v...v... của văn bản cũng sẽ được thông báo khi bạn duyệt qua.
 
 Đôi khi, bạn muốn tương tác trực tiếp với các đối tượng trong tài liệu.
@@ -776,16 +776,16 @@ Các trình cải thiện tầm nhìn bổ sung có thể được cung cấp qu
 
 Có thể thay đổi các thiết lập hỗ trợ nhìn của NVDA trong [phân loại hỗ trợ nhìn #VisionSettings] của hộp thoại [Cấu hình NVDA #NVDASettings].
 
-++ Làm Nổi Focus ++[VisionFocusHighlight]
-Làm Nổi Focus có thể giúp xác định [focus hệ thống #SystemFocus], [đối tượng điều hướng hiện tại #ObjectNavigation] và vị trí con trỏ [chế độ duyệt #BrowseMode].
+++ Làm Nổi Trực Quan ++[VisionFocusHighlight]
+Làm Nổi Trực Quan có thể giúp xác định [focus hệ thống #SystemFocus], [đối tượng điều hướng hiện tại #ObjectNavigation] và vị trí con trỏ [chế độ duyệt #BrowseMode].
 Những vị trí này được làm nổi bật với một đường viền màu hình chữ nhật.
-- Toàn bộ xanh dương là làm nổi vị trí kết hộp của đối tượng điều hướng hiện tại và focus hệ thống (ví dụ, [đối tượng điều hướng hiện tại đi theo focus hệ thống #ReviewCursorFollowFocus]).
+- Dấu gạch màu xanh dương là làm nổi vị trí kết hợp của đối tượng điều hướng hiện tại và focus hệ thống (ví dụ, [đối tượng điều hướng hiện tại đi theo focus hệ thống #ReviewCursorFollowFocus]).
 - Đường gạch xanh dương là chỉ làm nổi focus hệ thống.
 - Toàn bộ màu hồng là chỉ làm nổi đối tượng điều hướng.
 - Toàn bộ màu vàng làm nổi dấu nháy ảo được dùng trong chế độ duyệt (những nơi không có dấu nháy thật như trong các trình duyệt web).
 -
 
-Khi bật chức năng Làm Nổi  Focus trong [phân loại hỗ trợ nhìn #VisionSettings] của hộp thoại [Cấu Hình NVDA #NVDASettings], bạn có thể [thay đổi việc làm nổi focus, đối tượng điều hướng hoặc dấu nháy chế độ duyệt #VisionSettingsFocusHighlight]
+Khi bật chức năng Làm Nổi  trực quan trong [phân loại hỗ trợ nhìn #VisionSettings] của hộp thoại [Cấu Hình NVDA #NVDASettings], bạn có thể [thay đổi việc làm nổi focus, đối tượng điều hướng hoặc dấu nháy chế độ duyệt #VisionSettingsFocusHighlight]
 
 ++ Che màn hình ++[VisionScreenCurtain]
 Là người mù hay nhìn kém, thường sẽ không thể hoặc không cần nhìn những gì trên màn hình.
@@ -1400,10 +1400,10 @@ Phân loại hỗ trợ nhìn trong hộp thoại cấu hình NVDA cho phép b�
 Lưu ý rằng các tùy chọn trong phân loại này có thể được mở rộng bởi [các add-on của NVDA #AddonsManager].
 Mặc định, phân loại này có các tùy chọn sau:
 
-==== Làm Nổi Focus ====[VisionSettingsFocusHighlight]
-Các hộp kiểm trong nhóm này điều khiển hoạt động của tính năng [Làm Nổi Focus #VisionFocusHighlight].
+==== Làm Nổi Trực Quan ====[VisionSettingsFocusHighlight]
+Các hộp kiểm trong nhóm này điều khiển hoạt động của tính năng [Làm Nổi Trực Quan #VisionFocusHighlight].
 
-- Kích hoạt làm nổi: bật / tắt Làm Nổi Focus.
+- Kích hoạt làm nổi: bật / tắt Làm Nổi Trực Quan.
 - Làm nổi focus hệ thống: bật / tắt làm nổi [focus hệ thống #SystemFocus].
 - Làm nổi đối tượng điều hướng: bật / tắt làm nổi [đối tượng điều hướng #ObjectNavigation].
 - Làm nổi con trỏ chế độ duyệt: bật / tắt làm nổi [con trỏ ảo trong chế độ duyệt #BrowseMode].
@@ -2519,7 +2519,7 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 %kc:endInclude
 
 ++ Các dòng HumanWare Brailliant BI/B / BrailleNote Touch++[HumanWareBrailliant]
-Các dòng màn hình Brailliant BI và B của [HumanWare https://www.humanware.com/], bao gồm BI 14, BI 32, BI 40 và B 80, đều được hỗ trợ khi kết nối qua cổng USB hay bluetooth.
+Các dòng màn hình Brailliant BI và B của [HumanWare https://www.humanware.com/], bao gồm BI 14, BI 32, BI 20X, BI 40, BI 40X và B 80, đều được hỗ trợ khi kết nối qua cổng USB hay bluetooth.
 Nếu kết nối qua cổng USB với thiết lập giao thức đến Humanware, bạn cần phải cài trình điều khiển được cung cấp bởi nhà sản xuất.
 Sẽ không cần cài trình điều khiển USB nếu thiết lập giao thức đến OpenBraille.
 
