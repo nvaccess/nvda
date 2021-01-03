@@ -11,7 +11,6 @@ making sure NVDA can run on a minimum supported version of Windows.
 import sys
 import os
 import functools
-import winUser
 
 
 @functools.total_ordering
