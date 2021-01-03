@@ -156,10 +156,14 @@ def isSupportedOS():
 	# NVDA can only run on Windows 7 Service pack 1 and above
 	return getWinVer() >= WIN7_SP1
 
+
 def canRunVc2010Builds():
 	return isSupportedOS()
 
+
 UWP_OCR_DATA_PATH = os.path.expandvars(r"$windir\OCR")
+
+
 def isUwpOcrAvailable():
 	return os.path.isdir(UWP_OCR_DATA_PATH)
 
