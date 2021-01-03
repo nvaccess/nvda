@@ -2580,6 +2580,41 @@ class AdvancedPanelControls(
 		self.keyboardSupportInLegacyCheckBox.defaultValue = self._getDefaultValue(["terminals", "keyboardSupportInLegacy"])
 		self.keyboardSupportInLegacyCheckBox.Enable(winVersion.getWinVer() >= winVersion.WIN10_1607)
 
+		# Translators: This is the label for a combo box for selecting a
+		# method of detecting changed content in terminals in the advanced
+		# settings panel.
+		# Choices are automatic, allow Diff Match Patch, and force Difflib.
+		diffAlgoComboText = _("&Diff algorithm:")
+		diffAlgoChoices = [
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA determine the method of detecting changed
+			# content in terminals automatically.
+			_("Automatic (Difflib)"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA detect changes in terminals
+			# by character when supported, using the diff match patch algorithm.
+			_("allow Diff Match Patch"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA detect changes in terminals
+			# by line, using the difflib algorithm.
+			_("force Difflib")
+		]
+		#: The possible diffAlgo config values, in the order they appear
+		#: in the combo box.
+		self.diffAlgoVals = (
+			"auto",
+			"dmp",
+			"difflib"
+		)
+		self.diffAlgoCombo = terminalsGroup.addLabeledControl(diffAlgoComboText, wx.Choice, choices=diffAlgoChoices)
+		curChoice = self.diffAlgoVals.index(
+			config.conf['terminals']['diffAlgo']
+		)
+		self.diffAlgoCombo.SetSelection(curChoice)
+		self.diffAlgoCombo.defaultValue = self.diffAlgoVals.index(
+			self._getDefaultValue(["terminals", "diffAlgo"])
+		)
+
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
 		label = _("Speech")
@@ -2701,6 +2736,7 @@ class AdvancedPanelControls(
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
 			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
+			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and True  # reduce noise in diff when the list is extended.
@@ -2714,6 +2750,7 @@ class AdvancedPanelControls(
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
+		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue == 'auto')
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self._defaultsRestored = True
@@ -2730,6 +2767,10 @@ class AdvancedPanelControls(
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = self.cancelExpiredFocusSpeechCombo.GetSelection()
 		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
+		diffAlgoChoice = self.diffAlgoCombo.GetSelection()
+		config.conf['terminals']['diffAlgo'] = (
+			self.diffAlgoVals[diffAlgoChoice]
+		)
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
