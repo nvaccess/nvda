@@ -4,6 +4,80 @@ Novità in NVDA
 %!includeconf: ../changes.t2tconf
 
 
+= 2020.4 =
+Questa versione introduce nuovi metodi di input cinesi, un aggiornamento alle tabelle braille Liblouis e la possibilità di eseguire la funzione elenco elementi nelle pagine web anche in modalità focus (NVDA+f7). Quando ci si trova nelle finestre di dialogo delle impostazioni di NVDA, il tasto f1 aprirà l'aiuto contestuale per quella particolare sezione. Vi sono poi dei sensibili miglioramenti nelle regole di pronuncia dei simboli, nei dizionari, nei messaggi braille e nella lettura rapida. Sono inoltre stati risolti bug che riguardavano Mail, Outlook, Teams, Visual Studio, Azure Data Studio, Foobar2000. Per ciò che concerne il web i miglioramenti riguardano Google Docs, oltre ad un miglior supporto ad ARIA. Di seguito l'elenco di tutte le novità.
+
+== Novità ==
+- Se si Preme F1 nelle finestre di dialogo di NVDA, verrà aperta la guida nella sezione più pertinente. (#7757)
+- Supporto per i suggerimenti di completamento automatico (IntelliSense) in Microsoft SQL Server Management Studio più Visual Studio 2017 e versioni successive. (#7504)
+- Pronuncia simboli: possibilità di definire raggruppamenti di simboli complessi con conseguente capacità di referenziarli nel campo voce in sostituzione; in questo modo si possono ottenere regole più semplici e potenti. (#11107)
+- Gli utenti ora vengono avvisati quando tentano di creare voci del dizionario con sostituzioni di espressioni regolari non valide. (#11407)
+  - Vengono ora rilevati errori specifici di raggruppamento.
+- Aggiunto supporto per i nuovi metodi di immissione cinese tradizionale Quick and Pinyin in Windows 10. (#11562)
+- Le intestazioni delle schede sono considerate campi di un form quando si preme il tasto di navigazione veloce f. (#10432)
+- Aggiunto un comando per attivare / disattivare la segnalazione del testo contrassegnato (evidenziato); Non esiste alcun gesto associato predefinito. (#11807)
+- Aggiunto il parametro a riga di comando --copy-portable-config che permette di copiare automaticamente la configurazione fornita all'interno del profilo utente quando si installa NVDA  in maniera silenziosa. (#9676)
+- Vengono ora supportate le operazioni di cursor routing nel visualizzatore braille, facendo passare il mouse sopra le celle. (#11804)
+- NVDA è in grado di individuare automaticamente i display braille Humanware Brailliant BI 40X e 20X via USB e Bluetooth. (#11819)
+
+
+== Cambiamenti ==
+- Aggiornate le tabelle di traduzione braille Liblouis alla versione 3.16.1:
+ - Risolti diversi crash
+ - Aggiunta la tabella Bashkir grado 1 
+ - Aggiunta la tabella Copto a otto punti
+ - Aggiunte le tabelle per il braille letterario russo e letterario dettagliato.
+ - Rimossa la tabella russo grado 1.
+- da qui in inglese, da completare. When reading with say all in browse mode, the find next and find previous commands do not stop reading anymore if Allow skim reading option is enabled; say all rather resumes from after the next or previous found term. (#11563)
+- For HIMS braille displays F3 has been remapped to Space + dots 148. (#11710)
+- Improvements to the UX of the "braille message timeout" and "Show messages indefinitely" options. (#11602)
+- In web browsers and other applications that support browse mode, the Elements List dialog (NVDA+F7) can now be invoked when in focus mode. (#10453)
+- Updates to ARIA live regions are now suppressed when reporting of dynamic content changes is disabled. (#9077)
+- NVDA will now report "Copied to clipboard" before the copied text. (#6757)
+- Presentation of graphical view table in disk management has been improved. (#10048)
+- Labels for controls are now disabled (greyed out) when the control is disabled. (#11809)
+- Updated CLDR emoji annotation to version 38. (#11817)
+- The inbuilt "Focus Highlight" feature has been renamed "Vision Highlight". (#11700)
+
+
+== Bug Fixes ==
+- NVDA once again works correctly with edit fields when using the Fast Log Entry application. (#8996)
+- Report elapsed time in Foobar2000 if no total time is available (e.g. when playing a live stream). (#11337)
+- NVDA now honors the aria-roledescription attribute on elements in editable content in web pages. (#11607)
+- 'list' is no longer announced on every line of a list in Google Docs or other editable content in Google Chrome. (#7562)
+- When arrowing by character or word from one list item to another in editable content on the web, entering the new list item is now announced. (#11569)
+- NVDA now reads the correct line when the caret is placed at the end of a link on the end of a list item in Google Docs or other editable content on the web. (#11606)
+- On Windows 7, opening and closing the start menu from the desktop now sets focus correctly. (#10567)
+- When "attempt to cancel expired focus events" is enabled, the title of the tab is now announced again when switching tabs in Firefox. (#11397)
+- NVDA no longer fails to announce a list item after typing a character in a list when speaking with the SAPI5 Ivona voices. (#11651)
+- It is again possible to use browse mode when reading emails in Windows 10 Mail 16005.13110 and later. (#11439)
+- When using the SAPI5 Ivona voices from harposoftware.com, NVDA is now able to save configuration, switch synthesizers, and no longer will stay silent after restarting. (#11650)
+- It is now possible to enter number 6 in computer braille from a braille keyboard on HIMS displays. (#11710)
+- Major performance improvements in Azure Data Studio. (#11533, #11715)
+- With "Attempt to Cancel speech for expired focus events" enabled the title of the NVDA Find dialog is announced again. (#11632)
+- NVDA should no longer freeze when waking the computer and focus lands in a Microsoft Edge document. (#11576)
+- It is no longer necessary to press tab or move focus after closing a context menu in MS Edge for browse mode to be functional again. (#11202)
+- NVDA no longer fails to read items in list views within a 64-bit application such as Tortoise SVN. (#8175)
+- ARIA treegrids are now exposed as normal tables in browse mode in both Firefox and Chrome. (#9715)
+- A reverse search can now be initiated with 'find previous' via NVDA+shift+F3 (#11770)
+- An NVDA script is no longer treated as being repeated if an unrelated key press happens in between the two executions of the script. (#11388) 
+- Strong and emphasis tags in Internet Explorer can again be suppressed from being reported by returning off Report Emphasis in NVDA's Document Formatting settings. (#11808)
+- A freeze of several seconds experienced by a small amount of users when arrowing between cells in Excel should no longer occur. (#11818)
+- In Microsoft Teams builds with version numbers like 1.3.00.28xxx, NVDA no longer fails reading messages in chats or Teams channels due to an incorrectly focused menu. (#11821)
+- Text marked both as being a spelling and grammar error at the same time in Google Chrome will be appropriately announced as both a spelling and grammar error by NVDA. (#11787)
+- When using Outlook (French locale), the shortcut for 'Reply all' (control+shift+R) works again. (#11196)
+- In Visual Studio, IntelliSense tool tips that provide additional details about the currently selected IntelliSense item are now only reported once. (#11611)
+- In Windows 10 Calculator, NVDA will not announce progress of calculations if speak typed characters is disabled. (#9428)
+- NVDA no longer crashes when using English US grade 2 and expand to computer Braille at the cursor is on, when displaying certain content such as a URL in Braille. (#11754)
+
+
+== Changes for Developers ==
+- System tests can now send keys using spy.emulateKeyPress, which takes a key identifier that conforms to NVDA's own key names, and by default also blocks until the action is executed. (#11581)
+- NVDA no longer requires the current directory to be the NVDA application directory in order to function. (#6491)
+- The aria live politeness setting for live regions can now be found on NVDA Objects using the liveRegionPoliteness property. (#11596)
+- It is now possible to define separate gestures for Outlook and Word document. (#11196)
+
+
 = 2020.3 =
 Questa versione include diversi miglioramenti alla stabilità e alle prestazioni, in particolare nelle applicazioni di Microsoft Office. Sono disponibili nuove impostazioni per attivare/disattivare il supporto al touchscreen e la lettura dei grafici.
 Nei browser è possibile farsi annunciare la presenza di contenuto contrassegnato (evidenziato), inoltre sono disponibili nuove tabelle braille tedesche.
