@@ -4,6 +4,12 @@
 %!includeconf: ../changes.t2tconf
 
 = 2020.4 =
+Ova verzija uključuje podršku za nove Kineske metode unosa, ažuriranje za Liblouis i lista elemenata (NVDA+f7) sada radi u režimu fokusiranja.
+Pomoć vezana za sadržaj je sada dostupna kada se pritisne F1 u NVDA dijalozima.
+Poboljšanja za pravila izgovaranja simbola, govorne rečnike, brajeve poruke i površno čitanje.
+Ispravljene greške i poboljšanja u aplikacijama Mail, Outlook, Teams, Visual Studio, Azure Data Studio, Foobar2000.
+Na Webu, poboljšanja u aplikaciji Google Docs, i bolja podrška za ARIA standard.
+Takođe puno drugih poboljšanja i ispravljenih grešaka.
 
 == Nove karakteristike ==
 - Pritiskanjem tastera F1 u NVDA dijalozima otvoriće se relevantna sekcija pomoći. (#7757)
@@ -67,6 +73,7 @@
 - U aplikaciji Visual Studio, IntelliSense opisi alata koji pružaju dodatne detalje o trenutno izabranoj IntelliSense stavci se sada prijavljuju samo jednom. (#11611)
 - U aplikaciji Windows 10 Kalkulator, NVDA neće izgovarati napredak računanja ako je opcija izgovori ukucane znakove onemogućena. (#9428)
 - NVDA se više ne ruši kada se koristi tabela Engleski američki stepen 2 i opcija Proširi na kompjuterski brajev kod za reč na poziciji kursora je uključena, kada se prikazuje određen sadržaj kao što je Internet adresa. (#11754)
+- Ponovo je moguće prijaviti informacije o formatiranju za fokusiranu Excel ćeliju komandom NVDA+F. (#11914)
 
 
 == Promene za programere ==
