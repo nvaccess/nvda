@@ -1,5 +1,3 @@
-# brailleDisplayDrivers/seika.py
-#
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2012-2020 NV Access Limited, Ulf Beckmann <beckmann@flusoft.de>
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
@@ -39,7 +37,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		for portInfo in hwPortUtils.listComPorts(onlyAvailable=True):
 			port = portInfo["port"]
 			hwID = portInfo["hardwareID"]
-			# log.info("Found port {port} with hardwareID {hwID}".format(port=port, hwID=hwID))
+			
 			if not hwID.upper().startswith(r"USB\VID_10C4&PID_EA60"): # Seika USB to Serial, in XP it is lowercase, in Win7 uppercase
 				continue
 			# At this point, a port bound to this display has been found.
@@ -108,7 +106,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				writeBytes.append(b"\x00")
 				writeBytes.append(intToByte(cell))
 			lineBytes = b"".join(writeBytes) + cellPadding
-		# log.info("senden....{p}".format(p=len(lineBytes)))
 		self._ser.write(lineBytes)
 
 	def handleResponses(self):
@@ -122,7 +119,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if not chars[0] & 0x60: # a cursorrouting block is expected
 			chars: bytes = self._ser.read(maxCellRead)
 			keytyp=2
-		# log.info("Seika K {c}".format(c=chars))
+		
 		if keytyp == 1: # normal key
 			if chars[0] & 1: # LEFT
 				keys.add("left")
