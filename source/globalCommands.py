@@ -140,7 +140,8 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for toggle sleep mode command.
 		description=_("Toggles sleep mode on and off for the active application."),
-		gestures=("kb(desktop):NVDA+shift+s", "kb(laptop):NVDA+shift+z")
+		gestures=("kb(desktop):NVDA+shift+s", "kb(laptop):NVDA+shift+z"),
+		allowInSleepMode=True
 	)
 	def script_toggleCurrentAppSleepMode(self,gesture):
 		curFocus=api.getFocusObject()
@@ -155,7 +156,6 @@ class GlobalCommands(ScriptableObject):
 			curApp.sleepMode=True
 			# Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
 			ui.message(_("Sleep mode on"))
-	script_toggleCurrentAppSleepMode.allowInSleepMode=True
 
 	@script(
 		description=_(
