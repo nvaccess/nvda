@@ -1,5 +1,3 @@
-# brailleDisplayDrivers/seikantk.py
-#
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2012-2020 NV Access Limited, Ulf Beckmann <beckmann@flusoft.de>
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
@@ -75,13 +73,13 @@ bdDetect.addUsbDevices(SEIKA_NAME, bdDetect.KEY_HID, {vidpid, })
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	_dev: hwIo.IoBase
 	name = SEIKA_NAME
-	description = "Seika Notetaker"
+	# Translators: Name of a braille display.
+	description = _("Seika Notetaker")
 	path = ""
 	isThreadSafe = True
 	for d in hwPortUtils.listHidDevices():
 		if d["hardwareID"].startswith(hidvidpid):
 			path = d["devicePath"]
-			# log.info("Devicepath: "+path)
 
 	@classmethod
 	def check(cls):
@@ -99,9 +97,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self.cmdlen = 0
 		self.handle = None
 		self._hidBuffer = b""
-		log.info("Versuch: " + self.path)
-		# for portType, portId, port, portInfo in self._getTryPorts(port):
-		# log.info("port:"+port)
+		log.info("path: " + self.path)
+
 		if self.path == "":
 			raise RuntimeError("No MINI-SEIKA display found, no path found")
 		self._dev = hwIo.Hid(path=self.path, onReceive=self._onReceive)
@@ -110,6 +107,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._dev.setFeature(SEIKA_CONFIG)  # baudrate, stopbit usw
 		self._dev.setFeature(SEIKA_CMD_ON)  # device on
 		self._dev.write(SEIKA_REQUEST_INFO)  # Request the Info from the device
+
+		# wait and try to get info from the Braille display
 		for i in range(30):  # the info-block is about
 			self._dev.waitForRead(TIMEOUT)
 			if self.numCells:
@@ -146,8 +145,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			arg = self._hidBuffer[3:self.cmdlen + 4]
 			self.status = 0
 			self._hidBuffer = b""
-			# log.info("auswerten nach cmd"+
-			# "".join(format(x, ' 02X') for x in command)+" ... "+"".join(format(x, ' 02X') for x in arg));
+			
 			if command == SEIKA_INFO:
 				self._handInfo(arg)
 			elif command == SEIKA_ROUTING:
@@ -157,7 +155,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			elif command == SEIKA_KEYS_ROU:
 				self._handKeysRouting(arg)
 			else:
-				log.debug("hier haette ich nicht ankommen sollen.")
+				log.debug("other data.")
 
 	def _handInfo(self, arg: bytes):
 		self.numCells = arg[2]
@@ -165,12 +163,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _handRouting(self, arg: bytes):
 		Rou = 0
-		# log.info("Rou: "+""+"".join(format(x, ' 02X') for x in arg));
 		for i in range(arg[0]):
 			for j in range(8):
 				if arg[i + 1] & (1 << j):
 					Rou = i * 8 + j
-					# log.info("Routing: {c}".format(c=Rou))
+					
 					gesture = InputGestureRouting(Rou)
 					try:
 						inputCore.manager.executeGesture(gesture)
@@ -179,10 +176,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 						pass
 
 	def _handKeys(self, arg: bytes):
-		# log.info("Keys: "+""+"".join(format(x, ' 02X') for x in arg));
 		Brl = arg[1]
 		Key = arg[2] | (arg[3] << 8)
-		# space = arg[2] & 2
 		Btn = 0  # Seika has no button
 		if not (Key or Btn or Brl):
 			pass
@@ -226,10 +221,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"kb:shift+leftArrow": ("br(seikantk):SPACE+RJ_LEFT", "br(seikantk):BACKSPACE+RJ_LEFT"),
 			"kb:shift+rightArrow": ("br(seikantk):SPACE+RJ_RIGHT", "br(seikantk):BACKSPACE+RJ_RIGHT"),
 			"kb:escape": ("br(seikantk):SPACE+RJ_CENTER",),
-			# "kb:shift+upArrow": ("br(seikantk):BACKSPACE+RJ_UP",),
-			# "kb:shift+downArrow": ("br(seikantk):BACKSPACE+RJ_DOWN",),
-			# "kb:shift+leftArrow": ("br(seikantk):BACKSPACE+RJ_LEFT",),
-			# "kb:shift+rightArrow": ("br(seikantk):BACKSPACE+RJ_RIGHT",),
 			"kb:windows": ("br(seikantk):BACKSPACE+RJ_CENTER",),
 			"kb:space": ("br(seikantk):BACKSPACE", "br(seikantk):SPACE",),
 			"kb:backspace": ("br(seikantk):d7",),
@@ -273,4 +264,3 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			self.routingIndex = routing
 			names.add('routing')
 		self.id = "+".join(names)
-		# log.info("SNT: keys {keys}".format(keys=names))
