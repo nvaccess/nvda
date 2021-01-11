@@ -511,12 +511,12 @@ Browse моделот е исто опционално достапен за Mic
 
 Некогаш, Вие ќе треба да имате интеракција директно со контролите во овие документи.
 На пример, Вие ќе треба да го правите ова за едитирачки полиња на текст како и листи така што ќе можете да притискате карактери и да ги користите курсорските копчиња за да работите со контролата.
-You do this by switching to focus mode, where almost all keys are passed to the control.
-When in Browse mode, by default, NVDA will automatically switch to focus mode if you tab to or click on a particular control that requires it.
-Conversely, tabbing to or clicking on a control that does not require focus mode will switch back to browse mode.
-You can also press enter or space to switch to focus mode on controls that require it.
-Pressing escape will switch back to browse mode.
-In addition, you can manually force focus mode, after which it will remain in effect until you choose to disable it.
+Вие го правите ова со преминување во focus моделот, каде скоро сите копчиња се пренесени на контролата.
+Кога сте во Browse моделот, како основна селектирана опција, NVDA автоматски ќе премине во focus моделот доколку притиснете на копчето tab или притиснете на одредена контрола која го побарува тоа.(преведи го претходното)
+Обратно, со притискање на tab копчето или со притискање на контрола која не го побарува focus моделот ќе се премине назад во browse моделот.(преведи го претходното)
+Вие можете исто да притиснете enter или space да преминете во focus моделот на контролите кои го побаруваат тоа.
+Притискајќи escape ќе се премине назад во browse моделот.(преведи го претходното)
+Како додатна опција, Вие можете мануелно да нагласите focus модел, после кое моделнот ќе остане во ефект сѐ додека не одберете да го оневозможите.
 
 %kc:beginInclude
 || Name | Key | Description |
@@ -530,11 +530,11 @@ In addition, you can manually force focus mode, after which it will remain in ef
 %kc:endInclude
 
 ++ Single Letter Navigation ++[SingleLetterNavigation]
-While in browse mode, for quicker navigation, NVDA also provides single character keys to jump to certain fields in the document.
-Note that not all of these commands are supported in every type of document.
+Додека сте во browse моделот, за брза навигација, NVDA исто овозможува и копчиња од единствен карактер за да се скокне односно премине до одредени полиња во документот.(преведи го претходното)
+Забелешка дека не сите од овие команди се поддржани во секој вид на документ.
 
 %kc:beginInclude
-The following keys by themselves jump to the next available element, while adding the shift key causes them to jump to the previous element:
+Следниве копчиња од единствен карактер како самостојни скокаат на следниот достапен елемент, додека заедно со shift копчето ќе направи тие да скокаат на претходниот елемент:
 - h: heading
 - l: list
 - i: list item
@@ -559,35 +559,35 @@ The following keys by themselves jump to the next available element, while addin
 - a: annotation (comment, editor revision, etc.)
 - w: spelling error
 -
-To move to the beginning or end of containing elements such as lists and tables:
+За да се преидвижите на почетокот или крајот на содржаните елементи како листи или табели:
 || Name | Key | Description |
 | Move to start of container | shift+comma | Moves to the start of the container (list, table, etc.) where the caret is positioned |
 | Move past end of container | comma | Moves past the end of the container (list, table, etc.) where the caret is positioned |
 %kc:endInclude
 
-Some web applications such as Gmail, Twitter and Facebook use single letters as shortcut keys.
-If you want to use these while still being able to use your cursor keys to read in browse mode, you can temporarily disable NVDA's single letter navigation keys.
+Некои апликации како што се Gmail, Twitter и Facebook користат единечни букви како копчиња за брзи наредби.
+Доколку Вие саката да ги користите овие копчиња и сеуште да бидете во можност да ги користите вашите cursor копчиња за да читате во browse моделот, можете привремено да го оневозможите NVDA's единечните букви како навигациски копчиња.
 %kc:beginInclude
-To toggle single letter navigation on and off for the current document, press NVDA+shift+space.
+За преминување во вклучена и исклучена навигација од единечните букви за тековниот документ, притиснете NVDA+shift+space.(преведи го претходното)
 %kc:endInclude
 
 ++ The Elements List ++[ElementsList]
-The elements list provides access to a list of various types of elements in the document as appropriate for the application.
-For example, in web browsers, the elements list can list links, headings, form fields, buttons or landmarks.
-Radio buttons allow you to switch between the different types of elements.
-An edit field is also provided in the dialog which allows you to filter the list to help you search for a particular item on the page.
-Once you have chosen an item, you can use the provided buttons in the dialog to move to or activate that item.
+Листата од елементи овозможува пристап до листа на различни видови на елементи во документот како соодветни за апликацијата.
+На пример, во web прелистувач, листата на елементи може да лисta links, headings, полиња од форма, копчиња или landmarks.(преведи го претходното)
+Радио копчињата Ви дозволуваат да преминете помеѓу различни видови на елементи.
+Полето edit е исто така присутно во дијалогот кој Ви дозволува да ја филтрирате листата за да го олесните претражувањето на одреден item на страната.(преведи го претходното)
+Штом Вие ќе изберете an item, Вие можете да ги користите присутните копчиња во дијалогот за да се придвижите до или да го активирате тој item.(преведи го претходното)
 %kc:beginInclude
 || Name | Key | Description |
 | Browse mode elements list | NVDA+f7 | Lists various types of elements in the current document |
 %kc:endInclude
 
 ++ Searching for text ++[SearchingForText]
-This dialog allows you to search for terms in the current document.
-In the "Type the text you wish to find" field, the text to be found can be entered.
-The "Case sensitive" checkbox makes the search consider uppercase and lowercase letters differently.
-For example, with "Case sensitive" selected you can find "NV Access" but not "nv access".
-Use the following keys for performing searches:
+Овој дијалог Ви овозможува да претражувате за terms во тековниот документ.(преведи го претходното)
+Во "Type the text you wish to find" полето, текстот кој треба да се пронајде може да биде внесен.
+"Case sensitive" опцијата го прави претражувањето да ги воочува големите и малите бикви различно.
+На пример, со "Case sensitive" избрано можете да пронајдете "NV Access" но не и "nv access".
+Користете ги следниве копчиња за извршување на претражувања:
 %kc:beginInclude
 || Name | Key | Description |
 | Find text | NVDA+control+f | Opens the  search dialog |
@@ -596,44 +596,44 @@ Use the following keys for performing searches:
 %kc:endInclude
 
 ++ Embedded Objects ++[ImbeddedObjects]
-Pages can include rich content using technologies such as Adobe Flash, Oracle Java and HTML5, as well as applications and dialogs.
-Where these are encountered in browse mode, NVDA will report "embedded object", "application" or "dialog", respectively.
-You can quickly move to them using the o and shift+o embedded object single letter navigation keys.
-To interact with these objects, you can press enter on them.
-If it is accessible, you can then tab around it and interact with it like any other application.
-A key command is provided to return to the original page containing the embedded object:
+Страниците может да вклучуваат богата содржина користејќи технологии како на пример Adobe Flash, Oracle Java и HTML5, исто како и апликации и дијалози.
+Каде што овие се сретнати во browse моделот, NVDA ќе ги најави како "embedded object", "application" или "dialog", соодветно.(преведи го претходното)
+Вие можете набрзина да се придвиќите до нив користејќи го o како и shift+o embedded object навигациските копчиња со единечна буква.(преведи го претходното)
+За да имате комуникација односно интеракција со овие објекти, можете да притиснете enter на нив.(преведи го претходното)
+Доколку е достапно, Вие можете да се придвижувате наокулу со притискање на tab и да комуницирате односно да имате интеракција со објектите исто како било која друга апликација.(преведи го претходното)
+Команда од копче е достапна за да се вратите на првичната оригинална страна која го содржи embedded object:(преведи го претходното)
 %kc:beginInclude
 || Name | Key | Description |
 | Move to containing browse mode document | NVDA+control+space | Moves the focus out of the current embedded object and into the document that contains it |
 %kc:endInclude
 
 + Reading Mathematical Content +[ReadingMath]
-Using MathPlayer 4 from Design Science, NVDA can read and interactively navigate supported mathematical content.
-This requires that MathPlayer 4 is installed on the computer.
-MathPlayer is available as a free download from: https://www.dessci.com/en/products/mathplayer/
+Кориастејќи MathPlayer 4 од Design Science, NVDA може да чита и интерактивно да се движи помеѓу поддржаните математички содржини.
+Оваа опција побарува MathPlayer 4 да е инсталиран на компјутерот.
+MathPlayer е достапен како бесплатно превземање од: https://www.dessci.com/en/products/mathplayer/
 
-NVDA supports the following types of mathematical content:
-- MathML in Mozilla Firefox, Microsoft Internet Explorer and Google Chrome.
-- Design Science MathType in Microsoft Word and PowerPoint.
-MathType needs to be installed in order for this to work.
-The trial version is sufficient.
-It can be downloaded from https://www.dessci.com/en/products/mathtype/
-- MathML in Adobe Reader.
-Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
-- Math in Kindle for PC for books with accessible math.
+NVDA ги поддржува следниве типови на математичка содржина:
+- MathML во Mozilla Firefox, Microsoft Internet Explorer и Google Chrome.
+- Design Science MathType во Microsoft Word и PowerPoint.
+MathType е потребно да биде инсталиран со цел ова да работи односно да фунционира.
+Пробната верзија е доволна.
+Може да биде превземена од https://www.dessci.com/en/products/mathtype/
+- MathML во Adobe Reader.
+Забелешка дека ова не е официјален стандард сеуште, така да моментално не постои јавно достапен софтвер кој може да ја продуцира оваа содржина.
+- Math во Kindle за Персонален Копмјутер за книги со accessible математика.(преведи го претходното)
 -
 
-When reading a document, NVDA will speak any supported mathematical content where it occurs.
-If you are using a braille display, it will also be displayed in braille.
+Кога го читате документот, NVDA ќе ги изговори било кои поддржани математички содржини каде што ќе се појават.
+Доколку користите Брајов екран, исто така ќе биде прикажан на Брајово.
 
 ++ Interactive Navigation ++[InteractiveNavigation]
-If you are working primarily with speech, in most cases, you will probably wish to examine the expression in smaller segments, rather than hearing the entire expression at once.
+Доколку Вие работите примарно со говор, во најголем број од случаите, Вие најверојатно ќе сакате да ја истражите the expression во помали делови односно сегменти, отколку да ја слушнете целата експресија односно израз наеднаш.
 
-If you are in browse mode, you can do this by moving the cursor to the mathematical content and pressing enter.
+Доколку сте во browse моделот, Вие можете да го направите ова со движење на курсорот до математичката содржина и притискајќи на enter.(преведи го претходното)
 
-If you are not in browse mode:
+Доколку Вие не сте во browse моделот:
 + move the review cursor to the mathematical content.
-By default, the review cursor follows the system caret, so you can usually use the system caret to move to the desired content.
+Како основна селектирана опција, the review курсорот го следи the system caret, за Вие да можете најчесто да го користите system caret да се движите до посакуваната содржина.(преведи го претходното)
 + Then, activate the following command:
 +
 
@@ -642,26 +642,26 @@ By default, the review cursor follows the system caret, so you can usually use t
 | Interact with math content | NVDA+alt+m | Begins interaction with math content. |
 %kc:endInclude
 
-At this point, you can use MathPlayer commands such as the arrow keys to explore the expression.
-For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
-Please see the [MathPlayer documentation about navigation commands https://www.dessci.com/en/products/mathplayer/navigation_commands.htm] for further information.
+Во овој момент, Вие можете да користите MathPlayer команди како што се копчињата со стрелки да го истражувате изразот односно експресијата.
+На пример, Вие можете да се движите низ експресијата со копчето со лева и десна стрелка и да zoom во порција односно дел од експресијата како што е фракција користејќи го копчето со стрелка надолу.(преведи го претходното)
+Ве молиме информирајте се на [MathPlayer documentation about navigation commands https://www.dessci.com/en/products/mathplayer/navigation_commands.htm] за подетални информации.
 
-When you wish to return to the document, simply press the escape key.
+Кога сакате да се вратите кон документот, едноставно притиснете го escape копчето.(преведи го претходното)
 
-Sometimes mathematical content might be displayed as a button or other type of element which, when activated, can display a dialog or more information related to the formula.
-To activate the button or the element containing the formula, press ctrl+enter.
+Понекогаш математичката содржина може да биде прикажана како копче или друг вид на елемент којшто, кога е активиран, може да прикаже дијалог или повеќе информации во релација односно поврзано со формулата.
+Да се активира копчето или елементот кој ја содржи формулата, притиснете ctrl+enter.
 
 + Braille +[Braille]
-If you own a braille display, NVDA can display information in braille.
-If your braille display has a Perkins-style keyboard, you can also enter contracted or uncontracted braille.
-Braille can also be displayed on screen using the [Braille Viewer #BrailleViewer] instead of, or at the same time as, using a physical braille display.
+Доколку поседувате Брајов екран, NVDA е во состојба да ги прикажува информациите во Брајово.
+Доколку Вашиот Брајов екран има Perkins-модел на тестатура, можете исто да внесувате скратено или целосно(нескратено) Брајово.(преведи го претходното)
+Брајово исто може да биде прикажано на екран користејќи [Braille Viewer #BrailleViewer] наместо, или во исто време со, користење на физички Брајов екран.
 
-Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for information about the supported braille displays.
-This section also contains information about what displays support NVDA's automatic background braille display detection functionality.
-You can configure braille using the [Braille category #BrailleSettings] of the [NVDA Settings #NVDASettings] dialog.
+Ве молиме информирајте се на [Supported Braille Displays #SupportedBrailleDisplays] секција за информации окулу поддржаните Брајови екрани.
+Оваа секција исто така содржи информации окулу тоа кои екрани го подджуваат NVDA's автоматската позадинска функционалност на детекција односно откривање на Брајов екран.(преведи го претходното односно провери ја точноста)
+Вие можете да кофигурирате односно приспособите Брајово користејќи [Braille category #BrailleSettings] од [NVDA Settings #NVDASettings] дијалогот.
 
 ++ Control Type, State and Landmark abbreviations ++[BrailleAbbreviations]
-In order to fit as much information as possible on a braille display, the following abbreviations have been defined to indicate control type and state as well as landmarks.
+Сѐ со цел да прикажете што е можно повеќе информации на Брајов екран, следниве кратенки се веќе дефинирани за да наведете тип на контрола и состојба, како и обележја.(преведи го претходното)
 
 || Abbreviation | Control type |
 | app | application |
@@ -716,7 +716,7 @@ In order to fit as much information as possible on a braille display, the follow
 | ⠤⠤⠤⠤⠤ | separator |
 | mrkd | marked content |
 
-The following state indicators are also defined:
+Следниве индикатори односно покажувачи на состојби исто така се дефинирани:
 || Abbreviation | Control state |
 | ... | displayed when an object supports autocompletion |
 | ⢎⣿⡱ | displayed when an object (e.g. a toggle button) is pressed |
@@ -741,7 +741,7 @@ The following state indicators are also defined:
 | sorted desc | displayed when an object is sorted descending |
 | submnu | displayed when an object has a popup (usually a sub-menu) |
 
-Finally, the following abbreviations for landmarks are defined:
+Конечно, следниве кратенки за одбележја се дефинирани:
 || Abbreviation | Landmark |
 | bnnr | banner |
 | cinf | content info |
@@ -753,130 +753,130 @@ Finally, the following abbreviations for landmarks are defined:
 | rgn | region |
 
 ++ Braille Input ++[BrailleInput]
-NVDA supports entry of both uncontracted and contracted braille via a braille keyboard.
-You can select the translation table used to translate braille into text using the [Input table #BrailleSettingsInputTable] setting in the Braille category of the [NVDA Settings #NVDASettings] dialog.
+NVDA поддржува внес како на uncontracted така и на contracted Брајово преку Брајова тестатура.(преведи го претходното)
+Вие можете да ја одберете преводната табела која се користи за преведување на Брајово во текст користејќи го [Input table #BrailleSettingsInputTable] поставување во Брајова категорија од [NVDA Settings #NVDASettings] дијалогот.
 
-When uncontracted braille is being used, text is inserted as soon as it is entered.
-When using contracted braille, text is inserted when you press space or enter at the end of a word.
-Note that translation can only reflect the braille word you are typing and cannot consider existing text.
-For example, if you are using a braille code that begins numbers with a number sign and you press backspace to move to the end of a number, you will need to type the number sign again to enter additional numbers.
+Кога се користи целосно(нескратено) Брајово, текстот се вметнува истовремено како што се внесува.
+Кога се користи скретено Брајово, текстот се вметнува при притискање на space или enter на крајот од секој збор.
+Забелешка дека преведувањето може само да рефлектира односно да одрази Брајов збор кој Вие го пишувате и не може да биде разгледан постоечки текст.(преведи го претходното односно провери ја точноста)
+На пример, доколку Вие користите Брајов код кој ги започнува броевите со знак за број и Вие притиснете backspace да се движите на крајот од тој број, Вие ќе треба да го притиснете знакот за број повторно за да внесете дополнители броеви.(преведи го претходното односно провери ја точноста)
 
 %kc:beginInclude
-Pressing dot 7 erases the last entered braille cell or character.
-Dot 8 translates any braille input and presses the enter key.
-Pressing dot 7 + dot 8 translates any braille input, but without adding a space or pressing enter.
+Притискајќи dot 7 го брише последно внесениот Брајов cell или карактер.(преведи го претходното)
+Dot 8 го преведува секој Брајов внес и го притиска enter копчето.(преведи го претходното)
+Притискајќи dot 7 + dot 8 го преведува секој Брајов внес, но без додавање на space или притискање на enter.(преведи го претходното)
 %kc:endInclude
 
 + Vision +[Vision]
-While NVDA is primarily aimed at blind or vision impaired people who primarily use speech and/or braille to operate a computer, it also provides built-in facilities to change the contents of the screen.
-Within NVDA, such a visual aid is called a vision enhancement provider.
+Додека NVDA е примарно насочена кон лица со оштетувања во видот кои примарно користат говор и/или Брајово за да користат односно да работат на компјутер, исто така обезбедува вградени facilities да ги менува содржините на екранот.
+Внатре во NVDA, таква визуелна помош е наречена провајдер на подобрување на видливоста.
 
-NVDA offers several built-in vision enhancement providers which are described below.
-Additional vision enhancement providers can be provided in [NVDA add-ons #AddonsManager].
+NVDA нуди неколку вградени провајдери на подобрување на видливоста кои се опишани подолу.
+Додатни провајдери на подобрување на видливоста можат да бидат пронајдени за употреба односно обезбедени во [NVDA add-ons #AddonsManager].
 
-NVDA's vision settings can be changed in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog.
+NVDA's поставките односно подесувањата за видливост можат да бидат изменети во [vision category #VisionSettings] од [NVDA Settings #NVDASettings] дијалогот.
 
 ++ Focus Highlight ++[VisionFocusHighlight]
-Focus Highlight can help to identify the [system focus #SystemFocus], [navigator object #ObjectNavigation] and [browse mode #BrowseMode] positions.
-These positions are highlighted with a coloured rectangle outline.
-- Solid blue highlights a combined navigator object and system focus location (e.g. because [the navigator object follows the system focus #ReviewCursorFollowFocus]).
-- Dashed blue highlights just the system focus object.
-- Solid pink highlights just the navigator object.
-- Solid yellow highlights the virtual caret used in browse mode (where there is no physical caret such as in web browsers).
+Одбележувачот на Фокус може да помогне да се идентификува [system focus #SystemFocus], [navigator object #ObjectNavigation] и [browse mode #BrowseMode] позиции.(преведи го претходното)
+Овие позиции се одбележани со контура односно облик на правоаголник во боја.
+- Потполно плаво одбележува комбиниран navigator објектот и system focus локација (на пример бидејќи [the navigator object follows the system focus #ReviewCursorFollowFocus]).(преведи го претходното)
+- Испрекината односно непотполна блава го одблежува само system focus објектот.(преведи го претходното)
+- Потполно розево одбележува само navigator објект.(преведи го претходното)
+- Потполно жолто одбележува virtual caret кој се користи во browse mode (таму каде што не постои физички caret како што се наоѓа во web прелистувачите).(преведи го претходното)
 -
 
-When Focus Highlight is enabled in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog, you can [change whether or not to highlight the focus, navigator object or browse mode caret #VisionSettingsFocusHighlight].
+Кога Одбележувачот на Фокус е овозможен во [vision category #VisionSettings] од [NVDA Settings #NVDASettings] дијалогот, Вие можете [change whether or not to highlight the focus, navigator object or browse mode caret #VisionSettingsFocusHighlight].
 
 ++ Screen Curtain ++[VisionScreenCurtain]
-As a blind or vision impaired user, it is often not possible or necessary to see the contents of the screen.
-Furthermore, it might be hard to ensure that there isn't someone looking over your shoulder.
-For this situation, NVDA contains a feature called "screen curtain" which can be enabled to make the screen black.
+Како лице кое е со потешкотии во видот а корисник, често не е можно или потребно да се гледаат содржините на екранот.
+Понатаму уште повеќе, може да биде тешко да се биде сигурен дека нема некој кој гледа преку вашето рамо.
+За оваа ситуација, NVDA содржи feature наречена "screen curtain" која може да биде активирана за да го направи екранот црн.
 
-You can enable the Screen Curtain in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog.
+Вие можете да ја овозможите Screen Curtain во [vision category #VisionSettings] од [NVDA Settings #NVDASettings] дијалогот.
 
 + Content Recognition +[ContentRecognition]
-When authors don't provide sufficient information for a screen reader user to determine the content of something, various tools can be used to attempt to recognize the content from an image.
-NVDA supports the optical character recognition (OCR) functionality built into Windows 10 to recognize text from images.
-Additional content recognizers can be provided in NVDA add-ons.
+Кога авторите не овозможуваат доволно информации за корисникот на читачот на екран да ја одреди содржината на нешто, различни алатки можат да бидат користени за обид да се препознае содржината од слика.
+NVDA ја поддржува препознавањето на оптички карактери (OCR) функционалноста вградена во Windows 10 за да препознае текст од слика.
+Додатни препознавачи на содржина можат да бидат достапни во форма на NVDA додатоци.
 
-When you use a content recognition command, NVDA recognizes content from the current [navigator object #ObjectNavigation].
-By default, the navigator object follows the system focus or browse mode cursor, so you can usually just move the focus or browse mode cursor where desired.
-For example, if you move the browse mode cursor to a graphic, recognition will recognize content from the graphic by default.
-However, you may wish to use object navigation directly to, for example, recognize the content of an entire application window.
+Кога Вие користите команда за препознавање на содржина, NVDA препознава содржина од моменталниот [navigator object #ObjectNavigation].
+Како основна селектирана опција, the navigator објектот ги следи системскиот фокус или browse mode курсорот, за Вие да можете вообичаено само да го движите фокусот или browse mode курсорот каде што посакувате.(преведи го претходното)
+На пример, доколку го придвижите browse mode курсорот до графика, препознавањето ќе препознае содржина од графиката како основна селектирана опција.(преведи го претходното)
+Меѓутоа сепак, Вие можете да посакате да го користите објект навигацијата директно до, на пример, препознавање на содржината од целосен апликациски прозорец.
 
-Once recognition is complete, the result will be presented in a document similar to browse mode, allowing you to read the information with cursor keys, etc.
-Pressing enter or space will activate (normally click) the text at the cursor if possible.
-Pressing escape dismisses the recognition result.
+Еднаш препознавањето е комплетно, резултатот ќе биде презентиран во документ сличен до browse mode, дозволувајќи Ви Вам да ја читате информацијата со курсор копчињата, и.т. натаму.(преведи го претходното)
+Притискајќи enter или space ќе го активирате (normally click) текстот кој се наоѓа кај курсорот доколку тоа е можно.(преведи го претходното)
+Притискајќи escape го отпуштате односно ослободувате резултатот од препознавањето.
 
 ++ Windows 10 OCR ++[Win10Ocr]
-Windows 10 includes OCR for many languages.
-NVDA can use this to recognize text from images or inaccessible applications.
+Windows 10 вклучува OCR за многу јазици.
+NVDA може да го користи ова да препознае текст од слики или непристапни апликации.
 
-You can set the language to use for text recognition in the [Windows 10 OCR category #Win10OcrSettings] of the [NVDA Settings #NVDASettings] dialog.
-Additional languages can be installed by opening the Start menu, choosing Settings, selecting Time & Language -> Region & Language and then choosing Add a language.
+Вие можете да го поставите јазикот кој го употребувате за текстуално препознавање во [Windows 10 OCR category #Win10OcrSettings] од [NVDA Settings #NVDASettings] дијалогот.
+Додатни јазици можат да бидат инсталирани односно овозможени со отварање на Start menu, одбирајќи Settings, со селекција на Time & Language -> Region & Language и потоа одбирајќи Add a language.(преведи го претходното)
 
 %kc:beginInclude
-To recognize the text in the current navigator object using Windows 10 OCR, press NVDA+r.
+За да се препознае текст во постојниот navigator object користејќи Windows 10 OCR, притиснете односно одберете NVDA+r.
 %kc:endInclude
 
 + Application Specific Features +[ApplicationSpecificFeatures]
-NVDA provides its own extra features  for some applications to make certain tasks easier or to provide access to functionality which is not otherwise accessible to screen reader users.
+NVDA овозможува свои сопствени додатни опции односно карактеристики за некои апликации да ги направат одредени задачи полесни или да овозможат пристап до функционалноста која не е поинаку достапна до корисниците на читачите на екран.
 
 ++ Microsoft Word ++[MicrosoftWord]
 
 +++ Automatic Column and Row Header Reading +++[WordAutomaticColumnAndRowHeaderReading]
-NVDA is able to automatically announce appropriate row and column headers when navigating around tables in Microsoft Word.
-This firstly requires that the Report Table row / column headers option in NVDA's Document Formatting settings, found in the [NVDA Settings #NVDASettings] dialog, be turned on.
-Secondly, NVDA needs to know which row or column contains the headers in any given table.
-After moving to the first cell in the column or row containing the headers, use one of the following commands:
+NVDA е во можност автоматски да ги најавува соодветните ред и колона заглавија при навигација помеѓу табелите во Microsoft Word.
+Ова првично бара да Report Table ред / колона опции за заглавија во NVDA's Document Formatting поставките, кои се наоѓаат во [NVDA Settings #NVDASettings] дијалогот, да бидат вклучени.(преведи го претходното)
+Понатаму како второ, NVDA треба да знае кој ред или колона ги содржи заглавијата во било која дадена односно присутна табела.
+После придвижување во првата ќелија во колоната или редот кои ги содржат заглавијата, користете една од следниве команди:
 %kc:beginInclude
 || Name | Key | Description |
 | Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. |
 | Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. |
 %kc:endInclude
-These settings will be stored in the document as bookmarks compatible with other screen readers such as JAWS.
-This means that users of other screen readers who open this document at a later date will automatically  have the row and column headers already set.
+Овие поставки ќе бидат зачувани во документот како одбележувачи компатибилни со други читачи на екран како JAWS.
+Ова значи дека корисниците на други екрани кои го отвараат овој документ подоцна автоматски ќе ги имаат ред и колона заглавјата веќе поставени.
 
 +++ Browse Mode in Microsoft Word +++[BrowseModeInMicrosoftWord]
-Similar to the web, Browse mode can be used in Microsoft Word to allow you to use features such as Quick navigation and the Elements List.
+Слично на web, Browse mode може да биде користен во Microsoft Word да Ви дозволи да ги користите карактеристиките односно опциите како Quick Навигација и Elements List.(преведи го претходното)
 %kc:beginInclude
-To toggle Browse mode on and off in Microsoft Word, press NVDA+space.
+За да се вклучува/исклучува наизменично Browse mode во Microsoft Word, притиснете NVDA+space.(преведи го претходното)
 %kc:endInclude
-For further information about Browse mode and Quick Navigation, see the [Browse Mode section #BrowseMode].
+За понатамошни информации окулу Browse mode и Quick Навигација, повеќе дознајте во [Browse Mode section #BrowseMode].(преведи го претходното)
 
 ++++ The Elements List ++++[WordElementsList]
 %kc:beginInclude
-While in Browse mode in Microsoft Word, you can access the Elements List by pressing NVDA+f7.
+Додека сте во Browse mode во Microsoft Word, Вие можете да пристапувате кон Elements Листата со притискање на NVDA+f7.(преведи го претходното)
 %kc:endInclude
-The Elements List can list headings, links, annotations (which includes comments and track changes) and errors (currently limited to spelling errors).
+Elements Листата може да листа заглавја, links, прибелешки (кои вклучуваат коментари како и листа односно патека со промени) и грешки (кои моментално се ограничени на грешки во правописот).(преведи го претходното)
 
 +++ Reporting Comments +++[WordReportingComments]
 %kc:beginInclude
-To report any comments at the current caret position, press NVDA+alt+c.
+За да известите некакви коментари на постојната caret позиција односно локација, притиснете NVDA+alt+c.(преведи го претходното)
 %kc:endInclude
-All comments for the document, along with other tracked changes, can also be listed in the NVDA Elements List  when selecting Annotations as the type.
+Сите коментари за документот, заедно со останата забележана патека со промени, може исто да биде наведена односно извлистана во NVDA Elements Листа кога се одбираат Annotations како тип.(преведи го претходното)
 
 ++ Microsoft Excel ++[MicrosoftExcel]
 
 +++ Automatic Column and Row Header Reading +++[ExcelAutomaticColumnAndRowHeaderReading]
-NVDA is able to automatically announce appropriate row and column headers when navigating around Excel worksheets.
-This firstly requires that the Report Table row / column headers option in NVDA's Document Formatting settings, found in the [NVDA Settings #NVDASettings] dialog, be turned on.
-Secondly, NVDA needs to know which row or column contains the headers.
-After moving to the first cell in the column or row containing the headers, use one of the following commands:
+NVDA е во можност автоматски да ги најавува соодветните ред и колона заглавја кога се придвижувате односно навигирате наокулу Excel работните листови.
+Ова првично има потреба да Report Табелата ред / колона заглавја опцијата во NVDA's Форматирањето на Документ поставките, кое се наоѓа во [NVDA Settings #NVDASettings] дојалогот, да биде вклучена.(преведи го претходното)
+Понатаму како второ, NVDA има потреба да знае кој ред или колона ги содржи заглавјата.
+После придвижување до првата ќелија во колоната или редот кој ги содржи заглавјата, користете една од следниве команди:
 %kc:beginInclude
 || Name | Key | Description |
 | Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. |
 | Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. |
 %kc:endInclude
-These settings will be stored in the workbook as defined name ranges compatible with other screen readers such as JAWS.
-This means that users of other screen readers who open this workbook at a later date will automatically  have the row and column headers already set. 
+Овие поставки ќе бидат складирани во работниот лист како дефинирани опцези со имиња компатибилни со останати читачи на екран како JAWS.
+Ова значи дека корисниците на други читачи на екран кои ќе го отворат овој работен лист подоцна автоматски ќе ги имаат редот и колона заглавјата веќе поставени. 
 
 +++ The Elements List +++[ExcelElementsList]
-Similar to the web, NVDA has an Elements List for Microsoft Excel that allows you to list and access several different types of information.
+Слично на web, NVDA има Elements Листа за Microsoft Excel која Ви дозволува да наведувате односно листате како и да пристапувате неколку различни видови на информации.
 %kc:beginInclude
-To access the Elements List in Excel, press NVDA+f7.
+Да пристапите на Elements Листата во Excel, притиснете NVDA+f7.
 %kc:endInclude
-The various types of information available in the Elements List are:
+Различните типови на информации кои се достапни во Elements Листата се:
 - Charts: This lists all charts in the active worksheet. 
 Selecting a chart and pressing enter or the Move to button focuses the chart for navigating and reading with the arrow keys.
 - Comments: This lists all cells in the active worksheet containing comments. 
