@@ -1,9 +1,9 @@
-# scriptHandler.py
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2007-2020 NV Access Limited, Babbage B.V., Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from typing import List, Optional
 import time
 import weakref
 import inspect
@@ -241,32 +241,27 @@ def isScriptWaiting():
 	return bool(_numScriptsQueued)
 
 def script(
-	description="",
-	category=None,
-	gesture=None,
-	gestures=None,
-	canPropagate=False,
-	bypassInputHelp=False,
-	resumeSayAllMode=None
+		description: str = "",
+		category: Optional[str] = None,
+		gesture: Optional[str] = None,
+		gestures: Optional[List[str]] = None,
+		canPropagate: bool = False,
+		bypassInputHelp: bool = False,
+		allowInSleepMode: bool = False,
+		resumeSayAllMode: Optional[int] = None
 ):
 	"""Define metadata for a script.
 	This function is to be used as a decorator to set metadata used by the scripting system and gesture editor.
 	It can only decorate methods which name start swith "script_"
 	@param description: A short translatable description of the script to be used in the gesture editor, etc.
-	@type description: string 
 	@param category: The category of the script displayed in the gesture editor.
-	@type category: string
 	@param gesture: A gesture associated with this script.
-	@type gesture: string
 	@param gestures: A list of gestures associated with this script
-	@type gestures: list(string)
 	@param canPropagate: Whether this script should also apply when it belongs to a  focus ancestor object.
-	@type canPropagate: bool
 	@param bypassInputHelp: Whether this script should run when input help is active.
-	@type bypassInputHelp: bool
+	@param allowInSleepMode: Whether this script should run when NVDA is in sleep mode.
 	@param resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
-		One of the C{sayAllHandler.CURSOR_*} constants.
-	@type resumeSayAllMode: int
+	One of the C{sayAllHandler.CURSOR_*} constants.
 	"""
 	if gestures is None:
 		gestures = []
@@ -295,5 +290,6 @@ def script(
 		decoratedScript.bypassInputHelp = bypassInputHelp
 		if resumeSayAllMode is not None:
 			decoratedScript.resumeSayAllMode = resumeSayAllMode
+		decoratedScript.allowInSleepMode = allowInSleepMode
 		return decoratedScript
 	return script_decorator
