@@ -4,6 +4,12 @@ What's New in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2020.4 =
+This release includes new Chinese Input methods, an update to Liblouis and the elements list (NVDA+f7) now works in focus mode.
+Context sensitive help is now available when pressing F1 in NVDA dialogs.
+Improvements to symbol pronunciation rules, speech dictionary, Braille message and skim reading.
+Bug fixes and improvements to Mail, Outlook, Teams, Visual Studio, Azure Data Studio, Foobar2000.
+On the web, there are improvements to Google Docs, and greater support for ARIA.
+Plus many other important bug fixes and improvements.
 
 == New Features ==
 - Pressing F1 inside NVDA dialogs will now open the help file to most relevant section. (#7757)
@@ -67,6 +73,7 @@ What's New in NVDA
 - In Visual Studio, IntelliSense tool tips that provide additional details about the currently selected IntelliSense item are now only reported once. (#11611)
 - In Windows 10 Calculator, NVDA will not announce progress of calculations if speak typed characters is disabled. (#9428)
 - NVDA no longer crashes when using English US grade 2 and expand to computer Braille at the cursor is on, when displaying certain content such as a URL in Braille. (#11754)
+- It is again possible to report formatting information for the focused Excel cell using NVDA+F. (#11914)
 
 
 == Changes for Developers ==
