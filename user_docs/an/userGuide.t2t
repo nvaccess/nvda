@@ -305,9 +305,9 @@ Un obchecto ye un simple elemento tal como un trozo de texto, botón, caixeta de
 Lo foco d'o sistema, tamién conoixiu simplament como lo foco, ye o [obchecto #Objects] que recibe teclas escritas en o teclau.
 Por eixemplo, si yes escribindo en un campo de texto editable, o campo de texto editable tien o foco.
 
-Lo modo mas común de navegar por Windows con o NVDA, ye nomás mover-se con as ordens de teclau normals, tals como tabulador y mayus tabulador Ta mover-se-ne enta avant y dezaga entre controls, pretando l'Alt Ta desplegar a barra de menú y dimpués emplegando as teclas de cursor ta navegar por os menús, emplegando l'Alt-tabulador Ta mover-se-ne entre as aplicacions en execución. 
+Lo modo mas común de navegar por lo Windows con o NVDA, ye nomás mover-se con as ordens de teclau normals, tals como tabulador y mayus tabulador Ta mover-se-ne enta avant y dezaga entre controls, pretando l'Alt Ta desplegar a barra de menú y dimpués emplegando as teclas de cursor ta navegar por os menús, emplegando l'Alt-tabulador Ta mover-se-ne entre as aplicacions en execución. 
 Quan fagas ixo lo NVDA anunciará información sobre o que tien o foco, tal como o suyo nombre, tipo, valor, estau, descripción, alcorce de teclau y información posicional.
-Quan lo [resaltar lo Foco #VisionFocusHighlight] siga enchegau, la localización d'o foco d'o sistema actual tamién se exposa visualment.
+Quan lo [resaltau visual #VisionFocusHighlight] siga enchegau, la localización d'o foco d'o sistema actual tamién se exposa visualment.
 
 Bi ha qualques ordens de teclau utils quan nos movemos con o foco:
 %kc:beginInclude
@@ -363,7 +363,7 @@ D'a mesma traza, en una barra de ferramientas que contién controls, has de move
 
 L'obchecto actualment en revisión se diz navegador d'obchectos.
 Una vez que navegues enta un obchecto, puetz revisar o suyo conteniu emplegando as [ordens de revisión de texto #ReviewingText] mientras se siga en [modo de revisión d'obchectos #ObjectReview].
-Quan lo [resaltar lo Foco #VisionFocusHighlight] siga enchegau, la localización d'o foco d'o sistema actual tamién se exposa visualment.
+Quan lo [resaltau visual #VisionFocusHighlight] siga enchegau, la localización d'o foco d'o sistema actual tamién se exposa visualment.
 De traza predeterminada, o navegador d'obchectos se mueve de conchunta con o foco  d'o Sistema, encara que iste comportamiento puet activar-se y desactivar-se.
 
 Para cuenta: Que lo braille siga a la navegación d'obchectos  puet configurar-se a traviés d'[o braille ancorau a #BrailleTether].
@@ -506,7 +506,7 @@ Lo modo de navegación tamién ye disponible opcionalment pa los documentos d'o 
 
 En o modo de navegación, lo conteniu d'o documento se fa disponible por meyo d'una representación plana de conteniu tal como una pachina Web, por la qual te puetz mover con as teclas de cursor. 
 Todas las teclas d'ordens d'o [cursor d'o sistema #SystemCaret] d'o NVDA funcionarán en iste modo; p. eix.: leyer-lo tot, anunciar o formato, ordens de navegación de tabla, etc.
-Quan lo [resaltar lo Foco #VisionFocusHighlight] siga enchegau, la localización d'o foco d'o sistema actual tamién se exposa visualment.
+Quan lo [resaltau visual #VisionFocusHighlight] siga enchegau, la localización d'o foco d'o sistema actual tamién se exposa visualment.
 La información tal como si o texto ye un vinclo,  capitero, etc. s'anuncia de conchunta con o texto seguntes te muevas.
 
 A veces, amenesterás interactuar dreitament con controls en istos documentos.
@@ -776,8 +776,8 @@ Se puede proporcionar furnidors adicionals de millora d'a visión en [complement
 
 Las opcions d'a visión d'o NVDA pueden cambiar-sen en a [categoría de visión #VisionSettings] d'o dialogo d'[Opcions d'o NVDA #NVDASettings].
 
-++ Resaltau d'o foco ++[VisionFocusHighlight]
-Lo resaltau d'o foco puede aduyar a identificar las posicions d'o [foco d'o sistema #SystemFocus], [d'o navegador d'obchectos #ObjectNavigation] y [d'o modo de navegación #BrowseMode].
+++ Resaltau visual ++[VisionFocusHighlight]
+Lo resaltau visual puede aduyar a identificar las posicions d'o [foco d'o sistema #SystemFocus], [d'o navegador d'obchectos #ObjectNavigation] y [d'o modo de navegación #BrowseMode].
 Ixas posicions se resaltan con un rectanglo de color.
 - L'azul soliu resalta una combinación d'a localización d'o navegador d'obchectos y d'o foco d'o sistema (eix.: porque [lo navegador d'obchectos siga a lo foco d'o sistema #ReviewCursorFollowFocus]).
 - L'azul discontino resalta nomás l'obchecto d'o foco d'o sistema.
@@ -785,7 +785,7 @@ Ixas posicions se resaltan con un rectanglo de color.
 - L'amariello soliu resalta lo cursor virtual emplegau en o modo de navegación (en do no bi ha cursor fisico como en os navegadors web).
 -
 
-Quan lo resaltau d'o foco ye enchegau en a [categoría de visión #VisionSettings] d'o dialogo d'[opcions d'o NVDA #NVDASettings], [puetz cambiar si deseyas u no pas resaltar lo cursor d'o foco, d'o navegador d'obchectos u d'o modo de navegación #VisionSettingsFocusHighlight].
+Quan lo resaltau visual ye enchegau en a [categoría de visión #VisionSettings] d'o dialogo d'[opcions d'o NVDA #NVDASettings], [puetz cambiar si deseyas u no pas resaltar lo cursor d'o foco, d'o navegador d'obchectos u d'o modo de navegación #VisionSettingsFocusHighlight].
 
 ++ Cortina de Pantalla ++[VisionScreenCurtain]
 Como usuario ciego u con problemas de visión, a ormino no ye posible u necesario veyer lo conteniu d'a pantalla.
@@ -1147,6 +1147,9 @@ Si fas servir bell sintetizador de tercers, tamién podrás cambiar ixa valor si
 Ista opción te permite cambiar la velocidat d'a voz. 
 Ista ye una barra de desplazamiento que va dende 0 dica 100, (estando 0 la velocidat mas lenta y estando 100 la mas rapida).
 
+==== Charrar a escape ====[SpeechSettingsRateBoost]
+Enchegar ista opción aumentará prou la velocidat d'a voz si lo sintetizador actual lo suporta.
+
 ==== Ton ====[SpeechSettingsPitch]
 Ista opción te permite cambiar lo ton d'a voz. 
 Ista ye una barra de desplazamiento que va dende 0 dica 100, (estando 0 lo ton mas baixo y estando 100 lo mas alto). 
@@ -1291,20 +1294,20 @@ L'indicador de selección no ye afectau por ista opción, siempre ye con os punt
 Ista opción ye un campo numerico que te permite cambiar a velocidat de esparpello d'o cursor en milisegundos.
 
 ==== Forma d'o cursor pa o foco ====[BrailleSettingsCursorShapeForFocus]
-Ista opción te permit esleyir a forma (patrón de puntos) d'o cursor braille quan o braille siga a o foco.
+Ista opción te permite esleyir a forma (patrón de puntos) d'o cursor braille quan o braille siga a o foco.
 L'indicador de selección no ye afectau por ista opción, siempre ye con os puntos 7 y 8 sin esparpellar.
 
 ==== Forma d'o Cursor pa la Revisión ====[BrailleSettingsCursorShapeForReview]
 Ista opción te permite d'esleyir a forma (patrón de puntos) d'o cursor braille quan o braille siga a la revisión.
 L'indicador de selección no ye afectau por ista opción, siempre ye con os puntos 7 y 8 sin esparpellar.
 
+==== Amostrar los Mensaches ====[BrailleSettingsShowMessages]
+Iste ye un quadro combinau que te permite trigar si lo NVDA habría d'amostrar los mensaches braille y quán habría de desapareixer automaticament.
+
 ==== Durada d'o Mensache (en seg) ====[BrailleSettingsMessageTimeout]
 Ista opción ye un campo numerico que controla entre quánto tiempo s'amuestra os mensaches d'o sistema en a linia braille.
-En especifycar-bi 0 se desenchega l'amostrau d'istos mensaches de raso.
 Lo mensache d'o NVDA se zarra a l'inte en pretar un sensor en a linia braille, pero torna a amaneixer en pretar la correspondient tecla que l'aventó.
-
-==== Amostrar os Mensaches Indefinidament ====[BrailleSettingsNoMessageTimeout]
-Ista opción permite a os mensaches d'o NVDA d'amostrar-sen en a linia braille indefinidament.
+Ista opción no s'amuestra so que si se mete "amostrar los Mensaches" a "emplegar lo tiempo d'espera".
 
 %kc:setting
 ==== Lo braille ancorau a ====[BrailleTether]
@@ -1397,10 +1400,10 @@ La categoría de visión en o dialogo d'opcions d'o NVDA te permite enchegar, de
 Tiene en cuenta que las opcions disponibles en ista categoría podrían enamplar-sen con [complementos d'o NVDA #AddonsManager].
 Por defecto, ista categoría d'achustes contiene las siguients opcions:
 
-==== Resaltar lo foco ====[VisionSettingsFocusHighlight]
-Las caixetas de verificación en o grupo de resaltar lo foco controlan lo comportamiento d'a función integrada [resaltar lo foco #VisionFocusHighlight] d'o NVDA.
+==== Resaltau visual ====[VisionSettingsFocusHighlight]
+Las caixetas de verificación en o grupo d'o resaltau visual controlan lo comportamiento d'a función integrada [resaltar lo foco #VisionFocusHighlight] d'o NVDA.
 
-- Enchegar lo Resaltau: Enchega y desenchega lo resaltau d'o foco.
+- Enchegar lo Resaltau: Enchega y desenchega lo resaltau visual.
 - Resaltar lo foco d'o sistema: Cambiará si se resalta u no pas lo [foco d'o sistema #SystemFocus].
 - Resaltar lo navegador d'obchectos: Cambia si se resaltará u no pas lo [navegador d'obchectos #ObjectNavigation].
 - Resaltar lo cursor d'o modo de navegación: Cambia si se resaltará u no pas lo [cursor virtual d'o modo de navegación #BrowseMode].
@@ -1851,7 +1854,7 @@ Si veyes que lo NVDA aparenta estar seguindo incorrectament lo cursor, por eixem
 
 ==== Categorías d'o rechistro de depuración ====[AdvancedSettingsDebugLoggingCategories]
 Las caixetas de verificación d'ista lista te permiten enchegar categorías especificas de mensaches de depuración en o rechistro d'o NVDA.
-Lo rechistro d'ixos mensaches puede incurrir en un menor rendimiento y en fichers de rechistro de gran grandaria.
+Lo rechistro d'ixos mensaches puede resultar en un menor rendimiento y en fichers de rechistro de gran grandaria.
 Activa-ne nomás un d'ells si bell desembolicador d'o NVDA t'ha dau instruccions especificas, por eixemplo, a lo depurar por qué un controlador de linia braille no ye funcionando correctament.
 
 ++ Opcions miscelanias ++[MiscSettings]
@@ -1922,6 +1925,9 @@ Allora cambia los campos pa lo simbolo nuevo como lo ferías pa atros simbolos.
 Puetz eliminar un simbolo que adhibiés anteriorment pretando lo botón d'eliminar.
 
 En que remates, preta lo botón d'acceptar pa alzar los tuyos cambios u lo botón de cancelar pa descartar-los.
+
+En o caso de simbolos compleixos, lo campo de reemplazar puede haber d'incluyir qualques referencias de grupo d'o texto coincident. Por eixemplo, pa un patrón que coincida con una calendata completa, \1, \2, y \3 habría d'amaneixer en o campo, pa estar reemplazau por las partis correspondients d'a calendata.
+Por tanto, las barras inversas normals en o campo de reemplazar habrían de duplicar-sen, por eixemplo, "a\\b" habría d'escribir-se pa obtener lo reemplazo "a\b".
 
 +++ Cenyos de Dentrada +++[InputGestures]
 En iste dialogo, puetz personalizar os cenyos de dentrada (teclas en o teclau, botons en a pantalla braille, etc.) ta ordens d'o NVDA.
@@ -2103,6 +2109,14 @@ Las linias braille fisicas gosan tener botons pa desplazar-se enta debant u enta
 La finestra d'o visor d'o braille contiene una caixeta de verificación clamada "amostrar lo Visor d'o braille en rancar".
 Si ixa opción ye marcada, lo visor d'o braille s'ubrirá en que s'inicie lo NVDA.
 La finestra d'o visor d'o braille siempre mirará de tornar a ubrir-se con as mesmas dimensions y ubicación que quan se zarró.
+
+La finestra d'o visor d'o braille contiene una caixeta de verificación etiquetada como "Esvolastriar pa lo enrotamiento d'a celda", por defecto ye esmarcada.
+Si se marca, pasar lo churi sobre una celda braille enchegará un comando "enrotar a celda braille" pa ixa celda.
+A ormino s'emplega ixo pa mover lo cursor u enchegar l'acción d'un control.
+Ixo puede estar util pa comprebar que lo NVDA siga capable de revertir correctament lo mapa d'una celda braille.
+Pa privar lo enrotamiento involuntario t'as celdas, lo comando tiene un retardo.
+Lo churi ha de desplazar-se dica que la celda se torne verda.
+La celda prencipiará con una color amariella clara, pasará a estar narancha, y de momento se tornará verda.
 
 ++ Consola Python ++[PythonConsole]
 La consola Python d'o NVDA, que se troba baixo las ferramientas en o menú d'o NVDA, ye una ferramienta de desembolique que ye util pa depurar, inspeccions chenerals d'a parti interna d'o NVDA u inspección d'a hierarquía d'accessibilidat de bella aplicación.
@@ -2500,16 +2514,16 @@ Por favor mira-te la documentación d'a linia pa descripcions de do puede trobar
 | Mover a linia braille t'a linia anterior | B2 |
 | Mover a linia braille t'a siguient linia | B5 |
 | Ir t'a celda braille | sensors |
-| Commutar o seguimiento de braille | K2 |
+| Commutar lo seguimiento de braille | K2 |
 | Leyer-lo tot | B6 |
 %kc:endInclude
 
 ++ Series d'a HumanWare Brailliant BI/B / BrailleNote Touch ++[HumanWareBrailliant]
-Las linias braille Brailliant series BI y B de [HumanWare https://www.humanware.com/], incluindo BI 14, BI 32, BI 40 y B 80, son suportadas quan se connectan a traviés de l'USB u bluetooth.
+Las linias braille Brailliant series BI y B de [HumanWare https://www.humanware.com/], incluindo BI 14, BI 32, BI 20X, BI 40, BI 40X y B 80, se suportan en que se connectan a traviés de l'USB u lo bluetooth.
 Si la connectas a traviés d'USB con o protocolo establiu a HumanWare en primeras has d'instalar os controladors USB furnius por o fabricant.
 Los controladors USB no se requieren si lo protocolo ye establiu a OpenBraille.
 
-Los siguients dispostivos extra tamién se suportan (y no requieren garra controlador especial pa instalar-sen):
+Los siguients dispositivos extra tamién se suportan (y no requieren garra controlador especial pa instalar-sen):
 - APH Mantis Q40
 - APH Chameleon 20
 - Humanware BrailleOne
@@ -2625,7 +2639,7 @@ Por favor mira-te la documentación d'as linias pa descripcions d'án pueden tro
 | tecla escape | punto1+punto5+espacio, f4, brailleedge:f1 |
 | tecla suprimir | punto1+punto3+punto5+espacio, punto1+punto4+punto5+espacio |
 | tecla f1 | punto1+punto2+punto5+espacio |
-| tecla f3 | punto1+punto2+punto4+punto8 |
+| tecla f3 | punto1+punto4+punto8+espacio |
 | tecla f4 | punto7+f3 |
 | teclas windows+b | punto1+punto2+f1 |
 | teclas windows+d | punto1+punto4+punto5+f1 |
@@ -3108,7 +3122,7 @@ Ixos parametros han d'estar mesos dimpués d'a opción, deseparaus d'a opción p
 | nvda --log-file=c:\nvda.log |  Diz a lo NVDA que escriba o suyo rechistro en c:\nvda.log |
 | nvda --log-level=20 -f c:\nvda.log | Diz a lo  NVDA que ranque con o libel de rechistro establiu a información y que escriba o suyo rechistro en c:\nvda.log |
 
-As siguients son as opcions d'a linia de comandos d'o NVDA:
+Contino va las opcions d'a linia de comandos d'o NVDA:
 || Curta | Larga | Descripción |
 | -h | --help | Amostrar l'aduya d'a linia de comandos y salir |
 | -q | --quit | Salir d'a copia ya en execución d'o NVDA |
@@ -3125,6 +3139,7 @@ As siguients son as opcions d'a linia de comandos d'o NVDA:
 | garra | --install | Instala o NVDA (rancando a copia recient instalada) |
 | garra | --install-silent | Instala o NVDA silenciosament (no ranca la copia recient instalada) |
 | garra | --enable-start-on-logon=True|False | En instalar, enchega lo [emplegar lo NVDA en a pantalla d'inicio #StartAtWindowsLogon] d'o NVDA |
+| garra | --copy-portable-config | En instalar, copia la configuración portable dende la rota furnida (--config-path, -c) t'a lactual cuenta d'usuario |
 | garra | --create-portable | Creya una copia portable d'o NVDA (rancando a copia creyada recientment). Requier que --portable-path siga especificada |
 | garra | --create-portable-silent | Creya una copia portable d'o NVDA (sin rancar a copia recientment instalada). Requier que --portable-path siga especificada |
 | garra | --portable-path=PORTABLEPATH | A rota en do se creyará una copia portable |
