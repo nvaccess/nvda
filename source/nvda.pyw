@@ -19,6 +19,7 @@ if getattr(sys, "frozen", None):
 	appDir = sys.prefix
 else:
 	import sourceEnv
+	sourceEnv.expandPythonPath()
 	#We should always change directory to the location of this module (nvda.pyw), don't rely on sys.path[0]
 	appDir = os.path.normpath(os.path.dirname(__file__))
 appDir = os.path.abspath(appDir)

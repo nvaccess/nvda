@@ -10,7 +10,9 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../source'))
-import sourceEnv  # noqa: F401, E402
+import sourceEnv  # noqa: E402
+
+sourceEnv.expandPythonPath()
 
 # Initialize languageHandler so that sphinx is able to deal with translatable strings.
 import languageHandler  # noqa: E402

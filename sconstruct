@@ -42,6 +42,7 @@ if sys.version_info.micro == 6:
 sourceEnvPath = os.path.abspath(os.path.join(Dir('.').srcnode().path, "source"))
 sys.path.append(sourceEnvPath)
 import sourceEnv
+sourceEnv.expandPythonPath()
 sys.path.remove(sourceEnvPath)
 import time
 from glob import glob

@@ -1,4 +1,3 @@
-# tests/unit/__init__.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -31,9 +30,9 @@ TOP_DIR = os.path.dirname(os.path.dirname(UNIT_DIR))
 SOURCE_DIR = os.path.join(TOP_DIR, "source")
 # Let us import modules from the NVDA source.
 sys.path.insert(1, SOURCE_DIR)
-# Suppress Flake8 warning F401 (module imported but unused)
-# as this module is imported to expand the system path.
-import sourceEnv  # noqa: F401
+
+import sourceEnv
+sourceEnv.expandPythonPath()
 
 import globalVars
 
