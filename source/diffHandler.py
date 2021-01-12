@@ -89,6 +89,8 @@ class DiffMatchPatch(DiffAlgo):
 				(size,) = struct.unpack("=I", sizeb)
 				while len(buf) < size:
 					buf += DiffMatchPatch._proc.stdout.read(size - len(buf))
+				DiffMatchPatch._proc.stdin.flush()
+				DiffMatchPatch._proc.stdout.flush()
 				return [
 					line
 					for line in buf.decode("utf-8").splitlines()
