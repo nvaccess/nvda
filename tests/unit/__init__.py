@@ -31,7 +31,7 @@ SOURCE_DIR = os.path.join(TOP_DIR, "source")
 # Let us import modules from the NVDA source.
 sys.path.insert(1, SOURCE_DIR)
 
-import sourceEnv
+import sourceEnv  # noqa: E402
 sourceEnv.expandPythonPath()
 
 import globalVars

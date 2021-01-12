@@ -18,12 +18,6 @@ def installCallback(package):
 	# Evenn though this is quite ugly there is no other way to refresh list of available packages.
 	importlib.reload(pkg_resources)
 	pkg_resources._initialize_master_working_set()
-	print(type(pkg_resources.working_set.find(
-		# `resolve` considers installation to be succesfull only when installed package is
-		# returned from the callback.
-		list(pkg_resources.parse_requirements(str(package)))[0]
-		))
-	)
 	return pkg_resources.working_set.find(
 		# `resolve` considers installation to be succesfull only when installed package is
 		# returned from the callback.
@@ -33,11 +27,7 @@ def installCallback(package):
 
 def requestPackage(requirementsString):
 	import pkg_resources
-	import traceback
-	try:
-		pkg_resources.working_set.resolve(
-			pkg_resources.parse_requirements(requirementsString),
-			installer=installCallback
-		)
-	except Exception as e:
-		print(f"during install {traceback.format_exc()}")
+	pkg_resources.working_set.resolve(
+		pkg_resources.parse_requirements(requirementsString),
+		installer=installCallback
+	)
