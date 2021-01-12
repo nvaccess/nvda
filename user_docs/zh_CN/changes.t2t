@@ -5,7 +5,7 @@ NVDA更新日志
 
 = 2020.4 =
 
-此版本包括对新版中文输入法的改进，对 Liblouis 的更新，支持在焦点模式下使用 NVDA + F7 的元素列表对话框，增加了在 NVDA 设置对话框内按 F1 调用对应选项上下文帮助的新特性。
+此版本的新特性包括对新版中文输入法的改进，对 Liblouis 的更新，支持在焦点模式下使用 NVDA + F7 的元素列表对话框，增加了在 NVDA 设置对话框内按 F1 调用对应选项上下文帮助的功能。
 本版还改进了标点符号读音规则，语音词典，盲文消息和全文朗读功能。
 另外，针对 Windows Mail, Outlook, Teams, Visual Studio, Azure Data Studio以及 Foobar2000 等应用程序也进行了众多改进和 Bug 修复。
 在网页方面，我们针对 Google Docs 进行了优化，对更多的 ARIA 属性提供了支持。
@@ -36,8 +36,7 @@ NVDA更新日志
 - 在浏览模式中使用全文朗读时，，若启用了“在全文朗读模式下启用快捷键导航”选项，“查找下一个”和“查找上一个”命令不再打断朗读，而是从查找结果处继续向下执行全文朗读。 (#11563)
 - 针对 HIMS 点显器，重新将 F3  映射为 Space + 148 点。 (#11710)
 - 改进了盲文中“消息显示时间”和“无限期显示消息”选项的用户体验。 (#11602)
-- 在 Web 浏览器以及其他支持浏览模式的应用程序中，
-可以在焦点模式下使用“元素列表”对话框（NVDA + F7）。 (#10453)
+- 在 Web 浏览器以及其他支持浏览模式的应用程序中，可以在焦点模式下使用“元素列表”对话框（NVDA + F7）。 (#10453)
 - 当设置为不读动态内容更新时，禁止更新 ARIA Live 区域。 (#9077)
 - 在复制文本之前 NVDA 会读出“已复制到剪贴板”。 (#6757)
 - 改进了磁盘管理中图形视图列表的呈现方式。 (#10048)
@@ -46,14 +45,14 @@ NVDA更新日志
 - 将设置面板中“视觉辅助”下的“焦点高亮显示”功能重命名为“视觉高亮显示”。 (#11700)
 
 == 错误修复 ==
-- NVDA重新支持了 Fast Log Entry 的编辑区。 (#8996)
-- 在 Foobar2000 播放过程中若没有总时间（比如，播放流媒体直播时），也可以读出已经过时间，并且会给出总时间和剩余时间不可用的提示。 (#11337)
+- NVDA重新支持了 Fast Log Entry 编辑区的朗读。 (#8996)
+- 在 Foobar2000 播放过程中即使没有总时间（比如，播放流媒体直播时），也可以读出已经过时间，并且会给出总时间和剩余时间不可用的提示。 (#11337)
 - NVDA支持了网页中可编辑元素的 aria-roledescription 属性。 (#11607)
-- 不会在 Google Docs中 列表的每一行或 Google Chrome 中其他的富文本编辑区域读“列表”。 (#7562)
-- When arrowing by character or word from one list item to another in editable content on the web, entering the new list item is now announced. (#11569)
-- NVDA now reads the correct line when the caret is placed at the end of a link on the end of a list item in Google Docs or other editable content on the web. (#11606)
-- On Windows 7, opening and closing the start menu from the desktop now sets focus correctly. (#10567)
-- When "attempt to cancel expired focus events" is enabled, the title of the tab is now announced again when switching tabs in Firefox. (#11397)
+- 不会在 Google Docs中 列表的每一行或 Google Chrome 中其他的富文本编辑区域中反复读“列表”。 (#7562)
+- 当我们按字符或单词在Web 中的可编辑内容列表中导航时，从一个列表项移动到另一个列表项现在会给出提示。 (#11569)
+- 将输入光标停留在 Google Docs 中的链接末尾或 Web 中其他的可编辑内容列表末尾时， NVDA 可以读取正确的行。 (#11606)
+- 在 Windows 7 上，从桌面打开/关闭开始菜单现在可以正确停留焦点。 (#10567)
+- 修复了启用“尝试为过期的焦点事件取消语音”后，在 Firefox 中切换选项卡时，不读选项卡标题的错误。 (#11397)
 - NVDA no longer fails to announce a list item after typing a character in a list when speaking with the SAPI5 Ivona voices. (#11651)
 - It is again possible to use browse mode when reading emails in Windows 10 Mail 16005.13110 and later. (#11439)
 - When using the SAPI5 Ivona voices from harposoftware.com, NVDA is now able to save configuration, switch synthesizers, and no longer will stay silent after restarting. (#11650)

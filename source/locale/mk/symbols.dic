@@ -21,232 +21,232 @@ symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	dot	all	always
-! sentence ending	bang	all	always
-? sentence ending	question	all	always
-; phrase ending	semi	most	always
-: phrase ending	colon	most	always
+. sentence ending	точка	all	always
+! sentence ending	извичник	all	always
+? sentence ending	прашалник	all	always
+; phrase ending	точка запирка	most	always
+: phrase ending	две точки	most	always
 decimal point		none	always
-in-word '	tick	all	norep
-negative number	minus	none	norep
+in-word '	апостроф	all	norep
+negative number	минус	none	norep
 
 # Whitespace
-\0	blank	char	# null
-\t	tab
-\n	line feed	char
-\f	page break	none
-\r	carriage return	char
- 	space	char
- 	space	char	# no-break space
+\0	празно	char	# null
+\t	таб
+\n	нов ред	char
+\f	нова страна	none
+\r	крај на ред	char
+ 	спејс	char
+ 	спејс	char	# no-break space
 
 # Standard punctuation/symbols
-!	bang	all
-"	quote	most
-\#	number	some
-$	dollar	all	norep
-£	pound	all	norep
-€	euro	all	norep
-¢	Cents	all	norep
-¥	Yen	all	norep
-₹	Rupee	some	norep
-ƒ	florin	all	norep
-¤	currency sign	all	norep
-%	percent	some
-‰	per mille	some
-&	and	some
-'	tick	all
-(	left paren	most	always
-)	right paren	most	always
-*	star	some
-+	plus	some
-−	minus	some
-,	comma	all	always
--	dash	most
-.	dot	some
-/	slash	some
-:	colon	most	norep
-;	semi	most
-<	less	some
->	greater	some
-=	equals	some
-?	question	all
-@	at	some
-[	left bracket	most
-]	right bracket	most
-\\	backslash	most
+!	извичник	all
+"	наводник	most
+\#	тараба	some
+$	Долар	all	norep
+£	Фунта	all	norep
+€	Евро	all	norep
+¢	центи	all	norep
+¥	Јен	all	norep
+₹	Рупија	some	norep
+ƒ	флорин	all	norep
+¤	знак за валута	all	norep
+%	процент	some
+‰	промили	some
+&	амперсанд	some
+'	апостроф	all
+(	отворена заграда	most	always
+)	затворена заграда	most	always
+*	ѕвездичка	some
++	плус	some
+−	минус	some
+,	запирка	all	always
+-	цртичка	most
+.	точка	some
+/	коса црта	some
+:	две точки	most	norep
+;	точка запирка	most
+<	помало од	some
+>	поголемо од	some
+=	еднакво	some
+?	прашалник	all
+@	ет	some
+[	лева средна заграда	most
+]	десна средна заграда	most
+\\	обратна коса црта	most
 ^	caret	most
-_	line	most
-`	graav	most
-{	left brace	most
-}	right brace	most
-|	bar	most
-¦	broken bar	most
-~	tilda	most
-¡	inverted exclamation point	some
-¿	inverted question mark	some
-·	middle dot	most
-‚	single low quote	most
-„	double low quote	most
-′	prime	some
-″	double prime	some
-‴	triple prime	some
+_	долна црта	most
+`	акцент	most
+{	лева голема заграда	most
+}	десна голема заграда	most
+|	права црта	most
+¦	испрекината црта	most
+~	тилда	most
+¡	обратен извичник	some
+¿	обратен прашалник	some
+·	централна точка	most
+‚	долен наводник	most
+„	долни наводници	most
+′	прим	some
+″	двоен прим	some
+‴	троен прим	some
 
 # Other characters
-•	bullet	some
-…	dot dot dot	all	always
-...	dot dot dot	all	always
-“	left quote	most
-”	right quote	most
+•	знак за набројување	some
+…	три точки	all	always
+...	три точки	all	always
+“	лев наводник	most
+”	десен наводник	most
 ‘	left tick	most
 ’	right tick	most
-–	en dash	most	always
-—	em dash	most
+–	црта	most	always
+—	црта	most
 ­	soft hyphen	most
-⁃	hyphen bullet	none
-●	circle	most
-○	white circle	most
-¨	diaeresis	most
-¯	macron	most
+⁃	цртичка за набројување	none
+●	кругче	most
+○	бело кругче	most
+¨	дијареза	most
+¯	макрон	most
 ´	acute	most
 ¸	cedilla	most
-‎	left to right mark	char
-‏	right to left mark	char
-¶	paragraph marker	most
-■	black square	some
-▪	black square	some
-◾	black square	some
-□	white square	some
-◦	white bullet	some
-⇒	right double arrow	some
-⇨	right white arrow	some
-➔	right-pointing arrow	some
-➢	right arrowhead	some
-⮚	right arrowhead	some
-❖	black diamond minus white X	some
-♣	black club	some
-♦	black diamond	some
-◆	black diamond	some
-§	section	all
-°	degrees	some
+‎	знак за од лево на десно	char
+‏	знак за од десно на лево	char
+¶	обележувач на пасус	most
+■	црн квадрат	some
+▪	црн квадрат	some
+◾	црн квадрат	some
+□	бел квадрат	some
+◦	бела точка	some
+⇒	двојна стрелка на десно	some
+⇨	бела стрелка на десно	some
+➔	стрелка со насока на десно	some
+➢	десна стрелка	some
+⮚	десна стрелка	some
+❖	црна ромб минус бел X	some
+♣	црна детелина	some
+♦	црна баклава	some
+◆	црн ромб	some
+§	параграф	all
+°	степени	some
 «	double left pointing angle bracket
 »	double right pointing angle bracket
-µ	micro	some
-º	ordinal	some
-ª	superscript a	some
-⁰	superscript 0	some
-¹	superscript 1	some
-²	superscript 2	some
-³	superscript 3	some
-⁴	superscript 4	some
-⁵	superscript 5	some
-⁶	superscript 6	some
-⁷	superscript 7	some
-⁸	superscript 8	some
-⁹	superscript 9	some
-⁺	superscript plus	some
-⁻	superscript minus	some
-⁼	superscript equals	some
-⁽	superscript left paren	some
-⁾	superscript right paren	some
-ⁿ	superscript n	some
-₀	subscript 0	some
-₁	subscript 1	some
-₂	subscript 2	some
-₃	subscript 3	some
-₄	subscript 4	some
-₅	subscript 5	some
-₆	subscript 6	some
-₇	subscript 7	some
-₈	subscript 8	some
-₉	subscript 9	some
-₊	subscript plus	some
-₋	subscript minus	some
-₌	subscript equals	some
-₍	subscript left paren	some
-₎	subscript right paren	some
-®	registered	some
-™	Trademark	some
-©	Copyright	some
-±	Plus or Minus	some
-×	times	some
-÷	divide by	some
-←	left arrow	some
-↑	up arrow	some
-→	right arrow	some
-↓	down arrow	some
-✓	check	some
-✔	check	some
-🡺	right arrow	some
+µ	микро	some
+º	реден број	some
+ª	експонент а	some
+⁰	експонент 0	some
+¹	експонент 1	some
+²	експонент 2	some
+³	експонент 3	some
+⁴	експонент 4	some
+⁵	експонент 5	some
+⁶	експонент 6	some
+⁷	експонент 7	some
+⁸	експонент 8	some
+⁹	експонент 9	some
+⁺	експонент плус	some
+⁻	експонент минус	some
+⁼	експонент еднакво	some
+⁽	експонент отворена заграда	some
+⁾	експонент затворена заграда	some
+ⁿ	експонент n	some
+₀	индекс 0	some
+₁	индекс 1	some
+₂	индекс 2	some
+₃	индекс 3	some
+₄	индекс 4	some
+₅	индекс 5	some
+₆	индекс 6	some
+₇	индекс 7	some
+₈	индекс 8	some
+₉	индекс 9	some
+₊	индекс плус	some
+₋	индекс минус	some
+₌	индекс еднакво	some
+₍	индекс отворена заграда	some
+₎	индекс затворена заграда	some
+®	регистрирано	some
+™	Заштитен знак	some
+©	Авторско право	some
+±	плус или минус	some
+×	помножено со	some
+÷	делено со	some
+←	стрелка на лево	some
+↑	стрелка на горе	some
+→	стрелка на десно	some
+↓	стрелка на долу	some
+✓	означено	some
+✔	означено	some
+🡺	стрелка на десно	some
 †	dagger	some
 ‡	double dagger	some
-‣	triangular bullet	none
-✗	x-shaped bullet	none
+‣	триаголник за набројување	none
+✗	икс за набројување	none
 
 #Mathematical Operators U+2200 to U+220F
-∀	for all	none
+∀	за сите	none
 ∁	complement	none
 ∂	partial derivative	none
-∃	there exists	none
-∄	there does not exist	none
-∅	empty set	none
+∃	постои	none
+∄	не постои	none
+∅	празно множество	none
 ∆	increment	none
 ∇	nabla	none
-∈	element of	none
-∉	not an element of	none
+∈	припаѓа во множество	none
+∉	не припаѓа во множество	none
 ∊	small element of	none
-∋	contains as member	none
-∌	does not contain as member	none
+∋	содржи	none
+∌	не содржи	none
 ∍	small contains as member	none
-∎	end of proof	none
-∏	n-ary product	none
+∎	крај на доказот	none
+∏	Продукт	none
 
 # Miscellaneous Mathematical Operators
-∑	n-ary summation	none
-√	square root	none
-∛	cube root	none
-∜	fourth root	none
-∝	proportional to	none
-∞	infinity	none
-∟	right angle	none
-∠	angle	none
-∥	parallel to	none
-∦	not parallel to	none
-∧	logical and	none
-∨	logical or	none
-¬	logical not	none
-∩	intersection	none
-∪	union	none
-∫	integral	none
-∴	therefore	none
-∵	because	none
-∶	ratio	none
-∷	proportion	none
-≤	less- than or equal to	none
-≥	greater-than or equal to	none
-⊂	subset of	none
-⊃	superset of	none
-⊆	subset of or equal to	none
-⊇	superset of or equal to	none
+∑	Сума	none
+√	квадратен корен	none
+∛	кубен корен	none
+∜	четврти корен	none
+∝	пропорционално на	none
+∞	бесконечно	none
+∟	прав агол	none
+∠	агол	none
+∥	паралелно на	none
+∦	не е паралелно на	none
+∧	логичко и	none
+∨	логичко или	none
+¬	логичко не	none
+∩	пресек	none
+∪	унија	none
+∫	интеграл	none
+∴	тогаш	none
+∵	поради	none
+∶	размер	none
+∷	пропорција	none
+≤	помало или еднакво од	none
+≥	поголемо или еднакво од	none
+⊂	подмножество од	none
+⊃	надмножество на	none
+⊆	подмножество од или еднакво на	none
+⊇	надмножество или еднакво на	none
 
 # Vulgur Fractions U+2150 to U+215E
-¼	one quarter	none
-½	one half	none
-¾	three quarters	none
-⅐	one seventh	none
-⅑	one ninth	none
-⅒	one tenth	none
-⅓	one third	none
-⅔	two thirds	none
-⅕	one fifth	none
-⅖	two fifths	none
-⅗	three fifths	none
-⅘	four fifths	none
-⅙	one sixth	none
-⅚	five sixths	none
-⅛	one eighth	none
-⅜	three eights	none
-⅝	five eighths	none
-⅞	seven eighths	none
+¼	една четвртина	none
+½	една половина	none
+¾	три четвртини	none
+⅐	 една седмина	none
+⅑	една деветтина	none
+⅒	една десеттина	none
+⅓	една третина	none
+⅔	две третини	none
+⅕	една петтина	none
+⅖	две петтини	none
+⅗	три петтини	none
+⅘	четири петтини	none
+⅙	една шестина	none
+⅚	пет шестини	none
+⅛	една осмина	none
+⅜	три осмини	none
+⅝	пет осмини	none
+⅞	седум осмини	none
 
 # Miscellaneous Technical
-⌘	Mac Command key	none
+⌘	Мек командно копче	none
