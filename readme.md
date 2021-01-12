@@ -110,7 +110,6 @@ Additionally, the following build time dependencies are included in Git submodul
 * [Nulsoft Install System](https://nsis.sourceforge.io/Main_Page/), version 2.51
 * [NSIS UAC plug-in](https://nsis.sourceforge.io/UAC_plug-in), version 0.2.4, ansi
 * xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
-* [epydoc](http://epydoc.sourceforge.net/), version 3.0.1 with patch for bug #303
 * [Boost Optional (stand-alone header)](https://github.com/akrzemi1/Optional), from commit [3922965](https://github.com/akrzemi1/Optional/commit/3922965396fc455c6b1770374b9b4111799588a9)
 
 ### Other Dependencies
@@ -122,6 +121,7 @@ Although this [must be run manually](#linting-your-changes), developers may wish
 
 The following dependencies aren't needed by most people, and are not included in Git submodules:
 
+* To generate developer documentation: [Sphinx](http://sphinx-doc.org/), version 3.4.1
 * To generate developer documentation for nvdaHelper: [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
 * When you are using Visual Studio Code as your integrated development environment of preference, you can make use of our [prepopulated workspace configuration](https://github.com/nvaccess/vscode-nvda/) for [Visual Studio Code](https://code.visualstudio.com/).
 	While this VSCode project is not included as a submodule in the NVDA repository, you can easily check out the workspace configuration in your repository by executing the following from the root of the repository.
@@ -216,7 +216,14 @@ scons developerGuide
 ```
 
 The developer guide will be placed in the `devDocs` folder in the output directory.
-Note that the Python 3 sources of NVDA currently do not support building NVDA developer documentation using the `scons devDocs` command.
+
+To generate the HTML-based source code documentation, type:
+
+```
+scons devDocs
+```
+
+The documentation will be placed in the `NVDA` folder in the output directory.
 
 To generate developer documentation for nvdaHelper (not included in the devDocs target):
 
