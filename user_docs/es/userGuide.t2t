@@ -1589,6 +1589,7 @@ Esta opción te permite elegir si deseas que se te informe sobre la posición de
 
 ==== Deducir la información de Posición del Objeto cuando no esté disponible ====[ObjectPresentationGuessPositionInfo]
 Si el anunciado de información de posición del objeto está activado, esta opción permite a NVDA deducir la información de posición del objeto cuando no esté disponible para un control en particular.
+
 Cuando esté activada, NVDA anunciará información de posición para más controles tales como menús y barras de herramientas, no obstante esta información podrá ser ligeramente incorrecta. 
 
 ==== Anunciar Descripciones de Objetos ========[ObjectPresentationReportDescriptions]
@@ -1825,8 +1826,7 @@ Si sufres problemas de rendimiento en una o más aplicaciones, te recomendamos q
 ==== Utilizar UI automation para acceder a controles de documento de Microsoft Word cuando esté disponible ====[AdvancedSettingsUseUiaForWord]
 Cuando esta opción esté activada, NVDA intentará utilizar la API de accesibilidad de Microsoft UI Automation para obtener información de los controles de documentos de Microsoft Word.
 Esto incluye el mismo Microsoft Word, y también el visor de mensajes y el compositor de Microsoft Outlook.
-Para las versiones más recientes de Microsoft Office 2016/365 que se ejecutan en Windows 10, la compatibilidad con la UI Automation  es lo suficientemente completa como para proporcionar acceso a documentos de Microsoft Word casi igual a la compatibilidad con Microsoft Word existente de NVDA, con la ventaja añadida de que la capacidad de respuesta aumenta considerablemente.
-
+ Para las versiones más recientes de Microsoft Office 2016/365 que se ejecutan en Windows 10, la compatibilidad con la UI Automation  es lo suficientemente completa como para proporcionar acceso a documentos de Microsoft Word casi igual a la compatibilidad con Microsoft Word existente de NVDA, con la ventaja añadida de que la capacidad de respuesta aumenta considerablemente.
 Sin embargo, puede haber alguna información que no esté expuesta o que esté incorrectamente expuesta en algunas versiones de Microsoft Office, lo que significa que no siempre se puede confiar en este soporte de la UI automation.
 Todavía no recomendamos que la mayoría de los usuarios activen esta opción de forma predeterminada, aunque invitamos a los usuarios de Office 2016/365 a que prueben esta función y nos envíen sus comentarios.
 
@@ -2180,7 +2180,6 @@ Los complementos incompatibles se presentan en una lista con las siguientes colu
 El Administrador de Complementos Incompatibles también tiene un botón "Acerca del complemento...".
 Esto abre lo que te permitirá conocer todos los detalles del complemento, lo cual es de ayuda cuando contactes con el autor del complemento.
 
-
 ++ Crear copia portable ++[CreatePortableCopy]
 Esto abrirá un diálogo que te permite crear una copia portable de NVDA a partir de la versión instalada.
 De cualquier modo, al ejecutar una copia portable de NVDA, en el submenú Herramientas extra el elemento de menú se llamará "instalar NVDA en este PC" en lugar de "crear copia portable).
@@ -2273,6 +2272,7 @@ Las siguientes pantallas admiten esta funcionalidad de detección automática.
 - Series de las Optelec ALVA 6
 - Series de las HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille
 - Pantallas Eurobraille Esys/Esytime/Iris
+- Pantallas Nattiq nBraille
 -
 
 ++ Series de la Freedom Scientific Focus/PAC Mate ++[FreedomScientificFocus]
@@ -2639,7 +2639,7 @@ Por favor consulta la documentación de las pantallas para descripciones de dón
 | tecla escape | punto1+punto5+espacio, f4, brailleedge:f1 |
 | tecla suprimir | punto1+punto3+punto5+espacio, punto1+punto4+punto5+espacio |
 | tecla f1 | punto1+punto2+punto5+espacio |
-| tecla f3 | punto1+punto2+punto4+punto8+espacio |
+| tecla f3 | punto1+punto4+punto8+espacio |
 | tecla f4 | punto7+f3 |
 | teclas windows+b | punto1+punto2+f1 |
 | teclas windows+d | punto1+punto4+punto5+f1 |
