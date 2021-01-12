@@ -271,15 +271,17 @@ REQUIRED_PY2EXE_VER = "py2exe==0.10.1.0"
 
 # A builder to generate an NVDA distribution.
 def NVDADistGenerator(target, source, env, for_signature):
-	import buildFunctions
-	buildFunctions.requestPackage(REQUIRED_PY2EXE_VER)
+	action = []
+	action.append(
+		[sys.executable, "-c", f"import buildFunctions; buildFunctions.requestPackage('{REQUIRED_PY2EXE_VER}');"]
+	)
 	buildVersionFn = os.path.join(str(source[0]), "_buildVersion.py")
 	# Make the NVDA build use the specified version.
 	# We don't do this using normal scons mechanisms because we want it to be cleaned up immediately after this builder
 	# and py2exe will cause bytecode files to be created for it which scons doesn't know about.
 	updateVersionType = env["updateVersionType"] or None
 	# Any '\n' characters written are translated to the system default line separator, os.linesep.
-	action = [lambda target, source, env: open(buildVersionFn, "w", encoding="utf-8").write(
+	action.append([lambda target, source, env: open(buildVersionFn, "w", encoding="utf-8").write(
 		'version = {version!r}\n'
 		'publisher = {publisher!r}\n'
 		'updateVersionType = {updateVersionType!r}\n'
@@ -288,7 +290,7 @@ def NVDADistGenerator(target, source, env, for_signature):
 	)
 	# In Python 3 write returns the number of characters written,
 	# which scons treats as an error code.	
-	and None]
+	and None][0])
 
 	buildCmd = ["cd", source[0].path, "&&",
 		sys.executable]

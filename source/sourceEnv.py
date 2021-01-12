@@ -13,13 +13,14 @@ import os
 TOP_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 
-def pythonPackagesDir() -> str:
-	"""Returns path to the directory in which packages installed using pip should  be placed.
-	The directory would be created if it does not exist.
-	"""
-	PACKAGES_DIR = os.path.abspath(os.path.join(TOP_DIR, "installed_packages"))
-	os.makedirs(PACKAGES_DIR, exist_ok=True)
-	return PACKAGES_DIR
+def getBuildFunctions():
+	try:
+		import buildFunctions
+	except ImportError:
+		sys.path.append(TOP_DIR)
+		import buildFunctions
+		sys.path.remove(TOP_DIR)
+	return buildFunctions
 
 
 # Directories containing Python modules included in git submodules.
@@ -29,7 +30,7 @@ PYTHON_DIRS = (
 	os.path.join(TOP_DIR, "include", "configobj", "src"),
 	os.path.join(TOP_DIR, "include", "wxPython"),
 	os.path.join(TOP_DIR, "miscDeps", "python"),
-	pythonPackagesDir(),
+	getBuildFunctions().pythonPackagesDir(),
 )
 
 
