@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-03 01:31+1000\n"
+"POT-Creation-Date: 2021-01-12 20:07+1000\n"
 "PO-Revision-Date: 2020-10-05 14:59+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
@@ -686,6 +686,12 @@ msgstr "Αφρικάανς βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Afrikaans grade 2"
+msgstr "Αφρικάανς βαθμού 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Arabic 8 dot computer braille"
 msgstr "Αραβικό οχτάστιγμο braile υπολογιστών"
 
@@ -706,6 +712,12 @@ msgstr "Ασαμίζ βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Bashkir grade 1"
+msgstr "Κασμίρι βαθμού 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Bengali grade 1"
 msgstr "βεγγάλι βαθμού 1"
 
@@ -718,6 +730,12 @@ msgstr "Βουλγαρικό οκτάστιγμο braille"
 #. braille settings dialog.
 msgid "Central Kurdish grade 1"
 msgstr "Κεντρικά Κουρδικά βαθμού 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Coptic 8 dot computer braille"
+msgstr "Κροατικό οκτάστιγμο braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1161,8 +1179,15 @@ msgstr "Ρωσικό braille υπολογιστών"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Russian grade 1"
-msgstr "Ρωσικά βαθμού 1"
+#, fuzzy
+msgid "Russian literary braille"
+msgstr "Ρωσικό braille υπολογιστών"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Russian literary braille (detailed)"
+msgstr "Ρωσικό braille υπολογιστών"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3031,10 +3056,6 @@ msgstr ""
 msgid "No selection"
 msgstr "Καμία επιλογή"
 
-#. Translators: Message presented when text has been copied to clipboard.
-msgid "Copied to clipboard"
-msgstr "Αντιγράφηκε στο πρόχειρο"
-
 # check
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -3412,6 +3433,23 @@ msgid "Toggles on and off the reporting of emphasis"
 msgstr ""
 "Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
 "αναφοράς έμφασης"
+
+#. Translators: Input help mode message for toggle report marked (highlighted) content command.
+#, fuzzy
+msgid "Toggles on and off the reporting of marked text"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"αναφοράς άρθρων"
+
+#. Translators: The message announced when toggling the report marked document formatting setting.
+#, fuzzy
+msgid "report marked on"
+msgstr "ενεργοποίηση αναφοράς σελίδων"
+
+#. Translators: The message announced when toggling the report marked document formatting setting.
+#, fuzzy
+msgid "report marked off"
+msgstr "απενεργοποίηση αναφοράς σελίδων"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3819,12 +3857,6 @@ msgstr ""
 #. but there is no current navigator object.
 msgid "No navigator object"
 msgstr "Δεν υπάρχει αντικείμενο πλοήγησης"
-
-#. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
-#. Translators: The message presented when the status bar is copied to the clipboard.
-#, python-format
-msgid "%s copied to clipboard"
-msgstr "%s αντιγράφηκε στο πρόχειρο"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
@@ -4329,6 +4361,8 @@ msgid "Log fragment copied to clipboard"
 msgstr "Αντιγράφηκε τμήμα του αρχείου καταγραφής στο πρόχειρο"
 
 #. Translators: Presented when unable to copy to the clipboard because of an error.
+#. Translators: Presented when unable to copy to the clipboard because of an error
+#. or the clipboard content did not match what was just copied.
 msgid "Unable to copy"
 msgstr "Δεν είναι δυνατή η αντιγραφή"
 
@@ -4720,10 +4754,6 @@ msgstr "Δεν υπάρχει κείμενο προς αντιγραφή"
 msgid "Can't select text, press twice to copy"
 msgstr ""
 "Δε μπορείτε να επιλέξετε το κείμενο, πατήστε δύο φορές για να το αντιγράψετε"
-
-#. Translators: Presented when some review text has been copied to clipboard.
-msgid "Review selection copied to clipboard"
-msgstr "Το επιλεγμένο κείμενο προς επισκόπηση αντιγράφηκε στο πρόχειρο"
 
 #. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
 msgid ""
@@ -6716,6 +6746,25 @@ msgstr "Διακοπή αγγίγματος"
 msgid "NVDA Message"
 msgstr "Μήνυμα Του NVDA"
 
+#. Translators: Spoken instead of a lengthy text when copied to clipboard.
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
+#, python-format
+msgid "%d characters"
+msgstr "%d χαρακτήρες"
+
+#. Translators: Announced when a text has been copied to clipboard.
+#. {text} is replaced by the copied text.
+#, fuzzy, python-brace-format
+msgid "Copied to clipboard: {text}"
+msgstr "Αντιγράφηκε στο πρόχειρο"
+
+#. Translators: Displayed in braille when a text has been copied to clipboard.
+#. {text} is replaced by the copied text.
+#, fuzzy, python-brace-format
+msgid "Copied: {text}"
+msgstr "Ορθογραφικός έλεγχος: {text}"
+
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
 msgstr "Έλεγχος για ενημερωμένη έκδοση σε εξέλιξη..."
@@ -6734,6 +6783,9 @@ msgstr "Σφάλμα κατά τον έλεγχο για ενημερωμένη 
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
+#. Translators: The message title displayed
+#. when the user has not specified an absolute destination directory
+#. in the Create Portable NVDA dialog.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -7044,6 +7096,8 @@ msgid "Composition"
 msgstr "Σύνθεση"
 
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
+#. Translators: A label for a 'candidate' list
+#. which contains symbols the user can choose from  when typing east-asian characters into a document.
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 msgid "Candidate"
 msgstr "Επιλογή συμβόλου"
@@ -7065,6 +7119,10 @@ msgstr "Αδυναμία εύρεσης του παραθύρου του εγχ�
 msgid "No track playing"
 msgstr "Δεν αναπαράγεται κανένα κομμάτι"
 
+#. Translators: Reported if the remaining time can not be calculated in Foobar2000
+msgid "Unable to determine remaining time"
+msgstr ""
+
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Αναφέρει τον εναπομείναντα χρόνο του τρέχοντος κομματιού, αν υπάρχει"
@@ -7072,6 +7130,11 @@ msgstr "Αναφέρει τον εναπομείναντα χρόνο του τ�
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "Αναφέρει το χρόνο που έχει παρέλθει στο τρέχον κομμάτι, αν υπάρχει."
+
+#. Translators: Reported if the total time is not available in Foobar2000
+#, fuzzy
+msgid "Total time not available"
+msgstr "μη διαθέσιμο αρχείο καταγραφής"
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
 msgid "Reports the length of the currently playing track, if any"
@@ -7574,6 +7637,14 @@ msgstr "απενεργοποιημένο"
 msgid "No emoji"
 msgstr "Χωρίς emoji"
 
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking on"
+msgstr "Ενεργοποίηση παρακολούθησης αλλαγών"
+
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking off"
+msgstr "Απενεργοποίηση παρακολούθησης αλλαγών"
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
 msgstr "Optelec ALVA 6 series/protocol converter"
@@ -7691,6 +7762,11 @@ msgstr "Προβολέας Braille NVDA"
 #. whether the braille viewer is shown at startup or not.
 msgid "&Show Braille Viewer on Startup"
 msgstr "&Εμφάνιση Προβολέα Braille κατά την εκκίνηση"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether hovering mouse routes to the cell.
+msgid "&Hover for cell routing"
+msgstr ""
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -8317,6 +8393,8 @@ msgid "Install"
 msgstr "Εγκατάσταση"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
 msgid "Disabled"
 msgstr "Απενεργοποιημένο"
 
@@ -8660,6 +8738,17 @@ msgstr ""
 msgid "Manual Activation"
 msgstr "Χειροκίνητη Ενεργοποίηση"
 
+#. Translators: Message indicating no context sensitive help is available for the control or dialog.
+#, fuzzy
+msgid "No help available here."
+msgstr "Δεν είναι διαθέσιμη νέα έκδοση"
+
+#. Translators: Message shown when trying to display context sensitive help,
+#. indicating that	the user guide could not be found.
+#, fuzzy
+msgid "No user guide found."
+msgstr "Δε βρέθηκε γραμμή κατάστασης"
+
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
@@ -8899,6 +8988,16 @@ msgstr "&Εκκίνηση φορητού αντιγράφου μετά τη δη
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
 msgid "Please specify a directory in which to create the portable copy."
+msgstr ""
+"Παρακαλώ ορίστε ένα φάκελο μέσα στον οποίο θα δημιουργηθεί το φορητό "
+"αντίγραφο."
+
+#. Translators: The message displayed when the user has not specified an absolute destination directory
+#. in the Create Portable NVDA dialog.
+#, fuzzy
+msgid ""
+"Please specify an absolute path (including drive letter)  in which to create "
+"the portable copy."
 msgstr ""
 "Παρακαλώ ορίστε ένα φάκελο μέσα στον οποίο θα δημιουργηθεί το φορητό "
 "αντίγραφο."
@@ -9546,7 +9645,8 @@ msgstr "&Με έμφαση"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Marked (highlighted text)"
+#, fuzzy
+msgid "Mar&ked (highlighted text)"
 msgstr "Σήμανση (κειμένου με επισήμανση)"
 
 #. Translators: This is the label for a checkbox in the
@@ -10017,13 +10117,27 @@ msgstr "Σχήμα δρομέα για &εστίαση:"
 msgid "Cursor shape for &review:"
 msgstr "Σχήμα &δρομέα για αναθεώρηση:"
 
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+#, fuzzy
+msgid "Use timeout"
+msgstr "Εκπνοή χρονικού ορίου μηνύματος (δευτερόλεπτα)"
+
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+#, fuzzy
+msgid "Show indefinitely"
+msgstr "Εμφάνιση μηνύματος επ αόριστον"
+
+#. Translators: The label for a setting in braille settings to combobox enabling user
+#. to decide if braille messages should be shown and automatically disappear from braille display.
+#, fuzzy
+msgid "Show messages"
+msgstr "Δεν υπάρχει μήνυμα μέχρι στιγμής"
+
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
 msgstr "Εκπνοή χρονικού ορίου μηνύματος (δευτερόλεπτα)"
-
-#. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
-msgid "Show &messages indefinitely"
-msgstr "Εμφάνιση μηνύματος επ αόριστον"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
@@ -10204,12 +10318,6 @@ msgstr "επιλέχθηκε %s"
 #, python-format
 msgid "%s selected"
 msgstr "%s επιλεγμένο"
-
-#. Translators: This is spoken when the user has selected a large portion of text.
-#. Example output "1000 characters"
-#, python-format
-msgid "%d characters"
-msgstr "%d χαρακτήρες"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -10660,7 +10768,8 @@ msgid "Highlight navigator &object"
 msgstr "Επισήμανση &πλοήγησης αντικειμένου"
 
 #. Translators: Description for NVDA's built-in screen highlighter.
-msgid "Focus Highlight"
+#, fuzzy
+msgid "Visual Highlight"
 msgstr "Επισήμανση Εστίασης"
 
 #. Translators: The label for a checkbox that enables / disables focus highlighting
@@ -12073,10 +12182,11 @@ msgctxt "line spacing value"
 msgid "1.5 lines"
 msgstr "1.5 γραμμές"
 
-#. Translators: exact (minimum) line spacing
+#. Translators: line spacing of exactly x point
+#, python-brace-format
 msgctxt "line spacing value"
-msgid "exact"
-msgstr "ακριβές"
+msgid "exactly {space:.1f} pt"
+msgstr ""
 
 #. Translators: line spacing of at least x point
 #, python-format
@@ -12174,14 +12284,6 @@ msgstr "{styleName} Στυλ, επίπεδο περιγράμματος {outline
 msgid "{size:g} point font"
 msgstr "{size:g} στιγμές"
 
-#. Translators: a message when toggling change tracking in Microsoft word
-msgid "Change tracking on"
-msgstr "Ενεργοποίηση παρακολούθησης αλλαγών"
-
-#. Translators: a message when toggling change tracking in Microsoft word
-msgid "Change tracking off"
-msgstr "Απενεργοποίηση παρακολούθησης αλλαγών"
-
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
 msgid "Display nonprinting characters"
 msgstr "Εμφάνιση μη εκτυπώσιμων χαρακτήρων"
@@ -12232,6 +12334,19 @@ msgstr "Διπλό διάστιχο γραμμής"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Διάστιχο γραμμής 1.5"
+
+#~ msgctxt "line spacing value"
+#~ msgid "exact"
+#~ msgstr "ακριβές"
+
+#~ msgid "Russian grade 1"
+#~ msgstr "Ρωσικά βαθμού 1"
+
+#~ msgid "%s copied to clipboard"
+#~ msgstr "%s αντιγράφηκε στο πρόχειρο"
+
+#~ msgid "Review selection copied to clipboard"
+#~ msgstr "Το επιλεγμένο κείμενο προς επισκόπηση αντιγράφηκε στο πρόχειρο"
 
 #~ msgid "Apply"
 #~ msgstr "Εφαρμογή"
