@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from io import StringIO
 from configobj import ConfigObj
@@ -60,6 +60,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	cursorShapeFocus = integer(default=192,min=1,max=255)
 	cursorShapeReview = integer(default=128,min=1,max=255)
 	noMessageTimeout = boolean(default=false)
+	# Timeout after the message will disappear from braille display
+	# 0 means that no message will be shown
 	messageTimeout = integer(default=4,min=0,max=20)
 	tetherTo = string(default="focus")
 	autoTether = boolean(default=true)
@@ -124,6 +126,10 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [brailleViewer]
 	showBrailleViewerAtStartup = boolean(default=false)
+	shouldHoverRouteToCell = boolean(default=false)
+	secondsOfHoverToActivate = float(min=0.0, default=1.0)
+	# Devices with 40 cells are quite common.
+	defaultCellCount = integer(min=20, max=160, default=40)
 	autoPositionWindow = boolean(default=True)
 	# Values for positioning the window.
 	# Defaults are not used.
@@ -158,9 +164,10 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	autoSayAllOnPageLoad = boolean(default=true)
 	trapNonCommandGestures = boolean(default=true)
 	enableOnPageLoad = boolean(default=true)
-	autoFocusFocusableElements = boolean(default=True)
+	autoFocusFocusableElements = boolean(default=False)
 
 [touch]
+	enabled = boolean(default=true)
 	touchTyping = boolean(default=False)
 
 #Settings for document reading (such as MS Word and wordpad)
@@ -173,6 +180,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportFontAttributes = boolean(default=false)
 	reportRevisions = boolean(default=true)
 	reportEmphasis = boolean(default=false)
+	reportHighlight = boolean(default=true)
 	reportSuperscriptsAndSubscripts = boolean(default=false)
 	reportColor = boolean(default=False)
 	reportAlignment = boolean(default=false)
@@ -191,6 +199,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportBorderStyle = boolean(default=False)
 	reportBorderColor = boolean(default=False)
 	reportLinks = boolean(default=true)
+	reportGraphics = boolean(default=True)
 	reportComments = boolean(default=true)
 	reportLists = boolean(default=true)
 	reportHeadings = boolean(default=true)
@@ -211,10 +220,12 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enabled = boolean(default=true)
 	useInMSWordWhenAvailable = boolean(default=false)
 	winConsoleImplementation= option("auto", "legacy", "UIA", default="auto")
+	selectiveEventRegistration = boolean(default=false)
 
 [terminals]
 	speakPasswords = boolean(default=false)
 	keyboardSupportInLegacy = boolean(default=True)
+	diffAlgo = option("auto", "dmp", "difflib", default="auto")
 
 [update]
 	autoCheck = boolean(default=true)
@@ -231,6 +242,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [debugLog]
 	hwIo = boolean(default=false)
+	MSAA = boolean(default=false)
 	UIA = boolean(default=false)
 	audioDucking = boolean(default=false)
 	gui = boolean(default=false)
@@ -238,6 +250,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	timeSinceInput = boolean(default=false)
 	vision = boolean(default=false)
 	speech = boolean(default=false)
+	speechManager = boolean(default=false)
+	synthDriver = boolean(default=false)
+	nvwave = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")
@@ -250,6 +265,10 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [development]
 	enableScratchpadDir = boolean(default=false)
+
+[featureFlag]
+	# 0:default, 1:yes, 2:no
+	cancelExpiredFocusSpeech = integer(0, 2, default=0)
 """
 
 #: The configuration specification

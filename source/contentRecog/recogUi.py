@@ -22,7 +22,8 @@ import eventHandler
 import textInfos
 from logHandler import log
 import queueHandler
-from . import RecogImageInfo
+from . import RecogImageInfo, BaseContentRecogTextInfo
+
 
 class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Window):
 	"""Fake NVDAObject used to present a recognition result in a cursor manager.
@@ -51,7 +52,14 @@ class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Wind
 			ti.collapse()
 		else:
 			ti = self.result.makeTextInfo(self, position)
-		return self._patchTextInfo(ti)
+		if not isinstance(ti, BaseContentRecogTextInfo):
+			# Support of TextInfos that do not inherit from BaseContentRecogTextInfo is deprecated
+			# and will be removed in NVDA 2020.1.
+			log.warning(
+				f"Deprecation: {type(ti)} must inherit from {BaseContentRecogTextInfo} to avoid reference cycles."
+			)
+			ti = self._patchTextInfo(ti)
+		return ti
 
 	def _patchTextInfo(self, info):
 		# Patch TextInfos so that updateSelection/Caret updates our fake selection.
@@ -126,6 +134,8 @@ def recognizeNavigatorObject(recognizer):
 		ui.message(_("Already in a content recognition result"))
 		return
 	nav = api.getNavigatorObject()
+	if not recognizer.validateObject(nav):
+		return
 	# Translators: Reported when content recognition (e.g. OCR) is attempted,
 	# but the content is not visible.
 	notVisibleMsg = _("Content is not visible")
@@ -134,6 +144,8 @@ def recognizeNavigatorObject(recognizer):
 	except TypeError:
 		log.debugWarning("Object returned location %r" % nav.location)
 		ui.message(notVisibleMsg)
+		return
+	if not recognizer.validateCaptureBounds(nav.location):
 		return
 	try:
 		imgInfo = RecogImageInfo.createFromRecognizer(left, top, width, height, recognizer)

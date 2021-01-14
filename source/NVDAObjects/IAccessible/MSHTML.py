@@ -148,6 +148,7 @@ nodeNamesToNVDARoles: Dict[str, int] = {
 	"ARTICLE": controlTypes.ROLE_ARTICLE,
 	"FIGURE": controlTypes.ROLE_FIGURE,
 	"FIGCAPTION": controlTypes.ROLE_CAPTION,
+	"MARK": controlTypes.ROLE_MARKED_CONTENT,
 }
 
 
@@ -330,7 +331,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			else:
 				raise TypeError("Bookmark was for %s type, not for %s type"%(position.infoClass.__name__,self.__class__.__name__))
 		else:
-			raise NotImplementedError("position: %s"%position)
+			raise NotImplementedError("position: %s" % (position,))
 
 	def expand(self,unit):
 		if unit==textInfos.UNIT_PARAGRAPH:
@@ -1035,6 +1036,14 @@ class MSHTML(IAccessible):
 			return ti.getControlFieldForNVDAObject(self)["language"]
 		except LookupError:
 			return None
+
+	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
+		politeness = self.HTMLAttributes["aria-live"] or "off"
+		try:
+			return aria.AriaLivePoliteness(politeness.lower())
+		except ValueError:
+			log.error(f"Unknown live politeness of {politeness}", exc_info=True)
+			super().liveRegionPoliteness
 
 	def event_liveRegionChange(self):
 		# MSHTML live regions are currently handled with custom code in-process

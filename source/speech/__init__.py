@@ -1,13 +1,13 @@
-# -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler
+#  -*- coding: UTF-8 -*-
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Julien Cochuyt
 
 """High-level functions to speak information.
 """ 
 
-import collections
 import itertools
 import weakref
 import unicodedata
@@ -24,6 +24,7 @@ import textInfos
 import speechDictHandler
 import characterProcessing
 import languageHandler
+from . import manager
 from .commands import (
 	# Commands that are used in this file.
 	SpeechCommand,
@@ -38,6 +39,7 @@ from .commands import (  # noqa: F401
 	# The following are imported here because other files that speech.py
 	# previously relied on "import * from .commands"
 	# New commands added to commands.py should be directly imported only where needed.
+	# Usage of these imports is deprecated and will be removed in 2021.1
 	SynthCommand,
 	IndexCommand,
 	SynthParamCommand,
@@ -51,10 +53,25 @@ from .commands import (  # noqa: F401
 	WaveFileCommand,
 	ConfigProfileTriggerCommand,
 )
-
 from . import types
-from .types import SpeechSequence, SequenceItemT
-from typing import Optional, Dict, List, Any, Generator, Union, Callable, Iterator, Tuple
+from .types import (
+	SpeechSequence,
+	SequenceItemT,
+	logBadSequenceTypes,
+	GeneratorWithReturn,
+	_flattenNestedSequences
+)
+from typing import (
+	Optional,
+	Dict,
+	List,
+	Any,
+	Generator,
+	Union,
+	Callable,
+	Iterator,
+	Tuple,
+)
 from logHandler import log
 import config
 import aria
@@ -204,7 +221,12 @@ def speakSpelling(
 		useCharacterDescriptions: bool = False,
 		priority: Optional[Spri] = None
 ) -> None:
-	seq = list(getSpellingSpeech(text, locale=locale, useCharacterDescriptions=useCharacterDescriptions))
+	# This could be a very large list. In future we could convert this into chunks.
+	seq = list(getSpellingSpeech(
+		text,
+		locale=locale,
+		useCharacterDescriptions=useCharacterDescriptions
+	))
 	speak(seq, priority=priority)
 
 
@@ -417,9 +439,14 @@ def getObjectPropertiesSpeech(  # noqa: C901
 			newPropertyValues['states']=states
 	#Get the speech text for the properties we want to speak, and then speak it
 	speechSequence = getPropertiesSpeech(reason=reason, **newPropertyValues)
+
 	if speechSequence:
 		if _prefixSpeechCommand is not None:
 			speechSequence.insert(0, _prefixSpeechCommand)
+		from eventHandler import _getFocusLossCancellableSpeechCommand
+		cancelCommand = _getFocusLossCancellableSpeechCommand(obj, reason)
+		if cancelCommand is not None:
+			speechSequence.append(cancelCommand)
 	return speechSequence
 
 
@@ -454,8 +481,6 @@ def speakObject(
 		speak(sequence, priority=priority)
 
 
-def _flattenNestedSequences(nestedSequences: Iterator[SpeechSequence]) -> Iterator[SequenceItemT]:
-	return [i for seq in nestedSequences for i in seq]
 
 
 # C901 'getObjectSpeech' is too complex
@@ -689,24 +714,18 @@ def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> Spe
 def speak(  # noqa: C901
 		speechSequence: SpeechSequence,
 		symbolLevel: Optional[int] = None,
-		priority: Optional[Spri] = None
+		priority: Spri = Spri.NORMAL
 ):
 	"""Speaks a sequence of text and speech commands
 	@param speechSequence: the sequence of text and L{SpeechCommand} objects to speak
 	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
 	@param priority: The speech priority.
 	"""
-	# speechSequence may be a generator.
-	#  As speechViewer needs to iterate over it
-	# before it is iterated over for actual speaking,
-	# Or similarly it may be iterated over for logging bad sequence types,
-	# Flatten it into a list first.
-	if isinstance(speechSequence, collections.abc.Generator):
-		speechSequence = [i for i in speechSequence]
-	types.logBadSequenceTypes(speechSequence)
-	if priority is None:
-		priority = Spri.NORMAL
-	if not speechSequence: #Pointless - nothing to speak 
+	logBadSequenceTypes(speechSequence)
+	# in case priority was explicitly passed in as None, set to default.
+	priority: Spri = Spri.NORMAL if priority is None else priority
+
+	if not speechSequence:  # Pointless - nothing to speak
 		return
 	import speechViewer
 	if speechViewer.isActive:
@@ -1034,20 +1053,6 @@ def _extendSpeechSequence_addMathForTextInfo(
 		return
 
 
-class GeneratorWithReturn:
-	"""Helper class, used with generator functions to access the 'return' value after there are no more values
-	to iterate over.
-	"""
-	def __init__(self, gen, defaultReturnValue=None):
-		self.gen = gen
-		self.returnValue = defaultReturnValue
-		self.iterationFinished = False
-
-	def __iter__(self):
-		self.returnValue = yield from self.gen
-		self.iterationFinished = True
-
-
 def speakTextInfo(
 		info: textInfos.TextInfo,
 		useCache: Union[bool, SpeakTextInfoState] = True,
@@ -1059,7 +1064,7 @@ def speakTextInfo(
 		suppressBlanks: bool = False,
 		priority: Optional[Spri] = None
 ) -> bool:
-	speechSequences = getTextInfoSpeech(
+	speechGen = getTextInfoSpeech(
 		info,
 		useCache,
 		formatConfig,
@@ -1071,14 +1076,17 @@ def speakTextInfo(
 	)
 
 	if reason == controlTypes.REASON_SAYALL:
-		# Deprecation warning: In 2021.1 speakTextInfo will no longer  send speech through speakWithoutPauses
-		# if reason is sayAll, as sayAllhandler does this manually now.
-		return _speakWithoutPauses.speakWithoutPauses(speechSequences)
+		log.error(
+			"Deprecation warning: In 2021.1 speakTextInfo will no longer  send speech through "
+			"speakWithoutPauses if reason is sayAll, as sayAllhandler does this manually now."
+		)
+		flatSpeechGen = list(_flattenNestedSequences(speechGen))
+		return _speakWithoutPauses.speakWithoutPauses(flatSpeechGen)
 
-	speechSequences = GeneratorWithReturn(speechSequences)
-	for seq in speechSequences:
+	speechGen = GeneratorWithReturn(speechGen)
+	for seq in speechGen:
 		speak(seq, priority=priority)
-	return speechSequences.returnValue
+	return speechGen.returnValue
 
 
 # C901 'getTextInfoSpeech' is too complex
@@ -1273,17 +1281,19 @@ def getTextInfoSpeech(  # noqa: C901
 	if onlyInitialFields or (
 		isWordOrCharUnit
 		and len(textWithFields) > 0
-		and len(textWithFields[0]) == 1
+		and len(textWithFields[0].strip() if not textWithFields[0].isspace() else textWithFields[0]) == 1
 		and all(isControlEndFieldCommand(x) for x in itertools.islice(textWithFields, 1, None))
 	):
 		if not onlyCache:
 			if onlyInitialFields or any(isinstance(x, str) for x in speechSequence):
 				yield speechSequence
 			if not onlyInitialFields:
-				yield getSpellingSpeech(
+				spellingSequence = list(getSpellingSpeech(
 					textWithFields[0],
 					locale=language
-				)
+				))
+				logBadSequenceTypes(spellingSequence)
+				yield spellingSequence
 		if useCache:
 			speakTextInfoState.controlFieldStackCache=newControlFieldStack
 			speakTextInfoState.formatFieldAttributesCache=formatFieldAttributesCache
@@ -1650,7 +1660,12 @@ def getControlFieldSpeech(  # noqa: C901
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 
-	presCat=attrs.getPresentationCategory(ancestorAttrs,formatConfig, reason=reason)
+	presCat = attrs.getPresentationCategory(
+		ancestorAttrs,
+		formatConfig,
+		reason=reason,
+		extraDetail=extraDetail
+	)
 	childControlCount=int(attrs.get('_childcontrolcount',"0"))
 	role = attrs.get('role', controlTypes.ROLE_UNKNOWN)
 	if (
@@ -1813,6 +1828,7 @@ def getControlFieldSpeech(  # noqa: C901
 		types.logBadSequenceTypes(tableCellSequence)
 		return tableCellSequence
 
+	content = attrs.get("content")
 	# General cases.
 	if ((
 		speakEntry and ((
@@ -1831,7 +1847,6 @@ def getControlFieldSpeech(  # noqa: C901
 		and fieldType == "start_inControlFieldStack"
 	)):
 		out = []
-		content = attrs.get("content")
 		if content and speakContentFirst:
 			out.append(content)
 		if placeholderValue:
@@ -1895,7 +1910,21 @@ def getControlFieldSpeech(  # noqa: C901
 		out = []
 		if ariaCurrent:
 			out.extend(ariaCurrentSequence)
-			types.logBadSequenceTypes(out)
+		# Speak expanded / collapsed / level for treeview items (in ARIA treegrids)
+		if role == controlTypes.ROLE_TREEVIEWITEM:
+			if controlTypes.STATE_EXPANDED in states:
+				out.extend(
+					getPropertiesSpeech(reason=reason, states={controlTypes.STATE_EXPANDED}, _role=role)
+				)
+			elif controlTypes.STATE_COLLAPSED in states:
+				out.extend(
+					getPropertiesSpeech(reason=reason, states={controlTypes.STATE_COLLAPSED}, _role=role)
+				)
+			if levelSequence:
+				out.extend(levelSequence)
+		if role == controlTypes.ROLE_GRAPHIC and content:
+			out.append(content)
+		types.logBadSequenceTypes(out)
 		return out
 	else:
 		return []
@@ -2100,7 +2129,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				# Translators: Reported when text is not revised.
 				text = _("no revised %s") % oldRevision
 			textList.append(text)
-	if  formatConfig["reportEmphasis"]:
+	if formatConfig["reportHighlight"]:
 		# marked text 
 		marked=attrs.get("marked")
 		oldMarked=attrsCache.get("marked") if attrsCache is not None else None
@@ -2110,6 +2139,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				# Translators: Reported when text is no longer marked
 				else _("not marked"))
 			textList.append(text)
+	if formatConfig["reportEmphasis"]:
 		# strong text
 		strong=attrs.get("strong")
 		oldStrong=attrsCache.get("strong") if attrsCache is not None else None
@@ -2443,6 +2473,8 @@ class SpeechWithoutPauses:
 		L{GeneratorWithReturn} to retain the return value. A generator is used because the previous
 		implementation had several calls to speech, this approach replicates that.
 		"""
+		if speechSequence is not None:
+			logBadSequenceTypes(speechSequence)
 		# Break on all explicit break commands
 		if detectBreaks and speechSequence:
 			speech = GeneratorWithReturn(self._detectBreaksAndGetSpeech(speechSequence))
@@ -2543,10 +2575,9 @@ speakWithoutPauses = _speakWithoutPauses.speakWithoutPauses
 #: Kept for backwards compatibility.
 re_last_pause = _speakWithoutPauses.re_last_pause
 
-from .manager import SpeechManager
 #: The singleton _SpeechManager instance used for speech functions.
-#: @type: L{_SpeechManager}
-_manager = SpeechManager()
+#: @type: L{manager.SpeechManager}
+_manager = manager.SpeechManager()
 
 
 def clearTypedWordBuffer() -> None:

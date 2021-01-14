@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2020 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
-# Joseph Lee, Babbage B.V., Łukasz Golonka
+# Joseph Lee, Babbage B.V., Łukasz Golonka, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -17,6 +17,7 @@ import ctypes
 import ctypes.wintypes
 import os
 import sys
+import errno
 import itertools
 import contextlib
 from copy import deepcopy
@@ -82,7 +83,7 @@ def isInstalledCopy():
 		return False
 	winreg.CloseKey(k)
 	try:
-		return os.stat(instDir)==os.stat(os.getcwd()) 
+		return os.stat(instDir) == os.stat(globalVars.appDir)
 	except WindowsError:
 		return False
 
@@ -124,7 +125,7 @@ def getUserDefaultConfigPath(useInstalledPathIfExists=False):
 			# Therefore add a suffix to the directory to make it specific to Windows Store application versions.
 			installedUserConfigPath+='_appx'
 		return installedUserConfigPath
-	return u'.\\userConfig\\'
+	return os.path.join(globalVars.appDir, 'userConfig')
 
 def getSystemConfigPath():
 	if isInstalledCopy():
@@ -166,6 +167,19 @@ def initConfigPath(configPath=None):
 		configPath=globalVars.appArgs.configPath
 	if not os.path.isdir(configPath):
 		os.makedirs(configPath)
+	else:
+		OLD_CODE_DIRS = ("appModules", "brailleDisplayDrivers", "globalPlugins", "synthDrivers")
+		# #10014: Since #9238 code from these directories is no longer loaded.
+		# However they still exist in config for older installations. Remove them if empty to minimize confusion.
+		for dir in OLD_CODE_DIRS:
+			dir = os.path.join(configPath, dir)
+			if os.path.isdir(dir):
+				try:
+					os.rmdir(dir)
+					log.info("Removed old plugins dir: %s", dir)
+				except OSError as ex:
+					if ex.errno == errno.ENOTEMPTY:
+						log.info("Failed to remove old plugins dir: %s. Directory not empty.", dir)
 	subdirs=["speechDicts","profiles"]
 	if not isAppX:
 		subdirs.append("addons")
@@ -213,7 +227,8 @@ def canStartOnSecureScreens():
 	# This function will be transformed into a flag in a future release.
 	return isInstalledCopy()
 
-SLAVE_FILENAME = u"nvda_slave.exe"
+
+SLAVE_FILENAME = os.path.join(globalVars.appDir, "nvda_slave.exe")
 
 #: The name of the registry key stored under  HKEY_LOCAL_MACHINE where system wide NVDA settings are stored.
 #: Note that NVDA is a 32-bit application, so on X64 systems, this will evaluate to "SOFTWARE\WOW6432Node\nvda"
@@ -238,7 +253,7 @@ def _setStartOnLogonScreen(enable):
 		winreg.SetValueEx(k, u"startOnLogonScreen", None, winreg.REG_DWORD, int(enable))
 
 def setSystemConfigToCurrentConfig():
-	fromPath=os.path.abspath(globalVars.appArgs.configPath)
+	fromPath = globalVars.appArgs.configPath
 	if ctypes.windll.shell32.IsUserAnAdmin():
 		_setSystemConfig(fromPath)
 	else:
@@ -571,6 +586,8 @@ class ConfigManager(object):
 		"""
 		if globalVars.appArgs.secure:
 			return
+		if not name:
+			raise ValueError("Missing name.")
 		fn = self._getProfileFn(name)
 		if os.path.isfile(fn):
 			raise ValueError("A profile with the same name already exists: %s" % name)
@@ -641,6 +658,8 @@ class ConfigManager(object):
 			return
 		if newName == oldName:
 			return
+		if not newName:
+			raise ValueError("Missing newName")
 		oldFn = self._getProfileFn(oldName)
 		newFn = self._getProfileFn(newName)
 		if not os.path.isfile(oldFn):

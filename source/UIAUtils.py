@@ -7,6 +7,8 @@ import operator
 from comtypes import COMError
 import ctypes
 import UIAHandler
+import weakref
+
 
 def createUIAMultiPropertyCondition(*dicts):
 	"""
@@ -224,3 +226,59 @@ class BulkUIATextRangeAttributeValueFetcher(UIATextRangeAttributeValueFetcher):
 		if not ignoreMixedValues and val==UIAHandler.handler.ReservedMixedAttributeValue:
 			raise UIAMixedAttributeError
 		return val
+
+
+class FakeEventHandlerGroup:
+	"""
+	Mimics the behavior of UiAutomation 6+ Event Handler Groups for older versions.
+	"""
+
+	@property
+	def clientObject(self):
+		clientObject = self._clientObjectRef()
+		if not clientObject:
+			raise RuntimeError
+		return clientObject
+
+	def __init__(self, clientObject):
+		self._clientObjectRef = weakref.ref(clientObject)
+		self._automationEventHandlers = weakref.WeakValueDictionary()
+		self._notificationEventHandlers = weakref.WeakValueDictionary()
+		self._propertyChangedEventHandlers = weakref.WeakValueDictionary()
+
+	def AddAutomationEventHandler(self, eventId, scope, cacheRequest, handler):
+		self._automationEventHandlers[(eventId, scope, cacheRequest)] = handler
+
+	def AddNotificationEventHandler(self, scope, cacheRequest, handler):
+		if not isinstance(self.clientObject, UIAHandler.UIA.IUIAutomation5):
+			raise RuntimeError
+		self._notificationEventHandlers[(scope, cacheRequest)] = handler
+
+	def AddPropertyChangedEventHandler(self, scope, cacheRequest, handler, propertyArray, propertyCount):
+		properties = self.clientObject.IntNativeArrayToSafeArray(propertyArray, propertyCount)
+		self._propertyChangedEventHandlers[(scope, cacheRequest, properties)] = handler
+
+	def registerToClientObject(self, element):
+		try:
+			for (eventId, scope, cacheRequest), handler in self._automationEventHandlers.items():
+				self.clientObject.AddAutomationEventHandler(eventId, element, scope, cacheRequest, handler)
+			if isinstance(self.clientObject, UIAHandler.UIA.IUIAutomation5):
+				for (scope, cacheRequest), handler in self._notificationEventHandlers.items():
+					self.clientObject.AddNotificationEventHandler(element, scope, cacheRequest, handler)
+			for (scope, cacheRequest, properties), handler in self._propertyChangedEventHandlers.items():
+				self.clientObject.AddPropertyChangedEventHandler(element, scope, cacheRequest, handler, properties)
+		except COMError as e:
+			try:
+				self.unregisterFromClientObject(element)
+			except COMError:
+				pass
+			raise e
+
+	def unregisterFromClientObject(self, element):
+		for (eventId, scope, cacheRequest), handler in self._automationEventHandlers.items():
+			self.clientObject.RemoveAutomationEventHandler(eventId, element, handler)
+		if isinstance(self.clientObject, UIAHandler.UIA.IUIAutomation5):
+			for handler in self._notificationEventHandlers.values():
+				self.clientObject.RemoveNotificationEventHandler(element, handler)
+		for handler in self._propertyChangedEventHandlers.values():
+			self.clientObject.RemovePropertyChangedEventHandler(element, handler)
