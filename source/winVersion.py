@@ -156,10 +156,6 @@ def isSupportedOS():
 	return getWinVer() >= WIN7_SP1
 
 
-def canRunVc2010Builds():
-	return isSupportedOS()
-
-
 UWP_OCR_DATA_PATH = os.path.expandvars(r"$windir\OCR")
 
 
