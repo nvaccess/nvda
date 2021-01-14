@@ -390,8 +390,8 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_toggleReportFontName(self,gesture):
 		if config.conf["documentFormatting"]["reportFontName"]:
-			state = _("report font name off")
 			# Translators: The message announced when toggling the report font name document formatting setting.
+			state = _("report font name off")
 			config.conf["documentFormatting"]["reportFontName"]=False
 		else:
 			# Translators: The message announced when toggling the report font name document formatting setting.
