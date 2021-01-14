@@ -228,7 +228,7 @@ class AppModule(appModuleHandler.AppModule):
 			return
 		# The word "blank" is kept announced, so suppress this on build 17666 and later.
 		if winVersion.getWinVer().build > 17134:
-			# In build 17672 and later, return immediatley when element selected event on clipboard item was fired just prior to this.
+			# In build 17672 and later, return immediately when element selected event on clipboard item was fired just prior to this.
 			# In some cases, parent will be None, as seen when emoji panel is closed in build 18267.
 			try:
 				if obj.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemIndex" or obj.parent.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemsList": return
