@@ -671,7 +671,7 @@ class IsCurrent(Enum):
 	EG aria-current
 	"""
 	NO = "false"
-	Yes = "true"
+	YES = "true"
 	PAGE = "page"
 	STEP = "step"
 	LOCATION = "location"
@@ -689,7 +689,7 @@ class IsCurrent(Enum):
 			log.debugWarning(f"No translation mapping for: {self}")
 			# there is a value for 'current' but NVDA hasn't learned about it yet,
 			# at least describe in the general sense that this item is 'current'
-			return _isCurrentLabels[IsCurrent.Yes]
+			return _isCurrentLabels[IsCurrent.YES]
 
 
 #: Text to use for 'current' values. These describe if an item is the current item
@@ -697,7 +697,7 @@ class IsCurrent(Enum):
 _isCurrentLabels: Dict[Enum, str] = {
 	IsCurrent.NO: "",  # There is nothing extra to say for items that are not current.
 	# Translators: Presented when an item is marked as current in a collection of items
-	IsCurrent.Yes: _("current"),
+	IsCurrent.YES: _("current"),
 	# Translators: Presented when a page item is marked as current in a collection of page items
 	IsCurrent.PAGE: _("current page"),
 	# Translators: Presented when a step item is marked as current in a collection of step items
