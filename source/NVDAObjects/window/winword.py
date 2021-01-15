@@ -1,5 +1,3 @@
-# -*- coding: UTF-8 -*-
-# NVDAObjects/window/winword.py
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2020 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
 # This file is covered by the GNU General Public License.
@@ -308,28 +306,29 @@ NVDAUnitsToWordUnits={
 	textInfos.UNIT_READINGCHUNK:wdSentence,
 }
 
-formatConfigFlagsMap={
-	"reportFontName":0x1,
-	"reportFontSize":0x2,
-	"reportFontAttributes":0x4,
-	"reportColor":0x8,
-	"reportAlignment":0x10,
-	"reportStyle":0x20,
-	"reportSpellingErrors":0x40,
-	"reportPage":0x80,
-	"reportLineNumber":0x100,
-	"reportTables":0x200,
-	"reportLists":0x400,
-	"reportLinks":0x800,
-	"reportComments":0x1000,
-	"reportHeadings":0x2000,
-	"autoLanguageSwitching":0x4000,
-	"reportRevisions":0x8000,
-	"reportParagraphIndentation":0x10000,
-	"reportLineSpacing":0x40000,
+formatConfigFlagsMap = {
+	"reportFontName": 0x1,
+	"reportFontSize": 0x2,
+	"reportFontAttributes": 0x4,
+	"reportColor": 0x8,
+	"reportAlignment": 0x10,
+	"reportStyle": 0x20,
+	"reportSpellingErrors": 0x40,
+	"reportPage": 0x80,
+	"reportLineNumber": 0x100,
+	"reportTables": 0x200,
+	"reportLists": 0x400,
+	"reportLinks": 0x800,
+	"reportComments": 0x1000,
+	"reportHeadings": 0x2000,
+	"autoLanguageSwitching": 0x4000,
+	"reportRevisions": 0x8000,
+	"reportParagraphIndentation": 0x10000,
+	"reportLineSpacing": 0x40000,
 	"reportSuperscriptsAndSubscripts": 0x80000,
+	"reportGraphics": 0x100000,
 }
-formatConfigFlag_includeLayoutTables=0x20000
+formatConfigFlag_includeLayoutTables = 0x20000
 
 # Map some characters from 0 to Unicode. Meant to be used with bullets only.
 # Doesn't care about the actual font, so can give incorrect Unicode in rare cases.
@@ -557,6 +556,31 @@ class ChartWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	def filter(self,item):
 		return item.type==wdInlineShapeChart
 
+
+class LazyControlField_RowAndColumnHeaderText(textInfos.ControlField):
+
+	def __init__(self, ti):
+		self._ti = ti
+		super().__init__()
+
+	def get(self, name, default=None):
+		if name == "table-rowheadertext":
+			try:
+				cell = self._ti._rangeObj.cells[1]
+			except IndexError:
+				log.debugWarning("no cells for table row, possibly on end of cell mark")
+				return super().get(name, default)
+			return self._ti.obj.fetchAssociatedHeaderCellText(cell, False)
+		elif name == "table-columnheadertext":
+			try:
+				cell = self._ti._rangeObj.cells[1]
+			except IndexError:
+				log.debugWarning("no cells for table row, possibly on end of cell mark")
+				return super().get(name, default)
+			return self._ti.obj.fetchAssociatedHeaderCellText(cell, True)
+		else:
+			return super().get(name, default)
+
 class WordDocumentTextInfo(textInfos.TextInfo):
 
 	# #4852: temporary fix.
@@ -587,8 +611,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		textList.append(_("{distance} from top edge of page").format(distance=distance))
 		return ", ".join(textList)
 
-	def copyToClipboard(self):
+	def copyToClipboard(self, notify):
 		self._rangeObj.copy()
+		if notify:
+			ui.reportTextCopiedToClipboard(self.text)
 		return True
 
 	def find(self,text,caseSensitive=False,reverse=False):
@@ -796,26 +822,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				field['name']=name
 				field['alwaysReportName']=True
 				field['role']=controlTypes.ROLE_FRAME
-		# Hack support for lazy fetching of row and column header text values
-		class ControlField(textInfos.ControlField): 
-			def get(d,name,default=None):
-				if name=="table-rowheadertext":
-					try:
-						cell=self._rangeObj.cells[1]
-					except IndexError:
-						log.debugWarning("no cells for table row, possibly on end of cell mark")
-						return super(ControlField,d).get(name,default)
-					return self.obj.fetchAssociatedHeaderCellText(cell,False)
-				elif name=="table-columnheadertext":
-					try:
-						cell=self._rangeObj.cells[1]
-					except IndexError:
-						log.debugWarning("no cells for table row, possibly on end of cell mark")
-						return super(ControlField,d).get(name,default)
-					return self.obj.fetchAssociatedHeaderCellText(cell,True)
-				else:
-					return super(ControlField,d).get(name,default)
-		newField=ControlField()
+		newField = LazyControlField_RowAndColumnHeaderText(self)
 		newField.update(field)
 		return newField
 
@@ -836,8 +843,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				# Translators:  line spacing of 1.5 lines
 				field['line-spacing']=pgettext('line spacing value',"1.5 lines")
 			elif lineSpacingRule==wdLineSpaceExactly:
-				# Translators: exact (minimum) line spacing
-				field['line-spacing']=pgettext('line spacing value',"exact")
+				field['line-spacing'] = pgettext(
+					'line spacing value',
+					# Translators: line spacing of exactly x point
+					"exactly {space:.1f} pt"
+				).format(space=float(lineSpacingVal))
 			elif lineSpacingRule==wdLineSpaceAtLeast:
 				# Translators: line spacing of at least x point
 				field['line-spacing']=pgettext('line spacing value',"at least %.1f pt")%float(lineSpacingVal)
@@ -1365,24 +1375,6 @@ class WordDocument(Window):
 		# Translators: a message when increasing or decreasing font size in Microsoft Word
 		ui.message(_("{size:g} point font").format(size=val))
 
-	def script_toggleChangeTracking(self, gesture):
-		if not self.WinwordDocumentObject:
-			# We cannot fetch the Word object model, so we therefore cannot report the status change.
-			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
-			# or it's within Windows Defender Application Guard.
-			# In this case, just let the gesture through and don't report anything.
-			return gesture.send()
-		val = self._WaitForValueChangeForAction(
-			lambda: gesture.send(),
-			lambda: self.WinwordDocumentObject.TrackRevisions
-		)
-		if val:
-			# Translators: a message when toggling change tracking in Microsoft word
-			ui.message(_("Change tracking on"))
-		else:
-			# Translators: a message when toggling change tracking in Microsoft word
-			ui.message(_("Change tracking off"))
-
 	@script(gesture="kb:control+shift+8")
 	def script_toggleDisplayNonprintingCharacters(self, gesture):
 		if not self.WinwordWindowObject:
@@ -1507,7 +1499,6 @@ class WordDocument(Window):
 		"kb:control+1":"changeLineSpacing",
 		"kb:control+2":"changeLineSpacing",
 		"kb:control+5":"changeLineSpacing",
-		"kb:control+shift+e": "toggleChangeTracking",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 	}

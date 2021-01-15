@@ -205,12 +205,18 @@ class NvdaLib:
 	def save_NVDA_log(self):
 		"""NVDA logs are saved to the ${OUTPUT DIR}/nvdaTestRunLogs/${SUITE NAME}-${TEST NAME}-nvda.log"""
 		builtIn.log("Saving NVDA log")
-		saveToPath = _pJoin(_locations.preservedLogsDir, self._createTestIdFileName("nvda.log"))
+		saveToPath = self.create_preserved_test_output_filename("nvda.log")
 		opSys.copy_file(
 			_locations.logPath,
 			saveToPath
 		)
 		builtIn.log(f"Log saved to: {saveToPath}", level='DEBUG')
+
+	def create_preserved_test_output_filename(self, fileName):
+		"""EG for nvda.log path will become:
+			${OUTPUT DIR}/nvdaTestRunLogs/${SUITE NAME}-${TEST NAME}-nvda.log
+		"""
+		return _pJoin(_locations.preservedLogsDir, self._createTestIdFileName(fileName))
 
 	def quit_NVDA(self):
 		builtIn.log("Stopping nvdaSpy server: {}".format(self._spyServerURI))

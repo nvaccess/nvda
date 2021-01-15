@@ -85,10 +85,11 @@ def normalizeIA2TextFormatField(formatField):
 	except KeyError:
 		invalid=None
 	if invalid:
-		invalid=invalid.lower()
-		if invalid=="spelling":
+		# aria-invalid can contain multiple values separated by a comma.
+		invalidList = [x.lower().strip() for x in invalid.split(',')]
+		if "spelling" in invalidList:
 			formatField["invalid-spelling"]=True
-		elif invalid=="grammar":
+		if "grammar" in invalidList:
 			formatField["invalid-grammar"]=True
 	color=formatField.get('color')
 	if color:
@@ -261,7 +262,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			start,end,text = self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_CHAR)
 		except COMError:
 			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
-		if textUtils.isHighSurrogate(text) or textUtils.isLowSurrogate(text):
+		if text and (textUtils.isHighSurrogate(text) or textUtils.isLowSurrogate(text)):
 			# #8953: Some IA2 implementations, including Gecko and Chromium,
 			# erroneously report one offset for surrogates.
 			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
@@ -603,12 +604,6 @@ the NVDAObject for IAccessible
 		# Try every trick in the book to get the window handle if we don't have it.
 		if not windowHandle and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
 			windowHandle=self.IA2WindowHandle
-			#Mozilla Gecko: we can never use a MozillaWindowClass window for Gecko 1.9
-			tempWindow=windowHandle
-			while tempWindow and winUser.getClassName(tempWindow)=="MozillaWindowClass":
-				tempWindow=winUser.getAncestor(tempWindow,winUser.GA_PARENT)
-			if tempWindow and winUser.getClassName(tempWindow).startswith('Mozilla'):
-				windowHandle=tempWindow
 		try:
 			Identity=IAccessibleHandler.getIAccIdentity(IAccessibleObject,IAccessibleChildID)
 		except COMError:
@@ -698,6 +693,13 @@ the NVDAObject for IAccessible
 			testObj = parent
 		else:
 			return False
+		return True
+
+	def _get_shouldAllowIAccessibleMenuStartEvent(self) -> bool:
+		"""Determine whether an IAccessible menu start or menu popup start event should be allowed
+		for this object.
+		@return: C{True} if the event should be allowed.
+		"""
 		return True
 
 	def _get_TextInfo(self):
@@ -1996,6 +1998,7 @@ _staticMap={
 	("SysListView32",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("DirectUIHWND", oleacc.ROLE_SYSTEM_LISTITEM): "UIItem",
 	("SysListView32",oleacc.ROLE_SYSTEM_MENUITEM):"sysListView32.ListItemWithoutColumnSupport",
+	("SysListView32", oleacc.ROLE_SYSTEM_CHECKBUTTON): "sysListView32.ListItem",
 	("SysTreeView32",oleacc.ROLE_SYSTEM_OUTLINE):"sysTreeView32.TreeView",
 	("SysTreeView32",oleacc.ROLE_SYSTEM_OUTLINEITEM):"sysTreeView32.TreeViewItem",
 	("SysTreeView32",oleacc.ROLE_SYSTEM_MENUITEM):"sysTreeView32.TreeViewItem",

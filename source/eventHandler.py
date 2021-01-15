@@ -7,6 +7,7 @@
 import threading
 from typing import Optional
 
+import garbageHandler
 import queueHandler
 import api
 import speech
@@ -81,7 +82,8 @@ def isPendingEvents(eventName=None,obj=None):
 	elif eventName and obj:
 		return (eventName,obj) in _pendingEventCountsByNameAndObj
 
-class _EventExecuter(object):
+
+class _EventExecuter(garbageHandler.TrackedObject):
 	"""Facilitates execution of a chain of event functions.
 	L{gen} generates the event functions and positional arguments.
 	L{next} calls the next function in the chain.
@@ -94,7 +96,8 @@ class _EventExecuter(object):
 			self.next()
 		except StopIteration:
 			pass
-		del self._gen
+		finally:
+			del self._gen
 
 	def next(self):
 		func, args = next(self._gen)
@@ -146,9 +149,64 @@ def _trackFocusObject(eventName, obj) -> None:
 	:param obj: the object to track if focused
 	"""
 	global lastQueuedFocusObject
+
 	if eventName == "gainFocus":
 		lastQueuedFocusObject = obj
-	setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, obj is lastQueuedFocusObject)
+
+
+class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
+	def __init__(self, obj, reportDevInfo: bool):
+		from NVDAObjects import NVDAObject
+		if not isinstance(obj, NVDAObject):
+			log.warning("Unhandled object type. Expected all objects to be descendant from NVDAObject")
+			raise TypeError(f"Unhandled object type: {obj!r}")
+		self._obj = obj
+		super(FocusLossCancellableSpeechCommand, self).__init__(reportDevInfo=reportDevInfo)
+
+		if self.isLastFocusObj():
+			# Objects may be re-used.
+			# WAS_GAIN_FOCUS_OBJ_ATTR_NAME state should be cleared at some point?
+			# perhaps instead keep a weak ref list of obj that had focus, clear on keypress?
+
+			# Assumption: we only process one focus event at a time, so even if several focus events are queued,
+			# all focused objects will still gain this tracking attribute. Otherwise, this may need to be set via
+			# api.setFocusObject when globalVars.focusObject is set.
+			setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, True)
+		elif not hasattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME):
+			setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
+
+	def _checkIfValid(self):
+		stillValid = (
+			self.isLastFocusObj()
+			or not self.previouslyHadFocus()
+			or self.isAncestorOfCurrentFocus()
+			# Ensure titles for dialogs gaining focus are reported, EG NVDA Find dialog
+			or self.isForegroundObject()
+		)
+		return stillValid
+
+	def _getDevInfo(self):
+		return (
+			f"isLast: {self.isLastFocusObj()}"
+			f", previouslyHad: {self.previouslyHadFocus()}"
+			f", isAncestorOfCurrentFocus: {self.isAncestorOfCurrentFocus()}"
+			f", is foreground obj {self.isForegroundObject()}"
+		)
+
+	def isLastFocusObj(self):
+		# Use '==' rather than 'is' because obj may have been created multiple times
+		# pointing to the same underlying object.
+		return self._obj == api.getFocusObject()
+
+	def previouslyHadFocus(self):
+		return getattr(self._obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
+
+	def isAncestorOfCurrentFocus(self):
+		return self._obj in api.getFocusAncestors()
+
+	def isForegroundObject(self):
+		foreground = api.getForegroundObject()
+		return self._obj is foreground or self._obj == foreground
 
 
 def _getFocusLossCancellableSpeechCommand(
@@ -161,26 +219,9 @@ def _getFocusLossCancellableSpeechCommand(
 	if not isinstance(obj, NVDAObject):
 		log.warning("Unhandled object type. Expected all objects to be descendant from NVDAObject")
 		return None
-	previouslyHadFocus: bool = getattr(
-		obj,
-		WAS_GAIN_FOCUS_OBJ_ATTR_NAME,
-		False
-	)
 
-	def isSpeechStillValid():
-		from eventHandler import lastQueuedFocusObject
-		isLastFocusObj: bool = obj is lastQueuedFocusObject
-		stillValid = isLastFocusObj or not previouslyHadFocus
-
-		log._speechManagerDebug(
-			"checked if valid (isLast: %s, previouslyHad: %s): %s",
-			isLastFocusObj,
-			previouslyHadFocus,
-			obj.name
-		)
-		return stillValid
-
-	return _CancellableSpeechCommand(isSpeechStillValid)
+	shouldReportDevInfo = speech.manager._shouldDoSpeechManagerLogging()
+	return FocusLossCancellableSpeechCommand(obj, reportDevInfo=shouldReportDevInfo)
 
 
 def executeEvent(eventName, obj, **kwargs):
@@ -197,14 +238,6 @@ def executeEvent(eventName, obj, **kwargs):
 		if isGainFocus and obj.focusRedirect:
 			obj=obj.focusRedirect
 		sleepMode=obj.sleepMode
-		if isGainFocus and speech.manager._shouldCancelExpiredFocusEvents():
-			log._speechManagerDebug("executeEvent: Removing cancelled speech commands.")
-			# ask speechManager to check if any of it's queued utterances should be cancelled
-			speech._manager.removeCancelledSpeechCommands()
-			# Don't skip objects without focus here. Even if an object no longer has focus, it needs to be processed
-			# to capture changes in document depth. For instance jumping into a list?
-			# This needs further investigation; when the next object gets focus, it should
-			# allow us to capture this information?
 		if isGainFocus and not doPreGainFocus(obj, sleepMode=sleepMode):
 			return
 		elif not sleepMode and eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):
@@ -219,6 +252,21 @@ def doPreGainFocus(obj,sleepMode=False):
 	oldFocus=api.getFocusObject()
 	oldTreeInterceptor=oldFocus.treeInterceptor if oldFocus else None
 	api.setFocusObject(obj)
+
+	if speech.manager._shouldCancelExpiredFocusEvents():
+		log._speechManagerDebug("executeEvent: Removing cancelled speech commands.")
+		# ask speechManager to check if any of it's queued utterances should be cancelled
+		# Note: Removing cancelled speech commands should happen after all dependencies for the isValid check
+		# have been updated:
+		# - obj.WAS_GAIN_FOCUS_OBJ_ATTR_NAME
+		# - api.setFocusObject()
+		# - api.getFocusAncestors()
+		# When these are updated:
+		# - obj.WAS_GAIN_FOCUS_OBJ_ATTR_NAME
+		#   - Set during creation of the _CancellableSpeechCommand.
+		# - api.getFocusAncestors() via api.setFocusObject() called in doPreGainFocus
+		speech._manager.removeCancelledSpeechCommands()
+
 	if globalVars.focusDifferenceLevel<=1:
 		newForeground=api.getDesktopObject().objectInForeground()
 		if not newForeground:

@@ -460,15 +460,6 @@ class EdgeNode(UIA):
 			states.add(controlTypes.STATE_CLICKABLE)
 		return states
 
-	def _get_description(self):
-		ariaProperties=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
-		if 'describedby=' in ariaProperties:
-			try:
-				return self._getUIACacheablePropertyValue(UIAHandler.UIA_FullDescriptionPropertyId) or ""
-			except COMError:
-				pass
-		return super(EdgeNode,self).description
-
 	def _get_ariaProperties(self):
 		return splitUIAElementAttribs(self.UIAElement.currentAriaProperties)
 

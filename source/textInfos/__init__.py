@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
+# Copyright (C) 2006-2020 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -47,7 +47,13 @@ class ControlField(Field):
 	#: This field is just for layout.
 	PRESCAT_LAYOUT = None
 
-	def getPresentationCategory(self, ancestors, formatConfig, reason=controlTypes.REASON_CARET):
+	def getPresentationCategory(
+			self,
+			ancestors,
+			formatConfig,
+			reason=controlTypes.REASON_CARET,
+			extraDetail=False
+	):
 		role = self.get("role", controlTypes.ROLE_UNKNOWN)
 		states = self.get("states", set())
 
@@ -73,12 +79,14 @@ class ControlField(Field):
 		landmark = self.get("landmark")
 		if reason in (controlTypes.REASON_CARET, controlTypes.REASON_SAYALL, controlTypes.REASON_FOCUS) and (
 			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"])
+			or (role == controlTypes.ROLE_GRAPHIC and not formatConfig["reportGraphics"])
 			or (role == controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"])
 			or (role == controlTypes.ROLE_BLOCKQUOTE and not formatConfig["reportBlockQuotes"])
 			or (role == controlTypes.ROLE_GROUPING and (not name or not formatConfig["reportGroupings"]))
 			or (role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"])
 			or (role in (controlTypes.ROLE_LIST, controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
 			or (role == controlTypes.ROLE_ARTICLE and not formatConfig["reportArticles"])
+			or (role == controlTypes.ROLE_MARKED_CONTENT and not formatConfig["reportHighlight"])
 			or (role in (controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME) and not formatConfig["reportFrames"])
 			or (role in (controlTypes.ROLE_DELETED_CONTENT,controlTypes.ROLE_INSERTED_CONTENT) and not formatConfig["reportRevisions"])
 			or (
@@ -118,12 +126,17 @@ class ControlField(Field):
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
 		):
 			return self.PRESCAT_SINGLELINE
-		elif role in (
-			controlTypes.ROLE_SEPARATOR,
-			controlTypes.ROLE_FOOTNOTE,
-			controlTypes.ROLE_ENDNOTE,
-			controlTypes.ROLE_EMBEDDEDOBJECT,
-			controlTypes.ROLE_MATH
+		elif (
+			role in (
+				controlTypes.ROLE_SEPARATOR,
+				controlTypes.ROLE_FOOTNOTE,
+				controlTypes.ROLE_ENDNOTE,
+				controlTypes.ROLE_EMBEDDEDOBJECT,
+				controlTypes.ROLE_MATH
+			)
+			or (
+				extraDetail and role == controlTypes.ROLE_LISTITEM
+			)
 		):
 			return self.PRESCAT_MARKER
 		elif role in (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG):
@@ -144,6 +157,7 @@ class ControlField(Field):
 				controlTypes.ROLE_POPUPMENU,
 				controlTypes.ROLE_TABLE,
 				controlTypes.ROLE_ARTICLE,
+				controlTypes.ROLE_MARKED_CONTENT,
 			)
 			or (role == controlTypes.ROLE_EDITABLETEXT and (
 				controlTypes.STATE_READONLY not in states
@@ -489,13 +503,15 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""Text suitably formatted for copying to the clipboard. E.g. crlf characters inserted between lines."""
 		return convertToCrlf(self.text)
 
-	def copyToClipboard(self):
+	def copyToClipboard(self, notify=False):
 		"""Copy the content of this instance to the clipboard.
 		@return: C{True} if successful, C{False} otherwise.
 		@rtype: bool
+		@param notify: whether to emit a confirmation message
+		@type notify: boolean
 		"""
 		import api
-		return api.copyToClip(self.clipboardText)
+		return api.copyToClip(self.clipboardText, notify)
 
 	def getTextInChunks(self, unit):
 		"""Retrieve the text of this instance in chunks of a given unit.

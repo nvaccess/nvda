@@ -153,7 +153,12 @@ class WordDocumentTextInfo(UIATextInfo):
 				field['role']=controlTypes.ROLE_EDITABLETEXT
 		if obj.role==controlTypes.ROLE_GRAPHIC:
 			# Label graphics with a description before name as name seems to be auto-generated (E.g. "rectangle")
-			field['value']=field.pop('description',None) or obj.description or field.pop('name',None) or obj.name
+			field['content'] = (
+				field.pop('description', None)
+				or obj.description
+				or field.pop('name', None)
+				or obj.name
+			)
 		return field
 
 	def _getTextFromUIARange(self, textRange):
@@ -282,9 +287,6 @@ class WordDocumentTextInfo(UIATextInfo):
 		return fields
 
 class WordBrowseModeDocument(UIABrowseModeDocument):
-
-	def _get_isAlive(self):
-		return True
 
 	def shouldSetFocusToObj(self,obj):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 

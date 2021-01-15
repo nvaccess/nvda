@@ -1,11 +1,12 @@
-#gui/addonGui.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2012-2019 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V., Ethan Holliger, Arnold Loubriat
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2012-2019 NV Access Limited, Beqa Gozalishvili, Joseph Lee,
+# Babbage B.V., Ethan Holliger, Arnold Loubriat, Thomas Stivers
 
 import os
 import weakref
+from locale import strxfrm
 
 import addonAPIVersion
 import wx
@@ -19,7 +20,9 @@ import globalVars
 import buildVersion
 from . import guiHelper
 from . import nvdaControls
-from .dpiScalingHelper import DpiScalingHelperMixin
+from .dpiScalingHelper import DpiScalingHelperMixin, DpiScalingHelperMixinWithoutInit
+import gui.contextHelp
+
 
 def promptUserForRestart():
 	restartMessage = _(
@@ -135,7 +138,11 @@ def _showAddonInfo(addon):
 	gui.messageBox("\n".join(message), title, wx.OK)
 
 
-class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
+class AddonsDialog(
+		DpiScalingHelperMixinWithoutInit,
+		gui.contextHelp.ContextHelpMixin,
+		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+):
 	@classmethod
 	def _instance(cls):
 		""" type: () -> AddonsDialog
@@ -143,6 +150,8 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		with by treating that object as a callable.
 		"""
 		return None
+
+	helpId = "AddonsManager"
 
 	def __new__(cls, *args, **kwargs):
 		instance = AddonsDialog._instance()
@@ -160,14 +169,11 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		title = _("Add-ons Manager")
 		# Translators: The title of the Addons Dialog when add-ons are disabled
 		titleWhenAddonsAreDisabled = _("Add-ons Manager (add-ons disabled)")
-		wx.Dialog.__init__(
-			self,
+		super().__init__(
 			parent,
 			title=title if not globalVars.appArgs.disableAddons else titleWhenAddonsAreDisabled,
 			style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX,
 		)
-		DpiScalingHelperMixin.__init__(self, self.GetHandle())
-
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		firstTextSizer = wx.BoxSizer(wx.VERTICAL)
 		listAndButtonsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=wx.BoxSizer(wx.HORIZONTAL))
@@ -257,7 +263,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		mainSizer.Add(
 			wx.StaticLine(self),
 			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.TOP | wx.BOTTOM | wx.EXPAND
+			flag=wx.ALL | wx.EXPAND
 		)
 
 		# Translators: The label of a button to close the Addons dialog.
@@ -297,13 +303,22 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			self.refreshAddonsList()
 
 	def onRemoveClick(self,evt):
-		index=self.addonsList.GetFirstSelected()
-		if index<0: return
-		# Translators: Presented when attempting to remove the selected add-on.
-		if gui.messageBox(_("Are you sure you wish to remove the selected add-on from NVDA?"),
+		index = self.addonsList.GetFirstSelected()
+		if index < 0:
+			return
+		addon = self.curAddons[index]
+		if gui.messageBox(
+			(_(
+				# Translators: Presented when attempting to remove the selected add-on.
+				# {addon} is replaced with the add-on name.
+				"Are you sure you wish to remove the {addon} add-on from NVDA? "
+				"This cannot be undone."
+			)).format(addon=addon.name),
 			# Translators: Title for message asking if the user really wishes to remove the selected Addon.
-			_("Remove Add-on"), wx.YES_NO|wx.ICON_WARNING) != wx.YES: return
-		addon=self.curAddons[index]
+			_("Remove Add-on"),
+			wx.YES_NO | wx.NO_DEFAULT | wx.ICON_WARNING
+		) != wx.YES:
+			return
 		addon.requestRemove()
 		self.refreshAddonsList(activeIndex=index)
 		self.addonsList.SetFocus()
@@ -355,7 +370,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.addonsList.DeleteAllItems()
 		self.curAddons=[]
 		anyAddonIncompatible = False
-		for addon in addonHandler.getAvailableAddons():
+		for addon in sorted(addonHandler.getAvailableAddons(), key=lambda a: strxfrm(a.manifest['summary'])):
 			self.addonsList.Append((
 				addon.manifest['summary'],
 				self.getAddonStatus(addon),
@@ -648,7 +663,12 @@ def _showConfirmAddonInstallDialog(parent, bundle):
 		showAddonInfoFunction=lambda: _showAddonInfo(bundle)
 	).ShowModal()
 
-class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
+
+class IncompatibleAddonsDialog(
+		DpiScalingHelperMixinWithoutInit,
+		gui.contextHelp.ContextHelpMixin,
+		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+):
 	"""A dialog that lists incompatible addons, and why they are not compatible"""
 	@classmethod
 	def _instance(cls):
@@ -658,6 +678,8 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		"""
 		return None
 
+	helpId = "IncompatibleAddonsManager"
+	
 	def __new__(cls, *args, **kwargs):
 		instance = IncompatibleAddonsDialog._instance()
 		if instance is None:
@@ -685,14 +707,12 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			# this dialog is not designed to show an empty list.
 			raise RuntimeError("No incompatible addons.")
 
-		wx.Dialog.__init__(
-			self,
+		super().__init__(
 			parent,
 			# Translators: The title of the Incompatible Addons Dialog
 			title=_("Incompatible Add-ons"),
 			style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX,
 		)
-		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
@@ -730,8 +750,13 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		# Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
 		button = buttonSizer.addButton(self, label=_("&Close"), id=wx.ID_CLOSE)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
-		sHelper.addDialogDismissButtons(buttonSizer)
-		mainSizer.Add(settingsSizer, border=20, flag=wx.ALL | wx.EXPAND, proportion=1)
+		sHelper.addDialogDismissButtons(buttonSizer, separated=True)
+		mainSizer.Add(
+			settingsSizer,
+			border=guiHelper.BORDER_FOR_DIALOGS,
+			flag=wx.ALL | wx.EXPAND,
+			proportion=1
+		)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 

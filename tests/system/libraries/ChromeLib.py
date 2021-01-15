@@ -19,14 +19,12 @@ from robot.libraries.BuiltIn import BuiltIn
 # Imported for type information
 from robot.libraries.OperatingSystem import OperatingSystem as _OpSysLib
 from robot.libraries.Process import Process as _ProcessLib
-from KeyInputLib import KeyInputLib as _KeyInputLib
 from AssertsLib import AssertsLib as _AssertsLib
 import NvdaLib as _NvdaLib
 
 builtIn: BuiltIn = BuiltIn()
 opSys: _OpSysLib = _getLib('OperatingSystem')
 process: _ProcessLib = _getLib('Process')
-keyInputLib: _KeyInputLib = _getLib('KeyInputLib')
 assertsLib: _AssertsLib = _getLib('AssertsLib')
 
 
@@ -41,10 +39,19 @@ class ChromeLib:
 	def _getTestCasePath(filename):
 		return _pJoin(ChromeLib._testFileStagingPath, filename)
 
+	def exit_chrome(self):
+		spy = _NvdaLib.getSpyLib()
+		spy.emulateKeyPress('control+w')
+		process.wait_for_process(self.chromeHandle, timeout="1 minute", on_timeout="continue")
+
 	def start_chrome(self, filePath):
 		builtIn.log(f"starting chrome: {filePath}")
 		self.chromeHandle = process.start_process(
-			f"start chrome \"{filePath}\"",
+			"start chrome"
+			" --force-renderer-accessibility"
+			" --suppress-message-center-popups"
+			" --disable-notifications"
+			f' "{filePath}"',
 			shell=True,
 			alias='chromeAlias',
 		)
@@ -69,14 +76,41 @@ class ChromeLib:
 				<title>{ChromeLib._testCaseTitle}</title>
 			</head>
 			<body>
-				<button>{ChromeLib._beforeMarker}</button>
+				<p>{ChromeLib._beforeMarker}</p>
 				{testCase}
-				<button>{ChromeLib._afterMarker}</button>
+				<p>{ChromeLib._afterMarker}</p>
 			</body>
 		""")
 		with open(file=filePath, mode='w', encoding='UTF-8') as f:
 			f.write(fileContents)
 		return filePath
+
+	def _wasStartMarkerSpoken(self, speech: str):
+		if "document" not in speech:
+			return False
+		documentIndex = speech.index("document")
+		marker = ChromeLib._beforeMarker
+		return marker in speech and documentIndex < speech.index(marker)
+
+	def _moveToStartMarker(self, spy):
+		""" Press F6 until the start marker is spoken
+		@param spy:
+		@type spy: SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib
+		@return: None
+		"""
+		for i in range(10):  # set a limit on the number of tries.
+			# Small changes in Chrome mean the number of tab presses to get into the document can vary.
+			builtIn.sleep("0.5 seconds")  # ensure application has time to receive input
+			actualSpeech = self.getSpeechAfterKey('f6')
+			if self._wasStartMarkerSpoken(actualSpeech):
+				break
+		else:  # Exceeded the number of tries
+			spy.dump_speech_to_log()
+			builtIn.fail(
+				"Unable to tab to 'before sample' marker."
+				f" Too many attempts looking for '{ChromeLib._beforeMarker}'"
+				" See NVDA log for full speech."
+			)
 
 	def prepareChrome(self, testCase: str) -> None:
 		"""
@@ -85,50 +119,43 @@ class ChromeLib:
 		"""
 		spy = _NvdaLib.getSpyLib()
 		path = self._writeTestFile(testCase)
+
+		spy.wait_for_speech_to_finish()
+		lastSpeechIndex = spy.get_last_speech_index()
 		self.start_chrome(path)
 		# Ensure chrome started
+		# Different versions of chrome have variations in how the title is presented
+		# This may mean that there is a separator between document name and
+		# application name. E.G. "htmlTest   Google Chrome", "html – Google Chrome" or perhaps no applcation
+		# name at all.
+		# Rather than try to get this right, just wait for the doc title.
+		# If this continues to be unreliable we could use solenium or similar to start chrome and inform us when
+		# it is ready.
 		applicationTitle = f"{self._testCaseTitle}"
-		spy.wait_for_specific_speech(applicationTitle)
-		# Different versions of chrome have small variations in the separator between document name and
-		# application name. E.G. "htmlTest   Google Chrome", "html – Google Chrome"
-		# Rather than try to get the separator right, wait for the doc title, then wait for the 'Google Chrome'
-		# part. Note: this also works with "Chrome Canary"
-		spy.wait_for_specific_speech("Google Chrome")
-		# Read all is configured, but just test interacting with the sample.
+		appTitleIndex = spy.wait_for_specific_speech(applicationTitle, afterIndex=lastSpeechIndex)
 		spy.wait_for_speech_to_finish()
 
-		# move to start marker
-		for i in range(10):  # set a limit on the number of tries.
-			# Small changes in Chrome mean the number of tab presses to get into the document can vary.
-			builtIn.sleep(0.5)  # ensure application has time to receive input
-			actualSpeech = self.getSpeechAfterTab()
-			if actualSpeech == f"{ChromeLib._beforeMarker}  button":
-				break
-			if actualSpeech == f"{ChromeLib._afterMarker}  button":
-				# somehow missed the start marker!
-				builtIn.fail(
-					"Unable to tab to 'before sample' marker, reached 'after sample' marker first."
-					f" Looking for '{ChromeLib._beforeMarker}  button'"
-					" See NVDA log for full speech."
-				)
-				spy.dump_speech_to_log()
-		else:  # Exceeded the number of tries
-			builtIn.fail(
-				"Unable to tab to 'before sample' marker."
-				f" Too many attempts looking for '{ChromeLib._beforeMarker}  button'"
-				" See NVDA log for full speech."
-			)
-			spy.dump_speech_to_log()
+		afterTitleSpeech = spy.get_speech_at_index_until_now(appTitleIndex)
+		if not self._wasStartMarkerSpoken(afterTitleSpeech):
+			self._moveToStartMarker(spy)
+
 
 	@staticmethod
-	def getSpeechAfterTab() -> str:
-		"""Press tab, and get speech until it stops.
-		@return: The speech after tab.
+	def getSpeechAfterKey(key) -> str:
+		"""Ensure speech has stopped, press key, and get speech until it stops.
+		@return: The speech after key press.
 		"""
 		spy = _NvdaLib.getSpyLib()
 		spy.wait_for_speech_to_finish()
 		nextSpeechIndex = spy.get_next_speech_index()
-		keyInputLib.send('\t')
-		spy.wait_for_speech_to_finish()
+		spy.emulateKeyPress(key)
+		spy.wait_for_speech_to_finish(speechStartedIndex=nextSpeechIndex)
 		speech = spy.get_speech_at_index_until_now(nextSpeechIndex)
 		return speech
+
+	@staticmethod
+	def getSpeechAfterTab() -> str:
+		"""Ensure speech has stopped, press tab, and get speech until it stops.
+		@return: The speech after tab.
+		"""
+		return ChromeLib.getSpeechAfterKey('tab')

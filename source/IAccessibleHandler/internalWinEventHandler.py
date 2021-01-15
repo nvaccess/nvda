@@ -13,6 +13,9 @@ from typing import Dict, Callable
 
 import core
 import winUser
+from . import getWinEventLogInfo
+from . import isMSAADebugLoggingEnabled
+
 
 from comInterfaces.IAccessible2Lib import (
 	IA2_EVENT_TEXT_CARET_MOVED,
@@ -69,12 +72,26 @@ _processDestroyWinEvent = None
 
 # C901: winEventCallback is too complex
 def winEventCallback(handle, eventID, window, objectID, childID, threadID, timestamp):  # noqa: C901
+	if isMSAADebugLoggingEnabled():
+		log.debug(
+			f"Hook received winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+		)
 	try:
 		# Ignore all object IDs from alert onwards (sound, nativeom etc) as we don't support them
 		if objectID <= winUser.OBJID_ALERT:
+			if isMSAADebugLoggingEnabled():
+				log.debug(
+					f"objectID not supported. "
+					f"Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+				)
 			return
 		# Ignore all locationChange events except ones for the caret
 		if eventID == winUser.EVENT_OBJECT_LOCATIONCHANGE and objectID != winUser.OBJID_CARET:
+			if isMSAADebugLoggingEnabled():
+				log.debug(
+					f"locationChange for something other than the caret. "
+					f"Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+				)
 			return
 		if eventID == winUser.EVENT_OBJECT_DESTROY:
 			_processDestroyWinEvent(window, objectID, childID)
@@ -82,6 +99,11 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 		# Change window objIDs to client objIDs for better reporting of objects
 		if (objectID == 0) and (childID == 0):
 			objectID = winUser.OBJID_CLIENT
+			if isMSAADebugLoggingEnabled():
+				log.debug(
+					f"Changing OBJID_WINDOW to OBJID_CLIENT "
+					f"for winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+				)
 		# Ignore events with invalid window handles
 		isWindow = winUser.isWindow(window) if window else 0
 		if window == 0 or (
@@ -92,22 +114,33 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 				winUser.EVENT_SYSTEM_MENUPOPUPEND,
 			)
 		):
+			if isMSAADebugLoggingEnabled():
+				log.debug(
+					f"Changing NULL or invalid window to desktop window "
+					f"for winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+				)
 			window = winUser.getDesktopWindow()
 		elif not isWindow:
+			if isMSAADebugLoggingEnabled():
+				log.debug(
+					f"Invalid window. "
+					f"Dropping winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+				)
 			return
 
-		if childID < 0:
-			tempWindow = window
-			while (
-				tempWindow
-				and not winUser.getWindowStyle(tempWindow) & winUser.WS_POPUP
-				and winUser.getClassName(tempWindow) == "MozillaWindowClass"
-			):
-				tempWindow = winUser.getAncestor(tempWindow, winUser.GA_PARENT)
-			if tempWindow and winUser.getClassName(tempWindow).startswith('Mozilla'):
-				window = tempWindow
-
 		windowClassName = winUser.getClassName(window)
+		# Excel produces UI automation events
+		# Which are proxied by Windows into MSAA winEvents.
+		# However in certain builds of Excel 2016
+		# calling UIAHasServerSideProvider on the EXCEL7 window in responce to these events
+		# causes a freeze of several seconds.
+		# As we don't need these MSAA events for our Excel support, just ignore them early.
+		if windowClassName == "EXCEL7" and objectID > 0:
+			log.debug(
+				f"Dropping UIA proxied event for Excel7 window. "
+				f"WinEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+			)
+			return
 		if windowClassName == "ConsoleWindowClass":
 			# #10113: we need to use winEvents to track the real thread for console windows.
 			consoleWindowsToThreadIDs[window] = threadID
@@ -115,38 +148,43 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 		# Modern IME candidate list windows fire menu events which confuse us
 		# and can't be used properly in conjunction with input composition support.
 		if windowClassName == "Microsoft.IME.UIManager.CandidateWindow.Host" and eventID in MENU_EVENTIDS:
+			if isMSAADebugLoggingEnabled():
+				log.debug(
+					f"Dropping menu event for IME window. "
+					f"WinEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+				)
 			return
-		# At the moment we can't handle show or hide events on Mozilla Firefox Location bar,
-		# as there are just too many of them. Ignore show and hide on MozillaDropShadowWindowClass
-		# windows.
-		if (
-			windowClassName.startswith('Mozilla')
-			and eventID in (
-				winUser.EVENT_OBJECT_SHOW,
-				winUser.EVENT_OBJECT_HIDE
-			) and childID < 0
-		):
-			# Mozilla Gecko can sometimes fire win events on a catch-all window which isn't really the real window
-			# Move up the ancestry to find the real mozilla Window and use that
-			if winUser.getClassName(window) == 'MozillaDropShadowWindowClass':
-				return
 		if eventID == winUser.EVENT_SYSTEM_FOREGROUND:
 			# We never want to see foreground events for the Program Manager or Shell (task bar)
 			if windowClassName in ("Progman", "Shell_TrayWnd"):
+				if isMSAADebugLoggingEnabled():
+					log.debug(
+						f"Progman or shell_trayWnd window. "
+						f"Dropping winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+					)
 				return
 			# #3831: Event handling can be deferred if Windows takes a while to change the foreground window.
 			# See pumpAll for details.
 			global _deferUntilForegroundWindow, _foregroundDefers
 			_deferUntilForegroundWindow = window
 			_foregroundDefers = 0
+			if isMSAADebugLoggingEnabled():
+				log.debug(
+					f"Recording foreground defer "
+					f"for WinEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+				)
 		if windowClassName == "MSNHiddenWindowClass":
 			# HACK: Events get fired by this window in Windows Live Messenger 2009 when it starts. If we send a
 			# WM_NULL to this window at this point (which happens in accessibleObjectFromEvent), Messenger will
 			# silently exit (#677). Therefore, completely ignore these events, which is useless to us anyway.
 			return
+		if isMSAADebugLoggingEnabled():
+			log.debug(
+				f"Adding winEvent to limiter: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+			)
 		if winEventLimiter.addEvent(eventID, window, objectID, childID, threadID):
 			core.requestPump()
-	except:  # noqa: E722 Bare except
+	except Exception:
 		log.error("winEventCallback", exc_info=True)
 
 
@@ -187,18 +225,33 @@ def _shouldGetEvents():
 	if _deferUntilForegroundWindow:
 		# #3831: Sometimes, a foreground event is fired,
 		# but GetForegroundWindow() takes a short while to return this new foreground.
+		curForegroundWindow = winUser.getForegroundWindow()
+		curForegroundClassName = winUser.getClassName(curForegroundWindow)
+		futureForegroundClassName = winUser.getClassName(_deferUntilForegroundWindow)
 		if (
 			_foregroundDefers < MAX_FOREGROUND_DEFERS
-			and winUser.getForegroundWindow() != _deferUntilForegroundWindow
+			and curForegroundWindow != _deferUntilForegroundWindow
 		):
 			# Wait a core cycle before handling events to give the foreground window time to update.
 			core.requestPump()
 			_foregroundDefers += 1
+			if isMSAADebugLoggingEnabled():
+				log.debugWarning(
+					f"Foreground still {curForegroundWindow} ({curForegroundClassName}). "
+					f"Deferring until foreground is {_deferUntilForegroundWindow} ({futureForegroundClassName}), "
+					f"defer count {_foregroundDefers}"
+				)
 			return False
 		else:
 			# Either the foreground window is now correct
 			# or we've already had the maximum number of defers.
 			# (Sometimes, foreground events are fired even when the foreground hasn't actually changed.)
+			if curForegroundWindow != _deferUntilForegroundWindow:
+				log.debugWarning(
+					"Foreground took too long to change. "
+					f"Foreground still {curForegroundWindow} ({curForegroundClassName}). "
+					f"Should be {_deferUntilForegroundWindow} ({futureForegroundClassName})"
+				)
 			_deferUntilForegroundWindow = None
 	return True
 
