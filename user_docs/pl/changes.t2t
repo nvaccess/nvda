@@ -6,46 +6,46 @@
 = 2020.4 =
 
 == Nowości ==
-- Pressing F1 inside NVDA dialogs will now open the help file to most relevant section. (#7757)
-- Support for auto complete suggestions (IntelliSense) in Microsoft SQL Server Management Studio plus Visual Studio 2017 and higher. (#7504)
-- Symbol pronunciation: Support for grouping in a complex symbol definition and support group references in a replacement rule making them simpler and more powerful. (#11107)
-- Users are now notified when attempting to create Speech Dictionary entries with invalid regular expression substitutions. (#11407)
-  - Specifically grouping errors are now detected.
-- Added support for the new chinese Traditional Quick and Pinyin Input methods in Windows 10. (#11562)
-- Tab headers are now considered form fields with quick navigation f key. (#10432)
-- Added a command to toggle reporting of marked (highlighted) text; There is no default associated gesture. (#11807)
-- Added the --copy-portable-config command line parameter that allows you to automatically copy the provided configuration to the user account when silently installing NVDA. (#9676)
-- Braille routing is now supported with the Braille Viewer for mouse users, hover to route to a braille cell. (#11804)
-- NVDA will now automatically detect the Humanware Brailliant BI 40X and 20X devices via both USB and Bluetooth. (#11819)
+- Od teraz naciśnięcie klawisza F1 w oknach dialogowych NVDA spowoduje otwarcie pomocy podręcznej dla obecnie podświetlonej sekcji. (#7757)
+- Dodano wsparcie dla technologii Intelli Sense w programach Microsoft SQL Server i Microsoft Visual Studio 2017 i nowszych. (#7504)
+- Wymowa symboli: Dodano wsparcie dla grupowania referencji w zasadach zamiany. Powoduje to że zamiany są prostrze i bardziej funkcjonalne. (#11107)
+- Od teraz generowane jest powiadomienie przy próbie utworzenia wpisu słownika zawierającego błędne wyrażenia regularne. (#11407)
+  - W szczególności dotyczy to błędów grupowania.
+- Dodano wsparcie dla nowej metody wprowadzania języka Chińskiego uproszczonego i tradycyjnego w systemie Windows 10. (#11562)
+- Nagłówki zakładek są od teraz traktowane jako pola formularzy podczas szybkiej nawigacji przy pomocy klawisza F. (#10432)
+- Dodano polecenie przełączające odczytywanie oznaczonego tekstu. Wymagane jest ręczne przypisanie gestu. (#11807)
+- Dodano parametr wiersza poleceń --copy-portable-config pozwalający na przeniesienie konfiguracji przenośnej do konta użytkownika podczas cichej instalacji NVDA. (#9676)
+- Braille routing jest od teraz wspierany w podglądzie brajla dla użytkowników korzystających z myszy. Aby przenieść kursor do komórki, kliknij myszą w odpowiednie miejsce. (#11804)
+- NVDA automatycznie wykrywa urządzenia Humanware Brailliant BI 40X i 20X zarówno przez USB, jak i przez bluetooth. (#11819)
 
 
 == Zmiany ==
-- Updated liblouis braille translator to version 3.16.1:
- - Addresses multiple crashes
- - Adds Bashkir grade 1 Braille table
- - adds Coptic 8 dot computer braille table
- - Adds Russian literary braille and Russian literary braille (detailed) tables.
- - Removes the Russian grade 1 Braille table
+- Zaktualizowano Liblouis do wersji 3.16.1:
+ - Naprawiono krytyczne błędy.
+ - Dodano tablicę brajlowską dla baszkirskiego pisma pełnego.
+ - Dodano ośmiopunktową tablicę ośmiopunktową dla języka koptyjskiego.
+ - Dodano tablice brajlowskie: Rosyjski Literacki i Rosyjski Literacki Szczegółowy.
+ - Usunięto tablicę brajlowską Rosyjski pismo pełne.
 - When reading with say all in browse mode, the find next and find previous commands do not stop reading anymore if Allow skim reading option is enabled; say all rather resumes from after the next or previous found term. (#11563)
-- For HIMS braille displays F3 has been remapped to Space + dots 148. (#11710)
+- Dla monitorów brajlowskich Hims F3 od teraz wywoływane jest przez naciśnięcie kombinacji klawiszy spacja +kropki 1, 4, 8. (#11710)
 - Improvements to the UX of the "braille message timeout" and "Show messages indefinitely" options. (#11602)
-- In web browsers and other applications that support browse mode, the Elements List dialog (NVDA+F7) can now be invoked when in focus mode. (#10453)
-- Updates to ARIA live regions are now suppressed when reporting of dynamic content changes is disabled. (#9077)
-- NVDA will now report "Copied to clipboard" before the copied text. (#6757)
-- Presentation of graphical view table in disk management has been improved. (#10048)
-- Labels for controls are now disabled (greyed out) when the control is disabled. (#11809)
-- Updated CLDR emoji annotation to version 38. (#11817)
+- W przeglądarkach internetowych i innych aplikacjach wspierających tryb przeglądania, możliwe jest teraz wywołanie listy elementów (NVDA+F7) w trybie fokusu. (#10453)
+- Zmiany w regionach ARIA nie są odczytywane jeżeli ogłaszanie dynamicznych zmian treści jest wyłączone. (#9077)
+- NVDA od teraz zgłasza status skopiowania przed skopiowanym tekstem. (#6757)
+- Ulepszono prezentację widoku graficznego w menedżerze dysków systemu Windows. (#10048)
+- Etykiety dla kontrolek są od teraz wyłączone (wyszarzone) kiedy kontrolka jest nieaktywna. (#11809)
+- Zaktualizowano bazę danych Emoji CLDR do wersji 38. (#11817)
 - The inbuilt "Focus Highlight" feature has been renamed "Vision Highlight". (#11700)
 
 
 == Poprawki błędów ==
-- NVDA once again works correctly with edit fields when using the Fast Log Entry application. (#8996)
-- Report elapsed time in Foobar2000 if no total time is available (e.g. when playing a live stream). (#11337)
-- NVDA now honors the aria-roledescription attribute on elements in editable content in web pages. (#11607)
-- 'list' is no longer announced on every line of a list in Google Docs or other editable content in Google Chrome. (#7562)
-- When arrowing by character or word from one list item to another in editable content on the web, entering the new list item is now announced. (#11569)
-- NVDA now reads the correct line when the caret is placed at the end of a link on the end of a list item in Google Docs or other editable content on the web. (#11606)
-- On Windows 7, opening and closing the start menu from the desktop now sets focus correctly. (#10567)
+- NVDA ponownie działa poprawnie w polach edycyjnych w programie Fast Long Entry. (#8996)
+- Od teraz, jeżeli nie możliwe jest uzyskanie całkowitego czasu trwania pliku w programie Foobar 200, ogłaszany jest teraz czas, który upłynął od rozpoczęcia odtwarzania. (#11337)
+- NVDA od teraz wspiera atrybut aria-roledescription w polach edycyjnych na stronach internetowych. (#11607)
+- NVDA nie ogłasza już słowa 'lista' dla każdej linii listy w Google Docs lub jakiejkolwiek innej edytowalnej treści w Google Chrome. (#7562)
+- Podczas przechodzenia po znakach lub słowach z jednego elementu listy do drugiego, zmiana jest od teraz ogłaszana. (#11569)
+- NVDA od teraz odczytuje poprawną linię jeżeli kursor ustawiony jest na końcu linku, który znajduje się na końcu elementu listy w Google Docs lub innych edytowalnych treściach internetowych. (#11606)
+- Na Windows 7, otwarcie i zamknięcie menu start z pulpitu ustawia kursor w odpowiednim miejscu. (#10567)
 - When "attempt to cancel expired focus events" is enabled, the title of the tab is now announced again when switching tabs in Firefox. (#11397)
 - NVDA no longer fails to announce a list item after typing a character in a list when speaking with the SAPI5 Ivona voices. (#11651)
 - It is again possible to use browse mode when reading emails in Windows 10 Mail 16005.13110 and later. (#11439)

@@ -44,6 +44,7 @@ NVDA更新日志
 - 将 CLDR 表情符号解释库更新为 38版。 (#11817)
 - 将设置面板中“视觉辅助”下的“焦点高亮显示”功能重命名为“视觉高亮显示”。 (#11700)
 
+
 == 错误修复 ==
 - NVDA重新支持了 Fast Log Entry 编辑区的朗读。 (#8996)
 - 在 Foobar2000 播放过程中即使没有总时间（比如，播放流媒体直播时），也可以读出已经过时间，并且会给出总时间和剩余时间不可用的提示。 (#11337)
@@ -75,6 +76,7 @@ NVDA更新日志
 - NVDA no longer crashes when using English US grade 2 and expand to computer Braille at the cursor is on, when displaying certain content such as a URL in Braille. (#11754)
 - It is again possible to report formatting information for the focused Excel cell using NVDA+F. (#11914)
 - QWERTY input on Papenmeier braille displays that support it again works and no longer causes NVDA to randomly freeze. (#11944)
+
 
 == 插件以及NVDA核心开发者需要了解的变动 ==
 - System tests can now send keys using spy.emulateKeyPress, which takes a key identifier that conforms to NVDA's own key names, and by default also blocks until the action is executed. (#11581)
