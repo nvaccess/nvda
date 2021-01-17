@@ -1454,6 +1454,12 @@ class WordDocument(Window):
 		# Translators: a message when changing case in Microsoft Word
 		ui.message(wdCharacterCaseTypeLabels.get(val))
 
+	@script(gestures=[
+		"kb:control+=",
+		"kb:control+shift+=",
+		"kb:control+plus",
+		"kb:control+shift+plus",
+	])
 	def script_toggleSuperscriptSubscript(self,gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1627,8 +1633,6 @@ class WordDocument(Window):
 		"kb:control+]":"increaseDecreaseFontSize",
 		"kb:control+shift+,":"increaseDecreaseFontSize",
 		"kb:control+shift+.":"increaseDecreaseFontSize",
-		"kb:control+=":"toggleSuperscriptSubscript",
-		"kb:control+shift+=":"toggleSuperscriptSubscript",
 		"kb:control+l":"toggleAlignment",
 		"kb:control+e":"toggleAlignment",
 		"kb:control+r":"toggleAlignment",
