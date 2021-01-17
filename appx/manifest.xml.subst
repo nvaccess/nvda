@@ -2,6 +2,7 @@
 <Package
 	xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
 	xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+	xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10" 
 	xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
 >
 	<Identity 
@@ -22,17 +23,18 @@
 	<Dependencies>
 		<TargetDeviceFamily 
 			Name="Windows.Desktop" 
-			MinVersion="10.0.15063.0" 
-			MaxVersionTested="10.0.18362.0" 
+			MinVersion="10.0.18990.0" 
+			MaxVersionTested="10.0.18995.0" 
 		/>
 	</Dependencies>
 	<Capabilities>
 		<rescap:Capability Name="runFullTrust"/>
+		<rescap:Capability Name="uiAccess"/>
 	</Capabilities>
 	<Applications>
 		<Application 
 			Id="mainExecutable" 
-			Executable="nvda_noUIAccess.exe" 
+			Executable="nvda_UIAccess.exe" 
 			EntryPoint="Windows.FullTrustApplication"
 		>
 			<uap:VisualElements 
@@ -42,6 +44,17 @@
 				Square44x44Logo="appx_images/nvda_44x44.png" 
 				BackgroundColor="#660099" 
 			/>
+			<Extensions>
+			<desktop:Extension
+			Category="windows.startupTask"
+			Executable="nvda_UIAccess.exe"
+			EntryPoint="Windows.FullTrustApplication">
+			<desktop:StartupTask
+			TaskId="nvda_uiAccess"
+			Enabled="true"
+			DisplayName="%productName%" />
+			</desktop:Extension>
+			</Extensions>
 		</Application>
 	</Applications>
 </Package>

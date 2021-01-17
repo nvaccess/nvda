@@ -3,6 +3,324 @@ Ce este nou în NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2020.3 =
+Această versiune include câteva îmbunătățiri substanțiale la stabilitate și performanță, punându-se accent pe aplicațiile Microsoft Office. Există noi setări pentru activarea sau dezactivarea suportului pentru ecranele tactile și pentru activarea sau dezactivarea raportării graficelor.
+Existența conținutului marcat (evidențiat) poate fi raportată în navigatoarele web. De asemenea, sunt disponibile noi tabele braille germane.
+
+== Noi Funcționalități ==
+- Acum, puteți activa sau dezactiva raportarea graficelor din setările NVDA de formatare a documentului. De reținut faptul că dezactivarea acestei opțiuni nu va exclude citirea textelor alternative din grafice. (#4837)
+- Acum, puteți activa sau dezactiva suportul NVDA pentru ecranele tactile. A fost adăugată o opțiune în panoul Interacțiune Tactilă al setărilor NVDA. Gestul implicit este NVDA+control+alt+t. (#9682)
+- S-au adăugat noi tabele braille nemțești. (#11268)
+- Acum, NVDA detectează controale UIA de text read-only (#10494)
+- Existența conținutului marcat (evidențiat) este raportat atât vocal cât și în braille în toate navigatoarele web. (#11436)
+ - Aceasta poate fi activată sau dezactivată grație unei noi opțiuni de evidențiere care a fost adăugată în categoria de setări a Formatării Documentelor. 
+- Pot fi adăugate noi taste simulatoare de sistem din dialogul Gesturilor de Intrare al NVDA. (#6060)
+ - Pentru a face asta, apăsați butonul „Adaugă” după ce ați selectat categoria tastelor simulate ale tastaturii de sistem.
+- Acum, este suportat Handy Tech Active Braille cu joystick. (#11655)
+- Acum, setarea „Mod focalizare automată pentru mișcarea cursorului de scriere” este compatibilă cu „setează automat focalizarea la elementele focalizabile”. (#11663)
+
+
+== Modificări ==
+- A fost modificat scriptul pentru raportarea formatării (NVDA+f) astfel încât să raporteze formatarea de la cursorul de scriere al sistemului, nu de la cursorul de examinare, așa cum o făcea înainte. Pentru a vi se raporta formatarea de la poziția cursorului de examinare, apăsați NVDA+shift+f. (#9505)
+- NVDA nu mai setează focalizarea sistemului la elementele focalizabile în mod implicit în modul de navigare, îmbunătățind astfel performanța și stabilitatea. (#11190)
+- S-a actualizat CLDR de la versiunea 36.1 la versiunea 37. (#11303)
+- S-a actualizat eSpeak-NG la versiunea 1.51-dev, commit 1fb68ffffea4
+- Puteți utiliza navigarea prin tabel în casetele de listă care au elemente ce pot fi bifate atunci când lista particulară are coloane multiple. (#8857)
+- În administratorul de suplimente, atunci când trebuie să confirmați eliminarea unui supliment, butonul „Nu” este implicit. (#10015)
+- În Microsoft Excel, fereastra de dialog a listei de elemente prezintă formulele în forma lor localizată. (#9144)
+- NVDA raportează terminologia corectă pentru notele din MS Excel. (#11311)
+- La folosirea comenzii „mută cursorul de examinare la focalizare” în modul de navigare, cursorul de examinare este setat la poziția cursorului virtual de scriere. (#9622)
+- Informațiile raportată în modul de navigare, cum ar fi cele de formatare cu NVDA+F, sunt afișate într-o fereastră puțin mai mare aflată în centrul ecranului. (#9910)
+
+
+== Defecte Rezolvate ==
+- NVDA va vorbi de fiecare dată când veți naviga cuvânt cu cuvânt și vă veți focaliza pe oricare simbol singular urmat de un spațiu alb, indiferent de setările verbozității. (#5133)
+- Sunt din nou raportate descrierile obiectelor la utilizarea în aplicații a QT (versiunea 5.11 sau o versiune mai nouă). (#8604)
+- NVDA nu mai rămâne silențios la ștergerea unui cuvând folosind combinația control+delete. (#3298, #11029)
+  - Este anunțat cuvântul aflat în dreapta cuvântului șters.
+- Lista de limbi este sortată corect în panoul setărilor generale. (#10348)
+- În fereastra de dialog a gesturilor de intrare, s-a îmbunătățit în mod semnificativ performanța în timpul filtrării. (#10307)(
+- Puteți trimite, de la un afișaj braille, caractere Unicode dincolo de U+FFFF. (#10796)
+- NVDA va anunța conținutul ferestrei de dialog „Deschidere Cu” în actualizarea Windows 10 din mai 2020. (#11335)
+- O nouă opțiune experimentală în panoul setărilor avansate (Activează înregistrarea selectivă pentru evenimentele UI Automation și pentru schimbările de proprietate) poate oferi îmbunătățiri substanțiale de performanță în Microsoft Visual Studio și în alte aplicații bazate pe UI Automation dacă este activată. (#11077, #11209)
+- Pentru elementele de listă ce pot fi bifate, starea selectată nu mai este anunțată inutil, iar dacă se poate, este anunțată în schimb starea neselectată. (#8554)
+- În actualizarea Windows 10 din mai 2020, NVDA afișează Cartograful de Sunete Microsoft la vizualizarea dispozitivelor de ieșire din fereastra de dialog a sintetizatorului. (#11349)
+- În Internet Explorer, nummerele sunt anunțate corect pentru listele ordonate dacă lista nu începe cu 1. (#8438)
+- În Google Chrome, NVDA va raporta ca nebifate toate controalele ce pot fi bifate (nu doar casetele de bifat) care sunt nebifate în acel moment. (#11377)
+- Este din nou posibilă navigarea prin diverse controale atunci când limba interfeței NVDA este setată în aragoneză. (#11384)
+- Nu ar trebui ca NVDA, fie și din când în când, să se mai blocheze în Microsoft Word la o apăsare rapidă a săgeților sus și jos sau la tastarea de caractere cu braille-ul activat. (#11431, #11425, #11414)
+- NVDA nu mai adaugă un spațiu de urmărire inexistent la copierea obiectului navigator curent pe planșetă. (#11438)
+- NVDA nu mai activează profilul Spune Tot dacă nu este nimic de citit. (#10899, #9947)
+- NVDA poate să citească lista de caracteristici din administratorul Internet Information Services (IIS). (#11468)
+- NVDA ține dispozitivul audio deschis, îmbunătățind astfel performanța pentru niște plăci de sunet. (#5172, #10721)
+- NVDA nu se va mai bloca sau închide atunci când țineți apăsate în același timp tastele control+shift+săgeată jos în Microsoft Word. (#9463)
+- Starea de extins/redus a folderelor din treeview-ul de navigare pe drive.google.com este mereu raportată de NVDA. (#11520)
+- NVDA va autodetecta afișajul braille NLS eReader de la Humanware prin Bluetooth, întrucât numele său de Bluetooth este „NLS eReader Humanware”. (#11561)
+- Îmbunătățiri semnificative de performanță în codul Visual Studio. (#11533)
+
+
+== Modificări pentru Dezvoltatori ==
+- BoxSizerHelper.addDialogDismissButtons al GUI Helper-ului suportă un nou argument cuvânt cheie „separat” pentru adăugarea unui separator orizontal standard la dialoguri (altele decât mesajele și dialogurile singure de intrare). (#6468)
+- S-au adăugat proprietăți suplimentare la App module-uri, incluzând calea pentru executabil (appPath), este o aplicație din Windows Store (isWindowsStoreApp), și arhitectura computerului pentru aplicație (appArchitecture). (#7894)
+- Este posibilă crearea de app module-uri pentru aplicații găzduite în cadrul wwahost.exe pe Windows 8 și mai nou. (#4569)
+- Poate fi delimitat un fragment din jurnal și copiat pe planșetă folosindu-se NVDA+control+shift+F1. (#9280)
+- Obiectele specifice NVDA care sunt găsite de colectorul de gunoi ciclic al Python sunt acum înregistrate atunci când sunt șterse de colector pentru a ajuta la eliminarea ciclurilor de referință din NVDA. (#11499)
+ - Majoritatea claselor NVDA sunt urmărite, incluzând NVDAObjects, appModule-uri, GlobalPlugin-uri, SynthDrivere și TreeInterceptoare.
+ - O clasă care trebuie să fie urmărită ar trebui să moștenească de la garbageHandler.TrackedObject.
+- Diagnosticarea semnificativă pentru evenimentele MSAA poate fi activată din panoul setărilor avansate NVDA. (#11521)
+- WinEvent-urile MSAA pentru obiectul navigator curent nu mai sunt filtrate împreună cu alte evenimente dacă numărătoarea de evenimente pentru un anumit thread este depășită. (#11520)
+
+
+= 2020.2 =
+Caracteristicile principale ale acestei versiuni includ suportul pentru un afișaj braille nou de la Nattiq, suportul îmbunătățit pentru interfața grafică a antivirusului ESET, dar și pentru Windows Terminal, și îmbunătățiri de performanță în ceea ce privește 1Password și sintetizatorul Windows OneCore. În plus, multe erori importante au fost remediate și multe alte îmbunătățiri au fost făcute.
+
+== Noi Funcționalități ==
+- Suport pentru noi afișaje braille:
+ - Nattiq nBraille (#10778)
+- S-a adăugat un script pentru deschiderea dosarului configurărilor NVDA (niciun gest implicit). (#2214)
+- Suport îmbunătățit pentru interfața grafică a antivirusului ESET. (#10894)
+- S-a adăugat suportul pentru Windows Terminal. (#10305)
+- S-a adăugat o comandă pentru raportarea profilului activ de configurare (niciun gest implicit). (#9325)
+- S-a adăugat o comandă pentru activarea sau dezactivarea raportării subscripturilor și a superscripturilor (niciun gest implicit). (#10985)
+- Aplicațiile web precum Gmail nu mai raportează informații învechite atunci când focalizarea se deplasează rapid. (#10885)
+ - Această remediere experimentală trebuie să fie activată manual prin opțiunea „Încearcă să anulezi vorbirea pentru evenimentele expirate ale focalizării”, care se află în panoul setărilor avansate.
+- Au fost adăugate multe alte simboluri în dicționarul implicit al acestora. (#11105)
+
+
+== Modificări ==
+- S-a actualizat traducătorul braille liblouis de la versiunea 3.12 la versiunea [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0]. (#10832, #11221)
+- Acum, raportarea superscripturilor și a subscripturilor este controlată separat de raportarea atributelor fontului. (#10919)
+- Datorită schimbărilor făcute în VS Code, NVDA nu mai dezactivează modul de navigare din Code în mod implicit. (#10888)
+- S-au șters mesajele „sus” și „jos” la deplasarea cursorului de examinare la primul sau ultimul rând al obiectului navigator curent. (#9551)
+- S-au șters mesajele „stânga” și „dreapta” la deplasarea cursorului de examinare la primul sau ultimul caracter al rândului obiectului navigator curent. (#9551)
+
+
+== Defecte Rezolvate ==
+- Acum, NVDA pornește cum trebuie atunci când nu poate crea fișierul de jurnal. (#6330)
+- În versiunile recente ale Microsoft Word 365, NVDA nu va mai anunța „delete back word” dacă este apăsată combinația de taste Control+Backspace în timpul editării unui document. (#10851)
+- În Winamp, NVDA va anunța din nou o singură dată activarea sau dezactivarea stărilor „aleator” și „repetare”. (#10945)
+- NVDA nu mai este extrem de lent la deplasarea prin lista de elemente în 1Password. (#10508)
+- Sintetizatorul Windows OneCore nu mai rămâne între pronunții. (#10721)
+- NVDA nu se mai blochează atunci când deschideți meniul contextual pentru 1Password din zona notificărilor de sistem (System Tray). (#11017)
+- În Office 2013 și mai vechi:
+ - Sunt anunțate pamblicile atunci când focalizarea se deplasează pentru prima dată la ele. (#4207)
+ - Elementele din meniul contextual sunt din nou raportate așa cum trebuie. (#9252)
+ - Secțiunile de pamblici sunt anunțate consistent la navigarea cu Control+săgeți. (#7067)
+- În modul de navigare din Mozilla Firefox și Google Chrome, textul nu mai apare incorect pe un rând separat atunci când conținutul web utilizează afișarea CSS: inline-flex. (#11075)
+- În modul de navigare cu setarea automată a sistemului la elementele focalizabile dezactivată, nu mai puteți activa elemente care nu sunt focalizabile.
+- În modul de navigare cu setarea automată a sistemului la elementele focalizabile dezactivată, nu mai puteți activa elemente la care se ajunge prin apăsarea tastei tab. (#8528)
+- În modul de navigare cu setarea automată a sistemului la elementele focalizabile dezactivată, activarea anumitor elemente nu mai duce la o locație incorectă. (#9886)
+- Nu se vor mai auzi sunetele de eroare ale NVDA la accesarea controalelor de text DevExpress. (#10918)
+- Indiciile iconițelor din zona notificărilor de sistem nu mai sunt raportate la navigarea cu tastatura dacă textul lor și numele lor sunt identice, pentru a se evita anunțarea de două ori. (#6656)
+- În modul de navigare cu setarea automată a sistemului la elementele focalizabile dezactivată, comutarea la modul de focalizare cu NVDA+Spațiu focalizează elementul de sub cursorul de scriere al sistemului. (#11206)
+- Puteți din nou să căutați actualizări pentru NVDA pe anumite sisteme; e.x. curățări ale instalărilor de Windows. (#11253)
+- Nu mai este deplasată focalizarea în aplicațiile Java atunci când selecția este schimbată într-o vedere de listă extinsă nefocalizată, tabel sau listă. (#5989)
+
+
+== Modificări pentru Dezvoltatori ==
+- execElevated și hasUiAccess s-au mutat de la modulul config la modulul systemUtils. Utilizarea prin modulul config nu mai este de actualitate. (#10493)
+- S-a actualizat configobj la 5.1.0dev commit f9a265c4. (#10939)
+- Este posibilă testarea automată a NVDA cu Chrome și cu un sample HTML. (#10553)
+- IAccessibleHandler a fost transformat într-un pachet, OrderedWinEventLimiter a fost extras la un modul și s-au adăugat texte de unități. (#10934)
+- S-a actualizat BrlApi la versiunea 0.8 (BRLTTY 6.1). (#11065)
+- Recuperarea barei de stare poate să nu fie personalizată de un AppModule. (#2125, #4640)
+- NVDA nu mai ascultă IAccessible EVENT_OBJECT_REORDER. (#11076)
+- Un ScriptableObject defect (cum ar fi un GlobalPlugin căruia îi lipsește un apel către metoda __init__ a clasei sale de bază) nu mai afectează manipularea scripturilor NVDA. (#5446)
+
+
+= 2020.1 =
+Caracteristicile principale ale acestei versiuni includ suportul pentru câteva noi afișaje braille de la HumanWare și APH, precum și reparări ale unor erori importante precum cea a citirii conținutului matematic în Microsoft Word utilizându-se MathPlayer / MathType.
+
+== Noi Funcționalități ==
+- Elementul curent selectat din casetele de liste este prezentat din nou în modul de navigare din Google Chrome, așa cum se întâmpla și în NVDA 2019.1. (#10713)
+- Acum, puteți da click dreapta și dacă folosiți un dispozitiv cu ecran tactil, ca și cum ați folosi un maus fizic, apăsând o dată cu un deget și ținând apăsat. (#3886)
+- Suport pentru următoarele afișaje braille: APH Chameleon 20, APH Mantis Q40, HumanWare BrailleOne, BrailleNote Touch v2 și NLS eReader. (#10830)
+
+
+== Modificări ==
+- NVDA va împiedica sistemul să se blocheze sau să intre în modul de repaus atunci când va citi tot. (#10643)
+- Suport pentru iframe-urile out-of-process din Mozilla Firefox. (#10707)
+- S-a actualizat traducătorul braille liblouis la versiunea 3.12. (#10161)
+
+
+== Defecte Rezolvate ==
+- Am făcut astfel încât NVDA să nu mai anunțe simbolul Unicode „minus” (U+2212). (#10633)
+- La instalarea suplimentelor din administratorul de suplimente, numele dosarelor și fișierelor din fereastra de navigare nu mai sunt raportate de două ori. (#10620, #2395)
+- În Firefox, la încărcarea Mastodon având activată interfața web avansată, toate cronologiile sunt redate corect în modul de navigare. (#10776)
+- În modul de navigare, NVDA raportează „nebifat” pentru casetele care nu sunt bifate acolo unde uneori nu o făcea. (#10781)
+- Controalele de comutare ARIA nu mai raportează informații precum „nu este apăsat bifat” sau „apăsat bifat”, menite să genereze confuzie în rândul utilizatorilor. (#9187)
+- Nu ar mai trebui ca vocile SAPI4 să refuze să pronunțe un anume text. (#10792)
+- NVDA poate din nou să citească ecuațiile matematice din Microsoft Word și să interacționeze cu ele. (#10803)
+- NVDA va anunța din nou textul neselectat din modul de navigare la apăsarea unei taste săgeată cât timp textul este selectat. (#10731)
+- NVDA nu se mai închide dacă există o eroare la pornirea eSpeak. (#10607)
+- Erorile cauzate de Unicode în traduceri pentru scurtături nu mai opresc instalatorul, atenuate de revenirea la textul în engleză. (#5166, #6326)
+- Ieșirea listelor și a tabelelor dinn sayAll, cu citirea de suprafață activată, nu mai anunță în continuu ieșirea din listă sau tabel.
+
+
+== Modificări pentru Dezvoltatori ==
+- Ghidul dezvoltatorului este construit acum cu Sphinx. (#9840)
+- Câteva funcții de vorbire au fost împărțite în două. (#10593)
+  - Versiunea speakX rămâne, însă acum depinde de o funcție getXSpeech, care întoarce o frecvență de vorbire.
+  - Acum, speakObjectProperties se bazează pe getObjectPropertiesSpeech
+  - Acum, speakObject se bazează pe getObjectSpeech
+  - Acum, speakTextInfo se bazează pe getTextInfoSpeech
+  - speakWithoutPauses a fost convertită într-o clasă și refabricată, însă nu ar trebui să afecteze în vreun fel compatibilitatea.
+  - getSpeechForSpelling este depreciată, (deși încă este disponibilă) utilizați în schimb getSpellingSpeech.
+  - Modificări private care nu ar trebui să îi afecteze pe dezvoltatorii de suplimente:
+  - Acum, _speakPlaceholderIfEmpty este _getPlaceholderSpeechIfTextEmpty
+  - Acum, _speakTextInfo_addMath este _extendSpeechSequence_addMathForTextInfo
+- Vorbirea 'reason' a fost convertită într-un Enum, vedeți clasa controlTypes.OutputReason. (#10703)
+  - Constantele nivelurilor de modul 'reason' sunt depreciate.
+- Dependințele de compilare ale NVDA necesită Visual Studio 2019 (16.2 sau mai nou). (#10169)
+- S-a actualizat SCons la versiunea 3.1.1. (#10169)
+- Se permite din nou behaviors._FakeTableCell să nu aibă nicio locație definită. (#10864)
+
+
+= 2019.3 =
+NVDA 2019.3 este o versiune foarte importantă care conține modificări printre care se regăsesc actualizarea de la Python 2 la Python 3 și o rescriere majoră a subsistemului vorbirii NVDA.
+Deși aceste modificări anulează compatibilitatea cu suplimentele NVDA mai vechi, actualizarea Python 3 este necesară pentru securitate, iar modificările la vorbire permit inovații în viitorul apropiat.
+ Printre alte noutăți pe care le aduce această versiune se regăsesc suportul pentru VM-urile Java pe 64 de biți, funcționalitățile Cortină Ecran și Evidențiere Focalizare, suportul pentru mai multe afișaje braille și un nou monitor braille, precum și multe defecte rezolvate.
+
+== Noi Funcționalități ==
+- Acuratețea cu care mausul se deplasează la comanda obiectului navigator a fost îmbunătățită în câmpurile de text din aplicațiile Java. (#10157)
+- S-a adăugat suportul pentru următoarele afișaje braille de la Handy Tech:
+ - Basic Braille Plus 40
+ - Basic Braille Plus 32
+ - Connect Braille
+- Acum, toate gesturile setate de utilizator pot fi eliminate prin apăsarea unui nou buton aflat în fereastra de dialog a gesturilor de intrare, numit „Resetare la valorile implicite”. (#10293)
+- Acum, raportarea fontului din Microsoft Word înștiințează dacă textul este marcat ca ascuns. (#8713)
+- S-a adăugat o comandă care deplasează cursorul de examinare la poziția care  era setată ca marcaj de început pentru selecție sau copiere: NVDA+shift+F9. (#1969)
+- În Internet Explorer, Microsoft Edge și în versiunile recente de Firefox și Chrome, reperele sunt raportate în modul de focalizare și în navigarea obiectului. (#10101)
+- În Internet Explorer, Google Chrome și Mozilla Firefox, puteți naviga la articole folosind scripturile navigării rapide. Aceste scripturi sunt neasciate în mod implicit și pot fi atribuite în dialogul gesturilor de intrare atunci când acesta este deschis dintr-un document în care modul de navigare este prezent. (#9227)
+ - Și Figurile sunt raportate. Ele sunt considerate obiecte, prin urmare sunt navigabile cu tasta o a navigării rapide.
+- În Internet Explorer, Google Chrome și Mozilla Firefox, elementele articolelor sunt raportate cu navigarea obiectului și opțional în modul de navigare dacă acesta este activat din setările de formatare a documentului. (#10424)
+- S-a adăugat cortina ecranului, care face întregul ecran negru în Windows 8 și/sau în versiunile mai noi. (#7857)
+ - S-a adăugat un script care activează cortina ecranului (până la următoarea repornire a NVDA cu o singură apăsare, ori cât timp rulează NVDA cu două apăsări), niciun gest implicit nu este atribuit.
+ - Cortina poate fi activată și configurată în secțiunea „viziune” a ferestrei de dialog a setărilor NVDA.
+- Noua versiune de NVDA vine la pachet și cu funcționalitatea de evidențiere a ecranului. (#971, #9064)
+ - Evidențierea focalizării, obiectul navigator și poziția cursorului de scriere al modului de navigare pot fi activate și configurate în secțiunea „Vedere” a ferestrei de dialog a setărilor NVDA.
+ - Notă: această caracteristică este incompatibilă cu suplimentul Focus Higlight, însă suplimentul încă poate fi utilizat atât timp cât commpilarea în evidențiator este inactivă.
+- S-a adăugat unealta Monitor Braille, care vă permite să vizualizați ieșirea braille printr-o fereastră pe ecran. (#7788)
+
+
+== Modificări ==
+- Acum, manualul de utilizare descrie cum se folosește NVDA în Consola Windows. (#9957)
+- În mod implicit, executarea nvda.exe înlocuiește o copie a NVDA care rulează deja. Parametrul de înlocuire -r|--replace, care este folosit în Linia de Comandă, încă este acceptat, însă ignorat. (#8320)
+- În Windows 8 sau mai nou, NVDA va raporta numele produsului și informații cu privire la versiune pentru aplicațiile găzduite precum cele descărcate din Microsoft Store folosindu-se de informațiile oferite de acestea. (#4259, #10108)
+- La activarea sau dezactivarea schimbărilor de urmărire cu tastatura din Microsoft Word, NVDA va anunța starea setării. (#942)
+- Numărul versiunii de NVDA este înregistrat ca primul mesaj din jurnal. Acesta apare chiar dacă înregistrarea a fost dezactivată din Interfața Grafică a Utilizatorului. (#9803)
+- Dialogul de setări nu mai permite modificarea nivelului configurat al jurnalului dacă aceasta a fost suprascrisă din Linia de Comandă. (#10209)
+- În Microsoft Word, NVDA anunță starea de afișare a caracterelor neimprimabile la apăsarea scurtăturii de comutare Ctrl+Shift+8 . (#10241)
+- S-a actualizat traducătorul braille Liblouis la commit-ul 58d67e63. (#10094)
+- Când este activă raportarea caracterelor CLDR (aici sunt incluse și emoticoanele), ele sunt anunțate la toate nivelurile de punctuație. (#8826)
+- Au fost incluse în NVDA pachete de Python aparținând unor terțe părți, cum ar fi comtypes, acum își înregistrează avertismentele și erorile în jurnalul NVDA. (#10393)
+- S-au actualizat adnotările emoticoanelor Depozitului de Date Locale Comune Unicode la versiunea 36.0. (#10426)
+- La focalizarea unei grupări din modul de navigare, și descrierea este citită. (#10095)
+- Java Access Bridge este inclus cu NVDA pentru activarea accesului la aplicațiile Java, inclusiv pentru VM-urile Java bazate pe 64 de biți. (#7724)
+- Dacă Java Access Bridge nu este activat pentru utilizator, NVDA îl activează automat la pornire. (#7952)
+- S-a actualizat eSpeak-NG la 1.51-dev, commit ca65812ac6019926f2fbd7f12c92d7edd3701e0c. (#10581)
+
+
+== Defecte Rezolvate ==
+- Acum, emoticoanele și alte caractere unicode bazate pe 32 de biți ocupă mai puțin spațiu pe un afișaj braille atunci când sunt afișate ca valori hexadecimale. (#6695)
+- În Windows 10, NVDA va anunța indiciile din aplicațiile universale dacă este setat să le raporteze în fereastra de dialog a prezentării obiectului. (#8118)
+- În Windows 10 1607 sau mai nou, textul scris este raportat în Mintty. (#1348)
+- În Windows 10 1607 sau mai nou, ieșirea din Consola Windows care apare în apropierea cursorului de scriere nu mai este anunțată. (#513)
+- Controalele din dialogul de comprimare al Audacity sunt anunțate la navigarea prin fereastra acestuia. (#10103)
+- NVDA nu mai tratează spațiile ca cuvinte din obiectul de examinare în editoarele bazate pe Scintilla precum Notepad++. (#8295)
+- NVDA va împiedica sistemul să intre în modul de hibernare la deplasarea prin text cu comenzi ale afișajelor braille. (#9175)
+- În Windows 10, Braille-ul va urmări editarea conținuturilor de celulă din Microsoft Excel și din alte controale de text unde obișnuia să funcționeze cu întârziere. (#9749)
+- NVDA va raporta din nou sugestiile din bara de adrese a Microsoft Edge. (#7554)
+- NVDA nu mai este silențios atunci când focalizează un antet de control al unui fișier HTML în Internet Explorer. (#8898)
+- În Microsoft Edge bazat pe EdgeHTML, NVDA nu va mai reda sunetul de căutare pentru sugestii atunci când fereastra devine maximizată. (#9110, #10002)
+- Casetele combinate ARIA 1.1 sunt suportate în Mozilla Firefox și Google Chrome. (#9616)
+- NVDA nu va mai raporta conținutul coloanelor ascunse vizual pentru elementele de listă din controalele SysListView32. (#8268)
+- Dialogul de setări nu mai afișează "info" ca nivel curent al jurnalului în modul de siguranță. (#10209)
+- În meniul Start pentru Windows 10 Anniversary Update și mai nou, NVDA va anunța detaliile rezultatelor căutării. (#10232)
+- În modul de navigare, dacă deplasarea cursorului sau utilizarea navigării rapide face ca documentul să sufere modificări, NVDA nu mai citește incorect conținutul în unele cazuri. (#8831, #10343)
+- Au fost corectate niște nume de buline din Microsoft Word. (#10399)
+- În Windows 10 May 2019 Update și mai nou, NVDA va anunța din nou primul emoticon selectat sau primul element al planșetei atunci când panoul de emoticoane, respectiv istoricul planșetei se deschid. (#9204)
+- În Poedit se pot vedea din nou traduceri pentru limbi de la dreapta la stânga. (#9931)
+- În aplicația Setări din Windows 10 April 2018 Update și mai nou, NVDA nu va mai anunța informații ale barei de progres pentru metri de volum, găsite în pagina Sisttem/Sunete. (#10284)
+- Expresiile regulate invalide din dicționarele de vorbire nu mai întrerup complet vorbirea din NVDA. (#10334)
+- La citirea elementelor cu bulină din Microsoft Word cu Interfața Automată a Utilizatorului activată, bulina din următorul element de listă nu mai este anunțată incorect. (#9613)
+- Au fost rezolvate niște probleme rare de traducere braille și niște erori cu liblouis. (#9982)
+- Aplicațiile Java pornite înaintea NVDA sunt accesibile. Nu mai este necesară repornirea acestora. (#10296)
+- În Mozilla Firefox, când elementul focalizat devine marcat ca actual (aria-current), această modificare nu mai este anunțată în mod repetat. (#8960)
+- NVDA nu va mai trata anumite caractere unicode compuse precum e-ul cu accent ascuțit ca un singur caracter la deplasarea prin text. (#10550)
+- Este suportată versiunea 4 a Spring Tool Suite. (#10001)
+- Nu rosti de două ori numele atunci când relația țintă aria-labelledby este un element interior. (#10552)
+- În versiunea 1607 a Windows 10 și în versiunile mai noi, caracterele la tastarea cărora sunt utilizate tastaturi braille sunt rostite în multe situații. (#10569)
+- La modificarea dispozitivului audio de ieșire, tonurile redate de NVDA vor fi redate prin noul dispozitiv audio selectat. (#2167)
+- În Mozilla Firefox, mutarea focalizării în modul de navigare este mai rapidă. Aceasta face ca deplasarea cursorului din modul de navigare să aibă o viteză de reacție mult mai bună în multe situații. (#10584)
+
+
+== Modificări pentru Dezvoltatori ==
+- S-a actualizat Python la 3.7. (#7105)
+- S-a actualizat pySerial la versiunea 3.4. (#8815)
+- S-a actualizat wxPython la 4.0.3, care suportă Python 3.5+ (#9630)
+- S-a actualizat six la versiunea 1.12.0 (#9630)
+- S-a actualizat py2exe la versiunea 0.9.3.2 (în dezvoltare, commit b372a8e de la albertosottile/py2exe#13). (#9856)
+- S-a actualizat modulul de comtype-uri UIAutomationCore.dll la versiunea 10.0.18362. (#9829)
+- Fila-completare din consola Python sugerează doar atribute care încep cu o liniuță joasă (underscore) dacă aceasta este inserată mai întâi. (#9918)
+- Instrumentul de linting Flake8 a fost integrat cu SCon-uri care reflectă cerințele codului pentru pull request-uri. (#5918)
+- Întrucât NVDA nu mai depinde de pyWin32, module precum win32api și win32con nu mai sunt disponibile pentru suplimente. (#9639)
+ - Apelurile win32api pot fi înlocuite cu apeluri directe la funcțiile dll win32 prin ctype-uri.
+ - Ar trebui ca constant-urile win32con să fie definite în fișierele dumneavoastră.
+- Argumentul „async” din nvwave.playWaveFile a fost redenumit la „asynchronous”. (#8607)
+- Metodele speakText și speakCharacter din obiectele synthDriver nu mai sunt suportate.
+ - Această funcționalitate este controlată de SynthDriver.speak.
+- Clasele SynthSetting din synthDriverHandler au fost eliminate. Folosiți în schimb clasele driverHandler.DriverSetting.
+- Clasele SynthDriver nn-ar mai trebui să expună indexul prin proprietatea lastIndex.
+ - În schimb, ar trebui să notifice acțiunea synthDriverHandler.synthIndexReached cu indexul, odată ce redarea tuturor fișierelor audio s-a încheiat înainte de acel index.
+- Clasele SynthDriver ar trebui să notifice acțiunea synthDriverHandler.synthDoneSpeaking, odată ce redarea tuturor fișierelor audio dintr-un apel SynthDriver.speak s-a încheiat.
+- Clasele SynthDriver trebuie să suporte speech.PitchCommand în metoda lor de vorbire, întrucât modificările la ton pentru ortografia vorbirii depind de această funcționalitate.
+- Funcționalitatea de vorbire getSpeechTextForProperties a fost redenumită în getPropertiesSpeech. (#10098)
+- Funcționalitatea braille getBrailleTextForProperties a fost redenumită în getPropertiesBraille. (#10469)
+- Câteva funcționalități de vorbire au fost modificate pentru a se reveni la secvențele de vorbire. (#10098)
+ - getControlFieldSpeech
+ - getFormatFieldSpeech
+ - getSpeechTextForProperties, numită acum getPropertiesSpeech
+ - getIndentationSpeech
+ - getTableInfoSpeech
+- S-a adăugat un modul textUtils care simplifică diferențele de șiruri dintre șirurile Python 3 și șirurile unicode Windows. (#9545)
+ - Vedeți documentația modulului și modulul textInfos.offsets pentru  modele de implementări.
+- S-a eliminat o funcție depreciată. (#9548)
+ - AppModule-uri eliminate:
+ - Reportofonul Windows XP.
+ - Klango Player, un program abandonat.
+ - A fost eliminat wrapper-ul configobj.validate.
+ - Ar trebui să se folosească un nou cod din validarea importului configobj în loc de validarea importului
+ - textInfos.Point și textInfos.Rect au fost înlocuite de locationHelper.Point, respectiv de locationHelper.RectLTRB.
+ - braille.BrailleHandler._get_tether și braille.BrailleHandler.set_tether au fost eliminate.
+ - config.getConfigDirs a fost eliminat.
+ - config.ConfigManager.getConfigValidationParameter a fost înlocuit de getConfigValidation
+ - Proprietatea inputCore.InputGesture.logIdentifier a fost eliminată.
+   - Utilizați în schimb _get_identifiers în inputCore.InputGesture.
+ - synthDriverHandler.SynthDriver.speakText/speakCharacter, a fost eliminat.
+ - S-au eliminat câteva clase synthDriverHandler.SynthSetting.
+   - Erau păstrate pentru compatibilitatea cu programe mai vechi (#8214), însă acum sunt considerate ca fiind depășite.
+   - Driverele care foloseau clasele SynthSetting trebuie să fie actualizate ca să folosească clasele DriverSetting.
+ - au fost eliminate niște coduri tradiționale, în mod particular:
+  - Suportul pentru lista de mesaje din Outlook pre 2003.
+  - O clasă de adsrat pentru meniul start clasic, găsită numai în Windows Vista și mai vechi.
+  - Abandonarea suportului pentru Skype 7, întrucât Microsoft nu mai lucrează la el.
+- Un framework care le permite dezvoltatorilor să creeze furnizori de evidențiere a viziunii; module care pot modifica conținutul ecranelor, bazat opțional pe intrarea din NVDA despre localizările obiectelor. (#9064)
+ - Suplimentele pot să-și lase proprii furnuizori într-un folder visionEnhancementProviders.
+ - Vedeți modulele vision și visionEnhancementProviders pentru implementarea framework-ului, respectiv exemple.
+- Proprietățile claselor abstracte sunt suportate pe obiecte care moștenesc de la baseObject.AutoPropertyObject (de exemplu NVDAObjects și TextInfos). (#10102)
+- S-a introdus displayModel.UNIT_DISPLAYCHUNK ca o unitate constantă textInfos specifică DisplayModelTextInfo. (#10165)
+ - această constantă nouă permite plimbarea prin text într-un DisplayModelTextInfo într-un mod care seamănă mai îndeaproape cu modul în care sunt salvate bucățile de text în modelul de bază.
+- displayModel.getCaretRect întoarce o instanță a locationHelper.RectLTRB. (#10233)
+- Constantele UNIT_CONTROLFIELD și UNIT_FORMATFIELD au fost mutate de la virtualBuffers.VirtualBufferTextInfo la pachetul textInfos. (#10396)
+- Pentru fiecare intrare din jurnalul NVDA sunt incluse informații despre „firul originar”. (#10259)
+- Obiectele TextInfo UIA pot fi mutate/extinse de pagină, poveste și unitățile  de text formatField. (#10396)
+- Modulele externe (appModule-uri și globalPlugin-uri) sunt mai puțin capabile să distrugă creația NVDAObjects. 
+ - Excepțiile cauzate de metodele „chooseNVDAObjectOverlayClasses” și „event_NVDAObject_init” sunt prinse și înregistrate.
+- Dicționarul aria.htmlNodeNameToAriaLandmarkRoles a fost redenumit în aria.htmlNodeNameToAriaRoles. De asemenea, el conține roluri care nu sunt repere.
+- scriptHandler.isCurrentScript a fost eliminat din cauza lipsei de utilizare. Nu există niciun substitut pentru el. (#8677)
+
+
 = 2019.2.1 =
 Aceasta este o versiune minoră care repară câteva erori prezente în NVDA 2019.2. Reparările includ:
 - Câteva crash-uri din Gmail văzute  în Firefox și în Chrome la interacțiunea cu meniuri pop-upp particulare, de exemplu la crearea de filtre sau la modificarea anumitor setări din Gmail. (#10175, #9402, #8924)

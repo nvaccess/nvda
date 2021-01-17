@@ -1,9 +1,7 @@
-# -*- coding: UTF-8 -*-
-#textUtils.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2018-2020 NV Access Limited, Babbage B.V., Łukasz Golonka
 
 """
 Classes and utilities to deal with offsets variable width encodings, particularly utf_16.
@@ -18,6 +16,8 @@ import locale
 from logHandler import log
 
 WCHAR_ENCODING = "utf_16_le"
+USER_ANSI_CODE_PAGE = locale.getpreferredencoding()
+
 
 class WideStringOffsetConverter:
 	R"""
@@ -201,7 +201,7 @@ def getTextFromRawBytes(
 		if numChars > 1 and any(buf[numChars:]):
 			encoding = WCHAR_ENCODING
 		else:
-			encoding = locale.getlocale()[1]
+			encoding = USER_ANSI_CODE_PAGE
 	else:
 		encoding = encodings.normalize_encoding(encoding).lower()
 	if encoding.startswith("utf_16"):

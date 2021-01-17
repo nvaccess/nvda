@@ -6,6 +6,7 @@
 #See the file COPYING for more details.
 
 import os
+import sys
 import copy
 import gettext
 gettext.install("nvda")
@@ -13,12 +14,21 @@ from setuptools import setup
 import py2exe as py2exeModule
 from glob import glob
 import fnmatch
+# versionInfo names must be imported after Gettext
+# Suppress E402 (module level import not at top of file)
+from versionInfo import (
+	formatBuildVersionString,
+	name,
+	version,
+	publisher
+)  # noqa: E402
 from versionInfo import *
 from py2exe import distutils_buildexe
 from py2exe.dllfinder import DllFinder
 import wx
 import importlib.machinery
-
+# Explicitly put the nvda_dmp dir on the build path so the DMP library is included
+sys.path.append(os.path.join("..", "include", "nvda_dmp"))
 RT_MANIFEST = 24
 manifest_template = """\
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -187,6 +197,20 @@ setup(
 			"company_name": publisher,
 		},
 	],
+	console=[
+		{
+			"script": os.path.join("..", "include", "nvda_dmp", "nvda_dmp.py"),
+			"uiAccess": False,
+			"icon_resources": [(1, "images/nvda.ico")],
+			"other_resources": [],  # Populated at runtime
+			"version":formatBuildVersionString(),
+			"description": "NVDA Diff-match-patch proxy",
+			"product_name": name,
+			"product_version": version,
+			"copyright": f"{copyright}, Bill Dengler",
+			"company_name": f"Bill Dengler, {publisher}",
+		},
+	],
 	options = {"py2exe": {
 		"bundle_files": 3,
 		"excludes": ["tkinter",
@@ -228,8 +252,10 @@ setup(
 		("libArm64/%s"%version, glob("libArm64/*.dll") + glob("libArm64/*.exe")),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
+		("fonts", glob("fonts/*.ttf")),
 		("louis/tables",glob("louis/tables/*")),
 		("COMRegistrationFixes", glob("COMRegistrationFixes/*.reg")),
+		(".", glob("../miscDeps/python/*.dll")),
 		(".", ['message.html' ])
 	] + (
 		getLocaleDataFiles()

@@ -37,6 +37,8 @@ import globalVars
 from logHandler import log
 import addonHandler
 import extensionPoints
+import garbageHandler  # noqa: E402
+
 
 # inform those who want to know that NVDA has finished starting up.
 postNvdaStartup = extensionPoints.Action()
@@ -77,6 +79,8 @@ def doStartupDialogs():
 			wx.OK | wx.ICON_EXCLAMATION)
 	if config.conf["general"]["showWelcomeDialogAtStartup"]:
 		gui.WelcomeDialog.run()
+	if config.conf["brailleViewer"]["showBrailleViewerAtStartup"]:
+		gui.mainFrame.onToggleBrailleViewerCommand(evt=None)
 	if config.conf["speechViewer"]["showSpeechViewerAtStartup"]:
 		gui.mainFrame.onToggleSpeechViewerCommand(evt=None)
 	import inputCore
@@ -112,29 +116,28 @@ def restart(disableAddons=False, debugLogging=False):
 	import subprocess
 	import winUser
 	import shellapi
-	options=[]
-	try:
-		sys.argv.remove('--disable-addons')
-	except ValueError:
-		pass
-	try:
-		sys.argv.remove('--debug-logging')
-	except ValueError:
-		pass
+	for paramToRemove in ("--disable-addons", "--debug-logging", "--ease-of-access"):
+		try:
+			sys.argv.remove(paramToRemove)
+		except ValueError:
+			pass
+	options = []
+	if not hasattr(sys, "frozen"):
+		options.append(os.path.basename(sys.argv[0]))
 	if disableAddons:
 		options.append('--disable-addons')
 	if debugLogging:
 		options.append('--debug-logging')
-	try:
-		sys.argv.remove("--ease-of-access")
-	except ValueError:
-		pass
-	shellapi.ShellExecute(None, None,
-		sys.executable,
-		subprocess.list2cmdline(sys.argv + options),
-		None,
+	shellapi.ShellExecute(
+		hwnd=None,
+		operation=None,
+		file=sys.executable,
+		parameters=subprocess.list2cmdline(options + sys.argv[1:]),
+		directory=globalVars.appDir,
 		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
-		winUser.SW_SHOWNORMAL)
+		showCmd=winUser.SW_SHOWNORMAL
+	)
+
 
 def resetConfiguration(factoryDefaults=False):
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
@@ -146,6 +149,7 @@ def resetConfiguration(factoryDefaults=False):
 	import vision
 	import languageHandler
 	import inputCore
+	import tones
 	log.debug("Terminating vision")
 	vision.terminate()
 	log.debug("Terminating braille")
@@ -154,6 +158,8 @@ def resetConfiguration(factoryDefaults=False):
 	brailleInput.terminate()
 	log.debug("terminating speech")
 	speech.terminate()
+	log.debug("terminating tones")
+	tones.terminate()
 	log.debug("terminating addonHandler")
 	addonHandler.terminate()
 	log.debug("Reloading config")
@@ -165,6 +171,8 @@ def resetConfiguration(factoryDefaults=False):
 	languageHandler.setLanguage(lang)
 	# Addons
 	addonHandler.initialize()
+	# Tones
+	tones.initialize()
 	#Speech
 	log.debug("initializing speech")
 	speech.initialize()
@@ -201,8 +209,11 @@ def _setInitialFocus():
 
 def main():
 	"""NVDA's core main loop.
-This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it initialises the wx application object and sets up the core pump, which checks the queues and executes functions when requested. Finally, it starts the wx main loop.
-"""
+	This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI.
+	Then it initialises the wx application object and sets up the core pump,
+	which checks the queues and executes functions when requested.
+	Finally, it starts the wx main loop.
+	"""
 	log.debug("Core starting")
 
 	ctypes.windll.user32.SetProcessDPIAware()
@@ -212,15 +223,26 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		globalVars.appArgs.configPath=config.getUserDefaultConfigPath(useInstalledPathIfExists=globalVars.appArgs.launcher)
 	#Initialize the config path (make sure it exists)
 	config.initConfigPath()
-	log.info("Config dir: %s"%os.path.abspath(globalVars.appArgs.configPath))
+	log.info(f"Config dir: {globalVars.appArgs.configPath}")
 	log.debug("loading config")
 	import config
 	config.initialize()
+	if globalVars.appArgs.configPath == config.getUserDefaultConfigPath(useInstalledPathIfExists=True):
+		# Make sure not to offer the ability to copy the current configuration to the user account.
+		# This case always applies to the launcher when configPath is not overridden by the user,
+		# which is the default.
+		# However, if a user wants to run the launcher with a custom configPath,
+		# it is likely that he wants to copy that configuration when installing.
+		# This check also applies to cases where a portable copy is run using the installed configuration,
+		# in which case we want to avoid copying a configuration to itself.
+		# We set the value to C{None} in order for the gui to determine
+		# when to disable the checkbox for this feature.
+		globalVars.appArgs.copyPortableConfig = None
 	if config.conf['development']['enableScratchpadDir']:
 		log.info("Developer Scratchpad mode enabled")
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
-			nvwave.playWaveFile("waves\\start.wav")
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "start.wav"))
 		except:
 			pass
 	logHandler.setLogLevelFromConfig()
@@ -249,6 +271,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import NVDAHelper
 	log.debug("Initializing NVDAHelper")
 	NVDAHelper.initialize()
+	log.debug("Initializing tones")
+	import tones
+	tones.initialize()
 	import speechDictHandler
 	log.debug("Speech Dictionary processing")
 	speechDictHandler.initialize()
@@ -283,7 +308,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		speech.cancelSpeech()
 		if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 			try:
-				nvwave.playWaveFile("waves\\exit.wav",asynchronous=False)
+				nvwave.playWaveFile(
+					os.path.join(globalVars.appDir, "waves", "exit.wav"),
+					asynchronous=False
+				)
 			except:
 				pass
 		log.info("Windows session ending")
@@ -395,7 +423,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	if not wxLang and '_' in lang:
 		wxLang=locale.FindLanguageInfo(lang.split('_')[0])
 	if hasattr(sys,'frozen'):
-		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwd(),"locale"))
+		locale.AddCatalogLookupPathPrefix(os.path.join(globalVars.appDir, "locale"))
 	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
 	# If we try to initialize this language, wx will show a warning dialog.
 	# #9089: some languages (such as Aragonese) do not have language info, causing language getter to fail.
@@ -410,6 +438,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			log.error("Failed to initialize wx locale",exc_info=True)
 	else:
 		log.debugWarning("wx does not support language %s" % lang)
+
+	log.debug("Initializing garbageHandler")
+	garbageHandler.initialize()
 
 	import api
 	import winUser
@@ -435,8 +466,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("Initializing UIA support")
 	try:
 		UIAHandler.initialize()
-	except NotImplementedError:
-		log.warning("UIA not available")
+	except RuntimeError:
+		log.warning("UIA disabled in configuration")
 	except:
 		log.error("Error initializing UIA support", exc_info=True)
 	import IAccessibleHandler
@@ -462,7 +493,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	globalPluginHandler.initialize()
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import gui.installerGui
-		wx.CallAfter(gui.installerGui.doSilentInstall,startAfterInstall=not globalVars.appArgs.installSilent)
+		wx.CallAfter(
+			gui.installerGui.doSilentInstall,
+			copyPortableConfig=globalVars.appArgs.copyPortableConfig,
+			startAfterInstall=not globalVars.appArgs.installSilent
+		)
 	elif globalVars.appArgs.portablePath and (globalVars.appArgs.createPortable or globalVars.appArgs.createPortableSilent):
 		import gui.installerGui
 		wx.CallAfter(gui.installerGui.doCreatePortable,portableDirectory=globalVars.appArgs.portablePath,
@@ -558,6 +593,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	_terminate(winConsoleHandler, name="Legacy winConsole support")
 	_terminate(JABHandler, name="Java Access Bridge support")
 	_terminate(appModuleHandler, name="app module handler")
+	_terminate(tones)
 	_terminate(NVDAHelper)
 	_terminate(touchHandler)
 	_terminate(keyboardHandler, name="keyboard handler")
@@ -568,10 +604,22 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	_terminate(braille)
 	_terminate(speech)
 	_terminate(addonHandler)
+	_terminate(garbageHandler)
+	# DMP is only started if needed.
+	# Terminate manually (and let it write to the log if necessary)
+	# as core._terminate always writes an entry.
+	try:
+		import diffHandler
+		diffHandler._dmp._terminate()
+	except Exception:
+		log.exception("Exception while terminating DMP")
 
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
-			nvwave.playWaveFile("waves\\exit.wav",asynchronous=False)
+			nvwave.playWaveFile(
+				os.path.join(globalVars.appDir, "waves", "exit.wav"),
+				asynchronous=False
+			)
 		except:
 			pass
 	# #5189: Destroy the message window as late as possible

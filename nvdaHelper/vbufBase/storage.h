@@ -80,7 +80,6 @@ class VBufStorage_controlFieldNodeIdentifier_t {
 	bool operator<(const VBufStorage_controlFieldNodeIdentifier_t&) const;
 	bool operator!=(const VBufStorage_controlFieldNodeIdentifier_t&) const;
 	bool operator==(const VBufStorage_controlFieldNodeIdentifier_t&) const;
-
 };
 
 /**

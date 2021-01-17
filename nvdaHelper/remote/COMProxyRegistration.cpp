@@ -16,7 +16,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <cwchar>
 #include <string>
 #include <locale>
-#include <codecvt>
 #include <vector>
 #define WIN32_LEAN_AND_MEAN 
 #define CINTERFACE
@@ -140,8 +139,36 @@ COMProxyRegistration_t* registerCOMProxy(wchar_t* dllPath) {
 		for(unsigned short idx=0;idx<fileInfo.TableSize;++idx) {
 			IID iid=*(fileInfo.pStubVtblList[idx]->header.piid);
 			CLSID clsidBackup={0};
-			wstring_convert<codecvt_utf8_utf16<wchar_t>> converter;
-			wstring name=converter.from_bytes(fileInfo.pNamesArray[idx]);
+			const auto pName = fileInfo.pNamesArray[idx];
+			const int nameLength=MultiByteToWideChar(
+				CP_UTF8,  // Code Page for conversion
+				0,  // DWFlags
+				pName,  // lpMultiByteStr - string to convert
+				-1,  // cbMultiByte - size (bytes of pName). -1 means process whole string and pName must be null terminated.
+				nullptr,  // lpWideCharStr -  don't fetch anything this time
+				0 // cchWideChar - character count of lpWideCharStr. When 0, lpWideCharStr is not used, just return number of characters after conversion (including null character).
+			);
+			if (0 == nameLength) {
+				LOG_ERROR(L"Unable to  get name length for MultiByteToWideChar conversion for entry "<<idx<<L" in ProxyFileInfo, error "<<GetLastError());
+				continue;
+			}
+			wstring name(nameLength,L'\0');
+			const int charsConverted= MultiByteToWideChar(
+				CP_UTF8,  // Code Page for conversion
+				0,  // DWFlags
+				pName,  // lpMultiByteStr - string to convert
+				-1,  // cbMultiByte - size (bytes of pName). -1 means process whole string and pName must be null terminated.
+				name.data(),  // lpWideCharStr
+				nameLength  // cchWideChar
+			);
+			if (0 == charsConverted) {
+				LOG_ERROR(L"Unable to perform MultiByteToWideChar conversion for entry "<<idx<<L" in ProxyFileInfo, error "<<GetLastError());
+				continue;
+			}
+			const auto indexOfFirstNull = name.find_first_of(L'\0');
+			if(wstring::npos != indexOfFirstNull) {
+				name.resize(indexOfFirstNull );
+			}
 			// Fetch the old CLSID for this interface if one is set, so we can replace it on deregistration.
 			// If not set, then we'll use the standard marshaler clsid on deregistration.
 			res=CoGetPSClsid(iid,&clsidBackup);

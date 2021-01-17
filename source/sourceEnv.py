@@ -1,8 +1,7 @@
-#sourceEnv.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2013-2018 NV Access Limited, Leonard de Ruijter
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2013-2020 NV Access Limited, Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Set up the Python environment when running from source.
 """
@@ -14,7 +13,6 @@ import os
 TOP_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 # Directories containing Python modules included in git submodules.
 PYTHON_DIRS = (
-	os.path.join(TOP_DIR, "include", "scons", "src", "engine"),
 	os.path.join(TOP_DIR, "include", "pyserial"),
 	os.path.join(TOP_DIR, "include", "comtypes"),
 	os.path.join(TOP_DIR, "include", "configobj", "src"),

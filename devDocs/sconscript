@@ -1,0 +1,86 @@
+###
+#This file is a part of the NVDA project.
+#URL: http://www.nvaccess.org/
+#Copyright 2019 NV Access Limited.
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License version 2.0, as published by
+#the Free Software Foundation.
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#This license can be found at:
+#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+###
+
+import os
+import sys
+
+Import("env", "outputDir", "sourceDir", "t2tBuildConf")
+
+env = env.Clone()
+
+devDocsInstall = env.SConscript("devDocsInstall/sconscript", exports=["env"])
+env.Depends(devDocsInstall, env.Dir("devDocs/devDocsInstall/requirements.txt"))
+env.Alias("devDocsInstall", devDocsInstall)
+
+devDocsOutputDir=outputDir.Dir('devDocs')
+
+#Build the developer guide and move it to the output directory
+htmlFile=env.txt2tags('developerGuide.t2t')
+env.Depends(htmlFile, t2tBuildConf)
+env.SideEffect('_txt2tags',htmlFile)
+devGuide=env.Command(devDocsOutputDir.File('developerGuide.html'),htmlFile,Move('$TARGET','$SOURCE'))
+env.Alias("developerGuide",devGuide)
+
+devDocs_nvdaHelper_temp=env.Doxygen(source='../nvdaHelper/doxyfile')
+devDocs_nvdaHelper=env.Command(devDocsOutputDir.Dir('nvdaHelper'),devDocs_nvdaHelper_temp,Move('$TARGET','$SOURCE'))
+env.Alias('devDocs_nvdaHelper', devDocs_nvdaHelper)
+env.Clean('devDocs_nvdaHelper', devDocs_nvdaHelper)
+
+ignorePaths = [
+	'_buildVersion.py',
+	'comInterfaces',
+	'images',
+	'lib',
+	'lib64',
+	'libArm64',
+	'locale',
+	'louis',  # Not our project
+	'typelibs',
+	'waves',
+	"mathType.py",  # Fails when not installed
+	'oleTypes.py',  # Not our code
+	'setup.py',  # Py2exe
+	'sourceEnv.py',  # Only available when running from source
+]
+
+sphinxAPIDocs = env.Command(
+	"api",
+	sourceDir,
+	[
+		[
+			sys.executable,
+			"-m", "sphinx.ext.apidoc",
+			# "--force",  # overwrite existing files
+			"-P",  # Include private modules
+			"--module-first",  # put module documentation before submodule documentation
+			"--output-dir", "$TARGET",
+			"$SOURCE"  # Module sources
+		] + [f"{sourceDir}\\{f}" for f in ignorePaths]
+	]
+)
+env.Depends(sphinxAPIDocs, devDocsInstall)
+sphinxHtml = env.Command(
+	"_build",
+	sphinxAPIDocs,
+	[[
+		sys.executable,
+		"-m", "sphinx.cmd.build",
+		"-M", "html",
+		"devDocs",  # Source directory
+		"$TARGET",  # Build directory
+	]]
+)
+devDocs_nvda = env.Command(devDocsOutputDir.Dir('NVDA'), sphinxHtml, Move('$TARGET', '$SOURCE'))
+env.Alias('devDocs', [devGuide, devDocs_nvda])
+env.Clean('devDocs', [devGuide, devDocs_nvda])

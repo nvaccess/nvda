@@ -44,6 +44,7 @@ constexpr int wdDISPID_FIELDS_ITEM_TYPE = 1;
 constexpr int wdDISPID_FONT_BOLD = 130;
 constexpr int wdDISPID_FONT_COLOR = 159;
 constexpr int wdDISPID_FONT_DOUBLESTRIKETHROUGH = 136;
+constexpr int wdDISPID_FONT_HIDDEN = 132;
 constexpr int wdDISPID_FONT_ITALIC = 131;
 constexpr int wdDISPID_FONT_NAME = 142;
 constexpr int wdDISPID_FONT_SIZE = 141;

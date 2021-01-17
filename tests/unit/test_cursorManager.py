@@ -17,6 +17,18 @@ class CursorManager(cursorManager.CursorManager, BasicTextProvider):
 
 class TestMove(unittest.TestCase):
 
+	def setUp(self):
+		import speechDictHandler
+		speechDictHandler.initialize()  # setting the synth depends on dictionary["voice"]
+		import synthDriverHandler
+		# Some speech functions (speakTextInfo due to calling getSpellingSpeech) rely on getting config for a
+		# synth, they first get the synth, then synth.name.
+		# Previously this wasn't necessary since speech.speak and speech.speakSpelling are a no-op
+		# (see tests/unit/__init__.py), however, since logic from these methods has moved to get*Speech methods
+		# the logic is now executed, and the following dependencies need to be met.
+		assert synthDriverHandler.setSynth("silence")
+		assert synthDriverHandler.getSynth()
+
 	def test_nextChar(self):
 		cm = CursorManager(text="abc") # Caret at "a"
 		cm.script_moveByCharacter_forward(None)

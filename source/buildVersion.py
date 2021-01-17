@@ -1,7 +1,7 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import os
 
@@ -58,16 +58,17 @@ def formatVersionForGUI(year, major, minor):
 		raise ValueError(
 			"Three values must be provided. Got year={}, major={}, minor={}".format(year, major, minor)
 		)
-	if minor is 0:
+	if minor == 0:
 		return "{y}.{M}".format(y=year, M=major)
 	return "{y}.{M}.{m}".format(y=year, M=major, m=minor)
 
 
-name="NVDA"
-version_year=2019
-version_major=3
-version_minor=0
-version_build=0
+# Version information for NVDA
+name = "NVDA"
+version_year = 2021
+version_major = 1
+version_minor = 0
+version_build = 0  # Should not be set manually. Set in 'sconscript' provided by 'appVeyor.yml'
 version=_formatDevVersionString()
 publisher="unknown"
 updateVersionType=None

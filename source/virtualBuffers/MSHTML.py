@@ -1,8 +1,8 @@
-#virtualBuffers/MSHTML.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2009-2017 NV Access Limited, Babbage B.V.
+# virtualBuffers/MSHTML.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2009-2020 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
 
 from comtypes import COMError
 import eventHandler
@@ -37,8 +37,6 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			attrs['revision-insertion']=True
 		if formatState&FORMATSTATE_DELETED:
 			attrs['revision-deletion']=True
-		if formatState&FORMATSTATE_MARKED:
-			attrs['marked']=True
 		if formatState&FORMATSTATE_STRONG:
 			attrs['strong']=True
 		if formatState&FORMATSTATE_EMPH:
@@ -59,13 +57,17 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		accRole=attrs.get('IAccessible::role',0)
 		accRole=int(accRole) if isinstance(accRole,str) and accRole.isdigit() else accRole
 		nodeName=attrs.get('IHTMLDOMNode::nodeName',"")
-		ariaRoles=attrs.get("HTMLAttrib::role", "").split(" ")
+		roleAttrib = attrs.get("HTMLAttrib::role", "")
+		ariaRoles = [ar for ar in roleAttrib.split(" ") if ar]
 		#choose role
 		#Priority is aria role -> HTML tag name -> IAccessible role
-		role=next((aria.ariaRolesToNVDARoles[ar] for ar in ariaRoles if ar in aria.ariaRolesToNVDARoles),controlTypes.ROLE_UNKNOWN)
-		if not role and nodeName:
+		role = next(
+			(aria.ariaRolesToNVDARoles[ar] for ar in ariaRoles if ar in aria.ariaRolesToNVDARoles),
+			controlTypes.ROLE_UNKNOWN
+		)
+		if role == controlTypes.ROLE_UNKNOWN and nodeName:
 			role=NVDAObjects.IAccessible.MSHTML.nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_UNKNOWN)
-		if not role:
+		if role == controlTypes.ROLE_UNKNOWN:
 			role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
 		roleText=attrs.get('HTMLAttrib::aria-roledescription')
 		if roleText:
@@ -140,11 +142,11 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			# MSHTML puts the unavailable state on all graphics when the showing of graphics is disabled.
 			# This is rather annoying and irrelevant to our users, so discard it.
 			states.discard(controlTypes.STATE_UNAVAILABLE)
-		lRole = aria.htmlNodeNameToAriaLandmarkRoles.get(nodeName.lower())
+		lRole = aria.htmlNodeNameToAriaRoles.get(nodeName.lower())
 		if lRole:
 			ariaRoles.append(lRole)
-		# Get the first landmark role, if any.
-		landmark=next((ar for ar in ariaRoles if ar in aria.landmarkRoles),None)
+		# If the first role is a landmark role, use it.
+		landmark = ariaRoles[0] if ariaRoles and ariaRoles[0] in aria.landmarkRoles else None
 		ariaLevel=attrs.get('HTMLAttrib::aria-level',None)
 		ariaLevel=int(ariaLevel) if ariaLevel is not None else None
 		if ariaLevel:
@@ -242,14 +244,29 @@ class MSHTML(VirtualBuffer):
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_LINKED:[1],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_TRAVERSED:[None]}
 		elif nodeType=="formField":
 			attrs=[
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_OUTLINE],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]},
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX]},
+				{
+					"IAccessible::role": [
+						oleacc.ROLE_SYSTEM_CHECKBUTTON,
+						oleacc.ROLE_SYSTEM_OUTLINE,
+						oleacc.ROLE_SYSTEM_PUSHBUTTON,
+						oleacc.ROLE_SYSTEM_PAGETAB,
+						oleacc.ROLE_SYSTEM_RADIOBUTTON,
+					],
+					f"IAccessible::state_{oleacc.STATE_SYSTEM_READONLY}": [None],
+				},
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_COMBOBOX]},
 				# Focusable edit fields (input type=text, including readonly ones)
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]},
+				{
+					"IAccessible::role": [oleacc.ROLE_SYSTEM_TEXT],
+					f"IAccessible::state_{oleacc.STATE_SYSTEM_FOCUSABLE}": [1],
+				},
 				# Any top-most content editable element (E.g. an editable div for rhich text editing) 
-				{"IHTMLElement::isContentEditable":[1],"parent::IHTMLElement::isContentEditable":[0,None]},
-				{"IHTMLDOMNode::nodeName":["SELECT"]},
-				{"HTMLAttrib::role":["listbox"]},
+				{
+					"IHTMLElement::isContentEditable": [1],
+					"parent::IHTMLElement::isContentEditable": [0, None],
+				},
+				{"IHTMLDOMNode::nodeName": ["SELECT"]},
+				{"HTMLAttrib::role": ["listbox"]},
 			]
 		elif nodeType=="button":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON]}
@@ -297,15 +314,42 @@ class MSHTML(VirtualBuffer):
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="landmark":
 			attrs = [
-				{"HTMLAttrib::role": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles if lr != "region"]},
-				{"HTMLAttrib::role": [VBufStorage_findMatch_word("region")],
-					"name": [VBufStorage_findMatch_notEmpty]},
-				{"IHTMLDOMNode::nodeName": [VBufStorage_findMatch_word(lr.upper()) for lr in aria.htmlNodeNameToAriaLandmarkRoles]}
-				]
+				{"HTMLAttrib::role": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]},
+				{
+					"HTMLAttrib::role": [VBufStorage_findMatch_word("region")],
+					"name": [VBufStorage_findMatch_notEmpty]
+				},
+				{"IHTMLDOMNode::nodeName": [
+					VBufStorage_findMatch_word(node.upper()) for node, lr in aria.htmlNodeNameToAriaRoles.items()
+					if lr in aria.landmarkRoles
+				]},
+				{
+					"IHTMLDOMNode::nodeName": [VBufStorage_findMatch_word("SECTION")],
+					"name": [VBufStorage_findMatch_notEmpty]
+				},
+			]
+		elif nodeType == "article":
+			attrs = [
+				{"HTMLAttrib::role": [VBufStorage_findMatch_word("article")]},
+				{"IHTMLDOMNode::nodeName": [VBufStorage_findMatch_word("ARTICLE")]},
+			]
+		elif nodeType == "grouping":
+			attrs = [
+				{
+					"HTMLAttrib::role": [
+						VBufStorage_findMatch_word(r) for r in ("group", "radiogroup")
+					],
+					"name": [VBufStorage_findMatch_notEmpty]
+				},
+				{
+					"IHTMLDOMNode::nodeName": [VBufStorage_findMatch_word("FIELDSET")],
+					"name": [VBufStorage_findMatch_notEmpty]
+				},
+			]
 		elif nodeType == "embeddedObject":
 			attrs = [
-				{"IHTMLDOMNode::nodeName": ["OBJECT","EMBED","APPLET","AUDIO","VIDEO"]},
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_APPLICATION,oleacc.ROLE_SYSTEM_DIALOG]},
+				{"IHTMLDOMNode::nodeName": ["OBJECT", "EMBED", "APPLET", "AUDIO", "VIDEO", "FIGURE"]},
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_APPLICATION, oleacc.ROLE_SYSTEM_DIALOG]},
 			]
 		elif nodeType == "separator":
 			attrs = {"IHTMLDOMNode::nodeName": ["HR"]}

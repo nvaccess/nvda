@@ -3,6 +3,7 @@
 #Copyright (C) 2018 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+from typing import Optional, Any, Callable
 
 
 def scaleSize(scaleFactor, size):
@@ -20,11 +21,29 @@ def getScaleFactor(windowHandle):
 	import windowUtils
 	return windowUtils.getWindowScalingFactor(windowHandle)
 
+
 class DpiScalingHelperMixin(object):
-	""" mixin to provide size scaling """
+	""" mixin to provide size scaling intended to be used with wx.Window (usually wx.Dialog)
+			Sub-classes are responsible for calling wx.Window init
+	"""
+
 	def __init__(self, windowHandle):
 		self._scaleFactor = getScaleFactor(windowHandle)
 
 	def scaleSize(self, size):
 		assert getattr(self, u"_scaleFactor", None)
+		return scaleSize(self._scaleFactor, size)
+
+
+class DpiScalingHelperMixinWithoutInit:
+	"""Same concept as DpiScalingHelperMixin, but ensures you do not have to explicitly call the init
+		of wx.Window or this mixin
+	"""
+	GetHandle: Callable[[], Any]  # Should be provided by wx.Window
+	_scaleFactor: Optional[float] = None
+
+	def scaleSize(self, size):
+		if self._scaleFactor is None:
+			windowHandle = self.GetHandle()
+			self._scaleFactor = getScaleFactor(windowHandle)
 		return scaleSize(self._scaleFactor, size)

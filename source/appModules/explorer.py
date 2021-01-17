@@ -1,11 +1,10 @@
 # -*- coding: UTF-8 -*-
-#appModules/explorer.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Joseph Lee, Łukasz Golonka
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
-"""App module for Windows Explorer (aka Windows shell).
+"""App module for Windows Explorer (aka Windows shell and renamed to File Explorer in Windows 8).
 Provides workarounds for controls such as identifying Start button, notification area and others.
 """
 
@@ -20,9 +19,12 @@ import speech
 import eventHandler
 import mouseHandler
 from NVDAObjects.window import Window
-from NVDAObjects.IAccessible import sysListView32, IAccessible, List
+from NVDAObjects.IAccessible import IAccessible, List
 from NVDAObjects.UIA import UIA
+from NVDAObjects.behaviors import ToolTip
 from NVDAObjects.window.edit import RichEdit50, EditTextInfo
+import config
+
 
 # Suppress incorrect Win 10 Task switching window focus
 class MultitaskingViewFrameWindow(UIA):
@@ -55,16 +57,18 @@ class SearchBoxClient(IAccessible):
 
 
 # Class for menu items  for Windows Places and Frequently used Programs (in start menu)
-class SysListView32MenuItem(sysListView32.ListItemWithoutColumnSupport):
+# Also used for desktop items
+class SysListView32EmittingDuplicateFocusEvents(IAccessible):
 
 	# #474: When focus moves to these items, an extra focus is fired on the parent
 	# However NVDA redirects it to the real focus.
 	# But this means double focus events on the item, so filter the second one out
+	# #2988: Also seen when coming back to the Windows 7 desktop from different applications.
 	def _get_shouldAllowIAccessibleFocusEvent(self):
-		res=super(SysListView32MenuItem,self).shouldAllowIAccessibleFocusEvent
+		res = super().shouldAllowIAccessibleFocusEvent
 		if not res:
 			return False
-		focus=eventHandler.lastQueuedFocusObject
+		focus = eventHandler.lastQueuedFocusObject
 		if type(focus)!=type(self) or (self.event_windowHandle,self.event_objectID,self.event_childID)!=(focus.event_windowHandle,focus.event_objectID,focus.event_childID):
 			return True
 		return False
@@ -72,16 +76,25 @@ class SysListView32MenuItem(sysListView32.ListItemWithoutColumnSupport):
 class NotificationArea(IAccessible):
 	"""The Windows notification area, a.k.a. system tray.
 	"""
+	lastKnownLocation = None
 
 	def event_gainFocus(self):
+		NotificationArea.lastKnownLocation = self.location
 		if mouseHandler.lastMouseEventTime < time.time() - 0.2:
 			# This focus change was not caused by a mouse event.
-			# If the mouse is on another toolbar control, the notification area toolbar will rudely
+			# If the mouse is on another systray control, the notification area toolbar will rudely
 			# bounce the focus back to the object under the mouse after a brief pause.
 			# Moving the mouse to the focus object isn't a good solution because
 			# sometimes, the focus can't be moved away from the object under the mouse.
 			# Therefore, move the mouse out of the way.
-			winUser.setCursorPos(0, 0)
+			if self.location:
+				systrayLeft, systrayTop, systrayWidth, systrayHeight = self.location
+				mouseLeft, mouseTop = winUser.getCursorPos()
+				if (
+					systrayLeft <= mouseLeft <= systrayLeft + systrayWidth
+					and systrayTop <= mouseTop <= systrayTop + systrayHeight
+				):
+					winUser.setCursorPos(0, 0)
 
 		if self.role == controlTypes.ROLE_TOOLBAR:
 			# Sometimes, the toolbar itself receives the focus instead of the focused child.
@@ -99,6 +112,49 @@ class NotificationArea(IAccessible):
 		if eventHandler.isPendingEvents("gainFocus"):
 			return
 		super(NotificationArea, self).event_gainFocus()
+
+
+class ExplorerToolTip(ToolTip):
+
+	def shouldReport(self):
+		# Avoid reporting systray tool-tips if their text equals the focused systray icon name (#6656)
+
+		# Don't bother checking if reporting of tool-tips is disabled
+		if not config.conf["presentation"]["reportTooltips"]:
+			return False
+
+		focus = api.getFocusObject()
+
+		# Report if either
+		#  - the mouse has just moved
+		#  - the focus is not in the systray
+		#  - we do not know (yet) where the systray is located
+		if (
+			mouseHandler.lastMouseEventTime >= time.time() - 0.2
+			or not isinstance(focus, NotificationArea)
+			or NotificationArea.lastKnownLocation is None
+		):
+			return True
+
+		# Report if the mouse is indeed located in the systray
+		systrayLeft, systrayTop, systrayWidth, systrayHeight = NotificationArea.lastKnownLocation
+		mouseLeft, mouseTop = winUser.getCursorPos()
+		if (
+			systrayLeft <= mouseLeft <= systrayLeft + systrayWidth
+			and systrayTop <= mouseTop <= systrayTop + systrayHeight
+		):
+			return True
+
+		# Report is the next are different
+		if focus.name != self.name:
+			return True
+
+		# Do not report otherwise
+		return False
+
+	def event_show(self):
+		if self.shouldReport():
+			super().event_show()
 
 
 class GridTileElement(UIA):
@@ -193,6 +249,26 @@ class MetadataEditField(RichEdit50):
 		return cls.TextInfo
 
 
+class WorkerW(IAccessible):
+	def event_gainFocus(self):
+		# #6671: Normally we do not allow WorkerW thread to send gain focus event,
+		# as it causes 'pane" to be announced when minimizing windows or moving to desktop.
+		# However when closing Windows 7 Start Menu in some  cases
+		# focus lands  on it instead of the focused desktop item.
+		# Simply ignore the event if running on anything never than Win 7.
+		if ((winVersion.winVersion.major, winVersion.winVersion.minor) != (6, 1)):
+			return
+		if eventHandler.isPendingEvents("gainFocus"):
+			return
+		if self.simpleFirstChild:
+			# If focus is not going to be moved autotically
+			# we need to forcefully move it to the focused desktop item.
+			# As we are interested in the first focusable object below the pane use simpleFirstChild.
+			self.simpleFirstChild.setFocus()
+			return
+		super().event_gainFocus()
+
+
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
@@ -215,14 +291,27 @@ class AppModule(appModuleHandler.AppModule):
 					toolbarParent = None
 				if toolbarParent and toolbarParent.windowClassName == "SysPager":
 					clsList.insert(0, NotificationArea)
-			return 
+			return
+
+		if obj.role == controlTypes.ROLE_TOOLTIP:
+			clsList.insert(0, ExplorerToolTip)
+			return
 
 		if windowClass == "Edit" and controlTypes.STATE_READONLY in obj.states:
 			clsList.insert(0, ReadOnlyEditBox)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
-		if windowClass == "SysListView32" and role == controlTypes.ROLE_MENUITEM:
-			clsList.insert(0, SysListView32MenuItem)
+		if windowClass == "SysListView32":
+			if(
+				role == controlTypes.ROLE_MENUITEM
+				or(
+					role == controlTypes.ROLE_LISTITEM
+					and obj.simpleParent
+					and obj.simpleParent.simpleParent
+					and obj.simpleParent.simpleParent == api.getDesktopObject()
+				)
+			):
+				clsList.insert(0, SysListView32EmittingDuplicateFocusEvents)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		# #5178: Start button in Windows 8.1 and 10 should not have been a list in the first place.
@@ -234,6 +323,10 @@ class AppModule(appModuleHandler.AppModule):
 
 		if windowClass == 'RICHEDIT50W' and obj.windowControlID == 256:
 			clsList.insert(0, MetadataEditField)
+			return  # Optimization: return early to avoid comparing class names and roles that will never match.
+
+		if windowClass == "WorkerW" and role == controlTypes.ROLE_PANE and obj.name is None:
+			clsList.insert(0, WorkerW)
 			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if isinstance(obj, UIA):
@@ -319,8 +412,25 @@ class AppModule(appModuleHandler.AppModule):
 			# #8137: also seen when opening quick link menu (Windows+X) on Windows 8 and later.
 			return
 
-		if wClass == "WorkerW" and obj.role == controlTypes.ROLE_PANE and obj.name is None:
-			# #6671: Never allow WorkerW thread to send gain focus event, as it causes 'pane" to be announced when minimizing windows or moving to desktop.
-			return
+		nextHandler()
 
+	def isGoodUIAWindow(self, hwnd):
+		# #9204: shell raises window open event for emoji panel in build 18305 and later.
+		if winVersion.isWin10(version=1903) and winUser.getClassName(hwnd) == "ApplicationFrameWindow":
+			return True
+		return False
+
+	def event_UIA_window_windowOpen(self, obj, nextHandler):
+		# Send UIA window open event to input app window.
+		if isinstance(obj, UIA) and obj.UIAElement.cachedClassName == "ApplicationFrameWindow":
+			inputPanelWindow = obj.firstChild
+			inputPanelAppName = (
+				# 19H2 and earlier
+				"windowsinternal_composableshell_experiences_textinput_inputapp",
+				# 20H1 and later
+				"textinputhost"
+			)
+			if inputPanelWindow and inputPanelWindow.appModule.appName in inputPanelAppName:
+				eventHandler.executeEvent("UIA_window_windowOpen", inputPanelWindow)
+				return
 		nextHandler()

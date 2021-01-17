@@ -1,8 +1,7 @@
-#NVDAObjects/excel.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import abc
 import ctypes
@@ -26,6 +25,7 @@ import eventHandler
 import api
 from logHandler import log
 import gui
+import gui.contextHelp
 import winUser
 import mouseHandler
 from displayModel import DisplayModelTextInfo
@@ -33,6 +33,7 @@ import controlTypes
 from . import Window
 from .. import NVDAObjectTextInfo
 import scriptHandler
+from scriptHandler import script
 import browseMode
 import inputCore
 import ctypes
@@ -227,17 +228,21 @@ class ExcelQuickNavItem(browseMode.QuickNavItem):
 
 class ExcelChartQuickNavItem(ExcelQuickNavItem):
 
-	def __init__( self , nodeType , document , chartObject , chartCollection ):
+	def __init__(self, nodeType, document, chartObject, chartCollection):
 		self.chartIndex = chartObject.Index
+		topLeftAddress = chartObject.TopLeftCell.address(False, False, 1, False)
+		bottomRightAddress = chartObject.BottomRightCell.address(False, False, 1, False)
 		if chartObject.Chart.HasTitle:
-
-			self.label = chartObject.Chart.ChartTitle.Text + " " + chartObject.TopLeftCell.address(False,False,1,False) + "-" + chartObject.BottomRightCell.address(False,False,1,False) 
-
+			nameText = chartObject.Chart.ChartTitle.Text
 		else:
-
-			self.label = chartObject.Name + " " + chartObject.TopLeftCell.address(False,False,1,False) + "-" + chartObject.BottomRightCell.address(False,False,1,False) 
-
-		super( ExcelChartQuickNavItem ,self).__init__( nodeType , document , chartObject , chartCollection )
+			nameText = chartObject.Name
+		self.label = f"{nameText} {topLeftAddress}-{bottomRightAddress}"
+		super(ExcelChartQuickNavItem, self).__init__(
+			nodeType,
+			document,
+			chartObject,
+			chartCollection
+		)
 
 	def __lt__(self,other):
 		return self.chartIndex < other.chartIndex
@@ -245,18 +250,12 @@ class ExcelChartQuickNavItem(ExcelQuickNavItem):
 	def moveTo(self):
 		try:
 			self.excelItemObject.Activate()
-
-			# After activate(), though the chart object is selected, 
-
-			# pressing arrow keys moves the object, rather than 
-
-			# let use go inside for sub-objects. Somehow 
-		# calling an COM function on a different object fixes that !
-
-			log.debugWarning( self.excelItemCollection.Count )
-
-		except(COMError):
-
+			# After activate(), though the chart object is selected,
+			# pressing arrow keys moves the object, rather than
+			# let us go inside for sub-objects. Somehow
+			# calling a COM function on a different object fixes that!
+			log.debugWarning(self.excelItemCollection.Count)
+		except COMError:
 			pass
 		focus=api.getDesktopObject().objectWithFocus()
 		if not focus or not isinstance(focus,ExcelBase):
@@ -265,14 +264,12 @@ class ExcelChartQuickNavItem(ExcelQuickNavItem):
 		sel=focus._getSelection()
 		if not sel:
 			return
-		eventHandler.queueEvent("gainFocus",sel)
+		eventHandler.queueEvent("gainFocus", sel)
 
 
 	@property
 	def isAfterSelection(self):
 		activeCell = self.document.Application.ActiveCell
-		#log.debugWarning("active row: {} active column: {} current row: {} current column: {}".format ( activeCell.row , activeCell.column , self.excelCommentObject.row , self.excelCommentObject.column   ) )
-
 		if self.excelItemObject.TopLeftCell.row == activeCell.row:
 			if self.excelItemObject.TopLeftCell.column > activeCell.column:
 				return False
@@ -295,7 +292,14 @@ class ExcelRangeBasedQuickNavItem(ExcelQuickNavItem):
 	@property
 	def isAfterSelection(self):
 		activeCell = self.document.Application.ActiveCell
-		log.debugWarning("active row: {} active column: {} current row: {} current column: {}".format ( activeCell.row , activeCell.column , self.excelItemObject.row , self.excelItemObject.column   ) )
+		log.debugWarning(
+			"active row: {} active column: {} current row: {} current column: {}".format(
+				activeCell.row,
+				activeCell.column,
+				self.excelItemObject.row,
+				self.excelItemObject.column
+			)
+		)
 
 		if self.excelItemObject.row == activeCell.row:
 			if self.excelItemObject.column > activeCell.column:
@@ -314,18 +318,20 @@ class ExcelCommentQuickNavItem(ExcelRangeBasedQuickNavItem):
 class ExcelFormulaQuickNavItem(ExcelRangeBasedQuickNavItem):
 
 	def __init__( self , nodeType , document , formulaObject , formulaCollection ):
-		self.label = formulaObject.address(False,False,1,False) + " " + formulaObject.Formula
+		self.label = formulaObject.address(False, False, 1, False) + " " + formulaObject.FormulaLocal
 		super( ExcelFormulaQuickNavItem , self).__init__( nodeType , document , formulaObject , formulaCollection )
 
 class ExcelQuicknavIterator(object):
 	"""
-	Allows iterating over an MS excel collection (e.g. Comments, Formulas or charts) emitting L{QuickNavItem} objects.
+	Allows iterating over an MS excel collection
+	(e.g. notes, Formulas or charts) emitting L{QuickNavItem} objects.
 	"""
 
 	def __init__(self, itemType , document , direction , includeCurrent):
 		"""
 		See L{QuickNavItemIterator} for itemType, document and direction definitions.
-		@ param includeCurrent: if true then any item at the initial position will be also emitted rather than just further ones. 
+		@param includeCurrent: if true then any item at the initial position will be also emitted
+			rather than just further ones.
 		"""
 		self.document=document
 		self.itemType=itemType
@@ -334,7 +340,8 @@ class ExcelQuicknavIterator(object):
 
 	def collectionFromWorksheet(self,worksheetObject):
 		"""
-		Fetches a Microsoft Excel collection object from a Microsoft excel worksheet object. E.g. charts, comments, or formula.
+		Fetches a Microsoft Excel collection object from a Microsoft excel worksheet object.
+		E.g. charts, notes, or formula.
 		@param worksheetObject: a Microsoft excel worksheet object.
 		@return: a Microsoft excel collection object.
 		"""
@@ -501,27 +508,35 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 		cellPosition.Activate()
 		eventHandler.executeEvent('gainFocus',obj)
 
+	@script(gesture="kb:leftArrow")
 	def script_moveLeft(self,gesture):
 		self.navigationHelper("left")
 
+	@script(gesture="kb:rightArrow")
 	def script_moveRight(self,gesture):
 		self.navigationHelper("right")
 
+	@script(gesture="kb:upArrow")
 	def script_moveUp(self,gesture):
 		self.navigationHelper("up")
 
+	@script(gesture="kb:downArrow")
 	def script_moveDown(self,gesture):
 		self.navigationHelper("down")
 
+	@script(gesture="kb:control+upArrow")
 	def script_startOfColumn(self,gesture):
 		self.navigationHelper("startcol")
 
+	@script(gesture="kb:control+leftArrow")
 	def script_startOfRow(self,gesture):
 		self.navigationHelper("startrow")
 
+	@script(gesture="kb:control+rightArrow")
 	def script_endOfRow(self,gesture):
 		self.navigationHelper("endrow")
 
+	@script(gesture="kb:control+downArrow")
 	def script_endOfColumn(self,gesture):
 		self.navigationHelper("endcol")
 
@@ -559,18 +574,9 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 	script_elementsList.__doc__ = _("Lists various types of elements in this spreadsheet")
 	script_elementsList.ignoreTreeInterceptorPassThrough=True
 
-	__gestures = {
-		"kb:upArrow": "moveUp",
-		"kb:downArrow":"moveDown",
-		"kb:leftArrow":"moveLeft",
-		"kb:rightArrow":"moveRight",
-		"kb:control+upArrow":"startOfColumn",
-		"kb:control+downArrow":"endOfColumn",
-		"kb:control+leftArrow":"startOfRow",
-		"kb:control+rightArrow":"endOfRow",
-	}
-
 class ElementsListDialog(browseMode.ElementsListDialog):
+
+	helpId = "ExcelElementsList"
 
 	ELEMENT_TYPES=(
 		# Translators: The label of a radio button to select the type of element
@@ -578,7 +584,7 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		("chart", _("&Charts")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("comment", _("C&omments")),
+		("comment", _("N&otes")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("formula", _("Fo&rmulas")),
@@ -589,6 +595,14 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		# in the browse mode Elements List dialog.
 		("sheet", _("&Sheets")),
 	)
+
+
+class EditCommentDialog(
+		gui.contextHelp.ContextHelpMixin,
+		wx.TextEntryDialog,  # wxPython does not seem to call base class initializer, put last in MRO
+):
+	helpId = "ExcelReportingComments"
+
 
 class ExcelBase(Window):
 	"""A base that all Excel NVDAObjects inherit from, which contains some useful methods."""
@@ -927,6 +941,7 @@ class ExcelWorksheet(ExcelBase):
 		"kb:control+v",
 		"kb:shift+f11",
 	), canPropagate=True)
+
 	def script_changeSelection(self,gesture):
 		oldSelection=api.getFocusObject()
 		gesture.send()
@@ -1103,7 +1118,8 @@ class ExcelCellInfoQuicknavIterator(object, metaclass=abc.ABCMeta):
 	def __init__(self, itemType , document , direction , includeCurrent):
 		"""
 		See L{QuickNavItemIterator} for itemType, document and direction definitions.
-		@ param includeCurrent: if true then any item at the initial position will be also emitted rather than just further ones. 
+		@param includeCurrent: if true then any item at the initial position will be also emitted
+			rather than just further ones.
 		"""
 		self.document=document
 		self.itemType=itemType
@@ -1172,6 +1188,10 @@ class ExcelCell(ExcelBase):
 	def _get_rowHeaderText(self):
 		return self.parent.fetchAssociatedHeaderCellText(self,columnHeader=False)
 
+	@script(
+		# Translators: the description  for a script for Excel
+		description=_("opens a dropdown item at the current cell"),
+		gesture="kb:alt+downArrow")
 	def script_openDropdown(self,gesture):
 		gesture.send()
 		d=None
@@ -1194,6 +1214,10 @@ class ExcelCell(ExcelBase):
 		d.parent=self
 		eventHandler.queueEvent("gainFocus",d)
 
+	@script(
+		# Translators: the description  for a script for Excel
+		description=_("Sets the current cell as start of column header"),
+		gesture="kb:NVDA+shift+c")
 	def script_setColumnHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if not config.conf['documentFormatting']['reportTableHeaders']:
@@ -1216,6 +1240,10 @@ class ExcelCell(ExcelBase):
 				ui.message(_("Cannot find {address}    in column headers").format(address=self.cellCoordsText))
 	script_setColumnHeader.__doc__=_("Pressing once will set this cell as the first column header for any cells lower and to the right of it within this region. Pressing twice will forget the current column header for this cell.")
 
+	@script(
+		# Translators: the description  for a script for Excel
+		description=_("sets the current cell as start of row header"),
+		gesture="kb:NVDA+shift+r")
 	def script_setRowHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if not config.conf['documentFormatting']['reportTableHeaders']:
@@ -1395,24 +1423,33 @@ class ExcelCell(ExcelBase):
 		level=max(self.excelCellInfo.outlineLevel-1,0) or None
 		return {'level':level}
 
+	# In Office 2016, 365 and newer, comments are now called notes.
+	# Thus, messages dialog title and so on should refer to notes.
+	@script(
+		# Translators: the description  for a script for Excel
+		description=_("Reports the note on the current cell"),
+		gesture="kb:NVDA+alt+c")
 	def script_reportComment(self,gesture):
 		commentObj=self.excelCellObject.comment
 		text=commentObj.text() if commentObj else None
 		if text:
 			ui.message(text)
 		else:
-			# Translators: A message in Excel when there is no comment
-			ui.message(_("Not on a comment"))
-	# Translators: the description  for a script for Excel
-	script_reportComment.__doc__=_("Reports the comment on the current cell")
+			# Translators: A message in Excel when there is no note
+			ui.message(_("Not on a note"))
 
+	@script(
+		# Translators: the description  for a script for Excel
+		description=_("Opens the note editing dialog"),
+		gesture="kb:shift+f2")
 	def script_editComment(self,gesture):
 		commentObj=self.excelCellObject.comment
-		d = wx.TextEntryDialog(gui.mainFrame, 
-			# Translators: Dialog text for 
-			_("Editing comment for cell {address}").format(address=self.cellCoordsText),
-			# Translators: Title of a dialog edit an Excel comment 
-			_("Comment"),
+		d = EditCommentDialog(
+			gui.mainFrame,
+			# Translators: Dialog text for the note editing dialog
+			_("Editing note for cell {address}").format(address=self.cellCoordsText),
+			# Translators: Title for the note editing  dialog
+			_("Note"),
 			value=commentObj.text() if commentObj else u"",
 			style=wx.TE_MULTILINE|wx.OK|wx.CANCEL)
 		def callback(result):
@@ -1433,19 +1470,15 @@ class ExcelCell(ExcelBase):
 			if isinstance(field,textInfos.FieldCommand) and isinstance(field.field,textInfos.FormatField):
 				formatField.update(field.field)
 		if not hasattr(self.parent,'_formatFieldSpeechCache'):
-			self.parent._formatFieldSpeechCache={}
-		text=speech.getFormatFieldSpeech(formatField,attrsCache=self.parent._formatFieldSpeechCache,formatConfig=formatConfig) if formatField else None
-		if text:
-			speech.speakText(text)
+			self.parent._formatFieldSpeechCache = textInfos.Field()
+		if formatField:
+			sequence = speech.getFormatFieldSpeech(
+				formatField,
+				attrsCache=self.parent._formatFieldSpeechCache,
+				formatConfig=formatConfig
+			)
+			speech.speak(sequence)
 		super(ExcelCell,self).reportFocus()
-
-	__gestures = {
-		"kb:NVDA+shift+c": "setColumnHeader",
-		"kb:NVDA+shift+r": "setRowHeader",
-		"kb:shift+f2":"editComment",
-		"kb:alt+downArrow":"openDropdown",
-		"kb:NVDA+alt+c":"reportComment",
-	}
 
 class ExcelSelection(ExcelBase):
 
@@ -1465,7 +1498,14 @@ class ExcelSelection(ExcelBase):
 		firstCell=self.excelRangeObject.Item(1)
 		lastCell=self.excelRangeObject.Item(self.excelRangeObject.Count)
 		# Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-		return _("{firstAddress} {firstContent} through {lastAddress} {lastContent}").format(firstAddress=self.getCellAddress(firstCell),firstContent=firstCell.Text,lastAddress=self.getCellAddress(lastCell),lastContent=lastCell.Text)
+		# Beware to keep two spaces between the address and the content. Otherwise some synthesizer
+		# may mix the address and the content when the cell contains a 3-digit number.
+		return _("{firstAddress}  {firstContent} through {lastAddress}  {lastContent}").format(
+			firstAddress=self.getCellAddress(firstCell),
+			firstContent=firstCell.Text,
+			lastAddress=self.getCellAddress(lastCell),
+			lastContent=lastCell.Text
+		)
 
 	def _get_parent(self):
 		worksheet=self.excelRangeObject.Worksheet
@@ -1564,29 +1604,19 @@ class ExcelDropdown(Window):
 			if controlTypes.STATE_SELECTED in child.states:
 				return child
 
+	@script(
+		gestures=("kb:downArrow", "kb:upArrow", "kb:leftArrow", "kb:rightArrow", "kb:home", "kb:end"),
+		canPropagate=True)
 	def script_selectionChange(self,gesture):
 		gesture.send()
 		newFocus=self.selection or self
 		if eventHandler.lastQueuedFocusObject is newFocus: return
 		eventHandler.queueEvent("gainFocus",newFocus)
-	script_selectionChange.canPropagate=True
 
+	@script(gestures=("kb:escape", "kb:enter", "kb:space"), canPropagate=True)
 	def script_closeDropdown(self,gesture):
 		gesture.send()
 		eventHandler.queueEvent("gainFocus",self.parent)
-	script_closeDropdown.canPropagate=True
-
-	__gestures={
-		"kb:downArrow":"selectionChange",
-		"kb:upArrow":"selectionChange",
-		"kb:leftArrow":"selectionChange",
-		"kb:rightArrow":"selectionChange",
-		"kb:home":"selectionChange",
-		"kb:end":"selectionChange",
-		"kb:escape":"closeDropdown",
-		"kb:enter":"closeDropdown",
-		"kb:space":"closeDropdown",
-	}
 
 	def event_gainFocus(self):
 		child=self.selection
@@ -1715,9 +1745,9 @@ class ExcelFormControl(ExcelBase):
 			screenBottomRightY=int(Y + (bottomRightCellHeight/2+ bottomRightAddress.Top) * zoomRatio * py / pointsPerInch)
 			return (int(0.5*(screenTopLeftX+screenBottomRightX)), int(0.5*(screenTopLeftY+screenBottomRightY)))
 
+	@script(gestures=("kb:enter", "kb:space", "kb(desktop):numpadEnter"), canPropagate=True)
 	def script_doAction(self,gesture):
 		self.doAction()
-	script_doAction.canPropagate=True
 
 	def doAction(self):
 		(x,y)=self._getFormControlScreenCoordinates()
@@ -1727,12 +1757,6 @@ class ExcelFormControl(ExcelBase):
 		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
 		self.invalidateCache()
 		wx.CallLater(100,eventHandler.executeEvent,"stateChange",self)
-
-	__gestures= {
-				"kb:enter":"doAction",
-				"kb:space":"doAction",
-				"kb(desktop):numpadEnter":"doAction",
-				}
 
 class ExcelFormControlQuickNavItem(ExcelQuickNavItem):
 
@@ -1884,6 +1908,7 @@ class ExcelFormControlListBox(ExcelFormControl):
 		if self.listSize>0:
 			return self.getChildAtIndex(self.listSize-1)
 
+	@script(gesture="kb:upArrow", canPropagate=True)
 	def script_moveUp(self, gesture):
 		if self.selectedItemIndex > 1:
 			self.selectedItemIndex= self.selectedItemIndex - 1
@@ -1895,8 +1920,8 @@ class ExcelFormControlListBox(ExcelFormControl):
 			child=self.getChildAtIndex(self.selectedItemIndex-1)
 			if child:
 				eventHandler.queueEvent("gainFocus",child)
-	script_moveUp.canPropagate=True
 
+	@script(gesture="kb:downArrow", canPropagate=True)
 	def script_moveDown(self, gesture):
 		if self.selectedItemIndex < self.listSize:
 			self.selectedItemIndex= self.selectedItemIndex + 1
@@ -1908,7 +1933,6 @@ class ExcelFormControlListBox(ExcelFormControl):
 			child=self.getChildAtIndex(self.selectedItemIndex-1)
 			if child:
 				eventHandler.queueEvent("gainFocus",child)
-	script_moveDown.canPropagate=True
 
 	def doAction(self):
 		if self.isMultiSelectable:
@@ -1919,11 +1943,6 @@ class ExcelFormControlListBox(ExcelFormControl):
 				return
 			child=self.getChildAtIndex(self.selectedItemIndex-1)
 			eventHandler.queueEvent("gainFocus",child)
-
-	__gestures= {
-		"kb:upArrow": "moveUp",
-		"kb:downArrow":"moveDown",
-	}
 
 class ExcelFormControlDropDown(ExcelFormControl):
 
@@ -1938,28 +1957,23 @@ class ExcelFormControlDropDown(ExcelFormControl):
 		except:
 			self.selectedItemIndex=0
 
+	@script(gesture="kb:upArrow", canPropagate=True)
 	def script_moveUp(self, gesture):
 		if self.selectedItemIndex > 1:
 			self.selectedItemIndex= self.selectedItemIndex - 1
 			self.excelOLEFormatObject.Selected[self.selectedItemIndex] = True
 			eventHandler.queueEvent("valueChange",self)
-	script_moveUp.canPropagate=True
 
+	@script(gesture="kb:downArrow", canPropagate=True)
 	def script_moveDown(self, gesture):
 		if self.selectedItemIndex < self.listSize:
 			self.selectedItemIndex= self.selectedItemIndex + 1
 			self.excelOLEFormatObject.Selected[self.selectedItemIndex] = True
 			eventHandler.queueEvent("valueChange",self)
-	script_moveDown.canPropagate=True
 
 	def _get_value(self):
 		if self.selectedItemIndex < self.listSize:
 			return str(self.excelOLEFormatObject.List(self.selectedItemIndex))
-
-	__gestures= {
-		"kb:upArrow": "moveUp",
-		"kb:downArrow":"moveDown",
-	}
 
 class ExcelFormControlScrollBar(ExcelFormControl):
 
@@ -2000,21 +2014,18 @@ class ExcelFormControlScrollBar(ExcelFormControl):
 		self.excelControlFormatObject.value=newValue
 		eventHandler.queueEvent("valueChange",self)
 
+	@script(gesture="kb:upArrow")
 	def script_moveUpSmall(self,gesture):
 		self.moveValue(True,False)
 
+	@script(gesture="kb:downArrow")
 	def script_moveDownSmall(self,gesture):
 		self.moveValue(False,False)
 
+	@script(gesture="kb:pageUp")
 	def script_moveUpLarge(self,gesture):
 		self.moveValue(True,True)
 
+	@script(gesture="kb:pageDown")
 	def script_moveDownLarge(self,gesture):
 		self.moveValue(False,True)
-
-	__gestures={
-		"kb:upArrow":"moveUpSmall",
-		"kb:downArrow":"moveDownSmall",
-		"kb:pageUp":"moveUpLarge",
-		"kb:pageDown":"moveDownLarge",
-	}

@@ -1,12 +1,14 @@
 # -*- coding: UTF-8 -*-
-#NVDAObjects/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V., Davy Kager
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
+# Davy Kager
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
-"""Module that contains the base NVDA object type"""
+"""Module that contains the base NVDA object type with dynamic class creation support,
+as well as the associated TextInfo class."""
 
+import os
 import time
 import re
 import weakref
@@ -29,6 +31,9 @@ import vision
 import globalPluginHandler
 import brailleInput
 import locationHelper
+import aria
+import globalVars
+
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
@@ -89,11 +94,20 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		# optimisation: The base implementation of chooseNVDAObjectOverlayClasses does nothing,
 		# so only call this method if it's been overridden.
 		if appModule and not hasattr(appModule.chooseNVDAObjectOverlayClasses, "_isBase"):
-			appModule.chooseNVDAObjectOverlayClasses(obj, clsList)
+			try:
+				appModule.chooseNVDAObjectOverlayClasses(obj, clsList)
+			except Exception:
+				log.exception(f"Exception in chooseNVDAObjectOverlayClasses for {appModule}")
+				pass
+
 		# Allow global plugins to choose overlay classes.
 		for plugin in globalPluginHandler.runningPlugins:
 			if "chooseNVDAObjectOverlayClasses" in plugin.__class__.__dict__:
-				plugin.chooseNVDAObjectOverlayClasses(obj, clsList)
+				try:
+					plugin.chooseNVDAObjectOverlayClasses(obj, clsList)
+				except Exception:
+					log.exception(f"Exception in chooseNVDAObjectOverlayClasses for {plugin}")
+					pass
 
 		# Determine the bases for the new class.
 		bases=[]
@@ -123,9 +137,13 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			if cls in oldMro:
 				# This class was part of the initially constructed object, so its constructor would have been called.
 				continue
-			initFunc=cls.__dict__.get("initOverlayClass")
+			initFunc = cls.__dict__.get("initOverlayClass")
 			if initFunc:
-				initFunc(obj)
+				try:
+					initFunc(obj)
+				except Exception:
+					log.exception(f"Exception in initOverlayClass for {cls}")
+					continue
 			# Bind gestures specified on the class.
 			try:
 				obj.bindGestures(getattr(cls, "_%s__gestures" % cls.__name__))
@@ -134,7 +152,11 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 
 		# Allow app modules to make minor tweaks to the instance.
 		if appModule and hasattr(appModule,"event_NVDAObject_init"):
-			appModule.event_NVDAObject_init(obj)
+			try:
+				appModule.event_NVDAObject_init(obj)
+			except Exception:
+				log.exception(f"Exception in event_NVDAObject_init for {appModule}")
+				pass
 
 		return obj
 
@@ -286,7 +308,8 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	@staticmethod
 	def objectInForeground():
-		"""Retrieves the object representing the current foreground control according to the Operating System. This differes from NVDA's foreground object as this object is the real foreground object according to the Operating System, not according to NVDA.
+		"""Retrieves the object representing the current foreground control according to the
+		Operating System. This may differ from NVDA's cached foreground object.
 		@return: the foreground object
 		@rtype: L{NVDAObject}
 		"""
@@ -407,7 +430,19 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		No string is provided by default, meaning that NVDA will fall back to using role.
 		Examples of where this property might be overridden are shapes in Powerpoint, or ARIA role descriptions.
 		"""
+		if self.landmark and self.landmark in aria.landmarkRoles:
+			return f"{aria.landmarkRoles[self.landmark]} {controlTypes.roleLabels[controlTypes.ROLE_LANDMARK]}"
 		return None
+
+	def _get_roleTextBraille(self):
+		"""
+		A custom role string for this object, which is used for braille presentation,
+		which will override the standard label for this object's role property as well as the value of roleText.
+		By default, NVDA falls back to using roleText.
+		"""
+		if self.landmark and self.landmark in braille.landmarkLabels:
+			return f"{braille.roleLabels[controlTypes.ROLE_LANDMARK]} {braille.landmarkLabels[self.landmark]}"
+		return self.roleText
 
 	def _get_value(self):
 		"""The value of this object (example: the current percentage of a scrollbar, the selected option in a combo box).
@@ -460,6 +495,9 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		Finds out if this object is currently within the foreground.
 		"""
 		raise NotImplementedError
+
+	# Type info for auto property:
+	states: set
 
 	def _get_states(self):
 		"""Retrieves the current states of this object (example: selected, focused).
@@ -710,19 +748,54 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		states=self.states
 		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
 			return self.presType_unavailable
-		role=self.role
+		role = self.role
+		landmark = self.landmark
+		if (
+			role in (controlTypes.ROLE_LANDMARK, controlTypes.ROLE_REGION) or landmark
+		) and not config.conf["documentFormatting"]["reportLandmarks"]:
+			return self.presType_layout
+
+		roleText = self.roleText
+		if roleText:
+			# If roleText is set, the object is very likely to communicate something relevant to the user.
+			return self.presType_content
 
 		#Static text should be content only if it really use usable text
 		if role==controlTypes.ROLE_STATICTEXT:
 			text=self.makeTextInfo(textInfos.POSITION_ALL).text
 			return self.presType_content if text and not text.isspace() else self.presType_layout
 
-		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SPLITPANE, controlTypes.ROLE_SECTION, controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_TITLEBAR, controlTypes.ROLE_LABEL, controlTypes.ROLE_WHITESPACE,controlTypes.ROLE_BORDER):
+		if role in (
+			controlTypes.ROLE_UNKNOWN,
+			controlTypes.ROLE_PANE,
+			controlTypes.ROLE_TEXTFRAME,
+			controlTypes.ROLE_ROOTPANE,
+			controlTypes.ROLE_LAYEREDPANE,
+			controlTypes.ROLE_SCROLLPANE,
+			controlTypes.ROLE_SPLITPANE,
+			controlTypes.ROLE_SECTION,
+			controlTypes.ROLE_PARAGRAPH,
+			controlTypes.ROLE_TITLEBAR,
+			controlTypes.ROLE_LABEL,
+			controlTypes.ROLE_WHITESPACE,
+			controlTypes.ROLE_BORDER
+		):
 			return self.presType_layout
 		name = self.name
 		description = self.description
 		if not name and not description:
-			if role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING,controlTypes.ROLE_OPTIONPANE,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_FORM,controlTypes.ROLE_TABLEBODY):
+			if role in (
+				controlTypes.ROLE_WINDOW,
+				controlTypes.ROLE_PANEL,
+				controlTypes.ROLE_PROPERTYPAGE,
+				controlTypes.ROLE_TEXTFRAME,
+				controlTypes.ROLE_GROUPING,
+				controlTypes.ROLE_OPTIONPANE,
+				controlTypes.ROLE_INTERNALFRAME,
+				controlTypes.ROLE_FORM,
+				controlTypes.ROLE_TABLEBODY,
+				controlTypes.ROLE_REGION,
+			):
 				return self.presType_layout
 			if role == controlTypes.ROLE_TABLE and not config.conf["documentFormatting"]["reportTables"]:
 				return self.presType_layout
@@ -961,15 +1034,33 @@ Tries to force this object to take the focus.
 			# No error.
 			return
 		import nvwave
-		nvwave.playWaveFile(r"waves\textError.wav")
+		nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "textError.wav"))
+
+	def _get_liveRegionPoliteness(self) -> aria.AriaLivePoliteness:
+		""" Retrieves the priority with which  updates to live regions should be treated.
+		The base implementation returns C{aria.AriaLivePoliteness.OFF},
+		indicating that the object isn't a live region.
+		Subclasses supporting live region events must implement this.
+		"""
+		return aria.AriaLivePoliteness.OFF
 
 	def event_liveRegionChange(self):
 		"""
 		A base implementation for live region change events.
 		"""
-		name=self.name
+		name = self.name
 		if name:
-			ui.message(name)
+			politeness = self.liveRegionPoliteness
+			if politeness == aria.AriaLivePoliteness.OFF:
+				log.debugWarning("Processing live region event for object with live politeness set to 'OFF'")
+			ui.message(
+				name,
+				speechPriority=(
+					speech.priorities.Spri.NEXT
+					if politeness == aria.AriaLivePoliteness.ASSERTIVE
+					else speech.priorities.Spri.NORMAL
+				)
+			)
 
 	def event_typedCharacter(self,ch):
 		if config.conf["documentFormatting"]["reportSpellingErrors"] and config.conf["keyboard"]["alertForSpellingErrors"] and (
@@ -1164,6 +1255,11 @@ This code is executed if a gain focus event is received by this object.
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("role: %s" % ret)
+		try:
+			ret = repr(self.roleText)
+		except Exception as e:
+			ret = f"exception: {e}"
+		info.append(f"roleText: {ret}")
 		try:
 			stateConsts = dict((const, name) for name, const in controlTypes.__dict__.items() if name.startswith("STATE_"))
 			ret = ", ".join(

@@ -1,8 +1,7 @@
-#textInfos/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2020 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -13,10 +12,16 @@ A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable t
 from abc import abstractmethod
 import weakref
 import re
+from typing import Any, Union, List, Optional, Dict
+
 import baseObject
 import config
 import controlTypes
+from controlTypes import OutputReason
 import locationHelper
+
+
+SpeechSequence = List[Union[Any, str]]
 
 class Field(dict):
 	"""Provides information about a piece of text."""
@@ -42,7 +47,13 @@ class ControlField(Field):
 	#: This field is just for layout.
 	PRESCAT_LAYOUT = None
 
-	def getPresentationCategory(self, ancestors, formatConfig, reason=controlTypes.REASON_CARET):
+	def getPresentationCategory(
+			self,
+			ancestors,
+			formatConfig,
+			reason=controlTypes.REASON_CARET,
+			extraDetail=False
+	):
 		role = self.get("role", controlTypes.ROLE_UNKNOWN)
 		states = self.get("states", set())
 
@@ -63,14 +74,26 @@ class ControlField(Field):
 					table = None
 			if not table or (not formatConfig["includeLayoutTables"] and table.get("table-layout", None)) or table.get('isHidden',False):
 				return self.PRESCAT_LAYOUT
+
+		name = self.get("name")
+		landmark = self.get("landmark")
 		if reason in (controlTypes.REASON_CARET, controlTypes.REASON_SAYALL, controlTypes.REASON_FOCUS) and (
 			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"])
+			or (role == controlTypes.ROLE_GRAPHIC and not formatConfig["reportGraphics"])
 			or (role == controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"])
 			or (role == controlTypes.ROLE_BLOCKQUOTE and not formatConfig["reportBlockQuotes"])
+			or (role == controlTypes.ROLE_GROUPING and (not name or not formatConfig["reportGroupings"]))
 			or (role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"])
 			or (role in (controlTypes.ROLE_LIST, controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
+			or (role == controlTypes.ROLE_ARTICLE and not formatConfig["reportArticles"])
+			or (role == controlTypes.ROLE_MARKED_CONTENT and not formatConfig["reportHighlight"])
 			or (role in (controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME) and not formatConfig["reportFrames"])
 			or (role in (controlTypes.ROLE_DELETED_CONTENT,controlTypes.ROLE_INSERTED_CONTENT) and not formatConfig["reportRevisions"])
+			or (
+				(role == controlTypes.ROLE_LANDMARK or landmark)
+				and not formatConfig["reportLandmarks"]
+			)
+			or (role == controlTypes.ROLE_REGION and (not name or not formatConfig["reportLandmarks"]))
 		):
 			# This is just layout as far as the user is concerned.
 			return self.PRESCAT_LAYOUT
@@ -96,13 +119,25 @@ class ControlField(Field):
 				controlTypes.ROLE_MENUBUTTON, 
 				controlTypes.ROLE_TREEVIEW, 
 				controlTypes.ROLE_CHECKMENUITEM, 
-				controlTypes.ROLE_RADIOMENUITEM
+				controlTypes.ROLE_RADIOMENUITEM,
+				controlTypes.ROLE_CAPTION,
 			)
 			or (role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states))
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
 		):
 			return self.PRESCAT_SINGLELINE
-		elif role in (controlTypes.ROLE_SEPARATOR, controlTypes.ROLE_FOOTNOTE, controlTypes.ROLE_ENDNOTE, controlTypes.ROLE_EMBEDDEDOBJECT, controlTypes.ROLE_MATH):
+		elif (
+			role in (
+				controlTypes.ROLE_SEPARATOR,
+				controlTypes.ROLE_FOOTNOTE,
+				controlTypes.ROLE_ENDNOTE,
+				controlTypes.ROLE_EMBEDDEDOBJECT,
+				controlTypes.ROLE_MATH
+			)
+			or (
+				extraDetail and role == controlTypes.ROLE_LISTITEM
+			)
+		):
 			return self.PRESCAT_MARKER
 		elif role in (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG):
 			# Applications and dialogs should be reported as markers when embedded within content, but not when they themselves are the root
@@ -110,9 +145,26 @@ class ControlField(Field):
 		elif role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER):
 			return self.PRESCAT_CELL
 		elif (
-			role in (controlTypes.ROLE_BLOCKQUOTE, controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME, controlTypes.ROLE_TOOLBAR, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU, controlTypes.ROLE_TABLE)
-			or (role == controlTypes.ROLE_EDITABLETEXT and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states) and controlTypes.STATE_MULTILINE in states)
+			role in (
+				controlTypes.ROLE_BLOCKQUOTE,
+				controlTypes.ROLE_GROUPING,
+				controlTypes.ROLE_FIGURE,
+				controlTypes.ROLE_REGION,
+				controlTypes.ROLE_FRAME,
+				controlTypes.ROLE_INTERNALFRAME,
+				controlTypes.ROLE_TOOLBAR,
+				controlTypes.ROLE_MENUBAR,
+				controlTypes.ROLE_POPUPMENU,
+				controlTypes.ROLE_TABLE,
+				controlTypes.ROLE_ARTICLE,
+				controlTypes.ROLE_MARKED_CONTENT,
+			)
+			or (role == controlTypes.ROLE_EDITABLETEXT and (
+				controlTypes.STATE_READONLY not in states
+				or controlTypes.STATE_FOCUSABLE in states
+			) and controlTypes.STATE_MULTILINE in states)
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states)
+			or (role == controlTypes.ROLE_LANDMARK or landmark)
 			or (controlTypes.STATE_FOCUSABLE in states and controlTypes.STATE_EDITABLE in states)
 		):
 			return self.PRESCAT_CONTAINER
@@ -132,7 +184,7 @@ class FieldCommand(object):
 	A command indicates the start or end of a control or that the formatting of the text has changed.
 	"""
 
-	def __init__(self,command,field):
+	def __init__(self, command: str, field: Optional[Union[ControlField, FormatField]]):
 		"""Constructor.
 		@param command: The command; one of:
 			"controlStart", indicating the start of a L{ControlField};
@@ -189,21 +241,24 @@ class Bookmark(baseObject.AutoPropertyObject):
 	def __ne__(self,other):
 		return not self==other
 
+
 #Unit constants
-UNIT_CHARACTER="character"
-UNIT_WORD="word"
-UNIT_LINE="line"
-UNIT_SENTENCE="sentence"
-UNIT_PARAGRAPH="paragraph"
-UNIT_PAGE="page"
-UNIT_TABLE="table"
-UNIT_ROW="row"
-UNIT_COLUMN="column"
-UNIT_CELL="cell"
-UNIT_SCREEN="screen"
-UNIT_STORY="story"
-UNIT_READINGCHUNK="readingChunk"
-UNIT_OFFSET="offset"
+UNIT_CHARACTER = "character"
+UNIT_WORD = "word"
+UNIT_LINE = "line"
+UNIT_SENTENCE = "sentence"
+UNIT_PARAGRAPH = "paragraph"
+UNIT_PAGE = "page"
+UNIT_TABLE = "table"
+UNIT_ROW = "row"
+UNIT_COLUMN = "column"
+UNIT_CELL = "cell"
+UNIT_SCREEN = "screen"
+UNIT_STORY = "story"
+UNIT_READINGCHUNK = "readingChunk"
+UNIT_OFFSET = "offset"
+UNIT_CONTROLFIELD = "controlField"
+UNIT_FORMATFIELD = "formatField"
 
 MOUSE_TEXT_RESOLUTION_UNITS = (UNIT_CHARACTER,UNIT_WORD,UNIT_LINE,UNIT_PARAGRAPH)
 
@@ -213,6 +268,12 @@ unitLabels={
 	UNIT_LINE:_("line"),
 	UNIT_PARAGRAPH:_("paragraph"),
 }
+
+
+def _logBadSequenceTypes(sequence: SpeechSequence, shouldRaise: bool = True):
+	import speech.types
+	return speech.types.logBadSequenceTypes(sequence, raiseExceptionOnError=shouldRaise)
+
 
 class TextInfo(baseObject.AutoPropertyObject):
 	"""Provides information about a range of text in an object and facilitates access to all text in the widget.
@@ -233,10 +294,6 @@ class TextInfo(baseObject.AutoPropertyObject):
 	@ivar bookmark: A unique identifier that can be used to make another textInfo object at this position.
 	@type bookmark: L{Bookmark}
 	"""
-
-	#: whether this textInfo should be expanded then collapsed around its enclosing unit before review.
-	#: This can be problematic for some implementations.
-	_expandCollapseBeforeReview = True
 
 	def __init__(self,obj,position):
 		"""Constructor.
@@ -267,13 +324,13 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
-	def getTextWithFields(self,formatConfig=None):
-		"""Retreaves the text in this range, as well as any control/format fields associated therewith.
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> List[Union[str, FieldCommand]]:
+		"""Retrieves the text in this range, as well as any control/format fields associated therewith.
 		Subclasses may override this. The base implementation just returns the text.
-		@param formatConfig: Document formatting configuration, useful if you wish to force a particular configuration for a particular task.
+		@param formatConfig: Document formatting configuration, useful if you wish to force a particular
+			configuration for a particular task.
 		@type formatConfig: dict
 		@return: A sequence of text strings interspersed with associated field commands.
-		@rtype: list of str and L{FieldCommand}
 		""" 
 		return [self.text]
 
@@ -446,13 +503,15 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""Text suitably formatted for copying to the clipboard. E.g. crlf characters inserted between lines."""
 		return convertToCrlf(self.text)
 
-	def copyToClipboard(self):
+	def copyToClipboard(self, notify=False):
 		"""Copy the content of this instance to the clipboard.
 		@return: C{True} if successful, C{False} otherwise.
 		@rtype: bool
+		@param notify: whether to emit a confirmation message
+		@type notify: boolean
 		"""
 		import api
-		return api.copyToClip(self.clipboardText)
+		return api.copyToClip(self.clipboardText, notify)
 
 	def getTextInChunks(self, unit):
 		"""Retrieve the text of this instance in chunks of a given unit.
@@ -472,32 +531,54 @@ class TextInfo(baseObject.AutoPropertyObject):
 			yield chunkInfo.text
 			unitInfo.collapse(end=True)
 
-	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
+	def getControlFieldSpeech(
+			self,
+			attrs: ControlField,
+			ancestorAttrs: List[Field],
+			fieldType: str,
+			formatConfig: Optional[Dict[str, bool]] = None,
+			extraDetail: bool = False,
+			reason: Optional[OutputReason] = None
+	) -> SpeechSequence:
 		# Import late to avoid circular import.
 		import speech
-		return speech.getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason)
+		sequence = speech.getControlFieldSpeech(
+			attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason
+		)
+		_logBadSequenceTypes(sequence)
+		return sequence
 
 	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
 		# Import late to avoid circular import.
 		import braille
 		return braille.getControlFieldBraille(self, field, ancestors, reportStart, formatConfig)
 
-	def getFormatFieldSpeech(self, attrs, attrsCache=None, formatConfig=None, reason=None, unit=None, extraDetail=False , initialFormat=False, separator=None):
+	def getFormatFieldSpeech(
+			self,
+			attrs: Field,
+			attrsCache: Optional[Field] = None,
+			formatConfig: Optional[Dict[str, bool]] = None,
+			reason: Optional[OutputReason] = None,
+			unit: Optional[str] = None,
+			extraDetail: bool = False,
+			initialFormat: bool = False,
+	) -> SpeechSequence:
 		"""Get the spoken representation for given format information.
 		The base implementation just calls L{speech.getFormatFieldSpeech}.
 		This can be extended in order to support implementation specific attributes.
 		If extended, the superclass should be called first.
-		@param separator: The text used to separate chunks of format information;
-			defaults to L{speech.CHUNK_SEPARATOR}.
-		@type separator: str
 		"""
 		# Import late to avoid circular import.
 		import speech
-		if separator is None:
-			# #6749: The default for this argument is actually speech.CHUNK_SEPARATOR,
-			# but that can't be specified as a default argument because of circular import issues.
-			separator = speech.CHUNK_SEPARATOR
-		return speech.getFormatFieldSpeech(attrs, attrsCache=attrsCache, formatConfig=formatConfig, reason=reason, unit=unit, extraDetail=extraDetail , initialFormat=initialFormat, separator=separator)
+		return speech.getFormatFieldSpeech(
+			attrs=attrs,
+			attrsCache=attrsCache,
+			formatConfig=formatConfig,
+			reason=reason,
+			unit=unit,
+			extraDetail=extraDetail,
+			initialFormat=initialFormat
+		)
 
 	def activate(self):
 		"""Activate this position.

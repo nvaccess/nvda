@@ -282,6 +282,16 @@ VBufStorage_controlFieldNode_t* VBufBackend_t::reuseExistingNodeInRender(VBufSto
 		LOG_DEBUG(L"existing node has no parent. Not reusing.");
 		return nullptr;
 	}
+	// alwaysRerenderDescendants can be set after rendering to indicate that we
+	// must not reuse descendants.
+	if (existingParent->alwaysRerenderDescendants) {
+		// Propagate to descendants.
+		existingNode->alwaysRerenderDescendants = true;
+	}
+	if ( existingNode->alwaysRerenderDescendants) {
+		LOG_DEBUG(L"Existing node and its descendants must not be reused");
+		return nullptr;
+	}
 	if(existingNode->denyReuseIfPreviousSiblingsChanged) {
 		// This node is not allowed to be reused if any of its previous siblings have changed.
 		// We work this out by walking back to the previous controlFieldNode in its siblings, and ensuring that it is a reference node that references the existing node's first previous controlFieldNode.

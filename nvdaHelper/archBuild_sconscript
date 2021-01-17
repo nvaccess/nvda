@@ -73,9 +73,9 @@ def COMProxyDllBuilder(env,target,source,proxyClsid):
 	return proxyDll
 env.AddMethod(COMProxyDllBuilder,'COMProxyDll')
 
-# We only support compiling with MSVC 14.1 (2017)
-if not env.get('MSVC_VERSION')=='14.1':
-	raise RuntimeError("Visual C++ 14.1 (Visual Studio 2017) not found")
+# We only support compiling with MSVC 14.2 (2019)
+if not env.get('MSVC_VERSION')=='14.2':
+	raise RuntimeError("Visual C++ 14.2 (Visual Studio 2019) not found")
 
 
 TARGET_ARCH=env['TARGET_ARCH']
@@ -92,15 +92,9 @@ env.Append(
 		('_WIN32_WINNT','_WIN32_WINNT_WIN7')
 	]
 )
-env.Append(CCFLAGS=['/W3','/WX'])
-if 'analyze' in debug:
-	env.Append(CCFLAGS=['/analyze'])
-	# Disable: Inconsistent annotation for 'x': this instance has no annotations.
-	# Seems all MIDL-generated code from idl files don't add annotations 
-	env.Append(CCFLAGS='/wd28251')
-	# Disable: 'x': unreferenced formal parameter
-	# We use a great deal of hook functions where we have no need for various parameters 
-	env.Append(CCFLAGS='/wd4100')
+env.Append(CCFLAGS=[
+	'/std:c++17',
+])
 
 env.Append(CXXFLAGS=['/EHsc'])
 
@@ -151,6 +145,22 @@ if 'debugCRT' in debug:
 else:
 	env.Append(CCFLAGS=['/MT'])
 
+# Don't enable warnings and warnings as errors or analysis to 3rd party code.
+thirdPartyEnv = env.Clone()
+env.Append(CCFLAGS=[
+	'/W3',
+	'/WX',
+])
+if 'analyze' in debug:
+	env.Append(CCFLAGS=['/analyze'])
+	# Disable: Inconsistent annotation for 'x': this instance has no annotations.
+	# Seems all MIDL-generated code from idl files don't add annotations
+	env.Append(CCFLAGS='/wd28251')
+	# Disable: 'x': unreferenced formal parameter
+	# We use a great deal of hook functions where we have no need for various parameters
+	env.Append(CCFLAGS='/wd4100')
+
+Export('thirdPartyEnv')
 Export('env')
 
 acrobatAccessRPCStubs=env.SConscript('acrobatAccess_sconscript')
@@ -214,5 +224,5 @@ if TARGET_ARCH in ('x86_64', 'arm64'):
 	env.Install(libInstallDir,remoteLoaderProgram)
 
 if TARGET_ARCH=='x86':
-	env.SConscript('espeak/sconscript')
-	env.SConscript('liblouis/sconscript')
+	thirdPartyEnv.SConscript('espeak/sconscript')
+	thirdPartyEnv.SConscript('liblouis/sconscript')

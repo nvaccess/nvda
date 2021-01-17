@@ -12,6 +12,8 @@ using L{registerProvider}.
 """
 
 import re
+from typing import Optional
+
 from NVDAObjects.window import Window
 import controlTypes
 import api
@@ -31,7 +33,7 @@ class MathPresentationProvider(object):
 		@param mathMl: The MathML markup.
 		@type mathMl: str
 		@return: A speech sequence.
-		@rtype: list of str and/or L{speech.SpeechCommand}
+		@rtype: List[str, speech.SpeechCommand]
 		"""
 		raise NotImplementedError
 
@@ -50,9 +52,11 @@ class MathPresentationProvider(object):
 		"""
 		raise NotImplementedError
 
-speechProvider = None
-brailleProvider = None
-interactionProvider = None
+
+speechProvider: Optional[MathPresentationProvider] = None
+brailleProvider: Optional[MathPresentationProvider] = None
+interactionProvider: Optional[MathPresentationProvider] = None
+
 
 def registerProvider(provider, speech=False, braille=False, interaction=False):
 	"""Register a math presentation provider.

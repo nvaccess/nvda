@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-12 00:10+1000\n"
-"PO-Revision-Date: 2019-07-11 20:57+0300\n"
+"POT-Creation-Date: 2020-10-03 01:31+1000\n"
+"PO-Revision-Date: 2020-10-04 09:11+0300\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, "
 "florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
@@ -13,11 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.2.3\n"
-
-#. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
-msgid "Secure Desktop"
-msgstr "Spațiu de lucru sigur"
+"X-Generator: Poedit 2.4.1\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -107,7 +103,8 @@ msgstr "gramatică: {text}"
 msgid "unknown"
 msgstr "necunoscut"
 
-#. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
+#. Translators: This is presented when errors are found in an appModule
+#. (example output: error in appModule explorer).
 #, python-format
 msgid "Error in appModule %s"
 msgstr "Eroare în appModule %s"
@@ -140,17 +137,12 @@ msgstr "navigare"
 #. Translators: Reported for the search landmark, normally found on web pages.
 msgctxt "aria"
 msgid "search"
-msgstr "caută"
+msgstr "căutare"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
 msgctxt "aria"
 msgid "form"
 msgstr "formular"
-
-#. Translators: Reported for a significant region, normally found on web pages.
-msgctxt "aria"
-msgid "region"
-msgstr "regiune"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -227,7 +219,7 @@ msgstr "lst"
 msgid "gra"
 msgstr "gra"
 
-#. Translators: Displayed in braille for an object which is a
+#. Translators: Displayed in braille for toast notifications and for an object which is a
 #. help balloon.
 msgid "hlp"
 msgstr "hlp"
@@ -308,6 +300,11 @@ msgid "grp"
 msgstr "grp"
 
 #. Translators: Displayed in braille for an object which is a
+#. caption.
+msgid "cap"
+msgstr "cap"
+
+#. Translators: Displayed in braille for an object which is a
 #. embedded object.
 msgid "embedded"
 msgstr "obiect încorporat"
@@ -374,6 +371,26 @@ msgstr "del"
 #. Translators: Displayed in braille for an object which is inserted.
 msgid "ins"
 msgstr "ins"
+
+#. Translators: Displayed in braille for a landmark.
+msgid "lmk"
+msgstr "lmk"
+
+#. Translators: Displayed in braille for an object which is an article.
+msgid "art"
+msgstr "art"
+
+#. Translators: Displayed in braille for an object which is a region.
+msgid "rgn"
+msgstr "rgn"
+
+#. Translators: Displayed in braille for an object which is a figure.
+msgid "fig"
+msgstr "fig"
+
+#. Translators: Displayed in braille for an object which represents marked (highlighted) content
+msgid "mrkd"
+msgstr "mrkd"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -477,11 +494,6 @@ msgstr "srch"
 msgctxt "braille landmark abbreviation"
 msgid "form"
 msgstr "formă"
-
-#. Translators: Displayed in braille for a significant region, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "rgn"
-msgstr "rgn"
 
 #. Translators: The description of a braille cursor shape.
 msgid "Dots 7 and 8"
@@ -759,8 +771,18 @@ msgstr "Germană grad 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "German grade 0 (detailed)"
+msgstr "Germană grad 0 (detaliat)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "German grade 1"
 msgstr "Germană grad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German grade 1 (detailed)"
+msgstr "Germană grad 1 (detaliat)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -786,6 +808,11 @@ msgstr "Engleză (U.K.) grad 1"
 #. braille settings dialog.
 msgid "English (U.K.) grade 2"
 msgstr "Engleză (U.K.) grad 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "English North American Braille Computer Code"
+msgstr "Braille englezesc din America de Nord pentru cod mașină"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -899,12 +926,22 @@ msgstr "Gujarati grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Koine Greek"
-msgstr "Greacă comună"
+msgid "Greek international braille"
+msgstr "Braille grecesc internațional"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hebrew 8 dot computer braille"
+msgstr "Ebraică, braille în 8 puncte pentru calculator"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Israeli grade 1"
+msgstr "Ebraică  grad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Israeli 8 dot computer braille"
 msgstr "Ebraică, braille în 8 puncte pentru calculator"
 
 #. Translators: The name of a braille table displayed in the
@@ -1009,6 +1046,11 @@ msgstr "Manipuri grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Malay grade 2"
+msgstr "Malay grad 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Mongolian grade 1"
 msgstr "Mongolă grad 1"
 
@@ -1024,13 +1066,18 @@ msgstr "Marathi grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium)"
-msgstr "Neerlandeză (Belgia)"
+msgid "Dutch (Belgium) 6 dot"
+msgstr "Neerlandeză (Belgia) 6 puncte"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands)"
-msgstr "Neerlandeză (Țările de Jos)"
+msgid "Dutch (Netherlands) 6 dot"
+msgstr "Neerlandeză (Țările de Jos) 6 puncte"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Dutch 8 dot"
+msgstr "Neerlandeză 8 puncte"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1104,8 +1151,8 @@ msgstr "Română"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Russian braille for computer code"
-msgstr "Braille rusesc pentru cod mașină"
+msgid "Russian computer braille"
+msgstr "Braille pentru calculator rusesc"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1164,8 +1211,18 @@ msgstr "Turcă grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Ukrainian"
-msgstr "Ucraineană"
+msgid "Ukrainian grade 1"
+msgstr "Ucraineană grad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Ukrainian computer braille"
+msgstr "Persană, braille în 8 puncte pentru calculator"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Uzbek grade 1"
+msgstr "Uzbecă grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1204,8 +1261,6 @@ msgstr "Mod formular"
 #. Translators: The mode that presents text in a flat representation
 #. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
 msgid "Browse mode"
 msgstr "Mod navigare"
 
@@ -1697,6 +1752,38 @@ msgstr "se mută la eroarea anterioară"
 msgid "no previous error"
 msgstr "nu există eroare anterioară"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next article"
+msgstr "se mută la articolul următor"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next article"
+msgstr "nu există articol următor"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous article"
+msgstr "se mută la articolul anterior"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous article"
+msgstr "nu există articol anterior"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next grouping"
+msgstr "se mută la grupul următor"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next grouping"
+msgstr "nu există grup următor"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous grouping"
+msgstr "se mută la grupul anterior"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous grouping"
+msgstr "nu există grup anterior"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -1723,8 +1810,6 @@ msgstr "&Butoane"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings panel.
 msgid "Lan&dmarks"
 msgstr "&Repere"
 
@@ -1751,15 +1836,6 @@ msgstr "&Pornește"
 #. in the browse mode Elements List dialog.
 msgid "&Move to"
 msgstr "&Mută la"
-
-#, python-format
-msgid "%s landmark"
-msgstr "%s reper"
-
-#. Translators: This is brailled to indicate a landmark (example output: lmk main).
-#, python-format
-msgid "lmk %s"
-msgstr "lmk %s"
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
@@ -2489,11 +2565,6 @@ msgstr "Adresă IP"
 msgid "desktop icon"
 msgstr "iconiță de ecran"
 
-#. Translators: Identifies an alert message such as file download alert in Internet explorer 9 and above.
-#. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
-msgid "alert"
-msgstr "alertă"
-
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
 msgstr "panou de ecran"
@@ -2581,6 +2652,10 @@ msgstr "spațiator"
 msgid "alignment"
 msgstr "aliniere"
 
+#. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
+msgid "alert"
+msgstr "alertă"
+
 #. Translators: Identifies a data grid control (a grid which displays data).
 msgid "data grid"
 msgstr "grilă de date"
@@ -2617,6 +2692,26 @@ msgstr "șters"
 #. Translators: Reported when text is marked as having been inserted
 msgid "inserted"
 msgstr "inserat"
+
+#. Translators: Identifies a landmark.
+msgid "landmark"
+msgstr "reper"
+
+#. Translators: Identifies an article.
+msgid "article"
+msgstr "articol"
+
+#. Translators: Identifies a region.
+msgid "region"
+msgstr "regiune"
+
+#. Translators: Identifies a figure (commonly seen on some websites).
+msgid "figure"
+msgstr "figură"
+
+#. Translators: Identifies marked (highlighted) content
+msgid "marked content"
+msgstr "conținut marcat"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -2988,6 +3083,8 @@ msgstr "Maus"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the speech panel
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Speech"
 msgstr "Vorbire"
 
@@ -3003,6 +3100,11 @@ msgstr "Configurare profiluri"
 #. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "Braille"
+
+#. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the vision panel
+msgid "Vision"
+msgstr "Vedere"
 
 #. Translators: The name of a category of NVDA commands.
 msgctxt "script category"
@@ -3238,6 +3340,21 @@ msgstr "anunță atribute font activat"
 msgid "Toggles on and off the reporting of font attributes"
 msgstr "Activează sau dezactivează raportarea schimbărilor atributelor de font"
 
+#. Translators: Input help mode message for toggle superscripts and subscripts command.
+msgid "Toggles on and off the reporting of superscripts and subscripts"
+msgstr ""
+"Activează sau dezactivează raportarea superscripturilor și a subscripturilor"
+
+#. Translators: The message announced when toggling the report superscripts and subscripts
+#. document formatting setting.
+msgid "report superscripts and subscripts on"
+msgstr "raportează superscripturi și subscripturi activat"
+
+#. Translators: The message announced when toggling the report superscripts and subscripts
+#. document formatting setting.
+msgid "report superscripts and subscripts off"
+msgstr "raportează superscripturi și subscripturi dezactivat"
+
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
 msgstr "anunță versiuni dezactivat"
@@ -3428,6 +3545,18 @@ msgstr "anunță legături activat"
 msgid "Toggles on and off the reporting of links"
 msgstr "Activează sau dezactivează raportarea legăturilor"
 
+#. Translators: Input help mode message for toggle report graphics command.
+msgid "Toggles on and off the reporting of graphics"
+msgstr "Activează sau dezactivează raportarea graficelor"
+
+#. Translators: The message announced when toggling the report graphics document formatting setting.
+msgid "report graphics off"
+msgstr "anunță grafice dezactivat"
+
+#. Translators: The message announced when toggling the report graphics document formatting setting.
+msgid "report graphics on"
+msgstr "anunță grafice activat"
+
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
 msgstr "raport comentarii dezactivat"
@@ -3464,6 +3593,18 @@ msgstr "anunță rubrică activat"
 msgid "Toggles on and off the reporting of headings"
 msgstr "Activează sau dezactivează raportarea rubricilor"
 
+#. Translators: Input help mode message for toggle report groupings command.
+msgid "Toggles on and off the reporting of groupings"
+msgstr "Activează sau dezactivează raportarea grupurilor"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report groupings off"
+msgstr "anunță grupuri dezactivat"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report groupings on"
+msgstr "anunță grupuri activat"
+
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
 msgstr "anunță citat în bloc dezactivat"
@@ -3477,16 +3618,28 @@ msgid "Toggles on and off the reporting of block quotes"
 msgstr "Activează sau dezactivează raportarea citatelor în bloc"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-msgid "report landmarks off"
-msgstr "anunță repere dezactivat"
+msgid "report landmarks and regions off"
+msgstr "anunță repere și regiuni dezactivat"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-msgid "report landmarks on"
-msgstr "anunță repere activat"
+msgid "report landmarks and regions on"
+msgstr "anunță repere și regiuni activat"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
 msgstr "Activează sau dezactivează raportarea reperelor"
+
+#. Translators: Input help mode message for toggle report articles command.
+msgid "Toggles on and off the reporting of articles"
+msgstr "Activează sau dezactivează raportarea articolelor"
+
+#. Translators: The message announced when toggling the report articles document formatting setting.
+msgid "report articles off"
+msgstr "anunță articole dezactivat"
+
+#. Translators: The message announced when toggling the report articles document formatting setting.
+msgid "report articles on"
+msgstr "anunță articole activat"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
@@ -3616,17 +3769,18 @@ msgstr ""
 "cursorul de examinare. Dubla apăsare este posibil să furnizeze detalii "
 "suplimentare."
 
-#. Translators: Reported when attempting to move the navigator object to focus.
-msgid "Move to focus"
-msgstr "Mută la focalizare"
-
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
 msgstr ""
 "Setează obiectul navigator la focalizarea curentă, iar cursorul de examinare "
-"la poziția cursorului de scriere din interiorul obiectului, dacă e posibil."
+"la poziția cursorului de scriere din interiorul obiectului, dacă este "
+"posibil."
+
+#. Translators: Reported when attempting to move the navigator object to focus.
+msgid "Move to focus"
+msgstr "Mută la focalizare"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3639,6 +3793,7 @@ msgid "Move focus"
 msgstr "Mută focalizarea"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
+#. Translators: Reported when there is no caret.
 msgid "No caret"
 msgstr "Fără cursor de scriere"
 
@@ -3701,10 +3856,6 @@ msgstr ""
 "Efectuează acțiunea implicită pe obiectul navigator curent (exemplu: îl "
 "apasă dacă e un buton)."
 
-#. Translators: a message reported when review cursor is at the top line of the current navigator object.
-msgid "Top"
-msgstr "Sus"
-
 #. Translators: Input help mode message for move review cursor to top line command.
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
@@ -3712,6 +3863,10 @@ msgid ""
 msgstr ""
 "Mută cursorul de examinare la prima linie a obiectului navigator curent și o "
 "pronunță"
+
+#. Translators: a message reported when review cursor is at the top line of the current navigator object.
+msgid "Top"
+msgstr "Sus"
 
 #. Translators: Input help mode message for move review cursor to previous line command.
 msgid ""
@@ -3773,10 +3928,6 @@ msgstr ""
 "Mută cursorul de examinare la cuvântul următor al obiectului navigator "
 "curent și îl pronunță"
 
-#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
-msgid "Left"
-msgstr "Stânga"
-
 #. Translators: Input help mode message for move review cursor to start of current line command.
 msgid ""
 "Moves the review cursor to the first character of the line where it is "
@@ -3784,6 +3935,10 @@ msgid ""
 msgstr ""
 "Mută cursorul de examinare la primul caracter al liniei pe care se află,  în "
 "obiectul navigator curent și îl pronunță"
+
+#. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+msgid "Left"
+msgstr "Stânga"
 
 #. Translators: Input help mode message for move review cursor to previous character command.
 msgid ""
@@ -3905,11 +4060,11 @@ msgstr "Arată meniul NVDA"
 
 #. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"Reads from the review cursor up to end of current text, moving the review "
-"cursor as it goes"
+"Reads from the review cursor up to the end of the current text, moving the "
+"review cursor as it goes"
 msgstr ""
 "Citește din cursorul de examinare până la sfârșitul textului curent, mutând "
-"cursorul de examinare pe măsură ce citește"
+"cursorul de examinare pe măsură ce Citește"
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
@@ -3928,13 +4083,44 @@ msgid "Formatting"
 msgstr "Formatare"
 
 #. Translators: Input help mode message for report formatting command.
-msgid ""
-"Reports formatting info for the current review cursor position within a "
-"document. If pressed twice, presents the information in browse mode"
+msgid "Reports formatting info for the current review cursor position."
 msgstr ""
-"Raportează informația despre formatare pentru poziția curentă a cursorului "
-"de examinare în document. Apăsat de două ori, prezintă informația în mod "
-"navigare"
+"Raportează informații despre formatare pentru poziția curentă a cursorului "
+"de examinare."
+
+#. Translators: Input help mode message for show formatting at review cursor command.
+msgid ""
+"Presents, in browse mode, formatting info for the current review cursor "
+"position."
+msgstr ""
+"Prezintă, în modul de navigare, informații despre formatare pentru poziția "
+"curentă a cursorului de examinare."
+
+#. Translators: Input help mode message for report formatting command.
+msgid ""
+"Reports formatting info for the current review cursor position. If pressed "
+"twice, presents the information in browse mode"
+msgstr ""
+"Raportează informații despre formatare pentru poziția curentă a cursorului "
+"de examinare. Apăsat de două ori, prezintă informația în modul de navigare"
+
+#. Translators: Input help mode message for report formatting at caret command.
+msgid "Reports formatting info for the text under the caret."
+msgstr ""
+"Raportează informații despre formatare pentru textul aflat sub cursorul de "
+"scriere."
+
+#. Translators: Input help mode message for show formatting at caret position command.
+msgid "Presents, in browse mode, formatting info for the text under the caret."
+msgstr "Raportează informațiile pentru textul de sub această celulă braille."
+
+#. Translators: Input help mode message for report formatting at caret command.
+msgid ""
+"Reports formatting info for the text under the caret. If pressed twice, "
+"presents the information in browse mode"
+msgstr ""
+"Raportează informații despre formatare pentru textul aflat sub cursorul de "
+"scriere. Apăsat de două ori, prezintă informația în modul de navigare"
 
 #. Translators: Input help mode message for report current focus command.
 msgid "Reports the object with focus. If pressed twice, spells the information"
@@ -4001,8 +4187,8 @@ msgstr ""
 "copiază titlul pe planșetă"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
-msgid "Speaks the current foreground object"
-msgstr "Pronunță obiectul curent din prim-plan"
+msgid "Reads all controls in the active window"
+msgstr "Citește toate controalele din fereastra activă"
 
 #. Translators: GUI development tool, to get information about the components used in the NVDA GUI
 msgid ""
@@ -4020,6 +4206,44 @@ msgstr ""
 "Notează în jurnal informații despre obiectul navigator curent, care sunt de "
 "folos dezvoltatorilor și activează monitorul de  jurnale pentru ca "
 "informația să poată fi analizată."
+
+#. Translators: Input help mode message for a command to delimit then
+#. copy a fragment of the log to clipboard
+msgid ""
+"Mark the current end of the log as the start of the fragment to be copied to "
+"clipboard by pressing again."
+msgstr ""
+"Marchează sfârșitul curent al jurnalului ca început al fragmentului care să "
+"fie copiat pe planșetă apăsând din nou."
+
+#. Translators: Message when marking the start of a fragment of the log file for later copy
+#. to clipboard
+msgid "Log fragment start position marked, press again to copy to clipboard"
+msgstr ""
+"A fost marcată poziția de start a fragmentului din jurnal, apăsați încă o "
+"dată pentru a copia pe planșetă"
+
+#. Translators: Message when failed to mark the start of a
+#. fragment of the log file for later copy to clipboard
+msgid "Unable to mark log position"
+msgstr "Nu se poate marca poziția jurnalului"
+
+#. Translators: Message when attempting to copy an empty fragment of the log file
+msgid "No new log entry to copy"
+msgstr "Nu există nicio intrare nouă de jurnal de copiat"
+
+#. Translators: Message when a fragment of the log file has been
+#. copied to clipboard
+msgid "Log fragment copied to clipboard"
+msgstr "Fragment de jurnal copiat pe planșetă"
+
+#. Translators: Presented when unable to copy to the clipboard because of an error.
+msgid "Unable to copy"
+msgstr "Imposibil de copiat"
+
+#. Translators: Input help mode message for Open user configuration directory command.
+msgid "Opens NVDA configuration directory for the current user."
+msgstr "Deschide dosarul configurărilor NVDA pentru utilizatorul curent."
 
 #. Translators: A mode where no progress bar updates are given.
 msgid "No progress bar updates"
@@ -4234,6 +4458,21 @@ msgstr "Arată fereastra de dialog a pronuțiilor simbolurilor din NVDA"
 msgid "Shows the NVDA input gestures dialog"
 msgstr "Arată fereastra de dialog a gesturilor de intrare NVDA"
 
+#. Translators: Input help mode message for the report current configuration profile command.
+msgid "Reports the name of the current NVDA configuration profile"
+msgstr "Raportează numele profilului curemt al configurărilor NVDA"
+
+#. Translators: Message announced when the command to report the current configuration profile and
+#. the default configuration profile is active.
+msgid "normal configuration profile active"
+msgstr "profilul configurației normale este activ"
+
+#. Translators: Message announced when the command to report the current configuration profile
+#. is active. The placeholder '{profilename}' is replaced with the name of the current active profile.
+#, python-brace-format
+msgid "{profileName} configuration profile active"
+msgstr "profilul de configurare {profileName} este activ"
+
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
 msgstr "Salvează configurația curentă a NVDA"
@@ -4243,10 +4482,10 @@ msgstr "Salvează configurația curentă a NVDA"
 #. Translators: Input help mode message for apply last saved or default settings command.
 msgid ""
 "Pressing once reverts the current configuration to the most recently saved "
-"state. Pressing three times reverts to factory defaults."
+"state. Pressing three times resets to factory defaults."
 msgstr ""
 "Apăsând o dată, configurația actuală revine la cea mai recentă stare "
-"salvată. Apăsând de trei ori, revine la configurația implicită."
+"salvată. Apăsând de trei ori, se revine la configurația implicită."
 
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
@@ -4353,6 +4592,16 @@ msgstr ""
 "Marchează poziția curentă a cursorului de examinare ca începutul textului "
 "care urmează a fi selectat sau copiat"
 
+#. Translators: Input help mode message for move review cursor to marked start position for a
+#. select or copy command
+msgid ""
+"Move the review cursor to the position marked as the start of text to be "
+"selected or copied"
+msgstr ""
+"Mută cursorul de examinare la poziția care a fost marcată ca începutul "
+"textului care urmează a fi selectat sau copiat"
+
+#. Translators: Presented when attempting to move to the start marker for copy but none has been set.
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 msgid "No start marker set"
 msgstr "N-a fost marcat începutul"
@@ -4372,10 +4621,6 @@ msgstr "Nu se poate selecta textul, apăsați de două ori pentru a copia"
 #. Translators: Presented when some review text has been copied to clipboard.
 msgid "Review selection copied to clipboard"
 msgstr "Descrie selecțiunea copiată pe planșetă"
-
-#. Translators: Presented when unable to copy to the clipboard because of an error.
-msgid "Unable to copy"
-msgstr "Imposibil de copiat"
 
 #. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
 msgid ""
@@ -4500,6 +4745,22 @@ msgstr ""
 "Mută la obiectul anterior într-o perspectivă uniformă a ierarhiei navigării "
 "prin obiecte"
 
+#. Translators: Describes a command.
+msgid "Toggles the support of touch interaction"
+msgstr "Activează sau dezactivează suportul interacțiunii tactile"
+
+#. Translators: Presented when attempting to toggle touch interaction support
+msgid "Touch interaction not supported"
+msgstr "Interacțiune tactilă nesuportată"
+
+#. Translators: Presented when support of touch interaction has been enabled
+msgid "Touch interaction enabled"
+msgstr "Interacțiune tactilă activată"
+
+#. Translators: Presented when support of touch interaction has been disabled
+msgid "Touch interaction disabled"
+msgstr "Interacțiune tactilă dezactivată"
+
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
 msgid "%s mode"
@@ -4520,6 +4781,18 @@ msgid ""
 msgstr ""
 "Anunță noul obiect sau conținu sub degetul tău dacă diferă față de ultima "
 "poziție a degetului"
+
+#. Translators: Reported when the object has no location for the mouse to move to it.
+msgid "object has no location"
+msgstr "obiectul nu are nicio locație"
+
+#. Translators: Input help mode message for touch right click command.
+msgid ""
+"Clicks the right mouse button at the current touch position. This is "
+"generally used to activate a context menu."
+msgstr ""
+"Apasă o dată butonul dreapta al mausului la poziția actuală a mausului. În "
+"general, această acțiune este utilizată la activarea unui meniu contextual."
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
@@ -4559,6 +4832,56 @@ msgid ""
 "Recognizes the content of the current navigator object with Windows 10 OCR"
 msgstr ""
 "Recunoaște conținutul obiectului navigator curent, folosind Windows 10 OCR"
+
+#. Translators: Input help mode message for toggle report CLDR command.
+msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
+msgstr ""
+"Activează sau dezactivează raportarea caracterelor CLDR precum emoticoanele"
+
+#. Translators: presented when the report CLDR is toggled.
+msgid "report CLDR characters off"
+msgstr "anunță caractere CLDR dezactivat"
+
+#. Translators: presented when the report CLDR is toggled.
+msgid "report CLDR characters on"
+msgstr "anunță caractere CLDR activat"
+
+#. Translators: Describes a command.
+msgid ""
+"Toggles the state of the screen curtain, enable to make the screen black or "
+"disable to show the contents of the screen. Pressed once, screen curtain is "
+"enabled until you restart NVDA. Pressed twice, screen curtain is enabled "
+"until you disable it"
+msgstr ""
+"Schimbă starea cortinei ecranului, fie făcând ecranul negru, fie afișând "
+"conținutul acestuia. Dacă pentru activarea cortinei se apasă o dată, ea "
+"rămâne activă până la repornirea NVDA. Dacă se apasă de două ori, rămâne "
+"activă pe o perioadă nedeterminată. În consecință, dezactivarea acesteia "
+"trebuie să fie efectuată manual"
+
+#. Translators: Reported when the screen curtain is disabled.
+msgid "Screen curtain disabled"
+msgstr "Cortină ecran dezactivată"
+
+#. Translators: Reported when the screen curtain could not be enabled.
+msgid "Could not disable screen curtain"
+msgstr "Nu s-a putut dezactiva cortina ecranului"
+
+#. Translators: Reported when the screen curtain is not available.
+msgid "Screen curtain not available"
+msgstr "Cortină ecran indisponibilă"
+
+#. Translators: Reported when the screen curtain is enabled.
+msgid "Screen curtain enabled"
+msgstr "Cortină ecran activată"
+
+#. Translators: Reported when the screen curtain is temporarily enabled.
+msgid "Temporary Screen curtain, enabled until next restart"
+msgstr "Cortină ecran temporară, activă până la următoarea repornire"
+
+#. Translators: Reported when the screen curtain could not be enabled.
+msgid "Could not enable screen curtain"
+msgstr "Nu s-a putut activa cortina ecranului"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -4623,6 +4946,10 @@ msgstr "Referinţă Rapidă a Comenzilor"
 #. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
 msgstr "Ghidul utilizatorului"
+
+#. Translators: A label for a shortcut in start menu to open NVDA what's new.
+msgid "What's new"
+msgstr "Ce e nou"
 
 #. Translators: A file extension label for NVDA add-on package.
 msgid "NVDA add-on package"
@@ -4995,6 +5322,13 @@ msgstr "Birmană"
 msgctxt "languageName"
 msgid "Somali"
 msgstr "Somaleză"
+
+#. Translators: The pattern defining how languages are displayed and sorted in in the general
+#. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
+#. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
+#, python-brace-format
+msgid "{desc}, {lc}"
+msgstr "{desc}, {lc}"
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -6097,408 +6431,11 @@ msgstr "Examinare ecran"
 msgid "Emulates pressing %s on the system keyboard"
 msgstr "Emulează apăsarea %s pe tastatura sistemului"
 
-#. Translators: This is spoken when NVDA moves to an empty line.
-#. Translators: This is spoken when the line is considered blank.
-msgid "blank"
-msgstr "spațiu gol"
-
-#. Translators: cap will be spoken before the given letter when it is capitalized.
-#, python-format
-msgid "cap %s"
-msgstr "%s mare"
-
-#. Translators: This is spoken when the given line has no indentation.
-msgid "no indent"
-msgstr "fără indentare"
-
-#. Translators: This is spoken to indicate that some text is already selected.
-#. 'selected' preceding text is intentional.
-#. For example 'selected hello world'
-#, python-format
-msgid "selected %s"
-msgstr "selectat %s"
-
-#. Translators: This is spoken to indicate what has just been selected.
-#. The text preceding 'selected' is intentional.
-#. For example 'hello world selected'
-#, python-format
-msgid "%s selected"
-msgstr "%s selectat"
-
-#. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
-#, python-format
-msgid "%d characters"
-msgstr "%d caractere"
-
-#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
-#, python-format
-msgid "%s unselected"
-msgstr "%s deselectat"
-
-#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
-#, python-format
-msgid "%s selected instead"
-msgstr "%s selectat în loc"
-
-#. Translators: Reported when selection is removed.
-msgid "selection removed"
-msgstr "selectare îndepărtată"
-
-#. Translators: Speaks current row number (example output: row 3).
-#, python-format
-msgid "row %s"
-msgstr "rând %s"
-
-#. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "prin %s"
-
-#. Translators: Speaks current column number (example output: column 3).
-#, python-format
-msgid "column %s"
-msgstr "coloană %s"
-
-#. Translators: Speaks the row and column span added to the current row and column numbers
-#. (example output: through row 5 column 3).
-#, python-brace-format
-msgid "through row {row} column {column}"
-msgstr "prin rândul {row} coloana {column}"
-
-#. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
-msgid "with {rowCount} rows and {columnCount} columns"
-msgstr "cu {rowCount} rânduri și {columnCount} coloane"
-
-#. Translators: Speaks number of columns (example output: with 4 columns).
-#, python-format
-msgid "with %s columns"
-msgstr "cu %s coloane"
-
-#. Translators: Speaks number of rows (example output: with 2 rows).
-#, python-format
-msgid "with %s rows"
-msgstr "cu %s rânduri"
-
-#. Translators: Speaks the item level in treeviews (example output: level 2).
-#, python-format
-msgid "level %s"
-msgstr "nivel %s"
-
-#. Translators: Number of items in a list (example output: list with 5 items).
-#, python-format
-msgid "with %s items"
-msgstr "cu %s obiecte"
-
-#. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
-#, python-format
-msgid "out of %s"
-msgstr "în afara %s"
-
-#. Translators: Indicates the page number in a document.
-#. %s will be replaced with the page number.
-#, python-format
-msgid "page %s"
-msgstr "pagina %s"
-
-#. Translators: Indicates the section number in a document.
-#. %s will be replaced with the section number.
-#, python-format
-msgid "section %s"
-msgstr "secțiunea %s"
-
-#. Translators: Indicates the text column number in a document.
-#. {0} will be replaced with the text column number.
-#. {1} will be replaced with the number of text columns.
-#, python-brace-format
-msgid "column {0} of {1}"
-msgstr "coloana {0} din {1}"
-
-#. Translators: Indicates the text column number in a document.
-#. %s will be replaced with the number of text columns.
-#, python-format
-msgid "%s columns"
-msgstr "%s coloane"
-
-msgid "continuous section break"
-msgstr "continuă secțiunea"
-
-msgid "new column section break"
-msgstr "coloana nouă a secțiunii"
-
-msgid "new page section break"
-msgstr "pagina nouă a secțiunii"
-
-msgid "even pages section break"
-msgstr "chiar și spațiere între secțiunile paginii"
-
-msgid "odd pages section break"
-msgstr "spațiere adițională între secțiunile paginii"
-
-msgid "column break"
-msgstr "spațiere între coloane"
-
-#. Translators: Speaks the heading level (example output: heading level 2).
-#, python-format
-msgid "heading level %d"
-msgstr "rubrică nivel %d"
-
-#. Translators: Indicates the style of text.
-#. A style is a collection of formatting settings and depends on the application.
-#. %s will be replaced with the name of the style.
-#, python-format
-msgid "style %s"
-msgstr "stil %s"
-
-#. Translators: Indicates that text has reverted to the default style.
-#. A style is a collection of formatting settings and depends on the application.
-msgid "default style"
-msgstr "stil implicit"
-
-#. Translators: Indicates that cell does not have border lines.
-msgid "no border lines"
-msgstr "fără linii de frontieră"
-
-#. Translators: Reported when there are two background colors.
-#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
-#. {color1} will be replaced with the first background color.
-#. {color2} will be replaced with the second background color.
-#, python-brace-format
-msgid "{color1} to {color2}"
-msgstr "{color1} la {color2}"
-
-#. Translators: Reported when both the text and background colors change.
-#. {color} will be replaced with the text color.
-#. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
-msgid "{color} on {backgroundColor}"
-msgstr "{color} pe {backgroundColor}"
-
-#. Translators: Reported when the text color changes (but not the background color).
-#. {color} will be replaced with the text color.
-#, python-brace-format
-msgid "{color}"
-msgstr "{color}"
-
-#. Translators: Reported when the background color changes (but not the text color).
-#. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
-msgid "{backgroundColor} background"
-msgstr "culoare fundal {backgroundColor}"
-
-#, python-brace-format
-msgid "background pattern {pattern}"
-msgstr "tipar de fundal {pattern}"
-
-#. Translators: Indicates the line number of the text.
-#. %s will be replaced with the line number.
-#, python-format
-msgid "line %s"
-msgstr "rând %s"
-
-#. Translators: Reported when text is no longer marked as having been inserted.
-msgid "not inserted"
-msgstr "neinserat"
-
-#. Translators: Reported when text is no longer marked as having been  deleted.
-msgid "not deleted"
-msgstr "nu a fost șters"
-
-#. Translators: Reported when text is revised.
-#, python-format
-msgid "revised %s"
-msgstr "revizuit %s"
-
-#. Translators: Reported when text is not revised.
-#, python-format
-msgid "no revised %s"
-msgstr "nerevizuit %s"
-
-#. Translators: Reported when text is marked
-msgid "marked"
-msgstr "marcat"
-
-#. Translators: Reported when text is no longer marked
-msgid "not marked"
-msgstr "nemarcat"
-
-#. Translators: Reported when text is marked as strong (e.g. bold)
-msgid "strong"
-msgstr "îngroșat"
-
-#. Translators: Reported when text is no longer marked as strong (e.g. bold)
-msgid "not strong"
-msgstr "neîngroșat"
-
-#. Translators: Reported when text is marked as emphasised
-msgid "emphasised"
-msgstr "accentuat"
-
-#. Translators: Reported when text is no longer marked as emphasised
-msgid "not emphasised"
-msgstr "neaccentuat"
-
-#. Translators: Reported when text is not bolded.
-msgid "no bold"
-msgstr "neîngroșat"
-
-#. Translators: Reported when text is not italicized.
-msgid "no italic"
-msgstr "nu e cursiv"
-
-#. Translators: Reported when text is formatted with double strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
-msgid "double strikethrough"
-msgstr "tăiat cu linie dublă"
-
-#. Translators: Reported when text is formatted with strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
-msgid "strikethrough"
-msgstr "tăiat"
-
-#. Translators: Reported when text is formatted without strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
-msgid "no strikethrough"
-msgstr "nu e tăiat"
-
-#. Translators: Reported when text is underlined.
-msgid "underlined"
-msgstr "subliniat"
-
-#. Translators: Reported when text is not underlined.
-msgid "not underlined"
-msgstr "nesubliniat"
-
-#. Translators: Reported for text which is at the baseline position;
-#. i.e. not superscript or subscript.
-msgid "baseline"
-msgstr "line de bază"
-
-#. Translators: Reported when text is left-aligned.
-msgid "align left"
-msgstr "aliniere la stânga"
-
-#. Translators: Reported when text is centered.
-msgid "align center"
-msgstr "aliniere pe centru"
-
-#. Translators: Reported when text is right-aligned.
-msgid "align right"
-msgstr "aliniere la dreapta"
-
-#. Translators: Reported when text is justified.
-#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
-msgid "align justify"
-msgstr "aliniere pe toată lungimea"
-
-#. Translators: Reported when text is justified with character spacing (Japanese etc)
-#. See http://kohei.us/2010/01/21/distributed-text-justification/
-msgid "align distributed"
-msgstr "aliniere distribuită"
-
-#. Translators: Reported when text has reverted to default alignment.
-msgid "align default"
-msgstr "aliniere implicită"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "aliniere verticală sus"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "aliniere verticală mijloc"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "aliniere verticală jos"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "aliniere verticală la linia de bază"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "aliniere verticală la ambele margini"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "aliniere verticală distribuită"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "aliniere verticală implicită"
-
-#. Translators: the label for paragraph format left indent
-msgid "left indent"
-msgstr "indentație stânga"
-
-#. Translators: the message when there is no paragraph format left indent
-msgid "no left indent"
-msgstr "fără indentație stânga"
-
-#. Translators: the label for paragraph format right indent
-msgid "right indent"
-msgstr "indentație dreapta"
-
-#. Translators: the message when there is no paragraph format right indent
-msgid "no right indent"
-msgstr "fără indentație dreapta"
-
-#. Translators: the label for paragraph format hanging indent
-msgid "hanging indent"
-msgstr "indentație negativă"
-
-#. Translators: the message when there is no paragraph format hanging indent
-msgid "no hanging indent"
-msgstr "fără indentație negativă pentru primul rând"
-
-#. Translators: the label for paragraph format first line indent
-msgid "first line indent"
-msgstr "indentație pentru primul rând"
-
-#. Translators: the message when there is no paragraph format first line indent
-msgid "no first line indent"
-msgstr "fără indentație pentru primul rând"
-
-#. Translators: a type of line spacing (E.g. single line spacing)
-#, python-format
-msgid "line spacing %s"
-msgstr "spațiere linie %s"
-
-#. Translators: Reported when text no longer contains a comment.
-msgid "out of comment"
-msgstr "fără comentariu"
-
-#. Translators: Reported when text contains a spelling error.
-msgid "spelling error"
-msgstr "eroare de ortografie"
-
-#. Translators: Reported when moving out of text containing a spelling error.
-msgid "out of spelling error"
-msgstr "în afara erorii de ortografie"
-
-#. Translators: Reported when text contains a grammar error.
-msgid "grammar error"
-msgstr "eroare de gramatică"
-
-#. Translators: Reported when moving out of text containing a grammar error.
-msgid "out of grammar error"
-msgstr "în afara erorii de gramatică"
-
-#. Translators: Indicates end of a table.
-msgid "out of table"
-msgstr "în afara tabelului"
-
-#. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
-msgid "table with {columnCount} columns and {rowCount} rows"
-msgstr "tabel cu {columnCount} coloane și {rowCount} rânduri"
-
 msgid "NVDA Speech Viewer"
 msgstr "Monitorul de vorbire NVDA"
 
-#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+#. Translators: The label for a setting in the speech viewer that controls
+#. whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
 msgstr "&Arată monitorul de vorbire la pornire"
 
@@ -6675,7 +6612,13 @@ msgstr "Eroare la căutarea actualizărilor."
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
+#. Translators: The title of an error message dialog.
+#. Translators: An title for an error displayed when saving user defined input gestures fails.
+#. Translators: The title of a dialog presented when an error occurs.
+#. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
 msgid "Error"
 msgstr "Eroare"
 
@@ -6694,6 +6637,10 @@ msgstr "Nicio actualizare disponibilă."
 msgid "NVDA version {version} has been downloaded and is pending installation."
 msgstr "Versiunea NVDA {version} a fost descărcată și așteaptă instalarea."
 
+#. Translators: A message indicating that some add-ons will be disabled
+#. unless reviewed before installation.
+#. Translators: A message in the installer to let the user know that
+#. some addons are not compatible.
 msgid ""
 "\n"
 "\n"
@@ -6749,7 +6696,6 @@ msgstr "Amintește-mi mai &târziu"
 #. Translators: The label of a button to close a dialog.
 #. Translators: The label of a button to close the Addons dialog.
 #. Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
-#. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "În&chide"
 
@@ -6758,6 +6704,8 @@ msgstr "În&chide"
 msgid "NVDA version {version} is ready to be installed.\n"
 msgstr "Versiunea {version} pentru NVDA este gata să fie instalată.\n"
 
+#. Translators: A message indicating that some add-ons will be disabled
+#. unless reviewed before installation.
 msgid ""
 "\n"
 "However, your NVDA configuration contains add-ons that are incompatible with "
@@ -6800,6 +6748,7 @@ msgstr "Se descarcă"
 msgid "Error downloading update."
 msgstr "Eroare la descărcarea actualizării."
 
+#. Translators: The message requesting donations from users.
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
 "This project relies primarily on donations and grants. By donating, you are "
@@ -6850,6 +6799,7 @@ msgstr ""
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C)  {years} Colaboratori NVDA"
 
+#. Translators: "About NVDA" dialog box message
 #, python-brace-format
 msgid ""
 "{longName} ({name})\n"
@@ -6863,7 +6813,7 @@ msgid ""
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} is developed by NV Access, a non-profit organisation committed to "
@@ -6902,6 +6852,10 @@ msgid ""
 msgstr ""
 "Nu s-a putut instala suplimentul NVDA de la {path}.\n"
 "Trebuie să rulezi NVDA pentru a putea instala extensii add-on."
+
+#. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
+msgid "Secure Desktop"
+msgstr "Spațiu de lucru sigur"
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
 #, python-brace-format
@@ -6965,10 +6919,6 @@ msgstr ""
 #. Translators: When the help popup cannot be found for the selected autocompletion item
 msgid "Cann't find the documentation window."
 msgstr "Nu se poate găsi fereastra documentației."
-
-#. Translators: The title of Start menu/screen in your language (only the word start).
-msgid "Start"
-msgstr "Start"
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
@@ -7453,37 +7403,6 @@ msgstr "Diapozitiv gol"
 msgid "Waiting for Powerpoint..."
 msgstr "Inițializare Powerpoint..."
 
-#. Translators: The name of the NVDA command category for Skype specific commands.
-msgid "Skype"
-msgstr "Skype"
-
-msgid "Reports and moves the review cursor to a recent message"
-msgstr "Anunță și mută cursorul de examinare la un mesaj recent"
-
-#. Translators: Indicates that a contact stopped typing.
-msgid "Typing stopped"
-msgstr "Scriere oprită"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Rewind"
-msgstr "Reia"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Fast forward"
-msgstr "Înaintare rapidă"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Play"
-msgstr "Redă"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Stop"
-msgstr "Stop"
-
-#. Translators: This is the name of a button in sound recorder.
-msgid "Record"
-msgstr "Înregistrează"
-
 msgid "left"
 msgstr "stânga"
 
@@ -7599,6 +7518,10 @@ msgstr "Seriile braille HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync"
 msgid "MDV Lilli"
 msgstr "MDV Lilli"
 
+#. Translators: Names of braille displays
+msgid "Nattiq nBraille"
+msgstr "Nattiq nBraille"
+
 #. Translators: Is used to indicate that braille support will be disabled.
 msgid "No braille"
 msgstr "Fără braille"
@@ -7618,6 +7541,15 @@ msgstr "Afișaje Braille Seika"
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
 msgstr "SuperBraille"
+
+#. Translators: The title of the NVDA Braille Viewer tool window.
+msgid "NVDA Braille Viewer"
+msgstr "Monitorul de Braille NVDA"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether the braille viewer is shown at startup or not.
+msgid "&Show Braille Viewer on Startup"
+msgstr "&Arată Monitorul de Braille la pornire"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -7750,6 +7682,7 @@ msgstr "Setări NVDA"
 msgid "&Default dictionary..."
 msgstr "&Dicționar implicit..."
 
+#. Translators: The help text for the menu item to open Default speech dictionary dialog.
 msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
 "to the list"
@@ -7761,6 +7694,8 @@ msgstr ""
 msgid "&Voice dictionary..."
 msgstr "&Dicționar vocal..."
 
+#. Translators: The help text for the menu item
+#. to open Voice specific speech dictionary dialog.
 msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
@@ -7772,6 +7707,7 @@ msgstr ""
 msgid "&Temporary dictionary..."
 msgstr "&Dicționar temporar..."
 
+#. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
 msgid ""
 "A dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
@@ -7802,6 +7738,10 @@ msgstr "Vezi jurnal"
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
 msgstr "Monitor de vorbire"
+
+#. Translators: The label for the menu item to toggle Braille Viewer.
+msgid "Braille viewer"
+msgstr "Monitor braille"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -7915,6 +7855,7 @@ msgstr "Ieșir&e"
 msgid "Exit NVDA"
 msgstr "Ieșire NVDA"
 
+#. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
 msgid ""
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
@@ -7959,9 +7900,11 @@ msgid "&Use CapsLock as an NVDA modifier key"
 msgstr "Folosește &CapsLock ca tastă de modificare NVDA"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
-#. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
-msgid "&Automatically start NVDA after I log on to Windows"
-msgstr "&Pornește NVDA automat după ce mă autentific în Windows"
+#. Translators: The label for a setting in general settings to allow NVDA to start after logging onto
+#. Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must
+#. start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
+msgid "St&art NVDA after I sign in"
+msgstr "&Pornește NVDA după ce mă autentific"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Show this dialog when NVDA starts"
@@ -8056,15 +7999,21 @@ msgstr ""
 #. Translators: The label of a Yes button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
 #. the add-on
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. agree to enabling the curtain.
 msgid "&Yes"
 msgstr "&Da"
 
 #. Translators: The label of a No button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to decide not to
 #. install the add-on
+#. Translators: A button in the screen curtain warning dialog which allows the user to
+#. disagree to enabling the curtain.
 msgid "&No"
 msgstr "&Nu"
 
+#. Translators: A message asking the user if they wish to restart NVDA
+#. as addons have been added, enabled/disabled or removed.
 msgid ""
 "Changes were made to add-ons. You must restart NVDA for these changes to "
 "take effect. Would you like to restart now?"
@@ -8084,10 +8033,10 @@ msgstr "&Despre supliment..."
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
-#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
 msgid "OK"
 msgstr "OK"
 
+#. Translators: message shown in the Addon Information dialog.
 #, python-brace-format
 msgid ""
 "{summary} ({name})\n"
@@ -8125,6 +8074,7 @@ msgstr "Administratorul de suplimente"
 msgid "Add-ons Manager (add-ons disabled)"
 msgstr "Administratorul de suplimente (suplimente dezactivate)"
 
+#. Translators: A message in the add-ons manager shown when add-ons are globally disabled.
 msgid ""
 "NVDA was started with all add-ons disabled. You may modify the enabled / "
 "disabled state, and install or uninstall add-ons. Changes will not take "
@@ -8166,8 +8116,8 @@ msgstr "&Dezactivare supliment"
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
-#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 msgid "&Remove"
 msgstr "&Elimină"
 
@@ -8193,8 +8143,14 @@ msgid "NVDA Add-on Package (*.{ext})"
 msgstr "Pachetul suplimentului (*.{ext})"
 
 #. Translators: Presented when attempting to remove the selected add-on.
-msgid "Are you sure you wish to remove the selected add-on from NVDA?"
-msgstr "Sigur doriți să înlăturați din NVDA suplimentul selectat?"
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgid ""
+"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
+"undone."
+msgstr ""
+"Sigur doriți să înlăturați din NVDA suplimentul {addon}? Această acțiune "
+"este ireversibilă."
 
 #. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
@@ -8257,6 +8213,8 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "Instalare supliment"
 
+#. Translators: A message asking if the user wishes to update an add-on with the same version
+#. currently installed according to the version number.
 #, python-brace-format
 msgid ""
 "You are about to install version {newVersion} of {summary}, which appears to "
@@ -8265,6 +8223,8 @@ msgstr ""
 "Sunteți pe punctul de a instala versiunea {newVersion} a {summary}, care se "
 "pare că este deja instalată. Doriți, totuși, să actualizați?"
 
+#. Translators: A message asking if the user wishes to update a previously installed
+#. add-on with this one.
 #, python-brace-format
 msgid ""
 "A version of this add-on is already installed. Would you like to update "
@@ -8291,6 +8251,8 @@ msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
 msgstr ""
 "Suplimentele nu pot fi instalate în versiunea de NVDA pentru Windows Store"
 
+#. Translators: The message displayed when installing an add-on package is prohibited,
+#. because it requires a later version of NVDA than is currently installed.
 #, python-brace-format
 msgid ""
 "Installation of {summary} {version} has been blocked. The minimum NVDA "
@@ -8305,6 +8267,8 @@ msgstr ""
 msgid "Add-on not compatible"
 msgstr "Supliment incompatibil"
 
+#. Translators: A message informing the user that this addon can not be installed
+#. because it is not compatible.
 #, python-brace-format
 msgid ""
 "Installation of {summary} {version} has been blocked. An updated version of "
@@ -8315,6 +8279,7 @@ msgstr ""
 "actualizată a acestui supliment, API-ul minim al acestuia suportat de "
 "această versiune de NVDA fiind {backCompatToAPIVersion}"
 
+#. Translators: A message asking the user if they really wish to install an addon.
 #, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on?\n"
@@ -8329,6 +8294,7 @@ msgstr ""
 msgid "Incompatible Add-ons"
 msgstr "Suplimente incompatibile"
 
+#. Translators: The title of the Incompatible Addons Dialog
 msgid ""
 "The following add-ons are incompatible with NVDA version {}. These add-ons "
 "can not be enabled. Please contact the add-on author for further assistance."
@@ -8441,6 +8407,11 @@ msgstr "Nume nou:"
 msgid "Rename Profile"
 msgstr "Redenumire profil"
 
+#. Translators: An error displayed when the user attempts to rename a configuration profile
+#. with an empty name.
+msgid "A profile cannot have an empty name."
+msgstr "Un profil nu poate avea un nume lipsit de conținut."
+
 #. Translators: An error displayed when renaming a configuration profile
 #. and a profile with the new name already exists.
 #. Translators: An error displayed when the user attempts to create a configuration profile which already exists.
@@ -8512,6 +8483,11 @@ msgstr ""
 "fi înlăturat de la profilul respectiv și va fi asociat acestuia.\n"
 "Sigur vreți să continuați?"
 
+#. Translators: An error displayed when the user attempts to create a configuration profile
+#. with an empty name.
+msgid "You must choose a name for this profile."
+msgstr "Trebuie să alegeți un nume pentru acest profil."
+
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
 msgstr ""
@@ -8534,6 +8510,81 @@ msgstr ""
 #. Translators: The title of the confirmation dialog for manual activation of a created profile.
 msgid "Manual Activation"
 msgstr "Activare manuală"
+
+#. Translators: Describes a gesture in the Input Gestures dialog.
+#. {main} is replaced with the main part of the gesture; e.g. alt+tab.
+#. {source} is replaced with the gesture's source; e.g. laptop keyboard.
+#, python-brace-format
+msgid "{main} ({source})"
+msgstr "{main} ({source})"
+
+#. Translators: The prompt to enter a gesture in the Input Gestures dialog.
+msgid "Enter input gesture:"
+msgstr "Introduceți gest de intrare:"
+
+#. Translators: An gesture that will be emulated by some other new gesture. The token {emulateGesture}
+#. will be replaced by the gesture that can be triggered by a mapped gesture.
+#. E.G. Emulate key press: NVDA+b
+#, python-brace-format
+msgid "Emulate key press: {emulateGesture}"
+msgstr "Apăsare tastă de simulare: {emulateGesture}"
+
+#. Translators: The prompt to enter an emulated gesture in the Input Gestures dialog.
+msgid "Enter gesture to emulate:"
+msgstr "Introduceți gest de simulare:"
+
+#. Translators: The label for a filtered category in the Input Gestures dialog.
+#, python-brace-format
+msgid "{category} (1 result)"
+msgstr "{category} (un rezultat)"
+
+#. Translators: The label for a filtered category in the Input Gestures dialog.
+#, python-brace-format
+msgid "{category} ({nbResults} results)"
+msgstr "{category} ({nbResults} rezultate)"
+
+#. Translators: The title of the Input Gestures dialog where the user can remap input gestures for scripts.
+msgid "Input Gestures"
+msgstr "Gesturi intrare"
+
+#. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
+msgctxt "inputGestures"
+msgid "&Filter by:"
+msgstr "&Filtrează după:"
+
+#. Translators: The label of a button to add a gesture in the Input Gestures dialog.
+#. Translators: The label for a button in speech dictionaries dialog to add new entries.
+#. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
+msgid "&Add"
+msgstr "&Adaugă"
+
+#. Translators: The label of a button to reset all gestures in the Input Gestures dialog.
+msgid "Reset to factory &defaults"
+msgstr "Resettează la &valorile implicite"
+
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid ""
+"Are you sure you want to reset all gestures to their factory defaults?\n"
+"\n"
+"\t\t\tAll of your user defined gestures, whether previously set or defined "
+"during this session, will be lost.\n"
+"\t\t\tThis cannot be undone."
+msgstr ""
+"Sunteți sigur că vreți să resetați toate gesturrile la valorile implicite?\n"
+"\n"
+"\t\t\tToate gesturile pe care le-ați setat, fie că au fost setate anterior "
+"sau în această sesiune, vor fi șterse.\n"
+"\t\t\tAceastă acțiune este ireversibilă."
+
+#. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+msgid "Reset gestures"
+msgstr "Resetare gesturi"
+
+#. Translators: An error displayed when saving user defined input gestures fails.
+msgid "Error saving user defined gestures - probably read only file system."
+msgstr ""
+"Eroare la salvarea gesturilor definite de utilizator - probabil sistemul de "
+"fișiere este în mod exclusiv citire."
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
 msgid "Updating NVDA"
@@ -8619,8 +8670,8 @@ msgid ""
 msgstr "Calea de instalare a NVDA s-a schimbat. Acum va fi instalat în {path}"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-msgid "Use NVDA on the Windows &logon screen"
-msgstr "Folosește NVDA cu ecranul de &autentificare Windows"
+msgid "Use NVDA during sign-in"
+msgstr "Pornește NVDA în timpul autentificării"
 
 # traducere "dektop": birou de lucru sau birou
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
@@ -8641,6 +8692,8 @@ msgstr "Copiază configurația &portabilă în contul utilizatorului curent"
 msgid "&Continue"
 msgstr "&Continuă"
 
+#. Translators: A warning presented when the user attempts to downgrade NVDA
+#. to an older version.
 msgid ""
 "You are attempting to install an earlier version of NVDA than the version "
 "currently installed. If you really wish to revert to an earlier version, you "
@@ -8751,14 +8804,13 @@ msgstr "Salvează ca"
 msgid "Error saving log: %s"
 msgstr "Eroare la salvarea jurnalului: %s"
 
+#. Translators: A message indicating that log cannot be loaded to LogViewer.
+msgid "Log is unavailable"
+msgstr "Jurnalul nu este disponibil"
+
 #. Translators: A cancel button on a message dialog.
-#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
 msgid "Cancel"
 msgstr "Anulează"
-
-#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
-msgid "Apply"
-msgstr "Se aplică"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
@@ -8788,13 +8840,16 @@ msgstr "intrare/rezultat"
 msgid "debug"
 msgstr "diagnosticare"
 
-#. Translators: The label for a setting in general settings to select NVDA's interface language (once selected, NVDA must be restarted; the option user default means the user's Windows language will be used).
-msgid "&Language (requires restart to fully take effect):"
-msgstr "&Limba (necesită repornire pentru a avea efectul integral):"
+#. Translators: The label for a setting in general settings to select NVDA's interface language
+#. (once selected, NVDA must be restarted; the option user default means the user's Windows language
+#. will be used).
+msgid "NVDA &Language (requires restart):"
+msgstr "&Limba NVDA (necesită repornire):"
 
-#. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
-msgid "&Save configuration on exit"
-msgstr "&Salvează configurația la ieșire"
+#. Translators: The label for a setting in general settings to save current configuration when NVDA
+#. exits (if it is not checked, user needs to save configuration before quitting NVDA).
+msgid "&Save configuration when exiting NVDA"
+msgstr "&Salvează configurația la închiderea NVDA"
 
 #. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
 msgid "Sho&w exit options when exiting NVDA"
@@ -8804,24 +8859,30 @@ msgstr "Arată &opțiunile de ieșire când se părăsește NVDA"
 msgid "&Play sounds when starting or exiting NVDA"
 msgstr "&Redă sunete când se pornește sau se părăsește NVDA"
 
-#. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
+#. Translators: The label for a setting in general settings to select logging level of NVDA as it runs
+#. (available options and what they are logging are found under comments for the logging level messages
+#. themselves).
 msgid "L&ogging level:"
 msgstr "Nivel înregistrări din &jurnal:"
 
-#. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
-msgid ""
-"Use NVDA on the Windows logon screen (requires administrator privileges)"
+#. Translators: The label for a setting in general settings to
+#. allow NVDA to come up in Windows login screen (useful if user
+#. needs to enter passwords or if multiple user accounts are present
+#. to allow user to choose the correct account).
+msgid "Use NVDA during sign-in (requires administrator privileges)"
 msgstr ""
-"Folosește NVDA în ecranul de autentificare Windows (cere privilegii de "
-"administrator)"
+"Pornește NVDA în timpul autentificării (cere privilegii de administrator)"
 
-#. Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
+#. Translators: The label for a button in general settings to copy
+#. current user settings to system settings (to allow current
+#. settings to be used in secure screens such as User Account
+#. Control (UAC) dialog).
 msgid ""
-"Use currently saved settings on the logon and other secure screens (requires "
+"Use currently saved settings during sign-in and on secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"Folosește preferințele curent salvate asupra ecranului de autentificare și a "
-"altor ecrane securizate (cere privilegii de administrator)"
+"Folosește preferințele curent salvate în timpul autentificării și asupra "
+"ecranelor de securitate (cere privilegii de administrator)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
@@ -8837,6 +8898,8 @@ msgid "Allow the NVDA project to gather NVDA usage statistics"
 msgstr ""
 "Permite proiectului NVDA să adune statistici cu privire la utilizarea NVDA"
 
+#. Translators: A message to warn the user when attempting to copy current
+#. settings to system settings.
 msgid ""
 "Add-ons were detected in your user settings directory. Copying these to the "
 "system profile could be a security risk. Do you still wish to copy your "
@@ -8924,12 +8987,16 @@ msgstr "&Sintetizator:"
 #. device combo in the synthesizer dialog. Examples of
 #. of an output device are default soundcard, usb
 #. headphones, etc.
-msgid "Output &device:"
-msgstr "&Dispozitiv de ieșire:"
+msgid "Audio output  &device:"
+msgstr "&Dispozitiv audio de ieșire:"
+
+#. Translators: name for default (Microsoft Sound Mapper) audio output device.
+msgid "Microsoft Sound Mapper"
+msgstr "Cartograful de Sunete Microsoft"
 
 #. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
-msgid "Audio &ducking mode:"
-msgstr "Mod &atenuare audio:"
+msgid "Audio d&ucking mode:"
+msgstr "Mod de &atenuare audio:"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
@@ -8951,7 +9018,8 @@ msgid "Automatic language switching (when supported)"
 msgstr "Comutare automată a &limbii (când e suportat)"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings panel (if checked, different voices for dialects will be used to read text in that dialect).
+#. voice settings panel (if checked, different voices for dialects will be used to
+#. read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
 msgstr "Comutare automată a &dialectului (când e suportat)"
 
@@ -8975,7 +9043,8 @@ msgstr ""
 "Include datele Unicode Consortium (inclusiv emoji) atunci când se procesează "
 "caractere și simboluri"
 
-#. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
+#. Translators: This is a label for a setting in voice settings (an edit box to change
+#. voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "&Procent schimbare amplitudine la citirea majusculelor"
 
@@ -9015,13 +9084,13 @@ msgstr "&Pronunță cuvintele tastate"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-msgid "Speech interrupt for typed characters"
-msgstr "Întrerupe &vorbirea la tastarea de caractere"
+msgid "Speech &interrupt for typed characters"
+msgstr "&Vorbirea este întreruptă la tastarea de caractere"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-msgid "Speech interrupt for Enter key"
-msgstr "Întrerupe &vorbirea la apăsarea Enter"
+msgid "Speech i&nterrupt for Enter key"
+msgstr "&Vorbirea este întreruptă la apăsarea Enter"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -9030,14 +9099,13 @@ msgstr "Permite &răsfoirea în modul de rostire completă"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-msgid "Beep if typing lowercase letters when caps lock is on"
+msgid "&Beep if typing lowercase letters when caps lock is on"
 msgstr ""
-"&Emite un bip la tastarea literelor mici dacă  blocarea pe majuscule e "
-"activată"
+"&Emite un bip la tastarea literelor mici dacă tasta caps lock e activată"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
-msgid "Speak command &keys"
+msgid "Speak c&ommand keys"
 msgstr "Pronunță &tastele de comandă"
 
 #. Translators: This is the label for a checkbox in the
@@ -9110,7 +9178,7 @@ msgstr "Urmărește cursorul &mausului"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
-msgid "Simple review mode"
+msgid "&Simple review mode"
 msgstr "Mod &examinare simplă"
 
 #. Translators: This is the label for the Input Composition settings panel.
@@ -9187,7 +9255,7 @@ msgstr "Raportează informația despre &poziția obiectului"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Guess object &position information when unavailable"
+msgid "&Guess object position information when unavailable"
 msgstr ""
 "Intuiește informația despre &poziția obiectului când este indisponibilă"
 
@@ -9203,7 +9271,7 @@ msgstr "Tip anunț pentru &bara de progres:"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report background progress bars"
+msgid "Report backg&round progress bars"
 msgstr "Anunță barele de progres din &fundal"
 
 #. Translators: This is the label for a checkbox in the
@@ -9211,7 +9279,7 @@ msgstr "Anunță barele de progres din &fundal"
 msgid "Report dynamic &content changes"
 msgstr "Anunță schimbările &dinamice de conținut"
 
-#. Translators: This is the label for a combobox in the
+#. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "Play a sound when &auto-suggestions appear"
 msgstr "&Redă un sunet când apar autosugestiile"
@@ -9253,12 +9321,12 @@ msgstr "&Include tabelele de aspect"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatic focus mode for focus changes"
-msgstr "Mod formular automat pentru schimbările de &focalizare"
+msgstr "Mod focalizare automată pentru schimbările de &focalizare"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatic focus mode for caret movement"
-msgstr "Mod formular automat pentru mișcarea &cursorului de scriere"
+msgstr "Mod focalizare automată pentru mișcarea &cursorului de scriere"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -9271,6 +9339,11 @@ msgid "&Trap all non-command gestures from reaching the document"
 msgstr ""
 "Împiedică trimiterea către document a tuturor &gesturilor neatribuite unei "
 "comenzi"
+
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings panel.
+msgid "Automatically set system &focus to focusable elements"
+msgstr "Setează automat focalizarea sistemului la elementele focalizabile"
 
 #. Translators: This is the label for the document formatting panel.
 msgid "Document Formatting"
@@ -9301,13 +9374,23 @@ msgstr "Dimensiune &font"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Font attri&butes"
+msgid "Font attrib&utes"
 msgstr "&Atribute font"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+msgid "Su&perscripts and subscripts"
+msgstr "&Superscripturi și subscripturi"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "E&mphasis"
 msgstr "&Accentuare"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+msgid "Marked (highlighted text)"
+msgstr "Marcat (text evidențiat)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9326,8 +9409,8 @@ msgstr "Informație document"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Co&mments"
-msgstr "&Comentarii"
+msgid "No&tes and comments"
+msgstr "&Note și comentarii"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9375,8 +9458,8 @@ msgid "Tones"
 msgstr "Tonuri"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both  Speech and Tones"
-msgstr "Atât vorbire cât și tonuri"
+msgid "Both Speech and Tones"
+msgstr "Atât Vorbire cât și Tonuri"
 
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -9425,13 +9508,18 @@ msgstr "Atât culori cât și stiluri"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-msgid "Cell borders:"
-msgstr "Marginile celulei:"
+msgid "Cell &borders:"
+msgstr "&Marginile celulei:"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
 msgid "Elements"
 msgstr "Elemente"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+msgid "&Graphics"
+msgstr "&Grafice"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9445,6 +9533,21 @@ msgstr "&Citate bloc"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+msgid "&Groupings"
+msgstr "G&rupări"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+msgid "Lan&dmarks and regions"
+msgstr "&Repere și regiuni"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
+msgid "Arti&cles"
+msgstr "Arti&cole"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "Fra&mes"
 msgstr "&Cadre"
 
@@ -9455,13 +9558,18 @@ msgstr "&Clicabil"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Report formatting changes after the cursor (can cause a lag)"
+msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr ""
-"Anunță schimbări de formatare după cursor (poate produce  o întârziere)"
+"&Anunță schimbări de formatare după cursor (poate produce  o întârziere)"
 
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
 msgstr "Interacțiune tactilă"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings panel.
+msgid "Enable touch interaction support"
+msgstr "Activează suportul interacțiunii tactile"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
@@ -9500,6 +9608,14 @@ msgstr "Microsoft UI Automation"
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid ""
+"Enable &selective registration for UI Automation events and property changes"
+msgstr ""
+"Activează &înregistrarea selectivă pentru evenimentele UI Automation și "
+"pentru schimbările de proprietate"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid ""
 "Use UI Automation to access Microsoft &Word document controls when available"
 msgstr ""
 "Folosește UI Automation pentru a accesa comenzile documentelor Microsoft "
@@ -9507,9 +9623,9 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Use UI Automation to access the Windows Console when available"
+msgid "Use UI Automation to access the Windows C&onsole when available"
 msgstr ""
-"Folosește UI Automation pentru a accesa consola &Windows dacă este "
+"&Folosește UI Automation pentru a accesa Consola Windows dacă este "
 "disponibilă"
 
 #. Translators: This is the label for a checkbox in the
@@ -9517,10 +9633,37 @@ msgstr ""
 msgid "Speak &passwords in UIA consoles (may improve performance)"
 msgstr "&Spune parolele în consolele UIA (poate îmbunătăți performanța)"
 
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Terminal programs"
+msgstr "Programe terminale"
+
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Automatically set system &focus to focusable elements"
-msgstr "Setează automat focalizarea sistemului la elementele focalizabile"
+msgid "Use the new t&yped character support in Windows Console when available"
+msgstr ""
+"Folosește noul suport pentru caracterele &tastate în Consola Windows când "
+"este disponibil"
+
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Default (No)"
+msgstr "Implicit (nu)"
+
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Yes"
+msgstr "Da"
+
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "No"
+msgstr "Nu"
+
+#. Translators: This is the label for combobox in the Advanced settings panel.
+msgid "Attempt to cancel speech for expired focus events:"
+msgstr ""
+"Încearcă să anulezi vorbirea pentru evenimentele expirate ale focalizării:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9552,6 +9695,7 @@ msgstr "Avansat"
 msgid "Warning!"
 msgstr "Atenţie!"
 
+#. Translators: This is a label appearing on the Advanced settings panel.
 msgid ""
 "The following settings are for advanced users. Changing them may cause NVDA "
 "to function incorrectly. Please only change these if you know what you are "
@@ -9562,6 +9706,7 @@ msgstr ""
 "în cazul în care știți ce faceți sau ați fost instruit special de către "
 "dezvoltatorii NVDA."
 
+#. Translators: This is the label for a checkbox in the Advanced settings panel.
 msgid ""
 "I understand that changing these settings may cause NVDA to function "
 "incorrectly."
@@ -9618,12 +9763,11 @@ msgstr "Eroare la introducere în dicționar"
 msgid "Regular Expression error: \"%s\"."
 msgstr "Eroare de expresie regulată: \"%s\"."
 
-#. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
+#. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
 msgstr "Intrări în &dicționar"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
-#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
 msgstr "Comentariu"
 
@@ -9632,6 +9776,7 @@ msgid "Pattern"
 msgstr "Șablon"
 
 #. Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
+#. Translators: The label for a column in symbols list used to identify a replacement.
 msgid "Replacement"
 msgstr "Înlocuire"
 
@@ -9642,12 +9787,6 @@ msgstr "majusculă"
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
 msgid "Type"
 msgstr "Scrie"
-
-#. Translators: The label for a button in speech dictionaries dialog to add new entries.
-#. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
-#. Translators: The label of a button to add a gesture in the Input Gestures dialog.
-msgid "&Add"
-msgstr "&Adaugă"
 
 #. Translators: The label for a button in speech dictionaries dialog to edit existing entries.
 msgid "&Edit"
@@ -9673,10 +9812,14 @@ msgstr "&Afișaj Braille:"
 msgid "&Port:"
 msgstr "&Port:"
 
-#, python-format
-msgid "Could not load the %s display."
-msgstr "Nu s-a putut încărca afișajul %s."
+#. Translators: The message in a dialog presented when NVDA is unable to load the selected
+#. braille display.
+#, python-brace-format
+msgid "Could not load the {display} display."
+msgstr "Nu s-a putut încărca afișajul {display}"
 
+#. Translators: The title in a dialog presented when NVDA is unable to load the selected
+#. braille display.
 msgid "Braille Display Error"
 msgstr "Eroare afișaj Braille"
 
@@ -9736,6 +9879,68 @@ msgstr "Evită despărțirea &cuvintelor când e posibil"
 msgid "Focus context presentation:"
 msgstr "Focalizare pe contextul prezentării:"
 
+#. Translators: This message is presented when
+#. NVDA is unable to load a single vision enhancement provider.
+#, python-brace-format
+msgid "Could not load the {providerName} vision enhancement provider"
+msgstr ""
+"Nu s-a putut încărca furnizorul de îmbunătățire a vederii {providerName}"
+
+#. Translators: This message is presented when NVDA is unable to
+#. load multiple vision enhancement providers.
+#, python-brace-format
+msgid ""
+"Could not load the following vision enhancement providers:\n"
+"{providerNames}"
+msgstr ""
+"Nu s-au putut încărca următorii furnizori de îmbunătățire a vederii:\n"
+"{providerNames}"
+
+#. Translators: The title of the vision enhancement provider error message box.
+msgid "Vision Enhancement Provider Error"
+msgstr "Eroare la furnizorul de îmbunătățire a vederii"
+
+#. Translators: This message is presented when
+#. NVDA is unable to gracefully terminate a single vision enhancement provider.
+#, python-brace-format
+msgid ""
+"Could not gracefully terminate the {providerName} vision enhancement provider"
+msgstr ""
+"Nu s-a putut termina cu grație furnizorul de îmbunătățire a vederii "
+"{providerName}"
+
+#. Translators: This message is presented when
+#. NVDA is unable to terminate multiple vision enhancement providers.
+#, python-brace-format
+msgid ""
+"Could not gracefully terminate the following vision enhancement providers:\n"
+"{providerNames}"
+msgstr ""
+"Nu s-au putut termina cu grație următorii furnizori de îmbunătățire a "
+"vederii:\n"
+"{providerNames}"
+
+#. Translators: This is a label appearing on the vision settings panel.
+msgid "Configure visual aids."
+msgstr "Configurează ajutoare de vedere."
+
+#. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
+msgid "Enable"
+msgstr "Activare"
+
+#. Translators: Options label on a vision enhancement provider on the vision settings category panel
+#. Translators: The label for a group box containing the NVDA highlighter options.
+msgid "Options:"
+msgstr "Opțiuni:"
+
+#. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
+msgid ""
+"Unable to configure user interface for Vision Enhancement Provider, it can "
+"not be enabled."
+msgstr ""
+"Nu se poate configura interfața utilizatorului pentru furnizorul de "
+"îmbunătățire a vederii, nu poate fi activată."
+
 #. Translators: This is the label for the NVDA settings dialog.
 msgid "NVDA Settings"
 msgstr "Setări NVDA"
@@ -9749,8 +9954,8 @@ msgid "Add Symbol"
 msgstr "Adaugă Simbol"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-msgid "Symbol:"
-msgstr "Simbol:"
+msgid "&Symbol:"
+msgstr "&Simbol:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
@@ -9801,32 +10006,6 @@ msgstr "Eli&minare"
 msgid "Symbol \"%s\" is already present."
 msgstr "Simbolul „%s” este deja existent."
 
-#. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
-msgid "Input Gestures"
-msgstr "Gesturi intrare"
-
-#. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
-msgctxt "inputGestures"
-msgid "&Filter by:"
-msgstr "&Fltrează după:"
-
-#. Translators: Describes a gesture in the Input Gestures dialog.
-#. {main} is replaced with the main part of the gesture; e.g. alt+tab.
-#. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
-msgid "{main} ({source})"
-msgstr "{main} ({source})"
-
-#. Translators: The prompt to enter a gesture in the Input Gestures dialog.
-msgid "Enter input gesture:"
-msgstr "Introduceți gest de intrare:"
-
-#. Translators: An error displayed when saving user defined input gestures fails.
-msgid "Error saving user defined gestures - probably read only file system."
-msgstr ""
-"Eroare la salvarea gesturilor definite de utilizator - probabil sistemul de "
-"fișiere este în mod exclusiv citire."
-
 #. Translators: Describes a command.
 msgid "Exit math interaction"
 msgstr "Ieșire interacțiune mod matematic"
@@ -9835,6 +10014,414 @@ msgstr "Ieșire interacțiune mod matematic"
 #. but math interaction is not supported.
 msgid "Math interaction not supported."
 msgstr "Interacțiune mod matematic nesuportat."
+
+#. Translators: This is spoken when the line is considered blank.
+#. Translators: This is spoken when NVDA moves to an empty line.
+#. Translators: This is spoken when the line is considered blank.
+msgid "blank"
+msgstr "spațiu gol"
+
+#. Translators: cap will be spoken before the given letter when it is capitalized.
+#, python-format
+msgid "cap %s"
+msgstr "%s mare"
+
+#. Translators: This is spoken when the given line has no indentation.
+msgid "no indent"
+msgstr "fără indentare"
+
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "selectat %s"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s selectat"
+
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
+#, python-format
+msgid "%d characters"
+msgstr "%d caractere"
+
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
+#, python-format
+msgid "%s unselected"
+msgstr "%s deselectat"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s selectat în loc"
+
+#. Translators: Reported when selection is removed.
+msgid "selection removed"
+msgstr "selectare îndepărtată"
+
+#. Translators: Speaks current row number (example output: row 3).
+#, python-format
+msgid "row %s"
+msgstr "rând %s"
+
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-format
+msgid "through %s"
+msgstr "prin %s"
+
+#. Translators: Speaks current column number (example output: column 3).
+#, python-format
+msgid "column %s"
+msgstr "coloană %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "prin rândul {row} coloana {column}"
+
+#. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
+#, python-brace-format
+msgid "with {rowCount} rows and {columnCount} columns"
+msgstr "cu {rowCount} rânduri și {columnCount} coloane"
+
+#. Translators: Speaks number of columns (example output: with 4 columns).
+#, python-format
+msgid "with %s columns"
+msgstr "cu %s coloane"
+
+#. Translators: Speaks number of rows (example output: with 2 rows).
+#, python-format
+msgid "with %s rows"
+msgstr "cu %s rânduri"
+
+#. Translators: Speaks the item level in treeviews (example output: level 2).
+#, python-format
+msgid "level %s"
+msgstr "nivel %s"
+
+#. Translators: Number of items in a list (example output: list with 5 items).
+#, python-format
+msgid "with %s items"
+msgstr "cu %s obiecte"
+
+#. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
+#, python-format
+msgid "out of %s"
+msgstr "în afara %s"
+
+#. Translators: Indicates the page number in a document.
+#. %s will be replaced with the page number.
+#, python-format
+msgid "page %s"
+msgstr "pagina %s"
+
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "secțiunea %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+#, python-brace-format
+msgid "column {0} of {1}"
+msgstr "coloana {0} din {1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s coloane"
+
+msgid "continuous section break"
+msgstr "continuă secțiunea"
+
+msgid "new column section break"
+msgstr "coloana nouă a secțiunii"
+
+msgid "new page section break"
+msgstr "pagina nouă a secțiunii"
+
+msgid "even pages section break"
+msgstr "chiar și spațiere între secțiunile paginii"
+
+msgid "odd pages section break"
+msgstr "spațiere adițională între secțiunile paginii"
+
+msgid "column break"
+msgstr "spațiere între coloane"
+
+#. Translators: Speaks the heading level (example output: heading level 2).
+#, python-format
+msgid "heading level %d"
+msgstr "rubrică nivel %d"
+
+#. Translators: Indicates the style of text.
+#. A style is a collection of formatting settings and depends on the application.
+#. %s will be replaced with the name of the style.
+#, python-format
+msgid "style %s"
+msgstr "stil %s"
+
+#. Translators: Indicates that text has reverted to the default style.
+#. A style is a collection of formatting settings and depends on the application.
+msgid "default style"
+msgstr "stil implicit"
+
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "fără linii de frontieră"
+
+#. Translators: Reported when there are two background colors.
+#. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
+#. {color1} will be replaced with the first background color.
+#. {color2} will be replaced with the second background color.
+#, python-brace-format
+msgid "{color1} to {color2}"
+msgstr "{color1} la {color2}"
+
+#. Translators: Reported when both the text and background colors change.
+#. {color} will be replaced with the text color.
+#. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
+msgid "{color} on {backgroundColor}"
+msgstr "{color} pe {backgroundColor}"
+
+#. Translators: Reported when the text color changes (but not the background color).
+#. {color} will be replaced with the text color.
+#, python-brace-format
+msgid "{color}"
+msgstr "{color}"
+
+#. Translators: Reported when the background color changes (but not the text color).
+#. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
+msgid "{backgroundColor} background"
+msgstr "culoare fundal {backgroundColor}"
+
+#, python-brace-format
+msgid "background pattern {pattern}"
+msgstr "tipar de fundal {pattern}"
+
+#. Translators: Indicates the line number of the text.
+#. %s will be replaced with the line number.
+#, python-format
+msgid "line %s"
+msgstr "rând %s"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "neinserat"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "nu a fost șters"
+
+#. Translators: Reported when text is revised.
+#, python-format
+msgid "revised %s"
+msgstr "revizuit %s"
+
+#. Translators: Reported when text is not revised.
+#, python-format
+msgid "no revised %s"
+msgstr "nerevizuit %s"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "marcat"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "nemarcat"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "îngroșat"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "neîngroșat"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "accentuat"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "neaccentuat"
+
+#. Translators: Reported when text is not bolded.
+msgid "no bold"
+msgstr "neîngroșat"
+
+#. Translators: Reported when text is not italicized.
+msgid "no italic"
+msgstr "nu e cursiv"
+
+#. Translators: Reported when text is formatted with double strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "double strikethrough"
+msgstr "tăiat cu linie dublă"
+
+#. Translators: Reported when text is formatted with strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "strikethrough"
+msgstr "tăiat"
+
+#. Translators: Reported when text is formatted without strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+msgid "no strikethrough"
+msgstr "nu e tăiat"
+
+#. Translators: Reported when text is underlined.
+msgid "underlined"
+msgstr "subliniat"
+
+#. Translators: Reported when text is not underlined.
+msgid "not underlined"
+msgstr "nesubliniat"
+
+#. Translators: Reported when text is hidden.
+msgid "hidden"
+msgstr "ascuns"
+
+#. Translators: Reported when text is not hidden.
+msgid "not hidden"
+msgstr "vizibil"
+
+#. Translators: Reported for text which is at the baseline position;
+#. i.e. not superscript or subscript.
+msgid "baseline"
+msgstr "line de bază"
+
+#. Translators: Reported when text is left-aligned.
+msgid "align left"
+msgstr "aliniere la stânga"
+
+#. Translators: Reported when text is centered.
+msgid "align center"
+msgstr "aliniere pe centru"
+
+#. Translators: Reported when text is right-aligned.
+msgid "align right"
+msgstr "aliniere la dreapta"
+
+#. Translators: Reported when text is justified.
+#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
+msgid "align justify"
+msgstr "aliniere pe toată lungimea"
+
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "aliniere distribuită"
+
+#. Translators: Reported when text has reverted to default alignment.
+msgid "align default"
+msgstr "aliniere implicită"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "aliniere verticală sus"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "aliniere verticală mijloc"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "aliniere verticală jos"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "aliniere verticală la linia de bază"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "aliniere verticală la ambele margini"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "aliniere verticală distribuită"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "aliniere verticală implicită"
+
+#. Translators: the label for paragraph format left indent
+msgid "left indent"
+msgstr "indentație stânga"
+
+#. Translators: the message when there is no paragraph format left indent
+msgid "no left indent"
+msgstr "fără indentație stânga"
+
+#. Translators: the label for paragraph format right indent
+msgid "right indent"
+msgstr "indentație dreapta"
+
+#. Translators: the message when there is no paragraph format right indent
+msgid "no right indent"
+msgstr "fără indentație dreapta"
+
+#. Translators: the label for paragraph format hanging indent
+msgid "hanging indent"
+msgstr "indentație negativă"
+
+#. Translators: the message when there is no paragraph format hanging indent
+msgid "no hanging indent"
+msgstr "fără indentație negativă pentru primul rând"
+
+#. Translators: the label for paragraph format first line indent
+msgid "first line indent"
+msgstr "indentație pentru primul rând"
+
+#. Translators: the message when there is no paragraph format first line indent
+msgid "no first line indent"
+msgstr "fără indentație pentru primul rând"
+
+#. Translators: a type of line spacing (E.g. single line spacing)
+#, python-format
+msgid "line spacing %s"
+msgstr "spațiere linie %s"
+
+#. Translators: Reported when text no longer contains a comment.
+msgid "out of comment"
+msgstr "fără comentariu"
+
+#. Translators: Reported when text contains a spelling error.
+msgid "spelling error"
+msgstr "eroare de ortografie"
+
+#. Translators: Reported when moving out of text containing a spelling error.
+msgid "out of spelling error"
+msgstr "în afara erorii de ortografie"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "eroare de gramatică"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "în afara erorii de gramatică"
+
+#. Translators: Indicates end of a table.
+msgid "out of table"
+msgstr "în afara tabelului"
+
+#. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
+#, python-brace-format
+msgid "table with {columnCount} columns and {rowCount} rows"
+msgstr "tabel cu {columnCount} coloane și {rowCount} rânduri"
 
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
@@ -9877,7 +10464,7 @@ msgstr "Se încarcă document..."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
-msgstr "Actualizează conțiuntul documentului"
+msgstr "Actualizează conținutul documentului"
 
 #. Translators: Presented when use screen layout option is toggled.
 msgid "Use screen layout on"
@@ -9894,6 +10481,64 @@ msgid ""
 msgstr ""
 "Activează sau dezactivează păstrarea aspectului ecranului în timpul redării "
 "conținutului documentului"
+
+#. Translators: shown for a highlighter setting that toggles
+#. highlighting the system focus.
+msgid "Highlight system fo&cus"
+msgstr "&Evidențiază focalizarea sistemului"
+
+#. Translators: shown for a highlighter setting that toggles
+#. highlighting the browse mode cursor.
+msgid "Highlight browse &mode cursor"
+msgstr "&Evidențiază cursorul modului de navigare"
+
+#. Translators: shown for a highlighter setting that toggles
+#. highlighting the navigator object.
+msgid "Highlight navigator &object"
+msgstr "&Evidențiază obiectul navigator"
+
+#. Translators: Description for NVDA's built-in screen highlighter.
+msgid "Focus Highlight"
+msgstr "Evidențiere Focalizare"
+
+#. Translators: The label for a checkbox that enables / disables focus highlighting
+#. in the NVDA Highlighter vision settings panel.
+msgid "&Enable Highlighting"
+msgstr "&Activează evidențierea"
+
+#. Translators: Name for a vision enhancement provider that disables output to the screen,
+#. making it black.
+msgid "Screen Curtain"
+msgstr "Cortină Ecran"
+
+#. Translators: Description for a Screen Curtain setting that shows a warning when loading
+#. the screen curtain.
+msgid "Always &show a warning when loading Screen Curtain"
+msgstr ""
+"Afi&șează întotdeauna un mesaj de avertizare la încărcarea cortinei ecranului"
+
+#. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
+msgid "&Play sound when toggling Screen Curtain"
+msgstr "&Redă un sunet la activarea sau dezactivarea cortinei ecranului"
+
+#. Translators: A warning shown when activating the screen curtain.
+#. the translation of "Screen Curtain" should match the "translated name"
+msgid ""
+"Enabling Screen Curtain will make the screen of your computer completely "
+"black. Ensure you will be able to navigate without any use of your screen "
+"before continuing. \n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"Activarea cortinei ecranului va face ca ecranul calculatorului dumneavoastră "
+"să fie complet negru. Înainte de a continua, asigurați-vă că veți putea să "
+"navigați fără să vă folosiți ecranul. \n"
+"\n"
+"Doriți să continuați?"
+
+#. Translators: option to enable screen curtain in the vision settings panel
+msgid "Make screen black (immediate effect)"
+msgstr "Fă ecranul negru (efect imediat)"
 
 msgid "Taskbar"
 msgstr "Bară de activități"
@@ -10867,8 +11512,8 @@ msgstr "&Diagrame"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omments"
-msgstr "C&omentarii"
+msgid "N&otes"
+msgstr "N&ote"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -10884,6 +11529,14 @@ msgstr "&Foi"
 #, python-brace-format
 msgid "{start} through {end}"
 msgstr "de la {start} până la {end}"
+
+#. Translators: the description  for a script for Excel
+msgid "opens a dropdown item at the current cell"
+msgstr "deschide un element de extindere la celula curentă"
+
+#. Translators: the description  for a script for Excel
+msgid "Sets the current cell as start of column header"
+msgstr "Setează celula curentă ca fiind începutul antetului de coloană"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
@@ -10913,6 +11566,10 @@ msgstr ""
 "Apăsând o dată se va stabili această celulă ca primul antet coloană, pentru "
 "toate celulele aflate mai jos și la dreapta ei în interiorul acestei regiuni."
 "Apăsând de două ori se va renunța la antetul coloană curent acestei celule."
+
+#. Translators: the description  for a script for Excel
+msgid "sets the current cell as start of row header"
+msgstr "setează celula curentă ca fiind începutul antetului de rând"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
@@ -10956,23 +11613,33 @@ msgstr "Mesajul de intrare este {title}: {message}"
 msgid "Input Message is {message}"
 msgstr "Mesajul de intrare este {message}"
 
-#. Translators: A message in Excel when there is no comment
-msgid "Not on a comment"
-msgstr "Nu se află pe un comentariu"
+#. Translators: the description  for a script for Excel
+msgid "Reports the note on the current cell"
+msgstr "Raportează nota aflată în celula curentă"
+
+#. Translators: A message in Excel when there is no note
+msgid "Not on a note"
+msgstr "Nu este într-o notă"
 
 #. Translators: the description  for a script for Excel
-msgid "Reports the comment on the current cell"
-msgstr "Anunță comentariul din celula curentă"
+msgid "Opens the note editing dialog"
+msgstr "Deschide dialogul de editare a notei"
 
-#. Translators: Dialog text for
+#. Translators: Dialog text for the note editing dialog
 #, python-brace-format
-msgid "Editing comment for cell {address}"
-msgstr "Editare comentariu pentru celula {address}"
+msgid "Editing note for cell {address}"
+msgstr "Se editează nota pentru celula {address}"
+
+#. Translators: Title for the note editing  dialog
+msgid "Note"
+msgstr "Notă"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
+#. Beware to keep two spaces between the address and the content. Otherwise some synthesizer
+#. may mix the address and the content when the cell contains a 3-digit number.
 #, python-brace-format
-msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
-msgstr "{firstAddress} {firstContent} până la {lastAddress} {lastContent}"
+msgid "{firstAddress}  {firstContent} through {lastAddress}  {lastContent}"
+msgstr "{firstAddress} {firstContent} prin {lastAddress} {lastContent}"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "top edge"
@@ -11335,6 +12002,22 @@ msgstr "stil {styleName}, nivel subliniere {outlineLevel}"
 msgid "{size:g} point font"
 msgstr "font {size:g} puncte"
 
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking on"
+msgstr "Modificare urmărire activată"
+
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking off"
+msgstr "Modificare urmărire dezactivată"
+
+#. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
+msgid "Display nonprinting characters"
+msgstr "Afișează caracterele neimprimabile"
+
+#. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
+msgid "Hide nonprinting characters"
+msgstr "Ascunde caracterele neimprimabile"
+
 #. Translators: a measurement in Microsoft Word
 #, python-brace-format
 msgid "{offset:.3g} characters"
@@ -11378,46 +12061,26 @@ msgstr "Spațiere de două linii"
 msgid "1.5 line spacing"
 msgstr "Spațiere de 1.5 linii"
 
-#~ msgid "Selected %s"
-#~ msgstr "Selectat %s"
+#~ msgid "Apply"
+#~ msgstr "Se aplică"
 
-#~ msgid "Currently running application is %s"
-#~ msgstr "Aplicația activă curentă este %s"
+#~ msgid "Co&mments"
+#~ msgstr "&Comentarii"
 
-#~ msgid " and currently loaded module is %s"
-#~ msgstr " și modulul încărcat curent este %s"
+#~ msgid "C&omments"
+#~ msgstr "C&omentarii"
 
-#~ msgid ""
-#~ "All add-ons are currently disabled. To enable add-ons you must restart "
-#~ "NVDA."
-#~ msgstr ""
-#~ "Toate suplimentele sunt dezactivate. Pentru a le reactiva trebuie "
-#~ "repornit NVDA."
+#~ msgid "Ukrainian"
+#~ msgstr "Ucraineană"
 
-#~ msgid "Focus follows browse mode off"
-#~ msgstr "Focalizarea care urmărește modul de navigare este inactivă"
+#~ msgid "Russian braille for computer code"
+#~ msgstr "Braille rusesc pentru cod mașină"
 
-#~ msgid "Focus follows browse mode on"
-#~ msgstr "Focalizarea care urmărește modul de navigare este activă"
+#~ msgid "Speaks the current foreground object"
+#~ msgstr "Pronunță obiectul curent din prim-plan"
 
-#~ msgid "%s Settings Category"
-#~ msgstr "Categoria de setări %s"
+#~ msgid "&Automatically start NVDA after I log on to Windows"
+#~ msgstr "&Pornește NVDA automat după ce mă autentific în Windows"
 
-#~ msgid "System focus follows browse mode focus automatically"
-#~ msgstr ""
-#~ "Focalizarea sistemului o urmărește automat pe cea a modului de navigare"
-
-#~ msgid "NVDA"
-#~ msgstr "NVDA"
-
-#~ msgid "remove"
-#~ msgstr "eliminat"
-
-#~ msgid ""
-#~ "For the new language to take effect, the configuration must be saved and "
-#~ "NVDA must be restarted. Press enter to save and restart NVDA, or cancel "
-#~ "to manually save and exit at a later time."
-#~ msgstr ""
-#~ "Pentru ca noua limbă să fie activată, configurarea trebuie salvată și "
-#~ "NVDA trebuie repornit. Apăsați Enter pentru salvare și repornirea NVDA, "
-#~ "sau anulați pentru salvare manuală și închidere mai târziu."
+#~ msgid "Use NVDA on the Windows &logon screen"
+#~ msgstr "Folosește NVDA cu ecranul de &autentificare Windows"

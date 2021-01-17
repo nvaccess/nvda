@@ -85,10 +85,11 @@ def normalizeIA2TextFormatField(formatField):
 	except KeyError:
 		invalid=None
 	if invalid:
-		invalid=invalid.lower()
-		if invalid=="spelling":
+		# aria-invalid can contain multiple values separated by a comma.
+		invalidList = [x.lower().strip() for x in invalid.split(',')]
+		if "spelling" in invalidList:
 			formatField["invalid-spelling"]=True
-		elif invalid=="grammar":
+		if "grammar" in invalidList:
 			formatField["invalid-grammar"]=True
 	color=formatField.get('color')
 	if color:
@@ -261,7 +262,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			start,end,text = self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_CHAR)
 		except COMError:
 			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
-		if textUtils.isHighSurrogate(text) or textUtils.isLowSurrogate(text):
+		if text and (textUtils.isHighSurrogate(text) or textUtils.isLowSurrogate(text)):
 			# #8953: Some IA2 implementations, including Gecko and Chromium,
 			# erroneously report one offset for surrogates.
 			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
@@ -603,12 +604,6 @@ the NVDAObject for IAccessible
 		# Try every trick in the book to get the window handle if we don't have it.
 		if not windowHandle and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
 			windowHandle=self.IA2WindowHandle
-			#Mozilla Gecko: we can never use a MozillaWindowClass window for Gecko 1.9
-			tempWindow=windowHandle
-			while tempWindow and winUser.getClassName(tempWindow)=="MozillaWindowClass":
-				tempWindow=winUser.getAncestor(tempWindow,winUser.GA_PARENT)
-			if tempWindow and winUser.getClassName(tempWindow).startswith('Mozilla'):
-				windowHandle=tempWindow
 		try:
 			Identity=IAccessibleHandler.getIAccIdentity(IAccessibleObject,IAccessibleChildID)
 		except COMError:
@@ -698,6 +693,13 @@ the NVDAObject for IAccessible
 			testObj = parent
 		else:
 			return False
+		return True
+
+	def _get_shouldAllowIAccessibleMenuStartEvent(self) -> bool:
+		"""Determine whether an IAccessible menu start or menu popup start event should be allowed
+		for this object.
+		@return: C{True} if the event should be allowed.
+		"""
 		return True
 
 	def _get_TextInfo(self):
@@ -1469,10 +1471,10 @@ the NVDAObject for IAccessible
 			api.processPendingEvents()
 		if self in api.getFocusAncestors():
 			return
-		speech.speakObject(self, reason=controlTypes.REASON_FOCUS,priority=speech.SPRI_NOW)
+		speech.speakObject(self, reason=controlTypes.REASON_FOCUS, priority=speech.Spri.NOW)
 		for child in self.recursiveDescendants:
 			if controlTypes.STATE_FOCUSABLE in child.states:
-				speech.speakObject(child, reason=controlTypes.REASON_FOCUS,priority=speech.SPRI_NOW)
+				speech.speakObject(child, reason=controlTypes.REASON_FOCUS, priority=speech.Spri.NOW)
 
 	def event_caret(self):
 		focus = api.getFocusObject()
@@ -1869,6 +1871,13 @@ class MenuItem(IAccessible):
 class Taskbar(IAccessible):
 	name = _("Taskbar")
 
+	def event_gainFocus(self):
+		api.processPendingEvents(False)
+		# Sometimes before Windows 7 start menu opens taskbar gains focus for a moment producing annoying speech.
+		if eventHandler.isPendingEvents("gainFocus"):
+			return
+		super().event_gainFocus()
+
 class Button(IAccessible):
 
 	def _get_name(self):
@@ -1954,6 +1963,14 @@ class IENotificationBar(Dialog,IAccessible):
 				speech.speakObject(child,reason=controlTypes.REASON_FOCUS)
 			child=child.simpleNext
 
+
+class UIItem(IAccessible):
+	"""List items in Windows Explorer repeat the name as the value"""
+
+	def _get_value(self):
+		return ""
+
+
 ###class mappings
 
 _staticMap={
@@ -1979,7 +1996,9 @@ _staticMap={
 	("SysListView32",oleacc.ROLE_SYSTEM_LIST):"sysListView32.List",
 	("SysListView32",oleacc.ROLE_SYSTEM_GROUPING):"sysListView32.List",
 	("SysListView32",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
+	("DirectUIHWND", oleacc.ROLE_SYSTEM_LISTITEM): "UIItem",
 	("SysListView32",oleacc.ROLE_SYSTEM_MENUITEM):"sysListView32.ListItemWithoutColumnSupport",
+	("SysListView32", oleacc.ROLE_SYSTEM_CHECKBUTTON): "sysListView32.ListItem",
 	("SysTreeView32",oleacc.ROLE_SYSTEM_OUTLINE):"sysTreeView32.TreeView",
 	("SysTreeView32",oleacc.ROLE_SYSTEM_OUTLINEITEM):"sysTreeView32.TreeViewItem",
 	("SysTreeView32",oleacc.ROLE_SYSTEM_MENUITEM):"sysTreeView32.TreeViewItem",
@@ -2010,6 +2029,8 @@ _staticMap={
 	("AkelEditW",oleacc.ROLE_SYSTEM_CLIENT):"akelEdit.AkelEdit",
 	("AkelEditA",oleacc.ROLE_SYSTEM_CLIENT):"akelEdit.AkelEdit",
 	("MSOUNISTAT",oleacc.ROLE_SYSTEM_CLIENT):"msOffice.MSOUNISTAT",
+	("NetUIHWND", oleacc.ROLE_SYSTEM_PROPERTYPAGE): "msOffice.StatusBar",
+	("NetUIHWND", oleacc.ROLE_SYSTEM_TOOLBAR): "msOffice.RibbonSection",
 	("QWidget",oleacc.ROLE_SYSTEM_CLIENT):"qt.Client",
 	("QWidget",oleacc.ROLE_SYSTEM_LIST):"qt.Container",
 	("Qt5QWindowIcon",oleacc.ROLE_SYSTEM_LIST):"qt.Container",

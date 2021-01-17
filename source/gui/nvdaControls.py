@@ -3,14 +3,15 @@
 #Copyright (C) 2016-2018 NV Access Limited, Derek Riemer
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+
 from ctypes.wintypes import BOOL
 from typing import Any, Tuple, Optional
-
 import wx
 from comtypes import GUID
 from wx.lib.mixins import listctrl as listmix
-from gui import accPropServer
-from gui.dpiScalingHelper import DpiScalingHelperMixin
+from . import accPropServer
+from .dpiScalingHelper import DpiScalingHelperMixin
+from . import guiHelper
 import oleacc
 import winUser
 import winsound
@@ -305,6 +306,11 @@ class MessageDialog(DPIScaledDialog):
 		)
 		cancel.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
 
+	def _addContents(self, contentsSizer: guiHelper.BoxSizerHelper):
+		"""Adds additional contents  to the dialog, before the buttons.
+		Subclasses may implement this method.
+		"""
+
 	def _setIcon(self, type):
 		try:
 			iconID = self._DIALOG_TYPE_ICON_ID_MAP[type]
@@ -331,14 +337,15 @@ class MessageDialog(DPIScaledDialog):
 		self._setIcon(dialogType)
 		self._setSound(dialogType)
 		self.Bind(wx.EVT_SHOW, self._onShowEvt, source=self)
+		self.Bind(wx.EVT_ACTIVATE, self._onDialogActivated, source=self)
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
-		from . import guiHelper
 		contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
 
 		text = wx.StaticText(self, label=message)
 		text.Wrap(self.scaleSize(self.GetSize().Width))
 		contentsSizer.addItem(text)
+		self._addContents(contentsSizer)
 
 		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		self._addButtons(buttonHelper)
@@ -352,6 +359,9 @@ class MessageDialog(DPIScaledDialog):
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		self.CentreOnScreen()
+
+	def _onDialogActivated(self, evt):
+		evt.Skip()
 
 	def _onShowEvt(self, evt):
 		"""
