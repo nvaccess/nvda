@@ -57,7 +57,7 @@ def browseableMessage(message,title=None,isHtml=False):
 		title = _("NVDA Message")
 	if not isHtml:
 		message = f"<pre>{message.replace('<', '&lt;')}</pre>"
-	dialogString = u"true;{title};{message}".format(title=title, message=message)
+	dialogString = f"{title};{message}"
 	dialogArguements = automation.VARIANT( dialogString )
 	gui.mainFrame.prePopup() 
 	windll.mshtml.ShowHTMLDialogEx( 
