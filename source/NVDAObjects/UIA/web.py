@@ -6,19 +6,24 @@
 from comtypes import COMError
 from comtypes.automation import VARIANT
 from ctypes import byref
-import winVersion
+
+from . import (
+	UIATextInfo,
+	UIA,
+)
+
 from logHandler import log
-import eventHandler
-import config
 import controlTypes
 import cursorManager
 import re
 import aria
 import textInfos
+from UIABrowseMode import (
+	UIABrowseModeDocument,
+	UIABrowseModeDocumentTextInfo,
+)
+from UIAUtils import createUIAMultiPropertyCondition
 import UIAHandler
-from UIABrowseMode import UIABrowseModeDocument, UIABrowseModeDocumentTextInfo, UIATextRangeQuickNavItem,UIAControlQuicknavIterator
-from UIAUtils import *
-from . import UIA, UIATextInfo
 
 
 def splitUIAElementAttribs(attribsString):
@@ -62,84 +67,112 @@ def splitUIAElementAttribs(attribsString):
 class UIAWebTextInfo(UIATextInfo):
 
 	def _get_UIAElementAtStartWithReplacedContent(self):
-		"""Fetches the deepest UIAElement at the start of the text range whos name has been overridden by the author (such as aria-label)."""
-		element=self.UIAElementAtStart
-		condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:self.UIAControlTypesWhereNameIsContent})
-		# A part from the condition given, we must always match on the root of the document so we know when to stop walking
-		runtimeID=VARIANT()
-		self.obj.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(UIAHandler.UIA_RuntimeIdPropertyId,byref(runtimeID))
-		condition=UIAHandler.handler.clientObject.createOrCondition(UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,runtimeID),condition)
-		walker=UIAHandler.handler.clientObject.createTreeWalker(condition)
-		cacheRequest=UIAHandler.handler.clientObject.createCacheRequest()
+		"""Fetches the deepest UIAElement at the start of the text range
+		whose name has been overridden by the author (such as aria-label).
+		"""
+		element = self.UIAElementAtStart
+		condition = createUIAMultiPropertyCondition({
+			UIAHandler.UIA_ControlTypePropertyId: self.UIAControlTypesWhereNameIsContent
+		})
+		# A part from the condition given, we must always match on the root of the document
+		# so we know when to stop walking
+		runtimeID = VARIANT()
+		self.obj.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(
+			UIAHandler.UIA_RuntimeIdPropertyId,
+			byref(runtimeID)
+		)
+		condition = UIAHandler.handler.clientObject.createOrCondition(
+			UIAHandler.handler.clientObject.createPropertyCondition(
+				UIAHandler.UIA_RuntimeIdPropertyId,
+				runtimeID
+			),
+			condition
+		)
+		walker = UIAHandler.handler.clientObject.createTreeWalker(condition)
+		cacheRequest = UIAHandler.handler.clientObject.createCacheRequest()
 		cacheRequest.addProperty(UIAHandler.UIA_NamePropertyId)
 		cacheRequest.addProperty(UIAHandler.UIA_AriaPropertiesPropertyId)
-		element=walker.normalizeElementBuildCache(element,cacheRequest)
-		while element and not UIAHandler.handler.clientObject.compareElements(element,self.obj.UIAElement):
-			name=element.getCachedPropertyValue(UIAHandler.UIA_NamePropertyId)
+		element = walker.normalizeElementBuildCache(element, cacheRequest)
+		while element and not UIAHandler.handler.clientObject.compareElements(element, self.obj.UIAElement):
+			name = element.getCachedPropertyValue(UIAHandler.UIA_NamePropertyId)
 			if name:
-				ariaProperties=element.getCachedPropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
-				if ('label=' in ariaProperties)  or ('labelledby=' in ariaProperties):
+				ariaProperties = element.getCachedPropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
+				if ('label=' in ariaProperties) or ('labelledby=' in ariaProperties):
 					return element
 				try:
-					textRange=self.obj.UIATextPattern.rangeFromChild(element)
+					textRange = self.obj.UIATextPattern.rangeFromChild(element)
 				except COMError:
 					return
 				text = textRange.getText(-1)
 				if not text or text.isspace():
 					return element
-			element=walker.getParentElementBuildCache(element,cacheRequest)
+			element = walker.getParentElementBuildCache(element, cacheRequest)
 
-	def _moveToEdgeOfReplacedContent(self,back=False):
-		"""If within replaced content (E.g. aria-label is used), moves to the first or last character covered, so that a following call to move in the same direction will move out of the replaced content, in order to ensure that the content only takes up one character stop."""
-		element=self.UIAElementAtStartWithReplacedContent
+	def _moveToEdgeOfReplacedContent(self, back=False):
+		"""If within replaced content (E.g. aria-label is used),
+		moves to the first or last character covered, so that a following call to move in the same direction
+		will move out of the replaced content, in order to ensure
+		that the content only takes up one character stop.
+		"""
+		element = self.UIAElementAtStartWithReplacedContent
 		if not element:
 			return
 		try:
-			textRange=self.obj.UIATextPattern.rangeFromChild(element)
+			textRange = self.obj.UIATextPattern.rangeFromChild(element)
 		except COMError:
 			return
 		if not back:
-			textRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start, textRange, UIAHandler.TextPatternRangeEndpoint_End)
+			textRange.MoveEndpointByRange(
+				UIAHandler.TextPatternRangeEndpoint_Start,
+				textRange,
+				UIAHandler.TextPatternRangeEndpoint_End
+			)
 			textRange.move(UIAHandler.TextUnit_Character, -1)
 		else:
-			textRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End, textRange, UIAHandler.TextPatternRangeEndpoint_Start)
-		self._rangeObj=textRange
+			textRange.MoveEndpointByRange(
+				UIAHandler.TextPatternRangeEndpoint_End,
+				textRange,
+				UIAHandler.TextPatternRangeEndpoint_Start
+			)
+		self._rangeObj = textRange
 
-	def _collapsedMove(self,unit,direction,skipReplacedContent):
-		"""A simple collapsed move (i.e. both ends move together), but whether it classes replaced content as one character stop can be configured via the skipReplacedContent argument."""
+	def _collapsedMove(self, unit, direction, skipReplacedContent):
+		"""A simple collapsed move (i.e. both ends move together),
+		but whether it classes replaced content as one character stop
+		can be configured via the skipReplacedContent argument."""
 		if not skipReplacedContent:
 			return super().move(unit, direction)
-		if direction==0:
+		if direction == 0:
 			return
-		chunk=1 if direction>0 else -1
-		finalRes=0
-		while finalRes!=direction:
-			self._moveToEdgeOfReplacedContent(back=direction<0)
+		chunk = 1 if direction > 0 else -1
+		finalRes = 0
+		while finalRes != direction:
+			self._moveToEdgeOfReplacedContent(back=direction < 0)
 			res = super().move(unit, chunk)
-			if res==0:
+			if res == 0:
 				break
-			finalRes+=res
+			finalRes += res
 		return finalRes
 
-	def move(self,unit,direction,endPoint=None,skipReplacedContent=True):
+	def move(self, unit, direction, endPoint=None, skipReplacedContent=True):
 		if not endPoint:
-			return self._collapsedMove(unit,direction,skipReplacedContent)
+			return self._collapsedMove(unit, direction, skipReplacedContent)
 		else:
-			tempInfo=self.copy()
-			res=tempInfo.move(unit,direction,skipReplacedContent=skipReplacedContent)
-			if res!=0:
-				self.setEndPoint(tempInfo,"endToEnd" if endPoint=="end" else "startToStart")
+			tempInfo = self.copy()
+			res = tempInfo.move(unit, direction, skipReplacedContent=skipReplacedContent)
+			if res != 0:
+				self.setEndPoint(tempInfo, "endToEnd" if endPoint == "end" else "startToStart")
 			return res
 
-	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
+	def _getControlFieldForObject(self, obj, isEmbedded=False, startOfNode=False, endOfNode=False):
 		field = super()._getControlFieldForObject(
 			obj,
 			isEmbedded=isEmbedded,
 			startOfNode=startOfNode,
 			endOfNode=endOfNode
 		)
-		field['embedded']=isEmbedded
-		role=field.get('role')
+		field['embedded'] = isEmbedded
+		role = field.get('role')
 		# Fields should be treated as block for certain roles.
 		# This can affect whether the field is presented as a container (e.g.  announcing entering and exiting)
 		if role in (
@@ -150,105 +183,127 @@ class UIAWebTextInfo(UIATextInfo):
 			controlTypes.ROLE_LANDMARK,
 			controlTypes.ROLE_REGION,
 		):
-			field['isBlock']=True
+			field['isBlock'] = True
 		ariaProperties = splitUIAElementAttribs(
 			obj._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
 		)
 		# ARIA roledescription and landmarks
 		field['roleText'] = ariaProperties.get('roledescription')
 		# provide landmarks
-		field['landmark']=obj.landmark
+		field['landmark'] = obj.landmark
 		# Combo boxes with a text pattern are editable
-		if obj.role==controlTypes.ROLE_COMBOBOX and obj.UIATextPattern:
+		if obj.role == controlTypes.ROLE_COMBOBOX and obj.UIATextPattern:
 			field['states'].add(controlTypes.STATE_EDITABLE)
 		# report if the field is 'current'
-		field['current']=obj.isCurrent
+		field['current'] = obj.isCurrent
 		if obj.placeholder and obj._isTextEmpty:
-			field['placeholder']=obj.placeholder
+			field['placeholder'] = obj.placeholder
 		# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
-		# Later processing in Edge's getTextWithFields will remove descendant content from fields with a content attribute.
+		# Later processing in getTextWithFields will remove descendant content from fields
+		# with a content attribute.
 		hasAriaLabel = 'label' in ariaProperties
 		hasAriaLabelledby = 'labelledby' in ariaProperties
 		if field.get('nameIsContent'):
-			content=""
-			field.pop('name',None)
+			content = ""
+			field.pop('name', None)
 			if hasAriaLabel or hasAriaLabelledby:
-				content=obj.name
+				content = obj.name
 			if not content:
-				text=self.obj.makeTextInfo(obj).text
+				text = self.obj.makeTextInfo(obj).text
 				if not text or text.isspace():
-					content=obj.name or field.pop('description',None)
+					content = obj.name or field.pop('description', None)
 			if content:
-				field['content']=content
+				field['content'] = content
 		elif isEmbedded:
-			field['content']=obj.value
-			if field['role']==controlTypes.ROLE_GROUPING:
-				field['role']=controlTypes.ROLE_EMBEDDEDOBJECT
+			field['content'] = obj.value
+			if field['role'] == controlTypes.ROLE_GROUPING:
+				field['role'] = controlTypes.ROLE_EMBEDDEDOBJECT
 				if not obj.value:
-					field['content']=obj.name
+					field['content'] = obj.name
 		elif hasAriaLabel or hasAriaLabelledby:
 			field['alwaysReportName'] = True
 		# Give lists an item count
-		if obj.role==controlTypes.ROLE_LIST:
-			child=UIAHandler.handler.clientObject.ControlViewWalker.GetFirstChildElement(obj.UIAElement)
+		if obj.role == controlTypes.ROLE_LIST:
+			child = UIAHandler.handler.clientObject.ControlViewWalker.GetFirstChildElement(obj.UIAElement)
 			if child:
-				field['_childcontrolcount']=child.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
+				field['_childcontrolcount'] = child.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
 		return field
 
-	def getTextWithFields(self,formatConfig=None):
+	# C901 'getTextWithFields' is too complex
+	# Note: when working on getTextWithFields, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def getTextWithFields(self, formatConfig=None):  # noqa: C901
 		# We don't want fields for collapsed ranges.
-		# This would normally be a general rule, but MS Word currently needs fields for collapsed ranges, thus this code is not in the base.
+		# This would normally be a general rule, but MS Word currently needs fields for collapsed ranges,
+		# thus this code is not in the base.
 		if self.isCollapsed:
 			return []
 		fields = super().getTextWithFields(formatConfig)
-		seenText=False
-		curStarts=[]
 		# remove clickable state on descendants of controls with clickable state
-		clickableField=None
+		clickableField = None
 		for field in fields:
-			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
-				states=field.field['states']
+			if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart":
+				states = field.field['states']
 				if clickableField:
 					states.discard(controlTypes.STATE_CLICKABLE)
 				elif controlTypes.STATE_CLICKABLE in states:
-					clickableField=field.field
-			elif clickableField and isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd" and field.field is clickableField:
-				clickableField=None
+					clickableField = field.field
+			elif (
+				clickableField
+				and isinstance(field, textInfos.FieldCommand)
+				and field.command == "controlEnd"
+				and field.field is clickableField
+			):
+				clickableField = None
 		# Chop extra whitespace off the end incorrectly put there by Edge
-		numFields=len(fields)
-		index=0
-		while index<len(fields):
-			field=fields[index]
-			if index>1 and isinstance(field,str) and field.isspace():
-				prevField=fields[index-2]
-				if isinstance(prevField,textInfos.FieldCommand) and prevField.command=="controlEnd":
-					del fields[index-1:index+1]
-			index+=1
+		numFields = len(fields)
+		index = 0
+		while index < len(fields):
+			field = fields[index]
+			if index > 1 and isinstance(field, str) and field.isspace():
+				prevField = fields[index - 2]
+				if isinstance(prevField, textInfos.FieldCommand) and prevField.command == "controlEnd":
+					del fields[index - 1:index + 1]
+			index += 1
 		# chop fields off the end incorrectly placed there by Edge
 		# This can happen if expanding to line covers element start chars at its end
-		startCount=0
-		lastStartIndex=None
-		numFields=len(fields)
-		for index in range(numFields-1,-1,-1):
-			field=fields[index]
-			if isinstance(field,str):
+		startCount = 0
+		lastStartIndex = None
+		numFields = len(fields)
+		for index in range(numFields - 1, -1, -1):
+			field = fields[index]
+			if isinstance(field, str):
 				break
-			elif isinstance(field,textInfos.FieldCommand) and field.command=="controlStart" and not field.field.get('embedded'):
-				startCount+=1
-				lastStartIndex=index
+			elif (
+				isinstance(field, textInfos.FieldCommand)
+				and field.command == "controlStart"
+				and not field.field.get('embedded')
+			):
+				startCount += 1
+				lastStartIndex = index
 		if lastStartIndex:
-			del fields[lastStartIndex:lastStartIndex+(startCount*2)]
+			del fields[lastStartIndex: lastStartIndex + (startCount * 2)]
 		# Remove any content from fields with a content attribute
-		numFields=len(fields)
-		curField=None
-		for index in range(numFields-1,-1,-1):
-			field=fields[index]
-			if not curField and isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd" and field.field.get('content'):
-				curField=field.field
-				endIndex=index
-			elif curField and isinstance(field,textInfos.FieldCommand) and field.command=="controlStart" and field.field is curField:
-				fields[index+1:endIndex]=" "
-				curField=None
+		numFields = len(fields)
+		curField = None
+		for index in range(numFields - 1, -1, -1):
+			field = fields[index]
+			if (
+				not curField
+				and isinstance(field, textInfos.FieldCommand)
+				and field.command == "controlEnd"
+				and field.field.get('content')
+			):
+				curField = field.field
+				endIndex = index
+			elif (
+				curField
+				and isinstance(field, textInfos.FieldCommand)
+				and field.command == "controlStart"
+				and field.field is curField
+			):
+				fields[index + 1: endIndex] = " "
+				curField = None
 		return fields
 
 
@@ -259,21 +314,26 @@ class UIAWeb(UIA):
 	def _get_role(self):
 		role = super().role
 		from .edge import EdgeHTMLRoot
-		if not isinstance(self, EdgeHTMLRoot) and role==controlTypes.ROLE_PANE and self.UIATextPattern:
+		if not isinstance(self, EdgeHTMLRoot) and role == controlTypes.ROLE_PANE and self.UIATextPattern:
 			return controlTypes.ROLE_INTERNALFRAME
-		ariaRole=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
+		ariaRole = self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
 		# #7333: It is valid to provide multiple, space separated aria roles in HTML
 		# The role used is the first role in the list that has an associated NVDA role in aria.ariaRolesToNVDARoles
 		for ariaRole in ariaRole.split():
-			newRole=aria.ariaRolesToNVDARoles.get(ariaRole)
+			newRole = aria.ariaRolesToNVDARoles.get(ariaRole)
 			if newRole:
-				role=newRole
+				role = newRole
 				break
 		return role
 
 	def _get_states(self):
 		states = super().states
-		if self.role in (controlTypes.ROLE_STATICTEXT, controlTypes.ROLE_GROUPING, controlTypes.ROLE_SECTION, controlTypes.ROLE_GRAPHIC) and self.UIAInvokePattern:
+		if self.role in (
+			controlTypes.ROLE_STATICTEXT,
+			controlTypes.ROLE_GROUPING,
+			controlTypes.ROLE_SECTION,
+			controlTypes.ROLE_GRAPHIC,
+		) and self.UIAInvokePattern:
 			states.add(controlTypes.STATE_CLICKABLE)
 		return states
 
@@ -285,10 +345,10 @@ class UIAWeb(UIA):
 	# character and before the ';' character.
 	# This could be one of: "false", "true", "page", "step", "location", "date", "time"
 	# "false" is ignored by the regEx and will not produce a match
-	RE_ARIA_CURRENT_PROP_VALUE = re.compile("current=(?!false)(\w+);")
+	RE_ARIA_CURRENT_PROP_VALUE = re.compile(r"current=(?!false)(\w+);")
 
 	def _get_isCurrent(self):
-		ariaProperties=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
+		ariaProperties = self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
 		match = self.RE_ARIA_CURRENT_PROP_VALUE.search(ariaProperties)
 		log.debug("aria props = %s" % ariaProperties)
 		if match:
@@ -308,13 +368,13 @@ class UIAWeb(UIA):
 		return ariaPlaceholder
 
 	def _get_landmark(self):
-		landmarkId=self._getUIACacheablePropertyValue(UIAHandler.UIA_LandmarkTypePropertyId)
-		if not landmarkId: # will be 0 for non-landmarks
+		landmarkId = self._getUIACacheablePropertyValue(UIAHandler.UIA_LandmarkTypePropertyId)
+		if not landmarkId:  # will be 0 for non-landmarks
 			return None
 		landmarkRole = UIAHandler.UIALandmarkTypeIdsToLandmarkNames.get(landmarkId)
 		if landmarkRole:
 			return landmarkRole
-		ariaRoles=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
+		ariaRoles = self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
 		# #7333: It is valid to provide multiple, space separated aria roles in HTML
 		# If multiple roles or even multiple landmark roles are provided, the first one is used
 		ariaRole = ariaRoles.split(" ")[0]
@@ -333,25 +393,29 @@ class List(UIAWeb):
 		return states
 
 
-class UIAWebTreeInterceptor(cursorManager.ReviewCursorManager,UIABrowseModeDocument):
+class UIAWebTreeInterceptor(cursorManager.ReviewCursorManager, UIABrowseModeDocument):
+	TextInfo = UIABrowseModeDocumentTextInfo
 
-	TextInfo=UIABrowseModeDocumentTextInfo
-	
-	def makeTextInfo(self,position):
+	def makeTextInfo(self, position):
 		try:
 			return super().makeTextInfo(position)
 		except RuntimeError as e:
 			# sometimes the stored TextRange we have for the caret/selection can die if the page mutates too much.
-			# Therefore, if we detect this, just give back the first position in the document, updating our stored version as we go.
-			if position in (textInfos.POSITION_SELECTION,textInfos.POSITION_CARET):
-				log.debugWarning("%s died. Using first position instead."%position)
-				info=self.makeTextInfo(textInfos.POSITION_FIRST)
-				self._selection=info
+			# Therefore, if we detect this, just give back the first position in the document,
+			# updating our stored version as we go.
+			if position in (textInfos.POSITION_SELECTION, textInfos.POSITION_CARET):
+				log.debugWarning(f"{position} died. Using first position instead")
+				info = self.makeTextInfo(textInfos.POSITION_FIRST)
+				self._selection = info
 				return info
 			raise e
 
-	def shouldPassThrough(self,obj,reason=None):
+	def shouldPassThrough(self, obj, reason=None):
 		# Enter focus mode for selectable list items (<select> and role=listbox)
-		if reason==controlTypes.REASON_FOCUS and obj.role==controlTypes.ROLE_LISTITEM and controlTypes.STATE_SELECTABLE in obj.states:
+		if (
+			reason == controlTypes.REASON_FOCUS
+			and obj.role == controlTypes.ROLE_LISTITEM
+			and controlTypes.STATE_SELECTABLE in obj.states
+		):
 			return True
 		return super().shouldPassThrough(obj, reason=reason)
