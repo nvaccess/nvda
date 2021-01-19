@@ -883,10 +883,20 @@ class UIA(Window):
 			from . import spartanEdge
 			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
 				clsList.append(spartanEdge.EdgeHTMLRootContainer)
-			elif (self.UIATextPattern and
-				# #6998: Edge normally gives its root node a controlType of pane, but ARIA role="document"  changes the controlType to document
-				self.role in (controlTypes.ROLE_PANE,controlTypes.ROLE_DOCUMENT) and 
-				self.parent and (isinstance(self.parent,spartanEdge.EdgeHTMLRootContainer) or not isinstance(self.parent,spartanEdge.EdgeNode))
+			elif (
+				self.UIATextPattern
+				# #6998:
+				# Edge normally gives its root node a controlType of pane, but ARIA role="document"
+				# changes the controlType to document
+				and self.role in (
+					controlTypes.ROLE_PANE,
+					controlTypes.ROLE_DOCUMENT
+				)
+				and self.parent
+				and (
+					isinstance(self.parent, spartanEdge.EdgeHTMLRootContainer)
+					or not isinstance(self.parent, spartanEdge.EdgeNode)
+				)
 			): 
 				clsList.append(spartanEdge.EdgeHTMLRoot)
 			elif self.role==controlTypes.ROLE_LIST:
