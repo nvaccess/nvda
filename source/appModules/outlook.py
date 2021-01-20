@@ -11,6 +11,7 @@ import comtypes.automation
 import ctypes
 from hwPortUtils import SYSTEMTIME
 import scriptHandler
+from scriptHandler import script
 import winKernel
 import comHelper
 import NVDAHelper
@@ -29,6 +30,7 @@ import speech
 import ui
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
+from NVDAObjects.window.winword import WordDocument as BaseWordDocument
 from NVDAObjects.IAccessible.winword import WordDocument, WordDocumentTreeInterceptor, BrowseModeWordDocumentTextInfo, WordDocumentTextInfo
 from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog
@@ -552,7 +554,20 @@ class MailViewerTreeInterceptor(WordDocumentTreeInterceptor):
 		"kb:shift+tab":"tab",
 	}
 
-class OutlookWordDocument(WordDocument):
+
+class BaseOutlookWordDocument(BaseWordDocument):
+
+	@script(gestures=["kb:tab", "kb:shift+tab"])
+	def script_tab(self, gesture):
+		bookmark = self.makeTextInfo(textInfos.POSITION_SELECTION).bookmark
+		gesture.send()
+		info, caretMoved = self._hasCaretMoved(bookmark)
+		if not caretMoved:
+			return
+		self.reportTab()
+
+
+class OutlookWordDocument(WordDocument, BaseOutlookWordDocument):
 
 	def _get_isReadonlyViewer(self):
 		# #2975: The only way we know an email is read-only is if the underlying email has been sent.
@@ -575,7 +590,8 @@ class OutlookWordDocument(WordDocument):
 	ignoreEditorRevisions=True
 	ignorePageNumbers=True # This includes page sections, and page columns. None of which are appropriate for outlook.
 
-class OutlookUIAWordDocument(UIAWordDocument):
+
+class OutlookUIAWordDocument(UIAWordDocument, BaseOutlookWordDocument):
 	""" Forces browse mode to be used on the UI Automation Outlook message viewer if the message is being read)."""
 
 	def _get_isReadonlyViewer(self):
