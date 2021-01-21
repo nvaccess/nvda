@@ -2251,9 +2251,19 @@ Niiden käyttämiseksi on asennettava seuraavat kaksi osaa:
 ++ Windows OneCore ++[OneCore]
 Windows 10 sisältää uusia ääniä, jotka tunnetaan OneCore- tai matkapuhelinääninä.
 Ääniä on saatavilla useille kielille, ja ne reagoivat nopeammin kuin Microsoftin Speech API 5 -rajapinnan kautta käytettävät.
-Windows 10:ssä NVDA käyttää oletusarvoisesti Windows OneCore -ääniä ( muissa Windows-versioissa [eSpeak NG:tä #eSpeakNG]).
+NVDA käyttää Windows 10:ssä oletusarvoisesti OneCore-ääniä ( muissa Windows-versioissa [eSpeak NG:tä #eSpeakNG]).
 
-Katso luettelo saatavilla olevista äänistä ja ohjeet niiden asentamiseen [tästä https://support.microsoft.com/fi-fi/help/22797/windows-10-narrator-tts-voices/] Microsoftin artikkelista.
+Lisää uusia OneCore-ääniä menemällä Windowsin järjestelmäasetuksiin (Win+I) ja valitsemalla sieltä ensin "Aika ja kieli" ja sitten "Puhe".
+Paina "Lisää ääniä" -painiketta ja etsi haluamaasi kieltä kirjoittamalla se avautuvaan hakukenttään.
+Monilla kielillä on useita muunnelmia.
+"Yhdistynyt kuningaskunta" ja "Australia" ovat kaksi  esimerkkiä englannin muunnelmista.
+"Ranska", "Kanada" ja "Sveitsi" ovat käytettävissä olevat ranskankielen muunnelmat.
+Etsi ensin laajempaa kieltä (kuten englanti tai ranska) ja etsi sitten muunnelma luettelosta.
+Valitse kaikki haluamasi kielet ja lisää ne painamalla "Lisää"-painiketta.
+Kun kielet on lisätty, käynnistä NVDA uudelleen.
+
+
+Katso luettelo saatavilla olevista äänistä tästä Microsoftin artikkelista: https://support.microsoft.com/fi-fi/windows/liite-a-tuetut-kielet-ja-%C3%A4%C3%A4net-4486e345-7730-53da-fcfe-55cc64300f01
 
 + Tuetut pistenäytöt +[SupportedBrailleDisplays]
 Tässä kappaleessa on tietoja NVDA:n tukemista pistenäytöistä.

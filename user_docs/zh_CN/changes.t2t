@@ -11,6 +11,7 @@ NVDA更新日志
 在网页方面，我们针对 Google Docs 进行了优化，对更多的 ARIA 属性提供了支持。
 还有一些比较重要的改进和错误修复，见以下详细日志。
 
+
 == 新特性 ==
 - 在 NVDA 对话框中按 F1 键会打开帮助文档并跳转到相应章节。 (#7757)
 - 在 Microsoft SQL Server Management Studio 和 Visual Studio 2017及更高版本中支持自动完成建议（IntelliSense）。 (#7504)
@@ -38,31 +39,31 @@ NVDA更新日志
 - 改进了盲文中“消息显示时间”和“无限期显示消息”选项的用户体验。 (#11602)
 - 在 Web 浏览器以及其他支持浏览模式的应用程序中，可以在焦点模式下使用“元素列表”对话框（NVDA + F7）。 (#10453)
 - 当设置为不读动态内容更新时，禁止更新 ARIA Live 区域。 (#9077)
-- 在复制文本之前 NVDA 会读出“已复制到剪贴板”。 (#6757)
+- 在复制文本时 NVDA 会读出“已复制 XXX 到剪贴板”。 (#6757)
 - 改进了磁盘管理中图形视图列表的呈现方式。 (#10048)
 - 当 NVDA 设置面板中的控件被禁用时，其对应的文字标签也会被同时禁用（变灰）。 (#11809)
 - 将 CLDR 表情符号解释库更新为 38版。 (#11817)
-- 将设置面板中“视觉辅助”下的“焦点高亮显示”功能重命名为“视觉高亮显示”。 (#11700)
+- 将设置面板中“视觉辅助”下的“焦点高亮显示”功能重命名为“高亮显示”。 (#11700)
 
 
 == 错误修复 ==
 - NVDA重新支持了 Fast Log Entry 编辑区的朗读。 (#8996)
-- 在 Foobar2000 播放过程中即使没有总时间（比如，播放流媒体直播时），也可以读出已经过时间，并且会给出总时间和剩余时间不可用的提示。 (#11337)
-- NVDA支持了网页中可编辑元素的 aria-roledescription 属性。 (#11607)
-- 不会在 Google Docs中 列表的每一行或 Google Chrome 中其他的富文本编辑区域中反复读“列表”。 (#7562)
+- 在 Foobar2000 播放过程中即使没有总时间（比如，播放流媒体直播时），也可以听取已经过时间，并会给出总时间和剩余时间不可用的提示。 (#11337)
+- 支持了网页中可编辑元素的 aria-roledescription 属性。 (#11607)
+- 已经不会在 Google Docs中 列表的每一行或 Google Chrome 中其他的富文本编辑区域中反复读“列表”。 (#7562)
 - 当我们按字符或单词在Web 中的可编辑内容列表中导航时，从一个列表项移动到另一个列表项现在会给出提示。 (#11569)
 - 将输入光标停留在 Google Docs 中的链接末尾或 Web 中其他的可编辑内容列表末尾时， NVDA 可以读取正确的行。 (#11606)
 - 在 Windows 7 上，从桌面打开/关闭开始菜单现在可以正确停留焦点。 (#10567)
 - 修复了启用“尝试为过期的焦点事件取消语音”后，在 Firefox 中切换选项卡时，不读选项卡标题的错误。 (#11397)
-- NVDA no longer fails to announce a list item after typing a character in a list when speaking with the SAPI5 Ivona voices. (#11651)
-- It is again possible to use browse mode when reading emails in Windows 10 Mail 16005.13110 and later. (#11439)
-- When using the SAPI5 Ivona voices from harposoftware.com, NVDA is now able to save configuration, switch synthesizers, and no longer will stay silent after restarting. (#11650)
-- It is now possible to enter number 6 in computer braille from a braille keyboard on HIMS displays. (#11710)
-- Major performance improvements in Azure Data Studio. (#11533, #11715)
-- With "Attempt to Cancel speech for expired focus events" enabled the title of the NVDA Find dialog is announced again. (#11632)
-- NVDA should no longer freeze when waking the computer and focus lands in a Microsoft Edge document. (#11576)
-- It is no longer necessary to press tab or move focus after closing a context menu in MS Edge for browse mode to be functional again. (#11202)
-- NVDA no longer fails to read items in list views within a 64-bit application such as Tortoise SVN. (#8175)
+- 使用 SAPI5 的 Ivona 语音，在列表中键入字符后， NVDA可以读出列表项。 (#11651)
+- 在 Windows 10 邮件 16005.13110及更高版本中阅读电子邮件正文时，恢复了浏览模式支持。 (#11439)
+- 修复了使用 SAPI5 合成器的 Ivona语音时，NVDA 无法保存配置、切换合成器以及重启后无声的问题。 (#11650)
+- 现在可以在 HIMS 点显器的盲文键盘上输入计算机盲文的数字 6。 (#11710)
+- 大大提升了NVDA在 Azure Data Studio 中的性能。 (#11533, #11715)
+- 修复了启用“尝试为过期的焦点事件取消语音”后，无法读出 NVDA 查找对话框标题的 Bug。 (#11632)
+- 修复了从睡眠状态唤醒计算机并聚焦到 Microsoft Edge 文档时， NVDA无声的 Bug。 (#11576)
+- 关闭 Microsoft Edge 中的上下文菜单后，无需按 Tab键切换焦点即可使用浏览模式。 (#11202)
+- 支持了某些64位应用程序（例如 Tortoise SVN）中列表视图项目的朗读。 (#8175)
 - ARIA treegrids are now exposed as normal tables in browse mode in both Firefox and Chrome. (#9715)
 - A reverse search can now be initiated with 'find previous' via NVDA+shift+F3 (#11770)
 - An NVDA script is no longer treated as being repeated if an unrelated key press happens in between the two executions of the script. (#11388) 

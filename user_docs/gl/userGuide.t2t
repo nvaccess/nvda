@@ -1589,6 +1589,7 @@ Esta opción permíteche escoller onde desexas ter unha posición do obxecto anu
 
 ==== Deducir a información de Posición do Obxecto cando non estea dispoñible ====[ObjectPresentationGuessPositionInfo]
 Se o anunciado de información de posición do obxecto está desactivada, esta opción permite ao NVDA deducir a información de posición do obxecto cando non estea dispoñible para un control en particular.
+
 Cando estea activada, NVDA anunciará información de posición para máis controis como menús e barras de ferramentas, non obstante esta información poderá ser lixeiramente incorrecta. 
 
 ==== Anunciar Descripcións de Obxectos ====[ObjectPresentationReportDescriptions]
@@ -2254,7 +2255,17 @@ Windows 10 inclúe novas voces coñecidas coma voces "OneCore" ou "mobile".
 Proporciónanse voces para moitas linguas e son máis lixeiras que as voces Microsoft disponibles ao se usar Microsoft Speech API versión 5.
 En Windows 10, o NVDA usa voces Windows OneCore por defecto ([[eSpeak NG #eSpeakNG] úsase noutras versións).
 
-Porfavor consulta este artigo de Microsoft para unha listaxe de voces dispoñibles e instruccións para instalalas: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
+Para engadir voces Windows OneCore novas, vai a "Narrador", dentro das opcións de Accesibilidade. 
+Usa a opción "Engadir voces" e procura a lingua desexada.
+Moitas linguas inclúen múltiples variantes.
+"Reino Unido" e "Australia" son dúas das variantes do inglés.
+"Francia", "Canadá" e "Suiza" son variantes do francés dispoñibles.
+Procura a familia da lingua (como inglés ou Francés), logo localiza a variante na listaxe.
+Seleciona calquera lingua desexada e usa o botón "Engadir" para engadila.
+Unha vez engadida, reinicia o NVDA.
+
+
+Por favor consulta este artigo de Microsoft para unha listaxe de voces dispoñibles: https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
 + Pantallas Braille Soportadas +[SupportedBrailleDisplays]
 Esta sección contén información acerca das pantallas braille soportadas polo NVDA.
