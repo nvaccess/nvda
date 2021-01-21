@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2019 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2019-2020 NV Access Limited, Leonard de Ruijter, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -16,7 +16,7 @@ import sourceEnv  # noqa: F401, E402
 import languageHandler  # noqa: E402
 languageHandler.setLanguage("en")
 
-# Initialize globalvars.appArgs to something sensible.
+# Initialize globalVars.appArgs to something sensible.
 import globalVars  # noqa: E402
 
 
@@ -30,6 +30,11 @@ class AppArgs:
 
 
 globalVars.appArgs = AppArgs()
+# #11971: NVDA is not running, therefore app dir is undefined.
+# Therefore tell NVDA that apt source directory is app dir.
+appDir = os.path.join("..", "source")
+globalVars.appDir = os.path.abspath(appDir)
+
 
 # Import NVDA's versionInfo module.
 import versionInfo  # noqa: E402
