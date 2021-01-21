@@ -18,6 +18,7 @@ What's New in NVDA
   - This experimental fix must be manually enabled in NVDA's advanced settings panel by changing the diff algorithm to Diff Match Patch.
 - Fixed access to edit fields in MCS Electronics IDE's. (#11966) 
 - In MS Outlook, inappropriate distance reporting when shift+tabbing from the message body to the subject field should not occur anymore. (#10254)
+- In the Python Console, inserting a tab for indentation at the beginning of a non-empty input line and performing tab-completion in the middle of an input line are now supported. (#11532)
 
 
 == Changes for Developers ==
