@@ -15,6 +15,7 @@ import sys
 from ctypes import windll, byref, POINTER, addressof
 from comtypes import IUnknown
 from comtypes import automation 
+from html import escape
 from logHandler import log
 import gui
 import speech
@@ -56,7 +57,7 @@ def browseableMessage(message,title=None,isHtml=False):
 		# Translators: The title for the dialog used to present general NVDA messages in browse mode.
 		title = _("NVDA Message")
 	if not isHtml:
-		message = f"<pre>{message.replace('<', '&lt;')}</pre>"
+		message = f"<pre>{escape(message)}</pre>"^M
 	dialogString = f"{title};{message}"
 	dialogArguements = automation.VARIANT( dialogString )
 	gui.mainFrame.prePopup() 
