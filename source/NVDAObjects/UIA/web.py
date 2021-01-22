@@ -421,31 +421,46 @@ class HeadingControlQuickNavItem(UIATextRangeQuickNavItem):
 
 	@property
 	def level(self):
-		if not hasattr(self,'_level'):
-			styleVal=getUIATextAttributeValueFromRange(self.textInfo._rangeObj,UIAHandler.UIA_StyleIdAttributeId)
-			self._level=styleVal-(UIAHandler.StyleId_Heading1-1) if UIAHandler.StyleId_Heading1<=styleVal<=UIAHandler.StyleId_Heading6 else None
+		if not hasattr(self, '_level'):
+			styleVal = getUIATextAttributeValueFromRange(self.textInfo._rangeObj, UIAHandler.UIA_StyleIdAttributeId)
+			if UIAHandler.StyleId_Heading1 <= styleVal <= UIAHandler.StyleId_Heading6:
+				self._level = styleVal - (UIAHandler.StyleId_Heading1 - 1)
+			else:
+				self._level = None
 		return self._level
 
-	def isChild(self,parent):
-		return self.level>parent.level
+	def isChild(self, parent):
+		return self.level > parent.level
 
 
-def HeadingControlQuicknavIterator(itemType,document,position,direction="next"):
+def HeadingControlQuicknavIterator(itemType, document, position, direction="next"):
 	"""
-	A helper for L{UIAWebTreeInterceptor._iterNodesByType} that specifically yields L{HeadingControlQuickNavItem} objects found in the given document, starting the search from the given position,  searching in the given direction.
+	A helper for L{UIAWebTreeInterceptor._iterNodesByType}
+	that specifically yields L{HeadingControlQuickNavItem} objects
+	found in the given document, starting the search from the given position,  searching in the given direction.
 	See L{browseMode._iterNodesByType} for details on these specific arguments.
 	"""
-	# Some UI Automation web implementations expose all headings as UIA elements with a controlType of text, and a level. Thus we can quickly search for these.
-	# However, sometimes when ARIA is used, the level on the element may not match the level in the text attributes.
-	# Therefore we need to search for all levels 1 through 6, even if a specific level is specified.
+	# Some UI Automation web implementations expose all headings as UIA elements
+# 	with a controlType of text, and a level.
+	# Thus we can quickly search for these.
+	# However, sometimes when ARIA is used,
+	# the level on the element may not match the level in the text attributes.
+	# Therefore we need to search for all levels 1 through 6,
+	# even if a specific level is specified.
 	# Though this is still much faster than searching text attributes alone
 	# #9078: this must be wrapped inside a list, as Python 3 will treat this as iteration.
-	levels=list(range(1,7))
-	condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_TextControlTypeId,UIAHandler.UIA_LevelPropertyId:levels})
-	levelString=itemType[7:]
-	for item in UIAControlQuicknavIterator(itemType,document,position,condition,direction=direction,itemClass=HeadingControlQuickNavItem):
-		# Verify this is the correct heading level via text attributes 
-		if item.level and (not levelString or levelString==str(item.level)): 
+	levels = list(range(1, 7))
+	condition = createUIAMultiPropertyCondition({
+		UIAHandler.UIA_ControlTypePropertyId: UIAHandler.UIA_TextControlTypeId,
+		UIAHandler.UIA_LevelPropertyId: levels
+	})
+	levelString = itemType[7:]
+	itemIter = UIAControlQuicknavIterator(
+		itemType, document, position, condition, direction=direction, itemClass=HeadingControlQuickNavItem
+	)
+	for item in itemIter:
+		# Verify this is the correct heading level via text attributes
+		if item.level and (not levelString or levelString == str(item.level)):
 			yield item
 
 
@@ -476,8 +491,8 @@ class UIAWebTreeInterceptor(cursorManager.ReviewCursorManager, UIABrowseModeDocu
 			return True
 		return super().shouldPassThrough(obj, reason=reason)
 
-	def _iterNodesByType(self,nodeType,direction="next",pos=None):
+	def _iterNodesByType(self, nodeType, direction="next", pos=None):
 		if nodeType.startswith("heading"):
-			return HeadingControlQuicknavIterator(nodeType,self,pos,direction=direction)
+			return HeadingControlQuicknavIterator(nodeType, self, pos, direction=direction)
 		else:
-			return super()._iterNodesByType(nodeType,direction=direction,pos=pos)
+			return super()._iterNodesByType(nodeType, direction=direction, pos=pos)
