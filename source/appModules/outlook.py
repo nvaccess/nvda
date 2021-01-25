@@ -565,6 +565,12 @@ class BaseOutlookWordDocument(BaseWordDocument):
 		if not caretMoved:
 			return
 		self.reportTab()
+		
+	__gestures = {
+		"kb:control+shift+w": None,  # Shortcut existing in Word but not in Outlook
+		"kb:control+shift+b": None,  # Shortcut existing in Word but opens address book in Outlook
+		"kb:control+shift+a": "changeCase",  # In Outlook Ctrl+Shift+A is equivalent to Shift+F3
+	}
 
 
 class OutlookWordDocument(WordDocument, BaseOutlookWordDocument):
@@ -589,12 +595,6 @@ class OutlookWordDocument(WordDocument, BaseOutlookWordDocument):
 
 	ignoreEditorRevisions=True
 	ignorePageNumbers=True # This includes page sections, and page columns. None of which are appropriate for outlook.
-	
-	__gestures = {
-		"kb:control+shift+w": None,  # Shortcut existing in Word but not in Outlook
-		"kb:control+shift+b": None,  # Shortcut existing in Word but opens address book in Outlook
-		"kb:control+shift+a": "changeCase",  # In Outlook Ctrl+Shift+A is equivalent to Shift+F3
-	}
 
 
 class OutlookUIAWordDocument(UIAWordDocument, BaseOutlookWordDocument):
@@ -605,12 +605,6 @@ class OutlookUIAWordDocument(UIAWordDocument, BaseOutlookWordDocument):
 
 	def _get_shouldCreateTreeInterceptor(self):
 		return self.isReadonlyViewer
-
-	__gestures = {
-		"kb:control+shift+w": None,  # Shortcut existing in Word but not in Outlook
-		"kb:control+shift+b": None,  # Shortcut existing in Word but opens address book in Outlook
-		"kb:control+shift+a": "changeCase",  # In Outlook Ctrl+Shift+A is equivalent to Shift+F3
-	}
 
 class DatePickerButton(IAccessible):
 	# Value is a duplicate of name so get rid of it
