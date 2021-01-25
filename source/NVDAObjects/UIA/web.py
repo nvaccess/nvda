@@ -271,7 +271,7 @@ class UIAWeb(UIA):
 
 	def _get_role(self):
 		role = super().role
-		from .edge import EdgeHTMLRoot
+		from .spartanEdge import EdgeHTMLRoot
 		if not isinstance(self, EdgeHTMLRoot) and role==controlTypes.ROLE_PANE and self.UIATextPattern:
 			return controlTypes.ROLE_INTERNALFRAME
 		ariaRole=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
