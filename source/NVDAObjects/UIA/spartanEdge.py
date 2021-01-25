@@ -21,6 +21,11 @@ from UIABrowseMode import UIABrowseModeDocument, UIABrowseModeDocumentTextInfo, 
 from UIAUtils import *
 from . import UIA, web
 
+"""
+	A module for using the legacy Edge browser (code name spartan) via UIA.
+	Specialisations on the UIA.web module.
+"""
+
 
 class EdgeTextInfo(web.UIAWebTextInfo):
 	...

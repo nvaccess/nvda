@@ -880,23 +880,23 @@ class UIA(Window):
 			# But not for Internet Explorer
 			and not self.appModule.appName == 'iexplore'
 		):
-			from . import edge
+			from . import spartanEdge
 			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
-				clsList.append(edge.EdgeHTMLRootContainer)
+				clsList.append(spartanEdge.EdgeHTMLRootContainer)
 			elif (self.UIATextPattern and
 				# #6998: Edge normally gives its root node a controlType of pane, but ARIA role="document"  changes the controlType to document
 				self.role in (controlTypes.ROLE_PANE,controlTypes.ROLE_DOCUMENT) and 
-				self.parent and (isinstance(self.parent,edge.EdgeHTMLRootContainer) or not isinstance(self.parent,edge.EdgeNode))
+				self.parent and (isinstance(self.parent,spartanEdge.EdgeHTMLRootContainer) or not isinstance(self.parent,spartanEdge.EdgeNode))
 			): 
-				clsList.append(edge.EdgeHTMLRoot)
+				clsList.append(spartanEdge.EdgeHTMLRoot)
 			elif self.role==controlTypes.ROLE_LIST:
-				clsList.append(edge.EdgeList)
+				clsList.append(spartanEdge.EdgeList)
 			else:
-				clsList.append(edge.EdgeNode)
+				clsList.append(spartanEdge.EdgeNode)
 		elif self.role == controlTypes.ROLE_DOCUMENT and UIAAutomationId == "Microsoft.Windows.PDF.DocumentView":
 			# PDFs
-			from . import edge
-			clsList.append(edge.EdgeHTMLRoot)
+			from . import spartanEdge
+			clsList.append(spartanEdge.EdgeHTMLRoot)
 		elif (
 			UIAAutomationId == "RichEditControl"
 			and "DevExpress.XtraRichEdit" in self.UIAElement.cachedProviderDescription
