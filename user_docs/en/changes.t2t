@@ -35,6 +35,8 @@ What's New in NVDA
  - canStartOnSecureScreens - use config.isInstalledCopy instead.
  - hasUiAccess and execElevated - use them from the systemUtils module.
  - getConfigDirs - use globalVars.appArgs.configPath instead
+- Module level REASON_* constants are removed from controlTypes - please use controlTypes.OutputReason instead. (#11969)
+- REASON_QUICKNAV has been removed from browseMode - use controlTypes.OutputReason.QUICKNAV instead. (#11969)
 
 
 = 2020.4 =

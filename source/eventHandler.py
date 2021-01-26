@@ -213,7 +213,7 @@ def _getFocusLossCancellableSpeechCommand(
 		obj,
 		reason: controlTypes.OutputReason
 ) -> Optional[_CancellableSpeechCommand]:
-	if reason != controlTypes.REASON_FOCUS or not speech.manager._shouldCancelExpiredFocusEvents():
+	if reason != controlTypes.OutputReason.FOCUS or not speech.manager._shouldCancelExpiredFocusEvents():
 		return None
 	from NVDAObjects import NVDAObject
 	if not isinstance(obj, NVDAObject):

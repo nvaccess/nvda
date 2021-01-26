@@ -672,7 +672,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			self.updateCaret()
 			tiCopy = self.copy()
 			tiCopy.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(tiCopy,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(tiCopy, reason=controlTypes.OutputReason.FOCUS)
 			braille.handler.handleCaretMove(self)
 			return
 
@@ -1413,7 +1413,7 @@ class WordDocument(Window):
 			info.expand(textInfos.UNIT_PARAGRAPH)
 			isCollapsed=info.isCollapsed
 		if not isCollapsed:
-			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
 		braille.handler.handleCaretMove(self)
 		if selectionObj and isCollapsed:
 			offset=selectionObj.information(wdHorizontalPositionRelativeToPage)
@@ -1421,7 +1421,7 @@ class WordDocument(Window):
 			ui.message(msg)
 			if selectionObj.paragraphs[1].range.start==selectionObj.start:
 				info.expand(textInfos.UNIT_LINE)
-				speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+				speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 
 	def getLocalizedMeasurementTextForPointSize(self,offset):
 		options=self.WinwordApplicationObject.options

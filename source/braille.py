@@ -524,7 +524,15 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		textList.append(value)
 	if states is not None:
 		textList.extend(
-			controlTypes.processAndLabelStates(role, states, controlTypes.REASON_FOCUS, states, None, positiveStateLabels, negativeStateLabels)
+			controlTypes.processAndLabelStates(
+				role,
+				states,
+				controlTypes.OutputReason.FOCUS,
+				states,
+				None,
+				positiveStateLabels,
+				negativeStateLabels
+			)
 		)
 	if roleText:
 		textList.append(roleText)

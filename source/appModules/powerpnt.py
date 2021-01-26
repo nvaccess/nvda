@@ -1085,7 +1085,7 @@ class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 				speech.speakPreselectedText(info.text)
 			else:
 				info.expand(textInfos.UNIT_LINE)
-				speech.speakTextInfo(info, reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_LINE)
+				speech.speakTextInfo(info, reason=controlTypes.OutputReason.CARET, unit=textInfos.UNIT_LINE)
 
 	def event_gainFocus(self,obj,nextHandler):
 		pass
