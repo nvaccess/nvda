@@ -1095,7 +1095,9 @@ class TextInfoRegion(Region):
 			brailleInput.handler.updateDisplay()
 			return
 
-		if braillePos == self.brailleCursorPos:
+		dest = self.getTextInfoForBraillePos(braillePos)
+		cursor = self.getTextInfoForBraillePos(self.brailleCursorPos)
+		if dest.compareEndPoints(cursor, "startToStart") == 0:
 			# The cursor is already at this position,
 			# so activate the position.
 			try:
@@ -1103,7 +1105,6 @@ class TextInfoRegion(Region):
 			except NotImplementedError:
 				pass
 			return
-		dest = self.getTextInfoForBraillePos(braillePos)
 		self._setCursor(dest)
 
 	def nextLine(self):
