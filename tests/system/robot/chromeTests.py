@@ -345,3 +345,130 @@ def test_ariaCheckbox_browseMode():
 		actualSpeech,
 		"Sandwich Condiments  grouping  list  with 4 items  Lettuce  check box  not checked"
 	)
+
+
+ariaDescriptionSample = """
+		<div>
+			<div
+				contenteditable=""
+				spellcheck="false"
+				role="textbox"
+				aria-multiline="true"
+			><p>This is a line with no annotation</p>
+			<p><span
+					aria-description="User nearby, Boaty McBoatface"
+				>Here is a sentence that is being edited by someone else.</span>
+				<b>Multiple authors can edit this document at the same time.</b></p>
+			<p>An element with a role, follow <a
+				href="www.google.com"
+				aria-description="opens in a new tab"
+				>to google's</a
+			> website</p>
+			<p>Testing the title attribute, <a
+				href="www.google.com"
+				title="conduct a search"
+				>to google's</a
+			> website</p>
+			</div>
+		</div>
+	"""
+
+
+def test_ariaDescription_focusMode():
+	""" Ensure aria description is read in focus mode.
+	"""
+	_chrome.prepareChrome(ariaDescriptionSample)
+	# Focus the contenteditable and automatically switch to focus mode (due to contenteditable)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		"edit  multi line  This is a line with no annotation\nFocus mode"
+	)
+
+	annotation = "User nearby, Boaty Mc Boatface"
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	_asserts.strings_match(
+		actualSpeech,
+		f"{annotation}  Here is a sentence that is being edited by someone else."
+		"  Multiple authors can edit this document at the same time."
+	)
+	linkAnnotation = "opens in a new tab"
+	linkRole = "link"
+	linkName = "to google's"
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	_asserts.strings_match(
+		actualSpeech,
+		f"An element with a role, follow  {linkRole}  {linkAnnotation}  {linkName}  website"
+	)
+	linkTitle = "conduct a search"
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	_asserts.strings_match(
+		actualSpeech,
+		f"Testing the title attribute,  {linkRole}  {linkTitle}  {linkName}  website"
+	)
+
+
+def test_ariaDescription_browseMode():
+	""" Ensure aria description is read in browse mode.
+	"""
+	_chrome.prepareChrome(ariaDescriptionSample)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"edit  multi line  This is a line with no annotation"
+	)
+
+	annotation = "User nearby, Boaty Mc Boatface"
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	_asserts.strings_match(
+		actualSpeech,
+		f"{annotation}  Here is a sentence that is being edited by someone else."
+		"  Multiple authors can edit this document at"
+	)
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	_asserts.strings_match(
+		actualSpeech,
+		"the same time."
+	)
+	linkAnnotation = "opens in a new tab"
+	linkRole = "link"
+	linkName = "to google's"
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	_asserts.strings_match(
+		actualSpeech,
+		f"An element with a role, follow  {linkRole}  {linkAnnotation}  {linkName}  website"
+	)
+
+	linkTitle = "conduct a search"
+	actualSpeech = _chrome.getSpeechAfterKey('downArrow')
+	_asserts.strings_match(
+		actualSpeech,
+		f"Testing the title attribute,  {linkRole}  {linkTitle}  {linkName}  website"
+	)
+
+
+def test_ariaDescription_sayAll():
+	""" Ensure aria description is read by say all.
+	"""
+	_chrome.prepareChrome(ariaDescriptionSample)
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+downArrow")
+
+	annotation = "User nearby, Boaty Mc Boatface"
+	linkAnnotation = "opens in a new tab"
+	linkRole = "link"
+	linkName = "to google's"
+	linkTitle = "conduct a search"
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"Before Test Case Marker",
+			"edit  multi line  This is a line with no annotation",
+			f"{annotation}  Here is a sentence that is being edited by someone else.",
+			"Multiple authors can edit this document at  the same time.",
+			"An element with a role, "  # no comma, concat these two long strings.
+			f"follow  {linkRole}  {linkAnnotation}  {linkName}  website",
+			f"Testing the title attribute,  {linkRole}  {linkTitle}  {linkName}  website"
+			"  out of edit",
+			"After Test Case Marker"
+		])
+	)

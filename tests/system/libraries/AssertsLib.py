@@ -13,6 +13,10 @@ builtIn: BuiltIn = BuiltIn()
 class AssertsLib:
 	@staticmethod
 	def strings_match(actual, expected, ignore_case=False):
+		builtIn.log(
+			f"assert string matches (ignore case: {ignore_case}):  '{expected}'",
+			level="INFO"
+		)
 		try:
 			builtIn.should_be_equal_as_strings(
 				actual,
@@ -26,6 +30,7 @@ class AssertsLib:
 					ignore_case,
 					repr(actual),
 					repr(expected)
-				)
+				),
+				level="DEBUG"
 			)
 			raise

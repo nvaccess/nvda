@@ -47,3 +47,12 @@ ARIA checkbox
 	[Documentation]	Navigate to an unchecked checkbox in reading mode.
 	[Tags]	aria-at
 	test_ariaCheckbox_browseMode
+ARIA description Focus Mode
+	[Documentation]	Navigate to a span with aria-description in focus mode
+	test_ariaDescription_focusMode
+ARIA description Browse Mode
+	[Documentation]	Navigate to a span with aria-description in browse mode
+	test_ariaDescription_browseMode
+ARIA description Say All
+	[Documentation]	Say all, contents includes aria-description
+	test_ariaDescription_sayAll
