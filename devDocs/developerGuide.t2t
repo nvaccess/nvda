@@ -478,6 +478,8 @@ The following keyword arguments can be used when applying the script decorator:
   This option defaults to False.
 - bypassInputHelp: A boolean indicating whether this script should run when input help is active.
   This option defaults to False.
+- allowInSleepMode: A boolean indicating whether this script should run when sleep mode is active.
+  This option defaults to False.
 - resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
   The constants for say all mode are prefixed with CURSOR_ and specified in the sayAllHandler modules.
   If resumeSayAllMode is not specified, say all does not resume after this script.

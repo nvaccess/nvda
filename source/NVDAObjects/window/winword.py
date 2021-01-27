@@ -672,7 +672,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			self.updateCaret()
 			tiCopy = self.copy()
 			tiCopy.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(tiCopy,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(tiCopy, reason=controlTypes.OutputReason.FOCUS)
 			braille.handler.handleCaretMove(self)
 			return
 
@@ -1402,6 +1402,9 @@ class WordDocument(Window):
 		* If not in a table, announces the distance of the caret from the left edge of the document, and any remaining text on that line.
 		"""
 		gesture.send()
+		self.reportTab()
+
+	def reportTab(self):
 		selectionObj=self.WinwordSelectionObject
 		inTable=selectionObj.tables.count>0 if selectionObj else False
 		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -1410,7 +1413,7 @@ class WordDocument(Window):
 			info.expand(textInfos.UNIT_PARAGRAPH)
 			isCollapsed=info.isCollapsed
 		if not isCollapsed:
-			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
 		braille.handler.handleCaretMove(self)
 		if selectionObj and isCollapsed:
 			offset=selectionObj.information(wdHorizontalPositionRelativeToPage)
@@ -1418,7 +1421,7 @@ class WordDocument(Window):
 			ui.message(msg)
 			if selectionObj.paragraphs[1].range.start==selectionObj.start:
 				info.expand(textInfos.UNIT_LINE)
-				speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+				speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 
 	def getLocalizedMeasurementTextForPointSize(self,offset):
 		options=self.WinwordApplicationObject.options
