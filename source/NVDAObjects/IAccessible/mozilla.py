@@ -1,9 +1,8 @@
 # -*- coding: UTF-8 -*-
-#NVDAObjects/IAccessible/mozilla.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner
 
 import IAccessibleHandler
 from comInterfaces import IAccessible2Lib as IA2
@@ -22,6 +21,31 @@ class Mozilla(ia2Web.Ia2Web):
 		if self.IAccessibleStates & oleacc.STATE_SYSTEM_MARQUEED:
 			states.add(controlTypes.STATE_CHECKABLE)
 		return states
+
+	def _get_descriptionFrom(self) -> controlTypes.DescriptionFrom:
+		"""Firefox does not yet support 'description-from' attribute (which informs
+		NVDA of the source of accDescription after the name/description computation
+		is complete. However, a primary use-case can be supported via the IA2attribute
+		'description' which is exposed by Firefox and tells us the value of the "aria-description"
+		attribute. If the value of accDescription matches, we can infer that the source
+		of accDescription is 'aria-description'. Note: At the time of development not all
+		HTML elements result in the IA2attribute 'description' being exposed. EG on a 'span'
+		element it is not exposed.
+		"""
+		log.debug("Getting mozilla descriptionFrom")
+		ariaDesc = self.IA2Attributes.get("description", "")
+		log.debug(f"description IA2Attribute is: {ariaDesc}")
+		if (
+			ariaDesc == ""  # aria-description is missing or empty
+			# Ensure that aria-description is actually the value used.
+			# I.E. accDescription is sourced from the aria-description attribute as a result of the
+			# name/description computation.
+			# If the values don't match, some other source must have been used.
+			or self.description != ariaDesc
+		):
+			return controlTypes.DescriptionFrom.UNKNOWN
+		else:
+			return controlTypes.DescriptionFrom.ARIA_DESCRIPTION
 
 	def _get_presentationType(self):
 		presType=super(Mozilla,self).presentationType

@@ -470,6 +470,12 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		return ""
 
+	#: Typing information for auto property _get_descriptionFrom
+	descriptionFrom: controlTypes.DescriptionFrom
+
+	def _get_descriptionFrom(self) -> controlTypes.DescriptionFrom:
+		return controlTypes.DescriptionFrom.UNKNOWN
+
 	def _get_controllerFor(self):
 		"""Retrieves the object/s that this object controls."""
 		return []

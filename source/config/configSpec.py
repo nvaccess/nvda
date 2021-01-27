@@ -229,6 +229,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [annotations]
 	reportDetails = boolean(default=false)
+	reportAriaDescription = boolean(default=true)
 
 [terminals]
 	speakPasswords = boolean(default=false)

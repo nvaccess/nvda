@@ -142,6 +142,8 @@ class CompoundTextInfo(textInfos.TextInfo):
 		field = textInfos.ControlField()
 		field["role"] = role
 		field['roleText'] = obj.roleText
+		field['description'] = obj.description
+		field['_description-from'] = obj.descriptionFrom
 		# The user doesn't care about certain states, as they are obvious.
 		states.discard(controlTypes.STATE_EDITABLE)
 		states.discard(controlTypes.STATE_MULTILINE)
