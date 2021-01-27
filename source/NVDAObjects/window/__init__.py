@@ -1,8 +1,7 @@
-#NVDAObjects/window.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V., Bill Dengler
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Babbage B.V., Bill Dengler
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import re
 import ctypes
@@ -136,7 +135,7 @@ An NVDAObject for a window
 		if not any(issubclass(cls,EditableText) for cls in clsList):
 			gi=winUser.getGUIThreadInfo(self.windowThreadID)
 			if gi.hwndCaret==self.windowHandle and gi.flags&winUser.GUI_CARETBLINKING:
-				if self.windowTextLineCount:
+				if self.windowTextLineCount and self.windowText:
 					from .edit import UnidentifiedEdit
 					clsList.append(UnidentifiedEdit)
 				else:
