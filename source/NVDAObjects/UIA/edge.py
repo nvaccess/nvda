@@ -588,7 +588,11 @@ class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,UIABrowseModeDoc
 
 	def shouldPassThrough(self,obj,reason=None):
 		# Enter focus mode for selectable list items (<select> and role=listbox)
-		if reason==controlTypes.REASON_FOCUS and obj.role==controlTypes.ROLE_LISTITEM and controlTypes.STATE_SELECTABLE in obj.states:
+		if(
+			reason == controlTypes.OutputReason.FOCUS
+			and obj.role == controlTypes.ROLE_LISTITEM
+			and controlTypes.STATE_SELECTABLE in obj.states
+		):
 			return True
 		return super(EdgeHTMLTreeInterceptor,self).shouldPassThrough(obj,reason=reason)
 

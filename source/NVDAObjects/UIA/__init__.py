@@ -1668,7 +1668,7 @@ class UIA(Window):
 		This just reports the element that received the alert in speech and braille, similar to how focus is presented.
 		Skype for business toast notifications being one example.
 		"""
-		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
+		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 		# Ideally, we wouldn't use getPropertiesBraille directly.
 		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
@@ -1768,7 +1768,7 @@ class SensitiveSlider(UIA):
 	def event_valueChange(self):
 		focusParent=api.getFocusObject().parent
 		if self==focusParent:
-			speech.speakObjectProperties(self,value=True,reason=controlTypes.REASON_CHANGE)
+			speech.speakObjectProperties(self, value=True, reason=controlTypes.OutputReason.CHANGE)
 		else:
 			super(SensitiveSlider,self).event_valueChange()
 
