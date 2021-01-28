@@ -1674,16 +1674,7 @@ def getControlFieldSpeech(  # noqa: C901
 	isCurrent = attrs.get('current', controlTypes.IsCurrent.NO)
 	placeholderValue=attrs.get('placeholder', None)
 	value=attrs.get('value',"")
-	if (
-		attrs.get('alwaysReportDescription', False)
-		or reason in (
-			OutputReason.REASON_FOCUS,
-			OutputReason.REASON_CARET,
-		)
-	):
-		description=attrs.get('description',"")
-	else:
-		description=""
+	description = attrs.get('description', "")
 	level=attrs.get('level',None)
 
 	if presCat != attrs.PRESCAT_LAYOUT:
