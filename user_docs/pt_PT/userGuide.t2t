@@ -307,7 +307,7 @@ Por exemplo, se estiver a escrever num campo de texto editável, o campo de text
 
 A forma mais comum de navegar pelo Windows, com o NVDA, é simplesmente mover-se com os comandos de teclado padrão do Windows, tais como Tab e Shift+Tab, para se mover para a frente e para trás, entre controlos, pressionar Alt para aceder à barra de menus e utilizar as setas para navegar pelos menus e usar Alt+Tab para se mover entre aplicações em execução.
 Ao fazer isto, o NVDA transmitirá a informação sobre o objecto em foco, tal como o seu nome, tipo, valor, estado, descrição, atalho do teclado e informação da posição.
-Quando a funcionalidade ["Realçar foco" #VisionFocusHighlight] estiver ativada, a localização actual do foco do sistema também será anunciada visualmente.
+Quando a funcionalidade ["Realce visual" #VisionFocusHighlight] estiver ativada, a localização actual do foco do sistema também será anunciada visualmente.
 
 Existem alguns comandos de teclado úteis quando se move com o foco do sistema:
 %kc:beginInclude
@@ -363,7 +363,7 @@ De forma similar, uma barra de ferramentas contém controlos; portanto deve move
 
 O objecto que está a ser revisto actualmente denomina-se "objecto de navegação".
 Após navegar para um objecto, pode rever o seu conteúdo com os comandos de [revisão de texto #ReviewingText].
-Quando a funcionalidade ["Realçar foco" #VisionFocusHighlight] estiver ativada, a localização actual do foco do sistema também será anunciada visualmente.
+Quando a funcionalidade ["Realce visual" #VisionFocusHighlight] estiver ativada, a localização actual do foco do sistema também será anunciada visualmente.
 Por padrão, a navegação de objectos acompanha o foco do sistema, embora este comportamento possa ser activado e desactivado.
 
 Nota:  O Braille seguir o objecto de navegação pode ser configurado na opção Braille segue #BrailleTether].
@@ -506,7 +506,7 @@ O modo de navegação também está disponível como opção para o Microsoft Wo
 
 No modo de navegação, o conteúdo do documento está disponível numa representação plana e pode ser navegado com as teclas de cursor, como se se tratasse de um documento de texto normal.
 Todos os comandos de teclado do NVDA referentes ao [cursor do sistema #SystemCaret] trabalharão neste modo; como por exemplo, leitura contínua, anunciar formatação, comandos de navegação em tabelas, etc.
-Quando a funcionalidade ["Realçar foco" #VisionFocusHighlight] estiver ativada, a localização actual do foco do sistema também será anunciada visualmente.
+Quando a funcionalidade ["Realce visual" #VisionFocusHighlight] estiver ativada, a localização actual do foco do sistema também será anunciada visualmente.
 A informação de que o texto é ou não um link, título, etc., é anunciada conforme se movimenta pelo mesmo.
 
 Por vezes, necessitará de interagir directamente com os controlos, nestes documentos.
@@ -776,8 +776,8 @@ Através de [extras #AddonsManager] podem ser adicionados outros sistemas de mel
 
 As configurações visuais do NVDA podem ser alteradas na secção ["Visão" #VisionSettings] na janela de [Configurações do NVDA #NVDASettings].
 
-++ Realçar foco ++[VisionFocusHighlight]
-O realce do foco pode ajudar a identificar a posição do [foco do sistema #SystemFocus], do [objecto de navegação #ObjectNavigation] e do [cursor no modo de navegação #BrowseMode].
+++ Realce visual ++[VisionFocusHighlight]
+O realce visual  pode ajudar a identificar a posição do [foco do sistema #SystemFocus], do [objecto de navegação #ObjectNavigation] e do [cursor no modo de navegação #BrowseMode].
 Essas posições são realçadas por um rectângulo desenhado com as seguintes cores.
 - Azul sólido realça a posição combinada  do objecto de navegação com  o foco do sistema (porque o [objecto de navegação segue o foco do sistema #ReviewCursorFollowFocus]);
 - Azul tracejado realça apenas o objecto focado pelo sistema;
@@ -785,7 +785,7 @@ Essas posições são realçadas por um rectângulo desenhado com as seguintes c
 - Amarelo sólido realça o cursor virtual do modo de navegação (onde não existe um cursor físico, como nos navegadores web).
 -
 
-Quando o "Realçar foco" está activado, pode configurar na secção [Visão #VisionSettings] na janela das [configurações do NVDA #NVDASettings], se quer, ou não, realçar o foco do sistema, o objecto de navegação ou o cursor virtual do modo de navegação #VisionSettingsFocusHighlight]
+Quando o "Realce visual" está activado, pode configurar na secção [Visão #VisionSettings] na janela das [configurações do NVDA #NVDASettings], se quer, ou não, realçar o foco do sistema, o objecto de navegação ou o cursor virtual do modo de navegação #VisionSettingsFocusHighlight]
 
 ++ Cortina de ecrã ++[VisionScreenCurtain]
 Para um utilizador cego, ou deficiente visual, nem sempre é possível nem necessário ver o conteúdo do ecrã.
@@ -1147,6 +1147,9 @@ Se usar outro sintetizador, talvez também possa configurar a variante, se o sin
 Esta opção permite-lhe alterar a velocidade da voz.
 Trata-se de uma barra deslizante, que vai de 0 a 100 (sendo 0 a velocidade mais lenta e 100 a mais rápida).
 
++==== Turbo de voz ====[SpeechSettingsRateBoost]
+Activando esta opção aumentará, significativamente, a velocidade da voz, se tal for suportado pelo sintetizador.
+
 ==== Entoação ====[SpeechSettingsPitch]
 Esta opção permite-lhe alterar a entoação da voz actual.
 Trata-se de uma barra deslizante, que vai de 0 a 100 (sendo 0 a entoação mais grave e 100 a mais aguda.
@@ -1298,13 +1301,13 @@ A indicação de selecção não é afectada por esta opção, é sempre feita c
 Esta opção permite escolher a aparência (esquema de pontos) do cursor Braille, quando definido para seguir o cursor de revisão.
 A indicação de selecção não é afectada por esta opção, é sempre feita com os pontos 7 e 8, sem piscar.
 
++==== Show Messages ====[BrailleSettingsShowMessages]
+Uma caixa de combinação que permite definir se o NVDA deve mostrar as mensagens em Braille e quando elas devem desaparecer automaticamente.
+
 ==== Tempo de Permanência de Mensagens (seg) ====[BrailleSettingsMessageTimeout]
 Esta definição é um campo numérico que controla durante quantos segundos são apresentadas as mensagens do sistema, na linha Braille.
-Especifique 0, para que estas mensagens não sejam mostradas de todo.
 A mensagem do NVDA é imediatamente descartada ao pressionar um cursor de toque da linha Braille, mas reaparece ao pressionar um comando que accione a mensagem.
-
-==== Mostrar Mensagens Indefinidamente ====[BrailleSettingsNoMessageTimeout]
-Esta opção indica ao NVDA para mostrar, na linha Braille, as mensagens até o utilizador as descartar.
+Esta opção só é mostrada se a opção "Mostrar Mensagens" estiver definida para "Usar tempo de permanência".
 
 %kc:setting
 ==== Braille Segue ====[BrailleTether]
@@ -1397,10 +1400,10 @@ A secção "Visão" das configurações do NVDA permite activar, desactivar e co
 Note que as opções disponíveis nesta secção podem ser aumentadas através de [extras do NVDA #AddonsManager].
 De fábrica, esta secção contém as seguintes opções:
 
-==== Realçar foco====[VisionSettingsFocusHighlight]
-As caixas de verificação deste grupo controlam o comportamento do sistema "Realçar foco" incluido no NVDA #VisionFocusHighlight] facility.
+==== Realce visual ====[VisionSettingsFocusHighlight]
+As caixas de verificação deste grupo controlam o comportamento do sistema "Realce visual" incluido no NVDA #VisionFocusHighlight] facility.
 
-- "Activar realce": Activa/desactiva o realce do foco.
+- "Activar realce": Activa/desactiva o realce visual.
 - "Realçar o foco do sistema": Activa/desactiva o realçar do [foco do sistema #SystemFocus].
 - "Realçar o objecto de navegação": Activa/desactiva o realçar do [objecto de navegação #ObjectNavigation].
 - "Realçar o cursor no modo de navegação": Activa/desactiva o realçar do [cursor virtual do modo de navegação #BrowseMode].
@@ -1851,7 +1854,7 @@ Se o NVDA parecer estar a seguir incorrectamente o cursor de inserção, por exe
 
 ==== Categorias do registo em modo de depuração ====[AdvancedSettingsDebugLoggingCategories]
 As caixas de verificação desta lista permitem activar categorias específicas de mensagens de depuração no registo do NVDA.
-O registo dessas mensagens pode provocar desempenho reduzido e grandes ficheiros de registo.
+O registo dessas mensagens pode provocar um desempenho reduzido e grandes ficheiros de registo.
 Apenas active uma destas categorias se isso for solicitado por um desenvolvedor do NVDA, ou de um extra, para verificar a causa de um mau funcionamento.
 
 ++ Outras Opções ++[MiscSettings]
@@ -1922,6 +1925,9 @@ Em seguida, altere os campos para o novo símbolo como faria para outros símbol
 Pode remover um símbolo que tenha adicionado anteriormente, pressionando o botão "Remover".
 
 Quando tiver terminado, pressione o botão "OK", para guardar as suas modificações, ou o botão “Cancelar”, para as descartar.
+
+No caso de  símbolos complexos, o campo "Substituir por:" pode incluir referências de agrupamento do texto encontrado. Por exemplo, para um padrão condizente com data completa, \1, \2, e \3 precisará de aparecer no campo a ser substituido pela parte correspondente da data.
+Uma barra invertida no campo "Substituir por:" deve ser duplicada, i.e. "a\\b" deve ser indicado para obter "asubstituição \b".
 
 +++ Definir Comandos +++[InputGestures]
 Nesta caixa de diálogo, pode personalizar os comandos, (quer do teclado, quer dos controlos de uma linha Braille, etc.) que serão usados pelo NVDA.
@@ -2104,6 +2110,14 @@ A janela do Visualizador Braille tem uma caixa de verificação chamada "Mostrar
 Se esta caixa estiver marcada, o Visualizador Braille será aberto quando o NVDA é iniciado.
 O Visualizador Braille tentará sempre abrir na mesma localização e com o mesmo tamanho com que foi fechado.
 
+A janela do  Visualizador Vraille contém uma caixa de verificação chamada "Usar o rato para roteamento de células", que está desmarcada por padrão.
+Se marcada, colocando o ponteiro do rato sobre uma célula Braille activará o comando de rotear para essa célula.
+Isto é normalmente usado para colocar o cursor ou activar um controlo.
+Isto pode ser útil para verificar se o NVDA consegue reverter o mapeamento das células Braille.
+Para impedir a activação não intencional do roteamento, existe um desfazamento temporal.
+O ponteiro do rato deve ficar na célula até ela mudar para verde.
+A célula começa por ser amarela,  mudando para laranja e e depois para verde.
+
 ++ Consola de Python ++[PythonConsole]
 A Consola de Python do NVDA, encontrada em Ferramentas no menu do NVDA, é uma ferramenta de desenvolvimento útil para depuração, inspecção geral de componentes internos do NVDA ou inspecção da hierarquia de acessibilidade de uma aplicação.
 Para mais informações, leia o [Guia de desenvolvimento do NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
@@ -2237,9 +2251,18 @@ Para as usar, precisa de instalar dois componentes:
 ++ Windows OneCore Voices ++[OneCore]
 O Windows 10 inclui novas vozes, conhecidas por "OneCore" ou "mobile".
 Estas vozes são disponibilizadas para vários idiomas e possuem uma resposta mais rápida que as vozes Microsoft disponíveis através do Microsoft Speech API versão 5.
-No Windows 10, o NVDA usa o Windows OneCore voices por padrão, enquanto o [[eSpeak NG #eSpeakNG] é usado nas versões anteriores.
+No Windows 10, o NVDA usa o sintetizador Windows OneCore voices por padrão, enquanto o [[eSpeak NG #eSpeakNG] é usado nas versões anteriores.
 
-Por favor, para ver a lista de vozes disponíveis e como as instalar, leia este artigo da Microsoft: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+Para adicionar novas vozes Windows OneCore voices, vá a "Definições", "Hora e idioma", e por fim, "Voz".
+Use o botão "Adicionar vozes" e e pesquise o idioma desejado.
+Muitos idiomas incluem várias variantes.
+"Portugal" e "Brasil" são as duas variantes do português.
+"Reino Unido" e "Austrália" são duas das variants do inglês.
+Seleccione o idioma principal, como Português ou Inglês, e depois a variante desejada na lista.
+Seleccione os idiomas desejados e use o botão "Adicionar" para as adicionar.
+Uma vez adicionadas, reinicie o NVDA.
+
+Por favor, leia este artigo da Microsoft para saber as vozes disponíveis: https://support.microsoft.com/pt-pt/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
 + Linhas Braille Suportadas +[SupportedBrailleDisplays]
 Esta secção contém informação sobre as linhas Braille suportadas pelo NVDA.
@@ -2505,7 +2528,7 @@ Por favor, consulte a documentação desta linha braille para obter a descriçã
 %kc:endInclude
 
 ++ HumanWare séries Brailliant BI/B / BrailleNote Touch ++[HumanWareBrailliant]
-A série de linhas braille Brailliant BI e B da [HumanWare https://www.humanware.com/], incluindo as BI 14, BI 32, BI 40 e B 80, são suportadas quando conectadas via USB ou bluetooth.
+A série de linhas braille Brailliant BI e B da [HumanWare https://www.humanware.com/], incluindo as BI 14, BI 20X, BI 32, BI 40, BI 40X e B 80, são suportadas quando conectadas via USB ou bluetooth.
 Se as ligar via USB, usando o protocolo Humanware, deverá instalar previamente os drivers fornecidos pelo fabricante.
 Os drivers USB não serão necessários se utilizar o protocolo OpenBraille.
 
@@ -2625,7 +2648,7 @@ Por favor, consulte a documentação da sua linha braille para obter a descriç�
 | Tecla Escape | Ponto1+ponto5+Espaço, F4, brailleedge: F1 |
 | Tecla Delete | Ponto1+ponto3+ponto5+Espaço, Ponto1+ponto4+ponto5+Espaço |
 | Tecla F1 | Ponto1+ponto2+ponto5+Espaço |
-| Tecla F3 | Ponto1+ponto2+ponto4+ponto8 |
+| Tecla F3 | Ponto1+ponto4+ponto8+espaço |
 | Tecla F4 | Ponto7+F3 |
 | Teclas Windows+B | Ponto1+ponto2+F1 |
 | Teclas Windows+D | Ponto1+Ponto4+ponto5+F1 |
@@ -3125,6 +3148,7 @@ Seguidamente, apresentam-se as opções para a linha de comando para o NVDA
 | None | --install | Installa o NVDA e inicia a cópia instalada |
 | None | --install-silent | Instala o NVDA silenciosamente e não inicia a cópia instalada |
 | None | --enable-start-on-logon=True|False | Ao instalar, activa o [Usar o NVDA no início de sessão do Windows #StartAtWindowsLogon] |
+| None | --copy-portable-config | Ao instalar copiar a configuração portátil (--config-path, -c) para a conta do utilizador |
 | None | --create-portable | Cria uma cópia portátil do NVDA iniciando a cópia criada. Requer que --portable-path seja especificado |
 | None | --create-portable-silent | Cria uma cópia portátil do NVDA sem iniciar a cópia criada. Requer que --portable-path seja especificado |
 | None | --portable-path=PORTABLEPATH | O caminho da pasta onde a cópia portátil vai ser criada |
