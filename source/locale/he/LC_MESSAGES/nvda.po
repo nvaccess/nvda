@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA - R3939\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-12 20:07+1000\n"
-"PO-Revision-Date: 2020-10-05 01:25+0300\n"
+"POT-Creation-Date: 2021-01-22 00:02+1000\n"
+"PO-Revision-Date: 2021-01-25 23:53+0200\n"
 "Last-Translator: shmuel naaman <shmuel_naaman@yahoo.com>\n"
 "Language-Team: Shmuel Naaman <shmuel_naaman@yahoo.com>, Shmuel Retbi Adi "
 "Kushnir <nvda.israel@gmail.com>\n"
@@ -683,14 +683,13 @@ msgstr "פרסית שיטת ברייל 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Afrikaans grade 2"
-msgstr "פרסית שיטת ברייל 1"
+msgstr "אפריקנית שיטת ברייל 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Arabic 8 dot computer braille"
-msgstr "קרואטית ברייל ממוחשב 8 נקודות"
+msgstr "ערבית ברייל ממוחשב 8 נקודות"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3379,19 +3378,16 @@ msgid "Toggles on and off the reporting of emphasis"
 msgstr "מיתוג הקראת הסימון מודגש"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
-#, fuzzy
 msgid "Toggles on and off the reporting of marked text"
-msgstr "מיתוג דיווח על מאמרים"
+msgstr "מיתוג דיווח על טקסט מסומן"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-#, fuzzy
 msgid "report marked on"
-msgstr "הקראת מעבר בין עמודים"
+msgstr "דיווח על טקסט מסומן מופעל"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-#, fuzzy
 msgid "report marked off"
-msgstr "ללא הקראת מעבר בין עמודים"
+msgstr "ללא דיווח על טקסט מסומן"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -4344,7 +4340,7 @@ msgstr "מציג את הגדרות המצביע של NVDA"
 
 #. Translators: Input help mode message for go to input composition settings command.
 msgid "Shows NVDA's input composition settings"
-msgstr "מציג את תיבת הדו שיח של תבנית הקלט של NVDA"
+msgstr "מציג את תיבת הדו שיח של  מבנה הקלט ל NVDA"
 
 #. Translators: Input help mode message for go to object presentation settings command.
 msgid "Shows NVDA's object presentation settings"
@@ -6496,15 +6492,15 @@ msgstr "%d תווים"
 
 #. Translators: Announced when a text has been copied to clipboard.
 #. {text} is replaced by the copied text.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Copied to clipboard: {text}"
-msgstr "העתק לזיכרון הזמני"
+msgstr "הטקסט {text} הועתק ללוח הגזירים"
 
 #. Translators: Displayed in braille when a text has been copied to clipboard.
 #. {text} is replaced by the copied text.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Copied: {text}"
-msgstr "שגיאת איות: {text}"
+msgstr "הטקסט {text} הועתק ללוח הגזירים"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -6826,7 +6822,7 @@ msgstr "אין קטע המתנגן כרגע"
 
 #. Translators: Reported if the remaining time can not be calculated in Foobar2000
 msgid "Unable to determine remaining time"
-msgstr ""
+msgstr "לא ניתן להעריך את הזמן שנותר"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
@@ -6837,9 +6833,8 @@ msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "דיווח על זמן הנגינה הנותר, במידה וקיים"
 
 #. Translators: Reported if the total time is not available in Foobar2000
-#, fuzzy
 msgid "Total time not available"
-msgstr "קובץ הלוג לא זמין"
+msgstr "הזמן הכולל אינו זמין"
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
 msgid "Reports the length of the currently playing track, if any"
@@ -6959,15 +6954,15 @@ msgstr "עורך פרופיל {profile}"
 
 #. Translators: the last action taken on an Outlook mail message
 msgid "replied"
-msgstr "השב"
+msgstr "ניתנה תשובה"
 
 #. Translators: the last action taken on an Outlook mail message
 msgid "replied all"
-msgstr "השב להכל"
+msgstr "ניתנה תשובה לכולם"
 
 #. Translators: the last action taken on an Outlook mail message
 msgid "forwarded"
-msgstr "העבר"
+msgstr "הועבר"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -7003,12 +6998,12 @@ msgstr "ממתין לOutlook..."
 #. Translators: a message reporting the date of a all day Outlook calendar entry
 #, python-brace-format
 msgid "{date} (all day)"
-msgstr "{date} (all day)"
+msgstr "(כל היום) {date}"
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 #, python-brace-format
 msgid "{startTime} to {endTime}"
-msgstr "{startTime} to {endTime}"
+msgstr "החל ב{startTime} ועד  {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
 #, python-brace-format
@@ -8396,15 +8391,13 @@ msgid "Manual Activation"
 msgstr "הפעלה ידנית"
 
 #. Translators: Message indicating no context sensitive help is available for the control or dialog.
-#, fuzzy
 msgid "No help available here."
-msgstr "אין עדכון זמין."
+msgstr "אין כאן עזרה זמינה."
 
 #. Translators: Message shown when trying to display context sensitive help,
 #. indicating that	the user guide could not be found.
-#, fuzzy
 msgid "No user guide found."
-msgstr "לא נמצאה שורת מצב"
+msgstr "לא נמצא מדריך למשתמש."
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -8955,7 +8948,7 @@ msgstr "מקלדת"
 #. Translators: This is the label for a list of checkboxes
 #. controlling which keys are NVDA modifier keys.
 msgid "&Select NVDA Modifier Keys"
-msgstr "&בחר מקש עובר קיצורי מקשים עבור NVDA"
+msgstr "&בחר מקש עבור קיצורי דרך   N V D A"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -9021,7 +9014,7 @@ msgstr "עקוב אחרי סמן העכבר"
 #. Translators: This is the label for a combobox in the
 #. mouse settings panel.
 msgid "Text &unit resolution:"
-msgstr "מידת גודל הגופנים:"
+msgstr " יחידת המידע  להקראה:"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -9949,7 +9942,7 @@ msgstr "שורה %s"
 #. Translators: Speaks the column span added to the current column number (example output: through 5).
 #, python-format
 msgid "through %s"
-msgstr "דרך %s"
+msgstr "מתוך %s"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
@@ -11754,7 +11747,7 @@ msgstr "מרווח של שורה וחצי"
 #, python-brace-format
 msgctxt "line spacing value"
 msgid "exactly {space:.1f} pt"
-msgstr ""
+msgstr "בדיוק {space:.1f}  נקודות"
 
 #. Translators: line spacing of at least x point
 #, python-format
