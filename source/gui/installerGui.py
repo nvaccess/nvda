@@ -18,8 +18,8 @@ import installer
 from logHandler import log
 import gui
 from gui import guiHelper
+import gui.contextHelp
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
-from .contextHelp import ContextHelpMixin
 import tones
 import systemUtils
 
@@ -125,7 +125,7 @@ def doSilentInstall(
 
 class InstallerDialog(
 		DpiScalingHelperMixinWithoutInit,
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 
@@ -268,7 +268,7 @@ class InstallerDialog(
 
 class InstallingOverNewerVersionDialog(
 		DpiScalingHelperMixinWithoutInit,
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	
@@ -330,7 +330,7 @@ def showInstallGui():
 
 
 class PortableCreaterDialog(
-		ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 

@@ -138,7 +138,7 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 		try:
 			treeInterceptorObject=treeInterceptorHandler.update(o)
 		except:
-			log.exception("Error updating tree interceptor")
+			log.error("Error updating tree interceptor", exc_info=True)
 	#Always make sure that the focus object's treeInterceptor is forced to either the found treeInterceptor (if its in it) or to None
 	#This is to make sure that the treeInterceptor does not have to be looked up, which can cause problems for winInputHook
 	if obj is o or obj in treeInterceptorObject:
@@ -318,7 +318,7 @@ def copyToClip(text: str, notify: Optional[bool] = False) -> bool:
 			winUser.emptyClipboard()
 			winUser.setClipboardData(winUser.CF_UNICODETEXT, text)
 		got = getClipData()
-	except ctypes.WinError:
+	except OSError:
 		if notify:
 			ui.reportTextCopiedToClipboard()  # No argument reports a failure.
 		return False

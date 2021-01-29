@@ -23,6 +23,7 @@ import config
 import languageHandler
 import speech
 import gui
+import gui.contextHelp
 import globalVars
 from logHandler import log
 import nvwave
@@ -55,10 +56,9 @@ import time
 import keyLabels
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 
-
 class SettingsDialog(
 		DpiScalingHelperMixinWithoutInit,
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 		metaclass=guiHelper.SIPABCMeta
 ):
@@ -252,7 +252,7 @@ _RWLayoutNeededEvent, EVT_RW_LAYOUT_NEEDED = wx.lib.newevent.NewCommandEvent()
 
 class SettingsPanel(
 		DpiScalingHelperMixinWithoutInit,
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Panel,  # wxPython does not seem to call base class initializer, put last in MRO
 		metaclass=guiHelper.SIPABCMeta
 ):
@@ -737,7 +737,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("GeneralSettingsStartOnLogOnScreen", self.startOnLogonScreenCheckBox)
 		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
-		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
+		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.startOnLogonScreenCheckBox.Disable()
 		settingsSizerHelper.addItem(self.startOnLogonScreenCheckBox)
 
@@ -754,7 +754,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("GeneralSettingsCopySettings", self.copySettingsButton)
 		self.copySettingsButton.Bind(wx.EVT_BUTTON,self.onCopySettings)
-		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
+		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.copySettingsButton.Disable()
 		settingsSizerHelper.addItem(self.copySettingsButton)
 		if updateCheck:
@@ -864,7 +864,7 @@ class GeneralSettingsPanel(SettingsPanel):
 
 
 class LanguageRestartDialog(
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 
@@ -2472,7 +2472,7 @@ class UwpOcrPanel(SettingsPanel):
 
 
 class AdvancedPanelControls(
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Panel,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""Holds the actual controls for the Advanced Settings panel, this allows the state of the controls to
@@ -2579,6 +2579,41 @@ class AdvancedPanelControls(
 		self.keyboardSupportInLegacyCheckBox.SetValue(config.conf["terminals"]["keyboardSupportInLegacy"])
 		self.keyboardSupportInLegacyCheckBox.defaultValue = self._getDefaultValue(["terminals", "keyboardSupportInLegacy"])
 		self.keyboardSupportInLegacyCheckBox.Enable(winVersion.isWin10(1607))
+
+		# Translators: This is the label for a combo box for selecting a
+		# method of detecting changed content in terminals in the advanced
+		# settings panel.
+		# Choices are automatic, allow Diff Match Patch, and force Difflib.
+		diffAlgoComboText = _("&Diff algorithm:")
+		diffAlgoChoices = [
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA determine the method of detecting changed
+			# content in terminals automatically.
+			_("Automatic (Difflib)"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA detect changes in terminals
+			# by character when supported, using the diff match patch algorithm.
+			_("allow Diff Match Patch"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA detect changes in terminals
+			# by line, using the difflib algorithm.
+			_("force Difflib")
+		]
+		#: The possible diffAlgo config values, in the order they appear
+		#: in the combo box.
+		self.diffAlgoVals = (
+			"auto",
+			"dmp",
+			"difflib"
+		)
+		self.diffAlgoCombo = terminalsGroup.addLabeledControl(diffAlgoComboText, wx.Choice, choices=diffAlgoChoices)
+		curChoice = self.diffAlgoVals.index(
+			config.conf['terminals']['diffAlgo']
+		)
+		self.diffAlgoCombo.SetSelection(curChoice)
+		self.diffAlgoCombo.defaultValue = self.diffAlgoVals.index(
+			self._getDefaultValue(["terminals", "diffAlgo"])
+		)
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -2701,6 +2736,7 @@ class AdvancedPanelControls(
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
 			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
+			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and True  # reduce noise in diff when the list is extended.
@@ -2714,6 +2750,7 @@ class AdvancedPanelControls(
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
+		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue == 'auto')
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self._defaultsRestored = True
@@ -2730,6 +2767,10 @@ class AdvancedPanelControls(
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = self.cancelExpiredFocusSpeechCombo.GetSelection()
 		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
+		diffAlgoChoice = self.diffAlgoCombo.GetSelection()
+		config.conf['terminals']['diffAlgo'] = (
+			self.diffAlgoVals[diffAlgoChoice]
+		)
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
@@ -2820,7 +2861,7 @@ class AdvancedPanel(SettingsPanel):
 
 
 class DictionaryEntryDialog(
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	helpId = "SpeechDictionaries"
@@ -3943,7 +3984,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 
 
 class AddSymbolDialog(
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 

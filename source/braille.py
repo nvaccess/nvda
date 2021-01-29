@@ -524,7 +524,15 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		textList.append(value)
 	if states is not None:
 		textList.extend(
-			controlTypes.processAndLabelStates(role, states, controlTypes.REASON_FOCUS, states, None, positiveStateLabels, negativeStateLabels)
+			controlTypes.processAndLabelStates(
+				role,
+				states,
+				controlTypes.OutputReason.FOCUS,
+				states,
+				None,
+				positiveStateLabels,
+				negativeStateLabels
+			)
 		)
 	if roleText:
 		textList.append(roleText)
@@ -1083,7 +1091,9 @@ class TextInfoRegion(Region):
 			brailleInput.handler.updateDisplay()
 			return
 
-		if braillePos == self.brailleCursorPos:
+		dest = self.getTextInfoForBraillePos(braillePos)
+		cursor = self.getTextInfoForBraillePos(self.brailleCursorPos)
+		if dest.compareEndPoints(cursor, "startToStart") == 0:
 			# The cursor is already at this position,
 			# so activate the position.
 			try:
@@ -1091,7 +1101,6 @@ class TextInfoRegion(Region):
 			except NotImplementedError:
 				pass
 			return
-		dest = self.getTextInfoForBraillePos(braillePos)
 		self._setCursor(dest)
 
 	def nextLine(self):

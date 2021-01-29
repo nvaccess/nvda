@@ -272,9 +272,6 @@ class WordDocumentTextInfo(UIATextInfo):
 
 class WordBrowseModeDocument(UIABrowseModeDocument):
 
-	def _get_isAlive(self):
-		return True
-
 	def shouldSetFocusToObj(self,obj):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		if obj.role==controlTypes.ROLE_EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
@@ -295,7 +292,7 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 			return
 		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		if not info.isCollapsed:
-			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
 	script_shiftTab=script_tab
 
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):

@@ -146,7 +146,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 		review.handleCaretMove(info)
 		if speakUnit and not willSayAllResume(gesture):
 			info.expand(speakUnit)
-			speech.speakTextInfo(info, unit=speakUnit, reason=controlTypes.REASON_CARET)
+			speech.speakTextInfo(info, unit=speakUnit, reason=controlTypes.OutputReason.CARET)
 		braille.handler.handleCaretMove(self)
 
 	def _caretMovementScriptHelper(self, gesture, unit):
@@ -200,7 +200,13 @@ class EditableText(TextContainerObject,ScriptableObject):
 			onlyInitial=True
 		else:
 			onlyInitial=False
-		speech.speakTextInfo(lineInfo,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET,onlyInitialFields=onlyInitial,suppressBlanks=True)
+		speech.speakTextInfo(
+			lineInfo,
+			unit=textInfos.UNIT_LINE,
+			reason=controlTypes.OutputReason.CARET,
+			onlyInitialFields=onlyInitial,
+			suppressBlanks=True
+		)
 
 	def _caretMoveBySentenceHelper(self, gesture, direction):
 		if isScriptWaiting():
