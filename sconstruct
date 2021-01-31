@@ -34,10 +34,6 @@ if (
 		requiredPythonArchitecture
 	)
 	)
-if sys.version_info.micro == 6:
-	# #10696: Building with Python 3.7.6 fails. Innform user and exit.
-	Py376FailMsg = "Building with Python 3.7.6 is not possible.\nPlease use more  recent version of Python 3."
-	raise RuntimeError(Py376FailMsg)
 sourceEnvPath = os.path.abspath(os.path.join(Dir('.').srcnode().path, "source"))
 sys.path.append(sourceEnvPath)
 import sourceEnv
