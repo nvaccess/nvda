@@ -6,7 +6,11 @@
 
 """Helper module to ease communication to and from liblouis."""
 
-import louis
+# Python 3.8 changes the way DLL's are loaded due to security.
+# Thus manually add NVDA executable path to DLL lookup path for loading liblouis.dll.
+import os
+with os.add_dll_directory(os.path.dirname(__file__)):
+	import louis
 from logHandler import log
 import config
 
