@@ -1277,7 +1277,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 		if not self.passThrough:
 			if doSayAll:
-				speech.speakObjectProperties(self.rootNVDAObject, name=True, states=True, reason=OutputReason.Focus)
+				speech.speakObjectProperties(self.rootNVDAObject, name=True, states=True, reason=OutputReason.FOCUS)
 				sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
 			else:
 				# Speak it like we would speak focus on any other document object.
