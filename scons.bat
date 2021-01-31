@@ -6,7 +6,7 @@ where py 1>nul 2>&1
 if "%ERRORLEVEL%" == "0" (
 	rem Python launcher is present in the PATH
 	rem Call python 3.7 for 32 bits
-	py -3.7-32 "%~dp0\scons.py" %*
+	py -3.8-32 "%~dp0\scons.py" %*
 ) else (
 	rem Python registers itself with the .py extension, so call scons.py.
 	"%~dp0\scons.py" %*
