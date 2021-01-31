@@ -292,7 +292,7 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 			return
 		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		if not info.isCollapsed:
-			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
 	script_shiftTab=script_tab
 
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
