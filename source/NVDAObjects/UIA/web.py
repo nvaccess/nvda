@@ -269,10 +269,15 @@ class UIAWeb(UIA):
 
 	_TextInfo = UIAWebTextInfo
 
-	def _get_role(self):
+	def _isIframe(self):
 		role = super().role
-		from .spartanEdge import EdgeHTMLRoot
-		if not isinstance(self, EdgeHTMLRoot) and role==controlTypes.ROLE_PANE and self.UIATextPattern:
+		return (
+			role == controlTypes.ROLE_PANE
+			and self.UIATextPattern
+		)
+
+	def _get_role(self):
+		if self._isIframe():
 			return controlTypes.ROLE_INTERNALFRAME
 		ariaRole=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
 		# #7333: It is valid to provide multiple, space separated aria roles in HTML
@@ -280,9 +285,8 @@ class UIAWeb(UIA):
 		for ariaRole in ariaRole.split():
 			newRole=aria.ariaRolesToNVDARoles.get(ariaRole)
 			if newRole:
-				role=newRole
-				break
-		return role
+				return newRole
+		return super().role
 
 	def _get_states(self):
 		states = super().states
