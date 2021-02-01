@@ -94,7 +94,7 @@ class ChromeLib:
 		return marker in speech and documentIndex < speech.index(marker)
 
 	def _waitForStartMarker(self, spy, lastSpeechIndex):
-		""" Wait until the page loads and NVDA reads the start marker. 
+		""" Wait until the page loads and NVDA reads the start marker.
 		@param spy:
 		@type spy: SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib
 		@return: None
