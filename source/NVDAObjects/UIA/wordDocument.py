@@ -1,7 +1,7 @@
 # This file is covered by the GNU General Public License.
 # A part of NonVisual Desktop Access (NVDA)
 # See the file COPYING for more details.
-# Copyright (C) 2016-2020 NV Access Limited, Joseph Lee, Jakub Lukowicz
+# Copyright (C) 2016-2021 NV Access Limited, Joseph Lee, Jakub Lukowicz
 
 from comtypes import COMError
 from collections import defaultdict
@@ -69,23 +69,30 @@ def getCommentInfoFromPosition(position):
 	for index in range(UIAElementArray.length):
 		UIAElement=UIAElementArray.getElement(index)
 		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
-		obj=UIA(UIAElement=UIAElement)
-		if (
-			not obj.parent
-			# Because the name of this object is language sensetive check if it has UIA Annotation Pattern
-			or not obj.parent.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId)
-		):
-			continue
-		comment=obj.makeTextInfo(textInfos.POSITION_ALL).text
-		tempObj = obj.previous.previous
-		authorObj = tempObj or obj.previous
-		author = authorObj.name
-		if not tempObj:
-			return dict(comment=comment, author=author)
-		dateObj=obj.previous
-		date=dateObj.name
-		return dict(comment=comment,author=author,date=date)
-
+		typeID = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAnnotationTypeIdPropertyId)
+		# Use Annotation Type Comment if available
+		if typeID == UIAHandler.AnnotationType_Comment:
+			comment = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_NamePropertyId)
+			author = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAuthorPropertyId)
+			date = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationDateTimePropertyId)
+			return dict(comment=comment,author=author,date=date)
+		else:
+			obj=UIA(UIAElement=UIAElement)
+			if (
+				not obj.parent
+				# Because the name of this object is language sensetive check if it has UIA Annotation Pattern
+				or not obj.parent.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId)
+			):
+				continue
+			comment=obj.makeTextInfo(textInfos.POSITION_ALL).text
+			tempObj = obj.previous.previous
+			authorObj = tempObj or obj.previous
+			author = authorObj.name
+			if not tempObj:
+				return dict(comment=comment, author=author)
+			dateObj=obj.previous
+			date=dateObj.name
+			return dict(comment=comment,author=author,date=date)
 
 def getPresentableCommentInfoFromPosition(commentInfo):
 	if "date" not in commentInfo:
