@@ -41,6 +41,13 @@ class ChromiumUIATextInfo(web.UIAWebTextInfo):
 		if field['role'] == controlTypes.ROLE_TABLE:
 			if not obj._getUIACacheablePropertyValue(UIAHandler.UIA_IsTablePatternAvailablePropertyId):
 				field['table-layout'] = True
+		# Currently no way to tell if author has explicitly set name.
+		# Therefore always report the name if the control is not of a type that
+		# by definition uses its name for content.
+		# this may cause some duplicate speaking,
+		# But that is currently better than nothing at all.
+		if not field.get('nameIsContent') and field.get('name'):
+			field['alwaysReportName'] = True
 		return field
 
 
