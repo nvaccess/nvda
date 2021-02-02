@@ -254,6 +254,11 @@ t2tBuildConf = env.Textfile(userDocsDir.File("build.t2tConf"), [
 	r"%!PreProc: NVDA_COPYRIGHT_YEARS {}".format(versionInfo.copyrightYears),
 ])
 
+userGuideConf = os.path.join(userDocsDir.path, 'userGuide.t2tconf')
+globalConf = os.path.join(userDocsDir.path, 'global.t2tconf')
+changesConf = os.path.join(userDocsDir.path, 'changes.t2tconf')
+styles = os.path.join(userDocsDir.path, 'styles.css')
+
 #Allow all t2t files to be converted to html in user_docs
 #As we use scons Glob this will also include the keyCommands.t2t files
 for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
@@ -261,7 +266,9 @@ for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
 	#txt2tags can not be run in parallel so make sure scons knows this
 	env.SideEffect('_txt2tags',htmlFile)
 	# All of our t2t files require build.t2tConf.
-	env.Depends(htmlFile,t2tBuildConf)
+	styleInstallPath = os.path.dirname(t2tFile.abspath)
+	installedStyle = env.Install(styleInstallPath, styles)
+	env.Depends(htmlFile,[t2tBuildConf,userGuideConf,globalConf,changesConf,styles, installedStyle])
 # Build unicode CLDR dictionaries
 env.SConscript('cldrDict_sconscript',exports=['env', 'sourceDir'])
 
