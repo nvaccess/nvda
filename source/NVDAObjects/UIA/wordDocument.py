@@ -75,24 +75,27 @@ def getCommentInfoFromPosition(position):
 			comment = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_NamePropertyId)
 			author = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAuthorPropertyId)
 			date = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationDateTimePropertyId)
-			return dict(comment=comment,author=author,date=date)
+			return dict(comment=comment, author=author, date=date)
 		else:
-			obj=UIA(UIAElement=UIAElement)
+			obj = UIA(UIAElement=UIAElement)
 			if (
 				not obj.parent
 				# Because the name of this object is language sensetive check if it has UIA Annotation Pattern
-				or not obj.parent.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId)
+				or not obj.parent.UIAElement.getCurrentPropertyValue(
+					UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId
+				)
 			):
 				continue
-			comment=obj.makeTextInfo(textInfos.POSITION_ALL).text
+			comment = obj.makeTextInfo(textInfos.POSITION_ALL).text
 			tempObj = obj.previous.previous
 			authorObj = tempObj or obj.previous
 			author = authorObj.name
 			if not tempObj:
 				return dict(comment=comment, author=author)
-			dateObj=obj.previous
-			date=dateObj.name
-			return dict(comment=comment,author=author,date=date)
+			dateObj = obj.previous
+			date = dateObj.name
+			return dict(comment=comment, author=author, date=date)
+
 
 def getPresentableCommentInfoFromPosition(commentInfo):
 	if "date" not in commentInfo:
