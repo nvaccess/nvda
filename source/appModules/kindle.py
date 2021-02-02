@@ -59,7 +59,7 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 			# Don't report anything if the book area isn't focused.
 			return
 		info.expand(textInfos.UNIT_LINE)
-		speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.REASON_CARET)
+		speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=OutputReason.CARET)
 
 	def isAlive(self):
 		return winUser.isWindow(self.rootNVDAObject.windowHandle)
@@ -100,7 +100,8 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 		info=self.makeTextInfo(textInfos.POSITION_FIRST)
 		self.selection=info
 		info.expand(textInfos.UNIT_LINE)
-		if not willSayAllResume(gesture): speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+		if not willSayAllResume(gesture):
+			speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=OutputReason.CARET)
 
 	def script_moveByPage_forward(self,gesture):
 		self._changePageScriptHelper(gesture)

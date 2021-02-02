@@ -87,7 +87,10 @@ class Ia2Web(IAccessible):
 		if self is api.getFocusObject():
 			# Report aria-current if it changed.
 			speech.speakObjectProperties(
-				self, current=True, reason=controlTypes.REASON_CHANGE)
+				self,
+				current=True,
+				reason=controlTypes.OutputReason.CHANGE
+			)
 		# super calls event_stateChange which updates braille, so no need to
 		# update braille here.
 

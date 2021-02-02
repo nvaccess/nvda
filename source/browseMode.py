@@ -45,8 +45,6 @@ import globalVars
 from typing import Optional
 
 
-REASON_QUICKNAV = OutputReason.QUICKNAV
-
 def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 	"""Reports the pass through mode if it has changed.
 	@param treeInterceptor: The current Browse Mode treeInterceptor.
@@ -203,7 +201,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 			if info.compareEndPoints(fieldInfo, "endToEnd") > 0:
 				# We've expanded past the end of the field, so limit to the end of the field.
 				info.setEndPoint(fieldInfo, "endToEnd")
-		speech.speakTextInfo(info, reason=controlTypes.REASON_FOCUS)
+		speech.speakTextInfo(info, reason=OutputReason.FOCUS)
 
 	def activate(self):
 		self.textInfo.obj._activatePosition(info=self.textInfo)
@@ -217,7 +215,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 			reportPassThrough(self.document)
 		info = self.textInfo.copy()
 		info.collapse()
-		self.document._set_selection(info, reason=REASON_QUICKNAV)
+		self.document._set_selection(info, reason=OutputReason.QUICKNAV)
 
 	@property
 	def isAfterSelection(self):
@@ -251,7 +249,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 			# Translators: Reported label in the elements list for an element which which has no name and value
 			unlabeled = _("Unlabeled")
 			realStates = labelPropertyGetter("states")
-			labeledStates = " ".join(controlTypes.processAndLabelStates(role, realStates, controlTypes.REASON_FOCUS))
+			labeledStates = " ".join(controlTypes.processAndLabelStates(role, realStates, OutputReason.FOCUS))
 			if self.itemType == "formField":
 				if role in (controlTypes.ROLE_BUTTON,controlTypes.ROLE_DROPDOWNBUTTON,controlTypes.ROLE_TOGGLEBUTTON,controlTypes.ROLE_SPLITBUTTON,controlTypes.ROLE_MENUBUTTON,controlTypes.ROLE_DROPDOWNBUTTONGRID,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_TREEVIEWBUTTON):
 					# Example output: Mute; toggle button; pressed
@@ -323,17 +321,18 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		"""Determine whether pass through mode should be enabled (focus mode) or disabled (browse mode) for a given object.
 		@param obj: The object in question.
 		@type obj: L{NVDAObjects.NVDAObject}
-		@param reason: The reason for this query; one of the output reasons, L{REASON_QUICKNAV}, or C{None} for manual pass through mode activation by the user.
+		@param reason: The reason for this query;
+		one of the output reasons, or C{None} for manual pass through mode activation by the user.
 		@return: C{True} if pass through mode (focus mode) should be enabled, C{False} if it should be disabled (browse mode).
 		"""
 		if reason and (
 			self.disableAutoPassThrough
-			or (reason == controlTypes.REASON_FOCUS and not config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
-			or (reason == controlTypes.REASON_CARET and not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
+			or (reason == OutputReason.FOCUS and not config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
+			or (reason == OutputReason.CARET and not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
 		):
 			# This check relates to auto pass through and auto pass through is disabled, so don't change the pass through state.
 			return self.passThrough
-		if reason == REASON_QUICKNAV:
+		if reason == OutputReason.QUICKNAV:
 			return False
 		states = obj.states
 		role = obj.role
@@ -351,7 +350,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		if role in self.ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES or controlTypes.STATE_EDITABLE in states:
 			return True
 		# focus is moving to this control. Perhaps after pressing tab or clicking a button that brings up a menu (via javascript)
-		if reason == controlTypes.REASON_FOCUS:
+		if reason == OutputReason.FOCUS:
 			if role in self.SWITCH_TO_PASS_THROUGH_ON_FOCUS_ROLES:
 				return True
 			# If this is a focus change, pass through should be enabled for certain ancestor containers.
@@ -519,7 +518,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			reportPassThrough(self)
 		elif obj.role == controlTypes.ROLE_EMBEDDEDOBJECT or obj.role in self.APPLICATION_ROLES:
 			obj.setFocus()
-			speech.speakObject(obj, reason=controlTypes.REASON_FOCUS)
+			speech.speakObject(obj, reason=OutputReason.FOCUS)
 		else:
 			self._activateNVDAObject(obj)
 
@@ -547,7 +546,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			# this object to change (e.g. checking a check box). However, we won't
 			# actually get the focus event until after the change has occurred.
 			# Therefore, we must cache properties for speech before the change occurs.
-			speech.speakObject(obj, controlTypes.REASON_ONLYCACHE)
+			speech.speakObject(obj, OutputReason.ONLYCACHE)
 			self._objPendingFocusBeforeActivate = obj
 		if activatePosition:
 			# Make sure we activate the object at the caret, which is not necessarily focusable.
@@ -1278,13 +1277,13 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 		if not self.passThrough:
 			if doSayAll:
-				speech.speakObjectProperties(self.rootNVDAObject,name=True,states=True,reason=controlTypes.REASON_FOCUS)
+				speech.speakObjectProperties(self.rootNVDAObject, name=True, states=True, reason=OutputReason.FOCUS)
 				sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
 			else:
 				# Speak it like we would speak focus on any other document object.
 				# This includes when entering the treeInterceptor for the first time:
 				if not hadFirstGainFocus:
-					speech.speakObject(self.rootNVDAObject, reason=controlTypes.REASON_FOCUS)
+					speech.speakObject(self.rootNVDAObject, reason=OutputReason.FOCUS)
 				else:
 					# And when coming in from an outside object
 					# #4069 But not when coming up from a non-rendered descendant.
@@ -1295,13 +1294,13 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 					except ValueError:
 						tl=len(ancestors)
 					if fdl<=tl:
-						speech.speakObject(self.rootNVDAObject, reason=controlTypes.REASON_FOCUS)
+						speech.speakObject(self.rootNVDAObject, reason=OutputReason.FOCUS)
 				info = self.selection
 				if not info.isCollapsed:
 					speech.speakPreselectedText(info.text)
 				else:
 					info.expand(textInfos.UNIT_LINE)
-					speech.speakTextInfo(info, reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_LINE)
+					speech.speakTextInfo(info, reason=OutputReason.CARET, unit=textInfos.UNIT_LINE)
 
 		reportPassThrough(self)
 		braille.handler.handleGainFocus(self)
@@ -1325,7 +1324,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				return
 		super(BrowseModeDocumentTreeInterceptor,self)._activatePosition(obj=obj)
 
-	def _set_selection(self, info, reason=controlTypes.REASON_CARET):
+	def _set_selection(self, info, reason=OutputReason.CARET):
 		super(BrowseModeDocumentTreeInterceptor, self)._set_selection(info)
 		if isScriptWaiting() or not info.isCollapsed:
 			return
@@ -1336,7 +1335,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		caret.collapse()
 		self._lastCaretPosition = caret.bookmark
 		review.handleCaretMove(caret)
-		if reason == controlTypes.REASON_FOCUS:
+		if reason == OutputReason.FOCUS:
 			self._lastCaretMoveWasFocus = True
 			focusObj = api.getFocusObject()
 			if focusObj==self.rootNVDAObject:
@@ -1471,11 +1470,11 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			# This node is already focused, so we need to move to and speak this node here.
 			newCaret = newInfo.copy()
 			newCaret.collapse()
-			self._set_selection(newCaret,reason=controlTypes.REASON_FOCUS)
+			self._set_selection(newCaret, reason=OutputReason.FOCUS)
 			if self.passThrough:
 				obj.event_gainFocus()
 			else:
-				speech.speakTextInfo(newInfo,reason=controlTypes.REASON_FOCUS)
+				speech.speakTextInfo(newInfo, reason=OutputReason.FOCUS)
 		else:
 			# This node doesn't have the focus, so just set focus to it. The gainFocus event will handle the rest.
 			obj.setFocus()
@@ -1560,7 +1559,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		except:
 			# This object is not in the treeInterceptor, even though it resides beneath the document.
 			# Automatic pass through should be enabled in certain circumstances where this occurs.
-			if not self.passThrough and self.shouldPassThrough(obj,reason=controlTypes.REASON_FOCUS):
+			if not self.passThrough and self.shouldPassThrough(obj, reason=OutputReason.FOCUS):
 				self.passThrough=True
 				reportPassThrough(self)
 				self._replayFocusEnteredEvents()
@@ -1573,7 +1572,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if not self._hadFirstGainFocus or not focusInfo.isOverlapping(caretInfo):
 			# The virtual caret is not within the focus node.
 			oldPassThrough=self.passThrough
-			passThrough=self.shouldPassThrough(obj,reason=controlTypes.REASON_FOCUS)
+			passThrough = self.shouldPassThrough(obj, reason=OutputReason.FOCUS)
 			if not oldPassThrough and (passThrough or sayAllHandler.isRunning()):
 				# If pass-through is disabled, cancel speech, as a focus change should cause page reading to stop.
 				# This must be done before auto-pass-through occurs, as we want to stop page reading even if pass-through will be automatically enabled by this focus change.
@@ -1581,9 +1580,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			self.passThrough=passThrough
 			if not self.passThrough:
 				# We read the info from the browseMode document  instead of the control itself.
-				speech.speakTextInfo(focusInfo,reason=controlTypes.REASON_FOCUS)
+				speech.speakTextInfo(focusInfo, reason=OutputReason.FOCUS)
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
-				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
+				speech.speakObject(obj, controlTypes.OutputReason.ONLYCACHE)
 				# As we do not call nextHandler which would trigger the vision framework to handle gain focus,
 				# we need to call it manually here.
 				vision.handler.handleGainFocus(obj)
@@ -1591,17 +1590,17 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# Although we are going to speak the object rather than textInfo content, we still need to silently speak the textInfo content so that the textInfo speech cache is updated correctly.
 				# Not doing this would cause  later browseMode speaking to either not speak controlFields it had entered, or speak controlField exits after having already exited.
 				# See #7435 for a discussion on this.
-				speech.speakTextInfo(focusInfo,reason=controlTypes.REASON_ONLYCACHE)
+				speech.speakTextInfo(focusInfo, reason=OutputReason.ONLYCACHE)
 				self._replayFocusEnteredEvents()
 				nextHandler()
 			focusInfo.collapse()
-			self._set_selection(focusInfo,reason=controlTypes.REASON_FOCUS)
+			self._set_selection(focusInfo, reason=OutputReason.FOCUS)
 		else:
 			# The virtual caret was already at the focused node.
 			if not self.passThrough:
 				# This focus change was caused by a virtual caret movement, so don't speak the focused node to avoid double speaking.
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
-				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
+				speech.speakObject(obj, OutputReason.ONLYCACHE)
 				if config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
 					# As we do not call nextHandler which would trigger the vision framework to handle gain focus,
 					# we need to call it manually here.
@@ -1622,7 +1621,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 					# the properties before the activation/key, so use that to speak any
 					# changes.
 					speech.speakObject(
-						self._objPendingFocusBeforeActivate, controlTypes.REASON_CHANGE
+						self._objPendingFocusBeforeActivate,
+						OutputReason.CHANGE
 					)
 					self._objPendingFocusBeforeActivate = None
 			else:
@@ -1661,7 +1661,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if not scrollInfo.isOverlapping(caretInfo):
 			if scrollInfo.isCollapsed:
 				scrollInfo.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(scrollInfo,reason=controlTypes.REASON_CARET)
+			speech.speakTextInfo(scrollInfo, reason=OutputReason.CARET)
 			scrollInfo.collapse()
 			self.selection = scrollInfo
 			return True
@@ -1794,10 +1794,10 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			ui.message(_("Not in a container"))
 			return
 		container.collapse()
-		self._set_selection(container, reason=REASON_QUICKNAV)
+		self._set_selection(container, reason=OutputReason.QUICKNAV)
 		if not willSayAllResume(gesture):
 			container.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(container, reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(container, reason=OutputReason.FOCUS)
 	script_moveToStartOfContainer.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 	# Translators: Description for the Move to start of container command in browse mode. 
 	script_moveToStartOfContainer.__doc__=_("Moves to the start of the container element, such as a list or table")
@@ -1819,10 +1819,10 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			# Review cursor is at the bottom line of the current navigator object.
 			# Landing at the end of a browse mode document when trying to jump to the end of the current container. 
 			ui.message(_("Bottom"))
-		self._set_selection(container, reason=REASON_QUICKNAV)
+		self._set_selection(container, reason=OutputReason.QUICKNAV)
 		if not willSayAllResume(gesture):
 			container.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(container, reason=controlTypes.REASON_FOCUS)
+			speech.speakTextInfo(container, reason=OutputReason.FOCUS)
 	script_movePastEndOfContainer.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 	# Translators: Description for the Move past end of container command in browse mode. 
 	script_movePastEndOfContainer.__doc__=_("Moves past the end  of the container element, such as a list or table")

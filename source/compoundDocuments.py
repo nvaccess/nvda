@@ -449,7 +449,7 @@ class CompoundDocument(EditableText, DocumentTreeInterceptor):
 		return eventHandler.lastQueuedFocusObject
 
 	def event_treeInterceptor_gainFocus(self):
-		speech.speakObject(self.rootNVDAObject, reason=controlTypes.REASON_FOCUS)
+		speech.speakObject(self.rootNVDAObject, reason=controlTypes.OutputReason.FOCUS)
 		try:
 			info = self.makeTextInfo(textInfos.POSITION_SELECTION)
 		except RuntimeError:
@@ -457,7 +457,7 @@ class CompoundDocument(EditableText, DocumentTreeInterceptor):
 		else:
 			if info.isCollapsed:
 				info.expand(textInfos.UNIT_LINE)
-				speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.REASON_CARET)
+				speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 			else:
 				speech.speakPreselectedText(info.text)
 			braille.handler.handleGainFocus(self)
