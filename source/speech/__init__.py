@@ -2026,8 +2026,8 @@ def getFormatFieldSpeech(  # noqa: C901
 			and (
 				initialFormat
 				and (reason == OutputReason.FOCUS or unit in (textInfos.UNIT_LINE, textInfos.UNIT_PARAGRAPH))
+				or headingLevel != oldHeadingLevel
 			)
-			or headingLevel != oldHeadingLevel
 		):
 			# Translators: Speaks the heading level (example output: heading level 2).
 			text=_("heading level %d")%headingLevel
