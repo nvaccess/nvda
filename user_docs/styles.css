@@ -7,10 +7,9 @@ body {
   color: #333;
 }
 
-# heading white, on NVDA purple
 h1 {
   color:white;
-  background-color: #472F5F;
+  background-color: #472F5F; /* NVDA purple */
 }
 
 h2 {
@@ -18,16 +17,15 @@ h2 {
   padding-top: 1em;
 }
 
-# NVDA purple
 h2, h3, h4, a {
-  color: #472F5F;
+  color: #472F5F; /* NVDA purple */
 }
 
 strong {
   color: #000;
 }
 
-# tables
+/* tables */
 table, td, th {
   border:1px solid black;
 }
@@ -37,12 +35,11 @@ table{
 td, th {
   padding: 0.25em;
 }
-# NVDA purple
 th {
-  color: #472F5F;
+  color: #472F5F; /* NVDA purple */
 }
 
-# code / pre
+/* code / pre */
 code,
 pre {
   background: #f5f7f9;
