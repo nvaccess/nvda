@@ -651,7 +651,6 @@ class OutputReason(Enum):
 	QUICKNAV = auto()
 
 
-
 class IsCurrent(Enum):
 	"""Values to use within NVDA to denote 'current' values.
 	These describe if an item is the current item within a particular kind of selection.
