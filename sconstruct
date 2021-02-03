@@ -418,9 +418,12 @@ env.Alias("launcher", launcher)
 clientArchive = env.ZipArchive(outputDir.File("%s_controllerClient.zip" % outFilePrefix), clientDir, relativeTo=clientDir)
 env.Alias("client", clientArchive)
 
+outputStylesFile=env.Command(outputDir.File("styles.css"),userDocsDir.File('styles.css'),Copy('$TARGET','$SOURCE'))
 changesFile=env.Command(outputDir.File("%s_changes.html" % outFilePrefix),userDocsDir.File('en/changes.html'),Copy('$TARGET','$SOURCE'))
+env.Depends(changesFile, outputStylesFile)
 env.Alias('changes',changesFile)
 userGuideFile=env.Command(outputDir.File("userGuide.html"),userDocsDir.File('en/userGuide.html'),Copy('$TARGET','$SOURCE'))
+env.Depends(userGuideFile, outputStylesFile)
 env.Alias('userGuide',userGuideFile)
 
 def makePot(target, source, env):
