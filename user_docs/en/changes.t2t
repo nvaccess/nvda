@@ -42,6 +42,10 @@ What's New in NVDA
   - When an object is not current 'controlTypes.IsCurrent.NO' is returned.
 - The 'controlTypes.isCurrentLabels' mapping has been removed. (#11782)
   - Instead use the 'displayString' property on a 'controlTypes.IsCurrent' enum value. EG 'controlTypes.IsCurrent.YES.displayString'
+- 'NVDAObject' (and derivatives) property 'isCurrent' now strictly returns 'controlTypes.IsCurrent'. (#11782)
+  - 'isCurrent' is no longer Optional, and thus will not return None, when an object is not current 'controlTypes.IsCurrent.NO' is returned.
+- The 'controlTypes.isCurrentLabels' has been removed, instead use the 'displayString' property on a 'controlTypes.IsCurrent' enum value. (#11782)
+  - EG 'controlTypes.IsCurrent.YES.displayString'
 
 
 = 2020.4 =
