@@ -362,7 +362,7 @@ def getObjectPropertiesSpeech(  # noqa: C901
 				positionInfo=obj.positionInfo
 		elif value and name == "current":
 			# getPropertiesSpeech names this "current", but the NVDAObject property is
-			# named "isCurrent".
+			# named "isCurrent", it's type should always be controltypes.IsCurrent
 			newPropertyValues['current'] = obj.isCurrent
 		elif value:
 			# Certain properties such as row and column numbers have presentational versions, which should be used for speech if they are available.
@@ -1611,15 +1611,12 @@ def getPropertiesSpeech(  # noqa: C901
 	if rowCount or columnCount:
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
 		oldTableID = None
-	ariaCurrent = propertyValues.get('current', False)
-	if ariaCurrent:
-		try:
-			ariaCurrentLabel = controlTypes.isCurrentLabels[ariaCurrent]
-			textList.append(ariaCurrentLabel)
-		except KeyError:
-			log.debugWarning("Aria-current value not handled: %s"%ariaCurrent)
-			ariaCurrentLabel = controlTypes.isCurrentLabels[True]
-			textList.append(ariaCurrentLabel)
+
+	# speak isCurrent property EG aria-current
+	isCurrent = propertyValues.get('current', controlTypes.IsCurrent.NO)
+	if isCurrent != controlTypes.IsCurrent.NO:
+		textList.append(isCurrent.displayString)
+
 	placeholder: Optional[str] = propertyValues.get('placeholder', None)
 	if placeholder:
 		textList.append(placeholder)
@@ -1682,7 +1679,7 @@ def getControlFieldSpeech(  # noqa: C901
 		name = ""
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
-	ariaCurrent=attrs.get('current', None)
+	isCurrent = attrs.get('current', controlTypes.IsCurrent.NO)
 	placeholderValue=attrs.get('placeholder', None)
 	value=attrs.get('value',"")
 	if reason == OutputReason.FOCUS or attrs.get('alwaysReportDescription', False):
@@ -1712,7 +1709,7 @@ def getControlFieldSpeech(  # noqa: C901
 		keyboardShortcutSequence = getPropertiesSpeech(
 			reason=reason, keyboardShortcut=keyboardShortcut
 		)
-	ariaCurrentSequence = getPropertiesSpeech(reason=reason, current=ariaCurrent)
+	isCurrentSequence = getPropertiesSpeech(reason=reason, current=isCurrent)
 	placeholderSequence = getPropertiesSpeech(reason=reason, placeholder=placeholderValue)
 	nameSequence = getPropertiesSpeech(reason=reason, name=name)
 	valueSequence = getPropertiesSpeech(reason=reason, value=value)
@@ -1829,7 +1826,7 @@ def getControlFieldSpeech(  # noqa: C901
 			getProps['columnHeaderText'] = attrs.get("table-columnheadertext")
 		tableCellSequence = getPropertiesSpeech(_tableID=tableID, **getProps)
 		tableCellSequence.extend(stateTextSequence)
-		tableCellSequence.extend(ariaCurrentSequence)
+		tableCellSequence.extend(isCurrentSequence)
 		types.logBadSequenceTypes(tableCellSequence)
 		return tableCellSequence
 
@@ -1878,7 +1875,7 @@ def getControlFieldSpeech(  # noqa: C901
 		out.extend(stateTextSequence if speakStatesFirst else roleTextSequence)
 		out.extend(roleTextSequence if speakStatesFirst else stateTextSequence)
 		out.append(containerContainsText)
-		out.extend(ariaCurrentSequence)
+		out.extend(isCurrentSequence)
 		out.extend(valueSequence)
 		out.extend(descriptionSequence)
 		out.extend(levelSequence)
@@ -1913,8 +1910,8 @@ def getControlFieldSpeech(  # noqa: C901
 	# Special cases
 	elif not speakEntry and fieldType in ("start_addedToControlFieldStack","start_relative"):
 		out = []
-		if ariaCurrent:
-			out.extend(ariaCurrentSequence)
+		if isCurrent != controlTypes.IsCurrent.NO:
+			out.extend(isCurrentSequence)
 		# Speak expanded / collapsed / level for treeview items (in ARIA treegrids)
 		if role == controlTypes.ROLE_TREEVIEWITEM:
 			if controlTypes.STATE_EXPANDED in states:

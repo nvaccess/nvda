@@ -34,11 +34,13 @@ class Ia2Web(IAccessible):
 				info['level']=level
 		return info
 
-	def _get_isCurrent(self):
-		current = self.IA2Attributes.get("current", None)
-		if current == "false":
-			current = None
-		return current
+	def _get_isCurrent(self) -> controlTypes.IsCurrent:
+		ia2attrCurrent: str = self.IA2Attributes.get("current", "false")
+		try:
+			return controlTypes.IsCurrent(ia2attrCurrent)
+		except ValueError:
+			log.debugWarning(f"Unknown 'current' IA2Attribute value: {ia2attrCurrent}")
+			return controlTypes.IsCurrent.NO
 
 	def _get_placeholder(self):
 		placeholder = self.IA2Attributes.get('placeholder', None)

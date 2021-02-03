@@ -37,6 +37,15 @@ What's New in NVDA
  - getConfigDirs - use globalVars.appArgs.configPath instead
 - Module level REASON_* constants are removed from controlTypes - please use controlTypes.OutputReason instead. (#11969)
 - REASON_QUICKNAV has been removed from browseMode - use controlTypes.OutputReason.QUICKNAV instead. (#11969)
+- 'NVDAObject' (and derivatives) property 'isCurrent' now strictly returns Enum class 'controlTypes.IsCurrent'. (#11782)
+  - 'isCurrent' is no longer Optional, and thus will not return None.
+  - When an object is not current 'controlTypes.IsCurrent.NO' is returned.
+- The 'controlTypes.isCurrentLabels' mapping has been removed. (#11782)
+  - Instead use the 'displayString' property on a 'controlTypes.IsCurrent' enum value. EG 'controlTypes.IsCurrent.YES.displayString'
+- 'NVDAObject' (and derivatives) property 'isCurrent' now strictly returns 'controlTypes.IsCurrent'. (#11782)
+  - 'isCurrent' is no longer Optional, and thus will not return None, when an object is not current 'controlTypes.IsCurrent.NO' is returned.
+- The 'controlTypes.isCurrentLabels' has been removed, instead use the 'displayString' property on a 'controlTypes.IsCurrent' enum value. (#11782)
+  - EG 'controlTypes.IsCurrent.YES.displayString'
 
 
 = 2020.4 =
