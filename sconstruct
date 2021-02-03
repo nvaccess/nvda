@@ -268,7 +268,16 @@ for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
 	# All of our t2t files require build.t2tConf.
 	styleInstallPath = os.path.dirname(t2tFile.abspath)
 	installedStyle = env.Install(styleInstallPath, styles)
-	env.Depends(htmlFile,[t2tBuildConf,userGuideConf,globalConf,changesConf,styles, installedStyle])
+	env.Depends(
+		htmlFile,
+		[
+			t2tBuildConf,
+			userGuideConf,
+			globalConf,
+			changesConf,
+			styles,
+			installedStyle
+		])
 # Build unicode CLDR dictionaries
 env.SConscript('cldrDict_sconscript',exports=['env', 'sourceDir'])
 
