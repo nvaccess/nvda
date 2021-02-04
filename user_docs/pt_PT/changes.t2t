@@ -4,7 +4,7 @@ Traduzido pela Equipa portuguesa do NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2020.4 =
-Esta versão inclui:
+Nesta versão destacam-se as seguintes novidades:
 Novos métodos de entrada em chinês;
 Actualização do conversor Liblouis;
 A lista de elementos (NVDA + f7) já funciona em modo de foco;
@@ -12,17 +12,17 @@ Ajuda sensível ao contexto disponível ao pressionar F1 nas janelas de configur
 Diversas melhorias em regras de pronúncia de pontuação/símbolo, dicionário de voz, mensagens em Braille e leitura rápida;
 Várias correcções e melhorias no Correio, Outlook, Teams, Visual Studio, Azure Data Studio, e Foobar2000;
 Na web, há melhorias no Google Docs e maior suporte para ARIA;
-Além de muitas outras correcções e melhorias importantes.
+Muitas outras correcções e melhorias importantes.
 
 == Novas Funcionalidades ==
-- Ao pressionar F1 nos diálogos de configuração do NVDA abre-se o Manual do utilizador na secção apropriada. (#7757)
+- Ao pressionar F1 nas janelas de configuração do NVDA abre-se o Manual do utilizador na secção apropriada. (#7757)
 - Suporte para sugestões de "auto complete" (IntelliSense) no Microsoft SQL Server Management Studio mais Visual Studio 2017 e superior. (#7504)
 - Pronúncia de pontuação/símbolo: Suporte para agrupamento na definição dum símbolo complexo e suporte a referências a grupos nas regras de substituição, tornando-os mais simples e poderosos(#11107)
 - Os utilizadores passam a ser notificados quando tentam criar entradas de dicionário de voz com substituições de expressão regular inválidas. (#11407)
   - Especificamente, erros de agrupamento passam a ser detectados.
 - Adicionado suporte para os novos métodos de entrada rápida e pinyin em chinês tradicional no Windows 10.(#11562)
-- Os cabeçalhos de tabelas passam a ser considerados campos de formulário com navegação rápida tecla f.(#10432)
-- Adicionado um comando para alternar o anúncio de texto marcado (realçado); Não há nenhum comando predefinido. (#11807)
+- Os cabeçalhos de tabelas passam a ser considerados campos de formulário com navegação rápida tecla f. (#10432)
+- Adicionado um comando para alternar o anúncio de texto marcado (realçado), sem nenhuma predefinição. (#11807)
 - Adicionado o parâmetro de linha de comando --copy-portable-config que permite copiar automaticamente a configuração fornecida para a conta do utilizador ao instalar silenciosamente o NVDA. (#9676)
 - Encaminhar para a célula Braille já é possível no Visualizador Braille colocando o rato na célula para onde se quer encaminhar o foco. (#11804)
 - O NVDA já detecta automaticamente as linhas Braille Humanware Brailliant BI 40X e 20X via USB e Bluetooth. (#11819)
@@ -32,7 +32,7 @@ Além de muitas outras correcções e melhorias importantes.
 - Actualizado o conversor braille liblouis para a versão 3.16.1:
  - Resolve múltiplos craches;
  - Adiciona a tabela Braille Bashkir grau 1;
- - adiciona a tabela Braille Cóptico 8 pontos Braille de computador;
+ - adiciona a tabela Braille Copta 8 pontos Braille de computador;
  - adiciona as tabelas Braille literário Russo e Braille literário Russo (detalhado);
  - adiciona a tabela Braille Afrikaans grau 2;
  - Remove a tabela Braille Russo grau 1.
@@ -41,7 +41,7 @@ Além de muitas outras correcções e melhorias importantes.
 - Melhoramentos nas opções "Tempo de permanência de mensagens" e "Mostrar mensagens indefinidamente" das configurações de Braille. (#11602)
 - Nos navegadores Web e outras aplicações que permitam o modo de navegação, a Lista de elementos (NVDA+F7) já pode ser invocada em modo de foco. (#10453)
 - Actualizações de ARIA live regions passam a ser suprimidas quando o anúncio de conteúdo dinâmico estiver desactivado. (#9077)
-- O NVDA passa a anunciar "Copiado para a área de transferênci" antes do texto copiado. (#6757)
+- O NVDA passa a anunciar "Copiado:" antes do texto copiado. (#6757)
 - A apresentação gráfica da tabela da gestão de discos foi melhorada. (#10048)
 - As etiquetas para os controlos passam a desactivadas (em cinzento) quando o controlo está desactivado. (#11809)
 - Actualizada a lista de emoji CLDR para a versão 38. (#11817)
@@ -53,34 +53,34 @@ Além de muitas outras correcções e melhorias importantes.
 - Anúncio do tempo decorrido no Foobar2000 se o tempo total não estiver disponível (como numa emissão ao vivo). (#11337)
 - O NVDA passa a respeitar o atributo aria-roledescription em elementos em conteúdo editável em páginas web. (#11607)
 - Já não é anunciado "lista" em cada linha duma  lista no Google Docs ou outro conteúdo editável no Google Chrome. (#7562)
-- Ao navegar por caracter ou palavra, dum item de lista para outro, em conteúdo editável na web, a entrada no novo item de lista passa a ser anunciada. (#11569)
+- Ao navegar por caracter ou palavra, de um item de lista para outro, em conteúdo editável na web, a entrada no novo item de lista passa a ser anunciada. (#11569)
 - O NVDA já lê a linha correcta quando o cursor de inserção é colocado no fim de um  link no fim de um item de lista no Google Docs ou em outro conteúdo editável na web. (#11606)
 - No Windows 7, ao abrir ou fechar o Menu Iniciar a partir do ambiente de trabalho, o foco já é o correcto. (#10567)
-- When "attempt to cancel expired focus events" is enabled, the title of the tab is now announced again when switching tabs in Firefox. (#11397)
-- NVDA no longer fails to announce a list item after typing a character in a list when speaking with the SAPI5 Ivona voices. (#11651)
-- It is again possible to use browse mode when reading emails in Windows 10 Mail 16005.13110 and later. (#11439)
-- When using the SAPI5 Ivona voices from harposoftware.com, NVDA is now able to save configuration, switch synthesizers, and no longer will stay silent after restarting. (#11650)
-- It is now possible to enter number 6 in computer braille from a braille keyboard on HIMS displays. (#11710)
-- Major performance improvements in Azure Data Studio. (#11533, #11715)
-- With "Attempt to Cancel speech for expired focus events" enabled the title of the NVDA Find dialog is announced again. (#11632)
-- NVDA should no longer freeze when waking the computer and focus lands in a Microsoft Edge document. (#11576)
-- It is no longer necessary to press tab or move focus after closing a context menu in MS Edge for browse mode to be functional again. (#11202)
-- NVDA no longer fails to read items in list views within a 64-bit application such as Tortoise SVN. (#8175)
-- ARIA treegrids are now exposed as normal tables in browse mode in both Firefox and Chrome. (#9715)
-- A reverse search can now be initiated with 'find previous' via NVDA+shift+F3 (#11770)
-- An NVDA script is no longer treated as being repeated if an unrelated key press happens in between the two executions of the script. (#11388) 
-- Strong and emphasis tags in Internet Explorer can again be suppressed from being reported by returning off Report Emphasis in NVDA's Document Formatting settings. (#11808)
-- A freeze of several seconds experienced by a small amount of users when arrowing between cells in Excel should no longer occur. (#11818)
-- In Microsoft Teams builds with version numbers like 1.3.00.28xxx, NVDA no longer fails reading messages in chats or Teams channels due to an incorrectly focused menu. (#11821)
-- Text marked both as being a spelling and grammar error at the same time in Google Chrome will be appropriately announced as both a spelling and grammar error by NVDA. (#11787)
-- When using Outlook (French locale), the shortcut for 'Reply all' (control+shift+R) works again. (#11196)
-- In Visual Studio, IntelliSense tool tips that provide additional details about the currently selected IntelliSense item are now only reported once. (#11611)
-- In Windows 10 Calculator, NVDA will not announce progress of calculations if speak typed characters is disabled. (#9428)
-- NVDA no longer crashes when using English US grade 2 and expand to computer Braille at the cursor is on, when displaying certain content such as a URL in Braille. (#11754)
-- It is again possible to report formatting information for the focused Excel cell using NVDA+F. (#11914)
+- Quando "Tentar cancelar a voz para eventos de foco expirados" está activado, o título dos separadores é novamente anunciado ao mudar de separadores no Firefox. (#11397)
+- O NVDA já não falha ao anunciar um item de lista, depois de digitar a primeira letra numa lista usando as vozes SAPI5 Ivona. (#11651)
+- Quando se usa as vozes SAPI5 da Ivona, harposoftware.com, o NVDA já pode guardar as configurações, mudar de sintetizador e já não ficará mudo ao reiniciar. (#11650)
+- É novamente possível usar o modo de navegação para ler e-mails no Correio do Windows 10 versão 16005.13110 ou superior. (#11439)
+- Já é possível escrever o número 6 em Braille de computador com o teclado Braille de uma linha HIMS. (#11710)
+- Grandes melhorias na performance no Azure Data Studio. (#11533, #11715)
+- Mesmo com a opção "Tentar cancelar a voz para eventos de foco expirados" activada, o título da janela Localizar do NVDA é novamente anunciado. (#11632)
+- O NVDA já não deve pausar quando, ao acordar o computador, o foco ficar num documento do Microsoft Edge. (#11576)
+- Já não é necessário pressionar "tab" ou mover o foco após fechar um menu de contexto no Microsoft Edge, para que o modo de navegação fique novamente funcional. (#11202)
+- O NVDA volta a ler os itens numa vista de lista numa aplicação de 64-bit como o Tortoise SVN. (#8175)
+- ARIA treegrids são tratadas como tabelas normais em modo de navegação no Firefox e Chrome. (#9715)
+- Uma pesquisa do termo anterior pode ser iniciada com o comando "Localizar anterior via NVDA+shift+F3 (#11770)
+- Um comando do NVDA já não é assumido como sendo repetido, se qualquer outra tecla for pressionada no meio dos dois comandos. (#11388) 
+- as etiquetas de Realçado e enfatizado no Internet Explorer podem ser novamente marcadas para não serem anunciadas, desmarcando a opção "Enfatisado" na secção Formatação de documentos das configurações do NVDA. (#11808)
+- Uma pausa de vários segundos, que ocorria a vários utilizadores, ao percorrerem as células do Excel, usando as setas, já não deverá ocorrer. (#11818)
+- No Microsoft Teams, versões 1.3.00.28xxx, o NVDA já lê as mensagens nas conversações ou canais do Teams, o que não acontecia devido a um menu incorrectamente focado. (#11821)
+- Texto marcado como erro ortográfico e de gramática, em simultâneo, no Google Chrome será correctamente anunciado pelo NVDA como tendo ambos os tipos de erro. (#11787)
+- Quando se usa o Outlook em francês, o atalho para "Responder a todos"' (control+shift+R) volta a funcionar. (#11196)
+- No Visual Studio, as dicas IntelliSense, que proporcionam detalhes adicionais sobre o item seleccionado do IntelliSense, já só são anunciadas uma vez. (#11611)
+- Na Calculadora do Windows 10 , o NVDA não anuncia o progresso dos cálculos se a opção "Anunciar caracteres escritos" estiver desactivada. (#9428)
+- O NVDA já não cracha ao usar a tabela Braille Inglês US grau 2 e a opção "Expandir para Braille de computador palavras sob o cursor" está activada e está a ser mostrado um URL. (#11754)
+- É novamente possível anunciar a informação de formatação para a célula em foco do Excel, com NVDA+F. (#11914)
 
 
-== Changes for Developers ==
+== Alterações para Desenvolvedores ==
 - System tests can now send keys using spy.emulateKeyPress, which takes a key identifier that conforms to NVDA's own key names, and by default also blocks until the action is executed. (#11581)
 - NVDA no longer requires the current directory to be the NVDA application directory in order to function. (#6491)
 - The aria live politeness setting for live regions can now be found on NVDA Objects using the liveRegionPoliteness property. (#11596)
