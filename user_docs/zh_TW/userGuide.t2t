@@ -2252,11 +2252,21 @@ SAPI 5 是微軟語音合成器的標準版本。
 Windows 10 含有新的語音，一般稱之為「OneCore」或「mobile」語音。
 該語音提供了多種語系，且與微軟 SAPI 5合成器對接的語音相比，較之來的反應更快速。
 在 Windows 10 中，NVDA 預設使用 Windows OneCore。（在其它版本中則預設是使用[eSpeak NG #eSpeakNG]）
+要新增 Windows OneCore 語音，請前往 Windows 系統設定中的「輕鬆存取」，接著在清單中選擇「朗讀程式」，並選擇「新增其他語音」。
+接著找到「新增語音」按鈕來添加新的語音。
 
-請參照微軟此篇文章之內容來安裝: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
+許多語言會包含多種不同地區使用的語音。
+例如「英國」、「加拿大」、「印度」等都是英文可選擇的不同語音。
+又例如「法國」、「加拿大」、「瑞士」等都是法文可使用的不同語音。
+您可以使用大範圍的語言來搜尋，例如輸入「英文」、「法文」等，清單便會列出該語言的不同地區語音。
+選擇想要的語言後，按下「新增」按鈕來加入。
+新增完成後，重新啟動 NVDA。
+
+
+請參考微軟此篇文章來查看可使用的語音清單: https://support.microsoft.com/zh-tw/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
 + 支援的點顯器 +[SupportedBrailleDisplays]
-這一節的內容包含 NVDA 支援的點顯器的資訊。
+這一節的內容包含 NVDA 可支援點顯器的資訊。
 
 ++ 支援背景自動偵測功能的點顯器之相關資訊 ++[AutomaticDetection]
 無論是使用 USB 或藍牙連接，NVDA 均能夠在背景自動偵測到許多點顯器。
