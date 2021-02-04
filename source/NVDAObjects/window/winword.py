@@ -75,6 +75,7 @@ wdStartOfRangeColumnNumber=16
 wdMaximumNumberOfColumns=18
 
 # Underline style
+# see https://docs.microsoft.com/en-us/office/vba/api/word.wdunderline
 wdUnderlineNone = 0
 wdUnderlineSingle = 1
 wdUnderlineWords = 2
@@ -217,6 +218,7 @@ wdThemeColorText1=13
 wdThemeColorText2=15
 
 # WdCharacterCase enumeration
+# See https://docs.microsoft.com/en-us/office/vba/api/word.wdcharactercase
 wdNextCase = -1
 wdLowerCase = 0
 wdUpperCase = 1
