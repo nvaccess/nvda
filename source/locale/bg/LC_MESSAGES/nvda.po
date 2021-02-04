@@ -4,15 +4,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5822\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-12 20:07+1000\n"
-"PO-Revision-Date: 2020-09-27 09:50+0200\n"
+"POT-Creation-Date: 2021-01-22 00:02+1000\n"
+"PO-Revision-Date: 2021-01-23 10:20+0200\n"
 "Last-Translator: Kostadin Kolev <k_kolev1985@mail.bg>\n"
 "Language-Team: Български <>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 2.4.2\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
@@ -681,9 +681,8 @@ msgstr "Африкаанс, ниво 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Afrikaans grade 2"
-msgstr "Африкаанс, ниво 1"
+msgstr "Африкаанс, ниво 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -707,9 +706,8 @@ msgstr "Асамски, ниво 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Bashkir grade 1"
-msgstr "Кашмирски, ниво 1"
+msgstr "Башкирски, ниво 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -728,9 +726,8 @@ msgstr "Централен кюрдски, ниво 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Coptic 8 dot computer braille"
-msgstr "Хърватски 8-точков компютърен брайл"
+msgstr "Коптски 8-точков компютърен брайл"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1174,15 +1171,13 @@ msgstr "Руски компютърен брайл"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Russian literary braille"
-msgstr "Руски компютърен брайл"
+msgstr "Руски литературен брайл"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Russian literary braille (detailed)"
-msgstr "Руски компютърен брайл"
+msgstr "Руски литературен брайл (подробен)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3396,19 +3391,16 @@ msgid "Toggles on and off the reporting of emphasis"
 msgstr "Превключва докладването на открояването"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
-#, fuzzy
 msgid "Toggles on and off the reporting of marked text"
-msgstr "Включва или изключва докладването на статиите"
+msgstr "Включва или изключва докладването на отбелязан текст"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-#, fuzzy
 msgid "report marked on"
-msgstr "Докладването на страниците е включено"
+msgstr "Докладването на отбелязан текст е включено"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-#, fuzzy
 msgid "report marked off"
-msgstr "Докладването на страниците е изключено"
+msgstr "Докладването на отбелязан текст е изключено"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -6630,15 +6622,15 @@ msgstr "%d знака"
 
 #. Translators: Announced when a text has been copied to clipboard.
 #. {text} is replaced by the copied text.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Copied to clipboard: {text}"
-msgstr "Копирано в клипборда"
+msgstr "Копирано в клипборда: {text}"
 
 #. Translators: Displayed in braille when a text has been copied to clipboard.
 #. {text} is replaced by the copied text.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Copied: {text}"
-msgstr "правопис: {text}"
+msgstr "Копирано: {text}"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -6972,7 +6964,7 @@ msgstr "Няма просвирващ се запис"
 
 #. Translators: Reported if the remaining time can not be calculated in Foobar2000
 msgid "Unable to determine remaining time"
-msgstr ""
+msgstr "Не може да се определи оставащото време"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
@@ -6985,9 +6977,8 @@ msgstr ""
 "Докладва изминалото време на просвирвания в момента запис (ако има такъв)"
 
 #. Translators: Reported if the total time is not available in Foobar2000
-#, fuzzy
 msgid "Total time not available"
-msgstr "Протоколът не е наличен"
+msgstr "Общото времетраене не е налично"
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
 msgid "Reports the length of the currently playing track, if any"
@@ -7615,7 +7606,7 @@ msgstr "&Показвай брайловия визуализатор при с�
 #. Translators: The label for a setting in the braille viewer that controls
 #. whether hovering mouse routes to the cell.
 msgid "&Hover for cell routing"
-msgstr ""
+msgstr "Преместване до клетката при посо&чване"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -8581,15 +8572,13 @@ msgid "Manual Activation"
 msgstr "Ръчно активиране"
 
 #. Translators: Message indicating no context sensitive help is available for the control or dialog.
-#, fuzzy
 msgid "No help available here."
-msgstr "Няма налични обновления."
+msgstr "За този елемент няма налична помощ."
 
 #. Translators: Message shown when trying to display context sensitive help,
 #. indicating that	the user guide could not be found.
-#, fuzzy
 msgid "No user guide found."
-msgstr "Лентата на състоянието не е намерена"
+msgstr "Не е намерено ръководство за потребителя."
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -8829,11 +8818,12 @@ msgstr "Моля, посочете папка в която да бъде съз
 
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
-#, fuzzy
 msgid ""
 "Please specify an absolute path (including drive letter)  in which to create "
 "the portable copy."
-msgstr "Моля, посочете папка в която да бъде създадено преносимото копие."
+msgstr ""
+"Моля, посочете пълния път (включително буквата на устройството), където да "
+"се създаде преносимото копие."
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
@@ -9470,9 +9460,8 @@ msgstr "&Открояване"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#, fuzzy
 msgid "Mar&ked (highlighted text)"
-msgstr "Отбелязан (осветен) текст"
+msgstr "Отбеля&зан (осветен) текст"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9942,21 +9931,18 @@ msgstr "Форма на курсора на &прегледа:"
 
 #. Translators: One of the show states of braille messages
 #. (the timeout mode shows messages for the specific time).
-#, fuzzy
 msgid "Use timeout"
-msgstr "&Задържане на съобщението (сек)"
+msgstr "Със задържане"
 
 #. Translators: One of the show states of braille messages
 #. (the indefinitely mode prevents braille messages from disappearing automatically).
-#, fuzzy
 msgid "Show indefinitely"
-msgstr "Показвай &съобщенията неопределено време"
+msgstr "За неопределено време"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
-#, fuzzy
 msgid "Show messages"
-msgstr "Все още няма съобщение"
+msgstr "Показвай съобщенията"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
@@ -10577,27 +10563,26 @@ msgstr ""
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the system focus.
 msgid "Highlight system fo&cus"
-msgstr "Осветявай &системния фокус"
+msgstr "Откроявай &системния фокус"
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the browse mode cursor.
 msgid "Highlight browse &mode cursor"
-msgstr "Осветявай курсора в ре&жим на преглед"
+msgstr "Откроявай курсора в ре&жим на преглед"
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the navigator object.
 msgid "Highlight navigator &object"
-msgstr "Осветявай навигационния &обект"
+msgstr "Откроявай навигационния &обект"
 
 #. Translators: Description for NVDA's built-in screen highlighter.
-#, fuzzy
 msgid "Visual Highlight"
-msgstr "Осветяване на фокуса"
+msgstr "Визуално открояване"
 
 #. Translators: The label for a checkbox that enables / disables focus highlighting
 #. in the NVDA Highlighter vision settings panel.
 msgid "&Enable Highlighting"
-msgstr "&Включи осветяването"
+msgstr "&Включи открояването"
 
 #. Translators: Name for a vision enhancement provider that disables output to the screen,
 #. making it black.
@@ -11996,7 +11981,7 @@ msgstr "1,5 реда"
 #, python-brace-format
 msgctxt "line spacing value"
 msgid "exactly {space:.1f} pt"
-msgstr ""
+msgstr "точно {space:.1f} пкт"
 
 #. Translators: line spacing of at least x point
 #, python-format
