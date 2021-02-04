@@ -48,9 +48,17 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 
 	def _normalizeControlField(self,attrs):
 		level=None
-		ariaCurrent = attrs.get('HTMLAttrib::aria-current', None)
-		if ariaCurrent not in (None, "false"):
-			attrs['current']=ariaCurrent
+
+		ariaCurrentValue = attrs.get('HTMLAttrib::aria-current', 'false')
+		try:
+			ariaCurrent = controlTypes.IsCurrent(ariaCurrentValue)
+		except ValueError:
+			log.debugWarning(f"Unknown aria-current value: {ariaCurrentValue}")
+			ariaCurrent = controlTypes.IsCurrent.NO
+
+		if ariaCurrent != controlTypes.IsCurrent.NO:
+			attrs['current'] = ariaCurrent
+
 		placeholder = self._getPlaceholderAttribute(attrs, 'HTMLAttrib::aria-placeholder')
 		if placeholder:
 			attrs['placeholder']=placeholder
