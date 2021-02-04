@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-12 20:07+1000\n"
-"PO-Revision-Date: 2020-10-05 09:07+0100\n"
+"POT-Creation-Date: 2021-01-29 00:01+1000\n"
+"PO-Revision-Date: 2021-01-30 15:03+0100\n"
 "Last-Translator: Ondrej Rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <https://nvda.venik.org>\n"
 "Language: sk\n"
@@ -680,9 +680,8 @@ msgstr "Afrikánčina plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Afrikaans grade 2"
-msgstr "Afrikánčina plnopis"
+msgstr "Afrikánčina skratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -706,9 +705,8 @@ msgstr "Ásamčina plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Bashkir grade 1"
-msgstr "Kašmírčina plnopis"
+msgstr "baškirčina plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -727,9 +725,8 @@ msgstr "Stredná Kurdčina plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Coptic 8 dot computer braille"
-msgstr "Chorvátsky počítačový 8 bodový brail"
+msgstr "Koptský počítačový 8 bodový brail"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1173,15 +1170,13 @@ msgstr "Ruský počítačový 8 bodový brail"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Russian literary braille"
-msgstr "Ruský počítačový 8 bodový brail"
+msgstr "Ruština plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Russian literary braille (detailed)"
-msgstr "Ruský počítačový 8 bodový brail"
+msgstr "Ruština plnopis (detailný)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3388,19 +3383,16 @@ msgid "Toggles on and off the reporting of emphasis"
 msgstr "Zapína alebo vypína oznamovanie zvýraznenia"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
-#, fuzzy
 msgid "Toggles on and off the reporting of marked text"
-msgstr "Zapína alebo vypína oznamovanie článkov"
+msgstr "Zapína alebo vypína oznamovanie označeného textu"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-#, fuzzy
 msgid "report marked on"
-msgstr "oznamovať strany"
+msgstr "oznamovať označený text"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-#, fuzzy
 msgid "report marked off"
-msgstr "neoznamovať strany"
+msgstr "Neoznamovať vyznačený text"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -6586,15 +6578,15 @@ msgstr "%d znakov"
 
 #. Translators: Announced when a text has been copied to clipboard.
 #. {text} is replaced by the copied text.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Copied to clipboard: {text}"
-msgstr "Okopírované do schránky"
+msgstr "Okopírované do schránky: {text}"
 
 #. Translators: Displayed in braille when a text has been copied to clipboard.
 #. {text} is replaced by the copied text.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Copied: {text}"
-msgstr "Pravopisná chyba: {text}"
+msgstr "Skopírované: {text}"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -6927,7 +6919,7 @@ msgstr "Nie je prehrávaná žiadna skladba"
 
 #. Translators: Reported if the remaining time can not be calculated in Foobar2000
 msgid "Unable to determine remaining time"
-msgstr ""
+msgstr "Nie je možné zisťiť zostávajúci čas"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
@@ -6938,9 +6930,8 @@ msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "Oznámi uplynutý čas práve prehrávanej skladby"
 
 #. Translators: Reported if the total time is not available in Foobar2000
-#, fuzzy
 msgid "Total time not available"
-msgstr "Záznam nie je dostupný"
+msgstr "Nie je možné zistiť celkový čas"
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
 msgid "Reports the length of the currently playing track, if any"
@@ -7566,7 +7557,7 @@ msgstr "spustiť pri štarte zobrazovač &Braillu"
 #. Translators: The label for a setting in the braille viewer that controls
 #. whether hovering mouse routes to the cell.
 msgid "&Hover for cell routing"
-msgstr ""
+msgstr "&Pridržanie myši simuluje presunutie na znak"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -8514,15 +8505,13 @@ msgid "Manual Activation"
 msgstr "Ručná aktivácia"
 
 #. Translators: Message indicating no context sensitive help is available for the control or dialog.
-#, fuzzy
 msgid "No help available here."
-msgstr "Nie sú k dispozícii žiadne aktualizácie."
+msgstr "Pomoc pre prvok nie je dostupná."
 
 #. Translators: Message shown when trying to display context sensitive help,
 #. indicating that	the user guide could not be found.
-#, fuzzy
 msgid "No user guide found."
-msgstr "Stavový riadok nebol nájdený."
+msgstr "Nepodarilo sa nájsť používateľskú príručku."
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -8764,11 +8753,12 @@ msgstr "Prosím zadajte cestu do priečinka, kde sa vytvorí prenosná verzia."
 
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
-#, fuzzy
 msgid ""
 "Please specify an absolute path (including drive letter)  in which to create "
 "the portable copy."
-msgstr "Prosím zadajte cestu do priečinka, kde sa vytvorí prenosná verzia."
+msgstr ""
+"Prosím zadajte cestu priečinka (vrátane písmena jednotky), kde sa vytvorí "
+"prenosná verzia."
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
@@ -9399,9 +9389,8 @@ msgstr "Zv&ýraznenie"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#, fuzzy
 msgid "Mar&ked (highlighted text)"
-msgstr "Označený text"
+msgstr "Označený te&xt"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9855,21 +9844,18 @@ msgstr "Tva&r prezeracieho kurzora:"
 
 #. Translators: One of the show states of braille messages
 #. (the timeout mode shows messages for the specific time).
-#, fuzzy
 msgid "Use timeout"
-msgstr "Zobrazovať &správy (sek)"
+msgstr "po určenú dobu"
 
 #. Translators: One of the show states of braille messages
 #. (the indefinitely mode prevents braille messages from disappearing automatically).
-#, fuzzy
 msgid "Show indefinitely"
-msgstr "Zobraz&iť správy bez obmedzenia"
+msgstr "stále"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
-#, fuzzy
 msgid "Show messages"
-msgstr "Zatiaľ nebola doručená žiadna správa"
+msgstr "Zobrazovať správy"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
@@ -10498,9 +10484,8 @@ msgid "Highlight navigator &object"
 msgstr "Zvýrazniť &navigačný objekt"
 
 #. Translators: Description for NVDA's built-in screen highlighter.
-#, fuzzy
 msgid "Visual Highlight"
-msgstr "Zvýraznenie fokusu"
+msgstr "Zvýraznenie na obrazovke"
 
 #. Translators: The label for a checkbox that enables / disables focus highlighting
 #. in the NVDA Highlighter vision settings panel.
@@ -11898,7 +11883,7 @@ msgstr "1,5 riadka"
 #, python-brace-format
 msgctxt "line spacing value"
 msgid "exactly {space:.1f} pt"
-msgstr ""
+msgstr "presne {space:.1f} bodov"
 
 #. Translators: line spacing of at least x point
 #, python-format

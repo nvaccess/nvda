@@ -2,10 +2,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 2020.3beta4\n"
+"Project-Id-Version: 2020.4beta4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-12 20:07+1000\n"
-"PO-Revision-Date: 2020-10-06 15:01+0800\n"
+"POT-Creation-Date: 2021-01-22 00:02+1000\n"
+"PO-Revision-Date: 2021-01-29 13:56+0800\n"
 "Last-Translator: Eric Yip <cyeric20@yahoo.com.hk>\n"
 "Language-Team: Eric Yip@ HKBU <ericyip@hkbu.org.hk>\n"
 "Language: zh_HK\n"
@@ -683,9 +683,8 @@ msgstr "南非文一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Afrikaans grade 2"
-msgstr "南非文一級點字"
+msgstr "南非文二級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -709,9 +708,8 @@ msgstr "阿薩姆語一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Bashkir grade 1"
-msgstr "喀什米爾語一級點字"
+msgstr "巴什基爾文一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -730,9 +728,8 @@ msgstr "中库尔德語一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Coptic 8 dot computer braille"
-msgstr "克羅地亞語八點電腦點字"
+msgstr "科普特文八點電腦點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1176,15 +1173,13 @@ msgstr "俄語八點電腦點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Russian literary braille"
-msgstr "俄語八點電腦點字"
+msgstr "俄文書面語點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Russian literary braille (detailed)"
-msgstr "俄語八點電腦點字"
+msgstr "俄文書面語點字 (詳細)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3374,19 +3369,16 @@ msgid "Toggles on and off the reporting of emphasis"
 msgstr "切換是否讀出強調"
 
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
-#, fuzzy
 msgid "Toggles on and off the reporting of marked text"
-msgstr "切換是否讀出文章"
+msgstr "切換是否讀出標記文字"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-#, fuzzy
 msgid "report marked on"
-msgstr "讀出頁碼"
+msgstr "讀出標記文字"
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
-#, fuzzy
 msgid "report marked off"
-msgstr "不讀出頁碼"
+msgstr "不讀出標記文字"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -6465,15 +6457,15 @@ msgstr "%d 個字元"
 
 #. Translators: Announced when a text has been copied to clipboard.
 #. {text} is replaced by the copied text.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Copied to clipboard: {text}"
-msgstr "複製到剪貼簿"
+msgstr "{text} 已複製"
 
 #. Translators: Displayed in braille when a text has been copied to clipboard.
 #. {text} is replaced by the copied text.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Copied: {text}"
-msgstr "拼字：{text}"
+msgstr "複製: {text}"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -6792,7 +6784,7 @@ msgstr "目前沒有播放曲目"
 
 #. Translators: Reported if the remaining time can not be calculated in Foobar2000
 msgid "Unable to determine remaining time"
-msgstr ""
+msgstr "無法讀取剩餘時間"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
@@ -6803,13 +6795,12 @@ msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "如有的話讀出目前播放曲目的經過時間"
 
 #. Translators: Reported if the total time is not available in Foobar2000
-#, fuzzy
 msgid "Total time not available"
-msgstr "無法開啟事件紀錄"
+msgstr "無法讀取總長時間"
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
 msgid "Reports the length of the currently playing track, if any"
-msgstr "如有的話讀出目前播放曲目的長度"
+msgstr "如有的話讀出目前播放曲目的總長時間"
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -7430,7 +7421,7 @@ msgstr "啟動時顯示點字輸出檢視器(&S)"
 #. Translators: The label for a setting in the braille viewer that controls
 #. whether hovering mouse routes to the cell.
 msgid "&Hover for cell routing"
-msgstr ""
+msgstr "鼠標停留時移到點字顯示位置(&H)"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -8349,15 +8340,13 @@ msgid "Manual Activation"
 msgstr "手動啟用"
 
 #. Translators: Message indicating no context sensitive help is available for the control or dialog.
-#, fuzzy
 msgid "No help available here."
-msgstr "現時未有更新"
+msgstr "此處沒有說明。"
 
 #. Translators: Message shown when trying to display context sensitive help,
 #. indicating that	the user guide could not be found.
-#, fuzzy
 msgid "No user guide found."
-msgstr "找不到狀態列"
+msgstr "沒有目前語言的用戶指南。"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -8567,7 +8556,7 @@ msgstr "瀏覽...(&B)"
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
-msgstr "選擇可夔版的資料夾"
+msgstr "指定可夔版的資料夾"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
@@ -8580,15 +8569,14 @@ msgstr "完成後啟動新建可攜版(&S)"
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
 msgid "Please specify a directory in which to create the portable copy."
-msgstr "請選擇建立可攜版的資料夾。"
+msgstr "請指定建立可攜版的資料夾。"
 
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
-#, fuzzy
 msgid ""
 "Please specify an absolute path (including drive letter)  in which to create "
 "the portable copy."
-msgstr "請選擇建立可攜版的資料夾。"
+msgstr "請指定建立可攜版的完整路徑，(包括磁碟機代號)"
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
@@ -9211,9 +9199,8 @@ msgstr "強調標記(&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#, fuzzy
 msgid "Mar&ked (highlighted text)"
-msgstr "加亮文字 (highlighted text)"
+msgstr "加亮文字 (highlighted text)(&K)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9663,21 +9650,18 @@ msgstr "跟隨易讀游標的形態(&R)"
 
 #. Translators: One of the show states of braille messages
 #. (the timeout mode shows messages for the specific time).
-#, fuzzy
 msgid "Use timeout"
-msgstr "訊息顯示的時間 (以秒計)(&T)"
+msgstr "限時"
 
 #. Translators: One of the show states of braille messages
 #. (the indefinitely mode prevents braille messages from disappearing automatically).
-#, fuzzy
 msgid "Show indefinitely"
-msgstr "持續顯示訊息(&M)"
+msgstr "持續"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
-#, fuzzy
 msgid "Show messages"
-msgstr "沒有新訊息"
+msgstr "訊息顯示"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
@@ -10296,17 +10280,16 @@ msgstr "加亮系統焦點(&C)"
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the browse mode cursor.
 msgid "Highlight browse &mode cursor"
-msgstr "加亮瀏覽模式的游標(&M)"
+msgstr "在瀏覽模式加量朗讀焦點(&M)"
 
 #. Translators: shown for a highlighter setting that toggles
 #. highlighting the navigator object.
 msgid "Highlight navigator &object"
-msgstr "加亮物件游標(&O)"
+msgstr "加亮朗讀物件(&O)"
 
 #. Translators: Description for NVDA's built-in screen highlighter.
-#, fuzzy
 msgid "Visual Highlight"
-msgstr "焦點加亮"
+msgstr "視覺加量"
 
 #. Translators: The label for a checkbox that enables / disables focus highlighting
 #. in the NVDA Highlighter vision settings panel.
@@ -11675,7 +11658,7 @@ msgstr "1.5倍行高"
 #, python-brace-format
 msgctxt "line spacing value"
 msgid "exactly {space:.1f} pt"
-msgstr ""
+msgstr "正好 {space:.1f} pt"
 
 #. Translators: line spacing of at least x point
 #, python-format
