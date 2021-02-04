@@ -1912,7 +1912,7 @@ class ObjectPresentationPanel(SettingsPanel):
 
 		# Translators: This is the label for a combo box in the
 		# object presentation settings panel.
-		uiaNotificationText = _("Report &accessible event notifications:")
+		uiaNotificationText = _("Report UIA &accessible event notifications:")
 		notificationChoices = [label for setting, label in self.notificationLabels]
 		self.uiaNotificationList = sHelper.addLabeledControl(
 			uiaNotificationText, wx.Choice, choices=notificationChoices
