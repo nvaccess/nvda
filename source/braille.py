@@ -664,6 +664,9 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		):
 			return None
 
+	description = None
+	if config.conf["presentation"]["reportObjectDescriptions"]:
+		description = field.get("description", None)
 	states = field.get("states", set())
 	value=field.get('value',None)
 	current = field.get('current', controlTypes.IsCurrent.NO)
@@ -676,6 +679,8 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []
+		if description:
+			text.append(getPropertiesBraille(description=description))
 		if current:
 			text.append(getPropertiesBraille(current=current))
 		if role == controlTypes.ROLE_GRAPHIC and content:
@@ -694,6 +699,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			"columnSpan": field.get("table-columnsspanned"),
 			"includeTableCellCoords": reportTableCellCoords,
 			"current": current,
+			"description": description,
 		}
 		if reportTableHeaders:
 			props["columnHeaderText"] = field.get("table-columnheadertext")
@@ -708,7 +714,8 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			"value": value,
 			"current": current,
 			"placeholder": placeholder,
-			"roleText": roleText
+			"roleText": roleText,
+			"description": description,
 		}
 		if field.get('alwaysReportName', False):
 			# Ensure that the name of the field gets presented even if normally it wouldn't.
