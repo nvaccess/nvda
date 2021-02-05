@@ -173,10 +173,12 @@ class AppModule(appModuleHandler.AppModule):
 			return
 		# #9104: different aspects of modern input panel are represented by automation iD's.
 		childAutomationID = obj.firstChild.UIAElement.cachedAutomationID
-		# Emoji panel for build 16299 and 17134.
+		# Emoji panel for 1709 (build 16299) and 1803 (17134).
+		emojiPanelInitial = winVersion.WIN10_1709
 		# This event is properly raised in build 17134.
+		emojiPanelWindowOpenEvent = winVersion.WIN10_1803
 		if (
-			winVersion.getWinVer().build <= 17134
+			winVersion.getWinVer() in (emojiPanelInitial, emojiPanelWindowOpenEvent)
 			and childAutomationID in (
 				"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarItemControl",
 				"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton"
