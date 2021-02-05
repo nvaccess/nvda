@@ -1840,7 +1840,7 @@ When this option is enabled, NVDA will use a new, work in progress version of it
 ==== Speak passwords in UIA consoles ====[AdvancedSettingsWinConsoleSpeakPasswords]
 This setting controls whether characters are spoken by [speak typed characters #KeyboardSettingsSpeakTypedCharacters] or [speak typed words #KeyboardSettingsSpeakTypedWords] in situations where the screen does not update (such as password entry) in the Windows Console with UI automation support enabled. For security purposes, this setting should be left disabled. However, you may wish to enable it if you experience performance issues or instability with typed character and/or word reporting while using NVDA's new experimental console support.
 
-==== Use UIA with Microsoft Edge and other Chromium based browsers when available ====[AdvancedSettingsChromiumUIA]
+==== Use UIA with Microsoft Edge and other Chromium based browsers when available ====[ChromiumUIA]
 Allows specifying when UIA will be used when it is available in Chromium based browsers such as Microsoft Edge.
 UIA support for Chromium based browsers is early in development and may not provide the same level of access as IA2.
 The combo box has the following options:
@@ -1857,7 +1857,7 @@ This feature is available and enabled by default on Windows 10 versions 1607 and
 Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
 In untrusted environments, you may temporarily disable [speak typed characters #KeyboardSettingsSpeakTypedCharacters] and [speak typed words #KeyboardSettingsSpeakTypedWords] when entering passwords.
 
-==== Diff algorithm ====[AdvancedSettingsDiffAlgo]
+==== Diff algorithm ====[DiffAlgo]
 This setting controls how NVDA determines the new text to speak in terminals.
 The diff algorithm combo box has three options:
 - Automatic: as of NVDA 2021.1, this option is equivalent to Difflib.

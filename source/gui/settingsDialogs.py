@@ -2584,7 +2584,7 @@ class AdvancedPanelControls(
 			pgettext("advanced.uiaWithChromium", "No"),
 		)
 		self.UIAInChromiumCombo = UIAGroup.addLabeledControl(label, wx.Choice, choices=chromiumChoices)
-		self.bindHelpEvent("AdvancedSettingsChromiumUIA", self.UIAInChromiumCombo)
+		self.bindHelpEvent("ChromiumUIA", self.UIAInChromiumCombo)
 		self.UIAInChromiumCombo.SetSelection(config.conf["UIA"]["allowInChromium"])
 		self.UIAInChromiumCombo.defaultValue = self._getDefaultValue(["UIA", "allowInChromium"])
 
@@ -2632,7 +2632,7 @@ class AdvancedPanelControls(
 			"difflib"
 		)
 		self.diffAlgoCombo = terminalsGroup.addLabeledControl(diffAlgoComboText, wx.Choice, choices=diffAlgoChoices)
-		self.bindHelpEvent("AdvancedSettingsDiffAlgo", self.diffAlgoCombo)
+		self.bindHelpEvent("DiffAlgo", self.diffAlgoCombo)
 		curChoice = self.diffAlgoVals.index(
 			config.conf['terminals']['diffAlgo']
 		)
