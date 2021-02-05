@@ -1446,13 +1446,6 @@ class WordDocument(Window):
 			lambda: gesture.send(),
 			lambda: self.WinwordSelectionObject.Range.Case
 		)
-		# Under Outlook, calling the script quickly a second time gives strange results.
-		# Case value passes sometimes through an intermediate value.
-		# So poll the value a second time.
-		val = self._WaitForValueChangeForAction(
-			lambda: None,
-			lambda: self.WinwordSelectionObject.Range.Case
-		)
 		# Translators: a message when changing case in Microsoft Word
 		ui.message(wdCharacterCaseTypeLabels.get(val))
 
