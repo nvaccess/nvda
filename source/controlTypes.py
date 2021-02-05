@@ -6,6 +6,8 @@
 from typing import Dict, Union, Set, Any, Optional, List
 from enum import Enum, auto
 
+from logHandler import log
+
 ROLE_UNKNOWN=0
 ROLE_WINDOW=1
 ROLE_TITLEBAR=2
@@ -649,21 +651,49 @@ class OutputReason(Enum):
 	QUICKNAV = auto()
 
 
-#: Text to use for 'current' values. These describe if an item is the current item 
-#: within a particular kind of selection.
-isCurrentLabels: Dict[Union[bool, str], str] = {
+class IsCurrent(Enum):
+	"""Values to use within NVDA to denote 'current' values.
+	These describe if an item is the current item within a particular kind of selection.
+	EG aria-current
+	"""
+	NO = "false"
+	YES = "true"
+	PAGE = "page"
+	STEP = "step"
+	LOCATION = "location"
+	DATE = "date"
+	TIME = "time"
+
+	@property
+	def displayString(self):
+		"""
+		@return: The translated UI display string that should be used for this value of the IsCurrent enum
+		"""
+		try:
+			return _isCurrentLabels[self]
+		except KeyError:
+			log.debugWarning(f"No translation mapping for: {self}")
+			# there is a value for 'current' but NVDA hasn't learned about it yet,
+			# at least describe in the general sense that this item is 'current'
+			return _isCurrentLabels[IsCurrent.YES]
+
+
+#: Text to use for 'current' values. These describe if an item is the current item
+#: within a particular kind of selection. EG aria-current
+_isCurrentLabels: Dict[Enum, str] = {
+	IsCurrent.NO: "",  # There is nothing extra to say for items that are not current.
 	# Translators: Presented when an item is marked as current in a collection of items
-	True:_("current"),
+	IsCurrent.YES: _("current"),
 	# Translators: Presented when a page item is marked as current in a collection of page items
-	"page":_("current page"),
+	IsCurrent.PAGE: _("current page"),
 	# Translators: Presented when a step item is marked as current in a collection of step items
-	"step":_("current step"),
+	IsCurrent.STEP: _("current step"),
 	# Translators: Presented when a location item is marked as current in a collection of location items
-	"location":_("current location"),
+	IsCurrent.LOCATION: _("current location"),
 	# Translators: Presented when a date item is marked as current in a collection of date items
-	"date":_("current date"),
+	IsCurrent.DATE: _("current date"),
 	# Translators: Presented when a time item is marked as current in a collection of time items
-	"time":_("current time"),
+	IsCurrent.TIME: _("current time"),
 }
 
 
