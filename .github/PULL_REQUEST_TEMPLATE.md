@@ -21,7 +21,7 @@ Section: New features, Changes, Bug fixes
 
 This checklist is a reminder of things commonly forgotten in a new PR.
 Please do a self-review to check these items.
-Reviewers will not approve the PR until this are met.
+Reviewers will not approve the PR until these are met.
 
 - [ ] Pull Request description is up to date.
 - [ ] Unit tests.
