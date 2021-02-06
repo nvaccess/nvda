@@ -1928,20 +1928,19 @@ class ObjectPresentationPanel(SettingsPanel):
 
 		# Translators: This is the label for a combo box in the
 		# object presentation settings panel.
-		uiaNotificationText = _("Report UIA &accessible event notifications:")
-		notificationChoices = [label for setting, label in self.notificationLabels]
-		self.uiaNotificationList = sHelper.addLabeledControl(
-			uiaNotificationText, wx.Choice, choices=notificationChoices
+		appNotificationText = _("Report &app notifications:")
+		notificationChoices = [label for setting, label in self.appNotificationLabels]
+		self.appNotificationList = sHelper.addLabeledControl(
+			appNotificationText, wx.Choice, choices=notificationChoices
 		)
-		self.bindHelpEvent("ObjectPresentationAccessibleEventNotifications", self.uiaNotificationList)
-		notificationSettings = [setting for setting, label in self.notificationLabels]
+		self.bindHelpEvent("ObjectPresentationAppNotifications", self.appNotificationList)
+		notificationSettings = [setting for setting, label in self.appNotificationLabels]
 		try:
-			selection = notificationSettings.index(config.conf["presentation"]["reportUIANotifications"])
+			selection = notificationSettings.index(config.conf["presentation"]["appNotificationsFromAllApps"])
 		except ValueError:
 			selection = 0
-		self.uiaNotificationList.SetSelection(selection)
-		# #10956: UIA (accessible app event) notification event was introduced in Fall Creators Update.
-		self.uiaNotificationList.Enable(winVersion.isWin10(1709))
+		self.appNotificationList.SetSelection(selection)
+		self.appNotificationList.Enable(config.conf["presentation"]["reportAppNotifications"])
 
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings panel.
@@ -2013,6 +2012,12 @@ class ObjectPresentationPanel(SettingsPanel):
 			self.autoSuggestionSoundsCheckBox
 		)
 		self.autoSuggestionSoundsCheckBox.SetValue(config.conf["presentation"]["reportAutoSuggestionsWithSound"])
+
+	def onNotificationToggle(self, evt):
+		appNotifications = 1
+		self.appNotificationList.Enable(
+			self.notificationsList.IsChecked(appNotifications)
+		)
 
 	def onSave(self):
 		config.conf["presentation"]["reportTooltips"]=self.tooltipCheckBox.IsChecked()
