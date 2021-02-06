@@ -1882,16 +1882,13 @@ class ObjectPresentationPanel(SettingsPanel):
 		# See Progress bar output in the Object Presentation Settings section of the User Guide.
 		("both", _("Speak and beep")),
 	)
-	notificationLabels = (
-		# Translators: one of the accessible event notification choices
+	appNotificationLabels = (
+		# Translators: one of the app notification choices
 		# to always announce notifications.
-		("always", pgettext("accessible event notification", "always")),
-		# Translators: one of the accessible event notification choices
+		("always", pgettext("app notification", "all apps")),
+		# Translators: one of the app notification choices
 		# to announce notifications from focused app.
-		("focusedApp", pgettext("accessible event notification", "when application in foreground")),
-		# Translators: one of the accessible event notification choices
-		# to turn off notification announcement.
-		("off", pgettext("accessible event notification", "off"))
+		("focusedApp", pgettext("app notification", "foreground app")),
 	)
 
 	def makeSettings(self, settingsSizer):
