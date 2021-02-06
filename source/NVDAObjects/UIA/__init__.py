@@ -1729,11 +1729,11 @@ class UIA(Window):
 		# Do not announce notifications from background apps.
 		# #10956: ignore this altogether if NVDA should not handle this event
 		# either always or from background apps.
-		reportUIANotifications = config.conf['presentation']['reportUIANotifications']
+		appNotificationsFromAllApps = config.conf['presentation']["appNotificationsFromAllApps"]
 		if (
-			reportUIANotifications == "off"
+			not config.conf['presentation']['reportAppNotifications']
 			or (
-				reportUIANotifications == "focusedApp"
+				appNotificationsFromAllApps == "focusedApp"
 				and self.appModule != api.getFocusObject().appModule
 			)
 		):
