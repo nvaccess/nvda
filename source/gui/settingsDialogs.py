@@ -1900,12 +1900,31 @@ class ObjectPresentationPanel(SettingsPanel):
 		self.bindHelpEvent("ObjectPresentationReportToolTips", self.tooltipCheckBox)
 		self.tooltipCheckBox.SetValue(config.conf["presentation"]["reportTooltips"])
 
-		# Translators: This is the label for a checkbox in the
+		# Translators: This is the label for a checkable list in the
 		# object presentation settings panel.
-		balloonText = _("Report &notifications")
-		self.balloonCheckBox=sHelper.addItem(wx.CheckBox(self,label=balloonText))
-		self.bindHelpEvent("ObjectPresentationReportNotifications", self.balloonCheckBox)
-		self.balloonCheckBox.SetValue(config.conf["presentation"]["reportHelpBalloons"])
+		notificationsText = _("Report &notifications")
+		self.reportNotificationChoices = [
+			# Translators: This is the label for a notification setting in
+			# report notifications list.
+			_("help balloons and toasts"),
+			# Translators: This is the label for a notification setting in
+			# report notifications list.
+			_("app notifications")
+		]
+		self.notificationsList = sHelper.addLabeledControl(
+			notificationsText,
+			nvdaControls.CustomCheckListBox,
+			choices=self.reportNotificationChoices
+		)
+		notificationSettings = ("reportHelpBalloons", "reportAppNotifications")
+		self.notificationsList.CheckedItems = [
+			notificationSettings.index(setting) for setting in notificationSettings
+			if config.conf["presentation"][setting]
+		]
+		# Enable/disable app notification list if app notifications checkbox is checked/unchecked.
+		self.Bind(wx.EVT_CHECKLISTBOX, self.onNotificationToggle)
+		self.bindHelpEvent("ObjectPresentationReportNotifications", self.notificationsList)
+		self.notificationsList.Select(0)
 
 		# Translators: This is the label for a combo box in the
 		# object presentation settings panel.
