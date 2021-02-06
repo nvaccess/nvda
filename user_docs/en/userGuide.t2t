@@ -1579,21 +1579,26 @@ A checkbox that when checked tells NVDA to report tooltips as they appear.
 Many Windows and controls show a small message (or tooltip) when you move the mouse pointer over them, or sometimes when you move the focus to them.
 
 ==== Report notifications ====[ObjectPresentationReportNotifications]
-This checkbox, when checked, tells NVDA to report help balloons and toast notifications as they appear.
-- Help Balloons are like tooltips, but are usually larger in size, and are associated with system events such as a network cable being unplugged, or perhaps to alert you about Windows security issues.
-- Toast notifications have been introduced in Windows 10 and appear in the notification centre in the system tray, informing about several events (i.e. if an update has been downloaded, a new e-mail arrived in your inbox, etc.).
+Checkboxes in this setting allows you to configure which notifications will be announced.
+Notifications can include:
+- Help balloons and toasts:
+ - Help Balloons are like tooltips, but are usually larger in size, and are associated with system events such as a network cable being unplugged, or perhaps to alert you about Windows security issues.
+ - Toast notifications were introduced in Windows 8 and appear in the notification centre in the system tray, informing about several events (i.e. if an update has been downloaded, a new e-mail arrived in your inbox, etc.).
+- Apps: notifications from apps such as page load status in web browsers.
+ - In Windows 10 Fall creators update (version 1709) or later, app notifications can include UIA accessible event notifications from apps such as Microsoft Edge, microsoft Store, and audio volume changes.
+ -
 -
 
-==== Report UIA accessible event notifications ====[ObjectPresentationAccessibleEventNotifications]
-This combo box sets UIA accessible event notification announcements from apps such as Microsoft Store, Microsoft Edge, and audio volume changes.
+==== Report app notifications ====[ObjectPresentationAppNotifications]
+If app notifications is enabled in [report notifications #ObjectPresentationReportNotifications], this combo box sets which app notifications should be announced.
+
+A special type of app notifications is UIA accessible event notifications, introduced in Windows 10 Fall Creators Update.
 Accessible event notifications are used by apps to let assistive technologies such as NVDA announce important information.
 These announcements include update check results from Microsoft Store, page load status in Microsoft Edge, and audio volume changes while focused on File Explorer.
-This setting is only available if using Windows 10 Fall Creators Update (Version 1709) or later.
 
 The available options are:
-- Always: announce accessible event notifications from all apps, including background notifications.
-- When application in foreground: announce notifications from the app you are using.
-- Off: do not announce accessible event notifications.
+- All apps: announce notifications from all apps, including background notifications.
+- Foreground app: announce notifications from the app you are using.
 -
 
 ==== Report Object Shortcut Keys ====[ObjectPresentationShortcutKeys]
