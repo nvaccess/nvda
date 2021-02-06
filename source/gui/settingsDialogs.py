@@ -2022,9 +2022,13 @@ class ObjectPresentationPanel(SettingsPanel):
 	def onSave(self):
 		config.conf["presentation"]["reportTooltips"]=self.tooltipCheckBox.IsChecked()
 		helpBalloonNotifications = 0
-		config.conf["presentation"]["reportHelpBalloons"] = self.notificationsList.IsChecked(helpBalloonNotifications)
+		config.conf["presentation"]["reportHelpBalloons"] = self.notificationsList.IsChecked(
+			helpBalloonNotifications
+		)
 		appNotifications = 1
-		config.conf["presentation"]["reportAppNotifications"] = self.notificationsList.IsChecked(appNotifications)
+		config.conf["presentation"]["reportAppNotifications"] = self.notificationsList.IsChecked(
+			appNotifications
+		)
 		config.conf["presentation"]["appNotificationsFromAllApps"] = (
 			self.appNotificationLabels[self.appNotificationList.GetSelection()][0]
 		)
