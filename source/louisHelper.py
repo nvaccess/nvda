@@ -1,4 +1,3 @@
-# louisHelper.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -9,7 +8,8 @@
 # Python 3.8 changes the way DLL's are loaded due to security.
 # Thus manually add NVDA executable path to DLL lookup path for loading liblouis.dll.
 import os
-with os.add_dll_directory(os.path.dirname(__file__)):
+import globalVars
+with os.add_dll_directory(os.path.dirname(globalVars.appDir)):
 	import louis
 from logHandler import log
 import config
