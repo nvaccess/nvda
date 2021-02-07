@@ -166,7 +166,7 @@ class mirandaIMContactList(IAccessible):
 		gesture.send()
 		if not isScriptWaiting():
 			api.processPendingEvents()
-			speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
+			speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 			braille.handler.handleGainFocus(self)
 
 	__changeItemGestures = (

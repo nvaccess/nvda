@@ -417,10 +417,12 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		return ""
 
-	def _get_role(self):
+	#: Type definition for auto prop '_get_role'
+	role: int
+
+	def _get_role(self) -> int:
 		"""The role or type of control this object represents (example: button, list, dialog).
 		@return: a ROLE_* constant from L{controlTypes}
-		@rtype: int
 		"""  
 		return controlTypes.ROLE_UNKNOWN
 
@@ -975,12 +977,13 @@ Tries to force this object to take the focus.
 		"""
 		return None
 
-	def _get_isCurrent(self):
+	isCurrent: controlTypes.IsCurrent  #: type info for auto property _get_isCurrent
+
+	def _get_isCurrent(self) -> controlTypes.IsCurrent:
 		"""Gets the value that indicates whether this object is the current element in a set of related 
-		elements. This maps to aria-current. Normally returns None. If this object is current
-		it will return one of the following values: "true", "page", "step", "location", "date", "time"
+		elements. This maps to aria-current.
 		"""
-		return None
+		return controlTypes.IsCurrent.NO
 
 	def _get_shouldAcceptShowHideCaretEvent(self):
 		"""Some objects/applications send show/hide caret events when we don't expect it, such as when the cursor is blinking.
@@ -992,7 +995,7 @@ Tries to force this object to take the focus.
 	def reportFocus(self):
 		"""Announces this object in a way suitable such that it gained focus.
 		"""
-		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
+		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 
 	def _get_placeholder(self):
 		"""If it exists for this object get the value of the placeholder text.
@@ -1109,7 +1112,7 @@ Tries to force this object to take the focus.
 
 	def event_stateChange(self):
 		if self is api.getFocusObject():
-			speech.speakObjectProperties(self,states=True, reason=controlTypes.REASON_CHANGE)
+			speech.speakObjectProperties(self, states=True, reason=controlTypes.OutputReason.CHANGE)
 		braille.handler.handleUpdate(self)
 		vision.handler.handleUpdate(self, property="states")
 
@@ -1118,7 +1121,7 @@ Tries to force this object to take the focus.
 			speech.cancelSpeech()
 			return
 		if self.isPresentableFocusAncestor:
-			speech.speakObject(self,reason=controlTypes.REASON_FOCUSENTERED)
+			speech.speakObject(self, reason=controlTypes.OutputReason.FOCUSENTERED)
 
 	def event_gainFocus(self):
 		"""
@@ -1156,19 +1159,19 @@ This code is executed if a gain focus event is received by this object.
 
 	def event_valueChange(self):
 		if self is api.getFocusObject():
-			speech.speakObjectProperties(self, value=True, reason=controlTypes.REASON_CHANGE)
+			speech.speakObjectProperties(self, value=True, reason=controlTypes.OutputReason.CHANGE)
 		braille.handler.handleUpdate(self)
 		vision.handler.handleUpdate(self, property="value")
 
 	def event_nameChange(self):
 		if self is api.getFocusObject():
-			speech.speakObjectProperties(self, name=True, reason=controlTypes.REASON_CHANGE)
+			speech.speakObjectProperties(self, name=True, reason=controlTypes.OutputReason.CHANGE)
 		braille.handler.handleUpdate(self)
 		vision.handler.handleUpdate(self, property="name")
 
 	def event_descriptionChange(self):
 		if self is api.getFocusObject():
-			speech.speakObjectProperties(self, description=True, reason=controlTypes.REASON_CHANGE)
+			speech.speakObjectProperties(self, description=True, reason=controlTypes.OutputReason.CHANGE)
 		braille.handler.handleUpdate(self)
 		vision.handler.handleUpdate(self, property="description")
 

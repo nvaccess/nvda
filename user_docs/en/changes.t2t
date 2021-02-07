@@ -6,15 +6,25 @@ What's New in NVDA
 = 2021.1 =
 
 == New Features ==
+- Early support for UIA with Chromium based browsers (such as Edge). (#12025)
 
 
 == Changes ==
+- In browse mode, controls can now be activated with braille cursor routing on their descriptor (ie. "lnk" for a link). This is especially useful for activating eg. check-boxes with no labels. (#7447)
+- NVDA now prevents the user from performing Windows 10 OCR if screen curtain is enabled. (#11911)
+- Updated Unicode Common Locale Data Repository (CLDR) to 38.1. (#11943)
+- Added more mathematical symbols to the symbols dictionary. (#11467)
+- The user guide, changes file, and key commands listing now have a refreshed appearance. (#12027)
 
 
 == Bug Fixes ==
 - In terminal programs on Windows 10 version 1607 and later, when inserting or deleting characters in the middle of a line, the characters to the right of the caret are no longer read out. (#3200)
   - This experimental fix must be manually enabled in NVDA's advanced settings panel by changing the diff algorithm to Diff Match Patch.
 - Fixed access to edit fields in MCS Electronics IDE's. (#11966) 
+- In MS Outlook, inappropriate distance reporting when shift+tabbing from the message body to the subject field should not occur anymore. (#10254)
+- In the Python Console, inserting a tab for indentation at the beginning of a non-empty input line and performing tab-completion in the middle of an input line are now supported. (#11532)
+- Formatting information and other browseable messages no longer present unexpected blank lines when screen layout is turned off. (#12004)
+- It is now possible to read comments in MS Word with UIA enabled. (#9285)
 
 
 == Changes for Developers ==
@@ -24,6 +34,21 @@ What's New in NVDA
 - `LiveText` objects can now calculate diffs by character. (#11639)
   - To alter the diff behaviour for some object, override the `diffAlgo` property (see the docstring for details).
 - When defining a script with the script decorator, the 'allowInSleepMode' boolean argument can be specified to control  if a script is available in sleep mode or not. (#11979)
+- The following functions are removed from the config module:
+ - canStartOnSecureScreens - use config.isInstalledCopy instead.
+ - hasUiAccess and execElevated - use them from the systemUtils module.
+ - getConfigDirs - use globalVars.appArgs.configPath instead
+- Module level REASON_* constants are removed from controlTypes - please use controlTypes.OutputReason instead. (#11969)
+- REASON_QUICKNAV has been removed from browseMode - use controlTypes.OutputReason.QUICKNAV instead. (#11969)
+- 'NVDAObject' (and derivatives) property 'isCurrent' now strictly returns Enum class 'controlTypes.IsCurrent'. (#11782)
+  - 'isCurrent' is no longer Optional, and thus will not return None.
+  - When an object is not current 'controlTypes.IsCurrent.NO' is returned.
+- The 'controlTypes.isCurrentLabels' mapping has been removed. (#11782)
+  - Instead use the 'displayString' property on a 'controlTypes.IsCurrent' enum value. EG 'controlTypes.IsCurrent.YES.displayString'
+- 'NVDAObject' (and derivatives) property 'isCurrent' now strictly returns 'controlTypes.IsCurrent'. (#11782)
+  - 'isCurrent' is no longer Optional, and thus will not return None, when an object is not current 'controlTypes.IsCurrent.NO' is returned.
+- The 'controlTypes.isCurrentLabels' has been removed, instead use the 'displayString' property on a 'controlTypes.IsCurrent' enum value. (#11782)
+  - EG 'controlTypes.IsCurrent.YES.displayString'
 
 
 = 2020.4 =

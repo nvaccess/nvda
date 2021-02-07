@@ -70,7 +70,7 @@ class _ObjectsReader(garbageHandler.TrackedObject):
 			return
 		# Call this method again when we start speaking this object.
 		callbackCommand = speech.CallbackCommand(self.next, name="say-all:next")
-		speech.speakObject(obj, reason=controlTypes.REASON_SAYALL, _prefixSpeechCommand=callbackCommand)
+		speech.speakObject(obj, reason=controlTypes.OutputReason.SAYALL, _prefixSpeechCommand=callbackCommand)
 
 	def stop(self):
 		self.walker = None
@@ -175,7 +175,7 @@ class _TextReader(garbageHandler.TrackedObject):
 		speechGen = speech.getTextInfoSpeech(
 			self.reader,
 			unit=textInfos.UNIT_READINGCHUNK,
-			reason=controlTypes.REASON_SAYALL,
+			reason=controlTypes.OutputReason.SAYALL,
 			useCache=state
 		)
 		seq = list(speech._flattenNestedSequences(speechGen))

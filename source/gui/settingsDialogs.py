@@ -737,7 +737,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("GeneralSettingsStartOnLogOnScreen", self.startOnLogonScreenCheckBox)
 		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
-		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
+		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.startOnLogonScreenCheckBox.Disable()
 		settingsSizerHelper.addItem(self.startOnLogonScreenCheckBox)
 
@@ -754,7 +754,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("GeneralSettingsCopySettings", self.copySettingsButton)
 		self.copySettingsButton.Bind(wx.EVT_BUTTON,self.onCopySettings)
-		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
+		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.copySettingsButton.Disable()
 		settingsSizerHelper.addItem(self.copySettingsButton)
 		if updateCheck:
@@ -2563,6 +2563,27 @@ class AdvancedPanelControls(
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(config.conf["terminals"]["speakPasswords"])
 		self.winConsoleSpeakPasswordsCheckBox.defaultValue = self._getDefaultValue(["terminals", "speakPasswords"])
 
+		label = pgettext(
+			"advanced.uiaWithChromium",
+			# Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
+			# Note the '\n' is used to split this long label approximately in half.
+			"Use UIA with Microsoft Edge and other \n&Chromium based browsers when available:"
+		)
+		chromiumChoices = (
+			# Translators: Label for the default value of the Use UIA with Chromium combobox,
+			# in the Advanced settings panel.
+			pgettext("advanced.uiaWithChromium", "Default (Only when necessary)"),
+			# Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+			pgettext("advanced.uiaWithChromium", "Only when necessary"),
+			# Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+			pgettext("advanced.uiaWithChromium", "Yes"),
+			# Translators: Label for a value in the Use UIA with Chromium combobox, in the Advanced settings panel.
+			pgettext("advanced.uiaWithChromium", "No"),
+		)
+		self.UIAInChromiumCombo = UIAGroup.addLabeledControl(label, wx.Choice, choices=chromiumChoices)
+		self.UIAInChromiumCombo.SetSelection(config.conf["UIA"]["allowInChromium"])
+		self.UIAInChromiumCombo.defaultValue = self._getDefaultValue(["UIA", "allowInChromium"])
+
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
 		label = _("Terminal programs")
@@ -2735,6 +2756,7 @@ class AdvancedPanelControls(
 			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
 			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
+			and self.UIAInChromiumCombo.selection == self.UIAInChromiumCombo.defaultValue
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
 			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
@@ -2747,6 +2769,7 @@ class AdvancedPanelControls(
 		self.selectiveUIAEventRegistrationCheckBox.SetValue(self.selectiveUIAEventRegistrationCheckBox.defaultValue)
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
 		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue == 'UIA')
+		self.UIAInChromiumCombo.SetSelection(self.UIAInChromiumCombo.defaultValue)
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
@@ -2766,6 +2789,7 @@ class AdvancedPanelControls(
 			config.conf['UIA']['winConsoleImplementation'] = "auto"
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = self.cancelExpiredFocusSpeechCombo.GetSelection()
+		config.conf["UIA"]["allowInChromium"] = self.UIAInChromiumCombo.GetSelection()
 		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
 		diffAlgoChoice = self.diffAlgoCombo.GetSelection()
 		config.conf['terminals']['diffAlgo'] = (
