@@ -30,11 +30,7 @@ from ctypes.wintypes import (
 	UINT,
 	LPUINT
 )
-from ctypes import *
-from ctypes.wintypes import *
-import time
 import atexit
-import wx
 import garbageHandler
 import winKernel
 import wave
