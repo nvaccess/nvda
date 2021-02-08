@@ -2478,6 +2478,9 @@ class AdvancedPanelControls(
 	"""Holds the actual controls for the Advanced Settings panel, this allows the state of the controls to
 	be more easily managed.
 	"""
+	
+	helpId = "AdvancedSettings"
+	
 	def __init__(self, parent):
 		super().__init__(parent)
 		self._defaultsRestored = False
@@ -2581,6 +2584,7 @@ class AdvancedPanelControls(
 			pgettext("advanced.uiaWithChromium", "No"),
 		)
 		self.UIAInChromiumCombo = UIAGroup.addLabeledControl(label, wx.Choice, choices=chromiumChoices)
+		self.bindHelpEvent("ChromiumUIA", self.UIAInChromiumCombo)
 		self.UIAInChromiumCombo.SetSelection(config.conf["UIA"]["allowInChromium"])
 		self.UIAInChromiumCombo.defaultValue = self._getDefaultValue(["UIA", "allowInChromium"])
 
@@ -2628,6 +2632,7 @@ class AdvancedPanelControls(
 			"difflib"
 		)
 		self.diffAlgoCombo = terminalsGroup.addLabeledControl(diffAlgoComboText, wx.Choice, choices=diffAlgoChoices)
+		self.bindHelpEvent("DiffAlgo", self.diffAlgoCombo)
 		curChoice = self.diffAlgoVals.index(
 			config.conf['terminals']['diffAlgo']
 		)
