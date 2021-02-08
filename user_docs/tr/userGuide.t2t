@@ -31,7 +31,7 @@ NVDA, kör ve az görenlerin Windows işletim sistemi ve sistemde kurulu birçok
 - Dokunmatik hareketlerle metin ve kontrollerin bildirimi
 - Microsoft Active Accessibility, Java Access Bridge, IAccessible2 ve UI Automation gibi yaygın erişilebilirlik arayüzlerinin desteklenmesi
 - Windows Komut İstemi ve Console uygulamalarının desteklenmesi
-- Sistem odağını vurgulama özelliği
+- Sistem odağını görsel olarak vurgulama özelliği
 -
 
 ++ Yerel Dil Desteği ++[Internationalization]
@@ -2253,7 +2253,17 @@ Windows 10 "OneCore" ya da "mobile" sesler olarak bilinen yeni sesler içerir.
 Bir çok dil için sesler mevcuttur, dahası Sapi 5 kullanan önceki Microsoft seslerine kıyasla daha hızlı tepki vermektedirler.
 Windows 10'da, NVDA varsayılan olarak Windows OneCore seslerini kullanır ([[eSpeak NG #eSpeakNG] diğer sürümlerde kullanılır).
 
-Lütfen kullanılabilen sesler ve yükleme talimatları için bu Microsoft makalesine bakın: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
+Yeni Windows OneCore sesleri eklemek için, Windows sistem ayarlarında "Konuşma Ayarları"na gidin.
+"Ses ekle" seçeneğini kullanın ve istediğiniz dili arayın.
+Birçok dil birden çok aksan içerir.
+"Birleşik Krallık" ve "Avustralya" İngilizce aksanlardan ikisidir.
+"Fransa", "Kanada" ve "İsviçre", mevcut Fransızca aksanlardır.
+Farklı aksanlara  sahip dili (İngilizce veya Fransızca gibi) arayın, ardından aksanı listede bulun.
+İstediğiniz dilleri seçin ve eklemek için "ekle" düğmesini kullanın.
+Ekledikten sonra NVDA'yı yeniden başlatın.
+
+
+Lütfen kullanılabilen sesler ve yükleme talimatları için bu Microsoft makalesine bakın: https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
 + Desteklenen braille ekranlar +[SupportedBrailleDisplays]
 Bu bölümde NVDA tarafından desteklenen braille ekran bilgileri yer almaktadır.
