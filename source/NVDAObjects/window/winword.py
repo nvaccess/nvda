@@ -1069,6 +1069,14 @@ class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeI
 
 class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 
+	# This treeInterceptor starts in focus mode, thus escape should not switch back to browse mode
+	disableAutoPassThrough = True
+
+	def __init__(self, rootNVDAObject):
+		super(WordDocumentTreeInterceptor, self).__init__(rootNVDAObject)
+		self.passThrough = True
+		browseMode.reportPassThrough.last = True
+
 	TextInfo=BrowseModeWordDocumentTextInfo
 
 	def _activateLongDesc(self,controlField):
