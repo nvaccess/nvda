@@ -46,18 +46,24 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			attrs['language']=languageHandler.normalizeLanguage(language)
 		return attrs
 
-	def _normalizeControlField(self,attrs):
-		level=None
-
-		ariaCurrentValue = attrs.get('HTMLAttrib::aria-current', 'false')
+	def _getIsCurrentAttribute(self, attrs: dict) -> controlTypes.IsCurrent:
+		defaultAriaCurrentStringVal = "false"
+		ariaCurrentValue = attrs.get('HTMLAttrib::aria-current', defaultAriaCurrentStringVal)
+		# key 'HTMLAttrib::aria-current' may be in attrs with a value of None
+		ariaCurrentValue = defaultAriaCurrentStringVal if ariaCurrentValue is None else ariaCurrentValue
 		try:
 			ariaCurrent = controlTypes.IsCurrent(ariaCurrentValue)
 		except ValueError:
-			log.debugWarning(f"Unknown aria-current value: {ariaCurrentValue}")
+			log.debugWarningdebugWarning(f"Unknown aria-current value: {ariaCurrentValue}")
 			ariaCurrent = controlTypes.IsCurrent.NO
+		return ariaCurrent
 
-		if ariaCurrent != controlTypes.IsCurrent.NO:
-			attrs['current'] = ariaCurrent
+	def _normalizeControlField(self, attrs: dict):
+		level = None
+
+		isCurrent = self._getIsCurrentAttribute(attrs)
+		if isCurrent != controlTypes.IsCurrent.NO:
+			attrs['current'] = isCurrent
 
 		placeholder = self._getPlaceholderAttribute(attrs, 'HTMLAttrib::aria-placeholder')
 		if placeholder:
