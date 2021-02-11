@@ -58,7 +58,9 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			ariaCurrent = controlTypes.IsCurrent.NO
 		return ariaCurrent
 
-	def _normalizeControlField(self, attrs: dict):
+	# C901 'MSHTMLTextInfo._normalizeControlField' is too complex (42)
+	# Look for opportunities to simplify this function.
+	def _normalizeControlField(self, attrs: dict):  # noqa: C901
 		level = None
 
 		isCurrent = self._getIsCurrentAttribute(attrs)
