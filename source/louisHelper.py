@@ -9,7 +9,7 @@
 # Thus manually add NVDA executable path to DLL lookup path for loading liblouis.dll.
 import os
 import globalVars
-with os.add_dll_directory(os.path.dirname(globalVars.appDir)):
+with os.add_dll_directory(globalVars.appDir):
 	import louis
 from logHandler import log
 import config
