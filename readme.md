@@ -74,20 +74,17 @@ The following dependencies need to be installed on your system:
 
 
 ### Git Submodules
-Most of the dependencies are contained in Git submodules.
+Some of the dependencies are contained in Git submodules.
 If you didn't pass the `--recursive` option to git clone, you will need to run `git submodule update --init`.
 Whenever a required submodule commit changes (e.g. after git pull), you will need to run `git submodule update`.
 If you aren't sure, run `git submodule update` after every git pull, merge or checkout.
 
 For reference, the following run time dependencies are included in Git submodules:
 
-* [comtypes](https://github.com/enthought/comtypes), version 1.1.7
-* [wxPython](https://www.wxpython.org/), version 4.0.3
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit 82d5b7b04
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit cbc1f29631780
 * [ConfigObj](https://github.com/DiffSK/configobj), commit f9a265c
-* [Six](https://pypi.python.org/pypi/six), version 1.12.0, required by wxPython and ConfigObj
 * [liblouis](http://www.liblouis.org/), version 3.16.1
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 38.1
 * NVDA images and sounds
@@ -96,16 +93,12 @@ For reference, the following run time dependencies are included in Git submodule
 * [MinHook](https://github.com/RaMMicHaeL/minhook), tagged version 1.2.2
 * brlapi Python bindings, version 0.8 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html), version 6.1
 * lilli.dll, version 2.1.0.0
-* [pySerial](https://pypi.python.org/pypi/pyserial), version 3.4
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
 * Java Access Bridge 32 bit, from Zulu Community OpenJDK build 13.0.1+10Zulu (13.28.11)
 
 Additionally, the following build time dependencies are included in Git submodules:
 
-* [Py2Exe](https://github.com/albertosottile/py2exe/), version 0.9.3.2 commit b372a8e
-* [Python Windows Extensions](https://sourceforge.net/projects/pywin32/ ), build 224, required by py2exe
 * [txt2tags](https://txt2tags.org/), version 2.5
-* [SCons](https://www.scons.org/), version 4.0.1
 * [Nulsoft Install System](https://nsis.sourceforge.io/Main_Page/), version 2.51
 * [NSIS UAC plug-in](https://nsis.sourceforge.io/UAC_plug-in), version 0.2.4, ansi
 * xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
@@ -119,13 +112,29 @@ Although this [must be run manually](#linting-your-changes), developers may wish
 
 
 The following dependencies aren't needed by most people, and are not included in Git submodules:
-
-* To generate developer documentation: [Sphinx](http://sphinx-doc.org/), version 3.4.1
 * To generate developer documentation for nvdaHelper: [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
 * When you are using Visual Studio Code as your integrated development environment of preference, you can make use of our [prepopulated workspace configuration](https://github.com/nvaccess/vscode-nvda/) for [Visual Studio Code](https://code.visualstudio.com/).
 	While this VSCode project is not included as a submodule in the NVDA repository, you can easily check out the workspace configuration in your repository by executing the following from the root of the repository.
 
 	```git clone https://github.com/nvaccess/vscode-nvda.git .vscode```
+
+### Python dependencies
+NVDA and its build system depend on an extensive list of Python packages. They are all listed with their specific versions in a requirements.txt file in the root of this repository. This file can be used by the Pip Python package manager to install all required packages.
+These dependencies can be installed with the command:
+```
+py -m pip install -r requirements.txt
+```
+However, it is strongly recommended that you create a Python virtual environment for this repository, and activate it before installing required python packages and or building or running NVDA. This avoids any Python package version conflicts with packages you may have installed system-wide.
+To create a Python virtual environment in the .venv directory:
+```
+py -m venv .venv
+```
+To activate the virtual environment:
+```
+.venv\scripts\activate.bat
+```
+A reminder that all instructions in this readme only support building / running NVDA in a Windows cmd shell.
+
 
 ## Preparing the Source Tree
 Before you can run the NVDA source code, you must prepare the source tree.
