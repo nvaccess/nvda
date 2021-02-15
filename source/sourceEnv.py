@@ -13,11 +13,7 @@ import os
 TOP_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 # Directories containing Python modules included in git submodules.
 PYTHON_DIRS = (
-	os.path.join(TOP_DIR, "include", "pyserial"),
-	os.path.join(TOP_DIR, "include", "comtypes"),
 	os.path.join(TOP_DIR, "include", "configobj", "src"),
-	os.path.join(TOP_DIR, "include", "wxPython"),
-	os.path.join(TOP_DIR, "include", "py2exe"),
 	os.path.join(TOP_DIR, "miscDeps", "python"),
 )
 
