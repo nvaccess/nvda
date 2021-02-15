@@ -59,6 +59,9 @@ init:
 clone_depth: 1
 
 install:
+ # Install required Python dependencies
+ - py -m pip install --upgrade pip
+ - py -m pip install -r requirements.txt 
  - cd appveyor
  # Decrypt files.
  - ps: |
@@ -118,9 +121,6 @@ build_script:
  - cd ..
 
 before_test:
- # install required packages
- - py -m pip install --upgrade pip
- - py -m pip install -r tests/system/requirements.txt -r tests/lint/lintInstall/requirements.txt
  - mkdir testOutput
  - mkdir testOutput\unit
  - mkdir testOutput\system
