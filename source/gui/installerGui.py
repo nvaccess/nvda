@@ -5,22 +5,18 @@
 # Bill Dengler, Joseph Lee, Takuya Nishimoto
 
 import os
-import ctypes
 
-import buildVersion
 import shellapi
 import winUser
 import wx
 import config
 import globalVars
-import versionInfo
 import installer
 from logHandler import log
 import gui
 from gui import guiHelper
 import gui.contextHelp
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
-import tones
 import systemUtils
 
 
