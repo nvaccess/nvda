@@ -59,9 +59,16 @@ init:
 clone_depth: 1
 
 install:
- # Install required Python dependencies
+ # Ensure we have the latest version of pip
  - py -m pip install --upgrade pip
+ # Create a Python virtual environment
+ - py -3.8-32 -m venv .venv
+ # Activate the virtual environment
+ - .venv\scripts\activate.bat
+ # Install all required Python packages
  - py -m pip install -r requirements.txt 
+ # Save an exact list of the actual Python packages and their versions that got installed, to aide in reproducing a build
+ - py -m pip freeze >output\pip_packages.txt
  - cd appveyor
  # Decrypt files.
  - ps: |
@@ -98,12 +105,12 @@ build_script:
      Set-AppveyorBuildVariable "sconsOutTargets" $sconsOutTargets
      Set-AppveyorBuildVariable "sconsArgs" $sconsArgs
  - 'echo scons args: %sconsArgs%'
- - py scons.py source %sconsArgs%
+ - scons source %sconsArgs%
  # We don't need launcher to run checkPot, so run the checkPot before launcher.
- - py scons.py checkPot %sconsArgs%
+ - scons checkPot %sconsArgs%
  # The pot gets built by tests, but we don't actually need it as a build artifact.
  - 'echo scons output targets: %sconsOutTargets%'
- - py scons.py %sconsOutTargets% %sconsArgs%
+ - scons %sconsOutTargets% %sconsArgs%
  # Build symbol store.
  - ps: |
      foreach ($syms in
