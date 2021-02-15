@@ -208,10 +208,7 @@ class InstallerDialog(
 		self.copyPortableConfigCheckbox = optionsHelper.addItem(createPortableBox)
 		self.bindHelpEvent("CopyPortableConfigurationToCurrentUserAccount", self.copyPortableConfigCheckbox)
 		self.copyPortableConfigCheckbox.Value = bool(globalVars.appArgs.copyPortableConfig)
-		if globalVars.appArgs.copyPortableConfig is None:
-			# copyPortableConfig is set to C{None} in the main loop,
-			# when copying the portable configuration should be disabled at all costs.
-			self.copyPortableConfigCheckbox.Disable()
+		self.copyPortableConfigCheckbox.Enable(self._shouldEnableCopyConfig())
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
 		if shouldAskAboutAddons:
@@ -260,6 +257,25 @@ class InstallerDialog(
 			# the defaults from the installer are fine. We are testing against the running version.
 		)
 		incompatibleAddons.ShowModal()
+
+	@staticmethod
+	def _shouldEnableCopyConfig() -> bool:
+		# In some cases option to copy configuration from the portable copy
+		# should be disabled at all costs.
+		if globalVars.appArgs.launcher:
+			# Normally when running from the launcher
+			# and configPath is not overridden by the user this checkbox should be hidden.
+			# However, if a user wants to run the launcher with a custom configPath,
+			# it is likely that he wants to copy that configuration when installing.
+			return globalVars.appArgs.configPath != config.getUserDefaultConfigPath(useInstalledPathIfExists=True)
+		else:
+			# For portable copies we want to avoid copying the configuration to itself,
+			# so show this option only if the configPath
+			# does not point to the config of the installed copy in appdata.
+			confPath = config.getInstalledUserConfigPath()
+			if confPath and confPath == globalVars.appArgs.configPath:
+				return False
+			return True
 
 
 class InstallingOverNewerVersionDialog(
