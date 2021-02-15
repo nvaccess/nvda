@@ -54,7 +54,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		try:
 			ariaCurrent = controlTypes.IsCurrent(ariaCurrentValue)
 		except ValueError:
-			log.debugWarningdebugWarning(f"Unknown aria-current value: {ariaCurrentValue}")
+			log.debugWarning(f"Unknown aria-current value: {ariaCurrentValue}")
 			ariaCurrent = controlTypes.IsCurrent.NO
 		return ariaCurrent
 
