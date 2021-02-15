@@ -26,12 +26,7 @@ env.AlwaysBuild(systemTests)
 env.Alias("systemTests", systemTests)
 
 
-lintInstall = env.SConscript("lint/lintInstall/sconscript", exports=["env"])
-env.Depends(lintInstall, env.Dir("tests/lint/lintInstall/requirements.txt"))
-env.Alias("lintInstall", lintInstall)
-
 lint = env.SConscript("lint/sconscript", exports=["env"])
-env.Depends(lint, lintInstall)
 env.AlwaysBuild(lint)
 env.Alias("lint", lint)
 
