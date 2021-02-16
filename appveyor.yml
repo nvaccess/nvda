@@ -62,7 +62,7 @@ install:
  # Ensure we have the latest version of pip
  - py -m pip install --upgrade pip
  # Create a Python virtual environment
- - py -3.8-32 -m venv .venv
+ - py -m venv .venv
  # Activate the virtual environment
  - .venv\scripts\activate.bat
  # Install all required Python packages
