@@ -228,6 +228,8 @@ setup(
 			# winxptheme is optionally used by wx.lib.agw.aui.
 			# We don't need this.
 			"winxptheme",
+			# numpy is an optional dependency of comtypes but we don't require it.
+			"numpy",
 		],
 		"packages": [
 			"NVDAObjects",
