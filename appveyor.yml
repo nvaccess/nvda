@@ -160,7 +160,7 @@ test_script:
      $errorCode=0
      $outDir = (Resolve-Path .\testOutput\unit\)
      $unitTestsXml = "$outDir\unitTests.xml"
-     py -m nose -sv --with-xunit --xunit-file="$unitTestsXml" ./tests/unit
+     py -m nose -sv --with-xunit --xunit-file="$unitTestsXml" --traverse-namespace -w ./tests/unit
      if($LastExitCode -ne 0) {
       $errorCode=$LastExitCode
       Add-AppveyorMessage "Unit test failure"
