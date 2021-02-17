@@ -244,6 +244,8 @@ setup(
 			"nvdaBuiltin",
 			# #3368: bisect was implicitly included with Python 2.7.3, but isn't with 2.7.5.
 			"bisect",
+			# robotremoteserver (for system tests) depends on xmlrpc.server
+			"xmlrpc.server",
 		],
 	}},
 	data_files=[
