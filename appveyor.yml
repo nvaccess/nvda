@@ -254,7 +254,7 @@ deploy_script:
       }
       ConvertTo-Json -InputObject $data -Compress >deploy.json
       Push-AppveyorArtifact deploy.json
-      ssh nvaccess@deploy.nvaccess.org nvdaAppveyorHook <deploy.json
+      cat deploy.json | ssh nvaccess@deploy.nvaccess.org nvdaAppveyorHook
 
       # Upload symbols to Mozilla.
       py -m pip install --no-warn-script-location requests
