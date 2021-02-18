@@ -252,7 +252,7 @@ deploy_script:
        exe=$exe; hash=$hash;
        artifacts=$artifacts
       }
-      ConvertTo-Json -InputObject $data -Compress >deploy.json
+      ConvertTo-Json -InputObject $data -Compress | Out-File -FilePath deploy.json
       Push-AppveyorArtifact deploy.json
       cat deploy.json | ssh nvaccess@deploy.nvaccess.org nvdaAppveyorHook
 
