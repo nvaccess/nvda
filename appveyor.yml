@@ -252,7 +252,7 @@ deploy_script:
        exe=$exe; hash=$hash;
        artifacts=$artifacts
       }
-      ConvertTo-Json -InputObject $data -Compress | ssh nvaccess@exbi.nvaccess.org nvdaAppveyorHook
+      ConvertTo-Json -InputObject $data -Compress | ssh nvaccess@deploy.nvaccess.org nvdaAppveyorHook
 
       # Upload symbols to Mozilla.
       py -m pip install --no-warn-script-location requests
