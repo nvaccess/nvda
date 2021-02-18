@@ -56,7 +56,7 @@ init:
       Set-AppveyorBuildVariable "versionType" $versionType
      }
 
-clone_depth: 1
+clone_depth: 0
 
 install:
  - cd appveyor
@@ -74,4 +74,4 @@ install:
 
 build_script:
  - ps: |
-     echo "hello" | ssh -vvv nvaccess@deploy.nvaccess.org nvdaAppveyorHook
+     echo "hello" | ssh -vvvvv nvaccess@deploy.nvaccess.org nvdaAppveyorHook
