@@ -316,7 +316,7 @@ De meest gangbare manier om met NVDA te navigeren, is het verplaatsen van de foc
 - alt+tab om tussen actieve toepassingen te wisselen.
 - 
 Terwijl u dit doet, zal NVDA informatie over het object geven dat de focus heeft. Deze betreft o.a., de naam, het type (knop, selectievakje, invoerveld, etc. een beschrijving (meestal verschijnt een informatie ballon als de gebruiker met de muis over het object gaat), de waarde (bv. De inhoud van een invoerveld), positie (bv. «1 van 5» in een lijst of «1 van 1 niveau 0 in een boomstructuur), sneltoets (bv. Ongedaan maken Ctrl + z), status van het object (bv. Geactiveerd, geselecteerd, niet beschikbaar, etc.).
-Wanneer  [Focusuitlichting  #VisionFocusHighlight] geactiveerd is, wordt de plaats waar de huidige systeemfocus zich bevindt ook zichtbaar weergegeven.
+Wanneer  [Visuele Uitlichting  #VisionFocusHighlight] geactiveerd is, wordt de plaats waar de huidige systeemfocus zich bevindt ook zichtbaar weergegeven.
 - 
 Enkele toetscommando’s die van pas komen bij het verplaatsen van de systeemfocus:
 %kc:beginInclude
@@ -372,7 +372,7 @@ Iets dergelijks geldt voor bv. een werkbalk. U gaat de werkbalk in, (navigeert n
 
 Het object dat op een gegeven moment bekeken wordt in objectnavigatie wordt het navigator object genoemd.
 Wanneer u naar een object navigeert, kuntu de inhoud ervan bekijken met de [commando's voorhet Nalezen van Tekst #ReviewingText] terwijl u zich in de [objectoverzichtmodus #ObjectReview] bevindt.
-Wanneer  [Focusuitlichting  #VisionFocusHighlight] geactiveerd is, wordt de plaats waar het huidige navigator Object zich bevindt ook zichtbaar weergegeven.
+Wanneer  [Visuele Uitlichting  #VisionFocusHighlight] geactiveerd is, wordt de plaats waar het huidige navigator Object zich bevindt ook zichtbaar weergegeven.
 Standaard wordt in NVDA de object navigator tegelijk met de systeemfocus verplaatst, maar deze koppeling kan aan- en uitgezet worden.
 
 Merk op dat u Braille objectnavigatie kunt laten volgen met behulp van [Braille Koppelen #BrailleTether].
@@ -515,7 +515,7 @@ Bladermodus is ook optioneel beschikbaar voor Microsoft Word-documenten.
 
 In bladermodus wordt de inhoud van het document weergegeven als platte tekst waar u met de pijltoetsen doorheen kunt lopen alsof het een tekstdocument is.
 Alle NVDA commando's voor de [systeemcursor #SystemCaret] werken in bladermodus. Denk hierbij aan opmaakinformatie, alles lezen, tabelnavigatie etc.
-Wanneer  [Focusuitlichting  #VisionFocusHighlight] geactiveerd is, wordt de plaats waar de huidige virtuele bladermodus-aanwijzer zich bevindt ook zichtbaar weergegeven.
+Wanneer  [Visuele Uitlichting  #VisionFocusHighlight] geactiveerd is, wordt de plaats waar de huidige virtuele bladermodus-aanwijzer zich bevindt ook zichtbaar weergegeven.
 Informatie over de tekst, of het bijvoorbeeld een link of kop betreft, wordt gemeld als u door de tekst navigeert.
 
 Soms is het nodig om direct te werken met de onderdelen van een document in bladermodus.
@@ -785,8 +785,8 @@ Er kunnen meer elementen met optische meerwaarde aan[NVDA worden toegevoegd via 
 
 NVDA's instellingen voor Zicht kunnen aangepast worden in de  categorie [Zicht #VisionSettings] in het dialoogvenster [Instellingen NVDA #NVDASettings].
 
-++ Focusuitlichting ++[VisionFocusHighlight]
-Focusuitlichting maakt het gemakkelijker de [systeemfocus #SystemFocus], het [navigatorobject #ObjectNavigation] en [Bladermodus #BrowseMode] posities (optisch) te identificeren.
+++ Visuele Uitlichting ++[VisionFocusHighlight]
+Visuele Uitlichting maakt het gemakkelijker de [systeemfocus #SystemFocus], het [navigatorobject #ObjectNavigation] en [Bladermodus #BrowseMode] posities (optisch) te identificeren.
 Deze posities worden gemarkeerd met een gekleurde rechthoek er om.
 - Egaal blauw markeert de plaats waar navigatorobject en systeemfocus samenkomen, (bijv. omdat het navigatorobject de systeemfocus #ReviewCursorFollowFocus] volgt).
 - Gestreept blauw markeert alleen het systeemfocus-object.
@@ -794,7 +794,7 @@ Deze posities worden gemarkeerd met een gekleurde rechthoek er om.
 - Egaal geel markeert de virtuele aanwijzer die in bladermodus (waar een fysieke aanwijzer, zoals in een webbrowser, ontbreekt), wordt gebruikt.
 -
 
-Wanneer Focusuitlichting ingeschakeld is in de categorie[zicht #VisionSettings] in het dialoogvenster [NVDA-instellingen #NVDASettings] , kunt u daar aanpassen of u al dan niet de focus, het navigatorobject of de bladermodusaanwijzer #VisionSettingsFocusHighlight] markeert.
+Wanneer Visuele Uitlichting ingeschakeld is in de categorie[zicht #VisionSettings] in het dialoogvenster [NVDA-instellingen #NVDASettings] , kunt u daar aanpassen of u al dan niet de focus, het navigatorobject of de bladermodusaanwijzer #VisionSettingsFocusHighlight] markeert.
 
 ++ Scherm dimmen (Schermgordijn) ++[VisionScreenCurtain]
 Als blinde of slechtziende gebruiker is het vaak niet mogelijk of noodzakelijk te zien wat er op het scherm wordt weergegeven.
@@ -1409,10 +1409,10 @@ In de categorie Zicht in het dialoogvenster Instellingen van NVDA kunt u de [ele
 Merk op dat de beschikbare opties in deze categorie via [NVDA add-ons #AddonsManager] uitgebreid kunnen worden.
 Standaard treft u in deze categorie instellingen  de volgende opties aan:
 
-==== Focusuitlichting ====[VisionSettingsFocusHighlight]
-Via de selectievakjes van de groepering Focusuitlichting kunt u  de [Focusuitlichting #VisionFocusHighlight] in NVDA beheren.
+==== Visuele Uitlichting ====[VisionSettingsFocusHighlight]
+Via de selectievakjes van de groepering Visuele Uitlichting kunt u  de [Visuele Uitlichting #VisionFocusHighlight] in NVDA beheren.
 
-- Uitlichting activeren: Hiermee schakelt u Focusuitlichting in of uit.
+- Uitlichting activeren: Hiermee schakelt u Visuele Uitlichting in of uit.
 - systeemfocus uitlichten: Hiermee kunt u bepalen of de [systeemfocus #SystemFocus] al dan niet wordt uitgelicht.
 - Navigatorobject uitlichten: Hiermee kunt u bepalen of het [navigatorobject #ObjectNavigation] al dan niet wordt uitgelicht.
 - Bladermoduscursor uitlichten: Hiermee kunt u bepalen of de [virtuele bbladermoduscursor #BrowseMode] al dan niet wordt uitgelicht.
@@ -2269,7 +2269,17 @@ In Windows 10 zijn nieuwe stemmen beschikbaar die bekend staan als "OneCore" of 
 Deze stemmen zijn er voor vele talen en ze reageren sneller dan de Microsoft-stemmen die beschikbaar zijn bij gebruik van Microsoft Speech API versie 5.
 In Windows 10 gebruikt NVDA standaard de Windows OneCore stemmen ([eSpeak NG #eSpeakNG] wordt in andere versies gebruikt).
 
-Een lijst met beschikbare talen en de installatieinstructie vindt u op de navolgende webpagina van Microsoft: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
+Om nieuwe Windows OneCore-stemmen toe te voegen gaat u naar Spraakinstellingen in de systeeminstellingen van Windows. 
+Kies de optie "Stemmen toevoegen" en zoek naar de gewenste taal.
+Van veel talen zijn meer varianten beschikbaar.
+"Verenigd Koninkrijk" en "Australië" zijn 2 voorbeelden van de varianten van het Engels.
+"Frankrijk", "Canada" en "Zwitserland" zijn beschikbaar als varianten  van het Frans.
+Zoek eerst de algemene benaming van de gewenste taal (zoals Engels of Frans), om vervolgens de variant van uw keus in de lijst op te zoeken.
+Selecteer  een taal of talen naar keuze en gebruik de knop "Toevoegen" om deze toe tevoegen.
+Eenmaal toegvoegd moet u NVDA opnieuw starten.
+
+
+Een lijst met beschikbare talen en de installatieinstructie vindt u op de navolgende webpagina van Microsoft: https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
 + Ondersteunde Brailleleesregels +[SupportedBrailleDisplays]
 In deze rubriek treft u informatie aan over de brailleleesregels die door NVDA worden ondersteund.
@@ -2539,7 +2549,7 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B Serie / BrailleNote Touch ++[HumanWareBrailliant]
-De brailleleesregels uit de serie BI en B van [HumanWare https://www.humanware.com/], waaronder de BI 14, BI 32, BI 40 en B 80,, worden ondersteund, voor zover ze via USB of bluetooth verbonden zijn.
+De brailleleesregels uit de serie BI en B van [HumanWare https://www.humanware.com/], waaronder de BI 14, BI 32, BI 20X, BI 40, BI 40X en B 80, worden ondersteund, voor zover ze via USB of bluetooth verbonden zijn.
 Als u de leesregels via usb, waarbij het protocol op HumanWare is ingesteld, wilt aansluiten, moet u eerst de usb-drivers van de fabrikant installeren.
 USB drivers zijn niet nodig als u van het OpenBraille protocol gebruik maakt.
 

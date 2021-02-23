@@ -307,7 +307,7 @@ Jeśli np. wpisujesz tekst do pola edycji, to pole edycji posiada w tej chwili f
 
 Najczęściej używaną metodą nawigacji wśród okien i formularzy w systemie Windows jest nawigacja przy użyciu fokusa. Gdy naciskasz Tab, by przejść od jednej kontrolki do następnej, Shift+Tab by przejść do poprzedniej kontrolki, Alt by dostać się do menu programu czy też Alt+Tab by przełączać się między działającymi aplikacjami, zmienia się połorzenie fokusa.
 Za każdym razem, gdy wykonujesz te czynności, NVDA będzie informować cię o obiekcie, który aktualnie posiada fokus, podając jego nazwę, typ, zawartość, stan, opis, skrót klawiaturowy i informacje o położeniu.
-Podczas gdy  [Podświetlanie Fokusa #VisionFocusHighlight] jest włączone, pozycja kursora systemowego jest również pokazywana wizualnie.
+Podczas gdy  [podświetlacz fokusu #VisionFocusHighlight] jest włączone, pozycja kursora systemowego jest również pokazywana wizualnie.
 
 Przydatne skróty klawiszowe do nawigacji za pomocą fokusa:
 %kc:beginInclude
@@ -363,7 +363,7 @@ Podobnie: pasek narzędzi zawiera kontrolki, więc musisz wejść do tego paska,
 
 Obiekt aktualnie przeglądany, jest nazywany obiektem nawigatora.
 Gdy dotrzesz do obiektu, możesz przejrzeć jego treść, używając [poleceń przeglądania tekstu, #ReviewingText] gdy znajdujesz się w [trybie przeglądania obiektu #ObjectReview].
-Podczas gdy [Podświetlanie Fokusa #VisionFocusHighlight] jest włączone, aktualna pozycja obiektu nawigatora jest również pokazywana wizualnie.
+Podczas gdy [podświetlacz fokusu #VisionFocusHighlight] jest włączone, aktualna pozycja obiektu nawigatora jest również pokazywana wizualnie.
 Domyślnie obiekt nawigatora podąża za fokusem, ale to zachowanie można włączać i wyłączać.
 
 Uwaga: brajl śledzący objekt nawigatora może być skonfigurowany za pomocą opcji  [Przywiązanie brajla #BrailleTether].
@@ -506,7 +506,7 @@ Tryb czytania jest również opcjonalnie dostępny dla dokumentów w programie M
 
 W trybie czytania treść dokumentu jest udostępniana w płaskiej reprezentacji, po której można się przemieszczać z użyciem klawiszy kursora tak jak w zwykłych dokumentach tekstowych.
 Wszystkie polecenia NVDA dotyczące [fokusa #SystemCaret] będą działały w tym trybie; np. czytaj wszystko, odczytaj formatowanie, komendy nawigacji wewnątrz tabel, etc.
-Podczas gdy [Podświetlanie Fokusa #VisionFocusHighlight] jest włączone, pozycja kursora trybu przeglądania jest również pokazywana wizualnie.
+Podczas gdy [podświetlacz fokusu #VisionFocusHighlight] jest włączone, pozycja kursora trybu przeglądania jest również pokazywana wizualnie.
 Informacja o tym, że tekst jest linkiem, nagłówkiem itd. jest automatycznie anonsowana, gdy się przemieszczasz po dokumencie.
 
 Czasem zachodzi potrzeba interakcji z formularzami znajdującymi się w tych dokumentach. 
@@ -776,8 +776,8 @@ Dodatkowi dostawcy natomiast mogą być instalowani w sposób taki sam, jak pozo
 
 Ustawienia widoczności mogą być zmienione w [kategorii "widoczność" #VisionSettings] znajdującej się w [ustawieniach głównych programu #NVDASettings] dialog.
 
-++ Podświetlanie fokusa ++[VisionFocusHighlight]
-Podświetlanie fokusa może pomódz w identyfikacji pozycji [kursora systemowego #SystemFocus], [aktualnej pozycji nawigatora #ObjectNavigation] i [pozycji trybu przeglądania #BrowseMode].
+++ Podświetlacz fokusu ++[VisionFocusHighlight]
+Podświetlacz fokusu może pomódz w identyfikacji pozycji [kursora systemowego #SystemFocus], [aktualnej pozycji nawigatora #ObjectNavigation] i [pozycji trybu przeglądania #BrowseMode].
 
 - Kolorem niebieskim zaznaczana jest pozycja kursora systemowego połączonego z obiektem nawigatora, na przykład jeżeli kursor systemowy [podąża za nawigatorem #ReviewCursorFollowFocus]
 - Niebieskimi kreskami oznaczana jest pozycja kursora systemowego.
@@ -785,7 +785,7 @@ Podświetlanie fokusa może pomódz w identyfikacji pozycji [kursora systemowego
 - Kolor żółty zaś sygnalizuje pozycję wirtualnego kursora przeglądania.
 -
 
-Kiedy podświetlanie fokusa jest włączone w [ustawieniach widoczności #VisionSettings] w [oknie głównym programu #NVDASettings] dialog, możesz [zmienić co ma być podświetlane. #VisionSettingsFocusHighlight]
+Kiedy podświetlacz fokusu jest włączone w [ustawieniach widoczności #VisionSettings] w [oknie głównym programu #NVDASettings] dialog, możesz [zmienić co ma być podświetlane. #VisionSettingsFocusHighlight]
 
 ++ Kurtyna ++[VisionScreenCurtain]
 Jako użytkownik niewidomy, nie zawsze wymagana jest widoczność ekranu.
@@ -1147,6 +1147,9 @@ Jeżeli używasz zewnętrznego syntezatora mowy, możliwa może być zmiana tej 
 Ta opcja pozwala na zmianę prędkości głosu.
 Jest to suwak służący do zmiany prędkości czytania w skali od 0 do 100, (0 oznacza tempo najwolniejsze, 100 najszybsze).
 
+==== Podkręć szybkość ====[SpeechSettingsRateBoost]
+Jeśli ta opcja zostanie włączona, a syntezator mowy ją wspiera, prędkość będzie znacznie zwiększona.
+
 ==== Wysokość ====[SpeechSettingsPitch]
 Ta opcja pozwala na zmianę wysokości aktualnego głosu.
 Jest to suwak, który zmienia wysokość głosu w skali od 0 do 100, (0 oznacza głos najniższy, 100 najwyższy).
@@ -1298,13 +1301,13 @@ Ustawienie nie ma wpływu na wskaźnik zaznaczenia, są to zawsze punkty 7 i 8 b
 Ta opcja pozwala wybrać kształt (wzorzec punktowy) kursora brajlowskiego, gdy brajl jest związany z kursorem przeglądu.
 Ustawienie nie ma wpływu na wskaźnik zaznaczenia, są to zawsze punkty 7 i 8 bez migotania.
 
+==== Pokazuj wiadomości ====[BrailleSettingsShowMessages]
+Jest to lista rozwijana która umożliwia  włączenie i wyłączenie pokazywania wiadomości na monitorze brajlowskim a także ustawianie czasu, po którym te wiadomości powinne zniknąć.
+
 ==== Czas wygasania komunikatów ====[BrailleSettingsMessageTimeout]
 To ustawienie jest polem liczbowym określającym w sekundach, jak długo na monitorze brajlowskim są wyświetlane komunikaty programu NVDA.
-Wprowadzenie wartości 0, wyłącza całkowicie wyświetlanie tych komunikatów.
 Komunikat NVDA znika natychmiast po naciśnięciu klawisza CURSOR ROUTING na monitorze brajlowskim. Ponowne naciśnięcie klawisza przywraca komunikat.
-
-==== Pokazuj wiadomości w nieskończoność ====[BrailleSettingsNoMessageTimeout]
-Ta opcja powoduje, że wiadomości NVDA są w nieskończoność wyświetlane na monitorze brajlowskim.
+Ta opcja jest widoczna gdy wartość opcji "pokazuj wiadomości" jest ustawiona na "użyj wygasania".
 
 %kc:setting
 ==== Powiązanie brajla ====[BrailleTether]
@@ -1397,8 +1400,8 @@ ustawienia widoczności programu NVDA pozwalają na włączanie, wyłączanie i 
 Pamiętaj że nowe pomoce wizualne mogą być dodawane w [menedżerze dodatków NVDA #AddonsManager].
 Domyślnie ta kategoria zawiera następujące opcje:
 
-==== Podświetlanie fokusa ====[VisionSettingsFocusHighlight]
-Pola wyboru w tej kategorii kontrolują zachowanie funkcji [podświetlania fokusa #VisionFocusHighlight].
+==== Podświetlacz fokusu ====[VisionSettingsFocusHighlight]
+Pola wyboru w tej kategorii kontrolują zachowanie funkcji [podświetlacza fokusu #VisionFocusHighlight].
 
 - Włącz podświetlenie: włącza lub wyłącza funkcję.
 - Podświetlaj kursor systemowy: kontroluje czy [fokus systemowy #SystemFocus] będzie podświetlany.
@@ -1921,7 +1924,10 @@ Następnie zmodyfikuj pozostałe pola, tak jak przy innych symbolach.
 
 Możesz usunąć symbol, naciskając przycisk "Usuń".
 
-Aby zapisać zmiany kliknij przycisk ok, aby je odrzucić - kliknij Anuluj.
+Aby zapisać zmiany naciśnij przycisk ok, aby je odrzucić - naciśnij zrezygnuj.
+
+W przypadku złożonych symboli, pole zamiany powinno zawierać referencję grupową tekstu docelowego. Na przykłąd, dla wzorca, który stosuje się do całej daty, w polu powinno być napisane \1, \2, i \3, aby zmiana zadziałała dla odpowiednich części daty.
+Normalne ukośniki wsteczne powinni być dublowane, na przykład "a\\b" powinno być wpisane właśnie w takim porządku, aby dostać zamianę "a\b".
 
 +++ Zdarzenia wejścia +++[InputGestures]
 W tym oknie dialogowym możesz skonfigurować komendy NVDA uruchamiane przez zdarzenia wejścia (klawisze naciskane na klawiaturze, przyciski na monitorze brajlowskim, etc.).
@@ -2104,6 +2110,14 @@ Okno podglądu brajla zawiera pole wyboru umożliwiające włączanie tej funkcj
 Jeżeli zostanie ono zaznaczone, to podgląd brajla będzie ładował się przy każdym starcie programu.
 Okno podglądu brajla dokona próby otwarcia się z takimi samymi wymiarami i w takiej samej pozycji, w jakiej zostało ono zamknięte.
 
+Okno przegląd brajla zawiera pole wyboru  "przesuwanie po komórkach brajlowskich za pomocą myszy", które domyślnie jest odznaczone.
+Jeżeli to pole wyboru jest zaznaczone, przemieszczanie się po komórce brajlowskiej wywoła polecenie "przenieś się do komórki brajlowskiej" dla wybranej komórki.
+Często jest to używane do wywołania akcji oraz do ustawiania kursora na konkretną komórkę.
+Jest to korzystne, kiedy testujemy przekształcanie brajlowskich komórek na znaki i odwrotnie.
+Aby zapobiec niechciane przywoływanie komórek, polecenie jest opóźnione.
+Mysz powinna się ruszać do póki komórka nie stanie się zielona.
+Na początku kursor myszy będzie światło żólty, potem kolor zmieni się na pomorańczowy, a potem stanie się zielony.
+
 ++ Konsola Pythona ++[PythonConsole]
 Konsola Pythona NVDA znajduje się w menu Narzędzia  w NVDA. Jest narzędziem dla programistów i jest używana do debugowania, przeglądania wewnątrz NVDA lub sprawdzania hierarchii dostępności aplikacji.
 Więcej informacji znajduje się w [podręczniku dla twórców https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
@@ -2239,7 +2253,17 @@ Windows 10 zawiera nowe głosy znane jako "OneCore" lub głosy "mobilne".
 Dostarczone są głosy dla wielu języków, są bardziej responsywne niż głosy Microsoft dostępne przy użyciu Microsoft Speech API version 5.
 W systemie Windows 10, NVDA domyślnie używa głosów Windows One Core ([[eSpeak NG #eSpeakNG] natomiast, używany jest w innych wydaniach systemu operacyjnego.
 
-Artykuł Microsoft zawierający listę dostępnych głosów i instrukcję ich instalacji znajduje się pod poniższym adresem: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
+Aby dodać nowe Głosy Windows OneCore, Proszę wejść do kategorii "mowa", znajdujacej się w ustawieniach systemu Windows. 
+Trzeba użyć opcji "dodawanie głosu" i znaleźć odpowiedni język.
+Większość języków posiada więcej odmian.
+Angielski "Zjednoczone królestwo" i angielski "australijski" są dwie odmiany angielskiego.
+Dostępne odmiany języka francuzkiego to"francuzki (Francja)", "Kanadyjski" i "Szwajcarski".
+Znajdź szerszą kategorię języka (taką jak angielski lub francuzki), a potem znajdź odmianę na liście.
+Wybierz jakikolwiek potrzebny język i naciśnij "przycisk dodaj" aby je dodać.
+Po dodaniu języków, ponownie uruchom NVDA.
+
+
+Aby sprawdzić listę dostępnych głosów, prosimy przeczytać artykul na stronie firmy Microsoft: https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
 + Obsługiwane monitory brajlowskie +[SupportedBrailleDisplays]
 Ten rozdział zawiera informacje na temat monitorów brajlowskich wspieranych przez NVDA.
@@ -2505,7 +2529,7 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B Series/ BrailleNote Touch ++[HumanWareBrailliant]
-Serie monitorów Brailliant BI i B produkcji [HumanWare https://www.humanware.com/], włącznie z BI 14, BI 32, BI 40 i B 80, są obsługiwane przy połączeniu przez USB i bluetooth.
+Serie monitorów Brailliant BI i B produkcji [HumanWare https://www.humanware.com/], włącznie z BI 14, BI 32, BI 20X, BI 40, BI 40X i B 80, są obsługiwane przy połączeniu przez USB i bluetooth.
 Przy połączeniu przez USB z protokołem ustawionym na HumanWare, trzeba najpierw zainstalować sterowniki USB dostarczone przez producenta.
 Sterowniki USB nie są wymagane, jeśli protokół jest ustawiony na OpenBraille.
 
@@ -2625,7 +2649,7 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 | Klawisz escape | punkt 1+punkt 5+spacja, f4, brailleedge:f1 |
 | Klawisz delete | punkt 1+punkt 3+punkt 5+spacja, punkt 1+punkt 4+punkt 5+spacja |
 | Klawisz f1 | punkt 1+punkt 2+punkt 5+spacja |
-| Klawisz f3 | punkt 1+punkt 2+punkt 4+punkt 8 |
+| Klawisz F3 | punkt1+punkt4+punkt8+spacja |
 | Klawisz f4 | punkt 7+f3 |
 | Klawisz windows+b | punkt 1+punkt 2+f1 |
 | Klawisz windows+d | punkt 1+punkt 4+punkt 5+f1 |
@@ -3124,6 +3148,7 @@ Poniżej wymieniono wszystkie opcje linii poleceń dla NVDA:
 | Brak | --no-sr-flag  | Nie zmieniaj globalnej flagi systemowej czytnika ekranu |
 | Brak | --install | Po cichu instaluje NVDA i uruchamia zainstalowaną kopię |
 | Brak | --install-silent | Po cichu instaluje NVDA (nie uruchamia zainstalowanej kopii) |
+| Brak | --copy-portable-config | Podczas instalacji kopiuję konfigurację wersji przenośnej z określonej ścieżki (--config-path, -c) do aktualnego konta użytkownika |
 | Brak | --enable-start-on-logon=True|False | Przy instalacji włącz funkcję NVDA [Uruchamiaj na ekranie logowania #StartAtWindowsLogon] |
 | Brak | --create-portable | Tworzy przenośną kopię NVDA (uruchamiając nowo utworzoną kopię). Wymaga określenia parametru --portable-path |
 | Brak | --create-portable-silent | Tworzy przenośną kopię NVDA (nie uruchamiając nowo utworzonej kopii). Wymaga określenia parametru --portable-path |

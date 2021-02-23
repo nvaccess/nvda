@@ -1,9 +1,8 @@
 # -*- coding: UTF-8 -*-
-#synthDrivers/_espeak.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited, Peter Vágner
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2020 NV Access Limited, Peter Vágner
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import time
 import nvwave
@@ -369,7 +368,8 @@ def terminate():
 	onIndexReached = None
 
 def info():
-	return espeakDLL.espeak_Info()
+	# Python 3.8: a path string must be specified, a NULL is fine when what we need is version string.
+	return espeakDLL.espeak_Info(None).decode()
 
 def getVariantDict():
 	dir = os.path.join(globalVars.appDir, "synthDrivers", "espeak-ng-data", "voices", "!v")

@@ -794,6 +794,8 @@ For this situation, NVDA contains a feature called "screen curtain" which can be
 
 You can enable the Screen Curtain in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog.
 
+When the screen curtain is active some tasks directly based on what appears on the screen such as performing [OCR #Win10Ocr] or taking a screenshot cannot be achieved.
+
 + Content Recognition +[ContentRecognition]
 When authors don't provide sufficient information for a screen reader user to determine the content of something, various tools can be used to attempt to recognize the content from an image.
 NVDA supports the optical character recognition (OCR) functionality built into Windows 10 to recognize text from images.
@@ -814,6 +816,8 @@ NVDA can use this to recognize text from images or inaccessible applications.
 
 You can set the language to use for text recognition in the [Windows 10 OCR category #Win10OcrSettings] of the [NVDA Settings #NVDASettings] dialog.
 Additional languages can be installed by opening the Start menu, choosing Settings, selecting Time & Language -> Region & Language and then choosing Add a language.
+
+Windows 10 OCR may be partially or fully incompatible with [NVDA vision enhancements #Vision] or other external visual aids. You will need to disable these aids before proceeding to a recognition.
 
 %kc:beginInclude
 To recognize the text in the current navigator object using Windows 10 OCR, press NVDA+r.
@@ -1836,12 +1840,36 @@ When this option is enabled, NVDA will use a new, work in progress version of it
 ==== Speak passwords in UIA consoles ====[AdvancedSettingsWinConsoleSpeakPasswords]
 This setting controls whether characters are spoken by [speak typed characters #KeyboardSettingsSpeakTypedCharacters] or [speak typed words #KeyboardSettingsSpeakTypedWords] in situations where the screen does not update (such as password entry) in the Windows Console with UI automation support enabled. For security purposes, this setting should be left disabled. However, you may wish to enable it if you experience performance issues or instability with typed character and/or word reporting while using NVDA's new experimental console support.
 
+==== Use UIA with Microsoft Edge and other Chromium based browsers when available ====[ChromiumUIA]
+Allows specifying when UIA will be used when it is available in Chromium based browsers such as Microsoft Edge.
+UIA support for Chromium based browsers is early in development and may not provide the same level of access as IA2.
+The combo box has the following options:
+- Default (Only when necessary): The NVDA default, currently this is "Only when necessary". This default may change in the future as the technology matures.
+- Only when necessary: When NVDA is unable to inject into the browser process in order to use IA2 and UIA is available, then NVDA will fall back to using UIA.
+- Yes: If the browser makes UIA available, NVDA will use it.
+- No: Don't use UIA, even if NVDA is unable to inject in process. This may be useful for developers debugging issues with IA2 and want to ensure that NVDA does not fall back to UIA.
+-
+
 ==== Use the new typed character support in Windows Console when available ====[AdvancedSettingsKeyboardSupportInLegacy]
 This option enables an alternative method for detecting typed characters in Windows command consoles.
 While it improves performance and prevents some console output from being spelled out, it may be incompatible with some terminal programs.
 This feature is available and enabled by default on Windows 10 versions 1607 and later when UI Automation is unavailable or disabled.
 Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
 In untrusted environments, you may temporarily disable [speak typed characters #KeyboardSettingsSpeakTypedCharacters] and [speak typed words #KeyboardSettingsSpeakTypedWords] when entering passwords.
+
+==== Diff algorithm ====[DiffAlgo]
+This setting controls how NVDA determines the new text to speak in terminals.
+The diff algorithm combo box has three options:
+- Automatic: as of NVDA 2021.1, this option is equivalent to Difflib.
+In a future release, it may be changed to Diff Match Patch pending positive user testing.
+- allow Diff Match Patch: This option causes NVDA to calculate changes to terminal text by character.
+It may improve performance when large volumes of text are written to the console and allow more accurate reporting of changes made in the middle of lines.
+However, it may be incompatible with some applications.
+This feature is supported in Windows Console on Windows 10 versions 1607 and later.
+Additionally, it may be available in other terminals on earlier Windows releases.
+- force Difflib: this option causes NVDA to calculate changes to terminal text by line.
+It is identical to NVDA's behaviour in versions 2020.4 and earlier.
+-
 
 ==== Attempt to cancel speech for expired focus events ====[CancelExpiredFocusSpeech]
 This option enables behaviour which attempts to cancel speech for expired focus events.
@@ -2253,7 +2281,17 @@ Windows 10 includes new voices known as "OneCore" or "mobile" voices.
 Voices are provided for many languages, and they are more responsive than the Microsoft voices available using Microsoft Speech API version 5.
 On Windows 10, NVDA uses Windows OneCore voices by default ([eSpeak NG #eSpeakNG] is used in other releases).
 
-Please see this Microsoft article for a list of available voices and instructions to install them: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
+To add new Windows OneCore voices, go to "Speech Settings", within Windows system settings. 
+Use the "Add voices" option and search for the desired language.
+Many languages include multiple variants.
+"United Kingdom" and "Australia" are two of the English variants.
+"France", "Canada" and "Switzerland" are French variants available.
+Search for the broader language (such as English or French), then locate the variant in the list.
+Select any languages desired and use the "add" button to add them.
+Once added, restart NVDA.
+
+
+Please see this Microsoft article for a list of available voices: https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
 + Supported Braille Displays +[SupportedBrailleDisplays]
 This section contains information about the Braille displays supported by NVDA.

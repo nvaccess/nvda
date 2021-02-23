@@ -51,7 +51,7 @@ class ControlField(Field):
 			self,
 			ancestors,
 			formatConfig,
-			reason=controlTypes.REASON_CARET,
+			reason=OutputReason.CARET,
 			extraDetail=False
 	):
 		role = self.get("role", controlTypes.ROLE_UNKNOWN)
@@ -77,7 +77,7 @@ class ControlField(Field):
 
 		name = self.get("name")
 		landmark = self.get("landmark")
-		if reason in (controlTypes.REASON_CARET, controlTypes.REASON_SAYALL, controlTypes.REASON_FOCUS) and (
+		if reason in (OutputReason.CARET, OutputReason.SAYALL, OutputReason.FOCUS) and (
 			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"])
 			or (role == controlTypes.ROLE_GRAPHIC and not formatConfig["reportGraphics"])
 			or (role == controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"])
