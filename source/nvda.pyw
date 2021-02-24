@@ -10,6 +10,7 @@
 import sys
 import os
 import globalVars
+import ctypes
 
 
 if getattr(sys, "frozen", None):
@@ -18,6 +19,19 @@ if getattr(sys, "frozen", None):
 	sys.path.append(sys.prefix)
 	appDir = sys.prefix
 else:
+	# we are running from source
+	# Ensure we are inside the NVDA build system's Python virtual environment.
+	nvdaVenv = os.getenv("NVDA_VENV")
+	virtualEnv = os.getenv("VIRTUAL_ENV")
+	if not nvdaVenv or nvdaVenv != virtualEnv:
+		ctypes.windll.user32.MessageBoxW(
+			0,
+			"NVDA cannot  detect the NVDA build system Python virtual environment. "
+			"To run NVDA from source, please use runnvda.bat in the root of this repository.",
+			"Error",
+			0,
+		)
+		sys.exit(1)
 	import sourceEnv
 	#We should always change directory to the location of this module (nvda.pyw), don't rely on sys.path[0]
 	appDir = os.path.normpath(os.path.dirname(__file__))

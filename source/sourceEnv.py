@@ -12,14 +12,6 @@ import os
 # Get the path to the top of the repo; i.e. where include and miscDeps are.
 TOP_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
-# Ensure we are running in a virtual environment
-venvPath = os.getenv('VIRTUAL_ENV')
-if (
-	not venvPath
-	or os.path.normpath(venvPath) != os.path.normpath(TOP_DIR)
-):
-	raise RuntimeError("No Python Virtual environment detected. Please see readme.md for how to build / run NVDA correctly.")
-
 # Directories containing Python modules included in git submodules.
 PYTHON_DIRS = (
 	os.path.join(TOP_DIR, "include", "configobj", "src"),

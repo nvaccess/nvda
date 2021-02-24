@@ -7,6 +7,16 @@ import sys
 import os
 import platform
 
+# Ensure we are inside the NVDA build system's Python virtual environment.
+nvdaVenv = os.getenv("NVDA_VENV")
+virtualEnv = os.getenv("VIRTUAL_ENV")
+if not nvdaVenv or nvdaVenv != virtualEnv:
+	print(
+		"Error: SCons cannot detect  the NVDA build system Python virtual environment.\n"
+		"SCons must be executed using scons.bat in the root of this repository."
+	)
+	sys.exit(1)
+
 # Variables for storing required version of Python, and the version which is used to run this script.
 requiredPythonMajor ="3"
 requiredPythonMinor = "8"

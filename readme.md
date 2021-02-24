@@ -96,20 +96,13 @@ For reference, the following run time dependencies are included in Git submodule
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
 * Java Access Bridge 32 bit, from Zulu Community OpenJDK build 13.0.1+10Zulu (13.28.11)
 
-Additionally, the following build time dependencies are included in Git submodules:
+Additionally, the following build time dependencies are included in the miscDeps git submodule: 
 
 * [txt2tags](https://txt2tags.org/), version 2.5
 * [Nulsoft Install System](https://nsis.sourceforge.io/Main_Page/), version 2.51
 * [NSIS UAC plug-in](https://nsis.sourceforge.io/UAC_plug-in), version 0.2.4, ansi
 * xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
 * [Boost Optional (stand-alone header)](https://github.com/akrzemi1/Optional), from commit [3922965](https://github.com/akrzemi1/Optional/commit/3922965396fc455c6b1770374b9b4111799588a9)
-
-### Other Dependencies
-To lint using Flake 8 locally using our SCons integration, some dependencies are installed (automatically) via pip.
-Although this [must be run manually](#linting-your-changes), developers may wish to first configure a Python Virtual Environment to ensure their general install is not affected.
-* Flake8
-* Flake8-tabs
-
 
 The following dependencies aren't needed by most people, and are not included in Git submodules:
 * To generate developer documentation for nvdaHelper: [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
@@ -119,23 +112,8 @@ The following dependencies aren't needed by most people, and are not included in
 	```git clone https://github.com/nvaccess/vscode-nvda.git .vscode```
 
 ### Python dependencies
-NVDA and its build system depend on an extensive list of Python packages. They are all listed with their specific versions in a requirements.txt file in the root of this repository. This file can be used by the Pip Python package manager to install all required packages.
-These dependencies can be installed with the command:
-```
-py -m pip install -r requirements.txt
-```
-However, it is strongly recommended that you create a Python virtual environment for this repository, and activate it before installing required python packages and or building or running NVDA. This avoids any Python package version conflicts with packages you may have installed system-wide.
-To create a Python virtual environment in the .venv directory:
-```
-py -m venv .venv
-```
-To activate the virtual environment:
-```
-.venv\scripts\activate.bat
-```
-A reminder that all instructions in this readme only support building / running NVDA in a Windows cmd shell.
-
-
+NVDA and its build system also depend on an extensive list of Python packages. They are all listed with their specific versions in a requirements.txt file in the root of this repository. However, the build system takes care of fetching these itself when needed. these packages will be installed into an isolated Python virtual environment within this repository, and will not affect your system-wide set of packages.
+ 
 ## Preparing the Source Tree
 Before you can run the NVDA source code, you must prepare the source tree.
 You do this by opening a command prompt, changing to the root of the NVDA source distribution and typing:
@@ -181,13 +159,14 @@ By default, builds also do not use any compiler optimizations.
 Please see the `release` keyword argument for what compiler optimizations it will enable.
 
 ## Running the Source Code
-Most developers run directly from source by:
+Most developers run directly from source by executing:
 ```
-cd source
-pythonw.exe nvda.pyw
+runnvda.bat
 ```
-Note: Since NVDA is a Windows application (rather than command line), it is best to run it with `pythonw.exe`.
-However, if during development you encounter an error early in the startup of NVDA, you can use `python.exe` which is likely to give more information about the error.
+This command will block until NVDA is exited. However, you can run it in the background with:
+```
+start /b runnvda.bat
+```
 
 To view help on the arguments that NVDA will accept, use the `-h` or `--help` option.
 These arguments are also documented in the user guide.

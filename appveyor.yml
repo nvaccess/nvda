@@ -61,12 +61,8 @@ clone_depth: 1
 install:
  # Ensure we have the latest version of pip
  - py -m pip install --upgrade pip
- # Create a Python virtual environment
- - py -m venv .venv
- # Activate the virtual environment
- - .venv\scripts\activate.bat
- # Install all required Python packages
- - py -m pip install -r requirements.txt 
+ # Activate the NvDA build system Python virtual environment, creating / updating it if necessary.
+ - .\venvUtils\ensureAndActivate.bat
  # Save an exact list of the actual Python packages and their versions that got installed, to aide in reproducing a build
  - py -m pip freeze >output\pip_packages.txt
  - cd appveyor
