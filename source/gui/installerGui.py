@@ -21,7 +21,7 @@ import systemUtils
 
 
 def _canPortableConfigBeCopied() -> bool:
-	# In some cases even though user requested to copy config from the portable copy during installation 
+	# In some cases even though user requested to copy config from the portable copy during installation
 	# it should not be done.
 	if globalVars.appArgs.launcher:
 		# Normally when running from the launcher
