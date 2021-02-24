@@ -53,7 +53,7 @@ def createVenvAndPopulate():
 	Creates the NVDA build system's Python virtual environment and installs all required packages.
 	this function will overwrite any existing virtual environment found at c{venv_path}.
 	"""
-	print("Creating virtual environment...")
+	print("Creating virtual environment...", flush=True)
 	subprocess.run(
 		[
 			"py", "-3.8-32",
@@ -65,7 +65,7 @@ def createVenvAndPopulate():
 	)
 	with open(venv_python_version_path, "w") as f:
 		f.write(sys.version)
-	print("Installing packages in virtual environment...")
+	print("Installing packages in virtual environment...", flush=True)
 	subprocess.run(
 		[
 			# Activate virtual environment
