@@ -90,7 +90,7 @@ def ensureVenvAndRequirements():
 	"""
 	if not os.path.exists(venv_path):
 		print("Virtual environment does not exist.")
-		return createEnv()
+		return createVenvAndPopulate()
 	if (
 		not os.path.exists(venv_python_version_path)
 		or not os.path.exists(venv_orig_requirements_path)
