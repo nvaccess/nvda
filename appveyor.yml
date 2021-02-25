@@ -59,8 +59,6 @@ init:
 clone_depth: 1
 
 install:
- # Ensure we have the latest version of pip
- - py -m pip install --upgrade pip
  # Activate the NvDA build system Python virtual environment, creating / updating it if necessary.
  - .\venvUtils\ensureAndActivate.bat
  # Save an exact list of the actual Python packages and their versions that got installed, to aide in reproducing a build

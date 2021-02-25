@@ -71,9 +71,13 @@ def createVenvAndPopulate():
 			# Activate virtual environment
 			os.path.join(venv_path, "scripts", "activate.bat"),
 			"&&",
+			# Ensure we have the latest version of pip
+			"py", "-m", "pip",
+			"install", "--upgrade", "pip",
+			"&&",
 			# Install required packages with pip 
-			"pip", "install", 
-			"-r", requirements_path,
+			"py", "-m", "pip",
+			"install", "-r", requirements_path,
 		],
 		check=True,
 		shell=True,
