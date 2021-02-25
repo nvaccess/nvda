@@ -229,9 +229,9 @@ class InstallerDialog(
 		self.copyPortableConfigCheckbox = optionsHelper.addItem(createPortableBox)
 		self.bindHelpEvent("CopyPortableConfigurationToCurrentUserAccount", self.copyPortableConfigCheckbox)
 		self.copyPortableConfigCheckbox.Value = (
-			bool(globalVars.appArgs.copyPortableConfig) and self._canPortableConfigBeCopied()
+			bool(globalVars.appArgs.copyPortableConfig) and _canPortableConfigBeCopied()
 		)
-		self.copyPortableConfigCheckbox.Enable(self._canPortableConfigBeCopied())
+		self.copyPortableConfigCheckbox.Enable(_canPortableConfigBeCopied())
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
 		if shouldAskAboutAddons:
