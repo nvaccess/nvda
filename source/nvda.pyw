@@ -39,7 +39,7 @@ appDir = os.path.abspath(appDir)
 os.chdir(appDir)
 globalVars.appDir = appDir
 
-import ctypes
+
 import locale
 import gettext
 
