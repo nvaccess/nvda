@@ -56,7 +56,7 @@ def createVenvAndPopulate():
 	print("Creating virtual environment...", flush=True)
 	subprocess.run(
 		[
-			"py", "-3.8-32",
+			sys.executable,
 			"-m", "venv",
 			"--clear",
 			venv_path,
@@ -88,8 +88,8 @@ def ensureVenvAndRequirements():
 	"""
 	Ensures that the NVDA build system's Python virtual environment is created and up to date.
 	If a previous virtual environment exists but has a miss-matching Python version or pip package requirements have changed,
-	The virtual environement is recreated with the updated version of Python and packages.
-	If a virtual environement is found but does not seem to be ours,
+	The virtual environment is recreated with the updated version of Python and packages.
+	If a virtual environment is found but does not seem to be ours,
 	This function asks the user if it should be overwritten or not.
 	"""
 	if not os.path.exists(venv_path):
@@ -100,7 +100,7 @@ def ensureVenvAndRequirements():
 		or not os.path.exists(venv_orig_requirements_path)
 	):
 		if askYesNoQuestion(
-			f"Virtual environement at {venv_path} probably not created by NVDA. This directory must be removed before continuing. Should it be removed?"
+			f"Virtual environment at {venv_path} probably not created by NVDA. This directory must be removed before continuing. Should it be removed?"
 		):
 			return createVenvAndPopulate()
 		else:
