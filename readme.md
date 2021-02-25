@@ -159,14 +159,10 @@ By default, builds also do not use any compiler optimizations.
 Please see the `release` keyword argument for what compiler optimizations it will enable.
 
 ## Running the Source Code
-Most developers run directly from source by executing:
-```
-runnvda.bat
-```
-This command will block until NVDA is exited. However, you can run it in the background with:
-```
-start /b runnvda.bat
-```
+It is possible to run NVDA directly from source without having to build the full binary package and launcher.
+Two batch files (in the root of this repository) are provided for this purpose:
+* runnvda.bat runs NVDA and blocks until NVDA is exited. Any messages written to standard out or standard error during its initialization will be written directly to the console.
+* runnvdaw.bat runs NVDA but does not block. This is the behaviour that developers are previously used to by using pythonw manually.
 
 To view help on the arguments that NVDA will accept, use the `-h` or `--help` option.
 These arguments are also documented in the user guide.
