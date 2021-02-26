@@ -5,12 +5,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from .contextHelp import (
-	# several other submodules depend on ContextHelpMixin
-	# ensure early that it can be imported successfully.
-	ContextHelpMixin as _ContextHelpMixin,  # don't expose from gui, import submodule directly.
-)
-
 import time
 import os
 import sys
@@ -26,7 +20,6 @@ from documentationUtils import getDocFilePath
 from logHandler import log
 import config
 import versionInfo
-import addonAPIVersion
 import speech
 import queueHandler
 import core
@@ -34,14 +27,10 @@ from . import guiHelper
 from .settingsDialogs import *
 from .inputGestures import InputGesturesDialog
 import speechDictHandler
-import languageHandler
-import keyboardHandler
 from . import logViewer
 import speechViewer
 import winUser
 import api
-from . import guiHelper
-import winVersion
 
 try:
 	import updateCheck
