@@ -539,8 +539,8 @@ def initTranslation():
 	try:
 		callerFrame = inspect.currentframe().f_back
 		callerFrame.f_globals['_'] = translations.gettext
-		# Install our pgettext function.
-		callerFrame.f_globals['pgettext'] = languageHandler.makePgettext(translations)
+		# Install pgettext function.
+		callerFrame.f_globals['pgettext'] = translations.pgettext
 	finally:
 		del callerFrame # Avoid reference problems with frames (per python docs)
 
