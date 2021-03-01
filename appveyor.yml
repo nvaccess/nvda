@@ -252,7 +252,13 @@ deploy_script:
        exe=$exe; hash=$hash;
        artifacts=$artifacts
       }
-      ConvertTo-Json -InputObject $data -Compress | ssh nvaccess@exbi.nvaccess.org nvdaAppveyorHook
+      ConvertTo-Json -InputObject $data -Compress | Out-File -FilePath deploy.json
+      Push-AppveyorArtifact deploy.json
+      # Execute the deploy script on the NV Access server via ssh.
+      # Warning: if the server address is changed, 
+      # The new address must be also included in appveyor\ssh_known_hosts in this repo
+      # Otherwise ssh will freeze on input!
+      cat deploy.json | ssh nvaccess@deploy.nvaccess.org nvdaAppveyorHook
 
       # Upload symbols to Mozilla.
       py -m pip install --no-warn-script-location requests

@@ -20,8 +20,10 @@ Section: New features, Changes, Bug fixes
 ### Code Review Checklist:
 
 This checklist is a reminder of things commonly forgotten in a new PR.
-Please do a self-review to check these items.
-Reviewers will not approve the PR until these are met.
+Authors, please do a self-review and confirm you have considered the following items.
+Mark items you have considered by checking them.
+You can do this when editing the Pull request description with an x: `[ ]` becomes `[x]`.
+You can also check the checkboxes after the PR is created.
 
 - [ ] Pull Request description is up to date.
 - [ ] Unit tests.
