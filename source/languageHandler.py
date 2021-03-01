@@ -176,7 +176,8 @@ def setLanguage(lang):
 	except IOError:
 		trans=gettext.translation("nvda",fallback=True)
 		curLang="en"
-	trans.install()
+	# #9207: Python 3.8 adds gettext.pgettext, so add it to the built-in namespace.
+	trans.install(names=["pgettext"])
 
 def getLanguage():
 	return curLang
