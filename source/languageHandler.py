@@ -1,8 +1,7 @@
-#languageHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2018 NV access Limited, Joseph Lee
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2021 NV Access Limited, Joseph Lee
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Language and localization support.
 This module assists in NVDA going global through language services such as converting Windows locale ID's to friendly names and presenting available languages.

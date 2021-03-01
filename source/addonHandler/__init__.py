@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#addonHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2019 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee, Babbage B.V., Arnold Loubriat
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2012-2021 NV Access Limited, Rui Batista, Noelia Ruiz Martínez,
+# Joseph Lee, Babbage B.V., Arnold Loubriat
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import sys
 import os.path
