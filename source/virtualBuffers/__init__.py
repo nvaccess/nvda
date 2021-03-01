@@ -33,7 +33,6 @@ import queueHandler
 from logHandler import log
 import ui
 import aria
-import nvwave
 import treeInterceptorHandler
 import watchdog
 from abc import abstractmethod
