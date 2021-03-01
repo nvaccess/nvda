@@ -62,7 +62,8 @@ install:
  # Activate the NvDA build system Python virtual environment, creating / updating it if necessary.
  - .\venvUtils\ensureAndActivate.bat
  # Save an exact list of the actual Python packages and their versions that got installed, to aide in reproducing a build
- - py -m pip freeze >output\pip_packages.txt
+ - py -m pip freeze >installed_python_packages.txt
+ - appveyor PushArtifact  installed_python_packages.txt
  - cd appveyor
  # Decrypt files.
  - ps: |
