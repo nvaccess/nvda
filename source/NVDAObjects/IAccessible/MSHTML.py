@@ -543,13 +543,24 @@ class MSHTML(IAccessible):
 			return virtualBuffers.MSHTML.MSHTML
 		return super(MSHTML,self).treeInterceptorClass
 
-	def _get_isCurrent(self):
-		isCurrent = self.HTMLAttributes["aria-current"]
+	def _get_isCurrent(self) -> controlTypes.IsCurrent:
+		try:
+			isCurrent = self.HTMLAttributes["aria-current"]
+		except LookupError:
+			return controlTypes.IsCurrent.NO
+
+		# key may be in HTMLAttributes with a value of None
+		if isCurrent is None:
+			return controlTypes.IsCurrent.NO
+
 		try:
 			return controlTypes.IsCurrent(isCurrent)
 		except ValueError:
 			log.debugWarning(f"Unknown aria-current value: {isCurrent}")
 			return controlTypes.IsCurrent.NO
+
+	#: Typing for autoproperty _get_HTMLAttributes
+	HTMLAttributes: HTMLAttribCache
 
 	def _get_HTMLAttributes(self):
 		return HTMLAttribCache(self.HTMLNode)
