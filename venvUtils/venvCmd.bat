@@ -11,13 +11,14 @@ if "%NVDA_VENV%" NEQ "" (
 		rem We are already in the NVDA Python virtual environment.
 		echo directly calling %*
 		call %*
-		exit /b %ERRORLEVEL%
+		goto :EOF
 	)
 )
 
 setlocal
 echo Ensuring NVDA Python virtual environment
 call "%~dp0\ensureAndActivate.bat"
+if ERRORLEVEL 1 goto :EOF
 echo call %*
 call %*
 echo Deactivating NVDA Python virtual environment
