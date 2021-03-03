@@ -61,9 +61,12 @@ clone_depth: 1
 install:
  # Activate the NvDA build system Python virtual environment, creating / updating it if necessary.
  - .\venvUtils\ensureAndActivate.bat
+ - if ERRORLEVEL 1 exit %ERRORLEVEL%
  # Save an exact list of the actual Python packages and their versions that got installed, to aide in reproducing a build
  - py -m pip freeze >installed_python_packages.txt
+ - if ERRORLEVEL 1 exit %ERRORLEVEL%
  - appveyor PushArtifact  installed_python_packages.txt
+ - if ERRORLEVEL 1 exit %ERRORLEVEL%
  - cd appveyor
  # Decrypt files.
  - ps: |
@@ -101,11 +104,14 @@ build_script:
      Set-AppveyorBuildVariable "sconsArgs" $sconsArgs
  - 'echo scons args: %sconsArgs%'
  - scons source %sconsArgs%
+ - if ERRORLEVEL 1 exit %ERRORLEVEL%
  # We don't need launcher to run checkPot, so run the checkPot before launcher.
  - scons checkPot %sconsArgs%
+ - if ERRORLEVEL 1 exit %ERRORLEVEL%
  # The pot gets built by tests, but we don't actually need it as a build artifact.
  - 'echo scons output targets: %sconsOutTargets%'
  - scons %sconsOutTargets% %sconsArgs%
+ - if ERRORLEVEL 1 exit %ERRORLEVEL%
  # Build symbol store.
  - ps: |
      foreach ($syms in
@@ -120,6 +126,7 @@ build_script:
      }
  - cd symbols
  - 7z a -tzip -r ..\output\symbols.zip *.dl_ *.ex_ *.pd_
+ - if ERRORLEVEL 1 exit %ERRORLEVEL%
  - cd ..
 
 before_test:
