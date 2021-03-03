@@ -12,7 +12,7 @@ nvdaVenv = os.getenv("NVDA_VENV")
 virtualEnv = os.getenv("VIRTUAL_ENV")
 if not nvdaVenv or nvdaVenv != virtualEnv:
 	print(
-		"Error: SCons cannot detect  the NVDA build system Python virtual environment.\n"
+		"Error: SCons cannot detect the NVDA build system Python virtual environment.\n"
 		"SCons must be executed using scons.bat in the root of this repository."
 	)
 	sys.exit(1)
