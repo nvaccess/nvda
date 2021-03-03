@@ -4,8 +4,22 @@ rem It activates the environment, creating / updating it first if necessary,
 rem then executes the command,
 rem and then finally deactivates the environment.
 
+rem This script also supports running in an already fully activated NVDA Python environment.
+rem If this is detected, the command is executed directly instead.
+if "%NVDA_VENV%" NEQ "" (
+	if "%NVDA_VENV%" == "%VIRTUAL_ENV%" (
+		rem We are already in the NVDA Python virtual environment.
+		echo directly calling %*
+		call %*
+		exit /b %ERRORLEVEL%
+	)
+)
+
 setlocal
+echo Ensuring NVDA Python virtual environment
 call "%~dp0\ensureAndActivate.bat"
+echo call %*
 call %*
+echo Deactivating NVDA Python virtual environment
 call "%~dp0\..\.venv\scripts\deactivate.bat"
 endlocal
