@@ -3098,7 +3098,7 @@ class BrailleSettingsPanel(SettingsPanel):
 		# Translators: A label for the braille display on the braille panel.
 		displayLabel = _("Braille &display")
 
-		displaySizer = guiHelper.LTRStaticBoxSizer(wx.HORIZONTAL, self, label=displayLabel))
+		displaySizer = guiHelper.LTRStaticBoxSizer(wx.HORIZONTAL, self, label=displayLabel)
 		displayGroup = guiHelper.BoxSizerHelper(self, sizer=displaySizer)
 		settingsSizerHelper.addItem(displayGroup)
 		self.displayNameCtrl = ExpandoTextCtrl(self, size=(self.scaleSize(250), -1), style=wx.TE_READONLY)
