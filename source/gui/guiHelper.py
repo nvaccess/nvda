@@ -367,3 +367,13 @@ class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
 	"""Meta class to be used for wx subclasses with abstract methods."""
 	pass
 
+
+class LTRStaticBoxSizer(wx.StaticBoxSizer):
+	"""
+	An Overridden StaticBoxSizer as the original is buggy for RTL languages
+	Awaiting bug-fix for issue: https://trac.wxwidgets.org/ticket/19086
+	This override has a side effect of left alignment of grouping headers (StaticBox labels) for RTL languages
+	"""
+	def __init__(self, *args, **kw):
+		super().__init__(*args, **kw)
+		self.StaticBox.SetLayoutDirection(wx.Layout_LeftToRight)

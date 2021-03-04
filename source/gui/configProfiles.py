@@ -42,7 +42,7 @@ class ProfilesDialog(
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self,orientation=wx.VERTICAL)
-		profilesListGroupSizer = wx.StaticBoxSizer(wx.StaticBox(self), wx.HORIZONTAL)
+		profilesListGroupSizer = guiHelper.LTRStaticBoxSizer(wx.StaticBox(self), wx.HORIZONTAL)
 		profilesListGroupContents = wx.BoxSizer(wx.HORIZONTAL)
 
 		#contains the profile list and activation button in vertical arrangement.

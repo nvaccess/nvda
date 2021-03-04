@@ -910,7 +910,7 @@ class SpeechSettingsPanel(SettingsPanel):
 		# Translators: A label for the synthesizer on the speech panel.
 		synthLabel = _("&Synthesizer")
 		synthBox = wx.StaticBox(self, label=synthLabel)
-		synthGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(synthBox, wx.HORIZONTAL))
+		synthGroup = guiHelper.BoxSizerHelper(self, sizer=guiHelper.LTRStaticBoxSizer(synthBox, wx.HORIZONTAL))
 		settingsSizerHelper.addItem(synthGroup)
 
 		# Use a ExpandoTextCtrl because even when readonly it accepts focus from keyboard, which
@@ -2121,7 +2121,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		# Translators: This is the label for a group of document formatting options in the 
 		# document formatting settings panel
 		fontGroupText = _("Font")
-		fontGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=fontGroupText), wx.VERTICAL))
+		fontGroup = guiHelper.BoxSizerHelper(self, sizer=guiHelper.LTRStaticBoxSizer(wx.StaticBox(self, label=fontGroupText), wx.VERTICAL))
 		sHelper.addItem(fontGroup)
 
 		# Translators: This is the label for a checkbox in the
@@ -2183,7 +2183,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		# Translators: This is the label for a group of document formatting options in the 
 		# document formatting settings panel
 		documentInfoGroupText = _("Document information")
-		docInfoGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=documentInfoGroupText), wx.VERTICAL))
+		docInfoGroup = guiHelper.BoxSizerHelper(self, sizer=guiHelper.LTRStaticBoxSizer(wx.StaticBox(self, label=documentInfoGroupText), wx.VERTICAL))
 		sHelper.addItem(docInfoGroup)
 
 		# Translators: This is the label for a checkbox in the
@@ -2207,7 +2207,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		# Translators: This is the label for a group of document formatting options in the 
 		# document formatting settings panel
 		pageAndSpaceGroupText = _("Pages and spacing")
-		pageAndSpaceGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=pageAndSpaceGroupText), wx.VERTICAL))
+		pageAndSpaceGroup = guiHelper.BoxSizerHelper(self, sizer=guiHelper.LTRStaticBoxSizer(wx.StaticBox(self, label=pageAndSpaceGroupText), wx.VERTICAL))
 		sHelper.addItem(pageAndSpaceGroup)
 
 		# Translators: This is the label for a checkbox in the
@@ -2265,7 +2265,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		# Translators: This is the label for a group of document formatting options in the 
 		# document formatting settings panel
 		tablesGroupText = _("Table information")
-		tablesGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=tablesGroupText), wx.VERTICAL))
+		tablesGroup = guiHelper.BoxSizerHelper(self, sizer=guiHelper.LTRStaticBoxSizer(wx.StaticBox(self, label=tablesGroupText), wx.VERTICAL))
 		sHelper.addItem(tablesGroup)
 
 		# Translators: This is the label for a checkbox in the
@@ -2312,7 +2312,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		# Translators: This is the label for a group of document formatting options in the 
 		# document formatting settings panel
 		elementsGroupText = _("Elements")
-		elementsGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=elementsGroupText), wx.VERTICAL))
+		elementsGroup = guiHelper.BoxSizerHelper(self, sizer=guiHelper.LTRStaticBoxSizer(wx.StaticBox(self, label=elementsGroupText), wx.VERTICAL))
 		sHelper.addItem(elementsGroup, flag=wx.EXPAND, proportion=1)
 
 		# Translators: This is the label for a checkbox in the
@@ -2492,7 +2492,7 @@ class AdvancedPanelControls(
 		groupText = _("NVDA Development")
 		devGroup = guiHelper.BoxSizerHelper(
 			parent=self,
-			sizer=wx.StaticBoxSizer(parent=self, label=groupText, orient=wx.VERTICAL)
+			sizer=guiHelper.LTRStaticBoxSizer(parent=self, label=groupText, orient=wx.VERTICAL)
 		)
 		sHelper.addItem(devGroup)
 
@@ -2524,7 +2524,7 @@ class AdvancedPanelControls(
 		label = _("Microsoft UI Automation")
 		UIAGroup = guiHelper.BoxSizerHelper(
 			parent=self,
-			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+			sizer=guiHelper.LTRStaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
 		)
 		sHelper.addItem(UIAGroup)
 
@@ -2593,7 +2593,7 @@ class AdvancedPanelControls(
 		label = _("Terminal programs")
 		terminalsGroup = guiHelper.BoxSizerHelper(
 			parent=self,
-			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+			sizer=guiHelper.LTRStaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
 		)
 		sHelper.addItem(terminalsGroup)
 		# Translators: This is the label for a checkbox in the
@@ -2646,7 +2646,7 @@ class AdvancedPanelControls(
 		label = _("Speech")
 		speechGroup = guiHelper.BoxSizerHelper(
 			parent=self,
-			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+			sizer=guiHelper.LTRStaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
 		)
 		sHelper.addItem(speechGroup)
 
@@ -2682,7 +2682,7 @@ class AdvancedPanelControls(
 		label = _("Editable Text")
 		editableTextGroup = guiHelper.BoxSizerHelper(
 			self,
-			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+			sizer=guiHelper.LTRStaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
 		)
 		sHelper.addItem(editableTextGroup)
 
@@ -2704,7 +2704,7 @@ class AdvancedPanelControls(
 		label = _("Debug logging")
 		debugLogGroup = guiHelper.BoxSizerHelper(
 			self,
-			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+			sizer=guiHelper.LTRStaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
 		)
 		sHelper.addItem(debugLogGroup)
 
@@ -2831,7 +2831,7 @@ class AdvancedPanel(SettingsPanel):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		warningGroup = guiHelper.BoxSizerHelper(
 			self,
-			sizer=wx.StaticBoxSizer(wx.StaticBox(self), wx.VERTICAL)
+			sizer=guiHelper.LTRStaticBoxSizer(wx.StaticBox(self), wx.VERTICAL)
 		)
 		sHelper.addItem(warningGroup)
 		warningBox = warningGroup.sizer.GetStaticBox()  # type: wx.StaticBox
@@ -3108,7 +3108,7 @@ class BrailleSettingsPanel(SettingsPanel):
 		displayLabel = _("Braille &display")
 
 		displayBox = wx.StaticBox(self, label=displayLabel)
-		displayGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(displayBox, wx.HORIZONTAL))
+		displayGroup = guiHelper.BoxSizerHelper(self, sizer=guiHelper.LTRStaticBoxSizer(displayBox, wx.HORIZONTAL))
 		settingsSizerHelper.addItem(displayGroup)
 		self.displayNameCtrl = ExpandoTextCtrl(self, size=(self.scaleSize(250), -1), style=wx.TE_READONLY)
 		self.bindHelpEvent("BrailleSettingsChange", self.displayNameCtrl)
@@ -3717,7 +3717,7 @@ class VisionSettingsPanel(SettingsPanel):
 
 		for providerInfo in vision.handler.getProviderList(reloadFromSystem=True):
 			providerSizer = self.settingsSizerHelper.addItem(
-				wx.StaticBoxSizer(wx.StaticBox(self, label=providerInfo.displayName), wx.VERTICAL),
+				guiHelper.LTRStaticBoxSizer(wx.StaticBox(self, label=providerInfo.displayName), wx.VERTICAL),
 				flag=wx.EXPAND
 			)
 			if len(self.providerPanelInstances) > 0:
@@ -4096,7 +4096,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		changeSymbolText = _("Change selected symbol")
 		changeSymbolHelper = sHelper.addItem(guiHelper.BoxSizerHelper(
 			parent=self,
-			sizer=wx.StaticBoxSizer(
+			sizer=guiHelper.LTRStaticBoxSizer(
 				parent=self,
 				label=changeSymbolText,
 				orient=wx.VERTICAL,
