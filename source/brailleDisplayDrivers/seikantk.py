@@ -113,7 +113,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._dev.waitForRead(TIMEOUT)
 			if self.numCells:
 				log.info("Seikanotetaker an USB-HID, Cells {c} Buttons {b}".format(c=self.numCells, b=self.numBtns))
-				config.conf["braille"]["display"] = SEIKA_NAME
 				break
 
 		if self.numCells == 0:
