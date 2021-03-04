@@ -560,15 +560,6 @@ def main():
 	else:
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
-	# If running from source, try to disconnect from the console we may have been executed in.
-	# NVDA may reconnect to read it later,
-	# but it is better to assume we are not connected to anything at the start.
-	try:
-		ctypes.windll.kernel32.FreeConsole()
-	except WindowsError:
-		pass
-	else:
-		log.debug("Freed from parent console process.")
 	log.info("NVDA initialized")
 	postNvdaStartup.notify()
 
