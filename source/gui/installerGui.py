@@ -175,14 +175,10 @@ class InstallerDialog(
 			self.bindHelpEvent("InstallWithIncompatibleAddons", self.confirmationCheckbox)
 			self.confirmationCheckbox.SetFocus()
 
-		optionsSizer = guiHelper.BoxSizerHelper(self, sizer=sHelper.addItem(guiHelper.LTRStaticBoxSizer(
-			wx.StaticBox(
-				self,
-				# Translators: The label for a group box containing the NVDA installation dialog options.
-				label=_("Options")
-			),
-			wx.VERTICAL
-		)))
+		# Translators: The label for a group box containing the NVDA installation dialog options.
+		optionsLabel = _("Options")
+		optionsHelper = sHelper.addItem(guiHelper.LTRStaticBoxSizer(wx.VERTICAL, self, label=optionsLabel))
+		optionsSizer = guiHelper.BoxSizerHelper(self, sizer=optionsHelper)
 
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		startOnLogonText = _("Use NVDA during sign-in")
@@ -349,8 +345,8 @@ class PortableCreaterDialog(
 		# Translators: The label of a grouping containing controls to select the destination directory
 		# in the Create Portable NVDA dialog.
 		directoryGroupText = _("Portable &directory:")
-		boxSizer = guiHelper.LTRStaticBoxSizer(wx.StaticBox(self, label=directoryGroupText), wx.VERTICAL)
-		groupHelper = sHelper.addItem(gui.guiHelper.BoxSizerHelper(self, sizer=boxSizer))
+		groupSizer = guiHelper.LTRStaticBoxSizer(wx.VERTICAL, self, label=directoryGroupText)
+		groupHelper = sHelper.addItem(gui.guiHelper.BoxSizerHelper(self, sizer=groupSizer))
 		# Translators: The label of a button to browse for a directory.
 		browseText = _("Browse...")
 		# Translators: The title of the dialog presented when browsing for the

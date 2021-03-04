@@ -710,14 +710,9 @@ class WelcomeDialog(
 		welcomeTextDetail = wx.StaticText(self, wx.ID_ANY, self.WELCOME_MESSAGE_DETAIL)
 		mainSizer.Add(welcomeTextDetail,border=20,flag=wx.EXPAND|wx.LEFT|wx.RIGHT)
 
-		optionsSizer = guiHelper.LTRStaticBoxSizer(
-			wx.StaticBox(
-				self,
-				# Translators: The label for a group box containing the NVDA welcome dialog options.
-				label=_("Options")
-			),
-			wx.VERTICAL
-		)
+		# Translators: The label for a group box containing the NVDA welcome dialog options.
+		optionsLabel = _("Options")
+		optionsSizer = guiHelper.LTRStaticBoxSizer(wx.VERTICAL, self, label=optionsLabel)
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=optionsSizer)
 		# Translators: The label of a combobox in the Welcome dialog.
 		kbdLabelText = _("&Keyboard layout:")
@@ -795,7 +790,7 @@ class LauncherDialog(
 
 		# Translators: The label of the license text which will be shown when NVDA installation program starts.
 		groupLabel = _("License Agreement")
-		sizer = sHelper.addItem(guiHelper.LTRStaticBoxSizer(wx.StaticBox(self, label=groupLabel), wx.VERTICAL))
+		sizer = sHelper.addItem(guiHelper.LTRStaticBoxSizer(wx.VERTICAL, self, label=groupLabel))
 		licenseTextCtrl = wx.TextCtrl(self, size=(500, 400), style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH)
 		licenseTextCtrl.Value = codecs.open(getDocFilePath("copying.txt", False), "r", encoding="UTF-8").read()
 		sizer.Add(licenseTextCtrl)
