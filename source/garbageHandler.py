@@ -20,9 +20,7 @@ class TrackedObject:
 	"""
 
 	def __del__(self):
-		# notifyObjectDeletion could be None if Python is shutting down.
-		if notifyObjectDeletion:
-			notifyObjectDeletion(self)
+		notifyObjectDeletion(self)
 
 
 _collectionThreadID = 0
