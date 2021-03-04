@@ -42,12 +42,13 @@ class ProfilesDialog(
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self,orientation=wx.VERTICAL)
-		profilesListGroupSizer = wx.StaticBoxSizer(wx.StaticBox(self), wx.HORIZONTAL)
+		profilesListGroupSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self)
+		profilesListBox = profilesListGroupSizer.GetStaticBox()
 		profilesListGroupContents = wx.BoxSizer(wx.HORIZONTAL)
 
 		#contains the profile list and activation button in vertical arrangement.
 		changeProfilesSizer = wx.BoxSizer(wx.VERTICAL)
-		item = self.profileList = wx.ListBox(self,
+		item = self.profileList = wx.ListBox(profilesListBox,
 			choices=[self.getProfileDisplay(name, includeStates=True) for name in self.profileNames])
 		self.bindHelpEvent("ProfilesBasicManagement", self.profileList)
 		item.Bind(wx.EVT_LISTBOX, self.onProfileListChoice)
@@ -56,7 +57,7 @@ class ProfilesDialog(
 
 		changeProfilesSizer.AddSpacer(guiHelper.SPACE_BETWEEN_BUTTONS_VERTICAL)
 
-		self.changeStateButton = wx.Button(self)
+		self.changeStateButton = wx.Button(profilesListBox)
 		self.bindHelpEvent("ConfigProfileManual", self.changeStateButton)
 		self.changeStateButton.Bind(wx.EVT_BUTTON, self.onChangeState)
 		self.AffirmativeId = self.changeStateButton.Id
@@ -68,17 +69,17 @@ class ProfilesDialog(
 
 		buttonHelper = guiHelper.ButtonHelper(wx.VERTICAL)
 		# Translators: The label of a button to create a new configuration profile.
-		newButton = buttonHelper.addButton(self, label=_("&New"))
+		newButton = buttonHelper.addButton(profilesListBox, label=_("&New"))
 		self.bindHelpEvent("ProfilesCreating", newButton)
 		newButton.Bind(wx.EVT_BUTTON, self.onNew)
 
 		# Translators: The label of a button to rename a configuration profile.
-		self.renameButton = buttonHelper.addButton(self, label=_("&Rename"))
+		self.renameButton = buttonHelper.addButton(profilesListBox, label=_("&Rename"))
 		self.bindHelpEvent("ProfilesBasicManagement", self.renameButton)
 		self.renameButton.Bind(wx.EVT_BUTTON, self.onRename)
 
 		# Translators: The label of a button to delete a configuration profile.
-		self.deleteButton = buttonHelper.addButton(self, label=_("&Delete"))
+		self.deleteButton = buttonHelper.addButton(profilesListBox, label=_("&Delete"))
 		self.bindHelpEvent("ProfilesBasicManagement", self.deleteButton)
 		self.deleteButton.Bind(wx.EVT_BUTTON, self.onDelete)
 
