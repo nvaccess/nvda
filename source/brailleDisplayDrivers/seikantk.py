@@ -18,7 +18,6 @@ import bdDetect
 import hwIo
 from serial.win32 import INVALID_HANDLE_VALUE
 from logHandler import log
-import config
 
 TIMEOUT = 0.2
 
