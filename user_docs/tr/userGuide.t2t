@@ -3162,9 +3162,9 @@ Bu değerler kayıt defterinde aşağıdaki anahtarlardan birinin altında tutul
 -
 
 Bu kayıt defteri anahtarı altında aşağıdaki değerler ayarlanabilir:
-|| Name | Type | Possible values | Description |
-| configInLocalAppData | DWORD | 0 (default) to disable, 1 to enable | If enabled, stores the NVDA user configuration in the local application data instead of the roaming application data |
-| serviceDebug | DWORD | 0 (default) to disable, 1 to enable | If enabled, disables secure mode on windows secure desktops, allowing the use of the Python console and Log viewer. Due to several major security implications, the use of this option is strongly discouraged |
+|| Ad | Tür | Olası değerler | Açıklama |
+| configInLocalAppData | DWORD | devre dışı bırakmak için 0 (varsayılan), etkinleştirmek için 1 | etkinleştirilirse, NVDA kullanıcı konfigürasyonunu roaming application data  yerine local application data  altında tutar |
+| serviceDebug | DWORD | devre dışı bırakmak için 0 (varsayılan), etkinleştirmek için 1 | Etkinleştirilirse, Windows güvenli masaüstlerinde güvenli modu devre dışı bırakarak Python konsolu ve Günlük görüntüleyicinin kullanımına izin verir. Güvenlik açısından birkaç önemli sonuç nedeniyle, bu seçeneğin kullanılması kesinlikle önerilmez. |
 
 + Daha Detaylı Bilgi +[FurtherInformation]
 NVDA ile ilgili daha fazla bilgiye veya yardıma ihtiyaç duyarsanız, NVDA_URL adresini ziyaret edebilirsiniz.
