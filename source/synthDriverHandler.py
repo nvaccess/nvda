@@ -62,7 +62,7 @@ class SynthDriver(driverHandler.Driver):
 	e.g. the L{voice} attribute is used for the L{voice} setting.
 	These will usually be properties.
 	L{supportedCommands} should specify what synth commands the synthesizer supports.
-	At a minimum, L{speech.IndexCommand} must be supported.
+	At a minimum, L{IndexCommand} must be supported.
 	L{PitchCommand} must also be supported if you want capital pitch change to work;
 	support for the pitch setting is not sufficient.
 	L{supportedNotifications} should specify what notifications the synthesizer provides.
