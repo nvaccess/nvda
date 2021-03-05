@@ -3,32 +3,32 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from dataclasses import dataclass
-from ctypes import *
-from ctypes.wintypes import *
+import ctypes
+import ctypes.wintypes
+from ctypes import (
+	oledll,
+	windll,
+)
 from enum import (
 	Enum,
-	IntEnum,
 )
 
 import comtypes.client
 from comtypes.automation import VT_EMPTY
 from comtypes import (
 	COMError,
-	GUID,
+	COMObject,
 	byref,
+	CLSCTX_INPROC_SERVER,
+	CoCreateInstance,
 )
-from comtypes import *
-import weakref
+
 import threading
 import time
-from collections import namedtuple
 import config
 import api
 import appModuleHandler
-import queueHandler
 import controlTypes
-import NVDAHelper
 import winKernel
 import winUser
 import winVersion
@@ -256,7 +256,13 @@ class UIAHandler(COMObject):
 			raise self.MTAThreadInitException
 
 	def terminate(self):
-		MTAThreadHandle=HANDLE(windll.kernel32.OpenThread(winKernel.SYNCHRONIZE,False,self.MTAThread.ident))
+		MTAThreadHandle = ctypes.wintypes.HANDLE(
+			windll.kernel32.OpenThread(
+				winKernel.SYNCHRONIZE,
+				False,
+				self.MTAThread.ident
+			)
+		)
 		self.MTAThreadQueue.put_nowait(None)
 		#Wait for the MTA thread to die (while still message pumping)
 		if windll.user32.MsgWaitForMultipleObjects(1,byref(MTAThreadHandle),False,200,0)!=0:
