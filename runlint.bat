@@ -5,5 +5,5 @@ call "%~dp0\venvUtils\venvCmd.bat" py "%~dp0\tests\lint\genDiff.py" %1 "%~dp0\te
   if ERRORLEVEL 1 exit /b %ERRORLEVEL%
   set flake8Args=--diff --config="%~dp0\tests\lint\flake8.ini"
   if "%2" NEQ "" set flake8Args=%flake8Args%  --tee --output-file=%2
-  type "%~dp0\_lint.diff" | call "%~dp0\venvUtils\venvCmd.bat" py -Xutf8 -m flake8 %flake8Args%
+  type "%~dp0\tests\lint\_lint.diff" | call "%~dp0\venvUtils\venvCmd.bat" py -Xutf8 -m flake8 %flake8Args%
   
