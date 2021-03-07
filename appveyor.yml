@@ -162,7 +162,7 @@ test_script:
      $errorCode=0
      $outDir = (Resolve-Path .\testOutput\unit\)
      $unitTestsXml = "$outDir\unitTests.xml"
-     py -m nose -sv --with-xunit --xunit-file="$unitTestsXml" --traverse-namespace -w ./tests/unit
+     rununittests --with-xunit --xunit-file="$unitTestsXml"
      if($LastExitCode -ne 0) {
       $errorCode=$LastExitCode
       Add-AppveyorMessage "Unit test failure"
@@ -177,12 +177,14 @@ test_script:
     if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
       $lintOutput = (Resolve-Path .\testOutput\lint\)
       $lintSource = (Resolve-Path .\tests\lint\)
-      git fetch -q origin $env:APPVEYOR_REPO_BRANCH
-      $prDiff = "$lintOutput\prDiff.patch"
-      git diff -U0 FETCH_HEAD...HEAD > $prDiff
-      $flake8Config = "$lintSource\flake8.ini"
-      $flake8Output = "$lintOutput\PR-Flake8.txt"
-      type "$prDiff" | py -Xutf8 -m flake8 --diff --output-file="$flake8Output" --tee --config="$flake8Config"
+      # When Appveyor runs for a pr,
+      # the build is made from a new temporary commit,
+      # resulting from the pr branch being merged into its base branch.
+      # Therefore to create a diff for linting, we must fetch the head of the base branch.
+      # In a PR, APPVEYOR_REPO_BRANCH points to the head of the base branch. 
+                 git fetch -q origin $env:APPVEYOR_REPO_BRANCH
+                 $flake8Output = "$lintOutput\PR-Flake8.txt"
+      runlint FETCH_HEAD "$flake8Output" 
       if($LastExitCode -ne 0) {
        $errorCode=$LastExitCode
        Add-AppveyorMessage "PR introduces Flake8 errors"
@@ -200,20 +202,15 @@ test_script:
  - ps: |
      $testOutput = (Resolve-Path .\testOutput\)
      $systemTestOutput = (Resolve-Path "$testOutput\system")
-     $testSource = ".\tests\system\robot"
-
-     $robotArgs = '--argumentfile', '.\tests\system\robotArgs.robot'
-     # useInstalledNVDA must come after args file to override the whichNVDA value
-     $useInstalledNVDA = '--variable', 'whichNVDA:installed'
-
-     py -m robot $robotArgs $useInstalledNVDA $testSource
-     Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
-     Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
+    
+     runsystemtests --variable whichNVDA:installed
      if($LastExitCode -ne 0) {
       $errorCode=$LastExitCode
       Add-AppveyorMessage "System test failure"
      }
-     $wc = New-Object 'System.Net.WebClient'
+     Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
+     Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
+          $wc = New-Object 'System.Net.WebClient'
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$systemTestOutput\systemTests.xml"))
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
