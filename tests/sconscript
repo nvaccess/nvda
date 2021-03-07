@@ -22,18 +22,3 @@ checkPotTarget = env.Command("checkPot", pot, checkPotAction)
 env.Depends(checkPotTarget, pot)
 env.AlwaysBuild(checkPotTarget)
 env.Alias("checkPot", checkPotTarget)
-
-# Determine the targets for scons tests.
-# If specific tests are explicitly specified, only run those.
-explicitUnitTests = env.get("unitTests")
-explicitCheckPot = "checkPot" in COMMAND_LINE_TARGETS
-explicitSystemTests = "systemTests" in COMMAND_LINE_TARGETS
-explicit = explicitUnitTests or explicitCheckPot or explicitSystemTests
-tests = []
-if not explicit or explicitUnitTests:
-	tests.append(unitTests)
-if not explicit or explicitCheckPot:
-	tests.append(checkPotTarget)
-if explicit and explicitSystemTests: # only run system tests explicitly
-	tests.append(systemTests)
-env.Alias("tests", tests)
