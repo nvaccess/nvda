@@ -282,23 +282,26 @@ scons checkPot
 ### Linting your changes
 In order to ensure your changes comply with NVDA's coding style you can run the Flake8 linter locally.
 Some developers have found certain linting error messages misleading, these are clarified in `tests/lint/readme.md`.
-Running via SCons will use Flake8 to inspect only the differences between your working directory and the specified `base` branch.
+runlint.bat  will use Flake8 to inspect only the differences between your working directory and the specified `base` branch.
 If you create a Pull Request, the `base` branch you use here should be the same as the target you would use for a Pull Request. In most cases it will be `origin/master`.
 ```
-scons lint base=origin/master
+runlint origin/master
 ```
 
 To be warned about linting errors faster, you may wish to integrate Flake8 other development tools you are using.
 For more details, see `tests/lint/readme.md`
 
-### System Tests
-You may also use `scons` to run the system tests,
- though this will still require the dependencies to be set up.
-For more details (including filtering and exclusion of tests) see `tests/system/readme.md`.
+### Unit Tests
+Unit tests can be run with the `rununittests.bat` script.
+Internally this script uses the Nose Python test framework to execute the tests.
+Any arguments given to rununittests.bat are forwarded onto Nose.
+Please refer to Nose's own documentation on how to filter tests etc.
 
-```
-scons systemTests
-```
+### System Tests
+System tests can be run with the `runsystemtests.bat` script.
+Internally this script uses the Robot  test framework to execute the tests.
+Any arguments given to runsystemtests.bat are forwarded onto Robot.
+For more details (including filtering and exclusion of tests) see `tests/system/readme.md`.
 
 ## Contributing to NVDA
 
