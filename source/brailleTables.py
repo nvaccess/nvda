@@ -114,6 +114,12 @@ addTable("ba.utb", _("Bashkir grade 1"), input=False)
 addTable("be-in-g1.utb", _("Bengali grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("bel-comp.utb", _("Belarusian computer braille"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("bel.utb", _("Belarusian literary braille"), input=False)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("bg.ctb", _("Bulgarian 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
