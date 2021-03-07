@@ -162,7 +162,7 @@ test_script:
      $errorCode=0
      $outDir = (Resolve-Path .\testOutput\unit\)
      $unitTestsXml = "$outDir\unitTests.xml"
-     rununittests --with-xunit --xunit-file="$unitTestsXml"
+     .\rununittests.bat --with-xunit --xunit-file="$unitTestsXml"
      if($LastExitCode -ne 0) {
       $errorCode=$LastExitCode
       Add-AppveyorMessage "Unit test failure"
@@ -184,7 +184,7 @@ test_script:
       # In a PR, APPVEYOR_REPO_BRANCH points to the head of the base branch. 
                  git fetch -q origin $env:APPVEYOR_REPO_BRANCH
                  $flake8Output = "$lintOutput\PR-Flake8.txt"
-      runlint FETCH_HEAD "$flake8Output" 
+      .\runlint.bat FETCH_HEAD "$flake8Output" 
       if($LastExitCode -ne 0) {
        $errorCode=$LastExitCode
        Add-AppveyorMessage "PR introduces Flake8 errors"
@@ -203,7 +203,7 @@ test_script:
      $testOutput = (Resolve-Path .\testOutput\)
      $systemTestOutput = (Resolve-Path "$testOutput\system")
     
-     runsystemtests --variable whichNVDA:installed
+     .\runsystemtests.bat --variable whichNVDA:installed
      if($LastExitCode -ne 0) {
       $errorCode=$LastExitCode
       Add-AppveyorMessage "System test failure"
