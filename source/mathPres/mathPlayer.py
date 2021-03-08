@@ -63,8 +63,7 @@ def _processMpSpeech(text, language):
 		if m.lastgroup == "break":
 			out.append(BreakCommand(time=int(m.group("break")) * breakMulti))
 		elif m.lastgroup == "char":
-			out.extend((CharacterModeCommand(True),
-				m.group("char"), CharacterModeCommand(False)))
+			out.extend((CharacterModeCommand(True), m.group("char"), CharacterModeCommand(False)))
 		elif m.lastgroup == "comma":
 			out.append(BreakCommand(time=100))
 		elif m.lastgroup in PROSODY_COMMANDS:
@@ -76,8 +75,7 @@ def _processMpSpeech(text, language):
 				out.append(command(multiplier=1))
 			resetProsody.clear()
 		elif m.lastgroup == "phonemeText":
-			out.append(PhonemeCommand(m.group("ipa"),
-				text=m.group("phonemeText")))
+			out.append(PhonemeCommand(m.group("ipa"), text=m.group("phonemeText")))
 		elif m.lastgroup == "content":
 			out.append(m.group(0))
 	if language:

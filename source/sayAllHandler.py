@@ -72,7 +72,7 @@ class _ObjectsReader(garbageHandler.TrackedObject):
 			return
 		# Call this method again when we start speaking this object.
 		callbackCommand = CallbackCommand(self.next, name="say-all:next")
-		speakObject(obj, reason=controlTypes.OutputReason.SAYALL, _prefixSpeechCommand=callbackCommand)
+		speech.speakObject(obj, reason=controlTypes.OutputReason.SAYALL, _prefixSpeechCommand=callbackCommand)
 
 	def stop(self):
 		self.walker = None
