@@ -1,6 +1,7 @@
-A Python virtual environment is now used transparently by the NVDA build system, and all Python dependencies are installed into this environment using `pip`.
+A Python virtual environment is used transparently by the NVDA build system, and all Python dependencies are installed into this environment using `pip`.
 
-From a developer's perspective using the NVDA build system, there is no need to worry about the Python virtual environment behind the scenes, nor should you create and or activate one manually. All NVDA build system commands will handle this transparently.
+NVDA's build system commands will handle all aspects of the virtual environment.
+Developers should not create or activate the virtual environment manually, unless working on the build system itself.
 
 * To build NVDA, SCons should continue to be used in the usual way. E.g. executing scons.bat in the root of the repository. Running `py -m SCons`  is no longer supported, and scons.py has also been removed. 
 * To run NVDA from source, rather than executing `source/nvda.pyw` directly, the developer should now use `runnvda.bat` in the root of the repository. `runnvda.bat` uses `pythonw.exe` internally to execute NVDA. If you do try to execute `source/nvda.pyw`, a message box will alert you this is no longer supported.

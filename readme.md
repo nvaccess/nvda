@@ -159,7 +159,7 @@ Please see the `release` keyword argument for what compiler optimizations it wil
 
 ## Running the Source Code
 It is possible to run NVDA directly from source without having to build the full binary package and launcher.
-To launch NVDA from source, execute runnvda.bat in the root of the repository.
+To launch NVDA from source, using `cmd.exe`, execute `runnvda.bat` in the root of the repository.
 
 To view help on the arguments that NVDA will accept, use the `-h` or `--help` option.
 These arguments are also documented in the user guide.

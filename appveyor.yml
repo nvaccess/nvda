@@ -183,8 +183,8 @@ test_script:
       # resulting from the pr branch being merged into its base branch.
       # Therefore to create a diff for linting, we must fetch the head of the base branch.
       # In a PR, APPVEYOR_REPO_BRANCH points to the head of the base branch. 
-                 git fetch -q origin $env:APPVEYOR_REPO_BRANCH
-                 $flake8Output = "$lintOutput\PR-Flake8.txt"
+     git fetch -q origin $env:APPVEYOR_REPO_BRANCH
+     $flake8Output = "$lintOutput\PR-Flake8.txt"
       .\runlint.bat FETCH_HEAD "$flake8Output" 
       if($LastExitCode -ne 0) {
        $errorCode=$LastExitCode
@@ -211,7 +211,7 @@ test_script:
      }
      Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
      Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
-          $wc = New-Object 'System.Net.WebClient'
+     $wc = New-Object 'System.Net.WebClient'
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$systemTestOutput\systemTests.xml"))
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
