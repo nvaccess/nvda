@@ -12,7 +12,7 @@ import os
 import globalVars
 import ctypes
 
-customVenvDetected=False
+customVenvDetected = False
 if getattr(sys, "frozen", None):
 	# We are running as an executable.
 	# Append the path of the executable to sys so we can import modules from the dist dir.
