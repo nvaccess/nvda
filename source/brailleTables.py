@@ -438,6 +438,12 @@ addTable("uk.utb", _("Ukrainian grade 1"))
 addTable("uk-comp.utb", _("Ukrainian computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("ur-pk-g1.utb", _("Urdu grade 1"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("ur-pk-g2.ctb", _("Urdu grade 2"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("uz-g1.utb", _("Uzbek grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
