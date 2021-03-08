@@ -6,13 +6,14 @@ rem and then finally deactivates the environment.
 
 rem This script also supports running in an already fully activated NVDA Python environment.
 rem If this is detected, the command is executed directly instead.
-if "%NVDA_VENV%" NEQ "" (
-	if "%NVDA_VENV%" == "%VIRTUAL_ENV%" (
-		rem We are already in the NVDA Python virtual environment.
-		echo directly calling %*
-		call %*
-		goto :EOF
+if "%VIRTUAL_ENV%" NEQ "" (
+	if "%NVDA_VENV%" NEQ "%VIRTUAL_ENV%" (
+		echo Warning: Detected a custom Python virtual environment. 
+		echo It is recommended to run all NVDA build system commands outside of any existing Python virtual environment, unless you really know what you are doing.
 	)
+	echo directly calling %*
+	call %*
+	goto :EOF
 )
 
 setlocal
