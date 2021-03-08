@@ -50,8 +50,8 @@ class _NvdaLocationData:
 
 		self.whichNVDA = builtIn.get_variable_value("${whichNVDA}", "source")
 		if self.whichNVDA == "source":
-			self._runNVDAFilePath = _pJoin(self.repoRoot, "source/nvda.pyw")
-			self.baseNVDACommandline = f"pyw {self._runNVDAFilePath}"
+			self._runNVDAFilePath = _pJoin(self.repoRoot, "runnvda.bat")
+			self.baseNVDACommandline = self._runNVDAFilePath
 		elif self.whichNVDA == "installed":
 			self._runNVDAFilePath = _pJoin(_expandvars('%PROGRAMFILES%'), 'nvda', 'nvda.exe')
 			self.baseNVDACommandline = f'"{str(self._runNVDAFilePath)}"'
