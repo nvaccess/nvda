@@ -33,7 +33,7 @@ class MathPresentationProvider(object):
 		@param mathMl: The MathML markup.
 		@type mathMl: str
 		@return: A speech sequence.
-		@rtype: List[str, commands.SpeechCommand]
+		@rtype: List[str, SpeechCommand]
 		"""
 		raise NotImplementedError
 

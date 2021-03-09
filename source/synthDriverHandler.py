@@ -93,7 +93,7 @@ class SynthDriver(driverHandler.Driver):
 	#: @type: str
 	description = ""
 	#: The speech commands supported by the synth.
-	#: @type: set of L{commands.SynthCommand} subclasses.
+	#: @type: set of L{SynthCommand} subclasses.
 	supportedCommands = frozenset()
 	#: The notifications provided by the synth.
 	#: @type: set of L{extensionPoints.Action} instances
