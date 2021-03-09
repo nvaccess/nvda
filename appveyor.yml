@@ -273,8 +273,7 @@ on_finish:
   # add a message to point to the NVDA build, to make testing PR's easier.
   - ps: |
       # Save an exact list of the actual Python packages and their versions that got installed, to aide in reproducing a build
-      .\venvUtils\ensureAndActivate.bat
-      py -m pip freeze >installed_python_packages.txt
+      .\venvUtils\exportPackageList.bat installed_python_packages.txt
       Push-AppveyorArtifact installed_python_packages.txt
       $appVeyorUrl = "https://ci.appveyor.com"
       $exe = Get-ChildItem -Name output\*.exe
