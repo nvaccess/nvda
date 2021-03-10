@@ -1,24 +1,74 @@
-A Python virtual environment is used transparently by the NVDA build system, and all Python dependencies are installed into this environment using `pip`.
+# Build System Notes
+A Python virtual environment is used transparently by the NVDA build system,
+and all Python dependencies are installed into this environment using `pip`.
 
 NVDA's build system commands will handle all aspects of the virtual environment.
-Developers should not create or activate the virtual environment manually, unless working on the build system itself.
+Developers should not create or activate the virtual environment manually, unless
+working on the build system itself.
 
-* To build NVDA, SCons should continue to be used in the usual way. E.g. executing scons.bat in the root of the repository. Running `py -m SCons`  is no longer supported, and scons.py has also been removed. 
-* To run NVDA from source, rather than executing `source/nvda.pyw` directly, the developer should now use `runnvda.bat` in the root of the repository. `runnvda.bat` uses `pythonw.exe` internally to execute NVDA. If you do try to execute `source/nvda.pyw`, a message box will alert you this is no longer supported.
-* To perform unit tests, execute `rununittests.bat [<extra unittest discover options>]`
-* To perform system tests: execute `runsystemtests.bat [<extra robot options>]`
-* To perform linting, execute `runlint.bat <base branch>`
+For the documentation on how to _use_ the build system (E.G. building,
+running NVDA or tests) see the main repository readme file.
 
-Behind the scenes, the above batch files (`scons`, `runnvda`, `rununittests`, `runsystemtests` and `runlint`) ensure that the Python virtual environment is created and up to date, activates the environment, runs the command and then deactivates. All transparently. A developer should not have to know about the Python virtual environment at all.
-The first time one of these commands are run, the virtual environment will be created, and all required Python dependencies will be installed with `pip`. You can see the entire list of packages and their exact versions that `pip` will use, in `requirements.txt` in the root of the repository.
+## How the build system works
 
-`venvUtils/ensureVenv.py` contains the logic to check for, create and update the virtual environment.
-If a previous virtual environment exists but has a miss-matching Python version or pip package requirements have changed, The virtual environment is recreated with the updated version of Python and packages.
-If a virtual environment is found but does not seem to be ours, the user is asked if it should be overwritten or not.
-This script also detects if it is being run from an existing 3rd party Python virtual environment and aborts if so. thus, it is impossible to execute SCons or NVDA from source within another Python virtual environment.
+The virtual environment system used is `venv`.
+Dependencies are installed with `pip` via the `requirements.txt` file.
+Version numbers for dependencies should be used to lock in a version
 
-`venvUtils/ensureAndActivate.bat` can be used to ensure the virtual environment exists and is up to date, and then activates it in the current shell, ready for other commands to be executed in the context of NVDA's build system Python virtual environment. this would never normally be executed by itself, though appVeyor uses it at the beginning of its execution and leaves the environment active for the remainder of its execution.
+The virtual environment is recreated if it is outdated, either due to:
+- Python version.
+- `pip` requirements.
 
-`venvUtils/venvCmd.bat` is a script that runs a single command within the context of the NVDA build system Python virtual environment. It ensures and activates the environment, executes the command, and then deactivates the environment. this script is what all the high-level batch files use internally. 
+The user is consulted before modifying / removing a virtual environment that can't be identified
+as having been created by NVDA's build system.
 
-SConstruct, and `source/nvda.pyw` both contain logic that detects the NVDA build system Python virtual environment, and abort if it is not active.
+### Entry points to the build system
+
+These are the only files expected to be executed directly by a user/developer:
+- `scons.bat`
+- `runnvda.bat`
+- `rununittests.bat`
+- `runsystemtests.bat`
+- `runlint.bat`
+
+**Note:** The `runnvda.bat` script intentionally uses `pyw.exe` to run NVDA as
+this is the more common and expected way to run NVDA.
+Run NVDA with `py.exe` in order to have standard output/error output to the console.
+This is particularly useful if there is an error in NVDA before logging is initialised.
+To do this, modify the `runnvda.bat` file.
+
+**Note:** Executing `source/nvda.pyw` outside of a virtual environment will an error message
+and early termination.
+
+### Main implementation files:
+The following files contain the main implementation of the virtual environment setup.
+
+#### `venvUtils/ensureAndActivate.bat`
+   - Activates the virtual environment.
+   - If necessary, creates and configures it first. 
+   - The virtual environment is left active. 
+#### `venvUtils/venvCmd.bat`
+  - Uses `ensureAndActivate.bat` to run a command within the context
+   of the virtual environment. 
+  - The virtual environment is deactivated after the command
+   completes.
+  - All entry point scripts depend on this.
+#### `venvUtils/ensureVenv.py`
+- Does the actual work to create and configure the virtual
+   environment.
+
+## Motivation for using virtual environments
+
+In order to ensure the build environment is clean, no conflicts with other installed packages
+
+NVDA and its build system have has many Python dependencies.
+Using `pip` and a virtual environment means:
+- Updating is easier than git submodules.
+  E.G. wxPython no longer has to pre-built and stored in our bin repo.
+- Developers need to sync/update their submodules less often.
+- More consistency for dependencies.
+- IDE's can be configured more easily.
+- No conflict between NVDA dependencies and Python packages already installed globally on the
+  developer's system.
+- Don't interfere with the developer's system. Installing packages globally may break things
+  outside of NVDA.
