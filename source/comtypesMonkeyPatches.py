@@ -102,7 +102,7 @@ def newCpbDel(self):
 	# In this state, global symbols may be set to None
 	# Therefore avoid calling into garbageHandler.
 	# Using local variables or calling other methods on this class is still okay.
-	isFinalizing = getattr(sys,'is_finalizing', lambda: True)()
+	isFinalizing = getattr(sys, 'is_finalizing', lambda: True)()
 	if hasattr(self, "_deleted"):
 		# Don't allow this to be called more than once.
 		if not isFinalizing:

@@ -23,7 +23,7 @@ class TrackedObject:
 	def __del__(self):
 		# __del__ may still be called while Python is exiting.
 		# And therefore some symbols may be set to None.
-		isFinalizing = getattr(sys,'is_finalizing', lambda: True)()
+		isFinalizing = getattr(sys, 'is_finalizing', lambda: True)()
 		if not isFinalizing:
 			notifyObjectDeletion(self)
 
