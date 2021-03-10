@@ -5,6 +5,7 @@
 # See the file COPYING for more details.
 
 
+import sys
 import gc
 import threading
 from logHandler import log
@@ -20,7 +21,11 @@ class TrackedObject:
 	"""
 
 	def __del__(self):
-		notifyObjectDeletion(self)
+		# __del__ may still be called while Python is exiting.
+		# And therefore some symbols may be set to None.
+		isFinalizing = getattr(sys,'is_finalizing', lambda: True)()
+		if not isFinalizing:
+			notifyObjectDeletion(self)
 
 
 _collectionThreadID = 0
