@@ -8,6 +8,7 @@
 import ctypes
 import _ctypes
 import importlib
+import sys
 
 
 # A version of ctypes.WINFUNCTYPE 
@@ -95,14 +96,21 @@ comtypes.client.dynamic._Dispatch.__call__=new__call__
 # This causes Release() to be called more than it should, which is very nasty and will eventually cause us to access pointers which have been freed.
 from comtypes import _compointer_base
 
-_cpbDel = _compointer_base.__del__
+_compointer_base._oldCpbDel = _compointer_base.__del__
 def newCpbDel(self):
+	# __del__ may be called while Python is exiting.
+	# In this state, global symbols may be set to None
+	# Therefore avoid calling into garbageHandler.
+	# Using local variables or calling other methods on this class is still okay.
+	isFinalizing = getattr(sys,'is_finalizing', lambda: True)()
 	if hasattr(self, "_deleted"):
 		# Don't allow this to be called more than once.
-		log.debugWarning("COM pointer %r already deleted" % self)
+		if not isFinalizing:
+			log.debugWarning("COM pointer %r already deleted" % self)
 		return
-	garbageHandler.notifyObjectDeletion(self)
-	_cpbDel(self)
+	if not isFinalizing:
+		garbageHandler.notifyObjectDeletion(self)
+	self._oldCpbDel()
 	self._deleted = True
 newCpbDel.__name__ = "__del__"
 _compointer_base.__del__ = newCpbDel
