@@ -130,6 +130,8 @@ IDispatch._GetTypeInfo=newGetTypeInfo
 # comtypes doesn't let us disable this when running from source, so we need to monkey patch.
 # This is just the code from the original comtypes._check_version excluding the time check.
 import comtypes
+
+
 def _check_version(actual, tlib_cached_mtime=None):
 	from comtypes.tools.codegenerator import version as required
 	if actual != required:
