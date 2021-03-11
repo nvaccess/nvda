@@ -365,9 +365,31 @@ class CalendarView(IAccessible):
 				except COMError:
 					return super(CalendarView,self).reportFocus()
 				timeSlotText=self._generateTimeRangeText(selectedStartTime,selectedEndTime)
-				startLimit=u"%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedStartTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedStartTime, None))
-				endLimit=u"%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedEndTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedEndTime, None))
-				query=u'[Start] < "{endLimit}" And [End] > "{startLimit}"'.format(startLimit=startLimit,endLimit=endLimit)
+				startDate = winKernel.GetDateFormatEx(
+					winKernel.LOCALE_NAME_USER_DEFAULT,
+					winKernel.DATE_LONGDATE,
+					selectedStartTime,
+					None
+				)
+				startTime = winKernel.GetTimeFormatEx(
+					winKernel.LOCALE_NAME_USER_DEFAULT,
+					winKernel.TIME_NOSECONDS,
+					selectedStartTime,
+					None
+				)
+				endDate = winKernel.GetDateFormatEx(
+					winKernel.LOCALE_NAME_USER_DEFAULT,
+					winKernel.DATE_LONGDATE,
+					selectedEndTime,
+					None
+				)
+				endTime = winKernel.GetTimeFormatEx(
+					winKernel.LOCALE_NAME_USER_DEFAULT,
+					winKernel.TIME_NOSECONDS,
+					selectedEndTime,
+					None
+				)
+				query = f'[Start] < "{endDate} {endTime}" And [End] > "{startDate} {startTime}"'
 				i=e.currentFolder.items
 				i.sort('[Start]')
 				i.IncludeRecurrences =True

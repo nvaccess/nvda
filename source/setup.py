@@ -213,12 +213,13 @@ setup(
 	],
 	options = {"py2exe": {
 		"bundle_files": 3,
-		"excludes": ["tkinter",
-			"serial.loopback_connection", 
-			"serial.rfc2217", 
-			"serial.serialcli", 
-			"serial.serialjava", 
-			"serial.serialposix", 
+		"excludes": [
+			"tkinter",
+			"serial.loopback_connection",
+			"serial.rfc2217",
+			"serial.serialcli",
+			"serial.serialjava",
+			"serial.serialposix",
 			"serial.socket_connection",
 			# netbios (from pywin32) is optionally used by Python3's uuid module.
 			# This is not needed.
@@ -228,6 +229,8 @@ setup(
 			# winxptheme is optionally used by wx.lib.agw.aui.
 			# We don't need this.
 			"winxptheme",
+			# numpy is an optional dependency of comtypes but we don't require it.
+			"numpy",
 		],
 		"packages": [
 			"NVDAObjects",
@@ -242,6 +245,8 @@ setup(
 			"nvdaBuiltin",
 			# #3368: bisect was implicitly included with Python 2.7.3, but isn't with 2.7.5.
 			"bisect",
+			# robotremoteserver (for system tests) depends on xmlrpc.server
+			"xmlrpc.server",
 		],
 	}},
 	data_files=[

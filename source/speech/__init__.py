@@ -275,13 +275,6 @@ def getSpellingSpeech(  # noqa: C901
 			yield PitchCommand()
 		yield EndUtteranceCommand()
 
-
-# 'getSpeechForSpelling' should be considered deprecated, use getSpellingSpeech instead.
-# The name 'getSpeechForSpelling' was introduced during the 2019.3 release.
-# The decision was made to rename it to be consistent with the other functions (get*Speech) which create
-# speech sequences.
-getSpeechForSpelling = getSpellingSpeech
-
 def getCharDescListFromText(text,locale):
 	"""This method prepares a list, which contains character and its description for all characters the text is made up of, by checking the presence of character descriptions in characterDescriptions.dic of that locale for all possible combination of consecutive characters in the text.
 	This is done to take care of conjunct characters present in several languages such as Hindi, Urdu, etc.
