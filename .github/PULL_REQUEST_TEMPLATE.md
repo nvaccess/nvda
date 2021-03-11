@@ -9,7 +9,7 @@ Please also note that the NVDA project has a Citizen and Contributor Code of Con
 
 ### Description of how this pull request fixes the issue:
 
-### Testing performed:
+### Testing strategy:
 
 ### Known issues with pull request:
 
@@ -17,3 +17,18 @@ Please also note that the NVDA project has a Citizen and Contributor Code of Con
 
 Section: New features, Changes, Bug fixes
 
+### Code Review Checklist:
+
+This checklist is a reminder of things commonly forgotten in a new PR.
+Authors, please do a self-review and confirm you have considered the following items.
+Mark items you have considered by checking them.
+You can do this when editing the Pull request description with an x: `[ ]` becomes `[x]`.
+You can also check the checkboxes after the PR is created.
+
+- [ ] Pull Request description is up to date.
+- [ ] Unit tests.
+- [ ] System (end to end) tests.
+- [ ] Manual tests.
+- [ ] User Documentation.
+- [ ] Change log entry.
+- [ ] Context sensitive help for GUI changes.

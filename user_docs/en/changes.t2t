@@ -15,6 +15,7 @@ What's New in NVDA
 - Updated Unicode Common Locale Data Repository (CLDR) to 38.1. (#11943)
 - Added more mathematical symbols to the symbols dictionary. (#11467)
 - The user guide, changes file, and key commands listing now have a refreshed appearance. (#12027)
+- "Unsupported" now reported when attempting to toggle screen layout in applications that do not support it, such as Microsoft Word. (#7297)
 
 
 == Bug Fixes ==
@@ -29,6 +30,14 @@ What's New in NVDA
 
 == Changes for Developers ==
 - Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
+- NVDA now requires Python 3.8. (#12075)
+- NVDA's build system now fetches all Python dependencies with pip and stores them in a Python virtual environment. This is all done transparently.
+ - To build NVDA, SCons should continue to be used in the usual way. E.g. executing scons.bat in the root of the repository. Running ``py -m SCons``  is no longer supported, and ``scons.py`` has also been removed. 
+ - To run NVDA from source, rather than executing ``source/nvda.pyw`` directly, the developer should now use ``runnvda.bat`` in the root of the repository. If you do try to execute ``source/nvda.pyw``, a message box will alert you this is no longer supported.
+ - To perform unit tests, execute ``rununittests.bat [<extra unittest discover options>]``
+ - To perform system tests: execute ``runsystemtests.bat [<extra robot options>] ``
+ - To perform linting, execute ``runlint.bat <base branch>``
+ - Please refer to readme.md for more details.
 - `LiveText._getTextLines` has been removed. (#11639)
   - Instead, override `_getText` which returns a string of all text in the object.
 - `LiveText` objects can now calculate diffs by character. (#11639)
@@ -49,6 +58,10 @@ What's New in NVDA
   - 'isCurrent' is no longer Optional, and thus will not return None, when an object is not current 'controlTypes.IsCurrent.NO' is returned.
 - The 'controlTypes.isCurrentLabels' has been removed, instead use the 'displayString' property on a 'controlTypes.IsCurrent' enum value. (#11782)
   - EG 'controlTypes.IsCurrent.YES.displayString'
+- `winKernel.GetTimeFormat` has been removed - use `winKernel.GetTimeFormatEx` instead (#12139)
+- `winKernel.GetDateFormat` has been removed - use `winKernel.GetDateFormatEx` instead (#12139)
+- `gui.DriverSettingsMixin` has been removed - use `gui.AutoSettingsMixin` (#12144)
+- `speech.getSpeechForSpelling` has been removed - use `speech.getSpellingSpeech` (#12145)
 
 
 = 2020.4 =
@@ -114,7 +127,7 @@ Plus many other important bug fixes and improvements.
 - ARIA treegrids are now exposed as normal tables in browse mode in both Firefox and Chrome. (#9715)
 - A reverse search can now be initiated with 'find previous' via NVDA+shift+F3 (#11770)
 - An NVDA script is no longer treated as being repeated if an unrelated key press happens in between the two executions of the script. (#11388) 
-- Strong and emphasis tags in Internet Explorer can again be suppressed from being reported by returning off Report Emphasis in NVDA's Document Formatting settings. (#11808)
+- Strong and emphasis tags in Internet Explorer can again be suppressed from being reported by turning off Report Emphasis in NVDA's Document Formatting settings. (#11808)
 - A freeze of several seconds experienced by a small amount of users when arrowing between cells in Excel should no longer occur. (#11818)
 - In Microsoft Teams builds with version numbers like 1.3.00.28xxx, NVDA no longer fails reading messages in chats or Teams channels due to an incorrectly focused menu. (#11821)
 - Text marked both as being a spelling and grammar error at the same time in Google Chrome will be appropriately announced as both a spelling and grammar error by NVDA. (#11787)
@@ -3123,4 +3136,3 @@ Major highlights of this release include support for 64 bit editions of Windows;
 - NVDA now asks if it should save configuration and restart if the user has just changed the language in the User Interface Settings Dialog. NVDA must be restarted for the language change to fully take effect.
 - If a synthesizer can not be loaded, when choosing it from the synthesizer dialog, a message box alerts the user to the fact.
 - When loading a synthesizer for the first time, NVDA lets the synthesizer choose the most suitable voice, rate and pitch parameters, rather than forcing it to defaults it thinks are ok. This fixes a problem where Eloquence and Viavoice sapi4 synths start speaking way too fast for the first time.
-

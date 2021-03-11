@@ -307,7 +307,7 @@ For eksempel, hvis du skriver i et redigerbart tekstfelt har tekstfeltet fokus.
 
 Den mest almindelige måde at navigere rundt med NVDA i Windows er simpelthen ved at bevæge sig rundt med de almindelige Windows-tastatur kommandoer, såsom at trykke på Tab og Skift+TAB for at flytte frem og tilbage mellem kontrolelementerne, trykke ALT for at komme til menulinjen og derefter bruge pilene til at navigere i menuer, og bruge ALT + TAB for at flytte mellem kørende programmer.
 Mens du gør dette, vil NVDA give dig oplysninger om det objekt, som har fokus såsom dets navn, type, værdi, tilstand, beskrivelse, tastaturgenvej og oplysninger om placering.
-Når [Fremhæv fokus #VisionFocusHighlight] er aktiveret, vil systemmarkørens aktuelle fokus blive fremhævet på skærmen.
+Når [Visuel Fremhævning #VisionFocusHighlight] er aktiveret, vil systemmarkørens aktuelle fokus blive fremhævet på skærmen.
 
 Der er nogle nyttige kommandoer, når du flytter fokus rundt i systemet:
 %kc:beginInclude
@@ -363,7 +363,7 @@ På samme måde er der kontroller (fx. knapper) inde i en værktøjslinje. Så d
 
 Det objekt, du er i gang med at gennemse, kaldes for navigatorobjektet.
 Når du navigerer til et objekt, kan du gennemse det ved at benytte [ kommandoerne til gennemsyn af tekst #ReviewingText] når du befinder dig i [objektlæsetilstand #ObjectReview].
-Når [Fremhæv fokus #VisionFocusHighlight] er aktiveret, vil det aktuelle navigatorobjekt blive fremhævet på skærmen.
+Når [Visuel Fremhæving #VisionFocusHighlight] er aktiveret, vil det aktuelle navigatorobjekt blive fremhævet på skærmen.
 Som standard, flytter navigator objektet sammen med System fokus, men denne adfærd kan slås til  og fra.
 
 Bemærk: Du kan konfigurere, hvordan punkt skal følge objektnavigation under [Punkt følger #BrailleTether].
@@ -506,7 +506,7 @@ Gennemsynstilstand kan også valgfrit benyttes i Microsoft Word-dokumenter.
 
 Når du benytter gennemsynstilstand, bliver indholdet af dokumentet præsenteret i en flad visning, som du kan navigere rundt i ved hjælp af piletasterne, præcist som hvis det var et normalt dokument.
 Alle NVDAs kommandoer der benytter [systemmarkøren #SystemCaret] fungerer i denne tilstand; fx. læs alt, rapportér tekstformatering, kommandoer til navigering af tabeller, osv.
-Når [fremhæv fokus #VisionFocusHighlight] er aktiveret, vil markøren i gennemsynstilstand blive fremhævet på skærmen.
+Når [Visuel Fremhævning #VisionFocusHighlight] er aktiveret, vil markøren i gennemsynstilstand blive fremhævet på skærmen.
 Oplysninger såsom, om teksten er et link, en overskrift osv bliver annonceret sammen med teksten mens du bevæger dig rundt.
 
 Nogle gange får du brug for at interagere direkte med kontrollerne i disse dokumenter.
@@ -775,8 +775,8 @@ NVDA tilbyder nogle indbyggede visuelle forbedringer, der beskrives nedenfor.
 yderligere visuelle forbedringer kan leveres ved hjælp af [tilføjelsespakker #AddonsManager].
 
 Disse indstillinger kan ændres ved brug af [indstillingskategorien "Syn" #VisionSettings] i [NVDAs indstillingspanel #NVDASettings].
-
-++ Fremhæv fokus ++[VisionFocusHighlight]
+	
+++ Visuel Fremhævning ++[VisionFocusHighlight]
 Denne indstilling kan hjælpe dig med at lokalisere [markøren til systemfokus#SystemFocus], [navigatorobjektet #ObjectNavigation] og [markøren i gennemsynstilstand #BrowseMode].
 Disse positioner er fremhævet ved hjælp af et farvet rektangulært omrids.
 - Solid blå fremhæver positionen for navigatorobjekt og systemfokus ( f.eks. fordi [ navigatorobjektet følger systemfokus#ReviewCursorFollowFocus]).
@@ -785,7 +785,7 @@ Disse positioner er fremhævet ved hjælp af et farvet rektangulært omrids.
 - Solid gul fremhæver markøren for gennemsynstilstand (hvor der ikke befinder sig en fysisk markør som i web-browsere).
 -
 
-Når "Fremhæv fokus" er aktiveret i [indstillingskategorien Syn #VisionSettings] i [NVDAs indstillinger #NVDASettings], kan du [bestemme om du vil fremhæve systemfokus, navigatorobjektet eller markøren brugt i gennemsynstilstand #VisionSettingsFocusHighlight].
+Når "Visuel Fremhævning" er aktiveret i [indstillingskategorien Syn #VisionSettings] i [NVDAs indstillinger #NVDASettings], kan du [bestemme om du vil fremhæve systemfokus, navigatorobjektet eller markøren brugt i gennemsynstilstand #VisionSettingsFocusHighlight].
 
 ++ Skærmtæppe ++[VisionScreenCurtain]
 Som en blind eller svagtseende bruger er det ofte ikke muligt eller nødvendigt at se indholdet på skærmen.
@@ -1147,6 +1147,9 @@ Du kan også ændre denne indstilling, hvis du bruger en talesyntese fra en tred
 Med denne indstilling kan du ændre hastigheden for den aktuelle stemme.
 Det er en skyderkontrol, der går fra 0 til 100, (med 0 som det langsommeste, 100 som det hurtigste).
 
+==== Højere hastighed ====[SpeechSettingsRateBoost]
+Denne indstilling vil markant forøge talehastigheden, hvis denne funktion understøttes af din aktuelle talesyntese.
+
 ==== Toneleje ====[SpeechSettingsPitch]
 Med denne indstilling kan du ændre tonelejet for den aktuelle stemme.
 Det er en skyderkontrol, der går fra 0 til 100, (med 0 som det laveste toneleje og 100 som den højeste).
@@ -1298,13 +1301,13 @@ Udvælgelsesindikatoren påvirkes ikke af denne indstilling,  men vil altid forb
 Denne indstilling lader dig vælge formen (punktmønstret) til brugen af punktmarkøren, når punktmarkøren følger læsemarkøren.
 Udvælgelsesindikatoren påvirkes ikke af denne indstilling,  men vil altid forblive punkt 7 og 8 uden disse punkter blinker.
 
+==== Vis beskeder ====[BrailleSettingsShowMessages]
+Denne indstilling lader dig vælge, hvordan NVDA skal vise beskeder på punkt og om disse skal forsvinde automatisk.
+
 ==== Besked vises i (sek) ====[BrailleSettingsMessageTimeout]
 Denne indstilling er et felt til indtastning af en talværdi, som styrer, hvor længe NVDA-meddelelser vises på punktdisplayet.
-Hvis du skriver 0 i feltet, slår du visning af disse meddelelser helt fra.
-Ved et tryk på en markørknap på dit punktdisplay, vil beskeden forsvinde med det samme indtil du trykker en anden tast, der viser disse beskeder.
-
-==== Vis meddelelser på ubestemt tid ====[BrailleSettingsNoMessageTimeout]
-Denne indstilling tillader at NVDA-meddelelser kan vises på ubestemt tid på et punktdisplay.
+Ved et tryk på en markørknap på punktdisplayet, vil beskeden forsvinde. Beskeden vil blive vist igen, såfremt der trykkes en tilsvarende tast.
+Denne indstilling vises kun, hvis "Vis beskeder" er indstillet til "Brug timeout".
 
 %kc:setting
 ==== Punkt følger ====[BrailleTether]
@@ -1397,10 +1400,10 @@ Indstillingskategorien "Syn" lader dig aktivere, deaktivere samt konfigurere div
 Bemærk, at disse muligheder kan udvides ved brug af [tilføjelsespakker #AddonsManager].
 Denne kategori indeholder som udgangspunkt følgende:
 
-==== Fremhæv fokus ====[VisionSettingsFocusHighlight]
-Indstillingen her bestemmer adfærden for NVDAs [evne til at fremhæve fokuspositionen #VisionFocusHighlight].
+==== Visuel fremhævning ====[VisionSettingsFocusHighlight]
+Indstillingerne her bestemmer adfærden for NVDAs [evne til at fremhæve fokuspositionen #VisionFocusHighlight].
 
-- Aktivér: Slår fremhævelse af fokus til eller fra.
+- Aktivér fremhævelse: Slår fremhævelse af fokus til eller fra.
 - Fremhæv systemfokus: Bestemmer om [systemfokus #SystemFocus] skal fremhæves.
 - Fremhæv navigatorobjekt: Bestemmer om [navigatorobjektet #ObjectNavigation] skal fremhæves.
 - Fremhæv markør i gennemsynstilstand: Bestemmer om [den virtuelle markør i gennemsynstilstand #BrowseMode] skal fremhæves.
@@ -1923,6 +1926,9 @@ Du kan fjerne et symbol, som du tidligere har tilføjet, ved at trykke på Fjern
 
 Når du er færdig, skal du trykke på OK-knappen for at gemme dine ændringer, eller Annuller-knappen for at kassere dem.
 
+I tilfælde af komplekse symboler skal feltet Erstatning muligvis omfatte nogle gruppereferencer for den matchede tekst. F.eks. et mønster, der skal matche til en hel dato, vil det være nødvendigt at inkludere \1, \2, og \3 i feltet, hvorefter erstatningen ville blive ændret til den tilsvarende del af den pågældende dato.
+Normale omvendte skråstreger (\) skal derfor skrives to gange, f.eks. "a\\b" skal indtastes for at få "a\b" erstattet.
+
 +++ Håndter Kommandoer +++[InputGestures]
 I denne dialog kan du tilpasse kommandoer for de forskellige NVDA-funktioner (taster på tastaturet, knapper på et punktdisplay osv.)
 
@@ -2104,6 +2110,14 @@ Vinduet til punktskriftsviseren viser en check box med navnet "Vis punktskriftsv
 Hvis denne er valgt, vil viseren automatisk åbnes når NVDA startes.
 Dette vindue vil altid forsøge at åbne med samme dimensioner og samme placering, som de var, da vinduet blev lukket.
 
+Dette vindue indeholder desuden en check box kaldet "Hold musen over for at flytte til den pågældende celle".
+Hvis denne indstilling er valgt, vil dette simulere markørknapper og fungere, som havde du trykket på en knap over en punktcelle.
+Denne funktion benyttes ofte, når du skal flytte markøren eller udføre en handling på en kontrol.
+Dette kan eksempelvis være nyttigt, når du skal bekræfte om NVDA er i stand til at flytte til en bestemt celle.
+For at forhindre at NVDA utilsigtet flytter til celler, vil kommandoen være forsinket.
+Musen skal holdes over cellen, indtil cellen bliver grøn.
+Cellen starter som en lysegul farve, overgår til orange og bliver pludselig grøn. 
+
 ++ Python-konsol ++[PythonConsole]
 Python-konsollen, der er at finde i menuen "Værktøjer" i NVDA-menuen fungerer som et udviklingsværktøj. Dette værktøj kan benyttes til generel fejlfinding, undersøgelse af interne komponenter i NVDA eller tilgængeligheden af en applikation.
 For yderligere information, læs [NVDA Developer Guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
@@ -2239,7 +2253,17 @@ Windows 10 indeholder nu stemmer kendt som "OneCore" eller" Mobile."
 Der er stemmer tilgængelige på mange sprog, og disse stemmer er hurtigere til at reagere end de tilgængelige Microsoft-stemmer der benytter Microsoft Speech API version 5.
 NVDA vil benytte Windows OneCore som standardtalesyntese i windows 10 ([eSpeak NG #eSpeakNG] benyttes i andre versioner af Windows).
 
-For at installere stemmer til brug på yderligere sprog, samt hvordan disse installeres, se artiklen fra Microsoft: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
+For at tilføje nye Windows OneCore-stemmer, skal du gå til "Tid og sprog" under Windows-indstillinger (Windows+I), og vælge "Tale".
+Vælg "Tilføj stemmer" og søg efter det ønskede sprog.
+Mange sprog har flere varianter.
+Storbritannien og Australien er to af de engelsk varianter.
+For fransk er der Canada, Frankrig og Schweiz.
+Søg for det sprog du ønsker, og find en variant i listen over resultater.
+Tryk på "Tilføj" for hvert sprog, du ønsker at tilføje.
+Genstart NVDA, når du er færdig.
+
+
+Læs følgende artikel fra Microsoft for at se, hvilke stemmer der er tilgængelige: https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
 + Understøttede punktdisplays +[SupportedBrailleDisplays]
 Dette afsnit indeholder oplysninger om de punktdisplays, som NVDA understøtter.
@@ -2505,7 +2529,7 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B Series/BrailleNote Touch++[HumanWareBrailliant]
-Brailliant BI og B serierne af punktdisplays fra [HumanWare https://www.humanware.com/], herunder BI 14, BI 32, BI 40 og B 80, er understøttede når du kobler til via USB eller Bluetooth.
+Brailliant BI og B serierne af punktdisplays fra [HumanWare https://www.humanware.com/], herunder BI 14, BI 32, BI 20X, BI 40, BI 40X og B 80 er understøttede når du kobler til via USB eller Bluetooth.
 Hvis du ønsker at koble displayet til ved brug af USB med protokollen sat til HumanWare, skal du først installere driveren fra leverandøren.
 USB drivere kræves ikke, hvis protokollen er sat til OpenBraille.
 
@@ -2625,7 +2649,7 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | esc+tast | punkt1+punkt5+mellemrum, f4, brailleedge:f1 |
 | tasten slet | punkt1+punkt3+punkt5+mellemrum, punkt1+punkt4+punkt5+mellemrum |
 | f1-tast | punkt1+punkt2+punkt5+mellemrum |
-| f3-tast | punkt1+punkt2+punkt4+punkt8 |
+| f3-tast | punkt1+punkt4+punkt8+mellemrum |
 | f4-tast | punkt7+f3 |
 | tasterne windows+b | punkt1+punkt2+f1 |
 | tasterne windows+d | punkt1+punkt4+punkt5+f1 |
@@ -3125,6 +3149,7 @@ De mulige kommandolinjeparametre til NVDA er følgende:
 | Ingen | --install | Installerer NVDA og starter den nyinstallerede kopi |
 | Ingen | --install-silent | Tavs installation af NVDA (Starter ikke den nyinstallerede kopi) |
 | Ingen | --enable-start-on-logon=True|False | Under installation vil dette aktivere [opstart ved logon-skærmen #StartAtWindowsLogon] |
+| Ingen | --copy-portable-config | Kopierer den flytbare konfiguration til den angivne sti under installation (--config-path, -c) til den aktuelle brugerkonto |
 | Ingen | --create-portable | Opretter en flytbar kopi af NVDA (starter den nyoprettede kopi). Kræver --portable-path angives |
 | Ingen | --create-portable-silent | Opretter en flytbar kopi af NVDA (starter ikke den nyoprettede kopi). Kræver --portable-path angives |
 | Ingen | --portable-path=PORTABLEPATH | Stien hvor den flytbare kopi oprettes |

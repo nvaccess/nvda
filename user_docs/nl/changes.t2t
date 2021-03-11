@@ -4,6 +4,12 @@ Wat is Nieuw in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2020.4 =
+Deze release bevat nieuwe Chinese invoermethoden, een update van Liblouis en de elementenlijst (NVDA + f7) werkt nu in focusmodus.
+Contextgevoelige hulp is nu beschikbaar wanneer u op F1 drukt in NVDA-dialoogvensters.
+Verbeteringen aan de regels voor de uitspraak van symbolen, het spraakwoordenboek, braillemeldingen en Doorbladeren bij Alles lezen.
+Bugfixes en verbeteringen aan Mail, Outlook, Teams, Visual Studio, Azure Data Studio, Foobar2000.
+Op internet zijn er verbeteringen in Google Documenten en meer ondersteuning voor ARIA.
+Plus vele andere belangrijke bugfixes en verbeteringen. 
 
 == Nieuwe Functies ==
 - Als u in de dialoogvensters van NVDA op F1 drukt, wordt nu het helpbestand geopend op de meest relevante sectie. (#7757)
@@ -16,16 +22,27 @@ Wat is Nieuw in NVDA
 - Een commando toegevoegd om het melden van gemarkeerde tekst in of uit te schakelen; Er is geen standaard sneltoets toegewezen. (#11807)
 - De opdrachtregelparameter --copy-portable-config toegevoegd waarmee u de opgegeven configuratie automatisch naar het gebruikersaccount kunt kopiëren wanneer u NVDA stil installeert. (#9676)
 - Braille-routing wordt nu ondersteund met het Brailleweergavevenster voor muisgebruikers, beweeg de muis om naar een braillecel te springen. (#11804)
+- NVDA zal nu automatisch de Humanware Brailliant BI 40X- en 20X-apparaten detecteren via zowel USB als Bluetooth. (#11819)
 
 
 == Veranderingen ==
-- Liblouis braillevertaler bijgewerkt naar versie 3.15.0
+- Liblouis braillevertaler bijgewerkt naar versie 3.16.1:
+ - Lost meerdere crashes op
+ - Voegt Bashkir graad 1 brailletabel toe
+ - Voegt Koptische 8-punts computer brailletabel toe
+ - Voegt Russische literaire braille en Russische literaire braille (gedetailleerd) tabellen toe
+ - Voegt Afrikaans graad 2 brailletabel toe
+ - Verwijdert de Russische graad 1 brailletabel 
 - Bij 'alles lezen' in de bladermodus, stoppen de volgende en vorige zoeken opdrachten het lezen niet meer als de optie Doorbladeren bij alles lezen toestaan is ingeschakeld; het lezen wordt in plaats daar van hervat na het volgende of vorige zoekresultaat. (#11563)
 - Voor HIMS-brailleleesregels is F3 opnieuw toegewezen aan spatie + punten 148. (#11710)
 - Verbeteringen aan de UX van de opties "braille time-out" voor meldingen en "Toon meldingen voor onbepaalde tijd". (#11602)
 - In webbrowsers en andere toepassingen die de bladermodus ondersteunen, kan het dialoogvenster Elementenlijst (NVDA + F7) nu worden opgeroepen in de focusmodus. (#10453)
 - Updates voor live ARIA-regio's worden nu onderdrukt wanneer het melden van wijzigingen van dynamische inhoud is uitgeschakeld. (#9077)
 - NVDA meldt nu "Gekopieerd naar klembord" vóór de gekopieerde tekst. (#6757)
+- Presentatie van grafische weergavetabel in schijfbeheer is verbeterd. (#10048)
+- Labels voor bedieningselementen zijn nu uitgeschakeld (grijs weergegeven) wanneer het bedieningselement is uitgeschakeld. (#11809)
+- CLDR-emoji-annotatie bijgewerkt naar versie 38. (#11817)
+- De ingebouwde "Focus markering" -functie is omgedoopt tot "Visuele markering". (#11700)
 
 
 == Opgeloste Problemen ==
@@ -52,6 +69,13 @@ Wat is Nieuw in NVDA
 - Sterke tags en nadruk tags in Internet Explorer kunnen weer niet gemeld worden door Nadruk melden uit te schakelen in de NVDA-instellingen voor documentopmaak. (#11808)
 - Een bevriezing van enkele seconden die door een klein aantal gebruikers wordt ervaren bij het verplaatsen tussen cellen met de pijltjes in Excel zou niet langer moeten voorkomen. (#11818)
 - In Microsoft Teams-builds met versienummers zoals 1.3.00.28xxx, faalt NVDA niet langer bij het lezen van berichten in chats of Teams-kanalen vanwege een verkeerd gefocust menu. (#11821)
+- Tekst die zowel als een spelling- en grammaticafout is gemarkeerd in Google Chrome, wordt door NVDA ook aangekondigd als zowel een spellings- als grammaticafout. (#11787)
+- Bij gebruik van Outlook (Franse versie) werkt de sneltoets voor 'Allen beantwoorden' (control + shift + R) weer. (#11196)
+- In Visual Studio worden IntelliSense-tooltips die aanvullende details geven over het momenteel geselecteerde IntelliSense-item nu slechts één keer gerapporteerd. (#11611)
+- In Windows 10 Rekenmachine kondigt NVDA de voortgang van berekeningen niet aan als uitspreken van getypte tekens is uitgeschakeld. (#9428)
+- NVDA crasht niet langer bij gebruik van Engels US grade 2 en met Woord onder cursor uitbreiden naar computerbraille  ingeschakeld, bij het weergeven van bepaalde inhoud, zoals een URL in braille. (#11754)
+- Het is weer mogelijk om opmaakinformatie te rapporteren voor de gefocuste Excel-cel met NVDA + F. (#11914)
+- QWERTY-invoer op Papenmeier-brailleleesregels die dit ondersteunen, werkt weer en veroorzaakt niet langer dat NVDA willekeurig vastloopt. (#11944)
 
 
 == Veranderingen voor ontwikkelaars ==

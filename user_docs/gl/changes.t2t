@@ -28,10 +28,11 @@ Máis moitas outras importantes correcións de erros e melloras.
 == Cambios ==
 - Actualizado o transcriptor braille liblouis á versión 3.16.1
 - Abórdánse múltiples colgues
-- Engádese a táboa Braille grao 1 de Baskir
-- Engádese unha táboa braille de ordenador copto de 8 puntos
-- Engádense táboas de braille literario ruso e braille literario ruso (detallado).
-- Bórrase a táboa braille rusa de grao 1.
+ - Engádese a táboa Braille grao 1 de Baskir
+ - Engádese unha táboa braille de ordenador copto de 8 puntos
+ - Engádense táboas de braille literario ruso e braille literario ruso (detallado).
+ - Engádese a táboa braille para Afrikaans grao 2
+ - Bórrase a táboa braille rusa de grao 1.
 - Cando se le con ler todo no modo exploración, as ordes buscar seguinte e anterior non deteñen a lectura se a opción permitir lectura superficial está activada; ler todo reanuda a partir de despois do término seguinte ou anterior atopado. (#11563)
 - Para as pantallas braille HIMS remapeouse F3 a Espazo + puntos 148. (#11710)
 - Melloras para o UX das opcións "Tempo de espera da mensaxe braille" e "Amosar mensaxes indefinidamente". (#11602)
@@ -74,6 +75,7 @@ Máis moitas outras importantes correcións de erros e melloras.
 - Na calculadora de Windows 10, o NVDA non anunciará o progreso dos cálculos se se desactiva falar caracteres ao se escreber. (#9428)
 - O NVDA xa non se bloquea cando se use o inglés grao 2 de Estados unidos e expándese a braille computerizado cando estea sobre el cursor ao amosar certo contido coma unha URL en braille. (#11754)
 - É posible de novo anunciar información de formato para a celda de Excel enfocada usando NVDA+F. (#11914)
+- A entrada QWERTY en pantallas braille Papenmeier que o admitan funciona de novo e xa non causa que o NVDA se conxele aleatoriamente. (#11944)
 
 
 == Cambios para Desenvolvedores ==
