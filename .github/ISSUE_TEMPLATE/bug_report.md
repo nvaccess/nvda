@@ -33,6 +33,6 @@ Please also note that the NVDA project has a Citizen and Contributor Code of Con
 
 #### Have you tried any other versions of NVDA? If so, please report their behaviors.
 
-#### If addons are disabled, is your problem still occuring?
+#### If add-ons are disabled, is your problem still occurring?
 
 #### Did you try to run the COM registry fixing tool in NVDA menu / tools?
