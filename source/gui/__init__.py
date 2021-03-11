@@ -1,9 +1,15 @@
 # -*- coding: UTF-8 -*-
-#gui/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee, Thomas Stivers, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Thomas Stivers, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
+from .contextHelp import (
+	# several other submodules depend on ContextHelpMixin
+	# ensure early that it can be imported successfully.
+	ContextHelpMixin as _ContextHelpMixin,  # don't expose from gui, import submodule directly.
+)
 
 import time
 import os
@@ -25,7 +31,6 @@ import speech
 import queueHandler
 import core
 from . import guiHelper
-from .contextHelp import ContextHelpMixin
 from .settingsDialogs import *
 from .inputGestures import InputGesturesDialog
 import speechDictHandler
@@ -592,6 +597,21 @@ def initialize():
 		raise RuntimeError("GUI already initialized")
 	mainFrame = MainFrame()
 	wx.GetApp().SetTopWindow(mainFrame)
+	# In wxPython >= 4.1,
+	# wx.CallAfter no longer executes callbacks while NVDA's main thread is within apopup menu or message box.
+	# To work around this,
+	# Monkeypatch wx.CallAfter to
+	# post a WM_NULL message to our top-level window after calling the original CallAfter,
+	# which causes wx's event loop to wake up enough to execute the callback.
+	old_wx_CallAfter = wx.CallAfter
+
+	def wx_CallAfter_wrapper(func, *args, **kwargs):
+		old_wx_CallAfter(func, *args, **kwargs)
+		# mainFrame may be None as NVDA could be terminating.
+		topHandle = mainFrame.Handle if mainFrame else None
+		if topHandle:
+			winUser.PostMessage(topHandle, winUser.WM_NULL, 0, 0)
+	wx.CallAfter = wx_CallAfter_wrapper
 
 def terminate():
 	import brailleViewer
@@ -671,7 +691,7 @@ def runScriptModalDialog(dialog, callback=None):
 
 
 class WelcomeDialog(
-		ContextHelpMixin,
+		_ContextHelpMixin,
 		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""The NVDA welcome dialog.
@@ -774,7 +794,7 @@ class WelcomeDialog(
 
 
 class LauncherDialog(
-		ContextHelpMixin,
+		_ContextHelpMixin,
 		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""The dialog that is displayed when NVDA is started from the launcher.
@@ -1068,7 +1088,7 @@ def _isDebug():
 
 
 class AskAllowUsageStatsDialog(
-		ContextHelpMixin,
+		_ContextHelpMixin,
 		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""A dialog asking if the user wishes to allow NVDA usage stats to be collected by NV Access."""

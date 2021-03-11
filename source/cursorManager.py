@@ -15,6 +15,7 @@ import baseObject
 import documentBase
 import gui
 from gui import guiHelper
+import gui.contextHelp
 import sayAllHandler
 import review
 from scriptHandler import willSayAllResume, script
@@ -31,7 +32,7 @@ from textInfos import DocumentWithPageTurns
 
 
 class FindDialog(
-		gui.ContextHelpMixin,
+		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""A dialog used to specify text to find in a cursor manager.
@@ -157,7 +158,8 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		# info if it is offset-based.
 		selection = info.copy()
 		info.expand(unit)
-		if not willSayAllResume(gesture): speech.speakTextInfo(info,unit=unit,reason=controlTypes.REASON_CARET)
+		if not willSayAllResume(gesture):
+			speech.speakTextInfo(info, unit=unit, reason=controlTypes.OutputReason.CARET)
 		if not oldInfo.isCollapsed:
 			speech.speakSelectionChange(oldInfo, selection)
 		self.selection = selection
@@ -172,7 +174,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			speech.cancelSpeech()
 			info.move(textInfos.UNIT_LINE,1,endPoint="end")
 			if not willSayAllResume:
-				speech.speakTextInfo(info, reason=controlTypes.REASON_CARET)
+				speech.speakTextInfo(info, reason=controlTypes.OutputReason.CARET)
 		else:
 			wx.CallAfter(gui.messageBox,_('text "%s" not found')%text,_("Find Error"),wx.OK|wx.ICON_ERROR)
 		CursorManager._lastFindText=text

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Vietnamese Language for NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-18 00:10+1000\n"
-"PO-Revision-Date: 2020-09-18 11:07+0700\n"
+"POT-Creation-Date: 2021-01-12 20:07+1000\n"
+"PO-Revision-Date: 2020-12-25 00:00+0700\n"
 "Last-Translator: Dang Manh Cuong <dangmanhcuong@gmail.com>\n"
 "Language-Team: Sao Mai Center for the Blind <danghoaiphuc@gmail.com>\n"
 "Language: vi_VN\n"
@@ -681,6 +681,11 @@ msgstr "Nam Phi cấp 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Afrikaans grade 2"
+msgstr "Nam Phi cấp 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Arabic 8 dot computer braille"
 msgstr "Ả rập chữ nổi máy tính 8 chấm"
 
@@ -701,6 +706,11 @@ msgstr "Assam cấp 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Bashkir grade 1"
+msgstr "Bashkir cấp 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Bengali grade 1"
 msgstr "Bengal cấp 1"
 
@@ -713,6 +723,11 @@ msgstr "Bun-ga-ri chữ nổi máy tính 8 chấm"
 #. braille settings dialog.
 msgid "Central Kurdish grade 1"
 msgstr "Trung Kurdish cấp 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Coptic 8 dot computer braille"
+msgstr "Coptic chữ nổi máy tính 8 chấm"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1156,8 +1171,13 @@ msgstr "Nga chữ nổi máy tính"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Russian grade 1"
-msgstr "Nga cấp 1"
+msgid "Russian literary braille"
+msgstr "Nga chữ nổi văn học"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Russian literary braille (detailed)"
+msgstr "Nga chữ nổi văn học (chi tiết)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3016,10 +3036,6 @@ msgstr ""
 msgid "No selection"
 msgstr "Chưa chọn"
 
-#. Translators: Message presented when text has been copied to clipboard.
-msgid "Copied to clipboard"
-msgstr "Đã chép lên bộ nhớ tạm"
-
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
 #. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
@@ -3358,6 +3374,18 @@ msgstr "bật báo nhấn mạnh"
 #. Translators: Input help mode message for toggle report emphasis command.
 msgid "Toggles on and off the reporting of emphasis"
 msgstr "Bật/tắt thông báo thuộc tính nhấn mạnh (emphasise)"
+
+#. Translators: Input help mode message for toggle report marked (highlighted) content command.
+msgid "Toggles on and off the reporting of marked text"
+msgstr "Bật/tắt thông báo các văn bản được đánh dấu"
+
+#. Translators: The message announced when toggling the report marked document formatting setting.
+msgid "report marked on"
+msgstr "bật báo đánh dấu"
+
+#. Translators: The message announced when toggling the report marked document formatting setting.
+msgid "report marked off"
+msgstr "tắt báo đánh dấu"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3710,12 +3738,6 @@ msgstr "Bật/tắt chế độ duyệt đơn giản"
 #. but there is no current navigator object.
 msgid "No navigator object"
 msgstr "Không có đối tượng điều hướng"
-
-#. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
-#. Translators: The message presented when the status bar is copied to the clipboard.
-#, python-format
-msgid "%s copied to clipboard"
-msgstr "đã chép %s vào bộ nhớ tạm"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
@@ -4194,6 +4216,8 @@ msgid "Log fragment copied to clipboard"
 msgstr "Đã chép đoạn log vào bộ nhớ tạm"
 
 #. Translators: Presented when unable to copy to the clipboard because of an error.
+#. Translators: Presented when unable to copy to the clipboard because of an error
+#. or the clipboard content did not match what was just copied.
 msgid "Unable to copy"
 msgstr "Không thể sao chép"
 
@@ -4559,10 +4583,6 @@ msgstr "Không có nội dung để sao chép"
 #. Translators: Presented when unable to select the marked text.
 msgid "Can't select text, press twice to copy"
 msgstr "Không thể chọn nội dung, nhấn hai lần để chép"
-
-#. Translators: Presented when some review text has been copied to clipboard.
-msgid "Review selection copied to clipboard"
-msgstr "Vùng chọn đã được chép vào bộ nhớ tạm"
 
 #. Translators: Input help mode message for the select then copy command. The select then copy command first selects the review cursor text, then copies it to the clipboard.
 msgid ""
@@ -6517,6 +6537,25 @@ msgstr "vuốt lên"
 msgid "NVDA Message"
 msgstr "Thông điệp NVDA"
 
+#. Translators: Spoken instead of a lengthy text when copied to clipboard.
+#. Translators: This is spoken when the user has selected a large portion of text.
+#. Example output "1000 characters"
+#, python-format
+msgid "%d characters"
+msgstr "%d ký tự"
+
+#. Translators: Announced when a text has been copied to clipboard.
+#. {text} is replaced by the copied text.
+#, python-brace-format
+msgid "Copied to clipboard: {text}"
+msgstr "Đã chép lên bộ nhớ tạm: {text}"
+
+#. Translators: Displayed in braille when a text has been copied to clipboard.
+#. {text} is replaced by the copied text.
+#, python-brace-format
+msgid "Copied: {text}"
+msgstr "Đã chép: {text}"
+
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
 msgstr "Đang kiểm tra phiên bản mới"
@@ -6535,6 +6574,9 @@ msgstr "Lỗi kiểm tra cập nhật."
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
+#. Translators: The message title displayed
+#. when the user has not specified an absolute destination directory
+#. in the Create Portable NVDA dialog.
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
@@ -6816,6 +6858,8 @@ msgid "Composition"
 msgstr "Composition"
 
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
+#. Translators: A label for a 'candidate' list
+#. which contains symbols the user can choose from  when typing east-asian characters into a document.
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 msgid "Candidate"
 msgstr "Lựa chọn"
@@ -6835,6 +6879,10 @@ msgstr "Không tìm thấy cửa sổ tài liệu."
 msgid "No track playing"
 msgstr "Không có bài nào đang phát"
 
+#. Translators: Reported if the remaining time can not be calculated in Foobar2000
+msgid "Unable to determine remaining time"
+msgstr "Không thể xác định thời gian còn lại"
+
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Thông báo thời gian còn lại của bản nhạc đang chơi, nếu có"
@@ -6842,6 +6890,10 @@ msgstr "Thông báo thời gian còn lại của bản nhạc đang chơi, nếu
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "Thông báo thời gian đã phát của bản nhạc hiện tại, nếu có"
+
+#. Translators: Reported if the total time is not available in Foobar2000
+msgid "Total time not available"
+msgstr "Không có tổng thời gian"
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
 msgid "Reports the length of the currently playing track, if any"
@@ -7340,6 +7392,14 @@ msgstr "tắt"
 msgid "No emoji"
 msgstr "Không có biểu tượng cảm xúc"
 
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking on"
+msgstr "Bật thông báo theo dõi thay đổi"
+
+#. Translators: a message when toggling change tracking in Microsoft word
+msgid "Change tracking off"
+msgstr "Tắt thông báo theo dõi thay đổi"
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
 msgstr "Bộ chuyển giao thức/Optelec ALVA 6 series"
@@ -7457,6 +7517,11 @@ msgstr "Trình Xem chữ nổi của NVDA"
 #. whether the braille viewer is shown at startup or not.
 msgid "&Show Braille Viewer on Startup"
 msgstr "&Hiển thị trình xem chữ nổi khi khởi động"
+
+#. Translators: The label for a setting in the braille viewer that controls
+#. whether hovering mouse routes to the cell.
+msgid "&Hover for cell routing"
+msgstr "&Lướt để đưa đến ô"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -8063,6 +8128,8 @@ msgid "Install"
 msgstr "Cài đặt"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
 msgid "Disabled"
 msgstr "Đã tắt"
 
@@ -8399,6 +8466,15 @@ msgstr ""
 msgid "Manual Activation"
 msgstr "Kích Hoạt Thủ Công"
 
+#. Translators: Message indicating no context sensitive help is available for the control or dialog.
+msgid "No help available here."
+msgstr "Không có thông tin trợ giúp ở đây."
+
+#. Translators: Message shown when trying to display context sensitive help,
+#. indicating that	the user guide could not be found.
+msgid "No user guide found."
+msgstr "Không tìm thấy hướng dẫn sử dụng."
+
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
@@ -8627,6 +8703,15 @@ msgstr "&Khởi động bản chạy trực tiếp mới sau khi tạo"
 #. in the Create Portable NVDA dialog.
 msgid "Please specify a directory in which to create the portable copy."
 msgstr "Vui lòng chọn thư mục để tạo bản NVDA chạy trực tiếp."
+
+#. Translators: The message displayed when the user has not specified an absolute destination directory
+#. in the Create Portable NVDA dialog.
+msgid ""
+"Please specify an absolute path (including drive letter)  in which to create "
+"the portable copy."
+msgstr ""
+"Vui lòng chọn đường dẫn chính xác (bao gồm cả kí tự ổ đĩa) để tạo bản NVDA "
+"chạy trực tiếp."
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
@@ -9255,8 +9340,8 @@ msgstr "Nhấn &mạnh"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-msgid "Marked (highlighted text)"
-msgstr "Đã đánh dấu (nội dung được làm nổi)"
+msgid "Mar&ked (highlighted text)"
+msgstr "Đánh &dấu (nội dung được làm nổi)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9713,13 +9798,24 @@ msgstr "Hình con trỏ &focus:"
 msgid "Cursor shape for &review:"
 msgstr "Hình con trỏ &duyệt:"
 
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+msgid "Use timeout"
+msgstr "Dùng thời gian chờ"
+
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+msgid "Show indefinitely"
+msgstr "Hiển thị vô thời hạn"
+
+#. Translators: The label for a setting in braille settings to combobox enabling user
+#. to decide if braille messages should be shown and automatically disappear from braille display.
+msgid "Show messages"
+msgstr "Hiện thông điệp"
+
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
 msgstr "Thời gian kết &thúc thông điệp (giây)"
-
-#. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
-msgid "Show &messages indefinitely"
-msgstr "Hiển thị &thông điệp không xác định"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
@@ -9897,12 +9993,6 @@ msgstr "đã chọn %s"
 #, python-format
 msgid "%s selected"
 msgstr "đã chọn %s"
-
-#. Translators: This is spoken when the user has selected a large portion of text.
-#. Example output "1000 characters"
-#, python-format
-msgid "%d characters"
-msgstr "%d ký tự"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -10350,8 +10440,8 @@ msgid "Highlight navigator &object"
 msgstr "Làm nổi bật đối &tượng điều hướng"
 
 #. Translators: Description for NVDA's built-in screen highlighter.
-msgid "Focus Highlight"
-msgstr "Làm nổi focus"
+msgid "Visual Highlight"
+msgstr "Làm nổi trực quan"
 
 #. Translators: The label for a checkbox that enables / disables focus highlighting
 #. in the NVDA Highlighter vision settings panel.
@@ -11738,10 +11828,11 @@ msgctxt "line spacing value"
 msgid "1.5 lines"
 msgstr "1.5 dòng"
 
-#. Translators: exact (minimum) line spacing
+#. Translators: line spacing of exactly x point
+#, python-brace-format
 msgctxt "line spacing value"
-msgid "exact"
-msgstr "chính xác"
+msgid "exactly {space:.1f} pt"
+msgstr "khoảng cách chính xác {space:.1f} pt"
 
 #. Translators: line spacing of at least x point
 #, python-format
@@ -11839,14 +11930,6 @@ msgstr "Kiểu dáng {styleName}, Cấp độ bố cục {outlineLevel}"
 msgid "{size:g} point font"
 msgstr "{size:g} điểm phông"
 
-#. Translators: a message when toggling change tracking in Microsoft word
-msgid "Change tracking on"
-msgstr "Bật thông báo theo dõi thay đổi"
-
-#. Translators: a message when toggling change tracking in Microsoft word
-msgid "Change tracking off"
-msgstr "Tắt thông báo theo dõi thay đổi"
-
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
 msgid "Display nonprinting characters"
 msgstr "Hiển thị các kí tự không thể in"
@@ -11897,6 +11980,19 @@ msgstr "Phân cách dòng đôi"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Phân cách dòng 1.5"
+
+#~ msgctxt "line spacing value"
+#~ msgid "exact"
+#~ msgstr "chính xác"
+
+#~ msgid "Russian grade 1"
+#~ msgstr "Nga cấp 1"
+
+#~ msgid "%s copied to clipboard"
+#~ msgstr "đã chép %s vào bộ nhớ tạm"
+
+#~ msgid "Review selection copied to clipboard"
+#~ msgstr "Vùng chọn đã được chép vào bộ nhớ tạm"
 
 #~ msgid "Apply"
 #~ msgstr "Áp dụng"

@@ -55,9 +55,8 @@ The NVDA source depends on several other packages to run correctly.
 ### Installed Dependencies
 The following dependencies need to be installed on your system:
 
-* [Python](https://www.python.org/), version 3.7, 32 bit
+* [Python](https://www.python.org/), version 3.8, 32 bit
 	* Use latest minor version if possible.
-	* Don't use `3.7.6` it causes an error while building, see #10696.
 * Microsoft Visual Studio 2019 Community, Version 16.3 or later:
 	* Download from https://visualstudio.microsoft.com/vs/
 	* When installing Visual Studio, you need to enable the following:
@@ -75,59 +74,45 @@ The following dependencies need to be installed on your system:
 
 
 ### Git Submodules
-Most of the dependencies are contained in Git submodules.
+Some of the dependencies are contained in Git submodules.
 If you didn't pass the `--recursive` option to git clone, you will need to run `git submodule update --init`.
 Whenever a required submodule commit changes (e.g. after git pull), you will need to run `git submodule update`.
 If you aren't sure, run `git submodule update` after every git pull, merge or checkout.
 
 For reference, the following run time dependencies are included in Git submodules:
 
-* [comtypes](https://github.com/enthought/comtypes), version 1.1.7
-* [wxPython](https://www.wxpython.org/), version 4.0.3
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.51-dev commit 82d5b7b04
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit cbc1f29631780
-* [ConfigObj](https://github.com/DiffSK/configobj), commit f9a265c
-* [Six](https://pypi.python.org/pypi/six), version 1.12.0, required by wxPython and ConfigObj
 * [liblouis](http://www.liblouis.org/), version 3.16.1
-* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/) Emoji Annotations, version 38.0
+* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 38.1
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * Adobe FlashAccessibility interface typelib
 * [MinHook](https://github.com/RaMMicHaeL/minhook), tagged version 1.2.2
 * brlapi Python bindings, version 0.8 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html), version 6.1
 * lilli.dll, version 2.1.0.0
-* [pySerial](https://pypi.python.org/pypi/pyserial), version 3.4
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
 * Java Access Bridge 32 bit, from Zulu Community OpenJDK build 13.0.1+10Zulu (13.28.11)
 
-Additionally, the following build time dependencies are included in Git submodules:
+Additionally, the following build time dependencies are included in the miscDeps git submodule: 
 
-* [Py2Exe](https://github.com/albertosottile/py2exe/), version 0.9.3.2 commit b372a8e
-* [Python Windows Extensions](https://sourceforge.net/projects/pywin32/ ), build 224, required by py2exe
 * [txt2tags](https://txt2tags.org/), version 2.5
-* [SCons](https://www.scons.org/), version 4.0.1
 * [Nulsoft Install System](https://nsis.sourceforge.io/Main_Page/), version 2.51
 * [NSIS UAC plug-in](https://nsis.sourceforge.io/UAC_plug-in), version 0.2.4, ansi
 * xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
-* [epydoc](http://epydoc.sourceforge.net/), version 3.0.1 with patch for bug #303
 * [Boost Optional (stand-alone header)](https://github.com/akrzemi1/Optional), from commit [3922965](https://github.com/akrzemi1/Optional/commit/3922965396fc455c6b1770374b9b4111799588a9)
 
-### Other Dependencies
-To lint using Flake 8 locally using our SCons integration, some dependencies are installed (automatically) via pip.
-Although this [must be run manually](#linting-your-changes), developers may wish to first configure a Python Virtual Environment to ensure their general install is not affected.
-* Flake8
-* Flake8-tabs
-
-
 The following dependencies aren't needed by most people, and are not included in Git submodules:
-
 * To generate developer documentation for nvdaHelper: [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
 * When you are using Visual Studio Code as your integrated development environment of preference, you can make use of our [prepopulated workspace configuration](https://github.com/nvaccess/vscode-nvda/) for [Visual Studio Code](https://code.visualstudio.com/).
 	While this VSCode project is not included as a submodule in the NVDA repository, you can easily check out the workspace configuration in your repository by executing the following from the root of the repository.
 
 	```git clone https://github.com/nvaccess/vscode-nvda.git .vscode```
 
+### Python dependencies
+NVDA and its build system also depend on an extensive list of Python packages. They are all listed with their specific versions in a requirements.txt file in the root of this repository. However, the build system takes care of fetching these itself when needed. these packages will be installed into an isolated Python virtual environment within this repository, and will not affect your system-wide set of packages.
+ 
 ## Preparing the Source Tree
 Before you can run the NVDA source code, you must prepare the source tree.
 You do this by opening a command prompt, changing to the root of the NVDA source distribution and typing:
@@ -173,13 +158,8 @@ By default, builds also do not use any compiler optimizations.
 Please see the `release` keyword argument for what compiler optimizations it will enable.
 
 ## Running the Source Code
-Most developers run directly from source by:
-```
-cd source
-pythonw.exe nvda.pyw
-```
-Note: Since NVDA is a Windows application (rather than command line), it is best to run it with `pythonw.exe`.
-However, if during development you encounter an error early in the startup of NVDA, you can use `python.exe` which is likely to give more information about the error.
+It is possible to run NVDA directly from source without having to build the full binary package and launcher.
+To launch NVDA from source, using `cmd.exe`, execute `runnvda.bat` in the root of the repository.
 
 To view help on the arguments that NVDA will accept, use the `-h` or `--help` option.
 These arguments are also documented in the user guide.
@@ -216,7 +196,14 @@ scons developerGuide
 ```
 
 The developer guide will be placed in the `devDocs` folder in the output directory.
-Note that the Python 3 sources of NVDA currently do not support building NVDA developer documentation using the `scons devDocs` command.
+
+To generate the HTML-based source code documentation, type:
+
+```
+scons devDocs
+```
+
+The documentation will be placed in the `NVDA` folder in the output directory.
 
 To generate developer documentation for nvdaHelper (not included in the devDocs target):
 
@@ -295,23 +282,26 @@ scons checkPot
 ### Linting your changes
 In order to ensure your changes comply with NVDA's coding style you can run the Flake8 linter locally.
 Some developers have found certain linting error messages misleading, these are clarified in `tests/lint/readme.md`.
-Running via SCons will use Flake8 to inspect only the differences between your working directory and the specified `base` branch.
+runlint.bat  will use Flake8 to inspect only the differences between your working directory and the specified `base` branch.
 If you create a Pull Request, the `base` branch you use here should be the same as the target you would use for a Pull Request. In most cases it will be `origin/master`.
 ```
-scons lint base=origin/master
+runlint origin/master
 ```
 
 To be warned about linting errors faster, you may wish to integrate Flake8 other development tools you are using.
 For more details, see `tests/lint/readme.md`
 
-### System Tests
-You may also use `scons` to run the system tests,
- though this will still require the dependencies to be set up.
-For more details (including filtering and exclusion of tests) see `tests/system/readme.md`.
+### Unit Tests
+Unit tests can be run with the `rununittests.bat` script.
+Internally this script uses the Nose Python test framework to execute the tests.
+Any arguments given to rununittests.bat are forwarded onto Nose.
+Please refer to Nose's own documentation on how to filter tests etc.
 
-```
-scons systemTests
-```
+### System Tests
+System tests can be run with the `runsystemtests.bat` script.
+Internally this script uses the Robot  test framework to execute the tests.
+Any arguments given to runsystemtests.bat are forwarded onto Robot.
+For more details (including filtering and exclusion of tests) see `tests/system/readme.md`.
 
 ## Contributing to NVDA
 

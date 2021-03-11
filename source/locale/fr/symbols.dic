@@ -7,13 +7,13 @@ complexSymbols:
 # identifier	regexp
 # Sentence endings.
 . sentence ending	(?<=[^\s.])\s?\.(?=[\"'”’);\s]|$)
-! sentence ending	(?<=[^\s!])\s?\!(?=[\"'”’);\s]|$)
-? sentence ending	(?<=[^\s?])\s?\?(?=[\"'”’);\s]|$)
+! sentence ending	(?<=[^\s!])\s?\!(?=[\"'”’);!\s]|$)
+? sentence ending	(?<=[^\s?])\s?\?(?=[\"'”’);?\s]|$)
 ... sentence ending	(?<=[^\s.])\s?\.\.\.(?=[\"'”’);\s]|$)
 … sentence ending	(?<=[^\s…])\s?\…(?=[\"'”’);\s]|$)
 # Phrase endings.
-; phrase ending	(?<=[^\s;])\s?;(?=\s|$)
-: phrase ending	(?<=[^\s:])\s?:(?=\s|$)
+; phrase ending	(?<=[^\s;])\s?;(?=[\"'”’);\s]|$)
+: phrase ending	(?<=[^\s:])\s?:(?=[\"'”’);\s]|$)
 # Others
 decimal point	(?<![^\d -])\,(?=\d)
 thousands separator	(?<![^\d -])\.(?=\d{3}(\D|$))
@@ -109,8 +109,8 @@ _	souligné
 …	points de suspension
 ...	point point point
 	puce
-“	guillemet ouvert
-”	guillemet fermé
+“	guillemet double ouvrant
+”	guillemet double fermant
 ‘	apostrophe gauche
 ’	apostrophe droite
 –	tiret demicadratin
@@ -134,8 +134,8 @@ _	souligné
 
 §	section
 °	degré	some	norep
-«	guillemet ouvert
-»	guillemet fermé
+«	guillemet ouvert	most
+»	guillemet fermé	most
 µ	micro
 º	ordinal
 ª	puissance a	some
@@ -308,7 +308,6 @@ _	souligné
 Ω	oméga	none	never
 ¤	symbole monétaire	none	never
 ¸	cédille	none	never
-	guillemet vers le bas	none	never
 ↦	a pour image	none	never
 ′	prime	none	never
 ″	double prime	some
