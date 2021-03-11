@@ -50,6 +50,9 @@ What's New in NVDA
   - 'isCurrent' is no longer Optional, and thus will not return None, when an object is not current 'controlTypes.IsCurrent.NO' is returned.
 - The 'controlTypes.isCurrentLabels' has been removed, instead use the 'displayString' property on a 'controlTypes.IsCurrent' enum value. (#11782)
   - EG 'controlTypes.IsCurrent.YES.displayString'
+- `winKernel.GetTimeFormat` has been removed - use `winKernel.GetTimeFormatEx` instead (#12139)
+- `winKernel.GetDateFormat` has been removed - use `winKernel.GetDateFormatEx` instead (#12139)
+- `gui.DriverSettingsMixin` has been removed - use `gui.AutoSettingsMixin` (#12144)
 
 
 = 2020.4 =
@@ -3124,4 +3127,3 @@ Major highlights of this release include support for 64 bit editions of Windows;
 - NVDA now asks if it should save configuration and restart if the user has just changed the language in the User Interface Settings Dialog. NVDA must be restarted for the language change to fully take effect.
 - If a synthesizer can not be loaded, when choosing it from the synthesizer dialog, a message box alerts the user to the fact.
 - When loading a synthesizer for the first time, NVDA lets the synthesizer choose the most suitable voice, rate and pitch parameters, rather than forcing it to defaults it thinks are ok. This fixes a problem where Eloquence and Viavoice sapi4 synths start speaking way too fast for the first time.
-
