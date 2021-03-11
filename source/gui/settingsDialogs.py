@@ -1389,11 +1389,6 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 		super().onPanelActivated()
 
 
-#: DriverSettingsMixin name is provided or backwards compatibility.
-# The name DriverSettingsMixin should be considered deprecated, use AutoSettingsMixin instead.
-DriverSettingsMixin = AutoSettingsMixin
-
-
 class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 	# Translators: This is the label for the voice settings panel.
 	title = _("Voice")
