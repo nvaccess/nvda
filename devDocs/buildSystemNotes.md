@@ -13,7 +13,7 @@ running NVDA or tests) see the main repository readme file.
 
 The virtual environment system used is `venv`.
 Dependencies are installed with `pip` via the `requirements.txt` file.
-Version numbers for dependencies should be used to lock in a version
+Version numbers for dependencies should be used to lock in a version.
 
 The virtual environment is recreated if it is outdated, either due to:
 - Python version.
@@ -37,7 +37,7 @@ Run NVDA with `py.exe` in order to have standard output/error output to the cons
 This is particularly useful if there is an error in NVDA before logging is initialised.
 To do this, modify the `runnvda.bat` file.
 
-**Note:** Executing `source/nvda.pyw` outside of a virtual environment will an error message
+**Note:** Executing `source/nvda.pyw` outside of a virtual environment will produce an error message
 and early termination.
 
 ### Main implementation files:
@@ -59,12 +59,12 @@ The following files contain the main implementation of the virtual environment s
 
 ## Motivation for using virtual environments
 
-In order to ensure the build environment is clean, no conflicts with other installed packages
+Ensures the build environment is clean, and there are no conflicts with other installed packages.
 
-NVDA and its build system have has many Python dependencies.
+NVDA and its build system have many Python dependencies.
 Using `pip` and a virtual environment means:
 - Updating is easier than git submodules.
-  E.G. wxPython no longer has to pre-built and stored in our bin repo.
+  E.G. wxPython no longer has to be pre-built and stored in our bin repo.
 - Developers need to sync/update their submodules less often.
 - More consistency for dependencies.
 - IDE's can be configured more easily.
