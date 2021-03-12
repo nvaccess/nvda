@@ -96,14 +96,15 @@ class UwpOcr(ContentRecognizer):
 					data = json.loads(result)
 					self._onResult(LinesWordsResult(data, imgInfo))
 				else:
-					raise RuntimeError("UWP OCR failed")
+					self._onResult(RuntimeError("UWP OCR failed"))
 			self._dll.uwpOcr_terminate(self._handle)
 			self._callback = None
 			self._handle = None
 		self._callback = callback
 		self._handle = self._dll.uwpOcr_initialize(self.language, callback)
 		if not self._handle:
-			raise RuntimeError("UWP OCR failed")
+			onResult(RuntimeError("UWP OCR initialization failed"))
+			return
 		self._dll.uwpOcr_recognize(self._handle, pixels, imgInfo.recogWidth, imgInfo.recogHeight)
 
 	def cancel(self):
