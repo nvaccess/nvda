@@ -67,6 +67,7 @@ What's New in NVDA
 - `winKernel.GetDateFormat` has been removed - use `winKernel.GetDateFormatEx` instead (#12139)
 - `gui.DriverSettingsMixin` has been removed - use `gui.AutoSettingsMixin` (#12144)
 - `speech.getSpeechForSpelling` has been removed - use `speech.getSpellingSpeech` (#12145)
+- Commands cannot be directly imported from speech as `import speech; speech.ExampleCommand()` or `import speech.manager; speech.manager.ExampleCommand()` - use  `from speech.commands import ExampleCommand` instead (#12126)
 
 
 = 2020.4 =
