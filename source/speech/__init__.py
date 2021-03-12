@@ -1047,14 +1047,6 @@ def speakTextInfo(
 		suppressBlanks
 	)
 
-	if reason == OutputReason.SAYALL:
-		log.error(
-			"Deprecation warning: In 2021.1 speakTextInfo will no longer  send speech through "
-			"speakWithoutPauses if reason is sayAll, as sayAllhandler does this manually now."
-		)
-		flatSpeechGen = list(_flattenNestedSequences(speechGen))
-		return _speakWithoutPauses.speakWithoutPauses(flatSpeechGen)
-
 	speechGen = GeneratorWithReturn(speechGen)
 	for seq in speechGen:
 		speak(seq, priority=priority)
