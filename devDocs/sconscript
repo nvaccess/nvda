@@ -19,10 +19,6 @@ Import("env", "outputDir", "sourceDir", "t2tBuildConf")
 
 env = env.Clone()
 
-devDocsInstall = env.SConscript("devDocsInstall/sconscript", exports=["env"])
-env.Depends(devDocsInstall, env.Dir("devDocs/devDocsInstall/requirements.txt"))
-env.Alias("devDocsInstall", devDocsInstall)
-
 devDocsOutputDir=outputDir.Dir('devDocs')
 
 #Build the developer guide and move it to the output directory
@@ -69,7 +65,6 @@ sphinxAPIDocs = env.Command(
 		] + [f"{sourceDir}\\{f}" for f in ignorePaths]
 	]
 )
-env.Depends(sphinxAPIDocs, devDocsInstall)
 sphinxHtml = env.Command(
 	"_build",
 	sphinxAPIDocs,

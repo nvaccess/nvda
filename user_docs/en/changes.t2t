@@ -30,6 +30,19 @@ What's New in NVDA
 
 == Changes for Developers ==
 - Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
+- NVDA now requires Python 3.8. (#12075)
+- NVDA's build system now fetches all Python dependencies with pip and stores them in a Python virtual environment. This is all done transparently.
+ - To build NVDA, SCons should continue to be used in the usual way. E.g. executing scons.bat in the root of the repository. Running ``py -m SCons``  is no longer supported, and ``scons.py`` has also been removed. 
+ - To run NVDA from source, rather than executing ``source/nvda.pyw`` directly, the developer should now use ``runnvda.bat`` in the root of the repository. If you do try to execute ``source/nvda.pyw``, a message box will alert you this is no longer supported.
+ - To perform unit tests, execute ``rununittests.bat [<extra unittest discover options>]``
+ - To perform system tests: execute ``runsystemtests.bat [<extra robot options>] ``
+ - To perform linting, execute ``runlint.bat <base branch>``
+ - Please refer to readme.md for more details.
+- The following Python dependencies have also been upgraded:
+ - comtypes updated to 1.1.8.
+ - pySerial updated to 3.5.
+ - wxPython updated to 4.1.1.
+ - Py2exe updated to 0.10.1.0.
 - `LiveText._getTextLines` has been removed. (#11639)
   - Instead, override `_getText` which returns a string of all text in the object.
 - `LiveText` objects can now calculate diffs by character. (#11639)
@@ -50,6 +63,12 @@ What's New in NVDA
   - 'isCurrent' is no longer Optional, and thus will not return None, when an object is not current 'controlTypes.IsCurrent.NO' is returned.
 - The 'controlTypes.isCurrentLabels' has been removed, instead use the 'displayString' property on a 'controlTypes.IsCurrent' enum value. (#11782)
   - EG 'controlTypes.IsCurrent.YES.displayString'
+- `winKernel.GetTimeFormat` has been removed - use `winKernel.GetTimeFormatEx` instead (#12139)
+- `winKernel.GetDateFormat` has been removed - use `winKernel.GetDateFormatEx` instead (#12139)
+- `gui.DriverSettingsMixin` has been removed - use `gui.AutoSettingsMixin` (#12144)
+- `speech.getSpeechForSpelling` has been removed - use `speech.getSpellingSpeech` (#12145)
+- Commands cannot be directly imported from speech as `import speech; speech.ExampleCommand()` or `import speech.manager; speech.manager.ExampleCommand()` - use  `from speech.commands import ExampleCommand` instead (#12126)
+- `speakTextInfo` will no longer send speech through `speakWithoutPauses` if reason is `SAYALL`, as `sayAllhandler` does this manually now. (#12150)
 
 
 = 2020.4 =
@@ -3124,4 +3143,3 @@ Major highlights of this release include support for 64 bit editions of Windows;
 - NVDA now asks if it should save configuration and restart if the user has just changed the language in the User Interface Settings Dialog. NVDA must be restarted for the language change to fully take effect.
 - If a synthesizer can not be loaded, when choosing it from the synthesizer dialog, a message box alerts the user to the fact.
 - When loading a synthesizer for the first time, NVDA lets the synthesizer choose the most suitable voice, rate and pitch parameters, rather than forcing it to defaults it thinks are ok. This fixes a problem where Eloquence and Viavoice sapi4 synths start speaking way too fast for the first time.
-

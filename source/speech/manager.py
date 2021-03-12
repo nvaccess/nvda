@@ -18,25 +18,7 @@ from .commands import (
 	IndexCommand,
 	_CancellableSpeechCommand,
 )
-from .commands import (  # noqa: F401
-	# F401 imported but unused:
-	# These are imported explicitly to maintain backwards compatibility and will be removed in
-	# 2021.1. Rather than rely on these imports, import directly from the commands module.
-	# New commands added to commands.py should be directly imported only where needed.
-	SpeechCommand,
-	PitchCommand,
-	LangChangeCommand,
-	BeepCommand,
-	CharacterModeCommand,
-	SynthCommand,
-	BreakCommand,
-	BaseProsodyCommand,
-	VolumeCommand,
-	RateCommand,
-	PhonemeCommand,
-	CallbackCommand,
-	WaveFileCommand,
-)
+
 from .priorities import Spri, SPEECH_PRIORITIES
 from logHandler import log
 from synthDriverHandler import getSynth
