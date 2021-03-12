@@ -1,5 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2020 NV Access Limited, James Teh, Michael Curran, Peter Vágner, Joseph Lee, Reef Turner, Babbage B.V., Leonard de Ruijter, Łukasz Golonka, Accessolutions, Julien Cochuyt  # noqa: E501
+# Copyright (C) 2010-2021 NV Access Limited, James Teh, Michael Curran, Peter Vágner, Joseph Lee,
+# Reef Turner, Babbage B.V., Leonard de Ruijter, Łukasz Golonka, Accessolutions, Julien Cochuyt
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -7,9 +8,21 @@ import sys
 import os
 import platform
 
+# Ensure we are inside the Python virtual environment.
+nvdaVenv = os.getenv("NVDA_VENV")
+virtualEnv = os.getenv("VIRTUAL_ENV")
+if not virtualEnv or not os.path.isdir(virtualEnv): 
+	print(
+		"Error: SCons cannot detect the NVDA build system Python virtual environment.\n"
+		"SCons must be executed using scons.bat in the root of this repository."
+	)
+	sys.exit(1)
+if nvdaVenv != virtualEnv:
+	print("Warning: SCons launched within a custom Python virtual environment.")
+
 # Variables for storing required version of Python, and the version which is used to run this script.
 requiredPythonMajor ="3"
-requiredPythonMinor = "7"
+requiredPythonMinor = "8"
 requiredPythonArchitecture = "32bit"
 installedPythonMajor = str(sys.version_info.major)
 installedPythonMinor = str(sys.version_info.minor)
@@ -34,17 +47,12 @@ if (
 		requiredPythonArchitecture
 	)
 	)
-if sys.version_info.micro == 6:
-	# #10696: Building with Python 3.7.6 fails. Innform user and exit.
-	Py376FailMsg = "Building with Python 3.7.6 is not possible.\nPlease use more  recent version of Python 3."
-	raise RuntimeError(Py376FailMsg)
 sourceEnvPath = os.path.abspath(os.path.join(Dir('.').srcnode().path, "source"))
 sys.path.append(sourceEnvPath)
 import sourceEnv
 sys.path.remove(sourceEnvPath)
 import time
 from glob import glob
-from py2exe.dllfinder import pydll
 import importlib.util
 import winreg
 
@@ -102,21 +110,6 @@ vars.Add("certTimestampServer", "The URL of the timestamping server to use to ti
 vars.Add(PathVariable("outputDir", "The directory where the final built archives and such will be placed", "output",PathVariable.PathIsDirCreate))
 vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you require", 'none', ["debugCRT","RTC","analyze"]))
 vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in range(60)]))
-if "tests" in COMMAND_LINE_TARGETS:
-	vars.Add("unitTests", "A list of unit tests to run", "")
-if "lint" in COMMAND_LINE_TARGETS:
-	vars.Add(  # pass through variable that lint is requested
-		"doLint",
-		"internal use",
-		True
-	)
-	vars.Add(
-		"base",
-		"Lint is done only on a diff, specify the ref to use as base for the diff.",
-		None
-	)
-if "systemTests" in COMMAND_LINE_TARGETS:
-	vars.Add("filter", "A filter for the name of the system test(s) to run. Wildcards accepted.", "")
 
 #Base environment for this and sub sconscripts
 env = Environment(variables=vars,HOST_ARCH='x86',tools=[
@@ -315,23 +308,27 @@ def NVDADistGenerator(target, source, env, for_signature):
 
 	action.append(buildCmd)
 
-	# Python3 has started signing its main python dll.
-	# However, Py2exe currently tries to add a string resource to it, invalidating the signature and possibly currupting the certificate.
-	# Therefore, copy a fresh version  of the dll one more time once py2exe has completed.
-	action.append(Copy(target[0],pydll))
-
 	# #10031: Apps written in Python 3 require Universal CRT to be installed. We cannot assume users have it on their systems.
 	# Therefore , copy required libraries from Windows 10 SDK.
 	try:
 		with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r'SOFTWARE\Microsoft\Microsoft SDKs\Windows\v10.0', 0,winreg.KEY_READ|winreg.KEY_WOW64_32KEY) as SDKKey:
-			CRTDir = os.path.join(winreg.QueryValueEx(SDKKey, 'InstallationFolder')[0], "Redist", "ucrt", "DLLs", "x86")
+			sdk_installationFolder = winreg.QueryValueEx(SDKKey, 'InstallationFolder')[0]
+			sdk_productVersion = winreg.QueryValueEx(SDKKey, 'ProductVersion')[0]
 	except WindowsError:
 		raise RuntimeError("Windows 10 SDK not found")
-	if os.path.isdir(CRTDir):
-		with os.scandir(CRTDir) as dir:
-			for file in dir:
-				if file.name.endswith(".dll") and file.is_file():
-					action.append(Copy(target[0], file.path))
+	# The Universal CRT should be in an SDK version-specific directory
+	# But usually has a '.0' appended after the productVersion found in the registry. 
+	# E.g. 10.0.1941 might e actually 10.0.1941.0.
+	# Thus try both.
+	CRTDir = os.path.join(sdk_installationFolder, "Redist", sdk_productVersion+".0", "ucrt", "DLLs", "x86")
+	if not os.path.isdir(CRTDir):
+		CRTDir = os.path.join(sdk_installationFolder, "Redist", sdk_productVersion, "ucrt", "DLLs", "x86")
+		if not os.path.isdir(CRTDir):
+			raise RuntimeError(f"Could not locate CRT dlls in SDK at {CRTDir}")
+	with os.scandir(CRTDir) as dir:
+		for file in dir:
+			if file.name.endswith(".dll") and file.is_file():
+				action.append(Copy(target[0], file.path))
 
 	if certFile:
 		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe", "nvda_eoaProxy.exe":

@@ -34,25 +34,7 @@ from .commands import (
 	EndUtteranceCommand,
 	CharacterModeCommand,
 )
-from .commands import (  # noqa: F401
-	# F401 imported but unused:
-	# The following are imported here because other files that speech.py
-	# previously relied on "import * from .commands"
-	# New commands added to commands.py should be directly imported only where needed.
-	# Usage of these imports is deprecated and will be removed in 2021.1
-	SynthCommand,
-	IndexCommand,
-	SynthParamCommand,
-	BreakCommand,
-	BaseProsodyCommand,
-	VolumeCommand,
-	RateCommand,
-	PhonemeCommand,
-	BaseCallbackCommand,
-	CallbackCommand,
-	WaveFileCommand,
-	ConfigProfileTriggerCommand,
-)
+
 from . import types
 from .types import (
 	SpeechSequence,
@@ -292,13 +274,6 @@ def getSpellingSpeech(  # noqa: C901
 		if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
 			yield PitchCommand()
 		yield EndUtteranceCommand()
-
-
-# 'getSpeechForSpelling' should be considered deprecated, use getSpellingSpeech instead.
-# The name 'getSpeechForSpelling' was introduced during the 2019.3 release.
-# The decision was made to rename it to be consistent with the other functions (get*Speech) which create
-# speech sequences.
-getSpeechForSpelling = getSpellingSpeech
 
 def getCharDescListFromText(text,locale):
 	"""This method prepares a list, which contains character and its description for all characters the text is made up of, by checking the presence of character descriptions in characterDescriptions.dic of that locale for all possible combination of consecutive characters in the text.
