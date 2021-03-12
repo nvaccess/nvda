@@ -62,6 +62,7 @@ class IUIAutomationTogglePattern(comtypes.gen._00020430_0000_0000_C000_000000000
     _iid_ = GUID('{94CF8058-9B8D-4AB9-8BFD-4CD0A33C8C70}')
     _idlflags_ = []
 
+_isHidden = True
 # values for enumeration 'ToggleState'
 ToggleState_Off = 0
 ToggleState_On = 1

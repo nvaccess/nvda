@@ -28,8 +28,8 @@ import winVersion
 import eventHandler
 from logHandler import log
 import UIAUtils
-from comtypes.gen import UIAutomationClient as UIA
-from comtypes.gen.UIAutomationClient import *
+from comInterfaces import UIAutomationClient as UIA
+from comInterfaces .UIAutomationClient import *
 import textInfos
 from typing import Dict
 from queue import Queue
